@@ -1,49 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679533D2FFB;
-	Mon, 30 Mar 2026 12:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CD33D3314;
+	Mon, 30 Mar 2026 12:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874347; cv=none; b=eb8G8aQd79JLBHwEbx1+tBLIXIEm1ypbboF5MzzjikIK0AQ9ODAi4wsiX+AdRw7GWuC7XMe1jfKWU1xATNm2sS4V8eMX4z53xDqH46Mil0m0b526FWTR13yDdAmPsqy4Q1LKmJ5MSyZR6OoMZqt2sFd5JsMIenhcRXLgZ2OHbk8=
+	t=1774874348; cv=none; b=N7PfWgznCoszbz1U1bfyyeXk8HASV+yOdON7AtUtxJ0YWwpaIj51G5jyvnYq9UVXlt8TwrfagvT3C9ehIXIeHzKaf3AICQSYQfXoybfoHnWdZs9f6N0PMx/Ayeb5htMhBTbkmJpaCHZMcQAxaLk6kGfZZQSQRhKy+ZY6MQr2asU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874347; c=relaxed/simple;
-	bh=tYLoT/g8g+dfmbwXtdG4UEMxcZCoHibY3HsepB2r7ao=;
+	s=arc-20240116; t=1774874348; c=relaxed/simple;
+	bh=5wSSKEMIzIul31wUqPnRKJrbRSOh/Pgt2eb8JsZVyxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HcK8CcVP95Dw5WZX2SVOZRs93mUa6MEI13k9mqh4/kYPNFacJ3kqvAV2/fiZ3mA+XY7LCgMCJ2yN4wa83PnIdqKEGeX85osOLuDcauZqbst92HqySuK9XxwM3I9SIIJo54UDiZFD/Sy/1V3SlIPrNseJUxVEU0bk5EYWbyvZbSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U1C1whvW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gbfOoHq9w/3iFLby8WRY8cdOZu9ZUs0P53EGX4IRroxPmYYRzQdEEUuqR4ru8XIcGXDCQ7Iu+IHroHv2WlBbDeyFKNN+jszo6wjiJ3ghZnWMpH+Zua72ly8mqtysHS3akDygQyXH+cxU+imzQ+djQtSSpNPiesZXUTm724W5jmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ma14zB0s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U1C1whvW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58E9C2BCB3;
-	Mon, 30 Mar 2026 12:39:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ma14zB0s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA66FC2BCB0;
+	Mon, 30 Mar 2026 12:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874346;
-	bh=tYLoT/g8g+dfmbwXtdG4UEMxcZCoHibY3HsepB2r7ao=;
+	s=k20201202; t=1774874348;
+	bh=5wSSKEMIzIul31wUqPnRKJrbRSOh/Pgt2eb8JsZVyxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1C1whvWscUqwdUkp8dn8nX5SSgHCB3WnUbS365myRExoALjniyy61zIL44hP87J4
-	 WaHvp7hfWBy06Mn8m6J6Udv2th+6bLVPJ+VQYwaslNIfKtbNLqOVFpueCzB/dgAs79
-	 d88EHwljLTefh9ilCdJnKvXldllaim+8BEAr06UzKwQeye1Uj6m/AFbNrN4gW1t775
-	 FAPB0u1QwrvZsIBVQPTooMsmNYgavu4k5d+G44oNo2ucGfPG9O4lg5W8q3pfm7/gJ8
-	 UmD4BOeSyb36gbN+iA4MX91ctywJGA9RltPLMP8O9BRZmaStDz6P6Mjpl3lRTnVnhS
-	 OTrBMbSdwnhrQ==
+	b=ma14zB0s7+jkqnU5ccykj/BIbsauhPl0s00HGHBA9M7tvVepS8ncgKdYIkUI4jj7Y
+	 vlutPU5v26YwFZEMOaDxStgXehcsfr5Qveu8qZZkAYimH3AV67oHDC9MdLI3cnSIKY
+	 NnhhjtriuImDhyaZ1R/aTXZ2XJ+ESlrwxDElcJ9p2mcpXuwwpzkOsDGXSzdBKEK4d2
+	 mdiWlC4dUxe3zgLlmeA5V7FIoZLcW8ytdcBxXLkpvFeiNBwLnorhgzfXjMJ2d5p0xT
+	 sXt0wUChRfNoFXXy79dThjg0h9mQPd5t1BOmfBUpmhPWai7ho8UIWZVlbA6LtvmkVV
+	 QDlvOaMxZNE2Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+Cc: =?UTF-8?q?C=C3=A9sar=20Montoya?= <sprit152009@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	detlev.casanova@collabora.com,
-	ezequiel@vanguardiasur.com.ar,
-	mchehab@kernel.org,
-	heiko@sntech.de,
-	linux-media@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] media: rkvdec: reduce stack usage in rkvdec_init_v4l2_vp9_count_tbl()
-Date: Mon, 30 Mar 2026 08:38:29 -0400
-Message-ID: <20260330123842.756154-16-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 15-eg0xxx
+Date: Mon, 30 Mar 2026 08:38:31 -0400
+Message-ID: <20260330123842.756154-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -53,346 +48,369 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.10
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: César Montoya <sprit152009@gmail.com>
 
-[ Upstream commit c03b7dec3c4ddc97872fa12bfca75bae9cb46510 ]
+[ Upstream commit 2f388b4e8fdd6b0f27cafd281658daacfd85807e ]
 
-The deeply nested loop in rkvdec_init_v4l2_vp9_count_tbl() needs a lot
-of registers, so when the clang register allocator runs out, it ends up
-spilling countless temporaries to the stack:
+The HP Pavilion 15-eg0xxx with subsystem ID 0x103c87cb uses a Realtek
+ALC287 codec with a mute LED wired to GPIO pin 4 (mask 0x10). The
+existing ALC287_FIXUP_HP_GPIO_LED fixup already handles this correctly,
+but the subsystem ID was missing from the quirk table.
 
-drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c:966:12: error: stack frame size (1472) exceeds limit (1280) in 'rkvdec_vp9_start' [-Werror,-Wframe-larger-than]
+GPIO pin confirmed via manual hda-verb testing:
+  hda-verb SET_GPIO_MASK 0x10
+  hda-verb SET_GPIO_DIRECTION 0x10
+  hda-verb SET_GPIO_DATA 0x10
 
-Marking this function as noinline_for_stack keeps it out of
-rkvdec_vp9_start(), giving the compiler more room for optimization.
-
-The resulting code is good enough that both the total stack usage
-and the loop get enough better to stay under the warning limit,
-though it's still slow, and would need a larger rework if this
-function ends up being called in a fast path.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: César Montoya <sprit152009@gmail.com>
+Link: https://patch.msgid.link/20260321153603.12771-1-sprit152009@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-No existing stack fix in stable 6.6.y for this file. All the
-investigation is complete. Let me now compile the full analysis.
+All verification is complete. Here is the full analysis.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: Subject Line**
-Record: [media: rkvdec:] [reduce] [reduce stack usage in
-rkvdec_init_v4l2_vp9_count_tbl() to fix Clang build failure with
--Wframe-larger-than]
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: [ALSA: hda/realtek] [Add] [mute LED quirk for HP Pavilion
+15-eg0xxx — adds missing PCI subsystem ID to the Realtek ALC287 quirk
+table]
 
-**Step 1.2: Tags**
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Signed-off-by: Arnd Bergmann (author, well-known kernel build-fix
-  expert)
-- Reviewed-by: Nicolas Dufresne (Collabora, rkvdec contributor)
-- Signed-off-by: Nicolas Dufresne (subsystem co-maintainer)
-- Signed-off-by: Mauro Carvalho Chehab (media subsystem top-level
-  maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Acked-by:, Link:, or Cc: stable
-  (absence expected for this pipeline)
+- Signed-off-by: César Montoya `<sprit152009@gmail.com>` — patch author
+  / hardware owner
+- Link: `https://patch.msgid.link/20260321153603.12771-1-
+  sprit152009@gmail.com` — submission link
+- Signed-off-by: Takashi Iwai `<tiwai@suse.de>` — ALSA/HDA subsystem
+  maintainer (applied the patch)
+- No Fixes: tag (expected — quirk additions rarely have one)
+- No Reported-by: (author IS the affected user)
+- No Cc: stable (absence expected for commits under review)
 
-**Step 1.3: Commit Body**
-Record: Bug: The deeply nested 5-level loop in
-`rkvdec_init_v4l2_vp9_count_tbl()` uses many registers. When Clang
-inlines it into `rkvdec_vp9_start()`, the combined stack frame reaches
-1472 bytes, exceeding the 1280-byte `-Wframe-larger-than` limit.
-Symptom: Build failure with `-Werror,-Wframe-larger-than`. Fix: Mark the
-function `noinline_for_stack` to prevent inlining. Author notes the
-resulting code is "good enough" and the function is not on a fast path.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record: Bug: HP Pavilion 15-eg0xxx with subsystem ID 0x103c:0x87cb uses
+ALC287 codec with mute LED wired to GPIO pin 4 (mask 0x10). The existing
+`ALC287_FIXUP_HP_GPIO_LED` fixup already handles this correctly, but the
+subsystem ID was missing from the quirk table. Symptom: mute LED does
+not function at all. Root cause: missing SSID→fixup mapping. Evidence:
+author confirms GPIO pin via manual `hda-verb` testing (SET_GPIO_MASK,
+SET_GPIO_DIRECTION, SET_GPIO_DATA with 0x10).
 
-**Step 1.4: Hidden Bug Fix Detection**
-Record: This is an explicit build fix, not a disguised runtime fix. The
-commit message is transparent about the problem and solution.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a hidden bug fix — this is an explicit hardware quirk
+addition (a well-known stable exception category). The "bug" is that
+hardware doesn't work without the quirk table entry.
 
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS — LINE BY LINE
+===============================================================
 
-**Step 2.1: Inventory**
-Record: 1 file changed (`drivers/media/platform/rockchip/rkvdec/rkvdec-
-vp9.c`), ~2 lines modified (function signature only: `static void` ->
-`static noinline_for_stack void` split across 2 lines). Function
-modified: `rkvdec_init_v4l2_vp9_count_tbl()`. Scope: single-file,
-absolutely surgical.
+**Step 2.1: INVENTORY THE CHANGES**
+Record: 1 file changed: `sound/hda/codecs/realtek/alc269.c`. +1 line, -0
+lines. Function modified: none (data table `alc269_fixup_tbl[]` only).
+Scope: single-file, single table row — maximally surgical.
 
-**Step 2.2: Code Flow Change**
-Record: Before: `rkvdec_init_v4l2_vp9_count_tbl()` was a plain `static
-void` function eligible for inlining into `rkvdec_vp9_start()`. After:
-The `noinline_for_stack` attribute prevents inlining, so the function
-gets its own stack frame. No logic, data flow, or error path changes
-whatsoever.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record: Before: subsystem ID 0x103c:0x87cb is not in
+`alc269_fixup_tbl[]`, so the HDA core finds no fixup match during codec
+probe, and the mute LED is never configured. After: the new
+`SND_PCI_QUIRK(0x103c, 0x87cb, "HP Pavilion 15-eg0xxx",
+ALC287_FIXUP_HP_GPIO_LED)` entry causes `snd_hda_pick_fixup()` to match
+and apply the GPIO LED fixup during probe.
 
-**Step 2.3: Bug Mechanism**
-Record: Category: build fix / compiler stack-usage mitigation. The
-deeply nested loop (5 levels: `i`, `j`, `k`, `l`, `m`) with 6 pointer
-dereference assignments per iteration exhausts Clang's register
-allocator when inlined, causing heavy stack spilling that pushes the
-caller's frame past the warning limit.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: Category (h) — hardware workaround / quirk table entry. The
+added line is inserted in sorted order between 0x87c8 and 0x87cc (the
+latter is the same laptop model name using the same fixup). The fixup
+`ALC287_FIXUP_HP_GPIO_LED` is defined at line 5921 and calls
+`alc287_fixup_hp_gpio_led()`, which invokes
+`alc_fixup_hp_gpio_led(codec, action, 0x10, 0)` — GPIO mask 0x10 exactly
+matches the commit message's hda-verb testing.
 
-**Step 2.4: Fix Quality**
-Record: Obviously correct. `noinline_for_stack` is a well-established,
-documented kernel pattern (`include/linux/compiler_types.h` line
-276-278: `#define noinline_for_stack noinline`). Zero regression risk --
-the only effect is preventing inlining of a function called once during
-VP9 decoder initialization, which is not a hot path. No API or
-behavioral changes.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct — identical pattern to the neighboring 0x87cc
+entry for the same laptop model. Regression risk: effectively zero — the
+quirk only activates on machines with PCI subsystem ID 0x103c:0x87cb. No
+logic, no API, no code flow changes. No red flags.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.1: Blame**
-Record: `git blame` shows the entire function body traces to commit
-`f25709c4ff151f` ("media: rkvdec: Add the VP9 backend") by Andrzej
-Pietrasiewicz, dated 2021-11-17. This was included in
-`v5.17-rc1~171^2~201`, so the code has been present since v5.17. The
-same deeply nested loop and all 5 loop variables have been there since
-introduction.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: `git blame -L6868,6872` shows:
+- Line 6869 (0x87c8): from `aeeb85f26c3bbe` (Takashi Iwai, 2025-07-09) —
+  the mass file relocation commit
+- Line 6870 (0x87cc): from `7cd3c8cafbc050` (Takashi Iwai, 2025-07-21) —
+  merge of `9744ede7099e8` which added the 0x87cc entry
+- The 0x87cb line does not exist in this tree (this is the candidate
+  commit adding it)
 
-**Step 3.2: Fixes Tag**
-Record: No Fixes: tag present (expected for commits under manual
-review).
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: N/A — no Fixes: tag. Expected for quirk additions.
 
-**Step 3.3: File History**
-Record: On current tree, only 2 mainline commits modified `rkvdec-vp9.c`
-in the non-staging path: the unstaging move (`d968e50b5c266`) and a QoS
-disable (`664b42898db79`). The staging path has a few more minor
-changes. No existing stack-usage or noinline fix for this file anywhere
-in the history. The candidate is standalone.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: The related commit `9744ede7099e8` ("ALSA: hda/realtek - Add
+mute LED support for HP Pavilion 15-eg0xxx") added the 0x87cc entry for
+the same laptop model, was written by a different author (Dawid Rezler),
+explicitly carried `Cc: <stable@vger.kernel.org>`, and went into
+`sound/pci/hda/patch_realtek.c` (pre-move path). It was tagged
+`v6.16~13^2~3`, meaning it entered in v6.16. The current commit adds a
+sibling SSID (0x87cb) for the same model. Standalone — no other patches
+needed.
 
-**Step 3.4: Author Context**
-Record: Arnd Bergmann is a prolific kernel contributor especially well-
-known for build fixes, cross-compilation, architecture portability, and
-stack-usage reduction patches. His media subsystem commits include
-multiple similar `noinline_for_stack` fixes (e.g., `5954ad7d1af92` for
-st-delta, `8b55f8818900c` for mediatek VP9). This is his core expertise.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: César Montoya appears to be an end-user / first-time contributor
+fixing their own hardware. Patch was accepted and signed off by Takashi
+Iwai (ALSA maintainer), lending strong confidence.
 
-**Step 3.5: Dependencies**
-Record: No dependencies. `noinline_for_stack` is defined as `#define
-noinline_for_stack noinline` in `include/linux/compiler_types.h` and has
-existed since at least v4.x. The function signature is identical in all
-stable trees (6.1.y, 6.6.y, 6.12.y) -- verified via `git show` on each
-stable branch.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: The only prerequisite is `ALC287_FIXUP_HP_GPIO_LED` and its
+implementation `alc287_fixup_hp_gpio_led()`. These were introduced long
+ago and exist in all active stable trees. No other dependencies. Fully
+standalone.
 
-## PHASE 4: MAILING LIST RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-Record: Direct WebFetch to lore.kernel.org was blocked by Anubis proof-
-of-work. However, the commit has proper review/signoff chain (Reviewed-
-by from Nicolas Dufresne, Signed-off-by from both Nicolas Dufresne and
-Mauro Carvalho Chehab), confirming it went through standard review.
+**Step 4.1: SEARCH LORE.KERNEL.ORG**
+Record: The commit includes a Link to
+`patch.msgid.link/20260321153603.12771-1-sprit152009@gmail.com`. The
+patch was a single standalone submission (not a series — "12771-1" with
+no further parts). Takashi Iwai's Signed-off-by indicates direct
+application by the maintainer. No NAKs or objections are evident from
+the acceptance.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.2: SEARCH FOR BUG REPORT**
+Record: No separate bug report — the author is the affected user who
+submitted the fix directly, confirmed via hda-verb hardware testing.
 
-**Step 5.1: Functions**
-Record: Only `rkvdec_init_v4l2_vp9_count_tbl()` modified (signature
-only).
+**Step 4.3: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone single patch. The sibling 0x87cc entry (commit
+`9744ede7099e8`) was a separate patch from a different author and
+already carried `Cc: stable`.
 
-**Step 5.2: Callers**
-Record: Called exactly once from `rkvdec_vp9_start()` at line 1034.
-Verified in all stable trees (6.1.y line 1031, 6.6.y/6.12.y line 1030).
+**Step 4.4: CHECK STABLE MAILING LIST HISTORY**
+Record: The sibling commit `9744ede7099e8` for 0x87cc already has `Cc:
+stable@vger.kernel.org`, confirming the subsystem maintainer considers
+this class of quirk appropriate for stable backporting.
 
-**Step 5.3: Callees**
-Record: The function sets up pointer tables and runs a 5-level nested
-loop (`INNERMOST_LOOP` macro) performing array pointer assignments. No
-dynamic allocations, no locks, no side effects beyond pointer setup.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.4: Call Chain**
-Record: `rkvdec_vp9_fmt_ops.start` -> `rkvdec_vp9_start()` ->
-`rkvdec_init_v4l2_vp9_count_tbl()`. Called during VP9 streaming setup,
-not per-frame. The author explicitly notes it is not a fast path.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: No functions modified. Only a data table entry added to
+`alc269_fixup_tbl[]`.
 
-**Step 5.5: Similar Patterns**
-Record: `noinline_for_stack` is used in 7+ files under `drivers/media/`
-for the same class of issue. The nearly identical mediatek VP9 commit
-(`8b55f8818900c`) by the same author is the closest precedent.
+**Step 5.2: TRACE CALLERS**
+Record: The table is consumed by `snd_hda_pick_fixup()` during Realtek
+ALC269-family codec probe. This is a standard, well-tested code path run
+once per codec initialization.
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 5.3: TRACE CALLEES**
+Record: When matched, the fixup definition at line 5921 invokes
+`alc287_fixup_hp_gpio_led()` (line 1360), which calls
+`alc_fixup_hp_gpio_led(codec, action, 0x10, 0)`. This configures GPIO
+pin 4 for the mute LED — a well-tested helper used by many HP models.
 
-**Step 6.1: Code Existence**
-Record: The file exists in all active stable trees:
-- 6.1.y: `drivers/staging/media/rkvdec/rkvdec-vp9.c` (verified, function
-  at line 927)
-- 6.6.y: `drivers/staging/media/rkvdec/rkvdec-vp9.c` (verified, function
-  at line 926)
-- 6.12.y: `drivers/staging/media/rkvdec/rkvdec-vp9.c` (verified,
-  function at line 926)
-The function signature and the deeply nested loop are identical in all
-branches.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Codec probe → `snd_hda_pick_fixup()` → table lookup →
+`ALC287_FIXUP_HP_GPIO_LED` → `alc287_fixup_hp_gpio_led()` →
+`alc_fixup_hp_gpio_led()`. The path is reachable on every boot for users
+with this hardware.
 
-**Step 6.2: Backport Complications**
-Record: The file path differs in stable trees (staging vs non-staging),
-requiring a trivial path adjustment. The actual code is functionally
-identical -- the patch applies cleanly with a path change.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: `ALC287_FIXUP_HP_GPIO_LED` appears 11 times in the file. At
+least 10 other HP models use the identical fixup. This is a massively
+replicated, well-tested pattern.
 
-**Step 6.3: Precedent -- Critical Finding**
-Record: The nearly identical mediatek VP9 `noinline_for_stack` commit by
-the same author (`8b55f8818900c`) **was backported to all three stable
-trees**:
-- 6.1.y: `89e1132bbf713`
-- 6.6.y: `fa43166f2e8ba`
-- 6.12.y: `f87626a55c215`
+===============================================================
+PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+===============================================================
 
-This is extremely strong precedent. The rkvdec fix is the same type of
-change (same author, same compiler issue, same annotation, same VP9
-decoder context).
+**Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?**
+Record: The `ALC287_FIXUP_HP_GPIO_LED` fixup and its implementation have
+been in the tree since at least v5.10-era kernels. All active stable
+trees (6.1.y, 6.6.y, 6.12.y, etc.) contain the fixup infrastructure. The
+only thing missing is this specific SSID table entry.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: The file was moved from `sound/pci/hda/patch_realtek.c` to
+`sound/hda/codecs/realtek/alc269.c` in commit `6014e9021b28e`
+(v6.17-rc1). Stable trees older than 6.17 need the patch applied to the
+old path. The table format is identical in both locations. The fix is a
+single line addition at a predictable sorted location — trivial to
+adjust for either path.
 
-**Step 7.1: Subsystem**
-Record: `drivers/media/platform/rockchip/rkvdec/` -- Video decoder
-driver for Rockchip SoCs. Criticality: PERIPHERAL (hardware-specific),
-but Rockchip platforms are widely deployed in Chromebooks, single-board
-computers, and embedded systems.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE**
+Record: The 0x87cb SSID does not appear in the current tree (confirmed
+by grep), so no related fix for this specific SSID is already present.
 
-**Step 7.2: Activity**
-Record: Low-moderate activity. The driver is mature. Recent changes are
-minor (QoS fix, unstaging move).
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: Subsystem: sound/hda (HD-Audio, Realtek codec). Criticality:
+IMPORTANT — audio is critical for laptop users. This specific driver
+covers a very large number of consumer laptops.
 
-**Step 8.1: Who is Affected**
-Record: Anyone building the kernel with Clang (especially with KASAN
-enabled, based on the mediatek precedent) who enables
-`CONFIG_VIDEO_ROCKCHIP_VDEC` or `COMPILE_TEST`. This includes CI
-systems, distribution kernel builds, and embedded/Chromebook builders.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Extremely active — `git log` shows continuous stream of quirk
+additions. Takashi Iwai actively maintains and applies these patches.
+Quirk additions for HP laptops are the most common type of commit in
+this file.
 
-**Step 8.2: Trigger Conditions**
-Record: Triggered at compile time with Clang + `-Wframe-larger-than` +
-`-Werror`. Deterministic build failure. The specific Clang version and
-configuration matter (KASAN amplifies the issue per the mediatek
-precedent), but the fix is purely defensive and safe regardless.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.3: Failure Mode**
-Record: Build failure -- kernel cannot be compiled. For anyone who needs
-this driver, it is a hard blocker. Severity: MEDIUM-HIGH (build failure,
-not runtime crash, but prevents compilation entirely).
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Users of HP Pavilion 15-eg0xxx laptops with PCI subsystem ID
+0x103c:0x87cb and ALC287 codec. Platform-specific / driver-specific.
 
-**Step 8.4: Risk-Benefit Ratio**
-Record: BENEFIT: Fixes a real build failure for Clang users with common
-warning configurations. The identical class of fix was already deemed
-worthy of backport for the mediatek VP9 driver. RISK: Essentially zero.
-Adding `noinline_for_stack` has no behavioral effect; it only affects
-compiler inlining decisions. The function is called exactly once during
-initialization. Ratio: Very favorable.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Every boot on affected hardware. The mute LED never works
+without this quirk — it's not intermittent, it's permanent broken
+behavior for these users.
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: Without the fix, the mute LED does not respond. Severity: LOW
+for system stability (no crash/corruption), but this is a real hardware
+defect that makes the laptop's audio indicator non-functional. This is
+exactly the class of hardware enablement quirk that stable trees
+routinely accept.
 
-**Step 9.1: Evidence**
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record: Benefit: enables mute LED for a specific HP laptop variant —
+real hardware fix for real users. Risk: essentially zero — the
+`SND_PCI_QUIRK` entry only matches on the exact subsystem ID
+0x103c:0x87cb, and the underlying fixup is well-tested across 10+ other
+HP models. Risk-benefit ratio: very favorable.
 
-FOR backporting:
-- Fixes a documented Clang `-Werror,-Wframe-larger-than` build failure
-- Build fixes are an explicit exception category for stable backporting
-- Extremely minimal change: single attribute annotation, no logic change
-- Zero runtime regression risk
-- Well-established kernel pattern (`noinline_for_stack`)
-- Author is the recognized expert for this type of fix (Arnd Bergmann)
-- Reviewed by subsystem co-maintainer, signed off by media subsystem
-  top-level maintainer
-- **Strong precedent**: nearly identical fix by same author for mediatek
-  VP9 was backported to 6.1.y, 6.6.y, and 6.12.y
-- Code exists in all active stable trees with identical function
-  signature
-- `noinline_for_stack` macro exists in all stable trees
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-AGAINST backporting:
-- File path differs in stable (staging vs non-staging) -- requires
-  trivial path adjustment
-- Only affects Clang builds with specific configurations (not all build
-  environments)
-- The exact compiler version/config triggering the issue may vary
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** -- trivially correct, reviewed
-   by maintainers
-2. Fixes a real bug? **YES** -- build failure with Clang
-3. Important issue? **YES** -- build failure prevents compilation
-4. Small and contained? **YES** -- 2-line signature change
-5. No new features or APIs? **YES** -- no new features
-6. Can apply to stable? **YES** -- with path adjustment for staging
-   directory
+Evidence FOR backporting:
+- Single-line `SND_PCI_QUIRK` table entry addition — textbook stable
+  material
+- Uses existing, well-tested fixup (`ALC287_FIXUP_HP_GPIO_LED`)
+  confirmed in 10+ other entries
+- GPIO mask 0x10 in the fixup matches the author's hda-verb hardware
+  verification
+- Neighboring entry 0x87cc for the same laptop model uses the identical
+  fixup
+- The sibling 0x87cc commit (`9744ede7099e8`) explicitly carries `Cc:
+  stable@vger.kernel.org`
+- Accepted by ALSA maintainer Takashi Iwai
+- Fixup infrastructure exists in all active stable trees (since
+  v5.10-era)
+- Zero regression risk (SSID-gated, affects only this specific hardware)
+- Matches the "AUDIO CODEC QUIRKS" exception category explicitly listed
+  in stable guidelines
 
-**Step 9.3: Exception Category**
-Record: **BUILD FIX** -- explicitly listed as a valid stable exception
-in the rules.
+Evidence AGAINST backporting:
+- None
 
-**Step 9.4: Decision**
-This is a clear YES. It is a minimal, obviously correct build fix that
-follows a well-established kernel pattern, was created by the foremost
-expert in this area, and has direct precedent: the nearly identical
-mediatek VP9 `noinline_for_stack` fix by the same author was already
-backported to all active stable trees.
+Unresolved:
+- Full mailing list thread content not fetched (but maintainer
+  acceptance is confirmed via SOB)
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **YES** — identical pattern to dozens
+   of entries; hardware-verified by author via hda-verb; accepted by
+   subsystem maintainer
+2. Fixes a real bug that affects users? **YES** — mute LED non-
+   functional on specific HP laptop
+3. Important issue? **YES under exception** — hardware quirk for audio
+   codec; same class as the explicitly allowed "SND_PCI_QUIRK entries
+   for specific laptop models"
+4. Small and contained? **YES** — 1 line, single table entry
+5. No new features or APIs? **YES** — maps an existing fixup to a new
+   SSID
+6. Can apply to stable trees? **YES** — trivially, with path adjustment
+   for trees < v6.17 (`sound/pci/hda/patch_realtek.c` instead of
+   `sound/hda/codecs/realtek/alc269.c`)
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Hardware quirk / audio codec quirk — explicitly listed as
+automatic YES in stable guidelines. `SND_PCI_QUIRK` entries for specific
+laptop models are called out by name.
+
+**Step 9.4: MAKE YOUR DECISION**
+This is a textbook hardware quirk addition — a single-line
+`SND_PCI_QUIRK` entry mapping a missing PCI subsystem ID to an existing,
+well-tested fixup function. It enables the mute LED on a specific HP
+laptop variant. Zero regression risk, accepted by the subsystem
+maintainer, underlying fixup exists in all active stable trees.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed subject: "media: rkvdec: reduce stack usage" -- build
-  fix for Clang -Wframe-larger-than
-- [Phase 1] Parsed tags: Reviewed-by Nicolas Dufresne, SOBs from
-  subsystem and top-level maintainers, no Fixes/Reported-by (expected)
-- [Phase 2] Diff analysis: 2-line change adding `noinline_for_stack` to
-  `rkvdec_init_v4l2_vp9_count_tbl()` signature; no logic change
-- [Phase 3] git blame: function introduced by `f25709c4ff151f` ("media:
-  rkvdec: Add the VP9 backend", 2021-11-17), included since v5.17-rc1
-- [Phase 3] git describe --contains f25709c4ff151f: confirmed
-  `v5.17-rc1~171^2~201`
-- [Phase 3] Verified `noinline_for_stack` defined in
-  `include/linux/compiler_types.h` line 278 as `#define
-  noinline_for_stack noinline`
-- [Phase 3] Author check: Arnd Bergmann has multiple similar
-  `noinline_for_stack` commits in drivers/media/
-- [Phase 5] grep: `rkvdec_init_v4l2_vp9_count_tbl` called from exactly 1
-  place: `rkvdec_vp9_start()` at line 1034
-- [Phase 5] Read: confirmed 5-level nested loop (lines 973-997) with
-  INNERMOST_LOOP macro causing heavy register pressure
-- [Phase 6] git cat-file -e: verified file exists in 6.1.y, 6.6.y,
-  6.12.y at staging path
-- [Phase 6] git show on stable branches: verified function signature
-  `static void rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)`
-  is identical in 6.1.y (line 927), 6.6.y (line 926), 6.12.y (line 926)
-  -- no `noinline_for_stack` present
-- [Phase 6] Verified call site in 6.6.y stable at line 1030
-- [Phase 6] **Critical precedent**: mediatek VP9 `noinline_for_stack`
-  commit `8b55f8818900c` by same author backported to 6.1.y
-  (`89e1132bbf713`), 6.6.y (`fa43166f2e8ba`), 6.12.y (`f87626a55c215`)
-- [Phase 6] No existing stack-usage fix for rkvdec-vp9.c in any stable
-  branch (verified via git log --grep="stack" on 6.6.y)
-- [Phase 4] lore.kernel.org inaccessible (Anubis protection); review
-  chain verified from commit tags
-- UNVERIFIED: Mailing list discussion details beyond the commit tags
-- UNVERIFIED: Exact Clang version/config that triggers the failure;
-  however, the fix is defensive and safe regardless
+- [Phase 1] Parsed tags: Signed-off-by from author (César Montoya) and
+  maintainer (Takashi Iwai); Link to patch submission; no
+  Fixes:/Reported-by: (expected for quirk)
+- [Phase 2] Diff: exactly +1 line `SND_PCI_QUIRK(0x103c, 0x87cb, "HP
+  Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED)` in
+  `alc269_fixup_tbl[]`
+- [Phase 3] git blame -L6868,6872: confirmed 0x87cc at line 6870 from
+  `7cd3c8cafbc050`, surrounding lines from `aeeb85f26c3bbe` (file move);
+  0x87cb not present in current tree (grep returns no matches)
+- [Phase 3] git show `9744ede7099e8`: confirmed this is the sibling
+  0x87cc commit for the same laptop model, with `Cc:
+  <stable@vger.kernel.org>`, tagged `v6.16~13^2~3`
+- [Phase 3] git show `6014e9021b28e`: confirmed file moved from
+  `sound/pci/hda/patch_realtek.c` to `sound/hda/codecs/realtek/alc269.c`
+  in v6.17-rc1
+- [Phase 5] Read lines 1360-1364: `alc287_fixup_hp_gpio_led()` calls
+  `alc_fixup_hp_gpio_led(codec, action, 0x10, 0)` — GPIO mask 0x10
+  matches commit message
+- [Phase 5] Read lines 5921-5924: `ALC287_FIXUP_HP_GPIO_LED` fixup
+  definition confirmed, type `HDA_FIXUP_FUNC`
+- [Phase 5] Grep: `ALC287_FIXUP_HP_GPIO_LED` appears 11 times in
+  alc269.c (10+ other HP models)
+- [Phase 6] File path differs between mainline and stable < 6.17; table
+  format is identical — trivial backport adjustment
+- [Phase 8] Risk: zero (SSID-gated single table entry, well-tested
+  existing fixup path)
 
 **YES**
 
- drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c b/drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c
-index b4bf01e839eff..8fb6a1624a14f 100644
---- a/drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c
-+++ b/drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c
-@@ -927,7 +927,8 @@ static void rkvdec_vp9_done(struct rkvdec_ctx *ctx,
- 	update_ctx_last_info(vp9_ctx);
- }
- 
--static void rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)
-+static noinline_for_stack void
-+rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)
- {
- 	struct rkvdec_vp9_ctx *vp9_ctx = ctx->priv;
- 	struct rkvdec_vp9_intra_frame_symbol_counts *intra_cnts = vp9_ctx->count_tbl.cpu;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 75f880efdeaf1..5adc5db6fd52b 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6868,6 +6868,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x87cb, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87cc, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
 -- 
 2.53.0
 
