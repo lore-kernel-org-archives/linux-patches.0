@@ -1,66 +1,66 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8993AEF3B
-	for <patches@lists.linux.dev>; Mon, 30 Mar 2026 08:54:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E35299923
+	for <patches@lists.linux.dev>; Mon, 30 Mar 2026 09:02:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774860879; cv=none; b=hRJG0vZm8KlnxSWLQGJPvDocxugO8OrsJO76xWtZ5xkeo9r8OUwO8Hg2PXR8kuX2O7aNmj+BBtYZ3i4aETDeWdE4Jt76hAE2byvta05tbfRaeFRC8bY/HA0LXDDknBKAWonLf0bfFnRwa0w8tn7Hg6n59nQsW3KO5GOmWyV7r10=
+	t=1774861357; cv=none; b=mcQ4+NGVA9DcGCg4lGQw2PplBKDwk0AWd0IQmo1VYkeCUdeeeiJp3pHwzyfokSedkckkTvvYKi4mS3dTRO/Dr5WOf/hZLIM05qL3UmQaA8Jr6098w8OFYMs/om6XtPE/U3v1dvqzaPCkVsUTf/RWMVlN1lU/9QtgOpt36fk+Ku0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774860879; c=relaxed/simple;
-	bh=Ugxhy261d5LPgC7T7MePsjFfQZHYLP0vYZcrMZsEDbs=;
+	s=arc-20240116; t=1774861357; c=relaxed/simple;
+	bh=GODCm1B/1it3SFB2y34gcqgyDxFXc//xAtjl4Hm8+1w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eouhZ3qFVKVCVhz2cTBLARMa8/oHaUjaBTgalG57MQtvk5/7r/vsQ8mL1BHQKO4PAdW3NnODyQYTD5kbyRRifQSahE4zIhuoz2fml5fRGkfCPyZqblGBYqeQ31+GS5QWIO34yqsHB53B8jaThHadjPhE0T8n6OtxIhOf3RHJcJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UBc8bGg4; arc=none smtp.client-ip=209.85.216.52
+	 In-Reply-To:Content-Type; b=OG7fljygAWbaBr7W5kMA1C/gk01F70qjX9T/jAbZ1M65Yh5HPhWhNaq3RL91H2fPYWfBAjpNBUOZgjelWiirnwpTM2CibJQSD2Il8xv9xNARyU7IycbhNXGndIrfzlHqHPOCz3h8QZ7iOBaFVyE0sXaqogpxe+e+roINGHx71DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fimaHl7u; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UBc8bGg4"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-35da9c0c007so586385a91.2
-        for <patches@lists.linux.dev>; Mon, 30 Mar 2026 01:54:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fimaHl7u"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2ab39b111b9so17948115ad.1
+        for <patches@lists.linux.dev>; Mon, 30 Mar 2026 02:02:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774860878; x=1775465678; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1774861355; x=1775466155; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=CmARyMKOG13A38nFYqx4oFCWcRDBB88m6E/5cb+gjjc=;
-        b=UBc8bGg4oiqQ4mxyqo/wPC2nS3m1QCVaCdc7Jm24V33+AZFBpS+NF06USHHeN/dZ3q
-         3DNzylX9pm9vE9Ki5jyAEI3stWCaZr9EH4WFPw5uxMXuXbMuAAKdQ30c4zupz5d89GO8
-         hQ9Z90NomJu683SJ65ehTr/yJ05Ern9xUs+2RDTNCCbZS+7uh2mdtzpTmp3sq4qOfUTR
-         XZDO//X3KgXGI9q2+zCBjmmDY4++yEtw0FIZS4GUHYuqbSQm+5TT0tSRMl1R8BPGF9MP
-         YTLY8Z51nKOx1VcuuPHQR6rlyFUZEMFF+hiq/Y+iDbYK0Zj/RfCzBn5ipkHno1KOgrVh
-         gmvg==
+        bh=mpQILeXGrITAWA4MGQhQMWcX5qZm/qyaNH9J5RX59CY=;
+        b=fimaHl7ua94RMJqFHVzUBUvFzbYoLyuiSFDPYZzIx8ieCUsQg61zwZfNJX/KzfIzAj
+         VLjQgAv+8e2TUPhGLRbPFFgJpn8oUW4/bNliMfs9F5h04VoDt/ZdxwBZlp/ImuIFHOag
+         rX5Q0WArSQgy3QpX9chNXVjjQ/soS+/7xd8Oi7ebngoQwtzIN2XeVTgWquWoPxB4U7Fl
+         6ivNSHXrCH4otK5Z7sNgYsdqjF8/KRualp1k37W8OCSaFaPREmWDPXV9pY+GLEnBuyR0
+         k4HZ9AEN6gLXDkh/YVVavqNo34/xCgtImhZPyrLR1IZtY3ghHD3eJTzPX4Z86Z2wfsK6
+         Ck1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774860878; x=1775465678;
+        d=1e100.net; s=20251104; t=1774861355; x=1775466155;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CmARyMKOG13A38nFYqx4oFCWcRDBB88m6E/5cb+gjjc=;
-        b=eVWDx2eSecyyAKfAS7uSPntOCorOBkYJfVsJOswO/mSCULnJTlYXK6rHwwZ06Loj1v
-         xNkZKcPcYnL0hHa7p3BgNkKPOMFc7Ov0EXaRHRXVwSGrN0ObaqfGLNoDPes3pAq59TTT
-         1pm4H56nJWxGn9V5J0bm3v5epqbxPa3I5BcnXRp+2rHtOVjVzMP4X47cC2sbUcuUvMKA
-         p2e9Q3tkHHBq1iXChZLkQ2fjuWZ9sCe8qy1ateIBh4k0UAMFm8BmyAbjESUi0r5CrULl
-         X7oB6+KqSgMDnloDNiEWVSed+bnIdHvUa62ePvtNAfhFGgz/Fah3QNduNbBYFpyqNBCR
-         5wIg==
-X-Gm-Message-State: AOJu0YzgnBTYpepw36IDjJ6Trk5CKirfe4Vk4vjXppokYygqgzhvn+S7
-	nfxlW4J3n2Iy94zy6vqcjl1pnDcEVoXND4Zji1aB4nWqJj5e4LoX16yi
-X-Gm-Gg: ATEYQzxV4jZKSz0W6wTLx5O9jU9Klg6IW45xx0hlN0tWRIYRI0GMXeWPbsOidKeGWKg
-	g0pc4rGz7FRSUmyaSHsLn7yafyOm7y2PGTrhJ2/OeI5cFyr6B315xKl0Gpug686xa0wGoRkFsaL
-	7shYxSa5KH7xbPvegVnyveKnMV0rKsU+j4w1j9rlBXOTCf8tQ9sbp6RfyccM0z5Bx7DyUjnhbIt
-	uTDYuzsV4IykE5bTbnCLSdRvvEigfBfSDtHaJ5PHVw8rsqsmgo7TB5WMeH4c9gmW2PjYxKzLEFg
-	CVUfXV9wWDolJk8PnOzBH7DKzE6bfbULqPifrECgOFba0aVblGXr97ckaxEIJPGi2LTEj8QBhIF
-	w6pVMannrMqtzAIGVSfg3S90br0AWh0rL4a/rsatD5ZybA5UnCEp4ZyxNuw0Z8GfOMxvbqQRVWj
-	CWHCcMn5+QJEhD/l38uJbe2q9W77i18aleJCf9p3jGHxDRwDde/GaDaX1foL95O4g97y2GzL+c
-X-Received: by 2002:a17:902:cf0b:b0:2b0:708f:4dd7 with SMTP id d9443c01a7336-2b0cdcdd018mr118209755ad.38.1774860877949;
-        Mon, 30 Mar 2026 01:54:37 -0700 (PDT)
+        bh=mpQILeXGrITAWA4MGQhQMWcX5qZm/qyaNH9J5RX59CY=;
+        b=eEyNOcLXcLgrPxjoUaWU7lJYHWrD+zMowZaiDwoC9l1wdOjkqAnvngYiay10Jrd3em
+         TExsbsoo1uk06MMwbzOPnaWKkrmlKJrdefc5SXH1hgoMHLQqy1eaVfDTbffpYl86y22B
+         SrKjXHTDq8vtEDfLagbbmV+lPgRpyXTYv3izdz7MGPT2+UTs3+U7U/TyHCK0rHLb6Zz/
+         z9RJ4y3HOaf8IzRau6ey0w/lhw6m0tpyzXQvLNmTFtPVVDWvvGwmakGRVBqL0WdwRuHz
+         76GBIQizFuxHPRLaoV4MDq/BliGQttZXhmBzkAGTsk6ZFoKFQ1DGZgrPoEdLQMTQ+aog
+         m3uQ==
+X-Gm-Message-State: AOJu0YyKmZHLkqlnazqcEpsPeBFSrLnz2jlZZWoS3jbB0mpGRyvGqT7K
+	bSN26BIPsBNzXCIeoF7tyj+bFojVl/tLhwaFaxj+2CV+9drfUGs2l2Y2GisixQ==
+X-Gm-Gg: ATEYQzxNsH08lK9lNVMiGMHJisQ5iFBOuaXNoaJL0BlOwD+/b3w5bsDjtM7ePIhza1A
+	Kw2Cu0jKXHXS36FGUwiuaBm040zmiVpxLBWWd+MFAaEw45W3XD21Fa9ficMSpQpROJp5KnUkyN5
+	MxwgxzaQ3tXWhwGjQl/RzIHcocOYoTc0FddzTZuI9xQfvCSdvAg0Uwk6u2t5MXLcWITe4+E+SWf
+	rasyctefXiNaMQTeH2Vif+e0UCFSf/qX1Ux245SRP3nk3mXq85bq3eF0/A2fQSld7jhebMDT2dj
+	iB6R0dUQoQIWdhUhTSDmir3/mshHwQMjr3pbNJeKK250cUbf0Ncx1BJt9HKKNnIZRcyfqYVQZJl
+	9QRhyDUP6X9axC3evToLKb/7UyS7VZdZ6tL0Tv2/5t9Cn495xdC1AO75bni5V8s/VJcqzSbx782
+	r5kri5kkM3pupIjzUmJk5fllRjORshaKlPKXQvMjO3R105rJf8seR1QguxgWQcBF2/60bIfAoP
+X-Received: by 2002:a17:902:d511:b0:2ae:6259:5aff with SMTP id d9443c01a7336-2b0cdc0f665mr124190895ad.6.1774861355428;
+        Mon, 30 Mar 2026 02:02:35 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b242766396sm71853505ad.45.2026.03.30.01.54.36
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b24278501esm75368605ad.58.2026.03.30.02.02.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Mar 2026 01:54:37 -0700 (PDT)
+        Mon, 30 Mar 2026 02:02:34 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <a2d19941-48cd-4993-ab17-7b578d7c99d5@roeck-us.net>
-Date: Mon, 30 Mar 2026 01:54:35 -0700
+Message-ID: <8aa3ace8-33ba-4914-b615-c165fbd146af@roeck-us.net>
+Date: Mon, 30 Mar 2026 02:02:33 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,7 +68,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 000/212] 6.18.20-rc1 review
+Subject: Re: [PATCH 6.12 000/460] 6.12.78-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
@@ -76,7 +76,7 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
  rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, sr@sladewatkins.com
-References: <20260323134503.770111826@linuxfoundation.org>
+References: <20260323134526.647552166@linuxfoundation.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -122,15 +122,15 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
  FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
  np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
+In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi,
 
-On 3/23/26 06:43, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.20 release.
-> There are 212 patches in this series, all will be posted as a response
+On 3/23/26 06:39, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.78 release.
+> There are 460 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -138,42 +138,24 @@ On 3/23/26 06:43, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 
-um:defconfig has failed to build since v6.18.17.
+Since v6.12.64, various architecture/image combinations fail to build
+with the following error.
 
-Is there any interest in supporting it in this branch ? If so,
-upstream commit aa7387e79a5c ("unwind_user/x86: Fix arch=um build")
-might help, but I did not test it.
+Error log:
+sound/soc/codecs/ak4458.c:631:13: error: 'ak4458_reset' defined but not used [-Werror=unused-function]
+   631 | static void ak4458_reset(struct ak4458_priv *ak4458, bool active)
+
+This is seen if the driver is built with CONFIG_PM=n.
+
+Problem is that ak4458_reset() is only called from inside code
+protected with CONFIG_PM, but declared outside it. This was
+introduced with commit 47c4976513f1 ("ASoC: ak4458: remove the
+reset operation in probe and remove").
+
+The problem is not seen in later kernels which also have commit
+9f9c8e9064ea ("ASoC: ak4458: Convert to RUNTIME_PM_OPS() & co").
+That commit has not been backported to v6.12.y.
 
 Thanks,
 Guenter
 
----
-Build reference: v6.18.20
-Compiler version: x86_64-linux-gcc (GCC) 14.3.0
-Assembler version: GNU assembler (GNU Binutils) 2.44
-
-Building um:defconfig ... failed
---------------
-Error log:
-In file included from include/linux/unwind_user.h:6,
-                  from include/linux/unwind_deferred.h:6,
-                  from kernel/fork.c:108:
-arch/x86/include/asm/unwind_user.h: In function 'unwind_user_word_size':
-arch/x86/include/asm/unwind_user.h:23:17: error: 'struct pt_regs' has no member named 'flags'
-    23 |         if (regs->flags & X86_VM_MASK)
-       |                 ^~
-arch/x86/include/asm/unwind_user.h:23:27: error: 'X86_VM_MASK' undeclared (first use in this function)
-    23 |         if (regs->flags & X86_VM_MASK)
-       |                           ^~~~~~~~~~~
-arch/x86/include/asm/unwind_user.h:23:27: note: each undeclared identifier is reported only once for each function it appears in
-arch/x86/include/asm/unwind_user.h:26:14: error: implicit declaration of function 'user_64bit_mode' [-Wimplicit-function-declaration]
-    26 |         if (!user_64bit_mode(regs))
-       |              ^~~~~~~~~~~~~~~
-make[4]: *** [scripts/Makefile.build:287: kernel/fork.o] Error 1
-make[4]: *** Waiting for unfinished jobs....
-make[3]: *** [scripts/Makefile.build:544: kernel] Error 2
-make[3]: *** Waiting for unfinished jobs....
-make[2]: *** [Makefile:2021: .] Error 2
-make[1]: *** [Makefile:248: __sub-make] Error 2
-make: *** [Makefile:248: __sub-make] Error 2
---------------
