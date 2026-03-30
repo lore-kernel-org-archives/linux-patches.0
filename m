@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E653D0916;
-	Mon, 30 Mar 2026 12:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDB73CFF7F;
+	Mon, 30 Mar 2026 12:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874328; cv=none; b=IPx99bZ6YK3NRCcNB6Ra8WxMPCMSBCHQMey5GAzbAHAfUQ8CW8cmMji/mrKXgU81aFvqm2SoASCoaw4hd9JCdJNb3UuHivXZKy64f3JT1FmIkZ/tLmU6J/V0jUKql42xM+/LGSpvzZa3go30EtqS+IglONZh2Rud3N7SESIzV6U=
+	t=1774874329; cv=none; b=V5VLIBM5Tv5aH1WrPfkgglPCC9t00LByo9RE2deySZJQ5FX4iGFDMilvBvrpN/mC7fYlCrYQBd0ht2o7y8NfN1mhIp2hlctKjwFJZE5aj+W+qBUd4xI7FzOdw8WVQ6l/6toP57c3Owx7z/OknTc2SH3V0Q6n5/zf4bDhykvoFns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874328; c=relaxed/simple;
-	bh=7XdtASUNy0X+9mhBuXcMBQWiuQRIcc0MoWkQaPynTgQ=;
+	s=arc-20240116; t=1774874329; c=relaxed/simple;
+	bh=/hseZRdmw9bY/4L7bbjVEziEl/vgaxGnCH1lCzpW+0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tXHhVljU0u19offxL+02o3i0e2AkgflsEr1KJV2kaInBPUwtQQa4S2wkraNcV32EskxVeh6fgKBMqSczKR3+FLw4bbkImjKSNOVgPFhBnmRzcHNT4mT52kdQ7MuoyEiUtR4LMtItJOhNyhsrVFcLghYoArGD5WvtM9eg9JkAuTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FuLGgCIX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O9B/qJxWjoIPwrbnTk+JuOafVVVwvkOV59bOmw0Hn5zAHAIAInANarHLsZKDba6oicXsstlRmQGUSL0GGjdkdd7RHOKiTh5Etrmm5lljxeoHZ3TazUWZ1BecTt4J933YzjTBzyXbfW0SrM8yjQEgwH41uWlYRbkuAyor9Xpcrho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ok9OZ7iV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FuLGgCIX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F47C2BCB3;
-	Mon, 30 Mar 2026 12:38:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ok9OZ7iV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E78BC4AF09;
+	Mon, 30 Mar 2026 12:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874327;
-	bh=7XdtASUNy0X+9mhBuXcMBQWiuQRIcc0MoWkQaPynTgQ=;
+	s=k20201202; t=1774874329;
+	bh=/hseZRdmw9bY/4L7bbjVEziEl/vgaxGnCH1lCzpW+0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FuLGgCIXZlWpgIfUj3gERd9K8KatAyzEXJOJ6H7B7uwpCg9phF64XRl9jo11ebgWg
-	 SRt62iALu7cLvGzGUoZUW83VNISElIT5k97742VaN8BUvFBGs2o9ip/qMftR+JbBVk
-	 pEpFjDVayRMiZ49aU4SBihBqqUauJa2oztrzQOdgoNmQPisYRI4K8GbEGoZgvs26bZ
-	 zjuFaHo1TEoxeivzzX3diEGWpTK8uHQ3FfmhvDqh1WNEkFd9shr0hBKVhY/mRXpoZq
-	 uPAlZwhhQnOxkm5DrwLTMp2d1FX6u0gQEIqVEDlEJyddkBmg8mckrcmtDJw6Nu639r
-	 bMCdDa4eXayUQ==
+	b=Ok9OZ7iVBqRPZ+4W5T3z/TuVEve6jiyFf7mMRTmqNmMq71Hw3c8ddyEKeonIrVa6M
+	 X4vbKZMaH50FvWjlMBsE6q8zXHBHiSCL8H9wwDYTa6kI3gAOWK236c5p9aSpPmr1M4
+	 WOfaGIIp+u2/XmijvT9dDTQoYI82uRRHyfoxbFu/rKP51y4kWxTHuyJ+HW0VIgbpph
+	 ewFzIyfIDYdH/fJRKRArTQHEtjCTxEeI/5Lehqm8zEUsOLKNklsFysEFZnMzzUd/vy
+	 cjyvbcOjVl5j1cxZuLoD1AEPuo0vL//LM/r/+CT4X48o8Tnxm0pGaAY5Ea6xTwMHTG
+	 LTFg2Atw4CRWA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Goldwyn Rodrigues <rgoldwyn@suse.de>,
-	Boris Burkov <boris@bur.io>,
-	Goldwyn Rodrigues <rgoldwyn@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	rostedt@goodmis.org,
-	mhiramat@kernel.org,
-	linux-btrfs@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] btrfs: tracepoints: get correct superblock from dentry in event btrfs_sync_file()
-Date: Mon, 30 Mar 2026 08:38:16 -0400
-Message-ID: <20260330123842.756154-3-sashal@kernel.org>
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] Bluetooth: hci_sync: annotate data-races around hdev->req_status
+Date: Mon, 30 Mar 2026 08:38:17 -0400
+Message-ID: <20260330123842.756154-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -58,421 +54,431 @@ X-stable-base: Linux 6.19.10
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Goldwyn Rodrigues <rgoldwyn@suse.de>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit a85b46db143fda5869e7d8df8f258ccef5fa1719 ]
+[ Upstream commit b6807cfc195ef99e1ac37b2e1e60df40295daa8c ]
 
-If overlay is used on top of btrfs, dentry->d_sb translates to overlay's
-super block and fsid assignment will lead to a crash.
+__hci_cmd_sync_sk() sets hdev->req_status under hdev->req_lock:
 
-Use file_inode(file)->i_sb to always get btrfs_sb.
+    hdev->req_status = HCI_REQ_PEND;
 
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+However, several other functions read or write hdev->req_status without
+holding any lock:
+
+  - hci_send_cmd_sync() reads req_status in hci_cmd_work (workqueue)
+  - hci_cmd_sync_complete() reads/writes from HCI event completion
+  - hci_cmd_sync_cancel() / hci_cmd_sync_cancel_sync() read/write
+  - hci_abort_conn() reads in connection abort path
+
+Since __hci_cmd_sync_sk() runs on hdev->req_workqueue while
+hci_send_cmd_sync() runs on hdev->workqueue, these are different
+workqueues that can execute concurrently on different CPUs. The plain
+C accesses constitute a data race.
+
+Add READ_ONCE()/WRITE_ONCE() annotations on all concurrent accesses
+to hdev->req_status to prevent potential compiler optimizations that
+could affect correctness (e.g., load fusing in the wait_event
+condition or store reordering).
+
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the evidence. Here is the complete analysis.
+Now I have enough information for a comprehensive analysis. Let me
+compile the full assessment.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-Record: [btrfs: tracepoints] [get correct / fix] [Fix incorrect
-superblock derivation in the `btrfs_sync_file` trace event when
-overlayfs is stacked on btrfs]
+**Step 1.1:** Record: [Bluetooth: hci_sync] [annotate] Add
+READ_ONCE/WRITE_ONCE annotations to all concurrent accesses to
+`hdev->req_status`.
 
-**Step 1.2: Tags**
-- Reviewed-by: Boris Burkov <boris@bur.io> (btrfs developer/reviewer)
-- Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com> (author, active
-  btrfs contributor)
-- Signed-off-by: David Sterba <dsterba@suse.com> (btrfs co-maintainer,
-  committer)
-- No Fixes: tag (expected for commits under manual review)
-- No Reported-by:, Tested-by:, Link:, or Cc: stable tags
+**Step 1.2:** Record: Tags: `Signed-off-by: Cen Zhang
+<zzzccc427@gmail.com>` (author), `Signed-off-by: Luiz Augusto von Dentz
+<luiz.von.dentz@intel.com>` (Bluetooth subsystem maintainer). No Fixes:,
+Reported-by:, Tested-by:, Reviewed-by:, Link:, or Cc: stable tags
+present.
 
-Record: Reviewed by btrfs developer, committed by btrfs maintainer. No
-Fixes: or Cc: stable (expected for manually reviewed candidates).
+**Step 1.3:** Record: The commit explains that `__hci_cmd_sync_sk()`
+sets `hdev->req_status = HCI_REQ_PEND` under `hdev->req_lock`, but other
+functions read/write `req_status` without any lock. The separate
+workqueues (`hdev->req_workqueue` vs `hdev->workqueue`) execute
+concurrently on different CPUs. Failure mode: compiler may fuse loads in
+the `wait_event` condition or reorder stores.
 
-**Step 1.3: Commit Body**
-Record: Bug: when overlayfs is used on top of btrfs, `dentry->d_sb` in
-the tracepoint resolves to the overlay superblock, not btrfs'. The
-`btrfs_sb()` inline function then treats the overlay's `s_fs_info` as
-`struct btrfs_fs_info *`, and `TP_fast_assign_fsid` dereferences
-`fs_info->fs_devices->fsid`—accessing completely invalid memory.
-Symptom: kernel crash. Fix: use `file_inode(file)->i_sb` to always get
-the btrfs superblock.
-
-**Step 1.4: Hidden Bug Fix**
-Record: Not hidden—this is an explicit crash fix. The commit message
-directly states "will lead to a crash."
-
----
+**Step 1.4:** Record: This IS a real concurrency fix, not merely
+cosmetic. The "annotate" framing understates the correctness
+implication: under the Linux kernel memory model, concurrent
+unsynchronized plain accesses constitute a data race (undefined
+behavior).
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-Record: 1 file changed: `include/trace/events/btrfs.h`. Approximately 6
-lines added, 4 removed within the `TP_fast_assign` block of
-`TRACE_EVENT(btrfs_sync_file)`. Single-file, surgical fix.
+**Step 2.1:** Record: Files: `net/bluetooth/hci_conn.c` (1 read),
+`net/bluetooth/hci_core.c` (1 read), `net/bluetooth/hci_sync.c` (6 reads
++ 4 writes). Total: ~12 line replacements, zero logic changes. Functions
+modified: `hci_abort_conn()`, `hci_send_cmd_sync()`,
+`hci_cmd_sync_complete()`, `__hci_cmd_sync_sk()`,
+`hci_cmd_sync_cancel()`, `hci_cmd_sync_cancel_sync()`. Scope: small,
+surgical, single-variable annotation across 3 files.
 
-**Step 2.2: Code Flow Change**
+**Step 2.2:** Record: Every hunk replaces a plain `hdev->req_status`
+read with `READ_ONCE(hdev->req_status)` or a plain write with
+`WRITE_ONCE(hdev->req_status, value)`. No control flow, logic, or API
+changes whatsoever.
 
-Before:
-```c
-const struct dentry *dentry = file->f_path.dentry;
-const struct inode *inode = d_inode(dentry);
-TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb));
-__entry->parent = btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
-```
+**Step 2.3:** Record: Category: data race / synchronization fix.
+Mechanism: `hdev->req_status` is shared between:
+- The sync command waiter (on `req_workqueue` via `__hci_cmd_sync_sk`)
+- The command transmitter (on `workqueue` via
+  `hci_send_cmd_sync`/`hci_cmd_work`)
+- HCI event completion (`hci_cmd_sync_complete`)
+- Cancel paths (`hci_cmd_sync_cancel`, `hci_cmd_sync_cancel_sync`)
+- Connection abort (`hci_abort_conn`)
 
-After:
-```c
-struct dentry *dentry = file_dentry(file);
-struct inode *inode = file_inode(file);
-struct dentry *parent = dget_parent(dentry);
-struct inode *parent_inode = d_inode(parent);
-dput(parent);
-TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
-__entry->parent = btrfs_ino(BTRFS_I(parent_inode));
-```
+The most critical concern: in `hci_cmd_sync_cancel()` and
+`hci_cmd_sync_cancel_sync()`, without WRITE_ONCE, the store to
+`req_status = HCI_REQ_CANCELED` could be reordered by the compiler with
+the store to `req_result`, leading to the waiter in `__hci_cmd_sync_sk`
+seeing `HCI_REQ_CANCELED` but reading a stale `req_result`.
 
-Three independent improvements:
-1. **Critical crash fix**: `file->f_path.dentry->d_sb` → `inode->i_sb`
-   for the fsid assignment
-2. **Correctness**: `file->f_path.dentry` → `file_dentry(file)` and
-   `d_inode(dentry)` → `file_inode(file)` (overlay-safe helpers)
-3. **Safety**: parent dentry now accessed via `dget_parent()`/`dput()`
-   (proper reference counting)
-
-Record: Single hunk, tracepoint-only path, three small correctness
-improvements.
-
-**Step 2.3: Bug Mechanism**
-Verified:
-- `btrfs_sb(sb)` returns `sb->s_fs_info` (`fs/btrfs/super.h` line 21–24)
-- `TP_fast_assign_fsid(fs_info)` does `memcpy(__entry->fsid,
-  fs_info->fs_devices->fsid, BTRFS_FSID_SIZE)` (line 163–170)
-- Overlayfs stores `struct ovl_fs *` in `sb->s_fs_info`
-  (`fs/overlayfs/ovl_entry.h` line 115–121)
-- When overlay sb is passed to `btrfs_sb()`, the returned pointer is not
-  a `btrfs_fs_info`; dereferencing `->fs_devices->fsid` accesses invalid
-  memory → crash
-
-Record: [Type confusion via wrong superblock] [overlay's `s_fs_info`
-interpreted as `btrfs_fs_info *`, then invalid dereference of
-`fs_devices->fsid`]
-
-**Step 2.4: Fix Quality**
-Record: Obviously correct—this is the only btrfs tracepoint using
-`file->f_path.dentry->d_sb`; all others already use `inode->i_sb`. Fix
-aligns this tracepoint with the established pattern. Very low regression
-risk: changes only tracepoint data assignment code.
-
----
+**Step 2.4:** Record: Fix is obviously correct — mechanical replacement
+with standard kernel annotations. Zero regression risk. No behavior
+change intended.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-Verified via `git blame -L 771,779`:
-- The buggy fsid line
-  (`TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb))`)
-  introduced in commit `bc074524e123de` (Jeff Mahoney, 2016-06-09,
-  "btrfs: prefix fsid to all trace events")
-- `git describe --contains bc074524e123de` → `v4.8-rc1~38^2~1^2~12`
-- Bug has been present since **v4.8-rc1** — all currently active stable
-  trees are affected
+**Step 3.1:** Record: `git blame` shows:
+- Core `req_status` in `hci_sync.c` introduced by `6a98e3836fa207`
+  (Marcel Holtmann, 2021-10-27) — "Bluetooth: Add helper for serialized
+  HCI command execution"
+- `hci_abort_conn()` `req_status` read introduced by `a13f316e90fdb1`
+  (Luiz von Dentz, 2023-06-26)
+- `hci_send_cmd_sync()` direct `req_status` read from `8bedf130c26538`
+  (Luiz von Dentz, 2024-07-01)
 
-Record: [Bug introduced in bc074524e123de, first in v4.8-rc1, present
-since 2016 in all active stable trees]
+**Step 3.2:** Record: No Fixes: tag.
 
-**Step 3.2: Fixes Tag**
-Record: No Fixes: tag present. The implicit target is bc074524e123de.
+**Step 3.3:** Record: Related: `09b0cd1297b4d` ("Bluetooth: hci_sync:
+fix race in hci_cmd_sync_dequeue_once") by same author — a real UAF race
+fix in the same subsystem. This patch is standalone.
 
-**Step 3.3: File History**
-Verified via `git log --oneline -20 -- include/trace/events/btrfs.h`:
-- Related prior fix: `f157dd661339f` ("btrfs: fix NULL dereference on
-  root when tracing inode eviction") — a different tracepoint crash fix
-  in the same file
-- Historical related fix: `de17e793b104d` ("btrfs: fix crash/invalid
-  memory access on fsync when using overlayfs") — this fixed the **core
-  `btrfs_sync_file()` function** for the same overlayfs class of bug,
-  but did NOT fix the tracepoint. The current commit completes that
-  work.
-- The historical commit includes a full oops trace showing the exact
-  crash scenario
+**Step 3.4:** Record: Cen Zhang has one other Bluetooth commit in this
+tree (the race fix above). Luiz Augusto von Dentz is the Bluetooth
+subsystem maintainer. Maintainer sign-off provides trust.
 
-Record: [Standalone fix. Historical `de17e793b104d` fixed the fsync
-function itself but left the tracepoint buggy. This commit completes
-that fix.]
+**Step 3.5:** Record: No dependencies. The change is self-contained
+mechanical annotation. However, backport to older trees needs adaptation
+(see Phase 6).
 
-**Step 3.4: Author**
-Verified: Goldwyn Rodrigues has 10+ btrfs commits including folio
-conversions and core btrfs work. David Sterba is a listed btrfs
-maintainer.
-Record: [Author is established btrfs contributor from SUSE; committed by
-btrfs maintainer]
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 3.5: Dependencies**
-Verified: `file_dentry()`, `file_inode()`, `dget_parent()`, `dput()` all
-exist in v5.15, v6.1, v6.6 stable trees.
-Record: [No dependencies. All required helper APIs confirmed present in
-stable trees.]
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: Lore Search**
-Record: lore.kernel.org returned Anubis anti-bot challenge — exact patch
-thread not verified.
-
-**Step 4.2: Bug Report**
-Verified: The historical commit `de17e793b104d` includes a full kernel
-oops trace from `btrfs_sync_file` when using overlayfs. This establishes
-that overlayfs+btrfs fsync crashes are a known, real-world class of bug.
-The current tracepoint fix addresses the remaining instance of the same
-pattern.
-Record: [Real-world crash reports documented in historical commit
-de17e793b104d with full stack trace]
-
-**Step 4.3–4.4: Related Patches / Stable History**
-Record: Could not verify lore threads. No evidence of prior stable
-selection for this specific tracepoint fix.
-
----
+Record: Lore.kernel.org was inaccessible (Anubis PoW challenge). Could
+not verify patch discussion, reviewer feedback, or stable nominations.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Functions Modified**
-Record: `TRACE_EVENT(btrfs_sync_file)` — specifically its
-`TP_fast_assign` block
+**Step 5.1:** Functions: `hci_abort_conn()`, `hci_send_cmd_sync()`,
+`hci_cmd_sync_complete()`, `__hci_cmd_sync_sk()`,
+`hci_cmd_sync_cancel()`, `hci_cmd_sync_cancel_sync()`.
 
-**Step 5.2: Callers**
-Verified: `trace_btrfs_sync_file(file, datasync)` called from exactly
-one place: `fs/btrfs/file.c:1578` inside `btrfs_sync_file()`.
+**Step 5.2:** Verified callers:
+- `hci_send_cmd_sync()` ← `hci_cmd_work()` on `hdev->workqueue`
+- `hci_cmd_sync_complete()` ← installed as `req_complete_skb` callback,
+  reached from HCI event processing
+- `hci_abort_conn()` ← connection timeout, management disconnect/unpair
+  commands
+- `__hci_cmd_sync_sk()` ← core HCI sync command infrastructure (many
+  callers)
+- Cancel functions ← timeout, send error, power-off, mgmt paths
 
-**Step 5.3–5.4: Call Chain / Reachability**
-Verified complete path:
-- `fsync(2)` / `fdatasync(2)` → `do_fsync()` → `vfs_fsync()` →
-  `vfs_fsync_range()` → `btrfs_sync_file()` → `trace_btrfs_sync_file()`
-- Overlayfs path: `ovl_fsync()` (line 441 of `fs/overlayfs/file.c`) →
-  `vfs_fsync_range(upperfile, ...)` → `btrfs_sync_file()` →
-  `trace_btrfs_sync_file()`
-- The tracepoint body executes only when the `btrfs_sync_file`
-  tracepoint is enabled (static key gated)
+**Step 5.3-5.4:** Record: All paths reachable during normal Bluetooth
+operations (device init, connection setup/teardown, suspend/resume). The
+separate workqueue allocation confirmed at `hci_core.c:2604` and
+`hci_core.c:2610` — two distinct `alloc_ordered_workqueue()` calls.
 
-Record: [Directly reachable from userspace fsync() syscall. Overlayfs
-path confirmed via ovl_fsync(). Tracepoint gated by static key.]
-
-**Step 5.5: Similar Patterns**
-Verified: `TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb))`
-appears only once in the entire file — this tracepoint. All other btrfs
-tracepoints use `inode->i_sb` or receive `fs_info` directly. This is the
-sole inconsistent instance.
-Record: [Only tracepoint with this bug pattern; all others already
-correct]
-
----
+**Step 5.5:** Record: The `hci_req_sync_lock` macro exists and IS used
+extensively (verified via grep), expanding to
+`mutex_lock(&hdev->req_lock)`. It protects the caller-side serialization
+of `__hci_cmd_sync_sk`. However, the readers in event/cancel/abort paths
+do NOT hold this lock — confirming the race window.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Presence in Stable Trees**
-Verified via `git cat-file -p`:
-- v5.15: buggy line at line 701 ✓
-- v6.1: buggy line at line 766 ✓
-- v6.6: buggy line at line 795 ✓
+**Step 6.1:** Verified:
+- `6a98e3836fa207` is ancestor of v6.1 ✓ and v6.6 ✓ — `hci_sync.c` with
+  plain `req_status` accesses exists in both
+- `a13f316e90fdb1` is ancestor of v6.6 ✓ — `hci_abort_conn()`
+  `req_status` check exists in v6.6
+- `8bedf130c26538` is NOT ancestor of v6.6 — v6.6 uses
+  `hci_req_status_pend(hdev)` wrapper in `hci_core.c`
+- `hci_sync.c` does NOT exist in v5.15 (verified: `git show
+  v5.15:net/bluetooth/hci_sync.c` failed)
+- v6.6 and v6.1 `hci_sync.c` both have the same plain `req_status`
+  pattern (10 occurrences each, verified)
 
-Record: [All active stable trees (v5.15, v6.1, v6.6) contain the exact
-buggy line]
+**Step 6.2:** Record: Minor backport adjustment needed for `hci_core.c`
+on v6.6/v6.1 (uses `hci_req_status_pend()` wrapper instead of direct
+access). `hci_sync.c` changes should apply with minor context
+adjustments.
 
-**Step 6.2: Backport Complications**
-Record: Clean apply expected for recent stable trees — same code
-structure, same APIs available. Minor line number offsets only.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 6.3: Duplicate Fixes**
-Record: No alternative fix for this tracepoint found in any stable tree.
-The historical `de17e793b104d` fixed only the function, not the
-tracepoint.
+**Step 7.1:** Record: `net/bluetooth/` — IMPORTANT subsystem. Used by
+laptops, phones, IoT, embedded systems. Not core kernel (mm/vfs/net-core
+level), but widely used.
 
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: Subsystem**
-Record: btrfs filesystem tracepoints — IMPORTANT subsystem. btrfs is
-widely used, especially with overlayfs in container environments
-(Docker, Podman).
-
-**Step 7.2: Activity**
-Record: Active — `include/trace/events/btrfs.h` has seen 20+ recent
-commits including other tracepoint crash fixes.
-
----
+**Step 7.2:** Record: Very active subsystem — 20 recent commits in the
+touched files.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected Users**
-Record: Users running overlayfs on top of btrfs with btrfs tracepoints
-enabled. This includes container workloads and debugging/tracing
-scenarios on production systems.
+**Step 8.1:** Record: All Bluetooth users with `CONFIG_BT`. The affected
+functions are on the core HCI command synchronization path.
 
-**Step 8.2: Trigger Conditions**
-Record: Enable `btrfs_sync_file` tracepoint (or all btrfs events) + use
-overlayfs on btrfs + any `fsync()`/`fdatasync()` call. Deterministic
-when conditions met — not a race.
+**Step 8.2:** Record: The race requires concurrent access from separate
+workqueues or event completion while a sync command is pending. This is
+a realistic scenario during normal Bluetooth operation (connection
+attempts, command timeouts, connection aborts).
 
-**Step 8.3: Failure Mode**
-Record: Kernel crash / oops from invalid memory access in tracepoint
-assignment. Severity: **CRITICAL** when triggered (system crash,
-potential data loss from incomplete fsync).
+**Critical nuance on the `wait_event` concern:** I verified the
+`___wait_event` macro expands to a `for(;;)` loop that calls
+`prepare_to_wait_event()` (an out-of-line function with
+`spin_lock`/`spin_unlock`) each iteration. This acts as an implicit
+compiler barrier, meaning the compiler cannot cache `req_status` across
+iterations. The load fusing risk within `wait_event` is therefore
+mitigated in practice by the function-call barrier.
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: HIGH — prevents a deterministic kernel crash in a real,
-  userspace-triggerable path
-- RISK: VERY LOW — ~10 lines changed in a single tracepoint, using
-  established VFS helpers consistent with all other btrfs tracepoints
-Record: [Benefit: HIGH, Risk: VERY LOW, Ratio: Excellent for
-backporting]
+However, the **store reordering concern in cancel paths** is more
+legitimate: without WRITE_ONCE, the compiler could reorder
+`hdev->req_result = err` and `hdev->req_status = HCI_REQ_CANCELED` in
+`hci_cmd_sync_cancel()`, causing the waiter to observe `CANCELED` status
+but read a stale `req_result`. The reads in `hci_abort_conn()` and
+`hci_send_cmd_sync()` also lack annotation.
 
----
+**Step 8.3:** Record: Failure mode: Incorrect error propagation via
+stale `req_result` reads, potential KCSAN reports. Severity: MEDIUM —
+not a guaranteed crash but a real correctness issue that could cause
+wrong error codes or unexpected command behavior.
+
+**Step 8.4:** Record: Benefit: LOW-MEDIUM (fixes real LKMM violation,
+prevents potential incorrect behavior). Risk: VERY LOW (purely
+mechanical annotation). Ratio: favorable.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Compilation**
+**Step 9.1: Evidence**
 
 FOR backporting:
-- Fixes a real kernel crash (type confusion → invalid memory access →
-  oops)
-- Small, surgical fix: ~10 lines in 1 file, 1 tracepoint
-- Obviously correct: aligns with how all other btrfs tracepoints handle
-  the superblock
-- Bug class verified real via historical commit `de17e793b104d` with
-  full crash stack trace
-- Reviewed by btrfs developer, committed by btrfs maintainer
-- Bug present in ALL active stable trees (v5.15, v6.1, v6.6) — confirmed
-- All required helper APIs exist in stable trees — confirmed
-- No dependencies on other commits
-- Overlayfs call path verified to reach the buggy code
+- Real data race verified across separate workqueues (`hdev->workqueue`
+  vs `hdev->req_workqueue`)
+- Readers in event/cancel/abort paths confirmed to NOT hold `req_lock`
+- Fix is surgical, mechanical, and zero-risk (READ_ONCE/WRITE_ONCE only)
+- Core Bluetooth infrastructure — wide user base
+- Maintainer signed off
+- Author has established credibility (prior UAF race fix in same
+  subsystem)
+- Buggy code exists in v6.1 and v6.6 stable trees (verified)
+- Store reordering in cancel paths is a legitimate correctness concern
+- Under LKMM, these are definitionally data races (bugs)
 
 AGAINST backporting:
-- Tracepoint must be enabled to trigger (narrower population than core
-  path bugs)
-- No Tested-by: tag
-
-UNRESOLVED:
-- Exact lore.kernel.org patch discussion thread (blocked by Anubis)
-- Whether unprivileged users can enable this tracepoint
-- `git apply --check` not run against stable branches (but same code
-  confirmed present)
+- No crash/hang/syzbot/KCSAN report cited
+- No Fixes: tag, no Reported-by:
+- Commit message frames this as "annotation" not "fix"
+- The `wait_event` load fusing risk is partially mitigated by implicit
+  compiler barriers from `prepare_to_wait_event()`
+- Needs minor adaptation for v6.6/v6.1 (`hci_req_status_pend()` wrapper)
+- Practical user-visible impact is unverified
 
 **Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** — consistent with all other
-   btrfs tracepoints; maintainer-reviewed
-2. Fixes a real bug? **YES** — kernel crash with overlayfs+btrfs+tracing
-3. Important issue? **YES** — kernel oops (CRITICAL)
-4. Small and contained? **YES** — ~10 lines, single tracepoint
-5. No new features/APIs? **YES** — pure bug fix
-6. Applies to stable? **YES** — buggy code and required APIs confirmed
-   in v5.15/v6.1/v6.6
+1. Obviously correct and tested? **YES** — mechanical, maintainer-
+   committed
+2. Fixes a real bug? **YES** — LKMM data race, store reordering concern
+   in cancel paths
+3. Important issue? **BORDERLINE** — correctness issue but no
+   demonstrated crash
+4. Small and contained? **YES** — 12 line replacements, 3 files
+5. No new features or APIs? **YES**
+6. Applies to stable? **YES with minor adjustment** for `hci_core.c`
 
-**Step 9.3: Exception Categories**
-Record: Not applicable. This is a standard bug fix, not a device
-ID/quirk/DT exception.
+**Step 9.3:** No exception category applies.
 
 **Step 9.4: Decision**
-The fix addresses a real, deterministic kernel crash caused by type
-confusion when overlayfs is stacked on btrfs. The crash mechanism is
-fully verified: `btrfs_sb()` interprets overlay's `s_fs_info` (an
-`ovl_fs *`) as `btrfs_fs_info *`, then `TP_fast_assign_fsid`
-dereferences `fs_info->fs_devices->fsid` — accessing garbage memory. The
-fix is small, obviously correct, consistent with all other btrfs
-tracepoints, and has no dependencies. The bug exists in all active
-stable trees. The only limiting factor is that tracepoints must be
-enabled, but stable kernels are regularly used with tracing enabled for
-support and debugging, and a crash in that scenario is unacceptable.
 
----
+This is a borderline case. The data race is real per the Linux kernel
+memory model, and the fix carries effectively zero regression risk. The
+store reordering concern in the cancel paths
+(`hci_cmd_sync_cancel`/`hci_cmd_sync_cancel_sync`) is a legitimate
+correctness issue — the compiler could reorder the `req_result` and
+`req_status` stores, causing the waiter to observe inconsistent state.
+However, the most dramatic failure scenario (load fusing in
+`wait_event`) is largely mitigated in practice by implicit compiler
+barriers.
+
+The fix is small, surgical, and obviously correct. The risk/benefit
+ratio strongly favors inclusion. The kernel community's position under
+LKMM is that data races are bugs, and this fix addresses real concurrent
+accesses on core Bluetooth infrastructure. While no crash report exists,
+the potential for incorrect error propagation during command
+cancellation is a real functional concern for Bluetooth users.
 
 ## Verification
 
-- [Phase 1] Parsed tags from commit message: Reviewed-by Boris Burkov,
-  SOB from David Sterba (btrfs maintainer), SOB from Goldwyn Rodrigues
-  (author). No Fixes:, Reported-by:, Link:, Cc: stable.
-- [Phase 2] Read `include/trace/events/btrfs.h` lines 163–170: confirmed
-  `TP_fast_assign_fsid` does `memcpy(__entry->fsid,
-  fs_info->fs_devices->fsid, BTRFS_FSID_SIZE)`
-- [Phase 2] Read `include/trace/events/btrfs.h` lines 771–779: confirmed
-  pre-fix code uses `file->f_path.dentry->d_sb`
-- [Phase 2] Grep confirmed `btrfs_sb()` returns `sb->s_fs_info` in
-  `fs/btrfs/super.h` lines 21–24
-- [Phase 2] Read `fs/overlayfs/ovl_entry.h` lines 115–121: confirmed
-  `OVL_FS(sb)` casts `sb->s_fs_info` to `struct ovl_fs *` — type
-  confusion verified
-- [Phase 2] Grep confirmed the buggy
-  `TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb))` is the ONLY
-  such pattern in btrfs.h
-- [Phase 3] `git blame -L 771,779`: buggy fsid line from
-  `bc074524e123de` (Jeff Mahoney, 2016)
-- [Phase 3] `git describe --contains bc074524e123de`:
-  `v4.8-rc1~38^2~1^2~12` — bug present since v4.8
-- [Phase 3] `git show de17e793b104d`: confirmed historical
-  overlayfs+btrfs fsync crash with full kernel oops trace; that fix
-  addressed only `btrfs_sync_file()`, NOT the tracepoint
-- [Phase 3] `git log --oneline --author="Goldwyn Rodrigues" -10 --
-  fs/btrfs`: confirmed active btrfs contributor
-- [Phase 4] lore.kernel.org: blocked by Anubis — patch thread UNVERIFIED
-- [Phase 5] Grep: `trace_btrfs_sync_file` called from exactly
-  `fs/btrfs/file.c:1578`
-- [Phase 5] Read `fs/overlayfs/file.c` lines 441–464: confirmed
-  `ovl_fsync()` → `vfs_fsync_range(upperfile)` call path
-- [Phase 6] `git cat-file -p v5.15:include/trace/events/btrfs.h`: buggy
-  line at line 701 ✓
-- [Phase 6] `git cat-file -p v6.1:include/trace/events/btrfs.h`: buggy
-  line at line 766 ✓
-- [Phase 6] `git cat-file -p v6.6:include/trace/events/btrfs.h`: buggy
-  line at line 795 ✓
-- [Phase 6] Verified `file_inode`, `file_dentry`, `dget_parent` present
-  in v5.15, v6.1, v6.6 via `git cat-file` grep
-- [Phase 8] Failure mode: kernel oops from invalid memory access in
-  tracepoint assignment, severity CRITICAL
-- UNVERIFIED: Exact lore patch discussion (Anubis blocked); privilege
-  requirements for tracepoint enablement; `git apply --check` on stable
-  branches
+- [Phase 1] Parsed tags: only two Signed-off-by present; no Fixes:,
+  Reported-by:, Link:, or Cc: stable
+- [Phase 2] Diff: confirmed 12 mechanical READ_ONCE/WRITE_ONCE
+  replacements across 3 files, zero logic changes
+- [Phase 3] git blame: `6a98e3836fa207` (Marcel Holtmann, 2021-10-27)
+  introduced core `req_status` pattern in `hci_sync.c`; `a13f316e90fdb1`
+  (2023-06-26) introduced `hci_abort_conn()` access; `8bedf130c26538`
+  (2024-07-01) introduced `hci_send_cmd_sync()` direct access
+- [Phase 3] `git merge-base --is-ancestor`: confirmed `6a98e3836fa207`
+  in v6.1 and v6.6; `a13f316e90fdb1` in v6.6; `8bedf130c26538` NOT in
+  v6.6
+- [Phase 3] `git show v5.15:net/bluetooth/hci_sync.c` failed — file
+  doesn't exist in v5.15
+- [Phase 3] Author: `git log --author="Cen Zhang"` found one Bluetooth
+  commit: `09b0cd1297b4d` (UAF race fix in same area)
+- [Phase 5] Verified separate workqueue allocation at `hci_core.c:2604`
+  and `hci_core.c:2610` (two `alloc_ordered_workqueue` calls)
+- [Phase 5] Verified `hci_req_sync_lock` macro expands to
+  `mutex_lock(&hdev->req_lock)` (`include/net/bluetooth/hci_sync.h:15`);
+  it IS used extensively by callers of `__hci_cmd_sync_sk` but NOT held
+  by event/cancel/abort paths
+- [Phase 5] Verified `wait_event` macro: `___wait_event` expands to
+  `for(;;)` loop calling `prepare_to_wait_event()` (out-of-line,
+  contains spinlock) — acts as implicit compiler barrier per iteration
+- [Phase 6] v6.6 `hci_sync.c`: 10 plain `req_status` accesses confirmed;
+  v6.1: 10 plain accesses confirmed
+- [Phase 6] v6.6 `hci_core.c`: uses `hci_req_status_pend(hdev)` wrapper,
+  not direct access (needs adaptation)
+- [Phase 6] v6.6 `hci_conn.c`: plain `req_status` read at line 2934
+  confirmed
+- [Phase 8] `prepare_to_wait_event()` verified: contains
+  `spin_lock_irqsave`/`spin_unlock_irqrestore` — mitigates load fusing
+  in `wait_event` loop
+- UNVERIFIED: Lore.kernel.org discussion (blocked by Anubis)
+- UNVERIFIED: Whether KCSAN specifically reported this data race
+- UNVERIFIED: Concrete runtime failure attributable to this specific
+  race
 
 **YES**
 
- include/trace/events/btrfs.h | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_conn.c |  2 +-
+ net/bluetooth/hci_core.c |  2 +-
+ net/bluetooth/hci_sync.c | 20 ++++++++++----------
+ 3 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
-index 125bdc166bfed..0864700f76e0a 100644
---- a/include/trace/events/btrfs.h
-+++ b/include/trace/events/btrfs.h
-@@ -769,12 +769,15 @@ TRACE_EVENT(btrfs_sync_file,
- 	),
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 0f512c2c2fd3c..6335444331bd9 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2989,7 +2989,7 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ 	 * hci_connect_le serializes the connection attempts so only one
+ 	 * connection can be in BT_CONNECT at time.
+ 	 */
+-	if (conn->state == BT_CONNECT && hdev->req_status == HCI_REQ_PEND) {
++	if (conn->state == BT_CONNECT && READ_ONCE(hdev->req_status) == HCI_REQ_PEND) {
+ 		switch (hci_skb_event(hdev->sent_cmd)) {
+ 		case HCI_EV_CONN_COMPLETE:
+ 		case HCI_EV_LE_CONN_COMPLETE:
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 8ccec73dce45c..0f86b81b39730 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4125,7 +4125,7 @@ static int hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
+ 		kfree_skb(skb);
+ 	}
  
- 	TP_fast_assign(
--		const struct dentry *dentry = file->f_path.dentry;
--		const struct inode *inode = d_inode(dentry);
-+		struct dentry *dentry = file_dentry(file);
-+		struct inode *inode = file_inode(file);
-+		struct dentry *parent = dget_parent(dentry);
-+		struct inode *parent_inode = d_inode(parent);
+-	if (hdev->req_status == HCI_REQ_PEND &&
++	if (READ_ONCE(hdev->req_status) == HCI_REQ_PEND &&
+ 	    !hci_dev_test_and_set_flag(hdev, HCI_CMD_PENDING)) {
+ 		kfree_skb(hdev->req_skb);
+ 		hdev->req_skb = skb_clone(hdev->sent_cmd, GFP_KERNEL);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 43b36581e336d..bd2f5e646eecf 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -25,11 +25,11 @@ static void hci_cmd_sync_complete(struct hci_dev *hdev, u8 result, u16 opcode,
+ {
+ 	bt_dev_dbg(hdev, "result 0x%2.2x", result);
  
--		TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb));
-+		dput(parent);
-+		TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
- 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
--		__entry->parent		= btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
-+		__entry->parent		= btrfs_ino(BTRFS_I(parent_inode));
- 		__entry->datasync	= datasync;
- 		__entry->root_objectid	= btrfs_root_id(BTRFS_I(inode)->root);
- 	),
+-	if (hdev->req_status != HCI_REQ_PEND)
++	if (READ_ONCE(hdev->req_status) != HCI_REQ_PEND)
+ 		return;
+ 
+ 	hdev->req_result = result;
+-	hdev->req_status = HCI_REQ_DONE;
++	WRITE_ONCE(hdev->req_status, HCI_REQ_DONE);
+ 
+ 	/* Free the request command so it is not used as response */
+ 	kfree_skb(hdev->req_skb);
+@@ -167,20 +167,20 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 
+ 	hci_cmd_sync_add(&req, opcode, plen, param, event, sk);
+ 
+-	hdev->req_status = HCI_REQ_PEND;
++	WRITE_ONCE(hdev->req_status, HCI_REQ_PEND);
+ 
+ 	err = hci_req_sync_run(&req);
+ 	if (err < 0)
+ 		return ERR_PTR(err);
+ 
+ 	err = wait_event_interruptible_timeout(hdev->req_wait_q,
+-					       hdev->req_status != HCI_REQ_PEND,
++					       READ_ONCE(hdev->req_status) != HCI_REQ_PEND,
+ 					       timeout);
+ 
+ 	if (err == -ERESTARTSYS)
+ 		return ERR_PTR(-EINTR);
+ 
+-	switch (hdev->req_status) {
++	switch (READ_ONCE(hdev->req_status)) {
+ 	case HCI_REQ_DONE:
+ 		err = -bt_to_errno(hdev->req_result);
+ 		break;
+@@ -194,7 +194,7 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 		break;
+ 	}
+ 
+-	hdev->req_status = 0;
++	WRITE_ONCE(hdev->req_status, 0);
+ 	hdev->req_result = 0;
+ 	skb = hdev->req_rsp;
+ 	hdev->req_rsp = NULL;
+@@ -665,9 +665,9 @@ void hci_cmd_sync_cancel(struct hci_dev *hdev, int err)
+ {
+ 	bt_dev_dbg(hdev, "err 0x%2.2x", err);
+ 
+-	if (hdev->req_status == HCI_REQ_PEND) {
++	if (READ_ONCE(hdev->req_status) == HCI_REQ_PEND) {
+ 		hdev->req_result = err;
+-		hdev->req_status = HCI_REQ_CANCELED;
++		WRITE_ONCE(hdev->req_status, HCI_REQ_CANCELED);
+ 
+ 		queue_work(hdev->workqueue, &hdev->cmd_sync_cancel_work);
+ 	}
+@@ -683,12 +683,12 @@ void hci_cmd_sync_cancel_sync(struct hci_dev *hdev, int err)
+ {
+ 	bt_dev_dbg(hdev, "err 0x%2.2x", err);
+ 
+-	if (hdev->req_status == HCI_REQ_PEND) {
++	if (READ_ONCE(hdev->req_status) == HCI_REQ_PEND) {
+ 		/* req_result is __u32 so error must be positive to be properly
+ 		 * propagated.
+ 		 */
+ 		hdev->req_result = err < 0 ? -err : err;
+-		hdev->req_status = HCI_REQ_CANCELED;
++		WRITE_ONCE(hdev->req_status, HCI_REQ_CANCELED);
+ 
+ 		wake_up_interruptible(&hdev->req_wait_q);
+ 	}
 -- 
 2.53.0
 
