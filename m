@@ -1,66 +1,66 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1DA2D060D
-	for <patches@lists.linux.dev>; Mon, 30 Mar 2026 08:32:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8993AEF3B
+	for <patches@lists.linux.dev>; Mon, 30 Mar 2026 08:54:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774859547; cv=none; b=f6EHvqdbGBkJuqou7XwAVNDcSQF+/+D6MhT396pPeu9NBbDw2JNX4i4lPoltNOP/JIAK5eSG0BM96UExADD6UCWumvp6RYoL3nmDpLqVsWJT1zmjSPe7u/GFxgdkSa+aV4USaXslWPPVBqn0fIofpw4MGT7l3YjNit+x317J+mA=
+	t=1774860879; cv=none; b=hRJG0vZm8KlnxSWLQGJPvDocxugO8OrsJO76xWtZ5xkeo9r8OUwO8Hg2PXR8kuX2O7aNmj+BBtYZ3i4aETDeWdE4Jt76hAE2byvta05tbfRaeFRC8bY/HA0LXDDknBKAWonLf0bfFnRwa0w8tn7Hg6n59nQsW3KO5GOmWyV7r10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774859547; c=relaxed/simple;
-	bh=o0Dli9KWVqZ+T4nHyOqVZ5qeJndFFU0aZl2QR66aKNU=;
+	s=arc-20240116; t=1774860879; c=relaxed/simple;
+	bh=Ugxhy261d5LPgC7T7MePsjFfQZHYLP0vYZcrMZsEDbs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=De9b/HXUeGoa0d1Ana6wAMZiKfm5BRNehKIdBl3BPQqzRjXQxAyWP5/KR3fqJgst/XqGNZ0S3SNK8for/QNNumU3UzvXL6RVMynDE1CnVGFSMUWdxaHUgclkObq5Pv9AGlseJ0VOCjYeMa2qX+JUexPD5g9w11yK9AHLojIN/xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rIjEWuQs; arc=none smtp.client-ip=209.85.214.173
+	 In-Reply-To:Content-Type; b=eouhZ3qFVKVCVhz2cTBLARMa8/oHaUjaBTgalG57MQtvk5/7r/vsQ8mL1BHQKO4PAdW3NnODyQYTD5kbyRRifQSahE4zIhuoz2fml5fRGkfCPyZqblGBYqeQ31+GS5QWIO34yqsHB53B8jaThHadjPhE0T8n6OtxIhOf3RHJcJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UBc8bGg4; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rIjEWuQs"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2addb31945aso32715145ad.1
-        for <patches@lists.linux.dev>; Mon, 30 Mar 2026 01:32:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UBc8bGg4"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-35da9c0c007so586385a91.2
+        for <patches@lists.linux.dev>; Mon, 30 Mar 2026 01:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774859545; x=1775464345; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1774860878; x=1775465678; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=oJ2tUbY4pzEgUU7tzK8uvwt9Alws0pUs2dmmBbqRX00=;
-        b=rIjEWuQsIGVzRAY2BzCtRxtgJqlD0yEKdbYYHHoemEGgDTcOmIS2p9wPXFC6kwZOMs
-         X/M6XY6bM3UlUIKUacNG++sO4tkIjV6AtBEtabPY/UHy4ryMzctMnvTRNbpfuz2nKboM
-         dGhAFjJyXnpuuDnoJdEVDpdmAmUo+aFr0SVvj0CbYu58VeITUFcvjfN2v6hSJ63gpz8q
-         tXZkaUUwo2SkXOgZLtFWy9MGT1uKyXzaZtbQeR+IhLJQht6J30nq3uvSEyQNR3Kfhu6H
-         R5hDH/lW6Rsy60zrhLJ5hWypLZ7QbZVYGvq2yN4lj1zBF5uhxuiXF7EkVCJF+FuONz2r
-         4lSA==
+        bh=CmARyMKOG13A38nFYqx4oFCWcRDBB88m6E/5cb+gjjc=;
+        b=UBc8bGg4oiqQ4mxyqo/wPC2nS3m1QCVaCdc7Jm24V33+AZFBpS+NF06USHHeN/dZ3q
+         3DNzylX9pm9vE9Ki5jyAEI3stWCaZr9EH4WFPw5uxMXuXbMuAAKdQ30c4zupz5d89GO8
+         hQ9Z90NomJu683SJ65ehTr/yJ05Ern9xUs+2RDTNCCbZS+7uh2mdtzpTmp3sq4qOfUTR
+         XZDO//X3KgXGI9q2+zCBjmmDY4++yEtw0FIZS4GUHYuqbSQm+5TT0tSRMl1R8BPGF9MP
+         YTLY8Z51nKOx1VcuuPHQR6rlyFUZEMFF+hiq/Y+iDbYK0Zj/RfCzBn5ipkHno1KOgrVh
+         gmvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774859545; x=1775464345;
+        d=1e100.net; s=20251104; t=1774860878; x=1775465678;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oJ2tUbY4pzEgUU7tzK8uvwt9Alws0pUs2dmmBbqRX00=;
-        b=oz2WRr57sSCi+zWHCP+UH8xjCKWwterQ44jluQQhD0PdUsTWwbfkLCmrmZEkjf+uB8
-         w7elDiTk+C1QkO8BhBy29GS3Q2vhJnLvfzUBzmmPjXcI+4mIA11aghWd0KkNumnnHlLd
-         uL5QODY04gNJmns8IouxSdsvLm+BMeaJGdm4vPPoAY1yWDbhPLgicZ9VenVJ7Bcjwow8
-         1zrm4OTcIlUl+LTe0ZKXyYHvYYzdkKBApBi2GNe4pgwZ1zHqmpHQXcnH9NqErss3Dm83
-         64fhdNombWIUfDQk9yt3AS0htKiWWVn3weaoPzmEHFkwow83CMFdVd8neeaP24QGIfVO
-         HeYQ==
-X-Gm-Message-State: AOJu0YwdZgsZVLKz3BSC/PZ7HeT2eJZ6ByWeGUrNzTEUj1+SjhPxbl0Y
-	gSauopL6MsIVyaiufJD3Ttr4zxKeP6omOq0117cKW3uL7Fx/PQ1OFQ0D
-X-Gm-Gg: ATEYQzz/ZvPXjSJX/NK7/zOvYW6dfcRMli7Dfp2cWC32rywkGf+9AVdJNSyTgKpNxiH
-	7tnl5SK7zsi7cO02c34WRpQoqBVFp+oRsVuZqhe8t53ylXk+uxoaBBZmhSUP8z2CW/PFyidp7gg
-	S4OS4kAweH9cTIrtaijiZPfOGOE7OPBzGphvjI3ZNhl1mcmP1hXle+4+lhCFJ8OkxNA3r/h23CP
-	4+/vTxzqbqU6dYtIllEW2bzxYsESTw/aFfT570KgycOx6bRkFDgdWQqgV+ygw+nA/nEoRw1ytyQ
-	X0vVz+VSNsJs7VEpqpMTgu1U1InkCHeLNdJB5vZ7IT3ef69I4iyjYBKUoWO5bwvG4+FsYTJPIC7
-	A4P0LSkAdTzDiYaOoe6TDssQ4orErcYLyAjAgo8f2gkjFJq9lNyq6A9TPY5fTQqD/eNQa5e8CnS
-	fMgfOvgij9Q3M0m3pb4nanowNuYlk6dqmbNGMTKhcz0n13hcw2wmVobDADYpMHWAPHqJR7AXb0
-X-Received: by 2002:a17:902:da86:b0:2ae:b9cd:d2ce with SMTP id d9443c01a7336-2b0cdcaa68amr132168035ad.27.1774859545498;
-        Mon, 30 Mar 2026 01:32:25 -0700 (PDT)
+        bh=CmARyMKOG13A38nFYqx4oFCWcRDBB88m6E/5cb+gjjc=;
+        b=eVWDx2eSecyyAKfAS7uSPntOCorOBkYJfVsJOswO/mSCULnJTlYXK6rHwwZ06Loj1v
+         xNkZKcPcYnL0hHa7p3BgNkKPOMFc7Ov0EXaRHRXVwSGrN0ObaqfGLNoDPes3pAq59TTT
+         1pm4H56nJWxGn9V5J0bm3v5epqbxPa3I5BcnXRp+2rHtOVjVzMP4X47cC2sbUcuUvMKA
+         p2e9Q3tkHHBq1iXChZLkQ2fjuWZ9sCe8qy1ateIBh4k0UAMFm8BmyAbjESUi0r5CrULl
+         X7oB6+KqSgMDnloDNiEWVSed+bnIdHvUa62ePvtNAfhFGgz/Fah3QNduNbBYFpyqNBCR
+         5wIg==
+X-Gm-Message-State: AOJu0YzgnBTYpepw36IDjJ6Trk5CKirfe4Vk4vjXppokYygqgzhvn+S7
+	nfxlW4J3n2Iy94zy6vqcjl1pnDcEVoXND4Zji1aB4nWqJj5e4LoX16yi
+X-Gm-Gg: ATEYQzxV4jZKSz0W6wTLx5O9jU9Klg6IW45xx0hlN0tWRIYRI0GMXeWPbsOidKeGWKg
+	g0pc4rGz7FRSUmyaSHsLn7yafyOm7y2PGTrhJ2/OeI5cFyr6B315xKl0Gpug686xa0wGoRkFsaL
+	7shYxSa5KH7xbPvegVnyveKnMV0rKsU+j4w1j9rlBXOTCf8tQ9sbp6RfyccM0z5Bx7DyUjnhbIt
+	uTDYuzsV4IykE5bTbnCLSdRvvEigfBfSDtHaJ5PHVw8rsqsmgo7TB5WMeH4c9gmW2PjYxKzLEFg
+	CVUfXV9wWDolJk8PnOzBH7DKzE6bfbULqPifrECgOFba0aVblGXr97ckaxEIJPGi2LTEj8QBhIF
+	w6pVMannrMqtzAIGVSfg3S90br0AWh0rL4a/rsatD5ZybA5UnCEp4ZyxNuw0Z8GfOMxvbqQRVWj
+	CWHCcMn5+QJEhD/l38uJbe2q9W77i18aleJCf9p3jGHxDRwDde/GaDaX1foL95O4g97y2GzL+c
+X-Received: by 2002:a17:902:cf0b:b0:2b0:708f:4dd7 with SMTP id d9443c01a7336-2b0cdcdd018mr118209755ad.38.1774860877949;
+        Mon, 30 Mar 2026 01:54:37 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b242677d3dsm79102305ad.29.2026.03.30.01.32.23
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b242766396sm71853505ad.45.2026.03.30.01.54.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Mar 2026 01:32:24 -0700 (PDT)
+        Mon, 30 Mar 2026 01:54:37 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <5f4b8e66-db6c-4477-9569-8bb097b1cf83@roeck-us.net>
-Date: Mon, 30 Mar 2026 01:32:23 -0700
+Message-ID: <a2d19941-48cd-4993-ab17-7b578d7c99d5@roeck-us.net>
+Date: Mon, 30 Mar 2026 01:54:35 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,7 +68,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/481] 6.1.167-rc1 review
+Subject: Re: [PATCH 6.18 000/212] 6.18.20-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
@@ -76,7 +76,7 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
  rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, sr@sladewatkins.com
-References: <20260323134525.256603107@linuxfoundation.org>
+References: <20260323134503.770111826@linuxfoundation.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -122,26 +122,58 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
  FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
  np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
+In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi,
 
-On 3/23/26 06:39, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.167 release.
-> There are 481 patches in this series, all will be posted as a response
+On 3/23/26 06:43, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.20 release.
+> There are 212 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
 > Responses should be made by Wed, 25 Mar 2026 13:44:33 +0000.
 > Anything received after that time might be too late.
 > 
-loongarch images have failed to build in 6.1.y since v6.1.163 or mid February.
 
-Is it correct to assume that there is no interest in supporting this
-architecture in 6.1.y ?
+um:defconfig has failed to build since v6.18.17.
+
+Is there any interest in supporting it in this branch ? If so,
+upstream commit aa7387e79a5c ("unwind_user/x86: Fix arch=um build")
+might help, but I did not test it.
 
 Thanks,
 Guenter
 
+---
+Build reference: v6.18.20
+Compiler version: x86_64-linux-gcc (GCC) 14.3.0
+Assembler version: GNU assembler (GNU Binutils) 2.44
+
+Building um:defconfig ... failed
+--------------
+Error log:
+In file included from include/linux/unwind_user.h:6,
+                  from include/linux/unwind_deferred.h:6,
+                  from kernel/fork.c:108:
+arch/x86/include/asm/unwind_user.h: In function 'unwind_user_word_size':
+arch/x86/include/asm/unwind_user.h:23:17: error: 'struct pt_regs' has no member named 'flags'
+    23 |         if (regs->flags & X86_VM_MASK)
+       |                 ^~
+arch/x86/include/asm/unwind_user.h:23:27: error: 'X86_VM_MASK' undeclared (first use in this function)
+    23 |         if (regs->flags & X86_VM_MASK)
+       |                           ^~~~~~~~~~~
+arch/x86/include/asm/unwind_user.h:23:27: note: each undeclared identifier is reported only once for each function it appears in
+arch/x86/include/asm/unwind_user.h:26:14: error: implicit declaration of function 'user_64bit_mode' [-Wimplicit-function-declaration]
+    26 |         if (!user_64bit_mode(regs))
+       |              ^~~~~~~~~~~~~~~
+make[4]: *** [scripts/Makefile.build:287: kernel/fork.o] Error 1
+make[4]: *** Waiting for unfinished jobs....
+make[3]: *** [scripts/Makefile.build:544: kernel] Error 2
+make[3]: *** Waiting for unfinished jobs....
+make[2]: *** [Makefile:2021: .] Error 2
+make[1]: *** [Makefile:248: __sub-make] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+--------------
