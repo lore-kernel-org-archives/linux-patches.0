@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0A83D16F7;
-	Mon, 30 Mar 2026 12:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0023D0916;
+	Mon, 30 Mar 2026 12:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874331; cv=none; b=J6ZATg27b1V3Wt0n4KGgAeKzP14Q8skPKApWDZZgDWJ9O2gEEOeGFZ01qg+jR4o3wE6/NLqzohQR5APEX5YwrM4Zn06i1nFlgmEbaXVXi9C4THvEyrbxaFV35MGjK6sBbTzYXpALtb8zSRo96CEbLTW17Lrbd4uD0Q07taIzHR0=
+	t=1774874334; cv=none; b=L9P4gsefnRMVSWkQUEdGgsFgES09C8ceRSLyMcDlO3YUNruFc5lR4mgUwFotyCKEW5vFvrzkeYnoOJtCRcgPxxkqWMUJcci93VkhBHRMxUITikHRXsbjoUd/GMP+xz/25ER21zSSkHiIWd2HcocV9/YVFtw5vWrH1srmuPg6UXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874331; c=relaxed/simple;
-	bh=uujdV5K8kf267EBdHO8hDWeHkE+dhVf5akE4yMxwd0A=;
+	s=arc-20240116; t=1774874334; c=relaxed/simple;
+	bh=nmLuCXKilewrWUUcq5NfX5N6ZNgzQC+XTkSE2IeJSuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C9mqV46pGWSCkVuMj91V2UYJZ6Km8uPQLGIG1X4wDj0rBf55jIX7Q4kgVrnMC6/ryp+pPoUsQYw2hk/KQWNpTIn7yGd/x6naXJwkntVV17gsj+lj36SD2nhBBm0KTwlSSrySMrgbfmbUZXRL6T60PebFpZyChvogQGwKBXmVmG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NIv9/zBd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=myubQQcKqlkh4tqzdDJfkmWtjvSMO0RIXeiVk+nQ0XXyiXfgtNfUS/40Sie8cDlthX363IXG8T1HgZ/lFpcL5TFtpevxxUkVHE+m5RLLbzDv5C5BPoxuLfTlMlAZRfeAT1l0a3dlZb2C9RZaXfEQ5/1uKp+za7sWyeAL5JguKdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZmJgg+4W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NIv9/zBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B20DC2BCB1;
-	Mon, 30 Mar 2026 12:38:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZmJgg+4W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2376AC2BCB2;
+	Mon, 30 Mar 2026 12:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874330;
-	bh=uujdV5K8kf267EBdHO8hDWeHkE+dhVf5akE4yMxwd0A=;
+	s=k20201202; t=1774874332;
+	bh=nmLuCXKilewrWUUcq5NfX5N6ZNgzQC+XTkSE2IeJSuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NIv9/zBdZ+nGcJRGs/qb6LYeMC9nA/ES+Y2iTnnjEtmrU4v9NVBtORSPr4FilE7mp
-	 SmXYJXKUY4joGj1S0NlPl6uwDyj1phYULgxXMKPOqbbbLF+VPCuScuUbDLazMOKOvF
-	 +G6fGQiV1GFxB6IfNSufqDXr0Q7mK43BrPjVFEwWEBX1ZD9TNERgp+IK6Q5LW8xCu0
-	 WboLlb5HLpYDt6tJrlSVsLfW26oMcUcr29yG9AhuxCidIsfVkUK70CFEqFFxrckXJ0
-	 ZZdjMZX10jwK8NWEgqhlGazVYgmi7k9Wb9n2W8CcV5aL5X4Tdd9fIuY/Tq4L0+DNJM
-	 ofe1aOln4QQ2g==
+	b=ZmJgg+4W4PSwB91QCv8wVqAISP+VYLY/5GUhGPTJZfJ4NdZArNeHQiWPX01l3btug
+	 +s2uOT6i5DLGCyuwsxaByPNaRG+POKeWIJuI1Hy9nVScSY/2frTax9TKYVZqZHJL3Z
+	 OibmsWdIZ9+J9YJGRfoGhu9QLByMk3dMJGoBKYo41ClCW+H0eKv8NdvZveaF4NrpsF
+	 l3h0MGh4yOqILqQhjVwptCKF61swoUrlXKf/iZ6RXvIFtMeUQiLRZx7rNKaZD9KG9C
+	 ADOajIR/o9TLmmBVcjTQCK6vEnj0QS/0ENewsKjqmCmFtTRYGbd2HQTbhVcwhqANWQ
+	 HPR7JUaz88GoA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Matthew Schwartz <matthew.schwartz@linux.dev>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Denis Benato <denis.benato@linux.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Joel Fernandes <joelagnelf@nvidia.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	corentin.chary@gmail.com,
-	luke@ljones.dev,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	jiangshanlai@gmail.com,
+	josh@joshtriplett.org,
+	rcu@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] platform/x86: asus-nb-wmi: add DMI quirk for ASUS ROG Flow Z13-KJP GZ302EAC
-Date: Mon, 30 Mar 2026 08:38:18 -0400
-Message-ID: <20260330123842.756154-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] srcu: Use irq_work to start GP in tiny SRCU
+Date: Mon, 30 Mar 2026 08:38:19 -0400
+Message-ID: <20260330123842.756154-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -51,365 +49,722 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.10
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Joel Fernandes <joelagnelf@nvidia.com>
 
-[ Upstream commit 0198d2743207d67f995cd6df89e267e1b9f5e1f1 ]
+[ Upstream commit a6fc88b22bc8d12ad52e8412c667ec0f5bf055af ]
 
-The ASUS ROG Flow Z13-KJP GZ302EAC model uses sys_vendor name ASUS
-rather than ASUSTeK COMPUTER INC., but it needs the same folio quirk as
-the other ROG Flow Z13. To keep things simple, just match on sys_vendor
-ASUS since it covers both.
+Tiny SRCU's srcu_gp_start_if_needed() directly calls schedule_work(),
+which acquires the workqueue pool->lock.
 
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
-Link: https://patch.msgid.link/20260312212246.1608080-1-matthew.schwartz@linux.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+This causes a lockdep splat when call_srcu() is called with a scheduler
+lock held, due to:
+
+  call_srcu() [holding pi_lock]
+    srcu_gp_start_if_needed()
+      schedule_work() -> pool->lock
+
+  workqueue_init() / create_worker() [holding pool->lock]
+    wake_up_process() -> try_to_wake_up() -> pi_lock
+
+Also add irq_work_sync() to cleanup_srcu_struct() to prevent a
+use-after-free if a queued irq_work fires after cleanup begins.
+
+Tested with rcutorture SRCU-T and no lockdep warnings.
+
+[ Thanks to Boqun for similar fix in patch "rcu: Use an intermediate irq_work
+to start process_srcu()" ]
+
+Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Boqun Feng <boqun@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the facts verified. Here is the complete analysis:
+Now I have all the information needed for a comprehensive analysis. Let
+me compile the full assessment.
 
----
-
+===============================================================
 ## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: Subject Line**
-Record: [platform/x86: asus-nb-wmi] [add] [Broaden DMI vendor match for
-ASUS ROG Flow Z13-KJP GZ302EAC so the existing folio quirk applies]
+### Step 1.1: PARSE THE SUBJECT LINE
+Record: [srcu] [Use] [irq_work to defer schedule_work() in Tiny SRCU
+grace-period start to avoid lockdep splat from pi_lock vs pool->lock
+ordering]
 
-**Step 1.2: Tags**
-- Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev> (author)
-- Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-- Reviewed-by: Denis Benato <denis.benato@linux.dev>
-- Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com> (subsystem
-  maintainer)
-- Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-  (maintainer sign-off)
-- Link: https://patch.msgid.link/20260312212246.1608080-1-
-  matthew.schwartz@linux.dev
-- No Fixes:, Reported-by:, Tested-by:, or Cc: stable tags (expected for
-  candidates)
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Signed-off-by:** Joel Fernandes <joelagnelf@nvidia.com> (author)
+- **Reviewed-by:** Paul E. McKenney <paulmck@kernel.org> (RCU co-
+  maintainer, original Tiny SRCU author)
+- **Signed-off-by:** Boqun Feng <boqun@kernel.org> (RCU
+  maintainer/committer)
+- No `Fixes:` tag (expected — this is why we're reviewing)
+- No `Cc: stable@vger.kernel.org` (expected)
+- No `Reported-by:` tag
+- No `Link:` tag
 
-Record: Triple Reviewed-by including subsystem maintainer; strong
-quality signal.
+Record: Strong maintainer endorsement — reviewed by Paul McKenney (RCU
+authority), committed by Boqun Feng (RCU maintainer). Queued into
+`fixes.v7.0-rc4` branch (verified via mail-archive). No syzbot or
+external bug reporter.
 
-**Step 1.3: Body Text**
-The GZ302EAC model reports `sys_vendor` as "ASUS" rather than "ASUSTeK
-COMPUTER INC." The existing Z13 DMI entry matched only the longer
-string, so the GZ302EAC variant never received `quirk_asus_z13`. The fix
-broadens the vendor match to "ASUS" to cover both strings.
-Record: [Bug] DMI vendor string mismatch prevents quirk application.
-[Symptom] Missing folio/tablet and key-remap behavior on this model.
-[Version info] None explicit. [Root cause] `sys_vendor` differs across
-Z13 variants.
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit describes two bugs:
 
-**Step 1.4: Hidden Bug Fix Detection**
-Record: This is explicitly a hardware quirk fix — the existing Z13 quirk
-fails to match a real hardware variant, causing functional regressions
-for that model's users.
+**Bug 1 (lockdep/lock ordering):** `srcu_gp_start_if_needed()` calls
+`schedule_work()`, which acquires workqueue `pool->lock`. When
+`call_srcu()` is invoked while holding the scheduler `pi_lock`, this
+creates a lock ordering inversion:
+- Path A: `call_srcu()` [holding `pi_lock`] → `schedule_work()` →
+  `pool->lock`
+- Path B: `workqueue_init()`/`create_worker()` [holding `pool->lock`] →
+  `wake_up_process()` → `try_to_wake_up()` → `pi_lock`
 
----
+**Bug 2 (UAF prevention):** With the new irq_work mechanism,
+`irq_work_sync()` must be added to `cleanup_srcu_struct()` to prevent a
+use-after-free if a queued irq_work fires after cleanup begins.
 
-## PHASE 2: DIFF ANALYSIS
+Testing: rcutorture SRCU-T with no lockdep warnings.
 
-**Step 2.1: Inventory**
-Record: [1 file: `drivers/platform/x86/asus-nb-wmi.c`, +1/-1]
-[asus_quirks[] data table, Z13 entry] [Single-file, single-line surgical
-fix]
+Record: [Lock ordering inversion between pi_lock and workqueue
+pool->lock] [Lockdep splat, potential deadlock] [No specific version
+information] [Root cause: schedule_work() acquires pool->lock from
+call_srcu() context that may hold pi_lock]
 
-**Step 2.2: Code Flow Change**
-Before: The Z13 DMI entry matched `DMI_SYS_VENDOR` substring `"ASUSTeK
-COMPUTER INC."` plus `DMI_PRODUCT_NAME` substring `"ROG Flow Z13"`.
-After: Same entry matches `DMI_SYS_VENDOR` substring `"ASUS"` plus same
-product name.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+Record: [Not hidden — explicitly describes a lockdep-detected lock
+ordering bug and a UAF risk in cleanup. The UAF aspect is specific to
+the new irq_work mechanism being introduced by the same commit.]
 
-Verified in `drivers/firmware/dmi_scan.c` lines 864-866 that
-`DMI_MATCH()` uses `strstr()` for non-exact matches:
+===============================================================
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-```864:866:drivers/firmware/dmi_scan.c
-                        if (strstr(dmi_ident[s],
-                                   dmi->matches[i].substr))
-                                continue;
-```
+### Step 2.1: INVENTORY THE CHANGES
+- `include/linux/srcutiny.h`: +4 lines (add `irq_work_types.h` include,
+  `struct irq_work srcu_irq_work` field, function declaration, static
+  initializer entry)
+- `kernel/rcu/srcutiny.c`: +18/-1 lines (add `irq_work.h` include,
+  `init_irq_work()` in init, `irq_work_sync()` in cleanup, new
+  `srcu_tiny_irq_work()` function, change `schedule_work()` to
+  `irq_work_queue()`)
+- Total: ~22 lines added, 1 line changed
+- Functions modified: `init_srcu_struct_fields()`,
+  `cleanup_srcu_struct()`, `srcu_gp_start_if_needed()`
+- New function: `srcu_tiny_irq_work()`
 
-Since "ASUS" is a substring of "ASUSTeK COMPUTER INC.", all previously-
-matching devices continue to match. The broader string also covers
-models reporting just "ASUS".
-Record: [Widens vendor match safely; existing devices still match;
-GZ302EAC now also matches]
+Record: [2 files, +22/-1, single-subsystem, well-contained surgical fix]
 
-**Step 2.3: Bug Mechanism**
-Category: Hardware workaround / DMI quirk match fix.
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+- **Before:** `srcu_gp_start_if_needed()` directly calls
+  `schedule_work(&ssp->srcu_work)` when `srcu_init_done`. This acquires
+  `pool->lock` synchronously in whatever context the caller is running.
+- **After:** `irq_work_queue(&ssp->srcu_irq_work)` is called instead.
+  The irq_work handler `srcu_tiny_irq_work()` later calls
+  `schedule_work()`, breaking the direct lock nesting from the
+  `call_srcu()` call site.
+- **Cleanup:** `irq_work_sync()` is added before `flush_work()` in
+  `cleanup_srcu_struct()` to ensure no deferred irq_work runs after the
+  struct begins teardown.
+- **Init:** `init_irq_work()` is added in `init_srcu_struct_fields()`.
 
-The `quirk_asus_z13` provides:
+Record: [Normal GP-start path changed from synchronous schedule_work()
+to deferred irq_work hop. Cleanup path gets irq_work synchronization.
+Init path gets irq_work initialization.]
 
-```153:156:drivers/platform/x86/asus-nb-wmi.c
-static struct quirk_entry quirk_asus_z13 = {
-        .key_wlan_event = ASUS_WMI_KEY_ARMOURY,
-        .tablet_switch_mode = asus_wmi_kbd_dock_devid,
-};
-```
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+Category: **(b) Synchronization / Lock ordering** (lockdep-detected
+circular dependency between `pi_lock` and `pool->lock`), plus **(d)
+Memory safety** — UAF prevention in the cleanup path for the newly
+introduced irq_work.
 
-Without matching, the driver falls back to `quirk_asus_unknown` (line
-561), resulting in:
-- Side button erroneously triggering WiFi rfkill toggle instead of
-  emitting KEY_PROG3
-- No tablet mode detection when the folio keyboard is detached
+Record: [Lock ordering inversion (potential deadlock) detected by
+lockdep. The UAF prevention is specific to the irq_work mechanism
+introduced by this same commit, not a pre-existing UAF in old code.]
 
-Record: [DMI match failure prevents `quirk_asus_z13` application on
-GZ302EAC variant; fix widens vendor match safely]
+### Step 2.4: ASSESS THE FIX QUALITY
+- **Obviously correct:** Yes. irq_work is specifically designed for
+  deferring work from contexts where direct scheduling is unsafe. This
+  is the same pattern used in Tree RCU (referenced by the commit
+  message).
+- **Minimal/surgical:** Yes. ~22 lines, two files, all within the Tiny
+  SRCU subsystem.
+- **Regression risk:** Very low. The `irq_work` mechanism is mature. The
+  functional behavior is identical (same `schedule_work()` happens, just
+  deferred slightly). The `irq_work_sync()` + `flush_work()` ordering in
+  cleanup is a standard pattern used elsewhere in the kernel.
+- **Red flags:** None. `EXPORT_SYMBOL_GPL(srcu_tiny_irq_work)` is
+  slightly unusual for a callback but harmless (needed for module
+  builds).
 
-**Step 2.4: Fix Quality**
-Record: Obviously correct — single string change in a data table,
-mechanically verifiable via `strstr()` semantics. Product-name match
-(`"ROG Flow Z13"`) still constrains the match. Regression risk: very
-low.
+Record: [Fix is obviously correct, minimal, low regression risk.
+Standard irq_work deferral pattern, well-established in RCU subsystem]
 
----
-
+===============================================================
 ## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.1: Blame**
-`git blame` shows the Z13 DMI entry was introduced by commit
-`132bfcd24925d4` (Antheas Kapenekakis, 2025-08-08): "platform/x86: asus-
-wmi: Fix ROG button mapping, tablet mode on ASUS ROG Z13".
-Record: [Buggy code introduced by `132bfcd24925d4`] [First released in
-v6.17]
+### Step 3.1: BLAME THE CHANGED LINES
+The direct `schedule_work(&ssp->srcu_work)` call in
+`srcu_gp_start_if_needed()` was introduced by commit `1a893c711a600`
+("srcu: Provide internal interface to start a Tiny SRCU grace period")
+by Paul E. McKenney, dated 2020-11-13. This first appeared in release
+`v5.12` (verified via `git tag --contains`, earliest non-next tag would
+be p-5.15).
 
-**Step 3.2: Fixes: tag**
-Record: N/A — no Fixes: tag present (expected for candidates).
+However, the original `call_srcu()` function called `schedule_work()`
+even before that refactor — the lock ordering issue has existed since
+Tiny SRCU was created.
 
-**Step 3.3: File History**
-Recent history shows `132bfcd24925d4` (Z13 quirk) and `7dc6b2d3b5503`
-(Zenbook Duo UX8406CA quirk addition — same pattern). The candidate is a
-standalone follow-up. No other GZ302 or KJP commits found.
-Record: [Related: `132bfcd24925d4` prerequisite only] [Standalone fix]
+Record: [Buggy schedule_work() path introduced in 1a893c711a600 (v5.12
+era). Present in all stable trees from v5.15 onward.]
 
-**Step 3.4: Author**
-No prior commits by Matthew Schwartz in this subsystem found in local
-history. However, three subsystem-relevant reviewers signed off,
-including the maintainer Ilpo Järvinen.
-Record: [Author is not a regular contributor] [Maintainer reviewed and
-signed off]
+### Step 3.2: FOLLOW THE FIXES: TAG
+N/A — no `Fixes:` tag present (expected).
 
-**Step 3.5: Dependencies**
-`git tag --contains 132bfcd24925d4` confirms the prerequisite is in
-v6.17, v6.18, and v6.19. It is NOT in v6.12 or older LTS trees (exit
-code 1, empty output). The candidate is only meaningful for trees that
-already contain this commit.
-Record: [Depends on `132bfcd24925d4`; relevant for v6.17+; irrelevant
-for v6.12.y, v6.6.y, v6.1.y, v5.15.y]
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Recent srcutiny.c history shows:
+- `e6a43aeb71852` - Remove preempt_disable/enable() in
+  srcu_gp_start_if_needed() (recent)
+- `da2ac5623716c` - Make Tiny SRCU able to operate in preemptible
+  kernels (v6.15+, PREEMPT_LAZY)
+- `65b4a59557f6f` - Make Tiny SRCU explicitly disable preemption (v6.12)
 
----
+The PREEMPT_LAZY change (`da2ac5623716c`, first in v6.15) is
+significant: it allows Tiny SRCU to run on preemptible kernels, making
+the lock ordering issue more practically relevant than on the
+traditional non-preemptible UP configs.
 
+No duplicate irq_work fix for Tiny SRCU was found in the tree. This is
+standalone.
+
+Record: [Related to PREEMPT_LAZY enablement. Standalone fix. No
+prerequisites beyond existing code.]
+
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Joel Fernandes is a well-known RCU contributor at NVIDIA with multiple
+RCU commits. The fix is reviewed by Paul McKenney (original Tiny SRCU
+author) and committed by Boqun Feng (RCU maintainer).
+
+Record: [Joel Fernandes is a regular RCU contributor. Fix has strong
+maintainer endorsement.]
+
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Key backport consideration: The `#include <linux/irq_work_types.h>` in
+the header requires this file to exist. Verified that `irq_work_types.h`
+was introduced in commit `c809f081fe400` ("irqwork: Move data struct to
+a types header") and first appeared in **v6.19** only. It does NOT exist
+in v6.18, v6.15, v6.12, v6.6, v6.1, or v5.15. For older stable trees,
+the include would need to be changed to `<linux/irq_work.h>` — a trivial
+mechanical adaptation.
+
+The `__SRCU_STRUCT_INIT` macro has different argument counts across
+versions:
+- v5.15: 2 args `(name, __ignored)`
+- v6.6: 3 args `(name, __ignored, ___ignored)`
+- current: 4 args `(name, __ignored, ___ignored, ____ignored)`
+
+This means the static initializer addition `.srcu_irq_work = { .func =
+srcu_tiny_irq_work }` would need to go into the appropriate macro
+variant for each stable tree. This is a minor mechanical conflict.
+
+Record: [Standalone logically. Backport needs: 1) `irq_work_types.h` →
+`irq_work.h` for trees < v6.19, 2) minor `__SRCU_STRUCT_INIT` macro
+adaptation. These are mechanical, not logical, changes.]
+
+===============================================================
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.1-4.4:**
-Lore.kernel.org and patch.msgid.link were inaccessible due to Anubis
-anti-bot protection. The commit message itself carries three Reviewed-by
-tags and maintainer sign-off, which are strong acceptance signals.
-Record: [Lore thread content UNVERIFIED; relying on commit tag signals]
+### Step 4.1: SEARCH LORE.KERNEL.ORG FOR THE PATCH DISCUSSION
+Lore was blocked (Anubis anti-bot), but the discussion was found on
+mail-archive.com at:
+https://www.mail-archive.com/linux-
+kernel@vger.kernel.org/msg2619639.html
 
----
+Key findings from the discussion:
+- The patch was dated March 23, 2026
+- Boqun Feng queued it into `fixes.v7.0-rc4` branch (the RCU **fixes**
+  branch, not features)
+- Paul McKenney's `Reviewed-by` was provided in an off-list discussion
+- No NAKs, no concerns raised
+- No explicit stable nomination by reviewers in the visible thread
 
+Record: [Lore discussion found on mail-archive mirror. Queued into fixes
+branch by RCU maintainer. No objections. No explicit Cc: stable
+discussion visible.]
+
+### Step 4.2: SEARCH FOR THE BUG REPORT
+No external bug report. Found during development/testing. The lockdep
+splat is reproducible with rcutorture SRCU-T.
+
+Record: [Found during testing, reproducible with rcutorture]
+
+### Step 4.3: CHECK FOR RELATED PATCHES AND SERIES
+The commit message references Boqun Feng's similar fix "rcu: Use an
+intermediate irq_work to start process_srcu()" which applies the same
+pattern to Tree SRCU. This confirms the pattern is well-established.
+
+Record: [Companion to Boqun's Tree SRCU irq_work fix. Same pattern.]
+
+### Step 4.4: CHECK STABLE MAILING LIST HISTORY
+No stable-specific discussion found.
+
+Record: [No stable-specific discussion found]
+
+===============================================================
 ## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.1: Key Functions/Data**
-Record: `asus_quirks[]` table, `asus_nb_wmi_quirks()`,
-`dmi_check_system()`, `dmi_matched()`, `quirk_asus_z13`
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Modified: `init_srcu_struct_fields()`, `cleanup_srcu_struct()`,
+`srcu_gp_start_if_needed()`
+New: `srcu_tiny_irq_work()`
 
-**Step 5.2: Callers**
-`asus_nb_wmi_quirks()` is the `.detect_quirks` callback in
-`asus_nb_wmi_driver`, called from `asus_wmi_register_driver()` during
-`asus_nb_wmi_init()` → module initialization. Runs on every boot/module
-load for affected hardware.
-Record: [Called during normal driver initialization, not a hot path]
+### Step 5.2: TRACE CALLERS
+`srcu_gp_start_if_needed()` is called from:
+1. `call_srcu()` — widely used across the kernel
+2. `start_poll_synchronize_srcu()` — used by rcutorture and others
 
-**Step 5.3: Callees**
-`asus_nb_wmi_quirks()` calls `dmi_check_system(asus_quirks)`. On match,
-`dmi_matched()` sets the global `quirks` pointer. This subsequently
-affects `asus_nb_wmi_key_filter()` (key remapping) and tablet-switch
-initialization in `asus-wmi.c`.
-Record: [Quirk drives key event handling and tablet mode detection]
+`call_srcu()` callers (verified via grep, 14+ call sites in .c files):
+- `virt/kvm/kvm_main.c`
+- `mm/mmu_notifier.c`
+- `block/blk-mq.c`, `block/blk-mq-tag.c`
+- `kernel/events/uprobes.c`
+- `fs/tracefs/event_inode.c`
+- `fs/dlm/midcomms.c`, `fs/dlm/lowcomms.c`
+- `drivers/gpio/gpiolib.c`
+- Plus the RCU subsystem itself
 
-**Step 5.4: Call Chain**
-`module_init(asus_nb_wmi_init)` → `asus_wmi_register_driver()` →
-platform probe → `wdrv->detect_quirks()` → `asus_nb_wmi_quirks()` →
-`dmi_check_system(asus_quirks)` → `dmi_matched()` sets quirks.
-Record: [Reachable on every boot on affected hardware]
+**Important caveat:** On TINY_SRCU kernels, only the Tiny SRCU
+`call_srcu()` is linked. TINY_SRCU requires `TINY_RCU`, which requires
+`!SMP` (UP systems). On older stable trees (v6.12 and before), it
+additionally requires `!PREEMPTION`. On v6.15+, PREEMPT_LAZY allows Tiny
+SRCU to operate on preemptible (but still UP) kernels.
 
-**Step 5.5: Similar Patterns**
-The same file has many similar `DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK
-COMPUTER INC.")` entries. The sibling commit `7dc6b2d3b5503` (Zenbook
-Duo UX8406CA) shows the same pattern of small, single-entry DMI quirk
-additions.
-Record: [Standard pattern in this file]
+Record: [Wide caller surface for call_srcu() in general. On TINY_SRCU,
+limited to UP kernels. On v6.15+ with PREEMPT_LAZY, the lock ordering
+issue becomes more practically relevant.]
 
----
+### Step 5.3: TRACE CALLEES
+`srcu_gp_start_if_needed()` → `schedule_work()` (before) or
+`irq_work_queue()` (after)
+`srcu_tiny_irq_work()` → `schedule_work()`
+`cleanup_srcu_struct()` → `irq_work_sync()` (new) → `flush_work()`
+(existing)
 
-## PHASE 6: STABLE TREE ANALYSIS
+Record: [Standard irq_work deferral pattern]
 
-**Step 6.1: Buggy Code in Stable Trees**
-Verified via `git tag --contains`: The Z13 quirk (commit
-`132bfcd24925d4`) exists in v6.17, v6.18, v6.19 and their point
-releases. It does NOT exist in v6.12 or earlier LTS trees.
-Record: [Relevant for v6.17.y, v6.18.y, v6.19.y ONLY]
+### Step 5.4: FOLLOW THE CALL CHAIN
+`call_srcu()` is a generic kernel API. On TINY_SRCU builds, any code
+path that invokes `call_srcu()` while holding scheduler locks (like
+`pi_lock`) can trigger the lockdep splat. The kernel's scheduler code
+does hold `pi_lock` during task wakeups, and subsystems like KVM and
+uprobes that use `call_srcu()` can be reached from those contexts.
 
-**Step 6.2: Backport Complications**
-One-line string change in a static data table. The Z13 entry is
-identical across v6.17, v6.18, and v6.19.
-Record: [Clean apply expected on all relevant trees]
+Record: [Reachable from multiple kernel subsystems. The specific
+`pi_lock` → `pool->lock` ordering is mechanically real — verified that
+`schedule_work()` → `__queue_work()` takes `pool->lock`, and
+`create_worker()` holds `pool->lock` while calling `wake_up_process()`
+which takes `pi_lock`.]
 
-**Step 6.3: Duplicate Fixes**
-No evidence of an equivalent fix already shipped in stable.
-Record: [No duplicates found]
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Multiple irq_work-related fixes exist in the RCU subsystem (`git log
+--grep=irq_work -- kernel/rcu/`), confirming this is an established
+pattern. Examples:
+- `b41642c87716b` "rcu: Fix rcu_read_unlock() deadloop due to IRQ work"
+- `f596e2ce1c0f2` "rcu: Use IRQ_WORK_INIT_HARD() to avoid
+  rcu_read_unlock() hangs"
+- The referenced Boqun patch for Tree SRCU
 
----
+Record: [Well-established pattern in RCU subsystem]
 
+===============================================================
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+===============================================================
+
+### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
+Verified directly. All stable trees from v5.15 onward contain the direct
+`schedule_work()` call in `srcu_gp_start_if_needed()`:
+- **v5.15:** YES — `schedule_work()` at line 168 (with `unsigned short`
+  idx types)
+- **v6.1:** YES — `schedule_work()` at line 168 (with `unsigned long`
+  idx types)
+- **v6.6:** YES — `schedule_work()` at line 168
+- **v6.12:** YES (would also have `preempt_disable()` from
+  `65b4a59557f6f`)
+- **v6.15+:** YES (with PREEMPT_LAZY changes)
+
+**Practical impact across versions:**
+- **v5.15, v6.1, v6.6:** `TINY_RCU` requires `!PREEMPTION && !SMP`. On
+  UP non-preemptible kernels, the lock ordering issue is still
+  detectable by lockdep (lockdep tracks lock classes regardless of
+  whether locks spin), but a real deadlock hang is less likely since
+  spinlocks effectively become preemption disablers on UP.
+- **v6.12:** Same as above (`!PREEMPT_RCU && !SMP`, no PREEMPT_LAZY)
+- **v6.15+:** PREEMPT_LAZY enables Tiny SRCU on preemptible UP kernels.
+  The lock ordering inversion becomes more practically concerning
+  because preemption is real.
+
+Record: [Buggy code present in all stable trees v5.15+. Real practical
+impact increases on v6.15+ with PREEMPT_LAZY. On older trees, lockdep
+still detects the issue.]
+
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Backport complications identified:
+1. `irq_work_types.h` does not exist before v6.19 — must use
+   `irq_work.h` instead
+2. `__SRCU_STRUCT_INIT` macro has different argument counts: 2 in v5.15,
+   3 in v6.6, 4 in current
+3. `srcu_gp_start_if_needed()` has `preempt_disable()/enable()` in v6.12
+   but not in v6.6 (minor context change)
+4. v5.15 uses `unsigned short` for `srcu_idx`/`srcu_idx_max` vs
+   `unsigned long` in v6.1+
+
+All of these are minor context/mechanical differences. The core logic
+change (replacing `schedule_work()` with `irq_work_queue()`) is
+identical.
+
+Record: [Expected backport difficulty: minor conflicts. Needs mechanical
+adaptation for include file and macro arguments. Core fix logic applies
+cleanly.]
+
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
+No duplicate fix for this specific Tiny SRCU issue found in any stable
+tree or branch.
+
+Record: [No related fix already in stable]
+
+===============================================================
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 7.1:**
-Record: [platform/x86 — ASUS notebook WMI driver] [PERIPHERAL: affects
-specific ASUS laptop hardware, not universal]
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+- **Subsystem:** `kernel/rcu` — SRCU (Sleepable Read-Copy Update), Tiny
+  variant
+- **Criticality:** CORE — RCU/SRCU is fundamental synchronization
+  infrastructure used across the entire kernel. However, the Tiny
+  variant specifically targets UP/embedded systems.
+- **User base:** Embedded/IoT systems, UP configurations, systems that
+  use `CONFIG_TINY_RCU`
 
-**Step 7.2:**
-Record: [Actively maintained; steady stream of DMI quirk and key-mapping
-updates]
+Record: [CORE subsystem (RCU). Tiny SRCU variant targets embedded/UP
+systems.]
 
----
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Actively maintained by Paul McKenney and Boqun Feng. Regular ongoing
+development, especially around PREEMPT_LAZY support.
 
+Record: [Active development, strong maintainer oversight]
+
+===============================================================
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.1: Who Is Affected**
-Record: [Driver-specific / model-specific: owners of ASUS ROG Flow
-Z13-KJP GZ302EAC and any other Z13 variant reporting `sys_vendor` =
-"ASUS"]
+### Step 8.1: DETERMINE WHO IS AFFECTED
+Systems running with `CONFIG_TINY_SRCU`, which requires
+`CONFIG_TINY_RCU`:
+- **v6.6 and older:** `!PREEMPTION && !SMP` — UP non-preemptible kernels
+  (embedded/IoT)
+- **v6.15+:** `!PREEMPT_RCU && !SMP` with PREEMPT_LAZY possible — UP
+  kernels that may be preemptible
 
-**Step 8.2: Trigger Conditions**
-Record: [Triggers on every boot/module-load on affected hardware; not
-timing-dependent, not privilege-dependent]
+Record: [Affected: embedded/UP systems using TINY_SRCU. Narrower than
+general SMP deployments, but these are real production configurations.]
 
-**Step 8.3: Failure Mode Severity**
-Without the quirk: the driver falls back to `quirk_asus_unknown`, so the
-side button erroneously toggles WiFi rfkill and tablet mode detection
-when the folio keyboard is detached does not work.
-Record: [Functional hardware issue; severity MEDIUM for affected users]
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+- `call_srcu()` invoked while a scheduler lock (`pi_lock`) is held
+- This is a realistic scenario in workloads that exercise both scheduler
+  and SRCU paths
+- On PREEMPT_LAZY kernels (v6.15+), the lock ordering is more
+  practically dangerous
+- On older trees, lockdep detects the ordering even if an actual hang is
+  less likely on UP
 
-**Step 8.4: Risk-Benefit Ratio**
-- BENEFIT: Correct hardware behavior for a real device variant (HIGH for
-  those users)
-- RISK: 1-line data-only change, still constrained by product-name match
-  (VERY LOW)
-Record: [Strongly favorable ratio]
+Record: [Trigger: call_srcu() while holding scheduler locks.
+Reproducible with rcutorture SRCU-T. Realistic in production on
+PREEMPT_LAZY.]
 
----
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+- **Lockdep splat:** WARNING level — but lockdep splats in core
+  synchronization primitives are taken seriously because they indicate a
+  real lock ordering design flaw that can hide other real bugs
+- **Potential deadlock on PREEMPT_LAZY:** On v6.15+ UP preemptible
+  kernels, the lock ordering inversion represents a genuine deadlock
+  risk under the right timing conditions — MEDIUM-HIGH
+- **Note on the UAF:** The `irq_work_sync()` in cleanup prevents a UAF
+  that would exist only with the new irq_work mechanism. This is not a
+  pre-existing UAF in old stable trees — it's safety plumbing for the
+  new code introduced by this same commit.
 
+Record: [Lockdep splat (WARNING) on all affected trees + potential real
+deadlock risk on PREEMPT_LAZY (v6.15+). Severity: MEDIUM-HIGH overall]
+
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**BENEFIT:**
+- Fixes lockdep-detected lock ordering inversion in a core
+  synchronization primitive
+- On v6.15+: prevents potential real deadlock
+- Queued into `fixes` branch (not features) by RCU maintainer —
+  maintainers consider this a fix
+- Eliminates lockdep noise that can mask real bugs
+
+**RISK:**
+- Very low. ~22 lines, well-understood irq_work deferral pattern
+- Reviewed by Paul McKenney, tested with rcutorture
+- Only adds one extra asynchronous hop to the GP start path
+  (functionally equivalent)
+- Needs minor mechanical adaptation for older trees (include file, macro
+  args)
+
+Record: [Benefit: fixes real lockdep ordering bug in core
+infrastructure, prevents potential deadlock on newer stables. Risk: very
+low — small, well-reviewed, well-tested.]
+
+===============================================================
 ## PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 9.1: Evidence**
-- FOR: Fixes real DMI matching bug; trivial 1-line change; hardware
-  quirk stable exception; triple Reviewed-by including maintainer;
-  prerequisite exists in v6.17+; `strstr()` semantics verified; zero
-  regression risk to existing devices
-- AGAINST: Narrow impact (single model variant); not a
-  crash/security/corruption fix
-- UNRESOLVED: Lore thread content inaccessible; exact KJP DMI strings
-  from external source unverified
+### Step 9.1: COMPILE THE EVIDENCE
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** — trivially verifiable,
-   maintainer-reviewed
-2. Fixes a real bug? **YES** — hardware quirk not applied to real device
-3. Important issue? **YES for affected users** — functional hardware
-   regression
-4. Small and contained? **YES** — 1 line, 1 file, data-only
-5. No new features or APIs? **YES** — extends existing quirk coverage
-6. Can apply to stable? **YES** — clean apply on v6.17+ trees
+**FOR backporting:**
+- Fixes a lockdep-detected lock ordering inversion between `pi_lock` and
+  workqueue `pool->lock`
+- The lock chain is mechanically verified: `schedule_work()` →
+  `__queue_work()` → `pool->lock`, and `create_worker()` →
+  `wake_up_process()` → `pi_lock`
+- Small, surgical fix (~22 lines, 2 files, single subsystem)
+- Reviewed by Paul McKenney (RCU co-creator), committed by Boqun Feng
+  (RCU maintainer)
+- Queued into `fixes.v7.0-rc4` branch (not features) — maintainers
+  consider this a bug fix
+- Tested with rcutorture SRCU-T, no lockdep warnings
+- Well-understood irq_work deferral pattern already used in Tree RCU
+- Buggy `schedule_work()` pattern exists in all stable trees since v5.12
+- On v6.15+ with PREEMPT_LAZY, the lock ordering represents a more
+  practical deadlock risk
+- Lockdep splats in core RCU infrastructure can mask other real bugs
 
-**Step 9.3: Exception Category**
-Record: **Hardware quirk/workaround** — explicitly in the "quirks and
-workarounds" class suitable for stable.
+**AGAINST backporting:**
+- On older stable trees (v5.15 through v6.12), the lock ordering is
+  detectable by lockdep but a real deadlock hang is less likely on UP
+  non-preemptible kernels
+- Needs minor mechanical backport adaptation (`irq_work_types.h` →
+  `irq_work.h`, macro argument counts)
+- No external user reports of actual deadlocks
+- The UAF prevention in the commit is for the *new* irq_work mechanism,
+  not a pre-existing bug
+- `CONFIG_TINY_SRCU` is a narrower configuration than general SMP
+  deployments
 
-**Step 9.4: Decision**
-This is a textbook hardware quirk fix: a single-line broadening of a DMI
-vendor match so that an existing quirk applies to a real hardware
-variant. It falls squarely into the stable exception for hardware quirks
-and workarounds. The fix is trivially correct (verified via `strstr()`
-semantics), carries effectively zero regression risk (product-name match
-still constrains it), and has strong review signals. It should be
-backported to stable trees v6.17.y, v6.18.y, and v6.19.y (the only trees
-containing the prerequisite Z13 quirk commit `132bfcd24925d4`).
+**UNRESOLVED:**
+- Could not independently fetch lore.kernel.org (Anubis) — used mail-
+  archive mirror instead
+- Whether lockdep on UP no-op spinlocks still reports this ordering
+  (likely yes, since lockdep tracks lock classes regardless)
+- No verified concrete in-tree path that hits Tiny `call_srcu()` while
+  specifically holding `pi_lock` (though the ordering conflict is
+  mechanically real)
+
+### Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. **Obviously correct and tested?** YES — standard irq_work deferral
+   pattern, reviewed by Paul McKenney, tested with rcutorture
+2. **Fixes a real bug that affects users?** YES — lockdep-detected lock
+   ordering inversion. Lockdep warnings in core RCU are treated as
+   serious issues by maintainers. More practically dangerous on v6.15+.
+3. **Important issue?** YES for v6.15+ (potential deadlock). MEDIUM for
+   older trees (lockdep warning in core infrastructure).
+4. **Small and contained?** YES — ~22 lines, 2 files, single subsystem
+5. **No new features or APIs?** Correct — internal mechanism change only
+6. **Can apply to stable trees?** YES with minor mechanical adaptation
+
+### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Not an exception category. This is a standard synchronization/lock-
+ordering bug fix.
+
+### Step 9.4: MAKE YOUR DECISION
+This commit fixes a real lockdep-detected lock ordering inversion in the
+Tiny SRCU implementation — a core kernel synchronization primitive. The
+fix is small (~22 lines), well-contained (2 files, single subsystem),
+reviewed by the RCU maintainers (Paul McKenney, Boqun Feng), tested with
+rcutorture, and uses a well-established irq_work deferral pattern.
+
+The fact that this was queued into the RCU `fixes` branch (not features)
+by the maintainers demonstrates they consider it a bug fix, not an
+enhancement. Lockdep warnings in core RCU infrastructure are taken
+seriously because they indicate real design flaws that can cause
+problems under the right conditions and that mask other real bugs.
+
+The practical impact varies across stable trees: on v6.15+ with
+PREEMPT_LAZY, the risk is higher (potential real deadlock); on older
+trees, it's a lockdep warning that nonetheless indicates a genuine lock
+ordering problem. The regression risk is very low given the maturity of
+the irq_work mechanism and the surgical nature of the change.
+
+The minor backport adaptations needed (include file, macro arguments)
+are mechanical and well within the normal scope of stable backport
+adjustments.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject/body/tags from commit message; found 3x
-  Reviewed-by (Mario Limonciello, Denis Benato, Ilpo Järvinen) plus
-  maintainer sign-off
-- [Phase 2] Read diff: 1 line changed in `asus_quirks[]` — vendor string
-  `"ASUSTeK COMPUTER INC."` → `"ASUS"`
-- [Phase 2] Verified `DMI_MATCH()` uses `strstr()` in
-  `drivers/firmware/dmi_scan.c` lines 865-866
-- [Phase 2] Verified `quirk_asus_z13` at lines 153-156: sets
-  `key_wlan_event = ASUS_WMI_KEY_ARMOURY` and `tablet_switch_mode =
-  asus_wmi_kbd_dock_devid`
-- [Phase 2] Verified fallback: `asus_nb_wmi_quirks()` initializes
-  `quirks = &quirk_asus_unknown` (line 561) before `dmi_check_system()`
-- [Phase 3] `git blame -L 547,555`: Z13 entry introduced by
-  `132bfcd24925d4` (Antheas Kapenekakis, 2025-08-08)
-- [Phase 3] `git show 132bfcd24925d4`: original commit is "Fix ROG
-  button mapping, tablet mode on ASUS ROG Z13"
-- [Phase 3] `git tag --contains 132bfcd24925d4`: present in v6.17,
-  v6.18, v6.19 and their point releases
-- [Phase 3] `git tag --contains 132bfcd24925d4 | grep v6.12`: empty —
-  NOT in v6.12 or older LTS trees
-- [Phase 3] `git log --oneline -20 -- drivers/platform/x86/asus-nb-
-  wmi.c`: confirmed recent history and similar pattern (`7dc6b2d3b5503`)
-- [Phase 4] WebFetch on lore.kernel.org and patch.msgid.link blocked by
-  Anubis — lore thread UNVERIFIED
-- [Phase 5] Confirmed call chain: `module_init` →
-  `asus_wmi_register_driver()` → `.detect_quirks` →
-  `asus_nb_wmi_quirks()` → `dmi_check_system()`
-- [Phase 6] Z13 quirk only exists in v6.17+; fix irrelevant for v6.12.y
-  and older
-- [Phase 6] Z13 DMI entry identical across v6.17/v6.18/v6.19; clean
-  apply expected
-- [Phase 8] Failure mode: wrong quirks on affected hardware (missing key
-  remap, missing tablet mode); severity MEDIUM
-- UNVERIFIED: Exact DMI output of GZ302EAC (claim from commit message
-  only)
-- UNVERIFIED: Lore discussion content, stable nominations by reviewers,
-  any NAKs
+- [Phase 1] Parsed tags: Reviewed-by Paul E. McKenney, Signed-off-by
+  Boqun Feng (RCU maintainers). No Fixes:, no Reported-by:, no Cc:
+  stable.
+- [Phase 2] Diff analysis: +22/-1 lines across 2 files. Core change:
+  `schedule_work()` → `irq_work_queue()` in `srcu_gp_start_if_needed()`,
+  plus `irq_work_sync()` in cleanup, `init_irq_work()` in init, new
+  `srcu_tiny_irq_work()` handler.
+- [Phase 3] git blame: buggy `schedule_work()` introduced in
+  `1a893c711a600` by Paul McKenney (2020-11-13). First in release tags
+  starting around v5.12.
+- [Phase 3] git show `1a893c711a600`: confirmed it created
+  `srcu_gp_start_if_needed()` with direct `schedule_work()`.
+- [Phase 3] git tag --contains `da2ac5623716c`: PREEMPT_LAZY Tiny SRCU
+  enablement first in v6.15.
+- [Phase 3] git show v5.15/v6.1/v6.6 srcutiny.c: all contain direct
+  `schedule_work()` in `srcu_gp_start_if_needed()`.
+- [Phase 3] `irq_work_types.h` (commit `c809f081fe400`) first in v6.19
+  only — not in v6.18, v6.15, v6.12, v6.6, v6.1, v5.15. Verified via
+  `git show v6.18:include/linux/irq_work_types.h` (exit 128) and `git
+  tag --contains`.
+- [Phase 3] v5.15 `__SRCU_STRUCT_INIT` has 2 args, v6.6 has 3 args,
+  current has 4 args — verified via git show of respective headers.
+- [Phase 4] mail-archive.com: found patch discussion at
+  https://www.mail-archive.com/linux-
+  kernel@vger.kernel.org/msg2619639.html — Boqun queued into
+  `fixes.v7.0-rc4`, Paul's Reviewed-by provided off-list. No NAKs.
+- [Phase 5] Traced callers: `call_srcu()` used by KVM, mm, block, fs,
+  GPIO, uprobes — 14+ call sites in .c files.
+- [Phase 5] Verified lock chain: `schedule_work()` → `__queue_work()` →
+  `pool->lock` (48 instances of `raw_spin_lock.*pool->lock` in
+  workqueue.c). `create_worker()` → `wake_up_process()` → `pi_lock`.
+- [Phase 5] Verified irq_work APIs (`init_irq_work`, `irq_work_queue`,
+  `irq_work_sync`) exist in v5.15+ via `git show
+  v5.15:include/linux/irq_work.h`.
+- [Phase 6] Verified Kconfig: v6.6 `TINY_RCU` requires `!PREEMPTION &&
+  !SMP`; current requires `!PREEMPT_RCU && !SMP`.
+- [Phase 6] No duplicate fix found in any stable tree for this Tiny SRCU
+  issue.
+- [Phase 7] RCU is CORE subsystem, actively maintained.
+- [Phase 8] Severity: lockdep warning on all affected trees; potential
+  real deadlock on v6.15+ (PREEMPT_LAZY).
+- UNVERIFIED: Could not fetch lore.kernel.org directly (Anubis anti-
+  bot); used mail-archive mirror.
+- UNVERIFIED: Whether lockdep still reports the ordering on UP
+  configurations where spinlocks are effectively no-ops (likely yes,
+  lockdep tracks classes regardless).
+- UNVERIFIED: Specific in-tree call path where Tiny SRCU `call_srcu()`
+  is invoked while holding `pi_lock` (the ordering conflict is
+  mechanically real but no specific trigger path was traced end-to-end).
 
 **YES**
 
- drivers/platform/x86/asus-nb-wmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/srcutiny.h |  4 ++++
+ kernel/rcu/srcutiny.c    | 19 ++++++++++++++++++-
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index a38a65f5c550d..b4677c5bba5b4 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -548,7 +548,7 @@ static const struct dmi_system_id asus_quirks[] = {
- 		.callback = dmi_matched,
- 		.ident = "ASUS ROG Z13",
- 		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "ROG Flow Z13"),
- 		},
- 		.driver_data = &quirk_asus_z13,
+diff --git a/include/linux/srcutiny.h b/include/linux/srcutiny.h
+index e0698024667a7..313a0e17f22fe 100644
+--- a/include/linux/srcutiny.h
++++ b/include/linux/srcutiny.h
+@@ -11,6 +11,7 @@
+ #ifndef _LINUX_SRCU_TINY_H
+ #define _LINUX_SRCU_TINY_H
+ 
++#include <linux/irq_work_types.h>
+ #include <linux/swait.h>
+ 
+ struct srcu_struct {
+@@ -24,18 +25,21 @@ struct srcu_struct {
+ 	struct rcu_head *srcu_cb_head;	/* Pending callbacks: Head. */
+ 	struct rcu_head **srcu_cb_tail;	/* Pending callbacks: Tail. */
+ 	struct work_struct srcu_work;	/* For driving grace periods. */
++	struct irq_work srcu_irq_work;	/* Defer schedule_work() to irq work. */
+ #ifdef CONFIG_DEBUG_LOCK_ALLOC
+ 	struct lockdep_map dep_map;
+ #endif /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
+ };
+ 
+ void srcu_drive_gp(struct work_struct *wp);
++void srcu_tiny_irq_work(struct irq_work *irq_work);
+ 
+ #define __SRCU_STRUCT_INIT(name, __ignored, ___ignored, ____ignored)	\
+ {									\
+ 	.srcu_wq = __SWAIT_QUEUE_HEAD_INITIALIZER(name.srcu_wq),	\
+ 	.srcu_cb_tail = &name.srcu_cb_head,				\
+ 	.srcu_work = __WORK_INITIALIZER(name.srcu_work, srcu_drive_gp),	\
++	.srcu_irq_work = { .func = srcu_tiny_irq_work },		\
+ 	__SRCU_DEP_MAP_INIT(name)					\
+ }
+ 
+diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
+index 3450c3751ef7a..a2e2d516e51b9 100644
+--- a/kernel/rcu/srcutiny.c
++++ b/kernel/rcu/srcutiny.c
+@@ -9,6 +9,7 @@
+  */
+ 
+ #include <linux/export.h>
++#include <linux/irq_work.h>
+ #include <linux/mutex.h>
+ #include <linux/preempt.h>
+ #include <linux/rcupdate_wait.h>
+@@ -41,6 +42,7 @@ static int init_srcu_struct_fields(struct srcu_struct *ssp)
+ 	ssp->srcu_idx_max = 0;
+ 	INIT_WORK(&ssp->srcu_work, srcu_drive_gp);
+ 	INIT_LIST_HEAD(&ssp->srcu_work.entry);
++	init_irq_work(&ssp->srcu_irq_work, srcu_tiny_irq_work);
+ 	return 0;
+ }
+ 
+@@ -84,6 +86,7 @@ EXPORT_SYMBOL_GPL(init_srcu_struct);
+ void cleanup_srcu_struct(struct srcu_struct *ssp)
+ {
+ 	WARN_ON(ssp->srcu_lock_nesting[0] || ssp->srcu_lock_nesting[1]);
++	irq_work_sync(&ssp->srcu_irq_work);
+ 	flush_work(&ssp->srcu_work);
+ 	WARN_ON(ssp->srcu_gp_running);
+ 	WARN_ON(ssp->srcu_gp_waiting);
+@@ -177,6 +180,20 @@ void srcu_drive_gp(struct work_struct *wp)
+ }
+ EXPORT_SYMBOL_GPL(srcu_drive_gp);
+ 
++/*
++ * Use an irq_work to defer schedule_work() to avoid acquiring the workqueue
++ * pool->lock while the caller might hold scheduler locks, causing lockdep
++ * splats due to workqueue_init() doing a wakeup.
++ */
++void srcu_tiny_irq_work(struct irq_work *irq_work)
++{
++	struct srcu_struct *ssp;
++
++	ssp = container_of(irq_work, struct srcu_struct, srcu_irq_work);
++	schedule_work(&ssp->srcu_work);
++}
++EXPORT_SYMBOL_GPL(srcu_tiny_irq_work);
++
+ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
+ {
+ 	unsigned long cookie;
+@@ -189,7 +206,7 @@ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
+ 	WRITE_ONCE(ssp->srcu_idx_max, cookie);
+ 	if (!READ_ONCE(ssp->srcu_gp_running)) {
+ 		if (likely(srcu_init_done))
+-			schedule_work(&ssp->srcu_work);
++			irq_work_queue(&ssp->srcu_irq_work);
+ 		else if (list_empty(&ssp->srcu_work.entry))
+ 			list_add(&ssp->srcu_work.entry, &srcu_boot_list);
+ 	}
 -- 
 2.53.0
 
