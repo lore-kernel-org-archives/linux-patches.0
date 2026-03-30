@@ -1,154 +1,215 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115DA39C016;
-	Mon, 30 Mar 2026 07:12:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AF0395242;
+	Mon, 30 Mar 2026 07:34:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774854765; cv=none; b=b/4fxRT/wBH9tOT/+lvB+3qc47QvGPcsP2qK6FecNHGNNh7u0Dt0XZsfi1iLTFdMkpEoiDoX4XvdQ+CjhhaiLI9W0emZV60QEJPKvRq7Z0EJc28Rou+LacHYvNZOILLrXU/kl0kcHz99iNon3zBYVcZBrFUWNH7af7CvJfLtR1Q=
+	t=1774856041; cv=none; b=Qso1Ta3SbJNg6G7ldiCP+7vAC9vMef2jkmdtgRiBagjxO166U9y7hyqGMvPUB+yebADn9A48v2J4vxuz+k9BZ7Q/5MPaIGITh1JeB/yG3Tnf6bHejGfYpx1n83dNnBUrTJYPePhzwi4mfZl8fEkIAbFuZAYfZGrNL+tTiAgydzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774854765; c=relaxed/simple;
-	bh=I1d2RB1gDSz0e3EcVP4sVWvytWmay7FRINv2m6cCnCI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lhVji9JzNQdLGrt5j6W8b175WmiVb58X86+sUX93SXHy773fgRLqSebbpPzKru7FyYLPCmPHQ6sihCTAr2TT78blZuFx7FAmJ401ihenaMw8Hr6mFyVPJjVI3sGFjCJfE0B2W58ii+C2qi7HE5AGx9fH5mLFXwRs0TBgbNf+QR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fgFLPDnk; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1774856041; c=relaxed/simple;
+	bh=7kgUQuFANCPaR5uCvT7NPfT7IH4fWzabVqEmhp/cEHQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WsFbzj+OZCv6YhFwT7U5t5p2s93qV3UmeeIj2FpSYaIeUR+gG436/PGuPcQ6X9JHW4WY9Y7w9N10snZB/sT5fv1NXnhzMYsO2P6XkN43PWFyDKLC3yjOYj4UDwdjmmlWrdQkw83ZIcbC8PIfy5IKzsBspLOYBRf96+JOwaya9A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ifHBMOea; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fgFLPDnk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774854764; x=1806390764;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=I1d2RB1gDSz0e3EcVP4sVWvytWmay7FRINv2m6cCnCI=;
-  b=fgFLPDnkLoiNvI+aGlnOznv7RyM37JILffEjseK7jdsqpnjjUOSe8xFE
-   S+jZHBF1gvk8gf19I2Kb2BV98yilFIEN3i5isv4KP9Wpma9il4CeK8+Tx
-   AXBj9Fowta4m5zLDRNGkf51iwOwqAoOiAB7s0jNu3TQiz4MttYwUl0QwX
-   wb8k9uFFFvBfp1fq9kvk7rP7xMxhj48b/OSmz8UZW0DwteC2HfN33D/ii
-   cwy+obEkTgRzWIH0pENhl6uNylFN/gW51trDiGrTiyPL6IybudAeIMK2c
-   +immef8CUpzXOZARd5FIJsAtqrqcUGrQ+vB9oKDtqzDL709cUJUekOwjR
-   g==;
-X-CSE-ConnectionGUID: s28AaA6ISzOkbkOIJ7j9yw==
-X-CSE-MsgGUID: C1rqSAz8Qc2vPqMyaLZGIA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11743"; a="79441321"
-X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; 
-   d="scan'208";a="79441321"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2026 00:12:43 -0700
-X-CSE-ConnectionGUID: 6X3tG9B8TFKt/aEUnfkuPQ==
-X-CSE-MsgGUID: 3Cex4zdrQpOZVEHy1pkbUg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,149,1770624000"; 
-   d="scan'208";a="249162425"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2026 00:12:39 -0700
-Message-ID: <dd8038b7-ecf6-45c5-973e-3e1798c0a453@linux.intel.com>
-Date: Mon, 30 Mar 2026 15:11:17 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ifHBMOea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004CEC19423;
+	Mon, 30 Mar 2026 07:33:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774856040;
+	bh=7kgUQuFANCPaR5uCvT7NPfT7IH4fWzabVqEmhp/cEHQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ifHBMOea1qbxwQjnwUekkcAyh3AghrMj4LkZvBOhcfwXywdmiWyfNOZVth/qA700o
+	 MkKQPo6bV6Y1v7FH2BsGUpNi03IP+4wfy7JZnaxB47e1eczKOeaUBkrk0Mzuon4qz3
+	 MND6x74hP7mnxtw8Saxk6Be611YAMCWBBd3iPtcQ8j6z5kPQPW3mciNb6qMOrkPZ0y
+	 MY+78m+R/vxmC6G4uBmr+HgRahdIrU6xBzfo7opZE4Saso/iOIKXTGvXL7CucHOIwx
+	 S84TRtrFXR/nP1vEOKM+FfNrucDVzKj0/sUqrP0gkcghazAnljgQl6E4+ZzPMxnSrw
+	 hVC+vMxt/2PRg==
+Date: Mon, 30 Mar 2026 09:33:56 +0200
+From: Nathan Chancellor <nathan@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Wei Fang <wei.fang@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>, Rahul Sharma <black.hawk@163.com>
+Subject: Re: [PATCH 6.1 379/481] net: enetc: allocate vf_state during PF
+ probes
+Message-ID: <20260330073356.GA1017537@ax162>
+References: <20260323134525.256603107@linuxfoundation.org>
+ <20260323134534.371230946@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] iommu/vtd: Pass size_order to qi_desc_piotlb() not
- npages
-To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- Kevin Tian <kevin.tian@intel.com>, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>
-Cc: patches@lists.linux.dev
-References: <2-v1-f175e27af136+11647-iommupt_inv_vtd_jgg@nvidia.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <2-v1-f175e27af136+11647-iommupt_inv_vtd_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260323134534.371230946@linuxfoundation.org>
 
-On 3/27/26 23:25, Jason Gunthorpe wrote:
-> It doesn't make sense for the caller to compute mask, throw it away
-> and then have qi_desc_piotlb() compute it again.
+On Mon, Mar 23, 2026 at 02:46:01PM +0100, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
 > 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ------------------
+> 
+> From: Wei Fang <wei.fang@nxp.com>
+> 
+> [ Upstream commit e15c5506dd39885cd047f811a64240e2e8ab401b ]
+> 
+> In the previous implementation, vf_state is allocated memory only when VF
+> is enabled. However, net_device_ops::ndo_set_vf_mac() may be called before
+> VF is enabled to configure the MAC address of VF. If this is the case,
+> enetc_pf_set_vf_mac() will access vf_state, resulting in access to a null
+> pointer. The simplified error log is as follows.
+> 
+> root@ls1028ardb:~# ip link set eno0 vf 1 mac 00:0c:e7:66:77:89
+> [  173.543315] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
+> [  173.637254] pc : enetc_pf_set_vf_mac+0x3c/0x80 Message from sy
+> [  173.641973] lr : do_setlink+0x4a8/0xec8
+> [  173.732292] Call trace:
+> [  173.734740]  enetc_pf_set_vf_mac+0x3c/0x80
+> [  173.738847]  __rtnl_newlink+0x530/0x89c
+> [  173.742692]  rtnl_newlink+0x50/0x7c
+> [  173.746189]  rtnetlink_rcv_msg+0x128/0x390
+> [  173.750298]  netlink_rcv_skb+0x60/0x130
+> [  173.754145]  rtnetlink_rcv+0x18/0x24
+> [  173.757731]  netlink_unicast+0x318/0x380
+> [  173.761665]  netlink_sendmsg+0x17c/0x3c8
+> 
+> Fixes: d4fd0404c1c9 ("enetc: Introduce basic PF and VF ENETC ethernet drivers")
+> Signed-off-by: Wei Fang <wei.fang@nxp.com>
+> Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+> Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+> Link: https://patch.msgid.link/20241031060247.1290941-2-wei.fang@nxp.com
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> Signed-off-by: Rahul Sharma <black.hawk@163.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > ---
->   drivers/iommu/intel/cache.c | 10 ++++------
->   drivers/iommu/intel/iommu.h | 16 ++++++----------
->   2 files changed, 10 insertions(+), 16 deletions(-)
+>  drivers/net/ethernet/freescale/enetc/enetc_pf.c |   18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
 > 
-> diff --git a/drivers/iommu/intel/cache.c b/drivers/iommu/intel/cache.c
-> index e08253980a6ee7..74ee2002fb9c85 100644
-> --- a/drivers/iommu/intel/cache.c
-> +++ b/drivers/iommu/intel/cache.c
-> @@ -338,13 +338,11 @@ static void qi_batch_add_piotlb_all(struct intel_iommu *iommu, u16 did,
->   }
->   
->   static void qi_batch_add_piotlb(struct intel_iommu *iommu, u16 did, u32 pasid,
-> -				u64 addr, unsigned long npages, bool ih,
-> +				u64 addr, unsigned int size_order, bool ih,
->   				struct qi_batch *batch)
->   {
-> -	if (!npages)
-> -		return;
+> --- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+> +++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+> @@ -683,19 +683,11 @@ static int enetc_sriov_configure(struct
+>  
+>  	if (!num_vfs) {
+>  		enetc_msg_psi_free(pf);
+> -		kfree(pf->vf_state);
+>  		pf->num_vfs = 0;
+>  		pci_disable_sriov(pdev);
+>  	} else {
+>  		pf->num_vfs = num_vfs;
+>  
+> -		pf->vf_state = kcalloc(num_vfs, sizeof(struct enetc_vf_state),
+> -				       GFP_KERNEL);
+> -		if (!pf->vf_state) {
+> -			pf->num_vfs = 0;
+> -			return -ENOMEM;
+> -		}
 > -
-> -	qi_desc_piotlb(did, pasid, addr, npages, ih, &batch->descs[batch->index]);
-> +	qi_desc_piotlb(did, pasid, addr, size_order, ih,
-> +		       &batch->descs[batch->index]);
->   	qi_batch_increment_index(iommu, batch);
->   }
->   
-> @@ -385,7 +383,7 @@ static void cache_tag_flush_iotlb(struct dmar_domain *domain, struct cache_tag *
->   						tag->pasid, domain->qi_batch);
->   		else
->   			qi_batch_add_piotlb(iommu, tag->domain_id, tag->pasid,
-> -					    addr, pages, ih, domain->qi_batch);
-> +					    addr, mask, ih, domain->qi_batch);
->   		return;
->   	}
->   
-> diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-> index 40759587729953..7a92472985ee02 100644
-> --- a/drivers/iommu/intel/iommu.h
-> +++ b/drivers/iommu/intel/iommu.h
-> @@ -1092,19 +1092,16 @@ static inline void qi_desc_piotlb_all(u16 did, u32 pasid, struct qi_desc *desc)
->   
->   /* Page-selective-within-PASID IOTLB invalidation */
->   static inline void qi_desc_piotlb(u16 did, u32 pasid, u64 addr,
-> -				  unsigned long npages, bool ih,
-> +				  unsigned int size_order, bool ih,
->   				  struct qi_desc *desc)
->   {
-> -	int mask = ilog2(__roundup_pow_of_two(npages));
-> -	unsigned long align = (1ULL << (VTD_PAGE_SHIFT + mask));
-> -
-> -	if (WARN_ON_ONCE(!IS_ALIGNED(addr, align)))
-> -		addr = ALIGN_DOWN(addr, align);
-> -
-> +	/*
-> +	 * calculate_psi_aligned_address() must be used for addr and size_order
-> +	 */
->   	desc->qw0 = QI_EIOTLB_PASID(pasid) | QI_EIOTLB_DID(did) |
->   		    QI_EIOTLB_GRAN(QI_GRAN_PSI_PASID) | QI_EIOTLB_TYPE;
->   	desc->qw1 = QI_EIOTLB_ADDR(addr) | QI_EIOTLB_IH(ih) |
-> -		    QI_EIOTLB_AM(mask);
-> +		    QI_EIOTLB_AM(size_order);
->   }
->   
->   static inline void qi_desc_dev_iotlb_pasid(u16 sid, u16 pfsid, u32 pasid,
-> @@ -1167,8 +1164,7 @@ void qi_flush_dev_iotlb(struct intel_iommu *iommu, u16 sid, u16 pfsid,
->   			u16 qdep, u64 addr, unsigned mask);
->   
->   void qi_flush_piotlb_all(struct intel_iommu *iommu, u16 did, u32 pasid);
-> -void qi_flush_piotlb(struct intel_iommu *iommu, u16 did, u32 pasid, u64 addr,
-> -		     unsigned long npages, bool ih);
-> +
+>  		err = enetc_msg_psi_init(pf);
+>  		if (err) {
+>  			dev_err(&pdev->dev, "enetc_msg_psi_init (%d)\n", err);
+> @@ -714,7 +706,6 @@ static int enetc_sriov_configure(struct
+>  err_en_sriov:
+>  	enetc_msg_psi_free(pf);
+>  err_msg_psi:
+> -	kfree(pf->vf_state);
+>  	pf->num_vfs = 0;
+>  
+>  	return err;
+> @@ -1322,6 +1313,12 @@ static int enetc_pf_probe(struct pci_dev
+>  	pf = enetc_si_priv(si);
+>  	pf->si = si;
+>  	pf->total_vfs = pci_sriov_get_totalvfs(pdev);
+> +	if (pf->total_vfs) {
+> +		pf->vf_state = kcalloc(pf->total_vfs, sizeof(struct enetc_vf_state),
+> +				       GFP_KERNEL);
+> +		if (!pf->vf_state)
+> +			goto err_alloc_vf_state;
+> +	}
+>  
+>  	err = enetc_setup_mac_addresses(node, pf);
+>  	if (err)
+> @@ -1398,6 +1395,8 @@ err_alloc_si_res:
+>  err_alloc_netdev:
+>  err_device_disabled:
+>  err_setup_mac_addresses:
+> +	kfree(pf->vf_state);
+> +err_alloc_vf_state:
+>  	enetc_psi_destroy(pdev);
+>  err_psi_create:
+>  	return err;
+> @@ -1424,6 +1423,7 @@ static void enetc_pf_remove(struct pci_d
+>  	enetc_free_si_resources(priv);
+>  
+>  	free_netdev(si->ndev);
+> +	kfree(pf->vf_state);
+>  
+>  	enetc_psi_destroy(pdev);
+>  }
 
-Could we move this cleanup to the previous patch?
+This results in a clang warning:
 
-Otherwise, looks good to me.
+  drivers/net/ethernet/freescale/enetc/enetc_pf.c:1307:6: error: variable 'pf' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+   1307 |         if (node && !of_device_is_available(node)) {
+        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/net/ethernet/freescale/enetc/enetc_pf.c:1398:8: note: uninitialized use occurs here
+   1398 |         kfree(pf->vf_state);
+        |               ^~
+  drivers/net/ethernet/freescale/enetc/enetc_pf.c:1307:2: note: remove the 'if' if its condition is always false
+   1307 |         if (node && !of_device_is_available(node)) {
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   1308 |                 dev_info(&pdev->dev, "device is disabled, skipping\n");
+        |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   1309 |                 err = -ENODEV;
+        |                 ~~~~~~~~~~~~~~
+   1310 |                 goto err_device_disabled;
+        |                 ~~~~~~~~~~~~~~~~~~~~~~~~~
+   1311 |         }
+        |         ~
+  drivers/net/ethernet/freescale/enetc/enetc_pf.c:1290:21: note: initialize the variable 'pf' to silence this warning
+   1290 |         struct enetc_pf *pf;
+        |                            ^
+        |                             = NULL
 
->   void qi_flush_dev_iotlb_pasid(struct intel_iommu *iommu, u16 sid, u16 pfsid,
->   			      u32 pasid, u16 qdep, u64 addr,
+I see two options.
 
-Thanks,
-baolu
+1. Backport commit bfce089ddd0e ("net: enetc: remove
+   of_device_is_available() handling") and its dependent change,
+   commit 6fffbc7ae137 ("PCI: Honor firmware's device disabled status"),
+   although I did not look to see if there are any other necessary fixes
+   or dependencies.
+
+2. Address this with a stable-only patch like:
+
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+index 99422c0b4a26..e4c8bdff68c5 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+@@ -1285,9 +1285,9 @@ static int enetc_pf_probe(struct pci_dev *pdev,
+ {
+ 	struct device_node *node = pdev->dev.of_node;
+ 	struct enetc_ndev_priv *priv;
++	struct enetc_pf *pf = NULL;
+ 	struct net_device *ndev;
+ 	struct enetc_si *si;
+-	struct enetc_pf *pf;
+ 	int err;
+ 
+ 	err = enetc_pf_register_with_ierb(pdev);
+@@ -1395,7 +1395,8 @@ static int enetc_pf_probe(struct pci_dev *pdev,
+ err_alloc_netdev:
+ err_device_disabled:
+ err_setup_mac_addresses:
+-	kfree(pf->vf_state);
++	if (pf)
++		kfree(pf->vf_state);
+ err_alloc_vf_state:
+ 	enetc_psi_destroy(pdev);
+ err_psi_create:
+--
+
+Cheers,
+Nathan
