@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74453D1713;
-	Mon, 30 Mar 2026 12:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73B13D16FD;
+	Mon, 30 Mar 2026 12:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874335; cv=none; b=Tb3uVpe0ytQY3/Cc02R1t3XrfGVxezMuUZhO14FLSVhDf+9yoxOC30/QBtLMWOy7a8YKLHkSbT/jdXf4tQhmxhyT2jGs2Jb5gEzFyNJHfV8/+Vm2SOv3sgrJ3wihOORgz0i5k6Qqr8yUqG2JZzNuRDCxxz2To5ui+L5CAUqYiWk=
+	t=1774874335; cv=none; b=EJsQ3WlTbd/GkHw3WeQGLpCDKLsnwMQM4sBS1xPY5NsyIpmbVya5aSHD2zmx8aIyqQgIZDG31Euaq6o32HQ8gAq4pHxvsarGWDjh3B6SzPTYTLjB9/YYaxxIr385JOd6NBCGKHDw4o2SL+ueFTKXJ5szqfqfOngAeP0l2odFtwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774874335; c=relaxed/simple;
-	bh=tP+lre6dq3uVg+ttZiFaRElIPoTiUazPMTJ4WyhtlvQ=;
+	bh=oFLU5WAgDeApMYmpEY5B4JfKxFBn2/Lp+X+vKhq6MhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=knTifj1pUSo1LvYvRYRpmY2IxUgZJO0ejqGEVrK/5hnpT8uCe+QfxnQnfyS9iCeQ+EWfFAruT6npsG27b5liIUotBhOmhbUXVS/5Mdl3TaAuifFsj60Zy1S4DggRW4PIX0oaN+Fl4Ai+4aSW2NATCOTKgZuWl1Rf0qi36nX6IZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BXX2QQUI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=B8ovGEku5kpqj9Bs6lBSj5B4aICbM0d2DKWRQWLZAmZuw4tAE6wRECkubYGzWfsdRyKWs7T7xTL4F8JiB7YodyqyjqlpnD8pBkiXKpKScR2doC4eJALpnkWV+MX6TKqjITAHNruAs2WJyeBgDz1ya+pp7s6RUzeu5hjSDHAfsek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DHOl/jRo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BXX2QQUI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC559C2BCB1;
-	Mon, 30 Mar 2026 12:38:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DHOl/jRo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A73C2BCB3;
+	Mon, 30 Mar 2026 12:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874334;
-	bh=tP+lre6dq3uVg+ttZiFaRElIPoTiUazPMTJ4WyhtlvQ=;
+	s=k20201202; t=1774874333;
+	bh=oFLU5WAgDeApMYmpEY5B4JfKxFBn2/Lp+X+vKhq6MhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXX2QQUIVZk+ufPUO/4wYhWhQEwJCvpliRF7mSmuIm83LqYUpSJFN0FdcmQJFeFfN
-	 GkroFQ3djVRDo/4EIN04Jrtv/dn0meNgxsQdx2yE9IPMCmYHn1bsP3GTutzMjF0xPc
-	 0ctyHbMws4R27E/ELx4F9hqWPL93aLfcvfyd8ZAOvuATDj1JluUq1V4OvrrmJiIEOx
-	 Jp969oFvF+VM5QiKpDUFsZ7e88urB6ol3ftw2bIujnOmDUMHB2/Mt9Rygt3hpryu7g
-	 9KbpCsDMoiDPNVwgBzCDQlw2CrIKBwCQN858FuzI6d4C0seCrabMQ58JNO1OsaBfAn
-	 wonZV+nRPCHLg==
+	b=DHOl/jRo9ovT5aR3mvlIal7S3w6wbRJKbTunTOnOdNue3pKse+ATw8Z5FWjeU2OGK
+	 FBUGj776V4BJ3cCU0AA4XkroyZxIpLkF++wiBWqMZEjj29Vk3oa52hZZKwTVEH1ObT
+	 Sj4WB+IDDl5Asnnp5zSLrILxK1WRDDM/y+TtNWMCGnlKd5VY3dKMPEMFgOQ4Aott0X
+	 YRi1K6jq44mSHRkRoXW26966AXSarGk+sXQ5NHomh/0enkOEL4z3TdG4A49PHATbBq
+	 Hzfg+aMWs9sm4EoY9DOQeHgWC0W8cRp5EyfVfXK6a0PotYMy6x/RYWZcFTWwjxC21K
+	 uVpUhSz5fgtYA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiucheng Xu <jiucheng.xu@amlogic.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	xiang@kernel.org,
-	linux-erofs@lists.ozlabs.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] erofs: add GFP_NOIO in the bio completion if needed
-Date: Mon, 30 Mar 2026 08:38:21 -0400
-Message-ID: <20260330123842.756154-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] ALSA: asihpi: avoid write overflow check warning
+Date: Mon, 30 Mar 2026 08:38:20 -0400
+Message-ID: <20260330123842.756154-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -54,608 +54,378 @@ X-stable-base: Linux 6.19.10
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiucheng Xu <jiucheng.xu@amlogic.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit c23df30915f83e7257c8625b690a1cece94142a0 ]
+[ Upstream commit 591721223be9e28f83489a59289579493b8e3d83 ]
 
-The bio completion path in the process context (e.g. dm-verity)
-will directly call into decompression rather than trigger another
-workqueue context for minimal scheduling latencies, which can
-then call vm_map_ram() with GFP_KERNEL.
+clang-22 rightfully warns that the memcpy() in adapter_prepare() copies
+between different structures, crossing the boundary of nested
+structures inside it:
 
-Due to insufficient memory, vm_map_ram() may generate memory
-swapping I/O, which can cause submit_bio_wait to deadlock
-in some scenarios.
+In file included from sound/pci/asihpi/hpimsgx.c:13:
+In file included from include/linux/string.h:386:
+include/linux/fortify-string.h:569:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+  569 |                         __write_overflow_field(p_size_field, size);
 
-Trimmed down the call stack, as follows:
+The two structures seem to refer to the same layout, despite the
+separate definitions, so the code is in fact correct.
 
-f2fs_submit_read_io
-  submit_bio                      //bio_list is initialized.
-    mmc_blk_mq_recovery
-      z_erofs_endio
-        vm_map_ram
-          __pte_alloc_kernel
-            __alloc_pages_direct_reclaim
-              shrink_folio_list
-                __swap_writepage
-                  submit_bio_wait  //bio_list is non-NULL, hang!!!
+Avoid the warning by copying the two inner structures separately.
+I see the same pattern happens in other functions in the same file,
+so there is a chance that this may come back in the future, but
+this instance is the only one that I saw in practice, hitting it
+multiple times per day in randconfig build.
 
-Use memalloc_noio_{save,restore}() to wrap up this path.
-
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260318124016.3488566-1-arnd@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-All verified. Here is the complete analysis.
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject Line
-- **Subsystem**: erofs (Enhanced Read-Only File System, compressed I/O
-  path)
-- **Action verb**: "add" — but the body describes a deadlock fix
-- **Summary**: Adds `memalloc_noio_save/restore` scope in BIO completion
-  to prevent deadlock during direct decompression
-
-Record: [erofs] [add (really "fix")] [Wraps direct decompression in
-GFP_NOIO scope to prevent deadlock in bio completion]
-
-### Step 1.2: Tags
-- **Reviewed-by**: Gao Xiang <hsiangkao@linux.alibaba.com> — erofs
-  maintainer
-- **Signed-off-by**: Jiucheng Xu <jiucheng.xu@amlogic.com> — patch
-  author (Amlogic, ARM/Android platform vendor)
-- **Reviewed-by**: Chao Yu <chao@kernel.org> — regular erofs reviewer
-- **Signed-off-by**: Gao Xiang <hsiangkao@linux.alibaba.com> — committed
-  through maintainer tree
-- No `Fixes:` tag (expected for commits needing manual review)
-- No `Cc: stable@vger.kernel.org` (expected)
-- No `Reported-by:` or `Link:` tags
-- Notable: Two reviews from subsystem maintainer and key reviewer;
-  committed by maintainer
-
-Record: Two senior reviewers (one is the subsystem maintainer). No Fixes
-tag. Author is from Amlogic (Android SoC vendor, direct user of
-erofs+dm-verity).
-
-### Step 1.3: Commit Body Text
-The commit describes a **concrete deadlock scenario** with a trimmed
-stack trace:
-1. BIO completion runs in process context (e.g., when dm-verity is
-   layered on top)
-2. EROFS directly calls decompression (not via workqueue) to minimize
-   latency
-3. Decompression calls `vm_map_ram()` with `GFP_KERNEL`
-4. Under memory pressure, `vm_map_ram()` → page allocation → direct
-   reclaim → swap writeback → `submit_bio_wait()`
-5. Since `bio_list` is already initialized from the parent `submit_bio`,
-   the new bio gets queued to `bio_list` but is never drained →
-   **deadlock/hang**
-
-Stack trace: `f2fs_submit_read_io → submit_bio → mmc_blk_mq_recovery →
-z_erofs_endio → vm_map_ram → __pte_alloc_kernel →
-__alloc_pages_direct_reclaim → shrink_folio_list → __swap_writepage →
-submit_bio_wait //hang`
-
-Record: Real deadlock in BIO completion path. Trigger: erofs on dm-
-verity under memory pressure. Symptom: system hang. Root cause:
-GFP_KERNEL allocation inside bio completion context can recurse into
-block I/O.
-
-### Step 1.4: Hidden Bug Fix Detection
-Despite the subject using "add" rather than "fix", the commit message
-describes a real deadlock and provides a concrete stack trace
-demonstrating the hang. The fix uses the standard kernel mechanism for
-preventing I/O recursion. This is absolutely a bug fix.
-
-Record: Yes, genuine bug fix disguised with "add" verb. The body clearly
-describes a deadlock.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-- **Files changed**: 1 (`fs/erofs/zdata.c`)
-- **Lines added**: 3 (1 local variable declaration + 2 API calls)
-- **Lines removed**: 0
-- **Function modified**: `z_erofs_decompress_kickoff()`
-- **Scope**: Single-file, single-function, surgical fix
-
-Record: [fs/erofs/zdata.c: +3/-0 lines] [z_erofs_decompress_kickoff]
-[Surgical single-function fix]
-
-### Step 2.2: Code Flow Change
-**Before** (line 1494 of current code): When
-`z_erofs_decompress_kickoff()` reaches the non-atomic fallthrough path,
-it calls `z_erofs_decompressqueue_work(&io->u.work)` directly with no
-memory allocation restrictions. Any `GFP_KERNEL` allocation in the call
-chain can trigger reclaim I/O.
-
-**After**: The direct call is wrapped:
-```c
-gfp_flag = memalloc_noio_save();
-z_erofs_decompressqueue_work(&io->u.work);
-memalloc_noio_restore(gfp_flag);
-```
-This sets `PF_MEMALLOC_NOIO` on the current task's flags, causing all
-allocations in the decompression path to have `__GFP_IO` stripped,
-preventing swap/reclaim I/O.
-
-Record: Before: unrestricted GFP_KERNEL allocations during decompression
-in bio completion. After: GFP_NOIO scope prevents I/O recursion.
-
-### Step 2.3: Bug Mechanism
-**Category**: Deadlock / I/O recursion
-
-**Mechanism**: I verified the full call chain:
-- `z_erofs_endio()` (bio completion, line 1668) →
-  `z_erofs_decompress_kickoff(q, -1)` → non-atomic branch →
-  `z_erofs_decompressqueue_work()` → `z_erofs_decompress_queue()` →
-  `z_erofs_decompress_pcluster()` → multiple `GFP_KERNEL` allocations:
-  - `kvcalloc(..., GFP_KERNEL | __GFP_NOFAIL)` at lines 1300 and 1304
-    for decompressed/compressed pages
-  - `kmalloc(..., GFP_KERNEL | __GFP_NOFAIL)` at line 1161 for secondary
-    bvecs
-  - `erofs_vm_map_ram()` → `vm_map_ram()` → `vb_alloc(size, GFP_KERNEL)`
-    at `mm/vmalloc.c:3070` or `alloc_vmap_area(..., GFP_KERNEL, ...)` at
-    `mm/vmalloc.c:3078`
-
-Any of these `GFP_KERNEL` allocations can trigger direct reclaim under
-memory pressure, which can attempt swap writeback via
-`submit_bio_wait()`, and since `bio_list` is active from the parent
-`submit_bio()`, the new bio goes to the list but never drains.
-
-Record: [Deadlock] [Bio completion → direct decompression → GFP_KERNEL
-allocations (vm_map_ram, kvcalloc) → direct reclaim → swap I/O →
-submit_bio_wait hangs because bio_list is active]
-
-### Step 2.4: Fix Quality
-- **Obviously correct**: `memalloc_noio_save/restore` is the standard
-  kernel API for this exact pattern. It is used extensively in dm, md,
-  block, and filesystem layers for the same purpose.
-- **Minimal**: 3 lines added, no logic changes, no data structure
-  changes.
-- **Regression risk**: Very low. The only effect is restricting
-  allocations from triggering I/O in this scope. This could mean more
-  allocation failures under extreme pressure, but the `__GFP_NOFAIL`
-  allocations will still succeed (they just won't trigger I/O for
-  reclaim), and `vm_map_ram` already handles allocation failure
-  gracefully via retry in `erofs_vm_map_ram()`.
-- **No red flags**: No API changes, no locking changes, no new code
-  paths.
-
-Record: [Obviously correct, standard kernel pattern] [Very low
-regression risk] [Minimal scope]
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: Blame Changed Lines
-`git blame` on lines 1458-1495 shows:
-- `z_erofs_decompress_kickoff()` function structure: commit
-  `7865827c432bf9` (Gao Xiang, 2022-01-21) — a code rearrangement
-- The direct `z_erofs_decompressqueue_work(&io->u.work)` call at line
-  1494: same commit `7865827c432bf9`
-- The direct decompression optimization was **originally introduced** by
-  commit `648f2de053a88` (Huang Jianan, 2021-03-17): "erofs: use
-  workqueue decompression for atomic contexts only"
-
-The original `648f2de053a88` commit first appeared in tag `v5.13`. I
-verified:
-- `v5.10`: **NOT** ancestor — the buggy direct-call path does not exist
-- `v5.15`: **IS** ancestor — the buggy path exists
-- `v6.1`: **IS** ancestor
-- `v6.6`: **IS** ancestor
-
-Record: Direct decompression path introduced in 648f2de053a88 (v5.13).
-Present in v5.15, v6.1, v6.6, v6.12 and later. NOT present in v5.10.
-
-### Step 3.2: Fixes Tag
-No `Fixes:` tag present. (Expected for commits requiring manual review.)
-
-### Step 3.3: Related File History
-Related commits in the same optimization area:
-- `648f2de053a88` (v5.13): Introduced direct decompression in non-atomic
-  context
-- `7865827c432bf9` (v5.17): Rearranged function, same direct-call logic
-- `12d0a24afd9ea` (2023): "Fix detection of atomic context" — 1-line fix
-  to atomic check
-- `c99fab6e80b76` (2025): "fix atomic context detection when
-  !CONFIG_DEBUG_LOCK_ALLOC" — introduced `z_erofs_in_atomic()` helper
-
-The non-atomic direct decompression path has needed **multiple follow-up
-fixes**, establishing a pattern that this optimization area is
-correctness-sensitive.
-
-No prior `memalloc_noio` fix exists in erofs (verified: `git log
---grep='memalloc_noio' -- fs/erofs` returns empty).
-
-Record: Part of a pattern of fixes to the same direct-decompression
-optimization. Standalone fix. No prior NOIO fix in erofs.
-
-### Step 3.4: Author
-- Jiucheng Xu from Amlogic — no prior erofs commits found locally,
-  likely a first-time contributor from the platform vendor side
-- Patch was reviewed by erofs maintainer Gao Xiang and regular reviewer
-  Chao Yu, and committed through Gao Xiang's tree
-- Amlogic makes ARM SoCs used in Android devices — dm-verity + erofs is
-  standard on such platforms
-
-Record: Author is from platform vendor, fix reviewed and committed by
-erofs maintainer.
-
-### Step 3.5: Dependencies
-The fix is self-contained:
-- `memalloc_noio_save/restore` exists in `include/linux/sched/mm.h`
-  (verified: 4 occurrences of `memalloc_noio_save` in current tree)
-- These helpers have been available since well before v5.15
-- The direct decompression call path where the fix applies exists in all
-  applicable stable trees (v5.15+)
-- No code structure changes needed
-
-Record: No dependencies. Fully self-contained. Can apply standalone to
-any tree with the direct-call path.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: Lore Discussion
-The related commit `12d0a24afd9ea` ("Fix detection of atomic context")
-has accessible discussion showing:
-- A concrete stack trace from `filemap_fault`/readahead through dm-
-  verity into `z_erofs_decompress_kickoff()`, proving the direct
-  decompression in bio completion context is a real-world scenario
-- The dm-verity + erofs combination is explicitly called out as the
-  trigger
-
-The commit was included in erofs rc-fixes targeting mainline, which is
-the standard path for critical fixes.
-
-Record: Related discussion confirms real-world dm-verity + erofs
-scenario. Fix submitted through maintainer's fixes branch.
-
-### Step 4.2: Bug Report
-No explicit `Reported-by:` or `Link:` tags. The stack trace in the
-commit message references a concrete scenario (f2fs + mmc + erofs/dm-
-verity), indicating real-world observation. The author being from
-Amlogic (Android SoC vendor) strongly suggests this was discovered on
-production Android devices.
-
-Record: No formal bug report link, but stack trace indicates real
-observation on Android platform.
-
-### Step 4.3: Series Context
-This is a standalone fix, not part of a dependent series.
-
-Record: Standalone fix.
-
-### Step 4.4: Stable Discussion
-No specific stable discussion found for this patch.
-
-Record: No stable-specific discussion found.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Functions Modified
-Only `z_erofs_decompress_kickoff()` is modified.
-
-### Step 5.2: Callers
-`z_erofs_decompress_kickoff()` is called from:
-1. **`z_erofs_endio()`** (line 1668) — BIO completion callback. This is
-   the problematic path — when bio completion runs in process context
-   (dm-verity), this is NOT atomic, and the non-atomic branch takes the
-   direct decompression path.
-2. **`z_erofs_submit_queue()`** (line 1805) — submit path, called after
-   dispatching bios.
-
-### Step 5.3: Callees in the non-atomic path
-`z_erofs_decompressqueue_work()` → `z_erofs_decompress_queue()` →
-`z_erofs_decompress_pcluster()` which:
-- Allocates `decompressed_pages` via `kvcalloc(..., GFP_KERNEL |
-  __GFP_NOFAIL)` (line 1300)
-- Allocates `compressed_pages` via `kvcalloc(..., GFP_KERNEL |
-  __GFP_NOFAIL)` (line 1304)
-- Calls decompression algorithm which uses `erofs_vm_map_ram()` →
-  `vm_map_ram()` → `vb_alloc(size, GFP_KERNEL)` (mm/vmalloc.c:3070)
-
-All of these allocations can trigger direct reclaim.
-
-### Step 5.4: Reachability
-Full verified call chain from userspace:
-- Userspace read/page fault on compressed erofs file
-- → `z_erofs_read_folio()` (line 1887) or `z_erofs_readahead()` (line
-  1910)
-- → `z_erofs_runqueue()` → `z_erofs_submit_queue()` → `submit_bio()`
-- → bio completion → `z_erofs_endio()` (line 1648)
-- → `z_erofs_decompress_kickoff(q, -1)` (line 1668)
-- → non-atomic branch → `z_erofs_decompressqueue_work()` → `GFP_KERNEL`
-  allocations → deadlock
-
-This is the **primary compressed data read path** for erofs. Any
-unprivileged user reading a file from a mounted erofs filesystem can
-trigger it.
-
-Record: Critical primary read path. Reachable from unprivileged
-userspace file reads.
-
-### Step 5.5: Similar Patterns
-`memalloc_noio_save/restore` is used extensively throughout the kernel
-(dm, md, block layer) for the same purpose. No existing usage in
-`fs/erofs/` — this is the first.
-
-Record: Standard pattern used throughout kernel. First application in
-erofs.
-
----
-
-## PHASE 6: STABLE TREE ANALYSIS
-
-### Step 6.1: Does the buggy code exist in stable trees?
-Verified with `git show <version>:fs/erofs/zdata.c | grep`:
-- **v5.10**: Direct-call path does **NOT** exist (648f2de053a88 not
-  ancestor) → NOT APPLICABLE
-- **v5.15**: Direct-call exists at line 802 → **AFFECTED**
-- **v6.1**: Direct-call exists at line 1195 → **AFFECTED**
-- **v6.6**: Direct-call exists at line 1435 → **AFFECTED**
-- **v6.12**: Direct-call exists at line 1373 → **AFFECTED**
-
-Record: Bug affects all active stable trees v5.15 through v6.12. NOT
-applicable to v5.10 or older.
-
-### Step 6.2: Backport Complications
-The function context has changed across versions:
-- v5.15: uses `bool sync` parameter, older `in_atomic() ||
-  irqs_disabled()` check
-- v6.1: same older check, some structural changes
-- v6.6: uses different atomic detection
-- v6.12: uses `z_erofs_in_atomic()` helper (from c99fab6e80b76)
-
-However, the **actual fix location** (wrapping the direct
-`z_erofs_decompressqueue_work()` call) is consistent across all
-versions. The fix should apply with minor context adjustment (fuzz) on
-older trees.
-
-`memalloc_noio_save/restore` helpers exist in all these stable baselines
-(verified in `include/linux/sched/mm.h`).
-
-Record: Minor context adjustment needed for older stable trees. Fix site
-is consistent. Helper APIs available everywhere.
-
-### Step 6.3: Related fixes in stable
-No prior `memalloc_noio` fix in erofs exists. The related atomic-context
-fixes (`12d0a24afd9ea`, `c99fab6e80b76`) may or may not be in each
-stable tree, but they are not prerequisites — they only change which
-branch is taken (atomic vs. non-atomic), not the fix itself.
-
-Record: No duplicate fix in stable. Not redundant with existing fixes.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: Subsystem Criticality
-- **Subsystem**: `fs/erofs` — compressed read-only filesystem
-- **Criticality**: IMPORTANT
-  - Widely used on Android devices (system/vendor partition)
-  - Increasingly used in container/cloud environments (read-only layers)
-  - dm-verity + erofs is the default stack on modern Android
-
-Record: [fs/erofs] [IMPORTANT — Android, embedded, containers]
-
-### Step 7.2: Activity Level
-Recent `git log -20 -- fs/erofs/zdata.c` shows active development with
-regular fixes and improvements. Actively maintained by Gao Xiang.
-
-Record: Active subsystem with regular maintenance.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Affected Users
-All users of erofs with compressed data who:
-- Run erofs on dm-verity (standard on Android)
-- Or any other stacking block device where bio completion runs in
-  process context
-- AND experience memory pressure (common on memory-constrained
-  mobile/embedded devices)
-
-Record: Large user population (Android devices, embedded systems with
-dm-verity + erofs).
-
-### Step 8.2: Trigger Conditions
-- erofs compressed file read (ordinary `read()` or page fault)
-- BIO completion in process context (dm-verity provides this)
-- Memory pressure sufficient to trigger direct reclaim
-- Reclaim attempts swap writeback → `submit_bio_wait` with active
-  `bio_list`
-
-This is realistic on Android devices which frequently run under memory
-pressure. No privileges needed beyond read access to mounted filesystem.
-
-Record: [Common trigger: ordinary file reads under memory pressure on
-Android/dm-verity] [No special privileges needed]
-
-### Step 8.3: Failure Mode Severity
-**CRITICAL**: Complete system deadlock/hang. The `submit_bio_wait()`
-blocks indefinitely because the bio is queued to the active `bio_list`
-but never drained (the draining happens only after the parent bio
-completion returns, which is waiting for this one). This renders the
-system unresponsive and typically requires a hard reboot.
-
-Record: [System deadlock/hang] [Severity: CRITICAL]
-
-### Step 8.4: Risk-Benefit Ratio
-- **BENEFIT**: Very high — prevents a complete system hang on a widely-
-  deployed platform configuration
-- **RISK**: Very low — 3-line addition using a well-established kernel
-  API, no logic changes, no new code paths, no changed return values, no
-  API modifications
-- **Ratio**: Overwhelmingly favorable
-
-Record: [Benefit: Very High] [Risk: Very Low] [Ratio: Strongly
-favorable]
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: Evidence Compilation
-
-**FOR backporting:**
-- Fixes a real deadlock (system hang) with a concrete trigger and stack
-  trace
-- Extremely small and contained fix (3 lines in 1 function in 1 file)
-- Uses the standard, well-established `memalloc_noio_save/restore`
-  kernel API
-- Reviewed by erofs maintainer (Gao Xiang) and key reviewer (Chao Yu)
-- Committed through the maintainer's fixes tree
-- Affects widely-deployed platform configuration (Android + dm-verity +
-  erofs)
-- Bug has existed since v5.13 and is present in all active stable trees
-  v5.15+
-- Multiple `GFP_KERNEL` allocation sites confirmed in the decompression
-  path (vm_map_ram, kvcalloc)
-- Primary read path for compressed erofs — not an obscure corner case
-- Pattern of earlier bugs in same optimization area (648f2de,
-  12d0a24afd9ea, c99fab6e80b76) demonstrates the area is correctness-
-  sensitive
-- No existing `memalloc_noio` protection in erofs anywhere
-
-**AGAINST backporting:**
-- No explicit `Fixes:` tag or `Cc: stable` (expected for commits needing
-  manual review)
-- Minor context differences across stable tree versions (trivially
-  resolvable)
-- NOIO scope affects the entire decompression call, not just
-  `vm_map_ram()` (intentional and beneficial — there are multiple
-  GFP_KERNEL sites)
-
-**UNRESOLVED:**
-- Exact frequency of this deadlock in production (but the trigger
-  conditions are realistic)
-- Exact lore.kernel.org discussion thread for this specific patch (anti-
-  bot protections)
-
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES — standard kernel pattern,
-   reviewed by maintainer
-2. **Fixes a real bug?** YES — deadlock under memory pressure
-3. **Important issue?** YES — system hang/deadlock, CRITICAL severity
-4. **Small and contained?** YES — 3 lines in 1 file, 1 function
-5. **No new features or APIs?** YES — no new features
-6. **Can apply to stable?** YES — applicable to v5.15+ with minor
-   context adjustment; `memalloc_noio_*` helpers available in all target
+Now I have all the data I need. Let me compile the full analysis.
+
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+
+**Step 1.1: Subject Line**
+Record: [ALSA: asihpi] [avoid] [write overflow check warning from
+clang-22 fortify-string in adapter_prepare()]
+
+**Step 1.2: Tags**
+- Signed-off-by: Arnd Bergmann <arnd@arndb.de> (author)
+- Link:
+  https://patch.msgid.link/20260318124016.3488566-1-arnd@kernel.org
+- Signed-off-by: Takashi Iwai <tiwai@suse.de> (ALSA maintainer)
+- No Fixes: tag (expected for manual review candidates)
+- No Reported-by: tag
+- No Cc: stable tag
+- No Tested-by: or Reviewed-by:
+
+Record: Author is a highly trusted kernel contributor (Arnd Bergmann).
+Maintainer (Takashi Iwai) signed off. No external bug reports.
+
+**Step 1.3: Commit Body**
+The commit describes a clang-22 `__write_overflow_field` warning from
+`include/linux/fortify-string.h:569`. The `memcpy()` in
+`adapter_prepare()` copies between `struct hpi_response` and `struct
+hpi_adapter_response`, which are different structure types with
+equivalent layouts. The author explicitly states: "the code is in fact
+correct." The warning is hit "multiple times per day in randconfig
+build." The fix splits one `memcpy` into two field-level copies.
+
+Record: [Bug: build-time fortify warning, not a runtime defect]
+[Symptom: -Werror,-Wattribute-warning build failure with clang-22] [Root
+cause: FORTIFY_SOURCE cross-field memcpy detection on different struct
+types with equivalent layout]
+
+**Step 1.4: Hidden Bug Fix?**
+Record: Not a hidden bug fix. The author explicitly confirms the code is
+functionally correct. This is purely a compiler warning suppression.
+
+===============================================================
+PHASE 2: DIFF ANALYSIS
+===============================================================
+
+**Step 2.1: Inventory**
+Record: [sound/pci/asihpi/hpimsgx.c: -2/+4 lines, net +2] [Function:
+adapter_prepare()] [Scope: single-file, single-function, surgical]
+
+**Step 2.2: Code Flow Change**
+Before: One `memcpy(&rESP_HPI_ADAPTER_OPEN[adapter], &hr,
+sizeof(rESP_HPI_ADAPTER_OPEN[0]))` — copies the full struct from `hr`
+into the adapter open cache.
+
+After: Two memcpys:
+1. `memcpy(&rESP_HPI_ADAPTER_OPEN[adapter].h, &hr, sizeof(...h))` —
+   copies the response header
+2. `memcpy(&rESP_HPI_ADAPTER_OPEN[adapter].a, &hr.u.ax.info,
+   sizeof(...a))` — copies the adapter info payload
+
+This is on the normal initialization path after `HPI_ADAPTER_OPEN`.
+
+Record: [Before: single aggregate memcpy across struct boundaries →
+After: two targeted field-level memcpys copying identical data]
+
+**Step 2.3: Bug Mechanism**
+Verified struct layouts:
+- `struct hpi_response_header`: 12 bytes (u16 size + u8 type + u8
+  version + u16 object + u16 function + u16 error + u16 specific_error)
+- `struct hpi_response`: inline header fields matching
+  `hpi_response_header` + `union { ... union hpi_adapterx_res ax; ... }
+  u` at offset 12
+- `struct hpi_adapter_response` (packed): `struct hpi_response_header h`
+  (12 bytes) + `struct hpi_adapter_res a`
+- `union hpi_adapterx_res`: first member is `struct hpi_adapter_res
+  info`
+
+The new code copies `sizeof(hpi_response_header)` bytes from `&hr` into
+`.h`, then `sizeof(hpi_adapter_res)` bytes from `&hr.u.ax.info` into
+`.a`. This is equivalent to the original single copy because the inline
+header fields in `hpi_response` are layout-compatible with
+`hpi_response_header`, and `hr.u.ax.info` is at offset 12 (same as `.a`
+in the packed struct).
+
+Record: [Category: build fix — compiler warning, not runtime bug]
+[Mechanism: split memcpy to satisfy FORTIFY_SOURCE field boundary checks
+while copying identical data]
+
+**Step 2.4: Fix Quality**
+Record: [Obviously correct — verified from struct layouts] [Minimal,
+surgical] [Zero regression risk — functionally identical copy] [No API
+changes]
+
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+
+**Step 3.1: Blame**
+Verified: `git blame -L 584,586` shows the memcpy was introduced in
+commit `719f82d3987aa` by Eliot Blennerhassett on 2010-04-21 ("ALSA: Add
+support of AudioScience ASI boards"). This code has been in the kernel
+since v2.6.35 — present in all active stable trees.
+
+Record: [Introduced: 719f82d3987aa, v2.6.35 era (2010)] [Present in all
+stable trees]
+
+**Step 3.2: Fixes Tag**
+Record: [N/A — no Fixes: tag present]
+
+**Step 3.3: File History**
+Verified: `git log --oneline -20 -- sound/pci/asihpi/hpimsgx.c` shows
+very low activity. The only functional fix since the original import was
+`7b986c7430a6b` ("Fix potential OOB array access"). Since v5.15, only 2
+commits touched this file. Since v6.1, only 1.
+
+Record: [Very stable file, rarely changed] [No prerequisites or series]
+[Standalone patch]
+
+**Step 3.4: Author**
+Verified: Arnd Bergmann is a prolific kernel contributor who frequently
+submits compiler warning/build fixes across the tree. Not the asihpi
+subsystem maintainer, but a highly trusted contributor. Takashi Iwai
+(ALSA maintainer) applied the patch.
+
+Record: [Arnd Bergmann: trusted cross-tree contributor, specializes in
+build fixes] [Takashi Iwai: ALSA maintainer, accepted patch]
+
+**Step 3.5: Dependencies**
+Record: [No dependencies — self-contained single memcpy split]
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+**Step 4.1-4.4:**
+The lore.kernel.org and patch.msgid.link URLs are not accessible due to
+anti-bot (Anubis) protection.
+
+Record: [UNVERIFIED: lore discussion content, reviewer feedback, stable
+nominations, NAKs]
+
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+
+**Step 5.1: Functions Modified**
+Record: [adapter_prepare()]
+
+**Step 5.2: Callers**
+Verified: `adapter_prepare()` is called from exactly one place —
+`HPIMSGX__init()` at line 719, invoked during
+`HPI_SUBSYS_CREATE_ADAPTER`. This is an adapter initialization path
+called once per adapter during probe.
+
+Record: [Single call site: HPIMSGX__init() → adapter_prepare()] [Called
+during adapter creation/probe, not a hot path]
+
+**Step 5.3-5.4: Callees and Reachability**
+The function calls `hpi_init_message_response()`, `hw_entry_point()`,
+and `memcpy()`. The call chain is: adapter probe → `hpi_send_recv_ex()`
+→ `HPIMSGX__init()` → `adapter_prepare()`. This is reachable from the
+ioctl and kernel-side probe path for AudioScience ASI PCI sound cards.
+
+Record: [Probe/initialization path for niche PCI sound hardware]
+
+**Step 5.5: Similar Patterns**
+Verified: Similar `memcpy(&cache, &hr, sizeof(cache))` patterns exist
+for stream and mixer responses in the same file (lines 608, 621). The
+author notes these may trigger similar warnings in the future but
+currently only the adapter_prepare instance is hit.
+
+Record: [Similar patterns exist in same file for streams/mixer; only
+this one triggers with clang-22 currently]
+
+===============================================================
+PHASE 6: STABLE TREE ANALYSIS
+===============================================================
+
+**Step 6.1: Code in Stable Trees?**
+Verified: The original code was introduced in v2.6.35 (commit
+`719f82d3987aa`). Since v6.1, only 1 unrelated commit touched this file.
+Since v5.15, only 2. The exact buggy memcpy line exists identically in
+all active stable trees.
+
+Record: [Present in all stable trees: v5.15+, v6.1+, v6.6+]
+
+**Step 6.2: Backport Complications**
+Record: [Clean apply expected — file barely changed, tiny hunk with
+stable surrounding context]
+
+**Step 6.3: Related Fixes**
+Record: [No related fixes in stable for this warning]
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+**Step 7.1: Subsystem**
+Record: [sound/pci/asihpi — AudioScience ASI professional audio PCI
+boards] [Criticality: PERIPHERAL — niche hardware]
+
+**Step 7.2: Activity**
+Record: [Very low activity; mature, rarely touched driver]
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: Who Is Affected**
+Record: [Runtime: only users of AudioScience ASI PCI cards. Build:
+anyone building CONFIG_SND_ASIHPI (or allmodconfig/randconfig) with
+clang-22 and FORTIFY_SOURCE + -Werror]
+
+**Step 8.2: Trigger Conditions**
+Record: [Build-time only: clang-22 + CONFIG_FORTIFY_SOURCE + -Werror +
+CONFIG_SND_ASIHPI] [Not a runtime trigger]
+
+**Step 8.3: Failure Mode Severity**
+Record: [Failure mode: build failure/error] [Runtime severity: NONE —
+code is functionally correct] [Build severity: MEDIUM — blocks
+compilation under specific toolchain]
+
+**Step 8.4: Risk-Benefit Ratio**
+- Benefit: Keeps an existing stable driver buildable with newer compiler
+  fortify diagnostics. The author reports hitting this "multiple times
+  per day" in randconfig builds.
+- Risk: Extremely low — two memcpys copying the same data as one memcpy;
+  functionally identical, verified from struct layouts.
+
+Record: [Benefit: LOW-MEDIUM (build fix for newer toolchains)] [Risk:
+VERY LOW (trivially correct, behavior-preserving)] [Ratio: favorable]
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: Evidence**
+
+FOR backporting:
+- Build fixes are explicitly listed as an allowed stable exception:
+  "Fixes for compilation errors or warnings... These are critical for
+  users who need to build the kernel"
+- Fix is tiny (+4/-2 lines), single-function, obviously correct
+- Verified struct layout compatibility confirms the change is behavior-
+  preserving
+- Author (Arnd Bergmann) is highly trusted; maintainer (Takashi Iwai)
+  signed off
+- Code exists in all stable trees and patch would apply cleanly
+- Stable trees are expected to remain buildable with current toolchains;
+  clang versions age into wider use
+
+AGAINST backporting:
+- No runtime bug — the code is functionally correct without this patch
+- Niche driver (AudioScience ASI PCI cards)
+- Only triggers with clang-22, a very recent compiler
+- No user reports, no syzbot involvement
+- Impact scope is narrow (specific config + specific toolchain)
+
+UNRESOLVED:
+- Lore discussion content could not be verified (anti-bot protection)
+- Whether reviewers explicitly nominated this for stable
+
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** — trivially correct from layout
+   analysis; tested in randconfig
+2. Fixes a real bug that affects users? **YES (build bug)** — prevents
+   build failure with affected toolchain
+3. Important issue? **MEDIUM** — build failure, not crash/corruption,
+   but build fixes are an explicit exception
+4. Small and contained? **YES** — 4 lines changed in 1 function
+5. No new features or APIs? **YES**
+6. Can apply to stable trees? **YES** — identical code in all stable
    trees
 
-### Step 9.3: Exception Categories
-Not applicable (this is a straightforward critical bug fix).
+**Step 9.3: Exception Categories**
+This falls under the **Build Fixes** exception: "Fixes for compilation
+errors or warnings, Kconfig dependency fixes, include file fixes — These
+are critical for users who need to build the kernel."
 
-### Step 9.4: Decision
-This is a clear, surgical fix for a critical deadlock in the primary
-read path of a widely-deployed filesystem. The fix is minimal, uses a
-standard kernel API, was reviewed by the subsystem maintainer, and has
-virtually no regression risk. It meets all stable kernel criteria.
+**Step 9.4: Decision**
 
----
+This is a legitimate build fix under the stable exception rules. The
+patch is behavior-preserving (verified from struct layout analysis),
+trivially correct, and zero-risk. While the impact is narrow (clang-22 +
+niche driver), the stable tree policy explicitly allows build fixes
+because maintaining buildability with current and evolving toolchains is
+a core goal. Compiler versions age into wider use, and preventing build
+regressions on stable trees has standalone value. The near-zero
+regression risk further supports inclusion.
 
-## Verification
-
-- [Phase 1] Parsed tags: Reviewed-by Gao Xiang (erofs maintainer) and
-  Chao Yu. No Fixes: tag (expected). Signed-off-by Jiucheng Xu (Amlogic
-  author).
-- [Phase 2] Diff analysis: 3 lines added in
-  `z_erofs_decompress_kickoff()`, wrapping
-  `z_erofs_decompressqueue_work()` with `memalloc_noio_save/restore`.
-- [Phase 2] Verified `vm_map_ram()` uses `GFP_KERNEL` at
-  `mm/vmalloc.c:3070` (`vb_alloc(size, GFP_KERNEL)`) and line 3078
-  (`alloc_vmap_area(..., GFP_KERNEL, ...)`).
-- [Phase 2] Verified additional `GFP_KERNEL` allocations in
-  decompression: `kvcalloc(..., GFP_KERNEL | __GFP_NOFAIL)` at
-  `zdata.c:1300,1304` and `kmalloc(..., GFP_KERNEL | __GFP_NOFAIL)` at
-  `zdata.c:1161`.
-- [Phase 2] Verified `erofs_vm_map_ram()` at `internal.h:439-452` calls
-  `vm_map_ram()`.
-- [Phase 3] git blame: Lines 1458-1494 traced to `7865827c432bf9` (Gao
-  Xiang, 2022-01-21, rearrangement) and original logic from
-  `648f2de053a88` (Huang Jianan, 2021-03-17).
-- [Phase 3] `git tag --contains 648f2de053a88`: First appeared in v5.13.
-- [Phase 3] `git merge-base --is-ancestor 648f2de053a88 v5.10`: NOT
-  ancestor (path absent in v5.10).
-- [Phase 3] `git merge-base --is-ancestor 648f2de053a88 v5.15`: IS
-  ancestor (path present).
-- [Phase 3] `git merge-base --is-ancestor 648f2de053a88 v6.1`: IS
-  ancestor.
-- [Phase 3] `git merge-base --is-ancestor 648f2de053a88 v6.6`: IS
-  ancestor.
-- [Phase 3] Related atomic-context fixes verified: `12d0a24afd9ea` (1
-  file, 1 line), `c99fab6e80b76` (1 file, 11 lines).
-- [Phase 3] `git log --grep='memalloc_noio' -- fs/erofs`: empty — no
-  prior NOIO fix in erofs.
-- [Phase 3] `git log --author='Jiucheng Xu' -- fs/erofs`: no prior erofs
-  commits from author.
-- [Phase 4] lore.kernel.org not directly fetchable (anti-bot). Related
-  discussion for 12d0a24afd9ea confirms dm-verity + erofs scenario with
-  real stack traces.
-- [Phase 5] Callers verified: `z_erofs_decompress_kickoff()` called from
-  `z_erofs_endio()` (line 1668) and `z_erofs_submit_queue()` (line
-  1805).
-- [Phase 5] Reachability verified: `z_erofs_read_folio()` (line 1887)
-  and `z_erofs_readahead()` (line 1910) are the address_space_operations
-  (line 1944-1945).
-- [Phase 5] No existing `memalloc_noio_save` in `fs/erofs/` (grep
-  confirmed 0 matches).
-- [Phase 6] Direct-call path verified in: v5.15 (line 802), v6.1 (line
-  1195), v6.6 (line 1435), v6.12 (line 1373).
-- [Phase 6] `memalloc_noio_save` helpers exist in
-  `include/linux/sched/mm.h` (4 occurrences confirmed).
-- [Phase 8] Failure mode: System deadlock/hang in `submit_bio_wait` due
-  to bio queued to active `bio_list`, severity CRITICAL.
-- UNVERIFIED: Exact lore.kernel.org thread for this specific patch
-  (anti-bot protection blocked access).
-- UNVERIFIED: Exact real-world frequency of this deadlock in production
-  (trigger conditions are realistic based on Android + dm-verity +
-  memory pressure).
+**Verification:**
+- [Phase 1] Parsed all tags: Link, 2x Signed-off-by; no Fixes, Reported-
+  by, Cc: stable
+- [Phase 2] Diff: single memcpy replaced by two field-level memcpys in
+  adapter_prepare(); net +2 lines
+- [Phase 2] Struct layout verified: hpi_response_header (12 bytes
+  inline), hpi_response has matching inline fields + union at offset 12,
+  hpi_adapter_response is packed header.h + adapter_res.a — layouts
+  confirmed compatible
+- [Phase 3] git blame: code introduced in 719f82d3987aa (2010, v2.6.35
+  era), present in all stable trees
+- [Phase 3] git log: file barely changed; only 1 commit since v6.1, 2
+  since v5.15; no series/dependencies
+- [Phase 3] Author verified: Arnd Bergmann, prolific build-fix
+  contributor; Takashi Iwai (ALSA maintainer) applied
+- [Phase 4] UNVERIFIED: lore.kernel.org discussion blocked by anti-bot
+  protection
+- [Phase 5] Callers traced: adapter_prepare() called only from
+  HPIMSGX__init() (line 719), probe/init path
+- [Phase 5] Similar memcpy patterns exist at lines 608, 621 for streams;
+  only adapter instance triggers currently
+- [Phase 6] Code exists identically in v5.15, v6.1, v6.6; clean apply
+  expected
+- [Phase 7] Subsystem: sound/pci/asihpi — PERIPHERAL, low activity,
+  mature driver
+- [Phase 8] Impact: build-time only, clang-22 + FORTIFY_SOURCE +
+  -Werror; severity MEDIUM as build fix
+- [Phase 8] Risk: VERY LOW — functionally identical change, verified
+  from struct layouts
 
 **YES**
 
- fs/erofs/zdata.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/asihpi/hpimsgx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index b71fcf4be484a..8ba409df1ca70 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1459,6 +1459,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
- 				       int bios)
- {
- 	struct erofs_sb_info *const sbi = EROFS_SB(io->sb);
-+	int gfp_flag;
+diff --git a/sound/pci/asihpi/hpimsgx.c b/sound/pci/asihpi/hpimsgx.c
+index b68e6bfbbfbab..ed1c7b7744361 100644
+--- a/sound/pci/asihpi/hpimsgx.c
++++ b/sound/pci/asihpi/hpimsgx.c
+@@ -581,8 +581,10 @@ static u16 adapter_prepare(u16 adapter)
+ 		HPI_ADAPTER_OPEN);
+ 	hm.adapter_index = adapter;
+ 	hw_entry_point(&hm, &hr);
+-	memcpy(&rESP_HPI_ADAPTER_OPEN[adapter], &hr,
+-		sizeof(rESP_HPI_ADAPTER_OPEN[0]));
++	memcpy(&rESP_HPI_ADAPTER_OPEN[adapter].h, &hr,
++		sizeof(rESP_HPI_ADAPTER_OPEN[adapter].h));
++	memcpy(&rESP_HPI_ADAPTER_OPEN[adapter].a, &hr.u.ax.info,
++		sizeof(rESP_HPI_ADAPTER_OPEN[adapter].a));
+ 	if (hr.error)
+ 		return hr.error;
  
- 	/* wake up the caller thread for sync decompression */
- 	if (io->sync) {
-@@ -1491,7 +1492,9 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
- 			sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
- 		return;
- 	}
-+	gfp_flag = memalloc_noio_save();
- 	z_erofs_decompressqueue_work(&io->u.work);
-+	memalloc_noio_restore(gfp_flag);
- }
- 
- static void z_erofs_fill_bio_vec(struct bio_vec *bvec,
 -- 
 2.53.0
 
