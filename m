@@ -1,50 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0D63D47BC;
-	Mon, 30 Mar 2026 12:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3633D5671;
+	Mon, 30 Mar 2026 12:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874352; cv=none; b=ZQ96ou1St7nWOZsSujQlXQeUp2W2WQ5qhMS0k8y2EWJuIDuuwmVYk/BOyU/QI9yKfKU5LciahHQaSvALJ4QPprz01tSgyR4+oUjGbGfa/VD+pkIPT5VWbgOlNaK6fQIsMrfPEpYefY0BV/X/flb8Qcx3ydLqRynB9KjXrpxkcIA=
+	t=1774874353; cv=none; b=Vwld/OMgs/hFC5nfqwS4xrLkUaNcnmawHJNI19q1IG8vnQtWFq3H0SWeRDJPIEprIQw34lX8yLNMEUTAck3XKRl+iJAke5+DLcunRm/vjDZd3tesDGiO+Lan2f0/7DqamqxdU01QVQJyED/5xxGHzg6OTZhkM81TnVL+xP1LPKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874352; c=relaxed/simple;
-	bh=QIr2MPysgN6oXjXrbTTEUp1sNpZxedb6kRsTKaf1NtU=;
+	s=arc-20240116; t=1774874353; c=relaxed/simple;
+	bh=UVnjFdx8SHTfxHnR5sW2FoviYU2dJnrKgQOtUHu5A8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o5hJYbLi1sOfqolO4ymLAYqAY4g+I6hJlOlkUIsJhyoCJOrZdw+MBtCRS0J7QJJKhI3twY89Pi+n8Qk/h1eKXwKQpV1IUOAFG76j6MNFd7celmvD4XhohPGyjUzU0PedvEbJl1hbWEZ9BElM9ECFM++8QkXUAU3Jmvj6GX9eKMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D+f95Fkl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A1I5/vfs2jTxhJyOkJ62Ng2VJM7vCu1pa9q51ce3UjKxlKCstH+Fnn5EhIx8J1k7EgxUrpUEuWPco+Tp9ld8nqmIQaSFP6/qKv4cRKEMfb53qX+NN3HB29/IrPR2CVKyUqvkCTrhAZVAw43p7w3Q5i37fRTOftAbj/Xm1R3bkcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eGNTEfXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D+f95Fkl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8025C2BCB2;
-	Mon, 30 Mar 2026 12:39:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eGNTEfXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1A4C2BCB1;
+	Mon, 30 Mar 2026 12:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874352;
-	bh=QIr2MPysgN6oXjXrbTTEUp1sNpZxedb6kRsTKaf1NtU=;
+	s=k20201202; t=1774874353;
+	bh=UVnjFdx8SHTfxHnR5sW2FoviYU2dJnrKgQOtUHu5A8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+f95FklNi/1MzvAXHcy+AFf+L+M8YNw28ElNETkrccD4N10cPuHead3xeTLO6bPd
-	 xZDiJo5c6YeISH6EymjTzMgbLSQ3jFhGoGLCLniKe8O5mY8WAhdSpQzSeGnjMWEWbc
-	 VekFpl7kb34GZnaT23QCKyYT2Hryr9Y5UfTTBW5X4jGdwIXekfqgkvziu+m4JvkzLD
-	 9DJU3/DqafrdqclcKYWoFDeaHDd/fwfXbiVtkxmyw9HNl4snkMt+xxTFs39svlKHcf
-	 imDMeDmu9y5g6UjR7LrkqRhnAXfC9VRJIjoo47P6b+VM19wDkc0LpT4p2QjtysB95X
-	 PqFUizVEH6zXg==
+	b=eGNTEfXVjFlMT1L0RyQEnkHv78Mi/hDJY5zy64aJWp9UPAQc9aDcAJgErtDl1oCd3
+	 ysU+Z4+rkTFN2kCjT4o1rsphbSZ2DrT0XcIoy6fLV4igiiU3gUhaAL1Hz02jyzqoHg
+	 Z+iFJxzkg/DDDirnSwp1p37r97Zpn2Bw3qmNfLMORjGX0ir/g3vuQadqjgH2wES52E
+	 J2WA4tORLigjenTNVooKMdydqG12wh+GsO/1AJdi6DNr0lTxZanYm0syuA0R9nYSFX
+	 XtoLZwIDZcfgSfxD2eIB5vT9UVIj9avrCgOINVBYyCP/dL0CgG/83ARvH3941Xe+5g
+	 e9lKCdEkk1XWA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Kailang Yang <kailang@realtek.com>,
+	Chris Chiu <chris.chiu@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	yung-chuan.liao@linux.intel.com,
-	ranjani.sridharan@linux.intel.com,
-	daniel.baluta@nxp.com,
 	perex@perex.cz,
 	tiwai@suse.com,
-	sound-open-firmware@alsa-project.org,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] ASoC: SOF: topology: reject invalid vendor array size in token parser
-Date: Mon, 30 Mar 2026 08:38:33 -0400
-Message-ID: <20260330123842.756154-20-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19] ALSA: hda/realtek - Fixed Speaker Mute LED for HP EliteBoard G1a platform
+Date: Mon, 30 Mar 2026 08:38:34 -0400
+Message-ID: <20260330123842.756154-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -54,311 +49,522 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.10
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 215e5fe75881a7e2425df04aeeed47a903d5cd5d ]
+[ Upstream commit d3be95efc6a1e03230ef646b498050152efe2888 ]
 
-sof_parse_token_sets() accepts array->size values that can be invalid
-for a vendor tuple array header. In particular, a zero size does not
-advance the parser state and can lead to non-progress parsing on
-malformed topology data.
+On the HP EliteBoard G1a platform (models without a headphone jack).
+the speaker mute LED failed to function. The Sysfs ctl-led info showed
+empty values because the standard LED registration couldn't correctly
+bind to the master switch.
+Adding this patch will fix and enable the speaker mute LED feature.
 
-Validate array->size against the minimum header size and reject values
-smaller than sizeof(*array) before parsing. This preserves behavior for
-valid topologies and hardens malformed-input handling.
-
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260319-sof-topology-array-size-fix-v1-1-f9191b16b1b7@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Tested-by: Chris Chiu <chris.chiu@canonical.com>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/279e929e884849df84687dbd67f20037@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis.
-
-===============================================================
 ## PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
 
-**Step 1.1:** Record: [ASoC: SOF: topology] [reject] [reject invalid
-vendor array size in token parser to prevent non-progress parsing]
+### Step 1.1: Subject Line
+Record: [ALSA: hda/realtek] [Fixed] [Speaker mute LED not working on HP
+EliteBoard G1a, models without headphone jack]
 
-**Step 1.2:** Record: Tags present:
-- Signed-off-by: Cássio Gabriel (author)
-- Acked-by: Peter Ujfalusi (confirmed listed SOF maintainer in
-  MAINTAINERS)
-- Link: patch.msgid.link URL
-- Signed-off-by: Mark Brown (ASoC maintainer, merged the patch)
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable tags (expected for
-  manual review candidates)
+### Step 1.2: Tags
+- **Tested-by**: Chris Chiu <chris.chiu@canonical.com> — Canonical
+  developer verified the fix on real hardware
+- **Signed-off-by**: Kailang Yang <kailang@realtek.com> — author is from
+  Realtek, the codec vendor
+- **Link**:
+  https://lore.kernel.org/279e929e884849df84687dbd67f20037@realtek.com
+- **Signed-off-by**: Takashi Iwai <tiwai@suse.de> — ALSA subsystem
+  maintainer accepted it
+- No Fixes:, Reported-by:, Cc: stable tags (expected for this review
+  pipeline)
 
-**Step 1.3:** Record: Bug: `sof_parse_token_sets()` accepts
-`array->size` values that are invalid — specifically, a zero size does
-not advance parser state. Symptom: non-progress parsing (infinite loop)
-on malformed topology data. Root cause: the validation only checked
-`asize < 0`, which cannot catch zero or small positive values.
+Record: Tested-by from Canonical, author is Realtek vendor engineer,
+accepted by ALSA maintainer. No Fixes: tag.
 
-**Step 1.4:** Record: Yes, this is a real bug fix despite "hardens"
-language. The commit fixes a concrete infinite loop scenario where
-`asize == 0` causes the parser while-loop to never terminate.
+### Step 1.3: Commit Body
+Record: Bug: On HP EliteBoard G1a (models without headphone jack), the
+speaker mute LED fails to function. Sysfs `ctl-led` info shows empty
+values because the standard LED registration couldn't bind to the master
+switch. Symptom: Non-functional mute LED. Root cause: The LED classdev
+registration mechanism doesn't work properly when there is no HP pin on
+the platform.
 
-===============================================================
+### Step 1.4: Hidden Bug Fix
+Record: Not hidden — explicitly labeled as a "Fixed" in the subject.
+This is a straightforward hardware quirk fix.
+
+---
+
 ## PHASE 2: DIFF ANALYSIS
-===============================================================
 
-**Step 2.1:** Record: 1 file changed (`sound/soc/sof/topology.c`), 1
-line modified. Function modified: `sof_parse_token_sets()`.
-Classification: single-file, single-line surgical fix.
+### Step 2.1: Inventory
+- **Files changed**: 1 — `sound/hda/codecs/realtek/alc269.c`
+- **Lines**: ~20 added, ~1 removed (net +19)
+- **Functions**: New `alc245_hp_spk_mute_led_update()`; modified
+  `alc245_tas2781_i2c_hp_fixup_muteled()`
+- **Scope**: Single-file, surgical fix
 
-**Step 2.2:** Record: Before: `if (asize < 0)` — only rejects negative
-values. After: `if (asize < sizeof(*array))` — rejects any value smaller
-than the vendor array header size. The FIXME comment ("A zero-size array
-makes no sense") was already documenting this known deficiency.
+Record: 1 file, ~20 lines added, 1 function modified, 1 small helper
+added. Single-file surgical fix.
 
-**Step 2.3:** Record: Bug category: logic/infinite loop. The while loop
-at line 735 uses `array_size -= asize` (line 746) and advances the
-pointer via `array = (u8*)array + asize` (line 784). When `asize == 0`:
-1. `array_size -= 0` — no change, stays positive
-2. `array = array + 0` — pointer doesn't advance
-3. The while condition `array_size > 0 && total < count *
-   token_instance_num` remains true
-4. Result: **infinite loop / soft lockup**
+### Step 2.2: Code Flow Change
 
-**Step 2.4:** Record: The fix is obviously correct. `struct
-snd_soc_tplg_vendor_array` has three `__le32` header fields (`size`,
-`type`, `num_elems`) = 12 bytes minimum, plus a flex array union. Any
-valid array must be at least `sizeof(*array)` bytes. Note on type
-promotion: `asize` is `int`, `sizeof(*)` is `size_t`. A negative `asize`
-promotes to a very large unsigned value, so `asize < sizeof(*)` would be
-false — but negative `asize` is still caught by the subsequent
-`array_size -= asize; if (array_size < 0)` check at line 747, so no
-regression.
+**New function `alc245_hp_spk_mute_led_update()`**: A vmaster hook
+callback that writes COEF register 0x0b with mask 0x0c, setting 0x08
+when `enabled=1` and 0x04 when `enabled=0`.
 
-===============================================================
+**Modified `alc245_tas2781_i2c_hp_fixup_muteled()`**:
+- **Before**: Always called `alc245_fixup_hp_mute_led_coefbit()` after
+  TAS2781 fixup, which registers a LED classdev via
+  `snd_hda_gen_add_mute_led_cdev()`.
+- **After**: Reads `alc_get_hp_pin(spec)` at function entry. If no HP
+  pin: sets `vmaster_mute.hook` to the new direct-write function, sets
+  `vmaster_mute_led = 1`, syncs LED state during `HDA_FIXUP_ACT_INIT`.
+  Only calls `alc245_fixup_hp_mute_led_coefbit()` if `hp_pin` is non-
+  zero.
+
+Record: Before: always uses LED classdev path. After: uses direct
+vmaster hook when no HP pin, LED classdev when HP pin present.
+
+### Step 2.3: Bug Mechanism
+Record: [Hardware workaround]. The standard LED classdev registration
+via `snd_hda_gen_add_mute_led_cdev()` cannot bind properly to the master
+switch on platforms without a headphone pin. The fix bypasses the
+classdev and uses the `vmaster_mute.hook` mechanism for direct register
+control.
+
+### Step 2.4: Fix Quality — Polarity and Probe Ordering Analysis
+
+**Polarity concern**: The existing `alc245_fixup_hp_mute_led_coefbit`
+path uses the LED classdev, which turns LED ON (writes 0x08) when audio
+is MUTED. The new vmaster hook path writes 0x08 when `enabled=1` (audio
+NOT muted). This is an apparent polarity inversion. However, the
+`vmaster_mute.hook` convention (seen in analog.c, conexant.c,
+senarytech.c) passes `enabled=1` for unmuted, `enabled=0` for muted — so
+the new function maps unmuted → 0x08 (LED on), muted → 0x04 (LED off).
+This is opposite to the mute-LED convention but may be intentionally
+correct for this specific hardware platform. The Tested-by from Chris
+Chiu confirms correct behavior on the target hardware.
+
+**Probe ordering concern**: `alc_get_hp_pin(spec)` reads
+`spec->gen.autocfg.hp_pins[0]`, which is populated by
+`alc269_parse_auto_config()`. During `HDA_FIXUP_ACT_PRE_PROBE` (line
+8595), this function runs BEFORE `alc269_parse_auto_config()` (line
+8603), meaning `hp_pins[0]` is always 0 at PRE_PROBE time. This means
+`!hp_pin` is ALWAYS true during PRE_PROBE, so the vmaster hook path
+activates for ALL platforms using this fixup, not just no-HP models.
+However, during INIT (which runs after autocfg parsing), `hp_pin`
+correctly reflects the actual hardware. The `if (!hp_pin)` check in the
+INIT case correctly gates the LED sync.
+
+Record: Two technical concerns: (1) apparent LED polarity inversion vs
+standard convention, (2) probe ordering means hp_pin check is always
+true during PRE_PROBE. Both are mitigated by Tested-by on real hardware,
+vendor authorship, and maintainer acceptance.
+
+---
+
 ## PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
 
-**Step 3.1:** Record: `git blame` confirms the buggy `if (asize < 0)`
-check was introduced in commit `311ce4fe7637d9` ("ASoC: SOF: Add support
-for loading topologies") by Liam Girdwood, 2019-04-12. `git describe
---contains` shows this is `v5.2-rc1`. The bug has been present since
-**v5.2** — all active stable trees contain it.
+### Step 3.1: Blame
+`alc245_tas2781_i2c_hp_fixup_muteled` was introduced by commit
+`9afbbf4903228c` (Kailang Yang, 2025-11-20, "ALSA: hda/realtek - Enable
+Mute LED and Tas2781 for HP platform"). The commit first appeared in
+v6.19-rc1. The ZBook 8 G2a entries (0x8f40, 0x8f41, 0x8f42, 0x8f62) were
+also added by the same commit.
 
-**Step 3.2:** Record: No Fixes: tag present. The buggy commit is
-`311ce4fe7637d9`.
+Record: Function introduced in 9afbbf4903228c, v6.19-rc1 (2025-11-20),
+by same author.
 
-**Step 3.3:** Record: `git log --oneline -20` shows active development
-but no related prerequisite or duplicate fix for this specific issue.
+### Step 3.2: Fixes Tag
+No Fixes: tag present. If one existed, it would logically point to
+`9afbbf4903228c`.
 
-**Step 3.4:** Record: Peter Ujfalusi (Acked-by) is a listed maintainer
-for SOF in MAINTAINERS. Mark Brown signed off as ASoC subsystem
-maintainer. Strong maintainer endorsement.
+Record: N/A — no Fixes tag.
 
-**Step 3.5:** Record: No dependencies. The fix changes one condition in
-an existing function with no new types, helpers, or APIs needed.
+### Step 3.3: File History
+Recent `alc269.c` history shows very active development with many quirk
+additions and LED fixes. No intermediate fixes for this specific
+function were found.
 
-===============================================================
-## PHASE 4: MAILING LIST RESEARCH
-===============================================================
+Record: Standalone fix, no visible prerequisites beyond 9afbbf4903228c.
 
-Record: The patch.msgid.link and lore.kernel.org URLs are blocked by
-Anubis bot protection in this environment. However, the patch was Acked
-by a listed SOF maintainer (Peter Ujfalusi) and merged by the ASoC
-maintainer (Mark Brown), providing strong review signal.
+### Step 3.4: Author
+Kailang Yang (Realtek) is the codec vendor engineer and a frequent
+contributor to this driver. He authored the original function
+(9afbbf4903228c), the ZBook LED commit (500372aeb556a), and several
+other Realtek fixes. Takashi Iwai (ALSA maintainer) accepted the patch.
 
-===============================================================
+Record: Author is the Realtek codec vendor engineer — maximum authority
+for codec-specific behavior.
+
+### Step 3.5: Dependencies
+- Depends on `alc245_tas2781_i2c_hp_fixup_muteled()` from 9afbbf4903228c
+- Depends on `ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED` and associated
+  SND_PCI_QUIRK entries
+- All present in v6.19, absent from v6.18 and older
+
+Record: Dependencies all exist in 6.19.y. Cannot apply to older stable
+trees.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: Lore
+Lore link in the commit points to internal Realtek email;
+lore.kernel.org was blocked by Anubis bot protection. Could not access
+patch discussion.
+
+Record: UNVERIFIED — could not access lore discussion.
+
+### Step 4.2: Bug Report
+**Ubuntu Launchpad Bug #2136846** ("Fix speaker mute and mic mute leds
+on a HP EliteBoard G1a") was found and fetched. Key findings:
+- Filed by Chris Chiu (the Tested-by person) on 2025-12-19
+- Platform: HP NexusX (SSID 0x103c:0x8e8a) using Realtek ALC3315+TAS2783
+- The initial upstream fix (fd324768eb2c "ALSA: hda/tas2781: Add new
+  quirk for HP new project") was insufficient — **Comment #3** from
+  Chris Chiu: "Verified... the mic-mute led works but the mute led does
+  not."
+- The candidate commit is the follow-up to address the remaining speaker
+  mute LED issue
+- Ubuntu tracked this as an OEM-priority bug and it was marked "Fix
+  Released" for linux-oem-6.17 and later confirmed "6.19 has it"
+
+Record: Real-world bug confirmed by Ubuntu Launchpad #2136846. Mic-mute
+LED worked after first fix, speaker mute LED still broken — this commit
+is the specific follow-up fix.
+
+### Step 4.3-4.4: Related Patches and Stable History
+No direct stable-mailing-list discussion found. The Launchpad bug shows
+Ubuntu already backported the earlier fix to linux-oem-6.17.
+
+Record: Ubuntu already backported related fixes to their OEM kernel.
+
+---
+
 ## PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
 
-**Step 5.1:** Record: Modified function: `sof_parse_token_sets()`
+### Step 5.1: Key Functions
+- `alc245_hp_spk_mute_led_update()` (new) — vmaster hook for direct LED
+  control
+- `alc245_tas2781_i2c_hp_fixup_muteled()` (modified) — fixup function
 
-**Step 5.2:** Record: `sof_parse_token_sets()` is called from:
-1. `sof_parse_tokens()` — a wrapper called from ~9 locations throughout
-   topology.c (control load, widget parsing, DAI load, link load,
-   DSPless widget paths)
-2. `sof_parse_pin_binding()` — direct call for pin binding token parsing
+### Step 5.2: Callers
+`alc245_tas2781_i2c_hp_fixup_muteled` is called via the fixup table
+entry `ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED`, triggered by SND_PCI_QUIRK
+entries for:
+- HP NexusX (0x103c, 0x8e8a)
+- HP ZBook 8 G2a 14/16/14W/16W (0x103c, 0x8f40/8f41/8f42/8f62)
 
-This is a heavily-used core parsing function in the SOF topology loader.
+The new hook function is called by the generic vmaster framework during
+Master Playback Switch changes.
 
-**Step 5.3-5.4:** Record: The call chain is: `sof_pcm_probe()` →
-`snd_sof_load_topology()` → `snd_soc_tplg_component_load()` → SOF
-callbacks (widget_ready, dai_load, link_load, control_load) →
-`sof_parse_tokens()` → `sof_parse_token_sets()`. This is triggered
-during SOF audio component probe when topology firmware blobs are
-loaded.
+Record: Called from quirk table for 5 specific HP platform SSIDs. Well-
+defined scope.
 
-**Step 5.5:** Record: The **same weak check** (`if (asize < 0)`) exists
-in `sof_copy_tuples()` at line 544, with identical loop structure and
-pointer advancement at line 610. This sibling function has the same
-vulnerability but is NOT fixed by this commit. This means the patch is
-not a complete fix across all SOF topology parsing paths, but it does
-fix the specific path through `sof_parse_token_sets()`.
+### Step 5.3: Callees
+- `alc_update_coef_idx()` — standard codec coefficient register update,
+  used 64+ times in this file
+- `alc_get_hp_pin()` — reads `spec->gen.autocfg.hp_pins[0]` or
+  line_out_pins[0] if type is HP
 
-===============================================================
-## PHASE 6: STABLE TREE ANALYSIS
-===============================================================
+### Step 5.4: Call Chain
+PCI SSID match → `alc245_tas2781_i2c_hp_fixup_muteled` (PRE_PROBE/INIT)
+→ `vmaster_mute.hook` set → generic HDA build connects hook to Master
+Playback Switch → hook fires on mute state change. Reachable from
+userspace ALSA mixer controls and platform hotkeys.
 
-**Step 6.1:** Record: The buggy code was introduced in v5.2. All active
-stable trees (5.4.y, 5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y) contain this
-vulnerable code.
+Record: Path reachable from userspace mixer and hardware mute button.
 
-**Step 6.2:** Record: Expected clean or trivial backport — the `if
-(asize < 0)` line with the FIXME comment hasn't changed since
-introduction.
+### Step 5.5: Similar Patterns
+The `vmaster_mute.hook` mechanism is used in 4+ other codec drivers
+(analog, conexant, senarytech, ca0132). The pattern of direct COEF
+register writes for LED control is standard in the Realtek driver.
 
-**Step 6.3:** Record: No duplicate or alternative fix found for this
-exact issue in git history.
+Record: Uses well-established patterns from multiple codec drivers.
 
-===============================================================
-## PHASE 7: SUBSYSTEM CONTEXT
-===============================================================
+---
 
-**Step 7.1:** Record: Subsystem: sound/soc/sof (Sound Open Firmware).
-Criticality: IMPORTANT — SOF is used on most modern Intel laptops for
-audio hardware.
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 7.2:** Record: Active subsystem with regular commits.
+### Step 6.1: Code Existence in Stable Trees
+- **v6.19**: `alc245_tas2781_i2c_hp_fixup_muteled` EXISTS (verified via
+  `git show v6.19:...`)
+- **v6.18**: DOES NOT EXIST (verified, returns 0 matches)
+- **v6.12**: DOES NOT EXIST (verified, returns 0 matches)
+- `9afbbf4903228c` is ancestor of v6.19 but NOT ancestor of v6.18
 
-===============================================================
+Record: **Only 6.19.y contains the buggy code.** Not applicable to
+6.18.y, 6.12.y, 6.6.y, 6.1.y, or any older LTS trees.
+
+### Step 6.2: Backport Complications
+For 6.19.y: The function body in v6.19 matches the pre-patch context of
+the diff. Should apply cleanly.
+
+Record: Clean apply expected for 6.19.y only.
+
+### Step 6.3: Related Fixes in Stable
+No related fixes for this specific issue already in stable.
+
+Record: No duplicate fixes.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem Criticality
+- Subsystem: sound/hda/codecs/realtek — HDA audio codec driver
+- Criticality: IMPORTANT for affected laptops/workstations (audio is
+  user-facing), but driver-specific
+
+Record: IMPORTANT subsystem, driver-specific fix.
+
+### Step 7.2: Subsystem Activity
+The file is extremely active with constant quirk additions and LED
+fixes. This is routine maintenance for the Realtek codec driver.
+
+Record: Highly active subsystem; mute LED fixes are common and routine.
+
+---
+
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
 
-**Step 8.1:** Record: Affected users: SOF audio hardware users (very
-common on Intel-based laptops/desktops).
+### Step 8.1: Affected Users
+HP EliteBoard G1a (NexusX) and potentially HP ZBook 8 G2a users running
+6.19.y stable kernels with the `ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED`
+fixup.
 
-**Step 8.2:** Record: Trigger: malformed/corrupt SOF topology blob with
-`array->size == 0` (or < header size). Topology files are loaded from
-firmware path during driver probe. Trigger requires corrupt or
-maliciously crafted topology data — uncommon in normal operation but
-possible from disk corruption or adversarial input.
+Record: Driver-specific, affects users of specific HP platforms on
+6.19.y.
 
-**Step 8.3:** Record: Failure mode: infinite loop in kernel context →
-soft lockup → system hang during audio driver probe. Severity: HIGH
-(system hang, unavailability).
+### Step 8.2: Trigger Conditions
+The bug triggers on every boot — the mute LED simply never works. 100%
+reproducible on affected hardware.
 
-**Step 8.4:** Record:
-- **Benefit:** Prevents a real infinite loop / system hang. The FIXME
-  comment proves the developer knew this was broken. Low-medium benefit
-  (real hang, but only on malformed input).
-- **Risk:** Very low. Single condition change; valid topologies always
-  have `asize >= sizeof(*array)`. No regression for valid data. Acked by
-  subsystem maintainer.
-- **Ratio:** Favorable — high confidence in correctness, near-zero
-  regression risk, fixes real hang.
+Record: Always triggers on affected hardware. Confirmed reproducible by
+Launchpad bug.
 
-===============================================================
+### Step 8.3: Failure Mode Severity
+Non-functional speaker mute LED. Audio mute/unmute itself works
+correctly. This is a LOW severity user experience issue — no crash, no
+data corruption, no security impact.
+
+Record: Severity LOW — non-functional LED indicator.
+
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: LOW-MEDIUM — fixes user-visible hardware feature on
+  specific HP platforms. Ubuntu tracked this as OEM-priority.
+- **Risk**: LOW — only activates for specific HP platform SSIDs. ~20
+  lines, single file. Tested on real hardware. The probe ordering
+  concern means the vmaster hook path activates for ALL platforms using
+  this fixup (including ZBook), but the worst-case failure mode is wrong
+  LED polarity on those platforms (still LOW severity).
+- **Ratio**: Favorable — low risk, clear benefit for affected users.
+
+Record: Benefit > Risk. Small, well-tested change with bounded failure
+modes.
+
+---
+
 ## PHASE 9: FINAL SYNTHESIS
-===============================================================
 
-**Step 9.1: Evidence compilation**
+### Step 9.1: Evidence Summary
 
-FOR backporting:
-- Fixes a concrete infinite loop (system hang) — the FIXME comment
-  proves this was a known deficiency
-- Single-line, obviously correct fix
-- Acked by listed SOF subsystem maintainer (Peter Ujfalusi)
-- Merged by ASoC maintainer (Mark Brown)
-- Bug present since v5.2 — exists in all active stable trees
-- Near-zero regression risk for valid topologies
-- `sof_parse_token_sets()` is called from ~10 locations — well-used code
-  path
+**FOR backporting:**
+- Fixes a real user-facing issue confirmed by Ubuntu Launchpad bug
+  #2136846
+- Hardware quirk/workaround — explicitly allowed in stable rules
+- Small, surgical change (~20 lines, single file)
+- Author is the Realtek codec vendor engineer (maximum authority)
+- Tested-by from Canonical developer (Chris Chiu) on real hardware
+- Accepted by ALSA maintainer (Takashi Iwai)
+- Uses well-established `vmaster_mute.hook` mechanism (4+ codec drivers)
+- Applies cleanly to 6.19.y
+- Ubuntu already prioritized the underlying bug as OEM-priority
 
-AGAINST backporting:
-- Trigger requires malformed topology data (not normal operation)
-- No user/syzbot crash report — found by code inspection
-- The parallel `sof_copy_tuples()` function retains the same weak check
-  (incomplete coverage)
-- SOF is important but not core kernel — affects hardware-specific users
+**AGAINST backporting:**
+- Severity is LOW (LED malfunction, not crash/security/corruption)
+- Only applicable to 6.19.y (code doesn't exist in older stable trees)
+- Probe ordering issue: `alc_get_hp_pin()` always returns 0 during
+  PRE_PROBE, meaning the vmaster hook path activates for ALL platforms
+  using this fixup, not just no-HP models
+- LED polarity in the vmaster hook appears inverted from the standard
+  LED classdev convention
+- Code is only ~4 months old (introduced in v6.19-rc1)
 
-**Step 9.2: Stable rules checklist**
-1. Obviously correct and tested? **YES** — maintainer acked, trivially
-   verifiable from code
-2. Fixes a real bug? **YES** — infinite loop on malformed input
-   (acknowledged by FIXME comment)
-3. Important issue? **YES** — system hang (soft lockup), HIGH severity
-4. Small and contained? **YES** — 1 line changed, 1 function, 1 file
-5. No new features or APIs? **YES**
-6. Can apply to stable trees? **YES** — identical code in all stable
-   trees
+### Step 9.2: Stable Rules Checklist
+1. **Obviously correct and tested?** Tested-by present, but probe
+   ordering question makes it not 100% "obviously correct" from code
+   inspection alone. The polarity inversion is either intentional for
+   this hardware or a concern. The Tested-by and maintainer acceptance
+   provide practical confidence.
+2. **Fixes a real bug?** YES — confirmed by Launchpad bug and Tested-by
+3. **Important issue?** Borderline — LED malfunction is low severity,
+   but it's a real user-visible hardware issue
+4. **Small and contained?** YES — ~20 lines, single file
+5. **No new features or APIs?** YES — hardware workaround only
+6. **Can apply to stable?** YES — to 6.19.y only
 
-**Step 9.3:** Record: No exception category — standard bug fix.
+### Step 9.3: Exception Categories
+This falls squarely into the **hardware quirk/workaround** exception
+category. Audio codec quirks for specific platforms are routinely
+backported to stable and are explicitly listed as acceptable in stable
+rules.
 
-**Step 9.4: Decision**
+### Step 9.4: Decision
+This is a hardware quirk fix for specific HP platforms, authored by the
+Realtek codec vendor, tested on real hardware by Canonical, and accepted
+by the ALSA maintainer. While there are legitimate technical concerns
+about probe ordering (the `alc_get_hp_pin()` check at PRE_PROBE time)
+and LED polarity inversion compared to the standard path, the worst-case
+failure mode for any regression is wrong LED behavior (LOW severity),
+and the fix was verified working on the target hardware. Hardware quirks
+are explicitly allowed in stable, and the fix is only applicable to
+6.19.y where the prerequisite code exists. The Ubuntu Launchpad bug
+confirms this is a real user-facing issue that was tracked as OEM-
+priority.
 
-This commit fixes a real, documented infinite loop bug (the original
-code even had a FIXME acknowledging the problem). The fix is a single-
-line minimum-size validation, acked by the subsystem maintainer, with
-near-zero regression risk. While the trigger requires malformed topology
-data, a system hang is a serious failure mode — stable kernels should
-handle invalid input gracefully without hanging. The incomplete coverage
-of the sibling function `sof_copy_tuples()` does not diminish the value
-of fixing this specific path. The fix meets all stable kernel criteria.
+---
 
 ## Verification
 
-- [Phase 1] Parsed all tags from supplied commit message: Acked-by Peter
-  Ujfalusi, Signed-off-by Mark Brown, Link to patch.msgid.link
-- [Phase 1] Verified Peter Ujfalusi is listed as maintainer in
-  MAINTAINERS under "SOUND - SOUND OPEN FIRMWARE (SOF) DRIVERS"
-- [Phase 2] Read `sof_parse_token_sets()` (lines 724-793): confirmed
-  while loop at line 735, `array_size -= asize` at line 746, pointer
-  advance `(u8*)array + asize` at line 784 — `asize == 0` causes
-  infinite loop
-- [Phase 2] Verified `struct snd_soc_tplg_vendor_array` in
-  `include/uapi/sound/asoc.h` (line 220): three `__le32` fields (`size`,
-  `type`, `num_elems`) + flex array union — `sizeof(*array)` is the
-  correct minimum header size
-- [Phase 2] Verified type safety: `int asize` compared against `size_t
-  sizeof(*)` — negative values promote to large unsigned (caught by
-  subsequent `array_size < 0` check at line 747)
-- [Phase 3] git blame: buggy `if (asize < 0)` line attributed to commit
-  `311ce4fe7637d9` (Liam Girdwood, 2019-04-12)
-- [Phase 3] git describe: `311ce4fe7637d9` first appeared in `v5.2-rc1`
-  — bug present in all active stable trees
-- [Phase 3] git log -20: no prerequisites or duplicate fixes found
-- [Phase 5] grep callers: `sof_parse_token_sets()` called from
-  `sof_parse_tokens()` (~9 call sites) and `sof_parse_pin_binding()` (1
-  call site)
-- [Phase 5] grep: found same weak `if (asize < 0)` check in sibling
-  `sof_copy_tuples()` at line 544, with identical loop/advance pattern
-  at line 610 — NOT fixed by this commit
-- [Phase 6] Buggy code unchanged since v5.2 — clean backport expected to
-  all active stable trees
-- [Phase 8] Failure mode: infinite loop in kernel context → soft
-  lockup/system hang during topology load. Severity: HIGH
-- UNVERIFIED: Lore discussion content (blocked by Anubis protection)
-- UNVERIFIED: Whether unprivileged users can trigger topology loading on
-  specific distributions
-- UNVERIFIED: Exact runtime `sizeof(struct snd_soc_tplg_vendor_array)`
-  (struct is `__packed` with flex array — compile-time verification not
-  performed)
+- [Phase 1] Parsed commit message and tags from provided text: Tested-by
+  Chris Chiu (Canonical), SOB from Kailang Yang (Realtek) and Takashi
+  Iwai (ALSA maintainer), Link to lore
+- [Phase 2] Read `sound/hda/codecs/realtek/alc269.c` lines 3700-3719
+  (pre-patch function), lines 1540-1554
+  (`alc245_fixup_hp_mute_led_coefbit` showing coef values: idx=0x0b,
+  mask=3<<2=0x0c, on=2<<2=0x08, off=1<<2=0x04)
+- [Phase 2] Read `sound/hda/codecs/realtek/alc269.c` lines 1481-1491
+  (`coef_mute_led_set` → `alc_update_coef_led` using polarity +
+  brightness)
+- [Phase 2] Read `sound/hda/codecs/realtek/alc269.c` lines 1470-1479
+  (`alc_update_coef_led` logic: if polarity, invert; write on/off based
+  on boolean)
+- [Phase 2] Verified vmaster hook semantics: `sound/core/vmaster.c` line
+  515: `master->hook(master->hook_private_data, master->val)` —
+  `master->val` for boolean is 1=unmuted, 0=muted
+- [Phase 2] Verified `snd_hda_gen_add_mute_led_cdev()` at
+  `sound/hda/codecs/generic.c` lines 3952-3971: sets
+  `vmaster_mute_led=1`, checks `if (spec->vmaster_mute.hook)` and prints
+  error if already present
+- [Phase 2] Confirmed polarity: new hook writes 0x08 when enabled=1
+  (unmuted), 0x04 when enabled=0 (muted) — opposite to LED classdev
+  convention where brightness=1 (LED on) means muted
+- [Phase 2] Verified probe ordering: `alc269.c` line 8595
+  (`snd_hda_apply_fixup PRE_PROBE`) runs BEFORE line 8603
+  (`alc269_parse_auto_config`), so autocfg.hp_pins is zero during
+  PRE_PROBE
+- [Phase 2] Verified `alc_get_hp_pin()` at `realtek.c` lines 506-513:
+  reads from `spec->gen.autocfg.hp_pins[0]` and `line_out_pins[0]`, both
+  empty during PRE_PROBE
+- [Phase 2] Cross-checked with existing vmaster hooks:
+  `ad_vmaster_eapd_hook` (analog.c:131) and `senary_auto_vmaster_hook`
+  (senarytech.c:112) both use `enabled=1` → active, confirming
+  convention
+- [Phase 3] `git blame -L 3703,3719`: confirmed all lines from
+  `9afbbf4903228c` (Kailang Yang, 2025-11-20)
+- [Phase 3] `git show 9afbbf4903228c`: confirmed subject "Enable Mute
+  LED and Tas2781 for HP platform", 56 lines added, 10 removed
+- [Phase 3] `git blame -L 7155,7162`: confirmed ZBook entries
+  (0x8f40-0x8f62) also from `9afbbf4903228c`, NexusX also from same
+  commit
+- [Phase 3] `git log --author='Kailang Yang' -15`: confirmed frequent
+  contributor with related commits
+- [Phase 4] Fetched Ubuntu Launchpad Bug #2136846: confirmed real bug,
+  NexusX platform, comment #3 "mic-mute led works but the mute led does
+  not" after initial upstream fix
+- [Phase 5] Grep `ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED`: found 5
+  SND_PCI_QUIRK entries and fixup table definition
+- [Phase 5] Grep `vmaster_mute.hook`: confirmed usage in analog.c,
+  conexant.c, senarytech.c — well-established pattern
+- [Phase 6] `git merge-base --is-ancestor 9afbbf4903228c v6.19` → YES
+- [Phase 6] `git merge-base --is-ancestor 9afbbf4903228c v6.18` → NOT
+  ancestor
+- [Phase 6] `git show v6.19:sound/hda/codecs/realtek/alc269.c | grep
+  alc245_tas2781_i2c_hp_fixup_muteled` → found (exists in v6.19)
+- [Phase 6] `git show v6.18:...` and `v6.12:...` → 0 matches (does not
+  exist in older trees)
+- [Phase 6] Fixup table entry confirmed: `.type = HDA_FIXUP_FUNC,
+  .v.func = alc245_tas2781_i2c_hp_fixup_muteled` — no chaining to other
+  fixups
+- UNVERIFIED: Could not access lore.kernel.org discussion due to Anubis
+  bot protection
+- UNVERIFIED: Whether all ZBook 8 G2a models actually have headphone
+  jacks (if they don't, the probe ordering concern is moot)
+- UNVERIFIED: Whether the LED polarity inversion is intentional for this
+  hardware family or a latent bug (Tested-by and maintainer acceptance
+  suggest intentional, but not confirmed)
 
 **YES**
 
- sound/soc/sof/topology.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
-index 9bf8ab610a7ea..8880ac5d8d6ff 100644
---- a/sound/soc/sof/topology.c
-+++ b/sound/soc/sof/topology.c
-@@ -736,7 +736,7 @@ static int sof_parse_token_sets(struct snd_soc_component *scomp,
- 		asize = le32_to_cpu(array->size);
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 1054191d56fa1..0c710daa945ec 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3699,22 +3699,42 @@ static void alc245_tas2781_spi_hp_fixup_muteled(struct hda_codec *codec,
+ 	alc_fixup_hp_gpio_led(codec, action, 0x04, 0x0);
+ 	alc285_fixup_hp_coef_micmute_led(codec, fix, action);
+ }
++
++static void alc245_hp_spk_mute_led_update(void *private_data, int enabled)
++{
++	struct hda_codec *codec = private_data;
++	unsigned int val;
++
++	val = enabled ? 0x08 : 0x04; /* 0x08 led on, 0x04 led off */
++	alc_update_coef_idx(codec, 0x0b, 0x0c, val);
++}
++
+ /* JD2: mute led GPIO3: micmute led */
+ static void alc245_tas2781_i2c_hp_fixup_muteled(struct hda_codec *codec,
+ 					  const struct hda_fixup *fix, int action)
+ {
+ 	struct alc_spec *spec = codec->spec;
++	hda_nid_t hp_pin = alc_get_hp_pin(spec);
+ 	static const hda_nid_t conn[] = { 0x02 };
  
- 		/* validate asize */
--		if (asize < 0) { /* FIXME: A zero-size array makes no sense */
-+		if (asize < sizeof(*array)) {
- 			dev_err(scomp->dev, "error: invalid array size 0x%x\n",
- 				asize);
- 			return -EINVAL;
+ 	switch (action) {
+ 	case HDA_FIXUP_ACT_PRE_PROBE:
++		if (!hp_pin) {
++			spec->gen.vmaster_mute.hook = alc245_hp_spk_mute_led_update;
++			spec->gen.vmaster_mute_led = 1;
++		}
+ 		spec->gen.auto_mute_via_amp = 1;
+ 		snd_hda_override_conn_list(codec, 0x17, ARRAY_SIZE(conn), conn);
+ 		break;
++	case HDA_FIXUP_ACT_INIT:
++		if (!hp_pin)
++			alc245_hp_spk_mute_led_update(codec, !spec->gen.master_mute);
++		break;
+ 	}
+ 
+ 	tas2781_fixup_txnw_i2c(codec, fix, action);
+-	alc245_fixup_hp_mute_led_coefbit(codec, fix, action);
++	if (hp_pin)
++		alc245_fixup_hp_mute_led_coefbit(codec, fix, action);
+ 	alc285_fixup_hp_coef_micmute_led(codec, fix, action);
+ }
+ /*
 -- 
 2.53.0
 
