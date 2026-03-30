@@ -1,44 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A03D3D3012;
-	Mon, 30 Mar 2026 12:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679533D2FFB;
+	Mon, 30 Mar 2026 12:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874347; cv=none; b=EMFsuwjOyZfT6LTcRRQSueVNnvUtp1HuV/HKAH2il7x9wXx9HVoyEJgSSRFGAH4sFaQkQV05rdknqgdLXZDqNEQogrMNF4K1r5EdY5hMj5j7n9Hb0oJpmCmm1lJh8o+GIkaNz9s8x+zlzKE41NaZ8VQFQyHpOwI7iiBw7ZFHmW8=
+	t=1774874347; cv=none; b=eb8G8aQd79JLBHwEbx1+tBLIXIEm1ypbboF5MzzjikIK0AQ9ODAi4wsiX+AdRw7GWuC7XMe1jfKWU1xATNm2sS4V8eMX4z53xDqH46Mil0m0b526FWTR13yDdAmPsqy4Q1LKmJ5MSyZR6OoMZqt2sFd5JsMIenhcRXLgZ2OHbk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774874347; c=relaxed/simple;
-	bh=YuWcDvAIA902/gC2iLKD4evUCXTbwoD0XkMsT0s7uyU=;
+	bh=tYLoT/g8g+dfmbwXtdG4UEMxcZCoHibY3HsepB2r7ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RT+ogXk9dl0WPP+YNNBCYqs3teGEmA0Lr2hD41c+l+/tuN/WLuESEvwUSomDKjS5AB66kTDbOwv/XOlFvq+nbPQlrX4Pww5iBrVMSIiwLzJSYijrezIF8g4dpjXlcZj+l86E8Jx/coVISwkexf3eebkYeyt3/YA86b0CQ3XsYp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HjcfQE6r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HcK8CcVP95Dw5WZX2SVOZRs93mUa6MEI13k9mqh4/kYPNFacJ3kqvAV2/fiZ3mA+XY7LCgMCJ2yN4wa83PnIdqKEGeX85osOLuDcauZqbst92HqySuK9XxwM3I9SIIJo54UDiZFD/Sy/1V3SlIPrNseJUxVEU0bk5EYWbyvZbSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U1C1whvW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HjcfQE6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62912C2BCB1;
-	Mon, 30 Mar 2026 12:39:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U1C1whvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58E9C2BCB3;
+	Mon, 30 Mar 2026 12:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874347;
-	bh=YuWcDvAIA902/gC2iLKD4evUCXTbwoD0XkMsT0s7uyU=;
+	s=k20201202; t=1774874346;
+	bh=tYLoT/g8g+dfmbwXtdG4UEMxcZCoHibY3HsepB2r7ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HjcfQE6rx0B6XN26PFvqRXklfL8uPsFKYilBOAm6l5cGGVqcWf8gIbdbn49KX3ldc
-	 RfItFIHoXUOL8mwQ9lqhQA3E520PExhvM0vq880dlBbZvNCxwCkjJbjUWE6Du/JrxE
-	 KpG6/4njysyyxt25ZLN13oFZBSfprn4mNMRfekoUDCMd3By0wRau/rZggf7Z1cS8nj
-	 GlQPyf32OSm/RFVzbTFF9+ujmBszBI00XcVahd/PYrNBd46LOBkyr1AzHh34ZCRFHS
-	 xWUPsHFn7cSSOU19IMxpiHR6GHB1XSWvWsfUerL1tpgs6xUvfMWb8Pk1s3JVe3Xoxh
-	 PZSwkdg0iFj5A==
+	b=U1C1whvWscUqwdUkp8dn8nX5SSgHCB3WnUbS365myRExoALjniyy61zIL44hP87J4
+	 WaHvp7hfWBy06Mn8m6J6Udv2th+6bLVPJ+VQYwaslNIfKtbNLqOVFpueCzB/dgAs79
+	 d88EHwljLTefh9ilCdJnKvXldllaim+8BEAr06UzKwQeye1Uj6m/AFbNrN4gW1t775
+	 FAPB0u1QwrvZsIBVQPTooMsmNYgavu4k5d+G44oNo2ucGfPG9O4lg5W8q3pfm7/gJ8
+	 UmD4BOeSyb36gbN+iA4MX91ctywJGA9RltPLMP8O9BRZmaStDz6P6Mjpl3lRTnVnhS
+	 OTrBMbSdwnhrQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Filipe Manana <fdmanana@suse.com>,
-	Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	detlev.casanova@collabora.com,
+	ezequiel@vanguardiasur.com.ar,
+	mchehab@kernel.org,
+	heiko@sntech.de,
+	linux-media@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] btrfs: fix zero size inode with non-zero size after log replay
-Date: Mon, 30 Mar 2026 08:38:30 -0400
-Message-ID: <20260330123842.756154-17-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.1] media: rkvdec: reduce stack usage in rkvdec_init_v4l2_vp9_count_tbl()
+Date: Mon, 30 Mar 2026 08:38:29 -0400
+Message-ID: <20260330123842.756154-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -51,668 +56,343 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.10
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5254d4181add9dfaa5e3519edd71cc8f752b2f85 ]
+[ Upstream commit c03b7dec3c4ddc97872fa12bfca75bae9cb46510 ]
 
-When logging that an inode exists, as part of logging a new name or
-logging new dir entries for a directory, we always set the generation of
-the logged inode item to 0. This is to signal during log replay (in
-overwrite_item()), that we should not set the i_size since we only logged
-that an inode exists, so the i_size of the inode in the subvolume tree
-must be preserved (as when we log new names or that an inode exists, we
-don't log extents).
+The deeply nested loop in rkvdec_init_v4l2_vp9_count_tbl() needs a lot
+of registers, so when the clang register allocator runs out, it ends up
+spilling countless temporaries to the stack:
 
-This works fine except when we have already logged an inode in full mode
-or it's the first time we are logging an inode created in a past
-transaction, that inode has a new i_size of 0 and then we log a new name
-for the inode (due to a new hardlink or a rename), in which case we log
-an i_size of 0 for the inode and a generation of 0, which causes the log
-replay code to not update the inode's i_size to 0 (in overwrite_item()).
+drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c:966:12: error: stack frame size (1472) exceeds limit (1280) in 'rkvdec_vp9_start' [-Werror,-Wframe-larger-than]
 
-An example scenario:
+Marking this function as noinline_for_stack keeps it out of
+rkvdec_vp9_start(), giving the compiler more room for optimization.
 
-  mkdir /mnt/dir
-  xfs_io -f -c "pwrite 0 64K" /mnt/dir/foo
+The resulting code is good enough that both the total stack usage
+and the loop get enough better to stay under the warning limit,
+though it's still slow, and would need a larger rework if this
+function ends up being called in a fast path.
 
-  sync
-
-  xfs_io -c "truncate 0" -c "fsync" /mnt/dir/foo
-
-  ln /mnt/dir/foo /mnt/dir/bar
-
-  xfs_io -c "fsync" /mnt/dir
-
-  <power fail>
-
-After log replay the file remains with a size of 64K. This is because when
-we first log the inode, when we fsync file foo, we log its current i_size
-of 0, and then when we create a hard link we log again the inode in exists
-mode (LOG_INODE_EXISTS) but we set a generation of 0 for the inode item we
-add to the log tree, so during log replay overwrite_item() sees that the
-generation is 0 and i_size is 0 so we skip updating the inode's i_size
-from 64K to 0.
-
-Fix this by making sure at fill_inode_item() we always log the real
-generation of the inode if it was logged in the current transaction with
-the i_size we logged before. Also if an inode created in a previous
-transaction is logged in exists mode only, make sure we log the i_size
-stored in the inode item located from the commit root, so that if we log
-multiple times that the inode exists we get the correct i_size.
-
-A test case for fstests will follow soon.
-
-Reported-by: Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/af8c15fa-4e41-4bb2-885c-0bc4e97532a6@gmail.com/
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+No existing stack fix in stable 6.6.y for this file. All the
+investigation is complete. Let me now compile the full analysis.
+
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-Record: **[btrfs]** **[fix]** Incorrect inode `i_size` after log replay
-— a file truncated to zero appears with its old non-zero size after
-power failure and log replay, when a new name (hardlink/rename) is
-logged for the inode.
+**Step 1.1: Subject Line**
+Record: [media: rkvdec:] [reduce] [reduce stack usage in
+rkvdec_init_v4l2_vp9_count_tbl() to fix Clang build failure with
+-Wframe-larger-than]
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Reported-by:** Vyacheslav Kovalevsky
-  \<slava.kovalevskiy.2014@gmail.com\> — a real user encountered this
-  bug
-- **Link:** https://lore.kernel.org/linux-
-  btrfs/af8c15fa-4e41-4bb2-885c-0bc4e97532a6@gmail.com/ — bug report on
-  the btrfs mailing list
-- **Signed-off-by:** Filipe Manana \<fdmanana@suse.com\> — author,
-  primary btrfs tree-log developer
-- **Signed-off-by:** David Sterba \<dsterba@suse.com\> — btrfs
-  maintainer
-- No Fixes: tag (expected — this is why the commit is under manual
-  review)
-- No Cc: stable (expected)
-- No Tested-by or Reviewed-by
+**Step 1.2: Tags**
+Record:
+- Signed-off-by: Arnd Bergmann (author, well-known kernel build-fix
+  expert)
+- Reviewed-by: Nicolas Dufresne (Collabora, rkvdec contributor)
+- Signed-off-by: Nicolas Dufresne (subsystem co-maintainer)
+- Signed-off-by: Mauro Carvalho Chehab (media subsystem top-level
+  maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Acked-by:, Link:, or Cc: stable
+  (absence expected for this pipeline)
 
-Record: Single user reporter, fix from subsystem's primary tree-log
-developer, accepted by maintainer.
+**Step 1.3: Commit Body**
+Record: Bug: The deeply nested 5-level loop in
+`rkvdec_init_v4l2_vp9_count_tbl()` uses many registers. When Clang
+inlines it into `rkvdec_vp9_start()`, the combined stack frame reaches
+1472 bytes, exceeding the 1280-byte `-Wframe-larger-than` limit.
+Symptom: Build failure with `-Werror,-Wframe-larger-than`. Fix: Mark the
+function `noinline_for_stack` to prevent inlining. Author notes the
+resulting code is "good enough" and the function is not on a fast path.
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-The commit provides a concrete, reproducible scenario:
-1. `mkdir /mnt/dir && xfs_io -f -c "pwrite 0 64K" /mnt/dir/foo`
-2. `sync`
-3. `xfs_io -c "truncate 0" -c "fsync" /mnt/dir/foo` — truncates to 0,
-   fsync logs the inode with `i_size = 0`
-4. `ln /mnt/dir/foo /mnt/dir/bar` — creates a hard link, triggering
-   LOG_INODE_EXISTS logging
-5. `xfs_io -c "fsync" /mnt/dir` — syncs the directory log
-6. Power failure → after log replay, file has 64K size instead of 0
+**Step 1.4: Hidden Bug Fix Detection**
+Record: This is an explicit build fix, not a disguised runtime fix. The
+commit message is transparent about the problem and solution.
 
-**Root cause:** When logging "inode exists" (`LOG_INODE_EXISTS`),
-`fill_inode_item()` always sets generation=0. During log replay,
-`overwrite_item()` sees generation=0 and `ino_size=0` and skips updating
-the subvolume tree's `i_size`. The file retains its stale pre-truncate
-size.
+## PHASE 2: DIFF ANALYSIS
 
-Record: Data integrity bug — wrong file size after crash recovery. Clear
-mechanism, reproducible, user-reported.
+**Step 2.1: Inventory**
+Record: 1 file changed (`drivers/media/platform/rockchip/rkvdec/rkvdec-
+vp9.c`), ~2 lines modified (function signature only: `static void` ->
+`static noinline_for_stack void` split across 2 lines). Function
+modified: `rkvdec_init_v4l2_vp9_count_tbl()`. Scope: single-file,
+absolutely surgical.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden — explicitly a correctness fix for log replay data
-integrity.
+**Step 2.2: Code Flow Change**
+Record: Before: `rkvdec_init_v4l2_vp9_count_tbl()` was a plain `static
+void` function eligible for inlining into `rkvdec_vp9_start()`. After:
+The `noinline_for_stack` attribute prevents inlining, so the function
+gets its own stack frame. No logic, data flow, or error path changes
+whatsoever.
 
----
+**Step 2.3: Bug Mechanism**
+Record: Category: build fix / compiler stack-usage mitigation. The
+deeply nested loop (5 levels: `i`, `j`, `k`, `l`, `m`) with 6 pointer
+dereference assignments per iteration exhausts Clang's register
+allocator when inlined, causing heavy stack spilling that pushes the
+caller's frame past the warning limit.
 
-## PHASE 2: DIFF ANALYSIS — LINE BY LINE
-
-### Step 2.1: INVENTORY THE CHANGES
-- **File:** `fs/btrfs/tree-log.c` only
-- **Functions modified:** `fill_inode_item()`, `logged_inode_size()` →
-  renamed to `get_inode_size_to_log()`, `btrfs_log_inode()`
-- **Scope:** ~70 lines changed across 3 hunks in a single file.
-  Surgical, well-contained.
-
-Record: Single-file fix, 3 functions modified, ~+55/-23 lines.
-
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-
-**Hunk 1 — `fill_inode_item()`:**
-- **Before:** Always `btrfs_set_inode_generation(leaf, item, 0)` when
-  `log_inode_only=true`.
-- **After:** Default `gen` to the real inode generation. Only set
-  generation to 0 if `logged_trans < trans->transid` (i.e., the inode
-  was NOT already logged in the current transaction). If it WAS
-  previously logged in this transaction, keep the real generation so
-  replay will correctly apply the logged `i_size`.
-
-**Hunk 2 — `logged_inode_size()` → `get_inode_size_to_log()`:**
-- **Before:** Always searched the log tree; if item not found,
-  `*size_ret = 0`.
-- **After:** If inode was logged in the current transaction, searches
-  the log tree (same as before). If inode is from a past transaction and
-  not yet logged, searches the **commit root** of the subvolume tree. If
-  inode was created in the current transaction and not yet logged,
-  returns 0. Added ASSERT/WARN_ON_ONCE safety checks.
-
-**Hunk 3 — `btrfs_log_inode()`:**
-- **Before:** `if (inode_only == LOG_INODE_EXISTS &&
-  ctx->logged_before)` — only fetched `logged_isize` if inode was logged
-  before.
-- **After:** `if (inode_only == LOG_INODE_EXISTS)` — always fetches the
-  inode size to log, removing the `logged_before` guard. This ensures
-  correct size even on the first exists-only log in a transaction.
-
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-**Category:** Logic/correctness fix — filesystem log replay invariant
-violation leading to data inconsistency.
-
-**Mechanism verified against `overwrite_item()` (lines 628-658 in
-current tree):**
-
-```644:658:fs/btrfs/tree-log.c
-                if (btrfs_inode_generation(wc->log_leaf, src_item) == 0)
-{
-                        const u64 ino_size =
-btrfs_inode_size(wc->log_leaf, src_item);
-                        // ...
-                        if (S_ISREG(btrfs_inode_mode(wc->log_leaf,
-src_item)) &&
-                            S_ISREG(btrfs_inode_mode(dst_eb, dst_item))
-&&
-                            ino_size != 0)
-                                btrfs_set_inode_size(dst_eb, dst_item,
-ino_size);
-                        goto no_copy;
-                }
-```
-
-When generation=0 AND `ino_size=0` (for a regular file), the size update
-is skipped entirely and execution jumps to `no_copy`. This means the
-subvolume tree's stale `i_size` (64K in the example) is preserved. The
-fix ensures that when the inode was already logged in the same
-transaction (with the truncated size), the real generation is used,
-causing replay to take the full-copy path instead of the `no_copy` path.
-
-### Step 2.4: ASSESS THE FIX QUALITY
-- **Correctness:** The logic aligns with the documented
-  `overwrite_item()` replay semantics. Using `logged_trans` to
-  distinguish first-time vs. re-logging is consistent with existing
-  patterns in `inode_logged()` (line 3744) which already uses
-  `data_race(inode->logged_trans)`.
-- **Minimality:** Well-contained to logging paths only.
-- **Regression risk:** LOW — changes only affect the LOG_INODE_EXISTS
-  code path (triggered by hard links, renames). The ASSERT and
-  WARN_ON_ONCE provide debugging safety nets. No lock changes, no API
-  changes.
-
-Record: Fix is obviously correct when cross-referenced with
-`overwrite_item()` replay code. Minimal regression risk.
-
----
+**Step 2.4: Fix Quality**
+Record: Obviously correct. `noinline_for_stack` is a well-established,
+documented kernel pattern (`include/linux/compiler_types.h` line
+276-278: `#define noinline_for_stack noinline`). Zero regression risk --
+the only effect is preventing inlining of a function called once during
+VP9 decoder initialization, which is not a hot path. No API or
+behavioral changes.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-Verified via `git blame -L 4612,4625 fs/btrfs/tree-log.c`:
-- The generation=0 logic was introduced by **`94edf4ae43a5f9`** (Josef
-  Bacik, 2012-09-25) — "Btrfs: don't bother committing delayed inode
-  updates when fsyncing"
-- Lines 4620-4624 last touched by **`c418a1504540c6`** (David Sterba,
-  2025-06-27) — cosmetic accessor conversion, not the logic origin.
+**Step 3.1: Blame**
+Record: `git blame` shows the entire function body traces to commit
+`f25709c4ff151f` ("media: rkvdec: Add the VP9 backend") by Andrzej
+Pietrasiewicz, dated 2021-11-17. This was included in
+`v5.17-rc1~171^2~201`, so the code has been present since v5.17. The
+same deeply nested loop and all 5 loop variables have been there since
+introduction.
 
-Record: The buggy generation=0 behavior has existed since **2012**
-(pre-v3.8). Present in ALL active stable trees.
+**Step 3.2: Fixes Tag**
+Record: No Fixes: tag present (expected for commits under manual
+review).
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-No Fixes: tag present. N/A.
+**Step 3.3: File History**
+Record: On current tree, only 2 mainline commits modified `rkvdec-vp9.c`
+in the non-staging path: the unstaging move (`d968e50b5c266`) and a QoS
+disable (`664b42898db79`). The staging path has a few more minor
+changes. No existing stack-usage or noinline fix for this file anywhere
+in the history. The candidate is standalone.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Verified recent related commits from the same reporter/timeframe:
-- **`953902e4fb4c3`** — "btrfs: set inode flag
-  BTRFS_INODE_COPY_EVERYTHING when logging new name" — different bug
-  (names not persisted), touches `inode.c` and `tree-log.c`
-- **`bfe3d755ef7ce`** — "btrfs: do not update last_log_commit when
-  logging inode due to a new name" — different bug (directory fsync not
-  persisting), 1-line change in `tree-log.c`
+**Step 3.4: Author Context**
+Record: Arnd Bergmann is a prolific kernel contributor especially well-
+known for build fixes, cross-compilation, architecture portability, and
+stack-usage reduction patches. His media subsystem commits include
+multiple similar `noinline_for_stack` fixes (e.g., `5954ad7d1af92` for
+st-delta, `8b55f8818900c` for mediatek VP9). This is his core expertise.
 
-These are independent fixes for different bugs, all reported by the same
-user during testing.
+**Step 3.5: Dependencies**
+Record: No dependencies. `noinline_for_stack` is defined as `#define
+noinline_for_stack noinline` in `include/linux/compiler_types.h` and has
+existed since at least v4.x. The function signature is identical in all
+stable trees (6.1.y, 6.6.y, 6.12.y) -- verified via `git show` on each
+stable branch.
 
-Record: Standalone fix. Not part of a series. Independent of the two
-related commits above.
+## PHASE 4: MAILING LIST RESEARCH
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Filipe Manana is the primary btrfs tree-log developer. He authored
-`logged_inode_size()` (commit `1a4bcf470c886`, v4.0) and most of the
-tree-log fsync correctness fixes. David Sterba signed off as btrfs
-maintainer.
-
-Record: Author is THE subsystem expert for this code. Highest-confidence
-authorship signal.
-
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-- Uses `logged_trans`, `data_race()`, `search_commit_root`,
-  `skip_locking` — all long-established.
-- `ctx->logged_before` was introduced by **`0f8ce49821de3`** (Filipe
-  Manana) in **v5.18-rc1**. This field exists in stable trees 6.1+ and
-  later.
-- `logged_inode_size()` was introduced by **`1a4bcf470c886`** in
-  **v4.0-rc1**.
-
-Record: Self-contained. Requires `ctx->logged_before` (v5.18+), so
-applies to stable trees 6.1+.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1-4.4: LORE RESEARCH
-Both lore.kernel.org URLs returned Anubis bot protection (inaccessible).
-The Link: tag in the commit confirms a real bug report exists on the
-linux-btrfs mailing list from Vyacheslav Kovalevsky.
-
-Record: Lore inaccessible. Bug report confirmed to exist via Link: tag.
-UNVERIFIED: Full review discussion, any explicit stable nominations by
-reviewers, any NAKs.
-
----
+Record: Direct WebFetch to lore.kernel.org was blocked by Anubis proof-
+of-work. However, the commit has proper review/signoff chain (Reviewed-
+by from Nicolas Dufresne, Signed-off-by from both Nicolas Dufresne and
+Mauro Carvalho Chehab), confirming it went through standard review.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: KEY FUNCTIONS
-Functions modified: `fill_inode_item()`, `logged_inode_size()` →
-`get_inode_size_to_log()`, `btrfs_log_inode()`.
+**Step 5.1: Functions**
+Record: Only `rkvdec_init_v4l2_vp9_count_tbl()` modified (signature
+only).
 
-### Step 5.2: TRACE CALLERS
-**`fill_inode_item()`** is called from:
-1. `log_inode_item()` (line 4704) — with `log_inode_only=false` (NOT
-   affected by this change)
-2. `copy_inode_items_to_log()` (line 4966) — with `log_inode_only =
-   (inode_only == LOG_INODE_EXISTS)` — **this is the affected path**
+**Step 5.2: Callers**
+Record: Called exactly once from `rkvdec_vp9_start()` at line 1034.
+Verified in all stable trees (6.1.y line 1031, 6.6.y/6.12.y line 1030).
 
-**`btrfs_log_inode()`** is called during fsync and directory logging.
-The LOG_INODE_EXISTS path is triggered via `btrfs_log_new_name()`.
+**Step 5.3: Callees**
+Record: The function sets up pointer tables and runs a 5-level nested
+loop (`INNERMOST_LOOP` macro) performing array pointer assignments. No
+dynamic allocations, no locks, no side effects beyond pointer setup.
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-Verified call chain for bug reachability:
-- `link()` / `rename()` syscall → `btrfs_link()` / `btrfs_rename()` in
-  `inode.c` → `btrfs_log_new_name()` (line 7931) → `btrfs_log_inode()`
-  with `LOG_INODE_EXISTS` (line 6293) → `logged_inode_size()` (line
-  6992) → `fill_inode_item()` (line 4966)
+**Step 5.4: Call Chain**
+Record: `rkvdec_vp9_fmt_ops.start` -> `rkvdec_vp9_start()` ->
+`rkvdec_init_v4l2_vp9_count_tbl()`. Called during VP9 streaming setup,
+not per-frame. The author explicitly notes it is not a fast path.
 
-This is a **common userspace operation** — any unprivileged user can
-trigger it with `link()` or `rename()` followed by `fsync()`.
+**Step 5.5: Similar Patterns**
+Record: `noinline_for_stack` is used in 7+ files under `drivers/media/`
+for the same class of issue. The nearly identical mediatek VP9 commit
+(`8b55f8818900c`) by the same author is the closest precedent.
 
-Record: Bug reachable from common syscalls (link, rename, fsync).
-Unprivileged users can trigger it.
+## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-The `data_race(inode->logged_trans)` pattern already exists at line 3744
-in `inode_logged()`. The new code follows the same established pattern.
+**Step 6.1: Code Existence**
+Record: The file exists in all active stable trees:
+- 6.1.y: `drivers/staging/media/rkvdec/rkvdec-vp9.c` (verified, function
+  at line 927)
+- 6.6.y: `drivers/staging/media/rkvdec/rkvdec-vp9.c` (verified, function
+  at line 926)
+- 6.12.y: `drivers/staging/media/rkvdec/rkvdec-vp9.c` (verified,
+  function at line 926)
+The function signature and the deeply nested loop are identical in all
+branches.
 
-Record: Consistent with existing code patterns.
+**Step 6.2: Backport Complications**
+Record: The file path differs in stable trees (staging vs non-staging),
+requiring a trivial path adjustment. The actual code is functionally
+identical -- the patch applies cleanly with a path change.
 
----
+**Step 6.3: Precedent -- Critical Finding**
+Record: The nearly identical mediatek VP9 `noinline_for_stack` commit by
+the same author (`8b55f8818900c`) **was backported to all three stable
+trees**:
+- 6.1.y: `89e1132bbf713`
+- 6.6.y: `fa43166f2e8ba`
+- 6.12.y: `f87626a55c215`
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+This is extremely strong precedent. The rkvdec fix is the same type of
+change (same author, same compiler issue, same annotation, same VP9
+decoder context).
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-**Verified:** The pre-fix code (`logged_inode_size`, unconditional
-generation=0 in `fill_inode_item`, `ctx->logged_before` guard) is still
-present in the current tree (`v6.19.10`). `get_inode_size_to_log` does
-not exist — the fix has NOT been applied yet.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-- The generation=0 behavior dates to `94edf4ae43a5f9` (2012, pre-v3.8) —
-  present in ALL stable trees.
-- `logged_inode_size()` dates to `1a4bcf470c886` (v4.0) — present in all
-  active stable trees.
-- `ctx->logged_before` dates to `0f8ce49821de3` (v5.18) — present in
-  6.1+ stable trees.
+**Step 7.1: Subsystem**
+Record: `drivers/media/platform/rockchip/rkvdec/` -- Video decoder
+driver for Rockchip SoCs. Criticality: PERIPHERAL (hardware-specific),
+but Rockchip platforms are widely deployed in Chromebooks, single-board
+computers, and embedded systems.
 
-Record: All active stable trees (6.1+, 6.6+, 6.12+) contain the buggy
-code.
-
-### Step 6.2: BACKPORT COMPLICATIONS
-`tree-log.c` has been actively modified (5+ recent commits since v6.12).
-The patch modifies a function signature (`logged_inode_size` →
-`get_inode_size_to_log`), changes the condition in `btrfs_log_inode`,
-and restructures `fill_inode_item`. May require minor adaptation for
-older stables, but the core logic should port cleanly.
-
-Record: Expected backport difficulty: clean apply on recent stables
-(6.12+), minor conflicts possible on older (6.1, 6.6).
-
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
-No evidence that a different fix for the same bug exists. The confirmed
-related commits (`953902e4fb4c3`, `bfe3d755ef7ce`) address different
-bugs.
-
-Record: No duplicate fix found.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: IDENTIFY THE SUBSYSTEM
-**Subsystem:** fs/btrfs — filesystem layer, specifically the tree-log
-(fsync journal) subsystem.
-**Criticality:** IMPORTANT — btrfs is widely used, and crash recovery
-correctness is fundamental to filesystem integrity. Wrong file sizes
-after recovery = silent data corruption from the user's perspective.
-
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-`tree-log.c` is actively maintained with 30+ recent commits visible in
-the log. This is a mature, well-maintained subsystem.
-
-Record: Active subsystem, mature code, high importance for data
-integrity.
-
----
+**Step 7.2: Activity**
+Record: Low-moderate activity. The driver is mature. Recent changes are
+minor (QoS fix, unstaging move).
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-All btrfs users who rely on fsync for data integrity and who might
-create hard links or rename files after truncating. This is a
-fundamental filesystem operation.
+**Step 8.1: Who is Affected**
+Record: Anyone building the kernel with Clang (especially with KASAN
+enabled, based on the mediatek precedent) who enables
+`CONFIG_VIDEO_ROCKCHIP_VDEC` or `COMPILE_TEST`. This includes CI
+systems, distribution kernel builds, and embedded/Chromebook builders.
 
-Record: Affected population: all btrfs users (filesystem-specific but
-btrfs is widely used).
+**Step 8.2: Trigger Conditions**
+Record: Triggered at compile time with Clang + `-Wframe-larger-than` +
+`-Werror`. Deterministic build failure. The specific Clang version and
+configuration matter (KASAN amplifies the issue per the mediatek
+precedent), but the fix is purely defensive and safe regardless.
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-- **Trigger:** truncate file to 0 → fsync → create hard link or rename →
-  fsync directory → power failure
-- **How common:** Realistic workflow — the reporter hit it naturally
-- **Unprivileged:** Yes, any user can trigger this with normal file
-  operations
+**Step 8.3: Failure Mode**
+Record: Build failure -- kernel cannot be compiled. For anyone who needs
+this driver, it is a hard blocker. Severity: MEDIUM-HIGH (build failure,
+not runtime crash, but prevents compilation entirely).
 
-Record: Realistic trigger, unprivileged, discovered by a real user.
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-When triggered: **File appears with wrong (old) size after crash
-recovery.** The file was truncated to 0 but shows 64K after log replay.
-This is **data integrity corruption** — the filesystem state after
-recovery does not match what was committed via fsync.
-
-Record: **Failure mode: data integrity violation (wrong file size after
-crash).** **Severity: HIGH** — silent data corruption, stale data
-visible, violates fsync durability contract.
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-- **Benefit: HIGH** — prevents data corruption after crash recovery in a
-  production filesystem. Fixes a violation of the fsync durability
-  guarantee.
-- **Risk: LOW** — ~70 lines in one file, authored by the subsystem
-  expert, changes only the LOG_INODE_EXISTS logging path. Uses
-  established patterns (`data_race(logged_trans)`). Includes
-  ASSERT/WARN_ON safety nets. No lock changes, no API changes.
-- **Net ratio: Strongly favorable for backporting.**
-
----
+**Step 8.4: Risk-Benefit Ratio**
+Record: BENEFIT: Fixes a real build failure for Clang users with common
+warning configurations. The identical class of fix was already deemed
+worthy of backport for the mediatek VP9 driver. RISK: Essentially zero.
+Adding `noinline_for_stack` has no behavioral effect; it only affects
+compiler inlining decisions. The function is called exactly once during
+initialization. Ratio: Very favorable.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1: Evidence**
 
-**FOR backporting:**
-- Fixes a real, user-reported data integrity bug (wrong file size after
-  crash recovery)
-- Concrete, reproducible scenario provided in the commit message
-- Verified against `overwrite_item()` replay code: generation=0 +
-  ino_size=0 → skips `i_size` update → stale data preserved
-- Authored by Filipe Manana, THE primary btrfs tree-log developer
-- Accepted by David Sterba, btrfs maintainer
-- Single file, ~70 lines, well-contained to logging paths
-- Buggy code exists in ALL active stable trees (since 2012)
-- Uses established patterns (`data_race(logged_trans)`)
-- Trigger is realistic and reachable from unprivileged userspace
-- Standalone fix with no dependencies beyond existing stable code
+FOR backporting:
+- Fixes a documented Clang `-Werror,-Wframe-larger-than` build failure
+- Build fixes are an explicit exception category for stable backporting
+- Extremely minimal change: single attribute annotation, no logic change
+- Zero runtime regression risk
+- Well-established kernel pattern (`noinline_for_stack`)
+- Author is the recognized expert for this type of fix (Arnd Bergmann)
+- Reviewed by subsystem co-maintainer, signed off by media subsystem
+  top-level maintainer
+- **Strong precedent**: nearly identical fix by same author for mediatek
+  VP9 was backported to 6.1.y, 6.6.y, and 6.12.y
+- Code exists in all active stable trees with identical function
+  signature
+- `noinline_for_stack` macro exists in all stable trees
 
-**AGAINST backporting:**
-- Not trivial (not 1-5 lines) — moderate change size
-- Function renamed and restructured (`logged_inode_size` →
-  `get_inode_size_to_log`)
-- May require minor adaptation for oldest stable trees
-- Accesses commit root in a new code path (though safe and read-only)
+AGAINST backporting:
+- File path differs in stable (staging vs non-staging) -- requires
+  trivial path adjustment
+- Only affects Clang builds with specific configurations (not all build
+  environments)
+- The exact compiler version/config triggering the issue may vary
 
-**UNRESOLVED:**
-- Lore discussion inaccessible (Anubis protection) — could not verify
-  reviewer comments or explicit stable nominations
-- Per-branch clean apply not verified
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** -- trivially correct, reviewed
+   by maintainers
+2. Fixes a real bug? **YES** -- build failure with Clang
+3. Important issue? **YES** -- build failure prevents compilation
+4. Small and contained? **YES** -- 2-line signature change
+5. No new features or APIs? **YES** -- no new features
+6. Can apply to stable? **YES** -- with path adjustment for staging
+   directory
 
-### Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES — logic verified against
-   `overwrite_item()` replay code; authored by subsystem expert; fstests
-   mentioned as follow-up
-2. **Fixes a real bug that affects users?** YES — user-reported,
-   reproducible, data integrity violation
-3. **Important issue?** YES — data corruption (wrong file size after
-   crash recovery) — HIGH severity
-4. **Small and contained?** YES — single file, ~70 lines, 3 functions in
-   tree-log.c
-5. **No new features or APIs?** YES — purely a bug fix
-6. **Can apply to stable trees?** YES — should apply to 6.1+ with
-   possible minor adaptation for older trees
+**Step 9.3: Exception Category**
+Record: **BUILD FIX** -- explicitly listed as a valid stable exception
+in the rules.
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Not applicable — this is a standard data integrity bug fix, not an
-exception category.
-
-### Step 9.4: DECISION
-This is a clear **YES**. It fixes a real, user-reported data integrity
-bug where a file's size is incorrect after crash recovery. The fix is
-well-contained, authored by the subsystem's primary developer, and meets
-all stable kernel criteria. The risk-benefit ratio strongly favors
-backporting.
-
----
+**Step 9.4: Decision**
+This is a clear YES. It is a minimal, obviously correct build fix that
+follows a well-established kernel pattern, was created by the foremost
+expert in this area, and has direct precedent: the nearly identical
+mediatek VP9 `noinline_for_stack` fix by the same author was already
+backported to all active stable trees.
 
 ## Verification
 
-- **[Phase 1]** Parsed tags: found Reported-by: Vyacheslav Kovalevsky,
-  Link: to lore.kernel.org bug report, Signed-off-by from Filipe Manana
-  (author) and David Sterba (maintainer)
-- **[Phase 2]** Diff analysis: ~70 lines in `fs/btrfs/tree-log.c`,
-  modifies `fill_inode_item()`, `logged_inode_size()` →
-  `get_inode_size_to_log()`, `btrfs_log_inode()`
-- **[Phase 2]** Verified `overwrite_item()` log replay logic at lines
-  644-658: generation=0 AND ino_size=0 → skips `btrfs_set_inode_size()`
-  → goto `no_copy` → stale size preserved. Confirms the described bug
-  mechanism.
-- **[Phase 3]** `git blame -L 4612,4625`: generation=0 behavior from
-  `94edf4ae43a5f9` (Josef Bacik, 2012-09-25) — present since pre-v3.8
-- **[Phase 3]** `git log -S "logged_inode_size"`: introduced by
-  `1a4bcf470c886` "Btrfs: fix fsync data loss after adding hard link to
-  inode" — `git describe`: v4.0-rc1
-- **[Phase 3]** `git log -S "ctx->logged_before"`: introduced by
-  `0f8ce49821de3` — `git describe`: v5.18-rc1 — present in stable trees
-  6.1+
-- **[Phase 3]** Verified `953902e4fb4c3` and `bfe3d755ef7ce` are
-  independent fixes for different bugs (same reporter)
-- **[Phase 3]** Confirmed Filipe Manana is the primary tree-log
-  developer (10+ recent commits in this file)
-- **[Phase 4]** Lore.kernel.org inaccessible (Anubis bot protection) —
-  UNVERIFIED: full review discussion, explicit stable nominations
-- **[Phase 5]** `fill_inode_item()` called from
-  `copy_inode_items_to_log()` at line 4966 with `log_inode_only =
-  (inode_only == LOG_INODE_EXISTS)` — verified
-- **[Phase 5]** Call chain: `link()/rename()` → `btrfs_log_new_name()`
-  (line 7931) → `btrfs_log_inode()` → LOG_INODE_EXISTS path (line
-  6978/6992) — confirmed reachable from unprivileged syscalls
-- **[Phase 5]** `data_race(inode->logged_trans)` pattern already used at
-  line 3744 in `inode_logged()` — consistent
-- **[Phase 6]** `get_inode_size_to_log` does NOT exist in current tree —
-  patch not yet applied. Pre-fix code (`logged_inode_size`,
-  generation=0, `ctx->logged_before` guard) all confirmed present.
-- **[Phase 6]** Buggy code exists in all active stable trees:
-  generation=0 since 2012, `logged_inode_size` since v4.0,
-  `ctx->logged_before` since v5.18
-- **[Phase 8]** Failure mode: data integrity violation — wrong file size
-  after crash recovery. Severity: HIGH.
-- **UNVERIFIED:** Lore review discussion content. Per-branch clean apply
-  testing. Runtime fstests validation.
+- [Phase 1] Parsed subject: "media: rkvdec: reduce stack usage" -- build
+  fix for Clang -Wframe-larger-than
+- [Phase 1] Parsed tags: Reviewed-by Nicolas Dufresne, SOBs from
+  subsystem and top-level maintainers, no Fixes/Reported-by (expected)
+- [Phase 2] Diff analysis: 2-line change adding `noinline_for_stack` to
+  `rkvdec_init_v4l2_vp9_count_tbl()` signature; no logic change
+- [Phase 3] git blame: function introduced by `f25709c4ff151f` ("media:
+  rkvdec: Add the VP9 backend", 2021-11-17), included since v5.17-rc1
+- [Phase 3] git describe --contains f25709c4ff151f: confirmed
+  `v5.17-rc1~171^2~201`
+- [Phase 3] Verified `noinline_for_stack` defined in
+  `include/linux/compiler_types.h` line 278 as `#define
+  noinline_for_stack noinline`
+- [Phase 3] Author check: Arnd Bergmann has multiple similar
+  `noinline_for_stack` commits in drivers/media/
+- [Phase 5] grep: `rkvdec_init_v4l2_vp9_count_tbl` called from exactly 1
+  place: `rkvdec_vp9_start()` at line 1034
+- [Phase 5] Read: confirmed 5-level nested loop (lines 973-997) with
+  INNERMOST_LOOP macro causing heavy register pressure
+- [Phase 6] git cat-file -e: verified file exists in 6.1.y, 6.6.y,
+  6.12.y at staging path
+- [Phase 6] git show on stable branches: verified function signature
+  `static void rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)`
+  is identical in 6.1.y (line 927), 6.6.y (line 926), 6.12.y (line 926)
+  -- no `noinline_for_stack` present
+- [Phase 6] Verified call site in 6.6.y stable at line 1030
+- [Phase 6] **Critical precedent**: mediatek VP9 `noinline_for_stack`
+  commit `8b55f8818900c` by same author backported to 6.1.y
+  (`89e1132bbf713`), 6.6.y (`fa43166f2e8ba`), 6.12.y (`f87626a55c215`)
+- [Phase 6] No existing stack-usage fix for rkvdec-vp9.c in any stable
+  branch (verified via git log --grep="stack" on 6.6.y)
+- [Phase 4] lore.kernel.org inaccessible (Anubis protection); review
+  chain verified from commit tags
+- UNVERIFIED: Mailing list discussion details beyond the commit tags
+- UNVERIFIED: Exact Clang version/config that triggers the failure;
+  however, the fix is defensive and safe regardless
 
 **YES**
 
- fs/btrfs/tree-log.c | 98 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 65 insertions(+), 33 deletions(-)
+ drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 6c40f48cc194d..4cea0489f121c 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -4609,21 +4609,32 @@ static void fill_inode_item(struct btrfs_trans_handle *trans,
- 			    struct inode *inode, bool log_inode_only,
- 			    u64 logged_isize)
- {
-+	u64 gen = BTRFS_I(inode)->generation;
- 	u64 flags;
- 
- 	if (log_inode_only) {
--		/* set the generation to zero so the recover code
--		 * can tell the difference between an logging
--		 * just to say 'this inode exists' and a logging
--		 * to say 'update this inode with these values'
-+		/*
-+		 * Set the generation to zero so the recover code can tell the
-+		 * difference between a logging just to say 'this inode exists'
-+		 * and a logging to say 'update this inode with these values'.
-+		 * But only if the inode was not already logged before.
-+		 * We access ->logged_trans directly since it was already set
-+		 * up in the call chain by btrfs_log_inode(), and data_race()
-+		 * to avoid false alerts from KCSAN and since it was set already
-+		 * and one can set it to 0 since that only happens on eviction
-+		 * and we are holding a ref on the inode.
- 		 */
--		btrfs_set_inode_generation(leaf, item, 0);
-+		ASSERT(data_race(BTRFS_I(inode)->logged_trans) > 0);
-+		if (data_race(BTRFS_I(inode)->logged_trans) < trans->transid)
-+			gen = 0;
-+
- 		btrfs_set_inode_size(leaf, item, logged_isize);
- 	} else {
--		btrfs_set_inode_generation(leaf, item, BTRFS_I(inode)->generation);
- 		btrfs_set_inode_size(leaf, item, inode->i_size);
- 	}
- 
-+	btrfs_set_inode_generation(leaf, item, gen);
-+
- 	btrfs_set_inode_uid(leaf, item, i_uid_read(inode));
- 	btrfs_set_inode_gid(leaf, item, i_gid_read(inode));
- 	btrfs_set_inode_mode(leaf, item, inode->i_mode);
-@@ -5427,42 +5438,63 @@ static int btrfs_log_changed_extents(struct btrfs_trans_handle *trans,
- 	return 0;
+diff --git a/drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c b/drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c
+index b4bf01e839eff..8fb6a1624a14f 100644
+--- a/drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c
++++ b/drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c
+@@ -927,7 +927,8 @@ static void rkvdec_vp9_done(struct rkvdec_ctx *ctx,
+ 	update_ctx_last_info(vp9_ctx);
  }
  
--static int logged_inode_size(struct btrfs_root *log, struct btrfs_inode *inode,
--			     struct btrfs_path *path, u64 *size_ret)
-+static int get_inode_size_to_log(struct btrfs_trans_handle *trans,
-+				 struct btrfs_inode *inode,
-+				 struct btrfs_path *path, u64 *size_ret)
+-static void rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)
++static noinline_for_stack void
++rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)
  {
- 	struct btrfs_key key;
-+	struct btrfs_inode_item *item;
- 	int ret;
- 
- 	key.objectid = btrfs_ino(inode);
- 	key.type = BTRFS_INODE_ITEM_KEY;
- 	key.offset = 0;
- 
--	ret = btrfs_search_slot(NULL, log, &key, path, 0, 0);
--	if (ret < 0) {
--		return ret;
--	} else if (ret > 0) {
--		*size_ret = 0;
--	} else {
--		struct btrfs_inode_item *item;
-+	/*
-+	 * Our caller called inode_logged(), so logged_trans is up to date.
-+	 * Use data_race() to silence any warning from KCSAN. Once logged_trans
-+	 * is set, it can only be reset to 0 after inode eviction.
-+	 */
-+	if (data_race(inode->logged_trans) == trans->transid) {
-+		ret = btrfs_search_slot(NULL, inode->root->log_root, &key, path, 0, 0);
-+	} else if (inode->generation < trans->transid) {
-+		path->search_commit_root = true;
-+		path->skip_locking = true;
-+		ret = btrfs_search_slot(NULL, inode->root, &key, path, 0, 0);
-+		path->search_commit_root = false;
-+		path->skip_locking = false;
- 
--		item = btrfs_item_ptr(path->nodes[0], path->slots[0],
--				      struct btrfs_inode_item);
--		*size_ret = btrfs_inode_size(path->nodes[0], item);
--		/*
--		 * If the in-memory inode's i_size is smaller then the inode
--		 * size stored in the btree, return the inode's i_size, so
--		 * that we get a correct inode size after replaying the log
--		 * when before a power failure we had a shrinking truncate
--		 * followed by addition of a new name (rename / new hard link).
--		 * Otherwise return the inode size from the btree, to avoid
--		 * data loss when replaying a log due to previously doing a
--		 * write that expands the inode's size and logging a new name
--		 * immediately after.
--		 */
--		if (*size_ret > inode->vfs_inode.i_size)
--			*size_ret = inode->vfs_inode.i_size;
-+	} else {
-+		*size_ret = 0;
-+		return 0;
- 	}
- 
-+	/*
-+	 * If the inode was logged before or is from a past transaction, then
-+	 * its inode item must exist in the log root or in the commit root.
-+	 */
-+	ASSERT(ret <= 0);
-+	if (WARN_ON_ONCE(ret > 0))
-+		ret = -ENOENT;
-+
-+	if (ret < 0)
-+		return ret;
-+
-+	item = btrfs_item_ptr(path->nodes[0], path->slots[0],
-+			      struct btrfs_inode_item);
-+	*size_ret = btrfs_inode_size(path->nodes[0], item);
-+	/*
-+	 * If the in-memory inode's i_size is smaller then the inode size stored
-+	 * in the btree, return the inode's i_size, so that we get a correct
-+	 * inode size after replaying the log when before a power failure we had
-+	 * a shrinking truncate followed by addition of a new name (rename / new
-+	 * hard link). Otherwise return the inode size from the btree, to avoid
-+	 * data loss when replaying a log due to previously doing a write that
-+	 * expands the inode's size and logging a new name immediately after.
-+	 */
-+	if (*size_ret > inode->vfs_inode.i_size)
-+		*size_ret = inode->vfs_inode.i_size;
-+
- 	btrfs_release_path(path);
- 	return 0;
- }
-@@ -6975,7 +7007,7 @@ static int btrfs_log_inode(struct btrfs_trans_handle *trans,
- 			ret = drop_inode_items(trans, log, path, inode,
- 					       BTRFS_XATTR_ITEM_KEY);
- 	} else {
--		if (inode_only == LOG_INODE_EXISTS && ctx->logged_before) {
-+		if (inode_only == LOG_INODE_EXISTS) {
- 			/*
- 			 * Make sure the new inode item we write to the log has
- 			 * the same isize as the current one (if it exists).
-@@ -6989,7 +7021,7 @@ static int btrfs_log_inode(struct btrfs_trans_handle *trans,
- 			 * (zeroes), as if an expanding truncate happened,
- 			 * instead of getting a file of 4Kb only.
- 			 */
--			ret = logged_inode_size(log, inode, path, &logged_isize);
-+			ret = get_inode_size_to_log(trans, inode, path, &logged_isize);
- 			if (ret)
- 				goto out_unlock;
- 		}
+ 	struct rkvdec_vp9_ctx *vp9_ctx = ctx->priv;
+ 	struct rkvdec_vp9_intra_frame_symbol_counts *intra_cnts = vp9_ctx->count_tbl.cpu;
 -- 
 2.53.0
 
