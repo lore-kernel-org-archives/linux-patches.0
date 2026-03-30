@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614F33D0923;
-	Mon, 30 Mar 2026 12:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E653D0916;
+	Mon, 30 Mar 2026 12:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874326; cv=none; b=ul7EiynGW018/bKfuWGWF1tE8PHa9DR7ic7VBW5mnsQzrvYQJNjVvq0OQe5HxWU25/iNrJ72MH5SmoOyBFjhIHz42FTTLT7swb3+Lx/tmKBHQZgyuoOYJQelglLejk8gqVhbIMo7T1OJZw7U+iOfOCcsxwT5IdySUDWhyF6XKv4=
+	t=1774874328; cv=none; b=IPx99bZ6YK3NRCcNB6Ra8WxMPCMSBCHQMey5GAzbAHAfUQ8CW8cmMji/mrKXgU81aFvqm2SoASCoaw4hd9JCdJNb3UuHivXZKy64f3JT1FmIkZ/tLmU6J/V0jUKql42xM+/LGSpvzZa3go30EtqS+IglONZh2Rud3N7SESIzV6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874326; c=relaxed/simple;
-	bh=KRWmWuUtSo9tAqvjpp8SHlLXnSCjYWx3vpTul8pHxgw=;
+	s=arc-20240116; t=1774874328; c=relaxed/simple;
+	bh=7XdtASUNy0X+9mhBuXcMBQWiuQRIcc0MoWkQaPynTgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T6Cj53K2gADIrdKYgTJQ2rBan85ga6jLTzkKbsbG6agMkFm+c/9shc3xOIdDslj9KnM+sSKNOTrZ5GmV8w4g76hGc12JmXEUcXj02dVK92lzdhAZ6RBb3t+fsWpQr+37brxuq3rJIe3Mm+QqVLLNwhEmz8OWtq1h1iXKsYpAt4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=obZJztLE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tXHhVljU0u19offxL+02o3i0e2AkgflsEr1KJV2kaInBPUwtQQa4S2wkraNcV32EskxVeh6fgKBMqSczKR3+FLw4bbkImjKSNOVgPFhBnmRzcHNT4mT52kdQ7MuoyEiUtR4LMtItJOhNyhsrVFcLghYoArGD5WvtM9eg9JkAuTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FuLGgCIX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="obZJztLE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16480C2BCB1;
-	Mon, 30 Mar 2026 12:38:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FuLGgCIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F47C2BCB3;
+	Mon, 30 Mar 2026 12:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874326;
-	bh=KRWmWuUtSo9tAqvjpp8SHlLXnSCjYWx3vpTul8pHxgw=;
+	s=k20201202; t=1774874327;
+	bh=7XdtASUNy0X+9mhBuXcMBQWiuQRIcc0MoWkQaPynTgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=obZJztLEKqIly6dePMi2VO9rkW24dwYn3upPW1k3G/ipF/xEyIgLorUt87vbvsqT/
-	 2AMQgMG+DcO2P9g27h2SrVJqkcR5FpQ0FquJ/S9qVhORS9bNMtQTuigBWdjkkxGyc2
-	 uLsXYFOdLU31LPxkMdZ6C8MvEIbBgJlj/t2ca8r/72lbNAzgfLrrtEo4gqeH31Ktom
-	 i10sXIBnate2Bpp++7knnUl+Eo4ZOKhqPqOQy/yoRBHHxuK+wYLgozL5eEbSOnJnpo
-	 JT6DI/hhtTr0N8U1Gg2jTg3bvAvhawBp0ziICSER7Ym/UGd5Wp/ih5FLxvC6RmdPJl
-	 pIr/9PaIQn2hg==
+	b=FuLGgCIXZlWpgIfUj3gERd9K8KatAyzEXJOJ6H7B7uwpCg9phF64XRl9jo11ebgWg
+	 SRt62iALu7cLvGzGUoZUW83VNISElIT5k97742VaN8BUvFBGs2o9ip/qMftR+JbBVk
+	 pEpFjDVayRMiZ49aU4SBihBqqUauJa2oztrzQOdgoNmQPisYRI4K8GbEGoZgvs26bZ
+	 zjuFaHo1TEoxeivzzX3diEGWpTK8uHQ3FfmhvDqh1WNEkFd9shr0hBKVhY/mRXpoZq
+	 uPAlZwhhQnOxkm5DrwLTMp2d1FX6u0gQEIqVEDlEJyddkBmg8mckrcmtDJw6Nu639r
+	 bMCdDa4eXayUQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hasun Park <hasunpark@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Goldwyn Rodrigues <rgoldwyn@suse.de>,
+	Boris Burkov <boris@bur.io>,
+	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Vijendar.Mukunda@amd.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] ASoC: amd: acp: add ASUS HN7306EA quirk for legacy SDW machine
-Date: Mon, 30 Mar 2026 08:38:15 -0400
-Message-ID: <20260330123842.756154-2-sashal@kernel.org>
+	clm@fb.com,
+	rostedt@goodmis.org,
+	mhiramat@kernel.org,
+	linux-btrfs@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] btrfs: tracepoints: get correct superblock from dentry in event btrfs_sync_file()
+Date: Mon, 30 Mar 2026 08:38:16 -0400
+Message-ID: <20260330123842.756154-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -56,383 +58,421 @@ X-stable-base: Linux 6.19.10
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hasun Park <hasunpark@gmail.com>
+From: Goldwyn Rodrigues <rgoldwyn@suse.de>
 
-[ Upstream commit 2594196f4e3bd70782e7cf1e22e3e398cdb74f78 ]
+[ Upstream commit a85b46db143fda5869e7d8df8f258ccef5fa1719 ]
 
-Add a DMI quirk entry for ASUS HN7306EA in the ACP SoundWire legacy
-machine driver.
+If overlay is used on top of btrfs, dentry->d_sb translates to overlay's
+super block and fsid assignment will lead to a crash.
 
-Set driver_data to ASOC_SDW_ACP_DMIC for this board so the
-platform-specific DMIC quirk path is selected.
+Use file_inode(file)->i_sb to always get btrfs_sb.
 
-Signed-off-by: Hasun Park <hasunpark@gmail.com>
-Link: https://patch.msgid.link/20260319163321.30326-1-hasunpark@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+Now I have all the evidence. Here is the complete analysis.
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-Record: [ASoC: amd: acp] [add] [DMI quirk for ASUS HN7306EA to select
-ACP DMIC path in legacy SoundWire machine driver]
+Record: [btrfs: tracepoints] [get correct / fix] [Fix incorrect
+superblock derivation in the `btrfs_sync_file` trace event when
+overlayfs is stacked on btrfs]
 
 **Step 1.2: Tags**
-Record:
-- `Signed-off-by: Hasun Park <hasunpark@gmail.com>` — author/contributor
-- `Link:
-  https://patch.msgid.link/20260319163321.30326-1-hasunpark@gmail.com` —
-  patch submission
-- `Signed-off-by: Mark Brown <broonie@kernel.org>` — ASoC subsystem
-  maintainer
-- No Fixes: tag (expected for hardware quirk additions)
-- No Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc: stable
-  (absence expected)
+- Reviewed-by: Boris Burkov <boris@bur.io> (btrfs developer/reviewer)
+- Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com> (author, active
+  btrfs contributor)
+- Signed-off-by: David Sterba <dsterba@suse.com> (btrfs co-maintainer,
+  committer)
+- No Fixes: tag (expected for commits under manual review)
+- No Reported-by:, Tested-by:, Link:, or Cc: stable tags
 
-**Step 1.3: Body**
-Record: The commit explains it adds a DMI quirk entry for the ASUS
-HN7306EA board and sets `driver_data` to `ASOC_SDW_ACP_DMIC` so the
-platform-specific DMIC quirk path is selected. Without this quirk, the
-board's built-in digital microphone will not be enabled through the ACP
-SoundWire path. No stack traces, crash reports, or version information
-given — this is standard for a board-specific quirk addition.
+Record: Reviewed by btrfs developer, committed by btrfs maintainer. No
+Fixes: or Cc: stable (expected for manually reviewed candidates).
+
+**Step 1.3: Commit Body**
+Record: Bug: when overlayfs is used on top of btrfs, `dentry->d_sb` in
+the tracepoint resolves to the overlay superblock, not btrfs'. The
+`btrfs_sb()` inline function then treats the overlay's `s_fs_info` as
+`struct btrfs_fs_info *`, and `TP_fast_assign_fsid` dereferences
+`fs_info->fs_devices->fsid`—accessing completely invalid memory.
+Symptom: kernel crash. Fix: use `file_inode(file)->i_sb` to always get
+the btrfs superblock.
 
 **Step 1.4: Hidden Bug Fix**
-Record: Yes — while framed as "add," this is a hardware enablement fix.
-Without the quirk, the DMIC path is not selected, and the microphone
-does not function on this specific laptop. Adding board-specific DMI
-quirks is the standard Linux mechanism for making specific hardware work
-correctly.
+Record: Not hidden—this is an explicit crash fix. The commit message
+directly states "will lead to a crash."
 
-===============================================================
-PHASE 2: DIFF ANALYSIS
-===============================================================
+---
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-Record: 1 file modified: `sound/soc/amd/acp/acp-sdw-legacy-mach.c`, +8
-lines, 0 removed. Only the static `soc_sdw_quirk_table[]` data array is
-extended with one new entry before the `{}` terminator. Scope: single-
-file, single-table-entry, trivially scoped.
+Record: 1 file changed: `include/trace/events/btrfs.h`. Approximately 6
+lines added, 4 removed within the `TP_fast_assign` block of
+`TRACE_EVENT(btrfs_sync_file)`. Single-file, surgical fix.
 
 **Step 2.2: Code Flow Change**
-Record: Before: No DMI match for "ASUSTeK COMPUTER INC." / "HN7306EA" →
-the global `soc_sdw_quirk` stays at its default `RT711_JD1` → DMIC path
-not selected at line 419. After: DMI match sets `soc_sdw_quirk =
-ASOC_SDW_ACP_DMIC` via `soc_sdw_quirk_cb()` → at line 419,
-`soc_sdw_quirk & ASOC_SDW_ACP_DMIC` is true → `dmic_num = 1` →
-`create_dmic_dailinks()` is called at line 454, enabling the built-in
-digital microphone.
 
-Verified code path from file:
-
-```419:420:sound/soc/amd/acp/acp-sdw-legacy-mach.c
-        if (soc_sdw_quirk & ASOC_SDW_ACP_DMIC || mach_params->dmic_num)
-                dmic_num = 1;
+Before:
+```c
+const struct dentry *dentry = file->f_path.dentry;
+const struct inode *inode = d_inode(dentry);
+TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb));
+__entry->parent = btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
 ```
 
-```450:457:sound/soc/amd/acp/acp-sdw-legacy-mach.c
-        if (dmic_num > 0) {
-                if (ctx->ignore_internal_dmic) {
-                        dev_warn(dev, "Ignoring ACP DMIC\n");
-                } else {
-                        ret = create_dmic_dailinks(card, &dai_links,
-&be_id, 0);
-                        if (ret)
-                                return ret;
-                }
+After:
+```c
+struct dentry *dentry = file_dentry(file);
+struct inode *inode = file_inode(file);
+struct dentry *parent = dget_parent(dentry);
+struct inode *parent_inode = d_inode(parent);
+dput(parent);
+TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
+__entry->parent = btrfs_ino(BTRFS_I(parent_inode));
 ```
+
+Three independent improvements:
+1. **Critical crash fix**: `file->f_path.dentry->d_sb` → `inode->i_sb`
+   for the fsid assignment
+2. **Correctness**: `file->f_path.dentry` → `file_dentry(file)` and
+   `d_inode(dentry)` → `file_inode(file)` (overlay-safe helpers)
+3. **Safety**: parent dentry now accessed via `dget_parent()`/`dput()`
+   (proper reference counting)
+
+Record: Single hunk, tracepoint-only path, three small correctness
+improvements.
 
 **Step 2.3: Bug Mechanism**
-Record: Category: Hardware workaround / DMI quirk table entry. The board
-requires `ASOC_SDW_ACP_DMIC` to be set so the DMIC DAI link is created.
-Without it, the standard default (`RT711_JD1`) does not enable the DMIC
-path.
+Verified:
+- `btrfs_sb(sb)` returns `sb->s_fs_info` (`fs/btrfs/super.h` line 21–24)
+- `TP_fast_assign_fsid(fs_info)` does `memcpy(__entry->fsid,
+  fs_info->fs_devices->fsid, BTRFS_FSID_SIZE)` (line 163–170)
+- Overlayfs stores `struct ovl_fs *` in `sb->s_fs_info`
+  (`fs/overlayfs/ovl_entry.h` line 115–121)
+- When overlay sb is passed to `btrfs_sb()`, the returned pointer is not
+  a `btrfs_fs_info`; dereferencing `->fs_devices->fsid` accesses invalid
+  memory → crash
+
+Record: [Type confusion via wrong superblock] [overlay's `s_fs_info`
+interpreted as `btrfs_fs_info *`, then invalid dereference of
+`fs_devices->fsid`]
 
 **Step 2.4: Fix Quality**
-Record: Obviously correct — follows the exact same struct pattern as
-every other entry in the table (AMD, Dell, Lenovo). Minimal and
-surgical: 8 lines of pure static data. Zero regression risk for other
-machines: only fires when both `DMI_BOARD_VENDOR == "ASUSTeK COMPUTER
-INC."` AND `DMI_PRODUCT_NAME == "HN7306EA"` match.
+Record: Obviously correct—this is the only btrfs tracepoint using
+`file->f_path.dentry->d_sb`; all others already use `inode->i_sb`. Fix
+aligns this tracepoint with the established pattern. Very low regression
+risk: changes only tracepoint data assignment code.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: Blame**
-Record: `git blame` confirms the quirk table was introduced by
-`2981d9b0789c44` (Vijendar Mukunda, 2024-11-13, "ASoC: amd: acp: add
-soundwire machine driver for legacy stack") with just one entry (AMD
-Birman-PHX). Dell entries added by `4bb5b6f13fd83b` (2025-02-07) and
-`3254959b4dd065` (2025-09-03). Lenovo entries added by `aa7b7452bb742f`
-(2026-02-18). The infrastructure for `ASOC_SDW_ACP_DMIC` and the DMIC
-path has existed since the driver was created.
+Verified via `git blame -L 771,779`:
+- The buggy fsid line
+  (`TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb))`)
+  introduced in commit `bc074524e123de` (Jeff Mahoney, 2016-06-09,
+  "btrfs: prefix fsid to all trace events")
+- `git describe --contains bc074524e123de` → `v4.8-rc1~38^2~1^2~12`
+- Bug has been present since **v4.8-rc1** — all currently active stable
+  trees are affected
+
+Record: [Bug introduced in bc074524e123de, first in v4.8-rc1, present
+since 2016 in all active stable trees]
 
 **Step 3.2: Fixes Tag**
-Record: No Fixes: tag present — not applicable for a quirk addition.
+Record: No Fixes: tag present. The implicit target is bc074524e123de.
 
 **Step 3.3: File History**
-Record: 13 commits to this file since creation. Other DMI quirk
-additions (Dell, Lenovo) follow the identical pattern. This ASUS commit
-is standalone — not part of a series.
+Verified via `git log --oneline -20 -- include/trace/events/btrfs.h`:
+- Related prior fix: `f157dd661339f` ("btrfs: fix NULL dereference on
+  root when tracing inode eviction") — a different tracepoint crash fix
+  in the same file
+- Historical related fix: `de17e793b104d` ("btrfs: fix crash/invalid
+  memory access on fsync when using overlayfs") — this fixed the **core
+  `btrfs_sync_file()` function** for the same overlayfs class of bug,
+  but did NOT fix the tracepoint. The current commit completes that
+  work.
+- The historical commit includes a full oops trace showing the exact
+  crash scenario
+
+Record: [Standalone fix. Historical `de17e793b104d` fixed the fsync
+function itself but left the tracepoint buggy. This commit completes
+that fix.]
 
 **Step 3.4: Author**
-Record: `git log --author='Hasun Park'` returns empty for
-`sound/soc/amd/` — this appears to be an external contributor (likely
-owns the hardware). The patch was merged by Mark Brown, the ASoC
-subsystem maintainer, which is a strong quality endorsement.
+Verified: Goldwyn Rodrigues has 10+ btrfs commits including folio
+conversions and core btrfs work. David Sterba is a listed btrfs
+maintainer.
+Record: [Author is established btrfs contributor from SUSE; committed by
+btrfs maintainer]
 
 **Step 3.5: Dependencies**
-Record: No dependencies. The `ASOC_SDW_ACP_DMIC` constant (`BIT(5)` in
-`soc_amd_sdw_common.h`), the `soc_sdw_quirk_cb` callback, and the DMIC
-path all exist since the driver's introduction in v6.13. Fully self-
-contained.
+Verified: `file_dentry()`, `file_inode()`, `dget_parent()`, `dput()` all
+exist in v5.15, v6.1, v6.6 stable trees.
+Record: [No dependencies. All required helper APIs confirmed present in
+stable trees.]
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+---
 
-**Step 4.1-4.4:** Record: The `Link:` tag provides the patch message ID.
-Direct access to lore.kernel.org and patch.msgid.link was blocked by bot
-protection (Anubis). The patch was merged by Mark Brown directly. No
-NAKs or concerns are evidenced (the commit reached mainline). Could not
-verify explicit stable nominations or review comments from primary
-sources.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 4.1: Lore Search**
+Record: lore.kernel.org returned Anubis anti-bot challenge — exact patch
+thread not verified.
 
-**Step 5.1: Key Functions**
-Record: No function bodies modified — only the `soc_sdw_quirk_table[]`
-static data. Consumers: `soc_sdw_quirk_cb()`, `mc_probe()`,
-`soc_card_dai_links_create()`, `create_dmic_dailinks()`.
+**Step 4.2: Bug Report**
+Verified: The historical commit `de17e793b104d` includes a full kernel
+oops trace from `btrfs_sync_file` when using overlayfs. This establishes
+that overlayfs+btrfs fsync crashes are a known, real-world class of bug.
+The current tracepoint fix addresses the remaining instance of the same
+pattern.
+Record: [Real-world crash reports documented in historical commit
+de17e793b104d with full stack trace]
+
+**Step 4.3–4.4: Related Patches / Stable History**
+Record: Could not verify lore threads. No evidence of prior stable
+selection for this specific tracepoint fix.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: Functions Modified**
+Record: `TRACE_EVENT(btrfs_sync_file)` — specifically its
+`TP_fast_assign` block
 
 **Step 5.2: Callers**
-Record: `soc_sdw_quirk_table` is consumed by `dmi_check_system()` at
-line 498 in `mc_probe()`, the platform driver `.probe` callback.
-`mc_probe()` is registered via `soc_sdw_driver` (line 570) matching
-platform device ID `"amd_sdw"`.
+Verified: `trace_btrfs_sync_file(file, datasync)` called from exactly
+one place: `fs/btrfs/file.c:1578` inside `btrfs_sync_file()`.
 
-**Step 5.3: Callees**
-Record: `soc_sdw_quirk_cb()` (line 35) simply assigns `soc_sdw_quirk =
-(unsigned long)id->driver_data`. Downstream,
-`soc_card_dai_links_create()` checks the bit at line 419 and
-conditionally enables DMIC DAI link creation.
+**Step 5.3–5.4: Call Chain / Reachability**
+Verified complete path:
+- `fsync(2)` / `fdatasync(2)` → `do_fsync()` → `vfs_fsync()` →
+  `vfs_fsync_range()` → `btrfs_sync_file()` → `trace_btrfs_sync_file()`
+- Overlayfs path: `ovl_fsync()` (line 441 of `fs/overlayfs/file.c`) →
+  `vfs_fsync_range(upperfile, ...)` → `btrfs_sync_file()` →
+  `trace_btrfs_sync_file()`
+- The tracepoint body executes only when the `btrfs_sync_file`
+  tracepoint is enabled (static key gated)
 
-**Step 5.4: Call Chain**
-Record: PCI probe → `acp63_machine_register()` →
-`platform_device_register_data(..., "amd_sdw", ...)` → `mc_probe()` →
-`dmi_check_system(soc_sdw_quirk_table)` → `soc_card_dai_links_create()`
-→ DMIC enabled if `ASOC_SDW_ACP_DMIC` set. Reachable automatically on
-boot for matching AMD SoundWire hardware.
+Record: [Directly reachable from userspace fsync() syscall. Overlayfs
+path confirmed via ovl_fsync(). Tracepoint gated by static key.]
 
 **Step 5.5: Similar Patterns**
-Record: `acp-sdw-sof-mach.c` has an analogous `ASOC_SDW_ACP_DMIC` gating
-mechanism (lines 29, 312), confirming this is an established subsystem
-pattern. The same quirk table pattern is used for Dell and Lenovo
-entries in the same file.
+Verified: `TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb))`
+appears only once in the entire file — this tracepoint. All other btrfs
+tracepoints use `inode->i_sb` or receive `fs_info` directly. This is the
+sole inconsistent instance.
+Record: [Only tracepoint with this bug pattern; all others already
+correct]
 
-===============================================================
-PHASE 6: STABLE TREE ANALYSIS
-===============================================================
+---
 
-**Step 6.1: File Existence in Stable Trees**
-Record: Verified via `git cat-file -e`:
-- `stable/linux-6.6.y`: **MISSING** (driver not present)
-- `stable/linux-6.12.y`: **MISSING** (driver not present)
-- `stable/linux-6.13.y`: **EXISTS** (3 commits to file — base + Dell
-  quirks)
-- `stable/linux-6.14.y`: **EXISTS** (3 commits to file — base + Dell
-  quirks)
-- `stable/linux-6.19.y`: **EXISTS** (13 commits — all quirks including
-  Lenovo)
+## PHASE 6: STABLE TREE ANALYSIS
 
-The driver and `ASOC_SDW_ACP_DMIC` infrastructure exist in **6.13.y,
-6.14.y, and 6.19.y**.
+**Step 6.1: Presence in Stable Trees**
+Verified via `git cat-file -p`:
+- v5.15: buggy line at line 701 ✓
+- v6.1: buggy line at line 766 ✓
+- v6.6: buggy line at line 795 ✓
+
+Record: [All active stable trees (v5.15, v6.1, v6.6) contain the exact
+buggy line]
 
 **Step 6.2: Backport Complications**
-Record: The patch inserts one entry before the `{}` terminator in
-`soc_sdw_quirk_table[]`. In 6.13.y and 6.14.y, the table has fewer
-entries (no Lenovo rows), so there will be a minor context offset, but
-the append-before-terminator pattern makes this trivially applicable.
-Expected: clean apply or trivial context adjustment in all three stable
-trees.
+Record: Clean apply expected for recent stable trees — same code
+structure, same APIs available. Minor line number offsets only.
 
-**Step 6.3: Related Fixes in Stable**
-Record: No HN7306EA-specific fix exists in any stable tree. Other
-Dell/Lenovo quirks have been backported to various stable trees,
-confirming this class of change is accepted.
+**Step 6.3: Duplicate Fixes**
+Record: No alternative fix for this tracepoint found in any stable tree.
+The historical `de17e793b104d` fixed only the function, not the
+tracepoint.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: Subsystem**
-Record: `sound/soc/amd/acp` — ASoC AMD Audio Co-Processor SoundWire
-machine driver. Criticality: IMPORTANT — audio is a critical user-facing
-function on laptops, though this is driver/platform-specific, not
-universal.
+Record: btrfs filesystem tracepoints — IMPORTANT subsystem. btrfs is
+widely used, especially with overlayfs in container environments
+(Docker, Podman).
 
 **Step 7.2: Activity**
-Record: Actively maintained — 13 commits to this single file since
-creation, with regular quirk additions for Dell, Lenovo, and now ASUS.
-Mark Brown (ASoC maintainer) actively merges patches.
+Record: Active — `include/trace/events/btrfs.h` has seen 20+ recent
+commits including other tracepoint crash fixes.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: Affected Users**
-Record: Device-specific — owners of the ASUS HN7306EA (ProArt PX13)
-laptop running kernel 6.13+ with the AMD SoundWire audio stack.
+Record: Users running overlayfs on top of btrfs with btrfs tracepoints
+enabled. This includes container workloads and debugging/tracing
+scenarios on production systems.
 
 **Step 8.2: Trigger Conditions**
-Record: Triggers on every boot during driver probe via
-`dmi_check_system()`. Every user of this laptop model is affected. No
-special configuration or user action required.
+Record: Enable `btrfs_sync_file` tracepoint (or all btrfs events) + use
+overlayfs on btrfs + any `fsync()`/`fdatasync()` call. Deterministic
+when conditions met — not a race.
 
 **Step 8.3: Failure Mode**
-Record: Without the quirk, the built-in digital microphone is not
-enabled (the DMIC DAI link is never created). This is a "hardware
-doesn't work" issue — microphone non-functional. Severity: MEDIUM-HIGH
-for affected users (broken audio input on a laptop is a significant
-usability issue).
+Record: Kernel crash / oops from invalid memory access in tracepoint
+assignment. Severity: **CRITICAL** when triggered (system crash,
+potential data loss from incomplete fsync).
 
-**Step 8.4: Risk-Benefit Ratio**
-Record:
-- BENEFIT: High for affected users — enables the laptop's built-in
-  microphone
-- RISK: Essentially zero — DMI match table entry only triggers on exact
-  vendor+product match; 8 lines of pure static data; uses existing
-  infrastructure; well-established pattern
-- Ratio: Strongly favorable
+**Step 8.4: Risk-Benefit**
+- BENEFIT: HIGH — prevents a deterministic kernel crash in a real,
+  userspace-triggerable path
+- RISK: VERY LOW — ~10 lines changed in a single tracepoint, using
+  established VFS helpers consistent with all other btrfs tracepoints
+Record: [Benefit: HIGH, Risk: VERY LOW, Ratio: Excellent for
+backporting]
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+---
 
-**Step 9.1: Evidence**
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: Evidence Compilation**
 
 FOR backporting:
-- Classic hardware DMI quirk addition — explicitly listed as an allowed
-  exception category
-- 8 lines, single file, pure static data addition, trivially correct
-- Zero regression risk — only affects boards matching exact DMI strings
-- Fixes real user issue: broken DMIC (microphone non-functional) on ASUS
-  HN7306EA
-- Merged by ASoC subsystem maintainer Mark Brown
-- Self-contained with no dependencies
-- Infrastructure exists in 6.13.y, 6.14.y, and 6.19.y stable trees
-- Same pattern as Dell and Lenovo quirks already backported to stable
-  trees
+- Fixes a real kernel crash (type confusion → invalid memory access →
+  oops)
+- Small, surgical fix: ~10 lines in 1 file, 1 tracepoint
+- Obviously correct: aligns with how all other btrfs tracepoints handle
+  the superblock
+- Bug class verified real via historical commit `de17e793b104d` with
+  full crash stack trace
+- Reviewed by btrfs developer, committed by btrfs maintainer
+- Bug present in ALL active stable trees (v5.15, v6.1, v6.6) — confirmed
+- All required helper APIs exist in stable trees — confirmed
+- No dependencies on other commits
+- Overlayfs call path verified to reach the buggy code
 
 AGAINST backporting:
-- Only affects a single laptop model (normal for quirks — not a valid
-  concern)
-- Not a crash/security/corruption fix (but hardware enablement quirks
-  are an explicit exception)
+- Tracepoint must be enabled to trigger (narrower population than core
+  path bugs)
+- No Tested-by: tag
 
 UNRESOLVED:
-- Could not access lore.kernel.org to verify mailing list review
-  discussion
-- No primary end-user bug report verified (author is likely the affected
-  user)
+- Exact lore.kernel.org patch discussion thread (blocked by Anubis)
+- Whether unprivileged users can enable this tracepoint
+- `git apply --check` not run against stable branches (but same code
+  confirmed present)
 
 **Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** — trivial table entry following
-   exact same pattern as all existing entries; merged by maintainer
-2. Fixes a real bug? **YES** — broken DMIC on ASUS HN7306EA
-3. Important issue? **YES** — non-functional microphone on a shipping
-   laptop
-4. Small and contained? **YES** — 8 lines, one file, one table entry
-5. No new features or APIs? **YES** — just a DMI quirk data entry using
-   existing code paths
-6. Can apply to stable? **YES** — applicable to 6.13.y, 6.14.y, 6.19.y
-   with clean or trivial context adjustment
+1. Obviously correct and tested? **YES** — consistent with all other
+   btrfs tracepoints; maintainer-reviewed
+2. Fixes a real bug? **YES** — kernel crash with overlayfs+btrfs+tracing
+3. Important issue? **YES** — kernel oops (CRITICAL)
+4. Small and contained? **YES** — ~10 lines, single tracepoint
+5. No new features/APIs? **YES** — pure bug fix
+6. Applies to stable? **YES** — buggy code and required APIs confirmed
+   in v5.15/v6.1/v6.6
 
-**Step 9.3: Exception Category**
-Record: **Hardware quirk/workaround** — This is a DMI quirk table entry
-for a specific laptop, which is the textbook example of a stable-
-appropriate exception. Dell and Lenovo quirks from the same table have
-already been backported.
+**Step 9.3: Exception Categories**
+Record: Not applicable. This is a standard bug fix, not a device
+ID/quirk/DT exception.
 
 **Step 9.4: Decision**
-This is a trivial, zero-risk DMI quirk table entry that enables the
-built-in digital microphone on a specific ASUS laptop model. It falls
-squarely into the "hardware quirks and workarounds" exception category
-that is explicitly allowed in stable. The fix is 8 lines of pure static
-data, uses existing infrastructure, and only affects the exact matching
-hardware. The driver and `ASOC_SDW_ACP_DMIC` infrastructure exist in
-stable trees 6.13.y, 6.14.y, and 6.19.y.
+The fix addresses a real, deterministic kernel crash caused by type
+confusion when overlayfs is stacked on btrfs. The crash mechanism is
+fully verified: `btrfs_sb()` interprets overlay's `s_fs_info` (an
+`ovl_fs *`) as `btrfs_fs_info *`, then `TP_fast_assign_fsid`
+dereferences `fs_info->fs_devices->fsid` — accessing garbage memory. The
+fix is small, obviously correct, consistent with all other btrfs
+tracepoints, and has no dependencies. The bug exists in all active
+stable trees. The only limiting factor is that tracepoints must be
+enabled, but stable kernels are regularly used with tracing enabled for
+support and debugging, and a crash in that scenario is unacceptable.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed commit message: "add ASUS HN7306EA quirk," tags
-  include author SOB and Mark Brown (maintainer) SOB, Link to patch
-- [Phase 2] Read `acp-sdw-legacy-mach.c`: verified `ASOC_SDW_ACP_DMIC`
-  check at line 419 enables `dmic_num = 1`, which triggers
-  `create_dmic_dailinks()` at line 454
-- [Phase 2] Grep for `ASOC_SDW_ACP_DMIC`: found at line 29 (log_quirks),
-  line 419 (DMIC enablement), and `soc_amd_sdw_common.h` line 28
-  (`BIT(5)`)
-- [Phase 3] `git blame` lines 41-115: confirmed table origin commit
-  `2981d9b0789c44` (2024-11-13), Dell quirks from `4bb5b6f13fd83b` and
-  `3254959b4dd065`, Lenovo from `aa7b7452bb742f`
-- [Phase 3] `git show 2981d9b0789c44`: confirmed original driver
-  introduction creating `acp-sdw-legacy-mach.c` (486 lines)
-- [Phase 3] `git log --author='Hasun Park'`: no prior commits found in
-  `sound/soc/amd/`
-- [Phase 3] `git log --oneline -20`: confirmed 13 commits to file, all
-  quirk additions and driver evolution, no prerequisites for this patch
-- [Phase 5] Traced call chain in code: `mc_probe()` line 498 calls
-  `dmi_check_system(soc_sdw_quirk_table)`, then line 514 calls
-  `soc_card_dai_links_create()`, which checks quirk at line 419
-- [Phase 5] Grep confirmed analogous `ASOC_SDW_ACP_DMIC` pattern in
-  `acp-sdw-sof-mach.c` (established subsystem pattern)
-- [Phase 6] `git cat-file -e` across stable trees: file MISSING in 6.6.y
-  and 6.12.y; EXISTS in 6.13.y, 6.14.y, 6.19.y
-- [Phase 6] `git log stable/linux-6.13.y`: 3 commits (base + Dell
-  quirks); `stable/linux-6.14.y`: 3 commits; `stable/linux-6.19.y`: 13
-  commits (includes Lenovo)
-- [Phase 6] Clean apply expected in all three applicable stable trees —
-  trivial table entry append
-- [Phase 8] Failure mode verified from code: without quirk,
-  `ASOC_SDW_ACP_DMIC` not set → `dmic_num` stays 0 →
-  `create_dmic_dailinks()` not called → DMIC non-functional
-- UNVERIFIED: Could not access lore.kernel.org or patch.msgid.link
-  (blocked by Anubis bot protection) — no reviewer discussion or NAKs
-  verified
+- [Phase 1] Parsed tags from commit message: Reviewed-by Boris Burkov,
+  SOB from David Sterba (btrfs maintainer), SOB from Goldwyn Rodrigues
+  (author). No Fixes:, Reported-by:, Link:, Cc: stable.
+- [Phase 2] Read `include/trace/events/btrfs.h` lines 163–170: confirmed
+  `TP_fast_assign_fsid` does `memcpy(__entry->fsid,
+  fs_info->fs_devices->fsid, BTRFS_FSID_SIZE)`
+- [Phase 2] Read `include/trace/events/btrfs.h` lines 771–779: confirmed
+  pre-fix code uses `file->f_path.dentry->d_sb`
+- [Phase 2] Grep confirmed `btrfs_sb()` returns `sb->s_fs_info` in
+  `fs/btrfs/super.h` lines 21–24
+- [Phase 2] Read `fs/overlayfs/ovl_entry.h` lines 115–121: confirmed
+  `OVL_FS(sb)` casts `sb->s_fs_info` to `struct ovl_fs *` — type
+  confusion verified
+- [Phase 2] Grep confirmed the buggy
+  `TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb))` is the ONLY
+  such pattern in btrfs.h
+- [Phase 3] `git blame -L 771,779`: buggy fsid line from
+  `bc074524e123de` (Jeff Mahoney, 2016)
+- [Phase 3] `git describe --contains bc074524e123de`:
+  `v4.8-rc1~38^2~1^2~12` — bug present since v4.8
+- [Phase 3] `git show de17e793b104d`: confirmed historical
+  overlayfs+btrfs fsync crash with full kernel oops trace; that fix
+  addressed only `btrfs_sync_file()`, NOT the tracepoint
+- [Phase 3] `git log --oneline --author="Goldwyn Rodrigues" -10 --
+  fs/btrfs`: confirmed active btrfs contributor
+- [Phase 4] lore.kernel.org: blocked by Anubis — patch thread UNVERIFIED
+- [Phase 5] Grep: `trace_btrfs_sync_file` called from exactly
+  `fs/btrfs/file.c:1578`
+- [Phase 5] Read `fs/overlayfs/file.c` lines 441–464: confirmed
+  `ovl_fsync()` → `vfs_fsync_range(upperfile)` call path
+- [Phase 6] `git cat-file -p v5.15:include/trace/events/btrfs.h`: buggy
+  line at line 701 ✓
+- [Phase 6] `git cat-file -p v6.1:include/trace/events/btrfs.h`: buggy
+  line at line 766 ✓
+- [Phase 6] `git cat-file -p v6.6:include/trace/events/btrfs.h`: buggy
+  line at line 795 ✓
+- [Phase 6] Verified `file_inode`, `file_dentry`, `dget_parent` present
+  in v5.15, v6.1, v6.6 via `git cat-file` grep
+- [Phase 8] Failure mode: kernel oops from invalid memory access in
+  tracepoint assignment, severity CRITICAL
+- UNVERIFIED: Exact lore patch discussion (Anubis blocked); privilege
+  requirements for tracepoint enablement; `git apply --check` on stable
+  branches
 
 **YES**
 
- sound/soc/amd/acp/acp-sdw-legacy-mach.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/trace/events/btrfs.h | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-index 4f92de33a71a0..2e0f751afe250 100644
---- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-@@ -111,6 +111,14 @@ static const struct dmi_system_id soc_sdw_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(ASOC_SDW_CODEC_SPKR),
- 	},
-+	{
-+		.callback = soc_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HN7306EA"),
-+		},
-+		.driver_data = (void *)(ASOC_SDW_ACP_DMIC),
-+	},
- 	{}
- };
+diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
+index 125bdc166bfed..0864700f76e0a 100644
+--- a/include/trace/events/btrfs.h
++++ b/include/trace/events/btrfs.h
+@@ -769,12 +769,15 @@ TRACE_EVENT(btrfs_sync_file,
+ 	),
  
+ 	TP_fast_assign(
+-		const struct dentry *dentry = file->f_path.dentry;
+-		const struct inode *inode = d_inode(dentry);
++		struct dentry *dentry = file_dentry(file);
++		struct inode *inode = file_inode(file);
++		struct dentry *parent = dget_parent(dentry);
++		struct inode *parent_inode = d_inode(parent);
+ 
+-		TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb));
++		dput(parent);
++		TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
+ 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
+-		__entry->parent		= btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
++		__entry->parent		= btrfs_ino(BTRFS_I(parent_inode));
+ 		__entry->datasync	= datasync;
+ 		__entry->root_objectid	= btrfs_root_id(BTRFS_I(inode)->root);
+ 	),
 -- 
 2.53.0
 
