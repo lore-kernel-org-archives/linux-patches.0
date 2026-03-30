@@ -1,44 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7DB30E84F;
-	Mon, 30 Mar 2026 12:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614F33D0923;
+	Mon, 30 Mar 2026 12:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874325; cv=none; b=Q/mJzvqva5VcbLbC3xWWPL865kuMbYHNYXTk7Inileki+9qvfa9He9sWKyzT4tyE+nYVbJdxujTR06DDXBxKE0dwXb+Rh4mkeqXxM8r0MzhBvYTbW8fJa4ieIPHsmYQpKVuCHXu/5QXybRL+ODzxVtlf02cwIvCe+L07S26zuiE=
+	t=1774874326; cv=none; b=ul7EiynGW018/bKfuWGWF1tE8PHa9DR7ic7VBW5mnsQzrvYQJNjVvq0OQe5HxWU25/iNrJ72MH5SmoOyBFjhIHz42FTTLT7swb3+Lx/tmKBHQZgyuoOYJQelglLejk8gqVhbIMo7T1OJZw7U+iOfOCcsxwT5IdySUDWhyF6XKv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874325; c=relaxed/simple;
-	bh=jqL8jWgMBiXMBrLBv+2Vuwztl/XEUI1Jxtjw63+X0qo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=u9KRx+ax/XT2z/92+VRxoHJ10jEnqUVG+NzaJna1ybgFD5pkTnCpA3BQxgczMcsMrS8vimnclrIU8bcTJY/SHWhic1Cr+SdO/8xOEow9QltGqJSDVlfBpXupknyPn4A+LX5YM71xMvTH4v7aqW0vZmbmDpzMZN9r9b68/Zd+TVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aUUtY3Yp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774874326; c=relaxed/simple;
+	bh=KRWmWuUtSo9tAqvjpp8SHlLXnSCjYWx3vpTul8pHxgw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=T6Cj53K2gADIrdKYgTJQ2rBan85ga6jLTzkKbsbG6agMkFm+c/9shc3xOIdDslj9KnM+sSKNOTrZ5GmV8w4g76hGc12JmXEUcXj02dVK92lzdhAZ6RBb3t+fsWpQr+37brxuq3rJIe3Mm+QqVLLNwhEmz8OWtq1h1iXKsYpAt4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=obZJztLE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aUUtY3Yp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB56C4CEF7;
-	Mon, 30 Mar 2026 12:38:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="obZJztLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16480C2BCB1;
+	Mon, 30 Mar 2026 12:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874324;
-	bh=jqL8jWgMBiXMBrLBv+2Vuwztl/XEUI1Jxtjw63+X0qo=;
-	h=From:To:Cc:Subject:Date:From;
-	b=aUUtY3YpyhNSxvlBuSRIPiRqwh8w1SKo7CJcpF9+ePQVB7R59y6V3AjyhZ9HD1eYW
-	 TBZEjHz+Wfh7DawePsaann5fUkxWx4okcj1mrzxcjXsEfPMVud3bY0oWDE0LNsqcum
-	 8RT8S1zG4O1WjpwhJKLYvxH2gxbZAblAhU2C7AptsjDaML19bLRkQIlTRpsRAv0w6R
-	 4BF5bUScYgJcP2fqNlOqD6EKHqss0pDRX9y58m+fsuh3NtHDqra7TfaZR1c8acco9t
-	 RWItMbee9JYG4iSjjsnZx8OmXv+5vflBGRSb6/ZWr4zYGZwvAS0fNVo+KJk22QxSmV
-	 ykrO8fu2PH9SA==
+	s=k20201202; t=1774874326;
+	bh=KRWmWuUtSo9tAqvjpp8SHlLXnSCjYWx3vpTul8pHxgw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=obZJztLEKqIly6dePMi2VO9rkW24dwYn3upPW1k3G/ipF/xEyIgLorUt87vbvsqT/
+	 2AMQgMG+DcO2P9g27h2SrVJqkcR5FpQ0FquJ/S9qVhORS9bNMtQTuigBWdjkkxGyc2
+	 uLsXYFOdLU31LPxkMdZ6C8MvEIbBgJlj/t2ca8r/72lbNAzgfLrrtEo4gqeH31Ktom
+	 i10sXIBnate2Bpp++7knnUl+Eo4ZOKhqPqOQy/yoRBHHxuK+wYLgozL5eEbSOnJnpo
+	 JT6DI/hhtTr0N8U1Gg2jTg3bvAvhawBp0ziICSER7Ym/UGd5Wp/ih5FLxvC6RmdPJl
+	 pIr/9PaIQn2hg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Hasun Park <hasunpark@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	Vijendar.Mukunda@amd.com,
+	lgirdwood@gmail.com,
 	perex@perex.cz,
 	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] ALSA: hda/realtek: add quirk for Lenovo Yoga 7 2-in-1 16AKP10
-Date: Mon, 30 Mar 2026 08:38:14 -0400
-Message-ID: <20260330123842.756154-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] ASoC: amd: acp: add ASUS HN7306EA quirk for legacy SDW machine
+Date: Mon, 30 Mar 2026 08:38:15 -0400
+Message-ID: <20260330123842.756154-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
+References: <20260330123842.756154-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,376 +56,383 @@ X-stable-base: Linux 6.19.10
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Hasun Park <hasunpark@gmail.com>
 
-[ Upstream commit 7bae956cac0433c4d41aac9f1d04e42694e0b706 ]
+[ Upstream commit 2594196f4e3bd70782e7cf1e22e3e398cdb74f78 ]
 
-This machine is equipped with ALC287 and requires the quirk
-ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN to fix the issue
-where the bass speakers are not configured and the speaker
-volume cannot be controlled.
+Add a DMI quirk entry for ASUS HN7306EA in the ACP SoundWire legacy
+machine driver.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221210
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260313080624.1395362-1-zhangheng@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Set driver_data to ASOC_SDW_ACP_DMIC for this board so the
+platform-specific DMIC quirk path is selected.
+
+Signed-off-by: Hasun Park <hasunpark@gmail.com>
+Link: https://patch.msgid.link/20260319163321.30326-1-hasunpark@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me write the full analysis.
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
----
+**Step 1.1: Subject Line**
+Record: [ASoC: amd: acp] [add] [DMI quirk for ASUS HN7306EA to select
+ACP DMIC path in legacy SoundWire machine driver]
 
-## Phase 1: Commit Message Forensics
-
-**Step 1.1: Parse the subject line**
-Record: [ALSA: hda/realtek] [add] Add a hardware quirk entry so Lenovo
-Yoga 7 2-in-1 16AKP10 uses the existing ALC287 bass-speaker fixup.
-
-**Step 1.2: Parse all commit message tags**
+**Step 1.2: Tags**
 Record:
-- `Link: https://bugzilla.kernel.org/show_bug.cgi?id=221210` — a filed
-  kernel bug report
-- `Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>` — the author
-- `Link: https://patch.msgid.link/20260313080624.1395362-1-
-  zhangheng@kylinos.cn` — patch submission
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` — ALSA subsystem
+- `Signed-off-by: Hasun Park <hasunpark@gmail.com>` — author/contributor
+- `Link:
+  https://patch.msgid.link/20260319163321.30326-1-hasunpark@gmail.com` —
+  patch submission
+- `Signed-off-by: Mark Brown <broonie@kernel.org>` — ASoC subsystem
   maintainer
+- No Fixes: tag (expected for hardware quirk additions)
+- No Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc: stable
+  (absence expected)
 
-Not present: `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`,
-`Acked-by:`, `Cc: stable@vger.kernel.org`. Absence of these is expected
-for commits under manual review.
+**Step 1.3: Body**
+Record: The commit explains it adds a DMI quirk entry for the ASUS
+HN7306EA board and sets `driver_data` to `ASOC_SDW_ACP_DMIC` so the
+platform-specific DMIC quirk path is selected. Without this quirk, the
+board's built-in digital microphone will not be enabled through the ACP
+SoundWire path. No stack traces, crash reports, or version information
+given — this is standard for a board-specific quirk addition.
 
-**Step 1.3: Analyze the commit body text**
-Record: The machine has an ALC287 codec. Without the quirk, bass
-speakers are not configured and speaker volume cannot be controlled. A
-kernel bugzilla entry (#221210) documents the user-facing issue.
+**Step 1.4: Hidden Bug Fix**
+Record: Yes — while framed as "add," this is a hardware enablement fix.
+Without the quirk, the DMIC path is not selected, and the microphone
+does not function on this specific laptop. Adding board-specific DMI
+quirks is the standard Linux mechanism for making specific hardware work
+correctly.
 
-**Step 1.4: Detect hidden bug fixes**
-Record: Not a hidden fix — this is an explicit hardware quirk addition
-for a known audio routing problem.
+===============================================================
+PHASE 2: DIFF ANALYSIS
+===============================================================
 
----
+**Step 2.1: Inventory**
+Record: 1 file modified: `sound/soc/amd/acp/acp-sdw-legacy-mach.c`, +8
+lines, 0 removed. Only the static `soc_sdw_quirk_table[]` data array is
+extended with one new entry before the `{}` terminator. Scope: single-
+file, single-table-entry, trivially scoped.
 
-## Phase 2: Diff Analysis — Line by Line
+**Step 2.2: Code Flow Change**
+Record: Before: No DMI match for "ASUSTeK COMPUTER INC." / "HN7306EA" →
+the global `soc_sdw_quirk` stays at its default `RT711_JD1` → DMIC path
+not selected at line 419. After: DMI match sets `soc_sdw_quirk =
+ASOC_SDW_ACP_DMIC` via `soc_sdw_quirk_cb()` → at line 419,
+`soc_sdw_quirk & ASOC_SDW_ACP_DMIC` is true → `dmic_num = 1` →
+`create_dmic_dailinks()` is called at line 454, enabling the built-in
+digital microphone.
 
-**Step 2.1: Inventory the changes**
-Record: One file changed: `sound/hda/codecs/realtek/alc269.c`. +1 line,
--0 lines. Modified: `alc269_fixup_tbl[]` static table. Scope: single-
-file, table-only, surgical.
+Verified code path from file:
 
-**Step 2.2: Understand the code flow change**
-Record: Before: no entry in `alc269_fixup_tbl[]` for codec SSID
-`0x17aa:0x391d`. The ALC287 codec on this laptop gets no fixup applied
-to bass speakers. After: `HDA_CODEC_QUIRK(0x17aa, 0x391d, "Lenovo Yoga 7
-2-in-1 16AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN)` maps this
-codec SSID to an existing well-tested fixup. This is an
-initialization/probe path change.
+```419:420:sound/soc/amd/acp/acp-sdw-legacy-mach.c
+        if (soc_sdw_quirk & ASOC_SDW_ACP_DMIC || mach_params->dmic_num)
+                dmic_num = 1;
+```
 
-**Step 2.3: Identify the bug mechanism**
-Record: Category (h) — hardware workaround / audio codec quirk. The
-fixup function `alc287_fixup_yoga9_14iap7_bass_spk_pin()` does:
-1. Overrides Pin Complex 0x17 configuration (reported wrongly as
-   unconnected)
-2. Overrides connection list for NID 0x17 to DACs 0x02/0x03 (avoids DACs
-   0x06/0x08 which have no volume control)
-3. Sets preferred DAC pairing: speakers (0x14, 0x17) → DAC 0x02,
-   headphones (0x21) → DAC 0x03
+```450:457:sound/soc/amd/acp/acp-sdw-legacy-mach.c
+        if (dmic_num > 0) {
+                if (ctx->ignore_internal_dmic) {
+                        dev_warn(dev, "Ignoring ACP DMIC\n");
+                } else {
+                        ret = create_dmic_dailinks(card, &dai_links,
+&be_id, 0);
+                        if (ret)
+                                return ret;
+                }
+```
 
-**Step 2.4: Assess the fix quality**
-Record: Minimal and obviously correct — one exact-match table entry
-reusing a fixup already used by 7+ other Lenovo machines.
-`HDA_CODEC_QUIRK` matches on codec SSID (narrower than PCI SSID), so no
-other hardware can be affected. Regression risk: effectively zero.
+**Step 2.3: Bug Mechanism**
+Record: Category: Hardware workaround / DMI quirk table entry. The board
+requires `ASOC_SDW_ACP_DMIC` to be set so the DMIC DAI link is created.
+Without it, the standard default (`RT711_JD1`) does not enable the DMIC
+path.
 
----
+**Step 2.4: Fix Quality**
+Record: Obviously correct — follows the exact same struct pattern as
+every other entry in the table (AMD, Dell, Lenovo). Minimal and
+surgical: 8 lines of pure static data. Zero regression risk for other
+machines: only fires when both `DMI_BOARD_VENDOR == "ASUSTeK COMPUTER
+INC."` AND `DMI_PRODUCT_NAME == "HN7306EA"` match.
 
-## Phase 3: Git History Investigation
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.1: Blame the changed lines**
-Record: `git blame` shows the adjacent sibling entry for `0x391c`
-(14AKP10) was introduced by commit `1386d16761c0b5` (J-Donald Tournier,
-2025-10-18). The new `0x391d` entry is the 16-inch variant of the same
-family. There was no previous `0x391d` line — this is a coverage gap,
-not a changed line.
+**Step 3.1: Blame**
+Record: `git blame` confirms the quirk table was introduced by
+`2981d9b0789c44` (Vijendar Mukunda, 2024-11-13, "ASoC: amd: acp: add
+soundwire machine driver for legacy stack") with just one entry (AMD
+Birman-PHX). Dell entries added by `4bb5b6f13fd83b` (2025-02-07) and
+`3254959b4dd065` (2025-09-03). Lenovo entries added by `aa7b7452bb742f`
+(2026-02-18). The infrastructure for `ASOC_SDW_ACP_DMIC` and the DMIC
+path has existed since the driver was created.
 
-**Step 3.2: Follow the Fixes: tag**
-Record: N/A — no `Fixes:` tag present (expected for manually reviewed
-candidates).
+**Step 3.2: Fixes Tag**
+Record: No Fixes: tag present — not applicable for a quirk addition.
 
-**Step 3.3: Check file history for related changes**
-Record: Recent `alc269.c` history is dominated by quirk additions for
-various laptops. Related commits:
-- `1386d16761c0b5`: sibling 14AKP10 quirk (same fixup, same
-  `HDA_CODEC_QUIRK` pattern)
-- `3790a3d6dbbc4`: original `ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN`
-  introduction (first in v6.0)
-- `504f052aa3435`: introduced `HDA_CODEC_QUIRK` / codec-SSID matching
-  for Lenovo (first in v6.13)
+**Step 3.3: File History**
+Record: 13 commits to this file since creation. Other DMI quirk
+additions (Dell, Lenovo) follow the identical pattern. This ASUS commit
+is standalone — not part of a series.
 
-This commit is standalone — no patch series, no multi-file dependency.
+**Step 3.4: Author**
+Record: `git log --author='Hasun Park'` returns empty for
+`sound/soc/amd/` — this appears to be an external contributor (likely
+owns the hardware). The patch was merged by Mark Brown, the ASoC
+subsystem maintainer, which is a strong quality endorsement.
 
-**Step 3.4: Check the author's other commits**
-Record: Zhang Heng is a recurring contributor in
-`sound/hda/codecs/realtek/`, with 6+ prior quirk patches found. Not the
-subsystem maintainer but an established contributor. Takashi Iwai (ALSA
-maintainer) signed off.
+**Step 3.5: Dependencies**
+Record: No dependencies. The `ASOC_SDW_ACP_DMIC` constant (`BIT(5)` in
+`soc_amd_sdw_common.h`), the `soc_sdw_quirk_cb` callback, and the DMIC
+path all exist since the driver's introduction in v6.13. Fully self-
+contained.
 
-**Step 3.5: Check for dependent/prerequisite commits**
-Record: This patch depends on two prerequisites:
-1. `ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN` — present since v6.0
-2. `HDA_CODEC_QUIRK()` macro — present since v6.13 (commit
-   `504f052aa3435`)
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-Both are verified present on HEAD. The patch is standalone for any tree
-that has these two prerequisites.
+**Step 4.1-4.4:** Record: The `Link:` tag provides the patch message ID.
+Direct access to lore.kernel.org and patch.msgid.link was blocked by bot
+protection (Anubis). The patch was merged by Mark Brown directly. No
+NAKs or concerns are evidenced (the commit reached mainline). Could not
+verify explicit stable nominations or review comments from primary
+sources.
 
----
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-## Phase 4: Mailing List and External Research
+**Step 5.1: Key Functions**
+Record: No function bodies modified — only the `soc_sdw_quirk_table[]`
+static data. Consumers: `soc_sdw_quirk_cb()`, `mc_probe()`,
+`soc_card_dai_links_create()`, `create_dmic_dailinks()`.
 
-**Step 4.1–4.4**
-Record: Bugzilla #221210 and lore.kernel.org links were inaccessible due
-to Anubis bot protection. However, the existence of a kernel bugzilla
-report referenced in a maintainer-signed commit provides sufficient
-evidence of a documented, real-world user issue. No mailing list review
-details could be verified. No stable-specific discussion could be
-checked.
+**Step 5.2: Callers**
+Record: `soc_sdw_quirk_table` is consumed by `dmi_check_system()` at
+line 498 in `mc_probe()`, the platform driver `.probe` callback.
+`mc_probe()` is registered via `soc_sdw_driver` (line 570) matching
+platform device ID `"amd_sdw"`.
 
----
+**Step 5.3: Callees**
+Record: `soc_sdw_quirk_cb()` (line 35) simply assigns `soc_sdw_quirk =
+(unsigned long)id->driver_data`. Downstream,
+`soc_card_dai_links_create()` checks the bit at line 419 and
+conditionally enables DMIC DAI link creation.
 
-## Phase 5: Code Semantic Analysis
+**Step 5.4: Call Chain**
+Record: PCI probe → `acp63_machine_register()` →
+`platform_device_register_data(..., "amd_sdw", ...)` → `mc_probe()` →
+`dmi_check_system(soc_sdw_quirk_table)` → `soc_card_dai_links_create()`
+→ DMIC enabled if `ASOC_SDW_ACP_DMIC` set. Reachable automatically on
+boot for matching AMD SoundWire hardware.
 
-**Step 5.1: Identify key functions**
-Record: The diff modifies `alc269_fixup_tbl[]`. The semantically
-affected functions are:
-- `snd_hda_pick_fixup()` (reads the table during probe)
-- `alc287_fixup_yoga9_14iap7_bass_spk_pin()` (the fixup applied)
+**Step 5.5: Similar Patterns**
+Record: `acp-sdw-sof-mach.c` has an analogous `ASOC_SDW_ACP_DMIC` gating
+mechanism (lines 29, 312), confirming this is an established subsystem
+pattern. The same quirk table pattern is used for Dell and Lenovo
+entries in the same file.
 
-**Step 5.2: Trace callers**
-Record: `alc269_fixup_tbl` is consumed by `snd_hda_pick_fixup()`, called
-from `alc269_probe()` — the standard ALC269-family codec initialization
-path. This runs on every system that has this codec.
+===============================================================
+PHASE 6: STABLE TREE ANALYSIS
+===============================================================
 
-**Step 5.3: Trace callees**
-Record: `alc287_fixup_yoga9_14iap7_bass_spk_pin()` calls:
-- `hda_fixup_ideapad_acpi()` — mute LED support
-- `snd_hda_apply_pincfgs()` — override pin 0x17 configuration
-- `snd_hda_override_conn_list()` — set DAC connections for NID 0x17
-- Sets `spec->gen.preferred_dacs` — DAC pairing preferences
+**Step 6.1: File Existence in Stable Trees**
+Record: Verified via `git cat-file -e`:
+- `stable/linux-6.6.y`: **MISSING** (driver not present)
+- `stable/linux-6.12.y`: **MISSING** (driver not present)
+- `stable/linux-6.13.y`: **EXISTS** (3 commits to file — base + Dell
+  quirks)
+- `stable/linux-6.14.y`: **EXISTS** (3 commits to file — base + Dell
+  quirks)
+- `stable/linux-6.19.y`: **EXISTS** (13 commits — all quirks including
+  Lenovo)
 
-**Step 5.4: Follow the call chain**
-Record: ALC287 codec → `alc269_probe()` → `snd_hda_pick_fixup()` → table
-match on codec SSID → `snd_hda_apply_fixup(HDA_FIXUP_ACT_PRE_PROBE)` →
-`alc287_fixup_yoga9_14iap7_bass_spk_pin()`. This path is automatically
-exercised on boot on affected hardware. Fully reachable without special
-configuration.
+The driver and `ASOC_SDW_ACP_DMIC` infrastructure exist in **6.13.y,
+6.14.y, and 6.19.y**.
 
-**Step 5.5: Search for similar patterns**
-Record: The same fixup `ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN` is
-already used for 7+ Lenovo models: 0x3801, 0x3869, 0x3882, 0x3891,
-0x390d, 0x391c. This is a well-exercised, established pattern.
+**Step 6.2: Backport Complications**
+Record: The patch inserts one entry before the `{}` terminator in
+`soc_sdw_quirk_table[]`. In 6.13.y and 6.14.y, the table has fewer
+entries (no Lenovo rows), so there will be a minor context offset, but
+the append-before-terminator pattern makes this trivially applicable.
+Expected: clean apply or trivial context adjustment in all three stable
+trees.
 
----
+**Step 6.3: Related Fixes in Stable**
+Record: No HN7306EA-specific fix exists in any stable tree. Other
+Dell/Lenovo quirks have been backported to various stable trees,
+confirming this class of change is accepted.
 
-## Phase 6: Cross-Referencing and Stable Tree Analysis
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 6.1: Does the buggy code exist in stable trees?**
+**Step 7.1: Subsystem**
+Record: `sound/soc/amd/acp` — ASoC AMD Audio Co-Processor SoundWire
+machine driver. Criticality: IMPORTANT — audio is a critical user-facing
+function on laptops, though this is driver/platform-specific, not
+universal.
+
+**Step 7.2: Activity**
+Record: Actively maintained — 13 commits to this single file since
+creation, with regular quirk additions for Dell, Lenovo, and now ASUS.
+Mark Brown (ASoC maintainer) actively merges patches.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: Affected Users**
+Record: Device-specific — owners of the ASUS HN7306EA (ProArt PX13)
+laptop running kernel 6.13+ with the AMD SoundWire audio stack.
+
+**Step 8.2: Trigger Conditions**
+Record: Triggers on every boot during driver probe via
+`dmi_check_system()`. Every user of this laptop model is affected. No
+special configuration or user action required.
+
+**Step 8.3: Failure Mode**
+Record: Without the quirk, the built-in digital microphone is not
+enabled (the DMIC DAI link is never created). This is a "hardware
+doesn't work" issue — microphone non-functional. Severity: MEDIUM-HIGH
+for affected users (broken audio input on a laptop is a significant
+usability issue).
+
+**Step 8.4: Risk-Benefit Ratio**
 Record:
-- The bass-speaker fixup `ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN` has
-  existed since **v6.0**.
-- The `HDA_CODEC_QUIRK()` macro (codec-SSID matching) was introduced in
-  **v6.13** (`504f052aa3435`).
-- The sibling `0x391c` entry first appeared in **v6.18**
-  (`1386d16761c0b5`).
-- This commit (`7bae956cac043`) first appears in **v7.0-rc6**.
+- BENEFIT: High for affected users — enables the laptop's built-in
+  microphone
+- RISK: Essentially zero — DMI match table entry only triggers on exact
+  vendor+product match; 8 lines of pure static data; uses existing
+  infrastructure; well-established pattern
+- Ratio: Strongly favorable
 
-Branch applicability:
-- **v6.18.y, v6.19.y**: Trivial one-line addition next to the existing
-  `0x391c` sibling. Clean apply expected.
-- **v6.13–v6.17**: `HDA_CODEC_QUIRK` exists, fixup exists. Feasible but
-  `0x391c` context line is absent.
-- **v6.12 and older (v6.6, v6.1, v5.15)**: Lack `HDA_CODEC_QUIRK()`
-  macro entirely. Not a standalone backport — would need adaptation
-  (e.g., using `SND_PCI_QUIRK` instead, which matches PCI SSID not codec
-  SSID).
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 6.2: Check for backport complications**
-Record: Clean apply on v6.18.y and v6.19.y. Minor context adjustments
-for v6.13–v6.17. Not directly applicable for older trees.
+**Step 9.1: Evidence**
 
-**Step 6.3: Check if related fixes are already in stable**
-Record: No evidence of an existing `0x391d` entry in any branch. The
-sibling `0x391c` is in v6.18+.
+FOR backporting:
+- Classic hardware DMI quirk addition — explicitly listed as an allowed
+  exception category
+- 8 lines, single file, pure static data addition, trivially correct
+- Zero regression risk — only affects boards matching exact DMI strings
+- Fixes real user issue: broken DMIC (microphone non-functional) on ASUS
+  HN7306EA
+- Merged by ASoC subsystem maintainer Mark Brown
+- Self-contained with no dependencies
+- Infrastructure exists in 6.13.y, 6.14.y, and 6.19.y stable trees
+- Same pattern as Dell and Lenovo quirks already backported to stable
+  trees
 
----
+AGAINST backporting:
+- Only affects a single laptop model (normal for quirks — not a valid
+  concern)
+- Not a crash/security/corruption fix (but hardware enablement quirks
+  are an explicit exception)
 
-## Phase 7: Subsystem and Maintainer Context
+UNRESOLVED:
+- Could not access lore.kernel.org to verify mailing list review
+  discussion
+- No primary end-user bug report verified (author is likely the affected
+  user)
 
-**Step 7.1: Identify the subsystem and its criticality**
-Record: `sound/hda/codecs/realtek` — ALSA HDA Realtek codec driver.
-Criticality: IMPORTANT. While it's a specific driver, Realtek HDA is
-among the most widely used audio codecs in laptops. Quirks for this
-driver are routine stable material.
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** — trivial table entry following
+   exact same pattern as all existing entries; merged by maintainer
+2. Fixes a real bug? **YES** — broken DMIC on ASUS HN7306EA
+3. Important issue? **YES** — non-functional microphone on a shipping
+   laptop
+4. Small and contained? **YES** — 8 lines, one file, one table entry
+5. No new features or APIs? **YES** — just a DMI quirk data entry using
+   existing code paths
+6. Can apply to stable? **YES** — applicable to 6.13.y, 6.14.y, 6.19.y
+   with clean or trivial context adjustment
 
-**Step 7.2: Assess subsystem activity**
-Record: `alc269.c` sees very frequent updates, overwhelmingly quirk
-additions for various laptop models. This is completely normal for the
-subsystem.
+**Step 9.3: Exception Category**
+Record: **Hardware quirk/workaround** — This is a DMI quirk table entry
+for a specific laptop, which is the textbook example of a stable-
+appropriate exception. Dell and Lenovo quirks from the same table have
+already been backported.
 
----
-
-## Phase 8: Impact and Risk Assessment
-
-**Step 8.1: Determine who is affected**
-Record: Users of the Lenovo Yoga 7 2-in-1 16AKP10 laptop. Platform-
-specific / driver-specific scope.
-
-**Step 8.2: Determine trigger conditions**
-Record: The bug triggers on every boot — the bass speakers are
-misconfigured during codec initialization. Every user of this laptop is
-affected every time they use audio. Not a rare condition or timing-
-dependent race.
-
-**Step 8.3: Determine failure mode severity**
-Record: Bass speakers are not configured and speaker volume cannot be
-controlled. This is a persistent, user-visible functional defect.
-Severity: MEDIUM — not a crash or security issue, but a real hardware
-functionality problem that affects every boot.
-
-**Step 8.4: Calculate risk-benefit ratio**
-Record:
-- **Benefit**: HIGH for affected users — restores proper speaker
-  functionality on their laptop.
-- **Risk**: VERY LOW — one table entry, exact codec-SSID match, reuses a
-  well-tested fixup already used by 7+ other models. Zero risk to other
-  hardware.
-- **Ratio**: Strongly favorable.
-
----
-
-## Phase 9: Final Synthesis
-
-**Step 9.1: Compile the evidence**
-
-Evidence FOR backporting:
-- Real user-facing bug documented in kernel bugzilla (#221210)
-- One-line, exact-match hardware quirk — minimal change
-- Reuses `ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN`, well-tested since
-  v6.0 across 7+ Lenovo models
-- Maintainer (Takashi Iwai) signed off
-- Sibling device `0x391c` already uses the same fixup via same mechanism
-- `HDA_CODEC_QUIRK` narrows match to codec SSID — no risk of false
-  matches
-- Author (Zhang Heng) is an established contributor to this area
-
-Evidence AGAINST backporting:
-- Not a crash, security, or data corruption fix (functional audio issue)
-- Older LTS trees (v6.12 and below) lack `HDA_CODEC_QUIRK()` — not a
-  standalone backport there
-
-Unresolved:
-- Bugzilla #221210 contents (blocked by Anubis)
-- Lore review discussion (blocked by Anubis)
-
-**Step 9.2: Apply the stable rules checklist**
-1. Obviously correct and tested? **YES** — one table entry, same fixup
-   used by many devices, maintainer sign-off.
-2. Fixes a real bug that affects users? **YES** — broken bass speakers
-   and volume control on a shipping laptop.
-3. Important issue? **YES** — hardware functionality completely broken;
-   meets hardware quirk exception.
-4. Small and contained? **YES** — 1 line, 1 file.
-5. No new features or APIs? **YES** — data table entry only.
-6. Can apply to stable trees? **YES** — clean apply on v6.13+ trees that
-   have `HDA_CODEC_QUIRK`. Trivially clean on v6.18+/v6.19+.
-
-**Step 9.3: Check for exception categories**
-Record: This is a **hardware quirk/workaround** — explicitly listed as
-an exception category that is automatically YES for stable.
-Specifically, it is an **audio codec quirk** (`HDA_CODEC_QUIRK` entry in
-`alc269_fixup_tbl`).
-
-**Step 9.4: Make the decision**
-This is a textbook stable backport: a single-line audio codec quirk for
-an existing driver, fixing broken speakers on a specific laptop, using a
-well-established fixup. It should be backported to stable trees that
-already have `HDA_CODEC_QUIRK()` support (v6.13+), with special ease on
-v6.18.y and v6.19.y where the sibling entry provides clean context.
-
----
+**Step 9.4: Decision**
+This is a trivial, zero-risk DMI quirk table entry that enables the
+built-in digital microphone on a specific ASUS laptop model. It falls
+squarely into the "hardware quirks and workarounds" exception category
+that is explicitly allowed in stable. The fix is 8 lines of pure static
+data, uses existing infrastructure, and only affects the exact matching
+hardware. The driver and `ASOC_SDW_ACP_DMIC` infrastructure exist in
+stable trees 6.13.y, 6.14.y, and 6.19.y.
 
 ## Verification
 
-- [Phase 1] Parsed tags from `git show 7bae956cac043`: confirmed Link to
-  bugzilla #221210, SOBs from Zhang Heng and Takashi Iwai (ALSA
-  maintainer). No Fixes/Reported-by/Cc:stable tags.
-- [Phase 2] Diff analysis: confirmed exactly 1 line added —
-  `HDA_CODEC_QUIRK(0x17aa, 0x391d, ...)` in `alc269_fixup_tbl[]`.
-  Diffstat: `1 file changed, 1 insertion(+)`.
-- [Phase 2] Read fixup function at line 3428: confirmed
-  `alc287_fixup_yoga9_14iap7_bass_spk_pin()` applies pin config for NID
-  0x17, overrides connection list to DACs 0x02/0x03, sets preferred DAC
-  pairs.
-- [Phase 2] Read `HDA_CODEC_QUIRK` definition in
-  `sound/hda/common/hda_local.h`: confirmed it sets `.match_codec_ssid =
-  true` for narrow matching.
-- [Phase 3] `git blame -L 7574,7576`: confirmed sibling `0x391c` entry
-  from `1386d16761c0b5` (J-Donald Tournier, 2025-10-18).
-- [Phase 3] `git log --oneline -1 1386d16761c0b5`: confirmed "ALSA:
-  hda/realtek: Add quirk for Lenovo Yoga 7 2-in-1 14AKP10".
-- [Phase 3] `git tag --contains 3790a3d6dbbc4`: confirmed original Yoga9
-  bass-speaker fixup first in released tag v6.0.
-- [Phase 3] `git log --oneline -1 504f052aa3435`: confirmed "ALSA:
-  hda/realtek: Use codec SSID matching for Lenovo devices".
-- [Phase 3] `git tag --contains 504f052aa3435`: confirmed
-  `HDA_CODEC_QUIRK` support first in released tag v6.13.
-- [Phase 3] `git log --author="Zhang Heng"`: confirmed 6+ prior HDA
-  Realtek quirk patches.
-- [Phase 5] Grep for `ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN` in quirk
-  table: confirmed usage by 0x3801, 0x3869, 0x3882, 0x3891, 0x390d,
-  0x391c (7+ models).
-- [Phase 5] Grep for `alc287_fixup_yoga9_14iap7_bass_spk_pin`: confirmed
-  function definition at line 3428 and fixup array reference at line
-  6331.
-- [Phase 6] `git tag --contains 7bae956cac043`: confirmed this commit is
-  only in v7.0-rc6.
-- [Phase 6] `git tag --contains 1386d16761c0b5`: confirmed sibling entry
-  first in v6.18.
-- [Phase 6] Grep for `0x391d` in current tree: confirmed no existing
-  entry (the candidate adds it).
-- [Phase 7] `git log --oneline -20 --
-  sound/hda/codecs/realtek/alc269.c`: confirmed high churn, all quirk
-  additions.
-- [Phase 8] Failure mode assessed from commit message and fixup function
-  code: non-functional bass speakers and broken volume control. Severity
-  MEDIUM.
-- UNVERIFIED: Bugzilla #221210 contents (blocked by Anubis bot
-  protection).
-- UNVERIFIED: Lore patch discussion and any reviewer stable nomination
-  (blocked by Anubis).
-- UNVERIFIED: Whether a `SND_PCI_QUIRK` adaptation would work for trees
-  older than v6.13.
+- [Phase 1] Parsed commit message: "add ASUS HN7306EA quirk," tags
+  include author SOB and Mark Brown (maintainer) SOB, Link to patch
+- [Phase 2] Read `acp-sdw-legacy-mach.c`: verified `ASOC_SDW_ACP_DMIC`
+  check at line 419 enables `dmic_num = 1`, which triggers
+  `create_dmic_dailinks()` at line 454
+- [Phase 2] Grep for `ASOC_SDW_ACP_DMIC`: found at line 29 (log_quirks),
+  line 419 (DMIC enablement), and `soc_amd_sdw_common.h` line 28
+  (`BIT(5)`)
+- [Phase 3] `git blame` lines 41-115: confirmed table origin commit
+  `2981d9b0789c44` (2024-11-13), Dell quirks from `4bb5b6f13fd83b` and
+  `3254959b4dd065`, Lenovo from `aa7b7452bb742f`
+- [Phase 3] `git show 2981d9b0789c44`: confirmed original driver
+  introduction creating `acp-sdw-legacy-mach.c` (486 lines)
+- [Phase 3] `git log --author='Hasun Park'`: no prior commits found in
+  `sound/soc/amd/`
+- [Phase 3] `git log --oneline -20`: confirmed 13 commits to file, all
+  quirk additions and driver evolution, no prerequisites for this patch
+- [Phase 5] Traced call chain in code: `mc_probe()` line 498 calls
+  `dmi_check_system(soc_sdw_quirk_table)`, then line 514 calls
+  `soc_card_dai_links_create()`, which checks quirk at line 419
+- [Phase 5] Grep confirmed analogous `ASOC_SDW_ACP_DMIC` pattern in
+  `acp-sdw-sof-mach.c` (established subsystem pattern)
+- [Phase 6] `git cat-file -e` across stable trees: file MISSING in 6.6.y
+  and 6.12.y; EXISTS in 6.13.y, 6.14.y, 6.19.y
+- [Phase 6] `git log stable/linux-6.13.y`: 3 commits (base + Dell
+  quirks); `stable/linux-6.14.y`: 3 commits; `stable/linux-6.19.y`: 13
+  commits (includes Lenovo)
+- [Phase 6] Clean apply expected in all three applicable stable trees —
+  trivial table entry append
+- [Phase 8] Failure mode verified from code: without quirk,
+  `ASOC_SDW_ACP_DMIC` not set → `dmic_num` stays 0 →
+  `create_dmic_dailinks()` not called → DMIC non-functional
+- UNVERIFIED: Could not access lore.kernel.org or patch.msgid.link
+  (blocked by Anubis bot protection) — no reviewer discussion or NAKs
+  verified
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/amd/acp/acp-sdw-legacy-mach.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 39a57d9238497..b83f0c4bec142 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7573,6 +7573,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x38ab, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x38b4, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	HDA_CODEC_QUIRK(0x17aa, 0x391c, "Lenovo Yoga 7 2-in-1 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
-+	HDA_CODEC_QUIRK(0x17aa, 0x391d, "Lenovo Yoga 7 2-in-1 16AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x38b5, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38b6, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38b7, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
+diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+index 4f92de33a71a0..2e0f751afe250 100644
+--- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+@@ -111,6 +111,14 @@ static const struct dmi_system_id soc_sdw_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)(ASOC_SDW_CODEC_SPKR),
+ 	},
++	{
++		.callback = soc_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "HN7306EA"),
++		},
++		.driver_data = (void *)(ASOC_SDW_ACP_DMIC),
++	},
+ 	{}
+ };
+ 
 -- 
 2.53.0
 
