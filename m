@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D413D16F9;
-	Mon, 30 Mar 2026 12:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520423D330E;
+	Mon, 30 Mar 2026 12:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874339; cv=none; b=M8qnUp21I7okXRj2KJPZFboEvAFiVW/50EjzKtvH1a/xF8keENjyu/YUoFoY9dBq9BaZdHS7fmLfNVZl2GAkoinPMBED/86uAK5U5Fl4aJgkLYVS0jwsIyF+0eMFY1h0N4qJFsNEuf8+YfqAJvyDsEPmJvjtHHnE8LnE7XaYZA4=
+	t=1774874340; cv=none; b=TlGT7cpA29AF9uw8ZNN65wkgMekVqQlchsh4yFdpKgDSv/Lr6EeMSb5eOBEpHI9VOy8rpCwbGvnctpn/R+531LZq64HPfl+i1wqh9SJssdGf7+J8zykS9GWXqgdHppeGWkBI2h/koQpUPtXfGmH8c2cnBpnzUHmYZGrQMLMlbR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874339; c=relaxed/simple;
-	bh=DTgQ3ZVL3YQNnCCvLHu6gPbakMl8yNJQZvukj6+F8W0=;
+	s=arc-20240116; t=1774874340; c=relaxed/simple;
+	bh=mFjDYXZl9BeZFXuOwZWSoXRnp/QSrvsyZ9O2eaEN23A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n/eD9aNiCFBYE+aKHURcCWYcpnMJdQPtSIOsNan2GCqLNv6BUjUN0j0OchqYXLeTCI2tMNQlIRlIyG4qd6YXr8LdDPWpqFKxrPfOyivsoBbN5dW7CXCTpXd9anmfJi8bNIDnfZVVfTNlY7DNhZs034QP3+vBDDsDBf3XQrycRMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L8J7vLab; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pl/ZpF645HeEkAzz/BuKTYWPkF1wvlWgupD6hBY6yptAi2gkXST73+pBIoaihRRjxxRZkfgfmTjR6yKSR/IRpu5+o6csIEkVIXVwNrC90mu1JQewBGvzTXV6uyopcn4wIpyqZ2+hZKHz0Fp7TgqHlYloWdoWx2C8ynfnZbmHUYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ha+b4JnG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L8J7vLab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691FCC2BCB0;
-	Mon, 30 Mar 2026 12:38:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ha+b4JnG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD65C2BCB8;
+	Mon, 30 Mar 2026 12:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874337;
-	bh=DTgQ3ZVL3YQNnCCvLHu6gPbakMl8yNJQZvukj6+F8W0=;
+	s=k20201202; t=1774874340;
+	bh=mFjDYXZl9BeZFXuOwZWSoXRnp/QSrvsyZ9O2eaEN23A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8J7vLab4uBV+gbZmJLTQkz1dzsrjJEOUXGT9IMdfSZCmdgpOP2J5RTDr/uSQJE/o
-	 DDsZ+iZjSdgXvGAsJJ5YxK8hagpPwSb/KDfIcEAZDsG+YFEyJMaA8pcW+eAGxfSM2L
-	 Kewxf3wmxrn5BkqVLbX99J7Yl6N2oahkB/PjpsqPfpCj0ELgXXMKrCB0PJ+w3VQnwO
-	 DeP0zfX8/ImK4L9Cc1qxmFR6KaVc96hkEjHI9P5ENG/9cJkXWEy0QsOgcPv+x92fyD
-	 4QMY8htoxv5Ip6g3ZqOhx15X3vNlY1RgH2JABYQragddOz4IrUgScXjKbHE4Sz/2FY
-	 Srzquvoa8c2eg==
+	b=ha+b4JnGvQh50fhsdNXjDgTKVhAQtotwMSxv+2QI/5q8XSazhN/0n0SOs/2kAOeF1
+	 sPdrx6+niqV0B4V7KVMrO8UVTqNmZ5zCNK+CmhXbMBzKMwVjlIb4CWjkMmBoV7rfF8
+	 M41m3fiBQHiiEO5YqjVvjRyceGPgTnnwDvMyHi4443pFNcfsSQCaV9hMoPTu4zGRQl
+	 a6LSsv+3NFZurDKg7C37MoFJoVO+kSrkDjBpWFFbhfqrdlhpK1EH3w0iuVerR/vQcY
+	 RqegiKIMxHWsAxMBhcCw5F4rMgvhcNRas6CQlHsSvXWPn74esxvnmEDEvRj08+yzI+
+	 FvZlV7ffThPfA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Frank Zhang <rmxpzlb@gmail.com>,
+Cc: Andrii Kovalchuk <coderpy4@proton.me>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
 	perex@perex.cz,
 	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] ALSA:usb:qcom: add AUXILIARY_BUS to Kconfig dependencies
-Date: Mon, 30 Mar 2026 08:38:23 -0400
-Message-ID: <20260330123842.756154-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.1] ALSA: hda/realtek: Add HP ENVY Laptop 13-ba0xxx quirk
+Date: Mon, 30 Mar 2026 08:38:25 -0400
+Message-ID: <20260330123842.756154-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -54,354 +54,352 @@ X-stable-base: Linux 6.19.10
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Zhang <rmxpzlb@gmail.com>
+From: Andrii Kovalchuk <coderpy4@proton.me>
 
-[ Upstream commit b8bee48e38f2ddbdba5e58bc54ef54bb7d8d341b ]
+[ Upstream commit 793b008cd39516385791a1d1d223d817e947a471 ]
 
-The build can fail with:
+Add a PCI quirk for HP ENVY Laptop 13-ba0xxx (PCI device ID 0x8756)
+to enable proper mute LED and mic mute behavior using the
+ALC245_FIXUP_HP_X360_MUTE_LEDS fixup.
 
-ERROR: modpost: "__auxiliary_driver_register"
-[sound/usb/qcom/snd-usb-audio-qmi.ko] undefined!
-ERROR: modpost: "auxiliary_driver_unregister"
-[sound/usb/qcom/snd-usb-audio-qmi.ko] undefined!
-
-Select AUXILIARY_BUS when SND_USB_AUDIO_QMI is enabled.
-
-Signed-off-by: Frank Zhang <rmxpzlb@gmail.com>
-Link: https://patch.msgid.link/20260317102527.556248-1-rmxpzlb@gmail.com
+Signed-off-by: Andrii Kovalchuk <coderpy4@proton.me>
+Link: https://patch.msgid.link/u0s-uRVegF9BN0t-4JnOUwsIAR-mVc4U4FJfJHdEHX7ro_laErHD9y35NebWybcN16gVaVHPJo1ap3AoJ1a2gqJImPvThgeNt_SYVY1KaDw=@proton.me
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the technical verification I need. Let me produce the
-final answer.
+Now I have all the verified facts I need. Let me compile the final
+analysis.
 
 ---
 
-## Phase 1: Commit Message Forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-Record: [ALSA:usb:qcom] [add] [Add missing AUXILIARY_BUS Kconfig
-dependency to fix modpost build failure]
+Record: [ALSA: hda/realtek] [Add] [Add HP ENVY Laptop 13-ba0xxx quirk
+for mute LED / mic mute behavior]
 
 **Step 1.2: Tags**
-- `Signed-off-by: Frank Zhang <rmxpzlb@gmail.com>` — patch author
-- `Link:
-  https://patch.msgid.link/20260317102527.556248-1-rmxpzlb@gmail.com` —
-  patch submission
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` — ALSA subsystem
-  maintainer accepted the patch
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (expected for candidates under manual review)
-
-Record: Accepted by subsystem maintainer Takashi Iwai. Standalone patch
-(not part of a series).
+Record:
+- Signed-off-by: Andrii Kovalchuk `<coderpy4@proton.me>` (author)
+- Link: `https://patch.msgid.link/...` (patch submission)
+- Signed-off-by: Takashi Iwai `<tiwai@suse.de>` (ALSA subsystem
+  maintainer)
+- No Fixes: tag (expected for a quirk addition)
+- No Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc: stable
 
 **Step 1.3: Commit Body**
-Record: Bug: Enabling `SND_USB_AUDIO_QMI` without `AUXILIARY_BUS` causes
-modpost failures: `__auxiliary_driver_register` and
-`auxiliary_driver_unregister` are undefined in `snd-usb-audio-qmi.ko`.
-Symptom: hard build failure. Root cause: the Kconfig entry for
-`SND_USB_AUDIO_QMI` omits the required `select AUXILIARY_BUS`.
+Record: Bug: On HP ENVY Laptop 13-ba0xxx (PCI SSID 0x103c:0x8756), the
+mute LED and mic-mute LED do not function correctly because the driver
+lacks a quirk entry mapping this SSID to the appropriate fixup. Symptom:
+incorrect mute LED and mic-mute behavior. Root cause: missing PCI quirk
+table entry. No stack traces, crash descriptions, or version ranges
+mentioned.
 
-**Step 1.4: Hidden Bug Fix?**
-Record: Not really hidden — the commit message explicitly describes a
-build failure. The word "add" in the subject could be misleading, but
-the body makes the bug fix intent clear.
+**Step 1.4: Hidden Bug Fix Detection**
+Record: Not a hidden bug fix — this is an explicit hardware quirk
+addition. It fixes a real user-visible hardware issue (broken LED
+indicators) but is presented straightforwardly as a quirk addition.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-Record: 1 file changed (`sound/usb/Kconfig`), +1 line added (`select
-AUXILIARY_BUS`), 0 lines removed. No functions modified (Kconfig only).
-Scope: single-line surgical build fix.
+Record: `sound/hda/codecs/realtek/alc269.c`: +1 line, -0 lines. Single
+`SND_PCI_QUIRK()` entry added to `alc269_fixup_tbl[]`. Scope: single-
+file, single-line, table-only surgical addition.
 
 **Step 2.2: Code Flow Change**
-Record: Before: `SND_USB_AUDIO_QMI` could be enabled without
-`CONFIG_AUXILIARY_BUS`, causing the auxiliary bus object files not to be
-compiled, leaving
-`__auxiliary_driver_register`/`auxiliary_driver_unregister` unresolved
-at link time. After: enabling `SND_USB_AUDIO_QMI` forces
-`AUXILIARY_BUS=y`, guaranteeing the symbols are available.
+Record: Before: PCI SSID 0x103c:0x8756 has no match in
+`alc269_fixup_tbl[]`, so `snd_hda_pick_fixup()` does not select any
+fixup for this laptop — default generic behavior, LEDs non-functional.
+After: SSID matches `ALC245_FIXUP_HP_X360_MUTE_LEDS`, which calls
+existing `alc245_fixup_hp_mute_led_coefbit` chained to
+`ALC245_FIXUP_HP_GPIO_LED`.
 
 **Step 2.3: Bug Mechanism**
-Record: Category: build fix / Kconfig dependency bug. The driver's
-source (`qc_audio_offload.c` line 1990) uses
-`module_auxiliary_driver()`, which expands to
-`auxiliary_driver_register`/`auxiliary_driver_unregister` (declared in
-`include/linux/auxiliary_bus.h`). These are implemented in
-`drivers/base/auxiliary.o`, which is only built when
-`CONFIG_AUXILIARY_BUS` is enabled. Without the `select`, the symbols may
-not exist.
+Record: Category: hardware workaround / quirk table entry. Mechanism:
+Missing PCI SSID in quirk table prevents selection of already-
+implemented fixup for one specific HP laptop model.
 
 **Step 2.4: Fix Quality**
-Record: Obviously correct — the driver uses auxiliary bus APIs, so it
-must depend on the auxiliary bus. Minimal (1 line). Matches the
-established tree-wide pattern (50+ other Kconfig entries use `select
-AUXILIARY_BUS`). Regression risk: effectively zero — it only ensures a
-core infrastructure module is built.
+Record: Obviously correct — follows the identical pattern of hundreds of
+other entries in the same table. Minimal (1 line). Regression risk is
+essentially zero: `snd_hda_pick_fixup()` matches by exact PCI SSID, so
+only device 0x103c:0x8756 is affected. No API changes, no locking
+changes, no logic changes.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: Blame**
-Record: `git blame` confirms the `SND_USB_AUDIO_QMI` block was
-introduced in commit `326bbc348298a` ("ALSA: usb-audio: qcom: Introduce
-QC USB SND offloading support", Wesley Cheng, 2025-04-09). The `depends
-on USB_XHCI_HCD && USB_XHCI_SIDEBAND` line was later added by
-`882826f58b2c4` (Arnd Bergmann, 2025-05-21) — another build fix for the
-same driver. No `select AUXILIARY_BUS` exists in the current tree.
+Record: The neighboring quirk lines in `alc269_fixup_tbl[]` trace to the
+July 2025 Realtek driver split (file moved from
+`sound/pci/hda/patch_realtek.c` to `sound/hda/codecs/realtek/alc269.c`).
+The quirk infrastructure and the fixup `ALC245_FIXUP_HP_X360_MUTE_LEDS`
+are long-standing.
 
-**Step 3.2: Fixes Tag**
-Record: N/A — no `Fixes:` tag. However, the implied fix target is
-`326bbc348298a` which introduced the driver without the AUXILIARY_BUS
-dependency.
+**Step 3.2: Fixes: tag**
+Record: N/A — no Fixes: tag present, which is expected for a quirk
+addition.
 
 **Step 3.3: File History**
-Record: `git log --oneline -20 -- sound/usb/Kconfig` shows the
-SND_USB_AUDIO_QMI entry and the prior Kconfig build fix
-(`882826f58b2c4`). This is the **second** Kconfig dependency fix for the
-same new driver — a pattern consistent with a recently-introduced driver
-stabilizing its build dependencies. This patch is standalone; no multi-
-patch series dependency.
+Record: `git log --oneline -20 -- sound/hda/codecs/realtek/alc269.c`
+shows many similar quirk additions (HP, Samsung, Acer, Lenovo, etc.).
+This is the standard maintenance pattern for the Realtek HDA driver.
+This commit is standalone — not part of a numbered series.
 
 **Step 3.4: Author**
-Record: Frank Zhang has no other commits under `sound/usb/` in this
-tree. However, the patch was accepted by Takashi Iwai, the ALSA
-subsystem maintainer, providing quality assurance.
+Record: `git log --author='Andrii Kovalchuk' -10 -- sound/` returned no
+results — first-time contributor. However, the patch was accepted and
+signed off by Takashi Iwai (ALSA subsystem maintainer), which is a
+strong quality signal.
 
 **Step 3.5: Dependencies**
-Record: No prerequisites needed. The patch is self-contained: it only
-requires the `SND_USB_AUDIO_QMI` Kconfig block to already exist in the
-tree.
+Record: The only prerequisite is that `ALC245_FIXUP_HP_X360_MUTE_LEDS`
+must exist in the target tree. Verified:
+- **v6.6**: Present (3 occurrences in `sound/pci/hda/patch_realtek.c`) ✓
+- **v6.12**: Present (6 occurrences) ✓
+- **v6.1**: **NOT present** (0 occurrences) ✗
+- **v5.15**: **NOT present** (0 occurrences) ✗
+
+This commit is standalone for v6.6+ trees but **cannot** be backported
+to v6.1 or v5.15 without first backporting the prerequisite fixup.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1–4.4:**
-Record: Lore access was blocked by Anubis anti-bot protection. The patch
-link
-(`https://patch.msgid.link/20260317102527.556248-1-rmxpzlb@gmail.com`)
-and lore search URLs could not be fetched. Reviewer comments, explicit
-stable nominations, or NAKs remain unverified. However, the maintainer
-sign-off from Takashi Iwai confirms acceptance through the standard
-review process.
+**Step 4.1: Patch Discussion**
+Record: Direct lore.kernel.org and patch.msgid.link fetches were blocked
+by anti-bot protection. Via an alternative readable mirror, the thread
+shows a standalone [PATCH] submission. Takashi Iwai's only feedback was
+about email formatting — no technical objections. He manually corrected
+and applied the patch. No reviewer suggested Cc: stable. No NAKs.
+
+**Step 4.2: Bug Report**
+Record: No separate public bug report found. No Reported-by: tag. The
+patch thread itself serves as the primary evidence of the user-visible
+issue.
+
+**Step 4.3: Related Patches**
+Record: This is a standalone one-line patch, not part of a series.
+Similar quirks exist for other HP ENVY models using the same fixup
+(0x876e for 13-ay0xxx, 0x888a for 15-eu0xxx, etc.).
+
+**Step 4.4: Stable Discussion**
+Record: No stable-specific discussion found for this commit. However,
+analogous HP ENVY quirk additions have historically carried `Cc:
+stable@vger.kernel.org`, demonstrating this pattern is routinely
+considered for stable.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Key Functions**
-Record: N/A for C functions — this is a Kconfig-only change. The
-relevant code reference is
-`module_auxiliary_driver(qc_usb_audio_offload_drv)` at
-`sound/usb/qcom/qc_audio_offload.c:1990`.
+**Step 5.1: Functions Modified**
+Record: No functions modified. Only a static data table entry added to
+`alc269_fixup_tbl[]`.
 
-**Step 5.2–5.4: Code Tracing**
-Record: Verified the dependency chain:
-1. `sound/usb/qcom/qc_audio_offload.c` line 6: `#include
-   <linux/auxiliary_bus.h>`
-2. `sound/usb/qcom/qc_audio_offload.c` line 1990:
-   `module_auxiliary_driver(qc_usb_audio_offload_drv)`
-3. `include/linux/auxiliary_bus.h` defines `module_auxiliary_driver()`
-   expanding to
-   `auxiliary_driver_register`/`auxiliary_driver_unregister`
-4. `drivers/base/Kconfig` line 4-5: `config AUXILIARY_BUS` is a
-   promptless `bool` (cannot be enabled by the user directly — must be
-   selected by a consumer)
-5. Without `select AUXILIARY_BUS`, if no other enabled config selects
-   it, the symbols are unavailable → modpost failure
+**Step 5.2: Callers**
+Record: The quirk table is consumed by `snd_hda_pick_fixup(codec,
+alc269_fixup_models, alc269_fixup_tbl, alc269_fixups)` called from
+`alc269_probe()` at line 8572-8573 of `alc269.c`. The codec driver
+registers `.probe = alc269_probe` via
+`module_hda_codec_driver(alc269_driver)`.
+
+**Step 5.3: Callees**
+Record: The fixup `ALC245_FIXUP_HP_X360_MUTE_LEDS` (line 6401-6406)
+calls `.v.func = alc245_fixup_hp_mute_led_coefbit` and chains to
+`ALC245_FIXUP_HP_GPIO_LED`. All existing, well-tested code.
+
+**Step 5.4: Reachability**
+Record: Call chain: `module_hda_codec_driver` → `alc269_probe` →
+`snd_hda_pick_fixup()` → match PCI SSID against table. Triggered during
+codec probe on every boot/module-load on the affected laptop. Real and
+reachable.
 
 **Step 5.5: Similar Patterns**
-Record: `select AUXILIARY_BUS` appears in 50+ Kconfig files across the
-tree (drivers/gpu, drivers/net, drivers/clk, drivers/reset, sound/soc,
-etc.). This is the standard established pattern for auxiliary bus
-consumers. The fix is entirely consistent with tree-wide convention.
+Record: Verified 4 other devices already use this exact fixup in the
+same table:
+- 0x876e (HP ENVY x360 Convertible 13-ay0xxx)
+- 0x888a (HP ENVY x360 Convertible 15-eu0xxx)
+- 0x8c21 (HP Pavilion Plus Laptop 14-ey0XXX)
+- 0x8cbd (HP Pavilion Aero Laptop 13-bg0xxx)
 
 ---
 
-## Phase 6: Stable Tree Analysis
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Does the buggy code exist in stable trees?**
-Record: Verified via `git show <tag>:sound/usb/Kconfig`:
-- `v6.6` — `SND_USB_AUDIO_QMI` does NOT exist (grep returns 0 matches)
-- `v6.12` — does NOT exist (0 matches)
-- `v6.16` — EXISTS, missing `select AUXILIARY_BUS` (confirmed)
-- `v6.19` — EXISTS, missing `select AUXILIARY_BUS` (confirmed)
+**Step 6.1: Code Existence in Stable**
+Record: Verified via `git show`:
+- **v6.6**: `ALC245_FIXUP_HP_X360_MUTE_LEDS` exists in
+  `sound/pci/hda/patch_realtek.c` (3 matches). SSID 0x8756 is NOT
+  present — the bug exists here. **Applicable.**
+- **v6.12**: Fixup present (6 matches). **Applicable.**
+- **v6.1**: Fixup does NOT exist. **Not applicable without
+  prerequisite.**
+- **v5.15**: Fixup does NOT exist. **Not applicable without
+  prerequisite.**
 
-The introducing commit `326bbc348298a` first appears in `v6.16` and all
-subsequent releases. Older LTS branches (6.6.y, 6.12.y, 6.1.y) are
-unaffected — the driver does not exist there.
+**Step 6.2: Backport Complications**
+Record: For v6.6.y: trivial backport — the one-line entry goes into
+`sound/pci/hda/patch_realtek.c` (pre-split file path) instead of
+`sound/hda/codecs/realtek/alc269.c`. Context lines for the adjacent
+entries (0x8736, 0x8760) should be present. Minor context adjustment
+needed.
 
-**Step 6.2: Backport complications**
-Record: Clean apply expected. The `SND_USB_AUDIO_QMI` Kconfig block is
-materially identical across affected tags. One-line insertion should
-apply without conflicts.
-
-**Step 6.3: Related fixes in stable**
-Record: No `AUXILIARY_BUS` fix found in any of the affected stable tags.
-The prior related build fix (`882826f58b2c4` for USB_XHCI_HCD) is
-already present in v6.19 but addresses a different missing dependency.
+**Step 6.3: Related Fixes Already in Stable**
+Record: No existing fix for SSID 0x8756 found in v6.6.
 
 ---
 
-## Phase 7: Subsystem and Maintainer Context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: Subsystem**
-Record: `sound/usb` — ALSA USB audio, Qualcomm offload driver.
-Criticality: PERIPHERAL (hardware- and config-specific). However, build
-fixes are explicitly listed as stable-appropriate regardless of
-subsystem criticality.
+Record: sound/hda (HDA audio, Realtek codec driver). Criticality:
+IMPORTANT — laptop audio is user-facing and widely used, though this
+specific fix affects one hardware model.
 
 **Step 7.2: Activity**
-Record: Active development — multiple follow-up fixes since the driver's
-introduction in v6.16, indicating a young subsystem still being
-stabilized.
+Record: Very active subsystem — recent history shows continuous stream
+of quirk additions for various laptop models. Mature, well-maintained
+driver with established patterns.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Who is affected**
-Record: Anyone building a kernel with `CONFIG_SND_USB_AUDIO_QMI` enabled
-in a configuration where `AUXILIARY_BUS` is not otherwise selected by
-another driver. Primarily Qualcomm SoC users and distributions enabling
-this driver.
+**Step 8.1: Affected Users**
+Record: Hardware-specific: owners of HP ENVY Laptop 13-ba0xxx (PCI SSID
+0x103c:0x8756). This is a consumer laptop — potentially many users.
 
-**Step 8.2: Trigger conditions**
-Record: Build-time trigger, not runtime. 100% reproducible when the
-Kconfig condition is met. Note: the upstream arm64 defconfig
-incidentally enables `AUXILIARY_BUS` through `QCOM_PMIC_GLINK`, which
-masks the bug in that specific configuration. However, non-default
-configs can easily trigger it.
+**Step 8.2: Trigger Conditions**
+Record: Every boot. The mute/mic-mute LEDs simply don't work correctly
+without this quirk. No special configuration needed.
 
-**Step 8.3: Severity**
-Record: Build failure at modpost stage — HIGH for affected
-configurations (impossible to build the module). Not a runtime crash,
-but prevents kernel builds entirely for this config.
+**Step 8.3: Failure Mode Severity**
+Record: MEDIUM — Mute/mic-mute LED indicators don't function correctly.
+This is a usability and privacy concern (users can't visually confirm
+mic state), but not a crash, data corruption, or security vulnerability.
 
-**Step 8.4: Risk-benefit ratio**
-Record: BENEFIT: High — fixes a hard build break for a supported in-tree
-driver. RISK: Effectively zero — one-line Kconfig `select` addition with
-no runtime behavior change, matching an established tree-wide pattern.
-Ratio: Very strongly favorable.
+**Step 8.4: Risk-Benefit Ratio**
+Record:
+- Benefit: Moderate — fixes broken hardware functionality for real
+  laptop users
+- Risk: Very low — 1 line, device-specific (only SSID 0x103c:0x8756),
+  uses proven fixup used by 4+ other devices
+- Ratio: Strongly favorable for backporting
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: Evidence**
+
 FOR backporting:
-- Real build failure (modpost undefined symbols) — documented with exact
-  error messages
-- Single-line, obviously correct Kconfig fix
-- Matches established tree-wide pattern (`select AUXILIARY_BUS` used in
-  50+ other Kconfig entries)
-- Code path verified: driver uses `module_auxiliary_driver()` → needs
-  `AUXILIARY_BUS`
-- `AUXILIARY_BUS` is a promptless bool — must be selected, not user-
-  enabled
-- Zero runtime regression risk
-- Accepted by ALSA subsystem maintainer (Takashi Iwai)
-- Second build fix for the same driver (pattern of missing deps from
-  initial introduction — `882826f58b2c4` was the first)
-- Bug confirmed present in all affected stable tags (6.16.y through
-  6.19.y)
+- Single-line hardware quirk addition (1 line added)
+- Uses existing, well-tested fixup (`ALC245_FIXUP_HP_X360_MUTE_LEDS`)
+  already used by 4 other HP devices
+- Zero regression risk — only activates on PCI SSID 0x103c:0x8756
+- Accepted by ALSA subsystem maintainer Takashi Iwai with no technical
+  objections
+- Fixes real user-visible hardware issue on a consumer laptop
+- Prerequisite fixup verified present in v6.6+
+- Falls squarely under the "audio codec quirk" stable exception
 
 AGAINST backporting:
-- Not relevant to stable trees older than v6.16 (driver does not exist
-  there)
-- Narrow audience (Qualcomm USB audio offload users)
+- Not a crash, security issue, or data corruption — "only" a
+  usability/hardware fix
+- Not applicable to v6.1 or v5.15 without prerequisite backport
 
 UNRESOLVED:
-- Lore discussion not accessible (Anubis anti-bot)
+- No independent public bug report found (patch thread is the only
+  evidence)
+- Did not verify every active stable branch newer than v6.6
 
 **Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** — driver uses auxiliary bus
-   API, must depend on it
-2. Fixes a real bug? **YES** — modpost build failure
-3. Important issue? **YES** — prevents compilation of a supported driver
-4. Small and contained? **YES** — 1 line, 1 file
-5. No new features or APIs? **YES** — only adds missing build dependency
-6. Can apply to stable? **YES** — clean apply on v6.16+ branches
+1. Obviously correct and tested? **YES** — standard `SND_PCI_QUIRK`
+   table entry, maintainer-accepted
+2. Fixes a real bug? **YES** — mute/mic-mute LEDs non-functional on this
+   hardware
+3. Important issue? **YES under quirk exception** — hardware enablement
+   for a consumer laptop
+4. Small and contained? **YES** — 1 line in 1 file
+5. No new features or APIs? **YES** — uses existing fixup mechanism
+6. Can apply to stable? **YES** for v6.6+ (with file path adjustment);
+   NO for v6.1/v5.15 as standalone
 
 **Step 9.3: Exception Categories**
-Record: **Build fix** — explicitly listed as an exception category that
-is automatically YES for stable.
+Record: **Audio codec quirk** (`SND_PCI_QUIRK` entry in Realtek HDA
+driver) — explicitly listed as a stable-appropriate exception.
 
 **Step 9.4: Decision**
-This is a textbook build fix: a single-line Kconfig `select` addition
-that fixes a real modpost link failure for a supported in-tree driver.
-It should be backported to stable trees that contain `SND_USB_AUDIO_QMI`
-(v6.16.y and newer). It is not applicable to older LTS branches
-(v6.12.y, v6.6.y, v6.1.y) where the driver does not exist.
+This is a textbook stable-worthy hardware quirk. One line, zero
+regression risk, fixes real hardware for real users, uses an existing
+well-tested fixup. Good stable material for branches that already
+contain `ALC245_FIXUP_HP_X360_MUTE_LEDS` (v6.6+). Should not be taken as
+a standalone patch into older trees (v6.1, v5.15) without the
+prerequisite fixup.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags directly: `Link:` and two
-  `Signed-off-by:` tags present; no `Fixes:`, `Reported-by:`, `Tested-
-  by:`, or `Cc: stable`
-- [Phase 2] Diff: confirmed single `+     select AUXILIARY_BUS` line
-  added under `SND_USB_AUDIO_QMI` in `sound/usb/Kconfig`
-- [Phase 3] `git blame -L 191,205 -- sound/usb/Kconfig`: confirmed
-  `SND_USB_AUDIO_QMI` introduced by `326bbc348298a` (Wesley Cheng,
-  2025-04-09); deps line touched by `882826f58b2c4` (Arnd Bergmann,
-  2025-05-21)
-- [Phase 3] `git show 882826f58b2c4`: confirmed this was a prior Kconfig
-  build fix for the same driver (missing `USB_XHCI_HCD` dependency),
-  also with `Fixes: 326bbc348298` tag
-- [Phase 3] `git log --oneline -20 -- sound/usb/Kconfig`: confirmed
-  recent history, no existing `AUXILIARY_BUS` fix
-- [Phase 4] WebFetch to lore/patch.msgid.link: blocked by Anubis anti-
-  bot — UNVERIFIED: mailing list discussion details
-- [Phase 5] Grep `sound/usb/qcom/`: confirmed `#include
-  <linux/auxiliary_bus.h>` at line 6 and
-  `module_auxiliary_driver(qc_usb_audio_offload_drv)` at line 1990 of
-  `qc_audio_offload.c`
-- [Phase 5] Read `drivers/base/Kconfig` lines 4-5: confirmed
-  `AUXILIARY_BUS` is a promptless `bool` — must be selected by consumers
-- [Phase 5] Grep `select AUXILIARY_BUS` across Kconfig files: confirmed
-  50+ other consumers use this pattern
-- [Phase 6] `git show v6.6:sound/usb/Kconfig | grep SND_USB_AUDIO_QMI`:
-  0 matches — driver does not exist in v6.6
-- [Phase 6] `git show v6.12:sound/usb/Kconfig | grep SND_USB_AUDIO_QMI`:
-  0 matches — driver does not exist in v6.12
-- [Phase 6] `git show v6.16:sound/usb/Kconfig`: confirmed
-  `SND_USB_AUDIO_QMI` exists, `select AUXILIARY_BUS` missing
-- [Phase 6] `git show v6.19:sound/usb/Kconfig`: confirmed
-  `SND_USB_AUDIO_QMI` exists, `select AUXILIARY_BUS` missing
-- [Phase 6] `git tag --contains 326bbc348298a`: confirmed first
-  appearance at v6.16; present through v6.19.x
-- [Phase 8] Failure mode: modpost undefined symbol error — build
-  failure, severity HIGH for affected configs
-- UNVERIFIED: lore.kernel.org discussion details (anti-bot protection
-  blocked access)
+- [Phase 1] Parsed commit message: Add quirk for 0x103c:0x8756 using
+  `ALC245_FIXUP_HP_X360_MUTE_LEDS`; tags: SOB ×2, Link
+- [Phase 2] Diff: +1 `SND_PCI_QUIRK` line in `alc269_fixup_tbl[]` in
+  `sound/hda/codecs/realtek/alc269.c`
+- [Phase 3] Verified `ALC245_FIXUP_HP_X360_MUTE_LEDS` definition at
+  lines 6401-6406: `.v.func = alc245_fixup_hp_mute_led_coefbit`, chained
+  to `ALC245_FIXUP_HP_GPIO_LED`
+- [Phase 3] Verified `snd_hda_pick_fixup()` call at lines 8572-8573 in
+  `alc269_probe()`
+- [Phase 3] Verified 4 other SSIDs use the same fixup: 0x876e, 0x888a,
+  0x8c21, 0x8cbd
+- [Phase 3] `git log --author='Andrii Kovalchuk'`: no prior commits
+  found — first-time contributor
+- [Phase 4] Lore/patch.msgid blocked by anti-bot; alternative mirror
+  confirmed standalone patch, maintainer feedback was formatting-only,
+  no technical objections
+- [Phase 5] No functions modified — data-only change
+- [Phase 6] `git show v6.6:sound/pci/hda/patch_realtek.c | grep -c
+  'ALC245_FIXUP_HP_X360_MUTE_LEDS'`: **3** — fixup present in v6.6
+- [Phase 6] `git show v6.12:sound/pci/hda/patch_realtek.c | grep -c
+  ...`: **6** — fixup present in v6.12
+- [Phase 6] `git show v6.1:sound/pci/hda/patch_realtek.c | grep -c ...`:
+  **0** — fixup NOT in v6.1
+- [Phase 6] `git show v5.15:sound/pci/hda/patch_realtek.c | grep -c
+  ...`: **0** — fixup NOT in v5.15
+- [Phase 6] `git show v6.6:... | grep '0x8756'`: empty — SSID not
+  already in v6.6, confirming the bug exists there
+- [Phase 8] Risk: very low (1 line, SSID-specific). Benefit: fixes
+  broken mute LEDs on consumer laptop
+- UNVERIFIED: No independent public bug report found for this exact
+  laptop model
+- UNVERIFIED: Did not inspect every active stable branch newer than v6.6
 
 **YES**
 
- sound/usb/Kconfig | 1 +
+ sound/hda/codecs/realtek/alc269.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/Kconfig b/sound/usb/Kconfig
-index 9b890abd96d34..b4588915efa11 100644
---- a/sound/usb/Kconfig
-+++ b/sound/usb/Kconfig
-@@ -192,6 +192,7 @@ config SND_USB_AUDIO_QMI
- 	tristate "Qualcomm Audio Offload driver"
- 	depends on QCOM_QMI_HELPERS && SND_USB_AUDIO && SND_SOC_USB
- 	depends on USB_XHCI_HCD && USB_XHCI_SIDEBAND
-+	select AUXILIARY_BUS
- 	help
- 	  Say Y here to enable the Qualcomm USB audio offloading feature.
- 
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 4c49f1195e1bc..39a57d9238497 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6854,6 +6854,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8730, "HP ProBook 445 G7", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8735, "HP ProBook 435 G7", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8736, "HP", ALC285_FIXUP_HP_GPIO_AMP_INIT),
++	SND_PCI_QUIRK(0x103c, 0x8756, "HP ENVY Laptop 13-ba0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8760, "HP EliteBook 8{4,5}5 G7", ALC285_FIXUP_HP_BEEP_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x876e, "HP ENVY x360 Convertible 13-ay0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x877a, "HP", ALC285_FIXUP_HP_MUTE_LED),
 -- 
 2.53.0
 
