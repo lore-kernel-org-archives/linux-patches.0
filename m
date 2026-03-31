@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BBC2FE042;
-	Tue, 31 Mar 2026 17:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D712FE042;
+	Tue, 31 Mar 2026 17:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976510; cv=none; b=mYRSgKmWyxDGVRbwSZHNPzMxs5sPY+3ryqwPL8a9bZYVMCdPbwAfWFDDMcPsipYAZLeNwSV8EM4GGexQ21xQWerRxQCLRwdDkjrKIEukJ/OIxNKezZEPF4tB5LiE/L3dLC0yEXXqQazi4oI82SoDn6kcy/l7NX1dotq+3dToevk=
+	t=1774976513; cv=none; b=YXTyp2Yy02FFFX6Y8Sw0B2PRxBQ1xI8ZvA2LQkFrult7597jMYdPkpUVqeuBiKGSBXQZ+A8fpNh6XkXCbPFYoddjkcTPZVCvGlNM54wrd2E/7xLrT1xzk7lZEo2WOB/NfNv334R378094FDvwv9V4I/oEcvP+wUWthiUDTmyF5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976510; c=relaxed/simple;
-	bh=OO4JQApIj+O+IIiwdtetKPUm4AtvUv15MOn2qyCqkbM=;
+	s=arc-20240116; t=1774976513; c=relaxed/simple;
+	bh=E3NFJVPFtUI18Bb3hxpn16Ch8d86YwMjkBnbn29fupo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWmu7hhKuTvbCzgpmiXmHQsi+XOiHSuSWf6Z6koFmAk2KvgqUVj3WPSAwY5qbfgxXwOWac+q+rGDh4uEpvMEOTnxNrlCo2loB1S406lVt69H2+y+/xn0pKGlFZQ7PecEnM11WXGQoSSQKDIHlMQLUBT+Feox2scBV7mKLGboZTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yt0GwCpC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RA/8JY+P0Eg7uG0U9E8DfrEyVRosk7+yc0GxUQ73xof+pb6yc6FKcRWqiPxnwkhLVxFsuwDfmYBTX2N3qJKBpx8TSgbXIdmIKyFUMzdvXJFNiJ8DKqMK2x36MOv1vuYBVS6HHfXL9rjxh98RAY0qVeH5iZ0h/VFnFEXV3+jHW7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/YGgWjQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yt0GwCpC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F01CC19423;
-	Tue, 31 Mar 2026 17:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/YGgWjQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1095BC19423;
+	Tue, 31 Mar 2026 17:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976510;
-	bh=OO4JQApIj+O+IIiwdtetKPUm4AtvUv15MOn2qyCqkbM=;
+	s=korg; t=1774976513;
+	bh=E3NFJVPFtUI18Bb3hxpn16Ch8d86YwMjkBnbn29fupo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yt0GwCpCrWspXFUjewe4yz5vuW6WqGExhbqoLxGI29Cz8javyh2CaJ9d17Zj88PT0
-	 r0IpIZvnpqzVGzxXSfMcIKBeJG8F8fkSnUluIsY5ZRfW//KDT30UxdlbABnrbsZhUJ
-	 cUY5gWSpimLAyfpveezg2e7Rl6qXOLIfs2mt7eFo=
+	b=e/YGgWjQbjM7gYEpGer6Y3oawcb/Q4uAiB9A+b6qjK4YR3WSmq+bP7QO33jI7vSUo
+	 Igot+e63KJSa6QJUNxbThwkNJilZgZRtQNnYpW53J6WPWMClrQXttVwBWT9957uaD8
+	 vpMiMfvl2n6rm883A8Dqn+GT14MSc0xSFpKaBqIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 120/309] Bluetooth: btintel: serialize btintel_hw_error() with hci_req_sync_lock
-Date: Tue, 31 Mar 2026 18:20:23 +0200
-Message-ID: <20260331161757.898587862@linuxfoundation.org>
+Subject: [PATCH 6.18 121/309] Bluetooth: L2CAP: Fix not tracking outstanding TX ident
+Date: Tue, 31 Mar 2026 18:20:24 +0200
+Message-ID: <20260331161757.936099605@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,98 +51,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 94d8e6fe5d0818e9300e514e095a200bd5ff93ae ]
+[ Upstream commit 6c3ea155e5ee3e56606233acde8309afda66d483 ]
 
-btintel_hw_error() issues two __hci_cmd_sync() calls (HCI_OP_RESET
-and Intel exception-info retrieval) without holding
-hci_req_sync_lock().  This lets it race against
-hci_dev_do_close() -> btintel_shutdown_combined(), which also runs
-__hci_cmd_sync() under the same lock.  When both paths manipulate
-hdev->req_status/req_rsp concurrently, the close path may free the
-response skb first, and the still-running hw_error path hits a
-slab-use-after-free in kfree_skb().
+This attempts to proper track outstanding request by using struct ida
+and allocating from it in l2cap_get_ident using ida_alloc_range which
+would reuse ids as they are free, then upon completion release
+the id using ida_free.
 
-Wrap the whole recovery sequence in hci_req_sync_lock/unlock so it
-is serialized with every other synchronous HCI command issuer.
+This fixes the qualification test case L2CAP/COS/CED/BI-29-C which
+attempts to check if the host stack is able to work after 256 attempts
+to connect which requires Ident field to use the full range of possible
+values in order to pass the test.
 
-Below is the data race report and the kasan report:
-
-  BUG: data-race in __hci_cmd_sync_sk / btintel_shutdown_combined
-
-  read of hdev->req_rsp at net/bluetooth/hci_sync.c:199
-  by task kworker/u17:1/83:
-   __hci_cmd_sync_sk+0x12f2/0x1c30 net/bluetooth/hci_sync.c:200
-   __hci_cmd_sync+0x55/0x80 net/bluetooth/hci_sync.c:223
-   btintel_hw_error+0x114/0x670 drivers/bluetooth/btintel.c:254
-   hci_error_reset+0x348/0xa30 net/bluetooth/hci_core.c:1030
-
-  write/free by task ioctl/22580:
-   btintel_shutdown_combined+0xd0/0x360
-    drivers/bluetooth/btintel.c:3648
-   hci_dev_close_sync+0x9ae/0x2c10 net/bluetooth/hci_sync.c:5246
-   hci_dev_do_close+0x232/0x460 net/bluetooth/hci_core.c:526
-
-  BUG: KASAN: slab-use-after-free in
-   sk_skb_reason_drop+0x43/0x380 net/core/skbuff.c:1202
-  Read of size 4 at addr ffff888144a738dc
-  by task kworker/u17:1/83:
-   __hci_cmd_sync_sk+0x12f2/0x1c30 net/bluetooth/hci_sync.c:200
-   __hci_cmd_sync+0x55/0x80 net/bluetooth/hci_sync.c:223
-   btintel_hw_error+0x186/0x670 drivers/bluetooth/btintel.c:260
-
-Fixes: 973bb97e5aee ("Bluetooth: btintel: Add generic function for handling hardware errors")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://github.com/bluez/bluez/issues/1829
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Stable-dep-of: 00fdebbbc557 ("Bluetooth: L2CAP: Fix deadlock in l2cap_conn_del()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ include/net/bluetooth/l2cap.h |  3 +--
+ net/bluetooth/l2cap_core.c    | 46 ++++++++++++++++++++++++-----------
+ 2 files changed, 33 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 9d29ab811f802..5e0a05edcbfd1 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -251,11 +251,13 @@ void btintel_hw_error(struct hci_dev *hdev, u8 code)
+diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
+index f08ed93bb6fa3..010f1a8fd15f8 100644
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -657,8 +657,7 @@ struct l2cap_conn {
  
- 	bt_dev_err(hdev, "Hardware error 0x%2.2x", code);
+ 	struct sk_buff		*rx_skb;
+ 	__u32			rx_len;
+-	__u8			tx_ident;
+-	struct mutex		ident_lock;
++	struct ida		tx_ida;
  
-+	hci_req_sync_lock(hdev);
-+
- 	skb = __hci_cmd_sync(hdev, HCI_OP_RESET, 0, NULL, HCI_INIT_TIMEOUT);
- 	if (IS_ERR(skb)) {
- 		bt_dev_err(hdev, "Reset after hardware error failed (%ld)",
- 			   PTR_ERR(skb));
--		return;
-+		goto unlock;
- 	}
- 	kfree_skb(skb);
- 
-@@ -263,18 +265,21 @@ void btintel_hw_error(struct hci_dev *hdev, u8 code)
- 	if (IS_ERR(skb)) {
- 		bt_dev_err(hdev, "Retrieving Intel exception info failed (%ld)",
- 			   PTR_ERR(skb));
--		return;
-+		goto unlock;
- 	}
- 
- 	if (skb->len != 13) {
- 		bt_dev_err(hdev, "Exception info size mismatch");
- 		kfree_skb(skb);
--		return;
-+		goto unlock;
- 	}
- 
- 	bt_dev_err(hdev, "Exception info %s", (char *)(skb->data + 1));
- 
- 	kfree_skb(skb);
-+
-+unlock:
-+	hci_req_sync_unlock(hdev);
+ 	struct sk_buff_head	pending_rx;
+ 	struct work_struct	pending_rx_work;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index b5e393e4f3eb1..5bd5561a8dbf5 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -924,26 +924,18 @@ int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator)
+ 				 initiator);
  }
- EXPORT_SYMBOL_GPL(btintel_hw_error);
  
+-static u8 l2cap_get_ident(struct l2cap_conn *conn)
++static int l2cap_get_ident(struct l2cap_conn *conn)
+ {
+-	u8 id;
++	/* LE link does not support tools like l2ping so use the full range */
++	if (conn->hcon->type == LE_LINK)
++		return ida_alloc_range(&conn->tx_ida, 1, 255, GFP_ATOMIC);
+ 
+ 	/* Get next available identificator.
+ 	 *    1 - 128 are used by kernel.
+ 	 *  129 - 199 are reserved.
+ 	 *  200 - 254 are used by utilities like l2ping, etc.
+ 	 */
+-
+-	mutex_lock(&conn->ident_lock);
+-
+-	if (++conn->tx_ident > 128)
+-		conn->tx_ident = 1;
+-
+-	id = conn->tx_ident;
+-
+-	mutex_unlock(&conn->ident_lock);
+-
+-	return id;
++	return ida_alloc_range(&conn->tx_ida, 1, 128, GFP_ATOMIC);
+ }
+ 
+ static void l2cap_send_acl(struct l2cap_conn *conn, struct sk_buff *skb,
+@@ -1769,6 +1761,8 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+ 	if (work_pending(&conn->pending_rx_work))
+ 		cancel_work_sync(&conn->pending_rx_work);
+ 
++	ida_destroy(&conn->tx_ida);
++
+ 	cancel_delayed_work_sync(&conn->id_addr_timer);
+ 
+ 	l2cap_unregister_all_users(conn);
+@@ -4780,12 +4774,34 @@ static int l2cap_le_connect_rsp(struct l2cap_conn *conn,
+ 	return err;
+ }
+ 
++static void l2cap_put_ident(struct l2cap_conn *conn, u8 code, u8 id)
++{
++	switch (code) {
++	case L2CAP_COMMAND_REJ:
++	case L2CAP_CONN_RSP:
++	case L2CAP_CONF_RSP:
++	case L2CAP_DISCONN_RSP:
++	case L2CAP_ECHO_RSP:
++	case L2CAP_INFO_RSP:
++	case L2CAP_CONN_PARAM_UPDATE_RSP:
++	case L2CAP_ECRED_CONN_RSP:
++	case L2CAP_ECRED_RECONF_RSP:
++		/* First do a lookup since the remote may send bogus ids that
++		 * would make ida_free to generate warnings.
++		 */
++		if (ida_find_first_range(&conn->tx_ida, id, id) >= 0)
++			ida_free(&conn->tx_ida, id);
++	}
++}
++
+ static inline int l2cap_bredr_sig_cmd(struct l2cap_conn *conn,
+ 				      struct l2cap_cmd_hdr *cmd, u16 cmd_len,
+ 				      u8 *data)
+ {
+ 	int err = 0;
+ 
++	l2cap_put_ident(conn, cmd->code, cmd->ident);
++
+ 	switch (cmd->code) {
+ 	case L2CAP_COMMAND_REJ:
+ 		l2cap_command_rej(conn, cmd, cmd_len, data);
+@@ -5470,6 +5486,8 @@ static inline int l2cap_le_sig_cmd(struct l2cap_conn *conn,
+ {
+ 	int err = 0;
+ 
++	l2cap_put_ident(conn, cmd->code, cmd->ident);
++
+ 	switch (cmd->code) {
+ 	case L2CAP_COMMAND_REJ:
+ 		l2cap_le_command_rej(conn, cmd, cmd_len, data);
+@@ -6972,13 +6990,13 @@ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
+ 	     hci_dev_test_flag(hcon->hdev, HCI_FORCE_BREDR_SMP)))
+ 		conn->local_fixed_chan |= L2CAP_FC_SMP_BREDR;
+ 
+-	mutex_init(&conn->ident_lock);
+ 	mutex_init(&conn->lock);
+ 
+ 	INIT_LIST_HEAD(&conn->chan_l);
+ 	INIT_LIST_HEAD(&conn->users);
+ 
+ 	INIT_DELAYED_WORK(&conn->info_timer, l2cap_info_timeout);
++	ida_init(&conn->tx_ida);
+ 
+ 	skb_queue_head_init(&conn->pending_rx);
+ 	INIT_WORK(&conn->pending_rx_work, process_pending_rx);
 -- 
 2.51.0
 
