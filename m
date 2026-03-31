@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D793DB62F;
-	Tue, 31 Mar 2026 16:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A967A3EE1FB;
+	Tue, 31 Mar 2026 16:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974328; cv=none; b=rNqHdZ064jOJKtZEOQKN3+9OzYuZePat68ceseXEiCRnbjlBeJLsYonm6H2C0rk2tfaKMZW/mB4wyIFGMZNwEUJtkuopaIDAesGOfsl99Wz4lewrXanJ9l5JRhGwtkATvQu7mChHVgqsldoUD3gUnTdb78uP4w3gERU+rY4KnPI=
+	t=1774974330; cv=none; b=nNxqoHInHd+h3Nl8C8nqJT8Q9VcigWhuAGCvigdYZ9MDaSm4zkZYmYpiZBU5UKzp9gG2U3Q03eyxIrqEdF9QbbSQjBJN9SbUHYNO5xklQ3MHA+NLNJ7BbKD8sisFGz0BkvE4raQOrYO92FX+wMtrUnbPyZysdN7WF1uZnk3m4BI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974328; c=relaxed/simple;
-	bh=Lmu5hOwh1ICF0nbJVAl8Booq9IaIGxkRu8/rf5D8CnM=;
+	s=arc-20240116; t=1774974330; c=relaxed/simple;
+	bh=PpGhVKCUig0oQ7EkHIyC6ikvEp8ADyD9L3ci5Ebe7d4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IF9y2bYtO7reA8fC9uG1O2wegSr6lG3vXK+sHGgbCAfhuR8L7B5bWieQVxyTKYZ6ayqmjg4WDUr3mzo9+ezxev28ljPp4hBspPgefLdkWvFLSP1omkQKgGoe81CAse0OK88V4YTI+t5YJKkeifDbJYh0HMSzKd83ZZLEvcZHKw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EB7FFy8l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kF9vtFgkKpZ8IhfzjtINNqFMfBxX3BJ2kCA+VZ1zm8rnyBKRVPOCMaKe9JXFCLB5Ibyff33TSGzKYQ7BOq0yegU+QxP0wfa8/NmN0W4I35Xcb+Sohe5niUAs1XFdnPcrucj8eWVejG51rAqDPvC0ejlxshIQyTOB34TRk/m1nfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0+CK17R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EB7FFy8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E631C19423;
-	Tue, 31 Mar 2026 16:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0+CK17R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A5EC19423;
+	Tue, 31 Mar 2026 16:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974327;
-	bh=Lmu5hOwh1ICF0nbJVAl8Booq9IaIGxkRu8/rf5D8CnM=;
+	s=korg; t=1774974330;
+	bh=PpGhVKCUig0oQ7EkHIyC6ikvEp8ADyD9L3ci5Ebe7d4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EB7FFy8lynHMSWDf+rdD93l2AZN0Fkz/yX7/HT3jrQ6h0wDxMzKqoX0pjAXFKXIqH
-	 WaRCwDuBN0uOzVYGkH3zyD1VzuDc8QMCD72jbbwLZg5VTCGsAIAkZgfgGDWAGBeZuK
-	 vVOVrDKLjFsCRFuZ8gg0xmxJ21rjbyVtBc2qD74U=
+	b=Z0+CK17Rz9jUzRxKMDmCQH2Zfhsn8naURNhUiqf2mWjsRLySnUt0lMst1ttB6t70R
+	 APzfDb+O7/HPp1yza/JdIKrQY2mLMIKNYigoAEVkwz2g1mN20ciOn6e2SdcDAEaVqN
+	 5q3ETmTzS3Jf8I5CsNZghnBXKgXjo2Xj9ZsyNMIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Peter Metz <peter.metz@unarin.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/175] HID: asus: avoid memory leak in asus_report_fixup()
-Date: Tue, 31 Mar 2026 18:19:54 +0200
-Message-ID: <20260331161730.161684067@linuxfoundation.org>
+Subject: [PATCH 6.6 011/175] platform/x86: intel-hid: Add Dell 14 Plus 2-in-1 to dmi_vgbs_allow_list
+Date: Tue, 31 Mar 2026 18:19:55 +0200
+Message-ID: <20260331161730.196556680@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -52,60 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Günther Noack <gnoack@google.com>
+From: Peter Metz <peter.metz@unarin.com>
 
-[ Upstream commit 2bad24c17742fc88973d6aea526ce1353f5334a3 ]
+[ Upstream commit 6b3fa0615cd8432148581de62a52f83847af3d70 ]
 
-The asus_report_fixup() function was returning a newly allocated
-kmemdup()-allocated buffer, but never freeing it.  Switch to
-devm_kzalloc() to ensure the memory is managed and freed automatically
-when the device is removed.
+The Dell 14 Plus 2-in-1 (model DB04250) requires the VGBS allow list
+entry to correctly enable the tablet mode switch. Without this, the
+chassis state is not reported, and the hinge rotation only emits
+unknown scancodes.
 
-The caller of report_fixup() does not take ownership of the returned
-pointer, but it is permitted to return a pointer whose lifetime is at
-least that of the input buffer.
+Verified on Dell 14 Plus 2-in-1 DB04250.
 
-Also fix a harmless out-of-bounds read by copying only the original
-descriptor size.
-
-Assisted-by: Gemini-CLI:Google Gemini 3
-Signed-off-by: Günther Noack <gnoack@google.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221090
+Signed-off-by: Peter Metz <peter.metz@unarin.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260213044627.203638-1-peter.metz@unarin.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/platform/x86/intel/hid.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index d971e339b5eac..529b23b67ec4b 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -1200,14 +1200,21 @@ static __u8 *asus_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 		 */
- 		if (*rsize == rsize_orig &&
- 			rdesc[offs] == 0x09 && rdesc[offs + 1] == 0x76) {
--			*rsize = rsize_orig + 1;
--			rdesc = kmemdup(rdesc, *rsize, GFP_KERNEL);
--			if (!rdesc)
--				return NULL;
-+			__u8 *new_rdesc;
-+
-+			new_rdesc = devm_kzalloc(&hdev->dev, rsize_orig + 1,
-+						 GFP_KERNEL);
-+			if (!new_rdesc)
-+				return rdesc;
+diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
+index ac88119a73b84..7937ad20c2941 100644
+--- a/drivers/platform/x86/intel/hid.c
++++ b/drivers/platform/x86/intel/hid.c
+@@ -175,6 +175,12 @@ static const struct dmi_system_id dmi_vgbs_allow_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Dell Pro Rugged 12 Tablet RA02260"),
+ 		},
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Dell 14 Plus 2-in-1 DB04250"),
++		},
++	},
+ 	{ }
+ };
  
- 			hid_info(hdev, "Fixing up %s keyb report descriptor\n",
- 				drvdata->quirks & QUIRK_T100CHI ?
- 				"T100CHI" : "T90CHI");
-+
-+			memcpy(new_rdesc, rdesc, rsize_orig);
-+			*rsize = rsize_orig + 1;
-+			rdesc = new_rdesc;
-+
- 			memmove(rdesc + offs + 4, rdesc + offs + 2, 12);
- 			rdesc[offs] = 0x19;
- 			rdesc[offs + 1] = 0x00;
 -- 
 2.51.0
 
