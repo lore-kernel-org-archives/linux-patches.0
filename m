@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A933EF0A2;
-	Tue, 31 Mar 2026 16:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0441230C345;
+	Tue, 31 Mar 2026 16:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974284; cv=none; b=Lbs58RgShH3/rZTWB9O3hyAZP+x8TsvAE7KzPbmr9/vXM8EVRiHCE3GVX0XZsB63SLG+NxiEqcIEGWEQxY8C6MDprrkBjHXS6Vd6MTLyCDc54ktUnBNYAM+nBK31XgFfueL7z8pE4XcQhcDLqNetM1Z/d7mXZOYRHYvzvHO7Gro=
+	t=1774974287; cv=none; b=qA4CYrVHQf/HMiHXQqoiKEuo/vRiIMviVl/Pf2Xu7wQu6L04rxRYa65qKK3/ONawQl0faLqEvTEJUzWApX3+z/MepBH5S2cKvDSSld1UzxD58RD8uEd1o1GOuPA3kJR9u9PmIEVOcH3t7WsnIxRRKAkyIoJPDoYaR0K/2ZaNyps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974284; c=relaxed/simple;
-	bh=3g+1v8sLiSAftfdSCzvvqYLZGEg//1Gno9uBVgfLgdw=;
+	s=arc-20240116; t=1774974287; c=relaxed/simple;
+	bh=4utwA8vIto4yxf+1ydUcJsYmJAy4uV4xMOsIfgAnWqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=biuPIcOz/n68jbTgskV95rRrsolMzlLsEwXh6kFl3zFwetzopd/07QxHTqqHZWDe+IRyG8itW9DxODUXG8FhKRDMY4E13HN5D+Zfi+2ysqRVd2/jm4BoUWDAU2a0dZ8NZ4ub/ORScefIXCSh5avMdqSCcSUQY+poLPFpqxtJO8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwZ/PZ3J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YqJ4mMH5sw8ZfqOivr59lmUw6KPZHYp3H0wx6ULAAZ1NIHp5Toee3J6Aa1bjgXYRTLn9GGCnmDn+Mmijqmskikohc3y/nncYN2ckUMSUH6qkfm2Wz1eXn3bBNHUrLfOfHAcxwjYOm/9ir7xWzhV+Ntv61Bo9pIDoY9pkON13/hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9SlwdHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwZ/PZ3J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3979C19423;
-	Tue, 31 Mar 2026 16:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9SlwdHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37139C19423;
+	Tue, 31 Mar 2026 16:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974284;
-	bh=3g+1v8sLiSAftfdSCzvvqYLZGEg//1Gno9uBVgfLgdw=;
+	s=korg; t=1774974286;
+	bh=4utwA8vIto4yxf+1ydUcJsYmJAy4uV4xMOsIfgAnWqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwZ/PZ3JoKb/q/gkytakRi6j19nY9E3gEYXBol6f7bj9SrlR5Ru6bZRqqxI7OKeg0
-	 2rpxP+DqGm9nD33vAfP5nbH3ukp0nc0V8Y31LL2T73ARv+nENJJK3CkRqK9Xm2GMRu
-	 kxB/mqx8gb+78lRsNuTtldVxYa14aAAv1nUGZtyQ=
+	b=u9SlwdHPOQ1KJZNSAhEaiBbUYYsvaeQC+V0D0NWOFgASH+CnWR4hVRwOacaVe8rzv
+	 5iekWwBANNG+XuaQ7+DQRpHWujZXW5JdKJC5B1Q3g6bWENLiWrN4EBgOG7fe0aIWIj
+	 pZ0nlI3zpQjPV60NdSwuykW44ABCaj/vhT/CChGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/175] dma-buf: Include ioctl.h in UAPI header
-Date: Tue, 31 Mar 2026 18:20:09 +0200
-Message-ID: <20260331161730.707201170@linuxfoundation.org>
+Subject: [PATCH 6.6 026/175] HID: apple: avoid memory leak in apple_report_fixup()
+Date: Tue, 31 Mar 2026 18:20:10 +0200
+Message-ID: <20260331161730.749708465@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -53,39 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit a116bac87118903925108e57781bbfc7a7eea27b ]
+[ Upstream commit 239c15116d80f67d32f00acc34575f1a6b699613 ]
 
-include/uapi/linux/dma-buf.h uses several macros from ioctl.h to define
-its ioctl commands. However, it does not include ioctl.h itself. So,
-if userspace source code tries to include the dma-buf.h file without
-including ioctl.h, it can result in build failures.
+The apple_report_fixup() function was returning a
+newly kmemdup()-allocated buffer, but never freeing it.
 
-Therefore, include ioctl.h in the dma-buf UAPI header.
+The caller of report_fixup() does not take ownership of the returned
+pointer, but it *is* permitted to return a sub-portion of the input
+rdesc, whose lifetime is managed by the caller.
 
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Reviewed-by: T.J. Mercier <tjmercier@google.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260303002309.1401849-1-isaacmanjarres@google.com
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/dma-buf.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-apple.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/uapi/linux/dma-buf.h b/include/uapi/linux/dma-buf.h
-index 5a6fda66d9adf..e827c9d20c5d3 100644
---- a/include/uapi/linux/dma-buf.h
-+++ b/include/uapi/linux/dma-buf.h
-@@ -20,6 +20,7 @@
- #ifndef _DMA_BUF_UAPI_H_
- #define _DMA_BUF_UAPI_H_
+diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
+index 9dd5c698fefe0..6fae3427218fc 100644
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -645,9 +645,7 @@ static __u8 *apple_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 		hid_info(hdev,
+ 			 "fixing up Magic Keyboard battery report descriptor\n");
+ 		*rsize = *rsize - 1;
+-		rdesc = kmemdup(rdesc + 1, *rsize, GFP_KERNEL);
+-		if (!rdesc)
+-			return NULL;
++		rdesc = rdesc + 1;
  
-+#include <linux/ioctl.h>
- #include <linux/types.h>
- 
- /**
+ 		rdesc[0] = 0x05;
+ 		rdesc[1] = 0x01;
 -- 
 2.51.0
 
