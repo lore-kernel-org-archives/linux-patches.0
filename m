@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855792FCC0E;
-	Tue, 31 Mar 2026 17:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616ED3009D4;
+	Tue, 31 Mar 2026 17:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976518; cv=none; b=JOhFWqgh3+BgOi0hYEOGkLbGWtaIBy2TbXXSJ9KDqx0Yw+kFZG1+aTBoidyTin4Noeetuunh8aTzHu4xF0laDm5iBqVKatgQowm4v+5r2mNxJZuWfMnoOwdKCI/Y+H9sdDgLKrzZZXYZ2uyMS1xeg5vEmvtqUxS8CXk/v5/mPT4=
+	t=1774976521; cv=none; b=nSzTAl9+eq+mzzSYg6utHlVbVrOL8IAO9397lB6t2JVaLXjQ9GLl7rVBIzCyyYjlGiy2nVY5fUercI/zUwCTDxlzds/qIh4udgd5k3CP7oqPdqc7BdpNTcN3BrggX/QaJkRnmM5CT3x3G2LePC39f+lcaC4cvfNYD182RDVVg8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976518; c=relaxed/simple;
-	bh=z4aZTZnJc783iSFh9CZ91eZVTfoisQviXfY4cPzC/Yk=;
+	s=arc-20240116; t=1774976521; c=relaxed/simple;
+	bh=qAcLVZsg5YhMu8MYZ2agD4hpNJ/aPwXAxzSsR6fX6t0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+l1Jl3WrFdr4mWFPryAL934nkwtZVjShVn7HrjaauMVHQAeuCMZUnk+ePnjsDOsm5ipqijdcnzvuyrv+tXnZ4TJTW/XxD23MOlhjf69EJwqAWGN+xUUuWWUKkYloQXNAx5/gNEO+4U4ldm9IejNTDLEAKPkdU107akd/Bk8Em0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBhinBw8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IslZIkhlWWvSNyOSTE8TkXmeCAOZ8FzlFVQ4iO2yPntLnRCXXvHSskJo6vOMqupEjY2e2wUAWREAXO45Dq6n0BQyJr32X6K+xfNfWQVdZlmMkmXCX9+Gxdmyrmbu6oVyWJSRYp89A1Sw7Ji3oB/Mlp6pZsTgpY4SUzF8RAoLDxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KTqo3Nu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBhinBw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFF8C19423;
-	Tue, 31 Mar 2026 17:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KTqo3Nu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB064C19423;
+	Tue, 31 Mar 2026 17:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976518;
-	bh=z4aZTZnJc783iSFh9CZ91eZVTfoisQviXfY4cPzC/Yk=;
+	s=korg; t=1774976521;
+	bh=qAcLVZsg5YhMu8MYZ2agD4hpNJ/aPwXAxzSsR6fX6t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBhinBw8rzKyEc1xP+XRrSYnwehQ9XlftbRo6gTmaRpiIYdV8ErbvcPfjIpt133/U
-	 7IBwmHH5Jb/LR1E5eb6S8lthXpcXwym/rYKvi4av7VHCD2fJJr95fGzJ9oBHKXSjLM
-	 23JbkwGntSRs+Az5rExzkC4yJC8kfywgUAvVgVzE=
+	b=0KTqo3NuWEXzt+USOWB9Q5sRv3Vl/EHvB0cubYGTmdRPbPCjhMWyI1Jf/n0BV38T4
+	 ZB2ly0QgbUi4tv/T6W4XvnCoR/gExjs74v6/74rYJaCkl1RB1NNnR+EAdGM/4oOccb
+	 uBn25aP9/SKxQgsrbtPukG0YaWcsM9rIfWaHCGAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hyunwoo Kim <imv4bel@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 122/309] Bluetooth: L2CAP: Fix deadlock in l2cap_conn_del()
-Date: Tue, 31 Mar 2026 18:20:25 +0200
-Message-ID: <20260331161757.971717266@linuxfoundation.org>
+Subject: [PATCH 6.18 123/309] Bluetooth: L2CAP: Fix ERTM re-init and zero pdu_len infinite loop
+Date: Tue, 31 Mar 2026 18:20:26 +0200
+Message-ID: <20260331161758.008994812@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -53,60 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 00fdebbbc557a2fc21321ff2eaa22fd70c078608 ]
+[ Upstream commit 25f420a0d4cfd61d3d23ec4b9c56d9f443d91377 ]
 
-l2cap_conn_del() calls cancel_delayed_work_sync() for both info_timer
-and id_addr_timer while holding conn->lock. However, the work functions
-l2cap_info_timeout() and l2cap_conn_update_id_addr() both acquire
-conn->lock, creating a potential AB-BA deadlock if the work is already
-executing when l2cap_conn_del() takes the lock.
+l2cap_config_req() processes CONFIG_REQ for channels in BT_CONNECTED
+state to support L2CAP reconfiguration (e.g. MTU changes). However,
+since both CONF_INPUT_DONE and CONF_OUTPUT_DONE are already set from
+the initial configuration, the reconfiguration path falls through to
+l2cap_ertm_init(), which re-initializes tx_q, srej_q, srej_list, and
+retrans_list without freeing the previous allocations and sets
+chan->sdu to NULL without freeing the existing skb. This leaks all
+previously allocated ERTM resources.
 
-Move the work cancellations before acquiring conn->lock and use
-disable_delayed_work_sync() to additionally prevent the works from
-being rearmed after cancellation, consistent with the pattern used in
-hci_conn_del().
+Additionally, l2cap_parse_conf_req() does not validate the minimum
+value of remote_mps derived from the RFC max_pdu_size option. A zero
+value propagates to l2cap_segment_sdu() where pdu_len becomes zero,
+causing the while loop to never terminate since len is never
+decremented, exhausting all available memory.
 
-Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
+Fix the double-init by skipping l2cap_ertm_init() and
+l2cap_chan_ready() when the channel is already in BT_CONNECTED state,
+while still allowing the reconfiguration parameters to be updated
+through l2cap_parse_conf_req(). Also add a pdu_len zero check in
+l2cap_segment_sdu() as a safeguard.
+
+Fixes: 96298f640104 ("Bluetooth: L2CAP: handle l2cap config request during open state")
 Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ net/bluetooth/l2cap_core.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 5bd5561a8dbf5..734cbb5dc1bfa 100644
+index 734cbb5dc1bfa..b72f2da57257d 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -1748,6 +1748,9 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+@@ -2375,6 +2375,9 @@ static int l2cap_segment_sdu(struct l2cap_chan *chan,
+ 	/* Remote device may have requested smaller PDUs */
+ 	pdu_len = min_t(size_t, pdu_len, chan->remote_mps);
  
- 	BT_DBG("hcon %p conn %p, err %d", hcon, conn, err);
- 
-+	disable_delayed_work_sync(&conn->info_timer);
-+	disable_delayed_work_sync(&conn->id_addr_timer);
++	if (!pdu_len)
++		return -EINVAL;
 +
- 	mutex_lock(&conn->lock);
+ 	if (len <= pdu_len) {
+ 		sar = L2CAP_SAR_UNSEGMENTED;
+ 		sdu_len = 0;
+@@ -4310,14 +4313,16 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
+ 	if (test_bit(CONF_INPUT_DONE, &chan->conf_state)) {
+ 		set_default_fcs(chan);
  
- 	kfree_skb(conn->rx_skb);
-@@ -1763,8 +1766,6 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+-		if (chan->mode == L2CAP_MODE_ERTM ||
+-		    chan->mode == L2CAP_MODE_STREAMING)
+-			err = l2cap_ertm_init(chan);
++		if (chan->state != BT_CONNECTED) {
++			if (chan->mode == L2CAP_MODE_ERTM ||
++			    chan->mode == L2CAP_MODE_STREAMING)
++				err = l2cap_ertm_init(chan);
  
- 	ida_destroy(&conn->tx_ida);
+-		if (err < 0)
+-			l2cap_send_disconn_req(chan, -err);
+-		else
+-			l2cap_chan_ready(chan);
++			if (err < 0)
++				l2cap_send_disconn_req(chan, -err);
++			else
++				l2cap_chan_ready(chan);
++		}
  
--	cancel_delayed_work_sync(&conn->id_addr_timer);
--
- 	l2cap_unregister_all_users(conn);
- 
- 	/* Force the connection to be immediately dropped */
-@@ -1783,9 +1784,6 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
- 		l2cap_chan_put(chan);
+ 		goto unlock;
  	}
- 
--	if (conn->info_state & L2CAP_INFO_FEAT_MASK_REQ_SENT)
--		cancel_delayed_work_sync(&conn->info_timer);
--
- 	hci_chan_del(conn->hchan);
- 	conn->hchan = NULL;
- 
 -- 
 2.51.0
 
