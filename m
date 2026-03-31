@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479F23E559E;
-	Tue, 31 Mar 2026 16:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3351A423172;
+	Tue, 31 Mar 2026 16:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975073; cv=none; b=pfjGxefVHroXj5mtjpfWRwNi0WD33etCMrP5SbrFiBEus9Rcea2jmBLSa4M46VQfqBeE4ghfWWHFptKVcU+Kh58TOeNTsBd4n0K3cIvNnyIfca6YZjQ2Pbj2Yv3/YMcecZcpyfh76Xs2CH5cOFkznSm2sZmAhfkOWq9rO9cj68g=
+	t=1774975076; cv=none; b=ohYzX9PS+hMwYeGthoB4i3T+UnsrY7hGB4Kqd055GRyiFFXGo8zypbZkPyZ4TQ2nYyJrY8UiGO6RxMh4zJ/Ccq0eQjqD7qrrPppPjYm0csG8C9n+UicDviIK3Qtq9D5nsISCy0bf9rvNDwjrQuukARyATCYw+nDYcARtYGIPzNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975073; c=relaxed/simple;
-	bh=TfJ83+5+T56leZpFafVk3ZyJDyBwdET29BP1UjiqPkM=;
+	s=arc-20240116; t=1774975076; c=relaxed/simple;
+	bh=GVVrbTawekv9dc9+hXCVFShZ5S4ANHZeE8etzP0fT1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7kyPzKzC8TD2P1L8A1sO3RaF8zY5MFNQ/AWdj50n7ITBlNySZu9yxF8do0rflFnb5Xp3TW0nlLqR2DEUGUYcdD3ymUjuK2yY60QobSKuzO4peTZnepwa3xh09mVNUawTuU2eiN7LbU0bCEdqtpzM9uCxeSEoMnwILP32Y6E29E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RaktPHPl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mo0X2GECdOqt3E3sK2jLW3mwsK8toFSdCP8esKmYUz5F9+WwCYiKtSQ4hkcM2/p843CFmuCY4HiguqTE6qfEi4fDm94HtkUhn/YdB48JEnQR16zmZvv373zvQrHKj8ajJ9KYZvEugGy4bYUx2H5NmH5i6DRKWlZyB8a5qGbsbmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzapEWRW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaktPHPl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25BFC19423;
-	Tue, 31 Mar 2026 16:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzapEWRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B7FC19423;
+	Tue, 31 Mar 2026 16:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975073;
-	bh=TfJ83+5+T56leZpFafVk3ZyJDyBwdET29BP1UjiqPkM=;
+	s=korg; t=1774975075;
+	bh=GVVrbTawekv9dc9+hXCVFShZ5S4ANHZeE8etzP0fT1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RaktPHPlccWg5+zSS9uLVi6rgK70GgUJ1Dcm2Ana6sHgrQa7hS4kOBQz5CIN6rE50
-	 vzq6ypXvWBQ5eLHuxQNmG9SSz7nCBidl7reCrrMkZ0M+ThA13h3XzHSiDt1br7hoUb
-	 GD9QhOw8TD7+tsOWaR2C/neOFaynbiukYmpM3aAA=
+	b=zzapEWRWbm5srhRR8UFG4LEPptR722VFXYx+pm05QE8rwJ2aN4H2+bXvJJ3igmwW1
+	 sA8qSn99nab1wS4eP4pktaZDJjEvFQ7rnxlSSO8Mj4QHqFhRtmUsCKAYwlxId/sshf
+	 2/0m8bv0x1YeMNzqnBWeAR4A++wr+xgCJ+uPgYcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Leon Romanovsky <leon@kernel.org>,
+	syzbot+3d8bc31c45e11450f24c@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 153/342] RDMA/rw: Fall back to direct SGE on MR pool exhaustion
-Date: Tue, 31 Mar 2026 18:19:46 +0200
-Message-ID: <20260331161804.638468401@linuxfoundation.org>
+Subject: [PATCH 6.19 127/342] team: fix header_ops type confusion with non-Ethernet ports
+Date: Tue, 31 Mar 2026 18:19:20 +0200
+Message-ID: <20260331161803.679820899@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,87 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 00da250c21b074ea9494c375d0117b69e5b1d0a4 ]
+[ Upstream commit 425000dbf17373a4ab8be9428f5dc055ef870a56 ]
 
-When IOMMU passthrough mode is active, ib_dma_map_sgtable_attrs()
-produces no coalescing: each scatterlist page maps 1:1 to a DMA
-entry, so sgt.nents equals the raw page count. A 1 MB transfer
-yields 256 DMA entries. If that count exceeds the device's
-max_sgl_rd threshold (an optimization hint from mlx5 firmware),
-rdma_rw_io_needs_mr() steers the operation into the MR
-registration path. Each such operation consumes one or more MRs
-from a pool sized at max_rdma_ctxs -- roughly one MR per
-concurrent context. Under write-intensive workloads that issue
-many concurrent RDMA READs, the pool is rapidly exhausted,
-ib_mr_pool_get() returns NULL, and rdma_rw_init_one_mr() returns
--EAGAIN. Upper layer protocols treat this as a fatal DMA mapping
-failure and tear down the connection.
+Similar to commit 950803f72547 ("bonding: fix type confusion in
+bond_setup_by_slave()") team has the same class of header_ops type
+confusion.
 
-The max_sgl_rd check is a performance optimization, not a
-correctness requirement: the device can handle large SGE counts
-via direct posting, just less efficiently than with MR
-registration. When the MR pool cannot satisfy a request, falling
-back to the direct SGE (map_wrs) path avoids the connection
-reset while preserving the MR optimization for the common case
-where pool resources are available.
+For non-Ethernet ports, team_setup_by_port() copies port_dev->header_ops
+directly. When the team device later calls dev_hard_header() or
+dev_parse_header(), these callbacks can run with the team net_device
+instead of the real lower device, so netdev_priv(dev) is interpreted as
+the wrong private type and can crash.
 
-Add a fallback in rdma_rw_ctx_init() so that -EAGAIN from
-rdma_rw_init_mr_wrs() triggers direct SGE posting instead of
-propagating the error. iWARP devices, which mandate MR
-registration for RDMA READs, and force_mr debug mode continue
-to treat -EAGAIN as terminal.
+The syzbot report shows a crash in bond_header_create(), but the root
+cause is in team: the topology is gre -> bond -> team, and team calls
+the inherited header_ops with its own net_device instead of the lower
+device, so bond_header_create() receives a team device and interprets
+netdev_priv() as bonding private data, causing a type confusion crash.
 
-Fixes: 00bd1439f464 ("RDMA/rw: Support threshold for registration vs scattering to local pages")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260313194201.5818-2-cel@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fix this by introducing team header_ops wrappers for create/parse,
+selecting a team port under RCU, and calling the lower device callbacks
+with port->dev, so each callback always sees the correct net_device
+context.
+
+Also pass the selected lower device to the lower parse callback, so
+recursion is bounded in stacked non-Ethernet topologies and parse
+callbacks always run with the correct device context.
+
+Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
+Reported-by: syzbot+3d8bc31c45e11450f24c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69b46af7.050a0220.36eb34.000e.GAE@google.com/T/
+Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://patch.msgid.link/20260320072139.134249-2-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/rw.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/net/team/team_core.c | 65 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 64 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/rw.c b/drivers/infiniband/core/rw.c
-index 2522ff1cc462c..49fbfe1cef689 100644
---- a/drivers/infiniband/core/rw.c
-+++ b/drivers/infiniband/core/rw.c
-@@ -326,14 +326,29 @@ int rdma_rw_ctx_init(struct rdma_rw_ctx *ctx, struct ib_qp *qp, u32 port_num,
- 	if (rdma_rw_io_needs_mr(qp->device, port_num, dir, sg_cnt)) {
- 		ret = rdma_rw_init_mr_wrs(ctx, qp, port_num, sg, sg_cnt,
- 				sg_offset, remote_addr, rkey, dir);
--	} else if (sg_cnt > 1) {
-+		/*
-+		 * If MR init succeeded or failed for a reason other
-+		 * than pool exhaustion, that result is final.
-+		 *
-+		 * Pool exhaustion (-EAGAIN) from the max_sgl_rd
-+		 * optimization is recoverable: fall back to
-+		 * direct SGE posting. iWARP and force_mr require
-+		 * MRs unconditionally, so -EAGAIN is terminal.
-+		 */
-+		if (ret != -EAGAIN ||
-+		    rdma_protocol_iwarp(qp->device, port_num) ||
-+		    unlikely(rdma_rw_force_mr))
-+			goto out;
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index a0fe998cc055d..98772d749f2bf 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -2060,6 +2060,68 @@ static const struct ethtool_ops team_ethtool_ops = {
+  * rt netlink interface
+  ***********************/
+ 
++/* For tx path we need a linkup && enabled port and for parse any port
++ * suffices.
++ */
++static struct team_port *team_header_port_get_rcu(struct team *team,
++						  bool txable)
++{
++	struct team_port *port;
++
++	list_for_each_entry_rcu(port, &team->port_list, list) {
++		if (!txable || team_port_txable(port))
++			return port;
 +	}
 +
-+	if (sg_cnt > 1)
- 		ret = rdma_rw_init_map_wrs(ctx, qp, sg, sg_cnt, sg_offset,
- 				remote_addr, rkey, dir);
--	} else {
-+	else
- 		ret = rdma_rw_init_single_wr(ctx, qp, sg, sg_offset,
- 				remote_addr, rkey, dir);
--	}
- 
-+out:
- 	if (ret < 0)
- 		goto out_unmap_sg;
- 	return ret;
++	return NULL;
++}
++
++static int team_header_create(struct sk_buff *skb, struct net_device *team_dev,
++			      unsigned short type, const void *daddr,
++			      const void *saddr, unsigned int len)
++{
++	struct team *team = netdev_priv(team_dev);
++	const struct header_ops *port_ops;
++	struct team_port *port;
++	int ret = 0;
++
++	rcu_read_lock();
++	port = team_header_port_get_rcu(team, true);
++	if (port) {
++		port_ops = READ_ONCE(port->dev->header_ops);
++		if (port_ops && port_ops->create)
++			ret = port_ops->create(skb, port->dev,
++					       type, daddr, saddr, len);
++	}
++	rcu_read_unlock();
++	return ret;
++}
++
++static int team_header_parse(const struct sk_buff *skb,
++			     const struct net_device *team_dev,
++			     unsigned char *haddr)
++{
++	struct team *team = netdev_priv(team_dev);
++	const struct header_ops *port_ops;
++	struct team_port *port;
++	int ret = 0;
++
++	rcu_read_lock();
++	port = team_header_port_get_rcu(team, false);
++	if (port) {
++		port_ops = READ_ONCE(port->dev->header_ops);
++		if (port_ops && port_ops->parse)
++			ret = port_ops->parse(skb, port->dev, haddr);
++	}
++	rcu_read_unlock();
++	return ret;
++}
++
++static const struct header_ops team_header_ops = {
++	.create		= team_header_create,
++	.parse		= team_header_parse,
++};
++
+ static void team_setup_by_port(struct net_device *dev,
+ 			       struct net_device *port_dev)
+ {
+@@ -2068,7 +2130,8 @@ static void team_setup_by_port(struct net_device *dev,
+ 	if (port_dev->type == ARPHRD_ETHER)
+ 		dev->header_ops	= team->header_ops_cache;
+ 	else
+-		dev->header_ops	= port_dev->header_ops;
++		dev->header_ops	= port_dev->header_ops ?
++				  &team_header_ops : NULL;
+ 	dev->type = port_dev->type;
+ 	dev->hard_header_len = port_dev->hard_header_len;
+ 	dev->needed_headroom = port_dev->needed_headroom;
 -- 
-2.53.0
+2.51.0
 
 
 
