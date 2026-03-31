@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F7D3E3C40;
-	Tue, 31 Mar 2026 16:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45523E3C40;
+	Tue, 31 Mar 2026 16:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975190; cv=none; b=h6qlbltg10ju6AT9f6XL4ZVFgNiXkIV89LHz4OJnH5ouJohp8b3dv0TMjjWpKJ2QTyiSZYssW0dbX6CsAdULOfr+J8+4zVd3jSyPWs9+tdsM/DOK8u2hjL6dXHoMxQkg0eSTGpOqxFp8qgErgmyhGJuJ2GIXUPayEOXD/QfvxHA=
+	t=1774975192; cv=none; b=lN+D1uX3QjATxRX7Xpo50r2cimod5vqK/uvcUpp7q8JlPFjZ+YKbNXElJwh85vEMWhiZx85yt5YKmbdLm0rqhB43jRLgg1R3uzHMiO4u6PbEkXLgYw84dg1N531PWfkWdiz10Qu137D9G3RbeDfwM34QKUagg3xEi5Jbthc/u7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975190; c=relaxed/simple;
-	bh=Wzmz8KT8SlinsEiir3v4YNzwRTadvINF7qj7CN85Z2A=;
+	s=arc-20240116; t=1774975192; c=relaxed/simple;
+	bh=CxGJm+S+z31V0MfW0ZtuF88uKsNZ5Y2Lqimtl8Sm5MY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDjM/9FXT52PRrvmhvaGKfT/lLoos7nHxyaenJtlNg5kWul1GRMjF7UMV4KJin8KOycMJDgGsw/opSNHwmRrGAna0l9e0STWEm9SgxpAQqUIn054qxF/j+DQ1xirWOElsJvzcJJl1iWCDWi6fckSP8KSzN8UTofMwxBvP+soCrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nx+UQuFX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MWZC5TrrMNm3flYui0zeIxkYJ4lBeefrBWlrzfGiKAYYRU/bliUNs1uTEfwvNPV2OZ2ZbEt102uswiZwnphWFnWRjZfNnTl/sxPRXkqjdhSCkys/Rbj6B/n5W6PoZxNoZUMxiB0XtGnTLXdvSBbPpMv9xOiuwMqMSUpiZuuO33Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgSmjMcT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nx+UQuFX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD2AC19423;
-	Tue, 31 Mar 2026 16:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgSmjMcT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471EEC19423;
+	Tue, 31 Mar 2026 16:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975190;
-	bh=Wzmz8KT8SlinsEiir3v4YNzwRTadvINF7qj7CN85Z2A=;
+	s=korg; t=1774975192;
+	bh=CxGJm+S+z31V0MfW0ZtuF88uKsNZ5Y2Lqimtl8Sm5MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nx+UQuFXr1+M1hxo+9GSesJNuQZqP+hh/DFlECMx6cBq8N0p8P69rbelqvAwonwCE
-	 plWK0r+Q0v9iqtnbLAKsk09cX+02H8Y+mJHNKAR1rmKsPVi3swk2/cF9jwkth90Jj7
-	 9j7awtf0DRcBqfc8N2lXC8pbcLkgTTB2oEx5UIEs=
+	b=ZgSmjMcTIwbFUayEot39Xfd198nM+Z45/y9IXJ5/jO0fh6qQKjJQkO9HzDdF7pt+F
+	 VAbVawr+YG230DHP5gwhhJTDsKPYUl4vslGNRJK//IgLnqJ8sn/zmTSlprAzyo+2SL
+	 1k60sYXxopyInTvJXIHQ0M6c63FXY5GSS/KgcGTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yihang Li <liyihang9@huawei.com>,
+	John Garry <john.g.garry@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 165/342] ASoC: fsl: imx-card: initialize playback_only and capture_only
-Date: Tue, 31 Mar 2026 18:19:58 +0200
-Message-ID: <20260331161805.082740249@linuxfoundation.org>
+Subject: [PATCH 6.19 166/342] scsi: scsi_transport_sas: Fix the maximum channel scanning issue
+Date: Tue, 31 Mar 2026 18:19:59 +0200
+Message-ID: <20260331161805.119341934@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,37 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit ca67bd564e94aaa898a2cbb90922ca3cccd0612b ]
+[ Upstream commit d71afa9deb4d413232ba16d693f7d43b321931b4 ]
 
-Fix uninitialized variable playback_only and capture_only because
-graph_util_parse_link_direction() may not write them.
+After commit 37c4e72b0651 ("scsi: Fix sas_user_scan() to handle wildcard
+and multi-channel scans"), if the device supports multiple channels (0 to
+shost->max_channel), user_scan() invokes updated sas_user_scan() to perform
+the scan behavior for a specific transfer.  However, when the user
+specifies shost->max_channel, it will return -EINVAL, which is not
+expected.
 
-Fixes: 1877c3e7937f ("ASoC: imx-card: Add playback_only or capture_only support")
-Suggested-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260318102850.2794029-3-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix and support specifying the scan shost->max_channel for scanning.
+
+Fixes: 37c4e72b0651 ("scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans")
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20260317063147.2182562-1-liyihang9@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-card.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/scsi_transport_sas.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/imx-card.c b/sound/soc/fsl/imx-card.c
-index 05b4e971a3661..a4518fefad690 100644
---- a/sound/soc/fsl/imx-card.c
-+++ b/sound/soc/fsl/imx-card.c
-@@ -710,6 +710,8 @@ static int imx_card_parse_of(struct imx_card_data *data)
- 			link->ops = &imx_aif_ops;
- 		}
+diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
+index d69c7c444a311..081c168094374 100644
+--- a/drivers/scsi/scsi_transport_sas.c
++++ b/drivers/scsi/scsi_transport_sas.c
+@@ -1734,7 +1734,7 @@ static int sas_user_scan(struct Scsi_Host *shost, uint channel,
+ 		break;
  
-+		playback_only = false;
-+		capture_only  = false;
- 		graph_util_parse_link_direction(np, &playback_only, &capture_only);
- 		link->playback_only = playback_only;
- 		link->capture_only = capture_only;
+ 	default:
+-		if (channel < shost->max_channel) {
++		if (channel <= shost->max_channel) {
+ 			res = scsi_scan_host_selected(shost, channel, id, lun,
+ 						      SCSI_SCAN_MANUAL);
+ 		} else {
 -- 
 2.53.0
 
