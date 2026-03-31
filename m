@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7733DFC7D;
-	Tue, 31 Mar 2026 16:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194DE3DFC7D;
+	Tue, 31 Mar 2026 16:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974866; cv=none; b=bOrM3LwaIk515hSdrybUpJw1gsZ7xXF0TRwGBRzv1ZJTz05eqKtbErZj2gRA93m22GC2kU7ZXayuzPVK/LcYN3z5BaaoEATn28BZINzYnRv+IrNTVhtx5EcTBGhpvO7+aNvAj+oqt7uTDzaoZn7pQ6mHDDMqDb0BQJhr7XaWZK0=
+	t=1774974869; cv=none; b=dfr/GbwAgD2NfV/JAIsLc87bciJpX0v94I92AzS4SSZrU8zPluQXiLjeDjc80Rt4B6Ze3anAwe3jXwX/rooYzJUwJ6UHQOqa4wWpOa5Qk9Q8p1djZyPiNECSh2fpMc+3VSVEqkJLF+QWSvQ+7t4cMN/XhvqvWl/ifHmB3RcN5Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974866; c=relaxed/simple;
-	bh=Rc+1Gv/9gKZ7NO2aSFuUX8oQFrBvXF+SfHgNM+rvJdE=;
+	s=arc-20240116; t=1774974869; c=relaxed/simple;
+	bh=FcO+aGKHnlhJXFHaL6/1NVzuliFA2PUv/6rbg81ReyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CO0qvcVc3bpffJeCus3X+ITIsTSgMOODrnhDXTuTboWVuL8PhAH1LBpWM+M+0y2njTVa5enz2ualO4Jm16+qQbMZdqdnFd1bBjh2F1Pewy0S7L3twpGIiU1+zq8A+EvPLZzy82f1mbdCLK+9+2BcylNVZiM7wu7aGNdhcjHVdfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/l5M+sO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m7I4+GH2hFivaxqBZ13fyVbYJTrUhyxy0LUgf4UHClpOAOYgIoEkAk1KR1ZEp92RcSYGeaD+eKhWNTcVPEu53ioi4ja/KndIYg0Q4I85b6oLL+Wc2qVbceKokvp2SpElo8bfBAJqOAmB/O59G+fBco81sp81gLcAkiiS2JePwOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNI8MCB3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/l5M+sO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00308C19423;
-	Tue, 31 Mar 2026 16:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNI8MCB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E79BC19423;
+	Tue, 31 Mar 2026 16:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974866;
-	bh=Rc+1Gv/9gKZ7NO2aSFuUX8oQFrBvXF+SfHgNM+rvJdE=;
+	s=korg; t=1774974868;
+	bh=FcO+aGKHnlhJXFHaL6/1NVzuliFA2PUv/6rbg81ReyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/l5M+sO2B+bezCjKHHjc+9SGqHTnW/z6H5D5PUlnW7ZHdjN8T5ibHXgqerCVqH2l
-	 lUsJkInpMMOSf53zPOVvuswU+mjznB6qsGIWpzWCmH+rsHniJPY5Q8Q6iCFg614nm2
-	 bF+xnqjxFzjCL9pkDl9NW4RKN5AMMzDslunb8IzY=
+	b=gNI8MCB3hEwiJXff1GsV3zP6KgGgVgngsxvse5Q7cNEJzP0et7LeGy5XwxzDOXtf/
+	 MvnQzlZby6UQGwp/io8eJJVqMAzgyDjq/uMa/XqEhpbcGU06K4N6u+uGZFr+UqLp4s
+	 8SL361K4ur3ttEBh6BMBDI/jpVaLfW+EVRk4iMnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lianqin Hu <hulianqin@vivo.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 074/342] spi: intel-pci: Add support for Nova Lake mobile SPI flash
-Date: Tue, 31 Mar 2026 18:18:27 +0200
-Message-ID: <20260331161801.617250962@linuxfoundation.org>
+Subject: [PATCH 6.19 075/342] ALSA: usb-audio: Add iface reset and delay quirk for SPACETOUCH USB Audio
+Date: Tue, 31 Mar 2026 18:18:28 +0200
+Message-ID: <20260331161801.653765326@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,34 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-[ Upstream commit 85b731ad4bbf6eb3fedf267ab00be3596f148432 ]
+[ Upstream commit 5182e5ec4355dd690307f5d5c28cbfc5b2c06a97 ]
 
-Add Intel Nova Lake PCD-H SPI serial flash PCI ID to the list of
-supported devices.
+Setting up the interface when suspended/resumeing fail on this card.
+Adding a reset and delay quirk will eliminate this problem.
 
-Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/20260309153703.74282-1-alan.borzeszkowski@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+usb 1-1: New USB device found, idVendor=0666, idProduct=0880
+usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 1-1: Product: USB Audio
+usb 1-1: Manufacturer: SPACETOUCH
+usb 1-1: SerialNumber: 000000000
+
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/TYUPR06MB6217ACC80B70BE25D87456B0D247A@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-intel-pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
-index bce3d149bea18..d8ef8f89330ac 100644
---- a/drivers/spi/spi-intel-pci.c
-+++ b/drivers/spi/spi-intel-pci.c
-@@ -96,6 +96,7 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
- 	{ PCI_VDEVICE(INTEL, 0xa324), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xa3a4), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xa823), (unsigned long)&cnl_info },
-+	{ PCI_VDEVICE(INTEL, 0xd323), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xe323), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xe423), (unsigned long)&cnl_info },
- 	{ },
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index caca0e586d832..d87b988516bbf 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2239,6 +2239,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_IFACE_DELAY | QUIRK_FLAG_FORCE_IFACE_RESET),
+ 	DEVICE_FLG(0x0661, 0x0883, /* iBasso DC04 Ultra */
+ 		   QUIRK_FLAG_DSD_RAW),
++	DEVICE_FLG(0x0666, 0x0880, /* SPACETOUCH USB Audio */
++		   QUIRK_FLAG_FORCE_IFACE_RESET | QUIRK_FLAG_IFACE_DELAY),
+ 	DEVICE_FLG(0x06f8, 0xb000, /* Hercules DJ Console (Windows Edition) */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x06f8, 0xd002, /* Hercules DJ Console (Macintosh Edition) */
 -- 
 2.51.0
 
