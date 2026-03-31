@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E6E3E559E;
-	Tue, 31 Mar 2026 16:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A703E3C5C;
+	Tue, 31 Mar 2026 16:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974979; cv=none; b=G7FuRa4FQBa3eHilAeiCFwlZ0oxYG6YW9c9gBd+0yxLMliekk+1jiRT3MZkukH18kC39vwO2tBlWrc4JBl4xNz9U22MPBiEjK8vMDa03E8t/jsGQE3deuTenLunV8Zxp0KGI1a9lbQZ0YlL144EqlvxqNdUlYuRbNUI1BV3slh4=
+	t=1774974982; cv=none; b=HFb1U8piFyaWBYKzrqDXlzUpU5LLiPd2HmVuU/I1ojJd/jC0Li48wH3TGT6XVeNFrJmBMrfrdTz0GxrI658WyH/+LNyj2WC7FDClQl58CHDnHmtFRSYiJwsgFhSRBm7dUfMZL7/JKrCNHgK5SKkl8sTJu5Xt2LuyNneMuBxuMpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974979; c=relaxed/simple;
-	bh=iJwIYd4/vHKhYxYa0gIZPreVV6dLqG7fmTHryF8yAVQ=;
+	s=arc-20240116; t=1774974982; c=relaxed/simple;
+	bh=YSgoWowNgIHB6tra2a/sfkiw+uWpIUcvIiWKqnohBzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9EWCuPJYRzWku3Pj2o37KHTuBui5AvrvfoOVndm5/CjnCqCV1v3yyNCyrwp7CWf/zXd5TRO18sZDHbEHvzz51HtefB81GExFfjg8c085zkDo6zUb5uFBKg8bHV6wnXkSGhiMq28Lr5gQQE0hs0N7KkVTDZzloMzOXDh05RqJhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrpfp2+H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T8m2aSispQREKJzFoWbbgiImsuGUocDNk5U3A+ihbp1OFpJnx2AY+JfcrpVv+E5v97Plep158INQh5XfBTJ4SYC7ZD04BdZMArWM4C3RgUXVsx1WVSaZu2qflvacJSpLdYEFQXxyogfxQV/vuiGtv/ZAuBXwHva2Hv4COJFm0UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dg2jvSCt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrpfp2+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE1FC19423;
-	Tue, 31 Mar 2026 16:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dg2jvSCt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C192BC19423;
+	Tue, 31 Mar 2026 16:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974979;
-	bh=iJwIYd4/vHKhYxYa0gIZPreVV6dLqG7fmTHryF8yAVQ=;
+	s=korg; t=1774974982;
+	bh=YSgoWowNgIHB6tra2a/sfkiw+uWpIUcvIiWKqnohBzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hrpfp2+HHbfSb1/LAWfv7IEfaTMLeaJILpFWZQ389R2AQ0WEiicbknOOCt6z1qqEG
-	 mWJS9CZfzWnqTrF4p9KuUHfQTnGeplsHhkeM0BXwSLUh9op8Lc6QXWzJpkpS+Ji0G7
-	 Lbsnp0i8uNQCvY5eOUrThL+nqc3LHwfIn3Txow54=
+	b=dg2jvSCtIf7CHgO5JJ3OdGrT6D9FbHKKahRAbrW/1P7i2EhmkiD+QiklG1EYFGFD4
+	 GmRPgSpaeVZ1WVaw7UjCRgTnew0mTFlVg7Tjtsq9EYPuHyoQbTzGLXbBtuJf0zeilN
+	 BMRho8O9QKvcFmDaTyNycao2lYxl6AOKIPBz1gHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Simon Horman <horms@kernel.org>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 117/342] iavf: fix out-of-bounds writes in iavf_get_ethtool_stats()
-Date: Tue, 31 Mar 2026 18:19:10 +0200
-Message-ID: <20260331161803.316043571@linuxfoundation.org>
+Subject: [PATCH 6.19 091/342] can: statistics: add missing atomic access in hot path
+Date: Tue, 31 Mar 2026 18:18:44 +0200
+Message-ID: <20260331161802.369568810@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -55,156 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit fecacfc95f195b99c71c579a472120d0b4ed65fa ]
+[ Upstream commit 46eee1661aa9b49966e6c43d07126fe408edda57 ]
 
-iavf incorrectly uses real_num_tx_queues for ETH_SS_STATS. Since the
-value could change in runtime, we should use num_tx_queues instead.
+Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
+fixed a KCSAN issue in can_receive() but missed to convert the 'matches'
+variable used in can_rcv_filter().
 
-Moreover iavf_get_ethtool_stats() uses num_active_queues while
-iavf_get_sset_count() and iavf_get_stat_strings() use
-real_num_tx_queues, which triggers out-of-bounds writes when we do
-"ethtool -L" and "ethtool -S" simultaneously [1].
-
-For example when we change channels from 1 to 8, Thread 3 could be
-scheduled before Thread 2, and out-of-bounds writes could be triggered
-in Thread 3:
-
-Thread 1 (ethtool -L)       Thread 2 (work)        Thread 3 (ethtool -S)
-iavf_set_channels()
-...
-iavf_alloc_queues()
--> num_active_queues = 8
-iavf_schedule_finish_config()
-                                                   iavf_get_sset_count()
-                                                   real_num_tx_queues: 1
-                                                   -> buffer for 1 queue
-                                                   iavf_get_ethtool_stats()
-                                                   num_active_queues: 8
-                                                   -> out-of-bounds!
-                            iavf_finish_config()
-                            -> real_num_tx_queues = 8
-
-Use immutable num_tx_queues in all related functions to avoid the issue.
-
-[1]
- BUG: KASAN: vmalloc-out-of-bounds in iavf_add_one_ethtool_stat+0x200/0x270
- Write of size 8 at addr ffffc900031c9080 by task ethtool/5800
-
- CPU: 1 UID: 0 PID: 5800 Comm: ethtool Not tainted 6.19.0-enjuk-08403-g8137e3db7f1c #241 PREEMPT(full)
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x6f/0xb0
-  print_report+0x170/0x4f3
-  kasan_report+0xe1/0x180
-  iavf_add_one_ethtool_stat+0x200/0x270
-  iavf_get_ethtool_stats+0x14c/0x2e0
-  __dev_ethtool+0x3d0c/0x5830
-  dev_ethtool+0x12d/0x270
-  dev_ioctl+0x53c/0xe30
-  sock_do_ioctl+0x1a9/0x270
-  sock_ioctl+0x3d4/0x5e0
-  __x64_sys_ioctl+0x137/0x1c0
-  do_syscall_64+0xf3/0x690
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
- RIP: 0033:0x7f7da0e6e36d
- ...
-  </TASK>
-
- The buggy address belongs to a 1-page vmalloc region starting at 0xffffc900031c9000 allocated at __dev_ethtool+0x3cc9/0x5830
- The buggy address belongs to the physical page: page: refcount:1 mapcount:0 mapping:0000000000000000
- index:0xffff88813a013de0 pfn:0x13a013
- flags: 0x200000000000000(node=0|zone=2)
- raw: 0200000000000000 0000000000000000 dead000000000122 0000000000000000
- raw: ffff88813a013de0 0000000000000000 00000001ffffffff 0000000000000000
- page dumped because: kasan: bad access detected
-
- Memory state around the buggy address:
-  ffffc900031c8f80: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-  ffffc900031c9000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- >ffffc900031c9080: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-                    ^
-  ffffc900031c9100: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-  ffffc900031c9180: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-
-Fixes: 64430f70ba6f ("iavf: Fix displaying queue statistics shown by ethtool")
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260318173413.28235-1-socketcan@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/iavf/iavf_ethtool.c    | 31 +++++++++----------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ net/can/af_can.c | 4 ++--
+ net/can/af_can.h | 2 +-
+ net/can/proc.c   | 3 ++-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-index 6ff3842a1ff1f..98bec3afc2006 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-@@ -313,14 +313,13 @@ static int iavf_get_sset_count(struct net_device *netdev, int sset)
+diff --git a/net/can/af_can.c b/net/can/af_can.c
+index 770173d8db428..a624c04ed5c63 100644
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -469,7 +469,7 @@ int can_rx_register(struct net *net, struct net_device *dev, canid_t can_id,
+ 
+ 	rcv->can_id = can_id;
+ 	rcv->mask = mask;
+-	rcv->matches = 0;
++	atomic_long_set(&rcv->matches, 0);
+ 	rcv->func = func;
+ 	rcv->data = data;
+ 	rcv->ident = ident;
+@@ -573,7 +573,7 @@ EXPORT_SYMBOL(can_rx_unregister);
+ static inline void deliver(struct sk_buff *skb, struct receiver *rcv)
  {
- 	/* Report the maximum number queues, even if not every queue is
- 	 * currently configured. Since allocation of queues is in pairs,
--	 * use netdev->real_num_tx_queues * 2. The real_num_tx_queues is set
--	 * at device creation and never changes.
-+	 * use netdev->num_tx_queues * 2. The num_tx_queues is set at
-+	 * device creation and never changes.
- 	 */
- 
- 	if (sset == ETH_SS_STATS)
- 		return IAVF_STATS_LEN +
--			(IAVF_QUEUE_STATS_LEN * 2 *
--			 netdev->real_num_tx_queues);
-+		       (IAVF_QUEUE_STATS_LEN * 2 * netdev->num_tx_queues);
- 	else
- 		return -EINVAL;
+ 	rcv->func(skb, rcv->data);
+-	rcv->matches++;
++	atomic_long_inc(&rcv->matches);
  }
-@@ -345,19 +344,19 @@ static void iavf_get_ethtool_stats(struct net_device *netdev,
- 	iavf_add_ethtool_stats(&data, adapter, iavf_gstrings_stats);
  
- 	rcu_read_lock();
--	/* As num_active_queues describe both tx and rx queues, we can use
--	 * it to iterate over rings' stats.
-+	/* Use num_tx_queues to report stats for the maximum number of queues.
-+	 * Queues beyond num_active_queues will report zero.
- 	 */
--	for (i = 0; i < adapter->num_active_queues; i++) {
--		struct iavf_ring *ring;
-+	for (i = 0; i < netdev->num_tx_queues; i++) {
-+		struct iavf_ring *tx_ring = NULL, *rx_ring = NULL;
+ static int can_rcv_filter(struct can_dev_rcv_lists *dev_rcv_lists, struct sk_buff *skb)
+diff --git a/net/can/af_can.h b/net/can/af_can.h
+index 22f3352c77fec..87887014f5628 100644
+--- a/net/can/af_can.h
++++ b/net/can/af_can.h
+@@ -52,7 +52,7 @@ struct receiver {
+ 	struct hlist_node list;
+ 	canid_t can_id;
+ 	canid_t mask;
+-	unsigned long matches;
++	atomic_long_t matches;
+ 	void (*func)(struct sk_buff *skb, void *data);
+ 	void *data;
+ 	char *ident;
+diff --git a/net/can/proc.c b/net/can/proc.c
+index 0938bf7dd646a..de4d05ae34597 100644
+--- a/net/can/proc.c
++++ b/net/can/proc.c
+@@ -196,7 +196,8 @@ static void can_print_rcvlist(struct seq_file *m, struct hlist_head *rx_list,
+ 			"   %-5s     %03x    %08x  %pK  %pK  %8ld  %s\n";
  
--		/* Tx rings stats */
--		ring = &adapter->tx_rings[i];
--		iavf_add_queue_stats(&data, ring);
-+		if (i < adapter->num_active_queues) {
-+			tx_ring = &adapter->tx_rings[i];
-+			rx_ring = &adapter->rx_rings[i];
-+		}
- 
--		/* Rx rings stats */
--		ring = &adapter->rx_rings[i];
--		iavf_add_queue_stats(&data, ring);
-+		iavf_add_queue_stats(&data, tx_ring);
-+		iavf_add_queue_stats(&data, rx_ring);
+ 		seq_printf(m, fmt, DNAME(dev), r->can_id, r->mask,
+-				r->func, r->data, r->matches, r->ident);
++			   r->func, r->data, atomic_long_read(&r->matches),
++			   r->ident);
  	}
- 	rcu_read_unlock();
  }
-@@ -376,9 +375,9 @@ static void iavf_get_stat_strings(struct net_device *netdev, u8 *data)
- 	iavf_add_stat_strings(&data, iavf_gstrings_stats);
  
- 	/* Queues are always allocated in pairs, so we just use
--	 * real_num_tx_queues for both Tx and Rx queues.
-+	 * num_tx_queues for both Tx and Rx queues.
- 	 */
--	for (i = 0; i < netdev->real_num_tx_queues; i++) {
-+	for (i = 0; i < netdev->num_tx_queues; i++) {
- 		iavf_add_stat_strings(&data, iavf_gstrings_queue_stats,
- 				      "tx", i);
- 		iavf_add_stat_strings(&data, iavf_gstrings_queue_stats,
 -- 
 2.51.0
 
