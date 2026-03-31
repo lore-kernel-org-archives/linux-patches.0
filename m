@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26F640710B;
-	Tue, 31 Mar 2026 16:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6302B425CEE;
+	Tue, 31 Mar 2026 16:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975166; cv=none; b=WgqV2dqN/BFgOFNhdEpGDvg4sMEorKG/D2aaVgPQUeDxXUfI34ZM8/95f6dFEsI+Iy4nw2fajAQHIYeRzyjMulhre/qFePVW8BWWOiStt5J4yvk9Npj3HhmJKTaQlwqPaaMpduZ2MyxbLX2MpV0xstXxTrXC010dptvgWFya0To=
+	t=1774975169; cv=none; b=bOuoiFN6yBx8iXEK7yrmIMQFyl3HwKKdnTDN5S8WdLYXDhQOV2sp54FvwyemSQM7w8UisVF27OQSngXu1Qvl3ERxigump4nFZZ3Cv0/XWMs9Z7IGFwpK24bYUdkYZLDqytDfijQzXZfTFOLdw9u7MzjzSu83oiGbe7bwbwnbvzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975166; c=relaxed/simple;
-	bh=ewcXxxzb3K/wqUzwc0JVAy+czjeT78aW24XOByKM1m4=;
+	s=arc-20240116; t=1774975169; c=relaxed/simple;
+	bh=oPNGqmst+cCBf+yt9X18cvR5z+2iyNHPmL99iHThbkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTCS3uke/mw1ECGpcwU5G1fG0Tt4JnhSr0c5qq1VhJu9mJ3A4TEzUs6/BsYPv5AIpNMxM+uv+s7xFe3kVvM7bqZOSZoou0bkvyNeX9itul0knTidpBbKRNsXJ+LqPdz28RnBGmbNHLxg/U/mTHQXbxzxgj5NjzNMTFjqhrQ/s2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neLssQvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mns6x4P5f3tQpMDeUS4zYtrJufe9Kw9zzsXBK9vwshEX81oxcAU+hSQbNbyK/tM9UyF3XqtrfFUOZXs+5dlj2oRzfYSDv4wFNBryWL7yH/08tQnyN0OuUSG+9YkgNQml+zqoz/HZCgKFJEwBsuHj50bj4229MFCqZMed54kUVDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCQ+VzNI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neLssQvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5952CC19423;
-	Tue, 31 Mar 2026 16:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCQ+VzNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC32C19423;
+	Tue, 31 Mar 2026 16:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975166;
-	bh=ewcXxxzb3K/wqUzwc0JVAy+czjeT78aW24XOByKM1m4=;
+	s=korg; t=1774975169;
+	bh=oPNGqmst+cCBf+yt9X18cvR5z+2iyNHPmL99iHThbkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=neLssQvDzRR8/KHU0ooX/SZe2EfgKjSlWRM8O1UDtBx4Ww3kyl+/Wng2Mr5kBXh4m
-	 3t0XAI8+bj4yth6LOV7H1RbLF0W1K578PhlKUgIwXMI1VbbXh2xMSKB6DVIaO/H/q3
-	 syDGLOwSPrXptq8VtvlAhR5FAJBOVpEv+pZJfk0Q=
+	b=TCQ+VzNIsBLjUyFzAL1ljuQBrtCDQZYZgruH5fV5UmOvYzhgdBMcgrAf3Ix5QdXft
+	 4H9GCtdOzl2otEIjBewYr7R+BUzcLad8kJ+f24re5L9rrDP8bDwpVFT64UUQBrTgQ8
+	 pFvK5hos6S3Wvcras+JdKsb6qeCmMwJXZJtsv/vY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 162/342] RDMA/irdma: Return EINVAL for invalid arp index error
-Date: Tue, 31 Mar 2026 18:19:55 +0200
-Message-ID: <20260331161804.972482031@linuxfoundation.org>
+Subject: [PATCH 6.19 189/342] ASoC: adau1372: Fix unchecked clk_prepare_enable() return value
+Date: Tue, 31 Mar 2026 18:20:22 +0200
+Message-ID: <20260331161805.953600152@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -45,90 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 
-[ Upstream commit 7221f581eefa79ead06e171044f393fb7ee22f87 ]
+[ Upstream commit 326fe8104a4020d30080d37ac8b6b43893cdebca ]
 
-When rdma_connect() fails due to an invalid arp index, user space rdma core
-reports ENOMEM which is confusing. Modify irdma_make_cm_node() to return the
-correct error code.
+adau1372_set_power() calls clk_prepare_enable() but discards the return
+value. If the clock enable fails, the driver proceeds to access registers
+on unpowered hardware, potentially causing silent corruption.
 
-Fixes: 146b9756f14c ("RDMA/irdma: Add connection manager")
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Make adau1372_set_power() return int and propagate the error from
+clk_prepare_enable(). Update adau1372_set_bias_level() to return the
+error directly for the STANDBY and OFF cases.
+
+Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20260325210704.76847-2-jihed.chaibi.dev@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/cm.c | 17 ++++++++++-------
+ sound/soc/codecs/adau1372.c | 17 ++++++++++-------
  1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/cm.c b/drivers/infiniband/hw/irdma/cm.c
-index 128cfcf27714d..d14a381beb661 100644
---- a/drivers/infiniband/hw/irdma/cm.c
-+++ b/drivers/infiniband/hw/irdma/cm.c
-@@ -2241,11 +2241,12 @@ irdma_make_cm_node(struct irdma_cm_core *cm_core, struct irdma_device *iwdev,
- 	int oldarpindex;
- 	int arpindex;
- 	struct net_device *netdev = iwdev->netdev;
-+	int ret;
- 
- 	/* create an hte and cm_node for this instance */
- 	cm_node = kzalloc(sizeof(*cm_node), GFP_ATOMIC);
- 	if (!cm_node)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	/* set our node specific transport info */
- 	cm_node->ipv4 = cm_info->ipv4;
-@@ -2348,8 +2349,10 @@ irdma_make_cm_node(struct irdma_cm_core *cm_core, struct irdma_device *iwdev,
- 			arpindex = -EINVAL;
- 	}
- 
--	if (arpindex < 0)
-+	if (arpindex < 0) {
-+		ret = -EINVAL;
- 		goto err;
-+	}
- 
- 	ether_addr_copy(cm_node->rem_mac,
- 			iwdev->rf->arp_table[arpindex].mac_addr);
-@@ -2360,7 +2363,7 @@ irdma_make_cm_node(struct irdma_cm_core *cm_core, struct irdma_device *iwdev,
- err:
- 	kfree(cm_node);
- 
--	return NULL;
-+	return ERR_PTR(ret);
+diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
+index fdee689cae538..6345342218d61 100644
+--- a/sound/soc/codecs/adau1372.c
++++ b/sound/soc/codecs/adau1372.c
+@@ -782,15 +782,18 @@ static void adau1372_enable_pll(struct adau1372 *adau1372)
+ 		dev_err(adau1372->dev, "Failed to lock PLL\n");
  }
  
- static void irdma_destroy_connection(struct irdma_cm_node *cm_node)
-@@ -3021,8 +3024,8 @@ static int irdma_create_cm_node(struct irdma_cm_core *cm_core,
+-static void adau1372_set_power(struct adau1372 *adau1372, bool enable)
++static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+ {
+ 	if (adau1372->enabled == enable)
+-		return;
++		return 0;
  
- 	/* create a CM connection node */
- 	cm_node = irdma_make_cm_node(cm_core, iwdev, cm_info, NULL);
--	if (!cm_node)
--		return -ENOMEM;
-+	if (IS_ERR(cm_node))
-+		return PTR_ERR(cm_node);
+ 	if (enable) {
+ 		unsigned int clk_ctrl = ADAU1372_CLK_CTRL_MCLK_EN;
++		int ret;
  
- 	/* set our node side to client (active) side */
- 	cm_node->tcp_cntxt.client = 1;
-@@ -3219,9 +3222,9 @@ void irdma_receive_ilq(struct irdma_sc_vsi *vsi, struct irdma_puda_buf *rbuf)
- 		cm_info.cm_id = listener->cm_id;
- 		cm_node = irdma_make_cm_node(cm_core, iwdev, &cm_info,
- 					     listener);
--		if (!cm_node) {
-+		if (IS_ERR(cm_node)) {
- 			ibdev_dbg(&cm_core->iwdev->ibdev,
--				  "CM: allocate node failed\n");
-+				  "CM: allocate node failed ret=%ld\n", PTR_ERR(cm_node));
- 			refcount_dec(&listener->refcnt);
- 			return;
- 		}
+-		clk_prepare_enable(adau1372->mclk);
++		ret = clk_prepare_enable(adau1372->mclk);
++		if (ret)
++			return ret;
+ 		if (adau1372->pd_gpio)
+ 			gpiod_set_value(adau1372->pd_gpio, 0);
+ 
+@@ -829,6 +832,8 @@ static void adau1372_set_power(struct adau1372 *adau1372, bool enable)
+ 	}
+ 
+ 	adau1372->enabled = enable;
++
++	return 0;
+ }
+ 
+ static int adau1372_set_bias_level(struct snd_soc_component *component,
+@@ -842,11 +847,9 @@ static int adau1372_set_bias_level(struct snd_soc_component *component,
+ 	case SND_SOC_BIAS_PREPARE:
+ 		break;
+ 	case SND_SOC_BIAS_STANDBY:
+-		adau1372_set_power(adau1372, true);
+-		break;
++		return adau1372_set_power(adau1372, true);
+ 	case SND_SOC_BIAS_OFF:
+-		adau1372_set_power(adau1372, false);
+-		break;
++		return adau1372_set_power(adau1372, false);
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
