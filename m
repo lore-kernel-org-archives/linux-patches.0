@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293FC2E1C7C;
-	Tue, 31 Mar 2026 17:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA893033C9;
+	Tue, 31 Mar 2026 17:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976562; cv=none; b=ompPyCi0h0glW+ZHcFrz9MuJRhhoJbRfBLHUzMvUtrIx3xdXh8JxdFB9LM4FObkVvZ26hWBs5920Sv827hHXiAkOnfu+kdtp5/LSusvDeZzawtQUdb6gRJOlHEOJtBduHN9mI4o6avMcrER4VqGL1Z6QGJOZpnrZS+/ig5cZ084=
+	t=1774976564; cv=none; b=BEc/yK1sA6YSB7Cm4ubPJttxuayipGbXYBCf0NZmfXHxYLDNCHvqSVJwl5lcTLm1OGuq98s1deaXgCXgB8Smd3D1mTjqHi4XYQGa8J4Ou7oEW8xWdm4dWkwGY+2AV+bemivxGlEGMP6mds090NcqohaDpEwY66ih4sfIfbOQKgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976562; c=relaxed/simple;
-	bh=h8kHVF6NVB/hROKPM5hFSn19A67G//oTRuh/qI6JIwc=;
+	s=arc-20240116; t=1774976564; c=relaxed/simple;
+	bh=2YgpsOOB7dKEXaXQVJR9M+LIjpmPTM0/jcmiAvFd0bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OGFKCiRTORiFDq4t8fKudFYjwE9CNvDZu0F445MMa9lUSQUcoV0qDVJ74ITuH2vLzTXfY+5z1mWTHXmfAhCSgpCYmZw++Du5atdfZbk/6dXNo3YvrP1chKC1uYCwesErHweYKtMavUViUP9sVTpV1MinzJ9LYmjeG+z955QiXs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S31ebuYV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=byZEEIoslU3xL19cBPTDR9RkMbLagOaLNUBdHTSFNEJMfrBcMIVtGh+TzgjtvnlfIMbjJw37icl+bMyrVDVB+4mai27ZmAwOpsEQEaFbb/jVksBiJmNd0rXS9dCQPgWOA3Y5DcqhOq7SxaYKtbiN8eMC34sUNuAuc4e3++fyUK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kb52dFqD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S31ebuYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BD9C19423;
-	Tue, 31 Mar 2026 17:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kb52dFqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34516C19423;
+	Tue, 31 Mar 2026 17:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976562;
-	bh=h8kHVF6NVB/hROKPM5hFSn19A67G//oTRuh/qI6JIwc=;
+	s=korg; t=1774976564;
+	bh=2YgpsOOB7dKEXaXQVJR9M+LIjpmPTM0/jcmiAvFd0bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S31ebuYVqhMm7iAwrQmDx4Q6pvssoA0+1IpvzUTAx1WdaQMM7GOD3T1E21DLFo5kJ
-	 SW0r7IziSBOG6k+iY/mSBA81pF8klCeb6OzYpcD4SQGFrMwPMMBUTM/kJe1OrHNjFG
-	 xDN9iJmB5VCSAFNmmMY1VcosQRSx8+pjqaOPAU98=
+	b=Kb52dFqD4hjgwzvLx0D4W83h4vc5NXpL68bvtvE1xch1a1cJJhsI6xDt5FbB0xWe3
+	 RAAwFnL10FzGWZ6kqSd/fV88ih9j7ju8cdOyl5fgi+NuSKcUoGlYIMWs+NdwkFYPJc
+	 /eqy2YGSHh0DebN02uuXSVsEfqpjoILPD+mvBJ9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
 	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 141/309] RDMA/irdma: Initialize free_qp completion before using it
-Date: Tue, 31 Mar 2026 18:20:44 +0200
-Message-ID: <20260331161758.664724336@linuxfoundation.org>
+Subject: [PATCH 6.18 142/309] RDMA/irdma: Update ibqp state to error if QP is already in error state
+Date: Tue, 31 Mar 2026 18:20:45 +0200
+Message-ID: <20260331161758.700271249@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,44 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 
-[ Upstream commit 11a95521fb93c91e2d4ef9d53dc80ef0a755549b ]
+[ Upstream commit 8c1f19a2225cf37b3f8ab0b5a8a5322291cda620 ]
 
-In irdma_create_qp, if ib_copy_to_udata fails, it will call
-irdma_destroy_qp to clean up which will attempt to wait on
-the free_qp completion, which is not initialized yet. Fix this
-by initializing the completion before the ib_copy_to_udata call.
+In irdma_modify_qp() update ibqp state to error if the irdma QP is already
+in error state, otherwise the ibqp state which is visible to the consumer
+app remains stale.
 
 Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
 Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 5d027c04dba6f..f53b8f0d7ca83 100644
+index f53b8f0d7ca83..c2449f5721eeb 100644
 --- a/drivers/infiniband/hw/irdma/verbs.c
 +++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -1106,6 +1106,7 @@ static int irdma_create_qp(struct ib_qp *ibqp,
- 	spin_lock_init(&iwqp->sc_qp.pfpdu.lock);
- 	iwqp->sig_all = init_attr->sq_sig_type == IB_SIGNAL_ALL_WR;
- 	rf->qp_table[qp_num] = iwqp;
-+	init_completion(&iwqp->free_qp);
- 
- 	if (udata) {
- 		/* GEN_1 legacy support with libi40iw does not have expanded uresp struct */
-@@ -1130,7 +1131,6 @@ static int irdma_create_qp(struct ib_qp *ibqp,
- 		}
- 	}
- 
--	init_completion(&iwqp->free_qp);
- 	return 0;
- 
- error:
+@@ -1541,6 +1541,7 @@ int irdma_modify_qp_roce(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 		case IB_QPS_ERR:
+ 		case IB_QPS_RESET:
+ 			if (iwqp->iwarp_state == IRDMA_QP_STATE_ERROR) {
++				iwqp->ibqp_state = attr->qp_state;
+ 				spin_unlock_irqrestore(&iwqp->lock, flags);
+ 				if (udata && udata->inlen) {
+ 					if (ib_copy_from_udata(&ureq, udata,
+@@ -1746,6 +1747,7 @@ int irdma_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr, int attr_mask,
+ 		case IB_QPS_ERR:
+ 		case IB_QPS_RESET:
+ 			if (iwqp->iwarp_state == IRDMA_QP_STATE_ERROR) {
++				iwqp->ibqp_state = attr->qp_state;
+ 				spin_unlock_irqrestore(&iwqp->lock, flags);
+ 				if (udata && udata->inlen) {
+ 					if (ib_copy_from_udata(&ureq, udata,
 -- 
 2.53.0
 
