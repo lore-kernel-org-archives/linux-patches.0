@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28B23A1E8C;
-	Tue, 31 Mar 2026 16:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDFC423A8E;
+	Tue, 31 Mar 2026 16:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976372; cv=none; b=F1LHXzgYUuNeHmWFRbpou8JzZhhQzic+cBFSKjhVcFdBLB1zRnrR5MFDfw3YtASkQ+lk/rLrQEy32O6NVetqbC5cgW005ZcbW3nBVZMdQZUHZ4XPY6AJ4whUtsYcSV5x9NQG9dtodNoTNby9Puib1HXCOZ6eYW6tRAfR0H93Wg8=
+	t=1774976375; cv=none; b=iDM0Lkh8AKCNGBYtnl7YkIOP/zfYLCwFmLoNmdl403Gyc/WCtuGk7PhRrPSfE/lIxT8QzvfHgSuzSbiSnhfMqI/aIKn5BtKJ3XDJ2GFQr9RrGTpAcf4H5EZpMEeXSLzDjc1frbf6GugFUL7zxkPlibF0tOpa6jWgWgMEWEnVu1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976372; c=relaxed/simple;
-	bh=gKKhuGuZEqSyrMH0E41aH7d8GJzeCesNJfClZsnwdeY=;
+	s=arc-20240116; t=1774976375; c=relaxed/simple;
+	bh=fdjnPHH1zG7mjS29kyhOhnhrmCW2J5BRQqihrNh67bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fO9sL6vtFBisYekomdFMN8YUujk8da5KtWj3A/eehlbKFMPZBd69eC9n4Sm1R6i4JFWbdp+PvZKps8gYZtLG46mXbGSAUvYstP6LWd6k9XiAXTB4qUV3RNYZuT/3n/YJD9OkwhL+P+LJHWRsvVlTTn6uR/++JwElu9IoBqx5I44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2tRjeOb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CDP5bbat4RyBkrhepLCjKTg/bxfqimTpeK3tInWfifWpypKoQ3DqdoALwbqPFCO0jTVpnVLfqyybfCt2t6MxMEGGhrQPAe0WE0gUJr/woiI4l0vsHP3Kt1PiESltZKbdIL2XcEulZqbISflvUTp4nKJXUkgwsDFPZuCjsz6Lg74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4KjE06B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2tRjeOb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40859C19423;
-	Tue, 31 Mar 2026 16:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4KjE06B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABF8C19423;
+	Tue, 31 Mar 2026 16:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976372;
-	bh=gKKhuGuZEqSyrMH0E41aH7d8GJzeCesNJfClZsnwdeY=;
+	s=korg; t=1774976375;
+	bh=fdjnPHH1zG7mjS29kyhOhnhrmCW2J5BRQqihrNh67bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l2tRjeObs9oRSGFDA9dhCakaNjsCmVOq0u+cVqNVXQHm5icsBx90vDQlcmVShCBzF
-	 +j63q7ToBH+azc82kiWIbz/wctAozvvNqVCw1LovJAceOWeoVGVOTqAuPaGvypcDHR
-	 TySAeb9QlnhCYQk5Cbu3Af/bWDFT+MXrDhjRmU8k=
+	b=l4KjE06B3P+++OUo5WEmxDpKzh5L+LMwW+nQZZXKF/+8H/04gbJPXoE5shzTHI7gu
+	 FJR5dCJ7SB/40gsd77MHrwlFq0GEUOg5Pl0SgUatVsTBXsNdGgvBlfY1Y9ZturBFJv
+	 JY8N02t+V/nfRggEbAHdsB/4/lBpM0uGEKtEprdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/309] xfrm: add missing extack for XFRMA_SA_PCPU in add_acquire and allocspi
-Date: Tue, 31 Mar 2026 18:19:31 +0200
-Message-ID: <20260331161755.990666532@linuxfoundation.org>
+Subject: [PATCH 6.18 069/309] xfrm: fix the condition on x->pcpu_num in xfrm_sa_len
+Date: Tue, 31 Mar 2026 18:19:32 +0200
+Message-ID: <20260331161756.027707069@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -54,10 +54,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit aa8a3f3c67235422a0c3608a8772f69ca3b7b63f ]
+[ Upstream commit b57defcf8f109da5ba9cf59b2a736606faf3d846 ]
 
-We're returning an error caused by invalid user input without setting
-an extack. Add one.
+pcpu_num = 0 is a valid value. The marker for "unset pcpu_num" which
+makes copy_to_user_state_extra not add the XFRMA_SA_PCPU attribute is
+UINT_MAX.
 
 Fixes: 1ddf9916ac09 ("xfrm: Add support for per cpu xfrm state handling.")
 Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
@@ -65,33 +66,22 @@ Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/xfrm/xfrm_user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 403b5ecac2c54..3e6477c6082e7 100644
+index 3e6477c6082e7..4dd8341225bce 100644
 --- a/net/xfrm/xfrm_user.c
 +++ b/net/xfrm/xfrm_user.c
-@@ -1850,6 +1850,7 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		pcpu_num = nla_get_u32(attrs[XFRMA_SA_PCPU]);
- 		if (pcpu_num >= num_possible_cpus()) {
- 			err = -EINVAL;
-+			NL_SET_ERR_MSG(extack, "pCPU number too big");
- 			goto out_noput;
- 		}
+@@ -3676,7 +3676,7 @@ static inline unsigned int xfrm_sa_len(struct xfrm_state *x)
  	}
-@@ -3001,8 +3002,10 @@ static int xfrm_add_acquire(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	if (attrs[XFRMA_SA_PCPU]) {
- 		x->pcpu_num = nla_get_u32(attrs[XFRMA_SA_PCPU]);
- 		err = -EINVAL;
--		if (x->pcpu_num >= num_possible_cpus())
-+		if (x->pcpu_num >= num_possible_cpus()) {
-+			NL_SET_ERR_MSG(extack, "pCPU number too big");
- 			goto free_state;
-+		}
- 	}
+ 	if (x->if_id)
+ 		l += nla_total_size(sizeof(x->if_id));
+-	if (x->pcpu_num)
++	if (x->pcpu_num != UINT_MAX)
+ 		l += nla_total_size(sizeof(x->pcpu_num));
  
- 	err = verify_newpolicy_info(&ua->policy, extack);
+ 	/* Must count x->lastused as it may become non-zero behind our back. */
 -- 
 2.51.0
 
