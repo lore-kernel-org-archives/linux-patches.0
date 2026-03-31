@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B403E3F7887;
-	Tue, 31 Mar 2026 16:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482873F7887;
+	Tue, 31 Mar 2026 16:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974845; cv=none; b=Frt5s/LQ49JhrJOQKPoMBBeJvqOZyFYmuJU8uvEmBH9y7SbL3E6hRrbCt2Rl+FS17NHBHJMUZoKVHRwaMpjaIKzoCUZ/lXuG080EBxj7AuVHtkyYhEKjDLaXAvGh66JWU8WptVaOzwFs29YHLUudo8yfE7m8cM1wBQRaWAcp0tg=
+	t=1774974848; cv=none; b=AoHVJVWStcLdLghzRMWHkXatU8E2Cf9+lKypleCNYvPHGEOp/s2P5SffJwtjiwZqNWrp0WhR1LYLAcpkqLJmUkLSzweJxmqbT2V9w2mMGlMAzNefjpsG1BHoque4ozYyr0vAhZP2wTjKs1rg0xI7kPPswUc32uwRCaH99E0p4LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974845; c=relaxed/simple;
-	bh=y2Td8xYSzGVOmZ6XnTlNz5HuisqKvUcs+HrCslY9rso=;
+	s=arc-20240116; t=1774974848; c=relaxed/simple;
+	bh=b2A6OU4UBJpGWZFRi93+cRq5e6kd2OFg61xnsRYTRt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G1kpnMD3WSahVlWUDFh3tpb4odmsa/O/lNuAP+KzPrt6mr0JqEB6aE3EUUMfeAf8nLrVel82rYGfBqSK8FRBxuGbnYkYTjXpH+J6sR61QjZPOC3n7n3IivfiTXJxM0QA2jMh9byaCXm/SayGDvf7v1KKBN1znFD1X6Sp9HNG83A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXgbm5KU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C0fOWrER8EOp5OdZNUoaCk+58vKjDYSkuPEgmQAzcgoHDYswCPNDBeZtXO0FeMB6ht+vX82t36CKLOOf+X/03+gOA144lA/3Gr9QyeWAFto1R9LbPXqcAcH7G3Q22JBhYh6cH4ief+LN7af1cJVYbcupNqaP0WPevn+RX9MZ8S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6jx2GQu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXgbm5KU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD3EC19423;
-	Tue, 31 Mar 2026 16:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6jx2GQu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D246BC19423;
+	Tue, 31 Mar 2026 16:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974845;
-	bh=y2Td8xYSzGVOmZ6XnTlNz5HuisqKvUcs+HrCslY9rso=;
+	s=korg; t=1774974848;
+	bh=b2A6OU4UBJpGWZFRi93+cRq5e6kd2OFg61xnsRYTRt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vXgbm5KUHzGr0M6YzEPIEVgmDPOq+de+76I85nOXwCq2STcEDbDg/5Y38/5CXdfhV
-	 Nv/L4Xa7vW5MpAqUg0uSOsUSxiNFUfU2PYfM4TMLlk7Bjgutt2ajbSYi4UGF4IwjDn
-	 mdCaKuYu9NqVwcOGM5z/vr63EOgH1XU1L2qeUzQ4=
+	b=E6jx2GQu7mktSKUQKl9VP05EJdOL/q6+2k6OUpWxgkfTj3xD3UVpdrUCiXkokNWqr
+	 kqxy3yAbLxUph6kO2O2v0rzpSP9huiejHDOVI7eZz1oTvovCsXyfewZvRytCxM4gYo
+	 B99zsJUnkXybZpcwug3SET78nQ7ebGRhRqugPmSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.19 067/342] objtool/klp: Disable unsupported pr_debug() usage
-Date: Tue, 31 Mar 2026 18:18:20 +0200
-Message-ID: <20260331161801.361727223@linuxfoundation.org>
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 068/342] ALSA: hda/realtek: Add quirk for Gigabyte Technology to fix headphone
+Date: Tue, 31 Mar 2026 18:18:21 +0200
+Message-ID: <20260331161801.398881751@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,67 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit e476bb277cf91b7ac3ea803ec78a4f0791bddec3 ]
+[ Upstream commit 56fbbe096a89ff4b52af78a21a4afd9d94bdcc80 ]
 
-Instead of erroring out on unsupported pr_debug() (e.g., when patching a
-module), issue a warning and make it inert, similar to how unsupported
-tracepoints are currently handled.
+The BIOS of this machine has set 0x19 to mic, which needs to be set
+to headphone pin in order to work properly.
 
-Reviewed-and-tested-by: Song Liu <song@kernel.org>
-Link: https://patch.msgid.link/3a7db3a5b7d4abf9b2534803a74e2e7231322738.1770759954.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220814
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/b55f6ebe-7449-49f7-ae85-00d2ba1e7af0@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/klp-diff.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ sound/hda/codecs/realtek/alc662.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
-index b1847828217ba..b9340ef8d370c 100644
---- a/tools/objtool/klp-diff.c
-+++ b/tools/objtool/klp-diff.c
-@@ -1335,18 +1335,18 @@ static bool should_keep_special_sym(struct elf *elf, struct symbol *sym)
-  * be applied after static branch/call init, resulting in code corruption.
-  *
-  * Validate a special section entry to avoid that.  Note that an inert
-- * tracepoint is harmless enough, in that case just skip the entry and print a
-- * warning.  Otherwise, return an error.
-+ * tracepoint or pr_debug() is harmless enough, in that case just skip the
-+ * entry and print a warning.  Otherwise, return an error.
-  *
-- * This is only a temporary limitation which will be fixed when livepatch adds
-- * support for submodules: fully self-contained modules which are embedded in
-- * the top-level livepatch module's data and which can be loaded on demand when
-- * their corresponding to-be-patched module gets loaded.  Then klp relocs can
-- * be retired.
-+ * TODO: This is only a temporary limitation which will be fixed when livepatch
-+ * adds support for submodules: fully self-contained modules which are embedded
-+ * in the top-level livepatch module's data and which can be loaded on demand
-+ * when their corresponding to-be-patched module gets loaded.  Then klp relocs
-+ * can be retired.
-  *
-  * Return:
-  *   -1: error: validation failed
-- *    1: warning: tracepoint skipped
-+ *    1: warning: disabled tracepoint or pr_debug()
-  *    0: success
-  */
- static int validate_special_section_klp_reloc(struct elfs *e, struct symbol *sym)
-@@ -1404,6 +1404,13 @@ static int validate_special_section_klp_reloc(struct elfs *e, struct symbol *sym
- 				continue;
- 			}
+diff --git a/sound/hda/codecs/realtek/alc662.c b/sound/hda/codecs/realtek/alc662.c
+index 5073165d1f3cf..3a943adf90876 100644
+--- a/sound/hda/codecs/realtek/alc662.c
++++ b/sound/hda/codecs/realtek/alc662.c
+@@ -313,6 +313,7 @@ enum {
+ 	ALC897_FIXUP_HEADSET_MIC_PIN2,
+ 	ALC897_FIXUP_UNIS_H3C_X500S,
+ 	ALC897_FIXUP_HEADSET_MIC_PIN3,
++	ALC897_FIXUP_H610M_HP_PIN,
+ };
  
-+			if (strstr(reloc->sym->name, "__UNIQUE_ID_ddebug_")) {
-+				WARN("%s: disabling unsupported pr_debug()",
-+				     code_sym->name);
-+				ret = 1;
-+				continue;
-+			}
-+
- 			ERROR("%s+0x%lx: unsupported static branch key %s.  Use static_key_enabled() instead",
- 			      code_sym->name, code_offset, reloc->sym->name);
- 			return -1;
+ static const struct hda_fixup alc662_fixups[] = {
+@@ -766,6 +767,13 @@ static const struct hda_fixup alc662_fixups[] = {
+ 			{ }
+ 		},
+ 	},
++	[ALC897_FIXUP_H610M_HP_PIN] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x19, 0x0321403f }, /* HP out */
++			{ }
++		},
++	},
+ };
+ 
+ static const struct hda_quirk alc662_fixup_tbl[] = {
+@@ -815,6 +823,7 @@ static const struct hda_quirk alc662_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x8469, "ASUS mobo", ALC662_FIXUP_NO_JACK_DETECT),
+ 	SND_PCI_QUIRK(0x105b, 0x0cd6, "Foxconn", ALC662_FIXUP_ASUS_MODE2),
+ 	SND_PCI_QUIRK(0x144d, 0xc051, "Samsung R720", ALC662_FIXUP_IDEAPAD),
++	SND_PCI_QUIRK(0x1458, 0xa194, "H610M H V2 DDR4", ALC897_FIXUP_H610M_HP_PIN),
+ 	SND_PCI_QUIRK(0x14cd, 0x5003, "USI", ALC662_FIXUP_USI_HEADSET_MODE),
+ 	SND_PCI_QUIRK(0x17aa, 0x1036, "Lenovo P520", ALC662_FIXUP_LENOVO_MULTI_CODECS),
+ 	SND_PCI_QUIRK(0x17aa, 0x1057, "Lenovo P360", ALC897_FIXUP_HEADSET_MIC_PIN),
 -- 
 2.51.0
 
