@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758313E559E;
-	Tue, 31 Mar 2026 16:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2607B402BA9;
+	Tue, 31 Mar 2026 16:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974884; cv=none; b=e7YClbCu12rSSTs1AEJe7Pj7OB6ml5HZgh7eqYcALT3dsfskIED3feu4ztGi95125Meaa8d08xxbL7dx8SAhtE8A7sGKRMzJonrwKPR/ri+IHzyNJR8xitSsUGyl/snvyjuDanTv6ny4rpjUw6xTa9WX+3Di+nJeTjIptc9VonM=
+	t=1774974887; cv=none; b=O4yOPb+imZ4DmqpvAQ1co8NuoYVdrTNEaKp7LUxNhT6tSsXlIGlH6iNBMqusfjflZOkpAxdzPRFTM4ULnJWGjKUNd0PjXeAhCNkDKf3N4OO8bXgfR30a6ca95dsUajmUYk7cTZzwy7KOLmI0txnq3vJgr2jhwuEpnGltWlv9Gy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974884; c=relaxed/simple;
-	bh=CyokepTf8VD8j9RCsuV4yYRSCJbkNcXosiMiuKw3h8c=;
+	s=arc-20240116; t=1774974887; c=relaxed/simple;
+	bh=BJBxyLU9C+gEphDjt9UsMs7M79Y7r7B1HT2En9OVhSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gEyH8Aa1jNCC7BPnxg89JtMRFBPxVDEIFwRycUa3qLoAQHzF4s8tEorTWZ/e5huxLV2v31HKhAfvFR4Hb5f+nYR8cy71iQvGd+7oUmHkFuXZV4F9F2DlPrfPhEA1zwiz1VN/FIYNk2FkT/0EguDO4lf7QL4RfBrhNA/4+A1I6JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8Icc/p9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q5o7qAZBvwexLKk9N1eEQqIUcvdPr9rQyuHp+6Vo7/7bVjxkEDINCmYq1eAu8w1CUGtMXPflAM2O3xoqSeeknNIPx4kMcehqi7KXL1xJ0wMqei5HmK4kuwxOCp3/T+jLboclJTQkdcPNiVYZ9YK2/uQppCnkbbTFgb0f3gwB2To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9tO9Ewd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8Icc/p9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE33C19423;
-	Tue, 31 Mar 2026 16:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9tO9Ewd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9749BC19423;
+	Tue, 31 Mar 2026 16:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974884;
-	bh=CyokepTf8VD8j9RCsuV4yYRSCJbkNcXosiMiuKw3h8c=;
+	s=korg; t=1774974886;
+	bh=BJBxyLU9C+gEphDjt9UsMs7M79Y7r7B1HT2En9OVhSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8Icc/p9Fmm262XXIxBjvrNSwdoquKe2UpEl9rp6RIdMFPmY7B20dyr+o6MyieJe+
-	 AyJy7A7kctmcxR3PbZsZE/Tzjdc5RIxe8A2fhT3xa6Q61KygBREP3kuuNr1U6KO0Px
-	 sLx742l5XWomj/W8WsHwvg+ZWjP1JyZFzkxbUOn8=
+	b=K9tO9EwdVlUGrGJMvD6azsuBPO30QtsDLLV8Wi8vIXc7EK+cSg8O71G7TVzpQNEI2
+	 RfDRcV8yEOHAiLy92+sIFG9B5kL+2lyz/0QYxRToItXt99616lD0D2Hd7nXbnokOJa
+	 Jy7cbsjV+PUGu5PEG6py59Ne5u/1xZDthfK6P35s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 081/342] esp: fix skb leak with espintcp and async crypto
-Date: Tue, 31 Mar 2026 18:18:34 +0200
-Message-ID: <20260331161802.006519877@linuxfoundation.org>
+Subject: [PATCH 6.19 082/342] pinctrl: renesas: rzt2h: Fix device node leak in rzt2h_gpio_register()
+Date: Tue, 31 Mar 2026 18:18:35 +0200
+Message-ID: <20260331161802.042887363@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,69 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 0c0eef8ccd2413b0a10eb6bbd3442333b1e64dd2 ]
+[ Upstream commit e825c79ef914bd55cf7c2476ddcfb2738eb689c3 ]
 
-When the TX queue for espintcp is full, esp_output_tail_tcp will
-return an error and not free the skb, because with synchronous crypto,
-the common xfrm output code will drop the packet for us.
+When calling of_parse_phandle_with_fixed_args(), the caller is
+responsible for calling of_node_put() to release the device node
+reference.
 
-With async crypto (esp_output_done), we need to drop the skb when
-esp_output_tail_tcp returns an error.
+In rzt2h_gpio_register(), the driver fails to call of_node_put() to
+release the reference in of_args.np, which causes a memory leak.
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Add the missing of_node_put() call to fix the leak.
+
+Fixes: 34d4d093077a ("pinctrl: renesas: Add support for RZ/T2H")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260127-rzt2h-v1-1-86472e7421b8@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4.c | 9 ++++++---
- net/ipv6/esp6.c | 9 ++++++---
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ drivers/pinctrl/renesas/pinctrl-rzt2h.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
-index 2c922afadb8f6..6dfc0bcdef654 100644
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -235,10 +235,13 @@ static void esp_output_done(void *data, int err)
- 		xfrm_dev_resume(skb);
- 	} else {
- 		if (!err &&
--		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
--			esp_output_tail_tcp(x, skb);
--		else
-+		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP) {
-+			err = esp_output_tail_tcp(x, skb);
-+			if (err != -EINPROGRESS)
-+				kfree_skb(skb);
-+		} else {
- 			xfrm_output_resume(skb_to_full_sk(skb), skb, err);
-+		}
- 	}
- }
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzt2h.c b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
+index 40df706210119..24b90c80f5131 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzt2h.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
+@@ -648,6 +648,7 @@ static int rzt2h_gpio_register(struct rzt2h_pinctrl *pctrl)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Unable to parse gpio-ranges\n");
  
-diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
-index e75da98f52838..9f75313734f8c 100644
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -271,10 +271,13 @@ static void esp_output_done(void *data, int err)
- 		xfrm_dev_resume(skb);
- 	} else {
- 		if (!err &&
--		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
--			esp_output_tail_tcp(x, skb);
--		else
-+		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP) {
-+			err = esp_output_tail_tcp(x, skb);
-+			if (err != -EINPROGRESS)
-+				kfree_skb(skb);
-+		} else {
- 			xfrm_output_resume(skb_to_full_sk(skb), skb, err);
-+		}
- 	}
- }
- 
++	of_node_put(of_args.np);
+ 	if (of_args.args[0] != 0 || of_args.args[1] != 0 ||
+ 	    of_args.args[2] != pctrl->data->n_port_pins)
+ 		return dev_err_probe(dev, -EINVAL,
 -- 
 2.51.0
 
