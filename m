@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA122D1F40;
-	Tue, 31 Mar 2026 16:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9508133E367;
+	Tue, 31 Mar 2026 16:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975549; cv=none; b=Hb/FaHAhGZ6BTC4CnkqW/DlHqXevqTEHWlUEVcFUzCE79IASwH3u9EE2Prrh2Wto0cVVhfWDjal1XaypU9tWcPx8CaDzR3zvTNhmUr/IOCZlQhDnAOYq8XRlstvsH8yidEBE2jiCe5NEui24z22j6l5XwOXZOfxWheCGtO8bFec=
+	t=1774975552; cv=none; b=Ytksl+v4ZAYmmEvVsc6lhcJUZJTckELB+34tvOmvj48SDm/nhfeSxybr/c1Ajc+KuPBThqU0p5wlZ9m29Y+IcZ9fRW3E7djVB6xj7jzRw1AP/uH6txj81ZCesTk9OPTaFX43hGsQ37NEIJDlTkOPPmGVcYC0qx4Fcq66TGahhrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975549; c=relaxed/simple;
-	bh=vGAuRw0rwL5uRJ/sfwM3UMWuQEwR0GDIurYpsGTGUnw=;
+	s=arc-20240116; t=1774975552; c=relaxed/simple;
+	bh=BLMOkHO4CUSH+t6GKXWjp8gejwHCyxIrxCLJn6qzzI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g8ZdwiNCmgCMTONyQJpUA9WsVUPkhJQZ9fK6E3eVd1NEfhBzXS0egSSTwIK3H0jM1IWtkN8hOiEnVwoZHsY3D1tMPZXXOylhZ67E0Ax/KoHslr44EMSfN8pkDB1KHP0hvVdFU2VYddZqZEvRftb5V4lQuMEKUI6FRtGI93U6xyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxb2gjBn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K9X5ACGUS9b/1huRMq2uOV/FcfQJtJU9k6G3YuHveOPDts0j4HB3JSCAbDV/cpINMBf/8pt6rN+uEai+DTXSzCMPw0IJ1e8s7QvjE3TVABTBgvba/lsFx9JTHmNA0FJuiyma3PvKrd+0RYXL/vnQIBIU9OQBlQJlqGDNEWIL7XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQk4d+hi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxb2gjBn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769E5C19423;
-	Tue, 31 Mar 2026 16:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQk4d+hi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27982C19423;
+	Tue, 31 Mar 2026 16:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975549;
-	bh=vGAuRw0rwL5uRJ/sfwM3UMWuQEwR0GDIurYpsGTGUnw=;
+	s=korg; t=1774975552;
+	bh=BLMOkHO4CUSH+t6GKXWjp8gejwHCyxIrxCLJn6qzzI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fxb2gjBno1I37yqeT/xCgosS79mpZFXcrUX3jBVlBTYOBqZ9fYIUT2W+3EcYnS8cl
-	 azMYgAWi9p3ubfOZvwAXRkkr0D0Ut6itlsw4UUFS/x9Fbo9L4UHX2K4WI9jZfH493m
-	 lSRigZaJhoOtiPp3qxsVAOX7GXK4PPEeESC+eVwA=
+	b=DQk4d+hi/rJZJfs31IXIIbx+a7cqqdkBpMuSzxl9Nwz9kktHBT5RTM566eQj+UJGj
+	 Q3CnPA/y/Ecg4BR6vP1ZHgjdnNgRH4NW2kyI4edBErzzx6+HX2E4o+pjHGCQ+jNIJ2
+	 9804NaKZAztKflW4rKqBHzHgdK+bSTDrnZ9COFbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 337/342] futex: Require sys_futex_requeue() to have identical flags
-Date: Tue, 31 Mar 2026 18:22:50 +0200
-Message-ID: <20260331161811.301831720@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.19 306/342] ext4: fix iloc.bh leak in ext4_fc_replay_inode() error paths
+Date: Tue, 31 Mar 2026 18:22:19 +0200
+Message-ID: <20260331161810.185705262@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,46 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit 19f94b39058681dec64a10ebeb6f23fe7fc3f77a ]
+commit ec0a7500d8eace5b4f305fa0c594dd148f0e8d29 upstream.
 
-Nicholas reported that his LLM found it was possible to create a UaF
-when sys_futex_requeue() is used with different flags. The initial
-motivation for allowing different flags was the variable sized futex,
-but since that hasn't been merged (yet), simply mandate the flags are
-identical, as is the case for the old style sys_futex() requeue
-operations.
+During code review, Joseph found that ext4_fc_replay_inode() calls
+ext4_get_fc_inode_loc() to get the inode location, which holds a
+reference to iloc.bh that must be released via brelse().
 
-Fixes: 0f4b5f972216 ("futex: Add sys_futex_requeue()")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, several error paths jump to the 'out' label without
+releasing iloc.bh:
+
+ - ext4_handle_dirty_metadata() failure
+ - sync_dirty_buffer() failure
+ - ext4_mark_inode_used() failure
+ - ext4_iget() failure
+
+Fix this by introducing an 'out_brelse' label placed just before
+the existing 'out' label to ensure iloc.bh is always released.
+
+Additionally, make ext4_fc_replay_inode() propagate errors
+properly instead of always returning 0.
+
+Reported-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260323060836.3452660-1-libaokun@linux.alibaba.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/futex/syscalls.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ext4/fast_commit.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/futex/syscalls.c b/kernel/futex/syscalls.c
-index 880c9bf2f3150..99723189c8cf7 100644
---- a/kernel/futex/syscalls.c
-+++ b/kernel/futex/syscalls.c
-@@ -459,6 +459,14 @@ SYSCALL_DEFINE4(futex_requeue,
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -1613,19 +1613,21 @@ static int ext4_fc_replay_inode(struct s
+ 	/* Immediately update the inode on disk. */
+ 	ret = ext4_handle_dirty_metadata(NULL, NULL, iloc.bh);
  	if (ret)
- 		return ret;
+-		goto out;
++		goto out_brelse;
+ 	ret = sync_dirty_buffer(iloc.bh);
+ 	if (ret)
+-		goto out;
++		goto out_brelse;
+ 	ret = ext4_mark_inode_used(sb, ino);
+ 	if (ret)
+-		goto out;
++		goto out_brelse;
  
-+	/*
-+	 * For now mandate both flags are identical, like the sys_futex()
-+	 * interface has. If/when we merge the variable sized futex support,
-+	 * that patch can modify this test to allow a difference in size.
-+	 */
-+	if (futexes[0].w.flags != futexes[1].w.flags)
-+		return -EINVAL;
-+
- 	cmpval = futexes[0].w.val;
+ 	/* Given that we just wrote the inode on disk, this SHOULD succeed. */
+ 	inode = ext4_iget(sb, ino, EXT4_IGET_NORMAL);
+ 	if (IS_ERR(inode)) {
+ 		ext4_debug("Inode not found.");
+-		return -EFSCORRUPTED;
++		inode = NULL;
++		ret = -EFSCORRUPTED;
++		goto out_brelse;
+ 	}
  
- 	return futex_requeue(u64_to_user_ptr(futexes[0].w.uaddr), futexes[0].w.flags,
--- 
-2.53.0
-
+ 	/*
+@@ -1642,13 +1644,14 @@ static int ext4_fc_replay_inode(struct s
+ 	ext4_inode_csum_set(inode, ext4_raw_inode(&iloc), EXT4_I(inode));
+ 	ret = ext4_handle_dirty_metadata(NULL, NULL, iloc.bh);
+ 	sync_dirty_buffer(iloc.bh);
++out_brelse:
+ 	brelse(iloc.bh);
+ out:
+ 	iput(inode);
+ 	if (!ret)
+ 		blkdev_issue_flush(sb->s_bdev);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ /*
 
 
