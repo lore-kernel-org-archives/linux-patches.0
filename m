@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B314536AB47;
-	Tue, 31 Mar 2026 16:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655DC421EE4;
+	Tue, 31 Mar 2026 16:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974591; cv=none; b=gjSxrGzza2pWQb387CehFn7TTagdkYI81OlF2lZiCo5oUgYl4x/3XrfdenvuMxYfLO6Ku+x234NMzr4KYRfeA4FiRA8FkHfLdnrZjNSh2ZEIfbGEYpa2inIDEVNI0ODP2E2HMvVaOYzT0FXyuL+i6bD7VMwieC/3TQ8gaM+G8qo=
+	t=1774974594; cv=none; b=Q+YTlGKlcR9UkJNS6rRLdgtaj/sFOqE48lGJPT+Z8A2ksG+sLohxrx5AFdHZvYHldDdKuyEMk+VJw29ZQYIEYOQz1Xf/OB4AXs7hG6qegkjAsK6vOPojV3bWdw8UxW+EcUvvC+eRYPjGq8lCAgA47KkMOAw2ty5e6hzv1VZhWRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974591; c=relaxed/simple;
-	bh=SLquIfnDsClu5AWwBr6yU+rJUejgNgUgQjJ9weGDvuk=;
+	s=arc-20240116; t=1774974594; c=relaxed/simple;
+	bh=Z+8po0VV8W19+CKRhB51twY7dh9VeFCytwlRmt16e1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G1z67lg9PW2ngG2j00Q2rYcTWzeaWIMUKaQJ8KDzKaCwyaGkAyQhOeuYl60ASvGypTQjQESMmQFoOoi+YHeDo0LbXjh+Cf0GIOTwfB6FgOc5ECz7u1Yajf56cZaAZWa6fnlx9/VukzVKqgIHZSmxKhAAUCejmM48GSL4gIyBR0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9ZRwCTn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q5YqKnaZaJRnTkQHun/DkO4+RtCLUA7rNgOtjBCA/j0DosnTGjbS6Ib+egZ2VhYLP0FCKrHshPmqFTC/7oXs2lEvZ48jRcjfMR+zJCwucCtPCyl5ON6Ny55cvr0xeMrAhLHudm7r/itjr6nUvVi5Pka/DWFPvB5PJtc4/7TYmEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lq8pZtLj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9ZRwCTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489A4C19423;
-	Tue, 31 Mar 2026 16:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lq8pZtLj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1065C19423;
+	Tue, 31 Mar 2026 16:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974591;
-	bh=SLquIfnDsClu5AWwBr6yU+rJUejgNgUgQjJ9weGDvuk=;
+	s=korg; t=1774974594;
+	bh=Z+8po0VV8W19+CKRhB51twY7dh9VeFCytwlRmt16e1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z9ZRwCTndmI4sySNyZG9uTQLHOXFs3PnxZQrAUEo8ZfQa+aiLxCdzf+CygoAnhRBZ
-	 h5O3Zp6/oLmEimDHvO7lTuOhFPpy07OiKwkwhk2OFK+2xHCAcNnZaxkm0RSSOi5UZI
-	 BI1RDJQGld1TNa8WWSTeaWtPS0qwCvntmMUvpw+0=
+	b=Lq8pZtLjkbRcdJOX0cCKxD5oRsaSQsF2q7QKjE5zOQEhucCxPBBAlOAnUKi+P9SFl
+	 J1ueSFwvlcpbq+dqVyZjUDY3kh/0IxX6NVYF3lX6Aizpguk1skj+AoDxWRGs4GCXyu
+	 kTFzmau3YdW7FwXlJPkjwvUupVwr1s/3Fpc6Ph4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.6 143/175] powerpc64/bpf: do not increment tailcall count when prog is NULL
-Date: Tue, 31 Mar 2026 18:22:07 +0200
-Message-ID: <20260331161735.037960863@linuxfoundation.org>
+	Yuchan Nam <entropy1110@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.6 113/175] media: mc, v4l2: serialize REINIT and REQBUFS with req_queue_mutex
+Date: Tue, 31 Mar 2026 18:21:37 +0200
+Message-ID: <20260331161733.932455432@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,70 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Bathini <hbathini@linux.ibm.com>
+From: Yuchan Nam <entropy1110@gmail.com>
 
-commit 521bd39d9d28ce54cbfec7f9b89c94ad4fdb8350 upstream.
+commit bef4f4a88b73e4cc550d25f665b8a9952af22773 upstream.
 
-Do not increment tailcall count, if tailcall did not succeed due to
-missing BPF program.
+MEDIA_REQUEST_IOC_REINIT can run concurrently with VIDIOC_REQBUFS(0)
+queue teardown paths. This can race request object cleanup against vb2
+queue cancellation and lead to use-after-free reports.
 
-Fixes: ce0761419fae ("powerpc/bpf: Implement support for tail calls")
+We already serialize request queueing against STREAMON/OFF with
+req_queue_mutex. Extend that serialization to REQBUFS, and also take
+the same mutex in media_request_ioctl_reinit() so REINIT is in the
+same exclusion domain.
+
+This keeps request cleanup and queue cancellation from running in
+parallel for request-capable devices.
+
+Fixes: 6093d3002eab ("media: vb2: keep a reference to the request until dqbuf")
 Cc: stable@vger.kernel.org
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260303181031.390073-2-hbathini@linux.ibm.com
-[ Conflict due to missing feature commit 2ed2d8f6fb38 ("powerpc64/bpf:
-  Support tailcalls with subprogs") resolved accordingly. ]
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Yuchan Nam <entropy1110@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/net/bpf_jit_comp64.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/media/mc/mc-request.c        |    5 +++++
+ drivers/media/v4l2-core/v4l2-ioctl.c |    5 +++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/net/bpf_jit_comp64.c
-+++ b/arch/powerpc/net/bpf_jit_comp64.c
-@@ -307,27 +307,32 @@ static int bpf_jit_emit_tail_call(u32 *i
+--- a/drivers/media/mc/mc-request.c
++++ b/drivers/media/mc/mc-request.c
+@@ -190,6 +190,8 @@ static long media_request_ioctl_reinit(s
+ 	struct media_device *mdev = req->mdev;
+ 	unsigned long flags;
  
- 	/*
- 	 * tail_call_cnt++;
-+	 * Writeback this updated value only if tailcall succeeds.
- 	 */
- 	EMIT(PPC_RAW_ADDI(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_1), 1));
--	EMIT(PPC_RAW_STD(bpf_to_ppc(TMP_REG_1), _R1, bpf_jit_stack_tailcallcnt(ctx)));
- 
- 	/* prog = array->ptrs[index]; */
--	EMIT(PPC_RAW_MULI(bpf_to_ppc(TMP_REG_1), b2p_index, 8));
--	EMIT(PPC_RAW_ADD(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_1), b2p_bpf_array));
--	EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_1), offsetof(struct bpf_array, ptrs)));
-+	EMIT(PPC_RAW_MULI(bpf_to_ppc(TMP_REG_2), b2p_index, 8));
-+	EMIT(PPC_RAW_ADD(bpf_to_ppc(TMP_REG_2), bpf_to_ppc(TMP_REG_2), b2p_bpf_array));
-+	EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_2), bpf_to_ppc(TMP_REG_2),
-+			offsetof(struct bpf_array, ptrs)));
- 
- 	/*
- 	 * if (prog == NULL)
- 	 *   goto out;
- 	 */
--	EMIT(PPC_RAW_CMPLDI(bpf_to_ppc(TMP_REG_1), 0));
-+	EMIT(PPC_RAW_CMPLDI(bpf_to_ppc(TMP_REG_2), 0));
- 	PPC_BCC_SHORT(COND_EQ, out);
- 
- 	/* goto *(prog->bpf_func + prologue_size); */
--	EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_1), offsetof(struct bpf_prog, bpf_func)));
--	EMIT(PPC_RAW_ADDI(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_1),
--			FUNCTION_DESCR_SIZE + bpf_tailcall_prologue_size));
--	EMIT(PPC_RAW_MTCTR(bpf_to_ppc(TMP_REG_1)));
-+	EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_2), bpf_to_ppc(TMP_REG_2),
-+			offsetof(struct bpf_prog, bpf_func)));
-+	EMIT(PPC_RAW_ADDI(bpf_to_ppc(TMP_REG_2), bpf_to_ppc(TMP_REG_2),
-+			  FUNCTION_DESCR_SIZE + bpf_tailcall_prologue_size));
-+	EMIT(PPC_RAW_MTCTR(bpf_to_ppc(TMP_REG_2)));
++	mutex_lock(&mdev->req_queue_mutex);
 +
-+	/* Writeback updated tailcall count */
-+	EMIT(PPC_RAW_STD(bpf_to_ppc(TMP_REG_1), _R1, bpf_jit_stack_tailcallcnt(ctx)));
+ 	spin_lock_irqsave(&req->lock, flags);
+ 	if (req->state != MEDIA_REQUEST_STATE_IDLE &&
+ 	    req->state != MEDIA_REQUEST_STATE_COMPLETE) {
+@@ -197,6 +199,7 @@ static long media_request_ioctl_reinit(s
+ 			"request: %s not in idle or complete state, cannot reinit\n",
+ 			req->debug_str);
+ 		spin_unlock_irqrestore(&req->lock, flags);
++		mutex_unlock(&mdev->req_queue_mutex);
+ 		return -EBUSY;
+ 	}
+ 	if (req->access_count) {
+@@ -204,6 +207,7 @@ static long media_request_ioctl_reinit(s
+ 			"request: %s is being accessed, cannot reinit\n",
+ 			req->debug_str);
+ 		spin_unlock_irqrestore(&req->lock, flags);
++		mutex_unlock(&mdev->req_queue_mutex);
+ 		return -EBUSY;
+ 	}
+ 	req->state = MEDIA_REQUEST_STATE_CLEANING;
+@@ -214,6 +218,7 @@ static long media_request_ioctl_reinit(s
+ 	spin_lock_irqsave(&req->lock, flags);
+ 	req->state = MEDIA_REQUEST_STATE_IDLE;
+ 	spin_unlock_irqrestore(&req->lock, flags);
++	mutex_unlock(&mdev->req_queue_mutex);
  
- 	/* tear down stack, restore NVRs, ... */
- 	bpf_jit_emit_common_epilogue(image, ctx);
+ 	return 0;
+ }
+--- a/drivers/media/v4l2-core/v4l2-ioctl.c
++++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+@@ -2998,13 +2998,14 @@ static long __video_do_ioctl(struct file
+ 		vfh = file->private_data;
+ 
+ 	/*
+-	 * We need to serialize streamon/off with queueing new requests.
++	 * We need to serialize streamon/off/reqbufs with queueing new requests.
+ 	 * These ioctls may trigger the cancellation of a streaming
+ 	 * operation, and that should not be mixed with queueing a new
+ 	 * request at the same time.
+ 	 */
+ 	if (v4l2_device_supports_requests(vfd->v4l2_dev) &&
+-	    (cmd == VIDIOC_STREAMON || cmd == VIDIOC_STREAMOFF)) {
++	    (cmd == VIDIOC_STREAMON || cmd == VIDIOC_STREAMOFF ||
++	     cmd == VIDIOC_REQBUFS)) {
+ 		req_queue_lock = &vfd->v4l2_dev->mdev->req_queue_mutex;
+ 
+ 		if (mutex_lock_interruptible(req_queue_lock))
 
 
