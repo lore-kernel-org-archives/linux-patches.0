@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC03E2D5937;
-	Tue, 31 Mar 2026 16:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB323E316C;
+	Tue, 31 Mar 2026 16:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974705; cv=none; b=DxyJ78f87pwH6MmtJOeGzj24GN2DA6ao0+xPbzapv9gG0+ejhqZyP1n0RtqHjxej4vV7Nkm3/h2VS0nAQL4otwE5B4Yd6UzzGyou58xkbC4Ke7Uc/5TQeU8IfrZotQ1u672QKiTtapsn0l/cenykVX2XaBexgJ7pehtFurPndZE=
+	t=1774974708; cv=none; b=Vx2btdZsd1B3Tm6Yxn8AVHRWePGdqQs46MyR+cTOnysVXr/itgOI/4WDcni88CDX3PEiCjCgHWX/BUjEAtQk+3Tc6gY3mTsxi7YylfvIFnO8uzzGJu4FazskNwVPTpakyAXMqsKIeiPYNkH2vCtm4k100stUIOTv8LplaOv97Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974705; c=relaxed/simple;
-	bh=Im8JxrRHGa2KxiKmdmprlBiMRPDlSVtd+VraZn++ybU=;
+	s=arc-20240116; t=1774974708; c=relaxed/simple;
+	bh=eRmXNHJGfdAlYVVtFep7hMOHRRN3K9Q5BcZC06BHDAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b98ZX7l4tLGw/HVDx/xmZTBDv3lM96R42c3zc5Ij960Voku+4cTbON9EbVziaV2ZjNa5vpcxv/V2iAgl4XH3KfhRCBDqthPTgvDIaGxD3W4jGTtwq8v8eARIJQ8W+QIv96uESjOmXaGcc7VE7UnaXlZ7VhePCssGWxXU+7B1xvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcr4Bivu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GaghZze5N0OyhItv267raYTl1nKhiw+5e4lIQiGkF9lnqHktyTakrG5s/xwjL4SSkqxcemlO9WEEbW9co/1pu3j0kx6P4A5wlzwHgkaEGH4moBcW7rbOqyK/TqKPx8NOajLyC8FbY3nvSkuJpqAxTRkQkmiZQ9Zlx/6/fvJDwx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQcjE3zt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcr4Bivu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73545C19423;
-	Tue, 31 Mar 2026 16:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQcjE3zt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04309C19423;
+	Tue, 31 Mar 2026 16:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974705;
-	bh=Im8JxrRHGa2KxiKmdmprlBiMRPDlSVtd+VraZn++ybU=;
+	s=korg; t=1774974708;
+	bh=eRmXNHJGfdAlYVVtFep7hMOHRRN3K9Q5BcZC06BHDAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fcr4BivuMUQBRC7v5oh4YawLTBG0nshHqfD3SnFp6Jrt2pRN7LdEbN7BTsdATQaJg
-	 FBtmH2rlYkXSU9C3cfYtCaOczB5RzgI1PEXekoWiqmcqIZMSinn/uRBlChBMRaVeiC
-	 StCVLjepniTirTiTtZRgsNf2O6/3B47p1rJoe5hg=
+	b=ZQcjE3ztqQ1gbyAAC3oVUwNM9gjVy7/YLK+HBQoqYnO80R3uWw4Fm8taGx5b4BZgR
+	 9TUqXTE6Rzlh9EvTLekjQEd0pbtxoSe3dXCHbAk9Yo+OY5ADbx3HI2gA0E0KqOL6iw
+	 3yeGApafe5KOn6ahYXrdcMh1EULZmQb/RpNv0do8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gui-Dong Han <hanguidong02@gmail.com>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 013/342] driver core: generalize driver_override in struct device
-Date: Tue, 31 Mar 2026 18:17:26 +0200
-Message-ID: <20260331161759.396784556@linuxfoundation.org>
+Subject: [PATCH 6.19 014/342] driver core: platform: use generic driver_override infrastructure
+Date: Tue, 31 Mar 2026 18:17:27 +0200
+Message-ID: <20260331161759.432803364@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,318 +53,196 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit cb3d1049f4ea77d5ad93f17d8ac1f2ed4da70501 ]
+[ Upstream commit 2b38efc05bf7a8568ec74bfffea0f5cfa62bc01d ]
 
-Currently, there are 12 busses (including platform and PCI) that
-duplicate the driver_override logic for their individual devices.
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-All of them seem to be prone to the bug described in [1].
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
 
-While this could be solved for every bus individually using a separate
-lock, solving this in the driver-core generically results in less (and
-cleaner) changes overall.
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
 
-Thus, move driver_override to struct device, provide corresponding
-accessors for busses and handle locking with a separate lock internally.
-
-In particular, add device_set_driver_override(),
-device_has_driver_override(), device_match_driver_override() and
-generalize the sysfs store() and show() callbacks via a driver_override
-feature flag in struct bus_type.
-
-Until all busses have migrated, keep driver_set_override() in place.
-
-Note that we can't use the device lock for the reasons described in [2].
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220789 [1]
-Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [2]
-Tested-by: Gui-Dong Han <hanguidong02@gmail.com>
-Co-developed-by: Gui-Dong Han <hanguidong02@gmail.com>
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: 3d713e0e382e ("driver core: platform: add device binding path 'driver_override'")
 Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260303115720.48783-2-dakr@kernel.org
-[ Use dev->bus instead of sp->bus for consistency; fix commit message to
-  refer to the struct bus_type's driver_override feature flag. - Danilo ]
+Link: https://patch.msgid.link/20260303115720.48783-5-dakr@kernel.org
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Stable-dep-of: 2b38efc05bf7 ("driver core: platform: use generic driver_override infrastructure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/bus.c         | 43 ++++++++++++++++++++++++++-
- drivers/base/core.c        |  2 ++
- drivers/base/dd.c          | 60 ++++++++++++++++++++++++++++++++++++++
- include/linux/device.h     | 54 ++++++++++++++++++++++++++++++++++
- include/linux/device/bus.h |  4 +++
- 5 files changed, 162 insertions(+), 1 deletion(-)
+ drivers/base/platform.c         | 37 +++++----------------------------
+ drivers/bus/simple-pm-bus.c     |  4 ++--
+ drivers/clk/imx/clk-scu.c       |  3 +--
+ drivers/slimbus/qcom-ngd-ctrl.c |  6 ++----
+ include/linux/platform_device.h |  5 -----
+ sound/soc/samsung/i2s.c         |  6 +++---
+ 6 files changed, 13 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/base/bus.c b/drivers/base/bus.c
-index 9eb7771706f01..7c7d8d97215be 100644
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -504,6 +504,36 @@ int bus_for_each_drv(const struct bus_type *bus, struct device_driver *start,
+diff --git a/drivers/base/platform.c b/drivers/base/platform.c
+index b45d41b018ca6..d44591d52e363 100644
+--- a/drivers/base/platform.c
++++ b/drivers/base/platform.c
+@@ -603,7 +603,6 @@ static void platform_device_release(struct device *dev)
+ 	kfree(pa->pdev.dev.platform_data);
+ 	kfree(pa->pdev.mfd_cell);
+ 	kfree(pa->pdev.resource);
+-	kfree(pa->pdev.driver_override);
+ 	kfree(pa);
  }
- EXPORT_SYMBOL_GPL(bus_for_each_drv);
  
-+static ssize_t driver_override_store(struct device *dev,
-+				     struct device_attribute *attr,
-+				     const char *buf, size_t count)
-+{
-+	int ret;
-+
-+	ret = __device_set_driver_override(dev, buf, count);
-+	if (ret)
-+		return ret;
-+
-+	return count;
-+}
-+
-+static ssize_t driver_override_show(struct device *dev,
-+				    struct device_attribute *attr, char *buf)
-+{
-+	guard(spinlock)(&dev->driver_override.lock);
-+	return sysfs_emit(buf, "%s\n", dev->driver_override.name);
-+}
-+static DEVICE_ATTR_RW(driver_override);
-+
-+static struct attribute *driver_override_dev_attrs[] = {
-+	&dev_attr_driver_override.attr,
-+	NULL,
-+};
-+
-+static const struct attribute_group driver_override_dev_group = {
-+	.attrs = driver_override_dev_attrs,
-+};
-+
- /**
-  * bus_add_device - add device to bus
-  * @dev: device being added
-@@ -537,9 +567,15 @@ int bus_add_device(struct device *dev)
- 	if (error)
- 		goto out_put;
- 
-+	if (dev->bus->driver_override) {
-+		error = device_add_group(dev, &driver_override_dev_group);
-+		if (error)
-+			goto out_groups;
-+	}
-+
- 	error = sysfs_create_link(&sp->devices_kset->kobj, &dev->kobj, dev_name(dev));
- 	if (error)
--		goto out_groups;
-+		goto out_override;
- 
- 	error = sysfs_create_link(&dev->kobj, &sp->subsys.kobj, "subsystem");
- 	if (error)
-@@ -550,6 +586,9 @@ int bus_add_device(struct device *dev)
- 
- out_subsys:
- 	sysfs_remove_link(&sp->devices_kset->kobj, dev_name(dev));
-+out_override:
-+	if (dev->bus->driver_override)
-+		device_remove_group(dev, &driver_override_dev_group);
- out_groups:
- 	device_remove_groups(dev, sp->bus->dev_groups);
- out_put:
-@@ -607,6 +646,8 @@ void bus_remove_device(struct device *dev)
- 
- 	sysfs_remove_link(&dev->kobj, "subsystem");
- 	sysfs_remove_link(&sp->devices_kset->kobj, dev_name(dev));
-+	if (dev->bus->driver_override)
-+		device_remove_group(dev, &driver_override_dev_group);
- 	device_remove_groups(dev, dev->bus->dev_groups);
- 	if (klist_node_attached(&dev->p->knode_bus))
- 		klist_del(&dev->p->knode_bus);
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 40de2f51a1b1a..9863bd3705255 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -2556,6 +2556,7 @@ static void device_release(struct kobject *kobj)
- 	devres_release_all(dev);
- 
- 	kfree(dev->dma_range_map);
-+	kfree(dev->driver_override.name);
- 
- 	if (dev->release)
- 		dev->release(dev);
-@@ -3159,6 +3160,7 @@ void device_initialize(struct device *dev)
- 	kobject_init(&dev->kobj, &device_ktype);
- 	INIT_LIST_HEAD(&dev->dma_pools);
- 	mutex_init(&dev->mutex);
-+	spin_lock_init(&dev->driver_override.lock);
- 	lockdep_set_novalidate_class(&dev->mutex);
- 	spin_lock_init(&dev->devres_lock);
- 	INIT_LIST_HEAD(&dev->devres_head);
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index bea8da5f8a3a9..37c7e54e0e4c7 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -381,6 +381,66 @@ static void __exit deferred_probe_exit(void)
+@@ -1306,38 +1305,9 @@ static ssize_t numa_node_show(struct device *dev,
  }
- __exitcall(deferred_probe_exit);
+ static DEVICE_ATTR_RO(numa_node);
  
-+int __device_set_driver_override(struct device *dev, const char *s, size_t len)
-+{
-+	const char *new, *old;
-+	char *cp;
-+
-+	if (!s)
-+		return -EINVAL;
-+
-+	/*
-+	 * The stored value will be used in sysfs show callback (sysfs_emit()),
-+	 * which has a length limit of PAGE_SIZE and adds a trailing newline.
-+	 * Thus we can store one character less to avoid truncation during sysfs
-+	 * show.
-+	 */
-+	if (len >= (PAGE_SIZE - 1))
-+		return -EINVAL;
-+
-+	/*
-+	 * Compute the real length of the string in case userspace sends us a
-+	 * bunch of \0 characters like python likes to do.
-+	 */
-+	len = strlen(s);
-+
-+	if (!len) {
-+		/* Empty string passed - clear override */
-+		spin_lock(&dev->driver_override.lock);
-+		old = dev->driver_override.name;
-+		dev->driver_override.name = NULL;
-+		spin_unlock(&dev->driver_override.lock);
-+		kfree(old);
-+
-+		return 0;
-+	}
-+
-+	cp = strnchr(s, len, '\n');
-+	if (cp)
-+		len = cp - s;
-+
-+	new = kstrndup(s, len, GFP_KERNEL);
-+	if (!new)
-+		return -ENOMEM;
-+
-+	spin_lock(&dev->driver_override.lock);
-+	old = dev->driver_override.name;
-+	if (cp != s) {
-+		dev->driver_override.name = new;
-+		spin_unlock(&dev->driver_override.lock);
-+	} else {
-+		/* "\n" passed - clear override */
-+		dev->driver_override.name = NULL;
-+		spin_unlock(&dev->driver_override.lock);
-+
-+		kfree(new);
-+	}
-+	kfree(old);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(__device_set_driver_override);
-+
- /**
-  * device_is_bound() - Check if device is bound to a driver
-  * @dev: device to check
-diff --git a/include/linux/device.h b/include/linux/device.h
-index 0be95294b6e61..e65d564f01cd7 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -483,6 +483,8 @@ struct device_physical_location {
-  * 		on.  This shrinks the "Board Support Packages" (BSPs) and
-  * 		minimizes board-specific #ifdefs in drivers.
-  * @driver_data: Private pointer for driver specific info.
-+ * @driver_override: Driver name to force a match.  Do not touch directly; use
-+ *		     device_set_driver_override() instead.
-  * @links:	Links to suppliers and consumers of this device.
-  * @power:	For device power management.
-  *		See Documentation/driver-api/pm/devices.rst for details.
-@@ -576,6 +578,10 @@ struct device {
- 					   core doesn't touch it */
- 	void		*driver_data;	/* Driver data, set and get with
- 					   dev_set_drvdata/dev_get_drvdata */
-+	struct {
-+		const char	*name;
-+		spinlock_t	lock;
-+	} driver_override;
- 	struct mutex		mutex;	/* mutex to synchronize calls to
- 					 * its driver.
- 					 */
-@@ -701,6 +707,54 @@ struct device_link {
- 
- #define kobj_to_dev(__kobj)	container_of_const(__kobj, struct device, kobj)
- 
-+int __device_set_driver_override(struct device *dev, const char *s, size_t len);
-+
-+/**
-+ * device_set_driver_override() - Helper to set or clear driver override.
-+ * @dev: Device to change
-+ * @s: NUL-terminated string, new driver name to force a match, pass empty
-+ *     string to clear it ("" or "\n", where the latter is only for sysfs
-+ *     interface).
-+ *
-+ * Helper to set or clear driver override of a device.
-+ *
-+ * Returns: 0 on success or a negative error code on failure.
-+ */
-+static inline int device_set_driver_override(struct device *dev, const char *s)
-+{
-+	return __device_set_driver_override(dev, s, s ? strlen(s) : 0);
-+}
-+
-+/**
-+ * device_has_driver_override() - Check if a driver override has been set.
-+ * @dev: device to check
-+ *
-+ * Returns true if a driver override has been set for this device.
-+ */
-+static inline bool device_has_driver_override(struct device *dev)
-+{
-+	guard(spinlock)(&dev->driver_override.lock);
-+	return !!dev->driver_override.name;
-+}
-+
-+/**
-+ * device_match_driver_override() - Match a driver against the device's driver_override.
-+ * @dev: device to check
-+ * @drv: driver to match against
-+ *
-+ * Returns > 0 if a driver override is set and matches the given driver, 0 if a
-+ * driver override is set but does not match, or < 0 if a driver override is not
-+ * set at all.
-+ */
-+static inline int device_match_driver_override(struct device *dev,
-+					       const struct device_driver *drv)
-+{
-+	guard(spinlock)(&dev->driver_override.lock);
-+	if (dev->driver_override.name)
-+		return !strcmp(dev->driver_override.name, drv->name);
-+	return -1;
-+}
-+
- /**
-  * device_iommu_mapped - Returns true when the device DMA is translated
-  *			 by an IOMMU
-diff --git a/include/linux/device/bus.h b/include/linux/device/bus.h
-index 99b1002b3e318..f047b40a30b74 100644
---- a/include/linux/device/bus.h
-+++ b/include/linux/device/bus.h
-@@ -63,6 +63,9 @@ struct fwnode_handle;
-  *			this bus.
-  * @pm:		Power management operations of this bus, callback the specific
-  *		device driver's pm-ops.
-+ * @driver_override:	Set to true if this bus supports the driver_override
-+ *			mechanism, which allows userspace to force a specific
-+ *			driver to bind to a device via a sysfs attribute.
-  * @need_parent_lock:	When probing or removing a device on this bus, the
-  *			device core should lock the device's parent.
-  *
-@@ -104,6 +107,7 @@ struct bus_type {
- 
- 	const struct dev_pm_ops *pm;
- 
-+	bool driver_override;
- 	bool need_parent_lock;
+-static ssize_t driver_override_show(struct device *dev,
+-				    struct device_attribute *attr, char *buf)
+-{
+-	struct platform_device *pdev = to_platform_device(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = sysfs_emit(buf, "%s\n", pdev->driver_override);
+-	device_unlock(dev);
+-
+-	return len;
+-}
+-
+-static ssize_t driver_override_store(struct device *dev,
+-				     struct device_attribute *attr,
+-				     const char *buf, size_t count)
+-{
+-	struct platform_device *pdev = to_platform_device(dev);
+-	int ret;
+-
+-	ret = driver_set_override(dev, &pdev->driver_override, buf, count);
+-	if (ret)
+-		return ret;
+-
+-	return count;
+-}
+-static DEVICE_ATTR_RW(driver_override);
+-
+ static struct attribute *platform_dev_attrs[] = {
+ 	&dev_attr_modalias.attr,
+ 	&dev_attr_numa_node.attr,
+-	&dev_attr_driver_override.attr,
+ 	NULL,
  };
  
+@@ -1377,10 +1347,12 @@ static int platform_match(struct device *dev, const struct device_driver *drv)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	struct platform_driver *pdrv = to_platform_driver(drv);
++	int ret;
+ 
+ 	/* When driver_override is set, only bind to the matching driver */
+-	if (pdev->driver_override)
+-		return !strcmp(pdev->driver_override, drv->name);
++	ret = device_match_driver_override(dev, drv);
++	if (ret >= 0)
++		return ret;
+ 
+ 	/* Attempt an OF style match first */
+ 	if (of_driver_match_device(dev, drv))
+@@ -1516,6 +1488,7 @@ static const struct dev_pm_ops platform_dev_pm_ops = {
+ const struct bus_type platform_bus_type = {
+ 	.name		= "platform",
+ 	.dev_groups	= platform_dev_groups,
++	.driver_override = true,
+ 	.match		= platform_match,
+ 	.uevent		= platform_uevent,
+ 	.probe		= platform_probe,
+diff --git a/drivers/bus/simple-pm-bus.c b/drivers/bus/simple-pm-bus.c
+index 3f00d953fb9a0..c920bd6fbaafd 100644
+--- a/drivers/bus/simple-pm-bus.c
++++ b/drivers/bus/simple-pm-bus.c
+@@ -36,7 +36,7 @@ static int simple_pm_bus_probe(struct platform_device *pdev)
+ 	 * that's not listed in simple_pm_bus_of_match. We don't want to do any
+ 	 * of the simple-pm-bus tasks for these devices, so return early.
+ 	 */
+-	if (pdev->driver_override)
++	if (device_has_driver_override(&pdev->dev))
+ 		return 0;
+ 
+ 	match = of_match_device(dev->driver->of_match_table, dev);
+@@ -78,7 +78,7 @@ static void simple_pm_bus_remove(struct platform_device *pdev)
+ {
+ 	const void *data = of_device_get_match_data(&pdev->dev);
+ 
+-	if (pdev->driver_override || data)
++	if (device_has_driver_override(&pdev->dev) || data)
+ 		return;
+ 
+ 	dev_dbg(&pdev->dev, "%s\n", __func__);
+diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
+index c90d21e05f916..e6b273d8a09ae 100644
+--- a/drivers/clk/imx/clk-scu.c
++++ b/drivers/clk/imx/clk-scu.c
+@@ -706,8 +706,7 @@ struct clk_hw *imx_clk_scu_alloc_dev(const char *name,
+ 	if (ret)
+ 		goto put_device;
+ 
+-	ret = driver_set_override(&pdev->dev, &pdev->driver_override,
+-				  "imx-scu-clk", strlen("imx-scu-clk"));
++	ret = device_set_driver_override(&pdev->dev, "imx-scu-clk");
+ 	if (ret)
+ 		goto put_device;
+ 
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index ba3d80d12605c..d2d11f6294b70 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1539,10 +1539,8 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+ 		ngd->id = id;
+ 		ngd->pdev->dev.parent = parent;
+ 
+-		ret = driver_set_override(&ngd->pdev->dev,
+-					  &ngd->pdev->driver_override,
+-					  QCOM_SLIM_NGD_DRV_NAME,
+-					  strlen(QCOM_SLIM_NGD_DRV_NAME));
++		ret = device_set_driver_override(&ngd->pdev->dev,
++						 QCOM_SLIM_NGD_DRV_NAME);
+ 		if (ret) {
+ 			platform_device_put(ngd->pdev);
+ 			kfree(ngd);
+diff --git a/include/linux/platform_device.h b/include/linux/platform_device.h
+index 813da101b5bf8..ed1d50d1c3c15 100644
+--- a/include/linux/platform_device.h
++++ b/include/linux/platform_device.h
+@@ -31,11 +31,6 @@ struct platform_device {
+ 	struct resource	*resource;
+ 
+ 	const struct platform_device_id	*id_entry;
+-	/*
+-	 * Driver name to force a match.  Do not set directly, because core
+-	 * frees it.  Use driver_set_override() to set or clear it.
+-	 */
+-	const char *driver_override;
+ 
+ 	/* MFD cell pointer */
+ 	struct mfd_cell *mfd_cell;
+diff --git a/sound/soc/samsung/i2s.c b/sound/soc/samsung/i2s.c
+index e9964f0e010ae..140907a41a70d 100644
+--- a/sound/soc/samsung/i2s.c
++++ b/sound/soc/samsung/i2s.c
+@@ -1360,10 +1360,10 @@ static int i2s_create_secondary_device(struct samsung_i2s_priv *priv)
+ 	if (!pdev_sec)
+ 		return -ENOMEM;
+ 
+-	pdev_sec->driver_override = kstrdup("samsung-i2s", GFP_KERNEL);
+-	if (!pdev_sec->driver_override) {
++	ret = device_set_driver_override(&pdev_sec->dev, "samsung-i2s");
++	if (ret) {
+ 		platform_device_put(pdev_sec);
+-		return -ENOMEM;
++		return ret;
+ 	}
+ 
+ 	ret = platform_device_add(pdev_sec);
 -- 
 2.51.0
 
