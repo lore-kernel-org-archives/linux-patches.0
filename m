@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5381D42B756;
-	Tue, 31 Mar 2026 16:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223AA428472;
+	Tue, 31 Mar 2026 16:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975151; cv=none; b=bOhNAOu5Gr6lnjuv2v6w04HX4c/Zla4pZrp8oD5Yyyl7ei9CR02YheRJ0BCttBksUqZn68MWQ+22W7LoH9u4MXcCyX9K8Ht84iBCExw7+vgy6vxPjQGZU7kngt2kN5HGWUMLjH3z+QB7kucylUOr1iBAvoWh8sr62d5HRepi2ok=
+	t=1774975154; cv=none; b=oBl5vqP4oIsn9tv8azZO8ksSzIUsRab+X9U4fE5UCIlZsHcq/MPlvVtuXrDSKuqrLsHRi6iFgKX/rfpulQROD9IMxSDDOiLJBHl7HVHbrzf6LyC56+wQs+g5YW3qdMTJ0zSHTZqWRkvbHWH2UgEJoO+H3bYooxszb3iNehMFjyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975151; c=relaxed/simple;
-	bh=Y5RFvPUwii6gSBEF/aZr2+JxJSfoCkeWfWMrFt+6o1g=;
+	s=arc-20240116; t=1774975154; c=relaxed/simple;
+	bh=4sHqNmihLZtFAfcFUc+wLST4vJUH52DZMKnNl6JHhAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KY5a8fC+0WAni31eikFDWCDUcK3oJTgfTynEzcFM2P/EhLV1ZYOV7leLmaYebrUO4x1BLsbYJ2gvMyKDaeoIRJBiFW34xu8c6lDd9ujMu4Ees+behDdpIesaxlFRnVfGs0yp2iyqXxdopaA+pTxXbWCo8G2qc5qF4g9cBTZs+LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWDVSJ4i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nw/6ZuErJysEzo8VfLCN+FrPQgdJv8sG8EPFq6QLXxM7PwT855x3CphD3Zjv8VOH3fIdpAl2zzN7rq5EEONA2Mno1XZ2R6ysmYnAa64BXqopGrBChYKdyblFKUIvpamRnpYGxhgUvc3ZllAp20yRizpcal8Of0iemo//wewIrsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ng6fhdXu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWDVSJ4i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02B3C19423;
-	Tue, 31 Mar 2026 16:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ng6fhdXu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7625FC19423;
+	Tue, 31 Mar 2026 16:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975151;
-	bh=Y5RFvPUwii6gSBEF/aZr2+JxJSfoCkeWfWMrFt+6o1g=;
+	s=korg; t=1774975153;
+	bh=4sHqNmihLZtFAfcFUc+wLST4vJUH52DZMKnNl6JHhAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OWDVSJ4iFbARsLnbHAAvGOHl7uxd9NjUPK715TEuSLU3NsEFBhVvBlPlmmqAX8Srh
-	 6j4JQNZoOhzLmMna/IVNsceblDvYVBqY8aVK8mPtaCxBuhhtJFu8V6chFyaxmX84nH
-	 pafitQrI6hBCacJUiDoenaBcbrS/YYtmi1gHr86s=
+	b=Ng6fhdXu4A/AT4mTgJglDY5swQLid9Z6RcG0O0ZQT5lA9Nq0bgsLU7nH4e8DBA2SY
+	 YDrCqW7QIICxleEuWPEnlDkl3Hxix4YTpirnrpyaH2xoAQEXO4p3aKJvIBfbEhBbFs
+	 eAk7/YPzYQhUUUn8oWTbNGxaIwbjudI1wJ8lr0cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Shuming Fan <shumingf@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 183/342] hwmon: (adm1177) fix sysfs ABI violation and current unit conversion
-Date: Tue, 31 Mar 2026 18:20:16 +0200
-Message-ID: <20260331161805.736520303@linuxfoundation.org>
+Subject: [PATCH 6.19 184/342] ASoC: SDCA: fix finding wrong entity
+Date: Tue, 31 Mar 2026 18:20:17 +0200
+Message-ID: <20260331161805.772733591@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -46,189 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Shuming Fan <shumingf@realtek.com>
 
-[ Upstream commit bf08749a6abb6d1959bfdc0edc32c640df407558 ]
+[ Upstream commit c673efd5db2223c2e8b885025bcd96bca6cdb171 ]
 
-The adm1177 driver exposes the current alert threshold through
-hwmon_curr_max_alarm. This violates the hwmon sysfs ABI, where
-*_alarm attributes are read-only status flags and writable thresholds
-must use currN_max.
+This patch fixes an issue like:
+where searching for the entity 'FU 11' could incorrectly match 'FU 113' first.
+The driver should first perform an exact match on the full string name.
+If no exact match is found, it can then fall back to a partial match.
 
-The driver also stores the threshold internally in microamps, while
-currN_max is defined in milliamps. Convert the threshold accordingly
-on both the read and write paths.
-
-Widen the cached threshold and related calculations to 64 bits so
-that small shunt resistor values do not cause truncation or overflow.
-Also use 64-bit arithmetic for the mA/uA conversions, clamp writes
-to the range the hardware can represent, and propagate failures from
-adm1177_write_alert_thr() instead of silently ignoring them.
-
-Update the hwmon documentation to reflect the attribute rename and
-the correct units returned by the driver.
-
-Fixes: 09b08ac9e8d5 ("hwmon: (adm1177) Add ADM1177 Hot Swap Controller and Digital Power Monitor driver")
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20260325051246.28262-1-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 48fa77af2f4a ("ASoC: SDCA: Add terminal type into input/output widget name")
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Shuming Fan <shumingf@realtek.com>
+Link: https://patch.msgid.link/20260325110406.3232420-1-shumingf@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/adm1177.rst |  8 ++---
- drivers/hwmon/adm1177.c         | 54 +++++++++++++++++++--------------
- 2 files changed, 35 insertions(+), 27 deletions(-)
+ sound/soc/sdca/sdca_functions.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/hwmon/adm1177.rst b/Documentation/hwmon/adm1177.rst
-index 1c85a2af92bf7..375f6d6e03a7d 100644
---- a/Documentation/hwmon/adm1177.rst
-+++ b/Documentation/hwmon/adm1177.rst
-@@ -27,10 +27,10 @@ for details.
- Sysfs entries
- -------------
- 
--The following attributes are supported. Current maxim attribute
-+The following attributes are supported. Current maximum attribute
- is read-write, all other attributes are read-only.
- 
--in0_input		Measured voltage in microvolts.
-+in0_input		Measured voltage in millivolts.
- 
--curr1_input		Measured current in microamperes.
--curr1_max_alarm		Overcurrent alarm in microamperes.
-+curr1_input		Measured current in milliamperes.
-+curr1_max		Overcurrent shutdown threshold in milliamperes.
-diff --git a/drivers/hwmon/adm1177.c b/drivers/hwmon/adm1177.c
-index 8b2c965480e3f..7888afe8dafd6 100644
---- a/drivers/hwmon/adm1177.c
-+++ b/drivers/hwmon/adm1177.c
-@@ -10,6 +10,8 @@
- #include <linux/hwmon.h>
- #include <linux/i2c.h>
- #include <linux/init.h>
-+#include <linux/math64.h>
-+#include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/regulator/consumer.h>
- 
-@@ -33,7 +35,7 @@
- struct adm1177_state {
- 	struct i2c_client	*client;
- 	u32			r_sense_uohm;
--	u32			alert_threshold_ua;
-+	u64			alert_threshold_ua;
- 	bool			vrange_high;
- };
- 
-@@ -48,7 +50,7 @@ static int adm1177_write_cmd(struct adm1177_state *st, u8 cmd)
- }
- 
- static int adm1177_write_alert_thr(struct adm1177_state *st,
--				   u32 alert_threshold_ua)
-+				   u64 alert_threshold_ua)
+diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
+index d2de9e81b4f9f..a1f6f931a8081 100644
+--- a/sound/soc/sdca/sdca_functions.c
++++ b/sound/soc/sdca/sdca_functions.c
+@@ -1568,10 +1568,19 @@ static int find_sdca_entities(struct device *dev, struct sdw_slave *sdw,
+ static struct sdca_entity *find_sdca_entity_by_label(struct sdca_function_data *function,
+ 						     const char *entity_label)
  {
- 	u64 val;
- 	int ret;
-@@ -91,8 +93,8 @@ static int adm1177_read(struct device *dev, enum hwmon_sensor_types type,
- 			*val = div_u64((105840000ull * dummy),
- 				       4096 * st->r_sense_uohm);
- 			return 0;
--		case hwmon_curr_max_alarm:
--			*val = st->alert_threshold_ua;
-+		case hwmon_curr_max:
-+			*val = div_u64(st->alert_threshold_ua, 1000);
- 			return 0;
- 		default:
- 			return -EOPNOTSUPP;
-@@ -126,9 +128,10 @@ static int adm1177_write(struct device *dev, enum hwmon_sensor_types type,
- 	switch (type) {
- 	case hwmon_curr:
- 		switch (attr) {
--		case hwmon_curr_max_alarm:
--			adm1177_write_alert_thr(st, val);
--			return 0;
-+		case hwmon_curr_max:
-+			val = clamp_val(val, 0,
-+					div_u64(105840000ULL, st->r_sense_uohm));
-+			return adm1177_write_alert_thr(st, (u64)val * 1000);
- 		default:
- 			return -EOPNOTSUPP;
- 		}
-@@ -156,7 +159,7 @@ static umode_t adm1177_is_visible(const void *data,
- 			if (st->r_sense_uohm)
- 				return 0444;
- 			return 0;
--		case hwmon_curr_max_alarm:
-+		case hwmon_curr_max:
- 			if (st->r_sense_uohm)
- 				return 0644;
- 			return 0;
-@@ -170,7 +173,7 @@ static umode_t adm1177_is_visible(const void *data,
++	struct sdca_entity *entity = NULL;
+ 	int i;
  
- static const struct hwmon_channel_info * const adm1177_info[] = {
- 	HWMON_CHANNEL_INFO(curr,
--			   HWMON_C_INPUT | HWMON_C_MAX_ALARM),
-+			   HWMON_C_INPUT | HWMON_C_MAX),
- 	HWMON_CHANNEL_INFO(in,
- 			   HWMON_I_INPUT),
- 	NULL
-@@ -192,7 +195,8 @@ static int adm1177_probe(struct i2c_client *client)
- 	struct device *dev = &client->dev;
- 	struct device *hwmon_dev;
- 	struct adm1177_state *st;
--	u32 alert_threshold_ua;
-+	u64 alert_threshold_ua;
-+	u32 prop;
- 	int ret;
- 
- 	st = devm_kzalloc(dev, sizeof(*st), GFP_KERNEL);
-@@ -208,22 +212,26 @@ static int adm1177_probe(struct i2c_client *client)
- 	if (device_property_read_u32(dev, "shunt-resistor-micro-ohms",
- 				     &st->r_sense_uohm))
- 		st->r_sense_uohm = 0;
--	if (device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
--				     &alert_threshold_ua)) {
--		if (st->r_sense_uohm)
--			/*
--			 * set maximum default value from datasheet based on
--			 * shunt-resistor
--			 */
--			alert_threshold_ua = div_u64(105840000000,
--						     st->r_sense_uohm);
--		else
--			alert_threshold_ua = 0;
-+	if (!device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
-+				      &prop)) {
-+		alert_threshold_ua = prop;
-+	} else if (st->r_sense_uohm) {
-+		/*
-+		 * set maximum default value from datasheet based on
-+		 * shunt-resistor
-+		 */
-+		alert_threshold_ua = div_u64(105840000000ULL,
-+					     st->r_sense_uohm);
-+	} else {
-+		alert_threshold_ua = 0;
- 	}
- 	st->vrange_high = device_property_read_bool(dev,
- 						    "adi,vrange-high-enable");
--	if (alert_threshold_ua && st->r_sense_uohm)
--		adm1177_write_alert_thr(st, alert_threshold_ua);
-+	if (alert_threshold_ua && st->r_sense_uohm) {
-+		ret = adm1177_write_alert_thr(st, alert_threshold_ua);
-+		if (ret)
-+			return ret;
+ 	for (i = 0; i < function->num_entities; i++) {
+-		struct sdca_entity *entity = &function->entities[i];
++		entity = &function->entities[i];
++
++		/* check whole string first*/
++		if (!strcmp(entity->label, entity_label))
++			return entity;
 +	}
++
++	for (i = 0; i < function->num_entities; i++) {
++		entity = &function->entities[i];
  
- 	ret = adm1177_write_cmd(st, ADM1177_CMD_V_CONT |
- 				    ADM1177_CMD_I_CONT |
+ 		if (!strncmp(entity->label, entity_label, strlen(entity_label)))
+ 			return entity;
 -- 
 2.53.0
 
