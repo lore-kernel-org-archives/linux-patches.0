@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C1A427A1B;
-	Tue, 31 Mar 2026 16:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0984428473;
+	Tue, 31 Mar 2026 16:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975159; cv=none; b=J5gdp032p0iLhhbgTy5ZVt6LkpnhIfE6FYp8gkpq1JtylPhJlx8vqp2zA8q4RV5Ph9HfAwMK8DW/Kdw53HkE7r+kJQf+km1V7cHT28xnvWUwW1kbpY286YbLDa+MRxJdphTPNC4o8IwGzx9GU0Ygdxu1C3IacHeaq6kyyXgW3OY=
+	t=1774975161; cv=none; b=j7O/im7JU5pTqX7paVw9dZaDQKqZoi9qtAYoYgH2IVzUujZyU6IDsNFywixbiM/9kbfF0CTDbnfqTZRPmFQoFTyaXTL4xrxJRyTYOiOeFYTBFLJ4R7StQhjMu9j8DTTJUTGjAA0SdM8YLwn5PlHx2iNqw7pQOx5QOVzPk40Lh3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975159; c=relaxed/simple;
-	bh=5qHAMyPk6NPK5FaXUzXBRC/NlRtxfuBLC8mTtreFi1E=;
+	s=arc-20240116; t=1774975161; c=relaxed/simple;
+	bh=AS/sjQayujSOiutLnru9hc8Et2uHGaZYI9QjFJJjZI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B3LHKlLF4wiBOzOkPT1VyYf0JPqwsooBstzxzh8JrX+cT5lCdu0kYy0qZucvQlI52oZuoqxCWjkQ+3w6Cj1K6KKKRo1urlzFPdUHOpdyNWtEoNF9QA96vJYRu4bftQ2RS/5dRl1oxtb5O/MSsRsWcP6uFUgI3yVk+Wnt4g8zqMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpEzt8qI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BsUB7ybu40dOkr9Ts4NmwwKaPxTMAJv22bkCOCXXxWmp+2OpfDgc6xrh3Yg/F1HKkJR04Rgw2o0k/JGt71G7ri4aXPOCiU52QZU/+XbHxv/E/GMdemGj0yFRBhJinRqvl4VcVS/Sg13u5R4QNoH2Bp6UPZkzWt0aD5X+2nY2eeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7TBbepJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpEzt8qI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF44C19423;
-	Tue, 31 Mar 2026 16:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7TBbepJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371F4C19423;
+	Tue, 31 Mar 2026 16:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975159;
-	bh=5qHAMyPk6NPK5FaXUzXBRC/NlRtxfuBLC8mTtreFi1E=;
+	s=korg; t=1774975161;
+	bh=AS/sjQayujSOiutLnru9hc8Et2uHGaZYI9QjFJJjZI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bpEzt8qIL1JwM653zjlCWTFCv1EF2lTotIAJezwWOQ8ollcZSDKep/Ad6VTtHMLh1
-	 WZ2KtYj67QrE2iXgsr9roQl+ANDx/duOHbZgEk4JgQWESQi3fx6BBuZENuxoNWybDa
-	 zvouB9r5Ne5lGoTeNq5p/IZWSUcA+HGyUDNidA+8=
+	b=l7TBbepJv83YObQSthdG+byCGCrh3OY/yYkOK7vbs8FOtgsFHQGKaFH9wkpSUnZxs
+	 ESfbB64eUAhuDZtiPSmNaWzDSUe15bTKXq03cWqrAdQ2Sp5nq5AgVG6UZryrUB05xd
+	 j9wBvkDgw+KHImT+HSiwwrLT1QLefYENdXMSyEu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sanman Pradhan <psanman@juniper.net>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 186/342] hwmon: (pmbus) Introduce the concept of "write-only" attributes
-Date: Tue, 31 Mar 2026 18:20:19 +0200
-Message-ID: <20260331161805.845589012@linuxfoundation.org>
+Subject: [PATCH 6.19 187/342] hwmon: (pmbus/core) Protect regulator operations with mutex
+Date: Tue, 31 Mar 2026 18:20:20 +0200
+Message-ID: <20260331161805.882494533@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,182 +53,252 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit cd658475e7694d58e1c40dabc1dacf8431ccedb2 ]
+[ Upstream commit 754bd2b4a084b90b5e7b630e1f423061a9b9b761 ]
 
-Attributes intended to clear sensor history are intended to be writeable
-only. Reading those attributes today results in reporting more or less
-random values. To avoid ABI surprises, have those attributes explicitly
-return 0 when reading.
+The regulator operations pmbus_regulator_get_voltage(),
+pmbus_regulator_set_voltage(), and pmbus_regulator_list_voltage()
+access PMBus registers and shared data but were not protected by
+the update_lock mutex. This could lead to race conditions.
 
-Fixes: 787c095edaa9d ("hwmon: (pmbus/core) Add support for rated attributes")
+However, adding mutex protection directly to these functions causes
+a deadlock because pmbus_regulator_notify() (which calls
+regulator_notifier_call_chain()) is often called with the mutex
+already held (e.g., from pmbus_fault_handler()). If a regulator
+callback then calls one of the now-protected voltage functions,
+it will attempt to acquire the same mutex.
+
+Rework pmbus_regulator_notify() to utilize a worker function to
+send notifications outside of the mutex protection. Events are
+stored as atomics in a per-page bitmask and processed by the worker.
+
+Initialize the worker and its associated data during regulator
+registration, and ensure it is cancelled on device removal using
+devm_add_action_or_reset().
+
+While at it, remove the unnecessary include of linux/of.h.
+
+Cc: Sanman Pradhan <psanman@juniper.net>
+Fixes: ddbb4db4ced1b ("hwmon: (pmbus) Add regulator support")
 Reviewed-by: Sanman Pradhan <psanman@juniper.net>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 32 ++++++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 114 ++++++++++++++++++++++++-------
+ 1 file changed, 89 insertions(+), 25 deletions(-)
 
 diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index ecd1dddcbe0ff..cbc36f0ba4bf9 100644
+index cbc36f0ba4bf9..572be3ebc03df 100644
 --- a/drivers/hwmon/pmbus/pmbus_core.c
 +++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -1209,6 +1209,12 @@ static ssize_t pmbus_show_boolean(struct device *dev,
- 	return sysfs_emit(buf, "%d\n", val);
+@@ -6,6 +6,7 @@
+  * Copyright (c) 2012 Guenter Roeck
+  */
+ 
++#include <linux/atomic.h>
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/dcache.h>
+@@ -21,8 +22,8 @@
+ #include <linux/pmbus.h>
+ #include <linux/regulator/driver.h>
+ #include <linux/regulator/machine.h>
+-#include <linux/of.h>
+ #include <linux/thermal.h>
++#include <linux/workqueue.h>
+ #include "pmbus.h"
+ 
+ /*
+@@ -112,6 +113,11 @@ struct pmbus_data {
+ 
+ 	struct mutex update_lock;
+ 
++#if IS_ENABLED(CONFIG_REGULATOR)
++	atomic_t regulator_events[PMBUS_PAGES];
++	struct work_struct regulator_notify_work;
++#endif
++
+ 	bool has_status_word;		/* device uses STATUS_WORD register */
+ 	int (*read_status)(struct i2c_client *client, int page);
+ 
+@@ -3228,12 +3234,19 @@ static int pmbus_regulator_get_voltage(struct regulator_dev *rdev)
+ 		.class = PSC_VOLTAGE_OUT,
+ 		.convert = true,
+ 	};
++	int ret;
+ 
++	mutex_lock(&data->update_lock);
+ 	s.data = _pmbus_read_word_data(client, s.page, 0xff, PMBUS_READ_VOUT);
+-	if (s.data < 0)
+-		return s.data;
++	if (s.data < 0) {
++		ret = s.data;
++		goto unlock;
++	}
+ 
+-	return (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
++	ret = (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
  }
  
-+static ssize_t pmbus_show_zero(struct device *dev,
-+			       struct device_attribute *devattr, char *buf)
+ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+@@ -3250,16 +3263,22 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+ 	};
+ 	int val = DIV_ROUND_CLOSEST(min_uv, 1000); /* convert to mV */
+ 	int low, high;
++	int ret;
+ 
+ 	*selector = 0;
+ 
++	mutex_lock(&data->update_lock);
+ 	low = pmbus_regulator_get_low_margin(client, s.page);
+-	if (low < 0)
+-		return low;
++	if (low < 0) {
++		ret = low;
++		goto unlock;
++	}
+ 
+ 	high = pmbus_regulator_get_high_margin(client, s.page);
+-	if (high < 0)
+-		return high;
++	if (high < 0) {
++		ret = high;
++		goto unlock;
++	}
+ 
+ 	/* Make sure we are within margins */
+ 	if (low > val)
+@@ -3269,7 +3288,10 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+ 
+ 	val = pmbus_data2reg(data, &s, val);
+ 
+-	return _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
++	ret = _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
+ }
+ 
+ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+@@ -3279,6 +3301,7 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	int val, low, high;
++	int ret;
+ 
+ 	if (data->flags & PMBUS_VOUT_PROTECTED)
+ 		return 0;
+@@ -3291,18 +3314,29 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+ 	val = DIV_ROUND_CLOSEST(rdev->desc->min_uV +
+ 				(rdev->desc->uV_step * selector), 1000); /* convert to mV */
+ 
++	mutex_lock(&data->update_lock);
++
+ 	low = pmbus_regulator_get_low_margin(client, rdev_get_id(rdev));
+-	if (low < 0)
+-		return low;
++	if (low < 0) {
++		ret = low;
++		goto unlock;
++	}
+ 
+ 	high = pmbus_regulator_get_high_margin(client, rdev_get_id(rdev));
+-	if (high < 0)
+-		return high;
++	if (high < 0) {
++		ret = high;
++		goto unlock;
++	}
+ 
+-	if (val >= low && val <= high)
+-		return val * 1000; /* unit is uV */
++	if (val >= low && val <= high) {
++		ret = val * 1000; /* unit is uV */
++		goto unlock;
++	}
+ 
+-	return 0;
++	ret = 0;
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
+ }
+ 
+ const struct regulator_ops pmbus_regulator_ops = {
+@@ -3333,12 +3367,42 @@ int pmbus_regulator_init_cb(struct regulator_dev *rdev,
+ }
+ EXPORT_SYMBOL_NS_GPL(pmbus_regulator_init_cb, "PMBUS");
+ 
++static void pmbus_regulator_notify_work_cancel(void *data)
 +{
-+	return sysfs_emit(buf, "0\n");
++	struct pmbus_data *pdata = data;
++
++	cancel_work_sync(&pdata->regulator_notify_work);
 +}
 +
- static ssize_t pmbus_show_sensor(struct device *dev,
- 				 struct device_attribute *devattr, char *buf)
++static void pmbus_regulator_notify_worker(struct work_struct *work)
++{
++	struct pmbus_data *data =
++		container_of(work, struct pmbus_data, regulator_notify_work);
++	int i, j;
++
++	for (i = 0; i < data->info->pages; i++) {
++		int event;
++
++		event = atomic_xchg(&data->regulator_events[i], 0);
++		if (!event)
++			continue;
++
++		for (j = 0; j < data->info->num_regulators; j++) {
++			if (i == rdev_get_id(data->rdevs[j])) {
++				regulator_notifier_call_chain(data->rdevs[j],
++							      event, NULL);
++				break;
++			}
++		}
++	}
++}
++
+ static int pmbus_regulator_register(struct pmbus_data *data)
  {
-@@ -1407,7 +1413,7 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
- 					     int reg,
- 					     enum pmbus_sensor_classes class,
- 					     bool update, bool readonly,
--					     bool convert)
-+					     bool writeonly, bool convert)
- {
- 	struct pmbus_sensor *sensor;
- 	struct device_attribute *a;
-@@ -1436,7 +1442,8 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
- 	sensor->data = -ENODATA;
- 	pmbus_dev_attr_init(a, sensor->name,
- 			    readonly ? 0444 : 0644,
--			    pmbus_show_sensor, pmbus_set_sensor);
-+			    writeonly ? pmbus_show_zero : pmbus_show_sensor,
-+			    pmbus_set_sensor);
+ 	struct device *dev = data->dev;
+ 	const struct pmbus_driver_info *info = data->info;
+ 	const struct pmbus_platform_data *pdata = dev_get_platdata(dev);
+-	int i;
++	int i, ret;
  
- 	if (pmbus_add_attribute(data, &a->attr))
- 		return NULL;
-@@ -1496,6 +1503,7 @@ struct pmbus_limit_attr {
- 	u16 reg;		/* Limit register */
- 	u16 sbit;		/* Alarm attribute status bit */
- 	bool readonly:1;	/* True if the attribute is read-only */
-+	bool writeonly:1;	/* True if the attribute is write-only */
- 	bool update:1;		/* True if register needs updates */
- 	bool low:1;		/* True if low limit; for limits with compare functions only */
- 	const char *attr;	/* Attribute name */
-@@ -1545,7 +1553,7 @@ static int pmbus_add_limit_attrs(struct i2c_client *client,
- 			curr = pmbus_add_sensor(data, name, l->attr, index,
- 						page, 0xff, l->reg, attr->class,
- 						attr->update || l->update,
--						l->readonly, true);
-+						l->readonly, l->writeonly, true);
- 			if (!curr)
- 				return -ENOMEM;
- 			if (l->sbit && (info->func[page] & attr->sfunc)) {
-@@ -1585,7 +1593,7 @@ static int pmbus_add_sensor_attrs_one(struct i2c_client *client,
- 			return ret;
+ 	data->rdevs = devm_kzalloc(dev, sizeof(struct regulator_dev *) * info->num_regulators,
+ 				   GFP_KERNEL);
+@@ -3362,19 +3426,19 @@ static int pmbus_regulator_register(struct pmbus_data *data)
+ 					     info->reg_desc[i].name);
  	}
- 	base = pmbus_add_sensor(data, name, "input", index, page, phase,
--				attr->reg, attr->class, true, true, true);
-+				attr->reg, attr->class, true, true, false, true);
- 	if (!base)
- 		return -ENOMEM;
- 	/* No limit and alarm attributes for phase specific sensors */
-@@ -1722,6 +1730,7 @@ static const struct pmbus_limit_attr vin_limit_attrs[] = {
- 		.attr = "highest",
- 	}, {
- 		.reg = PMBUS_VIRT_RESET_VIN_HISTORY,
-+		.writeonly = true,
- 		.attr = "reset_history",
- 	}, {
- 		.reg = PMBUS_MFR_VIN_MIN,
-@@ -1796,6 +1805,7 @@ static const struct pmbus_limit_attr vout_limit_attrs[] = {
- 		.attr = "highest",
- 	}, {
- 		.reg = PMBUS_VIRT_RESET_VOUT_HISTORY,
-+		.writeonly = true,
- 		.attr = "reset_history",
- 	}, {
- 		.reg = PMBUS_MFR_VOUT_MIN,
-@@ -1877,6 +1887,7 @@ static const struct pmbus_limit_attr iin_limit_attrs[] = {
- 		.attr = "highest",
- 	}, {
- 		.reg = PMBUS_VIRT_RESET_IIN_HISTORY,
-+		.writeonly = true,
- 		.attr = "reset_history",
- 	}, {
- 		.reg = PMBUS_MFR_IIN_MAX,
-@@ -1918,6 +1929,7 @@ static const struct pmbus_limit_attr iout_limit_attrs[] = {
- 		.attr = "highest",
- 	}, {
- 		.reg = PMBUS_VIRT_RESET_IOUT_HISTORY,
-+		.writeonly = true,
- 		.attr = "reset_history",
- 	}, {
- 		.reg = PMBUS_MFR_IOUT_MAX,
-@@ -1976,6 +1988,7 @@ static const struct pmbus_limit_attr pin_limit_attrs[] = {
- 		.attr = "input_highest",
- 	}, {
- 		.reg = PMBUS_VIRT_RESET_PIN_HISTORY,
-+		.writeonly = true,
- 		.attr = "reset_history",
- 	}, {
- 		.reg = PMBUS_MFR_PIN_MAX,
-@@ -2017,6 +2030,7 @@ static const struct pmbus_limit_attr pout_limit_attrs[] = {
- 		.attr = "input_highest",
- 	}, {
- 		.reg = PMBUS_VIRT_RESET_POUT_HISTORY,
-+		.writeonly = true,
- 		.attr = "reset_history",
- 	}, {
- 		.reg = PMBUS_MFR_POUT_MAX,
-@@ -2088,6 +2102,7 @@ static const struct pmbus_limit_attr temp_limit_attrs[] = {
- 		.attr = "highest",
- 	}, {
- 		.reg = PMBUS_VIRT_RESET_TEMP_HISTORY,
-+		.writeonly = true,
- 		.attr = "reset_history",
- 	}, {
- 		.reg = PMBUS_MFR_MAX_TEMP_1,
-@@ -2133,6 +2148,7 @@ static const struct pmbus_limit_attr temp_limit_attrs2[] = {
- 		.attr = "highest",
- 	}, {
- 		.reg = PMBUS_VIRT_RESET_TEMP2_HISTORY,
-+		.writeonly = true,
- 		.attr = "reset_history",
- 	}, {
- 		.reg = PMBUS_MFR_MAX_TEMP_2,
-@@ -2250,7 +2266,7 @@ static int pmbus_add_fan_ctrl(struct i2c_client *client,
  
- 	sensor = pmbus_add_sensor(data, "fan", "target", index, page,
- 				  0xff, PMBUS_VIRT_FAN_TARGET_1 + id, PSC_FAN,
--				  false, false, true);
-+				  false, false, false, true);
++	INIT_WORK(&data->regulator_notify_work, pmbus_regulator_notify_worker);
++
++	ret = devm_add_action_or_reset(dev, pmbus_regulator_notify_work_cancel, data);
++	if (ret)
++		return ret;
++
+ 	return 0;
+ }
  
- 	if (!sensor)
- 		return -ENOMEM;
-@@ -2261,14 +2277,14 @@ static int pmbus_add_fan_ctrl(struct i2c_client *client,
- 
- 	sensor = pmbus_add_sensor(data, "pwm", NULL, index, page,
- 				  0xff, PMBUS_VIRT_PWM_1 + id, PSC_PWM,
--				  false, false, true);
-+				  false, false, false, true);
- 
- 	if (!sensor)
- 		return -ENOMEM;
- 
- 	sensor = pmbus_add_sensor(data, "pwm", "enable", index, page,
- 				  0xff, PMBUS_VIRT_PWM_ENABLE_1 + id, PSC_PWM,
--				  true, false, false);
-+				  true, false, false, false);
- 
- 	if (!sensor)
- 		return -ENOMEM;
-@@ -2310,7 +2326,7 @@ static int pmbus_add_fan_attributes(struct i2c_client *client,
- 
- 			if (pmbus_add_sensor(data, "fan", "input", index,
- 					     page, 0xff, pmbus_fan_registers[f],
--					     PSC_FAN, true, true, true) == NULL)
-+					     PSC_FAN, true, true, false, true) == NULL)
- 				return -ENOMEM;
- 
- 			/* Fan control */
+ static void pmbus_regulator_notify(struct pmbus_data *data, int page, int event)
+ {
+-	int j;
+-
+-	for (j = 0; j < data->info->num_regulators; j++) {
+-		if (page == rdev_get_id(data->rdevs[j])) {
+-			regulator_notifier_call_chain(data->rdevs[j], event, NULL);
+-			break;
+-		}
+-	}
++	atomic_or(event, &data->regulator_events[page]);
++	schedule_work(&data->regulator_notify_work);
+ }
+ #else
+ static int pmbus_regulator_register(struct pmbus_data *data)
 -- 
 2.53.0
 
