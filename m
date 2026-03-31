@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9024426D08;
-	Tue, 31 Mar 2026 16:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587B73FF883;
+	Tue, 31 Mar 2026 16:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975249; cv=none; b=OPcNEw5ffSi0VVB62BIz55TbI6YaUZ6czDDEOK0G7Yu3XD6pr0W7XVEclLFk2mRdS92AyznJ6RmshBocJnDL6eMSvLDLCBMakKUOvNYJIAc+qYpxB3fW6+eJ0PeptrAbk2g36qaxJF8Ui74vaJY5HITP8clEy9er2oYtZV9hqDg=
+	t=1774975252; cv=none; b=jrF8JB5OMmv3K+QzixHr5zdWrmE+facJNDacYmFRtFQFnthU68D+k8SSG2/e/Zhkb9O61mVtgqM48e8YR0KksbtsESjcITSZ7P048VTCDDAatXcuY7A0+mLwRNdBuyItj0wdLn8krVUP5bwSc885J6AVPCiKQVseMw0wWIx7C/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975249; c=relaxed/simple;
-	bh=+B0+KrS9R0p3RP6k0X1d217YdSo+P2NxBrBatwcoz4Y=;
+	s=arc-20240116; t=1774975252; c=relaxed/simple;
+	bh=sejuvBTYCJcP7lFxsINjYoEuuGxU+SR7kAxvxY0JmJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mce4SCyFne214NkJ0DsFqpTyaU4/o8P8Bid4+UbyBLvBBetD5dzkpTG/KuZ6yFlOR62Jt3OSrx7m5hWUG4yx/Q5vqN60gSnrcPiR1HRreAS8v33xE64XUA9qI9oThJHXU5Cb14itfmLhMb3XXt2j9bA+d59/SHBOJCKwBKHqS3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2cC0FWq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HU5EkYyp9QEmWfExmLOvMypmlebLDa39PR4MdXd0kWo4DEUN/vID1YfSyxR6t7ZwQBlrsn00qxfDpkMxBp3QxP+WiFPYTfDxA4LISsYsgtUF5nLDoqW/pJvEro4OQFuaTTVwRlScf/FFBtCFpNLcJYi1A+WHjVZ5oFx8vY3pdaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1S2+FYl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2cC0FWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50867C19423;
-	Tue, 31 Mar 2026 16:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1S2+FYl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E201EC19423;
+	Tue, 31 Mar 2026 16:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975249;
-	bh=+B0+KrS9R0p3RP6k0X1d217YdSo+P2NxBrBatwcoz4Y=;
+	s=korg; t=1774975252;
+	bh=sejuvBTYCJcP7lFxsINjYoEuuGxU+SR7kAxvxY0JmJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2cC0FWqTzkqGLi5CqhUUHVqjlXgeAH27l9Br9oXXftOy2B9EpunVXcczJ+YzC2s6
-	 1nUQERIIW3FzGtjEc2fKL2wEusDctUlHU0S7c6+hlWg7wvVxK9PUM/PdvtBlGWNbPI
-	 lRh+j0K3PgDCO4gIm0Sf+R6t+q7b9zc8O7NRwqPM=
+	b=l1S2+FYlNomr5OB2lBtWnUv/9Q+fSi9ODH/ET/BCAFYl5bhNagJlV0DFTrMpDhyid
+	 Y8gAga7NRANDt6Q0M80a5RZpL6m8s7UCu5Zq/HmC5rZLwZPXCyeyuH/mkmm9itlNdN
+	 X70NB7EBkG1u4btQicaHenNf+Jcv9dMoT0EI6GWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.19 221/342] platform/x86: ISST: Correct locked bit width
-Date: Tue, 31 Mar 2026 18:20:54 +0200
-Message-ID: <20260331161807.106190425@linuxfoundation.org>
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.19 222/342] KVM: arm64: Discard PC update state on vcpu reset
+Date: Tue, 31 Mar 2026 18:20:55 +0200
+Message-ID: <20260331161807.141212915@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -44,41 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit fbddf68d7b4e1e6da7a78dd7fbd8ec376536584a upstream.
+commit 1744a6ef48b9a48f017e3e1a0d05de0a6978396e upstream.
 
-SST-PP locked bit width is set to three bits. It should be only one bit.
-Use SST_PP_LOCK_WIDTH define instead of SST_PP_LEVEL_WIDTH.
+Our vcpu reset suffers from a particularly interesting flaw, as it
+does not correctly deal with state that will have an effect on the
+execution flow out of reset.
 
-Fixes: ea009e4769fa ("platform/x86: ISST: Add SST-PP support via TPMI")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Take the following completely random example, never seen in the wild
+and that never resulted in a couple of sleepless nights: /s
+
+- vcpu-A issues a PSCI_CPU_OFF using the SMC conduit
+
+- SMC being a trapped instruction (as opposed to HVC which is always
+  normally executed), we annotate the vcpu as needing to skip the
+  next instruction, which is the SMC itself
+
+- vcpu-A is now safely off
+
+- vcpu-B issues a PSCI_CPU_ON for vcpu-A, providing a starting PC
+
+- vcpu-A gets reset, get the new PC, and is sent on its merry way
+
+- right at the point of entering the guest, we notice that a PC
+  increment is pending (remember the earlier SMC?)
+
+- vcpu-A skips its first instruction...
+
+What could possibly go wrong?
+
+Well, I'm glad you asked. For pKVM as a NV guest, that first instruction
+is extremely significant, as it indicates whether the CPU is booting
+or resuming. Having skipped that instruction, nothing makes any sense
+anymore, and CPU hotplugging fails.
+
+This is all caused by the decoupling of PC update from the handling
+of an exception that triggers such update, making it non-obvious
+what affects what when.
+
+Fix this train wreck by discarding all the PC-affecting state on
+vcpu reset.
+
+Fixes: f5e30680616ab ("KVM: arm64: Move __adjust_pc out of line")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260323153635.3263828-1-srinivas.pandruvada@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Reviewed-by: Joey Gouly <joey.gouly@arm.com>
+Link: https://patch.msgid.link/20260312140850.822968-1-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/reset.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-+++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-@@ -871,7 +871,7 @@ static int isst_if_get_perf_level(void _
- 	_read_pp_info("current_level", perf_level.current_level, SST_PP_STATUS_OFFSET,
- 		      SST_PP_LEVEL_START, SST_PP_LEVEL_WIDTH, SST_MUL_FACTOR_NONE)
- 	_read_pp_info("locked", perf_level.locked, SST_PP_STATUS_OFFSET,
--		      SST_PP_LOCK_START, SST_PP_LEVEL_WIDTH, SST_MUL_FACTOR_NONE)
-+		      SST_PP_LOCK_START, SST_PP_LOCK_WIDTH, SST_MUL_FACTOR_NONE)
- 	_read_pp_info("feature_state", perf_level.feature_state, SST_PP_STATUS_OFFSET,
- 		      SST_PP_FEATURE_STATE_START, SST_PP_FEATURE_STATE_WIDTH, SST_MUL_FACTOR_NONE)
- 	perf_level.enabled = !!(power_domain_info->sst_header.cap_mask & BIT(1));
+--- a/arch/arm64/kvm/reset.c
++++ b/arch/arm64/kvm/reset.c
+@@ -247,6 +247,20 @@ void kvm_reset_vcpu(struct kvm_vcpu *vcp
+ 			kvm_vcpu_set_be(vcpu);
+ 
+ 		*vcpu_pc(vcpu) = target_pc;
++
++		/*
++		 * We may come from a state where either a PC update was
++		 * pending (SMC call resulting in PC being increpented to
++		 * skip the SMC) or a pending exception. Make sure we get
++		 * rid of all that, as this cannot be valid out of reset.
++		 *
++		 * Note that clearing the exception mask also clears PC
++		 * updates, but that's an implementation detail, and we
++		 * really want to make it explicit.
++		 */
++		vcpu_clear_flag(vcpu, PENDING_EXCEPTION);
++		vcpu_clear_flag(vcpu, EXCEPT_MASK);
++		vcpu_clear_flag(vcpu, INCREMENT_PC);
+ 		vcpu_set_reg(vcpu, 0, reset_state.r0);
+ 	}
+ 
 
 
