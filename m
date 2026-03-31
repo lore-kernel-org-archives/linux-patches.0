@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AE43EF0A2;
-	Tue, 31 Mar 2026 16:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5DD3F99EA;
+	Tue, 31 Mar 2026 16:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974470; cv=none; b=GTbDsSJQGp4RJyz+6oXC7SA5lc3Jc5QTk0VeSlTxEjduBRIk7UrbQqACfoqYoGFoaQVZW2GkmOZi1qmcbc4IlC5CobU1Uzia7/9X6E5vyUiFFLOz8FKXM8wSMbVCBa+HABza+8yVi+9/k6nTp3WQ5U6P1usxlCWRx9+5uyRyf4Y=
+	t=1774974472; cv=none; b=hXjQQ2anvX9mISQFR9QrJy6wafPnKmsdSmbpkZ5vf5TleeMjh8k5PoZhLxhizIz0+6f/VKu45fRKpLyZrEmLlsyeflzLnFAnzxwOQ9cGT8BJNsYXpAeqwIidHvdinhCsDzr4KPcTD8v5Tt7XtUUytU2tl0ZEyXrc2Y0ILfF1PLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974470; c=relaxed/simple;
-	bh=sZtr+MfGzAZ7kREv8rX5efAh7ERZ5xMUpt54NbkbVcI=;
+	s=arc-20240116; t=1774974472; c=relaxed/simple;
+	bh=d+frPPbXz08G46PbZQ0jL447GQK1gr6EXjAEHW7IzW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qa+JbFqFtM/iYaslxJKB5IrCQHVaXJjkoLc++RaACaFQhdG5yhdMR1+t42zubSVSuhDZKBbx0t2cbjqWXyzgCzb9cHdhnq/rCxmu5mJoe8sm9fj5pL4JGLbUenWUYxDEvnmBtaDXG8BDym05OjBrYGpL4BhxkXO3v7Jr/39RPeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMXN8YuX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGEyCjFs9a9yfZOfbUXsXyO5GWKgpz0hurN4NyOyU022fqbA/VMi6fap+c2fXKYry3RzsFvJzlBNWlfmmn4/z8yyXfCObcqwxG4FTZhYjKn/Be7G+pPGscOK/1RuXQuGy1oPWOSJxM9DEhbMGI8gjqjyIxZySdBJnbUWoaQQlW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnBHCK/X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMXN8YuX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84029C19423;
-	Tue, 31 Mar 2026 16:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnBHCK/X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DE5C19423;
+	Tue, 31 Mar 2026 16:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974469;
-	bh=sZtr+MfGzAZ7kREv8rX5efAh7ERZ5xMUpt54NbkbVcI=;
+	s=korg; t=1774974472;
+	bh=d+frPPbXz08G46PbZQ0jL447GQK1gr6EXjAEHW7IzW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TMXN8YuXSFYMPb9r19L7c6rq2wg+s1FtlN6dK8Y9dlz/8TgXTl0rcwKXagmgUEfmA
-	 tf/kIJNK+2UPPBz+Mu07bEv/ZunAkHRzkBOHpyGA7KJFfOLpAtzzpZslE0DA0YE+H7
-	 BShkWbqbDXNehQMSSdYbWoepY/0406+azQFchtxc=
+	b=YnBHCK/X38SA/bnbib92U9gEp/Bm9zogqlqGJbzNQbRqAK1bGMcOLjAg9CWTjYNNP
+	 3fphd+g8vQ4bGIrQYhQGSjBv1VV5Yftut3Bf8hSSJHI3wdRq5rHKhEuZ47ONz4hKR6
+	 SPiBftqiVpKff36Yv+pz9gHaxqecAlfUIVw0TMZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/175] spi: spi-fsl-lpspi: fix teardown order issue (UAF)
-Date: Tue, 31 Mar 2026 18:21:21 +0200
-Message-ID: <20260331161733.334103363@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	stable@kernel.org
+Subject: [PATCH 6.6 098/175] s390/syscalls: Add spectre boundary for syscall dispatch table
+Date: Tue, 31 Mar 2026 18:21:22 +0200
+Message-ID: <20260331161733.380369913@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,69 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit b341c1176f2e001b3adf0b47154fc31589f7410e ]
+commit 48b8814e25d073dd84daf990a879a820bad2bcbd upstream.
 
-There is a teardown order issue in the driver. The SPI controller is
-registered using devm_spi_register_controller(), which delays
-unregistration of the SPI controller until after the fsl_lpspi_remove()
-function returns.
+The s390 syscall number is directly controlled by userspace, but does
+not have an array_index_nospec() boundary to prevent access past the
+syscall function pointer tables.
 
-As the fsl_lpspi_remove() function synchronously tears down the DMA
-channels, a running SPI transfer triggers the following NULL pointer
-dereference due to use after free:
-
-| fsl_lpspi 42550000.spi: I/O Error in DMA RX
-| Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[...]
-| Call trace:
-|  fsl_lpspi_dma_transfer+0x260/0x340 [spi_fsl_lpspi]
-|  fsl_lpspi_transfer_one+0x198/0x448 [spi_fsl_lpspi]
-|  spi_transfer_one_message+0x49c/0x7c8
-|  __spi_pump_transfer_message+0x120/0x420
-|  __spi_sync+0x2c4/0x520
-|  spi_sync+0x34/0x60
-|  spidev_message+0x20c/0x378 [spidev]
-|  spidev_ioctl+0x398/0x750 [spidev]
-[...]
-
-Switch from devm_spi_register_controller() to spi_register_controller() in
-fsl_lpspi_probe() and add the corresponding spi_unregister_controller() in
-fsl_lpspi_remove().
-
-Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://patch.msgid.link/20260319-spi-fsl-lpspi-fixes-v1-1-b433e435b2d8@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Fixes: 56e62a737028 ("s390: convert to generic entry")
+Cc: stable@kernel.org
+Assisted-by: gkh_clanker_2000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://lore.kernel.org/r/2026032404-sterling-swoosh-43e6@gregkh
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/kernel/syscall.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 8ef82a11ebb0f..6b66b0e62db4f 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -954,7 +954,7 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 		enable_irq(irq);
- 	}
+--- a/arch/s390/kernel/syscall.c
++++ b/arch/s390/kernel/syscall.c
+@@ -13,6 +13,7 @@
+  */
  
--	ret = devm_spi_register_controller(&pdev->dev, controller);
-+	ret = spi_register_controller(controller);
- 	if (ret < 0) {
- 		dev_err_probe(&pdev->dev, ret, "spi_register_controller error\n");
- 		goto free_dma;
-@@ -981,6 +981,7 @@ static void fsl_lpspi_remove(struct platform_device *pdev)
- 	struct fsl_lpspi_data *fsl_lpspi =
- 				spi_controller_get_devdata(controller);
- 
-+	spi_unregister_controller(controller);
- 	fsl_lpspi_dma_exit(controller);
- 
- 	pm_runtime_dont_use_autosuspend(fsl_lpspi->dev);
--- 
-2.53.0
-
+ #include <linux/errno.h>
++#include <linux/nospec.h>
+ #include <linux/sched.h>
+ #include <linux/mm.h>
+ #include <linux/fs.h>
+@@ -141,6 +142,7 @@ static void do_syscall(struct pt_regs *r
+ 	if (likely(nr >= NR_syscalls))
+ 		goto out;
+ 	do {
++		nr = array_index_nospec(nr, NR_syscalls);
+ 		regs->gprs[2] = current->thread.sys_call_table[nr](regs);
+ 	} while (test_and_clear_pt_regs_flag(regs, PIF_EXECVE_PGSTE_RESTART));
+ out:
 
 
