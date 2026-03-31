@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3580D425CFF;
-	Tue, 31 Mar 2026 16:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1001D425CFF;
+	Tue, 31 Mar 2026 16:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975099; cv=none; b=tnznALe+KH2wN0rbIdWzyPFfF5i+usvr99tcp0h5b0JDoznXKs8hLCXkg73D5d603d9M8AC+p5lQuWxt0XPe8O1BW5PIsMoA8EXX2wXu+TgYRXFk4YUIGWG65IsBRd56G8+aHXcEBmMUiDsXaM2xfA//iKCVttdrSJ+Fbbhhli4=
+	t=1774975102; cv=none; b=PX9ICadG0rOoJQqJXPL46gsqAqvNFU1fUkntGVN/5eXmfopAuH1+iGZ6YTfwpIEvCIlf3rJTXjk1nYKGjkov+BlXnQUWV8ye3zHjyD8pnsCcK7Zs4e0PGPQOrc/8x2DH3mOkkcGYBtFh0NeapDFrTMbGKEo9NSYb/SNGPgGRoCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975099; c=relaxed/simple;
-	bh=+JXU/DUJfqf/nzKdKTT9IyHPfGBnZiBfqk/VU9I9exE=;
+	s=arc-20240116; t=1774975102; c=relaxed/simple;
+	bh=+rwcBwCqVqY1299X7BS341Z04JSACTKOl6TAAHudUxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eF0DqjkioY/hVMT4DUdyiA2OG3WhHjNqTBfpK6jAAne0pmpVLMENVgCC2i2w0tV/aa7zejkhRyGk5K15XWlspAssbtIFKEqp79q0OMiT+uSJ/rGzeb5ANixy0BVmFm5krAmKxE8iUkJXGEOp7/ePv1D53xs4LWJLS7R8VldR/3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihGKlJcQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iecGVYtV25oeAe8UKtwRVlj5godhLfJeu/VDDvfzWa3jtF6PJ1a6HlencYz0Ztyn4Y1apGbCbIUoHYAIQ6ve9Y1CvYO9lw2F0hC2Uv2E8WIWggqFxJ5fenEcW/oSnEA7zbLgQazb3HsSfNQHpstCNejAS0n8nr3RRw2LFjZWyM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6HsDU/o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihGKlJcQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D66C19423;
-	Tue, 31 Mar 2026 16:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6HsDU/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55DA4C19423;
+	Tue, 31 Mar 2026 16:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975099;
-	bh=+JXU/DUJfqf/nzKdKTT9IyHPfGBnZiBfqk/VU9I9exE=;
+	s=korg; t=1774975101;
+	bh=+rwcBwCqVqY1299X7BS341Z04JSACTKOl6TAAHudUxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ihGKlJcQF0Cr0/mzuxJJI/NNbGN6qw2BD4cww76iiHf5suguB1Ru9diUnQNgREe0R
-	 jK5aDZa4UMEzkR8CFTeyOLi+7rqaXZnEld79JaS+chDwg1inOs52YTPgLFzj4sa8pF
-	 oNFidJHAVBbasJYoXiBsxlxD2pBrK35rw6yPBrfQ=
+	b=w6HsDU/oM7OonDf4RboWrc4ALSz0WGbnC+3tl5DHKL+vK1vQX9HpzGlm0Vs5qnt7c
+	 eqlRgBpwr0F9Sdg9UKUOvlnrJBwneV8D2QKJxVSn/572CGR99vp5idVHx3GT7SdcFK
+	 oCKp+w7WCIrR14RFG9D61egUg3i65kFH/AMnYrhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	=?UTF-8?q?Jonas=20K=C3=B6ppeler?= <j.koeppeler@tu-berlin.de>,
-	Chris Arges <carges@cloudflare.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 131/342] net_sched: codel: fix stale state for empty flows in fq_codel
-Date: Tue, 31 Mar 2026 18:19:24 +0200
-Message-ID: <20260331161803.827752150@linuxfoundation.org>
+Subject: [PATCH 6.19 132/342] dma-mapping: add missing `inline` for `dma_free_attrs`
+Date: Tue, 31 Mar 2026 18:19:25 +0200
+Message-ID: <20260331161803.864533651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -49,81 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Köppeler <j.koeppeler@tu-berlin.de>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 815980fe6dbb01ad4007e8b260a45617f598b76d ]
+[ Upstream commit 2cdaff22ed26f1e619aa2b43f27bb84f2c6ef8f8 ]
 
-When codel_dequeue() finds an empty queue, it resets vars->dropping
-but does not reset vars->first_above_time.  The reference CoDel
-algorithm (Nichols & Jacobson, ACM Queue 2012) resets both:
+Under an UML build for an upcoming series [1], I got `-Wstatic-in-inline`
+for `dma_free_attrs`:
 
-  dodeque_result codel_queue_t::dodeque(time_t now) {
-      ...
-      if (r.p == NULL) {
-          first_above_time = 0;   // <-- Linux omits this
-      }
-      ...
-  }
+      BINDGEN rust/bindings/bindings_generated.rs - due to target missing
+    In file included from rust/helpers/helpers.c:59:
+    rust/helpers/dma.c:17:2: warning: static function 'dma_free_attrs' is used in an inline function with external linkage [-Wstatic-in-inline]
+       17 |         dma_free_attrs(dev, size, cpu_addr, dma_handle, attrs);
+          |         ^
+    rust/helpers/dma.c:12:1: note: use 'static' to give inline function 'rust_helper_dma_free_attrs' internal linkage
+       12 | __rust_helper void rust_helper_dma_free_attrs(struct device *dev, size_t size,
+          | ^
+          | static
 
-Note that codel_should_drop() does reset first_above_time when called
-with a NULL skb, but codel_dequeue() returns early before ever calling
-codel_should_drop() in the empty-queue case.  The post-drop code paths
-do reach codel_should_drop(NULL) and correctly reset the timer, so a
-dropped packet breaks the cycle -- but the next delivered packet
-re-arms first_above_time and the cycle repeats.
+The issue is that `dma_free_attrs` was not marked `inline` when it was
+introduced alongside the rest of the stubs.
 
-For sparse flows such as ICMP ping (one packet every 200ms-1s), the
-first packet arms first_above_time, the flow goes empty, and the
-second packet arrives after the interval has elapsed and gets dropped.
-The pattern repeats, producing sustained loss on flows that are not
-actually congested.
+Thus mark it.
 
-Test: veth pair, fq_codel, BQL disabled, 30000 iptables rules in the
-consumer namespace (NAPI-64 cycle ~14ms, well above fq_codel's 5ms
-target), ping at 5 pps under UDP flood:
-
-  Before fix:  26% ping packet loss
-  After fix:    0% ping packet loss
-
-Fix by resetting first_above_time to zero in the empty-queue path
-of codel_dequeue(), matching the reference algorithm.
-
-Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
-Fixes: d068ca2ae2e6 ("codel: split into multiple files")
-Co-developed-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Signed-off-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Signed-off-by: Jonas Köppeler <j.koeppeler@tu-berlin.de>
-Reported-by: Chris Arges <carges@cloudflare.com>
-Tested-by: Jonas Köppeler <j.koeppeler@tu-berlin.de>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/all/20260318134826.1281205-7-hawk@kernel.org/
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260323174920.253526-1-hawk@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ed6ccf10f24b ("dma-mapping: properly stub out the DMA API for !CONFIG_HAS_DMA")
+Closes: https://lore.kernel.org/rust-for-linux/20260322194616.89847-1-ojeda@kernel.org/ [1]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260325015548.70912-1-ojeda@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/codel_impl.h | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/dma-mapping.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/codel_impl.h b/include/net/codel_impl.h
-index 78a27ac730700..b2c359c6dd1b8 100644
---- a/include/net/codel_impl.h
-+++ b/include/net/codel_impl.h
-@@ -158,6 +158,7 @@ static struct sk_buff *codel_dequeue(void *ctx,
- 	bool drop;
- 
- 	if (!skb) {
-+		vars->first_above_time = 0;
- 		vars->dropping = false;
- 		return skb;
- 	}
+diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
+index aa36a0d1d9df6..190eab9f5e8c2 100644
+--- a/include/linux/dma-mapping.h
++++ b/include/linux/dma-mapping.h
+@@ -240,8 +240,8 @@ static inline void *dma_alloc_attrs(struct device *dev, size_t size,
+ {
+ 	return NULL;
+ }
+-static void dma_free_attrs(struct device *dev, size_t size, void *cpu_addr,
+-		dma_addr_t dma_handle, unsigned long attrs)
++static inline void dma_free_attrs(struct device *dev, size_t size,
++		void *cpu_addr, dma_addr_t dma_handle, unsigned long attrs)
+ {
+ }
+ static inline void *dmam_alloc_attrs(struct device *dev, size_t size,
 -- 
 2.51.0
 
