@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68297425CFF;
-	Tue, 31 Mar 2026 16:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC592EE262;
+	Tue, 31 Mar 2026 16:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975117; cv=none; b=QoI0SAUrStWXS8vWHxlRloLiibduPhLCa+D+R5sFAEuQHEjd5gRAg4KHbASU3PqexeeJwPKBr2P9Y7XGFll1a3IP936Q0I3UV8IamKHX085vHVVQ/shLrC38PqzKCItB8qF/ijPfLoy89BNcZmtUIAGQXfuNZ8AIZV4a2akaALs=
+	t=1774975120; cv=none; b=oUsHCDQXX0JJrQbewXh6AT3NFui5ANQST/6hkAzUpUJa1c99ejYbtKUd+ZsskOWC0Ckvvw5FcSQ9QmutKM+CiMxeznpCqfxoP61ZNcX9C/+vUCggy8ZlHyBHMgBCAAXxu19YziZqAM4DXZINlo51zUYsh04+ZBqCrAZNPHzrtRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975117; c=relaxed/simple;
-	bh=QgJMqnqDMMMAIRCQS0i9sHl2OLlYjLLIf/Ul25YdMRI=;
+	s=arc-20240116; t=1774975120; c=relaxed/simple;
+	bh=ey7HGYH8uQBPK/59c8Tvw8a0Ek3OF2QBho9l4yaSxIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jctZd4TmHxK4CM356u2ccNNEbHG5arrp8T29PFoBiir1a4P1B6IFi2sCxyKdywnVnrsgky/gxBip+BB/hCc22lNsKtTDiUl/wYUKnxZVWtkr5fWZSOlR22UuNRsClbsvq9GG2VYiEc/auxFwSB3/g2Ty+bgY9Uy83UUZmwsURzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8RLlLXB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CP+yQvCtHt10B1uhe6+2wfTaiANSMmdpMF9FuH/0JdhCs5jU2nHdUgb1FRMCsOeRZMZZyrPEqKz7sZhk8jaAX1agrq0Y558CGcyrIO+0wBBqtCUO+9uOtiERCbMaExk79DCmVZ3oSAa5Q543gIq6cHpSHcW3SekgqQicS27JuBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnmsrt4i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8RLlLXB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2181C19423;
-	Tue, 31 Mar 2026 16:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnmsrt4i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9537BC19423;
+	Tue, 31 Mar 2026 16:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975117;
-	bh=QgJMqnqDMMMAIRCQS0i9sHl2OLlYjLLIf/Ul25YdMRI=;
+	s=korg; t=1774975119;
+	bh=ey7HGYH8uQBPK/59c8Tvw8a0Ek3OF2QBho9l4yaSxIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e8RLlLXBzzNjm2r+HwMYmVR+GVEYvf913LAW07NUGhjQZkmf+Vi9wINlU3t2Px87Y
-	 CAqzmy2iBhs92o6nTvoE7N2mEH/hYWnFafHQKXIq+WUmk0zE4PIX727OzzZ6wkOfhR
-	 qBycn0wZWCxNv1CE3zjDTH5uN1Sk6xOZ1raP1hiY=
+	b=nnmsrt4i58rOnJAyJ0I45ZSILGuvpUlOM+6P0ITDD3un9wv3PB9ISELfht2ExGlOH
+	 wz2q0mv3sCglqWPC5e/KsIcZgmqHE5wYnT9vsHPndiMbGIDL0uoiGOEgTbCesWzOjY
+	 z7+M337ptI3dIeQbJUuvqGQJvlA8PAF7GDtK6M2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngjun Park <youngjun.park@lge.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Sebastian=20=C3=96sterlund?= <sebastian.osterlund@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 171/342] PM: sleep: Drop spurious WARN_ON() from pm_restore_gfp_mask()
-Date: Tue, 31 Mar 2026 18:20:04 +0200
-Message-ID: <20260331161805.302594232@linuxfoundation.org>
+Subject: [PATCH 6.19 172/342] drm/xe/pf: Fix use-after-free in migration restore
+Date: Tue, 31 Mar 2026 18:20:05 +0200
+Message-ID: <20260331161805.339615952@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -45,54 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Youngjun Park <youngjun.park@lge.com>
+From: Michał Winiarski <michal.winiarski@intel.com>
 
-[ Upstream commit a8d51efb5929ae308895455a3e496b5eca2cd143 ]
+[ Upstream commit 87997b6c6516e049cbaf2fc6810b213d587a06b1 ]
 
-Commit 35e4a69b2003f ("PM: sleep: Allow pm_restrict_gfp_mask()
-stacking") introduced refcount-based GFP mask management that warns
-when pm_restore_gfp_mask() is called with saved_gfp_count == 0.
+When an error is returned from xe_sriov_pf_migration_restore_produce(),
+the data pointer is not set to NULL, which can trigger use-after-free
+in subsequent .write() calls.
+Set the pointer to NULL upon error to fix the problem.
 
-Some hibernation paths call pm_restore_gfp_mask() defensively where
-the GFP mask may or may not be restricted depending on the execution
-path. For example, the uswsusp interface invokes it in
-SNAPSHOT_CREATE_IMAGE, SNAPSHOT_UNFREEZE, and snapshot_release().
-Before the stacking change this was a silent no-op; it now triggers
-a spurious WARNING.
-
-Remove the WARN_ON() wrapper from the !saved_gfp_count check while
-retaining the check itself, so that defensive calls remain harmless
-without producing false warnings.
-
-Fixes: 35e4a69b2003f ("PM: sleep: Allow pm_restrict_gfp_mask() stacking")
-Signed-off-by: Youngjun Park <youngjun.park@lge.com>
-[ rjw: Subject tweak ]
-Link: https://patch.msgid.link/20260322120528.750178-1-youngjun.park@lge.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 1ed30397c0b92 ("drm/xe/pf: Add support for encap/decap of bitstream to/from packet")
+Reported-by: Sebastian Österlund <sebastian.osterlund@intel.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7230
+Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Link: https://patch.msgid.link/20260217154118.176902-1-michal.winiarski@intel.com
+Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
+(cherry picked from commit 4f53d8c6d23527d734fe3531d08e15cb170a0819)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_sriov_packet.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/power/main.c b/kernel/power/main.c
-index 03b2c5495c77a..9ce75b1a23ed3 100644
---- a/kernel/power/main.c
-+++ b/kernel/power/main.c
-@@ -40,7 +40,7 @@ void pm_restore_gfp_mask(void)
- {
- 	WARN_ON(!mutex_is_locked(&system_transition_mutex));
+diff --git a/drivers/gpu/drm/xe/xe_sriov_packet.c b/drivers/gpu/drm/xe/xe_sriov_packet.c
+index bab9946968964..111877b6d44cf 100644
+--- a/drivers/gpu/drm/xe/xe_sriov_packet.c
++++ b/drivers/gpu/drm/xe/xe_sriov_packet.c
+@@ -342,6 +342,8 @@ ssize_t xe_sriov_packet_write_single(struct xe_device *xe, unsigned int vfid,
+ 		ret = xe_sriov_pf_migration_restore_produce(xe, vfid, *data);
+ 		if (ret) {
+ 			xe_sriov_packet_free(*data);
++			*data = NULL;
++
+ 			return ret;
+ 		}
  
--	if (WARN_ON(!saved_gfp_count) || --saved_gfp_count)
-+	if (!saved_gfp_count || --saved_gfp_count)
- 		return;
- 
- 	gfp_allowed_mask = saved_gfp_mask;
 -- 
 2.53.0
 
