@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EC3425CCD;
-	Tue, 31 Mar 2026 16:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C67423A9F;
+	Tue, 31 Mar 2026 16:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974607; cv=none; b=dNayPPoQm9XZIDmZ3lv/KaFf2G7oKNvJ3z8CaBvUhg4WGAJUbtewU0I1bCV+uxfMdowEE2QNmFHscTAa3RO/WuGnhYr/pTb44OEQb3nmUfeJgsp/l1ZDKh9uSbDc8beOfw9hiYxZ2IYNZpdHu5UtOQ1hF3IRX+nHzWLUVjEOy+0=
+	t=1774974610; cv=none; b=dwTrYk/eEjWi1FJYnQachg+07U4Yt0NhqO4rN8Xo9JY7IBbz/6g9yxwsGsjXarQt2vXxO2ZVeAPFmXt5VqYoAh1jjHP2J2aER2RdDMuSsieMXh0hjMZFUVnLru0Niou4hwmJvxY8Tae8R4SctGH5aoRk7zgXJ4+N4T3jYGgnW3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974607; c=relaxed/simple;
-	bh=PAqpRS2Foi/XI18CmssbQ++Rwfce2fYu0lYzjFGbyk8=;
+	s=arc-20240116; t=1774974610; c=relaxed/simple;
+	bh=ueSIGnWsYw3KYqrCU2V2SeNjCE9dgvfrlc5p2oTE+lA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CduLM9vdGy29D/HuMDdQR5PuYmEx+1FGnU+vZmO0xmAl9ScQJNY1ycG0fHgIeQbl/3k87Er0Uq5L2X0ivKdk8AqzBui/FNhqX6vpSpk6qtk/Yf5I47pDHdymUlF7u3ucV6R1YAHz80pHGRAw3tq7rZ8/aKGIF7NDToo+ZzC7HmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8Oaqr5h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Su1CBCshiOAQ33K5JROU/vCQ7VZtxgErXop3zgFUqHJTfsJ4BHVadmFkQ1XEGwCWfnKQr2/10jqjFbbUHx+0IrzsL6nzCRzQCwGxAW34VWFXTSIP4OTIZrfblcrW8c2LFsb11sfQpPo0CWlVaMFRc3V5Z8qlNA5KQxgGIypY9qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvUx8uFs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8Oaqr5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E927C2BCB5;
-	Tue, 31 Mar 2026 16:30:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvUx8uFs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83FEC2BCB2;
+	Tue, 31 Mar 2026 16:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974607;
-	bh=PAqpRS2Foi/XI18CmssbQ++Rwfce2fYu0lYzjFGbyk8=;
+	s=korg; t=1774974610;
+	bh=ueSIGnWsYw3KYqrCU2V2SeNjCE9dgvfrlc5p2oTE+lA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R8Oaqr5hesd64U7KsW4pndUz94tLNKx3FpMEXicpfqexlHCxdrOQZmdFT+7/lRBUR
-	 WII7tHOYBOcoDco84J7NqyvJR2jAKtBKcw3UX7McbSEArbmzej6Sb2r9higALh+RY0
-	 WLhg1XtjbR+kGKFOjpiWP3i6I8TenoBIw9wP7dOM=
+	b=IvUx8uFsZYDAWwPDehgWF39fO8Kmsu0c4Scon6IshEl5ouftx3lWzi23Zz9/ctHWt
+	 fnJTFoRr+i7NG2+KRC9ujGfOHrYod5sHjy7QWNigdSjXr1Bp56hBpn7oMrQunq6p0o
+	 mYYt3Vm5goT9i1ivfSgL+N1SgWrw0k5lzUlbnG8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Tyllis Xu <LivelyCarpet87@gmail.com>,
-	Dave Marquardt <davemarq@linux.ibm.com>,
-	Tyrel Datwyler <tyreld@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 118/175] scsi: ibmvfc: Fix OOB access in ibmvfc_discover_targets_done()
-Date: Tue, 31 Mar 2026 18:21:42 +0200
-Message-ID: <20260331161734.116204644@linuxfoundation.org>
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.6 109/175] KVM: arm64: Discard PC update state on vcpu reset
+Date: Tue, 31 Mar 2026 18:21:33 +0200
+Message-ID: <20260331161733.784204046@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -53,45 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyllis Xu <livelycarpet87@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 61d099ac4a7a8fb11ebdb6e2ec8d77f38e77362f upstream.
+commit 1744a6ef48b9a48f017e3e1a0d05de0a6978396e upstream.
 
-A malicious or compromised VIO server can return a num_written value in the
-discover targets MAD response that exceeds max_targets. This value is
-stored directly in vhost->num_targets without validation, and is then used
-as the loop bound in ibmvfc_alloc_targets() to index into disc_buf[], which
-is only allocated for max_targets entries. Indices at or beyond max_targets
-access kernel memory outside the DMA-coherent allocation.  The
-out-of-bounds data is subsequently embedded in Implicit Logout and PLOGI
-MADs that are sent back to the VIO server, leaking kernel memory.
+Our vcpu reset suffers from a particularly interesting flaw, as it
+does not correctly deal with state that will have an effect on the
+execution flow out of reset.
 
-Fix by clamping num_written to max_targets before storing it.
+Take the following completely random example, never seen in the wild
+and that never resulted in a couple of sleepless nights: /s
 
-Fixes: 072b91f9c651 ("[SCSI] ibmvfc: IBM Power Virtual Fibre Channel Adapter Client Driver")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+- vcpu-A issues a PSCI_CPU_OFF using the SMC conduit
+
+- SMC being a trapped instruction (as opposed to HVC which is always
+  normally executed), we annotate the vcpu as needing to skip the
+  next instruction, which is the SMC itself
+
+- vcpu-A is now safely off
+
+- vcpu-B issues a PSCI_CPU_ON for vcpu-A, providing a starting PC
+
+- vcpu-A gets reset, get the new PC, and is sent on its merry way
+
+- right at the point of entering the guest, we notice that a PC
+  increment is pending (remember the earlier SMC?)
+
+- vcpu-A skips its first instruction...
+
+What could possibly go wrong?
+
+Well, I'm glad you asked. For pKVM as a NV guest, that first instruction
+is extremely significant, as it indicates whether the CPU is booting
+or resuming. Having skipped that instruction, nothing makes any sense
+anymore, and CPU hotplugging fails.
+
+This is all caused by the decoupling of PC update from the handling
+of an exception that triggers such update, making it non-obvious
+what affects what when.
+
+Fix this train wreck by discarding all the PC-affecting state on
+vcpu reset.
+
+Fixes: f5e30680616ab ("KVM: arm64: Move __adjust_pc out of line")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
-Reviewed-by: Dave Marquardt <davemarq@linux.ibm.com>
-Acked-by: Tyrel Datwyler <tyreld@linux.ibm.com>
-Link: https://patch.msgid.link/20260314170151.548614-1-LivelyCarpet87@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Reviewed-by: Joey Gouly <joey.gouly@arm.com>
+Link: https://patch.msgid.link/20260312140850.822968-1-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ibmvscsi/ibmvfc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/reset.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/scsi/ibmvscsi/ibmvfc.c
-+++ b/drivers/scsi/ibmvscsi/ibmvfc.c
-@@ -4928,7 +4928,8 @@ static void ibmvfc_discover_targets_done
- 	switch (mad_status) {
- 	case IBMVFC_MAD_SUCCESS:
- 		ibmvfc_dbg(vhost, "Discover Targets succeeded\n");
--		vhost->num_targets = be32_to_cpu(rsp->num_written);
-+		vhost->num_targets = min_t(u32, be32_to_cpu(rsp->num_written),
-+					   max_targets);
- 		ibmvfc_set_host_action(vhost, IBMVFC_HOST_ACTION_ALLOC_TGTS);
- 		break;
- 	case IBMVFC_MAD_FAILED:
+--- a/arch/arm64/kvm/reset.c
++++ b/arch/arm64/kvm/reset.c
+@@ -293,6 +293,20 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu
+ 			kvm_vcpu_set_be(vcpu);
+ 
+ 		*vcpu_pc(vcpu) = target_pc;
++
++		/*
++		 * We may come from a state where either a PC update was
++		 * pending (SMC call resulting in PC being increpented to
++		 * skip the SMC) or a pending exception. Make sure we get
++		 * rid of all that, as this cannot be valid out of reset.
++		 *
++		 * Note that clearing the exception mask also clears PC
++		 * updates, but that's an implementation detail, and we
++		 * really want to make it explicit.
++		 */
++		vcpu_clear_flag(vcpu, PENDING_EXCEPTION);
++		vcpu_clear_flag(vcpu, EXCEPT_MASK);
++		vcpu_clear_flag(vcpu, INCREMENT_PC);
+ 		vcpu_set_reg(vcpu, 0, reset_state.r0);
+ 	}
+ 
 
 
