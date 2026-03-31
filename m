@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C20E40710B;
-	Tue, 31 Mar 2026 16:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE33229E11A;
+	Tue, 31 Mar 2026 16:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976290; cv=none; b=k6EA/aA9pLymT+wilQOXd4YPtgo4aOJPCY0tagy0imO3d9jsj/7NUe5wiDNDQeY2skx0JQFkUDxOt1TNUMJIEscYcEBGT54YS5cMXYIN/7xEQWfx5vJAyYxPt4pBPYNkhJKnSGY3iSIoTzAaeVTNx3aoBWa1Aanh0wOBDXtXg0w=
+	t=1774976292; cv=none; b=pNFXZfEpLrHunVoEHg4PgpL37zZi0jfqD+ZObqeNHoy/MlCMpXd73QiadO497H9k06m8MhSuD2YgWvcU5aNpyqcwn6NIruY/o+pi11FCtKSHyff/zcL4AeW//HN0M6j2im91wDC2XwbRADdVqGd11Ma5hyivL80TCpwS80g5x9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976290; c=relaxed/simple;
-	bh=hYbWI3ho0ETmtXHUFYcviZli0k332Qcq6nZYfpiE5gE=;
+	s=arc-20240116; t=1774976292; c=relaxed/simple;
+	bh=EQYYraXCLsoWOsZhEK2Jsq5totgPukplIl3KiZCDYNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gBMU6AP4Fp+6TyfryxZXS33uvY9ReLjBpxU0czWogoSs/vCzByfztWtKQyGNKUS5nEeVdv43lUfaZzm5KR/+s6pvKkFm4yFoMg3mmHrwyytVwHScldHzBiiSnSvUzvh3iQZixIbPhak28zZ0FH1rQVp3U4604icexqGpksQK5O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYmq/bU8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=apiDlt6pez9xwgCWubfpa2syr67ZztFopJWEcjEXa0mUYRui1NCQO5HpPjWBvyguTS1SAIzuUIiCbLsw4rYjcCSEtfx4CWtDeAUJp33F9rQ8NXzDe76hp/0Eb3uByHJu1RLopTUdiJ78Q8UShJJ2ei+l1FdfsyzH+8KWPUX0lvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDlFiUXI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYmq/bU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6010C19423;
-	Tue, 31 Mar 2026 16:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDlFiUXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4485CC19423;
+	Tue, 31 Mar 2026 16:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976290;
-	bh=hYbWI3ho0ETmtXHUFYcviZli0k332Qcq6nZYfpiE5gE=;
+	s=korg; t=1774976292;
+	bh=EQYYraXCLsoWOsZhEK2Jsq5totgPukplIl3KiZCDYNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYmq/bU8yZep1poqhOBgo9QcfpFvYtCweweztdp1xdTbW+Ahcn1OAiJ9kaheFQNH+
-	 VKm0RT+kfmXfwmC8OiB7M5f4vDxzmZhUWQ3/xeQDoCXlDOSDru3yADPtZtNsZmpU76
-	 SqK4gHUopQqgAxEsFz407GQsHQY2zcDtxN+4/VX8=
+	b=xDlFiUXIoHKIOaU8iQUHfkiPK/cdj8Y0ytgE76anKgPfib0R3+iaMNhfkOvRIR9f7
+	 UFvZdajZU9lkgKXolhVfWaptfLLPoM3gumjY1xnomxEDNEu+505kL5TjmCOwRruAdJ
+	 hOYAsFiKJrxzLdaOXcegcAXKSwSn6+4wDZnVlV/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Romain Sioen <romain.sioen@microchip.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/309] platform/x86: oxpec: Add support for OneXPlayer X1 Air
-Date: Tue, 31 Mar 2026 18:18:59 +0200
-Message-ID: <20260331161754.811299910@linuxfoundation.org>
+Subject: [PATCH 6.18 037/309] HID: mcp2221: cancel last I2C command on read error
+Date: Tue, 31 Mar 2026 18:19:00 +0200
+Message-ID: <20260331161754.848769213@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -45,47 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Romain Sioen <romain.sioen@microchip.com>
 
-[ Upstream commit 2a3b4a8c10a64a62c4243007139d253dc1324dfd ]
+[ Upstream commit e31b556c0ba21f20c298aa61181b96541140b7b9 ]
 
-X1 Air is an X1 variant with a newer Intel chipset. It uses the same
-registers as the X1. Add a quirk for it to the oxpec driver.
+When an I2C SMBus read operation fails, the MCP2221 internal state machine
+may not reset correctly, causing subsequent transactions to fail.
 
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://patch.msgid.link/20260223183004.2696892-4-lkml@antheas.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+By adding a short delay and explicitly cancelling the last command,
+we ensure the device is ready for the next operation.
+
+Fix an issue where i2cdetect was not able to detect all devices correctly
+on the bus.
+
+Signed-off-by: Romain Sioen <romain.sioen@microchip.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/oxpec.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/hid-mcp2221.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/platform/x86/oxpec.c b/drivers/platform/x86/oxpec.c
-index d66c9c0003585..a30845ba37969 100644
---- a/drivers/platform/x86/oxpec.c
-+++ b/drivers/platform/x86/oxpec.c
-@@ -313,6 +313,13 @@ static const struct dmi_system_id dmi_table[] = {
- 		},
- 		.driver_data = (void *)oxp_x1,
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
-+			DMI_EXACT_MATCH(DMI_BOARD_NAME, "ONEXPLAYER X1Air"),
-+		},
-+		.driver_data = (void *)oxp_x1,
-+	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
+diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
+index 33603b019f975..ef3b5c77c38e3 100644
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -353,6 +353,8 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
+ 				usleep_range(90, 100);
+ 				retries++;
+ 			} else {
++				usleep_range(980, 1000);
++				mcp_cancel_last_cmd(mcp);
+ 				return ret;
+ 			}
+ 		} else {
 -- 
 2.51.0
 
