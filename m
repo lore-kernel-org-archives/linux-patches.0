@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B862FE042;
-	Tue, 31 Mar 2026 17:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1C72F5491;
+	Tue, 31 Mar 2026 17:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976680; cv=none; b=jjbs9+hWGMowroHRotexgQ0tgQguwOWZOIDS7W8d5GWye9MUj6zND+ZD1aaCHakJTl4FRk4HIHQUSZvVoVok2KGocgy7zIKrc1GVsL99WlLVhBRXKlA3k/ApRsmu69ngiX9aAwe78Nd4UjyLVZX7wVhx38YQ9n/aqLbCHXDit0I=
+	t=1774976683; cv=none; b=RjEpoHSL63bWAhqbOCBmOhJV2d2mpN688VpXrPdJ9snQnJO8m0wr4E+TucxsmnDSaco70TMrHChIzvAbCvB77raJBBiqmWW72ynUoafV5sBZZKsNyzcPTPl0NoG57oBIFfaE2+SbKbFDxyWRe16QY7poclAnIj6VwmZMPCeiG/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976680; c=relaxed/simple;
-	bh=fzSI70kT9r1o3NJzUrcoF+d+VspSwqUqDuBSIsgV/zk=;
+	s=arc-20240116; t=1774976683; c=relaxed/simple;
+	bh=ffMZCVhu/fl9RRmUsKa+BMNiys2VhxoTDE9ACYWyAws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HSETXESpUG2Pf3N9eMF6hIqnLQHTZeS0jzXbgHSXXXTL3zt+b6cs/FB7fAo54keVyBO1Rt/z2euUWZsWTDwQJERVOXW3YOZ6d+6AoTejNTyh9NvMfVmYLO4dKKbQRSrEiLs3Imdt3BaBgb3w2gGzRnubndAc4bJeYagw7GKoaoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvOXKF6H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WVpnBs3PNad9n8mC7HNh9wmo9F5hbKCIxkBC5TTJiLqUcjYpfvmYkAWTqLhye4PwcjAX8B6i4em+lcj7oeVj0auKGmgX+yY14X8aYuKMQ3eYy/j8GrnqatfFu42NclnPeLMubf2ZAvDlDcjoueitlGlHgFLWtb9bNnkDaDrkmew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXvFzi2f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvOXKF6H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A182C19423;
-	Tue, 31 Mar 2026 17:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXvFzi2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96716C19423;
+	Tue, 31 Mar 2026 17:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976680;
-	bh=fzSI70kT9r1o3NJzUrcoF+d+VspSwqUqDuBSIsgV/zk=;
+	s=korg; t=1774976682;
+	bh=ffMZCVhu/fl9RRmUsKa+BMNiys2VhxoTDE9ACYWyAws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvOXKF6H3YpU/1Sn35Os3QZm7F95PA8f/9cir0puxbEDYVDfbkRUQq2iGnKK8R8do
-	 oOgd14fBe+LEswYMznaWfAL7DphCWFxaNTd9g9JuExqGVH1aLLITT27a5lyawbcYyR
-	 F5l0VFCeKLP2OVcVBCCu8eI2QaZqtI+2tJzrWfXk=
+	b=EXvFzi2fLuT/WYfhKSeX78xM5yspyedht2RR0An4nsQWKQvj4GsQHqHGX673I44oB
+	 utg5+bwmD9qOgeZoTF2dSy9PB7y+moaWaYcuPewDLQzvnjlhQ20bxBKnB+Hp44t1f9
+	 +Y5xE+T2cmoQ/FxeLMfxh2HCU2gyLUbbjnz5DDAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Nepomnyashih <sdl@nppct.ru>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 186/309] ALSA: firewire-lib: fix uninitialized local variable
-Date: Tue, 31 Mar 2026 18:21:29 +0200
-Message-ID: <20260331161800.306959322@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Joel Selvaraj <foss@joelselvaraj.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 187/309] ASoC: codecs: wcd934x: fix typo in dt parsing
+Date: Tue, 31 Mar 2026 18:21:30 +0200
+Message-ID: <20260331161800.342148919@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -50,41 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Nepomnyashih <sdl@nppct.ru>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit bb120ad57def62e3f23e3d999c5fbed11f610993 upstream.
+commit cfb385a8dc88d86a805a5682eaa68f59fa5c0ec3 upstream.
 
-Similar to commit d8dc8720468a ("ALSA: firewire-lib: fix uninitialized
-local variable"), the local variable `curr_cycle_time` in
-process_rx_packets() is declared without initialization.
+Looks like we ended up with a typo during device tree data parsing
+as part of 4f16b6351bbff ("ASoC: codecs: wcd: add common helper for wcd
+codecs") patch.
+ This will result in not parsing the device tree data and results in
+zero mic bias values.
 
-When the tracepoint event is not probed, the variable may appear to be
-used without being initialized. In practice the value is only relevant
-when the tracepoint is enabled, however initializing it avoids potential
-use of an uninitialized value and improves code safety.
+Fix this by calling wcd_dt_parse_micbias_info instead of
+wcd_dt_parse_mbhc_data.
 
-Initialize `curr_cycle_time` to zero.
-
-Fixes: fef4e61b0b76 ("ALSA: firewire-lib: extend tracepoints event including CYCLE_TIME of 1394 OHCI")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
-Link: https://patch.msgid.link/20260316191824.83249-1-sdl@nppct.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 4f16b6351bbff ("ASoC: codecs: wcd: add common helper for wcd codecs")
+Cc: Stable@vger.kernel.org
+Reported-by: Joel Selvaraj <foss@joelselvaraj.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260323231748.2217967-1-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/amdtp-stream.c |    2 +-
+ sound/soc/codecs/wcd934x.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/firewire/amdtp-stream.c
-+++ b/sound/firewire/amdtp-stream.c
-@@ -1179,7 +1179,7 @@ static void process_rx_packets(struct fw
- 	struct pkt_desc *desc = s->packet_descs_cursor;
- 	unsigned int pkt_header_length;
- 	unsigned int packets;
--	u32 curr_cycle_time;
-+	u32 curr_cycle_time = 0;
- 	bool need_hw_irq;
- 	int i;
+diff --git a/sound/soc/codecs/wcd934x.c b/sound/soc/codecs/wcd934x.c
+index c8db33f78a1b..bc41a1466c70 100644
+--- a/sound/soc/codecs/wcd934x.c
++++ b/sound/soc/codecs/wcd934x.c
+@@ -2172,7 +2172,7 @@ static int wcd934x_init_dmic(struct snd_soc_component *comp)
+ 	u32 def_dmic_rate, dmic_clk_drv;
+ 	int ret;
  
+-	ret = wcd_dt_parse_mbhc_data(comp->dev, &wcd->mbhc_cfg);
++	ret = wcd_dt_parse_micbias_info(&wcd->common);
+ 	if (ret)
+ 		return ret;
+ 
+-- 
+2.53.0
+
 
 
