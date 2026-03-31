@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A098B3F7867;
-	Tue, 31 Mar 2026 16:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B03A3E4C6C;
+	Tue, 31 Mar 2026 16:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976163; cv=none; b=Kn8NIiMSfZFbUuPEFhdGJ7DRbgyzK+LbHMeLtGMyvLj00PtRuvtL5VAU/6S/UfJ5VHJeSS5FgusRvNuvnsNf4qyfefvZI3HdQV4yhckTvRJwaFDchUBHAqSYE+KJVVipu21281KIFYgtU9XK7RmW4e12w1FTgdhPbtBTTZKuQQo=
+	t=1774976166; cv=none; b=LyA1NhefjiGaR7GCT+MzzL/fHU77rs1D7g6clysBZdVIs88IzisiWvkBNmvUZVybYBJAehzUabqI0dnrEysF9wI2wicGOBjIjAb+fgFqp7EV46Yy0ZJ558rzyMYOA//E8BXA/B4qYSOZOD+VKLCSHMgNxZJfIgfSC1dZtD8mgv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976163; c=relaxed/simple;
-	bh=GUWpfeGS7EBl8sH2DWv8fP1IsaCLX8XWJaadc9zy1Vw=;
+	s=arc-20240116; t=1774976166; c=relaxed/simple;
+	bh=SXhXSoO2YI3d2Dpa1/Pju6SPS43M+4IniBTCeK8xc+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bC87RY50VhkeoVv+boalejbISxZgUDK4ShgUzocFrlXelCbxD2ayZIIv/w6E/HYqPefOZxngtBX8SeKaZTWkgtrYQAu66eSNEcLA1qv+ileWAYMFr0i1uU/7pzKh9d6VJooewlB3N7ovrSzP41PDR5kHS4CtfEisS0Kax93ZeZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzJxvJNn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h/16nSHih894sn/XGMc5hrbtTPqr3mLYb+ZhpWyvVBoH54QjzrUR/mCqx7bmlp2BiAt5K9jE5X4B3U/p+ZoQ9/Jus7+Lya1WXrfAo3N7J4xBilGbsEGf5IubqB+/WdHO/ebvlwnUGxRmmRj5nro75m0BlUXF+bT/gRVGZr/ToZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9xY5l8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzJxvJNn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BFFC19423;
-	Tue, 31 Mar 2026 16:56:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9xY5l8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC482C19423;
+	Tue, 31 Mar 2026 16:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976163;
-	bh=GUWpfeGS7EBl8sH2DWv8fP1IsaCLX8XWJaadc9zy1Vw=;
+	s=korg; t=1774976166;
+	bh=SXhXSoO2YI3d2Dpa1/Pju6SPS43M+4IniBTCeK8xc+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzJxvJNn5pyLszWFTMBiNJfNXCpFjuYZPUxQks1BDwkWt+Q/zeSlt50FjDyukWJV2
-	 vlN6MmQBaZl6kixU8I5BtwonGOEXQ/IeIiMHgv4LrVs/mEopYdpekZ2UrJpiPqc6T1
-	 du0kcjXDUtGCFnrwroKE1W8saLxKbw7n1zKpjVHw=
+	b=N9xY5l8jkT8/34ea7HqbtrPfDMWTj1Gd/ZhycBLW0E1UNE7PXl9zHLq14BStuLGEb
+	 XWVwMzv9pPxVsBY0UFBsTyFqIWLgbSniqd2niscFsrcgwsC3TDQGE8HVoUKvpVKyUR
+	 Upo+QGCpE8fmomEc4e284DMhKQd5UBd2ZR+i0PII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tuo Li <islituo@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Marek Vasut <marex@nabladev.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 231/244] dmaengine: idxd: fix possible wrong descriptor completion in llist_abort_desc()
-Date: Tue, 31 Mar 2026 18:23:01 +0200
-Message-ID: <20260331161750.295240848@linuxfoundation.org>
+Subject: [PATCH 6.12 232/244] dmaengine: xilinx: xilinx_dma: Fix dma_device directions
+Date: Tue, 31 Mar 2026 18:23:02 +0200
+Message-ID: <20260331161750.331672200@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,40 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tuo Li <islituo@gmail.com>
+From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit e1c9866173c5f8521f2d0768547a01508cb9ff27 ]
+[ Upstream commit e9cc95397bb7da13fe8a5b53a2f23cfaf9018ade ]
 
-At the end of this function, d is the traversal cursor of flist, but the
-code completes found instead. This can lead to issues such as NULL pointer
-dereferences, double completion, or descriptor leaks.
+Unlike chan->direction , struct dma_device .directions field is a
+bitfield. Turn chan->direction into a bitfield to make it compatible
+with struct dma_device .directions .
 
-Fix this by completing d instead of found in the final
-list_for_each_entry_safe() loop.
-
-Fixes: aa8d18becc0c ("dmaengine: idxd: add callback support for iaa crypto")
-Signed-off-by: Tuo Li <islituo@gmail.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260106032428.162445-1-islituo@gmail.com
+Fixes: 7e01511443c3 ("dmaengine: xilinx_dma: Set dma_device directions")
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://patch.msgid.link/20260316221728.160139-1-marex@nabladev.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/submit.c | 2 +-
+ drivers/dma/xilinx/xilinx_dma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idxd/submit.c b/drivers/dma/idxd/submit.c
-index 94eca25ae9b90..b246da3cfb55d 100644
---- a/drivers/dma/idxd/submit.c
-+++ b/drivers/dma/idxd/submit.c
-@@ -138,7 +138,7 @@ static void llist_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
- 	 */
- 	list_for_each_entry_safe(d, t, &flist, list) {
- 		list_del_init(&d->list);
--		idxd_dma_complete_txd(found, IDXD_COMPLETE_ABORT, true,
-+		idxd_dma_complete_txd(d, IDXD_COMPLETE_ABORT, true,
- 				      NULL, NULL);
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 3ad37e9b924a7..7d49b8978aa57 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -2907,7 +2907,7 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
+ 		return -EINVAL;
  	}
- }
+ 
+-	xdev->common.directions |= chan->direction;
++	xdev->common.directions |= BIT(chan->direction);
+ 
+ 	/* Request the interrupt */
+ 	chan->irq = of_irq_get(node, chan->tdest);
 -- 
 2.53.0
 
