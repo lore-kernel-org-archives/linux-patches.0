@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EE62E11A6;
-	Tue, 31 Mar 2026 17:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3571E2D63E8;
+	Tue, 31 Mar 2026 17:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976685; cv=none; b=ooy6F/+hF6Ww8yDiYr/hBu1Fu5Fuy6TDwJk1ESQWRt62I1396ExcACmoT1ISLuKQny0qUKtkNYHXXxtFCIu51latRbngFCzERFUNq02d+jtuuRBe3p6mofTx9f3ORPrQfsDTmFDDYEQWreqwbju5aawZAi4p5rdMefUI3S0AwfE=
+	t=1774976688; cv=none; b=ZCnJCp7khtSOvGs7qDkI/tF0Af5tsBUg71DnXpJKDdLKJTY8WQ+E0l6Wwl7IRtR5tnFLTq+CisfWIPAQh8v2xCqTiMcyO63OKCpGlG2NfJfAmxRdGlnv01iq92jUae7S0ALxdzEZAbgIiIRPUaDu+iNT4NeoakWI1X2//nSZEo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976685; c=relaxed/simple;
-	bh=WmjfxA7ZkkdXm5G8F5yF7aKpKSkytuZMu68K0q92hpw=;
+	s=arc-20240116; t=1774976688; c=relaxed/simple;
+	bh=UOkuhUtHctsWpNqHzjqjQPojaY4tKwe1KojdkYauTqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkhLTry1GMxjXlmoQrElKaIHx5ZpiRJKqmBCVeDL2WMJKPLIGcoVXl5Bs7yk6mrsZuGHkFrjglRE1+p3BV8gZFgc33bROj+Ov+kd/Gn0yeSey8NI4IhXE0YPS7HcGdNjP08L9e9EU5C+2ZL3+7z9WeA9wQT8fqwk4W5TubA2LHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8QkE98x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C+2OHY5eSZW6zTkMCBXy9KrRtUvQ9O+BYisYEZImCaKXyW2wbOwqltRVAk+dSPbCaN2JwutCZyU5lei1F5SlvUNFerGG2ztrUEznJZrgvLNyIBHYSZ7Qku7D1z9931l7V5jai5J7yEjWajcM3QGzowBrFdqz63pkSuxaMZdDli4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKgp17zq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8QkE98x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E489C19423;
-	Tue, 31 Mar 2026 17:04:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKgp17zq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3BAC19423;
+	Tue, 31 Mar 2026 17:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976685;
-	bh=WmjfxA7ZkkdXm5G8F5yF7aKpKSkytuZMu68K0q92hpw=;
+	s=korg; t=1774976688;
+	bh=UOkuhUtHctsWpNqHzjqjQPojaY4tKwe1KojdkYauTqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E8QkE98xQbxsj1SSE8FIZqyg7V43tOnEcKNPL2prKYOV9JYm6xT0YT6eIXKzgPlTp
-	 QFMmho+aY+t66oXdF8I57pJoultD50QlWkSRyf5QYKCcoM/SyneT4Gyn4kP3W+WiEO
-	 X1cG2txABEl08GmdBhbgdKSJ7NVL/cpY+MPMN0xA=
+	b=WKgp17zqViMJcmsE4BkPUqy19FnlA8wmd85sLbBaknBhNyxot1B/n7wtvTwlNhxXi
+	 Kg4fix8oV5FNLSXGmFG7q0uV5kY61I34fTZ7QI/kH/BT/7VNBMUWKMdcBdpZY/xfUZ
+	 edtaaqrKRYy9vilzH4bYO9CS5isLsrX4vr8e08Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 188/309] ASoC: sma1307: fix double free of devm_kzalloc() memory
-Date: Tue, 31 Mar 2026 18:21:31 +0200
-Message-ID: <20260331161800.377987939@linuxfoundation.org>
+Subject: [PATCH 6.18 189/309] ASoC: SOF: ipc4-topology: Allow bytes controls without initial payload
+Date: Tue, 31 Mar 2026 18:21:32 +0200
+Message-ID: <20260331161800.415278555@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -50,44 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit fe757092d2329c397ecb32f2bf68a5b1c4bd9193 upstream.
+commit d40a198e2b7821197c5c77b89d0130cc90f400f5 upstream.
 
-A previous change added NULL checks and cleanup for allocation
-failures in sma1307_setting_loaded().
+It is unexpected, but allowed to have no initial payload for a bytes
+control and the code is prepared to handle this case, but the size check
+missed this corner case.
 
-However, the cleanup for mode_set entries is wrong. Those entries are
-allocated with devm_kzalloc(), so they are device-managed resources and
-must not be freed with kfree(). Manually freeing them in the error path
-can lead to a double free when devres later releases the same memory.
+Update the check for minimal size to allow the initial size to be 0.
 
-Drop the manual kfree() loop and let devres handle the cleanup.
-
-Fixes: 0ec6bd16705fe ("ASoC: sma1307: Add NULL check in sma1307_setting_loaded()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260313040611.391479-1-lgs201920130244@gmail.com
+Fixes: a653820700b8 ("ASoC: SOF: ipc4-topology: Correct the allocation size for bytes controls")
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://patch.msgid.link/20260326075618.1603-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/sma1307.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/sof/ipc4-topology.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/sma1307.c
-+++ b/sound/soc/codecs/sma1307.c
-@@ -1779,8 +1779,10 @@ static void sma1307_setting_loaded(struc
- 				   sma1307->set.mode_size * 2 * sizeof(int),
- 				   GFP_KERNEL);
- 		if (!sma1307->set.mode_set[i]) {
--			for (int j = 0; j < i; j++)
--				kfree(sma1307->set.mode_set[j]);
-+			for (int j = 0; j < i; j++) {
-+				devm_kfree(sma1307->dev, sma1307->set.mode_set[j]);
-+				sma1307->set.mode_set[j] = NULL;
-+			}
- 			sma1307->set.status = false;
- 			return;
- 		}
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -2880,7 +2880,7 @@ static int sof_ipc4_control_load_bytes(s
+ 		return -EINVAL;
+ 	}
+ 
+-	if (scontrol->priv_size < sizeof(struct sof_abi_hdr)) {
++	if (scontrol->priv_size && scontrol->priv_size < sizeof(struct sof_abi_hdr)) {
+ 		dev_err(sdev->dev,
+ 			"bytes control %s initial data size %zu is insufficient.\n",
+ 			scontrol->name, scontrol->priv_size);
 
 
