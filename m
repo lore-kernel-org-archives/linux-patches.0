@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BDF423A88;
-	Tue, 31 Mar 2026 16:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D23423A7C;
+	Tue, 31 Mar 2026 16:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976367; cv=none; b=WlJbaGWlcaKnG5rw/LJT/PY/CyFv0/Vei4hUNoQrkVjgroJjlUingLbzsjg2PB4MlFlUWSjV7tzSuIxob+R5+RVed0Ak1Nx+8rWEk4s4vzN2cRkWfVTjUXT/dnqQ0lqCwifRXvsSzOaUGL9Sw5IFuKG1MSUt9g5iKhoYQHaGVZ0=
+	t=1774976370; cv=none; b=Y3rowkzRPK40Bf46u4gUwrz/2E+0ek0OPKBgQysCKCSN9PP8akncI+qK7WgVH9Hz2BTz18rcQSFlm2nH0o2P4t166BryaXwVdtct+oQP7bk9V0lni1IIZ2svsHBWRbaDQhaAT2ymAaRaBdN1EKC7XzKD79Fe0vxB/BbOusl9MGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976367; c=relaxed/simple;
-	bh=nEEKlVpCPpAAnlYPhLXdKtFIHi65ieQ/dl9EX9/Mdlw=;
+	s=arc-20240116; t=1774976370; c=relaxed/simple;
+	bh=ETtv2SZ/EIAIUVPJ1BxEC2PwqWgC0kg+fj9cjsej41U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+yj4tyb8R18PwOVAobKfS6Dztvckf8qRsKMyFwc5LYglNY3jEN9VmGIyd1sk8NJXZkSwOmoCE3uvxIAw7j7WFrH/qUbpkFcUaSPA3RYTJadHCKH289vRln2aiVFb5jBqM97JquWrhOzyIy2vCUyvJmQoduTBkcqZEACzAn6+n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScXkOD+N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NYz+nqHsMm4SE1tKH3dRSqYdWpbQXUN4k7oRKRE6hjNRclWeVOmwFbm6gy89u4AfNkhdxRALaq1JzzeFW8PDC9Zju/CwddbmtgXeYIBJWUGxArQ2FwmtTIQYuvH8wapHTvDxPbfLnlV4ItZYysByY9iyFkyeyRAYscs5QeoXvLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsW0woPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScXkOD+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F34C2BCB1;
-	Tue, 31 Mar 2026 16:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsW0woPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DCCC19423;
+	Tue, 31 Mar 2026 16:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976367;
-	bh=nEEKlVpCPpAAnlYPhLXdKtFIHi65ieQ/dl9EX9/Mdlw=;
+	s=korg; t=1774976370;
+	bh=ETtv2SZ/EIAIUVPJ1BxEC2PwqWgC0kg+fj9cjsej41U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ScXkOD+NcgkmQVby7Nb1rly9OMcLxOrCOR31OWzmijk4nU2L72pokJ/oMrPNIujd7
-	 DkYtpHMleQa/PgIE4+30qcP60RqMhRdai4b0MJgfgXGW/hh7UCjwnUQFw4DcJv48aE
-	 +SvihSFVcCBpW4hUq1Jdr00GpkYJrnt2EkOc14KU=
+	b=WsW0woPS+ydXk8e66km9iFZ7bvZDJXS82RIaFL0Su1qpWiXt0vpkipV1Kn/5B+qSm
+	 B8FBdHWByhVf1zumRW73QJeMgRUekEqv6r30JAEK+c41rQQsC1PcD1LGPsTbZlLf8V
+	 22VpZprlJMuA2A4Ybm+ES4pqAxMJZtAYWbXe+Qcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liucheng Lu <luliucheng100@outlook.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Peter Yin <peteryin.openbmc@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/309] ALSA: hda/realtek: add HP Laptop 14s-dr5xxx mute LED quirk
-Date: Tue, 31 Mar 2026 18:19:21 +0200
-Message-ID: <20260331161755.622663305@linuxfoundation.org>
+Subject: [PATCH 6.18 067/309] i3c: master: dw-i3c: Fix missing of_node for virtual I2C adapter
+Date: Tue, 31 Mar 2026 18:19:30 +0200
+Message-ID: <20260331161755.953793883@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,36 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liucheng Lu <luliucheng100@outlook.com>
+From: Peter Yin <peteryin.openbmc@gmail.com>
 
-[ Upstream commit 178dd118c0f07fd63a9ed74cfbd8c31ae50e33af ]
+[ Upstream commit f26ecaa0f0abfe5db173416214098a00d3b7db79 ]
 
-HP Laptop 14s-dr5xxx with ALC236 codec does not handle the toggling of
-the mute LED.
-This patch adds a quirk entry for subsystem ID 0x8a1f using
-ALC236_FIXUP_HP_MUTE_LED_COEFBIT2 fixup, enabling correct mute LED
-behavior.
+The DesignWare I3C master driver creates a virtual I2C adapter to
+provide backward compatibility with I2C devices. However, the current
+implementation does not associate this virtual adapter with any
+Device Tree node.
 
-Signed-off-by: Liucheng Lu <luliucheng100@outlook.com>
-Link: https://patch.msgid.link/PAVPR03MB9774F3FCE9CCD181C585281AE37BA@PAVPR03MB9774.eurprd03.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Propagate the of_node from the I3C master platform device to the
+virtual I2C adapter's device structure. This ensures that standard
+I2C aliases are correctly resolved and bus numbering remains consistent.
+
+Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260302075645.1492766-1-peteryin.openbmc@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i3c/master/dw-i3c-master.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index a32a966be8ba1..437a7a2070e58 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6792,6 +6792,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x89da, "HP Spectre x360 14t-ea100", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x89e7, "HP Elite x2 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8a0f, "HP Pavilion 14-ec1xxx", ALC287_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8a1f, "HP Laptop 14s-dr5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8a20, "HP Laptop 15s-fq5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8a25, "HP Victus 16-d1xxx (MB 8A25)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8a26, "HP Victus 16-d1xxx (MB 8A26)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
+index 41ddac1d49d5e..825eb2d20e9eb 100644
+--- a/drivers/i3c/master/dw-i3c-master.c
++++ b/drivers/i3c/master/dw-i3c-master.c
+@@ -1596,6 +1596,8 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ 	master->quirks = (unsigned long)device_get_match_data(&pdev->dev);
+ 
+ 	INIT_WORK(&master->hj_work, dw_i3c_hj_work);
++
++	device_set_of_node_from_dev(&master->base.i2c.dev, &pdev->dev);
+ 	ret = i3c_master_register(&master->base, &pdev->dev,
+ 				  &dw_mipi_i3c_ops, false);
+ 	if (ret)
 -- 
 2.51.0
 
