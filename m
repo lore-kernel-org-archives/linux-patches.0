@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218DD3FADEE;
-	Tue, 31 Mar 2026 16:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26663FADEE;
+	Tue, 31 Mar 2026 16:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974693; cv=none; b=og0PFLWH4LuIUU/pMaT4dScxVJaVtqzdMR/AY7CdXXXla81nGJYllITznJPZOTbRPgBGyn/rQJr6b2FQBk60CoBrWVfKARufWQ7rnD7PyZS6acA3HikttiyZyCZfdb2op1QV4d9lLRT/be816lNzlKF0XaGIXwjudR9wJ9lMVZM=
+	t=1774974695; cv=none; b=PvaPopIgJA/h2AbhrscZATPk7JudvswmV8mV7wXj4b9UqjijK9mN7t0iKAX09dcSCzYshI0sTBEBDpnZr8QHCoWqaRy8/jF1Td9j4mxTiTxlLhI0oG+24wfKMQC21iNHK31p2EqzJSPmKTbZg3lR9HvXBcxutFw++20x29IhkRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974693; c=relaxed/simple;
-	bh=rTBCrRbGrVWnR6c8MRn5/XtoRf5++J+sLjm1Mkfb0/g=;
+	s=arc-20240116; t=1774974695; c=relaxed/simple;
+	bh=L++gqIV6ZGDGYvbgIDMuV8iBhFRGE/+/yQkwj3r7YBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZQakOwbt/Xs42j+KifcVOdrmFaeoyB68A52cKMSS8535q6jrLhwNb2kDvZuzfkrnxXLe5jSx3S81XHDoLqZtvEGL7Xn8mfL0S3H3cn0+UB43sC/pPUqqfaYsaGErUB6CMMZqHt/LtXeKo4iNTQlppaXcXTJa+SxQOlFRyYkdzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTW+jrlm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aNxjh0zR4UtLEppdWNSrGowDHvZI5dMGxrPL7kLYt+ep3FfxV3qY5oT/FF5coiqcmI5wqmnwBjobeKqJ9Vn3WDRAncLzDynJaWVNqwQjFsHPh8+0XFhRG2FOToIrdM1HJfSs2nk/RGlHgU4/ix9QqXJJ/bfgl3+e5mBHCTGBlik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClnI+urQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTW+jrlm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD345C19424;
-	Tue, 31 Mar 2026 16:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClnI+urQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39675C19423;
+	Tue, 31 Mar 2026 16:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974693;
-	bh=rTBCrRbGrVWnR6c8MRn5/XtoRf5++J+sLjm1Mkfb0/g=;
+	s=korg; t=1774974695;
+	bh=L++gqIV6ZGDGYvbgIDMuV8iBhFRGE/+/yQkwj3r7YBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTW+jrlmplN83v2FX0EXtjnG1A5fW9w0W8WDhy6cnDkngbyolSoYNcHvvxIWRiaV0
-	 0mCQ9ACJWPMdGvec1DAfKq9Absd3+nC1B5f7c298t5Uutl4r9JqYVtGTUPVLUDLizY
-	 8P0V/w3wikwaCPv1sTE6BSNH5XrVP0q0YX8u4rwY=
+	b=ClnI+urQtpgChlHVIntVOTZKhlELyFgIYeWRU8QNplCZz3W7z0z8kKgNkZyGHtQsq
+	 BjIzjCEVdhuI5J/wlEplymm3FC9PPQI3Cq4tFXX/u7aoCt9K7ZqKc0d8eK+p5SdJdn
+	 m4DViLU/U7+8R+2+W4tibgKaRKMthEs8Mi/O9vAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Kasselman <werner@verivus.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 144/175] ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()
-Date: Tue, 31 Mar 2026 18:22:08 +0200
-Message-ID: <20260331161735.076215663@linuxfoundation.org>
+Subject: [PATCH 6.19 001/342] cxl/port: Fix use after free of parent_port in cxl_detach_ep()
+Date: Tue, 31 Mar 2026 18:17:14 +0200
+Message-ID: <20260331161758.967229010@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
-References: <20260331161729.779738837@linuxfoundation.org>
+In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
+References: <20260331161758.909578033@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,179 +49,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Werner Kasselman <werner@verivus.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 48623ec358c1c600fa1e38368746f933e0f1a617 ]
+[ Upstream commit 19d2f0b97a131198efc2c4ca3eb7f980bba8c2b4 ]
 
-smb_grant_oplock() has two issues in the oplock publication sequence:
+cxl_detach_ep() is called during bottom-up removal when all CXL memory
+devices beneath a switch port have been removed. For each port in the
+hierarchy it locks both the port and its parent, removes the endpoint,
+and if the port is now empty, marks it dead and unregisters the port
+by calling delete_switch_port(). There are two places during this work
+where the parent_port may be used after freeing:
 
-1) opinfo is linked into ci->m_op_list (via opinfo_add) before
-   add_lease_global_list() is called.  If add_lease_global_list()
-   fails (kmalloc returns NULL), the error path frees the opinfo
-   via __free_opinfo() while it is still linked in ci->m_op_list.
-   Concurrent m_op_list readers (opinfo_get_list, or direct iteration
-   in smb_break_all_levII_oplock) dereference the freed node.
+First, a concurrent detach may have already processed a port by the
+time a second worker finds it via bus_find_device(). Without pinning
+parent_port, it may already be freed when we discover port->dead and
+attempt to unlock the parent_port. In a production kernel that's a
+silent memory corruption, with lock debug, it looks like this:
 
-2) opinfo->o_fp is assigned after add_lease_global_list() publishes
-   the opinfo on the global lease list.  A concurrent
-   find_same_lease_key() can walk the lease list and dereference
-   opinfo->o_fp->f_ci while o_fp is still NULL.
+[]DEBUG_LOCKS_WARN_ON(__owner_task(owner) != get_current())
+[]WARNING: kernel/locking/mutex.c:949 at __mutex_unlock_slowpath+0x1ee/0x310
+[]Call Trace:
+[]mutex_unlock+0xd/0x20
+[]cxl_detach_ep+0x180/0x400 [cxl_core]
+[]devm_action_release+0x10/0x20
+[]devres_release_all+0xa8/0xe0
+[]device_unbind_cleanup+0xd/0xa0
+[]really_probe+0x1a6/0x3e0
 
-Fix by restructuring the publication sequence to eliminate post-publish
-failure:
+Second, delete_switch_port() releases three devm actions registered
+against parent_port. The last of those is unregister_port() and it
+calls device_unregister() on the child port, which can cascade. If
+parent_port is now also empty the device core may unregister and free
+it too. So by the time delete_switch_port() returns, parent_port may
+be free, and the subsequent device_unlock(&parent_port->dev) operates
+on freed memory. The kernel log looks same as above, with a different
+offset in cxl_detach_ep().
 
-- Set opinfo->o_fp before any list publication (fixes NULL deref).
-- Preallocate lease_table via alloc_lease_table() before opinfo_add()
-  so add_lease_global_list() becomes infallible after publication.
-- Keep the original m_op_list publication order (opinfo_add before
-  lease list) so concurrent opens via same_client_has_lease() and
-  opinfo_get_list() still see the in-flight grant.
-- Use opinfo_put() instead of __free_opinfo() on err_out so that
-  the RCU-deferred free path is used.
+Both of these issues stem from the absence of a lifetime guarantee
+between a child port and its parent port.
 
-This also requires splitting add_lease_global_list() to take a
-preallocated lease_table and changing its return type from int to void,
-since it can no longer fail.
+Establish a lifetime rule for ports: child ports hold a reference to
+their parent device until release. Take the reference when the port
+is allocated and drop it when released. This ensures the parent is
+valid for the full lifetime of the child and eliminates the use after
+free window in cxl_detach_ep().
 
-Fixes: 1dfd062caa16 ("ksmbd: fix use-after-free by using call_rcu() for oplock_info")
-Cc: stable@vger.kernel.org
-Signed-off-by: Werner Kasselman <werner@verivus.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ replaced kmalloc_obj() and KSMBD_DEFAULT_GFP with kmalloc(sizeof(), GFP_KERNEL) ]
+This is easily reproduced with a reload of cxl_acpi in QEMU with CXL
+devices present.
+
+Fixes: 2345df54249c ("cxl/memdev: Fix endpoint port removal")
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/20260226184439.1732841-1-alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c |   72 ++++++++++++++++++++++++++++++-------------------
- 1 file changed, 45 insertions(+), 27 deletions(-)
+ drivers/cxl/core/port.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -82,11 +82,19 @@ static void lease_del_list(struct oplock
- 	spin_unlock(&lb->lb_lock);
- }
- 
--static void lb_add(struct lease_table *lb)
-+static struct lease_table *alloc_lease_table(struct oplock_info *opinfo)
- {
--	write_lock(&lease_list_lock);
--	list_add(&lb->l_entry, &lease_table_list);
--	write_unlock(&lease_list_lock);
-+	struct lease_table *lb;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 4717dcff264be..aa8b47c50c962 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -552,10 +552,13 @@ static void cxl_port_release(struct device *dev)
+ 	xa_destroy(&port->dports);
+ 	xa_destroy(&port->regions);
+ 	ida_free(&cxl_port_ida, port->id);
+-	if (is_cxl_root(port))
 +
-+	lb = kmalloc(sizeof(struct lease_table), GFP_KERNEL);
-+	if (!lb)
-+		return NULL;
-+
-+	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
-+	       SMB2_CLIENT_GUID_SIZE);
-+	INIT_LIST_HEAD(&lb->lease_list);
-+	spin_lock_init(&lb->lb_lock);
-+	return lb;
++	if (is_cxl_root(port)) {
+ 		kfree(to_cxl_root(port));
+-	else
++	} else {
++		put_device(dev->parent);
+ 		kfree(port);
++	}
  }
  
- static int alloc_lease(struct oplock_info *opinfo, struct lease_ctx_info *lctx)
-@@ -1042,34 +1050,27 @@ static void copy_lease(struct oplock_inf
- 	lease2->version = lease1->version;
- }
+ static ssize_t decoders_committed_show(struct device *dev,
+@@ -721,6 +724,7 @@ static struct cxl_port *cxl_port_alloc(struct device *uport_dev,
+ 		struct cxl_port *iter;
  
--static int add_lease_global_list(struct oplock_info *opinfo)
-+static void add_lease_global_list(struct oplock_info *opinfo,
-+				  struct lease_table *new_lb)
- {
- 	struct lease_table *lb;
+ 		dev->parent = &parent_port->dev;
++		get_device(dev->parent);
+ 		port->depth = parent_port->depth + 1;
+ 		port->parent_dport = parent_dport;
  
--	read_lock(&lease_list_lock);
-+	write_lock(&lease_list_lock);
- 	list_for_each_entry(lb, &lease_table_list, l_entry) {
- 		if (!memcmp(lb->client_guid, opinfo->conn->ClientGUID,
- 			    SMB2_CLIENT_GUID_SIZE)) {
- 			opinfo->o_lease->l_lb = lb;
- 			lease_add_list(opinfo);
--			read_unlock(&lease_list_lock);
--			return 0;
-+			write_unlock(&lease_list_lock);
-+			kfree(new_lb);
-+			return;
- 		}
- 	}
--	read_unlock(&lease_list_lock);
- 
--	lb = kmalloc(sizeof(struct lease_table), GFP_KERNEL);
--	if (!lb)
--		return -ENOMEM;
--
--	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
--	       SMB2_CLIENT_GUID_SIZE);
--	INIT_LIST_HEAD(&lb->lease_list);
--	spin_lock_init(&lb->lb_lock);
--	opinfo->o_lease->l_lb = lb;
-+	opinfo->o_lease->l_lb = new_lb;
- 	lease_add_list(opinfo);
--	lb_add(lb);
--	return 0;
-+	list_add(&new_lb->l_entry, &lease_table_list);
-+	write_unlock(&lease_list_lock);
- }
- 
- static void set_oplock_level(struct oplock_info *opinfo, int level,
-@@ -1189,6 +1190,7 @@ int smb_grant_oplock(struct ksmbd_work *
- 	int err = 0;
- 	struct oplock_info *opinfo = NULL, *prev_opinfo = NULL;
- 	struct ksmbd_inode *ci = fp->f_ci;
-+	struct lease_table *new_lb = NULL;
- 	bool prev_op_has_lease;
- 	__le32 prev_op_state = 0;
- 
-@@ -1291,21 +1293,37 @@ set_lev:
- 	set_oplock_level(opinfo, req_op_level, lctx);
- 
- out:
--	opinfo_count_inc(fp);
--	opinfo_add(opinfo, fp);
--
-+	/*
-+	 * Set o_fp before any publication so that concurrent readers
-+	 * (e.g. find_same_lease_key() on the lease list) that
-+	 * dereference opinfo->o_fp don't hit a NULL pointer.
-+	 *
-+	 * Keep the original publication order so concurrent opens can
-+	 * still observe the in-flight grant via ci->m_op_list, but make
-+	 * everything after opinfo_add() no-fail by preallocating any new
-+	 * lease_table first.
-+	 */
-+	opinfo->o_fp = fp;
- 	if (opinfo->is_lease) {
--		err = add_lease_global_list(opinfo);
--		if (err)
-+		new_lb = alloc_lease_table(opinfo);
-+		if (!new_lb) {
-+			err = -ENOMEM;
- 			goto err_out;
-+		}
- 	}
- 
-+	opinfo_count_inc(fp);
-+	opinfo_add(opinfo, fp);
-+
-+	if (opinfo->is_lease)
-+		add_lease_global_list(opinfo, new_lb);
-+
- 	rcu_assign_pointer(fp->f_opinfo, opinfo);
--	opinfo->o_fp = fp;
- 
- 	return 0;
- err_out:
--	__free_opinfo(opinfo);
-+	kfree(new_lb);
-+	opinfo_put(opinfo);
- 	return err;
- }
- 
+-- 
+2.51.0
+
 
 
