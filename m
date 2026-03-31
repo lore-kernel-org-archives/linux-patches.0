@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59BA421898;
-	Tue, 31 Mar 2026 16:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784A23E316C;
+	Tue, 31 Mar 2026 16:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974555; cv=none; b=leZfvCXvhheGd6sAYUzj2swuiOkapR6HSx8nprfvKZKFcTtg5Hsy5Rq8R9EM/L81s5BgkkUFk7xcdGKiDUsLHkXGgxF3GBDf5705BkYOskNzzqYwCXS4hhtaJvQNwIVqWXt+HvEWd2RSNJkGzPorvkgSjOEhvJlLdCZlQsHvEt0=
+	t=1774974558; cv=none; b=A3Gz2Fe8rUHQgbNB/10BVam4iBKxwvaBhoZ7pe8HlAlreplI9dXyezK3SHmTx+2Uqi3idynf498jGsEvaiR9wV9KMg5JsiaVL987Av6xuF80eMufU7FvsET1oQ/AjWD0RQ+75xRI31D1bEcVh4TprJRTiaCfZQaXwBbBX2VBilY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974555; c=relaxed/simple;
-	bh=PhUzX4TD2Zy2vaoUP/GgnGdgFgvHaRPGgfzuKeaXGHo=;
+	s=arc-20240116; t=1774974558; c=relaxed/simple;
+	bh=UYHgcA7W0H/mr/UkUSYLUUQLAZRETFF6Uoqv1/tTbig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qvW9VvjCgGw0I3+2I/jf3XHb7F0rxDIJep8GdG3SKcOOE9rzh6yqRb1lO8nMHqtcXGc4r9B4pmg9v/oQuTWQYWSLefS7igZYGPEp6XNZkXCCx+l/xOWKPjLmdWzVGSDjdCqN6QuY3oBlZq0kUp6I4WI5xwMkoDOLAIN/keOBw3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVVuub4H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lF/F+2HJ1c7f7LrQQjEvUyMAgAwVdrlHq+hRq9p3qhlXIeLwcKj63Jr4JMbKnVWT7qVHYVVkXt48aUz9BdmwzVEOmqu53x0Wl0ELaPNRoWQqEXA1hi/bIijdYMqg7NTzwDk9QGzqtHatfTkUV903IGfGD8TSnyYlC4TJhSe0qW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPS/PzwM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVVuub4H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138BFC19423;
-	Tue, 31 Mar 2026 16:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPS/PzwM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5259C19423;
+	Tue, 31 Mar 2026 16:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974555;
-	bh=PhUzX4TD2Zy2vaoUP/GgnGdgFgvHaRPGgfzuKeaXGHo=;
+	s=korg; t=1774974558;
+	bh=UYHgcA7W0H/mr/UkUSYLUUQLAZRETFF6Uoqv1/tTbig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVVuub4HP3mw8OuLi5QrIBNOhDWhJzdocXsbNjZPdJPVQPhkxzEkG1oohuztsZL/y
-	 ZwlNDanRAnLA3kGc0svxACgJ97VExMGurXZdOwWQfYoIJrq+3cmcBeS8VR7ZputJYV
-	 +7bLvKZ9Q/NXy2Q6dRnhN+7zTXhOS7fBLgc9hejM=
+	b=XPS/PzwM+sCHJfbsNuUmOxHING/sfkQHXydn9ouiH2pd3jVvJJ2xPrXpJ/ex/HAi8
+	 3ZXMrfHvREA82BlU0H6+PPUDO4QCot48COpQRu+LKFrXJhUPLwyt+/1sDh3y3f7lGQ
+	 QB4zAvGVuz5HboaBCMcwWfAyxaW2wzVPOFodrgRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <Kartikey406@gmail.com>,
+	Gerald Yang <gerald.yang@canonical.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.6 130/175] ext4: convert inline data to extents when truncate exceeds inline size
-Date: Tue, 31 Mar 2026 18:21:54 +0200
-Message-ID: <20260331161734.562693077@linuxfoundation.org>
+Subject: [PATCH 6.6 131/175] ext4: fix stale xarray tags after writeback
+Date: Tue, 31 Mar 2026 18:21:55 +0200
+Message-ID: <20260331161734.599396082@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -52,67 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-commit ed9356a30e59c7cc3198e7fc46cfedf3767b9b17 upstream.
+commit f4a2b42e78914ff15630e71289adc589c3a8eb45 upstream.
 
-Add a check in ext4_setattr() to convert files from inline data storage
-to extent-based storage when truncate() grows the file size beyond the
-inline capacity. This prevents the filesystem from entering an
-inconsistent state where the inline data flag is set but the file size
-exceeds what can be stored inline.
+There are cases where ext4_bio_write_page() gets called for a page which
+has no buffers to submit. This happens e.g. when the part of the file is
+actually a hole, when we cannot allocate blocks due to being called from
+jbd2, or in data=journal mode when checkpointing writes the buffers
+earlier. In these cases we just return from ext4_bio_write_page()
+however if the page didn't need redirtying, we will leave stale DIRTY
+and/or TOWRITE tags in xarray because those get cleared only in
+__folio_start_writeback(). As a result we can leave these tags set in
+mappings even after a final sync on filesystem that's getting remounted
+read-only or that's being frozen. Various assertions can then get upset
+when writeback is started on such filesystems (Gerald reported assertion
+in ext4_journal_check_start() firing).
 
-Without this fix, the following sequence causes a kernel BUG_ON():
+Fix the problem by cycling the page through writeback state even if we
+decide nothing needs to be written for it so that xarray tags get
+properly updated. This is slightly silly (we could update the xarray
+tags directly) but I don't think a special helper messing with xarray
+tags is really worth it in this relatively rare corner case.
 
-1. Mount filesystem with inode that has inline flag set and small size
-2. truncate(file, 50MB) - grows size but inline flag remains set
-3. sendfile() attempts to write data
-4. ext4_write_inline_data() hits BUG_ON(write_size > inline_capacity)
-
-The crash occurs because ext4_write_inline_data() expects inline storage
-to accommodate the write, but the actual inline capacity (~60 bytes for
-i_block + ~96 bytes for xattrs) is far smaller than the file size and
-write request.
-
-The fix checks if the new size from setattr exceeds the inode's actual
-inline capacity (EXT4_I(inode)->i_inline_size) and converts the file to
-extent-based storage before proceeding with the size change.
-
-This addresses the root cause by ensuring the inline data flag and file
-size remain consistent during truncate operations.
-
-Reported-by: syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7de5fe447862fc37576f
-Tested-by: syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com
-Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260207043607.1175976-1-kartikey406@gmail.com
+Reported-by: Gerald Yang <gerald.yang@canonical.com>
+Link: https://lore.kernel.org/all/20260128074515.2028982-1-gerald.yang@canonical.com
+Fixes: dff4ac75eeee ("ext4: move keep_towrite handling to ext4_bio_write_page()")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260205092223.21287-2-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/ext4/page-io.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -5530,6 +5530,18 @@ int ext4_setattr(struct mnt_idmap *idmap
- 		if (attr->ia_size == inode->i_size)
- 			inc_ivers = false;
+--- a/fs/ext4/page-io.c
++++ b/fs/ext4/page-io.c
+@@ -506,9 +506,15 @@ int ext4_bio_write_folio(struct ext4_io_
+ 		nr_to_submit++;
+ 	} while ((bh = bh->b_this_page) != head);
  
+-	/* Nothing to submit? Just unlock the folio... */
+-	if (!nr_to_submit)
++	if (!nr_to_submit) {
 +		/*
-+		 * If file has inline data but new size exceeds inline capacity,
-+		 * convert to extent-based storage first to prevent inconsistent
-+		 * state (inline flag set but size exceeds inline capacity).
++		 * We have nothing to submit. Just cycle the folio through
++		 * writeback state to properly update xarray tags.
 +		 */
-+		if (ext4_has_inline_data(inode) &&
-+		    attr->ia_size > EXT4_I(inode)->i_inline_size) {
-+			error = ext4_convert_inline_data(inode);
-+			if (error)
-+				goto err_out;
-+		}
-+
- 		if (shrink) {
- 			if (ext4_should_order_data(inode)) {
- 				error = ext4_begin_ordered_truncate(inode,
++		__folio_start_writeback(folio, keep_towrite);
++		folio_end_writeback(folio);
+ 		return 0;
++	}
+ 
+ 	bh = head = folio_buffers(folio);
+ 
 
 
