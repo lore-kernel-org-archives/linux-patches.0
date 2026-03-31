@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3203421A1D;
-	Tue, 31 Mar 2026 16:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F652421A1D;
+	Tue, 31 Mar 2026 16:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975200; cv=none; b=klBahz4YH4BBdsll4scVSL0/Jfp6i6Go73NIT5pdNYmXkz6krjPqPPLgcIfdeRSsq751EWwSq1VkJCYG8zoGJnrZq+r1aDyUN1mMO6JaRrIHc3gxqqh6evw0aGOpAVnqAPrvj8v6Kw9RA+c+SPRclrd3rwXMFQwoFWKZThmzs18=
+	t=1774975203; cv=none; b=B91WZ3IWmDJ7SkKfRVsTHeCHfXRAGHZ1sCJagTqBvvkHMrU1zZu8aaRkTwVqNwep65ireNLf9in19JbFBX4+0CSTGRWtmp8xGfDPEb/6m+kCdVCrusnwqqWIrvCJKYXzmvnO2p9ymzeu+XQgst18i+0raQlZTRjsnoyEEwJmrxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975200; c=relaxed/simple;
-	bh=W1sxsnNmokIy4hSx2EQoKOi9vksy7E+noBB9M99ju+s=;
+	s=arc-20240116; t=1774975203; c=relaxed/simple;
+	bh=TpHp3y4d/MvjaI8m8fN3UkCxSl6rXogVM5AmE6ehRu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dljnqy3YV0Lt6QvG7wt+wB58LFL3omhSG7kHokR1wpW+opwqGqjF4vdUX2bGIDaRKHCexEq6heYtKowHQzM7eD+layYvvSt8LPhLlR9AmunHjklI44PEhQ48R4wpGkodp/WBJVc/OQkNWS+gcMPQNzVhWxQU+xnBggZnAqDENrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YO6n3xQX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jgNTBXJGGXnYM0mxWV1zJ5I5Ze3aGA14NO+KyijUVClu52idJJQ2hvZ2DFi/q2Bsv7JZHt+G9w5MP8Q9cRFyLJEBT9JkPMcU2eaywQvH55yxbjJ2JJ32IMVb+MsVcABJJRdBL8eDUp9AcNDf9xXjYkjFUxc/BL0FmHp5aIBwuGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=my2AXy6k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YO6n3xQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B39C19423;
-	Tue, 31 Mar 2026 16:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="my2AXy6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C9DC19423;
+	Tue, 31 Mar 2026 16:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975200;
-	bh=W1sxsnNmokIy4hSx2EQoKOi9vksy7E+noBB9M99ju+s=;
+	s=korg; t=1774975203;
+	bh=TpHp3y4d/MvjaI8m8fN3UkCxSl6rXogVM5AmE6ehRu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YO6n3xQXns27ZZRmU0HyNeIZPg+RYMjRYqtRuYc9J8n1J0Jy0P6VPuFZSyqrsHTWQ
-	 kOZg+UzuFg/kP+bAnxxnB+KhsYMiYNJyNwhM04Z/vs4Ifh0j2sAQsMu7fg+2atsT91
-	 p0c6giLsArT8dRAUc2wj06tH0HsZUGAJ3QExXcnk=
+	b=my2AXy6k0oYW6Cml+oNh0tnEM7TvXIoRCNrFXQ3r51Il65IrfyoBY3tNPjce58c2s
+	 lRmBdUkV5GPrxtaWEOG91HUzccHoP83B/xOHELUTIVokrCrBi6lBSBwCtbWCEhhUbP
+	 36RzmdcMhk7x4AkNazJSyYaJNTI40+/Y4mZBDURw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Barrera <ivan.d.barrera@intel.com>,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 159/342] RDMA/irdma: Clean up unnecessary dereference of event->cm_node
-Date: Tue, 31 Mar 2026 18:19:52 +0200
-Message-ID: <20260331161804.861645419@linuxfoundation.org>
+	stable@kernel.org,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.19 196/342] s390/barrier: Make array_index_mask_nospec() __always_inline
+Date: Tue, 31 Mar 2026 18:20:29 +0200
+Message-ID: <20260331161806.204065008@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,64 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Barrera <ivan.d.barrera@intel.com>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit b415399c9a024d574b65479636f0d4eb625b9abd ]
+commit c5c0a268b38adffbb2e70e6957017537ff54c157 upstream.
 
-The cm_node is available and the usage of cm_node and event->cm_node
-seems arbitrary. Clean up unnecessary dereference of event->cm_node.
+Mark array_index_mask_nospec() as __always_inline to guarantee the
+mitigation is emitted inline regardless of compiler inlining decisions.
 
-Fixes: 146b9756f14c ("RDMA/irdma: Add connection manager")
-Signed-off-by: Ivan Barrera <ivan.d.barrera@intel.com>
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e2dd833389cc ("s390: add optimized array_index_mask_nospec")
+Cc: stable@kernel.org
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/irdma/cm.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/s390/include/asm/barrier.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/cm.c b/drivers/infiniband/hw/irdma/cm.c
-index f4f4f92ba63ac..128cfcf27714d 100644
---- a/drivers/infiniband/hw/irdma/cm.c
-+++ b/drivers/infiniband/hw/irdma/cm.c
-@@ -4239,21 +4239,21 @@ static void irdma_cm_event_handler(struct work_struct *work)
- 		irdma_cm_event_reset(event);
- 		break;
- 	case IRDMA_CM_EVENT_CONNECTED:
--		if (!event->cm_node->cm_id ||
--		    event->cm_node->state != IRDMA_CM_STATE_OFFLOADED)
-+		if (!cm_node->cm_id ||
-+		    cm_node->state != IRDMA_CM_STATE_OFFLOADED)
- 			break;
- 		irdma_cm_event_connected(event);
- 		break;
- 	case IRDMA_CM_EVENT_MPA_REJECT:
--		if (!event->cm_node->cm_id ||
-+		if (!cm_node->cm_id ||
- 		    cm_node->state == IRDMA_CM_STATE_OFFLOADED)
- 			break;
- 		irdma_send_cm_event(cm_node, cm_node->cm_id,
- 				    IW_CM_EVENT_CONNECT_REPLY, -ECONNREFUSED);
- 		break;
- 	case IRDMA_CM_EVENT_ABORTED:
--		if (!event->cm_node->cm_id ||
--		    event->cm_node->state == IRDMA_CM_STATE_OFFLOADED)
-+		if (!cm_node->cm_id ||
-+		    cm_node->state == IRDMA_CM_STATE_OFFLOADED)
- 			break;
- 		irdma_event_connect_error(event);
- 		break;
-@@ -4263,7 +4263,7 @@ static void irdma_cm_event_handler(struct work_struct *work)
- 		break;
- 	}
+--- a/arch/s390/include/asm/barrier.h
++++ b/arch/s390/include/asm/barrier.h
+@@ -62,8 +62,8 @@ do {									\
+  * @size: number of elements in array
+  */
+ #define array_index_mask_nospec array_index_mask_nospec
+-static inline unsigned long array_index_mask_nospec(unsigned long index,
+-						    unsigned long size)
++static __always_inline unsigned long array_index_mask_nospec(unsigned long index,
++							     unsigned long size)
+ {
+ 	unsigned long mask;
  
--	irdma_rem_ref_cm_node(event->cm_node);
-+	irdma_rem_ref_cm_node(cm_node);
- 	kfree(event);
- }
- 
--- 
-2.53.0
-
 
 
