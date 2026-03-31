@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE33229E11A;
-	Tue, 31 Mar 2026 16:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F353F7867;
+	Tue, 31 Mar 2026 16:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976292; cv=none; b=pNFXZfEpLrHunVoEHg4PgpL37zZi0jfqD+ZObqeNHoy/MlCMpXd73QiadO497H9k06m8MhSuD2YgWvcU5aNpyqcwn6NIruY/o+pi11FCtKSHyff/zcL4AeW//HN0M6j2im91wDC2XwbRADdVqGd11Ma5hyivL80TCpwS80g5x9Q=
+	t=1774976295; cv=none; b=cVfTG5G55Cdnf09UbMa2FcxJA2nN+WKSgRxLKjMWAA0QLHMAgDKDtV7K7dH6ApHb/QXVLnB3nVVv8fxhAaSBCBeqHUOYlfvfRrdQPXV5XTxHdg6x0gDVuMabBYQTzQTtaLyDDxfa/djveScbF+l0b1F7Ul6s7pQ5LedIkVfvKJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976292; c=relaxed/simple;
-	bh=EQYYraXCLsoWOsZhEK2Jsq5totgPukplIl3KiZCDYNs=;
+	s=arc-20240116; t=1774976295; c=relaxed/simple;
+	bh=BTzmvidIpaD2WM0m+0kvjU8irEZI/YocVei1ER2W/wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=apiDlt6pez9xwgCWubfpa2syr67ZztFopJWEcjEXa0mUYRui1NCQO5HpPjWBvyguTS1SAIzuUIiCbLsw4rYjcCSEtfx4CWtDeAUJp33F9rQ8NXzDe76hp/0Eb3uByHJu1RLopTUdiJ78Q8UShJJ2ei+l1FdfsyzH+8KWPUX0lvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDlFiUXI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l+4hC34tlHj0HpCebPwh2tb4lAWGq1DU0TQ3ktnaOQhBCxp0Yclj2W29ZkTpEiDsGnm6BzfO8BHhoWCwK3wY3cLmxpgF1T9QcROxvlP5+HDVuHJjIVH/QqC9EvTKsc2/rbDWbe1kg/QJax/em15IcmSL3tlPKe0MVu82mG6c5TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thzHF9KF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDlFiUXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4485CC19423;
-	Tue, 31 Mar 2026 16:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thzHF9KF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D3DC19423;
+	Tue, 31 Mar 2026 16:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976292;
-	bh=EQYYraXCLsoWOsZhEK2Jsq5totgPukplIl3KiZCDYNs=;
+	s=korg; t=1774976295;
+	bh=BTzmvidIpaD2WM0m+0kvjU8irEZI/YocVei1ER2W/wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xDlFiUXIoHKIOaU8iQUHfkiPK/cdj8Y0ytgE76anKgPfib0R3+iaMNhfkOvRIR9f7
-	 UFvZdajZU9lkgKXolhVfWaptfLLPoM3gumjY1xnomxEDNEu+505kL5TjmCOwRruAdJ
-	 hOYAsFiKJrxzLdaOXcegcAXKSwSn6+4wDZnVlV/g=
+	b=thzHF9KFk27w/G1nk0WTUmA98Ensbh+HCE6S2+EpoK75CeaTsVEOgyKHEk3Gu+HyA
+	 4lC2/LJOo2PecQoxsLxar4Px9sPENs/GTN4+ma+Dx+ssroj1+rHxHUAoYHDkZYvS6n
+	 seGvRqNpgHY+Tk9bw6VcQUAY4T3ke4T/p1lo/xyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Romain Sioen <romain.sioen@microchip.com>,
+	Denis Benato <denis.benato@linux.dev>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 037/309] HID: mcp2221: cancel last I2C command on read error
-Date: Tue, 31 Mar 2026 18:19:00 +0200
-Message-ID: <20260331161754.848769213@linuxfoundation.org>
+Subject: [PATCH 6.18 038/309] HID: asus: add xg mobile 2023 external hardware support
+Date: Tue, 31 Mar 2026 18:19:01 +0200
+Message-ID: <20260331161754.885133427@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,39 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Romain Sioen <romain.sioen@microchip.com>
+From: Denis Benato <denis.benato@linux.dev>
 
-[ Upstream commit e31b556c0ba21f20c298aa61181b96541140b7b9 ]
+[ Upstream commit 377f8e788945d45b012ed9cfc35ca56c02e86cd8 ]
 
-When an I2C SMBus read operation fails, the MCP2221 internal state machine
-may not reset correctly, causing subsequent transactions to fail.
+XG mobile stations have the 0x5a endpoint and has to be initialized:
+add them to hid-asus.
 
-By adding a short delay and explicitly cancelling the last command,
-we ensure the device is ready for the next operation.
-
-Fix an issue where i2cdetect was not able to detect all devices correctly
-on the bus.
-
-Signed-off-by: Romain Sioen <romain.sioen@microchip.com>
+Signed-off-by: Denis Benato <denis.benato@linux.dev>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-mcp2221.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-asus.c | 3 +++
+ drivers/hid/hid-ids.h  | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
-index 33603b019f975..ef3b5c77c38e3 100644
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -353,6 +353,8 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
- 				usleep_range(90, 100);
- 				retries++;
- 			} else {
-+				usleep_range(980, 1000);
-+				mcp_cancel_last_cmd(mcp);
- 				return ret;
- 			}
- 		} else {
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index 7904b3b7ea63c..5a068f6fd2ce5 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -1403,6 +1403,9 @@ static const struct hid_device_id asus_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X),
+ 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_ROG_ALLY_XPAD },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
++	    USB_DEVICE_ID_ASUSTEK_XGM_2023),
++	},
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_CLAYMORE_II_KEYBOARD),
+ 	  QUIRK_ROG_CLAYMORE_II_KEYBOARD },
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index f5715cf9468fc..d9d354f1b8847 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -229,6 +229,7 @@
+ #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X		0x1b4c
+ #define USB_DEVICE_ID_ASUSTEK_ROG_CLAYMORE_II_KEYBOARD	0x196b
+ #define USB_DEVICE_ID_ASUSTEK_FX503VD_KEYBOARD	0x1869
++#define USB_DEVICE_ID_ASUSTEK_XGM_2023	0x1a9a
+ 
+ #define USB_VENDOR_ID_ATEN		0x0557
+ #define USB_DEVICE_ID_ATEN_UC100KM	0x2004
 -- 
 2.51.0
 
