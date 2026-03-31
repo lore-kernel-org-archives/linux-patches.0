@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20517313E21;
-	Tue, 31 Mar 2026 17:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A15314D0D;
+	Tue, 31 Mar 2026 17:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976924; cv=none; b=PW3oaN8rwbz5hzVLJ3/du94EjkhHHf9od9zm019QMrUCc/BFqGn8R/3jPmN8k0iF22Pu1mohSBLPcM0W4FjtUzA3ViffLcJlWrUpJ6eFWbSUON5X5w9DFimHjlykpavS+iKq0+gtZlm2fFjYFxsDRzNRMn+H8JGfoosWDsz10yI=
+	t=1774976926; cv=none; b=cK8Fyir2jAHAhumSbc/zD2LPeIMJekD0O28tG5KFc1tAx9INRJvA2yZztEdRLBnS2pvCX+l4KZHLvMntdDYtoTBU+uMdMxe9COQAciYPoV+9tICb4c5dJ7/YT9WhxVwbV+KQCmdr8SmJIJIXSDRdEejh3JJrUGfyeRyfSlOHr1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976924; c=relaxed/simple;
-	bh=Wfxmrbz1zOzdAxTMol2sQzv8EQZXhLnl6dARCboIZyc=;
+	s=arc-20240116; t=1774976926; c=relaxed/simple;
+	bh=yUqp8A1jyCS4bATYYEJqbsfXKOhL5jtpwRGyV4+hYn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=geXSqII6pPxmCzPSy9wrWk7qHZZWBCNWY4E4JUHV7YfUllXGMIfwQB44qWNInk7TBwsnQ6hgMEWMqX7y5fYvS3rqU2AEVyAI28KaIb7ISn1xcVlMDdeUc4M0A2Vxed18dWqpkhOpd5FBQ7J+RLHpvBF4bYiu3sAXfHKZQXPLv9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5S5B35+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZKbweK9IPkVp38w0dtTSiz328qsKBbiks4HEjPlWfgHre2u5pfVXzu9zaJ/K0Fy2JoknmotTTmfzPEmxdcQjghvDceRnygCydj5Co3KNPHaxYTn4wLoNb4/6x9nPv4sFWxSjiawBTB9tB9Tx+rFLP8/PcAn/LqEmu+g++tIq4SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWm5XRlP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5S5B35+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE0BC19423;
-	Tue, 31 Mar 2026 17:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWm5XRlP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AF2C19423;
+	Tue, 31 Mar 2026 17:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976923;
-	bh=Wfxmrbz1zOzdAxTMol2sQzv8EQZXhLnl6dARCboIZyc=;
+	s=korg; t=1774976926;
+	bh=yUqp8A1jyCS4bATYYEJqbsfXKOhL5jtpwRGyV4+hYn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a5S5B35+I2Coi58Q05xgaE8tNpnvS/5v/x/y/S/+a5g4bT2IiNbKO3CMijIzcX8OX
-	 zk3wlkNtiLhTXqHAmZim2zx0WdznSBt1TgISD6WQyr6yak0X/DN1lsk2WkzJDmLf+1
-	 WsyVBVhRv22KjzkzsbYsU1eEn6NWMvt5K3xwk6qY=
+	b=sWm5XRlPbPGWBWSQAl2c78XOSOr7yPtV1BQbsP/OFrs53CN3xCXSvzsy0lWFlz+PJ
+	 ncNICwbZ+8MU+0IQJcwVeheixwrXgUwrmWIZJ7rybTymYOs5ilnbL/fsSAoSiJGYyz
+	 WnO+h4b4PwXRNJWvDmXgW7EZhlazqcO6YDc2NAmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Kasselman <werner@verivus.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 281/309] ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()
-Date: Tue, 31 Mar 2026 18:23:04 +0200
-Message-ID: <20260331161803.910995559@linuxfoundation.org>
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Antonius <antonius@bluedragonsec.com>,
+	"David Hildenbrand (ARM)" <david@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Jann Horn <jannh@google.com>,
+	Jeff Xu <jeffxu@chromium.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 282/309] mm/mseal: update VMA end correctly on merge
+Date: Tue, 31 Mar 2026 18:23:05 +0200
+Message-ID: <20260331161803.950072738@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -53,175 +57,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Kasselman <werner@verivus.com>
+From: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
 
-[ Upstream commit 48623ec358c1c600fa1e38368746f933e0f1a617 ]
+commit 2697dd8ae721db4f6a53d4f4cbd438212a80f8dc upstream.
 
-smb_grant_oplock() has two issues in the oplock publication sequence:
+Previously we stored the end of the current VMA in curr_end, and then upon
+iterating to the next VMA updated curr_start to curr_end to advance to the
+next VMA.
 
-1) opinfo is linked into ci->m_op_list (via opinfo_add) before
-   add_lease_global_list() is called.  If add_lease_global_list()
-   fails (kmalloc returns NULL), the error path frees the opinfo
-   via __free_opinfo() while it is still linked in ci->m_op_list.
-   Concurrent m_op_list readers (opinfo_get_list, or direct iteration
-   in smb_break_all_levII_oplock) dereference the freed node.
+However, this doesn't take into account the fact that a VMA might be
+updated due to a merge by vma_modify_flags(), which can result in curr_end
+being stale and thus, upon setting curr_start to curr_end, ending up with
+an incorrect curr_start on the next iteration.
 
-2) opinfo->o_fp is assigned after add_lease_global_list() publishes
-   the opinfo on the global lease list.  A concurrent
-   find_same_lease_key() can walk the lease list and dereference
-   opinfo->o_fp->f_ci while o_fp is still NULL.
+Resolve the issue by setting curr_end to vma->vm_end unconditionally to
+ensure this value remains updated should this occur.
 
-Fix by restructuring the publication sequence to eliminate post-publish
-failure:
+While we're here, eliminate this entire class of bug by simply setting
+const curr_[start/end] to be clamped to the input range and VMAs, which
+also happens to simplify the logic.
 
-- Set opinfo->o_fp before any list publication (fixes NULL deref).
-- Preallocate lease_table via alloc_lease_table() before opinfo_add()
-  so add_lease_global_list() becomes infallible after publication.
-- Keep the original m_op_list publication order (opinfo_add before
-  lease list) so concurrent opens via same_client_has_lease() and
-  opinfo_get_list() still see the in-flight grant.
-- Use opinfo_put() instead of __free_opinfo() on err_out so that
-  the RCU-deferred free path is used.
-
-This also requires splitting add_lease_global_list() to take a
-preallocated lease_table and changing its return type from int to void,
-since it can no longer fail.
-
-Fixes: 1dfd062caa16 ("ksmbd: fix use-after-free by using call_rcu() for oplock_info")
-Cc: stable@vger.kernel.org
-Signed-off-by: Werner Kasselman <werner@verivus.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ adapted kmalloc_obj() macro to kmalloc(sizeof()) ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20260327173104.322405-1-ljs@kernel.org
+Fixes: 6c2da14ae1e0 ("mm/mseal: rework mseal apply logic")
+Signed-off-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Reported-by: Antonius <antonius@bluedragonsec.com>
+Closes: https://lore.kernel.org/linux-mm/CAK8a0jwWGj9-SgFk0yKFh7i8jMkwKm5b0ao9=kmXWjO54veX2g@mail.gmail.com/
+Suggested-by: David Hildenbrand (ARM) <david@kernel.org>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jeff Xu <jeffxu@chromium.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c |   72 ++++++++++++++++++++++++++++++-------------------
- 1 file changed, 45 insertions(+), 27 deletions(-)
+ mm/mseal.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -82,11 +82,19 @@ static void lease_del_list(struct oplock
- 	spin_unlock(&lb->lb_lock);
- }
- 
--static void lb_add(struct lease_table *lb)
-+static struct lease_table *alloc_lease_table(struct oplock_info *opinfo)
+--- a/mm/mseal.c
++++ b/mm/mseal.c
+@@ -56,7 +56,6 @@ static int mseal_apply(struct mm_struct
+ 		unsigned long start, unsigned long end)
  {
--	write_lock(&lease_list_lock);
--	list_add(&lb->l_entry, &lease_table_list);
--	write_unlock(&lease_list_lock);
-+	struct lease_table *lb;
-+
-+	lb = kmalloc(sizeof(struct lease_table), KSMBD_DEFAULT_GFP);
-+	if (!lb)
-+		return NULL;
-+
-+	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
-+	       SMB2_CLIENT_GUID_SIZE);
-+	INIT_LIST_HEAD(&lb->lease_list);
-+	spin_lock_init(&lb->lb_lock);
-+	return lb;
- }
+ 	struct vm_area_struct *vma, *prev;
+-	unsigned long curr_start = start;
+ 	VMA_ITERATOR(vmi, mm, start);
  
- static int alloc_lease(struct oplock_info *opinfo, struct lease_ctx_info *lctx)
-@@ -1042,34 +1050,27 @@ static void copy_lease(struct oplock_inf
- 	lease2->version = lease1->version;
- }
+ 	/* We know there are no gaps so this will be non-NULL. */
+@@ -66,7 +65,8 @@ static int mseal_apply(struct mm_struct
+ 		prev = vma;
  
--static int add_lease_global_list(struct oplock_info *opinfo)
-+static void add_lease_global_list(struct oplock_info *opinfo,
-+				  struct lease_table *new_lb)
- {
- 	struct lease_table *lb;
+ 	for_each_vma_range(vmi, vma, end) {
+-		unsigned long curr_end = MIN(vma->vm_end, end);
++		const unsigned long curr_start = MAX(vma->vm_start, start);
++		const unsigned long curr_end = MIN(vma->vm_end, end);
  
--	read_lock(&lease_list_lock);
-+	write_lock(&lease_list_lock);
- 	list_for_each_entry(lb, &lease_table_list, l_entry) {
- 		if (!memcmp(lb->client_guid, opinfo->conn->ClientGUID,
- 			    SMB2_CLIENT_GUID_SIZE)) {
- 			opinfo->o_lease->l_lb = lb;
- 			lease_add_list(opinfo);
--			read_unlock(&lease_list_lock);
--			return 0;
-+			write_unlock(&lease_list_lock);
-+			kfree(new_lb);
-+			return;
+ 		if (!(vma->vm_flags & VM_SEALED)) {
+ 			vma = vma_modify_flags(&vmi, prev, vma,
+@@ -78,7 +78,6 @@ static int mseal_apply(struct mm_struct
  		}
+ 
+ 		prev = vma;
+-		curr_start = curr_end;
  	}
--	read_unlock(&lease_list_lock);
- 
--	lb = kmalloc(sizeof(struct lease_table), KSMBD_DEFAULT_GFP);
--	if (!lb)
--		return -ENOMEM;
--
--	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
--	       SMB2_CLIENT_GUID_SIZE);
--	INIT_LIST_HEAD(&lb->lease_list);
--	spin_lock_init(&lb->lb_lock);
--	opinfo->o_lease->l_lb = lb;
-+	opinfo->o_lease->l_lb = new_lb;
- 	lease_add_list(opinfo);
--	lb_add(lb);
--	return 0;
-+	list_add(&new_lb->l_entry, &lease_table_list);
-+	write_unlock(&lease_list_lock);
- }
- 
- static void set_oplock_level(struct oplock_info *opinfo, int level,
-@@ -1189,6 +1190,7 @@ int smb_grant_oplock(struct ksmbd_work *
- 	int err = 0;
- 	struct oplock_info *opinfo = NULL, *prev_opinfo = NULL;
- 	struct ksmbd_inode *ci = fp->f_ci;
-+	struct lease_table *new_lb = NULL;
- 	bool prev_op_has_lease;
- 	__le32 prev_op_state = 0;
- 
-@@ -1291,21 +1293,37 @@ set_lev:
- 	set_oplock_level(opinfo, req_op_level, lctx);
- 
- out:
--	opinfo_count_inc(fp);
--	opinfo_add(opinfo, fp);
--
-+	/*
-+	 * Set o_fp before any publication so that concurrent readers
-+	 * (e.g. find_same_lease_key() on the lease list) that
-+	 * dereference opinfo->o_fp don't hit a NULL pointer.
-+	 *
-+	 * Keep the original publication order so concurrent opens can
-+	 * still observe the in-flight grant via ci->m_op_list, but make
-+	 * everything after opinfo_add() no-fail by preallocating any new
-+	 * lease_table first.
-+	 */
-+	opinfo->o_fp = fp;
- 	if (opinfo->is_lease) {
--		err = add_lease_global_list(opinfo);
--		if (err)
-+		new_lb = alloc_lease_table(opinfo);
-+		if (!new_lb) {
-+			err = -ENOMEM;
- 			goto err_out;
-+		}
- 	}
- 
-+	opinfo_count_inc(fp);
-+	opinfo_add(opinfo, fp);
-+
-+	if (opinfo->is_lease)
-+		add_lease_global_list(opinfo, new_lb);
-+
- 	rcu_assign_pointer(fp->f_opinfo, opinfo);
--	opinfo->o_fp = fp;
  
  	return 0;
- err_out:
--	__free_opinfo(opinfo);
-+	kfree(new_lb);
-+	opinfo_put(opinfo);
- 	return err;
- }
- 
 
 
