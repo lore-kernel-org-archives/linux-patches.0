@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E56A3EF0A2;
-	Tue, 31 Mar 2026 16:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AB73EE1DD;
+	Tue, 31 Mar 2026 16:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974426; cv=none; b=o1FuGFUhZmN1KSNI9lBFENg7aj+XxmnttZdSKDFCyuIC8C4qKC55kCuBey9zTXUBL66XiauhSnDU4V0V6q3qZ20ZW1n/m2OaghoAs/fXilqiON1SLeiUFzWEevcsAiHiyutGjzd8a2XezrPVap2LmKbARgnI+MBQAgIx0jQvR6s=
+	t=1774974428; cv=none; b=FhBGNdKEG1F5rART4xfxOXhhoJ6szEZIkEeIJsnR50blBIy4xRJPqeWdPdt4PqbMdLebsNpOm1OSiqEyeGihrmZC2TA30mqdj9/9LkvXpEBxBW32h9glo+zI76dpsyK+BpBHNTvtufYkY5eQYQwuXuqAKCPfRyMq1uNTBqzA68A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974426; c=relaxed/simple;
-	bh=xYcVft71B4AAFyGJWwQvxVuKLLEBLTPrZYwk5MxDplc=;
+	s=arc-20240116; t=1774974428; c=relaxed/simple;
+	bh=S2oTL3Xt6btSraN1AURSf/kxDFuFrNEOSQARS+URBr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FcAKxpkJlmawasB0j33YDMEYG3GmP/sfB1xtSjRx33zSzXXcG1O5OXc79cXa37ucgTkVenVd9/jGVamLP7AQBPGUITPDXKaFRtdAA5RENR9f61fmHQLTc+HK4OM7QGvJov9SXQmAj8H/ccCcV/6qKXSc6YMlqqaAVyH/JSoJomM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yb3O11x1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SmAQHXiv0HdKf/hn9SGaNmEOHSGYzkaYzcb/INIoxdgfcRUuq5MjMxb+ER7g3hLoLGLaDkNffhp0FP2+bPKcK2ePu/rse21GNZWfZiTQkIl9dEvJ5KGOaFSvGYAhvwFiM75VrImvuldMuSXCA36eJ88FqiZY+5PncA/1oq4apqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoVqQjZ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yb3O11x1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F59CC19423;
-	Tue, 31 Mar 2026 16:27:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoVqQjZ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38089C19423;
+	Tue, 31 Mar 2026 16:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974426;
-	bh=xYcVft71B4AAFyGJWwQvxVuKLLEBLTPrZYwk5MxDplc=;
+	s=korg; t=1774974428;
+	bh=S2oTL3Xt6btSraN1AURSf/kxDFuFrNEOSQARS+URBr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yb3O11x1SkCCn4glItbRMh5Oz3ieRfYFS/OWfFOJXzrPFz6EcGkPKQ4eDF7O1nwac
-	 NRImvNNKFuwpHvH9ntNUvT6sSbstgO8l8jU/Pwa05nfUDe0R9nlt5xKnKLehw8lCbN
-	 PmJMIrGuMFxoI3tH3G1SFMFa20XQtoKBiLdFqfmY=
+	b=LoVqQjZ5cY6rG+tMqrES9wTjPhIP054+/kQW32o+wJLtoMc90SG7qpdnzA2ioLalc
+	 f6PlhksuqOuHf0cd7IacZFbAc+ugQ8CGUmIX4nJ7nm6vjeGhc4BwZ9NZSD3MgiQnzl
+	 VRnzF/qGmQvEsfqb3EnljHhF+WpIBcPZDa8W2LkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Paolo Valerio <pvalerio@redhat.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/175] can: statistics: add missing atomic access in hot path
-Date: Tue, 31 Mar 2026 18:20:22 +0200
-Message-ID: <20260331161731.185043348@linuxfoundation.org>
+Subject: [PATCH 6.6 074/175] net: macb: use the current queue number for stats
+Date: Tue, 31 Mar 2026 18:20:58 +0200
+Message-ID: <20260331161732.496661856@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,72 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Paolo Valerio <pvalerio@redhat.com>
 
-[ Upstream commit 46eee1661aa9b49966e6c43d07126fe408edda57 ]
+[ Upstream commit 72d96e4e24bbefdcfbc68bdb9341a05d8f5cb6e5 ]
 
-Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-fixed a KCSAN issue in can_receive() but missed to convert the 'matches'
-variable used in can_rcv_filter().
+There's a potential mismatch between the memory reserved for statistics
+and the amount of memory written.
 
-Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260318173413.28235-1-socketcan@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+gem_get_sset_count() correctly computes the number of stats based on the
+active queues, whereas gem_get_ethtool_stats() indiscriminately copies
+data using the maximum number of queues, and in the case the number of
+active queues is less than MACB_MAX_QUEUES, this results in a OOB write
+as observed in the KASAN splat.
+
+==================================================================
+BUG: KASAN: vmalloc-out-of-bounds in gem_get_ethtool_stats+0x54/0x78
+  [macb]
+Write of size 760 at addr ffff80008080b000 by task ethtool/1027
+
+CPU: [...]
+Tainted: [E]=UNSIGNED_MODULE
+Hardware name: raspberrypi rpi/rpi, BIOS 2025.10 10/01/2025
+Call trace:
+ show_stack+0x20/0x38 (C)
+ dump_stack_lvl+0x80/0xf8
+ print_report+0x384/0x5e0
+ kasan_report+0xa0/0xf0
+ kasan_check_range+0xe8/0x190
+ __asan_memcpy+0x54/0x98
+ gem_get_ethtool_stats+0x54/0x78 [macb
+   926c13f3af83b0c6fe64badb21ec87d5e93fcf65]
+ dev_ethtool+0x1220/0x38c0
+ dev_ioctl+0x4ac/0xca8
+ sock_do_ioctl+0x170/0x1d8
+ sock_ioctl+0x484/0x5d8
+ __arm64_sys_ioctl+0x12c/0x1b8
+ invoke_syscall+0xd4/0x258
+ el0_svc_common.constprop.0+0xb4/0x240
+ do_el0_svc+0x48/0x68
+ el0_svc+0x40/0xf8
+ el0t_64_sync_handler+0xa0/0xe8
+ el0t_64_sync+0x1b0/0x1b8
+
+The buggy address belongs to a 1-page vmalloc region starting at
+  0xffff80008080b000 allocated at dev_ethtool+0x11f0/0x38c0
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000
+  index:0xffff00000a333000 pfn:0xa333
+flags: 0x7fffc000000000(node=0|zone=0|lastcpupid=0x1ffff)
+raw: 007fffc000000000 0000000000000000 dead000000000122 0000000000000000
+raw: ffff00000a333000 0000000000000000 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff80008080b080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff80008080b100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff80008080b180: 00 00 00 00 00 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+                                  ^
+ ffff80008080b200: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+ ffff80008080b280: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+==================================================================
+
+Fix it by making sure the copied size only considers the active number of
+queues.
+
+Fixes: 512286bbd4b7 ("net: macb: Added some queue statistics")
+Signed-off-by: Paolo Valerio <pvalerio@redhat.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260323191634.2185840-1-pvalerio@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/af_can.c | 4 ++--
- net/can/af_can.h | 2 +-
- net/can/proc.c   | 3 ++-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/can/af_can.c b/net/can/af_can.c
-index cdad0be43e8ff..e0ad55b9af646 100644
---- a/net/can/af_can.c
-+++ b/net/can/af_can.c
-@@ -467,7 +467,7 @@ int can_rx_register(struct net *net, struct net_device *dev, canid_t can_id,
- 
- 	rcv->can_id = can_id;
- 	rcv->mask = mask;
--	rcv->matches = 0;
-+	atomic_long_set(&rcv->matches, 0);
- 	rcv->func = func;
- 	rcv->data = data;
- 	rcv->ident = ident;
-@@ -571,7 +571,7 @@ EXPORT_SYMBOL(can_rx_unregister);
- static inline void deliver(struct sk_buff *skb, struct receiver *rcv)
- {
- 	rcv->func(skb, rcv->data);
--	rcv->matches++;
-+	atomic_long_inc(&rcv->matches);
- }
- 
- static int can_rcv_filter(struct can_dev_rcv_lists *dev_rcv_lists, struct sk_buff *skb)
-diff --git a/net/can/af_can.h b/net/can/af_can.h
-index 22f3352c77fec..87887014f5628 100644
---- a/net/can/af_can.h
-+++ b/net/can/af_can.h
-@@ -52,7 +52,7 @@ struct receiver {
- 	struct hlist_node list;
- 	canid_t can_id;
- 	canid_t mask;
--	unsigned long matches;
-+	atomic_long_t matches;
- 	void (*func)(struct sk_buff *skb, void *data);
- 	void *data;
- 	char *ident;
-diff --git a/net/can/proc.c b/net/can/proc.c
-index 25fdf060e30d0..2f78ea8ac30b0 100644
---- a/net/can/proc.c
-+++ b/net/can/proc.c
-@@ -196,7 +196,8 @@ static void can_print_rcvlist(struct seq_file *m, struct hlist_head *rx_list,
- 			"   %-5s     %03x    %08x  %pK  %pK  %8ld  %s\n";
- 
- 		seq_printf(m, fmt, DNAME(dev), r->can_id, r->mask,
--				r->func, r->data, r->matches, r->ident);
-+			   r->func, r->data, atomic_long_read(&r->matches),
-+			   r->ident);
- 	}
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 693688a580022..18dd191526448 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -3255,7 +3255,7 @@ static void gem_get_ethtool_stats(struct net_device *dev,
+ 	spin_lock_irq(&bp->stats_lock);
+ 	gem_update_stats(bp);
+ 	memcpy(data, &bp->ethtool_stats, sizeof(u64)
+-			* (GEM_STATS_LEN + QUEUE_STATS_LEN * MACB_MAX_QUEUES));
++			* (GEM_STATS_LEN + QUEUE_STATS_LEN * bp->num_queues));
+ 	spin_unlock_irq(&bp->stats_lock);
  }
  
 -- 
