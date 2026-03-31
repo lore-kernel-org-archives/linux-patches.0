@@ -1,144 +1,170 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF363A4F49
-	for <patches@lists.linux.dev>; Tue, 31 Mar 2026 18:54:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774983273; cv=pass; b=kP3UTLT1V3nXVhvPh+apJF/TOg7FgZWPGpEpnpip+p0Una6GS3h8E6Q+qDXdVxcOjz5OGPpFbelQcP3EMGImKlLdc5pxm889tnacRE2pC6r6NIG1fQ74ETToJsVsaRYno0AD3bJsmkQYoPjrT9bvYb1HfR99/Ts/JysYZJm1HEE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774983273; c=relaxed/simple;
-	bh=uhzoRXxX78P/5kx2Ju13EGTvDLo7lvJcJD3Pm6rkk8c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FelDJJGf5ms/TI4ixsMt5MEQHqyXYJET03jlXYVbFO0kfqOXBW0HG42UFYMOzz3nWd0DyNwtiqw1ro5ykb+MSyJ/g7c2/Nemk2pwcdsaHTpW5y42O9LFbz4zwlWJPi85Eo0ILxrvvSRQ8yla7agWoxIcMf+e1w4z3bL9g8DzfdU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X3qC7oPP; arc=pass smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4727B36402E
+	for <patches@lists.linux.dev>; Tue, 31 Mar 2026 19:13:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774984388; cv=none; b=fN71gujQCx0kQk8wFU/DeNe9QlQff4I4Fm3XUXZDfaV4KtdjTOA7FaRIXA4Msm6vSEaxUTTwzJF5xYdmfWile2HGYRj8F1E0jcDQxglLHKbk4Sg02vXHG0Yio++Gkf5mug5P267HXw0kGYfuQ4lq9c5J+mES5vgO2MzMrxgRfoU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774984388; c=relaxed/simple;
+	bh=hl8AtJX6I7d4e7IwG035sd2dO77DSoqLPGsnHW6EB0w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rJzuPTsOUr+ZWaBDcT0MBTX6+rgvQKVcrG+eIfMBwmAtoVMSHcs5wyV3n5sJ5kvuqLYt45ZbdK4i05D4cNi1Chc/pgNlNftu+Y+5VKOWFMQWA4fKqFs6m7ZKZXlpUnG3a3VLA8YG9yy9xPhyFEE4hQMmxInE+vPIkoEF5pGQp3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NRqSga5H; arc=none smtp.client-ip=209.85.210.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X3qC7oPP"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5a2a5236811so4933925e87.1
-        for <patches@lists.linux.dev>; Tue, 31 Mar 2026 11:54:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774983270; cv=none;
-        d=google.com; s=arc-20240605;
-        b=TYmWkJfOs9cdkRPiFwkMkCoJ1lYv3N/C0yHhOnY4kISH+JGxFXtdSBHmmdflO2DypG
-         Pp+Q1zL7uLb31F6yrUoMsTH6cofGrKNDfLNCGww3fGcfXJJcWfoAlIW+zPg0pwJDqjfO
-         S1CRjLLT8KmEp2WTz9V3SYKZA49SBXAoBBq+c2jGzfeHs4OXGdDhXH0cXx+95ef+jG+I
-         ASBC69eWN1FDYJPAEwumsbk5voPsnPOFN+VZckX+aEi2la7DE3zG+55doGidu3f1Nafr
-         4QIJX3jo+/BK4iOErOHU3vsdLJHvSEC2dgpySgeZfvGz44WDCn0F+HDLdeNXhbbQLelK
-         9Q9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=PelUNYlHA4etBcKLJ5LMDyufODvPTjPf2fovxktMXIU=;
-        fh=V0G5h8bA/1+D33Lgv/+8CAeOMacyW6wyRD1Vx1dKq9U=;
-        b=PqQ4txDdIbn1EI+zMec0G7Z6IK79CmNHjsxSpKq1tF/1sOgoRsR8QQjJbHQc4ub9cF
-         RH6ljYnkXJNmf/nQ7YbigLGQOVUiSB/zzFP1FnqLRgQqb47mv1ss7UbFiAUNwS5sCLER
-         3YYgoDcmEK2h/xsZxyb0E5zf8rA61+xQqOYUO3UdOjQLkHmw3UScFXzgY+kKrpp7Y8dk
-         1BdOeHJHibK1ys9XOo5D81Ts5PjAUrwh9FlPcVHFwHHvDOP/9UhVRLijMaHbS0zDGapo
-         6MCF4RtyCqtSEMEdSguUOc0kdeUElYSR3ZJB/n1JBFy2yeyHIFFRgeHwvUYSHGiphHtk
-         bkeg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRqSga5H"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7d7f92bde91so3960133a34.1
+        for <patches@lists.linux.dev>; Tue, 31 Mar 2026 12:13:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774983270; x=1775588070; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PelUNYlHA4etBcKLJ5LMDyufODvPTjPf2fovxktMXIU=;
-        b=X3qC7oPPLXM3jRUC1pP9zoWQ71gHogpg3eBLP0J90mFMV4f4rif6wpU4jakoGjybrr
-         K00Xog5obvNtvcVuqXpubb1Ddf8wAe2mBpPwfAPbQqmDFtrsT4T4vpNocW30N+1Tyik1
-         kQLDixUgDnnJ5wnDaSjL+B+qInZ61We94dIFyvnRB+0R4MGCehPn4OSW/SKrBWrLY73L
-         SzCZ5/YUqz8SQNIbJt/K7kspmBifKXP9ojkjDbGIugInHU4ZFYsEv+Ww9tbPHOUyh8Qk
-         3PTUUsb6KDieqSfaXXv8AiPyp4ksbrXMTTU3qc20JeklL73kjNeA/9FGMlH7D8rF5EpY
-         PE8w==
+        d=linuxfoundation.org; s=google; t=1774984386; x=1775589186; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JFbNda8GpywTskESpPvkrm6fXAaL7MDAY2UtfW+3Q7k=;
+        b=NRqSga5HQWdQSRhU6lsyMOnNGTwULF0tG2rU+D2YD1Oox+bPMmKH195y2N1HouN9g7
+         r5hmglc822HLfYNBMEdXPQAGfpKhv0MzNO3ty3CSZ5DNXxZn0OtM71xsdwodlwMsDFJN
+         YIHR8CwFexWGq9+EvoggigCL5f5vh8K9ADd88=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774983270; x=1775588070;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PelUNYlHA4etBcKLJ5LMDyufODvPTjPf2fovxktMXIU=;
-        b=iQe7fwdZidfPAkqvUCb2tID33GFxNXQ9n+5CYrXscHU/yaMGtwYFpV0L3URN9pFLtY
-         njP45LPf1SumPLnefx69U2P5igNZpSrnI/t2IbZ2GM6f8LzMxXexH93ZeGFfmdmlR8cl
-         nhbnXlNMbEOBSiFmC5pGNv1xswecMV0jgMhCAGh1cjk7+vX0mBUqLedh1dyp1eYQe+5g
-         7mYzeI97gShlEfyJoYJxlKpT2jBqsAZnrvS942Z9AHLuXR162ck31CcegtYaEfGJeI/u
-         NHUX944HlovYYHUq7nWKhFc8VMK+ZwQXzvmzkQGHCIy0PyVPhyKtDf2MhIJoDak5Melx
-         aIlg==
-X-Forwarded-Encrypted: i=1; AJvYcCXaEDJDohKDnmPlajt5wosD3/p3onAbzVhPAMZumddafIjgyraZtis3DT5O5iRimuX2HWBTjDf8@lists.linux.dev
-X-Gm-Message-State: AOJu0YwJuttXAaBisWhDrsmt3O5MJb39Od8AEkNHu/Jqafe8gaZQ5+eL
-	EJBOi3/U1gtFJRGBTqZxj51UhnlVGl5jMqLLdWHmZarSj+AqgH9hJllscpV9WzBmR01KBmufnB3
-	whygXx+3DKNjtqd0Akbzv2jljtIIW+6k=
-X-Gm-Gg: ATEYQzyu7iLmYDYXB8mE2YaRwbyYl/g7zqqfDYlR+Ar9NZ6qDUmSC5BsdLNgVIgXEYA
-	wpHngSVWurwU6iZ1ZQ7SS+7nfMhJuqSATUFeUGMSiyocP3Ip1R2wv9+OJtZEXCt44ZfJ+fzkuy5
-	ZafbNf/9WHE4+rFkLGenNGFBfa9kBzAYfQrG/CnKDY0SRXSayRk0jpzEFhZyzvLIVGoXfMt14jl
-	WV6GJnskNQ/FKyWmeX038s+YShsaZ5WLHJ96vcu2CnYiAVsDzQIOLzqivsmCym0rfgPmQDIYCD6
-	URkVJW5oex6fDe7eHb/WTece0KOUOESH515vX8JCiA==
-X-Received: by 2002:a05:6512:308b:b0:5a1:351f:8650 with SMTP id
- 2adb3069b0e04-5a2c1eec64fmr165899e87.8.1774983269524; Tue, 31 Mar 2026
- 11:54:29 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774984386; x=1775589186;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JFbNda8GpywTskESpPvkrm6fXAaL7MDAY2UtfW+3Q7k=;
+        b=MCnMGJN31hXlrYbOH5fcZAA7mijTIWBg9Gmjc3B/MrSwcOL81VOXnIEjsvcbCIijGU
+         wNfR6RxizYfl+INvNlKCzk88fKKb/7MK+g2Ued55MaklJfC3TD14Xfs6oM8wanfMmD97
+         Gqkuc/cdyZ8bZcHs+pWnnDWB0x2FWPWqIpnytvFXqPHc85bjxyp4zn66jC1MvkXwVx1p
+         doyWaEIYdHMH+7zQGJ48YPTdRoPXoyUkWRMJNuBi3J7+TPM3m6wN0KuH/9705Z8CjQ1W
+         T1FYPbPMPdHuljbWzs2R54MKsmvjfPIFBPwChKxbe5uYlTJBdvxhVbYpkjar5vqEkS3h
+         p26Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUDTB8xiIGMmztlP1rHcw0ty5zk89dryMBIJj1/119U0KUmDIEEjKDsNDcNK5CzqbN7dAhMBsKH@lists.linux.dev
+X-Gm-Message-State: AOJu0YygkNh1CZt5LoqQEqlN4FKaHGoHongm7lpH3ohrxif5dSjY6IiA
+	6k2K4xWLLgxz1lscVwwS4pDSUj9mi3ZaYoWhArIqpO+1fJWqYpIzsPy+vqV86L+IFyY=
+X-Gm-Gg: ATEYQzweAyfGpbw+U5iNjlUcrYx8HMpJ6RikHR3vymjLvzwcg0k/5so/CvfFheouPn+
+	95ofV691UHs4DbtnL1AIx/0CgKxY/GAFXxZz2Q/6SrmQAZ8Bw/CDWGq1T9ayBsDyvpRApr4Czn0
+	tAkW2ENkrZzMkMd2bfinYF+O1+/+8y6BRjAovjrfI98hfT6R0rAcmPSASpH+QK2EqfFj0jK626y
+	A9n+CY2LwdiZOEQxJInTe25LuL6FRbFtj5Z9zTVcPcu6U4WpI+raEqjqeGS7UW8I78tKjYJM0Kk
+	iUst64kuXup04JM+ykWN7Z5sxSzi4wU3SuZg/tGuviycvNYpP+80GvFmTFtb9beK2a88nfOv2oL
+	DNexdB/5Nx9KWW+hggQXbrsBc7L1mehpDrheNcsL8IINCKfC6QNiJNvePfFIWi3byRYBBbfPmDU
+	oKRcatRid2xeF6hScZTaw7OdPjzQd6u5kFO0HXUp9w8Jd2Gg==
+X-Received: by 2002:a05:6820:1a0f:b0:67e:160c:36a1 with SMTP id 006d021491bc7-67fabca3628mr286496eaf.31.1774984385963;
+        Tue, 31 Mar 2026 12:13:05 -0700 (PDT)
+Received: from [192.168.1.14] ([38.175.187.108])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-67e2305db5dsm7419592eaf.4.2026.03.31.12.13.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Mar 2026 12:13:05 -0700 (PDT)
+Message-ID: <17b0f9ea-ea81-489c-8a8b-f3118d3d28f3@linuxfoundation.org>
+Date: Tue, 31 Mar 2026 13:13:03 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260331161753.468533260@linuxfoundation.org>
-In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
-From: Dileep malepu <dileep.debian@gmail.com>
-Date: Wed, 1 Apr 2026 00:24:16 +0530
-X-Gm-Features: AQROBzBNIKLKEZtwNjxuWXV3qWqroAIDJd6GWuT8KNKRw9dfUwXw5HuACN9i8HY
-Message-ID: <CAC-m1roDY60qEnS1ciy_93yE_BBKNy1w5=kdgO8h1kW-T1X1_w@mail.gmail.com>
-Subject: Re: [PATCH 6.18 000/309] 6.18.21-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/10] selftests/resctrl: Fixes and improvements
+ focused on Intel platforms
+To: Reinette Chatre <reinette.chatre@intel.com>, shuah@kernel.org,
+ Dave.Martin@arm.com, james.morse@arm.com, tony.luck@intel.com,
+ babu.moger@amd.com, ilpo.jarvinen@linux.intel.com
+Cc: fenghuay@nvidia.com, peternewman@google.com, zide.chen@intel.com,
+ dapeng1.mi@linux.intel.com, ben.horgan@arm.com, yu.c.chen@intel.com,
+ jason.zeng@intel.com, linux-kselftest@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <cover.1773432891.git.reinette.chatre@intel.com>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <cover.1773432891.git.reinette.chatre@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 31, 2026 at 10:33=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.18.21 release.
-> There are 309 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 02 Apr 2026 16:16:56 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.18.21-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.18.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
+On 3/13/26 14:32, Reinette Chatre wrote:
+> Changes since v2:
+> - v2: https://lore.kernel.org/linux-patches/cover.1772582958.git.reinette.chatre@intel.com/
+> - Rebased on top of v7.0-rc3.
+> - Split "selftests/resctrl: Improve accuracy of cache occupancy test" into
+>    changes impacting L3 and L2 respectively. (Ilpo)
+> - "long_mask" -> "full_mask", "return_value" -> "measurement", "org_count"
+>    -> "orig_count". (Ilpo)
+> - Use PATH_MAX where appropriate. (Ilpo)
+> - Handle errors first to reduce indentation. (Ilpo)
+> - Detailed changes in changelogs.
+> - No functional changes since v2. Series tested by running 20 iterations of all
+>    tests on Emerald Rapids, Granite Rapids, Sapphire Rapids, Ice Lake, Sierra
+>    Forest, and Broadwell.
+> 
+> Changes since v1:
+> - v1: https://lore.kernel.org/lkml/cover.1770406608.git.reinette.chatre@intel.com/
+> - The new perf interface that resctrl selftests can utilize has been accepted and
+>    merged into v7.0-rc2. This series can thus now be considered for inclusion.
+>    For reference,
+>    commit 6a8a48644c4b ("perf/x86/intel/uncore: Add per-scheduler IMC CAS count events")
+>    The resctrl selftest changes making use of the new perf interface are backward
+>    compatible. The selftests do not require a v7.0-rc2 kernel to run but the
+>    tests can only pass on recent Intel platforms running v7.0-rc2 or later.
+> - Combine the two outstanding resctrl selftest submissions into one series
+>    for easier tracking:
+>    https://lore.kernel.org/lkml/084e82b5c29d75f16f24af8768d50d39ba0118a5.1769101788.git.reinette.chatre@intel.com/
+>    https://lore.kernel.org/lkml/cover.1770406608.git.reinette.chatre@intel.com/
+> - Fix typo in changelog of "selftests/resctrl: Improve accuracy of cache
+>    occupancy test": "the data my be in L2" -> "the data may be in L2"
+> - Add Zide Chen's RB tags.
+> 
+> Cover letter updated to be accurate wrt perf changes:
+> 
+> The resctrl selftests fail on recent Intel platforms. Intermittent failures
+> in the CAT test and permanent failures of MBM and MBA tests on new platforms
+> like Sierra Forest and Granite Rapids.
+> 
+> The MBM and MBA resctrl selftests both generate memory traffic and compare the
+> memory bandwidth measurements between the iMC PMUs and MBM to determine pass or
+> fail. Both these tests are failing on recent platforms like Sierra Forest and
+> Granite Rapids that have two events that need to be read and combined
+> for a total memory bandwidth count instead of the single event available on
+> earlier platforms.
+> 
+> resctrl selftests prefer to obtain event details via sysfs instead of adding
+> model specific details on which events to read. Enhancements to perf to expose
+> the new event details are available since:
+>   commit 6a8a48644c4b ("perf/x86/intel/uncore: Add per-scheduler IMC CAS count events")
+> This series demonstrates use of the new sysfs interface to perf
+> to obtain accurate iMC read memory bandwidth measurements.
+> 
+> An additional issue with all the tests is that these selftests are part
+> performance tests and determine pass/fail on performance heuristics selected
+> after running the tests on a variety of platforms. When new platforms
+> arrive the previous heuristics may cause the tests to fail. These failures are
+> not because of an issue with the resctrl subsystem the tests intend to test
+> but because of the architectural changes in the new platforms.
+> 
+> Adapt the resctrl tests to not be as sensitive to architectural changes
+> while adjusting the remaining heuristics to ensure tests pass on a variety
+> of platforms. More details in individual patches.
+> 
+> Tested by running 100 iterations of all tests on Emerald Rapids, Granite
+> Rapids, Sapphire Rapids, Ice Lake, Sierra Forest, and Broadwell.
+> 
+> Reinette Chatre (10):
+>    selftests/resctrl: Improve accuracy of cache occupancy test
+>    selftests/resctrl: Reduce interference from L2 occupancy during cache
+>      occupancy test
+>    selftests/resctrl: Do not store iMC counter value in counter config
+>      structure
+>    selftests/resctrl: Prepare for parsing multiple events per iMC
+>    selftests/resctrl: Support multiple events associated with iMC
+>    selftests/resctrl: Increase size of buffer used in MBM and MBA tests
+>    selftests/resctrl: Raise threshold at which MBM and PMU values are
+>      compared
+>    selftests/resctrl: Remove requirement on cache miss rate
+>    selftests/resctrl: Simplify perf usage in CAT test
+>    selftests/resctrl: Reduce L2 impact on CAT test
+> 
 
-Build and Boot Report for 6.18.21-rc1
+Let me know if this series is ready to go into Linux 7.1
 
-Build and boot testing was performed on version 6.18.21-rc1 using the
-default configuration on both x86_64 and arm64 architectures in
-a virtual environment. The kernel built and booted successfully,
-and no dmesg regressions were observed.
-
-kernel version: 6.18.21-rc1
-Configurations: x86_64_defconfig, defconfig
-Architectures: arm64, x86_64
-Kernel Source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux=
--stable-rc.git
-Commit: 489a397a6e94bf636650e210b0ed749a3cdf1e9f
-
-Tested-by: Dileep Malepu <dileep.debian@gmail.com>
-
-Best regards,
-Dileep Malepu.
+thanks,
+-- Shuah
