@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEAB36AB47;
-	Tue, 31 Mar 2026 16:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086763E316C;
+	Tue, 31 Mar 2026 16:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974576; cv=none; b=WfV2ehpZgkMur2dLredJSxDbt2k00/IfN0aKmKx+uDTOkmK16zy3MrW2RN2GGELoYkeu1n2XmVfuHjsXdh5294tNEYaBrqKO7mRlm9eplyDYpvXhr0GpDApOmWtMJ2kOzyxpPjVAtURVoRuu8NE0qCUxphmHleMgnevSJT3rTCo=
+	t=1774974579; cv=none; b=R2QaLtkfE7OzKJI+pz5hoGOsEEXhlHy5Nlw1VdlP+PqF13Sj2TxWNz1NuFohkb3d97V9YLsv6PiQnSTEJBkxrWm2PXCkxeTP104BmkfqM7e5B1fIPAeZO+mLs/cW4O48DoTIaW4xZ3WhAlzxQMXKLt65IIz22tPI4nJsFOnpIzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974576; c=relaxed/simple;
-	bh=kHwKBqjZi1xGB5fL+LrrFJsJywfmfOahe5cOM+gQkAw=;
+	s=arc-20240116; t=1774974579; c=relaxed/simple;
+	bh=eg0lwXKZRqUXJDSdY2p2wKTKMGa6gP0MWW8/9IlKAw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJvmlQkbn8k6siyVSnkL738mWbLpaOFWRdgJcQwFyhv8R2l2bCUL0hCLoi/K0wRozXb0Ye2FaDFlypNevfxlAJYmIoeIeTm52+WqmMZ84GFBqqU9hcd8url6IPh7Chmb2inSP1xoLkn+8nAzgbMGZ1E1Z7B+BfyQ/XJQR7wNmb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Opk9Yp0b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j900PxTKXVbFtR/ImjL+RhJGDuHvzdFHx5I28kCUUijFezT/Dx9nNvB9KORW4SJcqJ9prmJEfRnG54Z6EClDLFZXaWnNsS/BKyDBT35QZFNMVWzzUZe9St/Rks9AMRbnZrouK6zanhPKJgVB/+mu0zV+6kumb6k8mDosivE3j6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xv4CLCSB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Opk9Yp0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50D8C19423;
-	Tue, 31 Mar 2026 16:29:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xv4CLCSB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58459C19423;
+	Tue, 31 Mar 2026 16:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974576;
-	bh=kHwKBqjZi1xGB5fL+LrrFJsJywfmfOahe5cOM+gQkAw=;
+	s=korg; t=1774974578;
+	bh=eg0lwXKZRqUXJDSdY2p2wKTKMGa6gP0MWW8/9IlKAw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Opk9Yp0bDTtcxnDQI6/JheuIEoK1LuV35/h8wX5pRA5PzwnvMSQzomfPmn2A9HDGh
-	 SVjjv/LHR2m+N5VkgUtcfF3ExYc9xYcxwXxkVgplbfFRVAnU9AtTNvi9eTp8ANNazm
-	 ogMeWVYpbH6v24gnCdFhtxibdgnPpXL6CqtAtygE=
+	b=xv4CLCSButd8OCycfP03VJWoyWXXxUG1ltBrrw6Pm4IJsdqEUSXHtQnH2rVnM1ji4
+	 0criiG43Z6Vpt8VR949DGbKOAtOm1zVjCmjIHlYFo4GpUm3iomJl7h3uZNCs9FAEml
+	 Dqqf2Dcy0XXu3sSXdRsnj16CfBaBEMoP8RZmpFmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jan Kara <jack@suse.cz>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 138/175] ext4: fix use-after-free in update_super_work when racing with umount
-Date: Tue, 31 Mar 2026 18:22:02 +0200
-Message-ID: <20260331161734.856583806@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 112/175] hwmon: (peci/cputemp) Fix off-by-one in cputemp_is_visible()
+Date: Tue, 31 Mar 2026 18:21:36 +0200
+Message-ID: <20260331161733.895005874@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -54,113 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit d15e4b0a418537aafa56b2cb80d44add83e83697 upstream.
+commit b0c9d8ae71509f25690d57f2efddebf7f4b12194 upstream.
 
-Commit b98535d09179 ("ext4: fix bug_on in start_this_handle during umount
-filesystem") moved ext4_unregister_sysfs() before flushing s_sb_upd_work
-to prevent new error work from being queued via /proc/fs/ext4/xx/mb_groups
-reads during unmount. However, this introduced a use-after-free because
-update_super_work calls ext4_notify_error_sysfs() -> sysfs_notify() which
-accesses the kobject's kernfs_node after it has been freed by kobject_del()
-in ext4_unregister_sysfs():
+cputemp_is_visible() validates the channel index against
+CPUTEMP_CHANNEL_NUMS, but currently uses '>' instead of '>='.
+As a result, channel == CPUTEMP_CHANNEL_NUMS is not rejected even though
+valid indices are 0 .. CPUTEMP_CHANNEL_NUMS - 1.
 
-  update_super_work                ext4_put_super
-  -----------------                --------------
-                                   ext4_unregister_sysfs(sb)
-                                     kobject_del(&sbi->s_kobj)
-                                       __kobject_del()
-                                         sysfs_remove_dir()
-                                           kobj->sd = NULL
-                                         sysfs_put(sd)
-                                           kernfs_put()  // RCU free
-  ext4_notify_error_sysfs(sbi)
-    sysfs_notify(&sbi->s_kobj)
-      kn = kobj->sd              // stale pointer
-      kernfs_get(kn)             // UAF on freed kernfs_node
-                                   ext4_journal_destroy()
-                                     flush_work(&sbi->s_sb_upd_work)
+Fix the bounds check by using '>=' so invalid channel indices are
+rejected before indexing the core bitmap.
 
-Instead of reordering the teardown sequence, fix this by making
-ext4_notify_error_sysfs() detect that sysfs has already been torn down
-by checking s_kobj.state_in_sysfs, and skipping the sysfs_notify() call
-in that case. A dedicated mutex (s_error_notify_mutex) serializes
-ext4_notify_error_sysfs() against kobject_del() in ext4_unregister_sysfs()
-to prevent TOCTOU races where the kobject could be deleted between the
-state_in_sysfs check and the sysfs_notify() call.
-
-Fixes: b98535d09179 ("ext4: fix bug_on in start_this_handle during umount filesystem")
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260319120336.157873-1-jiayuan.chen@linux.dev
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Fixes: bf3608f338e9 ("hwmon: peci: Add cputemp driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260323002352.93417-3-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h  |    1 +
- fs/ext4/super.c |    1 +
- fs/ext4/sysfs.c |   10 +++++++++-
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/hwmon/peci/cputemp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1535,6 +1535,7 @@ struct ext4_sb_info {
- 	struct proc_dir_entry *s_proc;
- 	struct kobject s_kobj;
- 	struct completion s_kobj_unregister;
-+	struct mutex s_error_notify_mutex; /* protects sysfs_notify vs kobject_del */
- 	struct super_block *s_sb;
- 	struct buffer_head *s_mmp_bh;
- 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5344,6 +5344,7 @@ static int __ext4_fill_super(struct fs_c
- 
- 	timer_setup(&sbi->s_err_report, print_daily_error_info, 0);
- 	spin_lock_init(&sbi->s_error_lock);
-+	mutex_init(&sbi->s_error_notify_mutex);
- 	INIT_WORK(&sbi->s_sb_upd_work, update_super_work);
- 
- 	err = ext4_group_desc_init(sb, es, logical_sb_block, &first_not_zeroed);
---- a/fs/ext4/sysfs.c
-+++ b/fs/ext4/sysfs.c
-@@ -529,7 +529,10 @@ static const struct kobj_type ext4_feat_
- 
- void ext4_notify_error_sysfs(struct ext4_sb_info *sbi)
+--- a/drivers/hwmon/peci/cputemp.c
++++ b/drivers/hwmon/peci/cputemp.c
+@@ -339,7 +339,7 @@ static umode_t cputemp_is_visible(const
  {
--	sysfs_notify(&sbi->s_kobj, NULL, "errors_count");
-+	mutex_lock(&sbi->s_error_notify_mutex);
-+	if (sbi->s_kobj.state_in_sysfs)
-+		sysfs_notify(&sbi->s_kobj, NULL, "errors_count");
-+	mutex_unlock(&sbi->s_error_notify_mutex);
- }
+ 	const struct peci_cputemp *priv = data;
  
- static struct kobject *ext4_root;
-@@ -542,8 +545,10 @@ int ext4_register_sysfs(struct super_blo
- 	int err;
+-	if (channel > CPUTEMP_CHANNEL_NUMS)
++	if (channel >= CPUTEMP_CHANNEL_NUMS)
+ 		return 0;
  
- 	init_completion(&sbi->s_kobj_unregister);
-+	mutex_lock(&sbi->s_error_notify_mutex);
- 	err = kobject_init_and_add(&sbi->s_kobj, &ext4_sb_ktype, ext4_root,
- 				   "%s", sb->s_id);
-+	mutex_unlock(&sbi->s_error_notify_mutex);
- 	if (err) {
- 		kobject_put(&sbi->s_kobj);
- 		wait_for_completion(&sbi->s_kobj_unregister);
-@@ -576,7 +581,10 @@ void ext4_unregister_sysfs(struct super_
- 
- 	if (sbi->s_proc)
- 		remove_proc_subtree(sb->s_id, ext4_proc_root);
-+
-+	mutex_lock(&sbi->s_error_notify_mutex);
- 	kobject_del(&sbi->s_kobj);
-+	mutex_unlock(&sbi->s_error_notify_mutex);
- }
- 
- int __init ext4_init_sysfs(void)
+ 	if (channel < channel_core)
 
 
