@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE1530CD85;
-	Tue, 31 Mar 2026 17:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6831B31A556;
+	Tue, 31 Mar 2026 17:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976975; cv=none; b=F6JBq55hL8ckwjyEMfOjxm6X3spYrO31eettuU04iazOs0fKuVxUSKzinnkj3PGYtqLyRq0Jm2Ks30TGmmtwwsv0Cjy+b75umalB5ufaQYoWiIbGL3+N6MwImJgKtpSsjV3iO/SaYAFv7PXO25RMKsSWJsuBNgMUFB8l3wlDKlk=
+	t=1774976978; cv=none; b=r5Qm7Hsi95sClAoeHuLESZPSGV1L0YplQzasR0e6xQacEXYC3iygScweoXKUS+FrUjJ9YmKNhGwN5JFypEfB+8mBKOLekCB/hwtKqnMo+2EOU1EZ4YTdisH2sYy63VjoTKiViIR1U1aHNlp/debdVvC0MttJXYm3F45FS9ZVnUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976975; c=relaxed/simple;
-	bh=KFSLVEDk7hOo6KsDvnZQHazMc709cv6ccLANUIZIeTk=;
+	s=arc-20240116; t=1774976978; c=relaxed/simple;
+	bh=UrZk9jDrFXEziCmOyEOirfmAej0mfQW1b6R6nPRJB/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLS6QV3CxxapPJrmV623t9yB2yjvHzuTOjTlf1JViXMKUynSYALJUra9KzAREQBXUU9cK/4w17zm6CCxn9M5bKu3qJiMGEpPLfmzddKBGGPd0pC/h47M7aCgUKOv+iMRPUIx5Y+llKTOfVGP0kH8uIitd9o6Rm8AH4NFtCxz7Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opzR69Qb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tlubwvwh2u1e8AzYgX+8YhdTM30ZI+tbLjxoBI38X+yxCI5gEsmK7HHqd+OZT827vsT7cjdxNtjLtpKaAADePGKPi3yH090LBE4s/LTUTUPq5zWUwZY7a1szDdC2MKvSG3mxQJOY6Y8/+UKxKChkcM6CkRqJ5JVuOPKKE6EH6bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yS0vNDFq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opzR69Qb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653B7C19423;
-	Tue, 31 Mar 2026 17:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yS0vNDFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21F8C2BCB1;
+	Tue, 31 Mar 2026 17:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976975;
-	bh=KFSLVEDk7hOo6KsDvnZQHazMc709cv6ccLANUIZIeTk=;
+	s=korg; t=1774976978;
+	bh=UrZk9jDrFXEziCmOyEOirfmAej0mfQW1b6R6nPRJB/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opzR69QbNlCPja4Snkgd4bz1WqcAU6Is9PXsVwiCkOmlJFGRWfpZcxI4WfD5ZUema
-	 PvsVb8GHNqts4wLAAd6rSu+7CiSIeaUP/Y1UKsivpNye6mvarP1rgMA+IiZD00hTWj
-	 V5VHxgDLHhpysfnndcSTrX7jhp4M7VjxQnR+Yn+0=
+	b=yS0vNDFqb9/50NKDMmhvYdI5vlWOmXXI1rAD2C4ZDdNzaskgezaL4oLbzdyu5eOaz
+	 6jPnP/144Tec0IEiZjWsLUCwvp1BIZK0NFrMYu0MbAuNSSf6vHkVqZ236UJmrFLUyu
+	 dE3thGzVdIQ9tgdkf6s0qPU76sIsaZp26nGMTZbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 273/309] powerpc64/bpf: do not increment tailcall count when prog is NULL
-Date: Tue, 31 Mar 2026 18:22:56 +0200
-Message-ID: <20260331161803.610489715@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 300/309] netfs: Fix read abandonment during retry
+Date: Tue, 31 Mar 2026 18:23:23 +0200
+Message-ID: <20260331161804.609393074@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,70 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Bathini <hbathini@linux.ibm.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 521bd39d9d28ce54cbfec7f9b89c94ad4fdb8350 upstream.
+[ Upstream commit 7e57523490cd2efb52b1ea97f2e0a74c0fb634cd ]
 
-Do not increment tailcall count, if tailcall did not succeed due to
-missing BPF program.
+Under certain circumstances, all the remaining subrequests from a read
+request will get abandoned during retry.  The abandonment process expects
+the 'subreq' variable to be set to the place to start abandonment from, but
+it doesn't always have a useful value (it will be uninitialised on the
+first pass through the loop and it may point to a deleted subrequest on
+later passes).
 
-Fixes: ce0761419fae ("powerpc/bpf: Implement support for tail calls")
-Cc: stable@vger.kernel.org
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260303181031.390073-2-hbathini@linux.ibm.com
-[ Conflict due to missing feature commit 2ed2d8f6fb38 ("powerpc64/bpf:
-  Support tailcalls with subprogs") resolved accordingly. ]
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix the first jump to "abandon:" to set subreq to the start of the first
+subrequest expected to need retry (which, in this abandonment case, turned
+out unexpectedly to no longer have NEED_RETRY set).
+
+Also clear the subreq pointer after discarding superfluous retryable
+subrequests to cause an oops if we do try to access it.
+
+Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/3775287.1773848338@warthog.procyon.org.uk
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/net/bpf_jit_comp64.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ fs/netfs/read_retry.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/net/bpf_jit_comp64.c
-+++ b/arch/powerpc/net/bpf_jit_comp64.c
-@@ -430,27 +430,32 @@ static int bpf_jit_emit_tail_call(u32 *i
+diff --git a/fs/netfs/read_retry.c b/fs/netfs/read_retry.c
+index 7793ba5e3e8fc..cca9ac43c0773 100644
+--- a/fs/netfs/read_retry.c
++++ b/fs/netfs/read_retry.c
+@@ -93,8 +93,10 @@ static void netfs_retry_read_subrequests(struct netfs_io_request *rreq)
+ 		       from->start, from->transferred, from->len);
  
- 	/*
- 	 * tail_call_cnt++;
-+	 * Writeback this updated value only if tailcall succeeds.
- 	 */
- 	EMIT(PPC_RAW_ADDI(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_1), 1));
--	EMIT(PPC_RAW_STD(bpf_to_ppc(TMP_REG_1), _R1, bpf_jit_stack_tailcallcnt(ctx)));
+ 		if (test_bit(NETFS_SREQ_FAILED, &from->flags) ||
+-		    !test_bit(NETFS_SREQ_NEED_RETRY, &from->flags))
++		    !test_bit(NETFS_SREQ_NEED_RETRY, &from->flags)) {
++			subreq = from;
+ 			goto abandon;
++		}
  
- 	/* prog = array->ptrs[index]; */
--	EMIT(PPC_RAW_MULI(bpf_to_ppc(TMP_REG_1), b2p_index, 8));
--	EMIT(PPC_RAW_ADD(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_1), b2p_bpf_array));
--	EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_1), offsetof(struct bpf_array, ptrs)));
-+	EMIT(PPC_RAW_MULI(bpf_to_ppc(TMP_REG_2), b2p_index, 8));
-+	EMIT(PPC_RAW_ADD(bpf_to_ppc(TMP_REG_2), bpf_to_ppc(TMP_REG_2), b2p_bpf_array));
-+	EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_2), bpf_to_ppc(TMP_REG_2),
-+			offsetof(struct bpf_array, ptrs)));
+ 		list_for_each_continue(next, &stream->subrequests) {
+ 			subreq = list_entry(next, struct netfs_io_subrequest, rreq_link);
+@@ -178,6 +180,7 @@ static void netfs_retry_read_subrequests(struct netfs_io_request *rreq)
+ 				if (subreq == to)
+ 					break;
+ 			}
++			subreq = NULL;
+ 			continue;
+ 		}
  
- 	/*
- 	 * if (prog == NULL)
- 	 *   goto out;
- 	 */
--	EMIT(PPC_RAW_CMPLDI(bpf_to_ppc(TMP_REG_1), 0));
-+	EMIT(PPC_RAW_CMPLDI(bpf_to_ppc(TMP_REG_2), 0));
- 	PPC_BCC_SHORT(COND_EQ, out);
- 
- 	/* goto *(prog->bpf_func + prologue_size); */
--	EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_1), offsetof(struct bpf_prog, bpf_func)));
--	EMIT(PPC_RAW_ADDI(bpf_to_ppc(TMP_REG_1), bpf_to_ppc(TMP_REG_1),
--			FUNCTION_DESCR_SIZE + bpf_tailcall_prologue_size));
--	EMIT(PPC_RAW_MTCTR(bpf_to_ppc(TMP_REG_1)));
-+	EMIT(PPC_RAW_LD(bpf_to_ppc(TMP_REG_2), bpf_to_ppc(TMP_REG_2),
-+			offsetof(struct bpf_prog, bpf_func)));
-+	EMIT(PPC_RAW_ADDI(bpf_to_ppc(TMP_REG_2), bpf_to_ppc(TMP_REG_2),
-+			  FUNCTION_DESCR_SIZE + bpf_tailcall_prologue_size));
-+	EMIT(PPC_RAW_MTCTR(bpf_to_ppc(TMP_REG_2)));
-+
-+	/* Writeback updated tailcall count */
-+	EMIT(PPC_RAW_STD(bpf_to_ppc(TMP_REG_1), _R1, bpf_jit_stack_tailcallcnt(ctx)));
- 
- 	/* tear down stack, restore NVRs, ... */
- 	bpf_jit_emit_common_epilogue(image, ctx);
+-- 
+2.53.0
+
 
 
