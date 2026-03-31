@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B3C2D1F40;
-	Tue, 31 Mar 2026 16:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447EF2D1F40;
+	Tue, 31 Mar 2026 16:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975577; cv=none; b=biQyISRX0tzQGUbu6Z5fxynMOUWXUIu8CsioWgr0eJaufBhexYKVQghbIHm7HWoF2jejFj35OHw04v72C4Vz8wb9OymffCS5XfTEk1NjmuhQGwO1i27VTcXno1egn3JRr/vAj059VjKwRjpf75zrEhglJbGCOmfFdsMmaRecU04=
+	t=1774975580; cv=none; b=eawPTaaHZPaOmYJLcNiz9tWM1wp7h0xvclbKEW5MsTkZvCbaxSePmrtmeCKPNq3gpMpcnifa2zVAfzQVfjaewtLaR5V6vyje4qrKrkTfYMkHu+Si5jb//h9iGAIPtVea4O+FTnpQT1o8IL5i0Oc1Revmcc16UpBmOfNlqTGQhUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975577; c=relaxed/simple;
-	bh=pDjR1aJRmafKtvnRFsHQK+ttWskj3yF8RBoNku+SIkQ=;
+	s=arc-20240116; t=1774975580; c=relaxed/simple;
+	bh=nLmBnW+UmEfcR6CBA2Upb98vMlojPg0FsaoAI50v1Ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IprC8NKNCzIAhyGcYh4h7DybbYQZBYHUvowyODXKko0ORbkOCZKu0WuhZbZ3revUqTc4cKgau0fOKBacSP03BV4vaSnxRUQ8J6zntBmP254XOyA+RDl2VOX/dZeEHXBT0mWxMniv779VfQMEz8nBKMxm/K4Azk9gf+HICejPezA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDI9ru93; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jf2mAUnLvVvu/OQIGgF4TlvEAC62Dm70RyKGp0wj3ilkVTAhQI2M1v858ulKncfzjAD3z/cIVgPuKJR94QLI40ZdRmQ/OnIpt5VE1r3Nh80OGmDrTxZmxDz25KRAh4w+ZAjkClwafMP/pOqQ2P/H4aQ58KM5yskBIePm9Xtj5H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4W+LeFI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDI9ru93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D653C19423;
-	Tue, 31 Mar 2026 16:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4W+LeFI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE32EC19423;
+	Tue, 31 Mar 2026 16:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975577;
-	bh=pDjR1aJRmafKtvnRFsHQK+ttWskj3yF8RBoNku+SIkQ=;
+	s=korg; t=1774975580;
+	bh=nLmBnW+UmEfcR6CBA2Upb98vMlojPg0FsaoAI50v1Ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDI9ru93sX0ww1+EHNi5LFE/OYBYSvHYSpMGRWA8kble2XJMZFo7kac1GmlJoX5su
-	 La5aqqWQjnTSlyzbLPqhBIAH7FmML6NqIiIicVXMqlOgxdVg6q54Q8dZQydQhXfx4h
-	 21Y4g4pUt+/Px9kaYy2eziTfrQCtNZM13HiA5JF0=
+	b=q4W+LeFIwisFLupPFMDu4JSxTe3bAMoFK+Isnsuz7WsMdvDcEx/OuotgvD1DpHV1a
+	 7D+hwKFhQnv1agOC0QyCR7AxgDVczZG/YG/v6TjbxhlLwaxQ3gdVtfDGHlOG8ZzigB
+	 aetqcWca+fMsOtSiFkoY/veVTYke5kPGl4YUutO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bill Wendling <morbo@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Justin Stitt <justinstitt@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 341/342] bug: avoid format attribute warning for clang as well
-Date: Tue, 31 Mar 2026 18:22:54 +0200
-Message-ID: <20260331161811.446506300@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Christian Eggers <ceggers@arri.de>
+Subject: [PATCH 6.19 342/342] Bluetooth: L2CAP: Fix regressions caused by reusing ident
+Date: Tue, 31 Mar 2026 18:22:55 +0200
+Message-ID: <20260331161811.482525451@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -58,78 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 2598ab9d63f41160c7081998857fef409182933d ]
+commit 761fb8ec8778f0caf2bba5a41e3cff1ea86974f3 upstream.
 
-Like gcc, clang-22 now also warns about a function that it incorrectly
-identifies as a printf-style format:
+This attempt to fix regressions caused by reusing ident which apparently
+is not handled well on certain stacks causing the stack to not respond to
+requests, so instead of simple returning the first unallocated id this
+stores the last used tx_ident and then attempt to use the next until all
+available ids are exausted and then cycle starting over to 1.
 
-lib/bug.c:190:22: error: diagnostic behavior may be improved by adding the 'format(printf, 1, 0)' attribute to the declaration of '__warn_printf' [-Werror,-Wmissing-format-attribute]
-  179 | static void __warn_printf(const char *fmt, struct pt_regs *regs)
-      | __attribute__((format(printf, 1, 0)))
-  180 | {
-  181 |         if (!fmt)
-  182 |                 return;
-  183 |
-  184 | #ifdef HAVE_ARCH_BUG_FORMAT_ARGS
-  185 |         if (regs) {
-  186 |                 struct arch_va_list _args;
-  187 |                 va_list *args = __warn_args(&_args, regs);
-  188 |
-  189 |                 if (args) {
-  190 |                         vprintk(fmt, *args);
-      |                                           ^
-
-Revert the change that added a gcc-specific workaround, and instead add
-the generic annotation that avoid the warning.
-
-Link: https://lkml.kernel.org/r/20260323205534.1284284-1-arnd@kernel.org
-Fixes: d36067d6ea00 ("bug: Hush suggest-attribute=format for __warn_printf()")
-Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Suggested-by: Brendan Jackman <jackmanb@google.com>
-Link: https://lore.kernel.org/all/20251208141618.2805983-1-andriy.shevchenko@linux.intel.com/T/#u
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Brendan Jackman <jackmanb@google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221120
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221177
+Fixes: 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding TX ident")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Christian Eggers <ceggers@arri.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bug.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ include/net/bluetooth/l2cap.h |    1 +
+ net/bluetooth/l2cap_core.c    |   29 ++++++++++++++++++++++++++---
+ 2 files changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/lib/bug.c b/lib/bug.c
-index 623c467a8b76c..aab9e6a40c5f9 100644
---- a/lib/bug.c
-+++ b/lib/bug.c
-@@ -173,10 +173,8 @@ struct bug_entry *find_bug(unsigned long bugaddr)
- 	return module_find_bug(bugaddr);
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -658,6 +658,7 @@ struct l2cap_conn {
+ 	struct sk_buff		*rx_skb;
+ 	__u32			rx_len;
+ 	struct ida		tx_ida;
++	__u8			tx_ident;
+ 
+ 	struct sk_buff_head	pending_rx;
+ 	struct work_struct	pending_rx_work;
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -926,16 +926,39 @@ int l2cap_chan_check_security(struct l2c
+ 
+ static int l2cap_get_ident(struct l2cap_conn *conn)
+ {
++	u8 max;
++	int ident;
++
+ 	/* LE link does not support tools like l2ping so use the full range */
+ 	if (conn->hcon->type == LE_LINK)
+-		return ida_alloc_range(&conn->tx_ida, 1, 255, GFP_ATOMIC);
+-
++		max = 255;
+ 	/* Get next available identificator.
+ 	 *    1 - 128 are used by kernel.
+ 	 *  129 - 199 are reserved.
+ 	 *  200 - 254 are used by utilities like l2ping, etc.
+ 	 */
+-	return ida_alloc_range(&conn->tx_ida, 1, 128, GFP_ATOMIC);
++	else
++		max = 128;
++
++	/* Allocate ident using min as last used + 1 (cyclic) */
++	ident = ida_alloc_range(&conn->tx_ida, READ_ONCE(conn->tx_ident) + 1,
++				max, GFP_ATOMIC);
++	/* Force min 1 to start over */
++	if (ident <= 0) {
++		ident = ida_alloc_range(&conn->tx_ida, 1, max, GFP_ATOMIC);
++		if (ident <= 0) {
++			/* If all idents are in use, log an error, this is
++			 * extremely unlikely to happen and would indicate a bug
++			 * in the code that idents are not being freed properly.
++			 */
++			BT_ERR("Unable to allocate ident: %d", ident);
++			return 0;
++		}
++	}
++
++	WRITE_ONCE(conn->tx_ident, ident);
++
++	return ident;
  }
  
--__diag_push();
--__diag_ignore(GCC, all, "-Wsuggest-attribute=format",
--	      "Not a valid __printf() conversion candidate.");
--static void __warn_printf(const char *fmt, struct pt_regs *regs)
-+static __printf(1, 0)
-+void __warn_printf(const char *fmt, struct pt_regs *regs)
- {
- 	if (!fmt)
- 		return;
-@@ -195,7 +193,6 @@ static void __warn_printf(const char *fmt, struct pt_regs *regs)
- 
- 	printk("%s", fmt);
- }
--__diag_pop();
- 
- static enum bug_trap_type __report_bug(struct bug_entry *bug, unsigned long bugaddr, struct pt_regs *regs)
- {
--- 
-2.53.0
-
+ static void l2cap_send_acl(struct l2cap_conn *conn, struct sk_buff *skb,
 
 
