@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6EE2D7DEF;
-	Tue, 31 Mar 2026 17:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A963C2D7DEF;
+	Tue, 31 Mar 2026 17:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976867; cv=none; b=c1b/7VRJKzqst6T3FcdQQ++8JmKnGZ7rvTi06nQUaCCDOA9ZGxNyHml7h2gFo2WotYMtYAuTyF44yz/Z6Nv2P/O7e+vKfFNbyZOCyvU4tdCNQt1EhzPIKSWisLR+bfLsk6SPzoIic7j6thkK9qh7jupdS1V3oaeuLZjR3EERKMw=
+	t=1774976869; cv=none; b=ZnBZCVq3Kf/I9zEtsrY3bVcP8q+RLPbLhlnn5vDohZDk1CxsRhNd3mYL6QQiqjFSzU6Hv+BPIqXdjRFUJYu3lvPZ4YcQYiq45mSRMbHmDQ8fs2OnkxyXdP+39J9c/XkLVIWgawa04nN7zkwUs76iem41+tyRC46DkqO/pJ954Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976867; c=relaxed/simple;
-	bh=86eMFk4PF/QkqPcDK4LyXww8uqdKXswJo+XG7M3IM7I=;
+	s=arc-20240116; t=1774976869; c=relaxed/simple;
+	bh=5DSTJTihjZNS7Nesqpuqicpmhz/V9EyWQRGqvZhE92E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2sBBnyg1cRBq2krHkX0x+xMDj+wwa7ho5TcG9vzrRNSGRrSKH0bNGLrQsN1m/pX1O0KbPV5Q0b2cfVUM/OQzB8A/By1wMZ9SM9VFy0bzbeCatj1I3w5ObbT7LcmTBH8Br5m5Wl668E/AJ1polQ752lJ02zGKnn466ag54idPIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEib8iWg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nEWXIWKsU7017yR9kfRbJK2XNe4qJZXXnmOFfFM1I8kVIr7xe+c/y1tMuCiGh8pGHspJ6IfiQxMssDQSug6cQcPSECiMoC6lsX9vtIEp7nfA3m2Yzz5SHPu/RYn9fuee0QDqAPuNrbULcMdsCnyju8k4AAr7WljCgoacVNWwWsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tI1ahDct; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEib8iWg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3659C19423;
-	Tue, 31 Mar 2026 17:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tI1ahDct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40022C19423;
+	Tue, 31 Mar 2026 17:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976867;
-	bh=86eMFk4PF/QkqPcDK4LyXww8uqdKXswJo+XG7M3IM7I=;
+	s=korg; t=1774976869;
+	bh=5DSTJTihjZNS7Nesqpuqicpmhz/V9EyWQRGqvZhE92E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YEib8iWgI/LiPmajj2hBdICtxU4FUd3cG1E1zwgOK6M6PPXiioOAXBnZ4erUxUK4c
-	 ojc3fu0YNjqFbcJS5pEoQaMOZvKRmKZ5k7L2GxKiLfu0d5gU9oC8uf97C2f8aToXYZ
-	 viGm5ScAm5KBBkg/QFgC5dCU9wR2d9W1ai4eqPRw=
+	b=tI1ahDct+s1dLvz45HEpvK0UU0S6uCQu+zFQ8jgSUeBfLmoGOEML3de0he/8ieDja
+	 fP1YLR0SchKf0dZZMZ1nqohDdSUpXKoRistyHWczOhnyTVSYrz4cju0P3ErvXcl41u
+	 Wf97ViMV4Tho2i+2YMySNmxyVPQahAN178Cz/xdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Free Ekanayaka <free.ekanayaka@gmail.com>,
 	Jan Kara <jack@suse.cz>,
 	Zhang Yi <yi.zhang@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.18 258/309] ext4: fix fsync(2) for nojournal mode
-Date: Tue, 31 Mar 2026 18:22:41 +0200
-Message-ID: <20260331161803.067013685@linuxfoundation.org>
+Subject: [PATCH 6.18 259/309] ext4: make recently_deleted() properly work with lazy itable initialization
+Date: Tue, 31 Mar 2026 18:22:42 +0200
+Message-ID: <20260331161803.102951915@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -55,58 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-commit 1308255bbf8452762f89f44f7447ce137ecdbcff upstream.
+commit bd060afa7cc3e0ad30afa9ecc544a78638498555 upstream.
 
-When inode metadata is changed, we sometimes just call
-ext4_mark_inode_dirty() to track modified metadata. This copies inode
-metadata into block buffer which is enough when we are journalling
-metadata. However when we are running in nojournal mode we currently
-fail to write the dirtied inode buffer during fsync(2) because the inode
-is not marked as dirty. Use explicit ext4_write_inode() call to make
-sure the inode table buffer is written to the disk. This is a band aid
-solution but proper solution requires a much larger rewrite including
-changes in metadata bh tracking infrastructure.
+recently_deleted() checks whether inode has been used in the near past.
+However this can give false positive result when inode table is not
+initialized yet and we are in fact comparing to random garbage (or stale
+itable block of a filesystem before mkfs). Ultimately this results in
+uninitialized inodes being skipped during inode allocation and possibly
+they are never initialized and thus e2fsck complains.  Verify if the
+inode has been initialized before checking for dtime.
 
-Reported-by: Free Ekanayaka <free.ekanayaka@gmail.com>
-Link: https://lore.kernel.org/all/87il8nhxdm.fsf@x1.mail-host-address-is-not-set/
-CC: stable@vger.kernel.org
 Signed-off-by: Jan Kara <jack@suse.cz>
 Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260216164848.3074-4-jack@suse.cz
+Link: https://patch.msgid.link/20260216164848.3074-3-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fsync.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ fs/ext4/ialloc.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/ext4/fsync.c
-+++ b/fs/ext4/fsync.c
-@@ -83,11 +83,23 @@ static int ext4_fsync_nojournal(struct f
- 				int datasync, bool *needs_barrier)
- {
- 	struct inode *inode = file->f_inode;
-+	struct writeback_control wbc = {
-+		.sync_mode = WB_SYNC_ALL,
-+		.nr_to_write = 0,
-+	};
- 	int ret;
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -686,6 +686,12 @@ static int recently_deleted(struct super
+ 	if (unlikely(!gdp))
+ 		return 0;
  
- 	ret = generic_buffers_fsync_noflush(file, start, end, datasync);
--	if (!ret)
--		ret = ext4_sync_parent(inode);
-+	if (ret)
-+		return ret;
++	/* Inode was never used in this filesystem? */
++	if (ext4_has_group_desc_csum(sb) &&
++	    (gdp->bg_flags & cpu_to_le16(EXT4_BG_INODE_UNINIT) ||
++	     ino >= EXT4_INODES_PER_GROUP(sb) - ext4_itable_unused_count(sb, gdp)))
++		return 0;
 +
-+	/* Force writeout of inode table buffer to disk */
-+	ret = ext4_write_inode(inode, &wbc);
-+	if (ret)
-+		return ret;
-+
-+	ret = ext4_sync_parent(inode);
-+
- 	if (test_opt(inode->i_sb, BARRIER))
- 		*needs_barrier = true;
- 
+ 	bh = sb_find_get_block(sb, ext4_inode_table(sb, gdp) +
+ 		       (ino / inodes_per_block));
+ 	if (!bh || !buffer_uptodate(bh))
 
 
