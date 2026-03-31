@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082CC423A7C;
-	Tue, 31 Mar 2026 16:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD6B3A1E8C;
+	Tue, 31 Mar 2026 16:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976396; cv=none; b=SUByLZklpz/CKKBHLtlPSr9XUK4TDmg0xTjNFi865VzXv+Tlp9BP42ou51g/S1hlvGQTY3SEiyqF3qqDHDRjXT1pC5dXjPRCH9X2eY8THbiEIt6DehIJCe3JFeqeNjBJuAG9zMM0DyuCwvtSolq/s+blAGcdeQQytWC3ee8PnMY=
+	t=1774976398; cv=none; b=NCSffoVanxnnpTxj/rbcS3mJhXgQpo74hajWA+ViyzORlqfLgR9p1DkGxUHXa3IT/2MK7ZXJmBeNPYhm2cQssP9cQw37PiWeFACNkPF83GokoTjlecXIqf2B/gMjXoFOR1rq7J5ABxvq0yZfjziRDR41yIREICbaTCRAKyxHosA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976396; c=relaxed/simple;
-	bh=/D+jh8pz2u8nJsqBPmwEWVItmzgGq2/RULtULMevKXQ=;
+	s=arc-20240116; t=1774976398; c=relaxed/simple;
+	bh=MN6c9dhnx6cNxoOeLrn1N3sqob668Je7Wk/RvSTYfNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IoG5L17hB00146P/4mxKLwR3i6lQTL+D4iXW2o0MzSXYfgW4so+/VYBaDeEYyTKfNgeyksEuAmiYknMKzPb7FBOBZPXmcp7eaHVgts3zIDTpGtLpEha0lQmW+s3M3rLQyakHms+aYORvJ5gaZk1TFkuh3U1Kkt8osF4+HnRgk8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AMxQ0Bd6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IaNqSZr5c2faAY3JW7q2ggvrsuZC/YUn5kGHjGvUPbne0DaSxZu0bpXSoozea93YQBMGZB7XSKEn+yetKBdPmCZ1rSNboStTgep7OS3GEV6zRAg9SeBtCezvI5Bdpc8WmVYdkYL+oiPbW9czsot4NJRFJp7aofGaY4amp/wNnaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Wyi0090; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMxQ0Bd6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93979C19423;
-	Tue, 31 Mar 2026 16:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Wyi0090"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FE5C19423;
+	Tue, 31 Mar 2026 16:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976395;
-	bh=/D+jh8pz2u8nJsqBPmwEWVItmzgGq2/RULtULMevKXQ=;
+	s=korg; t=1774976398;
+	bh=MN6c9dhnx6cNxoOeLrn1N3sqob668Je7Wk/RvSTYfNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AMxQ0Bd6qRLG+YbGT7IIQg7BP71AihwdFNzVqsPvN6y0MBfBkG6UZ2G2CSH+kixJJ
-	 w6aWyq3yd4WO64o3nPyXDxhdEz533lly9qhxzPmi55PdXixxIJNrPD1hyp1PnckDS1
-	 Eq9Q4dwa0VKFrB0EUOCyxalsKNlj/oGPW4J34Oy4=
+	b=0Wyi0090ApidqTbbRaI5i57g+EpKK0vf0ffKwLTJgU0MJRJ7I1/vEbMcLrWSUnANb
+	 0ij4BYzuC02Kj25m2GByN9uE7/ihCvqTt+9Xo+hepz1PbGccW9bi/rJg9GYYxHZirf
+	 osUej0fl6Nan3O7QhoM00lUi+MoNKAKMVLGuByKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+b518dfc8e021988fbd55@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 059/309] ALSA: hda/realtek: Add quirk for Gigabyte Technology to fix headphone
-Date: Tue, 31 Mar 2026 18:19:22 +0200
-Message-ID: <20260331161755.659954030@linuxfoundation.org>
+Subject: [PATCH 6.18 077/309] af_key: validate families in pfkey_send_migrate()
+Date: Tue, 31 Mar 2026 18:19:40 +0200
+Message-ID: <20260331161756.322346716@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,56 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 56fbbe096a89ff4b52af78a21a4afd9d94bdcc80 ]
+[ Upstream commit eb2d16a7d599dc9d4df391b5e660df9949963786 ]
 
-The BIOS of this machine has set 0x19 to mic, which needs to be set
-to headphone pin in order to work properly.
+syzbot was able to trigger a crash in skb_put() [1]
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220814
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/b55f6ebe-7449-49f7-ae85-00d2ba1e7af0@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Issue is that pfkey_send_migrate() does not check old/new families,
+and that set_ipsecrequest() @family argument was truncated,
+thus possibly overfilling the skb.
+
+Validate families early, do not wait set_ipsecrequest().
+
+[1]
+
+skbuff: skb_over_panic: text:ffffffff8a752120 len:392 put:16 head:ffff88802a4ad040 data:ffff88802a4ad040 tail:0x188 end:0x180 dev:<NULL>
+ kernel BUG at net/core/skbuff.c:214 !
+Call Trace:
+ <TASK>
+  skb_over_panic net/core/skbuff.c:219 [inline]
+  skb_put+0x159/0x210 net/core/skbuff.c:2655
+  skb_put_zero include/linux/skbuff.h:2788 [inline]
+  set_ipsecrequest net/key/af_key.c:3532 [inline]
+  pfkey_send_migrate+0x1270/0x2e50 net/key/af_key.c:3636
+  km_migrate+0x155/0x260 net/xfrm/xfrm_state.c:2848
+  xfrm_migrate+0x2140/0x2450 net/xfrm/xfrm_policy.c:4705
+  xfrm_do_migrate+0x8ff/0xaa0 net/xfrm/xfrm_user.c:3150
+
+Fixes: 08de61beab8a ("[PFKEYV2]: Extension for dynamic update of endpoint address(es)")
+Reported-by: syzbot+b518dfc8e021988fbd55@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69b5933c.050a0220.248e02.00f2.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc662.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/key/af_key.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc662.c b/sound/hda/codecs/realtek/alc662.c
-index 5073165d1f3cf..3a943adf90876 100644
---- a/sound/hda/codecs/realtek/alc662.c
-+++ b/sound/hda/codecs/realtek/alc662.c
-@@ -313,6 +313,7 @@ enum {
- 	ALC897_FIXUP_HEADSET_MIC_PIN2,
- 	ALC897_FIXUP_UNIS_H3C_X500S,
- 	ALC897_FIXUP_HEADSET_MIC_PIN3,
-+	ALC897_FIXUP_H610M_HP_PIN,
- };
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index 2ebde03522459..ceaa82bc78acc 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -3518,7 +3518,7 @@ static int set_sadb_kmaddress(struct sk_buff *skb, const struct xfrm_kmaddress *
  
- static const struct hda_fixup alc662_fixups[] = {
-@@ -766,6 +767,13 @@ static const struct hda_fixup alc662_fixups[] = {
- 			{ }
- 		},
- 	},
-+	[ALC897_FIXUP_H610M_HP_PIN] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x19, 0x0321403f }, /* HP out */
-+			{ }
-+		},
-+	},
- };
+ static int set_ipsecrequest(struct sk_buff *skb,
+ 			    uint8_t proto, uint8_t mode, int level,
+-			    uint32_t reqid, uint8_t family,
++			    uint32_t reqid, sa_family_t family,
+ 			    const xfrm_address_t *src, const xfrm_address_t *dst)
+ {
+ 	struct sadb_x_ipsecrequest *rq;
+@@ -3583,12 +3583,17 @@ static int pfkey_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
  
- static const struct hda_quirk alc662_fixup_tbl[] = {
-@@ -815,6 +823,7 @@ static const struct hda_quirk alc662_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x8469, "ASUS mobo", ALC662_FIXUP_NO_JACK_DETECT),
- 	SND_PCI_QUIRK(0x105b, 0x0cd6, "Foxconn", ALC662_FIXUP_ASUS_MODE2),
- 	SND_PCI_QUIRK(0x144d, 0xc051, "Samsung R720", ALC662_FIXUP_IDEAPAD),
-+	SND_PCI_QUIRK(0x1458, 0xa194, "H610M H V2 DDR4", ALC897_FIXUP_H610M_HP_PIN),
- 	SND_PCI_QUIRK(0x14cd, 0x5003, "USI", ALC662_FIXUP_USI_HEADSET_MODE),
- 	SND_PCI_QUIRK(0x17aa, 0x1036, "Lenovo P520", ALC662_FIXUP_LENOVO_MULTI_CODECS),
- 	SND_PCI_QUIRK(0x17aa, 0x1057, "Lenovo P360", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	/* ipsecrequests */
+ 	for (i = 0, mp = m; i < num_bundles; i++, mp++) {
+-		/* old locator pair */
+-		size_pol += sizeof(struct sadb_x_ipsecrequest) +
+-			    pfkey_sockaddr_pair_size(mp->old_family);
+-		/* new locator pair */
+-		size_pol += sizeof(struct sadb_x_ipsecrequest) +
+-			    pfkey_sockaddr_pair_size(mp->new_family);
++		int pair_size;
++
++		pair_size = pfkey_sockaddr_pair_size(mp->old_family);
++		if (!pair_size)
++			return -EINVAL;
++		size_pol += sizeof(struct sadb_x_ipsecrequest) + pair_size;
++
++		pair_size = pfkey_sockaddr_pair_size(mp->new_family);
++		if (!pair_size)
++			return -EINVAL;
++		size_pol += sizeof(struct sadb_x_ipsecrequest) + pair_size;
+ 	}
+ 
+ 	size += sizeof(struct sadb_msg) + size_pol;
 -- 
 2.51.0
 
