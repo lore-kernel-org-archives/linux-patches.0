@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E643E95A9;
-	Tue, 31 Mar 2026 16:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35D32C15B2;
+	Tue, 31 Mar 2026 16:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975780; cv=none; b=BO+bssyBLS8/zPAQ9fxSypTpiiQv31g+sMlVTb2PhwP/uD9y5D4wLw2XMLMGsB913YH1B4AATJk5qVuaQmboyFj1h6ZiybvaEuQ+H5RD2vf2i3GLkb7oGkpM3fSvLY4b5/Vrvuaz6MqAxmFB297b4pF1Hy3OwYGeGYiAC1drrVU=
+	t=1774975783; cv=none; b=EFR51zQBTyBneDkONAlX8P+V45SS6DcWyeyLZL7CCiZVsOK4dlMvTbdloYdofXst9TkthJGeqHOfwEYNBbogFbiatGZsj1q9a9zCvwA4LyWFSexBkIElVdA0XIKtD9l5AbeJZG+3EHfOa+v4GNyUIgv1/PbrLQQZSp3Z4c6AzUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975780; c=relaxed/simple;
-	bh=I/ej6eIQQAcoIktCt65wVEG83TPc7mdyTHoOeYTcDYQ=;
+	s=arc-20240116; t=1774975783; c=relaxed/simple;
+	bh=+vmAX3mbGBVq2CVJ9Jviwd+o7nh7mKw1aXUGPtoRmQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ym+JUTQONUkY4TsHG8HEg2ncSwr3KLaCVHwF+Ce7BuKsApI0ZB5bGesbtdk9AGhIoB+6C7VEDOwcFRfkU0gz/+kciwx79UCr9yOXKybEESEYumfjd5tvMG+KL+ke9liOZGePI3zVHKgnClbvv4+x2x1Ucn5WVH9ojzIa0axQ/Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TqMNvxS9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DFHW8n20d4DfUe1LOXjTZgnE50Cz90j8am1yprva/Tkit5qhXs25fiwrlBT3GfVu7U4sFwFJ9yyYAdTUUWTjXwpbmB7hxY1MyNoTLk02Q9PFqB0HdO2kzYynrPkCp9ELXAyGt96ziLXaEPdBDYPZ3lPqXphGDqN8AFX7NlkUWTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNhPj8Uc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqMNvxS9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94466C19423;
-	Tue, 31 Mar 2026 16:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNhPj8Uc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CAFC19423;
+	Tue, 31 Mar 2026 16:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975779;
-	bh=I/ej6eIQQAcoIktCt65wVEG83TPc7mdyTHoOeYTcDYQ=;
+	s=korg; t=1774975782;
+	bh=+vmAX3mbGBVq2CVJ9Jviwd+o7nh7mKw1aXUGPtoRmQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TqMNvxS92IGIV4vE3bnKYTOME1oQSXHt9QtaCl6ZYgG4t3DGbj/rGXZ6pG/OYkfGW
-	 g3QHGjOpZtutU33oO6nYCOvtSwOgrUyURgGvc2ALTVYGY3ape5a+IHh3nEOu7SyiLu
-	 noOwyCDdwAulEUYmUNPSf6vNYW5mcPtSjrp+LfsQ=
+	b=pNhPj8Uc66RsCCPaDbNAwOShtQItKNZD3DI6UpFBkaH2YxMoN16vxYYrgFVdFnIIn
+	 QV2NgBHYtGK1ohk4BC+lYz5Q97pYFQgTFzg8tEP0jJgsPyX4gvOEPRmA+p2ez66rTh
+	 8oi12k8GVV06KKIgUjmJ5Qtu7ixpJkGrh5mPTpS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Simon Horman <horms@kernel.org>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/244] iavf: fix out-of-bounds writes in iavf_get_ethtool_stats()
-Date: Tue, 31 Mar 2026 18:20:34 +0200
-Message-ID: <20260331161744.783528957@linuxfoundation.org>
+Subject: [PATCH 6.12 085/244] ipv6: Remove permanent routes from tb6_gc_hlist when all exceptions expire.
+Date: Tue, 31 Mar 2026 18:20:35 +0200
+Message-ID: <20260331161744.820145606@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -55,156 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit fecacfc95f195b99c71c579a472120d0b4ed65fa ]
+[ Upstream commit 6af51e9f31336632263c4680b2a3712295103e1f ]
 
-iavf incorrectly uses real_num_tx_queues for ETH_SS_STATS. Since the
-value could change in runtime, we should use num_tx_queues instead.
+Commit 5eb902b8e719 ("net/ipv6: Remove expired routes with a
+separated list of routes.") introduced a per-table GC list and
+changed GC to iterate over that list instead of traversing
+the entire route table.
 
-Moreover iavf_get_ethtool_stats() uses num_active_queues while
-iavf_get_sset_count() and iavf_get_stat_strings() use
-real_num_tx_queues, which triggers out-of-bounds writes when we do
-"ethtool -L" and "ethtool -S" simultaneously [1].
+However, it forgot to add permanent routes to tb6_gc_hlist
+when exception routes are added.
 
-For example when we change channels from 1 to 8, Thread 3 could be
-scheduled before Thread 2, and out-of-bounds writes could be triggered
-in Thread 3:
+Commit cfe82469a00f ("ipv6: add exception routes to GC list
+in rt6_insert_exception") fixed that issue but introduced
+another one.
 
-Thread 1 (ethtool -L)       Thread 2 (work)        Thread 3 (ethtool -S)
-iavf_set_channels()
-...
-iavf_alloc_queues()
--> num_active_queues = 8
-iavf_schedule_finish_config()
-                                                   iavf_get_sset_count()
-                                                   real_num_tx_queues: 1
-                                                   -> buffer for 1 queue
-                                                   iavf_get_ethtool_stats()
-                                                   num_active_queues: 8
-                                                   -> out-of-bounds!
-                            iavf_finish_config()
-                            -> real_num_tx_queues = 8
+Even after all exception routes expire, the permanent routes
+remain in tb6_gc_hlist, potentially negating the performance
+benefits intended by the initial change.
 
-Use immutable num_tx_queues in all related functions to avoid the issue.
+Let's count gc_args->more before and after rt6_age_exceptions()
+and remove the permanent route when the delta is 0.
 
-[1]
- BUG: KASAN: vmalloc-out-of-bounds in iavf_add_one_ethtool_stat+0x200/0x270
- Write of size 8 at addr ffffc900031c9080 by task ethtool/5800
+Note that the next patch will reuse fib6_age_exceptions().
 
- CPU: 1 UID: 0 PID: 5800 Comm: ethtool Not tainted 6.19.0-enjuk-08403-g8137e3db7f1c #241 PREEMPT(full)
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x6f/0xb0
-  print_report+0x170/0x4f3
-  kasan_report+0xe1/0x180
-  iavf_add_one_ethtool_stat+0x200/0x270
-  iavf_get_ethtool_stats+0x14c/0x2e0
-  __dev_ethtool+0x3d0c/0x5830
-  dev_ethtool+0x12d/0x270
-  dev_ioctl+0x53c/0xe30
-  sock_do_ioctl+0x1a9/0x270
-  sock_ioctl+0x3d4/0x5e0
-  __x64_sys_ioctl+0x137/0x1c0
-  do_syscall_64+0xf3/0x690
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
- RIP: 0033:0x7f7da0e6e36d
- ...
-  </TASK>
-
- The buggy address belongs to a 1-page vmalloc region starting at 0xffffc900031c9000 allocated at __dev_ethtool+0x3cc9/0x5830
- The buggy address belongs to the physical page: page: refcount:1 mapcount:0 mapping:0000000000000000
- index:0xffff88813a013de0 pfn:0x13a013
- flags: 0x200000000000000(node=0|zone=2)
- raw: 0200000000000000 0000000000000000 dead000000000122 0000000000000000
- raw: ffff88813a013de0 0000000000000000 00000001ffffffff 0000000000000000
- page dumped because: kasan: bad access detected
-
- Memory state around the buggy address:
-  ffffc900031c8f80: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-  ffffc900031c9000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- >ffffc900031c9080: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-                    ^
-  ffffc900031c9100: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-  ffffc900031c9180: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-
-Fixes: 64430f70ba6f ("iavf: Fix displaying queue statistics shown by ethtool")
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: cfe82469a00f ("ipv6: add exception routes to GC list in rt6_insert_exception")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260320072317.2561779-2-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/iavf/iavf_ethtool.c    | 31 +++++++++----------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ net/ipv6/ip6_fib.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-index 74a1e9fe18212..53e5a3bd9b956 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-@@ -311,14 +311,13 @@ static int iavf_get_sset_count(struct net_device *netdev, int sset)
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index 01c953a39211a..fca68fb1b74c2 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -2314,6 +2314,17 @@ static void fib6_flush_trees(struct net *net)
+ /*
+  *	Garbage collection
+  */
++static void fib6_age_exceptions(struct fib6_info *rt, struct fib6_gc_args *gc_args,
++				unsigned long now)
++{
++	bool may_expire = rt->fib6_flags & RTF_EXPIRES && rt->expires;
++	int old_more = gc_args->more;
++
++	rt6_age_exceptions(rt, gc_args, now);
++
++	if (!may_expire && old_more == gc_args->more)
++		fib6_remove_gc_list(rt);
++}
+ 
+ static int fib6_age(struct fib6_info *rt, struct fib6_gc_args *gc_args)
  {
- 	/* Report the maximum number queues, even if not every queue is
- 	 * currently configured. Since allocation of queues is in pairs,
--	 * use netdev->real_num_tx_queues * 2. The real_num_tx_queues is set
--	 * at device creation and never changes.
-+	 * use netdev->num_tx_queues * 2. The num_tx_queues is set at
-+	 * device creation and never changes.
+@@ -2336,7 +2347,7 @@ static int fib6_age(struct fib6_info *rt, struct fib6_gc_args *gc_args)
+ 	 *	Note, that clones are aged out
+ 	 *	only if they are not in use now.
  	 */
+-	rt6_age_exceptions(rt, gc_args, now);
++	fib6_age_exceptions(rt, gc_args, now);
  
- 	if (sset == ETH_SS_STATS)
- 		return IAVF_STATS_LEN +
--			(IAVF_QUEUE_STATS_LEN * 2 *
--			 netdev->real_num_tx_queues);
-+		       (IAVF_QUEUE_STATS_LEN * 2 * netdev->num_tx_queues);
- 	else
- 		return -EINVAL;
+ 	return 0;
  }
-@@ -343,19 +342,19 @@ static void iavf_get_ethtool_stats(struct net_device *netdev,
- 	iavf_add_ethtool_stats(&data, adapter, iavf_gstrings_stats);
- 
- 	rcu_read_lock();
--	/* As num_active_queues describe both tx and rx queues, we can use
--	 * it to iterate over rings' stats.
-+	/* Use num_tx_queues to report stats for the maximum number of queues.
-+	 * Queues beyond num_active_queues will report zero.
- 	 */
--	for (i = 0; i < adapter->num_active_queues; i++) {
--		struct iavf_ring *ring;
-+	for (i = 0; i < netdev->num_tx_queues; i++) {
-+		struct iavf_ring *tx_ring = NULL, *rx_ring = NULL;
- 
--		/* Tx rings stats */
--		ring = &adapter->tx_rings[i];
--		iavf_add_queue_stats(&data, ring);
-+		if (i < adapter->num_active_queues) {
-+			tx_ring = &adapter->tx_rings[i];
-+			rx_ring = &adapter->rx_rings[i];
-+		}
- 
--		/* Rx rings stats */
--		ring = &adapter->rx_rings[i];
--		iavf_add_queue_stats(&data, ring);
-+		iavf_add_queue_stats(&data, tx_ring);
-+		iavf_add_queue_stats(&data, rx_ring);
- 	}
- 	rcu_read_unlock();
- }
-@@ -374,9 +373,9 @@ static void iavf_get_stat_strings(struct net_device *netdev, u8 *data)
- 	iavf_add_stat_strings(&data, iavf_gstrings_stats);
- 
- 	/* Queues are always allocated in pairs, so we just use
--	 * real_num_tx_queues for both Tx and Rx queues.
-+	 * num_tx_queues for both Tx and Rx queues.
- 	 */
--	for (i = 0; i < netdev->real_num_tx_queues; i++) {
-+	for (i = 0; i < netdev->num_tx_queues; i++) {
- 		iavf_add_stat_strings(&data, iavf_gstrings_queue_stats,
- 				      "tx", i);
- 		iavf_add_stat_strings(&data, iavf_gstrings_queue_stats,
 -- 
 2.51.0
 
