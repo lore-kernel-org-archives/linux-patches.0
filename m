@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2014E425CD9;
-	Tue, 31 Mar 2026 16:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB348425CD9;
+	Tue, 31 Mar 2026 16:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975229; cv=none; b=EDl+0rKmtPOJbApXK+xWA6UTT7TitnLUYGmx7Fz0DlWqxicVXVUoUdEgfuSWDYInXpY63N+tO3igScDf9PPx5cZrw5QYsIb51LmzL2jcagZRuedXx0jiW7BdJJZL3iVoyS3HI/1Fuvh7dmDGj9Q7MkA7y5+vCGg7yEKD/k15JJY=
+	t=1774975231; cv=none; b=nShFuf7Kzn+FmWBAS3nm9ahqowDlEkiWoNGO5ogsbObHT/DbNaxtL0nzd8C9KxLD9zVcWCZQF5qPMTbACwO4zgR+igZaDkGKFap8M5eknADgrn5CDDcOVL9YKAFD4rUdTc/SPleaxaXCET+ePgNX2RVHoKzXUHY1ItsKdPt9nUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975229; c=relaxed/simple;
-	bh=7yNGKiq6UrxQfZWXv2OU+0X16FadKQE0zRDIqPUs2k4=;
+	s=arc-20240116; t=1774975231; c=relaxed/simple;
+	bh=+qqJsbbI6d+gsxz4Gg/PkL1OCROqGkFurY6Zx0lxUio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lL8By35oIOFBfDELIedAIUjRYsYPIJLXz1TbeSkOcdWX+9c4Hm35adNoZOqo1UaKFZ9CQRFyCP3fd+zqP4pXxMJW+JlbmTmmu9gytO9rhIEKG01n6mODj/Fr+PFQags7A11i9hiT53h4uk8ZP4AJmjZ7R0SsngSkd4PMFtMzbMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPFgNdEu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q94G58TvMuoB/Kqq8NjXmwoRxVilsD7Yd2PBCbHHyPKcaB4WbJIZtrOz2mI8qE/PBUUaSUhROzAW0HlTu1jT6Tzo9sqDVdTHVkzJXYaM7K1A/X8GNqeBb+i3+5jQtX0J/pa88C6M5hv501TCNIKdx0SyEDxMPC3HbDdkC/VkrSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAZnrguU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPFgNdEu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8769C19423;
-	Tue, 31 Mar 2026 16:40:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAZnrguU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417ABC19423;
+	Tue, 31 Mar 2026 16:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975229;
-	bh=7yNGKiq6UrxQfZWXv2OU+0X16FadKQE0zRDIqPUs2k4=;
+	s=korg; t=1774975231;
+	bh=+qqJsbbI6d+gsxz4Gg/PkL1OCROqGkFurY6Zx0lxUio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPFgNdEuuD7jSJmbdTOoZGmLuV1yOR+DPsWoMRsJO6KujQAuJQuXXGPRB9uoAjYnD
-	 sZo4qhhBefl2OsNkF2TMFOuf8yuDlNxZKZkfOZhqukZCYqBOk2KWjwy6hbvcIuBJeF
-	 fuQ1nix9CSVxkGtYoyTuirzqAYaNLKsg+Tjn4DZI=
+	b=bAZnrguUXKdqq5TlM/1qdw8n3fgragHxHAnjBxbPdc0QRb44EhFtVwEyJX3qCcGYz
+	 y1LORbhNvZODsxQ5GK2xtcMbIsV5hQMopf5uRzOUpM+z9WREOTFb1kf1X4VR3ejRKo
+	 tsG7LJUHS60UjetQHYJhO8Ffbe5mya1miqRgWIys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.19 214/342] can: netlink: can_changelink(): add missing error handling to call can_ctrlmode_changelink()
-Date: Tue, 31 Mar 2026 18:20:47 +0200
-Message-ID: <20260331161806.853414921@linuxfoundation.org>
+	stable@kernel.org,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.19 197/342] s390/entry: Scrub r12 register on kernel entry
+Date: Tue, 31 Mar 2026 18:20:30 +0200
+Message-ID: <20260331161806.239435416@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -49,39 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-commit cadf6019231b614ebbd9ec2a16e5997ecbd8d016 upstream.
+commit 0738d395aab8fae3b5a3ad3fc640630c91693c27 upstream.
 
-In commit e1a5cd9d6665 ("can: netlink: add can_ctrlmode_changelink()") the
-CAN Control Mode (IFLA_CAN_CTRLMODE) handling was factored out into the
-can_ctrlmode_changelink() function. But the call to
-can_ctrlmode_changelink() is missing the error handling.
+Before commit f33f2d4c7c80 ("s390/bp: remove TIF_ISOLATE_BP"),
+all entry handlers loaded r12 with the current task pointer
+(lg %r12,__LC_CURRENT) for use by the BPENTER/BPEXIT macros. That
+commit removed TIF_ISOLATE_BP, dropping both the branch prediction
+macros and the r12 load, but did not add r12 to the register clearing
+sequence.
 
-Add the missing error handling and propagation to the call
-can_ctrlmode_changelink().
+Add the missing xgr %r12,%r12 to make the register scrub consistent
+across all entry points.
 
-Cc: stable@vger.kernel.org
-Fixes: e1a5cd9d6665 ("can: netlink: add can_ctrlmode_changelink()")
-Link: https://patch.msgid.link/20260310-can_ctrlmode_changelink-add-error-handling-v1-1-0daf63d85922@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: f33f2d4c7c80 ("s390/bp: remove TIF_ISOLATE_BP")
+Cc: stable@kernel.org
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/dev/netlink.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/s390/kernel/entry.S |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/can/dev/netlink.c
-+++ b/drivers/net/can/dev/netlink.c
-@@ -601,7 +601,9 @@ static int can_changelink(struct net_dev
- 	/* We need synchronization with dev->stop() */
- 	ASSERT_RTNL();
- 
--	can_ctrlmode_changelink(dev, data, extack);
-+	err = can_ctrlmode_changelink(dev, data, extack);
-+	if (err)
-+		return err;
- 
- 	if (data[IFLA_CAN_BITTIMING]) {
- 		struct can_bittiming bt;
+--- a/arch/s390/kernel/entry.S
++++ b/arch/s390/kernel/entry.S
+@@ -260,6 +260,7 @@ SYM_CODE_START(system_call)
+ 	xgr	%r9,%r9
+ 	xgr	%r10,%r10
+ 	xgr	%r11,%r11
++	xgr	%r12,%r12
+ 	la	%r2,STACK_FRAME_OVERHEAD(%r15)	# pointer to pt_regs
+ 	mvc	__PT_R8(64,%r2),__LC_SAVE_AREA(%r13)
+ 	MBEAR	%r2,%r13
+@@ -396,6 +397,7 @@ SYM_CODE_START(\name)
+ 	xgr	%r6,%r6
+ 	xgr	%r7,%r7
+ 	xgr	%r10,%r10
++	xgr	%r12,%r12
+ 	xc	__PT_FLAGS(8,%r11),__PT_FLAGS(%r11)
+ 	mvc	__PT_R8(64,%r11),__LC_SAVE_AREA(%r13)
+ 	MBEAR	%r11,%r13
+@@ -485,6 +487,7 @@ SYM_CODE_START(mcck_int_handler)
+ 	xgr	%r6,%r6
+ 	xgr	%r7,%r7
+ 	xgr	%r10,%r10
++	xgr	%r12,%r12
+ 	stmg	%r8,%r9,__PT_PSW(%r11)
+ 	xc	__PT_FLAGS(8,%r11),__PT_FLAGS(%r11)
+ 	xc	__SF_BACKCHAIN(8,%r15),__SF_BACKCHAIN(%r15)
 
 
