@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9440330C368;
-	Tue, 31 Mar 2026 16:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358363FA5E6;
+	Tue, 31 Mar 2026 16:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974871; cv=none; b=pXgWAhhfretsU7RyPlFuXrA0kT2mbOow3sbIsvmOh3Ve2L0/GKvHi876OC8TfKGVzX90CptllGhq780IiopHKzo4mYhszayvFZys0fZ0yfU1ciG4YyuzwogmQlVoz+8O4mCBwzgvF2bkweZkgP6IIIqGHmheJsmfLY1aOqBksPQ=
+	t=1774974874; cv=none; b=f2HgtNl+SGnPTiztbyAdXY9iqJqADIr2sjKzqVSdMzHj3wb5rgwcAvBYoOQFHA4lmH3DT3Rzo+q1011BzyXyXQ4TaWJO6/LTfIUHUbOo0nd9mm8AfzzMgmromQwPpuLiE8R5cc7Gosvkp+jZDG4rp+8LV3dh9RV0OA/Cot8fjS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974871; c=relaxed/simple;
-	bh=jrTOUqetbzuDV1N3jnbCjFCBY/o4jZ6CbpgqPPqnhbU=;
+	s=arc-20240116; t=1774974874; c=relaxed/simple;
+	bh=cALsxi5ptQsgUng+A/zlzUF6ODWuMp+9a51kAO4lkCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hY8t+OXnd7qN5+yTjWaeOsmuxFg1SnLkeEVb6szhvWUBRkrlDYuVc5/n3EtGyoYyEKFKldoZ0uAfxPN7QaQZrGacHZYndeLH46gb8gV89euCo/6OdJ6sPtTw+vFQCKDQEe6/RfAlWhalZP5bDcilENW7tGBpbOLZtZkRCHw1tIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDL23+ll; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=His2Ucdoaq5lebxtGrGVUsTTak8p00PPQ0qcabEwiU7D+OKlMI5f5Wnxy6Bhe8waoHB3THQtoq3cmvi+1vOWM6H2MdZ26nkidYtYpRDPuM0UnaVZ0Kgl1RITfsZ7/mf4lKet+L+8I2MoN1Kc3pADZ5ebsf885hDebBx/fsmRSKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ds4nRilw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDL23+ll"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29564C19423;
-	Tue, 31 Mar 2026 16:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ds4nRilw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02EDC19423;
+	Tue, 31 Mar 2026 16:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974871;
-	bh=jrTOUqetbzuDV1N3jnbCjFCBY/o4jZ6CbpgqPPqnhbU=;
+	s=korg; t=1774974874;
+	bh=cALsxi5ptQsgUng+A/zlzUF6ODWuMp+9a51kAO4lkCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDL23+lly8Vz/cJ6IPTT1Ugy8TTRZzAQSjn+YW0zozfOydiBA3D9E5OlSBaS722U5
-	 xw+mpl26LRqjJh2GmcLUr92grFVr4TERWM5UE+KYLLmWlcjavPh2h04wgqsmmW7pmZ
-	 iikWk8QwTAlqfztiumbx1hmZMWhDz0aGGeaHiU8Q=
+	b=ds4nRilwmcvMPUMgWjjVntrxSYIRlQM0pWJZaInrjeH7ESW4i0+QD9O8BM22PBI8s
+	 mxJOl3AZ8F42KjYMWs087AzFY9mQiZfNqFcIxeqmSC2ASwWj/UdRf23YuN0T17wp8P
+	 TSK4tGHhIJ00n2sEpxNJS8hJ3RejatiLCGyH1pdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Peter Yin <peteryin.openbmc@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 076/342] ALSA: hda/realtek: add quirk for ASUS UM6702RC
-Date: Tue, 31 Mar 2026 18:18:29 +0200
-Message-ID: <20260331161801.689529078@linuxfoundation.org>
+Subject: [PATCH 6.19 077/342] i3c: master: dw-i3c: Fix missing of_node for virtual I2C adapter
+Date: Tue, 31 Mar 2026 18:18:30 +0200
+Message-ID: <20260331161801.725725935@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,35 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Peter Yin <peteryin.openbmc@gmail.com>
 
-[ Upstream commit 0d3429f12133c2ca47aa82ddab2342bc360c47d3 ]
+[ Upstream commit f26ecaa0f0abfe5db173416214098a00d3b7db79 ]
 
-The sound card of this machine cannot adjust the volume, it can only
-be 0 or 100%. The reason is that the DAC with pin 0x17 is connected
-to 0x06. Testing found that connecting 0x02 can fix this problem.
+The DesignWare I3C master driver creates a virtual I2C adapter to
+provide backward compatibility with I2C devices. However, the current
+implementation does not associate this virtual adapter with any
+Device Tree node.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220356
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260306123317.575346-1-zhangheng@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Propagate the of_node from the I3C master platform device to the
+virtual I2C adapter's device structure. This ensures that standard
+I2C aliases are correctly resolved and bus numbering remains consistent.
+
+Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260302075645.1492766-1-peteryin.openbmc@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i3c/master/dw-i3c-master.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 024d0b37574db..ab4b22fcb72ed 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7274,6 +7274,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1e93, "ASUS ExpertBook B9403CVAR", ALC294_FIXUP_ASUS_HPE),
- 	SND_PCI_QUIRK(0x1043, 0x1eb3, "ASUS Ally RCLA72", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x1043, 0x1ed3, "ASUS HN7306W", ALC287_FIXUP_CS35L41_I2C_2),
-+	HDA_CODEC_QUIRK(0x1043, 0x1ee2, "ASUS UM6702RA/RC", ALC285_FIXUP_ASUS_I2C_SPEAKER2_TO_DAC1),
- 	SND_PCI_QUIRK(0x1043, 0x1ee2, "ASUS UM6702RA/RC", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1c52, "ASUS Zephyrus G15 2022", ALC289_FIXUP_ASUS_GA401),
- 	SND_PCI_QUIRK(0x1043, 0x1f11, "ASUS Zephyrus G14", ALC289_FIXUP_ASUS_GA401),
+diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
+index f9b981abd10c5..1368c834ca5e8 100644
+--- a/drivers/i3c/master/dw-i3c-master.c
++++ b/drivers/i3c/master/dw-i3c-master.c
+@@ -1614,6 +1614,8 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ 		pm_runtime_get_noresume(&pdev->dev);
+ 
+ 	INIT_WORK(&master->hj_work, dw_i3c_hj_work);
++
++	device_set_of_node_from_dev(&master->base.i2c.dev, &pdev->dev);
+ 	ret = i3c_master_register(&master->base, &pdev->dev,
+ 				  &dw_mipi_i3c_ops, false);
+ 	if (ret)
 -- 
 2.51.0
 
