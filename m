@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475CF2D5C68;
-	Tue, 31 Mar 2026 17:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C272C21F8;
+	Tue, 31 Mar 2026 17:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976425; cv=none; b=haOIm5z7KIh+AhSlUYuXbZD5TLySIHIFUreQONmmVKSteUC7PttXiQ/VmOwX6YDGAi2hR71K8nImu+uUQCQyeMBcDEUS2ZkBaCWUYVvEzynKinh0AbBxafJ/U+UfkzSQ7S0Fmy6r2DSYQi7m46+TbWjTcmk/YfSl0lh/+Nxe7kA=
+	t=1774976427; cv=none; b=CF4q+eWeRDv3FRt5xfBxrJqQ6x2qesF5Yf5WDzmelcQdf1c+T463hD81dySFil+0n4MeRD5dMTAlcq4YONyno9MeexaGdZMq1+zBHzCB8JdzXfVTWnYVbwJYh7uHIru7I6WjHsKoARKM3BW+J1mAEk6n99g+XRN9E4o9XfLIFmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976425; c=relaxed/simple;
-	bh=i7WbSDsaQMs4IR49vnHlXAH3uYHAc0yaejYpyhrIqR0=;
+	s=arc-20240116; t=1774976427; c=relaxed/simple;
+	bh=kpACBCfSSU3NjzYm7bo3oiDNsAezxUDHBxGDOjRw6DM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rlP8fUKT79MqPvXGhgkVlaVokkv2dxu3vGIdlsFS9Ku41blFAMxJcFhV652Uvp9C3G+LnBW3175Ji1IdA0hACYXH/Q3ychgdxW5MKJ4hUaoyJTxCxS8+udXAhA6xv9lORbGwBPARYgSHY1Cq4VQ2RBRViM9hkPqjCE4TczgvqH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egKRvGGR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hvLTkPSPwemZpvEYOOPa8pnMKj0AvuZj9FaMO2lQEu7a+1E359G1PLb7TPMl/TAwS0rP4eU7mOc3Pw+JBZEHunx49dpYUPSw11Z9vEuQz9Cl7sJW017x4Yu/z0OzMJZtHw7FgwDtH9uYklopk5sok3YRZRoO234xYdQItWM/Glw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DT/a+YcW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egKRvGGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2ABFC19423;
-	Tue, 31 Mar 2026 17:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DT/a+YcW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC9BC19423;
+	Tue, 31 Mar 2026 17:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976425;
-	bh=i7WbSDsaQMs4IR49vnHlXAH3uYHAc0yaejYpyhrIqR0=;
+	s=korg; t=1774976427;
+	bh=kpACBCfSSU3NjzYm7bo3oiDNsAezxUDHBxGDOjRw6DM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=egKRvGGRo8mHcSLQ6zpV8gbxTXIUSrKasess3chbCV98BPnH/VwyGb+Ohn3CYfDfm
-	 N71q71bTJ4Bi0uzAMoNDLzFRWMOJ2a2iQDz8TbReGokSwgfmCUAJQq2FTEeHKzoWke
-	 aYe94mkhJ1pb+dYy/PMJFoAxEMASbDEOsHi16qTc=
+	b=DT/a+YcWcLCyohhlQcd1ncFECV4wKpB/pBK2xzt6D2KxXkqpDo7oMMAflPdIIg6w5
+	 DHbqJY9L9mT4809u+nHemxJuNbcY37a0hsBvHfUA/226bjP36EX5bOPm7oA4Gi6O+M
+	 n51aIOvIckyrYyPA0ppTfzZcQBtnHsFK8rpchqeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uzair Mughal <contact@uzair.is-a.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	Helen Koike <koike@igalia.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 060/309] ALSA: hda/realtek: Add headset jack quirk for Thinkpad X390
-Date: Tue, 31 Mar 2026 18:19:23 +0200
-Message-ID: <20260331161755.698072847@linuxfoundation.org>
+Subject: [PATCH 6.18 087/309] Bluetooth: L2CAP: Fix null-ptr-deref on l2cap_sock_ready_cb
+Date: Tue, 31 Mar 2026 18:19:50 +0200
+Message-ID: <20260331161756.687078628@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,41 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uzair Mughal <contact@uzair.is-a.dev>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit 542127f6528ca7cc3cf61e1651d6ccb58495f953 ]
+[ Upstream commit b6552e0503973daf6f23bd6ed9273ef131ee364f ]
 
-The Lenovo ThinkPad X390 (ALC257 codec, subsystem ID 0x17aa2288)
-does not report headset button press events. Headphone insertion is
-detected (SW_HEADPHONE_INSERT), but pressing the inline microphone
-button on a headset produces no input events.
+Before using sk pointer, check if it is null.
 
-Add a SND_PCI_QUIRK entry that maps this subsystem ID to
-ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK, which enables
-headset jack button detection through alc_fixup_headset_jack()
-and ThinkPad ACPI integration. This is the same fixup used by
-similar ThinkPad models (P1 Gen 3, X1 Extreme Gen 3).
+Fix the following:
 
-Signed-off-by: Uzair Mughal <contact@uzair.is-a.dev>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260307012906.20093-1-contact@uzair.is-a.dev
+ KASAN: null-ptr-deref in range [0x0000000000000260-0x0000000000000267]
+ CPU: 0 UID: 0 PID: 5985 Comm: kworker/0:5 Not tainted 7.0.0-rc4-00029-ga989fde763f4 #1 PREEMPT(full)
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-9.fc43 06/10/2025
+ Workqueue: events l2cap_info_timeout
+ RIP: 0010:kasan_byte_accessible+0x12/0x30
+ Code: 79 ff ff ff 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 40 d6 48 c1 ef 03 48 b8 00 00 00 00 00 fc ff df <0f> b6 04 07 3c 08 0f 92 c0 c3 cc cce
+ veth0_macvtap: entered promiscuous mode
+ RSP: 0018:ffffc90006e0f808 EFLAGS: 00010202
+ RAX: dffffc0000000000 RBX: ffffffff89746018 RCX: 0000000080000001
+ RDX: 0000000000000000 RSI: ffffffff89746018 RDI: 000000000000004c
+ RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+ R10: dffffc0000000000 R11: ffffffff8aae3e70 R12: 0000000000000000
+ R13: 0000000000000260 R14: 0000000000000260 R15: 0000000000000001
+ FS:  0000000000000000(0000) GS:ffff8880983c2000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00005582615a5008 CR3: 000000007007e000 CR4: 0000000000752ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  __kasan_check_byte+0x12/0x40
+  lock_acquire+0x79/0x2e0
+  lock_sock_nested+0x48/0x100
+  ? l2cap_sock_ready_cb+0x46/0x160
+  l2cap_sock_ready_cb+0x46/0x160
+  l2cap_conn_start+0x779/0xff0
+  ? __pfx_l2cap_conn_start+0x10/0x10
+  ? l2cap_info_timeout+0x60/0xa0
+  ? __pfx___mutex_lock+0x10/0x10
+  l2cap_info_timeout+0x68/0xa0
+  ? process_scheduled_works+0xa8d/0x18c0
+  process_scheduled_works+0xb6e/0x18c0
+  ? __pfx_process_scheduled_works+0x10/0x10
+  ? assign_work+0x3d5/0x5e0
+  worker_thread+0xa53/0xfc0
+  kthread+0x388/0x470
+  ? __pfx_worker_thread+0x10/0x10
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x51e/0xb90
+  ? __pfx_ret_from_fork+0x10/0x10
+ veth1_macvtap: entered promiscuous mode
+  ? __switch_to+0xc7d/0x1450
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ Modules linked in:
+ ---[ end trace 0000000000000000 ]---
+ batman_adv: batadv0: Interface activated: batadv_slave_0
+ batman_adv: batadv0: Interface activated: batadv_slave_1
+ netdevsim netdevsim7 netdevsim0: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim1: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim2: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim3: set [1, 0] type 2 family 0 port 6081 - 0
+ RIP: 0010:kasan_byte_accessible+0x12/0x30
+ Code: 79 ff ff ff 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 40 d6 48 c1 ef 03 48 b8 00 00 00 00 00 fc ff df <0f> b6 04 07 3c 08 0f 92 c0 c3 cc cce
+ ieee80211 phy39: Selected rate control algorithm 'minstrel_ht'
+ RSP: 0018:ffffc90006e0f808 EFLAGS: 00010202
+ RAX: dffffc0000000000 RBX: ffffffff89746018 RCX: 0000000080000001
+ RDX: 0000000000000000 RSI: ffffffff89746018 RDI: 000000000000004c
+ RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+ R10: dffffc0000000000 R11: ffffffff8aae3e70 R12: 0000000000000000
+ R13: 0000000000000260 R14: 0000000000000260 R15: 0000000000000001
+ FS:  0000000000000000(0000) GS:ffff8880983c2000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f7e16139e9c CR3: 000000000e74e000 CR4: 0000000000752ef0
+ PKRU: 55555554
+ Kernel panic - not syncing: Fatal exception
+
+Fixes: 54a59aa2b562 ("Bluetooth: Add l2cap_chan->ops->ready()")
+Signed-off-by: Helen Koike <koike@igalia.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/l2cap_sock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 437a7a2070e58..a42c3d43f5d93 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7323,6 +7323,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x224c, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
- 	SND_PCI_QUIRK(0x17aa, 0x224d, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
- 	SND_PCI_QUIRK(0x17aa, 0x225d, "Thinkpad T480", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
-+	SND_PCI_QUIRK(0x17aa, 0x2288, "Thinkpad X390", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x2292, "Thinkpad X1 Carbon 7th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x22be, "Thinkpad X1 Carbon 8th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x22c1, "Thinkpad P1 Gen 3", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index ab86aeef98d18..80a37d56b040f 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1681,6 +1681,9 @@ static void l2cap_sock_ready_cb(struct l2cap_chan *chan)
+ 	struct sock *sk = chan->data;
+ 	struct sock *parent;
+ 
++	if (!sk)
++		return;
++
+ 	lock_sock(sk);
+ 
+ 	parent = bt_sk(sk)->parent;
 -- 
 2.51.0
 
