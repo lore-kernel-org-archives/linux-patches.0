@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C1A2F5491;
-	Tue, 31 Mar 2026 17:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3413033C0;
+	Tue, 31 Mar 2026 17:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976582; cv=none; b=Qox3KeZHyMB8BFdeGvDmVvm6ngPYQsgtlSOUWj+ZMP//8RJvrIMmbt+SFj9uuMbVMKtvV3c2Z+2bNfggvBq1PE3tPyRewmYYdS5QCxObjOHpXJ65dEf0DIj0FbEyTBN3IPR1sBcw/R5rND35eN02KJajNs7Kya7JVFf02dVLyBI=
+	t=1774976585; cv=none; b=GB6bUkK2FG5WZl5N3GnIpJuQJNwzan8yDdVod1jQU1MarouafQV2yG205xD0wTvBEXJUTZMXmmKgODlJxZh+o6S05CqQD/xRpnyakC778SUMrGrysVI4cmslf5eg2N+edPumvfhX86B9aINaP98ZctKD7Z3pBcMMbEbcq1wBe6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976582; c=relaxed/simple;
-	bh=gjcVj02mr6V2vNkoyRWzRQUSyPt7f3SL9wKhVF21Ozo=;
+	s=arc-20240116; t=1774976585; c=relaxed/simple;
+	bh=d31+b8pDICBheP3pGh2iRJBwQ9BT7vtYvuivFbzgwG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYh2tae75pRKdiBBy7ZvQYTc/x1/C/dXx0tATihuhouhVHZHN2Ck6m81OsWTLf9FnoI9IQlq/0dkNAd8BvDq2+P1U0Gt9TgbSIheXUAOI2H5QxjO0LQGmIhJAFy8aW42uSAIaL//c8H1x3ycUrgHejXEvS6VONEWrjgJUlpejSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8YekhvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N7brEQw88w16uUdpVM13CfbcwxSt5Zf0rcN79iBLFTjacRH67gBL/1h5EZuPoKe99D2p/Sf2gi3f+VWAa+N8X+noYof1X6QufM46Pd1MAruZ43CBuk9u07hfiCvRC9KIs8AMAlbyMyqcQM6bMCxO84hSGhh1xMuA2GesVlMQ2UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sa25Xqxh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8YekhvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDDAC19424;
-	Tue, 31 Mar 2026 17:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sa25Xqxh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944CCC2BCB1;
+	Tue, 31 Mar 2026 17:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976582;
-	bh=gjcVj02mr6V2vNkoyRWzRQUSyPt7f3SL9wKhVF21Ozo=;
+	s=korg; t=1774976584;
+	bh=d31+b8pDICBheP3pGh2iRJBwQ9BT7vtYvuivFbzgwG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8YekhvDjpctfu907WQZHze+N6NSFh8v88VxFdJZ1VGy1QdneY5WBzvgq/la1f9J5
-	 ScqghGRsmvXs9+zmShrzmdMTV33+pXw0ahvgwNBhhISsZL6nzgAvrGix9RosJ14V6u
-	 pt46C3xTRcevH896WFyo8i7bo1Hk2XheXoGq9Ib0=
+	b=sa25XqxhOhArxufUOr/pDrqhBVJ8/1aa5xlmYLZ6cIZ0hrByQdwlmubRaL/2TPO8u
+	 NZK1OFl/nP5gNIE2dgxmc5zvj9Q41Lt1V4K3+v0THCT5wGSPfjTUEP/WGM3rlfoKo7
+	 k/COoyhvWNaLnD0DffchoEqqR3WJVqS2JDC8eIQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 148/309] RDMA/irdma: Harden depth calculation functions
-Date: Tue, 31 Mar 2026 18:20:51 +0200
-Message-ID: <20260331161758.918188909@linuxfoundation.org>
+Subject: [PATCH 6.18 149/309] ASoC: fsl: imx-card: initialize playback_only and capture_only
+Date: Tue, 31 Mar 2026 18:20:52 +0200
+Message-ID: <20260331161758.954906070@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,106 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiraz Saleem <shiraz.saleem@intel.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit e37afcb56ae070477741fe2d6e61fc0c542cce2d ]
+[ Upstream commit ca67bd564e94aaa898a2cbb90922ca3cccd0612b ]
 
-An issue was exposed where OS can pass in U32_MAX for SQ/RQ/SRQ size.
-This can cause integer overflow and truncation of SQ/RQ/SRQ depth
-returning a success when it should have failed.
+Fix uninitialized variable playback_only and capture_only because
+graph_util_parse_link_direction() may not write them.
 
-Harden the functions to do all depth calculations and boundary
-checking in u64 sizes.
-
-Fixes: 563e1feb5f6e ("RDMA/irdma: Add SRQ support")
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 1877c3e7937f ("ASoC: imx-card: Add playback_only or capture_only support")
+Suggested-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260318102850.2794029-3-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/uk.c | 39 ++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 17 deletions(-)
+ sound/soc/fsl/imx-card.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/uk.c b/drivers/infiniband/hw/irdma/uk.c
-index d5568584ad5e3..4cc81d61be7fa 100644
---- a/drivers/infiniband/hw/irdma/uk.c
-+++ b/drivers/infiniband/hw/irdma/uk.c
-@@ -1410,7 +1410,7 @@ int irdma_uk_cq_poll_cmpl(struct irdma_cq_uk *cq,
-  * irdma_round_up_wq - return round up qp wq depth
-  * @wqdepth: wq depth in quanta to round up
-  */
--static int irdma_round_up_wq(u32 wqdepth)
-+static u64 irdma_round_up_wq(u64 wqdepth)
- {
- 	int scount = 1;
+diff --git a/sound/soc/fsl/imx-card.c b/sound/soc/fsl/imx-card.c
+index 05b4e971a3661..a4518fefad690 100644
+--- a/sound/soc/fsl/imx-card.c
++++ b/sound/soc/fsl/imx-card.c
+@@ -710,6 +710,8 @@ static int imx_card_parse_of(struct imx_card_data *data)
+ 			link->ops = &imx_aif_ops;
+ 		}
  
-@@ -1463,15 +1463,16 @@ void irdma_get_wqe_shift(struct irdma_uk_attrs *uk_attrs, u32 sge,
- int irdma_get_sqdepth(struct irdma_uk_attrs *uk_attrs, u32 sq_size, u8 shift,
- 		      u32 *sqdepth)
- {
--	u32 min_size = (u32)uk_attrs->min_hw_wq_size << shift;
-+	u32 min_hw_quanta = (u32)uk_attrs->min_hw_wq_size << shift;
-+	u64 hw_quanta =
-+		irdma_round_up_wq(((u64)sq_size << shift) + IRDMA_SQ_RSVD);
- 
--	*sqdepth = irdma_round_up_wq((sq_size << shift) + IRDMA_SQ_RSVD);
--
--	if (*sqdepth < min_size)
--		*sqdepth = min_size;
--	else if (*sqdepth > uk_attrs->max_hw_wq_quanta)
-+	if (hw_quanta < min_hw_quanta)
-+		hw_quanta = min_hw_quanta;
-+	else if (hw_quanta > uk_attrs->max_hw_wq_quanta)
- 		return -EINVAL;
- 
-+	*sqdepth = hw_quanta;
- 	return 0;
- }
- 
-@@ -1485,15 +1486,16 @@ int irdma_get_sqdepth(struct irdma_uk_attrs *uk_attrs, u32 sq_size, u8 shift,
- int irdma_get_rqdepth(struct irdma_uk_attrs *uk_attrs, u32 rq_size, u8 shift,
- 		      u32 *rqdepth)
- {
--	u32 min_size = (u32)uk_attrs->min_hw_wq_size << shift;
--
--	*rqdepth = irdma_round_up_wq((rq_size << shift) + IRDMA_RQ_RSVD);
-+	u32 min_hw_quanta = (u32)uk_attrs->min_hw_wq_size << shift;
-+	u64 hw_quanta =
-+		irdma_round_up_wq(((u64)rq_size << shift) + IRDMA_RQ_RSVD);
- 
--	if (*rqdepth < min_size)
--		*rqdepth = min_size;
--	else if (*rqdepth > uk_attrs->max_hw_rq_quanta)
-+	if (hw_quanta < min_hw_quanta)
-+		hw_quanta = min_hw_quanta;
-+	else if (hw_quanta > uk_attrs->max_hw_rq_quanta)
- 		return -EINVAL;
- 
-+	*rqdepth = hw_quanta;
- 	return 0;
- }
- 
-@@ -1507,13 +1509,16 @@ int irdma_get_rqdepth(struct irdma_uk_attrs *uk_attrs, u32 rq_size, u8 shift,
- int irdma_get_srqdepth(struct irdma_uk_attrs *uk_attrs, u32 srq_size, u8 shift,
- 		       u32 *srqdepth)
- {
--	*srqdepth = irdma_round_up_wq((srq_size << shift) + IRDMA_RQ_RSVD);
-+	u32 min_hw_quanta = (u32)uk_attrs->min_hw_wq_size << shift;
-+	u64 hw_quanta =
-+		irdma_round_up_wq(((u64)srq_size << shift) + IRDMA_RQ_RSVD);
- 
--	if (*srqdepth < ((u32)uk_attrs->min_hw_wq_size << shift))
--		*srqdepth = uk_attrs->min_hw_wq_size << shift;
--	else if (*srqdepth > uk_attrs->max_hw_srq_quanta)
-+	if (hw_quanta < min_hw_quanta)
-+		hw_quanta = min_hw_quanta;
-+	else if (hw_quanta > uk_attrs->max_hw_srq_quanta)
- 		return -EINVAL;
- 
-+	*srqdepth = hw_quanta;
- 	return 0;
- }
- 
++		playback_only = false;
++		capture_only  = false;
+ 		graph_util_parse_link_direction(np, &playback_only, &capture_only);
+ 		link->playback_only = playback_only;
+ 		link->capture_only = capture_only;
 -- 
 2.53.0
 
