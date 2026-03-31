@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B275F423A61;
-	Tue, 31 Mar 2026 16:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CAE13FB7F1;
+	Tue, 31 Mar 2026 16:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974602; cv=none; b=JOQEJBHvw+ENon8Z3/0IdE7SFGkjwgJkwHCwoMcJgkNcsNrRqf+WZzXQg26us74Zbk5X2CdAr4+TmhbsK8r27jlbjg2kFkZrB8GjZiIQJcVV1NSCgUMT36WFzrg4oml2YEOOigVBwQbMDd3E+20vkqLDeVF26GT8Ta3CSAui3r8=
+	t=1774974605; cv=none; b=RX0BF/U1NbAdEM/0H6dUBjSjr2EGLrOjf0KBMoe5esN+pweSOtC6sjAMwDEN9RrA8V7Z2JH42EHjvCuFIcdwPqwlRaiCkSqQN/htoFiuKXBqKsCNwt+E//5u3+VSO7CMVkW1tYF793d8aYLB0nS48sa3CmDPwpNvEx7bHT36EoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974602; c=relaxed/simple;
-	bh=lNym5ItBn+8Y7tGRvXcD5aaO7S8YzVEg+nws2WiBPmc=;
+	s=arc-20240116; t=1774974605; c=relaxed/simple;
+	bh=qsAw8BciD7LE5KSepi4zFzNCjL/HAMA4tK5053TRIUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gju8/VK0esIAs3JINZOfYQGxyQ/aJoHRgpRKDII6mqsQi10XOoZpN/I6wsbyQ0VEJbHbAhIp7tdY7K6OBujhr9wLGn8KFdqdJD3IG9BynnYm3vjhy8okrBtGkbWUym1n1YiKZjgWlgsX3o4x+J22hZJT7XH+rLTeyAswLsyhE9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBcvekHF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iG15Lnu9E8SA8WtF0Up5NvqkPLFyVAR5DYDqO/8k1Rd+MpMcExkmWhLPpMwIRZd1G5N/Rfd690+tdiZwxOSjfT5P+grlg6638kP8dV8Ky3b8E2R0XvgI6+1fiYngrA9xkGEbZI3YTCR7pzV87Llw70JVUZJS29G/yKwXLkvVcM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KVo+prR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBcvekHF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80E7C19424;
-	Tue, 31 Mar 2026 16:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KVo+prR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF29C19423;
+	Tue, 31 Mar 2026 16:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974602;
-	bh=lNym5ItBn+8Y7tGRvXcD5aaO7S8YzVEg+nws2WiBPmc=;
+	s=korg; t=1774974604;
+	bh=qsAw8BciD7LE5KSepi4zFzNCjL/HAMA4tK5053TRIUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LBcvekHFjrgpNXNpev0nxj8uOBPgEBv8nzNBuOyeLNfLv+ZL6QetcEx9sNndR6/nn
-	 Fs5O+DQX8gZZnM31F4Fpzzjs0GOtLb9sj663oK3MD+P2mLVUbc2xFKI0ciVENQ/Mx7
-	 sY7pfSJCdv2CwzHtJwGKDQRj+835jp8fniGb78C8=
+	b=2KVo+prRiuVwcCalThfk0yr8Vdg4Np/xGmnP11rlynwyEHxrEdi0BgJ2fWkLCgKrT
+	 73iI+Fn7KKQnVZTofmk3tuHqFWSyx8H3UdSKDafoDtr94Qr4OcwGUrWenqljM2O9O0
+	 hNEHFcFNFJmIeRS6tTFTtYrhDpcAATeRCtbYl9RI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
-	Chao Yu <chao@kernel.org>
-Subject: [PATCH 6.6 116/175] erofs: add GFP_NOIO in the bio completion if needed
-Date: Tue, 31 Mar 2026 18:21:40 +0200
-Message-ID: <20260331161734.043763834@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.6 117/175] alarmtimer: Fix argument order in alarm_timer_forward()
+Date: Tue, 31 Mar 2026 18:21:41 +0200
+Message-ID: <20260331161734.079957714@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,62 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiucheng Xu <jiucheng.xu@amlogic.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit c23df30915f83e7257c8625b690a1cece94142a0 upstream.
+commit 5d16467ae56343b9205caedf85e3a131e0914ad8 upstream.
 
-The bio completion path in the process context (e.g. dm-verity)
-will directly call into decompression rather than trigger another
-workqueue context for minimal scheduling latencies, which can
-then call vm_map_ram() with GFP_KERNEL.
+alarm_timer_forward() passes arguments to alarm_forward() in the wrong
+order:
 
-Due to insufficient memory, vm_map_ram() may generate memory
-swapping I/O, which can cause submit_bio_wait to deadlock
-in some scenarios.
+  alarm_forward(alarm, timr->it_interval, now);
 
-Trimmed down the call stack, as follows:
+However, alarm_forward() is defined as:
 
-f2fs_submit_read_io
-  submit_bio                      //bio_list is initialized.
-    mmc_blk_mq_recovery
-      z_erofs_endio
-        vm_map_ram
-          __pte_alloc_kernel
-            __alloc_pages_direct_reclaim
-              shrink_folio_list
-                __swap_writepage
-                  submit_bio_wait  //bio_list is non-NULL, hang!!!
+  u64 alarm_forward(struct alarm *alarm, ktime_t now, ktime_t interval);
 
-Use memalloc_noio_{save,restore}() to wrap up this path.
+and uses the second argument as the current time:
 
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+  delta = ktime_sub(now, alarm->node.expires);
+
+Passing the interval as "now" results in incorrect delta computation,
+which can lead to missed expirations or incorrect overrun accounting.
+
+This issue has been present since the introduction of
+alarm_timer_forward().
+
+Fix this by swapping the arguments.
+
+Fixes: e7561f1633ac ("alarmtimer: Implement forward callback")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260323061130.29991-1-zhanxusheng@xiaomi.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/zdata.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/time/alarmtimer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1415,6 +1415,7 @@ static void z_erofs_decompress_kickoff(s
- 				       int bios)
+--- a/kernel/time/alarmtimer.c
++++ b/kernel/time/alarmtimer.c
+@@ -608,7 +608,7 @@ static s64 alarm_timer_forward(struct k_
  {
- 	struct erofs_sb_info *const sbi = EROFS_SB(io->sb);
-+	int gfp_flag;
+ 	struct alarm *alarm = &timr->it.alarm.alarmtimer;
  
- 	/* wake up the caller thread for sync decompression */
- 	if (io->sync) {
-@@ -1447,7 +1448,9 @@ static void z_erofs_decompress_kickoff(s
- 			sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
- 		return;
- 	}
-+	gfp_flag = memalloc_noio_save();
- 	z_erofs_decompressqueue_work(&io->u.work);
-+	memalloc_noio_restore(gfp_flag);
+-	return alarm_forward(alarm, timr->it_interval, now);
++	return alarm_forward(alarm, now, timr->it_interval);
  }
  
- static struct page *pickup_page_for_submission(struct z_erofs_pcluster *pcl,
+ /**
 
 
