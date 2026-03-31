@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6AB423A89;
-	Tue, 31 Mar 2026 16:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2B533E372;
+	Tue, 31 Mar 2026 16:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975603; cv=none; b=NXEQ32qKUxg2CSpzDUauMcRX+SDzTt6ZNktKJXSep5PcB3Qc/HlKxWdzhf8YInrC6sjiQ+QXGSucPy/ZXC3tMlHlfRjNjGfJcm5BD3lIdBAaKp3mlSh4H65wDK3SNAfspcRomXQjKevOmBn2vRNSi+RM+qMRNDxgkvTIMhnjcsk=
+	t=1774975605; cv=none; b=Pau0uDadAI2KxD7ZT9Kr8SBrGv1dSwms/misXhf1rIneW8OS8cUokjzHfJmMdZVHetxYQ8poZ/xOkG9dpz+zpyyUtZG82DuBUvid6ATHfBHHhmN6WhL/lw4O7NesW4J6rwKgiZtQx2FGbJPOUcrUmwkV5NSldp/IdTsu45Oaiso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975603; c=relaxed/simple;
-	bh=kocFV0Qafb9HSJQE1ufqkiFp4xUVMll32onMyQfLVag=;
+	s=arc-20240116; t=1774975605; c=relaxed/simple;
+	bh=oIxUOP5OKeRdjapomK0QjW071UQLLoE5B6iPBtUhVJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=do8UFNedW2wUAEaybfnGErLoqsQV7fNSwsAZriQzAraAe0rx3SQHX28KclmzwOPKbxjkBSYvOSfbkC60L71fJ1NtIMR6vPlvolSSt+mC5/bGKzpNP81R8fkmNaUcXftmWMZR8mK1j2B6vlrspyQLfaUreSx/lIytn39gEyKaHBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdCcAM27; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L3TRTirPhGYIQRPclFzmrW/KM4FXfrCuWHPxd++zoQ1gPVAggi3q5jU4bNCcqfk45Jy65DexwBa8s7MYzkh6h3hCnGIkOiUJlzEfgH5XxzKK3QrfG713DotTl+5PvcoJlTgsZX7qW3XB+SouTH1QCInHkUJd+6hrIDHT8hGPl/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGmCKUD6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdCcAM27"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FEEC19423;
-	Tue, 31 Mar 2026 16:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGmCKUD6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EFFC19423;
+	Tue, 31 Mar 2026 16:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975603;
-	bh=kocFV0Qafb9HSJQE1ufqkiFp4xUVMll32onMyQfLVag=;
+	s=korg; t=1774975605;
+	bh=oIxUOP5OKeRdjapomK0QjW071UQLLoE5B6iPBtUhVJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdCcAM27QSAKkegLaS1pt8AQhK9Rk0pgKWgL0kTx5xGXpNR35aPpMLjBVLOXgQyZk
-	 xYS3Z0bkFOAujTauOYdS/jDg6m5J0ZrUCRwCRXiERZvs9YEWWuPDyuEkvucFR5ddxI
-	 IE1j3L5Bu7ZhECAsRsnetsavG2U/VZf+Hps1OmN4=
+	b=VGmCKUD6l8HYPodRNJZSnVLEExE4umxaUxkf/goSVMODXwZX6A7drd13o4qcwaIVw
+	 6K3h1jV/hNL+SOtl0Q/SJ4BAM2OU0Kww1sX3DlrGY6TgaxWmAhkIwJqwon0UPT/zJn
+	 MAMmijET43TA54R2k+m0GUMvNIxi0825umG09hl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leif Skunberg <diamondback@cohunt.app>,
+	Yajat Kumar <yajatapps3@gmail.com>,
 	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 016/244] platform/x86: intel-hid: Enable 5-button array on ThinkPad X1 Fold 16 Gen 1
-Date: Tue, 31 Mar 2026 18:19:26 +0200
-Message-ID: <20260331161742.305153471@linuxfoundation.org>
+Subject: [PATCH 6.12 017/244] platform/x86: touchscreen_dmi: Add quirk for y-inverted Goodix touchscreen on SUPI S10
+Date: Tue, 31 Mar 2026 18:19:27 +0200
+Message-ID: <20260331161742.341225904@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -53,46 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leif Skunberg <diamondback@cohunt.app>
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-[ Upstream commit b38d478dad79e61e8a65931021bdfd7a71741212 ]
+[ Upstream commit 7d87ed70fc95482c12edf9493c249b6413be485e ]
 
-The Lenovo ThinkPad X1 Fold 16 Gen 1 has physical volume up/down
-buttons that are handled through the intel-hid 5-button array
-interface. The firmware does not advertise 5-button array support via
-HEBC, so the driver relies on a DMI allowlist to enable it.
+The touchscreen on the SUPI S10 tablet reports inverted Y coordinates,
+causing touch input to be mirrored vertically relative to the display.
 
-Add the ThinkPad X1 Fold 16 Gen 1 to the button_array_table so the
-volume buttons work out of the box.
+Add a quirk to set the "touchscreen-inverted-y" boolean device-property
+on the touchscreen device, so that the goodix_ts driver will fixup
+the coordinates.
 
-Signed-off-by: Leif Skunberg <diamondback@cohunt.app>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260210085625.34380-1-diamondback@cohunt.app
+Reported-by: Yajat Kumar <yajatapps3@gmail.com>
+Closes: https://lore.kernel.org/linux-input/20251230221639.582406-1-yajatapps3@gmail.com/
+Tested-by: Yajat Kumar <yajatapps3@gmail.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260217132346.34535-1-johannes.goede@oss.qualcomm.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/hid.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/platform/x86/touchscreen_dmi.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
-index 0b21d8317db30..a51b65280bc40 100644
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -126,6 +126,13 @@ static const struct dmi_system_id button_array_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_FAMILY, "ThinkPad X1 Tablet Gen 2"),
+diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
+index 0a39f68c641d1..02b0bb8af80a9 100644
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -410,6 +410,16 @@ static const struct ts_dmi_data gdix1002_upside_down_data = {
+ 	.properties	= gdix1001_upside_down_props,
+ };
+ 
++static const struct property_entry gdix1001_y_inverted_props[] = {
++	PROPERTY_ENTRY_BOOL("touchscreen-inverted-y"),
++	{ }
++};
++
++static const struct ts_dmi_data gdix1001_y_inverted_data = {
++	.acpi_name	= "GDIX1001",
++	.properties	= gdix1001_y_inverted_props,
++};
++
+ static const struct property_entry gp_electronic_t701_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-size-x", 960),
+ 	PROPERTY_ENTRY_U32("touchscreen-size-y", 640),
+@@ -1632,6 +1642,14 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_SKU, "PN20170413488"),
  		},
  	},
 +	{
-+		.ident = "Lenovo ThinkPad X1 Fold 16 Gen 1",
++		/* SUPI S10 */
++		.driver_data = (void *)&gdix1001_y_inverted_data,
 +		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_FAMILY, "ThinkPad X1 Fold 16 Gen 1"),
++			DMI_MATCH(DMI_SYS_VENDOR, "SUPI"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "S10"),
 +		},
 +	},
  	{
- 		.ident = "Microsoft Surface Go 3",
- 		.matches = {
+ 		/* Techbite Arc 11.6 */
+ 		.driver_data = (void *)&techbite_arc_11_6_data,
 -- 
 2.51.0
 
