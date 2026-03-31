@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE93E3EF0A2;
-	Tue, 31 Mar 2026 16:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC6D426684;
+	Tue, 31 Mar 2026 16:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974496; cv=none; b=Ri3lRWuY1uqFl5UP9v8gvhuFsBAaZ8c1ljWc3ZHBpBu4Uw4ptueeNUZxm6GH4JFAQyixwFjY5fkLHNJjt4FZqEhYipyYI9D0x4o+tkCjF4reUMIjFszSAKEGaIrkJV71WeqoUlJDHcLdqyAf+TTsrY1WtQR8EH1qsNRx6qpRRUg=
+	t=1774974498; cv=none; b=k3BdqgY16fN/SJz1zrFZc+CSGiNsNNQ+xcyyXkOR8Q2S8v99upXQQrhj8xxm9ouZfCw8RgOAyulBOtsk0d8tXSQT0Gn1/Q59LFQWZP0+eO7NCqwxLb2BoEjmid9qmCliBWnKqoMvx2z/RS3gszhxM5z3sH/cgIyKClmIftnflZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974496; c=relaxed/simple;
-	bh=GbvnkSTY3Hp4pKgqpBD9OO73D/Kw/vjWhZ8M8JNc38A=;
+	s=arc-20240116; t=1774974498; c=relaxed/simple;
+	bh=C1Cu3qZaEtPS+qxMMZO2JjdL+cdMa4lj4Uvw2I7B950=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UN1DYIxavBznXOt/58nfFtjjJjapJZsTTQ0u9M7yu6BiUa7NET/9nEmRr6zHGk/81of12n9+haVCA6U1+D0lPR8xSTL48nLdY9ME/9q2whIBg5Mb/rh/qgeVYDGMbxEnwJtttCwrCqtwXqsp5+WbKbo8wvrsrFfeGqvGr5oLKIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNmXzz5h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oKWGrFwPIWBlfykwrtxwJwdQq9TqZBy5s+Ab0WTXdNWwK/HxtbVCOKInxcXWADHoMGz31SRIwc1oQ4IaU9Cful5jCHdBEeXLCVDMJ/D+vaZS5BuKOOphmpz+W/zLWiuiXaQWQNH7t3yOL2PwZi2ccY75ALj950aZkJKqK0iOBBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPlkEdLF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNmXzz5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6F5C2BCB2;
-	Tue, 31 Mar 2026 16:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPlkEdLF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA31DC19424;
+	Tue, 31 Mar 2026 16:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974495;
-	bh=GbvnkSTY3Hp4pKgqpBD9OO73D/Kw/vjWhZ8M8JNc38A=;
+	s=korg; t=1774974498;
+	bh=C1Cu3qZaEtPS+qxMMZO2JjdL+cdMa4lj4Uvw2I7B950=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YNmXzz5hCA2jOF+cN8baI7biMbumZRezleaNInWnNJJiovDs35nlBVS+xPYQmNCEQ
-	 K7qJzpNg7SKklrusk08J6Nr5a7ovaaLleM8E+DCBE0eqCJLeNyW1GOZTLr5GmXdvTR
-	 wM/hrdB/dlPyLd7cH+7ixrO7wL0Ek2537h9ej1RY=
+	b=PPlkEdLFl5ojjF8wOsH6tp9Egs5gc1HQZOUeLCv8zyxa9MMkVxNiWomX5hxFGWKT8
+	 OmKq6hn05uA+d57uph7sFFtQU2dEjSSm0zZvwSmYs9gh8ldRO5XBomT2OKmFaHUheK
+	 O/M7+XzkNCiRyjG59tS+JumqwpYVUgr/uGnHt24o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Norouzi <ali.norouzi@keysight.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 106/175] can: isotp: fix tx.buf use-after-free in isotp_sendmsg()
-Date: Tue, 31 Mar 2026 18:21:30 +0200
-Message-ID: <20260331161733.675191550@linuxfoundation.org>
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 107/175] cpufreq: conservative: Reset requested_freq on limits change
+Date: Tue, 31 Mar 2026 18:21:31 +0200
+Message-ID: <20260331161733.711722747@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,83 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-commit 424e95d62110cdbc8fd12b40918f37e408e35a92 upstream.
+commit 6a28fb8cb28b9eb39a392e531d938a889eacafc5 upstream.
 
-isotp_sendmsg() uses only cmpxchg() on so->tx.state to serialize access
-to so->tx.buf. isotp_release() waits for ISOTP_IDLE via
-wait_event_interruptible() and then calls kfree(so->tx.buf).
+A recently reported issue highlighted that the cached requested_freq
+is not guaranteed to stay in sync with policy->cur. If the platform
+changes the actual CPU frequency after the governor sets one (e.g.
+due to platform-specific frequency scaling) and a re-sync occurs
+later, policy->cur may diverge from requested_freq.
 
-If a signal interrupts the wait_event_interruptible() inside close()
-while tx.state is ISOTP_SENDING, the loop exits early and release
-proceeds to force ISOTP_SHUTDOWN and continues to kfree(so->tx.buf)
-while sendmsg may still be reading so->tx.buf for the final CAN frame
-in isotp_fill_dataframe().
+This can lead to incorrect behavior in the conservative governor.
+For example, the governor may assume the CPU is already running at
+the maximum frequency and skip further increases even though there
+is still headroom.
 
-The so->tx.buf can be allocated once when the standard tx.buf length needs
-to be extended. Move the kfree() of this potentially extended tx.buf to
-sk_destruct time when either isotp_sendmsg() and isotp_release() are done.
+Avoid this by resetting the cached requested_freq to policy->cur on
+detecting a change in policy limits.
 
-Fixes: 96d1c81e6a04 ("can: isotp: add module parameter for maximum pdu size")
-Cc: stable@vger.kernel.org
-Reported-by: Ali Norouzi <ali.norouzi@keysight.com>
-Co-developed-by: Ali Norouzi <ali.norouzi@keysight.com>
-Signed-off-by: Ali Norouzi <ali.norouzi@keysight.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260319-fix-can-gw-and-can-isotp-v2-2-c45d52c6d2d8@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reported-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Tested-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://lore.kernel.org/all/20260210115458.3493646-1-zhenglifeng1@huawei.com/
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/d846a141a98ac0482f20560fcd7525c0f0ec2f30.1773999467.git.viresh.kumar@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |   24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/cpufreq/cpufreq_conservative.c |   12 ++++++++++++
+ drivers/cpufreq/cpufreq_governor.c     |    3 +++
+ drivers/cpufreq/cpufreq_governor.h     |    1 +
+ 3 files changed, 16 insertions(+)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1227,12 +1227,6 @@ static int isotp_release(struct socket *
- 	so->ifindex = 0;
- 	so->bound = 0;
- 
--	if (so->rx.buf != so->rx.sbuf)
--		kfree(so->rx.buf);
--
--	if (so->tx.buf != so->tx.sbuf)
--		kfree(so->tx.buf);
--
- 	sock_orphan(sk);
- 	sock->sk = NULL;
- 
-@@ -1600,6 +1594,21 @@ static int isotp_notifier(struct notifie
- 	return NOTIFY_DONE;
+--- a/drivers/cpufreq/cpufreq_conservative.c
++++ b/drivers/cpufreq/cpufreq_conservative.c
+@@ -314,6 +314,17 @@ static void cs_start(struct cpufreq_poli
+ 	dbs_info->requested_freq = policy->cur;
  }
  
-+static void isotp_sock_destruct(struct sock *sk)
++static void cs_limits(struct cpufreq_policy *policy)
 +{
-+	struct isotp_sock *so = isotp_sk(sk);
++	struct cs_policy_dbs_info *dbs_info = to_dbs_info(policy->governor_data);
 +
-+	/* do the standard CAN sock destruct work */
-+	can_sock_destruct(sk);
-+
-+	/* free potential extended PDU buffers */
-+	if (so->rx.buf != so->rx.sbuf)
-+		kfree(so->rx.buf);
-+
-+	if (so->tx.buf != so->tx.sbuf)
-+		kfree(so->tx.buf);
++	/*
++	 * The limits have changed, so may have the current frequency. Reset
++	 * requested_freq to avoid any unintended outcomes due to the mismatch.
++	 */
++	dbs_info->requested_freq = policy->cur;
 +}
 +
- static int isotp_init(struct sock *sk)
+ static struct dbs_governor cs_governor = {
+ 	.gov = CPUFREQ_DBS_GOVERNOR_INITIALIZER("conservative"),
+ 	.kobj_type = { .default_groups = cs_groups },
+@@ -323,6 +334,7 @@ static struct dbs_governor cs_governor =
+ 	.init = cs_init,
+ 	.exit = cs_exit,
+ 	.start = cs_start,
++	.limits = cs_limits,
+ };
+ 
+ #define CPU_FREQ_GOV_CONSERVATIVE	(cs_governor.gov)
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -563,6 +563,7 @@ EXPORT_SYMBOL_GPL(cpufreq_dbs_governor_s
+ 
+ void cpufreq_dbs_governor_limits(struct cpufreq_policy *policy)
  {
- 	struct isotp_sock *so = isotp_sk(sk);
-@@ -1646,6 +1655,9 @@ static int isotp_init(struct sock *sk)
- 	list_add_tail(&so->notifier, &isotp_notifier_list);
- 	spin_unlock(&isotp_notifier_lock);
++	struct dbs_governor *gov = dbs_governor_of(policy);
+ 	struct policy_dbs_info *policy_dbs;
  
-+	/* re-assign default can_sock_destruct() reference */
-+	sk->sk_destruct = isotp_sock_destruct;
-+
- 	return 0;
- }
+ 	/* Protect gov->gdbs_data against cpufreq_dbs_governor_exit() */
+@@ -574,6 +575,8 @@ void cpufreq_dbs_governor_limits(struct
+ 	mutex_lock(&policy_dbs->update_mutex);
+ 	cpufreq_policy_apply_limits(policy);
+ 	gov_update_sample_delay(policy_dbs, 0);
++	if (gov->limits)
++		gov->limits(policy);
+ 	mutex_unlock(&policy_dbs->update_mutex);
  
+ out:
+--- a/drivers/cpufreq/cpufreq_governor.h
++++ b/drivers/cpufreq/cpufreq_governor.h
+@@ -138,6 +138,7 @@ struct dbs_governor {
+ 	int (*init)(struct dbs_data *dbs_data);
+ 	void (*exit)(struct dbs_data *dbs_data);
+ 	void (*start)(struct cpufreq_policy *policy);
++	void (*limits)(struct cpufreq_policy *policy);
+ };
+ 
+ static inline struct dbs_governor *dbs_governor_of(struct cpufreq_policy *policy)
 
 
