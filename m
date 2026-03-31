@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAC6423A8E;
-	Tue, 31 Mar 2026 16:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378B5423A9B;
+	Tue, 31 Mar 2026 16:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976341; cv=none; b=dt8cNg1HG989UaosgT2P2uyFMAYKUK6C97WPEJu7Qqmqu/3FTVl0lfM38ABdAD8cUsxER1FIW4StCx+3pCtbSgoSrateW4kLaVpyiMQS+/k2FGzShHRWsSMpEmv2lL7zZLfJFbN1ck6oRrEP1w6daZRMkI9CbOFdfusLaJnZEu4=
+	t=1774976344; cv=none; b=pO2Ul2ZAgGbmpYC5BM5fsEQFAju41vFmvJYTbjyV05pmuluGtsclzcW1SUihVnqblHg7tnAir95uMzrlurxpZlj1KGEKmNU53yDuP3BpX1805NCTwklOAvfQSK880WYZAaPyfX/RiJcnDsaMTfBnYDgvcPTK7ubx51WmzSiksdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976341; c=relaxed/simple;
-	bh=1T9wx893O04FqG929rnw6paWFaEq5lFY/PZE1o2x2+4=;
+	s=arc-20240116; t=1774976344; c=relaxed/simple;
+	bh=lVpEoRfoDuLpgTsD8uUhyNAjvfC2/mspilJtezqoWTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RiCcB9DR2+wT2NVuyKaHwaNj4aFIXY0bpl6/7zZn2wFixXpjIgIWHbViMg1uE1fzBbtbms+YmB0r7heo7RJDmMOGeK21skICBkV06K1dMHHcRTXdRnoqHooGXhmG++tajQGM5YRGEEVq1AYrOvoIwzfFVL8AApUNfCbf+hQ9QpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOPtOMDk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gtGygVHhSzZ3qkk1IfC/uSBq1TApDgk+28HIb+Mle98eELa24C2axuqOLHd86UKsi70237xgLohd/SM1yxdKlyY7cKTEdTIQeaDagD6oqbbDqAwHbmWjwSUBaXMnh0IYFZEDsOPjr9nbHGNtlpca+C8crxxY2f/DTsBDQ1Ty5Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLQKHzTp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOPtOMDk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EB0C19423;
-	Tue, 31 Mar 2026 16:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLQKHzTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A22C19424;
+	Tue, 31 Mar 2026 16:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976341;
-	bh=1T9wx893O04FqG929rnw6paWFaEq5lFY/PZE1o2x2+4=;
+	s=korg; t=1774976344;
+	bh=lVpEoRfoDuLpgTsD8uUhyNAjvfC2/mspilJtezqoWTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOPtOMDkiZfFG+VB4oiod+ZVzUIM6orRNPb887hF/pchYiP4m5yU5gLedrG7Xq56Q
-	 /3BML1kB8jV+kiIX7LVvD9ujv+QprLEklxChTzNXYCOtAdA5oOMF6BdSOwxDVq+Eyd
-	 6ChmLK9R0b39o4t/F6Tpos7ZDXQ/iV+BQMuPqWNI=
+	b=NLQKHzTpmQ3+v3mzbLKGk+tASZAfPWCnq6YT7eeLWKs96Io2uVacG/zu8t+wOswdB
+	 p7U8/6XSeR7Xa+lkzZTo+dq3hKMK92/AGo16aMeiLvW3EzwNh9DiCGI4+rjsb+VqsJ
+	 5mSeyH+V2U+UQXBpl5kCt4wHvl0IWpvzGgInonEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	zhidao su <suzhidao@xiaomi.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 054/309] HID: apple: avoid memory leak in apple_report_fixup()
-Date: Tue, 31 Mar 2026 18:19:17 +0200
-Message-ID: <20260331161755.475596985@linuxfoundation.org>
+Subject: [PATCH 6.18 055/309] sched_ext: Use WRITE_ONCE() for the write side of dsq->seq update
+Date: Tue, 31 Mar 2026 18:19:18 +0200
+Message-ID: <20260331161755.512104407@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -45,47 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Günther Noack <gnoack@google.com>
+From: zhidao su <soolaugust@gmail.com>
 
-[ Upstream commit 239c15116d80f67d32f00acc34575f1a6b699613 ]
+[ Upstream commit 7a8464555d2e5f038758bb19e72ab4710b79e9cd ]
 
-The apple_report_fixup() function was returning a
-newly kmemdup()-allocated buffer, but never freeing it.
+bpf_iter_scx_dsq_new() reads dsq->seq via READ_ONCE() without holding
+any lock, making dsq->seq a lock-free concurrently accessed variable.
+However, dispatch_enqueue(), the sole writer of dsq->seq, uses a plain
+increment without the matching WRITE_ONCE() on the write side:
 
-The caller of report_fixup() does not take ownership of the returned
-pointer, but it *is* permitted to return a sub-portion of the input
-rdesc, whose lifetime is managed by the caller.
+    dsq->seq++;
+    ^^^^^^^^^^^
+    plain write -- KCSAN data race
 
-Assisted-by: Gemini-CLI:Google Gemini 3
-Signed-off-by: Günther Noack <gnoack@google.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+The KCSAN documentation requires that if one accessor uses READ_ONCE()
+or WRITE_ONCE() on a variable to annotate lock-free access, all other
+accesses must also use the appropriate accessor. A plain write leaves
+the pair incomplete and will trigger KCSAN warnings.
+
+Fix by using WRITE_ONCE() for the write side of the update:
+
+    WRITE_ONCE(dsq->seq, dsq->seq + 1);
+
+This is consistent with bpf_iter_scx_dsq_new() and makes the
+concurrent access annotation complete and KCSAN-clean.
+
+Signed-off-by: zhidao su <suzhidao@xiaomi.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-apple.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ kernel/sched/ext.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index 2f9a2e07c4263..9dcb252c5d6c7 100644
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -689,9 +689,7 @@ static const __u8 *apple_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 		hid_info(hdev,
- 			 "fixing up Magic Keyboard battery report descriptor\n");
- 		*rsize = *rsize - 1;
--		rdesc = kmemdup(rdesc + 1, *rsize, GFP_KERNEL);
--		if (!rdesc)
--			return NULL;
-+		rdesc = rdesc + 1;
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 4e3f06c19ab46..bf4bea3595cd0 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1019,7 +1019,7 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
+ 	}
  
- 		rdesc[0] = 0x05;
- 		rdesc[1] = 0x01;
+ 	/* seq records the order tasks are queued, used by BPF DSQ iterator */
+-	dsq->seq++;
++	WRITE_ONCE(dsq->seq, dsq->seq + 1);
+ 	p->scx.dsq_seq = dsq->seq;
+ 
+ 	dsq_mod_nr(dsq, 1);
 -- 
 2.51.0
 
