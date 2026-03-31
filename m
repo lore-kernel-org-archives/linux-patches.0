@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C593FADEE;
-	Tue, 31 Mar 2026 16:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D653FADEE;
+	Tue, 31 Mar 2026 16:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976003; cv=none; b=CUrc/hNA8UlHlCN750EX5koJJ1FzRGSoEQO0FTm5PNZnCLnI0YiIH288e7XJpUpqwHwPghzGdUc7E8NJE58zahqF0RBEAD4l02G18O0VI9WZ9sfTw9jX5LRImoZI1S+sup1OTQrlwjK0/kNODH2SozYvl1kkj2zZnbS1aQeoqZw=
+	t=1774976006; cv=none; b=IVGsduR7Z6Qdstknh7PWf4CCKyUzk87KcpXf3W4iZ882OltmntGk6rOr4OeEvFRJ8lS80qJNFAPsGtQMOE+MWJT9Q6jBPseBTmYJXi8Y5FzRUoi7Mi7cSPmMiFU68johPCNebCPN2oPaX59MKe46EhWY4lqDXuQuBURGfvU67L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976003; c=relaxed/simple;
-	bh=Xuk16ioh5O4EDLU9m8kgufJn9FCIHt3sgUgDvl3EmxQ=;
+	s=arc-20240116; t=1774976006; c=relaxed/simple;
+	bh=tu+PrRe7mw7UKgt1gmdbwQDM5/o6H0mfmr+X+DQlx7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tyKvkUlZlcdAI1Kc1gO4bT/aQTxq5bC9r7kfXkyaxLJgUmZ66ZKp5fqvcEUYfyD7n0iuU3/70rAHA3CioIM2cAVwlCJed2KUD1LiO5+/l5wL2HPCJF1XVu+9BpZGN9NrsYquIX379OWl/8kMA5Z4V2ETD+1MOe7XoyL7PBQIA9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKDic7zg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o0NTGOh5aMiOoAWhpXrxKcT1TLwuOQywem4t6KqxhV410omLXE+yw/IbDC/egWyDOYqfrYVEbDOIBj++pKIVMh/MAZKCfM8dXQJLGjuvHSQVBWsuPFKiOuwl9i1Iw68IiS7UK2bY6HWNO304gVz+BtcWTCFBWDw7xhqMNW/NRTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPnVibta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKDic7zg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274E4C19423;
-	Tue, 31 Mar 2026 16:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPnVibta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD1FC19423;
+	Tue, 31 Mar 2026 16:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976003;
-	bh=Xuk16ioh5O4EDLU9m8kgufJn9FCIHt3sgUgDvl3EmxQ=;
+	s=korg; t=1774976006;
+	bh=tu+PrRe7mw7UKgt1gmdbwQDM5/o6H0mfmr+X+DQlx7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cKDic7zg6fJo9TBlcWu1qHXBr0bs7oQyufvlPVP/UfMGLphzznZp0CiR5ytrjLLo2
-	 wOZ7q4wozKVlgVCs+Ss4CoWtKTsk0IkUOFVjwiK/2fiSdA2960m1QttRaxWT1I7SGU
-	 kM2EHlnqC27RjV9YRzcX1vcmpEYOJTVee5ghgvOo=
+	b=MPnVibtamdZePOHeKOxppsKX3cUKO5gHW6/xVqbzzXhQYBJGrwelMitySYxMysS8t
+	 oH7tgWJ4hvdukgs89mQz4RlyOfAAZEo0VQnouDUgAPm0TF7sVNfdEAzzaISjWEf2DL
+	 uct8Z5FtMpM0efveq/lscH28uQs3/Y4TnKwJPb9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.12 168/244] futex: Clear stale exiting pointer in futex_lock_pi() retry path
-Date: Tue, 31 Mar 2026 18:21:58 +0200
-Message-ID: <20260331161747.966509152@linuxfoundation.org>
+	Joy Zou <joy.zou@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.12 169/244] dmaengine: fsl-edma: fix channel parameter config for fixed channel requests
+Date: Tue, 31 Mar 2026 18:21:59 +0200
+Message-ID: <20260331161748.003726305@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -50,76 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Joy Zou <joy.zou@nxp.com>
 
-commit 210d36d892de5195e6766c45519dfb1e65f3eb83 upstream.
+commit 2e7b5cf72e51c9cf9c8b75190189c757df31ddd9 upstream.
 
-Fuzzying/stressing futexes triggered:
+Configure only the requested channel when a fixed channel is specified
+to avoid modifying other channels unintentionally.
 
-    WARNING: kernel/futex/core.c:825 at wait_for_owner_exiting+0x7a/0x80, CPU#11: futex_lock_pi_s/524
+Fix parameter configuration when a fixed DMA channel is requested on
+i.MX9 AON domain and i.MX8QM/QXP/DXL platforms. When a client requests
+a fixed channel (e.g., channel 6), the driver traverses channels 0-5
+and may unintentionally modify their configuration if they are unused.
 
-When futex_lock_pi_atomic() sees the owner is exiting, it returns -EBUSY
-and stores a refcounted task pointer in 'exiting'.
+This leads to issues such as setting the `is_multi_fifo` flag unexpectedly,
+causing memcpy tests to fail when using the dmatest tool.
 
-After wait_for_owner_exiting() consumes that reference, the local pointer
-is never reset to nil. Upon a retry, if futex_lock_pi_atomic() returns a
-different error, the bogus pointer is passed to wait_for_owner_exiting().
+Only affect edma memcpy test when the channel is fixed.
 
-  CPU0			     CPU1		       CPU2
-  futex_lock_pi(uaddr)
-  // acquires the PI futex
-  exit()
-    futex_cleanup_begin()
-      futex_state = EXITING;
-			     futex_lock_pi(uaddr)
-			       futex_lock_pi_atomic()
-				 attach_to_pi_owner()
-				   // observes EXITING
-				   *exiting = owner;  // takes ref
-				   return -EBUSY
-			       wait_for_owner_exiting(-EBUSY, owner)
-				 put_task_struct();   // drops ref
-			       // exiting still points to owner
-			       goto retry;
-			       futex_lock_pi_atomic()
-				 lock_pi_update_atomic()
-				   cmpxchg(uaddr)
-					*uaddr ^= WAITERS // whatever
-				   // value changed
-				 return -EAGAIN;
-			       wait_for_owner_exiting(-EAGAIN, exiting) // stale
-				 WARN_ON_ONCE(exiting)
-
-Fix this by resetting upon retry, essentially aligning it with requeue_pi.
-
-Fixes: 3ef240eaff36 ("futex: Prevent exit livelock")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
+Signed-off-by: Joy Zou <joy.zou@nxp.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260326001759.4129680-1-dave@stgolabs.net
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250917-b4-edma-chanconf-v1-1-886486e02e91@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/futex/pi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/fsl-edma-main.c |   26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
 
---- a/kernel/futex/pi.c
-+++ b/kernel/futex/pi.c
-@@ -918,7 +918,7 @@ int fixup_pi_owner(u32 __user *uaddr, st
- int futex_lock_pi(u32 __user *uaddr, unsigned int flags, ktime_t *time, int trylock)
- {
- 	struct hrtimer_sleeper timeout, *to;
--	struct task_struct *exiting = NULL;
-+	struct task_struct *exiting;
- 	struct rt_mutex_waiter rt_waiter;
- 	struct futex_hash_bucket *hb;
- 	struct futex_q q = futex_q_init;
-@@ -933,6 +933,7 @@ int futex_lock_pi(u32 __user *uaddr, uns
- 	to = futex_setup_timer(time, &timeout, flags, 0);
+--- a/drivers/dma/fsl-edma-main.c
++++ b/drivers/dma/fsl-edma-main.c
+@@ -185,10 +185,8 @@ static struct dma_chan *fsl_edma3_xlate(
+ 			return NULL;
+ 		i = fsl_chan - fsl_edma->chans;
  
- retry:
-+	exiting = NULL;
- 	ret = get_futex_key(uaddr, flags, &q.key, FUTEX_WRITE);
- 	if (unlikely(ret != 0))
- 		goto out;
+-		fsl_chan->priority = dma_spec->args[1];
+-		fsl_chan->is_rxchan = dma_spec->args[2] & FSL_EDMA_RX;
+-		fsl_chan->is_remote = dma_spec->args[2] & FSL_EDMA_REMOTE;
+-		fsl_chan->is_multi_fifo = dma_spec->args[2] & FSL_EDMA_MULTI_FIFO;
++		if (!b_chmux && i != dma_spec->args[0])
++			continue;
+ 
+ 		if ((dma_spec->args[2] & FSL_EDMA_EVEN_CH) && (i & 0x1))
+ 			continue;
+@@ -196,17 +194,15 @@ static struct dma_chan *fsl_edma3_xlate(
+ 		if ((dma_spec->args[2] & FSL_EDMA_ODD_CH) && !(i & 0x1))
+ 			continue;
+ 
+-		if (!b_chmux && i == dma_spec->args[0]) {
+-			chan = dma_get_slave_channel(chan);
+-			chan->device->privatecnt++;
+-			return chan;
+-		} else if (b_chmux && !fsl_chan->srcid) {
+-			/* if controller support channel mux, choose a free channel */
+-			chan = dma_get_slave_channel(chan);
+-			chan->device->privatecnt++;
+-			fsl_chan->srcid = dma_spec->args[0];
+-			return chan;
+-		}
++		fsl_chan->srcid = dma_spec->args[0];
++		fsl_chan->priority = dma_spec->args[1];
++		fsl_chan->is_rxchan = dma_spec->args[2] & FSL_EDMA_RX;
++		fsl_chan->is_remote = dma_spec->args[2] & FSL_EDMA_REMOTE;
++		fsl_chan->is_multi_fifo = dma_spec->args[2] & FSL_EDMA_MULTI_FIFO;
++
++		chan = dma_get_slave_channel(chan);
++		chan->device->privatecnt++;
++		return chan;
+ 	}
+ 	return NULL;
+ }
 
 
