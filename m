@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C547426EB6;
-	Tue, 31 Mar 2026 16:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDA44279F0;
+	Tue, 31 Mar 2026 16:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975855; cv=none; b=QeDyuoeCIjbomGy/D2ahv+T26yWS+lqqm6wwKcQ9wyrxakUQCFaphREmQ9h0tP+GGsRboMQmGcwksfkzyjKlLHwebUEBBpasphZ5mGmLNGM6l6NdDE4sjvoOl8Bhdr+notYTYDUrTZKfPmy9F2CzFTaDoq2LZEvafbiyZxCXA1w=
+	t=1774975857; cv=none; b=Pj2nA5fcWXmODsGoR9Nxmm3IDmxyWwLfnl4R9DaIGNLAnBcMDN9GEWGWCLOJkkNFEvOEaFAiNTwPqQ9yT6VSlVpdOEn6IN8NBUG2MQSiFoKE94HsBCtUBxIOPaxsIiVWn+6hgSHzfpkCjtrfcWx9TDpZGtbgtpeff9qLJn8uqr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975855; c=relaxed/simple;
-	bh=zy4Jf9kX88NvmL94zomEnUzuzE1b1Va9zhO8g7Hk17c=;
+	s=arc-20240116; t=1774975857; c=relaxed/simple;
+	bh=CrVCiliTRJZCEbUktdG5AqllTQmLkg8J1zNgehaUut0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sv98XYoFAIZSBYL6oWR/34xI7qzFZsJKGU7eF5I5YHdkDcilDnkz3DQfQhPj2wxyBMkEiF2DeI80kUk3eJTZFEhhpYe5PUhSAg63rrxtWc3cH3vUBZ7r2832g5GZe0APDm4Ro3oLLZ+/7rqvDc791t7WQ7lIk3KaSCe0GKRH5vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5Yg+ixH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j83oPIlO8EhQzXNk+C5GPHb4sm8xmGUv/3piGm0Q1QBQyuSrkpIdPeq/EveKBbVsGfDfAFeZLUEqZX6G1qzQWpV2N98ZCjnCZnrIfX7lWTL2EJDinn9RjXRRr4gxB8w/fsfVRiNHgKK/I8iMyYrjNfsq1nPYJiLKbRcmsEInSvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvmEw1hd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5Yg+ixH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A849EC2BCB5;
-	Tue, 31 Mar 2026 16:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvmEw1hd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E894C19423;
+	Tue, 31 Mar 2026 16:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975855;
-	bh=zy4Jf9kX88NvmL94zomEnUzuzE1b1Va9zhO8g7Hk17c=;
+	s=korg; t=1774975857;
+	bh=CrVCiliTRJZCEbUktdG5AqllTQmLkg8J1zNgehaUut0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U5Yg+ixHdnmKEHOnjIQv3zgycVJ3fBUXUQjTHOiS08+LxDZZuordfP7JC3sfOhJiP
-	 dapKaaUY82exoaWCujXrEeUuTFDnUnZtaK5DN95gc9QPkIQwsQIKapZLMd9tuoh3cx
-	 iq7rsntjJRzM9LmAnApCRZIV6UUX/JMzFX4EVvH4=
+	b=TvmEw1hd75xeIs3puyJkccCEBBAZU2l8LU8W6we7fZqXh+r5/hGVh9g79hO4cIhjx
+	 sjt8mBxs/wwaOiBnArCh2IsyFm8pp6UUlqlO3nxT8EjTtttOf/m8d/DmNYTVVxR85l
+	 MV1JyvZRk0SiQ+1drXm2jyjkyN+9WVgeggADtQU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Samal <anil.samal@intel.com>,
 	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/244] RDMA/irdma: Fix deadlock during netdev reset with active connections
-Date: Tue, 31 Mar 2026 18:21:03 +0200
-Message-ID: <20260331161745.837974269@linuxfoundation.org>
+Subject: [PATCH 6.12 114/244] RDMA/irdma: Return EINVAL for invalid arp index error
+Date: Tue, 31 Mar 2026 18:21:04 +0200
+Message-ID: <20260331161745.875384289@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,42 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Samal <anil.samal@intel.com>
+From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 
-[ Upstream commit 6f52370970ac07d352a7af4089e55e0e6425f827 ]
+[ Upstream commit 7221f581eefa79ead06e171044f393fb7ee22f87 ]
 
-Resolve deadlock that occurs when user executes netdev reset while RDMA
-applications (e.g., rping) are active. The netdev reset causes ice
-driver to remove irdma auxiliary driver, triggering device_delete and
-subsequent client removal. During client removal, uverbs_client waits
-for QP reference count to reach zero while cma_client holds the final
-reference, creating circular dependency and indefinite wait in iWARP
-mode. Skip QP reference count wait during device reset to prevent
-deadlock.
+When rdma_connect() fails due to an invalid arp index, user space rdma core
+reports ENOMEM which is confusing. Modify irdma_make_cm_node() to return the
+correct error code.
 
-Fixes: c8f304d75f6c ("RDMA/irdma: Prevent QP use after free")
-Signed-off-by: Anil Samal <anil.samal@intel.com>
+Fixes: 146b9756f14c ("RDMA/irdma: Add connection manager")
 Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/cm.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 5db64fae45515..1f267dea6460e 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -536,7 +536,8 @@ static int irdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+diff --git a/drivers/infiniband/hw/irdma/cm.c b/drivers/infiniband/hw/irdma/cm.c
+index e7f315e102d51..6a911f6230648 100644
+--- a/drivers/infiniband/hw/irdma/cm.c
++++ b/drivers/infiniband/hw/irdma/cm.c
+@@ -2240,11 +2240,12 @@ irdma_make_cm_node(struct irdma_cm_core *cm_core, struct irdma_device *iwdev,
+ 	int oldarpindex;
+ 	int arpindex;
+ 	struct net_device *netdev = iwdev->netdev;
++	int ret;
+ 
+ 	/* create an hte and cm_node for this instance */
+ 	cm_node = kzalloc(sizeof(*cm_node), GFP_ATOMIC);
+ 	if (!cm_node)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	/* set our node specific transport info */
+ 	cm_node->ipv4 = cm_info->ipv4;
+@@ -2347,8 +2348,10 @@ irdma_make_cm_node(struct irdma_cm_core *cm_core, struct irdma_device *iwdev,
+ 			arpindex = -EINVAL;
  	}
  
- 	irdma_qp_rem_ref(&iwqp->ibqp);
--	wait_for_completion(&iwqp->free_qp);
-+	if (!iwdev->rf->reset)
-+		wait_for_completion(&iwqp->free_qp);
- 	irdma_free_lsmm_rsrc(iwqp);
- 	irdma_cqp_qp_destroy_cmd(&iwdev->rf->sc_dev, &iwqp->sc_qp);
+-	if (arpindex < 0)
++	if (arpindex < 0) {
++		ret = -EINVAL;
+ 		goto err;
++	}
  
+ 	ether_addr_copy(cm_node->rem_mac,
+ 			iwdev->rf->arp_table[arpindex].mac_addr);
+@@ -2359,7 +2362,7 @@ irdma_make_cm_node(struct irdma_cm_core *cm_core, struct irdma_device *iwdev,
+ err:
+ 	kfree(cm_node);
+ 
+-	return NULL;
++	return ERR_PTR(ret);
+ }
+ 
+ static void irdma_destroy_connection(struct irdma_cm_node *cm_node)
+@@ -3020,8 +3023,8 @@ static int irdma_create_cm_node(struct irdma_cm_core *cm_core,
+ 
+ 	/* create a CM connection node */
+ 	cm_node = irdma_make_cm_node(cm_core, iwdev, cm_info, NULL);
+-	if (!cm_node)
+-		return -ENOMEM;
++	if (IS_ERR(cm_node))
++		return PTR_ERR(cm_node);
+ 
+ 	/* set our node side to client (active) side */
+ 	cm_node->tcp_cntxt.client = 1;
+@@ -3218,9 +3221,9 @@ void irdma_receive_ilq(struct irdma_sc_vsi *vsi, struct irdma_puda_buf *rbuf)
+ 		cm_info.cm_id = listener->cm_id;
+ 		cm_node = irdma_make_cm_node(cm_core, iwdev, &cm_info,
+ 					     listener);
+-		if (!cm_node) {
++		if (IS_ERR(cm_node)) {
+ 			ibdev_dbg(&cm_core->iwdev->ibdev,
+-				  "CM: allocate node failed\n");
++				  "CM: allocate node failed ret=%ld\n", PTR_ERR(cm_node));
+ 			refcount_dec(&listener->refcnt);
+ 			return;
+ 		}
 -- 
 2.53.0
 
