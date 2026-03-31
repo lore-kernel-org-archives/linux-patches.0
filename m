@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B06423A99;
-	Tue, 31 Mar 2026 16:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963C6423A8A;
+	Tue, 31 Mar 2026 16:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976217; cv=none; b=Wf7tMaNhgiVwMByy/zuWJ9eC5lQNq/3LFcI+OcVGi3NyoKEgbCweRRt2D1nfiu7wBgObJkZ+nbpRxCf3UlzFE3BgRJQ0SVd/D4N8VDb+JGc6TqKFqGeAf3/KQ+ShggLCS2CtYTL5KPvC6qmBpn0WW20ULDq2t+whPvZuqHf3TO8=
+	t=1774976220; cv=none; b=TAji5bm1CkHH421zMw16FKorXETk08XETecuB9n/G4hK7N7sSgsQ30vmNTvi2IWvt7B3/7HM1AIct4/9dyDwDAHIlCWKPJJjcRDpO/q3xl5awpJP8rQgr+w5NSuI9+vL9nZMjGj5i8zW1cD21ayUJo28jFWIUtQ7XDJDDxq6hh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976217; c=relaxed/simple;
-	bh=dKdFs1ONmxSSrUN5+trAMwix7M1FtkixQPQ8xNzF9hk=;
+	s=arc-20240116; t=1774976220; c=relaxed/simple;
+	bh=jKBFJ6YgYJgVyfYCDIz9MrNviwgdjBH2zFerTNVx1aI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ug8PHFLiO9aB90IHZb8pA93T8cn4dkWX5gFhwlYTd5S+4zVArIDEz/bcyKqq97tmizerGbpqj5/LV4cZUZmE0LB9i4XSm0WWC69oH1egeHtwXHaFCeJmOteXnlVw/662lVSsSDVUWMNAtyH64l+6wTAgBBGS1e5ZhcJch0yx78Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmBn31h0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1BNInyynpoAya/XcvT3Tdubb+e4oeTZxLSHvVBzSCH+X2L6NWoof0G+B51LzjbyTDS99IN4GZlp1ndfCrjf2sMFIUjyOhKH1BgjIiCXJnZSoymelxV1YXFPmEyhg2YJN1NvCDEopID2VC0Yi0ITZSiuP6vPo2EkQP5fhxcEwO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VL4djyAZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmBn31h0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E38C19424;
-	Tue, 31 Mar 2026 16:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VL4djyAZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA0FC19423;
+	Tue, 31 Mar 2026 16:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976217;
-	bh=dKdFs1ONmxSSrUN5+trAMwix7M1FtkixQPQ8xNzF9hk=;
+	s=korg; t=1774976220;
+	bh=jKBFJ6YgYJgVyfYCDIz9MrNviwgdjBH2zFerTNVx1aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EmBn31h0aBPruVm1HgVZA6bLbak8aSt75UnyY5h+AsHbOHQ75sFoVT9vnSUAo4Sql
-	 5cTFY/kXip1f1PxbzIu6Iud8Q3anmKCMakd47FFiSowYuLxSn8fGcHYTWTGcMN2L1k
-	 3u3xp0htCPp8g5J5T5rEMhtnYKMAAxAnX3uPy/t8=
+	b=VL4djyAZzzLRLrIy48PqKrghDuZoBP9+zR0bn9LIXbVfvSJOPOHKjZfsG1giWsduf
+	 zDwQSg6jqkYRm0NkZimt8i3QCQX32v1pQj5QZnjgVgS4Ch/yUkJwpiVHK5we/dbQQB
+	 0zOu/tHGoxdEuJgNrGkm9jm/DxQeGS6tKaxrmQIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Li <boolli@google.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.12 244/244] idpf: nullify pointers after they are freed
-Date: Tue, 31 Mar 2026 18:23:14 +0200
-Message-ID: <20260331161750.768396800@linuxfoundation.org>
+	Dave Jiang <dave.jiang@intel.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 001/309] cxl/port: Fix use after free of parent_port in cxl_detach_ep()
+Date: Tue, 31 Mar 2026 18:18:24 +0200
+Message-ID: <20260331161753.527546911@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
-References: <20260331161741.651718120@linuxfoundation.org>
+In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
+References: <20260331161753.468533260@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +49,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Li <boolli@google.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-commit bc3b31977314433e4685ae92853d1b6e91ad7bc2 upstream.
+[ Upstream commit 19d2f0b97a131198efc2c4ca3eb7f980bba8c2b4 ]
 
-rss_data->rss_key needs to be nullified after it is freed.
-Checks like "if (!rss_data->rss_key)" in the code could fail
-if it is not nullified.
+cxl_detach_ep() is called during bottom-up removal when all CXL memory
+devices beneath a switch port have been removed. For each port in the
+hierarchy it locks both the port and its parent, removes the endpoint,
+and if the port is now empty, marks it dead and unregisters the port
+by calling delete_switch_port(). There are two places during this work
+where the parent_port may be used after freeing:
 
-Tested: built and booted the kernel.
+First, a concurrent detach may have already processed a port by the
+time a second worker finds it via bus_find_device(). Without pinning
+parent_port, it may already be freed when we discover port->dead and
+attempt to unlock the parent_port. In a production kernel that's a
+silent memory corruption, with lock debug, it looks like this:
 
-Fixes: 83f38f210b85 ("idpf: Fix RSS LUT NULL pointer crash on early ethtool operations")
-Signed-off-by: Li Li <boolli@google.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[]DEBUG_LOCKS_WARN_ON(__owner_task(owner) != get_current())
+[]WARNING: kernel/locking/mutex.c:949 at __mutex_unlock_slowpath+0x1ee/0x310
+[]Call Trace:
+[]mutex_unlock+0xd/0x20
+[]cxl_detach_ep+0x180/0x400 [cxl_core]
+[]devm_action_release+0x10/0x20
+[]devres_release_all+0xa8/0xe0
+[]device_unbind_cleanup+0xd/0xa0
+[]really_probe+0x1a6/0x3e0
+
+Second, delete_switch_port() releases three devm actions registered
+against parent_port. The last of those is unregister_port() and it
+calls device_unregister() on the child port, which can cascade. If
+parent_port is now also empty the device core may unregister and free
+it too. So by the time delete_switch_port() returns, parent_port may
+be free, and the subsequent device_unlock(&parent_port->dev) operates
+on freed memory. The kernel log looks same as above, with a different
+offset in cxl_detach_ep().
+
+Both of these issues stem from the absence of a lifetime guarantee
+between a child port and its parent port.
+
+Establish a lifetime rule for ports: child ports hold a reference to
+their parent device until release. Take the reference when the port
+is allocated and drop it when released. This ensures the parent is
+valid for the full lifetime of the child and eliminates the use after
+free window in cxl_detach_ep().
+
+This is easily reproduced with a reload of cxl_acpi in QEMU with CXL
+devices present.
+
+Fixes: 2345df54249c ("cxl/memdev: Fix endpoint port removal")
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/20260226184439.1732841-1-alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_lib.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/cxl/core/port.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -1230,6 +1230,7 @@ static struct idpf_vport *idpf_vport_all
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 85131872d7f6e..c53a13d4f1662 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -553,10 +553,13 @@ static void cxl_port_release(struct device *dev)
+ 	xa_destroy(&port->dports);
+ 	xa_destroy(&port->regions);
+ 	ida_free(&cxl_port_ida, port->id);
+-	if (is_cxl_root(port))
++
++	if (is_cxl_root(port)) {
+ 		kfree(to_cxl_root(port));
+-	else
++	} else {
++		put_device(dev->parent);
+ 		kfree(port);
++	}
+ }
  
- free_rss_key:
- 	kfree(rss_data->rss_key);
-+	rss_data->rss_key = NULL;
- free_vector_idxs:
- 	kfree(vport->q_vector_idxs);
- free_vport:
+ static ssize_t decoders_committed_show(struct device *dev,
+@@ -722,6 +725,7 @@ static struct cxl_port *cxl_port_alloc(struct device *uport_dev,
+ 		struct cxl_port *iter;
+ 
+ 		dev->parent = &parent_port->dev;
++		get_device(dev->parent);
+ 		port->depth = parent_port->depth + 1;
+ 		port->parent_dport = parent_dport;
+ 
+-- 
+2.51.0
+
 
 
