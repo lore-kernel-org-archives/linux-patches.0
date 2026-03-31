@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B469426D16;
-	Tue, 31 Mar 2026 16:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32A3426D23;
+	Tue, 31 Mar 2026 16:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975029; cv=none; b=BhoC6bqdPrqxJLzNWk7Ztts7x7idTi1j/h1rXxf3ffJVFodbNq1EFpQohtagjtpdWTcFoJuE4f/vTSWJdkhVANIGU3DgnOTd3Pja0ljAPVIaV1S0jow76Q02iuUsCkktVCUcbTBgJm3E81K8gyzvE3oEEtHlTb5y1JpOpcFaYmM=
+	t=1774975032; cv=none; b=LD0IPGVbvTd1k//aERb7N8hxgbEa18B75zlVnLgTRxC6wkELpSIzpvDpqvs6ZL7lmWMChgNeVk38blQWwDG2cWi6TQbl59+p+0VE2eiNqY2GwLf/oMZ56BzHl7VB/51HqvXVaz9DzTIufnm1A43BN99Z6MF1jvqW2428Lm089Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975029; c=relaxed/simple;
-	bh=0sSYrSAb6ARJoK2SjjgUlPoWjb8S0h8hRLFsuZah2es=;
+	s=arc-20240116; t=1774975032; c=relaxed/simple;
+	bh=iErTbnJBxuP5b+Y3Gx3CnMgvRGLrRgOrabDnDl9IWcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GqTSdLomnJ3L0c62pAF31E8ohUduCMBMSzhNrGdE3ddIiOUr19umTbQmHYPjIh2Uke/XFJWeNGeHm7Zf1TTlJJh+4GhnfCKl6+7bj8s+CPFAweM8bvV3NwrLztf/oWOsY0kxLDYg10MxsurC341fNBIdGMAmMNZn/m24MPK8pOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBGqFk+F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VNtZTCpXqLFnPVW9ei8/cnaRFw5MY7dExyagVDoaqH/Fdw5SkhZGk4kP26TTa9jsQJ/LpUZPpnS+giGKlnvKL2BdB0ZK1a+IXJzT2IoVvY2Sn9DGERZXxjcF+Ozk2PI/3Z2tiW73ZYZcbADMNo4r019NEtq/pSnmXxaU0db0RjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DJ5ZZVL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBGqFk+F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D39C19423;
-	Tue, 31 Mar 2026 16:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DJ5ZZVL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4846DC19423;
+	Tue, 31 Mar 2026 16:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975029;
-	bh=0sSYrSAb6ARJoK2SjjgUlPoWjb8S0h8hRLFsuZah2es=;
+	s=korg; t=1774975031;
+	bh=iErTbnJBxuP5b+Y3Gx3CnMgvRGLrRgOrabDnDl9IWcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBGqFk+FTwuQPG6x1etMsqze/vWm9g4yjJhJKkD9tbUck9wFi4R7ZL6BzOvaC9ru3
-	 VthXb8Td775ZliZK1kLU/4REwchS1w/WdQVWqC/nEq5/14gNm+AJ1BdYQw07x0q6zn
-	 MrMFtpd2OXZW1d/EEsrMfWS87HsGEzpJPM4+XbF4=
+	b=0DJ5ZZVLIGRdk177v9xhUVnhXOR9gg2OEjbj0T+7kgYJVEqFpSCnqgvjYZ+gRWEEb
+	 6Ia0ZId1a/owKRo8DtGOxisfPYvn6uVAw8t//X/a+OchD/6s5Da9u+Utk5X10a4crS
+	 NsKleDzMm31XmPqMfYWBixcTAY7BRrqushq3JI+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 137/342] Bluetooth: L2CAP: Fix ERTM re-init and zero pdu_len infinite loop
-Date: Tue, 31 Mar 2026 18:19:30 +0200
-Message-ID: <20260331161804.049715439@linuxfoundation.org>
+Subject: [PATCH 6.19 138/342] Bluetooth: btusb: clamp SCO altsetting table indices
+Date: Tue, 31 Mar 2026 18:19:31 +0200
+Message-ID: <20260331161804.086322563@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,77 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 25f420a0d4cfd61d3d23ec4b9c56d9f443d91377 ]
+[ Upstream commit 129fa608b6ad08b8ab7178eeb2ec272c993aaccc ]
 
-l2cap_config_req() processes CONFIG_REQ for channels in BT_CONNECTED
-state to support L2CAP reconfiguration (e.g. MTU changes). However,
-since both CONF_INPUT_DONE and CONF_OUTPUT_DONE are already set from
-the initial configuration, the reconfiguration path falls through to
-l2cap_ertm_init(), which re-initializes tx_q, srej_q, srej_list, and
-retrans_list without freeing the previous allocations and sets
-chan->sdu to NULL without freeing the existing skb. This leaks all
-previously allocated ERTM resources.
+btusb_work() maps the number of active SCO links to USB alternate
+settings through a three-entry lookup table when CVSD traffic uses
+transparent voice settings. The lookup currently indexes alts[] with
+data->sco_num - 1 without first constraining sco_num to the number of
+available table entries.
 
-Additionally, l2cap_parse_conf_req() does not validate the minimum
-value of remote_mps derived from the RFC max_pdu_size option. A zero
-value propagates to l2cap_segment_sdu() where pdu_len becomes zero,
-causing the while loop to never terminate since len is never
-decremented, exhausting all available memory.
+While the table only defines alternate settings for up to three SCO
+links, data->sco_num comes from hci_conn_num() and is used directly.
+Cap the lookup to the last table entry before indexing it so the
+driver keeps selecting the highest supported alternate setting without
+reading past alts[].
 
-Fix the double-init by skipping l2cap_ertm_init() and
-l2cap_chan_ready() when the channel is already in BT_CONNECTED state,
-while still allowing the reconfiguration parameters to be updated
-through l2cap_parse_conf_req(). Also add a pdu_len zero check in
-l2cap_segment_sdu() as a safeguard.
-
-Fixes: 96298f640104 ("Bluetooth: L2CAP: handle l2cap config request during open state")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Fixes: baac6276c0a9 ("Bluetooth: btusb: handle mSBC audio over USB Endpoints")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/bluetooth/btusb.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 734cbb5dc1bfa..b72f2da57257d 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -2375,6 +2375,9 @@ static int l2cap_segment_sdu(struct l2cap_chan *chan,
- 	/* Remote device may have requested smaller PDUs */
- 	pdu_len = min_t(size_t, pdu_len, chan->remote_mps);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a41bb1e2a279a..4e161dcca00d8 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2378,8 +2378,11 @@ static void btusb_work(struct work_struct *work)
+ 		if (data->air_mode == HCI_NOTIFY_ENABLE_SCO_CVSD) {
+ 			if (hdev->voice_setting & 0x0020) {
+ 				static const int alts[3] = { 2, 4, 5 };
++				unsigned int sco_idx;
  
-+	if (!pdu_len)
-+		return -EINVAL;
-+
- 	if (len <= pdu_len) {
- 		sar = L2CAP_SAR_UNSEGMENTED;
- 		sdu_len = 0;
-@@ -4310,14 +4313,16 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
- 	if (test_bit(CONF_INPUT_DONE, &chan->conf_state)) {
- 		set_default_fcs(chan);
- 
--		if (chan->mode == L2CAP_MODE_ERTM ||
--		    chan->mode == L2CAP_MODE_STREAMING)
--			err = l2cap_ertm_init(chan);
-+		if (chan->state != BT_CONNECTED) {
-+			if (chan->mode == L2CAP_MODE_ERTM ||
-+			    chan->mode == L2CAP_MODE_STREAMING)
-+				err = l2cap_ertm_init(chan);
- 
--		if (err < 0)
--			l2cap_send_disconn_req(chan, -err);
--		else
--			l2cap_chan_ready(chan);
-+			if (err < 0)
-+				l2cap_send_disconn_req(chan, -err);
-+			else
-+				l2cap_chan_ready(chan);
-+		}
- 
- 		goto unlock;
- 	}
+-				new_alts = alts[data->sco_num - 1];
++				sco_idx = min_t(unsigned int, data->sco_num - 1,
++						ARRAY_SIZE(alts) - 1);
++				new_alts = alts[sco_idx];
+ 			} else {
+ 				new_alts = data->sco_num;
+ 			}
 -- 
 2.51.0
 
