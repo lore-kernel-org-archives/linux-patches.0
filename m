@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86202E1C7C;
-	Tue, 31 Mar 2026 17:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C1A2F5491;
+	Tue, 31 Mar 2026 17:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976579; cv=none; b=iPydmJ5uYp+4g5WiazZMnLQlqbbhS57/J+HVL0FZptG1AmYcIXDgHb38h3x6icpCfzbK+2S+p9LdBFNSiU+fwaEKS3EggdgU3LKFOcVPUExXxVRas4/oS4Ui43PiaJLYtnlB4gK0F4dhSAp4V27NOIIIYFUDpfPSJtL0zvHFr4c=
+	t=1774976582; cv=none; b=Qox3KeZHyMB8BFdeGvDmVvm6ngPYQsgtlSOUWj+ZMP//8RJvrIMmbt+SFj9uuMbVMKtvV3c2Z+2bNfggvBq1PE3tPyRewmYYdS5QCxObjOHpXJ65dEf0DIj0FbEyTBN3IPR1sBcw/R5rND35eN02KJajNs7Kya7JVFf02dVLyBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976579; c=relaxed/simple;
-	bh=5u2OTV2D6WvJ3jomus68lzcqT1pdHes0ilox4sxfWBw=;
+	s=arc-20240116; t=1774976582; c=relaxed/simple;
+	bh=gjcVj02mr6V2vNkoyRWzRQUSyPt7f3SL9wKhVF21Ozo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLgE7VMy1ixUjaMpXxzgze3aRw6wIGBkuSal2f/FHrMMOH7zZcLHIW9paFA/6IK6qay7SrjUo4LKRqlwW+tAr3BjqwTn96rg0T8SyGWWqL/02/SURVYiANg8pZScmiRtejKaZJZAYSzuXHMyN8Ly65xhSfu+mUWSh4bW//MJRpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dw8tzhZq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QYh2tae75pRKdiBBy7ZvQYTc/x1/C/dXx0tATihuhouhVHZHN2Ck6m81OsWTLf9FnoI9IQlq/0dkNAd8BvDq2+P1U0Gt9TgbSIheXUAOI2H5QxjO0LQGmIhJAFy8aW42uSAIaL//c8H1x3ycUrgHejXEvS6VONEWrjgJUlpejSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8YekhvD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dw8tzhZq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BFBC19423;
-	Tue, 31 Mar 2026 17:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8YekhvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDDAC19424;
+	Tue, 31 Mar 2026 17:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976579;
-	bh=5u2OTV2D6WvJ3jomus68lzcqT1pdHes0ilox4sxfWBw=;
+	s=korg; t=1774976582;
+	bh=gjcVj02mr6V2vNkoyRWzRQUSyPt7f3SL9wKhVF21Ozo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dw8tzhZqlNAgV3niwVwPc3/Bfi3mVFliQpLKvsei7B86Y9Bg1dvrrEqMeyx2KBGV4
-	 Xg1+UBa5Ip/jcyanx635t1Wgn8SGBWXhUMfIqpZtx2DjI+oeAzrm+FSOMBNtc/WSQ3
-	 uOvIZCalGKqklRNKtU7FbnJxuvxDlqVZic23fTN4=
+	b=d8YekhvDjpctfu907WQZHze+N6NSFh8v88VxFdJZ1VGy1QdneY5WBzvgq/la1f9J5
+	 ScqghGRsmvXs9+zmShrzmdMTV33+pXw0ahvgwNBhhISsZL6nzgAvrGix9RosJ14V6u
+	 pt46C3xTRcevH896WFyo8i7bo1Hk2XheXoGq9Ib0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 130/309] netfilter: nf_conntrack_sip: fix use of uninitialized rtp_addr in process_sdp
-Date: Tue, 31 Mar 2026 18:20:33 +0200
-Message-ID: <20260331161758.262936100@linuxfoundation.org>
+Subject: [PATCH 6.18 148/309] RDMA/irdma: Harden depth calculation functions
+Date: Tue, 31 Mar 2026 18:20:51 +0200
+Message-ID: <20260331161758.918188909@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -53,92 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Shiraz Saleem <shiraz.saleem@intel.com>
 
-[ Upstream commit 6a2b724460cb67caed500c508c2ae5cf012e4db4 ]
+[ Upstream commit e37afcb56ae070477741fe2d6e61fc0c542cce2d ]
 
-process_sdp() declares union nf_inet_addr rtp_addr on the stack and
-passes it to the nf_nat_sip sdp_session hook after walking the SDP
-media descriptions. However rtp_addr is only initialized inside the
-media loop when a recognized media type with a non-zero port is found.
+An issue was exposed where OS can pass in U32_MAX for SQ/RQ/SRQ size.
+This can cause integer overflow and truncation of SQ/RQ/SRQ depth
+returning a success when it should have failed.
 
-If the SDP body contains no m= lines, only inactive media sections
-(m=audio 0 ...) or only unrecognized media types, rtp_addr is never
-assigned. Despite that, the function still calls hooks->sdp_session()
-with &rtp_addr, causing nf_nat_sdp_session() to format the stale stack
-value as an IP address and rewrite the SDP session owner and connection
-lines with it.
+Harden the functions to do all depth calculations and boundary
+checking in u64 sizes.
 
-With CONFIG_INIT_STACK_ALL_ZERO (default on most distributions) this
-results in the session-level o= and c= addresses being rewritten to
-0.0.0.0 for inactive SDP sessions. Without stack auto-init the
-rewritten address is whatever happened to be on the stack.
-
-Fix this by pre-initializing rtp_addr from the session-level connection
-address (caddr) when available, and tracking via a have_rtp_addr flag
-whether any valid address was established. Skip the sdp_session hook
-entirely when no valid address exists.
-
-Fixes: 4ab9e64e5e3c ("[NETFILTER]: nf_nat_sip: split up SDP mangling")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 563e1feb5f6e ("RDMA/irdma: Add SRQ support")
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_sip.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/irdma/uk.c | 39 ++++++++++++++++++--------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
-index 4ab5ef71d96db..17af0ff4ea7ab 100644
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -1040,6 +1040,7 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
- 	unsigned int port;
- 	const struct sdp_media_type *t;
- 	int ret = NF_ACCEPT;
-+	bool have_rtp_addr = false;
+diff --git a/drivers/infiniband/hw/irdma/uk.c b/drivers/infiniband/hw/irdma/uk.c
+index d5568584ad5e3..4cc81d61be7fa 100644
+--- a/drivers/infiniband/hw/irdma/uk.c
++++ b/drivers/infiniband/hw/irdma/uk.c
+@@ -1410,7 +1410,7 @@ int irdma_uk_cq_poll_cmpl(struct irdma_cq_uk *cq,
+  * irdma_round_up_wq - return round up qp wq depth
+  * @wqdepth: wq depth in quanta to round up
+  */
+-static int irdma_round_up_wq(u32 wqdepth)
++static u64 irdma_round_up_wq(u64 wqdepth)
+ {
+ 	int scount = 1;
  
- 	hooks = rcu_dereference(nf_nat_sip_hooks);
+@@ -1463,15 +1463,16 @@ void irdma_get_wqe_shift(struct irdma_uk_attrs *uk_attrs, u32 sge,
+ int irdma_get_sqdepth(struct irdma_uk_attrs *uk_attrs, u32 sq_size, u8 shift,
+ 		      u32 *sqdepth)
+ {
+-	u32 min_size = (u32)uk_attrs->min_hw_wq_size << shift;
++	u32 min_hw_quanta = (u32)uk_attrs->min_hw_wq_size << shift;
++	u64 hw_quanta =
++		irdma_round_up_wq(((u64)sq_size << shift) + IRDMA_SQ_RSVD);
  
-@@ -1056,8 +1057,11 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
- 	caddr_len = 0;
- 	if (ct_sip_parse_sdp_addr(ct, *dptr, sdpoff, *datalen,
- 				  SDP_HDR_CONNECTION, SDP_HDR_MEDIA,
--				  &matchoff, &matchlen, &caddr) > 0)
-+				  &matchoff, &matchlen, &caddr) > 0) {
- 		caddr_len = matchlen;
-+		memcpy(&rtp_addr, &caddr, sizeof(rtp_addr));
-+		have_rtp_addr = true;
-+	}
+-	*sqdepth = irdma_round_up_wq((sq_size << shift) + IRDMA_SQ_RSVD);
+-
+-	if (*sqdepth < min_size)
+-		*sqdepth = min_size;
+-	else if (*sqdepth > uk_attrs->max_hw_wq_quanta)
++	if (hw_quanta < min_hw_quanta)
++		hw_quanta = min_hw_quanta;
++	else if (hw_quanta > uk_attrs->max_hw_wq_quanta)
+ 		return -EINVAL;
  
- 	mediaoff = sdpoff;
- 	for (i = 0; i < ARRAY_SIZE(sdp_media_types); ) {
-@@ -1091,9 +1095,11 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
- 					  &matchoff, &matchlen, &maddr) > 0) {
- 			maddr_len = matchlen;
- 			memcpy(&rtp_addr, &maddr, sizeof(rtp_addr));
--		} else if (caddr_len)
-+			have_rtp_addr = true;
-+		} else if (caddr_len) {
- 			memcpy(&rtp_addr, &caddr, sizeof(rtp_addr));
--		else {
-+			have_rtp_addr = true;
-+		} else {
- 			nf_ct_helper_log(skb, ct, "cannot parse SDP message");
- 			return NF_DROP;
- 		}
-@@ -1125,7 +1131,7 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
++	*sqdepth = hw_quanta;
+ 	return 0;
+ }
  
- 	/* Update session connection and owner addresses */
- 	hooks = rcu_dereference(nf_nat_sip_hooks);
--	if (hooks && ct->status & IPS_NAT_MASK)
-+	if (hooks && ct->status & IPS_NAT_MASK && have_rtp_addr)
- 		ret = hooks->sdp_session(skb, protoff, dataoff,
- 					 dptr, datalen, sdpoff,
- 					 &rtp_addr);
+@@ -1485,15 +1486,16 @@ int irdma_get_sqdepth(struct irdma_uk_attrs *uk_attrs, u32 sq_size, u8 shift,
+ int irdma_get_rqdepth(struct irdma_uk_attrs *uk_attrs, u32 rq_size, u8 shift,
+ 		      u32 *rqdepth)
+ {
+-	u32 min_size = (u32)uk_attrs->min_hw_wq_size << shift;
+-
+-	*rqdepth = irdma_round_up_wq((rq_size << shift) + IRDMA_RQ_RSVD);
++	u32 min_hw_quanta = (u32)uk_attrs->min_hw_wq_size << shift;
++	u64 hw_quanta =
++		irdma_round_up_wq(((u64)rq_size << shift) + IRDMA_RQ_RSVD);
+ 
+-	if (*rqdepth < min_size)
+-		*rqdepth = min_size;
+-	else if (*rqdepth > uk_attrs->max_hw_rq_quanta)
++	if (hw_quanta < min_hw_quanta)
++		hw_quanta = min_hw_quanta;
++	else if (hw_quanta > uk_attrs->max_hw_rq_quanta)
+ 		return -EINVAL;
+ 
++	*rqdepth = hw_quanta;
+ 	return 0;
+ }
+ 
+@@ -1507,13 +1509,16 @@ int irdma_get_rqdepth(struct irdma_uk_attrs *uk_attrs, u32 rq_size, u8 shift,
+ int irdma_get_srqdepth(struct irdma_uk_attrs *uk_attrs, u32 srq_size, u8 shift,
+ 		       u32 *srqdepth)
+ {
+-	*srqdepth = irdma_round_up_wq((srq_size << shift) + IRDMA_RQ_RSVD);
++	u32 min_hw_quanta = (u32)uk_attrs->min_hw_wq_size << shift;
++	u64 hw_quanta =
++		irdma_round_up_wq(((u64)srq_size << shift) + IRDMA_RQ_RSVD);
+ 
+-	if (*srqdepth < ((u32)uk_attrs->min_hw_wq_size << shift))
+-		*srqdepth = uk_attrs->min_hw_wq_size << shift;
+-	else if (*srqdepth > uk_attrs->max_hw_srq_quanta)
++	if (hw_quanta < min_hw_quanta)
++		hw_quanta = min_hw_quanta;
++	else if (hw_quanta > uk_attrs->max_hw_srq_quanta)
+ 		return -EINVAL;
+ 
++	*srqdepth = hw_quanta;
+ 	return 0;
+ }
+ 
 -- 
-2.51.0
+2.53.0
 
 
 
