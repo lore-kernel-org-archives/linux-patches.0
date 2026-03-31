@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D8F3F7867;
-	Tue, 31 Mar 2026 16:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E19B3F8E04;
+	Tue, 31 Mar 2026 16:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976096; cv=none; b=ZOoY02hl+UMgyQBV4Myu2w3p2YS4LRmlulTFXVshs2fM+KMlgcAf0x98Fh+/9d7AGBF7d7ZY0hTVlEHWqmj4hiOW6pTqykfwMXiRO4foDoyWJil/9qNQRrO26iB+5VOeJTMFTMF2N8hxvZvRwC6brDtiY+a+CoVvydrsMmk9hTE=
+	t=1774976099; cv=none; b=WsO6OJ9pP+K4t9axwn/Kq1J5WT7CbZyDP+PqjtJxyeu1LGNSKG5Zy64wUdKSvBdjV9JtvZ1ND34hmP/WRo4q8sfqH4VmmW9AL4T6hRBxHI1E72ouNAaxKmTRrtwvio7fW21I8kX3ZNcTYtRhUars0vzy6H3QuETHI99Ra4VN6l8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976096; c=relaxed/simple;
-	bh=AaJC0taeB7rOZ3yr/JIrjRjZxq2szyHWF32yQPnqnP4=;
+	s=arc-20240116; t=1774976099; c=relaxed/simple;
+	bh=b2kWUpoZqOqd7rqFTsAAvl23QKewzGh0F3thdjC8w/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jo/CjMbV5cIzxPzJUV+iDGUyBePiu5dJOPtWCCaWC7HAorDbhW7NlM9T35xiqlEJIJYNSlr9I+bKJULZhCVPu5tI41kTdQwTsyswa9/5StWvsAbRNt9AeJVxitnx1o55QfaOKnHL3b69rQb4u7tI5KSeeM8YDDv911K9O4YjpA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=drI6aNn3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hGHR49SeihWtW5Ty+4iwUDOzReNOBClknooUkg3xz8Gw9VDtRgocwZowQdVqdkyeVSDncDH/tE9MRxKDdDYo5iEZ1Oi/1XyMPrLnINun87wCuV6rNVpyGeu1EIjWdSU8OU4CTQSyze0WTvqpX++YtKFvLgAkQUVNOtHML1D98m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKi58gVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drI6aNn3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31365C19423;
-	Tue, 31 Mar 2026 16:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKi58gVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB66C19423;
+	Tue, 31 Mar 2026 16:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976096;
-	bh=AaJC0taeB7rOZ3yr/JIrjRjZxq2szyHWF32yQPnqnP4=;
+	s=korg; t=1774976099;
+	bh=b2kWUpoZqOqd7rqFTsAAvl23QKewzGh0F3thdjC8w/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=drI6aNn3sYdSqJVsseW+cdvoePQcxLHS1rtXKa/k9U+3aKh7BJNCmBvw7UgBdxaAz
-	 IYRNMB2/YGaiOqfmnPCcKUOY/Bqu6ZXr8tRPT2Ihfq8TkPGDUlTpKjgJ01ptUMJI9S
-	 U+C/+QxyinqE0rN8Jn1h61slM5dfuWr6KhKuCkBM=
+	b=lKi58gVsbdZbwG09Ly9iPbANRbR7mqO0VKoH4m9lEW/E9rOerSyktWlE1cPwgXnbh
+	 Jn2QJoTHM51y5s5nPsajy1xCVMgwrmjVpw7aubLWVGKUCg0Jx7sAgIvmcHjedE2rq7
+	 l1rUBgWiMME4pV71hU3FWNfckJT2G+5zN9lO0ELE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 204/244] LoongArch: vDSO: Emit GNU_EH_FRAME correctly
-Date: Tue, 31 Mar 2026 18:22:34 +0200
-Message-ID: <20260331161749.285158688@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jianqiang kang <jianqkang@sina.cn>
+Subject: [PATCH 6.12 205/244] spi: tegra210-quad: Protect curr_xfer check in IRQ handler
+Date: Tue, 31 Mar 2026 18:22:35 +0200
+Message-ID: <20260331161749.322817589@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -50,208 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Breno Leitao <leitao@debian.org>
 
-commit e4878c37f6679fdea91b27a0f4e60a871f0b7bad upstream.
+[ Upstream commit edf9088b6e1d6d88982db7eb5e736a0e4fbcc09e ]
 
-With -fno-asynchronous-unwind-tables and --no-eh-frame-hdr (the default
-of the linker), the GNU_EH_FRAME segment (specified by vdso.lds.S) is
-empty.  This is not valid, as the current DWARF specification mandates
-the first byte of the EH frame to be the version number 1.  It causes
-some unwinders to complain, for example the ClickHouse query profiler
-spams the log with messages:
+Now that all other accesses to curr_xfer are done under the lock,
+protect the curr_xfer NULL check in tegra_qspi_isr_thread() with the
+spinlock. Without this protection, the following race can occur:
 
-    clickhouse-server[365854]: libunwind: unsupported .eh_frame_hdr
-    version: 127 at 7ffffffb0000
+  CPU0 (ISR thread)              CPU1 (timeout path)
+  ----------------               -------------------
+  if (!tqspi->curr_xfer)
+    // sees non-NULL
+                                 spin_lock()
+                                 tqspi->curr_xfer = NULL
+                                 spin_unlock()
+  handle_*_xfer()
+    spin_lock()
+    t = tqspi->curr_xfer  // NULL!
+    ... t->len ...        // NULL dereference!
 
-Here "127" is just the byte located at the p_vaddr (0, i.e. the
-beginning of the vDSO) of the empty GNU_EH_FRAME segment. Cross-
-checking with /proc/365854/maps has also proven 7ffffffb0000 is the
-start of vDSO in the process VM image.
+With this patch, all curr_xfer accesses are now properly synchronized.
 
-In LoongArch the -fno-asynchronous-unwind-tables option seems just a
-MIPS legacy, and MIPS only uses this option to satisfy the MIPS-specific
-"genvdso" program, per the commit cfd75c2db17e ("MIPS: VDSO: Explicitly
-use -fno-asynchronous-unwind-tables").  IIRC it indicates some inherent
-limitation of the MIPS ELF ABI and has nothing to do with LoongArch.  So
-we can simply flip it over to -fasynchronous-unwind-tables and pass
---eh-frame-hdr for linking the vDSO, allowing the profilers to unwind the
-stack for statistics even if the sample point is taken when the PC is in
-the vDSO.
+Although all accesses to curr_xfer are done under the lock, in
+tegra_qspi_isr_thread() it checks for NULL, releases the lock and
+reacquires it later in handle_cpu_based_xfer()/handle_dma_based_xfer().
+There is a potential for an update in between, which could cause a NULL
+pointer dereference.
 
-However simply adjusting the options above would exploit an issue: when
-the libgcc unwinder saw the invalid GNU_EH_FRAME segment, it silently
-falled back to a machine-specific routine to match the code pattern of
-rt_sigreturn() and extract the registers saved in the sigframe if the
-code pattern is matched.  As unwinding from signal handlers is vital for
-libgcc to support pthread cancellation etc., the fall-back routine had
-been silently keeping the LoongArch Linux systems functioning since
-Linux 5.19.  But when we start to emit GNU_EH_FRAME with the correct
-format, fall-back routine will no longer be used and libgcc will fail
-to unwind the sigframe, and unwinding from signal handlers will no
-longer work, causing dozens of glibc test failures.  To make it possible
-to unwind from signal handlers again, it's necessary to code the unwind
-info in __vdso_rt_sigreturn via .cfi_* directives.
+To handle this, add a NULL check inside the handlers after acquiring
+the lock. This ensures that if the timeout path has already cleared
+curr_xfer, the handler will safely return without dereferencing the
+NULL pointer.
 
-The offsets in the .cfi_* directives depend on the layout of struct
-sigframe, notably the offset of sigcontext in the sigframe.  To use the
-offset in the assembly file, factor out struct sigframe into a header to
-allow asm-offsets.c to output the offset for assembly.
-
-To work around a long-term issue in the libgcc unwinder (the pc is
-unconditionally substracted by 1: doing so is technically incorrect for
-a signal frame), a nop instruction is included with the two real
-instructions in __vdso_rt_sigreturn in the same FDE PC range.  The same
-hack has been used on x86 for a long time.
-
-Cc: stable@vger.kernel.org
-Fixes: c6b99bed6b8f ("LoongArch: Add VDSO and VSYSCALL support")
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: b4e002d8a7ce ("spi: tegra210-quad: Fix timeout handling")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260126-tegra_xfer-v2-6-6d2115e4f387@debian.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ Minor conflict resolved. ]
+Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/linkage.h  |   36 ++++++++++++++++++++++++++++++++++
- arch/loongarch/include/asm/sigframe.h |    9 ++++++++
- arch/loongarch/kernel/asm-offsets.c   |    2 +
- arch/loongarch/kernel/signal.c        |    6 -----
- arch/loongarch/vdso/Makefile          |    4 +--
- arch/loongarch/vdso/sigreturn.S       |    6 ++---
- 6 files changed, 53 insertions(+), 10 deletions(-)
- create mode 100644 arch/loongarch/include/asm/sigframe.h
+ drivers/spi/spi-tegra210-quad.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/arch/loongarch/include/asm/linkage.h
-+++ b/arch/loongarch/include/asm/linkage.h
-@@ -41,4 +41,40 @@
- 	.cfi_endproc;					\
- 	SYM_END(name, SYM_T_NONE)
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -1351,6 +1351,11 @@ static irqreturn_t handle_cpu_based_xfer
+ 	spin_lock_irqsave(&tqspi->lock, flags);
+ 	t = tqspi->curr_xfer;
  
-+/*
-+ * This is for the signal handler trampoline, which is used as the return
-+ * address of the signal handlers in userspace instead of called normally.
-+ * The long standing libgcc bug https://gcc.gnu.org/PR124050 requires a
-+ * nop between .cfi_startproc and the actual address of the trampoline, so
-+ * we cannot simply use SYM_FUNC_START.
-+ *
-+ * This wrapper also contains all the .cfi_* directives for recovering
-+ * the content of the GPRs and the "return address" (where the rt_sigreturn
-+ * syscall will jump to), assuming there is a struct rt_sigframe (where
-+ * a struct sigcontext containing those information we need to recover) at
-+ * $sp.  The "DWARF for the LoongArch(TM) Architecture" manual states
-+ * column 0 is for $zero, but it does not make too much sense to
-+ * save/restore the hardware zero register.  Repurpose this column here
-+ * for the return address (here it's not the content of $ra we cannot use
-+ * the default column 3).
-+ */
-+#define SYM_SIGFUNC_START(name)				\
-+	.cfi_startproc;					\
-+	.cfi_signal_frame;				\
-+	.cfi_def_cfa 3, RT_SIGFRAME_SC;			\
-+	.cfi_return_column 0;				\
-+	.cfi_offset 0, SC_PC;				\
-+							\
-+	.irp num, 1,  2,  3,  4,  5,  6,  7,  8, 	\
-+		  9,  10, 11, 12, 13, 14, 15, 16,	\
-+		  17, 18, 19, 20, 21, 22, 23, 24,	\
-+		  25, 26, 27, 28, 29, 30, 31;		\
-+	.cfi_offset \num, SC_REGS + \num * SZREG;	\
-+	.endr;						\
-+							\
-+	nop;						\
-+	SYM_START(name, SYM_L_GLOBAL, SYM_A_ALIGN)
++	if (!t) {
++		spin_unlock_irqrestore(&tqspi->lock, flags);
++		return IRQ_HANDLED;
++	}
 +
-+#define SYM_SIGFUNC_END(name) SYM_FUNC_END(name)
-+
- #endif
---- /dev/null
-+++ b/arch/loongarch/include/asm/sigframe.h
-@@ -0,0 +1,9 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
-+
-+#include <asm/siginfo.h>
-+#include <asm/ucontext.h>
-+
-+struct rt_sigframe {
-+	struct siginfo rs_info;
-+	struct ucontext rs_uctx;
-+};
---- a/arch/loongarch/kernel/asm-offsets.c
-+++ b/arch/loongarch/kernel/asm-offsets.c
-@@ -16,6 +16,7 @@
- #include <asm/ptrace.h>
- #include <asm/processor.h>
- #include <asm/ftrace.h>
-+#include <asm/sigframe.h>
+ 	if (tqspi->tx_status ||  tqspi->rx_status) {
+ 		tegra_qspi_handle_error(tqspi);
+ 		complete(&tqspi->xfer_completion);
+@@ -1419,6 +1424,11 @@ static irqreturn_t handle_dma_based_xfer
+ 	spin_lock_irqsave(&tqspi->lock, flags);
+ 	t = tqspi->curr_xfer;
  
- static void __used output_ptreg_defines(void)
++	if (!t) {
++		spin_unlock_irqrestore(&tqspi->lock, flags);
++		return IRQ_HANDLED;
++	}
++
+ 	if (err) {
+ 		tegra_qspi_dma_unmap_xfer(tqspi, t);
+ 		tegra_qspi_handle_error(tqspi);
+@@ -1457,6 +1467,7 @@ exit:
+ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
  {
-@@ -219,6 +220,7 @@ static void __used output_sc_defines(voi
- 	COMMENT("Linux sigcontext offsets.");
- 	OFFSET(SC_REGS, sigcontext, sc_regs);
- 	OFFSET(SC_PC, sigcontext, sc_pc);
-+	OFFSET(RT_SIGFRAME_SC, rt_sigframe, rs_uctx.uc_mcontext);
- 	BLANK();
- }
+ 	struct tegra_qspi *tqspi = context_data;
++	unsigned long flags;
+ 	u32 status;
  
---- a/arch/loongarch/kernel/signal.c
-+++ b/arch/loongarch/kernel/signal.c
-@@ -35,6 +35,7 @@
- #include <asm/cpu-features.h>
- #include <asm/fpu.h>
- #include <asm/lbt.h>
-+#include <asm/sigframe.h>
- #include <asm/ucontext.h>
- #include <asm/vdso.h>
+ 	/*
+@@ -1474,7 +1485,9 @@ static irqreturn_t tegra_qspi_isr_thread
+ 	 * If no transfer is in progress, check if this was a real interrupt
+ 	 * that the timeout handler already processed, or a spurious one.
+ 	 */
++	spin_lock_irqsave(&tqspi->lock, flags);
+ 	if (!tqspi->curr_xfer) {
++		spin_unlock_irqrestore(&tqspi->lock, flags);
+ 		/* Spurious interrupt - transfer not ready */
+ 		if (!(status & QSPI_RDY))
+ 			return IRQ_NONE;
+@@ -1491,7 +1504,14 @@ static irqreturn_t tegra_qspi_isr_thread
+ 		tqspi->rx_status = tqspi->status_reg & (QSPI_RX_FIFO_OVF | QSPI_RX_FIFO_UNF);
  
-@@ -51,11 +52,6 @@
- #define lock_lbt_owner()	({ preempt_disable(); pagefault_disable(); })
- #define unlock_lbt_owner()	({ pagefault_enable(); preempt_enable(); })
+ 	tegra_qspi_mask_clear_irq(tqspi);
++	spin_unlock_irqrestore(&tqspi->lock, flags);
  
--struct rt_sigframe {
--	struct siginfo rs_info;
--	struct ucontext rs_uctx;
--};
--
- struct _ctx_layout {
- 	struct sctx_info *addr;
- 	unsigned int size;
---- a/arch/loongarch/vdso/Makefile
-+++ b/arch/loongarch/vdso/Makefile
-@@ -21,7 +21,7 @@ cflags-vdso := $(ccflags-vdso) \
- 	$(filter -W%,$(filter-out -Wa$(comma)%,$(KBUILD_CFLAGS))) \
- 	-std=gnu11 -O2 -g -fno-strict-aliasing -fno-common -fno-builtin \
- 	-fno-stack-protector -fno-jump-tables -DDISABLE_BRANCH_PROFILING \
--	$(call cc-option, -fno-asynchronous-unwind-tables) \
-+	$(call cc-option, -fasynchronous-unwind-tables) \
- 	$(call cc-option, -fno-stack-protector)
- aflags-vdso := $(ccflags-vdso) \
- 	-D__ASSEMBLY__ -Wa,-gdwarf-2
-@@ -36,7 +36,7 @@ endif
++	/*
++	 * Lock is released here but handlers safely re-check curr_xfer under
++	 * lock before dereferencing.
++	 * DMA handler also needs to sleep in wait_for_completion_*(), which
++	 * cannot be done while holding spinlock.
++	 */
+ 	if (!tqspi->is_curr_dma_xfer)
+ 		return handle_cpu_based_xfer(tqspi);
  
- # VDSO linker flags.
- ldflags-y := -Bsymbolic --no-undefined -soname=linux-vdso.so.1 \
--	$(filter -E%,$(KBUILD_CFLAGS)) -shared --build-id -T
-+	$(filter -E%,$(KBUILD_CFLAGS)) -shared --build-id --eh-frame-hdr -T
- 
- #
- # Shared build commands.
---- a/arch/loongarch/vdso/sigreturn.S
-+++ b/arch/loongarch/vdso/sigreturn.S
-@@ -12,13 +12,13 @@
- 
- #include <asm/regdef.h>
- #include <asm/asm.h>
-+#include <asm/asm-offsets.h>
- 
- 	.section	.text
--	.cfi_sections	.debug_frame
- 
--SYM_FUNC_START(__vdso_rt_sigreturn)
-+SYM_SIGFUNC_START(__vdso_rt_sigreturn)
- 
- 	li.w	a7, __NR_rt_sigreturn
- 	syscall	0
- 
--SYM_FUNC_END(__vdso_rt_sigreturn)
-+SYM_SIGFUNC_END(__vdso_rt_sigreturn)
 
 
