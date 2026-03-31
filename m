@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4D53E8C50;
-	Tue, 31 Mar 2026 16:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D47D2C15B2;
+	Tue, 31 Mar 2026 16:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975816; cv=none; b=CSsvWqRxyevQfo1YazRdz7iUPoGexXdeg1Bg90cMbtjFHpdz5Y6IgLi/LO0IlLSXCVZS4to/bklYXvQCke0/MSNe2jJW3cP/nbAtxwY4PtsgPipBXBCxXRKR0epluniznbrNtgFdKQgV2NQccbiaxwlsBCMkggRBiHcgbkdCHYg=
+	t=1774975819; cv=none; b=TRlns7IZtOI7Qk31Jiu7HPpxeCEU1AjJFOM7PP5am/yv59/OWjcNGAwuGbzwdXyBaKJSw9it/dMmVLNeyP0g8GA+wHomJWWj5k4jToI1GJVK5o5s4szv2u71/COIjzv3nmgLi2Mb+xGfQwhfMuUQbUC8IhwUbwFeWu4yqUTiOiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975816; c=relaxed/simple;
-	bh=Z0VkR3/1egvW2hGgD/GeIwvL6PfeCQd8uwnR7ugnksE=;
+	s=arc-20240116; t=1774975819; c=relaxed/simple;
+	bh=A4X22uY5dYjh/HFZXkbLFg10dpuqfpoT+hUJIY4NwB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q75aaJzHZNoCE5Y227oPGE0eNwCj0Abccj5lUt4NDUCCmjs+M35WSs7GUXY241lT++rAaa3z3NNZ/5RP5B7rCEOrMrN+O6NpN4mLa/NyaTfcW27lMWTMNAcQRWnz+VgSw1IHwzEEVURBgyb6RoCm5QTJGLXKqffsAEmAzSvoSE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7eDtUvG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nL6xA9kjNdo8VszjRCSZm+COUQS7ux5JizVHdJAgFsB6ftLT+dzzeudIFjPCKjTjj4Y6aCBcIAgrZXG+y8sLDxhAzWsruAqhzq3mmeI/noXNgg6babVwwO2A8OjTkIio9AMWpD6Tpj/7M8kEwKEoK4QM5DfjfQq7NgK0S6NAUDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UzU/PyHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7eDtUvG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC130C19423;
-	Tue, 31 Mar 2026 16:50:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzU/PyHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83670C19423;
+	Tue, 31 Mar 2026 16:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975816;
-	bh=Z0VkR3/1egvW2hGgD/GeIwvL6PfeCQd8uwnR7ugnksE=;
+	s=korg; t=1774975818;
+	bh=A4X22uY5dYjh/HFZXkbLFg10dpuqfpoT+hUJIY4NwB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7eDtUvGBSmFFCrS5hv5MUAx5goZUd8+TtQetvDe4reqHJ3tdg8MYLEmCNSpGQrrO
-	 oV8TIkEX8VaG0kFIRyNenx372vrkrOa9OfsovWAgKRW+OnNlrYHATnw0cQeL5NY4Z9
-	 u22FChYOsW6ZpBbJcjsH/z6auGfmJxLtacK3kcDc=
+	b=UzU/PyHPkA3lnc5eWyt7SZCQZkBCtLdKIpOqxfACaICehvfd7NCV4XEYp42/BjBxu
+	 UyeiKhiFecsoylVMZI7kq4MQCVa2Y5Plq09ZElUGRqIEzTcnPFUDQbLI3liJxzMq6Z
+	 UqquK9KGW0PFqT3Ya/mFgQuBiw5lu7iT66Zbu4xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Tang <tpluszz77@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 070/244] net/smc: fix double-free of smc_spd_priv when tee() duplicates splice pipe buffer
-Date: Tue, 31 Mar 2026 18:20:20 +0200
-Message-ID: <20260331161744.273123544@linuxfoundation.org>
+Subject: [PATCH 6.12 097/244] Bluetooth: btusb: clamp SCO altsetting table indices
+Date: Tue, 31 Mar 2026 18:20:47 +0200
+Message-ID: <20260331161745.257577621@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,98 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Tang <tpluszz77@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 24dd586bb4cbba1889a50abe74143817a095c1c9 ]
+[ Upstream commit 129fa608b6ad08b8ab7178eeb2ec272c993aaccc ]
 
-smc_rx_splice() allocates one smc_spd_priv per pipe_buffer and stores
-the pointer in pipe_buffer.private.  The pipe_buf_operations for these
-buffers used .get = generic_pipe_buf_get, which only increments the page
-reference count when tee(2) duplicates a pipe buffer.  The smc_spd_priv
-pointer itself was not handled, so after tee() both the original and the
-cloned pipe_buffer share the same smc_spd_priv *.
+btusb_work() maps the number of active SCO links to USB alternate
+settings through a three-entry lookup table when CVSD traffic uses
+transparent voice settings. The lookup currently indexes alts[] with
+data->sco_num - 1 without first constraining sco_num to the number of
+available table entries.
 
-When both pipes are subsequently released, smc_rx_pipe_buf_release() is
-called twice against the same object:
+While the table only defines alternate settings for up to three SCO
+links, data->sco_num comes from hci_conn_num() and is used directly.
+Cap the lookup to the last table entry before indexing it so the
+driver keeps selecting the highest supported alternate setting without
+reading past alts[].
 
-  1st call: kfree(priv)  sock_put(sk)  smc_rx_update_cons()  [correct]
-  2nd call: kfree(priv)  sock_put(sk)  smc_rx_update_cons()  [UAF]
-
-KASAN reports a slab-use-after-free in smc_rx_pipe_buf_release(), which
-then escalates to a NULL-pointer dereference and kernel panic via
-smc_rx_update_consumer() when it chases the freed priv->smc pointer:
-
-  BUG: KASAN: slab-use-after-free in smc_rx_pipe_buf_release+0x78/0x2a0
-  Read of size 8 at addr ffff888004a45740 by task smc_splice_tee_/74
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x53/0x70
-   print_report+0xce/0x650
-   kasan_report+0xc6/0x100
-   smc_rx_pipe_buf_release+0x78/0x2a0
-   free_pipe_info+0xd4/0x130
-   pipe_release+0x142/0x160
-   __fput+0x1c6/0x490
-   __x64_sys_close+0x4f/0x90
-   do_syscall_64+0xa6/0x1a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000020
-  RIP: 0010:smc_rx_update_consumer+0x8d/0x350
-  Call Trace:
-   <TASK>
-   smc_rx_pipe_buf_release+0x121/0x2a0
-   free_pipe_info+0xd4/0x130
-   pipe_release+0x142/0x160
-   __fput+0x1c6/0x490
-   __x64_sys_close+0x4f/0x90
-   do_syscall_64+0xa6/0x1a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Kernel panic - not syncing: Fatal exception
-
-Beyond the memory-safety problem, duplicating an SMC splice buffer is
-semantically questionable: smc_rx_update_cons() would advance the
-consumer cursor twice for the same data, corrupting receive-window
-accounting.  A refcount on smc_spd_priv could fix the double-free, but
-the cursor-accounting issue would still need to be addressed separately.
-
-The .get callback is invoked by both tee(2) and splice_pipe_to_pipe()
-for partial transfers; both will now return -EFAULT.  Users who need
-to duplicate SMC socket data must use a copy-based read path.
-
-Fixes: 9014db202cb7 ("smc: add support for splice()")
-Signed-off-by: Qi Tang <tpluszz77@gmail.com>
-Link: https://patch.msgid.link/20260318064847.23341-1-tpluszz77@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: baac6276c0a9 ("Bluetooth: btusb: handle mSBC audio over USB Endpoints")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_rx.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
-index 79047721df511..e7a6c2602e786 100644
---- a/net/smc/smc_rx.c
-+++ b/net/smc/smc_rx.c
-@@ -135,9 +135,16 @@ static void smc_rx_pipe_buf_release(struct pipe_inode_info *pipe,
- 	sock_put(sk);
- }
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 9d3236321056b..b8bf4dfea11c2 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2350,8 +2350,11 @@ static void btusb_work(struct work_struct *work)
+ 		if (data->air_mode == HCI_NOTIFY_ENABLE_SCO_CVSD) {
+ 			if (hdev->voice_setting & 0x0020) {
+ 				static const int alts[3] = { 2, 4, 5 };
++				unsigned int sco_idx;
  
-+static bool smc_rx_pipe_buf_get(struct pipe_inode_info *pipe,
-+				struct pipe_buffer *buf)
-+{
-+	/* smc_spd_priv in buf->private is not shareable; disallow cloning. */
-+	return false;
-+}
-+
- static const struct pipe_buf_operations smc_pipe_ops = {
- 	.release = smc_rx_pipe_buf_release,
--	.get = generic_pipe_buf_get
-+	.get	 = smc_rx_pipe_buf_get,
- };
- 
- static void smc_rx_spd_release(struct splice_pipe_desc *spd,
+-				new_alts = alts[data->sco_num - 1];
++				sco_idx = min_t(unsigned int, data->sco_num - 1,
++						ARRAY_SIZE(alts) - 1);
++				new_alts = alts[sco_idx];
+ 			} else {
+ 				new_alts = data->sco_num;
+ 			}
 -- 
 2.51.0
 
