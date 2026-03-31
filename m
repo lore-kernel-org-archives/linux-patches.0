@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE80423149;
-	Tue, 31 Mar 2026 16:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F013F8E04;
+	Tue, 31 Mar 2026 16:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975997; cv=none; b=FjO3zVMrhNsDYADe5tpN9SMXZzueWVxhyCEmnx9T9yYh38EQPBR7nvCIBADWDPeMxSVbuDrX0hMV9vqvd1oSNByp7TED4cs22grmrFBqmhJe9Gp7SLei5MYKToWvU+VjdHGn6ejXl0q4JHLrSGPMdYtTxJfYdlVJcTGtguEIGrw=
+	t=1774976000; cv=none; b=dd2oXDZXR9XBw/eBMnplDJb8UTxlQbdji4KfpcIP9QD+U82uEUWOPlihHIiVFCA2axOoNdHLoQsNAwlj8rzlArLHhpcI5MkNoHC9EiKmBUPeIRkynV/C61DE4isyXjAHBfGlIJi1kEYOkogbiTeTU1JDl0oynPnv6Vr+kUpqNpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975997; c=relaxed/simple;
-	bh=ylik5fv+G/cgqaIgst/BK3Bpg1nfSJ4hs7nUIWPVeak=;
+	s=arc-20240116; t=1774976000; c=relaxed/simple;
+	bh=rnQspb9WcOul58Fe4uJ9D6FbtaYmKoBHHPRnA9DIAzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fXdcXdlWcUrkuBWKrxDQmFI5AuZRjyARiWMHmVy/FCMIzBWMv3jzUO8ToJaoHDDdUuMcTClOShKGKFQSJH1mXxFPR6yZHfAkx06rWQjExEuurmCWuyDyoMOSucCFINV9vMYexle11O0MNYNJlhQ6WJNkBwZYArbakp37tssKBsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHlXYU9D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q9zJ6OI7KBxs/DDH7PP4nQlTNOSxIfHhhwZmdiikCRDzmTYHv1KLl2sj9g/yfemxyHuGE7siIB5D8RRWlKNxk7bxS+/DchReZQI0ilkY5w9hdo3kn2zCVMa1NDYqcPaRvphkG3ibuYZf3f+07lqPaaKvmOL0ZWxDvGRSSzrWn7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePzMhYr3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHlXYU9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBFC2C19423;
-	Tue, 31 Mar 2026 16:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePzMhYr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B96C19423;
+	Tue, 31 Mar 2026 16:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975997;
-	bh=ylik5fv+G/cgqaIgst/BK3Bpg1nfSJ4hs7nUIWPVeak=;
+	s=korg; t=1774975999;
+	bh=rnQspb9WcOul58Fe4uJ9D6FbtaYmKoBHHPRnA9DIAzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YHlXYU9Dcqk10XwT3K6+Ktu15ITj1a6VCSylhZClMUWW0wkYOzzzSQ/Da3lbov7cM
-	 cu28qopxb4DwWK4A/KFLyQnLDIJ0zjuGtgOlwmX14SIGdXztgGLsTqFUdJBmw7MLpG
-	 1MttIkN3uXTFsq9XrgDzl6BJbfPJzkpOlqtIvAPo=
+	b=ePzMhYr3NjPb2jBSTvmkE5sF8dHdf6fbB0DHYrheGZzd9aOTuVk81qHNmq3UwZX6R
+	 JN6QP1mXy+phuN47eOmIBok9dbcZH9SinoRReUeoA7WCJfZQ9YlWCtUwMo140iHAK/
+	 cfaw4nt/2pjPmswg6WXDCgZ1WjnaRnsz8WVys+yM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 6.12 167/244] irqchip/qcom-mpm: Add missing mailbox TX done acknowledgment
-Date: Tue, 31 Mar 2026 18:21:57 +0200
-Message-ID: <20260331161747.930663474@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 141/244] ksmbd: do not expire session on binding failure
+Date: Tue, 31 Mar 2026 18:21:31 +0200
+Message-ID: <20260331161746.976665039@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,46 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jassi Brar <jassisinghbrar@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit cfe02147e86307a17057ee4e3604f5f5919571d2 upstream.
+commit 9bbb19d21ded7d78645506f20d8c44895e3d0fb9 upstream.
 
-The mbox_client for qcom-mpm sends NULL doorbell messages via
-mbox_send_message() but never signals TX completion.
+When a multichannel session binding request fails (e.g. wrong password),
+the error path unconditionally sets sess->state = SMB2_SESSION_EXPIRED.
+However, during binding, sess points to the target session looked up via
+ksmbd_session_lookup_slowpath() -- which belongs to another connection's
+user. This allows a remote attacker to invalidate any active session by
+simply sending a binding request with a wrong password (DoS).
 
-Set knows_txdone=true and call mbox_client_txdone() after a successful
-send, matching the pattern used by other Qualcomm mailbox clients (smp2p,
-smsm, qcom_aoss etc).
+Fix this by skipping session expiration when the failed request was
+a binding attempt, since the session does not belong to the current
+connection. The reference taken by ksmbd_session_lookup_slowpath() is
+still correctly released via ksmbd_user_session_put().
 
-Fixes: a6199bb514d8a6 "irqchip: Add Qualcomm MPM controller driver"
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260322171533.608436-1-jassisinghbrar@gmail.com
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-qcom-mpm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/server/smb2pdu.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-qcom-mpm.c
-+++ b/drivers/irqchip/irq-qcom-mpm.c
-@@ -306,6 +306,8 @@ static int mpm_pd_power_off(struct gener
- 	if (ret < 0)
- 		return ret;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1945,8 +1945,14 @@ out_err:
+ 			if (sess->user && sess->user->flags & KSMBD_USER_FLAG_DELAY_SESSION)
+ 				try_delay = true;
  
-+	mbox_client_txdone(priv->mbox_chan, 0);
-+
- 	return 0;
- }
- 
-@@ -434,6 +436,7 @@ static int qcom_mpm_init(struct device_n
- 	}
- 
- 	priv->mbox_client.dev = dev;
-+	priv->mbox_client.knows_txdone = true;
- 	priv->mbox_chan = mbox_request_channel(&priv->mbox_client, 0);
- 	if (IS_ERR(priv->mbox_chan)) {
- 		ret = PTR_ERR(priv->mbox_chan);
+-			sess->last_active = jiffies;
+-			sess->state = SMB2_SESSION_EXPIRED;
++			/*
++			 * For binding requests, session belongs to another
++			 * connection. Do not expire it.
++			 */
++			if (!(req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
++				sess->last_active = jiffies;
++				sess->state = SMB2_SESSION_EXPIRED;
++			}
+ 			ksmbd_user_session_put(sess);
+ 			work->sess = NULL;
+ 			if (try_delay) {
 
 
