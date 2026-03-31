@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CCB3DE431;
-	Tue, 31 Mar 2026 16:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D042423A8A;
+	Tue, 31 Mar 2026 16:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975893; cv=none; b=Q9hX6eIhWG+A/c4TA7kqsa2rl1ikP3jEhdJGptRVYMBoA2ynJilH1Peb31OG1+qHYRtetcPAveuoYSAc7zcq2gq6sJuZKXTsFCGiRKmtgEOzqmF5xkhfCiZyL92+z/pwzkHOtb/LE6V69RgrXPU1cPKxqtGUHshBljx2ttVygLI=
+	t=1774975896; cv=none; b=SySVfrRRni+agC3O7O/sz5rsgLluma1Z5RalwZ9bXlbkU//ouOX/JXIaC/McBM8SsefAN9oOqY/dMttrCNF8MCmeMozfkAoQppmo2FLCbXmkgk8e2JNXsy8qIyyZJWYB5L/9XSN2SZ0hgVREjscEyK5HE51+q9GCVqNEQLqROS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975893; c=relaxed/simple;
-	bh=Eg6hMMAi0trLHJGjok19s/vS8MreqYo36eKhq1B+oTw=;
+	s=arc-20240116; t=1774975896; c=relaxed/simple;
+	bh=cIL/Dy/AIdLDfP3mpLHo3+nvhS1aA+TeHi8ZNg/wggw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mhOv9yYgRc1gMRQ7RaDe5Tis7V49dZCPlW3dhLSjqO06voxeIhvZxYBSTBr3qQP28r789V0Hyt8wxzZHEsuLkkvcWAKu4GvXoDXP6NCpknOngEdxuopnnWvdntd1HOoFMm/YehTDLG3IXDgN79WUoReDWF2MPVRuAby3oQAi2RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUgdQH5S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qSzKhP4G/cH5pNRisLt1kPGDBrd9t5JMigMsMw56ke6wyrP0h1Q9+5Ur92dGm36QfpodWt4jnPNkZv/wwUPCyGWtMQTSLWe84H03nlb8jnwuPuRyrVYr5JPLY86Fyd87DXsxQ1SlLLKyfAFde8pXicZvH8CUaGJrZbryPUlfiMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCX+S2VX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUgdQH5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE5BC19423;
-	Tue, 31 Mar 2026 16:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCX+S2VX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C0BC2BCB1;
+	Tue, 31 Mar 2026 16:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975893;
-	bh=Eg6hMMAi0trLHJGjok19s/vS8MreqYo36eKhq1B+oTw=;
+	s=korg; t=1774975896;
+	bh=cIL/Dy/AIdLDfP3mpLHo3+nvhS1aA+TeHi8ZNg/wggw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUgdQH5SdU7/gjsyl7gGw/WbmQAcWBNrx534XnaL5UuPCpPd4pQaEGBGpqmqOyAfp
-	 rJ4oX7btfaFJ8hiosExIsVZdtRKiJFbjn5uVq3NVV6zi8283GFtfKT+nQJMz/3XmXn
-	 fA4r9iW1pr1oED+WXgYnLONzigV43XBbjwS3RUZk=
+	b=QCX+S2VXYTB+LO5hi4ZuBxkG8lOANXi0mEY2MC8ceaL7TZGzXhdPOFO14k35j1Jq7
+	 cb3att7QevR9S+c09Kfk/nxCtJLNPIHsdnY/oNmReBVuuxE8i38TS6rsk9R+o1FqqJ
+	 wkGgjq40kMYVQFDR5YykoNV0yKRwbP3ISHFUPJ6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 127/244] hwmon: (adm1177) fix sysfs ABI violation and current unit conversion
-Date: Tue, 31 Mar 2026 18:21:17 +0200
-Message-ID: <20260331161746.347082061@linuxfoundation.org>
+Subject: [PATCH 6.12 128/244] hwmon: (pmbus/core) Fix various coding style issues
+Date: Tue, 31 Mar 2026 18:21:18 +0200
+Message-ID: <20260331161746.382506404@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -46,189 +45,202 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit bf08749a6abb6d1959bfdc0edc32c640df407558 ]
+[ Upstream commit 649b419f918fedf7213e590dba16e2fab5ea7259 ]
 
-The adm1177 driver exposes the current alert threshold through
-hwmon_curr_max_alarm. This violates the hwmon sysfs ABI, where
-*_alarm attributes are read-only status flags and writable thresholds
-must use currN_max.
+Checkpatch reports bad multi-line comments, bad multi-line alignments,
+missing blank lines after variable declarations, unnecessary empty lines,
+unnecessary spaces, and unnecessary braces. Fix most of the reported
+problems except for some multi-line alignment problems.
 
-The driver also stores the threshold internally in microamps, while
-currN_max is defined in milliamps. Convert the threshold accordingly
-on both the read and write paths.
-
-Widen the cached threshold and related calculations to 64 bits so
-that small shunt resistor values do not cause truncation or overflow.
-Also use 64-bit arithmetic for the mA/uA conversions, clamp writes
-to the range the hardware can represent, and propagate failures from
-adm1177_write_alert_thr() instead of silently ignoring them.
-
-Update the hwmon documentation to reflect the attribute rename and
-the correct units returned by the driver.
-
-Fixes: 09b08ac9e8d5 ("hwmon: (adm1177) Add ADM1177 Hot Swap Controller and Digital Power Monitor driver")
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20260325051246.28262-1-sanman.pradhan@hpe.com
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 805a5bd1c3f3 ("hwmon: (pmbus) Mark lowest/average/highest/rated attributes as read-only")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/adm1177.rst |  8 ++---
- drivers/hwmon/adm1177.c         | 54 +++++++++++++++++++--------------
- 2 files changed, 35 insertions(+), 27 deletions(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 41 +++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 24 deletions(-)
 
-diff --git a/Documentation/hwmon/adm1177.rst b/Documentation/hwmon/adm1177.rst
-index 1c85a2af92bf7..375f6d6e03a7d 100644
---- a/Documentation/hwmon/adm1177.rst
-+++ b/Documentation/hwmon/adm1177.rst
-@@ -27,10 +27,10 @@ for details.
- Sysfs entries
- -------------
- 
--The following attributes are supported. Current maxim attribute
-+The following attributes are supported. Current maximum attribute
- is read-write, all other attributes are read-only.
- 
--in0_input		Measured voltage in microvolts.
-+in0_input		Measured voltage in millivolts.
- 
--curr1_input		Measured current in microamperes.
--curr1_max_alarm		Overcurrent alarm in microamperes.
-+curr1_input		Measured current in milliamperes.
-+curr1_max		Overcurrent shutdown threshold in milliamperes.
-diff --git a/drivers/hwmon/adm1177.c b/drivers/hwmon/adm1177.c
-index 8b2c965480e3f..7888afe8dafd6 100644
---- a/drivers/hwmon/adm1177.c
-+++ b/drivers/hwmon/adm1177.c
-@@ -10,6 +10,8 @@
- #include <linux/hwmon.h>
- #include <linux/i2c.h>
- #include <linux/init.h>
-+#include <linux/math64.h>
-+#include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/regulator/consumer.h>
- 
-@@ -33,7 +35,7 @@
- struct adm1177_state {
- 	struct i2c_client	*client;
- 	u32			r_sense_uohm;
--	u32			alert_threshold_ua;
-+	u64			alert_threshold_ua;
- 	bool			vrange_high;
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index a68b0a98e8d4d..a8ffafc7411e3 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -41,8 +41,7 @@ struct pmbus_sensor {
+ 	enum pmbus_sensor_classes class;	/* sensor class */
+ 	bool update;		/* runtime sensor update needed */
+ 	bool convert;		/* Whether or not to apply linear/vid/direct */
+-	int data;		/* Sensor data.
+-				   Negative if there was a read error */
++	int data;		/* Sensor data; negative if there was a read error */
  };
+ #define to_pmbus_sensor(_attr) \
+ 	container_of(_attr, struct pmbus_sensor, attribute)
+@@ -189,11 +188,10 @@ static void pmbus_update_ts(struct i2c_client *client, bool write_op)
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	const struct pmbus_driver_info *info = data->info;
  
-@@ -48,7 +50,7 @@ static int adm1177_write_cmd(struct adm1177_state *st, u8 cmd)
+-	if (info->access_delay) {
++	if (info->access_delay)
+ 		data->access_time = ktime_get();
+-	} else if (info->write_delay && write_op) {
++	else if (info->write_delay && write_op)
+ 		data->write_time = ktime_get();
+-	}
  }
  
- static int adm1177_write_alert_thr(struct adm1177_state *st,
--				   u32 alert_threshold_ua)
-+				   u64 alert_threshold_ua)
+ int pmbus_set_page(struct i2c_client *client, int page, int phase)
+@@ -289,7 +287,6 @@ int pmbus_write_word_data(struct i2c_client *client, int page, u8 reg,
+ }
+ EXPORT_SYMBOL_NS_GPL(pmbus_write_word_data, PMBUS);
+ 
+-
+ static int pmbus_write_virt_reg(struct i2c_client *client, int page, int reg,
+ 				u16 word)
  {
- 	u64 val;
- 	int ret;
-@@ -91,8 +93,8 @@ static int adm1177_read(struct device *dev, enum hwmon_sensor_types type,
- 			*val = div_u64((105840000ull * dummy),
- 				       4096 * st->r_sense_uohm);
- 			return 0;
--		case hwmon_curr_max_alarm:
--			*val = st->alert_threshold_ua;
-+		case hwmon_curr_max:
-+			*val = div_u64(st->alert_threshold_ua, 1000);
- 			return 0;
- 		default:
- 			return -EOPNOTSUPP;
-@@ -126,9 +128,10 @@ static int adm1177_write(struct device *dev, enum hwmon_sensor_types type,
- 	switch (type) {
- 	case hwmon_curr:
- 		switch (attr) {
--		case hwmon_curr_max_alarm:
--			adm1177_write_alert_thr(st, val);
--			return 0;
-+		case hwmon_curr_max:
-+			val = clamp_val(val, 0,
-+					div_u64(105840000ULL, st->r_sense_uohm));
-+			return adm1177_write_alert_thr(st, (u64)val * 1000);
- 		default:
- 			return -EOPNOTSUPP;
- 		}
-@@ -156,7 +159,7 @@ static umode_t adm1177_is_visible(const void *data,
- 			if (st->r_sense_uohm)
- 				return 0444;
- 			return 0;
--		case hwmon_curr_max_alarm:
-+		case hwmon_curr_max:
- 			if (st->r_sense_uohm)
- 				return 0644;
- 			return 0;
-@@ -170,7 +173,7 @@ static umode_t adm1177_is_visible(const void *data,
+@@ -378,14 +375,14 @@ int pmbus_update_fan(struct i2c_client *client, int page, int id,
+ 	u8 to;
  
- static const struct hwmon_channel_info * const adm1177_info[] = {
- 	HWMON_CHANNEL_INFO(curr,
--			   HWMON_C_INPUT | HWMON_C_MAX_ALARM),
-+			   HWMON_C_INPUT | HWMON_C_MAX),
- 	HWMON_CHANNEL_INFO(in,
- 			   HWMON_I_INPUT),
- 	NULL
-@@ -192,7 +195,8 @@ static int adm1177_probe(struct i2c_client *client)
- 	struct device *dev = &client->dev;
- 	struct device *hwmon_dev;
- 	struct adm1177_state *st;
--	u32 alert_threshold_ua;
-+	u64 alert_threshold_ua;
-+	u32 prop;
- 	int ret;
+ 	from = _pmbus_read_byte_data(client, page,
+-				    pmbus_fan_config_registers[id]);
++				     pmbus_fan_config_registers[id]);
+ 	if (from < 0)
+ 		return from;
  
- 	st = devm_kzalloc(dev, sizeof(*st), GFP_KERNEL);
-@@ -208,22 +212,26 @@ static int adm1177_probe(struct i2c_client *client)
- 	if (device_property_read_u32(dev, "shunt-resistor-micro-ohms",
- 				     &st->r_sense_uohm))
- 		st->r_sense_uohm = 0;
--	if (device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
--				     &alert_threshold_ua)) {
--		if (st->r_sense_uohm)
--			/*
--			 * set maximum default value from datasheet based on
--			 * shunt-resistor
--			 */
--			alert_threshold_ua = div_u64(105840000000,
--						     st->r_sense_uohm);
--		else
--			alert_threshold_ua = 0;
-+	if (!device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
-+				      &prop)) {
-+		alert_threshold_ua = prop;
-+	} else if (st->r_sense_uohm) {
-+		/*
-+		 * set maximum default value from datasheet based on
-+		 * shunt-resistor
-+		 */
-+		alert_threshold_ua = div_u64(105840000000ULL,
-+					     st->r_sense_uohm);
-+	} else {
-+		alert_threshold_ua = 0;
+ 	to = (from & ~mask) | (config & mask);
+ 	if (to != from) {
+ 		rv = _pmbus_write_byte_data(client, page,
+-					   pmbus_fan_config_registers[id], to);
++					    pmbus_fan_config_registers[id], to);
+ 		if (rv < 0)
+ 			return rv;
  	}
- 	st->vrange_high = device_property_read_bool(dev,
- 						    "adi,vrange-high-enable");
--	if (alert_threshold_ua && st->r_sense_uohm)
--		adm1177_write_alert_thr(st, alert_threshold_ua);
-+	if (alert_threshold_ua && st->r_sense_uohm) {
-+		ret = adm1177_write_alert_thr(st, alert_threshold_ua);
-+		if (ret)
-+			return ret;
-+	}
+@@ -560,7 +557,7 @@ static int pmbus_get_fan_rate(struct i2c_client *client, int page, int id,
+ 	}
  
- 	ret = adm1177_write_cmd(st, ADM1177_CMD_V_CONT |
- 				    ADM1177_CMD_I_CONT |
+ 	config = _pmbus_read_byte_data(client, page,
+-				      pmbus_fan_config_registers[id]);
++				       pmbus_fan_config_registers[id]);
+ 	if (config < 0)
+ 		return config;
+ 
+@@ -785,7 +782,7 @@ static s64 pmbus_reg2data_linear(struct pmbus_data *data,
+ 
+ 	if (sensor->class == PSC_VOLTAGE_OUT) {	/* LINEAR16 */
+ 		exponent = data->exponent[sensor->page];
+-		mantissa = (u16) sensor->data;
++		mantissa = (u16)sensor->data;
+ 	} else {				/* LINEAR11 */
+ 		exponent = ((s16)sensor->data) >> 11;
+ 		mantissa = ((s16)((sensor->data & 0x7ff) << 5)) >> 5;
+@@ -1170,7 +1167,6 @@ static int pmbus_get_boolean(struct i2c_client *client, struct pmbus_boolean *b,
+ 		} else {
+ 			pmbus_clear_fault_page(client, page);
+ 		}
+-
+ 	}
+ 	if (s1 && s2) {
+ 		s64 v1, v2;
+@@ -1497,8 +1493,7 @@ struct pmbus_limit_attr {
+ 	u16 reg;		/* Limit register */
+ 	u16 sbit;		/* Alarm attribute status bit */
+ 	bool update;		/* True if register needs updates */
+-	bool low;		/* True if low limit; for limits with compare
+-				   functions only */
++	bool low;		/* True if low limit; for limits with compare functions only */
+ 	const char *attr;	/* Attribute name */
+ 	const char *alarm;	/* Alarm attribute name */
+ };
+@@ -2209,8 +2204,8 @@ static const u32 pmbus_fan_status_flags[] = {
+ 
+ /* Precondition: FAN_CONFIG_x_y and FAN_COMMAND_x must exist for the fan ID */
+ static int pmbus_add_fan_ctrl(struct i2c_client *client,
+-		struct pmbus_data *data, int index, int page, int id,
+-		u8 config)
++			      struct pmbus_data *data, int index, int page,
++			      int id, u8 config)
+ {
+ 	struct pmbus_sensor *sensor;
+ 
+@@ -2222,7 +2217,7 @@ static int pmbus_add_fan_ctrl(struct i2c_client *client,
+ 		return -ENOMEM;
+ 
+ 	if (!((data->info->func[page] & PMBUS_HAVE_PWM12) ||
+-			(data->info->func[page] & PMBUS_HAVE_PWM34)))
++	      (data->info->func[page] & PMBUS_HAVE_PWM34)))
+ 		return 0;
+ 
+ 	sensor = pmbus_add_sensor(data, "pwm", NULL, index, page,
+@@ -2888,7 +2883,7 @@ static void pmbus_notify(struct pmbus_data *data, int page, int reg, int flags)
+ }
+ 
+ static int _pmbus_get_flags(struct pmbus_data *data, u8 page, unsigned int *flags,
+-			   unsigned int *event, bool notify)
++			    unsigned int *event, bool notify)
+ {
+ 	int i, status;
+ 	const struct pmbus_status_category *cat;
+@@ -2917,7 +2912,6 @@ static int _pmbus_get_flags(struct pmbus_data *data, u8 page, unsigned int *flag
+ 
+ 		if (notify && status)
+ 			pmbus_notify(data, page, cat->reg, status);
+-
+ 	}
+ 
+ 	/*
+@@ -2968,7 +2962,6 @@ static int _pmbus_get_flags(struct pmbus_data *data, u8 page, unsigned int *flag
+ 		*event |= REGULATOR_EVENT_OVER_TEMP_WARN;
+ 	}
+ 
+-
+ 	return 0;
+ }
+ 
+@@ -3181,7 +3174,7 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+ }
+ 
+ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+-					 unsigned int selector)
++					unsigned int selector)
+ {
+ 	struct device *dev = rdev_get_dev(rdev);
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+@@ -3296,8 +3289,8 @@ static irqreturn_t pmbus_fault_handler(int irq, void *pdata)
+ {
+ 	struct pmbus_data *data = pdata;
+ 	struct i2c_client *client = to_i2c_client(data->dev);
+-
+ 	int i, status, event;
++
+ 	mutex_lock(&data->update_lock);
+ 	for (i = 0; i < data->info->pages; i++) {
+ 		_pmbus_get_flags(data, i, &status, &event, true);
+@@ -3405,7 +3398,7 @@ DEFINE_DEBUGFS_ATTRIBUTE(pmbus_debugfs_ops_status, pmbus_debugfs_get_status,
+ 			 NULL, "0x%04llx\n");
+ 
+ static ssize_t pmbus_debugfs_mfr_read(struct file *file, char __user *buf,
+-				       size_t count, loff_t *ppos)
++				      size_t count, loff_t *ppos)
+ {
+ 	int rc;
+ 	struct pmbus_debugfs_entry *entry = file->private_data;
+@@ -3724,8 +3717,8 @@ int pmbus_do_probe(struct i2c_client *client, struct pmbus_driver_info *info)
+ 
+ 	data->groups[0] = &data->group;
+ 	memcpy(data->groups + 1, info->groups, sizeof(void *) * groups_num);
+-	data->hwmon_dev = devm_hwmon_device_register_with_groups(dev,
+-					name, data, data->groups);
++	data->hwmon_dev = devm_hwmon_device_register_with_groups(dev, name,
++								 data, data->groups);
+ 	if (IS_ERR(data->hwmon_dev)) {
+ 		dev_err(dev, "Failed to register hwmon device\n");
+ 		return PTR_ERR(data->hwmon_dev);
 -- 
 2.53.0
 
