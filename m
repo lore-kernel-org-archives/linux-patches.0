@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45403E3C5C;
-	Tue, 31 Mar 2026 16:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC5C31714F;
+	Tue, 31 Mar 2026 16:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975385; cv=none; b=m+6yC/1yiWEIJzv20jks/aoqoI6uwyOHEw2wJrZWX0LUsx7Pli5/RK956mR4205YtQceEY/Y38x3B1ZHDPlE5y3iondnHNWeCUquHA86TS454zyCaumOZQC6G99PNpn6MOV5jwo0PJBuhJXeqza/fj/LSfpx+U6mPVgiydy6wHo=
+	t=1774975388; cv=none; b=SyJtju4M7dGpmB1MgxhNBpPs1FVF7V/ac2dGQLA50b4R/4sAuiAQ9jGw/Ffc5cbF9qX+uQrRu+1RGbvZSVz0Mb+ro4yKHTF0RsTR8qzimURqxl3Dn5dVvuaJWR/M6vd5wfbveNpGw8kqziwHD8DFTGQzRL214w3r856IaEh30/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975385; c=relaxed/simple;
-	bh=GBRzkanGS3fDO4+nxLD5tfZ/YlkAiuTT9G5NUdVEd6o=;
+	s=arc-20240116; t=1774975388; c=relaxed/simple;
+	bh=LjZToz8nTpKuLKxHFI0D4Rm1TzU4HjsdZBNj2UeEjTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UPPBJdujujcQ2hjnzHqWWeoI4ys7zXmKp6JrPJVTEsRZE8Hk76dFNi7zQkSpeqTLwPw8N6lfQDZbVqQgeM6BAq0J2pjBhayqF6I3YfOeBPvgiAPscOm11igN4a0hzIzMlXZ+LQvYF0mwrVAuEpPMWjm/zUs8VWpUQjqaJmuplwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxY42RDZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CmbgsbLuMmJhH2+On0nn4nWA9x/VpB1ueVp0Q5cMYvoPpURQWUPpkjSO9SEZ/0loV/VD7d03/FFzj4PNSAaXnLWQi4Ao2i7o6OXvepQX0t+gYCUPp3paL19H7zjdm1vCTVJ7Hap5q1xJQkD/TgbdFm8bj7LHlxhcNEFthhgYHeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xH9HggC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxY42RDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B164C19423;
-	Tue, 31 Mar 2026 16:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xH9HggC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5CBC19423;
+	Tue, 31 Mar 2026 16:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975385;
-	bh=GBRzkanGS3fDO4+nxLD5tfZ/YlkAiuTT9G5NUdVEd6o=;
+	s=korg; t=1774975388;
+	bh=LjZToz8nTpKuLKxHFI0D4Rm1TzU4HjsdZBNj2UeEjTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxY42RDZzceRbeKVmT4rzsacZTE8w8K1/fgGu9u+Njeh0KWt7Yf43l+jy62IlwQvv
-	 fi6515ntVff/Sjhhz8wsIjDMpTODEJ/W3YU14pkvRNfD+J7BSCjFvo6BFcdCRFnnOU
-	 BMa5RrvPmqsZWGSa58ZfE57xl+DU5OYpDaZISkVY=
+	b=1xH9HggC6EUQm5y9nI/yEcYiAXseafssNNnQ58+EaCU17BOjEwQYlsLbuQwVt8xYo
+	 s9OjsIeXuyq7SQ1CQOV2M5I3HKjO5tqlBWTFn5T8JNLNXLEpuN9mvYTssHWkZpx0Oc
+	 XdVg2fhtDRJSXvQO9uQyUv1QGaby7WxbGidpqF5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uma Shankar <uma.shankar@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.19 267/342] drm/i915/dp_tunnel: Fix error handling when clearing stream BW in atomic state
-Date: Tue, 31 Mar 2026 18:21:40 +0200
-Message-ID: <20260331161808.773478123@linuxfoundation.org>
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.19 276/342] drm/amd/pm: Return -EOPNOTSUPP for unsupported OD_MCLK on smu_v13_0_6
+Date: Tue, 31 Mar 2026 18:21:49 +0200
+Message-ID: <20260331161809.095317801@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -47,135 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-commit 77fcf58df15edcf3f5b5421f24814fb72796def9 upstream.
+commit 2f0e491faee43181b6a86e90f34016b256042fe1 upstream.
 
-Clearing the DP tunnel stream BW in the atomic state involves getting
-the tunnel group state, which can fail. Handle the error accordingly.
+When SET_UCLK_MAX capability is absent, return -EOPNOTSUPP from
+smu_v13_0_6_emit_clk_levels() for OD_MCLK instead of 0. This makes
+unsupported OD_MCLK reporting consistent with other clock types
+and allows callers to skip the entry cleanly.
 
-This fixes at least one issue where drm_dp_tunnel_atomic_set_stream_bw()
-failed to get the tunnel group state returning -EDEADLK, which wasn't
-handled. This lead to the ctx->contended warn later in modeset_lock()
-while taking a WW mutex for another object in the same atomic state, and
-thus within the same already contended WW context.
-
-Moving intel_crtc_state_alloc() later would avoid freeing saved_state on
-the error path; this stable patch leaves that simplification for a
-follow-up.
-
-Cc: Uma Shankar <uma.shankar@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v6.9+
-Fixes: a4efae87ecb2 ("drm/i915/dp: Compute DP tunnel BW during encoder state computation")
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7617
-Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patch.msgid.link/20260320092900.13210-1-imre.deak@intel.com
-(cherry picked from commit fb69d0076e687421188bc8103ab0e8e5825b1df1)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d82e0a72d9189e8acd353988e1a57f85ce479e37)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c   |    8 +++++++-
- drivers/gpu/drm/i915/display/intel_dp_tunnel.c |   20 ++++++++++++++------
- drivers/gpu/drm/i915/display/intel_dp_tunnel.h |   11 +++++++----
- 3 files changed, 28 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -4578,6 +4578,7 @@ intel_crtc_prepare_cleared_state(struct
- 	struct intel_crtc_state *crtc_state =
- 		intel_atomic_get_new_crtc_state(state, crtc);
- 	struct intel_crtc_state *saved_state;
-+	int err;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+@@ -1520,7 +1520,7 @@ static int smu_v13_0_6_print_clk_levels(
  
- 	saved_state = intel_crtc_state_alloc(crtc);
- 	if (!saved_state)
-@@ -4586,7 +4587,12 @@ intel_crtc_prepare_cleared_state(struct
- 	/* free the old crtc_state->hw members */
- 	intel_crtc_free_hw_state(crtc_state);
+ 	case SMU_OD_MCLK:
+ 		if (!smu_v13_0_6_cap_supported(smu, SMU_CAP(SET_UCLK_MAX)))
+-			return 0;
++			return -EOPNOTSUPP;
  
--	intel_dp_tunnel_atomic_clear_stream_bw(state, crtc_state);
-+	err = intel_dp_tunnel_atomic_clear_stream_bw(state, crtc_state);
-+	if (err) {
-+		kfree(saved_state);
-+
-+		return err;
-+	}
- 
- 	/* FIXME: before the switch to atomic started, a new pipe_config was
- 	 * kzalloc'd. Code that depends on any field being zero should be
---- a/drivers/gpu/drm/i915/display/intel_dp_tunnel.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_tunnel.c
-@@ -622,19 +622,27 @@ int intel_dp_tunnel_atomic_compute_strea
-  *
-  * Clear any DP tunnel stream BW requirement set by
-  * intel_dp_tunnel_atomic_compute_stream_bw().
-+ *
-+ * Returns 0 in case of success, a negative error code otherwise.
-  */
--void intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
--					    struct intel_crtc_state *crtc_state)
-+int intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
-+					   struct intel_crtc_state *crtc_state)
- {
- 	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
-+	int err;
- 
- 	if (!crtc_state->dp_tunnel_ref.tunnel)
--		return;
-+		return 0;
-+
-+	err = drm_dp_tunnel_atomic_set_stream_bw(&state->base,
-+						 crtc_state->dp_tunnel_ref.tunnel,
-+						 crtc->pipe, 0);
-+	if (err)
-+		return err;
- 
--	drm_dp_tunnel_atomic_set_stream_bw(&state->base,
--					   crtc_state->dp_tunnel_ref.tunnel,
--					   crtc->pipe, 0);
- 	drm_dp_tunnel_ref_put(&crtc_state->dp_tunnel_ref);
-+
-+	return 0;
- }
- 
- /**
---- a/drivers/gpu/drm/i915/display/intel_dp_tunnel.h
-+++ b/drivers/gpu/drm/i915/display/intel_dp_tunnel.h
-@@ -40,8 +40,8 @@ int intel_dp_tunnel_atomic_compute_strea
- 					     struct intel_dp *intel_dp,
- 					     const struct intel_connector *connector,
- 					     struct intel_crtc_state *crtc_state);
--void intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
--					    struct intel_crtc_state *crtc_state);
-+int intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
-+					   struct intel_crtc_state *crtc_state);
- 
- int intel_dp_tunnel_atomic_add_state_for_crtc(struct intel_atomic_state *state,
- 					      struct intel_crtc *crtc);
-@@ -88,9 +88,12 @@ intel_dp_tunnel_atomic_compute_stream_bw
- 	return 0;
- }
- 
--static inline void
-+static inline int
- intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
--				       struct intel_crtc_state *crtc_state) {}
-+				       struct intel_crtc_state *crtc_state)
-+{
-+	return 0;
-+}
- 
- static inline int
- intel_dp_tunnel_atomic_add_state_for_crtc(struct intel_atomic_state *state,
+ 		size += sysfs_emit_at(buf, size, "%s:\n", "OD_MCLK");
+ 		size += sysfs_emit_at(buf, size, "0: %uMhz\n1: %uMhz\n",
 
 
