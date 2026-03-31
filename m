@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B63266581;
-	Tue, 31 Mar 2026 16:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DD8401A2C;
+	Tue, 31 Mar 2026 16:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974633; cv=none; b=Kn+fPztRJ8SMpEiFc8hcglLwAWAbQsJK1P3GVBhD5I5O2ExK3VFFU8MkHCC7s6+iXHA23pBXtkxLxRrgBnwhwVIwxaia6tVP4yWhjf+rtSnY8a7wAC5Snd+DOdhuYFs7i30Xf2gwYVs1wiiT2UhZDMmLyUmC+GcrwMaaAzVjLNM=
+	t=1774974636; cv=none; b=Y6ug4/E2SnZaAaJ1uaY0B8y7JJ9SqY4s7CM78ZMmWG822fWDi+/Eh4bTZceZaFPXpHHHsXLpHwi7mdnKs1BC3+YdG4jzTVrnDiOrhXEb/QhwqbnLgKXg1yjs6LH/oK2Dd2Pj2Oiv1+9Y7dZYiHJ4e95Ga9QhjVdImznLoB53QtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974633; c=relaxed/simple;
-	bh=6dkGKJxu97Gt3xGy7nLJLFb/o+gVdYZalma8zh33wEM=;
+	s=arc-20240116; t=1774974636; c=relaxed/simple;
+	bh=weRjn17jwD6uC0LQnM3y06tTR2s9R1wr9MZbCGbnylU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8qGq/xtm8rkTZnA7hyI8alCoO9ESD+f/ttS2xT9VajrMQGL0pN0YrnS2mfn7f05U5vy7u11OTZSdWtPahTGEEp3QuUPxqe7qwK33sSlF8m5kI+iFz9ijRY5s2OK1eKKk39X2OZPYs8YB5YpV7n+RVeBIw4Q8VJXmrSF8IlAhMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9bfj2ke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BFPQz3tc6FGk/9JaGUamvQ5lzR53frwKwUKI3CzvuOYHRnHAv5LjjKFUAQguQgkKJ/A3gXd/I16nGk73JbXH2SXMyee+xUU6FGKxPo9igBdUXyrW3NlsGy/eEm1HHeMNLar4E8tc3/I02wmw3PYOmKBrV1/9UGSGox7miGe3dUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGZBCRnG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9bfj2ke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E29C19423;
-	Tue, 31 Mar 2026 16:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGZBCRnG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC321C19423;
+	Tue, 31 Mar 2026 16:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974633;
-	bh=6dkGKJxu97Gt3xGy7nLJLFb/o+gVdYZalma8zh33wEM=;
+	s=korg; t=1774974636;
+	bh=weRjn17jwD6uC0LQnM3y06tTR2s9R1wr9MZbCGbnylU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C9bfj2keMyOu5AlddoWvSy+K7a/mN7QY+dTlDPCgfGgYUqENzPHERk6SqjswPKjHA
-	 fONIV2FG1qVLam4tyIMrHOtgNNpat7X0PkD8vHpoQDQRKIDBON1u4ivxT9OBdqvtI1
-	 oOsvX86IVTe0618Bpqc9iR9wwwuBAYyrqKiokhEU=
+	b=wGZBCRnGPgr7zFOy9sjFy28Y0wbTJXB/IYCqcKJnOUBL7gk7GeyNAbqImjSb+1g+X
+	 QKZDbTPNszvlDtcH5VFjC89Uz7bxMV4AvdfdPD9v8N2vYxyNfySbLCg1OkiGDgL8Tz
+	 hPqWeedkAaXZzb2yxYZbt1qVo9xGvVZjgjhBXnFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 161/175] dmaengine: idxd: Fix memory leak when a wq is reset
-Date: Tue, 31 Mar 2026 18:22:25 +0200
-Message-ID: <20260331161735.713054568@linuxfoundation.org>
+Subject: [PATCH 6.6 162/175] phy: ti: j721e-wiz: Fix device node reference leak in wiz_get_lane_phy_types()
+Date: Tue, 31 Mar 2026 18:22:26 +0200
+Message-ID: <20260331161735.749577335@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -52,52 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit d9cfb5193a047a92a4d3c0e91ea4cc87c8f7c478 ]
+[ Upstream commit 584b457f4166293bdfa50f930228e9fb91a38392 ]
 
-idxd_wq_disable_cleanup() which is called from the reset path for a
-workqueue, sets the wq type to NONE, which for other parts of the
-driver mean that the wq is empty (all its resources were released).
+The serdes device_node is obtained using of_get_child_by_name(),
+which increments the reference count. However, it is never put,
+leading to a reference leak.
 
-Only set the wq type to NONE after its resources are released.
+Add the missing of_node_put() calls to ensure the reference count is
+properly balanced.
 
-Fixes: da32b28c95a7 ("dmaengine: idxd: cleanup workqueue config after disabling")
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-8-7ed70658a9d1@intel.com
+Fixes: 7ae14cf581f2 ("phy: ti: j721e-wiz: Implement DisplayPort mode to the wiz driver")
+Suggested-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20260212-wiz-v2-1-6e8bd4cc7a4a@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/device.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/phy/ti/phy-j721e-wiz.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 542d340552dd7..44bbeb3acd14e 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -173,6 +173,7 @@ void idxd_wq_free_resources(struct idxd_wq *wq)
- 	free_descs(wq);
- 	dma_free_coherent(dev, wq->compls_size, wq->compls, wq->compls_addr);
- 	sbitmap_queue_free(&wq->sbq);
-+	wq->type = IDXD_WQT_NONE;
- }
+diff --git a/drivers/phy/ti/phy-j721e-wiz.c b/drivers/phy/ti/phy-j721e-wiz.c
+index fc3cd98c60ff4..a28c168b35d92 100644
+--- a/drivers/phy/ti/phy-j721e-wiz.c
++++ b/drivers/phy/ti/phy-j721e-wiz.c
+@@ -1424,6 +1424,7 @@ static int wiz_get_lane_phy_types(struct device *dev, struct wiz *wiz)
+ 			dev_err(dev,
+ 				"%s: Reading \"reg\" from \"%s\" failed: %d\n",
+ 				__func__, subnode->name, ret);
++			of_node_put(serdes);
+ 			return ret;
+ 		}
+ 		of_property_read_u32(subnode, "cdns,num-lanes", &num_lanes);
+@@ -1438,6 +1439,7 @@ static int wiz_get_lane_phy_types(struct device *dev, struct wiz *wiz)
+ 		}
+ 	}
  
- int idxd_wq_enable(struct idxd_wq *wq)
-@@ -365,7 +366,6 @@ static void idxd_wq_disable_cleanup(struct idxd_wq *wq)
- 	lockdep_assert_held(&wq->wq_lock);
- 	wq->state = IDXD_WQ_DISABLED;
- 	memset(wq->wqcfg, 0, idxd->wqcfg_size);
--	wq->type = IDXD_WQT_NONE;
- 	wq->threshold = 0;
- 	wq->priority = 0;
- 	wq->enqcmds_retries = IDXD_ENQCMDS_RETRIES;
-@@ -1507,7 +1507,6 @@ void drv_disable_wq(struct idxd_wq *wq)
- 	idxd_wq_reset(wq);
- 	idxd_wq_free_resources(wq);
- 	percpu_ref_exit(&wq->wq_active);
--	wq->type = IDXD_WQT_NONE;
- 	wq->client_count = 0;
++	of_node_put(serdes);
+ 	return 0;
  }
  
 -- 
