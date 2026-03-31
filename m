@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB60E2FB632;
-	Tue, 31 Mar 2026 17:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFC62F5491;
+	Tue, 31 Mar 2026 17:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976600; cv=none; b=k7Cn5Xym5I9Kt61oJkfIJ/nbO4ISLECxnicenNtkho9adZAIQCIY8LVS8kBt5V+bS77JR5UuwSQiIWsyi/NQxk4Sgejg0cCcAF50ksFjjYiL8qXP1zMcJLGRY4LtK5GEBTCf8OhJxYn7GzAiuctqRjQdPkOQnCoMp3nhST9Kx4c=
+	t=1774976603; cv=none; b=K0+h/v+hrPwrjXi1SF+Y+PfhU7yT94mJ9kUX6fw8o4NjLkDrSxPif+h4gSLHbHeV+v3wZj2TZmETxO1wfvgAAdHp8eVO7YC7sBBhNjXf/x+8TTPrrvwoc2A9XOuq9gHf8JfAzOMVvjpolr3oNCPJkZosH3xts+qZanR2zWSUxvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976600; c=relaxed/simple;
-	bh=4iRCGcDfc+PX9kihk7yNpCGisqWsp4r/yHakM1fBkjA=;
+	s=arc-20240116; t=1774976603; c=relaxed/simple;
+	bh=6NM0M3tt7RmaJ7OKxtM8l0jIaywZHoczScFeNz/760U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9EOZ83Dvcu1TuJEA89omzzV9OgJW3vKyakapXOXAxFPNhh9amCgT3jUiWhZs2dgruRMExoEsBvL0qItAz4XsIsb6kmj+Rh+BLbeH8NEVZV45K00S9vBvB3Vz8wlk1MPPqKweRMBOAXctODQo3UqreAv/TRAc7eXusjjjGsLVv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSVIpbUT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tCu4V1G6fviZG7PjANAXh7rA0eX4qBkeW75LiDVI+fqufLBPez9MQdB0lQ6f3F3aRuIjw/rwuRzk9HHTc1S3TzaEKSzCMsGM0kXMgLS709U4zplQCwaKbPlOVoz0J0m8wQY7lAaaad6ORuTaAyUyex7+HtDFuGmtAlzpfvI38j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCC9vN90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSVIpbUT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EBAC19423;
-	Tue, 31 Mar 2026 17:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCC9vN90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82CA2C19423;
+	Tue, 31 Mar 2026 17:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976600;
-	bh=4iRCGcDfc+PX9kihk7yNpCGisqWsp4r/yHakM1fBkjA=;
+	s=korg; t=1774976602;
+	bh=6NM0M3tt7RmaJ7OKxtM8l0jIaywZHoczScFeNz/760U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mSVIpbUTsg1LGGIFpQ5N+GiZ43VpEHuMsxYqeWYt7G6wnOidLs1HlgVcF+H5F3Zh5
-	 Ld2O06n0s2khNOSQ6PQn7blMShwezQMFZqMudzS6bVTCbiJTkmwlFkYOWV3mSe1/iC
-	 uQm2v3lB2rDXZoImETzLgToj90LehecGJqBOWxKc=
+	b=iCC9vN90X4XAKX/dslOAJ60snYEnCLH/620Ksgb/DEXSU7JJllYc1og7vBvhTJXNL
+	 t0J7rXBLG49hbgnukOuKD9nxxYm+hsh/YNkOUp7CDadkl2Uf7KTKjhTCAbJKFjJp6b
+	 MsM3hbAhaiEnSWE/pUhSNU3rj8E/eIEXFcdO1XZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngjun Park <youngjun.park@lge.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 155/309] PM: sleep: Drop spurious WARN_ON() from pm_restore_gfp_mask()
-Date: Tue, 31 Mar 2026 18:20:58 +0200
-Message-ID: <20260331161759.175711394@linuxfoundation.org>
+Subject: [PATCH 6.18 156/309] spi: sn-f-ospi: Fix resource leak in f_ospi_probe()
+Date: Tue, 31 Mar 2026 18:20:59 +0200
+Message-ID: <20260331161759.211468046@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,48 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngjun Park <youngjun.park@lge.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit a8d51efb5929ae308895455a3e496b5eca2cd143 ]
+[ Upstream commit ef3d549e1deb3466c61f3b01d22fc3fe3e5efb08 ]
 
-Commit 35e4a69b2003f ("PM: sleep: Allow pm_restrict_gfp_mask()
-stacking") introduced refcount-based GFP mask management that warns
-when pm_restore_gfp_mask() is called with saved_gfp_count == 0.
+In f_ospi_probe(), when num_cs validation fails, it returns without
+calling spi_controller_put() on the SPI controller, which causes a
+resource leak.
 
-Some hibernation paths call pm_restore_gfp_mask() defensively where
-the GFP mask may or may not be restricted depending on the execution
-path. For example, the uswsusp interface invokes it in
-SNAPSHOT_CREATE_IMAGE, SNAPSHOT_UNFREEZE, and snapshot_release().
-Before the stacking change this was a silent no-op; it now triggers
-a spurious WARNING.
+Use devm_spi_alloc_host() instead of spi_alloc_host() to ensure the
+SPI controller is properly freed when probe fails.
 
-Remove the WARN_ON() wrapper from the !saved_gfp_count check while
-retaining the check itself, so that defensive calls remain harmless
-without producing false warnings.
-
-Fixes: 35e4a69b2003f ("PM: sleep: Allow pm_restrict_gfp_mask() stacking")
-Signed-off-by: Youngjun Park <youngjun.park@lge.com>
-[ rjw: Subject tweak ]
-Link: https://patch.msgid.link/20260322120528.750178-1-youngjun.park@lge.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 1b74dd64c861 ("spi: Add Socionext F_OSPI SPI flash controller driver")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260319-sn-f-v1-1-33a6738d2da8@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-sn-f-ospi.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/power/main.c b/kernel/power/main.c
-index 549f51ca3a1e6..ed7b5953d1ce0 100644
---- a/kernel/power/main.c
-+++ b/kernel/power/main.c
-@@ -38,7 +38,7 @@ void pm_restore_gfp_mask(void)
- {
- 	WARN_ON(!mutex_is_locked(&system_transition_mutex));
+diff --git a/drivers/spi/spi-sn-f-ospi.c b/drivers/spi/spi-sn-f-ospi.c
+index c4969f66a0ba9..84a5b327022e8 100644
+--- a/drivers/spi/spi-sn-f-ospi.c
++++ b/drivers/spi/spi-sn-f-ospi.c
+@@ -612,7 +612,7 @@ static int f_ospi_probe(struct platform_device *pdev)
+ 	u32 num_cs = OSPI_NUM_CS;
+ 	int ret;
  
--	if (WARN_ON(!saved_gfp_count) || --saved_gfp_count)
-+	if (!saved_gfp_count || --saved_gfp_count)
- 		return;
+-	ctlr = spi_alloc_host(dev, sizeof(*ospi));
++	ctlr = devm_spi_alloc_host(dev, sizeof(*ospi));
+ 	if (!ctlr)
+ 		return -ENOMEM;
  
- 	gfp_allowed_mask = saved_gfp_mask;
+@@ -636,16 +636,12 @@ static int f_ospi_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, ospi);
+ 
+ 	ospi->base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(ospi->base)) {
+-		ret = PTR_ERR(ospi->base);
+-		goto err_put_ctlr;
+-	}
++	if (IS_ERR(ospi->base))
++		return PTR_ERR(ospi->base);
+ 
+ 	ospi->clk = devm_clk_get_enabled(dev, NULL);
+-	if (IS_ERR(ospi->clk)) {
+-		ret = PTR_ERR(ospi->clk);
+-		goto err_put_ctlr;
+-	}
++	if (IS_ERR(ospi->clk))
++		return PTR_ERR(ospi->clk);
+ 
+ 	mutex_init(&ospi->mlock);
+ 
+@@ -662,9 +658,6 @@ static int f_ospi_probe(struct platform_device *pdev)
+ err_destroy_mutex:
+ 	mutex_destroy(&ospi->mlock);
+ 
+-err_put_ctlr:
+-	spi_controller_put(ctlr);
+-
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
