@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1E14266A5;
-	Tue, 31 Mar 2026 16:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCB7426D2F;
+	Tue, 31 Mar 2026 16:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975969; cv=none; b=pvsFFD8ndHpTkjnI64G7EmuRmDuLB1KSLvXyDdQLHsyTt+xI5GgziZn/8eJWJ11QMRjwkyEuf4+XLIPCNiE3gBjpII5OOKdKDpFho9shpvTNfEjLe2QoIMtk0Qom9w4S/aW2m8RZmu7yzRZm1qPzReQ+ioV1qBP8kyFhpfdbEgc=
+	t=1774975972; cv=none; b=dHbEMhul312yTndVikNiZx4dvGbo6uCMOW8eqIIcA1DWtTbAV4M4jPy8B9WLCExVz4gXsWNfemeg93DVs/iKEUR1OzQNl0IY+Tb9RmUBnGzEaI7zESh49KCuabsYC/l2w5plpD+ADUDwHK17ql6GP3MRQ0yY+tfn0KT78RV44lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975969; c=relaxed/simple;
-	bh=C3WXuLJk+mniDYE66B8k774HJ0RtC1gdOVvcPhhCZ/w=;
+	s=arc-20240116; t=1774975972; c=relaxed/simple;
+	bh=X9tddw6sBuzO9cwSVVPZvclPNJkBCLgIIbEAzdSu+sI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=erbog4hGq6Pe10aOgbw2GovSvlKW7hVmYuuOwGiOLm+TtAW4POyURd+zX/d2MMR3lN9rPR++6/SRqOG2rZ2ee5bJAoHjTujrOC+KwZXYp26GzHZjPqQvZR8lpeT7pvWNSu2bcp8ZpryUow640HdouaWdE5YxjjpY7zAeJG+53tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfPD+oXs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5Xxf5Y9zwHxGEuv5RrPjynmsLBiZmauMsOxwutMTnrU8hCFqtJYmAHDAG45YSzb2yHuvReuWU+ASvhU3se6ELkgmhHwU6iAIMePoc2HLFrfAMRs9zBVxxPdFaLugKrsGhmbm73KUlKoWDc1f/4KzA17pCbymqeltINIXpS2Bxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdZu6cs1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfPD+oXs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92162C19423;
-	Tue, 31 Mar 2026 16:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdZu6cs1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D05C19423;
+	Tue, 31 Mar 2026 16:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975968;
-	bh=C3WXuLJk+mniDYE66B8k774HJ0RtC1gdOVvcPhhCZ/w=;
+	s=korg; t=1774975971;
+	bh=X9tddw6sBuzO9cwSVVPZvclPNJkBCLgIIbEAzdSu+sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfPD+oXs6sPy5GxLfFBQKwrMbTv2NbZrUuiFtr3apWk+Anw9L1HBbjOKLleqMs7ZT
-	 YF1VGd1caVAuhlFTaR36/aqUOp3hwZKcLkOfm5Ci/FL4dhxDkW6J2KnHM+D4GJEr0N
-	 9ID5ynvy+0ZbmwcrMeL9Z9YpPA6aVFNESH/05tv4=
+	b=bdZu6cs1iVM9YK6GiRfdGKEuK6NHg2UXhgQ0WcnBbPoXBS/ALdD29SBmGeWRHwPV3
+	 CzHg5zGTtQUQA33uzEv4H5X7whVin/eB3Q9StzmyAHSc8vFN1qn75zB+1Pn1f+IlIB
+	 91hjE24/05hqyvVSnkO8odmSgvsIe1G9z9NfmrmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.12 157/244] x86/cpu: Remove X86_CR4_FRED from the CR4 pinned bits mask
-Date: Tue, 31 Mar 2026 18:21:47 +0200
-Message-ID: <20260331161747.562437920@linuxfoundation.org>
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Werner Kasselman <werner@verivus.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 140/244] ksmbd: fix memory leaks and NULL deref in smb2_lock()
+Date: Tue, 31 Mar 2026 18:21:30 +0200
+Message-ID: <20260331161746.820612016@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,63 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Werner Kasselman <werner@verivus.com>
 
-commit 411df123c017169922cc767affce76282b8e6c85 upstream.
+commit 309b44ed684496ed3f9c5715d10b899338623512 upstream.
 
-Commit in Fixes added the FRED CR4 bit to the CR4 pinned bits mask so
-that whenever something else modifies CR4, that bit remains set. Which
-in itself is a perfectly fine idea.
+smb2_lock() has three error handling issues after list_del() detaches
+smb_lock from lock_list at no_check_cl:
 
-However, there's an issue when during boot FRED is initialized: first on
-the BSP and later on the APs. Thus, there's a window in time when
-exceptions cannot be handled.
+1) If vfs_lock_file() returns an unexpected error in the non-UNLOCK
+   path, goto out leaks smb_lock and its flock because the out:
+   handler only iterates lock_list and rollback_list, neither of
+   which contains the detached smb_lock.
 
-This becomes particularly nasty when running as SEV-{ES,SNP} or TDX
-guests which, when they manage to trigger exceptions during that short
-window described above, triple fault due to FRED MSRs not being set up
-yet.
+2) If vfs_lock_file() returns -ENOENT in the UNLOCK path, goto out
+   leaks smb_lock and flock for the same reason.  The error code
+   returned to the dispatcher is also stale.
 
-See Link tag below for a much more detailed explanation of the
-situation.
+3) In the rollback path, smb_flock_init() can return NULL on
+   allocation failure.  The result is dereferenced unconditionally,
+   causing a kernel NULL pointer dereference.  Add a NULL check to
+   prevent the crash and clean up the bookkeeping; the VFS lock
+   itself cannot be rolled back without the allocation and will be
+   released at file or connection teardown.
 
-So, as a result, the commit in that Link URL tried to address this
-shortcoming by temporarily disabling CR4 pinning when an AP is not
-online yet.
+Fix cases 1 and 2 by hoisting the locks_free_lock()/kfree() to before
+the if(!rc) check in the UNLOCK branch so all exit paths share one
+free site, and by freeing smb_lock and flock before goto out in the
+non-UNLOCK branch.  Propagate the correct error code in both cases.
+Fix case 3 by wrapping the VFS unlock in an if(rlock) guard and adding
+a NULL check for locks_free_lock(rlock) in the shared cleanup.
 
-However, that is a problem in itself because in this case, an attack on
-the kernel needs to only modify the online bit - a single bit in RW
-memory - and then disable CR4 pinning and then disable SM*P, leading to
-more and worse things to happen to the system.
+Found via call-graph analysis using sqry.
 
-So, instead, remove the FRED bit from the CR4 pinning mask, thus
-obviating the need to temporarily disable CR4 pinning.
-
-If someone manages to disable FRED when poking at CR4, then
-idt_invalidate() would make sure the system would crash'n'burn on the
-first exception triggered, which is a much better outcome security-wise.
-
-Fixes: ff45746fbf00 ("x86/cpu: Add X86_CR4_FRED macro")
-Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org> # 6.12+
-Link: https://lore.kernel.org/r/177385987098.1647592.3381141860481415647.tip-bot2@tip-bot2
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Suggested-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Werner Kasselman <werner@verivus.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |   29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -405,7 +405,7 @@ out:
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -7552,14 +7552,15 @@ retry:
+ 		rc = vfs_lock_file(filp, smb_lock->cmd, flock, NULL);
+ skip:
+ 		if (smb_lock->flags & SMB2_LOCKFLAG_UNLOCK) {
++			locks_free_lock(flock);
++			kfree(smb_lock);
+ 			if (!rc) {
+ 				ksmbd_debug(SMB, "File unlocked\n");
+ 			} else if (rc == -ENOENT) {
+ 				rsp->hdr.Status = STATUS_NOT_LOCKED;
++				err = rc;
+ 				goto out;
+ 			}
+-			locks_free_lock(flock);
+-			kfree(smb_lock);
+ 		} else {
+ 			if (rc == FILE_LOCK_DEFERRED) {
+ 				void **argv;
+@@ -7628,6 +7629,9 @@ skip:
+ 				spin_unlock(&work->conn->llist_lock);
+ 				ksmbd_debug(SMB, "successful in taking lock\n");
+ 			} else {
++				locks_free_lock(flock);
++				kfree(smb_lock);
++				err = rc;
+ 				goto out;
+ 			}
+ 		}
+@@ -7658,13 +7662,17 @@ out:
+ 		struct file_lock *rlock = NULL;
  
- /* These bits should not change their value after CPU init is finished. */
- static const unsigned long cr4_pinned_mask = X86_CR4_SMEP | X86_CR4_SMAP | X86_CR4_UMIP |
--					     X86_CR4_FSGSBASE | X86_CR4_CET | X86_CR4_FRED;
-+					     X86_CR4_FSGSBASE | X86_CR4_CET;
- static DEFINE_STATIC_KEY_FALSE_RO(cr_pinning);
- static unsigned long cr4_pinned_bits __ro_after_init;
+ 		rlock = smb_flock_init(filp);
+-		rlock->c.flc_type = F_UNLCK;
+-		rlock->fl_start = smb_lock->start;
+-		rlock->fl_end = smb_lock->end;
+-
+-		rc = vfs_lock_file(filp, F_SETLK, rlock, NULL);
+-		if (rc)
+-			pr_err("rollback unlock fail : %d\n", rc);
++		if (rlock) {
++			rlock->c.flc_type = F_UNLCK;
++			rlock->fl_start = smb_lock->start;
++			rlock->fl_end = smb_lock->end;
++
++			rc = vfs_lock_file(filp, F_SETLK, rlock, NULL);
++			if (rc)
++				pr_err("rollback unlock fail : %d\n", rc);
++		} else {
++			pr_err("rollback unlock alloc failed\n");
++		}
  
+ 		list_del(&smb_lock->llist);
+ 		spin_lock(&work->conn->llist_lock);
+@@ -7674,7 +7682,8 @@ out:
+ 		spin_unlock(&work->conn->llist_lock);
+ 
+ 		locks_free_lock(smb_lock->fl);
+-		locks_free_lock(rlock);
++		if (rlock)
++			locks_free_lock(rlock);
+ 		kfree(smb_lock);
+ 	}
+ out2:
 
 
