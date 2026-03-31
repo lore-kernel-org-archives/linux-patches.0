@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5FB4279E6;
-	Tue, 31 Mar 2026 16:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E3D426EDA;
+	Tue, 31 Mar 2026 16:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975135; cv=none; b=RgQ2VpGlEJS0jzqau9Xd5bVqx8HPOf/FVdU/A9ZlEupe+7qK/7CDF3L+9vHXvNmJH1e5H47JteQTPZm44g1O2jC+FOSczQsvqFzvoXLnwP798tKU6O+TVouh/JbHZsipdsMAJSVH9/PrCr8AjwWlBG6KvTapkjAGlFEzUWjtX8E=
+	t=1774975138; cv=none; b=CB2iCS1IjWtUxyUfKjp6nUt3ReqJmK2U4nvzf0uk/FAG3wMJLJTPQ5rgrKRlLn84D1mlbuGz+c5pn8t3UInADSv1RcoIYdxaq6XUQ49ZsE5LhUPgG0oBu6FfYIz1tFKFBiMfVbM9ZWNn5HMiFr8si+f6UIIMVRsvq7oi1W4peJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975135; c=relaxed/simple;
-	bh=6BvXbstGLYKWzFd2HnlJbkXtJZ4EAr7vchJJ7BnzMRs=;
+	s=arc-20240116; t=1774975138; c=relaxed/simple;
+	bh=irtckMe+GC/QrHtQpFNYrUGXcYlCf9mFGTJnBLm0dMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWsOpYd6CbV9QRNYAeNbupy+Azo8rIIeteg9eodLhwHs6rnFoGZV3GyrJ5z7MYP4mK9Gdv3j2W1BjYlVbi1iR0Te35Ihitl7Ahtg49//Jdb0Yi+9EleDTDCyRUQwjI0TNvsUen8JZ6cVAkqBsSJV6hsyVQsJQmfssUx/rCkxy+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpNF3stU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nEyTNbzcKcRuctVfZ6MyP7hYFFyaSYRUGSGRv+ru2a9YGs5ZK1VvD8lPWwYkeUzc1v1a9f8JFGYK0J+eoxANQMbm1XWCprTNP2gC/Wk1nT/beYH1AHgQ449Ixe069ldg1ib0sNpmx5QW+SN/RxIlghKa1p4eEZbsn+Ah1W2FJUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/YlK1qC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpNF3stU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B9DC2BCB1;
-	Tue, 31 Mar 2026 16:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/YlK1qC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C328CC19423;
+	Tue, 31 Mar 2026 16:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975135;
-	bh=6BvXbstGLYKWzFd2HnlJbkXtJZ4EAr7vchJJ7BnzMRs=;
+	s=korg; t=1774975138;
+	bh=irtckMe+GC/QrHtQpFNYrUGXcYlCf9mFGTJnBLm0dMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpNF3stUb9Fn4NBk2u1wqtQylk4/X/Jl99EaTo104JtXMrune9esQxduNfU/XRLtQ
-	 1tqHUIyxmgVojUO/k/+TNLW/twK6DTKxmL+q7QtQSUGXSL1+uoPwWDNvmFvCEtrqeM
-	 FHT+c8bD6n24JHxntD9+00gf1ErjpoWdn/FCMX4k=
+	b=p/YlK1qCc87leU/oLs5Mb1V/Qyu1TS/EFWixTic2YwVKt7BMOp0y9tr82vvPb+xyS
+	 QtklqnnaxqJvBPldCrDobAsM20EIEuuOxAPraVjZz5cxJ/RTGXSbIs4y2uuPjky6Ma
+	 ClwbK2MIaF3TGtctPsOfU3XleOnUp+pxP6OJ9C04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Daniel Almeida <daniel.almeida@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Anil Samal <anil.samal@intel.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 178/342] rust: regulator: do not assume that regulator_get() returns non-null
-Date: Tue, 31 Mar 2026 18:20:11 +0200
-Message-ID: <20260331161805.555743890@linuxfoundation.org>
+Subject: [PATCH 6.19 161/342] RDMA/irdma: Fix deadlock during netdev reset with active connections
+Date: Tue, 31 Mar 2026 18:19:54 +0200
+Message-ID: <20260331161804.934659750@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,138 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Anil Samal <anil.samal@intel.com>
 
-[ Upstream commit 8121353a4bf8e38afee26299419a78ec108e14a6 ]
+[ Upstream commit 6f52370970ac07d352a7af4089e55e0e6425f827 ]
 
-The Rust `Regulator` abstraction uses `NonNull` to wrap the underlying
-`struct regulator` pointer. When `CONFIG_REGULATOR` is disabled, the C
-stub for `regulator_get` returns `NULL`. `from_err_ptr` does not treat
-`NULL` as an error, so it was passed to `NonNull::new_unchecked`,
-causing undefined behavior.
+Resolve deadlock that occurs when user executes netdev reset while RDMA
+applications (e.g., rping) are active. The netdev reset causes ice
+driver to remove irdma auxiliary driver, triggering device_delete and
+subsequent client removal. During client removal, uverbs_client waits
+for QP reference count to reach zero while cma_client holds the final
+reference, creating circular dependency and indefinite wait in iWARP
+mode. Skip QP reference count wait during device reset to prevent
+deadlock.
 
-Fix this by using a raw pointer `*mut bindings::regulator` instead of
-`NonNull`. This allows `inner` to be `NULL` when `CONFIG_REGULATOR` is
-disabled, and leverages the C stubs which are designed to handle `NULL`
-or are no-ops.
-
-Fixes: 9b614ceada7c ("rust: regulator: add a bare minimum regulator abstraction")
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Closes: https://lore.kernel.org/r/20260322193830.89324-1-ojeda@kernel.org
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
-Link: https://patch.msgid.link/20260324-regulator-fix-v1-1-a5244afa3c15@google.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c8f304d75f6c ("RDMA/irdma: Prevent QP use after free")
+Signed-off-by: Anil Samal <anil.samal@intel.com>
+Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/regulator.rs | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/rust/kernel/regulator.rs b/rust/kernel/regulator.rs
-index 2c44827ad0b7e..40c7f2209867d 100644
---- a/rust/kernel/regulator.rs
-+++ b/rust/kernel/regulator.rs
-@@ -23,7 +23,10 @@ use crate::{
-     prelude::*,
- };
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index ac3a8f3f95b7f..c454a006c78e0 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -558,7 +558,8 @@ static int irdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 	}
  
--use core::{marker::PhantomData, mem::ManuallyDrop, ptr::NonNull};
-+use core::{
-+    marker::PhantomData,
-+    mem::ManuallyDrop, //
-+};
- 
- mod private {
-     pub trait Sealed {}
-@@ -232,15 +235,17 @@ pub fn devm_enable_optional(dev: &Device<Bound>, name: &CStr) -> Result {
- ///
- /// # Invariants
- ///
--/// - `inner` is a non-null wrapper over a pointer to a `struct
--///   regulator` obtained from [`regulator_get()`].
-+/// - `inner` is a pointer obtained from a successful call to
-+///   [`regulator_get()`]. It is treated as an opaque token that may only be
-+///   accessed using C API methods (e.g., it may be `NULL` if the C API returns
-+///   `NULL`).
- ///
- /// [`regulator_get()`]: https://docs.kernel.org/driver-api/regulator.html#c.regulator_get
- pub struct Regulator<State>
- where
-     State: RegulatorState,
- {
--    inner: NonNull<bindings::regulator>,
-+    inner: *mut bindings::regulator,
-     _phantom: PhantomData<State>,
- }
- 
-@@ -252,7 +257,7 @@ impl<T: RegulatorState> Regulator<T> {
-         // SAFETY: Safe as per the type invariants of `Regulator`.
-         to_result(unsafe {
-             bindings::regulator_set_voltage(
--                self.inner.as_ptr(),
-+                self.inner,
-                 min_voltage.as_microvolts(),
-                 max_voltage.as_microvolts(),
-             )
-@@ -262,7 +267,7 @@ impl<T: RegulatorState> Regulator<T> {
-     /// Gets the current voltage of the regulator.
-     pub fn get_voltage(&self) -> Result<Voltage> {
-         // SAFETY: Safe as per the type invariants of `Regulator`.
--        let voltage = unsafe { bindings::regulator_get_voltage(self.inner.as_ptr()) };
-+        let voltage = unsafe { bindings::regulator_get_voltage(self.inner) };
- 
-         to_result(voltage).map(|()| Voltage::from_microvolts(voltage))
-     }
-@@ -273,10 +278,8 @@ impl<T: RegulatorState> Regulator<T> {
-             // received from the C code.
-             from_err_ptr(unsafe { bindings::regulator_get(dev.as_raw(), name.as_char_ptr()) })?;
- 
--        // SAFETY: We can safely trust `inner` to be a pointer to a valid
--        // regulator if `ERR_PTR` was not returned.
--        let inner = unsafe { NonNull::new_unchecked(inner) };
--
-+        // INVARIANT: `inner` is a pointer obtained from `regulator_get()`, and
-+        // the call was successful.
-         Ok(Self {
-             inner,
-             _phantom: PhantomData,
-@@ -285,12 +288,12 @@ impl<T: RegulatorState> Regulator<T> {
- 
-     fn enable_internal(&self) -> Result {
-         // SAFETY: Safe as per the type invariants of `Regulator`.
--        to_result(unsafe { bindings::regulator_enable(self.inner.as_ptr()) })
-+        to_result(unsafe { bindings::regulator_enable(self.inner) })
-     }
- 
-     fn disable_internal(&self) -> Result {
-         // SAFETY: Safe as per the type invariants of `Regulator`.
--        to_result(unsafe { bindings::regulator_disable(self.inner.as_ptr()) })
-+        to_result(unsafe { bindings::regulator_disable(self.inner) })
-     }
- }
- 
-@@ -352,7 +355,7 @@ impl<T: IsEnabled> Regulator<T> {
-     /// Checks if the regulator is enabled.
-     pub fn is_enabled(&self) -> bool {
-         // SAFETY: Safe as per the type invariants of `Regulator`.
--        unsafe { bindings::regulator_is_enabled(self.inner.as_ptr()) != 0 }
-+        unsafe { bindings::regulator_is_enabled(self.inner) != 0 }
-     }
- }
- 
-@@ -362,11 +365,11 @@ impl<T: RegulatorState> Drop for Regulator<T> {
-             // SAFETY: By the type invariants, we know that `self` owns a
-             // reference on the enabled refcount, so it is safe to relinquish it
-             // now.
--            unsafe { bindings::regulator_disable(self.inner.as_ptr()) };
-+            unsafe { bindings::regulator_disable(self.inner) };
-         }
-         // SAFETY: By the type invariants, we know that `self` owns a reference,
-         // so it is safe to relinquish it now.
--        unsafe { bindings::regulator_put(self.inner.as_ptr()) };
-+        unsafe { bindings::regulator_put(self.inner) };
-     }
- }
+ 	irdma_qp_rem_ref(&iwqp->ibqp);
+-	wait_for_completion(&iwqp->free_qp);
++	if (!iwdev->rf->reset)
++		wait_for_completion(&iwqp->free_qp);
+ 	irdma_free_lsmm_rsrc(iwqp);
+ 	irdma_cqp_qp_destroy_cmd(&iwdev->rf->sc_dev, &iwqp->sc_qp);
  
 -- 
 2.53.0
