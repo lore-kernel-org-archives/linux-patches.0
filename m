@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B89D3E3174;
-	Tue, 31 Mar 2026 16:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE93E3EF0A2;
+	Tue, 31 Mar 2026 16:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974493; cv=none; b=s3C7n+4zN3VAGxmsdcpbgtGhUr+pXvkd8EwajD2PlJ0m9jr/oG20UMp0ogCGHLvaR206aW/VFz2+SVL3EvhFt+cnvkvVcDsbKPR5HOBPRp9S0ajzTsW/7HFB3/PRP4UewIiPQJoJZ3d+3dA88J2D1PV+f/saKL+aM/GdaA0cOXQ=
+	t=1774974496; cv=none; b=Ri3lRWuY1uqFl5UP9v8gvhuFsBAaZ8c1ljWc3ZHBpBu4Uw4ptueeNUZxm6GH4JFAQyixwFjY5fkLHNJjt4FZqEhYipyYI9D0x4o+tkCjF4reUMIjFszSAKEGaIrkJV71WeqoUlJDHcLdqyAf+TTsrY1WtQR8EH1qsNRx6qpRRUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974493; c=relaxed/simple;
-	bh=T+lET38Q28cpG5PTvgQIsl31kCER/lt5Ea3QOtcJA3A=;
+	s=arc-20240116; t=1774974496; c=relaxed/simple;
+	bh=GbvnkSTY3Hp4pKgqpBD9OO73D/Kw/vjWhZ8M8JNc38A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HwDSeSr6qSPPaXHLiMoxkGwWXigp6w6m4iRZdp2+Pd7/y4rOyUbAAsUByQJIJZ8i01DH2kzP3zCuICRdGlsLFcwI5mm+9NHwioxMQWVs4XsjAk0fHv9jME7PLZPEpNDJkyTOhAZUIU2IiwaTXve4KrYwkuz8zCiMHybCFDKKe6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F98a/ijt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UN1DYIxavBznXOt/58nfFtjjJjapJZsTTQ0u9M7yu6BiUa7NET/9nEmRr6zHGk/81of12n9+haVCA6U1+D0lPR8xSTL48nLdY9ME/9q2whIBg5Mb/rh/qgeVYDGMbxEnwJtttCwrCqtwXqsp5+WbKbo8wvrsrFfeGqvGr5oLKIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNmXzz5h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F98a/ijt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA43FC2BCB2;
-	Tue, 31 Mar 2026 16:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNmXzz5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6F5C2BCB2;
+	Tue, 31 Mar 2026 16:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974493;
-	bh=T+lET38Q28cpG5PTvgQIsl31kCER/lt5Ea3QOtcJA3A=;
+	s=korg; t=1774974495;
+	bh=GbvnkSTY3Hp4pKgqpBD9OO73D/Kw/vjWhZ8M8JNc38A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F98a/ijtqoNiqSfS3Mj7ymqO+MpRRqIzYRgqwnbzLRUP7GEivSDMtqNnghmV54SNz
-	 /lpZEqZWGO4k8YjkOO8gs3/sltA1xn6xB+lkb+qa6G3xXCXgFO4ipM4in89XniCACu
-	 WykJOC7Z+LhJwiEyPBycm2ST5Nyk0vcwinEPRSCM=
+	b=YNmXzz5hCA2jOF+cN8baI7biMbumZRezleaNInWnNJJiovDs35nlBVS+xPYQmNCEQ
+	 K7qJzpNg7SKklrusk08J6Nr5a7ovaaLleM8E+DCBE0eqCJLeNyW1GOZTLr5GmXdvTR
+	 wM/hrdB/dlPyLd7cH+7ixrO7wL0Ek2537h9ej1RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ali Norouzi <ali.norouzi@keysight.com>,
 	Oliver Hartkopp <socketcan@hartkopp.net>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 105/175] can: gw: fix OOB heap access in cgw_csum_crc8_rel()
-Date: Tue, 31 Mar 2026 18:21:29 +0200
-Message-ID: <20260331161733.639147309@linuxfoundation.org>
+Subject: [PATCH 6.6 106/175] can: isotp: fix tx.buf use-after-free in isotp_sendmsg()
+Date: Tue, 31 Mar 2026 18:21:30 +0200
+Message-ID: <20260331161733.675191550@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,77 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Norouzi <ali.norouzi@keysight.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit b9c310d72783cc2f30d103eed83920a5a29c671a upstream.
+commit 424e95d62110cdbc8fd12b40918f37e408e35a92 upstream.
 
-cgw_csum_crc8_rel() correctly computes bounds-safe indices via calc_idx():
+isotp_sendmsg() uses only cmpxchg() on so->tx.state to serialize access
+to so->tx.buf. isotp_release() waits for ISOTP_IDLE via
+wait_event_interruptible() and then calls kfree(so->tx.buf).
 
-    int from = calc_idx(crc8->from_idx, cf->len);
-    int to   = calc_idx(crc8->to_idx,   cf->len);
-    int res  = calc_idx(crc8->result_idx, cf->len);
+If a signal interrupts the wait_event_interruptible() inside close()
+while tx.state is ISOTP_SENDING, the loop exits early and release
+proceeds to force ISOTP_SHUTDOWN and continues to kfree(so->tx.buf)
+while sendmsg may still be reading so->tx.buf for the final CAN frame
+in isotp_fill_dataframe().
 
-    if (from < 0 || to < 0 || res < 0)
-        return;
+The so->tx.buf can be allocated once when the standard tx.buf length needs
+to be extended. Move the kfree() of this potentially extended tx.buf to
+sk_destruct time when either isotp_sendmsg() and isotp_release() are done.
 
-However, the loop and the result write then use the raw s8 fields directly
-instead of the computed variables:
-
-    for (i = crc8->from_idx; ...)        /* BUG: raw negative index */
-    cf->data[crc8->result_idx] = ...;    /* BUG: raw negative index */
-
-With from_idx = to_idx = result_idx = -64 on a 64-byte CAN FD frame,
-calc_idx(-64, 64) = 0 so the guard passes, but the loop iterates with
-i = -64, reading cf->data[-64], and the write goes to cf->data[-64].
-This write might end up to 56 (7.0-rc) or 40 (<= 6.19) bytes before the
-start of the canfd_frame on the heap.
-
-The companion function cgw_csum_xor_rel() uses `from`/`to`/`res`
-correctly throughout; fix cgw_csum_crc8_rel() to match.
-
-Confirmed with KASAN on linux-7.0-rc2:
-  BUG: KASAN: slab-out-of-bounds in cgw_csum_crc8_rel+0x515/0x5b0
-  Read of size 1 at addr ffff8880076619c8 by task poc_cgw_oob/62
-
-To configure the can-gw crc8 checksums CAP_NET_ADMIN is needed.
-
-Fixes: 456a8a646b25 ("can: gw: add support for CAN FD frames")
+Fixes: 96d1c81e6a04 ("can: isotp: add module parameter for maximum pdu size")
 Cc: stable@vger.kernel.org
 Reported-by: Ali Norouzi <ali.norouzi@keysight.com>
-Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Co-developed-by: Ali Norouzi <ali.norouzi@keysight.com>
 Signed-off-by: Ali Norouzi <ali.norouzi@keysight.com>
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260319-fix-can-gw-and-can-isotp-v2-1-c45d52c6d2d8@pengutronix.de
+Link: https://patch.msgid.link/20260319-fix-can-gw-and-can-isotp-v2-2-c45d52c6d2d8@pengutronix.de
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/gw.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/can/isotp.c |   24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
---- a/net/can/gw.c
-+++ b/net/can/gw.c
-@@ -374,10 +374,10 @@ static void cgw_csum_crc8_rel(struct can
- 		return;
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1227,12 +1227,6 @@ static int isotp_release(struct socket *
+ 	so->ifindex = 0;
+ 	so->bound = 0;
  
- 	if (from <= to) {
--		for (i = crc8->from_idx; i <= crc8->to_idx; i++)
-+		for (i = from; i <= to; i++)
- 			crc = crc8->crctab[crc ^ cf->data[i]];
- 	} else {
--		for (i = crc8->from_idx; i >= crc8->to_idx; i--)
-+		for (i = from; i >= to; i--)
- 			crc = crc8->crctab[crc ^ cf->data[i]];
- 	}
+-	if (so->rx.buf != so->rx.sbuf)
+-		kfree(so->rx.buf);
+-
+-	if (so->tx.buf != so->tx.sbuf)
+-		kfree(so->tx.buf);
+-
+ 	sock_orphan(sk);
+ 	sock->sk = NULL;
  
-@@ -396,7 +396,7 @@ static void cgw_csum_crc8_rel(struct can
- 		break;
- 	}
- 
--	cf->data[crc8->result_idx] = crc ^ crc8->final_xor_val;
-+	cf->data[res] = crc ^ crc8->final_xor_val;
+@@ -1600,6 +1594,21 @@ static int isotp_notifier(struct notifie
+ 	return NOTIFY_DONE;
  }
  
- static void cgw_csum_crc8_pos(struct canfd_frame *cf,
++static void isotp_sock_destruct(struct sock *sk)
++{
++	struct isotp_sock *so = isotp_sk(sk);
++
++	/* do the standard CAN sock destruct work */
++	can_sock_destruct(sk);
++
++	/* free potential extended PDU buffers */
++	if (so->rx.buf != so->rx.sbuf)
++		kfree(so->rx.buf);
++
++	if (so->tx.buf != so->tx.sbuf)
++		kfree(so->tx.buf);
++}
++
+ static int isotp_init(struct sock *sk)
+ {
+ 	struct isotp_sock *so = isotp_sk(sk);
+@@ -1646,6 +1655,9 @@ static int isotp_init(struct sock *sk)
+ 	list_add_tail(&so->notifier, &isotp_notifier_list);
+ 	spin_unlock(&isotp_notifier_lock);
+ 
++	/* re-assign default can_sock_destruct() reference */
++	sk->sk_destruct = isotp_sock_destruct;
++
+ 	return 0;
+ }
+ 
 
 
