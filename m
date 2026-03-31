@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7116425CC5;
-	Tue, 31 Mar 2026 16:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5771C861A;
+	Tue, 31 Mar 2026 16:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975347; cv=none; b=OSiod4pt52N6fDfMX2K5LtcOXShiBHXqLIG2yOdSJQ1bDfz/kHvvVIYbLiQTcr10+hihetNEzlpJjuXouMCjxZDuZGvAuhylIlDD9qsgUpXR15Hc6WhvETclBMcCQm8r8lipVFq1iBTAK2WO7EVbWD0Y4ft63swHc4a+SVIb6DY=
+	t=1774975349; cv=none; b=hCNhpOAp5SXoSpsHtEbljUlpR4JdP+UQ/1xAtVy34yd6ciOIfNgp6UeMzg4zCS4hFfBTxYRsbOlGXFKOX92JyqD1xH9THE8mOkstld9zm3LQvamBsQbdgcGVv2cKZnWxt4tvOQvqSCjV5fd/9Hii82FFL2i5GwPanKZ2fqx4cis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975347; c=relaxed/simple;
-	bh=Hv4NtBIqExsfAyGfkJkf2O4ipGWBSwpzoaATGTlOe9Y=;
+	s=arc-20240116; t=1774975349; c=relaxed/simple;
+	bh=YnfRW8WXJQLv9AfSUTpso4o+H4VEUH5oiFQKw5PLPxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LM5oRQKhfAkniAxixsBltwSTGavKr9xcNf9oF8ojD7dTZxbqx8iA+y63FkEcNs2JR66YJJz+saHHenYM7hgRfO2OVsaghI9yCO5kXdpCtIL2kBcyOn01hiDx+kQiJRuyxBjmbqt3fQQe7NreDMUWG/5T+XTAXqMPr3J+pChnHH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxa65kwn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mG1MufKJvWgyXoJhVC7qsPDPfoCdj9M8SDf+BRn+EvFs8VXLumoIf1h5Xf+XNXg2PLxSNjwkfFsvOW+Hh6ERzrMzRsj9kydj4KajRRrrlBEnIiVi616DLWWybL9m0SlACRKguDNkMqfvK6h13WvE2hcYirArLYusQJiugT9LlJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owxY/b+e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxa65kwn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FE9C19423;
-	Tue, 31 Mar 2026 16:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owxY/b+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3506EC19423;
+	Tue, 31 Mar 2026 16:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975346;
-	bh=Hv4NtBIqExsfAyGfkJkf2O4ipGWBSwpzoaATGTlOe9Y=;
+	s=korg; t=1774975349;
+	bh=YnfRW8WXJQLv9AfSUTpso4o+H4VEUH5oiFQKw5PLPxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxa65kwn4MQrgvZirV24+4hFhBQluaGKxgtn6u7dVf36z4LqdlbumWkeLXAbcyTzV
-	 pAaS7zz1MTvWWEjCV3W86dDiwCGYyxZpqOyrRuTPlhrUO9Tb5N+fLscG6n+5vZkpcn
-	 ugSiyqJc4Nyvqx2MUNQGtJcvbjeClYStoUs/h4Ok=
+	b=owxY/b+eYiPXAHLN7zqoDDuzSN/i7ar6e7Cbjzs6xnRNqMI8R38TedXklJl7REEh5
+	 p95hynRsufuSn8xIPyGvz1BXEOlED4JvwM45aT6vH6toxc6uy6bkC6b2P46krA5AT0
+	 cpW2KIAkS5wgpTPblm0ysnUBUjkb17GkBjd7cVEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joy Zou <joy.zou@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.19 259/342] dmaengine: fsl-edma: fix channel parameter config for fixed channel requests
-Date: Tue, 31 Mar 2026 18:21:32 +0200
-Message-ID: <20260331161808.486152151@linuxfoundation.org>
+Subject: [PATCH 6.19 260/342] dmaengine: sh: rz-dmac: Protect the driver specific lists
+Date: Tue, 31 Mar 2026 18:21:33 +0200
+Message-ID: <20260331161808.521576798@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,75 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joy Zou <joy.zou@nxp.com>
+From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 
-commit 2e7b5cf72e51c9cf9c8b75190189c757df31ddd9 upstream.
+commit abb863e6213dc41a58ef8bb3289b7e77460dabf3 upstream.
 
-Configure only the requested channel when a fixed channel is specified
-to avoid modifying other channels unintentionally.
+The driver lists (ld_free, ld_queue) are used in
+rz_dmac_free_chan_resources(), rz_dmac_terminate_all(),
+rz_dmac_issue_pending(), and rz_dmac_irq_handler_thread(), all under
+the virtual channel lock. Take the same lock in rz_dmac_prep_slave_sg()
+and rz_dmac_prep_dma_memcpy() as well to avoid concurrency issues, since
+these functions also check whether the lists are empty and update or
+remove list entries.
 
-Fix parameter configuration when a fixed DMA channel is requested on
-i.MX9 AON domain and i.MX8QM/QXP/DXL platforms. When a client requests
-a fixed channel (e.g., channel 6), the driver traverses channels 0-5
-and may unintentionally modify their configuration if they are unused.
-
-This leads to issues such as setting the `is_multi_fifo` flag unexpectedly,
-causing memcpy tests to fail when using the dmatest tool.
-
-Only affect edma memcpy test when the channel is fixed.
-
-Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
-Signed-off-by: Joy Zou <joy.zou@nxp.com>
+Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
 Cc: stable@vger.kernel.org
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250917-b4-edma-chanconf-v1-1-886486e02e91@nxp.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20260316133252.240348-2-claudiu.beznea.uj@bp.renesas.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/fsl-edma-main.c |   26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ drivers/dma/sh/rz-dmac.c |   63 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 35 insertions(+), 28 deletions(-)
 
---- a/drivers/dma/fsl-edma-main.c
-+++ b/drivers/dma/fsl-edma-main.c
-@@ -317,10 +317,8 @@ static struct dma_chan *fsl_edma3_xlate(
- 			return NULL;
- 		i = fsl_chan - fsl_edma->chans;
+--- a/drivers/dma/sh/rz-dmac.c
++++ b/drivers/dma/sh/rz-dmac.c
+@@ -10,6 +10,7 @@
+  */
  
--		fsl_chan->priority = dma_spec->args[1];
--		fsl_chan->is_rxchan = dma_spec->args[2] & FSL_EDMA_RX;
--		fsl_chan->is_remote = dma_spec->args[2] & FSL_EDMA_REMOTE;
--		fsl_chan->is_multi_fifo = dma_spec->args[2] & FSL_EDMA_MULTI_FIFO;
-+		if (!b_chmux && i != dma_spec->args[0])
-+			continue;
+ #include <linux/bitfield.h>
++#include <linux/cleanup.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/dmaengine.h>
+ #include <linux/interrupt.h>
+@@ -448,6 +449,7 @@ static int rz_dmac_alloc_chan_resources(
+ 		if (!desc)
+ 			break;
  
- 		if ((dma_spec->args[2] & FSL_EDMA_EVEN_CH) && (i & 0x1))
- 			continue;
-@@ -328,17 +326,15 @@ static struct dma_chan *fsl_edma3_xlate(
- 		if ((dma_spec->args[2] & FSL_EDMA_ODD_CH) && !(i & 0x1))
- 			continue;
- 
--		if (!b_chmux && i == dma_spec->args[0]) {
--			chan = dma_get_slave_channel(chan);
--			chan->device->privatecnt++;
--			return chan;
--		} else if (b_chmux && !fsl_chan->srcid) {
--			/* if controller support channel mux, choose a free channel */
--			chan = dma_get_slave_channel(chan);
--			chan->device->privatecnt++;
--			fsl_chan->srcid = dma_spec->args[0];
--			return chan;
--		}
-+		fsl_chan->srcid = dma_spec->args[0];
-+		fsl_chan->priority = dma_spec->args[1];
-+		fsl_chan->is_rxchan = dma_spec->args[2] & FSL_EDMA_RX;
-+		fsl_chan->is_remote = dma_spec->args[2] & FSL_EDMA_REMOTE;
-+		fsl_chan->is_multi_fifo = dma_spec->args[2] & FSL_EDMA_MULTI_FIFO;
-+
-+		chan = dma_get_slave_channel(chan);
-+		chan->device->privatecnt++;
-+		return chan;
++		/* No need to lock. This is called only for the 1st client. */
+ 		list_add_tail(&desc->node, &channel->ld_free);
+ 		channel->descs_allocated++;
  	}
- 	return NULL;
+@@ -503,18 +505,21 @@ rz_dmac_prep_dma_memcpy(struct dma_chan
+ 	dev_dbg(dmac->dev, "%s channel: %d src=0x%pad dst=0x%pad len=%zu\n",
+ 		__func__, channel->index, &src, &dest, len);
+ 
+-	if (list_empty(&channel->ld_free))
+-		return NULL;
++	scoped_guard(spinlock_irqsave, &channel->vc.lock) {
++		if (list_empty(&channel->ld_free))
++			return NULL;
++
++		desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
++
++		desc->type = RZ_DMAC_DESC_MEMCPY;
++		desc->src = src;
++		desc->dest = dest;
++		desc->len = len;
++		desc->direction = DMA_MEM_TO_MEM;
+ 
+-	desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
+-
+-	desc->type = RZ_DMAC_DESC_MEMCPY;
+-	desc->src = src;
+-	desc->dest = dest;
+-	desc->len = len;
+-	desc->direction = DMA_MEM_TO_MEM;
++		list_move_tail(channel->ld_free.next, &channel->ld_queue);
++	}
+ 
+-	list_move_tail(channel->ld_free.next, &channel->ld_queue);
+ 	return vchan_tx_prep(&channel->vc, &desc->vd, flags);
  }
+ 
+@@ -530,27 +535,29 @@ rz_dmac_prep_slave_sg(struct dma_chan *c
+ 	int dma_length = 0;
+ 	int i = 0;
+ 
+-	if (list_empty(&channel->ld_free))
+-		return NULL;
+-
+-	desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
++	scoped_guard(spinlock_irqsave, &channel->vc.lock) {
++		if (list_empty(&channel->ld_free))
++			return NULL;
++
++		desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
++
++		for_each_sg(sgl, sg, sg_len, i)
++			dma_length += sg_dma_len(sg);
++
++		desc->type = RZ_DMAC_DESC_SLAVE_SG;
++		desc->sg = sgl;
++		desc->sgcount = sg_len;
++		desc->len = dma_length;
++		desc->direction = direction;
++
++		if (direction == DMA_DEV_TO_MEM)
++			desc->src = channel->src_per_address;
++		else
++			desc->dest = channel->dst_per_address;
+ 
+-	for_each_sg(sgl, sg, sg_len, i) {
+-		dma_length += sg_dma_len(sg);
++		list_move_tail(channel->ld_free.next, &channel->ld_queue);
+ 	}
+ 
+-	desc->type = RZ_DMAC_DESC_SLAVE_SG;
+-	desc->sg = sgl;
+-	desc->sgcount = sg_len;
+-	desc->len = dma_length;
+-	desc->direction = direction;
+-
+-	if (direction == DMA_DEV_TO_MEM)
+-		desc->src = channel->src_per_address;
+-	else
+-		desc->dest = channel->dst_per_address;
+-
+-	list_move_tail(channel->ld_free.next, &channel->ld_queue);
+ 	return vchan_tx_prep(&channel->vc, &desc->vd, flags);
+ }
+ 
 
 
