@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B204279E4;
-	Tue, 31 Mar 2026 16:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1415042B749;
+	Tue, 31 Mar 2026 16:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975047; cv=none; b=AElOeqMTo34/JLBcwXmXUdEcX3YYhdYdedib2NyzkD0nIinMa7gZCECsTcFmsaM6ipotzWx+ph7sMm58iEljEJDhSv2sWvDabESuNy7zCf3mJUOKmoEXfabjIZZK0fRKO/SuBCFhewkU3y0URuuD4xG9U0G9p3cSRIxk+izT86Q=
+	t=1774975050; cv=none; b=Ubunj/W90LZkSFEo8DF90hw67k730OVNtPQUqDkHodHt0IK7SDytFkTLxnh2Ihca01hotPfkRihLQ8w45B/woMmf6/28S9hjaAZKvhPsYPH3efNyJKj8sX6PewVgYdS7acYevG1QNO11NtUzAlc62AJCraJX23QDU7PgwzsJOic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975047; c=relaxed/simple;
-	bh=6+hsLyzWe2GaiUt/WQB3k7Y0fhY3X2jZLi4hGTNrZKI=;
+	s=arc-20240116; t=1774975050; c=relaxed/simple;
+	bh=cpvaPajKKb7Hg0NhcM1DOLUywA/3Rjd3v093csPUYek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZ7XqKl39LCu6C89P4AuO9WhH30V2iuYx/eLw6Pika/SuxRHz8tQ9qgHUSe2otdyhglhkXs7qbR1vBGkTI2/yhrkYNV384MO14606v67wpeK38hYtr6mBGCF4sZlHsI80ji06iyzVKQKS5aiOUsN4fq9+/bgGQ6DfN0y2zH7TwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NeVOI3+3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+7vT+9iPMhLUKoMWJk9GIJlhlvLYlDUze5DMiNe/rP6kLEDwK6JRSQ/s76bc14cqFoC0GNC2EH9Hn0o+t1C/g9FzJGaz/gCbGVZSkyMp5XvtnGSzfjghdoypttuCZyrESmS/CwvExdWGozQppr20bqPQtA1+PZGGpxjQksREus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqHBsCQD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NeVOI3+3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C31C2BCB4;
-	Tue, 31 Mar 2026 16:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqHBsCQD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73745C19423;
+	Tue, 31 Mar 2026 16:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975047;
-	bh=6+hsLyzWe2GaiUt/WQB3k7Y0fhY3X2jZLi4hGTNrZKI=;
+	s=korg; t=1774975050;
+	bh=cpvaPajKKb7Hg0NhcM1DOLUywA/3Rjd3v093csPUYek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NeVOI3+3uInrweh0O7gpLdht22+UBH42ZjFiuprFawxi1crSA7cjy1f9qy2anXTVz
-	 jU497fYqRmNFoHUwb9vA2og3GQEfUmGXa8DGR1rZAZs/JOMN6VyCVSGnU+niHEnaWL
-	 bk9FHr3lwLSLeErJULQXEZSc5QPuja+ln4yAJHaQ=
+	b=vqHBsCQDh/DJJ+YK0bNCwyxFOuFLuNWLSm7vQzgv/zsdOlMfhoK8UA/+NlZyIz8jV
+	 6biubrnIJFnMMc5uscmwiOnjcXX86PrscAh/kx5zKxVrh6u8lIMUo4e1Vvy2mz7VOW
+	 +HwJ3Im6oTJX02/IH4tPvJUmPkAkUesEopyDTfTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 126/342] virtio-net: correct hdr_len handling for tunnel gso
-Date: Tue, 31 Mar 2026 18:19:19 +0200
-Message-ID: <20260331161803.642496543@linuxfoundation.org>
+Subject: [PATCH 6.19 144/342] netfilter: nf_conntrack_sip: fix use of uninitialized rtp_addr in process_sdp
+Date: Tue, 31 Mar 2026 18:19:37 +0200
+Message-ID: <20260331161804.306524900@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,78 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 6c860dc02a8e60b438e26940227dfa641fcdb66a ]
+[ Upstream commit 6a2b724460cb67caed500c508c2ae5cf012e4db4 ]
 
-The commit a2fb4bc4e2a6a03 ("net: implement virtio helpers to handle UDP
-GSO tunneling.") introduces support for the UDP GSO tunnel feature in
-virtio-net.
+process_sdp() declares union nf_inet_addr rtp_addr on the stack and
+passes it to the nf_nat_sip sdp_session hook after walking the SDP
+media descriptions. However rtp_addr is only initialized inside the
+media loop when a recognized media type with a non-zero port is found.
 
-The virtio spec says:
+If the SDP body contains no m= lines, only inactive media sections
+(m=audio 0 ...) or only unrecognized media types, rtp_addr is never
+assigned. Despite that, the function still calls hooks->sdp_session()
+with &rtp_addr, causing nf_nat_sdp_session() to format the stale stack
+value as an IP address and rewrite the SDP session owner and connection
+lines with it.
 
-    If the \field{gso_type} has the VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV4 bit or
-    VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV6 bit set, \field{hdr_len} accounts for
-    all the headers up to and including the inner transport.
+With CONFIG_INIT_STACK_ALL_ZERO (default on most distributions) this
+results in the session-level o= and c= addresses being rewritten to
+0.0.0.0 for inactive SDP sessions. Without stack auto-init the
+rewritten address is whatever happened to be on the stack.
 
-The commit did not update the hdr_len to include the inner transport.
+Fix this by pre-initializing rtp_addr from the session-level connection
+address (caddr) when available, and tracking via a have_rtp_addr flag
+whether any valid address was established. Skip the sdp_session hook
+entirely when no valid address exists.
 
-I observed that the "hdr_len" is 116 for this packet:
-
-    17:36:18.241105 52:55:00:d1:27:0a > 2e:2c:df:46:a9:e1, ethertype IPv4 (0x0800), length 2912: (tos 0x0, ttl 64, id 45197, offset 0, flags [none], proto UDP (17), length 2898)
-        192.168.122.100.50613 > 192.168.122.1.4789: [bad udp cksum 0x8106 -> 0x26a0!] VXLAN, flags [I] (0x08), vni 1
-    fa:c3:ba:82:05:ee > ce:85:0c:31:77:e5, ethertype IPv4 (0x0800), length 2862: (tos 0x0, ttl 64, id 14678, offset 0, flags [DF], proto TCP (6), length 2848)
-        192.168.3.1.49880 > 192.168.3.2.9898: Flags [P.], cksum 0x9266 (incorrect -> 0xaa20), seq 515667:518463, ack 1, win 64, options [nop,nop,TS val 2990048824 ecr 2798801412], length 2796
-
-116 = 14(mac) + 20(ip) + 8(udp) + 8(vxlan) + 14(inner mac) + 20(inner ip) + 32(innner tcp)
-
-Fixes: a2fb4bc4e2a6a03 ("net: implement virtio helpers to handle UDP GSO tunneling.")
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://patch.msgid.link/20260320021818.111741-3-xuanzhuo@linux.alibaba.com
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4ab9e64e5e3c ("[NETFILTER]: nf_nat_sip: split up SDP mangling")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_net.h | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ net/netfilter/nf_conntrack_sip.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index 361b60c8be680..f36d21b5bc19e 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -224,6 +224,22 @@ static inline void __virtio_net_set_hdrlen(const struct sk_buff *skb,
- 	hdr->hdr_len = __cpu_to_virtio16(little_endian, hdr_len);
- }
+diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
+index 4ab5ef71d96db..17af0ff4ea7ab 100644
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -1040,6 +1040,7 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
+ 	unsigned int port;
+ 	const struct sdp_media_type *t;
+ 	int ret = NF_ACCEPT;
++	bool have_rtp_addr = false;
  
-+/* This function must be called after virtio_net_hdr_from_skb(). */
-+static inline void __virtio_net_set_tnl_hdrlen(const struct sk_buff *skb,
-+					       struct virtio_net_hdr *hdr)
-+{
-+	u16 hdr_len;
-+
-+	hdr_len = skb_inner_transport_offset(skb);
-+
-+	if (hdr->gso_type == VIRTIO_NET_HDR_GSO_UDP_L4)
-+		hdr_len += sizeof(struct udphdr);
-+	else
-+		hdr_len += inner_tcp_hdrlen(skb);
-+
-+	hdr->hdr_len = __cpu_to_virtio16(true, hdr_len);
-+}
-+
- static inline int virtio_net_hdr_from_skb(const struct sk_buff *skb,
- 					  struct virtio_net_hdr *hdr,
- 					  bool little_endian,
-@@ -440,6 +456,9 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
- 	if (ret)
- 		return ret;
+ 	hooks = rcu_dereference(nf_nat_sip_hooks);
  
-+	if (feature_hdrlen && hdr->hdr_len)
-+		__virtio_net_set_tnl_hdrlen(skb, hdr);
-+
- 	if (skb->protocol == htons(ETH_P_IPV6))
- 		hdr->gso_type |= VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV6;
- 	else
+@@ -1056,8 +1057,11 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
+ 	caddr_len = 0;
+ 	if (ct_sip_parse_sdp_addr(ct, *dptr, sdpoff, *datalen,
+ 				  SDP_HDR_CONNECTION, SDP_HDR_MEDIA,
+-				  &matchoff, &matchlen, &caddr) > 0)
++				  &matchoff, &matchlen, &caddr) > 0) {
+ 		caddr_len = matchlen;
++		memcpy(&rtp_addr, &caddr, sizeof(rtp_addr));
++		have_rtp_addr = true;
++	}
+ 
+ 	mediaoff = sdpoff;
+ 	for (i = 0; i < ARRAY_SIZE(sdp_media_types); ) {
+@@ -1091,9 +1095,11 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
+ 					  &matchoff, &matchlen, &maddr) > 0) {
+ 			maddr_len = matchlen;
+ 			memcpy(&rtp_addr, &maddr, sizeof(rtp_addr));
+-		} else if (caddr_len)
++			have_rtp_addr = true;
++		} else if (caddr_len) {
+ 			memcpy(&rtp_addr, &caddr, sizeof(rtp_addr));
+-		else {
++			have_rtp_addr = true;
++		} else {
+ 			nf_ct_helper_log(skb, ct, "cannot parse SDP message");
+ 			return NF_DROP;
+ 		}
+@@ -1125,7 +1131,7 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
+ 
+ 	/* Update session connection and owner addresses */
+ 	hooks = rcu_dereference(nf_nat_sip_hooks);
+-	if (hooks && ct->status & IPS_NAT_MASK)
++	if (hooks && ct->status & IPS_NAT_MASK && have_rtp_addr)
+ 		ret = hooks->sdp_session(skb, protoff, dataoff,
+ 					 dptr, datalen, sdpoff,
+ 					 &rtp_addr);
 -- 
 2.51.0
 
