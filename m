@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663CA426EDA;
-	Tue, 31 Mar 2026 16:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012AE4266A3;
+	Tue, 31 Mar 2026 16:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975293; cv=none; b=ojRW2FXV3hLNq3SFx+VSLO9AlcnZ2RuZSnYizYWcR0i/t1KOb3q/AQSgMA/vCHtByiwsA3WllYzXJ2fXjhjQTofB1MzvShRrFz402G2S6ORbA7i9Mg1Kn01h0yMBGEzdOV/zpL7tiCA8KbvNx2DHZrz1J75kMdBzrkC82vltme8=
+	t=1774975296; cv=none; b=liuIUXHdG2aCc3dXZI4ux5qmArrSwmtb5PEw6NpKUNAEw29KhameLg5P7HEPXDPfzSI+nsEmr8fe6WMN8quMY4mXfrLdSyKxGut2Ilhea8jcTlC+yzdMEkJtpMkQD3hyN9Y/9vg+OH4gGdtZxoyWcgMm9+rCMfBXLokyr1j75PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975293; c=relaxed/simple;
-	bh=RPLNY0N2jb7GsIgtUnW1Xlm6qaOPurCeA5OdaORqZf8=;
+	s=arc-20240116; t=1774975296; c=relaxed/simple;
+	bh=kJ0XO87WHYVlOTW9moxSuXdfGHh0De656HAZf1GFtFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QzaI0kuMDL1JWBU8WO5KFDEripte44sbBH/V7U+epqyhyvCfOn9OEY1dBRq21mvD3CsjXvlbCZvF+WqLTCPl9mOHbdi7tHaeIwpSoYLztIkyPj2vd+UmmupcmP8CLsFtDb7NrYMsrp/D9VdwclHOdyAQwf8bDNeyp7fSFO6NyUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAjpHJ74; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KSCsrSgADm3fIMdG0vkrLYs8jS/XmP3RPCbj923OnHQ3R7ACFO+cVMWlioTVvaw0eNyfKyibfm2Pdu0EzcVbH4oQ6/nSdUBgEQrwTc6dU9Ed1c+TbiVcq46IOk1z3aURdxK+POdR3NjUt9eoqWd0EamYwoOtbyEH+/SD/HG9A9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwziQXQN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAjpHJ74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03F5C19423;
-	Tue, 31 Mar 2026 16:41:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwziQXQN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0C6C19423;
+	Tue, 31 Mar 2026 16:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975293;
-	bh=RPLNY0N2jb7GsIgtUnW1Xlm6qaOPurCeA5OdaORqZf8=;
+	s=korg; t=1774975295;
+	bh=kJ0XO87WHYVlOTW9moxSuXdfGHh0De656HAZf1GFtFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gAjpHJ74lfXD8cvyvegEJylcw9JZ8IfI38UoyNDPF3+8zHG5H6bjBAlP/g9FO6s/L
-	 UJxstKG/j8XoMpV1tBPXN8PwlSAhqaijAU+GCzeH8l0Zu62EYNgO/iKiulh3oT2kMg
-	 MzJdPDCeRL/SGZ/GspvADXq9h83xaN6Ukjzaeey0=
+	b=RwziQXQNRu2mHsM3FVTkgMMZ5Im27gT6QOO6StkmzgP7nrsNc7MDPKsTbjhVWw3tE
+	 /pNQFgYbkethjxhjp3goE/sGPiQdlj35Rf+9qpWxITPmvSTjA1sunCAqzQmGbLfOzO
+	 tOFldrA6k6u7BqfwhuD9HAtbar8LqI4qroqCBvZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	stable@kernel.org
-Subject: [PATCH 6.19 195/342] s390/syscalls: Add spectre boundary for syscall dispatch table
-Date: Tue, 31 Mar 2026 18:20:28 +0200
-Message-ID: <20260331161806.168552154@linuxfoundation.org>
+	Zubin Mithra <zsm@google.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Subject: [PATCH 6.19 232/342] virt: tdx-guest: Fix handling of host controlled quote buffer length
+Date: Tue, 31 Mar 2026 18:21:05 +0200
+Message-ID: <20260331161807.505365800@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -55,53 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Zubin Mithra <zsm@google.com>
 
-commit 48b8814e25d073dd84daf990a879a820bad2bcbd upstream.
+commit c3fd16c3b98ed726294feab2f94f876290bf7b61 upstream.
 
-The s390 syscall number is directly controlled by userspace, but does
-not have an array_index_nospec() boundary to prevent access past the
-syscall function pointer tables.
+Validate host controlled value `quote_buf->out_len` that determines how
+many bytes of the quote are copied out to guest userspace. In TDX
+environments with remote attestation, quotes are not considered private,
+and can be forwarded to an attestation server.
 
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Fixes: 56e62a737028 ("s390: convert to generic entry")
-Cc: stable@kernel.org
-Assisted-by: gkh_clanker_2000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Link: https://lore.kernel.org/r/2026032404-sterling-swoosh-43e6@gregkh
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Catch scenarios where the host specifies a response length larger than
+the guest's allocation, or otherwise races modifying the response while
+the guest consumes it.
+
+This prevents contents beyond the pages allocated for `quote_buf`
+(up to TSM_REPORT_OUTBLOB_MAX) from being read out to guest userspace,
+and possibly forwarded in attestation requests.
+
+Recall that some deployments want per-container configs-tsm-report
+interfaces, so the leak may cross container protection boundaries, not
+just local root.
+
+Fixes: f4738f56d1dc ("virt: tdx-guest: Add Quote generation support using TSM_REPORTS")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zubin Mithra <zsm@google.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/syscall.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/virt/coco/tdx-guest/tdx-guest.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kernel/syscall.c
-+++ b/arch/s390/kernel/syscall.c
-@@ -13,6 +13,7 @@
-  */
+--- a/drivers/virt/coco/tdx-guest/tdx-guest.c
++++ b/drivers/virt/coco/tdx-guest/tdx-guest.c
+@@ -169,6 +169,8 @@ static void tdx_mr_deinit(const struct a
+ #define GET_QUOTE_SUCCESS		0
+ #define GET_QUOTE_IN_FLIGHT		0xffffffffffffffff
  
- #include <linux/cpufeature.h>
-+#include <linux/nospec.h>
- #include <linux/errno.h>
- #include <linux/sched.h>
- #include <linux/mm.h>
-@@ -131,8 +132,10 @@ void noinstr __do_syscall(struct pt_regs
- 	if (unlikely(test_and_clear_pt_regs_flag(regs, PIF_SYSCALL_RET_SET)))
- 		goto out;
- 	regs->gprs[2] = -ENOSYS;
--	if (likely(nr < NR_syscalls))
-+	if (likely(nr < NR_syscalls)) {
-+		nr = array_index_nospec(nr, NR_syscalls);
- 		regs->gprs[2] = sys_call_table[nr](regs);
-+	}
- out:
- 	syscall_exit_to_user_mode(regs);
- }
++#define TDX_QUOTE_MAX_LEN		(GET_QUOTE_BUF_SIZE - sizeof(struct tdx_quote_buf))
++
+ /* struct tdx_quote_buf: Format of Quote request buffer.
+  * @version: Quote format version, filled by TD.
+  * @status: Status code of Quote request, filled by VMM.
+@@ -267,6 +269,7 @@ static int tdx_report_new_locked(struct
+ 	u8 *buf;
+ 	struct tdx_quote_buf *quote_buf = quote_data;
+ 	struct tsm_report_desc *desc = &report->desc;
++	u32 out_len;
+ 	int ret;
+ 	u64 err;
+ 
+@@ -304,12 +307,17 @@ static int tdx_report_new_locked(struct
+ 		return ret;
+ 	}
+ 
+-	buf = kvmemdup(quote_buf->data, quote_buf->out_len, GFP_KERNEL);
++	out_len = READ_ONCE(quote_buf->out_len);
++
++	if (out_len > TDX_QUOTE_MAX_LEN)
++		return -EFBIG;
++
++	buf = kvmemdup(quote_buf->data, out_len, GFP_KERNEL);
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+ 	report->outblob = buf;
+-	report->outblob_len = quote_buf->out_len;
++	report->outblob_len = out_len;
+ 
+ 	/*
+ 	 * TODO: parse the PEM-formatted cert chain out of the quote buffer when
 
 
