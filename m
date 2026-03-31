@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03522413258;
-	Tue, 31 Mar 2026 16:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890A3413225;
+	Tue, 31 Mar 2026 16:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975565; cv=none; b=gBAHQBCZjfebK1VnRH72P1hUBvCJ2GCEoktmWSikOzKZkvjmSYCg9+aJYXfB/0/Sko+2eLg6K/8kAJ26ZbU+S1kJOMFiWuYbqAZDPFVXhlLRjhuanS85lKGDX+HxpDNJy92n3+TgrYpXcP0CpXum2vUubxLUIA5bbNG9lOhshYc=
+	t=1774975567; cv=none; b=sRQWIzxU8NiHklzt4XesID+BjJ9AO5e+axJHs1f3fhdDI6qmJrlkfrzTjYWsI90MohJY1tuZmi1BIFcY2XpDTQE+vcJQY/tkBDc9a5X/LPPHuxwV5TaQ8NspulMLkNgWt3RTrP05/u1A9cUpLfGBN2MW6wp/+DL90FZsR43jjJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975565; c=relaxed/simple;
-	bh=rtVFecSvs0kjaSQ91aaU9xmmqdCFXKGADyttldemOY4=;
+	s=arc-20240116; t=1774975567; c=relaxed/simple;
+	bh=BQhnZKFaG+SJ6eJMeXktkAjKMzQ7b+pXtSwgvZ6tgsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HUMKjp8fBUqA0h/b08uJIexFTzVy+8XoudTm9SlZAuSNHXsNqRLytm3KXlDyEmZwPCioiMQzjUTEEezeuyv+mhh5gRRjK3UXkyTlzxizUXTDB1ZMys/tzroGK6nvLQfVAAlZ2Uk8yHI+6YdXOxQqiVW4xurmfPUzdRwVnTny6YA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tG3fUU8P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qoJAvVc0Io7B+HosKd3z/FTYhUOFwQGa628uFfmnDjiwoIkXqQ/S8wBOjVcYbsq8urwnDyKCO2fcECP8VacWbedWZcX2vrqCetecw69nsDgUkXczwn8uiux8ZouWie2sZ5U7Dthj6URWbZu3vC5cDUv+BdhxBGal2hD8+tl8ado=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NixEd2Zw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tG3fUU8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841EAC19423;
-	Tue, 31 Mar 2026 16:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NixEd2Zw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B637C19423;
+	Tue, 31 Mar 2026 16:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975564;
-	bh=rtVFecSvs0kjaSQ91aaU9xmmqdCFXKGADyttldemOY4=;
+	s=korg; t=1774975567;
+	bh=BQhnZKFaG+SJ6eJMeXktkAjKMzQ7b+pXtSwgvZ6tgsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tG3fUU8Pt38NAaOtf1XOwEkcaV5Ui+38RDcbCgbX61+K/OCdwLghnkkou+96asR/N
-	 79Bo77FDhQwqnfiLrvrXQ8st3XfUD+Nn5FLtCPyyGW7HYlsqAY77z5oCMnryf3ZE4K
-	 KS7MAk0LHhix2PBUNIIHIZNiVllscYeb9JJ/cKgs=
+	b=NixEd2ZwALzERLSPfBmusP29/Gir7qYmVKxhPO9YrCjjBsXVFd29XyqJpnU5KslOM
+	 ihk7hMKUdhWXepwP5U+1PetbBydJ/oSbTKvp8ndeFVXhGQxCeH7hxkoIlYqFHUaIE2
+	 jPFvyaMOmxdseXSQeq94LrpBrLQl3iGTS2VE9dd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 310/342] mm/damon/core: avoid use of half-online-committed context
-Date: Tue, 31 Mar 2026 18:22:23 +0200
-Message-ID: <20260331161810.330097263@linuxfoundation.org>
+	Benno Lossin <lossin@kernel.org>,
+	Gary Guo <gary@garyguo.net>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.19 311/342] rust: pin-init: internal: init: document load-bearing fact of field accessors
+Date: Tue, 31 Mar 2026 18:22:24 +0200
+Message-ID: <20260331161810.367450981@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -50,121 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Benno Lossin <lossin@kernel.org>
 
-commit 26f775a054c3cda86ad465a64141894a90a9e145 upstream.
+[ Upstream commit 580cc37b1de4fcd9997c48d7080e744533f09f36 ]
 
-One major usage of damon_call() is online DAMON parameters update.  It is
-done by calling damon_commit_ctx() inside the damon_call() callback
-function.  damon_commit_ctx() can fail for two reasons: 1) invalid
-parameters and 2) internal memory allocation failures.  In case of
-failures, the damon_ctx that attempted to be updated (commit destination)
-can be partially updated (or, corrupted from a perspective), and therefore
-shouldn't be used anymore.  The function only ensures the damon_ctx object
-can safely deallocated using damon_destroy_ctx().
+The functions `[Pin]Init::__[pinned_]init` and `ptr::write` called from
+the `init!` macro require the passed pointer to be aligned. This fact is
+ensured by the creation of field accessors to previously initialized
+fields.
 
-The API callers are, however, calling damon_commit_ctx() only after
-asserting the parameters are valid, to avoid damon_commit_ctx() fails due
-to invalid input parameters.  But it can still theoretically fail if the
-internal memory allocation fails.  In the case, DAMON may run with the
-partially updated damon_ctx.  This can result in unexpected behaviors
-including even NULL pointer dereference in case of damos_commit_dests()
-failure [1].  Such allocation failure is arguably too small to fail, so
-the real world impact would be rare.  But, given the bad consequence, this
-needs to be fixed.
+Since we missed this very important fact from the beginning [1],
+document it in the code.
 
-Avoid such partially-committed (maybe-corrupted) damon_ctx use by saving
-the damon_commit_ctx() failure on the damon_ctx object.  For this,
-introduce damon_ctx->maybe_corrupted field.  damon_commit_ctx() sets it
-when it is failed.  kdamond_call() checks if the field is set after each
-damon_call_control->fn() is executed.  If it is set, ignore remaining
-callback requests and return.  All kdamond_call() callers including
-kdamond_fn() also check the maybe_corrupted field right after
-kdamond_call() invocations.  If the field is set, break the kdamond_fn()
-main loop so that DAMON sill doesn't use the context that might be
-corrupted.
-
-[sj@kernel.org: let kdamond_call() with cancel regardless of maybe_corrupted]
-  Link: https://lkml.kernel.org/r/20260320031553.2479-1-sj@kernel.org
-  Link: https://sashiko.dev/#/patchset/20260319145218.86197-1-sj%40kernel.org
-Link: https://lkml.kernel.org/r/20260319145218.86197-1-sj@kernel.org
-Link: https://lore.kernel.org/20260319043309.97966-1-sj@kernel.org [1]
-Fixes: 3301f1861d34 ("mm/damon/sysfs: handle commit command using damon_call()")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.15+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Link: https://rust-for-linux.zulipchat.com/#narrow/channel/561532-pin-init/topic/initialized.20field.20accessor.20detection/with/576210658 [1]
+Fixes: 90e53c5e70a6 ("rust: add pin-init API core")
+Cc: <stable@vger.kernel.org> # 6.6.y, 6.12.y: 42415d163e5d: rust: pin-init: add references to previously initialized fields
+Cc: <stable@vger.kernel.org> # 6.6.y, 6.12.y, 6.18.y, 6.19.y
+Signed-off-by: Benno Lossin <lossin@kernel.org>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20260302140424.4097655-2-lossin@kernel.org
+[ Updated Cc: stable@ tags as discussed. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+[ Moved changes to the declarative macro, because 6.19.y and earlier do not
+  have `syn`. Also duplicated the comment for all field accessor creations.
+  - Benno ]
+Signed-off-by: Benno Lossin <lossin@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/damon.h |    7 +++++++
- mm/damon/core.c       |    9 ++++++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ rust/pin-init/src/macros.rs |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -806,7 +806,14 @@ struct damon_ctx {
- 	struct damos_walk_control *walk_control;
- 	struct mutex walk_control_lock;
+--- a/rust/pin-init/src/macros.rs
++++ b/rust/pin-init/src/macros.rs
+@@ -1312,6 +1312,10 @@ macro_rules! __init_internal {
+         // return when an error/panic occurs.
+         // We also use the `data` to require the correct trait (`Init` or `PinInit`) for `$field`.
+         unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field), init)? };
++        // NOTE: the field accessor ensures that the initialized field is properly aligned.
++        // Unaligned fields will cause the compiler to emit E0793. We do not support
++        // unaligned fields since `Init::__init` requires an aligned pointer; the call to
++        // `ptr::write` below has the same requirement.
+         // SAFETY:
+         // - the project function does the correct field projection,
+         // - the field has been initialized,
+@@ -1351,6 +1355,10 @@ macro_rules! __init_internal {
+         // return when an error/panic occurs.
+         unsafe { $crate::Init::__init(init, ::core::ptr::addr_of_mut!((*$slot).$field))? };
  
-+	/*
-+	 * indicate if this may be corrupted.  Currentonly this is set only for
-+	 * damon_commit_ctx() failure.
-+	 */
-+	bool maybe_corrupted;
-+
- /* public: */
-+	/* Working thread of the given DAMON context */
- 	struct task_struct *kdamond;
- 	struct mutex kdamond_lock;
++        // NOTE: the field accessor ensures that the initialized field is properly aligned.
++        // Unaligned fields will cause the compiler to emit E0793. We do not support
++        // unaligned fields since `Init::__init` requires an aligned pointer; the call to
++        // `ptr::write` below has the same requirement.
+         // SAFETY:
+         // - the field is not structurally pinned, since the line above must compile,
+         // - the field has been initialized,
+@@ -1391,6 +1399,10 @@ macro_rules! __init_internal {
+             unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
+         }
  
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1241,6 +1241,7 @@ int damon_commit_ctx(struct damon_ctx *d
- {
- 	int err;
- 
-+	dst->maybe_corrupted = true;
- 	if (!is_power_of_2(src->min_region_sz))
- 		return -EINVAL;
- 
-@@ -1266,6 +1267,7 @@ int damon_commit_ctx(struct damon_ctx *d
- 	dst->addr_unit = src->addr_unit;
- 	dst->min_region_sz = src->min_region_sz;
- 
-+	dst->maybe_corrupted = false;
- 	return 0;
- }
- 
-@@ -2610,10 +2612,11 @@ static void kdamond_call(struct damon_ct
- 			complete(&control->completion);
- 		} else if (control->canceled && control->dealloc_on_cancel) {
- 			kfree(control);
--			continue;
- 		} else {
- 			list_add(&control->list, &repeat_controls);
- 		}
-+		if (!cancel && ctx->maybe_corrupted)
-+			break;
- 	}
- 	control = list_first_entry_or_null(&repeat_controls,
- 			struct damon_call_control, list);
-@@ -2646,6 +2649,8 @@ static int kdamond_wait_activation(struc
- 		kdamond_usleep(min_wait_time);
- 
- 		kdamond_call(ctx, false);
-+		if (ctx->maybe_corrupted)
-+			return -EINVAL;
- 		damos_walk_cancel(ctx);
- 	}
- 	return -EBUSY;
-@@ -2731,6 +2736,8 @@ static int kdamond_fn(void *data)
- 		 * kdamond_merge_regions() if possible, to reduce overhead
- 		 */
- 		kdamond_call(ctx, false);
-+		if (ctx->maybe_corrupted)
-+			break;
- 		if (!list_empty(&ctx->schemes))
- 			kdamond_apply_schemes(ctx);
- 		else
++        // NOTE: the field accessor ensures that the initialized field is properly aligned.
++        // Unaligned fields will cause the compiler to emit E0793. We do not support
++        // unaligned fields since `Init::__init` requires an aligned pointer; the call to
++        // `ptr::write` below has the same requirement.
+         #[allow(unused_variables)]
+         // SAFETY:
+         // - the field is not structurally pinned, since no `use_data` was required to create this
+@@ -1431,6 +1443,10 @@ macro_rules! __init_internal {
+             // SAFETY: The memory at `slot` is uninitialized.
+             unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
+         }
++        // NOTE: the field accessor ensures that the initialized field is properly aligned.
++        // Unaligned fields will cause the compiler to emit E0793. We do not support
++        // unaligned fields since `Init::__init` requires an aligned pointer; the call to
++        // `ptr::write` below has the same requirement.
+         // SAFETY:
+         // - the project function does the correct field projection,
+         // - the field has been initialized,
 
 
