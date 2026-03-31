@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660A530E0DC;
-	Tue, 31 Mar 2026 16:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417F830E0DC;
+	Tue, 31 Mar 2026 16:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974410; cv=none; b=feAAd2EwQKtP5N1HLtGZRuINGX8/pBvN5ZqkqnkmB8KkBVavpBGz6Ef965jZZekxqoKUlL9tVSv4qsz8lQyd+6WpOxpKf8RfCwfCT12oK3OtuqWyhPB6W7dkJuuMWkWTlzsc5C5KI7EWBPauPb19GMGK/wvIdxwguFRsGm19RB8=
+	t=1774974413; cv=none; b=DNkc8Ka/SLHIVIDh4Upo4tKz57n7NF0jhB3PekjrMznQMwMoS6U4Xs0HvppzojnFJmLIDVrnxfhjYrQWnOZyRa/QOpxSxglbkZ/w2ykF6uO3Uw8HNBIeXgFcbM31IrHt4jAy+bt1n1aoZPGUjLD39teGohxaa4dBQG8hK/wezu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974410; c=relaxed/simple;
-	bh=CFz220xVR05Q5i3Sw4Ftfkz8FdsCM0Y4A7rzWEfFTLU=;
+	s=arc-20240116; t=1774974413; c=relaxed/simple;
+	bh=jEOtWODDj0eimGVtCsjcOYJedYf228cQPCL5844q6/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwE30disoaTCCVrB9fH8e+o3NWUExuPT2WBuRvLBZd+DkJXMw7MzXlfHbVCLsnmpccLxkffci+ec/wiMW9yYu6OC3FtsWIeNzaNLxGsCUkdf/MzFsPN9KN4K+5tEvOC4EyOJhYn+lWR7SRZY5n9j3OL5ztEQkv+DfWThA2orO88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESiVXruu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A4T3bb1VRDS+rJdR8hwatVJXRU00nlzeOYBqPsqSvxWtMenxfv8OtMP7p38QTph226i0FkL/RdL5kyNyER4PaVxEtiaL+N3DiUH3ko1uRmTtu7MKs9Csh+LcanCNcZPUlrAvfPg3PB+oixhf1UE4cx9Tys+DJ8adt3RQLzg9MA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwsRW49/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESiVXruu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AE1C19423;
-	Tue, 31 Mar 2026 16:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwsRW49/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B8CC19424;
+	Tue, 31 Mar 2026 16:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974410;
-	bh=CFz220xVR05Q5i3Sw4Ftfkz8FdsCM0Y4A7rzWEfFTLU=;
+	s=korg; t=1774974412;
+	bh=jEOtWODDj0eimGVtCsjcOYJedYf228cQPCL5844q6/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ESiVXruuv4O5x90yMRSfXj56BHxb3KmXOCP933T/CpgN0kSdaZfX5cARcX4m6MSXG
-	 o1ozK0xHrcbTxHJn+EHb+11N254HWDp/b1cc+zgRFkgqAxd0bpFfjLE51qR99Nzx+t
-	 u4aikRCczDHI4tB+Nd3nNJtt0XFc68ZG1uoiz4SI=
+	b=cwsRW49/JYRouDaikzD/ik3S92T1jrOEKDJ+k3HgrU6YuHsc19tAcFlhsY1JhuHQe
+	 aHZsoZj4K4sWhHtU2oy/5t7Ga10E2RaaukG3cD4wVdYfnPcVSqbKtLNAQNhHlByXqz
+	 O3r+KdwxNonv2f1oVkbt9I3oWxMxWFb+EZIGWw1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helen Koike <koike@igalia.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/175] Bluetooth: L2CAP: Fix null-ptr-deref on l2cap_sock_ready_cb
-Date: Tue, 31 Mar 2026 18:20:26 +0200
-Message-ID: <20260331161731.331658328@linuxfoundation.org>
+Subject: [PATCH 6.6 043/175] pinctrl: mediatek: common: Fix probe failure for devices without EINT
+Date: Tue, 31 Mar 2026 18:20:27 +0200
+Message-ID: <20260331161731.368170284@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,103 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helen Koike <koike@igalia.com>
+From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
 
-[ Upstream commit b6552e0503973daf6f23bd6ed9273ef131ee364f ]
+[ Upstream commit 8f9f64c8f90dca07d3b9f1d7ce5d34ccd246c9dd ]
 
-Before using sk pointer, check if it is null.
+Some pinctrl devices like mt6397 or mt6392 don't support EINT at all, but
+the mtk_eint_init function is always called and returns -ENODEV, which
+then bubbles up and causes probe failure.
 
-Fix the following:
+To address this only call mtk_eint_init if EINT pins are present.
 
- KASAN: null-ptr-deref in range [0x0000000000000260-0x0000000000000267]
- CPU: 0 UID: 0 PID: 5985 Comm: kworker/0:5 Not tainted 7.0.0-rc4-00029-ga989fde763f4 #1 PREEMPT(full)
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-9.fc43 06/10/2025
- Workqueue: events l2cap_info_timeout
- RIP: 0010:kasan_byte_accessible+0x12/0x30
- Code: 79 ff ff ff 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 40 d6 48 c1 ef 03 48 b8 00 00 00 00 00 fc ff df <0f> b6 04 07 3c 08 0f 92 c0 c3 cc cce
- veth0_macvtap: entered promiscuous mode
- RSP: 0018:ffffc90006e0f808 EFLAGS: 00010202
- RAX: dffffc0000000000 RBX: ffffffff89746018 RCX: 0000000080000001
- RDX: 0000000000000000 RSI: ffffffff89746018 RDI: 000000000000004c
- RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
- R10: dffffc0000000000 R11: ffffffff8aae3e70 R12: 0000000000000000
- R13: 0000000000000260 R14: 0000000000000260 R15: 0000000000000001
- FS:  0000000000000000(0000) GS:ffff8880983c2000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00005582615a5008 CR3: 000000007007e000 CR4: 0000000000752ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  __kasan_check_byte+0x12/0x40
-  lock_acquire+0x79/0x2e0
-  lock_sock_nested+0x48/0x100
-  ? l2cap_sock_ready_cb+0x46/0x160
-  l2cap_sock_ready_cb+0x46/0x160
-  l2cap_conn_start+0x779/0xff0
-  ? __pfx_l2cap_conn_start+0x10/0x10
-  ? l2cap_info_timeout+0x60/0xa0
-  ? __pfx___mutex_lock+0x10/0x10
-  l2cap_info_timeout+0x68/0xa0
-  ? process_scheduled_works+0xa8d/0x18c0
-  process_scheduled_works+0xb6e/0x18c0
-  ? __pfx_process_scheduled_works+0x10/0x10
-  ? assign_work+0x3d5/0x5e0
-  worker_thread+0xa53/0xfc0
-  kthread+0x388/0x470
-  ? __pfx_worker_thread+0x10/0x10
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x51e/0xb90
-  ? __pfx_ret_from_fork+0x10/0x10
- veth1_macvtap: entered promiscuous mode
-  ? __switch_to+0xc7d/0x1450
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- Modules linked in:
- ---[ end trace 0000000000000000 ]---
- batman_adv: batadv0: Interface activated: batadv_slave_0
- batman_adv: batadv0: Interface activated: batadv_slave_1
- netdevsim netdevsim7 netdevsim0: set [1, 0] type 2 family 0 port 6081 - 0
- netdevsim netdevsim7 netdevsim1: set [1, 0] type 2 family 0 port 6081 - 0
- netdevsim netdevsim7 netdevsim2: set [1, 0] type 2 family 0 port 6081 - 0
- netdevsim netdevsim7 netdevsim3: set [1, 0] type 2 family 0 port 6081 - 0
- RIP: 0010:kasan_byte_accessible+0x12/0x30
- Code: 79 ff ff ff 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 40 d6 48 c1 ef 03 48 b8 00 00 00 00 00 fc ff df <0f> b6 04 07 3c 08 0f 92 c0 c3 cc cce
- ieee80211 phy39: Selected rate control algorithm 'minstrel_ht'
- RSP: 0018:ffffc90006e0f808 EFLAGS: 00010202
- RAX: dffffc0000000000 RBX: ffffffff89746018 RCX: 0000000080000001
- RDX: 0000000000000000 RSI: ffffffff89746018 RDI: 000000000000004c
- RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
- R10: dffffc0000000000 R11: ffffffff8aae3e70 R12: 0000000000000000
- R13: 0000000000000260 R14: 0000000000000260 R15: 0000000000000001
- FS:  0000000000000000(0000) GS:ffff8880983c2000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007f7e16139e9c CR3: 000000000e74e000 CR4: 0000000000752ef0
- PKRU: 55555554
- Kernel panic - not syncing: Fatal exception
+Tested on Xiaomi Mi Smart Clock x04g (mt6392).
 
-Fixes: 54a59aa2b562 ("Bluetooth: Add l2cap_chan->ops->ready()")
-Signed-off-by: Helen Koike <koike@igalia.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: e46df235b4e6 ("pinctrl: mediatek: refactor EINT related code for all MediaTek pinctrl can fit")
+Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/mediatek/pinctrl-mtk-common.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 250cc0bc552e0..1960d35b3be0a 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1665,6 +1665,9 @@ static void l2cap_sock_ready_cb(struct l2cap_chan *chan)
- 	struct sock *sk = chan->data;
- 	struct sock *parent;
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
+index 74b15952b742e..7066fab7621e9 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
+@@ -1133,9 +1133,12 @@ int mtk_pctrl_init(struct platform_device *pdev,
+ 		goto chip_error;
+ 	}
  
-+	if (!sk)
-+		return;
-+
- 	lock_sock(sk);
+-	ret = mtk_eint_init(pctl, pdev);
+-	if (ret)
+-		goto chip_error;
++	/* Only initialize EINT if we have EINT pins */
++	if (data->eint_hw.ap_num > 0) {
++		ret = mtk_eint_init(pctl, pdev);
++		if (ret)
++			goto chip_error;
++	}
  
- 	parent = bt_sk(sk)->parent;
+ 	return 0;
+ 
 -- 
 2.51.0
 
