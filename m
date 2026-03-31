@@ -1,111 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F98128507E;
-	Tue, 31 Mar 2026 11:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72FC423A62;
+	Tue, 31 Mar 2026 15:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774956646; cv=none; b=rWJCa3GgC/kuHjFxRVckOz5n9U6N5vtf+Psw9jiPS1Fn/yp/avcXP23B0O3+NmnVxN5iTpNTNltDBwoGPjD/VKmNyTrvaMXplffVlUlBMO6LiJEooA53x55AISrEI0C9TnA8mHc4+Lj610RIqAicUB7Bn/Gs7xiF8/87ZlTE4SQ=
+	t=1774971503; cv=none; b=JLXgMz9Ifw0xZFmVPzXft1OCx9IMy9A/Vt9ycu+Q9gW5Rkxd5APvTz7BEXJbd0VhwNNc2VGflAPyiV8BzDNdN70jFj/URZBEF2DiVPeR8mP89QqrE0GJ0GS50Yb2aAq/G52sMEB1ruRqMZ2wCn3MSMD4LTAEt/b7zxvMnBEOGyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774956646; c=relaxed/simple;
-	bh=CCUP4sHYCQ9axw7943rER5xM/KZ1AUs+kGKRSkEffmc=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=JPt7Zb7F2MNwVG0JleoRcDnebIz1+duDABVqch6TNl1I7QRUt+b2e9SxT/+8+or5rwcg1/l0dYsZpy+W8LOQg9hzTPHh0uL5GbcHyI5/3btDVoJnOZGsnYmiUWQ89hzQc0Z+AB2pMb9ejxNWJWd7lfJVUF8ZDqu9fPBmNeTkmtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjzGfbrc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774971503; c=relaxed/simple;
+	bh=Yb4OkI2lEqPgmQxRKGJSkL8RVqJUE5jHBisHEcfMpvg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ABCk9aztLjGKMrpcmuk9+ALlhEE8Henosy1TNN2AY6pR8QvZON7DKGiwYDhLc+6PTGhUtNE3YojL972p1VqkVdJYEzkj0oRvc/OQfRtN5r00mCoDnOf2jQgz8fAfcryutJygqkK28aYu1vOYGeFoihWayILxhNI7GQdGUj2GjpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=prKcdYCr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjzGfbrc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C424FC19423;
-	Tue, 31 Mar 2026 11:30:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774956646;
-	bh=CCUP4sHYCQ9axw7943rER5xM/KZ1AUs+kGKRSkEffmc=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=BjzGfbrcnXGWiW9k25HwLiyEozu/Ckerj8dWUv/smgHmYJZ5FVv5V4TxnXGwmtCbY
-	 zy5B2TZ1zgsJcceDcZf6uuFXAn+qNUJN2OWLqBtC4DlyvvrmDgG80WECActMxf6ocn
-	 s2+w7/6M2DOHFFyEf8ZCbZgmdRTnZTQXNpwrUfMM=
-Subject: Patch "nvme: fix admin queue leak on controller reset" has been added to the 6.6-stable tree
-To: 1468888505@139.com,axboe@fb.com,gregkh@linuxfoundation.org,hare@suse.de,hch@lst.de,kbusch@kernel.org,kch@nvidia.com,linux-nvme@lists.infradead.org,ming.lei@redhat.com,patches@lists.linux.dev,sagi@grimberg.me,yi.zhang@redhat.com
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Tue, 31 Mar 2026 13:30:22 +0200
-In-Reply-To: <20260331073659.3136206-1-1468888505@139.com>
-Message-ID: <2026033122-stood-unaligned-08af@gregkh>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="prKcdYCr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C17C19423;
+	Tue, 31 Mar 2026 15:38:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774971503;
+	bh=Yb4OkI2lEqPgmQxRKGJSkL8RVqJUE5jHBisHEcfMpvg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=prKcdYCr9iUyZdZ03hpH+SWUzKf/iZt3M/8nLRReechb2/xcnKO/U8zPaj1FD4PRW
+	 rcI/U+g8I9Fg+Uy9J0cWT42CaAJ4yHyByOfNNl9BnVlF4GVpw92otBZpe9Yul4xOra
+	 r6WXTB//qE6Mq6BduC9WyguCnBztFLP7cRpOZ25mlLWzTOV/pQGBzsZ1rfwpv8Vq+0
+	 0R8QMNP/cePyrMsgXBFfUJCIbRRaybE/ej0GpMR8doFNDLUiCXIjgNoMGFn0cgD9sh
+	 4Z3OEV8NpzB4A4fcY0jePFPXbSyADic8kRMnpIyvQB/3mMBO6378UUsd0kC9EcDF0G
+	 HvO6+kk2oZXFQ==
+Date: Tue, 31 Mar 2026 17:38:18 +0200
+From: Nathan Chancellor <nathan@kernel.org>
+To: Vladimir Oltean <vladimir.oltean@nxp.com>
+Cc: stable@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev, netdev@vger.kernel.org,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Wei Fang <wei.fang@nxp.com>, Rahul Sharma <black.hawk@163.com>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 6.1] net: enetc: fix PF !of_device_is_available()
+ teardown path
+Message-ID: <20260331153818.GA1992169@ax162>
+References: <20260330081944.527545-1-vladimir.oltean@nxp.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260330081944.527545-1-vladimir.oltean@nxp.com>
 
+On Mon, Mar 30, 2026 at 11:19:44AM +0300, Vladimir Oltean wrote:
+> Upstream commit e15c5506dd39 ("net: enetc: allocate vf_state during PF
+> probes") was backported incorrectly to kernels where enetc_pf_probe()
+> still has to manually check whether the OF node of the PCI device is
+> enabled.
+> 
+> In kernels which contain commit bfce089ddd0e ("net: enetc: remove
+> of_device_is_available() handling") and its dependent change, commit
+> 6fffbc7ae137 ("PCI: Honor firmware's device disabled status"), the
+> "err_device_disabled" label has disappeared. Yet, linux-6.1.y and
+> earlier still contains it.
+> 
+> The trouble is that upstream commit e15c5506dd39 ("net: enetc: allocate
+> vf_state during PF probes"), backported as 35668e29e979 in linux-6.1.y,
+> introduces new code for the err_setup_mac_addresses and err_alloc_netdev
+> labels which calls kfree(pf->vf_state). This code must not execute for
+> the err_device_disabled label, because at that stage, the pf structure
+> has not yet been allocated, and is an uninitialized pointer.
+> 
+> By moving the err_device_disabled label to undo just the previous
+> operation, i.e. a successful enetc_psi_create() call with
+> enetc_psi_destroy(), the dereference of uninitialized pf->vf_state is
+> avoided.
+> 
+> Fixes: 35668e29e979 ("net: enetc: allocate vf_state during PF probes")
+> Reported-by: Nathan Chancellor <nathan@kernel.org>
+> Closes: https://lore.kernel.org/linux-patches/20260330073356.GA1017537@ax162/
+> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-This is a note to let you know that I've just added the patch titled
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org> # build
 
-    nvme: fix admin queue leak on controller reset
-
-to the 6.6-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
-
-The filename of the patch is:
-     nvme-fix-admin-queue-leak-on-controller-reset.patch
-and it can be found in the queue-6.6 subdirectory.
-
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
-
-
-From stable+bounces-231348-greg=kroah.com@vger.kernel.org Tue Mar 31 09:44:05 2026
-From: Li hongliang <1468888505@139.com>
-Date: Tue, 31 Mar 2026 15:36:59 +0800
-Subject: nvme: fix admin queue leak on controller reset
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, ming.lei@redhat.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, yi.zhang@redhat.com, kbusch@kernel.org, axboe@fb.com, hch@lst.de, sagi@grimberg.me, hare@suse.de, kch@nvidia.com, linux-nvme@lists.infradead.org
-Message-ID: <20260331073659.3136206-1-1468888505@139.com>
-
-From: Ming Lei <ming.lei@redhat.com>
-
-[ Upstream commit b84bb7bd913d8ca2f976ee6faf4a174f91c02b8d ]
-
-When nvme_alloc_admin_tag_set() is called during a controller reset,
-a previous admin queue may still exist. Release it properly before
-allocating a new one to avoid orphaning the old queue.
-
-This fixes a regression introduced by commit 03b3bcd319b3 ("nvme: fix
-admin request_queue lifetime").
-
-Cc: Keith Busch <kbusch@kernel.org>
-Fixes: 03b3bcd319b3 ("nvme: fix admin request_queue lifetime").
-Reported-and-tested-by: Yi Zhang <yi.zhang@redhat.com>
-Closes: https://lore.kernel.org/linux-block/CAHj4cs9wv3SdPo+N01Fw2SHBYDs9tj2M_e1-GdQOkRy=DsBB1w@mail.gmail.com/
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Li hongliang <1468888505@139.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/nvme/host/core.c |    7 +++++++
- 1 file changed, 7 insertions(+)
-
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4287,6 +4287,13 @@ int nvme_alloc_admin_tag_set(struct nvme
- 	if (ret)
- 		return ret;
- 
-+	/*
-+	 * If a previous admin queue exists (e.g., from before a reset),
-+	 * put it now before allocating a new one to avoid orphaning it.
-+	 */
-+	if (ctrl->admin_q)
-+		blk_put_queue(ctrl->admin_q);
-+
- 	ctrl->admin_q = blk_mq_init_queue(set);
- 	if (IS_ERR(ctrl->admin_q)) {
- 		ret = PTR_ERR(ctrl->admin_q);
-
-
-Patches currently in stable-queue which might be from 1468888505@139.com are
-
-queue-6.6/nvme-fix-admin-queue-leak-on-controller-reset.patch
+> ---
+>  drivers/net/ethernet/freescale/enetc/enetc_pf.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+> index 99422c0b4a26..8cb4c759b165 100644
+> --- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+> +++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+> @@ -1393,10 +1393,10 @@ static int enetc_pf_probe(struct pci_dev *pdev,
+>  	si->ndev = NULL;
+>  	free_netdev(ndev);
+>  err_alloc_netdev:
+> -err_device_disabled:
+>  err_setup_mac_addresses:
+>  	kfree(pf->vf_state);
+>  err_alloc_vf_state:
+> +err_device_disabled:
+>  	enetc_psi_destroy(pdev);
+>  err_psi_create:
+>  	return err;
+> -- 
+> 2.43.0
+> 
