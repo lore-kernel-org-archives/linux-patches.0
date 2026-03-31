@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB85425CD6;
-	Tue, 31 Mar 2026 16:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD81413225;
+	Tue, 31 Mar 2026 16:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975697; cv=none; b=jRxCsrojgZfoWfcW0okimH3uLNpf+8k+lJXq2fY/TwOErh6pbaTN3n87Im8GQLh2oXnbnAxAPi3MY5pOcMHAY0TRx2hODGUGa6Fa0mWslcxYj4fxmKUuN3FtKtomiZS9s2jikhdON1z93I93K3rQZ96WnDhDObJDyXotlEj8nX8=
+	t=1774975699; cv=none; b=lA03jtJSuVpV9sjcSVpan5naxaieojgGxB2BXMzIUfRDwM9meOtAepnC0OB/cMt7dc30qGzNnT/WfSsXbbVfamAPrypI7vCzVKn1oSrtzsEEnTqsWvpfm+W/2GP+m1U8tzpWeMq0iypJsBhSokxozJyaxH2cxZAPeRVJDCiTBA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975697; c=relaxed/simple;
-	bh=BBIcj8Uj268aPD/UlAyBO0foh8JPksBPXFOyHpRiVVw=;
+	s=arc-20240116; t=1774975699; c=relaxed/simple;
+	bh=4X5eFl6zEtpI1RCn9NA1XFUZ7qcxUXGAzbUpoMHKgRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+BwEpag9/V0bshhl1KIgiI7JFwqrGhJk3qRnXer+Hnyz2mqw+PM0l7FszbBtZFnmOYpve+S7crBLY+9DpYymLgRsMtT8KeLaPgNXNhZLhtbWD837GuurOausP11cmOwowlxdnnLvbFywFOfUzMddGYKOkzlAnJucXJZFtxdK1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiDnjdKG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BqY/MZ6MlozSYtXSDVjsanfrp9aByJzQlNDw86Bc4Uah0e5KAQMgHJwtHwhivLccCN9qVYnwVFBMZHXcctVC0m/ihNUS1zsJqRdk6rQfJeMBdOlk54V2xuTv4X5v/Ex4VvZneu1FliJZOmy2lTsVkMLgIWFnVEf9pDs/sdJku+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toZW0OWw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiDnjdKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABC4C19423;
-	Tue, 31 Mar 2026 16:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toZW0OWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037B1C19423;
+	Tue, 31 Mar 2026 16:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975696;
-	bh=BBIcj8Uj268aPD/UlAyBO0foh8JPksBPXFOyHpRiVVw=;
+	s=korg; t=1774975699;
+	bh=4X5eFl6zEtpI1RCn9NA1XFUZ7qcxUXGAzbUpoMHKgRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fiDnjdKG277by8k50kCbPLmaN2S2fKpayZZFhFmKF0wU6in4A/Gvw86dazF28zJaP
-	 IRZf5PGE//xm94RrbFRLld9n6iRspexrPQCaCd2AxlRBT+Pd/J8rIatRemCpy5lEFM
-	 8nC53UQroPgJTKZizDe5JPQDVdEJzlmx84RnzhHs=
+	b=toZW0OWwFevoITkfEmTIus5quT/BZlrDDY4My+UFGXlZu3kVEMh71QZBoClEm/zS6
+	 vyaU0FLKJRYd1vufOO8p2G5cqXba5voNM2pcb23CU+rnOQ4lBin9irtexIAahGMXxD
+	 82FC+mWarb7Nsky6GGkk0YFmsg0ZspFHl7mzriIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/244] esp: fix skb leak with espintcp and async crypto
-Date: Tue, 31 Mar 2026 18:20:01 +0200
-Message-ID: <20260331161743.579368173@linuxfoundation.org>
+Subject: [PATCH 6.12 052/244] xfrm: Fix work re-schedule after cancel in xfrm_nat_keepalive_net_fini()
+Date: Tue, 31 Mar 2026 18:20:02 +0200
+Message-ID: <20260331161743.615838793@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,67 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 0c0eef8ccd2413b0a10eb6bbd3442333b1e64dd2 ]
+[ Upstream commit daf8e3b253aa760ff9e96c7768a464bc1d6b3c90 ]
 
-When the TX queue for espintcp is full, esp_output_tail_tcp will
-return an error and not free the skb, because with synchronous crypto,
-the common xfrm output code will drop the packet for us.
+After cancel_delayed_work_sync() is called from
+xfrm_nat_keepalive_net_fini(), xfrm_state_fini() flushes remaining
+states via __xfrm_state_delete(), which calls
+xfrm_nat_keepalive_state_updated() to re-schedule nat_keepalive_work.
 
-With async crypto (esp_output_done), we need to drop the skb when
-esp_output_tail_tcp returns an error.
+The following is a simple race scenario:
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
+           cpu0                             cpu1
+
+cleanup_net() [Round 1]
+  ops_undo_list()
+    xfrm_net_exit()
+      xfrm_nat_keepalive_net_fini()
+        cancel_delayed_work_sync(nat_keepalive_work);
+      xfrm_state_fini()
+        xfrm_state_flush()
+          xfrm_state_delete(x)
+            __xfrm_state_delete(x)
+              xfrm_nat_keepalive_state_updated(x)
+                schedule_delayed_work(nat_keepalive_work);
+  rcu_barrier();
+  net_complete_free();
+  net_passive_dec(net);
+    llist_add(&net->defer_free_list, &defer_free_list);
+
+cleanup_net() [Round 2]
+  rcu_barrier();
+  net_complete_free()
+    kmem_cache_free(net_cachep, net);
+                                     nat_keepalive_work()
+                                       // on freed net
+
+To prevent this, cancel_delayed_work_sync() is replaced with
+disable_delayed_work_sync().
+
+Fixes: f531d13bdfe3 ("xfrm: support sending NAT keepalives in ESP in UDP states")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4.c | 9 ++++++---
- net/ipv6/esp6.c | 9 ++++++---
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ net/xfrm/xfrm_nat_keepalive.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
-index b8c7c8b42c0a0..deea0b934d910 100644
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -235,10 +235,13 @@ static void esp_output_done(void *data, int err)
- 		xfrm_dev_resume(skb);
- 	} else {
- 		if (!err &&
--		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
--			esp_output_tail_tcp(x, skb);
--		else
-+		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP) {
-+			err = esp_output_tail_tcp(x, skb);
-+			if (err != -EINPROGRESS)
-+				kfree_skb(skb);
-+		} else {
- 			xfrm_output_resume(skb_to_full_sk(skb), skb, err);
-+		}
- 	}
- }
+diff --git a/net/xfrm/xfrm_nat_keepalive.c b/net/xfrm/xfrm_nat_keepalive.c
+index 82f0a301683f0..8a0379c8c41c8 100644
+--- a/net/xfrm/xfrm_nat_keepalive.c
++++ b/net/xfrm/xfrm_nat_keepalive.c
+@@ -251,7 +251,7 @@ int __net_init xfrm_nat_keepalive_net_init(struct net *net)
  
-diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
-index 9c4c7b1f29550..20c1149f0f0a3 100644
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -271,10 +271,13 @@ static void esp_output_done(void *data, int err)
- 		xfrm_dev_resume(skb);
- 	} else {
- 		if (!err &&
--		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
--			esp_output_tail_tcp(x, skb);
--		else
-+		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP) {
-+			err = esp_output_tail_tcp(x, skb);
-+			if (err != -EINPROGRESS)
-+				kfree_skb(skb);
-+		} else {
- 			xfrm_output_resume(skb_to_full_sk(skb), skb, err);
-+		}
- 	}
+ int xfrm_nat_keepalive_net_fini(struct net *net)
+ {
+-	cancel_delayed_work_sync(&net->xfrm.nat_keepalive_work);
++	disable_delayed_work_sync(&net->xfrm.nat_keepalive_work);
+ 	return 0;
  }
  
 -- 
