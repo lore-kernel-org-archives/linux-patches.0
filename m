@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129D7401A2C;
-	Tue, 31 Mar 2026 16:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8F7423A9A;
+	Tue, 31 Mar 2026 16:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974675; cv=none; b=K+3eXtRvWyFQoCBirsnsYl0tHu6JzADRgDO4nSIOtZPxMLrxioa0qUVVfMKHJnAlWuGF59ds6Wcn4vmqA6XQMmTtZE+aymnTlMlejOeGqA2LT+BDIuB1rs18usvZLhyKn8YP4lusmxLBCHSUNcdGpCMcntmyswQ7LKZgDNuOcBQ=
+	t=1774974677; cv=none; b=jL9NU2ejJYlL2T5KSdx7OrPcK8BgEa1nFHFaUSA+6NJTZ19cSFHWBV9w8j78Tawcj4egZ0I0j6eMECpSjae1e2rVrKTmf1FW8s+F+Rkgu0RyvgJNlMx2MKjo2O/kYcO/gLApXqWWvd8NhXbRoNO//uRcUZcqg1eAVMVfGsPr9Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974675; c=relaxed/simple;
-	bh=TOY6M3o1lbBUPySfiTq8GkasiaKVbHvpL5nhaqq0k6o=;
+	s=arc-20240116; t=1774974677; c=relaxed/simple;
+	bh=qlOA3Og8BKTNRf5TBaEoSHLPfJ7eFEtbn63N5Ce/lz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8WLG1dLhUIxOn8v9ZbLjjpddXz6Od647xAKM1g8bayFE+b1VjPiI8xYvc4GNSpVgfJQRn8rt0Pn4SnjptJmuGZuu6stG9BU63Ga93HN7olIMNZ88Bj/DrgIFugg2yKCSn5dyGmF05otLEbX9p9QvrRVAESUZKMYkbe6xB675e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mih4kzge; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcEvWiksGeAaqs9uY0Vf5v1HJmdjIyClP6wmT9FydcZrhCHlKPOcpV8QAto3wbvnqaI5vYtwgshCEgPgrc2GWi+CqRc6C90iKVhvPp+ozw1/e7Bi+79seGfrdx+sGKucLA1MjDFyq5MO+JWpBKba0ddFevSoAfWX2tJw+t7+XIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=upMA63Ni; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mih4kzge"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6F6C19424;
-	Tue, 31 Mar 2026 16:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upMA63Ni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A90C19424;
+	Tue, 31 Mar 2026 16:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974675;
-	bh=TOY6M3o1lbBUPySfiTq8GkasiaKVbHvpL5nhaqq0k6o=;
+	s=korg; t=1774974677;
+	bh=qlOA3Og8BKTNRf5TBaEoSHLPfJ7eFEtbn63N5Ce/lz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mih4kzge46N6SL0bcXZvfB66c4UL+ZmWU6jahCmhmL+mHSZaviNShbkx3ZdPs6R2C
-	 GlHeqKXq+OvuHWi8F4i69DtDnUSa2Zhe+X2DK/Cp2gtevA28KXp/+5Hkre91mttv36
-	 RhXlJ402HRjwjdNOwvBylsQkdhAfl8P0yYfEsCAs=
+	b=upMA63NiLNu0YY/m9GBuPwK3DG1IsQJ9LqncV/J2W+3taG9eec+CljbV31pk6J8Xc
+	 ixrfsxF+qVkq+jUGU24I9HDBJXhvib88j3p6lp77EJO3mQ+UxfZOmhv9AEdc/cLqDG
+	 bHm0XFdX4RcM+KECZKAvoZj31c9eIqMHv7oJ6C6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 175/175] tcp: Fix bind() regression for v6-only wildcard and v4-mapped-v6 non-wildcard addresses.
-Date: Tue, 31 Mar 2026 18:22:39 +0200
-Message-ID: <20260331161736.222746088@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	Benno Lossin <lossin@kernel.org>
+Subject: [PATCH 6.6 148/175] rust: pin-init: add references to previously initialized fields
+Date: Tue, 31 Mar 2026 18:22:12 +0200
+Message-ID: <20260331161735.226121984@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -50,73 +50,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Benno Lossin <lossin@kernel.org>
 
-commit ea111449501ea32bf6da82750de860243691efc7 upstream.
+[ Upstream commit 42415d163e5df6db799c7de6262d707e402c2c7e ]
 
-Commit 5e07e672412b ("tcp: Use bhash2 for v4-mapped-v6 non-wildcard
-address.") introduced bind() regression for v4-mapped-v6 address.
+After initializing a field in an initializer macro, create a variable
+holding a reference that points at that field. The type is either
+`Pin<&mut T>` or `&mut T` depending on the field's structural pinning
+kind.
 
-When we bind() the following two addresses on the same port, the 2nd
-bind() should succeed but fails now.
-
-  1. [::] w/ IPV6_ONLY
-  2. ::ffff:127.0.0.1
-
-After the chagne, v4-mapped-v6 uses bhash2 instead of bhash to
-detect conflict faster, but I forgot to add a necessary change.
-
-During the 2nd bind(), inet_bind2_bucket_match_addr_any() returns
-the tb2 bucket of [::], and inet_bhash2_conflict() finally calls
-inet_bind_conflict(), which returns true, meaning conflict.
-
-  inet_bhash2_addr_any_conflict
-  |- inet_bind2_bucket_match_addr_any  <-- return [::] bucket
-  `- inet_bhash2_conflict
-     `- __inet_bhash2_conflict <-- checks IPV6_ONLY for AF_INET
-        |                          but not for v4-mapped-v6 address
-        `- inet_bind_conflict  <-- does not check address
-
-inet_bind_conflict() does not check socket addresses because
-__inet_bhash2_conflict() is expected to do so.
-
-However, it checks IPV6_V6ONLY attribute only against AF_INET
-socket, and not for v4-mapped-v6 address.
-
-As a result, v4-mapped-v6 address conflicts with v6-only wildcard
-address.
-
-To avoid that, let's add the missing test to use bhash2 for
-v4-mapped-v6 address.
-
-Fixes: 5e07e672412b ("tcp: Use bhash2 for v4-mapped-v6 non-wildcard address.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240326204251.51301-2-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Applied fixes to devres and rust_driver_pci sample - Benno]
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Benno Lossin <lossin@kernel.org>
+[ Removed the devres changes, because devres is not present in 6.12.y and
+  earlier. Also adjusted paths in the macro to account for the fact that
+  pin-init is part of the kernel crate in 6.12.y and earlier. - Benno ]
+Signed-off-by: Benno Lossin <lossin@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ rust/kernel/init/macros.rs |  144 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 113 insertions(+), 31 deletions(-)
 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -185,8 +185,15 @@ static bool __inet_bhash2_conflict(const
- 				   kuid_t sk_uid, bool relax,
- 				   bool reuseport_cb_ok, bool reuseport_ok)
- {
--	if (sk->sk_family == AF_INET && ipv6_only_sock(sk2))
--		return false;
-+	if (ipv6_only_sock(sk2)) {
-+		if (sk->sk_family == AF_INET)
-+			return false;
+--- a/rust/kernel/init/macros.rs
++++ b/rust/kernel/init/macros.rs
+@@ -964,35 +964,54 @@ macro_rules! __pin_data {
+         @pinned($($(#[$($p_attr:tt)*])* $pvis:vis $p_field:ident : $p_type:ty),* $(,)?),
+         @not_pinned($($(#[$($attr:tt)*])* $fvis:vis $field:ident : $type:ty),* $(,)?),
+     ) => {
+-        // For every field, we create a projection function according to its projection type. If a
+-        // field is structurally pinned, then it must be initialized via `PinInit`, if it is not
+-        // structurally pinned, then it can be initialized via `Init`.
+-        //
+-        // The functions are `unsafe` to prevent accidentally calling them.
+-        #[allow(dead_code)]
+-        impl<$($impl_generics)*> $pin_data<$($ty_generics)*>
+-        where $($whr)*
+-        {
+-            $(
+-                $(#[$($p_attr)*])*
+-                $pvis unsafe fn $p_field<E>(
+-                    self,
+-                    slot: *mut $p_type,
+-                    init: impl $crate::init::PinInit<$p_type, E>,
+-                ) -> ::core::result::Result<(), E> {
+-                    unsafe { $crate::init::PinInit::__pinned_init(init, slot) }
+-                }
+-            )*
+-            $(
+-                $(#[$($attr)*])*
+-                $fvis unsafe fn $field<E>(
+-                    self,
+-                    slot: *mut $type,
+-                    init: impl $crate::init::Init<$type, E>,
+-                ) -> ::core::result::Result<(), E> {
+-                    unsafe { $crate::init::Init::__init(init, slot) }
+-                }
+-            )*
++        $crate::macros::paste! {
++            // For every field, we create a projection function according to its projection type. If a
++            // field is structurally pinned, then it must be initialized via `PinInit`, if it is not
++            // structurally pinned, then it can be initialized via `Init`.
++            //
++            // The functions are `unsafe` to prevent accidentally calling them.
++            #[allow(dead_code, non_snake_case)]
++            #[expect(clippy::missing_safety_doc)]
++            impl<$($impl_generics)*> $pin_data<$($ty_generics)*>
++            where $($whr)*
++            {
++                $(
++                    $(#[$($p_attr)*])*
++                    $pvis unsafe fn $p_field<E>(
++                        self,
++                        slot: *mut $p_type,
++                        init: impl $crate::init::PinInit<$p_type, E>,
++                    ) -> ::core::result::Result<(), E> {
++                        unsafe { $crate::init::PinInit::__pinned_init(init, slot) }
++                    }
 +
-+#if IS_ENABLED(CONFIG_IPV6)
-+		if (ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr))
-+			return false;
-+#endif
-+	}
++                    $(#[$($p_attr)*])*
++                    $pvis unsafe fn [<__project_ $p_field>]<'__slot>(
++                        self,
++                        slot: &'__slot mut $p_type,
++                    ) -> ::core::pin::Pin<&'__slot mut $p_type> {
++                        unsafe { ::core::pin::Pin::new_unchecked(slot) }
++                    }
++                )*
++                $(
++                    $(#[$($attr)*])*
++                    $fvis unsafe fn $field<E>(
++                        self,
++                        slot: *mut $type,
++                        init: impl $crate::init::Init<$type, E>,
++                    ) -> ::core::result::Result<(), E> {
++                        unsafe { $crate::init::Init::__init(init, slot) }
++                    }
++
++                    $(#[$($attr)*])*
++                    $fvis unsafe fn [<__project_ $field>]<'__slot>(
++                        self,
++                        slot: &'__slot mut $type,
++                    ) -> &'__slot mut $type {
++                        slot
++                    }
++                )*
++            }
+         }
+     };
+ }
+@@ -1186,6 +1205,13 @@ macro_rules! __init_internal {
+         // return when an error/panic occurs.
+         // We also use the `data` to require the correct trait (`Init` or `PinInit`) for `$field`.
+         unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field), init)? };
++        // SAFETY:
++        // - the project function does the correct field projection,
++        // - the field has been initialized,
++        // - the reference is only valid until the end of the initializer.
++        #[allow(unused_variables, unused_assignments)]
++        let $field = $crate::macros::paste!(unsafe { $data.[< __project_ $field >](&mut (*$slot).$field) });
++
+         // Create the drop guard:
+         //
+         // We rely on macro hygiene to make it impossible for users to access this local variable.
+@@ -1217,6 +1243,14 @@ macro_rules! __init_internal {
+         // SAFETY: `slot` is valid, because we are inside of an initializer closure, we
+         // return when an error/panic occurs.
+         unsafe { $crate::init::Init::__init(init, ::core::ptr::addr_of_mut!((*$slot).$field))? };
++
++        // SAFETY:
++        // - the field is not structurally pinned, since the line above must compile,
++        // - the field has been initialized,
++        // - the reference is only valid until the end of the initializer.
++        #[allow(unused_variables, unused_assignments)]
++        let $field = unsafe { &mut (*$slot).$field };
++
+         // Create the drop guard:
+         //
+         // We rely on macro hygiene to make it impossible for users to access this local variable.
+@@ -1235,7 +1269,7 @@ macro_rules! __init_internal {
+             );
+         }
+     };
+-    (init_slot($($use_data:ident)?):
++    (init_slot(): // No `use_data`, so all fields are not structurally pinned
+         @data($data:ident),
+         @slot($slot:ident),
+         @guards($($guards:ident,)*),
+@@ -1249,6 +1283,15 @@ macro_rules! __init_internal {
+             // SAFETY: The memory at `slot` is uninitialized.
+             unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
+         }
++
++        #[allow(unused_variables, unused_assignments)]
++        // SAFETY:
++        // - the field is not structurally pinned, since no `use_data` was required to create this
++        //   initializer,
++        // - the field has been initialized,
++        // - the reference is only valid until the end of the initializer.
++        let $field = unsafe { &mut (*$slot).$field };
++
+         // Create the drop guard:
+         //
+         // We rely on macro hygiene to make it impossible for users to access this local variable.
+@@ -1259,7 +1302,46 @@ macro_rules! __init_internal {
+                 $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
+             };
  
- 	return inet_bind_conflict(sk, sk2, sk_uid, relax,
- 				  reuseport_cb_ok, reuseport_ok);
+-            $crate::__init_internal!(init_slot($($use_data)?):
++            $crate::__init_internal!(init_slot():
++                @data($data),
++                @slot($slot),
++                @guards([< __ $field _guard >], $($guards,)*),
++                @munch_fields($($rest)*),
++            );
++        }
++    };
++    (init_slot($use_data:ident):
++        @data($data:ident),
++        @slot($slot:ident),
++        @guards($($guards:ident,)*),
++        // Init by-value.
++        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
++    ) => {
++        {
++            $(let $field = $val;)?
++            // Initialize the field.
++            //
++            // SAFETY: The memory at `slot` is uninitialized.
++            unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
++        }
++        // SAFETY:
++        // - the project function does the correct field projection,
++        // - the field has been initialized,
++        // - the reference is only valid until the end of the initializer.
++        #[allow(unused_variables, unused_assignments)]
++        let $field = $crate::macros::paste!(unsafe { $data.[< __project_ $field >](&mut (*$slot).$field) });
++
++        // Create the drop guard:
++        //
++        // We rely on macro hygiene to make it impossible for users to access this local variable.
++        // We use `paste!` to create new hygiene for `$field`.
++        $crate::macros::paste! {
++            // SAFETY: We forget the guard later when initialization has succeeded.
++            let [< __ $field _guard >] = unsafe {
++                $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
++            };
++
++            $crate::__init_internal!(init_slot($use_data):
+                 @data($data),
+                 @slot($slot),
+                 @guards([<$field>], $($guards,)*),
 
 
