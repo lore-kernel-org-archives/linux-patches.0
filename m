@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940D02FE042;
-	Tue, 31 Mar 2026 17:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242342FDC5E;
+	Tue, 31 Mar 2026 17:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976742; cv=none; b=vGmcFI1SU4bhbpTsfr4GmxH2aQrVCcfiD6Ig3GwI56XAX6l9gg9yoxR3IhjvFpnAkZ7ou5O2RAbGbFiDdIJTPmeM30WUxenWzrF8WLtRmeYQJFAstAsTQIAHtuqo4luL90GQPgZc68kGTxr+P5cyB/HQal9CaKlweRXnm49rUq0=
+	t=1774976745; cv=none; b=rRgiKTzoKs3rlziKGKKcwA8FJbo0c4X4ZiAHtl2IpOKQFgEYMh+VhweWy+7sEkbrTxfqU8rsIwSnDcuUDCEsQ9tJ84OwY9oAOA6Z+vtBIGHF4DGbXIPZWGN57atVix7Llxb4HV3/W3eYcVb0rIDdq23dkjBXSZGlE2sulzodSYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976742; c=relaxed/simple;
-	bh=OqK6h/fWLLtM+dWvqooSqQGNzsegwSnefJj6yrfJRpo=;
+	s=arc-20240116; t=1774976745; c=relaxed/simple;
+	bh=nuiMItCsKEE2bbSxPMobc8C6kmIcQpA6cQhgbpBsvcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nl3iWALjIlyRjnflQlyFvFey+BBqM3Kr4I82oJ5ku36HwDR8xJbC01Ux4zwpY3rNZlAAPv0Sx8aZn50dYGKOI9AlHzC2dop8L+e8fIGurn3FdhD3yLLOwnleBI2ARUQ8d+diV3Nz+pWxYzSXMDWykhkNGJs52ntmLDeRuJoQQgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bS1xcda5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e17apIyYmsYbq7HnOBIfpB3g+7G9LLVlDNxJblXPaAxYK0vSgflJwzsH0g/NtnGyvkZsDmmyT8fzuNI9jbWGD1n0S1aKg436xSkdCM+bCBD/0s+YReJeCK/j4hCNgsJadluTfAR5zsH30Al7QfahH0mgVo31Z0Fc+/qDMbko5E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh7oqhpX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bS1xcda5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F2AC2BCB1;
-	Tue, 31 Mar 2026 17:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh7oqhpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED06C19423;
+	Tue, 31 Mar 2026 17:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976742;
-	bh=OqK6h/fWLLtM+dWvqooSqQGNzsegwSnefJj6yrfJRpo=;
+	s=korg; t=1774976745;
+	bh=nuiMItCsKEE2bbSxPMobc8C6kmIcQpA6cQhgbpBsvcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bS1xcda5gnD9g8QnXfO1llkKhGUoP6WECBKKzzs4ZEsZsSypjft9nSQMkcoCx1fKp
-	 DOG87vupiTNJfZuQPgQf6rkpUUuiDKXFPfNmQQDEv+1ukvKZNo5lDZshk9bYy68+3H
-	 7KEHcq0/R88fxXYtkqgzfRHF3AmMqOMNfM7eKQPQ=
+	b=Fh7oqhpXti9Ldyypi6A0inhWeUSmLhGvgaX6bwmJ7TylggRYLt46DRMvS+5bX5I+f
+	 +gfQ9icbO1JODmP5eoUsZiNPv/gyt/PFl/XnYa4ZlpvqhooT+B2Za0FrrvLPH6XwFy
+	 tTuuQKL/3EcdtyBjA2QAfNchUajPHvGhCdJFMDMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	Nikunj A Dadhania <nikunj@amd.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	stable@kernel.org
-Subject: [PATCH 6.18 211/309] x86/cpu: Enable FSGSBASE early in cpu_init_exception_handling()
-Date: Tue, 31 Mar 2026 18:21:54 +0200
-Message-ID: <20260331161801.213754946@linuxfoundation.org>
+Subject: [PATCH 6.18 212/309] x86/cpu: Remove X86_CR4_FRED from the CR4 pinned bits mask
+Date: Tue, 31 Mar 2026 18:21:55 +0200
+Message-ID: <20260331161801.249486088@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,137 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikunj A Dadhania <nikunj@amd.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 05243d490bb7852a8acca7b5b5658019c7797a52 upstream.
+commit 411df123c017169922cc767affce76282b8e6c85 upstream.
 
-Move FSGSBASE enablement from identify_cpu() to cpu_init_exception_handling()
-to ensure it is enabled before any exceptions can occur on both boot and
-secondary CPUs.
+Commit in Fixes added the FRED CR4 bit to the CR4 pinned bits mask so
+that whenever something else modifies CR4, that bit remains set. Which
+in itself is a perfectly fine idea.
 
-== Background ==
+However, there's an issue when during boot FRED is initialized: first on
+the BSP and later on the APs. Thus, there's a window in time when
+exceptions cannot be handled.
 
-Exception entry code (paranoid_entry()) uses ALTERNATIVE patching based on
-X86_FEATURE_FSGSBASE to decide whether to use RDGSBASE/WRGSBASE instructions
-or the slower RDMSR/SWAPGS sequence for saving/restoring GSBASE.
+This becomes particularly nasty when running as SEV-{ES,SNP} or TDX
+guests which, when they manage to trigger exceptions during that short
+window described above, triple fault due to FRED MSRs not being set up
+yet.
 
-On boot CPU, ALTERNATIVE patching happens after enabling FSGSBASE in CR4.
-When the feature is available, the code is permanently patched to use
-RDGSBASE/WRGSBASE, which require CR4.FSGSBASE=1 to execute without triggering
+See Link tag below for a much more detailed explanation of the
+situation.
 
-== Boot Sequence ==
+So, as a result, the commit in that Link URL tried to address this
+shortcoming by temporarily disabling CR4 pinning when an AP is not
+online yet.
 
-Boot CPU (with CR pinning enabled):
-  trap_init()
-    cpu_init()                   <- Uses unpatched code (RDMSR/SWAPGS)
-      x2apic_setup()
-  ...
-  arch_cpu_finalize_init()
-    identify_boot_cpu()
-      identify_cpu()
-        cr4_set_bits(X86_CR4_FSGSBASE)  # Enables the feature
-	# This becomes part of cr4_pinned_bits
-    ...
-    alternative_instructions()   <- Patches code to use RDGSBASE/WRGSBASE
+However, that is a problem in itself because in this case, an attack on
+the kernel needs to only modify the online bit - a single bit in RW
+memory - and then disable CR4 pinning and then disable SM*P, leading to
+more and worse things to happen to the system.
 
-Secondary CPUs (with CR pinning enabled):
-  start_secondary()
-    cr4_init()                   <- Code already patched, CR4.FSGSBASE=1
-                                    set implicitly via cr4_pinned_bits
+So, instead, remove the FRED bit from the CR4 pinning mask, thus
+obviating the need to temporarily disable CR4 pinning.
 
-    cpu_init()                   <- exceptions work because FSGSBASE is
-                                    already enabled
+If someone manages to disable FRED when poking at CR4, then
+idt_invalidate() would make sure the system would crash'n'burn on the
+first exception triggered, which is a much better outcome security-wise.
 
-Secondary CPU (with CR pinning disabled):
-  start_secondary()
-    cr4_init()                   <- Code already patched, CR4.FSGSBASE=0
-    cpu_init()
-      x2apic_setup()
-        rdmsrq(MSR_IA32_APICBASE)  <- Triggers #VC in SNP guests
-          exc_vmm_communication()
-            paranoid_entry()       <- Uses RDGSBASE with CR4.FSGSBASE=0
-                                      (patched code)
-    ...
-    ap_starting()
-      identify_secondary_cpu()
-        identify_cpu()
-	  cr4_set_bits(X86_CR4_FSGSBASE)  <- Enables the feature, which is
-                                             too late
-
-== CR Pinning ==
-
-Currently, for secondary CPUs, CR4.FSGSBASE is set implicitly through
-CR-pinning: the boot CPU sets it during identify_cpu(), it becomes part of
-cr4_pinned_bits, and cr4_init() applies those pinned bits to secondary CPUs.
-This works but creates an undocumented dependency between cr4_init() and the
-pinning mechanism.
-
-== Problem ==
-
-Secondary CPUs boot after alternatives have been applied globally. They
-execute already-patched paranoid_entry() code that uses RDGSBASE/WRGSBASE
-instructions, which require CR4.FSGSBASE=1. Upcoming changes to CR pinning
-behavior will break the implicit dependency, causing secondary CPUs to
-generate #UD.
-
-This issue manifests itself on AMD SEV-SNP guests, where the rdmsrq() in
-x2apic_setup() triggers a #VC exception early during cpu_init(). The #VC
-handler (exc_vmm_communication()) executes the patched paranoid_entry() path.
-Without CR4.FSGSBASE enabled, RDGSBASE instructions trigger #UD.
-
-== Fix ==
-
-Enable FSGSBASE explicitly in cpu_init_exception_handling() before loading
-exception handlers. This makes the dependency explicit and ensures both
-boot and secondary CPUs have FSGSBASE enabled before paranoid_entry()
-executes.
-
-Fixes: c82965f9e530 ("x86/entry/64: Handle FSGSBASE enabled paranoid entry/exit")
-Reported-by: Borislav Petkov <bp@alien8.de>
-Suggested-by: Sohil Mehta <sohil.mehta@intel.com>
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Fixes: ff45746fbf00 ("x86/cpu: Add X86_CR4_FRED macro")
+Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260318075654.1792916-2-nikunj@amd.com
+Cc: <stable@kernel.org> # 6.12+
+Link: https://lore.kernel.org/r/177385987098.1647592.3381141860481415647.tip-bot2@tip-bot2
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/common.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ arch/x86/kernel/cpu/common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
-@@ -2020,12 +2020,6 @@ static void identify_cpu(struct cpuinfo_
- 	setup_smap(c);
- 	setup_umip(c);
+@@ -407,7 +407,7 @@ out:
  
--	/* Enable FSGSBASE instructions if available. */
--	if (cpu_has(c, X86_FEATURE_FSGSBASE)) {
--		cr4_set_bits(X86_CR4_FSGSBASE);
--		elf_hwcap2 |= HWCAP2_FSGSBASE;
--	}
--
- 	/*
- 	 * The vendor-specific functions might have changed features.
- 	 * Now we do "generic changes."
-@@ -2386,6 +2380,18 @@ void cpu_init_exception_handling(bool bo
- 	/* GHCB needs to be setup to handle #VC. */
- 	setup_ghcb();
+ /* These bits should not change their value after CPU init is finished. */
+ static const unsigned long cr4_pinned_mask = X86_CR4_SMEP | X86_CR4_SMAP | X86_CR4_UMIP |
+-					     X86_CR4_FSGSBASE | X86_CR4_CET | X86_CR4_FRED;
++					     X86_CR4_FSGSBASE | X86_CR4_CET;
+ static DEFINE_STATIC_KEY_FALSE_RO(cr_pinning);
+ static unsigned long cr4_pinned_bits __ro_after_init;
  
-+	/*
-+	 * On CPUs with FSGSBASE support, paranoid_entry() uses
-+	 * ALTERNATIVE-patched RDGSBASE/WRGSBASE instructions. Secondary CPUs
-+	 * boot after alternatives are patched globally, so early exceptions
-+	 * execute patched code that depends on FSGSBASE. Enable the feature
-+	 * before any exceptions occur.
-+	 */
-+	if (cpu_feature_enabled(X86_FEATURE_FSGSBASE)) {
-+		cr4_set_bits(X86_CR4_FSGSBASE);
-+		elf_hwcap2 |= HWCAP2_FSGSBASE;
-+	}
-+
- 	if (cpu_feature_enabled(X86_FEATURE_FRED)) {
- 		/* The boot CPU has enabled FRED during early boot */
- 		if (!boot_cpu)
 
 
