@@ -1,37 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A02402B9B;
-	Tue, 31 Mar 2026 16:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E29F3D8114;
+	Tue, 31 Mar 2026 16:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975370; cv=none; b=l8aokwzD0GyzF5ZRPcVh8PA13Fuk9H81ofwWgB9uwLomqHf/Hahugw6Mku6gq/K10NRSTVXYuq7cRbVjEFDqIH33/iBD4bg7s/lU+N2mBZQcKAcKKh7lDsButkDlTQWf+KIjDnK7Tby0rDBfCs3bOKpUQxr5pPv75FLhSBWwZ8M=
+	t=1774975373; cv=none; b=rFxrgbd3TG+8f/QKLyCMfbkxkv6mCdoRkx8iMQL46t7dQ9rjWd4Comz/GXRxH13msxwO2xbjD1qDzVxRmq1fU0CPhUpA0Meps3GtPlxNFujcPKm218ql0tw9/oupZJ7tHOZpiknawKf47qTCm5i/R1fCvwDGA/qDHAKqJHbX1M8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975370; c=relaxed/simple;
-	bh=iLEoHetaD5ZlaANSsYpBpeHB4UyjmNzbBTsLdHdIheY=;
+	s=arc-20240116; t=1774975373; c=relaxed/simple;
+	bh=Tm9uJI/yByMh6fHuNQpxJigCnYOz4j50UViGSD3NrgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0jpb+bi/IVNd5eV+YlCakTIGTojiKiwb4JIeZkunmm9H9IjOaLx/lpTyQHRWWezYNm+qWhGpq/qrWnhimH2k959aoWbIB9cXv+nn+h8yoGfJ03yFM3+S+uYs7qx1TLSWFbMk6ekKRB6lRyCFDpLoIWgsP2loFod6Ie5uWMIZTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OozNn1V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g8pcDXqPT+bt6A43vkoZ3JyiRvZwqWXixdwnUJMnrbVk675rf1W68hqZEyEkUO9xvTb59QfwQU/ZyLOCIv5bFe/nR2cATTPsJYbCrZLdOVaUoUZ97rMxZt345KJcK1ppkcdLb/0L4qvPXdL7oLltSdwA/vYL22ssSaFcEazyPUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvo/bWff; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OozNn1V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F889C19423;
-	Tue, 31 Mar 2026 16:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvo/bWff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824E0C19423;
+	Tue, 31 Mar 2026 16:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975370;
-	bh=iLEoHetaD5ZlaANSsYpBpeHB4UyjmNzbBTsLdHdIheY=;
+	s=korg; t=1774975373;
+	bh=Tm9uJI/yByMh6fHuNQpxJigCnYOz4j50UViGSD3NrgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2OozNn1Va9rEwLPvn6Kf3d0p2/NlitUUjkiudaQ60bJyQeSHWe0XDO8MaoE0skSZk
-	 fGQDEUTBJQkvolwOAZzZrohjhwb867c5zNnqulR8I2eC8Y6yvnKkKiWotfIFC2sR/N
-	 rhpftnyjsMHjl+ElwHOZkXRsYiNbu2dONEp1gIQQ=
+	b=gvo/bWff4bIDMafWvNLXQMKihmQsol50Fa/4TEHeIy2iHlTVifHZWg0ntfWS+rl9V
+	 E+pcqsH/3OGg5PYL5ykUVfMlACmZiSbu0SDPJX+fySzCIkCneTy5E4MEOGkVTsPld7
+	 2Z7Q324JT6uHcXe/Bf501kH0rDE1bSuODorPcUZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.19 236/342] alarmtimer: Fix argument order in alarm_timer_forward()
-Date: Tue, 31 Mar 2026 18:21:09 +0200
-Message-ID: <20260331161807.649113054@linuxfoundation.org>
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.19 237/342] mm/huge_memory: fix folio isnt locked in softleaf_to_folio()
+Date: Tue, 31 Mar 2026 18:21:10 +0200
+Message-ID: <20260331161807.685915657@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -50,51 +61,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-commit 5d16467ae56343b9205caedf85e3a131e0914ad8 upstream.
+commit 4c5e7f0fcd592801c9cc18f29f80fbee84eb8669 upstream.
 
-alarm_timer_forward() passes arguments to alarm_forward() in the wrong
-order:
+On arm64 server, we found folio that get from migration entry isn't locked
+in softleaf_to_folio().  This issue triggers when mTHP splitting and
+zap_nonpresent_ptes() races, and the root cause is lack of memory barrier
+in softleaf_to_folio().  The race is as follows:
 
-  alarm_forward(alarm, timr->it_interval, now);
+	CPU0                                             CPU1
 
-However, alarm_forward() is defined as:
+deferred_split_scan()                              zap_nonpresent_ptes()
+  lock folio
+  split_folio()
+    unmap_folio()
+      change ptes to migration entries
+    __split_folio_to_order()                         softleaf_to_folio()
+      set flags(including PG_locked) for tail pages    folio = pfn_folio(softleaf_to_pfn(entry))
+      smp_wmb()                                        VM_WARN_ON_ONCE(!folio_test_locked(folio))
+      prep_compound_page() for tail pages
 
-  u64 alarm_forward(struct alarm *alarm, ktime_t now, ktime_t interval);
+In __split_folio_to_order(), smp_wmb() guarantees page flags of tail pages
+are visible before the tail page becomes non-compound.  smp_wmb() should
+be paired with smp_rmb() in softleaf_to_folio(), which is missed.  As a
+result, if zap_nonpresent_ptes() accesses migration entry that stores tail
+pfn, softleaf_to_folio() may see the updated compound_head of tail page
+before page->flags.
 
-and uses the second argument as the current time:
+This issue will trigger VM_WARN_ON_ONCE() in pfn_swap_entry_folio()
+because of the race between folio split and zap_nonpresent_ptes()
+leading to a folio incorrectly undergoing modification without a folio
+lock being held.
 
-  delta = ktime_sub(now, alarm->node.expires);
+This is a BUG_ON() before commit 93976a20345b ("mm: eliminate further
+swapops predicates"), which in merged in v6.19-rc1.
 
-Passing the interval as "now" results in incorrect delta computation,
-which can lead to missed expirations or incorrect overrun accounting.
+To fix it, add missing smp_rmb() if the softleaf entry is migration entry
+in softleaf_to_folio() and softleaf_to_page().
 
-This issue has been present since the introduction of
-alarm_timer_forward().
-
-Fix this by swapping the arguments.
-
-Fixes: e7561f1633ac ("alarmtimer: Implement forward callback")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260323061130.29991-1-zhanxusheng@xiaomi.com
+[tujinjiang@huawei.com: update function name and comments]
+  Link: https://lkml.kernel.org/r/20260321075214.3305564-1-tujinjiang@huawei.com
+Link: https://lkml.kernel.org/r/20260319012541.4158561-1-tujinjiang@huawei.com
+Fixes: e9b61f19858a ("thp: reintroduce split_huge_page()")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/alarmtimer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/leafops.h |   32 +++++++++++++++++++++-----------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
---- a/kernel/time/alarmtimer.c
-+++ b/kernel/time/alarmtimer.c
-@@ -540,7 +540,7 @@ static s64 alarm_timer_forward(struct k_
- {
- 	struct alarm *alarm = &timr->it.alarm.alarmtimer;
- 
--	return alarm_forward(alarm, timr->it_interval, now);
-+	return alarm_forward(alarm, now, timr->it_interval);
+--- a/include/linux/leafops.h
++++ b/include/linux/leafops.h
+@@ -363,6 +363,23 @@ static inline unsigned long softleaf_to_
+ 	return swp_offset(entry) & SWP_PFN_MASK;
  }
  
++static inline void softleaf_migration_sync(softleaf_t entry,
++		struct folio *folio)
++{
++	/*
++	 * Ensure we do not race with split, which might alter tail pages into new
++	 * folios and thus result in observing an unlocked folio.
++	 * This matches the write barrier in __split_folio_to_order().
++	 */
++	smp_rmb();
++
++	/*
++	 * Any use of migration entries may only occur while the
++	 * corresponding page is locked
++	 */
++	VM_WARN_ON_ONCE(!folio_test_locked(folio));
++}
++
  /**
+  * softleaf_to_page() - Obtains struct page for PFN encoded within leaf entry.
+  * @entry: Leaf entry, softleaf_has_pfn(@entry) must return true.
+@@ -374,11 +391,8 @@ static inline struct page *softleaf_to_p
+ 	struct page *page = pfn_to_page(softleaf_to_pfn(entry));
+ 
+ 	VM_WARN_ON_ONCE(!softleaf_has_pfn(entry));
+-	/*
+-	 * Any use of migration entries may only occur while the
+-	 * corresponding page is locked
+-	 */
+-	VM_WARN_ON_ONCE(softleaf_is_migration(entry) && !PageLocked(page));
++	if (softleaf_is_migration(entry))
++		softleaf_migration_sync(entry, page_folio(page));
+ 
+ 	return page;
+ }
+@@ -394,12 +408,8 @@ static inline struct folio *softleaf_to_
+ 	struct folio *folio = pfn_folio(softleaf_to_pfn(entry));
+ 
+ 	VM_WARN_ON_ONCE(!softleaf_has_pfn(entry));
+-	/*
+-	 * Any use of migration entries may only occur while the
+-	 * corresponding folio is locked.
+-	 */
+-	VM_WARN_ON_ONCE(softleaf_is_migration(entry) &&
+-			!folio_test_locked(folio));
++	if (softleaf_is_migration(entry))
++		softleaf_migration_sync(entry, folio);
+ 
+ 	return folio;
+ }
 
 
