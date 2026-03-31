@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CAD421F1F;
-	Tue, 31 Mar 2026 16:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA6F423149;
+	Tue, 31 Mar 2026 16:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975404; cv=none; b=kojyJKivTSkqXaexiKrN+vytGF2r/a7Q5RH+3wMQplFnVSwPgcSmLEDfKJ4hJOHS8Pk4NqzfGoj5s/sbLloL88N6SXzVdLLBM+zzhFf68Zhu4vMkE8QVLxllXM+5ppttkDapgtzNw2IPW/fnPA92DbfVu5SxsTrV/7YTllm/EnA=
+	t=1774975406; cv=none; b=aYUK7RnGH+UssbyGhZdPrN9N/X0f9Wpx15xJ9P0yJTKY3G1EVq6wAANfTgKvZ695fDhnmzMWcbX2nfZJO/XBWOTKej4Wg5oUl5Kim3wFR74SuANbtxHKO7GQuRjdEC5s8N+KmT52n2W85Ic1euNF9MtYQlsapL9US2P3698oZy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975404; c=relaxed/simple;
-	bh=JkPc/aNnXUcDmpyp7gp2svpcdNGZY2JbPCDWRmqU0mU=;
+	s=arc-20240116; t=1774975406; c=relaxed/simple;
+	bh=8Wvb67knUyY9rmdupl8FfoTbFDcrgQ+FeGcDVveEtyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NuJ+JCqGMapvrKHeSvGmFxhcvJo1IAlbMZGTnaR0AkgpjN35MJksn9clkU7OHCruwyzRxJB1/izq097XHxVhQOgt2/1uZj6R+jgkStCqtcyjc0zCybEBp9NkBbthcynbO7M4zZ6kHHm7St2M34yKIiLypcpjIikR5bQrg7BN/Jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sb0mlKk0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DBVPvs5d9cN8MrZJM3awHF7GhRyI5suC1xjWGxGML8oK19KwrIP3o2F84Kjh3rJpyPSMjDtQ0uZbpHSa//mhOVvjduHBM/LvGfG/B/aFHXlQhl8kY35DxgJVTba7h/KYxYGws8+bu+Mji+uStVqM0hQ9vZ3LuHvJVGECz/ExSgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPYz0wTH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sb0mlKk0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A5EC19423;
-	Tue, 31 Mar 2026 16:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPYz0wTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8DF9C19423;
+	Tue, 31 Mar 2026 16:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975403;
-	bh=JkPc/aNnXUcDmpyp7gp2svpcdNGZY2JbPCDWRmqU0mU=;
+	s=korg; t=1774975406;
+	bh=8Wvb67knUyY9rmdupl8FfoTbFDcrgQ+FeGcDVveEtyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sb0mlKk0Os9kqyaXIXXRANZyzwsBCR2gBpLZJjq/gdDyOrl6SySuUViBw9Q/M/8Ok
-	 8NK/rKWmQ8mAgdwvcRc7tY2I5Lm18+8FnDjDTo/Fc+W2XIlJK+7nHFWAdQRzfz/Pjw
-	 cRWwmFbl7ac9zDcr965N/L78w35+UKwsjQ7KojyY=
+	b=yPYz0wTHyFmvbR/TnOX/Ytfn4ReyRH8rW7VGeZZUXDrh1zhBsZ5lI/t9iW2BEtvR3
+	 CJYH41veBcgGdPrgWYvknQ5Tvce+5omq+gMaPoPqhNtV+11O+EluxG2AwDx04BZQU9
+	 x1ljFTlKyhfd2wcHnCv1tUS04/cngAAkNcJXRETU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Max Boone <mboone@akamai.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 282/342] mm/pagewalk: fix race between concurrent split and refault
-Date: Tue, 31 Mar 2026 18:21:55 +0200
-Message-ID: <20260331161809.317071062@linuxfoundation.org>
+	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
+	Yuto Ohnuki <ytohnuki@amazon.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.19 283/342] xfs: stop reclaim before pushing AIL during unmount
+Date: Tue, 31 Mar 2026 18:21:56 +0200
+Message-ID: <20260331161809.353030713@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -57,151 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Boone <mboone@akamai.com>
+From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-commit 3b89863c3fa482912911cd65a12a3aeef662c250 upstream.
+commit 4f24a767e3d64a5f58c595b5c29b6063a201f1e3 upstream.
 
-The splitting of a PUD entry in walk_pud_range() can race with a
-concurrent thread refaulting the PUD leaf entry causing it to try walking
-a PMD range that has disappeared.
+The unmount sequence in xfs_unmount_flush_inodes() pushed the AIL while
+background reclaim and inodegc are still running. This is broken
+independently of any use-after-free issues - background reclaim and
+inodegc should not be running while the AIL is being pushed during
+unmount, as inodegc can dirty and insert inodes into the AIL during the
+flush, and background reclaim can race to abort and free dirty inodes.
 
-An example and reproduction of this is to try reading numa_maps of a
-process while VFIO-PCI is setting up DMA (specifically the
-vfio_pin_pages_remote call) on a large BAR for that process.
+Reorder xfs_unmount_flush_inodes() to stop inodegc and cancel background
+reclaim before pushing the AIL. Stop inodegc before cancelling
+m_reclaim_work because the inodegc worker can re-queue m_reclaim_work
+via xfs_inodegc_set_reclaimable.
 
-This will trigger a kernel BUG:
-vfio-pci 0000:03:00.0: enabling device (0000 -> 0002)
-BUG: unable to handle page fault for address: ffffa23980000000
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] SMP NOPTI
-...
-RIP: 0010:walk_pgd_range+0x3b5/0x7a0
-Code: 8d 43 ff 48 89 44 24 28 4d 89 ce 4d 8d a7 00 00 20 00 48 8b 4c 24
-28 49 81 e4 00 00 e0 ff 49 8d 44 24 ff 48 39 c8 4c 0f 43 e3 <49> f7 06
-   9f ff ff ff 75 3b 48 8b 44 24 20 48 8b 40 28 48 85 c0 74
-RSP: 0018:ffffac23e1ecf808 EFLAGS: 00010287
-RAX: 00007f44c01fffff RBX: 00007f4500000000 RCX: 00007f44ffffffff
-RDX: 0000000000000000 RSI: 000ffffffffff000 RDI: ffffffff93378fe0
-RBP: ffffac23e1ecf918 R08: 0000000000000004 R09: ffffa23980000000
-R10: 0000000000000020 R11: 0000000000000004 R12: 00007f44c0200000
-R13: 00007f44c0000000 R14: ffffa23980000000 R15: 00007f44c0000000
-FS:  00007fe884739580(0000) GS:ffff9b7d7a9c0000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffa23980000000 CR3: 000000c0650e2005 CR4: 0000000000770ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- __walk_page_range+0x195/0x1b0
- walk_page_vma+0x62/0xc0
- show_numa_map+0x12b/0x3b0
- seq_read_iter+0x297/0x440
- seq_read+0x11d/0x140
- vfs_read+0xc2/0x340
- ksys_read+0x5f/0xe0
- do_syscall_64+0x68/0x130
- ? get_page_from_freelist+0x5c2/0x17e0
- ? mas_store_prealloc+0x17e/0x360
- ? vma_set_page_prot+0x4c/0xa0
- ? __alloc_pages_noprof+0x14e/0x2d0
- ? __mod_memcg_lruvec_state+0x8d/0x140
- ? __lruvec_stat_mod_folio+0x76/0xb0
- ? __folio_mod_stat+0x26/0x80
- ? do_anonymous_page+0x705/0x900
- ? __handle_mm_fault+0xa8d/0x1000
- ? __count_memcg_events+0x53/0xf0
- ? handle_mm_fault+0xa5/0x360
- ? do_user_addr_fault+0x342/0x640
- ? arch_exit_to_user_mode_prepare.constprop.0+0x16/0xa0
- ? irqentry_exit_to_user_mode+0x24/0x100
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7fe88464f47e
-Code: c0 e9 b6 fe ff ff 50 48 8d 3d be 07 0b 00 e8 69 01 02 00 66 0f 1f
-84 00 00 00 00 00 64 8b 04 25 18 00 00 00 85 c0 75 14 0f 05 <48> 3d 00
-   f0 ff ff 77 5a c3 66 0f 1f 84 00 00 00 00 00 48 83 ec 28
-RSP: 002b:00007ffe6cd9a9b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007fe88464f47e
-RDX: 0000000000020000 RSI: 00007fe884543000 RDI: 0000000000000003
-RBP: 00007fe884543000 R08: 00007fe884542010 R09: 0000000000000000
-R10: fffffffffffffbc5 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
- </TASK>
-
-Fix this by validating the PUD entry in walk_pmd_range() using a stable
-snapshot (pudp_get()).  If the PUD is not present or is a leaf, retry the
-walk via ACTION_AGAIN instead of descending further.  This mirrors the
-retry logic in walk_pte_range(), which lets walk_pmd_range() retry if the
-PTE is not being got by pte_offset_map_lock().
-
-Link: https://lkml.kernel.org/r/20260325-pagewalk-check-pmd-refault-v2-1-707bff33bc60@akamai.com
-Fixes: f9e54c3a2f5b ("vfio/pci: implement huge_fault support")
-Co-developed-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Max Boone <mboone@akamai.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
+Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
+Cc: stable@vger.kernel.org # v5.9
+Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/pagewalk.c |   25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_mount.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/mm/pagewalk.c
-+++ b/mm/pagewalk.c
-@@ -97,6 +97,7 @@ static int walk_pte_range(pmd_t *pmd, un
- static int walk_pmd_range(pud_t *pud, unsigned long addr, unsigned long end,
- 			  struct mm_walk *walk)
- {
-+	pud_t pudval = pudp_get(pud);
- 	pmd_t *pmd;
- 	unsigned long next;
- 	const struct mm_walk_ops *ops = walk->ops;
-@@ -105,6 +106,24 @@ static int walk_pmd_range(pud_t *pud, un
- 	int err = 0;
- 	int depth = real_depth(3);
+--- a/fs/xfs/xfs_mount.c
++++ b/fs/xfs/xfs_mount.c
+@@ -607,8 +607,9 @@ xfs_unmount_check(
+  * have been retrying in the background.  This will prevent never-ending
+  * retries in AIL pushing from hanging the unmount.
+  *
+- * Finally, we can push the AIL to clean all the remaining dirty objects, then
+- * reclaim the remaining inodes that are still in memory at this point in time.
++ * Stop inodegc and background reclaim before pushing the AIL so that they
++ * are not running while the AIL is being flushed. Then push the AIL to
++ * clean all the remaining dirty objects and reclaim the remaining inodes.
+  */
+ static void
+ xfs_unmount_flush_inodes(
+@@ -620,9 +621,9 @@ xfs_unmount_flush_inodes(
  
-+	/*
-+	 * For PTE handling, pte_offset_map_lock() takes care of checking
-+	 * whether there actually is a page table. But it also has to be
-+	 * very careful about concurrent page table reclaim.
-+	 *
-+	 * Similarly, we have to be careful here - a PUD entry that points
-+	 * to a PMD table cannot go away, so we can just walk it. But if
-+	 * it's something else, we need to ensure we didn't race something,
-+	 * so need to retry.
-+	 *
-+	 * A pertinent example of this is a PUD refault after PUD split -
-+	 * we will need to split again or risk accessing invalid memory.
-+	 */
-+	if (!pud_present(pudval) || pud_leaf(pudval)) {
-+		walk->action = ACTION_AGAIN;
-+		return 0;
-+	}
-+
- 	pmd = pmd_offset(pud, addr);
- 	do {
- again:
-@@ -218,12 +237,12 @@ static int walk_pud_range(p4d_t *p4d, un
- 		else if (pud_leaf(*pud) || !pud_present(*pud))
- 			continue; /* Nothing to do. */
+ 	xfs_set_unmounting(mp);
  
--		if (pud_none(*pud))
--			goto again;
--
- 		err = walk_pmd_range(pud, addr, next, walk);
- 		if (err)
- 			break;
-+
-+		if (walk->action == ACTION_AGAIN)
-+			goto again;
- 	} while (pud++, addr = next, addr != end);
- 
- 	return err;
+-	xfs_ail_push_all_sync(mp->m_ail);
+ 	xfs_inodegc_stop(mp);
+ 	cancel_delayed_work_sync(&mp->m_reclaim_work);
++	xfs_ail_push_all_sync(mp->m_ail);
+ 	xfs_reclaim_inodes(mp);
+ 	xfs_health_unmount(mp);
+ }
 
 
