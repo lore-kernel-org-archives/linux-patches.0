@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBFE426681;
-	Tue, 31 Mar 2026 16:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68297425CFF;
+	Tue, 31 Mar 2026 16:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975114; cv=none; b=CvcnrE246CRW1P4orKbLhJpRXoO2D6wNBeB4+TKEDV5z3Q9r0aKg02QF18PxvWPrxzpOZevalqizcjyyFzeUsrTLBRdZah5IsZeMoZImlHHJ0HzNUnZdcOamH4zK2At4dOUdKavUBsIIHxlIxB0dUdDt0nAHeY3k2iWsbfLE9gY=
+	t=1774975117; cv=none; b=QoI0SAUrStWXS8vWHxlRloLiibduPhLCa+D+R5sFAEuQHEjd5gRAg4KHbASU3PqexeeJwPKBr2P9Y7XGFll1a3IP936Q0I3UV8IamKHX085vHVVQ/shLrC38PqzKCItB8qF/ijPfLoy89BNcZmtUIAGQXfuNZ8AIZV4a2akaALs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975114; c=relaxed/simple;
-	bh=fKZ/aC/+dPDNA6yOfdJ8aIRrI7y94EM0jzlCiUHew0M=;
+	s=arc-20240116; t=1774975117; c=relaxed/simple;
+	bh=QgJMqnqDMMMAIRCQS0i9sHl2OLlYjLLIf/Ul25YdMRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mmQYhlVdRvB2M6ccUrdLucqqL/qE9z8ffAK7cK/fU11LgDDWySThWi2oFDK+F76cbndMovkj1SGZ6TM2lcQ/fE6O/KaNvfnUnFAYJTAIEvLkq5uAX+adOx53CqvKHualrGbVS9Hw+uxMc7NCwkn3BIwjHNjBDoS1zWgMF67fLKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDzksqRY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jctZd4TmHxK4CM356u2ccNNEbHG5arrp8T29PFoBiir1a4P1B6IFi2sCxyKdywnVnrsgky/gxBip+BB/hCc22lNsKtTDiUl/wYUKnxZVWtkr5fWZSOlR22UuNRsClbsvq9GG2VYiEc/auxFwSB3/g2Ty+bgY9Uy83UUZmwsURzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8RLlLXB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDzksqRY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659B2C19423;
-	Tue, 31 Mar 2026 16:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8RLlLXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2181C19423;
+	Tue, 31 Mar 2026 16:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975114;
-	bh=fKZ/aC/+dPDNA6yOfdJ8aIRrI7y94EM0jzlCiUHew0M=;
+	s=korg; t=1774975117;
+	bh=QgJMqnqDMMMAIRCQS0i9sHl2OLlYjLLIf/Ul25YdMRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDzksqRY2tsjG5HuJi6RcOx47Fgo2zDvJC2qLYMW8WROUCNx1SGOM4fEm1bl/wToB
-	 qu9DPv15IVwSca4Logo9ILEwQvoCiS75EFZk593sW4iIvCTVuLEgYqZrsrRXMRJbgi
-	 sOYPBZk9Rcf155y2psrQVKvAva2mGD6gRYPKOEfU=
+	b=e8RLlLXBzzNjm2r+HwMYmVR+GVEYvf913LAW07NUGhjQZkmf+Vi9wINlU3t2Px87Y
+	 CAqzmy2iBhs92o6nTvoE7N2mEH/hYWnFafHQKXIq+WUmk0zE4PIX727OzzZ6wkOfhR
+	 qBycn0wZWCxNv1CE3zjDTH5uN1Sk6xOZ1raP1hiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alberto Garcia <berto@igalia.com>,
-	Brian Geffon <bgeffon@google.com>,
+	Youngjun Park <youngjun.park@lge.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 170/342] PM: hibernate: Drain trailing zero pages on userspace restore
-Date: Tue, 31 Mar 2026 18:20:03 +0200
-Message-ID: <20260331161805.266482143@linuxfoundation.org>
+Subject: [PATCH 6.19 171/342] PM: sleep: Drop spurious WARN_ON() from pm_restore_gfp_mask()
+Date: Tue, 31 Mar 2026 18:20:04 +0200
+Message-ID: <20260331161805.302594232@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,62 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alberto Garcia <berto@igalia.com>
+From: Youngjun Park <youngjun.park@lge.com>
 
-[ Upstream commit 734eba62cd32cb9ceffa09e57cdc03d761528525 ]
+[ Upstream commit a8d51efb5929ae308895455a3e496b5eca2cd143 ]
 
-Commit 005e8dddd497 ("PM: hibernate: don't store zero pages in the
-image file") added an optimization to skip zero-filled pages in the
-hibernation image. On restore, zero pages are handled internally by
-snapshot_write_next() in a loop that processes them without returning
-to the caller.
+Commit 35e4a69b2003f ("PM: sleep: Allow pm_restrict_gfp_mask()
+stacking") introduced refcount-based GFP mask management that warns
+when pm_restore_gfp_mask() is called with saved_gfp_count == 0.
 
-With the userspace restore interface, writing the last non-zero page
-to /dev/snapshot is followed by the SNAPSHOT_ATOMIC_RESTORE ioctl. At
-this point there are no more calls to snapshot_write_next() so any
-trailing zero pages are not processed, snapshot_image_loaded() fails
-because handle->cur is smaller than expected, the ioctl returns -EPERM
-and the image is not restored.
+Some hibernation paths call pm_restore_gfp_mask() defensively where
+the GFP mask may or may not be restricted depending on the execution
+path. For example, the uswsusp interface invokes it in
+SNAPSHOT_CREATE_IMAGE, SNAPSHOT_UNFREEZE, and snapshot_release().
+Before the stacking change this was a silent no-op; it now triggers
+a spurious WARNING.
 
-The in-kernel restore path is not affected by this because the loop in
-load_image() in swap.c calls snapshot_write_next() until it returns 0.
-It is this final call that drains any trailing zero pages.
+Remove the WARN_ON() wrapper from the !saved_gfp_count check while
+retaining the check itself, so that defensive calls remain harmless
+without producing false warnings.
 
-Fixed by calling snapshot_write_next() in snapshot_write_finalize(),
-giving the kernel the chance to drain any trailing zero pages.
-
-Fixes: 005e8dddd497 ("PM: hibernate: don't store zero pages in the image file")
-Signed-off-by: Alberto Garcia <berto@igalia.com>
-Acked-by: Brian Geffon <bgeffon@google.com>
-Link: https://patch.msgid.link/ef5a7c5e3e3dbd17dcb20efaa0c53a47a23498bb.1773075892.git.berto@igalia.com
+Fixes: 35e4a69b2003f ("PM: sleep: Allow pm_restrict_gfp_mask() stacking")
+Signed-off-by: Youngjun Park <youngjun.park@lge.com>
+[ rjw: Subject tweak ]
+Link: https://patch.msgid.link/20260322120528.750178-1-youngjun.park@lge.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/snapshot.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ kernel/power/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/power/snapshot.c b/kernel/power/snapshot.c
-index 0a946932d5c17..5706287e7230e 100644
---- a/kernel/power/snapshot.c
-+++ b/kernel/power/snapshot.c
-@@ -2855,6 +2855,17 @@ int snapshot_write_finalize(struct snapshot_handle *handle)
+diff --git a/kernel/power/main.c b/kernel/power/main.c
+index 03b2c5495c77a..9ce75b1a23ed3 100644
+--- a/kernel/power/main.c
++++ b/kernel/power/main.c
+@@ -40,7 +40,7 @@ void pm_restore_gfp_mask(void)
  {
- 	int error;
+ 	WARN_ON(!mutex_is_locked(&system_transition_mutex));
  
-+	/*
-+	 * Call snapshot_write_next() to drain any trailing zero pages,
-+	 * but make sure we're in the data page region first.
-+	 * This function can return PAGE_SIZE if the kernel was expecting
-+	 * another copy page. Return -ENODATA in that situation.
-+	 */
-+	if (handle->cur > nr_meta_pages + 1) {
-+		error = snapshot_write_next(handle);
-+		if (error)
-+			return error > 0 ? -ENODATA : error;
-+	}
- 	copy_last_highmem_page();
- 	error = hibernate_restore_protect_page(handle->buffer);
- 	/* Do that only if we have loaded the image entirely */
+-	if (WARN_ON(!saved_gfp_count) || --saved_gfp_count)
++	if (!saved_gfp_count || --saved_gfp_count)
+ 		return;
+ 
+ 	gfp_allowed_mask = saved_gfp_mask;
 -- 
 2.53.0
 
