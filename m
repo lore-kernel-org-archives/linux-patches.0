@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFBB2FC89C;
-	Tue, 31 Mar 2026 17:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1CF2E1C7C;
+	Tue, 31 Mar 2026 17:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976546; cv=none; b=QAPXabXZoHxIKHHtQc7TNwwFL1gX615lOmFYr21Lwt+7+kujwKgx08t9azjtzaS77DfTB3wDEOm4OFcZCf3IH7Fx0tUK+eVkMEelePvPhUkl51uv67Whc2m8+H+mhUesC4B/cWLvia/H/tUVLvMcwehtVNzvd9G7Db72nnCYt6o=
+	t=1774976549; cv=none; b=LhtGOHVU+Oi+vcFT6ySl6u2oZqtJ/f6OTuhDYkYkEiU+NqeYHKXoRZfR/pLsylVx+fFxMFWmm/6SF42Dngcd8nAscLhlwJ9SxHgyr+6FIHCURXm4Foe1CVgUj8cK1oDKqnoCvxchvSbMB6z58sXV0cuN2e2/d4MBvAYznjhzfCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976546; c=relaxed/simple;
-	bh=C115/y+XLQ7MR1tSB3xvAhaQYhj7Mv5UkQ0fOtgBeXI=;
+	s=arc-20240116; t=1774976549; c=relaxed/simple;
+	bh=4UZuX17oIeA29xBaT0lHKtYVibpSNRAv2kZHIlJZM+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lL5JBfJz5GyS7fV6mxOcBMqqHsZ1oBF26ldPLUqHDQXwkiW8ZviNO9MHI1jXtIXu27+nOBOx/T3Xg7UJfA/27l4F+Z0gmqGAbob+SFa9JOZvrR9XRgkwrPAOqsFF9n3bfP643ngHVA8yN/AcRbhTR1UyUuF26Vs9LD3rR+8NJ7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOoT9MZ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GAD7fS1jIK6SNs8LHDcghProXY6xyZrpKztx49Xr6tkt8yXZWO5B4U8rqzukUgQHUlLW0jf4VVSoLPMQ7O78Inng287rBGNT6DfCbJgTZY7eUsmyTcMwPfztuMmCN9Oz2t2DJyECDssNA3Wx/J+Zbg1INfbwuopAPIiBVQwpVqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yi6Hf/WB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOoT9MZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D3FC19423;
-	Tue, 31 Mar 2026 17:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yi6Hf/WB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B75C19423;
+	Tue, 31 Mar 2026 17:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976546;
-	bh=C115/y+XLQ7MR1tSB3xvAhaQYhj7Mv5UkQ0fOtgBeXI=;
+	s=korg; t=1774976549;
+	bh=4UZuX17oIeA29xBaT0lHKtYVibpSNRAv2kZHIlJZM+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOoT9MZ63jhPytdVDcHu9vUvZGyMc8Z/ZR6jq/a2RSZAlHVefRYww4lAPoi9/PARb
-	 XiatfecZUYpodVc/ubP+S0+SRYDjQRlru55aIzvjUlCDH+pUWP7lAbyFeL+EvpVOU4
-	 cYjZq30Qy9usZlYCZeOOdcwTzMtLfxjbuG3arDmU=
+	b=yi6Hf/WBW+4wk6eEBK/titvIwMBGCFPfPRGH+LfGQtN9O5lyqUaGZdWVKU+1frZ6c
+	 XSlmIR183+zqx3k8Jc0AMb4prhcgJYz2JJ14eEDIwhtWfVlcZJrI7Cjd3ajYGEizi2
+	 i2puzu7icZdbBAJrpWRJ6kFHbHGisuwt3xm750uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 101/309] platform/x86: lenovo: wmi-gamezone: Drop gz_chain_head
-Date: Tue, 31 Mar 2026 18:20:04 +0200
-Message-ID: <20260331161757.205877963@linuxfoundation.org>
+Subject: [PATCH 6.18 092/309] openvswitch: defer tunnel netdev_put to RCU release
+Date: Tue, 31 Mar 2026 18:19:55 +0200
+Message-ID: <20260331161756.878166209@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -46,61 +50,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-[ Upstream commit 5a3955f3602950d1888df743a5b1889e43b5cb60 ]
+[ Upstream commit 6931d21f87bc6d657f145798fad0bf077b82486c ]
 
-The gz_chain_head variable has been unused since the driver's initial
-addition to the tree. Its use was eliminated between v3 and v4 during
-development but due to the reference of gz_chain_head's wait_list
-member, the compiler could not warn that it was unused.
+ovs_netdev_tunnel_destroy() may run after NETDEV_UNREGISTER already
+detached the device. Dropping the netdev reference in destroy can race
+with concurrent readers that still observe vport->dev.
 
-After a (tip) commit ("locking/rwsem: Remove the list_head from struct
-rw_semaphore"), which removed a reference to the variable passed to
-__RWSEM_INITIALIZER(), certain configurations show an unused variable
-warning from the Lenovo wmi-gamezone driver:
+Do not release vport->dev in ovs_netdev_tunnel_destroy(). Instead, let
+vport_netdev_free() drop the reference from the RCU callback, matching
+the non-tunnel destroy path and avoiding additional synchronization
+under RTNL.
 
-  drivers/platform/x86/lenovo/wmi-gamezone.c:34:31: warning: 'gz_chain_head' defined but not used [-Wunused-variable]
-     34 | static BLOCKING_NOTIFIER_HEAD(gz_chain_head);
-        |                               ^~~~~~~~~~~~~
-  include/linux/notifier.h:119:39: note: in definition of macro 'BLOCKING_NOTIFIER_HEAD'
-    119 |         struct blocking_notifier_head name =                    \
-        |                                       ^~~~
-
-Remove the variable to prevent the warning from showing up.
-
-Fixes: 22024ac5366f ("platform/x86: Add Lenovo Gamezone WMI Driver")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/20260313-lenovo-wmi-gamezone-remove-gz_chain_head-v1-1-ce5231f0c6fa@kernel.org
-[ij: reorganized the changelog]
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: a9020fde67a6 ("openvswitch: Move tunnel destroy function to oppenvswitch module.")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
+Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260319074241.3405262-1-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/lenovo/wmi-gamezone.c | 2 --
+ net/openvswitch/vport-netdev.c | 2 --
  1 file changed, 2 deletions(-)
 
-diff --git a/drivers/platform/x86/lenovo/wmi-gamezone.c b/drivers/platform/x86/lenovo/wmi-gamezone.c
-index b26806b37d960..baf1238b4d1d9 100644
---- a/drivers/platform/x86/lenovo/wmi-gamezone.c
-+++ b/drivers/platform/x86/lenovo/wmi-gamezone.c
-@@ -31,8 +31,6 @@
- #define LWMI_GZ_METHOD_ID_SMARTFAN_SET 44
- #define LWMI_GZ_METHOD_ID_SMARTFAN_GET 45
+diff --git a/net/openvswitch/vport-netdev.c b/net/openvswitch/vport-netdev.c
+index c688dee96503f..12055af832dc0 100644
+--- a/net/openvswitch/vport-netdev.c
++++ b/net/openvswitch/vport-netdev.c
+@@ -196,8 +196,6 @@ void ovs_netdev_tunnel_destroy(struct vport *vport)
+ 	 */
+ 	if (vport->dev->reg_state == NETREG_REGISTERED)
+ 		rtnl_delete_link(vport->dev, 0, NULL);
+-	netdev_put(vport->dev, &vport->dev_tracker);
+-	vport->dev = NULL;
+ 	rtnl_unlock();
  
--static BLOCKING_NOTIFIER_HEAD(gz_chain_head);
--
- struct lwmi_gz_priv {
- 	enum thermal_mode current_mode;
- 	struct notifier_block event_nb;
+ 	call_rcu(&vport->rcu, vport_netdev_free);
 -- 
 2.51.0
 
