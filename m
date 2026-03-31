@@ -1,108 +1,154 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72FC423A62;
-	Tue, 31 Mar 2026 15:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17203D75D9;
+	Tue, 31 Mar 2026 16:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774971503; cv=none; b=JLXgMz9Ifw0xZFmVPzXft1OCx9IMy9A/Vt9ycu+Q9gW5Rkxd5APvTz7BEXJbd0VhwNNc2VGflAPyiV8BzDNdN70jFj/URZBEF2DiVPeR8mP89QqrE0GJ0GS50Yb2aAq/G52sMEB1ruRqMZ2wCn3MSMD4LTAEt/b7zxvMnBEOGyw=
+	t=1774974240; cv=none; b=EtUXwiHNp1VurfY0GC7yV3Sc0s+42GIF8HmnJeDViLCJxEeN9hO35mDXCnIrKvAYj6YqRS5W2ofOmwHHM9OW5Cn5hperi8bpFq//8GtPENyeqgZm4KG4iLYgscTwuUfaZdUGlW/+sa6/7EnsXfUdMtdifcP3e2Ga1JTRkf1Au54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774971503; c=relaxed/simple;
-	bh=Yb4OkI2lEqPgmQxRKGJSkL8RVqJUE5jHBisHEcfMpvg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ABCk9aztLjGKMrpcmuk9+ALlhEE8Henosy1TNN2AY6pR8QvZON7DKGiwYDhLc+6PTGhUtNE3YojL972p1VqkVdJYEzkj0oRvc/OQfRtN5r00mCoDnOf2jQgz8fAfcryutJygqkK28aYu1vOYGeFoihWayILxhNI7GQdGUj2GjpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=prKcdYCr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774974240; c=relaxed/simple;
+	bh=BluBn50t5prR4UgpK+tt8bE+oXcbb3TKK/PJOLK+p6w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sCCImS0EqB+4HRqW8UXlFgCssyIrqqHIhkna5ITdaP8OqfysyW8w76kfy6vfW836bPa/f6oWuVthVeBp5BpXeMbJVi+TiNkej5FYW8hztWr5R4Kp4ap+WFVEgAvfdEcvMyi8NNbJ0kQXEwu99GGYBejeH1tkSUiUK7R9jpmkyZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1Fj8jPc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="prKcdYCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C17C19423;
-	Tue, 31 Mar 2026 15:38:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774971503;
-	bh=Yb4OkI2lEqPgmQxRKGJSkL8RVqJUE5jHBisHEcfMpvg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=prKcdYCr9iUyZdZ03hpH+SWUzKf/iZt3M/8nLRReechb2/xcnKO/U8zPaj1FD4PRW
-	 rcI/U+g8I9Fg+Uy9J0cWT42CaAJ4yHyByOfNNl9BnVlF4GVpw92otBZpe9Yul4xOra
-	 r6WXTB//qE6Mq6BduC9WyguCnBztFLP7cRpOZ25mlLWzTOV/pQGBzsZ1rfwpv8Vq+0
-	 0R8QMNP/cePyrMsgXBFfUJCIbRRaybE/ej0GpMR8doFNDLUiCXIjgNoMGFn0cgD9sh
-	 4Z3OEV8NpzB4A4fcY0jePFPXbSyADic8kRMnpIyvQB/3mMBO6378UUsd0kC9EcDF0G
-	 HvO6+kk2oZXFQ==
-Date: Tue, 31 Mar 2026 17:38:18 +0200
-From: Nathan Chancellor <nathan@kernel.org>
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: stable@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev, netdev@vger.kernel.org,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Wei Fang <wei.fang@nxp.com>, Rahul Sharma <black.hawk@163.com>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6.1] net: enetc: fix PF !of_device_is_available()
- teardown path
-Message-ID: <20260331153818.GA1992169@ax162>
-References: <20260330081944.527545-1-vladimir.oltean@nxp.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1Fj8jPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021DEC19423;
+	Tue, 31 Mar 2026 16:23:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1774974239;
+	bh=BluBn50t5prR4UgpK+tt8bE+oXcbb3TKK/PJOLK+p6w=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=P1Fj8jPc1o2qFiMwamJmtN0W//AtVCkI2NoErNqRQIJr4Nfz/b3jdsgXPC0aGMdbO
+	 gD40ZURfJYMra5dwd0L9/uths8zFDUk3G2/3RE58K/SNOPwutLiokii6ctaQEUf6us
+	 E/xsydavM19EHqDbmgpacRQUCBKp3/WHsbVbLfs0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 001/175] perf: Extract a few helpers
+Date: Tue, 31 Mar 2026 18:19:45 +0200
+Message-ID: <20260331161729.837275842@linuxfoundation.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
+References: <20260331161729.779738837@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260330081944.527545-1-vladimir.oltean@nxp.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 30, 2026 at 11:19:44AM +0300, Vladimir Oltean wrote:
-> Upstream commit e15c5506dd39 ("net: enetc: allocate vf_state during PF
-> probes") was backported incorrectly to kernels where enetc_pf_probe()
-> still has to manually check whether the OF node of the PCI device is
-> enabled.
-> 
-> In kernels which contain commit bfce089ddd0e ("net: enetc: remove
-> of_device_is_available() handling") and its dependent change, commit
-> 6fffbc7ae137 ("PCI: Honor firmware's device disabled status"), the
-> "err_device_disabled" label has disappeared. Yet, linux-6.1.y and
-> earlier still contains it.
-> 
-> The trouble is that upstream commit e15c5506dd39 ("net: enetc: allocate
-> vf_state during PF probes"), backported as 35668e29e979 in linux-6.1.y,
-> introduces new code for the err_setup_mac_addresses and err_alloc_netdev
-> labels which calls kfree(pf->vf_state). This code must not execute for
-> the err_device_disabled label, because at that stage, the pf structure
-> has not yet been allocated, and is an uninitialized pointer.
-> 
-> By moving the err_device_disabled label to undo just the previous
-> operation, i.e. a successful enetc_psi_create() call with
-> enetc_psi_destroy(), the dereference of uninitialized pf->vf_state is
-> avoided.
-> 
-> Fixes: 35668e29e979 ("net: enetc: allocate vf_state during PF probes")
-> Reported-by: Nathan Chancellor <nathan@kernel.org>
-> Closes: https://lore.kernel.org/linux-patches/20260330073356.GA1017537@ax162/
-> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org> # build
+------------------
 
-> ---
->  drivers/net/ethernet/freescale/enetc/enetc_pf.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-> index 99422c0b4a26..8cb4c759b165 100644
-> --- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-> +++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-> @@ -1393,10 +1393,10 @@ static int enetc_pf_probe(struct pci_dev *pdev,
->  	si->ndev = NULL;
->  	free_netdev(ndev);
->  err_alloc_netdev:
-> -err_device_disabled:
->  err_setup_mac_addresses:
->  	kfree(pf->vf_state);
->  err_alloc_vf_state:
-> +err_device_disabled:
->  	enetc_psi_destroy(pdev);
->  err_psi_create:
->  	return err;
-> -- 
-> 2.43.0
-> 
+From: Peter Zijlstra <peterz@infradead.org>
+
+[ Upstream commit 9a32bd9901fe5b1dcf544389dbf04f3b0a2fbab4 ]
+
+The context time update code is repeated verbatim a few times.
+
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240807115550.031212518@infradead.org
+Stable-dep-of: 4b9ce6719606 ("perf: Make sure to use pmu_ctx->pmu for groups")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ kernel/events/core.c | 39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
+
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 652baf91c629e..53cb9ee145746 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -2349,6 +2349,24 @@ group_sched_out(struct perf_event *group_event, struct perf_event_context *ctx)
+ 		event_sched_out(event, ctx);
+ }
+ 
++static inline void
++ctx_time_update(struct perf_cpu_context *cpuctx, struct perf_event_context *ctx)
++{
++	if (ctx->is_active & EVENT_TIME) {
++		update_context_time(ctx);
++		update_cgrp_time_from_cpuctx(cpuctx, false);
++	}
++}
++
++static inline void
++ctx_time_update_event(struct perf_event_context *ctx, struct perf_event *event)
++{
++	if (ctx->is_active & EVENT_TIME) {
++		update_context_time(ctx);
++		update_cgrp_time_from_event(event);
++	}
++}
++
+ #define DETACH_GROUP	0x01UL
+ #define DETACH_CHILD	0x02UL
+ #define DETACH_DEAD	0x04UL
+@@ -2370,10 +2388,7 @@ __perf_remove_from_context(struct perf_event *event,
+ 	enum perf_event_state state = PERF_EVENT_STATE_OFF;
+ 	unsigned long flags = (unsigned long)info;
+ 
+-	if (ctx->is_active & EVENT_TIME) {
+-		update_context_time(ctx);
+-		update_cgrp_time_from_cpuctx(cpuctx, false);
+-	}
++	ctx_time_update(cpuctx, ctx);
+ 
+ 	/*
+ 	 * Ensure event_sched_out() switches to OFF, at the very least
+@@ -2470,12 +2485,8 @@ static void __perf_event_disable(struct perf_event *event,
+ 	if (event->state < PERF_EVENT_STATE_INACTIVE)
+ 		return;
+ 
+-	if (ctx->is_active & EVENT_TIME) {
+-		update_context_time(ctx);
+-		update_cgrp_time_from_event(event);
+-	}
+-
+ 	perf_pmu_disable(event->pmu_ctx->pmu);
++	ctx_time_update_event(ctx, event);
+ 
+ 	/*
+ 	 * When disabling a group leader, the whole group becomes ineligible
+@@ -4534,10 +4545,7 @@ static void __perf_event_read(void *info)
+ 		return;
+ 
+ 	raw_spin_lock(&ctx->lock);
+-	if (ctx->is_active & EVENT_TIME) {
+-		update_context_time(ctx);
+-		update_cgrp_time_from_event(event);
+-	}
++	ctx_time_update_event(ctx, event);
+ 
+ 	perf_event_update_time(event);
+ 	if (data->group)
+@@ -4718,10 +4726,7 @@ static int perf_event_read(struct perf_event *event, bool group)
+ 		 * May read while context is not active (e.g., thread is
+ 		 * blocked), in that case we cannot update context time
+ 		 */
+-		if (ctx->is_active & EVENT_TIME) {
+-			update_context_time(ctx);
+-			update_cgrp_time_from_event(event);
+-		}
++		ctx_time_update_event(ctx, event);
+ 
+ 		perf_event_update_time(event);
+ 		if (group)
+-- 
+2.51.0
+
+
+
