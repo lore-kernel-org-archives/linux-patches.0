@@ -1,121 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAEE3DFC72;
-	Tue, 31 Mar 2026 08:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C84C3A9D87;
+	Tue, 31 Mar 2026 10:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774946124; cv=none; b=gvxrX8Ur+6NCqdu7DoK56hp5TZnDJNIa1lnqdM4yo74LvsVy7kayPUojMcMnOCC5KLQwV5EnZ1n9OyPRpL4rlK/YL1+Pj1KXMgzkVyGg1Ys+DeQvUxU+9qARTOUOvTUbMNF3gHrwe2r2aQkMtvj9UenyEvSNM4zGureZh2RgJwI=
+	t=1774952348; cv=none; b=IqffiSwBC4T7IT6Os5wwHdzvSWicF2XYbQfFfApXaBQnc5kn3gYBz0m5ps/bFtVPtN+jU5tePz4D7RySEXmCsh/X9Mbp8M4LiSDa8xYbVeavLO7hY8qUmNdHPLiPS4QlnXQyrnTj2OI0Bn/hk8QMwgB0U5Jy1gELHaiEs0wXj6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774946124; c=relaxed/simple;
-	bh=4PxGJGHThb4XA2T2D+sB4KkxVzrAmQWcMhgkUx2dkh0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=ESquyYwbip3kft3M4FZqBheNCbTrgmATVBYPYQkX/NvoD5WWk3JEaU6uPxXce+881vrnezItukU+KVjiVlYl7ufDOKgTZ0chORQevOWcehXqtfaMPu7KFtkWvznOs8kq/zY3ooNoY+HBn58s+xks8vaJPth1kZr4SZZEqc2uvM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=inH7+CYT; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774952348; c=relaxed/simple;
+	bh=C63rki2LoaCtMMcuFy7+wQ/l3D0PT2ixs9u9g+JVSpo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KsVs7kAwHRNKfByYd/UADC4g3P4KG+Ual6kSp7MD39AOygwWVjbvwxiRbif+bF1CXSBq+QMNqvxVj4A+l01YSfs9w8vmHyYLdERzceMfUDWnG2vljlyS4KYgS51ajua9tzELiqEY5nAFAnWa9fMzAj11Wb97R8aJd6kR9RHuyjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cewqqc70; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="inH7+CYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FE7C19423;
-	Tue, 31 Mar 2026 08:35:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774946124;
-	bh=4PxGJGHThb4XA2T2D+sB4KkxVzrAmQWcMhgkUx2dkh0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=inH7+CYTX7DG2DDaly+qKAdgfh+vFtWcQ8PaZTxXVKfvakF5RsC75qOmR82y1sipZ
-	 JrvpHTtlGmieqvX1nhDvpCuz1oJfph3ygqao+fP6fS3UOhHbZB03tdky7GCSMiY4rb
-	 N08P2ZFd103mkviNdo7Dq73bP8jRVbDc/RVMuamAxvm3LNYHzkDUqElldtod4h2+JV
-	 OmzGbi6DYG4GOoTsk9KbTtxOE/8xKzrTj6OsB7RMPLWUOpNQdAK18dEIUhJ2cvJibH
-	 2UdeqSbj0MvAX+OT+kg+6eLle8Girz/+AJafHsmK6hP9FlAP31vGiIjWcKa1t7O3t/
-	 7RaZGcPaewTQA==
-From: Leon Romanovsky <leon@kernel.org>
-To: Abhijit Gangurde <abhijit.gangurde@amd.com>, 
- Allen Hubbe <allen.hubbe@amd.com>, 
- Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
- Bernard Metzler <bernard.metzler@linux.dev>, 
- Bryan Tan <bryan-bt.tan@broadcom.com>, 
- Cheng Xu <chengyou@linux.alibaba.com>, 
- Gal Pressman <gal.pressman@linux.dev>, 
- Junxian Huang <huangjunxian6@hisilicon.com>, 
- Kai Shen <kaishen@linux.alibaba.com>, 
- Konstantin Taranov <kotaranov@microsoft.com>, 
- Krzysztof Czurylo <krzysztof.czurylo@intel.com>, 
- linux-hyperv@vger.kernel.org, linux-rdma@vger.kernel.org, 
- Michal Kalderon <mkalderon@marvell.com>, 
- Michael Margolin <mrgolin@amazon.com>, Nelson Escobar <neescoba@cisco.com>, 
- Satish Kharat <satishkh@cisco.com>, 
- Selvin Xavier <selvin.xavier@broadcom.com>, 
- Yossi Leybovich <sleybo@amazon.com>, 
- Chengchang Tang <tangchengchang@huawei.com>, 
- Tatyana Nikolova <tatyana.e.nikolova@intel.com>, 
- Vishnu Dasa <vishnu.dasa@broadcom.com>, Yishai Hadas <yishaih@nvidia.com>, 
- Zhu Yanjun <zyjzyj2000@gmail.com>, Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Long Li <longli@microsoft.com>, patches@lists.linux.dev
-In-Reply-To: <0-v2-f4ac6f418bd6+12c5-rdma_udata_req_jgg@nvidia.com>
-References: <0-v2-f4ac6f418bd6+12c5-rdma_udata_req_jgg@nvidia.com>
-Subject: Re: [PATCH v2 00/16] Update drivers to use
- ib_copy_validate_udata_in()
-Message-Id: <177494612145.4056125.9188398247456851629.b4-ty@kernel.org>
-Date: Tue, 31 Mar 2026 04:35:21 -0400
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cewqqc70"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3055DC2BCB0;
+	Tue, 31 Mar 2026 10:19:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1774952347;
+	bh=C63rki2LoaCtMMcuFy7+wQ/l3D0PT2ixs9u9g+JVSpo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Cewqqc705/lCYbeJKP8sJfsgy3UQsbAl5dtWjwj3Bqq+5JvJtxZdEaQ/i2U4fdZbn
+	 EGLOPzUKotyLfHU3UZi+ZT6PW0LYRLXpLWZtqeaGQjEs5aCyXiBX5oOqVN2TiF7lN0
+	 5vLl2faf8FxFSFLPHTYdDQ54JeRMfCP1PoYesFRg=
+Date: Tue, 31 Mar 2026 12:19:04 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Thorsten Leemhuis <linux@leemhuis.info>
+Cc: Sasha Levin <sashal@kernel.org>, achill@achill.org,
+	akpm@linux-foundation.org, broonie@kernel.org, conor@kernel.org,
+	f.fainelli@gmail.com, hargar@microsoft.com, jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org, linux@roeck-us.net,
+	lkft-triage@lists.linaro.org, patches@kernelci.org,
+	patches@lists.linux.dev, pavel@nabladev.com, rwarsow@gmx.de,
+	shuah@kernel.org, sr@sladewatkins.com, stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com, torvalds@linux-foundation.org,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>, Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	linux-um@lists.infradead.org
+Subject: Re: [PATCH 6.18 000/212] 6.18.20-rc1 review
+Message-ID: <2026033158-choking-confined-75be@gregkh>
+References: <20260323134503.770111826@linuxfoundation.org>
+ <20260325010401.62938-1-ojeda@kernel.org>
+ <fed7d83d-ace7-47b2-acbb-d469c6189722@leemhuis.info>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-18f8f
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fed7d83d-ace7-47b2-acbb-d469c6189722@leemhuis.info>
 
-
-On Wed, 25 Mar 2026 18:26:46 -0300, Jason Gunthorpe wrote:
-> Progress the uAPI work by shifting nearly all drivers to use
-> ib_copy_validate_udata_in() and its variations.
+On Mon, Mar 30, 2026 at 07:48:50PM +0200, Thorsten Leemhuis wrote:
+> On 3/25/26 02:04, Miguel Ojeda wrote:
+> > On Mon, 23 Mar 2026 14:43:41 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> > 
+> > For UML, I am seeing:
 > 
-> These helpers are easier to use and enforce a tighter uAPI protocol
-> for the udata.
+> Guenter (now CCed) just reported something similar down in the thread.
+> And I got a similar bug report about it as well, which bisected it to
+> 49cf34c0815f93 ("unwind_user/x86: Enable frame pointer unwinding on
+> x86") [v6.19-rc1, v6.18.17 (b9537a51b65af0)]:
+> https://bugzilla.kernel.org/show_bug.cgi?id=221283
 > 
-> v2:
->  - Drop EFA patch, rename the field instead
->  - Fix the mlx5 mw change, userspace doesn't use the udata struct at all
-> v1: https://patch.msgid.link/r/0-v1-2b86f54cda42+7d-rdma_udata_req_jgg@nvidia.com
+> > [...]
+> > 
+> >   aa7387e79a5c ("unwind_user/x86: Fix arch=um build")
 > 
-> [...]
+> The users in that bug reported confirmed that this fixed things:
+> https://bugzilla.kernel.org/show_bug.cgi?id=221283#c12
+> 
+> Greg, Sasha, could you pick this up please for 6.18.y?
 
-Applied, thanks!
+Now added, thanks.
 
-[01/16] RDMA: Consolidate patterns with offsetofend() to ib_copy_validate_udata_in()
-        (no commit info)
-[02/16] RDMA: Consolidate patterns with offsetof() to ib_copy_validate_udata_in()
-        (no commit info)
-[03/16] RDMA: Consolidate patterns with sizeof() to ib_copy_validate_udata_in()
-        (no commit info)
-[04/16] RDMA: Use ib_copy_validate_udata_in() for implicit full structs
-        (no commit info)
-[05/16] RDMA/pvrdma: Use ib_copy_validate_udata_in() for srq
-        (no commit info)
-[06/16] RDMA/mlx5: Use ib_copy_validate_udata_in() for SRQ
-        (no commit info)
-[07/16] RDMA/mlx5: Use ib_copy_validate_udata_in() for MW
-        (no commit info)
-[08/16] RDMA/mlx4: Use ib_copy_validate_udata_in()
-        (no commit info)
-[09/16] RDMA/mlx4: Use ib_copy_validate_udata_in() for QP
-        (no commit info)
-[10/16] RDMA/hns: Use ib_copy_validate_udata_in()
-        (no commit info)
-[11/16] RDMA: Use ib_copy_validate_udata_in_cm() for zero comp_mask
-        (no commit info)
-[12/16] RDMA/mlx5: Pull comp_mask validation into ib_copy_validate_udata_in_cm()
-        (no commit info)
-[13/16] RDMA/hns: Add missing comp_mask check in create_qp
-        (no commit info)
-[14/16] RDMA/irdma: Add missing comp_mask check in alloc_ucontext
-        (no commit info)
-[15/16] RDMA: Remove redundant = {} for udata req structs
-        (no commit info)
-[16/16] RDMA/hns: Remove the duplicate calls to ib_copy_validate_udata_in()
-        (no commit info)
-
-Best regards,
--- 
-Leon Romanovsky <leon@kernel.org>
-
+greg k-h
