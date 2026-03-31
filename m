@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9F32FE042;
-	Tue, 31 Mar 2026 17:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6936C2FE042;
+	Tue, 31 Mar 2026 17:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976734; cv=none; b=u4zBWwPhLW7942A7D7LMTjfr9dT7D3JQwZ3WyCw6igi8PKUt4O0v27JUFR70dXZW2Vl+mpfIPqsIGWmH6mgsrfDwOzJHZKE/K3sZKYfuFYocTigilpMmV/oBbz5nJoV0xi8fj6cBixm1Ud5KuXSVxZ9eT4X8iX2oae3vt9qoqs4=
+	t=1774976737; cv=none; b=tHO5J2RajaAkU5hnaARMKlWFMtkWftGXkxz/f80MOGHkwiC+iVHjwzCUpLcaJv0P6OSkl58brj/gn5eKl9eLLeGExv1pkk3yeVv1ey0y7Ld1q88CdIaQ+ZziHsSk+P2oM+oo8wQVKtrRD5Q5R2vT+fC2dHn1aRC7c5lnk29PQII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976734; c=relaxed/simple;
-	bh=cV9UJWcyH4VI4kjpIMAym4LuRNPsfDK7r9+KMaxPH00=;
+	s=arc-20240116; t=1774976737; c=relaxed/simple;
+	bh=RX1a4hkxdQ79zM8doB7ZSvtrnCCAbiRWS5Mxit0h/LQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u9QHhePFn67Kmng97Fc4qQf9vGQf3D48/t+lw7YRy8x9DRuJspmwXt38OdZEbVaSeW9CGesMZReKlOWM07DlbovPJCRIXBN2D1d2Pz2CgkoGXpF19ArERMFeRZlevlkwoNjeEYAiR36huLiERaaMljD8Zjid8Xkk9M6PXE3e2iU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHlnx3IU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q8sZbU2UzrHehU5zjz12MNu7rFd1UVFogzSWIruV5FyDXEbW0tLySrdNKGmnTKiLYrJ/UZFgaK55Z+4wJ4bqgi9z2QMnVj1rw0gxAMUlN36TO4rYPIDas5h06a8Dx/EoyP2LJitJmEbA7pVG5RJy8uA0Ke/FXDYKzj0k+SJDY0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIJcq7gz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHlnx3IU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6537DC19423;
-	Tue, 31 Mar 2026 17:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIJcq7gz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006C4C19423;
+	Tue, 31 Mar 2026 17:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976734;
-	bh=cV9UJWcyH4VI4kjpIMAym4LuRNPsfDK7r9+KMaxPH00=;
+	s=korg; t=1774976737;
+	bh=RX1a4hkxdQ79zM8doB7ZSvtrnCCAbiRWS5Mxit0h/LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CHlnx3IU8xClfWbCuQMsHbC+zHGmKa+B/EpNbZclKweGeX4smfA8rbVqfUOS4rSVR
-	 7yw0vP2jXN/usd5X+JXoo96/IGd7EVpiGF8KJaS/LZek9bK0QKAcQNIMgMRMqkIaBC
-	 pqiH2ksm/49kqHrEAVICbKNt10DT+ziPGWxlaHDk=
+	b=rIJcq7gzgYDfNBKibZgTZV7Kahlp904VzHQMwZnNsOnYVMaEbA2Xm94YPzikYBANZ
+	 pGsIAqvnHj6cE1mBrTUys+WCq6zr6rve9Hv2O5dLjFQloxM+/WTYwSx3U9HS8mXOAG
+	 XLmfaEeY7k8n+GFvl36GHtafG8M9WD0MsYeqXSxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 200/309] hwmon: (pmbus/isl68137) Add mutex protection for AVS enable sysfs attributes
-Date: Tue, 31 Mar 2026 18:21:43 +0200
-Message-ID: <20260331161800.815658979@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.18 209/309] alarmtimer: Fix argument order in alarm_timer_forward()
+Date: Tue, 31 Mar 2026 18:21:52 +0200
+Message-ID: <20260331161801.141593950@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -50,88 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 3075a3951f7708da5a8ab47b0b7d068a32f69e58 upstream.
+commit 5d16467ae56343b9205caedf85e3a131e0914ad8 upstream.
 
-The custom avs0_enable and avs1_enable sysfs attributes access PMBus
-registers through the exported API helpers (pmbus_read_byte_data,
-pmbus_read_word_data, pmbus_write_word_data, pmbus_update_byte_data)
-without holding the PMBus update_lock mutex. These exported helpers do
-not acquire the mutex internally, unlike the core's internal callers
-which hold the lock before invoking them.
+alarm_timer_forward() passes arguments to alarm_forward() in the wrong
+order:
 
-The store callback is especially vulnerable: it performs a multi-step
-read-modify-write sequence (read VOUT_COMMAND, write VOUT_COMMAND, then
-update OPERATION) where concurrent access from another thread could
-interleave and corrupt the register state.
+  alarm_forward(alarm, timr->it_interval, now);
 
-Add pmbus_lock_interruptible()/pmbus_unlock() around both the show and
-store callbacks to serialize PMBus register access with the rest of the
-driver.
+However, alarm_forward() is defined as:
 
-Fixes: 038a9c3d1e424 ("hwmon: (pmbus/isl68137) Add driver for Intersil ISL68137 PWM Controller")
+  u64 alarm_forward(struct alarm *alarm, ktime_t now, ktime_t interval);
+
+and uses the second argument as the current time:
+
+  delta = ktime_sub(now, alarm->node.expires);
+
+Passing the interval as "now" results in incorrect delta computation,
+which can lead to missed expirations or incorrect overrun accounting.
+
+This issue has been present since the introduction of
+alarm_timer_forward().
+
+Fix this by swapping the arguments.
+
+Fixes: e7561f1633ac ("alarmtimer: Implement forward callback")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260319173055.125271-3-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://patch.msgid.link/20260323061130.29991-1-zhanxusheng@xiaomi.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/isl68137.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ kernel/time/alarmtimer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwmon/pmbus/isl68137.c
-+++ b/drivers/hwmon/pmbus/isl68137.c
-@@ -94,7 +94,15 @@ static ssize_t isl68137_avs_enable_show_
- 					     int page,
- 					     char *buf)
+--- a/kernel/time/alarmtimer.c
++++ b/kernel/time/alarmtimer.c
+@@ -540,7 +540,7 @@ static s64 alarm_timer_forward(struct k_
  {
--	int val = pmbus_read_byte_data(client, page, PMBUS_OPERATION);
-+	int val;
-+
-+	val = pmbus_lock_interruptible(client);
-+	if (val)
-+		return val;
-+
-+	val = pmbus_read_byte_data(client, page, PMBUS_OPERATION);
-+
-+	pmbus_unlock(client);
+ 	struct alarm *alarm = &timr->it.alarm.alarmtimer;
  
- 	if (val < 0)
- 		return val;
-@@ -116,6 +124,10 @@ static ssize_t isl68137_avs_enable_store
- 
- 	op_val = result ? ISL68137_VOUT_AVS : 0;
- 
-+	rc = pmbus_lock_interruptible(client);
-+	if (rc)
-+		return rc;
-+
- 	/*
- 	 * Writes to VOUT setpoint over AVSBus will persist after the VRM is
- 	 * switched to PMBus control. Switching back to AVSBus control
-@@ -127,17 +139,20 @@ static ssize_t isl68137_avs_enable_store
- 		rc = pmbus_read_word_data(client, page, 0xff,
- 					  PMBUS_VOUT_COMMAND);
- 		if (rc < 0)
--			return rc;
-+			goto unlock;
- 
- 		rc = pmbus_write_word_data(client, page, PMBUS_VOUT_COMMAND,
- 					   rc);
- 		if (rc < 0)
--			return rc;
-+			goto unlock;
- 	}
- 
- 	rc = pmbus_update_byte_data(client, page, PMBUS_OPERATION,
- 				    ISL68137_VOUT_AVS, op_val);
- 
-+unlock:
-+	pmbus_unlock(client);
-+
- 	return (rc < 0) ? rc : count;
+-	return alarm_forward(alarm, timr->it_interval, now);
++	return alarm_forward(alarm, now, timr->it_interval);
  }
  
+ /**
 
 
