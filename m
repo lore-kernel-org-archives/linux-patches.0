@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56143F7A8B;
-	Tue, 31 Mar 2026 16:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39678426EC8;
+	Tue, 31 Mar 2026 16:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975280; cv=none; b=d0gK7kqQ5ZUgwqpjHBXMPcSKl5d2wasypdX1Y6CVezOoJ4vdzw1ugRBVzHRDxAKkjLy2ZzZqxzruijhmLLm9XXw3ZrHuR9i0MV/pB1ZKpNlnp9IYrb6mr+UQt9JLdR54k7ObZmIhtVfVg10M/ol8PHCFcafOZYgXq6pm02qIXPI=
+	t=1774975283; cv=none; b=ESuCFTv/3U8e+54rYPLkyCDzX7gln0kz5CtNE8C31EN2ghlXqK+NpdvNrEkz9ZENztCCnDZdMMI0vQxv7TWCDpjFbYmd1vFS0g4p+ZIwQfHlL8vZkIXHkfm7DrLB3Cdn+HFYVyl2IWyshUwEJ3rhCheY8q/grjU7sVcYXj6P9UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975280; c=relaxed/simple;
-	bh=jf5PpyewlaJOpVSvaA4zeA1cp2bh3Qxl9s+4h4V0KCU=;
+	s=arc-20240116; t=1774975283; c=relaxed/simple;
+	bh=4Ih+mdeZNbdZE8BI8QFjc5INQINTDsjhWdeukHO5CBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ol7CD++PQ+PgSD1HU3/fi94TIMKX/DJ7+VEvacGJytV9q4smuwjxfCFfgYEPsp3oJcw4nqXDfhVK6iUKphkGL2AVyl3CKywmxoWlCuAx6f99IyAZjLDf84l9praxBRUUj0Kgp5163QO2e0918arNsslEvTRoHM9vwOGunoJe5ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awS1xxtu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j191cNEXXFm1zn14zq4XkkspbtFnimbu5DGzlYiGHEQM/KvbVeMyAb+occw2zRxUwdYFZpkFoEksgzuAHqn0TSbVfIhRxMzcoGr1SalTz0jEFYyZkTsrvrm5QX8eVu1n3Qc+Phmrz9XI5arISWGRNwGW2J4lf52vwRqZ9uVq3y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVq0aXXy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awS1xxtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABC1C19423;
-	Tue, 31 Mar 2026 16:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVq0aXXy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2110C19423;
+	Tue, 31 Mar 2026 16:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975280;
-	bh=jf5PpyewlaJOpVSvaA4zeA1cp2bh3Qxl9s+4h4V0KCU=;
+	s=korg; t=1774975283;
+	bh=4Ih+mdeZNbdZE8BI8QFjc5INQINTDsjhWdeukHO5CBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=awS1xxtu+ut1aWN7kHheTl1vGJmEcV87mQ9LAPot/og/rQALXQlxS3oRx2tLYtYJk
-	 GFil8SMUSCuX53DY35UsOYPKpV7yNMrrX/oPoGuzL5+uRolWI7Rc0Cj+iImoTn0eGe
-	 kJ3i7aQ4roZ/hE8Aq4lPxu0kzKa+7Z4ub3j8cpI4=
+	b=UVq0aXXyEC6oZmwOhItuf/wWoNteCVlCAgOKyH7KbaXBRF3NRqaAwABkrScxs2XSc
+	 xpDwS1o2cpSCXc88QscZfNLQEtbIDow44Ssav9eHefvYIEMc/GEjuwpTB9kl74/3sl
+	 kZSFg74imN0He7XeQMs0rc0fpM6eY+9NhRc7Umhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.19 200/342] drm/xe: always keep track of remap prev/next
-Date: Tue, 31 Mar 2026 18:20:33 +0200
-Message-ID: <20260331161806.347573004@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.19 201/342] ksmbd: replace hardcoded hdr2_len with offsetof() in smb2_calc_max_out_buf_len()
+Date: Tue, 31 Mar 2026 18:20:34 +0200
+Message-ID: <20260331161806.384424807@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,197 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit bfe9e314d7574d1c5c851972e7aee342733819d2 upstream.
+commit 0e55f63dd08f09651d39e1b709a91705a8a0ddcb upstream.
 
-During 3D workload, user is reporting hitting:
+After this commit (e2b76ab8b5c9 "ksmbd: add support for read compound"),
+response buffer management was changed to use dynamic iov array.
+In the new design, smb2_calc_max_out_buf_len() expects the second
+argument (hdr2_len) to be the offset of ->Buffer field in the
+response structure, not a hardcoded magic number.
+Fix the remaining call sites to use the correct offsetof() value.
 
-[  413.361679] WARNING: drivers/gpu/drm/xe/xe_vm.c:1217 at vm_bind_ioctl_ops_unwind+0x1e2/0x2e0 [xe], CPU#7: vkd3d_queue/9925
-[  413.361944] CPU: 7 UID: 1000 PID: 9925 Comm: vkd3d_queue Kdump: loaded Not tainted 7.0.0-070000rc3-generic #202603090038 PREEMPT(lazy)
-[  413.361949] RIP: 0010:vm_bind_ioctl_ops_unwind+0x1e2/0x2e0 [xe]
-[  413.362074] RSP: 0018:ffffd4c25c3df930 EFLAGS: 00010282
-[  413.362077] RAX: 0000000000000000 RBX: ffff8f3ee817ed10 RCX: 0000000000000000
-[  413.362078] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-[  413.362079] RBP: ffffd4c25c3df980 R08: 0000000000000000 R09: 0000000000000000
-[  413.362081] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8f41fbf99380
-[  413.362082] R13: ffff8f3ee817e968 R14: 00000000ffffffef R15: ffff8f43d00bd380
-[  413.362083] FS:  00000001040ff6c0(0000) GS:ffff8f4696d89000(0000) knlGS:00000000330b0000
-[  413.362085] CS:  0010 DS: 002b ES: 002b CR0: 0000000080050033
-[  413.362086] CR2: 00007ddfc4747000 CR3: 00000002e6262005 CR4: 0000000000f72ef0
-[  413.362088] PKRU: 55555554
-[  413.362089] Call Trace:
-[  413.362092]  <TASK>
-[  413.362096]  xe_vm_bind_ioctl+0xa9a/0xc60 [xe]
-
-Which seems to hint that the vma we are re-inserting for the ops unwind
-is either invalid or overlapping with something already inserted in the
-vm. It shouldn't be invalid since this is a re-insertion, so must have
-worked before. Leaving the likely culprit as something already placed
-where we want to insert the vma.
-
-Following from that, for the case where we do something like a rebind in
-the middle of a vma, and one or both mapped ends are already compatible,
-we skip doing the rebind of those vma and set next/prev to NULL. As well
-as then adjust the original unmap va range, to avoid unmapping the ends.
-However, if we trigger the unwind path, we end up with three va, with
-the two ends never being removed and the original va range in the middle
-still being the shrunken size.
-
-If this occurs, one failure mode is when another unwind op needs to
-interact with that range, which can happen with a vector of binds. For
-example, if we need to re-insert something in place of the original va.
-In this case the va is still the shrunken version, so when removing it
-and then doing a re-insert it can overlap with the ends, which were
-never removed, triggering a warning like above, plus leaving the vm in a
-bad state.
-
-With that, we need two things here:
-
- 1) Stop nuking the prev/next tracking for the skip cases. Instead
-    relying on checking for skip prev/next, where needed. That way on the
-    unwind path, we now correctly remove both ends.
-
- 2) Undo the unmap va shrinkage, on the unwind path. With the two ends
-    now removed the unmap va should expand back to the original size again,
-    before re-insertion.
-
-v2:
-  - Update the explanation in the commit message, based on an actual IGT of
-    triggering this issue, rather than conjecture.
-  - Also undo the unmap shrinkage, for the skip case. With the two ends
-    now removed, the original unmap va range should expand back to the
-    original range.
-v3:
-  - Track the old start/range separately. vma_size/start() uses the va
-    info directly.
-
-Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7602
-Fixes: 8f33b4f054fc ("drm/xe: Avoid doing rebinds")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.8+
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260318100208.78097-2-matthew.auld@intel.com
-(cherry picked from commit aec6969f75afbf4e01fd5fb5850ed3e9c27043ac)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pt.c       |   12 ++++++------
- drivers/gpu/drm/xe/xe_vm.c       |   22 ++++++++++++++++++----
- drivers/gpu/drm/xe/xe_vm_types.h |    4 ++++
- 3 files changed, 28 insertions(+), 10 deletions(-)
+ fs/smb/server/smb2pdu.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_pt.c
-+++ b/drivers/gpu/drm/xe/xe_pt.c
-@@ -1442,9 +1442,9 @@ static int op_check_svm_userptr(struct x
- 		err = vma_check_userptr(vm, op->map.vma, pt_update);
- 		break;
- 	case DRM_GPUVA_OP_REMAP:
--		if (op->remap.prev)
-+		if (op->remap.prev && !op->remap.skip_prev)
- 			err = vma_check_userptr(vm, op->remap.prev, pt_update);
--		if (!err && op->remap.next)
-+		if (!err && op->remap.next && !op->remap.skip_next)
- 			err = vma_check_userptr(vm, op->remap.next, pt_update);
- 		break;
- 	case DRM_GPUVA_OP_UNMAP:
-@@ -2029,12 +2029,12 @@ static int op_prepare(struct xe_vm *vm,
- 
- 		err = unbind_op_prepare(tile, pt_update_ops, old);
- 
--		if (!err && op->remap.prev) {
-+		if (!err && op->remap.prev && !op->remap.skip_prev) {
- 			err = bind_op_prepare(vm, tile, pt_update_ops,
- 					      op->remap.prev, false);
- 			pt_update_ops->wait_vm_bookkeep = true;
- 		}
--		if (!err && op->remap.next) {
-+		if (!err && op->remap.next && !op->remap.skip_next) {
- 			err = bind_op_prepare(vm, tile, pt_update_ops,
- 					      op->remap.next, false);
- 			pt_update_ops->wait_vm_bookkeep = true;
-@@ -2258,10 +2258,10 @@ static void op_commit(struct xe_vm *vm,
- 
- 		unbind_op_commit(vm, tile, pt_update_ops, old, fence, fence2);
- 
--		if (op->remap.prev)
-+		if (op->remap.prev && !op->remap.skip_prev)
- 			bind_op_commit(vm, tile, pt_update_ops, op->remap.prev,
- 				       fence, fence2, false);
--		if (op->remap.next)
-+		if (op->remap.next && !op->remap.skip_next)
- 			bind_op_commit(vm, tile, pt_update_ops, op->remap.next,
- 				       fence, fence2, false);
- 		break;
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -2532,7 +2532,6 @@ static int xe_vma_op_commit(struct xe_vm
- 			if (!err && op->remap.skip_prev) {
- 				op->remap.prev->tile_present =
- 					tile_present;
--				op->remap.prev = NULL;
- 			}
- 		}
- 		if (op->remap.next) {
-@@ -2542,11 +2541,13 @@ static int xe_vma_op_commit(struct xe_vm
- 			if (!err && op->remap.skip_next) {
- 				op->remap.next->tile_present =
- 					tile_present;
--				op->remap.next = NULL;
- 			}
- 		}
- 
--		/* Adjust for partial unbind after removing VMA from VM */
-+		/*
-+		 * Adjust for partial unbind after removing VMA from VM. In case
-+		 * of unwind we might need to undo this later.
-+		 */
- 		if (!err) {
- 			op->base.remap.unmap->va->va.addr = op->remap.start;
- 			op->base.remap.unmap->va->va.range = op->remap.range;
-@@ -2665,6 +2666,8 @@ static int vm_bind_ioctl_ops_parse(struc
- 
- 			op->remap.start = xe_vma_start(old);
- 			op->remap.range = xe_vma_size(old);
-+			op->remap.old_start = op->remap.start;
-+			op->remap.old_range = op->remap.range;
- 
- 			flags |= op->base.remap.unmap->va->flags & XE_VMA_CREATE_MASK;
- 			if (op->base.remap.prev) {
-@@ -2812,8 +2815,19 @@ static void xe_vma_op_unwind(struct xe_v
- 			xe_svm_notifier_lock(vm);
- 			vma->gpuva.flags &= ~XE_VMA_DESTROYED;
- 			xe_svm_notifier_unlock(vm);
--			if (post_commit)
-+			if (post_commit) {
-+				/*
-+				 * Restore the old va range, in case of the
-+				 * prev/next skip optimisation. Otherwise what
-+				 * we re-insert here could be smaller than the
-+				 * original range.
-+				 */
-+				op->base.remap.unmap->va->va.addr =
-+					op->remap.old_start;
-+				op->base.remap.unmap->va->va.range =
-+					op->remap.old_range;
- 				xe_vm_insert_vma(vm, vma);
-+			}
- 		}
- 		break;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4445,8 +4445,9 @@ int smb2_query_dir(struct ksmbd_work *wo
+ 	d_info.wptr = (char *)rsp->Buffer;
+ 	d_info.rptr = (char *)rsp->Buffer;
+ 	d_info.out_buf_len =
+-		smb2_calc_max_out_buf_len(work, 8,
+-					  le32_to_cpu(req->OutputBufferLength));
++		smb2_calc_max_out_buf_len(work,
++				offsetof(struct smb2_query_directory_rsp, Buffer),
++				le32_to_cpu(req->OutputBufferLength));
+ 	if (d_info.out_buf_len < 0) {
+ 		rc = -EINVAL;
+ 		goto err_out;
+@@ -4713,8 +4714,9 @@ static int smb2_get_ea(struct ksmbd_work
  	}
---- a/drivers/gpu/drm/xe/xe_vm_types.h
-+++ b/drivers/gpu/drm/xe/xe_vm_types.h
-@@ -360,6 +360,10 @@ struct xe_vma_op_remap {
- 	u64 start;
- 	/** @range: range of the VMA unmap */
- 	u64 range;
-+	/** @old_start: Original start of the VMA we unmap */
-+	u64 old_start;
-+	/** @old_range: Original range of the VMA we unmap */
-+	u64 old_range;
- 	/** @skip_prev: skip prev rebind */
- 	bool skip_prev;
- 	/** @skip_next: skip next rebind */
+ 
+ 	buf_free_len =
+-		smb2_calc_max_out_buf_len(work, 8,
+-					  le32_to_cpu(req->OutputBufferLength));
++		smb2_calc_max_out_buf_len(work,
++				offsetof(struct smb2_query_info_rsp, Buffer),
++				le32_to_cpu(req->OutputBufferLength));
+ 	if (buf_free_len < 0)
+ 		return -EINVAL;
+ 
+@@ -5040,8 +5042,9 @@ static int get_file_stream_info(struct k
+ 	file_info = (struct smb2_file_stream_info *)rsp->Buffer;
+ 
+ 	buf_free_len =
+-		smb2_calc_max_out_buf_len(work, 8,
+-					  le32_to_cpu(req->OutputBufferLength));
++		smb2_calc_max_out_buf_len(work,
++				offsetof(struct smb2_query_info_rsp, Buffer),
++				le32_to_cpu(req->OutputBufferLength));
+ 	if (buf_free_len < 0)
+ 		goto out;
+ 
+@@ -8190,8 +8193,9 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 	buffer = (char *)req + le32_to_cpu(req->InputOffset);
+ 
+ 	cnt_code = le32_to_cpu(req->CtlCode);
+-	ret = smb2_calc_max_out_buf_len(work, 48,
+-					le32_to_cpu(req->MaxOutputResponse));
++	ret = smb2_calc_max_out_buf_len(work,
++			offsetof(struct smb2_ioctl_rsp, Buffer),
++			le32_to_cpu(req->MaxOutputResponse));
+ 	if (ret < 0) {
+ 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
+ 		goto out;
 
 
