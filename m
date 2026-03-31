@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAB12C15BB;
-	Tue, 31 Mar 2026 16:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD0F31714F;
+	Tue, 31 Mar 2026 16:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975391; cv=none; b=eUO0Tg9tgViN3O7DMzIOezfIpD3wmap13aQ7O4iDw8UvznYPB2OnZ7G7hAam27QpRRCxAZ/QpqJcOrJ3S9JXEnORmGSI9yBBrgnwCIsVdoTT0TW7qAtGf9vSLWZu2rT4ykl6jNS09r56kn/FII7ZfVfpIM8gRuvZ6sdkuRZ7oBs=
+	t=1774975393; cv=none; b=M/vwaBP0Sb6jPZOvbZxejsykkC+XYgBWX/iuCG9lR/uffe4o2T7s4Hg/20nKx5IeuZT8tXX6eg/C7m+99l307Z6Hcf+6d3w/nrmk9m34Q8Z7I9sNd2sK+J3fx9yegCx02CzeEfeE2bXqHs+0oNUsWg3hbnQxuguPTwbDkq3+Kwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975391; c=relaxed/simple;
-	bh=nSaHdSkXiSRfgAta04BdX7inYw7KaCFcEfarBC6wl4Q=;
+	s=arc-20240116; t=1774975393; c=relaxed/simple;
+	bh=aQO3PtaSQtqOwaJgJAE/3CtUKgfLsoVc4ki/9697UJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBlpVPbLYWR5tmGZQURAu6JsEk+2X5qYGiDRPz8hlAoslDYiv8u6FMfibMXbbUIH+W7X6oa4Fope/Er60KzZL/BaABp4fq4TZusljF5Qpj0GmG8paPWw2Xxb5bMKRGXoxyab3dXf5c5FLIhkO//yl7pbVEF63i+V0iwLr2QFbDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdfI8TeN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UalvN4gbJbcXJ/yNqMjqZTDxV0Aq2iXemJ6PcXP2tVPIUTchKvNfEsVcawUqvZ3Ep7qBK320om8hVe2TR1BcnhjdIFjoFmv9aUhRO0ZuvxjetEMV4LfdoHQ53ZSrDOoHNj6Gfa9QajKTLmoWR6Iss14QQsrs3JOKLzW9wCV0668=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoaW91De; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdfI8TeN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEF7C19423;
-	Tue, 31 Mar 2026 16:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoaW91De"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A72C19423;
+	Tue, 31 Mar 2026 16:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975390;
-	bh=nSaHdSkXiSRfgAta04BdX7inYw7KaCFcEfarBC6wl4Q=;
+	s=korg; t=1774975393;
+	bh=aQO3PtaSQtqOwaJgJAE/3CtUKgfLsoVc4ki/9697UJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UdfI8TeNXsKYlvLRDLIyYr3P4Mxo/mTlQeH1DjAfwkFL0IdgT9iAPucIG43x50XaH
-	 dg/6yPqpuo2XcIQCIP6+WnBQPZha+PG4O9SxsziQBN9WSY//twmqQhD/Da4GL5o2ML
-	 Y9GAut29wVvLEWGC0KfxMhJLz2KSvVv9zw2YihIY=
+	b=YoaW91De2+wDjW517mhGoUKnn5wVB+dewwHjMjo9tWj3zAjY6HuuZWjT3ZJx5BwEM
+	 cfBXHFNJNWlb0QfPNaMKaqLYQCXLTs81AL6sqNHm5YKPDYzpTRzSipOgRvfowjs9TI
+	 lsjsc/phzmJbMFB7m777zNiGXagInNETCt67CtgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Antonius <antonius@bluedragonsec.com>,
+	"David Hildenbrand (ARM)" <david@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Jann Horn <jannh@google.com>,
+	Jeff Xu <jeffxu@chromium.org>,
 	Liam Howlett <liam.howlett@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Peter Xu <peterx@redhat.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 277/342] mm/memory: fix PMD/PUD checks in follow_pfnmap_start()
-Date: Tue, 31 Mar 2026 18:21:50 +0200
-Message-ID: <20260331161809.131618589@linuxfoundation.org>
+Subject: [PATCH 6.19 278/342] mm/mseal: update VMA end correctly on merge
+Date: Tue, 31 Mar 2026 18:21:51 +0200
+Message-ID: <20260331161809.167794779@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -57,99 +57,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
 
-commit ffef67b93aa352b34e6aeba3d52c19a63885409a upstream.
+commit 2697dd8ae721db4f6a53d4f4cbd438212a80f8dc upstream.
 
-follow_pfnmap_start() suffers from two problems:
+Previously we stored the end of the current VMA in curr_end, and then upon
+iterating to the next VMA updated curr_start to curr_end to advance to the
+next VMA.
 
-(1) We are not re-fetching the pmd/pud after taking the PTL
+However, this doesn't take into account the fact that a VMA might be
+updated due to a merge by vma_modify_flags(), which can result in curr_end
+being stale and thus, upon setting curr_start to curr_end, ending up with
+an incorrect curr_start on the next iteration.
 
-Therefore, we are not properly stabilizing what the lock actually
-protects.  If there is concurrent zapping, we would indicate to the
-caller that we found an entry, however, that entry might already have
-been invalidated, or contain a different PFN after taking the lock.
+Resolve the issue by setting curr_end to vma->vm_end unconditionally to
+ensure this value remains updated should this occur.
 
-Properly use pmdp_get() / pudp_get() after taking the lock.
+While we're here, eliminate this entire class of bug by simply setting
+const curr_[start/end] to be clamped to the input range and VMAs, which
+also happens to simplify the logic.
 
-(2) pmd_leaf() / pud_leaf() are not well defined on non-present entries
-
-pmd_leaf()/pud_leaf() could wrongly trigger on non-present entries.
-
-There is no real guarantee that pmd_leaf()/pud_leaf() returns something
-reasonable on non-present entries.  Most architectures indeed either
-perform a present check or make it work by smart use of flags.
-
-However, for example loongarch checks the _PAGE_HUGE flag in pmd_leaf(),
-and always sets the _PAGE_HUGE flag in __swp_entry_to_pmd().  Whereby
-pmd_trans_huge() explicitly checks pmd_present(), pmd_leaf() does not do
-that.
-
-Let's check pmd_present()/pud_present() before assuming "the is a present
-PMD leaf" when spotting pmd_leaf()/pud_leaf(), like other page table
-handling code that traverses user page tables does.
-
-Given that non-present PMD entries are likely rare in VM_IO|VM_PFNMAP, (1)
-is likely more relevant than (2).  It is questionable how often (1) would
-actually trigger, but let's CC stable to be sure.
-
-This was found by code inspection.
-
-Link: https://lkml.kernel.org/r/20260323-follow_pfnmap_fix-v1-1-5b0ec10872b3@kernel.org
-Fixes: 6da8e9634bb7 ("mm: new follow_pfnmap API")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Link: https://lkml.kernel.org/r/20260327173104.322405-1-ljs@kernel.org
+Fixes: 6c2da14ae1e0 ("mm/mseal: rework mseal apply logic")
+Signed-off-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Reported-by: Antonius <antonius@bluedragonsec.com>
+Closes: https://lore.kernel.org/linux-mm/CAK8a0jwWGj9-SgFk0yKFh7i8jMkwKm5b0ao9=kmXWjO54veX2g@mail.gmail.com/
+Suggested-by: David Hildenbrand (ARM) <david@kernel.org>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jeff Xu <jeffxu@chromium.org>
 Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ mm/mseal.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -6775,11 +6775,16 @@ retry:
+--- a/mm/mseal.c
++++ b/mm/mseal.c
+@@ -56,7 +56,6 @@ static int mseal_apply(struct mm_struct
+ 		unsigned long start, unsigned long end)
+ {
+ 	struct vm_area_struct *vma, *prev;
+-	unsigned long curr_start = start;
+ 	VMA_ITERATOR(vmi, mm, start);
  
- 	pudp = pud_offset(p4dp, address);
- 	pud = pudp_get(pudp);
--	if (pud_none(pud))
-+	if (!pud_present(pud))
- 		goto out;
- 	if (pud_leaf(pud)) {
- 		lock = pud_lock(mm, pudp);
--		if (!unlikely(pud_leaf(pud))) {
-+		pud = pudp_get(pudp);
-+
-+		if (unlikely(!pud_present(pud))) {
-+			spin_unlock(lock);
-+			goto out;
-+		} else if (unlikely(!pud_leaf(pud))) {
- 			spin_unlock(lock);
- 			goto retry;
- 		}
-@@ -6791,9 +6796,16 @@ retry:
+ 	/* We know there are no gaps so this will be non-NULL. */
+@@ -66,6 +65,7 @@ static int mseal_apply(struct mm_struct
+ 		prev = vma;
  
- 	pmdp = pmd_offset(pudp, address);
- 	pmd = pmdp_get_lockless(pmdp);
-+	if (!pmd_present(pmd))
-+		goto out;
- 	if (pmd_leaf(pmd)) {
- 		lock = pmd_lock(mm, pmdp);
--		if (!unlikely(pmd_leaf(pmd))) {
-+		pmd = pmdp_get(pmdp);
-+
-+		if (unlikely(!pmd_present(pmd))) {
-+			spin_unlock(lock);
-+			goto out;
-+		} else if (unlikely(!pmd_leaf(pmd))) {
- 			spin_unlock(lock);
- 			goto retry;
+ 	for_each_vma_range(vmi, vma, end) {
++		const unsigned long curr_start = MAX(vma->vm_start, start);
+ 		const unsigned long curr_end = MIN(vma->vm_end, end);
+ 
+ 		if (!(vma->vm_flags & VM_SEALED)) {
+@@ -79,7 +79,6 @@ static int mseal_apply(struct mm_struct
  		}
+ 
+ 		prev = vma;
+-		curr_start = curr_end;
+ 	}
+ 
+ 	return 0;
 
 
