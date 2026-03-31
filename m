@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C3633F38A;
-	Tue, 31 Mar 2026 16:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E53B401A38;
+	Tue, 31 Mar 2026 16:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974913; cv=none; b=iFncKhfBMkOE/doS/SHhxjdEisYAldAheuQIHRjf711xlpl2WSkXZ5Lm7ekUg5KLXD2NKdvRCE2yAWv0hhxloOd/iWelXz2zc1UyAJOid6r8yYhSeg8XVmt3bT1RmhPkFsoeZeUFpKDKDcYm3v4U//raItdU+CgizlVnqaP7eeg=
+	t=1774974915; cv=none; b=a1gPzMT6/WvhWAwOUxFryETblhkWalZqYUU25etgYbT1qGtCbHuMgw+EHwM/PtAIvDTSgP5RGUza5PvxdK9QS7yrtf7j4WEdTBVmH0qZSHmFJdJ5CKo0DRD9iHBKoQlTz1UA0Rz/6S7VOQRdFIpKN8PEsqmR/74vo2L4idO81Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974913; c=relaxed/simple;
-	bh=sJWMN/1TUaSMnLOW92szFA90sE00aVjtN9NewcpL5ds=;
+	s=arc-20240116; t=1774974915; c=relaxed/simple;
+	bh=rcnoysp1IYmEzmmnDMUYF4/8Nq1oT+eOJTR7CaO2m+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rj/tmjvp1WFwhKSmsCeG9otFq2MCM7P7deObAoRW5wiQcAY1Grb6IFmCAbz0ZjTg6qyE3zXlzcuWoLNlrHmOv/dcFAJ3ht7aDNOFxwPsmK+K4lKJMHeI0Kv+yURdvmz8uufVZCSbupRsLj9LZ49FCdFDMp7BP53JfKzyuHRa7t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3VlBeYO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NnUIS/LAtT6jls0manOsXXWoSd+SaiF/qeFPd3Wq4s2jQoSlU7pWRXTRAkCkMtWhNITZnaj3jb0LzlQfQ/ok/1zlfICdw6meD/q3iXPL0i0i2vlLbrXlmIe32oxGZ/b4JGf4PaAerqLHeaG9PFJWTqNw84dgpXKAPPUDx9B2uTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WE7fyz+v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3VlBeYO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B43EC19423;
-	Tue, 31 Mar 2026 16:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WE7fyz+v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150FEC19423;
+	Tue, 31 Mar 2026 16:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974912;
-	bh=sJWMN/1TUaSMnLOW92szFA90sE00aVjtN9NewcpL5ds=;
+	s=korg; t=1774974915;
+	bh=rcnoysp1IYmEzmmnDMUYF4/8Nq1oT+eOJTR7CaO2m+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3VlBeYORSkkJ2yDMmBGSVztTYx9yeaM7mLBz2Vd4oKNgf9kK29oif4oaeBd7tsui
-	 9lVjQ+bKNX1KVDYp5qOBgUXz0PpCYioJ1CpuK/qOImo/eugiWj0i/KFG/zhJv//N8e
-	 5058kc17nYgR7nVywo6N3fkQ8mCTXdfG/yQI7YhE=
+	b=WE7fyz+vnx1jS+ljgZd77HsK+7VSKMb80CocA2iue3UxJYcfeznqDL4+PTNTESpXg
+	 CcfPo3PQlclb3k8Idm/3aM32p2zxg0Hl0wYvezbGjLjIRh+4izwFcYlmYM1qaOVGMQ
+	 vdM5Ix7t8BUDG0c5KkkQwX5iu39O6v14JBAueskI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 060/342] bpf: Fix u32/s32 bounds when ranges cross min/max boundary
-Date: Tue, 31 Mar 2026 18:18:13 +0200
-Message-ID: <20260331161801.104764279@linuxfoundation.org>
+Subject: [PATCH 6.19 061/342] HID: apple: avoid memory leak in apple_report_fixup()
+Date: Tue, 31 Mar 2026 18:18:14 +0200
+Message-ID: <20260331161801.140901427@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -55,200 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit fbc7aef517d8765e4c425d2792409bb9bf2e1f13 ]
+[ Upstream commit 239c15116d80f67d32f00acc34575f1a6b699613 ]
 
-Same as in __reg64_deduce_bounds(), refine s32/u32 ranges
-in __reg32_deduce_bounds() in the following situations:
+The apple_report_fixup() function was returning a
+newly kmemdup()-allocated buffer, but never freeing it.
 
-- s32 range crosses U32_MAX/0 boundary, positive part of the s32 range
-  overlaps with u32 range:
+The caller of report_fixup() does not take ownership of the returned
+pointer, but it *is* permitted to return a sub-portion of the input
+rdesc, whose lifetime is managed by the caller.
 
-  0                                                   U32_MAX
-  |  [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]              |
-  |----------------------------|----------------------------|
-  |xxxxx s32 range xxxxxxxxx]                       [xxxxxxx|
-  0                     S32_MAX S32_MIN                    -1
-
-- s32 range crosses U32_MAX/0 boundary, negative part of the s32 range
-  overlaps with u32 range:
-
-  0                                                   U32_MAX
-  |              [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]  |
-  |----------------------------|----------------------------|
-  |xxxxxxxxx]                       [xxxxxxxxxxxx s32 range |
-  0                     S32_MAX S32_MIN                    -1
-
-- No refinement if ranges overlap in two intervals.
-
-This helps for e.g. consider the following program:
-
-   call %[bpf_get_prandom_u32];
-   w0 &= 0xffffffff;
-   if w0 < 0x3 goto 1f;    // on fall-through u32 range [3..U32_MAX]
-   if w0 s> 0x1 goto 1f;   // on fall-through s32 range [S32_MIN..1]
-   if w0 s< 0x0 goto 1f;   // range can be narrowed to  [S32_MIN..-1]
-   r10 = 0;
-1: ...;
-
-The reg_bounds.c selftest is updated to incorporate identical logic,
-refinement based on non-overflowing range halves:
-
-  ((x ∩ [0, smax]) ∩ (y ∩ [0, smax])) ∪
-  ((x ∩ [smin,-1]) ∩ (y ∩ [smin,-1]))
-
-Reported-by: Andrea Righi <arighi@nvidia.com>
-Reported-by: Emil Tsalapatis <emil@etsalapatis.com>
-Closes: https://lore.kernel.org/bpf/aakqucg4vcujVwif@gpd4/T/
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260306-bpf-32-bit-range-overflow-v3-1-f7f67e060a6b@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                         | 24 +++++++
- .../selftests/bpf/prog_tests/reg_bounds.c     | 62 +++++++++++++++++--
- 2 files changed, 82 insertions(+), 4 deletions(-)
+ drivers/hid/hid-apple.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index ea312acf7d482..9032c6d4dbbcc 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2490,6 +2490,30 @@ static void __reg32_deduce_bounds(struct bpf_reg_state *reg)
- 	if ((u32)reg->s32_min_value <= (u32)reg->s32_max_value) {
- 		reg->u32_min_value = max_t(u32, reg->s32_min_value, reg->u32_min_value);
- 		reg->u32_max_value = min_t(u32, reg->s32_max_value, reg->u32_max_value);
-+	} else {
-+		if (reg->u32_max_value < (u32)reg->s32_min_value) {
-+			/* See __reg64_deduce_bounds() for detailed explanation.
-+			 * Refine ranges in the following situation:
-+			 *
-+			 * 0                                                   U32_MAX
-+			 * |  [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]              |
-+			 * |----------------------------|----------------------------|
-+			 * |xxxxx s32 range xxxxxxxxx]                       [xxxxxxx|
-+			 * 0                     S32_MAX S32_MIN                    -1
-+			 */
-+			reg->s32_min_value = (s32)reg->u32_min_value;
-+			reg->u32_max_value = min_t(u32, reg->u32_max_value, reg->s32_max_value);
-+		} else if ((u32)reg->s32_max_value < reg->u32_min_value) {
-+			/*
-+			 * 0                                                   U32_MAX
-+			 * |              [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]  |
-+			 * |----------------------------|----------------------------|
-+			 * |xxxxxxxxx]                       [xxxxxxxxxxxx s32 range |
-+			 * 0                     S32_MAX S32_MIN                    -1
-+			 */
-+			reg->s32_max_value = (s32)reg->u32_max_value;
-+			reg->u32_min_value = max_t(u32, reg->u32_min_value, reg->s32_min_value);
-+		}
- 	}
- }
+diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
+index 2f9a2e07c4263..9dcb252c5d6c7 100644
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -689,9 +689,7 @@ static const __u8 *apple_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 		hid_info(hdev,
+ 			 "fixing up Magic Keyboard battery report descriptor\n");
+ 		*rsize = *rsize - 1;
+-		rdesc = kmemdup(rdesc + 1, *rsize, GFP_KERNEL);
+-		if (!rdesc)
+-			return NULL;
++		rdesc = rdesc + 1;
  
-diff --git a/tools/testing/selftests/bpf/prog_tests/reg_bounds.c b/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-index 0322f817d07be..04938d0d431b3 100644
---- a/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-+++ b/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-@@ -422,15 +422,69 @@ static bool is_valid_range(enum num_t t, struct range x)
- 	}
- }
- 
--static struct range range_improve(enum num_t t, struct range old, struct range new)
-+static struct range range_intersection(enum num_t t, struct range old, struct range new)
- {
- 	return range(t, max_t(t, old.a, new.a), min_t(t, old.b, new.b));
- }
- 
-+/*
-+ * Result is precise when 'x' and 'y' overlap or form a continuous range,
-+ * result is an over-approximation if 'x' and 'y' do not overlap.
-+ */
-+static struct range range_union(enum num_t t, struct range x, struct range y)
-+{
-+	if (!is_valid_range(t, x))
-+		return y;
-+	if (!is_valid_range(t, y))
-+		return x;
-+	return range(t, min_t(t, x.a, y.a), max_t(t, x.b, y.b));
-+}
-+
-+/*
-+ * This function attempts to improve x range intersecting it with y.
-+ * range_cast(... to_t ...) looses precision for ranges that pass to_t
-+ * min/max boundaries. To avoid such precision loses this function
-+ * splits both x and y into halves corresponding to non-overflowing
-+ * sub-ranges: [0, smin] and [smax, -1].
-+ * Final result is computed as follows:
-+ *
-+ *   ((x ∩ [0, smax]) ∩ (y ∩ [0, smax])) ∪
-+ *   ((x ∩ [smin,-1]) ∩ (y ∩ [smin,-1]))
-+ *
-+ * Precision might still be lost if final union is not a continuous range.
-+ */
-+static struct range range_refine_in_halves(enum num_t x_t, struct range x,
-+					   enum num_t y_t, struct range y)
-+{
-+	struct range x_pos, x_neg, y_pos, y_neg, r_pos, r_neg;
-+	u64 smax, smin, neg_one;
-+
-+	if (t_is_32(x_t)) {
-+		smax = (u64)(u32)S32_MAX;
-+		smin = (u64)(u32)S32_MIN;
-+		neg_one = (u64)(u32)(s32)(-1);
-+	} else {
-+		smax = (u64)S64_MAX;
-+		smin = (u64)S64_MIN;
-+		neg_one = U64_MAX;
-+	}
-+	x_pos = range_intersection(x_t, x, range(x_t, 0, smax));
-+	x_neg = range_intersection(x_t, x, range(x_t, smin, neg_one));
-+	y_pos = range_intersection(y_t, y, range(x_t, 0, smax));
-+	y_neg = range_intersection(y_t, y, range(y_t, smin, neg_one));
-+	r_pos = range_intersection(x_t, x_pos, range_cast(y_t, x_t, y_pos));
-+	r_neg = range_intersection(x_t, x_neg, range_cast(y_t, x_t, y_neg));
-+	return range_union(x_t, r_pos, r_neg);
-+
-+}
-+
- static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t, struct range y)
- {
- 	struct range y_cast;
- 
-+	if (t_is_32(x_t) == t_is_32(y_t))
-+		x = range_refine_in_halves(x_t, x, y_t, y);
-+
- 	y_cast = range_cast(y_t, x_t, y);
- 
- 	/* If we know that
-@@ -444,7 +498,7 @@ static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t,
- 	 */
- 	if (x_t == S64 && y_t == S32 && y_cast.a <= S32_MAX  && y_cast.b <= S32_MAX &&
- 	    (s64)x.a >= S32_MIN && (s64)x.b <= S32_MAX)
--		return range_improve(x_t, x, y_cast);
-+		return range_intersection(x_t, x, y_cast);
- 
- 	/* the case when new range knowledge, *y*, is a 32-bit subregister
- 	 * range, while previous range knowledge, *x*, is a full register
-@@ -462,7 +516,7 @@ static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t,
- 		x_swap = range(x_t, swap_low32(x.a, y_cast.a), swap_low32(x.b, y_cast.b));
- 		if (!is_valid_range(x_t, x_swap))
- 			return x;
--		return range_improve(x_t, x, x_swap);
-+		return range_intersection(x_t, x, x_swap);
- 	}
- 
- 	if (!t_is_32(x_t) && !t_is_32(y_t) && x_t != y_t) {
-@@ -480,7 +534,7 @@ static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t,
- 	}
- 
- 	/* otherwise, plain range cast and intersection works */
--	return range_improve(x_t, x, y_cast);
-+	return range_intersection(x_t, x, y_cast);
- }
- 
- /* =======================
+ 		rdesc[0] = 0x05;
+ 		rdesc[1] = 0x01;
 -- 
 2.51.0
 
