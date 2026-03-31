@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB223E92A5;
-	Tue, 31 Mar 2026 16:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECEC3EE1DD;
+	Tue, 31 Mar 2026 16:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974441; cv=none; b=dV3qLBF5ub+tX1MzAmxkXudijyY8F2svN0Xe9l1yOjRKIRp5cDFWRiMhCS+YlXDvTAa0GiSwSNCu58VIHuebB44J/XERDLXeG+o1f+/3v9CwFUfWIsKlmGXqhNzAd9fgd8ri/D1TthguKrXUOv0/M0spGSp+aluSElVQxfBNOLc=
+	t=1774974444; cv=none; b=unfrShkvRxF/LJCLoAfqc0+qEzJHCK/hLCEbPEINM1IbnmpDLqnI3eUlt/Vk+CREXOMGnxBDDORNRWyvr/mMc0vyPa6ne+waOXVC6QMrSBwqBRPKBO2Ud5rjC7NfTDJSAkLkdFyGzOX5Tmtbb676oqPUs9j6Viw9cXNqJpCK/6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974441; c=relaxed/simple;
-	bh=0yZnLFGBphip3i05T49U8nFDpwbWU2j6hodo1gKofqg=;
+	s=arc-20240116; t=1774974444; c=relaxed/simple;
+	bh=IqV27wpJtb4BxgZpg0cmK8ghGXM/MRJUIeLhbBzdp5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oOaJDq+k6rWjjwgeg8LXlAQTdFoBdf/UrnuhUFlRRlzQfZSVxUoxusyA0IHxGWsNPVEiWmmUnPSm5QG46IFDyWTCsq5R3L+UJZtc12ZjZfSFgQVU/tFYgJJFRnDcNUY18vd9W8E5kwHOAhtr1zUQ4V8A3zLM0SYPlVPGxEskRfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvQhCsIK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AybiFvs6HgKIp6hd4C2Af3C4103aiqPzluPRXCli51sezhUDEt+KteFRJo0Gf5Q3olMM8YWl8tFJdOV9FtGVO06MFqBC1Nw53Abf52hifVMa8Y36pgQcy7nSOkZpU3WWXwkr8fwgMegtZ08hYA92PyFA7GwUKqGU+0cxaDI5x9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ypn4hkkq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvQhCsIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126DEC19423;
-	Tue, 31 Mar 2026 16:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ypn4hkkq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0DDC19423;
+	Tue, 31 Mar 2026 16:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974441;
-	bh=0yZnLFGBphip3i05T49U8nFDpwbWU2j6hodo1gKofqg=;
+	s=korg; t=1774974443;
+	bh=IqV27wpJtb4BxgZpg0cmK8ghGXM/MRJUIeLhbBzdp5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DvQhCsIKvZKZ1pC+mpuIrzwxndftZ87ZoxAdn3uJRgC4cn+nxSl3W/mLpkEpBn8uA
-	 fprQQcqrrCIu1QgkHXK14ZLQLoOPw8MPuMTgkggjPGXILBHvoVKYoxOW/ydPQgMU8K
-	 UDFvWv7krg+5MNz7K7oQLn3Q57qO2/0Af5kdAn00=
+	b=Ypn4hkkql4IL5TaZROGoSmMUirJ8occ7pBXp/tHkMhyaYprArX3+TIo7KojkKLntO
+	 avoY9I+d3PWbvtTLlTiQ9GgrUmmGtrldgVxvlFBptoNcPEYTHPJtuE1W7ZGuOvUwC2
+	 bJ1ewhh2oNfPvH1FMpNQZmBSeZfHGgEMiYr4F7Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Kees Cook <keescook@chromium.org>,
+	Alberto Garcia <berto@igalia.com>,
+	Brian Geffon <bgeffon@google.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/175] PM: hibernate: Dont ignore return from set_memory_ro()
-Date: Tue, 31 Mar 2026 18:21:11 +0200
-Message-ID: <20260331161732.967725777@linuxfoundation.org>
+Subject: [PATCH 6.6 088/175] PM: hibernate: Drain trailing zero pages on userspace restore
+Date: Tue, 31 Mar 2026 18:21:12 +0200
+Message-ID: <20260331161733.004095465@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -52,149 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Alberto Garcia <berto@igalia.com>
 
-[ Upstream commit f4311756a83fb01c28a9bf841cbb7eb2b318eebf ]
+[ Upstream commit 734eba62cd32cb9ceffa09e57cdc03d761528525 ]
 
-set_memory_ro() and set_memory_rw() can fail, leaving memory
-unprotected.
+Commit 005e8dddd497 ("PM: hibernate: don't store zero pages in the
+image file") added an optimization to skip zero-filled pages in the
+hibernation image. On restore, zero pages are handled internally by
+snapshot_write_next() in a loop that processes them without returning
+to the caller.
 
-Take the returned value into account and abort in case of
-failure.
+With the userspace restore interface, writing the last non-zero page
+to /dev/snapshot is followed by the SNAPSHOT_ATOMIC_RESTORE ioctl. At
+this point there are no more calls to snapshot_write_next() so any
+trailing zero pages are not processed, snapshot_image_loaded() fails
+because handle->cur is smaller than expected, the ioctl returns -EPERM
+and the image is not restored.
 
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Kees Cook <keescook@chromium.org>
+The in-kernel restore path is not affected by this because the loop in
+load_image() in swap.c calls snapshot_write_next() until it returns 0.
+It is this final call that drains any trailing zero pages.
+
+Fixed by calling snapshot_write_next() in snapshot_write_finalize(),
+giving the kernel the chance to drain any trailing zero pages.
+
+Fixes: 005e8dddd497 ("PM: hibernate: don't store zero pages in the image file")
+Signed-off-by: Alberto Garcia <berto@igalia.com>
+Acked-by: Brian Geffon <bgeffon@google.com>
+Link: https://patch.msgid.link/ef5a7c5e3e3dbd17dcb20efaa0c53a47a23498bb.1773075892.git.berto@igalia.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 734eba62cd32 ("PM: hibernate: Drain trailing zero pages on userspace restore")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/power.h    |  2 +-
- kernel/power/snapshot.c | 25 ++++++++++++++++---------
- kernel/power/swap.c     |  8 ++++----
- kernel/power/user.c     |  4 +++-
- 4 files changed, 24 insertions(+), 15 deletions(-)
+ kernel/power/snapshot.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/kernel/power/power.h b/kernel/power/power.h
-index 62a7cb452a4be..3ea663f1ad1e2 100644
---- a/kernel/power/power.h
-+++ b/kernel/power/power.h
-@@ -152,7 +152,7 @@ extern unsigned int snapshot_additional_pages(struct zone *zone);
- extern unsigned long snapshot_get_image_size(void);
- extern int snapshot_read_next(struct snapshot_handle *handle);
- extern int snapshot_write_next(struct snapshot_handle *handle);
--extern void snapshot_write_finalize(struct snapshot_handle *handle);
-+int snapshot_write_finalize(struct snapshot_handle *handle);
- extern int snapshot_image_loaded(struct snapshot_handle *handle);
- 
- extern bool hibernate_acquire(void);
 diff --git a/kernel/power/snapshot.c b/kernel/power/snapshot.c
-index 50a15408c3fca..ea52417375a4e 100644
+index ea52417375a4e..c3ad93fc24e64 100644
 --- a/kernel/power/snapshot.c
 +++ b/kernel/power/snapshot.c
-@@ -58,22 +58,24 @@ static inline void hibernate_restore_protection_end(void)
- 	hibernate_restore_protection_active = false;
- }
- 
--static inline void hibernate_restore_protect_page(void *page_address)
-+static inline int __must_check hibernate_restore_protect_page(void *page_address)
+@@ -2866,6 +2866,17 @@ int snapshot_write_finalize(struct snapshot_handle *handle)
  {
- 	if (hibernate_restore_protection_active)
--		set_memory_ro((unsigned long)page_address, 1);
-+		return set_memory_ro((unsigned long)page_address, 1);
-+	return 0;
- }
+ 	int error;
  
--static inline void hibernate_restore_unprotect_page(void *page_address)
-+static inline int hibernate_restore_unprotect_page(void *page_address)
- {
- 	if (hibernate_restore_protection_active)
--		set_memory_rw((unsigned long)page_address, 1);
-+		return set_memory_rw((unsigned long)page_address, 1);
-+	return 0;
- }
- #else
- static inline void hibernate_restore_protection_begin(void) {}
- static inline void hibernate_restore_protection_end(void) {}
--static inline void hibernate_restore_protect_page(void *page_address) {}
--static inline void hibernate_restore_unprotect_page(void *page_address) {}
-+static inline int __must_check hibernate_restore_protect_page(void *page_address) {return 0; }
-+static inline int hibernate_restore_unprotect_page(void *page_address) {return 0; }
- #endif /* CONFIG_STRICT_KERNEL_RWX  && CONFIG_ARCH_HAS_SET_MEMORY */
- 
- 
-@@ -2832,7 +2834,9 @@ int snapshot_write_next(struct snapshot_handle *handle)
- 		}
- 	} else {
- 		copy_last_highmem_page();
--		hibernate_restore_protect_page(handle->buffer);
-+		error = hibernate_restore_protect_page(handle->buffer);
++	/*
++	 * Call snapshot_write_next() to drain any trailing zero pages,
++	 * but make sure we're in the data page region first.
++	 * This function can return PAGE_SIZE if the kernel was expecting
++	 * another copy page. Return -ENODATA in that situation.
++	 */
++	if (handle->cur > nr_meta_pages + 1) {
++		error = snapshot_write_next(handle);
 +		if (error)
-+			return error;
- 		handle->buffer = get_buffer(&orig_bm, &ca);
- 		if (IS_ERR(handle->buffer))
- 			return PTR_ERR(handle->buffer);
-@@ -2858,15 +2862,18 @@ int snapshot_write_next(struct snapshot_handle *handle)
-  * stored in highmem.  Additionally, it recycles bitmap memory that's not
-  * necessary any more.
-  */
--void snapshot_write_finalize(struct snapshot_handle *handle)
-+int snapshot_write_finalize(struct snapshot_handle *handle)
- {
-+	int error;
-+
++			return error > 0 ? -ENODATA : error;
++	}
  	copy_last_highmem_page();
--	hibernate_restore_protect_page(handle->buffer);
-+	error = hibernate_restore_protect_page(handle->buffer);
+ 	error = hibernate_restore_protect_page(handle->buffer);
  	/* Do that only if we have loaded the image entirely */
- 	if (handle->cur > 1 && handle->cur > nr_meta_pages + nr_copy_pages + nr_zero_pages) {
- 		memory_bm_recycle(&orig_bm);
- 		free_highmem_data();
- 	}
-+	return error;
- }
- 
- int snapshot_image_loaded(struct snapshot_handle *handle)
-diff --git a/kernel/power/swap.c b/kernel/power/swap.c
-index d71c590550d28..8c162e18e1645 100644
---- a/kernel/power/swap.c
-+++ b/kernel/power/swap.c
-@@ -1099,8 +1099,8 @@ static int load_image(struct swap_map_handle *handle,
- 		ret = err2;
- 	if (!ret) {
- 		pr_info("Image loading done\n");
--		snapshot_write_finalize(snapshot);
--		if (!snapshot_image_loaded(snapshot))
-+		ret = snapshot_write_finalize(snapshot);
-+		if (!ret && !snapshot_image_loaded(snapshot))
- 			ret = -ENODATA;
- 	}
- 	swsusp_show_speed(start, stop, nr_to_read, "Read");
-@@ -1440,8 +1440,8 @@ static int load_image_lzo(struct swap_map_handle *handle,
- 	stop = ktime_get();
- 	if (!ret) {
- 		pr_info("Image loading done\n");
--		snapshot_write_finalize(snapshot);
--		if (!snapshot_image_loaded(snapshot))
-+		ret = snapshot_write_finalize(snapshot);
-+		if (!ret && !snapshot_image_loaded(snapshot))
- 			ret = -ENODATA;
- 		if (!ret) {
- 			if (swsusp_header->flags & SF_CRC32_MODE) {
-diff --git a/kernel/power/user.c b/kernel/power/user.c
-index 3a4e70366f354..3aa41ba22129d 100644
---- a/kernel/power/user.c
-+++ b/kernel/power/user.c
-@@ -317,7 +317,9 @@ static long snapshot_ioctl(struct file *filp, unsigned int cmd,
- 		break;
- 
- 	case SNAPSHOT_ATOMIC_RESTORE:
--		snapshot_write_finalize(&data->handle);
-+		error = snapshot_write_finalize(&data->handle);
-+		if (error)
-+			break;
- 		if (data->mode != O_WRONLY || !data->frozen ||
- 		    !snapshot_image_loaded(&data->handle)) {
- 			error = -EPERM;
 -- 
 2.53.0
 
