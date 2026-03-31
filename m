@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9BF303A07;
-	Tue, 31 Mar 2026 17:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9D5303A07;
+	Tue, 31 Mar 2026 17:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976841; cv=none; b=GGSCRTtv773djHnYaP52unULK7bCFsklMcp5h0CiKriyU5e6bWMtsEBLhoUO2bK6yuK0FjTO94N1qcN8N98j3sp9ifDR5CDiLXbTt5/HN3mw0CXPhifTrKdJUKpgCdiE44hz1ARSHN82uYUMbqqxJkyn5JML31yMIpVd3HUVi3c=
+	t=1774976843; cv=none; b=THbh0gqt1Eidh8L0kReCQmdm2Ttjo+Y/BjofV3bZA1e9vSBCzDqe1JJEzYVfQY/Id3YduKopdEqqxS9XF0CxEDoi3HU3fPBtbue0RxgGjakJEZQd3wBFXQovusxBOPOG6FXviNnKwAcqGDL70P4pBRUGq4bmK1kXhLq2uo7D9JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976841; c=relaxed/simple;
-	bh=+PNKo53I5JobtxaNNH/3SY+osmQkGFtRufz8aGlfVJE=;
+	s=arc-20240116; t=1774976843; c=relaxed/simple;
+	bh=M6XN84OZBkXXdnpxuI7/nDZy7RQudNqIYf3R8QelJKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gIL0k4sdbgbQMxFj6dDXwVZD2zekzltu61JXQ9bsCLXsQ6kj/+x07YWD3u/jENKdngEmTT6S0IlK0pz9rqKhM6Lhh73XLcvM7ILcVP9EV2aM76vliyI7DNMnaq21601y+LAtFkaAN/TlQdia9rp4deTyQz/g9qgEeHo+GVlFAQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccXtYyQS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pi0sZFuZTbdFQJ/+RuQ6PN3Ng0WEbaTKhM16PKiiSJDjq+ba/ELhMRhMxquGOG9Na0EmzUzvX1Uk604ofoyBV2Kb1Tjew7kQQowAO6LV1CkD3wRZmhYEr8s6xp1wmJ8j3RnumFE7rh6CJPQzl0Dux74mcEfKiSCFgE0jf51ZNwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5MnrC1r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccXtYyQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5436C19423;
-	Tue, 31 Mar 2026 17:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5MnrC1r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759FFC19423;
+	Tue, 31 Mar 2026 17:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976841;
-	bh=+PNKo53I5JobtxaNNH/3SY+osmQkGFtRufz8aGlfVJE=;
+	s=korg; t=1774976843;
+	bh=M6XN84OZBkXXdnpxuI7/nDZy7RQudNqIYf3R8QelJKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ccXtYyQSH5RrkJW3Y1ZjZ7B/KBEIkXV75acy72a8B5si8n19LCMEIgNtS4eR9MYd2
-	 Sum7Y4L+TvZxoO69b53c5bJjwaESVN4kx/liAP1DV+e+pRZGeUEoTgVpuAst7zGAOV
-	 IyIhvZrWq8+eOWVCEupQ8+MD3pUyu0qHT9QPoNIk=
+	b=f5MnrC1rrzDK2RL2BEa7EByWM97Pm95OmvagayLakMyg+56GkFs4PvwefLZ/Z+qfR
+	 X37FbkM2wc/5TF+/taClz5T0I/YdjSXwKp2v4RS046YpEbjNrXYTET4cKFuj/a3vC/
+	 b5KJk4Wp4e1L9m0BAgamY7cFe4E/Vt3KNl9yCAfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
-	Yuto Ohnuki <ytohnuki@amazon.com>,
+	hongao <hongao@uniontech.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 249/309] xfs: avoid dereferencing log items after push callbacks
-Date: Tue, 31 Mar 2026 18:22:32 +0200
-Message-ID: <20260331161802.738071700@linuxfoundation.org>
+Subject: [PATCH 6.18 250/309] xfs: scrub: unlock dquot before early return in quota scrub
+Date: Tue, 31 Mar 2026 18:22:33 +0200
+Message-ID: <20260331161802.775369447@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,165 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuto Ohnuki <ytohnuki@amazon.com>
+From: hongao <hongao@uniontech.com>
 
-commit 79ef34ec0554ec04bdbafafbc9836423734e1bd6 upstream.
+commit 268378b6ad20569af0d1957992de1c8b16c6e900 upstream.
 
-After xfsaild_push_item() calls iop_push(), the log item may have been
-freed if the AIL lock was dropped during the push. Background inode
-reclaim or the dquot shrinker can free the log item while the AIL lock
-is not held, and the tracepoints in the switch statement dereference
-the log item after iop_push() returns.
+xchk_quota_item can return early after calling xchk_fblock_process_error.
+When that helper returns false, the function returned immediately without
+dropping dq->q_qlock, which can leave the dquot lock held and risk lock
+leaks or deadlocks in later quota operations.
 
-Fix this by capturing the log item type, flags, and LSN before calling
-xfsaild_push_item(), and introducing a new xfs_ail_push_class trace
-event class that takes these pre-captured values and the ailp pointer
-instead of the log item pointer.
+Fix this by unlocking dq->q_qlock before the early return.
 
-Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
-Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
-Cc: stable@vger.kernel.org # v5.9
-Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+Signed-off-by: hongao <hongao@uniontech.com>
+Fixes: 7d1f0e167a067e ("xfs: check the ondisk space mapping behind a dquot")
+Cc: <stable@vger.kernel.org> # v6.8
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_trace.h     |   36 ++++++++++++++++++++++++++++++++----
- fs/xfs/xfs_trans_ail.c |   26 +++++++++++++++++++-------
- 2 files changed, 51 insertions(+), 11 deletions(-)
+ fs/xfs/scrub/quota.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_trace.h
-+++ b/fs/xfs/xfs_trace.h
-@@ -56,6 +56,7 @@
- #include <linux/tracepoint.h>
+--- a/fs/xfs/scrub/quota.c
++++ b/fs/xfs/scrub/quota.c
+@@ -174,8 +174,10 @@ xchk_quota_item(
  
- struct xfs_agf;
-+struct xfs_ail;
- struct xfs_alloc_arg;
- struct xfs_attr_list_context;
- struct xfs_buf_log_item;
-@@ -1649,16 +1650,43 @@ TRACE_EVENT(xfs_log_force,
- DEFINE_EVENT(xfs_log_item_class, name, \
- 	TP_PROTO(struct xfs_log_item *lip), \
- 	TP_ARGS(lip))
--DEFINE_LOG_ITEM_EVENT(xfs_ail_push);
--DEFINE_LOG_ITEM_EVENT(xfs_ail_pinned);
--DEFINE_LOG_ITEM_EVENT(xfs_ail_locked);
--DEFINE_LOG_ITEM_EVENT(xfs_ail_flushing);
- DEFINE_LOG_ITEM_EVENT(xfs_cil_whiteout_mark);
- DEFINE_LOG_ITEM_EVENT(xfs_cil_whiteout_skip);
- DEFINE_LOG_ITEM_EVENT(xfs_cil_whiteout_unpin);
- DEFINE_LOG_ITEM_EVENT(xlog_ail_insert_abort);
- DEFINE_LOG_ITEM_EVENT(xfs_trans_free_abort);
+ 	error = xchk_quota_item_bmap(sc, dq, offset);
+ 	xchk_iunlock(sc, XFS_ILOCK_SHARED);
+-	if (!xchk_fblock_process_error(sc, XFS_DATA_FORK, offset, &error))
++	if (!xchk_fblock_process_error(sc, XFS_DATA_FORK, offset, &error)) {
++		mutex_unlock(&dq->q_qlock);
+ 		return error;
++	}
  
-+DECLARE_EVENT_CLASS(xfs_ail_push_class,
-+	TP_PROTO(struct xfs_ail *ailp, uint type, unsigned long flags, xfs_lsn_t lsn),
-+	TP_ARGS(ailp, type, flags, lsn),
-+	TP_STRUCT__entry(
-+		__field(dev_t, dev)
-+		__field(uint, type)
-+		__field(unsigned long, flags)
-+		__field(xfs_lsn_t, lsn)
-+	),
-+	TP_fast_assign(
-+		__entry->dev = ailp->ail_log->l_mp->m_super->s_dev;
-+		__entry->type = type;
-+		__entry->flags = flags;
-+		__entry->lsn = lsn;
-+	),
-+	TP_printk("dev %d:%d lsn %d/%d type %s flags %s",
-+		  MAJOR(__entry->dev), MINOR(__entry->dev),
-+		  CYCLE_LSN(__entry->lsn), BLOCK_LSN(__entry->lsn),
-+		  __print_symbolic(__entry->type, XFS_LI_TYPE_DESC),
-+		  __print_flags(__entry->flags, "|", XFS_LI_FLAGS))
-+)
-+
-+#define DEFINE_AIL_PUSH_EVENT(name) \
-+DEFINE_EVENT(xfs_ail_push_class, name, \
-+	TP_PROTO(struct xfs_ail *ailp, uint type, unsigned long flags, xfs_lsn_t lsn), \
-+	TP_ARGS(ailp, type, flags, lsn))
-+DEFINE_AIL_PUSH_EVENT(xfs_ail_push);
-+DEFINE_AIL_PUSH_EVENT(xfs_ail_pinned);
-+DEFINE_AIL_PUSH_EVENT(xfs_ail_locked);
-+DEFINE_AIL_PUSH_EVENT(xfs_ail_flushing);
-+
- DECLARE_EVENT_CLASS(xfs_ail_class,
- 	TP_PROTO(struct xfs_log_item *lip, xfs_lsn_t old_lsn, xfs_lsn_t new_lsn),
- 	TP_ARGS(lip, old_lsn, new_lsn),
---- a/fs/xfs/xfs_trans_ail.c
-+++ b/fs/xfs/xfs_trans_ail.c
-@@ -365,6 +365,12 @@ xfsaild_resubmit_item(
- 	return XFS_ITEM_SUCCESS;
- }
- 
-+/*
-+ * Push a single log item from the AIL.
-+ *
-+ * @lip may have been released and freed by the time this function returns,
-+ * so callers must not dereference the log item afterwards.
-+ */
- static inline uint
- xfsaild_push_item(
- 	struct xfs_ail		*ailp,
-@@ -505,7 +511,10 @@ xfsaild_push(
- 
- 	lsn = lip->li_lsn;
- 	while ((XFS_LSN_CMP(lip->li_lsn, ailp->ail_target) <= 0)) {
--		int	lock_result;
-+		int		lock_result;
-+		uint		type = lip->li_type;
-+		unsigned long	flags = lip->li_flags;
-+		xfs_lsn_t	item_lsn = lip->li_lsn;
- 
- 		if (test_bit(XFS_LI_FLUSHING, &lip->li_flags))
- 			goto next_item;
-@@ -514,14 +523,17 @@ xfsaild_push(
- 		 * Note that iop_push may unlock and reacquire the AIL lock.  We
- 		 * rely on the AIL cursor implementation to be able to deal with
- 		 * the dropped lock.
-+		 *
-+		 * The log item may have been freed by the push, so it must not
-+		 * be accessed or dereferenced below this line.
- 		 */
- 		lock_result = xfsaild_push_item(ailp, lip);
- 		switch (lock_result) {
- 		case XFS_ITEM_SUCCESS:
- 			XFS_STATS_INC(mp, xs_push_ail_success);
--			trace_xfs_ail_push(lip);
-+			trace_xfs_ail_push(ailp, type, flags, item_lsn);
- 
--			ailp->ail_last_pushed_lsn = lsn;
-+			ailp->ail_last_pushed_lsn = item_lsn;
- 			break;
- 
- 		case XFS_ITEM_FLUSHING:
-@@ -537,22 +549,22 @@ xfsaild_push(
- 			 * AIL is being flushed.
- 			 */
- 			XFS_STATS_INC(mp, xs_push_ail_flushing);
--			trace_xfs_ail_flushing(lip);
-+			trace_xfs_ail_flushing(ailp, type, flags, item_lsn);
- 
- 			flushing++;
--			ailp->ail_last_pushed_lsn = lsn;
-+			ailp->ail_last_pushed_lsn = item_lsn;
- 			break;
- 
- 		case XFS_ITEM_PINNED:
- 			XFS_STATS_INC(mp, xs_push_ail_pinned);
--			trace_xfs_ail_pinned(lip);
-+			trace_xfs_ail_pinned(ailp, type, flags, item_lsn);
- 
- 			stuck++;
- 			ailp->ail_log_flush++;
- 			break;
- 		case XFS_ITEM_LOCKED:
- 			XFS_STATS_INC(mp, xs_push_ail_locked);
--			trace_xfs_ail_locked(lip);
-+			trace_xfs_ail_locked(ailp, type, flags, item_lsn);
- 
- 			stuck++;
- 			break;
+ 	/*
+ 	 * Warn if the hard limits are larger than the fs.
 
 
