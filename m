@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6302B425CEE;
-	Tue, 31 Mar 2026 16:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F229A425CEA;
+	Tue, 31 Mar 2026 16:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975169; cv=none; b=bOuoiFN6yBx8iXEK7yrmIMQFyl3HwKKdnTDN5S8WdLYXDhQOV2sp54FvwyemSQM7w8UisVF27OQSngXu1Qvl3ERxigump4nFZZ3Cv0/XWMs9Z7IGFwpK24bYUdkYZLDqytDfijQzXZfTFOLdw9u7MzjzSu83oiGbe7bwbwnbvzI=
+	t=1774975172; cv=none; b=rKkWg8YgICVf8ZDJybdq8QBMXwqkdE6o2n4eFTnCo2ulIcQ4FlQMbA3fwxwRbRkIbeC14RMVH0TBHen4XFBy9/vtEPRQokxxakkJsPww2MD3Ec2PoPjBlDC2zpxjRVuF1774+YObqysyguuE6bncKXGziFkwS1pePrGajxgpJt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975169; c=relaxed/simple;
-	bh=oPNGqmst+cCBf+yt9X18cvR5z+2iyNHPmL99iHThbkU=;
+	s=arc-20240116; t=1774975172; c=relaxed/simple;
+	bh=5UptM1qor/Ui4k0aiCHwV4uD+CJL16h8mr7uJ21JqRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mns6x4P5f3tQpMDeUS4zYtrJufe9Kw9zzsXBK9vwshEX81oxcAU+hSQbNbyK/tM9UyF3XqtrfFUOZXs+5dlj2oRzfYSDv4wFNBryWL7yH/08tQnyN0OuUSG+9YkgNQml+zqoz/HZCgKFJEwBsuHj50bj4229MFCqZMed54kUVDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCQ+VzNI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=akGg63p//bWJL6aHK0AFXDVS0uKLWYPBgx7YWanUiIOrJGVeabYaPQwqaH/qVEdkaTIerJ1ec6pw1KEu/QzeZNA5DQwxY/WKZCoh+y0mTfauTnWIL28zNmF+M8t8a2S9nSdVVrQhch8riGmXJAVHdV/49RrUJ5TAPUynKKrtR4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0SJ4mym; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCQ+VzNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC32C19423;
-	Tue, 31 Mar 2026 16:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0SJ4mym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895A9C19423;
+	Tue, 31 Mar 2026 16:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975169;
-	bh=oPNGqmst+cCBf+yt9X18cvR5z+2iyNHPmL99iHThbkU=;
+	s=korg; t=1774975171;
+	bh=5UptM1qor/Ui4k0aiCHwV4uD+CJL16h8mr7uJ21JqRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCQ+VzNIsBLjUyFzAL1ljuQBrtCDQZYZgruH5fV5UmOvYzhgdBMcgrAf3Ix5QdXft
-	 4H9GCtdOzl2otEIjBewYr7R+BUzcLad8kJ+f24re5L9rrDP8bDwpVFT64UUQBrTgQ8
-	 pFvK5hos6S3Wvcras+JdKsb6qeCmMwJXZJtsv/vY=
+	b=g0SJ4mymB5SZlmFlssy0ICIMDCDqLXNQmd9JtFosadIm4/RB1KwQ7tznhP0YDuERA
+	 5z7g3PYYaTWWG0KtjvUdMdxnGj7aADeWm8oL0KugWEb3IJgwY68iGOhl7gQeKa91R9
+	 cQK++VaIzhFKkyacGPC+1vRCxtxpnsY2Zl3YQpEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 189/342] ASoC: adau1372: Fix unchecked clk_prepare_enable() return value
-Date: Tue, 31 Mar 2026 18:20:22 +0200
-Message-ID: <20260331161805.953600152@linuxfoundation.org>
+Subject: [PATCH 6.19 190/342] ASoC: adau1372: Fix clock leak on PLL lock failure
+Date: Tue, 31 Mar 2026 18:20:23 +0200
+Message-ID: <20260331161805.989292945@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -55,75 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 
-[ Upstream commit 326fe8104a4020d30080d37ac8b6b43893cdebca ]
+[ Upstream commit bfe6a264effcb6fe99ad7ceaf9e8c7439fc9555b ]
 
-adau1372_set_power() calls clk_prepare_enable() but discards the return
-value. If the clock enable fails, the driver proceeds to access registers
-on unpowered hardware, potentially causing silent corruption.
+adau1372_enable_pll() was a void function that logged a dev_err() on
+PLL lock timeout but did not propagate the error. As a result,
+adau1372_set_power() would continue with adau1372->enabled set to true
+despite the PLL being unlocked, and the mclk left enabled with no
+corresponding disable on the error path.
 
-Make adau1372_set_power() return int and propagate the error from
-clk_prepare_enable(). Update adau1372_set_bias_level() to return the
-error directly for the STANDBY and OFF cases.
+Convert adau1372_enable_pll() to return int, using -ETIMEDOUT on lock
+timeout and propagating regmap errors directly. In adau1372_set_power(),
+check the return value and unwind in reverse order: restore regcache to
+cache-only mode, reassert GPIO power-down, and disable the clock before
+returning the error.
 
 Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
 Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20260325210704.76847-2-jihed.chaibi.dev@gmail.com
+Link: https://patch.msgid.link/20260325210704.76847-3-jihed.chaibi.dev@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau1372.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ sound/soc/codecs/adau1372.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
-index fdee689cae538..6345342218d61 100644
+index 6345342218d61..d7363f9d53bb3 100644
 --- a/sound/soc/codecs/adau1372.c
 +++ b/sound/soc/codecs/adau1372.c
-@@ -782,15 +782,18 @@ static void adau1372_enable_pll(struct adau1372 *adau1372)
- 		dev_err(adau1372->dev, "Failed to lock PLL\n");
+@@ -762,7 +762,7 @@ static int adau1372_startup(struct snd_pcm_substream *substream, struct snd_soc_
+ 	return 0;
  }
  
--static void adau1372_set_power(struct adau1372 *adau1372, bool enable)
-+static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+-static void adau1372_enable_pll(struct adau1372 *adau1372)
++static int adau1372_enable_pll(struct adau1372 *adau1372)
  {
- 	if (adau1372->enabled == enable)
--		return;
-+		return 0;
+ 	unsigned int val, timeout = 0;
+ 	int ret;
+@@ -778,8 +778,12 @@ static void adau1372_enable_pll(struct adau1372 *adau1372)
+ 		timeout++;
+ 	} while (!(val & 1) && timeout < 3);
  
- 	if (enable) {
- 		unsigned int clk_ctrl = ADAU1372_CLK_CTRL_MCLK_EN;
-+		int ret;
- 
--		clk_prepare_enable(adau1372->mclk);
-+		ret = clk_prepare_enable(adau1372->mclk);
-+		if (ret)
-+			return ret;
- 		if (adau1372->pd_gpio)
- 			gpiod_set_value(adau1372->pd_gpio, 0);
- 
-@@ -829,6 +832,8 @@ static void adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 	}
- 
- 	adau1372->enabled = enable;
+-	if (ret < 0 || !(val & 1))
++	if (ret < 0 || !(val & 1)) {
+ 		dev_err(adau1372->dev, "Failed to lock PLL\n");
++		return ret < 0 ? ret : -ETIMEDOUT;
++	}
 +
 +	return 0;
  }
  
- static int adau1372_set_bias_level(struct snd_soc_component *component,
-@@ -842,11 +847,9 @@ static int adau1372_set_bias_level(struct snd_soc_component *component,
- 	case SND_SOC_BIAS_PREPARE:
- 		break;
- 	case SND_SOC_BIAS_STANDBY:
--		adau1372_set_power(adau1372, true);
--		break;
-+		return adau1372_set_power(adau1372, true);
- 	case SND_SOC_BIAS_OFF:
--		adau1372_set_power(adau1372, false);
--		break;
-+		return adau1372_set_power(adau1372, false);
- 	}
+ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+@@ -807,7 +811,14 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+ 		 * accessed.
+ 		 */
+ 		if (adau1372->use_pll) {
+-			adau1372_enable_pll(adau1372);
++			ret = adau1372_enable_pll(adau1372);
++			if (ret) {
++				regcache_cache_only(adau1372->regmap, true);
++				if (adau1372->pd_gpio)
++					gpiod_set_value(adau1372->pd_gpio, 1);
++				clk_disable_unprepare(adau1372->mclk);
++				return ret;
++			}
+ 			clk_ctrl |= ADAU1372_CLK_CTRL_CLKSRC;
+ 		}
  
- 	return 0;
 -- 
 2.53.0
 
