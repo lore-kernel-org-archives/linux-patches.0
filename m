@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5A33EF0A2;
-	Tue, 31 Mar 2026 16:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B373A1E8C;
+	Tue, 31 Mar 2026 16:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976207; cv=none; b=ZF0CNxBnZonmfvOQCYuZQdsKa12esVbDLAB0UQPorRuqtuwnJ+/intWFGPfAQDFtF2HsxMCN5/gAsVhYbT4E4DJyS6A+uK5ff00YT+IdhzU3J+V0AnQHAXdRbpdl9PbDxo+7IVC6Gvor0K8tgLWby8WPzUJdNMHWZzf0T2BJ7Lw=
+	t=1774976210; cv=none; b=FxxSPQVjKpaLC1Z7D/lT9sHDucoLR5YFHoWBolMU6I6fMdwbD+Ms7+S54vaQqeZkZ85jdXPsJzlCpVaRA2sp32a+v1ujMM2HZ0MfOUmz4n+3edIvt476qUlfVBM7wQxwjQhG9dgvuaiHWFKzRrrNzAkPYCyCSQa2XE44fVBMykg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976207; c=relaxed/simple;
-	bh=p/oAhJb4QVm6RqWPVQHhQYaHc49EPb93KjQUY2ddmaQ=;
+	s=arc-20240116; t=1774976210; c=relaxed/simple;
+	bh=SUlPh5pDvwYnYUCzu7wBERKG1p+dM/PO6b5kHU1uxcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f1gt08NpsJoGcO2OYoyBnxjb2RQAlX8VKS/Lvf/vni4OHVf+Loa3HTt7DaRwEh7Ndp6a8uACZlvJytbwpmynFXVOnvCXuG0Ala2fS1Fh0T0z/BTjeR+465TbBJOQfyVaLTIS4+P363+4/nU70TJzXJDoM8NRDS5rkLG9jvHTgi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Wp3Om2b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sptwqhx1WKTomJeyzJHYc3VAIPFUImctQ4Ma6KitkkiRup41+kKPD7sAyT/O4l66n3CmuTGSWn1K4y4IrmYuwf1KI/RppEVIFAgEBu8ojz5Fx5SVm5atMBf51yTBwgDZP6qqSMDg3heW+B2rz9ToIgOnLNAoIbMJm2451oPSsnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XB3bxV+H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Wp3Om2b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F27C19423;
-	Tue, 31 Mar 2026 16:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XB3bxV+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88205C19423;
+	Tue, 31 Mar 2026 16:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976207;
-	bh=p/oAhJb4QVm6RqWPVQHhQYaHc49EPb93KjQUY2ddmaQ=;
+	s=korg; t=1774976209;
+	bh=SUlPh5pDvwYnYUCzu7wBERKG1p+dM/PO6b5kHU1uxcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Wp3Om2bFX4drxzv+fJnVMhvw8CD8i+NeAb3cGfLx5xhSs7S39L22Aq1EDqjWOfSc
-	 yl4dTTLt2iAjxdEbMHpULEF+S+FuJ09aEdrbobbwCRLggp9nu5efbuN2AtyS2QQLek
-	 XbFahKZGlKj+nZBtgnJlhjjY8OP3cvg9CyxpY0gg=
+	b=XB3bxV+HtQL5sMMxN75eqtcRsJnK1F+CcCMGzRWNrwYPfSbFIa7hirAq+YoM9MqqU
+	 pl8hN7slxXW6WDzd88fiWjPUofcVTFsjvZMlJ4zW1c8loC9oba+4BgsF8sNz9ttiwE
+	 hXwXmW0fbqwpAiZHdLW//uNh1A/qdQXWtwLzdv/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Song Liu <song@kernel.org>,
-	Tingmao Wang <m@maowtm.org>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
+	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.12 216/244] landlock: Fix handling of disconnected directories
-Date: Tue, 31 Mar 2026 18:22:46 +0200
-Message-ID: <20260331161749.740971676@linuxfoundation.org>
+Subject: [PATCH 6.12 217/244] ice: fix using untrusted value of pkt_len in ice_vc_fdir_parse_raw()
+Date: Tue, 31 Mar 2026 18:22:47 +0200
+Message-ID: <20260331161749.778447068@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -48,169 +48,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
 
-[ Upstream commit 49c9e09d961025b22e61ef9ad56aa1c21b6ce2f1 ]
+[ Upstream commit 1388dd564183a5a18ec4a966748037736b5653c5 ]
 
-Disconnected files or directories can appear when they are visible and
-opened from a bind mount, but have been renamed or moved from the source
-of the bind mount in a way that makes them inaccessible from the mount
-point (i.e. out of scope).
+Fix using the untrusted value of proto->raw.pkt_len in function
+ice_vc_fdir_parse_raw() by verifying if it does not exceed the
+VIRTCHNL_MAX_SIZE_RAW_PACKET value.
 
-Previously, access rights tied to files or directories opened through a
-disconnected directory were collected by walking the related hierarchy
-down to the root of the filesystem, without taking into account the
-mount point because it couldn't be found. This could lead to
-inconsistent access results, potential access right widening, and
-hard-to-debug renames, especially since such paths cannot be printed.
-
-For a sandboxed task to create a disconnected directory, it needs to
-have write access (i.e. FS_MAKE_REG, FS_REMOVE_FILE, and FS_REFER) to
-the underlying source of the bind mount, and read access to the related
-mount point.   Because a sandboxed task cannot acquire more access
-rights than those defined by its Landlock domain, this could lead to
-inconsistent access rights due to missing permissions that should be
-inherited from the mount point hierarchy, while inheriting permissions
-from the filesystem hierarchy hidden by this mount point instead.
-
-Landlock now handles files and directories opened from disconnected
-directories by taking into account the filesystem hierarchy when the
-mount point is not found in the hierarchy walk, and also always taking
-into account the mount point from which these disconnected directories
-were opened.  This ensures that a rename is not allowed if it would
-widen access rights [1].
-
-The rationale is that, even if disconnected hierarchies might not be
-visible or accessible to a sandboxed task, relying on the collected
-access rights from them improves the guarantee that access rights will
-not be widened during a rename because of the access right comparison
-between the source and the destination (see LANDLOCK_ACCESS_FS_REFER).
-It may look like this would grant more access on disconnected files and
-directories, but the security policies are always enforced for all the
-evaluated hierarchies.  This new behavior should be less surprising to
-users and safer from an access control perspective.
-
-Remove a wrong WARN_ON_ONCE() canary in collect_domain_accesses() and
-fix the related comment.
-
-Because opened files have their access rights stored in the related file
-security properties, there is no impact for disconnected or unlinked
-files.
-
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Günther Noack <gnoack@google.com>
-Cc: Song Liu <song@kernel.org>
-Reported-by: Tingmao Wang <m@maowtm.org>
-Closes: https://lore.kernel.org/r/027d5190-b37a-40a8-84e9-4ccbc352bcdf@maowtm.org
-Closes: https://lore.kernel.org/r/09b24128f86973a6022e6aa8338945fcfb9a33e4.1749925391.git.m@maowtm.org
-Fixes: b91c3e4ea756 ("landlock: Add support for file reparenting with LANDLOCK_ACCESS_FS_REFER")
-Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
-Link: https://lore.kernel.org/r/b0f46246-f2c5-42ca-93ce-0d629702a987@maowtm.org [1]
-Reviewed-by: Tingmao Wang <m@maowtm.org>
-Link: https://lore.kernel.org/r/20251128172200.760753-2-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-(cherry picked from commit 49c9e09d961025b22e61ef9ad56aa1c21b6ce2f1)
+Fixes: 99f419df8a5c ("ice: enable FDIR filters from raw binary patterns for VFs")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
+Signed-off-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+(cherry picked from commit 1388dd564183a5a18ec4a966748037736b5653c5)
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/landlock/errata/abi-1.h |   16 +++++++++++++++
- security/landlock/fs.c           |   40 +++++++++++++++++++++++++++------------
- 2 files changed, 44 insertions(+), 12 deletions(-)
- create mode 100644 security/landlock/errata/abi-1.h
+ drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c |   24 +++++++++++++--------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- /dev/null
-+++ b/security/landlock/errata/abi-1.h
-@@ -0,0 +1,16 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
+@@ -832,21 +832,27 @@ ice_vc_fdir_parse_raw(struct ice_vf *vf,
+ 		      struct virtchnl_proto_hdrs *proto,
+ 		      struct virtchnl_fdir_fltr_conf *conf)
+ {
+-	u8 *pkt_buf, *msk_buf __free(kfree);
++	u8 *pkt_buf, *msk_buf __free(kfree) = NULL;
+ 	struct ice_parser_result rslt;
+ 	struct ice_pf *pf = vf->pf;
++	u16 pkt_len, udp_port = 0;
+ 	struct ice_parser *psr;
+ 	int status = -ENOMEM;
+ 	struct ice_hw *hw;
+-	u16 udp_port = 0;
+ 
+-	pkt_buf = kzalloc(proto->raw.pkt_len, GFP_KERNEL);
+-	msk_buf = kzalloc(proto->raw.pkt_len, GFP_KERNEL);
++	pkt_len = proto->raw.pkt_len;
 +
-+/**
-+ * DOC: erratum_3
-+ *
-+ * Erratum 3: Disconnected directory handling
-+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+ *
-+ * This fix addresses an issue with disconnected directories that occur when a
-+ * directory is moved outside the scope of a bind mount.  The change ensures
-+ * that evaluated access rights include both those from the disconnected file
-+ * hierarchy down to its filesystem root and those from the related mount point
-+ * hierarchy.  This prevents access right widening through rename or link
-+ * actions.
-+ */
-+LANDLOCK_ERRATUM(3)
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -899,21 +899,31 @@ jump_up:
- 				break;
- 			}
- 		}
++	if (!pkt_len || pkt_len > VIRTCHNL_MAX_SIZE_RAW_PACKET)
++		return -EINVAL;
 +
- 		if (unlikely(IS_ROOT(walker_path.dentry))) {
--			/*
--			 * Stops at disconnected root directories.  Only allows
--			 * access to internal filesystems (e.g. nsfs, which is
--			 * reachable through /proc/<pid>/ns/<namespace>).
--			 */
--			if (walker_path.mnt->mnt_flags & MNT_INTERNAL) {
-+			if (likely(walker_path.mnt->mnt_flags & MNT_INTERNAL)) {
-+				/*
-+				 * Stops and allows access when reaching disconnected root
-+				 * directories that are part of internal filesystems (e.g. nsfs,
-+				 * which is reachable through /proc/<pid>/ns/<namespace>).
-+				 */
- 				allowed_parent1 = true;
- 				allowed_parent2 = true;
-+				break;
- 			}
--			break;
++	pkt_buf = kzalloc(pkt_len, GFP_KERNEL);
++	msk_buf = kzalloc(pkt_len, GFP_KERNEL);
 +
-+			/*
-+			 * We reached a disconnected root directory from a bind mount.
-+			 * Let's continue the walk with the mount point we missed.
-+			 */
-+			dput(walker_path.dentry);
-+			walker_path.dentry = walker_path.mnt->mnt_root;
-+			dget(walker_path.dentry);
-+		} else {
-+			parent_dentry = dget_parent(walker_path.dentry);
-+			dput(walker_path.dentry);
-+			walker_path.dentry = parent_dentry;
- 		}
--		parent_dentry = dget_parent(walker_path.dentry);
--		dput(walker_path.dentry);
--		walker_path.dentry = parent_dentry;
+ 	if (!pkt_buf || !msk_buf)
+ 		goto err_mem_alloc;
+ 
+-	memcpy(pkt_buf, proto->raw.spec, proto->raw.pkt_len);
+-	memcpy(msk_buf, proto->raw.mask, proto->raw.pkt_len);
++	memcpy(pkt_buf, proto->raw.spec, pkt_len);
++	memcpy(msk_buf, proto->raw.mask, pkt_len);
+ 
+ 	hw = &pf->hw;
+ 
+@@ -862,7 +868,7 @@ ice_vc_fdir_parse_raw(struct ice_vf *vf,
+ 	if (ice_get_open_tunnel_port(hw, &udp_port, TNL_VXLAN))
+ 		ice_parser_vxlan_tunnel_set(psr, udp_port, true);
+ 
+-	status = ice_parser_run(psr, pkt_buf, proto->raw.pkt_len, &rslt);
++	status = ice_parser_run(psr, pkt_buf, pkt_len, &rslt);
+ 	if (status)
+ 		goto err_parser_destroy;
+ 
+@@ -876,7 +882,7 @@ ice_vc_fdir_parse_raw(struct ice_vf *vf,
  	}
- 	path_put(&walker_path);
  
-@@ -990,6 +1000,9 @@ static access_mask_t maybe_remove(const
-  * file.  While walking from @dir to @mnt_root, we record all the domain's
-  * allowed accesses in @layer_masks_dom.
-  *
-+ * Because of disconnected directories, this walk may not reach @mnt_dir.  In
-+ * this case, the walk will continue to @mnt_dir after this call.
-+ *
-  * This is similar to is_access_to_paths_allowed() but much simpler because it
-  * only handles walking on the same mount point and only checks one set of
-  * accesses.
-@@ -1031,8 +1044,11 @@ static bool collect_domain_accesses(
- 			break;
- 		}
+ 	status = ice_parser_profile_init(&rslt, pkt_buf, msk_buf,
+-					 proto->raw.pkt_len, ICE_BLK_FD,
++					 pkt_len, ICE_BLK_FD,
+ 					 conf->prof);
+ 	if (status)
+ 		goto err_parser_profile_init;
+@@ -885,7 +891,7 @@ ice_vc_fdir_parse_raw(struct ice_vf *vf,
+ 		ice_parser_profile_dump(hw, conf->prof);
  
--		/* We should not reach a root other than @mnt_root. */
--		if (dir == mnt_root || WARN_ON_ONCE(IS_ROOT(dir)))
-+		/*
-+		 * Stops at the mount point or the filesystem root for a disconnected
-+		 * directory.
-+		 */
-+		if (dir == mnt_root || unlikely(IS_ROOT(dir)))
- 			break;
+ 	/* Store raw flow info into @conf */
+-	conf->pkt_len = proto->raw.pkt_len;
++	conf->pkt_len = pkt_len;
+ 	conf->pkt_buf = pkt_buf;
+ 	conf->parser_ena = true;
  
- 		parent_dentry = dget_parent(dir);
 
 
