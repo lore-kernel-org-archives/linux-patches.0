@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447662D5C68;
-	Tue, 31 Mar 2026 17:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23002D595D;
+	Tue, 31 Mar 2026 17:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976438; cv=none; b=f9Varo4r0LDZcrHl95QzP4HKd1+IZ/FRfXwoxaIu6uYdzH/q0SZlWML2X/LIDRbs0XUb4RGEZT/DWTkLakTjZ26iyFyX2duAJMrCODsAAb3zYY4P6mBU322UDKIfTQyN4PbU+ONH5mzBG7VfObCZ4oLckPidUmS/FYPW8xyLjzE=
+	t=1774976440; cv=none; b=s86I8Ll4naXDzydS6jROHW5tW8npWeXRKZ+eK6vwFYAyOtoyxnfKDF1k1oe34PLrQlRewlDye78H3X478h1e5fbT+8Aovrg9T+645tiGPO94mxpPebHyZ5117+G5bsI9pKIaWgUziPw5nB7ofGgFRH4JNvl53UpacWhsajbaDt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976438; c=relaxed/simple;
-	bh=1Ow82+QwkcoxVl8iij/2MXE9J95eb+JJ3xWA7Xy1tjY=;
+	s=arc-20240116; t=1774976440; c=relaxed/simple;
+	bh=LyP5ExgkSAN/ekq9LgFwN+C6ieNYfPEdoZaOWlShTOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AAK2hdMzHlBwf4oql2jnc26ehm5hFnVFc/CYXCUHBsOHe16sSAdDFKfRBnRScHyiA9Ym5hiAKRLJSplQahmXh0/56sdL8P6vVH3Jz0dRIpad4MDW9tHGJOFHijcsICvpWczQ/5oDwacJgfJZhIxF+ct43jXavrTOhR7qLrINmZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stmQ3J5f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XY/vOnJN+mM422i2rSxt7cGvgK/hs+WLfmMzUdbxxwN1JWpHg0AGbqSheP/HySRomuF6JLKNktVmtF8CrJYOGzplL9NkEDULycC3nr4lowQ9km34xjyN8NmPk9Hgp/dh3nYFpImCxUTc7lbkPSmlpdi22/JlWrDBd/THbgz4nQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uz9pLisp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stmQ3J5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE17C19423;
-	Tue, 31 Mar 2026 17:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uz9pLisp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A6BC19423;
+	Tue, 31 Mar 2026 17:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976438;
-	bh=1Ow82+QwkcoxVl8iij/2MXE9J95eb+JJ3xWA7Xy1tjY=;
+	s=korg; t=1774976440;
+	bh=LyP5ExgkSAN/ekq9LgFwN+C6ieNYfPEdoZaOWlShTOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=stmQ3J5fBizMGNgcR+d1PuX9okJxEPK/dNI2/yhy+N7wG5THTv5ecwGW80o7ZFvLP
-	 WuYRlW55F2RfNJq99o3kYUrIQ0X3oLWe3Tfi5oxDKS8wXl9hsVf14pHAl8Tlr3W04k
-	 kLI0nJ+CqlurRqriTyRwEfxH0edPu/ygAfrFTH5E=
+	b=Uz9pLispVXAfUoSnpEeLdy4CO0kr6Gtxoq0CN6LfyCuIBph4EwoeM0oQos148+9hl
+	 y/pscO7MJh78Mzap341+F0jwxqbM5ygQ9rppfVfnnyvwDWWC3m53YXd9uoMK6eUAL9
+	 24eg3TgbdupGH/NaoonifhtvFoz7HmbyRPf5y3fE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minxi Hou <mhou@redhat.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 091/309] net: openvswitch: Avoid releasing netdev before teardown completes
-Date: Tue, 31 Mar 2026 18:19:54 +0200
-Message-ID: <20260331161756.841107532@linuxfoundation.org>
+Subject: [PATCH 6.18 061/309] objtool: Handle Clang RSP musical chairs
+Date: Tue, 31 Mar 2026 18:19:24 +0200
+Message-ID: <20260331161755.734770778@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -46,129 +45,139 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 7c770dadfda5cbbde6aa3c4363ed513f1d212bf8 ]
+[ Upstream commit 7fdaa640c810cb42090a182c33f905bcc47a616a ]
 
-The patch cited in the Fixes tag below changed the teardown code for
-OVS ports to no longer unconditionally take the RTNL. After this change,
-the netdev_destroy() callback can proceed immediately to the call_rcu()
-invocation if the IFF_OVS_DATAPATH flag is already cleared on the
-netdev.
+For no apparent reason (possibly related to CONFIG_KMSAN), Clang can
+randomly pass the value of RSP to other registers and then back again to
+RSP.  Handle that accordingly.
 
-The ovs_netdev_detach_dev() function clears the flag before completing
-the unregistration, and if it gets preempted after clearing the flag (as
-can happen on an -rt kernel), netdev_destroy() can complete and the
-device can be freed before the unregistration completes. This leads to a
-splat like:
+Fixes the following warnings:
 
-[  998.393867] Oops: general protection fault, probably for non-canonical address 0xff00000001000239: 0000 [#1] SMP PTI
-[  998.393877] CPU: 42 UID: 0 PID: 55177 Comm: ip Kdump: loaded Not tainted 6.12.0-211.1.1.el10_2.x86_64+rt #1 PREEMPT_RT
-[  998.393886] Hardware name: Dell Inc. PowerEdge R740/0JMK61, BIOS 2.24.0 03/27/2025
-[  998.393889] RIP: 0010:dev_set_promiscuity+0x8d/0xa0
-[  998.393901] Code: 00 00 75 d8 48 8b 53 08 48 83 ba b0 02 00 00 00 75 ca 48 83 c4 08 5b c3 cc cc cc cc 48 83 bf 48 09 00 00 00 75 91 48 8b 47 08 <48> 83 b8 b0 02 00 00 00 74 97 eb 81 0f 1f 80 00 00 00 00 90 90 90
-[  998.393906] RSP: 0018:ffffce5864a5f6a0 EFLAGS: 00010246
-[  998.393912] RAX: ff00000000ffff89 RBX: ffff894d0adf5a05 RCX: 0000000000000000
-[  998.393917] RDX: 0000000000000000 RSI: 00000000ffffffff RDI: ffff894d0adf5a05
-[  998.393921] RBP: ffff894d19252000 R08: ffff894d19252000 R09: 0000000000000000
-[  998.393924] R10: ffff894d19252000 R11: ffff894d192521b8 R12: 0000000000000006
-[  998.393927] R13: ffffce5864a5f738 R14: 00000000ffffffe2 R15: 0000000000000000
-[  998.393931] FS:  00007fad61971800(0000) GS:ffff894cc0140000(0000) knlGS:0000000000000000
-[  998.393936] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  998.393940] CR2: 000055df0a2a6e40 CR3: 000000011c7fe003 CR4: 00000000007726f0
-[  998.393944] PKRU: 55555554
-[  998.393946] Call Trace:
-[  998.393949]  <TASK>
-[  998.393952]  ? show_trace_log_lvl+0x1b0/0x2f0
-[  998.393961]  ? show_trace_log_lvl+0x1b0/0x2f0
-[  998.393975]  ? dp_device_event+0x41/0x80 [openvswitch]
-[  998.394009]  ? __die_body.cold+0x8/0x12
-[  998.394016]  ? die_addr+0x3c/0x60
-[  998.394027]  ? exc_general_protection+0x16d/0x390
-[  998.394042]  ? asm_exc_general_protection+0x26/0x30
-[  998.394058]  ? dev_set_promiscuity+0x8d/0xa0
-[  998.394066]  ? ovs_netdev_detach_dev+0x3a/0x80 [openvswitch]
-[  998.394092]  dp_device_event+0x41/0x80 [openvswitch]
-[  998.394102]  notifier_call_chain+0x5a/0xd0
-[  998.394106]  unregister_netdevice_many_notify+0x51b/0xa60
-[  998.394110]  rtnl_dellink+0x169/0x3e0
-[  998.394121]  ? rt_mutex_slowlock.constprop.0+0x95/0xd0
-[  998.394125]  rtnetlink_rcv_msg+0x142/0x3f0
-[  998.394128]  ? avc_has_perm_noaudit+0x69/0xf0
-[  998.394130]  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
-[  998.394132]  netlink_rcv_skb+0x50/0x100
-[  998.394138]  netlink_unicast+0x292/0x3f0
-[  998.394141]  netlink_sendmsg+0x21b/0x470
-[  998.394145]  ____sys_sendmsg+0x39d/0x3d0
-[  998.394149]  ___sys_sendmsg+0x9a/0xe0
-[  998.394156]  __sys_sendmsg+0x7a/0xd0
-[  998.394160]  do_syscall_64+0x7f/0x170
-[  998.394162]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  998.394165] RIP: 0033:0x7fad61bf4724
-[  998.394188] Code: 89 02 b8 ff ff ff ff eb bb 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 80 3d c5 e9 0c 00 00 74 13 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 48 83 ec 28 89 54 24 1c 48 89
-[  998.394189] RSP: 002b:00007ffd7e2f7cb8 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
-[  998.394191] RAX: ffffffffffffffda RBX: 0000000000000001 RCX: 00007fad61bf4724
-[  998.394193] RDX: 0000000000000000 RSI: 00007ffd7e2f7d20 RDI: 0000000000000003
-[  998.394194] RBP: 00007ffd7e2f7d90 R08: 0000000000000010 R09: 000000000000003f
-[  998.394195] R10: 000055df11558010 R11: 0000000000000202 R12: 00007ffd7e2f8380
-[  998.394196] R13: 0000000069b233d7 R14: 000055df0a256040 R15: 0000000000000000
-[  998.394200]  </TASK>
+  drivers/input/misc/uinput.o: warning: objtool: uinput_str_to_user+0x165: undefined stack state
+  drivers/input/misc/uinput.o: warning: objtool: uinput_str_to_user+0x165: unknown CFA base reg -1
 
-To fix this, reorder the operations in ovs_netdev_detach_dev() to only
-clear the flag after completing the other operations, and introduce an
-smp_wmb() to make the ordering requirement explicit. The smp_wmb() is
-paired with a full smp_mb() in netdev_destroy() to make sure the
-call_rcu() invocation does not happen before the unregister operations
-are visible.
-
-Reported-by: Minxi Hou <mhou@redhat.com>
-Tested-by: Minxi Hou <mhou@redhat.com>
-Fixes: 549822767630 ("net: openvswitch: Avoid needlessly taking the RTNL on vport destroy")
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20260318155554.1133405-1-toke@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Closes: https://lore.kernel.org/90956545-2066-46e3-b547-10c884582eb0@app.fastmail.com
+Link: https://patch.msgid.link/240e6a172cc73292499334a3724d02ccb3247fc7.1772818491.git.jpoimboe@kernel.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/vport-netdev.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ tools/objtool/arch/x86/decode.c | 62 ++++++++++++---------------------
+ tools/objtool/check.c           | 14 ++++++++
+ 2 files changed, 37 insertions(+), 39 deletions(-)
 
-diff --git a/net/openvswitch/vport-netdev.c b/net/openvswitch/vport-netdev.c
-index 6574f9bcdc026..c688dee96503f 100644
---- a/net/openvswitch/vport-netdev.c
-+++ b/net/openvswitch/vport-netdev.c
-@@ -151,11 +151,15 @@ static void vport_netdev_free(struct rcu_head *rcu)
- void ovs_netdev_detach_dev(struct vport *vport)
- {
- 	ASSERT_RTNL();
--	vport->dev->priv_flags &= ~IFF_OVS_DATAPATH;
- 	netdev_rx_handler_unregister(vport->dev);
- 	netdev_upper_dev_unlink(vport->dev,
- 				netdev_master_upper_dev_get(vport->dev));
- 	dev_set_promiscuity(vport->dev, -1);
-+
-+	/* paired with smp_mb() in netdev_destroy() */
-+	smp_wmb();
-+
-+	vport->dev->priv_flags &= ~IFF_OVS_DATAPATH;
- }
+diff --git a/tools/objtool/arch/x86/decode.c b/tools/objtool/arch/x86/decode.c
+index 0ad5cc70ecbe7..fdaddc636e977 100644
+--- a/tools/objtool/arch/x86/decode.c
++++ b/tools/objtool/arch/x86/decode.c
+@@ -340,52 +340,36 @@ int arch_decode_instruction(struct objtool_file *file, const struct section *sec
+ 		if (!rex_w)
+ 			break;
  
- static void netdev_destroy(struct vport *vport)
-@@ -174,6 +178,9 @@ static void netdev_destroy(struct vport *vport)
- 		rtnl_unlock();
- 	}
+-		if (modrm_reg == CFI_SP) {
+-
+-			if (mod_is_reg()) {
+-				/* mov %rsp, reg */
+-				ADD_OP(op) {
+-					op->src.type = OP_SRC_REG;
+-					op->src.reg = CFI_SP;
+-					op->dest.type = OP_DEST_REG;
+-					op->dest.reg = modrm_rm;
+-				}
+-				break;
+-
+-			} else {
+-				/* skip RIP relative displacement */
+-				if (is_RIP())
+-					break;
+-
+-				/* skip nontrivial SIB */
+-				if (have_SIB()) {
+-					modrm_rm = sib_base;
+-					if (sib_index != CFI_SP)
+-						break;
+-				}
+-
+-				/* mov %rsp, disp(%reg) */
+-				ADD_OP(op) {
+-					op->src.type = OP_SRC_REG;
+-					op->src.reg = CFI_SP;
+-					op->dest.type = OP_DEST_REG_INDIRECT;
+-					op->dest.reg = modrm_rm;
+-					op->dest.offset = ins.displacement.value;
+-				}
+-				break;
++		if (mod_is_reg()) {
++			/* mov reg, reg */
++			ADD_OP(op) {
++				op->src.type = OP_SRC_REG;
++				op->src.reg = modrm_reg;
++				op->dest.type = OP_DEST_REG;
++				op->dest.reg = modrm_rm;
+ 			}
+-
+ 			break;
+ 		}
  
-+	/* paired with smp_wmb() in ovs_netdev_detach_dev() */
-+	smp_mb();
+-		if (rm_is_reg(CFI_SP)) {
++		/* skip RIP relative displacement */
++		if (is_RIP())
++			break;
+ 
+-			/* mov reg, %rsp */
++		/* skip nontrivial SIB */
++		if (have_SIB()) {
++			modrm_rm = sib_base;
++			if (sib_index != CFI_SP)
++				break;
++		}
 +
- 	call_rcu(&vport->rcu, vport_netdev_free);
- }
++		/* mov %rsp, disp(%reg) */
++		if (modrm_reg == CFI_SP) {
+ 			ADD_OP(op) {
+ 				op->src.type = OP_SRC_REG;
+-				op->src.reg = modrm_reg;
+-				op->dest.type = OP_DEST_REG;
+-				op->dest.reg = CFI_SP;
++				op->src.reg = CFI_SP;
++				op->dest.type = OP_DEST_REG_INDIRECT;
++				op->dest.reg = modrm_rm;
++				op->dest.offset = ins.displacement.value;
+ 			}
+ 			break;
+ 		}
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 6059a546fb759..bb34484046060 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -2902,6 +2902,20 @@ static int update_cfi_state(struct instruction *insn,
+ 				cfi->stack_size += 8;
+ 			}
+ 
++			else if (cfi->vals[op->src.reg].base == CFI_CFA) {
++				/*
++				 * Clang RSP musical chairs:
++				 *
++				 *   mov %rsp, %rdx [handled above]
++				 *   ...
++				 *   mov %rdx, %rbx [handled here]
++				 *   ...
++				 *   mov %rbx, %rsp [handled above]
++				 */
++				cfi->vals[op->dest.reg].base = CFI_CFA;
++				cfi->vals[op->dest.reg].offset = cfi->vals[op->src.reg].offset;
++			}
++
+ 
+ 			break;
  
 -- 
 2.51.0
