@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553A5423A79;
-	Tue, 31 Mar 2026 16:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B220341B349;
+	Tue, 31 Mar 2026 16:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974545; cv=none; b=HSSM62LCmj4BCCLne/4esHNQH0Zh+mUOtGaWau971gjyHFEd0eaAKQKfkLUTkLPLduTfJuAV+SNW4tMGghBy+acYwJJozOnHhbxG1CC4uSPNoa+Y1qSxadIUe16iacdLpjm780NVLTyQ5sMQzXHhRpBgsnlG/N7JUOC9kz6l3ws=
+	t=1774974547; cv=none; b=gx4T6pf6kqRoH+Y19x1w3Hl752fZ/ya0dHBZP3BWOmpgzcmATNTSs6/wubbsC5m9HDznYvxbqG7PkKUg50jbsTDalH8ioQYOW60fwmusamtNZ2mzNWVzoz9229H1/9JZGacuuyiPtajswJDFe4kDegOYmMorEQFji8bQqWR44A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974545; c=relaxed/simple;
-	bh=lgRv/hE/nZ3crLhiCqhhR2tYMUxBRnkMj5AP2H5Z/mQ=;
+	s=arc-20240116; t=1774974547; c=relaxed/simple;
+	bh=7fqB2Z5x+EeBbqnurz0PaUzGi2Ytfym0yuSaoClJ6rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SbGSKI6Y0RGsrvI5SuCJVf6vyNR9143mNZ0xiIlUkebCWqGIj/ZOIsL6XGNQLYBXj58hiO6fUI5NZvg/WWQcIJJNyU8ROh8yzY+7L/0S+9kE54W3QUFNNOlZ6k67e5FRBuGPjKRy4n8AJmrWpQYyjq7MC0eCFGUZBqO36JQXUwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jIdBugFB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EgxAcXLtfwfm8OnSkL9ywJEXkPHDzLWB0TpbsyVB10+k1BeB0ALE80nnb4TH58aUbGfr6cMwvhdbLDyEl0+x5Ri0oEnkHEPX0jck4QmYAq7MsjWldrgvSa3jktuyE/AIDJJqz4yUlXnbLzrnAnvuAkUsQW3QpiWlk9LeTC3Qpfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydg5jkTs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jIdBugFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84FE4C19424;
-	Tue, 31 Mar 2026 16:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydg5jkTs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489E3C19423;
+	Tue, 31 Mar 2026 16:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974544;
-	bh=lgRv/hE/nZ3crLhiCqhhR2tYMUxBRnkMj5AP2H5Z/mQ=;
+	s=korg; t=1774974547;
+	bh=7fqB2Z5x+EeBbqnurz0PaUzGi2Ytfym0yuSaoClJ6rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jIdBugFBZk4udLDvubWxPeEf6E4l2M544iyfqlmZKipcD27XRQ/WwErgta/6zoONC
-	 rjXg83NDds8Re9XDpaHxaOiKOUafQO29dJFVIR7hvaUTvVfJhEOYq1vg7Lrn1aZVDd
-	 sDmRPce+9UVCDy4Zp+0K6sY1Ic+61G2DtE+mFHNs=
+	b=ydg5jkTsAPK8MxuKQgHswFKJBjrB37bAcnFETKMMtSbmX0TIBXg1mQCRTO1gvBioM
+	 9+4AXBn4dhIgwmBgr8ilO/sS69AQFCdoBx4hK5jt8bCj7tw95PTJfcwVu3MkcfZxj9
+	 gYlY9IFpN9jY+HL9c1+qw/7Da13cSCioZs+kJWSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
-	Yuto Ohnuki <ytohnuki@amazon.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Long Li <leo.lilong@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.6 127/175] xfs: stop reclaim before pushing AIL during unmount
-Date: Tue, 31 Mar 2026 18:21:51 +0200
-Message-ID: <20260331161734.448446472@linuxfoundation.org>
+Subject: [PATCH 6.6 128/175] xfs: fix ri_total validation in xlog_recover_attri_commit_pass2
+Date: Tue, 31 Mar 2026 18:21:52 +0200
+Message-ID: <20260331161734.487723152@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -52,58 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuto Ohnuki <ytohnuki@amazon.com>
+From: Long Li <leo.lilong@huawei.com>
 
-commit 4f24a767e3d64a5f58c595b5c29b6063a201f1e3 upstream.
+commit d72f2084e30966097c8eae762e31986a33c3c0ae upstream.
 
-The unmount sequence in xfs_unmount_flush_inodes() pushed the AIL while
-background reclaim and inodegc are still running. This is broken
-independently of any use-after-free issues - background reclaim and
-inodegc should not be running while the AIL is being pushed during
-unmount, as inodegc can dirty and insert inodes into the AIL during the
-flush, and background reclaim can race to abort and free dirty inodes.
+The ri_total checks for SET/REPLACE operations are hardcoded to 3,
+but xfs_attri_item_size() only emits a value iovec when value_len > 0,
+so ri_total is 2 when value_len == 0.
 
-Reorder xfs_unmount_flush_inodes() to stop inodegc and cancel background
-reclaim before pushing the AIL. Stop inodegc before cancelling
-m_reclaim_work because the inodegc worker can re-queue m_reclaim_work
-via xfs_inodegc_set_reclaimable.
+For PPTR_SET/PPTR_REMOVE/PPTR_REPLACE, value_len is validated by
+xfs_attri_validate() to be exactly sizeof(struct xfs_parent_rec) and
+is never zero, so their hardcoded checks remain correct.
 
-Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
-Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
-Cc: stable@vger.kernel.org # v5.9
-Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+This problem may cause log recovery failures. The following script can be
+used to reproduce the problem:
+
+ #!/bin/bash
+ mkfs.xfs -f /dev/sda
+ mount /dev/sda /mnt/test/
+ touch /mnt/test/file
+ for i in {1..200}; do
+         attr -s "user.attr_$i" -V "value_$i" /mnt/test/file > /dev/null
+ done
+ echo 1 > /sys/fs/xfs/debug/larp
+ echo 1 > /sys/fs/xfs/sda/errortag/larp
+ attr -s "user.zero" -V "" /mnt/test/file
+ echo 0 > /sys/fs/xfs/sda/errortag/larp
+ umount /mnt/test
+ mount /dev/sda /mnt/test/  # mount failed
+
+Fix this by deriving the expected count dynamically as "2 + !!value_len"
+for SET/REPLACE operations.
+
+Cc: stable@vger.kernel.org # v6.9
+Fixes: ad206ae50eca ("xfs: check opcode and iovec count match in xlog_recover_attri_commit_pass2")
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_mount.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_attr_item.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/xfs_mount.c
-+++ b/fs/xfs/xfs_mount.c
-@@ -576,8 +576,9 @@ xfs_unmount_check(
-  * have been retrying in the background.  This will prevent never-ending
-  * retries in AIL pushing from hanging the unmount.
-  *
-- * Finally, we can push the AIL to clean all the remaining dirty objects, then
-- * reclaim the remaining inodes that are still in memory at this point in time.
-+ * Stop inodegc and background reclaim before pushing the AIL so that they
-+ * are not running while the AIL is being flushed. Then push the AIL to
-+ * clean all the remaining dirty objects and reclaim the remaining inodes.
-  */
- static void
- xfs_unmount_flush_inodes(
-@@ -589,9 +590,9 @@ xfs_unmount_flush_inodes(
- 
- 	set_bit(XFS_OPSTATE_UNMOUNTING, &mp->m_opstate);
- 
--	xfs_ail_push_all_sync(mp->m_ail);
- 	xfs_inodegc_stop(mp);
- 	cancel_delayed_work_sync(&mp->m_reclaim_work);
-+	xfs_ail_push_all_sync(mp->m_ail);
- 	xfs_reclaim_inodes(mp);
- 	xfs_health_unmount(mp);
- }
+--- a/fs/xfs/xfs_attr_item.c
++++ b/fs/xfs/xfs_attr_item.c
+@@ -746,8 +746,8 @@ xlog_recover_attri_commit_pass2(
+ 	switch (op) {
+ 	case XFS_ATTRI_OP_FLAGS_SET:
+ 	case XFS_ATTRI_OP_FLAGS_REPLACE:
+-		/* Log item, attr name, attr value */
+-		if (item->ri_total != 3) {
++		/* Log item, attr name, optional attr value */
++		if (item->ri_total != 2 + !!attri_formatp->alfi_value_len) {
+ 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+ 					     attri_formatp, len);
+ 			return -EFSCORRUPTED;
 
 
