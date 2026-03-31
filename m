@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C266303A07;
-	Tue, 31 Mar 2026 17:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB3E303A07;
+	Tue, 31 Mar 2026 17:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976851; cv=none; b=qsFDFyagdoyVfn1N64XAQ3ZRNxVNQgIlRYS5fLr/sxfMJ2lDfM36/jomO/5r2PKtgNwEbYZ2ha06LqF0JfZQnljhQWHEXEP8kMKUbzGG3h6x084Vv8QrJZBMBGHIyVjKJC3qrW7nszakwk6NZemSd8XPS4elqGGhor1ndCH40g4=
+	t=1774976854; cv=none; b=pKOzvnKoPpNkpOSXTKMdZxCNvhqQHbxxr/Prx1bvkuQ8157cJTygr6xfMSTqYQWOI31wfnCqgoDcaPhv3hooJHaoX/G54Z4IBh6JmxIaVuB0GwDnxU9wzHR9VGjq6Wi671ccq3My7e4bnwWjMT47S5NT+2CyfnGVGm4JyGeixGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976851; c=relaxed/simple;
-	bh=Bu0mqBm5hAGai0nQ4xmqexTNMugJCONgT0d7dVOwHSM=;
+	s=arc-20240116; t=1774976854; c=relaxed/simple;
+	bh=vjjQHZMDGkxhKkb3z+auWZtXu7X8c6IDMgt0dVo7S4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8Uicmc1QD0tEsfMdEJYL4T1hsc9VQ3kX9GnABfLxA427peBLiJYCHymzol5Z5T64VpVNQHr7JU3ZshAzv4IzQCqnxvOO1TuhV07AH7ZsHX1AIJr6AQJK2J64jqzNzvc0+PLCGgMWLAM7cU1nXP/V/o1xKy7psnhXPb1xKYT40s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcgSbkWt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ANwLdmcbiqURxAsU9ewGAZjM+jY1h+tF3Gw5aQCKMaCwcZCSvc8ailV5zngSbaf68kNpt2RC4UaBuKrDhTSum3Rkc9c+RzWea9pxa6h4xNyQB0KITZX5y49r2t7AuhmiuHeUrDSPLx5/DPlIT3T89HqQXVD21ov9DITm8gHOyO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMkMA4K8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcgSbkWt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3083DC19423;
-	Tue, 31 Mar 2026 17:07:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMkMA4K8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A20C19423;
+	Tue, 31 Mar 2026 17:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976851;
-	bh=Bu0mqBm5hAGai0nQ4xmqexTNMugJCONgT0d7dVOwHSM=;
+	s=korg; t=1774976854;
+	bh=vjjQHZMDGkxhKkb3z+auWZtXu7X8c6IDMgt0dVo7S4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CcgSbkWtIxjsEf1ayDsavQj6DdKFPFx/3zuBWeugX7PWhicEcmuFkjZfLtGSxkAGV
-	 958raSi6mD2ohWPnxL/lDgwR88IBGTEdmkw5JJDHmrWejYTRB7HZ7BFxX1uR7ZFsvz
-	 /g8Rmx5fhABiT9aQpSlbz6+McA6WHiiaJqJuOz/k=
+	b=mMkMA4K8kAV4Jm1KQaATunmjqiK8gZiq8022pWzwLd2lVg64/6DKlVhY9kuWWv55w
+	 vdkUnX3CSoAzL5bYFtOavr6Cd8PNuxEcoOlouDQlprTsmmbCLwUA3IIaXnmI4TMtS1
+	 NypyfpkIkbv58npZkBHfkKGZ/mk/zwDbQv4DF0KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	rostedt@goodmis.org,
-	david.laight.linux@gmail.com,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 253/309] xfs: remove file_path tracepoint data
-Date: Tue, 31 Mar 2026 18:22:36 +0200
-Message-ID: <20260331161802.886288307@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.18 236/309] drm/i915: Order OP vs. timeout correctly in __wait_for()
+Date: Tue, 31 Mar 2026 18:22:19 +0200
+Message-ID: <20260331161802.264432535@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -48,97 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit e31c53a8060e134111ed095783fee0aa0c43b080 upstream.
+commit 6ad2a661ff0d3d94884947d2a593311ba46d34c2 upstream.
 
-The xfile/xmbuf shmem file descriptions are no longer as detailed as
-they were when online fsck was first merged, because moving to static
-strings in commit 60382993a2e180 ("xfs: get rid of the
-xchk_xfile_*_descr calls") removed a memory allocation and hence a
-source of failure.
+Put the barrier() before the OP so that anything we read out in
+OP and check in COND will actually be read out after the timeout
+has been evaluated.
 
-However this makes encoding the description in the tracepoints sort of a
-waste of memory.  David Laight also points out that file_path doesn't
-zero the whole buffer which causes exposure of stale trace bytes, and
-Steven Rostedt wonders why we're not using a dynamic array for the file
-path.
+Currently the only place where we use OP is __intel_wait_for_register(),
+but the use there is precisely susceptible to this reordering, assuming
+the ktime_*() stuff itself doesn't act as a sufficient barrier:
 
-I don't think this is worth fixing, so let's just rip it out.
+__intel_wait_for_register(...)
+{
+	...
+	ret = __wait_for(reg_value = intel_uncore_read_notrace(...),
+ 			 (reg_value & mask) == value, ...);
+	...
+}
 
-Cc: rostedt@goodmis.org
-Cc: david.laight.linux@gmail.com
-Link: https://lore.kernel.org/linux-xfs/20260323172204.work.979-kees@kernel.org/
-Cc: stable@vger.kernel.org # v6.11
-Fixes: 19ebc8f84ea12e ("xfs: fix file_path handling in tracepoints")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 1c3c1dc66a96 ("drm/i915: Add compiler barrier to wait_for")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patch.msgid.link/20260313110740.24620-1-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit a464bace0482aa9a83e9aa7beefbaf44cd58e6cf)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/trace.h |   12 ++----------
- fs/xfs/xfs_trace.h   |   11 ++---------
- 2 files changed, 4 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/i915/i915_wait_util.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/trace.h
-+++ b/fs/xfs/scrub/trace.h
-@@ -972,20 +972,12 @@ TRACE_EVENT(xfile_create,
- 	TP_STRUCT__entry(
- 		__field(dev_t, dev)
- 		__field(unsigned long, ino)
--		__array(char, pathname, MAXNAMELEN)
- 	),
- 	TP_fast_assign(
--		char		*path;
--
- 		__entry->ino = file_inode(xf->file)->i_ino;
--		path = file_path(xf->file, __entry->pathname, MAXNAMELEN);
--		if (IS_ERR(path))
--			strncpy(__entry->pathname, "(unknown)",
--					sizeof(__entry->pathname));
- 	),
--	TP_printk("xfino 0x%lx path '%s'",
--		  __entry->ino,
--		  __entry->pathname)
-+	TP_printk("xfino 0x%lx",
-+		  __entry->ino)
- );
- 
- TRACE_EVENT(xfile_destroy,
---- a/fs/xfs/xfs_trace.h
-+++ b/fs/xfs/xfs_trace.h
-@@ -5117,23 +5117,16 @@ TRACE_EVENT(xmbuf_create,
- 	TP_STRUCT__entry(
- 		__field(dev_t, dev)
- 		__field(unsigned long, ino)
--		__array(char, pathname, MAXNAMELEN)
- 	),
- 	TP_fast_assign(
--		char		*path;
- 		struct file	*file = btp->bt_file;
- 
- 		__entry->dev = btp->bt_mount->m_super->s_dev;
- 		__entry->ino = file_inode(file)->i_ino;
--		path = file_path(file, __entry->pathname, MAXNAMELEN);
--		if (IS_ERR(path))
--			strncpy(__entry->pathname, "(unknown)",
--					sizeof(__entry->pathname));
- 	),
--	TP_printk("dev %d:%d xmino 0x%lx path '%s'",
-+	TP_printk("dev %d:%d xmino 0x%lx",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev),
--		  __entry->ino,
--		  __entry->pathname)
-+		  __entry->ino)
- );
- 
- TRACE_EVENT(xmbuf_free,
+--- a/drivers/gpu/drm/i915/i915_wait_util.h
++++ b/drivers/gpu/drm/i915/i915_wait_util.h
+@@ -25,9 +25,9 @@
+ 	might_sleep();							\
+ 	for (;;) {							\
+ 		const bool expired__ = ktime_after(ktime_get_raw(), end__); \
+-		OP;							\
+ 		/* Guarantee COND check prior to timeout */		\
+ 		barrier();						\
++		OP;							\
+ 		if (COND) {						\
+ 			ret__ = 0;					\
+ 			break;						\
 
 
