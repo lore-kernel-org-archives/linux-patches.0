@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3192D2EE262;
-	Tue, 31 Mar 2026 16:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B751624D5;
+	Tue, 31 Mar 2026 16:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974729; cv=none; b=ZyDdEgLxX2luZU1SEbFOQNRM6T1iCsG9ADgnowyCCDoH+njwTrs638rhpiQ+JsBPnyKAJacSBWqlij/Ah5nGd2oDrDkvU7YOwGGRUsNMjOeWPPomYVDADzQzAaf/8PwhWEDmdIIn9bnqCYFdoiesqBmcMNw3j0STH1e127w1kGs=
+	t=1774974731; cv=none; b=gwLhmzXCffNW62gy3/bqVdzLqg6eZy2Ak+QrniHHVVGA4d5y6kvojtd1sIcVY+JaWeSK0w8Sg/tqYL0j+P4vtpLgps1AxtmDPgIWbdcG6s7FUrryI/Vz/Z0uM2gt45+XGFhOm4CHRK+hOqtq5DHYYMSwASQ1/pT4PJ5IsVjM5xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974729; c=relaxed/simple;
-	bh=R50/Gjrw/lqbdunBmhpSWxqs5D1qpmDf8woIqJcRIow=;
+	s=arc-20240116; t=1774974731; c=relaxed/simple;
+	bh=4vocyztRguFNS1tugmB7H6E49uTjNu/DR6tEKCna7PI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d7w6wRK0Siw1rh4D0tyxwwfxsmAvdr0PAoNYS8uajYq9HOkVTz/y81qmYohoWY55NXYBtu2qvPctlFpzxyoM1SAJU5I7e5yV4hJpLlG2d9VT3v7v4Gct3C97SK6N+8AE1qPZ0RVzgpsqGaKkq3CvHOCxlYvz/hNt4Fniwh1S0UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y456g68i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UmF7gWtQhm20kgbrR5b6+rL61hSO7VUUUgvAL1+9auTWdPy5ug+0nz9nsHMpHYrPzIeXS2QdsDs2ByUZ2RJM4D6YMnmTAgZeHwIrhNXr8l7gWespVHskJixPsp/ZqUuJcmvGHW/oh0lCPHq66JNgALvS8jq0ljct+ANpnH42QC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ya1jkepq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y456g68i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC066C19423;
-	Tue, 31 Mar 2026 16:32:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ya1jkepq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD53C19423;
+	Tue, 31 Mar 2026 16:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974729;
-	bh=R50/Gjrw/lqbdunBmhpSWxqs5D1qpmDf8woIqJcRIow=;
+	s=korg; t=1774974731;
+	bh=4vocyztRguFNS1tugmB7H6E49uTjNu/DR6tEKCna7PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y456g68i93Quq637d+QlIka6sT70nRm6+x/1+v3sEMYQUJarT0eXN0b2hbog69zQt
-	 CM7BsynJ/IKhv25Jow7re0WH8WoCNOULcocZKBrbSYAp/Da33t2+aBqLx+JcJbDarT
-	 iyFwukkyifnYTJf5Bwih87gw4NYOolt6sU73TUMw=
+	b=Ya1jkepqyRPQKKxHTh1ABqvdfq+3j3xveKLjiCOL1yUYt9LR7pOTtDzZ8GqVRrh84
+	 7gT15gX0r/97PJ4QVWneoqbFpN3G7JuF9JmQIgMVKuty6VW3npO/5dt7d6M9O+Y9v2
+	 /Ru2c7Dbsd9RE26CemxMW/hPqx61BrjgQQTfny7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 007/342] s390/mm: Add missing secure storage access fixups for donated memory
-Date: Tue, 31 Mar 2026 18:17:20 +0200
-Message-ID: <20260331161759.183390510@linuxfoundation.org>
+Subject: [PATCH 6.19 008/342] objtool/klp: fix data alignment in __clone_symbol()
+Date: Tue, 31 Mar 2026 18:17:21 +0200
+Message-ID: <20260331161759.219617896@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,61 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janosch Frank <frankja@linux.ibm.com>
+From: Joe Lawrence <joe.lawrence@redhat.com>
 
-[ Upstream commit b00be77302d7ec4ad0367bb236494fce7172b730 ]
+[ Upstream commit 2f2600decb3004938762a3f2d0eba3ea9e01045b ]
 
-There are special cases where secure storage access exceptions happen
-in a kernel context for pages that don't have the PG_arch_1 bit
-set. That bit is set for non-exported guest secure storage (memory)
-but is absent on storage donated to the Ultravisor since the kernel
-isn't allowed to export donated pages.
+Commit 356e4b2f5b80 ("objtool: Fix data alignment in elf_add_data()")
+corrected the alignment of data within a section (honoring the section's
+sh_addralign).  Apply the same alignment when klp-diff mode clones a
+symbol, adjusting the new symbol's offset for the output section's
+sh_addralign.
 
-Prior to this patch we would try to export the page by calling
-arch_make_folio_accessible() which would instantly return since the
-arch bit is absent signifying that the page was already exported and
-no further action is necessary. This leads to secure storage access
-exception loops which can never be resolved.
-
-With this patch we unconditionally try to export and if that fails we
-fixup.
-
-Fixes: 084ea4d611a3 ("s390/mm: add (non)secure page access exceptions handlers")
-Reported-by: Heiko Carstens <hca@linux.ibm.com>
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Tested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Fixes: dd590d4d57eb ("objtool/klp: Introduce klp diff subcommand for diffing object files")
+Signed-off-by: Joe Lawrence <joe.lawrence@redhat.com>
+Link: https://patch.msgid.link/20260310203751.1479229-2-joe.lawrence@redhat.com
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/fault.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/objtool/klp-diff.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
-index e2e13778c36a9..b977150443550 100644
---- a/arch/s390/mm/fault.c
-+++ b/arch/s390/mm/fault.c
-@@ -441,10 +441,17 @@ void do_secure_storage_access(struct pt_regs *regs)
- 		folio = phys_to_folio(addr);
- 		if (unlikely(!folio_try_get(folio)))
- 			return;
--		rc = arch_make_folio_accessible(folio);
-+		rc = uv_convert_from_secure(folio_to_phys(folio));
-+		if (!rc)
-+			clear_bit(PG_arch_1, &folio->flags.f);
- 		folio_put(folio);
-+		/*
-+		 * There are some valid fixup types for kernel
-+		 * accesses to donated secure memory. zeropad is one
-+		 * of them.
-+		 */
- 		if (rc)
--			BUG();
-+			return handle_fault_error_nolock(regs, 0);
- 	} else {
- 		if (faulthandler_disabled())
- 			return handle_fault_error_nolock(regs, 0);
+diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
+index d94632e809558..b1847828217ba 100644
+--- a/tools/objtool/klp-diff.c
++++ b/tools/objtool/klp-diff.c
+@@ -14,6 +14,7 @@
+ #include <objtool/util.h>
+ #include <arch/special.h>
+ 
++#include <linux/align.h>
+ #include <linux/objtool_types.h>
+ #include <linux/livepatch_external.h>
+ #include <linux/stringify.h>
+@@ -560,7 +561,7 @@ static struct symbol *__clone_symbol(struct elf *elf, struct symbol *patched_sym
+ 		}
+ 
+ 		if (!is_sec_sym(patched_sym))
+-			offset = sec_size(out_sec);
++			offset = ALIGN(sec_size(out_sec), out_sec->sh.sh_addralign);
+ 
+ 		if (patched_sym->len || is_sec_sym(patched_sym)) {
+ 			void *data = NULL;
 -- 
 2.51.0
 
