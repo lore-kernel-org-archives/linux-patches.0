@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B712D97BB;
-	Tue, 31 Mar 2026 17:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215322C21F8;
+	Tue, 31 Mar 2026 17:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976417; cv=none; b=jJJwdKqP3HUXHnuzpPEEAIrlAheLgz1cHQHuS5b8ylooZjUsChGDIcddr5xJggnVoMM9xuuI+O2Zuxfy9zb6oHPBu9L5zy9MhWDQJ7zraragTTeg+BvSoNynNIiajEFQUOjLDyWYXKv0Pvz2IYzjmnUeN68t9/BKxskEMwOqfO0=
+	t=1774976420; cv=none; b=iiH4InIaHXbbz8dufsQl3IecgjnwFzrRvAN3Zwf3T18zBAyT/G5KjLCQZbAVCmTjG4U8DAnD+v3eMn3VdSlDtL1BmJE0TAg+WZqSWhC+9SwyS7TsIeYJr37atcMqZBBSknAsxDMUiqIu88F3VvAzBhXaEU5LFLs/dFRz4DeKJAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976417; c=relaxed/simple;
-	bh=IbsVwWuGvSVoWhqLo30njb9MBK6ZVqNRuz6qElaS8uk=;
+	s=arc-20240116; t=1774976420; c=relaxed/simple;
+	bh=J0dgRK9hZ4+XZDMn0XFVo49Yv6TieCkve71lRlKN6k0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E5EQ1iFNXbzJ0Drs2GYTrVwFafepSKu6kSNu5gBjkktaFvDj4liwkgJayRoTgbv6IevYPj5WZRw30PayGWqlzCaFgRckHrbZBnezLN7EbYR6Fnw9r1FkGohMW7wge9lWBZfnevuwzKCA/IRRrIpKRNn0Eslf4T6WOWWf430aw8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nU/Ocq0y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uyfPEPXflmzdqLd05nvEKChGlxcU6hQR+wetUVXd1dnzj44hLjlNu/l9/gkPeWXeNUBU9GNNbL6rCc4UHJiEGAUl/OPl5MQi266G76WGirCgW0pqdLRzCzh06h/iVyQzbeBjv9yZcfseHVqXU9rZkLEkPAc2rxc0RGAWgETtvhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H172ZQvE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nU/Ocq0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B284C2BCB1;
-	Tue, 31 Mar 2026 17:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H172ZQvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9142C19423;
+	Tue, 31 Mar 2026 17:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976417;
-	bh=IbsVwWuGvSVoWhqLo30njb9MBK6ZVqNRuz6qElaS8uk=;
+	s=korg; t=1774976420;
+	bh=J0dgRK9hZ4+XZDMn0XFVo49Yv6TieCkve71lRlKN6k0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nU/Ocq0yAd4F2m50x8IEO+cGT5MkDtwtce5/HWl2wY6t8FqBouwL9Caz35bH1qT2k
-	 gubt+qgWm7XTpYdxqZKKTn4atVhB+eIGyR/x8H+C93EXfjlTKYmdv8Dsnfb2FUTFo5
-	 9kB4L9elO0ko1l2nXFt142GMx4+apxqVX4SY+6Ps=
+	b=H172ZQvEBgzk2CAkUfaLF6B/3R5Gc/E/MWefhS3B58eRshVU52JAhEp7YwmCMpKdi
+	 V1ltrFY4YepzW/BCced2xjPpd1pzwEtn8Byt1w2yafli4t3cOWmegCZGsrODH8gm/Z
+	 LF/xEkcXH0GR316opompyE2g23UsN44d2JqO6+B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 084/309] Bluetooth: SCO: Fix use-after-free in sco_recv_frame() due to missing sock_hold
-Date: Tue, 31 Mar 2026 18:19:47 +0200
-Message-ID: <20260331161756.576741497@linuxfoundation.org>
+Subject: [PATCH 6.18 085/309] Bluetooth: MGMT: Fix dangling pointer on mgmt_add_adv_patterns_monitor_complete
+Date: Tue, 31 Mar 2026 18:19:48 +0200
+Message-ID: <20260331161756.613403689@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,60 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 598dbba9919c5e36c54fe1709b557d64120cb94b ]
+[ Upstream commit 5f5fa4cd35f707344f65ce9e225b6528691dbbaa ]
 
-sco_recv_frame() reads conn->sk under sco_conn_lock() but immediately
-releases the lock without holding a reference to the socket. A concurrent
-close() can free the socket between the lock release and the subsequent
-sk->sk_state access, resulting in a use-after-free.
+This fixes the condition checking so mgmt_pending_valid is executed
+whenever status != -ECANCELED otherwise calling mgmt_pending_free(cmd)
+would kfree(cmd) without unlinking it from the list first, leaving a
+dangling pointer. Any subsequent list traversal (e.g.,
+mgmt_pending_foreach during __mgmt_power_off, or another
+mgmt_pending_valid call) would dereference freed memory.
 
-Other functions in the same file (sco_sock_timeout(), sco_conn_del())
-correctly use sco_sock_hold() to safely hold a reference under the lock.
-
-Fix by using sco_sock_hold() to take a reference before releasing the
-lock, and adding sock_put() on all exit paths.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/linux-bluetooth/20260315132013.75ab40c5@kernel.org/T/#m1418f9c82eeff8510c1beaa21cf53af20db96c06
+Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/sco.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/bluetooth/mgmt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index 49a47eaa674da..f7b50cc730476 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -401,7 +401,7 @@ static void sco_recv_frame(struct sco_conn *conn, struct sk_buff *skb)
- 	struct sock *sk;
- 
- 	sco_conn_lock(conn);
--	sk = conn->sk;
-+	sk = sco_sock_hold(conn);
- 	sco_conn_unlock(conn);
- 
- 	if (!sk)
-@@ -410,11 +410,15 @@ static void sco_recv_frame(struct sco_conn *conn, struct sk_buff *skb)
- 	BT_DBG("sk %p len %u", sk, skb->len);
- 
- 	if (sk->sk_state != BT_CONNECTED)
--		goto drop;
-+		goto drop_put;
- 
--	if (!sock_queue_rcv_skb(sk, skb))
-+	if (!sock_queue_rcv_skb(sk, skb)) {
-+		sock_put(sk);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 1a270f0b17d9e..5d70b1f69bb6d 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5273,7 +5273,7 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
+ 	 * hci_adv_monitors_clear is about to be called which will take care of
+ 	 * freeing the adv_monitor instances.
+ 	 */
+-	if (status == -ECANCELED && !mgmt_pending_valid(hdev, cmd))
++	if (status == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
  		return;
-+	}
  
-+drop_put:
-+	sock_put(sk);
- drop:
- 	kfree_skb(skb);
- }
+ 	monitor = cmd->user_data;
 -- 
 2.51.0
 
