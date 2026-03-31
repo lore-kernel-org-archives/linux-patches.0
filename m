@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4B12E11A6;
-	Tue, 31 Mar 2026 17:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286E7301471;
+	Tue, 31 Mar 2026 17:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976595; cv=none; b=Blh4GC3bD0NrQ1Pt2WlrcnbHsaQSS2lMVkegDqU0THdrP1NBj3byWF/XSaOkHVmwXWEfGjVB+rxX1XfAWZfqYPGoCSnPvmFhXWMmVVkSozLEa+AV3nayoF3lsIfn7njfa1on/xczUhdg6XAmGHbAtvPeFYkhSV1QhmqKjWcu/Pk=
+	t=1774976598; cv=none; b=sNkh1pb1qnmLeNMuel8mpBvCgSdUlZbtFkYm8FszttsjPbS6esHVgkfD/izTx2NlBstftX5ujutRJhqx3nYFqx6vFbQjbSMnG2btocZgndde+Zn0LXxBdUU/OAPTGQBoBQd1O+eQ04eEgHh3Z/HR4lb4XY3h6e+GKICsjXnURo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976595; c=relaxed/simple;
-	bh=c19AXWTaCdotqGQZNzqo8aFEHE8evXlfNbm1ygkSEBA=;
+	s=arc-20240116; t=1774976598; c=relaxed/simple;
+	bh=oaR8EDExvBD5TONrSceMg1+ZANHjvVrNCfBIsYOQor0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlhACoQM3HjLAkObiZo8x3scxAvTp5jkWF6ZkXjo0zxyfFj3e7KKbXhC1TYR83TL4FHzfKkuRJ7ZXHcGvIdNifdJVlmVL2b0gN0Yy/CLbnU46784Utb/Sxd/pMyUSBP9XnTu8dAxO0NVNxwliGCtVWw7ik6YojnYNwjpb6IropQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tp21jro9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NERQ91BNhaN/HlYKebkIFKhtniNuh/v0RIp7gFW1sDkJlogfDpNxv/Ju3YXRh9EVNgF7GvHD2G2yBxDxwfKJ48MhwCXxk1W3e1oOAMpoZM+Hv/MOU5t0ajqjfzD0mucmvFwckoacpNETiL0OZD/CFAYKotd0U5P8bNFu8x/BPb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URYz8QTw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tp21jro9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6D0C2BCB2;
-	Tue, 31 Mar 2026 17:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URYz8QTw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D94C19423;
+	Tue, 31 Mar 2026 17:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976595;
-	bh=c19AXWTaCdotqGQZNzqo8aFEHE8evXlfNbm1ygkSEBA=;
+	s=korg; t=1774976597;
+	bh=oaR8EDExvBD5TONrSceMg1+ZANHjvVrNCfBIsYOQor0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tp21jro9cPXG7XSOlC/mAxcyD0JCjmG+2WdW29XQtwMRT0jcueIiSBAAoadjhV7G5
-	 6fQDy8RQH6NeSdtJJDuwi7uFDotep/s9dOJXdBjW8tCQ1Ew7xf9KCPwxW1vpmz3gZx
-	 3RlZ8jR47xvRSvNq1/jPwyVBpBgjQ5VD7CP68pak=
+	b=URYz8QTwR2YGkDoVIgi58uFeUOpt5q6EbyXeWu4bK0kPh2MTECPQ948Xnk5Ghaf8P
+	 Ry+E6msm9dah8J24RMsQXbHmm50iOHrMan6ULqmIVQVTE9niht8BRHVmcUlD8Wb+CB
+	 Z/8Nh2BZaTVgTBEFWlbbXqcgVJ8KuAp1fDv25To0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Alberto Garcia <berto@igalia.com>,
+	Brian Geffon <bgeffon@google.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 153/309] drm/i915/gmbus: fix spurious timeout on 512-byte burst reads
-Date: Tue, 31 Mar 2026 18:20:56 +0200
-Message-ID: <20260331161759.101585127@linuxfoundation.org>
+Subject: [PATCH 6.18 154/309] PM: hibernate: Drain trailing zero pages on userspace restore
+Date: Tue, 31 Mar 2026 18:20:57 +0200
+Message-ID: <20260331161759.138713866@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,44 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Alberto Garcia <berto@igalia.com>
 
-[ Upstream commit 08441f10f4dc09fdeb64529953ac308abc79dd38 ]
+[ Upstream commit 734eba62cd32cb9ceffa09e57cdc03d761528525 ]
 
-When reading exactly 512 bytes with burst read enabled, the
-extra_byte_added path breaks out of the inner do-while without
-decrementing len. The outer while(len) then re-enters and gmbus_wait()
-times out since all data has been delivered. Decrement len before the
-break so the outer loop terminates correctly.
+Commit 005e8dddd497 ("PM: hibernate: don't store zero pages in the
+image file") added an optimization to skip zero-filled pages in the
+hibernation image. On restore, zero pages are handled internally by
+snapshot_write_next() in a loop that processes them without returning
+to the caller.
 
-Fixes: d5dc0f43f268 ("drm/i915/gmbus: Enable burst read")
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patch.msgid.link/20260316231920.135438-2-samasth.norway.ananda@oracle.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 4ab0f09ee73fc853d00466682635f67c531f909c)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+With the userspace restore interface, writing the last non-zero page
+to /dev/snapshot is followed by the SNAPSHOT_ATOMIC_RESTORE ioctl. At
+this point there are no more calls to snapshot_write_next() so any
+trailing zero pages are not processed, snapshot_image_loaded() fails
+because handle->cur is smaller than expected, the ioctl returns -EPERM
+and the image is not restored.
+
+The in-kernel restore path is not affected by this because the loop in
+load_image() in swap.c calls snapshot_write_next() until it returns 0.
+It is this final call that drains any trailing zero pages.
+
+Fixed by calling snapshot_write_next() in snapshot_write_finalize(),
+giving the kernel the chance to drain any trailing zero pages.
+
+Fixes: 005e8dddd497 ("PM: hibernate: don't store zero pages in the image file")
+Signed-off-by: Alberto Garcia <berto@igalia.com>
+Acked-by: Brian Geffon <bgeffon@google.com>
+Link: https://patch.msgid.link/ef5a7c5e3e3dbd17dcb20efaa0c53a47a23498bb.1773075892.git.berto@igalia.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_gmbus.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/power/snapshot.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_gmbus.c b/drivers/gpu/drm/i915/display/intel_gmbus.c
-index 358210adb8f84..10b3f3969c960 100644
---- a/drivers/gpu/drm/i915/display/intel_gmbus.c
-+++ b/drivers/gpu/drm/i915/display/intel_gmbus.c
-@@ -497,8 +497,10 @@ gmbus_xfer_read_chunk(struct intel_display *display,
+diff --git a/kernel/power/snapshot.c b/kernel/power/snapshot.c
+index 645f42e404789..e249e5786fbcd 100644
+--- a/kernel/power/snapshot.c
++++ b/kernel/power/snapshot.c
+@@ -2856,6 +2856,17 @@ int snapshot_write_finalize(struct snapshot_handle *handle)
+ {
+ 	int error;
  
- 		val = intel_de_read_fw(display, GMBUS3(display));
- 		do {
--			if (extra_byte_added && len == 1)
-+			if (extra_byte_added && len == 1) {
-+				len--;
- 				break;
-+			}
- 
- 			*buf++ = val & 0xff;
- 			val >>= 8;
++	/*
++	 * Call snapshot_write_next() to drain any trailing zero pages,
++	 * but make sure we're in the data page region first.
++	 * This function can return PAGE_SIZE if the kernel was expecting
++	 * another copy page. Return -ENODATA in that situation.
++	 */
++	if (handle->cur > nr_meta_pages + 1) {
++		error = snapshot_write_next(handle);
++		if (error)
++			return error > 0 ? -ENODATA : error;
++	}
+ 	copy_last_highmem_page();
+ 	error = hibernate_restore_protect_page(handle->buffer);
+ 	/* Do that only if we have loaded the image entirely */
 -- 
 2.53.0
 
