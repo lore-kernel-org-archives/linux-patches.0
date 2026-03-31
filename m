@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8880C3F7A8B;
-	Tue, 31 Mar 2026 16:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086AA262A6;
+	Tue, 31 Mar 2026 16:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975434; cv=none; b=l8IGQBl87eWQJp5kvgw9icze/pp0CvSKtVbePFe/FGvtMbfDR5Nz/5mMGtYhZGaAb9QuTtzTWBLP+C6H0sXZD0a4JrqxksSu4fZUr8djOs7tLF0CF5FduL1S8Uv6XDdUW1xLZhoGS92PpQRQdQ82wkmRzQU6l/YTYusEU+9loZE=
+	t=1774975437; cv=none; b=FH89bgIC+e0Pi1BuEY0WfW4YNmUjEpFWbu76EiuT91dU/E8X36FR5jfZpArNbiWA7/xHaSgm1BxkEYaOY6pwULQ/RuBl9qek/jmZXCu/TJZsG1UqCC7dW4CPMZ7oi4uaY0WPmBloV/M4pXS4iU07yYDmfnAcSMU1aGl0Uzh5sY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975434; c=relaxed/simple;
-	bh=RTLk4NfRjMcILSS3/+sjhhes+pzlCbNEGFlhZFzdbBQ=;
+	s=arc-20240116; t=1774975437; c=relaxed/simple;
+	bh=radaiP4MUySj87U/BPcsF+JeGszWqUVfaGwzPdJ2hII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DNrMcAK0OE6yA5KlzUs0c+ZMZ32kKxZXmaS6ZEazugo5T8FTzdv7lvBEP4x1EtJ7mVJJlxZW6oF6M5txPY7J/TIcDQdWAQGaHQoNmtqzbiinqnG0Haj8xqVynTE1O6otJ+Rk9n6BvcFV1n0oST4/rejR6iFy9MHDtaJJLE7sRh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DM9DZ/YE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QB/8fmIgCkCwvip2NYjejpLA5MNfJZDsgb6JUcR1T+W3j2FMhhmJM4fD6SUEe/fZ6kowSmyEYeVBghcLT6ZaAZ65BtZwzoR64Eiq7v8NKeJeuCLdt1S+llyj8T8pz76cVK+o7AkAmbb800Oo4o8Rs4lL7GpGskGdE3J9fvWq8C0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgWWbn5C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DM9DZ/YE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F156C19423;
-	Tue, 31 Mar 2026 16:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgWWbn5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971E1C19423;
+	Tue, 31 Mar 2026 16:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975434;
-	bh=RTLk4NfRjMcILSS3/+sjhhes+pzlCbNEGFlhZFzdbBQ=;
+	s=korg; t=1774975436;
+	bh=radaiP4MUySj87U/BPcsF+JeGszWqUVfaGwzPdJ2hII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DM9DZ/YEWsA9MHTnLott0MDRAJozMu1cK8FBsPZZVOShcr3aoGcTjkWD9vykY/PUS
-	 /5YjsFGhlA4M9UkjpXY3IE90XicvC1ApyD6/6J3RpK3qutjE260YtIL6qMaaNhZvXq
-	 CzcXinfsXCI+ytOFDllRd1B3sf0c5QKNcTJKBey8=
+	b=LgWWbn5CPJjhqIvybSrAfOnYZouAKyR04oxKC2Zl3mWyZe0BcQReiZbjKvEgD685K
+	 fn2pb3bEFsXZ0dwfVbs7zxRPrWLOSvHuonwk7qxjK/eaI/VYAHoy93nyFRUbd/icWb
+	 AuHBqIlIj2mxjnUrjC89XeecSg3t52A15rzJoC7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
+	Free Ekanayaka <free.ekanayaka@gmail.com>,
 	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.19 293/342] ext4: do not check fast symlink during orphan recovery
-Date: Tue, 31 Mar 2026 18:22:06 +0200
-Message-ID: <20260331161809.720175714@linuxfoundation.org>
+Subject: [PATCH 6.19 294/342] ext4: fix fsync(2) for nojournal mode
+Date: Tue, 31 Mar 2026 18:22:07 +0200
+Message-ID: <20260331161809.755947707@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,90 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 84e21e3fb8fd99ea460eb7274584750d11cf3e9f upstream.
+commit 1308255bbf8452762f89f44f7447ce137ecdbcff upstream.
 
-Commit '5f920d5d6083 ("ext4: verify fast symlink length")' causes the
-generic/475 test to fail during orphan cleanup of zero-length symlinks.
+When inode metadata is changed, we sometimes just call
+ext4_mark_inode_dirty() to track modified metadata. This copies inode
+metadata into block buffer which is enough when we are journalling
+metadata. However when we are running in nojournal mode we currently
+fail to write the dirtied inode buffer during fsync(2) because the inode
+is not marked as dirty. Use explicit ext4_write_inode() call to make
+sure the inode table buffer is written to the disk. This is a band aid
+solution but proper solution requires a much larger rewrite including
+changes in metadata bh tracking infrastructure.
 
-  generic/475  84s ... _check_generic_filesystem: filesystem on /dev/vde is inconsistent
-
-The fsck reports are provided below:
-
-  Deleted inode 9686 has zero dtime.
-  Deleted inode 158230 has zero dtime.
-  ...
-  Inode bitmap differences:  -9686 -158230
-  Orphan file (inode 12) block 13 is not clean.
-  Failed to initialize orphan file.
-
-In ext4_symlink(), a newly created symlink can be added to the orphan
-list due to ENOSPC. Its data has not been initialized, and its size is
-zero. Therefore, we need to disregard the length check of the symbolic
-link when cleaning up orphan inodes. Instead, we should ensure that the
-nlink count is zero.
-
-Fixes: 5f920d5d6083 ("ext4: verify fast symlink length")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260131091156.1733648-1-yi.zhang@huaweicloud.com
+Reported-by: Free Ekanayaka <free.ekanayaka@gmail.com>
+Link: https://lore.kernel.org/all/87il8nhxdm.fsf@x1.mail-host-address-is-not-set/
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20260216164848.3074-4-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   40 +++++++++++++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 11 deletions(-)
+ fs/ext4/fsync.c |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -5449,18 +5449,36 @@ struct inode *__ext4_iget(struct super_b
- 			inode->i_op = &ext4_encrypted_symlink_inode_operations;
- 		} else if (ext4_inode_is_fast_symlink(inode)) {
- 			inode->i_op = &ext4_fast_symlink_inode_operations;
--			if (inode->i_size == 0 ||
--			    inode->i_size >= sizeof(ei->i_data) ||
--			    strnlen((char *)ei->i_data, inode->i_size + 1) !=
--								inode->i_size) {
--				ext4_error_inode(inode, function, line, 0,
--					"invalid fast symlink length %llu",
--					 (unsigned long long)inode->i_size);
--				ret = -EFSCORRUPTED;
--				goto bad_inode;
+--- a/fs/ext4/fsync.c
++++ b/fs/ext4/fsync.c
+@@ -83,11 +83,23 @@ static int ext4_fsync_nojournal(struct f
+ 				int datasync, bool *needs_barrier)
+ {
+ 	struct inode *inode = file->f_inode;
++	struct writeback_control wbc = {
++		.sync_mode = WB_SYNC_ALL,
++		.nr_to_write = 0,
++	};
+ 	int ret;
+ 
+ 	ret = generic_buffers_fsync_noflush(file, start, end, datasync);
+-	if (!ret)
+-		ret = ext4_sync_parent(inode);
++	if (ret)
++		return ret;
 +
-+			/*
-+			 * Orphan cleanup can see inodes with i_size == 0
-+			 * and i_data uninitialized. Skip size checks in
-+			 * that case. This is safe because the first thing
-+			 * ext4_evict_inode() does for fast symlinks is
-+			 * clearing of i_data and i_size.
-+			 */
-+			if ((EXT4_SB(sb)->s_mount_state & EXT4_ORPHAN_FS)) {
-+				if (inode->i_nlink != 0) {
-+					ext4_error_inode(inode, function, line, 0,
-+						"invalid orphan symlink nlink %d",
-+						inode->i_nlink);
-+					ret = -EFSCORRUPTED;
-+					goto bad_inode;
-+				}
-+			} else {
-+				if (inode->i_size == 0 ||
-+				    inode->i_size >= sizeof(ei->i_data) ||
-+				    strnlen((char *)ei->i_data, inode->i_size + 1) !=
-+						inode->i_size) {
-+					ext4_error_inode(inode, function, line, 0,
-+						"invalid fast symlink length %llu",
-+						(unsigned long long)inode->i_size);
-+					ret = -EFSCORRUPTED;
-+					goto bad_inode;
-+				}
-+				inode_set_cached_link(inode, (char *)ei->i_data,
-+						      inode->i_size);
- 			}
--			inode_set_cached_link(inode, (char *)ei->i_data,
--					      inode->i_size);
- 		} else {
- 			inode->i_op = &ext4_symlink_inode_operations;
- 		}
++	/* Force writeout of inode table buffer to disk */
++	ret = ext4_write_inode(inode, &wbc);
++	if (ret)
++		return ret;
++
++	ret = ext4_sync_parent(inode);
++
+ 	if (test_opt(inode->i_sb, BARRIER))
+ 		*needs_barrier = true;
+ 
 
 
