@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C34425CC4;
-	Tue, 31 Mar 2026 16:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D66E4035AB;
+	Tue, 31 Mar 2026 16:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975989; cv=none; b=B3I0dceqkPxFJGt9twDRN+tItv3Dq8kRcEPOiHNZAqarL2GF970CwtsjizdsNIc+Gy5LpmPzwpGS+CqNCxpf78ZtDjumLCqs6XyU7287/KkWQ9vbrjuAaGUpjk5ziLbfzLvqGwcWBLYmSV8m8BDgG0HplGNMcq/17yy/iouuFoY=
+	t=1774975992; cv=none; b=F3ZV5qqXtaffgcweOEUGSnFD1GMB/DwkMA6Kue5Mvm1ASN81YMiCkQ8OgHWqihd90791Gr5fpmzcQHQ1nOmb7QCT+X1eH3UXEM3lM56Vg6uECnFHO439PfbNwZSofD5Y9ca9kwSP7aiFIn9Ld9wCD+FHEgCoWoNGZquj0691AF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975989; c=relaxed/simple;
-	bh=KC1kKY1e9i1YwfwxAiSA0qpITMVMKEQnGQEguTiJ9Ws=;
+	s=arc-20240116; t=1774975992; c=relaxed/simple;
+	bh=VjY7EL8g6W7w85K8vZjAR8jokEffpNTJ/WfYwTxhfnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Id1eMysSuMbNx/IG1CTSHnqVWU0HSrCbrWBlsHRRPDN1IRJt12TRkg2ruEoeWIT8GYO5WNSCISM7gNDhFvdggVqmn3J4Vxua0znQAMKvy2UyBaIiEBLFozIEimKtA6Qc0ctKQbCQBS72JgUYxyKIlscQbECJfpfuMiG6pbFGB4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nizSimHY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uZe616YDtj5Mexbhep8ff5S+pZ6TVPlousf96rWEGlYtXvYLlpZqyLehDpl2NSroZyMEArmrtxhq0qx/mKAn/b3a9aqwjkm37t59jCoJxmMFjeWkFOeTxn16OhYbV8O9h+ZAsw/5daqcHqK/erUVo8jnDLhEhq+TVlEw8lRNWOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfopwL4y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nizSimHY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFB4C19423;
-	Tue, 31 Mar 2026 16:53:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfopwL4y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C950FC19423;
+	Tue, 31 Mar 2026 16:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975989;
-	bh=KC1kKY1e9i1YwfwxAiSA0qpITMVMKEQnGQEguTiJ9Ws=;
+	s=korg; t=1774975992;
+	bh=VjY7EL8g6W7w85K8vZjAR8jokEffpNTJ/WfYwTxhfnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nizSimHYmiPP7l93b4GdMngEzkMQpebhMlwSnuQYzo3QSonORSkCR613V8z80CA8n
-	 iFC0Z8GxGpo8Q22hzkyBHSTEvCd6u8ztTb2G2m529WyC6JmPhwavBQSZdRtp3+jq3C
-	 f6BZxYKb5KN3TMEnaUTGZSgckq/XqTiiYC94LOw0=
+	b=YfopwL4ypmRbELnAi3Xks66tYS3GQXxbczVakn0VvnL3R8OSEU4Lbo68QkMwgiKc5
+	 2XhnRHfVLiXCfw60+Qz7Ivwi7y4cFysWvKBFGZnfV9t0vcATMd+gIPOEwyywdFIvPF
+	 lJ+NkmaGxSYxdzbbZUXxjVWz1aZ4YwClozSZTrMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 164/244] net: macb: Use dev_consume_skb_any() to free TX SKBs
-Date: Tue, 31 Mar 2026 18:21:54 +0200
-Message-ID: <20260331161747.821828455@linuxfoundation.org>
+	Alexander Bulekov <bkov@amazon.com>,
+	Fred Griffoul <fgriffo@amazon.co.uk>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 165/244] KVM: x86/mmu: Drop/zap existing present SPTE even when creating an MMIO SPTE
+Date: Tue, 31 Mar 2026 18:21:55 +0200
+Message-ID: <20260331161747.857200618@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,73 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 647b8a2fe474474704110db6bd07f7a139e621eb upstream.
+commit aad885e774966e97b675dfe928da164214a71605 upstream.
 
-The napi_consume_skb() function is not intended to be called in an IRQ
-disabled context. However, after commit 6bc8a5098bf4 ("net: macb: Fix
-tx_ptr_lock locking"), the freeing of TX SKBs is performed with IRQs
-disabled. To resolve the following call trace, use dev_consume_skb_any()
-for freeing TX SKBs:
-   WARNING: kernel/softirq.c:430 at __local_bh_enable_ip+0x174/0x188, CPU#0: ksoftirqd/0/15
-   Modules linked in:
-   CPU: 0 UID: 0 PID: 15 Comm: ksoftirqd/0 Not tainted 7.0.0-rc4-next-20260319-yocto-standard-dirty #37 PREEMPT
-   Hardware name: ZynqMP ZCU102 Rev1.1 (DT)
-   pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-   pc : __local_bh_enable_ip+0x174/0x188
-   lr : local_bh_enable+0x24/0x38
-   sp : ffff800082b3bb10
-   x29: ffff800082b3bb10 x28: ffff0008031f3c00 x27: 000000000011ede0
-   x26: ffff000800a7ff00 x25: ffff800083937ce8 x24: 0000000000017a80
-   x23: ffff000803243a78 x22: 0000000000000040 x21: 0000000000000000
-   x20: ffff000800394c80 x19: 0000000000000200 x18: 0000000000000001
-   x17: 0000000000000001 x16: ffff000803240000 x15: 0000000000000000
-   x14: ffffffffffffffff x13: 0000000000000028 x12: ffff000800395650
-   x11: ffff8000821d1528 x10: ffff800081c2bc08 x9 : ffff800081c1e258
-   x8 : 0000000100000301 x7 : ffff8000810426ec x6 : 0000000000000000
-   x5 : 0000000000000001 x4 : 0000000000000001 x3 : 0000000000000000
-   x2 : 0000000000000008 x1 : 0000000000000200 x0 : ffff8000810428dc
-   Call trace:
-    __local_bh_enable_ip+0x174/0x188 (P)
-    local_bh_enable+0x24/0x38
-    skb_attempt_defer_free+0x190/0x1d8
-    napi_consume_skb+0x58/0x108
-    macb_tx_poll+0x1a4/0x558
-    __napi_poll+0x50/0x198
-    net_rx_action+0x1f4/0x3d8
-    handle_softirqs+0x16c/0x560
-    run_ksoftirqd+0x44/0x80
-    smpboot_thread_fn+0x1d8/0x338
-    kthread+0x120/0x150
-    ret_from_fork+0x10/0x20
-   irq event stamp: 29751
-   hardirqs last  enabled at (29750): [<ffff8000813be184>] _raw_spin_unlock_irqrestore+0x44/0x88
-   hardirqs last disabled at (29751): [<ffff8000813bdf60>] _raw_spin_lock_irqsave+0x38/0x98
-   softirqs last  enabled at (29150): [<ffff8000800f1aec>] handle_softirqs+0x504/0x560
-   softirqs last disabled at (29153): [<ffff8000800f2fec>] run_ksoftirqd+0x44/0x80
+When installing an emulated MMIO SPTE, do so *after* dropping/zapping the
+existing SPTE (if it's shadow-present).  While commit a54aa15c6bda3 was
+right about it being impossible to convert a shadow-present SPTE to an
+MMIO SPTE due to a _guest_ write, it failed to account for writes to guest
+memory that are outside the scope of KVM.
 
-Fixes: 6bc8a5098bf4 ("net: macb: Fix tx_ptr_lock locking")
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
+E.g. if host userspace modifies a shadowed gPTE to switch from a memslot
+to emulted MMIO and then the guest hits a relevant page fault, KVM will
+install the MMIO SPTE without first zapping the shadow-present SPTE.
+
+  ------------[ cut here ]------------
+  is_shadow_present_pte(*sptep)
+  WARNING: arch/x86/kvm/mmu/mmu.c:484 at mark_mmio_spte+0xb2/0xc0 [kvm], CPU#0: vmx_ept_stale_r/4292
+  Modules linked in: kvm_intel kvm irqbypass
+  CPU: 0 UID: 1000 PID: 4292 Comm: vmx_ept_stale_r Not tainted 7.0.0-rc2-eafebd2d2ab0-sink-vm #319 PREEMPT
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:mark_mmio_spte+0xb2/0xc0 [kvm]
+  Call Trace:
+   <TASK>
+   mmu_set_spte+0x237/0x440 [kvm]
+   ept_page_fault+0x535/0x7f0 [kvm]
+   kvm_mmu_do_page_fault+0xee/0x1f0 [kvm]
+   kvm_mmu_page_fault+0x8d/0x620 [kvm]
+   vmx_handle_exit+0x18c/0x5a0 [kvm_intel]
+   kvm_arch_vcpu_ioctl_run+0xc55/0x1c20 [kvm]
+   kvm_vcpu_ioctl+0x2d5/0x980 [kvm]
+   __x64_sys_ioctl+0x8a/0xd0
+   do_syscall_64+0xb5/0x730
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x47fa3f
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+
+Reported-by: Alexander Bulekov <bkov@amazon.com>
+Debugged-by: Alexander Bulekov <bkov@amazon.com>
+Suggested-by: Fred Griffoul <fgriffo@amazon.co.uk>
+Fixes: a54aa15c6bda3 ("KVM: x86/mmu: Handle MMIO SPTEs directly in mmu_set_spte()")
 Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260321-macb-tx-v1-1-b383a58dd4e6@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/mmu/mmu.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -1129,7 +1129,7 @@ static void macb_tx_unmap(struct macb *b
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2919,12 +2919,6 @@ static int mmu_set_spte(struct kvm_vcpu
+ 	bool prefetch = !fault || fault->prefetch;
+ 	bool write_fault = fault && fault->write;
+ 
+-	if (unlikely(is_noslot_pfn(pfn))) {
+-		vcpu->stat.pf_mmio_spte_created++;
+-		mark_mmio_spte(vcpu, sptep, gfn, pte_access);
+-		return RET_PF_EMULATE;
+-	}
+-
+ 	if (is_shadow_present_pte(*sptep)) {
+ 		/*
+ 		 * If we overwrite a PTE page pointer with a 2MB PMD, unlink
+@@ -2944,6 +2938,14 @@ static int mmu_set_spte(struct kvm_vcpu
+ 			was_rmapped = 1;
  	}
  
- 	if (tx_skb->skb) {
--		napi_consume_skb(tx_skb->skb, budget);
-+		dev_consume_skb_any(tx_skb->skb);
- 		tx_skb->skb = NULL;
- 	}
- }
++	if (unlikely(is_noslot_pfn(pfn))) {
++		vcpu->stat.pf_mmio_spte_created++;
++		mark_mmio_spte(vcpu, sptep, gfn, pte_access);
++		if (flush)
++			kvm_flush_remote_tlbs_gfn(vcpu->kvm, gfn, level);
++		return RET_PF_EMULATE;
++	}
++
+ 	wrprot = make_spte(vcpu, sp, slot, pte_access, gfn, pfn, *sptep, prefetch,
+ 			   true, host_writable, &spte);
+ 
 
 
