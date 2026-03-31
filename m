@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C88423A89;
-	Tue, 31 Mar 2026 16:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218DD3FADEE;
+	Tue, 31 Mar 2026 16:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974690; cv=none; b=su3sdCFRi7CQjA++6Clqe0JyI/D6YEnH8WmSfcgjWvb9iMqkXMHrvi2ZlYoMAmayqZQbn8n3fsX0Lqlq7CPaRLFJbUocupTyS6rwHHtmvEvHJS/6EpoWsbwGiFscJOl0aAl3LD0+k5qp3tJbdUKWy0oE4440Xi4/Hc4MjSKMYMs=
+	t=1774974693; cv=none; b=og0PFLWH4LuIUU/pMaT4dScxVJaVtqzdMR/AY7CdXXXla81nGJYllITznJPZOTbRPgBGyn/rQJr6b2FQBk60CoBrWVfKARufWQ7rnD7PyZS6acA3HikttiyZyCZfdb2op1QV4d9lLRT/be816lNzlKF0XaGIXwjudR9wJ9lMVZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974690; c=relaxed/simple;
-	bh=A2He0M+FDvs+Cg3ddeZQJ1XSQW9GHzSoH3NpEwsORc8=;
+	s=arc-20240116; t=1774974693; c=relaxed/simple;
+	bh=rTBCrRbGrVWnR6c8MRn5/XtoRf5++J+sLjm1Mkfb0/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G4GxrHxVw0HbQ6ELEzL6DxR9ptEnPbdbpnRKgPWdudkNlN2TdcqH+rvGaT/j7+LYsGWPXT17rQoZ0Z1+AG75S+MkLJwjIrw+1pjCtpHwBvjQve7FUmwyMlRqG1mO5Wl0VdUzC936i4/BgNFRSDempTZrwyVtB2CQOp5oA1Vo9l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCjXgpu5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZQakOwbt/Xs42j+KifcVOdrmFaeoyB68A52cKMSS8535q6jrLhwNb2kDvZuzfkrnxXLe5jSx3S81XHDoLqZtvEGL7Xn8mfL0S3H3cn0+UB43sC/pPUqqfaYsaGErUB6CMMZqHt/LtXeKo4iNTQlppaXcXTJa+SxQOlFRyYkdzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTW+jrlm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCjXgpu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28396C19423;
-	Tue, 31 Mar 2026 16:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTW+jrlm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD345C19424;
+	Tue, 31 Mar 2026 16:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974690;
-	bh=A2He0M+FDvs+Cg3ddeZQJ1XSQW9GHzSoH3NpEwsORc8=;
+	s=korg; t=1774974693;
+	bh=rTBCrRbGrVWnR6c8MRn5/XtoRf5++J+sLjm1Mkfb0/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QCjXgpu5j8A1Y55QIfBBVEwzpv124PFJfgOSRun6xDXJgENOfVhOpXOu8BsB/oUGz
-	 gBDGFXAy1CuVWZZViJltRoNwqCbZOji9Tlg+uSb47xugG0p4k/0gyqs9+/Ft5DKP2n
-	 zzkzRjyAs98mpDZqows5akhFcidKUDt1oxGt6x2k=
+	b=tTW+jrlmplN83v2FX0EXtjnG1A5fW9w0W8WDhy6cnDkngbyolSoYNcHvvxIWRiaV0
+	 0mCQ9ACJWPMdGvec1DAfKq9Absd3+nC1B5f7c298t5Uutl4r9JqYVtGTUPVLUDLizY
+	 8P0V/w3wikwaCPv1sTE6BSNH5XrVP0q0YX8u4rwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Weimer <fweimer@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Jonas Rebmann <kernel@schlaraffenlan.de>
-Subject: [PATCH 6.6 153/175] libbpf: Fix -Wdiscarded-qualifiers under C23
-Date: Tue, 31 Mar 2026 18:22:17 +0200
-Message-ID: <20260331161735.414448614@linuxfoundation.org>
+	Werner Kasselman <werner@verivus.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 144/175] ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()
+Date: Tue, 31 Mar 2026 18:22:08 +0200
+Message-ID: <20260331161735.076215663@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -48,53 +47,181 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Werner Kasselman <werner@verivus.com>
 
-commit d70f79fef65810faf64dbae1f3a1b5623cdb2345 upstream.
+[ Upstream commit 48623ec358c1c600fa1e38368746f933e0f1a617 ]
 
-glibc ≥ 2.42 (GCC 15) defaults to -std=gnu23, which promotes
--Wdiscarded-qualifiers to an error.
+smb_grant_oplock() has two issues in the oplock publication sequence:
 
-In C23, strstr() and strchr() return "const char *".
+1) opinfo is linked into ci->m_op_list (via opinfo_add) before
+   add_lease_global_list() is called.  If add_lease_global_list()
+   fails (kmalloc returns NULL), the error path frees the opinfo
+   via __free_opinfo() while it is still linked in ci->m_op_list.
+   Concurrent m_op_list readers (opinfo_get_list, or direct iteration
+   in smb_break_all_levII_oplock) dereference the freed node.
 
-Change variable types to const char * where the pointers are never
-modified (res, sym_sfx, next_path).
+2) opinfo->o_fp is assigned after add_lease_global_list() publishes
+   the opinfo on the global lease list.  A concurrent
+   find_same_lease_key() can walk the lease list and dereference
+   opinfo->o_fp->f_ci while o_fp is still NULL.
 
-[ shung-hsi.yu: needed to fix kernel build failure due to libbpf since glibc
-  2.43+ (which adds 'const' qualifier to strstr) ]
-[ Jonas Rebmann: down to one declaration on 6.6 to resolve build error
-  with glibc 2.43 ]
+Fix by restructuring the publication sequence to eliminate post-publish
+failure:
 
-Suggested-by: Florian Weimer <fweimer@redhat.com>
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Link: https://lore.kernel.org/r/20251206092825.1471385-1-mikhail.v.gavrilov@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Jonas Rebmann <kernel@schlaraffenlan.de>
+- Set opinfo->o_fp before any list publication (fixes NULL deref).
+- Preallocate lease_table via alloc_lease_table() before opinfo_add()
+  so add_lease_global_list() becomes infallible after publication.
+- Keep the original m_op_list publication order (opinfo_add before
+  lease list) so concurrent opens via same_client_has_lease() and
+  opinfo_get_list() still see the in-flight grant.
+- Use opinfo_put() instead of __free_opinfo() on err_out so that
+  the RCU-deferred free path is used.
+
+This also requires splitting add_lease_global_list() to take a
+preallocated lease_table and changing its return type from int to void,
+since it can no longer fail.
+
+Fixes: 1dfd062caa16 ("ksmbd: fix use-after-free by using call_rcu() for oplock_info")
+Cc: stable@vger.kernel.org
+Signed-off-by: Werner Kasselman <werner@verivus.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ replaced kmalloc_obj() and KSMBD_DEFAULT_GFP with kmalloc(sizeof(), GFP_KERNEL) ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/libbpf.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/oplock.c |   72 ++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 45 insertions(+), 27 deletions(-)
 
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -11247,7 +11247,7 @@ static int resolve_full_path(const char
- 		if (!search_paths[i])
- 			continue;
- 		for (s = search_paths[i]; s != NULL; s = strchr(s, ':')) {
--			char *next_path;
-+			const char *next_path;
- 			int seg_len;
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -82,11 +82,19 @@ static void lease_del_list(struct oplock
+ 	spin_unlock(&lb->lb_lock);
+ }
  
- 			if (s[0] == ':')
+-static void lb_add(struct lease_table *lb)
++static struct lease_table *alloc_lease_table(struct oplock_info *opinfo)
+ {
+-	write_lock(&lease_list_lock);
+-	list_add(&lb->l_entry, &lease_table_list);
+-	write_unlock(&lease_list_lock);
++	struct lease_table *lb;
++
++	lb = kmalloc(sizeof(struct lease_table), GFP_KERNEL);
++	if (!lb)
++		return NULL;
++
++	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
++	       SMB2_CLIENT_GUID_SIZE);
++	INIT_LIST_HEAD(&lb->lease_list);
++	spin_lock_init(&lb->lb_lock);
++	return lb;
+ }
+ 
+ static int alloc_lease(struct oplock_info *opinfo, struct lease_ctx_info *lctx)
+@@ -1042,34 +1050,27 @@ static void copy_lease(struct oplock_inf
+ 	lease2->version = lease1->version;
+ }
+ 
+-static int add_lease_global_list(struct oplock_info *opinfo)
++static void add_lease_global_list(struct oplock_info *opinfo,
++				  struct lease_table *new_lb)
+ {
+ 	struct lease_table *lb;
+ 
+-	read_lock(&lease_list_lock);
++	write_lock(&lease_list_lock);
+ 	list_for_each_entry(lb, &lease_table_list, l_entry) {
+ 		if (!memcmp(lb->client_guid, opinfo->conn->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE)) {
+ 			opinfo->o_lease->l_lb = lb;
+ 			lease_add_list(opinfo);
+-			read_unlock(&lease_list_lock);
+-			return 0;
++			write_unlock(&lease_list_lock);
++			kfree(new_lb);
++			return;
+ 		}
+ 	}
+-	read_unlock(&lease_list_lock);
+ 
+-	lb = kmalloc(sizeof(struct lease_table), GFP_KERNEL);
+-	if (!lb)
+-		return -ENOMEM;
+-
+-	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
+-	       SMB2_CLIENT_GUID_SIZE);
+-	INIT_LIST_HEAD(&lb->lease_list);
+-	spin_lock_init(&lb->lb_lock);
+-	opinfo->o_lease->l_lb = lb;
++	opinfo->o_lease->l_lb = new_lb;
+ 	lease_add_list(opinfo);
+-	lb_add(lb);
+-	return 0;
++	list_add(&new_lb->l_entry, &lease_table_list);
++	write_unlock(&lease_list_lock);
+ }
+ 
+ static void set_oplock_level(struct oplock_info *opinfo, int level,
+@@ -1189,6 +1190,7 @@ int smb_grant_oplock(struct ksmbd_work *
+ 	int err = 0;
+ 	struct oplock_info *opinfo = NULL, *prev_opinfo = NULL;
+ 	struct ksmbd_inode *ci = fp->f_ci;
++	struct lease_table *new_lb = NULL;
+ 	bool prev_op_has_lease;
+ 	__le32 prev_op_state = 0;
+ 
+@@ -1291,21 +1293,37 @@ set_lev:
+ 	set_oplock_level(opinfo, req_op_level, lctx);
+ 
+ out:
+-	opinfo_count_inc(fp);
+-	opinfo_add(opinfo, fp);
+-
++	/*
++	 * Set o_fp before any publication so that concurrent readers
++	 * (e.g. find_same_lease_key() on the lease list) that
++	 * dereference opinfo->o_fp don't hit a NULL pointer.
++	 *
++	 * Keep the original publication order so concurrent opens can
++	 * still observe the in-flight grant via ci->m_op_list, but make
++	 * everything after opinfo_add() no-fail by preallocating any new
++	 * lease_table first.
++	 */
++	opinfo->o_fp = fp;
+ 	if (opinfo->is_lease) {
+-		err = add_lease_global_list(opinfo);
+-		if (err)
++		new_lb = alloc_lease_table(opinfo);
++		if (!new_lb) {
++			err = -ENOMEM;
+ 			goto err_out;
++		}
+ 	}
+ 
++	opinfo_count_inc(fp);
++	opinfo_add(opinfo, fp);
++
++	if (opinfo->is_lease)
++		add_lease_global_list(opinfo, new_lb);
++
+ 	rcu_assign_pointer(fp->f_opinfo, opinfo);
+-	opinfo->o_fp = fp;
+ 
+ 	return 0;
+ err_out:
+-	__free_opinfo(opinfo);
++	kfree(new_lb);
++	opinfo_put(opinfo);
+ 	return err;
+ }
+ 
 
 
