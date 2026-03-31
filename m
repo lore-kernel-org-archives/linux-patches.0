@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7436630DEDC;
-	Tue, 31 Mar 2026 17:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B85E30E83A;
+	Tue, 31 Mar 2026 17:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976895; cv=none; b=uLIKdbkqWdwycxwECAZtyCGayjoiJDGuU9EdSWq+VX6k4stxoQE+Ir8AdkqesZ+vj5hTDdZOGL3CChCzbNK4DnTIGf1B0qs3MCpqw8PK6kWwKcVmr4IgCwykuGit3T5MtnnqeNvtf26/w2glI9r3eKl3QYjPEOV1EmYdt8K34lE=
+	t=1774976898; cv=none; b=lSug9K2fQ3YPyOfWouwF0RZzB6fM+zwGgcSXt9GAnvGYHn8od63EG49ra3U6P/7fOv4D0qjepBsTbeWzzw80Aci9y8LTSOpQnrfz5s64XgUBW/C3eD7ouml3cB1D8jgBK85mYqAG3wdO8UJIjzZywYA0zMb27rI6g0eR1LRMHSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976895; c=relaxed/simple;
-	bh=wzmPgSEc27QxHRz0BZvtOVvJfeOS1t7YZ5/6NFebX+E=;
+	s=arc-20240116; t=1774976898; c=relaxed/simple;
+	bh=xJI0hAv+7VgIdtZXIAraDu+lF2wwc3aqrvPqB7vBUyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HoUOxUosHX7AJVmJ0l9zaKAPFYQ29jujIOg18CNoemaGLTyC7Etq2U3YutPqdrO9wn3xBZ9LW82LF/bWfiYrsq9a6XicmqilvE1R+U+gfogiWAHQhvr3Rc1lGPdW5pSUt2WTbCRoZImB9rPQL3oiIMeRvswbuUBzunOO7+cCbxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLR7Y4/g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zi8dkuBvfZiIoVr4g58tsX7mjuprpetRE0LaKpHO4P1DZGcXeyyqMqYCa7HXkGglM/BVt2DP6WNB5XOlu/axVqZes+zWarokGMbq445hNHMtT69SV45/6YCT8Y7MY3mO4WH7jf+IODLMPHRbqJxMd/kTmE038fcZayspHvB/d1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zU8+mJPE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLR7Y4/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089B0C19423;
-	Tue, 31 Mar 2026 17:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zU8+mJPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940CAC19423;
+	Tue, 31 Mar 2026 17:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976895;
-	bh=wzmPgSEc27QxHRz0BZvtOVvJfeOS1t7YZ5/6NFebX+E=;
+	s=korg; t=1774976897;
+	bh=xJI0hAv+7VgIdtZXIAraDu+lF2wwc3aqrvPqB7vBUyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLR7Y4/grfNrZEElQdgxFfbkSZPCFsTvW4iM42/075nGfUCgXJY0bNzIerL2Xudm/
-	 SNYZbI3pTA1hNQXg40/RraY/7E4EqPJDZszKA0oaZHqJjC4z/hHPnXvpOum6zbbYQi
-	 lJ8aN/zUUR+W9/CPxR8IROqMw0qprEcvK2dmTYyk=
+	b=zU8+mJPEyBsfJFzaV/czdUBjGKJ8U6pefzPEqPqphWN1auJNmF55E2F7YAPGiMHum
+	 YUfcx/XdE3gtnkhchd3D+l23djosSid9JOwmDY+Hzn+wZ/T7lAgpjtP6jijH31OZUK
+	 k3+LfQ97W3qC9N600Qm2arMJz3s44dvREEbcGeX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang@linux.dev>,
+	Jan Kara <jack@suse.cz>,
 	Baokun Li <libaokun@linux.alibaba.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.18 268/309] ext4: fix the might_sleep() warnings in kvfree()
-Date: Tue, 31 Mar 2026 18:22:51 +0200
-Message-ID: <20260331161803.427645495@linuxfoundation.org>
+Subject: [PATCH 6.18 269/309] ext4: handle wraparound when searching for blocks for indirect mapped blocks
+Date: Tue, 31 Mar 2026 18:22:52 +0200
+Message-ID: <20260331161803.463357867@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,168 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 496bb99b7e66f48b178126626f47e9ba79e2d0fa upstream.
+commit bb81702370fad22c06ca12b6e1648754dbc37e0f upstream.
 
-Use the kvfree() in the RCU read critical section can trigger
-the following warnings:
+Commit 4865c768b563 ("ext4: always allocate blocks only from groups
+inode can use") restricts what blocks will be allocated for indirect
+block based files to block numbers that fit within 32-bit block
+numbers.
 
-EXT4-fs (vdb): unmounting filesystem cd983e5b-3c83-4f5a-a136-17b00eb9d018.
+However, when using a review bot running on the latest Gemini LLM to
+check this commit when backporting into an LTS based kernel, it raised
+this concern:
 
-WARNING: suspicious RCU usage
+   If ac->ac_g_ex.fe_group is >= ngroups (for instance, if the goal
+   group was populated via stream allocation from s_mb_last_groups),
+   then start will be >= ngroups.
 
-./include/linux/rcupdate.h:409 Illegal context switch in RCU read-side critical section!
+   Does this allow allocating blocks beyond the 32-bit limit for
+   indirect block mapped files? The commit message mentions that
+   ext4_mb_scan_groups_linear() takes care to not select unsupported
+   groups. However, its loop uses group = *start, and the very first
+   iteration will call ext4_mb_scan_group() with this unsupported
+   group because next_linear_group() is only called at the end of the
+   iteration.
 
-other info that might help us debug this:
+After reviewing the code paths involved and considering the LLM
+review, I determined that this can happen when there is a file system
+where some files/directories are extent-mapped and others are
+indirect-block mapped.  To address this, add a safety clamp in
+ext4_mb_scan_groups().
 
-rcu_scheduler_active = 2, debug_locks = 1
-
-Call Trace:
- <TASK>
- dump_stack_lvl+0xbb/0xd0
- dump_stack+0x14/0x20
- lockdep_rcu_suspicious+0x15a/0x1b0
- __might_resched+0x375/0x4d0
- ? put_object.part.0+0x2c/0x50
- __might_sleep+0x108/0x160
- vfree+0x58/0x910
- ? ext4_group_desc_free+0x27/0x270
- kvfree+0x23/0x40
- ext4_group_desc_free+0x111/0x270
- ext4_put_super+0x3c8/0xd40
- generic_shutdown_super+0x14c/0x4a0
- ? __pfx_shrinker_free+0x10/0x10
- kill_block_super+0x40/0x90
- ext4_kill_sb+0x6d/0xb0
- deactivate_locked_super+0xb4/0x180
- deactivate_super+0x7e/0xa0
- cleanup_mnt+0x296/0x3e0
- __cleanup_mnt+0x16/0x20
- task_work_run+0x157/0x250
- ? __pfx_task_work_run+0x10/0x10
- ? exit_to_user_mode_loop+0x6a/0x550
- exit_to_user_mode_loop+0x102/0x550
- do_syscall_64+0x44a/0x500
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-BUG: sleeping function called from invalid context at mm/vmalloc.c:3441
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 556, name: umount
-preempt_count: 1, expected: 0
-CPU: 3 UID: 0 PID: 556 Comm: umount
-Call Trace:
- <TASK>
- dump_stack_lvl+0xbb/0xd0
- dump_stack+0x14/0x20
- __might_resched+0x275/0x4d0
- ? put_object.part.0+0x2c/0x50
- __might_sleep+0x108/0x160
- vfree+0x58/0x910
- ? ext4_group_desc_free+0x27/0x270
- kvfree+0x23/0x40
- ext4_group_desc_free+0x111/0x270
- ext4_put_super+0x3c8/0xd40
- generic_shutdown_super+0x14c/0x4a0
- ? __pfx_shrinker_free+0x10/0x10
- kill_block_super+0x40/0x90
- ext4_kill_sb+0x6d/0xb0
- deactivate_locked_super+0xb4/0x180
- deactivate_super+0x7e/0xa0
- cleanup_mnt+0x296/0x3e0
- __cleanup_mnt+0x16/0x20
- task_work_run+0x157/0x250
- ? __pfx_task_work_run+0x10/0x10
- ? exit_to_user_mode_loop+0x6a/0x550
- exit_to_user_mode_loop+0x102/0x550
- do_syscall_64+0x44a/0x500
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-The above scenarios occur in initialization failures and teardown
-paths, there are no parallel operations on the resources released
-by kvfree(), this commit therefore remove rcu_read_lock/unlock() and
-use rcu_access_pointer() instead of rcu_dereference() operations.
-
-Fixes: 7c990728b99e ("ext4: fix potential race between s_flex_groups online resizing and access")
-Fixes: df3da4ea5a0f ("ext4: fix potential race between s_group_info online resizing and access")
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Fixes: 4865c768b563 ("ext4: always allocate blocks only from groups inode can use")
+Cc: Jan Kara <jack@suse.cz>
 Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260319094545.19291-1-qiang.zhang@linux.dev
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://patch.msgid.link/20260326045834.1175822-1-tytso@mit.edu
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   10 +++-------
- fs/ext4/super.c   |    8 ++------
- 2 files changed, 5 insertions(+), 13 deletions(-)
+ fs/ext4/mballoc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -3579,9 +3579,7 @@ err_freebuddy:
- 	rcu_read_unlock();
- 	iput(sbi->s_buddy_cache);
- err_freesgi:
--	rcu_read_lock();
--	kvfree(rcu_dereference(sbi->s_group_info));
--	rcu_read_unlock();
-+	kvfree(rcu_access_pointer(sbi->s_group_info));
- 	return -ENOMEM;
- }
+@@ -1199,6 +1199,8 @@ static int ext4_mb_scan_groups(struct ex
  
-@@ -3898,7 +3896,8 @@ void ext4_mb_release(struct super_block
- 		WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
- 	}
+ 	/* searching for the right group start from the goal value specified */
+ 	start = ac->ac_g_ex.fe_group;
++	if (start >= ngroups)
++		start = 0;
+ 	ac->ac_prefetch_grp = start;
+ 	ac->ac_prefetch_nr = 0;
  
--	if (sbi->s_group_info) {
-+	group_info = rcu_access_pointer(sbi->s_group_info);
-+	if (group_info) {
- 		for (i = 0; i < ngroups; i++) {
- 			cond_resched();
- 			grinfo = ext4_get_group_info(sb, i);
-@@ -3916,12 +3915,9 @@ void ext4_mb_release(struct super_block
- 		num_meta_group_infos = (ngroups +
- 				EXT4_DESC_PER_BLOCK(sb) - 1) >>
- 			EXT4_DESC_PER_BLOCK_BITS(sb);
--		rcu_read_lock();
--		group_info = rcu_dereference(sbi->s_group_info);
- 		for (i = 0; i < num_meta_group_infos; i++)
- 			kfree(group_info[i]);
- 		kvfree(group_info);
--		rcu_read_unlock();
- 	}
- 	ext4_mb_avg_fragment_size_destroy(sbi);
- 	ext4_mb_largest_free_orders_destroy(sbi);
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1249,12 +1249,10 @@ static void ext4_group_desc_free(struct
- 	struct buffer_head **group_desc;
- 	int i;
- 
--	rcu_read_lock();
--	group_desc = rcu_dereference(sbi->s_group_desc);
-+	group_desc = rcu_access_pointer(sbi->s_group_desc);
- 	for (i = 0; i < sbi->s_gdb_count; i++)
- 		brelse(group_desc[i]);
- 	kvfree(group_desc);
--	rcu_read_unlock();
- }
- 
- static void ext4_flex_groups_free(struct ext4_sb_info *sbi)
-@@ -1262,14 +1260,12 @@ static void ext4_flex_groups_free(struct
- 	struct flex_groups **flex_groups;
- 	int i;
- 
--	rcu_read_lock();
--	flex_groups = rcu_dereference(sbi->s_flex_groups);
-+	flex_groups = rcu_access_pointer(sbi->s_flex_groups);
- 	if (flex_groups) {
- 		for (i = 0; i < sbi->s_flex_groups_allocated; i++)
- 			kvfree(flex_groups[i]);
- 		kvfree(flex_groups);
- 	}
--	rcu_read_unlock();
- }
- 
- static void ext4_put_super(struct super_block *sb)
 
 
