@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419C02E1C7C;
-	Tue, 31 Mar 2026 17:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38FC30276A;
+	Tue, 31 Mar 2026 17:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976823; cv=none; b=naiaPtd7uQ3oCJzQ0LgGac6Gvgxt7iG0z5lQYCYdFi5VRw019poqVVBDNnAzzUIDO4s3HVAXpgSgvQofWNSFUGhKjsaWoX7VPCQrzedQbE0RDwshkhG69blhaFMKYzykGQoWCpzvFTAOc6whfae0JQGwB3Eyck53kQ7cvL4uTEs=
+	t=1774976825; cv=none; b=BVbXYbg0djHKcOsBf7WcIDsoD8TPhV4hwcqfa6MPVSo9nKGq6Mp+34pDM5AWaJrSPs+PBuz9Bm94/9GiK9FQE94nTNx7WLi+1vNBbu0C6AuQntRj9ckKE+GtbFQA7OVQ4HNDAnrDjLszKbfp8fw9NlVz874f2SVHkcepO5jEFUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976823; c=relaxed/simple;
-	bh=LJiS5zKGhd2mEiK3+Vam+nr9v/oGTuN9alrOIlM1n7c=;
+	s=arc-20240116; t=1774976825; c=relaxed/simple;
+	bh=Y7L6oge+E1FxjOfmkQSB6FVICxy/ukOIu+cKfbIxyPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AeBa7Xmqcl7BFfWacxzsvONeHbU/u7GLv8moIVtq0SojdZaQdEFBCurfV78iHing5guEL2zvA289gpsOz0BEfe8vlhYhA+V0uaZ/RJSuGr9Yi3AhbC3oLvh2oymCJp4CfW47SdpWwVBEJrBm3Zh0jPmQqR1SbQVVAeSaMMcE8v0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpWwsF/E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MJYzvFL+IOpy9QQ2I2lfwwHM4LgxCFB4d+lbFJ1gDNvVoU+wT32owGn7AhrHko0hdNMBBTxe40lC5upL15URsG3dXu33prbSIp96odE8YHdMjnZvEeYrr86DT1mqxorcnAPASlAtr30WmRoczeVGWeqMrKgKk9h44ZSHpb0lCw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GLU2E7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpWwsF/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA963C19423;
-	Tue, 31 Mar 2026 17:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GLU2E7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641DAC19423;
+	Tue, 31 Mar 2026 17:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976823;
-	bh=LJiS5zKGhd2mEiK3+Vam+nr9v/oGTuN9alrOIlM1n7c=;
+	s=korg; t=1774976825;
+	bh=Y7L6oge+E1FxjOfmkQSB6FVICxy/ukOIu+cKfbIxyPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KpWwsF/E6/USuksewql4qIec0qDjkJ07DuW8zBO95HZkImGG3V8EhGW0I5xH+rwNz
-	 o9qkqgBOY+ODHl3FXVJ1G8pmIT5bkQzpOuB9q53t72IQzk+KlBJq/q5WZbJ+FbvTv1
-	 eh23zbS3cFRRy9zP6I89P/jIhotwe/7FAKDuTX+M=
+	b=2GLU2E7JMAHIfNjhiMfg8aqTtFZAhV3X57mR78Fm9NxR8nIfcj9V9vpOfgRJQBYCW
+	 G1Sgo9+ulzh2ffflzIwRda2Navo0yY4ZV/ybElTFuxY9G4Zouyd7m+RrvJ+AoIeyFF
+	 hQ/2QpqUiJeHwDzQGYZ1KTkGskAg90OLVB9jHHN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 199/309] hwmon: (pmbus/ina233) Fix error handling and sign extension in shunt voltage read
-Date: Tue, 31 Mar 2026 18:21:42 +0200
-Message-ID: <20260331161800.778741739@linuxfoundation.org>
+	Uma Shankar <uma.shankar@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.18 235/309] drm/i915/dp_tunnel: Fix error handling when clearing stream BW in atomic state
+Date: Tue, 31 Mar 2026 18:22:18 +0200
+Message-ID: <20260331161802.227375826@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -44,62 +47,135 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Imre Deak <imre.deak@intel.com>
 
-commit f7e775c4694782844c66da5316fed82881835cf8 upstream.
+commit 77fcf58df15edcf3f5b5421f24814fb72796def9 upstream.
 
-ina233_read_word_data() reads MFR_READ_VSHUNT via pmbus_read_word_data()
-but has two issues:
+Clearing the DP tunnel stream BW in the atomic state involves getting
+the tunnel group state, which can fail. Handle the error accordingly.
 
-1. The return value is not checked for errors before being used in
-   arithmetic. A negative error code from a failed I2C transaction is
-   passed directly to DIV_ROUND_CLOSEST(), producing garbage data.
+This fixes at least one issue where drm_dp_tunnel_atomic_set_stream_bw()
+failed to get the tunnel group state returning -EDEADLK, which wasn't
+handled. This lead to the ctx->contended warn later in modeset_lock()
+while taking a WW mutex for another object in the same atomic state, and
+thus within the same already contended WW context.
 
-2. MFR_READ_VSHUNT is a 16-bit two's complement value. Negative shunt
-   voltages (values with bit 15 set) are treated as large positive
-   values since pmbus_read_word_data() returns them zero-extended in an
-   int. This leads to incorrect scaling in the VIN coefficient
-   conversion.
+Moving intel_crtc_state_alloc() later would avoid freeing saved_state on
+the error path; this stable patch leaves that simplification for a
+follow-up.
 
-Fix both issues by adding an error check, casting to s16 for proper
-sign extension, and clamping the result to a valid non-negative range.
-The clamp is necessary because read_word_data callbacks must return
-non-negative values on success (negative values indicate errors to the
-pmbus core).
-
-Fixes: b64b6cb163f16 ("hwmon: Add driver for TI INA233 Current and Power Monitor")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260319173055.125271-2-sanman.pradhan@hpe.com
-[groeck: Fixed clamp to avoid losing the sign bit]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: Uma Shankar <uma.shankar@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v6.9+
+Fixes: a4efae87ecb2 ("drm/i915/dp: Compute DP tunnel BW during encoder state computation")
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7617
+Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patch.msgid.link/20260320092900.13210-1-imre.deak@intel.com
+(cherry picked from commit fb69d0076e687421188bc8103ab0e8e5825b1df1)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/ina233.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_display.c   |    8 +++++++-
+ drivers/gpu/drm/i915/display/intel_dp_tunnel.c |   20 ++++++++++++++------
+ drivers/gpu/drm/i915/display/intel_dp_tunnel.h |   11 +++++++----
+ 3 files changed, 28 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/ina233.c b/drivers/hwmon/pmbus/ina233.c
-index 2d8b5a5347ed..7aebd854763a 100644
---- a/drivers/hwmon/pmbus/ina233.c
-+++ b/drivers/hwmon/pmbus/ina233.c
-@@ -72,7 +72,8 @@ static int ina233_read_word_data(struct i2c_client *client, int page,
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -4568,6 +4568,7 @@ intel_crtc_prepare_cleared_state(struct
+ 	struct intel_crtc_state *crtc_state =
+ 		intel_atomic_get_new_crtc_state(state, crtc);
+ 	struct intel_crtc_state *saved_state;
++	int err;
  
- 		/* Adjust returned value to match VIN coefficients */
- 		/* VIN: 1.25 mV VSHUNT: 2.5 uV LSB */
--		ret = DIV_ROUND_CLOSEST(ret * 25, 12500);
-+		ret = clamp_val(DIV_ROUND_CLOSEST((s16)ret * 25, 12500),
-+				S16_MIN, S16_MAX) & 0xffff;
- 		break;
- 	default:
- 		ret = -ENODATA;
--- 
-2.53.0
-
+ 	saved_state = intel_crtc_state_alloc(crtc);
+ 	if (!saved_state)
+@@ -4576,7 +4577,12 @@ intel_crtc_prepare_cleared_state(struct
+ 	/* free the old crtc_state->hw members */
+ 	intel_crtc_free_hw_state(crtc_state);
+ 
+-	intel_dp_tunnel_atomic_clear_stream_bw(state, crtc_state);
++	err = intel_dp_tunnel_atomic_clear_stream_bw(state, crtc_state);
++	if (err) {
++		kfree(saved_state);
++
++		return err;
++	}
+ 
+ 	/* FIXME: before the switch to atomic started, a new pipe_config was
+ 	 * kzalloc'd. Code that depends on any field being zero should be
+--- a/drivers/gpu/drm/i915/display/intel_dp_tunnel.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_tunnel.c
+@@ -622,19 +622,27 @@ int intel_dp_tunnel_atomic_compute_strea
+  *
+  * Clear any DP tunnel stream BW requirement set by
+  * intel_dp_tunnel_atomic_compute_stream_bw().
++ *
++ * Returns 0 in case of success, a negative error code otherwise.
+  */
+-void intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
+-					    struct intel_crtc_state *crtc_state)
++int intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
++					   struct intel_crtc_state *crtc_state)
+ {
+ 	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
++	int err;
+ 
+ 	if (!crtc_state->dp_tunnel_ref.tunnel)
+-		return;
++		return 0;
++
++	err = drm_dp_tunnel_atomic_set_stream_bw(&state->base,
++						 crtc_state->dp_tunnel_ref.tunnel,
++						 crtc->pipe, 0);
++	if (err)
++		return err;
+ 
+-	drm_dp_tunnel_atomic_set_stream_bw(&state->base,
+-					   crtc_state->dp_tunnel_ref.tunnel,
+-					   crtc->pipe, 0);
+ 	drm_dp_tunnel_ref_put(&crtc_state->dp_tunnel_ref);
++
++	return 0;
+ }
+ 
+ /**
+--- a/drivers/gpu/drm/i915/display/intel_dp_tunnel.h
++++ b/drivers/gpu/drm/i915/display/intel_dp_tunnel.h
+@@ -40,8 +40,8 @@ int intel_dp_tunnel_atomic_compute_strea
+ 					     struct intel_dp *intel_dp,
+ 					     const struct intel_connector *connector,
+ 					     struct intel_crtc_state *crtc_state);
+-void intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
+-					    struct intel_crtc_state *crtc_state);
++int intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
++					   struct intel_crtc_state *crtc_state);
+ 
+ int intel_dp_tunnel_atomic_add_state_for_crtc(struct intel_atomic_state *state,
+ 					      struct intel_crtc *crtc);
+@@ -88,9 +88,12 @@ intel_dp_tunnel_atomic_compute_stream_bw
+ 	return 0;
+ }
+ 
+-static inline void
++static inline int
+ intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
+-				       struct intel_crtc_state *crtc_state) {}
++				       struct intel_crtc_state *crtc_state)
++{
++	return 0;
++}
+ 
+ static inline int
+ intel_dp_tunnel_atomic_add_state_for_crtc(struct intel_atomic_state *state,
 
 
