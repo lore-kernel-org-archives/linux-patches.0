@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBD8423A63;
-	Tue, 31 Mar 2026 16:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2491E31714F;
+	Tue, 31 Mar 2026 16:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975398; cv=none; b=ERew3/fEKDRGtPYhMIYZQ44Kl7X+BLfLUH7dRhykh0KKyKq5nHPzxMZTXr9Fh/+yWpp5dTHjXXn/SSJGrLpanmGSmKJZBRLRY938JK/jAju7TZyKIQekk+esCIsJDa4NC7k3FNSjur7ekqybu8XnFnyuRO8kayZaU5hYtznM/rs=
+	t=1774975401; cv=none; b=Yi0TxsyubtRFMqCH+phw4lX4d6Ofo0+7Fbx2zFv2X+rpBSvB4g01n7AuyP4pLwJtSc1vRQXc4gnQcKpOKywcOgh2EAZ26Ow+XCPriCnxklb2Ds6kAkQZCUT9PHOtwqiSvoXVzRek4lEWEhwcpVeM4KlK2eYGjrTD2Z3T6eM2BrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975398; c=relaxed/simple;
-	bh=/LxLtzZy1LE6T8HqAT6RBqjF5euwby6EY5K9URJMzbE=;
+	s=arc-20240116; t=1774975401; c=relaxed/simple;
+	bh=HG6TslWt9VUZwxXXRzUlWiw8HPKBqUD108YQzn0jp8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuS5O4hbaEDmZADSUcqQ9ERfX/Suik01w1ydC+HmZkisACSqv5W31Xr9DVLxy1tt83hYkF36s8IZtILnC53JhRo3tT5lt3R1VH5DgeNHNKV2LmJJXdULQf4/5qGQL3R8LtwBTJHsY+HhWajv0rFX0/CZCEZs0AjmXndULx3H6t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CO/5v17U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ueP+gVeGJixD8AQ1f+nEAhHc7w1ZMuAzGSIIEon/0DNx4ObGRAyqjmivXWntBqFSsQ6YCpJJwL5iiTfySl1utNfvLOX8kImvi8VYdjjNuMR/YZ7bSpR3x+KJx5+Pm845WCy7xYGjJu2a0IxtXQRWsJV6acaK8LFeJ55j6F0nINU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDUAo+Of; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CO/5v17U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F04C19423;
-	Tue, 31 Mar 2026 16:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDUAo+Of"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE30BC19423;
+	Tue, 31 Mar 2026 16:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975398;
-	bh=/LxLtzZy1LE6T8HqAT6RBqjF5euwby6EY5K9URJMzbE=;
+	s=korg; t=1774975401;
+	bh=HG6TslWt9VUZwxXXRzUlWiw8HPKBqUD108YQzn0jp8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CO/5v17U0SSCfZupj8oz8FloFxWFezYYPmikGIaSTdB4GnGrC/u8iZ9IhNZIwOMHd
-	 f62aS7SLGvXNuUDqNQ2KwRYma8Ci8UU1qjswIcKhFzF18ts1TdMNUgIHaimU7UkI5H
-	 OXQNALT0A4lvNX1/tal3KIHE27GLDn9Ziv5VnKuE=
+	b=aDUAo+OfdqSxhioZX7Uw56Y2RZaFoJNfjpIYi4DaFNYygOvzdgrV+sxKmLY8SLtdF
+	 hEuzP24lcPtDDd1nWmwpaJakfazEOg/s0OwRUbngJRa1TTlONWhUdhWBK7VrUyFvcq
+	 /0NtUvoz7bK2sZfrULOcxeQNL3DZghPgXyCdDDiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josh Law <objecting@objecting.org>,
 	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 280/342] mm/damon/sysfs: check contexts->nr before accessing contexts_arr[0]
-Date: Tue, 31 Mar 2026 18:21:53 +0200
-Message-ID: <20260331161809.241368026@linuxfoundation.org>
+Subject: [PATCH 6.19 281/342] mm/damon/sysfs: check contexts->nr in repeat_call_fn
+Date: Tue, 31 Mar 2026 18:21:54 +0200
+Message-ID: <20260331161809.279805413@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,39 +53,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Law <objecting@objecting.org>
 
-commit 1bfe9fb5ed2667fb075682408b776b5273162615 upstream.
+commit 6557004a8b59c7701e695f02be03c7e20ed1cc15 upstream.
 
-Multiple sysfs command paths dereference contexts_arr[0] without first
-verifying that kdamond->contexts->nr == 1.  A user can set nr_contexts to
-0 via sysfs while DAMON is running, causing NULL pointer dereferences.
+damon_sysfs_repeat_call_fn() calls damon_sysfs_upd_tuned_intervals(),
+damon_sysfs_upd_schemes_stats(), and
+damon_sysfs_upd_schemes_effective_quotas() without checking contexts->nr.
+If nr_contexts is set to 0 via sysfs while DAMON is running, these
+functions dereference contexts_arr[0] and cause a NULL pointer
+dereference.  Add the missing check.
 
-In more detail, the issue can be triggered by privileged users like
-below.
+For example, the issue can be reproduced using DAMON sysfs interface and
+DAMON user-space tool (damo) [1] like below.
 
-First, start DAMON and make contexts directory empty
-(kdamond->contexts->nr == 0).
+    $ sudo damo start --refresh_interval 1s
+    $ echo 0 | sudo tee \
+            /sys/kernel/mm/damon/admin/kdamonds/0/contexts/nr_contexts
 
-    # damo start
-    # cd /sys/kernel/mm/damon/admin/kdamonds/0
-    # echo 0 > contexts/nr_contexts
-
-Then, each of below commands will cause the NULL pointer dereference.
-
-    # echo update_schemes_stats > state
-    # echo update_schemes_tried_regions > state
-    # echo update_schemes_tried_bytes > state
-    # echo update_schemes_effective_quotas > state
-    # echo update_tuned_intervals > state
-
-Guard all commands (except OFF) at the entry point of
-damon_sysfs_handle_cmd().
-
-Link: https://lkml.kernel.org/r/20260321175427.86000-3-sj@kernel.org
-Fixes: 0ac32b8affb5 ("mm/damon/sysfs: support DAMOS stats")
+Link: https://patch.msgid.link/20260320163559.178101-3-objecting@objecting.org
+Link: https://lkml.kernel.org/r/20260321175427.86000-4-sj@kernel.org
+Link: https://github.com/damonitor/damo [1]
+Fixes: d809a7c64ba8 ("mm/damon/sysfs: implement refresh_ms file internal work")
 Signed-off-by: Josh Law <objecting@objecting.org>
 Reviewed-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[5.18+]
+Cc: <stable@vger.kernel.org>	[6.17+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -94,15 +85,18 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -1752,6 +1752,9 @@ static int damon_sysfs_update_schemes_tr
- static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
- 		struct damon_sysfs_kdamond *kdamond)
- {
-+	if (cmd != DAMON_SYSFS_CMD_OFF && kdamond->contexts->nr != 1)
-+		return -EINVAL;
-+
- 	switch (cmd) {
- 	case DAMON_SYSFS_CMD_ON:
- 		return damon_sysfs_turn_damon_on(kdamond);
+@@ -1622,9 +1622,12 @@ static int damon_sysfs_repeat_call_fn(vo
+ 
+ 	if (!mutex_trylock(&damon_sysfs_lock))
+ 		return 0;
++	if (sysfs_kdamond->contexts->nr != 1)
++		goto out;
+ 	damon_sysfs_upd_tuned_intervals(sysfs_kdamond);
+ 	damon_sysfs_upd_schemes_stats(sysfs_kdamond);
+ 	damon_sysfs_upd_schemes_effective_quotas(sysfs_kdamond);
++out:
+ 	mutex_unlock(&damon_sysfs_lock);
+ 	return 0;
+ }
 
 
