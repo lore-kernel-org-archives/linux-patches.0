@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15BE3E4C6C;
-	Tue, 31 Mar 2026 16:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7CC425CD6;
+	Tue, 31 Mar 2026 16:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976032; cv=none; b=X1h9WfcnZ3yN+hJsxBf/s/TNfRX9m9ObxBY8XTnWJC3RwDmkzop1PJZ5KcxplPsIRjf4tcUUbJUK1t5TmDq8NMYq3Y7Vc4Jfo3Dlm80IvfMErwEPQqNEYMzeq2+9IxSsBVJT4Pgb5g9tVKWwJMevcljlCSnjpRtW1jC7s2Mu2KU=
+	t=1774976034; cv=none; b=bjHIGt4GPGL0j/gLeUK7fndOHPMfuVTsNzD5hNGegLmxb0JwjHxYJfrnirSkFdKRj8vEzen24H/TYy5LIEbTvzLcvWmzAI3T7pOP1v1gLCjaBq5ylAqtrjy744yWVXguDzXzuU8nyZTnii7T9MLh3SASKJqCdjCk5c9qJ/APHKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976032; c=relaxed/simple;
-	bh=2Ur7vUJODuq48T8VQlYrQaeYaVTjQjGV/IQiIThGZ44=;
+	s=arc-20240116; t=1774976034; c=relaxed/simple;
+	bh=v7Q0uza27SMw16nOezMxJw1r4NHmhPXM2h1KzozXpzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kqMn6aVsh+O2uaQttsaY6OayGjcBhSh1/HYRByyAspQJFy3oMZhJCRgZVmG2RACVetePLHk8JvrYC2BYQLpgd6zbfEQ13pNr5r25WGebLsyPHsLpB540yT06SZKSVILwbhW8v9iIJbVJeE3AcYT3CqCYmAF2N9w9UW9YIFjNQQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EagLQaEO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q8PmejpHcaJdJyVYVUn2M8ne5x85xFPPIOuyvtiyOXV4e77ke1eJg/EScLTrSnGZtCMrxurJTBR1PEYcby4LXYtTtkKjnPGRDOQssK72phNovMgcC88Gw1aTuEYjBKixuG59JnYbW0nQmUY9Fhe03kVCydUic3kJW4qYM3PjOYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxGd2wEu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EagLQaEO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88446C19423;
-	Tue, 31 Mar 2026 16:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxGd2wEu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A83C19423;
+	Tue, 31 Mar 2026 16:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976031;
-	bh=2Ur7vUJODuq48T8VQlYrQaeYaVTjQjGV/IQiIThGZ44=;
+	s=korg; t=1774976034;
+	bh=v7Q0uza27SMw16nOezMxJw1r4NHmhPXM2h1KzozXpzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EagLQaEOXWsKCCwI0MRtUnsPELC/WkDRdttkT8WOCjLp+zbA0pQFJ1kssqDZiGWG7
-	 hUqIm9NUSlOBX0W5hPvTHfbvFLAH2Tg+1YSDt10MEGUZi8wF2RH40nk0ZEuZDXz4/0
-	 ZXPGVM/W/7fuVaWy/8Ss2d9Yz2DaKIj83Yf0CHLA=
+	b=DxGd2wEu/E2EreYr4q/t2ubD2DxEUfZS90g6M4I3utE1o28DcvcWdfETnd7YA0MED
+	 N4tpdQsjpXEk5yVC9MJLiNj4rP3RVstC8Mi7IUx8NqC0s7r/mSk2FBb9vt63Y2R6sz
+	 BoxDoR36zztP5psKTK/nVIVs4bpz+ajFtGv7yLc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 138/244] ksmbd: replace hardcoded hdr2_len with offsetof() in smb2_calc_max_out_buf_len()
-Date: Tue, 31 Mar 2026 18:21:28 +0200
-Message-ID: <20260331161746.747447847@linuxfoundation.org>
+	Li Jun <lijun01@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 174/244] LoongArch: Fix missing NULL checks for kstrdup()
+Date: Tue, 31 Mar 2026 18:22:04 +0200
+Message-ID: <20260331161748.184519686@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -50,75 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Li Jun <lijun01@kylinos.cn>
 
-commit 0e55f63dd08f09651d39e1b709a91705a8a0ddcb upstream.
+commit 3a28daa9b7d7c2ddf2c722e9e95d7e0928bf0cd1 upstream.
 
-After this commit (e2b76ab8b5c9 "ksmbd: add support for read compound"),
-response buffer management was changed to use dynamic iov array.
-In the new design, smb2_calc_max_out_buf_len() expects the second
-argument (hdr2_len) to be the offset of ->Buffer field in the
-response structure, not a hardcoded magic number.
-Fix the remaining call sites to use the correct offsetof() value.
+1. Replace "of_find_node_by_path("/")" with "of_root" to avoid multiple
+calls to "of_node_put()".
+
+2. Fix a potential kernel oops during early boot when memory allocation
+fails while parsing CPU model from device tree.
 
 Cc: stable@vger.kernel.org
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Li Jun <lijun01@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ arch/loongarch/kernel/env.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4458,8 +4458,9 @@ int smb2_query_dir(struct ksmbd_work *wo
- 	d_info.wptr = (char *)rsp->Buffer;
- 	d_info.rptr = (char *)rsp->Buffer;
- 	d_info.out_buf_len =
--		smb2_calc_max_out_buf_len(work, 8,
--					  le32_to_cpu(req->OutputBufferLength));
-+		smb2_calc_max_out_buf_len(work,
-+				offsetof(struct smb2_query_directory_rsp, Buffer),
-+				le32_to_cpu(req->OutputBufferLength));
- 	if (d_info.out_buf_len < 0) {
- 		rc = -EINVAL;
- 		goto err_out;
-@@ -4726,8 +4727,9 @@ static int smb2_get_ea(struct ksmbd_work
+--- a/arch/loongarch/kernel/env.c
++++ b/arch/loongarch/kernel/env.c
+@@ -42,16 +42,15 @@ static int __init init_cpu_fullname(void
+ 	int cpu, ret;
+ 	char *cpuname;
+ 	const char *model;
+-	struct device_node *root;
+ 
+ 	/* Parsing cpuname from DTS model property */
+-	root = of_find_node_by_path("/");
+-	ret = of_property_read_string(root, "model", &model);
++	ret = of_property_read_string(of_root, "model", &model);
+ 	if (ret == 0) {
+ 		cpuname = kstrdup(model, GFP_KERNEL);
++		if (!cpuname)
++			return -ENOMEM;
+ 		loongson_sysconf.cpuname = strsep(&cpuname, " ");
  	}
+-	of_node_put(root);
  
- 	buf_free_len =
--		smb2_calc_max_out_buf_len(work, 8,
--					  le32_to_cpu(req->OutputBufferLength));
-+		smb2_calc_max_out_buf_len(work,
-+				offsetof(struct smb2_query_info_rsp, Buffer),
-+				le32_to_cpu(req->OutputBufferLength));
- 	if (buf_free_len < 0)
- 		return -EINVAL;
- 
-@@ -5040,8 +5042,9 @@ static int get_file_stream_info(struct k
- 	file_info = (struct smb2_file_stream_info *)rsp->Buffer;
- 
- 	buf_free_len =
--		smb2_calc_max_out_buf_len(work, 8,
--					  le32_to_cpu(req->OutputBufferLength));
-+		smb2_calc_max_out_buf_len(work,
-+				offsetof(struct smb2_query_info_rsp, Buffer),
-+				le32_to_cpu(req->OutputBufferLength));
- 	if (buf_free_len < 0)
- 		goto out;
- 
-@@ -8140,8 +8143,9 @@ int smb2_ioctl(struct ksmbd_work *work)
- 	buffer = (char *)req + le32_to_cpu(req->InputOffset);
- 
- 	cnt_code = le32_to_cpu(req->CtlCode);
--	ret = smb2_calc_max_out_buf_len(work, 48,
--					le32_to_cpu(req->MaxOutputResponse));
-+	ret = smb2_calc_max_out_buf_len(work,
-+			offsetof(struct smb2_ioctl_rsp, Buffer),
-+			le32_to_cpu(req->MaxOutputResponse));
- 	if (ret < 0) {
- 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
- 		goto out;
+ 	if (loongson_sysconf.cpuname && !strncmp(loongson_sysconf.cpuname, "Loongson", 8)) {
+ 		for (cpu = 0; cpu < NR_CPUS; cpu++)
 
 
