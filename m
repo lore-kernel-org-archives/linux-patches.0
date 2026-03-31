@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1E22D63E8;
-	Tue, 31 Mar 2026 17:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7242FE042;
+	Tue, 31 Mar 2026 17:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976639; cv=none; b=FzRkFQA2rNO4wJ/xyh/53ZadVCRZtSwUhOSax++kkoIq4iWw0ilhH6UO3TKWg7Ck6axoSjq0gcDHDkUoENI0uT0OqVx0qCK2plVtpSfZbkFdS7TW05rlj9jHFJdbfys6e5gfM6mdEITYnDL9kZU4VBPRXY5T2l5utJ0M6ia0vB8=
+	t=1774976641; cv=none; b=jTAMF74vibVb3qfZnebpiVciY2GaKVxqdu3deklSon874Q92VWEFZiUlzXgtfjUoys4i+kJ1CIyaN5SI8xBfKKbNdFjO2IZLP50pnN1L+kx+YWJWoC1Mzzo+tsmXTxQ0hJstEH4/LKP4qOjr+YZQG+REU3h5hD1yegEbga7Gi9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976639; c=relaxed/simple;
-	bh=oAgYw9ykecnfPPfTPH7VXqGSJPdMN4tFDZHiQnGQM3g=;
+	s=arc-20240116; t=1774976641; c=relaxed/simple;
+	bh=dpybjADJqahYI969q6XKA7Co17VpodpU0eqPSZ0FFo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Udh6steH1oY9J8FgoEz8LKM/WQB+G9iLdRioHt0cJO0MtnV+83mOJR/RLdMzD70UvIrwXnpEYTFXsgvy8+KcUJ4MtxanE8F65MGerc4bath9o1nxw2jTbl+/rkmNbwrGLFC8oSa2L1Dyh/WWjgKU3d5AGYYEfUSWAaUChgpinwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itHPq0Lq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kEmPhPHkB1LwKhyKziuFDuX/didB4PxhLacF/hdtOf5+j9u7+4h4YLmn/TDGGbdzhWKyvj1vuFc4AFXInpS7+Z/JDChUIlYhoItMBsaHpbGhxODaaz00jQezrC3/JHp/Sa/I9kBJxPDH/KNMEf6eH7ov1O8nsAdROLN6zS+IHUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tl46YT3H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itHPq0Lq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31FFC19423;
-	Tue, 31 Mar 2026 17:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tl46YT3H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7A4C19423;
+	Tue, 31 Mar 2026 17:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976639;
-	bh=oAgYw9ykecnfPPfTPH7VXqGSJPdMN4tFDZHiQnGQM3g=;
+	s=korg; t=1774976641;
+	bh=dpybjADJqahYI969q6XKA7Co17VpodpU0eqPSZ0FFo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=itHPq0LqfpPx5/oLOTVGwTQSvCqo/dmtNuIrvJT1o6MSF91UR+g21Q3ZNNwGL/OeQ
-	 fCVFjNmtAbpQctFoDE0P1TAwCv4CMEc/5ttf1IziKBtdrEQPQogMI3ms4yedepVsQw
-	 NC7xWoxvUXpn71iA9RX6v5b/fyahCybIK0rYiqbQ=
+	b=Tl46YT3HhPENKMO03j9Tad9xU+o2p/WIoV4TbA9CwKeE+PR/ogers5FewxDkMYaRx
+	 CEkUqPXBrD2zrfnlhcaSyym5AsvVY0DB4/yyrkD3VCmWBGcT/TqTpXV3sMAmPSa90Y
+	 2K2knRyPLJFIuNw7u4y2CsehoOsXl0lZv6fo7R/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Arges <carges@cloudflare.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 128/309] netfilter: nft_set_rbtree: revisit array resize logic
-Date: Tue, 31 Mar 2026 18:20:31 +0200
-Message-ID: <20260331161758.190282231@linuxfoundation.org>
+Subject: [PATCH 6.18 164/309] ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()
+Date: Tue, 31 Mar 2026 18:21:07 +0200
+Message-ID: <20260331161759.501834820@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,189 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit fafdd92b9e30fe057740c5bb5cd4f92ecea9bf26 ]
+[ Upstream commit f6484cadbcaf26b5844b51bd7307a663dda48ef6 ]
 
-Chris Arges reports high memory consumption with thousands of
-containers, this patch revisits the array allocation logic.
+When ec_install_handlers() returns -EPROBE_DEFER on reduced-hardware
+platforms, it has already started the EC and installed the address
+space handler with the struct acpi_ec pointer as handler context.
+However, acpi_ec_setup() propagates the error without any cleanup.
 
-For anonymous sets, start by 16 slots (which takes 256 bytes on x86_64).
-Expand it by x2 until threshold of 512 slots is reached, over that
-threshold, expand it by x1.5.
+The caller acpi_ec_add() then frees the struct acpi_ec for non-boot
+instances, leaving a dangling handler context in ACPICA.
 
-For non-anonymous set, start by 1024 slots in the array (which takes 16
-Kbytes initially on x86_64). Expand it by x1.5.
+Any subsequent AML evaluation that accesses an EC OpRegion field
+dispatches into acpi_ec_space_handler() with the freed pointer,
+causing a use-after-free:
 
-Use set->ndeact to subtract deactivated elements when calculating the
-number of the slots in the array, otherwise the array size array gets
-increased artifically. Add special case shrink logic to deal with flush
-set too.
+ BUG: KASAN: slab-use-after-free in mutex_lock (kernel/locking/mutex.c:289)
+ Write of size 8 at addr ffff88800721de38 by task init/1
+ Call Trace:
+  <TASK>
+  mutex_lock (kernel/locking/mutex.c:289)
+  acpi_ec_space_handler (drivers/acpi/ec.c:1362)
+  acpi_ev_address_space_dispatch (drivers/acpi/acpica/evregion.c:293)
+  acpi_ex_access_region (drivers/acpi/acpica/exfldio.c:246)
+  acpi_ex_field_datum_io (drivers/acpi/acpica/exfldio.c:509)
+  acpi_ex_extract_from_field (drivers/acpi/acpica/exfldio.c:700)
+  acpi_ex_read_data_from_field (drivers/acpi/acpica/exfield.c:327)
+  acpi_ex_resolve_node_to_value (drivers/acpi/acpica/exresolv.c:392)
+  </TASK>
 
-The shrink logic is skipped by anonymous sets.
+ Allocated by task 1:
+  acpi_ec_alloc (drivers/acpi/ec.c:1424)
+  acpi_ec_add (drivers/acpi/ec.c:1692)
 
-Use check_add_overflow() to calculate the new array size.
+ Freed by task 1:
+  kfree (mm/slub.c:6876)
+  acpi_ec_add (drivers/acpi/ec.c:1751)
 
-Add a WARN_ON_ONCE check to make sure elements fit into the new array
-size.
+The bug triggers on reduced-hardware EC platforms (ec->gpe < 0)
+when the GPIO IRQ provider defers probing. Once the stale handler
+exists, any unprivileged sysfs read that causes AML to touch an
+EC OpRegion (battery, thermal, backlight) exercises the dangling
+pointer.
 
-Reported-by: Chris Arges <carges@cloudflare.com>
-Fixes: 7e43e0a1141d ("netfilter: nft_set_rbtree: translate rbtree to array for binary search")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix this by calling ec_remove_handlers() in the error path of
+acpi_ec_setup() before clearing first_ec. ec_remove_handlers()
+checks each EC_FLAGS_* bit before acting, so it is safe to call
+regardless of how far ec_install_handlers() progressed:
+
+  -ENODEV  (handler not installed): only calls acpi_ec_stop()
+  -EPROBE_DEFER (handler installed): removes handler, stops EC
+
+Fixes: 03e9a0e05739 ("ACPI: EC: Consolidate event handler installation code")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260324165458.1337233-2-bestswngs@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 92 +++++++++++++++++++++++++++-------
- 1 file changed, 75 insertions(+), 17 deletions(-)
+ drivers/acpi/ec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 5d91b7d08d33a..154bf2772e27d 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -572,14 +572,12 @@ static struct nft_array *nft_array_alloc(u32 max_intervals)
- 	return array;
- }
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index 7855bbf752b1e..1f4fc78a124fa 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1655,6 +1655,8 @@ static int acpi_ec_setup(struct acpi_ec *ec, struct acpi_device *device, bool ca
  
--#define NFT_ARRAY_EXTRA_SIZE	10240
--
- /* Similar to nft_rbtree_{u,k}size to hide details to userspace, but consider
-  * packed representation coming from userspace for anonymous sets too.
-  */
- static u32 nft_array_elems(const struct nft_set *set)
- {
--	u32 nelems = atomic_read(&set->nelems);
-+	u32 nelems = atomic_read(&set->nelems) - set->ndeact;
- 
- 	/* Adjacent intervals are represented with a single start element in
- 	 * anonymous sets, use the current element counter as is.
-@@ -595,27 +593,87 @@ static u32 nft_array_elems(const struct nft_set *set)
- 	return (nelems / 2) + 2;
- }
- 
--static int nft_array_may_resize(const struct nft_set *set)
-+#define NFT_ARRAY_INITIAL_SIZE		1024
-+#define NFT_ARRAY_INITIAL_ANON_SIZE	16
-+#define NFT_ARRAY_INITIAL_ANON_THRESH	(8192U / sizeof(struct nft_array_interval))
+ 	ret = ec_install_handlers(ec, device, call_reg);
+ 	if (ret) {
++		ec_remove_handlers(ec);
 +
-+static int nft_array_may_resize(const struct nft_set *set, bool flush)
- {
--	u32 nelems = nft_array_elems(set), new_max_intervals;
-+	u32 initial_intervals, max_intervals, new_max_intervals, delta;
-+	u32 shrinked_max_intervals, nelems = nft_array_elems(set);
- 	struct nft_rbtree *priv = nft_set_priv(set);
- 	struct nft_array *array;
+ 		if (ec == first_ec)
+ 			first_ec = NULL;
  
--	if (!priv->array_next) {
--		array = nft_array_alloc(nelems + NFT_ARRAY_EXTRA_SIZE);
--		if (!array)
--			return -ENOMEM;
-+	if (nft_set_is_anonymous(set))
-+		initial_intervals = NFT_ARRAY_INITIAL_ANON_SIZE;
-+	else
-+		initial_intervals = NFT_ARRAY_INITIAL_SIZE;
-+
-+	if (priv->array_next) {
-+		max_intervals = priv->array_next->max_intervals;
-+		new_max_intervals = priv->array_next->max_intervals;
-+	} else {
-+		if (priv->array) {
-+			max_intervals = priv->array->max_intervals;
-+			new_max_intervals = priv->array->max_intervals;
-+		} else {
-+			max_intervals = 0;
-+			new_max_intervals = initial_intervals;
-+		}
-+	}
- 
--		priv->array_next = array;
-+	if (nft_set_is_anonymous(set))
-+		goto maybe_grow;
-+
-+	if (flush) {
-+		/* Set flush just started, nelems still report elements.*/
-+		nelems = 0;
-+		new_max_intervals = NFT_ARRAY_INITIAL_SIZE;
-+		goto realloc_array;
- 	}
- 
--	if (nelems < priv->array_next->max_intervals)
--		return 0;
-+	if (check_add_overflow(new_max_intervals, new_max_intervals,
-+			       &shrinked_max_intervals))
-+		return -EOVERFLOW;
-+
-+	shrinked_max_intervals = DIV_ROUND_UP(shrinked_max_intervals, 3);
- 
--	new_max_intervals = priv->array_next->max_intervals + NFT_ARRAY_EXTRA_SIZE;
--	if (nft_array_intervals_alloc(priv->array_next, new_max_intervals) < 0)
-+	if (shrinked_max_intervals > NFT_ARRAY_INITIAL_SIZE &&
-+	    nelems < shrinked_max_intervals) {
-+		new_max_intervals = shrinked_max_intervals;
-+		goto realloc_array;
-+	}
-+maybe_grow:
-+	if (nelems > new_max_intervals) {
-+		if (nft_set_is_anonymous(set) &&
-+		    new_max_intervals < NFT_ARRAY_INITIAL_ANON_THRESH) {
-+			new_max_intervals <<= 1;
-+		} else {
-+			delta = new_max_intervals >> 1;
-+			if (check_add_overflow(new_max_intervals, delta,
-+					       &new_max_intervals))
-+				return -EOVERFLOW;
-+		}
-+	}
-+
-+realloc_array:
-+	if (WARN_ON_ONCE(nelems > new_max_intervals))
- 		return -ENOMEM;
- 
-+	if (priv->array_next) {
-+		if (max_intervals == new_max_intervals)
-+			return 0;
-+
-+		if (nft_array_intervals_alloc(priv->array_next, new_max_intervals) < 0)
-+			return -ENOMEM;
-+	} else {
-+		array = nft_array_alloc(new_max_intervals);
-+		if (!array)
-+			return -ENOMEM;
-+
-+		priv->array_next = array;
-+	}
-+
- 	return 0;
- }
- 
-@@ -630,7 +688,7 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 
- 	nft_rbtree_maybe_reset_start_cookie(priv, tstamp);
- 
--	if (nft_array_may_resize(set) < 0)
-+	if (nft_array_may_resize(set, false) < 0)
- 		return -ENOMEM;
- 
- 	do {
-@@ -741,7 +799,7 @@ nft_rbtree_deactivate(const struct net *net, const struct nft_set *set,
- 	    nft_rbtree_interval_null(set, this))
- 		priv->start_rbe_cookie = 0;
- 
--	if (nft_array_may_resize(set) < 0)
-+	if (nft_array_may_resize(set, false) < 0)
- 		return NULL;
- 
- 	while (parent != NULL) {
-@@ -811,7 +869,7 @@ static void nft_rbtree_walk(const struct nft_ctx *ctx,
- 
- 	switch (iter->type) {
- 	case NFT_ITER_UPDATE_CLONE:
--		if (nft_array_may_resize(set) < 0) {
-+		if (nft_array_may_resize(set, true) < 0) {
- 			iter->err = -ENOMEM;
- 			break;
- 		}
 -- 
-2.51.0
+2.53.0
 
 
 
