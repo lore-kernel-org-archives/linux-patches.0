@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263E7423A8B;
-	Tue, 31 Mar 2026 16:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B089C3F99EA;
+	Tue, 31 Mar 2026 16:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974794; cv=none; b=ei+WXQsXZ/qNuUGBfzRBjHGC/D+DchBzsdc55CwmaSECwMU8bHYW/zDBLzaeAWb5TqG4vzXrjKu75Vivb9EpgEvFg9A2K6UG6FG41gpcLdxNUlk8vOUeb/nDbpBm2jV0JMWAQP/2Svi4hgvJPxSV/+imn20INd9N030CttjFMQ4=
+	t=1774974796; cv=none; b=juxcCJtILf0qRAPRIS7Z49eAKYOEIWggngnW0CuM81/gUezNzJTMcOXS7VA8Z9uMVy4cqstPGjbdjMq+NQp2nUyK9tx+ilWIhkYoOvH5kJ8knEMO4SHyhXju06db/5PsgJ5NN4DUMBK3DzImeSBdmtbvYU6RNYsmV7R+1crbamE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974794; c=relaxed/simple;
-	bh=vpLUUSQGsgpKNgEGOFCYeqTldtAxyKYSUnmP0Sn5+0Q=;
+	s=arc-20240116; t=1774974796; c=relaxed/simple;
+	bh=DDL8T5BKJer9/NTZJIDP1Ry87Wr2h5qkGC8cCH3/ScM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i9rwkI1Cj0B2JKf0YI7O46SOkzVzl6EXhAVOpVbVTRggySUGilCBabuW144G2SvIRhU6KU0nw1dDuIMf/CHgwa2ogYZV40NDEO1M6tNWG4iGDLXbmzr0Z/3nxQwbBOWktXWHCTg17a17aYPC9Euc87Oyk1DJI26cMGJOMCIdybI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rs5gkdcu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X35wX/UdTiWwOHhwPhDXEiqwoe1fhhbmqLzOKUCo0k+Hz9xt85sbS3UsvwfUuA0T9+Qcccclv9YG8vtPBeIg7BRDqw/kni0pbRuGzNpPMmKXaE4oVYCObn+gtopNH5uZRXSOvnaokizF3GADOc1sFOFIqe90Xag6eW9fIS2W3jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFYIzgX3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rs5gkdcu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0664C19423;
-	Tue, 31 Mar 2026 16:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFYIzgX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47352C19423;
+	Tue, 31 Mar 2026 16:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974794;
-	bh=vpLUUSQGsgpKNgEGOFCYeqTldtAxyKYSUnmP0Sn5+0Q=;
+	s=korg; t=1774974796;
+	bh=DDL8T5BKJer9/NTZJIDP1Ry87Wr2h5qkGC8cCH3/ScM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rs5gkdcuy2uStQ8+lWf6vce5t4JsEYbvakBQbVPb4xwPIELe/CMyDQQJLi0cGFzg9
-	 XDFcF6FLVO15UVCaMa6RmHQ8IeT0G+3G/dKvpByo+C69yyC6P/hoS4t+HKcU2/wJZ0
-	 T4RoBz5wrMu96xtPWp5m9yGIzu7ZF/RtGWO6jTl8=
+	b=pFYIzgX3GOypeCfbR+0gpkrXUxJ8iqa/nACGn4Bf/3DqL/RBFCvBK71fYoct2EhHd
+	 GPgc83o5rEvNuIpiDf+m71kb9n1d1QJm/XlVfXa2h4uC6ClkwnK8kB7sQfI3dN0pA/
+	 VrIdCBgKYWyiz+DAuw/hbSm026QFUeb1Cb2fivEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Daniel Wade <danjwade95@gmail.com>,
+	Amery Hung <ameryhung@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 046/342] ASoC: fsl_easrc: Fix event generation in fsl_easrc_iec958_set_reg()
-Date: Tue, 31 Mar 2026 18:17:59 +0200
-Message-ID: <20260331161800.595029681@linuxfoundation.org>
+Subject: [PATCH 6.19 020/342] bpf: Fix unsound scalar forking in maybe_fork_scalars() for BPF_OR
+Date: Tue, 31 Mar 2026 18:17:33 +0200
+Message-ID: <20260331161759.656196413@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -50,50 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Daniel Wade <danjwade95@gmail.com>
 
-[ Upstream commit 31ddc62c1cd92e51b9db61d7954b85ae2ec224da ]
+[ Upstream commit c845894ebd6fb43226b3118d6b017942550910c5 ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_easrc_set_reg() only returns 0 or a negative
-error code, causing ALSA to not generate any change events. Add a suitable
-check by using regmap_update_bits_check() with the underlying regmap, this
-is more clearly and simply correct than trying to verify that one of the
-generic ops is exactly equivalent to this one.
+maybe_fork_scalars() is called for both BPF_AND and BPF_OR when the
+source operand is a constant.  When dst has signed range [-1, 0], it
+forks the verifier state: the pushed path gets dst = 0, the current
+path gets dst = -1.
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20260205-asoc-fsl-easrc-fix-events-v1-2-39d4c766918b@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+For BPF_AND this is correct: 0 & K == 0.
+For BPF_OR this is wrong:    0 | K == K, not 0.
+
+The pushed path therefore tracks dst as 0 when the runtime value is K,
+producing an exploitable verifier/runtime divergence that allows
+out-of-bounds map access.
+
+Fix this by passing env->insn_idx (instead of env->insn_idx + 1) to
+push_stack(), so the pushed path re-executes the ALU instruction with
+dst = 0 and naturally computes the correct result for any opcode.
+
+Fixes: bffacdb80b93 ("bpf: Recognize special arithmetic shift in the verifier")
+Signed-off-by: Daniel Wade <danjwade95@gmail.com>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260314021521.128361-2-danjwade95@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_easrc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ kernel/bpf/verifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index e64a0d97afd0c..733374121196e 100644
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -93,14 +93,17 @@ static int fsl_easrc_set_reg(struct snd_kcontrol *kcontrol,
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct soc_mreg_control *mc =
- 		(struct soc_mreg_control *)kcontrol->private_value;
-+	struct fsl_asrc *easrc = snd_soc_component_get_drvdata(component);
- 	unsigned int regval = ucontrol->value.integer.value[0];
-+	bool changed;
- 	int ret;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 0160c6c28af1f..ea312acf7d482 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -15593,7 +15593,7 @@ static int maybe_fork_scalars(struct bpf_verifier_env *env, struct bpf_insn *ins
+ 	else
+ 		return 0;
  
--	ret = snd_soc_component_write(component, mc->regbase, regval);
--	if (ret < 0)
-+	ret = regmap_update_bits_check(easrc->regmap, mc->regbase,
-+				       GENMASK(31, 0), regval, &changed);
-+	if (ret != 0)
- 		return ret;
+-	branch = push_stack(env, env->insn_idx + 1, env->insn_idx, false);
++	branch = push_stack(env, env->insn_idx, env->insn_idx, false);
+ 	if (IS_ERR(branch))
+ 		return PTR_ERR(branch);
  
--	return 0;
-+	return changed;
- }
- 
- #define SOC_SINGLE_REG_RW(xname, xreg) \
 -- 
 2.51.0
 
