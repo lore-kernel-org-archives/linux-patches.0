@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997713DE431;
-	Tue, 31 Mar 2026 16:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7B5425CE1;
+	Tue, 31 Mar 2026 16:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975883; cv=none; b=bMVnO4sEAsRD9cHTefregwnm14Bc4/O80kTUZTyCS0zlGdixHgVdxYWaJPGCG8kbIddKvS/zajbgGa0KueF1rUJraHxfp/gtZZIqHpRDGSXjhbFRaDrKLoQdSh8Yq2x6nPzoF0Wzp3xlY7P+1pImav6gIV06m7HwVjA+YacmoMk=
+	t=1774975886; cv=none; b=Uog0/XGDbD58HFd0ZKwGOr4QSLIab5MsZe9PdLjYgEmmI1fRjUtflLrYLDfaEzFFay8KlawHKSo86WMeajMF4QAfp1XI0MaD2AA4/q3I3aAiPpwpHNGQ9iu/zRasz/PkMA/fg3dsfMyicnVCvgewgWGo0bYb9gH1i3PIp+2JhjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975883; c=relaxed/simple;
-	bh=YidEm3Dj6Q6EEqK6vcbqdXZaeVQ2Q4z112DeNjcNAYY=;
+	s=arc-20240116; t=1774975886; c=relaxed/simple;
+	bh=ly34s2cMy5ERQQF1+JeZ/AfAbScHwkNo1R5XffrzJ88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDim/xmzvaaIcIGuCfBoRJB2npcD9+BHXhkXequHPNHICjai72MK3mrYqftc+VvK5q9e383SWr/PTrzXNOHT9Jqm7bdu0ZGSn0E103/cDW/5SddEomdigI2WsqSDPI8wlvLR4wMUP5FIoRX7webCwyAkQcfXwcIzd3lDCTUfxhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIle1viL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C9/8kj84hetNBh1/tf+CNvzHY6ngnbbgxRvPTwJ7lvS8nCO+AlaZ+ue/gjBI+6KmzfK28Obe6xsZ5EZTtcVGa5vIQJZCJjvleuIVUHIoUYfADXwWK3MO0sMe9VHo5dapShEUzlnKtkpZ+14k49MUUq+nf+zKHrZpPC4nQM8CT6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QH7zsVc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIle1viL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30564C19423;
-	Tue, 31 Mar 2026 16:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QH7zsVc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAED4C19423;
+	Tue, 31 Mar 2026 16:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975883;
-	bh=YidEm3Dj6Q6EEqK6vcbqdXZaeVQ2Q4z112DeNjcNAYY=;
+	s=korg; t=1774975886;
+	bh=ly34s2cMy5ERQQF1+JeZ/AfAbScHwkNo1R5XffrzJ88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIle1viLxBDCyVWKZ/Tw5FvZsLXmXw8m70Ub/LpmDIaSUkfrBxi1LiScC+V0iozrK
-	 Lh3vD6MTva6Jq3dlpnsAFUAAj8yT/DoBs4ygMBdeKLIZupW3C+iDgItnkdGbNhieGd
-	 AUsga8jqlaQ5t+tG7szrqqmOEwTJOaypr8wGCyms=
+	b=2QH7zsVck0NxIqSFfsHSm8rlOcINFbdQ+88D2dn8NWAi5W9XjvVO6hVJjuMdhU6c6
+	 VFL6JMW+KRfCHJG5ZOa02tIQUXC2K3n2nyCaXilb6ZOAN/kNPZ4Gz9TFeP3FNLS/bQ
+	 vCIz6w1rH6vMZywzsgyFO5B40SS12LEmf0oNrrss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 123/244] spi: Group CS related fields in struct spi_device
-Date: Tue, 31 Mar 2026 18:21:13 +0200
-Message-ID: <20260331161746.202714795@linuxfoundation.org>
+Subject: [PATCH 6.12 124/244] spi: use generic driver_override infrastructure
+Date: Tue, 31 Mar 2026 18:21:14 +0200
+Message-ID: <20260331161746.238449002@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,118 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit dd8a9807fa03666bff52cb28472fb227eaac36c9 ]
+[ Upstream commit cc34d77dd48708d810c12bfd6f5bf03304f6c824 ]
 
-The CS related fields are sparse in the struct spi_device. Group them.
-While at it, fix the comment style of cs_index_mask.
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20250331103609.4160281-1-andriy.shevchenko@linux.intel.com
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
+
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
+
+Also note that we do not enable the driver_override feature of struct
+bus_type, as SPI - in contrast to most other buses - passes "" to
+sysfs_emit() when the driver_override pointer is NULL. Thus, printing
+"\n" instead of "(null)\n".
+
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: 5039563e7c25 ("spi: Add driver_override SPI device attribute")
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/20260324005919.2408620-12-dakr@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: cc34d77dd487 ("spi: use generic driver_override infrastructure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/spi/spi.h | 37 +++++++++++++++++++++----------------
- 1 file changed, 21 insertions(+), 16 deletions(-)
+ drivers/spi/spi.c       | 19 +++++++------------
+ include/linux/spi/spi.h |  5 -----
+ 2 files changed, 7 insertions(+), 17 deletions(-)
 
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 7cf37e28e4859..0c3200d08fe46 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -49,7 +49,6 @@ static void spidev_release(struct device *dev)
+ 	struct spi_device	*spi = to_spi_device(dev);
+ 
+ 	spi_controller_put(spi->controller);
+-	kfree(spi->driver_override);
+ 	free_percpu(spi->pcpu_statistics);
+ 	kfree(spi);
+ }
+@@ -72,10 +71,9 @@ static ssize_t driver_override_store(struct device *dev,
+ 				     struct device_attribute *a,
+ 				     const char *buf, size_t count)
+ {
+-	struct spi_device *spi = to_spi_device(dev);
+ 	int ret;
+ 
+-	ret = driver_set_override(dev, &spi->driver_override, buf, count);
++	ret = __device_set_driver_override(dev, buf, count);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -85,13 +83,8 @@ static ssize_t driver_override_store(struct device *dev,
+ static ssize_t driver_override_show(struct device *dev,
+ 				    struct device_attribute *a, char *buf)
+ {
+-	const struct spi_device *spi = to_spi_device(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = sysfs_emit(buf, "%s\n", spi->driver_override ? : "");
+-	device_unlock(dev);
+-	return len;
++	guard(spinlock)(&dev->driver_override.lock);
++	return sysfs_emit(buf, "%s\n", dev->driver_override.name ?: "");
+ }
+ static DEVICE_ATTR_RW(driver_override);
+ 
+@@ -375,10 +368,12 @@ static int spi_match_device(struct device *dev, const struct device_driver *drv)
+ {
+ 	const struct spi_device	*spi = to_spi_device(dev);
+ 	const struct spi_driver	*sdrv = to_spi_driver(drv);
++	int ret;
+ 
+ 	/* Check override first, and if set, only use the named driver */
+-	if (spi->driver_override)
+-		return strcmp(spi->driver_override, drv->name) == 0;
++	ret = device_match_driver_override(dev, drv);
++	if (ret >= 0)
++		return ret;
+ 
+ 	/* Attempt an OF style match */
+ 	if (of_driver_match_device(dev, drv))
 diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index 71ad766932d31..825c41611852a 100644
+index 825c41611852a..8f6280bd2bf06 100644
 --- a/include/linux/spi/spi.h
 +++ b/include/linux/spi/spi.h
-@@ -134,13 +134,6 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
-  * @max_speed_hz: Maximum clock rate to be used with this chip
-  *	(on this board); may be changed by the device's driver.
-  *	The spi_transfer.speed_hz can override this for each transfer.
-- * @chip_select: Array of physical chipselect, spi->chipselect[i] gives
-- *	the corresponding physical CS for logical CS i.
-- * @mode: The spi mode defines how data is clocked out and in.
-- *	This may be changed by the device's driver.
-- *	The "active low" default for chipselect mode can be overridden
-- *	(by specifying SPI_CS_HIGH) as can the "MSB first" default for
-- *	each word in a transfer (by specifying SPI_LSB_FIRST).
-  * @bits_per_word: Data transfers involve one or more words; word sizes
-  *	like eight or 12 bits are common.  In-memory wordsizes are
-  *	powers of two bytes (e.g. 20 bit samples use 32 bits).
-@@ -148,6 +141,11 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
-  *	default (0) indicating protocol words are eight bit bytes.
-  *	The spi_transfer.bits_per_word can override this for each transfer.
-  * @rt: Make the pump thread real time priority.
-+ * @mode: The spi mode defines how data is clocked out and in.
-+ *	This may be changed by the device's driver.
-+ *	The "active low" default for chipselect mode can be overridden
-+ *	(by specifying SPI_CS_HIGH) as can the "MSB first" default for
-+ *	each word in a transfer (by specifying SPI_LSB_FIRST).
-  * @irq: Negative, or the number passed to request_irq() to receive
-  *	interrupts from this device.
-  * @controller_state: Controller's runtime state
-@@ -160,8 +158,7 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
-  *	the device will bind to the named driver and only the named driver.
-  *	Do not set directly, because core frees it; use driver_set_override() to
-  *	set or clear it.
-- * @cs_gpiod: Array of GPIO descriptors of the corresponding chipselect lines
-- *	(optional, NULL when not using a GPIO line)
-+ * @pcpu_statistics: statistics for the spi_device
+@@ -154,10 +154,6 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
+  * @modalias: Name of the driver to use with this device, or an alias
+  *	for that name.  This appears in the sysfs "modalias" attribute
+  *	for driver coldplugging, and in uevents used for hotplugging
+- * @driver_override: If the name of a driver is written to this attribute, then
+- *	the device will bind to the named driver and only the named driver.
+- *	Do not set directly, because core frees it; use driver_set_override() to
+- *	set or clear it.
+  * @pcpu_statistics: statistics for the spi_device
   * @word_delay: delay to be inserted between consecutive
   *	words of a transfer
-  * @cs_setup: delay to be introduced by the controller after CS is asserted
-@@ -169,8 +166,11 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
-  * @cs_inactive: delay to be introduced by the controller after CS is
-  *	deasserted. If @cs_change_delay is used from @spi_transfer, then the
-  *	two delays will be added up.
-- * @pcpu_statistics: statistics for the spi_device
-+ * @chip_select: Array of physical chipselect, spi->chipselect[i] gives
-+ *	the corresponding physical CS for logical CS i.
-  * @cs_index_mask: Bit mask of the active chipselect(s) in the chipselect array
-+ * @cs_gpiod: Array of GPIO descriptors of the corresponding chipselect lines
-+ *	(optional, NULL when not using a GPIO line)
-  *
-  * A @spi_device is used to interchange data between an SPI slave
-  * (usually a discrete chip) and CPU memory.
-@@ -185,7 +185,6 @@ struct spi_device {
- 	struct device		dev;
- 	struct spi_controller	*controller;
- 	u32			max_speed_hz;
--	u8			chip_select[SPI_CS_CNT_MAX];
- 	u8			bits_per_word;
- 	bool			rt;
- #define SPI_NO_TX		BIT(31)		/* No transmit wire */
-@@ -216,23 +215,29 @@ struct spi_device {
+@@ -214,7 +210,6 @@ struct spi_device {
+ 	void			*controller_state;
  	void			*controller_data;
  	char			modalias[SPI_NAME_SIZE];
- 	const char		*driver_override;
--	struct gpio_desc	*cs_gpiod[SPI_CS_CNT_MAX];	/* Chip select gpio desc */
-+
-+	/* The statistics */
-+	struct spi_statistics __percpu	*pcpu_statistics;
-+
- 	struct spi_delay	word_delay; /* Inter-word delay */
-+
- 	/* CS delays */
- 	struct spi_delay	cs_setup;
- 	struct spi_delay	cs_hold;
- 	struct spi_delay	cs_inactive;
+-	const char		*driver_override;
  
--	/* The statistics */
--	struct spi_statistics __percpu	*pcpu_statistics;
-+	u8			chip_select[SPI_CS_CNT_MAX];
- 
--	/* Bit mask of the chipselect(s) that the driver need to use from
--	 * the chipselect array.When the controller is capable to handle
-+	/*
-+	 * Bit mask of the chipselect(s) that the driver need to use from
-+	 * the chipselect array. When the controller is capable to handle
- 	 * multiple chip selects & memories are connected in parallel
- 	 * then more than one bit need to be set in cs_index_mask.
- 	 */
- 	u32			cs_index_mask : SPI_CS_CNT_MAX;
- 
-+	struct gpio_desc	*cs_gpiod[SPI_CS_CNT_MAX];	/* Chip select gpio desc */
-+
- 	/*
- 	 * Likely need more hooks for more protocol options affecting how
- 	 * the controller talks to each chip, like:
+ 	/* The statistics */
+ 	struct spi_statistics __percpu	*pcpu_statistics;
 -- 
 2.53.0
 
