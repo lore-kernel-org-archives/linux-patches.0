@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009853EE1DD;
-	Tue, 31 Mar 2026 16:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BEF30E0DC;
+	Tue, 31 Mar 2026 16:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974362; cv=none; b=i+nnzAGaHdbn9TE+YD6U4CogPP1VS2BjgbO43gLb9ykOTahZkshQAbev+zKnLUvuH8nqPB10ovOzq6tvzt4/B4Vom76Y1Je5pKcooyQJA2kDFr73Z/iF9kGWffhkgREvFOigW5aA8ExRwPNwVM2vqbxEGUeQmaJsLupyCvls978=
+	t=1774974364; cv=none; b=M/sH+4WFzV7trS7QyWkTqTgtpHrbqxAgolCflHjXhuNgW8kYLDHyOg5ZQ/RkGJMuxmmiQel4NwUin9g2YA1MMHiTwo0z9NsrzRc699UXsjeoDOqfDU3OW5Y5rLYOUAJDd1PufsS9dbbv5AcxON26ssn8BSWQE2R2nWi4BjZldYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974362; c=relaxed/simple;
-	bh=kKUN6QV1jPtylDBtZSjrGvVl+sVpuxkqzdK88krgvxM=;
+	s=arc-20240116; t=1774974364; c=relaxed/simple;
+	bh=TH2iaBmB4ttyIcfJ0k3j0Xk+C1yxaqRWPrZu5eyPqU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AWHUNNJC7yqx2gDYto3NvV+f62OmoPMHR/qBfRv5aTTtaWsKBsn1IFV+F8+ovCwq0k5RssniqOcS5kutAT9Rcwiw4JfTTNTULFRETp0ATUovvMW/1lFihqx4tvCKUatxNYztCyJP/Qvo++/oVLA/PceeXkL+ybD8YtFyQdhRniM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ad/INyEs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KdWZ6QjhQFlz12AvboDZiIIvSmdsNSUiolrhJ9U5DB252u2GxMlT7kjpuO/eqoUgK3AdQtPGb6uTXdIqJQ+/DemweVEJxi23AOtGPX2YaDHdAzgQF25jHzJpwRj7+BnXXwVVsJwVi8FNkMor+cM2LDrNyrlq2AMXAAclhkO7bbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0Q30hHv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ad/INyEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23BD4C19423;
-	Tue, 31 Mar 2026 16:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0Q30hHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9716FC19424;
+	Tue, 31 Mar 2026 16:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974361;
-	bh=kKUN6QV1jPtylDBtZSjrGvVl+sVpuxkqzdK88krgvxM=;
+	s=korg; t=1774974363;
+	bh=TH2iaBmB4ttyIcfJ0k3j0Xk+C1yxaqRWPrZu5eyPqU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ad/INyEsmZf3Mx65dDYfRn8IbLr7P9Si3ZsuixRNdBgrvVrJpwneL+86UeaAqUt8U
-	 jPzjBYjciIsJh1aEePgcPi8/70F4p6PHDkirzfjaQV55oJA9mL6Js21I22rlmItqsm
-	 7OYu11OSQ0S4yYRYDpsP39zYgqDPCjk1xNawazeM=
+	b=e0Q30hHvXjAKu1ckNzkff/RvIfWNVbf8077cLQ/f7mmpdLQXjtPzEi1MFkkOFVTjD
+	 7py6dL07nk2jYKc7UZjX24wXbe4lFzYDtWv42oAD/ZnJGDK/5DfO7vtmb4H0xmGpuU
+	 pub9T3u2bOHuctpultVwHGzpfXw+e4Eg12S8nOdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/175] tcp: Use bhash2 for v4-mapped-v6 non-wildcard address.
-Date: Tue, 31 Mar 2026 18:20:40 +0200
-Message-ID: <20260331161731.843736907@linuxfoundation.org>
+Subject: [PATCH 6.6 057/175] tcp: Rearrange tests in inet_csk_bind_conflict().
+Date: Tue, 31 Mar 2026 18:20:41 +0200
+Message-ID: <20260331161731.880919956@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -54,18 +54,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 5e07e672412bed473122813ab35d4f7d42fd9635 ]
+[ Upstream commit 58655bc0ad7ccdd5b53319bcc091cb81b6aee7c3 ]
 
-While checking port availability in bind() or listen(), we used only
-bhash for all v4-mapped-v6 addresses.  But there is no good reason not
-to use bhash2 for v4-mapped-v6 non-wildcard addresses.
+The following patch adds code in the !inet_use_bhash2_on_bind(sk)
+case in inet_csk_bind_conflict().
 
-Let's do it by returning true in inet_use_bhash2_on_bind().  Then, we
-also need to add a test in inet_bind2_bucket_match_addr_any() so that
-::ffff:X.X.X.X will match with 0.0.0.0.
-
-Note that sk->sk_rcv_saddr is initialised for v4-mapped-v6 sk in
-__inet6_bind().
+To avoid adding nest and make the change cleaner, this patch
+rearranges tests in inet_csk_bind_conflict().
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
@@ -73,42 +68,75 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: e537dd15d0d4 ("udp: Fix wildcard bind conflict check when using hash2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 7 +++++--
- net/ipv4/inet_hashtables.c      | 3 ++-
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ net/ipv4/inet_connection_sock.c | 40 ++++++++++++++++-----------------
+ 1 file changed, 19 insertions(+), 21 deletions(-)
 
 diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index bd032ac2376ed..4a53c538dcaa1 100644
+index 4a53c538dcaa1..e7751bfab92bb 100644
 --- a/net/ipv4/inet_connection_sock.c
 +++ b/net/ipv4/inet_connection_sock.c
-@@ -157,8 +157,11 @@ static bool inet_use_bhash2_on_bind(const struct sock *sk)
- 	if (sk->sk_family == AF_INET6) {
- 		int addr_type = ipv6_addr_type(&sk->sk_v6_rcv_saddr);
+@@ -240,9 +240,10 @@ static int inet_csk_bind_conflict(const struct sock *sk,
+ 				  const struct inet_bind2_bucket *tb2, /* may be null */
+ 				  bool relax, bool reuseport_ok)
+ {
+-	bool reuseport_cb_ok;
+-	struct sock_reuseport *reuseport_cb;
+ 	kuid_t uid = sock_i_uid((struct sock *)sk);
++	struct sock_reuseport *reuseport_cb;
++	bool reuseport_cb_ok;
++	struct sock *sk2;
  
--		return addr_type != IPV6_ADDR_ANY &&
--			addr_type != IPV6_ADDR_MAPPED;
-+		if (addr_type == IPV6_ADDR_ANY)
-+			return false;
+ 	rcu_read_lock();
+ 	reuseport_cb = rcu_dereference(sk->sk_reuseport_cb);
+@@ -250,32 +251,29 @@ static int inet_csk_bind_conflict(const struct sock *sk,
+ 	reuseport_cb_ok = !reuseport_cb || READ_ONCE(reuseport_cb->num_closed_socks);
+ 	rcu_read_unlock();
+ 
+-	/*
+-	 * Unlike other sk lookup places we do not check
++	/* Conflicts with an existing IPV6_ADDR_ANY (if ipv6) or INADDR_ANY (if
++	 * ipv4) should have been checked already. We need to do these two
++	 * checks separately because their spinlocks have to be acquired/released
++	 * independently of each other, to prevent possible deadlocks
++	 */
++	if (inet_use_bhash2_on_bind(sk))
++		return tb2 && inet_bhash2_conflict(sk, tb2, uid, relax,
++						   reuseport_cb_ok, reuseport_ok);
 +
-+		if (addr_type != IPV6_ADDR_MAPPED)
++	/* Unlike other sk lookup places we do not check
+ 	 * for sk_net here, since _all_ the socks listed
+ 	 * in tb->owners and tb2->owners list belong
+ 	 * to the same net - the one this bucket belongs to.
+ 	 */
++	sk_for_each_bound(sk2, &tb->owners) {
++		if (!inet_bind_conflict(sk, sk2, uid, relax, reuseport_cb_ok, reuseport_ok))
++			continue;
+ 
+-	if (!inet_use_bhash2_on_bind(sk)) {
+-		struct sock *sk2;
+-
+-		sk_for_each_bound(sk2, &tb->owners)
+-			if (inet_bind_conflict(sk, sk2, uid, relax,
+-					       reuseport_cb_ok, reuseport_ok) &&
+-			    inet_rcv_saddr_equal(sk, sk2, true))
+-				return true;
+-
+-		return false;
++		if (inet_rcv_saddr_equal(sk, sk2, true))
 +			return true;
  	}
- #endif
- 	return sk->sk_rcv_saddr != htonl(INADDR_ANY);
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 7292f70176251..ed253aa1f5d3f 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -845,7 +845,8 @@ bool inet_bind2_bucket_match_addr_any(const struct inet_bind2_bucket *tb, const
- 			return ipv6_addr_any(&tb->v6_rcv_saddr) ||
- 				ipv6_addr_v4mapped_any(&tb->v6_rcv_saddr);
  
--		return false;
-+		return ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr) &&
-+			tb->rcv_saddr == 0;
- 	}
+-	/* Conflicts with an existing IPV6_ADDR_ANY (if ipv6) or INADDR_ANY (if
+-	 * ipv4) should have been checked already. We need to do these two
+-	 * checks separately because their spinlocks have to be acquired/released
+-	 * independently of each other, to prevent possible deadlocks
+-	 */
+-	return tb2 && inet_bhash2_conflict(sk, tb2, uid, relax, reuseport_cb_ok,
+-					   reuseport_ok);
++	return false;
+ }
  
- 	if (sk->sk_family == AF_INET6)
+ /* Determine if there is a bind conflict with an existing IPV6_ADDR_ANY (if ipv6) or
 -- 
 2.51.0
 
