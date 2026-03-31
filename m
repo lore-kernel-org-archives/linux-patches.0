@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184DB4218A4;
-	Tue, 31 Mar 2026 16:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCC34266B0;
+	Tue, 31 Mar 2026 16:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975943; cv=none; b=eTTwL59OF9SmjNuckNyJkEop7qgsG46n55poqfiuHGIvUs6XWjW/TztoAqpeaI+ddjbgYaWWFgE5LAhgk/21z9oEFSWikTVj5aqmeDUK6ZZW4FdpkWATyW6Rlpzctlcz/OtjjGJuYyrCsMzzm64/JFd6CR6VjbBh8PgGagH95qk=
+	t=1774975945; cv=none; b=bMNJkKeY3zW5iOxx5KrRVaZEHlv0x6KBSPhebz/Xi3e+1b5JNM2uTz4fRNYGO4AtmgSQ4Sc7htz8q4P0GZlnKZf7LimDHLNS8Db4YhhNIK5jHYZ3mbcI0gVySkef1mpF1QLiFF5uiPXS1sikpiJ94UB05+D7tXex1BbtUr6cHFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975943; c=relaxed/simple;
-	bh=PBAe/yTZF5n2MO0acJf7yDMzKsv/mLoRaGv9kacQAL8=;
+	s=arc-20240116; t=1774975945; c=relaxed/simple;
+	bh=Aqax7egA0nO1VaFAM5Cc2w8Ry0w26/mXRJiSVMwGjok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A/ph0jFNKdonBhqha/0zJFwdgre1BrvhUex30K6+/HZ8m3Kv9HM0sUCkvf8NFfT9mCBrmR7boj0Rj7o0en5o1198JfJZY8k3jyhLhFMjrTI9HMa4Cj/G9IqpUQcFW1SCcR3Repp6o7LskO1+QBEqp38/h4LOGAP7zSSVLtJpQxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIEKGCT2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hSFUTs+9/0j8rrtOhzIPgsdn5g2pYrKx+yhLrUzVeKYK+gr3dc8G2tFJ2B+26Wt2T69DoXSapMBegU/ZCFYH4jVxu37l4j85kEUqblEWQxP+aqUT6d6r5Ym27NcYXHQD9V/dNfiGFcFJAdLtTyUh87mSOvWe5zmunU4gD2TyPD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9Qi0iFi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIEKGCT2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A259BC19423;
-	Tue, 31 Mar 2026 16:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9Qi0iFi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433ACC19423;
+	Tue, 31 Mar 2026 16:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975943;
-	bh=PBAe/yTZF5n2MO0acJf7yDMzKsv/mLoRaGv9kacQAL8=;
+	s=korg; t=1774975945;
+	bh=Aqax7egA0nO1VaFAM5Cc2w8Ry0w26/mXRJiSVMwGjok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIEKGCT2VqBg7c3J5Kdxfps7V2LTY0uVfPk2lpWVQ+nVrZ9opRBB0uZGzoyCVFF71
-	 2iXUBy6ayy9suFKGa8yJPtYOl6Nh/z2DoEEFBbHOkVGN09Lh5L4+X6KPd8NavkW5wG
-	 uOkeC7DFxIqHql/qAHD5c0rwpbNFkjKB7e2gnZ5I=
+	b=X9Qi0iFiReHzFgio+83IT6mT/qSKyEdEEDmlOn8gFE+4ZbwEa0W2yYuXz2jAZu1Di
+	 qh1Xk8eFDh0qXKJV+QvDizxMRHXslCCdXWNPPtOCQVjE+CLgGRTg1T5hXhxSEQ/wC+
+	 cSuBx8VnklOLxoXgRiKok0dbysU+Lp2jLpasgQZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 139/244] ksmbd: fix potencial OOB in get_file_all_info() for compound requests
-Date: Tue, 31 Mar 2026 18:21:29 +0200
-Message-ID: <20260331161746.784275764@linuxfoundation.org>
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.12 148/244] KVM: arm64: Discard PC update state on vcpu reset
+Date: Tue, 31 Mar 2026 18:21:38 +0200
+Message-ID: <20260331161747.230123393@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,72 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 
-commit beef2634f81f1c086208191f7228bce1d366493d upstream.
+commit 1744a6ef48b9a48f017e3e1a0d05de0a6978396e upstream.
 
-When a compound request consists of QUERY_DIRECTORY + QUERY_INFO
-(FILE_ALL_INFORMATION) and the first command consumes nearly the entire
-max_trans_size, get_file_all_info() would blindly call smbConvertToUTF16()
-with PATH_MAX, causing out-of-bounds write beyond the response buffer.
-In get_file_all_info(), there was a missing validation check for
-the client-provided OutputBufferLength before copying the filename into
-FileName field of the smb2_file_all_info structure.
-If the filename length exceeds the available buffer space, it could lead to
-potential buffer overflows or memory corruption during smbConvertToUTF16
-conversion. This calculating the actual free buffer size using
-smb2_calc_max_out_buf_len() and returning -EINVAL if the buffer is
-insufficient and updating smbConvertToUTF16 to use the actual filename
-length (clamped by PATH_MAX) to ensure a safe copy operation.
+Our vcpu reset suffers from a particularly interesting flaw, as it
+does not correctly deal with state that will have an effect on the
+execution flow out of reset.
 
+Take the following completely random example, never seen in the wild
+and that never resulted in a couple of sleepless nights: /s
+
+- vcpu-A issues a PSCI_CPU_OFF using the SMC conduit
+
+- SMC being a trapped instruction (as opposed to HVC which is always
+  normally executed), we annotate the vcpu as needing to skip the
+  next instruction, which is the SMC itself
+
+- vcpu-A is now safely off
+
+- vcpu-B issues a PSCI_CPU_ON for vcpu-A, providing a starting PC
+
+- vcpu-A gets reset, get the new PC, and is sent on its merry way
+
+- right at the point of entering the guest, we notice that a PC
+  increment is pending (remember the earlier SMC?)
+
+- vcpu-A skips its first instruction...
+
+What could possibly go wrong?
+
+Well, I'm glad you asked. For pKVM as a NV guest, that first instruction
+is extremely significant, as it indicates whether the CPU is booting
+or resuming. Having skipped that instruction, nothing makes any sense
+anymore, and CPU hotplugging fails.
+
+This is all caused by the decoupling of PC update from the handling
+of an exception that triggers such update, making it non-obvious
+what affects what when.
+
+Fix this train wreck by discarding all the PC-affecting state on
+vcpu reset.
+
+Fixes: f5e30680616ab ("KVM: arm64: Move __adjust_pc out of line")
 Cc: stable@vger.kernel.org
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
-Reported-by: Asim Viladi Oglu Manizada <manizada@pm.me>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Reviewed-by: Joey Gouly <joey.gouly@arm.com>
+Link: https://patch.msgid.link/20260312140850.822968-1-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/reset.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4941,7 +4941,8 @@ static int get_file_all_info(struct ksmb
- 	int conv_len;
- 	char *filename;
- 	u64 time;
--	int ret;
-+	int ret, buf_free_len, filename_len;
-+	struct smb2_query_info_req *req = ksmbd_req_buf_next(work);
+--- a/arch/arm64/kvm/reset.c
++++ b/arch/arm64/kvm/reset.c
+@@ -257,6 +257,20 @@ void kvm_reset_vcpu(struct kvm_vcpu *vcp
+ 			kvm_vcpu_set_be(vcpu);
  
- 	if (!(fp->daccess & FILE_READ_ATTRIBUTES_LE)) {
- 		ksmbd_debug(SMB, "no right to read the attributes : 0x%x\n",
-@@ -4953,6 +4954,16 @@ static int get_file_all_info(struct ksmb
- 	if (IS_ERR(filename))
- 		return PTR_ERR(filename);
- 
-+	filename_len = strlen(filename);
-+	buf_free_len = smb2_calc_max_out_buf_len(work,
-+			offsetof(struct smb2_query_info_rsp, Buffer) +
-+			offsetof(struct smb2_file_all_info, FileName),
-+			le32_to_cpu(req->OutputBufferLength));
-+	if (buf_free_len < (filename_len + 1) * 2) {
-+		kfree(filename);
-+		return -EINVAL;
-+	}
+ 		*vcpu_pc(vcpu) = target_pc;
 +
- 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
- 			  AT_STATX_SYNC_AS_STAT);
- 	if (ret) {
-@@ -4988,7 +4999,8 @@ static int get_file_all_info(struct ksmb
- 	file_info->Mode = fp->coption;
- 	file_info->AlignmentRequirement = 0;
- 	conv_len = smbConvertToUTF16((__le16 *)file_info->FileName, filename,
--				     PATH_MAX, conn->local_nls, 0);
-+				     min(filename_len, PATH_MAX),
-+				     conn->local_nls, 0);
- 	conv_len *= 2;
- 	file_info->FileNameLength = cpu_to_le32(conv_len);
- 	rsp->OutputBufferLength =
++		/*
++		 * We may come from a state where either a PC update was
++		 * pending (SMC call resulting in PC being increpented to
++		 * skip the SMC) or a pending exception. Make sure we get
++		 * rid of all that, as this cannot be valid out of reset.
++		 *
++		 * Note that clearing the exception mask also clears PC
++		 * updates, but that's an implementation detail, and we
++		 * really want to make it explicit.
++		 */
++		vcpu_clear_flag(vcpu, PENDING_EXCEPTION);
++		vcpu_clear_flag(vcpu, EXCEPT_MASK);
++		vcpu_clear_flag(vcpu, INCREMENT_PC);
+ 		vcpu_set_reg(vcpu, 0, reset_state.r0);
+ 	}
+ 
 
 
