@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7D7426681;
-	Tue, 31 Mar 2026 16:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4080426EB7;
+	Tue, 31 Mar 2026 16:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975125; cv=none; b=mBHtGfjQHT7t5b/o3iKngLqOWsxpfLEUVwjqWJ0XOFzPYbZKk3VyCBEwlOCRtlCEXcRRmUgGoj3GpFx65rUAxyYe8lXLPwWXZHR+4VY7+uhFnbiciCwTaqkUfdP6ceFmKVAL6tCYRFcS2x9Pc5KEotuIfEiWp8a5YC0rdZZ51gk=
+	t=1774975127; cv=none; b=dnlWvT/3DbQ+YuH75p2esPQ6pSOA2BZOI3l46d7ubaKrwt5iejuo53fJs4Lsqhx6md1/Eol5rjTW3D3UyF2xxFwN4Zyt3SB376RRT8aFC6wXAxy4pFZ/vKPZbD0Rj+6vywfMbbvTbHAFm/1YuWvqd7GucHJ9cvCwNHFoOG4opbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975125; c=relaxed/simple;
-	bh=xyVmsvR1l84LPlrJeMQ4r8MVQ3iTER39VvwnSG3LcVg=;
+	s=arc-20240116; t=1774975127; c=relaxed/simple;
+	bh=tt71lWwhBep+CirBDKhjHD1jC5ocB8IYAmEtMlnFp2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHBHfnq5oTV/xjNgPmUhJ5fRzPciSQBSIzOoZ5avAmKwucpPczERVPfWP2klC7NEg+Ficz02bRDZXFZupdSFt53sLKfvYBr+Is3KNvLV0eErNI6gPC/N0BK5P6XfoB3OJcF0HEoE2xSQH9KKkhLhoZxIc/q0PuiFUnvASI4HEMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMJ7BgYM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gztj7iPEZUThYZGzYZxIM2UnWEMIiTgRPwy4OGKNcn3mCOUojJICIBfZft2Uix5PFy7RO/6NJMTArSiWU+yhWffP+f/ALcl9uLR1FCuIzquJhbBikkECxhlzmOEOH1VbxFXzoJcdIj91aepo8zh64pJ3Ph1MdJzqC1tWir2F8es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bL+gSSMA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMJ7BgYM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B84C19423;
-	Tue, 31 Mar 2026 16:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bL+gSSMA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC50C19423;
+	Tue, 31 Mar 2026 16:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975125;
-	bh=xyVmsvR1l84LPlrJeMQ4r8MVQ3iTER39VvwnSG3LcVg=;
+	s=korg; t=1774975127;
+	bh=tt71lWwhBep+CirBDKhjHD1jC5ocB8IYAmEtMlnFp2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dMJ7BgYMIiiqF+4Aq98bnbYHiKFYwAemw2re3mk32We3qISqgjJjMSAXg5VGuppNq
-	 4rjkG6tM9ftWUjkn0zvl+Y5DrDH+kTbpXEf6395+8K8YRCG23xFULjO+kaDnVN+kMy
-	 g9poZKuejrG1Ax7/nKYJF8Jlv+aib8+7f/bXHiA0=
+	b=bL+gSSMAIUeQaQUzwqgKmmqH8cCrBI0rU60j0Xn9sQWd9NewhJZwpjdWDi5scWVxY
+	 Z9t5LZnsggyGc53X3iCWlfHU28vfaMaaJ+2Tsp2rEJEK8Aws/+DpgmzFpvDYrIDpf5
+	 QqPOYPAdyTOrra0IUEXaD7JP40pKQ/qwOnBRSf3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 174/342] ASoC: Intel: catpt: Fix the device initialization
-Date: Tue, 31 Mar 2026 18:20:07 +0200
-Message-ID: <20260331161805.412116687@linuxfoundation.org>
+Subject: [PATCH 6.19 175/342] spi: meson-spicc: Fix double-put in remove path
+Date: Tue, 31 Mar 2026 18:20:08 +0200
+Message-ID: <20260331161805.448546042@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,61 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 5a184f1cb43a8e035251c635f5c47da5dc3e3049 ]
+[ Upstream commit 63542bb402b7013171c9f621c28b609eda4dbf1f ]
 
-The DMA mask shall be coerced before any buffer allocations for the
-device are done.  At the same time explain why DMA mask of 31 bits is
-used in the first place.
+meson_spicc_probe() registers the controller with
+devm_spi_register_controller(), so teardown already drops the
+controller reference via devm cleanup.
 
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Fixes: 7a10b66a5df9 ("ASoC: Intel: catpt: Device driver lifecycle")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260320101217.1243688-1-cezary.rojewski@intel.com
+Calling spi_controller_put() again in meson_spicc_remove()
+causes a double-put.
+
+Fixes: 8311ee2164c5 ("spi: meson-spicc: fix memory leak in meson_spicc_remove")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260322-rockchip-v1-1-fac3f0c6dad8@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/catpt/device.c | 10 +++++++++-
- sound/soc/intel/catpt/dsp.c    |  3 ---
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/spi/spi-meson-spicc.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/intel/catpt/device.c b/sound/soc/intel/catpt/device.c
-index d13062c8e907c..fcc7a7342a4ab 100644
---- a/sound/soc/intel/catpt/device.c
-+++ b/sound/soc/intel/catpt/device.c
-@@ -281,7 +281,15 @@ static int catpt_acpi_probe(struct platform_device *pdev)
- 	if (IS_ERR(cdev->pci_ba))
- 		return PTR_ERR(cdev->pci_ba);
+diff --git a/drivers/spi/spi-meson-spicc.c b/drivers/spi/spi-meson-spicc.c
+index 6b91373075334..c99fab392add1 100644
+--- a/drivers/spi/spi-meson-spicc.c
++++ b/drivers/spi/spi-meson-spicc.c
+@@ -1102,8 +1102,6 @@ static void meson_spicc_remove(struct platform_device *pdev)
  
--	/* alloc buffer for storing DRAM context during dx transitions */
-+	/*
-+	 * As per design HOST is responsible for preserving firmware's runtime
-+	 * context during D0 -> D3 -> D0 transitions.  Addresses used for DMA
-+	 * to/from HOST memory shall be outside the reserved range of 0xFFFxxxxx.
-+	 */
-+	ret = dma_coerce_mask_and_coherent(cdev->dev, DMA_BIT_MASK(31));
-+	if (ret)
-+		return ret;
-+
- 	cdev->dxbuf_vaddr = dmam_alloc_coherent(dev, catpt_dram_size(cdev),
- 						&cdev->dxbuf_paddr, GFP_KERNEL);
- 	if (!cdev->dxbuf_vaddr)
-diff --git a/sound/soc/intel/catpt/dsp.c b/sound/soc/intel/catpt/dsp.c
-index 008a20a2acbda..677f348909c8f 100644
---- a/sound/soc/intel/catpt/dsp.c
-+++ b/sound/soc/intel/catpt/dsp.c
-@@ -125,9 +125,6 @@ int catpt_dmac_probe(struct catpt_dev *cdev)
- 	dmac->dev = cdev->dev;
- 	dmac->irq = cdev->irq;
+ 	/* Disable SPI */
+ 	writel(0, spicc->base + SPICC_CONREG);
+-
+-	spi_controller_put(spicc->host);
+ }
  
--	ret = dma_coerce_mask_and_coherent(cdev->dev, DMA_BIT_MASK(31));
--	if (ret)
--		return ret;
- 	/*
- 	 * Caller is responsible for putting device in D0 to allow
- 	 * for I/O and memory access before probing DW.
+ static const struct meson_spicc_data meson_spicc_gx_data = {
 -- 
 2.53.0
 
