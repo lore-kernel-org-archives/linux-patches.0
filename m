@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F652421A1D;
-	Tue, 31 Mar 2026 16:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED179421A1D;
+	Tue, 31 Mar 2026 16:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975203; cv=none; b=B91WZ3IWmDJ7SkKfRVsTHeCHfXRAGHZ1sCJagTqBvvkHMrU1zZu8aaRkTwVqNwep65ireNLf9in19JbFBX4+0CSTGRWtmp8xGfDPEb/6m+kCdVCrusnwqqWIrvCJKYXzmvnO2p9ymzeu+XQgst18i+0raQlZTRjsnoyEEwJmrxE=
+	t=1774975206; cv=none; b=h+6g8twFJzcCmF8pKlGbjsYhLPtN2aKTeTVvZrQ4jePOQbRMGzQMlJmb6LRsAvnnXXVvAOx3u4D1EiKlsX+3XiYz40dUqlPv6pZsNwCnahLmarphtEpA6OFPhU/Nkx4l1CtSDa7X/ezVCWPWCg+SJHWB1qVaeHQRs7nfaBMQvvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975203; c=relaxed/simple;
-	bh=TpHp3y4d/MvjaI8m8fN3UkCxSl6rXogVM5AmE6ehRu4=;
+	s=arc-20240116; t=1774975206; c=relaxed/simple;
+	bh=b5EDOe3icRmVfzcrC4S5dTzKpqDtfQHCZje1QGFlgiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jgNTBXJGGXnYM0mxWV1zJ5I5Ze3aGA14NO+KyijUVClu52idJJQ2hvZ2DFi/q2Bsv7JZHt+G9w5MP8Q9cRFyLJEBT9JkPMcU2eaywQvH55yxbjJ2JJ32IMVb+MsVcABJJRdBL8eDUp9AcNDf9xXjYkjFUxc/BL0FmHp5aIBwuGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=my2AXy6k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qU5Z2vYCShJ8GcktHS1T5LhF2Ai5NRlaDqRX4D+opoNYccjCcZXfzV3EaMHWlzQGVof5ccKDnXWqax8kPZSZZEUY0fCq+MuxexPH+IcDkcfrThjTVrOuEOfYU3G7oBHwzvU4stTWvkxX7wlUfT1qRHLLPwqolrqr+75uwx3g9wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sy6WrLtH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="my2AXy6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C9DC19423;
-	Tue, 31 Mar 2026 16:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sy6WrLtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A4DC19423;
+	Tue, 31 Mar 2026 16:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975203;
-	bh=TpHp3y4d/MvjaI8m8fN3UkCxSl6rXogVM5AmE6ehRu4=;
+	s=korg; t=1774975205;
+	bh=b5EDOe3icRmVfzcrC4S5dTzKpqDtfQHCZje1QGFlgiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=my2AXy6k0oYW6Cml+oNh0tnEM7TvXIoRCNrFXQ3r51Il65IrfyoBY3tNPjce58c2s
-	 lRmBdUkV5GPrxtaWEOG91HUzccHoP83B/xOHELUTIVokrCrBi6lBSBwCtbWCEhhUbP
-	 36RzmdcMhk7x4AkNazJSyYaJNTI40+/Y4mZBDURw=
+	b=Sy6WrLtHlhvaec2V/Q7I1ZUbz7nCURdbBcj/Dcv550Y9tx0ExzsrSuD0J+zPbNg+e
+	 7aSpBOMfZW8UmYT2keCbp590qsEi/LdtxbBfqpkCNUtgGcFXts3X0hw26ubD6ZYQ1v
+	 ar+vHXWPAQfANotWWOLdgpkXu0qCRXS1Lar0cML4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.19 196/342] s390/barrier: Make array_index_mask_nospec() __always_inline
-Date: Tue, 31 Mar 2026 18:20:29 +0200
-Message-ID: <20260331161806.204065008@linuxfoundation.org>
+	Juhyun Song <juju6985@outlook.kr>,
+	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.19 205/342] Revert "ALSA: hda/intel: Add MSI X870E Tomahawk to denylist"
+Date: Tue, 31 Mar 2026 18:20:38 +0200
+Message-ID: <20260331161806.527410658@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,34 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit c5c0a268b38adffbb2e70e6957017537ff54c157 upstream.
+commit ed4da361bf943b9041fc63e5cb6af01b3c0de978 upstream.
 
-Mark array_index_mask_nospec() as __always_inline to guarantee the
-mitigation is emitted inline regardless of compiler inlining decisions.
+commit 30b3211aa2416 ("ALSA: hda/intel: Add MSI X870E Tomahawk
+to denylist") was added to silence a warning, but this effectively
+reintroduced commit df42ee7e22f03 ("ALSA: hda: Add ASRock
+X670E Taichi to denylist") which was already reported to cause
+problems and reverted in commit ee8f1613596ad ("Revert "ALSA: hda:
+Add ASRock X670E Taichi to denylist"")
 
-Fixes: e2dd833389cc ("s390: add optimized array_index_mask_nospec")
-Cc: stable@kernel.org
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Revert it yet again.
+
+Cc: stable@vger.kernel.org
+Reported-by: Juhyun Song <juju6985@outlook.kr>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221274
+Cc: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260326190542.524515-1-mario.limonciello@amd.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/barrier.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/hda/controllers/intel.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/s390/include/asm/barrier.h
-+++ b/arch/s390/include/asm/barrier.h
-@@ -62,8 +62,8 @@ do {									\
-  * @size: number of elements in array
-  */
- #define array_index_mask_nospec array_index_mask_nospec
--static inline unsigned long array_index_mask_nospec(unsigned long index,
--						    unsigned long size)
-+static __always_inline unsigned long array_index_mask_nospec(unsigned long index,
-+							     unsigned long size)
- {
- 	unsigned long mask;
+--- a/sound/hda/controllers/intel.c
++++ b/sound/hda/controllers/intel.c
+@@ -2077,7 +2077,6 @@ static const struct pci_device_id driver
+ 	{ PCI_DEVICE_SUB(0x1022, 0x1487, 0x1043, 0x874f) }, /* ASUS ROG Zenith II / Strix */
+ 	{ PCI_DEVICE_SUB(0x1022, 0x1487, 0x1462, 0xcb59) }, /* MSI TRX40 Creator */
+ 	{ PCI_DEVICE_SUB(0x1022, 0x1487, 0x1462, 0xcb60) }, /* MSI TRX40 */
+-	{ PCI_DEVICE_SUB(0x1022, 0x15e3, 0x1462, 0xee59) }, /* MSI X870E Tomahawk WiFi */
+ 	{}
+ };
  
 
 
