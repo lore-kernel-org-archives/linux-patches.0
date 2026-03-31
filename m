@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5852FE042;
-	Tue, 31 Mar 2026 17:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA042E1C7C;
+	Tue, 31 Mar 2026 17:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976721; cv=none; b=Gap6szJFlB9w/MMarAdj+XCtOeWlDgY3vf1wGwksFa6IJWKWgrtG+tuZFNM0RAb4s6RJDtAXBpBZyZ+hmlJEudnpZI+ZS72KSypXARQWPI5ZiLiy3CsqMdRC4vlTig8cc5k5gdSBsvlyOCCMzvm6gAI8Pu6EybDe7dGW0L51mPs=
+	t=1774976724; cv=none; b=Hk/mPuvefKFE94otfq6Jb/VvlfGtZ2lDhizVLczB5wd4gOa6HpKrv+bfSdm/cHl85JAvqzNZ47FZVg7+Upj+T4P6US7mUE11YrNxu87nnc/N9YzEY9wGMt+WCS3K0F7FJHsJTKQeCzxCARdga7fyK3G23PfnYWERSHK8u4s3p3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976721; c=relaxed/simple;
-	bh=CmN6hc+ZGiiwS1uUmhK23aoLSFiO1T88hALr7562Dp8=;
+	s=arc-20240116; t=1774976724; c=relaxed/simple;
+	bh=dqvKDYGK3amAy0ZZvxpXPIQ/6nuLc/BNhDNwAI8kGXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaNeGoOeZPdpi4A9BRlL3If+kvd8Gzrl5D7Rz10IHzsGMalJZ9oJQxBjhGV7vNtiwsrENQeA95Z8G77Sxzy20zjFfHu0ekEqHeJ4MRKgPD9H0Tx2Rl9i3Yyg3tnxCygPhsp3GVZzi8crCJPVrfr/1f/DVvz1Yk06Vsqu+/xM7hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1w6VUKfg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I0+oJMmu16N3T2dah+42dzTRJSC6wxLpa5xa2utOkhtrGMRfG3PtvqbJTdURuFcdHWh9cHC24kxAVJOm7N4sJlZmVaMpGLhMcXlVnn9Xu0miwUW0DZfakSkut065AsoDJzKwXuPcwAgBFoJFdKZaBifp7OPtFkCz8DLxYDKPGA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihjtDtHe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1w6VUKfg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726D2C19423;
-	Tue, 31 Mar 2026 17:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihjtDtHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122F6C2BCB4;
+	Tue, 31 Mar 2026 17:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976721;
-	bh=CmN6hc+ZGiiwS1uUmhK23aoLSFiO1T88hALr7562Dp8=;
+	s=korg; t=1774976724;
+	bh=dqvKDYGK3amAy0ZZvxpXPIQ/6nuLc/BNhDNwAI8kGXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1w6VUKfgtB+pSIPOsZCMjLTlExy6U2Ko5jilOblQqmhiL1tEHK//QYNhWDb6EsMc2
-	 9+S1Ys9cUMDBeThIGjVx5DlbHqaKpSPb+mqQcW5mVJfkyzQ5nohErLo3L+d1wVPTCQ
-	 dlvCcsl23TjGLxT5PYpGdU3rBRctNOstZJfqRV4g=
+	b=ihjtDtHeUuZXXCppaVJzSe2wUDMh4y3+nX10DlYeDpypNzddNZstYaH+dh0IrgjCx
+	 7zHbur9ye3UUgh1MrdXYH9fS2IvITjogLa6WXRapNslx9VHPWItYkw50kPr9O6vWYT
+	 Okipud6JdHa8Z5o0zkEKUhglS08JLDBQFBMt8kD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Marc Buerg <buermarc@googlemail.com>,
+	Joel Granados <joel.granados@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 169/309] hwmon: (pmbus/core) Protect regulator operations with mutex
-Date: Tue, 31 Mar 2026 18:21:12 +0200
-Message-ID: <20260331161759.687315510@linuxfoundation.org>
+Subject: [PATCH 6.18 170/309] sysctl: fix uninitialized variable in proc_do_large_bitmap
+Date: Tue, 31 Mar 2026 18:21:13 +0200
+Message-ID: <20260331161759.724567146@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,254 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Marc Buerg <buermarc@googlemail.com>
 
-[ Upstream commit 754bd2b4a084b90b5e7b630e1f423061a9b9b761 ]
+[ Upstream commit f63a9df7e3f9f842945d292a19d9938924f066f9 ]
 
-The regulator operations pmbus_regulator_get_voltage(),
-pmbus_regulator_set_voltage(), and pmbus_regulator_list_voltage()
-access PMBus registers and shared data but were not protected by
-the update_lock mutex. This could lead to race conditions.
+proc_do_large_bitmap() does not initialize variable c, which is expected
+to be set to a trailing character by proc_get_long().
 
-However, adding mutex protection directly to these functions causes
-a deadlock because pmbus_regulator_notify() (which calls
-regulator_notifier_call_chain()) is often called with the mutex
-already held (e.g., from pmbus_fault_handler()). If a regulator
-callback then calls one of the now-protected voltage functions,
-it will attempt to acquire the same mutex.
+However, proc_get_long() only sets c when the input buffer contains a
+trailing character after the parsed value.
 
-Rework pmbus_regulator_notify() to utilize a worker function to
-send notifications outside of the mutex protection. Events are
-stored as atomics in a per-page bitmask and processed by the worker.
+If c is not initialized it may happen to contain a '-'. If this is the
+case proc_do_large_bitmap() expects to be able to parse a second part of
+the input buffer. If there is no second part an unjustified -EINVAL will
+be returned.
 
-Initialize the worker and its associated data during regulator
-registration, and ensure it is cancelled on device removal using
-devm_add_action_or_reset().
+Initialize c to 0 to prevent returning -EINVAL on valid input.
 
-While at it, remove the unnecessary include of linux/of.h.
-
-Cc: Sanman Pradhan <psanman@juniper.net>
-Fixes: ddbb4db4ced1b ("hwmon: (pmbus) Add regulator support")
-Reviewed-by: Sanman Pradhan <psanman@juniper.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 9f977fb7ae9d ("sysctl: add proc_do_large_bitmap")
+Signed-off-by: Marc Buerg <buermarc@googlemail.com>
+Reviewed-by: Joel Granados <joel.granados@kernel.org>
+Signed-off-by: Joel Granados <joel.granados@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 114 ++++++++++++++++++++++++-------
- 1 file changed, 89 insertions(+), 25 deletions(-)
+ kernel/sysctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index cbc36f0ba4bf9..572be3ebc03df 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -6,6 +6,7 @@
-  * Copyright (c) 2012 Guenter Roeck
-  */
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index cb6196e3fa993..970525e6c76c7 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -1213,7 +1213,7 @@ int proc_do_large_bitmap(const struct ctl_table *table, int write,
+ 	unsigned long bitmap_len = table->maxlen;
+ 	unsigned long *bitmap = *(unsigned long **) table->data;
+ 	unsigned long *tmp_bitmap = NULL;
+-	char tr_a[] = { '-', ',', '\n' }, tr_b[] = { ',', '\n', 0 }, c;
++	char tr_a[] = { '-', ',', '\n' }, tr_b[] = { ',', '\n', 0 }, c = 0;
  
-+#include <linux/atomic.h>
- #include <linux/debugfs.h>
- #include <linux/delay.h>
- #include <linux/dcache.h>
-@@ -21,8 +22,8 @@
- #include <linux/pmbus.h>
- #include <linux/regulator/driver.h>
- #include <linux/regulator/machine.h>
--#include <linux/of.h>
- #include <linux/thermal.h>
-+#include <linux/workqueue.h>
- #include "pmbus.h"
- 
- /*
-@@ -112,6 +113,11 @@ struct pmbus_data {
- 
- 	struct mutex update_lock;
- 
-+#if IS_ENABLED(CONFIG_REGULATOR)
-+	atomic_t regulator_events[PMBUS_PAGES];
-+	struct work_struct regulator_notify_work;
-+#endif
-+
- 	bool has_status_word;		/* device uses STATUS_WORD register */
- 	int (*read_status)(struct i2c_client *client, int page);
- 
-@@ -3228,12 +3234,19 @@ static int pmbus_regulator_get_voltage(struct regulator_dev *rdev)
- 		.class = PSC_VOLTAGE_OUT,
- 		.convert = true,
- 	};
-+	int ret;
- 
-+	mutex_lock(&data->update_lock);
- 	s.data = _pmbus_read_word_data(client, s.page, 0xff, PMBUS_READ_VOUT);
--	if (s.data < 0)
--		return s.data;
-+	if (s.data < 0) {
-+		ret = s.data;
-+		goto unlock;
-+	}
- 
--	return (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
-+	ret = (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
-+unlock:
-+	mutex_unlock(&data->update_lock);
-+	return ret;
- }
- 
- static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
-@@ -3250,16 +3263,22 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
- 	};
- 	int val = DIV_ROUND_CLOSEST(min_uv, 1000); /* convert to mV */
- 	int low, high;
-+	int ret;
- 
- 	*selector = 0;
- 
-+	mutex_lock(&data->update_lock);
- 	low = pmbus_regulator_get_low_margin(client, s.page);
--	if (low < 0)
--		return low;
-+	if (low < 0) {
-+		ret = low;
-+		goto unlock;
-+	}
- 
- 	high = pmbus_regulator_get_high_margin(client, s.page);
--	if (high < 0)
--		return high;
-+	if (high < 0) {
-+		ret = high;
-+		goto unlock;
-+	}
- 
- 	/* Make sure we are within margins */
- 	if (low > val)
-@@ -3269,7 +3288,10 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
- 
- 	val = pmbus_data2reg(data, &s, val);
- 
--	return _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
-+	ret = _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
-+unlock:
-+	mutex_unlock(&data->update_lock);
-+	return ret;
- }
- 
- static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
-@@ -3279,6 +3301,7 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
- 	struct i2c_client *client = to_i2c_client(dev->parent);
- 	struct pmbus_data *data = i2c_get_clientdata(client);
- 	int val, low, high;
-+	int ret;
- 
- 	if (data->flags & PMBUS_VOUT_PROTECTED)
- 		return 0;
-@@ -3291,18 +3314,29 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
- 	val = DIV_ROUND_CLOSEST(rdev->desc->min_uV +
- 				(rdev->desc->uV_step * selector), 1000); /* convert to mV */
- 
-+	mutex_lock(&data->update_lock);
-+
- 	low = pmbus_regulator_get_low_margin(client, rdev_get_id(rdev));
--	if (low < 0)
--		return low;
-+	if (low < 0) {
-+		ret = low;
-+		goto unlock;
-+	}
- 
- 	high = pmbus_regulator_get_high_margin(client, rdev_get_id(rdev));
--	if (high < 0)
--		return high;
-+	if (high < 0) {
-+		ret = high;
-+		goto unlock;
-+	}
- 
--	if (val >= low && val <= high)
--		return val * 1000; /* unit is uV */
-+	if (val >= low && val <= high) {
-+		ret = val * 1000; /* unit is uV */
-+		goto unlock;
-+	}
- 
--	return 0;
-+	ret = 0;
-+unlock:
-+	mutex_unlock(&data->update_lock);
-+	return ret;
- }
- 
- const struct regulator_ops pmbus_regulator_ops = {
-@@ -3333,12 +3367,42 @@ int pmbus_regulator_init_cb(struct regulator_dev *rdev,
- }
- EXPORT_SYMBOL_NS_GPL(pmbus_regulator_init_cb, "PMBUS");
- 
-+static void pmbus_regulator_notify_work_cancel(void *data)
-+{
-+	struct pmbus_data *pdata = data;
-+
-+	cancel_work_sync(&pdata->regulator_notify_work);
-+}
-+
-+static void pmbus_regulator_notify_worker(struct work_struct *work)
-+{
-+	struct pmbus_data *data =
-+		container_of(work, struct pmbus_data, regulator_notify_work);
-+	int i, j;
-+
-+	for (i = 0; i < data->info->pages; i++) {
-+		int event;
-+
-+		event = atomic_xchg(&data->regulator_events[i], 0);
-+		if (!event)
-+			continue;
-+
-+		for (j = 0; j < data->info->num_regulators; j++) {
-+			if (i == rdev_get_id(data->rdevs[j])) {
-+				regulator_notifier_call_chain(data->rdevs[j],
-+							      event, NULL);
-+				break;
-+			}
-+		}
-+	}
-+}
-+
- static int pmbus_regulator_register(struct pmbus_data *data)
- {
- 	struct device *dev = data->dev;
- 	const struct pmbus_driver_info *info = data->info;
- 	const struct pmbus_platform_data *pdata = dev_get_platdata(dev);
--	int i;
-+	int i, ret;
- 
- 	data->rdevs = devm_kzalloc(dev, sizeof(struct regulator_dev *) * info->num_regulators,
- 				   GFP_KERNEL);
-@@ -3362,19 +3426,19 @@ static int pmbus_regulator_register(struct pmbus_data *data)
- 					     info->reg_desc[i].name);
- 	}
- 
-+	INIT_WORK(&data->regulator_notify_work, pmbus_regulator_notify_worker);
-+
-+	ret = devm_add_action_or_reset(dev, pmbus_regulator_notify_work_cancel, data);
-+	if (ret)
-+		return ret;
-+
- 	return 0;
- }
- 
- static void pmbus_regulator_notify(struct pmbus_data *data, int page, int event)
- {
--	int j;
--
--	for (j = 0; j < data->info->num_regulators; j++) {
--		if (page == rdev_get_id(data->rdevs[j])) {
--			regulator_notifier_call_chain(data->rdevs[j], event, NULL);
--			break;
--		}
--	}
-+	atomic_or(event, &data->regulator_events[page]);
-+	schedule_work(&data->regulator_notify_work);
- }
- #else
- static int pmbus_regulator_register(struct pmbus_data *data)
+ 	if (!bitmap || !bitmap_len || !left || (*ppos && !write)) {
+ 		*lenp = 0;
 -- 
 2.53.0
 
