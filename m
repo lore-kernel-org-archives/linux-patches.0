@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A15314D0D;
-	Tue, 31 Mar 2026 17:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F73E310645;
+	Tue, 31 Mar 2026 17:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976926; cv=none; b=cK8Fyir2jAHAhumSbc/zD2LPeIMJekD0O28tG5KFc1tAx9INRJvA2yZztEdRLBnS2pvCX+l4KZHLvMntdDYtoTBU+uMdMxe9COQAciYPoV+9tICb4c5dJ7/YT9WhxVwbV+KQCmdr8SmJIJIXSDRdEejh3JJrUGfyeRyfSlOHr1Y=
+	t=1774976929; cv=none; b=O5vroqZhRlg0XkG2PNyKILtOV4d16maYICzNVwOdKEMZRHDzkDYKg4h4NV2CIK7+HI9UxLzMQEwZKRFH9N25XbYAXTeE4u0MmMW2CqbXYLq+FpHBtjx4KQwEIDqO3DdKvHmODnPSAldZm3YpR+POgTmGJyONTwzXw8hb2tliH10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976926; c=relaxed/simple;
-	bh=yUqp8A1jyCS4bATYYEJqbsfXKOhL5jtpwRGyV4+hYn4=;
+	s=arc-20240116; t=1774976929; c=relaxed/simple;
+	bh=0K8xiby8NlOXIAQlshDF67my8XXu9Qx14kww9oIw03o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKbweK9IPkVp38w0dtTSiz328qsKBbiks4HEjPlWfgHre2u5pfVXzu9zaJ/K0Fy2JoknmotTTmfzPEmxdcQjghvDceRnygCydj5Co3KNPHaxYTn4wLoNb4/6x9nPv4sFWxSjiawBTB9tB9Tx+rFLP8/PcAn/LqEmu+g++tIq4SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWm5XRlP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntKnRJfQ9t61J7bbseSml0gU1KiY770tFz6aVIF8MveoLoxZp9slstF/PPM2cuH7oyVYUdA7iiopMYnBsWiwRCdr62li4TXb5+AxWeMeXlMwwVjT7fZ7vYF5E1ojracC1oN9a5xA66YSZEG0fjH6WO8gLZbnmSyZ4zg2egltxDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1w3S9fK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWm5XRlP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AF2C19423;
-	Tue, 31 Mar 2026 17:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1w3S9fK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98EF2C19423;
+	Tue, 31 Mar 2026 17:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976926;
-	bh=yUqp8A1jyCS4bATYYEJqbsfXKOhL5jtpwRGyV4+hYn4=;
+	s=korg; t=1774976928;
+	bh=0K8xiby8NlOXIAQlshDF67my8XXu9Qx14kww9oIw03o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWm5XRlPbPGWBWSQAl2c78XOSOr7yPtV1BQbsP/OFrs53CN3xCXSvzsy0lWFlz+PJ
-	 ncNICwbZ+8MU+0IQJcwVeheixwrXgUwrmWIZJ7rybTymYOs5ilnbL/fsSAoSiJGYyz
-	 WnO+h4b4PwXRNJWvDmXgW7EZhlazqcO6YDc2NAmg=
+	b=c1w3S9fKc/SLtPT9lfozfJkwdyOcvHe3Kh/lmUVtxXMce3PUSVmJYDmLsclzIkW2F
+	 QvKLZtDKnrgDsX0YP/uWtdp5O1565TlYOU8VRNMlWQQt9e8lONDN7jLEUkutYhuBea
+	 pvwZynTc+RFgVrz3tQAoGq/G8rcR33kxYIjeUyH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Antonius <antonius@bluedragonsec.com>,
-	"David Hildenbrand (ARM)" <david@kernel.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Jann Horn <jannh@google.com>,
-	Jeff Xu <jeffxu@chromium.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 282/309] mm/mseal: update VMA end correctly on merge
-Date: Tue, 31 Mar 2026 18:23:05 +0200
-Message-ID: <20260331161803.950072738@linuxfoundation.org>
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 283/309] dmaengine: idxd: Fix crash when the event log is disabled
+Date: Tue, 31 Mar 2026 18:23:06 +0200
+Message-ID: <20260331161803.986688322@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -57,73 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-commit 2697dd8ae721db4f6a53d4f4cbd438212a80f8dc upstream.
+[ Upstream commit 52d2edea0d63c935e82631e4b9e4a94eccf97b5b ]
 
-Previously we stored the end of the current VMA in curr_end, and then upon
-iterating to the next VMA updated curr_start to curr_end to advance to the
-next VMA.
+If reporting errors to the event log is not supported by the hardware,
+and an error that causes Function Level Reset (FLR) is received, the
+driver will try to restore the event log even if it was not allocated.
 
-However, this doesn't take into account the fact that a VMA might be
-updated due to a merge by vma_modify_flags(), which can result in curr_end
-being stale and thus, upon setting curr_start to curr_end, ending up with
-an incorrect curr_start on the next iteration.
+Also, only try to free the event log if it was properly allocated.
 
-Resolve the issue by setting curr_end to vma->vm_end unconditionally to
-ensure this value remains updated should this occur.
-
-While we're here, eliminate this entire class of bug by simply setting
-const curr_[start/end] to be clamped to the input range and VMAs, which
-also happens to simplify the logic.
-
-Link: https://lkml.kernel.org/r/20260327173104.322405-1-ljs@kernel.org
-Fixes: 6c2da14ae1e0 ("mm/mseal: rework mseal apply logic")
-Signed-off-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Reported-by: Antonius <antonius@bluedragonsec.com>
-Closes: https://lore.kernel.org/linux-mm/CAK8a0jwWGj9-SgFk0yKFh7i8jMkwKm5b0ao9=kmXWjO54veX2g@mail.gmail.com/
-Suggested-by: David Hildenbrand (ARM) <david@kernel.org>
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jeff Xu <jeffxu@chromium.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6078a315aec1 ("dmaengine: idxd: Add idxd_device_config_save() and idxd_device_config_restore() helpers")
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-2-7ed70658a9d1@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mseal.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/dma/idxd/device.c | 3 +++
+ drivers/dma/idxd/init.c   | 3 ++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/mm/mseal.c
-+++ b/mm/mseal.c
-@@ -56,7 +56,6 @@ static int mseal_apply(struct mm_struct
- 		unsigned long start, unsigned long end)
- {
- 	struct vm_area_struct *vma, *prev;
--	unsigned long curr_start = start;
- 	VMA_ITERATOR(vmi, mm, start);
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index 5cf419fe6b464..c599a902767ee 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -815,6 +815,9 @@ static void idxd_device_evl_free(struct idxd_device *idxd)
+ 	struct device *dev = &idxd->pdev->dev;
+ 	struct idxd_evl *evl = idxd->evl;
  
- 	/* We know there are no gaps so this will be non-NULL. */
-@@ -66,7 +65,8 @@ static int mseal_apply(struct mm_struct
- 		prev = vma;
++	if (!evl)
++		return;
++
+ 	gencfg.bits = ioread32(idxd->reg_base + IDXD_GENCFG_OFFSET);
+ 	if (!gencfg.evl_en)
+ 		return;
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index 2acc34b3daff8..449424242631d 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -962,7 +962,8 @@ static void idxd_device_config_restore(struct idxd_device *idxd,
  
- 	for_each_vma_range(vmi, vma, end) {
--		unsigned long curr_end = MIN(vma->vm_end, end);
-+		const unsigned long curr_start = MAX(vma->vm_start, start);
-+		const unsigned long curr_end = MIN(vma->vm_end, end);
+ 	idxd->rdbuf_limit = idxd_saved->saved_idxd.rdbuf_limit;
  
- 		if (!(vma->vm_flags & VM_SEALED)) {
- 			vma = vma_modify_flags(&vmi, prev, vma,
-@@ -78,7 +78,6 @@ static int mseal_apply(struct mm_struct
- 		}
+-	idxd->evl->size = saved_evl->size;
++	if (idxd->evl)
++		idxd->evl->size = saved_evl->size;
  
- 		prev = vma;
--		curr_start = curr_end;
- 	}
- 
- 	return 0;
+ 	for (i = 0; i < idxd->max_groups; i++) {
+ 		struct idxd_group *saved_group, *group;
+-- 
+2.53.0
+
 
 
