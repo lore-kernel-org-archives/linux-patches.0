@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E97433F38A;
-	Tue, 31 Mar 2026 16:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C004533F38A;
+	Tue, 31 Mar 2026 16:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974923; cv=none; b=hkPzO8jGxAYnggO6ZiCh5J7xrrfjB8tuS19+Zg5aYZlk3QIE1/dMd/q5fbgeQW9IOTy6/vcRcec5RJvCVMv9sxJ8AfMR70CyafVqMozcdWhngKW9oq4Sv0YaFDyu/JwFUAZfcC8XI2d2rYMEljaqIr5MNUCFokZoDiL5SWOqlzU=
+	t=1774974925; cv=none; b=OTYnk5/eKPjjxgFwjRMpJZ/qiiSqjn+Ve/5Vm88Wmb+90aCvrBCcrNylReAeS+gBLQAWp8rQAZALNqs2n814HO+90h5Yfp5k6Jaq9Ssk6qICV1abjXxwmgvuY6GeVR+lsC8b8onhOAfs91f8uvoSA2UyJntdxu7wsjofk165Mmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974923; c=relaxed/simple;
-	bh=yGMGiMwBi2laaGxMnr+N9hRYhpkEJ/XoiNP3+DM5Q58=;
+	s=arc-20240116; t=1774974925; c=relaxed/simple;
+	bh=p8z01He+K3vA4qrj75yI2tjhpb9B7z5RPsLq8omq5Fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyg07lvzIOdnlJ0TSjR3Z8f1SKetEH59Dt6xLtEAQu2psLvzLmTiRSNgvOJsOdaOZTOkxaaUac1eqvCVviXTNYxYabYRvIInFh3nKT7FXvRPvpjeh0Ti9GGXSw21yrNIBnTiycQ2KXS8MLWKOInzrsZlExv9Ag+Extw86tQvdWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoQjkxnh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c3fiGkXqWB4VHVQrV+ksqO1IM9r6ReQbEgMTXJ3x/6XWF1OFyuXzdVogdWu+u5VlRX8pCJ1liFoE77lbVW9IgEl37CvqklSDFCE8crGnxCAIcFXisvfsKFfDbD+pOWCwd+6dNzJvvmXgFaT2UnZew2khv2nBq2EQY6rpZC8tY1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqzsPuce; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoQjkxnh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B842AC19423;
-	Tue, 31 Mar 2026 16:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqzsPuce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6EBC19423;
+	Tue, 31 Mar 2026 16:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974923;
-	bh=yGMGiMwBi2laaGxMnr+N9hRYhpkEJ/XoiNP3+DM5Q58=;
+	s=korg; t=1774974925;
+	bh=p8z01He+K3vA4qrj75yI2tjhpb9B7z5RPsLq8omq5Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WoQjkxnhaMZTmfcrnAbm0l4Uyc1mYHqFiKzgPDMmqnP1SCI9zViBZGUrcu23Cr/Ag
-	 M9CpRkLeDH1ZSnz4zbFD55LQlsoEkT6XAdQphKX+xxLXYIhJZEQRb3cGhAQm2J6kh4
-	 vs2JLEd3Ro51uRmRBiB7C/gfYfRuLgLsj8VaOmGs=
+	b=tqzsPuceDsQOcPaBq2e0JIl04wi99eJyYA9br+UXbXXzMC7zElu7/Cv2GDAaUvrIn
+	 AsfLlHm2k7XVq8vapYsN3CfWpjhxVoEc+37hWobkumcIFNbsb8qonmHF8zeasVHqen
+	 y+Lb4kbfSzoF9wOzKd3NIojwYBw+A6E7LUoLmmcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Helen Koike <koike@igalia.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 089/342] dma: swiotlb: add KMSAN annotations to swiotlb_bounce()
-Date: Tue, 31 Mar 2026 18:18:42 +0200
-Message-ID: <20260331161802.294926417@linuxfoundation.org>
+Subject: [PATCH 6.19 098/342] Bluetooth: L2CAP: Fix null-ptr-deref on l2cap_sock_ready_cb
+Date: Tue, 31 Mar 2026 18:18:51 +0200
+Message-ID: <20260331161802.623959372@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,81 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit 6f770b73d0311a5b099277653199bb6421c4fed2 ]
+[ Upstream commit b6552e0503973daf6f23bd6ed9273ef131ee364f ]
 
-When a device performs DMA to a bounce buffer, KMSAN is unaware of
-the write and does not mark the data as initialized.  When
-swiotlb_bounce() later copies the bounce buffer back to the original
-buffer, memcpy propagates the uninitialized shadow to the original
-buffer, causing false positive uninit-value reports.
+Before using sk pointer, check if it is null.
 
-Fix this by calling kmsan_unpoison_memory() on the bounce buffer
-before copying it back in the DMA_FROM_DEVICE path, so that memcpy
-naturally propagates initialized shadow to the destination.
+Fix the following:
 
-Suggested-by: Alexander Potapenko <glider@google.com>
-Link: https://lore.kernel.org/CAG_fn=WUGta-paG1BgsGRoAR+fmuCgh3xo=R3XdzOt_-DqSdHw@mail.gmail.com/
-Fixes: 7ade4f10779c ("dma: kmsan: unpoison DMA mappings")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260315082750.2375581-1-syoshida@redhat.com
+ KASAN: null-ptr-deref in range [0x0000000000000260-0x0000000000000267]
+ CPU: 0 UID: 0 PID: 5985 Comm: kworker/0:5 Not tainted 7.0.0-rc4-00029-ga989fde763f4 #1 PREEMPT(full)
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-9.fc43 06/10/2025
+ Workqueue: events l2cap_info_timeout
+ RIP: 0010:kasan_byte_accessible+0x12/0x30
+ Code: 79 ff ff ff 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 40 d6 48 c1 ef 03 48 b8 00 00 00 00 00 fc ff df <0f> b6 04 07 3c 08 0f 92 c0 c3 cc cce
+ veth0_macvtap: entered promiscuous mode
+ RSP: 0018:ffffc90006e0f808 EFLAGS: 00010202
+ RAX: dffffc0000000000 RBX: ffffffff89746018 RCX: 0000000080000001
+ RDX: 0000000000000000 RSI: ffffffff89746018 RDI: 000000000000004c
+ RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+ R10: dffffc0000000000 R11: ffffffff8aae3e70 R12: 0000000000000000
+ R13: 0000000000000260 R14: 0000000000000260 R15: 0000000000000001
+ FS:  0000000000000000(0000) GS:ffff8880983c2000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00005582615a5008 CR3: 000000007007e000 CR4: 0000000000752ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  __kasan_check_byte+0x12/0x40
+  lock_acquire+0x79/0x2e0
+  lock_sock_nested+0x48/0x100
+  ? l2cap_sock_ready_cb+0x46/0x160
+  l2cap_sock_ready_cb+0x46/0x160
+  l2cap_conn_start+0x779/0xff0
+  ? __pfx_l2cap_conn_start+0x10/0x10
+  ? l2cap_info_timeout+0x60/0xa0
+  ? __pfx___mutex_lock+0x10/0x10
+  l2cap_info_timeout+0x68/0xa0
+  ? process_scheduled_works+0xa8d/0x18c0
+  process_scheduled_works+0xb6e/0x18c0
+  ? __pfx_process_scheduled_works+0x10/0x10
+  ? assign_work+0x3d5/0x5e0
+  worker_thread+0xa53/0xfc0
+  kthread+0x388/0x470
+  ? __pfx_worker_thread+0x10/0x10
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x51e/0xb90
+  ? __pfx_ret_from_fork+0x10/0x10
+ veth1_macvtap: entered promiscuous mode
+  ? __switch_to+0xc7d/0x1450
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ Modules linked in:
+ ---[ end trace 0000000000000000 ]---
+ batman_adv: batadv0: Interface activated: batadv_slave_0
+ batman_adv: batadv0: Interface activated: batadv_slave_1
+ netdevsim netdevsim7 netdevsim0: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim1: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim2: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim3: set [1, 0] type 2 family 0 port 6081 - 0
+ RIP: 0010:kasan_byte_accessible+0x12/0x30
+ Code: 79 ff ff ff 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 40 d6 48 c1 ef 03 48 b8 00 00 00 00 00 fc ff df <0f> b6 04 07 3c 08 0f 92 c0 c3 cc cce
+ ieee80211 phy39: Selected rate control algorithm 'minstrel_ht'
+ RSP: 0018:ffffc90006e0f808 EFLAGS: 00010202
+ RAX: dffffc0000000000 RBX: ffffffff89746018 RCX: 0000000080000001
+ RDX: 0000000000000000 RSI: ffffffff89746018 RDI: 000000000000004c
+ RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+ R10: dffffc0000000000 R11: ffffffff8aae3e70 R12: 0000000000000000
+ R13: 0000000000000260 R14: 0000000000000260 R15: 0000000000000001
+ FS:  0000000000000000(0000) GS:ffff8880983c2000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f7e16139e9c CR3: 000000000e74e000 CR4: 0000000000752ef0
+ PKRU: 55555554
+ Kernel panic - not syncing: Fatal exception
+
+Fixes: 54a59aa2b562 ("Bluetooth: Add l2cap_chan->ops->ready()")
+Signed-off-by: Helen Koike <koike@igalia.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/swiotlb.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_sock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
-index a547c7693135b..b4bc7ce01dadc 100644
---- a/kernel/dma/swiotlb.c
-+++ b/kernel/dma/swiotlb.c
-@@ -30,6 +30,7 @@
- #include <linux/gfp.h>
- #include <linux/highmem.h>
- #include <linux/io.h>
-+#include <linux/kmsan-checks.h>
- #include <linux/iommu-helper.h>
- #include <linux/init.h>
- #include <linux/memblock.h>
-@@ -901,10 +902,19 @@ static void swiotlb_bounce(struct device *dev, phys_addr_t tlb_addr, size_t size
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index bc9760e0abaf8..f1131e4415c95 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1681,6 +1681,9 @@ static void l2cap_sock_ready_cb(struct l2cap_chan *chan)
+ 	struct sock *sk = chan->data;
+ 	struct sock *parent;
  
- 			local_irq_save(flags);
- 			page = pfn_to_page(pfn);
--			if (dir == DMA_TO_DEVICE)
-+			if (dir == DMA_TO_DEVICE) {
-+				/*
-+				 * Ideally, kmsan_check_highmem_page()
-+				 * could be used here to detect infoleaks,
-+				 * but callers may map uninitialized buffers
-+				 * that will be written by the device,
-+				 * causing false positives.
-+				 */
- 				memcpy_from_page(vaddr, page, offset, sz);
--			else
-+			} else {
-+				kmsan_unpoison_memory(vaddr, sz);
- 				memcpy_to_page(page, offset, vaddr, sz);
-+			}
- 			local_irq_restore(flags);
++	if (!sk)
++		return;
++
+ 	lock_sock(sk);
  
- 			size -= sz;
-@@ -913,8 +923,15 @@ static void swiotlb_bounce(struct device *dev, phys_addr_t tlb_addr, size_t size
- 			offset = 0;
- 		}
- 	} else if (dir == DMA_TO_DEVICE) {
-+		/*
-+		 * Ideally, kmsan_check_memory() could be used here to detect
-+		 * infoleaks (uninitialized data being sent to device), but
-+		 * callers may map uninitialized buffers that will be written
-+		 * by the device, causing false positives.
-+		 */
- 		memcpy(vaddr, phys_to_virt(orig_addr), size);
- 	} else {
-+		kmsan_unpoison_memory(vaddr, size);
- 		memcpy(phys_to_virt(orig_addr), vaddr, size);
- 	}
- }
+ 	parent = bt_sk(sk)->parent;
 -- 
 2.51.0
 
