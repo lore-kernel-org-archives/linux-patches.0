@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F865426D2B;
-	Tue, 31 Mar 2026 16:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C547426EB6;
+	Tue, 31 Mar 2026 16:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975852; cv=none; b=E85kzITGB4mTMsE28VcfNV6/ClY7l/NbNxZPB327M4aMBV2oyvu75v4aGUuRjzHxDbnuPS7ZZFdASGBuAEN8CRJOOQtN96EtSwsd5REKjfnaWcD24DWerR4PNEqmUePwWophtRdINMaV+dPi2t4cWN4Uzf/5ITtZo7nKRGMu69Q=
+	t=1774975855; cv=none; b=QeDyuoeCIjbomGy/D2ahv+T26yWS+lqqm6wwKcQ9wyrxakUQCFaphREmQ9h0tP+GGsRboMQmGcwksfkzyjKlLHwebUEBBpasphZ5mGmLNGM6l6NdDE4sjvoOl8Bhdr+notYTYDUrTZKfPmy9F2CzFTaDoq2LZEvafbiyZxCXA1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975852; c=relaxed/simple;
-	bh=oTFjn7np7mNBqcyeL26y6PUEajoicRjugZ2rcQqsXUE=;
+	s=arc-20240116; t=1774975855; c=relaxed/simple;
+	bh=zy4Jf9kX88NvmL94zomEnUzuzE1b1Va9zhO8g7Hk17c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pl+sN4m9WXg1Nbs+nzWyCtkHkPAmzQdoikpyHP9f2FMbeIomZFJpMTNlXHE5w7CU+IStKlpwhkM8/Od4OHH/5ts25M/H7EoBEalQ+f4L2wjOGSss1svcLuE2cys9r7aBD9DuWn+chuepGG1Z7Hn4hl9aH/V6rC0uhUTC2Nz0aHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgrWZ+k9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sv98XYoFAIZSBYL6oWR/34xI7qzFZsJKGU7eF5I5YHdkDcilDnkz3DQfQhPj2wxyBMkEiF2DeI80kUk3eJTZFEhhpYe5PUhSAg63rrxtWc3cH3vUBZ7r2832g5GZe0APDm4Ro3oLLZ+/7rqvDc791t7WQ7lIk3KaSCe0GKRH5vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5Yg+ixH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgrWZ+k9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164E5C19423;
-	Tue, 31 Mar 2026 16:50:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5Yg+ixH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A849EC2BCB5;
+	Tue, 31 Mar 2026 16:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975852;
-	bh=oTFjn7np7mNBqcyeL26y6PUEajoicRjugZ2rcQqsXUE=;
+	s=korg; t=1774975855;
+	bh=zy4Jf9kX88NvmL94zomEnUzuzE1b1Va9zhO8g7Hk17c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TgrWZ+k9f0d6t7/VzYw9wMbL1AJENxALWw8E32P48xLL5fEMY+GdQlA6zT0hpOJsx
-	 4YJiULcRvOVz12pVzNvTvE9BJ6DNYB/dzdDVXXkXE4q+yAVIfXMaAA/SzSWw8DC+HZ
-	 ZaauAUN/RcCnKZiflgrQSf9KaNmwqVkIyuG2rV7w=
+	b=U5Yg+ixHdnmKEHOnjIQv3zgycVJ3fBUXUQjTHOiS08+LxDZZuordfP7JC3sfOhJiP
+	 dapKaaUY82exoaWCujXrEeUuTFDnUnZtaK5DN95gc9QPkIQwsQIKapZLMd9tuoh3cx
+	 iq7rsntjJRzM9LmAnApCRZIV6UUX/JMzFX4EVvH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Anil Samal <anil.samal@intel.com>,
 	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/244] RDMA/irdma: Remove reset check from irdma_modify_qp_to_err()
-Date: Tue, 31 Mar 2026 18:21:02 +0200
-Message-ID: <20260331161745.802297841@linuxfoundation.org>
+Subject: [PATCH 6.12 113/244] RDMA/irdma: Fix deadlock during netdev reset with active connections
+Date: Tue, 31 Mar 2026 18:21:03 +0200
+Message-ID: <20260331161745.837974269@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,36 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+From: Anil Samal <anil.samal@intel.com>
 
-[ Upstream commit c45c6ebd693b944f1ffe429fdfb6cc1674c237be ]
+[ Upstream commit 6f52370970ac07d352a7af4089e55e0e6425f827 ]
 
-During reset, irdma_modify_qp() to error should be called to disconnect
-the QP. Without this fix, if not preceded by irdma_modify_qp() to error, the
-API call irdma_destroy_qp() gets stuck waiting for the QP refcount to go
-to zero, because the cm_node associated with this QP isn't disconnected.
+Resolve deadlock that occurs when user executes netdev reset while RDMA
+applications (e.g., rping) are active. The netdev reset causes ice
+driver to remove irdma auxiliary driver, triggering device_delete and
+subsequent client removal. During client removal, uverbs_client waits
+for QP reference count to reach zero while cma_client holds the final
+reference, creating circular dependency and indefinite wait in iWARP
+mode. Skip QP reference count wait during device reset to prevent
+deadlock.
 
-Fixes: 915cc7ac0f8e ("RDMA/irdma: Add miscellaneous utility definitions")
+Fixes: c8f304d75f6c ("RDMA/irdma: Prevent QP use after free")
+Signed-off-by: Anil Samal <anil.samal@intel.com>
 Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/utils.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
-index 87a6d58663ded..a88f93b961682 100644
---- a/drivers/infiniband/hw/irdma/utils.c
-+++ b/drivers/infiniband/hw/irdma/utils.c
-@@ -2340,8 +2340,6 @@ void irdma_modify_qp_to_err(struct irdma_sc_qp *sc_qp)
- 	struct irdma_qp *qp = sc_qp->qp_uk.back_qp;
- 	struct ib_qp_attr attr;
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 5db64fae45515..1f267dea6460e 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -536,7 +536,8 @@ static int irdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 	}
  
--	if (qp->iwdev->rf->reset)
--		return;
- 	attr.qp_state = IB_QPS_ERR;
+ 	irdma_qp_rem_ref(&iwqp->ibqp);
+-	wait_for_completion(&iwqp->free_qp);
++	if (!iwdev->rf->reset)
++		wait_for_completion(&iwqp->free_qp);
+ 	irdma_free_lsmm_rsrc(iwqp);
+ 	irdma_cqp_qp_destroy_cmd(&iwdev->rf->sc_dev, &iwqp->sc_qp);
  
- 	if (rdma_protocol_roce(qp->ibqp.device, 1))
 -- 
 2.53.0
 
