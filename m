@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEAE3F23DD;
-	Tue, 31 Mar 2026 16:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AFC3E3C40;
+	Tue, 31 Mar 2026 16:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974770; cv=none; b=Hrjs0Mg8jlNWBbg7o+f7e9q13lEP4LgXgwTa6Fzax2XdmoErWhAQ1o7ipgiIive5/2BCJZxQML/E5xUqnP1vcaU02XXzzOAbc6pxdBRohDw+FwS/OkRd0E9fg5kDggwdBhLrifxaTyNjIMAVUL+Kx0toiInXdntw2t3v2inoko4=
+	t=1774974773; cv=none; b=SCsfttywNvrjIUi/ADnh+spG0nHJ8CSP+vXRuAx+82Wkwok1Q4bmh5HmmuPIrMUrys8e9zOIB/tLKE7uqWegYrgU6rUsdyBKag3Fc1MLltliDxtW1YENsxH6Q8CuKytL3OGvdceF4An7Z+wN8wJ/ydcW3Smq12c6xhutViwPitI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974770; c=relaxed/simple;
-	bh=lolrRmHXvOImeMEg6ER8DkTxeAq2N3rtfi0TDpyK9GA=;
+	s=arc-20240116; t=1774974773; c=relaxed/simple;
+	bh=AAZQqDAPRqxhISvab/YLXTwZsWQOrV7a7ADs+l5Qc6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1gascfziwa+0cZSB/MSNrDY4bwK5F3NMIjIaZYAPIV30JCfdr+UGaeM8wEOSRdz0Smkw/yAKVCoqQLd2HynMAfRIbiHmPl1OmDv2piPaC4+x0GEqaSLC5gmVPnz5rr4wa350maSGzJtdhdP3cZiTt8siY5yG6x3S6dYUPkA/yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/KGvX4D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WFP5IcAanhK/RWExLYSkdZKUDiIeyVO81epmcG5+3yDy9thnlDKhstyn8AWVS5mG7bS57+JvvYgrHl0be2ZWEcORKoYkkVU0TKpXSk0Tko73PRLRgfufYOdipnp6zeVQj5xhdZio68F0JsagSVaDKSK8iEVK+NuFo6QCSjmoqS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mweK52y5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/KGvX4D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661E0C19423;
-	Tue, 31 Mar 2026 16:32:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mweK52y5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F17C19423;
+	Tue, 31 Mar 2026 16:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974770;
-	bh=lolrRmHXvOImeMEg6ER8DkTxeAq2N3rtfi0TDpyK9GA=;
+	s=korg; t=1774974773;
+	bh=AAZQqDAPRqxhISvab/YLXTwZsWQOrV7a7ADs+l5Qc6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/KGvX4DqeH8pBH7Ck10LtlwXreEQP9vhQ6ds/KmMrCYHmR++14mB6ono5k26uTO2
-	 vwYLoKKvFXqaZwdrUoXSbU4ZMLhFIH6KMGKZgiWbWWMT4vT4p3ghGruNd4OsMKkSdf
-	 kc5gGIoVRaQscMZVCLcygIkB0QSELiQsvJ/ju9j0=
+	b=mweK52y5W1dbZ9ylkOLbIQAgEwr4fls50fnNV8qTgjm/8Us2Pv8IoryszFZtRBlLO
+	 5pQNzQqHpvDNc+WwUBT9EFqeTvTcH053NsZuPVFlLtyyD1JxZMKdT+lIQ/6BE63AqV
+	 NhkfxVOCzUe4OtFIGjH60mx/mcwonaUX05lp50Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Jiri Kosina <jkosina@suse.com>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 037/342] HID: apple: Add EPOMAKER TH87 to the non-apple keyboards list
-Date: Tue, 31 Mar 2026 18:17:50 +0200
-Message-ID: <20260331161800.270240890@linuxfoundation.org>
+Subject: [PATCH 6.19 038/342] platform/x86: oxpec: Add support for OneXPlayer X1z
+Date: Tue, 31 Mar 2026 18:17:51 +0200
+Message-ID: <20260331161800.306105330@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -45,45 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 7c698de0dc5daa1e1a5fd1f0c6aa1b6bb2f5d867 ]
+[ Upstream commit 4049c46edb5d44c0de045f6f504371705dd603dd ]
 
-EPOMAKER TH87 has the very same ID as Apple Aluminum keyboard
-(05ac:024f) although it doesn't work as expected in compatible way.
+X1z is a variant of OneXPlayer X1 A with 8840U. It seems that only one
+user has this one. Add a quirk for it to the oxpec driver.
 
-Put three entries to the non-apple keyboards list to exclude this
-device: one for BT ("TH87"), one for USB ("HFD Epomaker TH87") and one
-for dongle ("2.4G Wireless Receiver").
-
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1258455
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://patch.msgid.link/20260223183004.2696892-3-lkml@antheas.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-apple.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/x86/oxpec.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index 233e367cce1d1..2f9a2e07c4263 100644
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -365,6 +365,9 @@ static const struct apple_non_apple_keyboard non_apple_keyboards[] = {
- 	{ "A3R" },
- 	{ "hfd.cn" },
- 	{ "WKB603" },
-+	{ "TH87" },			/* EPOMAKER TH87 BT mode */
-+	{ "HFD Epomaker TH87" },	/* EPOMAKER TH87 USB mode */
-+	{ "2.4G Wireless Receiver" },	/* EPOMAKER TH87 dongle */
- };
- 
- static bool apple_is_non_apple_keyboard(struct hid_device *hdev)
+diff --git a/drivers/platform/x86/oxpec.c b/drivers/platform/x86/oxpec.c
+index 59d6f9d9a9052..623d9a452c469 100644
+--- a/drivers/platform/x86/oxpec.c
++++ b/drivers/platform/x86/oxpec.c
+@@ -219,6 +219,13 @@ static const struct dmi_system_id dmi_table[] = {
+ 		},
+ 		.driver_data = (void *)oxp_mini_amd_pro,
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
++			DMI_EXACT_MATCH(DMI_BOARD_NAME, "ONEXPLAYER X1z"),
++		},
++		.driver_data = (void *)oxp_x1,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
 -- 
 2.51.0
 
