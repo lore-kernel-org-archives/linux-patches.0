@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FAF3DE431;
-	Tue, 31 Mar 2026 16:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8693DE431;
+	Tue, 31 Mar 2026 16:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975844; cv=none; b=CtdcD2gYT1TUk7MbaGkMPvk+/NLtqo56L/1m2RuxrNTSragOpVnOEsQK2F5hlKTPQdBcH6eXUXoM5gJ/NkuC3/5UekYXihdNZPzU01gkctkF1Eo4A7zG71M9E3KYMWCwoZVBT4JKyf+l9cyXrFueOvRVmZD5VsYEjTNn7drImOk=
+	t=1774975847; cv=none; b=tgiv7tE39zmm+/sZbT0v5aJPpRj1Eynbxpb++ArZYBOUXnMmW8wWS2z45TI8jV58nEmnJIhjSB94pvFABzcSdmaf+sWeRG8/uQPQdSVbqeD8e0Jw2OG9OlXBP+MsmKDbC87Eav4JFSyZnvqdgrHkEdrl0bbCzVpB35lhgvMtqvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975844; c=relaxed/simple;
-	bh=cdGgIiH36vXEoJLsp/isHuYFjcZNk+PcSURW4huTh9M=;
+	s=arc-20240116; t=1774975847; c=relaxed/simple;
+	bh=NCffRoAeQ819NXnPXpyBZiLIaSzNX4Imn7dwIUfzxYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZzGwBl1AbHKit2Hm1pG/LilbGQUs8Sto/JC2L7uO0KfopSajYUtG0FJew2rxxyXqjB2Fnmrz+iBx3/iH4iLIyEtTfkYlLAJYYK8F9+fO4LcA0T5sNvngRgVGQ67LSyX90J1YuXVMdzWxp+Pxa/A/CFrI3VJN1a9tiXKxasMyz/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqOeYoQB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Br82pkB8+fR0qr6W0Xe7YZ/i4ME4owWN0w5bA19Z5zAnkavp6ez3SxKaeKhWYy2KB4ZMOxeMsRNfV1TSqYYtvDAoL9OuBhtsEFMq5YL4+Z7dJA+/vhj/GNiCe8gFzhTqt72xRcX8VIfSgslV7nQI9lYjr9Xdo4rjSZY682oTnHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grQAQsqq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqOeYoQB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B8EC19423;
-	Tue, 31 Mar 2026 16:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grQAQsqq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E502AC19423;
+	Tue, 31 Mar 2026 16:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975844;
-	bh=cdGgIiH36vXEoJLsp/isHuYFjcZNk+PcSURW4huTh9M=;
+	s=korg; t=1774975847;
+	bh=NCffRoAeQ819NXnPXpyBZiLIaSzNX4Imn7dwIUfzxYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BqOeYoQBbns+hgGN5Y9PU232ptxGmdfOgRjhZBQh2rEu/Zrs9ES8fuLoNIt9wLKQK
-	 /ALRS6PLVsNLW5TG10EWbGutoFNNdNLHGffhrXwgAoW02BKXRdk0V9YDyRceHWt5SG
-	 Bx8S/s8whJocDb6hosdAIEhvWfeQTdBVpYQ2L/j4=
+	b=grQAQsqq1m/vRK+Tu6JjEx1rPdh09NejanZVOdxscGu2Eu5hw28sj3KPbe1LXz+IY
+	 bTFqgmT+3aO0FWpZFmIlwLMLbn4PAORtDCMkZrfAb+HO32hC3ngfA1PorU7FQ5poVj
+	 QrgH20GidCRo0BVehN+/t7BRVvEPJaZkFCGIsSHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Minxi Hou <mhou@redhat.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/244] net: bcmasp: streamline early exit in probe
-Date: Tue, 31 Mar 2026 18:20:26 +0200
-Message-ID: <20260331161744.492946725@linuxfoundation.org>
+Subject: [PATCH 6.12 067/244] net: openvswitch: Avoid releasing netdev before teardown completes
+Date: Tue, 31 Mar 2026 18:20:17 +0200
+Message-ID: <20260331161744.162042230@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -46,90 +46,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-[ Upstream commit 1fd1281250c38408d793863c8dcaa43c7de8932c ]
+[ Upstream commit 7c770dadfda5cbbde6aa3c4363ed513f1d212bf8 ]
 
-Streamline the bcmasp_probe early exit. As support for other
-functionality is added(i.e. ptp), it is easier to keep track of early
-exit cleanup when it is all in one place.
+The patch cited in the Fixes tag below changed the teardown code for
+OVS ports to no longer unconditionally take the RTNL. After this change,
+the netdev_destroy() callback can proceed immediately to the call_rcu()
+invocation if the IFF_OVS_DATAPATH flag is already cleared on the
+netdev.
 
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260122194949.1145107-3-justin.chen@broadcom.com
+The ovs_netdev_detach_dev() function clears the flag before completing
+the unregistration, and if it gets preempted after clearing the flag (as
+can happen on an -rt kernel), netdev_destroy() can complete and the
+device can be freed before the unregistration completes. This leads to a
+splat like:
+
+[  998.393867] Oops: general protection fault, probably for non-canonical address 0xff00000001000239: 0000 [#1] SMP PTI
+[  998.393877] CPU: 42 UID: 0 PID: 55177 Comm: ip Kdump: loaded Not tainted 6.12.0-211.1.1.el10_2.x86_64+rt #1 PREEMPT_RT
+[  998.393886] Hardware name: Dell Inc. PowerEdge R740/0JMK61, BIOS 2.24.0 03/27/2025
+[  998.393889] RIP: 0010:dev_set_promiscuity+0x8d/0xa0
+[  998.393901] Code: 00 00 75 d8 48 8b 53 08 48 83 ba b0 02 00 00 00 75 ca 48 83 c4 08 5b c3 cc cc cc cc 48 83 bf 48 09 00 00 00 75 91 48 8b 47 08 <48> 83 b8 b0 02 00 00 00 74 97 eb 81 0f 1f 80 00 00 00 00 90 90 90
+[  998.393906] RSP: 0018:ffffce5864a5f6a0 EFLAGS: 00010246
+[  998.393912] RAX: ff00000000ffff89 RBX: ffff894d0adf5a05 RCX: 0000000000000000
+[  998.393917] RDX: 0000000000000000 RSI: 00000000ffffffff RDI: ffff894d0adf5a05
+[  998.393921] RBP: ffff894d19252000 R08: ffff894d19252000 R09: 0000000000000000
+[  998.393924] R10: ffff894d19252000 R11: ffff894d192521b8 R12: 0000000000000006
+[  998.393927] R13: ffffce5864a5f738 R14: 00000000ffffffe2 R15: 0000000000000000
+[  998.393931] FS:  00007fad61971800(0000) GS:ffff894cc0140000(0000) knlGS:0000000000000000
+[  998.393936] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  998.393940] CR2: 000055df0a2a6e40 CR3: 000000011c7fe003 CR4: 00000000007726f0
+[  998.393944] PKRU: 55555554
+[  998.393946] Call Trace:
+[  998.393949]  <TASK>
+[  998.393952]  ? show_trace_log_lvl+0x1b0/0x2f0
+[  998.393961]  ? show_trace_log_lvl+0x1b0/0x2f0
+[  998.393975]  ? dp_device_event+0x41/0x80 [openvswitch]
+[  998.394009]  ? __die_body.cold+0x8/0x12
+[  998.394016]  ? die_addr+0x3c/0x60
+[  998.394027]  ? exc_general_protection+0x16d/0x390
+[  998.394042]  ? asm_exc_general_protection+0x26/0x30
+[  998.394058]  ? dev_set_promiscuity+0x8d/0xa0
+[  998.394066]  ? ovs_netdev_detach_dev+0x3a/0x80 [openvswitch]
+[  998.394092]  dp_device_event+0x41/0x80 [openvswitch]
+[  998.394102]  notifier_call_chain+0x5a/0xd0
+[  998.394106]  unregister_netdevice_many_notify+0x51b/0xa60
+[  998.394110]  rtnl_dellink+0x169/0x3e0
+[  998.394121]  ? rt_mutex_slowlock.constprop.0+0x95/0xd0
+[  998.394125]  rtnetlink_rcv_msg+0x142/0x3f0
+[  998.394128]  ? avc_has_perm_noaudit+0x69/0xf0
+[  998.394130]  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
+[  998.394132]  netlink_rcv_skb+0x50/0x100
+[  998.394138]  netlink_unicast+0x292/0x3f0
+[  998.394141]  netlink_sendmsg+0x21b/0x470
+[  998.394145]  ____sys_sendmsg+0x39d/0x3d0
+[  998.394149]  ___sys_sendmsg+0x9a/0xe0
+[  998.394156]  __sys_sendmsg+0x7a/0xd0
+[  998.394160]  do_syscall_64+0x7f/0x170
+[  998.394162]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[  998.394165] RIP: 0033:0x7fad61bf4724
+[  998.394188] Code: 89 02 b8 ff ff ff ff eb bb 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 80 3d c5 e9 0c 00 00 74 13 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 48 83 ec 28 89 54 24 1c 48 89
+[  998.394189] RSP: 002b:00007ffd7e2f7cb8 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
+[  998.394191] RAX: ffffffffffffffda RBX: 0000000000000001 RCX: 00007fad61bf4724
+[  998.394193] RDX: 0000000000000000 RSI: 00007ffd7e2f7d20 RDI: 0000000000000003
+[  998.394194] RBP: 00007ffd7e2f7d90 R08: 0000000000000010 R09: 000000000000003f
+[  998.394195] R10: 000055df11558010 R11: 0000000000000202 R12: 00007ffd7e2f8380
+[  998.394196] R13: 0000000069b233d7 R14: 000055df0a256040 R15: 0000000000000000
+[  998.394200]  </TASK>
+
+To fix this, reorder the operations in ovs_netdev_detach_dev() to only
+clear the flag after completing the other operations, and introduce an
+smp_wmb() to make the ordering requirement explicit. The smp_wmb() is
+paired with a full smp_mb() in netdev_destroy() to make sure the
+call_rcu() invocation does not happen before the unregister operations
+are visible.
+
+Reported-by: Minxi Hou <mhou@redhat.com>
+Tested-by: Minxi Hou <mhou@redhat.com>
+Fixes: 549822767630 ("net: openvswitch: Avoid needlessly taking the RTNL on vport destroy")
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20260318155554.1133405-1-toke@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: cbfa5be2bf64 ("net: bcmasp: fix double free of WoL irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp.c | 27 +++++++++++----------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ net/openvswitch/vport-netdev.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-index 57932e5c54e01..1e73595096c13 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-@@ -1286,6 +1286,8 @@ static int bcmasp_probe(struct platform_device *pdev)
- 	bcmasp_core_init(priv);
- 	bcmasp_core_init_filters(priv);
- 
-+	bcmasp_init_wol(priv);
+diff --git a/net/openvswitch/vport-netdev.c b/net/openvswitch/vport-netdev.c
+index 6574f9bcdc026..c688dee96503f 100644
+--- a/net/openvswitch/vport-netdev.c
++++ b/net/openvswitch/vport-netdev.c
+@@ -151,11 +151,15 @@ static void vport_netdev_free(struct rcu_head *rcu)
+ void ovs_netdev_detach_dev(struct vport *vport)
+ {
+ 	ASSERT_RTNL();
+-	vport->dev->priv_flags &= ~IFF_OVS_DATAPATH;
+ 	netdev_rx_handler_unregister(vport->dev);
+ 	netdev_upper_dev_unlink(vport->dev,
+ 				netdev_master_upper_dev_get(vport->dev));
+ 	dev_set_promiscuity(vport->dev, -1);
 +
- 	ports_node = of_find_node_by_name(dev->of_node, "ethernet-ports");
- 	if (!ports_node) {
- 		dev_warn(dev, "No ports found\n");
-@@ -1297,16 +1299,14 @@ static int bcmasp_probe(struct platform_device *pdev)
- 		intf = bcmasp_interface_create(priv, intf_node, i);
- 		if (!intf) {
- 			dev_err(dev, "Cannot create eth interface %d\n", i);
--			bcmasp_remove_intfs(priv);
--			ret = -ENOMEM;
--			goto of_put_exit;
-+			of_node_put(ports_node);
-+			ret = -EINVAL;
-+			goto err_cleanup;
- 		}
- 		list_add_tail(&intf->list, &priv->intfs);
- 		i++;
- 	}
--
--	/* Check and enable WoL */
--	bcmasp_init_wol(priv);
-+	of_node_put(ports_node);
++	/* paired with smp_mb() in netdev_destroy() */
++	smp_wmb();
++
++	vport->dev->priv_flags &= ~IFF_OVS_DATAPATH;
+ }
  
- 	/* Drop the clock reference count now and let ndo_open()/ndo_close()
- 	 * manage it for us from now on.
-@@ -1321,19 +1321,20 @@ static int bcmasp_probe(struct platform_device *pdev)
- 	list_for_each_entry(intf, &priv->intfs, list) {
- 		ret = register_netdev(intf->ndev);
- 		if (ret) {
--			netdev_err(intf->ndev,
--				   "failed to register net_device: %d\n", ret);
--			bcmasp_wol_irq_destroy(priv);
--			bcmasp_remove_intfs(priv);
--			goto of_put_exit;
-+			dev_err(dev, "failed to register net_device: %d\n", ret);
-+			goto err_cleanup;
- 		}
- 		count++;
+ static void netdev_destroy(struct vport *vport)
+@@ -174,6 +178,9 @@ static void netdev_destroy(struct vport *vport)
+ 		rtnl_unlock();
  	}
  
- 	dev_info(dev, "Initialized %d port(s)\n", count);
- 
--of_put_exit:
--	of_node_put(ports_node);
-+	return ret;
++	/* paired with smp_wmb() in ovs_netdev_detach_dev() */
++	smp_mb();
 +
-+err_cleanup:
-+	bcmasp_wol_irq_destroy(priv);
-+	bcmasp_remove_intfs(priv);
-+
- 	return ret;
+ 	call_rcu(&vport->rcu, vport_netdev_free);
  }
  
 -- 
