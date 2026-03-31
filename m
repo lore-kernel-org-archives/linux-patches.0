@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6035C2D8771;
-	Tue, 31 Mar 2026 17:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D6B30FF20;
+	Tue, 31 Mar 2026 17:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774977017; cv=none; b=Bsi3Fjf7rIVjUB28V05MvrPolQ9JH2gCRxaj9IG5uHqd5+XSi/YE8rXcA50fkMexC4VRiEAyOdGH5pGOpyBrK2ptbm6hTFTxiyKgpHGQ2R9r/7YM1pdUKHDGVlz5FjPDMAQlWwxh4J5rRszxAMqEeKEsO4ITVCQvE5MRJJUQy8I=
+	t=1774977020; cv=none; b=Jv2+mn9PfLBgEsgQPAeTfUnbG4mGaXAEyCb7YgepomkPgL8mg5Ji8Zbg03GIe2RnF9JuaTscb2hPnaeZP2GT6jrfJ/QcYEtjAeBG0G9IjnYLMxQiPw3UjlkNeliz593tCKO3P0C8k9Rq1L3E19S/IxZgEdo+2ISzeA+MeJ0e+1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774977017; c=relaxed/simple;
-	bh=hCCbz6N+z2uvFygvQnc+zbDxeqqbRqngkepdDrBwr5w=;
+	s=arc-20240116; t=1774977020; c=relaxed/simple;
+	bh=0O7pbVwcKP6zzxAn3nAxvdvlnhR1hbnc9pRjVpoFrKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2V0FSwtGX9lDf4dPF3jqmpy1+UzMhhdug+9f8NuSKyH0nsYcFA76idNASF6qPb0YRdf4KMcX/foSBjjr1aK9h1AQmXB5DrDObivWMljVSzFYkH3xU8Fh6tpzVfFic2vvI3NJOH7xGZ8U83r4a0S+oUxItkfOeU6VS594I8Q4nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1QQVDiQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M59HuFkL8JJ53NcNKfq5Ato4ktXC5bBU7skdPdgHmr4RYglqppB7yttIBqgjZ4BmzJABxZEde5OKesRSW8mtrPKrxyh39WRKHcUyj8B1QnV4afqsdFhaP6MA5vEgtjBBSTAEm8PgpIHq360a7WaivkiJam+U5KNJ06Q/6dRTFiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJkkXCGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1QQVDiQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EE8C19423;
-	Tue, 31 Mar 2026 17:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJkkXCGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B27C2BCB1;
+	Tue, 31 Mar 2026 17:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774977017;
-	bh=hCCbz6N+z2uvFygvQnc+zbDxeqqbRqngkepdDrBwr5w=;
+	s=korg; t=1774977019;
+	bh=0O7pbVwcKP6zzxAn3nAxvdvlnhR1hbnc9pRjVpoFrKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1QQVDiQ+7Q9u+5gYkAxGz6SQCTCEY6rSHlRL20Zvosle/uv+J//WJtc5lpCsdWs6
-	 uN1eAAKpGkUJxnSupzmhEXKUS2skORiokqCWD4PVIWH3uOo2JXnCP14cXSJrceYfUF
-	 YP6hTk9kaFYei2qCLEas0Pfqv5IEJMQkIqprXTls=
+	b=OJkkXCGuYXwWU9+ews6h1BF7pgGCBCu9dNBTOf1W/MSjlzUbaAbJEHjBtLjQtTyap
+	 bh3AIqgx3x454fjP82U3ysLDaHEc9aBic3DG3xSF3JuK9mxbaZda22GA9il09op9Ql
+	 mGrQXAkR13w+gte4DIR2H8NF9ygobcQqfqojj2lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Christian Eggers <ceggers@arri.de>
-Subject: [PATCH 6.18 309/309] Bluetooth: L2CAP: Fix regressions caused by reusing ident
-Date: Tue, 31 Mar 2026 18:23:32 +0200
-Message-ID: <20260331161804.936345873@linuxfoundation.org>
+	Paulo Alcantara <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 305/309] netfs: Fix the handling of stream->front by removing it
+Date: Tue, 31 Mar 2026 18:23:28 +0200
+Message-ID: <20260331161804.790300354@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -50,81 +54,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 761fb8ec8778f0caf2bba5a41e3cff1ea86974f3 upstream.
+[ Upstream commit 0e764b9d46071668969410ec5429be0e2f38c6d3 ]
 
-This attempt to fix regressions caused by reusing ident which apparently
-is not handled well on certain stacks causing the stack to not respond to
-requests, so instead of simple returning the first unallocated id this
-stores the last used tx_ident and then attempt to use the next until all
-available ids are exausted and then cycle starting over to 1.
+The netfs_io_stream::front member is meant to point to the subrequest
+currently being collected on a stream, but it isn't actually used this way
+by direct write (which mostly ignores it).  However, there's a tracepoint
+which looks at it.  Further, stream->front is actually redundant with
+stream->subrequests.next.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221120
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221177
-Fixes: 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding TX ident")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Christian Eggers <ceggers@arri.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix the potential problem in the direct code by just removing the member
+and using stream->subrequests.next instead, thereby also simplifying the
+code.
+
+Fixes: a0b4c7a49137 ("netfs: Fix unbuffered/DIO writes to dispatch subrequests in strict sequence")
+Reported-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/4158599.1774426817@warthog.procyon.org.uk
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/l2cap.h |    1 +
- net/bluetooth/l2cap_core.c    |   29 ++++++++++++++++++++++++++---
- 2 files changed, 27 insertions(+), 3 deletions(-)
+ fs/netfs/buffered_read.c     | 3 +--
+ fs/netfs/direct_read.c       | 3 +--
+ fs/netfs/direct_write.c      | 1 -
+ fs/netfs/read_collect.c      | 4 ++--
+ fs/netfs/read_single.c       | 1 -
+ fs/netfs/write_collect.c     | 4 ++--
+ fs/netfs/write_issue.c       | 3 +--
+ include/linux/netfs.h        | 1 -
+ include/trace/events/netfs.h | 8 ++++----
+ 9 files changed, 11 insertions(+), 17 deletions(-)
 
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -658,6 +658,7 @@ struct l2cap_conn {
- 	struct sk_buff		*rx_skb;
- 	__u32			rx_len;
- 	struct ida		tx_ida;
-+	__u8			tx_ident;
+diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
+index 37ab6f28b5ad0..88361e8c70961 100644
+--- a/fs/netfs/buffered_read.c
++++ b/fs/netfs/buffered_read.c
+@@ -171,9 +171,8 @@ static void netfs_queue_read(struct netfs_io_request *rreq,
+ 	spin_lock(&rreq->lock);
+ 	list_add_tail(&subreq->rreq_link, &stream->subrequests);
+ 	if (list_is_first(&subreq->rreq_link, &stream->subrequests)) {
+-		stream->front = subreq;
+ 		if (!stream->active) {
+-			stream->collected_to = stream->front->start;
++			stream->collected_to = subreq->start;
+ 			/* Store list pointers before active flag */
+ 			smp_store_release(&stream->active, true);
+ 		}
+diff --git a/fs/netfs/direct_read.c b/fs/netfs/direct_read.c
+index a498ee8d66745..f72e6da88cca7 100644
+--- a/fs/netfs/direct_read.c
++++ b/fs/netfs/direct_read.c
+@@ -71,9 +71,8 @@ static int netfs_dispatch_unbuffered_reads(struct netfs_io_request *rreq)
+ 		spin_lock(&rreq->lock);
+ 		list_add_tail(&subreq->rreq_link, &stream->subrequests);
+ 		if (list_is_first(&subreq->rreq_link, &stream->subrequests)) {
+-			stream->front = subreq;
+ 			if (!stream->active) {
+-				stream->collected_to = stream->front->start;
++				stream->collected_to = subreq->start;
+ 				/* Store list pointers before active flag */
+ 				smp_store_release(&stream->active, true);
+ 			}
+diff --git a/fs/netfs/direct_write.c b/fs/netfs/direct_write.c
+index 4d9760e36c119..f9ab69de3e298 100644
+--- a/fs/netfs/direct_write.c
++++ b/fs/netfs/direct_write.c
+@@ -111,7 +111,6 @@ static int netfs_unbuffered_write(struct netfs_io_request *wreq)
+ 			netfs_prepare_write(wreq, stream, wreq->start + wreq->transferred);
+ 			subreq = stream->construct;
+ 			stream->construct = NULL;
+-			stream->front = NULL;
+ 		}
  
- 	struct sk_buff_head	pending_rx;
- 	struct work_struct	pending_rx_work;
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -926,16 +926,39 @@ int l2cap_chan_check_security(struct l2c
- 
- static int l2cap_get_ident(struct l2cap_conn *conn)
- {
-+	u8 max;
-+	int ident;
-+
- 	/* LE link does not support tools like l2ping so use the full range */
- 	if (conn->hcon->type == LE_LINK)
--		return ida_alloc_range(&conn->tx_ida, 1, 255, GFP_ATOMIC);
--
-+		max = 255;
- 	/* Get next available identificator.
- 	 *    1 - 128 are used by kernel.
- 	 *  129 - 199 are reserved.
- 	 *  200 - 254 are used by utilities like l2ping, etc.
+ 		/* Check if (re-)preparation failed. */
+diff --git a/fs/netfs/read_collect.c b/fs/netfs/read_collect.c
+index 137f0e28a44c5..e5f6665b3341e 100644
+--- a/fs/netfs/read_collect.c
++++ b/fs/netfs/read_collect.c
+@@ -205,7 +205,8 @@ static void netfs_collect_read_results(struct netfs_io_request *rreq)
+ 	 * in progress.  The issuer thread may be adding stuff to the tail
+ 	 * whilst we're doing this.
  	 */
--	return ida_alloc_range(&conn->tx_ida, 1, 128, GFP_ATOMIC);
-+	else
-+		max = 128;
-+
-+	/* Allocate ident using min as last used + 1 (cyclic) */
-+	ident = ida_alloc_range(&conn->tx_ida, READ_ONCE(conn->tx_ident) + 1,
-+				max, GFP_ATOMIC);
-+	/* Force min 1 to start over */
-+	if (ident <= 0) {
-+		ident = ida_alloc_range(&conn->tx_ida, 1, max, GFP_ATOMIC);
-+		if (ident <= 0) {
-+			/* If all idents are in use, log an error, this is
-+			 * extremely unlikely to happen and would indicate a bug
-+			 * in the code that idents are not being freed properly.
-+			 */
-+			BT_ERR("Unable to allocate ident: %d", ident);
-+			return 0;
-+		}
-+	}
-+
-+	WRITE_ONCE(conn->tx_ident, ident);
-+
-+	return ident;
- }
+-	front = READ_ONCE(stream->front);
++	front = list_first_entry_or_null(&stream->subrequests,
++					 struct netfs_io_subrequest, rreq_link);
+ 	while (front) {
+ 		size_t transferred;
  
- static void l2cap_send_acl(struct l2cap_conn *conn, struct sk_buff *skb,
+@@ -301,7 +302,6 @@ static void netfs_collect_read_results(struct netfs_io_request *rreq)
+ 		list_del_init(&front->rreq_link);
+ 		front = list_first_entry_or_null(&stream->subrequests,
+ 						 struct netfs_io_subrequest, rreq_link);
+-		stream->front = front;
+ 		spin_unlock(&rreq->lock);
+ 		netfs_put_subrequest(remove,
+ 				     notes & ABANDON_SREQ ?
+diff --git a/fs/netfs/read_single.c b/fs/netfs/read_single.c
+index 5c0dc4efc7922..9d48ced80d1fa 100644
+--- a/fs/netfs/read_single.c
++++ b/fs/netfs/read_single.c
+@@ -107,7 +107,6 @@ static int netfs_single_dispatch_read(struct netfs_io_request *rreq)
+ 	spin_lock(&rreq->lock);
+ 	list_add_tail(&subreq->rreq_link, &stream->subrequests);
+ 	trace_netfs_sreq(subreq, netfs_sreq_trace_added);
+-	stream->front = subreq;
+ 	/* Store list pointers before active flag */
+ 	smp_store_release(&stream->active, true);
+ 	spin_unlock(&rreq->lock);
+diff --git a/fs/netfs/write_collect.c b/fs/netfs/write_collect.c
+index 83eb3dc1adf8a..b194447f4b111 100644
+--- a/fs/netfs/write_collect.c
++++ b/fs/netfs/write_collect.c
+@@ -228,7 +228,8 @@ static void netfs_collect_write_results(struct netfs_io_request *wreq)
+ 		if (!smp_load_acquire(&stream->active))
+ 			continue;
+ 
+-		front = stream->front;
++		front = list_first_entry_or_null(&stream->subrequests,
++						 struct netfs_io_subrequest, rreq_link);
+ 		while (front) {
+ 			trace_netfs_collect_sreq(wreq, front);
+ 			//_debug("sreq [%x] %llx %zx/%zx",
+@@ -279,7 +280,6 @@ static void netfs_collect_write_results(struct netfs_io_request *wreq)
+ 			list_del_init(&front->rreq_link);
+ 			front = list_first_entry_or_null(&stream->subrequests,
+ 							 struct netfs_io_subrequest, rreq_link);
+-			stream->front = front;
+ 			spin_unlock(&wreq->lock);
+ 			netfs_put_subrequest(remove,
+ 					     notes & SAW_FAILURE ?
+diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
+index 437268f656409..2db688f941251 100644
+--- a/fs/netfs/write_issue.c
++++ b/fs/netfs/write_issue.c
+@@ -206,9 +206,8 @@ void netfs_prepare_write(struct netfs_io_request *wreq,
+ 	spin_lock(&wreq->lock);
+ 	list_add_tail(&subreq->rreq_link, &stream->subrequests);
+ 	if (list_is_first(&subreq->rreq_link, &stream->subrequests)) {
+-		stream->front = subreq;
+ 		if (!stream->active) {
+-			stream->collected_to = stream->front->start;
++			stream->collected_to = subreq->start;
+ 			/* Write list pointers before active flag */
+ 			smp_store_release(&stream->active, true);
+ 		}
+diff --git a/include/linux/netfs.h b/include/linux/netfs.h
+index 72ee7d210a744..ba17ac5bf356a 100644
+--- a/include/linux/netfs.h
++++ b/include/linux/netfs.h
+@@ -140,7 +140,6 @@ struct netfs_io_stream {
+ 	void (*issue_write)(struct netfs_io_subrequest *subreq);
+ 	/* Collection tracking */
+ 	struct list_head	subrequests;	/* Contributory I/O operations */
+-	struct netfs_io_subrequest *front;	/* Op being collected */
+ 	unsigned long long	collected_to;	/* Position we've collected results to */
+ 	size_t			transferred;	/* The amount transferred from this stream */
+ 	unsigned short		error;		/* Aggregate error for the stream */
+diff --git a/include/trace/events/netfs.h b/include/trace/events/netfs.h
+index 2d366be46a1c3..cbe28211106c5 100644
+--- a/include/trace/events/netfs.h
++++ b/include/trace/events/netfs.h
+@@ -740,19 +740,19 @@ TRACE_EVENT(netfs_collect_stream,
+ 		    __field(unsigned int,	wreq)
+ 		    __field(unsigned char,	stream)
+ 		    __field(unsigned long long,	collected_to)
+-		    __field(unsigned long long,	front)
++		    __field(unsigned long long,	issued_to)
+ 			     ),
+ 
+ 	    TP_fast_assign(
+ 		    __entry->wreq	= wreq->debug_id;
+ 		    __entry->stream	= stream->stream_nr;
+ 		    __entry->collected_to = stream->collected_to;
+-		    __entry->front	= stream->front ? stream->front->start : UINT_MAX;
++		    __entry->issued_to	= atomic64_read(&wreq->issued_to);
+ 			   ),
+ 
+-	    TP_printk("R=%08x[%x:] cto=%llx frn=%llx",
++	    TP_printk("R=%08x[%x:] cto=%llx ito=%llx",
+ 		      __entry->wreq, __entry->stream,
+-		      __entry->collected_to, __entry->front)
++		      __entry->collected_to, __entry->issued_to)
+ 	    );
+ 
+ TRACE_EVENT(netfs_folioq,
+-- 
+2.53.0
+
 
 
