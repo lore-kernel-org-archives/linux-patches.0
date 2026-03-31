@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBE03F7867;
-	Tue, 31 Mar 2026 16:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E3B3E4C6C;
+	Tue, 31 Mar 2026 16:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976107; cv=none; b=Q3EyuVsqz/1s+4x07T7Go2eGTygZt0hz4sCqEFzEL0lAiNQnro1DmTZfgwi+7UPgXWHdFMMd1hp5dH40DfEb54EPSa3EqpLPDZCRCnKJXrh82+8F/WJ4ZckmnEzYQVP+92zdhDodYKSsrYRwWq7Br9KDUKSFgxt5qvso5NOHGwE=
+	t=1774976109; cv=none; b=XmkztcExD4nlHe/1KjuQy3AkoCjb4NOIxyywZTnoDMvBjUwklz9PkUQyWyo3XXWIm2yqyY23G698Wsczm/WXEdvHtzDiLaaFR/kRysGU/UPaiHn5mQoOgc+1ceonlGirzUo25AFLk5MyoPo4VPiTYGEDdhMVCnJa8zKXQ6Riy1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976107; c=relaxed/simple;
-	bh=MAehULrpugo1tRvlGQnzCjc6QqFwfu1NK+rU8IBIqGk=;
+	s=arc-20240116; t=1774976109; c=relaxed/simple;
+	bh=WLyokls13gb2WA2QiyERNQs3NsCmMT/luNDv73BhrfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BsxICe90bnRkxp+accnvF873XGhLpxNHzo49jl91cQ3K36ioDXZXoMDBXOiwS0kveaevqApdzxVX75C+mcjraEtNzWmyDtOqPn9MUxtI1gnt1QIa+C/87xk6Zlc6K9h+zF0Izc2GGizhsQ3Db/gAi3cvAfRtS9E6w4eA8R5VivU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6p7mCuc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W6kYTYwkaShOeTGJx0bz9v9B4Il0wxZAAhNk8WGsFP7Zar0eT5a7plOt/DchCevmQXrGWAsYjm3xFse8CUzlJks/uW8P4BPr6ULzh+YIeEsQc76IWdfH69ufjU4ZXLKL9FhEX7q5l6pEM712SConNuBzRYbg1IyylD4bgpv1N6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aybh0c3l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6p7mCuc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86336C19423;
-	Tue, 31 Mar 2026 16:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aybh0c3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EADC19423;
+	Tue, 31 Mar 2026 16:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976106;
-	bh=MAehULrpugo1tRvlGQnzCjc6QqFwfu1NK+rU8IBIqGk=;
+	s=korg; t=1774976109;
+	bh=WLyokls13gb2WA2QiyERNQs3NsCmMT/luNDv73BhrfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6p7mCucTwwrwXwS5249JckU194oJfJ6TeEnaYxHvFTslrUc4y9ffTn1t+VqzB4jB
-	 I16WIVOHO+VBZ1LKcrt81o/cFLP1VCvW/LP2UIbDovVt4cCbAfzspNeGMfETd8Ktis
-	 CqvYRXuhRPNAGKI+ngLXqFatwiHEgUtQQ871jv+U=
+	b=Aybh0c3l67moasaVz5SdGGtVCoqhDtPMuwKKWcZEYH+hTHHWin8jivbCxMlD2Glk0
+	 FsfiVjSwrnYMO1VegQyXhjxh3YsqORBZJNc3sJrE8SWXCAHqcMwo8svU5AHDsJ8hkh
+	 ZKVbFWoUiEXFsIsfdS3hcuBOh6yUy0ukFYnbXnik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	Benno Lossin <lossin@kernel.org>
-Subject: [PATCH 6.12 208/244] rust: pin-init: add references to previously initialized fields
-Date: Tue, 31 Mar 2026 18:22:38 +0200
-Message-ID: <20260331161749.436709449@linuxfoundation.org>
+	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
+	Yuto Ohnuki <ytohnuki@amazon.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.12 177/244] xfs: stop reclaim before pushing AIL during unmount
+Date: Tue, 31 Mar 2026 18:22:07 +0200
+Message-ID: <20260331161748.292931150@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -50,219 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benno Lossin <lossin@kernel.org>
+From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-commit 42415d163e5df6db799c7de6262d707e402c2c7e upstream.
+commit 4f24a767e3d64a5f58c595b5c29b6063a201f1e3 upstream.
 
-After initializing a field in an initializer macro, create a variable
-holding a reference that points at that field. The type is either
-`Pin<&mut T>` or `&mut T` depending on the field's structural pinning
-kind.
+The unmount sequence in xfs_unmount_flush_inodes() pushed the AIL while
+background reclaim and inodegc are still running. This is broken
+independently of any use-after-free issues - background reclaim and
+inodegc should not be running while the AIL is being pushed during
+unmount, as inodegc can dirty and insert inodes into the AIL during the
+flush, and background reclaim can race to abort and free dirty inodes.
 
-[ Applied fixes to devres and rust_driver_pci sample - Benno]
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Benno Lossin <lossin@kernel.org>
-[ Removed the devres changes, because devres is not present in 6.12.y and
-  earlier. Also adjusted paths in the macro to account for the fact that
-  pin-init is part of the kernel crate in 6.12.y and earlier. - Benno ]
-Signed-off-by: Benno Lossin <lossin@kernel.org>
+Reorder xfs_unmount_flush_inodes() to stop inodegc and cancel background
+reclaim before pushing the AIL. Stop inodegc before cancelling
+m_reclaim_work because the inodegc worker can re-queue m_reclaim_work
+via xfs_inodegc_set_reclaimable.
+
+Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
+Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
+Cc: stable@vger.kernel.org # v5.9
+Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/init/macros.rs |  149 ++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 115 insertions(+), 34 deletions(-)
+ fs/xfs/xfs_mount.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -985,38 +985,56 @@ macro_rules! __pin_data {
-         @pinned($($(#[$($p_attr:tt)*])* $pvis:vis $p_field:ident : $p_type:ty),* $(,)?),
-         @not_pinned($($(#[$($attr:tt)*])* $fvis:vis $field:ident : $type:ty),* $(,)?),
-     ) => {
--        // For every field, we create a projection function according to its projection type. If a
--        // field is structurally pinned, then it must be initialized via `PinInit`, if it is not
--        // structurally pinned, then it can be initialized via `Init`.
--        //
--        // The functions are `unsafe` to prevent accidentally calling them.
--        #[allow(dead_code)]
--        #[expect(clippy::missing_safety_doc)]
--        impl<$($impl_generics)*> $pin_data<$($ty_generics)*>
--        where $($whr)*
--        {
--            $(
--                $(#[$($p_attr)*])*
--                $pvis unsafe fn $p_field<E>(
--                    self,
--                    slot: *mut $p_type,
--                    init: impl $crate::init::PinInit<$p_type, E>,
--                ) -> ::core::result::Result<(), E> {
--                    // SAFETY: TODO.
--                    unsafe { $crate::init::PinInit::__pinned_init(init, slot) }
--                }
--            )*
--            $(
--                $(#[$($attr)*])*
--                $fvis unsafe fn $field<E>(
--                    self,
--                    slot: *mut $type,
--                    init: impl $crate::init::Init<$type, E>,
--                ) -> ::core::result::Result<(), E> {
--                    // SAFETY: TODO.
--                    unsafe { $crate::init::Init::__init(init, slot) }
--                }
--            )*
-+        $crate::macros::paste! {
-+            // For every field, we create a projection function according to its projection type. If a
-+            // field is structurally pinned, then it must be initialized via `PinInit`, if it is not
-+            // structurally pinned, then it can be initialized via `Init`.
-+            //
-+            // The functions are `unsafe` to prevent accidentally calling them.
-+            #[allow(dead_code, non_snake_case)]
-+            #[expect(clippy::missing_safety_doc)]
-+            impl<$($impl_generics)*> $pin_data<$($ty_generics)*>
-+            where $($whr)*
-+            {
-+                $(
-+                    $(#[$($p_attr)*])*
-+                    $pvis unsafe fn $p_field<E>(
-+                        self,
-+                        slot: *mut $p_type,
-+                        init: impl $crate::init::PinInit<$p_type, E>,
-+                    ) -> ::core::result::Result<(), E> {
-+                        // SAFETY: TODO.
-+                        unsafe { $crate::init::PinInit::__pinned_init(init, slot) }
-+                    }
-+
-+                    $(#[$($p_attr)*])*
-+                    $pvis unsafe fn [<__project_ $p_field>]<'__slot>(
-+                        self,
-+                        slot: &'__slot mut $p_type,
-+                    ) -> ::core::pin::Pin<&'__slot mut $p_type> {
-+                        unsafe { ::core::pin::Pin::new_unchecked(slot) }
-+                    }
-+                )*
-+                $(
-+                    $(#[$($attr)*])*
-+                    $fvis unsafe fn $field<E>(
-+                        self,
-+                        slot: *mut $type,
-+                        init: impl $crate::init::Init<$type, E>,
-+                    ) -> ::core::result::Result<(), E> {
-+                        // SAFETY: TODO.
-+                        unsafe { $crate::init::Init::__init(init, slot) }
-+                    }
-+
-+                    $(#[$($attr)*])*
-+                    $fvis unsafe fn [<__project_ $field>]<'__slot>(
-+                        self,
-+                        slot: &'__slot mut $type,
-+                    ) -> &'__slot mut $type {
-+                        slot
-+                    }
-+                )*
-+            }
-         }
-     };
- }
-@@ -1213,6 +1231,13 @@ macro_rules! __init_internal {
-         // return when an error/panic occurs.
-         // We also use the `data` to require the correct trait (`Init` or `PinInit`) for `$field`.
-         unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field), init)? };
-+        // SAFETY:
-+        // - the project function does the correct field projection,
-+        // - the field has been initialized,
-+        // - the reference is only valid until the end of the initializer.
-+        #[allow(unused_variables, unused_assignments)]
-+        let $field = $crate::macros::paste!(unsafe { $data.[< __project_ $field >](&mut (*$slot).$field) });
-+
-         // Create the drop guard:
-         //
-         // We rely on macro hygiene to make it impossible for users to access this local variable.
-@@ -1244,6 +1269,14 @@ macro_rules! __init_internal {
-         // SAFETY: `slot` is valid, because we are inside of an initializer closure, we
-         // return when an error/panic occurs.
-         unsafe { $crate::init::Init::__init(init, ::core::ptr::addr_of_mut!((*$slot).$field))? };
-+
-+        // SAFETY:
-+        // - the field is not structurally pinned, since the line above must compile,
-+        // - the field has been initialized,
-+        // - the reference is only valid until the end of the initializer.
-+        #[allow(unused_variables, unused_assignments)]
-+        let $field = unsafe { &mut (*$slot).$field };
-+
-         // Create the drop guard:
-         //
-         // We rely on macro hygiene to make it impossible for users to access this local variable.
-@@ -1262,7 +1295,7 @@ macro_rules! __init_internal {
-             );
-         }
-     };
--    (init_slot($($use_data:ident)?):
-+    (init_slot(): // No `use_data`, so all fields are not structurally pinned
-         @data($data:ident),
-         @slot($slot:ident),
-         @guards($($guards:ident,)*),
-@@ -1276,6 +1309,15 @@ macro_rules! __init_internal {
-             // SAFETY: The memory at `slot` is uninitialized.
-             unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
-         }
-+
-+        #[allow(unused_variables, unused_assignments)]
-+        // SAFETY:
-+        // - the field is not structurally pinned, since no `use_data` was required to create this
-+        //   initializer,
-+        // - the field has been initialized,
-+        // - the reference is only valid until the end of the initializer.
-+        let $field = unsafe { &mut (*$slot).$field };
-+
-         // Create the drop guard:
-         //
-         // We rely on macro hygiene to make it impossible for users to access this local variable.
-@@ -1286,7 +1328,46 @@ macro_rules! __init_internal {
-                 $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
-             };
+--- a/fs/xfs/xfs_mount.c
++++ b/fs/xfs/xfs_mount.c
+@@ -588,8 +588,9 @@ xfs_unmount_check(
+  * have been retrying in the background.  This will prevent never-ending
+  * retries in AIL pushing from hanging the unmount.
+  *
+- * Finally, we can push the AIL to clean all the remaining dirty objects, then
+- * reclaim the remaining inodes that are still in memory at this point in time.
++ * Stop inodegc and background reclaim before pushing the AIL so that they
++ * are not running while the AIL is being flushed. Then push the AIL to
++ * clean all the remaining dirty objects and reclaim the remaining inodes.
+  */
+ static void
+ xfs_unmount_flush_inodes(
+@@ -601,9 +602,9 @@ xfs_unmount_flush_inodes(
  
--            $crate::__init_internal!(init_slot($($use_data)?):
-+            $crate::__init_internal!(init_slot():
-+                @data($data),
-+                @slot($slot),
-+                @guards([< __ $field _guard >], $($guards,)*),
-+                @munch_fields($($rest)*),
-+            );
-+        }
-+    };
-+    (init_slot($use_data:ident):
-+        @data($data:ident),
-+        @slot($slot:ident),
-+        @guards($($guards:ident,)*),
-+        // Init by-value.
-+        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-+    ) => {
-+        {
-+            $(let $field = $val;)?
-+            // Initialize the field.
-+            //
-+            // SAFETY: The memory at `slot` is uninitialized.
-+            unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
-+        }
-+        // SAFETY:
-+        // - the project function does the correct field projection,
-+        // - the field has been initialized,
-+        // - the reference is only valid until the end of the initializer.
-+        #[allow(unused_variables, unused_assignments)]
-+        let $field = $crate::macros::paste!(unsafe { $data.[< __project_ $field >](&mut (*$slot).$field) });
-+
-+        // Create the drop guard:
-+        //
-+        // We rely on macro hygiene to make it impossible for users to access this local variable.
-+        // We use `paste!` to create new hygiene for `$field`.
-+        $crate::macros::paste! {
-+            // SAFETY: We forget the guard later when initialization has succeeded.
-+            let [< __ $field _guard >] = unsafe {
-+                $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
-+            };
-+
-+            $crate::__init_internal!(init_slot($use_data):
-                 @data($data),
-                 @slot($slot),
-                 @guards([< __ $field _guard >], $($guards,)*),
+ 	xfs_set_unmounting(mp);
+ 
+-	xfs_ail_push_all_sync(mp->m_ail);
+ 	xfs_inodegc_stop(mp);
+ 	cancel_delayed_work_sync(&mp->m_reclaim_work);
++	xfs_ail_push_all_sync(mp->m_ail);
+ 	xfs_reclaim_inodes(mp);
+ 	xfs_health_unmount(mp);
+ }
 
 
