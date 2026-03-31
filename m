@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BED423A7C;
-	Tue, 31 Mar 2026 16:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B0B425CFF;
+	Tue, 31 Mar 2026 16:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975104; cv=none; b=asl3/0/gbWPCOo49U3oPWO6X0DF+66hclpsD7IE7SYTZ456JFmApFqBiy6zNQCwb5kin2ChQgPU/vn5NkZmVmYB8nALLivA9ggIfXhhfClubcgsx7GBx9th7d5EYbO3W4odaz1+Vq0qIT/99Ry2sOtYykCq/U+QzbTLet0Oka4Y=
+	t=1774975107; cv=none; b=lQJXJM17rGiw81JrEg2IZ1OYHkJfkuCcrfnkl8ir3DuL0uhU/TOTbaEhMcMIVUyDx39r3A8QoBVySOWQhS6E51ojj+ArFBQUY0jxGtwBRq8y3fAi4Za1Nrh8ymmBaN58Y6fFYwDTLtyPvnxsntD+7xFCVv+4OXmBBYaDFVILig0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975104; c=relaxed/simple;
-	bh=YeHZ289FLAbtf4fBeVWC2cLTIhYagnF7ynvOg/RFtC4=;
+	s=arc-20240116; t=1774975107; c=relaxed/simple;
+	bh=amhD7Witb4VLzf8SqnWAG9M4goswxVXUrnvjluwWIBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QOLDt6k+DBFElpRFBaq+1WL2+EV0RDgyqDvdv/lLon8uCTnTXe3QW3FFZA+upKgOYtid/OHZ2xt4bMUKaRSsoPc28tYwUvOSq/LQVKsnK4QVyivtynBvugmYJ8BhC7aXSGDonX2kwP9j/27jPHGtXMxJMJLGe6sajJljOe9AcUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04WYhfOx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L2zWHTkNkexpF94knXHvT0X2W9wS+vMKT/GynpbHFMK7wMbeLl40cPgGzH3U9eDyZ5YBffD/+T1ryzq1p+XWjYQmuqkkt3bZpLypcbpqa6D8vkv8EK/SJ1Q6s5hW7ASBIX1nfHlQq9Df6x7SswTGTovLfsJLsewGaaDn93++KoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpePoOhp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04WYhfOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008C1C19423;
-	Tue, 31 Mar 2026 16:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpePoOhp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904B9C19423;
+	Tue, 31 Mar 2026 16:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975104;
-	bh=YeHZ289FLAbtf4fBeVWC2cLTIhYagnF7ynvOg/RFtC4=;
+	s=korg; t=1774975106;
+	bh=amhD7Witb4VLzf8SqnWAG9M4goswxVXUrnvjluwWIBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=04WYhfOxU4G/M3g8olIoCpkHERksLL59YgTTcWbW+o8ltom+h3733rk2WA/eCAA5r
-	 TQb3u9TClWeA3MWTwpW9g+x6Sfnch/LlqWhLjXvmCQNPJDu7nSa8xuOQUWIltQblDX
-	 vgigEv1BSe42JMXoxlECqwe4DlYe0SyZDDl2ojY4=
+	b=KpePoOhp4AvmQK3SDJSVBSJ31t7FaoWZFfzpaOadXmL3F3PSD6poay2S3wcqCZY5r
+	 cubsXJZ2ky/velLvF4tniiaLR/ZwDZraXCdy+89ySDGbsBgiQQLElClRrw2ojVHw+d
+	 l89eiUdhZmQQDn3O+emcdZaYDvUpxjBEPBTAf9ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Chen <zhangchen01@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 133/342] Bluetooth: L2CAP: Fix send LE flow credits in ACL link
-Date: Tue, 31 Mar 2026 18:19:26 +0200
-Message-ID: <20260331161803.901025626@linuxfoundation.org>
+Subject: [PATCH 6.19 124/342] net: enetc: fix the output issue of ethtool --show-ring
+Date: Tue, 31 Mar 2026 18:19:17 +0200
+Message-ID: <20260331161803.570329136@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,47 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Chen <zhangchen01@kylinos.cn>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit f39f905e55f529b036321220af1ba4f4085564a5 ]
+[ Upstream commit 70b439bf06f6a12e491f827fa81a9887a11501f9 ]
 
-When the L2CAP channel mode is L2CAP_MODE_ERTM/L2CAP_MODE_STREAMING,
-l2cap_publish_rx_avail will be called and le flow credits will be sent in
-l2cap_chan_rx_avail, even though the link type is ACL.
+Currently, enetc_get_ringparam() only provides rx_pending and tx_pending,
+but 'ethtool --show-ring' no longer displays these fields. Because the
+ringparam retrieval path has moved to the new netlink interface, where
+rings_fill_reply() emits the *x_pending only if the *x_max_pending values
+are non-zero. So rx_max_pending and tx_max_pending to are added to
+enetc_get_ringparam() to fix the issue.
 
-The logs in question as follows:
-> ACL Data RX: Handle 129 flags 0x02 dlen 12
-      L2CAP: Unknown (0x16) ident 4 len 4
-        40 00 ed 05
-< ACL Data TX: Handle 129 flags 0x00 dlen 10
-      L2CAP: Command Reject (0x01) ident 4 len 2
-        Reason: Command not understood (0x0000)
+Note that the maximum tx/rx ring size of hardware is 64K, but we haven't
+added set_ringparam() to make the ring size configurable. To avoid users
+mistakenly believing that the ring size can be increased, so set
+the *x_max_pending to priv->*x_bd_count.
 
-Bluetooth: Unknown BR/EDR signaling command 0x16
-Bluetooth: Wrong link type (-22)
-
-Fixes: ce60b9231b66 ("Bluetooth: compute LE flow credits based on recvbuf space")
-Signed-off-by: Zhang Chen <zhangchen01@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: e4a1717b677c ("ethtool: provide ring sizes with RINGS_GET request")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20260320094222.706339-1-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc_ethtool.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 848a9b945de89..b5e393e4f3eb1 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6589,6 +6589,10 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
- 	struct l2cap_le_credits pkt;
- 	u16 return_credits = l2cap_le_rx_credits(chan);
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
+index fed89d4f1e1dc..2fe140ddebb23 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
+@@ -813,6 +813,8 @@ static void enetc_get_ringparam(struct net_device *ndev,
+ {
+ 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
  
-+	if (chan->mode != L2CAP_MODE_LE_FLOWCTL &&
-+	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
-+		return;
-+
- 	if (chan->rx_credits >= return_credits)
- 		return;
++	ring->rx_max_pending = priv->rx_bd_count;
++	ring->tx_max_pending = priv->tx_bd_count;
+ 	ring->rx_pending = priv->rx_bd_count;
+ 	ring->tx_pending = priv->tx_bd_count;
  
 -- 
 2.51.0
