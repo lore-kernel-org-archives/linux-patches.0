@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686C93FADEE;
-	Tue, 31 Mar 2026 16:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098A6402BA9;
+	Tue, 31 Mar 2026 16:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974454; cv=none; b=hRfoI9PrgmMLYGTI+V5FFFv9A5Gn8eRmFP3+E7vGzuDHYedUCxzXICkbq6rdvvuQQUnfVvk2ATY/ewx7Wfhd2FHD7zos1CXkieL8jgf8xYt/Xlr75stEjfIDxWzJpwEnvHC2m/WrMAlnmknZo5sophKhI8VGo1shaGTgOGVzXtQ=
+	t=1774974457; cv=none; b=lK8GYG8IfosjDqdspst1LSVcsw0/up7vSs9I5zsyVoYzn4lv1F2S8FmzDMcsbKqb1tXlttkE9cZEoesyOq2s8yKEMynxhv8UR84+0y71UG3RCVXGCZD5/3U5b+FIF3a2TMLXkUxjcIcDMX3FWYuCmnpo5mLkrX5ob1YdjiHhj+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974454; c=relaxed/simple;
-	bh=GreHCGcvyUUbRJOwsQxTi8f4tenCevrqjbSoxwmYbBU=;
+	s=arc-20240116; t=1774974457; c=relaxed/simple;
+	bh=/HfVimxPUOwoE+99VYNt8hjHlP7/BTwjpn+DZkDvX7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t643/oaVP+GHwPwox1hl/YvuMVJW744nvvEXUG0KqIzUCjkbFm/9Hiyh6X+8g3c7fJAwr+N9z+UwOUyOSX9EgZTUrj7l+K8TZb+mQdMIFtGciaWTb7M7hlIFE/QxcolREmipiLOW/P/ZvmCWIHznlOIS5+nYqcVm8ujrVEeLaTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSdyE55z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MTwuoJYksfZzX4rhWqhVOSop+ZMNpcfnkqq2WsvrBxSLNm4t02Z9ZJBhb+KnAvTbfhu0ed75Qup9QZJcYLOdIq2yi/7rcsL2L+hAY60lyhYiWjiW8sbMPhKFTeKqLH/u2afUynC5YcXYi2ZuqpU8EbVbVQbJDQBpxT29BEf6vXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFVPtPfq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSdyE55z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3148C19423;
-	Tue, 31 Mar 2026 16:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFVPtPfq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94668C2BCB1;
+	Tue, 31 Mar 2026 16:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974454;
-	bh=GreHCGcvyUUbRJOwsQxTi8f4tenCevrqjbSoxwmYbBU=;
+	s=korg; t=1774974456;
+	bh=/HfVimxPUOwoE+99VYNt8hjHlP7/BTwjpn+DZkDvX7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSdyE55znrirN9V+5xrk140hcWg1pf3YBwNRp87zVT4PAsidTQ2z23ZzZg3H+38Lz
-	 TxO0G8xHGz3/lql7a03InTtAiK0Gb6z6di9e/rPva6jwvxkRYNTd5oHLhsIDKYnDcq
-	 s8APFQEzuTUlDs10VzHRArxKhj0icc1jmHB89RaI=
+	b=kFVPtPfqczzbA2Uhdz2phi1f8yuKcVtLgrhJ74TV2YuZ9+PGCqTYqImXtXIksNcex
+	 OK1YMWqayWq5m+CjCvHTk+vaRPGu67UyYXan+IxjcXKqprNgezaVXD8h+vw+hKuPb2
+	 mAAmPn44SKutOc3qM1FGl+SeAGMq0xp66iOKEmwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 092/175] drm/amdgpu: Fix fence put before wait in amdgpu_amdkfd_submit_ib
-Date: Tue, 31 Mar 2026 18:21:16 +0200
-Message-ID: <20260331161733.150272401@linuxfoundation.org>
+Subject: [PATCH 6.6 075/175] regmap: Synchronize cache for the page selector
+Date: Tue, 31 Mar 2026 18:20:59 +0200
+Message-ID: <20260331161732.533158483@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -48,64 +46,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 7150850146ebfa4ca998f653f264b8df6f7f85be ]
+[ Upstream commit 09e70e4f119ff650d24c96161fd2f62ac7e424b0 ]
 
-amdgpu_amdkfd_submit_ib() submits a GPU job and gets a fence
-from amdgpu_ib_schedule(). This fence is used to wait for job
-completion.
+If the selector register is represented in each page, its value
+according to the debugfs is stale because it gets synchronized
+only after the real page switch happens. Hence the regmap cache
+initialisation from the HW inherits outdated data in the selector
+register.
 
-Currently, the code drops the fence reference using dma_fence_put()
-before calling dma_fence_wait().
+Synchronize cache for the page selector just in time.
 
-If dma_fence_put() releases the last reference, the fence may be
-freed before dma_fence_wait() is called. This can lead to a
-use-after-free.
+Before (offset followed by hexdump, the first byte is selector):
 
-Fix this by waiting on the fence first and releasing the reference
-only after dma_fence_wait() completes.
+    // Real registers
+    18: 05 ff 00 00 ff 0f 00 00 f0 00 00 00
+    ...
+    // Virtual (per port)
+    40: 05 ff 00 00 e0 e0 00 00 00 00 00 1f
+    50: 00 ff 00 00 e0 e0 00 00 00 00 00 1f
+    60: 01 ff 00 00 ff ff 00 00 00 00 00 00
+    70: 02 ff 00 00 cf f3 00 00 00 00 00 0c
+    80: 03 ff 00 00 00 00 00 00 00 00 00 ff
+    90: 04 ff 00 00 ff 0f 00 00 f0 00 00 00
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c:697 amdgpu_amdkfd_submit_ib() warn: passing freed memory 'f' (line 696)
+After:
 
-Fixes: 9ae55f030dc5 ("drm/amdgpu: Follow up change to previous drm scheduler change.")
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8b9e5259adc385b61a6590a13b82ae0ac2bd3482)
+    // Real registers
+    18: 05 ff 00 00 ff 0f 00 00 f0 00 00 00
+    ...
+    // Virtual (per port)
+    40: 00 ff 00 00 e0 e0 00 00 00 00 00 1f
+    50: 01 ff 00 00 e0 e0 00 00 00 00 00 1f
+    60: 02 ff 00 00 ff ff 00 00 00 00 00 00
+    70: 03 ff 00 00 cf f3 00 00 00 00 00 0c
+    80: 04 ff 00 00 00 00 00 00 00 00 00 ff
+    90: 05 ff 00 00 ff 0f 00 00 f0 00 00 00
+
+Fixes: 6863ca622759 ("regmap: Add support for register indirect addressing.")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260302184753.2693803-1-andriy.shevchenko@linux.intel.com
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/base/regmap/regmap.c | 30 ++++++++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-index fbee10927bfb6..946264a87d0e8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-@@ -670,9 +670,9 @@ int amdgpu_amdkfd_submit_ib(struct amdgpu_device *adev,
- 		goto err_ib_sched;
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index 48860beff95c9..3b84755c2e54d 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -1541,6 +1541,7 @@ static int _regmap_select_page(struct regmap *map, unsigned int *reg,
+ 			       unsigned int val_num)
+ {
+ 	void *orig_work_buf;
++	unsigned int selector_reg;
+ 	unsigned int win_offset;
+ 	unsigned int win_page;
+ 	bool page_chg;
+@@ -1559,10 +1560,31 @@ static int _regmap_select_page(struct regmap *map, unsigned int *reg,
+ 			return -EINVAL;
  	}
  
--	/* Drop the initial kref_init count (see drm_sched_main as example) */
--	dma_fence_put(f);
- 	ret = dma_fence_wait(f, false);
-+	/* Drop the returned fence reference after the wait completes */
-+	dma_fence_put(f);
+-	/* It is possible to have selector register inside data window.
+-	   In that case, selector register is located on every page and
+-	   it needs no page switching, when accessed alone. */
++	/*
++	 * Calculate the address of the selector register in the corresponding
++	 * data window if it is located on every page.
++	 */
++	page_chg = in_range(range->selector_reg, range->window_start, range->window_len);
++	if (page_chg)
++		selector_reg = range->range_min + win_page * range->window_len +
++			       range->selector_reg - range->window_start;
++
++	/*
++	 * It is possible to have selector register inside data window.
++	 * In that case, selector register is located on every page and it
++	 * needs no page switching, when accessed alone.
++	 *
++	 * Nevertheless we should synchronize the cache values for it.
++	 * This can't be properly achieved if the selector register is
++	 * the first and the only one to be read inside the data window.
++	 * That's why we update it in that case as well.
++	 *
++	 * However, we specifically avoid updating it for the default page,
++	 * when it's overlapped with the real data window, to prevent from
++	 * infinite looping.
++	 */
+ 	if (val_num > 1 ||
++	    (page_chg && selector_reg != range->selector_reg) ||
+ 	    range->window_start + win_offset != range->selector_reg) {
+ 		/* Use separate work_buf during page switching */
+ 		orig_work_buf = map->work_buf;
+@@ -1571,7 +1593,7 @@ static int _regmap_select_page(struct regmap *map, unsigned int *reg,
+ 		ret = _regmap_update_bits(map, range->selector_reg,
+ 					  range->selector_mask,
+ 					  win_page << range->selector_shift,
+-					  &page_chg, false);
++					  NULL, false);
  
- err_ib_sched:
- 	amdgpu_job_free(job);
+ 		map->work_buf = orig_work_buf;
+ 
 -- 
 2.53.0
 
