@@ -1,32 +1,34 @@
-Received: from n169-111.mail.139.com (n169-111.mail.139.com [120.232.169.111])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D10F27FB1F
-	for <patches@lists.linux.dev>; Tue, 31 Mar 2026 06:17:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.111
+Received: from n169-110.mail.139.com (n169-110.mail.139.com [120.232.169.110])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277193C873A
+	for <patches@lists.linux.dev>; Tue, 31 Mar 2026 07:37:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.110
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774937853; cv=none; b=QPNUPN2z/COQV199U2AQWl4auHtJT2ozby3NLk2hjilJUeCnQxW5AiZM4oouIfVmdlFQIJW+SuhRil8XkxSRuzxLjAc9YJ2QxwwUCbIG4GzTump18DlDRA2kBNiKnI4HdE7MxbGxm42XT521PxvcWKGKsWuYKXrxLUA/X9VceDw=
+	t=1774942634; cv=none; b=KG3jjtfW47saaJqa7BV84qq4qKsVz8C1vz4TpsWwgwCGMxy9qlIEn24ZOjUUrARXhd8fwjDuPNa5CtK5xlr9TBDI1DlB1Dwpla1rbPZ6+v34BCMgny7mLjn4FnRO2dWSZbr3YCxXLMiKZ5TqlCEGi+pdGjxYwuXkjSrmznJbXKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774937853; c=relaxed/simple;
-	bh=OR8PviOQvPFrwioQJHXCEjJ2Gr/EDn7NUd04k/Sep+c=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=R+oyB8LEOaed5ULMmbOooNhJ4zqQJEh40nIRbo1QsOQiDDPbWPrn1YIheGSp0BTK4NLa0KhtEl0TKdSCK5xvkACv9JK7HS3NvMRAOx4ll1rcN30bWuduglVXPrzGzN9TFX+f5cE9agedEsu70EQVrCvUFQ5Bi3Z49eIKZuyH0Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=XX8k8QRb; arc=none smtp.client-ip=120.232.169.111
+	s=arc-20240116; t=1774942634; c=relaxed/simple;
+	bh=YBP/TtPYT+hb8wz5QxnOXfzm1eFRzpJ9lgiP2xy99P4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=DP5XTaLycPVUa6lCe8p4KlAX/ZMispp22TpIfuRKv4U41xtCIGsTM0+6ZhB2SnXwMaoQkK9W+xOXNenhLXYb+lZ5gWXIKlXftCAT+AJT2kOT5U6lAQMRZfe18rAKGZaZNHmmShoBj4fmd/i5XKOfCsG20+Ar8SZzR1KgJtpm5rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=vIEXjM98; arc=none smtp.client-ip=120.232.169.110
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="XX8k8QRb"
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="vIEXjM98"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=139.com; s=dkim; l=0;
 	h=from:subject:message-id:to:cc:mime-version;
 	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=XX8k8QRbqXIEZgRlcW1cUj/YbeS2EM4xl4yRB99U9a95F6o/V8xk21qNre3LCi0XxiJA3EEw/c8D8
-	 FxEd2/nZMD0creav1z/t1DyhkARaP74VT2aOzzk7XCZvGdwzUofFBBl8alU4cerYuduATlmPPO0qm8
-	 pJIzYUVJfjMViVqk=
+	b=vIEXjM98q4aEqI6MCekX8/1EuxSy4cG6Hmr20/WKaZ6G7gVlVnKoz+Y5d3yJl1dQxKlMhzLHJo1dr
+	 +IRDYhzCIThBVVdp0+1/4c1+Hq/3NGNaoJp6Uc1klrW//Be5uGfLg3+D/NJbwXe6avgn1ABbGTPI6i
+	 SW/5y9XJQHi3kE34=
 X-RM-TagInfo: emlType=0                                       
 X-RM-SPAM:                                                                                        
 X-RM-SPAM-FLAG:00000000
 Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-17-12016 (RichMail) with SMTP id 2ef069cb660f3f8-003fd;
-	Tue, 31 Mar 2026 14:13:40 +0800 (CST)
-X-RM-TRANSID:2ef069cb660f3f8-003fd
+	by rmsmtp-lg-appmail-09-12087 (RichMail) with SMTP id 2f3769cb799bb1b-00b2a;
+	Tue, 31 Mar 2026 15:37:01 +0800 (CST)
+X-RM-TRANSID:2f3769cb799bb1b-00b2a
 From: Li hongliang <1468888505@139.com>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -41,9 +43,9 @@ Cc: patches@lists.linux.dev,
 	hare@suse.de,
 	kch@nvidia.com,
 	linux-nvme@lists.infradead.org
-Subject: [PATCH 6.1.y] nvme: fix admin queue leak on controller reset
-Date: Tue, 31 Mar 2026 14:13:39 +0800
-Message-Id: <20260331061339.3121617-1-1468888505@139.com>
+Subject: [PATCH 6.6.y] nvme: fix admin queue leak on controller reset
+Date: Tue, 31 Mar 2026 15:36:59 +0800
+Message-Id: <20260331073659.3136206-1-1468888505@139.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -76,10 +78,10 @@ Signed-off-by: Li hongliang <1468888505@139.com>
  1 file changed, 7 insertions(+)
 
 diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 9df33b293ee3..b0c7a055cf20 100644
+index f09ebcbe1179..215aa871092d 100644
 --- a/drivers/nvme/host/core.c
 +++ b/drivers/nvme/host/core.c
-@@ -5012,6 +5012,13 @@ int nvme_alloc_admin_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
+@@ -4287,6 +4287,13 @@ int nvme_alloc_admin_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
  	if (ret)
  		return ret;
  
