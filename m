@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB373E95A9;
-	Tue, 31 Mar 2026 16:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB364266A6;
+	Tue, 31 Mar 2026 16:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975824; cv=none; b=ekY4t5iJGM5p5P2gK5XRKwyv4vO65bxw2gktsuXg4kTjWGlAUFwSWsSH/S7BDJQjgTR/FD97+9/MYUeYINgxxaOg4XUoO5506rmWBsI0P0HnKqu2zEtuPxPozl4vyPyd3Q/t7y7cShBKsPDBhPz9ZVN9XFBymQp8iUY7U0HZM1o=
+	t=1774975826; cv=none; b=P+jDdcz7ocZBNu0x5Q9OPcjMEw41iNl/0CxhWvsNl90MR3d/3Ty2wIFfUyJGRTIZ0rMDyv3uDyhqt5rUsIfGhAmXdBlF7aMmyVPmLvE4/VFf1/ndVBok4bfFRCJqat8vFmSEodpN13ECIAv/0gjRux8vgiKjIG8ASsMJkvkSQvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975824; c=relaxed/simple;
-	bh=gwTS92zKpL+ywj1zOdScEreModbxiVjaqeO1YEbrbQs=;
+	s=arc-20240116; t=1774975826; c=relaxed/simple;
+	bh=Npy/8NZQwlBTQiDNd+vUbgvA13i2HQdVKYgkaM63e5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ve1h1R10bO/PT29p6W+lC3v1NOb5FFI7F3qtHlNCRe/Oe3+H/j1EUqFuP6sKzN6AsbbzIpVhBoG+dHEFQtUBa1tRwYpq8435U85nDA/MG8+G+FPWoaPwch3XPNAaaAIVQT2Rm46DE1bzh5ZMfrVHYyMVcZUnntH34uj6aO/97QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoyEz/Gk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HqpHiWIv+morePFclGt0Y3jhoR/a30PC8r0G6a7JMTazWuwmGuMHpqnrBQNii9UnOdLJllHWfIHIhkE/qe7dWHk5lKg8u0BsjAQDjeRccOht9dqxTGWIctMoP56FjyOsvqw3y+f2CoGhSz+rvrrpCzVO68t8W/BaDEM6i3nZz5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJeJAViz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoyEz/Gk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D81C19424;
-	Tue, 31 Mar 2026 16:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJeJAViz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CF3C2BCB4;
+	Tue, 31 Mar 2026 16:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975824;
-	bh=gwTS92zKpL+ywj1zOdScEreModbxiVjaqeO1YEbrbQs=;
+	s=korg; t=1774975826;
+	bh=Npy/8NZQwlBTQiDNd+vUbgvA13i2HQdVKYgkaM63e5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PoyEz/GkHPUANvA1y7E0PPnA91gUWRsFrWmQSpywVYUcTSEObo3SR1ouCcXuZyTG6
-	 CVEHpkhXolNiGuku0qmuvYoaUTGiRhrVIPemDod8YZtqWuzpnO/uzinvyVtfcJaY1y
-	 Hzcw2ydMzGizz6J4DTENI8WGy4fuy1JE2/1kJ4Xc=
+	b=mJeJAVizwup9ceqgGSjYJd4luhjnLMgFEyew3qUveGyP0zUi+Dp8ffwr0YTGI97/i
+	 jlEzSSJCtn4f/f6Fa9MW6vINmuf8PJT5z7iqd7QW3u03s1QUulwQSmy+6TnO6QRni+
+	 BSqiTuUL+VHgB4Z2+rIsu/U6phhRWYg6KaneajOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuhang Zheng <z1652074432@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/244] netfilter: nfnetlink_log: fix uninitialized padding leak in NFULA_PAYLOAD
-Date: Tue, 31 Mar 2026 18:20:49 +0200
-Message-ID: <20260331161745.330162785@linuxfoundation.org>
+Subject: [PATCH 6.12 100/244] netfilter: ip6t_rt: reject oversized addrnr in rt_mt6_check()
+Date: Tue, 31 Mar 2026 18:20:50 +0200
+Message-ID: <20260331161745.367108901@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -53,55 +57,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Ren Wei <n05ec@lzu.edu.cn>
 
-[ Upstream commit 52025ebaa29f4eb4ed8bf92ce83a68f24ab7fdf7 ]
+[ Upstream commit 9d3f027327c2fa265f7f85ead41294792c3296ed ]
 
-__build_packet_message() manually constructs the NFULA_PAYLOAD netlink
-attribute using skb_put() and skb_copy_bits(), bypassing the standard
-nla_reserve()/nla_put() helpers. While nla_total_size(data_len) bytes
-are allocated (including NLA alignment padding), only data_len bytes
-of actual packet data are copied. The trailing nla_padlen(data_len)
-bytes (1-3 when data_len is not 4-byte aligned) are never initialized,
-leaking stale heap contents to userspace via the NFLOG netlink socket.
+Reject rt match rules whose addrnr exceeds IP6T_RT_HOPS.
 
-Replace the manual attribute construction with nla_reserve(), which
-handles the tailroom check, header setup, and padding zeroing via
-__nla_reserve(). The subsequent skb_copy_bits() fills in the payload
-data on top of the properly initialized attribute.
+rt_mt6() expects addrnr to stay within the bounds of rtinfo->addrs[].
+Validate addrnr during rule installation so malformed rules are rejected
+before the match logic can use an out-of-range value.
 
-Fixes: df6fb868d611 ("[NETFILTER]: nfnetlink: convert to generic netlink attribute functions")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Yuhang Zheng <z1652074432@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_log.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ net/ipv6/netfilter/ip6t_rt.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index 134e05d31061e..aa5fc9bffef0c 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -647,15 +647,11 @@ __build_packet_message(struct nfnl_log_net *log,
- 
- 	if (data_len) {
- 		struct nlattr *nla;
--		int size = nla_attr_size(data_len);
- 
--		if (skb_tailroom(inst->skb) < nla_total_size(data_len))
-+		nla = nla_reserve(inst->skb, NFULA_PAYLOAD, data_len);
-+		if (!nla)
- 			goto nla_put_failure;
- 
--		nla = skb_put(inst->skb, nla_total_size(data_len));
--		nla->nla_type = NFULA_PAYLOAD;
--		nla->nla_len = size;
--
- 		if (skb_copy_bits(skb, 0, nla_data(nla), data_len))
- 			BUG();
+diff --git a/net/ipv6/netfilter/ip6t_rt.c b/net/ipv6/netfilter/ip6t_rt.c
+index 4ad8b2032f1f9..5561bd9cea818 100644
+--- a/net/ipv6/netfilter/ip6t_rt.c
++++ b/net/ipv6/netfilter/ip6t_rt.c
+@@ -157,6 +157,10 @@ static int rt_mt6_check(const struct xt_mtchk_param *par)
+ 		pr_debug("unknown flags %X\n", rtinfo->invflags);
+ 		return -EINVAL;
  	}
++	if (rtinfo->addrnr > IP6T_RT_HOPS) {
++		pr_debug("too many addresses specified\n");
++		return -EINVAL;
++	}
+ 	if ((rtinfo->flags & (IP6T_RT_RES | IP6T_RT_FST_MASK)) &&
+ 	    (!(rtinfo->flags & IP6T_RT_TYP) ||
+ 	     (rtinfo->rt_type != 0) ||
 -- 
 2.51.0
 
