@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7B5425CE1;
-	Tue, 31 Mar 2026 16:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F593DE431;
+	Tue, 31 Mar 2026 16:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975886; cv=none; b=Uog0/XGDbD58HFd0ZKwGOr4QSLIab5MsZe9PdLjYgEmmI1fRjUtflLrYLDfaEzFFay8KlawHKSo86WMeajMF4QAfp1XI0MaD2AA4/q3I3aAiPpwpHNGQ9iu/zRasz/PkMA/fg3dsfMyicnVCvgewgWGo0bYb9gH1i3PIp+2JhjY=
+	t=1774975888; cv=none; b=YrD0YvY2E5yFd5Zpkjjr2kXpvQ6FcmMP5Q/eBG81hfDVp1iA2lrMJRo1429OqlbhP/BLrQR+KWIfzPt0kI3uivgXTXupMkGqfiqfMjOZ/g3cSwdJedp4/5x+ZWak8c12Hir97B5oVLzBaGlAwUlL4ChZHUJvTvHbcsnyb2VELgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975886; c=relaxed/simple;
-	bh=ly34s2cMy5ERQQF1+JeZ/AfAbScHwkNo1R5XffrzJ88=;
+	s=arc-20240116; t=1774975888; c=relaxed/simple;
+	bh=SmQCUvCc6oasanASo960njHg/hlc1H5qyxjR7hcAbbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9/8kj84hetNBh1/tf+CNvzHY6ngnbbgxRvPTwJ7lvS8nCO+AlaZ+ue/gjBI+6KmzfK28Obe6xsZ5EZTtcVGa5vIQJZCJjvleuIVUHIoUYfADXwWK3MO0sMe9VHo5dapShEUzlnKtkpZ+14k49MUUq+nf+zKHrZpPC4nQM8CT6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QH7zsVc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0ZSfL8f33QdtlxSL8MKQzlE+E3vu6/ttB0XQWNWtUWyK49mVKIzd3eTr+PgxZfto1GWbhbDPEO4cjRZJye64b98V7PLmM88TMVBgJEPHusiR2cuYKCBGqg8dpp/iAjOSDmY9SberSTyqEmVpfDI0NJ4GmCtmUHkOalzrQxyIkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owKH6N4J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QH7zsVc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAED4C19423;
-	Tue, 31 Mar 2026 16:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owKH6N4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526BAC19423;
+	Tue, 31 Mar 2026 16:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975886;
-	bh=ly34s2cMy5ERQQF1+JeZ/AfAbScHwkNo1R5XffrzJ88=;
+	s=korg; t=1774975888;
+	bh=SmQCUvCc6oasanASo960njHg/hlc1H5qyxjR7hcAbbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2QH7zsVck0NxIqSFfsHSm8rlOcINFbdQ+88D2dn8NWAi5W9XjvVO6hVJjuMdhU6c6
-	 VFL6JMW+KRfCHJG5ZOa02tIQUXC2K3n2nyCaXilb6ZOAN/kNPZ4Gz9TFeP3FNLS/bQ
-	 vCIz6w1rH6vMZywzsgyFO5B40SS12LEmf0oNrrss=
+	b=owKH6N4Jz3iflByB6gcFzyFU9WJoZHMddSxVn2RPIEFBnZYrZjXTVq+VDBvF1+nVY
+	 F6DZ+1wKFHTBdPzJ19gjenpDMQYMGmsHxBWEjlJD5rTt9xJpxwSgPmOyuaLDTkZYM9
+	 E/gyXo+PIqILnkxptdn5BDxXshmuBzriUqKY+1t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 124/244] spi: use generic driver_override infrastructure
-Date: Tue, 31 Mar 2026 18:21:14 +0200
-Message-ID: <20260331161746.238449002@linuxfoundation.org>
+Subject: [PATCH 6.12 125/244] ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()
+Date: Tue, 31 Mar 2026 18:21:15 +0200
+Message-ID: <20260331161746.275433848@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,116 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit cc34d77dd48708d810c12bfd6f5bf03304f6c824 ]
+[ Upstream commit f6484cadbcaf26b5844b51bd7307a663dda48ef6 ]
 
-When a driver is probed through __driver_attach(), the bus' match()
-callback is called without the device lock held, thus accessing the
-driver_override field without a lock, which can cause a UAF.
+When ec_install_handlers() returns -EPROBE_DEFER on reduced-hardware
+platforms, it has already started the EC and installed the address
+space handler with the struct acpi_ec pointer as handler context.
+However, acpi_ec_setup() propagates the error without any cleanup.
 
-Fix this by using the driver-core driver_override infrastructure taking
-care of proper locking internally.
+The caller acpi_ec_add() then frees the struct acpi_ec for non-boot
+instances, leaving a dangling handler context in ACPICA.
 
-Note that calling match() from __driver_attach() without the device lock
-held is intentional. [1]
+Any subsequent AML evaluation that accesses an EC OpRegion field
+dispatches into acpi_ec_space_handler() with the freed pointer,
+causing a use-after-free:
 
-Also note that we do not enable the driver_override feature of struct
-bus_type, as SPI - in contrast to most other buses - passes "" to
-sysfs_emit() when the driver_override pointer is NULL. Thus, printing
-"\n" instead of "(null)\n".
+ BUG: KASAN: slab-use-after-free in mutex_lock (kernel/locking/mutex.c:289)
+ Write of size 8 at addr ffff88800721de38 by task init/1
+ Call Trace:
+  <TASK>
+  mutex_lock (kernel/locking/mutex.c:289)
+  acpi_ec_space_handler (drivers/acpi/ec.c:1362)
+  acpi_ev_address_space_dispatch (drivers/acpi/acpica/evregion.c:293)
+  acpi_ex_access_region (drivers/acpi/acpica/exfldio.c:246)
+  acpi_ex_field_datum_io (drivers/acpi/acpica/exfldio.c:509)
+  acpi_ex_extract_from_field (drivers/acpi/acpica/exfldio.c:700)
+  acpi_ex_read_data_from_field (drivers/acpi/acpica/exfield.c:327)
+  acpi_ex_resolve_node_to_value (drivers/acpi/acpica/exresolv.c:392)
+  </TASK>
 
-Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
-Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: 5039563e7c25 ("spi: Add driver_override SPI device attribute")
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/20260324005919.2408620-12-dakr@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ Allocated by task 1:
+  acpi_ec_alloc (drivers/acpi/ec.c:1424)
+  acpi_ec_add (drivers/acpi/ec.c:1692)
+
+ Freed by task 1:
+  kfree (mm/slub.c:6876)
+  acpi_ec_add (drivers/acpi/ec.c:1751)
+
+The bug triggers on reduced-hardware EC platforms (ec->gpe < 0)
+when the GPIO IRQ provider defers probing. Once the stale handler
+exists, any unprivileged sysfs read that causes AML to touch an
+EC OpRegion (battery, thermal, backlight) exercises the dangling
+pointer.
+
+Fix this by calling ec_remove_handlers() in the error path of
+acpi_ec_setup() before clearing first_ec. ec_remove_handlers()
+checks each EC_FLAGS_* bit before acting, so it is safe to call
+regardless of how far ec_install_handlers() progressed:
+
+  -ENODEV  (handler not installed): only calls acpi_ec_stop()
+  -EPROBE_DEFER (handler installed): removes handler, stops EC
+
+Fixes: 03e9a0e05739 ("ACPI: EC: Consolidate event handler installation code")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260324165458.1337233-2-bestswngs@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c       | 19 +++++++------------
- include/linux/spi/spi.h |  5 -----
- 2 files changed, 7 insertions(+), 17 deletions(-)
+ drivers/acpi/ec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 7cf37e28e4859..0c3200d08fe46 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -49,7 +49,6 @@ static void spidev_release(struct device *dev)
- 	struct spi_device	*spi = to_spi_device(dev);
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index a813bc97cf425..10bd2942c4beb 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1653,6 +1653,8 @@ static int acpi_ec_setup(struct acpi_ec *ec, struct acpi_device *device, bool ca
  
- 	spi_controller_put(spi->controller);
--	kfree(spi->driver_override);
- 	free_percpu(spi->pcpu_statistics);
- 	kfree(spi);
- }
-@@ -72,10 +71,9 @@ static ssize_t driver_override_store(struct device *dev,
- 				     struct device_attribute *a,
- 				     const char *buf, size_t count)
- {
--	struct spi_device *spi = to_spi_device(dev);
- 	int ret;
+ 	ret = ec_install_handlers(ec, device, call_reg);
+ 	if (ret) {
++		ec_remove_handlers(ec);
++
+ 		if (ec == first_ec)
+ 			first_ec = NULL;
  
--	ret = driver_set_override(dev, &spi->driver_override, buf, count);
-+	ret = __device_set_driver_override(dev, buf, count);
- 	if (ret)
- 		return ret;
- 
-@@ -85,13 +83,8 @@ static ssize_t driver_override_store(struct device *dev,
- static ssize_t driver_override_show(struct device *dev,
- 				    struct device_attribute *a, char *buf)
- {
--	const struct spi_device *spi = to_spi_device(dev);
--	ssize_t len;
--
--	device_lock(dev);
--	len = sysfs_emit(buf, "%s\n", spi->driver_override ? : "");
--	device_unlock(dev);
--	return len;
-+	guard(spinlock)(&dev->driver_override.lock);
-+	return sysfs_emit(buf, "%s\n", dev->driver_override.name ?: "");
- }
- static DEVICE_ATTR_RW(driver_override);
- 
-@@ -375,10 +368,12 @@ static int spi_match_device(struct device *dev, const struct device_driver *drv)
- {
- 	const struct spi_device	*spi = to_spi_device(dev);
- 	const struct spi_driver	*sdrv = to_spi_driver(drv);
-+	int ret;
- 
- 	/* Check override first, and if set, only use the named driver */
--	if (spi->driver_override)
--		return strcmp(spi->driver_override, drv->name) == 0;
-+	ret = device_match_driver_override(dev, drv);
-+	if (ret >= 0)
-+		return ret;
- 
- 	/* Attempt an OF style match */
- 	if (of_driver_match_device(dev, drv))
-diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index 825c41611852a..8f6280bd2bf06 100644
---- a/include/linux/spi/spi.h
-+++ b/include/linux/spi/spi.h
-@@ -154,10 +154,6 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
-  * @modalias: Name of the driver to use with this device, or an alias
-  *	for that name.  This appears in the sysfs "modalias" attribute
-  *	for driver coldplugging, and in uevents used for hotplugging
-- * @driver_override: If the name of a driver is written to this attribute, then
-- *	the device will bind to the named driver and only the named driver.
-- *	Do not set directly, because core frees it; use driver_set_override() to
-- *	set or clear it.
-  * @pcpu_statistics: statistics for the spi_device
-  * @word_delay: delay to be inserted between consecutive
-  *	words of a transfer
-@@ -214,7 +210,6 @@ struct spi_device {
- 	void			*controller_state;
- 	void			*controller_data;
- 	char			modalias[SPI_NAME_SIZE];
--	const char		*driver_override;
- 
- 	/* The statistics */
- 	struct spi_statistics __percpu	*pcpu_statistics;
 -- 
 2.53.0
 
