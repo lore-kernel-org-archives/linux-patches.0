@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FA7423A8E;
-	Tue, 31 Mar 2026 16:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F7C423A62;
+	Tue, 31 Mar 2026 16:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975728; cv=none; b=sR8oHDlKVT5OclJwHZh/DdWH0qu2u3xk/+Dm5WtegmS5uPIQyB1jaGmgP5ln2YOGPoPk3pW6ieSCjxqeGDbv/isVMKBUCPwWUBD5toAXUz58jyWIP6LDXXV5xJAHv3DgoKZxmvkjI+xiquHsNzbviysWyiBt543AWluQc0/8u9w=
+	t=1774975730; cv=none; b=MPp6oOmJ7g26RryRhcJHINB2uj/rYU8a12oE/kDojnv/mNS/ZO90awHTlSqswljsANSlzklEZEIZy9wVIXcvWCW6jhFQdNFCCW+84MFCq/6DFPPBiAiDNsyhhR0cFaf1b4Y+TIuN7x3b363rHz8UpCP/B6mtDXuHrhI/NtqfLbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975728; c=relaxed/simple;
-	bh=vIonFI4pqnAsaJU0Azcm/QfiL6Za1v4evgbzspz1U1Q=;
+	s=arc-20240116; t=1774975730; c=relaxed/simple;
+	bh=guO8ZX8AQzqPWwkyQ5uG4yZYP4H+y3QT+BoxwYt4QBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Khwlb7IoV4cxY6d4FhCk7tUvLydDGc1lT9wAOTZF9jryt/N/jgGRehnYys4gmgdHAR9+lFCTL2uu/tUSkb/57N91SSWu8xLx1oc9BNpQLqe9L8P7bf5XrNtWjm0y8p0f074xToOLhIg+9OlbTxbf1MIMJNW14wCmtFgCyhyPLcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ou0NWoiJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AnDdcPjk9A3Mjn/ym0XYFosVR0hyD8rRUipLNXTLtN/extNdVsOnAwGA1jMbiKUrqsffpzoDpzDolDOhUFIZDUUCFhjO0LpFqmVOvce3yIt7Gg2B19vF1fjZ4qJGmjKOphCGeE957HO/W4m3O3YsGom5K9nQTMVUe+WEsWjdTqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTDQwPUo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ou0NWoiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BF5C19423;
-	Tue, 31 Mar 2026 16:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTDQwPUo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0865FC19423;
+	Tue, 31 Mar 2026 16:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975727;
-	bh=vIonFI4pqnAsaJU0Azcm/QfiL6Za1v4evgbzspz1U1Q=;
+	s=korg; t=1774975730;
+	bh=guO8ZX8AQzqPWwkyQ5uG4yZYP4H+y3QT+BoxwYt4QBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ou0NWoiJ9FyJHmQqD+MxK/1nlPwTGLX8llQBn8LsvpuGvZU/dbpK+d9m46UVo4QVA
-	 zCHv/PzMTTxC3ThBpt0Aovc32bfWpG5As2DLYy1hxcRehhoPKrTkOlOTgrHw+Cm3Fz
-	 +RdTInB5+oJ+ChxOgGv+7UbI5Ux5R7J3fbqn5mwE=
+	b=CTDQwPUoFx3hX1bbsMBWhx37vhpbK3OkptXlVOY1GmdtnkJ/Lkx4f2tvtT8CaESZr
+	 vt9QTHdtVx4yxTEneoF6B1aTmRSoZGfuN5crI39PJihp6BIwvN8I7Pce10T2vMcPYw
+	 qlfnizR/7ijkeXd4WKJIseImpo5RLgJfwm0PGPMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Anas Iqbal <mohd.abd.6602@gmail.com>,
+	Helen Koike <koike@igalia.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/244] Bluetooth: hci_ll: Fix firmware leak on error path
-Date: Tue, 31 Mar 2026 18:20:12 +0200
-Message-ID: <20260331161743.978925797@linuxfoundation.org>
+Subject: [PATCH 6.12 063/244] Bluetooth: L2CAP: Fix null-ptr-deref on l2cap_sock_ready_cb
+Date: Tue, 31 Mar 2026 18:20:13 +0200
+Message-ID: <20260331161744.016153680@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,44 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anas Iqbal <mohd.abd.6602@gmail.com>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit 31148a7be723aa9f2e8fbd62424825ab8d577973 ]
+[ Upstream commit b6552e0503973daf6f23bd6ed9273ef131ee364f ]
 
-Smatch reports:
+Before using sk pointer, check if it is null.
 
-drivers/bluetooth/hci_ll.c:587 download_firmware() warn:
-'fw' from request_firmware() not released on lines: 544.
+Fix the following:
 
-In download_firmware(), if request_firmware() succeeds but the returned
-firmware content is invalid (no data or zero size), the function returns
-without releasing the firmware, resulting in a resource leak.
+ KASAN: null-ptr-deref in range [0x0000000000000260-0x0000000000000267]
+ CPU: 0 UID: 0 PID: 5985 Comm: kworker/0:5 Not tainted 7.0.0-rc4-00029-ga989fde763f4 #1 PREEMPT(full)
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-9.fc43 06/10/2025
+ Workqueue: events l2cap_info_timeout
+ RIP: 0010:kasan_byte_accessible+0x12/0x30
+ Code: 79 ff ff ff 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 40 d6 48 c1 ef 03 48 b8 00 00 00 00 00 fc ff df <0f> b6 04 07 3c 08 0f 92 c0 c3 cc cce
+ veth0_macvtap: entered promiscuous mode
+ RSP: 0018:ffffc90006e0f808 EFLAGS: 00010202
+ RAX: dffffc0000000000 RBX: ffffffff89746018 RCX: 0000000080000001
+ RDX: 0000000000000000 RSI: ffffffff89746018 RDI: 000000000000004c
+ RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+ R10: dffffc0000000000 R11: ffffffff8aae3e70 R12: 0000000000000000
+ R13: 0000000000000260 R14: 0000000000000260 R15: 0000000000000001
+ FS:  0000000000000000(0000) GS:ffff8880983c2000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00005582615a5008 CR3: 000000007007e000 CR4: 0000000000752ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  __kasan_check_byte+0x12/0x40
+  lock_acquire+0x79/0x2e0
+  lock_sock_nested+0x48/0x100
+  ? l2cap_sock_ready_cb+0x46/0x160
+  l2cap_sock_ready_cb+0x46/0x160
+  l2cap_conn_start+0x779/0xff0
+  ? __pfx_l2cap_conn_start+0x10/0x10
+  ? l2cap_info_timeout+0x60/0xa0
+  ? __pfx___mutex_lock+0x10/0x10
+  l2cap_info_timeout+0x68/0xa0
+  ? process_scheduled_works+0xa8d/0x18c0
+  process_scheduled_works+0xb6e/0x18c0
+  ? __pfx_process_scheduled_works+0x10/0x10
+  ? assign_work+0x3d5/0x5e0
+  worker_thread+0xa53/0xfc0
+  kthread+0x388/0x470
+  ? __pfx_worker_thread+0x10/0x10
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x51e/0xb90
+  ? __pfx_ret_from_fork+0x10/0x10
+ veth1_macvtap: entered promiscuous mode
+  ? __switch_to+0xc7d/0x1450
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ Modules linked in:
+ ---[ end trace 0000000000000000 ]---
+ batman_adv: batadv0: Interface activated: batadv_slave_0
+ batman_adv: batadv0: Interface activated: batadv_slave_1
+ netdevsim netdevsim7 netdevsim0: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim1: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim2: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim3: set [1, 0] type 2 family 0 port 6081 - 0
+ RIP: 0010:kasan_byte_accessible+0x12/0x30
+ Code: 79 ff ff ff 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 40 d6 48 c1 ef 03 48 b8 00 00 00 00 00 fc ff df <0f> b6 04 07 3c 08 0f 92 c0 c3 cc cce
+ ieee80211 phy39: Selected rate control algorithm 'minstrel_ht'
+ RSP: 0018:ffffc90006e0f808 EFLAGS: 00010202
+ RAX: dffffc0000000000 RBX: ffffffff89746018 RCX: 0000000080000001
+ RDX: 0000000000000000 RSI: ffffffff89746018 RDI: 000000000000004c
+ RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+ R10: dffffc0000000000 R11: ffffffff8aae3e70 R12: 0000000000000000
+ R13: 0000000000000260 R14: 0000000000000260 R15: 0000000000000001
+ FS:  0000000000000000(0000) GS:ffff8880983c2000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f7e16139e9c CR3: 000000000e74e000 CR4: 0000000000752ef0
+ PKRU: 55555554
+ Kernel panic - not syncing: Fatal exception
 
-Fix this by calling release_firmware() before returning when
-request_firmware() succeeded but the firmware content is invalid.
-
-Fixes: 371805522f87 ("bluetooth: hci_uart: add LL protocol serdev driver support")
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Anas Iqbal <mohd.abd.6602@gmail.com>
+Fixes: 54a59aa2b562 ("Bluetooth: Add l2cap_chan->ops->ready()")
+Signed-off-by: Helen Koike <koike@igalia.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_ll.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/l2cap_sock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/bluetooth/hci_ll.c b/drivers/bluetooth/hci_ll.c
-index 4a0b5c3160c2b..4d987dece2d0c 100644
---- a/drivers/bluetooth/hci_ll.c
-+++ b/drivers/bluetooth/hci_ll.c
-@@ -541,6 +541,8 @@ static int download_firmware(struct ll_device *lldev)
- 	if (err || !fw->data || !fw->size) {
- 		bt_dev_err(lldev->hu.hdev, "request_firmware failed(errno %d) for %s",
- 			   err, bts_scr_name);
-+		if (!err)
-+			release_firmware(fw);
- 		return -EINVAL;
- 	}
- 	ptr = (void *)fw->data;
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index ef1b8a44420ed..697b997f3fb65 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1668,6 +1668,9 @@ static void l2cap_sock_ready_cb(struct l2cap_chan *chan)
+ 	struct sock *sk = chan->data;
+ 	struct sock *parent;
+ 
++	if (!sk)
++		return;
++
+ 	lock_sock(sk);
+ 
+ 	parent = bt_sk(sk)->parent;
 -- 
 2.51.0
 
