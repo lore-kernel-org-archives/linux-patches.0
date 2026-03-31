@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE5B31717E;
-	Tue, 31 Mar 2026 17:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD3531715F;
+	Tue, 31 Mar 2026 17:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976911; cv=none; b=Hq5nDmh9ixqOetHJXPrcvatxHS/Qpnyikz8TtQp+NQLx9EpOG/QuVUbAB/0bJolorCVhrNuwyxVkTkhall8QHxKUHtgyLq9+AEBAxEhacOsoJLq0AuzRh56bz5DHFuM+vlC3/rJYwgMyJuE54meoyOvYOpoxpTDUo+064aIvk2U=
+	t=1774976913; cv=none; b=GIn0YR6BetJmB4nHHSfSxNQPI4wLpsRBbImIfXtsQ3el/xZBQuhUP4AR/4bGAGUnAowGN4whjIrfDfX9E5sGRhiqlFscOYFzXTz3wsUPO2/T8E91sSsazl8LoGhWvo4qeP2jOowB3ZdBe6OEJu+IP1uwpgYxAcf11ECTrWtec+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976911; c=relaxed/simple;
-	bh=yZGyOriDWqgyzFxCoE8CgL8UhYZ8qOJwkGIoemN4U34=;
+	s=arc-20240116; t=1774976913; c=relaxed/simple;
+	bh=F/JmbEEaJyX7ZD9CgnBmQeQ9Ks3zeQqmL4OFis5Twug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KjIN9j5B+qM+hGgaE5USPNJ/LhBsP0vidDlxgmTZbIEZ+y7rJqPCcB22Q51VvsU0gCB7KuLIUN1ZeEXhgJVF61FebKevwJFN7YUu7MI/Bgs1soptwYmDTr7nh/OBQeOnxl8189q6XKogKdbXPk5hvbsP6gshzV9ATOlJ3H0z6vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U31Ezv/W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xly3qVBLB7uJDZP+UJ8w84CX1UQlFx8iLJdnziJFLnDh1jbu9ouQ9+Omdz1Nkf9gwIsWzsmy1tcY/96wMQqc6kDWM3Xesmuv7+RkduvJel2qTaNtee6ch67ptcIgtxpk50u8fOe7YjW6i36UR6M5SXR/eHZGLylKYm4qSvkZo2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtNqv5T2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U31Ezv/W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8368FC19423;
-	Tue, 31 Mar 2026 17:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtNqv5T2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E952C19423;
+	Tue, 31 Mar 2026 17:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976910;
-	bh=yZGyOriDWqgyzFxCoE8CgL8UhYZ8qOJwkGIoemN4U34=;
+	s=korg; t=1774976913;
+	bh=F/JmbEEaJyX7ZD9CgnBmQeQ9Ks3zeQqmL4OFis5Twug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U31Ezv/WrPLZsvz1gH5QawKnCZ5c51uUDfS9DL42RbOb55hxrNGbKwCu0dGOga1GB
-	 1b8rnhX00xv5mKYoiqHW4pDoJSwl1BsoaLTX+Xvbb9EYhcyQtcl2VqyvWAxkPcu0zT
-	 GqrZmrIC6g+2XYMco2IriCNp/XTRmC8Qcq/yKj8o=
+	b=rtNqv5T2Sk+5oyI87g0ow3jlJSi5FKlg9esp9SUTnZWwrBxe1CZYyCDbpuDAR7INU
+	 RsKsij0EI2hCWxYSjZfvVRGFyy+uZKyqWB5evDCgDqg/6QFHGscbkb4DJKgGfC34Q3
+	 EdYu95e+OEJfC3sB+dRS2/UILOLWyWcWs9Ul7/Us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien Jarno <aurel32@debian.org>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 242/309] LoongArch: KVM: Handle the case that EIOINTCs coremap is empty
-Date: Tue, 31 Mar 2026 18:22:25 +0200
-Message-ID: <20260331161802.480472740@linuxfoundation.org>
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 243/309] drm/amd/pm: Return -EOPNOTSUPP for unsupported OD_MCLK on smu_v13_0_6
+Date: Tue, 31 Mar 2026 18:22:26 +0200
+Message-ID: <20260331161802.516375710@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -50,36 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Asad Kamal <asad.kamal@amd.com>
 
-commit b97bd69eb0f67b5f961b304d28e9ba45e202d841 upstream.
+commit 2f0e491faee43181b6a86e90f34016b256042fe1 upstream.
 
-EIOINTC's coremap in eiointc_update_sw_coremap() can be empty, currently
-we get a cpuid with -1 in this case, but we actually need 0 because it's
-similar as the case that cpuid >= 4.
+When SET_UCLK_MAX capability is absent, return -EOPNOTSUPP from
+smu_v13_0_6_emit_clk_levels() for OD_MCLK instead of 0. This makes
+unsupported OD_MCLK reporting consistent with other clock types
+and allows callers to skip the entry cleanly.
 
-This fix an out-of-bounds access to kvm_arch::phyid_map::phys_map[].
-
-Cc: <stable@vger.kernel.org>
-Fixes: 3956a52bc05bd81 ("LoongArch: KVM: Add EIOINTC read and write functions")
-Reported-by: Aurelien Jarno <aurel32@debian.org>
-Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1131431
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d82e0a72d9189e8acd353988e1a57f85ce479e37)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/eiointc.c |    2 +-
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/kvm/intc/eiointc.c
-+++ b/arch/loongarch/kvm/intc/eiointc.c
-@@ -83,7 +83,7 @@ static inline void eiointc_update_sw_cor
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+@@ -1494,7 +1494,7 @@ static int smu_v13_0_6_print_clk_levels(
  
- 		if (!(s->status & BIT(EIOINTC_ENABLE_CPU_ENCODE))) {
- 			cpuid = ffs(cpuid) - 1;
--			cpuid = (cpuid >= 4) ? 0 : cpuid;
-+			cpuid = ((cpuid < 0) || (cpuid >= 4)) ? 0 : cpuid;
- 		}
+ 	case SMU_OD_MCLK:
+ 		if (!smu_v13_0_6_cap_supported(smu, SMU_CAP(SET_UCLK_MAX)))
+-			return 0;
++			return -EOPNOTSUPP;
  
- 		vcpu = kvm_get_vcpu_by_cpuid(s->kvm, cpuid);
+ 		size += sysfs_emit_at(buf, size, "%s:\n", "OD_MCLK");
+ 		size += sysfs_emit_at(buf, size, "0: %uMhz\n1: %uMhz\n",
 
 
