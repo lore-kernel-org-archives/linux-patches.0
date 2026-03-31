@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547A733F38A;
-	Tue, 31 Mar 2026 16:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB8733F38A;
+	Tue, 31 Mar 2026 16:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974928; cv=none; b=C+I7RrLq1I/kgqKl6+Z+lRX3s7rjuv9Ns5MrBhv929CdBv648EmgMRcmmHO0QwpOS8qJB+HgS9qY2+darpOITI+um5uUCvCuz8lAI5pk/gK/726dPpwAQ/qcePt4aohiuoK2eAgyG2Z1GHuVIA5r8EVR6mKG487TohayRA9KP1M=
+	t=1774974930; cv=none; b=LbceTemhB0/CSCPaXetmSbzBOo3+1ouBrzpjdLWMLeElxDyRY5lOz3aalN3s3VBAlaX1Cc5vE4nG3FyT10Q57wESHQJLy1HD4BaHuqbm8v2wgYDNt9zUJZtNC17hDkOAV6MOlzsQk32QJp2sLvbFcOUQfACF8FEFU2J630Mz3Jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974928; c=relaxed/simple;
-	bh=8ok9zZXNfI/ukfF+4xMOhFleoIYse1rhiumM8DO8/XQ=;
+	s=arc-20240116; t=1774974930; c=relaxed/simple;
+	bh=sJO8Kp4zcuohaZqS3gcmMPxys+SnLxMpUYrheqjHfGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cVYGkSOXjtH3q3AYJ9VoqnJH9k29QqBOk3TkTSWCe+6lq2Ga1CSugoKkBxilSKVkfruaXBZ5up0BiTNd0tqjm12GvQIr2CUSfidHRbPNjs2EYr1p/+PyXfYdipMmP2CJPVOwT+2o7tGkc5B80V957QxOPyDX3kW4GKM/34ZdR+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqWp/exF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FrUAwILM6Ghxw5AH1uB3+lm9GFcmCkq0in4HrpWVqV4jtMVTbfjiIaXMOgChV+mVx6AZGCiuuxJZ29vnLjBYjaWxQsHdRGFQCeM2FK9gOs3EUiy7ZFlr3gsuzFoN7wr6bvgBe6CW7s1MJQTrNJOIwn06xJdiZDApSHYT1fHjL0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhCr0R0P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqWp/exF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC9CC2BCB1;
-	Tue, 31 Mar 2026 16:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhCr0R0P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DC3C19423;
+	Tue, 31 Mar 2026 16:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974928;
-	bh=8ok9zZXNfI/ukfF+4xMOhFleoIYse1rhiumM8DO8/XQ=;
+	s=korg; t=1774974930;
+	bh=sJO8Kp4zcuohaZqS3gcmMPxys+SnLxMpUYrheqjHfGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZqWp/exFEO5PFYEekfHbp1kBmAlx+oZe792Evwq5GA32YT5WLjFM1DyM+y0b8Sj+W
-	 Y5jVTerRY0isTgyM3dGGSIp6a0soTNHwOzLIy3GVb7lH3iQYVl6HiB2K+NQsAZysF9
-	 EpsytJQeSV8uO99VFQWsxpQVbaP2LwRtbfGw3grs=
+	b=UhCr0R0P16KOFQ1Kn4khpVR2LGwNND350DR6mz2Am5Uh4213xs1roLOgJo0qh9Ciq
+	 0maisyN0ojYZlTFiFl+lSw60l65b3jkRt9CcoZhlDxCw1WnzvxwnVVCAbbPFc8KNOo
+	 U1KssGDFfOVuPT9858OHA7oq8nA3R1pEKn4eNxjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Mohammad Heib <mheib@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 099/342] pinctrl: mediatek: common: Fix probe failure for devices without EINT
-Date: Tue, 31 Mar 2026 18:18:52 +0200
-Message-ID: <20260331161802.659607585@linuxfoundation.org>
+Subject: [PATCH 6.19 100/342] ionic: fix persistent MAC address override on PF
+Date: Tue, 31 Mar 2026 18:18:53 +0200
+Message-ID: <20260331161802.695162179@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,47 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+From: Mohammad Heib <mheib@redhat.com>
 
-[ Upstream commit 8f9f64c8f90dca07d3b9f1d7ce5d34ccd246c9dd ]
+[ Upstream commit cbcb3cfcdc436d6f91a3d95ecfa9c831abe14aed ]
 
-Some pinctrl devices like mt6397 or mt6392 don't support EINT at all, but
-the mtk_eint_init function is always called and returns -ENODEV, which
-then bubbles up and causes probe failure.
+The use of IONIC_CMD_LIF_SETATTR in the MAC address update path causes
+the ionic firmware to update the LIF's identity in its persistent state.
+Since the firmware state is maintained across host warm boots and driver
+reloads, any MAC change on the Physical Function (PF) becomes "sticky.
 
-To address this only call mtk_eint_init if EINT pins are present.
+This is problematic because it causes ethtool -P to report the
+user-configured MAC as the permanent factory address, which breaks
+system management tools that rely on a stable hardware identity.
 
-Tested on Xiaomi Mi Smart Clock x04g (mt6392).
+While Virtual Functions (VFs) need this hardware-level programming to
+properly handle MAC assignments in guest environments, the PF should
+maintain standard transient behavior. This patch gates the
+ionic_program_mac call using is_virtfn so that PF MAC changes remain
+local to the netdev filters and do not overwrite the firmware's
+permanent identity block.
 
-Fixes: e46df235b4e6 ("pinctrl: mediatek: refactor EINT related code for all MediaTek pinctrl can fit")
-Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 19058be7c48c ("ionic: VF initial random MAC address if no assigned mac")
+Signed-off-by: Mohammad Heib <mheib@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Link: https://patch.msgid.link/20260317170806.35390-1-mheib@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-mtk-common.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-index d6a46fe0cda89..3f518dce6d23f 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-@@ -1135,9 +1135,12 @@ int mtk_pctrl_init(struct platform_device *pdev,
- 		goto chip_error;
- 	}
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index 058eea86e141c..38a827203a2f7 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -1719,13 +1719,18 @@ static int ionic_set_mac_address(struct net_device *netdev, void *sa)
+ 	if (ether_addr_equal(netdev->dev_addr, mac))
+ 		return 0;
  
--	ret = mtk_eint_init(pctl, pdev);
--	if (ret)
--		goto chip_error;
-+	/* Only initialize EINT if we have EINT pins */
-+	if (data->eint_hw.ap_num > 0) {
-+		ret = mtk_eint_init(pctl, pdev);
-+		if (ret)
-+			goto chip_error;
+-	err = ionic_program_mac(lif, mac);
+-	if (err < 0)
+-		return err;
++	/* Only program macs for virtual functions to avoid losing the permanent
++	 * Mac across warm reset/reboot.
++	 */
++	if (lif->ionic->pdev->is_virtfn) {
++		err = ionic_program_mac(lif, mac);
++		if (err < 0)
++			return err;
+ 
+-	if (err > 0)
+-		netdev_dbg(netdev, "%s: SET and GET ATTR Mac are not equal-due to old FW running\n",
+-			   __func__);
++		if (err > 0)
++			netdev_dbg(netdev, "%s: SET and GET ATTR Mac are not equal-due to old FW running\n",
++				   __func__);
 +	}
  
- 	return 0;
- 
+ 	err = eth_prepare_mac_addr_change(netdev, addr);
+ 	if (err)
 -- 
 2.51.0
 
