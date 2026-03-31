@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCC83FAE08;
-	Tue, 31 Mar 2026 16:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702F229E11A;
+	Tue, 31 Mar 2026 16:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974482; cv=none; b=afeR3WkfcwCIoLKD5mCj0raVQklhq7CMVfpDxL/y7nusi0ZZ3OCPGjj3jCrpQCKrxR6wklyxIwhv4ndMSGdVwENuPU19cTf56KgIc4QIeNroe/j+//dYPV52EkUIxyZJ02r9qhB6AMTge844DTe8y/S8OFylLJVGvFvQlRbJytA=
+	t=1774974485; cv=none; b=LqiDnbjO8KRDsvd986In/BcaW6Nv5niHlA8viH9g1rlo8GFhwIyLa299imYvBA/WEtZ5tpZFXf3733ojZjzEg7QCUiOYkm+wwAJrnjh4R/R9sv6l8mitgC6P9pqbUPyR/dP5svp9Jbp82UO5Xi12OpdNVAeH5znCsB5lYqOU6a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974482; c=relaxed/simple;
-	bh=Y/Br69wAU1hEw5wRzenLV6NEq2hdF2xGM81cboa7EoE=;
+	s=arc-20240116; t=1774974485; c=relaxed/simple;
+	bh=xpfhk+WxprmyuiOJ5j/sw0LOdJPmc7CioidaJgPgJRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0gvyR/jiB85lZwk+1e7SpyxLhYlH5Xi8P21nzpIzOZ1SdykQG5dW6j8J+6c2SwPPgD7HtiV6IlkEZF1foTi7qBDwMj/aY85FaQWQ4hIGBkazmJZK6k3VO/wQIAeUxtECxZKGsbZv4/qd19S+NbD/YNmoK8fM/d1GwckFyHDsj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfhys4cl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s6ndQwbNjJqntmDmJC0cHQQIYvFYMJNfNIrTn15p3kJ2+Y1Es2qtfDOyi/equABvg2K1tyV+lBB1PwEs0N+Oxb437eogvXbaAv1CTGIDuW+dPUst7/8InUw9EjfHTak7AZkNqu6ZSIrtIBgDurz2Wna8qrYsuaeSnhWxzuC/pbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGy3WL8X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfhys4cl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FADC19423;
-	Tue, 31 Mar 2026 16:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGy3WL8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069AEC19423;
+	Tue, 31 Mar 2026 16:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974482;
-	bh=Y/Br69wAU1hEw5wRzenLV6NEq2hdF2xGM81cboa7EoE=;
+	s=korg; t=1774974485;
+	bh=xpfhk+WxprmyuiOJ5j/sw0LOdJPmc7CioidaJgPgJRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zfhys4clm6epjhCx5XKkipC/Qgd42e9DUsXzrEXy3m6dVLfCIh9WQ5XItV2jIqZAa
-	 FudpPnpYy4iK744++C8JTDGRHNWNIqvYnrPf42ypn09i/RbAvVvh0fdfwbYAd5Vnwd
-	 BA7CDJ9JSQzf1pMgvXo4e3486yhONf2q6ZRm4Gsw=
+	b=eGy3WL8X3YRRpwTfTipeM5rQlIDpziXY/CdHvnToy4qzgfejHdpPKj1fONUoFd4DQ
+	 Ufl/kjuMyoy5eDhgI5/BElFwZht/wsG5ISgTAS5hxjv3fOgISquVYj+GHqIo4Ec5Lc
+	 TS2fxHUacS2rRV/jqf/9Fb5i2h/OJ3ozbBASEK94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 102/175] ksmbd: do not expire session on binding failure
-Date: Tue, 31 Mar 2026 18:21:26 +0200
-Message-ID: <20260331161733.525448020@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 076/175] RDMA/rw: Fall back to direct SGE on MR pool exhaustion
+Date: Tue, 31 Mar 2026 18:21:00 +0200
+Message-ID: <20260331161732.569352562@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,49 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 9bbb19d21ded7d78645506f20d8c44895e3d0fb9 upstream.
+[ Upstream commit 00da250c21b074ea9494c375d0117b69e5b1d0a4 ]
 
-When a multichannel session binding request fails (e.g. wrong password),
-the error path unconditionally sets sess->state = SMB2_SESSION_EXPIRED.
-However, during binding, sess points to the target session looked up via
-ksmbd_session_lookup_slowpath() -- which belongs to another connection's
-user. This allows a remote attacker to invalidate any active session by
-simply sending a binding request with a wrong password (DoS).
+When IOMMU passthrough mode is active, ib_dma_map_sgtable_attrs()
+produces no coalescing: each scatterlist page maps 1:1 to a DMA
+entry, so sgt.nents equals the raw page count. A 1 MB transfer
+yields 256 DMA entries. If that count exceeds the device's
+max_sgl_rd threshold (an optimization hint from mlx5 firmware),
+rdma_rw_io_needs_mr() steers the operation into the MR
+registration path. Each such operation consumes one or more MRs
+from a pool sized at max_rdma_ctxs -- roughly one MR per
+concurrent context. Under write-intensive workloads that issue
+many concurrent RDMA READs, the pool is rapidly exhausted,
+ib_mr_pool_get() returns NULL, and rdma_rw_init_one_mr() returns
+-EAGAIN. Upper layer protocols treat this as a fatal DMA mapping
+failure and tear down the connection.
 
-Fix this by skipping session expiration when the failed request was
-a binding attempt, since the session does not belong to the current
-connection. The reference taken by ksmbd_session_lookup_slowpath() is
-still correctly released via ksmbd_user_session_put().
+The max_sgl_rd check is a performance optimization, not a
+correctness requirement: the device can handle large SGE counts
+via direct posting, just less efficiently than with MR
+registration. When the MR pool cannot satisfy a request, falling
+back to the direct SGE (map_wrs) path avoids the connection
+reset while preserving the MR optimization for the common case
+where pool resources are available.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add a fallback in rdma_rw_ctx_init() so that -EAGAIN from
+rdma_rw_init_mr_wrs() triggers direct SGE posting instead of
+propagating the error. iWARP devices, which mandate MR
+registration for RDMA READs, and force_mr debug mode continue
+to treat -EAGAIN as terminal.
+
+Fixes: 00bd1439f464 ("RDMA/rw: Support threshold for registration vs scattering to local pages")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260313194201.5818-2-cel@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/rw.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1925,8 +1925,14 @@ out_err:
- 			if (sess->user && sess->user->flags & KSMBD_USER_FLAG_DELAY_SESSION)
- 				try_delay = true;
+diff --git a/drivers/infiniband/core/rw.c b/drivers/infiniband/core/rw.c
+index 2522ff1cc462c..49fbfe1cef689 100644
+--- a/drivers/infiniband/core/rw.c
++++ b/drivers/infiniband/core/rw.c
+@@ -326,14 +326,29 @@ int rdma_rw_ctx_init(struct rdma_rw_ctx *ctx, struct ib_qp *qp, u32 port_num,
+ 	if (rdma_rw_io_needs_mr(qp->device, port_num, dir, sg_cnt)) {
+ 		ret = rdma_rw_init_mr_wrs(ctx, qp, port_num, sg, sg_cnt,
+ 				sg_offset, remote_addr, rkey, dir);
+-	} else if (sg_cnt > 1) {
++		/*
++		 * If MR init succeeded or failed for a reason other
++		 * than pool exhaustion, that result is final.
++		 *
++		 * Pool exhaustion (-EAGAIN) from the max_sgl_rd
++		 * optimization is recoverable: fall back to
++		 * direct SGE posting. iWARP and force_mr require
++		 * MRs unconditionally, so -EAGAIN is terminal.
++		 */
++		if (ret != -EAGAIN ||
++		    rdma_protocol_iwarp(qp->device, port_num) ||
++		    unlikely(rdma_rw_force_mr))
++			goto out;
++	}
++
++	if (sg_cnt > 1)
+ 		ret = rdma_rw_init_map_wrs(ctx, qp, sg, sg_cnt, sg_offset,
+ 				remote_addr, rkey, dir);
+-	} else {
++	else
+ 		ret = rdma_rw_init_single_wr(ctx, qp, sg, sg_offset,
+ 				remote_addr, rkey, dir);
+-	}
  
--			sess->last_active = jiffies;
--			sess->state = SMB2_SESSION_EXPIRED;
-+			/*
-+			 * For binding requests, session belongs to another
-+			 * connection. Do not expire it.
-+			 */
-+			if (!(req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
-+				sess->last_active = jiffies;
-+				sess->state = SMB2_SESSION_EXPIRED;
-+			}
- 			ksmbd_user_session_put(sess);
- 			work->sess = NULL;
- 			if (try_delay) {
++out:
+ 	if (ret < 0)
+ 		goto out_unmap_sg;
+ 	return ret;
+-- 
+2.53.0
+
 
 
