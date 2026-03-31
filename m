@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A073C3F7887;
-	Tue, 31 Mar 2026 16:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370983E3C5C;
+	Tue, 31 Mar 2026 16:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974858; cv=none; b=PAjMWlOxbTq27YXuA64NqG5u8KcL7Uiy+jD4/ceDyKnUEi9dyxmQyrT4rkalOqLx25ARGR1cTMncOYMkBHfupN0zWqKktTYQLCkl6wfwQewtl5MkBNXmJfzExdUPaE8tp7NHSl2W7UhynmZZKjGp0CTqbOZVgur0nXYUyPUDhgM=
+	t=1774974861; cv=none; b=e6r+0Tqx3eI3mFxKi2mP6/an+/qm1htv1RnIxYzKXVFookZyTT9D8Zn1iP01IK/qaZsqOLapIgYtI5aIyNQqhqrXquub/Iu/EypZeL96v9Bfhkhe2cW0HCB612l0fLTO/b+1/PwiuYLJff7s0De2NgigIJICndaqsp1upBNfg0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974858; c=relaxed/simple;
-	bh=hk2YGHmARYPW3/4YTu9zfkaZ17W0E4lVx+3k0YXN9/4=;
+	s=arc-20240116; t=1774974861; c=relaxed/simple;
+	bh=SGOZ94CZaZfuxX9Klcna6RHE0JA5fhyKi9+6mkfVAVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLC9rSxRAa+N65WLMwek3HZ7bC5QnxAJBTbDnFXG8yJAf8gFS87QUWdTU/6Ef1+nb4fO5YPCfPvCS2DAyGG5wmTiiOCUu+bOd9T8Ae0mRs93suf6Tcwtv1S54R/AeNq45Q8O89OSSk9mfVIHG8kHwlxRaCGXe40+zAdLp/j1xzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyDsSEoJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lBce2sUHlqjn8PrSJUc489hgE+FaJaNbY68d0g1bWo8nF9x50Dv0MdpHHwJhiHtfwV5emWqVUP7hNRgfXqa4bQmBni1LdoNPJFvKdBOILkvQN+LIjQqyGucG4dLOfCdx4GDXgpq+xN1o4dQiu7A63VCoW1xWQB6fZa+UhBgtGTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOU3uMzH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyDsSEoJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C1DC19423;
-	Tue, 31 Mar 2026 16:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOU3uMzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CEFC19423;
+	Tue, 31 Mar 2026 16:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974858;
-	bh=hk2YGHmARYPW3/4YTu9zfkaZ17W0E4lVx+3k0YXN9/4=;
+	s=korg; t=1774974861;
+	bh=SGOZ94CZaZfuxX9Klcna6RHE0JA5fhyKi9+6mkfVAVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YyDsSEoJ7Aw0kiKvicNFnHL/irrP5MLd8iovmcmhUpZXj2ngpwbe8SMgD9f3E3173
-	 vKZgAK8THpgOJwwJFQgUEdSgSCgvFkbosXFQEKEAi8GFCa3CDRjnaOEP+bUrHPzoGu
-	 oBNGszrNyOzB+5VZB/jIfDTG58Nu8YiAZzJLuuVo=
+	b=pOU3uMzHbX49zOuDGP87n/azXor99MjcT5wmuUKhYOHmIp9aVA9bGDNrxyycqMNmF
+	 mKklqpFjd6w2nBkMOwpS/xAP9P777h6rKfHWyeeUa/DcXjaaUgEPwwbdlmsCas7UnZ
+	 3cOD5UcT0Qy4sQBygnLvzlr5ni0hAv2ea3jj08hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 072/342] drm/amdgpu: fix gpu idle power consumption issue for gfx v12
-Date: Tue, 31 Mar 2026 18:18:25 +0200
-Message-ID: <20260331161801.543887498@linuxfoundation.org>
+Subject: [PATCH 6.19 055/342] dma-buf: Include ioctl.h in UAPI header
+Date: Tue, 31 Mar 2026 18:18:08 +0200
+Message-ID: <20260331161800.923097161@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -45,54 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-[ Upstream commit a6571045cf06c4aa749b4801382ae96650e2f0e1 ]
+[ Upstream commit a116bac87118903925108e57781bbfc7a7eea27b ]
 
-Older versions of the MES firmware may cause abnormal GPU power consumption.
-When performing inference tasks on the GPU (e.g., with Ollama using ROCm),
-the GPU may show abnormal power consumption in idle state and incorrect GPU load information.
-This issue has been fixed in firmware version 0x8b and newer.
+include/uapi/linux/dma-buf.h uses several macros from ioctl.h to define
+its ioctl commands. However, it does not include ioctl.h itself. So,
+if userspace source code tries to include the dma-buf.h file without
+including ioctl.h, it can result in build failures.
 
-Closes: https://github.com/ROCm/ROCm/issues/5706
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4e22a5fe6ea6e0b057e7f246df4ac3ff8bfbc46a)
+Therefore, include ioctl.h in the dma-buf UAPI header.
+
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Reviewed-by: T.J. Mercier <tjmercier@google.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20260303002309.1401849-1-isaacmanjarres@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v12_0.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/uapi/linux/dma-buf.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-index 231aba48d8d28..dcafbd7066c40 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-@@ -731,6 +731,9 @@ static int mes_v12_0_set_hw_resources(struct amdgpu_mes *mes, int pipe)
- 	int i;
- 	struct amdgpu_device *adev = mes->adev;
- 	union MESAPI_SET_HW_RESOURCES mes_set_hw_res_pkt;
-+	uint32_t mes_rev = (pipe == AMDGPU_MES_SCHED_PIPE) ?
-+		(mes->sched_version & AMDGPU_MES_VERSION_MASK) :
-+		(mes->kiq_version & AMDGPU_MES_VERSION_MASK);
+diff --git a/include/uapi/linux/dma-buf.h b/include/uapi/linux/dma-buf.h
+index 5a6fda66d9adf..e827c9d20c5d3 100644
+--- a/include/uapi/linux/dma-buf.h
++++ b/include/uapi/linux/dma-buf.h
+@@ -20,6 +20,7 @@
+ #ifndef _DMA_BUF_UAPI_H_
+ #define _DMA_BUF_UAPI_H_
  
- 	memset(&mes_set_hw_res_pkt, 0, sizeof(mes_set_hw_res_pkt));
++#include <linux/ioctl.h>
+ #include <linux/types.h>
  
-@@ -785,7 +788,7 @@ static int mes_v12_0_set_hw_resources(struct amdgpu_mes *mes, int pipe)
- 	 * handling support, other queue will not use the oversubscribe timer.
- 	 * handling  mode - 0: disabled; 1: basic version; 2: basic+ version
- 	 */
--	mes_set_hw_res_pkt.oversubscription_timer = 50;
-+	mes_set_hw_res_pkt.oversubscription_timer = mes_rev < 0x8b ? 0 : 50;
- 	mes_set_hw_res_pkt.unmapped_doorbell_handling = 1;
- 
- 	if (amdgpu_mes_log_enable) {
+ /**
 -- 
 2.51.0
 
