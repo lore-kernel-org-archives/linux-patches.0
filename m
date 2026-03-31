@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4965423A88;
-	Tue, 31 Mar 2026 16:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9ED423A7C;
+	Tue, 31 Mar 2026 16:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976359; cv=none; b=VA1imppLuyCrp2PAHkIWYSRK8vkn3CzN7gV/JD01P61HbJeXVc1r1MNi625C93D5QY57hesFwo3B9lnHHxMKb1Sgfw9ydc2U6wyoT5ej3mhoXdGpKCqKx3/It7jkLTfNEmu3oKR4ET3bx1PgBn/ABuVE04xsnmRm+axaqS3ddDE=
+	t=1774976362; cv=none; b=jKaYYbzBz0JsSc2zvKnMrowlGwyYvr6nwhSgnTd/c3eJqlyX8xCjWVsQ3ezhW4wpG5GYmSyzYFUGo/xW3ypRMh8QAtJpiF5x97+/wEXEhdIdyaxA0+QcfnqPh3xZWuBk7no2wIGRq2ZBOv6Tq3S62djwNEvk1FuHss0lj6gMfwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976359; c=relaxed/simple;
-	bh=LKZUgNgDCA0DU768pYP9DLBa6rYRAj/416bh8sC3nH4=;
+	s=arc-20240116; t=1774976362; c=relaxed/simple;
+	bh=6phVvRMb6ZQPUmSEq3bnLL9haGUFKvF1WUmYncfTb5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnKNxXxZbWNKrOoBA6fR7OhqVgd2RcjH0zhDiTw3nTpDPesgEThL94AEMU6zKXN5X9ePQOGoY+xlPU/UeEEbMmgrj4+gbAZpe/44U8DVX3Bj3DKw8+HrYXquq7fPasWmB3qVXHP9J0oN69osLu6XfkfT7Ytupv2+9kxrDvAq6y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYMwfJNC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MjxMYjUxkwmka0DB5xsM+1hKBIazs6W/YznjGwDgrfd0YNzORAnEA2TbdQ6mJgsCEgDGXWDfPngCc0ZJGmhxg82w8XV5GtdHoe0Y/+1Awn7i5UCl5e12+GQ1kg89Ol4BRl2LyGGSadzceUTY6jqcIvbxMsnSUMGFXxcu+Ux9aSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSQrUQJS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYMwfJNC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358E3C2BCB2;
-	Tue, 31 Mar 2026 16:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSQrUQJS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86BCC19424;
+	Tue, 31 Mar 2026 16:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976359;
-	bh=LKZUgNgDCA0DU768pYP9DLBa6rYRAj/416bh8sC3nH4=;
+	s=korg; t=1774976362;
+	bh=6phVvRMb6ZQPUmSEq3bnLL9haGUFKvF1WUmYncfTb5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYMwfJNCh6Dc9hLxnxOYhNwGyzknHD6SixpcWDhrHwTW3Kq6Ht+eOxulTpHNNzTFJ
-	 Xpgp7eUUAZ98bMjgnhbYPp0yaBOItvdWasvxXdC38vt2QLqNLXihd1RLwsrgUDailg
-	 6kYIpe3lA3DfFpz/RLORk6UZ2EDPm9832EhWVAdg=
+	b=MSQrUQJS90Mv28WO0Oundmr3yuolyOGYbOm8rrnfJJ3b4lJgMyuRN4ijFXr0QdO6g
+	 RuSXDX94Zf+31BpKXq8kdQCSXG5PkjW8PVisQJrzNWl5IdQpvyrhDZshf0WvParja5
+	 vjJ8F6aWCj+m+I1uWiM0kJFeGM/Ds1BJbWbs/I8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Lixu <lixu.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/309] HID: intel-ish-hid: ipc: Add Nova Lake-H/S PCI device IDs
-Date: Tue, 31 Mar 2026 18:18:52 +0200
-Message-ID: <20260331161754.553594045@linuxfoundation.org>
+Subject: [PATCH 6.18 030/309] platform/x86: oxpec: Add support for OneXPlayer APEX
+Date: Tue, 31 Mar 2026 18:18:53 +0200
+Message-ID: <20260331161754.591027319@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -47,83 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 22f8bcec5aeb05104b3eaa950cb5a345e95f0aa8 ]
+[ Upstream commit 3385ea97c14d271dcb0c6e6fcf16972f819eecd8 ]
 
-Add device IDs of Nova Lake-H and Nova Lake-S into ishtp support list.
+OneXPlayer Apex is a new Strix Halo handheld. It uses the same registers
+as the OneXPlayer Fly devices. Add a quirk for it to the oxpec driver.
 
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://patch.msgid.link/20260223183004.2696892-2-lkml@antheas.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ipc/hw-ish.h  |  2 ++
- drivers/hid/intel-ish-hid/ipc/pci-ish.c | 12 ++++++++++++
- 2 files changed, 14 insertions(+)
+ drivers/platform/x86/oxpec.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/hw-ish.h b/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-index fa5d68c363134..27389971b96cc 100644
---- a/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-+++ b/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-@@ -39,6 +39,8 @@
- #define PCI_DEVICE_ID_INTEL_ISH_PTL_H		0xE345
- #define PCI_DEVICE_ID_INTEL_ISH_PTL_P		0xE445
- #define PCI_DEVICE_ID_INTEL_ISH_WCL		0x4D45
-+#define PCI_DEVICE_ID_INTEL_ISH_NVL_H		0xD354
-+#define PCI_DEVICE_ID_INTEL_ISH_NVL_S		0x6E78
+diff --git a/drivers/platform/x86/oxpec.c b/drivers/platform/x86/oxpec.c
+index 54377b282ff88..9511791f04d9a 100644
+--- a/drivers/platform/x86/oxpec.c
++++ b/drivers/platform/x86/oxpec.c
+@@ -13,7 +13,7 @@
+  *
+  * Copyright (C) 2022 Joaquín I. Aramendía <samsagax@gmail.com>
+  * Copyright (C) 2024 Derek J. Clark <derekjohn.clark@gmail.com>
+- * Copyright (C) 2025 Antheas Kapenekakis <lkml@antheas.dev>
++ * Copyright (C) 2025-2026 Antheas Kapenekakis <lkml@antheas.dev>
+  */
  
- #define	REVISION_ID_CHT_A0	0x6
- #define	REVISION_ID_CHT_Ax_SI	0x0
-diff --git a/drivers/hid/intel-ish-hid/ipc/pci-ish.c b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-index b748ac6fbfdc7..51a41a28541c5 100644
---- a/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-+++ b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-@@ -28,11 +28,15 @@ enum ishtp_driver_data_index {
- 	ISHTP_DRIVER_DATA_LNL_M,
- 	ISHTP_DRIVER_DATA_PTL,
- 	ISHTP_DRIVER_DATA_WCL,
-+	ISHTP_DRIVER_DATA_NVL_H,
-+	ISHTP_DRIVER_DATA_NVL_S,
- };
- 
- #define ISH_FW_GEN_LNL_M "lnlm"
- #define ISH_FW_GEN_PTL "ptl"
- #define ISH_FW_GEN_WCL "wcl"
-+#define ISH_FW_GEN_NVL_H "nvlh"
-+#define ISH_FW_GEN_NVL_S "nvls"
- 
- #define ISH_FIRMWARE_PATH(gen) "intel/ish/ish_" gen ".bin"
- #define ISH_FIRMWARE_PATH_ALL "intel/ish/ish_*.bin"
-@@ -47,6 +51,12 @@ static struct ishtp_driver_data ishtp_driver_data[] = {
- 	[ISHTP_DRIVER_DATA_WCL] = {
- 		.fw_generation = ISH_FW_GEN_WCL,
+ #include <linux/acpi.h>
+@@ -208,6 +208,13 @@ static const struct dmi_system_id dmi_table[] = {
+ 		},
+ 		.driver_data = (void *)oxp_2,
  	},
-+	[ISHTP_DRIVER_DATA_NVL_H] = {
-+		.fw_generation = ISH_FW_GEN_NVL_H,
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
++			DMI_EXACT_MATCH(DMI_BOARD_NAME, "ONEXPLAYER APEX"),
++		},
++		.driver_data = (void *)oxp_fly,
 +	},
-+	[ISHTP_DRIVER_DATA_NVL_S] = {
-+		.fw_generation = ISH_FW_GEN_NVL_S,
-+	},
- };
- 
- static const struct pci_device_id ish_pci_tbl[] = {
-@@ -76,6 +86,8 @@ static const struct pci_device_id ish_pci_tbl[] = {
- 	{PCI_DEVICE_DATA(INTEL, ISH_PTL_H, ISHTP_DRIVER_DATA_PTL)},
- 	{PCI_DEVICE_DATA(INTEL, ISH_PTL_P, ISHTP_DRIVER_DATA_PTL)},
- 	{PCI_DEVICE_DATA(INTEL, ISH_WCL, ISHTP_DRIVER_DATA_WCL)},
-+	{PCI_DEVICE_DATA(INTEL, ISH_NVL_H, ISHTP_DRIVER_DATA_NVL_H)},
-+	{PCI_DEVICE_DATA(INTEL, ISH_NVL_S, ISHTP_DRIVER_DATA_NVL_S)},
- 	{}
- };
- MODULE_DEVICE_TABLE(pci, ish_pci_tbl);
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
 -- 
 2.51.0
 
