@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370983E3C5C;
-	Tue, 31 Mar 2026 16:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AF33DFC7D;
+	Tue, 31 Mar 2026 16:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974861; cv=none; b=e6r+0Tqx3eI3mFxKi2mP6/an+/qm1htv1RnIxYzKXVFookZyTT9D8Zn1iP01IK/qaZsqOLapIgYtI5aIyNQqhqrXquub/Iu/EypZeL96v9Bfhkhe2cW0HCB612l0fLTO/b+1/PwiuYLJff7s0De2NgigIJICndaqsp1upBNfg0A=
+	t=1774974863; cv=none; b=s0/kCjm2uRy/uLZKw+4xBBfOMp2i6j2JT8KnSZCueg2KWWH0XiNAdfTj3i7yDG0Bc9Ma1sYFkdHsgB7lHZr9ZS/ItF1hotVEmyDbUvhlVS+5r8DWKb8cmYHMJlPjAhw9Gn3B3ai4DzrLVBkPNcuMGNwzp/aHPkGqsV9dhqCNkes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974861; c=relaxed/simple;
-	bh=SGOZ94CZaZfuxX9Klcna6RHE0JA5fhyKi9+6mkfVAVA=;
+	s=arc-20240116; t=1774974863; c=relaxed/simple;
+	bh=CAU65dJBarfHIFvBNt6OD5YO3yy4ZnR2lvm4aDZ7vJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lBce2sUHlqjn8PrSJUc489hgE+FaJaNbY68d0g1bWo8nF9x50Dv0MdpHHwJhiHtfwV5emWqVUP7hNRgfXqa4bQmBni1LdoNPJFvKdBOILkvQN+LIjQqyGucG4dLOfCdx4GDXgpq+xN1o4dQiu7A63VCoW1xWQB6fZa+UhBgtGTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOU3uMzH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cGQ+7Fq3kdw8HMYmtWkKKnfm7OzbU3qRtUttKcDtq4VkTiYAb2DpFy0zI8FZpzblUw79wAvYJvXpjVXETTMKAxeuxhRHioQv+BTHxEBuvn9eIKzdvwSN/51NK/w3DSD1mXSTs9zCEVqH5IbWxWWbSDoMg52dTtKu7BJtWF6rL4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMW6BrGS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOU3uMzH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CEFC19423;
-	Tue, 31 Mar 2026 16:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMW6BrGS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE79C19423;
+	Tue, 31 Mar 2026 16:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974861;
-	bh=SGOZ94CZaZfuxX9Klcna6RHE0JA5fhyKi9+6mkfVAVA=;
+	s=korg; t=1774974863;
+	bh=CAU65dJBarfHIFvBNt6OD5YO3yy4ZnR2lvm4aDZ7vJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pOU3uMzHbX49zOuDGP87n/azXor99MjcT5wmuUKhYOHmIp9aVA9bGDNrxyycqMNmF
-	 mKklqpFjd6w2nBkMOwpS/xAP9P777h6rKfHWyeeUa/DcXjaaUgEPwwbdlmsCas7UnZ
-	 3cOD5UcT0Qy4sQBygnLvzlr5ni0hAv2ea3jj08hY=
+	b=sMW6BrGS3utY32UDOe5BET3wI5ljBzAINCwsBKaNCO74Ryo2d6yTRxz5oqlTOkB+3
+	 N79kaPy7Pbzvs+M1A3ZFPzePs76GDLR/oBxxcUbQZqlCTKO+BzWGb0haTkBtOrE3SA
+	 fd1Rc5dVZqQEOB1eyrLaUnGC7J9slXEc8V+4jj9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jie Deng <dengjie03@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 055/342] dma-buf: Include ioctl.h in UAPI header
-Date: Tue, 31 Mar 2026 18:18:08 +0200
-Message-ID: <20260331161800.923097161@linuxfoundation.org>
+Subject: [PATCH 6.19 073/342] usb: core: new quirk to handle devices with zero configurations
+Date: Tue, 31 Mar 2026 18:18:26 +0200
+Message-ID: <20260331161801.579975006@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -46,46 +44,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Jie Deng <dengjie03@kylinos.cn>
 
-[ Upstream commit a116bac87118903925108e57781bbfc7a7eea27b ]
+[ Upstream commit 9f6a983cfa22ac662c86e60816d3a357d4b551e9 ]
 
-include/uapi/linux/dma-buf.h uses several macros from ioctl.h to define
-its ioctl commands. However, it does not include ioctl.h itself. So,
-if userspace source code tries to include the dma-buf.h file without
-including ioctl.h, it can result in build failures.
+Some USB devices incorrectly report bNumConfigurations as 0 in their
+device descriptor, which causes the USB core to reject them during
+enumeration.
+logs:
+usb 1-2: device descriptor read/64, error -71
+usb 1-2: no configurations
+usb 1-2: can't read configurations, error -22
 
-Therefore, include ioctl.h in the dma-buf UAPI header.
+However, these devices actually work correctly when
+treated as having a single configuration.
 
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Reviewed-by: T.J. Mercier <tjmercier@google.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260303002309.1401849-1-isaacmanjarres@google.com
+Add a new quirk USB_QUIRK_FORCE_ONE_CONFIG to handle such devices.
+When this quirk is set, assume the device has 1 configuration instead
+of failing with -EINVAL.
+
+This quirk is applied to the device with VID:PID 5131:2007 which
+exhibits this behavior.
+
+Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
+Link: https://patch.msgid.link/20260227084931.1527461-1-dengjie03@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/dma-buf.h | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/admin-guide/kernel-parameters.txt | 3 +++
+ drivers/usb/core/config.c                       | 6 +++++-
+ drivers/usb/core/quirks.c                       | 5 +++++
+ include/linux/usb/quirks.h                      | 3 +++
+ 4 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/dma-buf.h b/include/uapi/linux/dma-buf.h
-index 5a6fda66d9adf..e827c9d20c5d3 100644
---- a/include/uapi/linux/dma-buf.h
-+++ b/include/uapi/linux/dma-buf.h
-@@ -20,6 +20,7 @@
- #ifndef _DMA_BUF_UAPI_H_
- #define _DMA_BUF_UAPI_H_
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index aa0031108bc1d..f31e9e4c598fc 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -8090,6 +8090,9 @@ Kernel parameters
+ 				p = USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT
+ 					(Reduce timeout of the SET_ADDRESS
+ 					request from 5000 ms to 500 ms);
++				q = USB_QUIRK_FORCE_ONE_CONFIG (Device
++					claims zero configurations,
++					forcing to 1);
+ 			Example: quirks=0781:5580:bk,0a5c:5834:gij
  
-+#include <linux/ioctl.h>
- #include <linux/types.h>
+ 	usbhid.mousepoll=
+diff --git a/drivers/usb/core/config.c b/drivers/usb/core/config.c
+index 2bb1ceb9d621a..3067e18ec4d8a 100644
+--- a/drivers/usb/core/config.c
++++ b/drivers/usb/core/config.c
+@@ -927,7 +927,11 @@ int usb_get_configuration(struct usb_device *dev)
+ 		dev->descriptor.bNumConfigurations = ncfg = USB_MAXCONFIG;
+ 	}
  
- /**
+-	if (ncfg < 1) {
++	if (ncfg < 1 && dev->quirks & USB_QUIRK_FORCE_ONE_CONFIG) {
++		dev_info(ddev, "Device claims zero configurations, forcing to 1\n");
++		dev->descriptor.bNumConfigurations = 1;
++		ncfg = 1;
++	} else if (ncfg < 1) {
+ 		dev_err(ddev, "no configurations\n");
+ 		return -EINVAL;
+ 	}
+diff --git a/drivers/usb/core/quirks.c b/drivers/usb/core/quirks.c
+index 9fef2f4d604a5..65168eb89295c 100644
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -141,6 +141,8 @@ static int quirks_param_set(const char *value, const struct kernel_param *kp)
+ 			case 'p':
+ 				flags |= USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT;
+ 				break;
++			case 'q':
++				flags |= USB_QUIRK_FORCE_ONE_CONFIG;
+ 			/* Ignore unrecognized flag characters */
+ 			}
+ 		}
+@@ -597,6 +599,9 @@ static const struct usb_device_id usb_quirk_list[] = {
+ 	/* VCOM device */
+ 	{ USB_DEVICE(0x4296, 0x7570), .driver_info = USB_QUIRK_CONFIG_INTF_STRINGS },
+ 
++	/* Noji-MCS SmartCard Reader */
++	{ USB_DEVICE(0x5131, 0x2007), .driver_info = USB_QUIRK_FORCE_ONE_CONFIG },
++
+ 	/* INTEL VALUE SSD */
+ 	{ USB_DEVICE(0x8086, 0xf1a5), .driver_info = USB_QUIRK_RESET_RESUME },
+ 
+diff --git a/include/linux/usb/quirks.h b/include/linux/usb/quirks.h
+index 2f7bd2fdc6164..b3cc7beab4a3c 100644
+--- a/include/linux/usb/quirks.h
++++ b/include/linux/usb/quirks.h
+@@ -78,4 +78,7 @@
+ /* skip BOS descriptor request */
+ #define USB_QUIRK_NO_BOS			BIT(17)
+ 
++/* Device claims zero configurations, forcing to 1 */
++#define USB_QUIRK_FORCE_ONE_CONFIG		BIT(18)
++
+ #endif /* __LINUX_USB_QUIRKS_H */
 -- 
 2.51.0
 
