@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E27426D2A;
-	Tue, 31 Mar 2026 16:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56164426EC7;
+	Tue, 31 Mar 2026 16:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975976; cv=none; b=AcyPYkJWMukCW07GtQ8cCQ88sIuekaIobwF7rOksr5OEq/XVUbgeZEF/tNOg3RIGM1eTlvywRrHwO9ZmCuDq62NDNuEv+dCviL5GKTe2+FpUSiD0CaBKcS/9yPN9qXHhMM4bv6S3gVmp0gNafjesug4CcqeD9fLGiB8MBG1L1Ko=
+	t=1774975979; cv=none; b=fm32ep21NC6VTtDoD9gwemygrVy6kGGZAgi2uKhSkHGU/PgfHhV6VyfdypzFH3XJXP07zAaRn+Y7orpMRrhW4fFHkzA5Lym4ZBk2rLAt/U7yCtyoHiGhVKo7ie9BXvRkJWhU5m8LqDG5B3ZrU/QVI1ZGYZc3EksjZf0czTsY0gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975976; c=relaxed/simple;
-	bh=hehGFCmPdUKJ0C0ae4OSe9jVojWmDApL38LAWtYQcYs=;
+	s=arc-20240116; t=1774975979; c=relaxed/simple;
+	bh=VKf9WV1IQl9az5wRuntkEDluiKBg8lXh3u0pyqj94qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKD0rigHAs3jjBc0gRmHk6xFIC5hLfQE9jRXCFfzE7LDaPxyKBsrOsUd+C2Pj6ldaGZ8TLece+5nPfwIQf7iR6PNuZdjOQY9JaP+D78ODCLWmSvckD6vA7ry8sYyw+ROs5rNWRpRuHdE4xwtcBfnJDfBOz+qSHzOIUXUS2rc9xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Eq0Psm7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GjrnWSVfZO5iP4sWBjhuNwrQcEg25WX2Hju1QS5ovwoVbj/i7uhBPPpg9euooAnQhqC6RhKX39siSOaCmu9sghYHTyT8dANLoIoIeFU97CwLtdNMPsswWZIWkpRzfRpcfuJHapKxkOkYgK48FFUEQXeQOFKX0Wo4kapUqHNPdN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgwOniT2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Eq0Psm7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC8DC19423;
-	Tue, 31 Mar 2026 16:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgwOniT2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3E7C19423;
+	Tue, 31 Mar 2026 16:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975976;
-	bh=hehGFCmPdUKJ0C0ae4OSe9jVojWmDApL38LAWtYQcYs=;
+	s=korg; t=1774975979;
+	bh=VKf9WV1IQl9az5wRuntkEDluiKBg8lXh3u0pyqj94qY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Eq0Psm7wx23Dd6PaJW/OMayNzvCkKkUronDkaPi3KdV19gn8K9pGt+UGuFGMRDpf
-	 M0J7VPGUoQEmDJ+yI9yA+/DyADps2Ib95o5KGdvtT3/YkG//t4bUiyTFYWrRuHSXRi
-	 P7TGfn7VrG7F+46YalyBoHSRV5EqbRhPMIs/cX3k=
+	b=AgwOniT2nE7nimHSY7mkfm0EmqPJ2lw9sIKbXjaG6HgIyVCT5Ic7ZzlPffX5+Ldon
+	 8b79knP9mjKuSyU2zI/BBw48KMBZWBVJX7UCh9JlaZd3YK6LAYuqQ9L+XcVb7sR8Rq
+	 9WE7rcl6Q3qrmJlcOLX9B9Az6qc+HKvAdbMvntsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.12 159/244] ovl: fix wrong detection of 32bit inode numbers
-Date: Tue, 31 Mar 2026 18:21:49 +0200
-Message-ID: <20260331161747.639759819@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Tyllis Xu <LivelyCarpet87@gmail.com>,
+	Dave Marquardt <davemarq@linux.ibm.com>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 160/244] scsi: ibmvfc: Fix OOB access in ibmvfc_discover_targets_done()
+Date: Tue, 31 Mar 2026 18:21:50 +0200
+Message-ID: <20260331161747.677100471@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -49,43 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Tyllis Xu <livelycarpet87@gmail.com>
 
-commit 53a7c171e9dd833f0a96b545adcb89bd57387239 upstream.
+commit 61d099ac4a7a8fb11ebdb6e2ec8d77f38e77362f upstream.
 
-The implicit FILEID_INO32_GEN encoder was changed to be explicit,
-so we need to fix the detection.
+A malicious or compromised VIO server can return a num_written value in the
+discover targets MAD response that exceeds max_targets. This value is
+stored directly in vhost->num_targets without validation, and is then used
+as the loop bound in ibmvfc_alloc_targets() to index into disc_buf[], which
+is only allocated for max_targets entries. Indices at or beyond max_targets
+access kernel memory outside the DMA-coherent allocation.  The
+out-of-bounds data is subsequently embedded in Implicit Logout and PLOGI
+MADs that are sent back to the VIO server, leaking kernel memory.
 
-When mounting overlayfs with upperdir and lowerdir on different ext4
-filesystems, the expected kmsg log is:
+Fix by clamping num_written to max_targets before storing it.
 
-  overlayfs: "xino" feature enabled using 32 upper inode bits.
-
-But instead, since the regressing commit, the kmsg log was:
-
-  overlayfs: "xino" feature enabled using 2 upper inode bits.
-
-Fixes: e21fc2038c1b9 ("exportfs: make ->encode_fh() a mandatory method for NFS export")
-Cc: stable@vger.kernel.org # v6.7+
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Fixes: 072b91f9c651 ("[SCSI] ibmvfc: IBM Power Virtual Fibre Channel Adapter Client Driver")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
+Reviewed-by: Dave Marquardt <davemarq@linux.ibm.com>
+Acked-by: Tyrel Datwyler <tyreld@linux.ibm.com>
+Link: https://patch.msgid.link/20260314170151.548614-1-LivelyCarpet87@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/util.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/ibmvscsi/ibmvfc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -84,7 +84,10 @@ int ovl_can_decode_fh(struct super_block
- 	if (!exportfs_can_decode_fh(sb->s_export_op))
- 		return 0;
- 
--	return sb->s_export_op->encode_fh ? -1 : FILEID_INO32_GEN;
-+	if (sb->s_export_op->encode_fh == generic_encode_ino32_fh)
-+		return FILEID_INO32_GEN;
-+
-+	return -1;
- }
- 
- struct dentry *ovl_indexdir(struct super_block *sb)
+--- a/drivers/scsi/ibmvscsi/ibmvfc.c
++++ b/drivers/scsi/ibmvscsi/ibmvfc.c
+@@ -4963,7 +4963,8 @@ static void ibmvfc_discover_targets_done
+ 	switch (mad_status) {
+ 	case IBMVFC_MAD_SUCCESS:
+ 		ibmvfc_dbg(vhost, "Discover Targets succeeded\n");
+-		vhost->num_targets = be32_to_cpu(rsp->num_written);
++		vhost->num_targets = min_t(u32, be32_to_cpu(rsp->num_written),
++					   max_targets);
+ 		ibmvfc_set_host_action(vhost, IBMVFC_HOST_ACTION_ALLOC_TGTS);
+ 		break;
+ 	case IBMVFC_MAD_FAILED:
 
 
