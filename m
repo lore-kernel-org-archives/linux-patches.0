@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAF4423A7C;
-	Tue, 31 Mar 2026 16:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D05423A7C;
+	Tue, 31 Mar 2026 16:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976346; cv=none; b=uc4y1NiFSXf53lYIY2zCUVY+5Pih2l5siA+E3MjF8Vc0JuJ+2mXY/8ckJIHnAizwqedBepK9pr1CQPh4YNfCcs/FWYaV6jpKKG8A2hEHF+yFohEKuMTuxvq+spgS0lBblMYsBvmKL7LlZh6SmCSbr/3ZRYoO6umo2Go0uF20qKs=
+	t=1774976349; cv=none; b=niTehXfe3L+PvQEUvpY+FzsmKVHLJCbr9yM8Z1ar457ioiM1KPxt53MHuL8e7NJ8D9gXcL0cH4ZWsXnnpu4CsgI+RSikddis4s1U2Mw3HjdcgGNdSaNsIzCbaLKqtc8pqr3M5O5xeFh91guclISbv5oOk9s1hQ0kagxyI3oOaEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976346; c=relaxed/simple;
-	bh=uRkNYARlzxVApljUUlKCIAPlzuySL3gRUe5SSW5e2aE=;
+	s=arc-20240116; t=1774976349; c=relaxed/simple;
+	bh=aIWx4KNRVDX8AbkpOmaeMvsPhzneRDoRHPRtJE2k2Xw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OrhE3Bsto1IdRkHyGj5t5NYPOXhViVWJXsG4WVPit8D8PobH0XjUcANrB2rMCOENO/WUOA29obP9Tgo3uUYcjtDyWOhhuoBitRRL+XzE8+TSpXi4itfG48e6Z9CMw4ExSWxo6Dzi9oPusqEt4Nz5BCVRqPTKyUJHLvH+OtwkQZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8PRTHJy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YzIWvGpqYp5Yvypg++zp0e10vkj4/iA6HcCwyqLE6NhgdirtvanOFzPzk5dpufOg9SRKScKqPHd64+1yRrJFBQLaWenz+o5XCywdw+9UHVKH2RfUhy2eBHiybXLOFWg4N3k7+LDzfr3CQSIEmeicr2Lc6N1UiEXgp/zaKlrp6vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZgE066p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8PRTHJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5256CC19423;
-	Tue, 31 Mar 2026 16:59:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZgE066p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A9FC19424;
+	Tue, 31 Mar 2026 16:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976346;
-	bh=uRkNYARlzxVApljUUlKCIAPlzuySL3gRUe5SSW5e2aE=;
+	s=korg; t=1774976349;
+	bh=aIWx4KNRVDX8AbkpOmaeMvsPhzneRDoRHPRtJE2k2Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8PRTHJy4vH6gmZedW0m/6MjZZXX3+lVgPr2ITufJROnNUwoQQXAv66OtUFgUM2QS
-	 OqDvxtO80XBnBTv6l/AfVCZEWGp/patQd7eg/hCX4kBFMTuGToQfleu0iewgDUjGhV
-	 vCfs4W8C92xJCuZh8r+afRkjLRZAjC5G2/YSqaoI=
+	b=DZgE066pHELQngzZKkfR6dT6FcxPRbN3ZcNCXBQm27/cioi/1UUrCX39Wu23ZQf+U
+	 e5eN5z8rOwjAWDDgLniFGERYSwpXQYHWazew+Lq4GG4XK8k8DlhdQZnQywKhlGGfOm
+	 00JbE5cVp/etNF28OQ+9vtcKSv3TFCk91Uj89aMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Yajat Kumar <yajatapps3@gmail.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 056/309] btrfs: set BTRFS_ROOT_ORPHAN_CLEANUP during subvol create
-Date: Tue, 31 Mar 2026 18:19:19 +0200
-Message-ID: <20260331161755.548911017@linuxfoundation.org>
+Subject: [PATCH 6.18 025/309] platform/x86: touchscreen_dmi: Add quirk for y-inverted Goodix touchscreen on SUPI S10
+Date: Tue, 31 Mar 2026 18:18:48 +0200
+Message-ID: <20260331161754.405339978@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -46,200 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-[ Upstream commit 5131fa077f9bb386a1b901bf5b247041f0ec8f80 ]
+[ Upstream commit 7d87ed70fc95482c12edf9493c249b6413be485e ]
 
-We have recently observed a number of subvolumes with broken dentries.
-ls-ing the parent dir looks like:
+The touchscreen on the SUPI S10 tablet reports inverted Y coordinates,
+causing touch input to be mirrored vertically relative to the display.
 
-drwxrwxrwt 1 root root 16 Jan 23 16:49 .
-drwxr-xr-x 1 root root 24 Jan 23 16:48 ..
-d????????? ? ?    ?     ?            ? broken_subvol
+Add a quirk to set the "touchscreen-inverted-y" boolean device-property
+on the touchscreen device, so that the goodix_ts driver will fixup
+the coordinates.
 
-and similarly stat-ing the file fails.
-
-In this state, deleting the subvol fails with ENOENT, but attempting to
-create a new file or subvol over it errors out with EEXIST and even
-aborts the fs. Which leaves us a bit stuck.
-
-dmesg contains a single notable error message reading:
-"could not do orphan cleanup -2"
-
-2 is ENOENT and the error comes from the failure handling path of
-btrfs_orphan_cleanup(), with the stack leading back up to
-btrfs_lookup().
-
-btrfs_lookup
-btrfs_lookup_dentry
-btrfs_orphan_cleanup // prints that message and returns -ENOENT
-
-After some detailed inspection of the internal state, it became clear
-that:
-- there are no orphan items for the subvol
-- the subvol is otherwise healthy looking, it is not half-deleted or
-  anything, there is no drop progress, etc.
-- the subvol was created a while ago and does the meaningful first
-  btrfs_orphan_cleanup() call that sets BTRFS_ROOT_ORPHAN_CLEANUP much
-  later.
-- after btrfs_orphan_cleanup() fails, btrfs_lookup_dentry() returns -ENOENT,
-  which results in a negative dentry for the subvolume via
-  d_splice_alias(NULL, dentry), leading to the observed behavior. The
-  bug can be mitigated by dropping the dentry cache, at which point we
-  can successfully delete the subvolume if we want.
-
-i.e.,
-btrfs_lookup()
-  btrfs_lookup_dentry()
-    if (!sb_rdonly(inode->vfs_inode)->vfs_inode)
-    btrfs_orphan_cleanup(sub_root)
-      test_and_set_bit(BTRFS_ROOT_ORPHAN_CLEANUP)
-      btrfs_search_slot() // finds orphan item for inode N
-      ...
-      prints "could not do orphan cleanup -2"
-  if (inode == ERR_PTR(-ENOENT))
-    inode = NULL;
-  return d_splice_alias(NULL, dentry) // NEGATIVE DENTRY for valid subvolume
-
-btrfs_orphan_cleanup() does test_and_set_bit(BTRFS_ROOT_ORPHAN_CLEANUP)
-on the root when it runs, so it cannot run more than once on a given
-root, so something else must run concurrently. However, the obvious
-routes to deleting an orphan when nlinks goes to 0 should not be able to
-run without first doing a lookup into the subvolume, which should run
-btrfs_orphan_cleanup() and set the bit.
-
-The final important observation is that create_subvol() calls
-d_instantiate_new() but does not set BTRFS_ROOT_ORPHAN_CLEANUP, so if
-the dentry cache gets dropped, the next lookup into the subvolume will
-make a real call into btrfs_orphan_cleanup() for the first time. This
-opens up the possibility of concurrently deleting the inode/orphan items
-but most typical evict() paths will be holding a reference on the parent
-dentry (child dentry holds parent->d_lockref.count via dget in
-d_alloc(), released in __dentry_kill()) and prevent the parent from
-being removed from the dentry cache.
-
-The one exception is delayed iputs. Ordered extent creation calls
-igrab() on the inode. If the file is unlinked and closed while those
-refs are held, iput() in __dentry_kill() decrements i_count but does
-not trigger eviction (i_count > 0). The child dentry is freed and the
-subvol dentry's d_lockref.count drops to 0, making it evictable while
-the inode is still alive.
-
-Since there are two races (the race between writeback and unlink and
-the race between lookup and delayed iputs), and there are too many moving
-parts, the following three diagrams show the complete picture.
-(Only the second and third are races)
-
-Phase 1:
-Create Subvol in dentry cache without BTRFS_ROOT_ORPHAN_CLEANUP set
-
-btrfs_mksubvol()
-  lookup_one_len()
-    __lookup_slow()
-      d_alloc_parallel()
-        __d_alloc() // d_lockref.count = 1
-  create_subvol(dentry)
-    // doesn't touch the bit..
-    d_instantiate_new(dentry, inode) // dentry in cache with d_lockref.count == 1
-
-Phase 2:
-Create a delayed iput for a file in the subvol but leave the subvol in
-state where its dentry can be evicted (d_lockref.count == 0)
-
-T1 (task)                    T2 (writeback)                   T3 (OE workqueue)
-
-write() // dirty pages
-                              btrfs_writepages()
-                                btrfs_run_delalloc_range()
-                                  cow_file_range()
-                                    btrfs_alloc_ordered_extent()
-                                      igrab() // i_count: 1 -> 2
-btrfs_unlink_inode()
-  btrfs_orphan_add()
-close()
-  __fput()
-    dput()
-      finish_dput()
-        __dentry_kill()
-          dentry_unlink_inode()
-            iput() // 2 -> 1
-          --parent->d_lockref.count // 1 -> 0; evictable
-                                                                finish_ordered_fn()
-                                                                  btrfs_finish_ordered_io()
-                                                                    btrfs_put_ordered_extent()
-                                                                      btrfs_add_delayed_iput()
-
-Phase 3:
-Once the delayed iput is pending and the subvol dentry is evictable,
-the shrinker can free it, causing the next lookup to go through
-btrfs_lookup() and call btrfs_orphan_cleanup() for the first time.
-If the cleaner kthread processes the delayed iput concurrently, the
-two race:
-
-  T1 (shrinker)              T2 (cleaner kthread)                          T3 (lookup)
-
-  super_cache_scan()
-    prune_dcache_sb()
-      __dentry_kill()
-      // subvol dentry freed
-                              btrfs_run_delayed_iputs()
-                                iput()  // i_count -> 0
-                                  evict()  // sets I_FREEING
-                                    btrfs_evict_inode()
-                                      // truncation loop
-                                                                            btrfs_lookup()
-                                                                              btrfs_lookup_dentry()
-                                                                                btrfs_orphan_cleanup()
-                                                                                  // first call (bit never set)
-                                                                                  btrfs_iget()
-                                                                                    // blocks on I_FREEING
-
-                                      btrfs_orphan_del()
-                                      // inode freed
-                                                                                    // returns -ENOENT
-                                                                                  btrfs_del_orphan_item()
-                                                                                    // -ENOENT
-                                                                                // "could not do orphan cleanup -2"
-                                                                            d_splice_alias(NULL, dentry)
-                                                                            // negative dentry for valid subvol
-
-The most straightforward fix is to ensure the invariant that a dentry
-for a subvolume can exist if and only if that subvolume has
-BTRFS_ROOT_ORPHAN_CLEANUP set on its root (and is known to have no
-orphans or ran btrfs_orphan_cleanup()).
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Yajat Kumar <yajatapps3@gmail.com>
+Closes: https://lore.kernel.org/linux-input/20251230221639.582406-1-yajatapps3@gmail.com/
+Tested-by: Yajat Kumar <yajatapps3@gmail.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260217132346.34535-1-johannes.goede@oss.qualcomm.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/platform/x86/touchscreen_dmi.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 5f0bac5cea7e4..c7977bd5442b3 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -674,6 +674,13 @@ static noinline int create_subvol(struct mnt_idmap *idmap,
- 		goto out;
- 	}
+diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
+index bdc19cd8d3edf..d83c387821ea1 100644
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -410,6 +410,16 @@ static const struct ts_dmi_data gdix1002_upside_down_data = {
+ 	.properties	= gdix1001_upside_down_props,
+ };
  
-+	/*
-+	 * Subvolumes have orphans cleaned on first dentry lookup. A new
-+	 * subvolume cannot have any orphans, so we should set the bit before we
-+	 * add the subvolume dentry to the dentry cache, so that it is in the
-+	 * same state as a subvolume after first lookup.
-+	 */
-+	set_bit(BTRFS_ROOT_ORPHAN_CLEANUP, &new_root->state);
- 	d_instantiate_new(dentry, new_inode_args.inode);
- 	new_inode_args.inode = NULL;
- 
++static const struct property_entry gdix1001_y_inverted_props[] = {
++	PROPERTY_ENTRY_BOOL("touchscreen-inverted-y"),
++	{ }
++};
++
++static const struct ts_dmi_data gdix1001_y_inverted_data = {
++	.acpi_name	= "GDIX1001",
++	.properties	= gdix1001_y_inverted_props,
++};
++
+ static const struct property_entry gp_electronic_t701_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-size-x", 960),
+ 	PROPERTY_ENTRY_U32("touchscreen-size-y", 640),
+@@ -1658,6 +1668,14 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_SKU, "PN20170413488"),
+ 		},
+ 	},
++	{
++		/* SUPI S10 */
++		.driver_data = (void *)&gdix1001_y_inverted_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "SUPI"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "S10"),
++		},
++	},
+ 	{
+ 		/* Techbite Arc 11.6 */
+ 		.driver_data = (void *)&techbite_arc_11_6_data,
 -- 
 2.51.0
 
