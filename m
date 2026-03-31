@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F13A346E46;
-	Tue, 31 Mar 2026 16:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B7433E372;
+	Tue, 31 Mar 2026 16:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975681; cv=none; b=RW0QmGZ+LHgcoiD/jH9JHvmKh85tg4+zDRV1gganGCNrfLWxkiQ1nc67VC8NHLOoiHYfh8yQ62RE3M17XMa6HeUHXGa3uBYPoh1IKwmJi3buAZ2ZCQyYC/sgtQC3Dt0f+H15Zj/+ienMmKCUd4v0bXfz24zkKR/0f20B5epAznk=
+	t=1774975684; cv=none; b=uksbjMHxKA+SbdlqkbEc+5jvqJG0SDKuHtgQNzWgjBiOzhXwaqjL8wbKIx4SsRMVD3fkkLqGyiPRGtOBxJ9ExLVF+nY8i8IrSiOFPDdDMrC8Xjz+Qp9wpPR27N9EF7jvQsaooxV6wKU2I/GoCAuUJA+tM2a7zPEO652WWgZLajQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975681; c=relaxed/simple;
-	bh=JuxUsmA0ZpqiCczqIxuZlB47RGkVzcITzQejxuvvTL0=;
+	s=arc-20240116; t=1774975684; c=relaxed/simple;
+	bh=0Aq9TL9K4Mpt+W3jMJjQL1yse1Q9lVw0VxsCtpH2eDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOPZJ6cPo6o8Cgzr/igsOFhLNLoOzocOQ+tY8EVV/j0u3gApvIeyd4RqEP+wOX88kNlrPWQ+PXZa5xzLHsMhUtOHZNui98uupOGOnP+XxJzTleFd888SrOUEL2q7veeA1u86fj3OWCl8wbgCMKP80Q6VcLOuOQOHw2pWytyrqYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QjSC7jg0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GP4xWUWjA1fN6KgfJzHq2ONL7BWDFMjA5k7JAJKcFsrp8KprzL8jPyJpKHCv2h9BEmlRXfvy/WiymcNgTDtgK9LfF0RyxOigCtnopUgCkmdSCZWKUlHsFtjRq4cOZ0FYONuvFirR26VDIRFSs/XW/X+kb/hVYiVKnNypf4d0TSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1eOL23F8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QjSC7jg0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86A1C19423;
-	Tue, 31 Mar 2026 16:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1eOL23F8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7B4C19423;
+	Tue, 31 Mar 2026 16:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975681;
-	bh=JuxUsmA0ZpqiCczqIxuZlB47RGkVzcITzQejxuvvTL0=;
+	s=korg; t=1774975683;
+	bh=0Aq9TL9K4Mpt+W3jMJjQL1yse1Q9lVw0VxsCtpH2eDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QjSC7jg0jLuH11znE3UzUg/Xsd46IHM3INlUuOsTuzq0dUIf6LFwHgtJDHe4vWKmy
-	 jbAYHfVPr5Bwv7dQBhvJ9RF53j/fXxh+WA/3ofb76u7jt+NvE1u3DWv28mmHCT9pEs
-	 kJCHVddTAEXfKdnuRpcRqc+m9Mavz4JBMJ6R7+nY=
+	b=1eOL23F8o5XVuQyOfStcBoBs4raXdwr66vsD8xZSymrvDNdLbYfWVehowu8rS2Qxx
+	 2Ggsnd51ww/rWGr4dsBRypBY+m6JnLEVigAHxHKA2o1g31qknEjGlvOB42AWoKARRR
+	 +gjIaWopxxT5yvPdkuy0811RzfBakWf42TD/YJ+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Yin <peteryin.openbmc@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/244] i3c: master: dw-i3c: Fix missing of_node for virtual I2C adapter
-Date: Tue, 31 Mar 2026 18:19:56 +0200
-Message-ID: <20260331161743.397836405@linuxfoundation.org>
+Subject: [PATCH 6.12 047/244] xfrm: add missing extack for XFRMA_SA_PCPU in add_acquire and allocspi
+Date: Tue, 31 Mar 2026 18:19:57 +0200
+Message-ID: <20260331161743.433786670@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,41 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Yin <peteryin.openbmc@gmail.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit f26ecaa0f0abfe5db173416214098a00d3b7db79 ]
+[ Upstream commit aa8a3f3c67235422a0c3608a8772f69ca3b7b63f ]
 
-The DesignWare I3C master driver creates a virtual I2C adapter to
-provide backward compatibility with I2C devices. However, the current
-implementation does not associate this virtual adapter with any
-Device Tree node.
+We're returning an error caused by invalid user input without setting
+an extack. Add one.
 
-Propagate the of_node from the I3C master platform device to the
-virtual I2C adapter's device structure. This ensures that standard
-I2C aliases are correctly resolved and bus numbering remains consistent.
-
-Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260302075645.1492766-1-peteryin.openbmc@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 1ddf9916ac09 ("xfrm: Add support for per cpu xfrm state handling.")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/dw-i3c-master.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/xfrm/xfrm_user.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
-index e0853a6bde0a4..3453431e49a24 100644
---- a/drivers/i3c/master/dw-i3c-master.c
-+++ b/drivers/i3c/master/dw-i3c-master.c
-@@ -1606,6 +1606,8 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
- 	master->free_pos = GENMASK(master->maxdevs - 1, 0);
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index 1a4d2fac08594..7d03a6e486b34 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -1785,6 +1785,7 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		pcpu_num = nla_get_u32(attrs[XFRMA_SA_PCPU]);
+ 		if (pcpu_num >= num_possible_cpus()) {
+ 			err = -EINVAL;
++			NL_SET_ERR_MSG(extack, "pCPU number too big");
+ 			goto out_noput;
+ 		}
+ 	}
+@@ -2934,8 +2935,10 @@ static int xfrm_add_acquire(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	if (attrs[XFRMA_SA_PCPU]) {
+ 		x->pcpu_num = nla_get_u32(attrs[XFRMA_SA_PCPU]);
+ 		err = -EINVAL;
+-		if (x->pcpu_num >= num_possible_cpus())
++		if (x->pcpu_num >= num_possible_cpus()) {
++			NL_SET_ERR_MSG(extack, "pCPU number too big");
+ 			goto free_state;
++		}
+ 	}
  
- 	INIT_WORK(&master->hj_work, dw_i3c_hj_work);
-+
-+	device_set_of_node_from_dev(&master->base.i2c.dev, &pdev->dev);
- 	ret = i3c_master_register(&master->base, &pdev->dev,
- 				  &dw_mipi_i3c_ops, false);
- 	if (ret)
+ 	err = verify_newpolicy_info(&ua->policy, extack);
 -- 
 2.51.0
 
