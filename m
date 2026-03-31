@@ -1,50 +1,65 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB8C28D8DB
-	for <patches@lists.linux.dev>; Tue, 31 Mar 2026 21:57:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A770C45BD5E
+	for <patches@lists.linux.dev>; Tue, 31 Mar 2026 22:09:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774994263; cv=none; b=Qsf1/x+0YKxwSRrqTmg4yoFyO8pl2dAT993BrSiU2GuqEGaB1HlgClYtjRDeMbsyovcHsGjfyoWlIhHVHUYXNcGlhStvQ6N86eSTiUHctdXn5XhpmZ3Keu1uy0A3AUrEMCizl4hs0kVBF+8Ct7ldWBX1D5OPDlPco7m1UnxEm48=
+	t=1774994960; cv=none; b=gY8z4+WusaCOM+PbySBTzIqD4K2NLgpArhtZkYeR/foWFlhJm4AoNkwY599n1ey5beNGA36rIo7wMd0/aUXX++MCVuoR6k9Q2rB8c8YkzVHGoqlVtiHFQp5o9+HRwYQI8pfE0AnAdBfaLt5og1JWSA3wLxGkRFD7O+3EQ8We4GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774994263; c=relaxed/simple;
-	bh=osHKNBJnoAssK6sgDBH0zR07D+BOTdyaNa/D8nRPko8=;
+	s=arc-20240116; t=1774994960; c=relaxed/simple;
+	bh=aCIzUS24G7f7mlW4FQqkMFZge3gDg/UjgmEjiZgCFQk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y3ETrlyfUH5+NXbZeVRAQlzTYMcoawFCGOCxVFQtbXBSi5qgjP/cRmSb9GrDT0HF4LkfTDGX67KLqmiXrdI/76SGIV0fEfUeXjciFycquJ2S36ytwkA0z9eq7wBKcid2ahV67zFAmFsa/Dp40VNhMcJx0hrjytSnAB2G7h/KmsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HVAK1/km; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 In-Reply-To:Content-Type; b=sp+fIt43U2pcBFk2Rgz5Wa3DUsoGoooy6e+pqGNrDy1gPl4W+h81nmF3lU1iSPTTzFLDmqqc6LqTL4IAsl2pc0LFrzurl0m+v4m3OJccLkQQYTFGGRC8HFDXK/x+K4MTtrcasmGjPA0+QB5ZAmid0WW5J59FtPUmU4d/f3jhBGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l55mLkBv; arc=none smtp.client-ip=74.125.82.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HVAK1/km"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774994262; x=1806530262;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=osHKNBJnoAssK6sgDBH0zR07D+BOTdyaNa/D8nRPko8=;
-  b=HVAK1/km7UnGs39z00nn/ps2Kju39lQZr7ZGgffA0Lh7Q092JLHrwzz9
-   l4I8/Uv0yLYFi+CPz7T7VhWUhxt34zpI7TC1zVeyQDV2JZ6kHC4nL8VGL
-   sry+VuhZDRzxnbKiZNfMT8bFDiJDl2WXFR0ebI9wFiu8uU3JwYXHWECi+
-   A51/HDk6Y5233q8TaoSAKUzW24JUna8O3H2cC8LhpjRhDGTnekNJjVwMo
-   1iR8b58QjeuGaKOdz221edSfYI40jVjIbh+NGvjeuDKr27Qoa6eC+W9ij
-   9qz4efrN98/uVk9ProfuZIIkDiRU7To9AjLvcBQ1bX93X9zL6Qflt4gV3
-   g==;
-X-CSE-ConnectionGUID: 8dHphy0BSLaEBCkSpj8XgA==
-X-CSE-MsgGUID: 8ymey02jSVOuvbU9xHaz/A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11745"; a="86720840"
-X-IronPort-AV: E=Sophos;i="6.23,152,1770624000"; 
-   d="scan'208";a="86720840"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2026 14:57:41 -0700
-X-CSE-ConnectionGUID: ygebbQbFSsGxN9E27mM+cQ==
-X-CSE-MsgGUID: QMsDLU5DScizyhOrzfPPQg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,152,1770624000"; 
-   d="scan'208";a="222091722"
-Received: from gabaabhi-mobl2.amr.corp.intel.com (HELO [10.125.111.56]) ([10.125.111.56])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2026 14:57:40 -0700
-Message-ID: <b0269343-6dc4-4b46-8d78-5edf85fed9a8@intel.com>
-Date: Tue, 31 Mar 2026 14:57:39 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l55mLkBv"
+Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-1271257ae53so6358840c88.1
+        for <patches@lists.linux.dev>; Tue, 31 Mar 2026 15:09:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774994957; x=1775599757; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oIYjut8AQhdxjU3934zP0YIqNhOY/AQmYnZZkfDPxAc=;
+        b=l55mLkBvFSa3rMQQbv8F1bHxom1MIg1/jfZsyRyazQtNT1EGVkkOWnu3THkc9H/6M3
+         +oe27G/lMFnTunxJJr4MAmsJOqQg3SRNWdf6IzTqzvQgvhSyNp9BHeK1QXgc7avIkCnj
+         AogI/0LRyYEqotxrmvr/K5UTBfdFSSyyJc0cZm97Q2qR3702wQZdBvywbzv8uhjzQO75
+         cvWcXpagrOL5Yq/JPRcoE3vn/WXrwaIeEMZy/+agn0S9pZCe1UOjrpLp6dqCTssIiAHC
+         CnGkCMim29/TxjPLdfMRXeCEUR77dQM/LmZgdIG6kvSbgHl9RM62fYOQIAGEhWrukalL
+         Y/SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774994957; x=1775599757;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oIYjut8AQhdxjU3934zP0YIqNhOY/AQmYnZZkfDPxAc=;
+        b=lSsvu0MFWpl/Zv+7QFz9/mdZzX5IvLdRQTlOIrTojKyXNpgjmhMfb0jX9gf1LMLEO6
+         CakzR5Oer2hZECc7BCD0UbdR/D0X2GKIrDI1vz0LDksXBGSPkQBs2YCwVB2BR3O/XFcP
+         6YGlZ7GVWUX2RWmfSJjTjLph/HN2SSDPnkgIdROAxNIA7Y3FQ94NwoRUYM16bp51wrJ6
+         I0/uu8szNYUuPQGA6Dp9uZ3JZVrsYh6sjaBNp/Tp1jDWGhdKugtDCf0m5ZKdATe4kWtE
+         cBSe+8N3EC/MJmS8dasR8U/gj/D+4Rg1o04cxAnQg8PIsoU0w8yeQrYzThLYP52z93+r
+         5kMA==
+X-Gm-Message-State: AOJu0YzHdgRcYavpD2KbSg/SfgHOhdl17Xk+7fumR92zXxq2dpiTtM8k
+	GVm0GS/0EGi2fpcMn9/qRTJwhakPCYYo1spRZHGAeOhvENub87C2PVUx
+X-Gm-Gg: ATEYQzz+V0hx1ChJJqnZyAfkcNplDlS6o8u8jmF9HNp9kmt3uI18ZZ1fd5a32rrJ/bg
+	DBH/v+f5jDdpu8SR6QAbsC5TUEwmgjdhiPfqhlqZ7eIw/8kY26bZFol/S8o+ouB5pTQgoo/tlze
+	Bynf9eDiVvoBF6CAqLlJ3C/ffMKqyMVKklQQpAfrQ/v/8aZQl6DUs+gMNwsglUbv4ZZ3orfWGLO
+	IPwylNinoefcQBsIE/FUN9zrfgD3Bf+hG+m0WMx2aPS/NptExfGuAVPEvAEl0EVWky6Y3r1DwIJ
+	gUVoF5ZEoaRjrZP+5eMwAtiouAWyYwrLXCm0ecnitYgdVpLK3NTEL4lAtusuxYPyuJUgP7KVKmh
+	hIExsQdi4QjipPlmoqZ/KbFAgJACBmBxzprvkmJKaxrP/EIR1+czeT62UxP4x1h65n6UvPxOvXz
+	lGY90MbsjtO/0KdrsLlkdGYmijUGNYrULPuBITrSoNxGW6WUjD0b3Op+ZMRWKh
+X-Received: by 2002:a05:7022:6624:b0:12a:6c7e:bef2 with SMTP id a92af1059eb24-12be645def0mr693705c88.7.1774994956715;
+        Tue, 31 Mar 2026 15:09:16 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12ab97cb08csm17996118c88.3.2026.03.31.15.09.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Mar 2026 15:09:16 -0700 (PDT)
+Message-ID: <b5782135-b241-415f-a492-dd585c820edd@gmail.com>
+Date: Tue, 31 Mar 2026 15:09:14 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,98 +67,44 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] dax/hmem: Add tests for the dax_hmem takeover
- capability
-To: Dan Williams <dan.j.williams@intel.com>
-Cc: patches@lists.linux.dev, linux-cxl@vger.kernel.org,
- alison.schofield@intel.com, Smita.KoralahalliChannabasappa@amd.com,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, stable@vger.kernel.org
-References: <20260327052821.440749-1-dan.j.williams@intel.com>
-Content-Language: en-US
-From: Dave Jiang <dave.jiang@intel.com>
-In-Reply-To: <20260327052821.440749-1-dan.j.williams@intel.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 6.18 000/309] 6.18.21-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260331161753.468533260@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
+On 3/31/26 09:18, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.21 release.
+> There are 309 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 02 Apr 2026 16:16:56 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.21-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-On 3/26/26 10:28 PM, Dan Williams wrote:
-> Given all the cross subsystem dependencies needed to make this solution
-> work, it needs to have a unit test to keep it functional.
-> 
-> On the path to writing that, several fixes fell out, but not to Smita's
-> code, to mine. One use-after-free has been there since the original
-> automatic region assembly code.
-> 
-> Here is a preview of the core of the test I will submit to the cxl-cli project:
-> 
-> ---
-> modprobe cxl_mock_mem && modprobe cxl_test hmem_test=1
-> 
-> dax=$(find_dax_cxl)
-> [[ "$dax" == "" ]] && err $LINENO
-> dax=$(find_dax_hmem)
-> [[ "$dax" != "" ]] && err $LINENO
-> 
-> unload
-> 
-> modprobe cxl_mock_mem && modprobe cxl_test fail_autoassemble hmem_test=1
-> 
-> dax=$(find_dax_cxl)
-> [[ "$dax" != "" ]] && err $LINENO
-> dax=$(find_dax_hmem)
-> [[ "$dax" == "" ]] && err $LINENO
-> 
-> unload
-> ---
-> 
-> This builds on Smita's series [1] pushed out to for-7.1/dax-hmem in
-> cxl.git [2].
-> 
-> [1]: http://lore.kernel.org/20260322195343.206900-1-Smita.KoralahalliChannabasappa@amd.com
-> [2]: https://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl.git/log/?h=for-7.1/dax-hmem
-> 
-> Dan Williams (9):
->   cxl/region: Fix use-after-free from auto assembly failure
->   dax/cxl: Fix HMEM dependencies
->   cxl/region: Limit visibility of cxl_region_contains_resource()
->   cxl/region: Constify cxl_region_resource_contains()
->   dax/hmem: Reduce visibility of dax_cxl coordination symbols
->   dax/hmem: Fix singleton confusion between dax_hmem_work and hmem
->     devices
->   dax/hmem: Parent dax_hmem devices
->   tools/testing/cxl: Simulate auto-assembly failure
->   tools/testing/cxl: Test dax_hmem takeover of CXL regions
-> 
->  drivers/dax/Kconfig                |   6 +-
->  drivers/cxl/cxl.h                  |  11 ++-
->  drivers/dax/bus.h                  |  15 +++-
->  include/cxl/cxl.h                  |  15 ----
->  tools/testing/cxl/test/mock.h      |   8 ++
->  drivers/cxl/core/region.c          |  68 +++++++++++++++--
->  drivers/dax/hmem/device.c          |  28 ++++---
->  drivers/dax/hmem/hmem.c            | 115 +++++++++++++++--------------
->  tools/testing/cxl/test/cxl.c       |  66 +++++++++++++++++
->  tools/testing/cxl/test/hmem_test.c |  47 ++++++++++++
->  tools/testing/cxl/test/mem.c       |   3 +
->  tools/testing/cxl/test/mock.c      |  50 +++++++++++++
->  tools/testing/cxl/Kbuild           |   7 ++
->  tools/testing/cxl/test/Kbuild      |   1 +
->  14 files changed, 344 insertions(+), 96 deletions(-)
->  delete mode 100644 include/cxl/cxl.h
->  create mode 100644 tools/testing/cxl/test/hmem_test.c
-> 
-> 
-> base-commit: 51d2fa02c0e4b3b23c4484f2af9b6d65c35471e8
-
-Applied to cxl/next
-fe5dfc24e003 tools/testing/cxl: Test dax_hmem takeover of CXL regions
-de121c377f88 tools/testing/cxl: Simulate auto-assembly failure
-a515eb335f51 dax/hmem: Parent dax_hmem devices
-841e96c053f1 dax/hmem: Fix singleton confusion between dax_hmem_work and hmem devices
-6c96c76597cc dax/hmem: Reduce visibility of dax_cxl coordination symbols
-069a54fd21e8 cxl/region: Constify cxl_region_resource_contains()
-b95c14f0dc79 cxl/region: Limit visibility of cxl_region_contains_resource()
-6c7077d5ca81 dax/cxl: Fix HMEM dependencies
-16413cc33cfd cxl/region: Fix use-after-free from auto assembly failure
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
