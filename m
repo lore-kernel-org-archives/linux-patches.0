@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8767B425CC6;
-	Tue, 31 Mar 2026 16:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D64423A76;
+	Tue, 31 Mar 2026 16:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974953; cv=none; b=YyNrOBVvdxJaikK31jRBKTBb7NfMoQirHwFK7GiZTucx+zCpjOi/0W+yyr6tzuwUhX2+MikTzxd0p4B6Zmy68GG3/J0xPsLOK7CLAkkKK4aLJjoA2t6H4YsJWUJ8vHhFIzNGgLCpyLw7oBfyRgRbEx8pTEbegH/g5mEKQq5O9EE=
+	t=1774974956; cv=none; b=ndPKhSRTx1MEtzls7EjMPON94IwHplEEpzOBrLfMlxJiPGeLcxYb1cdbmoWyatIuP7GIvkymtxaWQO6QbqotcKywqQYoa5Cd9D/iyLtQxSb6fBa9fVTn7OOVedv+xF0eW64/YzTtyOfVz3fyhI2pstJlrxxct3edvogI3uGl0dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974953; c=relaxed/simple;
-	bh=3Cuj2mNxv2WSj7tr94O2WHccRHgUbvSK0mNKGndP+/w=;
+	s=arc-20240116; t=1774974956; c=relaxed/simple;
+	bh=r9RxtsVizRmLe9dE1Xzc8nUJB0C/vnlGiiwFvUqU2vI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Asqx5tEp7Xh4C/+NRk9HXhPK6q7XFitq/u514mvVVPwpVZ1oxQisSqfEwSjqwuGBoE1tvcgWQMHqgKpAk6SEsq1WxFObFHvCEF1H+HLYljxm73Hsrf4YuIcPjYuQGqeBqIQqhRv4TXYs/z409VeHel4/U9yetJO6MYdmHladcqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xi9wgebe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uyl3E/3R0PJy/5Uc+urpWFMVRKCBuoi9ljSFLWqOxCOa92pA/mj+V7/5mPMNVtyBHtcVA+FRH9eYDF8XhwQNku2Jyvrs1GCtMsrK2KgibWv8cEbpXg8aW3kKIARyP/zaqe/COlFpTX72T+hZTtIFEiYIcBI7s1L4GL80x9mksMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7J/mKuW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xi9wgebe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D177C19423;
-	Tue, 31 Mar 2026 16:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7J/mKuW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF46FC19423;
+	Tue, 31 Mar 2026 16:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974953;
-	bh=3Cuj2mNxv2WSj7tr94O2WHccRHgUbvSK0mNKGndP+/w=;
+	s=korg; t=1774974956;
+	bh=r9RxtsVizRmLe9dE1Xzc8nUJB0C/vnlGiiwFvUqU2vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xi9wgebeAHUeIPrStarKhI1grH5zikgK2/X415Gumw6hrC/PyU6DUCLTvayx/TYuz
-	 SUIgMZnX5V8IwkVLgN36c3B0Wb7HEHfHlGS9ATVoQgo54tpqttPXh9gbYhLzTY+eEG
-	 aKpntV3o9KIuq5/k35DIyx2oc7WQ1pyYxYtvO8is=
+	b=j7J/mKuWgkorb5zF4wIS6Jcke26AmxaeuiN8QN8wk9NdvQEYVqhBgNSRJ5D5vM7Qb
+	 mt5LKALyQUH5D0G3IR+v9ITwYf60OXSkLbFnK4vS31bKIMxQkwyMZzF8fEeeilcWpO
+	 eYxUHps5eR/7sUJ7aEh6wH8P5IFSO+q1fj8UVSy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chenguanyou <chenguanyou@xiaomi.com>,
-	Yunlei He <heyunlei@xiaomi.com>,
-	Sheng Yong <shengyong1@xiaomi.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 090/342] erofs: set fileio bio failed in short read case
-Date: Tue, 31 Mar 2026 18:18:43 +0200
-Message-ID: <20260331161802.332690080@linuxfoundation.org>
+Subject: [PATCH 6.19 108/342] net: bcmasp: streamline early exit in probe
+Date: Tue, 31 Mar 2026 18:19:01 +0200
+Message-ID: <20260331161802.988639079@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -54,58 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheng Yong <shengyong1@xiaomi.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit eade54040384f54b7fb330e4b0975c5734850b3c ]
+[ Upstream commit 1fd1281250c38408d793863c8dcaa43c7de8932c ]
 
-For file-backed mount, IO requests are handled by vfs_iocb_iter_read().
-However, it can be interrupted by SIGKILL, returning the number of
-bytes actually copied. Unused folios in bio are unexpectedly marked
-as uptodate.
+Streamline the bcmasp_probe early exit. As support for other
+functionality is added(i.e. ptp), it is easier to keep track of early
+exit cleanup when it is all in one place.
 
-  vfs_read
-    filemap_read
-      filemap_get_pages
-        filemap_readahead
-          erofs_fileio_readahead
-            erofs_fileio_rq_submit
-              vfs_iocb_iter_read
-                filemap_read
-                  filemap_get_pages  <= detect signal
-              erofs_fileio_ki_complete  <= set all folios uptodate
-
-This patch addresses this by setting short read bio with an error
-directly.
-
-Fixes: bc804a8d7e86 ("erofs: handle end of filesystem properly for file-backed mounts")
-Reported-by: chenguanyou <chenguanyou@xiaomi.com>
-Signed-off-by: Yunlei He <heyunlei@xiaomi.com>
-Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260122194949.1145107-3-justin.chen@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: cbfa5be2bf64 ("net: bcmasp: fix double free of WoL irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/fileio.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp.c | 27 +++++++++++----------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/fs/erofs/fileio.c b/fs/erofs/fileio.c
-index 2a778a02681a0..aa580c59fe645 100644
---- a/fs/erofs/fileio.c
-+++ b/fs/erofs/fileio.c
-@@ -25,10 +25,8 @@ static void erofs_fileio_ki_complete(struct kiocb *iocb, long ret)
- 			container_of(iocb, struct erofs_fileio_rq, iocb);
- 	struct folio_iter fi;
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
+index 014340f33345a..de5f540f78049 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
+@@ -1322,6 +1322,8 @@ static int bcmasp_probe(struct platform_device *pdev)
  
--	if (ret >= 0 && ret != rq->bio.bi_iter.bi_size) {
--		bio_advance(&rq->bio, ret);
--		zero_fill_bio(&rq->bio);
--	}
-+	if (ret >= 0 && ret != rq->bio.bi_iter.bi_size)
-+		ret = -EIO;
- 	if (!rq->bio.bi_end_io) {
- 		bio_for_each_folio_all(fi, &rq->bio) {
- 			DBG_BUGON(folio_test_uptodate(fi.folio));
+ 	bcmasp_core_init_filters(priv);
+ 
++	bcmasp_init_wol(priv);
++
+ 	ports_node = of_find_node_by_name(dev->of_node, "ethernet-ports");
+ 	if (!ports_node) {
+ 		dev_warn(dev, "No ports found\n");
+@@ -1333,16 +1335,14 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 		intf = bcmasp_interface_create(priv, intf_node, i);
+ 		if (!intf) {
+ 			dev_err(dev, "Cannot create eth interface %d\n", i);
+-			bcmasp_remove_intfs(priv);
+-			ret = -ENOMEM;
+-			goto of_put_exit;
++			of_node_put(ports_node);
++			ret = -EINVAL;
++			goto err_cleanup;
+ 		}
+ 		list_add_tail(&intf->list, &priv->intfs);
+ 		i++;
+ 	}
+-
+-	/* Check and enable WoL */
+-	bcmasp_init_wol(priv);
++	of_node_put(ports_node);
+ 
+ 	/* Drop the clock reference count now and let ndo_open()/ndo_close()
+ 	 * manage it for us from now on.
+@@ -1357,19 +1357,20 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 	list_for_each_entry(intf, &priv->intfs, list) {
+ 		ret = register_netdev(intf->ndev);
+ 		if (ret) {
+-			netdev_err(intf->ndev,
+-				   "failed to register net_device: %d\n", ret);
+-			bcmasp_wol_irq_destroy(priv);
+-			bcmasp_remove_intfs(priv);
+-			goto of_put_exit;
++			dev_err(dev, "failed to register net_device: %d\n", ret);
++			goto err_cleanup;
+ 		}
+ 		count++;
+ 	}
+ 
+ 	dev_info(dev, "Initialized %d port(s)\n", count);
+ 
+-of_put_exit:
+-	of_node_put(ports_node);
++	return ret;
++
++err_cleanup:
++	bcmasp_wol_irq_destroy(priv);
++	bcmasp_remove_intfs(priv);
++
+ 	return ret;
+ }
+ 
 -- 
 2.51.0
 
