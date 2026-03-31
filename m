@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560033FFADF;
-	Tue, 31 Mar 2026 16:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D793DB62F;
+	Tue, 31 Mar 2026 16:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974325; cv=none; b=V+pjokTXe2QRTLq498M4CgRQD5QgcN3uIXSzigXgyLgYfmhfNDYFJ+wK5ESyPyZgK5daYZ1QXqnF+VZ9FZeuORaTbNChHWUkgAOc3pQTcdra6CUkyTk6quU51ji+kg1QbLusA9ksIXYk5PhPrpanDe1DigQhmwy7fwOmyVTkFBo=
+	t=1774974328; cv=none; b=rNqHdZ064jOJKtZEOQKN3+9OzYuZePat68ceseXEiCRnbjlBeJLsYonm6H2C0rk2tfaKMZW/mB4wyIFGMZNwEUJtkuopaIDAesGOfsl99Wz4lewrXanJ9l5JRhGwtkATvQu7mChHVgqsldoUD3gUnTdb78uP4w3gERU+rY4KnPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974325; c=relaxed/simple;
-	bh=6V4cZYRaLalD4PxWuYyIoBx05x+icDI4fUZInZ/zclo=;
+	s=arc-20240116; t=1774974328; c=relaxed/simple;
+	bh=Lmu5hOwh1ICF0nbJVAl8Booq9IaIGxkRu8/rf5D8CnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkkW1c6OlwYhoazbrOT6jT+/UdPl480o9RRb4s+6x7Sn+6zLuJPNk+HcH2t4AyB6SFNq7mmU2A4V5ClHgQFzxFEW5ghI5ebpmOqsZnCkN7qVeX+uIniFZ/zxBEEjrEqsE/EqfwjaTLEblg3RRNxjCxcBiwGm1XKTS/pUNoTxzlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k06fio4Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IF9y2bYtO7reA8fC9uG1O2wegSr6lG3vXK+sHGgbCAfhuR8L7B5bWieQVxyTKYZ6ayqmjg4WDUr3mzo9+ezxev28ljPp4hBspPgefLdkWvFLSP1omkQKgGoe81CAse0OK88V4YTI+t5YJKkeifDbJYh0HMSzKd83ZZLEvcZHKw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EB7FFy8l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k06fio4Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB827C19423;
-	Tue, 31 Mar 2026 16:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EB7FFy8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E631C19423;
+	Tue, 31 Mar 2026 16:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974325;
-	bh=6V4cZYRaLalD4PxWuYyIoBx05x+icDI4fUZInZ/zclo=;
+	s=korg; t=1774974327;
+	bh=Lmu5hOwh1ICF0nbJVAl8Booq9IaIGxkRu8/rf5D8CnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k06fio4YgzJHqinWeAqC/5ghIyWqwyw/LNihQcTHijUM12vaTD+nU+Quj5b9mXJJB
-	 fHDUJqF37BUhrmLMVcRjyc9RmqyTqT4XoFluGdyythpVf82YG3ho909GADtJFyNZ8I
-	 A65VceZf02MP9Z/7QUmT/FQRIL3/RQrlsgJ+FZKI=
+	b=EB7FFy8lynHMSWDf+rdD93l2AZN0Fkz/yX7/HT3jrQ6h0wDxMzKqoX0pjAXFKXIqH
+	 WaRCwDuBN0uOzVYGkH3zyD1VzuDc8QMCD72jbbwLZg5VTCGsAIAkZgfgGDWAGBeZuK
+	 vVOVrDKLjFsCRFuZ8gg0xmxJ21rjbyVtBc2qD74U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Jenny Guanni Qu <qguanni@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 009/175] bpf: Fix undefined behavior in interpreter sdiv/smod for INT_MIN
-Date: Tue, 31 Mar 2026 18:19:53 +0200
-Message-ID: <20260331161730.124951594@linuxfoundation.org>
+Subject: [PATCH 6.6 010/175] HID: asus: avoid memory leak in asus_report_fixup()
+Date: Tue, 31 Mar 2026 18:19:54 +0200
+Message-ID: <20260331161730.161684067@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -47,108 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jenny Guanni Qu <qguanni@gmail.com>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit c77b30bd1dcb61f66c640ff7d2757816210c7cb0 ]
+[ Upstream commit 2bad24c17742fc88973d6aea526ce1353f5334a3 ]
 
-The BPF interpreter's signed 32-bit division and modulo handlers use
-the kernel abs() macro on s32 operands. The abs() macro documentation
-(include/linux/math.h) explicitly states the result is undefined when
-the input is the type minimum. When DST contains S32_MIN (0x80000000),
-abs((s32)DST) triggers undefined behavior and returns S32_MIN unchanged
-on arm64/x86. This value is then sign-extended to u64 as
-0xFFFFFFFF80000000, causing do_div() to compute the wrong result.
+The asus_report_fixup() function was returning a newly allocated
+kmemdup()-allocated buffer, but never freeing it.  Switch to
+devm_kzalloc() to ensure the memory is managed and freed automatically
+when the device is removed.
 
-The verifier's abstract interpretation (scalar32_min_max_sdiv) computes
-the mathematically correct result for range tracking, creating a
-verifier/interpreter mismatch that can be exploited for out-of-bounds
-map value access.
+The caller of report_fixup() does not take ownership of the returned
+pointer, but it is permitted to return a pointer whose lifetime is at
+least that of the input buffer.
 
-Introduce abs_s32() which handles S32_MIN correctly by casting to u32
-before negating, avoiding signed overflow entirely. Replace all 8
-abs((s32)...) call sites in the interpreter's sdiv32/smod32 handlers.
+Also fix a harmless out-of-bounds read by copying only the original
+descriptor size.
 
-s32 is the only affected case -- the s64 division/modulo handlers do
-not use abs().
-
-Fixes: ec0e2da95f72 ("bpf: Support new signed div/mod instructions.")
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
-Link: https://lore.kernel.org/r/20260311011116.2108005-2-qguanni@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/hid/hid-asus.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index a343248c35ded..3011add7c4a88 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -1667,6 +1667,12 @@ bool bpf_opcode_in_insntable(u8 code)
- }
- 
- #ifndef CONFIG_BPF_JIT_ALWAYS_ON
-+/* Absolute value of s32 without undefined behavior for S32_MIN */
-+static u32 abs_s32(s32 x)
-+{
-+	return x >= 0 ? (u32)x : -(u32)x;
-+}
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index d971e339b5eac..529b23b67ec4b 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -1200,14 +1200,21 @@ static __u8 *asus_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 		 */
+ 		if (*rsize == rsize_orig &&
+ 			rdesc[offs] == 0x09 && rdesc[offs + 1] == 0x76) {
+-			*rsize = rsize_orig + 1;
+-			rdesc = kmemdup(rdesc, *rsize, GFP_KERNEL);
+-			if (!rdesc)
+-				return NULL;
++			__u8 *new_rdesc;
 +
- /**
-  *	___bpf_prog_run - run eBPF program on a given context
-  *	@regs: is the array of MAX_BPF_EXT_REG eBPF pseudo-registers
-@@ -1831,8 +1837,8 @@ static u64 ___bpf_prog_run(u64 *regs, const struct bpf_insn *insn)
- 			DST = do_div(AX, (u32) SRC);
- 			break;
- 		case 1:
--			AX = abs((s32)DST);
--			AX = do_div(AX, abs((s32)SRC));
-+			AX = abs_s32((s32)DST);
-+			AX = do_div(AX, abs_s32((s32)SRC));
- 			if ((s32)DST < 0)
- 				DST = (u32)-AX;
- 			else
-@@ -1859,8 +1865,8 @@ static u64 ___bpf_prog_run(u64 *regs, const struct bpf_insn *insn)
- 			DST = do_div(AX, (u32) IMM);
- 			break;
- 		case 1:
--			AX = abs((s32)DST);
--			AX = do_div(AX, abs((s32)IMM));
-+			AX = abs_s32((s32)DST);
-+			AX = do_div(AX, abs_s32((s32)IMM));
- 			if ((s32)DST < 0)
- 				DST = (u32)-AX;
- 			else
-@@ -1886,8 +1892,8 @@ static u64 ___bpf_prog_run(u64 *regs, const struct bpf_insn *insn)
- 			DST = (u32) AX;
- 			break;
- 		case 1:
--			AX = abs((s32)DST);
--			do_div(AX, abs((s32)SRC));
-+			AX = abs_s32((s32)DST);
-+			do_div(AX, abs_s32((s32)SRC));
- 			if (((s32)DST < 0) == ((s32)SRC < 0))
- 				DST = (u32)AX;
- 			else
-@@ -1913,8 +1919,8 @@ static u64 ___bpf_prog_run(u64 *regs, const struct bpf_insn *insn)
- 			DST = (u32) AX;
- 			break;
- 		case 1:
--			AX = abs((s32)DST);
--			do_div(AX, abs((s32)IMM));
-+			AX = abs_s32((s32)DST);
-+			do_div(AX, abs_s32((s32)IMM));
- 			if (((s32)DST < 0) == ((s32)IMM < 0))
- 				DST = (u32)AX;
- 			else
++			new_rdesc = devm_kzalloc(&hdev->dev, rsize_orig + 1,
++						 GFP_KERNEL);
++			if (!new_rdesc)
++				return rdesc;
+ 
+ 			hid_info(hdev, "Fixing up %s keyb report descriptor\n",
+ 				drvdata->quirks & QUIRK_T100CHI ?
+ 				"T100CHI" : "T90CHI");
++
++			memcpy(new_rdesc, rdesc, rsize_orig);
++			*rsize = rsize_orig + 1;
++			rdesc = new_rdesc;
++
+ 			memmove(rdesc + offs + 4, rdesc + offs + 2, 12);
+ 			rdesc[offs] = 0x19;
+ 			rdesc[offs + 1] = 0x00;
 -- 
 2.51.0
 
