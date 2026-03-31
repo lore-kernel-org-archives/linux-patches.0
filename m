@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C052E1C7C;
-	Tue, 31 Mar 2026 17:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0BB2FDC5E;
+	Tue, 31 Mar 2026 17:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976805; cv=none; b=gkv0CsiW4ZaonU/aVam+wEpFOscFfKj6ShRYid/SnYHa0nA5BEWDAG1t+8JzVPKStdjIPc8q5iZKM/nsNaMUX3R2FNxWNRU6DkRESdmmamRG4h6R1jajYq4Leb0RFGw/JJzKd0ez5VYl1ov3G455YiFZJqx2DMHW+w3sGIH7S60=
+	t=1774976807; cv=none; b=SB0EHbNraDzMZDjsCQXUQZAKU0jUITM3cd3/Wy/bDh2t5SwJGtINUqRX+y/lb3snvP+Uk6zNYUB+VUz62oAp0103Bs7n1CCnkIQPpeP99/O9fRj6F8Ox9rg/QLGNxY3WJK4FZXRuF0OAfD7S42/Im61wGcvw/eWWcHAZdqjRDUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976805; c=relaxed/simple;
-	bh=31XaKez47BQuFzFHSqJYnA9EzkD2TlPHJL2HvGBJ1UA=;
+	s=arc-20240116; t=1774976807; c=relaxed/simple;
+	bh=nAR56JV0MzBG9hq6N65AQuzWlrBoy6kf+BjDl+kTZZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QhtM3cXHJQ4moLS3ZYYhLE2KyW6jdIL4++Rxgh1idpNwStBAjiR/Ps6HB1nR3v7tHxqoHiTX7qFPlUnwvD2ay/Gw1FBlqGPaX51JwgeJpChQm33eWh3r2dfjcIoCLPQ2kF0EveSRAmNGcKuAz7R7L1vTEKtJUcsLDUTLarhBIWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SoElibnQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fl5ttZqb5YsbxDsjA2RcrKXvdO6joWRZobb7Q46+O0XxoWeRW37gW1VyVm/oM5YKND/XjpBCJaHi1p39BkI1awqqoSfN6SnUHyUYkEkeD7Q1xY06tBwjmFxqzT/ki1PuLTCWM6TA+Z75qk+aTW3+HIr2FCa0VOVL1BvuXb4wgjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEH/sIvr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SoElibnQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F3FC19423;
-	Tue, 31 Mar 2026 17:06:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEH/sIvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AD8C19423;
+	Tue, 31 Mar 2026 17:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976804;
-	bh=31XaKez47BQuFzFHSqJYnA9EzkD2TlPHJL2HvGBJ1UA=;
+	s=korg; t=1774976807;
+	bh=nAR56JV0MzBG9hq6N65AQuzWlrBoy6kf+BjDl+kTZZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SoElibnQWA1Vp7iOzN59tsUqt02yhfqNbra6b/xc/Xx9PSffNWtycxC5+eWSGHnrN
-	 5uauEh1VnEAAJVf7xapZkbOhC+eRl5CnU8OgnluhCJ55sAKg105ZRvZ1LtYX/rhfjy
-	 zCew3OVhaHUvearbKC9YDRMPN8jnheVloEfjFhwM=
+	b=mEH/sIvrj46pwEw+XovuvcttK7bOCWSitqCTXwjYw7haq9EWJBlN9qeprEfwqdt5s
+	 Lr4eMUiIsGuUNXumrWwr6WzX3QhYuqimQ0M/OCojhHg9a+N7mdr9uQtgk0+W+pQjIP
+	 MJNq65PaJXUPC/CDFLb1RnMvkCqJtwPKihAQRNhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Huang <jinhuieric.huang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 233/309] drm/amdgpu: prevent immediate PASID reuse case
-Date: Tue, 31 Mar 2026 18:22:16 +0200
-Message-ID: <20260331161802.155707744@linuxfoundation.org>
+	Yuchan Nam <entropy1110@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.18 203/309] media: mc, v4l2: serialize REINIT and REQBUFS with req_queue_mutex
+Date: Tue, 31 Mar 2026 18:21:46 +0200
+Message-ID: <20260331161800.924011881@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -45,136 +45,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Huang <jinhuieric.huang@amd.com>
+From: Yuchan Nam <entropy1110@gmail.com>
 
-commit 14b81abe7bdc25f8097906fc2f91276ffedb2d26 upstream.
+commit bef4f4a88b73e4cc550d25f665b8a9952af22773 upstream.
 
-PASID resue could cause interrupt issue when process
-immediately runs into hw state left by previous
-process exited with the same PASID, it's possible that
-page faults are still pending in the IH ring buffer when
-the process exits and frees up its PASID. To prevent the
-case, it uses idr cyclic allocator same as kernel pid's.
+MEDIA_REQUEST_IOC_REINIT can run concurrently with VIDIOC_REQBUFS(0)
+queue teardown paths. This can race request object cleanup against vb2
+queue cancellation and lead to use-after-free reports.
 
-Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8f1de51f49be692de137c8525106e0fce2d1912d)
+We already serialize request queueing against STREAMON/OFF with
+req_queue_mutex. Extend that serialization to REQBUFS, and also take
+the same mutex in media_request_ioctl_reinit() so REINIT is in the
+same exclusion domain.
+
+This keeps request cleanup and queue cancellation from running in
+parallel for request-capable devices.
+
+Fixes: 6093d3002eab ("media: vb2: keep a reference to the request until dqbuf")
 Cc: stable@vger.kernel.org
+Signed-off-by: Yuchan Nam <entropy1110@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c |   45 ++++++++++++++++++++++----------
- drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h |    1 
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c  |    1 
- 3 files changed, 34 insertions(+), 13 deletions(-)
+ drivers/media/mc/mc-request.c        |    5 +++++
+ drivers/media/v4l2-core/v4l2-ioctl.c |    5 +++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-@@ -35,10 +35,13 @@
-  * PASIDs are global address space identifiers that can be shared
-  * between the GPU, an IOMMU and the driver. VMs on different devices
-  * may use the same PASID if they share the same address
-- * space. Therefore PASIDs are allocated using a global IDA. VMs are
-- * looked up from the PASID per amdgpu_device.
-+ * space. Therefore PASIDs are allocated using IDR cyclic allocator
-+ * (similar to kernel PID allocation) which naturally delays reuse.
-+ * VMs are looked up from the PASID per amdgpu_device.
-  */
--static DEFINE_IDA(amdgpu_pasid_ida);
+--- a/drivers/media/mc/mc-request.c
++++ b/drivers/media/mc/mc-request.c
+@@ -190,6 +190,8 @@ static long media_request_ioctl_reinit(s
+ 	struct media_device *mdev = req->mdev;
+ 	unsigned long flags;
+ 
++	mutex_lock(&mdev->req_queue_mutex);
 +
-+static DEFINE_IDR(amdgpu_pasid_idr);
-+static DEFINE_SPINLOCK(amdgpu_pasid_idr_lock);
- 
- /* Helper to free pasid from a fence callback */
- struct amdgpu_pasid_cb {
-@@ -50,8 +53,8 @@ struct amdgpu_pasid_cb {
-  * amdgpu_pasid_alloc - Allocate a PASID
-  * @bits: Maximum width of the PASID in bits, must be at least 1
-  *
-- * Allocates a PASID of the given width while keeping smaller PASIDs
-- * available if possible.
-+ * Uses kernel's IDR cyclic allocator (same as PID allocation).
-+ * Allocates sequentially with automatic wrap-around.
-  *
-  * Returns a positive integer on success. Returns %-EINVAL if bits==0.
-  * Returns %-ENOSPC if no PASID was available. Returns %-ENOMEM on
-@@ -59,14 +62,15 @@ struct amdgpu_pasid_cb {
-  */
- int amdgpu_pasid_alloc(unsigned int bits)
- {
--	int pasid = -EINVAL;
-+	int pasid;
- 
--	for (bits = min(bits, 31U); bits > 0; bits--) {
--		pasid = ida_alloc_range(&amdgpu_pasid_ida, 1U << (bits - 1),
--					(1U << bits) - 1, GFP_KERNEL);
--		if (pasid != -ENOSPC)
--			break;
--	}
-+	if (bits == 0)
-+		return -EINVAL;
-+
-+	spin_lock(&amdgpu_pasid_idr_lock);
-+	pasid = idr_alloc_cyclic(&amdgpu_pasid_idr, NULL, 1,
-+				 1U << bits, GFP_KERNEL);
-+	spin_unlock(&amdgpu_pasid_idr_lock);
- 
- 	if (pasid >= 0)
- 		trace_amdgpu_pasid_allocated(pasid);
-@@ -81,7 +85,10 @@ int amdgpu_pasid_alloc(unsigned int bits
- void amdgpu_pasid_free(u32 pasid)
- {
- 	trace_amdgpu_pasid_freed(pasid);
--	ida_free(&amdgpu_pasid_ida, pasid);
-+
-+	spin_lock(&amdgpu_pasid_idr_lock);
-+	idr_remove(&amdgpu_pasid_idr, pasid);
-+	spin_unlock(&amdgpu_pasid_idr_lock);
- }
- 
- static void amdgpu_pasid_free_cb(struct dma_fence *fence,
-@@ -640,3 +647,15 @@ void amdgpu_vmid_mgr_fini(struct amdgpu_
- 		}
+ 	spin_lock_irqsave(&req->lock, flags);
+ 	if (req->state != MEDIA_REQUEST_STATE_IDLE &&
+ 	    req->state != MEDIA_REQUEST_STATE_COMPLETE) {
+@@ -197,6 +199,7 @@ static long media_request_ioctl_reinit(s
+ 			"request: %s not in idle or complete state, cannot reinit\n",
+ 			req->debug_str);
+ 		spin_unlock_irqrestore(&req->lock, flags);
++		mutex_unlock(&mdev->req_queue_mutex);
+ 		return -EBUSY;
  	}
+ 	if (req->access_count) {
+@@ -204,6 +207,7 @@ static long media_request_ioctl_reinit(s
+ 			"request: %s is being accessed, cannot reinit\n",
+ 			req->debug_str);
+ 		spin_unlock_irqrestore(&req->lock, flags);
++		mutex_unlock(&mdev->req_queue_mutex);
+ 		return -EBUSY;
+ 	}
+ 	req->state = MEDIA_REQUEST_STATE_CLEANING;
+@@ -214,6 +218,7 @@ static long media_request_ioctl_reinit(s
+ 	spin_lock_irqsave(&req->lock, flags);
+ 	req->state = MEDIA_REQUEST_STATE_IDLE;
+ 	spin_unlock_irqrestore(&req->lock, flags);
++	mutex_unlock(&mdev->req_queue_mutex);
+ 
+ 	return 0;
  }
-+
-+/**
-+ * amdgpu_pasid_mgr_cleanup - cleanup PASID manager
-+ *
-+ * Cleanup the IDR allocator.
-+ */
-+void amdgpu_pasid_mgr_cleanup(void)
-+{
-+	spin_lock(&amdgpu_pasid_idr_lock);
-+	idr_destroy(&amdgpu_pasid_idr);
-+	spin_unlock(&amdgpu_pasid_idr_lock);
-+}
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.h
-@@ -74,6 +74,7 @@ int amdgpu_pasid_alloc(unsigned int bits
- void amdgpu_pasid_free(u32 pasid);
- void amdgpu_pasid_free_delayed(struct dma_resv *resv,
- 			       u32 pasid);
-+void amdgpu_pasid_mgr_cleanup(void);
+--- a/drivers/media/v4l2-core/v4l2-ioctl.c
++++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+@@ -3079,13 +3079,14 @@ static long __video_do_ioctl(struct file
+ 	}
  
- bool amdgpu_vmid_had_gpu_reset(struct amdgpu_device *adev,
- 			       struct amdgpu_vmid *id);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2884,6 +2884,7 @@ void amdgpu_vm_manager_fini(struct amdgp
- 	xa_destroy(&adev->vm_manager.pasids);
+ 	/*
+-	 * We need to serialize streamon/off with queueing new requests.
++	 * We need to serialize streamon/off/reqbufs with queueing new requests.
+ 	 * These ioctls may trigger the cancellation of a streaming
+ 	 * operation, and that should not be mixed with queueing a new
+ 	 * request at the same time.
+ 	 */
+ 	if (v4l2_device_supports_requests(vfd->v4l2_dev) &&
+-	    (cmd == VIDIOC_STREAMON || cmd == VIDIOC_STREAMOFF)) {
++	    (cmd == VIDIOC_STREAMON || cmd == VIDIOC_STREAMOFF ||
++	     cmd == VIDIOC_REQBUFS)) {
+ 		req_queue_lock = &vfd->v4l2_dev->mdev->req_queue_mutex;
  
- 	amdgpu_vmid_mgr_fini(adev);
-+	amdgpu_pasid_mgr_cleanup();
- }
- 
- /**
+ 		if (mutex_lock_interruptible(req_queue_lock))
 
 
