@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0113F7867;
-	Tue, 31 Mar 2026 16:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8560E41B373;
+	Tue, 31 Mar 2026 16:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976063; cv=none; b=pYPbIxYUlWD7meuLx2R38ihXw+NIYXieJYdhNDNN6X/0MRa+u6JtmZec6Xe0VWCJ+MM3Y8VdbAQ/jD44YQEmRmONau4VpNu2XUUAVBmOwtpT8BZtJgWIv5fwhckGuG3IIU1eHLTQ21T/MffT1nEDpiqzE6082QmTCIjqCGwURzU=
+	t=1774976065; cv=none; b=r1hRNhXanZ7IGqLxket27uz2wKC8eVi4uukqtpFY5xwvPO2vF6eYI7LqYvz5Bw3u3ZV8gr/x3iiA6K3G1MiOX5zp97vpNIUonwJd91p6DzRuCRH0GW6orbHUL+AIkvXjy7TwDvyC7N5jU5HwlrCo3ajbe76C8ixghOlGgoAHOuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976063; c=relaxed/simple;
-	bh=MXG+Fesj+h+8/6VVT/ENTSKkpax+m+B+aaDw0Xzf26s=;
+	s=arc-20240116; t=1774976065; c=relaxed/simple;
+	bh=iTe7D5iPbjHvs1M1kPVUe5/6MaynOoXPf9OgiCIiBKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z5du8mcVHJ3tTleoVt9nHPHfm7WxsJapG+iQO39mY+JogYz+gNsxSZdLa/X01EfQUX+rO8RC4m/sX2aFp81Ur6OTYRh5YVPc9jx39Vfx1EIgP+oTjI1nFnkP7+9DVpXmxZ7eitbyPy2mrjicJg3nUAdJSIQMgfunfjTuJfEIlCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6kUr4Pw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4+Hc7X2JIQMG2sljVaYmZoufjIfGWDjP78SR6XIU4idhEyJFHBYCjZxo1CWOrQrn2DNamI9PoNln6fbF6WX36yp7NeKlsfna+kqCU+mNxg5c0q95wZMiJtJtfNYi4CTKp0vXvbLKRRfnvxLazaewep/HW0H2gK8gUu2cGuaeE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Wogo2wr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6kUr4Pw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BAAC19423;
-	Tue, 31 Mar 2026 16:54:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Wogo2wr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3AEC19423;
+	Tue, 31 Mar 2026 16:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976062;
-	bh=MXG+Fesj+h+8/6VVT/ENTSKkpax+m+B+aaDw0Xzf26s=;
+	s=korg; t=1774976065;
+	bh=iTe7D5iPbjHvs1M1kPVUe5/6MaynOoXPf9OgiCIiBKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h6kUr4Pw78+ZlJTOj2vANTaUct5rxAp5xSQt0lnpM6D1vvpd5zts8mL1qEU/Y9Fbq
-	 /5CFO+bJOoXWtsDl6XmJ/ST+QPlIdL3SEgOXHWZL84HZE43E0BdgJ0mWJ+W4vQdFEd
-	 gH9iVKkKaPJ/uMUcEG+pu8qNvndyMMNdGvt7zHiM=
+	b=1Wogo2wrjzprD/jf9D6JrLm2j8xeTqVxQSral3h/dJbg15rchvSuL/wVe/wZAvsee
+	 qPqI4g0Sry9tSZUpZGDLugMTMwcg/nUb0vQprlfZDuQQzpaik7YJEKhUbh24B62pX/
+	 dap+JFQPZcfrKoQKlWB6Fdn0p0qKxM7ObTZiVUMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianhai Wu <wuqianhai@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 175/244] LoongArch: Workaround LS2K/LS7A GPU DMA hang bug
-Date: Tue, 31 Mar 2026 18:22:05 +0200
-Message-ID: <20260331161748.220773330@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jan Kara <jack@suse.cz>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.12 193/244] ext4: fix use-after-free in update_super_work when racing with umount
+Date: Tue, 31 Mar 2026 18:22:23 +0200
+Message-ID: <20260331161748.879282509@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -50,131 +54,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-commit 95db0c9f526d583634cddb2e5914718570fbac87 upstream.
+commit d15e4b0a418537aafa56b2cb80d44add83e83697 upstream.
 
-1. Hardware limitation: GPU, DC and VPU are typically PCI device 06.0,
-06.1 and 06.2. They share some hardware resources, so when configure the
-PCI 06.0 device BAR1, DMA memory access cannot be performed through this
-BAR, otherwise it will cause hardware abnormalities.
+Commit b98535d09179 ("ext4: fix bug_on in start_this_handle during umount
+filesystem") moved ext4_unregister_sysfs() before flushing s_sb_upd_work
+to prevent new error work from being queued via /proc/fs/ext4/xx/mb_groups
+reads during unmount. However, this introduced a use-after-free because
+update_super_work calls ext4_notify_error_sysfs() -> sysfs_notify() which
+accesses the kobject's kernfs_node after it has been freed by kobject_del()
+in ext4_unregister_sysfs():
 
-2. In typical scenarios of reboot or S3/S4, DC access to memory through
-BAR is not prohibited, resulting in GPU DMA hangs.
+  update_super_work                ext4_put_super
+  -----------------                --------------
+                                   ext4_unregister_sysfs(sb)
+                                     kobject_del(&sbi->s_kobj)
+                                       __kobject_del()
+                                         sysfs_remove_dir()
+                                           kobj->sd = NULL
+                                         sysfs_put(sd)
+                                           kernfs_put()  // RCU free
+  ext4_notify_error_sysfs(sbi)
+    sysfs_notify(&sbi->s_kobj)
+      kn = kobj->sd              // stale pointer
+      kernfs_get(kn)             // UAF on freed kernfs_node
+                                   ext4_journal_destroy()
+                                     flush_work(&sbi->s_sb_upd_work)
 
-3. Workaround method: When configuring the 06.0 device BAR1, turn off
-the memory access of DC, GPU and VPU (via DC's CRTC registers).
+Instead of reordering the teardown sequence, fix this by making
+ext4_notify_error_sysfs() detect that sysfs has already been torn down
+by checking s_kobj.state_in_sysfs, and skipping the sysfs_notify() call
+in that case. A dedicated mutex (s_error_notify_mutex) serializes
+ext4_notify_error_sysfs() against kobject_del() in ext4_unregister_sysfs()
+to prevent TOCTOU races where the kobject could be deleted between the
+state_in_sysfs check and the sysfs_notify() call.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Qianhai Wu <wuqianhai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: b98535d09179 ("ext4: fix bug_on in start_this_handle during umount filesystem")
+Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260319120336.157873-1-jiayuan.chen@linux.dev
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/pci/pci.c |   80 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
+ fs/ext4/ext4.h  |    1 +
+ fs/ext4/super.c |    1 +
+ fs/ext4/sysfs.c |   10 +++++++++-
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/pci/pci.c
-+++ b/arch/loongarch/pci/pci.c
-@@ -6,9 +6,11 @@
- #include <linux/export.h>
- #include <linux/init.h>
- #include <linux/acpi.h>
-+#include <linux/delay.h>
- #include <linux/types.h>
- #include <linux/pci.h>
- #include <linux/vgaarb.h>
-+#include <linux/io-64-nonatomic-lo-hi.h>
- #include <asm/cacheflush.h>
- #include <asm/loongson.h>
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -1534,6 +1534,7 @@ struct ext4_sb_info {
+ 	struct proc_dir_entry *s_proc;
+ 	struct kobject s_kobj;
+ 	struct completion s_kobj_unregister;
++	struct mutex s_error_notify_mutex; /* protects sysfs_notify vs kobject_del */
+ 	struct super_block *s_sb;
+ 	struct buffer_head *s_mmp_bh;
  
-@@ -16,6 +18,9 @@
- #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
- #define PCI_DEVICE_ID_LOONGSON_DC2      0x7a36
- #define PCI_DEVICE_ID_LOONGSON_DC3      0x7a46
-+#define PCI_DEVICE_ID_LOONGSON_GPU1     0x7a15
-+#define PCI_DEVICE_ID_LOONGSON_GPU2     0x7a25
-+#define PCI_DEVICE_ID_LOONGSON_GPU3     0x7a35
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5313,6 +5313,7 @@ static int __ext4_fill_super(struct fs_c
  
- int raw_pci_read(unsigned int domain, unsigned int bus, unsigned int devfn,
- 						int reg, int len, u32 *val)
-@@ -100,3 +105,78 @@ static void pci_fixup_vgadev(struct pci_
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC1, pci_fixup_vgadev);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC2, pci_fixup_vgadev);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC3, pci_fixup_vgadev);
+ 	timer_setup(&sbi->s_err_report, print_daily_error_info, 0);
+ 	spin_lock_init(&sbi->s_error_lock);
++	mutex_init(&sbi->s_error_notify_mutex);
+ 	INIT_WORK(&sbi->s_sb_upd_work, update_super_work);
+ 
+ 	err = ext4_group_desc_init(sb, es, logical_sb_block, &first_not_zeroed);
+--- a/fs/ext4/sysfs.c
++++ b/fs/ext4/sysfs.c
+@@ -551,7 +551,10 @@ static const struct kobj_type ext4_feat_
+ 
+ void ext4_notify_error_sysfs(struct ext4_sb_info *sbi)
+ {
+-	sysfs_notify(&sbi->s_kobj, NULL, "errors_count");
++	mutex_lock(&sbi->s_error_notify_mutex);
++	if (sbi->s_kobj.state_in_sysfs)
++		sysfs_notify(&sbi->s_kobj, NULL, "errors_count");
++	mutex_unlock(&sbi->s_error_notify_mutex);
+ }
+ 
+ static struct kobject *ext4_root;
+@@ -564,8 +567,10 @@ int ext4_register_sysfs(struct super_blo
+ 	int err;
+ 
+ 	init_completion(&sbi->s_kobj_unregister);
++	mutex_lock(&sbi->s_error_notify_mutex);
+ 	err = kobject_init_and_add(&sbi->s_kobj, &ext4_sb_ktype, ext4_root,
+ 				   "%s", sb->s_id);
++	mutex_unlock(&sbi->s_error_notify_mutex);
+ 	if (err) {
+ 		kobject_put(&sbi->s_kobj);
+ 		wait_for_completion(&sbi->s_kobj_unregister);
+@@ -598,7 +603,10 @@ void ext4_unregister_sysfs(struct super_
+ 
+ 	if (sbi->s_proc)
+ 		remove_proc_subtree(sb->s_id, ext4_proc_root);
 +
-+#define CRTC_NUM_MAX		2
-+#define CRTC_OUTPUT_ENABLE	0x100
-+
-+static void loongson_gpu_fixup_dma_hang(struct pci_dev *pdev, bool on)
-+{
-+	u32 i, val, count, crtc_offset, device;
-+	void __iomem *crtc_reg, *base, *regbase;
-+	static u32 crtc_status[CRTC_NUM_MAX] = { 0 };
-+
-+	base = pdev->bus->ops->map_bus(pdev->bus, pdev->devfn + 1, 0);
-+	device = readw(base + PCI_DEVICE_ID);
-+
-+	regbase = ioremap(readq(base + PCI_BASE_ADDRESS_0) & ~0xffull, SZ_64K);
-+	if (!regbase) {
-+		pci_err(pdev, "Failed to ioremap()\n");
-+		return;
-+	}
-+
-+	switch (device) {
-+	case PCI_DEVICE_ID_LOONGSON_DC2:
-+		crtc_reg = regbase + 0x1240;
-+		crtc_offset = 0x10;
-+		break;
-+	case PCI_DEVICE_ID_LOONGSON_DC3:
-+		crtc_reg = regbase;
-+		crtc_offset = 0x400;
-+		break;
-+	}
-+
-+	for (i = 0; i < CRTC_NUM_MAX; i++, crtc_reg += crtc_offset) {
-+		val = readl(crtc_reg);
-+
-+		if (!on)
-+			crtc_status[i] = val;
-+
-+		/* No need to fixup if the status is off at startup. */
-+		if (!(crtc_status[i] & CRTC_OUTPUT_ENABLE))
-+			continue;
-+
-+		if (on)
-+			val |= CRTC_OUTPUT_ENABLE;
-+		else
-+			val &= ~CRTC_OUTPUT_ENABLE;
-+
-+		mb();
-+		writel(val, crtc_reg);
-+
-+		for (count = 0; count < 40; count++) {
-+			val = readl(crtc_reg) & CRTC_OUTPUT_ENABLE;
-+			if ((on && val) || (!on && !val))
-+				break;
-+			udelay(1000);
-+		}
-+
-+		pci_info(pdev, "DMA hang fixup at reg[0x%lx]: 0x%x\n",
-+				(unsigned long)crtc_reg & 0xffff, readl(crtc_reg));
-+	}
-+
-+	iounmap(regbase);
-+}
-+
-+static void pci_fixup_dma_hang_early(struct pci_dev *pdev)
-+{
-+	loongson_gpu_fixup_dma_hang(pdev, false);
-+}
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU2, pci_fixup_dma_hang_early);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU3, pci_fixup_dma_hang_early);
-+
-+static void pci_fixup_dma_hang_final(struct pci_dev *pdev)
-+{
-+	loongson_gpu_fixup_dma_hang(pdev, true);
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU2, pci_fixup_dma_hang_final);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU3, pci_fixup_dma_hang_final);
++	mutex_lock(&sbi->s_error_notify_mutex);
+ 	kobject_del(&sbi->s_kobj);
++	mutex_unlock(&sbi->s_error_notify_mutex);
+ }
+ 
+ int __init ext4_init_sysfs(void)
 
 
