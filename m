@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD6B3A1E8C;
-	Tue, 31 Mar 2026 16:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F0F3A1E8C;
+	Tue, 31 Mar 2026 17:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976398; cv=none; b=NCSffoVanxnnpTxj/rbcS3mJhXgQpo74hajWA+ViyzORlqfLgR9p1DkGxUHXa3IT/2MK7ZXJmBeNPYhm2cQssP9cQw37PiWeFACNkPF83GokoTjlecXIqf2B/gMjXoFOR1rq7J5ABxvq0yZfjziRDR41yIREICbaTCRAKyxHosA=
+	t=1774976402; cv=none; b=L4YTGAQz2RrahfVrtX8ia/RCIHyyih+c21EAsMnUREJ/oDC5dk/K5UGu7QgaVOTh/ldmrdnqvnxJ/QevpModFl3wZXTIyze272cyZeF3Vca5auhKOcMQDL+yZzz28QfWOS45JClfP3a8FgOJK/kyIvJE9DvbBZs/IIYL+R5kDPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976398; c=relaxed/simple;
-	bh=MN6c9dhnx6cNxoOeLrn1N3sqob668Je7Wk/RvSTYfNY=;
+	s=arc-20240116; t=1774976402; c=relaxed/simple;
+	bh=QdddpCzNslIpHjyyP2he+/toZzTcaX64KQUk/bs4JoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IaNqSZr5c2faAY3JW7q2ggvrsuZC/YUn5kGHjGvUPbne0DaSxZu0bpXSoozea93YQBMGZB7XSKEn+yetKBdPmCZ1rSNboStTgep7OS3GEV6zRAg9SeBtCezvI5Bdpc8WmVYdkYL+oiPbW9czsot4NJRFJp7aofGaY4amp/wNnaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Wyi0090; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=raN4zfHqpU44AtRZZGNnjrxV/DuDA8npadFFsAykCfL9bV57wcTTTVzo/3HfsdjtSlNGJOSTMQgHUVIqwybkGzZUkKend8HSmchggLFumaqZlOh6BK5DA0hudBzrNKtpP42O5J/KYUa6YrnVgXpKA8RSUDFNMisRFKrtcXmOEXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1xP40oE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Wyi0090"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FE5C19423;
-	Tue, 31 Mar 2026 16:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1xP40oE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA52C19423;
+	Tue, 31 Mar 2026 17:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976398;
-	bh=MN6c9dhnx6cNxoOeLrn1N3sqob668Je7Wk/RvSTYfNY=;
+	s=korg; t=1774976402;
+	bh=QdddpCzNslIpHjyyP2he+/toZzTcaX64KQUk/bs4JoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Wyi0090ApidqTbbRaI5i57g+EpKK0vf0ffKwLTJgU0MJRJ7I1/vEbMcLrWSUnANb
-	 0ij4BYzuC02Kj25m2GByN9uE7/ihCvqTt+9Xo+hepz1PbGccW9bi/rJg9GYYxHZirf
-	 osUej0fl6Nan3O7QhoM00lUi+MoNKAKMVLGuByKY=
+	b=d1xP40oE4RrSQUVDoy5rPyEiweP73MDRCBu5Ib0bfhzAr7p+oY3Ug6nqE/7c+3WQk
+	 XQbGQ9WJsL9Od/Eyr2eCaPoTbJU6VZUQhaRq9gus+ED30pTRMYFNlCjd8Hza2S+sAp
+	 GvKksXLArXJodY3UYyn6WQS81nHn1Fl5TyFJqGR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b518dfc8e021988fbd55@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alexander Potapenko <glider@google.com>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 077/309] af_key: validate families in pfkey_send_migrate()
-Date: Tue, 31 Mar 2026 18:19:40 +0200
-Message-ID: <20260331161756.322346716@linuxfoundation.org>
+Subject: [PATCH 6.18 078/309] dma: swiotlb: add KMSAN annotations to swiotlb_bounce()
+Date: Tue, 31 Mar 2026 18:19:41 +0200
+Message-ID: <20260331161756.358866019@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -53,82 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit eb2d16a7d599dc9d4df391b5e660df9949963786 ]
+[ Upstream commit 6f770b73d0311a5b099277653199bb6421c4fed2 ]
 
-syzbot was able to trigger a crash in skb_put() [1]
+When a device performs DMA to a bounce buffer, KMSAN is unaware of
+the write and does not mark the data as initialized.  When
+swiotlb_bounce() later copies the bounce buffer back to the original
+buffer, memcpy propagates the uninitialized shadow to the original
+buffer, causing false positive uninit-value reports.
 
-Issue is that pfkey_send_migrate() does not check old/new families,
-and that set_ipsecrequest() @family argument was truncated,
-thus possibly overfilling the skb.
+Fix this by calling kmsan_unpoison_memory() on the bounce buffer
+before copying it back in the DMA_FROM_DEVICE path, so that memcpy
+naturally propagates initialized shadow to the destination.
 
-Validate families early, do not wait set_ipsecrequest().
-
-[1]
-
-skbuff: skb_over_panic: text:ffffffff8a752120 len:392 put:16 head:ffff88802a4ad040 data:ffff88802a4ad040 tail:0x188 end:0x180 dev:<NULL>
- kernel BUG at net/core/skbuff.c:214 !
-Call Trace:
- <TASK>
-  skb_over_panic net/core/skbuff.c:219 [inline]
-  skb_put+0x159/0x210 net/core/skbuff.c:2655
-  skb_put_zero include/linux/skbuff.h:2788 [inline]
-  set_ipsecrequest net/key/af_key.c:3532 [inline]
-  pfkey_send_migrate+0x1270/0x2e50 net/key/af_key.c:3636
-  km_migrate+0x155/0x260 net/xfrm/xfrm_state.c:2848
-  xfrm_migrate+0x2140/0x2450 net/xfrm/xfrm_policy.c:4705
-  xfrm_do_migrate+0x8ff/0xaa0 net/xfrm/xfrm_user.c:3150
-
-Fixes: 08de61beab8a ("[PFKEYV2]: Extension for dynamic update of endpoint address(es)")
-Reported-by: syzbot+b518dfc8e021988fbd55@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/69b5933c.050a0220.248e02.00f2.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Suggested-by: Alexander Potapenko <glider@google.com>
+Link: https://lore.kernel.org/CAG_fn=WUGta-paG1BgsGRoAR+fmuCgh3xo=R3XdzOt_-DqSdHw@mail.gmail.com/
+Fixes: 7ade4f10779c ("dma: kmsan: unpoison DMA mappings")
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260315082750.2375581-1-syoshida@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/key/af_key.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ kernel/dma/swiotlb.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index 2ebde03522459..ceaa82bc78acc 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -3518,7 +3518,7 @@ static int set_sadb_kmaddress(struct sk_buff *skb, const struct xfrm_kmaddress *
+diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+index 0d37da3d95b65..e27225f8aeb27 100644
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -30,6 +30,7 @@
+ #include <linux/gfp.h>
+ #include <linux/highmem.h>
+ #include <linux/io.h>
++#include <linux/kmsan-checks.h>
+ #include <linux/iommu-helper.h>
+ #include <linux/init.h>
+ #include <linux/memblock.h>
+@@ -903,10 +904,19 @@ static void swiotlb_bounce(struct device *dev, phys_addr_t tlb_addr, size_t size
  
- static int set_ipsecrequest(struct sk_buff *skb,
- 			    uint8_t proto, uint8_t mode, int level,
--			    uint32_t reqid, uint8_t family,
-+			    uint32_t reqid, sa_family_t family,
- 			    const xfrm_address_t *src, const xfrm_address_t *dst)
- {
- 	struct sadb_x_ipsecrequest *rq;
-@@ -3583,12 +3583,17 @@ static int pfkey_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 			local_irq_save(flags);
+ 			page = pfn_to_page(pfn);
+-			if (dir == DMA_TO_DEVICE)
++			if (dir == DMA_TO_DEVICE) {
++				/*
++				 * Ideally, kmsan_check_highmem_page()
++				 * could be used here to detect infoleaks,
++				 * but callers may map uninitialized buffers
++				 * that will be written by the device,
++				 * causing false positives.
++				 */
+ 				memcpy_from_page(vaddr, page, offset, sz);
+-			else
++			} else {
++				kmsan_unpoison_memory(vaddr, sz);
+ 				memcpy_to_page(page, offset, vaddr, sz);
++			}
+ 			local_irq_restore(flags);
  
- 	/* ipsecrequests */
- 	for (i = 0, mp = m; i < num_bundles; i++, mp++) {
--		/* old locator pair */
--		size_pol += sizeof(struct sadb_x_ipsecrequest) +
--			    pfkey_sockaddr_pair_size(mp->old_family);
--		/* new locator pair */
--		size_pol += sizeof(struct sadb_x_ipsecrequest) +
--			    pfkey_sockaddr_pair_size(mp->new_family);
-+		int pair_size;
-+
-+		pair_size = pfkey_sockaddr_pair_size(mp->old_family);
-+		if (!pair_size)
-+			return -EINVAL;
-+		size_pol += sizeof(struct sadb_x_ipsecrequest) + pair_size;
-+
-+		pair_size = pfkey_sockaddr_pair_size(mp->new_family);
-+		if (!pair_size)
-+			return -EINVAL;
-+		size_pol += sizeof(struct sadb_x_ipsecrequest) + pair_size;
+ 			size -= sz;
+@@ -915,8 +925,15 @@ static void swiotlb_bounce(struct device *dev, phys_addr_t tlb_addr, size_t size
+ 			offset = 0;
+ 		}
+ 	} else if (dir == DMA_TO_DEVICE) {
++		/*
++		 * Ideally, kmsan_check_memory() could be used here to detect
++		 * infoleaks (uninitialized data being sent to device), but
++		 * callers may map uninitialized buffers that will be written
++		 * by the device, causing false positives.
++		 */
+ 		memcpy(vaddr, phys_to_virt(orig_addr), size);
+ 	} else {
++		kmsan_unpoison_memory(vaddr, size);
+ 		memcpy(phys_to_virt(orig_addr), vaddr, size);
  	}
- 
- 	size += sizeof(struct sadb_msg) + size_pol;
+ }
 -- 
 2.51.0
 
