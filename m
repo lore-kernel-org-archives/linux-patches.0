@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A1A3E316C;
-	Tue, 31 Mar 2026 16:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DDF2EE262;
+	Tue, 31 Mar 2026 16:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974586; cv=none; b=f35FWkipt/Ocys28TXT7xT/pIJpaANJ4QbfEOJmMkN+Xq1rpClDSSqnau9ytuwFjzDiHusfaYjJLgr2HmnZ1FZxefB/vTB2+OzbJXZ0IP1wUb02S/bPyuadytJyJ63N8FU6/Iui8j3ho+AfVSMd0+0eKI8ie42k3GDFIXWqUdN8=
+	t=1774974589; cv=none; b=JD+IseKJiqG4t4K8VtBWdU25/JYU5mqp+JbhEb5dxFUL+csuqoH83JfpjNWdcwcnD6+HNLtWXD9NQ19rKEmmI7H157eMC4aIbEnScz1w7jMSgFVZyaxBuL9GN/HdP2T619vkMa6P2kPY4SFeBesMEVfuX2b+oK3Lc5UIPkdsAH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974586; c=relaxed/simple;
-	bh=Gupp3NOjR2+uOwJ0ANsqMdTIqczTsJdOnbwIE3zwfFE=;
+	s=arc-20240116; t=1774974589; c=relaxed/simple;
+	bh=SF/DYD4tj5b2bYY6LkLmD5JTR7v9Mt55QMgTUwjml1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izmxU+5vtkVpsCZ6DDSNK32VfpAXARhSCO6HvgZ4fVe0USYJf4J+6I3GqY9yDanm+ql9+XUyy1gbMBWKF/dxyURvUCRuhXrJgGzhjy8iYlUSfOw6QKffvFU6drW9/b6tXe6nU/NYKrBwUJZTKRuoRQumyowvgLy+Of9R1/nfy8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv7a4tfN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FlfI1XT3TgLyliXv3f3KXzo26K5Ov7x8kp1FTWUk1d9LD5k8bH9aH2WzhxIe6gbCFRDUqrqkw5PbLIcMbMKo73EhJMr2ZiTVpcVd872TXDyuw1egmf1y/OPsh0nloQ4ysfckesXQOU6hXR1NdJoeOn8Bc88qWkVu7/WKq+SQ74Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fL7Qfx8X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv7a4tfN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266FEC19423;
-	Tue, 31 Mar 2026 16:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fL7Qfx8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD51DC19423;
+	Tue, 31 Mar 2026 16:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974586;
-	bh=Gupp3NOjR2+uOwJ0ANsqMdTIqczTsJdOnbwIE3zwfFE=;
+	s=korg; t=1774974589;
+	bh=SF/DYD4tj5b2bYY6LkLmD5JTR7v9Mt55QMgTUwjml1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vv7a4tfN2X8kISVqPKr4nNeVHPMyVDhTYRT1lClo47ip8C/JpKeoSfELxyRSoqfuV
-	 6QHyxUztvYOvXQqxZA4fsHZVE17WbkRQsqyiIiE2nHWtbVjpVXxryqBxjBa70tgn8c
-	 hDOOzbBPoif8PDHtce6AmmhVcP5LnEF0cHq7rBwQ=
+	b=fL7Qfx8Xnr8vP4ZhP+N83DdmV/zHxcLAq0Lc4Jboe6Ybgo42N7rRw8rAL5UraCpyr
+	 GQX2GpQT08JThyl3zF7X+esbKIgdsaOPagBInI8/BV5cPdYwTY2/E0FcrH13c4T2bW
+	 3A69ZqIomIh7giEM9T8PIcJA/t4963toihrm/rVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 141/175] ext4: always drain queued discard work in ext4_mb_release()
-Date: Tue, 31 Mar 2026 18:22:05 +0200
-Message-ID: <20260331161734.966390494@linuxfoundation.org>
+	Markus Niebel <Markus.Niebel@ew.tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.6 142/175] arm64: dts: imx8mn-tqma8mqnl: fix LDO5 power off
+Date: Tue, 31 Mar 2026 18:22:06 +0200
+Message-ID: <20260331161735.001631954@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -50,65 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Markus Niebel <Markus.Niebel@ew.tq-group.com>
 
-commit 9ee29d20aab228adfb02ca93f87fb53c56c2f3af upstream.
+commit 8adc841d43ebceabec996c9dcff6e82d3e585268 upstream.
 
-While reviewing recent ext4 patch[1], Sashiko raised the following
-concern[2]:
+Fix SD card removal caused by automatic LDO5 power off after boot
 
-> If the filesystem is initially mounted with the discard option,
-> deleting files will populate sbi->s_discard_list and queue
-> s_discard_work. If it is then remounted with nodiscard, the
-> EXT4_MOUNT_DISCARD flag is cleared, but the pending s_discard_work is
-> neither cancelled nor flushed.
+To prevent this, add vqmmc regulator for USDHC, using a GPIO-controlled
+regulator that is supplied by LDO5. Since this is implemented on SoM but
+used on baseboards with SD-card interface, implement the functionality
+on SoM part and optionally enable it on baseboards if needed.
 
-[1] https://lore.kernel.org/r/20260319094545.19291-1-qiang.zhang@linux.dev/
-[2] https://sashiko.dev/#/patchset/20260319094545.19291-1-qiang.zhang%40linux.dev
-
-The concern was valid, but it had nothing to do with the patch[1].
-One of the problems with Sashiko in its current (early) form is that
-it will detect pre-existing issues and report it as a problem with the
-patch that it is reviewing.
-
-In practice, it would be hard to hit deliberately (unless you are a
-malicious syzkaller fuzzer), since it would involve mounting the file
-system with -o discard, and then deleting a large number of files,
-remounting the file system with -o nodiscard, and then immediately
-unmounting the file system before the queued discard work has a change
-to drain on its own.
-
-Fix it because it's a real bug, and to avoid Sashiko from raising this
-concern when analyzing future patches to mballoc.c.
-
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Fixes: 55cdd0af2bc5 ("ext4: get discard out of jbd2 commit kthread contex")
-Cc: stable@kernel.org
+Signed-off-by: Markus Niebel <Markus.Niebel@ew.tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx.dts |   13 ++++----
+ arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi       |   22 ++++++++++++++
+ 2 files changed, 29 insertions(+), 6 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3793,13 +3793,11 @@ int ext4_mb_release(struct super_block *
- 	struct kmem_cache *cachep = get_groupinfo_cache(sb->s_blocksize_bits);
- 	int count;
+--- a/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl-mba8mx.dts
+@@ -63,6 +63,10 @@
+ 	};
+ };
  
--	if (test_opt(sb, DISCARD)) {
--		/*
--		 * wait the discard work to drain all of ext4_free_data
--		 */
--		flush_work(&sbi->s_discard_work);
--		WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
--	}
-+	/*
-+	 * wait the discard work to drain all of ext4_free_data
-+	 */
-+	flush_work(&sbi->s_discard_work);
-+	WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
++&reg_usdhc2_vqmmc {
++	status = "okay";
++};
++
+ &sai3 {
+ 	assigned-clocks = <&clk IMX8MN_CLK_SAI3>;
+ 	assigned-clock-parents = <&clk IMX8MN_AUDIO_PLL1_OUT>;
+@@ -207,8 +211,7 @@
+ 			   <MX8MN_IOMUXC_SD2_DATA0_USDHC2_DATA0		0x1d4>,
+ 			   <MX8MN_IOMUXC_SD2_DATA1_USDHC2_DATA1		0x1d4>,
+ 			   <MX8MN_IOMUXC_SD2_DATA2_USDHC2_DATA2		0x1d4>,
+-			   <MX8MN_IOMUXC_SD2_DATA3_USDHC2_DATA3		0x1d4>,
+-			   <MX8MN_IOMUXC_GPIO1_IO04_USDHC2_VSELECT	0x84>;
++			   <MX8MN_IOMUXC_SD2_DATA3_USDHC2_DATA3		0x1d4>;
+ 	};
  
- 	group_info = rcu_access_pointer(sbi->s_group_info);
- 	if (group_info) {
+ 	pinctrl_usdhc2_100mhz: usdhc2-100mhzgrp {
+@@ -217,8 +220,7 @@
+ 			   <MX8MN_IOMUXC_SD2_DATA0_USDHC2_DATA0		0x1d4>,
+ 			   <MX8MN_IOMUXC_SD2_DATA1_USDHC2_DATA1		0x1d4>,
+ 			   <MX8MN_IOMUXC_SD2_DATA2_USDHC2_DATA2		0x1d4>,
+-			   <MX8MN_IOMUXC_SD2_DATA3_USDHC2_DATA3		0x1d4>,
+-			   <MX8MN_IOMUXC_GPIO1_IO04_USDHC2_VSELECT	0x84>;
++			   <MX8MN_IOMUXC_SD2_DATA3_USDHC2_DATA3		0x1d4>;
+ 	};
+ 
+ 	pinctrl_usdhc2_200mhz: usdhc2-200mhzgrp {
+@@ -227,8 +229,7 @@
+ 			   <MX8MN_IOMUXC_SD2_DATA0_USDHC2_DATA0		0x1d4>,
+ 			   <MX8MN_IOMUXC_SD2_DATA1_USDHC2_DATA1		0x1d4>,
+ 			   <MX8MN_IOMUXC_SD2_DATA2_USDHC2_DATA2		0x1d4>,
+-			   <MX8MN_IOMUXC_SD2_DATA3_USDHC2_DATA3		0x1d4>,
+-			   <MX8MN_IOMUXC_GPIO1_IO04_USDHC2_VSELECT	0x84>;
++			   <MX8MN_IOMUXC_SD2_DATA3_USDHC2_DATA3		0x1d4>;
+ 	};
+ 
+ 	pinctrl_usdhc2_gpio: usdhc2-gpiogrp {
+--- a/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi
+@@ -30,6 +30,20 @@
+ 		regulator-max-microvolt = <3300000>;
+ 	};
+ 
++	reg_usdhc2_vqmmc: regulator-usdhc2-vqmmc {
++		compatible = "regulator-gpio";
++		pinctrl-names = "default";
++		pinctrl-0 = <&pinctrl_reg_usdhc2_vqmmc>;
++		regulator-name = "V_SD2";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
++		gpios = <&gpio1 4 GPIO_ACTIVE_HIGH>;
++		states = <1800000 0x1>,
++			 <3300000 0x0>;
++		vin-supply = <&ldo5_reg>;
++		status = "disabled";
++	};
++
+ 	reserved-memory {
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+@@ -219,6 +233,10 @@
+ 	};
+ };
+ 
++&usdhc2 {
++	vqmmc-supply = <&reg_usdhc2_vqmmc>;
++};
++
+ &usdhc3 {
+ 	pinctrl-names = "default", "state_100mhz", "state_200mhz";
+ 	pinctrl-0 = <&pinctrl_usdhc3>;
+@@ -273,6 +291,10 @@
+ 		fsl,pins = <MX8MN_IOMUXC_SD2_RESET_B_GPIO2_IO19		0x84>;
+ 	};
+ 
++	pinctrl_reg_usdhc2_vqmmc: regusdhc2vqmmcgrp {
++		fsl,pins = <MX8MN_IOMUXC_GPIO1_IO04_GPIO1_IO4		0xc0>;
++	};
++
+ 	pinctrl_usdhc3: usdhc3grp {
+ 		fsl,pins = <MX8MN_IOMUXC_NAND_WE_B_USDHC3_CLK		0x1d4>,
+ 			   <MX8MN_IOMUXC_NAND_WP_B_USDHC3_CMD		0x1d2>,
 
 
