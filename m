@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A46B2D63E8;
-	Tue, 31 Mar 2026 17:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E343019D6;
+	Tue, 31 Mar 2026 17:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976714; cv=none; b=BPnHyud2BPbSOwGPYKqo50UI13Feamwr7xPBum9piNUmcjl/EiwCLGh1laSMbdB630DfUzrPR/z+rIof5ByNbXpPdEeD3L3qsN45inySzSFPE5iUgzr7m+XW9p0I0xJADzSHezlp1ZJfen+XA4kEDfYq0aVPRAsjomIXiDQt8eg=
+	t=1774976717; cv=none; b=Cm/UYxx+uvhQW4ZZvEJSJrK4Xy1bSAU7hD9DxqGDCPrL+Nfu35eTRrESBwDLm98AW5dSAN8gfOSoncrePsSfbIva5Lpu/u1wS/dxWurPSObM18LG1aL/YDhQI1zwULvTl4YJGVdIf62gW+c+Qb0bBobWmy9Rtm2UwqcBJaNEshc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976714; c=relaxed/simple;
-	bh=YzkgyXALyv0LYZBFyrVK4oWOfY5q/mh9McHEmVGdiLw=;
+	s=arc-20240116; t=1774976717; c=relaxed/simple;
+	bh=XHECGfPKS+XYCVk4a8npHEz7Wrk0OWiSEFG9eXMBUpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fgQ/W4BI4beKOy0jIu7bZVYlXWMwDx6uE5O10epbrGrJfx32RhfYVZbXHE8Vb2afniDg1kCRGkBFB9EdZzPFOxF9HdrAooDL4tsgnSt9W7RgMcr+sEJviqwEQWcCCZKwGQpcZhrThHavZJ+fE8Vtcy92YfhqW1FYSI5wvXUmyLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlr7mLbt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MvuyX+rpHzwCnWQftBneP2rRuKZY3bRhxw/ViL/q0T8r47lZHjgSOPCD79z/15HY2mUl1EernNXcEkFdur6XA2ZcAYwHFlgeLVPLd6fzCFTLBZMaLuWQOVZaSJPF3MKhQY43kJgmuAei3rv5Mk5rhd4R9M4/J1/55JnjgAMCkxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEEuaWXQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlr7mLbt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A609FC19424;
-	Tue, 31 Mar 2026 17:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEEuaWXQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B932C19423;
+	Tue, 31 Mar 2026 17:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976714;
-	bh=YzkgyXALyv0LYZBFyrVK4oWOfY5q/mh9McHEmVGdiLw=;
+	s=korg; t=1774976716;
+	bh=XHECGfPKS+XYCVk4a8npHEz7Wrk0OWiSEFG9eXMBUpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlr7mLbtCXB+0ptKnBI8F1pcDkgAofrrVUmVnGQL2Jd0SOijwzXNEjn+ZwAjpMlVT
-	 5+9EvKfeWlckappQPoXsq+QObwLJcy+4sV1zfmyMuR3xfVEReJDmWJ4/cbVnxMClgd
-	 jXwK+pSL4LRmcZIdImuyu8e61tHpCFyO5fj4AeCg=
+	b=TEEuaWXQfrKLQaXOMTxtFEjjE2uvrqi4nXUpenCB3fteMTqTzcJPGULYGDz9fCc4v
+	 i+K1VrKJVz2lZGr5tq0ScpTP9BInJ4pnkynRLnyLvNnkpZGIw2XvjsBlDPXPpW5QFs
+	 Wbt0p6N/sk6H1yHLu+8Rx7a0jf9iTLxlIOy21FFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.18 198/309] KVM: arm64: Discard PC update state on vcpu reset
-Date: Tue, 31 Mar 2026 18:21:41 +0200
-Message-ID: <20260331161800.743365814@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 167/309] hwmon: (pmbus) Mark lowest/average/highest/rated attributes as read-only
+Date: Tue, 31 Mar 2026 18:21:10 +0200
+Message-ID: <20260331161759.612147254@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,81 +51,279 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-commit 1744a6ef48b9a48f017e3e1a0d05de0a6978396e upstream.
+[ Upstream commit 805a5bd1c3f307d45ae4e9cf8915ef16d585a54a ]
 
-Our vcpu reset suffers from a particularly interesting flaw, as it
-does not correctly deal with state that will have an effect on the
-execution flow out of reset.
+Writing those attributes is not supported, so mark them as read-only.
 
-Take the following completely random example, never seen in the wild
-and that never resulted in a couple of sleepless nights: /s
+Prior to this change, attempts to write into these attributes returned
+an error.
 
-- vcpu-A issues a PSCI_CPU_OFF using the SMC conduit
+Mark boolean fields in struct pmbus_limit_attr and in struct
+pmbus_sensor_attr as bit fields to reduce configuration data size.
+The data is scanned only while probing, so performance is not a concern.
 
-- SMC being a trapped instruction (as opposed to HVC which is always
-  normally executed), we annotate the vcpu as needing to skip the
-  next instruction, which is the SMC itself
-
-- vcpu-A is now safely off
-
-- vcpu-B issues a PSCI_CPU_ON for vcpu-A, providing a starting PC
-
-- vcpu-A gets reset, get the new PC, and is sent on its merry way
-
-- right at the point of entering the guest, we notice that a PC
-  increment is pending (remember the earlier SMC?)
-
-- vcpu-A skips its first instruction...
-
-What could possibly go wrong?
-
-Well, I'm glad you asked. For pKVM as a NV guest, that first instruction
-is extremely significant, as it indicates whether the CPU is booting
-or resuming. Having skipped that instruction, nothing makes any sense
-anymore, and CPU hotplugging fails.
-
-This is all caused by the decoupling of PC update from the handling
-of an exception that triggers such update, making it non-obvious
-what affects what when.
-
-Fix this train wreck by discarding all the PC-affecting state on
-vcpu reset.
-
-Fixes: f5e30680616ab ("KVM: arm64: Move __adjust_pc out of line")
-Cc: stable@vger.kernel.org
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Joey Gouly <joey.gouly@arm.com>
-Link: https://patch.msgid.link/20260312140850.822968-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6f183d33a02e6 ("hwmon: (pmbus) Add support for peak attributes")
+Reviewed-by: Sanman Pradhan <psanman@juniper.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/reset.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/hwmon/pmbus/pmbus_core.c | 48 ++++++++++++++++++++++++++++----
+ 1 file changed, 42 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/kvm/reset.c
-+++ b/arch/arm64/kvm/reset.c
-@@ -247,6 +247,20 @@ void kvm_reset_vcpu(struct kvm_vcpu *vcp
- 			kvm_vcpu_set_be(vcpu);
- 
- 		*vcpu_pc(vcpu) = target_pc;
-+
-+		/*
-+		 * We may come from a state where either a PC update was
-+		 * pending (SMC call resulting in PC being increpented to
-+		 * skip the SMC) or a pending exception. Make sure we get
-+		 * rid of all that, as this cannot be valid out of reset.
-+		 *
-+		 * Note that clearing the exception mask also clears PC
-+		 * updates, but that's an implementation detail, and we
-+		 * really want to make it explicit.
-+		 */
-+		vcpu_clear_flag(vcpu, PENDING_EXCEPTION);
-+		vcpu_clear_flag(vcpu, EXCEPT_MASK);
-+		vcpu_clear_flag(vcpu, INCREMENT_PC);
- 		vcpu_set_reg(vcpu, 0, reset_state.r0);
- 	}
- 
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index be6d05def1152..ecd1dddcbe0ff 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -1495,8 +1495,9 @@ static int pmbus_add_label(struct pmbus_data *data,
+ struct pmbus_limit_attr {
+ 	u16 reg;		/* Limit register */
+ 	u16 sbit;		/* Alarm attribute status bit */
+-	bool update;		/* True if register needs updates */
+-	bool low;		/* True if low limit; for limits with compare functions only */
++	bool readonly:1;	/* True if the attribute is read-only */
++	bool update:1;		/* True if register needs updates */
++	bool low:1;		/* True if low limit; for limits with compare functions only */
+ 	const char *attr;	/* Attribute name */
+ 	const char *alarm;	/* Alarm attribute name */
+ };
+@@ -1511,9 +1512,9 @@ struct pmbus_sensor_attr {
+ 	u8 nlimit;			/* # of limit registers */
+ 	enum pmbus_sensor_classes class;/* sensor class */
+ 	const char *label;		/* sensor label */
+-	bool paged;			/* true if paged sensor */
+-	bool update;			/* true if update needed */
+-	bool compare;			/* true if compare function needed */
++	bool paged:1;			/* true if paged sensor */
++	bool update:1;			/* true if update needed */
++	bool compare:1;			/* true if compare function needed */
+ 	u32 func;			/* sensor mask */
+ 	u32 sfunc;			/* sensor status mask */
+ 	int sreg;			/* status register */
+@@ -1544,7 +1545,7 @@ static int pmbus_add_limit_attrs(struct i2c_client *client,
+ 			curr = pmbus_add_sensor(data, name, l->attr, index,
+ 						page, 0xff, l->reg, attr->class,
+ 						attr->update || l->update,
+-						false, true);
++						l->readonly, true);
+ 			if (!curr)
+ 				return -ENOMEM;
+ 			if (l->sbit && (info->func[page] & attr->sfunc)) {
+@@ -1707,23 +1708,28 @@ static const struct pmbus_limit_attr vin_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VIN_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VIN_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VIN_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_VIN_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_VIN_MIN,
++		.readonly = true,
+ 		.attr = "rated_min",
+ 	}, {
+ 		.reg = PMBUS_MFR_VIN_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -1776,23 +1782,28 @@ static const struct pmbus_limit_attr vout_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VOUT_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VOUT_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VOUT_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_VOUT_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_VOUT_MIN,
++		.readonly = true,
+ 		.attr = "rated_min",
+ 	}, {
+ 		.reg = PMBUS_MFR_VOUT_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -1852,20 +1863,24 @@ static const struct pmbus_limit_attr iin_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IIN_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IIN_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IIN_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_IIN_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_IIN_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -1889,20 +1904,24 @@ static const struct pmbus_limit_attr iout_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IOUT_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IOUT_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IOUT_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_IOUT_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_IOUT_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -1943,20 +1962,24 @@ static const struct pmbus_limit_attr pin_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_PIN_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_PIN_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "input_lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_PIN_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "input_highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_PIN_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_PIN_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -1980,20 +2003,24 @@ static const struct pmbus_limit_attr pout_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_POUT_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_POUT_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "input_lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_POUT_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "input_highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_POUT_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_POUT_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -2049,18 +2076,22 @@ static const struct pmbus_limit_attr temp_limit_attrs[] = {
+ 		.sbit = PB_TEMP_OT_FAULT,
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP_MIN,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP_AVG,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP_MAX,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_TEMP_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_MAX_TEMP_1,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -2090,18 +2121,22 @@ static const struct pmbus_limit_attr temp_limit_attrs2[] = {
+ 		.sbit = PB_TEMP_OT_FAULT,
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP2_MIN,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP2_AVG,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP2_MAX,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_TEMP2_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_MAX_TEMP_2,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -2131,6 +2166,7 @@ static const struct pmbus_limit_attr temp_limit_attrs3[] = {
+ 		.sbit = PB_TEMP_OT_FAULT,
+ 	}, {
+ 		.reg = PMBUS_MFR_MAX_TEMP_3,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+-- 
+2.53.0
+
 
 
