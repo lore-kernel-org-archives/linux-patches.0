@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B55F2DA74C;
-	Tue, 31 Mar 2026 17:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071312D3EF2;
+	Tue, 31 Mar 2026 17:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976412; cv=none; b=bHObEtc4Kbr4q2gJjlkLjamceF9PaglYk82DD2BaXbhTH6GvmXdtEvATTk54ddGdd/KhzSxSPHTtDS7DZL9C8NPtEwcOUnh1jRpJZBmA4tHuktlxTB7O2EZCbOyvOnAnliua7/z/LIN+D0ZvBOOG5XU8RgTe2fSsMEF22sjxgDQ=
+	t=1774976415; cv=none; b=oDM5uaoZmQIBPBiC+kP1pANXuEVWpc7Eh+deBQ6Wt5LwX9hk+/VVJXlh46kR2tSS443iYlmXjfIxLrz7qmQgh+4LSDiNTKyQdvm5L/cwFwj8XOSDhKtmleq2YZdraQRaFJKPbPMJyY4M9ztE57wlz3pAljxB2v4jQzXp4Xs1fXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976412; c=relaxed/simple;
-	bh=F1+9jcVxBDQqrOfP2o/v5px39UMz42YB76XVj7uqCWo=;
+	s=arc-20240116; t=1774976415; c=relaxed/simple;
+	bh=DVOq7zH9mO8DKQTrQ+6a31shwsz63FcSVFWab4q5Khs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X9RYB2ECxgXAsqjla1EFuT6DH1dUsyQp3FrMMfj/9IYeZB0T8eCrIbZFolpOpCE/DB8kqASfez/jUfQVlGq2qZhfKo2TiqU0Xp7+WJDzZhzQncpMYdjbwHdrtuGDEwvmt5WXNAoerFnY4a4zYpaBzmg+pRO6GeKr7h24CtpaTh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JStv8iKv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IWK1AVjl7BaHwENwCLVRhHJvvnu3lFi/HtLa6E+DgxZkHV0xm3e9wvMlP59YnCrB1QV3UuWJ/H5qcH5VJ0MtV5C2pIby5eXRxI9F/q1J6hiwCi340gRFLSHRChI1WQ4wJbNlYJ4KQ7mF/Xk+6e23xNXe5nTP/oCTACSFp2pVQL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdnBbstE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JStv8iKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4197C19423;
-	Tue, 31 Mar 2026 17:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdnBbstE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8994AC19423;
+	Tue, 31 Mar 2026 17:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976412;
-	bh=F1+9jcVxBDQqrOfP2o/v5px39UMz42YB76XVj7uqCWo=;
+	s=korg; t=1774976414;
+	bh=DVOq7zH9mO8DKQTrQ+6a31shwsz63FcSVFWab4q5Khs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JStv8iKvhvTirHjOLPOiPHVwG6TluoplneYNboRboQ32FfxiwCXiZezkQFwbNQisU
-	 M1fN88NNzaJrO11i+GrHZQsbOMAy6LEjihh4aqZt6BDLsJZkT6gZE9Wno1zqIAmtr+
-	 orFxRXrYYmDc1wpECobmsnosQG10kIvkwd9F+Ogk=
+	b=CdnBbstEl5ATXt+7gmqINvb5sp/hiWskdyP04J7nQSGQvQuClYIcRQYkQrtsvVGwd
+	 NXuAQurIryUDQq28mRzsr53lFIY8i7p0osWfxc/JOwr+gF8xbnEzH8RJs0/sR649YU
+	 R/FkoEbtDlc8ctZLZHwT/Bfz5RqhEJRXk+GR2hZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b7f3e7d9a596bf6a63e3@syzkaller.appspotmail.com,
-	Minseo Park <jacob.park.9436@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 082/309] Bluetooth: L2CAP: Fix stack-out-of-bounds read in l2cap_ecred_conn_req
-Date: Tue, 31 Mar 2026 18:19:45 +0200
-Message-ID: <20260331161756.504194528@linuxfoundation.org>
+Subject: [PATCH 6.18 083/309] Bluetooth: L2CAP: Validate PDU length before reading SDU length in l2cap_ecred_data_rcv()
+Date: Tue, 31 Mar 2026 18:19:46 +0200
+Message-ID: <20260331161756.540550092@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,63 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minseo Park <jacob.park.9436@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 9d87cb22195b2c67405f5485d525190747ad5493 ]
+[ Upstream commit c65bd945d1c08c3db756821b6bf9f1c4a77b29c6 ]
 
-Syzbot reported a KASAN stack-out-of-bounds read in l2cap_build_cmd()
-that is triggered by a malformed Enhanced Credit Based Connection Request.
+l2cap_ecred_data_rcv() reads the SDU length field from skb->data using
+get_unaligned_le16() without first verifying that skb contains at least
+L2CAP_SDULEN_SIZE (2) bytes. When skb->len is less than 2, this reads
+past the valid data in the skb.
 
-The vulnerability stems from l2cap_ecred_conn_req(). The function allocates
-a local stack buffer (`pdu`) designed to hold a maximum of 5 Source Channel
-IDs (SCIDs), totaling 18 bytes. When an attacker sends a request with more
-than 5 SCIDs, the function calculates `rsp_len` based on this unvalidated
-`cmd_len` before checking if the number of SCIDs exceeds
-L2CAP_ECRED_MAX_CID.
+The ERTM reassembly path correctly calls pskb_may_pull() before reading
+the SDU length (l2cap_reassemble_sdu, L2CAP_SAR_START case). Apply the
+same validation to the Enhanced Credit Based Flow Control data path.
 
-If the SCID count is too high, the function correctly jumps to the
-`response` label to reject the packet, but `rsp_len` retains the
-attacker's oversized value. Consequently, l2cap_send_cmd() is instructed
-to read past the end of the 18-byte `pdu` buffer, triggering a
-KASAN panic.
-
-Fix this by moving the assignment of `rsp_len` to after the `num_scid`
-boundary check. If the packet is rejected, `rsp_len` will safely
-remain 0, and the error response will only read the 8-byte base header
-from the stack.
-
-Fixes: c28d2bff7044 ("Bluetooth: L2CAP: Fix result of L2CAP_ECRED_CONN_RSP when MTU is too short")
-Reported-by: syzbot+b7f3e7d9a596bf6a63e3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b7f3e7d9a596bf6a63e3
-Tested-by: syzbot+b7f3e7d9a596bf6a63e3@syzkaller.appspotmail.com
-Signed-off-by: Minseo Park <jacob.park.9436@gmail.com>
+Fixes: aac23bf63659 ("Bluetooth: Implement LE L2CAP reassembly")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 9ea030fc9a9cc..583fe3b654c11 100644
+index 583fe3b654c11..848a9b945de89 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -5065,14 +5065,14 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
- 	cmd_len -= sizeof(*req);
- 	num_scid = cmd_len / sizeof(u16);
+@@ -6672,6 +6672,11 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
+ 	if (!chan->sdu) {
+ 		u16 sdu_len;
  
--	/* Always respond with the same number of scids as in the request */
--	rsp_len = cmd_len;
--
- 	if (num_scid > L2CAP_ECRED_MAX_CID) {
- 		result = L2CAP_CR_LE_INVALID_PARAMS;
- 		goto response;
- 	}
- 
-+	/* Always respond with the same number of scids as in the request */
-+	rsp_len = cmd_len;
++		if (!pskb_may_pull(skb, L2CAP_SDULEN_SIZE)) {
++			err = -EINVAL;
++			goto failed;
++		}
 +
- 	mtu  = __le16_to_cpu(req->mtu);
- 	mps  = __le16_to_cpu(req->mps);
+ 		sdu_len = get_unaligned_le16(skb->data);
+ 		skb_pull(skb, L2CAP_SDULEN_SIZE);
  
 -- 
 2.51.0
