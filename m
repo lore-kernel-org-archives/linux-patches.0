@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E652E1C7C;
-	Tue, 31 Mar 2026 17:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EE12FE042;
+	Tue, 31 Mar 2026 17:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976729; cv=none; b=Pvk5cpwprBldxjyRS5J4Sg7mS7jHMCVToXSRoh9X1b78DcnSNfC2dP2c+SRj6fxFOSAwc8HBxtnTfkwKrLUpDA/YRaNphtKbdkP8jJc3U4vsP5E2q0klkwsLNeZEjVLqf+dYzn7VGbLulkWCSC5oMPAHT/Zo8IvdQxw/X/MhmjA=
+	t=1774976732; cv=none; b=J0R9YOEs9G4D9STtNKCMiFEs9DM8L3sibIdT0jO/GvqBF7Tv8r/PJ6RvzOktemaaVECWO6A4fDXNLBSg1u5DtiYxa1M7+RVS7ldkIVlXmMX7NNQfhAsZmt6fOnWLhJQqXkCD8IJUTZBDtTXBKkH0h+VZwdTlxPLg61nrUOxhdy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976729; c=relaxed/simple;
-	bh=WVCJmcO1MlpnRAu8rXsyO+wbog2zqux0gtE4V88YjK8=;
+	s=arc-20240116; t=1774976732; c=relaxed/simple;
+	bh=qT5T/1oJvmvbg5+966MPSjOCrHNfjFcNiEgma4OFqR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qFIvxNP+cE0R4PN4Eei/ktPzfOkju8v4yWnMAeUmwaA+PNexCePccHnj/zMELcFkM2q/AsTfrgxbJRZkChU6I4VVelQmWcJIDhu8/zg+2jEWmEsCIukHbhe71TSr4CHOy5DO8TeDwZ+v3akUEpfVxUQiwYiOZ1OrgX1euWNGv1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGesQcTB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iiJ05GYDWhOmzF38HI6S8k+Gwx1Uk11OvoRVidkddI+bdKEPmcwp7JKPij4Poe+pTM8DtjhkNdB+Bb9ZnDHTc50gzErVeJmo4Qpqz4i7uHorHQ0YflHkQJgpJJp83TzfNZ3GpNYeHGgngKNUIh30XwyZUuuOWztqd8RzDvYLQqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b994GGNt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGesQcTB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C78CC2BCB3;
-	Tue, 31 Mar 2026 17:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b994GGNt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCEA4C19423;
+	Tue, 31 Mar 2026 17:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976729;
-	bh=WVCJmcO1MlpnRAu8rXsyO+wbog2zqux0gtE4V88YjK8=;
+	s=korg; t=1774976732;
+	bh=qT5T/1oJvmvbg5+966MPSjOCrHNfjFcNiEgma4OFqR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGesQcTBeapn8CCVvu5OwiD9mKOnR+QmOYk5/Op4n1lpYwDx6gqMv26yn716gv+Yv
-	 wzoN7jzgpuiLmiccuJ0quF3lmHKjvox80nAbHYHwtWAglaDW3sl7Cy+lIsKNogzxj/
-	 YYvAhILLm0Miusv39juF78fb3DaH5IQ8wa+QkryU=
+	b=b994GGNtNTi80p2TttC42Q/RcQQPye8WLaUa7Faz/vhJpDZ/OezqH1Gxth78HTiDQ
+	 dW64Qkt2Qsv3r7VAlTU15vl0ma4LirCTPRCfVXuLxkdzgY/hf4WeGsT3kmLfVFb2WB
+	 hGhJ1Evc+wRUzdcPIIkvbwNST4VmbRBNDNdmrkFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 172/309] ASoC: adau1372: Fix clock leak on PLL lock failure
-Date: Tue, 31 Mar 2026 18:21:15 +0200
-Message-ID: <20260331161759.797480054@linuxfoundation.org>
+Subject: [PATCH 6.18 163/309] spi: use generic driver_override infrastructure
+Date: Tue, 31 Mar 2026 18:21:06 +0200
+Message-ID: <20260331161759.466030180@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -46,82 +46,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit bfe6a264effcb6fe99ad7ceaf9e8c7439fc9555b ]
+[ Upstream commit cc34d77dd48708d810c12bfd6f5bf03304f6c824 ]
 
-adau1372_enable_pll() was a void function that logged a dev_err() on
-PLL lock timeout but did not propagate the error. As a result,
-adau1372_set_power() would continue with adau1372->enabled set to true
-despite the PLL being unlocked, and the mclk left enabled with no
-corresponding disable on the error path.
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-Convert adau1372_enable_pll() to return int, using -ETIMEDOUT on lock
-timeout and propagating regmap errors directly. In adau1372_set_power(),
-check the return value and unwind in reverse order: restore regcache to
-cache-only mode, reassert GPIO power-down, and disable the clock before
-returning the error.
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
 
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
-Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20260325210704.76847-3-jihed.chaibi.dev@gmail.com
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
+
+Also note that we do not enable the driver_override feature of struct
+bus_type, as SPI - in contrast to most other buses - passes "" to
+sysfs_emit() when the driver_override pointer is NULL. Thus, printing
+"\n" instead of "(null)\n".
+
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: 5039563e7c25 ("spi: Add driver_override SPI device attribute")
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/20260324005919.2408620-12-dakr@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau1372.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/spi/spi.c       | 19 +++++++------------
+ include/linux/spi/spi.h |  5 -----
+ 2 files changed, 7 insertions(+), 17 deletions(-)
 
-diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
-index 6345342218d61..d7363f9d53bb3 100644
---- a/sound/soc/codecs/adau1372.c
-+++ b/sound/soc/codecs/adau1372.c
-@@ -762,7 +762,7 @@ static int adau1372_startup(struct snd_pcm_substream *substream, struct snd_soc_
- 	return 0;
- }
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 201b9569ce690..87d829d2a8427 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -50,7 +50,6 @@ static void spidev_release(struct device *dev)
+ 	struct spi_device	*spi = to_spi_device(dev);
  
--static void adau1372_enable_pll(struct adau1372 *adau1372)
-+static int adau1372_enable_pll(struct adau1372 *adau1372)
+ 	spi_controller_put(spi->controller);
+-	kfree(spi->driver_override);
+ 	free_percpu(spi->pcpu_statistics);
+ 	kfree(spi);
+ }
+@@ -73,10 +72,9 @@ static ssize_t driver_override_store(struct device *dev,
+ 				     struct device_attribute *a,
+ 				     const char *buf, size_t count)
  {
- 	unsigned int val, timeout = 0;
+-	struct spi_device *spi = to_spi_device(dev);
  	int ret;
-@@ -778,8 +778,12 @@ static void adau1372_enable_pll(struct adau1372 *adau1372)
- 		timeout++;
- 	} while (!(val & 1) && timeout < 3);
  
--	if (ret < 0 || !(val & 1))
-+	if (ret < 0 || !(val & 1)) {
- 		dev_err(adau1372->dev, "Failed to lock PLL\n");
-+		return ret < 0 ? ret : -ETIMEDOUT;
-+	}
-+
-+	return 0;
+-	ret = driver_set_override(dev, &spi->driver_override, buf, count);
++	ret = __device_set_driver_override(dev, buf, count);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -86,13 +84,8 @@ static ssize_t driver_override_store(struct device *dev,
+ static ssize_t driver_override_show(struct device *dev,
+ 				    struct device_attribute *a, char *buf)
+ {
+-	const struct spi_device *spi = to_spi_device(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = sysfs_emit(buf, "%s\n", spi->driver_override ? : "");
+-	device_unlock(dev);
+-	return len;
++	guard(spinlock)(&dev->driver_override.lock);
++	return sysfs_emit(buf, "%s\n", dev->driver_override.name ?: "");
  }
+ static DEVICE_ATTR_RW(driver_override);
  
- static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
-@@ -807,7 +811,14 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 		 * accessed.
- 		 */
- 		if (adau1372->use_pll) {
--			adau1372_enable_pll(adau1372);
-+			ret = adau1372_enable_pll(adau1372);
-+			if (ret) {
-+				regcache_cache_only(adau1372->regmap, true);
-+				if (adau1372->pd_gpio)
-+					gpiod_set_value(adau1372->pd_gpio, 1);
-+				clk_disable_unprepare(adau1372->mclk);
-+				return ret;
-+			}
- 			clk_ctrl |= ADAU1372_CLK_CTRL_CLKSRC;
- 		}
+@@ -376,10 +369,12 @@ static int spi_match_device(struct device *dev, const struct device_driver *drv)
+ {
+ 	const struct spi_device	*spi = to_spi_device(dev);
+ 	const struct spi_driver	*sdrv = to_spi_driver(drv);
++	int ret;
  
+ 	/* Check override first, and if set, only use the named driver */
+-	if (spi->driver_override)
+-		return strcmp(spi->driver_override, drv->name) == 0;
++	ret = device_match_driver_override(dev, drv);
++	if (ret >= 0)
++		return ret;
+ 
+ 	/* Attempt an OF style match */
+ 	if (of_driver_match_device(dev, drv))
+diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
+index cb2c2df310899..fe9dd430cc03a 100644
+--- a/include/linux/spi/spi.h
++++ b/include/linux/spi/spi.h
+@@ -156,10 +156,6 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
+  * @modalias: Name of the driver to use with this device, or an alias
+  *	for that name.  This appears in the sysfs "modalias" attribute
+  *	for driver coldplugging, and in uevents used for hotplugging
+- * @driver_override: If the name of a driver is written to this attribute, then
+- *	the device will bind to the named driver and only the named driver.
+- *	Do not set directly, because core frees it; use driver_set_override() to
+- *	set or clear it.
+  * @pcpu_statistics: statistics for the spi_device
+  * @word_delay: delay to be inserted between consecutive
+  *	words of a transfer
+@@ -217,7 +213,6 @@ struct spi_device {
+ 	void			*controller_state;
+ 	void			*controller_data;
+ 	char			modalias[SPI_NAME_SIZE];
+-	const char		*driver_override;
+ 
+ 	/* The statistics */
+ 	struct spi_statistics __percpu	*pcpu_statistics;
 -- 
 2.53.0
 
