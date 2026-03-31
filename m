@@ -1,36 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700CA2FDC5E;
-	Tue, 31 Mar 2026 17:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D343019DC;
+	Tue, 31 Mar 2026 17:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976776; cv=none; b=puDwj1dPurdEiFYfdbyp2PrXKTehFgRwg1ZGVXPXK6KMoOOz7P/DYZ3YwgierArSotg4zr7BszK9WM3McVW+E18agYu5h5FamwT79YcXZlr3QH63UZWKMvcCqYHm0HYwNM4buMbz5+FxY8YUcyPkd9dur1SDJgs9M1WWQyda0M4=
+	t=1774976779; cv=none; b=rqJVnYg3soj6gH+kO2cQdifHblFTjAHE0UDUAiVo5grTMGF2FJBScRRl/QdIDoqViqOLAJPaBtV4yQYw1Kg1sZcmYP9HjEXaKwmjxvrd5baJuWVS3Bi2zD+pZuoUutiJsFZErh3UMrFcbcI8vLtZylU0hoApZj413dMsgEBu4I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976776; c=relaxed/simple;
-	bh=h6OhDYu7CkjkxPWU3u+5IhR4p21x1yAVc0vCpI5cids=;
+	s=arc-20240116; t=1774976779; c=relaxed/simple;
+	bh=EZUnIiXj7oqmyhPESi7Jm/2F4nQn8MuY2iUOUE3dV9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNls0d0kbI9VCm80/NzzYEiZrIQMu9vJ8DBbNveVwejhSdZGoQ7A8NqR2MTZOjh++b5uRnXJaHWqw56QoTdmfnqc2zWxNoHW4Hdk2F7tovWgcKsIqk3XkklbQ0EvRgCc+OVTqdthvZA2lnn/+Uj+nQtFgWa0NaLnzplg450xV8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6a5K6vb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gkZSTFCUhO2A5sgUGm6P0bsLbR2ti0GmMgXVCIjct28/4S38q9dBEb/+3qn7QIczp0QqJcvZVebbdyWoKrPnBgO2jjHifWdmuYA9oQQBqE6Y/W/CjjeGPJ5TzLf7RPvfMW6SxkG8B4oUg/xc6df+yptHH4ApENQ1CAZ57sJGRJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOoZbGrM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6a5K6vb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BF1C19423;
-	Tue, 31 Mar 2026 17:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOoZbGrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D427C19423;
+	Tue, 31 Mar 2026 17:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976776;
-	bh=h6OhDYu7CkjkxPWU3u+5IhR4p21x1yAVc0vCpI5cids=;
+	s=korg; t=1774976778;
+	bh=EZUnIiXj7oqmyhPESi7Jm/2F4nQn8MuY2iUOUE3dV9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6a5K6vbllJeev/xqWMfXXPcgQ5QCZ4EYC9v9+1gSDGBKOJwBuUFFzpB1x366Qmq7
-	 Cdqs3Iqw87pUPYbNUmI56li0M9r+DDI0QNWrZQPWo+253WFMr6WlSMyZKRAJ5UPJO2
-	 aRz1Mv4Xs5I8V1aLVnuuGkjQ7NgdsiEJmpNU+NzI=
+	b=NOoZbGrMAfQ3nFH8FT327UcNIpCBkPPS3bXuz72DLRSf5YwE8jkVsdtr1GFC7hGif
+	 xsmQ+/oTh+6Avih7X2MwKQBzsEdIyKJDLv7hEdsv6L2gaOpdMtzOacsS7biE3/4k//
+	 TwE1oseUR/FkM8xgCBSYawmtBtDv4o3pwjnAmaJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 223/309] KVM: x86/mmu: Only WARN in direct MMUs when overwriting shadow-present SPTE
-Date: Tue, 31 Mar 2026 18:22:06 +0200
-Message-ID: <20260331161801.653741377@linuxfoundation.org>
+	Milos Nikic <nikic.milos@gmail.com>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.18 224/309] jbd2: gracefully abort on checkpointing state corruptions
+Date: Tue, 31 Mar 2026 18:22:07 +0200
+Message-ID: <20260331161801.689563418@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -49,62 +55,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Milos Nikic <nikic.milos@gmail.com>
 
-commit df83746075778958954aa0460cca55f4b3fc9c02 upstream.
+commit bac3190a8e79beff6ed221975e0c9b1b5f2a21da upstream.
 
-Adjust KVM's sanity check against overwriting a shadow-present SPTE with a
-another SPTE with a different target PFN to only apply to direct MMUs,
-i.e. only to MMUs without shadowed gPTEs.  While it's impossible for KVM
-to overwrite a shadow-present SPTE in response to a guest write, writes
-from outside the scope of KVM, e.g. from host userspace, aren't detected
-by KVM's write tracking and so can break KVM's shadow paging rules.
+This patch targets two internal state machine invariants in checkpoint.c
+residing inside functions that natively return integer error codes.
 
-  ------------[ cut here ]------------
-  pfn != spte_to_pfn(*sptep)
-  WARNING: arch/x86/kvm/mmu/mmu.c:3069 at mmu_set_spte+0x1e4/0x440 [kvm], CPU#0: vmx_ept_stale_r/872
-  Modules linked in: kvm_intel kvm irqbypass
-  CPU: 0 UID: 1000 PID: 872 Comm: vmx_ept_stale_r Not tainted 7.0.0-rc2-eafebd2d2ab0-sink-vm #319 PREEMPT
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:mmu_set_spte+0x1e4/0x440 [kvm]
-  Call Trace:
-   <TASK>
-   ept_page_fault+0x535/0x7f0 [kvm]
-   kvm_mmu_do_page_fault+0xee/0x1f0 [kvm]
-   kvm_mmu_page_fault+0x8d/0x620 [kvm]
-   vmx_handle_exit+0x18c/0x5a0 [kvm_intel]
-   kvm_arch_vcpu_ioctl_run+0xc55/0x1c20 [kvm]
-   kvm_vcpu_ioctl+0x2d5/0x980 [kvm]
-   __x64_sys_ioctl+0x8a/0xd0
-   do_syscall_64+0xb5/0x730
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+- In jbd2_cleanup_journal_tail(): A blocknr of 0 indicates a severely
+corrupted journal superblock. Replaced the J_ASSERT with a WARN_ON_ONCE
+and a graceful journal abort, returning -EFSCORRUPTED.
 
-Fixes: 11d45175111d ("KVM: x86/mmu: Warn if PFN changes on shadow-present SPTE in shadow MMU")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+- In jbd2_log_do_checkpoint(): Replaced the J_ASSERT_BH checking for
+an unexpected buffer_jwrite state. If the warning triggers, we
+explicitly drop the just-taken get_bh() reference and call __flush_batch()
+to safely clean up any previously queued buffers in the j_chkpt_bhs array,
+preventing a memory leak before returning -EFSCORRUPTED.
+
+Signed-off-by: Milos Nikic <nikic.milos@gmail.com>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260311041548.159424-1-nikic.milos@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/jbd2/checkpoint.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 98406d6aa2d6..dd06453d5b72 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -3060,7 +3060,8 @@ static int mmu_set_spte(struct kvm_vcpu *vcpu, struct kvm_memory_slot *slot,
- 			child = spte_to_child_sp(pte);
- 			drop_parent_pte(vcpu->kvm, child, sptep);
- 			flush = true;
--		} else if (WARN_ON_ONCE(pfn != spte_to_pfn(*sptep))) {
-+		} else if (pfn != spte_to_pfn(*sptep)) {
-+			WARN_ON_ONCE(vcpu->arch.mmu->root_role.direct);
- 			drop_spte(vcpu->kvm, sptep);
- 			flush = true;
- 		} else
--- 
-2.53.0
-
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -267,7 +267,15 @@ restart:
+ 			 */
+ 			BUFFER_TRACE(bh, "queue");
+ 			get_bh(bh);
+-			J_ASSERT_BH(bh, !buffer_jwrite(bh));
++			if (WARN_ON_ONCE(buffer_jwrite(bh))) {
++				put_bh(bh); /* drop the ref we just took */
++				spin_unlock(&journal->j_list_lock);
++				/* Clean up any previously batched buffers */
++				if (batch_count)
++					__flush_batch(journal, &batch_count);
++				jbd2_journal_abort(journal, -EFSCORRUPTED);
++				return -EFSCORRUPTED;
++			}
+ 			journal->j_chkpt_bhs[batch_count++] = bh;
+ 			transaction->t_chp_stats.cs_written++;
+ 			transaction->t_checkpoint_list = jh->b_cpnext;
+@@ -325,7 +333,10 @@ int jbd2_cleanup_journal_tail(journal_t
+ 
+ 	if (!jbd2_journal_get_log_tail(journal, &first_tid, &blocknr))
+ 		return 1;
+-	J_ASSERT(blocknr != 0);
++	if (WARN_ON_ONCE(blocknr == 0)) {
++		jbd2_journal_abort(journal, -EFSCORRUPTED);
++		return -EFSCORRUPTED;
++	}
+ 
+ 	/*
+ 	 * We need to make sure that any blocks that were recently written out
 
 
