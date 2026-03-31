@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76A72FC89C;
-	Tue, 31 Mar 2026 17:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE15E2E1C7C;
+	Tue, 31 Mar 2026 17:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976551; cv=none; b=k+DAFsUf/aEKuQhjeVguwkEOJkWwpjkHJ1tR4NFIcNuN3qHy6Y/sTvdOTWPa1cURQAMvPIkzF+meayFmBjM25ac6q0ghEJLddhN/4WEDTszubHsB8ETvdFN/6jap1vH5+u69VYOoAdUaPRSkQ/GSxo5B9MW5/K3ORBJXSKCTspY=
+	t=1774976554; cv=none; b=atrjVeHBI9LaR7o+3H6LtLB7EpunGY7D76VEAvAESSs48Ym/KpICwLQcE5/sV3oegVMzbWfTG2aHVsRXkkqMAIozfQTLutl1c2g+YYhAP8/kVyH0VABZItjwavUIENb6SEF6e5jVXDYg8CXMe1oIUg9szSSt5cJ6Z1ew9MIVrL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976551; c=relaxed/simple;
-	bh=g0lRBsQhL+dYv7OXG7wEPJQf0TtfP9MknrihQ5A/kMY=;
+	s=arc-20240116; t=1774976554; c=relaxed/simple;
+	bh=AiCi7VHHp9PzvdgxCG988E0mpVJU2wGP0twaFBb6Ov0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EY46NeAf/D/z9T84qC36vZG6M2+hWfbs8/1v7hF/Yys6nrBroyBctv826vTPbF1i/bbYCbtkppYAyTxZaBpGUdpWRv9N2h8DOheWMYHUMbbTPSGsm5W9iSIIkcNkp7BG788Rb8ico6SAGI2llue/bKO/BOU608o7fw+YzSKTyGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2u6+VKAh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p+52lyvAMAezjCJA+0tAitgRgN8dSHGf4NcEq/0Wu02E8c69NNO9ilTpMm07BwHX0/UV5jqUFc7dQdcTi96Ifl/HHpwGsaN1N40T/fmn2IaDqtCjX/DhDHsoHgKca1NaUwOXWE+5ymXrKutx0HshMV3cIbLTQIKcq9N+7dcoOx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swoRwXOB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2u6+VKAh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD7CC19423;
-	Tue, 31 Mar 2026 17:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swoRwXOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1110BC19423;
+	Tue, 31 Mar 2026 17:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976551;
-	bh=g0lRBsQhL+dYv7OXG7wEPJQf0TtfP9MknrihQ5A/kMY=;
+	s=korg; t=1774976554;
+	bh=AiCi7VHHp9PzvdgxCG988E0mpVJU2wGP0twaFBb6Ov0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2u6+VKAhmf8cAzigqWoqgRCHTp76R0dny0DeupOGKmYfQdBGmhWo5zYfPVw+sSALV
-	 S6wdkBXnwyQczOcH3JLj4rVvqFOqeBkuNgTfWwHkHEfOKocZmAfujdF2uJrTFXx+4C
-	 FqPeI8OKt5S18pGpRBfeIOt9DZMCJOrRzrbO+JDI=
+	b=swoRwXOB8Hfms74qmUWF42++t1OlrjsZ4aGpdRWTAUXgVdmxagtQi78Zii8lHhA3C
+	 3ZaXnOT+KJllqvRNiTEvE3hnqXlQMcccLBttyYAw6MsmSwuHUGcALV3kTgmVw7ffT6
+	 hQNozJICNp6o0K0gn6/6C4Vvh14MIfZFDN8pT0LY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 129/309] netfilter: nf_conntrack_expect: skip expectations in other netns via proc
-Date: Tue, 31 Mar 2026 18:20:32 +0200
-Message-ID: <20260331161758.227129070@linuxfoundation.org>
+Subject: [PATCH 6.18 138/309] RDMA/rw: Fall back to direct SGE on MR pool exhaustion
+Date: Tue, 31 Mar 2026 18:20:41 +0200
+Message-ID: <20260331161758.556094057@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,45 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 3db5647984de03d9cae0dcddb509b058351f0ee4 ]
+[ Upstream commit 00da250c21b074ea9494c375d0117b69e5b1d0a4 ]
 
-Skip expectations that do not reside in this netns.
+When IOMMU passthrough mode is active, ib_dma_map_sgtable_attrs()
+produces no coalescing: each scatterlist page maps 1:1 to a DMA
+entry, so sgt.nents equals the raw page count. A 1 MB transfer
+yields 256 DMA entries. If that count exceeds the device's
+max_sgl_rd threshold (an optimization hint from mlx5 firmware),
+rdma_rw_io_needs_mr() steers the operation into the MR
+registration path. Each such operation consumes one or more MRs
+from a pool sized at max_rdma_ctxs -- roughly one MR per
+concurrent context. Under write-intensive workloads that issue
+many concurrent RDMA READs, the pool is rapidly exhausted,
+ib_mr_pool_get() returns NULL, and rdma_rw_init_one_mr() returns
+-EAGAIN. Upper layer protocols treat this as a fatal DMA mapping
+failure and tear down the connection.
 
-Similar to e77e6ff502ea ("netfilter: conntrack: do not dump other netns's
-conntrack entries via proc").
+The max_sgl_rd check is a performance optimization, not a
+correctness requirement: the device can handle large SGE counts
+via direct posting, just less efficiently than with MR
+registration. When the MR pool cannot satisfy a request, falling
+back to the direct SGE (map_wrs) path avoids the connection
+reset while preserving the MR optimization for the common case
+where pool resources are available.
 
-Fixes: 9b03f38d0487 ("netfilter: netns nf_conntrack: per-netns expectations")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Add a fallback in rdma_rw_ctx_init() so that -EAGAIN from
+rdma_rw_init_mr_wrs() triggers direct SGE posting instead of
+propagating the error. iWARP devices, which mandate MR
+registration for RDMA READs, and force_mr debug mode continue
+to treat -EAGAIN as terminal.
+
+Fixes: 00bd1439f464 ("RDMA/rw: Support threshold for registration vs scattering to local pages")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260313194201.5818-2-cel@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_expect.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/infiniband/core/rw.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
-index cfc2daa3fc7f3..227fb5dc39e27 100644
---- a/net/netfilter/nf_conntrack_expect.c
-+++ b/net/netfilter/nf_conntrack_expect.c
-@@ -627,11 +627,15 @@ static int exp_seq_show(struct seq_file *s, void *v)
- {
- 	struct nf_conntrack_expect *expect;
- 	struct nf_conntrack_helper *helper;
-+	struct net *net = seq_file_net(s);
- 	struct hlist_node *n = v;
- 	char *delim = "";
- 
- 	expect = hlist_entry(n, struct nf_conntrack_expect, hnode);
- 
-+	if (!net_eq(nf_ct_exp_net(expect), net))
-+		return 0;
+diff --git a/drivers/infiniband/core/rw.c b/drivers/infiniband/core/rw.c
+index 2522ff1cc462c..49fbfe1cef689 100644
+--- a/drivers/infiniband/core/rw.c
++++ b/drivers/infiniband/core/rw.c
+@@ -326,14 +326,29 @@ int rdma_rw_ctx_init(struct rdma_rw_ctx *ctx, struct ib_qp *qp, u32 port_num,
+ 	if (rdma_rw_io_needs_mr(qp->device, port_num, dir, sg_cnt)) {
+ 		ret = rdma_rw_init_mr_wrs(ctx, qp, port_num, sg, sg_cnt,
+ 				sg_offset, remote_addr, rkey, dir);
+-	} else if (sg_cnt > 1) {
++		/*
++		 * If MR init succeeded or failed for a reason other
++		 * than pool exhaustion, that result is final.
++		 *
++		 * Pool exhaustion (-EAGAIN) from the max_sgl_rd
++		 * optimization is recoverable: fall back to
++		 * direct SGE posting. iWARP and force_mr require
++		 * MRs unconditionally, so -EAGAIN is terminal.
++		 */
++		if (ret != -EAGAIN ||
++		    rdma_protocol_iwarp(qp->device, port_num) ||
++		    unlikely(rdma_rw_force_mr))
++			goto out;
++	}
 +
- 	if (expect->timeout.function)
- 		seq_printf(s, "%ld ", timer_pending(&expect->timeout)
- 			   ? (long)(expect->timeout.expires - jiffies)/HZ : 0);
++	if (sg_cnt > 1)
+ 		ret = rdma_rw_init_map_wrs(ctx, qp, sg, sg_cnt, sg_offset,
+ 				remote_addr, rkey, dir);
+-	} else {
++	else
+ 		ret = rdma_rw_init_single_wr(ctx, qp, sg, sg_offset,
+ 				remote_addr, rkey, dir);
+-	}
+ 
++out:
+ 	if (ret < 0)
+ 		goto out_unmap_sg;
+ 	return ret;
 -- 
-2.51.0
+2.53.0
 
 
 
