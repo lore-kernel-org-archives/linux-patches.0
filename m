@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C9041324B;
-	Tue, 31 Mar 2026 16:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99B041324B;
+	Tue, 31 Mar 2026 16:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974807; cv=none; b=GeRxOByjgvBrz2CDTgMqMxtSu8QUp2uvxOzKYAvpKz93oqgyYh73HYZvfp6LPUysryPD6O46Q1pwIubXfPDc2Ps3ZDuNeA7Y2EkgYkPfjzbqFeFc4oM2ta7sB9Vnqb24BzJsvGW1bJdpq/5KcAhFxZV9QZ6tOoX4k3jf6fdAJjw=
+	t=1774974809; cv=none; b=BfIjvK36kbplCmN807Q/dHnjAwWANtgVA7l36N8w3RiBd4oib1WsbSmiKKNNdh39r+YT7itpeE6Gj315LOyPAjXimqWs/rZLKgpPiZoA3HodAPSQ2K1bDusp/jJ07kCtpts5SV+g7BalWqiSuCpGaGwvr4DLYcB0mo3TT3yt+8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974807; c=relaxed/simple;
-	bh=sA2VEVkULM0PgOKYTOHb8Kmr3A7uBvRIX8T01NAiIJE=;
+	s=arc-20240116; t=1774974809; c=relaxed/simple;
+	bh=ZbmzaMU0Bs/kkuf4br/+IXftPZOGc46lKBwlOy1si2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bh9+VbJmMrqiqHtYuPTIcLPvk7gXKSKVIUz7xytnbH/1BwTSbuIO+y/HUbHCHTT9jUHnmAn/iDUgfaMUoibiyJwGeC5CZOBkpxPTjpagRic2Z5q7FypNqbzRel0UzZILS1hJ2TCJ+36OY+827lH4AXJTec8T7/EI12PAjwlCs9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5W8WdT9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CfB0AMNWbbHEBuqy0PUSfQOWcoNBV0/mybv7IKu3qOAs9Z2x9+4JvS75D4ONgVSkwMeSwLqXSPCnh6IgDQlOPjVW34vSUHXaBbt2tssP3RUQcgqFnohk80t9Cj/03xkzZ52e92YAeZW9mV7kcJ7lfedevAcDzoEXFMKyl4yBbDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCe5Z4Ue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5W8WdT9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E654C19423;
-	Tue, 31 Mar 2026 16:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCe5Z4Ue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC73C19423;
+	Tue, 31 Mar 2026 16:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974807;
-	bh=sA2VEVkULM0PgOKYTOHb8Kmr3A7uBvRIX8T01NAiIJE=;
+	s=korg; t=1774974809;
+	bh=ZbmzaMU0Bs/kkuf4br/+IXftPZOGc46lKBwlOy1si2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d5W8WdT9cArIGSKa2aHV2mgmag/yJyl2posAWemoFLqdCfPmB2xSea5o4QaSZpZkG
-	 xO520z6r1nwVr+EZowyESrV9X4dY6wmvMKmp2ycnfD6PAZOw4u4v6cCxqsq9usRceO
-	 LYkLKeIdbbn+B3PMc017CgJDxNI+KAQAiNZ2yr1I=
+	b=xCe5Z4Ue7CDjrlSBW810CxL39NJ7BPbInlHG3vMIYkS5OmXbU5wXwLrNCbI376gTF
+	 wFvKeFh9hHBSNRsbzIHt0gNaFf/i3TvTruXpvQq5tZ6BkU/UlLQJLBoEw/bEFRo0ER
+	 57E9zJzJL/lgzXR74WQ96+rIjUxa0suuuUSuawqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Freyermuth <o.freyermuth@googlemail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sheetal <sheetal@nvidia.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 050/342] ASoC: Intel: sof_sdw: Add quirk for Alienware Area 51 (2025) 0CCD SKU
-Date: Tue, 31 Mar 2026 18:18:03 +0200
-Message-ID: <20260331161800.740362553@linuxfoundation.org>
+Subject: [PATCH 6.19 051/342] ALSA: hda/hdmi: Add Tegra238 HDA codec device ID
+Date: Tue, 31 Mar 2026 18:18:04 +0200
+Message-ID: <20260331161800.778246494@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,42 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Freyermuth <o.freyermuth@googlemail.com>
+From: Sheetal <sheetal@nvidia.com>
 
-[ Upstream commit 70eddf6a0a3fc6d3ab6f77251676da97cc7f12ae ]
+[ Upstream commit 5f4338e5633dc034a81000b2516a78cfb51c601d ]
 
-This adds the necessary quirk for the Alienware 18 Area 51 (2025).
-Complements commit 1b03391d073d ("ASoC: Intel: sof_sdw: Add quirk
-for Alienware Area 51 (2025) 0CCC SKU").
+Add Tegra238 HDA codec device in hda_device_id list.
 
-Signed-off-by: Oliver Freyermuth <o.freyermuth@googlemail.com>
-Tested-by: Oliver Freyermuth <o.freyermuth@googlemail.com>
-Link: https://patch.msgid.link/20260224190224.30630-1-o.freyermuth@googlemail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sheetal <sheetal@nvidia.com>
+Link: https://patch.msgid.link/20260302084217.3135982-1-sheetal@nvidia.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/hda/codecs/hdmi/tegrahdmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index 50b838be24e95..0186c281296ec 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -763,6 +763,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
- 	},
-+	{
-+		.callback = sof_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0CCD")
-+		},
-+		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
-+	},
- 	/* Pantherlake devices*/
- 	{
- 		.callback = sof_sdw_quirk_cb,
+diff --git a/sound/hda/codecs/hdmi/tegrahdmi.c b/sound/hda/codecs/hdmi/tegrahdmi.c
+index 5f6fe31aa2028..ebb6410a48313 100644
+--- a/sound/hda/codecs/hdmi/tegrahdmi.c
++++ b/sound/hda/codecs/hdmi/tegrahdmi.c
+@@ -299,6 +299,7 @@ static const struct hda_device_id snd_hda_id_tegrahdmi[] = {
+ 	HDA_CODEC_ID_MODEL(0x10de002f, "Tegra194 HDMI/DP2",	MODEL_TEGRA),
+ 	HDA_CODEC_ID_MODEL(0x10de0030, "Tegra194 HDMI/DP3",	MODEL_TEGRA),
+ 	HDA_CODEC_ID_MODEL(0x10de0031, "Tegra234 HDMI/DP",	MODEL_TEGRA234),
++	HDA_CODEC_ID_MODEL(0x10de0032, "Tegra238 HDMI/DP",	MODEL_TEGRA234),
+ 	HDA_CODEC_ID_MODEL(0x10de0033, "SoC 33 HDMI/DP",	MODEL_TEGRA234),
+ 	HDA_CODEC_ID_MODEL(0x10de0034, "Tegra264 HDMI/DP",	MODEL_TEGRA234),
+ 	HDA_CODEC_ID_MODEL(0x10de0035, "SoC 35 HDMI/DP",	MODEL_TEGRA234),
 -- 
 2.51.0
 
