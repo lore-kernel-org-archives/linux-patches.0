@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2BC2D1F40;
-	Tue, 31 Mar 2026 16:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F88D2D1F40;
+	Tue, 31 Mar 2026 16:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975645; cv=none; b=NwX7j4wpVWrmDZJx1Iq3qoLKC0c+4OnLgr3dnogYcOXm605kaCntnp18uiaOnRMogkqio0ifZXWFfKCgMFUgLTqxGm2praaz0eHIggldRfXbBvRGIYmW8P3v7oveFtS7tCbnMHag1H5g5tVpsCCNyqXSGDB4tpMVPLjlNf6bWys=
+	t=1774975647; cv=none; b=bIS07UDX9+CIpgo+kO/DGfYjxATS9LWDb7enbIx7KhbH/bAzpoU9ZJigUG13Ihw1RqczZg9Kekc4x7bbeF083IwtMFEInf+6eSBotavfpkljAuW+lMF9W+R0DiuOgNOPuFA34p3Pulo2t6wUvFBTm9IMwIUo+ev/Ycj9dJqsQ70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975645; c=relaxed/simple;
-	bh=0xSMqpn/KmFyfsl06IuYjOvI8zZjLIy9aadtf0gywVs=;
+	s=arc-20240116; t=1774975647; c=relaxed/simple;
+	bh=ymLH2SK0RBmx7LnlVv1cVsPti4JWgDOG9BWFsU80HSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qk5UaL27jM17onHpm2HRW6XJo4mAijTm+gworLeN7AcfljWe6JKzl0xRWlk7Yafk8BoivfBx2ZkhW6pdwRk3EMQ/ZKxSCw/zf2hkLZJqjhr+UGI115Y2UhfrlydmXA/ckoK81KqzoSXwUyyUrHZJDbtORCazmKRRdnuXFP5pGCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1yNGksKE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XoBWOwueEjh6irVgpewMgxtO9x3IF2dLyNy8G2GojhY+aK5/IJhuSKIq0B0KwknL3RkrAnLyk7WCxLy3KHhxewuTZ0jRrKggr07NKmjYaLsK3Dch47jVJp2Rrd7vTBPgxxhgzyVH+ZeMNV73buuEEy5Lk1MPX0Z0pYCKRtWv8M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gH4A5slX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yNGksKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D8BC19423;
-	Tue, 31 Mar 2026 16:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gH4A5slX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25599C19423;
+	Tue, 31 Mar 2026 16:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975644;
-	bh=0xSMqpn/KmFyfsl06IuYjOvI8zZjLIy9aadtf0gywVs=;
+	s=korg; t=1774975647;
+	bh=ymLH2SK0RBmx7LnlVv1cVsPti4JWgDOG9BWFsU80HSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1yNGksKEcMWxsQdGSLeYap8hEGNQVFa9WbxPD6y0AOFeVI9/bTl6l1w5loSotNSPS
-	 P857eMUt+BhVVVI8JuiBoZleTFaDmvuqYBUXEc2LSZreDlKm1c0n2jmy0AGncckqBy
-	 KmmxY7UAGPBxhuFp9/QA6X9+CyVVOQDqtill9IAQ=
+	b=gH4A5slXtYPXifZ7RWJBnRPqXQd+oYr4Zb/YPsQg3qcb2eyfIG1kLnalDl3c++nMv
+	 lg19KDqRL7EhuQ6xfnTNiZ5ilidH47LoG7ASbx/fZXUPTVs1+qJbtB1fWpiozF5fzK
+	 TJfk+0gIpHPNzhTnTSabq25sTBwpgCVW1hq5Gdeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/244] ASoC: fsl_easrc: Fix event generation in fsl_easrc_iec958_put_bits()
-Date: Tue, 31 Mar 2026 18:19:40 +0200
-Message-ID: <20260331161742.815362189@linuxfoundation.org>
+Subject: [PATCH 6.12 004/244] cxl/hdm: Avoid incorrect DVSEC fallback when HDM decoders are enabled
+Date: Tue, 31 Mar 2026 18:19:14 +0200
+Message-ID: <20260331161741.820393992@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -50,47 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
 
-[ Upstream commit 54a86cf48eaa6d1ab5130d756b718775e81e1748 ]
+[ Upstream commit 75cea0776de502f2a1be5ca02d37c586dc81887e ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_easrc_iec958_put_bits() unconditionally returns
-0, causing ALSA to not generate any change events. This is detected by
-mixer-test with large numbers of messages in the form:
+Check the global CXL_HDM_DECODER_ENABLE bit instead of looping over
+per-decoder COMMITTED bits to determine whether to fall back to DVSEC
+range emulation. When the HDM decoder capability is globally enabled,
+ignore DVSEC range registers regardless of individual decoder commit
+state.
 
-    No event generated for Context 3 IEC958 CS5
-    Context 3 IEC958 CS5.0 orig 5224 read 5225, is_volatile 0
+should_emulate_decoders() currently loops over per-decoder COMMITTED
+bits, which leads to an incorrect DVSEC fallback when those bits are
+zero. One way to trigger this is to destroy a region and bounce the
+memdev:
 
-Add a suitable check.
+  cxl disable-region region0
+  cxl destroy-region region0
+  cxl disable-memdev mem0
+  cxl enable-memdev mem0
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20260205-asoc-fsl-easrc-fix-events-v1-1-39d4c766918b@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Region teardown zeroes the HDM decoder registers including the committed
+bits. The subsequent memdev re-probe finds uncommitted decoders and falls
+back to DVSEC emulation, even though HDM remains globally enabled.
+
+Observed failures:
+
+  should_emulate_decoders: cxl_port endpoint6: decoder6.0: committed: 0 base: 0x0_00000000 size: 0x0_00000000
+  devm_cxl_setup_hdm: cxl_port endpoint6: Fallback map 1 range register
+  ..
+  devm_cxl_add_region: cxl_acpi ACPI0017:00: decoder0.0: created region0
+  __construct_region: cxl_pci 0000:e1:00.0: mem1:decoder6.0:
+  __construct_region region0 res: [mem 0x850000000-0x284fffffff flags 0x200] iw: 1 ig: 4096
+  cxl region0: pci0000:e0:port1 cxl_port_setup_targets expected iw: 1 ig: 4096 ..
+  cxl region0: pci0000:e0:port1 cxl_port_setup_targets got iw: 1 ig: 256 state: disabled ..
+  cxl_port endpoint6: failed to attach decoder6.0 to region0: -6
+  ..
+  devm_cxl_add_region: cxl_acpi ACPI0017:00: decoder0.0: created region4
+  alloc_hpa: cxl region4: HPA allocation error (-34) ..
+
+Fixes: 52cc48ad2a76 ("cxl/hdm: Limit emulation to the number of range registers")
+Signed-off-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://patch.msgid.link/20260316201950.224567-1-Smita.KoralahalliChannabasappa@amd.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_easrc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/cxl/core/hdm.c | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index 7aaea441f7a57..683792f29688c 100644
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -52,10 +52,13 @@ static int fsl_easrc_iec958_put_bits(struct snd_kcontrol *kcontrol,
- 	struct soc_mreg_control *mc =
- 		(struct soc_mreg_control *)kcontrol->private_value;
- 	unsigned int regval = ucontrol->value.integer.value[0];
-+	int ret;
-+
-+	ret = (easrc_priv->bps_iec958[mc->regbase] != regval);
+diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+index fde609f37e562..5b4ddc1262d7c 100644
+--- a/drivers/cxl/core/hdm.c
++++ b/drivers/cxl/core/hdm.c
+@@ -99,7 +99,6 @@ static bool should_emulate_decoders(struct cxl_endpoint_dvsec_info *info)
+ 	struct cxl_hdm *cxlhdm;
+ 	void __iomem *hdm;
+ 	u32 ctrl;
+-	int i;
  
- 	easrc_priv->bps_iec958[mc->regbase] = regval;
+ 	if (!info)
+ 		return false;
+@@ -118,22 +117,16 @@ static bool should_emulate_decoders(struct cxl_endpoint_dvsec_info *info)
+ 		return false;
  
--	return 0;
-+	return ret;
+ 	/*
+-	 * If any decoders are committed already, there should not be any
+-	 * emulated DVSEC decoders.
++	 * If HDM decoders are globally enabled, do not fall back to DVSEC
++	 * range emulation. Zeroed decoder registers after region teardown
++	 * do not imply absence of HDM capability.
++	 *
++	 * Falling back to DVSEC here would treat the decoder as AUTO and
++	 * may incorrectly latch default interleave settings.
+ 	 */
+-	for (i = 0; i < cxlhdm->decoder_count; i++) {
+-		ctrl = readl(hdm + CXL_HDM_DECODER0_CTRL_OFFSET(i));
+-		dev_dbg(&info->port->dev,
+-			"decoder%d.%d: committed: %ld base: %#x_%.8x size: %#x_%.8x\n",
+-			info->port->id, i,
+-			FIELD_GET(CXL_HDM_DECODER0_CTRL_COMMITTED, ctrl),
+-			readl(hdm + CXL_HDM_DECODER0_BASE_HIGH_OFFSET(i)),
+-			readl(hdm + CXL_HDM_DECODER0_BASE_LOW_OFFSET(i)),
+-			readl(hdm + CXL_HDM_DECODER0_SIZE_HIGH_OFFSET(i)),
+-			readl(hdm + CXL_HDM_DECODER0_SIZE_LOW_OFFSET(i)));
+-		if (FIELD_GET(CXL_HDM_DECODER0_CTRL_COMMITTED, ctrl))
+-			return false;
+-	}
++	ctrl = readl(hdm + CXL_HDM_DECODER_CTRL_OFFSET);
++	if (ctrl & CXL_HDM_DECODER_ENABLE)
++		return false;
+ 
+ 	return true;
  }
- 
- static int fsl_easrc_iec958_get_bits(struct snd_kcontrol *kcontrol,
 -- 
 2.51.0
 
