@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D88E423A82;
-	Tue, 31 Mar 2026 16:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB85425CD6;
+	Tue, 31 Mar 2026 16:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975694; cv=none; b=VyJpPQZFtx2RBEfF0+FIrSRSPWucPpGemp+809wd4umRI5HvfanTJbHOycKiX8doRzAuGC1Idsc/sYFGFv+rA0GyK938EBl77Vbec4OikDYARyG75FkFhRe8n7XaepYFIu255T9Ozvv3xe16tq8Nqstj26y0ZcUxzBQr8WodVJY=
+	t=1774975697; cv=none; b=jRxCsrojgZfoWfcW0okimH3uLNpf+8k+lJXq2fY/TwOErh6pbaTN3n87Im8GQLh2oXnbnAxAPi3MY5pOcMHAY0TRx2hODGUGa6Fa0mWslcxYj4fxmKUuN3FtKtomiZS9s2jikhdON1z93I93K3rQZ96WnDhDObJDyXotlEj8nX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975694; c=relaxed/simple;
-	bh=LNFlGG+ss0A63lmtrMUwXvRfeD+fCoYd6f7hYcRTgoI=;
+	s=arc-20240116; t=1774975697; c=relaxed/simple;
+	bh=BBIcj8Uj268aPD/UlAyBO0foh8JPksBPXFOyHpRiVVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W7CbH5xDul3yi8YyFvg53PWaGHhPkxoOzRbyowNxpBTovTHgVv3jqd5LO54AeMUCwmkap47q1j7AwxNFfRnpG9QqNstR/1rp9QB5wiWOOwnBrw0nVm8F9CBzPefDO864I1BJV9Hn5u985XAa+0eKWVvuSAhgIyG6iQhP3mz5vk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xu5/NH6i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D+BwEpag9/V0bshhl1KIgiI7JFwqrGhJk3qRnXer+Hnyz2mqw+PM0l7FszbBtZFnmOYpve+S7crBLY+9DpYymLgRsMtT8KeLaPgNXNhZLhtbWD837GuurOausP11cmOwowlxdnnLvbFywFOfUzMddGYKOkzlAnJucXJZFtxdK1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiDnjdKG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xu5/NH6i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C0CC19424;
-	Tue, 31 Mar 2026 16:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiDnjdKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABC4C19423;
+	Tue, 31 Mar 2026 16:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975694;
-	bh=LNFlGG+ss0A63lmtrMUwXvRfeD+fCoYd6f7hYcRTgoI=;
+	s=korg; t=1774975696;
+	bh=BBIcj8Uj268aPD/UlAyBO0foh8JPksBPXFOyHpRiVVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xu5/NH6iZFRsP65C1SJgNw/P+SJ9H26I5k78cEM2DSCwWVyzfCTRjKoKB6OMnraux
-	 MUp4aBE+0gdJbDOqZLH/xpGu47C6R801FYGoZzTWmliU3rRFwDsBuPA38AnRyJAdgc
-	 F8pIrCeJeN52EI+mVx1l9EpUZ0EZhmhJDWJKIAA8=
+	b=fiDnjdKG277by8k50kCbPLmaN2S2fKpayZZFhFmKF0wU6in4A/Gvw86dazF28zJaP
+	 IRZf5PGE//xm94RrbFRLld9n6iRspexrPQCaCd2AxlRBT+Pd/J8rIatRemCpy5lEFM
+	 8nC53UQroPgJTKZizDe5JPQDVdEJzlmx84RnzhHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Maarten Lankhorst <dev@lankhorst.se>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/244] drm/ttm/tests: Fix build failure on PREEMPT_RT
-Date: Tue, 31 Mar 2026 18:19:43 +0200
-Message-ID: <20260331161742.924858436@linuxfoundation.org>
+Subject: [PATCH 6.12 051/244] esp: fix skb leak with espintcp and async crypto
+Date: Tue, 31 Mar 2026 18:20:01 +0200
+Message-ID: <20260331161743.579368173@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -46,50 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maarten Lankhorst <dev@lankhorst.se>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit a58d487fb1a52579d3c37544ea371da78ed70c45 ]
+[ Upstream commit 0c0eef8ccd2413b0a10eb6bbd3442333b1e64dd2 ]
 
-Fix a compile error in the kunit tests when CONFIG_PREEMPT_RT is
-enabled, and the normal mutex is converted into a rtmutex.
+When the TX queue for espintcp is full, esp_output_tail_tcp will
+return an error and not free the skb, because with synchronous crypto,
+the common xfrm output code will drop the packet for us.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202602261547.3bM6yVAS-lkp@intel.com/
-Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
-Link: https://patch.msgid.link/20260304085616.1216961-1-dev@lankhorst.se
-Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
+With async crypto (esp_output_done), we need to drop the skb when
+esp_output_tail_tcp returns an error.
+
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/tests/ttm_bo_test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/esp4.c | 9 ++++++---
+ net/ipv6/esp6.c | 9 ++++++---
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/ttm/tests/ttm_bo_test.c b/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
-index f0a7eb62116ca..b5b385a1da481 100644
---- a/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
-+++ b/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
-@@ -222,13 +222,13 @@ static void ttm_bo_reserve_interrupted(struct kunit *test)
- 		KUNIT_FAIL(test, "Couldn't create ttm bo reserve task\n");
- 
- 	/* Take a lock so the threaded reserve has to wait */
--	mutex_lock(&bo->base.resv->lock.base);
-+	dma_resv_lock(bo->base.resv, NULL);
- 
- 	wake_up_process(task);
- 	msleep(20);
- 	err = kthread_stop(task);
- 
--	mutex_unlock(&bo->base.resv->lock.base);
-+	dma_resv_unlock(bo->base.resv);
- 
- 	KUNIT_ASSERT_EQ(test, err, -ERESTARTSYS);
+diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
+index b8c7c8b42c0a0..deea0b934d910 100644
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -235,10 +235,13 @@ static void esp_output_done(void *data, int err)
+ 		xfrm_dev_resume(skb);
+ 	} else {
+ 		if (!err &&
+-		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
+-			esp_output_tail_tcp(x, skb);
+-		else
++		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP) {
++			err = esp_output_tail_tcp(x, skb);
++			if (err != -EINPROGRESS)
++				kfree_skb(skb);
++		} else {
+ 			xfrm_output_resume(skb_to_full_sk(skb), skb, err);
++		}
+ 	}
  }
+ 
+diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
+index 9c4c7b1f29550..20c1149f0f0a3 100644
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -271,10 +271,13 @@ static void esp_output_done(void *data, int err)
+ 		xfrm_dev_resume(skb);
+ 	} else {
+ 		if (!err &&
+-		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
+-			esp_output_tail_tcp(x, skb);
+-		else
++		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP) {
++			err = esp_output_tail_tcp(x, skb);
++			if (err != -EINPROGRESS)
++				kfree_skb(skb);
++		} else {
+ 			xfrm_output_resume(skb_to_full_sk(skb), skb, err);
++		}
+ 	}
+ }
+ 
 -- 
 2.51.0
 
