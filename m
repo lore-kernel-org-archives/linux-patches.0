@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D862FD68B;
-	Tue, 31 Mar 2026 17:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643712FDC5E;
+	Tue, 31 Mar 2026 17:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976495; cv=none; b=cqMeYUmwtiuuEA6aIDcNV2WzU3fjy17Ud2aQR9Y6R0KQREsD6lOTKw2MAZmMKIpGsxps2IqTXzNlAGO7ZNKGH/IIT7zvBwOrb4gcpW581eov+LY5038AX9FyLAwpPm0nfFiDAnWhS6jlIwGv1JsA4yVTMnxjQfhXstddmrz5aGI=
+	t=1774976498; cv=none; b=MDt1VNQLCo/45fby/Y1WBkQJqY1au25agkO3hvlnW+4BqJ3Qivjl+iocbH5JxXFXRkUeXFMYSN1vkVnm1ENMTTe+kvFZZNv6j1mXA/cVywgFOsikETekPGSSBRLb7emKlA/f8nRi8AWYQ+PEkE1STfNpPF27y4fh+x3+/z1xYCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976495; c=relaxed/simple;
-	bh=Sq5QdBVTKz+Bms8tswGMHd/IfBNQev0lQYHYIrqYITA=;
+	s=arc-20240116; t=1774976498; c=relaxed/simple;
+	bh=E72b2tGJw5W4Z1hV+LtaAou17uT0SskCDtApwZqkAyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/w5ln35fJQHZiqwa8xAObm5Eq0EN/A/rM1kgHBLJPxqorgynAa8yVlTWSR7epItgWWs77wB078w8IdW+eHtN+AfU4ItkbcSqx4I4nIuJp3Zaw3nrSBjJtQl+2esV2CAAacNFNSwA6de6hFUTvgGlquKP0heZSUeRBZJtOsxqfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkafOWR6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SrQaHln0jU5nktTc7NZToDUr96zWsFxGQXK7RPSYwc0Xi3gDGh47hRnXAGyFDOIpORmUAIJf46hlAIAjJTipBVZ38g0JqcVNJmjIZvdEV2w6y4ZStPyUZOY4sxS3mdcJGY8hjQLIoZ9wyeMv2BuQGr+Agkob2l/Fq70PCHcH3hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylKQ48Lj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkafOWR6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67F5C19423;
-	Tue, 31 Mar 2026 17:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylKQ48Lj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84237C19423;
+	Tue, 31 Mar 2026 17:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976495;
-	bh=Sq5QdBVTKz+Bms8tswGMHd/IfBNQev0lQYHYIrqYITA=;
+	s=korg; t=1774976497;
+	bh=E72b2tGJw5W4Z1hV+LtaAou17uT0SskCDtApwZqkAyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kkafOWR6D3Nu05BUV1X5EpLvyK3CCzxOXTYCXUk+6tLn3aRq6vfSMXto2lSJrhLZ1
-	 91SjDgTAjbdIORjwrK8dkxlVwmoLmCyGPTyDs8CnmOoMOeUfxI4WIU7WmpH8l9g5fO
-	 vnrD+yxS/OcV+jZwI/V1r/Cue1xb4N3Nx50FE27Y=
+	b=ylKQ48LjoTa2/VA+lfMxMjCPyTssHDjGHklPzXsFQqE5E4EBfLinSFvnudtgzwMra
+	 khXkrEjSKVf+uW6EhhusJIlfi3BRKI8VyYkIG/5ptZawGhC652BlcI+Ool0UPSYPh7
+	 h71x+aX36Xz5APPSwWIXub1FeLVo1v2irNAe5Xdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	syzbot+3d8bc31c45e11450f24c@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 114/309] virtio-net: correct hdr_len handling for tunnel gso
-Date: Tue, 31 Mar 2026 18:20:17 +0200
-Message-ID: <20260331161757.681242907@linuxfoundation.org>
+Subject: [PATCH 6.18 115/309] team: fix header_ops type confusion with non-Ethernet ports
+Date: Tue, 31 Mar 2026 18:20:18 +0200
+Message-ID: <20260331161757.717227655@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,78 +53,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 6c860dc02a8e60b438e26940227dfa641fcdb66a ]
+[ Upstream commit 425000dbf17373a4ab8be9428f5dc055ef870a56 ]
 
-The commit a2fb4bc4e2a6a03 ("net: implement virtio helpers to handle UDP
-GSO tunneling.") introduces support for the UDP GSO tunnel feature in
-virtio-net.
+Similar to commit 950803f72547 ("bonding: fix type confusion in
+bond_setup_by_slave()") team has the same class of header_ops type
+confusion.
 
-The virtio spec says:
+For non-Ethernet ports, team_setup_by_port() copies port_dev->header_ops
+directly. When the team device later calls dev_hard_header() or
+dev_parse_header(), these callbacks can run with the team net_device
+instead of the real lower device, so netdev_priv(dev) is interpreted as
+the wrong private type and can crash.
 
-    If the \field{gso_type} has the VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV4 bit or
-    VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV6 bit set, \field{hdr_len} accounts for
-    all the headers up to and including the inner transport.
+The syzbot report shows a crash in bond_header_create(), but the root
+cause is in team: the topology is gre -> bond -> team, and team calls
+the inherited header_ops with its own net_device instead of the lower
+device, so bond_header_create() receives a team device and interprets
+netdev_priv() as bonding private data, causing a type confusion crash.
 
-The commit did not update the hdr_len to include the inner transport.
+Fix this by introducing team header_ops wrappers for create/parse,
+selecting a team port under RCU, and calling the lower device callbacks
+with port->dev, so each callback always sees the correct net_device
+context.
 
-I observed that the "hdr_len" is 116 for this packet:
+Also pass the selected lower device to the lower parse callback, so
+recursion is bounded in stacked non-Ethernet topologies and parse
+callbacks always run with the correct device context.
 
-    17:36:18.241105 52:55:00:d1:27:0a > 2e:2c:df:46:a9:e1, ethertype IPv4 (0x0800), length 2912: (tos 0x0, ttl 64, id 45197, offset 0, flags [none], proto UDP (17), length 2898)
-        192.168.122.100.50613 > 192.168.122.1.4789: [bad udp cksum 0x8106 -> 0x26a0!] VXLAN, flags [I] (0x08), vni 1
-    fa:c3:ba:82:05:ee > ce:85:0c:31:77:e5, ethertype IPv4 (0x0800), length 2862: (tos 0x0, ttl 64, id 14678, offset 0, flags [DF], proto TCP (6), length 2848)
-        192.168.3.1.49880 > 192.168.3.2.9898: Flags [P.], cksum 0x9266 (incorrect -> 0xaa20), seq 515667:518463, ack 1, win 64, options [nop,nop,TS val 2990048824 ecr 2798801412], length 2796
-
-116 = 14(mac) + 20(ip) + 8(udp) + 8(vxlan) + 14(inner mac) + 20(inner ip) + 32(innner tcp)
-
-Fixes: a2fb4bc4e2a6a03 ("net: implement virtio helpers to handle UDP GSO tunneling.")
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://patch.msgid.link/20260320021818.111741-3-xuanzhuo@linux.alibaba.com
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
+Reported-by: syzbot+3d8bc31c45e11450f24c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69b46af7.050a0220.36eb34.000e.GAE@google.com/T/
+Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://patch.msgid.link/20260320072139.134249-2-jiayuan.chen@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_net.h | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/net/team/team_core.c | 65 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 64 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index 361b60c8be680..f36d21b5bc19e 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -224,6 +224,22 @@ static inline void __virtio_net_set_hdrlen(const struct sk_buff *skb,
- 	hdr->hdr_len = __cpu_to_virtio16(little_endian, hdr_len);
- }
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 6ec6708c52e2d..a98f5e5061544 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -2059,6 +2059,68 @@ static const struct ethtool_ops team_ethtool_ops = {
+  * rt netlink interface
+  ***********************/
  
-+/* This function must be called after virtio_net_hdr_from_skb(). */
-+static inline void __virtio_net_set_tnl_hdrlen(const struct sk_buff *skb,
-+					       struct virtio_net_hdr *hdr)
++/* For tx path we need a linkup && enabled port and for parse any port
++ * suffices.
++ */
++static struct team_port *team_header_port_get_rcu(struct team *team,
++						  bool txable)
 +{
-+	u16 hdr_len;
++	struct team_port *port;
 +
-+	hdr_len = skb_inner_transport_offset(skb);
++	list_for_each_entry_rcu(port, &team->port_list, list) {
++		if (!txable || team_port_txable(port))
++			return port;
++	}
 +
-+	if (hdr->gso_type == VIRTIO_NET_HDR_GSO_UDP_L4)
-+		hdr_len += sizeof(struct udphdr);
-+	else
-+		hdr_len += inner_tcp_hdrlen(skb);
-+
-+	hdr->hdr_len = __cpu_to_virtio16(true, hdr_len);
++	return NULL;
 +}
 +
- static inline int virtio_net_hdr_from_skb(const struct sk_buff *skb,
- 					  struct virtio_net_hdr *hdr,
- 					  bool little_endian,
-@@ -440,6 +456,9 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
- 	if (ret)
- 		return ret;
- 
-+	if (feature_hdrlen && hdr->hdr_len)
-+		__virtio_net_set_tnl_hdrlen(skb, hdr);
++static int team_header_create(struct sk_buff *skb, struct net_device *team_dev,
++			      unsigned short type, const void *daddr,
++			      const void *saddr, unsigned int len)
++{
++	struct team *team = netdev_priv(team_dev);
++	const struct header_ops *port_ops;
++	struct team_port *port;
++	int ret = 0;
 +
- 	if (skb->protocol == htons(ETH_P_IPV6))
- 		hdr->gso_type |= VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV6;
++	rcu_read_lock();
++	port = team_header_port_get_rcu(team, true);
++	if (port) {
++		port_ops = READ_ONCE(port->dev->header_ops);
++		if (port_ops && port_ops->create)
++			ret = port_ops->create(skb, port->dev,
++					       type, daddr, saddr, len);
++	}
++	rcu_read_unlock();
++	return ret;
++}
++
++static int team_header_parse(const struct sk_buff *skb,
++			     const struct net_device *team_dev,
++			     unsigned char *haddr)
++{
++	struct team *team = netdev_priv(team_dev);
++	const struct header_ops *port_ops;
++	struct team_port *port;
++	int ret = 0;
++
++	rcu_read_lock();
++	port = team_header_port_get_rcu(team, false);
++	if (port) {
++		port_ops = READ_ONCE(port->dev->header_ops);
++		if (port_ops && port_ops->parse)
++			ret = port_ops->parse(skb, port->dev, haddr);
++	}
++	rcu_read_unlock();
++	return ret;
++}
++
++static const struct header_ops team_header_ops = {
++	.create		= team_header_create,
++	.parse		= team_header_parse,
++};
++
+ static void team_setup_by_port(struct net_device *dev,
+ 			       struct net_device *port_dev)
+ {
+@@ -2067,7 +2129,8 @@ static void team_setup_by_port(struct net_device *dev,
+ 	if (port_dev->type == ARPHRD_ETHER)
+ 		dev->header_ops	= team->header_ops_cache;
  	else
+-		dev->header_ops	= port_dev->header_ops;
++		dev->header_ops	= port_dev->header_ops ?
++				  &team_header_ops : NULL;
+ 	dev->type = port_dev->type;
+ 	dev->hard_header_len = port_dev->hard_header_len;
+ 	dev->needed_headroom = port_dev->needed_headroom;
 -- 
 2.51.0
 
