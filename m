@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE15E2E1C7C;
-	Tue, 31 Mar 2026 17:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062CB3016E3;
+	Tue, 31 Mar 2026 17:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976554; cv=none; b=atrjVeHBI9LaR7o+3H6LtLB7EpunGY7D76VEAvAESSs48Ym/KpICwLQcE5/sV3oegVMzbWfTG2aHVsRXkkqMAIozfQTLutl1c2g+YYhAP8/kVyH0VABZItjwavUIENb6SEF6e5jVXDYg8CXMe1oIUg9szSSt5cJ6Z1ew9MIVrL0=
+	t=1774976557; cv=none; b=ddSri3xvdX69Gntf61cumn6Pcae4IPZs7UZffTZszEHDZwzzP9lBwLjiMmFTp5HJgX2iIhlugZatq0AgRA6Lw+SGW6ZURJ06MK/NJ0tdBHCXAnrERDGP/v2RcMtEZUOHbTu7Dq9wQmz0nPDi/Nr6YOCU3pgfxVCRFre6qZ1Zxkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976554; c=relaxed/simple;
-	bh=AiCi7VHHp9PzvdgxCG988E0mpVJU2wGP0twaFBb6Ov0=;
+	s=arc-20240116; t=1774976557; c=relaxed/simple;
+	bh=/eBJ28zVPr4+1PGEAqeXYUHUtRNmklR65e/FZtKvl3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+52lyvAMAezjCJA+0tAitgRgN8dSHGf4NcEq/0Wu02E8c69NNO9ilTpMm07BwHX0/UV5jqUFc7dQdcTi96Ifl/HHpwGsaN1N40T/fmn2IaDqtCjX/DhDHsoHgKca1NaUwOXWE+5ymXrKutx0HshMV3cIbLTQIKcq9N+7dcoOx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swoRwXOB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=soSc06ml0c4CaYpeTxaWLzdoQ58e1Y9fedOvYKwolbjb4cUeW5uFVZpDnnx0BNLdUkak50Hh7Y6jXE7HwoKB2HCvyd3Jsq4ABg5/TqocknIGbnC/HloszJ4JN4lUDk1DBwMUG5uUN7K/6QZNG/nAeeY3dH58cwO3E97biO1zLvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hmk+OFeG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swoRwXOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1110BC19423;
-	Tue, 31 Mar 2026 17:02:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hmk+OFeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93334C19423;
+	Tue, 31 Mar 2026 17:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976554;
-	bh=AiCi7VHHp9PzvdgxCG988E0mpVJU2wGP0twaFBb6Ov0=;
+	s=korg; t=1774976556;
+	bh=/eBJ28zVPr4+1PGEAqeXYUHUtRNmklR65e/FZtKvl3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=swoRwXOB8Hfms74qmUWF42++t1OlrjsZ4aGpdRWTAUXgVdmxagtQi78Zii8lHhA3C
-	 3ZaXnOT+KJllqvRNiTEvE3hnqXlQMcccLBttyYAw6MsmSwuHUGcALV3kTgmVw7ffT6
-	 hQNozJICNp6o0K0gn6/6C4Vvh14MIfZFDN8pT0LY=
+	b=Hmk+OFeGUUGGcp7LU/jy8wt1PUjEygYu45huhvAu7TbLzefUVfP2OcBxwz2/tk7fr
+	 qZthQSzFVzVGUjV3s0GQyRw5coO1NyAhiKGjaBfiRuqxihwdCiTVh1ZceHaTWn6lFt
+	 i0rIFf1JTpRyqI/bCUg3I1qbvqQELg2u/mJe538Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 138/309] RDMA/rw: Fall back to direct SGE on MR pool exhaustion
-Date: Tue, 31 Mar 2026 18:20:41 +0200
-Message-ID: <20260331161758.556094057@linuxfoundation.org>
+Subject: [PATCH 6.18 139/309] RDMA/efa: Fix possible deadlock
+Date: Tue, 31 Mar 2026 18:20:42 +0200
+Message-ID: <20260331161758.592504301@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,85 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 00da250c21b074ea9494c375d0117b69e5b1d0a4 ]
+[ Upstream commit 0f2055db7b630559870afb40fc84490816ab8ec5 ]
 
-When IOMMU passthrough mode is active, ib_dma_map_sgtable_attrs()
-produces no coalescing: each scatterlist page maps 1:1 to a DMA
-entry, so sgt.nents equals the raw page count. A 1 MB transfer
-yields 256 DMA entries. If that count exceeds the device's
-max_sgl_rd threshold (an optimization hint from mlx5 firmware),
-rdma_rw_io_needs_mr() steers the operation into the MR
-registration path. Each such operation consumes one or more MRs
-from a pool sized at max_rdma_ctxs -- roughly one MR per
-concurrent context. Under write-intensive workloads that issue
-many concurrent RDMA READs, the pool is rapidly exhausted,
-ib_mr_pool_get() returns NULL, and rdma_rw_init_one_mr() returns
--EAGAIN. Upper layer protocols treat this as a fatal DMA mapping
-failure and tear down the connection.
+In the error path for efa_com_alloc_comp_ctx() the semaphore assigned to
+&aq->avail_cmds is not released.
 
-The max_sgl_rd check is a performance optimization, not a
-correctness requirement: the device can handle large SGE counts
-via direct posting, just less efficiently than with MR
-registration. When the MR pool cannot satisfy a request, falling
-back to the direct SGE (map_wrs) path avoids the connection
-reset while preserving the MR optimization for the common case
-where pool resources are available.
+Detected by Smatch:
+drivers/infiniband/hw/efa/efa_com.c:662 efa_com_cmd_exec() warn:
+inconsistent returns '&aq->avail_cmds'
 
-Add a fallback in rdma_rw_ctx_init() so that -EAGAIN from
-rdma_rw_init_mr_wrs() triggers direct SGE posting instead of
-propagating the error. iWARP devices, which mandate MR
-registration for RDMA READs, and force_mr debug mode continue
-to treat -EAGAIN as terminal.
+Add release for &aq->avail_cmds in efa_com_alloc_comp_ctx() error path.
 
-Fixes: 00bd1439f464 ("RDMA/rw: Support threshold for registration vs scattering to local pages")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260313194201.5818-2-cel@kernel.org
+Fixes: ef3b06742c8a2 ("RDMA/efa: Fix use of completion ctx after free")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Link: https://patch.msgid.link/20260314045730.1143862-1-ethantidmore06@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/rw.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/efa/efa_com.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/rw.c b/drivers/infiniband/core/rw.c
-index 2522ff1cc462c..49fbfe1cef689 100644
---- a/drivers/infiniband/core/rw.c
-+++ b/drivers/infiniband/core/rw.c
-@@ -326,14 +326,29 @@ int rdma_rw_ctx_init(struct rdma_rw_ctx *ctx, struct ib_qp *qp, u32 port_num,
- 	if (rdma_rw_io_needs_mr(qp->device, port_num, dir, sg_cnt)) {
- 		ret = rdma_rw_init_mr_wrs(ctx, qp, port_num, sg, sg_cnt,
- 				sg_offset, remote_addr, rkey, dir);
--	} else if (sg_cnt > 1) {
-+		/*
-+		 * If MR init succeeded or failed for a reason other
-+		 * than pool exhaustion, that result is final.
-+		 *
-+		 * Pool exhaustion (-EAGAIN) from the max_sgl_rd
-+		 * optimization is recoverable: fall back to
-+		 * direct SGE posting. iWARP and force_mr require
-+		 * MRs unconditionally, so -EAGAIN is terminal.
-+		 */
-+		if (ret != -EAGAIN ||
-+		    rdma_protocol_iwarp(qp->device, port_num) ||
-+		    unlikely(rdma_rw_force_mr))
-+			goto out;
-+	}
-+
-+	if (sg_cnt > 1)
- 		ret = rdma_rw_init_map_wrs(ctx, qp, sg, sg_cnt, sg_offset,
- 				remote_addr, rkey, dir);
--	} else {
-+	else
- 		ret = rdma_rw_init_single_wr(ctx, qp, sg, sg_offset,
- 				remote_addr, rkey, dir);
--	}
+diff --git a/drivers/infiniband/hw/efa/efa_com.c b/drivers/infiniband/hw/efa/efa_com.c
+index 56caba612139f..e97b5f0d70038 100644
+--- a/drivers/infiniband/hw/efa/efa_com.c
++++ b/drivers/infiniband/hw/efa/efa_com.c
+@@ -629,6 +629,7 @@ int efa_com_cmd_exec(struct efa_com_admin_queue *aq,
+ 	comp_ctx = efa_com_alloc_comp_ctx(aq);
+ 	if (!comp_ctx) {
+ 		clear_bit(EFA_AQ_STATE_RUNNING_BIT, &aq->state);
++		up(&aq->avail_cmds);
+ 		return -EINVAL;
+ 	}
  
-+out:
- 	if (ret < 0)
- 		goto out_unmap_sg;
- 	return ret;
 -- 
 2.53.0
 
