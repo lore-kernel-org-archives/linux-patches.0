@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E466423A9B;
-	Tue, 31 Mar 2026 16:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E11423A8E;
+	Tue, 31 Mar 2026 16:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976326; cv=none; b=BZE9eOFBxgQaqJNsTKP5VdliPUr1FlXfkQC2mKOf/NfJjWRnmIAQD7U8lxN7QWQFCi1lQBYyftJXREC4nAh1vRyOgCsYVqPy8siVAmdaW0qJChWmVo2TcLwlAuc9JgW7T46u/Y7/sNHUZBLYbiQLJ5tzhzbh7Do0khtoesz6N7Q=
+	t=1774976328; cv=none; b=H5Ucuv+Zu3VnKRe1LNkcKZm0YL7GiLrsfG5yYKGfCkzZRJ0p1Cu/cV/tTOh1jzquTf6LteWAWSROowuGHALSIusuOxpnUPkJaaKbfvjF2bGH71DsSAJ1BhF0CN+C1Sgc01alO6Zpg3/mIJtFJtINowLkWSsCPqs1sB4FaMTUX0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976326; c=relaxed/simple;
-	bh=JaE21dqU/hQYTD4r+bYZfRWd6Ua+6Rny9gzpXzdg9cs=;
+	s=arc-20240116; t=1774976328; c=relaxed/simple;
+	bh=P/U05GB+kR5iqDvlZ4Teoy3a5CT5xkjL4yRubZ7MC40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=St5qWqcCuS9yR21xUsMAWVLCtJeoMXX6bI196eoN7KhZ2Y8M1n+JjehZSxgkg/RVAua6lo6uQkf8t/vSYnV85FPISzzzeF/RBhqqx29hA2PH7AefWyOnUzJbqjJJQDLYZN+c6gmL/TgqHRnsrm4yPq+s7zQTbooW6Q3AZm7cMAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOy2yHfc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oY+azrFbDIjhtFxs9pqZ2Ud/LOsJJEhaJc7L45K/fXbavdtr1wHPx7K5r0VwEF/eAO2KYJSL9nipXC71vyrR83GF/8CAdyrw082z0eS2Bmdxbah8E16kINU/M5bpgRDwvP2nXrWBHHrImz6a4nDFQGrG8RmcQamnWOfm0HUu9hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htdoTzfP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOy2yHfc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A936FC19423;
-	Tue, 31 Mar 2026 16:58:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htdoTzfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C68C19423;
+	Tue, 31 Mar 2026 16:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976326;
-	bh=JaE21dqU/hQYTD4r+bYZfRWd6Ua+6Rny9gzpXzdg9cs=;
+	s=korg; t=1774976328;
+	bh=P/U05GB+kR5iqDvlZ4Teoy3a5CT5xkjL4yRubZ7MC40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pOy2yHfctKJisskg19V0fvmayO9zZggvkLQjWUb4rBX3iIqFJZXlVj9yFjPXzLbS8
-	 z593bCBygKXbjPy/phB5BHZCnoX3wqEGEZRygJVjj/shlMrgWFXz4TTccuF+ZGlsNN
-	 z7kx3Xc5OYkgqTHI5E+7UhJoIE8hmfFSVuT+v/ok=
+	b=htdoTzfPT+kFvy2Mzb0UVbVU2pI5UTLbVsT4lGvM9VyhTKWxZbhCU8oaSxEMlgBT1
+	 zASqmtXnM58KLj47QlHyt+T0Rk9TzqxehrDt3r+/OUtRVF2YRWxWseylGnSa4/jcpb
+	 eYR/M/q+nSusiB2Ph6Kz8ThVgMnhA0eTXy4dWmug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	wangdicheng <wangdicheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 049/309] block: break pcpu_alloc_mutex dependency on freeze_lock
-Date: Tue, 31 Mar 2026 18:19:12 +0200
-Message-ID: <20260331161755.291414238@linuxfoundation.org>
+Subject: [PATCH 6.18 050/309] ALSA: hda/senary: Ensure EAPD is enabled during init
+Date: Tue, 31 Mar 2026 18:19:13 +0200
+Message-ID: <20260331161755.327694393@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -54,127 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: wangdicheng <wangdicheng@kylinos.cn>
 
-[ Upstream commit 539d1b47e935e8384977dd7e5cec370c08b7a644 ]
+[ Upstream commit 7ae0d8f1abbbba6f98cac735145e1206927c67d9 ]
 
-While nr_hw_update allocates tagset tags it acquires ->pcpu_alloc_mutex
-after ->freeze_lock is acquired or queue is frozen. This potentially
-creates a circular dependency involving ->fs_reclaim if reclaim is
-triggered simultaneously in a code path which first acquires ->pcpu_
-alloc_mutex. As the queue is already frozen while nr_hw_queue update
-allocates tagsets, the reclaim can't forward progress and thus it could
-cause a potential deadlock as reported in lockdep splat[1].
+The driver sets spec->gen.own_eapd_ctl to take manual control of the
+EAPD (External Amplifier). However, senary_init does not turn on the
+EAPD, while senary_shutdown turns it off.
 
-Fix this by pre-allocating tagset tags before we freeze queue during
-nr_hw_queue update. Later the allocated tagset tags could be safely
-installed and used after queue is frozen.
+Since the generic driver skips EAPD handling when own_eapd_ctl is set,
+the EAPD remains off after initialization (e.g., after resume), leaving
+the codec in a non-functional state.
 
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Closes: https://lore.kernel.org/all/CAHj4cs8F=OV9s3La2kEQ34YndgfZP-B5PHS4Z8_b9euKG6J4mw@mail.gmail.com/ [1]
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Tested-by: Yi Zhang <yi.zhang@redhat.com>
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-[axboe: fix brace style issue]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Explicitly call senary_auto_turn_eapd in senary_init to ensure the EAPD
+is enabled and the codec is functional.
+
+Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Link: https://patch.msgid.link/20260303081516.583438-1-wangdich9700@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 45 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 30 insertions(+), 15 deletions(-)
+ sound/hda/codecs/senarytech.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index a03f52ab87d64..4ebb92014eae1 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4747,38 +4747,45 @@ static void blk_mq_update_queue_map(struct blk_mq_tag_set *set)
- 	}
- }
+diff --git a/sound/hda/codecs/senarytech.c b/sound/hda/codecs/senarytech.c
+index 9aa1e9bcd9ec0..601b7eb38eb13 100644
+--- a/sound/hda/codecs/senarytech.c
++++ b/sound/hda/codecs/senarytech.c
+@@ -25,6 +25,7 @@ struct senary_spec {
+ 	/* extra EAPD pins */
+ 	unsigned int num_eapds;
+ 	hda_nid_t eapds[4];
++	bool dynamic_eapd;
+ 	hda_nid_t mute_led_eapd;
  
--static int blk_mq_realloc_tag_set_tags(struct blk_mq_tag_set *set,
--				       int new_nr_hw_queues)
-+static struct blk_mq_tags **blk_mq_prealloc_tag_set_tags(
-+				struct blk_mq_tag_set *set,
-+				int new_nr_hw_queues)
+ 	unsigned int parse_flags; /* flag for snd_hda_parse_pin_defcfg() */
+@@ -131,8 +132,12 @@ static void senary_init_gpio_led(struct hda_codec *codec)
+ 
+ static int senary_init(struct hda_codec *codec)
  {
- 	struct blk_mq_tags **new_tags;
- 	int i;
- 
- 	if (set->nr_hw_queues >= new_nr_hw_queues)
--		goto done;
-+		return NULL;
- 
- 	new_tags = kcalloc_node(new_nr_hw_queues, sizeof(struct blk_mq_tags *),
- 				GFP_KERNEL, set->numa_node);
- 	if (!new_tags)
--		return -ENOMEM;
-+		return ERR_PTR(-ENOMEM);
- 
- 	if (set->tags)
- 		memcpy(new_tags, set->tags, set->nr_hw_queues *
- 		       sizeof(*set->tags));
--	kfree(set->tags);
--	set->tags = new_tags;
- 
- 	for (i = set->nr_hw_queues; i < new_nr_hw_queues; i++) {
--		if (!__blk_mq_alloc_map_and_rqs(set, i)) {
--			while (--i >= set->nr_hw_queues)
--				__blk_mq_free_map_and_rqs(set, i);
--			return -ENOMEM;
-+		if (blk_mq_is_shared_tags(set->flags)) {
-+			new_tags[i] = set->shared_tags;
-+		} else {
-+			new_tags[i] = blk_mq_alloc_map_and_rqs(set, i,
-+					set->queue_depth);
-+			if (!new_tags[i])
-+				goto out_unwind;
- 		}
- 		cond_resched();
- 	}
- 
--done:
--	set->nr_hw_queues = new_nr_hw_queues;
--	return 0;
-+	return new_tags;
-+out_unwind:
-+	while (--i >= set->nr_hw_queues) {
-+		if (!blk_mq_is_shared_tags(set->flags))
-+			blk_mq_free_map_and_rqs(set, new_tags[i], i);
-+	}
-+	kfree(new_tags);
-+	return ERR_PTR(-ENOMEM);
- }
- 
- /*
-@@ -5062,6 +5069,7 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 	unsigned int memflags;
- 	int i;
- 	struct xarray elv_tbl;
-+	struct blk_mq_tags **new_tags;
- 	bool queues_frozen = false;
- 
- 	lockdep_assert_held(&set->tag_list_lock);
-@@ -5096,11 +5104,18 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 		if (blk_mq_elv_switch_none(q, &elv_tbl))
- 			goto switch_back;
- 
-+	new_tags = blk_mq_prealloc_tag_set_tags(set, nr_hw_queues);
-+	if (IS_ERR(new_tags))
-+		goto switch_back;
++	struct senary_spec *spec = codec->spec;
 +
- 	list_for_each_entry(q, &set->tag_list, tag_set_list)
- 		blk_mq_freeze_queue_nomemsave(q);
- 	queues_frozen = true;
--	if (blk_mq_realloc_tag_set_tags(set, nr_hw_queues) < 0)
--		goto switch_back;
-+	if (new_tags) {
-+		kfree(set->tags);
-+		set->tags = new_tags;
-+	}
-+	set->nr_hw_queues = nr_hw_queues;
+ 	snd_hda_gen_init(codec);
+ 	senary_init_gpio_led(codec);
++	if (!spec->dynamic_eapd)
++		senary_auto_turn_eapd(codec, spec->num_eapds, spec->eapds, true);
+ 	snd_hda_apply_fixup(codec, HDA_FIXUP_ACT_INIT);
  
- fallback:
- 	blk_mq_update_queue_map(set);
+ 	return 0;
 -- 
 2.51.0
 
