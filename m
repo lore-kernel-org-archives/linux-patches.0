@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098A6402BA9;
-	Tue, 31 Mar 2026 16:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965363EE1DD;
+	Tue, 31 Mar 2026 16:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974457; cv=none; b=lK8GYG8IfosjDqdspst1LSVcsw0/up7vSs9I5zsyVoYzn4lv1F2S8FmzDMcsbKqb1tXlttkE9cZEoesyOq2s8yKEMynxhv8UR84+0y71UG3RCVXGCZD5/3U5b+FIF3a2TMLXkUxjcIcDMX3FWYuCmnpo5mLkrX5ob1YdjiHhj+s=
+	t=1774974459; cv=none; b=NfsYfcN2wvW+xnJPpHY+YPynku+S8lPvVKP++7xJsiX6DuiJTkm5nPfEw5mXcOPBia3Q77Ji51+JEX4TA0vY4ukxFPzBEiZLMugfm9RNXlFOSXnjXTOsB3mN2X7JKrtICU/Zm7ge1q/Wsy/ul/O4K9z8QzPJkZvrtypL2glyYnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974457; c=relaxed/simple;
-	bh=/HfVimxPUOwoE+99VYNt8hjHlP7/BTwjpn+DZkDvX7c=;
+	s=arc-20240116; t=1774974459; c=relaxed/simple;
+	bh=Ycy4heOfnZvBAmKYzMJlAZKA/ZOE8Qyt3PRcFyy08IM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTwuoJYksfZzX4rhWqhVOSop+ZMNpcfnkqq2WsvrBxSLNm4t02Z9ZJBhb+KnAvTbfhu0ed75Qup9QZJcYLOdIq2yi/7rcsL2L+hAY60lyhYiWjiW8sbMPhKFTeKqLH/u2afUynC5YcXYi2ZuqpU8EbVbVQbJDQBpxT29BEf6vXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFVPtPfq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NUHYOyHX+WzHE3lvXmGknfwTDBL2kurVtLaQOjV4CdnHO2b83xi9ZNEqT4y99g8N4xEoM2Bf7c3OCPvc2SZLREXidJ1qJJsRzx3Ii7L4qPETuhN5a1wg9FpMEtHEbiEpUbmwCowPS770JkyzscKBTlnKON7+Z+w4F3MzKQNn250=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZqUNkGd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFVPtPfq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94668C2BCB1;
-	Tue, 31 Mar 2026 16:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZqUNkGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB1EC19423;
+	Tue, 31 Mar 2026 16:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974456;
-	bh=/HfVimxPUOwoE+99VYNt8hjHlP7/BTwjpn+DZkDvX7c=;
+	s=korg; t=1774974459;
+	bh=Ycy4heOfnZvBAmKYzMJlAZKA/ZOE8Qyt3PRcFyy08IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kFVPtPfqczzbA2Uhdz2phi1f8yuKcVtLgrhJ74TV2YuZ9+PGCqTYqImXtXIksNcex
-	 OK1YMWqayWq5m+CjCvHTk+vaRPGu67UyYXan+IxjcXKqprNgezaVXD8h+vw+hKuPb2
-	 mAAmPn44SKutOc3qM1FGl+SeAGMq0xp66iOKEmwY=
+	b=vZqUNkGdpo1Huq0RxTQQp4l/7kmjIUk9YFxpNOCtz8usw0PhYOYt12tQS0CX0zfzf
+	 m0bXv1ZkPsPKlFQ5jwS5HgNc6nct8TVuXotF2iJOjFg4GOv75BLT0qVxI+3qaEMi+3
+	 csoGnSbb1WjsmEbyQ6QPklObssI4AI1qJNqU3zbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sanman Pradhan <psanman@juniper.net>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/175] regmap: Synchronize cache for the page selector
-Date: Tue, 31 Mar 2026 18:20:59 +0200
-Message-ID: <20260331161732.533158483@linuxfoundation.org>
+Subject: [PATCH 6.6 093/175] hwmon: (adm1177) fix sysfs ABI violation and current unit conversion
+Date: Tue, 31 Mar 2026 18:21:17 +0200
+Message-ID: <20260331161733.187584640@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -46,116 +46,189 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-[ Upstream commit 09e70e4f119ff650d24c96161fd2f62ac7e424b0 ]
+[ Upstream commit bf08749a6abb6d1959bfdc0edc32c640df407558 ]
 
-If the selector register is represented in each page, its value
-according to the debugfs is stale because it gets synchronized
-only after the real page switch happens. Hence the regmap cache
-initialisation from the HW inherits outdated data in the selector
-register.
+The adm1177 driver exposes the current alert threshold through
+hwmon_curr_max_alarm. This violates the hwmon sysfs ABI, where
+*_alarm attributes are read-only status flags and writable thresholds
+must use currN_max.
 
-Synchronize cache for the page selector just in time.
+The driver also stores the threshold internally in microamps, while
+currN_max is defined in milliamps. Convert the threshold accordingly
+on both the read and write paths.
 
-Before (offset followed by hexdump, the first byte is selector):
+Widen the cached threshold and related calculations to 64 bits so
+that small shunt resistor values do not cause truncation or overflow.
+Also use 64-bit arithmetic for the mA/uA conversions, clamp writes
+to the range the hardware can represent, and propagate failures from
+adm1177_write_alert_thr() instead of silently ignoring them.
 
-    // Real registers
-    18: 05 ff 00 00 ff 0f 00 00 f0 00 00 00
-    ...
-    // Virtual (per port)
-    40: 05 ff 00 00 e0 e0 00 00 00 00 00 1f
-    50: 00 ff 00 00 e0 e0 00 00 00 00 00 1f
-    60: 01 ff 00 00 ff ff 00 00 00 00 00 00
-    70: 02 ff 00 00 cf f3 00 00 00 00 00 0c
-    80: 03 ff 00 00 00 00 00 00 00 00 00 ff
-    90: 04 ff 00 00 ff 0f 00 00 f0 00 00 00
+Update the hwmon documentation to reflect the attribute rename and
+the correct units returned by the driver.
 
-After:
-
-    // Real registers
-    18: 05 ff 00 00 ff 0f 00 00 f0 00 00 00
-    ...
-    // Virtual (per port)
-    40: 00 ff 00 00 e0 e0 00 00 00 00 00 1f
-    50: 01 ff 00 00 e0 e0 00 00 00 00 00 1f
-    60: 02 ff 00 00 ff ff 00 00 00 00 00 00
-    70: 03 ff 00 00 cf f3 00 00 00 00 00 0c
-    80: 04 ff 00 00 00 00 00 00 00 00 00 ff
-    90: 05 ff 00 00 ff 0f 00 00 f0 00 00 00
-
-Fixes: 6863ca622759 ("regmap: Add support for register indirect addressing.")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260302184753.2693803-1-andriy.shevchenko@linux.intel.com
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 09b08ac9e8d5 ("hwmon: (adm1177) Add ADM1177 Hot Swap Controller and Digital Power Monitor driver")
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Acked-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20260325051246.28262-1-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap.c | 30 ++++++++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ Documentation/hwmon/adm1177.rst |  8 ++---
+ drivers/hwmon/adm1177.c         | 54 +++++++++++++++++++--------------
+ 2 files changed, 35 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index 48860beff95c9..3b84755c2e54d 100644
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -1541,6 +1541,7 @@ static int _regmap_select_page(struct regmap *map, unsigned int *reg,
- 			       unsigned int val_num)
+diff --git a/Documentation/hwmon/adm1177.rst b/Documentation/hwmon/adm1177.rst
+index 1c85a2af92bf7..375f6d6e03a7d 100644
+--- a/Documentation/hwmon/adm1177.rst
++++ b/Documentation/hwmon/adm1177.rst
+@@ -27,10 +27,10 @@ for details.
+ Sysfs entries
+ -------------
+ 
+-The following attributes are supported. Current maxim attribute
++The following attributes are supported. Current maximum attribute
+ is read-write, all other attributes are read-only.
+ 
+-in0_input		Measured voltage in microvolts.
++in0_input		Measured voltage in millivolts.
+ 
+-curr1_input		Measured current in microamperes.
+-curr1_max_alarm		Overcurrent alarm in microamperes.
++curr1_input		Measured current in milliamperes.
++curr1_max		Overcurrent shutdown threshold in milliamperes.
+diff --git a/drivers/hwmon/adm1177.c b/drivers/hwmon/adm1177.c
+index 60a893f271597..7581fd2456f9b 100644
+--- a/drivers/hwmon/adm1177.c
++++ b/drivers/hwmon/adm1177.c
+@@ -10,6 +10,8 @@
+ #include <linux/hwmon.h>
+ #include <linux/i2c.h>
+ #include <linux/init.h>
++#include <linux/math64.h>
++#include <linux/minmax.h>
+ #include <linux/module.h>
+ #include <linux/regulator/consumer.h>
+ 
+@@ -33,7 +35,7 @@
+ struct adm1177_state {
+ 	struct i2c_client	*client;
+ 	u32			r_sense_uohm;
+-	u32			alert_threshold_ua;
++	u64			alert_threshold_ua;
+ 	bool			vrange_high;
+ };
+ 
+@@ -48,7 +50,7 @@ static int adm1177_write_cmd(struct adm1177_state *st, u8 cmd)
+ }
+ 
+ static int adm1177_write_alert_thr(struct adm1177_state *st,
+-				   u32 alert_threshold_ua)
++				   u64 alert_threshold_ua)
  {
- 	void *orig_work_buf;
-+	unsigned int selector_reg;
- 	unsigned int win_offset;
- 	unsigned int win_page;
- 	bool page_chg;
-@@ -1559,10 +1560,31 @@ static int _regmap_select_page(struct regmap *map, unsigned int *reg,
- 			return -EINVAL;
+ 	u64 val;
+ 	int ret;
+@@ -91,8 +93,8 @@ static int adm1177_read(struct device *dev, enum hwmon_sensor_types type,
+ 			*val = div_u64((105840000ull * dummy),
+ 				       4096 * st->r_sense_uohm);
+ 			return 0;
+-		case hwmon_curr_max_alarm:
+-			*val = st->alert_threshold_ua;
++		case hwmon_curr_max:
++			*val = div_u64(st->alert_threshold_ua, 1000);
+ 			return 0;
+ 		default:
+ 			return -EOPNOTSUPP;
+@@ -126,9 +128,10 @@ static int adm1177_write(struct device *dev, enum hwmon_sensor_types type,
+ 	switch (type) {
+ 	case hwmon_curr:
+ 		switch (attr) {
+-		case hwmon_curr_max_alarm:
+-			adm1177_write_alert_thr(st, val);
+-			return 0;
++		case hwmon_curr_max:
++			val = clamp_val(val, 0,
++					div_u64(105840000ULL, st->r_sense_uohm));
++			return adm1177_write_alert_thr(st, (u64)val * 1000);
+ 		default:
+ 			return -EOPNOTSUPP;
+ 		}
+@@ -156,7 +159,7 @@ static umode_t adm1177_is_visible(const void *data,
+ 			if (st->r_sense_uohm)
+ 				return 0444;
+ 			return 0;
+-		case hwmon_curr_max_alarm:
++		case hwmon_curr_max:
+ 			if (st->r_sense_uohm)
+ 				return 0644;
+ 			return 0;
+@@ -170,7 +173,7 @@ static umode_t adm1177_is_visible(const void *data,
+ 
+ static const struct hwmon_channel_info * const adm1177_info[] = {
+ 	HWMON_CHANNEL_INFO(curr,
+-			   HWMON_C_INPUT | HWMON_C_MAX_ALARM),
++			   HWMON_C_INPUT | HWMON_C_MAX),
+ 	HWMON_CHANNEL_INFO(in,
+ 			   HWMON_I_INPUT),
+ 	NULL
+@@ -192,7 +195,8 @@ static int adm1177_probe(struct i2c_client *client)
+ 	struct device *dev = &client->dev;
+ 	struct device *hwmon_dev;
+ 	struct adm1177_state *st;
+-	u32 alert_threshold_ua;
++	u64 alert_threshold_ua;
++	u32 prop;
+ 	int ret;
+ 
+ 	st = devm_kzalloc(dev, sizeof(*st), GFP_KERNEL);
+@@ -208,22 +212,26 @@ static int adm1177_probe(struct i2c_client *client)
+ 	if (device_property_read_u32(dev, "shunt-resistor-micro-ohms",
+ 				     &st->r_sense_uohm))
+ 		st->r_sense_uohm = 0;
+-	if (device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
+-				     &alert_threshold_ua)) {
+-		if (st->r_sense_uohm)
+-			/*
+-			 * set maximum default value from datasheet based on
+-			 * shunt-resistor
+-			 */
+-			alert_threshold_ua = div_u64(105840000000,
+-						     st->r_sense_uohm);
+-		else
+-			alert_threshold_ua = 0;
++	if (!device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
++				      &prop)) {
++		alert_threshold_ua = prop;
++	} else if (st->r_sense_uohm) {
++		/*
++		 * set maximum default value from datasheet based on
++		 * shunt-resistor
++		 */
++		alert_threshold_ua = div_u64(105840000000ULL,
++					     st->r_sense_uohm);
++	} else {
++		alert_threshold_ua = 0;
  	}
+ 	st->vrange_high = device_property_read_bool(dev,
+ 						    "adi,vrange-high-enable");
+-	if (alert_threshold_ua && st->r_sense_uohm)
+-		adm1177_write_alert_thr(st, alert_threshold_ua);
++	if (alert_threshold_ua && st->r_sense_uohm) {
++		ret = adm1177_write_alert_thr(st, alert_threshold_ua);
++		if (ret)
++			return ret;
++	}
  
--	/* It is possible to have selector register inside data window.
--	   In that case, selector register is located on every page and
--	   it needs no page switching, when accessed alone. */
-+	/*
-+	 * Calculate the address of the selector register in the corresponding
-+	 * data window if it is located on every page.
-+	 */
-+	page_chg = in_range(range->selector_reg, range->window_start, range->window_len);
-+	if (page_chg)
-+		selector_reg = range->range_min + win_page * range->window_len +
-+			       range->selector_reg - range->window_start;
-+
-+	/*
-+	 * It is possible to have selector register inside data window.
-+	 * In that case, selector register is located on every page and it
-+	 * needs no page switching, when accessed alone.
-+	 *
-+	 * Nevertheless we should synchronize the cache values for it.
-+	 * This can't be properly achieved if the selector register is
-+	 * the first and the only one to be read inside the data window.
-+	 * That's why we update it in that case as well.
-+	 *
-+	 * However, we specifically avoid updating it for the default page,
-+	 * when it's overlapped with the real data window, to prevent from
-+	 * infinite looping.
-+	 */
- 	if (val_num > 1 ||
-+	    (page_chg && selector_reg != range->selector_reg) ||
- 	    range->window_start + win_offset != range->selector_reg) {
- 		/* Use separate work_buf during page switching */
- 		orig_work_buf = map->work_buf;
-@@ -1571,7 +1593,7 @@ static int _regmap_select_page(struct regmap *map, unsigned int *reg,
- 		ret = _regmap_update_bits(map, range->selector_reg,
- 					  range->selector_mask,
- 					  win_page << range->selector_shift,
--					  &page_chg, false);
-+					  NULL, false);
- 
- 		map->work_buf = orig_work_buf;
- 
+ 	ret = adm1177_write_cmd(st, ADM1177_CMD_V_CONT |
+ 				    ADM1177_CMD_I_CONT |
 -- 
 2.53.0
 
