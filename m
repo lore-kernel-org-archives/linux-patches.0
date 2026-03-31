@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447EF2D1F40;
-	Tue, 31 Mar 2026 16:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F9C317166;
+	Tue, 31 Mar 2026 16:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975580; cv=none; b=eawPTaaHZPaOmYJLcNiz9tWM1wp7h0xvclbKEW5MsTkZvCbaxSePmrtmeCKPNq3gpMpcnifa2zVAfzQVfjaewtLaR5V6vyje4qrKrkTfYMkHu+Si5jb//h9iGAIPtVea4O+FTnpQT1o8IL5i0Oc1Revmcc16UpBmOfNlqTGQhUc=
+	t=1774975582; cv=none; b=pM/EeiBIcmy75F/S1TqO/7/wWMcTHppWxW6jP963FuuiAkKXxijKRPaCdkZxmCoFvM8NMUDAWb7YdRJlbSYorGVsT6OaAH9sAHPOzwxcwvaCKRqvXfZxA5hm8liFAMqRQpeeBb/MEkres8Es9gWzLfZqL+6D+TYiPw4QM9vB+jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975580; c=relaxed/simple;
-	bh=nLmBnW+UmEfcR6CBA2Upb98vMlojPg0FsaoAI50v1Ew=;
+	s=arc-20240116; t=1774975582; c=relaxed/simple;
+	bh=zWmfolDiKaRDoB0/qYyJN1mJbKSfdpYycPXtgaZVKr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jf2mAUnLvVvu/OQIGgF4TlvEAC62Dm70RyKGp0wj3ilkVTAhQI2M1v858ulKncfzjAD3z/cIVgPuKJR94QLI40ZdRmQ/OnIpt5VE1r3Nh80OGmDrTxZmxDz25KRAh4w+ZAjkClwafMP/pOqQ2P/H4aQ58KM5yskBIePm9Xtj5H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4W+LeFI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sm9NNuPEtH9GHHUoWj2YCVVROwxWTyIWHAjXHC21RlxFwQYc2W5fLrg2Tczw5ew0K2KsjtoEAsPfb3rZr524qBF96Dw1nBm1ELKFBfZAhhT2ub7a36aio7gwLJq7BbQ3LtFfYkLFmj2qwW7tJDYLKhQ3/rR8Z6Tp2Dg2b3UZL2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jov641W1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4W+LeFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE32EC19423;
-	Tue, 31 Mar 2026 16:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jov641W1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD3CC19423;
+	Tue, 31 Mar 2026 16:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975580;
-	bh=nLmBnW+UmEfcR6CBA2Upb98vMlojPg0FsaoAI50v1Ew=;
+	s=korg; t=1774975582;
+	bh=zWmfolDiKaRDoB0/qYyJN1mJbKSfdpYycPXtgaZVKr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4W+LeFIwisFLupPFMDu4JSxTe3bAMoFK+Isnsuz7WsMdvDcEx/OuotgvD1DpHV1a
-	 7D+hwKFhQnv1agOC0QyCR7AxgDVczZG/YG/v6TjbxhlLwaxQ3gdVtfDGHlOG8ZzigB
-	 aetqcWca+fMsOtSiFkoY/veVTYke5kPGl4YUutO0=
+	b=jov641W1bg1mqFRwk48iZ6BOZvobLhCTXSM51mU8N8YAvsj6upuhizlxTSYy6FDeD
+	 ZmcFCHrJVzWJnWA3ysnJ/FCHEPjQrIDAY6nyPwIBLSkSWOD6LJEa9iYZ9XE2C94y1x
+	 vu6XOJfiI1srQKCI0ar2vLm+tWwymeVztbjJX5Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Christian Eggers <ceggers@arri.de>
-Subject: [PATCH 6.19 342/342] Bluetooth: L2CAP: Fix regressions caused by reusing ident
-Date: Tue, 31 Mar 2026 18:22:55 +0200
-Message-ID: <20260331161811.482525451@linuxfoundation.org>
+	Hao-Yu Yang <naup96721@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 338/342] futex: Fix UaF between futex_key_to_node_opt() and vma_replace_policy()
+Date: Tue, 31 Mar 2026 18:22:51 +0200
+Message-ID: <20260331161811.337733893@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -50,81 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Hao-Yu Yang <naup96721@gmail.com>
 
-commit 761fb8ec8778f0caf2bba5a41e3cff1ea86974f3 upstream.
+[ Upstream commit 190a8c48ff623c3d67cb295b4536a660db2012aa ]
 
-This attempt to fix regressions caused by reusing ident which apparently
-is not handled well on certain stacks causing the stack to not respond to
-requests, so instead of simple returning the first unallocated id this
-stores the last used tx_ident and then attempt to use the next until all
-available ids are exausted and then cycle starting over to 1.
+During futex_key_to_node_opt() execution, vma->vm_policy is read under
+speculative mmap lock and RCU. Concurrently, mbind() may call
+vma_replace_policy() which frees the old mempolicy immediately via
+kmem_cache_free().
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221120
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221177
-Fixes: 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding TX ident")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Christian Eggers <ceggers@arri.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This creates a race where __futex_key_to_node() dereferences a freed
+mempolicy pointer, causing a use-after-free read of mpol->mode.
+
+[  151.412631] BUG: KASAN: slab-use-after-free in __futex_key_to_node (kernel/futex/core.c:349)
+[  151.414046] Read of size 2 at addr ffff888001c49634 by task e/87
+
+[  151.415969] Call Trace:
+
+[  151.416732]  __asan_load2 (mm/kasan/generic.c:271)
+[  151.416777]  __futex_key_to_node (kernel/futex/core.c:349)
+[  151.416822]  get_futex_key (kernel/futex/core.c:374 kernel/futex/core.c:386 kernel/futex/core.c:593)
+
+Fix by adding rcu to __mpol_put().
+
+Fixes: c042c505210d ("futex: Implement FUTEX2_MPOL")
+Reported-by: Hao-Yu Yang <naup96721@gmail.com>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Hao-Yu Yang <naup96721@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://patch.msgid.link/20260324174418.GB1850007@noisy.programming.kicks-ass.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/l2cap.h |    1 +
- net/bluetooth/l2cap_core.c    |   29 ++++++++++++++++++++++++++---
- 2 files changed, 27 insertions(+), 3 deletions(-)
+ include/linux/mempolicy.h |  1 +
+ kernel/futex/core.c       |  2 +-
+ mm/mempolicy.c            | 10 ++++++++--
+ 3 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -658,6 +658,7 @@ struct l2cap_conn {
- 	struct sk_buff		*rx_skb;
- 	__u32			rx_len;
- 	struct ida		tx_ida;
-+	__u8			tx_ident;
+diff --git a/include/linux/mempolicy.h b/include/linux/mempolicy.h
+index 0fe96f3ab3ef0..65c732d440d2f 100644
+--- a/include/linux/mempolicy.h
++++ b/include/linux/mempolicy.h
+@@ -55,6 +55,7 @@ struct mempolicy {
+ 		nodemask_t cpuset_mems_allowed;	/* relative to these nodes */
+ 		nodemask_t user_nodemask;	/* nodemask passed by user */
+ 	} w;
++	struct rcu_head rcu;
+ };
  
- 	struct sk_buff_head	pending_rx;
- 	struct work_struct	pending_rx_work;
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -926,16 +926,39 @@ int l2cap_chan_check_security(struct l2c
+ /*
+diff --git a/kernel/futex/core.c b/kernel/futex/core.c
+index cf7e610eac429..31e83a09789e0 100644
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -342,7 +342,7 @@ static int __futex_key_to_node(struct mm_struct *mm, unsigned long addr)
+ 	if (!vma)
+ 		return FUTEX_NO_NODE;
  
- static int l2cap_get_ident(struct l2cap_conn *conn)
+-	mpol = vma_policy(vma);
++	mpol = READ_ONCE(vma->vm_policy);
+ 	if (!mpol)
+ 		return FUTEX_NO_NODE;
+ 
+diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+index 68a98ba578821..74ebf38a7db1a 100644
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -488,7 +488,13 @@ void __mpol_put(struct mempolicy *pol)
  {
-+	u8 max;
-+	int ident;
-+
- 	/* LE link does not support tools like l2ping so use the full range */
- 	if (conn->hcon->type == LE_LINK)
--		return ida_alloc_range(&conn->tx_ida, 1, 255, GFP_ATOMIC);
--
-+		max = 255;
- 	/* Get next available identificator.
- 	 *    1 - 128 are used by kernel.
- 	 *  129 - 199 are reserved.
- 	 *  200 - 254 are used by utilities like l2ping, etc.
- 	 */
--	return ida_alloc_range(&conn->tx_ida, 1, 128, GFP_ATOMIC);
-+	else
-+		max = 128;
-+
-+	/* Allocate ident using min as last used + 1 (cyclic) */
-+	ident = ida_alloc_range(&conn->tx_ida, READ_ONCE(conn->tx_ident) + 1,
-+				max, GFP_ATOMIC);
-+	/* Force min 1 to start over */
-+	if (ident <= 0) {
-+		ident = ida_alloc_range(&conn->tx_ida, 1, max, GFP_ATOMIC);
-+		if (ident <= 0) {
-+			/* If all idents are in use, log an error, this is
-+			 * extremely unlikely to happen and would indicate a bug
-+			 * in the code that idents are not being freed properly.
-+			 */
-+			BT_ERR("Unable to allocate ident: %d", ident);
-+			return 0;
-+		}
-+	}
-+
-+	WRITE_ONCE(conn->tx_ident, ident);
-+
-+	return ident;
+ 	if (!atomic_dec_and_test(&pol->refcnt))
+ 		return;
+-	kmem_cache_free(policy_cache, pol);
++	/*
++	 * Required to allow mmap_lock_speculative*() access, see for example
++	 * futex_key_to_node_opt(). All accesses are serialized by mmap_lock,
++	 * however the speculative lock section unbound by the normal lock
++	 * boundaries, requiring RCU freeing.
++	 */
++	kfree_rcu(pol, rcu);
  }
+ EXPORT_SYMBOL_FOR_MODULES(__mpol_put, "kvm");
  
- static void l2cap_send_acl(struct l2cap_conn *conn, struct sk_buff *skb,
+@@ -1021,7 +1027,7 @@ static int vma_replace_policy(struct vm_area_struct *vma,
+ 	}
+ 
+ 	old = vma->vm_policy;
+-	vma->vm_policy = new; /* protected by mmap_lock */
++	WRITE_ONCE(vma->vm_policy, new); /* protected by mmap_lock */
+ 	mpol_put(old);
+ 
+ 	return 0;
+-- 
+2.53.0
+
 
 
