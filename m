@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A5E421EFC;
-	Tue, 31 Mar 2026 16:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4C43D8114;
+	Tue, 31 Mar 2026 16:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975376; cv=none; b=heAkN/KojQur0lH4/AVgmB77BrV4Sn19c/eN8j2yLJjBJTlaB2EgQWipwejR/LcUUf4+kcNSzQpLSksWUYLEDmfP722Y89I+nedGKTIhzUMcVTKRamdrgoVm+fRIb/DP0l6ASBj3JkEpx8YQfI+XgOsS4gdVykNAePhglvW4HFI=
+	t=1774975378; cv=none; b=LzI+kTBfM4lsBX6+RJkokUyshvwuEQu4wFGko/A08uN9qY5thEyyxl67/hb7kuiOu/3BeVGkzjaKLZ0Tb3Qlm+oEAqhw943HQwm91fQG0Fmkkk4+IEZIvlO/pQgCg1vkiAdYQTJKuC/46s1DpWJ3DsFR/h6vNhEIlSUYDNHaoiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975376; c=relaxed/simple;
-	bh=PA0P4C1bFIfOg0cq1r5HX5RUM5+rMnJqCcJYSXc+duM=;
+	s=arc-20240116; t=1774975378; c=relaxed/simple;
+	bh=+x/ZfKuoJX2uOnBJ1IaL+mv6PzyeTlfl9MMzyY9Oumo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptBGwqYC3vWc3EgL0dc+psk0GCFHjbX8x83aYxZnUKjX0ugKPe6/GJ5ZTgJaunufx3sWngy9VEs2lfq9E4QREH12ksXVbwYR/bL4Uien1XoyqWzne97YE5euRKYuOLOlQ0FsS5fSMmKYRDlgxZxanOp8KKn/rQsPqmwji1QfSAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBhb7GG6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IKN0C1eosvhDoYy7GRh/HvceqZvt9LOH+Lotmd8Rid0Qik/J5ULahgLqocm+1c1M9RiR/LcNlJK4k4veqZ4ZnJy1vYAm2jH5Ur+3ugh0xoUySDYY6Qenb8DtaQhX/cUQ9QxBj8tve/SYnV599FYTFm67xhtO2ZIAQu82Z5JK7Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqyqvVpO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBhb7GG6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B8FC19423;
-	Tue, 31 Mar 2026 16:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqyqvVpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7644C19423;
+	Tue, 31 Mar 2026 16:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975375;
-	bh=PA0P4C1bFIfOg0cq1r5HX5RUM5+rMnJqCcJYSXc+duM=;
+	s=korg; t=1774975378;
+	bh=+x/ZfKuoJX2uOnBJ1IaL+mv6PzyeTlfl9MMzyY9Oumo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hBhb7GG6jsql6Vk3/ajXY9WzlA5ptAfslTGy8uRwROysVIrBr7Fcu0xHTdRyiN8NW
-	 O4c79xloK8VJ/j3qkZj47T8nIVKVQuHPCMPmnbffugiuy3M8EBt8anvJUkAeovGFss
-	 k1hx4j1LXIUwUZZcvXmJmTl2KFkdhZkQVnbkkdpM=
+	b=aqyqvVpODRcrP4l9bLnqEEvRmyQWxYNuC7QaoKm6lTIdgls7tQbnxeumnaOagm/Cf
+	 AQmHL5t4ZjBdHf8wdGUPUMsnoWSDLeTnWpqPUJ0/iFBOLOSgjevV1HYc06w7qMIMEU
+	 /xhozy4b9zmBJrVA+4RvGPuWNRgcDuXSzsXn/hjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John <therealgraysky@proton.me>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.19 238/342] writeback: dont block sync for filesystems with no data integrity guarantees
-Date: Tue, 31 Mar 2026 18:21:11 +0200
-Message-ID: <20260331161807.722806399@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 6.19 239/342] x86/cpu: Enable FSGSBASE early in cpu_init_exception_handling()
+Date: Tue, 31 Mar 2026 18:21:12 +0200
+Message-ID: <20260331161807.758780179@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,173 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Nikunj A Dadhania <nikunj@amd.com>
 
-commit 76f9377cd2ab7a9220c25d33940d9ca20d368172 upstream.
+commit 05243d490bb7852a8acca7b5b5658019c7797a52 upstream.
 
-Add a SB_I_NO_DATA_INTEGRITY superblock flag for filesystems that cannot
-guarantee data persistence on sync (eg fuse). For superblocks with this
-flag set, sync kicks off writeback of dirty inodes but does not wait
-for the flusher threads to complete the writeback.
+Move FSGSBASE enablement from identify_cpu() to cpu_init_exception_handling()
+to ensure it is enabled before any exceptions can occur on both boot and
+secondary CPUs.
 
-This replaces the per-inode AS_NO_DATA_INTEGRITY mapping flag added in
-commit f9a49aa302a0 ("fs/writeback: skip AS_NO_DATA_INTEGRITY mappings
-in wait_sb_inodes()"). The flag belongs at the superblock level because
-data integrity is a filesystem-wide property, not a per-inode one.
-Having this flag at the superblock level also allows us to skip having
-to iterate every dirty inode in wait_sb_inodes() only to skip each inode
-individually.
+== Background ==
 
-Prior to this commit, mappings with no data integrity guarantees skipped
-waiting on writeback completion but still waited on the flusher threads
-to finish initiating the writeback. Waiting on the flusher threads is
-unnecessary. This commit kicks off writeback but does not wait on the
-flusher threads. This change properly addresses a recent report [1] for
-a suspend-to-RAM hang seen on fuse-overlayfs that was caused by waiting
-on the flusher threads to finish:
+Exception entry code (paranoid_entry()) uses ALTERNATIVE patching based on
+X86_FEATURE_FSGSBASE to decide whether to use RDGSBASE/WRGSBASE instructions
+or the slower RDMSR/SWAPGS sequence for saving/restoring GSBASE.
 
-Workqueue: pm_fs_sync pm_fs_sync_work_fn
-Call Trace:
- <TASK>
- __schedule+0x457/0x1720
- schedule+0x27/0xd0
- wb_wait_for_completion+0x97/0xe0
- sync_inodes_sb+0xf8/0x2e0
- __iterate_supers+0xdc/0x160
- ksys_sync+0x43/0xb0
- pm_fs_sync_work_fn+0x17/0xa0
- process_one_work+0x193/0x350
- worker_thread+0x1a1/0x310
- kthread+0xfc/0x240
- ret_from_fork+0x243/0x280
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+On boot CPU, ALTERNATIVE patching happens after enabling FSGSBASE in CR4.
+When the feature is available, the code is permanently patched to use
+RDGSBASE/WRGSBASE, which require CR4.FSGSBASE=1 to execute without triggering
 
-On fuse this is problematic because there are paths that may cause the
-flusher thread to block (eg if systemd freezes the user session cgroups
-first, which freezes the fuse daemon, before invoking the kernel
-suspend. The kernel suspend triggers ->write_node() which on fuse issues
-a synchronous setattr request, which cannot be processed since the
-daemon is frozen. Or if the daemon is buggy and cannot properly complete
-writeback, initiating writeback on a dirty folio already under writeback
-leads to writeback_get_folio() -> folio_prepare_writeback() ->
-unconditional wait on writeback to finish, which will cause a hang).
-This commit restores fuse to its prior behavior before tmp folios were
-removed, where sync was essentially a no-op.
+== Boot Sequence ==
 
-[1] https://lore.kernel.org/linux-fsdevel/CAJnrk1a-asuvfrbKXbEwwDSctvemF+6zfhdnuzO65Pt8HsFSRw@mail.gmail.com/T/#m632c4648e9cafc4239299887109ebd880ac6c5c1
+Boot CPU (with CR pinning enabled):
+  trap_init()
+    cpu_init()                   <- Uses unpatched code (RDMSR/SWAPGS)
+      x2apic_setup()
+  ...
+  arch_cpu_finalize_init()
+    identify_boot_cpu()
+      identify_cpu()
+        cr4_set_bits(X86_CR4_FSGSBASE)  # Enables the feature
+	# This becomes part of cr4_pinned_bits
+    ...
+    alternative_instructions()   <- Patches code to use RDGSBASE/WRGSBASE
 
-Fixes: 0c58a97f919c ("fuse: remove tmp folio for writebacks and internal rb tree")
-Reported-by: John <therealgraysky@proton.me>
-Cc: stable@vger.kernel.org
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Link: https://patch.msgid.link/20260320005145.2483161-2-joannelkoong@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Secondary CPUs (with CR pinning enabled):
+  start_secondary()
+    cr4_init()                   <- Code already patched, CR4.FSGSBASE=1
+                                    set implicitly via cr4_pinned_bits
+
+    cpu_init()                   <- exceptions work because FSGSBASE is
+                                    already enabled
+
+Secondary CPU (with CR pinning disabled):
+  start_secondary()
+    cr4_init()                   <- Code already patched, CR4.FSGSBASE=0
+    cpu_init()
+      x2apic_setup()
+        rdmsrq(MSR_IA32_APICBASE)  <- Triggers #VC in SNP guests
+          exc_vmm_communication()
+            paranoid_entry()       <- Uses RDGSBASE with CR4.FSGSBASE=0
+                                      (patched code)
+    ...
+    ap_starting()
+      identify_secondary_cpu()
+        identify_cpu()
+	  cr4_set_bits(X86_CR4_FSGSBASE)  <- Enables the feature, which is
+                                             too late
+
+== CR Pinning ==
+
+Currently, for secondary CPUs, CR4.FSGSBASE is set implicitly through
+CR-pinning: the boot CPU sets it during identify_cpu(), it becomes part of
+cr4_pinned_bits, and cr4_init() applies those pinned bits to secondary CPUs.
+This works but creates an undocumented dependency between cr4_init() and the
+pinning mechanism.
+
+== Problem ==
+
+Secondary CPUs boot after alternatives have been applied globally. They
+execute already-patched paranoid_entry() code that uses RDGSBASE/WRGSBASE
+instructions, which require CR4.FSGSBASE=1. Upcoming changes to CR pinning
+behavior will break the implicit dependency, causing secondary CPUs to
+generate #UD.
+
+This issue manifests itself on AMD SEV-SNP guests, where the rdmsrq() in
+x2apic_setup() triggers a #VC exception early during cpu_init(). The #VC
+handler (exc_vmm_communication()) executes the patched paranoid_entry() path.
+Without CR4.FSGSBASE enabled, RDGSBASE instructions trigger #UD.
+
+== Fix ==
+
+Enable FSGSBASE explicitly in cpu_init_exception_handling() before loading
+exception handlers. This makes the dependency explicit and ensures both
+boot and secondary CPUs have FSGSBASE enabled before paranoid_entry()
+executes.
+
+Fixes: c82965f9e530 ("x86/entry/64: Handle FSGSBASE enabled paranoid entry/exit")
+Reported-by: Borislav Petkov <bp@alien8.de>
+Suggested-by: Sohil Mehta <sohil.mehta@intel.com>
+Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/20260318075654.1792916-2-nikunj@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fs-writeback.c              |   18 ++++++++++++------
- fs/fuse/file.c                 |    4 +---
- fs/fuse/inode.c                |    1 +
- include/linux/fs/super_types.h |    1 +
- include/linux/pagemap.h        |   11 -----------
- 5 files changed, 15 insertions(+), 20 deletions(-)
+ arch/x86/kernel/cpu/common.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -2759,13 +2759,8 @@ static void wait_sb_inodes(struct super_
- 		 * The mapping can appear untagged while still on-list since we
- 		 * do not have the mapping lock. Skip it here, wb completion
- 		 * will remove it.
--		 *
--		 * If the mapping does not have data integrity semantics,
--		 * there's no need to wait for the writeout to complete, as the
--		 * mapping cannot guarantee that data is persistently stored.
- 		 */
--		if (!mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK) ||
--		    mapping_no_data_integrity(mapping))
-+		if (!mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK))
- 			continue;
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2042,12 +2042,6 @@ static void identify_cpu(struct cpuinfo_
+ 	setup_umip(c);
+ 	setup_lass(c);
  
- 		spin_unlock_irq(&sb->s_inode_wblist_lock);
-@@ -2900,6 +2895,17 @@ void sync_inodes_sb(struct super_block *
- 	 */
- 	if (bdi == &noop_backing_dev_info)
- 		return;
-+
+-	/* Enable FSGSBASE instructions if available. */
+-	if (cpu_has(c, X86_FEATURE_FSGSBASE)) {
+-		cr4_set_bits(X86_CR4_FSGSBASE);
+-		elf_hwcap2 |= HWCAP2_FSGSBASE;
+-	}
+-
+ 	/*
+ 	 * The vendor-specific functions might have changed features.
+ 	 * Now we do "generic changes."
+@@ -2408,6 +2402,18 @@ void cpu_init_exception_handling(bool bo
+ 	/* GHCB needs to be setup to handle #VC. */
+ 	setup_ghcb();
+ 
 +	/*
-+	 * If the superblock has SB_I_NO_DATA_INTEGRITY set, there's no need to
-+	 * wait for the writeout to complete, as the filesystem cannot guarantee
-+	 * data persistence on sync. Just kick off writeback and return.
++	 * On CPUs with FSGSBASE support, paranoid_entry() uses
++	 * ALTERNATIVE-patched RDGSBASE/WRGSBASE instructions. Secondary CPUs
++	 * boot after alternatives are patched globally, so early exceptions
++	 * execute patched code that depends on FSGSBASE. Enable the feature
++	 * before any exceptions occur.
 +	 */
-+	if (sb->s_iflags & SB_I_NO_DATA_INTEGRITY) {
-+		wakeup_flusher_threads_bdi(bdi, WB_REASON_SYNC);
-+		return;
++	if (cpu_feature_enabled(X86_FEATURE_FSGSBASE)) {
++		cr4_set_bits(X86_CR4_FSGSBASE);
++		elf_hwcap2 |= HWCAP2_FSGSBASE;
 +	}
 +
- 	WARN_ON(!rwsem_is_locked(&sb->s_umount));
- 
- 	/* protect against inode wb switch, see inode_switch_wbs_work_fn() */
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -3200,10 +3200,8 @@ void fuse_init_file_inode(struct inode *
- 
- 	inode->i_fop = &fuse_file_operations;
- 	inode->i_data.a_ops = &fuse_file_aops;
--	if (fc->writeback_cache) {
-+	if (fc->writeback_cache)
- 		mapping_set_writeback_may_deadlock_on_reclaim(&inode->i_data);
--		mapping_set_no_data_integrity(&inode->i_data);
--	}
- 
- 	INIT_LIST_HEAD(&fi->write_files);
- 	INIT_LIST_HEAD(&fi->queued_writes);
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -1709,6 +1709,7 @@ static void fuse_sb_defaults(struct supe
- 	sb->s_export_op = &fuse_export_operations;
- 	sb->s_iflags |= SB_I_IMA_UNVERIFIABLE_SIGNATURE;
- 	sb->s_iflags |= SB_I_NOIDMAP;
-+	sb->s_iflags |= SB_I_NO_DATA_INTEGRITY;
- 	if (sb->s_user_ns != &init_user_ns)
- 		sb->s_iflags |= SB_I_UNTRUSTED_MOUNTER;
- 	sb->s_flags &= ~(SB_NOSEC | SB_I_VERSION);
---- a/include/linux/fs/super_types.h
-+++ b/include/linux/fs/super_types.h
-@@ -332,5 +332,6 @@ struct super_block {
- #define SB_I_NOUMASK	0x00001000	/* VFS does not apply umask */
- #define SB_I_NOIDMAP	0x00002000	/* No idmapped mounts on this superblock */
- #define SB_I_ALLOW_HSM	0x00004000	/* Allow HSM events on this superblock */
-+#define SB_I_NO_DATA_INTEGRITY	0x00008000 /* fs cannot guarantee data persistence on sync */
- 
- #endif /* _LINUX_FS_SUPER_TYPES_H */
---- a/include/linux/pagemap.h
-+++ b/include/linux/pagemap.h
-@@ -210,7 +210,6 @@ enum mapping_flags {
- 	AS_WRITEBACK_MAY_DEADLOCK_ON_RECLAIM = 9,
- 	AS_KERNEL_FILE = 10,	/* mapping for a fake kernel file that shouldn't
- 				   account usage to user cgroups */
--	AS_NO_DATA_INTEGRITY = 11, /* no data integrity guarantees */
- 	/* Bits 16-25 are used for FOLIO_ORDER */
- 	AS_FOLIO_ORDER_BITS = 5,
- 	AS_FOLIO_ORDER_MIN = 16,
-@@ -346,16 +345,6 @@ static inline bool mapping_writeback_may
- 	return test_bit(AS_WRITEBACK_MAY_DEADLOCK_ON_RECLAIM, &mapping->flags);
- }
- 
--static inline void mapping_set_no_data_integrity(struct address_space *mapping)
--{
--	set_bit(AS_NO_DATA_INTEGRITY, &mapping->flags);
--}
--
--static inline bool mapping_no_data_integrity(const struct address_space *mapping)
--{
--	return test_bit(AS_NO_DATA_INTEGRITY, &mapping->flags);
--}
--
- static inline gfp_t mapping_gfp_mask(const struct address_space *mapping)
- {
- 	return mapping->gfp_mask;
+ 	if (cpu_feature_enabled(X86_FEATURE_FRED)) {
+ 		/* The boot CPU has enabled FRED during early boot */
+ 		if (!boot_cpu)
 
 
