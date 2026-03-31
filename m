@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1762C15BB;
-	Tue, 31 Mar 2026 16:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBD8423A63;
+	Tue, 31 Mar 2026 16:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975396; cv=none; b=HAQcsKzhQHcJqSdF1O1P2Y+Z6r5Bw73MwFah6/QtPjpOoeBDlZFMsqNiyEtW1JhZApL26FoakVnOk2jE/CCwYIeiXUNrjA+EwrMWLTU3qI5512y81QIZeAYMzD54Rq5eeWgW9Ss/4c6HsZw9njZfzGc9uq0z+R3r4l5rLzl5TPA=
+	t=1774975398; cv=none; b=ERew3/fEKDRGtPYhMIYZQ44Kl7X+BLfLUH7dRhykh0KKyKq5nHPzxMZTXr9Fh/+yWpp5dTHjXXn/SSJGrLpanmGSmKJZBRLRY938JK/jAju7TZyKIQekk+esCIsJDa4NC7k3FNSjur7ekqybu8XnFnyuRO8kayZaU5hYtznM/rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975396; c=relaxed/simple;
-	bh=2xc4OW1jim2NmLLddcR4QugTvKDWns+JpfEOzDiBpZ8=;
+	s=arc-20240116; t=1774975398; c=relaxed/simple;
+	bh=/LxLtzZy1LE6T8HqAT6RBqjF5euwby6EY5K9URJMzbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rur5r0hyEQGtGZbbRUeBcy/2s5UXYLCjJhSK3LPFidypjuQUYsoSUI5bVw6iXldx9o4MleM5Ov4l22OEaUc2amdOiUGAIiHYIUzL8/Qvf2DAk0hwv+8R6y3RfcJF6nBbSVNqQmwh8vWfpH9LnNecj8lmT+uXSOV5eV1nJ1N60tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cP/gQgik; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MuS5O4hbaEDmZADSUcqQ9ERfX/Suik01w1ydC+HmZkisACSqv5W31Xr9DVLxy1tt83hYkF36s8IZtILnC53JhRo3tT5lt3R1VH5DgeNHNKV2LmJJXdULQf4/5qGQL3R8LtwBTJHsY+HhWajv0rFX0/CZCEZs0AjmXndULx3H6t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CO/5v17U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cP/gQgik"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9A7C19423;
-	Tue, 31 Mar 2026 16:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CO/5v17U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F04C19423;
+	Tue, 31 Mar 2026 16:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975396;
-	bh=2xc4OW1jim2NmLLddcR4QugTvKDWns+JpfEOzDiBpZ8=;
+	s=korg; t=1774975398;
+	bh=/LxLtzZy1LE6T8HqAT6RBqjF5euwby6EY5K9URJMzbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cP/gQgikMszJbtvE9bru0y37e0IiVNceEMGZWt7s0LAVNgrODYyv/kN9ltkNOClF5
-	 xMTsd4iFuwjuhMLpNb0SJmRXCdaDqZXKUliVyZ5OLusoADL8phINWEXVuE++qDrgvU
-	 MvDOAGKl0dSr8l+A56le6P4Ylt/gyOTZ1hSVBsII=
+	b=CO/5v17U0SSCfZupj8oz8FloFxWFezYYPmikGIaSTdB4GnGrC/u8iZ9IhNZIwOMHd
+	 f62aS7SLGvXNuUDqNQ2KwRYma8Ci8UU1qjswIcKhFzF18ts1TdMNUgIHaimU7UkI5H
+	 OXQNALT0A4lvNX1/tal3KIHE27GLDn9Ziv5VnKuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josh Law <objecting@objecting.org>,
 	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 279/342] mm/damon/sysfs: fix param_ctx leak on damon_sysfs_new_test_ctx() failure
-Date: Tue, 31 Mar 2026 18:21:52 +0200
-Message-ID: <20260331161809.204150777@linuxfoundation.org>
+Subject: [PATCH 6.19 280/342] mm/damon/sysfs: check contexts->nr before accessing contexts_arr[0]
+Date: Tue, 31 Mar 2026 18:21:53 +0200
+Message-ID: <20260331161809.241368026@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,48 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Law <objecting@objecting.org>
 
-commit 7fe000eb32904758a85e62f6ea9483f89d5dabfc upstream.
+commit 1bfe9fb5ed2667fb075682408b776b5273162615 upstream.
 
-Patch series "mm/damon/sysfs: fix memory leak and NULL dereference
-issues", v4.
+Multiple sysfs command paths dereference contexts_arr[0] without first
+verifying that kdamond->contexts->nr == 1.  A user can set nr_contexts to
+0 via sysfs while DAMON is running, causing NULL pointer dereferences.
 
-DAMON_SYSFS can leak memory under allocation failure, and do NULL pointer
-dereference when a privileged user make wrong sequences of control.  Fix
-those.
+In more detail, the issue can be triggered by privileged users like
+below.
 
+First, start DAMON and make contexts directory empty
+(kdamond->contexts->nr == 0).
 
-This patch (of 3):
+    # damo start
+    # cd /sys/kernel/mm/damon/admin/kdamonds/0
+    # echo 0 > contexts/nr_contexts
 
-When damon_sysfs_new_test_ctx() fails in damon_sysfs_commit_input(),
-param_ctx is leaked because the early return skips the cleanup at the out
-label.  Destroy param_ctx before returning.
+Then, each of below commands will cause the NULL pointer dereference.
 
-Link: https://lkml.kernel.org/r/20260321175427.86000-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20260321175427.86000-2-sj@kernel.org
-Fixes: f0c5118ebb0e ("mm/damon/sysfs: catch commit test ctx alloc failure")
+    # echo update_schemes_stats > state
+    # echo update_schemes_tried_regions > state
+    # echo update_schemes_tried_bytes > state
+    # echo update_schemes_effective_quotas > state
+    # echo update_tuned_intervals > state
+
+Guard all commands (except OFF) at the entry point of
+damon_sysfs_handle_cmd().
+
+Link: https://lkml.kernel.org/r/20260321175427.86000-3-sj@kernel.org
+Fixes: 0ac32b8affb5 ("mm/damon/sysfs: support DAMOS stats")
 Signed-off-by: Josh Law <objecting@objecting.org>
 Reviewed-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.18+]
+Cc: <stable@vger.kernel.org>	[5.18+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/damon/sysfs.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -1526,8 +1526,10 @@ static int damon_sysfs_commit_input(void
- 	if (IS_ERR(param_ctx))
- 		return PTR_ERR(param_ctx);
- 	test_ctx = damon_sysfs_new_test_ctx(kdamond->damon_ctx);
--	if (!test_ctx)
-+	if (!test_ctx) {
-+		damon_destroy_ctx(param_ctx);
- 		return -ENOMEM;
-+	}
- 	err = damon_commit_ctx(test_ctx, param_ctx);
- 	if (err)
- 		goto out;
+@@ -1752,6 +1752,9 @@ static int damon_sysfs_update_schemes_tr
+ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
+ 		struct damon_sysfs_kdamond *kdamond)
+ {
++	if (cmd != DAMON_SYSFS_CMD_OFF && kdamond->contexts->nr != 1)
++		return -EINVAL;
++
+ 	switch (cmd) {
+ 	case DAMON_SYSFS_CMD_ON:
+ 		return damon_sysfs_turn_damon_on(kdamond);
 
 
