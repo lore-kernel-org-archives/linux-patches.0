@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E822C15B2;
-	Tue, 31 Mar 2026 16:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAA22C15B2;
+	Tue, 31 Mar 2026 16:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975811; cv=none; b=IqN0pf4pv+yc1v68ArfdaYfi7xXa91r+CQS+i9V3Xs65kk6sR2/RxCFsQe/UokrZAMiAnAScwxEuaIyi0m9QJ+VWwY8bawt9jHMX8mZ4a0JIX0dSJssHaoFI+Tp8lQGThzZwngU+gsZ23YjggJHIMkQshjeI/rH8bDxgVuXr788=
+	t=1774975814; cv=none; b=db/VjQB2thDNqOW3E7XrCfvDzjRLA5ZiU6MRxWg8PwTzDTJHETnHVTtUo8lE0J45dHw0I8Vilaizw+DKnxTmhL+aJX5tRTBzfhzL+rEnahhQPldc38ywXd6w7YpW3X2JvvCVMjPfimlSl8voAWJxNtVhqQodbvluWDOQyGyXIzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975811; c=relaxed/simple;
-	bh=cakKbTh4hdXXiddk9mBx+hbJWa0oEhiUTgH8PYoLBa4=;
+	s=arc-20240116; t=1774975814; c=relaxed/simple;
+	bh=pmiEJl5MlA2G6YlD4tWQIeLWqvJECcYIp07HLruufD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XK74xBAF0VxggZhTSOVwnaJefzkOCUtNsOIRq6ulOB3kVvyT1tLV0XxjJtgnuZpDG1k/H8HZzQ8fqqFJXXyEmZF3o5RvUsUOtXoJ/pvmR6H9xv7olr2r1v246K9/U5gV5TEPfGyJ8mbUDAgwE/rXqgBpiVtodiE/ijvUhI5FPfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIBqB2Kv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rn/sqe54ITVE3mM+vC2EXZ+LMrQfesLFY7mCmBJcQgYjnT67U1ZbQEihHWdgjReMhHMde35B6DdEUgqQViIfCiLWmrACXmA+crOkGWs/kt4Vz2vGbeL8RN5WrYhV6aCDkLYg8e+5wqBV3LQ2jrgRmyNqzGDPuB4K8i11V0sBIiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMkRLfaP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIBqB2Kv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990B0C19423;
-	Tue, 31 Mar 2026 16:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMkRLfaP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D5FC19423;
+	Tue, 31 Mar 2026 16:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975810;
-	bh=cakKbTh4hdXXiddk9mBx+hbJWa0oEhiUTgH8PYoLBa4=;
+	s=korg; t=1774975813;
+	bh=pmiEJl5MlA2G6YlD4tWQIeLWqvJECcYIp07HLruufD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CIBqB2KvZjFVkHnXdCFYcPmvhJYusCpdbwUSxsUnEppxySiZKHr6ujdMRwrh8g4qt
-	 5fiDo/XgIUkczkL5tETCkzGx5KdGgnWQc5JnL5d8L8fKxa8u8+LeZZn1UU1ng17Sf+
-	 qwuhyzZeorB2mB5yXpyatBI9I5Qu1WTv7oYJgnj4=
+	b=XMkRLfaPomik5YeIdLkX8vNgz2hRbPxbEr/OGiBtKJPw3p7F5zFcIzsKgizzb+It/
+	 YPFe1ydj/kaoJuEG5p0HVeA27R0tKvdSRwQBWN8+nuEGb3oRwux7n01FOysO2qqUH1
+	 ValkBWU5XEMSVHQjZynYp0xv8rPzaW23QIU3TdnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 095/244] Bluetooth: btintel: serialize btintel_hw_error() with hci_req_sync_lock
-Date: Tue, 31 Mar 2026 18:20:45 +0200
-Message-ID: <20260331161745.184776659@linuxfoundation.org>
+Subject: [PATCH 6.12 096/244] Bluetooth: L2CAP: Fix ERTM re-init and zero pdu_len infinite loop
+Date: Tue, 31 Mar 2026 18:20:46 +0200
+Message-ID: <20260331161745.221371858@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,98 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 94d8e6fe5d0818e9300e514e095a200bd5ff93ae ]
+[ Upstream commit 25f420a0d4cfd61d3d23ec4b9c56d9f443d91377 ]
 
-btintel_hw_error() issues two __hci_cmd_sync() calls (HCI_OP_RESET
-and Intel exception-info retrieval) without holding
-hci_req_sync_lock().  This lets it race against
-hci_dev_do_close() -> btintel_shutdown_combined(), which also runs
-__hci_cmd_sync() under the same lock.  When both paths manipulate
-hdev->req_status/req_rsp concurrently, the close path may free the
-response skb first, and the still-running hw_error path hits a
-slab-use-after-free in kfree_skb().
+l2cap_config_req() processes CONFIG_REQ for channels in BT_CONNECTED
+state to support L2CAP reconfiguration (e.g. MTU changes). However,
+since both CONF_INPUT_DONE and CONF_OUTPUT_DONE are already set from
+the initial configuration, the reconfiguration path falls through to
+l2cap_ertm_init(), which re-initializes tx_q, srej_q, srej_list, and
+retrans_list without freeing the previous allocations and sets
+chan->sdu to NULL without freeing the existing skb. This leaks all
+previously allocated ERTM resources.
 
-Wrap the whole recovery sequence in hci_req_sync_lock/unlock so it
-is serialized with every other synchronous HCI command issuer.
+Additionally, l2cap_parse_conf_req() does not validate the minimum
+value of remote_mps derived from the RFC max_pdu_size option. A zero
+value propagates to l2cap_segment_sdu() where pdu_len becomes zero,
+causing the while loop to never terminate since len is never
+decremented, exhausting all available memory.
 
-Below is the data race report and the kasan report:
+Fix the double-init by skipping l2cap_ertm_init() and
+l2cap_chan_ready() when the channel is already in BT_CONNECTED state,
+while still allowing the reconfiguration parameters to be updated
+through l2cap_parse_conf_req(). Also add a pdu_len zero check in
+l2cap_segment_sdu() as a safeguard.
 
-  BUG: data-race in __hci_cmd_sync_sk / btintel_shutdown_combined
-
-  read of hdev->req_rsp at net/bluetooth/hci_sync.c:199
-  by task kworker/u17:1/83:
-   __hci_cmd_sync_sk+0x12f2/0x1c30 net/bluetooth/hci_sync.c:200
-   __hci_cmd_sync+0x55/0x80 net/bluetooth/hci_sync.c:223
-   btintel_hw_error+0x114/0x670 drivers/bluetooth/btintel.c:254
-   hci_error_reset+0x348/0xa30 net/bluetooth/hci_core.c:1030
-
-  write/free by task ioctl/22580:
-   btintel_shutdown_combined+0xd0/0x360
-    drivers/bluetooth/btintel.c:3648
-   hci_dev_close_sync+0x9ae/0x2c10 net/bluetooth/hci_sync.c:5246
-   hci_dev_do_close+0x232/0x460 net/bluetooth/hci_core.c:526
-
-  BUG: KASAN: slab-use-after-free in
-   sk_skb_reason_drop+0x43/0x380 net/core/skbuff.c:1202
-  Read of size 4 at addr ffff888144a738dc
-  by task kworker/u17:1/83:
-   __hci_cmd_sync_sk+0x12f2/0x1c30 net/bluetooth/hci_sync.c:200
-   __hci_cmd_sync+0x55/0x80 net/bluetooth/hci_sync.c:223
-   btintel_hw_error+0x186/0x670 drivers/bluetooth/btintel.c:260
-
-Fixes: 973bb97e5aee ("Bluetooth: btintel: Add generic function for handling hardware errors")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Fixes: 96298f640104 ("Bluetooth: L2CAP: handle l2cap config request during open state")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_core.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 3a4db68fc2e63..6e3e4a817e727 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -245,11 +245,13 @@ void btintel_hw_error(struct hci_dev *hdev, u8 code)
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 58679045093a9..128f5701efb46 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -2383,6 +2383,9 @@ static int l2cap_segment_sdu(struct l2cap_chan *chan,
+ 	/* Remote device may have requested smaller PDUs */
+ 	pdu_len = min_t(size_t, pdu_len, chan->remote_mps);
  
- 	bt_dev_err(hdev, "Hardware error 0x%2.2x", code);
- 
-+	hci_req_sync_lock(hdev);
++	if (!pdu_len)
++		return -EINVAL;
 +
- 	skb = __hci_cmd_sync(hdev, HCI_OP_RESET, 0, NULL, HCI_INIT_TIMEOUT);
- 	if (IS_ERR(skb)) {
- 		bt_dev_err(hdev, "Reset after hardware error failed (%ld)",
- 			   PTR_ERR(skb));
--		return;
-+		goto unlock;
+ 	if (len <= pdu_len) {
+ 		sar = L2CAP_SAR_UNSEGMENTED;
+ 		sdu_len = 0;
+@@ -4283,14 +4286,16 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
+ 	if (test_bit(CONF_INPUT_DONE, &chan->conf_state)) {
+ 		set_default_fcs(chan);
+ 
+-		if (chan->mode == L2CAP_MODE_ERTM ||
+-		    chan->mode == L2CAP_MODE_STREAMING)
+-			err = l2cap_ertm_init(chan);
++		if (chan->state != BT_CONNECTED) {
++			if (chan->mode == L2CAP_MODE_ERTM ||
++			    chan->mode == L2CAP_MODE_STREAMING)
++				err = l2cap_ertm_init(chan);
+ 
+-		if (err < 0)
+-			l2cap_send_disconn_req(chan, -err);
+-		else
+-			l2cap_chan_ready(chan);
++			if (err < 0)
++				l2cap_send_disconn_req(chan, -err);
++			else
++				l2cap_chan_ready(chan);
++		}
+ 
+ 		goto unlock;
  	}
- 	kfree_skb(skb);
- 
-@@ -257,18 +259,21 @@ void btintel_hw_error(struct hci_dev *hdev, u8 code)
- 	if (IS_ERR(skb)) {
- 		bt_dev_err(hdev, "Retrieving Intel exception info failed (%ld)",
- 			   PTR_ERR(skb));
--		return;
-+		goto unlock;
- 	}
- 
- 	if (skb->len != 13) {
- 		bt_dev_err(hdev, "Exception info size mismatch");
- 		kfree_skb(skb);
--		return;
-+		goto unlock;
- 	}
- 
- 	bt_dev_err(hdev, "Exception info %s", (char *)(skb->data + 1));
- 
- 	kfree_skb(skb);
-+
-+unlock:
-+	hci_req_sync_unlock(hdev);
- }
- EXPORT_SYMBOL_GPL(btintel_hw_error);
- 
 -- 
 2.51.0
 
