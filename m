@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF3C421F1F;
-	Tue, 31 Mar 2026 16:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA4A3EF0A2;
+	Tue, 31 Mar 2026 16:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975409; cv=none; b=C94S69MgXxDuAFqsvItIkI/DBL2X1uxK3tJmutYl/4UHHaZ4x8mWQrmGIVgU6hkp3NOB0voYp85mc+AnDmWPkGO486Ea1qRtpD1gZSApl5OOphEKZJLAvhT4rMwmi6k1om9tgzb8dwbujeO7iUdCZejtEr5Ngw9mpetwFL+pc+s=
+	t=1774975411; cv=none; b=TiK9Clg88L4HwqpZTXz82S4kRYoHsWrMy1HODLg8z8gFFt7YQJAPG49AyuBsmXhSd/vtgzsWC6zXMBNFIkjl8UzDrTaDUhXaP0WoECKYax7jMoWFfxEYWLGBnNMWBObsjUk3BbzrgR4JODrIasr8415bu88A3INv/hPUbi33YN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975409; c=relaxed/simple;
-	bh=jsdwS8CuqHb9MHEDQaaBlEjNW+5ak0bmbE13R6RLICo=;
+	s=arc-20240116; t=1774975411; c=relaxed/simple;
+	bh=sUYWN1E9YxDQK7l/t6kovxoG9fy1xvJ107fkPAzBPyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PDNFEd4/h0ZHJfsQztHHk0ZYu2fgRWho+qK491JUHS/SrUR4wKpyeB7VpW/9UswUunz5klrDT6b7YbSNp0iioH2oct92VhKM6pp7NFhchKzN0fhJPHdW+utP/pnR+kuDPJ+OgT+MUYSrYx8Ii8VJQgi/HucFdobvyigJ4eigdss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cuxOXfW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fQxY04PV7jZOUcHKyBQkORlSHTj9mAK+SYxN9LNTcCg/ADPYSVCUWEw6kcPVrYGve+FPO/07ry31Y8b2kOc3TPfjCuOeKvJOqPgbESoHk/48Wn6m/qbQkuOZ/Jhperp5qBg28vnkkrfATMSuCRV3wPSWKfUn3FZg0+UytoEpNJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuTilZNA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cuxOXfW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601DBC19424;
-	Tue, 31 Mar 2026 16:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuTilZNA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85B7C19423;
+	Tue, 31 Mar 2026 16:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975408;
-	bh=jsdwS8CuqHb9MHEDQaaBlEjNW+5ak0bmbE13R6RLICo=;
+	s=korg; t=1774975411;
+	bh=sUYWN1E9YxDQK7l/t6kovxoG9fy1xvJ107fkPAzBPyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0cuxOXfW0oZCqvnRYZmKip8VDTLSgJVbxM33RXp1QOP3qjXSd3dHCBmYr6iRxRaoz
-	 L3S/U27EIsL+5YKiqH5baJ2vF7tIvmMndec+HfsEiUnuZ1ogaLxf1LXz1YIwP1ns4E
-	 dB7PR/Ug8LzlflfzYa+GuB2HjHlb1KFVN/aP0Okw=
+	b=CuTilZNA3oXN1kNvQnaXnIomB2lCVFipiukSfqcZRat+e7QM+VOWSDhAgiAoS7Gar
+	 HFa3EEhDVw+yL0kR+ORPe7ZsGZxIUNhtbT54DZTh26etk2dsvHtFyvagzgyXD2pywc
+	 Y0WXQjYFY78Ln0CHysBu6R8P2VvGydRqUTsGX3fA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
 	Yuto Ohnuki <ytohnuki@amazon.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.19 284/342] xfs: save ailp before dropping the AIL lock in push callbacks
-Date: Tue, 31 Mar 2026 18:21:57 +0200
-Message-ID: <20260331161809.389538869@linuxfoundation.org>
+Subject: [PATCH 6.19 285/342] xfs: avoid dereferencing log items after push callbacks
+Date: Tue, 31 Mar 2026 18:21:58 +0200
+Message-ID: <20260331161809.427224663@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -55,96 +54,163 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-commit 394d70b86fae9fe865e7e6d9540b7696f73aa9b6 upstream.
+commit 79ef34ec0554ec04bdbafafbc9836423734e1bd6 upstream.
 
-In xfs_inode_item_push() and xfs_qm_dquot_logitem_push(), the AIL lock
-is dropped to perform buffer IO. Once the cluster buffer no longer
-protects the log item from reclaim, the log item may be freed by
-background reclaim or the dquot shrinker. The subsequent spin_lock()
-call dereferences lip->li_ailp, which is a use-after-free.
+After xfsaild_push_item() calls iop_push(), the log item may have been
+freed if the AIL lock was dropped during the push. Background inode
+reclaim or the dquot shrinker can free the log item while the AIL lock
+is not held, and the tracepoints in the switch statement dereference
+the log item after iop_push() returns.
 
-Fix this by saving the ailp pointer in a local variable while the AIL
-lock is held and the log item is guaranteed to be valid.
+Fix this by capturing the log item type, flags, and LSN before calling
+xfsaild_push_item(), and introducing a new xfs_ail_push_class trace
+event class that takes these pre-captured values and the ailp pointer
+instead of the log item pointer.
 
 Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
 Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
 Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
 Cc: stable@vger.kernel.org # v5.9
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot_item.c |    9 +++++++--
- fs/xfs/xfs_inode_item.c |    9 +++++++--
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ fs/xfs/xfs_trace.h     |   36 ++++++++++++++++++++++++++++++++----
+ fs/xfs/xfs_trans_ail.c |   26 +++++++++++++++++++-------
+ 2 files changed, 51 insertions(+), 11 deletions(-)
 
---- a/fs/xfs/xfs_dquot_item.c
-+++ b/fs/xfs/xfs_dquot_item.c
-@@ -126,6 +126,7 @@ xfs_qm_dquot_logitem_push(
- 	struct xfs_dq_logitem	*qlip = DQUOT_ITEM(lip);
- 	struct xfs_dquot	*dqp = qlip->qli_dquot;
- 	struct xfs_buf		*bp;
-+	struct xfs_ail		*ailp = lip->li_ailp;
- 	uint			rval = XFS_ITEM_SUCCESS;
- 	int			error;
+--- a/fs/xfs/xfs_trace.h
++++ b/fs/xfs/xfs_trace.h
+@@ -56,6 +56,7 @@
+ #include <linux/tracepoint.h>
  
-@@ -154,7 +155,7 @@ xfs_qm_dquot_logitem_push(
- 		goto out_unlock;
- 	}
+ struct xfs_agf;
++struct xfs_ail;
+ struct xfs_alloc_arg;
+ struct xfs_attr_list_context;
+ struct xfs_buf_log_item;
+@@ -1647,16 +1648,43 @@ TRACE_EVENT(xfs_log_force,
+ DEFINE_EVENT(xfs_log_item_class, name, \
+ 	TP_PROTO(struct xfs_log_item *lip), \
+ 	TP_ARGS(lip))
+-DEFINE_LOG_ITEM_EVENT(xfs_ail_push);
+-DEFINE_LOG_ITEM_EVENT(xfs_ail_pinned);
+-DEFINE_LOG_ITEM_EVENT(xfs_ail_locked);
+-DEFINE_LOG_ITEM_EVENT(xfs_ail_flushing);
+ DEFINE_LOG_ITEM_EVENT(xfs_cil_whiteout_mark);
+ DEFINE_LOG_ITEM_EVENT(xfs_cil_whiteout_skip);
+ DEFINE_LOG_ITEM_EVENT(xfs_cil_whiteout_unpin);
+ DEFINE_LOG_ITEM_EVENT(xlog_ail_insert_abort);
+ DEFINE_LOG_ITEM_EVENT(xfs_trans_free_abort);
  
--	spin_unlock(&lip->li_ailp->ail_lock);
-+	spin_unlock(&ailp->ail_lock);
- 
- 	error = xfs_dquot_use_attached_buf(dqp, &bp);
- 	if (error == -EAGAIN) {
-@@ -173,9 +174,13 @@ xfs_qm_dquot_logitem_push(
- 			rval = XFS_ITEM_FLUSHING;
- 	}
- 	xfs_buf_relse(bp);
-+	/*
-+	 * The buffer no longer protects the log item from reclaim, so
-+	 * do not reference lip after this point.
-+	 */
- 
- out_relock_ail:
--	spin_lock(&lip->li_ailp->ail_lock);
-+	spin_lock(&ailp->ail_lock);
- out_unlock:
- 	mutex_unlock(&dqp->q_qlock);
- 	return rval;
---- a/fs/xfs/xfs_inode_item.c
-+++ b/fs/xfs/xfs_inode_item.c
-@@ -749,6 +749,7 @@ xfs_inode_item_push(
- 	struct xfs_inode_log_item *iip = INODE_ITEM(lip);
- 	struct xfs_inode	*ip = iip->ili_inode;
- 	struct xfs_buf		*bp = lip->li_buf;
-+	struct xfs_ail		*ailp = lip->li_ailp;
- 	uint			rval = XFS_ITEM_SUCCESS;
- 	int			error;
- 
-@@ -774,7 +775,7 @@ xfs_inode_item_push(
- 	if (!xfs_buf_trylock(bp))
- 		return XFS_ITEM_LOCKED;
- 
--	spin_unlock(&lip->li_ailp->ail_lock);
-+	spin_unlock(&ailp->ail_lock);
- 
- 	/*
- 	 * We need to hold a reference for flushing the cluster buffer as it may
-@@ -798,7 +799,11 @@ xfs_inode_item_push(
- 		rval = XFS_ITEM_LOCKED;
- 	}
- 
--	spin_lock(&lip->li_ailp->ail_lock);
-+	/*
-+	 * The buffer no longer protects the log item from reclaim, so
-+	 * do not reference lip after this point.
-+	 */
-+	spin_lock(&ailp->ail_lock);
- 	return rval;
++DECLARE_EVENT_CLASS(xfs_ail_push_class,
++	TP_PROTO(struct xfs_ail *ailp, uint type, unsigned long flags, xfs_lsn_t lsn),
++	TP_ARGS(ailp, type, flags, lsn),
++	TP_STRUCT__entry(
++		__field(dev_t, dev)
++		__field(uint, type)
++		__field(unsigned long, flags)
++		__field(xfs_lsn_t, lsn)
++	),
++	TP_fast_assign(
++		__entry->dev = ailp->ail_log->l_mp->m_super->s_dev;
++		__entry->type = type;
++		__entry->flags = flags;
++		__entry->lsn = lsn;
++	),
++	TP_printk("dev %d:%d lsn %d/%d type %s flags %s",
++		  MAJOR(__entry->dev), MINOR(__entry->dev),
++		  CYCLE_LSN(__entry->lsn), BLOCK_LSN(__entry->lsn),
++		  __print_symbolic(__entry->type, XFS_LI_TYPE_DESC),
++		  __print_flags(__entry->flags, "|", XFS_LI_FLAGS))
++)
++
++#define DEFINE_AIL_PUSH_EVENT(name) \
++DEFINE_EVENT(xfs_ail_push_class, name, \
++	TP_PROTO(struct xfs_ail *ailp, uint type, unsigned long flags, xfs_lsn_t lsn), \
++	TP_ARGS(ailp, type, flags, lsn))
++DEFINE_AIL_PUSH_EVENT(xfs_ail_push);
++DEFINE_AIL_PUSH_EVENT(xfs_ail_pinned);
++DEFINE_AIL_PUSH_EVENT(xfs_ail_locked);
++DEFINE_AIL_PUSH_EVENT(xfs_ail_flushing);
++
+ DECLARE_EVENT_CLASS(xfs_ail_class,
+ 	TP_PROTO(struct xfs_log_item *lip, xfs_lsn_t old_lsn, xfs_lsn_t new_lsn),
+ 	TP_ARGS(lip, old_lsn, new_lsn),
+--- a/fs/xfs/xfs_trans_ail.c
++++ b/fs/xfs/xfs_trans_ail.c
+@@ -365,6 +365,12 @@ xfsaild_resubmit_item(
+ 	return XFS_ITEM_SUCCESS;
  }
  
++/*
++ * Push a single log item from the AIL.
++ *
++ * @lip may have been released and freed by the time this function returns,
++ * so callers must not dereference the log item afterwards.
++ */
+ static inline uint
+ xfsaild_push_item(
+ 	struct xfs_ail		*ailp,
+@@ -505,7 +511,10 @@ xfsaild_push(
+ 
+ 	lsn = lip->li_lsn;
+ 	while ((XFS_LSN_CMP(lip->li_lsn, ailp->ail_target) <= 0)) {
+-		int	lock_result;
++		int		lock_result;
++		uint		type = lip->li_type;
++		unsigned long	flags = lip->li_flags;
++		xfs_lsn_t	item_lsn = lip->li_lsn;
+ 
+ 		if (test_bit(XFS_LI_FLUSHING, &lip->li_flags))
+ 			goto next_item;
+@@ -514,14 +523,17 @@ xfsaild_push(
+ 		 * Note that iop_push may unlock and reacquire the AIL lock.  We
+ 		 * rely on the AIL cursor implementation to be able to deal with
+ 		 * the dropped lock.
++		 *
++		 * The log item may have been freed by the push, so it must not
++		 * be accessed or dereferenced below this line.
+ 		 */
+ 		lock_result = xfsaild_push_item(ailp, lip);
+ 		switch (lock_result) {
+ 		case XFS_ITEM_SUCCESS:
+ 			XFS_STATS_INC(mp, xs_push_ail_success);
+-			trace_xfs_ail_push(lip);
++			trace_xfs_ail_push(ailp, type, flags, item_lsn);
+ 
+-			ailp->ail_last_pushed_lsn = lsn;
++			ailp->ail_last_pushed_lsn = item_lsn;
+ 			break;
+ 
+ 		case XFS_ITEM_FLUSHING:
+@@ -537,22 +549,22 @@ xfsaild_push(
+ 			 * AIL is being flushed.
+ 			 */
+ 			XFS_STATS_INC(mp, xs_push_ail_flushing);
+-			trace_xfs_ail_flushing(lip);
++			trace_xfs_ail_flushing(ailp, type, flags, item_lsn);
+ 
+ 			flushing++;
+-			ailp->ail_last_pushed_lsn = lsn;
++			ailp->ail_last_pushed_lsn = item_lsn;
+ 			break;
+ 
+ 		case XFS_ITEM_PINNED:
+ 			XFS_STATS_INC(mp, xs_push_ail_pinned);
+-			trace_xfs_ail_pinned(lip);
++			trace_xfs_ail_pinned(ailp, type, flags, item_lsn);
+ 
+ 			stuck++;
+ 			ailp->ail_log_flush++;
+ 			break;
+ 		case XFS_ITEM_LOCKED:
+ 			XFS_STATS_INC(mp, xs_push_ail_locked);
+-			trace_xfs_ail_locked(lip);
++			trace_xfs_ail_locked(ailp, type, flags, item_lsn);
+ 
+ 			stuck++;
+ 			break;
 
 
