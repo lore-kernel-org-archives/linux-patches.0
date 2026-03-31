@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17203D75D9;
-	Tue, 31 Mar 2026 16:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9432421898;
+	Tue, 31 Mar 2026 16:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974240; cv=none; b=EtUXwiHNp1VurfY0GC7yV3Sc0s+42GIF8HmnJeDViLCJxEeN9hO35mDXCnIrKvAYj6YqRS5W2ofOmwHHM9OW5Cn5hperi8bpFq//8GtPENyeqgZm4KG4iLYgscTwuUfaZdUGlW/+sa6/7EnsXfUdMtdifcP3e2Ga1JTRkf1Au54=
+	t=1774974242; cv=none; b=iBJ7mFei3fQ8DhVFDVshXYv8Eouo6E8W8V6/YUr1YwY+tPX8KKlhlIjpKkydP3TM4YbUvLZSNc6AWZl6TiGoKdD/JVU46Hst0j0zWi3Js8UfpCEKzXFj6OJPHjpMOL2zKH3DRiCkPPQKQdWM2EU1wMn6EeXv/g5iKRRbd6XcuUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974240; c=relaxed/simple;
-	bh=BluBn50t5prR4UgpK+tt8bE+oXcbb3TKK/PJOLK+p6w=;
+	s=arc-20240116; t=1774974242; c=relaxed/simple;
+	bh=7k2ewNhighUvAhRVUpj+LBJyTAIiJ47InjUE2x1Pu8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCCImS0EqB+4HRqW8UXlFgCssyIrqqHIhkna5ITdaP8OqfysyW8w76kfy6vfW836bPa/f6oWuVthVeBp5BpXeMbJVi+TiNkej5FYW8hztWr5R4Kp4ap+WFVEgAvfdEcvMyi8NNbJ0kQXEwu99GGYBejeH1tkSUiUK7R9jpmkyZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1Fj8jPc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AZ2QRevtlf5hYJxmR2+AaRvh3fZwK/nR18gX4I6GcEzfMYi+KQYML3DrC0CXbDYd1aTyVr1t/p3IH9vpzFKhld5uYFFPjdk15Tp6i6J8JHpImsNyVJflBeSwGh4jPbb7S5pYbIZocKfEqPBlfsbG2V3m6CyuZQKej2+C5qtO8rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUAgPUGE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1Fj8jPc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021DEC19423;
-	Tue, 31 Mar 2026 16:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUAgPUGE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9236C19424;
+	Tue, 31 Mar 2026 16:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974239;
-	bh=BluBn50t5prR4UgpK+tt8bE+oXcbb3TKK/PJOLK+p6w=;
+	s=korg; t=1774974242;
+	bh=7k2ewNhighUvAhRVUpj+LBJyTAIiJ47InjUE2x1Pu8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1Fj8jPc1o2qFiMwamJmtN0W//AtVCkI2NoErNqRQIJr4Nfz/b3jdsgXPC0aGMdbO
-	 gD40ZURfJYMra5dwd0L9/uths8zFDUk3G2/3RE58K/SNOPwutLiokii6ctaQEUf6us
-	 E/xsydavM19EHqDbmgpacRQUCBKp3/WHsbVbLfs0=
+	b=NUAgPUGE6UJrFYHXaqEe9OsanOndbeX+m6bZMORpN0/iE+ygH9dVCTARsgJcbAcPb
+	 RmBmE1YleaFQqwGTDsodC8+R9n+oSjkuJ+YvbgxpAp5I+gy65rtNXLIg7E2CT6Ioaz
+	 EfF6qJMI2FId/AHj3tiYTc8zgX4UHmTM11zi6aMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Oliver Rosenberg <olrose55@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/175] perf: Extract a few helpers
-Date: Tue, 31 Mar 2026 18:19:45 +0200
-Message-ID: <20260331161729.837275842@linuxfoundation.org>
+Subject: [PATCH 6.6 002/175] perf: Make sure to use pmu_ctx->pmu for groups
+Date: Tue, 31 Mar 2026 18:19:46 +0200
+Message-ID: <20260331161729.873719569@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -54,99 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 9a32bd9901fe5b1dcf544389dbf04f3b0a2fbab4 ]
+[ Upstream commit 4b9ce671960627b2505b3f64742544ae9801df97 ]
 
-The context time update code is repeated verbatim a few times.
+Oliver reported that x86_pmu_del() ended up doing an out-of-bound memory access
+when group_sched_in() fails and needs to roll back.
 
+This *should* be handled by the transaction callbacks, but he found that when
+the group leader is a software event, the transaction handlers of the wrong PMU
+are used. Despite the move_group case in perf_event_open() and group_sched_in()
+using pmu_ctx->pmu.
+
+Turns out, inherit uses event->pmu to clone the events, effectively undoing the
+move_group case for all inherited contexts. Fix this by also making inherit use
+pmu_ctx->pmu, ensuring all inherited counters end up in the same pmu context.
+
+Similarly, __perf_event_read() should use equally use pmu_ctx->pmu for the
+group case.
+
+Fixes: bd2756811766 ("perf: Rewrite core context handling")
+Reported-by: Oliver Rosenberg <olrose55@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20240807115550.031212518@infradead.org
-Stable-dep-of: 4b9ce6719606 ("perf: Make sure to use pmu_ctx->pmu for groups")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://patch.msgid.link/20260309133713.GB606826@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 39 ++++++++++++++++++++++-----------------
- 1 file changed, 22 insertions(+), 17 deletions(-)
+ kernel/events/core.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
 diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 652baf91c629e..53cb9ee145746 100644
+index 53cb9ee145746..eba5eb6fcb876 100644
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -2349,6 +2349,24 @@ group_sched_out(struct perf_event *group_event, struct perf_event_context *ctx)
- 		event_sched_out(event, ctx);
- }
- 
-+static inline void
-+ctx_time_update(struct perf_cpu_context *cpuctx, struct perf_event_context *ctx)
-+{
-+	if (ctx->is_active & EVENT_TIME) {
-+		update_context_time(ctx);
-+		update_cgrp_time_from_cpuctx(cpuctx, false);
-+	}
-+}
-+
-+static inline void
-+ctx_time_update_event(struct perf_event_context *ctx, struct perf_event *event)
-+{
-+	if (ctx->is_active & EVENT_TIME) {
-+		update_context_time(ctx);
-+		update_cgrp_time_from_event(event);
-+	}
-+}
-+
- #define DETACH_GROUP	0x01UL
- #define DETACH_CHILD	0x02UL
- #define DETACH_DEAD	0x04UL
-@@ -2370,10 +2388,7 @@ __perf_remove_from_context(struct perf_event *event,
- 	enum perf_event_state state = PERF_EVENT_STATE_OFF;
- 	unsigned long flags = (unsigned long)info;
- 
--	if (ctx->is_active & EVENT_TIME) {
--		update_context_time(ctx);
--		update_cgrp_time_from_cpuctx(cpuctx, false);
--	}
-+	ctx_time_update(cpuctx, ctx);
+@@ -4532,7 +4532,7 @@ static void __perf_event_read(void *info)
+ 	struct perf_event *sub, *event = data->event;
+ 	struct perf_event_context *ctx = event->ctx;
+ 	struct perf_cpu_context *cpuctx = this_cpu_ptr(&perf_cpu_context);
+-	struct pmu *pmu = event->pmu;
++	struct pmu *pmu;
  
  	/*
- 	 * Ensure event_sched_out() switches to OFF, at the very least
-@@ -2470,12 +2485,8 @@ static void __perf_event_disable(struct perf_event *event,
- 	if (event->state < PERF_EVENT_STATE_INACTIVE)
+ 	 * If this is a task context, we need to check whether it is
+@@ -4544,7 +4544,7 @@ static void __perf_event_read(void *info)
+ 	if (ctx->task && cpuctx->task_ctx != ctx)
  		return;
  
--	if (ctx->is_active & EVENT_TIME) {
--		update_context_time(ctx);
--		update_cgrp_time_from_event(event);
--	}
--
- 	perf_pmu_disable(event->pmu_ctx->pmu);
-+	ctx_time_update_event(ctx, event);
- 
- 	/*
- 	 * When disabling a group leader, the whole group becomes ineligible
-@@ -4534,10 +4545,7 @@ static void __perf_event_read(void *info)
- 		return;
- 
- 	raw_spin_lock(&ctx->lock);
--	if (ctx->is_active & EVENT_TIME) {
--		update_context_time(ctx);
--		update_cgrp_time_from_event(event);
--	}
-+	ctx_time_update_event(ctx, event);
+-	raw_spin_lock(&ctx->lock);
++	guard(raw_spinlock)(&ctx->lock);
+ 	ctx_time_update_event(ctx, event);
  
  	perf_event_update_time(event);
- 	if (data->group)
-@@ -4718,10 +4726,7 @@ static int perf_event_read(struct perf_event *event, bool group)
- 		 * May read while context is not active (e.g., thread is
- 		 * blocked), in that case we cannot update context time
- 		 */
--		if (ctx->is_active & EVENT_TIME) {
--			update_context_time(ctx);
--			update_cgrp_time_from_event(event);
--		}
-+		ctx_time_update_event(ctx, event);
+@@ -4552,25 +4552,22 @@ static void __perf_event_read(void *info)
+ 		perf_event_update_sibling_time(event);
  
- 		perf_event_update_time(event);
- 		if (group)
+ 	if (event->state != PERF_EVENT_STATE_ACTIVE)
+-		goto unlock;
++		return;
+ 
+ 	if (!data->group) {
+-		pmu->read(event);
++		perf_pmu_read(event);
+ 		data->ret = 0;
+-		goto unlock;
++		return;
+ 	}
+ 
++	pmu = event->pmu_ctx->pmu;
+ 	pmu->start_txn(pmu, PERF_PMU_TXN_READ);
+ 
+-	pmu->read(event);
+-
++	perf_pmu_read(event);
+ 	for_each_sibling_event(sub, event)
+ 		perf_pmu_read(sub);
+ 
+ 	data->ret = pmu->commit_txn(pmu);
+-
+-unlock:
+-	raw_spin_unlock(&ctx->lock);
+ }
+ 
+ static inline u64 perf_event_count(struct perf_event *event)
+@@ -13541,7 +13538,7 @@ inherit_event(struct perf_event *parent_event,
+ 	get_ctx(child_ctx);
+ 	child_event->ctx = child_ctx;
+ 
+-	pmu_ctx = find_get_pmu_context(child_event->pmu, child_ctx, child_event);
++	pmu_ctx = find_get_pmu_context(parent_event->pmu_ctx->pmu, child_ctx, child_event);
+ 	if (IS_ERR(pmu_ctx)) {
+ 		free_event(child_event);
+ 		return ERR_CAST(pmu_ctx);
 -- 
 2.51.0
 
