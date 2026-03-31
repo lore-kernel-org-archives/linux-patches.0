@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B751624D5;
-	Tue, 31 Mar 2026 16:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C412EE262;
+	Tue, 31 Mar 2026 16:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974731; cv=none; b=gwLhmzXCffNW62gy3/bqVdzLqg6eZy2Ak+QrniHHVVGA4d5y6kvojtd1sIcVY+JaWeSK0w8Sg/tqYL0j+P4vtpLgps1AxtmDPgIWbdcG6s7FUrryI/Vz/Z0uM2gt45+XGFhOm4CHRK+hOqtq5DHYYMSwASQ1/pT4PJ5IsVjM5xk=
+	t=1774974734; cv=none; b=tKLDboBOZ7fLlQXnN9Dl2hWWr9ADoP+G3whOTPcQ7hRlKbeWTHRzFc3HM0ZYhw/w/rAWvjrW1IzQLMKzC1/mvLiViUhJDk/kTNH2SSEpD9kMa6DMGFx71Bmb/Pb34STpJdFBemICtLCKhLnQerg4q22u5UazynC+787p1QdbV20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974731; c=relaxed/simple;
-	bh=4vocyztRguFNS1tugmB7H6E49uTjNu/DR6tEKCna7PI=;
+	s=arc-20240116; t=1774974734; c=relaxed/simple;
+	bh=akE71Jv4xiYg/mCBSuxw12mhohUmCdr84UcczpAzMbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmF7gWtQhm20kgbrR5b6+rL61hSO7VUUUgvAL1+9auTWdPy5ug+0nz9nsHMpHYrPzIeXS2QdsDs2ByUZ2RJM4D6YMnmTAgZeHwIrhNXr8l7gWespVHskJixPsp/ZqUuJcmvGHW/oh0lCPHq66JNgALvS8jq0ljct+ANpnH42QC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ya1jkepq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SoZ8zIdzz6ICUaGChi8xaHBOrQVHtsn+/7jMEfdwdaabL3hpwzhGBXhs0JJPW2ajKoMRXqqzN9dr8lN/9hy+uFt/1sSJcLYoGSwI1PdlPaBw2E8GJNRfq1+qZcLiyZmwSWh/b6tSbF+JZYBIpXDnEAFOj6egDPlnlGJTyRERVh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bx0jJeb/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ya1jkepq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD53C19423;
-	Tue, 31 Mar 2026 16:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bx0jJeb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F82C19423;
+	Tue, 31 Mar 2026 16:32:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974731;
-	bh=4vocyztRguFNS1tugmB7H6E49uTjNu/DR6tEKCna7PI=;
+	s=korg; t=1774974734;
+	bh=akE71Jv4xiYg/mCBSuxw12mhohUmCdr84UcczpAzMbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ya1jkepqyRPQKKxHTh1ABqvdfq+3j3xveKLjiCOL1yUYt9LR7pOTtDzZ8GqVRrh84
-	 7gT15gX0r/97PJ4QVWneoqbFpN3G7JuF9JmQIgMVKuty6VW3npO/5dt7d6M9O+Y9v2
-	 /Ru2c7Dbsd9RE26CemxMW/hPqx61BrjgQQTfny7I=
+	b=Bx0jJeb/oKL0ND74SaDLfsCOiiuh1m0+3wAn9ddIo9xvydiXO9/t14WGoKF8Ls2KZ
+	 N5PgYThGJpekbqD6+pj21VBmcgAQ9o8N8Z3WdyktdiTBZJwB/pY76rQdZ1rQxeVEgb
+	 qJgNaELdT8teMRgW30T/0Tg0ktAT3Kq1zN4pSxSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Joe Lawrence <joe.lawrence@redhat.com>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 008/342] objtool/klp: fix data alignment in __clone_symbol()
-Date: Tue, 31 Mar 2026 18:17:21 +0200
-Message-ID: <20260331161759.219617896@linuxfoundation.org>
+Subject: [PATCH 6.19 009/342] livepatch/klp-build: Fix inconsistent kernel version
+Date: Tue, 31 Mar 2026 18:17:22 +0200
+Message-ID: <20260331161759.254942270@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,46 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Lawrence <joe.lawrence@redhat.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 2f2600decb3004938762a3f2d0eba3ea9e01045b ]
+[ Upstream commit 6f93f7b06810d04acc6b106a7d5ecd6000f80545 ]
 
-Commit 356e4b2f5b80 ("objtool: Fix data alignment in elf_add_data()")
-corrected the alignment of data within a section (honoring the section's
-sh_addralign).  Apply the same alignment when klp-diff mode clones a
-symbol, adjusting the new symbol's offset for the output section's
-sh_addralign.
+If .config hasn't been synced with auto.conf, any recent changes to
+CONFIG_LOCALVERSION* may not get reflected in the kernel version name.
 
-Fixes: dd590d4d57eb ("objtool/klp: Introduce klp diff subcommand for diffing object files")
+Use "make syncconfig" to force them to sync, and "make -s kernelrelease"
+to get the version instead of having to construct it manually.
+
+Fixes: 24ebfcd65a87 ("livepatch/klp-build: Introduce klp-build script for generating livepatch modules")
+Closes: https://lore.kernel.org/20260217160645.3434685-10-joe.lawrence@redhat.com
+Reported-by: Joe Lawrence <joe.lawrence@redhat.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Joe Lawrence <joe.lawrence@redhat.com>
-Link: https://patch.msgid.link/20260310203751.1479229-2-joe.lawrence@redhat.com
+Acked-by: Song Liu <song@kernel.org>
+Link: https://patch.msgid.link/20260310203751.1479229-10-joe.lawrence@redhat.com
 Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/klp-diff.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ scripts/livepatch/klp-build | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
-index d94632e809558..b1847828217ba 100644
---- a/tools/objtool/klp-diff.c
-+++ b/tools/objtool/klp-diff.c
-@@ -14,6 +14,7 @@
- #include <objtool/util.h>
- #include <arch/special.h>
+diff --git a/scripts/livepatch/klp-build b/scripts/livepatch/klp-build
+index 809e198a561d5..7b82c7503c2bf 100755
+--- a/scripts/livepatch/klp-build
++++ b/scripts/livepatch/klp-build
+@@ -285,15 +285,14 @@ set_module_name() {
+ # application from appending it with '+' due to a dirty git working tree.
+ set_kernelversion() {
+ 	local file="$SRC/scripts/setlocalversion"
+-	local localversion
++	local kernelrelease
  
-+#include <linux/align.h>
- #include <linux/objtool_types.h>
- #include <linux/livepatch_external.h>
- #include <linux/stringify.h>
-@@ -560,7 +561,7 @@ static struct symbol *__clone_symbol(struct elf *elf, struct symbol *patched_sym
- 		}
+ 	stash_file "$file"
  
- 		if (!is_sec_sym(patched_sym))
--			offset = sec_size(out_sec);
-+			offset = ALIGN(sec_size(out_sec), out_sec->sh.sh_addralign);
+-	localversion="$(cd "$SRC" && make --no-print-directory kernelversion)"
+-	localversion="$(cd "$SRC" && KERNELVERSION="$localversion" ./scripts/setlocalversion)"
+-	[[ -z "$localversion" ]] && die "setlocalversion failed"
++	kernelrelease="$(cd "$SRC" && make syncconfig &>/dev/null && make -s kernelrelease)"
++	[[ -z "$kernelrelease" ]] && die "failed to get kernel version"
  
- 		if (patched_sym->len || is_sec_sym(patched_sym)) {
- 			void *data = NULL;
+-	sed -i "2i echo $localversion; exit 0" scripts/setlocalversion
++	sed -i "2i echo $kernelrelease; exit 0" scripts/setlocalversion
+ }
+ 
+ get_patch_files() {
 -- 
 2.51.0
 
