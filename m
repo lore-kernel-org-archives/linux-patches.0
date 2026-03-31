@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC93C426681;
-	Tue, 31 Mar 2026 16:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF4440710B;
+	Tue, 31 Mar 2026 16:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975018; cv=none; b=PEf2zAhq+7rPBz8cMhU7Ns5X+my7qbXsqQ2qkz/9M5VNYZfBTBCW3TgxJkBpx8ILvSrBCf8yUa73xtVdG/oPWSWrOoRBBwhIXhLivrjeWeNETl5FkDuYa/qH+0lCz8h2cR6UU2uB0fFIKZoHLtowhxYJ2m8VYDTs2M9v7MZkDzU=
+	t=1774975021; cv=none; b=QK3C7HEELsOuXTQhYIPSRuMvF3rGgCjax9EoYt72woxisx+WJLBB5H/NkcbZ8gmIZyv4f5nZoGNY0QXgkyyL9UNwIWNzyMwxX08ll9MyO8idcVAZprNf76jfY066MqWn3Hhz+KBd8fhf7GJHvm0aTvHiR9IvNr8pPStdyqrOyh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975018; c=relaxed/simple;
-	bh=ejmxpKQw4mEpyB6374mtuJhmg3a4r9ze3y1yvnlLXjU=;
+	s=arc-20240116; t=1774975021; c=relaxed/simple;
+	bh=KdKYkK4KwUa6ADG54+mtu0nyKydSuDfsfcUz5i5uAIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iohNnfZn5UF1FQ4VKB9ogWiOqkesbTwOPmLvKyE2ysidvcCqgld/RA05tlYlQTQQNmKpGu2ujSr7NYX6kC6DhTaAkNe8/gBfglk0zTYomu7BoTct0Jsngb3/8CYdMIAeQ6vm1ZPBkklssVkVPFX6khCWwebjG5tijBi7tkjh9dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tL6QNe9a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OkOIMnPKrJu5fERGWEgcm9etpYiU/q/K1TtmUFsejd1dLsH95dd92yE5K2UG2a50p1kEWshyBBaSi09ly7WEGChWCodkXHkphbbvZkNmdG56Sl9qyDEkrt+NtsjgK7KEOMzVfAcDw1qs2s5nE1JmkT5u7+/NoFV8qdTdcYUgsjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1mgh7Kr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tL6QNe9a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F1EC2BCB2;
-	Tue, 31 Mar 2026 16:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1mgh7Kr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35CDC19423;
+	Tue, 31 Mar 2026 16:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975018;
-	bh=ejmxpKQw4mEpyB6374mtuJhmg3a4r9ze3y1yvnlLXjU=;
+	s=korg; t=1774975021;
+	bh=KdKYkK4KwUa6ADG54+mtu0nyKydSuDfsfcUz5i5uAIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tL6QNe9azed+eiU5+DxRTneCyvchmpLCVg8+gmTaa1IPnucjAiN6KJ/Sv56G+X8F4
-	 t5OPKHHYHbJgHFXXda1tTYTEK4MkaEhWrXgbdKdoBAfm6aA1k9g7LgcCgXWhyAbVAa
-	 qSk0kNtPraAaA2SoIphqtJA9hg+6pXSKXPgu6Gpo=
+	b=Z1mgh7Krcu+5L+ZQikZjVu7ob3F6jGk9aRMcUK11Af7tqv927tqGQlliiTbV4ojxp
+	 u/MIc1GtocxakJ0n+M9EriCfUPqjhN9mfB50XkDtPzIglzrVmwgCzYRFw+lZFu/7o8
+	 ns+WXBSZ7+fM7mExaZr8T9SEHnc/0qZG5QCQ++lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 125/342] virtio-net: correct hdr_len handling for VIRTIO_NET_F_GUEST_HDRLEN
-Date: Tue, 31 Mar 2026 18:19:18 +0200
-Message-ID: <20260331161803.606330035@linuxfoundation.org>
+Subject: [PATCH 6.19 134/342] Bluetooth: btintel: serialize btintel_hw_error() with hci_req_sync_lock
+Date: Tue, 31 Mar 2026 18:19:27 +0200
+Message-ID: <20260331161803.938378952@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,132 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 38ec410b99a5ee6566f75650ce3d4fd632940fd0 ]
+[ Upstream commit 94d8e6fe5d0818e9300e514e095a200bd5ff93ae ]
 
-The commit be50da3e9d4a ("net: virtio_net: implement exact header length
-guest feature") introduces support for the VIRTIO_NET_F_GUEST_HDRLEN
-feature in virtio-net.
+btintel_hw_error() issues two __hci_cmd_sync() calls (HCI_OP_RESET
+and Intel exception-info retrieval) without holding
+hci_req_sync_lock().  This lets it race against
+hci_dev_do_close() -> btintel_shutdown_combined(), which also runs
+__hci_cmd_sync() under the same lock.  When both paths manipulate
+hdev->req_status/req_rsp concurrently, the close path may free the
+response skb first, and the still-running hw_error path hits a
+slab-use-after-free in kfree_skb().
 
-This feature requires virtio-net to set hdr_len to the actual header
-length of the packet when transmitting, the number of
-bytes from the start of the packet to the beginning of the
-transport-layer payload.
+Wrap the whole recovery sequence in hci_req_sync_lock/unlock so it
+is serialized with every other synchronous HCI command issuer.
 
-However, in practice, hdr_len was being set using skb_headlen(skb),
-which is clearly incorrect. This commit fixes that issue.
+Below is the data race report and the kasan report:
 
-Fixes: be50da3e9d4a ("net: virtio_net: implement exact header length guest feature")
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://patch.msgid.link/20260320021818.111741-2-xuanzhuo@linux.alibaba.com
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  BUG: data-race in __hci_cmd_sync_sk / btintel_shutdown_combined
+
+  read of hdev->req_rsp at net/bluetooth/hci_sync.c:199
+  by task kworker/u17:1/83:
+   __hci_cmd_sync_sk+0x12f2/0x1c30 net/bluetooth/hci_sync.c:200
+   __hci_cmd_sync+0x55/0x80 net/bluetooth/hci_sync.c:223
+   btintel_hw_error+0x114/0x670 drivers/bluetooth/btintel.c:254
+   hci_error_reset+0x348/0xa30 net/bluetooth/hci_core.c:1030
+
+  write/free by task ioctl/22580:
+   btintel_shutdown_combined+0xd0/0x360
+    drivers/bluetooth/btintel.c:3648
+   hci_dev_close_sync+0x9ae/0x2c10 net/bluetooth/hci_sync.c:5246
+   hci_dev_do_close+0x232/0x460 net/bluetooth/hci_core.c:526
+
+  BUG: KASAN: slab-use-after-free in
+   sk_skb_reason_drop+0x43/0x380 net/core/skbuff.c:1202
+  Read of size 4 at addr ffff888144a738dc
+  by task kworker/u17:1/83:
+   __hci_cmd_sync_sk+0x12f2/0x1c30 net/bluetooth/hci_sync.c:200
+   __hci_cmd_sync+0x55/0x80 net/bluetooth/hci_sync.c:223
+   btintel_hw_error+0x186/0x670 drivers/bluetooth/btintel.c:260
+
+Fixes: 973bb97e5aee ("Bluetooth: btintel: Add generic function for handling hardware errors")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun_vnet.h     |  2 +-
- drivers/net/virtio_net.c   |  6 +++++-
- include/linux/virtio_net.h | 34 ++++++++++++++++++++++++++++++----
- 3 files changed, 36 insertions(+), 6 deletions(-)
+ drivers/bluetooth/btintel.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/tun_vnet.h b/drivers/net/tun_vnet.h
-index a5f93b6c4482c..fa5cab9d3e55c 100644
---- a/drivers/net/tun_vnet.h
-+++ b/drivers/net/tun_vnet.h
-@@ -244,7 +244,7 @@ tun_vnet_hdr_tnl_from_skb(unsigned int flags,
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index 9d29ab811f802..5e0a05edcbfd1 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -251,11 +251,13 @@ void btintel_hw_error(struct hci_dev *hdev, u8 code)
  
- 	if (virtio_net_hdr_tnl_from_skb(skb, tnl_hdr, has_tnl_offload,
- 					tun_vnet_is_little_endian(flags),
--					vlan_hlen, true)) {
-+					vlan_hlen, true, false)) {
- 		struct virtio_net_hdr_v1 *hdr = &tnl_hdr->hash_hdr.hdr;
- 		struct skb_shared_info *sinfo = skb_shinfo(skb);
+ 	bt_dev_err(hdev, "Hardware error 0x%2.2x", code);
  
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index db88dcaefb20b..80f08c228407c 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3267,8 +3267,12 @@ static int xmit_skb(struct send_queue *sq, struct sk_buff *skb, bool orphan)
- 	struct virtio_net_hdr_v1_hash_tunnel *hdr;
- 	int num_sg;
- 	unsigned hdr_len = vi->hdr_len;
-+	bool feature_hdrlen;
- 	bool can_push;
- 
-+	feature_hdrlen = virtio_has_feature(vi->vdev,
-+					    VIRTIO_NET_F_GUEST_HDRLEN);
++	hci_req_sync_lock(hdev);
 +
- 	pr_debug("%s: xmit %p %pM\n", vi->dev->name, skb, dest);
+ 	skb = __hci_cmd_sync(hdev, HCI_OP_RESET, 0, NULL, HCI_INIT_TIMEOUT);
+ 	if (IS_ERR(skb)) {
+ 		bt_dev_err(hdev, "Reset after hardware error failed (%ld)",
+ 			   PTR_ERR(skb));
+-		return;
++		goto unlock;
+ 	}
+ 	kfree_skb(skb);
  
- 	/* Make sure it's safe to cast between formats */
-@@ -3288,7 +3292,7 @@ static int xmit_skb(struct send_queue *sq, struct sk_buff *skb, bool orphan)
+@@ -263,18 +265,21 @@ void btintel_hw_error(struct hci_dev *hdev, u8 code)
+ 	if (IS_ERR(skb)) {
+ 		bt_dev_err(hdev, "Retrieving Intel exception info failed (%ld)",
+ 			   PTR_ERR(skb));
+-		return;
++		goto unlock;
+ 	}
  
- 	if (virtio_net_hdr_tnl_from_skb(skb, hdr, vi->tx_tnl,
- 					virtio_is_little_endian(vi->vdev), 0,
--					false))
-+					false, feature_hdrlen))
- 		return -EPROTO;
+ 	if (skb->len != 13) {
+ 		bt_dev_err(hdev, "Exception info size mismatch");
+ 		kfree_skb(skb);
+-		return;
++		goto unlock;
+ 	}
  
- 	if (vi->mergeable_rx_bufs)
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index 75dabb763c650..361b60c8be680 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -207,6 +207,23 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
- 	return __virtio_net_hdr_to_skb(skb, hdr, little_endian, hdr->gso_type);
+ 	bt_dev_err(hdev, "Exception info %s", (char *)(skb->data + 1));
+ 
+ 	kfree_skb(skb);
++
++unlock:
++	hci_req_sync_unlock(hdev);
  }
+ EXPORT_SYMBOL_GPL(btintel_hw_error);
  
-+/* This function must be called after virtio_net_hdr_from_skb(). */
-+static inline void __virtio_net_set_hdrlen(const struct sk_buff *skb,
-+					   struct virtio_net_hdr *hdr,
-+					   bool little_endian)
-+{
-+	u16 hdr_len;
-+
-+	hdr_len = skb_transport_offset(skb);
-+
-+	if (hdr->gso_type == VIRTIO_NET_HDR_GSO_UDP_L4)
-+		hdr_len += sizeof(struct udphdr);
-+	else
-+		hdr_len += tcp_hdrlen(skb);
-+
-+	hdr->hdr_len = __cpu_to_virtio16(little_endian, hdr_len);
-+}
-+
- static inline int virtio_net_hdr_from_skb(const struct sk_buff *skb,
- 					  struct virtio_net_hdr *hdr,
- 					  bool little_endian,
-@@ -385,7 +402,8 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
- 			    bool tnl_hdr_negotiated,
- 			    bool little_endian,
- 			    int vlan_hlen,
--			    bool has_data_valid)
-+			    bool has_data_valid,
-+			    bool feature_hdrlen)
- {
- 	struct virtio_net_hdr *hdr = (struct virtio_net_hdr *)vhdr;
- 	unsigned int inner_nh, outer_th;
-@@ -394,9 +412,17 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
- 
- 	tnl_gso_type = skb_shinfo(skb)->gso_type & (SKB_GSO_UDP_TUNNEL |
- 						    SKB_GSO_UDP_TUNNEL_CSUM);
--	if (!tnl_gso_type)
--		return virtio_net_hdr_from_skb(skb, hdr, little_endian,
--					       has_data_valid, vlan_hlen);
-+	if (!tnl_gso_type) {
-+		ret = virtio_net_hdr_from_skb(skb, hdr, little_endian,
-+					      has_data_valid, vlan_hlen);
-+		if (ret)
-+			return ret;
-+
-+		if (feature_hdrlen && hdr->hdr_len)
-+			__virtio_net_set_hdrlen(skb, hdr, little_endian);
-+
-+		return ret;
-+	}
- 
- 	/* Tunnel support not negotiated but skb ask for it. */
- 	if (!tnl_hdr_negotiated)
 -- 
 2.51.0
 
