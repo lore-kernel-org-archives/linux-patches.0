@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E343019D6;
-	Tue, 31 Mar 2026 17:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489502FF669;
+	Tue, 31 Mar 2026 17:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976717; cv=none; b=Cm/UYxx+uvhQW4ZZvEJSJrK4Xy1bSAU7hD9DxqGDCPrL+Nfu35eTRrESBwDLm98AW5dSAN8gfOSoncrePsSfbIva5Lpu/u1wS/dxWurPSObM18LG1aL/YDhQI1zwULvTl4YJGVdIf62gW+c+Qb0bBobWmy9Rtm2UwqcBJaNEshc=
+	t=1774976719; cv=none; b=Je/QdD4Xi+FFR6/ggUa0yLzxrl099aqZgInp3wJasRKrPOmRllnm7OqJ1dZM86FKWUBNA0E6n3IfUK1wYPPVve3m2GXc9mQjXk4ytmk6UikPNF6kZ79ArUUx3XZeHc2zUsk0Q4ZE6QYznDqqtJ4/1dPiDFyO2x+iYCK6Q+pldEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976717; c=relaxed/simple;
-	bh=XHECGfPKS+XYCVk4a8npHEz7Wrk0OWiSEFG9eXMBUpY=;
+	s=arc-20240116; t=1774976719; c=relaxed/simple;
+	bh=Z1DlU31qXFaILBsktKSEDW6QczejXoe/pbkPbxMyTrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MvuyX+rpHzwCnWQftBneP2rRuKZY3bRhxw/ViL/q0T8r47lZHjgSOPCD79z/15HY2mUl1EernNXcEkFdur6XA2ZcAYwHFlgeLVPLd6fzCFTLBZMaLuWQOVZaSJPF3MKhQY43kJgmuAei3rv5Mk5rhd4R9M4/J1/55JnjgAMCkxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEEuaWXQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mlz/0G3ynUD/wvDoLht7YS4WRHuhzT+gkC45EBVW0uI6WA2eynJCPpuYHmEE5CSIxv3GeEAlu+ndjyIDYinc3TOWO2FSq6XxLgKtxz0FQDK1nBir3/o7FHxL/7b4jOO1sHQbjH9Xezydl/lwIBVioqmxXedXGYNf5/a52JQ9XCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzBWWUpn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEEuaWXQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B932C19423;
-	Tue, 31 Mar 2026 17:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzBWWUpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20B3C19423;
+	Tue, 31 Mar 2026 17:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976716;
-	bh=XHECGfPKS+XYCVk4a8npHEz7Wrk0OWiSEFG9eXMBUpY=;
+	s=korg; t=1774976719;
+	bh=Z1DlU31qXFaILBsktKSEDW6QczejXoe/pbkPbxMyTrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TEEuaWXQfrKLQaXOMTxtFEjjE2uvrqi4nXUpenCB3fteMTqTzcJPGULYGDz9fCc4v
-	 i+K1VrKJVz2lZGr5tq0ScpTP9BInJ4pnkynRLnyLvNnkpZGIw2XvjsBlDPXPpW5QFs
-	 Wbt0p6N/sk6H1yHLu+8Rx7a0jf9iTLxlIOy21FFw=
+	b=FzBWWUpnwPWz1IF1xCQG0gx9pG175HQGDMqC65w+p+0WizJ4Nnb0EkQHN4441IGzU
+	 mPh3t195ZUr+ZHZq05u5WMUTP8aDo1e76rXxyVtyYcw/M5ZRlBgoouNgVDpJ5xXKvz
+	 snBpwX7maHxgAkU+C3VO4AFQZv8VrxJSxaOgvzP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sanman Pradhan <psanman@juniper.net>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 167/309] hwmon: (pmbus) Mark lowest/average/highest/rated attributes as read-only
-Date: Tue, 31 Mar 2026 18:21:10 +0200
-Message-ID: <20260331161759.612147254@linuxfoundation.org>
+Subject: [PATCH 6.18 168/309] hwmon: (pmbus) Introduce the concept of "write-only" attributes
+Date: Tue, 31 Mar 2026 18:21:11 +0200
+Message-ID: <20260331161759.650619688@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -53,275 +53,182 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 805a5bd1c3f307d45ae4e9cf8915ef16d585a54a ]
+[ Upstream commit cd658475e7694d58e1c40dabc1dacf8431ccedb2 ]
 
-Writing those attributes is not supported, so mark them as read-only.
+Attributes intended to clear sensor history are intended to be writeable
+only. Reading those attributes today results in reporting more or less
+random values. To avoid ABI surprises, have those attributes explicitly
+return 0 when reading.
 
-Prior to this change, attempts to write into these attributes returned
-an error.
-
-Mark boolean fields in struct pmbus_limit_attr and in struct
-pmbus_sensor_attr as bit fields to reduce configuration data size.
-The data is scanned only while probing, so performance is not a concern.
-
-Fixes: 6f183d33a02e6 ("hwmon: (pmbus) Add support for peak attributes")
+Fixes: 787c095edaa9d ("hwmon: (pmbus/core) Add support for rated attributes")
 Reviewed-by: Sanman Pradhan <psanman@juniper.net>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 48 ++++++++++++++++++++++++++++----
- 1 file changed, 42 insertions(+), 6 deletions(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index be6d05def1152..ecd1dddcbe0ff 100644
+index ecd1dddcbe0ff..cbc36f0ba4bf9 100644
 --- a/drivers/hwmon/pmbus/pmbus_core.c
 +++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -1495,8 +1495,9 @@ static int pmbus_add_label(struct pmbus_data *data,
- struct pmbus_limit_attr {
+@@ -1209,6 +1209,12 @@ static ssize_t pmbus_show_boolean(struct device *dev,
+ 	return sysfs_emit(buf, "%d\n", val);
+ }
+ 
++static ssize_t pmbus_show_zero(struct device *dev,
++			       struct device_attribute *devattr, char *buf)
++{
++	return sysfs_emit(buf, "0\n");
++}
++
+ static ssize_t pmbus_show_sensor(struct device *dev,
+ 				 struct device_attribute *devattr, char *buf)
+ {
+@@ -1407,7 +1413,7 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
+ 					     int reg,
+ 					     enum pmbus_sensor_classes class,
+ 					     bool update, bool readonly,
+-					     bool convert)
++					     bool writeonly, bool convert)
+ {
+ 	struct pmbus_sensor *sensor;
+ 	struct device_attribute *a;
+@@ -1436,7 +1442,8 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
+ 	sensor->data = -ENODATA;
+ 	pmbus_dev_attr_init(a, sensor->name,
+ 			    readonly ? 0444 : 0644,
+-			    pmbus_show_sensor, pmbus_set_sensor);
++			    writeonly ? pmbus_show_zero : pmbus_show_sensor,
++			    pmbus_set_sensor);
+ 
+ 	if (pmbus_add_attribute(data, &a->attr))
+ 		return NULL;
+@@ -1496,6 +1503,7 @@ struct pmbus_limit_attr {
  	u16 reg;		/* Limit register */
  	u16 sbit;		/* Alarm attribute status bit */
--	bool update;		/* True if register needs updates */
--	bool low;		/* True if low limit; for limits with compare functions only */
-+	bool readonly:1;	/* True if the attribute is read-only */
-+	bool update:1;		/* True if register needs updates */
-+	bool low:1;		/* True if low limit; for limits with compare functions only */
+ 	bool readonly:1;	/* True if the attribute is read-only */
++	bool writeonly:1;	/* True if the attribute is write-only */
+ 	bool update:1;		/* True if register needs updates */
+ 	bool low:1;		/* True if low limit; for limits with compare functions only */
  	const char *attr;	/* Attribute name */
- 	const char *alarm;	/* Alarm attribute name */
- };
-@@ -1511,9 +1512,9 @@ struct pmbus_sensor_attr {
- 	u8 nlimit;			/* # of limit registers */
- 	enum pmbus_sensor_classes class;/* sensor class */
- 	const char *label;		/* sensor label */
--	bool paged;			/* true if paged sensor */
--	bool update;			/* true if update needed */
--	bool compare;			/* true if compare function needed */
-+	bool paged:1;			/* true if paged sensor */
-+	bool update:1;			/* true if update needed */
-+	bool compare:1;			/* true if compare function needed */
- 	u32 func;			/* sensor mask */
- 	u32 sfunc;			/* sensor status mask */
- 	int sreg;			/* status register */
-@@ -1544,7 +1545,7 @@ static int pmbus_add_limit_attrs(struct i2c_client *client,
+@@ -1545,7 +1553,7 @@ static int pmbus_add_limit_attrs(struct i2c_client *client,
  			curr = pmbus_add_sensor(data, name, l->attr, index,
  						page, 0xff, l->reg, attr->class,
  						attr->update || l->update,
--						false, true);
-+						l->readonly, true);
+-						l->readonly, true);
++						l->readonly, l->writeonly, true);
  			if (!curr)
  				return -ENOMEM;
  			if (l->sbit && (info->func[page] & attr->sfunc)) {
-@@ -1707,23 +1708,28 @@ static const struct pmbus_limit_attr vin_limit_attrs[] = {
- 	}, {
- 		.reg = PMBUS_VIRT_READ_VIN_AVG,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "average",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_VIN_MIN,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "lowest",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_VIN_MAX,
- 		.update = true,
-+		.readonly = true,
+@@ -1585,7 +1593,7 @@ static int pmbus_add_sensor_attrs_one(struct i2c_client *client,
+ 			return ret;
+ 	}
+ 	base = pmbus_add_sensor(data, name, "input", index, page, phase,
+-				attr->reg, attr->class, true, true, true);
++				attr->reg, attr->class, true, true, false, true);
+ 	if (!base)
+ 		return -ENOMEM;
+ 	/* No limit and alarm attributes for phase specific sensors */
+@@ -1722,6 +1730,7 @@ static const struct pmbus_limit_attr vin_limit_attrs[] = {
  		.attr = "highest",
  	}, {
  		.reg = PMBUS_VIRT_RESET_VIN_HISTORY,
++		.writeonly = true,
  		.attr = "reset_history",
  	}, {
  		.reg = PMBUS_MFR_VIN_MIN,
-+		.readonly = true,
- 		.attr = "rated_min",
- 	}, {
- 		.reg = PMBUS_MFR_VIN_MAX,
-+		.readonly = true,
- 		.attr = "rated_max",
- 	},
- };
-@@ -1776,23 +1782,28 @@ static const struct pmbus_limit_attr vout_limit_attrs[] = {
- 	}, {
- 		.reg = PMBUS_VIRT_READ_VOUT_AVG,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "average",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_VOUT_MIN,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "lowest",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_VOUT_MAX,
- 		.update = true,
-+		.readonly = true,
+@@ -1796,6 +1805,7 @@ static const struct pmbus_limit_attr vout_limit_attrs[] = {
  		.attr = "highest",
  	}, {
  		.reg = PMBUS_VIRT_RESET_VOUT_HISTORY,
++		.writeonly = true,
  		.attr = "reset_history",
  	}, {
  		.reg = PMBUS_MFR_VOUT_MIN,
-+		.readonly = true,
- 		.attr = "rated_min",
- 	}, {
- 		.reg = PMBUS_MFR_VOUT_MAX,
-+		.readonly = true,
- 		.attr = "rated_max",
- 	},
- };
-@@ -1852,20 +1863,24 @@ static const struct pmbus_limit_attr iin_limit_attrs[] = {
- 	}, {
- 		.reg = PMBUS_VIRT_READ_IIN_AVG,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "average",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_IIN_MIN,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "lowest",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_IIN_MAX,
- 		.update = true,
-+		.readonly = true,
+@@ -1877,6 +1887,7 @@ static const struct pmbus_limit_attr iin_limit_attrs[] = {
  		.attr = "highest",
  	}, {
  		.reg = PMBUS_VIRT_RESET_IIN_HISTORY,
++		.writeonly = true,
  		.attr = "reset_history",
  	}, {
  		.reg = PMBUS_MFR_IIN_MAX,
-+		.readonly = true,
- 		.attr = "rated_max",
- 	},
- };
-@@ -1889,20 +1904,24 @@ static const struct pmbus_limit_attr iout_limit_attrs[] = {
- 	}, {
- 		.reg = PMBUS_VIRT_READ_IOUT_AVG,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "average",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_IOUT_MIN,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "lowest",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_IOUT_MAX,
- 		.update = true,
-+		.readonly = true,
+@@ -1918,6 +1929,7 @@ static const struct pmbus_limit_attr iout_limit_attrs[] = {
  		.attr = "highest",
  	}, {
  		.reg = PMBUS_VIRT_RESET_IOUT_HISTORY,
++		.writeonly = true,
  		.attr = "reset_history",
  	}, {
  		.reg = PMBUS_MFR_IOUT_MAX,
-+		.readonly = true,
- 		.attr = "rated_max",
- 	},
- };
-@@ -1943,20 +1962,24 @@ static const struct pmbus_limit_attr pin_limit_attrs[] = {
- 	}, {
- 		.reg = PMBUS_VIRT_READ_PIN_AVG,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "average",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_PIN_MIN,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "input_lowest",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_PIN_MAX,
- 		.update = true,
-+		.readonly = true,
+@@ -1976,6 +1988,7 @@ static const struct pmbus_limit_attr pin_limit_attrs[] = {
  		.attr = "input_highest",
  	}, {
  		.reg = PMBUS_VIRT_RESET_PIN_HISTORY,
++		.writeonly = true,
  		.attr = "reset_history",
  	}, {
  		.reg = PMBUS_MFR_PIN_MAX,
-+		.readonly = true,
- 		.attr = "rated_max",
- 	},
- };
-@@ -1980,20 +2003,24 @@ static const struct pmbus_limit_attr pout_limit_attrs[] = {
- 	}, {
- 		.reg = PMBUS_VIRT_READ_POUT_AVG,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "average",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_POUT_MIN,
- 		.update = true,
-+		.readonly = true,
- 		.attr = "input_lowest",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_POUT_MAX,
- 		.update = true,
-+		.readonly = true,
+@@ -2017,6 +2030,7 @@ static const struct pmbus_limit_attr pout_limit_attrs[] = {
  		.attr = "input_highest",
  	}, {
  		.reg = PMBUS_VIRT_RESET_POUT_HISTORY,
++		.writeonly = true,
  		.attr = "reset_history",
  	}, {
  		.reg = PMBUS_MFR_POUT_MAX,
-+		.readonly = true,
- 		.attr = "rated_max",
- 	},
- };
-@@ -2049,18 +2076,22 @@ static const struct pmbus_limit_attr temp_limit_attrs[] = {
- 		.sbit = PB_TEMP_OT_FAULT,
- 	}, {
- 		.reg = PMBUS_VIRT_READ_TEMP_MIN,
-+		.readonly = true,
- 		.attr = "lowest",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_TEMP_AVG,
-+		.readonly = true,
- 		.attr = "average",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_TEMP_MAX,
-+		.readonly = true,
+@@ -2088,6 +2102,7 @@ static const struct pmbus_limit_attr temp_limit_attrs[] = {
  		.attr = "highest",
  	}, {
  		.reg = PMBUS_VIRT_RESET_TEMP_HISTORY,
++		.writeonly = true,
  		.attr = "reset_history",
  	}, {
  		.reg = PMBUS_MFR_MAX_TEMP_1,
-+		.readonly = true,
- 		.attr = "rated_max",
- 	},
- };
-@@ -2090,18 +2121,22 @@ static const struct pmbus_limit_attr temp_limit_attrs2[] = {
- 		.sbit = PB_TEMP_OT_FAULT,
- 	}, {
- 		.reg = PMBUS_VIRT_READ_TEMP2_MIN,
-+		.readonly = true,
- 		.attr = "lowest",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_TEMP2_AVG,
-+		.readonly = true,
- 		.attr = "average",
- 	}, {
- 		.reg = PMBUS_VIRT_READ_TEMP2_MAX,
-+		.readonly = true,
+@@ -2133,6 +2148,7 @@ static const struct pmbus_limit_attr temp_limit_attrs2[] = {
  		.attr = "highest",
  	}, {
  		.reg = PMBUS_VIRT_RESET_TEMP2_HISTORY,
++		.writeonly = true,
  		.attr = "reset_history",
  	}, {
  		.reg = PMBUS_MFR_MAX_TEMP_2,
-+		.readonly = true,
- 		.attr = "rated_max",
- 	},
- };
-@@ -2131,6 +2166,7 @@ static const struct pmbus_limit_attr temp_limit_attrs3[] = {
- 		.sbit = PB_TEMP_OT_FAULT,
- 	}, {
- 		.reg = PMBUS_MFR_MAX_TEMP_3,
-+		.readonly = true,
- 		.attr = "rated_max",
- 	},
- };
+@@ -2250,7 +2266,7 @@ static int pmbus_add_fan_ctrl(struct i2c_client *client,
+ 
+ 	sensor = pmbus_add_sensor(data, "fan", "target", index, page,
+ 				  0xff, PMBUS_VIRT_FAN_TARGET_1 + id, PSC_FAN,
+-				  false, false, true);
++				  false, false, false, true);
+ 
+ 	if (!sensor)
+ 		return -ENOMEM;
+@@ -2261,14 +2277,14 @@ static int pmbus_add_fan_ctrl(struct i2c_client *client,
+ 
+ 	sensor = pmbus_add_sensor(data, "pwm", NULL, index, page,
+ 				  0xff, PMBUS_VIRT_PWM_1 + id, PSC_PWM,
+-				  false, false, true);
++				  false, false, false, true);
+ 
+ 	if (!sensor)
+ 		return -ENOMEM;
+ 
+ 	sensor = pmbus_add_sensor(data, "pwm", "enable", index, page,
+ 				  0xff, PMBUS_VIRT_PWM_ENABLE_1 + id, PSC_PWM,
+-				  true, false, false);
++				  true, false, false, false);
+ 
+ 	if (!sensor)
+ 		return -ENOMEM;
+@@ -2310,7 +2326,7 @@ static int pmbus_add_fan_attributes(struct i2c_client *client,
+ 
+ 			if (pmbus_add_sensor(data, "fan", "input", index,
+ 					     page, 0xff, pmbus_fan_registers[f],
+-					     PSC_FAN, true, true, true) == NULL)
++					     PSC_FAN, true, true, false, true) == NULL)
+ 				return -ENOMEM;
+ 
+ 			/* Fan control */
 -- 
 2.53.0
 
