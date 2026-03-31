@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B81F30E0DC;
-	Tue, 31 Mar 2026 16:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF3A3FADF9;
+	Tue, 31 Mar 2026 16:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974302; cv=none; b=pbCBLCmSvo7i6BxBsdiylzJpYTZRtDkE4MeLlemNj0Fk1wzxH0Qbfe8tuJNN7D77apE0egPuiRQKHQCxaLs+/q0lUoLkpuWjoPuEehbyBzaFfJNxuS+vUYvGshVj4u2wVV7XwsEYgQthevHak2aM4kDk1YQ3YV8dbIOJqxfOpJc=
+	t=1774974304; cv=none; b=YB/pN9Re4O4hjTftNYyYRvFRWq47aY+WBJo9SVpF16AjxRcl8gV4XmcBoONu3Oy8Je3V0VibrsM35wWO7mi0LUe960I1LF2PropQrvFodzne6llGNSzjuDijs532XFrmsVWOMQNBhcoTk9xx0kMgSVB8cWImALoWFoXej8HUI2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974302; c=relaxed/simple;
-	bh=xR4cnQOvAbK0/wqG2t4wLZcIA5exNZNmKycVfmsIlbI=;
+	s=arc-20240116; t=1774974304; c=relaxed/simple;
+	bh=SESgMhkFm7kHovOuPO9XXVUZaxtSkgVcI6WyuWQeNlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cogvEHYu1iUTEByta+JmsYTrApJU4ut3WCspO3WMU6+WN3CGovKC1aSpOTXeW0qECJbMGqeB16yS+IDHhLwzZWxYMOehYU1AXWJdDtwsZiMBrJGxqRFdH0t+T3xzy8dnIuQXGcRn42zA0NfK4qqbdihN94hrS2TlKSfip+YBV8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lA8WU46u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c3WX7jVE2Y/ziDUgL1m0lKHENTdkYSYOFuwEwN/uaj4kDqnxQLB4ASNZ2Apvz/pKBCd/BQ8pBNW8FBq8O9mT0rB9nTR+ZYdTK8cVKCNksBIk2bmOZPpWcPApKTSiWinh+EOjkyIrfsBYO4xjsE46wX8Z05SevH3V7iiVxXo3Y9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhZhFepz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lA8WU46u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA7CC19423;
-	Tue, 31 Mar 2026 16:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhZhFepz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40142C19423;
+	Tue, 31 Mar 2026 16:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974301;
-	bh=xR4cnQOvAbK0/wqG2t4wLZcIA5exNZNmKycVfmsIlbI=;
+	s=korg; t=1774974304;
+	bh=SESgMhkFm7kHovOuPO9XXVUZaxtSkgVcI6WyuWQeNlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lA8WU46uWD67Cs9CujhdFOmUMcHnHjay5ZrOlxeWJuvCjHP+dCeCf7jhv6YlXIVL9
-	 JH1iQcri7YpIjwu4aPHPz9twQSOtcTzzUgl1M2v2uua28VvRyyoZH9mxDZgvLd/l8K
-	 iZNe8AJs86LkIGXZe25kSt9sz+WxcE/x7M76idEg=
+	b=LhZhFepz9ndslVbj5E7gZ8upcaQataNvtkpU9I+YiUmZUN8Lm2S1umMbTRYFaPEyF
+	 UFW/uOfC/bL+fFmOV5KrWNgu9CvvjclmyvsaqfzIYYqCVdFUOcprGIy8UrNqdwIuLL
+	 DLq8raO9UhAu7Ipq9C+9RSiMT/e9K1Wim7TfQNaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/175] spi: intel-pci: Add support for Nova Lake mobile SPI flash
-Date: Tue, 31 Mar 2026 18:20:16 +0200
-Message-ID: <20260331161730.966478605@linuxfoundation.org>
+Subject: [PATCH 6.6 006/175] hwmon: axi-fan: dont use driver_override as IRQ name
+Date: Tue, 31 Mar 2026 18:19:50 +0200
+Message-ID: <20260331161730.017651713@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -46,40 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 85b731ad4bbf6eb3fedf267ab00be3596f148432 ]
+[ Upstream commit 813bbc4d33d2ca5b0da63e70ae13b60874f20d37 ]
 
-Add Intel Nova Lake PCD-H SPI serial flash PCI ID to the list of
-supported devices.
+Do not use driver_override as IRQ name, as it is not guaranteed to point
+to a valid string; use NULL instead (which makes the devm IRQ helpers
+use dev_name()).
 
-Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/20260309153703.74282-1-alan.borzeszkowski@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8412b410fa5e ("hwmon: Support ADI Fan Control IP")
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Acked-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260303115720.48783-4-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-intel-pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/axi-fan-control.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
-index 5c0dec90eec1d..43692315ea305 100644
---- a/drivers/spi/spi-intel-pci.c
-+++ b/drivers/spi/spi-intel-pci.c
-@@ -86,6 +86,7 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
- 	{ PCI_VDEVICE(INTEL, 0xa324), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xa3a4), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xa823), (unsigned long)&cnl_info },
-+	{ PCI_VDEVICE(INTEL, 0xd323), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xe323), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xe423), (unsigned long)&cnl_info },
- 	{ },
+diff --git a/drivers/hwmon/axi-fan-control.c b/drivers/hwmon/axi-fan-control.c
+index df99cad16b208..641cc06c77aff 100644
+--- a/drivers/hwmon/axi-fan-control.c
++++ b/drivers/hwmon/axi-fan-control.c
+@@ -507,7 +507,7 @@ static int axi_fan_control_probe(struct platform_device *pdev)
+ 	ret = devm_request_threaded_irq(&pdev->dev, ctl->irq, NULL,
+ 					axi_fan_control_irq_handler,
+ 					IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
+-					pdev->driver_override, ctl);
++					NULL, ctl);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret,
+ 				     "failed to request an irq\n");
 -- 
 2.51.0
 
