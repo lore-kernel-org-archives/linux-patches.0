@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30A72C15B2;
-	Tue, 31 Mar 2026 16:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E822C15B2;
+	Tue, 31 Mar 2026 16:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975809; cv=none; b=rtSamnAxeHLDrotgf6zisnhNU+60nruuiWrNEEddmq4+eObIZ4JGKYvOfkaW+hH2slUNjpShdMUDcXSTtleAPvNmhN2HKNrD3HtwRXfN1s+Zavbz+pm8dW26nAuDxEyVRMe4nhlFohCcYJDGdpKSDMxW0EP45yoof3zlpvqOhFE=
+	t=1774975811; cv=none; b=IqN0pf4pv+yc1v68ArfdaYfi7xXa91r+CQS+i9V3Xs65kk6sR2/RxCFsQe/UokrZAMiAnAScwxEuaIyi0m9QJ+VWwY8bawt9jHMX8mZ4a0JIX0dSJssHaoFI+Tp8lQGThzZwngU+gsZ23YjggJHIMkQshjeI/rH8bDxgVuXr788=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975809; c=relaxed/simple;
-	bh=QAKmJOijuJFuvO1pj6OmxijyB1hlvcaAz/44aTorOJo=;
+	s=arc-20240116; t=1774975811; c=relaxed/simple;
+	bh=cakKbTh4hdXXiddk9mBx+hbJWa0oEhiUTgH8PYoLBa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ki6UkMprb/8QhFA6mfqFI/ZYTjdAK2lu8eexU3V5qR5hUNwL8tNzw+xOeQikxwy0qJ0rIM36AaVkd54/yzCMNgQmO/CDxgLRjYg/8IKYzjCM4dlTlOUXDzaxw8x0WzVy1p7vq5G+bWAg4hda3F0QZ/9Aaj4lWVg3X7fhy+mqGyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/Tob3b9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XK74xBAF0VxggZhTSOVwnaJefzkOCUtNsOIRq6ulOB3kVvyT1tLV0XxjJtgnuZpDG1k/H8HZzQ8fqqFJXXyEmZF3o5RvUsUOtXoJ/pvmR6H9xv7olr2r1v246K9/U5gV5TEPfGyJ8mbUDAgwE/rXqgBpiVtodiE/ijvUhI5FPfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIBqB2Kv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/Tob3b9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E555C19423;
-	Tue, 31 Mar 2026 16:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIBqB2Kv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990B0C19423;
+	Tue, 31 Mar 2026 16:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975808;
-	bh=QAKmJOijuJFuvO1pj6OmxijyB1hlvcaAz/44aTorOJo=;
+	s=korg; t=1774975810;
+	bh=cakKbTh4hdXXiddk9mBx+hbJWa0oEhiUTgH8PYoLBa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q/Tob3b95vvv09O09TT+D4HHdLIE738ckQLaAEbnQq7xvwlfP+Us/UJtVampU9HSO
-	 +dZe5sT7Hl3JgTs2mMTJTr96BuJxf7OFiIHP9/5o/r6OYswLoMag6kp476q87KjhwA
-	 IChDMWeGGH69+OEXajNWuwT9kFWY0AzK/MDlneT4=
+	b=CIBqB2KvZjFVkHnXdCFYcPmvhJYusCpdbwUSxsUnEppxySiZKHr6ujdMRwrh8g4qt
+	 5fiDo/XgIUkczkL5tETCkzGx5KdGgnWQc5JnL5d8L8fKxa8u8+LeZZn1UU1ng17Sf+
+	 qwuhyzZeorB2mB5yXpyatBI9I5Qu1WTv7oYJgnj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Chen <zhangchen01@kylinos.cn>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/244] Bluetooth: L2CAP: Fix send LE flow credits in ACL link
-Date: Tue, 31 Mar 2026 18:20:44 +0200
-Message-ID: <20260331161745.148143250@linuxfoundation.org>
+Subject: [PATCH 6.12 095/244] Bluetooth: btintel: serialize btintel_hw_error() with hci_req_sync_lock
+Date: Tue, 31 Mar 2026 18:20:45 +0200
+Message-ID: <20260331161745.184776659@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,47 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Chen <zhangchen01@kylinos.cn>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit f39f905e55f529b036321220af1ba4f4085564a5 ]
+[ Upstream commit 94d8e6fe5d0818e9300e514e095a200bd5ff93ae ]
 
-When the L2CAP channel mode is L2CAP_MODE_ERTM/L2CAP_MODE_STREAMING,
-l2cap_publish_rx_avail will be called and le flow credits will be sent in
-l2cap_chan_rx_avail, even though the link type is ACL.
+btintel_hw_error() issues two __hci_cmd_sync() calls (HCI_OP_RESET
+and Intel exception-info retrieval) without holding
+hci_req_sync_lock().  This lets it race against
+hci_dev_do_close() -> btintel_shutdown_combined(), which also runs
+__hci_cmd_sync() under the same lock.  When both paths manipulate
+hdev->req_status/req_rsp concurrently, the close path may free the
+response skb first, and the still-running hw_error path hits a
+slab-use-after-free in kfree_skb().
 
-The logs in question as follows:
-> ACL Data RX: Handle 129 flags 0x02 dlen 12
-      L2CAP: Unknown (0x16) ident 4 len 4
-        40 00 ed 05
-< ACL Data TX: Handle 129 flags 0x00 dlen 10
-      L2CAP: Command Reject (0x01) ident 4 len 2
-        Reason: Command not understood (0x0000)
+Wrap the whole recovery sequence in hci_req_sync_lock/unlock so it
+is serialized with every other synchronous HCI command issuer.
 
-Bluetooth: Unknown BR/EDR signaling command 0x16
-Bluetooth: Wrong link type (-22)
+Below is the data race report and the kasan report:
 
-Fixes: ce60b9231b66 ("Bluetooth: compute LE flow credits based on recvbuf space")
-Signed-off-by: Zhang Chen <zhangchen01@kylinos.cn>
+  BUG: data-race in __hci_cmd_sync_sk / btintel_shutdown_combined
+
+  read of hdev->req_rsp at net/bluetooth/hci_sync.c:199
+  by task kworker/u17:1/83:
+   __hci_cmd_sync_sk+0x12f2/0x1c30 net/bluetooth/hci_sync.c:200
+   __hci_cmd_sync+0x55/0x80 net/bluetooth/hci_sync.c:223
+   btintel_hw_error+0x114/0x670 drivers/bluetooth/btintel.c:254
+   hci_error_reset+0x348/0xa30 net/bluetooth/hci_core.c:1030
+
+  write/free by task ioctl/22580:
+   btintel_shutdown_combined+0xd0/0x360
+    drivers/bluetooth/btintel.c:3648
+   hci_dev_close_sync+0x9ae/0x2c10 net/bluetooth/hci_sync.c:5246
+   hci_dev_do_close+0x232/0x460 net/bluetooth/hci_core.c:526
+
+  BUG: KASAN: slab-use-after-free in
+   sk_skb_reason_drop+0x43/0x380 net/core/skbuff.c:1202
+  Read of size 4 at addr ffff888144a738dc
+  by task kworker/u17:1/83:
+   __hci_cmd_sync_sk+0x12f2/0x1c30 net/bluetooth/hci_sync.c:200
+   __hci_cmd_sync+0x55/0x80 net/bluetooth/hci_sync.c:223
+   btintel_hw_error+0x186/0x670 drivers/bluetooth/btintel.c:260
+
+Fixes: 973bb97e5aee ("Bluetooth: btintel: Add generic function for handling hardware errors")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bluetooth/btintel.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index c65724d19fcfe..58679045093a9 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6554,6 +6554,10 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
- 	struct l2cap_le_credits pkt;
- 	u16 return_credits = l2cap_le_rx_credits(chan);
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index 3a4db68fc2e63..6e3e4a817e727 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -245,11 +245,13 @@ void btintel_hw_error(struct hci_dev *hdev, u8 code)
  
-+	if (chan->mode != L2CAP_MODE_LE_FLOWCTL &&
-+	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
-+		return;
+ 	bt_dev_err(hdev, "Hardware error 0x%2.2x", code);
+ 
++	hci_req_sync_lock(hdev);
 +
- 	if (chan->rx_credits >= return_credits)
- 		return;
+ 	skb = __hci_cmd_sync(hdev, HCI_OP_RESET, 0, NULL, HCI_INIT_TIMEOUT);
+ 	if (IS_ERR(skb)) {
+ 		bt_dev_err(hdev, "Reset after hardware error failed (%ld)",
+ 			   PTR_ERR(skb));
+-		return;
++		goto unlock;
+ 	}
+ 	kfree_skb(skb);
+ 
+@@ -257,18 +259,21 @@ void btintel_hw_error(struct hci_dev *hdev, u8 code)
+ 	if (IS_ERR(skb)) {
+ 		bt_dev_err(hdev, "Retrieving Intel exception info failed (%ld)",
+ 			   PTR_ERR(skb));
+-		return;
++		goto unlock;
+ 	}
+ 
+ 	if (skb->len != 13) {
+ 		bt_dev_err(hdev, "Exception info size mismatch");
+ 		kfree_skb(skb);
+-		return;
++		goto unlock;
+ 	}
+ 
+ 	bt_dev_err(hdev, "Exception info %s", (char *)(skb->data + 1));
+ 
+ 	kfree_skb(skb);
++
++unlock:
++	hci_req_sync_unlock(hdev);
+ }
+ EXPORT_SYMBOL_GPL(btintel_hw_error);
  
 -- 
 2.51.0
