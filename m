@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934583F9F5E;
-	Tue, 31 Mar 2026 16:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B89D3E3174;
+	Tue, 31 Mar 2026 16:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974490; cv=none; b=dUbdDYeV7b7JH6d6DF1z0asxlu7J/niG0wUILYkMemfl6r+pb33f4jXysSLaWIrVnTXMxalVf/4n/n7lt+8qx9kSzlDu6QgHKjsZhMr7A9AfBdyrWdrAjeO0XmF+I8lcqKkDH/MgbqnfML2/2f1WWYfoSeJ4vlsQC8LLpzsWDxg=
+	t=1774974493; cv=none; b=s3C7n+4zN3VAGxmsdcpbgtGhUr+pXvkd8EwajD2PlJ0m9jr/oG20UMp0ogCGHLvaR206aW/VFz2+SVL3EvhFt+cnvkvVcDsbKPR5HOBPRp9S0ajzTsW/7HFB3/PRP4UewIiPQJoJZ3d+3dA88J2D1PV+f/saKL+aM/GdaA0cOXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974490; c=relaxed/simple;
-	bh=bxltIHO4PsHhVDu+u4HassSnBi4UUJxbVshu8Fg94sE=;
+	s=arc-20240116; t=1774974493; c=relaxed/simple;
+	bh=T+lET38Q28cpG5PTvgQIsl31kCER/lt5Ea3QOtcJA3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fXvSuP7gHCUnDXwZDMc+W676V+vGXwonwbNDokL/a5Y8sOGXN+zTNktiHwKp6f5GcncupezCTRvWwWI9NcXQp7LWF9/iGAEi703nVTmjfhPJ18DtB8i1/zAfbuqVNGL1VzAiY7ta1Fvo/TUSojb7NoFmOfIAsrk7a7853Ue+Erw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fa2GuXDp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HwDSeSr6qSPPaXHLiMoxkGwWXigp6w6m4iRZdp2+Pd7/y4rOyUbAAsUByQJIJZ8i01DH2kzP3zCuICRdGlsLFcwI5mm+9NHwioxMQWVs4XsjAk0fHv9jME7PLZPEpNDJkyTOhAZUIU2IiwaTXve4KrYwkuz8zCiMHybCFDKKe6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F98a/ijt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fa2GuXDp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22272C19423;
-	Tue, 31 Mar 2026 16:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F98a/ijt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA43FC2BCB2;
+	Tue, 31 Mar 2026 16:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974490;
-	bh=bxltIHO4PsHhVDu+u4HassSnBi4UUJxbVshu8Fg94sE=;
+	s=korg; t=1774974493;
+	bh=T+lET38Q28cpG5PTvgQIsl31kCER/lt5Ea3QOtcJA3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fa2GuXDp5aHdgXGMiE3W63T3nPCxz3a5eeSavxlRrdnKJPrRp6GGPrzNNno0wd9J7
-	 fshuNiF90hV4S7rOeKE5xf7aXaPyNcfMjTRNRwbyKQWOkLtRc0fSvd2eoxUu7jYYj0
-	 LSuFCs0vjHXo8dmVntVENl2CijhG/SM5ublUzGO0=
+	b=F98a/ijtqoNiqSfS3Mj7ymqO+MpRRqIzYRgqwnbzLRUP7GEivSDMtqNnghmV54SNz
+	 /lpZEqZWGO4k8YjkOO8gs3/sltA1xn6xB+lkb+qa6G3xXCXgFO4ipM4in89XniCACu
+	 WykJOC7Z+LhJwiEyPBycm2ST5Nyk0vcwinEPRSCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 104/175] ASoC: SOF: ipc4-topology: Allow bytes controls without initial payload
-Date: Tue, 31 Mar 2026 18:21:28 +0200
-Message-ID: <20260331161733.602177836@linuxfoundation.org>
+	Ali Norouzi <ali.norouzi@keysight.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.6 105/175] can: gw: fix OOB heap access in cgw_csum_crc8_rel()
+Date: Tue, 31 Mar 2026 18:21:29 +0200
+Message-ID: <20260331161733.639147309@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -54,40 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Ali Norouzi <ali.norouzi@keysight.com>
 
-commit d40a198e2b7821197c5c77b89d0130cc90f400f5 upstream.
+commit b9c310d72783cc2f30d103eed83920a5a29c671a upstream.
 
-It is unexpected, but allowed to have no initial payload for a bytes
-control and the code is prepared to handle this case, but the size check
-missed this corner case.
+cgw_csum_crc8_rel() correctly computes bounds-safe indices via calc_idx():
 
-Update the check for minimal size to allow the initial size to be 0.
+    int from = calc_idx(crc8->from_idx, cf->len);
+    int to   = calc_idx(crc8->to_idx,   cf->len);
+    int res  = calc_idx(crc8->result_idx, cf->len);
 
+    if (from < 0 || to < 0 || res < 0)
+        return;
+
+However, the loop and the result write then use the raw s8 fields directly
+instead of the computed variables:
+
+    for (i = crc8->from_idx; ...)        /* BUG: raw negative index */
+    cf->data[crc8->result_idx] = ...;    /* BUG: raw negative index */
+
+With from_idx = to_idx = result_idx = -64 on a 64-byte CAN FD frame,
+calc_idx(-64, 64) = 0 so the guard passes, but the loop iterates with
+i = -64, reading cf->data[-64], and the write goes to cf->data[-64].
+This write might end up to 56 (7.0-rc) or 40 (<= 6.19) bytes before the
+start of the canfd_frame on the heap.
+
+The companion function cgw_csum_xor_rel() uses `from`/`to`/`res`
+correctly throughout; fix cgw_csum_crc8_rel() to match.
+
+Confirmed with KASAN on linux-7.0-rc2:
+  BUG: KASAN: slab-out-of-bounds in cgw_csum_crc8_rel+0x515/0x5b0
+  Read of size 1 at addr ffff8880076619c8 by task poc_cgw_oob/62
+
+To configure the can-gw crc8 checksums CAP_NET_ADMIN is needed.
+
+Fixes: 456a8a646b25 ("can: gw: add support for CAN FD frames")
 Cc: stable@vger.kernel.org
-Fixes: a653820700b8 ("ASoC: SOF: ipc4-topology: Correct the allocation size for bytes controls")
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://patch.msgid.link/20260326075618.1603-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Ali Norouzi <ali.norouzi@keysight.com>
+Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Ali Norouzi <ali.norouzi@keysight.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260319-fix-can-gw-and-can-isotp-v2-1-c45d52c6d2d8@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-topology.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/can/gw.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -2203,7 +2203,7 @@ static int sof_ipc4_control_load_bytes(s
- 		return -EINVAL;
+--- a/net/can/gw.c
++++ b/net/can/gw.c
+@@ -374,10 +374,10 @@ static void cgw_csum_crc8_rel(struct can
+ 		return;
+ 
+ 	if (from <= to) {
+-		for (i = crc8->from_idx; i <= crc8->to_idx; i++)
++		for (i = from; i <= to; i++)
+ 			crc = crc8->crctab[crc ^ cf->data[i]];
+ 	} else {
+-		for (i = crc8->from_idx; i >= crc8->to_idx; i--)
++		for (i = from; i >= to; i--)
+ 			crc = crc8->crctab[crc ^ cf->data[i]];
  	}
  
--	if (scontrol->priv_size < sizeof(struct sof_abi_hdr)) {
-+	if (scontrol->priv_size && scontrol->priv_size < sizeof(struct sof_abi_hdr)) {
- 		dev_err(sdev->dev,
- 			"bytes control %s initial data size %zu is insufficient.\n",
- 			scontrol->name, scontrol->priv_size);
+@@ -396,7 +396,7 @@ static void cgw_csum_crc8_rel(struct can
+ 		break;
+ 	}
+ 
+-	cf->data[crc8->result_idx] = crc ^ crc8->final_xor_val;
++	cf->data[res] = crc ^ crc8->final_xor_val;
+ }
+ 
+ static void cgw_csum_crc8_pos(struct canfd_frame *cf,
 
 
