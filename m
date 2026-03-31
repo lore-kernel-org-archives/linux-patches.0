@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CEC3EF0A2;
-	Tue, 31 Mar 2026 16:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CD231714F;
+	Tue, 31 Mar 2026 16:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975462; cv=none; b=F3JVEWMny2wQ5hxtyJAT3GEfupD/+xYdTL/NE6+TTcM9crqLyEL2yr3b7eK8yKem2/VTt8sCRDbNMMU1+YLeZQM4s12uUq4lkNlN+TmKBG7hmjNyRKsbr0DqHuXnen+T9Tl1OHUj5iSgdPQeAgC6T9GQfa0mFl6zkzzHEEGOdTI=
+	t=1774975465; cv=none; b=PqVX6ODjCPTUuzmPCuGJPr5qDrgbSNaiqLdj+v2fl1AenE7/JCnLEUgVGSY+vc7zMUxLM3fiAh6Flrg+vjTTvftmy/BVGX1J2/Z9YImIN6Yc+4ekzFBj19Wzf0X15v5cnO+9QCmm+lCUOKOQdZbwD+95U10up7HCMvgDoYaDcOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975462; c=relaxed/simple;
-	bh=AXSyTOf4IPT5hNETx8J2gJtjtp/muLR0b3BN4Nxy5nM=;
+	s=arc-20240116; t=1774975465; c=relaxed/simple;
+	bh=uVKSFFmAegvt8VY+NsHV3F3uHX2M/GCT5gzi8sV/lu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8capUKs4OtV3LXZvWw534Azt/7qdcqxbmGKuVWmN15p2HrGuXD0TpwIvPcfNJTa92L3J6ECVHyim1QOW6C+QXX+yBeZUNoblXAlM7t4pJhYNQruBqD4wpHXowTPHg3QpeRD0NHh/7Fnima+riOYwFyj+eSd6sGbILNiAvhPBd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JA+IROeK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b1FrIVPESrYDMGRceU8eC/gjgngqWIGmlSiXTslk0Sie7dQnZH+tlowo3uiXJd7X6OJNO07lZTD4Rn8XqFsHJngFlv5qJ3d65JoQjSvf1RCNQuGMxLC0v4/F4FtDgNEcQ864T2gaer5FzsWoXaqT/gR/7PQxk+/FxPIsJQuUe+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNeFll0G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JA+IROeK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A810C19423;
-	Tue, 31 Mar 2026 16:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNeFll0G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E6CC19423;
+	Tue, 31 Mar 2026 16:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975462;
-	bh=AXSyTOf4IPT5hNETx8J2gJtjtp/muLR0b3BN4Nxy5nM=;
+	s=korg; t=1774975464;
+	bh=uVKSFFmAegvt8VY+NsHV3F3uHX2M/GCT5gzi8sV/lu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JA+IROeK1NuSngdk8Du90OGQfDUa/6HTjvnwAfXYN6hIun0PjYy3HkWcF6vZO7Y2C
-	 jqkl/91tJ36CYZOhKiiH0wj6Si4NWQQt1CVcdFhrUvXFwS0/G6OqhKMCXRAvE5bCo4
-	 w5XyRXw0g1NOxxv5yOd0qv0a8gNTMOuDA7bgHAbk=
+	b=dNeFll0GlVGUmkVQEY4BCFt0ONB6DEDAKoigLJdRYrMBm3kXh7g1srQdqw4Z63pyg
+	 dkmSochCYhTbdUUuI7XcXvCNx+wlWTFxoGvyTrsaOOOy64IAEjoNhcPhkmWg1+UCJ6
+	 cYYQz/NqUungR4WkQeKoNA6B5fDBdw3FsD8kxy+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
+	Qianhai Wu <wuqianhai@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.19 271/342] LoongArch: vDSO: Emit GNU_EH_FRAME correctly
-Date: Tue, 31 Mar 2026 18:21:44 +0200
-Message-ID: <20260331161808.917227849@linuxfoundation.org>
+Subject: [PATCH 6.19 272/342] LoongArch: Workaround LS2K/LS7A GPU DMA hang bug
+Date: Tue, 31 Mar 2026 18:21:45 +0200
+Message-ID: <20260331161808.953271049@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -50,208 +50,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit e4878c37f6679fdea91b27a0f4e60a871f0b7bad upstream.
+commit 95db0c9f526d583634cddb2e5914718570fbac87 upstream.
 
-With -fno-asynchronous-unwind-tables and --no-eh-frame-hdr (the default
-of the linker), the GNU_EH_FRAME segment (specified by vdso.lds.S) is
-empty.  This is not valid, as the current DWARF specification mandates
-the first byte of the EH frame to be the version number 1.  It causes
-some unwinders to complain, for example the ClickHouse query profiler
-spams the log with messages:
+1. Hardware limitation: GPU, DC and VPU are typically PCI device 06.0,
+06.1 and 06.2. They share some hardware resources, so when configure the
+PCI 06.0 device BAR1, DMA memory access cannot be performed through this
+BAR, otherwise it will cause hardware abnormalities.
 
-    clickhouse-server[365854]: libunwind: unsupported .eh_frame_hdr
-    version: 127 at 7ffffffb0000
+2. In typical scenarios of reboot or S3/S4, DC access to memory through
+BAR is not prohibited, resulting in GPU DMA hangs.
 
-Here "127" is just the byte located at the p_vaddr (0, i.e. the
-beginning of the vDSO) of the empty GNU_EH_FRAME segment. Cross-
-checking with /proc/365854/maps has also proven 7ffffffb0000 is the
-start of vDSO in the process VM image.
-
-In LoongArch the -fno-asynchronous-unwind-tables option seems just a
-MIPS legacy, and MIPS only uses this option to satisfy the MIPS-specific
-"genvdso" program, per the commit cfd75c2db17e ("MIPS: VDSO: Explicitly
-use -fno-asynchronous-unwind-tables").  IIRC it indicates some inherent
-limitation of the MIPS ELF ABI and has nothing to do with LoongArch.  So
-we can simply flip it over to -fasynchronous-unwind-tables and pass
---eh-frame-hdr for linking the vDSO, allowing the profilers to unwind the
-stack for statistics even if the sample point is taken when the PC is in
-the vDSO.
-
-However simply adjusting the options above would exploit an issue: when
-the libgcc unwinder saw the invalid GNU_EH_FRAME segment, it silently
-falled back to a machine-specific routine to match the code pattern of
-rt_sigreturn() and extract the registers saved in the sigframe if the
-code pattern is matched.  As unwinding from signal handlers is vital for
-libgcc to support pthread cancellation etc., the fall-back routine had
-been silently keeping the LoongArch Linux systems functioning since
-Linux 5.19.  But when we start to emit GNU_EH_FRAME with the correct
-format, fall-back routine will no longer be used and libgcc will fail
-to unwind the sigframe, and unwinding from signal handlers will no
-longer work, causing dozens of glibc test failures.  To make it possible
-to unwind from signal handlers again, it's necessary to code the unwind
-info in __vdso_rt_sigreturn via .cfi_* directives.
-
-The offsets in the .cfi_* directives depend on the layout of struct
-sigframe, notably the offset of sigcontext in the sigframe.  To use the
-offset in the assembly file, factor out struct sigframe into a header to
-allow asm-offsets.c to output the offset for assembly.
-
-To work around a long-term issue in the libgcc unwinder (the pc is
-unconditionally substracted by 1: doing so is technically incorrect for
-a signal frame), a nop instruction is included with the two real
-instructions in __vdso_rt_sigreturn in the same FDE PC range.  The same
-hack has been used on x86 for a long time.
+3. Workaround method: When configuring the 06.0 device BAR1, turn off
+the memory access of DC, GPU and VPU (via DC's CRTC registers).
 
 Cc: stable@vger.kernel.org
-Fixes: c6b99bed6b8f ("LoongArch: Add VDSO and VSYSCALL support")
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Qianhai Wu <wuqianhai@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/linkage.h  |   36 ++++++++++++++++++++++++++++++++++
- arch/loongarch/include/asm/sigframe.h |    9 ++++++++
- arch/loongarch/kernel/asm-offsets.c   |    2 +
- arch/loongarch/kernel/signal.c        |    6 -----
- arch/loongarch/vdso/Makefile          |    4 +--
- arch/loongarch/vdso/sigreturn.S       |    6 ++---
- 6 files changed, 53 insertions(+), 10 deletions(-)
- create mode 100644 arch/loongarch/include/asm/sigframe.h
+ arch/loongarch/pci/pci.c |   80 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
 
---- a/arch/loongarch/include/asm/linkage.h
-+++ b/arch/loongarch/include/asm/linkage.h
-@@ -41,4 +41,40 @@
- 	.cfi_endproc;					\
- 	SYM_END(name, SYM_T_NONE)
+--- a/arch/loongarch/pci/pci.c
++++ b/arch/loongarch/pci/pci.c
+@@ -5,9 +5,11 @@
+ #include <linux/kernel.h>
+ #include <linux/init.h>
+ #include <linux/acpi.h>
++#include <linux/delay.h>
+ #include <linux/types.h>
+ #include <linux/pci.h>
+ #include <linux/vgaarb.h>
++#include <linux/io-64-nonatomic-lo-hi.h>
+ #include <asm/cacheflush.h>
+ #include <asm/loongson.h>
  
-+/*
-+ * This is for the signal handler trampoline, which is used as the return
-+ * address of the signal handlers in userspace instead of called normally.
-+ * The long standing libgcc bug https://gcc.gnu.org/PR124050 requires a
-+ * nop between .cfi_startproc and the actual address of the trampoline, so
-+ * we cannot simply use SYM_FUNC_START.
-+ *
-+ * This wrapper also contains all the .cfi_* directives for recovering
-+ * the content of the GPRs and the "return address" (where the rt_sigreturn
-+ * syscall will jump to), assuming there is a struct rt_sigframe (where
-+ * a struct sigcontext containing those information we need to recover) at
-+ * $sp.  The "DWARF for the LoongArch(TM) Architecture" manual states
-+ * column 0 is for $zero, but it does not make too much sense to
-+ * save/restore the hardware zero register.  Repurpose this column here
-+ * for the return address (here it's not the content of $ra we cannot use
-+ * the default column 3).
-+ */
-+#define SYM_SIGFUNC_START(name)				\
-+	.cfi_startproc;					\
-+	.cfi_signal_frame;				\
-+	.cfi_def_cfa 3, RT_SIGFRAME_SC;			\
-+	.cfi_return_column 0;				\
-+	.cfi_offset 0, SC_PC;				\
-+							\
-+	.irp num, 1,  2,  3,  4,  5,  6,  7,  8, 	\
-+		  9,  10, 11, 12, 13, 14, 15, 16,	\
-+		  17, 18, 19, 20, 21, 22, 23, 24,	\
-+		  25, 26, 27, 28, 29, 30, 31;		\
-+	.cfi_offset \num, SC_REGS + \num * SZREG;	\
-+	.endr;						\
-+							\
-+	nop;						\
-+	SYM_START(name, SYM_L_GLOBAL, SYM_A_ALIGN)
+@@ -15,6 +17,9 @@
+ #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
+ #define PCI_DEVICE_ID_LOONGSON_DC2      0x7a36
+ #define PCI_DEVICE_ID_LOONGSON_DC3      0x7a46
++#define PCI_DEVICE_ID_LOONGSON_GPU1     0x7a15
++#define PCI_DEVICE_ID_LOONGSON_GPU2     0x7a25
++#define PCI_DEVICE_ID_LOONGSON_GPU3     0x7a35
+ 
+ int raw_pci_read(unsigned int domain, unsigned int bus, unsigned int devfn,
+ 						int reg, int len, u32 *val)
+@@ -99,3 +104,78 @@ static void pci_fixup_vgadev(struct pci_
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC1, pci_fixup_vgadev);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC2, pci_fixup_vgadev);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC3, pci_fixup_vgadev);
 +
-+#define SYM_SIGFUNC_END(name) SYM_FUNC_END(name)
++#define CRTC_NUM_MAX		2
++#define CRTC_OUTPUT_ENABLE	0x100
 +
- #endif
---- /dev/null
-+++ b/arch/loongarch/include/asm/sigframe.h
-@@ -0,0 +1,9 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
++static void loongson_gpu_fixup_dma_hang(struct pci_dev *pdev, bool on)
++{
++	u32 i, val, count, crtc_offset, device;
++	void __iomem *crtc_reg, *base, *regbase;
++	static u32 crtc_status[CRTC_NUM_MAX] = { 0 };
 +
-+#include <asm/siginfo.h>
-+#include <asm/ucontext.h>
++	base = pdev->bus->ops->map_bus(pdev->bus, pdev->devfn + 1, 0);
++	device = readw(base + PCI_DEVICE_ID);
 +
-+struct rt_sigframe {
-+	struct siginfo rs_info;
-+	struct ucontext rs_uctx;
-+};
---- a/arch/loongarch/kernel/asm-offsets.c
-+++ b/arch/loongarch/kernel/asm-offsets.c
-@@ -16,6 +16,7 @@
- #include <asm/ptrace.h>
- #include <asm/processor.h>
- #include <asm/ftrace.h>
-+#include <asm/sigframe.h>
- #include <vdso/datapage.h>
- 
- static void __used output_ptreg_defines(void)
-@@ -220,6 +221,7 @@ static void __used output_sc_defines(voi
- 	COMMENT("Linux sigcontext offsets.");
- 	OFFSET(SC_REGS, sigcontext, sc_regs);
- 	OFFSET(SC_PC, sigcontext, sc_pc);
-+	OFFSET(RT_SIGFRAME_SC, rt_sigframe, rs_uctx.uc_mcontext);
- 	BLANK();
- }
- 
---- a/arch/loongarch/kernel/signal.c
-+++ b/arch/loongarch/kernel/signal.c
-@@ -35,6 +35,7 @@
- #include <asm/cpu-features.h>
- #include <asm/fpu.h>
- #include <asm/lbt.h>
-+#include <asm/sigframe.h>
- #include <asm/ucontext.h>
- #include <asm/vdso.h>
- 
-@@ -51,11 +52,6 @@
- #define lock_lbt_owner()	({ preempt_disable(); pagefault_disable(); })
- #define unlock_lbt_owner()	({ pagefault_enable(); preempt_enable(); })
- 
--struct rt_sigframe {
--	struct siginfo rs_info;
--	struct ucontext rs_uctx;
--};
--
- struct _ctx_layout {
- 	struct sctx_info *addr;
- 	unsigned int size;
---- a/arch/loongarch/vdso/Makefile
-+++ b/arch/loongarch/vdso/Makefile
-@@ -26,7 +26,7 @@ cflags-vdso := $(ccflags-vdso) \
- 	$(filter -W%,$(filter-out -Wa$(comma)%,$(KBUILD_CFLAGS))) \
- 	-std=gnu11 -fms-extensions -O2 -g -fno-strict-aliasing -fno-common -fno-builtin \
- 	-fno-stack-protector -fno-jump-tables -DDISABLE_BRANCH_PROFILING \
--	$(call cc-option, -fno-asynchronous-unwind-tables) \
-+	$(call cc-option, -fasynchronous-unwind-tables) \
- 	$(call cc-option, -fno-stack-protector)
- aflags-vdso := $(ccflags-vdso) \
- 	-D__ASSEMBLY__ -Wa,-gdwarf-2
-@@ -41,7 +41,7 @@ endif
- 
- # VDSO linker flags.
- ldflags-y := -Bsymbolic --no-undefined -soname=linux-vdso.so.1 \
--	$(filter -E%,$(KBUILD_CFLAGS)) -shared --build-id -T
-+	$(filter -E%,$(KBUILD_CFLAGS)) -shared --build-id --eh-frame-hdr -T
- 
- #
- # Shared build commands.
---- a/arch/loongarch/vdso/sigreturn.S
-+++ b/arch/loongarch/vdso/sigreturn.S
-@@ -12,13 +12,13 @@
- 
- #include <asm/regdef.h>
- #include <asm/asm.h>
-+#include <asm/asm-offsets.h>
- 
- 	.section	.text
--	.cfi_sections	.debug_frame
- 
--SYM_FUNC_START(__vdso_rt_sigreturn)
-+SYM_SIGFUNC_START(__vdso_rt_sigreturn)
- 
- 	li.w	a7, __NR_rt_sigreturn
- 	syscall	0
- 
--SYM_FUNC_END(__vdso_rt_sigreturn)
-+SYM_SIGFUNC_END(__vdso_rt_sigreturn)
++	regbase = ioremap(readq(base + PCI_BASE_ADDRESS_0) & ~0xffull, SZ_64K);
++	if (!regbase) {
++		pci_err(pdev, "Failed to ioremap()\n");
++		return;
++	}
++
++	switch (device) {
++	case PCI_DEVICE_ID_LOONGSON_DC2:
++		crtc_reg = regbase + 0x1240;
++		crtc_offset = 0x10;
++		break;
++	case PCI_DEVICE_ID_LOONGSON_DC3:
++		crtc_reg = regbase;
++		crtc_offset = 0x400;
++		break;
++	}
++
++	for (i = 0; i < CRTC_NUM_MAX; i++, crtc_reg += crtc_offset) {
++		val = readl(crtc_reg);
++
++		if (!on)
++			crtc_status[i] = val;
++
++		/* No need to fixup if the status is off at startup. */
++		if (!(crtc_status[i] & CRTC_OUTPUT_ENABLE))
++			continue;
++
++		if (on)
++			val |= CRTC_OUTPUT_ENABLE;
++		else
++			val &= ~CRTC_OUTPUT_ENABLE;
++
++		mb();
++		writel(val, crtc_reg);
++
++		for (count = 0; count < 40; count++) {
++			val = readl(crtc_reg) & CRTC_OUTPUT_ENABLE;
++			if ((on && val) || (!on && !val))
++				break;
++			udelay(1000);
++		}
++
++		pci_info(pdev, "DMA hang fixup at reg[0x%lx]: 0x%x\n",
++				(unsigned long)crtc_reg & 0xffff, readl(crtc_reg));
++	}
++
++	iounmap(regbase);
++}
++
++static void pci_fixup_dma_hang_early(struct pci_dev *pdev)
++{
++	loongson_gpu_fixup_dma_hang(pdev, false);
++}
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU2, pci_fixup_dma_hang_early);
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU3, pci_fixup_dma_hang_early);
++
++static void pci_fixup_dma_hang_final(struct pci_dev *pdev)
++{
++	loongson_gpu_fixup_dma_hang(pdev, true);
++}
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU2, pci_fixup_dma_hang_final);
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU3, pci_fixup_dma_hang_final);
 
 
