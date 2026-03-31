@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D64423A76;
-	Tue, 31 Mar 2026 16:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA629410D27;
+	Tue, 31 Mar 2026 16:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974956; cv=none; b=ndPKhSRTx1MEtzls7EjMPON94IwHplEEpzOBrLfMlxJiPGeLcxYb1cdbmoWyatIuP7GIvkymtxaWQO6QbqotcKywqQYoa5Cd9D/iyLtQxSb6fBa9fVTn7OOVedv+xF0eW64/YzTtyOfVz3fyhI2pstJlrxxct3edvogI3uGl0dI=
+	t=1774974958; cv=none; b=CukiCQDLcicQguFWrLQpBbB6dTS38b17mJrOoNuOB4blPFqurdF91HRdAlHTSxuSFkRFDa43Bkeb+lomSk4EAR2NfxDGUdp+wd2vm9ge7ps5KBfYWHcCHAvO/CHQAaFFjx9iNh67KBB3oOwmnYwKkgvEPhC8AC6kXFVQkrB8PEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974956; c=relaxed/simple;
-	bh=r9RxtsVizRmLe9dE1Xzc8nUJB0C/vnlGiiwFvUqU2vI=;
+	s=arc-20240116; t=1774974958; c=relaxed/simple;
+	bh=Ed/zcM6aIzzfqHt1wfvZVngpl14ZBfJJqbcLNOEAOvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uyl3E/3R0PJy/5Uc+urpWFMVRKCBuoi9ljSFLWqOxCOa92pA/mj+V7/5mPMNVtyBHtcVA+FRH9eYDF8XhwQNku2Jyvrs1GCtMsrK2KgibWv8cEbpXg8aW3kKIARyP/zaqe/COlFpTX72T+hZTtIFEiYIcBI7s1L4GL80x9mksMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7J/mKuW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K05mgNTsdd1Z6kvHsT688KTSkV6u+w0mg0Rtlo5MyspoZC+9NsZLV59tFj3+MxtdlX1oG87nitbjM/MdM3t2+2x9U4Sk1Ccq9+D9B6b/w2pnRA3gzbv4PpGMdiuOin/Bgzd2lPacy90FnndLx4F4FnQyvpYYZfSb78GQU3t5FFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okGBWAK5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7J/mKuW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF46FC19423;
-	Tue, 31 Mar 2026 16:35:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okGBWAK5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF9EC19423;
+	Tue, 31 Mar 2026 16:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974956;
-	bh=r9RxtsVizRmLe9dE1Xzc8nUJB0C/vnlGiiwFvUqU2vI=;
+	s=korg; t=1774974958;
+	bh=Ed/zcM6aIzzfqHt1wfvZVngpl14ZBfJJqbcLNOEAOvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7J/mKuWgkorb5zF4wIS6Jcke26AmxaeuiN8QN8wk9NdvQEYVqhBgNSRJ5D5vM7Qb
-	 mt5LKALyQUH5D0G3IR+v9ITwYf60OXSkLbFnK4vS31bKIMxQkwyMZzF8fEeeilcWpO
-	 eYxUHps5eR/7sUJ7aEh6wH8P5IFSO+q1fj8UVSy4=
+	b=okGBWAK5rd5cMAJD7ssX/iOZ5o73bxUauTvotLSu6aeGQZmsgVC2VozZLtCyrVT3S
+	 yxuc0BUFwSPi0vWHtbZxx3huArjAz0ND9bJlFsmpJHzw0AQGqqPcN7hhnmy86zGkdT
+	 euPhu76w+icJH3+yRF39xmW0xRgrf1XZlTBNve1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 108/342] net: bcmasp: streamline early exit in probe
-Date: Tue, 31 Mar 2026 18:19:01 +0200
-Message-ID: <20260331161802.988639079@linuxfoundation.org>
+Subject: [PATCH 6.19 109/342] net: bcmasp: fix double free of WoL irq
+Date: Tue, 31 Mar 2026 18:19:02 +0200
+Message-ID: <20260331161803.024634329@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -54,82 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit 1fd1281250c38408d793863c8dcaa43c7de8932c ]
+[ Upstream commit cbfa5be2bf64511d49b854a0f9fd6d0b5118621f ]
 
-Streamline the bcmasp_probe early exit. As support for other
-functionality is added(i.e. ptp), it is easier to keep track of early
-exit cleanup when it is all in one place.
+We do not need to free wol_irq since it was instantiated with
+devm_request_irq(). So devres will free for us.
 
+Fixes: a2f0751206b0 ("net: bcmasp: Add support for WoL magic packet")
 Signed-off-by: Justin Chen <justin.chen@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260122194949.1145107-3-justin.chen@broadcom.com
+Link: https://patch.msgid.link/20260319234813.1937315-2-justin.chen@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: cbfa5be2bf64 ("net: bcmasp: fix double free of WoL irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp.c | 27 +++++++++++----------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-index 014340f33345a..de5f540f78049 100644
+index de5f540f78049..fac795ac0fcee 100644
 --- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
 +++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-@@ -1322,6 +1322,8 @@ static int bcmasp_probe(struct platform_device *pdev)
- 
- 	bcmasp_core_init_filters(priv);
- 
-+	bcmasp_init_wol(priv);
-+
- 	ports_node = of_find_node_by_name(dev->of_node, "ethernet-ports");
- 	if (!ports_node) {
- 		dev_warn(dev, "No ports found\n");
-@@ -1333,16 +1335,14 @@ static int bcmasp_probe(struct platform_device *pdev)
- 		intf = bcmasp_interface_create(priv, intf_node, i);
- 		if (!intf) {
- 			dev_err(dev, "Cannot create eth interface %d\n", i);
--			bcmasp_remove_intfs(priv);
--			ret = -ENOMEM;
--			goto of_put_exit;
-+			of_node_put(ports_node);
-+			ret = -EINVAL;
-+			goto err_cleanup;
- 		}
- 		list_add_tail(&intf->list, &priv->intfs);
- 		i++;
+@@ -1157,12 +1157,6 @@ void bcmasp_enable_wol(struct bcmasp_intf *intf, bool en)
  	}
+ }
+ 
+-static void bcmasp_wol_irq_destroy(struct bcmasp_priv *priv)
+-{
+-	if (priv->wol_irq > 0)
+-		free_irq(priv->wol_irq, priv);
+-}
 -
--	/* Check and enable WoL */
--	bcmasp_init_wol(priv);
-+	of_node_put(ports_node);
- 
- 	/* Drop the clock reference count now and let ndo_open()/ndo_close()
- 	 * manage it for us from now on.
-@@ -1357,19 +1357,20 @@ static int bcmasp_probe(struct platform_device *pdev)
- 	list_for_each_entry(intf, &priv->intfs, list) {
- 		ret = register_netdev(intf->ndev);
- 		if (ret) {
--			netdev_err(intf->ndev,
--				   "failed to register net_device: %d\n", ret);
--			bcmasp_wol_irq_destroy(priv);
--			bcmasp_remove_intfs(priv);
--			goto of_put_exit;
-+			dev_err(dev, "failed to register net_device: %d\n", ret);
-+			goto err_cleanup;
- 		}
- 		count++;
- 	}
- 
- 	dev_info(dev, "Initialized %d port(s)\n", count);
- 
--of_put_exit:
--	of_node_put(ports_node);
-+	return ret;
-+
-+err_cleanup:
-+	bcmasp_wol_irq_destroy(priv);
-+	bcmasp_remove_intfs(priv);
-+
+ static void bcmasp_eee_fixup(struct bcmasp_intf *intf, bool en)
+ {
+ 	u32 reg, phy_lpi_overwrite;
+@@ -1368,7 +1362,6 @@ static int bcmasp_probe(struct platform_device *pdev)
  	return ret;
+ 
+ err_cleanup:
+-	bcmasp_wol_irq_destroy(priv);
+ 	bcmasp_remove_intfs(priv);
+ 
+ 	return ret;
+@@ -1381,7 +1374,6 @@ static void bcmasp_remove(struct platform_device *pdev)
+ 	if (!priv)
+ 		return;
+ 
+-	bcmasp_wol_irq_destroy(priv);
+ 	bcmasp_remove_intfs(priv);
  }
  
 -- 
