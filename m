@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9923C425CE5;
-	Tue, 31 Mar 2026 16:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3580D425CFF;
+	Tue, 31 Mar 2026 16:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975096; cv=none; b=CJlaJUiOp9k6eeaJ2IPUtEIinP3pOK13Nypax0iRMilrmGlBxbB/L5wsyTO30sTUh2MEm3FvMkjfNRtaD8GGOuyRRhlJlbYckdy9DyRBNKGon1vbhMUc1rNDTq0nBEqf9ViLiEY7yltK/H8KagnTiyZhHl+rxj80PBMAeBYSTtM=
+	t=1774975099; cv=none; b=tnznALe+KH2wN0rbIdWzyPFfF5i+usvr99tcp0h5b0JDoznXKs8hLCXkg73D5d603d9M8AC+p5lQuWxt0XPe8O1BW5PIsMoA8EXX2wXu+TgYRXFk4YUIGWG65IsBRd56G8+aHXcEBmMUiDsXaM2xfA//iKCVttdrSJ+Fbbhhli4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975096; c=relaxed/simple;
-	bh=bzU9pXmje8WOI54AwEddBYa2wPbffWA1TgYP7qmhEZA=;
+	s=arc-20240116; t=1774975099; c=relaxed/simple;
+	bh=+JXU/DUJfqf/nzKdKTT9IyHPfGBnZiBfqk/VU9I9exE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pgL8jC8sjvS5pYhfyfLuaE7OwWb3ZBbrJS3damznmEl3NLuGS4G3zjjAa/KsiYscFzWTK9MY6Ef6B9RfFR+o3HNB252EN4aA9edZ6KRR6KAsnyImMOJuPhzZ54sblXufU55Uu21dQ36wszlDf80jgurp+mbOuAsm6Tposp4RybA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+ym7tEw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eF0DqjkioY/hVMT4DUdyiA2OG3WhHjNqTBfpK6jAAne0pmpVLMENVgCC2i2w0tV/aa7zejkhRyGk5K15XWlspAssbtIFKEqp79q0OMiT+uSJ/rGzeb5ANixy0BVmFm5krAmKxE8iUkJXGEOp7/ePv1D53xs4LWJLS7R8VldR/3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihGKlJcQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+ym7tEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB0EC19423;
-	Tue, 31 Mar 2026 16:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihGKlJcQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D66C19423;
+	Tue, 31 Mar 2026 16:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975096;
-	bh=bzU9pXmje8WOI54AwEddBYa2wPbffWA1TgYP7qmhEZA=;
+	s=korg; t=1774975099;
+	bh=+JXU/DUJfqf/nzKdKTT9IyHPfGBnZiBfqk/VU9I9exE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+ym7tEwmQxnjqBpTeprGiEzDV0XX/rFe/I89lv7NIAn+eqDEkjf9S1ihwM7lXDIU
-	 qoNzPGniObj5s9Wdc50U+qslJTjbMRD1KhxJSfrCHbS20JuZKdRZUaSynV3/Dlnq5N
-	 XGOPGWm52J1EnpPiqNLdS7lfXsjA0LkD4hDPp8uk=
+	b=ihGKlJcQF0Cr0/mzuxJJI/NNbGN6qw2BD4cww76iiHf5suguB1Ru9diUnQNgREe0R
+	 jK5aDZa4UMEzkR8CFTeyOLi+7rqaXZnEld79JaS+chDwg1inOs52YTPgLFzj4sa8pF
+	 oNFidJHAVBbasJYoXiBsxlxD2pBrK35rw6yPBrfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	=?UTF-8?q?Jonas=20K=C3=B6ppeler?= <j.koeppeler@tu-berlin.de>,
+	Chris Arges <carges@cloudflare.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 130/342] rtnetlink: fix leak of SRCU struct in rtnl_link_register
-Date: Tue, 31 Mar 2026 18:19:23 +0200
-Message-ID: <20260331161803.790814869@linuxfoundation.org>
+Subject: [PATCH 6.19 131/342] net_sched: codel: fix stale state for empty flows in fq_codel
+Date: Tue, 31 Mar 2026 18:19:24 +0200
+Message-ID: <20260331161803.827752150@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -46,44 +49,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Jonas Köppeler <j.koeppeler@tu-berlin.de>
 
-[ Upstream commit 09474055f2619be9445ba4245e4013741ed01a5e ]
+[ Upstream commit 815980fe6dbb01ad4007e8b260a45617f598b76d ]
 
-Commit 6b57ff21a310 ("rtnetlink: Protect link_ops by mutex.") swapped
-the EEXIST check with the init_srcu_struct, but didn't add cleanup of
-the SRCU struct we just allocated in case of error.
+When codel_dequeue() finds an empty queue, it resets vars->dropping
+but does not reset vars->first_above_time.  The reference CoDel
+algorithm (Nichols & Jacobson, ACM Queue 2012) resets both:
 
-Fixes: 6b57ff21a310 ("rtnetlink: Protect link_ops by mutex.")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/e77fe499f9a58c547b33b5212b3596dad417cec6.1774025341.git.sd@queasysnail.net
+  dodeque_result codel_queue_t::dodeque(time_t now) {
+      ...
+      if (r.p == NULL) {
+          first_above_time = 0;   // <-- Linux omits this
+      }
+      ...
+  }
+
+Note that codel_should_drop() does reset first_above_time when called
+with a NULL skb, but codel_dequeue() returns early before ever calling
+codel_should_drop() in the empty-queue case.  The post-drop code paths
+do reach codel_should_drop(NULL) and correctly reset the timer, so a
+dropped packet breaks the cycle -- but the next delivered packet
+re-arms first_above_time and the cycle repeats.
+
+For sparse flows such as ICMP ping (one packet every 200ms-1s), the
+first packet arms first_above_time, the flow goes empty, and the
+second packet arrives after the interval has elapsed and gets dropped.
+The pattern repeats, producing sustained loss on flows that are not
+actually congested.
+
+Test: veth pair, fq_codel, BQL disabled, 30000 iptables rules in the
+consumer namespace (NAPI-64 cycle ~14ms, well above fq_codel's 5ms
+target), ping at 5 pps under UDP flood:
+
+  Before fix:  26% ping packet loss
+  After fix:    0% ping packet loss
+
+Fix by resetting first_above_time to zero in the empty-queue path
+of codel_dequeue(), matching the reference algorithm.
+
+Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
+Fixes: d068ca2ae2e6 ("codel: split into multiple files")
+Co-developed-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Signed-off-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Signed-off-by: Jonas Köppeler <j.koeppeler@tu-berlin.de>
+Reported-by: Chris Arges <carges@cloudflare.com>
+Tested-by: Jonas Köppeler <j.koeppeler@tu-berlin.de>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/all/20260318134826.1281205-7-hawk@kernel.org/
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260323174920.253526-1-hawk@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/net/codel_impl.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 6cdf6ee8be216..11cdad3972ad8 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -629,6 +629,9 @@ int rtnl_link_register(struct rtnl_link_ops *ops)
- unlock:
- 	mutex_unlock(&link_ops_mutex);
+diff --git a/include/net/codel_impl.h b/include/net/codel_impl.h
+index 78a27ac730700..b2c359c6dd1b8 100644
+--- a/include/net/codel_impl.h
++++ b/include/net/codel_impl.h
+@@ -158,6 +158,7 @@ static struct sk_buff *codel_dequeue(void *ctx,
+ 	bool drop;
  
-+	if (err)
-+		cleanup_srcu_struct(&ops->srcu);
-+
- 	return err;
- }
- EXPORT_SYMBOL_GPL(rtnl_link_register);
+ 	if (!skb) {
++		vars->first_above_time = 0;
+ 		vars->dropping = false;
+ 		return skb;
+ 	}
 -- 
 2.51.0
 
