@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166BD3A1E8C;
-	Tue, 31 Mar 2026 16:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25293EF0A2;
+	Tue, 31 Mar 2026 16:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976197; cv=none; b=HnYJx+q3nshyP5mhDKedA99HPSzKXJy7PYKR1u01dBeoAuCrtH8bppE5t4ctaI3cOizbL1GFLxA2w75QKzN1QAYi+b3hejKu14BOKfFD0dKATVg2BGDu+f7eKGXpmbbaqM/8KcYaC9DAOOSQq+h0kllWxAwRxFj4qO+370Ha17k=
+	t=1774976199; cv=none; b=RVuvtfzG/FLmym6H1d+sUr6uGhd1eFFddlLlcpnmaktAvSt9VQa0SntMUmd3bIuuuXkqSjqqUSghxdrL7Cfeibi2yPoybcmAI+B2Jw8YlXI74Be/JEK6/rteArGbOGH7ENI2Amunvqio16DCu2Ve2fkYw6M69/4yUECT6i7Df4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976197; c=relaxed/simple;
-	bh=0hM+QwDQfBeBvzLhII0JM863rir3AfM503QLlXVlbks=;
+	s=arc-20240116; t=1774976199; c=relaxed/simple;
+	bh=z2FObEen1Ipuf1YPj0BJaCfLY+bu1ZOzgevmOBxB2yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hN86uSuEWa0z3C+DPeyvDuFwHBBXUe7+PXQ1mOOXvBv20UAfp7LIYrTGBj/ox5fFHokW2tSn9ue9Ka3nGeZc1DOynQbuGlNEf0bL+8FK/oKp0Klzg1k3xbLql01k+noaeTxT19rdI20boQVMq/wGgJfHwdnIhm8S8iWo1AkGJis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDEquyIY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=av3FkiA0xGHGQaEcyFvbJvlVRNNQ77r9N9xlR7GxeINKYu/iKf864RjuyNLMw368A9AxtrlWfyNZkcrhjkjFl5zAdyz7MySocvzRXXjhnUBz0vmAQkeFHgbHqR3hF6YvYLckgxsnJrr/SYb8Uai6deJ6fEQNttzAu810Rl3pVoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfZTsxLm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDEquyIY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAE1C19423;
-	Tue, 31 Mar 2026 16:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfZTsxLm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B76C2BCB4;
+	Tue, 31 Mar 2026 16:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976197;
-	bh=0hM+QwDQfBeBvzLhII0JM863rir3AfM503QLlXVlbks=;
+	s=korg; t=1774976199;
+	bh=z2FObEen1Ipuf1YPj0BJaCfLY+bu1ZOzgevmOBxB2yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDEquyIYypzNdowJKYRsa0y+NnN6BUyvh0IIRcA3esA1vuMvAvNgXqVNc876OwP7v
-	 jZv74XR6tAsRgp6T/KiNRA617Kh117e1b0ByKHMV4dw2EDRAhNCLXT0wx/N5BHVi5z
-	 VUI9PEpCDYuU2dOyk6ri+D7yPNDSWOtTZ5DwTKBI=
+	b=VfZTsxLmtIUWdupMMKS3L++cMg/r3x2qUPPSgWeYPQrU5latdZ4hDFpRP/RuGmGo9
+	 oaa/rGQq+DRVWkKOhIKKdZGEpqX/G9yA+M2sfMuQsMsDVsJFOXgY3QX1OOFr04NpMo
+	 9069br/DqJV8G3cTQM99ruLuqJaE00zzS3UleNcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 243/244] net: bcmasp: Fix network filter wake for asp-3.0
-Date: Tue, 31 Mar 2026 18:23:13 +0200
-Message-ID: <20260331161750.731994237@linuxfoundation.org>
+	Zubin Mithra <zsm@google.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Subject: [PATCH 6.12 213/244] virt: tdx-guest: Fix handling of host controlled quote buffer length
+Date: Tue, 31 Mar 2026 18:22:43 +0200
+Message-ID: <20260331161749.624266154@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,61 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Zubin Mithra <zsm@google.com>
 
-commit bbb11b8d758d17a4ce34b8ed0b49de150568265b upstream.
+commit c3fd16c3b98ed726294feab2f94f876290bf7b61 upstream.
 
-We need to apply the tx_chan_offset to the netfilter cfg channel or the
-output channel will be incorrect for asp-3.0 and newer.
+Validate host controlled value `quote_buf->out_len` that determines how
+many bytes of the quote are copied out to guest userspace. In TDX
+environments with remote attestation, quotes are not considered private,
+and can be forwarded to an attestation server.
 
-Fixes: e9f31435ee7d ("net: bcmasp: Add support for asp-v3.0")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260120192339.2031648-1-justin.chen@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Catch scenarios where the host specifies a response length larger than
+the guest's allocation, or otherwise races modifying the response while
+the guest consumes it.
+
+This prevents contents beyond the pages allocated for `quote_buf`
+(up to TSM_REPORT_OUTBLOB_MAX) from being read out to guest userspace,
+and possibly forwarded in attestation requests.
+
+Recall that some deployments want per-container configs-tsm-report
+interfaces, so the leak may cross container protection boundaries, not
+just local root.
+
+Fixes: f4738f56d1dc ("virt: tdx-guest: Add Quote generation support using TSM_REPORTS")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zubin Mithra <zsm@google.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Zubin Mithra <zsm@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp.c |    5 +++--
- drivers/net/ethernet/broadcom/asp2/bcmasp.h |    1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/virt/coco/tdx-guest/tdx-guest.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-@@ -156,7 +156,7 @@ static void bcmasp_netfilt_hw_en_wake(st
- 			  ASP_RX_FILTER_NET_OFFSET_L4(32),
- 			  ASP_RX_FILTER_NET_OFFSET(nfilt->hw_index + 1));
+--- a/drivers/virt/coco/tdx-guest/tdx-guest.c
++++ b/drivers/virt/coco/tdx-guest/tdx-guest.c
+@@ -35,6 +35,8 @@
+ #define GET_QUOTE_SUCCESS		0
+ #define GET_QUOTE_IN_FLIGHT		0xffffffffffffffff
  
--	rx_filter_core_wl(priv, ASP_RX_FILTER_NET_CFG_CH(nfilt->port + 8) |
-+	rx_filter_core_wl(priv, ASP_RX_FILTER_NET_CFG_CH(nfilt->ch) |
- 			  ASP_RX_FILTER_NET_CFG_EN |
- 			  ASP_RX_FILTER_NET_CFG_L2_EN |
- 			  ASP_RX_FILTER_NET_CFG_L3_EN |
-@@ -166,7 +166,7 @@ static void bcmasp_netfilt_hw_en_wake(st
- 			  ASP_RX_FILTER_NET_CFG_UMC(nfilt->port),
- 			  ASP_RX_FILTER_NET_CFG(nfilt->hw_index));
++#define TDX_QUOTE_MAX_LEN              (GET_QUOTE_BUF_SIZE - sizeof(struct tdx_quote_buf))
++
+ /* struct tdx_quote_buf: Format of Quote request buffer.
+  * @version: Quote format version, filled by TD.
+  * @status: Status code of Quote request, filled by VMM.
+@@ -162,6 +164,7 @@ static int tdx_report_new(struct tsm_rep
+ 	u8 *buf, *reportdata = NULL, *tdreport = NULL;
+ 	struct tdx_quote_buf *quote_buf = quote_data;
+ 	struct tsm_desc *desc = &report->desc;
++	u32 out_len;
+ 	int ret;
+ 	u64 err;
  
--	rx_filter_core_wl(priv, ASP_RX_FILTER_NET_CFG_CH(nfilt->port + 8) |
-+	rx_filter_core_wl(priv, ASP_RX_FILTER_NET_CFG_CH(nfilt->ch) |
- 			  ASP_RX_FILTER_NET_CFG_EN |
- 			  ASP_RX_FILTER_NET_CFG_L2_EN |
- 			  ASP_RX_FILTER_NET_CFG_L3_EN |
-@@ -714,6 +714,7 @@ struct bcmasp_net_filter *bcmasp_netfilt
- 		nfilter = &priv->net_filters[open_index];
- 		nfilter->claimed = true;
- 		nfilter->port = intf->port;
-+		nfilter->ch = intf->channel + priv->tx_chan_offset;
- 		nfilter->hw_index = open_index;
+@@ -226,14 +229,21 @@ static int tdx_report_new(struct tsm_rep
+ 		goto done;
  	}
  
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-@@ -348,6 +348,7 @@ struct bcmasp_net_filter {
- 	bool				wake_filter;
+-	buf = kvmemdup(quote_buf->data, quote_buf->out_len, GFP_KERNEL);
++	out_len = READ_ONCE(quote_buf->out_len);
++
++	if (out_len > TDX_QUOTE_MAX_LEN) {
++		ret = -EFBIG;
++		goto done;
++	}
++
++	buf = kvmemdup(quote_buf->data, out_len, GFP_KERNEL);
+ 	if (!buf) {
+ 		ret = -ENOMEM;
+ 		goto done;
+ 	}
  
- 	int				port;
-+	int				ch;
- 	unsigned int			hw_index;
- };
+ 	report->outblob = buf;
+-	report->outblob_len = quote_buf->out_len;
++	report->outblob_len = out_len;
  
+ 	/*
+ 	 * TODO: parse the PEM-formatted cert chain out of the quote buffer when
 
 
