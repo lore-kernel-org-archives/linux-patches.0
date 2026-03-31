@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C67423A9F;
-	Tue, 31 Mar 2026 16:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9618426685;
+	Tue, 31 Mar 2026 16:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974610; cv=none; b=dwTrYk/eEjWi1FJYnQachg+07U4Yt0NhqO4rN8Xo9JY7IBbz/6g9yxwsGsjXarQt2vXxO2ZVeAPFmXt5VqYoAh1jjHP2J2aER2RdDMuSsieMXh0hjMZFUVnLru0Niou4hwmJvxY8Tae8R4SctGH5aoRk7zgXJ4+N4T3jYGgnW3k=
+	t=1774974612; cv=none; b=k+0KyHlZutnYxaQm3OTJOI9ILX5no6pEGGWnWqlLkUPUEj69LWnAYeMgRijJ27V9jiPm4vuEW71t7hnPWr+n/9+2pq9buKfMPk9Df2+vCoP6GT8mFY2OmAEpx1J2iTCKL+/qAkQz/G61gno1d3QYsCAuXw1fjSNnxsDjRmLYKPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974610; c=relaxed/simple;
-	bh=ueSIGnWsYw3KYqrCU2V2SeNjCE9dgvfrlc5p2oTE+lA=;
+	s=arc-20240116; t=1774974612; c=relaxed/simple;
+	bh=5yALuWCKZaQb7WUPCnBfwFCr797t9x1dye/TsZ2SU3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Su1CBCshiOAQ33K5JROU/vCQ7VZtxgErXop3zgFUqHJTfsJ4BHVadmFkQ1XEGwCWfnKQr2/10jqjFbbUHx+0IrzsL6nzCRzQCwGxAW34VWFXTSIP4OTIZrfblcrW8c2LFsb11sfQpPo0CWlVaMFRc3V5Z8qlNA5KQxgGIypY9qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvUx8uFs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GwvYsckJzDr5biBcS/oxdilFurQ7A8I95DBWG+R50XGaPGSujbAbL9NsMoBmKP1eyd406VHckXg/qQBxkwSbJGNZKQC9WgS3SMi6nQCSTAxhL01QGUMCcS3plpeBZ9Od0Omvt3qxIicISy5fhdQYoAnUfwh1JlRD7kS1JeStWRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jneEXrFB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvUx8uFs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83FEC2BCB2;
-	Tue, 31 Mar 2026 16:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jneEXrFB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70792C19423;
+	Tue, 31 Mar 2026 16:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974610;
-	bh=ueSIGnWsYw3KYqrCU2V2SeNjCE9dgvfrlc5p2oTE+lA=;
+	s=korg; t=1774974612;
+	bh=5yALuWCKZaQb7WUPCnBfwFCr797t9x1dye/TsZ2SU3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IvUx8uFsZYDAWwPDehgWF39fO8Kmsu0c4Scon6IshEl5ouftx3lWzi23Zz9/ctHWt
-	 fnJTFoRr+i7NG2+KRC9ujGfOHrYod5sHjy7QWNigdSjXr1Bp56hBpn7oMrQunq6p0o
-	 mYYt3Vm5goT9i1ivfSgL+N1SgWrw0k5lzUlbnG8w=
+	b=jneEXrFBHY6nhTkAxGdQulAcEx4RTKc3D+gDpfjebWC9aFsAaoOEw7zAtAXe/xE4x
+	 /apJKZ4WKY7Xj90xHUAN6M/R80wJQxD+Blo2O6TTEJh8zROGAbmlA6uq10WLYP6q5H
+	 c1ummyKfSomnJO1L+OWpRbJsokSLYxUDE2lkOTVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.6 109/175] KVM: arm64: Discard PC update state on vcpu reset
-Date: Tue, 31 Mar 2026 18:21:33 +0200
-Message-ID: <20260331161733.784204046@linuxfoundation.org>
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Werner Kasselman <werner@verivus.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 145/175] ksmbd: fix memory leaks and NULL deref in smb2_lock()
+Date: Tue, 31 Mar 2026 18:22:09 +0200
+Message-ID: <20260331161735.113666941@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,81 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Werner Kasselman <werner@verivus.com>
 
-commit 1744a6ef48b9a48f017e3e1a0d05de0a6978396e upstream.
+[ Upstream commit 309b44ed684496ed3f9c5715d10b899338623512 ]
 
-Our vcpu reset suffers from a particularly interesting flaw, as it
-does not correctly deal with state that will have an effect on the
-execution flow out of reset.
+smb2_lock() has three error handling issues after list_del() detaches
+smb_lock from lock_list at no_check_cl:
 
-Take the following completely random example, never seen in the wild
-and that never resulted in a couple of sleepless nights: /s
+1) If vfs_lock_file() returns an unexpected error in the non-UNLOCK
+   path, goto out leaks smb_lock and its flock because the out:
+   handler only iterates lock_list and rollback_list, neither of
+   which contains the detached smb_lock.
 
-- vcpu-A issues a PSCI_CPU_OFF using the SMC conduit
+2) If vfs_lock_file() returns -ENOENT in the UNLOCK path, goto out
+   leaks smb_lock and flock for the same reason.  The error code
+   returned to the dispatcher is also stale.
 
-- SMC being a trapped instruction (as opposed to HVC which is always
-  normally executed), we annotate the vcpu as needing to skip the
-  next instruction, which is the SMC itself
+3) In the rollback path, smb_flock_init() can return NULL on
+   allocation failure.  The result is dereferenced unconditionally,
+   causing a kernel NULL pointer dereference.  Add a NULL check to
+   prevent the crash and clean up the bookkeeping; the VFS lock
+   itself cannot be rolled back without the allocation and will be
+   released at file or connection teardown.
 
-- vcpu-A is now safely off
+Fix cases 1 and 2 by hoisting the locks_free_lock()/kfree() to before
+the if(!rc) check in the UNLOCK branch so all exit paths share one
+free site, and by freeing smb_lock and flock before goto out in the
+non-UNLOCK branch.  Propagate the correct error code in both cases.
+Fix case 3 by wrapping the VFS unlock in an if(rlock) guard and adding
+a NULL check for locks_free_lock(rlock) in the shared cleanup.
 
-- vcpu-B issues a PSCI_CPU_ON for vcpu-A, providing a starting PC
+Found via call-graph analysis using sqry.
 
-- vcpu-A gets reset, get the new PC, and is sent on its merry way
-
-- right at the point of entering the guest, we notice that a PC
-  increment is pending (remember the earlier SMC?)
-
-- vcpu-A skips its first instruction...
-
-What could possibly go wrong?
-
-Well, I'm glad you asked. For pKVM as a NV guest, that first instruction
-is extremely significant, as it indicates whether the CPU is booting
-or resuming. Having skipped that instruction, nothing makes any sense
-anymore, and CPU hotplugging fails.
-
-This is all caused by the decoupling of PC update from the handling
-of an exception that triggers such update, making it non-obvious
-what affects what when.
-
-Fix this train wreck by discarding all the PC-affecting state on
-vcpu reset.
-
-Fixes: f5e30680616ab ("KVM: arm64: Move __adjust_pc out of line")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Joey Gouly <joey.gouly@arm.com>
-Link: https://patch.msgid.link/20260312140850.822968-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Suggested-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Werner Kasselman <werner@verivus.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ adapted rlock->c.flc_type to rlock->fl_type ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/reset.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/smb/server/smb2pdu.c |   29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
---- a/arch/arm64/kvm/reset.c
-+++ b/arch/arm64/kvm/reset.c
-@@ -293,6 +293,20 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu
- 			kvm_vcpu_set_be(vcpu);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -7536,14 +7536,15 @@ retry:
+ 		rc = vfs_lock_file(filp, smb_lock->cmd, flock, NULL);
+ skip:
+ 		if (smb_lock->flags & SMB2_LOCKFLAG_UNLOCK) {
++			locks_free_lock(flock);
++			kfree(smb_lock);
+ 			if (!rc) {
+ 				ksmbd_debug(SMB, "File unlocked\n");
+ 			} else if (rc == -ENOENT) {
+ 				rsp->hdr.Status = STATUS_NOT_LOCKED;
++				err = rc;
+ 				goto out;
+ 			}
+-			locks_free_lock(flock);
+-			kfree(smb_lock);
+ 		} else {
+ 			if (rc == FILE_LOCK_DEFERRED) {
+ 				void **argv;
+@@ -7612,6 +7613,9 @@ skip:
+ 				spin_unlock(&work->conn->llist_lock);
+ 				ksmbd_debug(SMB, "successful in taking lock\n");
+ 			} else {
++				locks_free_lock(flock);
++				kfree(smb_lock);
++				err = rc;
+ 				goto out;
+ 			}
+ 		}
+@@ -7642,13 +7646,17 @@ out:
+ 		struct file_lock *rlock = NULL;
  
- 		*vcpu_pc(vcpu) = target_pc;
+ 		rlock = smb_flock_init(filp);
+-		rlock->fl_type = F_UNLCK;
+-		rlock->fl_start = smb_lock->start;
+-		rlock->fl_end = smb_lock->end;
+-
+-		rc = vfs_lock_file(filp, F_SETLK, rlock, NULL);
+-		if (rc)
+-			pr_err("rollback unlock fail : %d\n", rc);
++		if (rlock) {
++			rlock->fl_type = F_UNLCK;
++			rlock->fl_start = smb_lock->start;
++			rlock->fl_end = smb_lock->end;
 +
-+		/*
-+		 * We may come from a state where either a PC update was
-+		 * pending (SMC call resulting in PC being increpented to
-+		 * skip the SMC) or a pending exception. Make sure we get
-+		 * rid of all that, as this cannot be valid out of reset.
-+		 *
-+		 * Note that clearing the exception mask also clears PC
-+		 * updates, but that's an implementation detail, and we
-+		 * really want to make it explicit.
-+		 */
-+		vcpu_clear_flag(vcpu, PENDING_EXCEPTION);
-+		vcpu_clear_flag(vcpu, EXCEPT_MASK);
-+		vcpu_clear_flag(vcpu, INCREMENT_PC);
- 		vcpu_set_reg(vcpu, 0, reset_state.r0);
- 	}
++			rc = vfs_lock_file(filp, F_SETLK, rlock, NULL);
++			if (rc)
++				pr_err("rollback unlock fail : %d\n", rc);
++		} else {
++			pr_err("rollback unlock alloc failed\n");
++		}
  
+ 		list_del(&smb_lock->llist);
+ 		spin_lock(&work->conn->llist_lock);
+@@ -7658,7 +7666,8 @@ out:
+ 		spin_unlock(&work->conn->llist_lock);
+ 
+ 		locks_free_lock(smb_lock->fl);
+-		locks_free_lock(rlock);
++		if (rlock)
++			locks_free_lock(rlock);
+ 		kfree(smb_lock);
+ 	}
+ out2:
 
 
