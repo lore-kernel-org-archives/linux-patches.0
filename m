@@ -1,49 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6373E311592;
-	Tue, 31 Mar 2026 17:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20517313E21;
+	Tue, 31 Mar 2026 17:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976921; cv=none; b=F9oJQgAGLfrCNNB5gTpc6aeQS+mFGrZZ5Yn+ViQG00a3QXhbUZNX59HBYCKi1tCLl4dl7bMeu3JWhhB6dY9v5Cuq51i+OkHjvcScdPJx1Qr7ISBKyInAAeZ0tRG0qRG2OkU7OiA01sDs40DtxP1PrJZXtmaVCLt8uZ78lW6/kuM=
+	t=1774976924; cv=none; b=PW3oaN8rwbz5hzVLJ3/du94EjkhHHf9od9zm019QMrUCc/BFqGn8R/3jPmN8k0iF22Pu1mohSBLPcM0W4FjtUzA3ViffLcJlWrUpJ6eFWbSUON5X5w9DFimHjlykpavS+iKq0+gtZlm2fFjYFxsDRzNRMn+H8JGfoosWDsz10yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976921; c=relaxed/simple;
-	bh=JmquOdWSplFXLXkyGGIXQ+rEpRS7EMRvV4GghuBme5E=;
+	s=arc-20240116; t=1774976924; c=relaxed/simple;
+	bh=Wfxmrbz1zOzdAxTMol2sQzv8EQZXhLnl6dARCboIZyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gELvL+fIEX+iLctVH8Kirt85sHVkzJ9NRPuz1prVwgpYeVfyq9eWT5j2Sfn+AA6fGsIZSeefFFImxnQI55KIgSa68uMtIsWK1QjRY2RNg5FMDaKZIhcDy564jggeWarIM4sW0rW/vWTaSM51T+H/nsdf0lVSM/rLmlQyovFHJaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQpMheie; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=geXSqII6pPxmCzPSy9wrWk7qHZZWBCNWY4E4JUHV7YfUllXGMIfwQB44qWNInk7TBwsnQ6hgMEWMqX7y5fYvS3rqU2AEVyAI28KaIb7ISn1xcVlMDdeUc4M0A2Vxed18dWqpkhOpd5FBQ7J+RLHpvBF4bYiu3sAXfHKZQXPLv9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5S5B35+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQpMheie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62B4C19424;
-	Tue, 31 Mar 2026 17:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5S5B35+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE0BC19423;
+	Tue, 31 Mar 2026 17:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976921;
-	bh=JmquOdWSplFXLXkyGGIXQ+rEpRS7EMRvV4GghuBme5E=;
+	s=korg; t=1774976923;
+	bh=Wfxmrbz1zOzdAxTMol2sQzv8EQZXhLnl6dARCboIZyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQpMheiejOq6VjTU8blHcUiYLfRbR+0QSb7tctN+TrXwuBYb+AMn18DLFvdv0u5ky
-	 haOQ3vYXgbWEAMlEpQBZZmHrj/vuLxE80DfDcw1IllRbkcEdhNIREFIfbmUlDQRXbo
-	 nBhRyopzb48FZ4SCNGLxKIbxctn884IAJBh8uBoI=
+	b=a5S5B35+I2Coi58Q05xgaE8tNpnvS/5v/x/y/S/+a5g4bT2IiNbKO3CMijIzcX8OX
+	 zk3wlkNtiLhTXqHAmZim2zx0WdznSBt1TgISD6WQyr6yak0X/DN1lsk2WkzJDmLf+1
+	 WsyVBVhRv22KjzkzsbYsU1eEn6NWMvt5K3xwk6qY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Werner Kasselman <werner@verivus.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 280/309] mm/huge_memory: fix folio isnt locked in softleaf_to_folio()
-Date: Tue, 31 Mar 2026 18:23:03 +0200
-Message-ID: <20260331161803.872940900@linuxfoundation.org>
+Subject: [PATCH 6.18 281/309] ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()
+Date: Tue, 31 Mar 2026 18:23:04 +0200
+Message-ID: <20260331161803.910995559@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -62,118 +53,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Werner Kasselman <werner@verivus.com>
 
-[ Upstream commit 4c5e7f0fcd592801c9cc18f29f80fbee84eb8669 ]
+[ Upstream commit 48623ec358c1c600fa1e38368746f933e0f1a617 ]
 
-On arm64 server, we found folio that get from migration entry isn't locked
-in softleaf_to_folio().  This issue triggers when mTHP splitting and
-zap_nonpresent_ptes() races, and the root cause is lack of memory barrier
-in softleaf_to_folio().  The race is as follows:
+smb_grant_oplock() has two issues in the oplock publication sequence:
 
-	CPU0                                             CPU1
+1) opinfo is linked into ci->m_op_list (via opinfo_add) before
+   add_lease_global_list() is called.  If add_lease_global_list()
+   fails (kmalloc returns NULL), the error path frees the opinfo
+   via __free_opinfo() while it is still linked in ci->m_op_list.
+   Concurrent m_op_list readers (opinfo_get_list, or direct iteration
+   in smb_break_all_levII_oplock) dereference the freed node.
 
-deferred_split_scan()                              zap_nonpresent_ptes()
-  lock folio
-  split_folio()
-    unmap_folio()
-      change ptes to migration entries
-    __split_folio_to_order()                         softleaf_to_folio()
-      set flags(including PG_locked) for tail pages    folio = pfn_folio(softleaf_to_pfn(entry))
-      smp_wmb()                                        VM_WARN_ON_ONCE(!folio_test_locked(folio))
-      prep_compound_page() for tail pages
+2) opinfo->o_fp is assigned after add_lease_global_list() publishes
+   the opinfo on the global lease list.  A concurrent
+   find_same_lease_key() can walk the lease list and dereference
+   opinfo->o_fp->f_ci while o_fp is still NULL.
 
-In __split_folio_to_order(), smp_wmb() guarantees page flags of tail pages
-are visible before the tail page becomes non-compound.  smp_wmb() should
-be paired with smp_rmb() in softleaf_to_folio(), which is missed.  As a
-result, if zap_nonpresent_ptes() accesses migration entry that stores tail
-pfn, softleaf_to_folio() may see the updated compound_head of tail page
-before page->flags.
+Fix by restructuring the publication sequence to eliminate post-publish
+failure:
 
-This issue will trigger VM_WARN_ON_ONCE() in pfn_swap_entry_folio()
-because of the race between folio split and zap_nonpresent_ptes()
-leading to a folio incorrectly undergoing modification without a folio
-lock being held.
+- Set opinfo->o_fp before any list publication (fixes NULL deref).
+- Preallocate lease_table via alloc_lease_table() before opinfo_add()
+  so add_lease_global_list() becomes infallible after publication.
+- Keep the original m_op_list publication order (opinfo_add before
+  lease list) so concurrent opens via same_client_has_lease() and
+  opinfo_get_list() still see the in-flight grant.
+- Use opinfo_put() instead of __free_opinfo() on err_out so that
+  the RCU-deferred free path is used.
 
-This is a BUG_ON() before commit 93976a20345b ("mm: eliminate further
-swapops predicates"), which in merged in v6.19-rc1.
+This also requires splitting add_lease_global_list() to take a
+preallocated lease_table and changing its return type from int to void,
+since it can no longer fail.
 
-To fix it, add missing smp_rmb() if the softleaf entry is migration entry
-in softleaf_to_folio() and softleaf_to_page().
-
-[tujinjiang@huawei.com: update function name and comments]
-  Link: https://lkml.kernel.org/r/20260321075214.3305564-1-tujinjiang@huawei.com
-Link: https://lkml.kernel.org/r/20260319012541.4158561-1-tujinjiang@huawei.com
-Fixes: e9b61f19858a ("thp: reintroduce split_huge_page()")
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ applied fix to swapops.h using old pfn_swap_entry/swp_entry_t naming ]
+Fixes: 1dfd062caa16 ("ksmbd: fix use-after-free by using call_rcu() for oplock_info")
+Cc: stable@vger.kernel.org
+Signed-off-by: Werner Kasselman <werner@verivus.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ adapted kmalloc_obj() macro to kmalloc(sizeof()) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/swapops.h |   27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ fs/smb/server/oplock.c |   72 ++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 45 insertions(+), 27 deletions(-)
 
---- a/include/linux/swapops.h
-+++ b/include/linux/swapops.h
-@@ -487,15 +487,29 @@ static inline int pte_none_mostly(pte_t
- 	return pte_none(pte) || is_pte_marker(pte);
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -82,11 +82,19 @@ static void lease_del_list(struct oplock
+ 	spin_unlock(&lb->lb_lock);
  }
  
--static inline struct page *pfn_swap_entry_to_page(swp_entry_t entry)
-+static inline void swap_entry_migration_sync(swp_entry_t entry,
-+		struct folio *folio)
+-static void lb_add(struct lease_table *lb)
++static struct lease_table *alloc_lease_table(struct oplock_info *opinfo)
  {
--	struct page *p = pfn_to_page(swp_offset_pfn(entry));
+-	write_lock(&lease_list_lock);
+-	list_add(&lb->l_entry, &lease_table_list);
+-	write_unlock(&lease_list_lock);
++	struct lease_table *lb;
++
++	lb = kmalloc(sizeof(struct lease_table), KSMBD_DEFAULT_GFP);
++	if (!lb)
++		return NULL;
++
++	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
++	       SMB2_CLIENT_GUID_SIZE);
++	INIT_LIST_HEAD(&lb->lease_list);
++	spin_lock_init(&lb->lb_lock);
++	return lb;
+ }
+ 
+ static int alloc_lease(struct oplock_info *opinfo, struct lease_ctx_info *lctx)
+@@ -1042,34 +1050,27 @@ static void copy_lease(struct oplock_inf
+ 	lease2->version = lease1->version;
+ }
+ 
+-static int add_lease_global_list(struct oplock_info *opinfo)
++static void add_lease_global_list(struct oplock_info *opinfo,
++				  struct lease_table *new_lb)
+ {
+ 	struct lease_table *lb;
+ 
+-	read_lock(&lease_list_lock);
++	write_lock(&lease_list_lock);
+ 	list_for_each_entry(lb, &lease_table_list, l_entry) {
+ 		if (!memcmp(lb->client_guid, opinfo->conn->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE)) {
+ 			opinfo->o_lease->l_lb = lb;
+ 			lease_add_list(opinfo);
+-			read_unlock(&lease_list_lock);
+-			return 0;
++			write_unlock(&lease_list_lock);
++			kfree(new_lb);
++			return;
+ 		}
+ 	}
+-	read_unlock(&lease_list_lock);
+ 
+-	lb = kmalloc(sizeof(struct lease_table), KSMBD_DEFAULT_GFP);
+-	if (!lb)
+-		return -ENOMEM;
+-
+-	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
+-	       SMB2_CLIENT_GUID_SIZE);
+-	INIT_LIST_HEAD(&lb->lease_list);
+-	spin_lock_init(&lb->lb_lock);
+-	opinfo->o_lease->l_lb = lb;
++	opinfo->o_lease->l_lb = new_lb;
+ 	lease_add_list(opinfo);
+-	lb_add(lb);
+-	return 0;
++	list_add(&new_lb->l_entry, &lease_table_list);
++	write_unlock(&lease_list_lock);
+ }
+ 
+ static void set_oplock_level(struct oplock_info *opinfo, int level,
+@@ -1189,6 +1190,7 @@ int smb_grant_oplock(struct ksmbd_work *
+ 	int err = 0;
+ 	struct oplock_info *opinfo = NULL, *prev_opinfo = NULL;
+ 	struct ksmbd_inode *ci = fp->f_ci;
++	struct lease_table *new_lb = NULL;
+ 	bool prev_op_has_lease;
+ 	__le32 prev_op_state = 0;
+ 
+@@ -1291,21 +1293,37 @@ set_lev:
+ 	set_oplock_level(opinfo, req_op_level, lctx);
+ 
+ out:
+-	opinfo_count_inc(fp);
+-	opinfo_add(opinfo, fp);
+-
 +	/*
-+	 * Ensure we do not race with split, which might alter tail pages into new
-+	 * folios and thus result in observing an unlocked folio.
-+	 * This matches the write barrier in __split_folio_to_order().
++	 * Set o_fp before any publication so that concurrent readers
++	 * (e.g. find_same_lease_key() on the lease list) that
++	 * dereference opinfo->o_fp don't hit a NULL pointer.
++	 *
++	 * Keep the original publication order so concurrent opens can
++	 * still observe the in-flight grant via ci->m_op_list, but make
++	 * everything after opinfo_add() no-fail by preallocating any new
++	 * lease_table first.
 +	 */
-+	smp_rmb();
++	opinfo->o_fp = fp;
+ 	if (opinfo->is_lease) {
+-		err = add_lease_global_list(opinfo);
+-		if (err)
++		new_lb = alloc_lease_table(opinfo);
++		if (!new_lb) {
++			err = -ENOMEM;
+ 			goto err_out;
++		}
+ 	}
  
- 	/*
- 	 * Any use of migration entries may only occur while the
- 	 * corresponding page is locked
- 	 */
--	BUG_ON(is_migration_entry(entry) && !PageLocked(p));
-+	BUG_ON(!folio_test_locked(folio));
-+}
++	opinfo_count_inc(fp);
++	opinfo_add(opinfo, fp);
 +
-+static inline struct page *pfn_swap_entry_to_page(swp_entry_t entry)
-+{
-+	struct page *p = pfn_to_page(swp_offset_pfn(entry));
++	if (opinfo->is_lease)
++		add_lease_global_list(opinfo, new_lb);
 +
-+	if (is_migration_entry(entry))
-+		swap_entry_migration_sync(entry, page_folio(p));
+ 	rcu_assign_pointer(fp->f_opinfo, opinfo);
+-	opinfo->o_fp = fp;
  
- 	return p;
+ 	return 0;
+ err_out:
+-	__free_opinfo(opinfo);
++	kfree(new_lb);
++	opinfo_put(opinfo);
+ 	return err;
  }
-@@ -504,11 +518,8 @@ static inline struct folio *pfn_swap_ent
- {
- 	struct folio *folio = pfn_folio(swp_offset_pfn(entry));
  
--	/*
--	 * Any use of migration entries may only occur while the
--	 * corresponding folio is locked
--	 */
--	BUG_ON(is_migration_entry(entry) && !folio_test_locked(folio));
-+	if (is_migration_entry(entry))
-+		swap_entry_migration_sync(entry, folio);
- 
- 	return folio;
- }
 
 
