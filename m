@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9889F423A76;
-	Tue, 31 Mar 2026 16:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3578E425CE4;
+	Tue, 31 Mar 2026 16:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975321; cv=none; b=Lckl6TgHHU5ihBxNEXD8FXavQ3w3xpawwu69wU6VsdkSJNiJIofmRKm1IolwTlZOGn00h9h8y6UFK8LGw3MVbVrn83M0qkrghFGMLM+BvpHE7isN+KQmjkkCzor9M0VeJMRZrszRmiGuEtTefDNSLbA9fNZgabOs7frGAW/2x1g=
+	t=1774975324; cv=none; b=sn+fRpd2GTmaNYPFufB+MqXggf3+smIshB8yKw19Mt9ggejgUVRu5HLxyH4quMnmgMJH6MVawI5DXQJ/bU3wLfTL/Zf4SgCqeKaX327BP1/xgbfFNWVLerLjN7gatgt6BD5FSQaNKMkLlhgmtu0Z+Dw/jhFRfHMnmJOC3k3TT5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975321; c=relaxed/simple;
-	bh=7F49mslvYlekFabGdrRSHX4pTUIIBAa2EnOUpdN2qQ4=;
+	s=arc-20240116; t=1774975324; c=relaxed/simple;
+	bh=k5adLRXXFfoQDqDCOldrmtR6yneBnjt2P5fsgLzulnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NRaLDPGTie9MjMawrq33zmakZAlGnMqYqCp9hmcyrYAwKa1n65zfFciDA6btsu5YVuSC032RwJ7CYkDeZlDuNJoftihE5IE/iEmdNTd3HBKJQ8zeaozxBCaKmTX8S/WGbzOLNr+fbpCMHV2ZWg2wIUUmEGK24gWxibBKxim14d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTu4oZUx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzaThYHqkDQ+ev/TxeXWgNWAX3i9sCdxfKhWbmiQv0pv8MXhd8rbxZkDyuUQsVsoqj8hX20vfyQ0k9Cg2wRdOeDcFEaGtAOZIKBIbxolb/pimzn0zL/TCJS3ZhMLPpXoz2Qfrqpmyt4HOl/mh2d5xQAj5t6upaIgcx5cLYg4x4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvddURm2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTu4oZUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329CDC19423;
-	Tue, 31 Mar 2026 16:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvddURm2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C083BC19423;
+	Tue, 31 Mar 2026 16:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975321;
-	bh=7F49mslvYlekFabGdrRSHX4pTUIIBAa2EnOUpdN2qQ4=;
+	s=korg; t=1774975324;
+	bh=k5adLRXXFfoQDqDCOldrmtR6yneBnjt2P5fsgLzulnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uTu4oZUxn61jun7Ol9V4bNflBXLvXTTJzMuSqr9dim0KF5JmrXl+stuuC8KtEKoww
-	 a8bDA1hlwzbvSVk2alecoEc/nkrU/aUuvpciIFOn0SE9rsVnvQZU3UTUEypS0MlUHy
-	 SMVH4ea/4NIfuocei7Ynhr4VUsHu3h9/jxn/4L6g=
+	b=vvddURm2UsDWwIpZsunX2BNEQRFefd0GLQshqpXw5AABaKwZgLA9u6FVspy98iweg
+	 X9iV+7tT4TNPzqBJm9TvEasAQehczMQY0icoUd1sUhFx4xtUCY+VDPLK6tQk6cU+0T
+	 L9GJpvWOYla7erjEbe0qTdZKhdP6XAHdTHWRa7G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Bulekov <bkov@amazon.com>,
-	Fred Griffoul <fgriffo@amazon.co.uk>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.19 250/342] KVM: x86/mmu: Drop/zap existing present SPTE even when creating an MMIO SPTE
-Date: Tue, 31 Mar 2026 18:21:23 +0200
-Message-ID: <20260331161808.158992675@linuxfoundation.org>
+	xietangxin <xietangxin@yeah.net>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.19 233/342] virtio_net: Fix UAF on dst_ops when IFF_XMIT_DST_RELEASE is cleared and napi_tx is false
+Date: Tue, 31 Mar 2026 18:21:06 +0200
+Message-ID: <20260331161807.541356890@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,83 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: xietangxin <xietangxin@yeah.net>
 
-commit aad885e774966e97b675dfe928da164214a71605 upstream.
+commit ba8bda9a0896746053aa97ac6c3e08168729172c upstream.
 
-When installing an emulated MMIO SPTE, do so *after* dropping/zapping the
-existing SPTE (if it's shadow-present).  While commit a54aa15c6bda3 was
-right about it being impossible to convert a shadow-present SPTE to an
-MMIO SPTE due to a _guest_ write, it failed to account for writes to guest
-memory that are outside the scope of KVM.
+A UAF issue occurs when the virtio_net driver is configured with napi_tx=N
+and the device's IFF_XMIT_DST_RELEASE flag is cleared
+(e.g., during the configuration of tc route filter rules).
 
-E.g. if host userspace modifies a shadowed gPTE to switch from a memslot
-to emulted MMIO and then the guest hits a relevant page fault, KVM will
-install the MMIO SPTE without first zapping the shadow-present SPTE.
+When IFF_XMIT_DST_RELEASE is removed from the net_device, the network stack
+expects the driver to hold the reference to skb->dst until the packet
+is fully transmitted and freed. In virtio_net with napi_tx=N,
+skbs may remain in the virtio transmit ring for an extended period.
 
-  ------------[ cut here ]------------
-  is_shadow_present_pte(*sptep)
-  WARNING: arch/x86/kvm/mmu/mmu.c:484 at mark_mmio_spte+0xb2/0xc0 [kvm], CPU#0: vmx_ept_stale_r/4292
-  Modules linked in: kvm_intel kvm irqbypass
-  CPU: 0 UID: 1000 PID: 4292 Comm: vmx_ept_stale_r Not tainted 7.0.0-rc2-eafebd2d2ab0-sink-vm #319 PREEMPT
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:mark_mmio_spte+0xb2/0xc0 [kvm]
-  Call Trace:
-   <TASK>
-   mmu_set_spte+0x237/0x440 [kvm]
-   ept_page_fault+0x535/0x7f0 [kvm]
-   kvm_mmu_do_page_fault+0xee/0x1f0 [kvm]
-   kvm_mmu_page_fault+0x8d/0x620 [kvm]
-   vmx_handle_exit+0x18c/0x5a0 [kvm_intel]
-   kvm_arch_vcpu_ioctl_run+0xc55/0x1c20 [kvm]
-   kvm_vcpu_ioctl+0x2d5/0x980 [kvm]
-   __x64_sys_ioctl+0x8a/0xd0
-   do_syscall_64+0xb5/0x730
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  RIP: 0033:0x47fa3f
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+If the network namespace is destroyed while these skbs are still pending,
+the corresponding dst_ops structure has freed. When a subsequent packet
+is transmitted, free_old_xmit() is triggered to clean up old skbs.
+It then calls dst_release() on the skb associated with the stale dst_entry.
+Since the dst_ops (referenced by the dst_entry) has already been freed,
+a UAF kernel paging request occurs.
 
-Reported-by: Alexander Bulekov <bkov@amazon.com>
-Debugged-by: Alexander Bulekov <bkov@amazon.com>
-Suggested-by: Fred Griffoul <fgriffo@amazon.co.uk>
-Fixes: a54aa15c6bda3 ("KVM: x86/mmu: Handle MMIO SPTEs directly in mmu_set_spte()")
+fix it by adds skb_dst_drop(skb) in start_xmit to explicitly release
+the dst reference before the skb is queued in virtio_net.
+
+Call Trace:
+ Unable to handle kernel paging request at virtual address ffff80007e150000
+ CPU: 2 UID: 0 PID: 6236 Comm: ping Kdump: loaded Not tainted 7.0.0-rc1+ #6 PREEMPT
+  ...
+  percpu_counter_add_batch+0x3c/0x158 lib/percpu_counter.c:98 (P)
+  dst_release+0xe0/0x110  net/core/dst.c:177
+  skb_release_head_state+0xe8/0x108 net/core/skbuff.c:1177
+  sk_skb_reason_drop+0x54/0x2d8 net/core/skbuff.c:1255
+  dev_kfree_skb_any_reason+0x64/0x78 net/core/dev.c:3469
+  napi_consume_skb+0x1c4/0x3a0 net/core/skbuff.c:1527
+  __free_old_xmit+0x164/0x230  drivers/net/virtio_net.c:611 [virtio_net]
+  free_old_xmit drivers/net/virtio_net.c:1081 [virtio_net]
+  start_xmit+0x7c/0x530 drivers/net/virtio_net.c:3329 [virtio_net]
+  ...
+
+Reproduction Steps:
+NETDEV="enp3s0"
+
+config_qdisc_route_filter() {
+    tc qdisc del dev $NETDEV root
+    tc qdisc add dev $NETDEV root handle 1: prio
+    tc filter add dev $NETDEV parent 1:0 \
+	protocol ip prio 100 route to 100 flowid 1:1
+    ip route add 192.168.1.100/32 dev $NETDEV realm 100
+}
+
+test_ns() {
+    ip netns add testns
+    ip link set $NETDEV netns testns
+    ip netns exec testns ifconfig $NETDEV  10.0.32.46/24
+    ip netns exec testns ping -c 1 10.0.32.1
+    ip netns del testns
+}
+
+config_qdisc_route_filter
+
+test_ns
+sleep 2
+test_ns
+
+Fixes: f2fc6a54585a ("[NETNS][IPV6] route6 - move ip6_dst_ops inside the network namespace")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: xietangxin <xietangxin@yeah.net>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Fixes: 0287587884b1 ("net: better IFF_XMIT_DST_RELEASE support")
+Link: https://patch.msgid.link/20260312025406.15641-1-xietangxin@yeah.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/virtio_net.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -3044,12 +3044,6 @@ static int mmu_set_spte(struct kvm_vcpu
- 	bool prefetch = !fault || fault->prefetch;
- 	bool write_fault = fault && fault->write;
- 
--	if (unlikely(is_noslot_pfn(pfn))) {
--		vcpu->stat.pf_mmio_spte_created++;
--		mark_mmio_spte(vcpu, sptep, gfn, pte_access);
--		return RET_PF_EMULATE;
--	}
--
- 	if (is_shadow_present_pte(*sptep)) {
- 		if (prefetch && is_last_spte(*sptep, level) &&
- 		    pfn == spte_to_pfn(*sptep))
-@@ -3073,6 +3067,14 @@ static int mmu_set_spte(struct kvm_vcpu
- 			was_rmapped = 1;
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3355,6 +3355,7 @@ static netdev_tx_t start_xmit(struct sk_
+ 	/* Don't wait up for transmitted skbs to be freed. */
+ 	if (!use_napi) {
+ 		skb_orphan(skb);
++		skb_dst_drop(skb);
+ 		nf_reset_ct(skb);
  	}
- 
-+	if (unlikely(is_noslot_pfn(pfn))) {
-+		vcpu->stat.pf_mmio_spte_created++;
-+		mark_mmio_spte(vcpu, sptep, gfn, pte_access);
-+		if (flush)
-+			kvm_flush_remote_tlbs_gfn(vcpu->kvm, gfn, level);
-+		return RET_PF_EMULATE;
-+	}
-+
- 	wrprot = make_spte(vcpu, sp, slot, pte_access, gfn, pfn, *sptep, prefetch,
- 			   false, host_writable, &spte);
  
 
 
