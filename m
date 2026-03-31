@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8522C21F8;
-	Tue, 31 Mar 2026 17:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE242D73AD;
+	Tue, 31 Mar 2026 17:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976459; cv=none; b=EYWSOx9764eTcEifLNtur4y3JwAL2g174Tw9dU5seKRfzmfA0nHoMayPOH1XiG6Kk0QDPDptJNfGFt/kVbkdhYkaoXFBfmCm4FGD6S2KLgmKr8iYYwITmIUTlZMbx17MCfsVqwA3LDOrVlG6EM2iA6AWoE4PyKrCmvlnWMjIQ74=
+	t=1774976461; cv=none; b=fi7Gwkxwv3p0MBPJ3K10NI6EMXI10F4QxVpb6Gmqk9q8bTYj0F10bdmqpuRowrIK0xJ5xf7xE3hm3Cp5vNNnYiCey8yyF8L/5gLQzEO4vp3i/nS+5IzgC1boJ9ZhBY/1K42r1MQMx9Pj9q5e8DY3ZRARTukBV30NYx7oAY8gw6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976459; c=relaxed/simple;
-	bh=bF6zCXnuacN51BrQX7tP86OPex3I0KE3WILVFOM+TVo=;
+	s=arc-20240116; t=1774976461; c=relaxed/simple;
+	bh=fSgOWKpvljbrfLBu50YiU7RDOO828yILsr0VfchxCYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZFqwjvxQEKpF9xH6BB/7M7c3QOnbKVVuNaA93q1ZwnUAw+LA3k67cdIaG4lUfrJ7yS+uhvOt9R6b+O+sFDOZUuezadjz9E8sb7EepwTvBoEvA0vpTZeymxnbFtaNdNmu3SS+36L1ndcrHRL19Xj/D4s4wKrZj1eyonvQSo5yIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HE/MJNjw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=grpyIvv/5J0NhcCBdgDfKlUy0DlCnFvn801uYNbUYotlQE5QClSc6zMwfX+IICxm9amnei6EyTi/enin0r5zW22w8C0MRscSQjy7fmD+VJGxEJU5Eo/VwoX3GCkxQHb0Lq4+pDRbNlgH1blUWLpxY2Cyauo5OUjNtyRfxSt5gQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuQHeDYu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HE/MJNjw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961A3C19423;
-	Tue, 31 Mar 2026 17:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuQHeDYu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3083EC19423;
+	Tue, 31 Mar 2026 17:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976458;
-	bh=bF6zCXnuacN51BrQX7tP86OPex3I0KE3WILVFOM+TVo=;
+	s=korg; t=1774976461;
+	bh=fSgOWKpvljbrfLBu50YiU7RDOO828yILsr0VfchxCYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HE/MJNjweR8QIDqfcg+GR6Nne6H0qzhn/g4O0whx4U6T+oQPGNonU1UTj3JR+axHR
-	 wp+8tfcTCpy/eXDpPaIM3vGk/75LXSWXMp8GSKTQc47xIlMoEjYoYKMMXX/AFyGyql
-	 q8zctiBZH1cuQ/Ewo1af68E21E/dn9bjRjqK1FBg=
+	b=vuQHeDYuN1FWI/JqGhm3LTKk3MSZ03Ma9M4P+H+sOJnabelvjQX2QP7B27JhtAlgp
+	 QoGUeNFO4BFPivFl4qykbQZLGIAHtH7qyi85tLZUDMSY8VNkKbAaAIzrkEs3zcRqFI
+	 BejDtMkMe6GiXQGDqVMxdZMZtu7NOfdvx2SbnLYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Lubomir Rintel <lkundrak@v3.sk>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 093/309] openvswitch: validate MPLS set/set_masked payload length
-Date: Tue, 31 Mar 2026 18:19:56 +0200
-Message-ID: <20260331161756.914147427@linuxfoundation.org>
+Subject: [PATCH 6.18 102/309] platform/olpc: olpc-xo175-ec: Fix overflow error message to print inlen
+Date: Tue, 31 Mar 2026 18:20:05 +0200
+Message-ID: <20260331161757.242176029@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -50,54 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 546b68ac893595877ffbd7751e5c55fd1c43ede6 ]
+[ Upstream commit 2061f7b042f88d372cca79615f8425f3564c0b40 ]
 
-validate_set() accepted OVS_KEY_ATTR_MPLS as variable-sized payload for
-SET/SET_MASKED actions. In action handling, OVS expects fixed-size
-MPLS key data (struct ovs_key_mpls).
+The command length check validates inlen (> 5), but the error message
+incorrectly printed resp_len. Print inlen so the log reflects the
+actual command length.
 
-Use the already normalized key_len (masked case included) and reject
-non-matching MPLS action key sizes.
-
-Reject invalid MPLS action payload lengths early.
-
-Fixes: fbdcdd78da7c ("Change in Openvswitch to support MPLS label depth of 3 in ingress direction")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
-Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260319080228.3423307-1-n05ec@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0c3d931b3ab9e ("Platform: OLPC: Add XO-1.75 EC driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Acked-by: Lubomir Rintel <lkundrak@v3.sk>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://patch.msgid.link/20260310130138.700687-1-alok.a.tiwari@oracle.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow_netlink.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/olpc/olpc-xo175-ec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index 2d536901309ea..2dc4a6c2aecec 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2953,6 +2953,8 @@ static int validate_set(const struct nlattr *a,
- 	case OVS_KEY_ATTR_MPLS:
- 		if (!eth_p_mpls(eth_type))
- 			return -EINVAL;
-+		if (key_len != sizeof(struct ovs_key_mpls))
-+			return -EINVAL;
- 		break;
+diff --git a/drivers/platform/olpc/olpc-xo175-ec.c b/drivers/platform/olpc/olpc-xo175-ec.c
+index fa7b3bda688a6..bee271a4fda1a 100644
+--- a/drivers/platform/olpc/olpc-xo175-ec.c
++++ b/drivers/platform/olpc/olpc-xo175-ec.c
+@@ -482,7 +482,7 @@ static int olpc_xo175_ec_cmd(u8 cmd, u8 *inbuf, size_t inlen, u8 *resp,
+ 	dev_dbg(dev, "CMD %x, %zd bytes expected\n", cmd, resp_len);
  
- 	case OVS_KEY_ATTR_SCTP:
+ 	if (inlen > 5) {
+-		dev_err(dev, "command len %zd too big!\n", resp_len);
++		dev_err(dev, "command len %zd too big!\n", inlen);
+ 		return -EOVERFLOW;
+ 	}
+ 
 -- 
 2.51.0
 
