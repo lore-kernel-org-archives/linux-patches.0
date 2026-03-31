@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFD83054C7;
-	Tue, 31 Mar 2026 17:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAD53033CC;
+	Tue, 31 Mar 2026 17:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976539; cv=none; b=dNpIOT1t6I4EyzsAGhhWEMa2SLdfxY2tDZ4ytJX86TBFUzDCe7sodAIkF7JytyuaHSbJ+6SHD+j9ZqonBlCS0Cpp+rLk9ifa42ceIEaBjuIOi67k2r+RkzdiMuE12wXkCgNDzabZH39sQBzc6XR//p8ld5Z87HXQ5Nu2w0fFBsE=
+	t=1774976541; cv=none; b=MebojKaKGBR36rHANVM9VKFowTfxGS3BYfB4mBefs6VsKJcTGuMA667BHt5oFtG+ASLrOj7dUpApi3DFFi/1nXZm+kbBRQogvWq5/ClukHUDfJEf5ARoXv8i5iqPj7kgU5FtOQdFDQoe9p2lLlySGcPM9N5tpU+HbqbA4V+fXrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976539; c=relaxed/simple;
-	bh=6KhZRZtg9BszrrDxcim0sqKMXfH2Di+WmPQ2Anc6A8M=;
+	s=arc-20240116; t=1774976541; c=relaxed/simple;
+	bh=/3ulhgmdd2KYEUIwCsI4XbMwjma9q+2uB5sxmxdXQMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iPZzLub4ZIZxLJEVog4YL32HZxihtqmeVrgxR1xJkC9odaV9ajykdFjsAq4tLSnIApH7T/V9Ohw3WQ/dkSoj3zVwuVI8DcAE/8Ia034FpSuNBxgKHsChkbMBhpqIMUyU9Jsh+0HsOz0TM2mcwWSSn9OA3jPa1tyBwwFgq3xaSok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIrJC0v5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jQI0/SiiHrA+Mj2ntuQK2u6muWa+CHmiiNIJ8HzIq9Q0KDYbyqTVsPJLOUJkdd8slqEwlx5niJwcnk3wa4XSTh3DWPjXrYwbvuiIi/I68FhqpZoOGSn3KVQMfdS3ac5JpJCFHRhmtqqdqLqiFOsRJ+wvBRgCbv8rBPVy7qBcbYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNsoXL8K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIrJC0v5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C40DC19423;
-	Tue, 31 Mar 2026 17:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNsoXL8K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B41C19423;
+	Tue, 31 Mar 2026 17:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976539;
-	bh=6KhZRZtg9BszrrDxcim0sqKMXfH2Di+WmPQ2Anc6A8M=;
+	s=korg; t=1774976541;
+	bh=/3ulhgmdd2KYEUIwCsI4XbMwjma9q+2uB5sxmxdXQMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TIrJC0v5vb+dKDO8OdZYghjfIBcXyIwIed7nFUdOcEkwPyrOCbAAkRdSD8dsq/dYo
-	 fbAIDxwBiYjPAZiJe9/8NCxSG1O74zaAaeVsNXlATit1YVc/uXBp/N5LVoyrFQnpa2
-	 x4adM8oofdwiIq/hQk28WaV4J81VSJlWUt4Im7p0=
+	b=PNsoXL8KzA05pu2cOiCsUZ/kUddD6rs59/WZSvVqn5ZO9jK57WPv2u2jBz6gAP1g7
+	 tCNBFPSyoovbogeIqmZwtq54Kre5TmkBwlf6cOsTXoRMXuQPIxKXGb401CCOf+T7/B
+	 /iy3jN3FRsocQrs6hW8d01xgz6HXDm2eTjMR2ZP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 098/309] net: bcmasp: fix double free of WoL irq
-Date: Tue, 31 Mar 2026 18:20:01 +0200
-Message-ID: <20260331161757.095499043@linuxfoundation.org>
+Subject: [PATCH 6.18 099/309] net: bcmasp: fix double disable of clk
+Date: Tue, 31 Mar 2026 18:20:02 +0200
+Message-ID: <20260331161757.132974846@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -54,54 +54,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit cbfa5be2bf64511d49b854a0f9fd6d0b5118621f ]
+[ Upstream commit 27dfe9030acbc601c260b42ecdbb4e5858a97b53 ]
 
-We do not need to free wol_irq since it was instantiated with
-devm_request_irq(). So devres will free for us.
+Switch to devm_clk_get_optional() so we can manage the clock ourselves.
+We dynamically control the clocks depending on the state of the interface
+for power savings. The default state is clock disabled, so unbinding the
+driver causes a double disable.
 
-Fixes: a2f0751206b0 ("net: bcmasp: Add support for WoL magic packet")
+Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
 Signed-off-by: Justin Chen <justin.chen@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260319234813.1937315-2-justin.chen@broadcom.com
+Link: https://patch.msgid.link/20260319234813.1937315-3-justin.chen@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp.c | 8 --------
- 1 file changed, 8 deletions(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp.c | 33 ++++++++++++++-------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-index de5f540f78049..fac795ac0fcee 100644
+index fac795ac0fcee..1fdf0822c8a02 100644
 --- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
 +++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-@@ -1157,12 +1157,6 @@ void bcmasp_enable_wol(struct bcmasp_intf *intf, bool en)
- 	}
- }
+@@ -1254,7 +1254,7 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 	if (priv->irq <= 0)
+ 		return -EINVAL;
  
--static void bcmasp_wol_irq_destroy(struct bcmasp_priv *priv)
--{
--	if (priv->wol_irq > 0)
--		free_irq(priv->wol_irq, priv);
--}
+-	priv->clk = devm_clk_get_optional_enabled(dev, "sw_asp");
++	priv->clk = devm_clk_get_optional(dev, "sw_asp");
+ 	if (IS_ERR(priv->clk))
+ 		return dev_err_probe(dev, PTR_ERR(priv->clk),
+ 				     "failed to request clock\n");
+@@ -1282,6 +1282,10 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 
+ 	bcmasp_set_pdata(priv, pdata);
+ 
++	ret = clk_prepare_enable(priv->clk);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to start clock\n");
++
+ 	/* Enable all clocks to ensure successful probing */
+ 	bcmasp_core_clock_set(priv, ASP_CTRL_CLOCK_CTRL_ASP_ALL_DISABLE, 0);
+ 
+@@ -1293,8 +1297,10 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 
+ 	ret = devm_request_irq(&pdev->dev, priv->irq, bcmasp_isr, 0,
+ 			       pdev->name, priv);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "failed to request ASP interrupt: %d", ret);
++	if (ret) {
++		dev_err(dev, "Failed to request ASP interrupt: %d", ret);
++		goto err_clock_disable;
++	}
+ 
+ 	/* Register mdio child nodes */
+ 	of_platform_populate(dev->of_node, bcmasp_mdio_of_match, NULL, dev);
+@@ -1306,13 +1312,17 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 
+ 	priv->mda_filters = devm_kcalloc(dev, priv->num_mda_filters,
+ 					 sizeof(*priv->mda_filters), GFP_KERNEL);
+-	if (!priv->mda_filters)
+-		return -ENOMEM;
++	if (!priv->mda_filters) {
++		ret = -ENOMEM;
++		goto err_clock_disable;
++	}
+ 
+ 	priv->net_filters = devm_kcalloc(dev, priv->num_net_filters,
+ 					 sizeof(*priv->net_filters), GFP_KERNEL);
+-	if (!priv->net_filters)
+-		return -ENOMEM;
++	if (!priv->net_filters) {
++		ret = -ENOMEM;
++		goto err_clock_disable;
++	}
+ 
+ 	bcmasp_core_init_filters(priv);
+ 
+@@ -1321,7 +1331,8 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 	ports_node = of_find_node_by_name(dev->of_node, "ethernet-ports");
+ 	if (!ports_node) {
+ 		dev_warn(dev, "No ports found\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_clock_disable;
+ 	}
+ 
+ 	i = 0;
+@@ -1343,8 +1354,6 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 	 */
+ 	bcmasp_core_clock_set(priv, 0, ASP_CTRL_CLOCK_CTRL_ASP_ALL_DISABLE);
+ 
+-	clk_disable_unprepare(priv->clk);
 -
- static void bcmasp_eee_fixup(struct bcmasp_intf *intf, bool en)
- {
- 	u32 reg, phy_lpi_overwrite;
-@@ -1368,7 +1362,6 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 	/* Now do the registration of the network ports which will take care
+ 	 * of managing the clock properly.
+ 	 */
+@@ -1357,12 +1366,16 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 		count++;
+ 	}
+ 
++	clk_disable_unprepare(priv->clk);
++
+ 	dev_info(dev, "Initialized %d port(s)\n", count);
+ 
  	return ret;
  
  err_cleanup:
--	bcmasp_wol_irq_destroy(priv);
  	bcmasp_remove_intfs(priv);
++err_clock_disable:
++	clk_disable_unprepare(priv->clk);
  
  	return ret;
-@@ -1381,7 +1374,6 @@ static void bcmasp_remove(struct platform_device *pdev)
- 	if (!priv)
- 		return;
- 
--	bcmasp_wol_irq_destroy(priv);
- 	bcmasp_remove_intfs(priv);
  }
- 
 -- 
 2.51.0
 
