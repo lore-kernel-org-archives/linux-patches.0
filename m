@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAF7428481;
-	Tue, 31 Mar 2026 16:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8357F42B756;
+	Tue, 31 Mar 2026 16:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975938; cv=none; b=MlIaA3o3FTUtroXWQjxJaOsBPWK/yauQZrDKXKh6EoWhA2GtMll83VOUND2CVCOJ1TLp43J5t0YG9MGxWMbmFGKV86Unv8IJHLtIRTBoi5IKbaERp1ZWXYXiKmTCIMYC46N368tpdX1TPnkQ4QpOQPzWbLb0ZqoNg2n0j97S148=
+	t=1774975940; cv=none; b=QEq4WKiSKp1kHp+l0xIKZeOjzCj+h8eqYycLuRSHGmZjNidB3NTNuF6SyrFyVB0DOoZZPdpQs+vrXrzzdk4GiagMR685a0JAvDQkejZLBXpX2YA+Mu/O+1kxK2gbmnGYYVhh/hoYDNn7MOHOXHelLukgN7ADG21voVgMHIg6lvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975938; c=relaxed/simple;
-	bh=Xst8fdtKrPG4G676keHQyZYlioCA7RFf3HdnrsA+Zeg=;
+	s=arc-20240116; t=1774975940; c=relaxed/simple;
+	bh=H8UasX4+Eex1RHITByJfODaCNcwi9cjLb5awb3vg+dA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gngx5+tHq2yXBk7fcB4KxsOf41L1yv6Zc5ZyQCeyzjm6uN6M6QP3Y37Om/8Eht75tRzpuLWrXD9xkNVoYMxff1QRDsxT47j33K7SGN7mYBqcI+8lEcbXizqakcFJT4tk5rtiYl7o9iOtX/WElRISKAAONNZzJUZZkChTP9FIvXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6WrwE0T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cX7uSep+rKIRXwhCEpm4ERYEuZ+0V2EEHxhfbCelcF1Wi+cIkWQeNIPNexzz+O+gkiihZiMSkD7LMnAD/92c1Zrxd02OHvSqeGsMglP3Ez8fKoNxtb5Lln9FxuRF578k7hXU0GI2jdrIq9ZVepn50rxXnb4+xi6hg7P1AcejOlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNaDbL6y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6WrwE0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83286C2BCB4;
-	Tue, 31 Mar 2026 16:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNaDbL6y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CE0C19423;
+	Tue, 31 Mar 2026 16:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975937;
-	bh=Xst8fdtKrPG4G676keHQyZYlioCA7RFf3HdnrsA+Zeg=;
+	s=korg; t=1774975940;
+	bh=H8UasX4+Eex1RHITByJfODaCNcwi9cjLb5awb3vg+dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6WrwE0T3cWGEXo/SGXnPmKsfeBmIqL8M6aWjczt/HL17n5CNQfanoIgfLYSKsf21
-	 ifmoH7McBjhlgq56iSU0V656/6n3QE0aKtqI5OUvJrRVEXOlyq0G8ODIVeFltUKoo8
-	 XjEy/O5uof24YlHF9nMIZDNwH4MoeqwOmxIyEiYM=
+	b=lNaDbL6y2NDahyPjIRuRtZmMSmgbJg5q0v8+7lk7KIhwiUjR5s9zcMpohQ+2oMkm8
+	 G0hSMTnu5uyLGjWIZYDAt6QQVAPUV9iKF6tB29x9Ok9hfxisR8w6huOMzinfeXXYNc
+	 TH/+ytyQgOkPD4jXgYiwr/4RkRRFkZEG4iKdqKxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Barrera <ivan.d.barrera@intel.com>,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/244] RDMA/irdma: Clean up unnecessary dereference of event->cm_node
-Date: Tue, 31 Mar 2026 18:21:01 +0200
-Message-ID: <20260331161745.765341925@linuxfoundation.org>
+Subject: [PATCH 6.12 102/244] netfilter: nf_conntrack_sip: fix use of uninitialized rtp_addr in process_sdp
+Date: Tue, 31 Mar 2026 18:20:52 +0200
+Message-ID: <20260331161745.440026692@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,64 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Barrera <ivan.d.barrera@intel.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit b415399c9a024d574b65479636f0d4eb625b9abd ]
+[ Upstream commit 6a2b724460cb67caed500c508c2ae5cf012e4db4 ]
 
-The cm_node is available and the usage of cm_node and event->cm_node
-seems arbitrary. Clean up unnecessary dereference of event->cm_node.
+process_sdp() declares union nf_inet_addr rtp_addr on the stack and
+passes it to the nf_nat_sip sdp_session hook after walking the SDP
+media descriptions. However rtp_addr is only initialized inside the
+media loop when a recognized media type with a non-zero port is found.
 
-Fixes: 146b9756f14c ("RDMA/irdma: Add connection manager")
-Signed-off-by: Ivan Barrera <ivan.d.barrera@intel.com>
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+If the SDP body contains no m= lines, only inactive media sections
+(m=audio 0 ...) or only unrecognized media types, rtp_addr is never
+assigned. Despite that, the function still calls hooks->sdp_session()
+with &rtp_addr, causing nf_nat_sdp_session() to format the stale stack
+value as an IP address and rewrite the SDP session owner and connection
+lines with it.
+
+With CONFIG_INIT_STACK_ALL_ZERO (default on most distributions) this
+results in the session-level o= and c= addresses being rewritten to
+0.0.0.0 for inactive SDP sessions. Without stack auto-init the
+rewritten address is whatever happened to be on the stack.
+
+Fix this by pre-initializing rtp_addr from the session-level connection
+address (caddr) when available, and tracking via a have_rtp_addr flag
+whether any valid address was established. Skip the sdp_session hook
+entirely when no valid address exists.
+
+Fixes: 4ab9e64e5e3c ("[NETFILTER]: nf_nat_sip: split up SDP mangling")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/cm.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/netfilter/nf_conntrack_sip.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/cm.c b/drivers/infiniband/hw/irdma/cm.c
-index 7b9cba80a7f74..e7f315e102d51 100644
---- a/drivers/infiniband/hw/irdma/cm.c
-+++ b/drivers/infiniband/hw/irdma/cm.c
-@@ -4238,21 +4238,21 @@ static void irdma_cm_event_handler(struct work_struct *work)
- 		irdma_cm_event_reset(event);
- 		break;
- 	case IRDMA_CM_EVENT_CONNECTED:
--		if (!event->cm_node->cm_id ||
--		    event->cm_node->state != IRDMA_CM_STATE_OFFLOADED)
-+		if (!cm_node->cm_id ||
-+		    cm_node->state != IRDMA_CM_STATE_OFFLOADED)
- 			break;
- 		irdma_cm_event_connected(event);
- 		break;
- 	case IRDMA_CM_EVENT_MPA_REJECT:
--		if (!event->cm_node->cm_id ||
-+		if (!cm_node->cm_id ||
- 		    cm_node->state == IRDMA_CM_STATE_OFFLOADED)
- 			break;
- 		irdma_send_cm_event(cm_node, cm_node->cm_id,
- 				    IW_CM_EVENT_CONNECT_REPLY, -ECONNREFUSED);
- 		break;
- 	case IRDMA_CM_EVENT_ABORTED:
--		if (!event->cm_node->cm_id ||
--		    event->cm_node->state == IRDMA_CM_STATE_OFFLOADED)
-+		if (!cm_node->cm_id ||
-+		    cm_node->state == IRDMA_CM_STATE_OFFLOADED)
- 			break;
- 		irdma_event_connect_error(event);
- 		break;
-@@ -4262,7 +4262,7 @@ static void irdma_cm_event_handler(struct work_struct *work)
- 		break;
- 	}
+diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
+index 657839a58782a..84334537c6067 100644
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -1040,6 +1040,7 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
+ 	unsigned int port;
+ 	const struct sdp_media_type *t;
+ 	int ret = NF_ACCEPT;
++	bool have_rtp_addr = false;
  
--	irdma_rem_ref_cm_node(event->cm_node);
-+	irdma_rem_ref_cm_node(cm_node);
- 	kfree(event);
- }
+ 	hooks = rcu_dereference(nf_nat_sip_hooks);
  
+@@ -1056,8 +1057,11 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
+ 	caddr_len = 0;
+ 	if (ct_sip_parse_sdp_addr(ct, *dptr, sdpoff, *datalen,
+ 				  SDP_HDR_CONNECTION, SDP_HDR_MEDIA,
+-				  &matchoff, &matchlen, &caddr) > 0)
++				  &matchoff, &matchlen, &caddr) > 0) {
+ 		caddr_len = matchlen;
++		memcpy(&rtp_addr, &caddr, sizeof(rtp_addr));
++		have_rtp_addr = true;
++	}
+ 
+ 	mediaoff = sdpoff;
+ 	for (i = 0; i < ARRAY_SIZE(sdp_media_types); ) {
+@@ -1091,9 +1095,11 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
+ 					  &matchoff, &matchlen, &maddr) > 0) {
+ 			maddr_len = matchlen;
+ 			memcpy(&rtp_addr, &maddr, sizeof(rtp_addr));
+-		} else if (caddr_len)
++			have_rtp_addr = true;
++		} else if (caddr_len) {
+ 			memcpy(&rtp_addr, &caddr, sizeof(rtp_addr));
+-		else {
++			have_rtp_addr = true;
++		} else {
+ 			nf_ct_helper_log(skb, ct, "cannot parse SDP message");
+ 			return NF_DROP;
+ 		}
+@@ -1125,7 +1131,7 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
+ 
+ 	/* Update session connection and owner addresses */
+ 	hooks = rcu_dereference(nf_nat_sip_hooks);
+-	if (hooks && ct->status & IPS_NAT_MASK)
++	if (hooks && ct->status & IPS_NAT_MASK && have_rtp_addr)
+ 		ret = hooks->sdp_session(skb, protoff, dataoff,
+ 					 dptr, datalen, sdpoff,
+ 					 &rtp_addr);
 -- 
-2.53.0
+2.51.0
 
 
 
