@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6AE423A62;
-	Tue, 31 Mar 2026 16:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F122423A9D;
+	Tue, 31 Mar 2026 16:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976321; cv=none; b=OBrdqBjx1EQSZ0dDVplHapfeerGCeDXAnpiy68d8je+I++RHTRITeHDJW+MdIEZ+yxjUFULupF4ThH5uIMuTD7Im+KTq7hrLVPZ/Khy/eddM0RtnE6SSSZevoyfs9fuRsHVjXDGxGI4zBWm6NcTbR2i/k+ZMnGZtYXKKUiJ8cH8=
+	t=1774976323; cv=none; b=Zjbm9k0MP9q+RzloIypSTMV+cH5reNxX9E5GRFL83dfaP+Z5lH0SbAdZQwIhiIrlPXQxMyJ2sTuLpmyX5MPmAiN1Wb6j2vhJNw4rptnvcgd4koGYrkJg+AlSbKskCPIsu5ArUr/0J7AOe7JzuXPNNrR9vcGsK7SNGhpD9S7JRqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976321; c=relaxed/simple;
-	bh=FwLzTqKQJ0Y6w+Y41bPwp2A2eQRmAF2e0N2qntct42k=;
+	s=arc-20240116; t=1774976323; c=relaxed/simple;
+	bh=h9ag9SSiuUbhQbjuuAgPmrCVMs8JdnMUt50zIIGepDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZQxv/pgTMMywtoM0WLpQncPAkgnJOpZ8q6tyYZCnabnr2ZBcvRblsNKS/zd9WMzub4ZYHaQxf0TKlDrQlqN1B7Vez0mtaJx1tqIIlvBoM5gBjilirsA4pVaqIqu688eESdlbhntOwMR8FeYjrSW/2M74auK7maNLD35VU/wVCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1MH/vdl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W2Hb9dwYlVy5G+cUclWjxl8HDqTXcY10T+Achf2/Cvjhj0xBTy1RVRLt1iI0xAR2ysG96eob92gtm6WUtK2UCotUNlFOcrm680OFIafORCWvZWDKrg5ODFBdoAmla33xZ5RRZztABwg5udQaHEK+2QkPJPUnrgi0trV0G2b+uPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K45d2xG9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1MH/vdl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867BCC19423;
-	Tue, 31 Mar 2026 16:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K45d2xG9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17418C19423;
+	Tue, 31 Mar 2026 16:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976320;
-	bh=FwLzTqKQJ0Y6w+Y41bPwp2A2eQRmAF2e0N2qntct42k=;
+	s=korg; t=1774976323;
+	bh=h9ag9SSiuUbhQbjuuAgPmrCVMs8JdnMUt50zIIGepDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1MH/vdlqstCYDdK0B26Mte7UovlWvWpIMO4sMPkJqyBUn2dezjn28b83gDepHftp
-	 9BTrqBtw1aE5yoOa2SKUsXzJm8pwzvvlHJThBl6NelnjyUCXJ5ftUISJbaqOefky01
-	 GDVk5fvFlBKu/V0If4Z+hieBlN3D/s/6WVvqUy68=
+	b=K45d2xG965XG9UpsyRzgwqTCcbCeJo5cKIenOj7OqZA9yPz6VI/+84/ABNeDOauLg
+	 0i++T0vJH7hA98i5f+AnK+Q/+5hvnqtNyALixyeozKWEvm56zkYpGJDSrbqzCnQMiH
+	 9mVXeOONwtPH0lmHF7Go13UcC1AwRkoK8Gd99VxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 047/309] ASoC: cs35l56: Only patch ASP registers if the DAI is part of a DAIlink
-Date: Tue, 31 Mar 2026 18:19:10 +0200
-Message-ID: <20260331161755.216800559@linuxfoundation.org>
+Subject: [PATCH 6.18 048/309] dma-buf: Include ioctl.h in UAPI header
+Date: Tue, 31 Mar 2026 18:19:11 +0200
+Message-ID: <20260331161755.253751667@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -45,116 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-[ Upstream commit 9351cf3fd92dc1349bb75f2f7f7324607dcf596f ]
+[ Upstream commit a116bac87118903925108e57781bbfc7a7eea27b ]
 
-Move the ASP register patches to a separate struct and apply this from the
-ASP DAI probe() function so that the registers are only patched if the DAI
-is part of a DAI link.
+include/uapi/linux/dma-buf.h uses several macros from ioctl.h to define
+its ioctl commands. However, it does not include ioctl.h itself. So,
+if userspace source code tries to include the dma-buf.h file without
+including ioctl.h, it can result in build failures.
 
-Some systems use the ASP as a special-purpose interconnect and on these
-systems the ASP registers are configured by a third party (the firmware,
-the BIOS, or another device using the amp's secondary host control
-interface).
+Therefore, include ioctl.h in the dma-buf UAPI header.
 
-If the machine driver does not hook up the ASP DAI then the ASP registers
-must be omitted from the patch to prevent overwriting the third party
-configuration.
-
-If the machine driver includes the ASP DAI in a DAI link, this implies that
-the machine driver and higher components (such as alsa-ucm) are taking
-ownership of the ASP. In this case the ASP registers are patched to known
-defaults and the machine driver should configure the ASP.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260226110137.1664562-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Reviewed-by: T.J. Mercier <tjmercier@google.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20260303002309.1401849-1-isaacmanjarres@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/cs35l56.h           |  1 +
- sound/soc/codecs/cs35l56-shared.c | 16 +++++++++++++++-
- sound/soc/codecs/cs35l56.c        |  8 ++++++++
- 3 files changed, 24 insertions(+), 1 deletion(-)
+ include/uapi/linux/dma-buf.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
-index ab044ce2aa8b3..0374c251901f5 100644
---- a/include/sound/cs35l56.h
-+++ b/include/sound/cs35l56.h
-@@ -344,6 +344,7 @@ extern const struct cirrus_amp_cal_controls cs35l56_calibration_controls;
- extern const char * const cs35l56_tx_input_texts[CS35L56_NUM_INPUT_SRC];
- extern const unsigned int cs35l56_tx_input_values[CS35L56_NUM_INPUT_SRC];
+diff --git a/include/uapi/linux/dma-buf.h b/include/uapi/linux/dma-buf.h
+index 5a6fda66d9adf..e827c9d20c5d3 100644
+--- a/include/uapi/linux/dma-buf.h
++++ b/include/uapi/linux/dma-buf.h
+@@ -20,6 +20,7 @@
+ #ifndef _DMA_BUF_UAPI_H_
+ #define _DMA_BUF_UAPI_H_
  
-+int cs35l56_set_asp_patch(struct cs35l56_base *cs35l56_base);
- int cs35l56_set_patch(struct cs35l56_base *cs35l56_base);
- int cs35l56_mbox_send(struct cs35l56_base *cs35l56_base, unsigned int command);
- int cs35l56_firmware_shutdown(struct cs35l56_base *cs35l56_base);
-diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
-index 9e6b9ca2f3547..a13e8eaf277d4 100644
---- a/sound/soc/codecs/cs35l56-shared.c
-+++ b/sound/soc/codecs/cs35l56-shared.c
-@@ -16,7 +16,7 @@
++#include <linux/ioctl.h>
+ #include <linux/types.h>
  
- #include "cs35l56.h"
- 
--static const struct reg_sequence cs35l56_patch[] = {
-+static const struct reg_sequence cs35l56_asp_patch[] = {
- 	/*
- 	 * Firmware can change these to non-defaults to satisfy SDCA.
- 	 * Ensure that they are at known defaults.
-@@ -33,6 +33,20 @@ static const struct reg_sequence cs35l56_patch[] = {
- 	{ CS35L56_ASP1TX2_INPUT,		0x00000000 },
- 	{ CS35L56_ASP1TX3_INPUT,		0x00000000 },
- 	{ CS35L56_ASP1TX4_INPUT,		0x00000000 },
-+};
-+
-+int cs35l56_set_asp_patch(struct cs35l56_base *cs35l56_base)
-+{
-+	return regmap_register_patch(cs35l56_base->regmap, cs35l56_asp_patch,
-+				     ARRAY_SIZE(cs35l56_asp_patch));
-+}
-+EXPORT_SYMBOL_NS_GPL(cs35l56_set_asp_patch, "SND_SOC_CS35L56_SHARED");
-+
-+static const struct reg_sequence cs35l56_patch[] = {
-+	/*
-+	 * Firmware can change these to non-defaults to satisfy SDCA.
-+	 * Ensure that they are at known defaults.
-+	 */
- 	{ CS35L56_SWIRE_DP3_CH1_INPUT,		0x00000018 },
- 	{ CS35L56_SWIRE_DP3_CH2_INPUT,		0x00000019 },
- 	{ CS35L56_SWIRE_DP3_CH3_INPUT,		0x00000029 },
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 2c1edbd636efc..193adba0cd1a4 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -324,6 +324,13 @@ static int cs35l56_dsp_event(struct snd_soc_dapm_widget *w,
- 	return wm_adsp_event(w, kcontrol, event);
- }
- 
-+static int cs35l56_asp_dai_probe(struct snd_soc_dai *codec_dai)
-+{
-+	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(codec_dai->component);
-+
-+	return cs35l56_set_asp_patch(&cs35l56->base);
-+}
-+
- static int cs35l56_asp_dai_set_fmt(struct snd_soc_dai *codec_dai, unsigned int fmt)
- {
- 	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(codec_dai->component);
-@@ -528,6 +535,7 @@ static int cs35l56_asp_dai_set_sysclk(struct snd_soc_dai *dai,
- }
- 
- static const struct snd_soc_dai_ops cs35l56_ops = {
-+	.probe = cs35l56_asp_dai_probe,
- 	.set_fmt = cs35l56_asp_dai_set_fmt,
- 	.set_tdm_slot = cs35l56_asp_dai_set_tdm_slot,
- 	.hw_params = cs35l56_asp_dai_hw_params,
+ /**
 -- 
 2.51.0
 
