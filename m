@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87083016EE;
-	Tue, 31 Mar 2026 17:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419C02E1C7C;
+	Tue, 31 Mar 2026 17:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976820; cv=none; b=VZDpYfC+W/Rfknp2dK4HmzZjKgc5JysK/g59VPLPMUTasCCV3fQnqXnO6OMOe4jJOhv42EJjXuIfzA6n2Y1KU1QxBqgT6GFhpEtOIhWJNIBbWhpFKctuNdNLBRCU5rsYGthHQVw/g35eOoKJZ4ZX/RSYzVSllzc5Fr5WpEfzZ80=
+	t=1774976823; cv=none; b=naiaPtd7uQ3oCJzQ0LgGac6Gvgxt7iG0z5lQYCYdFi5VRw019poqVVBDNnAzzUIDO4s3HVAXpgSgvQofWNSFUGhKjsaWoX7VPCQrzedQbE0RDwshkhG69blhaFMKYzykGQoWCpzvFTAOc6whfae0JQGwB3Eyck53kQ7cvL4uTEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976820; c=relaxed/simple;
-	bh=ewmBQ9gGBt27Fuk/U7ilyzhrU+1KmOqyPT3eqpnpdTI=;
+	s=arc-20240116; t=1774976823; c=relaxed/simple;
+	bh=LJiS5zKGhd2mEiK3+Vam+nr9v/oGTuN9alrOIlM1n7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2272J4UAfDJCyViuzCbGo7VEnopv9XH98cEOl0Fq/tyFbiFTpMm8VHvlop6bNFHUXLLDmELnKFjeC7Tz1QAnyhAvYKlLlQ9mysV97ASmO7Jejn4CFmHbQVk05P7t5bDfPg5wXQmk2vuu7cXsdjUEu3I5xJBcOExhqBqLREyEHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DV8kX/f0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AeBa7Xmqcl7BFfWacxzsvONeHbU/u7GLv8moIVtq0SojdZaQdEFBCurfV78iHing5guEL2zvA289gpsOz0BEfe8vlhYhA+V0uaZ/RJSuGr9Yi3AhbC3oLvh2oymCJp4CfW47SdpWwVBEJrBm3Zh0jPmQqR1SbQVVAeSaMMcE8v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpWwsF/E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DV8kX/f0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BC1C19423;
-	Tue, 31 Mar 2026 17:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpWwsF/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA963C19423;
+	Tue, 31 Mar 2026 17:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976820;
-	bh=ewmBQ9gGBt27Fuk/U7ilyzhrU+1KmOqyPT3eqpnpdTI=;
+	s=korg; t=1774976823;
+	bh=LJiS5zKGhd2mEiK3+Vam+nr9v/oGTuN9alrOIlM1n7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DV8kX/f06nEY8qV5NwldEhOzx/u9P5dCws4VnvSmDauKeqaQsu2aP+GBQvkygu5Hb
-	 ueeubEGkweOQs7+TkMrnXtgECOejF8ecICj63Jtzoca2nN0wRxfL9bmqOdhjWtOLvO
-	 pmfmIVO1qtEty03U4LqpMxJlB4D8nHEi+UY2NCC0=
+	b=KpWwsF/E6/USuksewql4qIec0qDjkJ07DuW8zBO95HZkImGG3V8EhGW0I5xH+rwNz
+	 o9qkqgBOY+ODHl3FXVJ1G8pmIT5bkQzpOuB9q53t72IQzk+KlBJq/q5WZbJ+FbvTv1
+	 eh23zbS3cFRRy9zP6I89P/jIhotwe/7FAKDuTX+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
-	Chao Yu <chao@kernel.org>
-Subject: [PATCH 6.18 208/309] erofs: add GFP_NOIO in the bio completion if needed
-Date: Tue, 31 Mar 2026 18:21:51 +0200
-Message-ID: <20260331161801.105297713@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 199/309] hwmon: (pmbus/ina233) Fix error handling and sign extension in shunt voltage read
+Date: Tue, 31 Mar 2026 18:21:42 +0200
+Message-ID: <20260331161800.778741739@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,62 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiucheng Xu <jiucheng.xu@amlogic.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit c23df30915f83e7257c8625b690a1cece94142a0 upstream.
+commit f7e775c4694782844c66da5316fed82881835cf8 upstream.
 
-The bio completion path in the process context (e.g. dm-verity)
-will directly call into decompression rather than trigger another
-workqueue context for minimal scheduling latencies, which can
-then call vm_map_ram() with GFP_KERNEL.
+ina233_read_word_data() reads MFR_READ_VSHUNT via pmbus_read_word_data()
+but has two issues:
 
-Due to insufficient memory, vm_map_ram() may generate memory
-swapping I/O, which can cause submit_bio_wait to deadlock
-in some scenarios.
+1. The return value is not checked for errors before being used in
+   arithmetic. A negative error code from a failed I2C transaction is
+   passed directly to DIV_ROUND_CLOSEST(), producing garbage data.
 
-Trimmed down the call stack, as follows:
+2. MFR_READ_VSHUNT is a 16-bit two's complement value. Negative shunt
+   voltages (values with bit 15 set) are treated as large positive
+   values since pmbus_read_word_data() returns them zero-extended in an
+   int. This leads to incorrect scaling in the VIN coefficient
+   conversion.
 
-f2fs_submit_read_io
-  submit_bio                      //bio_list is initialized.
-    mmc_blk_mq_recovery
-      z_erofs_endio
-        vm_map_ram
-          __pte_alloc_kernel
-            __alloc_pages_direct_reclaim
-              shrink_folio_list
-                __swap_writepage
-                  submit_bio_wait  //bio_list is non-NULL, hang!!!
+Fix both issues by adding an error check, casting to s16 for proper
+sign extension, and clamping the result to a valid non-negative range.
+The clamp is necessary because read_word_data callbacks must return
+non-negative values on success (negative values indicate errors to the
+pmbus core).
 
-Use memalloc_noio_{save,restore}() to wrap up this path.
-
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: b64b6cb163f16 ("hwmon: Add driver for TI INA233 Current and Power Monitor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260319173055.125271-2-sanman.pradhan@hpe.com
+[groeck: Fixed clamp to avoid losing the sign bit]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/zdata.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwmon/pmbus/ina233.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1445,6 +1445,7 @@ static void z_erofs_decompress_kickoff(s
- 				       int bios)
- {
- 	struct erofs_sb_info *const sbi = EROFS_SB(io->sb);
-+	int gfp_flag;
+diff --git a/drivers/hwmon/pmbus/ina233.c b/drivers/hwmon/pmbus/ina233.c
+index 2d8b5a5347ed..7aebd854763a 100644
+--- a/drivers/hwmon/pmbus/ina233.c
++++ b/drivers/hwmon/pmbus/ina233.c
+@@ -72,7 +72,8 @@ static int ina233_read_word_data(struct i2c_client *client, int page,
  
- 	/* wake up the caller thread for sync decompression */
- 	if (io->sync) {
-@@ -1477,7 +1478,9 @@ static void z_erofs_decompress_kickoff(s
- 			sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
- 		return;
- 	}
-+	gfp_flag = memalloc_noio_save();
- 	z_erofs_decompressqueue_work(&io->u.work);
-+	memalloc_noio_restore(gfp_flag);
- }
- 
- static void z_erofs_fill_bio_vec(struct bio_vec *bvec,
+ 		/* Adjust returned value to match VIN coefficients */
+ 		/* VIN: 1.25 mV VSHUNT: 2.5 uV LSB */
+-		ret = DIV_ROUND_CLOSEST(ret * 25, 12500);
++		ret = clamp_val(DIV_ROUND_CLOSEST((s16)ret * 25, 12500),
++				S16_MIN, S16_MAX) & 0xffff;
+ 		break;
+ 	default:
+ 		ret = -ENODATA;
+-- 
+2.53.0
+
 
 
