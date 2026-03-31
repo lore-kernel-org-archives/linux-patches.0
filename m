@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E78423149;
-	Tue, 31 Mar 2026 16:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89949425CC4;
+	Tue, 31 Mar 2026 16:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976070; cv=none; b=L/1Xt9B71yurF+7i3gWgvrXFVMInOAO9qTtF1hJFsCzKRIzmqVY62kZFPU8zZH77VGrYZbup3VEz++WPdzrI6+dEIsvWwBuG6LtGkGVDjVgUoBeZI8iip5jBDyO18h1s6yiK/2Y7thLbait4WIlurhU7X9exjhQ+ip5jn84KiAI=
+	t=1774976073; cv=none; b=UqMDihncywB3VM7xtHl1bZa9ZcodorsqncoscCigX2nO7cJOi/4HTcfACLQzImufAJcmE9JwBN0kTNHK6LbynzgE8wtVfwlaW/4+QTRzEhqSQuDmbhYahu0UYk/SeWnzC4QXfRjIt/A7qHy2/8Qv0zmPD0H8Upj7scw57nbcGhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976070; c=relaxed/simple;
-	bh=DkNZK3DX7OTvmlLSUPfoNd1hgr0L+k8OdEpKUECWPaU=;
+	s=arc-20240116; t=1774976073; c=relaxed/simple;
+	bh=iHiGLpshrG+gVPVmcggKISqFHAgZi/4sE3q08QASZBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pJ5Tzj0cd57vKD0+khkcP42HtLrb0CsjQED+dO051PNvnLLv3Llp3SDdPfs80sM5M9FegTSHP7FhB8SMJDEb4cOfG770GST2k3CNq1GtQoVOevQ+7ltcM1sJCcG3vUlwZv+C5qZADq6dtEd+bsUTir04U9UBh5vFWSx6+2SLK2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWQ61184; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oh9N/FKSXrBBpEcmEbyp+EmgeTveiCs2sxmCXQVFTkYsgcCCOvU4iqprTrp8CHAQoeQ+lVTKgC/YC3XXQtK1AxEQfEOA6A5DqiqyhxrCtS5DDKlopgQM541s/93fSjgQkpfdHwj0NPOz9uXbWUwYbjqEn+3u9vZijElMTwMtba4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+yNcFRk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWQ61184"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2B2C19423;
-	Tue, 31 Mar 2026 16:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+yNcFRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F1FC19423;
+	Tue, 31 Mar 2026 16:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976070;
-	bh=DkNZK3DX7OTvmlLSUPfoNd1hgr0L+k8OdEpKUECWPaU=;
+	s=korg; t=1774976073;
+	bh=iHiGLpshrG+gVPVmcggKISqFHAgZi/4sE3q08QASZBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gWQ61184HFxfR6oi1tu8XbiPzwSwevscKZBmlSLBeicnbDoxMqdamuHma7/luwWA8
-	 6DGuRuhmKtr3q8/BH4GIb61C3Mkj80ga5RvbPAjzFgbmP3CWLYQuz+X1E12NHo0BTE
-	 COVcZ+7Vof/psNY8mDEMAs6PUw8//1rKv8uF2dFs=
+	b=P+yNcFRkXLQNusg1nMFQcPVBAshImYWdi8/iR4Ofv8e2cP7mAHnXI7UG6zbsmVJtX
+	 c64jgbFMDXMWhXWZSd8hsHASV+jy+w/rn6dcp9/gztiuwCPTwTN6Df+9q079DosR1K
+	 n/me/f8v/34+rtrZ030hRkAN02b+OnHSPs+JyWVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Baokun Li <libaokun@linux.alibaba.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.12 195/244] ext4: handle wraparound when searching for blocks for indirect mapped blocks
-Date: Tue, 31 Mar 2026 18:22:25 +0200
-Message-ID: <20260331161748.951850225@linuxfoundation.org>
+Subject: [PATCH 6.12 196/244] ext4: fix iloc.bh leak in ext4_fc_replay_inode() error paths
+Date: Tue, 31 Mar 2026 18:22:26 +0200
+Message-ID: <20260331161748.988768533@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,60 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-commit bb81702370fad22c06ca12b6e1648754dbc37e0f upstream.
+commit ec0a7500d8eace5b4f305fa0c594dd148f0e8d29 upstream.
 
-Commit 4865c768b563 ("ext4: always allocate blocks only from groups
-inode can use") restricts what blocks will be allocated for indirect
-block based files to block numbers that fit within 32-bit block
-numbers.
+During code review, Joseph found that ext4_fc_replay_inode() calls
+ext4_get_fc_inode_loc() to get the inode location, which holds a
+reference to iloc.bh that must be released via brelse().
 
-However, when using a review bot running on the latest Gemini LLM to
-check this commit when backporting into an LTS based kernel, it raised
-this concern:
+However, several error paths jump to the 'out' label without
+releasing iloc.bh:
 
-   If ac->ac_g_ex.fe_group is >= ngroups (for instance, if the goal
-   group was populated via stream allocation from s_mb_last_groups),
-   then start will be >= ngroups.
+ - ext4_handle_dirty_metadata() failure
+ - sync_dirty_buffer() failure
+ - ext4_mark_inode_used() failure
+ - ext4_iget() failure
 
-   Does this allow allocating blocks beyond the 32-bit limit for
-   indirect block mapped files? The commit message mentions that
-   ext4_mb_scan_groups_linear() takes care to not select unsupported
-   groups. However, its loop uses group = *start, and the very first
-   iteration will call ext4_mb_scan_group() with this unsupported
-   group because next_linear_group() is only called at the end of the
-   iteration.
+Fix this by introducing an 'out_brelse' label placed just before
+the existing 'out' label to ensure iloc.bh is always released.
 
-After reviewing the code paths involved and considering the LLM
-review, I determined that this can happen when there is a file system
-where some files/directories are extent-mapped and others are
-indirect-block mapped.  To address this, add a safety clamp in
-ext4_mb_scan_groups().
+Additionally, make ext4_fc_replay_inode() propagate errors
+properly instead of always returning 0.
 
-Fixes: 4865c768b563 ("ext4: always allocate blocks only from groups inode can use")
-Cc: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Reported-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://patch.msgid.link/20260326045834.1175822-1-tytso@mit.edu
+Link: https://patch.msgid.link/20260323060836.3452660-1-libaokun@linux.alibaba.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/fast_commit.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -1199,6 +1199,8 @@ static int ext4_mb_scan_groups(struct ex
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -1601,19 +1601,21 @@ static int ext4_fc_replay_inode(struct s
+ 	/* Immediately update the inode on disk. */
+ 	ret = ext4_handle_dirty_metadata(NULL, NULL, iloc.bh);
+ 	if (ret)
+-		goto out;
++		goto out_brelse;
+ 	ret = sync_dirty_buffer(iloc.bh);
+ 	if (ret)
+-		goto out;
++		goto out_brelse;
+ 	ret = ext4_mark_inode_used(sb, ino);
+ 	if (ret)
+-		goto out;
++		goto out_brelse;
  
- 	/* searching for the right group start from the goal value specified */
- 	start = ac->ac_g_ex.fe_group;
-+	if (start >= ngroups)
-+		start = 0;
- 	ac->ac_prefetch_grp = start;
- 	ac->ac_prefetch_nr = 0;
+ 	/* Given that we just wrote the inode on disk, this SHOULD succeed. */
+ 	inode = ext4_iget(sb, ino, EXT4_IGET_NORMAL);
+ 	if (IS_ERR(inode)) {
+ 		ext4_debug("Inode not found.");
+-		return -EFSCORRUPTED;
++		inode = NULL;
++		ret = -EFSCORRUPTED;
++		goto out_brelse;
+ 	}
  
+ 	/*
+@@ -1630,13 +1632,14 @@ static int ext4_fc_replay_inode(struct s
+ 	ext4_inode_csum_set(inode, ext4_raw_inode(&iloc), EXT4_I(inode));
+ 	ret = ext4_handle_dirty_metadata(NULL, NULL, iloc.bh);
+ 	sync_dirty_buffer(iloc.bh);
++out_brelse:
+ 	brelse(iloc.bh);
+ out:
+ 	iput(inode);
+ 	if (!ret)
+ 		blkdev_issue_flush(sb->s_bdev);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ /*
 
 
