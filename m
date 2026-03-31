@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DD142EEDA;
-	Tue, 31 Mar 2026 16:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928BA423A8B;
+	Tue, 31 Mar 2026 16:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975057; cv=none; b=uwt1ade/HdgFmf3hUq9MKwXqqDGRTYICxtXIO2XAl+OjYa9r728KtDJhXoc9o8VNblQp724c4Se9SUXdGWY7Tf0SOV9D16Bd+OlmRD10WwSRvus4KabW/m5NcvGhubrIK5ZB4BEJRjR5bJQr28gvTSckwzdH0L2tVmfGhLIiQiM=
+	t=1774975060; cv=none; b=gzE0R03+eA31RGKRBZQCRF/zRpIsctQwihIKMaxYLHVQTvTmrm/l6O0YJs7fepjkJRFvVsIgjn/RsemORadwBr0/pQgkvb3qe1+qTdBESRj75qCnGP+aQIJDew600bKbmFpCnv5vrPv+5vIv5Oq+HksGLiZw5z2lTAxS5Ep9LWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975057; c=relaxed/simple;
-	bh=leAC6GUoN7zbrfgDqaABSwr4NV2zrskaw1LAUgrphiw=;
+	s=arc-20240116; t=1774975060; c=relaxed/simple;
+	bh=BFrH0izzut3oYZ+zXxR6cIBeogPB77gebwE972naoO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O9fuuNCH1XKRgsXlC0KN8DPqjwuqAb37rBbF6o2rQlmh47B+wSyZJGjnA0xsPZPUih4c9Z4JSvQV09gwbtqPuRJOxeP/qautHS8Hmac+2Df8IDUe53SB8+sZkxllgan8FyOI9P6vNOftqm2XDxLc22HX4dBeg3FaqgnXb9QQkC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AO630IiY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b0p/2liIO9woxXt6+6ceEBSbnhPiQ01SImS27ja7py37f6gjSAERqUALOHd3GjWZ+M0cCqb4yYvTipVnQ0EGfBpY6rgEzVaPKv8jXBoEjVXR1lAP56tKpq0RfhhOso7rYOTMSix/znFK9Yv9pCm8725Ft1dOy2tCVDNTAvUUAkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=be4yTBrD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AO630IiY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601C4C19424;
-	Tue, 31 Mar 2026 16:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="be4yTBrD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA234C19423;
+	Tue, 31 Mar 2026 16:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975057;
-	bh=leAC6GUoN7zbrfgDqaABSwr4NV2zrskaw1LAUgrphiw=;
+	s=korg; t=1774975060;
+	bh=BFrH0izzut3oYZ+zXxR6cIBeogPB77gebwE972naoO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AO630IiY2XVi5L9a3G2nzR5ChQG3QCSQ+Ab65xsUXF7KjwjRlhmYDlp50yfutZ2Mz
-	 2s3thzcIvOjn1tD46nBiVAkPKocEVmbASW3kZm64or/dymOn7+XIK54b17dM0GbD21
-	 k1KLPdVAQgP5BOWzqbA9m+eUjQbgwCuB+GXEUPjA=
+	b=be4yTBrDKGGdGg7DTdKacs/olrZOfuLfrR5V7iKm2ZIr1OR8Gdp0HAovB+5WsGWGZ
+	 QluL7PMRDkIuSCrd/wUnWHfxLQRrGBaD+NF1AU/2X4v3sda6OO2DYmo+dcDhY/o4ar
+	 7ZlBF7WkIOeK28wYbUK9O+VsBs51aUaK0SGkfOm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Heib <kheib@redhat.com>,
-	Siva Reddy Kallam <siva.kallam@broadcom.com>,
+	Daniel Kranzdorf <dkkranzd@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Yonatan Nachum <ynachum@amazon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 147/342] RDMA/bng_re: Fix silent failure in HWRM version query
-Date: Tue, 31 Mar 2026 18:19:40 +0200
-Message-ID: <20260331161804.413720188@linuxfoundation.org>
+Subject: [PATCH 6.19 148/342] RDMA/efa: Check stored completion CTX command ID with received one
+Date: Tue, 31 Mar 2026 18:19:41 +0200
+Message-ID: <20260331161804.450502859@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,85 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Heib <kheib@redhat.com>
+From: Yonatan Nachum <ynachum@amazon.com>
 
-[ Upstream commit c242e92c9da456d361d1d4482fb6e93ee95bd8cf ]
+[ Upstream commit 4b01ec0f133b3fe1038dc538d6bfcbd72462d2f0 ]
 
-If the firmware version query fails, the driver currently ignores the
-error and continues initializing. This leaves the device in a bad state.
+In admin command completion, we receive a CQE with the command ID which
+is constructed from context index and entropy bits from the admin queue
+producer counter. To try to detect memory corruptions in the received
+CQE, validate the full command ID of the fetched context with the CQE
+command ID. If there is a mismatch, complete the CQE with error.
+Also use LSBs of the admin queue producer counter to better detect
+entropy mismatch between smaller number of commands.
 
-Fix this by making bng_re_query_hwrm_version() return the error code and
-update the driver to check for this error and stop the setup process
-safely if it happens.
-
-Fixes: 745065770c2d ("RDMA/bng_re: Register and get the resources from bnge driver")
-Signed-off-by: Kamal Heib <kheib@redhat.com>
-Link: https://patch.msgid.link/20260303043645.425724-1-kheib@redhat.com
-Reviewed-by: Siva Reddy Kallam <siva.kallam@broadcom.com>
+Reviewed-by: Daniel Kranzdorf <dkkranzd@amazon.com>
+Reviewed-by: Michael Margolin <mrgolin@amazon.com>
+Signed-off-by: Yonatan Nachum <ynachum@amazon.com>
+Link: https://patch.msgid.link/20251210130614.36460-2-ynachum@amazon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: ef3b06742c8a ("RDMA/efa: Fix use of completion ctx after free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bng_re/bng_dev.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/efa/efa_com.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bng_re/bng_dev.c b/drivers/infiniband/hw/bng_re/bng_dev.c
-index fd0a4fe274ca6..9cf73f87070ec 100644
---- a/drivers/infiniband/hw/bng_re/bng_dev.c
-+++ b/drivers/infiniband/hw/bng_re/bng_dev.c
-@@ -210,7 +210,7 @@ static int bng_re_stats_ctx_alloc(struct bng_re_dev *rdev)
- 	return rc;
- }
+diff --git a/drivers/infiniband/hw/efa/efa_com.c b/drivers/infiniband/hw/efa/efa_com.c
+index 0e979ca10d240..b31478f3a1212 100644
+--- a/drivers/infiniband/hw/efa/efa_com.c
++++ b/drivers/infiniband/hw/efa/efa_com.c
+@@ -3,6 +3,8 @@
+  * Copyright 2018-2025 Amazon.com, Inc. or its affiliates. All rights reserved.
+  */
  
--static void bng_re_query_hwrm_version(struct bng_re_dev *rdev)
-+static int bng_re_query_hwrm_version(struct bng_re_dev *rdev)
- {
- 	struct bnge_auxr_dev *aux_dev = rdev->aux_dev;
- 	struct hwrm_ver_get_output ver_get_resp = {};
-@@ -230,7 +230,7 @@ static void bng_re_query_hwrm_version(struct bng_re_dev *rdev)
- 	if (rc) {
- 		ibdev_err(&rdev->ibdev, "Failed to query HW version, rc = 0x%x",
- 			  rc);
--		return;
-+		return rc;
- 	}
- 
- 	cctx = rdev->chip_ctx;
-@@ -244,6 +244,8 @@ static void bng_re_query_hwrm_version(struct bng_re_dev *rdev)
- 
- 	if (!cctx->hwrm_cmd_max_timeout)
- 		cctx->hwrm_cmd_max_timeout = BNG_ROCE_FW_MAX_TIMEOUT;
++#include <linux/log2.h>
 +
-+	return 0;
- }
+ #include "efa_com.h"
+ #include "efa_regs_defs.h"
  
- static void bng_re_dev_uninit(struct bng_re_dev *rdev)
-@@ -306,13 +308,15 @@ static int bng_re_dev_init(struct bng_re_dev *rdev)
- 		goto msix_ctx_fail;
- 	}
+@@ -317,7 +319,7 @@ static struct efa_comp_ctx *__efa_com_submit_admin_cmd(struct efa_com_admin_queu
  
--	bng_re_query_hwrm_version(rdev);
-+	rc = bng_re_query_hwrm_version(rdev);
-+	if (rc)
-+		goto destroy_chip_ctx;
+ 	/* cmd_id LSBs are the ctx_id and MSBs are entropy bits from pc */
+ 	cmd_id = ctx_id & queue_size_mask;
+-	cmd_id |= aq->sq.pc & ~queue_size_mask;
++	cmd_id |= aq->sq.pc << ilog2(aq->depth);
+ 	cmd_id &= EFA_ADMIN_AQ_COMMON_DESC_COMMAND_ID_MASK;
  
- 	rc = bng_re_alloc_fw_channel(&rdev->bng_res, &rdev->rcfw);
- 	if (rc) {
- 		ibdev_err(&rdev->ibdev,
- 			  "Failed to allocate RCFW Channel: %#x\n", rc);
--		goto alloc_fw_chl_fail;
-+		goto destroy_chip_ctx;
- 	}
+ 	cmd->aq_common_descriptor.command_id = cmd_id;
+@@ -418,7 +420,7 @@ static int efa_com_handle_single_admin_completion(struct efa_com_admin_queue *aq
+ 			 EFA_ADMIN_ACQ_COMMON_DESC_COMMAND_ID);
  
- 	/* Allocate nq record memory */
-@@ -391,7 +395,7 @@ static int bng_re_dev_init(struct bng_re_dev *rdev)
- 	kfree(rdev->nqr);
- nq_alloc_fail:
- 	bng_re_free_rcfw_channel(&rdev->rcfw);
--alloc_fw_chl_fail:
-+destroy_chip_ctx:
- 	bng_re_destroy_chip_ctx(rdev);
- msix_ctx_fail:
- 	bnge_unregister_dev(rdev->aux_dev);
+ 	comp_ctx = efa_com_get_comp_ctx(aq, cmd_id, false);
+-	if (comp_ctx->status != EFA_CMD_SUBMITTED) {
++	if (comp_ctx->status != EFA_CMD_SUBMITTED || comp_ctx->cmd_id != cmd_id) {
+ 		ibdev_err(aq->efa_dev,
+ 			  "Received completion with unexpected command id[%d], sq producer: %d, sq consumer: %d, cq consumer: %d\n",
+ 			  cmd_id, aq->sq.pc, aq->sq.cc, aq->cq.cc);
 -- 
 2.53.0
 
