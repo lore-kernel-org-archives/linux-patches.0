@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6510230C368;
-	Tue, 31 Mar 2026 16:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F070F3F7887;
+	Tue, 31 Mar 2026 16:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974835; cv=none; b=m7zeOBglAvjlfZpAqOSqigiTs2DbE6lFqIvrAYokTkUJf5OkifcaY/+kr8EWde9sm8tRwQfneubEbHvjZjQ+FW63ByjcT0AuaP3Nu84Gfu97ekKWHX1Mi+47REvDZi4MAAInf/JU3B30+/OHrHcqoDkSd/zXyupAdWjQ23uq07s=
+	t=1774974838; cv=none; b=GjL+iwLmqZl7jIEpwJeUxK8njbilSLX5cvJDz+TDLPKnXpdgFbuBGc6m/JOdIehPxVXCGlzUC90//dcGxJkr9Rfc1KyEMmWwEuBQwBENVVCdiv8F06VINJJ42yGRrsQFP7qTRTrhbS1nBkiZWawbwSOfT26UxJAYrEGAXbAEuIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974835; c=relaxed/simple;
-	bh=jnbItVip76cKQ6GnDZkaG9kE3ukcNX5Kce8V8Ngaobg=;
+	s=arc-20240116; t=1774974838; c=relaxed/simple;
+	bh=tl9+kGh8Kb3nuRai4cWEOe2aOKMP6nDICZaq9DuHSRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d3Vr82Kow7x+wZkPHU/hNYcnUXNxmxEiIgtJkVADQyRfluRiumLKO3HFBZbF1o9iaHxu9o1DmbbUHqRBFI8OPCVeRFQIJfxFCQGnEFzNo+EGJcORJHUrg+3xsHtmTwmNHVeepLLcWiCUkbiALseWkpybNYmyaJuJC8xGVU00YbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgUzn7jj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=THbZPMpzSEbAyOVOQz/MmafpCZ8+i6rv/jO1EnXefEfrHPOOA6gKuO048EJa51mzcMUVoKS4DDY7Poq5cYGXuv0aoEcSgVqu6NvE8rMp6Ru6hD10IFIejEUbmgOvERfo1J8CQIECaOe58BAuxTUdlw/mfIp1mfvBGY9DAMr2sG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Z2mCBwK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgUzn7jj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF50C19423;
-	Tue, 31 Mar 2026 16:33:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Z2mCBwK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890F4C19423;
+	Tue, 31 Mar 2026 16:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974835;
-	bh=jnbItVip76cKQ6GnDZkaG9kE3ukcNX5Kce8V8Ngaobg=;
+	s=korg; t=1774974837;
+	bh=tl9+kGh8Kb3nuRai4cWEOe2aOKMP6nDICZaq9DuHSRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lgUzn7jjZ0yLGwMRUUVrsgNl51TeZ13OnIa/94r57e29+FFqNblPWmnbfLlRR0ctF
-	 jShMNpnq2CQHfZj1xU8Dll/exhI9WoL6KmkJiCFKa5Dd48qPl2imkOn2mI2wWRTT+G
-	 ut+59FgbZLkl9M/CRlJKbEQS7QRI8Bz8kHaeBS6g=
+	b=1Z2mCBwKpzv1rFhIRptdCtC8g2cPYejPhWk8hUpiRKv65zt6WoU2yyNLzWqpkRQDw
+	 6m5z9GETZWR40mApa4dfpV8TVRkGRbkOKblQNTtJO3PfTgqCe3qWBNbpdx0vNt/6lH
+	 rrDo3xd/dAvKDJdTBMi6AhQMcKig1aNFsIznJXbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	HONG Yifan <elsk@google.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 063/342] btrfs: set BTRFS_ROOT_ORPHAN_CLEANUP during subvol create
-Date: Tue, 31 Mar 2026 18:18:16 +0200
-Message-ID: <20260331161801.213617947@linuxfoundation.org>
+Subject: [PATCH 6.19 064/342] objtool: Use HOSTCFLAGS for HAVE_XXHASH test
+Date: Tue, 31 Mar 2026 18:18:17 +0200
+Message-ID: <20260331161801.250223651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,194 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: HONG Yifan <elsk@google.com>
 
-[ Upstream commit 5131fa077f9bb386a1b901bf5b247041f0ec8f80 ]
+[ Upstream commit 32234049107d012703d50547e815f198f147968b ]
 
-We have recently observed a number of subvolumes with broken dentries.
-ls-ing the parent dir looks like:
+Previously, HAVE_XXHASH is tested by invoking HOSTCC without HOSTCFLAGS.
 
-drwxrwxrwt 1 root root 16 Jan 23 16:49 .
-drwxr-xr-x 1 root root 24 Jan 23 16:48 ..
-d????????? ? ?    ?     ?            ? broken_subvol
+Consider the following scenario:
 
-and similarly stat-ing the file fails.
+- The host machine has libxxhash installed
+- We build the kernel with HOSTCFLAGS containing a --sysroot that does
+  not have xxhash.h (for hermetic builds)
 
-In this state, deleting the subvol fails with ENOENT, but attempting to
-create a new file or subvol over it errors out with EEXIST and even
-aborts the fs. Which leaves us a bit stuck.
+In this case, HAVE_XXHASH is set to y, but when it builds objtool with
+HOSTCFLAGS, because the --sysroot does not contain xxhash.h, the
+following error is raised:
 
-dmesg contains a single notable error message reading:
-"could not do orphan cleanup -2"
+<...>/common/tools/objtool/include/objtool/checksum_types.h:12:10: fatal error: 'xxhash.h' file not found
+   12 | #include <xxhash.h>
+      |          ^~~~~~~~~~
 
-2 is ENOENT and the error comes from the failure handling path of
-btrfs_orphan_cleanup(), with the stack leading back up to
-btrfs_lookup().
+To resolve the error, we test HAVE_XXHASH by invoking HOSTCC with
+HOSTCFLAGS.
 
-btrfs_lookup
-btrfs_lookup_dentry
-btrfs_orphan_cleanup // prints that message and returns -ENOENT
-
-After some detailed inspection of the internal state, it became clear
-that:
-- there are no orphan items for the subvol
-- the subvol is otherwise healthy looking, it is not half-deleted or
-  anything, there is no drop progress, etc.
-- the subvol was created a while ago and does the meaningful first
-  btrfs_orphan_cleanup() call that sets BTRFS_ROOT_ORPHAN_CLEANUP much
-  later.
-- after btrfs_orphan_cleanup() fails, btrfs_lookup_dentry() returns -ENOENT,
-  which results in a negative dentry for the subvolume via
-  d_splice_alias(NULL, dentry), leading to the observed behavior. The
-  bug can be mitigated by dropping the dentry cache, at which point we
-  can successfully delete the subvolume if we want.
-
-i.e.,
-btrfs_lookup()
-  btrfs_lookup_dentry()
-    if (!sb_rdonly(inode->vfs_inode)->vfs_inode)
-    btrfs_orphan_cleanup(sub_root)
-      test_and_set_bit(BTRFS_ROOT_ORPHAN_CLEANUP)
-      btrfs_search_slot() // finds orphan item for inode N
-      ...
-      prints "could not do orphan cleanup -2"
-  if (inode == ERR_PTR(-ENOENT))
-    inode = NULL;
-  return d_splice_alias(NULL, dentry) // NEGATIVE DENTRY for valid subvolume
-
-btrfs_orphan_cleanup() does test_and_set_bit(BTRFS_ROOT_ORPHAN_CLEANUP)
-on the root when it runs, so it cannot run more than once on a given
-root, so something else must run concurrently. However, the obvious
-routes to deleting an orphan when nlinks goes to 0 should not be able to
-run without first doing a lookup into the subvolume, which should run
-btrfs_orphan_cleanup() and set the bit.
-
-The final important observation is that create_subvol() calls
-d_instantiate_new() but does not set BTRFS_ROOT_ORPHAN_CLEANUP, so if
-the dentry cache gets dropped, the next lookup into the subvolume will
-make a real call into btrfs_orphan_cleanup() for the first time. This
-opens up the possibility of concurrently deleting the inode/orphan items
-but most typical evict() paths will be holding a reference on the parent
-dentry (child dentry holds parent->d_lockref.count via dget in
-d_alloc(), released in __dentry_kill()) and prevent the parent from
-being removed from the dentry cache.
-
-The one exception is delayed iputs. Ordered extent creation calls
-igrab() on the inode. If the file is unlinked and closed while those
-refs are held, iput() in __dentry_kill() decrements i_count but does
-not trigger eviction (i_count > 0). The child dentry is freed and the
-subvol dentry's d_lockref.count drops to 0, making it evictable while
-the inode is still alive.
-
-Since there are two races (the race between writeback and unlink and
-the race between lookup and delayed iputs), and there are too many moving
-parts, the following three diagrams show the complete picture.
-(Only the second and third are races)
-
-Phase 1:
-Create Subvol in dentry cache without BTRFS_ROOT_ORPHAN_CLEANUP set
-
-btrfs_mksubvol()
-  lookup_one_len()
-    __lookup_slow()
-      d_alloc_parallel()
-        __d_alloc() // d_lockref.count = 1
-  create_subvol(dentry)
-    // doesn't touch the bit..
-    d_instantiate_new(dentry, inode) // dentry in cache with d_lockref.count == 1
-
-Phase 2:
-Create a delayed iput for a file in the subvol but leave the subvol in
-state where its dentry can be evicted (d_lockref.count == 0)
-
-T1 (task)                    T2 (writeback)                   T3 (OE workqueue)
-
-write() // dirty pages
-                              btrfs_writepages()
-                                btrfs_run_delalloc_range()
-                                  cow_file_range()
-                                    btrfs_alloc_ordered_extent()
-                                      igrab() // i_count: 1 -> 2
-btrfs_unlink_inode()
-  btrfs_orphan_add()
-close()
-  __fput()
-    dput()
-      finish_dput()
-        __dentry_kill()
-          dentry_unlink_inode()
-            iput() // 2 -> 1
-          --parent->d_lockref.count // 1 -> 0; evictable
-                                                                finish_ordered_fn()
-                                                                  btrfs_finish_ordered_io()
-                                                                    btrfs_put_ordered_extent()
-                                                                      btrfs_add_delayed_iput()
-
-Phase 3:
-Once the delayed iput is pending and the subvol dentry is evictable,
-the shrinker can free it, causing the next lookup to go through
-btrfs_lookup() and call btrfs_orphan_cleanup() for the first time.
-If the cleaner kthread processes the delayed iput concurrently, the
-two race:
-
-  T1 (shrinker)              T2 (cleaner kthread)                          T3 (lookup)
-
-  super_cache_scan()
-    prune_dcache_sb()
-      __dentry_kill()
-      // subvol dentry freed
-                              btrfs_run_delayed_iputs()
-                                iput()  // i_count -> 0
-                                  evict()  // sets I_FREEING
-                                    btrfs_evict_inode()
-                                      // truncation loop
-                                                                            btrfs_lookup()
-                                                                              btrfs_lookup_dentry()
-                                                                                btrfs_orphan_cleanup()
-                                                                                  // first call (bit never set)
-                                                                                  btrfs_iget()
-                                                                                    // blocks on I_FREEING
-
-                                      btrfs_orphan_del()
-                                      // inode freed
-                                                                                    // returns -ENOENT
-                                                                                  btrfs_del_orphan_item()
-                                                                                    // -ENOENT
-                                                                                // "could not do orphan cleanup -2"
-                                                                            d_splice_alias(NULL, dentry)
-                                                                            // negative dentry for valid subvol
-
-The most straightforward fix is to ensure the invariant that a dentry
-for a subvolume can exist if and only if that subvolume has
-BTRFS_ROOT_ORPHAN_CLEANUP set on its root (and is known to have no
-orphans or ran btrfs_orphan_cleanup()).
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: HONG Yifan <elsk@google.com>
+Reviewed-by: Carlos Llamas <cmllamas@google.com>
+Link: https://patch.msgid.link/20260303010340.306164-1-elsk@google.com
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/objtool/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 1a5d98811f2b2..b78998815ce72 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -672,6 +672,13 @@ static noinline int create_subvol(struct mnt_idmap *idmap,
- 		goto out;
- 	}
+diff --git a/tools/objtool/Makefile b/tools/objtool/Makefile
+index 76bcd4e85de34..b71d1886022e9 100644
+--- a/tools/objtool/Makefile
++++ b/tools/objtool/Makefile
+@@ -13,7 +13,7 @@ endif
  
-+	/*
-+	 * Subvolumes have orphans cleaned on first dentry lookup. A new
-+	 * subvolume cannot have any orphans, so we should set the bit before we
-+	 * add the subvolume dentry to the dentry cache, so that it is in the
-+	 * same state as a subvolume after first lookup.
-+	 */
-+	set_bit(BTRFS_ROOT_ORPHAN_CLEANUP, &new_root->state);
- 	d_instantiate_new(dentry, new_inode_args.inode);
- 	new_inode_args.inode = NULL;
- 
+ ifeq ($(ARCH_HAS_KLP),y)
+ 	HAVE_XXHASH = $(shell printf "$(pound)include <xxhash.h>\nXXH3_state_t *state;int main() {}" | \
+-		      $(HOSTCC) -xc - -o /dev/null -lxxhash 2> /dev/null && echo y || echo n)
++		      $(HOSTCC) $(HOSTCFLAGS) -xc - -o /dev/null -lxxhash 2> /dev/null && echo y || echo n)
+ 	ifeq ($(HAVE_XXHASH),y)
+ 		BUILD_KLP	 := y
+ 		LIBXXHASH_CFLAGS := $(shell $(HOSTPKG_CONFIG) libxxhash --cflags 2>/dev/null) \
 -- 
 2.51.0
 
