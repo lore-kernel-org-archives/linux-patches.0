@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABF1401A2C;
-	Tue, 31 Mar 2026 16:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A95423A89;
+	Tue, 31 Mar 2026 16:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974534; cv=none; b=Sbaf5n/NCyTszg54jDxW7cQBFT2NAlq/EEc2spF6G9U0lrCr65o344J6oJkCKgNTXH+jQguFp1+121LbD8/Ra9udvrGr08S1AtLCwDRXN8Mj28Y6IuI+4l2K3IqUj/vN4do61pIB7Oa0k1+EPG1Ss+TryaqKPovoOf2G/tDQSro=
+	t=1774974537; cv=none; b=a/kqe9hIORQz33FDiFqzdAgLjVHSXTp23lgop/kyub9MkxzpNQRrKYAg+SFGkL5rWBKsQZlnDC64edAfurLSMnkpQ4CBpsgkJIHwzew5oFwCYrgPXTmD+zv1L975m7egh12hmAr/Y3Lm9sWaF2ifnc06R7IFRMe5iZ8wUY4tQl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974534; c=relaxed/simple;
-	bh=CDZevVEZHksHHZ3fA7fnXnQ1fWg/SykH50nQhBp4B58=;
+	s=arc-20240116; t=1774974537; c=relaxed/simple;
+	bh=rFxcuNiZQkHDIYf56I/OOe/DZKx11M/76ppyCoulcas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXDkQrhofjBX5ptQG4q6dNCuXYW71yhToMAfBpqLSgmTggAuIlL47/wmdaQxAH68+kRDrTfbH5RiQF4Qil34a87BfH/tSCuaooDCa9tbg0aaJRNKx0ufMaUo1f0d2tcHZOUNO/0WgkRUMYP8JFkd6Wl4qdNZaRLXl/oT7nKrrYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEEpriFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T5XTXpm4KzxCNN6VZW3bzznb11foVQIM8hgw8qjRm/qfAqrczB0N7jN0jizwj76UQi7H1ZcI9LYx2xXIQmjxh1hLn/S2k8BcXjat6xHwnClck8ml29hlLY9WGJBEBY2XkLZnZXT0CJIBoQeon5xyzSAxClSDObnCcrXb8vDuRNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQuw2Iep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEEpriFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20252C19423;
-	Tue, 31 Mar 2026 16:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQuw2Iep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3413C19423;
+	Tue, 31 Mar 2026 16:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974534;
-	bh=CDZevVEZHksHHZ3fA7fnXnQ1fWg/SykH50nQhBp4B58=;
+	s=korg; t=1774974537;
+	bh=rFxcuNiZQkHDIYf56I/OOe/DZKx11M/76ppyCoulcas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEEpriFzfId4BxSgkQMRo6+4hk7IKHpacmfXV1Uk+qMCrnBaJwqA/zCTMnq4IU7f/
-	 MM7N/6NoDGJm2bGeJiucHRyW2QysNcCTE0i9WfzvQ+mrM2hwrDSrl9DczN32/gApns
-	 cokxjbYAPKCpUPfiU7VIj7u+24v5TXvzo5ydg0z0=
+	b=cQuw2IepyM1rRfwRsMlALo1brMFFg5F+Otu7xWrG4g8C8jsvKxSYkIpd7JZyG2We2
+	 vL/eLDdR+2VP48SnolisJ+C869G05WWQ3ipOs1dhsIwPZqNx5K9AB1XrwwhWqf5bJi
+	 P5M8HPpukP9zDdlAZCOi9Cnx/WzU2qbjW0TN/FR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 6.6 123/175] irqchip/qcom-mpm: Add missing mailbox TX done acknowledgment
-Date: Tue, 31 Mar 2026 18:21:47 +0200
-Message-ID: <20260331161734.299586652@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 124/175] dmaengine: sh: rz-dmac: Protect the driver specific lists
+Date: Tue, 31 Mar 2026 18:21:48 +0200
+Message-ID: <20260331161734.336263127@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,46 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jassi Brar <jassisinghbrar@gmail.com>
+From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 
-commit cfe02147e86307a17057ee4e3604f5f5919571d2 upstream.
+commit abb863e6213dc41a58ef8bb3289b7e77460dabf3 upstream.
 
-The mbox_client for qcom-mpm sends NULL doorbell messages via
-mbox_send_message() but never signals TX completion.
+The driver lists (ld_free, ld_queue) are used in
+rz_dmac_free_chan_resources(), rz_dmac_terminate_all(),
+rz_dmac_issue_pending(), and rz_dmac_irq_handler_thread(), all under
+the virtual channel lock. Take the same lock in rz_dmac_prep_slave_sg()
+and rz_dmac_prep_dma_memcpy() as well to avoid concurrency issues, since
+these functions also check whether the lists are empty and update or
+remove list entries.
 
-Set knows_txdone=true and call mbox_client_txdone() after a successful
-send, matching the pattern used by other Qualcomm mailbox clients (smp2p,
-smsm, qcom_aoss etc).
-
-Fixes: a6199bb514d8a6 "irqchip: Add Qualcomm MPM controller driver"
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260322171533.608436-1-jassisinghbrar@gmail.com
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20260316133252.240348-2-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-qcom-mpm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/dma/sh/rz-dmac.c |   63 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 35 insertions(+), 28 deletions(-)
 
---- a/drivers/irqchip/irq-qcom-mpm.c
-+++ b/drivers/irqchip/irq-qcom-mpm.c
-@@ -305,6 +305,8 @@ static int mpm_pd_power_off(struct gener
- 	if (ret < 0)
- 		return ret;
+--- a/drivers/dma/sh/rz-dmac.c
++++ b/drivers/dma/sh/rz-dmac.c
+@@ -10,6 +10,7 @@
+  */
  
-+	mbox_client_txdone(priv->mbox_chan, 0);
+ #include <linux/bitfield.h>
++#include <linux/cleanup.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/dmaengine.h>
+ #include <linux/interrupt.h>
+@@ -424,6 +425,7 @@ static int rz_dmac_alloc_chan_resources(
+ 		if (!desc)
+ 			break;
+ 
++		/* No need to lock. This is called only for the 1st client. */
+ 		list_add_tail(&desc->node, &channel->ld_free);
+ 		channel->descs_allocated++;
+ 	}
+@@ -479,18 +481,21 @@ rz_dmac_prep_dma_memcpy(struct dma_chan
+ 	dev_dbg(dmac->dev, "%s channel: %d src=0x%pad dst=0x%pad len=%zu\n",
+ 		__func__, channel->index, &src, &dest, len);
+ 
+-	if (list_empty(&channel->ld_free))
+-		return NULL;
++	scoped_guard(spinlock_irqsave, &channel->vc.lock) {
++		if (list_empty(&channel->ld_free))
++			return NULL;
 +
- 	return 0;
++		desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
++
++		desc->type = RZ_DMAC_DESC_MEMCPY;
++		desc->src = src;
++		desc->dest = dest;
++		desc->len = len;
++		desc->direction = DMA_MEM_TO_MEM;
+ 
+-	desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
+-
+-	desc->type = RZ_DMAC_DESC_MEMCPY;
+-	desc->src = src;
+-	desc->dest = dest;
+-	desc->len = len;
+-	desc->direction = DMA_MEM_TO_MEM;
++		list_move_tail(channel->ld_free.next, &channel->ld_queue);
++	}
+ 
+-	list_move_tail(channel->ld_free.next, &channel->ld_queue);
+ 	return vchan_tx_prep(&channel->vc, &desc->vd, flags);
  }
  
-@@ -414,6 +416,7 @@ static int qcom_mpm_init(struct device_n
+@@ -506,27 +511,29 @@ rz_dmac_prep_slave_sg(struct dma_chan *c
+ 	int dma_length = 0;
+ 	int i = 0;
+ 
+-	if (list_empty(&channel->ld_free))
+-		return NULL;
+-
+-	desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
++	scoped_guard(spinlock_irqsave, &channel->vc.lock) {
++		if (list_empty(&channel->ld_free))
++			return NULL;
++
++		desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
++
++		for_each_sg(sgl, sg, sg_len, i)
++			dma_length += sg_dma_len(sg);
++
++		desc->type = RZ_DMAC_DESC_SLAVE_SG;
++		desc->sg = sgl;
++		desc->sgcount = sg_len;
++		desc->len = dma_length;
++		desc->direction = direction;
++
++		if (direction == DMA_DEV_TO_MEM)
++			desc->src = channel->src_per_address;
++		else
++			desc->dest = channel->dst_per_address;
+ 
+-	for_each_sg(sgl, sg, sg_len, i) {
+-		dma_length += sg_dma_len(sg);
++		list_move_tail(channel->ld_free.next, &channel->ld_queue);
  	}
  
- 	priv->mbox_client.dev = dev;
-+	priv->mbox_client.knows_txdone = true;
- 	priv->mbox_chan = mbox_request_channel(&priv->mbox_client, 0);
- 	if (IS_ERR(priv->mbox_chan)) {
- 		ret = PTR_ERR(priv->mbox_chan);
+-	desc->type = RZ_DMAC_DESC_SLAVE_SG;
+-	desc->sg = sgl;
+-	desc->sgcount = sg_len;
+-	desc->len = dma_length;
+-	desc->direction = direction;
+-
+-	if (direction == DMA_DEV_TO_MEM)
+-		desc->src = channel->src_per_address;
+-	else
+-		desc->dest = channel->dst_per_address;
+-
+-	list_move_tail(channel->ld_free.next, &channel->ld_queue);
+ 	return vchan_tx_prep(&channel->vc, &desc->vd, flags);
+ }
+ 
 
 
