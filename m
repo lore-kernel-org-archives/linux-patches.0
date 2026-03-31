@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0956D336EC5;
-	Tue, 31 Mar 2026 16:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428E93FEB20;
+	Tue, 31 Mar 2026 16:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974385; cv=none; b=CFqunkl9jsfTUAo2PlVc+AAc9WJWr3YmYuR7YHtr3cJORkYirgHALTSMVmAfo2kBBMmUlAXZ+ipS9IAhGhQNGLju4kPKsB4hsAtpgVBXDpQNZ+GOumMHkR3Uk/OMRxXdysZAomhG1R0ALoiUbgfwXQ40h7mT0VM3bnu+R49qxC8=
+	t=1774974387; cv=none; b=tRj5Cdqn2qQuJIiJkIWjfn0ct+XZjrVx7ima8roTlKAd4py6yzErilv0FIVNF7uAFN7/IPYL38cOmgkmHZ064xB4iXqo4hPEck6JEQAdPLtmmapVnJPiOnBaqjeV57ZOtiPn3Ji31gDVslZzPNjG3OoGD88Y3YL4PplndGjNgW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974385; c=relaxed/simple;
-	bh=R9tD341VAzPIGznTgxJdzEvxA5LH8JM7j69fdXxHzFc=;
+	s=arc-20240116; t=1774974387; c=relaxed/simple;
+	bh=hXEpCyDpZ6OHbLnZu8fYQlxfqelx6fjZpfUqB99054A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sD6WTy3+0GZd+490NUa4fGIEbWIjCiTpMp82OQObhaWtAd9VMcWfdzugDm5LvvCfGXwkq1PBDQecEfc95/p4uIdt0TOnb6vbW9Fy7qKWoQCbPLFBi/K21PtQ+ZVvyLD6m4WJm5Ggs8qYuhtgMOw4dpidpjgq2dkbDTWbKbVFvhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCSvHdc4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p1NWML1DkrdJYjcQYSspVxFTKml91NWkL4hX2ewE46zFf53buVuUgAk3SUkYYpPeOTR7bHMBD8IYwCPeC+6fjy7NtY49JiiAkAzDzMN9Vk4777jL9lJmJUzYWN/bM9ghzYkNwU5ZEKhi1OfvTvhHglShyku/2uwdMHtHg6R3DoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1jNBa6M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCSvHdc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F37C19423;
-	Tue, 31 Mar 2026 16:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1jNBa6M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14FEC19423;
+	Tue, 31 Mar 2026 16:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974384;
-	bh=R9tD341VAzPIGznTgxJdzEvxA5LH8JM7j69fdXxHzFc=;
+	s=korg; t=1774974387;
+	bh=hXEpCyDpZ6OHbLnZu8fYQlxfqelx6fjZpfUqB99054A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JCSvHdc4v5tXSMKKLw2w/ipSgNn6QTuQyCmUssYrQxRQDRvWJBot/A9qj6O1ZH47s
-	 2Lml0IuBqrctALKwE9upcJjLuQyXIS40ghq/yAETkM++YNQNNpd8M/1V8C49OVxSb9
-	 P+zClvaHEiVX400shIDbIB31OCU2DiuZ5xmXzVsk=
+	b=B1jNBa6M4tG/1eMv8UalQxD3Pn+1pWgOksnBhoYGCua3Ph8/8EluIMMNLGqavQpdZ
+	 BNw5xEHBKuU9jWUzVzc8w34izlmt9OuZDizQp+xxa01UtKR8FdIOHdKsB+46OkOWBP
+	 C01AnmZkKwiDdTyigqDtgJNB4zlN6O4BpTiHXS9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/175] Bluetooth: hci_sync: Remove remaining dependencies of hci_request
-Date: Tue, 31 Mar 2026 18:20:48 +0200
-Message-ID: <20260331161732.134102495@linuxfoundation.org>
+Subject: [PATCH 6.6 065/175] Bluetooth: btintel: serialize btintel_hw_error() with hci_req_sync_lock
+Date: Tue, 31 Mar 2026 18:20:49 +0200
+Message-ID: <20260331161732.170706201@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -50,124 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit f2d89775358606c7ab6b6b6c4a02fe1e8cd270b1 ]
+[ Upstream commit 94d8e6fe5d0818e9300e514e095a200bd5ff93ae ]
 
-This removes the dependencies of hci_req_init and hci_request_cancel_all
-from hci_sync.c.
+btintel_hw_error() issues two __hci_cmd_sync() calls (HCI_OP_RESET
+and Intel exception-info retrieval) without holding
+hci_req_sync_lock().  This lets it race against
+hci_dev_do_close() -> btintel_shutdown_combined(), which also runs
+__hci_cmd_sync() under the same lock.  When both paths manipulate
+hdev->req_status/req_rsp concurrently, the close path may free the
+response skb first, and the still-running hw_error path hits a
+slab-use-after-free in kfree_skb().
 
+Wrap the whole recovery sequence in hci_req_sync_lock/unlock so it
+is serialized with every other synchronous HCI command issuer.
+
+Below is the data race report and the kasan report:
+
+  BUG: data-race in __hci_cmd_sync_sk / btintel_shutdown_combined
+
+  read of hdev->req_rsp at net/bluetooth/hci_sync.c:199
+  by task kworker/u17:1/83:
+   __hci_cmd_sync_sk+0x12f2/0x1c30 net/bluetooth/hci_sync.c:200
+   __hci_cmd_sync+0x55/0x80 net/bluetooth/hci_sync.c:223
+   btintel_hw_error+0x114/0x670 drivers/bluetooth/btintel.c:254
+   hci_error_reset+0x348/0xa30 net/bluetooth/hci_core.c:1030
+
+  write/free by task ioctl/22580:
+   btintel_shutdown_combined+0xd0/0x360
+    drivers/bluetooth/btintel.c:3648
+   hci_dev_close_sync+0x9ae/0x2c10 net/bluetooth/hci_sync.c:5246
+   hci_dev_do_close+0x232/0x460 net/bluetooth/hci_core.c:526
+
+  BUG: KASAN: slab-use-after-free in
+   sk_skb_reason_drop+0x43/0x380 net/core/skbuff.c:1202
+  Read of size 4 at addr ffff888144a738dc
+  by task kworker/u17:1/83:
+   __hci_cmd_sync_sk+0x12f2/0x1c30 net/bluetooth/hci_sync.c:200
+   __hci_cmd_sync+0x55/0x80 net/bluetooth/hci_sync.c:223
+   btintel_hw_error+0x186/0x670 drivers/bluetooth/btintel.c:260
+
+Fixes: 973bb97e5aee ("Bluetooth: btintel: Add generic function for handling hardware errors")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 94d8e6fe5d08 ("Bluetooth: btintel: serialize btintel_hw_error() with hci_req_sync_lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_sync.h | 17 +++++++++++++++++
- net/bluetooth/hci_request.h      | 17 -----------------
- net/bluetooth/hci_sync.c         | 14 +++++++++++---
- 3 files changed, 28 insertions(+), 20 deletions(-)
+ drivers/bluetooth/btintel.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
-index e2e588b08fe90..e155ab5aa9b4f 100644
---- a/include/net/bluetooth/hci_sync.h
-+++ b/include/net/bluetooth/hci_sync.h
-@@ -8,6 +8,23 @@
- #define UINT_PTR(_handle)		((void *)((uintptr_t)_handle))
- #define PTR_UINT(_ptr)			((uintptr_t)((void *)_ptr))
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index 3773cd9d998d5..25fcd00c6a174 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -242,11 +242,13 @@ static void btintel_hw_error(struct hci_dev *hdev, u8 code)
  
-+#define HCI_REQ_DONE	  0
-+#define HCI_REQ_PEND	  1
-+#define HCI_REQ_CANCELED  2
-+
-+#define hci_req_sync_lock(hdev)   mutex_lock(&hdev->req_lock)
-+#define hci_req_sync_unlock(hdev) mutex_unlock(&hdev->req_lock)
-+
-+struct hci_request {
-+	struct hci_dev		*hdev;
-+	struct sk_buff_head	cmd_q;
-+
-+	/* If something goes wrong when building the HCI request, the error
-+	 * value is stored in this field.
-+	 */
-+	int			err;
-+};
-+
- typedef int (*hci_cmd_sync_work_func_t)(struct hci_dev *hdev, void *data);
- typedef void (*hci_cmd_sync_work_destroy_t)(struct hci_dev *hdev, void *data,
- 					    int err);
-diff --git a/net/bluetooth/hci_request.h b/net/bluetooth/hci_request.h
-index c91f2838f5424..b730da4a8b476 100644
---- a/net/bluetooth/hci_request.h
-+++ b/net/bluetooth/hci_request.h
-@@ -22,23 +22,6 @@
+ 	bt_dev_err(hdev, "Hardware error 0x%2.2x", code);
  
- #include <asm/unaligned.h>
++	hci_req_sync_lock(hdev);
++
+ 	skb = __hci_cmd_sync(hdev, HCI_OP_RESET, 0, NULL, HCI_INIT_TIMEOUT);
+ 	if (IS_ERR(skb)) {
+ 		bt_dev_err(hdev, "Reset after hardware error failed (%ld)",
+ 			   PTR_ERR(skb));
+-		return;
++		goto unlock;
+ 	}
+ 	kfree_skb(skb);
  
--#define HCI_REQ_DONE	  0
--#define HCI_REQ_PEND	  1
--#define HCI_REQ_CANCELED  2
--
--#define hci_req_sync_lock(hdev)   mutex_lock(&hdev->req_lock)
--#define hci_req_sync_unlock(hdev) mutex_unlock(&hdev->req_lock)
--
--struct hci_request {
--	struct hci_dev		*hdev;
--	struct sk_buff_head	cmd_q;
--
--	/* If something goes wrong when building the HCI request, the error
--	 * value is stored in this field.
--	 */
--	int			err;
--};
--
- void hci_req_init(struct hci_request *req, struct hci_dev *hdev);
- void hci_req_purge(struct hci_request *req);
- bool hci_req_status_pend(struct hci_dev *hdev);
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 6192f70e4d393..c1c9d82faa658 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -12,7 +12,6 @@
- #include <net/bluetooth/hci_core.h>
- #include <net/bluetooth/mgmt.h>
+@@ -254,18 +256,21 @@ static void btintel_hw_error(struct hci_dev *hdev, u8 code)
+ 	if (IS_ERR(skb)) {
+ 		bt_dev_err(hdev, "Retrieving Intel exception info failed (%ld)",
+ 			   PTR_ERR(skb));
+-		return;
++		goto unlock;
+ 	}
  
--#include "hci_request.h"
- #include "hci_codec.h"
- #include "hci_debugfs.h"
- #include "smp.h"
-@@ -147,6 +146,13 @@ static int hci_req_sync_run(struct hci_request *req)
- 	return 0;
+ 	if (skb->len != 13) {
+ 		bt_dev_err(hdev, "Exception info size mismatch");
+ 		kfree_skb(skb);
+-		return;
++		goto unlock;
+ 	}
+ 
+ 	bt_dev_err(hdev, "Exception info %s", (char *)(skb->data + 1));
+ 
+ 	kfree_skb(skb);
++
++unlock:
++	hci_req_sync_unlock(hdev);
  }
  
-+static void hci_request_init(struct hci_request *req, struct hci_dev *hdev)
-+{
-+	skb_queue_head_init(&req->cmd_q);
-+	req->hdev = hdev;
-+	req->err = 0;
-+}
-+
- /* This function requires the caller holds hdev->req_lock. */
- struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
- 				  const void *param, u8 event, u32 timeout,
-@@ -158,7 +164,7 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
- 
- 	bt_dev_dbg(hdev, "Opcode 0x%4.4x", opcode);
- 
--	hci_req_init(&req, hdev);
-+	hci_request_init(&req, hdev);
- 
- 	hci_cmd_sync_add(&req, opcode, plen, param, event, sk);
- 
-@@ -5227,7 +5233,9 @@ int hci_dev_close_sync(struct hci_dev *hdev)
- 	cancel_delayed_work(&hdev->le_scan_disable);
- 	cancel_delayed_work(&hdev->le_scan_restart);
- 
--	hci_request_cancel_all(hdev);
-+	hci_cmd_sync_cancel_sync(hdev, ENODEV);
-+
-+	cancel_interleave_scan(hdev);
- 
- 	if (hdev->adv_instance_timeout) {
- 		cancel_delayed_work_sync(&hdev->adv_instance_expire);
+ int btintel_version_info(struct hci_dev *hdev, struct intel_version *ver)
 -- 
 2.51.0
 
