@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB8733F38A;
-	Tue, 31 Mar 2026 16:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7669933F38A;
+	Tue, 31 Mar 2026 16:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974930; cv=none; b=LbceTemhB0/CSCPaXetmSbzBOo3+1ouBrzpjdLWMLeElxDyRY5lOz3aalN3s3VBAlaX1Cc5vE4nG3FyT10Q57wESHQJLy1HD4BaHuqbm8v2wgYDNt9zUJZtNC17hDkOAV6MOlzsQk32QJp2sLvbFcOUQfACF8FEFU2J630Mz3Jk=
+	t=1774974933; cv=none; b=DeRQHJW6UPHcRvIPkKdpBSliI/4r0CK2mZa5fIibbkxy8CaWwEBQncB1Dff8O2G+igkkeVAAOK100SiT9D2YePsdHrkliuInbZ+Bs6r1I9Qj4h/w1JgWF0KP7zuRvYWk6/DQ4L68zo6AXGzyklkJojB766W5WWgccPzkQ6+TZh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974930; c=relaxed/simple;
-	bh=sJO8Kp4zcuohaZqS3gcmMPxys+SnLxMpUYrheqjHfGs=;
+	s=arc-20240116; t=1774974933; c=relaxed/simple;
+	bh=2ZFXI/AiUBDN+zxwZ7irpBtBq8qg04CrQDpfUPcOxw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FrUAwILM6Ghxw5AH1uB3+lm9GFcmCkq0in4HrpWVqV4jtMVTbfjiIaXMOgChV+mVx6AZGCiuuxJZ29vnLjBYjaWxQsHdRGFQCeM2FK9gOs3EUiy7ZFlr3gsuzFoN7wr6bvgBe6CW7s1MJQTrNJOIwn06xJdiZDApSHYT1fHjL0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhCr0R0P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m1POzQwcXSkRWETiepRyHpjK4/MliUSiY02R8yeLBJ0mVBiqxk0lMHcbryhev0+6l98RXhx+0rACYuZxp68RO4MzSGkKWE2I8Y6tGD206kdb1p+ZApepHb3yQKnxVRTwCFE6f8rpgT6zqOi7BKZgk7EOsMRZlaf3sZeNn0zv0dM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2vYz49n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhCr0R0P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DC3C19423;
-	Tue, 31 Mar 2026 16:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2vYz49n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3CBC19423;
+	Tue, 31 Mar 2026 16:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974930;
-	bh=sJO8Kp4zcuohaZqS3gcmMPxys+SnLxMpUYrheqjHfGs=;
+	s=korg; t=1774974933;
+	bh=2ZFXI/AiUBDN+zxwZ7irpBtBq8qg04CrQDpfUPcOxw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UhCr0R0P16KOFQ1Kn4khpVR2LGwNND350DR6mz2Am5Uh4213xs1roLOgJo0qh9Ciq
-	 0maisyN0ojYZlTFiFl+lSw60l65b3jkRt9CcoZhlDxCw1WnzvxwnVVCAbbPFc8KNOo
-	 U1KssGDFfOVuPT9858OHA7oq8nA3R1pEKn4eNxjg=
+	b=K2vYz49nkKALFePQQoNdrOpDpUk2UBCkOh9A032NXP27+HqImkpZePdf3HLdPGWdo
+	 OJPhX4CuAq96IcdwtWoX596mBWs2VCtmSx0aBMJQrKtzSuKEbAOznlQjeEa/cg2EbZ
+	 HG5tQhfzOOvp02qHs/xg1YT5wztzMwmDmkQ+TfKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammad Heib <mheib@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Brett Creeley <brett.creeley@amd.com>,
+	Ian Ray <ian.ray@gehealthcare.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 100/342] ionic: fix persistent MAC address override on PF
-Date: Tue, 31 Mar 2026 18:18:53 +0200
-Message-ID: <20260331161802.695162179@linuxfoundation.org>
+Subject: [PATCH 6.19 101/342] nfc: nci: fix circular locking dependency in nci_close_device
+Date: Tue, 31 Mar 2026 18:18:54 +0200
+Message-ID: <20260331161802.731076749@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,66 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohammad Heib <mheib@redhat.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit cbcb3cfcdc436d6f91a3d95ecfa9c831abe14aed ]
+[ Upstream commit 4527025d440ce84bf56e75ce1df2e84cb8178616 ]
 
-The use of IONIC_CMD_LIF_SETATTR in the MAC address update path causes
-the ionic firmware to update the LIF's identity in its persistent state.
-Since the firmware state is maintained across host warm boots and driver
-reloads, any MAC change on the Physical Function (PF) becomes "sticky.
+nci_close_device() flushes rx_wq and tx_wq while holding req_lock.
+This causes a circular locking dependency because nci_rx_work()
+running on rx_wq can end up taking req_lock too:
 
-This is problematic because it causes ethtool -P to report the
-user-configured MAC as the permanent factory address, which breaks
-system management tools that rely on a stable hardware identity.
+  nci_rx_work -> nci_rx_data_packet -> nci_data_exchange_complete
+    -> __sk_destruct -> rawsock_destruct -> nfc_deactivate_target
+    -> nci_deactivate_target -> nci_request -> mutex_lock(&ndev->req_lock)
 
-While Virtual Functions (VFs) need this hardware-level programming to
-properly handle MAC assignments in guest environments, the PF should
-maintain standard transient behavior. This patch gates the
-ionic_program_mac call using is_virtfn so that PF MAC changes remain
-local to the netdev filters and do not overwrite the firmware's
-permanent identity block.
+Move the flush of rx_wq after req_lock has been released.
+This should safe (I think) because NCI_UP has already been cleared
+and the transport is closed, so the work will see it and return
+-ENETDOWN.
 
-Fixes: 19058be7c48c ("ionic: VF initial random MAC address if no assigned mac")
-Signed-off-by: Mohammad Heib <mheib@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Link: https://patch.msgid.link/20260317170806.35390-1-mheib@redhat.com
+NIPA has been hitting this running the nci selftest with a debug
+kernel on roughly 4% of the runs.
+
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reviewed-by: Ian Ray <ian.ray@gehealthcare.com>
+Link: https://patch.msgid.link/20260317193334.988609-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ net/nfc/nci/core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index 058eea86e141c..38a827203a2f7 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -1719,13 +1719,18 @@ static int ionic_set_mac_address(struct net_device *netdev, void *sa)
- 	if (ether_addr_equal(netdev->dev_addr, mac))
- 		return 0;
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index d334b7aa8c172..25ba4cbb00e1e 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -579,8 +579,7 @@ static int nci_close_device(struct nci_dev *ndev)
+ 	skb_queue_purge(&ndev->rx_q);
+ 	skb_queue_purge(&ndev->tx_q);
  
--	err = ionic_program_mac(lif, mac);
--	if (err < 0)
--		return err;
-+	/* Only program macs for virtual functions to avoid losing the permanent
-+	 * Mac across warm reset/reboot.
-+	 */
-+	if (lif->ionic->pdev->is_virtfn) {
-+		err = ionic_program_mac(lif, mac);
-+		if (err < 0)
-+			return err;
+-	/* Flush RX and TX wq */
+-	flush_workqueue(ndev->rx_wq);
++	/* Flush TX wq, RX wq flush can't be under the lock */
+ 	flush_workqueue(ndev->tx_wq);
  
--	if (err > 0)
--		netdev_dbg(netdev, "%s: SET and GET ATTR Mac are not equal-due to old FW running\n",
--			   __func__);
-+		if (err > 0)
-+			netdev_dbg(netdev, "%s: SET and GET ATTR Mac are not equal-due to old FW running\n",
-+				   __func__);
-+	}
+ 	/* Reset device */
+@@ -592,13 +591,13 @@ static int nci_close_device(struct nci_dev *ndev)
+ 		      msecs_to_jiffies(NCI_RESET_TIMEOUT));
  
- 	err = eth_prepare_mac_addr_change(netdev, addr);
- 	if (err)
+ 	/* After this point our queues are empty
+-	 * and no works are scheduled.
++	 * rx work may be running but will see that NCI_UP was cleared
+ 	 */
+ 	ndev->ops->close(ndev);
+ 
+ 	clear_bit(NCI_INIT, &ndev->flags);
+ 
+-	/* Flush cmd wq */
++	/* Flush cmd and tx wq */
+ 	flush_workqueue(ndev->cmd_wq);
+ 
+ 	timer_delete_sync(&ndev->cmd_timer);
+@@ -613,6 +612,9 @@ static int nci_close_device(struct nci_dev *ndev)
+ 
+ 	mutex_unlock(&ndev->req_lock);
+ 
++	/* rx_work may take req_lock via nci_deactivate_target */
++	flush_workqueue(ndev->rx_wq);
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
