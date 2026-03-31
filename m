@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2520D30C345;
-	Tue, 31 Mar 2026 16:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823573E316C;
+	Tue, 31 Mar 2026 16:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974297; cv=none; b=qFcwmJ2hb/E4kb+ib9mTFtqyPeL3wGmeLvgs5zGC21lI+s9HFqGU3Skhu12y0xgZVxe2FR67tNfHUv/PnhP/5XicUSZOwdykrNaigNoe8eOyjdveV3lEJR70+5XWxuf09BljUp1HE2UNETHe82C0nMTPP3MuxYLxv5kt1O9Dsfc=
+	t=1774974299; cv=none; b=qQtwUdUTp1Y05wewRNacVub/L2oiaAjCvO/Zw1KFxnaBhi16u7RQgcrfqgR31lKjM/lO/ByjI8hKroVEv9XOyspoXdBUVN3OTvtHuXD/4hwXtfg7bZFIgubeti3WcD/fwxQ+G++iDkEDv+9omY8Dlc8SQ8ipVs/+ecuQE4De89k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974297; c=relaxed/simple;
-	bh=ez8jx2xjKK4/nFL1CC10HcnWTlvLEU4dLddSMX8Kphs=;
+	s=arc-20240116; t=1774974299; c=relaxed/simple;
+	bh=wW746/M8dzojgF04kuor+2Hr80sBEfslfAFTEDvicVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlEO13n0EZRkDtEPNk06OCt0o31eP5ZwqYgSztZyrvlR9PKrunsYSfdE3mDoJyKDEpz+xmZ9BDK2SYLaZlAV2VZkZ+3XQO9neCke7C5aS5J7WpnwdgUPB0QUnFHUUh4uIOFtCUyrzoc1rulpBj6qKWd+CKWoZuXLP8rZrdzsngU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpMbNUco; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6kQ1W5N9llJC22dj+PQ0laY6yGMBWwwOmZhrfjj51Ht+IWS6NgTRoCncshLWmWtcjWjjRHaiR+PHogLmXqmLJdeqfX+Gaw9vbH/sdfeiQt4OWS6XLknMWKUw6DnkaNDaf5IByjEMO+H4qDMlbeb/DgoF5noWtPdzWlx4HyFSVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u67MncYn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpMbNUco"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797F9C19423;
-	Tue, 31 Mar 2026 16:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u67MncYn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199C5C19423;
+	Tue, 31 Mar 2026 16:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974296;
-	bh=ez8jx2xjKK4/nFL1CC10HcnWTlvLEU4dLddSMX8Kphs=;
+	s=korg; t=1774974299;
+	bh=wW746/M8dzojgF04kuor+2Hr80sBEfslfAFTEDvicVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpMbNUco2zpv3ZGVBRInXQBzvXmxG2cKIV5MIaCcBmprcTL5J+QRM/rHbGCcUFLqs
-	 ZRYYoNzyzhHPGGWlyOVGrLRGXHCiOJ/CKlp3DlTfcv3UJmiWZ85ADxSeWkDQ3kcaTs
-	 2w8LfIASpWyaTMl0NnSf2iyLuH3m3wXLbt3xokn4=
+	b=u67MncYnTjq4zBizvKoewkiTHdLC33fJMmOMx/cjf8/T234juHpE4RceJshcNAfDX
+	 KZ8UwPx26Q7riikLAwA6kDPGABDnO6yMEXh/w96XPQ/eNCfYkcdFrSgaTyYHQdyRM2
+	 I7MwhBpOK1fcBXiDp8puAzbl3umafxZKuvbS9lTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Jie Deng <dengjie03@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/175] objtool: Handle Clang RSP musical chairs
-Date: Tue, 31 Mar 2026 18:20:14 +0200
-Message-ID: <20260331161730.893627302@linuxfoundation.org>
+Subject: [PATCH 6.6 031/175] usb: core: new quirk to handle devices with zero configurations
+Date: Tue, 31 Mar 2026 18:20:15 +0200
+Message-ID: <20260331161730.930494804@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,134 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Jie Deng <dengjie03@kylinos.cn>
 
-[ Upstream commit 7fdaa640c810cb42090a182c33f905bcc47a616a ]
+[ Upstream commit 9f6a983cfa22ac662c86e60816d3a357d4b551e9 ]
 
-For no apparent reason (possibly related to CONFIG_KMSAN), Clang can
-randomly pass the value of RSP to other registers and then back again to
-RSP.  Handle that accordingly.
+Some USB devices incorrectly report bNumConfigurations as 0 in their
+device descriptor, which causes the USB core to reject them during
+enumeration.
+logs:
+usb 1-2: device descriptor read/64, error -71
+usb 1-2: no configurations
+usb 1-2: can't read configurations, error -22
 
-Fixes the following warnings:
+However, these devices actually work correctly when
+treated as having a single configuration.
 
-  drivers/input/misc/uinput.o: warning: objtool: uinput_str_to_user+0x165: undefined stack state
-  drivers/input/misc/uinput.o: warning: objtool: uinput_str_to_user+0x165: unknown CFA base reg -1
+Add a new quirk USB_QUIRK_FORCE_ONE_CONFIG to handle such devices.
+When this quirk is set, assume the device has 1 configuration instead
+of failing with -EINVAL.
 
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Closes: https://lore.kernel.org/90956545-2066-46e3-b547-10c884582eb0@app.fastmail.com
-Link: https://patch.msgid.link/240e6a172cc73292499334a3724d02ccb3247fc7.1772818491.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+This quirk is applied to the device with VID:PID 5131:2007 which
+exhibits this behavior.
+
+Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
+Link: https://patch.msgid.link/20260227084931.1527461-1-dengjie03@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/arch/x86/decode.c | 62 ++++++++++++---------------------
- tools/objtool/check.c           | 14 ++++++++
- 2 files changed, 37 insertions(+), 39 deletions(-)
+ Documentation/admin-guide/kernel-parameters.txt | 3 +++
+ drivers/usb/core/config.c                       | 6 +++++-
+ drivers/usb/core/quirks.c                       | 5 +++++
+ include/linux/usb/quirks.h                      | 3 +++
+ 4 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/tools/objtool/arch/x86/decode.c b/tools/objtool/arch/x86/decode.c
-index c0f25d00181ec..40a5aa02bd831 100644
---- a/tools/objtool/arch/x86/decode.c
-+++ b/tools/objtool/arch/x86/decode.c
-@@ -325,52 +325,36 @@ int arch_decode_instruction(struct objtool_file *file, const struct section *sec
- 		if (!rex_w)
- 			break;
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index fff3ca50c6c26..fdbc2749fbb37 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -6901,6 +6901,9 @@
+ 				p = USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT
+ 					(Reduce timeout of the SET_ADDRESS
+ 					request from 5000 ms to 500 ms);
++				q = USB_QUIRK_FORCE_ONE_CONFIG (Device
++					claims zero configurations,
++					forcing to 1);
+ 			Example: quirks=0781:5580:bk,0a5c:5834:gij
  
--		if (modrm_reg == CFI_SP) {
--
--			if (mod_is_reg()) {
--				/* mov %rsp, reg */
--				ADD_OP(op) {
--					op->src.type = OP_SRC_REG;
--					op->src.reg = CFI_SP;
--					op->dest.type = OP_DEST_REG;
--					op->dest.reg = modrm_rm;
--				}
--				break;
--
--			} else {
--				/* skip RIP relative displacement */
--				if (is_RIP())
--					break;
--
--				/* skip nontrivial SIB */
--				if (have_SIB()) {
--					modrm_rm = sib_base;
--					if (sib_index != CFI_SP)
--						break;
--				}
--
--				/* mov %rsp, disp(%reg) */
--				ADD_OP(op) {
--					op->src.type = OP_SRC_REG;
--					op->src.reg = CFI_SP;
--					op->dest.type = OP_DEST_REG_INDIRECT;
--					op->dest.reg = modrm_rm;
--					op->dest.offset = ins.displacement.value;
--				}
--				break;
-+		if (mod_is_reg()) {
-+			/* mov reg, reg */
-+			ADD_OP(op) {
-+				op->src.type = OP_SRC_REG;
-+				op->src.reg = modrm_reg;
-+				op->dest.type = OP_DEST_REG;
-+				op->dest.reg = modrm_rm;
+ 	usbhid.mousepoll=
+diff --git a/drivers/usb/core/config.c b/drivers/usb/core/config.c
+index 10a1bc059ea1f..9cd263b6cdee8 100644
+--- a/drivers/usb/core/config.c
++++ b/drivers/usb/core/config.c
+@@ -891,7 +891,11 @@ int usb_get_configuration(struct usb_device *dev)
+ 		dev->descriptor.bNumConfigurations = ncfg = USB_MAXCONFIG;
+ 	}
+ 
+-	if (ncfg < 1) {
++	if (ncfg < 1 && dev->quirks & USB_QUIRK_FORCE_ONE_CONFIG) {
++		dev_info(ddev, "Device claims zero configurations, forcing to 1\n");
++		dev->descriptor.bNumConfigurations = 1;
++		ncfg = 1;
++	} else if (ncfg < 1) {
+ 		dev_err(ddev, "no configurations\n");
+ 		return -EINVAL;
+ 	}
+diff --git a/drivers/usb/core/quirks.c b/drivers/usb/core/quirks.c
+index c12942a533ce2..53b08d6cf7824 100644
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -141,6 +141,8 @@ static int quirks_param_set(const char *value, const struct kernel_param *kp)
+ 			case 'p':
+ 				flags |= USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT;
+ 				break;
++			case 'q':
++				flags |= USB_QUIRK_FORCE_ONE_CONFIG;
+ 			/* Ignore unrecognized flag characters */
  			}
--
- 			break;
  		}
+@@ -594,6 +596,9 @@ static const struct usb_device_id usb_quirk_list[] = {
+ 	/* VCOM device */
+ 	{ USB_DEVICE(0x4296, 0x7570), .driver_info = USB_QUIRK_CONFIG_INTF_STRINGS },
  
--		if (rm_is_reg(CFI_SP)) {
-+		/* skip RIP relative displacement */
-+		if (is_RIP())
-+			break;
- 
--			/* mov reg, %rsp */
-+		/* skip nontrivial SIB */
-+		if (have_SIB()) {
-+			modrm_rm = sib_base;
-+			if (sib_index != CFI_SP)
-+				break;
-+		}
++	/* Noji-MCS SmartCard Reader */
++	{ USB_DEVICE(0x5131, 0x2007), .driver_info = USB_QUIRK_FORCE_ONE_CONFIG },
 +
-+		/* mov %rsp, disp(%reg) */
-+		if (modrm_reg == CFI_SP) {
- 			ADD_OP(op) {
- 				op->src.type = OP_SRC_REG;
--				op->src.reg = modrm_reg;
--				op->dest.type = OP_DEST_REG;
--				op->dest.reg = CFI_SP;
-+				op->src.reg = CFI_SP;
-+				op->dest.type = OP_DEST_REG_INDIRECT;
-+				op->dest.reg = modrm_rm;
-+				op->dest.offset = ins.displacement.value;
- 			}
- 			break;
- 		}
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index c021798ba8372..6497c80fd6f77 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -2969,6 +2969,20 @@ static int update_cfi_state(struct instruction *insn,
- 				cfi->stack_size += 8;
- 			}
+ 	/* INTEL VALUE SSD */
+ 	{ USB_DEVICE(0x8086, 0xf1a5), .driver_info = USB_QUIRK_RESET_RESUME },
  
-+			else if (cfi->vals[op->src.reg].base == CFI_CFA) {
-+				/*
-+				 * Clang RSP musical chairs:
-+				 *
-+				 *   mov %rsp, %rdx [handled above]
-+				 *   ...
-+				 *   mov %rdx, %rbx [handled here]
-+				 *   ...
-+				 *   mov %rbx, %rsp [handled above]
-+				 */
-+				cfi->vals[op->dest.reg].base = CFI_CFA;
-+				cfi->vals[op->dest.reg].offset = cfi->vals[op->src.reg].offset;
-+			}
+diff --git a/include/linux/usb/quirks.h b/include/linux/usb/quirks.h
+index 2f7bd2fdc6164..b3cc7beab4a3c 100644
+--- a/include/linux/usb/quirks.h
++++ b/include/linux/usb/quirks.h
+@@ -78,4 +78,7 @@
+ /* skip BOS descriptor request */
+ #define USB_QUIRK_NO_BOS			BIT(17)
+ 
++/* Device claims zero configurations, forcing to 1 */
++#define USB_QUIRK_FORCE_ONE_CONFIG		BIT(18)
 +
- 
- 			break;
- 
+ #endif /* __LINUX_USB_QUIRKS_H */
 -- 
 2.51.0
 
