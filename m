@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025EB2EDD69;
-	Tue, 31 Mar 2026 17:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA3A2FF669;
+	Tue, 31 Mar 2026 17:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976501; cv=none; b=gdsSisGGhp05/ke0YGljTi9KkkFl/fNjP9GhiYW0ZQygqikwGGJLibUNYzuB0x2jfBeOGr2cf4nqIXWpyWblr85z44eVSJxz6OQY5c0UgsLeQFqV1P2qsQT+6EdBxwuLGbX6wyzU6cOdjK3X9jZDe4i8kGffoWc2b8sXr7Um09A=
+	t=1774976503; cv=none; b=ePMWVDN0eAHu8586N5O1NYRNofed3mSzsvAvYb7rLLK/RQBm30rEmD79r8cHp+GruT9mcdDpiS2Pun46aaTS7rmarhziUwoS8jxMY3xFHXzuChBItl78U3qG2BpjhN6F41vfg/ZQtRA7RfcQ3KO8dpTPhW/90EqC9lXdEgDHiwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976501; c=relaxed/simple;
-	bh=yzQRZJyJffikl4dVG2HNyN+aUqhafjDdW1t90jSJSz4=;
+	s=arc-20240116; t=1774976503; c=relaxed/simple;
+	bh=mszdTCObfEterdgmR7YXI9tBW7uMKuAynaLlCT3YOgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mON9sEgRXsFzsowXWDNhEfO5HEn3TeAvZ5G457XnCpjKpTccnpRAWgmy5tJbRIec+YjI3KvlULGmwbVxejJFYsUKdH7NWNXm3UPjkqWoU9D+jnsnD8kFVeGUb+9L4XUl9HkFpSdoT2mnK+9GJh3rNyKMqYGOEQbirPBzJnkUoJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOwKVz8h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dm6V8ExQ0VUJSj334iDtdLM+pkvePOJfYQ2VMvnp1qnMYjA6+t6wEw/LghAddBizb0OyNb8P+r2lAkDnUxcH1hZR9z5H5c7qPI3iP/EzVqkHm6TaJ3REM0gAidxO7YVu9pPZTFgv43Gp1qCAwxlDx7hMqemu60IMrNyAK5ykM5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3G9hqLw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOwKVz8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2193FC19424;
-	Tue, 31 Mar 2026 17:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3G9hqLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2467C2BCB1;
+	Tue, 31 Mar 2026 17:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976500;
-	bh=yzQRZJyJffikl4dVG2HNyN+aUqhafjDdW1t90jSJSz4=;
+	s=korg; t=1774976503;
+	bh=mszdTCObfEterdgmR7YXI9tBW7uMKuAynaLlCT3YOgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOwKVz8h1DTnwSuvupCk29w5kMY9f40RyGTPgcnAyEK1qwsKU2bsEArDAHtb93EWU
-	 grXfLVFI3zCP/rYgqeZLdDgBbjMF09JWqvTGa6PwnFd4et3KpyRLk9K1891amuvQ/b
-	 d4idgenC4qZCbeLxyBE4NjoBMKLpZNrVrHurk3rk=
+	b=j3G9hqLwlm5gfjPh1e+7KIzdf26dcrBX57hf0v6EI/CrgeC0vW647EGSej6D0UThT
+	 j9D251A2xHwMW/KlxiRxL3akoQPqm06/5cpiZiXwf7nsB0lkEKYsteI+tLLla+jEKi
+	 /apMeR1B6XpIXTuFA3zkAO1AoMFRUFs68JG5P+O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thangaraj Samynathan <thangaraj.s@microchip.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 116/309] net: lan743x: fix duplex configuration in mac_link_up
-Date: Tue, 31 Mar 2026 18:20:19 +0200
-Message-ID: <20260331161757.753508500@linuxfoundation.org>
+Subject: [PATCH 6.18 117/309] rtnetlink: fix leak of SRCU struct in rtnl_link_register
+Date: Tue, 31 Mar 2026 18:20:20 +0200
+Message-ID: <20260331161757.790176122@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,47 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thangaraj Samynathan <thangaraj.s@microchip.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 71399707876b93240f236f48b8062f3423a5fe97 ]
+[ Upstream commit 09474055f2619be9445ba4245e4013741ed01a5e ]
 
-The driver does not explicitly configure the MAC duplex mode when
-bringing the link up. As a result, the MAC may retain a stale duplex
-setting from a previous link state, leading to duplex mismatches with
-the link partner and degraded network performance.
+Commit 6b57ff21a310 ("rtnetlink: Protect link_ops by mutex.") swapped
+the EEXIST check with the init_srcu_struct, but didn't add cleanup of
+the SRCU struct we just allocated in case of error.
 
-Update lan743x_phylink_mac_link_up() to set or clear the MAC_CR_DPX_
-bit according to the negotiated duplex mode.
-
-This ensures the MAC configuration is consistent with the phylink
-resolved state.
-
-Fixes: a5f199a8d8a03 ("net: lan743x: Migrate phylib to phylink")
-Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20260323065345.144915-1-thangaraj.s@microchip.com
+Fixes: 6b57ff21a310 ("rtnetlink: Protect link_ops by mutex.")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/e77fe499f9a58c547b33b5212b3596dad417cec6.1774025341.git.sd@queasysnail.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/core/rtnetlink.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index e4c542fc6c2b8..09d255e78f6cd 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -3054,6 +3054,11 @@ static void lan743x_phylink_mac_link_up(struct phylink_config *config,
- 	else if (speed == SPEED_100)
- 		mac_cr |= MAC_CR_CFG_L_;
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index b389210d518ef..f3b22d5526fe6 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -629,6 +629,9 @@ int rtnl_link_register(struct rtnl_link_ops *ops)
+ unlock:
+ 	mutex_unlock(&link_ops_mutex);
  
-+	if (duplex == DUPLEX_FULL)
-+		mac_cr |= MAC_CR_DPX_;
-+	else
-+		mac_cr &= ~MAC_CR_DPX_;
++	if (err)
++		cleanup_srcu_struct(&ops->srcu);
 +
- 	lan743x_csr_write(adapter, MAC_CR, mac_cr);
- 
- 	lan743x_ptp_update_latency(adapter, speed);
+ 	return err;
+ }
+ EXPORT_SYMBOL_GPL(rtnl_link_register);
 -- 
 2.51.0
 
