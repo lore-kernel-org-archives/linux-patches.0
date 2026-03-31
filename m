@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6653161A4;
-	Tue, 31 Mar 2026 17:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42361317150;
+	Tue, 31 Mar 2026 17:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976970; cv=none; b=Nw5oHMv2K58kgRrJGRzQGp28Rk8gb6BaFmS25ragYzzpm6v8bBeZKX2sv98U3LpPfRxdb2gQg0/6NNqshwkvvYUJj22X2pYT7z+XeS/HuaVEXI3rFeB6FB4w7Ctzfo878RiVbEZbvFE50gCt46GKmDcP1YSb/itZP84lPIYkF9I=
+	t=1774976973; cv=none; b=rrfOxMauSswoIldNp8VMpSIQg/L0SnSTzBQoTVDRMSjBqmvEsjPxIVHW5pNK7b0wylEgFA2cjVlmZklWAZRwRAwo7kQgLbRxRATu5DoAwT62GnVNW8TAfju4TrY0m2vOD8TIp8LJ1tkVRsMYDtRigq2msSGoGxqprhEhSlMhSSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976970; c=relaxed/simple;
-	bh=ainYZNTqMSaiZpYo2wTEiSLIPGzis9W1n7l6SPBUVe0=;
+	s=arc-20240116; t=1774976973; c=relaxed/simple;
+	bh=+4CACyGjrflPhA1mD24dNI0rCKYicAr/GfouIQXXprE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSrLzPIyAxQgYkQPlr4l90ZEkFcDJZvvQyRc63g4AB1tk6bUOliZjCEWv2LlZwo+fQV8B2G7ho2CdhgsEjKJpUcFuHYSKQ0+tBhmUPVEe7PXsU+FCJ/fwDFMYi1PunH0v1AEtTpWZZ11YAW4LMp+748bPeMMJ4NndhZa1cnj9LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8WHSU8v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SRZf876kaivijFcxzKWprCG2xObk9VSNt3dlQpCME5uE5teOleNjQ7t4t9vJXZBh/6mnIFcub23ULyydLD2J2BcnflMAI/nAq51s1U1cO5r0WX8MBEr/szyC1Ewai9YoTjUFtG88PbHAMaFdaYq4yR7w3HMKAKgibtpC+AEzPVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFM/QEfj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8WHSU8v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40277C19423;
-	Tue, 31 Mar 2026 17:09:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFM/QEfj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF75C2BCB3;
+	Tue, 31 Mar 2026 17:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976970;
-	bh=ainYZNTqMSaiZpYo2wTEiSLIPGzis9W1n7l6SPBUVe0=;
+	s=korg; t=1774976973;
+	bh=+4CACyGjrflPhA1mD24dNI0rCKYicAr/GfouIQXXprE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k8WHSU8v0ObN26NO8IVNZbBLdKqdOvU9d2wZky+WJq8l47RS3ADR9wy/YoN33Fn0n
-	 VaybwuPIqi7izEeIgAzk6Dt1vXrkQB6ukuCkEwl8hPmK5cv9KpQPVkqTx3z12gYAga
-	 K/66r82x8T9b5YBs9TnhzPh6kBbVwMpiWRuns20I=
+	b=TFM/QEfjVgN0HS3qI2QP8WkQECGfwyY7fYlv1Lrc0aT9Gl64bAsLKQMQgMVpS+Gc0
+	 XC1syWdENVVBDZoSynnPe78nFG6tIeaOSR+QO13ljYGOg0NW9IE7NMd88giMoKJ07/
+	 HbtUHp0/bRn6pTLtfo4+9znTWHlwzfh+QFhEfxac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 298/309] dmaengine: xilinx_dma: Fix reset related timeout with two-channel AXIDMA
-Date: Tue, 31 Mar 2026 18:23:21 +0200
-Message-ID: <20260331161804.537271126@linuxfoundation.org>
+Subject: [PATCH 6.18 299/309] selftests/mount_setattr: increase tmpfs size for idmapped mount tests
+Date: Tue, 31 Mar 2026 18:23:22 +0200
+Message-ID: <20260331161804.573676011@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,95 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit a17ce4bc6f4f9acf77ba416c36791a15602e53aa ]
+[ Upstream commit c465f5591aa84a6f85d66d152e28b92844a45d4f ]
 
-A single AXIDMA controller can have one or two channels. When it has two
-channels, the reset for both are tied together: resetting one channel
-resets the other as well. This creates a problem where resetting one
-channel will reset the registers for both channels, including clearing
-interrupt enable bits for the other channel, which can then lead  to
-timeouts as the driver is waiting for an interrupt which never comes.
+The mount_setattr_idmapped fixture mounts a 2 MB tmpfs at /mnt and then
+creates a 2 GB sparse ext4 image at /mnt/C/ext4.img. While ftruncate()
+succeeds (sparse file), mkfs.ext4 needs to write actual metadata blocks
+(inode tables, journal, bitmaps) which easily exceeds the 2 MB tmpfs
+limit, causing ENOSPC and failing the fixture setup for all
+mount_setattr_idmapped tests.
 
-The driver currently has a probe-time work around for this: when a
-channel is created, the driver also resets and enables the
-interrupts. With two channels the reset for the second channel will
-clear the interrupt enables for the first one. The work around in the
-driver is just to manually enable the interrupts again in
-xilinx_dma_alloc_chan_resources().
+This was introduced by commit d37d4720c3e7 ("selftests/mount_settattr:
+ensure that ext4 filesystem can be created") which increased the image
+size from 2 MB to 2 GB but didn't adjust the tmpfs size.
 
-This workaround only addresses the probe-time issue. When channels are
-reset at runtime (e.g., in xilinx_dma_terminate_all() or during error
-recovery), there's no corresponding mechanism to restore the other
-channel's interrupt enables. This leads to one channel having its
-interrupts disabled while the driver expects them to work, causing
-timeouts and DMA failures.
+Bump the tmpfs size to 256 MB which is sufficient for the ext4 metadata.
 
-A proper fix is a complicated matter, as we should not reset the other
-channel when it's operating normally. So, perhaps, there should be some
-kind of synchronization for a common reset, which is not trivial to
-implement. To add to the complexity, the driver also supports other DMA
-types, like VDMA, CDMA and MCDMA, which don't have a shared reset.
-
-However, when the two-channel AXIDMA is used in the (assumably) normal
-use case, providing DMA for a single memory-to-memory device, the common
-reset is a bit smaller issue: when something bad happens on one channel,
-or when one channel is terminated, the assumption is that we also want
-to terminate the other channel. And thus resetting both at the same time
-is "ok".
-
-With that line of thinking we can implement a bit better work around
-than just the current probe time work around: let's enable the
-AXIDMA interrupts at xilinx_dma_start_transfer() instead.
-This ensures interrupts are enabled whenever a transfer starts,
-regardless of any prior resets that may have cleared them.
-
-This approach is also more logical: enable interrupts only when needed
-for a transfer, rather than at resource allocation time, and, I think,
-all the other DMA types should also use this model, but I'm reluctant to
-do such changes as I cannot test them.
-
-The reset function still enables interrupts even though it's not needed
-for AXIDMA anymore, but it's common code for all DMA types (VDMA, CDMA,
-MCDMA), so leave it unchanged to avoid affecting other variants.
-
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Fixes: c0bba3a99f07 ("dmaengine: vdma: Add Support for Xilinx AXI Direct Memory Access Engine")
-Link: https://patch.msgid.link/20260311-xilinx-dma-fix-v2-1-a725abb66e3c@ideasonboard.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: d37d4720c3e7 ("selftests/mount_settattr: ensure that ext4 filesystem can be created")
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ tools/testing/selftests/mount_setattr/mount_setattr_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 7b24d0a18ea53..7dec5e6babe14 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -1217,14 +1217,6 @@ static int xilinx_dma_alloc_chan_resources(struct dma_chan *dchan)
+diff --git a/tools/testing/selftests/mount_setattr/mount_setattr_test.c b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
+index a688871a98eba..388bca88ec94f 100644
+--- a/tools/testing/selftests/mount_setattr/mount_setattr_test.c
++++ b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
+@@ -1020,7 +1020,7 @@ FIXTURE_SETUP(mount_setattr_idmapped)
+ 			"size=100000,mode=700"), 0);
  
- 	dma_cookie_init(dchan);
+ 	ASSERT_EQ(mount("testing", "/mnt", "tmpfs", MS_NOATIME | MS_NODEV,
+-			"size=2m,mode=700"), 0);
++			"size=256m,mode=700"), 0);
  
--	if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIDMA) {
--		/* For AXI DMA resetting once channel will reset the
--		 * other channel as well so enable the interrupts here.
--		 */
--		dma_ctrl_set(chan, XILINX_DMA_REG_DMACR,
--			      XILINX_DMA_DMAXR_ALL_IRQ_MASK);
--	}
--
- 	if ((chan->xdev->dma_config->dmatype == XDMA_TYPE_CDMA) && chan->has_sg)
- 		dma_ctrl_set(chan, XILINX_DMA_REG_DMACR,
- 			     XILINX_CDMA_CR_SGMODE);
-@@ -1594,6 +1586,7 @@ static void xilinx_dma_start_transfer(struct xilinx_dma_chan *chan)
- 			     head_desc->async_tx.phys);
- 	reg  &= ~XILINX_DMA_CR_DELAY_MAX;
- 	reg  |= chan->irq_delay << XILINX_DMA_CR_DELAY_SHIFT;
-+	reg |= XILINX_DMA_DMAXR_ALL_IRQ_MASK;
- 	dma_ctrl_write(chan, XILINX_DMA_REG_DMACR, reg);
+ 	ASSERT_EQ(mkdir("/mnt/A", 0777), 0);
  
- 	xilinx_dma_start(chan);
 -- 
 2.53.0
 
