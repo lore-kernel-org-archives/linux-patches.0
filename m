@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3496331326C;
-	Tue, 31 Mar 2026 17:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B360C318EE4;
+	Tue, 31 Mar 2026 17:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976916; cv=none; b=kleKaSyNegFuNriSEDEpoDnxG7E7gwocoj46Z16n/Fti6VOPppARz/mRLWZTVrFO9mti+gMkPkgD98eymOEoFcMma3TiyD+loB7lKK7ppceMguJjKkumkNMRMoqpKh+CxQrM5a1vU2teORcXiFIbzqO9OjMGmU9MXYfzCdtVHWY=
+	t=1774976918; cv=none; b=Xwf/AsHvs1FFlRZwD2yrr8V20zGAUlWfFavrc2icEoUTFlu2YsMa4qQhPe2p4T7Q/IY0NE7Y22KM5J5lK97q1GN75QUks4dA9d/IOTv9qPtwqfWRkNJunzvpkTZoRqbzKGSpflQ3N+EZp5pkRmZ+oo2XI3XBM5SUgcS+K2agi7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976916; c=relaxed/simple;
-	bh=AN7gpwBfqGFBqXc+BMm8YeTLQqPrVrOGjQpyhU82QzM=;
+	s=arc-20240116; t=1774976918; c=relaxed/simple;
+	bh=abYoj2wsTh4DTwixxbGdQbATx6iyZhzak4bmi8K9wOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u1Czs72jy5e0mplzBjVT75WpHgjKZW3gUPvA4gHrL/h1qqKYbi4zI3skkOB3uu6X1Z9DHKBr+sy5hPiCTfv5WMBPnvo+0vCiuWUm6Wdnm45emZZ3DYkVUgxEzyvXI2dN0u5zAsH3gCVo8n+nw9qBdKsbAw4KnKm/fSJ90T9pqIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jk6RVRlp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=twXGeYqlNCIYV36JGdk+JHhPLpYGZ6q7suj+ysJMt5VPtuf9lpvlpF8B84NvG3gGb0miFTGWPAxefacL1fP0psqAMPCeBhx07pqsTXlnFuvk7ngY1QnQjVjVluUKRTeHbSirsENxUUY2qZ02UjwJ8QIxygxO4/vhel1XBrq/tBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3i860f5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jk6RVRlp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77B8C19423;
-	Tue, 31 Mar 2026 17:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3i860f5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B930C19423;
+	Tue, 31 Mar 2026 17:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976916;
-	bh=AN7gpwBfqGFBqXc+BMm8YeTLQqPrVrOGjQpyhU82QzM=;
+	s=korg; t=1774976918;
+	bh=abYoj2wsTh4DTwixxbGdQbATx6iyZhzak4bmi8K9wOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jk6RVRlpqIlKL8P6XH2WidVUDgHE8puf0bgIIA0YReGMWwmFC7kn2gaQ+fNBporXw
-	 yAMOWU5T4UpzAWZReBjWm5qgfBEocVsUAIE5EW9fXB15cMvX9dY43BZJ6sLrkAAPm+
-	 4hThbGukDfTCftShVJSkkg7uaFox8bn2DcMh4sDo=
+	b=t3i860f5b2iYLi265VYrVQqysIBGsDBCkd3PhUSPQ1XvuSl65fXcOrdwCp03LCTCh
+	 Lsn08L9nZaciY7wK5RVIyjmuQnDa7qLB0rc9xP8yfclxRt9DkL1Z72g9W0lkfcra/2
+	 2Grh0KtQ/OALUEbibG41oENUPif4RA530O2vzwRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Chuanyu Tseng <chuanyu.tseng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 234/309] drm/amd/display: Fix drm_edid leak in amdgpu_dm
-Date: Tue, 31 Mar 2026 18:22:17 +0200
-Message-ID: <20260331161802.191907761@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.18 271/309] ext4: always drain queued discard work in ext4_mb_release()
+Date: Tue, 31 Mar 2026 18:22:54 +0200
+Message-ID: <20260331161803.538508086@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,40 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 37c2caa167b0b8aca4f74c32404c5288b876a2a3 upstream.
+commit 9ee29d20aab228adfb02ca93f87fb53c56c2f3af upstream.
 
-[WHAT]
-When a sink is connected, aconnector->drm_edid was overwritten without
-freeing the previous allocation, causing a memory leak on resume.
+While reviewing recent ext4 patch[1], Sashiko raised the following
+concern[2]:
 
-[HOW]
-Free the previous drm_edid before updating it.
+> If the filesystem is initially mounted with the discard option,
+> deleting files will populate sbi->s_discard_list and queue
+> s_discard_work. If it is then remounted with nodiscard, the
+> EXT4_MOUNT_DISCARD flag is cleared, but the pending s_discard_work is
+> neither cancelled nor flushed.
 
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Chuanyu Tseng <chuanyu.tseng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 52024a94e7111366141cfc5d888b2ef011f879e5)
-Cc: stable@vger.kernel.org
+[1] https://lore.kernel.org/r/20260319094545.19291-1-qiang.zhang@linux.dev/
+[2] https://sashiko.dev/#/patchset/20260319094545.19291-1-qiang.zhang%40linux.dev
+
+The concern was valid, but it had nothing to do with the patch[1].
+One of the problems with Sashiko in its current (early) form is that
+it will detect pre-existing issues and report it as a problem with the
+patch that it is reviewing.
+
+In practice, it would be hard to hit deliberately (unless you are a
+malicious syzkaller fuzzer), since it would involve mounting the file
+system with -o discard, and then deleting a large number of files,
+remounting the file system with -o nodiscard, and then immediately
+unmounting the file system before the queued discard work has a change
+to drain on its own.
+
+Fix it because it's a real bug, and to avoid Sashiko from raising this
+concern when analyzing future patches to mballoc.c.
+
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 55cdd0af2bc5 ("ext4: get discard out of jbd2 commit kthread contex")
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/mballoc.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3822,8 +3822,9 @@ void amdgpu_dm_update_connector_after_de
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3890,13 +3890,11 @@ void ext4_mb_release(struct super_block
+ 	struct kmem_cache *cachep = get_groupinfo_cache(sb->s_blocksize_bits);
+ 	int count;
  
- 		aconnector->dc_sink = sink;
- 		dc_sink_retain(aconnector->dc_sink);
-+		drm_edid_free(aconnector->drm_edid);
-+		aconnector->drm_edid = NULL;
- 		if (sink->dc_edid.length == 0) {
--			aconnector->drm_edid = NULL;
- 			hdmi_cec_unset_edid(aconnector);
- 			if (aconnector->dc_link->aux_mode) {
- 				drm_dp_cec_unset_edid(&aconnector->dm_dp_aux.aux);
+-	if (test_opt(sb, DISCARD)) {
+-		/*
+-		 * wait the discard work to drain all of ext4_free_data
+-		 */
+-		flush_work(&sbi->s_discard_work);
+-		WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
+-	}
++	/*
++	 * wait the discard work to drain all of ext4_free_data
++	 */
++	flush_work(&sbi->s_discard_work);
++	WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
+ 
+ 	group_info = rcu_access_pointer(sbi->s_group_info);
+ 	if (group_info) {
 
 
