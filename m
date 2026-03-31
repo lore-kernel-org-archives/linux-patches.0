@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AB73EE1DD;
-	Tue, 31 Mar 2026 16:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40284410D00;
+	Tue, 31 Mar 2026 16:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974428; cv=none; b=FhBGNdKEG1F5rART4xfxOXhhoJ6szEZIkEeIJsnR50blBIy4xRJPqeWdPdt4PqbMdLebsNpOm1OSiqEyeGihrmZC2TA30mqdj9/9LkvXpEBxBW32h9glo+zI76dpsyK+BpBHNTvtufYkY5eQYQwuXuqAKCPfRyMq1uNTBqzA68A=
+	t=1774974431; cv=none; b=F7OE5Qy0nJ2d4aRIgQ7rCtOMFV+SV4rbMdMHP/OXWJguKAR/LIBNwZa6LntUBTEWskn6VvoCUOwlup7nw1DirrrFW/UCCrN5j2zpMAki/oncgeQCiaRZ+PrUZeDGJzGqwKscBYs7zgJIWQF0Oyq/DjJfisM0u3B8W0gydrdqzpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974428; c=relaxed/simple;
-	bh=S2oTL3Xt6btSraN1AURSf/kxDFuFrNEOSQARS+URBr8=;
+	s=arc-20240116; t=1774974431; c=relaxed/simple;
+	bh=SYpxNVNRHX2Zeia6vFfEPP8r2+ix8sOkEPJJzKBEFDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SmAQHXiv0HdKf/hn9SGaNmEOHSGYzkaYzcb/INIoxdgfcRUuq5MjMxb+ER7g3hLoLGLaDkNffhp0FP2+bPKcK2ePu/rse21GNZWfZiTQkIl9dEvJ5KGOaFSvGYAhvwFiM75VrImvuldMuSXCA36eJ88FqiZY+5PncA/1oq4apqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoVqQjZ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ktWa943wAeL3EixXwSlGySu9JIV40C3dQsEa0DrlPqNztF57sy3PxHaC3tWxPjmPHPOZ5+wbMLCv6oPi40USsj4//E4DoP3aXEq706JdDA4m2dm5nGOa425vOgnW15GSDx/K8nIb4ePFmKYdIURqvcWrVy+b3kUnSU1vlQcCMBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxF97rNs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoVqQjZ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38089C19423;
-	Tue, 31 Mar 2026 16:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxF97rNs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBE1C19423;
+	Tue, 31 Mar 2026 16:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974428;
-	bh=S2oTL3Xt6btSraN1AURSf/kxDFuFrNEOSQARS+URBr8=;
+	s=korg; t=1774974431;
+	bh=SYpxNVNRHX2Zeia6vFfEPP8r2+ix8sOkEPJJzKBEFDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoVqQjZ5cY6rG+tMqrES9wTjPhIP054+/kQW32o+wJLtoMc90SG7qpdnzA2ioLalc
-	 f6PlhksuqOuHf0cd7IacZFbAc+ugQ8CGUmIX4nJ7nm6vjeGhc4BwZ9NZSD3MgiQnzl
-	 VRnzF/qGmQvEsfqb3EnljHhF+WpIBcPZDa8W2LkA=
+	b=oxF97rNs9OL18luUwv7s2K/BjHgB1VVMXZgyue0tlejA03fxoZo+T/+yHR3klHaMJ
+	 xmQCPhmMBtxJ/IrhmGQ1K4sY8EjpflSOvuIdiBoQeMjmp6ZPRy7hANxIiPlHvyDq8o
+	 lcXqJnRPc3FUOp/cJBEw8PtP6mDh4W16AC2lL0jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Valerio <pvalerio@redhat.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/175] net: macb: use the current queue number for stats
-Date: Tue, 31 Mar 2026 18:20:58 +0200
-Message-ID: <20260331161732.496661856@linuxfoundation.org>
+Subject: [PATCH 6.6 083/175] RDMA/irdma: Return EINVAL for invalid arp index error
+Date: Tue, 31 Mar 2026 18:21:07 +0200
+Message-ID: <20260331161732.822573552@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -52,95 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Valerio <pvalerio@redhat.com>
+From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 
-[ Upstream commit 72d96e4e24bbefdcfbc68bdb9341a05d8f5cb6e5 ]
+[ Upstream commit 7221f581eefa79ead06e171044f393fb7ee22f87 ]
 
-There's a potential mismatch between the memory reserved for statistics
-and the amount of memory written.
+When rdma_connect() fails due to an invalid arp index, user space rdma core
+reports ENOMEM which is confusing. Modify irdma_make_cm_node() to return the
+correct error code.
 
-gem_get_sset_count() correctly computes the number of stats based on the
-active queues, whereas gem_get_ethtool_stats() indiscriminately copies
-data using the maximum number of queues, and in the case the number of
-active queues is less than MACB_MAX_QUEUES, this results in a OOB write
-as observed in the KASAN splat.
-
-==================================================================
-BUG: KASAN: vmalloc-out-of-bounds in gem_get_ethtool_stats+0x54/0x78
-  [macb]
-Write of size 760 at addr ffff80008080b000 by task ethtool/1027
-
-CPU: [...]
-Tainted: [E]=UNSIGNED_MODULE
-Hardware name: raspberrypi rpi/rpi, BIOS 2025.10 10/01/2025
-Call trace:
- show_stack+0x20/0x38 (C)
- dump_stack_lvl+0x80/0xf8
- print_report+0x384/0x5e0
- kasan_report+0xa0/0xf0
- kasan_check_range+0xe8/0x190
- __asan_memcpy+0x54/0x98
- gem_get_ethtool_stats+0x54/0x78 [macb
-   926c13f3af83b0c6fe64badb21ec87d5e93fcf65]
- dev_ethtool+0x1220/0x38c0
- dev_ioctl+0x4ac/0xca8
- sock_do_ioctl+0x170/0x1d8
- sock_ioctl+0x484/0x5d8
- __arm64_sys_ioctl+0x12c/0x1b8
- invoke_syscall+0xd4/0x258
- el0_svc_common.constprop.0+0xb4/0x240
- do_el0_svc+0x48/0x68
- el0_svc+0x40/0xf8
- el0t_64_sync_handler+0xa0/0xe8
- el0t_64_sync+0x1b0/0x1b8
-
-The buggy address belongs to a 1-page vmalloc region starting at
-  0xffff80008080b000 allocated at dev_ethtool+0x11f0/0x38c0
-The buggy address belongs to the physical page:
-page: refcount:1 mapcount:0 mapping:0000000000000000
-  index:0xffff00000a333000 pfn:0xa333
-flags: 0x7fffc000000000(node=0|zone=0|lastcpupid=0x1ffff)
-raw: 007fffc000000000 0000000000000000 dead000000000122 0000000000000000
-raw: ffff00000a333000 0000000000000000 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff80008080b080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- ffff80008080b100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->ffff80008080b180: 00 00 00 00 00 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-                                  ^
- ffff80008080b200: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
- ffff80008080b280: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-==================================================================
-
-Fix it by making sure the copied size only considers the active number of
-queues.
-
-Fixes: 512286bbd4b7 ("net: macb: Added some queue statistics")
-Signed-off-by: Paolo Valerio <pvalerio@redhat.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260323191634.2185840-1-pvalerio@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 146b9756f14c ("RDMA/irdma: Add connection manager")
+Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/cm.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 693688a580022..18dd191526448 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -3255,7 +3255,7 @@ static void gem_get_ethtool_stats(struct net_device *dev,
- 	spin_lock_irq(&bp->stats_lock);
- 	gem_update_stats(bp);
- 	memcpy(data, &bp->ethtool_stats, sizeof(u64)
--			* (GEM_STATS_LEN + QUEUE_STATS_LEN * MACB_MAX_QUEUES));
-+			* (GEM_STATS_LEN + QUEUE_STATS_LEN * bp->num_queues));
- 	spin_unlock_irq(&bp->stats_lock);
+diff --git a/drivers/infiniband/hw/irdma/cm.c b/drivers/infiniband/hw/irdma/cm.c
+index 00e63a46a50ee..122b4cffc8dc7 100644
+--- a/drivers/infiniband/hw/irdma/cm.c
++++ b/drivers/infiniband/hw/irdma/cm.c
+@@ -2239,11 +2239,12 @@ irdma_make_cm_node(struct irdma_cm_core *cm_core, struct irdma_device *iwdev,
+ 	int oldarpindex;
+ 	int arpindex;
+ 	struct net_device *netdev = iwdev->netdev;
++	int ret;
+ 
+ 	/* create an hte and cm_node for this instance */
+ 	cm_node = kzalloc(sizeof(*cm_node), GFP_ATOMIC);
+ 	if (!cm_node)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	/* set our node specific transport info */
+ 	cm_node->ipv4 = cm_info->ipv4;
+@@ -2346,8 +2347,10 @@ irdma_make_cm_node(struct irdma_cm_core *cm_core, struct irdma_device *iwdev,
+ 			arpindex = -EINVAL;
+ 	}
+ 
+-	if (arpindex < 0)
++	if (arpindex < 0) {
++		ret = -EINVAL;
+ 		goto err;
++	}
+ 
+ 	ether_addr_copy(cm_node->rem_mac,
+ 			iwdev->rf->arp_table[arpindex].mac_addr);
+@@ -2358,7 +2361,7 @@ irdma_make_cm_node(struct irdma_cm_core *cm_core, struct irdma_device *iwdev,
+ err:
+ 	kfree(cm_node);
+ 
+-	return NULL;
++	return ERR_PTR(ret);
  }
  
+ static void irdma_destroy_connection(struct irdma_cm_node *cm_node)
+@@ -3019,8 +3022,8 @@ static int irdma_create_cm_node(struct irdma_cm_core *cm_core,
+ 
+ 	/* create a CM connection node */
+ 	cm_node = irdma_make_cm_node(cm_core, iwdev, cm_info, NULL);
+-	if (!cm_node)
+-		return -ENOMEM;
++	if (IS_ERR(cm_node))
++		return PTR_ERR(cm_node);
+ 
+ 	/* set our node side to client (active) side */
+ 	cm_node->tcp_cntxt.client = 1;
+@@ -3217,9 +3220,9 @@ void irdma_receive_ilq(struct irdma_sc_vsi *vsi, struct irdma_puda_buf *rbuf)
+ 		cm_info.cm_id = listener->cm_id;
+ 		cm_node = irdma_make_cm_node(cm_core, iwdev, &cm_info,
+ 					     listener);
+-		if (!cm_node) {
++		if (IS_ERR(cm_node)) {
+ 			ibdev_dbg(&cm_core->iwdev->ibdev,
+-				  "CM: allocate node failed\n");
++				  "CM: allocate node failed ret=%ld\n", PTR_ERR(cm_node));
+ 			refcount_dec(&listener->refcnt);
+ 			return;
+ 		}
 -- 
-2.51.0
+2.53.0
 
 
 
