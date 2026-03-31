@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602F03F7A8B;
-	Tue, 31 Mar 2026 16:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF92423A82;
+	Tue, 31 Mar 2026 16:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975352; cv=none; b=UHm3cneD9FXKnuXpW7B/VU7krsH32We1NkhEgi+4+yd29RYD3aIQOuklPsgE0yA5qQKgY8Gxi3ELxUw5AeRpTzzPddagcOhcQ3NQxuSytXqfhFRQ6iKY5bsrc96A2GxKyr4+yRJzaM4NB3NLexu0f2jmkL8NVgXTy0mHvfJDLIw=
+	t=1774975355; cv=none; b=Nb1gfi4V6/6Cq7nWJQeWTl6T2UvFNkgDLYGWLppUVTgHoshI6Pqu0fEZW9/UMh5cYxrtV0d1N85OWHprX2Xfj58xYUvSdd15al7LU8xuGCXACijfchFgb2xh/pBHJOdwSwsNnhsDpuXTmMBy0cNKXAtgrLybrkxx8hnlh0Xnwao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975352; c=relaxed/simple;
-	bh=TC1lTNW4Oa0Icq/qlBnUCer0tNL2Bj7kX5VhyY9ZN6g=;
+	s=arc-20240116; t=1774975355; c=relaxed/simple;
+	bh=riYoh1BXQ8cNS43ppDflNWpHC1rXC3Ly26YWOWsk7XU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBIK5J3qSdTzuTnuUEuI2wF7JWnSlNDaBLpOBuqiJoWcdPFjzNLMD36bAH3w53eIZEhTmqTHhUNFZF8oducIwkA7rtB/cwhcTqAY5iOnIk/pxJf4KEwWPhDlYGxw773IMpkxHr7mrn3KAW9hDArUNI6LWNQlVUdEH0XjSR29A54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oreYUXuA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ppx+5tJuk5KLi4tr2uluHhoQPIOh7h3dea1U6xg7PNLt5t31JuvtUjCXwYZkrPkEfKr56+/xhb0qAYRdBEdbcQrCl48GdwHNVbaFS3piZ+Zcz37yftNobVY3QfQ5Jz10ECA6PDtokbTnbUYHCCddN+1LmbaWx3X8FYa0hlwMyUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7rWKZPB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oreYUXuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC18FC19423;
-	Tue, 31 Mar 2026 16:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7rWKZPB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C359C19423;
+	Tue, 31 Mar 2026 16:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975352;
-	bh=TC1lTNW4Oa0Icq/qlBnUCer0tNL2Bj7kX5VhyY9ZN6g=;
+	s=korg; t=1774975354;
+	bh=riYoh1BXQ8cNS43ppDflNWpHC1rXC3Ly26YWOWsk7XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oreYUXuAC2r+Y1Vuv3QOtSYDGWOL9RzIN0jywV5c4oJ+hutAiCyYvBgm4zbUvhMR1
-	 Httz9ym9DgTKnJg1Oyt/wzWqsL10tjbgiWJBDTNtWny+LeQXMMytfZGYygAuIBiF+s
-	 gLPTzXjPa0yo5H5B/xQGmFXZ+DQ5N5RrPkRsKwMA=
+	b=x7rWKZPB7mKwthvKkA6eoiB7ji+k3qk64zmf8a4H3b/g6wFn4BvKnJzXl6rkbtzsq
+	 AH0My404g+6KuVU0PeKCKX01m5Ptfk0h7ec5E2iWTrrUelOU8wkJzRBp/95SIbNgpw
+	 /P7ti1Yd3t2id/E79nifMWzu8XZcFD86oaiNICrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renato Marziano <renato@marziano.top>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Alex Williamson <alex.williamson@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 6.19 234/342] vfio/pci: Fix double free in dma-buf feature
-Date: Tue, 31 Mar 2026 18:21:07 +0200
-Message-ID: <20260331161807.576928135@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.19 261/342] dmaengine: sh: rz-dmac: Move CHCTRL updates under spinlock
+Date: Tue, 31 Mar 2026 18:21:34 +0200
+Message-ID: <20260331161808.557558328@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,48 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@nvidia.com>
+From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 
-commit e98137f0a874ab36d0946de4707aa48cb7137d1c upstream.
+commit 89a8567d84bde88cb7cdbbac2ab2299c4f991490 upstream.
 
-The error path through vfio_pci_core_feature_dma_buf() ignores its
-own advice to only use dma_buf_put() after dma_buf_export(), instead
-falling through the entire unwind chain.  In the unlikely event that
-we encounter file descriptor exhaustion, this can result in an
-unbalanced refcount on the vfio device and double free of allocated
-objects.
+Both rz_dmac_disable_hw() and rz_dmac_irq_handle_channel() update the
+CHCTRL register. To avoid concurrency issues when configuring
+functionalities exposed by this registers, take the virtual channel lock.
+All other CHCTRL updates were already protected by the same lock.
 
-Avoid this by moving the "put" directly into the error path and return
-the errno rather than entering the unwind chain.
+Previously, rz_dmac_disable_hw() disabled and re-enabled local IRQs, before
+accessing CHCTRL registers but this does not ensure race-free access.
+Remove the local IRQ disable/enable code as well.
 
-Reported-by: Renato Marziano <renato@marziano.top>
-Fixes: 5d74781ebc86 ("vfio/pci: Add dma-buf export support for MMIO regions")
+Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
 Cc: stable@vger.kernel.org
-Acked-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
-Link: https://lore.kernel.org/r/20260323215659.2108191-3-alex.williamson@nvidia.com
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20260316133252.240348-3-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/vfio_pci_dmabuf.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/dma/sh/rz-dmac.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/vfio/pci/vfio_pci_dmabuf.c
-+++ b/drivers/vfio/pci/vfio_pci_dmabuf.c
-@@ -302,11 +302,10 @@ int vfio_pci_core_feature_dma_buf(struct
- 	 */
- 	ret = dma_buf_fd(priv->dmabuf, get_dma_buf.open_flags);
- 	if (ret < 0)
--		goto err_dma_buf;
-+		dma_buf_put(priv->dmabuf);
-+
- 	return ret;
+--- a/drivers/dma/sh/rz-dmac.c
++++ b/drivers/dma/sh/rz-dmac.c
+@@ -298,13 +298,10 @@ static void rz_dmac_disable_hw(struct rz
+ {
+ 	struct dma_chan *chan = &channel->vc.chan;
+ 	struct rz_dmac *dmac = to_rz_dmac(chan->device);
+-	unsigned long flags;
  
--err_dma_buf:
--	dma_buf_put(priv->dmabuf);
- err_dev_put:
- 	vfio_device_put_registration(&vdev->vdev);
- err_free_phys:
+ 	dev_dbg(dmac->dev, "%s channel %d\n", __func__, channel->index);
+ 
+-	local_irq_save(flags);
+ 	rz_dmac_ch_writel(channel, CHCTRL_DEFAULT, CHCTRL, 1);
+-	local_irq_restore(flags);
+ }
+ 
+ static void rz_dmac_set_dmars_register(struct rz_dmac *dmac, int nr, u32 dmars)
+@@ -569,8 +566,8 @@ static int rz_dmac_terminate_all(struct
+ 	unsigned int i;
+ 	LIST_HEAD(head);
+ 
+-	rz_dmac_disable_hw(channel);
+ 	spin_lock_irqsave(&channel->vc.lock, flags);
++	rz_dmac_disable_hw(channel);
+ 	for (i = 0; i < DMAC_NR_LMDESC; i++)
+ 		lmdesc[i].header = 0;
+ 
+@@ -707,7 +704,9 @@ static void rz_dmac_irq_handle_channel(s
+ 	if (chstat & CHSTAT_ER) {
+ 		dev_err(dmac->dev, "DMAC err CHSTAT_%d = %08X\n",
+ 			channel->index, chstat);
+-		rz_dmac_ch_writel(channel, CHCTRL_DEFAULT, CHCTRL, 1);
++
++		scoped_guard(spinlock_irqsave, &channel->vc.lock)
++			rz_dmac_ch_writel(channel, CHCTRL_DEFAULT, CHCTRL, 1);
+ 		goto done;
+ 	}
+ 
 
 
