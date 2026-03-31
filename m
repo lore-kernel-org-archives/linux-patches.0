@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2D941B342;
-	Tue, 31 Mar 2026 16:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81072423A9F;
+	Tue, 31 Mar 2026 16:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975658; cv=none; b=STEcSQwLn1PRcPA6tFm8P2Og6kXz+Uk8qOpVVqUwLtsBFRSx6+UTb6+mxw0l94eybAgRSk+MUhr3AMZwNzRienbI4ogv4wadXeFle46ArL5bbAxkOGzdYnq20nlNxiF7hezWLZLUn4QSgtxI4UBPOah6fs/OhPJa0p6Boh8v60g=
+	t=1774975660; cv=none; b=Cnpns9ylqX61c328agkalr2lnNSR++/CjTJXrimF/TWgqz3x3GZZSoq5NZ7t2qVsOQnrtZehbxxmMAFQndFP3AHT00pE/d9epUNOjrtGctIqMAR8FbGyPQsEq1ST6k978fhI2EPxlOKiOxNIMBDTARsJW8OUYYG4N/LPUbRo1zY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975658; c=relaxed/simple;
-	bh=eWpRkUPDZar5RWyYkfaOmFKlAaOfO6lG8h9McIVyQJw=;
+	s=arc-20240116; t=1774975660; c=relaxed/simple;
+	bh=4jP8GGJMBbwTfTDFRMMAAPLHTTga3NKG6sEI6EP/F2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kj8vli3IunfWvTY80fbcoBVwgjO/cB/6BbF4jj28paoTgyttjeQawLwl60WQD+g/QM56of0eT28FXwcIa3hf/2tggMpF+xZHtwe42AwbcbEBvh0oKdFc5az7Wly3AQMvki995AacIcwrZDUuxqy7Emux+NwdCIFrCMHJ6DWLrVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m9idzswb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r/hnrGXZSW1Nhk8UzQknrkYukweim5PYyeNKGWKm/Nsd7vzn7A6BLhZYNA6rliIkgQ6Uz1hiiVxgJyUrqo01zbDoMMJZGX3KbKZsa144hvFM1tHulY0/BbLci6WfYLmPk7o1dvgedimh8XNofkfEjCcpH7za3PrKxYY94Eywgu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rw+18k6N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m9idzswb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80644C2BCB1;
-	Tue, 31 Mar 2026 16:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rw+18k6N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196CEC2BCB1;
+	Tue, 31 Mar 2026 16:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975657;
-	bh=eWpRkUPDZar5RWyYkfaOmFKlAaOfO6lG8h9McIVyQJw=;
+	s=korg; t=1774975660;
+	bh=4jP8GGJMBbwTfTDFRMMAAPLHTTga3NKG6sEI6EP/F2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m9idzswbZnFEWlfW+CoGtLjX+GbKPDSOn0lW/kADyPdnvRdNcxFyFdZJ57OwPz2DX
-	 ppxyhIta99DsIIldiaepbAmWhRNK9/p6FuHcNTkOwGwbu5B7Z+Srh1i8+yxJR9M9F8
-	 9wUbFoFjZ5nty9VtOl7EUMjluFnPJepJqIbZ+K0g=
+	b=Rw+18k6NnwJLaYnBOQtyPE5kHz+/GTOCY88YykbCyFUb55Nd523o8/Jv3V94VHD5K
+	 ryLrvEim1psosHlBLsoMJeN3VH8Z8FMKzU2IUun1OJ7EQaLHdk0fabSHbY2WwU3nFf
+	 B8/i3vb7TRMgSwULyilz1umxJUo7ZLkxgv+tKDPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Gregory Bell <grbell@redhat.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/244] driver core: platform: use generic driver_override infrastructure
-Date: Tue, 31 Mar 2026 18:19:18 +0200
-Message-ID: <20260331161742.011773850@linuxfoundation.org>
+Subject: [PATCH 6.12 009/244] bpf: Release module BTF IDR before module unload
+Date: Tue, 31 Mar 2026 18:19:19 +0200
+Message-ID: <20260331161742.048625606@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,198 +54,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 2b38efc05bf7a8568ec74bfffea0f5cfa62bc01d ]
+[ Upstream commit 146bd2a87a65aa407bb17fac70d8d583d19aba06 ]
 
-When a driver is probed through __driver_attach(), the bus' match()
-callback is called without the device lock held, thus accessing the
-driver_override field without a lock, which can cause a UAF.
+Gregory reported in [0] that the global_map_resize test when run in
+repeatedly ends up failing during program load. This stems from the fact
+that BTF reference has not dropped to zero after the previous run's
+module is unloaded, and the older module's BTF is still discoverable and
+visible. Later, in libbpf, load_module_btfs() will find the ID for this
+stale BTF, open its fd, and then it will be used during program load
+where later steps taking module reference using btf_try_get_module()
+fail since the underlying module for the BTF is gone.
 
-Fix this by using the driver-core driver_override infrastructure taking
-care of proper locking internally.
+Logically, once a module is unloaded, it's associated BTF artifacts
+should become hidden. The BTF object inside the kernel may still remain
+alive as long its reference counts are alive, but it should no longer be
+discoverable.
 
-Note that calling match() from __driver_attach() without the device lock
-held is intentional. [1]
+To fix this, let us call btf_free_id() from the MODULE_STATE_GOING case
+for the module unload to free the BTF associated IDR entry, and disable
+its discovery once module unload returns to user space. If a race
+happens during unload, the outcome is non-deterministic anyway. However,
+user space should be able to rely on the guarantee that once it has
+synchronously established a successful module unload, no more stale
+artifacts associated with this module can be obtained subsequently.
 
-Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
-Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: 3d713e0e382e ("driver core: platform: add device binding path 'driver_override'")
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260303115720.48783-5-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Note that we must be careful to not invoke btf_free_id() in btf_put()
+when btf_is_module() is true now. There could be a window where the
+module unload drops a non-terminal reference, frees the IDR, but the
+same ID gets reused and the second unconditional btf_free_id() ends up
+releasing an unrelated entry.
+
+To avoid a special case for btf_is_module() case, set btf->id to zero to
+make btf_free_id() idempotent, such that we can unconditionally invoke it
+from btf_put(), and also from the MODULE_STATE_GOING case. Since zero is
+an invalid IDR, the idr_remove() should be a noop.
+
+Note that we can be sure that by the time we reach final btf_put() for
+btf_is_module() case, the btf_free_id() is already done, since the
+module itself holds the BTF reference, and it will call this function
+for the BTF before dropping its own reference.
+
+  [0]: https://lore.kernel.org/bpf/cover.1773170190.git.grbell@redhat.com
+
+Fixes: 36e68442d1af ("bpf: Load and verify kernel module BTFs")
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Suggested-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reported-by: Gregory Bell <grbell@redhat.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20260312205307.1346991-1-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/platform.c         | 37 +++++----------------------------
- drivers/bus/simple-pm-bus.c     |  4 ++--
- drivers/clk/imx/clk-scu.c       |  3 +--
- drivers/slimbus/qcom-ngd-ctrl.c |  6 ++----
- include/linux/platform_device.h |  5 -----
- sound/soc/samsung/i2s.c         |  6 +++---
- 6 files changed, 13 insertions(+), 48 deletions(-)
+ kernel/bpf/btf.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/base/platform.c b/drivers/base/platform.c
-index 6f2a33722c520..24440eec1d4a2 100644
---- a/drivers/base/platform.c
-+++ b/drivers/base/platform.c
-@@ -562,7 +562,6 @@ static void platform_device_release(struct device *dev)
- 	kfree(pa->pdev.dev.platform_data);
- 	kfree(pa->pdev.mfd_cell);
- 	kfree(pa->pdev.resource);
--	kfree(pa->pdev.driver_override);
- 	kfree(pa);
- }
- 
-@@ -1265,38 +1264,9 @@ static ssize_t numa_node_show(struct device *dev,
- }
- static DEVICE_ATTR_RO(numa_node);
- 
--static ssize_t driver_override_show(struct device *dev,
--				    struct device_attribute *attr, char *buf)
--{
--	struct platform_device *pdev = to_platform_device(dev);
--	ssize_t len;
--
--	device_lock(dev);
--	len = sysfs_emit(buf, "%s\n", pdev->driver_override);
--	device_unlock(dev);
--
--	return len;
--}
--
--static ssize_t driver_override_store(struct device *dev,
--				     struct device_attribute *attr,
--				     const char *buf, size_t count)
--{
--	struct platform_device *pdev = to_platform_device(dev);
--	int ret;
--
--	ret = driver_set_override(dev, &pdev->driver_override, buf, count);
--	if (ret)
--		return ret;
--
--	return count;
--}
--static DEVICE_ATTR_RW(driver_override);
--
- static struct attribute *platform_dev_attrs[] = {
- 	&dev_attr_modalias.attr,
- 	&dev_attr_numa_node.attr,
--	&dev_attr_driver_override.attr,
- 	NULL,
- };
- 
-@@ -1336,10 +1306,12 @@ static int platform_match(struct device *dev, const struct device_driver *drv)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
- 	struct platform_driver *pdrv = to_platform_driver(drv);
-+	int ret;
- 
- 	/* When driver_override is set, only bind to the matching driver */
--	if (pdev->driver_override)
--		return !strcmp(pdev->driver_override, drv->name);
-+	ret = device_match_driver_override(dev, drv);
-+	if (ret >= 0)
-+		return ret;
- 
- 	/* Attempt an OF style match first */
- 	if (of_driver_match_device(dev, drv))
-@@ -1477,6 +1449,7 @@ static const struct dev_pm_ops platform_dev_pm_ops = {
- const struct bus_type platform_bus_type = {
- 	.name		= "platform",
- 	.dev_groups	= platform_dev_groups,
-+	.driver_override = true,
- 	.match		= platform_match,
- 	.uevent		= platform_uevent,
- 	.probe		= platform_probe,
-diff --git a/drivers/bus/simple-pm-bus.c b/drivers/bus/simple-pm-bus.c
-index 50870c8278899..11fb711edd999 100644
---- a/drivers/bus/simple-pm-bus.c
-+++ b/drivers/bus/simple-pm-bus.c
-@@ -36,7 +36,7 @@ static int simple_pm_bus_probe(struct platform_device *pdev)
- 	 * that's not listed in simple_pm_bus_of_match. We don't want to do any
- 	 * of the simple-pm-bus tasks for these devices, so return early.
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index f83bd019db141..cd523ad72838a 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -1657,7 +1657,16 @@ static void btf_free_id(struct btf *btf)
+ 	 * of the _bh() version.
  	 */
--	if (pdev->driver_override)
-+	if (device_has_driver_override(&pdev->dev))
- 		return 0;
+ 	spin_lock_irqsave(&btf_idr_lock, flags);
+-	idr_remove(&btf_idr, btf->id);
++	if (btf->id) {
++		idr_remove(&btf_idr, btf->id);
++		/*
++		 * Clear the id here to make this function idempotent, since it will get
++		 * called a couple of times for module BTFs: on module unload, and then
++		 * the final btf_put(). btf_alloc_id() starts IDs with 1, so we can use
++		 * 0 as sentinel value.
++		 */
++		WRITE_ONCE(btf->id, 0);
++	}
+ 	spin_unlock_irqrestore(&btf_idr_lock, flags);
+ }
  
- 	match = of_match_device(dev->driver->of_match_table, dev);
-@@ -78,7 +78,7 @@ static void simple_pm_bus_remove(struct platform_device *pdev)
+@@ -7805,7 +7814,7 @@ static void bpf_btf_show_fdinfo(struct seq_file *m, struct file *filp)
  {
- 	const void *data = of_device_get_match_data(&pdev->dev);
+ 	const struct btf *btf = filp->private_data;
  
--	if (pdev->driver_override || data)
-+	if (device_has_driver_override(&pdev->dev) || data)
- 		return;
+-	seq_printf(m, "btf_id:\t%u\n", btf->id);
++	seq_printf(m, "btf_id:\t%u\n", READ_ONCE(btf->id));
+ }
+ #endif
  
- 	dev_dbg(&pdev->dev, "%s\n", __func__);
-diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
-index b27186aaf2a15..75a6d91c0711c 100644
---- a/drivers/clk/imx/clk-scu.c
-+++ b/drivers/clk/imx/clk-scu.c
-@@ -715,8 +715,7 @@ struct clk_hw *imx_clk_scu_alloc_dev(const char *name,
- 	if (ret)
- 		goto put_device;
+@@ -7892,7 +7901,7 @@ int btf_get_info_by_fd(const struct btf *btf,
+ 	if (copy_from_user(&info, uinfo, info_copy))
+ 		return -EFAULT;
  
--	ret = driver_set_override(&pdev->dev, &pdev->driver_override,
--				  "imx-scu-clk", strlen("imx-scu-clk"));
-+	ret = device_set_driver_override(&pdev->dev, "imx-scu-clk");
- 	if (ret)
- 		goto put_device;
+-	info.id = btf->id;
++	info.id = READ_ONCE(btf->id);
+ 	ubtf = u64_to_user_ptr(info.btf);
+ 	btf_copy = min_t(u32, btf->data_size, info.btf_size);
+ 	if (copy_to_user(ubtf, btf->data, btf_copy))
+@@ -7955,7 +7964,7 @@ int btf_get_fd_by_id(u32 id)
  
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index f8d033a289810..ecc74a8903859 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1539,10 +1539,8 @@ static int of_qcom_slim_ngd_register(struct device *parent,
- 		ngd->id = id;
- 		ngd->pdev->dev.parent = parent;
+ u32 btf_obj_id(const struct btf *btf)
+ {
+-	return btf->id;
++	return READ_ONCE(btf->id);
+ }
  
--		ret = driver_set_override(&ngd->pdev->dev,
--					  &ngd->pdev->driver_override,
--					  QCOM_SLIM_NGD_DRV_NAME,
--					  strlen(QCOM_SLIM_NGD_DRV_NAME));
-+		ret = device_set_driver_override(&ngd->pdev->dev,
-+						 QCOM_SLIM_NGD_DRV_NAME);
- 		if (ret) {
- 			platform_device_put(ngd->pdev);
- 			kfree(ngd);
-diff --git a/include/linux/platform_device.h b/include/linux/platform_device.h
-index 7132623e46585..40f9d2e725bff 100644
---- a/include/linux/platform_device.h
-+++ b/include/linux/platform_device.h
-@@ -31,11 +31,6 @@ struct platform_device {
- 	struct resource	*resource;
+ bool btf_is_kernel(const struct btf *btf)
+@@ -8088,6 +8097,13 @@ static int btf_module_notify(struct notifier_block *nb, unsigned long op,
+ 			if (btf_mod->module != module)
+ 				continue;
  
- 	const struct platform_device_id	*id_entry;
--	/*
--	 * Driver name to force a match.  Do not set directly, because core
--	 * frees it.  Use driver_set_override() to set or clear it.
--	 */
--	const char *driver_override;
- 
- 	/* MFD cell pointer */
- 	struct mfd_cell *mfd_cell;
-diff --git a/sound/soc/samsung/i2s.c b/sound/soc/samsung/i2s.c
-index 8f6deb06e2346..8ad99f1ef6554 100644
---- a/sound/soc/samsung/i2s.c
-+++ b/sound/soc/samsung/i2s.c
-@@ -1362,10 +1362,10 @@ static int i2s_create_secondary_device(struct samsung_i2s_priv *priv)
- 	if (!pdev_sec)
- 		return -ENOMEM;
- 
--	pdev_sec->driver_override = kstrdup("samsung-i2s", GFP_KERNEL);
--	if (!pdev_sec->driver_override) {
-+	ret = device_set_driver_override(&pdev_sec->dev, "samsung-i2s");
-+	if (ret) {
- 		platform_device_put(pdev_sec);
--		return -ENOMEM;
-+		return ret;
- 	}
- 
- 	ret = platform_device_add(pdev_sec);
++			/*
++			 * For modules, we do the freeing of BTF IDR as soon as
++			 * module goes away to disable BTF discovery, since the
++			 * btf_try_get_module() on such BTFs will fail. This may
++			 * be called again on btf_put(), but it's ok to do so.
++			 */
++			btf_free_id(btf_mod->btf);
+ 			list_del(&btf_mod->list);
+ 			if (btf_mod->sysfs_attr)
+ 				sysfs_remove_bin_file(btf_kobj, btf_mod->sysfs_attr);
 -- 
 2.51.0
 
