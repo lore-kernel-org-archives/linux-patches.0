@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E405D421EF4;
-	Tue, 31 Mar 2026 16:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E91423A8B;
+	Tue, 31 Mar 2026 16:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974789; cv=none; b=Mg1Mwk5JOzhEJ32R3QWSLw/9fe75uZ91Mm56Be0WY5O6IxqVadBK9Xwc31rT/bC8Oqhjz6P0F4yxOsoDsQrrilQ9R5Ov2a4XoBy7dr+nIVCQFxswwC49mTbg6kiX2c5AzGWfm96jYAqhw82tfbT6R+9FTEBpJ/IG14mkriuohqg=
+	t=1774974791; cv=none; b=n4Og3Ox93FxFHXxPfYrhoB+ROrdcEh2rm5Sid92JrUSLuOAk0i1kYwhdJMfs6nQAVF1H3unq5VG3ba6W80Gz6v0mGH7aAGMif0v9rvkF66cln3CWR3C3ObdTTyo3sbQ22PFbJnyCYS3u8jL1s4aqd2UkvAy+Kz427WsmbWueSVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974789; c=relaxed/simple;
-	bh=40Qm4pGEP5qmsEcDMWEdkXeyCtZl6FLz9hR2ieZbpwo=;
+	s=arc-20240116; t=1774974791; c=relaxed/simple;
+	bh=kzO1MQNtXISVnyYx/uyXpxlKtb0sbibAmdedYuiASAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h61WfV8VHQaZ3Hz6WsXKkuNjAV/qjABKwtzg48UG64/OJV05tMWnpJT10ZOGftctDmOrGaZBDJrZSOuiSdncW007dNd+t5P8TdClpiABp5HGs8JuOK88L4SrZ7LjpolQvsOT5YuNMZ11+fPJJ2jnnP9DjaaJXdrh4maIvTEjOv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlkNp5SA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jh6XaDhHjvvd3TdA3zGCGkLaRfnmxKQgkN4xEHPFnXVoCPY47b/2SEG+mncLxNe1Efg9yxPW1Yz6qIgiXGmAJe04ZCqvJZn+0QG0KfyxMLy3EZ0y2pVQ0CD2uPbkHSZ0D4kI8w7Q/qCt2PNNvz6/iCOIULWhdeyFXLeHt0xO42s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBeYSPzi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlkNp5SA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEA6C19423;
-	Tue, 31 Mar 2026 16:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBeYSPzi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B07FC19423;
+	Tue, 31 Mar 2026 16:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974788;
-	bh=40Qm4pGEP5qmsEcDMWEdkXeyCtZl6FLz9hR2ieZbpwo=;
+	s=korg; t=1774974791;
+	bh=kzO1MQNtXISVnyYx/uyXpxlKtb0sbibAmdedYuiASAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FlkNp5SA+iCAlLdY0P5Op0VsTxpkCXqHQ+NaLnh5MRu4BOuzrhE7KqPNFcyquir2U
-	 jGFvxBy4RDpL1fHa36Fr5nQQ33sxp/oeUCc51JAbhP0Q4KbbpcseP+Yhpw25sex8k8
-	 G3Dvii11+3B3fOhIZ1/MCOW8wPFq5cw8M0KENW4E=
+	b=zBeYSPziiUPovH2r+WL8Yk9i5U/slhYaJwUjBZWFnAfpK8Mj7Wj+qSCDYyJTaYK66
+	 P2/QKsdbra/baInlZ5+i9eqcGO3I2VT2qkZnrrRbMXqDCBZ69vkv7Q44Hf6jolBptM
+	 cpDbrpBA3UfU0/J/Ve1XLZnTzUUowgygLGH7rqWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Benato <denis.benato@linux.dev>,
-	Jiri Kosina <jkosina@suse.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 044/342] HID: asus: add xg mobile 2023 external hardware support
-Date: Tue, 31 Mar 2026 18:17:57 +0200
-Message-ID: <20260331161800.522044293@linuxfoundation.org>
+Subject: [PATCH 6.19 045/342] module: Fix kernel panic when a symbol st_shndx is out of bounds
+Date: Tue, 31 Mar 2026 18:17:58 +0200
+Message-ID: <20260331161800.558741076@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,47 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Benato <denis.benato@linux.dev>
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
 
-[ Upstream commit 377f8e788945d45b012ed9cfc35ca56c02e86cd8 ]
+[ Upstream commit f9d69d5e7bde2295eb7488a56f094ac8f5383b92 ]
 
-XG mobile stations have the 0x5a endpoint and has to be initialized:
-add them to hid-asus.
+The module loader doesn't check for bounds of the ELF section index in
+simplify_symbols():
 
-Signed-off-by: Denis Benato <denis.benato@linux.dev>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+       for (i = 1; i < symsec->sh_size / sizeof(Elf_Sym); i++) {
+		const char *name = info->strtab + sym[i].st_name;
+
+		switch (sym[i].st_shndx) {
+		case SHN_COMMON:
+
+		[...]
+
+		default:
+			/* Divert to percpu allocation if a percpu var. */
+			if (sym[i].st_shndx == info->index.pcpu)
+				secbase = (unsigned long)mod_percpu(mod);
+			else
+  /** HERE --> **/		secbase = info->sechdrs[sym[i].st_shndx].sh_addr;
+			sym[i].st_value += secbase;
+			break;
+		}
+	}
+
+A symbol with an out-of-bounds st_shndx value, for example 0xffff
+(known as SHN_XINDEX or SHN_HIRESERVE), may cause a kernel panic:
+
+  BUG: unable to handle page fault for address: ...
+  RIP: 0010:simplify_symbols+0x2b2/0x480
+  ...
+  Kernel panic - not syncing: Fatal exception
+
+This can happen when module ELF is legitimately using SHN_XINDEX or
+when it is corrupted.
+
+Add a bounds check in simplify_symbols() to validate that st_shndx is
+within the valid range before using it.
+
+This issue was discovered due to a bug in llvm-objcopy, see relevant
+discussion for details [1].
+
+[1] https://lore.kernel.org/linux-modules/20251224005752.201911-1-ihor.solodrai@linux.dev/
+
+Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c | 3 +++
- drivers/hid/hid-ids.h  | 1 +
- 2 files changed, 4 insertions(+)
+ kernel/module/main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index 8487332bf43b0..b1ad4e9f20c85 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -1404,6 +1404,9 @@ static const struct hid_device_id asus_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
- 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X),
- 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_ROG_ALLY_XPAD },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
-+	    USB_DEVICE_ID_ASUSTEK_XGM_2023),
-+	},
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
- 	    USB_DEVICE_ID_ASUSTEK_ROG_CLAYMORE_II_KEYBOARD),
- 	  QUIRK_ROG_CLAYMORE_II_KEYBOARD },
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 85ab1ac511096..7fd67745ee010 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -229,6 +229,7 @@
- #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X		0x1b4c
- #define USB_DEVICE_ID_ASUSTEK_ROG_CLAYMORE_II_KEYBOARD	0x196b
- #define USB_DEVICE_ID_ASUSTEK_FX503VD_KEYBOARD	0x1869
-+#define USB_DEVICE_ID_ASUSTEK_XGM_2023	0x1a9a
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index bcd259505c8b3..21c5c0d14fa83 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -1568,6 +1568,13 @@ static int simplify_symbols(struct module *mod, const struct load_info *info)
+ 			break;
  
- #define USB_VENDOR_ID_ATEN		0x0557
- #define USB_DEVICE_ID_ATEN_UC100KM	0x2004
+ 		default:
++			if (sym[i].st_shndx >= info->hdr->e_shnum) {
++				pr_err("%s: Symbol %s has an invalid section index %u (max %u)\n",
++				       mod->name, name, sym[i].st_shndx, info->hdr->e_shnum - 1);
++				ret = -ENOEXEC;
++				break;
++			}
++
+ 			/* Divert to percpu allocation if a percpu var. */
+ 			if (sym[i].st_shndx == info->index.pcpu)
+ 				secbase = (unsigned long)mod_percpu(mod);
 -- 
 2.51.0
 
