@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3FF423A76;
-	Tue, 31 Mar 2026 16:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1D8421A1D;
+	Tue, 31 Mar 2026 16:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974889; cv=none; b=SEyQxv0B4iaDUCWRDzZ10OpktTPpx+EUeS8q/gy29S0bxq22wffmdYwDB2bPK4hLCKxKgR7UXoaI4Zb5fLqA4tqohRxa6v8ES1moeOSADdRlKYl2n7EZ3/HqYKz5AZC2RabgseLbuNmRexCL9cg3losy+uE3xnqvoHFl3hEjESk=
+	t=1774974892; cv=none; b=o/QErd+8wCL8oekBNvtbP/H7hgD1m1VmW1uMMNNOgy5rXHqA9NH3WVAqbE/zuus8KoJuI6ZvBd8CgG86SOoqqIrki/oVoNikkPRGl52ghOY7upIsxKJIIJxc411IRocEpAv3sJ/w8otNxZBYA4hbV06x200XgkRi12LXo5UKHmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974889; c=relaxed/simple;
-	bh=Vh1ahq59aDt8J70RP8WToCoVt0OeKtaLRL2ktoMHMmU=;
+	s=arc-20240116; t=1774974892; c=relaxed/simple;
+	bh=B75+myYq6QfL89JD9+dXRiUTboD5cF9HYmedCNqV3g0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gFAWOUOaacVl3bRWTbtsggSeNMXJhdNITmVZgpgyzjwQq/VOzt923fRCTTgCqmS/MzkQXZWnIMsgt4C91BK6+5SmpoiG+BXIyFi6svueaNyVT896oDgIikPSEFAU1Hcqj4J6e8+Bwyu10plEprDIGHLF6FTSoQvZr1LEuRBFEyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oim74WmS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hEyHAGl7LKMgc1TpUKwo+VoQHoS5l1pbuJLUb0cU2v0xAqBlfOll5R/cHD/WXvyub+5+oXZiTRe1y0v8hIZoungY6cGWD6KYE5BRc9l+LB9dlT3CuNVcvDmfjprNZlReUyy9Bk1A1QWgKofsOl7PauPXIHmPJ4mTfOrEkvd5HTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOkDPEG+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oim74WmS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFFFC19423;
-	Tue, 31 Mar 2026 16:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOkDPEG+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2771C19423;
+	Tue, 31 Mar 2026 16:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974889;
-	bh=Vh1ahq59aDt8J70RP8WToCoVt0OeKtaLRL2ktoMHMmU=;
+	s=korg; t=1774974892;
+	bh=B75+myYq6QfL89JD9+dXRiUTboD5cF9HYmedCNqV3g0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oim74WmS/gAax0OZ0NmhrSO1F7WTz0SKw2dEdoeiR0JU9mt/+7e4IqELBs/6hEFg2
-	 qJqau0x2gFM2+MldRLfXOuA/KNCn40OKgF/3gbQqAK3GURmcmZWHPgLrx2ctsxPnKb
-	 7CdA+1X0mSRuboR5WsxzngebOuW0vAC/H+ua3RSA=
+	b=YOkDPEG+s9tcNlYwey4460kTvRb61ZiiEH06yrU4Ryj+K1SU+hqlHb4YaybzSQOng
+	 bbN6/3Wl/MN2aDJ+iwgOI7UWpsAelqcoyfQkqZjmQqM27m/JbhHw5vGCSQ2DsfF2HS
+	 y2umijg8mARX6XukbRyFKAVdxOfmAoCIGeHcrmkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Hao Long <me@imlonghao.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 056/342] block: break pcpu_alloc_mutex dependency on freeze_lock
-Date: Tue, 31 Mar 2026 18:18:09 +0200
-Message-ID: <20260331161800.958732894@linuxfoundation.org>
+Subject: [PATCH 6.19 083/342] xfrm: iptfs: fix skb_put() panic on non-linear skb during reassembly
+Date: Tue, 31 Mar 2026 18:18:36 +0200
+Message-ID: <20260331161802.078874332@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -54,127 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 539d1b47e935e8384977dd7e5cec370c08b7a644 ]
+[ Upstream commit 0b352f83cabfefdaafa806d6471f0eca117dc7d5 ]
 
-While nr_hw_update allocates tagset tags it acquires ->pcpu_alloc_mutex
-after ->freeze_lock is acquired or queue is frozen. This potentially
-creates a circular dependency involving ->fs_reclaim if reclaim is
-triggered simultaneously in a code path which first acquires ->pcpu_
-alloc_mutex. As the queue is already frozen while nr_hw_queue update
-allocates tagsets, the reclaim can't forward progress and thus it could
-cause a potential deadlock as reported in lockdep splat[1].
+In iptfs_reassem_cont(), IP-TFS attempts to append data to the new inner
+packet 'newskb' that is being reassembled. First a zero-copy approach is
+tried if it succeeds then newskb becomes non-linear.
 
-Fix this by pre-allocating tagset tags before we freeze queue during
-nr_hw_queue update. Later the allocated tagset tags could be safely
-installed and used after queue is frozen.
+When a subsequent fragment in the same datagram does not meet the
+fast-path conditions, a memory copy is performed. It calls skb_put() to
+append the data and as newskb is non-linear it triggers
+SKB_LINEAR_ASSERT check.
 
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Closes: https://lore.kernel.org/all/CAHj4cs8F=OV9s3La2kEQ34YndgfZP-B5PHS4Z8_b9euKG6J4mw@mail.gmail.com/ [1]
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Tested-by: Yi Zhang <yi.zhang@redhat.com>
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-[axboe: fix brace style issue]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+ Oops: invalid opcode: 0000 [#1] SMP NOPTI
+ [...]
+ RIP: 0010:skb_put+0x3c/0x40
+ [...]
+ Call Trace:
+  <IRQ>
+  iptfs_reassem_cont+0x1ab/0x5e0 [xfrm_iptfs]
+  iptfs_input_ordered+0x2af/0x380 [xfrm_iptfs]
+  iptfs_input+0x122/0x3e0 [xfrm_iptfs]
+  xfrm_input+0x91e/0x1a50
+  xfrm4_esp_rcv+0x3a/0x110
+  ip_protocol_deliver_rcu+0x1d7/0x1f0
+  ip_local_deliver_finish+0xbe/0x1e0
+  __netif_receive_skb_core.constprop.0+0xb56/0x1120
+  __netif_receive_skb_list_core+0x133/0x2b0
+  netif_receive_skb_list_internal+0x1ff/0x3f0
+  napi_complete_done+0x81/0x220
+  virtnet_poll+0x9d6/0x116e [virtio_net]
+  __napi_poll.constprop.0+0x2b/0x270
+  net_rx_action+0x162/0x360
+  handle_softirqs+0xdc/0x510
+  __irq_exit_rcu+0xe7/0x110
+  irq_exit_rcu+0xe/0x20
+  common_interrupt+0x85/0xa0
+  </IRQ>
+  <TASK>
+
+Fix this by checking if the skb is non-linear. If it is, linearize it by
+calling skb_linearize(). As the initial allocation of newskb originally
+reserved enough tailroom for the entire reassembled packet we do not
+need to check if we have enough tailroom or extend it.
+
+Fixes: 5f2b6a909574 ("xfrm: iptfs: add skb-fragment sharing code")
+Reported-by: Hao Long <me@imlonghao.com>
+Closes: https://lore.kernel.org/netdev/DGRCO9SL0T5U.JTINSHJQ9KPK@imlonghao.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 45 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 30 insertions(+), 15 deletions(-)
+ net/xfrm/xfrm_iptfs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 968699277c3d5..3b58dd5876114 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4778,38 +4778,45 @@ static void blk_mq_update_queue_map(struct blk_mq_tag_set *set)
- 	}
- }
- 
--static int blk_mq_realloc_tag_set_tags(struct blk_mq_tag_set *set,
--				       int new_nr_hw_queues)
-+static struct blk_mq_tags **blk_mq_prealloc_tag_set_tags(
-+				struct blk_mq_tag_set *set,
-+				int new_nr_hw_queues)
- {
- 	struct blk_mq_tags **new_tags;
- 	int i;
- 
- 	if (set->nr_hw_queues >= new_nr_hw_queues)
--		goto done;
-+		return NULL;
- 
- 	new_tags = kcalloc_node(new_nr_hw_queues, sizeof(struct blk_mq_tags *),
- 				GFP_KERNEL, set->numa_node);
- 	if (!new_tags)
--		return -ENOMEM;
-+		return ERR_PTR(-ENOMEM);
- 
- 	if (set->tags)
- 		memcpy(new_tags, set->tags, set->nr_hw_queues *
- 		       sizeof(*set->tags));
--	kfree(set->tags);
--	set->tags = new_tags;
- 
- 	for (i = set->nr_hw_queues; i < new_nr_hw_queues; i++) {
--		if (!__blk_mq_alloc_map_and_rqs(set, i)) {
--			while (--i >= set->nr_hw_queues)
--				__blk_mq_free_map_and_rqs(set, i);
--			return -ENOMEM;
-+		if (blk_mq_is_shared_tags(set->flags)) {
-+			new_tags[i] = set->shared_tags;
-+		} else {
-+			new_tags[i] = blk_mq_alloc_map_and_rqs(set, i,
-+					set->queue_depth);
-+			if (!new_tags[i])
-+				goto out_unwind;
- 		}
- 		cond_resched();
- 	}
- 
--done:
--	set->nr_hw_queues = new_nr_hw_queues;
--	return 0;
-+	return new_tags;
-+out_unwind:
-+	while (--i >= set->nr_hw_queues) {
-+		if (!blk_mq_is_shared_tags(set->flags))
-+			blk_mq_free_map_and_rqs(set, new_tags[i], i);
-+	}
-+	kfree(new_tags);
-+	return ERR_PTR(-ENOMEM);
- }
- 
- /*
-@@ -5093,6 +5100,7 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 	unsigned int memflags;
- 	int i;
- 	struct xarray elv_tbl;
-+	struct blk_mq_tags **new_tags;
- 	bool queues_frozen = false;
- 
- 	lockdep_assert_held(&set->tag_list_lock);
-@@ -5127,11 +5135,18 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 		if (blk_mq_elv_switch_none(q, &elv_tbl))
- 			goto switch_back;
- 
-+	new_tags = blk_mq_prealloc_tag_set_tags(set, nr_hw_queues);
-+	if (IS_ERR(new_tags))
-+		goto switch_back;
+diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
+index 3b6d7284fc70a..4e270628fc347 100644
+--- a/net/xfrm/xfrm_iptfs.c
++++ b/net/xfrm/xfrm_iptfs.c
+@@ -901,6 +901,12 @@ static u32 iptfs_reassem_cont(struct xfrm_iptfs_data *xtfs, u64 seq,
+ 	    iptfs_skb_can_add_frags(newskb, fragwalk, data, copylen)) {
+ 		iptfs_skb_add_frags(newskb, fragwalk, data, copylen);
+ 	} else {
++		if (skb_linearize(newskb)) {
++			XFRM_INC_STATS(xs_net(xtfs->x),
++				       LINUX_MIB_XFRMINBUFFERERROR);
++			goto abandon;
++		}
 +
- 	list_for_each_entry(q, &set->tag_list, tag_set_list)
- 		blk_mq_freeze_queue_nomemsave(q);
- 	queues_frozen = true;
--	if (blk_mq_realloc_tag_set_tags(set, nr_hw_queues) < 0)
--		goto switch_back;
-+	if (new_tags) {
-+		kfree(set->tags);
-+		set->tags = new_tags;
-+	}
-+	set->nr_hw_queues = nr_hw_queues;
- 
- fallback:
- 	blk_mq_update_queue_map(set);
+ 		/* copy fragment data into newskb */
+ 		if (skb_copy_seq_read(st, data, skb_put(newskb, copylen),
+ 				      copylen)) {
 -- 
 2.51.0
 
