@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1D8421A1D;
-	Tue, 31 Mar 2026 16:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEC030C368;
+	Tue, 31 Mar 2026 16:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974892; cv=none; b=o/QErd+8wCL8oekBNvtbP/H7hgD1m1VmW1uMMNNOgy5rXHqA9NH3WVAqbE/zuus8KoJuI6ZvBd8CgG86SOoqqIrki/oVoNikkPRGl52ghOY7upIsxKJIIJxc411IRocEpAv3sJ/w8otNxZBYA4hbV06x200XgkRi12LXo5UKHmo=
+	t=1774974894; cv=none; b=V3zE8S29XnDEx8hWWtLqwADz2TvvuLEGBRDdUxfWB+PpLw1TrkS1ZCoAAVGfZ7/7uc7ppxqjf4C4n6iE3Cix+W2x1IrW7a6kE/Kev0V4816ezHpsaUC+qpoV/w4g5+OUHHTECumxvt/iSzcxNUg0Vi1mtFIJlC32hmehndvAZHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974892; c=relaxed/simple;
-	bh=B75+myYq6QfL89JD9+dXRiUTboD5cF9HYmedCNqV3g0=;
+	s=arc-20240116; t=1774974894; c=relaxed/simple;
+	bh=HLo1KRcOHLVpD912X2udFEyGyHI7stJhT4w2j0RsR/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hEyHAGl7LKMgc1TpUKwo+VoQHoS5l1pbuJLUb0cU2v0xAqBlfOll5R/cHD/WXvyub+5+oXZiTRe1y0v8hIZoungY6cGWD6KYE5BRc9l+LB9dlT3CuNVcvDmfjprNZlReUyy9Bk1A1QWgKofsOl7PauPXIHmPJ4mTfOrEkvd5HTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOkDPEG+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QwDrODiTtT+nVGFTJDF4YnCIXSKuoFZU79awz3DE7c1PG6k8UUU7RrDhlJorQyKVphsIdJvURUBzyVeDp4Dn/qMsyUxIdezYeAPUkzRVpLUq/rL56gLSjaPLoLzFmFwJp+0zUAOXUnET95qHtCngelhVJRSK5Dv+pNCD/aNaYIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbcT7VgI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOkDPEG+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2771C19423;
-	Tue, 31 Mar 2026 16:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbcT7VgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524CBC19423;
+	Tue, 31 Mar 2026 16:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974892;
-	bh=B75+myYq6QfL89JD9+dXRiUTboD5cF9HYmedCNqV3g0=;
+	s=korg; t=1774974894;
+	bh=HLo1KRcOHLVpD912X2udFEyGyHI7stJhT4w2j0RsR/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YOkDPEG+s9tcNlYwey4460kTvRb61ZiiEH06yrU4Ryj+K1SU+hqlHb4YaybzSQOng
-	 bbN6/3Wl/MN2aDJ+iwgOI7UWpsAelqcoyfQkqZjmQqM27m/JbhHw5vGCSQ2DsfF2HS
-	 y2umijg8mARX6XukbRyFKAVdxOfmAoCIGeHcrmkE=
+	b=tbcT7VgID+8mpm9oXZmQJAbCMg0INWZAmIHBUnFGBrgcd8oEFxlRScizFgluehpLV
+	 ucqDN812NTCnen2zcPjwFhsEBOZD1abrpBwYMxNSEtvyHlHUFs/2z5NJiBkXkHD1Kc
+	 UMlGc6ucihM8BDVnYPnM0onPspO9voqgq45Pg5w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Long <me@imlonghao.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 083/342] xfrm: iptfs: fix skb_put() panic on non-linear skb during reassembly
-Date: Tue, 31 Mar 2026 18:18:36 +0200
-Message-ID: <20260331161802.078874332@linuxfoundation.org>
+Subject: [PATCH 6.19 084/342] pinctrl: qcom: spmi-gpio: implement .get_direction()
+Date: Tue, 31 Mar 2026 18:18:37 +0200
+Message-ID: <20260331161802.114144729@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,78 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 0b352f83cabfefdaafa806d6471f0eca117dc7d5 ]
+[ Upstream commit 263447532463cf4444a3595e835b99a4e90952fa ]
 
-In iptfs_reassem_cont(), IP-TFS attempts to append data to the new inner
-packet 'newskb' that is being reassembled. First a zero-copy approach is
-tried if it succeeds then newskb becomes non-linear.
+GPIO controller driver should typically implement the .get_direction()
+callback as GPIOLIB internals may try to use it to determine the state
+of a pin. Since introduction of shared proxy, it prints a warning splat
+when using a shared spmi gpio.
 
-When a subsequent fragment in the same datagram does not meet the
-fast-path conditions, a memory copy is performed. It calls skb_put() to
-append the data and as newskb is non-linear it triggers
-SKB_LINEAR_ASSERT check.
+The implementation is not easy because the controller supports enabling
+the input and output logic at the same time, so we aligns on the
+behaviour of the .get() operation and return -EINVAL in other
+situations.
 
- Oops: invalid opcode: 0000 [#1] SMP NOPTI
- [...]
- RIP: 0010:skb_put+0x3c/0x40
- [...]
- Call Trace:
-  <IRQ>
-  iptfs_reassem_cont+0x1ab/0x5e0 [xfrm_iptfs]
-  iptfs_input_ordered+0x2af/0x380 [xfrm_iptfs]
-  iptfs_input+0x122/0x3e0 [xfrm_iptfs]
-  xfrm_input+0x91e/0x1a50
-  xfrm4_esp_rcv+0x3a/0x110
-  ip_protocol_deliver_rcu+0x1d7/0x1f0
-  ip_local_deliver_finish+0xbe/0x1e0
-  __netif_receive_skb_core.constprop.0+0xb56/0x1120
-  __netif_receive_skb_list_core+0x133/0x2b0
-  netif_receive_skb_list_internal+0x1ff/0x3f0
-  napi_complete_done+0x81/0x220
-  virtnet_poll+0x9d6/0x116e [virtio_net]
-  __napi_poll.constprop.0+0x2b/0x270
-  net_rx_action+0x162/0x360
-  handle_softirqs+0xdc/0x510
-  __irq_exit_rcu+0xe7/0x110
-  irq_exit_rcu+0xe/0x20
-  common_interrupt+0x85/0xa0
-  </IRQ>
-  <TASK>
-
-Fix this by checking if the skb is non-linear. If it is, linearize it by
-calling skb_linearize(). As the initial allocation of newskb originally
-reserved enough tailroom for the entire reassembled packet we do not
-need to check if we have enough tailroom or extend it.
-
-Fixes: 5f2b6a909574 ("xfrm: iptfs: add skb-fragment sharing code")
-Reported-by: Hao Long <me@imlonghao.com>
-Closes: https://lore.kernel.org/netdev/DGRCO9SL0T5U.JTINSHJQ9KPK@imlonghao.com/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: eadff3024472 ("pinctrl: Qualcomm SPMI PMIC GPIO pin controller driver")
+Fixes: d7b5f5cc5eb4 ("pinctrl: qcom: spmi-gpio: Add support for GPIO LV/MV subtype")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_iptfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
-index 3b6d7284fc70a..4e270628fc347 100644
---- a/net/xfrm/xfrm_iptfs.c
-+++ b/net/xfrm/xfrm_iptfs.c
-@@ -901,6 +901,12 @@ static u32 iptfs_reassem_cont(struct xfrm_iptfs_data *xtfs, u64 seq,
- 	    iptfs_skb_can_add_frags(newskb, fragwalk, data, copylen)) {
- 		iptfs_skb_add_frags(newskb, fragwalk, data, copylen);
- 	} else {
-+		if (skb_linearize(newskb)) {
-+			XFRM_INC_STATS(xs_net(xtfs->x),
-+				       LINUX_MIB_XFRMINBUFFERERROR);
-+			goto abandon;
-+		}
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index 83f940fe30b26..d02d42513ebbc 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -723,6 +723,21 @@ static const struct pinconf_ops pmic_gpio_pinconf_ops = {
+ 	.pin_config_group_dbg_show	= pmic_gpio_config_dbg_show,
+ };
+ 
++static int pmic_gpio_get_direction(struct gpio_chip *chip, unsigned pin)
++{
++	struct pmic_gpio_state *state = gpiochip_get_data(chip);
++	struct pmic_gpio_pad *pad;
 +
- 		/* copy fragment data into newskb */
- 		if (skb_copy_seq_read(st, data, skb_put(newskb, copylen),
- 				      copylen)) {
++	pad = state->ctrl->desc->pins[pin].drv_data;
++
++	if (!pad->is_enabled || pad->analog_pass ||
++	    (!pad->input_enabled && !pad->output_enabled))
++		return -EINVAL;
++
++	/* Make sure the state is aligned on what pmic_gpio_get() returns */
++	return pad->input_enabled ? GPIO_LINE_DIRECTION_IN : GPIO_LINE_DIRECTION_OUT;
++}
++
+ static int pmic_gpio_direction_input(struct gpio_chip *chip, unsigned pin)
+ {
+ 	struct pmic_gpio_state *state = gpiochip_get_data(chip);
+@@ -801,6 +816,7 @@ static void pmic_gpio_dbg_show(struct seq_file *s, struct gpio_chip *chip)
+ }
+ 
+ static const struct gpio_chip pmic_gpio_gpio_template = {
++	.get_direction		= pmic_gpio_get_direction,
+ 	.direction_input	= pmic_gpio_direction_input,
+ 	.direction_output	= pmic_gpio_direction_output,
+ 	.get			= pmic_gpio_get,
 -- 
 2.51.0
 
