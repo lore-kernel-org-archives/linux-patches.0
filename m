@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5355129E11A;
-	Tue, 31 Mar 2026 16:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B61413258;
+	Tue, 31 Mar 2026 16:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976264; cv=none; b=u1Vfc58ZK7RrtaNnb2eXupYUadc1izrGq9qE6hcBJTs2yhk39YFpzZ3+26AgSGO9vjniSmwwegxzr9npDGpgiIeBH3mYh0dswxWiKldkcawATFLk37Ngv1GQJA1JMIE4rh2/MQ7mx44JHf7IlCsaE0uCuXst+O/t2lNxGIKs2j8=
+	t=1774976266; cv=none; b=Aawt9Z1pZ1fG8+d678KnbghMg/wbxkqzPpL5B4QhSb4l/OpzbtaykmyJ6GM46//rhkg1GTOK7iPMh1UnGj5N9A1QI2oQI8tyathDBRq4mSJSMmGNZN+DVuFpf2Gp2yDzlnpko/aFMwT4cu5nM6lKXRgP9g1tjaUVdOpRBSZmDg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976264; c=relaxed/simple;
-	bh=Z5oCOSbcHDFKt+DkBHWguC+53HJyqURS6RBxJEMqL78=;
+	s=arc-20240116; t=1774976266; c=relaxed/simple;
+	bh=xw1RxmS/Xf5Qyu/hKT+1pxW3gQY8eP7PL9c8hYKwg8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVNmL8d5SajHUO1G1OeSHuE0ET45j5xCwyCDa/lOLTt7hFTo399qAGZFB6q0xETmPcMYB3aqhi3ANY5rICPfFm2qbiHSE7kxl4rBrwxZu9kbFN/q4ynfaWIk+euEbXtjJui9Rh0d8CIVEVMdDbSS/T0gGqGqsmNmB8pz7AlLfS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiz/0qYo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uqb/vfU4zT9ik/eKxnZAWZl3dYbxNhg5VChT3sgWlYWUiYDNGTz9Hd3Z/Wc5COZtcOy1HDWPBgVzyyaczzQkhgVAMtzYK8Vifw6luKQrMX2M9O4c7GD6xO+U+CTyJKVD9/aKVj73qi6RbSwvBl1MzVe3NjC0I4evH0M5k+KDtGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSciALul; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiz/0qYo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1416C19423;
-	Tue, 31 Mar 2026 16:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSciALul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5698FC19424;
+	Tue, 31 Mar 2026 16:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976264;
-	bh=Z5oCOSbcHDFKt+DkBHWguC+53HJyqURS6RBxJEMqL78=;
+	s=korg; t=1774976266;
+	bh=xw1RxmS/Xf5Qyu/hKT+1pxW3gQY8eP7PL9c8hYKwg8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yiz/0qYo301Ky6ldeoq24Kp2cd38n+a4CCj75eXoOtZ4A+Xt8ytrxptgByPGWLL+O
-	 bLp/LI0xLGvZXV2NZ+BtD3umL13izHLWRBi2gybXJ9yEAmTaBPCZpkbpELzAuQSv/u
-	 D3w1ALoHiVHJOGnPeynkDsRgHroQPapI3BDv2zJs=
+	b=ZSciALulmAuuoXy6uSOziPvCN23sIZWJzSycC998HvRUlnUY8vjHqsw9boQinYsBh
+	 0T6axt7BaplSUd/PImOBr8b5oIbP4w6rhM5t1Gdpjy1nkF+j3qcIk/rJWOULLTwDTA
+	 n5A0o8OKI2LtMLxSSkI9EQge19MlCk94RkArrSRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 007/309] cxl/hdm: Avoid incorrect DVSEC fallback when HDM decoders are enabled
-Date: Tue, 31 Mar 2026 18:18:30 +0200
-Message-ID: <20260331161753.747857861@linuxfoundation.org>
+Subject: [PATCH 6.18 008/309] hwmon: axi-fan: dont use driver_override as IRQ name
+Date: Tue, 31 Mar 2026 18:18:31 +0200
+Message-ID: <20260331161753.783616980@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -46,105 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 75cea0776de502f2a1be5ca02d37c586dc81887e ]
+[ Upstream commit 813bbc4d33d2ca5b0da63e70ae13b60874f20d37 ]
 
-Check the global CXL_HDM_DECODER_ENABLE bit instead of looping over
-per-decoder COMMITTED bits to determine whether to fall back to DVSEC
-range emulation. When the HDM decoder capability is globally enabled,
-ignore DVSEC range registers regardless of individual decoder commit
-state.
+Do not use driver_override as IRQ name, as it is not guaranteed to point
+to a valid string; use NULL instead (which makes the devm IRQ helpers
+use dev_name()).
 
-should_emulate_decoders() currently loops over per-decoder COMMITTED
-bits, which leads to an incorrect DVSEC fallback when those bits are
-zero. One way to trigger this is to destroy a region and bounce the
-memdev:
-
-  cxl disable-region region0
-  cxl destroy-region region0
-  cxl disable-memdev mem0
-  cxl enable-memdev mem0
-
-Region teardown zeroes the HDM decoder registers including the committed
-bits. The subsequent memdev re-probe finds uncommitted decoders and falls
-back to DVSEC emulation, even though HDM remains globally enabled.
-
-Observed failures:
-
-  should_emulate_decoders: cxl_port endpoint6: decoder6.0: committed: 0 base: 0x0_00000000 size: 0x0_00000000
-  devm_cxl_setup_hdm: cxl_port endpoint6: Fallback map 1 range register
-  ..
-  devm_cxl_add_region: cxl_acpi ACPI0017:00: decoder0.0: created region0
-  __construct_region: cxl_pci 0000:e1:00.0: mem1:decoder6.0:
-  __construct_region region0 res: [mem 0x850000000-0x284fffffff flags 0x200] iw: 1 ig: 4096
-  cxl region0: pci0000:e0:port1 cxl_port_setup_targets expected iw: 1 ig: 4096 ..
-  cxl region0: pci0000:e0:port1 cxl_port_setup_targets got iw: 1 ig: 256 state: disabled ..
-  cxl_port endpoint6: failed to attach decoder6.0 to region0: -6
-  ..
-  devm_cxl_add_region: cxl_acpi ACPI0017:00: decoder0.0: created region4
-  alloc_hpa: cxl region4: HPA allocation error (-34) ..
-
-Fixes: 52cc48ad2a76 ("cxl/hdm: Limit emulation to the number of range registers")
-Signed-off-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20260316201950.224567-1-Smita.KoralahalliChannabasappa@amd.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 8412b410fa5e ("hwmon: Support ADI Fan Control IP")
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Acked-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260303115720.48783-4-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+ drivers/hwmon/axi-fan-control.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index 13dafac7c6d56..4d5113b5e6316 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -94,7 +94,6 @@ static bool should_emulate_decoders(struct cxl_endpoint_dvsec_info *info)
- 	struct cxl_hdm *cxlhdm;
- 	void __iomem *hdm;
- 	u32 ctrl;
--	int i;
- 
- 	if (!info)
- 		return false;
-@@ -113,22 +112,16 @@ static bool should_emulate_decoders(struct cxl_endpoint_dvsec_info *info)
- 		return false;
- 
- 	/*
--	 * If any decoders are committed already, there should not be any
--	 * emulated DVSEC decoders.
-+	 * If HDM decoders are globally enabled, do not fall back to DVSEC
-+	 * range emulation. Zeroed decoder registers after region teardown
-+	 * do not imply absence of HDM capability.
-+	 *
-+	 * Falling back to DVSEC here would treat the decoder as AUTO and
-+	 * may incorrectly latch default interleave settings.
- 	 */
--	for (i = 0; i < cxlhdm->decoder_count; i++) {
--		ctrl = readl(hdm + CXL_HDM_DECODER0_CTRL_OFFSET(i));
--		dev_dbg(&info->port->dev,
--			"decoder%d.%d: committed: %ld base: %#x_%.8x size: %#x_%.8x\n",
--			info->port->id, i,
--			FIELD_GET(CXL_HDM_DECODER0_CTRL_COMMITTED, ctrl),
--			readl(hdm + CXL_HDM_DECODER0_BASE_HIGH_OFFSET(i)),
--			readl(hdm + CXL_HDM_DECODER0_BASE_LOW_OFFSET(i)),
--			readl(hdm + CXL_HDM_DECODER0_SIZE_HIGH_OFFSET(i)),
--			readl(hdm + CXL_HDM_DECODER0_SIZE_LOW_OFFSET(i)));
--		if (FIELD_GET(CXL_HDM_DECODER0_CTRL_COMMITTED, ctrl))
--			return false;
--	}
-+	ctrl = readl(hdm + CXL_HDM_DECODER_CTRL_OFFSET);
-+	if (ctrl & CXL_HDM_DECODER_ENABLE)
-+		return false;
- 
- 	return true;
- }
+diff --git a/drivers/hwmon/axi-fan-control.c b/drivers/hwmon/axi-fan-control.c
+index b7bb325c3ad96..01590dfa55e60 100644
+--- a/drivers/hwmon/axi-fan-control.c
++++ b/drivers/hwmon/axi-fan-control.c
+@@ -507,7 +507,7 @@ static int axi_fan_control_probe(struct platform_device *pdev)
+ 	ret = devm_request_threaded_irq(&pdev->dev, ctl->irq, NULL,
+ 					axi_fan_control_irq_handler,
+ 					IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
+-					pdev->driver_override, ctl);
++					NULL, ctl);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret,
+ 				     "failed to request an irq\n");
 -- 
 2.51.0
 
