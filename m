@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CF23F7867;
-	Tue, 31 Mar 2026 16:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0611B423A89;
+	Tue, 31 Mar 2026 16:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976122; cv=none; b=qt12Ula3YyboRIoS6RL1LvFW7Alm0KtObjVcO87lRM4W3IvXTweH07Xk/+k4uvX63+vfYacjPybIM6YPq/MirheO/t/9gpCC5u7G8oW2BEY2/uH40SrmfP4t7kO7SjARWkhSRdubsSqdnuraokCe0QJamNu9H1DXuXcACOjJnhs=
+	t=1774976125; cv=none; b=Q+j2aiy8L2OQ0SvC34G/eSoyfLk3ag5bwfAZvDqnJQFBlCqjpwywOewN5+D9rslbEzzQTnPmkxz+oEwCrCmrFohsTe12xIGrb1xjPz2IPBPrcrm7q1Jqv+kQpGFvA+qXJs9+sN7S7TRTTOKjMLkUjdqyEsRss7tcIQ/g3xjztq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976122; c=relaxed/simple;
-	bh=PFmrcSKv1bYE9YZk6OJBYyBTC2GcEgSBYuVzD3pBrO8=;
+	s=arc-20240116; t=1774976125; c=relaxed/simple;
+	bh=hDtnEAoj1DfLSCBxm7FyAmm37kh9Ha2AXOVuw8tGP+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F65eN/fadLL93aSdILhjGBeBMNgVmmsRzRQOFv52xa1OuxGpk2MhN4qPFHRqAJ2t2I4RmAdAiH3xa3kS9gjrFa+DsU/6cJmUhIUj3puWTR2i0ta9++s2yjbbKPOzMKBbkpQj8h1Y0sUnXLLfX13jw85wJCScmeu3A8nhBBHdIn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZX3lyL+e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RZ4cDgp4NeVD1aosA5kK+L05rxtSptVI9aMj9Dv6orLy8e//IYJkS07ghmNRl9b4HhHn2fV3OIEWueKA+HiTt8mrInzFt2zxR864/tOaXXZZg/YKAPLPEqdHi5b5rQ0o16LStu3R3FIQMZRZQFkVkT90xmzx9XG7JXo7CovBZds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPY00zcN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZX3lyL+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB7EC19423;
-	Tue, 31 Mar 2026 16:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPY00zcN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F0CC19423;
+	Tue, 31 Mar 2026 16:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976122;
-	bh=PFmrcSKv1bYE9YZk6OJBYyBTC2GcEgSBYuVzD3pBrO8=;
+	s=korg; t=1774976124;
+	bh=hDtnEAoj1DfLSCBxm7FyAmm37kh9Ha2AXOVuw8tGP+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZX3lyL+eF1rCW9yrSJQm9EWCMvIXPTROHRbgE/NVdpFmpY5QrnP4Job39nAcDbtwm
-	 w7w6qLlB1+VMwb/fpyuTBfuwvNPz4FKqCQxouNR8U5O/TEjFDxZsTavLIS2wWbPdyc
-	 qS7BrWuqQ8+AWkYrra+vM96Pr4urxF8fiucu8Ebs=
+	b=RPY00zcNp9+7c4A7XnpuDc+2SLXcmauJhZ/j7Xt9gA4Rz7V/g9jBAbIAA1g27hO/M
+	 AYcSrptpz4OJw0TNCUfaFw0bJi5HBjbroGynawL5MbqzklYd3T13Fx2aRVW0DoJX6Y
+	 480oiVJdSJiFluwQlGJU3lDDas6qw0Dd0ZB0uTrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	rostedt@goodmis.org,
-	david.laight.linux@gmail.com,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 182/244] xfs: remove file_path tracepoint data
-Date: Tue, 31 Mar 2026 18:22:12 +0200
-Message-ID: <20260331161748.479827830@linuxfoundation.org>
+	Uma Shankar <uma.shankar@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.12 173/244] drm/i915/dp_tunnel: Fix error handling when clearing stream BW in atomic state
+Date: Tue, 31 Mar 2026 18:22:03 +0200
+Message-ID: <20260331161748.147451621@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -48,97 +47,135 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Imre Deak <imre.deak@intel.com>
 
-commit e31c53a8060e134111ed095783fee0aa0c43b080 upstream.
+commit 77fcf58df15edcf3f5b5421f24814fb72796def9 upstream.
 
-The xfile/xmbuf shmem file descriptions are no longer as detailed as
-they were when online fsck was first merged, because moving to static
-strings in commit 60382993a2e180 ("xfs: get rid of the
-xchk_xfile_*_descr calls") removed a memory allocation and hence a
-source of failure.
+Clearing the DP tunnel stream BW in the atomic state involves getting
+the tunnel group state, which can fail. Handle the error accordingly.
 
-However this makes encoding the description in the tracepoints sort of a
-waste of memory.  David Laight also points out that file_path doesn't
-zero the whole buffer which causes exposure of stale trace bytes, and
-Steven Rostedt wonders why we're not using a dynamic array for the file
-path.
+This fixes at least one issue where drm_dp_tunnel_atomic_set_stream_bw()
+failed to get the tunnel group state returning -EDEADLK, which wasn't
+handled. This lead to the ctx->contended warn later in modeset_lock()
+while taking a WW mutex for another object in the same atomic state, and
+thus within the same already contended WW context.
 
-I don't think this is worth fixing, so let's just rip it out.
+Moving intel_crtc_state_alloc() later would avoid freeing saved_state on
+the error path; this stable patch leaves that simplification for a
+follow-up.
 
-Cc: rostedt@goodmis.org
-Cc: david.laight.linux@gmail.com
-Link: https://lore.kernel.org/linux-xfs/20260323172204.work.979-kees@kernel.org/
-Cc: stable@vger.kernel.org # v6.11
-Fixes: 19ebc8f84ea12e ("xfs: fix file_path handling in tracepoints")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Cc: Uma Shankar <uma.shankar@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v6.9+
+Fixes: a4efae87ecb2 ("drm/i915/dp: Compute DP tunnel BW during encoder state computation")
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7617
+Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patch.msgid.link/20260320092900.13210-1-imre.deak@intel.com
+(cherry picked from commit fb69d0076e687421188bc8103ab0e8e5825b1df1)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/trace.h |   12 ++----------
- fs/xfs/xfs_trace.h   |   11 ++---------
- 2 files changed, 4 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display.c   |    8 +++++++-
+ drivers/gpu/drm/i915/display/intel_dp_tunnel.c |   20 ++++++++++++++------
+ drivers/gpu/drm/i915/display/intel_dp_tunnel.h |   11 +++++++----
+ 3 files changed, 28 insertions(+), 11 deletions(-)
 
---- a/fs/xfs/scrub/trace.h
-+++ b/fs/xfs/scrub/trace.h
-@@ -959,20 +959,12 @@ TRACE_EVENT(xfile_create,
- 	TP_STRUCT__entry(
- 		__field(dev_t, dev)
- 		__field(unsigned long, ino)
--		__array(char, pathname, MAXNAMELEN)
- 	),
- 	TP_fast_assign(
--		char		*path;
--
- 		__entry->ino = file_inode(xf->file)->i_ino;
--		path = file_path(xf->file, __entry->pathname, MAXNAMELEN);
--		if (IS_ERR(path))
--			strncpy(__entry->pathname, "(unknown)",
--					sizeof(__entry->pathname));
- 	),
--	TP_printk("xfino 0x%lx path '%s'",
--		  __entry->ino,
--		  __entry->pathname)
-+	TP_printk("xfino 0x%lx",
-+		  __entry->ino)
- );
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -4588,6 +4588,7 @@ intel_crtc_prepare_cleared_state(struct
+ 		intel_atomic_get_new_crtc_state(state, crtc);
+ 	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
+ 	struct intel_crtc_state *saved_state;
++	int err;
  
- TRACE_EVENT(xfile_destroy,
---- a/fs/xfs/xfs_trace.h
-+++ b/fs/xfs/xfs_trace.h
-@@ -4710,23 +4710,16 @@ TRACE_EVENT(xmbuf_create,
- 	TP_STRUCT__entry(
- 		__field(dev_t, dev)
- 		__field(unsigned long, ino)
--		__array(char, pathname, MAXNAMELEN)
- 	),
- 	TP_fast_assign(
--		char		*path;
- 		struct file	*file = btp->bt_file;
+ 	saved_state = intel_crtc_state_alloc(crtc);
+ 	if (!saved_state)
+@@ -4596,7 +4597,12 @@ intel_crtc_prepare_cleared_state(struct
+ 	/* free the old crtc_state->hw members */
+ 	intel_crtc_free_hw_state(crtc_state);
  
- 		__entry->dev = btp->bt_mount->m_super->s_dev;
- 		__entry->ino = file_inode(file)->i_ino;
--		path = file_path(file, __entry->pathname, MAXNAMELEN);
--		if (IS_ERR(path))
--			strncpy(__entry->pathname, "(unknown)",
--					sizeof(__entry->pathname));
- 	),
--	TP_printk("dev %d:%d xmino 0x%lx path '%s'",
-+	TP_printk("dev %d:%d xmino 0x%lx",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev),
--		  __entry->ino,
--		  __entry->pathname)
-+		  __entry->ino)
- );
+-	intel_dp_tunnel_atomic_clear_stream_bw(state, crtc_state);
++	err = intel_dp_tunnel_atomic_clear_stream_bw(state, crtc_state);
++	if (err) {
++		kfree(saved_state);
++
++		return err;
++	}
  
- TRACE_EVENT(xmbuf_free,
+ 	/* FIXME: before the switch to atomic started, a new pipe_config was
+ 	 * kzalloc'd. Code that depends on any field being zero should be
+--- a/drivers/gpu/drm/i915/display/intel_dp_tunnel.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_tunnel.c
+@@ -622,19 +622,27 @@ int intel_dp_tunnel_atomic_compute_strea
+  *
+  * Clear any DP tunnel stream BW requirement set by
+  * intel_dp_tunnel_atomic_compute_stream_bw().
++ *
++ * Returns 0 in case of success, a negative error code otherwise.
+  */
+-void intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
+-					    struct intel_crtc_state *crtc_state)
++int intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
++					   struct intel_crtc_state *crtc_state)
+ {
+ 	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
++	int err;
+ 
+ 	if (!crtc_state->dp_tunnel_ref.tunnel)
+-		return;
++		return 0;
++
++	err = drm_dp_tunnel_atomic_set_stream_bw(&state->base,
++						 crtc_state->dp_tunnel_ref.tunnel,
++						 crtc->pipe, 0);
++	if (err)
++		return err;
+ 
+-	drm_dp_tunnel_atomic_set_stream_bw(&state->base,
+-					   crtc_state->dp_tunnel_ref.tunnel,
+-					   crtc->pipe, 0);
+ 	drm_dp_tunnel_ref_put(&crtc_state->dp_tunnel_ref);
++
++	return 0;
+ }
+ 
+ /**
+--- a/drivers/gpu/drm/i915/display/intel_dp_tunnel.h
++++ b/drivers/gpu/drm/i915/display/intel_dp_tunnel.h
+@@ -39,8 +39,8 @@ int intel_dp_tunnel_atomic_compute_strea
+ 					     struct intel_dp *intel_dp,
+ 					     const struct intel_connector *connector,
+ 					     struct intel_crtc_state *crtc_state);
+-void intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
+-					    struct intel_crtc_state *crtc_state);
++int intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
++					   struct intel_crtc_state *crtc_state);
+ 
+ int intel_dp_tunnel_atomic_add_state_for_crtc(struct intel_atomic_state *state,
+ 					      struct intel_crtc *crtc);
+@@ -87,9 +87,12 @@ intel_dp_tunnel_atomic_compute_stream_bw
+ 	return 0;
+ }
+ 
+-static inline void
++static inline int
+ intel_dp_tunnel_atomic_clear_stream_bw(struct intel_atomic_state *state,
+-				       struct intel_crtc_state *crtc_state) {}
++				       struct intel_crtc_state *crtc_state)
++{
++	return 0;
++}
+ 
+ static inline int
+ intel_dp_tunnel_atomic_add_state_for_crtc(struct intel_atomic_state *state,
 
 
