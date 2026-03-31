@@ -1,196 +1,148 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011036.outbound.protection.outlook.com [52.101.57.36])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7979730CD85;
-	Tue, 31 Mar 2026 17:12:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.36
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774977148; cv=fail; b=SqaxwvTRGKBG9mq+p1eby8cuQmXXH3VkpyRZfy1IImyRleUFFht5F4ctLwy87ZJMR/HSuC5lqdPi2lIM2/nWILX2bFt0PZUOufCdqNSU6sILtYvt+MWgdzQuDmkNZRkR4ktro2INS119dJTAeFeePBYJRCaVEh4X17WQ5OzVCXo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774977148; c=relaxed/simple;
-	bh=c8ntyPUKo0N4iRkwPY2u4ySpnPA6dQnzv/kZ5xPb84U=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=M8jR1S1u8JL0R/uwtix5m6zfKcLIDh+Sb3oi5NbZ35ZYV8yu3+RjGZSqB9vKm7MjZLsgLKYkTNvijkinDOLy9MvLM0verwgIQUBNJmkOe/169AhZmvuPjxNbwGlu3Gtcz5+nViAwFxApN62c1/e/Xqnhu9R4dcXZ1TswVqlaWBA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Py+00rBf; arc=fail smtp.client-ip=52.101.57.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B6036897F
+	for <patches@lists.linux.dev>; Tue, 31 Mar 2026 17:23:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774977805; cv=none; b=LWGjPPQl4LWI0MNbycRlFeYxr9zV5YjSpse7ker/kf+ISx5xnigwIVRt5yZ38UhDWYfqYAO5SsLMgApB9IquUfzhtYTYxJiC1w8NzZYDJtu+pZakHTaJCMVZBKuXgJg/spj54kLh8hlRnjXht+Umqz9pcyUIlJmO9hTuRgoChkQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774977805; c=relaxed/simple;
+	bh=1R+q0brxT5FCSRMOO/LqKS2K1GLvRDjYnI692aiflvw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DXBM6nN+nVZVzb/wECWl7MpnqiugRz0oeh+ixksLFKaPcpRr9Bv5o64BIhbLik4FEMj1JQTGYW6TWI73hcSAgo7cdkWTTtuz/ziNnZoANyAJec0aiemb9uVSqwCLHYv9fboJ4/976Hbiy+MvocmfucwrqImhoHWVwbx8A+rToGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=IJk5PdDu; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Py+00rBf"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=on+9zpxKtFVTRQmVJRWa+bcVqj2qeNib3/V0RGIee7pQwmCjpZYjB7mq/rNCxol/l7yfoVd2Oagjw8oNJjkg0Qv+QsHf9zTq3opUR7eJW2yz1c227WmacuU+bR9fQP/QxLnt5ZPEzjSHkuUu+wLZC58OtGZfJzbdv7foNVckrN/CeXG9/fLCnZmyPlSuY9fVaUgbb0Ayc5hrLJZxx+C1O5HRUQzElAx55WbikDHWtrtKs/7tzoFajDm7xHhSX78wt0q8tm56T+iBO3Nx1HJVXlv298eeEY0mUi9ap63aK4dNR11tkVa/S6wnWRxWfMh72anumVv/xOWjpnYO8jFrTA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6J7td/wVl8pnOECxXd8WOevp70dEcqjo0vAOglwoZUI=;
- b=ESUiycbdQ9elTl/u9SqtICpJJ3vUHHi+u0kqR632DNhyPRS5kvGnZ3ygUDbMwdCoulfEmKIFrgVrQSYXOh9ZnFTu1YZuS7IrKyL1Xn+T+L/QTS6teBUKhTNIAFv6Pi4nOuG+H3uzgsCQ9Se1bwRdBg+wE6GmjBptsd5OE26GxFA+8ZRYrO7eOsYAAgQ/i2WXkCj2pLl618yb0np8xsYw4khPca/Q4hsRcrJiRKMnlOFY708Ci1UFuKa4pp8PnBQ2KvwKfj07r7qxtTK9EScwbebVByae9rtnxCDA12LQDQyADat1w4/KOE49905ktA8Npyx37tsrhBaL708GqMpEOQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6J7td/wVl8pnOECxXd8WOevp70dEcqjo0vAOglwoZUI=;
- b=Py+00rBfETlM4ISQW0UTsCkBonKkINuktDenVCSvZ3yByjyPFV4lcvLtjXC01ih4R+WtJ2zLWj00YXewTnEgZNyS1tTMslBlbrCIC6Mjw3ul3ggQnnSvwx0dZ/hZ1NRN0ehxmSNdjDqQZtmP0FssrH39E26xiShKQKP0R+KJalop2kYURd4+u4HPHr04xH0edIGw1J3sp2uCKiS1j81Y/cgLOth6Txtcv7ctXrP8sjH5i3au+LJndQfxGiBzfvMlgRc1cvYauyf7xr0OAvhkPyogSshm5VE/wNBU/5aT5ank/8sTRrmkNAkRm/1Ht6LszWb77TVYrCgSGpfSbB301g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DS2PR12MB9750.namprd12.prod.outlook.com (2603:10b6:8:2b0::12)
- by PH7PR12MB7795.namprd12.prod.outlook.com (2603:10b6:510:278::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.17; Tue, 31 Mar
- 2026 17:12:23 +0000
-Received: from DS2PR12MB9750.namprd12.prod.outlook.com
- ([fe80::56a8:d6bf:e24c:b391]) by DS2PR12MB9750.namprd12.prod.outlook.com
- ([fe80::56a8:d6bf:e24c:b391%6]) with mapi id 15.20.9769.014; Tue, 31 Mar 2026
- 17:12:23 +0000
-Message-ID: <8800a38b-8515-4bbe-af15-0dae81274bf7@nvidia.com>
-Date: Tue, 31 Mar 2026 18:12:18 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rc 1/2] iommu: Do not call drivers for empty gathers
-To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>
-Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
- Joerg Roedel <joerg.roedel@amd.com>, Kevin Tian <kevin.tian@intel.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
- Samiullah Khawaja <skhawaja@google.com>, stable@vger.kernel.org,
- "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-References: <1-v1-13a02eb0e031+a5-iommu_gather_jgg@nvidia.com>
-From: Jon Hunter <jonathanh@nvidia.com>
-Content-Language: en-US
-In-Reply-To: <1-v1-13a02eb0e031+a5-iommu_gather_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO2P265CA0198.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:9e::18) To DS2PR12MB9750.namprd12.prod.outlook.com
- (2603:10b6:8:2b0::12)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="IJk5PdDu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1774977782; x=1775582582; i=rwarsow@gmx.de;
+	bh=1R+q0brxT5FCSRMOO/LqKS2K1GLvRDjYnI692aiflvw=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=IJk5PdDukhiM8ugTD2Kqt/CVeHVLIMt2bGOdURt5Sb7IlYBmkYQ96T6ofPtm6G/m
+	 mGR3h176TxQJTZS7NQJiLKpZ5i/xDx0tBsAANJKzLDWh7SgsM77nkJN2TX7G2EkGn
+	 oq7Dh3+TT8kKl4A/PpxO64vc93//EcmuSgHwu4GxScEvG8tn/XIs5Rt7M9apsaEaP
+	 SY5tkGMHMci2Nk4Sb8rXQZgsHedsb+T38ncaANsi+J3v/ruuyq362k9nH8x5EWizX
+	 1VsRzfsX7xS3A5cjZIHzPemHUBu4ucw0lSkd7tvHNosAfEBd2wTz3n1RoBoSLmy+q
+	 960SfZbq/ZqeqstwiQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mr9Bu-1vlGbI02Vi-00iXgj; Tue, 31
+ Mar 2026 19:23:02 +0200
+Message-ID: <a111bf2e-7c4c-4047-86a0-34590fc571ed@gmx.de>
+Date: Tue, 31 Mar 2026 19:23:00 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PR12MB9750:EE_|PH7PR12MB7795:EE_
-X-MS-Office365-Filtering-Correlation-Id: c897ca87-ee68-46e9-dc38-08de8f48acec
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|7416014|376014|1800799024|22082099003|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	GBOVKHd50kuu8ls+/EOZFdM+Ex8KBy0TRk0bH0uXUEfC38cZuKbQMAorCv4mQfiwhSquYKbZrZJJdEZjUnh3Jycnj+7879TFf8XsGL8Szsg2ZN7aHgaippbCYbZ2aa92M0qzN/7b33jcQlmAQQZWLor57M0S/RbeG958R/DDoGAp1J+2DC7NFV3WICYW50s9vr2h1HWEnITXgXvljVT/UirRucQ+TD/n4j3BBwuM1um5nViZ5dDvzbpuMyBoOHbeb8qeEivY1YCvBdFD56XDmleQ+69DO0u4TI9ivhngYf9macYbrYKQ4lxoqZdHE8SuQKTjOcmoT7XHhk0m0nQwFulo6MTEqrj+3kI3ynIIyWDefmFZ/I/5b0rb120Goiif4FfSzlpT8rg/RHbxutAoOMaUAwHBV2uzaEqYp8PTR1drQrgXEzjvdWA66QAGvBZ2PUk0nMlp9SJ5e/tvfvJDsljKJoKmhCXVACWBzjLeT2dRIRmnuNK4j5JUWBq6SzHbmeGytIegYgQ8haWa4UTFXufuI8miY/g8D6P3VV6HR+0W83IvkPiakH+QPJav5mw0EyiKKVHYJ13GdIkkYdjh6bFB5baC2u0p/MYNrOTMj3RajIqOo+c3Ciev8CgPk1ba3CPpIOY0hdj9jvMmRYVRcWzPQhwn/3Ku410LooeeuGvuTi3QiyTeioZuDKwUO+ILITsIqV5AvxIKR9Ajjm3NGwAPZth1gwtJs2gQseXVz5c=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS2PR12MB9750.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024)(22082099003)(56012099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cDRzVDRadjVWM2d2anJCdlIxRjNHSlFJNHB3RWhHLzZsaEVROVlGbWtPY3Zp?=
- =?utf-8?B?RVRDdUZyVEJCOGNEYVlQZ290bmdJUjRTL1hvS1RMQmZCL2FXeEwyY005Z2lL?=
- =?utf-8?B?MGFHQ3lRMklVckFKcC8wUTZxWGliVndIV0tLaFFFdGRMY25PTEpQcGFlclJS?=
- =?utf-8?B?c2lCK0RjRnhBZkFTSEdQR1ZzekFVRjk3eGFzeVJsVjlueGs0MnZwcXVOaDBK?=
- =?utf-8?B?dDRNM1RHRHpMYXdxT2phWEkySExHSkl1L2pMdkxtSTE3RzdsUUxFUGlnYUhR?=
- =?utf-8?B?bklmVWk2Z21tRWNFNzdtcHZOaUdOdTEyYkpCbWtrMXErTEw5RndKaUU1TlVv?=
- =?utf-8?B?dXhTaGwyb2FCaHFEMS9rRm1uaGhSK2JMK2NZd2hTZytSSjRnK25kblp1SEFR?=
- =?utf-8?B?SkozN1ZSV1hsa0JNYlhjV2xOWGxOOGszMjN2dlAwa0kva3hhd1B0ZmNkVjlm?=
- =?utf-8?B?cXUzcHVZejlVcUlSakJvWTZnczNEWTlISytxQ3IvQkVMbUsyYkM3MVNvelhT?=
- =?utf-8?B?VjBhYkFwak93akJqc1gxWWZYUlBrMXk2b0k1bnpqaDRHQnNicEtyeGNnU0xY?=
- =?utf-8?B?Z3J6c3pVUDJOR0VOalRLN05JbXI3a1IySXY2SlhiaDVmWklMSzRHQUpZc1Zz?=
- =?utf-8?B?c0hCeTBhTFBvSHFEQ29xN3NrcDl0bFM5c1hjeFNwSmdNM3pkVi9LKzNZeHB4?=
- =?utf-8?B?TUFobHpGOFJoaXlhUHFSdXRzVHA0S015bFJKVTFqNmJSUWtmdVIzRlZVaEJm?=
- =?utf-8?B?WEkxTDRQbWo0cVdJeGlRM0JuK21ZdHhkVFJpU3FrMk9pWEhib3hwdkcxZFJj?=
- =?utf-8?B?WlcrTkI0dzg5R3Y2VVBLZGZsL3Y3dXh2b1RoSlhwSk9DRURhanhmZGtKaXJP?=
- =?utf-8?B?TGJma09wRmNDeDQ2bTlGRVBWTmNiM3BRbWpRTDRTbitZQzRBUGZRby9OdWZQ?=
- =?utf-8?B?WEdRRnFLN3lPRXJURkYzek9aQzgwblRPWUpSeFp0QlhyelBleDlsNUhTSmxH?=
- =?utf-8?B?Qmt2RFAvOU1qNk5KNXNjbko0UDJwaTRKZzdVUEpFTFh3RWpPc3lpYjl4em53?=
- =?utf-8?B?U1dNaTVsVjZPNWQxKy9JWlMweW9tV25Zb3hFYjg1dDE4UVJIcERqM01LRlBW?=
- =?utf-8?B?Wmw3akFGTHhHWklMbjcvcGFRWEdxZkwwVnQ0ODdmdDhEeURFSnpIUDV6RkVa?=
- =?utf-8?B?NnBrOXI2TkptUGZQQmRkdzZKTVlzVVJLYjkrbVVNbTFJdWhwdy9sOWdlVVBs?=
- =?utf-8?B?R0xEY0dWR1JodFMydHROWHVjZEFDOTN6OHlyNWIzMVJlbW9nQkU0bjl6d0Iy?=
- =?utf-8?B?RFBTaUltK3VsV3BhOTg4UUNCSGZvYzN3NkgvZXNhQ0NsYUVaQ2dYdGVoNUI3?=
- =?utf-8?B?TUFRVkUyRUVvUnlSdk1tdTVsRVY0SUNBNHZvaTZzeFlHSS8zVU1nNzFDL1VK?=
- =?utf-8?B?QnAxamFBZVFjQjRwNTdROGkxNElhRXpOdnA3a0huay9SZnBQRXRrdWc4TjZ0?=
- =?utf-8?B?MmxIL3lNTVFHRjZoaERrdGdiZ0haazB2L1I2eTlsdmJZUVVxKytkbDN0NTBw?=
- =?utf-8?B?eFpKNmtqLzNIVDJvS1B1UkFMQVlrcDFZQ0VYNnA0S2QzQmFsSi9hb21VQ1E1?=
- =?utf-8?B?SkwvU25BZEZXNnJFYmtuMzhCYW5HRFA1UmN4WWg3SmhTVm8zbWlyS3RBQnRI?=
- =?utf-8?B?am5Kak9uSzFYZmJ4N1o0QVFKTWJ5SWRJeXQzVEsva0NwUHA2WDNjUWJQSGN4?=
- =?utf-8?B?dUkvZDRQZWN1bWZDUDV2WHZEZmxVVlhOT1d4c3Rqc3ZaL1Y3OGI1NkE4bGxk?=
- =?utf-8?B?aWhra3hwUldZRFJIZnNsazRqN01Pc3JRRWo2R2svYmdRN0xSUWtmVE52TVo0?=
- =?utf-8?B?azVpSWdweERRQ2FqakYrajFBOS9BQ3VwaVhFRmRYVXI3L29MZExnWE05WWhK?=
- =?utf-8?B?K0lvTExEWU1raGVZVWNjcStCNkcyUmphNTlLNGVxQkNUcDJJZ1M2MkEvdlYy?=
- =?utf-8?B?TU1FeWc3eGFHYUY2OGtiNWYxamxyQXJTWFo1L3g3a2RYbmgxOEhjTDdzK2FS?=
- =?utf-8?B?ay9zQUhwTmNHNmFoV0Rud2pLaW1wOHlpNitnZTZoTHIvZmRoVEJoQWJNang1?=
- =?utf-8?B?ak5DSWliSHQxajAzekpJZDFEblJpcEtVQ1lLMDNhMXRyc0JBV3BoMldwMWhO?=
- =?utf-8?B?Q2NTK2dhT2tWM2QzeHpSeDc1VzhJdHYvNUFYZUp5d01GbkpLWFo4ZlZzL05a?=
- =?utf-8?B?UnNSUTBHbGxDS2xQcjlCMEtES3ZOTi9UaWhZWmNReGJqN1p2RjZvMVRWYVIr?=
- =?utf-8?B?dDliY3ZGWlllSnJoUlIvZklXUDB4S0IvbnBpWTlXUE5LazlLZDBGQT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c897ca87-ee68-46e9-dc38-08de8f48acec
-X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9750.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Mar 2026 17:12:23.5894
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5g2B1OIjb37/tc8SFeFyXJQqKfWSTyc1mP2yQVWQRwV18fueggy7KOeeWHAc0n51UrfBWFaaTaN7zwjGXmJ80A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7795
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.19 000/342] 6.19.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260331161758.909578033@linuxfoundation.org>
+From: Ronald Warsow <rwarsow@gmx.de>
+Content-Language: de-DE, en-US
+In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:XtmfCsky1woUr/rpelTerwoVMpBQamPQeAL9rXjdEkdMP0KM6O3
+ z9A8wC4QElL6On05eBOEa3sE/Nn4mjV5XgAUSMkUeikqDeDF3r/fU4Oyexkc5hrwl+EEi5y
+ 5JT335LPAdscUNKoCCo5JdAHbpVQC79QWHvELmBhg99pofe034gUhwXPQgRr7ZvmEMaLzSj
+ ystMQkdPSzHgUTUVH0W9Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:yYZ3xq9H2lo=;WReig8UXA5LDWqMp4LUDW6yanJY
+ 0aA5jJ+YGxHCPjFz72NAAPRnObw/c89+eyudKMIWaatpw/LT7E6lxctMZPkh2htW+fddhk0va
+ iPCON2goQN4nb1GCiARrFpybDcRsQR3hPtc/drQUU0929t+02YP/q5QynmKVCEZJHjAe4Fn8k
+ J1xQ37vlDubFKKkXMPLdjVyTGmLoJouKRDoyoKzUdgTUDhkIJw8aJWzfjWK6Fr2lNenEBW9K+
+ xIh6U/oAAbUT67dhgKDfBWvt24D99SIu5JbdRdK2xxK/ox5p+UJd8VYqQ9k+UAJjNedUjOppQ
+ 4hbUJGkFLxkTcJBZAHsvqWHTSU1rKTooZ7WVrUUqbmEeHIcUGuhHxRB8+XqzG6aZyTdx/Jxgt
+ NYh1Qk4Q9fCj0klQjSlrRKicDVgm6OMcl+l8LJ+AYVU/tOGV1sTcTiht4iKGIwpgyS4BTXIBl
+ d693lCsFo+rb1x3Fh07Yn//ufW00NhKXZmhfaXivlEkKPH/fD81+ihx53J6OMnFAB4relKrj4
+ Ggrq5nheGfObyIG6Hejch3RdZPFCafEu1NJkEtzWQ9+HBzYOmLPrgYtbrt77ac0j/7Z4g36VU
+ lYr/WtjJJcJHb2DHLQZL+mqvKcA1hqDMvAVe/0YEJoNY4Y41tCfe4RfiZMxMjZZRmdksz1+Yl
+ WuOiAbaGhv38FGIb7255frOdDl8byHtbkp7FxXowE9RPRoihjGYxlJ7K87pyL2u/Lf9KHRep/
+ KrOP63RXRSmDVOFnPu7P+UauNBpJhlHRDPhhsBJC0B4mNtyQAZDTUcIsryq/GRVR+M7U5BtMf
+ jhsWny9e0z0epmpLCYb7SOb6DhwFGuCF6n+VJzHqz47fFSqvfgV2FpR1u7l2H2zBlqWeTKwHX
+ HdZEFunuT0LYVp9lQpb5ecJzXvn3Wx8kcsqvj2iOceNaTDO3qOtuMGm06BuKzFYxfRK44dwvN
+ +wbIiukJzcrtgpmb3K8nSxLPxCGB+I+Nu0q0gmWhIV54+Div4oLAj1wsSf965rrHLtRIf8lcV
+ Dq2i2gBGE9eTlZIE8SePh7awNdI2BI+kfKGde5PHY/T4EFddV0TlVwirKac8rMyQmJi6EJ6hh
+ ZsWjGGEo71OafSnGotSNcC+zNGad3GKHb9qN8AZXjGT9ztsHn1z7ImjDzkGTjjDnL0QM+WtRV
+ 1d18W+GS/mz4zbtUUGarS41qdk36lrQS0HKnnDRMeTFv+6KNJnVwKZsM34QG/280idYfNzwPB
+ mkpS8uNQF4DUpIqEopokTYiNqvV9s3vHr0beiLGNSbRLlFb2BiNXn/6WzeoDD9hTMhTZXJRgU
+ PwlX9sKscZeGgLVHA2amoCMqKdWpkGSlp+2WC7rnSDwA4Iqga2s11mj4kt6PLVpkLygDxaen7
+ c0GS/IXffMVWsH/bBMQt50+B+Ebtxx5VdEjk4iN4utKN4BtEz8plbPmIISReI4tgRwqCisuWz
+ QZ/A9ES7NB4B1w4jKDb/MLQd9sNsOZ4SP39x1CGue0TvJ2T0O6MdRfiiG0Skll4CPvYuOhs8n
+ PbDG7QoZ5+5LCNpIgoQrmVPeoEab10TZd7BWt/GVahfuBeLShx5fYEdNGZd7E4UVPJy+5Gg9L
+ CkHuHhOncGqMMugkAi5rGiqAiN28NuNoPNy2NqcE19qNjqGEHr/VCpo1zGEaIuviPrLlH8wdC
+ GQgklY+AkFC0vFVojam0hcTMEdAjwyFS4Yq9s9HoCIawxPYTyv8x7CJSZKn9Aa+nHmV+gRLY0
+ I8xtrWUafYuvgdPhL7bF8eULqEBMnpbTnqazUvxzzOf2/eQ3LBaxOzaCSER2bf1REb463ujMD
+ iELnxusAFKHmFI9T1aNxubj7S0J1Zzs4M6LwBwjF7VqkQXDKhbtPwJ04z6tRsiyk151ZLPc2A
+ W0SFjIKWaHS7OLrHi2+TqPAeck2tjuexhViwnjEnhBQ86V2ORl51NuKV673fM8278UTzE5SsO
+ 6aLMGDxbTteMmOQ9unD2ZjtMi13pXWf/lAvIZ6LCZPzpxKqe6SK5f4PynPFyOEx/lde4GrDuh
+ yZOiDrdhJEFK/AZRCDXKwzscSLTpSWHk1ugVMuMv7wCEAq9LRRvf8Qx+IsniYReJ+mI2qfMVE
+ WErg7w0la4fpiay+2SP9rJOIoMGL8AymYlKfCDKbtEcn+jsaYVhG/OIKkPMAnKpZE3eBWcyWE
+ zEuRC5HuFrcCaUK7E1/6OkRDSVmnDmU5/EVKz+4JOy422XuHybV3KSuDJxFHFY0fTbQQ331x+
+ V6OtXwQ/WIFWwBqlUVbr/bNvq7+kSi259pLnfVBd6HYj2NVXkty988gQFwRDysDPdbo/+ElnD
+ fPIwpgEmtRIWcxZevB6RFy/yQ7u3U0jELZ2qjtfY+H0D94m7GMr5TTf8BNaSqlhPrisb3qut3
+ jv+ghvk/VFgUj8NG8idF1r4z97TsgGNN0TwO44izJjq+GuiL/KkKf/Y+mlUaixzGqB3+3p4su
+ f0WubbqzMbzqYNMirGpwvGj7CIe709gBMKAw7mJ2uKq7iF6RQDOPpUl7SSGLg4wOL6iWbhLfq
+ KSt/zs8wg5tbEibIJIAhIO0Nvp/1MExzlPWZHMsDX5wesqsAmnElOWgrPQSyxfvhh4vlbZrIa
+ lJ9HooM2zPj/MfmIxi65N7oPQOkvnLLvzdpiC53/vF2nbAo6l+GzHX6dZ2rGr6D/gHStJrvEa
+ 8GJiMqYocaAmVX+pMTqUhD3q5d80O1CbD6xdc2KixZGm5Wje32IrrF7gpmYzc96l6McFYQCU/
+ YEQwfNn+qsihnOFZRfGfghHY0oYlfFR1Q5pOgaJvvvBTFt0PPFuMUEFsKP0Gi05coqi7gxQnk
+ 3XxrsMnXQ0i4w97HzapI4wsG+bRsz3Zv2NUuOPdFYoi5JP799+wBKw9VIDUWF28WF7bmP5h6J
+ HmRvSLdpYTGNojq0OV+APe2BuvGnRV/unxk7uMmt9DH2+3Udn+A8dPc5F2N3qi1QGKMfaAKCo
+ pw/IgNluOJ4TZV9OV7lZ99HUOXKysZ4e8T4KrJNhEaRCbMIkZTne7SAlJLzMo2lUsBYJrLHSS
+ Nn8UYIGFARXOXVZGwEFjOjCsh/U5zc8tClVpmKxov/Uchj4fV+9SlRAbUJXef4dVkyCX0ruE3
+ 7TWSfW14QueItF/0YE+ohWgalpyAPOV8pPonVKxZvAr5kduUVgv3Vgig2GmokhFS86feCvk96
+ qEYSRCRmpbQZelrqp80oyn3zFq7nU3nlVLdxrzNEosXTtcxTSRICeidJ0li3RLxHVMjH9/dCU
+ BRbpcpUMgrGO+4S34TP5y0a9RHWHbH4W9wJnrYAwtEczmV8u4p7u9gxhBTg0IK3Xvy7CnZO82
+ Ge7ZGlsE1FU9505uSDrVcqDROyz9djuNGmnT2Gs5sdw4LMkZKFuFK8NlpUDDJolXpoLttLQBP
+ qz7jTXdrfJD7IpBugBV9vxfoVjAJRTYJ4BorG4TvFOWhQH7iSsOytuskWUFoL4B1zfmN2I1PX
+ /pOVhm0VSlrG1WldGmmRWdz9psts8X1PdLVL5e0YQHEjiLvMTcql2I5b3ORYIvFTjKVMNek0/
+ i+hMOaQR9L68VSQiuc86DUJthaJJE3rR0QOazZA4pTBz4cXSkX0YQIIP+3Bjkhi8wBaOzgtVl
+ toJY7zC75DZ4GV+f8zpDm1ujSgR0Q55CXgLDkVIuk+iA3fXXYAWL8o43pPuImVLXEtMxePaEv
+ yci8YFqHuJqYrEZMyz+giO7ry5QxcaKY3oBCUP0tLniWrxoHufBssH1FB68jhlKU/q5mfhjTC
+ Y8N/s/20DL03h248piD/jf1cyGfyn+jgmfTBL5/rq97oSyanqjT76Ay041HZPkEzj8Virynh9
+ HWvlIBVGoe+BntSltaBLuaYuUd1zBhDcPYT7Xyw+0Kj3k2rKHI8eY/EMEkRP2XwCv+DKgUr0E
+ NYz0cT3cNjUPpG/u4NN9njpDsr/U+Jb2BD/LKU3j47hk3Mso5cXXzjVXaB1PZ0hw+4Io/C99e
+ p4SVyI9cCf5p+WIrQfk97FObGvQf/r+/y5c+Bi8QIeAuum/advKKrt2j0MpqOukNoic36CzvO
+ 5c/sckKP6qzpN0DrH92D9ArDGgUXb/XNOcxZY9IlOQhhalfplntm0x4sZf59TxPbgs7AqBOQ/
+ nebP99Y6C/2nXvT1jufncFYHhksBcxesJRHR2mI6kIKfysGLcFw1APDL8T/PvJC+rcaPZZsOw
+ Iko9a93d8TIMTpnWj95Wz9md3An6QNtVzRS1NxtTypxd1L7FIrsMcIzHvM7xqAh42IfeSGfKf
+ pOb/76AHO722I+xYtJZ6GHbarMGt4A3JMta0EwOuGmuNTDbGYqh2N8fMgEw11Qs2HMEmAss/8
+ 6Aglkqay3tdLTGvyKM7H90G4xuxXiwUqh6DM0nhmHKNT6I9ZSd2Enhetu3qlh93DLwHUyAmXu
+ jFnt6KCOKWXXLtRxT7/8lZ1F4Im4ga7R0TjaA+PGVdsD7AGKP6LZEcvED2fwBwO1HtnTiEe3F
+ 1KpiuHxt9UuhlGAUGGc0fBvULeTIiNAILHlz/+p0YQufhnYyMu5cNxADX+aDgrBY3m3kXu8Ga
+ HHEWLVTi68+sb9aLHLKhmaRgBUf12JcDNIonuwxxRsSnYVraDjt3QYKZ4JIRVexzYUkllntY/
+ 5HBckn9plEpAQVrT3QKzDU2i37Vep+qkQ3Hq97wZmxeXvrTSN72WmQxqVv6Nm9/xzOovN925o
+ 9nRniLgYLq+LxOQcR6BJZ7pBoZV4MB1IjcApTrDWyHD3oLvSYFTmVHaJ9aqnQkKL3c8zrqzEu
+ Aa7SaH9vO26phTbN3ks5pK1ECWvVubfEZK1izKr24Gkw1orS/dbXhlmMv4PHigmsUhVmKr9yZ
+ csY/z7h1BvYBA9mEfRp4IiAc9IfUPYlWy9Hi2ps277GmgqeVAc2No8QgpHOeGTko7CWQwlFpK
+ TrStE9ehnUtsalodnWK8tfXxtlIfnVdSmucWEbVTnPqYiRh0akH86V8iWqs5ffGK2OtEcaEBl
+ DxCLp9++YHKqIkZAqFhgMFXiqdkuLly4lr4eZC0WdQrqvWgV/89bCqW19k62bbOjBb5YIRJmr
+ jXLnY2CEmpIU4h9fmRTJCYBrHHh7suyIwFq7++wjgCQ+G/kZZ8ZfS8sjQYB68sEjnK2mn/HHW
+ qyWdEYkXXB6LxGkp23CZfm4DtVtu9YgSFM7l+f0oqKU4bJyCAOrmcozaRyIgZ4Eg5I21e1KXX
+ 5+e2nXfnSfB01ts4h2hILsaVPn8ATl5S4XWRzhGSRygzUQhAb2AnYVjisHXb4B3LyLIq0eTBd
+ 6dlOjWFck9qLhl3vPdtIGe0r9i+EuaDbZa2kQ8PwbA==
 
-Hi Jason,
+Hi
 
-On 02/03/2026 22:22, Jason Gunthorpe wrote:
-> An empty gather is coded with start=U64_MAX, end=0 and several drivers go
-> on to convert that to a size with:
-> 
->   end - start + 1
-> 
-> Which gives 2 for an empty gather. This then causes Weird Stuff to
-> happen (for example an UBSAN splat in VT-d) that is hopefully harmless,
-> but maybe not.
-> 
-> Prevent drivers from being called right in iommu_iotlb_sync().
-> 
-> Auditing shows that AMD, Intel, Mediatek and RSIC-V drivers all do things
-> on these empty gathers.
-> 
-> Further, there are several callers that can trigger empty gathers,
-> especially in unusual conditions. For example iommu_map_nosync() will call
-> a 0 size unmap on some error paths. Also in VFIO, iommupt and other
-> places.
-> 
-> Cc: stable@vger.kernel.org
-> Reported-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-> Closes: https://lore.kernel.org/r/11145826.aFP6jjVeTY@jkrzyszt-mobl2.ger.corp.intel.com
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   include/linux/iommu.h | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 54b8b48c762e88..555597b54083cd 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -980,7 +980,8 @@ static inline void iommu_flush_iotlb_all(struct iommu_domain *domain)
->   static inline void iommu_iotlb_sync(struct iommu_domain *domain,
->   				  struct iommu_iotlb_gather *iotlb_gather)
->   {
-> -	if (domain->ops->iotlb_sync)
-> +	if (domain->ops->iotlb_sync &&
-> +	    likely(iotlb_gather->start < iotlb_gather->end))
->   		domain->ops->iotlb_sync(domain, iotlb_gather);
->   
->   	iommu_iotlb_gather_init(iotlb_gather);
+no regressions here on x86_64 (Intel 11th Gen. CPU)
 
+Thanks
 
-I noticed that a couple of our Tegra boards are no longer booting -next 
-and bisect pointed to this commit. Reverting this does fix it.
-
-This is impacting our Tegra186 (using nvidia,tegra186-smmu compatible 
-string) and Tegra194 (using nvidia,tegra194-smmu compatible string) 
-boards. There is no specific crash I see, but the boards just appear to 
-hang on boot. If you have any thoughts or things to try let me know.
-
-Thanks!
-Jon
-
--- 
-nvpublic
-
+Tested-by: Ronald Warsow <rwarsow@gmx.de>
