@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E3D426EDA;
-	Tue, 31 Mar 2026 16:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB19426EDA;
+	Tue, 31 Mar 2026 16:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975138; cv=none; b=CB2iCS1IjWtUxyUfKjp6nUt3ReqJmK2U4nvzf0uk/FAG3wMJLJTPQ5rgrKRlLn84D1mlbuGz+c5pn8t3UInADSv1RcoIYdxaq6XUQ49ZsE5LhUPgG0oBu6FfYIz1tFKFBiMfVbM9ZWNn5HMiFr8si+f6UIIMVRsvq7oi1W4peJY=
+	t=1774975141; cv=none; b=ZIcMJWLioFQsQJJMqwzqRaPkCiHYkN7LCcqKeLGB1ka7yY70tlLR/HdyUeZnBBtufRSYksILGKBfbGKSaLY0dE+O2TeEmcYxf4HuhBlbHrReewFGh1GZnWRePANjOhGRX4XXs4cYI8v1F+GykBptXGuAx5q3+VAxcqnhrDPook4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975138; c=relaxed/simple;
-	bh=irtckMe+GC/QrHtQpFNYrUGXcYlCf9mFGTJnBLm0dMU=;
+	s=arc-20240116; t=1774975141; c=relaxed/simple;
+	bh=3eILs24/6V+2+lmj+h7E/m3eJotuenDoqi7BbXTlUhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nEyTNbzcKcRuctVfZ6MyP7hYFFyaSYRUGSGRv+ru2a9YGs5ZK1VvD8lPWwYkeUzc1v1a9f8JFGYK0J+eoxANQMbm1XWCprTNP2gC/Wk1nT/beYH1AHgQ449Ixe069ldg1ib0sNpmx5QW+SN/RxIlghKa1p4eEZbsn+Ah1W2FJUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/YlK1qC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHO/sgOxbEvsuRF0yRxy/WKDrZzD1Tdn2zHDC7DaWFOXWuVkMnxcaf1KQ6dMds/uZzbFJRpJ35t7hB34UA3Nfaoe1K2JpCp3IxoPC4yram2RM5FQaubXE6r/y8TIjdoqCkwiTYw5mqUhLQUMxdOAkvGGO82YI9TmEnvYXDPEWOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9+h1oGQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/YlK1qC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C328CC19423;
-	Tue, 31 Mar 2026 16:38:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9+h1oGQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81463C19423;
+	Tue, 31 Mar 2026 16:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975138;
-	bh=irtckMe+GC/QrHtQpFNYrUGXcYlCf9mFGTJnBLm0dMU=;
+	s=korg; t=1774975140;
+	bh=3eILs24/6V+2+lmj+h7E/m3eJotuenDoqi7BbXTlUhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p/YlK1qCc87leU/oLs5Mb1V/Qyu1TS/EFWixTic2YwVKt7BMOp0y9tr82vvPb+xyS
-	 QtklqnnaxqJvBPldCrDobAsM20EIEuuOxAPraVjZz5cxJ/RTGXSbIs4y2uuPjky6Ma
-	 ClwbK2MIaF3TGtctPsOfU3XleOnUp+pxP6OJ9C04=
+	b=u9+h1oGQKR2LpSKvMBmPUCPbB7lsoMvo6wk76EmEuJld/g6dlQrsqwIqGdoRdb/s0
+	 lkuLNn00dIhQWBC5OxY8B+rKLROtVx9ik3dwKZrW4BEqBrgEQqIjSIWlUhjH1bLoU1
+	 E0Wvj7F0MfLl85hCMsEVGlE0Dh1A08r4HIiRK+aU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Samal <anil.samal@intel.com>,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Matt Atwood <matthew.s.atwood@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 161/342] RDMA/irdma: Fix deadlock during netdev reset with active connections
-Date: Tue, 31 Mar 2026 18:19:54 +0200
-Message-ID: <20260331161804.934659750@linuxfoundation.org>
+Subject: [PATCH 6.19 179/342] drm/xe: Implement recent spec updates to Wa_16025250150
+Date: Tue, 31 Mar 2026 18:20:12 +0200
+Message-ID: <20260331161805.591872870@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,42 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Samal <anil.samal@intel.com>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit 6f52370970ac07d352a7af4089e55e0e6425f827 ]
+[ Upstream commit 56781a4597706cd25185b1dedc38841ec6c31496 ]
 
-Resolve deadlock that occurs when user executes netdev reset while RDMA
-applications (e.g., rping) are active. The netdev reset causes ice
-driver to remove irdma auxiliary driver, triggering device_delete and
-subsequent client removal. During client removal, uverbs_client waits
-for QP reference count to reach zero while cma_client holds the final
-reference, creating circular dependency and indefinite wait in iWARP
-mode. Skip QP reference count wait during device reset to prevent
-deadlock.
+The hardware teams noticed that the originally documented workaround
+steps for Wa_16025250150 may not be sufficient to fully avoid a hardware
+issue.  The workaround documentation has been augmented to suggest
+programming one additional register; make the corresponding change in
+the driver.
 
-Fixes: c8f304d75f6c ("RDMA/irdma: Prevent QP use after free")
-Signed-off-by: Anil Samal <anil.samal@intel.com>
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 7654d51f1fd8 ("drm/xe/xe2hpg: Add Wa_16025250150")
+Reviewed-by: Matt Atwood <matthew.s.atwood@intel.com>
+Link: https://patch.msgid.link/20260319-wa_16025250150_part2-v1-1-46b1de1a31b2@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit a31566762d4075646a8a2214586158b681e94305)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/regs/xe_gt_regs.h | 1 +
+ drivers/gpu/drm/xe/xe_wa.c           | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index ac3a8f3f95b7f..c454a006c78e0 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -558,7 +558,8 @@ static int irdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
- 	}
+diff --git a/drivers/gpu/drm/xe/regs/xe_gt_regs.h b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+index 917a088c28f24..ec1ae2dc6cabe 100644
+--- a/drivers/gpu/drm/xe/regs/xe_gt_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+@@ -544,6 +544,7 @@
+ #define   ENABLE_SMP_LD_RENDER_SURFACE_CONTROL	REG_BIT(44 - 32)
+ #define   FORCE_SLM_FENCE_SCOPE_TO_TILE		REG_BIT(42 - 32)
+ #define   FORCE_UGM_FENCE_SCOPE_TO_TILE		REG_BIT(41 - 32)
++#define   L3_128B_256B_WRT_DIS			REG_BIT(40 - 32)
+ #define   MAXREQS_PER_BANK			REG_GENMASK(39 - 32, 37 - 32)
+ #define   DISABLE_128B_EVICTION_COMMAND_UDW	REG_BIT(36 - 32)
  
- 	irdma_qp_rem_ref(&iwqp->ibqp);
--	wait_for_completion(&iwqp->free_qp);
-+	if (!iwdev->rf->reset)
-+		wait_for_completion(&iwqp->free_qp);
- 	irdma_free_lsmm_rsrc(iwqp);
- 	irdma_cqp_qp_destroy_cmd(&iwdev->rf->sc_dev, &iwqp->sc_qp);
+diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
+index 4039a6428e6c1..c15b0288e0ff5 100644
+--- a/drivers/gpu/drm/xe/xe_wa.c
++++ b/drivers/gpu/drm/xe/xe_wa.c
+@@ -261,7 +261,8 @@ static const struct xe_rtp_entry_sr gt_was[] = {
+ 				   LSN_DIM_Z_WGT_MASK,
+ 				   LSN_LNI_WGT(1) | LSN_LNE_WGT(1) |
+ 				   LSN_DIM_X_WGT(1) | LSN_DIM_Y_WGT(1) |
+-				   LSN_DIM_Z_WGT(1)))
++				   LSN_DIM_Z_WGT(1)),
++			SET(LSC_CHICKEN_BIT_0_UDW, L3_128B_256B_WRT_DIS))
+ 	},
  
+ 	/* Xe2_HPM */
 -- 
 2.53.0
 
