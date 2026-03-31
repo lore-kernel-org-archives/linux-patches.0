@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355033E3C40;
-	Tue, 31 Mar 2026 16:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7504E402B9B;
+	Tue, 31 Mar 2026 16:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975363; cv=none; b=df4lJs6GN+UBLG8Uzz4631X1lKbvpuXrB47bpt1wBSGLVsxY0TULNz/g4ikVCc+kjZR7F4nwdcrFwmk3AiIViCpqLTgSvjnTX/A97QPrwAlgYAGFw9NLuq4/kEME4YUR9OJJ9geemCpVBLXvsDxmu75tzFcWIbgiurnf3jGoZIM=
+	t=1774975365; cv=none; b=YRuAB9as8YhzY9y41XYYJvWBcHc0ifm/gDlA4J4p/mSX5a3Fk7loR39pt/E6uaHEtuCTCA8JMafnZNDOd1ScIQZjp+pLSacHCnh7Ls+j40N0mygf2JiwS6TlHxGyl5DM8XCkaEKKdHN7/YCueQ1GumAAQim1vX5TLQous1QvSsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975363; c=relaxed/simple;
-	bh=fvxf8NAMrO78ZlMAodVlmD1Yl4EuNCXPM2uhoZWWY+o=;
+	s=arc-20240116; t=1774975365; c=relaxed/simple;
+	bh=k+tbv3bDS5DbLCfISkVceSu1IoHvLjdpYqS/iVbK+yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ds9MJHnqENHzwh/3N/Yh3hCmHKWYInK1d8liw2qfA/7+vKzs71CZiayjClsm8vjN1CRBWoPvwLStXOff3yaqf2hzjctw9p7I1GB8DRlEVA+lCvRvD2yQOTY38uUeEyypKbrKOqCDhjLuxQU3d9gUe5koGpQt/RTVi72hGoYlric=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smaZKFkx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h6g7Nnm3Cv8oy9vm4FL76nGRMH2KxTyq/WKnH1BU9W3BgEklZrzze1yLfv1PWAXm7JWqa/IOn1UOlw+DbAixF5k2wm5+fywX36wmnbDf0pmVAIZwNQeQaVDPsPkDS+aRBgKah3e+8Ix15h5VUUwD9Gp0/ZB0e23Ij13KprpRBL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZykPqzJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smaZKFkx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E182C19423;
-	Tue, 31 Mar 2026 16:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZykPqzJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBC1C2BCB1;
+	Tue, 31 Mar 2026 16:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975362;
-	bh=fvxf8NAMrO78ZlMAodVlmD1Yl4EuNCXPM2uhoZWWY+o=;
+	s=korg; t=1774975365;
+	bh=k+tbv3bDS5DbLCfISkVceSu1IoHvLjdpYqS/iVbK+yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smaZKFkxeQSs0P42510CyMWPuop3dNe3yhi4IBaUJ6nlNuM624iR6Kmw0uqy7QGMW
-	 LlcHQF7Gjw15u9DQND+tvmhtNUXA99rodPpW28M7h6NqLmYlYJ4yDLCGCR4rn4Gm6b
-	 BH4XtZBsfIyJK3X1FEIQfNzYUS9DxbkSPbfP4Eqo=
+	b=bZykPqzJX5xHnSoT7ot6+zsHbNqNEZyI5CLOgS8ODqOiEzsC/N4WwpdvJ4CP2L6Is
+	 q9RDL6N6uobi1o3NpjMSXoOJgJm0X5OPHLHF/RdIQlPZqOvn326QZEF5lAtbYDi5cB
+	 3RnjhdtxagAJE6azxDpSJrZMeNs60kqIgaiv0kMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Chuanyu Tseng <chuanyu.tseng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.19 264/342] drm/amd/display: Fix DCE LVDS handling
-Date: Tue, 31 Mar 2026 18:21:37 +0200
-Message-ID: <20260331161808.665837267@linuxfoundation.org>
+Subject: [PATCH 6.19 265/342] drm/amd/display: Fix drm_edid leak in amdgpu_dm
+Date: Tue, 31 Mar 2026 18:21:38 +0200
+Message-ID: <20260331161808.701856298@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,165 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-commit 90d239cc53723c1a3f89ce08eac17bf3a9e9f2d4 upstream.
+commit 37c2caa167b0b8aca4f74c32404c5288b876a2a3 upstream.
 
-LVDS does not use an HPD pin so it may be invalid.  Handle
-this case correctly in link encoder creation.
+[WHAT]
+When a sink is connected, aconnector->drm_edid was overwritten without
+freeing the previous allocation, causing a memory leak on resume.
 
-Fixes: 7c8fb3b8e9ba ("drm/amd/display: Add hpd_source index check for DCE60/80/100/110/112/120 link encoders")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5012
-Cc: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Cc: Roman Li <roman.li@amd.com>
+[HOW]
+Free the previous drm_edid before updating it.
+
 Reviewed-by: Roman Li <roman.li@amd.com>
-Reviewed-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Chuanyu Tseng <chuanyu.tseng@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3b5620f7ee688177fcf65cf61588c5435bce1872)
+(cherry picked from commit 52024a94e7111366141cfc5d888b2ef011f879e5)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c |    6 +---
- drivers/gpu/drm/amd/display/dc/resource/dce110/dce110_resource.c |    5 ++-
- drivers/gpu/drm/amd/display/dc/resource/dce112/dce112_resource.c |    5 ++-
- drivers/gpu/drm/amd/display/dc/resource/dce120/dce120_resource.c |    5 ++-
- drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c   |   14 ++++------
- drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c   |    6 +---
- 6 files changed, 19 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce100/dce100_resource.c
-@@ -651,9 +651,6 @@ static struct link_encoder *dce100_link_
- 		return &enc110->base;
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3891,8 +3891,9 @@ void amdgpu_dm_update_connector_after_de
  
--	if (enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs))
--		return NULL;
--
- 	link_regs_id =
- 		map_transmitter_id_to_phy_instance(enc_init_data->transmitter);
- 
-@@ -662,7 +659,8 @@ static struct link_encoder *dce100_link_
- 				      &link_enc_feature,
- 				      &link_enc_regs[link_regs_id],
- 				      &link_enc_aux_regs[enc_init_data->channel - 1],
--				      &link_enc_hpd_regs[enc_init_data->hpd_source]);
-+				      enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs) ?
-+				      NULL : &link_enc_hpd_regs[enc_init_data->hpd_source]);
- 	return &enc110->base;
- }
- 
---- a/drivers/gpu/drm/amd/display/dc/resource/dce110/dce110_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce110/dce110_resource.c
-@@ -672,7 +672,7 @@ static struct link_encoder *dce110_link_
- 		kzalloc(sizeof(struct dce110_link_encoder), GFP_KERNEL);
- 	int link_regs_id;
- 
--	if (!enc110 || enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs))
-+	if (!enc110)
- 		return NULL;
- 
- 	link_regs_id =
-@@ -683,7 +683,8 @@ static struct link_encoder *dce110_link_
- 				      &link_enc_feature,
- 				      &link_enc_regs[link_regs_id],
- 				      &link_enc_aux_regs[enc_init_data->channel - 1],
--				      &link_enc_hpd_regs[enc_init_data->hpd_source]);
-+				      enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs) ?
-+				      NULL : &link_enc_hpd_regs[enc_init_data->hpd_source]);
- 	return &enc110->base;
- }
- 
---- a/drivers/gpu/drm/amd/display/dc/resource/dce112/dce112_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce112/dce112_resource.c
-@@ -633,7 +633,7 @@ static struct link_encoder *dce112_link_
- 		kzalloc(sizeof(struct dce110_link_encoder), GFP_KERNEL);
- 	int link_regs_id;
- 
--	if (!enc110 || enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs))
-+	if (!enc110)
- 		return NULL;
- 
- 	link_regs_id =
-@@ -644,7 +644,8 @@ static struct link_encoder *dce112_link_
- 				      &link_enc_feature,
- 				      &link_enc_regs[link_regs_id],
- 				      &link_enc_aux_regs[enc_init_data->channel - 1],
--				      &link_enc_hpd_regs[enc_init_data->hpd_source]);
-+				      enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs) ?
-+				      NULL : &link_enc_hpd_regs[enc_init_data->hpd_source]);
- 	return &enc110->base;
- }
- 
---- a/drivers/gpu/drm/amd/display/dc/resource/dce120/dce120_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce120/dce120_resource.c
-@@ -717,7 +717,7 @@ static struct link_encoder *dce120_link_
- 		kzalloc(sizeof(struct dce110_link_encoder), GFP_KERNEL);
- 	int link_regs_id;
- 
--	if (!enc110 || enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs))
-+	if (!enc110)
- 		return NULL;
- 
- 	link_regs_id =
-@@ -728,7 +728,8 @@ static struct link_encoder *dce120_link_
- 				      &link_enc_feature,
- 				      &link_enc_regs[link_regs_id],
- 				      &link_enc_aux_regs[enc_init_data->channel - 1],
--				      &link_enc_hpd_regs[enc_init_data->hpd_source]);
-+				      enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs) ?
-+				      NULL : &link_enc_hpd_regs[enc_init_data->hpd_source]);
- 
- 	return &enc110->base;
- }
---- a/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
-@@ -747,18 +747,16 @@ static struct link_encoder *dce60_link_e
- 		return &enc110->base;
- 	}
- 
--	if (enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs))
--		return NULL;
--
- 	link_regs_id =
- 		map_transmitter_id_to_phy_instance(enc_init_data->transmitter);
- 
- 	dce60_link_encoder_construct(enc110,
--				      enc_init_data,
--				      &link_enc_feature,
--				      &link_enc_regs[link_regs_id],
--				      &link_enc_aux_regs[enc_init_data->channel - 1],
--				      &link_enc_hpd_regs[enc_init_data->hpd_source]);
-+				     enc_init_data,
-+				     &link_enc_feature,
-+				     &link_enc_regs[link_regs_id],
-+				     &link_enc_aux_regs[enc_init_data->channel - 1],
-+				     enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs) ?
-+				     NULL : &link_enc_hpd_regs[enc_init_data->hpd_source]);
- 	return &enc110->base;
- }
- 
---- a/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-@@ -753,9 +753,6 @@ static struct link_encoder *dce80_link_e
- 		return &enc110->base;
- 	}
- 
--	if (enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs))
--		return NULL;
--
- 	link_regs_id =
- 		map_transmitter_id_to_phy_instance(enc_init_data->transmitter);
- 
-@@ -764,7 +761,8 @@ static struct link_encoder *dce80_link_e
- 				      &link_enc_feature,
- 				      &link_enc_regs[link_regs_id],
- 				      &link_enc_aux_regs[enc_init_data->channel - 1],
--				      &link_enc_hpd_regs[enc_init_data->hpd_source]);
-+				      enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs) ?
-+				      NULL : &link_enc_hpd_regs[enc_init_data->hpd_source]);
- 	return &enc110->base;
- }
- 
+ 		aconnector->dc_sink = sink;
+ 		dc_sink_retain(aconnector->dc_sink);
++		drm_edid_free(aconnector->drm_edid);
++		aconnector->drm_edid = NULL;
+ 		if (sink->dc_edid.length == 0) {
+-			aconnector->drm_edid = NULL;
+ 			hdmi_cec_unset_edid(aconnector);
+ 			if (aconnector->dc_link->aux_mode) {
+ 				drm_dp_cec_unset_edid(&aconnector->dm_dp_aux.aux);
 
 
