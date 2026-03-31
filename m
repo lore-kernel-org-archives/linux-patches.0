@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACD63FB052;
-	Tue, 31 Mar 2026 16:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59BA421898;
+	Tue, 31 Mar 2026 16:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974552; cv=none; b=MrxFFxMShQZjbO6Z/ZnpUuLyGs3Ly9Vg/7+1kJV+2hiTaiDDPAqF9/lqHmOWpacCyBx05huornrzaE/fftswuqAfd+xqE3aL/CXEBiH1nvBtbRO5A6+quJo5opWLoyyEUbL66mP7Rzf9RB7T77F+pY/sUxrsfI3SDi3AOkcCWLo=
+	t=1774974555; cv=none; b=leZfvCXvhheGd6sAYUzj2swuiOkapR6HSx8nprfvKZKFcTtg5Hsy5Rq8R9EM/L81s5BgkkUFk7xcdGKiDUsLHkXGgxF3GBDf5705BkYOskNzzqYwCXS4hhtaJvQNwIVqWXt+HvEWd2RSNJkGzPorvkgSjOEhvJlLdCZlQsHvEt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974552; c=relaxed/simple;
-	bh=9gSOw1pbXCnFgrz6Zsvi7hPvzBoXmLOEqYAp7NKx+nI=;
+	s=arc-20240116; t=1774974555; c=relaxed/simple;
+	bh=PhUzX4TD2Zy2vaoUP/GgnGdgFgvHaRPGgfzuKeaXGHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oH2+KJOPaLZ2dACZd1p0AQugOtyhXqxLqphXdeX7TBimx3lxyiyTDh74ApgGEejEcTVf3RaHBU4TKgZmhDcqT3RFQ1Nxua+QQwUY6BynAFXeve2JXMwsa3o77I2864TgHBje2eS0XIz6+t9KHV2uWOhRNKzTMTe9mOSRRfOMAoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWI8BgSV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvW9VvjCgGw0I3+2I/jf3XHb7F0rxDIJep8GdG3SKcOOE9rzh6yqRb1lO8nMHqtcXGc4r9B4pmg9v/oQuTWQYWSLefS7igZYGPEp6XNZkXCCx+l/xOWKPjLmdWzVGSDjdCqN6QuY3oBlZq0kUp6I4WI5xwMkoDOLAIN/keOBw3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVVuub4H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWI8BgSV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B13C19423;
-	Tue, 31 Mar 2026 16:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVVuub4H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138BFC19423;
+	Tue, 31 Mar 2026 16:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974552;
-	bh=9gSOw1pbXCnFgrz6Zsvi7hPvzBoXmLOEqYAp7NKx+nI=;
+	s=korg; t=1774974555;
+	bh=PhUzX4TD2Zy2vaoUP/GgnGdgFgvHaRPGgfzuKeaXGHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gWI8BgSVH4gpwHUd6tLlhGHZaiptJUW1gR8YrJOcB54cC4ZEkpOEJKoSgUjoHLcpm
-	 BsUmmuIiZmH52KkKNc31O01NQou8rMLirDyMUGlGFFNx9HWvESzRmSm1YEgu03fBH4
-	 CMacLdylQ2dXfhZs1d/2N/9dmZtYPYOQHzC/cWH0=
+	b=dVVuub4HP3mw8OuLi5QrIBNOhDWhJzdocXsbNjZPdJPVQPhkxzEkG1oohuztsZL/y
+	 ZwlNDanRAnLA3kGc0svxACgJ97VExMGurXZdOwWQfYoIJrq+3cmcBeS8VR7ZputJYV
+	 +7bLvKZ9Q/NXy2Q6dRnhN+7zTXhOS7fBLgc9hejM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Durrer <anthonydev@fastmail.com>,
-	Simon Weber <simon.weber.39@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>,
+	syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <Kartikey406@gmail.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.6 129/175] ext4: fix journal credit check when setting fscrypt context
-Date: Tue, 31 Mar 2026 18:21:53 +0200
-Message-ID: <20260331161734.525999272@linuxfoundation.org>
+Subject: [PATCH 6.6 130/175] ext4: convert inline data to extents when truncate exceeds inline size
+Date: Tue, 31 Mar 2026 18:21:54 +0200
+Message-ID: <20260331161734.562693077@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -53,58 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Weber <simon.weber.39@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit b1d682f1990c19fb1d5b97d13266210457092bcd upstream.
+commit ed9356a30e59c7cc3198e7fc46cfedf3767b9b17 upstream.
 
-Fix an issue arising when ext4 features has_journal, ea_inode, and encrypt
-are activated simultaneously, leading to ENOSPC when creating an encrypted
-file.
+Add a check in ext4_setattr() to convert files from inline data storage
+to extent-based storage when truncate() grows the file size beyond the
+inline capacity. This prevents the filesystem from entering an
+inconsistent state where the inline data flag is set but the file size
+exceeds what can be stored inline.
 
-Fix by passing XATTR_CREATE flag to xattr_set_handle function if a handle
-is specified, i.e., when the function is called in the control flow of
-creating a new inode. This aligns the number of jbd2 credits set_handle
-checks for with the number allocated for creating a new inode.
+Without this fix, the following sequence causes a kernel BUG_ON():
 
-ext4_set_context must not be called with a non-null handle (fs_data) if
-fscrypt context xattr is not guaranteed to not exist yet. The only other
-usage of this function currently is when handling the ioctl
-FS_IOC_SET_ENCRYPTION_POLICY, which calls it with fs_data=NULL.
+1. Mount filesystem with inode that has inline flag set and small size
+2. truncate(file, 50MB) - grows size but inline flag remains set
+3. sendfile() attempts to write data
+4. ext4_write_inline_data() hits BUG_ON(write_size > inline_capacity)
 
-Fixes: c1a5d5f6ab21eb7e ("ext4: improve journal credit handling in set xattr paths")
+The crash occurs because ext4_write_inline_data() expects inline storage
+to accommodate the write, but the actual inline capacity (~60 bytes for
+i_block + ~96 bytes for xattrs) is far smaller than the file size and
+write request.
 
-Co-developed-by: Anthony Durrer <anthonydev@fastmail.com>
-Signed-off-by: Anthony Durrer <anthonydev@fastmail.com>
-Signed-off-by: Simon Weber <simon.weber.39@gmail.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://patch.msgid.link/20260207100148.724275-4-simon.weber.39@gmail.com
+The fix checks if the new size from setattr exceeds the inode's actual
+inline capacity (EXT4_I(inode)->i_inline_size) and converts the file to
+extent-based storage before proceeding with the size change.
+
+This addresses the root cause by ensuring the inline data flag and file
+size remain consistent during truncate operations.
+
+Reported-by: syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7de5fe447862fc37576f
+Tested-by: syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com
+Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260207043607.1175976-1-kartikey406@gmail.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/crypto.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/fs/ext4/crypto.c
-+++ b/fs/ext4/crypto.c
-@@ -169,10 +169,17 @@ static int ext4_set_context(struct inode
- 	 */
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5530,6 +5530,18 @@ int ext4_setattr(struct mnt_idmap *idmap
+ 		if (attr->ia_size == inode->i_size)
+ 			inc_ivers = false;
  
- 	if (handle) {
 +		/*
-+		 * Since the inode is new it is ok to pass the
-+		 * XATTR_CREATE flag. This is necessary to match the
-+		 * remaining journal credits check in the set_handle
-+		 * function with the credits allocated for the new
-+		 * inode.
++		 * If file has inline data but new size exceeds inline capacity,
++		 * convert to extent-based storage first to prevent inconsistent
++		 * state (inline flag set but size exceeds inline capacity).
 +		 */
- 		res = ext4_xattr_set_handle(handle, inode,
- 					    EXT4_XATTR_INDEX_ENCRYPTION,
- 					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
--					    ctx, len, 0);
-+					    ctx, len, XATTR_CREATE);
- 		if (!res) {
- 			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
- 			ext4_clear_inode_state(inode,
++		if (ext4_has_inline_data(inode) &&
++		    attr->ia_size > EXT4_I(inode)->i_inline_size) {
++			error = ext4_convert_inline_data(inode);
++			if (error)
++				goto err_out;
++		}
++
+ 		if (shrink) {
+ 			if (ext4_should_order_data(inode)) {
+ 				error = ext4_begin_ordered_truncate(inode,
 
 
