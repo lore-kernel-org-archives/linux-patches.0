@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAA22C15B2;
-	Tue, 31 Mar 2026 16:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4D53E8C50;
+	Tue, 31 Mar 2026 16:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975814; cv=none; b=db/VjQB2thDNqOW3E7XrCfvDzjRLA5ZiU6MRxWg8PwTzDTJHETnHVTtUo8lE0J45dHw0I8Vilaizw+DKnxTmhL+aJX5tRTBzfhzL+rEnahhQPldc38ywXd6w7YpW3X2JvvCVMjPfimlSl8voAWJxNtVhqQodbvluWDOQyGyXIzo=
+	t=1774975816; cv=none; b=CSsvWqRxyevQfo1YazRdz7iUPoGexXdeg1Bg90cMbtjFHpdz5Y6IgLi/LO0IlLSXCVZS4to/bklYXvQCke0/MSNe2jJW3cP/nbAtxwY4PtsgPipBXBCxXRKR0epluniznbrNtgFdKQgV2NQccbiaxwlsBCMkggRBiHcgbkdCHYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975814; c=relaxed/simple;
-	bh=pmiEJl5MlA2G6YlD4tWQIeLWqvJECcYIp07HLruufD4=;
+	s=arc-20240116; t=1774975816; c=relaxed/simple;
+	bh=Z0VkR3/1egvW2hGgD/GeIwvL6PfeCQd8uwnR7ugnksE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rn/sqe54ITVE3mM+vC2EXZ+LMrQfesLFY7mCmBJcQgYjnT67U1ZbQEihHWdgjReMhHMde35B6DdEUgqQViIfCiLWmrACXmA+crOkGWs/kt4Vz2vGbeL8RN5WrYhV6aCDkLYg8e+5wqBV3LQ2jrgRmyNqzGDPuB4K8i11V0sBIiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMkRLfaP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q75aaJzHZNoCE5Y227oPGE0eNwCj0Abccj5lUt4NDUCCmjs+M35WSs7GUXY241lT++rAaa3z3NNZ/5RP5B7rCEOrMrN+O6NpN4mLa/NyaTfcW27lMWTMNAcQRWnz+VgSw1IHwzEEVURBgyb6RoCm5QTJGLXKqffsAEmAzSvoSE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7eDtUvG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMkRLfaP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D5FC19423;
-	Tue, 31 Mar 2026 16:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7eDtUvG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC130C19423;
+	Tue, 31 Mar 2026 16:50:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975813;
-	bh=pmiEJl5MlA2G6YlD4tWQIeLWqvJECcYIp07HLruufD4=;
+	s=korg; t=1774975816;
+	bh=Z0VkR3/1egvW2hGgD/GeIwvL6PfeCQd8uwnR7ugnksE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMkRLfaPomik5YeIdLkX8vNgz2hRbPxbEr/OGiBtKJPw3p7F5zFcIzsKgizzb+It/
-	 YPFe1ydj/kaoJuEG5p0HVeA27R0tKvdSRwQBWN8+nuEGb3oRwux7n01FOysO2qqUH1
-	 ValkBWU5XEMSVHQjZynYp0xv8rPzaW23QIU3TdnI=
+	b=d7eDtUvGBSmFFCrS5hv5MUAx5goZUd8+TtQetvDe4reqHJ3tdg8MYLEmCNSpGQrrO
+	 oV8TIkEX8VaG0kFIRyNenx372vrkrOa9OfsovWAgKRW+OnNlrYHATnw0cQeL5NY4Z9
+	 u22FChYOsW6ZpBbJcjsH/z6auGfmJxLtacK3kcDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 096/244] Bluetooth: L2CAP: Fix ERTM re-init and zero pdu_len infinite loop
-Date: Tue, 31 Mar 2026 18:20:46 +0200
-Message-ID: <20260331161745.221371858@linuxfoundation.org>
+Subject: [PATCH 6.12 070/244] net/smc: fix double-free of smc_spd_priv when tee() duplicates splice pipe buffer
+Date: Tue, 31 Mar 2026 18:20:20 +0200
+Message-ID: <20260331161744.273123544@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,77 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Qi Tang <tpluszz77@gmail.com>
 
-[ Upstream commit 25f420a0d4cfd61d3d23ec4b9c56d9f443d91377 ]
+[ Upstream commit 24dd586bb4cbba1889a50abe74143817a095c1c9 ]
 
-l2cap_config_req() processes CONFIG_REQ for channels in BT_CONNECTED
-state to support L2CAP reconfiguration (e.g. MTU changes). However,
-since both CONF_INPUT_DONE and CONF_OUTPUT_DONE are already set from
-the initial configuration, the reconfiguration path falls through to
-l2cap_ertm_init(), which re-initializes tx_q, srej_q, srej_list, and
-retrans_list without freeing the previous allocations and sets
-chan->sdu to NULL without freeing the existing skb. This leaks all
-previously allocated ERTM resources.
+smc_rx_splice() allocates one smc_spd_priv per pipe_buffer and stores
+the pointer in pipe_buffer.private.  The pipe_buf_operations for these
+buffers used .get = generic_pipe_buf_get, which only increments the page
+reference count when tee(2) duplicates a pipe buffer.  The smc_spd_priv
+pointer itself was not handled, so after tee() both the original and the
+cloned pipe_buffer share the same smc_spd_priv *.
 
-Additionally, l2cap_parse_conf_req() does not validate the minimum
-value of remote_mps derived from the RFC max_pdu_size option. A zero
-value propagates to l2cap_segment_sdu() where pdu_len becomes zero,
-causing the while loop to never terminate since len is never
-decremented, exhausting all available memory.
+When both pipes are subsequently released, smc_rx_pipe_buf_release() is
+called twice against the same object:
 
-Fix the double-init by skipping l2cap_ertm_init() and
-l2cap_chan_ready() when the channel is already in BT_CONNECTED state,
-while still allowing the reconfiguration parameters to be updated
-through l2cap_parse_conf_req(). Also add a pdu_len zero check in
-l2cap_segment_sdu() as a safeguard.
+  1st call: kfree(priv)  sock_put(sk)  smc_rx_update_cons()  [correct]
+  2nd call: kfree(priv)  sock_put(sk)  smc_rx_update_cons()  [UAF]
 
-Fixes: 96298f640104 ("Bluetooth: L2CAP: handle l2cap config request during open state")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+KASAN reports a slab-use-after-free in smc_rx_pipe_buf_release(), which
+then escalates to a NULL-pointer dereference and kernel panic via
+smc_rx_update_consumer() when it chases the freed priv->smc pointer:
+
+  BUG: KASAN: slab-use-after-free in smc_rx_pipe_buf_release+0x78/0x2a0
+  Read of size 8 at addr ffff888004a45740 by task smc_splice_tee_/74
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x53/0x70
+   print_report+0xce/0x650
+   kasan_report+0xc6/0x100
+   smc_rx_pipe_buf_release+0x78/0x2a0
+   free_pipe_info+0xd4/0x130
+   pipe_release+0x142/0x160
+   __fput+0x1c6/0x490
+   __x64_sys_close+0x4f/0x90
+   do_syscall_64+0xa6/0x1a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000020
+  RIP: 0010:smc_rx_update_consumer+0x8d/0x350
+  Call Trace:
+   <TASK>
+   smc_rx_pipe_buf_release+0x121/0x2a0
+   free_pipe_info+0xd4/0x130
+   pipe_release+0x142/0x160
+   __fput+0x1c6/0x490
+   __x64_sys_close+0x4f/0x90
+   do_syscall_64+0xa6/0x1a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+  Kernel panic - not syncing: Fatal exception
+
+Beyond the memory-safety problem, duplicating an SMC splice buffer is
+semantically questionable: smc_rx_update_cons() would advance the
+consumer cursor twice for the same data, corrupting receive-window
+accounting.  A refcount on smc_spd_priv could fix the double-free, but
+the cursor-accounting issue would still need to be addressed separately.
+
+The .get callback is invoked by both tee(2) and splice_pipe_to_pipe()
+for partial transfers; both will now return -EFAULT.  Users who need
+to duplicate SMC socket data must use a copy-based read path.
+
+Fixes: 9014db202cb7 ("smc: add support for splice()")
+Signed-off-by: Qi Tang <tpluszz77@gmail.com>
+Link: https://patch.msgid.link/20260318064847.23341-1-tpluszz77@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ net/smc/smc_rx.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 58679045093a9..128f5701efb46 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -2383,6 +2383,9 @@ static int l2cap_segment_sdu(struct l2cap_chan *chan,
- 	/* Remote device may have requested smaller PDUs */
- 	pdu_len = min_t(size_t, pdu_len, chan->remote_mps);
+diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
+index 79047721df511..e7a6c2602e786 100644
+--- a/net/smc/smc_rx.c
++++ b/net/smc/smc_rx.c
+@@ -135,9 +135,16 @@ static void smc_rx_pipe_buf_release(struct pipe_inode_info *pipe,
+ 	sock_put(sk);
+ }
  
-+	if (!pdu_len)
-+		return -EINVAL;
++static bool smc_rx_pipe_buf_get(struct pipe_inode_info *pipe,
++				struct pipe_buffer *buf)
++{
++	/* smc_spd_priv in buf->private is not shareable; disallow cloning. */
++	return false;
++}
 +
- 	if (len <= pdu_len) {
- 		sar = L2CAP_SAR_UNSEGMENTED;
- 		sdu_len = 0;
-@@ -4283,14 +4286,16 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
- 	if (test_bit(CONF_INPUT_DONE, &chan->conf_state)) {
- 		set_default_fcs(chan);
+ static const struct pipe_buf_operations smc_pipe_ops = {
+ 	.release = smc_rx_pipe_buf_release,
+-	.get = generic_pipe_buf_get
++	.get	 = smc_rx_pipe_buf_get,
+ };
  
--		if (chan->mode == L2CAP_MODE_ERTM ||
--		    chan->mode == L2CAP_MODE_STREAMING)
--			err = l2cap_ertm_init(chan);
-+		if (chan->state != BT_CONNECTED) {
-+			if (chan->mode == L2CAP_MODE_ERTM ||
-+			    chan->mode == L2CAP_MODE_STREAMING)
-+				err = l2cap_ertm_init(chan);
- 
--		if (err < 0)
--			l2cap_send_disconn_req(chan, -err);
--		else
--			l2cap_chan_ready(chan);
-+			if (err < 0)
-+				l2cap_send_disconn_req(chan, -err);
-+			else
-+				l2cap_chan_ready(chan);
-+		}
- 
- 		goto unlock;
- 	}
+ static void smc_rx_spd_release(struct splice_pipe_desc *spd,
 -- 
 2.51.0
 
