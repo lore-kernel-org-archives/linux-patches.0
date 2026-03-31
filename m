@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3351A423172;
-	Tue, 31 Mar 2026 16:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E41421A1D;
+	Tue, 31 Mar 2026 16:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975076; cv=none; b=ohYzX9PS+hMwYeGthoB4i3T+UnsrY7hGB4Kqd055GRyiFFXGo8zypbZkPyZ4TQ2nYyJrY8UiGO6RxMh4zJ/Ccq0eQjqD7qrrPppPjYm0csG8C9n+UicDviIK3Qtq9D5nsISCy0bf9rvNDwjrQuukARyATCYw+nDYcARtYGIPzNo=
+	t=1774975078; cv=none; b=TjoE7J6uCrvlo/sYYjK53th/9ns7zZO3c7rhtk/6oTH2RRZRUAEhoF89tMybT5MtzjCgB2crsm8jWiJ5n+u+awQH576/sTEbjsdCg9rlJGP/oZA7LIr2gYxYsrE2HxFwlrJPh/kUitztq4N6LsoqWsbgAzUHXMa8D0A/dJKyPGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975076; c=relaxed/simple;
-	bh=GVVrbTawekv9dc9+hXCVFShZ5S4ANHZeE8etzP0fT1U=;
+	s=arc-20240116; t=1774975078; c=relaxed/simple;
+	bh=W3MQPQQd+msDjCqgfo0WCWsydHgSVqHODBQWdONKWA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mo0X2GECdOqt3E3sK2jLW3mwsK8toFSdCP8esKmYUz5F9+WwCYiKtSQ4hkcM2/p843CFmuCY4HiguqTE6qfEi4fDm94HtkUhn/YdB48JEnQR16zmZvv373zvQrHKj8ajJ9KYZvEugGy4bYUx2H5NmH5i6DRKWlZyB8a5qGbsbmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzapEWRW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ss2Hb7/uvgMC3nEeCYydu6I9xkf+dhEWPLnRse1uOMyCxA4vMCrvBtScMDBRM20YXggGMFlZLakj8OoaiK1+DyHMemEFuQVvk8hV1B/wCp1Bbf3NUvPB5wEsFpQhZ9h464ENgZ563w4JhOOyXdBlD3JLEbsIAhINMOmMZr81+ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewh2Alou; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzapEWRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B7FC19423;
-	Tue, 31 Mar 2026 16:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewh2Alou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CAFC4AF09;
+	Tue, 31 Mar 2026 16:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975075;
-	bh=GVVrbTawekv9dc9+hXCVFShZ5S4ANHZeE8etzP0fT1U=;
+	s=korg; t=1774975078;
+	bh=W3MQPQQd+msDjCqgfo0WCWsydHgSVqHODBQWdONKWA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zzapEWRWbm5srhRR8UFG4LEPptR722VFXYx+pm05QE8rwJ2aN4H2+bXvJJ3igmwW1
-	 sA8qSn99nab1wS4eP4pktaZDJjEvFQ7rnxlSSO8Mj4QHqFhRtmUsCKAYwlxId/sshf
-	 2/0m8bv0x1YeMNzqnBWeAR4A++wr+xgCJ+uPgYcM=
+	b=ewh2AlouuRvGmknVLHurKJArKBMZPRiS5wZc7GY/wqyMbxMffQuJyWMoTW2o6mTYg
+	 9TFQOrwNR9f2bShnblV84rV/hACSQRhmL3C4jSg16cWfUU7Ndt43M9Xo1NQb4yBotR
+	 HOOa7SHW4mBPjEvHHMAympGwrn03/tBcFor+IeaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3d8bc31c45e11450f24c@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 127/342] team: fix header_ops type confusion with non-Ethernet ports
-Date: Tue, 31 Mar 2026 18:19:20 +0200
-Message-ID: <20260331161803.679820899@linuxfoundation.org>
+Subject: [PATCH 6.19 154/342] RDMA/efa: Fix possible deadlock
+Date: Tue, 31 Mar 2026 18:19:47 +0200
+Message-ID: <20260331161804.675931906@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,132 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 425000dbf17373a4ab8be9428f5dc055ef870a56 ]
+[ Upstream commit 0f2055db7b630559870afb40fc84490816ab8ec5 ]
 
-Similar to commit 950803f72547 ("bonding: fix type confusion in
-bond_setup_by_slave()") team has the same class of header_ops type
-confusion.
+In the error path for efa_com_alloc_comp_ctx() the semaphore assigned to
+&aq->avail_cmds is not released.
 
-For non-Ethernet ports, team_setup_by_port() copies port_dev->header_ops
-directly. When the team device later calls dev_hard_header() or
-dev_parse_header(), these callbacks can run with the team net_device
-instead of the real lower device, so netdev_priv(dev) is interpreted as
-the wrong private type and can crash.
+Detected by Smatch:
+drivers/infiniband/hw/efa/efa_com.c:662 efa_com_cmd_exec() warn:
+inconsistent returns '&aq->avail_cmds'
 
-The syzbot report shows a crash in bond_header_create(), but the root
-cause is in team: the topology is gre -> bond -> team, and team calls
-the inherited header_ops with its own net_device instead of the lower
-device, so bond_header_create() receives a team device and interprets
-netdev_priv() as bonding private data, causing a type confusion crash.
+Add release for &aq->avail_cmds in efa_com_alloc_comp_ctx() error path.
 
-Fix this by introducing team header_ops wrappers for create/parse,
-selecting a team port under RCU, and calling the lower device callbacks
-with port->dev, so each callback always sees the correct net_device
-context.
-
-Also pass the selected lower device to the lower parse callback, so
-recursion is bounded in stacked non-Ethernet topologies and parse
-callbacks always run with the correct device context.
-
-Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
-Reported-by: syzbot+3d8bc31c45e11450f24c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69b46af7.050a0220.36eb34.000e.GAE@google.com/T/
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://patch.msgid.link/20260320072139.134249-2-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ef3b06742c8a2 ("RDMA/efa: Fix use of completion ctx after free")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Link: https://patch.msgid.link/20260314045730.1143862-1-ethantidmore06@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 65 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 64 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/efa/efa_com.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index a0fe998cc055d..98772d749f2bf 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -2060,6 +2060,68 @@ static const struct ethtool_ops team_ethtool_ops = {
-  * rt netlink interface
-  ***********************/
+diff --git a/drivers/infiniband/hw/efa/efa_com.c b/drivers/infiniband/hw/efa/efa_com.c
+index 56caba612139f..e97b5f0d70038 100644
+--- a/drivers/infiniband/hw/efa/efa_com.c
++++ b/drivers/infiniband/hw/efa/efa_com.c
+@@ -629,6 +629,7 @@ int efa_com_cmd_exec(struct efa_com_admin_queue *aq,
+ 	comp_ctx = efa_com_alloc_comp_ctx(aq);
+ 	if (!comp_ctx) {
+ 		clear_bit(EFA_AQ_STATE_RUNNING_BIT, &aq->state);
++		up(&aq->avail_cmds);
+ 		return -EINVAL;
+ 	}
  
-+/* For tx path we need a linkup && enabled port and for parse any port
-+ * suffices.
-+ */
-+static struct team_port *team_header_port_get_rcu(struct team *team,
-+						  bool txable)
-+{
-+	struct team_port *port;
-+
-+	list_for_each_entry_rcu(port, &team->port_list, list) {
-+		if (!txable || team_port_txable(port))
-+			return port;
-+	}
-+
-+	return NULL;
-+}
-+
-+static int team_header_create(struct sk_buff *skb, struct net_device *team_dev,
-+			      unsigned short type, const void *daddr,
-+			      const void *saddr, unsigned int len)
-+{
-+	struct team *team = netdev_priv(team_dev);
-+	const struct header_ops *port_ops;
-+	struct team_port *port;
-+	int ret = 0;
-+
-+	rcu_read_lock();
-+	port = team_header_port_get_rcu(team, true);
-+	if (port) {
-+		port_ops = READ_ONCE(port->dev->header_ops);
-+		if (port_ops && port_ops->create)
-+			ret = port_ops->create(skb, port->dev,
-+					       type, daddr, saddr, len);
-+	}
-+	rcu_read_unlock();
-+	return ret;
-+}
-+
-+static int team_header_parse(const struct sk_buff *skb,
-+			     const struct net_device *team_dev,
-+			     unsigned char *haddr)
-+{
-+	struct team *team = netdev_priv(team_dev);
-+	const struct header_ops *port_ops;
-+	struct team_port *port;
-+	int ret = 0;
-+
-+	rcu_read_lock();
-+	port = team_header_port_get_rcu(team, false);
-+	if (port) {
-+		port_ops = READ_ONCE(port->dev->header_ops);
-+		if (port_ops && port_ops->parse)
-+			ret = port_ops->parse(skb, port->dev, haddr);
-+	}
-+	rcu_read_unlock();
-+	return ret;
-+}
-+
-+static const struct header_ops team_header_ops = {
-+	.create		= team_header_create,
-+	.parse		= team_header_parse,
-+};
-+
- static void team_setup_by_port(struct net_device *dev,
- 			       struct net_device *port_dev)
- {
-@@ -2068,7 +2130,8 @@ static void team_setup_by_port(struct net_device *dev,
- 	if (port_dev->type == ARPHRD_ETHER)
- 		dev->header_ops	= team->header_ops_cache;
- 	else
--		dev->header_ops	= port_dev->header_ops;
-+		dev->header_ops	= port_dev->header_ops ?
-+				  &team_header_ops : NULL;
- 	dev->type = port_dev->type;
- 	dev->hard_header_len = port_dev->hard_header_len;
- 	dev->needed_headroom = port_dev->needed_headroom;
 -- 
-2.51.0
+2.53.0
 
 
 
