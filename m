@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3899423A62;
-	Tue, 31 Mar 2026 16:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F12E425CC4;
+	Tue, 31 Mar 2026 16:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976311; cv=none; b=iagoRiJrmC9JSYHO4R6kxZIaVRK8TlNgT8Kvo3ajIHTGk2kSTUzC+pd8paoYzrAa+PxIh4ppPPFYggl6ClOjLCuDaSRAZfN1U/coyA7GyS3AmzGh1CExCRExmHfx7BJN9JHKXXviKZYXn0O7AqdNsWOgSKH0r+GMXPg+EkCQ/JA=
+	t=1774976313; cv=none; b=edUnwfzBqHUEseNQPJrFf6YjDO6JtwibL8bt7Ifybi32csw+GTtZPNagdXI0beMrYuK4Ym+U+RpLL8GajF94hjTBim1/qnzCex5HfcBKY73wqr90le5TZeMNpL1YkeN3+dWcTkM3RitJ6gZ7Tlthzes36RjOO6JQ7SGHw8+Ctlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976311; c=relaxed/simple;
-	bh=SFmPzGYxJHLMZwOyI5PjA45mY0ngOJuC0KOli78D+f8=;
+	s=arc-20240116; t=1774976313; c=relaxed/simple;
+	bh=poUT66zwBzn7MBVgPwvgEYzCyh0HLPZ05s5eQRU6ilQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AbXhlzQ0q7x+4gz4dOjIua9OHKN9GoiS480ejCdBx52I/e4Mp+yJChYG0E9IWGoJoAVkQ8pzUGY5fidsDcsruZu11b4aRl6xM8+n1XbrwlZvxtbtBxXLExO72hMCz5pdXsfAU5nbbYBIqIW4YhLvKQKEYXvWVoNPVg2MNSSBfSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBLnUyjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PEDbSGz7m134OcQFq1mIhT7HNY0Y0/3OwwBgsLQCoQOdTJgg0xu7EK8n67qpj63U28zhbinH+49DCZNgLB7JxPwkg2XWcGe+hvqV2nMu2HRdlo2Y9Mcp9pWdVfVKVIerK5olLw4xehO5m9lXHILEOIK9Ce4zA+TZhegsKYuKYPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+oLJkZo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBLnUyjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF51C19423;
-	Tue, 31 Mar 2026 16:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+oLJkZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA19AC19424;
+	Tue, 31 Mar 2026 16:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976310;
-	bh=SFmPzGYxJHLMZwOyI5PjA45mY0ngOJuC0KOli78D+f8=;
+	s=korg; t=1774976313;
+	bh=poUT66zwBzn7MBVgPwvgEYzCyh0HLPZ05s5eQRU6ilQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBLnUyjWSUzHLunALnGLiqGBqqIavu1nU6Tf7/QLC8XjS6jmOU+6aHMUc3Pon3TUl
-	 NP/G5YnIfRZta5qxELkOWFekD68bNDEP7DK0ePzmV5r8iA14uSG2N26WYwdAPoRt9g
-	 /Ncx+W/L9faOiaMns8Gsaj9c5vW7LfclwzvurIkU=
+	b=Y+oLJkZoBsoOgOruOYP7hdzXjPsQYASlhZvVY3REiZKniebjwI+QrOGEM/ly0Lg3e
+	 UfNeQRc5+R1+BmmDaC3SlNNlo1K/dGuwCY31gBOFqB/p2mUr3DNdkRLqv84tTWoWhG
+	 rfKwEQE974Jy9D5to5urTAapsz1kQPS6OrZs4oFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Oliver Freyermuth <o.freyermuth@googlemail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/309] scsi: devinfo: Add BLIST_SKIP_IO_HINTS for Iomega ZIP
-Date: Tue, 31 Mar 2026 18:19:06 +0200
-Message-ID: <20260331161755.070717479@linuxfoundation.org>
+Subject: [PATCH 6.18 044/309] ASoC: Intel: sof_sdw: Add quirk for Alienware Area 51 (2025) 0CCD SKU
+Date: Tue, 31 Mar 2026 18:19:07 +0200
+Message-ID: <20260331161755.107025504@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,42 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Oliver Freyermuth <o.freyermuth@googlemail.com>
 
-[ Upstream commit 80bf3b28d32b431f84f244a8469488eb6d96afbb ]
+[ Upstream commit 70eddf6a0a3fc6d3ab6f77251676da97cc7f12ae ]
 
-The Iomega ZIP 100 (Z100P2) can't process IO Advice Hints Grouping mode
-page query. It immediately switches to the status phase 0xb8 after
-receiving the subpage code 0x05 of MODE_SENSE_10 command, which fails
-imm_out() and turns into DID_ERROR of this command, which leads to unusable
-device. This was tested with an Iomega ZIP 100 (Z100P2) connected with a
-StarTech PEX1P2 AX99100 PCIe parallel port card.
+This adds the necessary quirk for the Alienware 18 Area 51 (2025).
+Complements commit 1b03391d073d ("ASoC: Intel: sof_sdw: Add quirk
+for Alienware Area 51 (2025) 0CCC SKU").
 
-Prior to this fix, Test Unit Ready fails and the drive can't be used:
-        IMM: returned SCSI status b8
-        sd 7:0:6:0: [sdh] Test Unit Ready failed: Result: hostbyte=0x01 driverbyte=DRIVER_OK
-
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Link: https://patch.msgid.link/20260227181823.892932-1-fuchsfl@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Oliver Freyermuth <o.freyermuth@googlemail.com>
+Tested-by: Oliver Freyermuth <o.freyermuth@googlemail.com>
+Link: https://patch.msgid.link/20260224190224.30630-1-o.freyermuth@googlemail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_devinfo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/boards/sof_sdw.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/scsi_devinfo.c b/drivers/scsi/scsi_devinfo.c
-index 78346b2b69c91..c51146882a1fa 100644
---- a/drivers/scsi/scsi_devinfo.c
-+++ b/drivers/scsi/scsi_devinfo.c
-@@ -190,7 +190,7 @@ static struct {
- 	{"IBM", "2076", NULL, BLIST_NO_VPD_SIZE},
- 	{"IBM", "2105", NULL, BLIST_RETRY_HWERROR},
- 	{"iomega", "jaz 1GB", "J.86", BLIST_NOTQ | BLIST_NOLUN},
--	{"IOMEGA", "ZIP", NULL, BLIST_NOTQ | BLIST_NOLUN},
-+	{"IOMEGA", "ZIP", NULL, BLIST_NOTQ | BLIST_NOLUN | BLIST_SKIP_IO_HINTS},
- 	{"IOMEGA", "Io20S         *F", NULL, BLIST_KEY},
- 	{"INSITE", "Floptical   F*8I", NULL, BLIST_KEY},
- 	{"INSITE", "I325VM", NULL, BLIST_KEY},
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 6c95b1f8fc1a5..465bf5fafecf7 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -749,6 +749,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
+ 	},
++	{
++		.callback = sof_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0CCD")
++		},
++		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
++	},
+ 	/* Pantherlake devices*/
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
 -- 
 2.51.0
 
