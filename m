@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26663FADEE;
-	Tue, 31 Mar 2026 16:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37828401A38;
+	Tue, 31 Mar 2026 16:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974695; cv=none; b=PvaPopIgJA/h2AbhrscZATPk7JudvswmV8mV7wXj4b9UqjijK9mN7t0iKAX09dcSCzYshI0sTBEBDpnZr8QHCoWqaRy8/jF1Td9j4mxTiTxlLhI0oG+24wfKMQC21iNHK31p2EqzJSPmKTbZg3lR9HvXBcxutFw++20x29IhkRo=
+	t=1774974698; cv=none; b=fg00CwAup3rFlHGUNC1oHY1eVtj/Te4BUW0vX/1gQo1jEBpTXiJVaHNgZwrUPDXVXZwxgkCUXZHEChXpjkUVIxukncfT9XBt1PC9Cyu6E64r0RHntxnjxFtjqnBytClTSJF/lGBV7t143ynQbMi1JLfwbIDy3XRtPYpxEB3Gf9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974695; c=relaxed/simple;
-	bh=L++gqIV6ZGDGYvbgIDMuV8iBhFRGE/+/yQkwj3r7YBk=;
+	s=arc-20240116; t=1774974698; c=relaxed/simple;
+	bh=jhhLWX0IUsTaQZlwUhODMRsYajDBG9eZ8M1J3NmWnwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNxjh0zR4UtLEppdWNSrGowDHvZI5dMGxrPL7kLYt+ep3FfxV3qY5oT/FF5coiqcmI5wqmnwBjobeKqJ9Vn3WDRAncLzDynJaWVNqwQjFsHPh8+0XFhRG2FOToIrdM1HJfSs2nk/RGlHgU4/ix9QqXJJ/bfgl3+e5mBHCTGBlik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClnI+urQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rri3d0FlSd9mGIIqEyTgFrJ4loksv0V3MNdi9oyYcIIYKX40L7BBu7RcvyR3wEucG22qMccAO2mZudWWCzHq2Gopd9NZqe9c4w71NarWtHme5wkqdhdUsfDv3KckfhlnLn9WVTltBHXcwobvLbSN/IH2DrwTciBPA3/ftu2mcXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CE9UWkAK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClnI+urQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39675C19423;
-	Tue, 31 Mar 2026 16:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CE9UWkAK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30A8C19423;
+	Tue, 31 Mar 2026 16:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974695;
-	bh=L++gqIV6ZGDGYvbgIDMuV8iBhFRGE/+/yQkwj3r7YBk=;
+	s=korg; t=1774974698;
+	bh=jhhLWX0IUsTaQZlwUhODMRsYajDBG9eZ8M1J3NmWnwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClnI+urQtpgChlHVIntVOTZKhlELyFgIYeWRU8QNplCZz3W7z0z8kKgNkZyGHtQsq
-	 BjIzjCEVdhuI5J/wlEplymm3FC9PPQI3Cq4tFXX/u7aoCt9K7ZqKc0d8eK+p5SdJdn
-	 m4DViLU/U7+8R+2+W4tibgKaRKMthEs8Mi/O9vAA=
+	b=CE9UWkAKMRFCuZMOlimvyjB9viK0rIBHElShxNFf+HXTtCVsEq4UdSueLVUXb0MTo
+	 3S/IEQ60T21zD20kDt+C16gFajm/iX8AF2sMFWmVF9GhC4UnMGBVL574FTfeyiPzl2
+	 tJQ+2cMMg22HHKbrg2WaKaM8bFzMXOlVzLbZztug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Dave Jiang <dave.jiang@intel.com>,
-	Li Ming <ming.li@zohomail.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 001/342] cxl/port: Fix use after free of parent_port in cxl_detach_ep()
-Date: Tue, 31 Mar 2026 18:17:14 +0200
-Message-ID: <20260331161758.967229010@linuxfoundation.org>
+Subject: [PATCH 6.19 010/342] cxl/hdm: Avoid incorrect DVSEC fallback when HDM decoders are enabled
+Date: Tue, 31 Mar 2026 18:17:23 +0200
+Message-ID: <20260331161759.290621423@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,94 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
 
-[ Upstream commit 19d2f0b97a131198efc2c4ca3eb7f980bba8c2b4 ]
+[ Upstream commit 75cea0776de502f2a1be5ca02d37c586dc81887e ]
 
-cxl_detach_ep() is called during bottom-up removal when all CXL memory
-devices beneath a switch port have been removed. For each port in the
-hierarchy it locks both the port and its parent, removes the endpoint,
-and if the port is now empty, marks it dead and unregisters the port
-by calling delete_switch_port(). There are two places during this work
-where the parent_port may be used after freeing:
+Check the global CXL_HDM_DECODER_ENABLE bit instead of looping over
+per-decoder COMMITTED bits to determine whether to fall back to DVSEC
+range emulation. When the HDM decoder capability is globally enabled,
+ignore DVSEC range registers regardless of individual decoder commit
+state.
 
-First, a concurrent detach may have already processed a port by the
-time a second worker finds it via bus_find_device(). Without pinning
-parent_port, it may already be freed when we discover port->dead and
-attempt to unlock the parent_port. In a production kernel that's a
-silent memory corruption, with lock debug, it looks like this:
+should_emulate_decoders() currently loops over per-decoder COMMITTED
+bits, which leads to an incorrect DVSEC fallback when those bits are
+zero. One way to trigger this is to destroy a region and bounce the
+memdev:
 
-[]DEBUG_LOCKS_WARN_ON(__owner_task(owner) != get_current())
-[]WARNING: kernel/locking/mutex.c:949 at __mutex_unlock_slowpath+0x1ee/0x310
-[]Call Trace:
-[]mutex_unlock+0xd/0x20
-[]cxl_detach_ep+0x180/0x400 [cxl_core]
-[]devm_action_release+0x10/0x20
-[]devres_release_all+0xa8/0xe0
-[]device_unbind_cleanup+0xd/0xa0
-[]really_probe+0x1a6/0x3e0
+  cxl disable-region region0
+  cxl destroy-region region0
+  cxl disable-memdev mem0
+  cxl enable-memdev mem0
 
-Second, delete_switch_port() releases three devm actions registered
-against parent_port. The last of those is unregister_port() and it
-calls device_unregister() on the child port, which can cascade. If
-parent_port is now also empty the device core may unregister and free
-it too. So by the time delete_switch_port() returns, parent_port may
-be free, and the subsequent device_unlock(&parent_port->dev) operates
-on freed memory. The kernel log looks same as above, with a different
-offset in cxl_detach_ep().
+Region teardown zeroes the HDM decoder registers including the committed
+bits. The subsequent memdev re-probe finds uncommitted decoders and falls
+back to DVSEC emulation, even though HDM remains globally enabled.
 
-Both of these issues stem from the absence of a lifetime guarantee
-between a child port and its parent port.
+Observed failures:
 
-Establish a lifetime rule for ports: child ports hold a reference to
-their parent device until release. Take the reference when the port
-is allocated and drop it when released. This ensures the parent is
-valid for the full lifetime of the child and eliminates the use after
-free window in cxl_detach_ep().
+  should_emulate_decoders: cxl_port endpoint6: decoder6.0: committed: 0 base: 0x0_00000000 size: 0x0_00000000
+  devm_cxl_setup_hdm: cxl_port endpoint6: Fallback map 1 range register
+  ..
+  devm_cxl_add_region: cxl_acpi ACPI0017:00: decoder0.0: created region0
+  __construct_region: cxl_pci 0000:e1:00.0: mem1:decoder6.0:
+  __construct_region region0 res: [mem 0x850000000-0x284fffffff flags 0x200] iw: 1 ig: 4096
+  cxl region0: pci0000:e0:port1 cxl_port_setup_targets expected iw: 1 ig: 4096 ..
+  cxl region0: pci0000:e0:port1 cxl_port_setup_targets got iw: 1 ig: 256 state: disabled ..
+  cxl_port endpoint6: failed to attach decoder6.0 to region0: -6
+  ..
+  devm_cxl_add_region: cxl_acpi ACPI0017:00: decoder0.0: created region4
+  alloc_hpa: cxl region4: HPA allocation error (-34) ..
 
-This is easily reproduced with a reload of cxl_acpi in QEMU with CXL
-devices present.
-
-Fixes: 2345df54249c ("cxl/memdev: Fix endpoint port removal")
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Li Ming <ming.li@zohomail.com>
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Link: https://patch.msgid.link/20260226184439.1732841-1-alison.schofield@intel.com
+Fixes: 52cc48ad2a76 ("cxl/hdm: Limit emulation to the number of range registers")
+Signed-off-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://patch.msgid.link/20260316201950.224567-1-Smita.KoralahalliChannabasappa@amd.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/cxl/core/hdm.c | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 4717dcff264be..aa8b47c50c962 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -552,10 +552,13 @@ static void cxl_port_release(struct device *dev)
- 	xa_destroy(&port->dports);
- 	xa_destroy(&port->regions);
- 	ida_free(&cxl_port_ida, port->id);
--	if (is_cxl_root(port))
-+
-+	if (is_cxl_root(port)) {
- 		kfree(to_cxl_root(port));
--	else
-+	} else {
-+		put_device(dev->parent);
- 		kfree(port);
-+	}
+diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+index bc4b0c8607258..ce27074bb5c7d 100644
+--- a/drivers/cxl/core/hdm.c
++++ b/drivers/cxl/core/hdm.c
+@@ -94,7 +94,6 @@ static bool should_emulate_decoders(struct cxl_endpoint_dvsec_info *info)
+ 	struct cxl_hdm *cxlhdm;
+ 	void __iomem *hdm;
+ 	u32 ctrl;
+-	int i;
+ 
+ 	if (!info)
+ 		return false;
+@@ -113,22 +112,16 @@ static bool should_emulate_decoders(struct cxl_endpoint_dvsec_info *info)
+ 		return false;
+ 
+ 	/*
+-	 * If any decoders are committed already, there should not be any
+-	 * emulated DVSEC decoders.
++	 * If HDM decoders are globally enabled, do not fall back to DVSEC
++	 * range emulation. Zeroed decoder registers after region teardown
++	 * do not imply absence of HDM capability.
++	 *
++	 * Falling back to DVSEC here would treat the decoder as AUTO and
++	 * may incorrectly latch default interleave settings.
+ 	 */
+-	for (i = 0; i < cxlhdm->decoder_count; i++) {
+-		ctrl = readl(hdm + CXL_HDM_DECODER0_CTRL_OFFSET(i));
+-		dev_dbg(&info->port->dev,
+-			"decoder%d.%d: committed: %ld base: %#x_%.8x size: %#x_%.8x\n",
+-			info->port->id, i,
+-			FIELD_GET(CXL_HDM_DECODER0_CTRL_COMMITTED, ctrl),
+-			readl(hdm + CXL_HDM_DECODER0_BASE_HIGH_OFFSET(i)),
+-			readl(hdm + CXL_HDM_DECODER0_BASE_LOW_OFFSET(i)),
+-			readl(hdm + CXL_HDM_DECODER0_SIZE_HIGH_OFFSET(i)),
+-			readl(hdm + CXL_HDM_DECODER0_SIZE_LOW_OFFSET(i)));
+-		if (FIELD_GET(CXL_HDM_DECODER0_CTRL_COMMITTED, ctrl))
+-			return false;
+-	}
++	ctrl = readl(hdm + CXL_HDM_DECODER_CTRL_OFFSET);
++	if (ctrl & CXL_HDM_DECODER_ENABLE)
++		return false;
+ 
+ 	return true;
  }
- 
- static ssize_t decoders_committed_show(struct device *dev,
-@@ -721,6 +724,7 @@ static struct cxl_port *cxl_port_alloc(struct device *uport_dev,
- 		struct cxl_port *iter;
- 
- 		dev->parent = &parent_port->dev;
-+		get_device(dev->parent);
- 		port->depth = parent_port->depth + 1;
- 		port->parent_dport = parent_dport;
- 
 -- 
 2.51.0
 
