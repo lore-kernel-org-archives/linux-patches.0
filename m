@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88BB2D1F40;
-	Tue, 31 Mar 2026 16:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5220C423A8A;
+	Tue, 31 Mar 2026 16:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975595; cv=none; b=stdHun/NMT2Dc1xLcLd987NWkMpbAYhdkL17M+KxP87zkTDxMu0oqeFJYS5Tn4sIB6j60B2w4RhhLryyBXuWEPb51OSPoSj5aMvkkaQ2uhNM0Kh81K0a1xY9gRfnk3jKl+k88u4hnI72XAM3TfIFMG4Z4KsLtggqsTh+lXcyxp8=
+	t=1774975598; cv=none; b=Lx/d44mHLk3FUp38Fa9hZbwxX0tyEpe6tg1mLHV7ZuCr35qDlNlo1Tr4z2erggTK5c0JiZjGjGc9LN66rmeU1Sfg17rF9/NYYGbfNI62tMYLBYIBSVbl89kmUh8CDNmK9D7IUg1hOK0WNG48cbwJ8dsY2zCDIOlZMYK57zGQa/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975595; c=relaxed/simple;
-	bh=IYLrf/6YGoEbneBobd3N6vKM1iR7t6tMBeb9kF9lwTQ=;
+	s=arc-20240116; t=1774975598; c=relaxed/simple;
+	bh=17D0YnUcqPluj68DR8ET6o3bMlCeOVVf+9lDSwmZ1U8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Sa5LxINtYpyyWAJEcLOWvP53WrviZQl6Hfoz2OBjRG4nf8L+3v9+uLi4aUt9X6OM2ACQc1ZoAcJOSaTeT3f+eeG+TC95Beov/lEKZy3N1J8aMOArRrlBfMmDqp1mJ2QqIe5J6zdTw2PA+6bmZ8aCjnvZwXxzzqwyDQzh4ExHCWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inGLyvOQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RsCJbET6dDuHqH+LYIZAi2K9QN1OjU4m474i7opBEkKWmbuNGVBXBfgU0vSv+x/Xs4KLhsQiQMsxe0d5+cr0oVg/pVVGgw3WBuuFP4sMblUZbdrcEw4vGCRDzfFWrPc0C7mtk88YW/8H6b5MFu94PFDTcXQNGuWquWKOtKC7Tvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j48PcsXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inGLyvOQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB68C19424;
-	Tue, 31 Mar 2026 16:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j48PcsXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE389C2BCB1;
+	Tue, 31 Mar 2026 16:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975595;
-	bh=IYLrf/6YGoEbneBobd3N6vKM1iR7t6tMBeb9kF9lwTQ=;
+	s=korg; t=1774975598;
+	bh=17D0YnUcqPluj68DR8ET6o3bMlCeOVVf+9lDSwmZ1U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inGLyvOQcG0dqILRHLTQ9nJ1B/PBPMiLHzgXBSwKOPpptYsx/ft70Ar/xj/bI0W/u
-	 HSDqXZoL1BfThHQKDia7OwoXWEeOcheHR0NGgRqhPl4blMnTajGR6Qcq4XIJkeVeEp
-	 /+mJucCbn4m2TRSLNnZ3VbM3ARgvsGOuoeoGWvmg=
+	b=j48PcsXWh+X3vUc08RrYIYA9Lpln5k9KJjLPx61IsbQBEsRdT6xLmH4bKILtre6Hs
+	 gnchqGbW0wvkPtKrabIdDhanU7Kyzw4uNYSJS6iuLcJetqeS6oyOwKjjnKhGHGKpsK
+	 Efq6WmtcyAwgSvmU9rmGPc4Ahdlt3ko3uBBycJkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Metz <peter.metz@unarin.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/244] platform/x86: intel-hid: Add Dell 14 Plus 2-in-1 to dmi_vgbs_allow_list
-Date: Tue, 31 Mar 2026 18:19:23 +0200
-Message-ID: <20260331161742.196720563@linuxfoundation.org>
+Subject: [PATCH 6.12 014/244] nvme-pci: cap queue creation to used queues
+Date: Tue, 31 Mar 2026 18:19:24 +0200
+Message-ID: <20260331161742.232688437@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -46,52 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Metz <peter.metz@unarin.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 6b3fa0615cd8432148581de62a52f83847af3d70 ]
+[ Upstream commit 4735b510a00fb2d4ac9e8d21a8c9552cb281f585 ]
 
-The Dell 14 Plus 2-in-1 (model DB04250) requires the VGBS allow list
-entry to correctly enable the tablet mode switch. Without this, the
-chassis state is not reported, and the hinge rotation only emits
-unknown scancodes.
+If the user reduces the special queue count at runtime and resets the
+controller, we need to reduce the number of queues and interrupts
+requested accordingly rather than start with the pre-allocated queue
+count.
 
-Verified on Dell 14 Plus 2-in-1 DB04250.
-
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221090
-Signed-off-by: Peter Metz <peter.metz@unarin.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260213044627.203638-1-peter.metz@unarin.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Tested-by: Kanchan Joshi <joshi.k@samsung.com>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/hid.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/host/pci.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
-index 04056fbd92196..0b21d8317db30 100644
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -180,6 +180,12 @@ static const struct dmi_system_id dmi_vgbs_allow_list[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Dell Pro Rugged 12 Tablet RA02260"),
- 		},
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Dell 14 Plus 2-in-1 DB04250"),
-+		},
-+	},
- 	{ }
- };
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 6bd02c9116501..7a58ba05484bf 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2456,7 +2456,13 @@ static int nvme_setup_io_queues(struct nvme_dev *dev)
+ 	dev->nr_write_queues = write_queues;
+ 	dev->nr_poll_queues = poll_queues;
  
+-	nr_io_queues = dev->nr_allocated_queues - 1;
++	/*
++	 * The initial number of allocated queue slots may be too large if the
++	 * user reduced the special queue parameters. Cap the value to the
++	 * number we need for this round.
++	 */
++	nr_io_queues = min(nvme_max_io_queues(dev),
++			   dev->nr_allocated_queues - 1);
+ 	result = nvme_set_queue_count(&dev->ctrl, &nr_io_queues);
+ 	if (result < 0)
+ 		return result;
 -- 
 2.51.0
 
