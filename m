@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4CE423A8E;
-	Tue, 31 Mar 2026 16:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D67425CC7;
+	Tue, 31 Mar 2026 16:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975011; cv=none; b=Gt3aT1maq7gcKDn6zokkwDN7/P9fhGJBISEon2k4gNmykIbFvH8IG3VB2/L+YQM7Jl0rstghEumoJOuKCESmD/8nKTS/Hg+7r8aGBe0+xTlfgmsNbaU7ewreCs5EmKWqXE23B+7cOpEIwncLiDi/9G9B48a0cgIswdlHEwzy8Fk=
+	t=1774975013; cv=none; b=WHslq7WO5GL94KOReCCV9ylZnxikGKh/LeItUDx7J4HA1ikCdD3MZ0B24WWtm9HFPaNwgFpEY0NRa4MZs1dlkwZNnCO9YQqJF8SULFjugAlFPwAWU9BZ1DTBzAh/0GDiA08FD0+M8nwrD2uBesHixR9tJs1CjNGyAoBqU3tNMOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975011; c=relaxed/simple;
-	bh=INlR2GdcM95gM6kcxK6kENcAzf8i5BKX27BKy/Ozuwk=;
+	s=arc-20240116; t=1774975013; c=relaxed/simple;
+	bh=LJGlFB5qp+C6Wy3sk/lwtsBqbkwujsVMEiPgZKtyyFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S01XPXsxtLDLfo1oW6H2J5YtzwkZw0fzFFPA5HIR8gZga+6ByzdGls3WqTDoS4fi2WE+WXXoeha1lFecITL6F7Iztn07B9yMWUQcFf4zT2si9ZIrlB1HN+9dzNPa7Udeg/sYVjYM6hB77d8fHUo1wAaoHhmWoZCZ4n92IPY/3MM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=no/kVmW4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jxvaY+DtjTqfYUGGELR531DAYPcwIxwu11vlI+5EEEgqsU65AOoXCJzgQd/D5zDpL9AV7OvcPqC2XZW6BQmr6/InBrm3rjFwcuRCslMhLs23kCO9zsJvkT4SnTA73Z79jsI9eoYMUOw9qmy4P7SA9O0vWZ1GIMQ25lb8YxmHT9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGK087Lm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="no/kVmW4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856D9C19423;
-	Tue, 31 Mar 2026 16:36:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGK087Lm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC23C19424;
+	Tue, 31 Mar 2026 16:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975010;
-	bh=INlR2GdcM95gM6kcxK6kENcAzf8i5BKX27BKy/Ozuwk=;
+	s=korg; t=1774975013;
+	bh=LJGlFB5qp+C6Wy3sk/lwtsBqbkwujsVMEiPgZKtyyFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=no/kVmW4bRnQwsIkarJdA5cyxhFwBoMMp1dv8pads/x7jlxqQ3UH50zuBAJuYPvSJ
-	 ThHbqyNWpMSnaJAkx6SN9ubOsRHVMbJocueLZQ9NQEKmY/kpZfm+VaX+kRU/ptpASc
-	 weR5b9MGU3SXYAl2MEsH1HxDMV6DYVbZO41UZC9s=
+	b=TGK087LmjC+LLXvJ0lFcXebTHAKCHR4LlMOhgn+RMMxO3tJyDaloyTSnRDxV0kzd+
+	 TgaYmHHFe5LCgp7+Y31fK4W67a96okqC1JQ7sb5Jdcpy7qqMZHbFlpwWf2kfMuc4QT
+	 e4PvT5edFhaGhAh3spry+zEioWVkUJCp/W0hNN8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Anas Iqbal <mohd.abd.6602@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 096/342] Bluetooth: MGMT: Fix dangling pointer on mgmt_add_adv_patterns_monitor_complete
-Date: Tue, 31 Mar 2026 18:18:49 +0200
-Message-ID: <20260331161802.551231500@linuxfoundation.org>
+Subject: [PATCH 6.19 097/342] Bluetooth: hci_ll: Fix firmware leak on error path
+Date: Tue, 31 Mar 2026 18:18:50 +0200
+Message-ID: <20260331161802.587051801@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,39 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Anas Iqbal <mohd.abd.6602@gmail.com>
 
-[ Upstream commit 5f5fa4cd35f707344f65ce9e225b6528691dbbaa ]
+[ Upstream commit 31148a7be723aa9f2e8fbd62424825ab8d577973 ]
 
-This fixes the condition checking so mgmt_pending_valid is executed
-whenever status != -ECANCELED otherwise calling mgmt_pending_free(cmd)
-would kfree(cmd) without unlinking it from the list first, leaving a
-dangling pointer. Any subsequent list traversal (e.g.,
-mgmt_pending_foreach during __mgmt_power_off, or another
-mgmt_pending_valid call) would dereference freed memory.
+Smatch reports:
 
-Link: https://lore.kernel.org/linux-bluetooth/20260315132013.75ab40c5@kernel.org/T/#m1418f9c82eeff8510c1beaa21cf53af20db96c06
-Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+drivers/bluetooth/hci_ll.c:587 download_firmware() warn:
+'fw' from request_firmware() not released on lines: 544.
+
+In download_firmware(), if request_firmware() succeeds but the returned
+firmware content is invalid (no data or zero size), the function returns
+without releasing the firmware, resulting in a resource leak.
+
+Fix this by calling release_firmware() before returning when
+request_firmware() succeeded but the firmware content is invalid.
+
+Fixes: 371805522f87 ("bluetooth: hci_uart: add LL protocol serdev driver support")
 Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Anas Iqbal <mohd.abd.6602@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/hci_ll.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 2c63f49c33018..f3da1bc38a551 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -5355,7 +5355,7 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
- 	 * hci_adv_monitors_clear is about to be called which will take care of
- 	 * freeing the adv_monitor instances.
- 	 */
--	if (status == -ECANCELED && !mgmt_pending_valid(hdev, cmd))
-+	if (status == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
- 	monitor = cmd->user_data;
+diff --git a/drivers/bluetooth/hci_ll.c b/drivers/bluetooth/hci_ll.c
+index 6f4e25917b863..c4584f4085766 100644
+--- a/drivers/bluetooth/hci_ll.c
++++ b/drivers/bluetooth/hci_ll.c
+@@ -541,6 +541,8 @@ static int download_firmware(struct ll_device *lldev)
+ 	if (err || !fw->data || !fw->size) {
+ 		bt_dev_err(lldev->hu.hdev, "request_firmware failed(errno %d) for %s",
+ 			   err, bts_scr_name);
++		if (!err)
++			release_firmware(fw);
+ 		return -EINVAL;
+ 	}
+ 	ptr = (void *)fw->data;
 -- 
 2.51.0
 
