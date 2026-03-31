@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9054A423A63;
-	Tue, 31 Mar 2026 16:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9C9423A63;
+	Tue, 31 Mar 2026 16:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975673; cv=none; b=gXAb/rLABwHcLtpAeuxA4FGHNSufgKkPykWK4dqUBsJlTvxMPvshOTXbmRuAN9cN0ZUJuXgBEqpf331gq/c26N4K5PwO85QeoOiji/qubN+DEnnDE3xsZCV5uVwdUaqLoVqgOdRtodiG7MMovuJYjoyQiCkhoTeontME0V3Rop4=
+	t=1774975676; cv=none; b=dbz/sJiGhL/2sdgRSGe1rrK2osTYd7+MW9VIkrM9w1dxQi9/Drz0hZTs/zHnK5AXam2XydXfiUCvN4SJduGVtk/MFbuX8EAjuPRP5wEXMu7iU3IUtEgc5ct+d6BCSk6tTMJ6og9wBBllaqP4OH1erSOTcCEsXbWtOLUpxSVQO5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975673; c=relaxed/simple;
-	bh=MOBHLhtWexEy+fSKk3GFvfnkyBa+FP1Yw51UPCyMVkI=;
+	s=arc-20240116; t=1774975676; c=relaxed/simple;
+	bh=Q+g7uG2YYW6DkBuhql5b5w8RNp4hmhNHQn7I+gGdY/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQBBv+KpCwPOtQCZdBdWn3VYyKfkrSvh2eEwqW9+vQK2G6qtKw1NldNRMIgrUrYqnlzEMVAmN2BhBVSvOpjCfHjBK4+6+FtIFaBtqm0Zu+7lBT+v8588SIVEr3CfdDufUL3udWgkB1s5Kr1OLQTBVWLNAJiwRMH3rZD482K/qV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FWnwElc5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XB6b8W0hqEfgijLpPpYdudFTchV+QmcNcPMtePJ/pHF9sRxhe5ONoXrPhlfoF79dK7fpUaOYL9NdlvmmNC02Tyz+9aKCwuVHKMFwEMeN1QMq7AMbgdSsb+9uUgPfqzXGEV7r6rk48UKCnKqGVIJWnzc6+/CbVW7dPrLGwAknmM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVBoOgNx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FWnwElc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263A0C19423;
-	Tue, 31 Mar 2026 16:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVBoOgNx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5CEEC19424;
+	Tue, 31 Mar 2026 16:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975673;
-	bh=MOBHLhtWexEy+fSKk3GFvfnkyBa+FP1Yw51UPCyMVkI=;
+	s=korg; t=1774975676;
+	bh=Q+g7uG2YYW6DkBuhql5b5w8RNp4hmhNHQn7I+gGdY/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FWnwElc5LRT6dbHdT/AuG24h6rgZEPVn4Mje95N/qfNRcXVxmtL8BryGcFWEu9SML
-	 f9OlvctR1YcKt+KZkbCWp05PCOb269SOASpX0MkVxnlhCqWF87wNlK9lef7NQ50yer
-	 zBAAR3XeS7VmzMmkHsZ9gSxU+2qKMQFJ2jmF1Wzw=
+	b=GVBoOgNxOlYiDY4tzqUXDPCJx0cqUncMRTCDuwWpnRqmWtr5BzYUR8fgLA9+mvCmn
+	 eri2xPURSt/oj7mqeMnOP3U2266I0MOLxJ/Ac3XrOHzJyfQtPu1K1qm6e+scdrmqoE
+	 rJiA1Bg8NhDzI2Tkm7zmZ/CIjtzdqCHhNrGydU9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Deng <dengjie03@kylinos.cn>,
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/244] usb: core: new quirk to handle devices with zero configurations
-Date: Tue, 31 Mar 2026 18:19:53 +0200
-Message-ID: <20260331161743.289091660@linuxfoundation.org>
+Subject: [PATCH 6.12 044/244] spi: intel-pci: Add support for Nova Lake mobile SPI flash
+Date: Tue, 31 Mar 2026 18:19:54 +0200
+Message-ID: <20260331161743.325293411@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -50,105 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Deng <dengjie03@kylinos.cn>
+From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 
-[ Upstream commit 9f6a983cfa22ac662c86e60816d3a357d4b551e9 ]
+[ Upstream commit 85b731ad4bbf6eb3fedf267ab00be3596f148432 ]
 
-Some USB devices incorrectly report bNumConfigurations as 0 in their
-device descriptor, which causes the USB core to reject them during
-enumeration.
-logs:
-usb 1-2: device descriptor read/64, error -71
-usb 1-2: no configurations
-usb 1-2: can't read configurations, error -22
+Add Intel Nova Lake PCD-H SPI serial flash PCI ID to the list of
+supported devices.
 
-However, these devices actually work correctly when
-treated as having a single configuration.
-
-Add a new quirk USB_QUIRK_FORCE_ONE_CONFIG to handle such devices.
-When this quirk is set, assume the device has 1 configuration instead
-of failing with -EINVAL.
-
-This quirk is applied to the device with VID:PID 5131:2007 which
-exhibits this behavior.
-
-Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
-Link: https://patch.msgid.link/20260227084931.1527461-1-dengjie03@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20260309153703.74282-1-alan.borzeszkowski@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt | 3 +++
- drivers/usb/core/config.c                       | 6 +++++-
- drivers/usb/core/quirks.c                       | 5 +++++
- include/linux/usb/quirks.h                      | 3 +++
- 4 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/spi/spi-intel-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index e88505e945d52..811345669be4e 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -7249,6 +7249,9 @@
- 				p = USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT
- 					(Reduce timeout of the SET_ADDRESS
- 					request from 5000 ms to 500 ms);
-+				q = USB_QUIRK_FORCE_ONE_CONFIG (Device
-+					claims zero configurations,
-+					forcing to 1);
- 			Example: quirks=0781:5580:bk,0a5c:5834:gij
- 
- 	usbhid.mousepoll=
-diff --git a/drivers/usb/core/config.c b/drivers/usb/core/config.c
-index bbc3cb1ba7b5c..0baecdd342c7a 100644
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -891,7 +891,11 @@ int usb_get_configuration(struct usb_device *dev)
- 		dev->descriptor.bNumConfigurations = ncfg = USB_MAXCONFIG;
- 	}
- 
--	if (ncfg < 1) {
-+	if (ncfg < 1 && dev->quirks & USB_QUIRK_FORCE_ONE_CONFIG) {
-+		dev_info(ddev, "Device claims zero configurations, forcing to 1\n");
-+		dev->descriptor.bNumConfigurations = 1;
-+		ncfg = 1;
-+	} else if (ncfg < 1) {
- 		dev_err(ddev, "no configurations\n");
- 		return -EINVAL;
- 	}
-diff --git a/drivers/usb/core/quirks.c b/drivers/usb/core/quirks.c
-index c12942a533ce2..53b08d6cf7824 100644
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -141,6 +141,8 @@ static int quirks_param_set(const char *value, const struct kernel_param *kp)
- 			case 'p':
- 				flags |= USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT;
- 				break;
-+			case 'q':
-+				flags |= USB_QUIRK_FORCE_ONE_CONFIG;
- 			/* Ignore unrecognized flag characters */
- 			}
- 		}
-@@ -594,6 +596,9 @@ static const struct usb_device_id usb_quirk_list[] = {
- 	/* VCOM device */
- 	{ USB_DEVICE(0x4296, 0x7570), .driver_info = USB_QUIRK_CONFIG_INTF_STRINGS },
- 
-+	/* Noji-MCS SmartCard Reader */
-+	{ USB_DEVICE(0x5131, 0x2007), .driver_info = USB_QUIRK_FORCE_ONE_CONFIG },
-+
- 	/* INTEL VALUE SSD */
- 	{ USB_DEVICE(0x8086, 0xf1a5), .driver_info = USB_QUIRK_RESET_RESUME },
- 
-diff --git a/include/linux/usb/quirks.h b/include/linux/usb/quirks.h
-index 2f7bd2fdc6164..b3cc7beab4a3c 100644
---- a/include/linux/usb/quirks.h
-+++ b/include/linux/usb/quirks.h
-@@ -78,4 +78,7 @@
- /* skip BOS descriptor request */
- #define USB_QUIRK_NO_BOS			BIT(17)
- 
-+/* Device claims zero configurations, forcing to 1 */
-+#define USB_QUIRK_FORCE_ONE_CONFIG		BIT(18)
-+
- #endif /* __LINUX_USB_QUIRKS_H */
+diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
+index 5c0dec90eec1d..43692315ea305 100644
+--- a/drivers/spi/spi-intel-pci.c
++++ b/drivers/spi/spi-intel-pci.c
+@@ -86,6 +86,7 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, 0xa324), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0xa3a4), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0xa823), (unsigned long)&cnl_info },
++	{ PCI_VDEVICE(INTEL, 0xd323), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0xe323), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0xe423), (unsigned long)&cnl_info },
+ 	{ },
 -- 
 2.51.0
 
