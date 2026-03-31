@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740F83002A9;
-	Tue, 31 Mar 2026 17:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194212FDC5E;
+	Tue, 31 Mar 2026 17:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976618; cv=none; b=GbGS/gGwUoXflr1ip5LPhnCwd80b1s9ZaxANFlPB2kMDmuWrw6CfJ8BNKi2Vj+aGf/QLC9jmw+RBH5TB0dkfN6NYV34KGihAKzUWZmWxHn+wyMABBA1JeAQX9HZSeKS84iEKPDN6yVax8QQL2YmVYo839tJGM6r1c4DqN00WBfI=
+	t=1774976621; cv=none; b=rRCzp8tH4Qm9boNQelxUehd6pKrAsstHZg/YsN4N2ewGihvZVJxdYr/62h3emNkYfig5egm4IF4RZ2w9Y0Fo1v6EjIgXdBP3vQd8zS60LT3iSphSn+vRlY97X37liGmfBzGBsgna0idaKlAV2B+C2DgbEHvt+tyg+DEWd/8AAIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976618; c=relaxed/simple;
-	bh=FJLL2qKuK7G1dS/J3bqGsryNLE+Ayw+m5/UOQqwHD4I=;
+	s=arc-20240116; t=1774976621; c=relaxed/simple;
+	bh=w2aQJYfHm3K+EP2y8Ae8NRiM9gjuAzZcxoAvDK7u5lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IQBg2M3WfJ4tpILLNhPab664xco/GnHRuqkiC7yhBf3OHHqItViiEBX+lNcTz6TCXEy+8HBwv7Rmwk+G6Se7cetsmDhj8yuTkN06Fj1WRHQXyrs7F6FSOtMXEzlxoBnhvh8my/XYCYe5kvFNhN4xdeV8uhELeCLQalxu/3Bd/zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gICV1jgK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nOjYDVu2y039H2XEuWm+T+D82YGyxb37afE6ndmWNwLKtOAM8uSudtwJfmqZLJ4Hq5lpCIGfZVKWVnb+GyQPwbUQJvyI25kjAVd88V5jl9OS5gxtMiigxtDgifw9hjmz66HucVKBNjuMCGJ+ZpkfeLnmTnXnrSiyKJxO0TiZkhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QhqcPRVG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gICV1jgK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADA8C19423;
-	Tue, 31 Mar 2026 17:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhqcPRVG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A09C19423;
+	Tue, 31 Mar 2026 17:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976618;
-	bh=FJLL2qKuK7G1dS/J3bqGsryNLE+Ayw+m5/UOQqwHD4I=;
+	s=korg; t=1774976621;
+	bh=w2aQJYfHm3K+EP2y8Ae8NRiM9gjuAzZcxoAvDK7u5lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gICV1jgK0l0sn5KNR1l9ekWqjicrE145PB3gNrLrOTZZ+qNDE6YDb3h7s6J+GDAJQ
-	 4bCyci2NjO0fsJgkXGH5KzNzGhFUzRn0tqyiBJWm+BKtl9xN7CSYY3CXuzBFGvJnxI
-	 BfuR1/uv6Y8rUzJkxnvfuCdrvgrqVqzCRoTulkPs=
+	b=QhqcPRVGLR70UY3A3VJpkkL0P3uQV+URh9iZlIVMrLmH3Km9dCs8txGyJH0f63Bm9
+	 dZM9VxAVxh0heJlx+tgLlsVpLk6BARUGq8XxY2tv86JThuGqv+uIjQnug7rxQod5xS
+	 cDt4hu1QoCIRDHI1k0L0ApyOQ/9NJNxNc/8uk3Ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Daniel Almeida <daniel.almeida@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Matt Atwood <matthew.s.atwood@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 161/309] rust: regulator: do not assume that regulator_get() returns non-null
-Date: Tue, 31 Mar 2026 18:21:04 +0200
-Message-ID: <20260331161759.392582626@linuxfoundation.org>
+Subject: [PATCH 6.18 162/309] drm/xe: Implement recent spec updates to Wa_16025250150
+Date: Tue, 31 Mar 2026 18:21:05 +0200
+Message-ID: <20260331161759.429310629@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -53,139 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit 8121353a4bf8e38afee26299419a78ec108e14a6 ]
+[ Upstream commit 56781a4597706cd25185b1dedc38841ec6c31496 ]
 
-The Rust `Regulator` abstraction uses `NonNull` to wrap the underlying
-`struct regulator` pointer. When `CONFIG_REGULATOR` is disabled, the C
-stub for `regulator_get` returns `NULL`. `from_err_ptr` does not treat
-`NULL` as an error, so it was passed to `NonNull::new_unchecked`,
-causing undefined behavior.
+The hardware teams noticed that the originally documented workaround
+steps for Wa_16025250150 may not be sufficient to fully avoid a hardware
+issue.  The workaround documentation has been augmented to suggest
+programming one additional register; make the corresponding change in
+the driver.
 
-Fix this by using a raw pointer `*mut bindings::regulator` instead of
-`NonNull`. This allows `inner` to be `NULL` when `CONFIG_REGULATOR` is
-disabled, and leverages the C stubs which are designed to handle `NULL`
-or are no-ops.
-
-Fixes: 9b614ceada7c ("rust: regulator: add a bare minimum regulator abstraction")
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Closes: https://lore.kernel.org/r/20260322193830.89324-1-ojeda@kernel.org
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
-Link: https://patch.msgid.link/20260324-regulator-fix-v1-1-a5244afa3c15@google.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7654d51f1fd8 ("drm/xe/xe2hpg: Add Wa_16025250150")
+Reviewed-by: Matt Atwood <matthew.s.atwood@intel.com>
+Link: https://patch.msgid.link/20260319-wa_16025250150_part2-v1-1-46b1de1a31b2@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit a31566762d4075646a8a2214586158b681e94305)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/regulator.rs | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/xe/regs/xe_gt_regs.h | 1 +
+ drivers/gpu/drm/xe/xe_wa.c           | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/rust/kernel/regulator.rs b/rust/kernel/regulator.rs
-index b55a201e5029f..09c8263043bc7 100644
---- a/rust/kernel/regulator.rs
-+++ b/rust/kernel/regulator.rs
-@@ -23,7 +23,10 @@ use crate::{
-     prelude::*,
- };
+diff --git a/drivers/gpu/drm/xe/regs/xe_gt_regs.h b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+index f680c8b8f2587..7d90e4dd86d0e 100644
+--- a/drivers/gpu/drm/xe/regs/xe_gt_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+@@ -540,6 +540,7 @@
+ #define   ENABLE_SMP_LD_RENDER_SURFACE_CONTROL	REG_BIT(44 - 32)
+ #define   FORCE_SLM_FENCE_SCOPE_TO_TILE		REG_BIT(42 - 32)
+ #define   FORCE_UGM_FENCE_SCOPE_TO_TILE		REG_BIT(41 - 32)
++#define   L3_128B_256B_WRT_DIS			REG_BIT(40 - 32)
+ #define   MAXREQS_PER_BANK			REG_GENMASK(39 - 32, 37 - 32)
+ #define   DISABLE_128B_EVICTION_COMMAND_UDW	REG_BIT(36 - 32)
  
--use core::{marker::PhantomData, mem::ManuallyDrop, ptr::NonNull};
-+use core::{
-+    marker::PhantomData,
-+    mem::ManuallyDrop, //
-+};
+diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
+index fe6e6227d9216..51c5985830b17 100644
+--- a/drivers/gpu/drm/xe/xe_wa.c
++++ b/drivers/gpu/drm/xe/xe_wa.c
+@@ -261,7 +261,8 @@ static const struct xe_rtp_entry_sr gt_was[] = {
+ 				   LSN_DIM_Z_WGT_MASK,
+ 				   LSN_LNI_WGT(1) | LSN_LNE_WGT(1) |
+ 				   LSN_DIM_X_WGT(1) | LSN_DIM_Y_WGT(1) |
+-				   LSN_DIM_Z_WGT(1)))
++				   LSN_DIM_Z_WGT(1)),
++			SET(LSC_CHICKEN_BIT_0_UDW, L3_128B_256B_WRT_DIS))
+ 	},
  
- mod private {
-     pub trait Sealed {}
-@@ -230,15 +233,17 @@ pub fn devm_enable_optional(dev: &Device<Bound>, name: &CStr) -> Result {
- ///
- /// # Invariants
- ///
--/// - `inner` is a non-null wrapper over a pointer to a `struct
--///   regulator` obtained from [`regulator_get()`].
-+/// - `inner` is a pointer obtained from a successful call to
-+///   [`regulator_get()`]. It is treated as an opaque token that may only be
-+///   accessed using C API methods (e.g., it may be `NULL` if the C API returns
-+///   `NULL`).
- ///
- /// [`regulator_get()`]: https://docs.kernel.org/driver-api/regulator.html#c.regulator_get
- pub struct Regulator<State>
- where
-     State: RegulatorState,
- {
--    inner: NonNull<bindings::regulator>,
-+    inner: *mut bindings::regulator,
-     _phantom: PhantomData<State>,
- }
- 
-@@ -250,7 +255,7 @@ impl<T: RegulatorState> Regulator<T> {
-         // SAFETY: Safe as per the type invariants of `Regulator`.
-         to_result(unsafe {
-             bindings::regulator_set_voltage(
--                self.inner.as_ptr(),
-+                self.inner,
-                 min_voltage.as_microvolts(),
-                 max_voltage.as_microvolts(),
-             )
-@@ -260,7 +265,7 @@ impl<T: RegulatorState> Regulator<T> {
-     /// Gets the current voltage of the regulator.
-     pub fn get_voltage(&self) -> Result<Voltage> {
-         // SAFETY: Safe as per the type invariants of `Regulator`.
--        let voltage = unsafe { bindings::regulator_get_voltage(self.inner.as_ptr()) };
-+        let voltage = unsafe { bindings::regulator_get_voltage(self.inner) };
- 
-         to_result(voltage).map(|()| Voltage::from_microvolts(voltage))
-     }
-@@ -270,10 +275,8 @@ impl<T: RegulatorState> Regulator<T> {
-         // received from the C code.
-         let inner = from_err_ptr(unsafe { bindings::regulator_get(dev.as_raw(), name.as_ptr()) })?;
- 
--        // SAFETY: We can safely trust `inner` to be a pointer to a valid
--        // regulator if `ERR_PTR` was not returned.
--        let inner = unsafe { NonNull::new_unchecked(inner) };
--
-+        // INVARIANT: `inner` is a pointer obtained from `regulator_get()`, and
-+        // the call was successful.
-         Ok(Self {
-             inner,
-             _phantom: PhantomData,
-@@ -282,12 +285,12 @@ impl<T: RegulatorState> Regulator<T> {
- 
-     fn enable_internal(&self) -> Result {
-         // SAFETY: Safe as per the type invariants of `Regulator`.
--        to_result(unsafe { bindings::regulator_enable(self.inner.as_ptr()) })
-+        to_result(unsafe { bindings::regulator_enable(self.inner) })
-     }
- 
-     fn disable_internal(&self) -> Result {
-         // SAFETY: Safe as per the type invariants of `Regulator`.
--        to_result(unsafe { bindings::regulator_disable(self.inner.as_ptr()) })
-+        to_result(unsafe { bindings::regulator_disable(self.inner) })
-     }
- }
- 
-@@ -349,7 +352,7 @@ impl<T: IsEnabled> Regulator<T> {
-     /// Checks if the regulator is enabled.
-     pub fn is_enabled(&self) -> bool {
-         // SAFETY: Safe as per the type invariants of `Regulator`.
--        unsafe { bindings::regulator_is_enabled(self.inner.as_ptr()) != 0 }
-+        unsafe { bindings::regulator_is_enabled(self.inner) != 0 }
-     }
- }
- 
-@@ -359,11 +362,11 @@ impl<T: RegulatorState> Drop for Regulator<T> {
-             // SAFETY: By the type invariants, we know that `self` owns a
-             // reference on the enabled refcount, so it is safe to relinquish it
-             // now.
--            unsafe { bindings::regulator_disable(self.inner.as_ptr()) };
-+            unsafe { bindings::regulator_disable(self.inner) };
-         }
-         // SAFETY: By the type invariants, we know that `self` owns a reference,
-         // so it is safe to relinquish it now.
--        unsafe { bindings::regulator_put(self.inner.as_ptr()) };
-+        unsafe { bindings::regulator_put(self.inner) };
-     }
- }
- 
+ 	/* Xe2_HPM */
 -- 
 2.53.0
 
