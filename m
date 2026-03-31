@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFFC2F12AF;
-	Tue, 31 Mar 2026 17:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251202EBB8D;
+	Tue, 31 Mar 2026 17:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976488; cv=none; b=n2SkcT/iKKXGr2FwJTwOlEQHP8N1IgbhQShwaUiQhtN0mehAiqd7P1wBk23ROOIl8r7KwdtEQyE7QSjFCGTatcI6Ma7/OSb8cBzMXq/n0nsO5yIvyZ/eiEhSoEMJM/zBz4hFY7XplZeVt2YeKXPLQnxQr3dAlPXKQY41a4Fe+Ew=
+	t=1774976490; cv=none; b=o9jkabFBiMSw78vvKFFTrQ/fMwipUrjMGCcIdJPn+9C90ybTzM29hKTyf7hqtLpw3wcYN313yYtoRksK6kbDKYBNGGauuaDJ+B84gdmafhYJfL62zgskhwCoY0iJSjDYk/UTLeAZ2D79BpCXNUenOcX/W1oIjr1TJPcl6vUmR0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976488; c=relaxed/simple;
-	bh=TgtCLjTDlgrA4VRRJILEhDCFzWFjUsts7WTuKB1e+uA=;
+	s=arc-20240116; t=1774976490; c=relaxed/simple;
+	bh=nyosvTAkg1IgJlwKlQlJ8qso5HJxqtTXN/wzBMU6Cw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PRnGNNLJVtv3qC5uubyO00LJTquqJNUAj45xkh99cHWDidtRFF02VjmZvkBxNG1JBuswqNtGimVcVA4E1TTMWDlPeUdEjN52HzQ+eJJomVUvCm01+YeEp0frOhiqwxQ09rCdeeOYt3xE87VdxAqORxW9bWUisQMErBSGdQg5uUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDIqFuxl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DPXbzmaW/+qlMLlTqF1ZgpXJcu6GgedqH0okA89/PpphT5h9/IIATQqAttsehqJb03JGzYzrXA9mhvwfGf5/hBeLdfsd9KEerwp2/Q2+dCENneZ3/Sy96YzTwXF7mjU3wvVjJUMz2SIKciyGAIrVlgkBbP5h4twbnTxFxs/Rl8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdZoWX8G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDIqFuxl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2040CC19423;
-	Tue, 31 Mar 2026 17:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdZoWX8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DFFC19423;
+	Tue, 31 Mar 2026 17:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976487;
-	bh=TgtCLjTDlgrA4VRRJILEhDCFzWFjUsts7WTuKB1e+uA=;
+	s=korg; t=1774976490;
+	bh=nyosvTAkg1IgJlwKlQlJ8qso5HJxqtTXN/wzBMU6Cw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDIqFuxlbCWuEeI8IHRzHjYFp/2XegnWav9lNDcmGiM2wZgmtMolp4ihqaLwaFNgd
-	 8tZwjWYM3T8wiZEOAjCHyI4gBzPHk7g3YBlSXlthQV3q2Gw1O4+qz72IgHWBgCyRqF
-	 G5rwbbJgVvbS6SKTiZdrMyOUdwfvQf0d3+bztbY0=
+	b=ZdZoWX8G+14ljHkoeeIxGsTR2173S48/cKUfoix92hlmbxHDUzv/LfxQEg1rxxrIh
+	 J1CQfGqRaRieqWGLpt73iwPSff9WfQNnUqRxtVy+O3zv/y4fClGBfUoGrjfu+kc67x
+	 Bm2GFtjryb8do27bIMHEJHSQ8g6CKgAbpMhy5VlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Tang <tpluszz77@gmail.com>,
+	Wei Fang <wei.fang@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 094/309] net/smc: fix double-free of smc_spd_priv when tee() duplicates splice pipe buffer
-Date: Tue, 31 Mar 2026 18:19:57 +0200
-Message-ID: <20260331161756.950442881@linuxfoundation.org>
+Subject: [PATCH 6.18 112/309] net: enetc: fix the output issue of ethtool --show-ring
+Date: Tue, 31 Mar 2026 18:20:15 +0200
+Message-ID: <20260331161757.608131651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,98 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Tang <tpluszz77@gmail.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 24dd586bb4cbba1889a50abe74143817a095c1c9 ]
+[ Upstream commit 70b439bf06f6a12e491f827fa81a9887a11501f9 ]
 
-smc_rx_splice() allocates one smc_spd_priv per pipe_buffer and stores
-the pointer in pipe_buffer.private.  The pipe_buf_operations for these
-buffers used .get = generic_pipe_buf_get, which only increments the page
-reference count when tee(2) duplicates a pipe buffer.  The smc_spd_priv
-pointer itself was not handled, so after tee() both the original and the
-cloned pipe_buffer share the same smc_spd_priv *.
+Currently, enetc_get_ringparam() only provides rx_pending and tx_pending,
+but 'ethtool --show-ring' no longer displays these fields. Because the
+ringparam retrieval path has moved to the new netlink interface, where
+rings_fill_reply() emits the *x_pending only if the *x_max_pending values
+are non-zero. So rx_max_pending and tx_max_pending to are added to
+enetc_get_ringparam() to fix the issue.
 
-When both pipes are subsequently released, smc_rx_pipe_buf_release() is
-called twice against the same object:
+Note that the maximum tx/rx ring size of hardware is 64K, but we haven't
+added set_ringparam() to make the ring size configurable. To avoid users
+mistakenly believing that the ring size can be increased, so set
+the *x_max_pending to priv->*x_bd_count.
 
-  1st call: kfree(priv)  sock_put(sk)  smc_rx_update_cons()  [correct]
-  2nd call: kfree(priv)  sock_put(sk)  smc_rx_update_cons()  [UAF]
-
-KASAN reports a slab-use-after-free in smc_rx_pipe_buf_release(), which
-then escalates to a NULL-pointer dereference and kernel panic via
-smc_rx_update_consumer() when it chases the freed priv->smc pointer:
-
-  BUG: KASAN: slab-use-after-free in smc_rx_pipe_buf_release+0x78/0x2a0
-  Read of size 8 at addr ffff888004a45740 by task smc_splice_tee_/74
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x53/0x70
-   print_report+0xce/0x650
-   kasan_report+0xc6/0x100
-   smc_rx_pipe_buf_release+0x78/0x2a0
-   free_pipe_info+0xd4/0x130
-   pipe_release+0x142/0x160
-   __fput+0x1c6/0x490
-   __x64_sys_close+0x4f/0x90
-   do_syscall_64+0xa6/0x1a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000020
-  RIP: 0010:smc_rx_update_consumer+0x8d/0x350
-  Call Trace:
-   <TASK>
-   smc_rx_pipe_buf_release+0x121/0x2a0
-   free_pipe_info+0xd4/0x130
-   pipe_release+0x142/0x160
-   __fput+0x1c6/0x490
-   __x64_sys_close+0x4f/0x90
-   do_syscall_64+0xa6/0x1a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Kernel panic - not syncing: Fatal exception
-
-Beyond the memory-safety problem, duplicating an SMC splice buffer is
-semantically questionable: smc_rx_update_cons() would advance the
-consumer cursor twice for the same data, corrupting receive-window
-accounting.  A refcount on smc_spd_priv could fix the double-free, but
-the cursor-accounting issue would still need to be addressed separately.
-
-The .get callback is invoked by both tee(2) and splice_pipe_to_pipe()
-for partial transfers; both will now return -EFAULT.  Users who need
-to duplicate SMC socket data must use a copy-based read path.
-
-Fixes: 9014db202cb7 ("smc: add support for splice()")
-Signed-off-by: Qi Tang <tpluszz77@gmail.com>
-Link: https://patch.msgid.link/20260318064847.23341-1-tpluszz77@gmail.com
+Fixes: e4a1717b677c ("ethtool: provide ring sizes with RINGS_GET request")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20260320094222.706339-1-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_rx.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/enetc/enetc_ethtool.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
-index e7f1134453ef4..4a3d7b405132e 100644
---- a/net/smc/smc_rx.c
-+++ b/net/smc/smc_rx.c
-@@ -135,9 +135,16 @@ static void smc_rx_pipe_buf_release(struct pipe_inode_info *pipe,
- 	sock_put(sk);
- }
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
+index 71d052de669ab..0250ed95e48ca 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
+@@ -788,6 +788,8 @@ static void enetc_get_ringparam(struct net_device *ndev,
+ {
+ 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
  
-+static bool smc_rx_pipe_buf_get(struct pipe_inode_info *pipe,
-+				struct pipe_buffer *buf)
-+{
-+	/* smc_spd_priv in buf->private is not shareable; disallow cloning. */
-+	return false;
-+}
-+
- static const struct pipe_buf_operations smc_pipe_ops = {
- 	.release = smc_rx_pipe_buf_release,
--	.get = generic_pipe_buf_get
-+	.get	 = smc_rx_pipe_buf_get,
- };
++	ring->rx_max_pending = priv->rx_bd_count;
++	ring->tx_max_pending = priv->tx_bd_count;
+ 	ring->rx_pending = priv->rx_bd_count;
+ 	ring->tx_pending = priv->tx_bd_count;
  
- static void smc_rx_spd_release(struct splice_pipe_desc *spd,
 -- 
 2.51.0
 
