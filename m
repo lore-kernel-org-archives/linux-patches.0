@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9013E95A9;
-	Tue, 31 Mar 2026 16:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E41A3EF0A2;
+	Tue, 31 Mar 2026 16:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975772; cv=none; b=M7Maxwv9AX0aaB2qiPhC7/NC6TKbwBHzY6N54qsaqx8hHu2ciFUD+f+8CveFqV7Dqdu5rseJzUtUM1pEVbgoWHTVx4nBBnmSdRyb618rLFxW8FQ5e8tfR5Gm8bTC+4dJa0seeDXeYMTzericxUF9RCQusIKo9hDookYErsXj4EY=
+	t=1774975775; cv=none; b=Cx8Jc86n5YL2IUWKm4S/6MMdewyUsqbUBp9daiBPg+B2QBVfro5ovgGV2uYCN3P097Pvmi5ELNlhkvMgdXxLQOEZkTkevgy4KJnzuH51EOmACQQ3moQum9A5VHjVozlwm1458LQpChWhXgBscJ3FTdpp2V4KzuY3po8WCcWnyqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975772; c=relaxed/simple;
-	bh=z4TQXIIj3cKgeukD2iNJi5Dx0Pz4bH2CXSlPqb0U9II=;
+	s=arc-20240116; t=1774975775; c=relaxed/simple;
+	bh=7mQGE8NoNUpuu6PoxOaqw+e7cl6Vx/A6Y6IEFH+JvAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H4bhRiPXldl1saAXgYIff9vfBIl7Isk53ajmEuVsHG4TBNhrg09VA/SYjZa75OtuDot7dG9qFSu4w1u3Yxd1KX73NnUt0NrV/qDj0Oa6FRlfM4zyqfShs+5+8I1ckVrOp7a2lPjFr1oYDBFaP9I7EFx61gn1MjpuXn8JlfnQcnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YelPRP+n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mhzd6l+ddPY3q1mMAaki2LlbvJm8DMdAy6TVt6BlSlnYIW3A3w7Qa6VtdeAPuE6x1OelUevmM+uuSx7KqTYkHBJOFUJBtmbxX4WIoIyzrHmCU1w5qSTK5rNPxKlSzYIONyWCB+SECauz1GyNpQRbXdhgEV1zuk5nkylEdUNpM2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xb13bU0Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YelPRP+n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A7AC19423;
-	Tue, 31 Mar 2026 16:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xb13bU0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D07C19423;
+	Tue, 31 Mar 2026 16:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975772;
-	bh=z4TQXIIj3cKgeukD2iNJi5Dx0Pz4bH2CXSlPqb0U9II=;
+	s=korg; t=1774975774;
+	bh=7mQGE8NoNUpuu6PoxOaqw+e7cl6Vx/A6Y6IEFH+JvAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YelPRP+nk75iFgiq2MoU13iw/JB2pytpHgvJpmbtJA+B8fWhE5BcEQq6nlX8o8WHx
-	 E4VvrWW8ErX+zVcLK7IWbFpRMRHhcu0RRYfkw1pxuL0hOurIM+5mioLxrKb7JWcP/C
-	 hdozOl0p2CG87gFJ0J00AXAQb/UyZFu96EkisJuU=
+	b=Xb13bU0YFzjfYKHI+pQMMWAVmCt91+s+Nx7hPE0zv2t9eOOv7Zg3ZSt99pqUi/Dru
+	 p1nbET+Z/t1WfbAb1IS/o0WfClN1GT5zJfZDB5cm7apkcQm6aUJCzvw5lofmJ1w5TY
+	 u3dhP/3A4Ao2iqhRQEwQlQs7CTfVvXuANPkDocoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David McFarland <corngood@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Petr Oros <poros@redhat.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Patryk Holda <patryk.holda@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 081/244] platform/x86: intel-hid: disable wakeup_mode during hibernation
-Date: Tue, 31 Mar 2026 18:20:31 +0200
-Message-ID: <20260331161744.674663592@linuxfoundation.org>
+Subject: [PATCH 6.12 082/244] ice: fix inverted ready check for VF representors
+Date: Tue, 31 Mar 2026 18:20:32 +0200
+Message-ID: <20260331161744.711048512@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -45,64 +48,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David McFarland <corngood@gmail.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit e02ea3ae8ee40d5835a845884c7b161a27c10bcb ]
+[ Upstream commit ad85de0fc09eb3236e73df5acb2bc257625103f5 ]
 
-Add a freeze handler which clears wakeup_mode. This fixes aborted hibernation on
-Dell Precision 3880.
+Commit 0f00a897c9fcbd ("ice: check if SF is ready in ethtool ops")
+refactored the VF readiness check into a generic repr->ops.ready()
+callback but implemented ice_repr_ready_vf() with inverted logic:
 
-  Wakeup event detected during hibernation, rolling back
+  return !ice_check_vf_ready_for_cfg(repr->vf);
 
-This system sends power button events during hibernation, even when triggered by
-software.
+ice_check_vf_ready_for_cfg() returns 0 on success, so the negation
+makes ready() return non-zero when the VF is ready. All callers treat
+non-zero as "not ready, skip", causing ndo_get_stats64, get_drvinfo,
+get_strings and get_ethtool_stats to always bail out in switchdev mode.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218634
-Fixes: 0c4cae1bc00d ("PM: hibernate: Avoid missing wakeup events during hibernation")
-Signed-off-by: David McFarland <corngood@gmail.com>
-Link: https://patch.msgid.link/20260205231629.1336348-1-corngood@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Remove the erroneous negation. The SF variant ice_repr_ready_sf() is
+already correct (returns !active, i.e. non-zero when not active).
+
+Fixes: 0f00a897c9fcbd ("ice: check if SF is ready in ethtool ops")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Tested-by: Patryk Holda <patryk.holda@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/hid.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_repr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
-index a51b65280bc40..0e81904548f36 100644
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -423,6 +423,14 @@ static int intel_hid_pl_suspend_handler(struct device *device)
- 	return 0;
+diff --git a/drivers/net/ethernet/intel/ice/ice_repr.c b/drivers/net/ethernet/intel/ice/ice_repr.c
+index 970a99a52bf18..1b1288d243248 100644
+--- a/drivers/net/ethernet/intel/ice/ice_repr.c
++++ b/drivers/net/ethernet/intel/ice/ice_repr.c
+@@ -314,7 +314,7 @@ ice_repr_reg_netdev(struct net_device *netdev, const struct net_device_ops *ops)
+ 
+ static int ice_repr_ready_vf(struct ice_repr *repr)
+ {
+-	return !ice_check_vf_ready_for_cfg(repr->vf);
++	return ice_check_vf_ready_for_cfg(repr->vf);
  }
  
-+static int intel_hid_pl_freeze_handler(struct device *device)
-+{
-+	struct intel_hid_priv *priv = dev_get_drvdata(device);
-+
-+	priv->wakeup_mode = false;
-+	return intel_hid_pl_suspend_handler(device);
-+}
-+
- static int intel_hid_pl_resume_handler(struct device *device)
- {
- 	intel_hid_pm_complete(device);
-@@ -437,7 +445,7 @@ static int intel_hid_pl_resume_handler(struct device *device)
- static const struct dev_pm_ops intel_hid_pl_pm_ops = {
- 	.prepare = intel_hid_pm_prepare,
- 	.complete = intel_hid_pm_complete,
--	.freeze  = intel_hid_pl_suspend_handler,
-+	.freeze  = intel_hid_pl_freeze_handler,
- 	.thaw  = intel_hid_pl_resume_handler,
- 	.restore  = intel_hid_pl_resume_handler,
- 	.suspend  = intel_hid_pl_suspend_handler,
+ static int ice_repr_ready_sf(struct ice_repr *repr)
 -- 
 2.51.0
 
