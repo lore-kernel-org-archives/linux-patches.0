@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B220341B349;
-	Tue, 31 Mar 2026 16:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AA53E3D82;
+	Tue, 31 Mar 2026 16:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974547; cv=none; b=gx4T6pf6kqRoH+Y19x1w3Hl752fZ/ya0dHBZP3BWOmpgzcmATNTSs6/wubbsC5m9HDznYvxbqG7PkKUg50jbsTDalH8ioQYOW60fwmusamtNZ2mzNWVzoz9229H1/9JZGacuuyiPtajswJDFe4kDegOYmMorEQFji8bQqWR44A0=
+	t=1774974550; cv=none; b=kv4n1Co6oBrNLL68b6+i2dB5TnG8vjX3EHJoW9B7KDcWjB6P1ipHbd0m4Yde/IwiHk/d+B2BTgr+m/TiJ9YRld8AZDPbd5R3zp1YEnhqS8RnrabuUHdgPfTPb8/OMIXNkZcXxmG4/div5Dy9hnhfuswf+N9wgPrwIxPPc6u1tSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974547; c=relaxed/simple;
-	bh=7fqB2Z5x+EeBbqnurz0PaUzGi2Ytfym0yuSaoClJ6rs=;
+	s=arc-20240116; t=1774974550; c=relaxed/simple;
+	bh=9ucCAfSFfgW/Xm90WhpAjwULTr6j8uFKjt6mNg6rexs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EgxAcXLtfwfm8OnSkL9ywJEXkPHDzLWB0TpbsyVB10+k1BeB0ALE80nnb4TH58aUbGfr6cMwvhdbLDyEl0+x5Ri0oEnkHEPX0jck4QmYAq7MsjWldrgvSa3jktuyE/AIDJJqz4yUlXnbLzrnAnvuAkUsQW3QpiWlk9LeTC3Qpfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydg5jkTs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WegdbWAXT4DJ++LLeyAliHxdBtek8PgxtimyN6dtDGGeI/zcVkwlheZKkUxvhiaPF3OWLxk665jEnXhkaJiRi8nUANL2iHQF6L9G9BAunUrrGKeJ5VNPKkRXTegsM3OWuE1McI5TDsqSOVyRPrJKVAlOmRw1PIkw3L6CqPQOsMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jt+sEex2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydg5jkTs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489E3C19423;
-	Tue, 31 Mar 2026 16:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jt+sEex2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D29C19423;
+	Tue, 31 Mar 2026 16:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974547;
-	bh=7fqB2Z5x+EeBbqnurz0PaUzGi2Ytfym0yuSaoClJ6rs=;
+	s=korg; t=1774974550;
+	bh=9ucCAfSFfgW/Xm90WhpAjwULTr6j8uFKjt6mNg6rexs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ydg5jkTsAPK8MxuKQgHswFKJBjrB37bAcnFETKMMtSbmX0TIBXg1mQCRTO1gvBioM
-	 9+4AXBn4dhIgwmBgr8ilO/sS69AQFCdoBx4hK5jt8bCj7tw95PTJfcwVu3MkcfZxj9
-	 gYlY9IFpN9jY+HL9c1+qw/7Da13cSCioZs+kJWSY=
+	b=jt+sEex2OI5eEHe7q1I8kjZKMngYs/ey+T3TNfnGc1mhNOf11igZmIptFOQVlrIsV
+	 S/n74kVpaP5QKPLiridLGsblYXWYdeN8U06if8hQv2Xsxy406oDzmloeauCaLkSAKJ
+	 /Nnp/fup+ryimKNrobS0c7olNVYR2aOza3Ld4u0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Long Li <leo.lilong@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.6 128/175] xfs: fix ri_total validation in xlog_recover_attri_commit_pass2
-Date: Tue, 31 Mar 2026 18:21:52 +0200
-Message-ID: <20260331161734.487723152@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 111/175] hwmon: (peci/cputemp) Fix crit_hyst returning delta instead of absolute temperature
+Date: Tue, 31 Mar 2026 18:21:35 +0200
+Message-ID: <20260331161733.856085801@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -52,61 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit d72f2084e30966097c8eae762e31986a33c3c0ae upstream.
+commit 0adc752b4f7d82af7bd14f7cad3091b3b5d702ba upstream.
 
-The ri_total checks for SET/REPLACE operations are hardcoded to 3,
-but xfs_attri_item_size() only emits a value iovec when value_len > 0,
-so ri_total is 2 when value_len == 0.
+The hwmon sysfs ABI expects tempN_crit_hyst to report the temperature at
+which the critical condition clears, not the hysteresis delta from the
+critical limit.
 
-For PPTR_SET/PPTR_REMOVE/PPTR_REPLACE, value_len is validated by
-xfs_attri_validate() to be exactly sizeof(struct xfs_parent_rec) and
-is never zero, so their hardcoded checks remain correct.
+The peci cputemp driver currently returns tjmax - tcontrol for
+crit_hyst_type, which is the hysteresis margin rather than the
+corresponding absolute temperature.
 
-This problem may cause log recovery failures. The following script can be
-used to reproduce the problem:
+Return tcontrol directly, and update the documentation accordingly.
 
- #!/bin/bash
- mkfs.xfs -f /dev/sda
- mount /dev/sda /mnt/test/
- touch /mnt/test/file
- for i in {1..200}; do
-         attr -s "user.attr_$i" -V "value_$i" /mnt/test/file > /dev/null
- done
- echo 1 > /sys/fs/xfs/debug/larp
- echo 1 > /sys/fs/xfs/sda/errortag/larp
- attr -s "user.zero" -V "" /mnt/test/file
- echo 0 > /sys/fs/xfs/sda/errortag/larp
- umount /mnt/test
- mount /dev/sda /mnt/test/  # mount failed
-
-Fix this by deriving the expected count dynamically as "2 + !!value_len"
-for SET/REPLACE operations.
-
-Cc: stable@vger.kernel.org # v6.9
-Fixes: ad206ae50eca ("xfs: check opcode and iovec count match in xlog_recover_attri_commit_pass2")
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: bf3608f338e9 ("hwmon: peci: Add cputemp driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260323002352.93417-2-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_attr_item.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/hwmon/peci-cputemp.rst |   10 ++++++----
+ drivers/hwmon/peci/cputemp.c         |    2 +-
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
---- a/fs/xfs/xfs_attr_item.c
-+++ b/fs/xfs/xfs_attr_item.c
-@@ -746,8 +746,8 @@ xlog_recover_attri_commit_pass2(
- 	switch (op) {
- 	case XFS_ATTRI_OP_FLAGS_SET:
- 	case XFS_ATTRI_OP_FLAGS_REPLACE:
--		/* Log item, attr name, attr value */
--		if (item->ri_total != 3) {
-+		/* Log item, attr name, optional attr value */
-+		if (item->ri_total != 2 + !!attri_formatp->alfi_value_len) {
- 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
- 					     attri_formatp, len);
- 			return -EFSCORRUPTED;
+--- a/Documentation/hwmon/peci-cputemp.rst
++++ b/Documentation/hwmon/peci-cputemp.rst
+@@ -51,8 +51,9 @@ temp1_max		Provides thermal control temp
+ temp1_crit		Provides shutdown temperature of the CPU package which
+ 			is also known as the maximum processor junction
+ 			temperature, Tjmax or Tprochot.
+-temp1_crit_hyst		Provides the hysteresis value from Tcontrol to Tjmax of
+-			the CPU package.
++temp1_crit_hyst		Provides the hysteresis temperature of the CPU
++			package. Returns Tcontrol, the temperature at which
++			the critical condition clears.
+ 
+ temp2_label		"DTS"
+ temp2_input		Provides current temperature of the CPU package scaled
+@@ -62,8 +63,9 @@ temp2_max		Provides thermal control temp
+ temp2_crit		Provides shutdown temperature of the CPU package which
+ 			is also known as the maximum processor junction
+ 			temperature, Tjmax or Tprochot.
+-temp2_crit_hyst		Provides the hysteresis value from Tcontrol to Tjmax of
+-			the CPU package.
++temp2_crit_hyst		Provides the hysteresis temperature of the CPU
++			package. Returns Tcontrol, the temperature at which
++			the critical condition clears.
+ 
+ temp3_label		"Tcontrol"
+ temp3_input		Provides current Tcontrol temperature of the CPU
+--- a/drivers/hwmon/peci/cputemp.c
++++ b/drivers/hwmon/peci/cputemp.c
+@@ -133,7 +133,7 @@ static int get_temp_target(struct peci_c
+ 		*val = priv->temp.target.tjmax;
+ 		break;
+ 	case crit_hyst_type:
+-		*val = priv->temp.target.tjmax - priv->temp.target.tcontrol;
++		*val = priv->temp.target.tcontrol;
+ 		break;
+ 	default:
+ 		ret = -EOPNOTSUPP;
 
 
