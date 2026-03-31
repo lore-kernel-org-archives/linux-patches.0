@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273C9425CC3;
-	Tue, 31 Mar 2026 16:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADAD4035AB;
+	Tue, 31 Mar 2026 16:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975917; cv=none; b=deytvXtp5X4H8wW8M3xW4dwi5Qod3NPTbh+rliuH+Q7EUb78EiIm9xoYSGd1Vz/6XqVIGVbke5Ph13LDi6LoN8qLizBvSoZiC28yXkXRt0qlQoFYkvsaRgjMd9st6teLPhihzpHrZ3VBiUb7I4qrfON3PqlsFOITmMsrwk9G+PY=
+	t=1774975919; cv=none; b=qlwEaR9aNVw6LetestO1Rd3XLbpz+M4Ka8gm8SDrbmudY3v0CQuANRo+FC4gYRLbKy7JcHECdPzIUowemTmPZWmAy7AgEsncLg8GbB0e//RrTXi85s0BtgsxbW8gSsrUSlDgqqMGQIp9bf/0FuXHZ3dKrPfpdnJWWYcH10eDenE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975917; c=relaxed/simple;
-	bh=NPqYjcrobh3HItsqev+dhFs4e3NTT5OFT5ybrsXTY40=;
+	s=arc-20240116; t=1774975919; c=relaxed/simple;
+	bh=weeiqqYx6VjhLQkHhiHL8jNeI/7WHmluWC8RWQBST2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thDqpixyJZclSYi6gmhuhbqvM3smkpvYU7iP5lD5QwKmyIwgGarCt7adlr0C2iMQB91lfMvPql7+0iX5g/YhbBLrExk1xwfaF+MP5jZ1R8Y3FDKD4d2yGKS8gFRxNrNwVmPZk+F/or9fIhLX6C7rLxROIGfbZSeay6s/l2GMl+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnBtm4/p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GuPWcdpuw5ganfi6J7FEtpiuDj2XcI4BCZRnBOM9mByDBlF9Yuv3KhiXFrDUWU70Zy7qIEOCCXkMiCUsBAiCi/CRn3HeWZkBX5XeZ2cGyg1509Qtbnp26uPB7k5lMz8jByjJSS8NaPpvJ9n7GUcsgnZfc+DJS+ea/e0I5qNq3dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNmyhAwy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnBtm4/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EAAC19423;
-	Tue, 31 Mar 2026 16:51:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNmyhAwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C60C19423;
+	Tue, 31 Mar 2026 16:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975917;
-	bh=NPqYjcrobh3HItsqev+dhFs4e3NTT5OFT5ybrsXTY40=;
+	s=korg; t=1774975919;
+	bh=weeiqqYx6VjhLQkHhiHL8jNeI/7WHmluWC8RWQBST2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnBtm4/pBtRjTUtRufw49VVNRXPm3SKQd0BxbGfycwmo+pA7LWPIEXQQwnWfZkXt7
-	 +uKriqK6WfaGM9UhR3Um+oAbbSJH/0SwGW/IX1A/HibTmTwbuOn3yLApR5N/G0Lsie
-	 Gf7WJIsI3L0RM0v1A09KC8nst8pmnwPgURegJ/G4=
+	b=cNmyhAwyd1uDgj7i3Ka49mjSipkMP8ae182W8ER4bN/KvgzJTr4KLq8JdGktz6Dho
+	 Wfvd3AtU2lRyMussPBrTQ1xeC7WM37iSxwLj1lR3adDtYz86CGq4SqobjWiQp/mzDh
+	 fwFsXa4GMSFB2qhB43QwuH8xHCEviFQy9+A99gwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	stable@kernel.org
-Subject: [PATCH 6.12 135/244] s390/syscalls: Add spectre boundary for syscall dispatch table
-Date: Tue, 31 Mar 2026 18:21:25 +0200
-Message-ID: <20260331161746.638674198@linuxfoundation.org>
+	stable@kernel.org,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.12 136/244] s390/barrier: Make array_index_mask_nospec() __always_inline
+Date: Tue, 31 Mar 2026 18:21:26 +0200
+Message-ID: <20260331161746.675119290@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -55,49 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-commit 48b8814e25d073dd84daf990a879a820bad2bcbd upstream.
+commit c5c0a268b38adffbb2e70e6957017537ff54c157 upstream.
 
-The s390 syscall number is directly controlled by userspace, but does
-not have an array_index_nospec() boundary to prevent access past the
-syscall function pointer tables.
+Mark array_index_mask_nospec() as __always_inline to guarantee the
+mitigation is emitted inline regardless of compiler inlining decisions.
 
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Fixes: 56e62a737028 ("s390: convert to generic entry")
+Fixes: e2dd833389cc ("s390: add optimized array_index_mask_nospec")
 Cc: stable@kernel.org
-Assisted-by: gkh_clanker_2000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Link: https://lore.kernel.org/r/2026032404-sterling-swoosh-43e6@gregkh
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/syscall.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/include/asm/barrier.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kernel/syscall.c
-+++ b/arch/s390/kernel/syscall.c
-@@ -13,6 +13,7 @@
+--- a/arch/s390/include/asm/barrier.h
++++ b/arch/s390/include/asm/barrier.h
+@@ -62,8 +62,8 @@ do {									\
+  * @size: number of elements in array
   */
+ #define array_index_mask_nospec array_index_mask_nospec
+-static inline unsigned long array_index_mask_nospec(unsigned long index,
+-						    unsigned long size)
++static __always_inline unsigned long array_index_mask_nospec(unsigned long index,
++							     unsigned long size)
+ {
+ 	unsigned long mask;
  
- #include <linux/errno.h>
-+#include <linux/nospec.h>
- #include <linux/sched.h>
- #include <linux/mm.h>
- #include <linux/fs.h>
-@@ -114,6 +115,7 @@ static void do_syscall(struct pt_regs *r
- 	if (likely(nr >= NR_syscalls))
- 		goto out;
- 	do {
-+		nr = array_index_nospec(nr, NR_syscalls);
- 		regs->gprs[2] = current->thread.sys_call_table[nr](regs);
- 	} while (test_and_clear_pt_regs_flag(regs, PIF_EXECVE_PGSTE_RESTART));
- out:
 
 
