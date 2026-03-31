@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C892F31714F;
-	Tue, 31 Mar 2026 16:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEDC2C15BB;
+	Tue, 31 Mar 2026 16:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975449; cv=none; b=pXcpOLRSv1HC2N+62sar0SBmtFFP4KKIupboPpiC4b7PMRkwlmS5vzreUonA7vdzOHaPVng5iJ0Oz1MS5p2JDNSQ5ZHYlsfvn33IoOg5lbgjJbC8dy7QiNPxlnnNxMZORQLqlwrIrQXZ3/aL3SfoHLV7u2IRfej0g3C49FBJmpQ=
+	t=1774975452; cv=none; b=nXFLOWUC5NRuXiLFdKlIJlTSEetRpUtpzx897Ek6rfuGbbTDfUo0sbwSPdycpk1XZOv0ULuy6BUoplBwH7FvXE1lDjYxbmQKHFY60LdV1XfGYgE6C49cHa1Ob81v+6N84WgmlctxriGZBXL3VMlDJ3kVw+0pX/VoIIO+e6xMX9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975449; c=relaxed/simple;
-	bh=za/AlUXdta+2zD/60x2gfM89AQTzCTJfpGOkwQnvXME=;
+	s=arc-20240116; t=1774975452; c=relaxed/simple;
+	bh=jhwUWevGVW1uo+Ma9lBqFl10d0oB4//x/ShBc+ot9Z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X60dVunFpuqNyJgaZNOl+z2wlbzbboFCsMEDmRzjaVJZL1MaXeffDSMeLxiF5bQn/YFp7WWoSx7fQwz0AS5Br7Jl1iPdC9TiiWP3uat85AMPT28Djnrs/fZiebBY2DDFSdQCVLkG5wZHKhWsK0K++zqgB3yr8YePsvsX3fK3fuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvVJMJZE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lyUvlwwv6KTFO3LOXbVsk0WOz1juy36A9DVjn/6KlF1IsrJFGmZUkzDDJQJ5lwUY1H2dgv/I2X+BMvPPPb6KH7/wI+lX3wENLLfSvoO1WA9HZP6K/2ZyP/zWrhhvZM+kcmkxVK/JV2ML3AOfibADJ80ySyFX7N5OB4oAIrEDiXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qn7uMc9g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvVJMJZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBCCC19423;
-	Tue, 31 Mar 2026 16:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qn7uMc9g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52D9C19423;
+	Tue, 31 Mar 2026 16:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975449;
-	bh=za/AlUXdta+2zD/60x2gfM89AQTzCTJfpGOkwQnvXME=;
+	s=korg; t=1774975452;
+	bh=jhwUWevGVW1uo+Ma9lBqFl10d0oB4//x/ShBc+ot9Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xvVJMJZE/nbIE7OtARem5imO2xgNof5kZ62mrqA2SyXiLIyFk7RnI5m+qA+znD8co
-	 FCqt+C3yqySgsfe45fQTjQWD7rrNLDuDJpBi2BgXOiseL6zHvghhmBB7i/TjBKItJI
-	 agXBkbpgP9boSa8Ol+jICscORr4P/cYj5HiNwZXY=
+	b=qn7uMc9grm6xNemiasjdmTXcYMaGTur7/rMIw+OD0jP8COUWQ8y/GVvHC6JKJ4ZZ2
+	 /Pnt6yCtGGSNiS01LrvdLpo4ToxSoOQzqEgO2ATAS0XJgVH7+dTHSH1e1wmhx9qbAh
+	 v2DY+eNUVgEXc2vXR8S9h/K4m2R5dtYKWV1W1I7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	syzbot+04c4e65cab786a2e5b7e@syzkaller.appspotmail.com,
+	Tejas Bharambe <tejas.bharambe@outlook.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.19 298/342] ext4: test if inodes all dirty pages are submitted to disk
-Date: Tue, 31 Mar 2026 18:22:11 +0200
-Message-ID: <20260331161809.898162568@linuxfoundation.org>
+Subject: [PATCH 6.19 299/342] ext4: validate p_idx bounds in ext4_ext_correct_indexes
+Date: Tue, 31 Mar 2026 18:22:12 +0200
+Message-ID: <20260331161809.933555175@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,48 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Tejas Bharambe <tejas.bharambe@outlook.com>
 
-commit 73bf12adbea10b13647864cd1c62410d19e21086 upstream.
+commit 2acb5c12ebd860f30e4faf67e6cc8c44ddfe5fe8 upstream.
 
-The commit aa373cf55099 ("writeback: stop background/kupdate works from
-livelocking other works") introduced an issue where unmounting a filesystem
-in a multi-logical-partition scenario could lead to batch file data loss.
-This problem was not fixed until the commit d92109891f21 ("fs/writeback:
-bail out if there is no more inodes for IO and queued once"). It took
-considerable time to identify the root cause. Additionally, in actual
-production environments, we frequently encountered file data loss after
-normal system reboots. Therefore, we are adding a check in the inode
-release flow to verify whether all dirty pages have been flushed to disk,
-in order to determine whether the data loss is caused by a logic issue in
-the filesystem code.
+ext4_ext_correct_indexes() walks up the extent tree correcting
+index entries when the first extent in a leaf is modified. Before
+accessing path[k].p_idx->ei_block, there is no validation that
+p_idx falls within the valid range of index entries for that
+level.
 
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260303012242.3206465-1-yebin@huaweicloud.com
+If the on-disk extent header contains a corrupted or crafted
+eh_entries value, p_idx can point past the end of the allocated
+buffer, causing a slab-out-of-bounds read.
+
+Fix this by validating path[k].p_idx against EXT_LAST_INDEX() at
+both access sites: before the while loop and inside it. Return
+-EFSCORRUPTED if the index pointer is out of range, consistent
+with how other bounds violations are handled in the ext4 extent
+tree code.
+
+Reported-by: syzbot+04c4e65cab786a2e5b7e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=04c4e65cab786a2e5b7e
+Signed-off-by: Tejas Bharambe <tejas.bharambe@outlook.com>
+Link: https://patch.msgid.link/JH0PR06MB66326016F9B6AD24097D232B897CA@JH0PR06MB6632.apcprd06.prod.outlook.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ext4/extents.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -184,6 +184,14 @@ void ext4_evict_inode(struct inode *inod
- 	if (EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)
- 		ext4_evict_ea_inode(inode);
- 	if (inode->i_nlink) {
-+		/*
-+		 * If there's dirty page will lead to data loss, user
-+		 * could see stale data.
-+		 */
-+		if (unlikely(!ext4_emergency_state(inode->i_sb) &&
-+		    mapping_tagged(&inode->i_data, PAGECACHE_TAG_DIRTY)))
-+			ext4_warning_inode(inode, "data will be lost");
-+
- 		truncate_inode_pages_final(&inode->i_data);
- 
- 		goto no_delete;
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -1741,6 +1741,13 @@ static int ext4_ext_correct_indexes(hand
+ 	err = ext4_ext_get_access(handle, inode, path + k);
+ 	if (err)
+ 		return err;
++	if (unlikely(path[k].p_idx > EXT_LAST_INDEX(path[k].p_hdr))) {
++		EXT4_ERROR_INODE(inode,
++				 "path[%d].p_idx %p > EXT_LAST_INDEX %p",
++				 k, path[k].p_idx,
++				 EXT_LAST_INDEX(path[k].p_hdr));
++		return -EFSCORRUPTED;
++	}
+ 	path[k].p_idx->ei_block = border;
+ 	err = ext4_ext_dirty(handle, inode, path + k);
+ 	if (err)
+@@ -1753,6 +1760,14 @@ static int ext4_ext_correct_indexes(hand
+ 		err = ext4_ext_get_access(handle, inode, path + k);
+ 		if (err)
+ 			goto clean;
++		if (unlikely(path[k].p_idx > EXT_LAST_INDEX(path[k].p_hdr))) {
++			EXT4_ERROR_INODE(inode,
++					 "path[%d].p_idx %p > EXT_LAST_INDEX %p",
++					 k, path[k].p_idx,
++					 EXT_LAST_INDEX(path[k].p_hdr));
++			err = -EFSCORRUPTED;
++			goto clean;
++		}
+ 		path[k].p_idx->ei_block = border;
+ 		err = ext4_ext_dirty(handle, inode, path + k);
+ 		if (err)
 
 
