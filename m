@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1C72F5491;
-	Tue, 31 Mar 2026 17:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EE62E11A6;
+	Tue, 31 Mar 2026 17:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976683; cv=none; b=RjEpoHSL63bWAhqbOCBmOhJV2d2mpN688VpXrPdJ9snQnJO8m0wr4E+TucxsmnDSaco70TMrHChIzvAbCvB77raJBBiqmWW72ynUoafV5sBZZKsNyzcPTPl0NoG57oBIFfaE2+SbKbFDxyWRe16QY7poclAnIj6VwmZMPCeiG/s=
+	t=1774976685; cv=none; b=ooy6F/+hF6Ww8yDiYr/hBu1Fu5Fuy6TDwJk1ESQWRt62I1396ExcACmoT1ISLuKQny0qUKtkNYHXXxtFCIu51latRbngFCzERFUNq02d+jtuuRBe3p6mofTx9f3ORPrQfsDTmFDDYEQWreqwbju5aawZAi4p5rdMefUI3S0AwfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976683; c=relaxed/simple;
-	bh=ffMZCVhu/fl9RRmUsKa+BMNiys2VhxoTDE9ACYWyAws=;
+	s=arc-20240116; t=1774976685; c=relaxed/simple;
+	bh=WmjfxA7ZkkdXm5G8F5yF7aKpKSkytuZMu68K0q92hpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVpnBs3PNad9n8mC7HNh9wmo9F5hbKCIxkBC5TTJiLqUcjYpfvmYkAWTqLhye4PwcjAX8B6i4em+lcj7oeVj0auKGmgX+yY14X8aYuKMQ3eYy/j8GrnqatfFu42NclnPeLMubf2ZAvDlDcjoueitlGlHgFLWtb9bNnkDaDrkmew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXvFzi2f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NkhLTry1GMxjXlmoQrElKaIHx5ZpiRJKqmBCVeDL2WMJKPLIGcoVXl5Bs7yk6mrsZuGHkFrjglRE1+p3BV8gZFgc33bROj+Ov+kd/Gn0yeSey8NI4IhXE0YPS7HcGdNjP08L9e9EU5C+2ZL3+7z9WeA9wQT8fqwk4W5TubA2LHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8QkE98x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXvFzi2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96716C19423;
-	Tue, 31 Mar 2026 17:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8QkE98x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E489C19423;
+	Tue, 31 Mar 2026 17:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976682;
-	bh=ffMZCVhu/fl9RRmUsKa+BMNiys2VhxoTDE9ACYWyAws=;
+	s=korg; t=1774976685;
+	bh=WmjfxA7ZkkdXm5G8F5yF7aKpKSkytuZMu68K0q92hpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EXvFzi2fLuT/WYfhKSeX78xM5yspyedht2RR0An4nsQWKQvj4GsQHqHGX673I44oB
-	 utg5+bwmD9qOgeZoTF2dSy9PB7y+moaWaYcuPewDLQzvnjlhQ20bxBKnB+Hp44t1f9
-	 +Y5xE+T2cmoQ/FxeLMfxh2HCU2gyLUbbjnz5DDAk=
+	b=E8QkE98xQbxsj1SSE8FIZqyg7V43tOnEcKNPL2prKYOV9JYm6xT0YT6eIXKzgPlTp
+	 QFMmho+aY+t66oXdF8I57pJoultD50QlWkSRyf5QYKCcoM/SyneT4Gyn4kP3W+WiEO
+	 X1cG2txABEl08GmdBhbgdKSJ7NVL/cpY+MPMN0xA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Joel Selvaraj <foss@joelselvaraj.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 187/309] ASoC: codecs: wcd934x: fix typo in dt parsing
-Date: Tue, 31 Mar 2026 18:21:30 +0200
-Message-ID: <20260331161800.342148919@linuxfoundation.org>
+Subject: [PATCH 6.18 188/309] ASoC: sma1307: fix double free of devm_kzalloc() memory
+Date: Tue, 31 Mar 2026 18:21:31 +0200
+Message-ID: <20260331161800.377987939@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -53,46 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit cfb385a8dc88d86a805a5682eaa68f59fa5c0ec3 upstream.
+commit fe757092d2329c397ecb32f2bf68a5b1c4bd9193 upstream.
 
-Looks like we ended up with a typo during device tree data parsing
-as part of 4f16b6351bbff ("ASoC: codecs: wcd: add common helper for wcd
-codecs") patch.
- This will result in not parsing the device tree data and results in
-zero mic bias values.
+A previous change added NULL checks and cleanup for allocation
+failures in sma1307_setting_loaded().
 
-Fix this by calling wcd_dt_parse_micbias_info instead of
-wcd_dt_parse_mbhc_data.
+However, the cleanup for mode_set entries is wrong. Those entries are
+allocated with devm_kzalloc(), so they are device-managed resources and
+must not be freed with kfree(). Manually freeing them in the error path
+can lead to a double free when devres later releases the same memory.
 
-Fixes: 4f16b6351bbff ("ASoC: codecs: wcd: add common helper for wcd codecs")
-Cc: Stable@vger.kernel.org
-Reported-by: Joel Selvaraj <foss@joelselvaraj.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260323231748.2217967-1-srinivas.kandagatla@oss.qualcomm.com
+Drop the manual kfree() loop and let devres handle the cleanup.
+
+Fixes: 0ec6bd16705fe ("ASoC: sma1307: Add NULL check in sma1307_setting_loaded()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260313040611.391479-1-lgs201920130244@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd934x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/sma1307.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd934x.c b/sound/soc/codecs/wcd934x.c
-index c8db33f78a1b..bc41a1466c70 100644
---- a/sound/soc/codecs/wcd934x.c
-+++ b/sound/soc/codecs/wcd934x.c
-@@ -2172,7 +2172,7 @@ static int wcd934x_init_dmic(struct snd_soc_component *comp)
- 	u32 def_dmic_rate, dmic_clk_drv;
- 	int ret;
- 
--	ret = wcd_dt_parse_mbhc_data(comp->dev, &wcd->mbhc_cfg);
-+	ret = wcd_dt_parse_micbias_info(&wcd->common);
- 	if (ret)
- 		return ret;
- 
--- 
-2.53.0
-
+--- a/sound/soc/codecs/sma1307.c
++++ b/sound/soc/codecs/sma1307.c
+@@ -1779,8 +1779,10 @@ static void sma1307_setting_loaded(struc
+ 				   sma1307->set.mode_size * 2 * sizeof(int),
+ 				   GFP_KERNEL);
+ 		if (!sma1307->set.mode_set[i]) {
+-			for (int j = 0; j < i; j++)
+-				kfree(sma1307->set.mode_set[j]);
++			for (int j = 0; j < i; j++) {
++				devm_kfree(sma1307->dev, sma1307->set.mode_set[j]);
++				sma1307->set.mode_set[j] = NULL;
++			}
+ 			sma1307->set.status = false;
+ 			return;
+ 		}
 
 
