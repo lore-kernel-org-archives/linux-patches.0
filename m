@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459B523507B;
-	Tue, 31 Mar 2026 16:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5BA41C30C;
+	Tue, 31 Mar 2026 16:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974680; cv=none; b=BUB0GY4pt7OianXrpGYWSrN/RXLS5ENCuOTXK649aZ+DHQk2LqGa+4Iuq7oN5uRju8cBT6AlRW7UNW8DKpwwO3n5WLdyWTIATjGgfR91/e1s7SI462g3ybVvr0pefFVmoN8zuZifFv8Kj8a528JKVDc18W8LBiWDDuVX9us4Xgw=
+	t=1774974682; cv=none; b=UeMS0eWvPlqhLhQ0bgvtGn0t/sTeLuUwUGobsFGFvZ7GEbWvypPBQO5Rs84HU0R6a2CWKBPLGTnfofv3fya5J1rYrM/QuCtyAdTmg/E4X80r68EmziMzIkEOL2S/0rvspM1G5wSj5obAQxftwhPf/TqU7IFzDIYClcaFMa1Cu+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974680; c=relaxed/simple;
-	bh=lIAWdxWspzDpsIzLtF2c5xBykNoUyiA9bLlnLKY0Ujw=;
+	s=arc-20240116; t=1774974682; c=relaxed/simple;
+	bh=fsc3siuiIXW//9+MzhWv/5max0tjwTva1qTA8Encaiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UXTVpwKC2rbzooGiN2cIPEZd9CXq6UGBhsVyjS6P1uNOUJYWhlfnwqWC01eI1fSHtwUQ5R9qVbuJesYhQujkumZkbXuIVfaWFbbDs6zCWE3wtv8kDLG52DeAXNqqnVwuEuxlGm1sA/JJzrnJpOXIDpTqspx9VnsKh2GMQBJ3dFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffKsjVCI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jq7ugdo8qxY5TupIsdkYILNnfM3amat1cuiD3DBPkwR1yuOvtzOax7F4R6SDGuHBETL+32BMFqII9S7aXJ7C6nQd/TxU8pjB8Bnvi2FaZhW36XZv02Kzf4X0ikiTDtQCKLRwhecUUHfrsJOJZbp3AQbOaPRF7Rvc/WUYms6Q0aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXSqP9zm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffKsjVCI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCCBC19423;
-	Tue, 31 Mar 2026 16:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXSqP9zm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C48C19424;
+	Tue, 31 Mar 2026 16:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974680;
-	bh=lIAWdxWspzDpsIzLtF2c5xBykNoUyiA9bLlnLKY0Ujw=;
+	s=korg; t=1774974682;
+	bh=fsc3siuiIXW//9+MzhWv/5max0tjwTva1qTA8Encaiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ffKsjVCIx60ljw2COjZhZSDGWsGhmXDHe4tFxckMNHENCP4z/oNDfVc9DVNCA4BoW
-	 CgXbAR5cKP1aUZrB5hQ+aoXhxWNYrnYuRkLKmVy+cOQ+Xyiw0bbILiKavTi+mmrBxv
-	 ULw+mpQEG22EsfSQe9rXd+/WEC9DlisGIgxuz+iQ=
+	b=sXSqP9zmsUD/hHYOBgYxzvQdCAN3LUZMJ1o6UBBPI0geABhR0LzEMIoJccp4QXwZV
+	 2VKArzRv7vuR73e2OEj2D1qUcQMHJvZcWwuhAF0LHHSbaWBNi/1Qg1dhwpkcdDP429
+	 IDd6VpCpg/ZLktWsUae3a1aLqaoGjxATS/mRBquY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benno Lossin <lossin@kernel.org>,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.6 149/175] rust: pin-init: internal: init: document load-bearing fact of field accessors
-Date: Tue, 31 Mar 2026 18:22:13 +0200
-Message-ID: <20260331161735.264326554@linuxfoundation.org>
+	Pratyush Yadav <p.yadav@ti.com>,
+	Michael Walle <michael@walle.cc>,
+	Luke Wang <ziniu.wang_1@nxp.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Liyin Zhang <liyin.zhang.cn@windriver.com>
+Subject: [PATCH 6.6 150/175] mtd: spi-nor: core: avoid odd length/address reads on 8D-8D-8D mode
+Date: Tue, 31 Mar 2026 18:22:14 +0200
+Message-ID: <20260331161735.302050711@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -51,81 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benno Lossin <lossin@kernel.org>
+From: Pratyush Yadav <p.yadav@ti.com>
 
-[ Upstream commit 580cc37b1de4fcd9997c48d7080e744533f09f36 ]
+[ Upstream commit f156b23df6a84efb2f6686156be94d4988568954 ]
 
-The functions `[Pin]Init::__[pinned_]init` and `ptr::write` called from
-the `init!` macro require the passed pointer to be aligned. This fact is
-ensured by the creation of field accessors to previously initialized
-fields.
+On Octal DTR capable flashes like Micron Xcella reads cannot start or
+end at an odd address in Octal DTR mode. Extra bytes need to be read at
+the start or end to make sure both the start address and length remain
+even.
 
-Since we missed this very important fact from the beginning [1],
-document it in the code.
+To avoid allocating too much extra memory, thereby putting unnecessary
+memory pressure on the system, the temporary buffer containing the extra
+padding bytes is capped at PAGE_SIZE bytes. The rest of the 2-byte
+aligned part should be read directly in the main buffer.
 
-Link: https://rust-for-linux.zulipchat.com/#narrow/channel/561532-pin-init/topic/initialized.20field.20accessor.20detection/with/576210658 [1]
-Fixes: 90e53c5e70a6 ("rust: add pin-init API core")
-Cc: <stable@vger.kernel.org> # 6.6.y, 6.12.y: 42415d163e5d: rust: pin-init: add references to previously initialized fields
-Cc: <stable@vger.kernel.org> # 6.6.y, 6.12.y, 6.18.y, 6.19.y
-Signed-off-by: Benno Lossin <lossin@kernel.org>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260302140424.4097655-2-lossin@kernel.org
-[ Updated Cc: stable@ tags as discussed. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-[ Moved changes to the declarative macro, because 6.19.y and earlier do not
-  have `syn`. Also duplicated the comment for all field accessor creations.
-  - Benno ]
-Signed-off-by: Benno Lossin <lossin@kernel.org>
+Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
+Reviewed-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Link: https://lore.kernel.org/r/20250708091646.292-1-ziniu.wang_1@nxp.com
+[ Resolve conflict in drivers/mtd/spi-nor/core.c.
+  In spi_nor_read(), 6.6.y contains a spi_nor_convert_addr() call
+  before spi_nor_read_data(), introduced by 364995962803 ("mtd:
+  spi-nor: Add a ->convert_addr() method"), which does not exist in
+  mainline. This call is specific to Xilinx S3AN flashes, which use a
+  non-standard address format. In mainline, S3AN flash support was
+  removed entirely, and the corresponding spi_nor_convert_addr() call
+  was dropped by 9539d12d9f52 ("mtd: spi-nor: get rid of non-power-of-2
+  page size handling"). Keep the existing spi_nor_convert_addr() call
+  and insert the new spi_nor_octal_dtr_read() branch after it. ]
+Signed-off-by: Liyin Zhang <liyin.zhang.cn@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/init/macros.rs |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/mtd/spi-nor/core.c |   76 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 75 insertions(+), 1 deletion(-)
 
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -1205,6 +1205,10 @@ macro_rules! __init_internal {
-         // return when an error/panic occurs.
-         // We also use the `data` to require the correct trait (`Init` or `PinInit`) for `$field`.
-         unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field), init)? };
-+        // NOTE: the field accessor ensures that the initialized field is properly aligned.
-+        // Unaligned fields will cause the compiler to emit E0793. We do not support
-+        // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-+        // `ptr::write` below has the same requirement.
-         // SAFETY:
-         // - the project function does the correct field projection,
-         // - the field has been initialized,
-@@ -1244,6 +1248,10 @@ macro_rules! __init_internal {
-         // return when an error/panic occurs.
-         unsafe { $crate::init::Init::__init(init, ::core::ptr::addr_of_mut!((*$slot).$field))? };
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -2082,6 +2082,76 @@ static const struct flash_info *spi_nor_
+ 	return info;
+ }
  
-+        // NOTE: the field accessor ensures that the initialized field is properly aligned.
-+        // Unaligned fields will cause the compiler to emit E0793. We do not support
-+        // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-+        // `ptr::write` below has the same requirement.
-         // SAFETY:
-         // - the field is not structurally pinned, since the line above must compile,
-         // - the field has been initialized,
-@@ -1284,6 +1292,10 @@ macro_rules! __init_internal {
-             unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
-         }
++/*
++ * On Octal DTR capable flashes, reads cannot start or end at an odd
++ * address in Octal DTR mode. Extra bytes need to be read at the start
++ * or end to make sure both the start address and length remain even.
++ */
++static int spi_nor_octal_dtr_read(struct spi_nor *nor, loff_t from, size_t len,
++				  u_char *buf)
++{
++	u_char *tmp_buf;
++	size_t tmp_len;
++	loff_t start, end;
++	int ret, bytes_read;
++
++	if (IS_ALIGNED(from, 2) && IS_ALIGNED(len, 2))
++		return spi_nor_read_data(nor, from, len, buf);
++	else if (IS_ALIGNED(from, 2) && len > PAGE_SIZE)
++		return spi_nor_read_data(nor, from, round_down(len, PAGE_SIZE),
++					 buf);
++
++	tmp_buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
++	if (!tmp_buf)
++		return -ENOMEM;
++
++	start = round_down(from, 2);
++	end = round_up(from + len, 2);
++
++	/*
++	 * Avoid allocating too much memory. The requested read length might be
++	 * quite large. Allocating a buffer just as large (slightly bigger, in
++	 * fact) would put unnecessary memory pressure on the system.
++	 *
++	 * For example if the read is from 3 to 1M, then this will read from 2
++	 * to 4098. The reads from 4098 to 1M will then not need a temporary
++	 * buffer so they can proceed as normal.
++	 */
++	tmp_len = min_t(size_t, end - start, PAGE_SIZE);
++
++	ret = spi_nor_read_data(nor, start, tmp_len, tmp_buf);
++	if (ret == 0) {
++		ret = -EIO;
++		goto out;
++	}
++	if (ret < 0)
++		goto out;
++
++	/*
++	 * More bytes are read than actually requested, but that number can't be
++	 * reported to the calling function or it will confuse its calculations.
++	 * Calculate how many of the _requested_ bytes were read.
++	 */
++	bytes_read = ret;
++
++	if (from != start)
++		ret -= from - start;
++
++	/*
++	 * Only account for extra bytes at the end if they were actually read.
++	 * For example, if the total length was truncated because of temporary
++	 * buffer size limit then the adjustment for the extra bytes at the end
++	 * is not needed.
++	 */
++	if (start + bytes_read == end)
++		ret -= end - (from + len);
++
++	memcpy(buf, tmp_buf + (from - start), ret);
++out:
++	kfree(tmp_buf);
++	return ret;
++}
++
+ static int spi_nor_read(struct mtd_info *mtd, loff_t from, size_t len,
+ 			size_t *retlen, u_char *buf)
+ {
+@@ -2101,7 +2171,11 @@ static int spi_nor_read(struct mtd_info
  
-+        // NOTE: the field accessor ensures that the initialized field is properly aligned.
-+        // Unaligned fields will cause the compiler to emit E0793. We do not support
-+        // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-+        // `ptr::write` below has the same requirement.
-         #[allow(unused_variables, unused_assignments)]
-         // SAFETY:
-         // - the field is not structurally pinned, since no `use_data` was required to create this
-@@ -1324,6 +1336,10 @@ macro_rules! __init_internal {
-             // SAFETY: The memory at `slot` is uninitialized.
-             unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
-         }
-+        // NOTE: the field accessor ensures that the initialized field is properly aligned.
-+        // Unaligned fields will cause the compiler to emit E0793. We do not support
-+        // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-+        // `ptr::write` below has the same requirement.
-         // SAFETY:
-         // - the project function does the correct field projection,
-         // - the field has been initialized,
+ 		addr = spi_nor_convert_addr(nor, addr);
+ 
+-		ret = spi_nor_read_data(nor, addr, len, buf);
++		if (nor->read_proto == SNOR_PROTO_8_8_8_DTR)
++			ret = spi_nor_octal_dtr_read(nor, addr, len, buf);
++		else
++			ret = spi_nor_read_data(nor, addr, len, buf);
++
+ 		if (ret == 0) {
+ 			/* We shouldn't see 0-length reads */
+ 			ret = -EIO;
 
 
