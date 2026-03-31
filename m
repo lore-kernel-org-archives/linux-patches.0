@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597CD40710B;
-	Tue, 31 Mar 2026 16:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50383A1E8C;
+	Tue, 31 Mar 2026 16:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976189; cv=none; b=Mqaj+GRsVSm4OY+mRtD9q5ZgfKFS/5kjDkatb7wcyna6qGibmGInDgwWry5wjI18cEYccIuHmbrwTkzh4DbdS9BAZ2socgQZesu8wzZSlM+LYZoZLcGCDn4CCcFOt0yMu1KJZxw9jE2J33aSwqp8nAvtOqurl0bXlT1dQ0cvprk=
+	t=1774976192; cv=none; b=FigeSwTVDa6na56wgRtmFuPwilccyjLbh375GZFil+5CXlCHnkGH1c7i9AZFDUl49rRCDafbNGrSJXXaZGkjNPK4ACz9VJAPMsHjvH/Lj2rPMjb/bR3fX9pA+e1vkqceMDMw5mcynEUtq1QtxqVdTIWZrBk07dAH6cxxNZZkxs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976189; c=relaxed/simple;
-	bh=b1wOhEH4Erx0DglCph2nLGfeDgQ/I5tdflb6vjA4zCo=;
+	s=arc-20240116; t=1774976192; c=relaxed/simple;
+	bh=+6AJMr/I2idPSK1D6DaxdDtmeX9ppr4BMelvzuPAJIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KdwZ3SBlajuDxGvm0lHt8kMea91HQc4oetOyOtkwvEmpb8u4rsBgaAB0Ms3SdNBxVUo3IDr9jQwJwewRb9oZF6XiI/fEd4K00YAbVRCxelXV1b+3Espdk2rFpXCxO2amCNNAqBJKUXObw4KeyXrDP1A+bKyoGcktH/EaaGW/DHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrhVepQf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ISBfOQI6mVgijkOwwQ/7XzVTH/hwkys9m8ZBf5eX98Qprw8ntLrfQ06YFm9QFQc0wGaFkhqYidPGGK128Zj8ZwiU3zCD+sqsv9rAxnKN6x/BrIUf4jcp64CxoPJQDToTJcFhdz870WBoPBrAHHOJzf+/dLoSjNuuBZk3TIl9qQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBxObRHZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrhVepQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3949C19423;
-	Tue, 31 Mar 2026 16:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBxObRHZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79817C19423;
+	Tue, 31 Mar 2026 16:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976189;
-	bh=b1wOhEH4Erx0DglCph2nLGfeDgQ/I5tdflb6vjA4zCo=;
+	s=korg; t=1774976191;
+	bh=+6AJMr/I2idPSK1D6DaxdDtmeX9ppr4BMelvzuPAJIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrhVepQfLD/Epa/RXKQ3jYCDX8rYjRO2xVAU1oA0L25AofMzgNb4HGPRMOuznlH9q
-	 JRP+j0ZlCY3yE74Mv8dnP/8hbI58BZ4UqbN9po0R0uG9/b995mT+Gfq5Og2t3QYwKJ
-	 WCPgJgmsxr74erge2gQOsigD1rsQT/CSNBBy9b5I=
+	b=WBxObRHZ7tj6R/SRhw0rTAtbPIBRS7ZUuulp0lIxWNNXBf4NjIh38hwoYC1MSY8fr
+	 bIaZ9p88/mmn1hVZ6v2yYtlowFpeOKnW6wLyjeUU860ToVykR6TQQZCBXJvMrskyhO
+	 LlIEcuMsWTGu9qlCLU4YLLOK/lUS8AUMXeoO1D2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 240/244] futex: Require sys_futex_requeue() to have identical flags
-Date: Tue, 31 Mar 2026 18:23:10 +0200
-Message-ID: <20260331161750.622311345@linuxfoundation.org>
+Subject: [PATCH 6.12 241/244] dmaengine: idxd: Fix leaking event log memory
+Date: Tue, 31 Mar 2026 18:23:11 +0200
+Message-ID: <20260331161750.658270441@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,46 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-[ Upstream commit 19f94b39058681dec64a10ebeb6f23fe7fc3f77a ]
+[ Upstream commit ee66bc29578391c9b48523dc9119af67bd5c7c0f ]
 
-Nicholas reported that his LLM found it was possible to create a UaF
-when sys_futex_requeue() is used with different flags. The initial
-motivation for allowing different flags was the variable sized futex,
-but since that hasn't been merged (yet), simply mandate the flags are
-identical, as is the case for the old style sys_futex() requeue
-operations.
+During the device remove process, the device is reset, causing the
+configuration registers to go back to their default state, which is
+zero. As the driver is checking if the event log support was enabled
+before deallocating, it will fail if a reset happened before.
 
-Fixes: 0f4b5f972216 ("futex: Add sys_futex_requeue()")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Do not check if the support was enabled, the check for 'idxd->evl'
+being valid (only allocated if the HW capability is available) is
+enough.
+
+Fixes: 244da66cda35 ("dmaengine: idxd: setup event log configuration")
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-10-7ed70658a9d1@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/syscalls.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/dma/idxd/device.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/kernel/futex/syscalls.c b/kernel/futex/syscalls.c
-index 880c9bf2f3150..99723189c8cf7 100644
---- a/kernel/futex/syscalls.c
-+++ b/kernel/futex/syscalls.c
-@@ -459,6 +459,14 @@ SYSCALL_DEFINE4(futex_requeue,
- 	if (ret)
- 		return ret;
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -815,10 +815,6 @@ static void idxd_device_evl_free(struct
+ 	struct device *dev = &idxd->pdev->dev;
+ 	struct idxd_evl *evl = idxd->evl;
  
-+	/*
-+	 * For now mandate both flags are identical, like the sys_futex()
-+	 * interface has. If/when we merge the variable sized futex support,
-+	 * that patch can modify this test to allow a difference in size.
-+	 */
-+	if (futexes[0].w.flags != futexes[1].w.flags)
-+		return -EINVAL;
-+
- 	cmpval = futexes[0].w.val;
- 
- 	return futex_requeue(u64_to_user_ptr(futexes[0].w.uaddr), futexes[0].w.flags,
--- 
-2.53.0
-
+-	gencfg.bits = ioread32(idxd->reg_base + IDXD_GENCFG_OFFSET);
+-	if (!gencfg.evl_en)
+-		return;
+-
+ 	mutex_lock(&evl->lock);
+ 	gencfg.evl_en = 0;
+ 	iowrite32(gencfg.bits, idxd->reg_base + IDXD_GENCFG_OFFSET);
 
 
