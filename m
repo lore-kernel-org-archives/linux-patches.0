@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0458F33120E;
-	Tue, 31 Mar 2026 16:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965B2413258;
+	Tue, 31 Mar 2026 16:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975570; cv=none; b=aFfx6JKLyLhw+3/AdRdkkZs8tm7sgGW10ffogHtzQbJ20n06n4UsQccw2y3V0TnvF9VicHqlutaGYOIeRxaWXXfjLmqwTXqA6H8w6S3l5SIjnpfiXSzletO7vocb4EEPGyRWIrvheHCHBnwLyIBMORcXK8tV0KinuUGaUSwa8MY=
+	t=1774975572; cv=none; b=SnCdwdEmwgMXE87++zUIBKBVmalhzSTxxhvM5V0yamy3z2Mb69b+YMh50sX17d2EayYppR0GszvaryV0t3Bsk/m2m3LSvoMuyv3/r1GYKpkAFI+ooF/wzwTg2nWTznhfpfX+zj3OFtscer5W+j/E/Y3i6ce7i4Z7iYFLTG8pXEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975570; c=relaxed/simple;
-	bh=59vFYsnCx9uN0btH6i5makyLh2Snl1SF4BfxTtHcRWo=;
+	s=arc-20240116; t=1774975572; c=relaxed/simple;
+	bh=1Ah35xL37FCMc6YMpXZh8dgW4dsycvN78TJzOX/QgAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E0kqs8aVzTePIwIEQ+b077nfcn9y/0WAwR8bXaPmqvgel4/0eAG1od2wegCYYoVHuFZD+DHYoZ6IjC8dFYM7gEhUQYU8/JqzzkGKnoVC5QTgZpHVaDPdspMkoEYjfo8hY3pNfZMI+xwI7GOg96VoT/Tmf8qzLfL+zFhwhxXg1wY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRtVmXHB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFrAmTYguz/0C0Gy9r6jSYy7/wfWOhWLSLu0Xltu1ed4/JHscFxf84PwAXwTyINfwRwwvvWAdOsAlfMSMesnQeUqAuHK2U3NPsS1S0DebQgAYda0YOL/0spM6nP8FOxcJgR+IFE84HsIed7i2X6cRimb6B3FDY5JT/ZxMRDGaqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFLtUGMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRtVmXHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9496AC19423;
-	Tue, 31 Mar 2026 16:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFLtUGMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2F7C19423;
+	Tue, 31 Mar 2026 16:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975569;
-	bh=59vFYsnCx9uN0btH6i5makyLh2Snl1SF4BfxTtHcRWo=;
+	s=korg; t=1774975572;
+	bh=1Ah35xL37FCMc6YMpXZh8dgW4dsycvN78TJzOX/QgAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JRtVmXHBBVvjABIuzzXcoBqjxaW4jghd5umFw1NJ4CMcq6Uc1b8q4u4bjcZBA1/OM
-	 mhYnOkiFgPtllIIk2pC2kjFzfaoU8h/VzBOISJ/72mRQnTKBQz/SKYa6C4kuL37Sm+
-	 eDQlWDq2WF2Dz7r+DJx8DwYD+9vNTxPXuDU71sSg=
+	b=HFLtUGMw0fXV5QYcdPrLrbtI5kK9rkom8eATiYboYvJJq9DlRBEUfDqqtNBUi1KIn
+	 qsdchKnv9TA1Ql7W8oxHDOjDtfhcqYl9VzBiQoWrofrVZM8qSuoe8k4UrxcI8KeXwJ
+	 yowJq4Uc4k6SHCXZ9Fd8rOvyja0MxIHP/4G52aMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helen Koike <koike@igalia.com>,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
-	syzbot+b73703b873a33d8eb8f6@syzkaller.appspotmail.com,
-	stable@kernel.org
-Subject: [PATCH 6.19 302/342] ext4: reject mount if bigalloc with s_first_data_block != 0
-Date: Tue, 31 Mar 2026 18:22:15 +0200
-Message-ID: <20260331161810.040934544@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 339/342] ext4: introduce EXPORT_SYMBOL_FOR_EXT4_TEST() helper
+Date: Tue, 31 Mar 2026 18:22:52 +0200
+Message-ID: <20260331161811.373384737@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,40 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helen Koike <koike@igalia.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 3822743dc20386d9897e999dbb990befa3a5b3f8 upstream.
+[ Upstream commit 49504a512587147dd6da3b4b08832ccc157b97dc ]
 
-bigalloc with s_first_data_block != 0 is not supported, reject mounting
-it.
+Introduce EXPORT_SYMBOL_FOR_EXT4_TEST() helper for kuint test.
 
-Signed-off-by: Helen Koike <koike@igalia.com>
-Suggested-by: Theodore Ts'o <tytso@mit.edu>
-Reported-by: syzbot+b73703b873a33d8eb8f6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b73703b873a33d8eb8f6
-Link: https://patch.msgid.link/20260317142325.135074-1-koike@igalia.com
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260314075258.1317579-2-yebin@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 519b76ac0b31 ("ext4: fix mballoc-test.c is not compiled when EXT4_KUNIT_TESTS=M")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ext4/ext4.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -3625,6 +3625,13 @@ int ext4_feature_set_ok(struct super_blo
- 			 "extents feature\n");
- 		return 0;
- 	}
-+	if (ext4_has_feature_bigalloc(sb) &&
-+	    le32_to_cpu(EXT4_SB(sb)->s_es->s_first_data_block)) {
-+		ext4_msg(sb, KERN_WARNING,
-+			 "bad geometry: bigalloc file system with non-zero "
-+			 "first_data_block\n");
-+		return 0;
-+	}
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index d4a98ff58076f..f1c476303f3a9 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3953,6 +3953,11 @@ static inline bool ext4_inode_can_atomic_write(struct inode *inode)
+ extern int ext4_block_write_begin(handle_t *handle, struct folio *folio,
+ 				  loff_t pos, unsigned len,
+ 				  get_block_t *get_block);
++
++#if IS_ENABLED(CONFIG_EXT4_KUNIT_TESTS)
++#define EXPORT_SYMBOL_FOR_EXT4_TEST(sym) \
++	EXPORT_SYMBOL_FOR_MODULES(sym, "ext4-test")
++#endif
+ #endif	/* __KERNEL__ */
  
- #if !IS_ENABLED(CONFIG_QUOTA) || !IS_ENABLED(CONFIG_QFMT_V2)
- 	if (!readonly && (ext4_has_feature_quota(sb) ||
+ #define EFSBADCRC	EBADMSG		/* Bad CRC detected */
+-- 
+2.53.0
+
 
 
