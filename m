@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE253425CE0;
-	Tue, 31 Mar 2026 16:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789A1425CE0;
+	Tue, 31 Mar 2026 16:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975337; cv=none; b=GDjdlYlIRzwOdlkUZDq84JB3W5JDJescEcFEBuV8b8Wrvj/KGtGrUuDPuOSRxDtYBy/BA2P6n8HSrljyF9uCjeOJcSfI6husOoLIl4MlG4B4aUxvn/wJkCxwWySX9VOYbj2dWyTXsLsX6MU/7Pjw4uG7ox36AIiLYmNJILDGt0U=
+	t=1774975339; cv=none; b=rkqKjq1GYyW2lRo9IElCE3qrdBqOHkBtg+nu+IjrofGDKNGP1fo2h50TA6Gfc1rGEhDMTt9j4esstrZC2S+/FJuzIMIkcdgdT83xwmakEeBcSGyZhf/f2nqSA7jcAjxTygXhER8Do9GVmy9BmPf0W90MwA9iUozqIwSwx7tIxp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975337; c=relaxed/simple;
-	bh=96vsvhEGJgO02jChbanOi6jfvxovR4puirS5oEo0P6A=;
+	s=arc-20240116; t=1774975339; c=relaxed/simple;
+	bh=PrOTm3UxiCBM8W0rKLWqIVcJbQzuSvrJSJMsREGwFt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFZQkZ4s0Ha7gu5DkOB9sYPObQrziBhgbMBcNYF+WEISTIUqAxucUu8TWBUyPG6Fr/Je8f/CulCyHtn5wAG5U6UZLcrZWVXNopeWTbU0LVP6A2+soqYw1yUOf0HYpYBBLPghAxgdSCmOozxRLqDbiXksrbqgC9Zj52IC5NW8UP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cz2gDpDu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xu9IkfmUmVwqwM+QCxaQ8lhYhdRa7HLwzq1w/Vkc5z5wcHC2f2QVGQN/QMDJg/gmCnhOtKyZpQxKP3rz1XbR2ftCwxmf3yOcB6hssDJato0/tRkVA1ohVBTCymoI9KcDYqkAR/E83pt1BQpf1hkiHkJ6zTGgo167SsjUJ8ZAvQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqwUv1tH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cz2gDpDu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89356C19423;
-	Tue, 31 Mar 2026 16:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqwUv1tH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B8BC19423;
+	Tue, 31 Mar 2026 16:42:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975336;
-	bh=96vsvhEGJgO02jChbanOi6jfvxovR4puirS5oEo0P6A=;
+	s=korg; t=1774975339;
+	bh=PrOTm3UxiCBM8W0rKLWqIVcJbQzuSvrJSJMsREGwFt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cz2gDpDuZRR7/0lMSAs+LfvXM2q5xbH/F9kTH/S4Vu1ZTPsOoypVjCuoaGOBf2BNP
-	 W3ydu7tQp6T5XJS/221QsHAq746FTrZmEgeMQ50WA1iDs/kWRzvtTgFS/LLkx3lnN+
-	 UI9QTfyVjcdGhRy0yWZWYY8OEv9gtAb/5BVeJ3w8=
+	b=eqwUv1tHuIrv8ePAbOxinhAK+uIg8xjdjKnKssuIpscFzUYNWXlQl1RR75vihSknP
+	 jGjIGfQpJHIb0gFkF7/9RiNRf581UzLGf+IN1ILW4UobLcatlb7xA1OEihdaQWp/i6
+	 6AlPBrT1w0m4VUxXGm2tL0TErTF0fAZVKyENNzPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Du <bin.du@amd.com>,
-	Pratap Nirujogi <pratap.nirujogi@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.19 255/342] i2c: designware: amdisp: Fix resume-probe race condition issue
-Date: Tue, 31 Mar 2026 18:21:28 +0200
-Message-ID: <20260331161808.337979638@linuxfoundation.org>
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.19 256/342] futex: Clear stale exiting pointer in futex_lock_pi() retry path
+Date: Tue, 31 Mar 2026 18:21:29 +0200
+Message-ID: <20260331161808.374911530@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -54,78 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratap Nirujogi <pratap.nirujogi@amd.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-commit e2f1ada8e089dd5a331bcd8b88125ae2af8d188f upstream.
+commit 210d36d892de5195e6766c45519dfb1e65f3eb83 upstream.
 
-Identified resume-probe race condition in kernel v7.0 with the commit
-38fa29b01a6a ("i2c: designware: Combine the init functions"),but this
-issue existed from the beginning though not detected.
+Fuzzying/stressing futexes triggered:
 
-The amdisp i2c device requires ISP to be in power-on state for probe
-to succeed. To meet this requirement, this device is added to genpd
-to control ISP power using runtime PM. The pm_runtime_get_sync() called
-before i2c_dw_probe() triggers PM resume, which powers on ISP and also
-invokes the amdisp i2c runtime resume before the probe completes resulting
-in this race condition and a NULL dereferencing issue in v7.0
+    WARNING: kernel/futex/core.c:825 at wait_for_owner_exiting+0x7a/0x80, CPU#11: futex_lock_pi_s/524
 
-Fix this race condition by using the genpd APIs directly during probe:
-  - Call dev_pm_genpd_resume() to Power ON ISP before probe
-  - Call dev_pm_genpd_suspend() to Power OFF ISP after probe
-  - Set the device to suspended state with pm_runtime_set_suspended()
-  - Enable runtime PM only after the device is fully initialized
+When futex_lock_pi_atomic() sees the owner is exiting, it returns -EBUSY
+and stores a refcounted task pointer in 'exiting'.
 
-Fixes: d6263c468a761 ("i2c: amd-isp: Add ISP i2c-designware driver")
-Co-developed-by: Bin Du <bin.du@amd.com>
-Signed-off-by: Bin Du <bin.du@amd.com>
-Signed-off-by: Pratap Nirujogi <pratap.nirujogi@amd.com>
-Cc: <stable@vger.kernel.org> # v6.16+
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260320201302.3490570-1-pratap.nirujogi@amd.com
+After wait_for_owner_exiting() consumes that reference, the local pointer
+is never reset to nil. Upon a retry, if futex_lock_pi_atomic() returns a
+different error, the bogus pointer is passed to wait_for_owner_exiting().
+
+  CPU0			     CPU1		       CPU2
+  futex_lock_pi(uaddr)
+  // acquires the PI futex
+  exit()
+    futex_cleanup_begin()
+      futex_state = EXITING;
+			     futex_lock_pi(uaddr)
+			       futex_lock_pi_atomic()
+				 attach_to_pi_owner()
+				   // observes EXITING
+				   *exiting = owner;  // takes ref
+				   return -EBUSY
+			       wait_for_owner_exiting(-EBUSY, owner)
+				 put_task_struct();   // drops ref
+			       // exiting still points to owner
+			       goto retry;
+			       futex_lock_pi_atomic()
+				 lock_pi_update_atomic()
+				   cmpxchg(uaddr)
+					*uaddr ^= WAITERS // whatever
+				   // value changed
+				 return -EAGAIN;
+			       wait_for_owner_exiting(-EAGAIN, exiting) // stale
+				 WARN_ON_ONCE(exiting)
+
+Fix this by resetting upon retry, essentially aligning it with requeue_pi.
+
+Fixes: 3ef240eaff36 ("futex: Prevent exit livelock")
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260326001759.4129680-1-dave@stgolabs.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-designware-amdisp.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ kernel/futex/pi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-designware-amdisp.c
-+++ b/drivers/i2c/busses/i2c-designware-amdisp.c
-@@ -7,6 +7,7 @@
+--- a/kernel/futex/pi.c
++++ b/kernel/futex/pi.c
+@@ -918,7 +918,7 @@ int fixup_pi_owner(u32 __user *uaddr, st
+ int futex_lock_pi(u32 __user *uaddr, unsigned int flags, ktime_t *time, int trylock)
+ {
+ 	struct hrtimer_sleeper timeout, *to;
+-	struct task_struct *exiting = NULL;
++	struct task_struct *exiting;
+ 	struct rt_mutex_waiter rt_waiter;
+ 	struct futex_q q = futex_q_init;
+ 	DEFINE_WAKE_Q(wake_q);
+@@ -933,6 +933,7 @@ int futex_lock_pi(u32 __user *uaddr, uns
+ 	to = futex_setup_timer(time, &timeout, flags, 0);
  
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_domain.h>
- #include <linux/pm_runtime.h>
- #include <linux/soc/amd/isp4_misc.h>
- 
-@@ -82,22 +83,20 @@ static int amd_isp_dw_i2c_plat_probe(str
- 	if (isp_i2c_dev->shared_with_punit)
- 		pm_runtime_get_noresume(&pdev->dev);
- 
--	pm_runtime_enable(&pdev->dev);
--	pm_runtime_get_sync(&pdev->dev);
--
-+	dev_pm_genpd_resume(&pdev->dev);
- 	ret = i2c_dw_probe(isp_i2c_dev);
- 	if (ret) {
- 		dev_err_probe(&pdev->dev, ret, "i2c_dw_probe failed\n");
- 		goto error_release_rpm;
- 	}
--
--	pm_runtime_put_sync(&pdev->dev);
-+	dev_pm_genpd_suspend(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
-+	pm_runtime_enable(&pdev->dev);
- 
- 	return 0;
- 
- error_release_rpm:
- 	amd_isp_dw_i2c_plat_pm_cleanup(isp_i2c_dev);
--	pm_runtime_put_sync(&pdev->dev);
- 	return ret;
- }
- 
+ retry:
++	exiting = NULL;
+ 	ret = get_futex_key(uaddr, flags, &q.key, FUTEX_WRITE);
+ 	if (unlikely(ret != 0))
+ 		goto out;
 
 
