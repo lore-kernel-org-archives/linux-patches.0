@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD3531715F;
-	Tue, 31 Mar 2026 17:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3496331326C;
+	Tue, 31 Mar 2026 17:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976913; cv=none; b=GIn0YR6BetJmB4nHHSfSxNQPI4wLpsRBbImIfXtsQ3el/xZBQuhUP4AR/4bGAGUnAowGN4whjIrfDfX9E5sGRhiqlFscOYFzXTz3wsUPO2/T8E91sSsazl8LoGhWvo4qeP2jOowB3ZdBe6OEJu+IP1uwpgYxAcf11ECTrWtec+Q=
+	t=1774976916; cv=none; b=kleKaSyNegFuNriSEDEpoDnxG7E7gwocoj46Z16n/Fti6VOPppARz/mRLWZTVrFO9mti+gMkPkgD98eymOEoFcMma3TiyD+loB7lKK7ppceMguJjKkumkNMRMoqpKh+CxQrM5a1vU2teORcXiFIbzqO9OjMGmU9MXYfzCdtVHWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976913; c=relaxed/simple;
-	bh=F/JmbEEaJyX7ZD9CgnBmQeQ9Ks3zeQqmL4OFis5Twug=;
+	s=arc-20240116; t=1774976916; c=relaxed/simple;
+	bh=AN7gpwBfqGFBqXc+BMm8YeTLQqPrVrOGjQpyhU82QzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xly3qVBLB7uJDZP+UJ8w84CX1UQlFx8iLJdnziJFLnDh1jbu9ouQ9+Omdz1Nkf9gwIsWzsmy1tcY/96wMQqc6kDWM3Xesmuv7+RkduvJel2qTaNtee6ch67ptcIgtxpk50u8fOe7YjW6i36UR6M5SXR/eHZGLylKYm4qSvkZo2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtNqv5T2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u1Czs72jy5e0mplzBjVT75WpHgjKZW3gUPvA4gHrL/h1qqKYbi4zI3skkOB3uu6X1Z9DHKBr+sy5hPiCTfv5WMBPnvo+0vCiuWUm6Wdnm45emZZ3DYkVUgxEzyvXI2dN0u5zAsH3gCVo8n+nw9qBdKsbAw4KnKm/fSJ90T9pqIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jk6RVRlp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtNqv5T2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E952C19423;
-	Tue, 31 Mar 2026 17:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jk6RVRlp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77B8C19423;
+	Tue, 31 Mar 2026 17:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976913;
-	bh=F/JmbEEaJyX7ZD9CgnBmQeQ9Ks3zeQqmL4OFis5Twug=;
+	s=korg; t=1774976916;
+	bh=AN7gpwBfqGFBqXc+BMm8YeTLQqPrVrOGjQpyhU82QzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtNqv5T2Sk+5oyI87g0ow3jlJSi5FKlg9esp9SUTnZWwrBxe1CZYyCDbpuDAR7INU
-	 RsKsij0EI2hCWxYSjZfvVRGFyy+uZKyqWB5evDCgDqg/6QFHGscbkb4DJKgGfC34Q3
-	 EdYu95e+OEJfC3sB+dRS2/UILOLWyWcWs9Ul7/Us=
+	b=Jk6RVRlpqIlKL8P6XH2WidVUDgHE8puf0bgIIA0YReGMWwmFC7kn2gaQ+fNBporXw
+	 yAMOWU5T4UpzAWZReBjWm5qgfBEocVsUAIE5EW9fXB15cMvX9dY43BZJ6sLrkAAPm+
+	 4hThbGukDfTCftShVJSkkg7uaFox8bn2DcMh4sDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Chuanyu Tseng <chuanyu.tseng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 243/309] drm/amd/pm: Return -EOPNOTSUPP for unsupported OD_MCLK on smu_v13_0_6
-Date: Tue, 31 Mar 2026 18:22:26 +0200
-Message-ID: <20260331161802.516375710@linuxfoundation.org>
+Subject: [PATCH 6.18 234/309] drm/amd/display: Fix drm_edid leak in amdgpu_dm
+Date: Tue, 31 Mar 2026 18:22:17 +0200
+Message-ID: <20260331161802.191907761@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,35 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-commit 2f0e491faee43181b6a86e90f34016b256042fe1 upstream.
+commit 37c2caa167b0b8aca4f74c32404c5288b876a2a3 upstream.
 
-When SET_UCLK_MAX capability is absent, return -EOPNOTSUPP from
-smu_v13_0_6_emit_clk_levels() for OD_MCLK instead of 0. This makes
-unsupported OD_MCLK reporting consistent with other clock types
-and allows callers to skip the entry cleanly.
+[WHAT]
+When a sink is connected, aconnector->drm_edid was overwritten without
+freeing the previous allocation, causing a memory leak on resume.
 
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+[HOW]
+Free the previous drm_edid before updating it.
+
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Chuanyu Tseng <chuanyu.tseng@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d82e0a72d9189e8acd353988e1a57f85ce479e37)
+(cherry picked from commit 52024a94e7111366141cfc5d888b2ef011f879e5)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-@@ -1494,7 +1494,7 @@ static int smu_v13_0_6_print_clk_levels(
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3822,8 +3822,9 @@ void amdgpu_dm_update_connector_after_de
  
- 	case SMU_OD_MCLK:
- 		if (!smu_v13_0_6_cap_supported(smu, SMU_CAP(SET_UCLK_MAX)))
--			return 0;
-+			return -EOPNOTSUPP;
- 
- 		size += sysfs_emit_at(buf, size, "%s:\n", "OD_MCLK");
- 		size += sysfs_emit_at(buf, size, "0: %uMhz\n1: %uMhz\n",
+ 		aconnector->dc_sink = sink;
+ 		dc_sink_retain(aconnector->dc_sink);
++		drm_edid_free(aconnector->drm_edid);
++		aconnector->drm_edid = NULL;
+ 		if (sink->dc_edid.length == 0) {
+-			aconnector->drm_edid = NULL;
+ 			hdmi_cec_unset_edid(aconnector);
+ 			if (aconnector->dc_link->aux_mode) {
+ 				drm_dp_cec_unset_edid(&aconnector->dm_dp_aux.aux);
 
 
