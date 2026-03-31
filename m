@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53D93EF0A2;
-	Tue, 31 Mar 2026 16:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549083D8114;
+	Tue, 31 Mar 2026 16:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975477; cv=none; b=KmtZlNNbtgs0Jgof7c0WzCZqQA2Se9XcI/CCgoctXyXeUvYWnMCWj8YD/t8S9O6TxjZHwz1pcQHMd2EGNu24HgS/k0golt1aRWmSQeR+Xu6qXT42qKshVzA3qgA040vSE18TPtJACY9EuEAQMG9ldsqpzD1KdezemFKqp03Lj4M=
+	t=1774975480; cv=none; b=tJ4OrrTm9nrXbad2D7kcuiOwtvcvTz5Y1XvlLb+WSZiDQPK6PQGVyRj1XAJ1CAskzhlFSf/2otCdX2Mk8CP1BeuLvui7uqSOBX3YNjToc+g5Qh2teZy8oo45DxiLqpo2UJmc1gBnvOEtfzCgdtumT4dJXdIptdknD9Qb4aLdU/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975477; c=relaxed/simple;
-	bh=LUX1v2C7U1N+9fd0yHH4TnBl5rZM6Sq977m2xPQlXZg=;
+	s=arc-20240116; t=1774975480; c=relaxed/simple;
+	bh=pe0imqeKoywK/Ki3vG+RNwlAt0XhmQzwpv+16mG5wJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oH77+eqiq32pUQ+gCH/VdlUEkJ7Th6R6lpn7Emf+/dpMQ1h2CThPjF2H5ub9Shar3RqzAy/CPMj1EF00OQ4KNxHXStuQvCNAZcIys10Jf9HdbARWuOZDfIhyB4jmYgJC1Fj5g4t2ZvyJG0+fPMy7ENrAgSNiOMdoorXOUxYf/cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btTXRYgC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bYSjfjBb7H3/gwV/SNf9iz0IMP1CAvMEjMZ9wSBosp4muZBB2Q01eXNIwCF3/++R8sgRO7KotrVzxqeyeL2whGmzkE3CCrgGX0whaajUrdLgdTs+ZJKMV5Vm/EhnK5StntGTRzfdmPynjy7j64iN9OfwbAC8cLGqJb1xHd3CDv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZ3pgUcd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btTXRYgC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB94C19423;
-	Tue, 31 Mar 2026 16:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZ3pgUcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1CEC19423;
+	Tue, 31 Mar 2026 16:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975477;
-	bh=LUX1v2C7U1N+9fd0yHH4TnBl5rZM6Sq977m2xPQlXZg=;
+	s=korg; t=1774975480;
+	bh=pe0imqeKoywK/Ki3vG+RNwlAt0XhmQzwpv+16mG5wJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btTXRYgCR1uj36ZnyqvwASrLb6CbrKimg1cAzU0kxHXY8pIsD7yriynFJRif+pEX0
-	 +8+2gYu5MvIyqaK3Z7p6X3TtWb/InA/NPNkz/Nq9rfCZ2tSbIyrVTeHIHo2oQ7SJST
-	 kubflkHHXWopi4ytt6YJWI5J+/zjChBYGCBNJxsE=
+	b=vZ3pgUcddPyuZ1Crqak7SU2ad0j2x7CsOCORgCwgbqwyWFSwh7RzDf/dWKAs3PfOB
+	 AO6AgJn+YFXWrpbiSkef5DEotXvAcv8v9AytK9tjsEuHd6zsME/bAUvIDT6MLKhcwr
+	 96X9YIYu4hgEIsO5qeLEQcz1nbnDm1XhvyvPRFqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jan Kara <jack@suse.cz>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.19 303/342] ext4: fix use-after-free in update_super_work when racing with umount
-Date: Tue, 31 Mar 2026 18:22:16 +0200
-Message-ID: <20260331161810.077269812@linuxfoundation.org>
+	Werner Kasselman <werner@verivus.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 312/342] ksmbd: fix use-after-free and NULL deref in smb_grant_oplock()
+Date: Tue, 31 Mar 2026 18:22:25 +0200
+Message-ID: <20260331161810.405142815@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -54,113 +53,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Werner Kasselman <werner@verivus.com>
 
-commit d15e4b0a418537aafa56b2cb80d44add83e83697 upstream.
+[ Upstream commit 48623ec358c1c600fa1e38368746f933e0f1a617 ]
 
-Commit b98535d09179 ("ext4: fix bug_on in start_this_handle during umount
-filesystem") moved ext4_unregister_sysfs() before flushing s_sb_upd_work
-to prevent new error work from being queued via /proc/fs/ext4/xx/mb_groups
-reads during unmount. However, this introduced a use-after-free because
-update_super_work calls ext4_notify_error_sysfs() -> sysfs_notify() which
-accesses the kobject's kernfs_node after it has been freed by kobject_del()
-in ext4_unregister_sysfs():
+smb_grant_oplock() has two issues in the oplock publication sequence:
 
-  update_super_work                ext4_put_super
-  -----------------                --------------
-                                   ext4_unregister_sysfs(sb)
-                                     kobject_del(&sbi->s_kobj)
-                                       __kobject_del()
-                                         sysfs_remove_dir()
-                                           kobj->sd = NULL
-                                         sysfs_put(sd)
-                                           kernfs_put()  // RCU free
-  ext4_notify_error_sysfs(sbi)
-    sysfs_notify(&sbi->s_kobj)
-      kn = kobj->sd              // stale pointer
-      kernfs_get(kn)             // UAF on freed kernfs_node
-                                   ext4_journal_destroy()
-                                     flush_work(&sbi->s_sb_upd_work)
+1) opinfo is linked into ci->m_op_list (via opinfo_add) before
+   add_lease_global_list() is called.  If add_lease_global_list()
+   fails (kmalloc returns NULL), the error path frees the opinfo
+   via __free_opinfo() while it is still linked in ci->m_op_list.
+   Concurrent m_op_list readers (opinfo_get_list, or direct iteration
+   in smb_break_all_levII_oplock) dereference the freed node.
 
-Instead of reordering the teardown sequence, fix this by making
-ext4_notify_error_sysfs() detect that sysfs has already been torn down
-by checking s_kobj.state_in_sysfs, and skipping the sysfs_notify() call
-in that case. A dedicated mutex (s_error_notify_mutex) serializes
-ext4_notify_error_sysfs() against kobject_del() in ext4_unregister_sysfs()
-to prevent TOCTOU races where the kobject could be deleted between the
-state_in_sysfs check and the sysfs_notify() call.
+2) opinfo->o_fp is assigned after add_lease_global_list() publishes
+   the opinfo on the global lease list.  A concurrent
+   find_same_lease_key() can walk the lease list and dereference
+   opinfo->o_fp->f_ci while o_fp is still NULL.
 
-Fixes: b98535d09179 ("ext4: fix bug_on in start_this_handle during umount filesystem")
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260319120336.157873-1-jiayuan.chen@linux.dev
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Fix by restructuring the publication sequence to eliminate post-publish
+failure:
+
+- Set opinfo->o_fp before any list publication (fixes NULL deref).
+- Preallocate lease_table via alloc_lease_table() before opinfo_add()
+  so add_lease_global_list() becomes infallible after publication.
+- Keep the original m_op_list publication order (opinfo_add before
+  lease list) so concurrent opens via same_client_has_lease() and
+  opinfo_get_list() still see the in-flight grant.
+- Use opinfo_put() instead of __free_opinfo() on err_out so that
+  the RCU-deferred free path is used.
+
+This also requires splitting add_lease_global_list() to take a
+preallocated lease_table and changing its return type from int to void,
+since it can no longer fail.
+
+Fixes: 1dfd062caa16 ("ksmbd: fix use-after-free by using call_rcu() for oplock_info")
+Cc: stable@vger.kernel.org
+Signed-off-by: Werner Kasselman <werner@verivus.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ adapted kmalloc_obj() macro to kmalloc(sizeof()) ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h  |    1 +
- fs/ext4/super.c |    1 +
- fs/ext4/sysfs.c |   10 +++++++++-
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ fs/smb/server/oplock.c |   72 ++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 45 insertions(+), 27 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1583,6 +1583,7 @@ struct ext4_sb_info {
- 	struct proc_dir_entry *s_proc;
- 	struct kobject s_kobj;
- 	struct completion s_kobj_unregister;
-+	struct mutex s_error_notify_mutex; /* protects sysfs_notify vs kobject_del */
- 	struct super_block *s_sb;
- 	struct buffer_head *s_mmp_bh;
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -82,11 +82,19 @@ static void lease_del_list(struct oplock
+ 	spin_unlock(&lb->lb_lock);
+ }
  
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5400,6 +5400,7 @@ static int __ext4_fill_super(struct fs_c
- 
- 	timer_setup(&sbi->s_err_report, print_daily_error_info, 0);
- 	spin_lock_init(&sbi->s_error_lock);
-+	mutex_init(&sbi->s_error_notify_mutex);
- 	INIT_WORK(&sbi->s_sb_upd_work, update_super_work);
- 
- 	err = ext4_group_desc_init(sb, es, logical_sb_block, &first_not_zeroed);
---- a/fs/ext4/sysfs.c
-+++ b/fs/ext4/sysfs.c
-@@ -561,7 +561,10 @@ static const struct kobj_type ext4_feat_
- 
- void ext4_notify_error_sysfs(struct ext4_sb_info *sbi)
+-static void lb_add(struct lease_table *lb)
++static struct lease_table *alloc_lease_table(struct oplock_info *opinfo)
  {
--	sysfs_notify(&sbi->s_kobj, NULL, "errors_count");
-+	mutex_lock(&sbi->s_error_notify_mutex);
-+	if (sbi->s_kobj.state_in_sysfs)
-+		sysfs_notify(&sbi->s_kobj, NULL, "errors_count");
-+	mutex_unlock(&sbi->s_error_notify_mutex);
- }
- 
- static struct kobject *ext4_root;
-@@ -574,8 +577,10 @@ int ext4_register_sysfs(struct super_blo
- 	int err;
- 
- 	init_completion(&sbi->s_kobj_unregister);
-+	mutex_lock(&sbi->s_error_notify_mutex);
- 	err = kobject_init_and_add(&sbi->s_kobj, &ext4_sb_ktype, ext4_root,
- 				   "%s", sb->s_id);
-+	mutex_unlock(&sbi->s_error_notify_mutex);
- 	if (err) {
- 		kobject_put(&sbi->s_kobj);
- 		wait_for_completion(&sbi->s_kobj_unregister);
-@@ -608,7 +613,10 @@ void ext4_unregister_sysfs(struct super_
- 
- 	if (sbi->s_proc)
- 		remove_proc_subtree(sb->s_id, ext4_proc_root);
+-	write_lock(&lease_list_lock);
+-	list_add(&lb->l_entry, &lease_table_list);
+-	write_unlock(&lease_list_lock);
++	struct lease_table *lb;
 +
-+	mutex_lock(&sbi->s_error_notify_mutex);
- 	kobject_del(&sbi->s_kobj);
-+	mutex_unlock(&sbi->s_error_notify_mutex);
++	lb = kmalloc(sizeof(struct lease_table), KSMBD_DEFAULT_GFP);
++	if (!lb)
++		return NULL;
++
++	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
++	       SMB2_CLIENT_GUID_SIZE);
++	INIT_LIST_HEAD(&lb->lease_list);
++	spin_lock_init(&lb->lb_lock);
++	return lb;
  }
  
- int __init ext4_init_sysfs(void)
+ static int alloc_lease(struct oplock_info *opinfo, struct lease_ctx_info *lctx)
+@@ -1042,34 +1050,27 @@ static void copy_lease(struct oplock_inf
+ 	lease2->version = lease1->version;
+ }
+ 
+-static int add_lease_global_list(struct oplock_info *opinfo)
++static void add_lease_global_list(struct oplock_info *opinfo,
++				  struct lease_table *new_lb)
+ {
+ 	struct lease_table *lb;
+ 
+-	read_lock(&lease_list_lock);
++	write_lock(&lease_list_lock);
+ 	list_for_each_entry(lb, &lease_table_list, l_entry) {
+ 		if (!memcmp(lb->client_guid, opinfo->conn->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE)) {
+ 			opinfo->o_lease->l_lb = lb;
+ 			lease_add_list(opinfo);
+-			read_unlock(&lease_list_lock);
+-			return 0;
++			write_unlock(&lease_list_lock);
++			kfree(new_lb);
++			return;
+ 		}
+ 	}
+-	read_unlock(&lease_list_lock);
+ 
+-	lb = kmalloc(sizeof(struct lease_table), KSMBD_DEFAULT_GFP);
+-	if (!lb)
+-		return -ENOMEM;
+-
+-	memcpy(lb->client_guid, opinfo->conn->ClientGUID,
+-	       SMB2_CLIENT_GUID_SIZE);
+-	INIT_LIST_HEAD(&lb->lease_list);
+-	spin_lock_init(&lb->lb_lock);
+-	opinfo->o_lease->l_lb = lb;
++	opinfo->o_lease->l_lb = new_lb;
+ 	lease_add_list(opinfo);
+-	lb_add(lb);
+-	return 0;
++	list_add(&new_lb->l_entry, &lease_table_list);
++	write_unlock(&lease_list_lock);
+ }
+ 
+ static void set_oplock_level(struct oplock_info *opinfo, int level,
+@@ -1189,6 +1190,7 @@ int smb_grant_oplock(struct ksmbd_work *
+ 	int err = 0;
+ 	struct oplock_info *opinfo = NULL, *prev_opinfo = NULL;
+ 	struct ksmbd_inode *ci = fp->f_ci;
++	struct lease_table *new_lb = NULL;
+ 	bool prev_op_has_lease;
+ 	__le32 prev_op_state = 0;
+ 
+@@ -1291,21 +1293,37 @@ set_lev:
+ 	set_oplock_level(opinfo, req_op_level, lctx);
+ 
+ out:
+-	opinfo_count_inc(fp);
+-	opinfo_add(opinfo, fp);
+-
++	/*
++	 * Set o_fp before any publication so that concurrent readers
++	 * (e.g. find_same_lease_key() on the lease list) that
++	 * dereference opinfo->o_fp don't hit a NULL pointer.
++	 *
++	 * Keep the original publication order so concurrent opens can
++	 * still observe the in-flight grant via ci->m_op_list, but make
++	 * everything after opinfo_add() no-fail by preallocating any new
++	 * lease_table first.
++	 */
++	opinfo->o_fp = fp;
+ 	if (opinfo->is_lease) {
+-		err = add_lease_global_list(opinfo);
+-		if (err)
++		new_lb = alloc_lease_table(opinfo);
++		if (!new_lb) {
++			err = -ENOMEM;
+ 			goto err_out;
++		}
+ 	}
+ 
++	opinfo_count_inc(fp);
++	opinfo_add(opinfo, fp);
++
++	if (opinfo->is_lease)
++		add_lease_global_list(opinfo, new_lb);
++
+ 	rcu_assign_pointer(fp->f_opinfo, opinfo);
+-	opinfo->o_fp = fp;
+ 
+ 	return 0;
+ err_out:
+-	__free_opinfo(opinfo);
++	kfree(new_lb);
++	opinfo_put(opinfo);
+ 	return err;
+ }
+ 
 
 
