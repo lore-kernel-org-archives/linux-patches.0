@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A963C2D7DEF;
-	Tue, 31 Mar 2026 17:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F4F22578D;
+	Tue, 31 Mar 2026 17:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976869; cv=none; b=ZnBZCVq3Kf/I9zEtsrY3bVcP8q+RLPbLhlnn5vDohZDk1CxsRhNd3mYL6QQiqjFSzU6Hv+BPIqXdjRFUJYu3lvPZ4YcQYiq45mSRMbHmDQ8fs2OnkxyXdP+39J9c/XkLVIWgawa04nN7zkwUs76iem41+tyRC46DkqO/pJ954Ew=
+	t=1774976872; cv=none; b=Pq1RIi4Rmm8KtjUTnO4ZGfJbYj/I1fMzRIfGI/ln+GhpMZsAcvSrEzP1DyWBs/KMqoVuRvnT3cjtgDto3unRUIOMuCF3rOfIYuA24Buen5s7ukb/hFuDMt270oeiJaT0aIQT3dehjORE8Drlh5Bl57jnF+gOkaKOwQ9llC9aJt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976869; c=relaxed/simple;
-	bh=5DSTJTihjZNS7Nesqpuqicpmhz/V9EyWQRGqvZhE92E=;
+	s=arc-20240116; t=1774976872; c=relaxed/simple;
+	bh=EOhfmEE5ERDycH/BjcYqIIo6FBoAVsdga014gpecpGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nEWXIWKsU7017yR9kfRbJK2XNe4qJZXXnmOFfFM1I8kVIr7xe+c/y1tMuCiGh8pGHspJ6IfiQxMssDQSug6cQcPSECiMoC6lsX9vtIEp7nfA3m2Yzz5SHPu/RYn9fuee0QDqAPuNrbULcMdsCnyju8k4AAr7WljCgoacVNWwWsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tI1ahDct; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QlssNM9TWZ8qpLCKO9hgcOk/6bXQAbyeF1REFBZqPKIGjjZ18QaH+5Ik9MLHxXxRYavOCGK78YM/34ieiwLiY97zrHhPNgcU2KRjvwaQXtK/a8+YNY5SFHsQE/eL9iA3h1e/DpR2yWiRgMDuzeG1Mt+zOjYxWXkMcwaxKxnOJV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgL5zowl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tI1ahDct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40022C19423;
-	Tue, 31 Mar 2026 17:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgL5zowl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABE3C19423;
+	Tue, 31 Mar 2026 17:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976869;
-	bh=5DSTJTihjZNS7Nesqpuqicpmhz/V9EyWQRGqvZhE92E=;
+	s=korg; t=1774976872;
+	bh=EOhfmEE5ERDycH/BjcYqIIo6FBoAVsdga014gpecpGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tI1ahDct+s1dLvz45HEpvK0UU0S6uCQu+zFQ8jgSUeBfLmoGOEML3de0he/8ieDja
-	 fP1YLR0SchKf0dZZMZ1nqohDdSUpXKoRistyHWczOhnyTVSYrz4cju0P3ErvXcl41u
-	 Wf97ViMV4Tho2i+2YMySNmxyVPQahAN178Cz/xdM=
+	b=XgL5zowlmUw0oAghIWgrb2dwjzm3IelSiEtyQ5KmMyrp8j7MqQXOjwzFv0QdGBA9L
+	 JAL6KPbY60U09op/KtlmhHoeE74q3yULxsXdzsAMxfJhXMNwRAi3PVDs5wbSI3TL80
+	 Jo78L/+u3koQcS527Hmn9otWlKpInS89qIz7zpFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
+	Yuto Ohnuki <ytohnuki@amazon.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.18 259/309] ext4: make recently_deleted() properly work with lazy itable initialization
-Date: Tue, 31 Mar 2026 18:22:42 +0200
-Message-ID: <20260331161803.102951915@linuxfoundation.org>
+Subject: [PATCH 6.18 260/309] ext4: replace BUG_ON with proper error handling in ext4_read_inline_folio
+Date: Tue, 31 Mar 2026 18:22:43 +0200
+Message-ID: <20260331161803.138466380@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,42 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-commit bd060afa7cc3e0ad30afa9ecc544a78638498555 upstream.
+commit 356227096eb66e41b23caf7045e6304877322edf upstream.
 
-recently_deleted() checks whether inode has been used in the near past.
-However this can give false positive result when inode table is not
-initialized yet and we are in fact comparing to random garbage (or stale
-itable block of a filesystem before mkfs). Ultimately this results in
-uninitialized inodes being skipped during inode allocation and possibly
-they are never initialized and thus e2fsck complains.  Verify if the
-inode has been initialized before checking for dtime.
+Replace BUG_ON() with proper error handling when inline data size
+exceeds PAGE_SIZE. This prevents kernel panic and allows the system to
+continue running while properly reporting the filesystem corruption.
 
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260216164848.3074-3-jack@suse.cz
+The error is logged via ext4_error_inode(), the buffer head is released
+to prevent memory leak, and -EFSCORRUPTED is returned to indicate
+filesystem corruption.
+
+Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+Link: https://patch.msgid.link/20260223123345.14838-2-ytohnuki@amazon.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ialloc.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ext4/inline.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -686,6 +686,12 @@ static int recently_deleted(struct super
- 	if (unlikely(!gdp))
- 		return 0;
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -522,7 +522,15 @@ static int ext4_read_inline_folio(struct
+ 		goto out;
  
-+	/* Inode was never used in this filesystem? */
-+	if (ext4_has_group_desc_csum(sb) &&
-+	    (gdp->bg_flags & cpu_to_le16(EXT4_BG_INODE_UNINIT) ||
-+	     ino >= EXT4_INODES_PER_GROUP(sb) - ext4_itable_unused_count(sb, gdp)))
-+		return 0;
+ 	len = min_t(size_t, ext4_get_inline_size(inode), i_size_read(inode));
+-	BUG_ON(len > PAGE_SIZE);
 +
- 	bh = sb_find_get_block(sb, ext4_inode_table(sb, gdp) +
- 		       (ino / inodes_per_block));
- 	if (!bh || !buffer_uptodate(bh))
++	if (len > PAGE_SIZE) {
++		ext4_error_inode(inode, __func__, __LINE__, 0,
++				 "inline size %zu exceeds PAGE_SIZE", len);
++		ret = -EFSCORRUPTED;
++		brelse(iloc.bh);
++		goto out;
++	}
++
+ 	kaddr = kmap_local_folio(folio, 0);
+ 	ret = ext4_read_inline_data(inode, kaddr, len, &iloc);
+ 	kaddr = folio_zero_tail(folio, len, kaddr + len);
 
 
