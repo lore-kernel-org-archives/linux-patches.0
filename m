@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D202426EB9;
-	Tue, 31 Mar 2026 16:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7D7426681;
+	Tue, 31 Mar 2026 16:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975122; cv=none; b=gu4qWXJ/gpZp7s+dTWeDH/jYNoEyeAhliiIa4rGzEfbaP4N36Ahz9n8bV3cwt1RI6qzBXCO4/Xz0ZXij98slzkvDHiIs5UQ3mDYMWu+PQqpGE1CWGpj/4+Irc2DMfc8WlETSItgga2qujjy9gAZF22bw4ObgHML/ihD5Isn0Wc0=
+	t=1774975125; cv=none; b=mBHtGfjQHT7t5b/o3iKngLqOWsxpfLEUVwjqWJ0XOFzPYbZKk3VyCBEwlOCRtlCEXcRRmUgGoj3GpFx65rUAxyYe8lXLPwWXZHR+4VY7+uhFnbiciCwTaqkUfdP6ceFmKVAL6tCYRFcS2x9Pc5KEotuIfEiWp8a5YC0rdZZ51gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975122; c=relaxed/simple;
-	bh=oKXWcNgzzcSxItDxOqPAGnWcIIg43sYg0e/z4Glvxsc=;
+	s=arc-20240116; t=1774975125; c=relaxed/simple;
+	bh=xyVmsvR1l84LPlrJeMQ4r8MVQ3iTER39VvwnSG3LcVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WabNZJwsgCBHp4qO6y7LAmtR7PwbdoWgLku70ERJOj0sz35qB9tfrsx9jAEra+lT/Ym7QmPJSyzemz/TKA/EgAp9tOGASqp3Lo+OTaDdstVACBmIieLQXP/ZdVrk9nODpxi2YJyEPk4RiswRrmGPISqdvNz0iHFz56ItGN8xhiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPjw85zJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHBHfnq5oTV/xjNgPmUhJ5fRzPciSQBSIzOoZ5avAmKwucpPczERVPfWP2klC7NEg+Ficz02bRDZXFZupdSFt53sLKfvYBr+Is3KNvLV0eErNI6gPC/N0BK5P6XfoB3OJcF0HEoE2xSQH9KKkhLhoZxIc/q0PuiFUnvASI4HEMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMJ7BgYM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPjw85zJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30497C19424;
-	Tue, 31 Mar 2026 16:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMJ7BgYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B84C19423;
+	Tue, 31 Mar 2026 16:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975122;
-	bh=oKXWcNgzzcSxItDxOqPAGnWcIIg43sYg0e/z4Glvxsc=;
+	s=korg; t=1774975125;
+	bh=xyVmsvR1l84LPlrJeMQ4r8MVQ3iTER39VvwnSG3LcVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPjw85zJDTV872sPMsiY3jdXVmvWczLS3i6oHXX4jSiQIqI8cHbmO5HXSfbv2aHSH
-	 EYunOh2rkjAb4EkqZzEh3IrIDQo92V1qDkdKhKVOIuW4ALvB8BApJCpb/ZDO5zYdUg
-	 pU7UObQRckQZo6ftgP5mqpa/By4Pa85cMZHNxgP4=
+	b=dMJ7BgYMIiiqF+4Aq98bnbYHiKFYwAemw2re3mk32We3qISqgjJjMSAXg5VGuppNq
+	 4rjkG6tM9ftWUjkn0zvl+Y5DrDH+kTbpXEf6395+8K8YRCG23xFULjO+kaDnVN+kMy
+	 g9poZKuejrG1Ax7/nKYJF8Jlv+aib8+7f/bXHiA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 173/342] spi: sn-f-ospi: Fix resource leak in f_ospi_probe()
-Date: Tue, 31 Mar 2026 18:20:06 +0200
-Message-ID: <20260331161805.376284865@linuxfoundation.org>
+Subject: [PATCH 6.19 174/342] ASoC: Intel: catpt: Fix the device initialization
+Date: Tue, 31 Mar 2026 18:20:07 +0200
+Message-ID: <20260331161805.412116687@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,70 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit ef3d549e1deb3466c61f3b01d22fc3fe3e5efb08 ]
+[ Upstream commit 5a184f1cb43a8e035251c635f5c47da5dc3e3049 ]
 
-In f_ospi_probe(), when num_cs validation fails, it returns without
-calling spi_controller_put() on the SPI controller, which causes a
-resource leak.
+The DMA mask shall be coerced before any buffer allocations for the
+device are done.  At the same time explain why DMA mask of 31 bits is
+used in the first place.
 
-Use devm_spi_alloc_host() instead of spi_alloc_host() to ensure the
-SPI controller is properly freed when probe fails.
-
-Fixes: 1b74dd64c861 ("spi: Add Socionext F_OSPI SPI flash controller driver")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260319-sn-f-v1-1-33a6738d2da8@gmail.com
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: 7a10b66a5df9 ("ASoC: Intel: catpt: Device driver lifecycle")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260320101217.1243688-1-cezary.rojewski@intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sn-f-ospi.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ sound/soc/intel/catpt/device.c | 10 +++++++++-
+ sound/soc/intel/catpt/dsp.c    |  3 ---
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-sn-f-ospi.c b/drivers/spi/spi-sn-f-ospi.c
-index c4969f66a0ba9..84a5b327022e8 100644
---- a/drivers/spi/spi-sn-f-ospi.c
-+++ b/drivers/spi/spi-sn-f-ospi.c
-@@ -612,7 +612,7 @@ static int f_ospi_probe(struct platform_device *pdev)
- 	u32 num_cs = OSPI_NUM_CS;
- 	int ret;
+diff --git a/sound/soc/intel/catpt/device.c b/sound/soc/intel/catpt/device.c
+index d13062c8e907c..fcc7a7342a4ab 100644
+--- a/sound/soc/intel/catpt/device.c
++++ b/sound/soc/intel/catpt/device.c
+@@ -281,7 +281,15 @@ static int catpt_acpi_probe(struct platform_device *pdev)
+ 	if (IS_ERR(cdev->pci_ba))
+ 		return PTR_ERR(cdev->pci_ba);
  
--	ctlr = spi_alloc_host(dev, sizeof(*ospi));
-+	ctlr = devm_spi_alloc_host(dev, sizeof(*ospi));
- 	if (!ctlr)
- 		return -ENOMEM;
+-	/* alloc buffer for storing DRAM context during dx transitions */
++	/*
++	 * As per design HOST is responsible for preserving firmware's runtime
++	 * context during D0 -> D3 -> D0 transitions.  Addresses used for DMA
++	 * to/from HOST memory shall be outside the reserved range of 0xFFFxxxxx.
++	 */
++	ret = dma_coerce_mask_and_coherent(cdev->dev, DMA_BIT_MASK(31));
++	if (ret)
++		return ret;
++
+ 	cdev->dxbuf_vaddr = dmam_alloc_coherent(dev, catpt_dram_size(cdev),
+ 						&cdev->dxbuf_paddr, GFP_KERNEL);
+ 	if (!cdev->dxbuf_vaddr)
+diff --git a/sound/soc/intel/catpt/dsp.c b/sound/soc/intel/catpt/dsp.c
+index 008a20a2acbda..677f348909c8f 100644
+--- a/sound/soc/intel/catpt/dsp.c
++++ b/sound/soc/intel/catpt/dsp.c
+@@ -125,9 +125,6 @@ int catpt_dmac_probe(struct catpt_dev *cdev)
+ 	dmac->dev = cdev->dev;
+ 	dmac->irq = cdev->irq;
  
-@@ -636,16 +636,12 @@ static int f_ospi_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, ospi);
- 
- 	ospi->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(ospi->base)) {
--		ret = PTR_ERR(ospi->base);
--		goto err_put_ctlr;
--	}
-+	if (IS_ERR(ospi->base))
-+		return PTR_ERR(ospi->base);
- 
- 	ospi->clk = devm_clk_get_enabled(dev, NULL);
--	if (IS_ERR(ospi->clk)) {
--		ret = PTR_ERR(ospi->clk);
--		goto err_put_ctlr;
--	}
-+	if (IS_ERR(ospi->clk))
-+		return PTR_ERR(ospi->clk);
- 
- 	mutex_init(&ospi->mlock);
- 
-@@ -662,9 +658,6 @@ static int f_ospi_probe(struct platform_device *pdev)
- err_destroy_mutex:
- 	mutex_destroy(&ospi->mlock);
- 
--err_put_ctlr:
--	spi_controller_put(ctlr);
--
- 	return ret;
- }
- 
+-	ret = dma_coerce_mask_and_coherent(cdev->dev, DMA_BIT_MASK(31));
+-	if (ret)
+-		return ret;
+ 	/*
+ 	 * Caller is responsible for putting device in D0 to allow
+ 	 * for I/O and memory access before probing DW.
 -- 
 2.53.0
 
