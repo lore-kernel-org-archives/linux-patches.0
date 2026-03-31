@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D0725D527;
-	Tue, 31 Mar 2026 16:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAF133E367;
+	Tue, 31 Mar 2026 16:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975519; cv=none; b=lEapnZXctmgJ3yfICxYmjH0Lit5E0+t6nCVCDmqjxaZGIcgHJrLEnaU/EFcwVEINELlaGixd0jilE9ELqwTFROs0+qBQUKPu/sNwKfL8z+EC/F7NG1d54anqKPs0EICbTD2mLd9Vj5vs9dKq4pDOSoArTPgyRiAyD1Z2RGjtIK8=
+	t=1774975521; cv=none; b=KjF4dTHdGLIGdButfZV5OnQBUkSfWN0IWhno33GQlPXGsUXqOKx8+FyrA2XuEjek35+JwhYXRO2UG1q3EppUEg5BcUcCoz9cATwl+v3i85sWZEJsb2kf+oHmwD9I90ymBzknQeIIHjLvbt6RB8S301SXdt6RWUuSNRPYsXMNJdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975519; c=relaxed/simple;
-	bh=ObUnb1yTeG350KhmXCU9XYq2voufG6isJgqqnel8nRM=;
+	s=arc-20240116; t=1774975521; c=relaxed/simple;
+	bh=JqoEaRJqH2V0xsP+ifCNFW51LoM2Ecj5PdCMbs6HF9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3hXtFxtiYQABSarrQSs3EQmR4Mh3IdoxnHCFpZBGpmgGww5+GllEX/LoRr7Q6pwdgBSVm3trzDgAxMOlpFGXRT2fE1xsyFf9btA8qxtkiHwnIFkP7laP6bL6y7CUWZz6bLoaCOR6nQECUBGvWlOgulcdm3EhlBKk2evTjo8wJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNVzR8Qy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WgoK0+7PpDaadZp6/YVoX8tQheBMQ9YNlQJnErdidNxaCKSWehFcTXlMYE2TGmVkXUlXi4M8y2OIF1FQ41GGWoNrqeBcsTWT0FAQemrc3y4rkyBnRjQleSapz+4RQPmExzd9KHBPlsth3xKFwbikQ0L1Zn4P3Lj3kbb7I0B+1Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3hOAMiE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNVzR8Qy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B71C19423;
-	Tue, 31 Mar 2026 16:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3hOAMiE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8EFC19423;
+	Tue, 31 Mar 2026 16:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975519;
-	bh=ObUnb1yTeG350KhmXCU9XYq2voufG6isJgqqnel8nRM=;
+	s=korg; t=1774975521;
+	bh=JqoEaRJqH2V0xsP+ifCNFW51LoM2Ecj5PdCMbs6HF9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gNVzR8Qy1MPw0hFToOa4SFVNsqrzOqDBkjnjqmR2038y/26o8jwwBSLwER3Aa2+yr
-	 R793RXbXyuUmCTfIgvSnK/afSnYp5zmq7097CL6Rar8h8vqaS6MXaWoRaqq2oX4Ih5
-	 c+khCkIxcMBI9sLFqehWnlH2DfCLpzxVcR2KlJw8=
+	b=L3hOAMiE/nWy/A/nayc/Dy4vdgsiQyI8vjwj58f+Yrhm2TYuB2sawlTvnPaCeClvt
+	 VeJkX8q7tugclQteatmw4OaSlY35sUCE2oxtWPZ2EmMCa92iY3jjv9OfSRlMCQrwqk
+	 1YWqhFjfIh8ZNX+eRWMCYhhuPweU4WweMrqQ+Shg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marek Vasut <marex@nabladev.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 326/342] dmaengine: xilinx: xilinx_dma: Fix residue calculation for cyclic DMA
-Date: Tue, 31 Mar 2026 18:22:39 +0200
-Message-ID: <20260331161810.906349059@linuxfoundation.org>
+Subject: [PATCH 6.19 327/342] dmaengine: xilinx: xilinx_dma: Fix unmasked residue subtraction
+Date: Tue, 31 Mar 2026 18:22:40 +0200
+Message-ID: <20260331161810.942244122@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,71 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit f61d145999d61948a23cd436ebbfa4c3b9ab8987 ]
+[ Upstream commit c7d812e33f3e8ca0fa9eeabf71d1c7bc3acedc09 ]
 
-The cyclic DMA calculation is currently entirely broken and reports
-residue only for the first segment. The problem is twofold.
+The segment .control and .status fields both contain top bits which are
+not part of the buffer size, the buffer size is located only in the bottom
+max_buffer_len bits. To avoid interference from those top bits, mask out
+the size using max_buffer_len first, and only then subtract the values.
 
-First, when the first descriptor finishes, it is moved from active_list
-to done_list, but it is never returned back into the active_list. The
-xilinx_dma_tx_status() expects the descriptor to be in the active_list
-to report any meaningful residue information, which never happens after
-the first descriptor finishes. Fix this up in xilinx_dma_start_transfer()
-and if the descriptor is cyclic, lift it from done_list and place it back
-into active_list list.
-
-Second, the segment .status fields of the descriptor remain dirty. Once
-the DMA did one pass on the descriptor, the .status fields are populated
-with data by the DMA, but the .status fields are not cleared before reuse
-during the next cyclic DMA round. The xilinx_dma_get_residue() recognizes
-that as if the descriptor was complete and had 0 residue, which is bogus.
-Reinitialize the status field before placing the descriptor back into the
-active_list.
-
-Fixes: c0bba3a99f07 ("dmaengine: vdma: Add Support for Xilinx AXI Direct Memory Access Engine")
+Fixes: a575d0b4e663 ("dmaengine: xilinx_dma: Introduce xilinx_dma_get_residue")
 Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://patch.msgid.link/20260316221943.160375-1-marex@nabladev.com
+Link: https://patch.msgid.link/20260316222530.163815-1-marex@nabladev.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dma.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index e6d10079ec670..ccfcc2b801f82 100644
+index ccfcc2b801f82..7b24d0a18ea53 100644
 --- a/drivers/dma/xilinx/xilinx_dma.c
 +++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -1546,8 +1546,29 @@ static void xilinx_dma_start_transfer(struct xilinx_dma_chan *chan)
- 	if (chan->err)
- 		return;
+@@ -997,16 +997,16 @@ static u32 xilinx_dma_get_residue(struct xilinx_dma_chan *chan,
+ 					      struct xilinx_cdma_tx_segment,
+ 					      node);
+ 			cdma_hw = &cdma_seg->hw;
+-			residue += (cdma_hw->control - cdma_hw->status) &
+-				   chan->xdev->max_buffer_len;
++			residue += (cdma_hw->control & chan->xdev->max_buffer_len) -
++			           (cdma_hw->status & chan->xdev->max_buffer_len);
+ 		} else if (chan->xdev->dma_config->dmatype ==
+ 			   XDMA_TYPE_AXIDMA) {
+ 			axidma_seg = list_entry(entry,
+ 						struct xilinx_axidma_tx_segment,
+ 						node);
+ 			axidma_hw = &axidma_seg->hw;
+-			residue += (axidma_hw->control - axidma_hw->status) &
+-				   chan->xdev->max_buffer_len;
++			residue += (axidma_hw->control & chan->xdev->max_buffer_len) -
++			           (axidma_hw->status & chan->xdev->max_buffer_len);
+ 		} else {
+ 			aximcdma_seg =
+ 				list_entry(entry,
+@@ -1014,8 +1014,8 @@ static u32 xilinx_dma_get_residue(struct xilinx_dma_chan *chan,
+ 					   node);
+ 			aximcdma_hw = &aximcdma_seg->hw;
+ 			residue +=
+-				(aximcdma_hw->control - aximcdma_hw->status) &
+-				chan->xdev->max_buffer_len;
++				(aximcdma_hw->control & chan->xdev->max_buffer_len) -
++				(aximcdma_hw->status & chan->xdev->max_buffer_len);
+ 		}
+ 	}
  
--	if (list_empty(&chan->pending_list))
-+	if (list_empty(&chan->pending_list)) {
-+		if (chan->cyclic) {
-+			struct xilinx_dma_tx_descriptor *desc;
-+			struct list_head *entry;
-+
-+			desc = list_last_entry(&chan->done_list,
-+					       struct xilinx_dma_tx_descriptor, node);
-+			list_for_each(entry, &desc->segments) {
-+				struct xilinx_axidma_tx_segment *axidma_seg;
-+				struct xilinx_axidma_desc_hw *axidma_hw;
-+				axidma_seg = list_entry(entry,
-+							struct xilinx_axidma_tx_segment,
-+							node);
-+				axidma_hw = &axidma_seg->hw;
-+				axidma_hw->status = 0;
-+			}
-+
-+			list_splice_tail_init(&chan->done_list, &chan->active_list);
-+			chan->desc_pendingcount = 0;
-+			chan->idle = false;
-+		}
- 		return;
-+	}
- 
- 	if (!chan->idle)
- 		return;
 -- 
 2.53.0
 
