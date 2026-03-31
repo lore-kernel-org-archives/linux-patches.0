@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5771C861A;
-	Tue, 31 Mar 2026 16:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602F03F7A8B;
+	Tue, 31 Mar 2026 16:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975349; cv=none; b=hCNhpOAp5SXoSpsHtEbljUlpR4JdP+UQ/1xAtVy34yd6ciOIfNgp6UeMzg4zCS4hFfBTxYRsbOlGXFKOX92JyqD1xH9THE8mOkstld9zm3LQvamBsQbdgcGVv2cKZnWxt4tvOQvqSCjV5fd/9Hii82FFL2i5GwPanKZ2fqx4cis=
+	t=1774975352; cv=none; b=UHm3cneD9FXKnuXpW7B/VU7krsH32We1NkhEgi+4+yd29RYD3aIQOuklPsgE0yA5qQKgY8Gxi3ELxUw5AeRpTzzPddagcOhcQ3NQxuSytXqfhFRQ6iKY5bsrc96A2GxKyr4+yRJzaM4NB3NLexu0f2jmkL8NVgXTy0mHvfJDLIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975349; c=relaxed/simple;
-	bh=YnfRW8WXJQLv9AfSUTpso4o+H4VEUH5oiFQKw5PLPxg=;
+	s=arc-20240116; t=1774975352; c=relaxed/simple;
+	bh=TC1lTNW4Oa0Icq/qlBnUCer0tNL2Bj7kX5VhyY9ZN6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mG1MufKJvWgyXoJhVC7qsPDPfoCdj9M8SDf+BRn+EvFs8VXLumoIf1h5Xf+XNXg2PLxSNjwkfFsvOW+Hh6ERzrMzRsj9kydj4KajRRrrlBEnIiVi616DLWWybL9m0SlACRKguDNkMqfvK6h13WvE2hcYirArLYusQJiugT9LlJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owxY/b+e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tBIK5J3qSdTzuTnuUEuI2wF7JWnSlNDaBLpOBuqiJoWcdPFjzNLMD36bAH3w53eIZEhTmqTHhUNFZF8oducIwkA7rtB/cwhcTqAY5iOnIk/pxJf4KEwWPhDlYGxw773IMpkxHr7mrn3KAW9hDArUNI6LWNQlVUdEH0XjSR29A54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oreYUXuA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owxY/b+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3506EC19423;
-	Tue, 31 Mar 2026 16:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oreYUXuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC18FC19423;
+	Tue, 31 Mar 2026 16:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975349;
-	bh=YnfRW8WXJQLv9AfSUTpso4o+H4VEUH5oiFQKw5PLPxg=;
+	s=korg; t=1774975352;
+	bh=TC1lTNW4Oa0Icq/qlBnUCer0tNL2Bj7kX5VhyY9ZN6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owxY/b+eYiPXAHLN7zqoDDuzSN/i7ar6e7Cbjzs6xnRNqMI8R38TedXklJl7REEh5
-	 p95hynRsufuSn8xIPyGvz1BXEOlED4JvwM45aT6vH6toxc6uy6bkC6b2P46krA5AT0
-	 cpW2KIAkS5wgpTPblm0ysnUBUjkb17GkBjd7cVEQ=
+	b=oreYUXuAC2r+Y1Vuv3QOtSYDGWOL9RzIN0jywV5c4oJ+hutAiCyYvBgm4zbUvhMR1
+	 Httz9ym9DgTKnJg1Oyt/wzWqsL10tjbgiWJBDTNtWny+LeQXMMytfZGYygAuIBiF+s
+	 gLPTzXjPa0yo5H5B/xQGmFXZ+DQ5N5RrPkRsKwMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.19 260/342] dmaengine: sh: rz-dmac: Protect the driver specific lists
-Date: Tue, 31 Mar 2026 18:21:33 +0200
-Message-ID: <20260331161808.521576798@linuxfoundation.org>
+	Renato Marziano <renato@marziano.top>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Alex Williamson <alex.williamson@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex@shazbot.org>
+Subject: [PATCH 6.19 234/342] vfio/pci: Fix double free in dma-buf feature
+Date: Tue, 31 Mar 2026 18:21:07 +0200
+Message-ID: <20260331161807.576928135@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,126 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+From: Alex Williamson <alex.williamson@nvidia.com>
 
-commit abb863e6213dc41a58ef8bb3289b7e77460dabf3 upstream.
+commit e98137f0a874ab36d0946de4707aa48cb7137d1c upstream.
 
-The driver lists (ld_free, ld_queue) are used in
-rz_dmac_free_chan_resources(), rz_dmac_terminate_all(),
-rz_dmac_issue_pending(), and rz_dmac_irq_handler_thread(), all under
-the virtual channel lock. Take the same lock in rz_dmac_prep_slave_sg()
-and rz_dmac_prep_dma_memcpy() as well to avoid concurrency issues, since
-these functions also check whether the lists are empty and update or
-remove list entries.
+The error path through vfio_pci_core_feature_dma_buf() ignores its
+own advice to only use dma_buf_put() after dma_buf_export(), instead
+falling through the entire unwind chain.  In the unlikely event that
+we encounter file descriptor exhaustion, this can result in an
+unbalanced refcount on the vfio device and double free of allocated
+objects.
 
-Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
+Avoid this by moving the "put" directly into the error path and return
+the errno rather than entering the unwind chain.
+
+Reported-by: Renato Marziano <renato@marziano.top>
+Fixes: 5d74781ebc86 ("vfio/pci: Add dma-buf export support for MMIO regions")
 Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://patch.msgid.link/20260316133252.240348-2-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Acked-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
+Link: https://lore.kernel.org/r/20260323215659.2108191-3-alex.williamson@nvidia.com
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/sh/rz-dmac.c |   63 ++++++++++++++++++++++++++---------------------
- 1 file changed, 35 insertions(+), 28 deletions(-)
+ drivers/vfio/pci/vfio_pci_dmabuf.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/dma/sh/rz-dmac.c
-+++ b/drivers/dma/sh/rz-dmac.c
-@@ -10,6 +10,7 @@
-  */
- 
- #include <linux/bitfield.h>
-+#include <linux/cleanup.h>
- #include <linux/dma-mapping.h>
- #include <linux/dmaengine.h>
- #include <linux/interrupt.h>
-@@ -448,6 +449,7 @@ static int rz_dmac_alloc_chan_resources(
- 		if (!desc)
- 			break;
- 
-+		/* No need to lock. This is called only for the 1st client. */
- 		list_add_tail(&desc->node, &channel->ld_free);
- 		channel->descs_allocated++;
- 	}
-@@ -503,18 +505,21 @@ rz_dmac_prep_dma_memcpy(struct dma_chan
- 	dev_dbg(dmac->dev, "%s channel: %d src=0x%pad dst=0x%pad len=%zu\n",
- 		__func__, channel->index, &src, &dest, len);
- 
--	if (list_empty(&channel->ld_free))
--		return NULL;
-+	scoped_guard(spinlock_irqsave, &channel->vc.lock) {
-+		if (list_empty(&channel->ld_free))
-+			return NULL;
+--- a/drivers/vfio/pci/vfio_pci_dmabuf.c
++++ b/drivers/vfio/pci/vfio_pci_dmabuf.c
+@@ -302,11 +302,10 @@ int vfio_pci_core_feature_dma_buf(struct
+ 	 */
+ 	ret = dma_buf_fd(priv->dmabuf, get_dma_buf.open_flags);
+ 	if (ret < 0)
+-		goto err_dma_buf;
++		dma_buf_put(priv->dmabuf);
 +
-+		desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
-+
-+		desc->type = RZ_DMAC_DESC_MEMCPY;
-+		desc->src = src;
-+		desc->dest = dest;
-+		desc->len = len;
-+		desc->direction = DMA_MEM_TO_MEM;
+ 	return ret;
  
--	desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
--
--	desc->type = RZ_DMAC_DESC_MEMCPY;
--	desc->src = src;
--	desc->dest = dest;
--	desc->len = len;
--	desc->direction = DMA_MEM_TO_MEM;
-+		list_move_tail(channel->ld_free.next, &channel->ld_queue);
-+	}
- 
--	list_move_tail(channel->ld_free.next, &channel->ld_queue);
- 	return vchan_tx_prep(&channel->vc, &desc->vd, flags);
- }
- 
-@@ -530,27 +535,29 @@ rz_dmac_prep_slave_sg(struct dma_chan *c
- 	int dma_length = 0;
- 	int i = 0;
- 
--	if (list_empty(&channel->ld_free))
--		return NULL;
--
--	desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
-+	scoped_guard(spinlock_irqsave, &channel->vc.lock) {
-+		if (list_empty(&channel->ld_free))
-+			return NULL;
-+
-+		desc = list_first_entry(&channel->ld_free, struct rz_dmac_desc, node);
-+
-+		for_each_sg(sgl, sg, sg_len, i)
-+			dma_length += sg_dma_len(sg);
-+
-+		desc->type = RZ_DMAC_DESC_SLAVE_SG;
-+		desc->sg = sgl;
-+		desc->sgcount = sg_len;
-+		desc->len = dma_length;
-+		desc->direction = direction;
-+
-+		if (direction == DMA_DEV_TO_MEM)
-+			desc->src = channel->src_per_address;
-+		else
-+			desc->dest = channel->dst_per_address;
- 
--	for_each_sg(sgl, sg, sg_len, i) {
--		dma_length += sg_dma_len(sg);
-+		list_move_tail(channel->ld_free.next, &channel->ld_queue);
- 	}
- 
--	desc->type = RZ_DMAC_DESC_SLAVE_SG;
--	desc->sg = sgl;
--	desc->sgcount = sg_len;
--	desc->len = dma_length;
--	desc->direction = direction;
--
--	if (direction == DMA_DEV_TO_MEM)
--		desc->src = channel->src_per_address;
--	else
--		desc->dest = channel->dst_per_address;
--
--	list_move_tail(channel->ld_free.next, &channel->ld_queue);
- 	return vchan_tx_prep(&channel->vc, &desc->vd, flags);
- }
- 
+-err_dma_buf:
+-	dma_buf_put(priv->dmabuf);
+ err_dev_put:
+ 	vfio_device_put_registration(&vdev->vdev);
+ err_free_phys:
 
 
