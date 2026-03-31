@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100802D4B40;
-	Tue, 31 Mar 2026 17:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0042D4B40;
+	Tue, 31 Mar 2026 17:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976446; cv=none; b=uxkMFh1IpkftJAazsWEj/kHT9BXUKk9I+9FTv5wIloz44mjtFe9vrLSrg5fQvOaC1y5WK2suYUOgDyAmIr5FpMFFnd1hO8zSTDWmxkBDHE9/Zq7ZpdGKn/+u5y7qqZpCMedLxfFsiGB0ehoPRvhKZY3u6tQyPgJ3LVU0FOrV6Hc=
+	t=1774976448; cv=none; b=erJf98o/Lmg+xm9yPC1+3KeLuclQFmmm9FPaUTb8QdyJJCusFvzIGbnapSwbc3qm3Uhu7iCJula7ndc/R00amil6l+xH0ZDUSX9rFtwBSmEub73mSWYomd5sb/eNk4n/p7FCgGh4TbV2PVIglGTxuxoImVowjOGckuJkYKHwgU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976446; c=relaxed/simple;
-	bh=FcSKMKH53Q+0YKYhMLwho1jxyO9un2stX3M043iTx1k=;
+	s=arc-20240116; t=1774976448; c=relaxed/simple;
+	bh=ehoDJNFLT35jGSj12vKNBqSLZTHNFKTz1Byk5B6rmvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9JPmYk1NFgY66+u7bok+vJ2TKCAR28niYKpDeiwOZjx2/r9IDUr6SozkmarW9uZ0qBM95X/ViZ7sNzFXpIIIwnMu++SGD1+4cWrkSasQeHUzSeNf2wVZD6NbE/NREIJrcrdYxz86v/N8q/fVGjCpmLNvhJRCZduUADoC2pL7OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqsBiN9S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r2+XzsL5MG2MlEGYdlZqUHsLZj3Nvt8znOj2OlibKcSoTB0MegQWby5atRIpru6QunkmLOnZdAXWB11uYZEPUOMmV9FZbyfBxBQOVr0FJF2FxQzYg8vKaKV3f19xM4qt7EKgp69Z66pwXjlv81cTIoqB4m+V0J5TGo1JbUf7e4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQsVH148; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqsBiN9S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C15CC19423;
-	Tue, 31 Mar 2026 17:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQsVH148"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32ECDC19423;
+	Tue, 31 Mar 2026 17:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976446;
-	bh=FcSKMKH53Q+0YKYhMLwho1jxyO9un2stX3M043iTx1k=;
+	s=korg; t=1774976448;
+	bh=ehoDJNFLT35jGSj12vKNBqSLZTHNFKTz1Byk5B6rmvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lqsBiN9SaI1H4q6T5FOrZHDLfLRDncLpa/E3A08yB7yf2hXPzjTWYie1w0br5eJ86
-	 egaOm1REY/xFBMLt128gySY9h6GfwrknBHSZdPBYppOxl89mArdMeTO/yBydRUFgrb
-	 wgQmSjOMX73u1HYOCtgAtmDfi5MJyTftcTsHWb0M=
+	b=UQsVH1487hVzSjYEKcjKbDthfVg0PLDXHuLFE9a7DaG1MvfN0Wp7WL8gE5vDTv8eJ
+	 zY03FmlAxlbiITCMEh87Z4MVYehSvMsHJ/flP0PP5snVx0VYhSb+lYWkvsvkiyYT63
+	 4V5xQNQtrjZ+v30CblZhA7GxZ4SBqVB4HOmWVwZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jie Deng <dengjie03@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 063/309] drm/amdgpu: fix gpu idle power consumption issue for gfx v12
-Date: Tue, 31 Mar 2026 18:19:26 +0200
-Message-ID: <20260331161755.807679693@linuxfoundation.org>
+Subject: [PATCH 6.18 064/309] usb: core: new quirk to handle devices with zero configurations
+Date: Tue, 31 Mar 2026 18:19:27 +0200
+Message-ID: <20260331161755.844415464@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,48 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Jie Deng <dengjie03@kylinos.cn>
 
-[ Upstream commit a6571045cf06c4aa749b4801382ae96650e2f0e1 ]
+[ Upstream commit 9f6a983cfa22ac662c86e60816d3a357d4b551e9 ]
 
-Older versions of the MES firmware may cause abnormal GPU power consumption.
-When performing inference tasks on the GPU (e.g., with Ollama using ROCm),
-the GPU may show abnormal power consumption in idle state and incorrect GPU load information.
-This issue has been fixed in firmware version 0x8b and newer.
+Some USB devices incorrectly report bNumConfigurations as 0 in their
+device descriptor, which causes the USB core to reject them during
+enumeration.
+logs:
+usb 1-2: device descriptor read/64, error -71
+usb 1-2: no configurations
+usb 1-2: can't read configurations, error -22
 
-Closes: https://github.com/ROCm/ROCm/issues/5706
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4e22a5fe6ea6e0b057e7f246df4ac3ff8bfbc46a)
+However, these devices actually work correctly when
+treated as having a single configuration.
+
+Add a new quirk USB_QUIRK_FORCE_ONE_CONFIG to handle such devices.
+When this quirk is set, assume the device has 1 configuration instead
+of failing with -EINVAL.
+
+This quirk is applied to the device with VID:PID 5131:2007 which
+exhibits this behavior.
+
+Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
+Link: https://patch.msgid.link/20260227084931.1527461-1-dengjie03@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v12_0.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ Documentation/admin-guide/kernel-parameters.txt | 3 +++
+ drivers/usb/core/config.c                       | 6 +++++-
+ drivers/usb/core/quirks.c                       | 5 +++++
+ include/linux/usb/quirks.h                      | 3 +++
+ 4 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-index 4a424c1f9d55c..c40aed5a8fc21 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-@@ -727,6 +727,9 @@ static int mes_v12_0_set_hw_resources(struct amdgpu_mes *mes, int pipe)
- 	int i;
- 	struct amdgpu_device *adev = mes->adev;
- 	union MESAPI_SET_HW_RESOURCES mes_set_hw_res_pkt;
-+	uint32_t mes_rev = (pipe == AMDGPU_MES_SCHED_PIPE) ?
-+		(mes->sched_version & AMDGPU_MES_VERSION_MASK) :
-+		(mes->kiq_version & AMDGPU_MES_VERSION_MASK);
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 6c42061ca20e5..ab4e03f91e744 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -7925,6 +7925,9 @@
+ 				p = USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT
+ 					(Reduce timeout of the SET_ADDRESS
+ 					request from 5000 ms to 500 ms);
++				q = USB_QUIRK_FORCE_ONE_CONFIG (Device
++					claims zero configurations,
++					forcing to 1);
+ 			Example: quirks=0781:5580:bk,0a5c:5834:gij
  
- 	memset(&mes_set_hw_res_pkt, 0, sizeof(mes_set_hw_res_pkt));
+ 	usbhid.mousepoll=
+diff --git a/drivers/usb/core/config.c b/drivers/usb/core/config.c
+index 2bb1ceb9d621a..3067e18ec4d8a 100644
+--- a/drivers/usb/core/config.c
++++ b/drivers/usb/core/config.c
+@@ -927,7 +927,11 @@ int usb_get_configuration(struct usb_device *dev)
+ 		dev->descriptor.bNumConfigurations = ncfg = USB_MAXCONFIG;
+ 	}
  
-@@ -781,7 +784,7 @@ static int mes_v12_0_set_hw_resources(struct amdgpu_mes *mes, int pipe)
- 	 * handling support, other queue will not use the oversubscribe timer.
- 	 * handling  mode - 0: disabled; 1: basic version; 2: basic+ version
- 	 */
--	mes_set_hw_res_pkt.oversubscription_timer = 50;
-+	mes_set_hw_res_pkt.oversubscription_timer = mes_rev < 0x8b ? 0 : 50;
- 	mes_set_hw_res_pkt.unmapped_doorbell_handling = 1;
+-	if (ncfg < 1) {
++	if (ncfg < 1 && dev->quirks & USB_QUIRK_FORCE_ONE_CONFIG) {
++		dev_info(ddev, "Device claims zero configurations, forcing to 1\n");
++		dev->descriptor.bNumConfigurations = 1;
++		ncfg = 1;
++	} else if (ncfg < 1) {
+ 		dev_err(ddev, "no configurations\n");
+ 		return -EINVAL;
+ 	}
+diff --git a/drivers/usb/core/quirks.c b/drivers/usb/core/quirks.c
+index 9fef2f4d604a5..65168eb89295c 100644
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -141,6 +141,8 @@ static int quirks_param_set(const char *value, const struct kernel_param *kp)
+ 			case 'p':
+ 				flags |= USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT;
+ 				break;
++			case 'q':
++				flags |= USB_QUIRK_FORCE_ONE_CONFIG;
+ 			/* Ignore unrecognized flag characters */
+ 			}
+ 		}
+@@ -597,6 +599,9 @@ static const struct usb_device_id usb_quirk_list[] = {
+ 	/* VCOM device */
+ 	{ USB_DEVICE(0x4296, 0x7570), .driver_info = USB_QUIRK_CONFIG_INTF_STRINGS },
  
- 	if (amdgpu_mes_log_enable) {
++	/* Noji-MCS SmartCard Reader */
++	{ USB_DEVICE(0x5131, 0x2007), .driver_info = USB_QUIRK_FORCE_ONE_CONFIG },
++
+ 	/* INTEL VALUE SSD */
+ 	{ USB_DEVICE(0x8086, 0xf1a5), .driver_info = USB_QUIRK_RESET_RESUME },
+ 
+diff --git a/include/linux/usb/quirks.h b/include/linux/usb/quirks.h
+index 2f7bd2fdc6164..b3cc7beab4a3c 100644
+--- a/include/linux/usb/quirks.h
++++ b/include/linux/usb/quirks.h
+@@ -78,4 +78,7 @@
+ /* skip BOS descriptor request */
+ #define USB_QUIRK_NO_BOS			BIT(17)
+ 
++/* Device claims zero configurations, forcing to 1 */
++#define USB_QUIRK_FORCE_ONE_CONFIG		BIT(18)
++
+ #endif /* __LINUX_USB_QUIRKS_H */
 -- 
 2.51.0
 
