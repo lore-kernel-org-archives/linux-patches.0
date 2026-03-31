@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA852E11A6;
-	Tue, 31 Mar 2026 17:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB9E2FE042;
+	Tue, 31 Mar 2026 17:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976654; cv=none; b=su0iY0eRJu84ARQ65bLLfnKqE4GjRoRaALJ/4mA+rgGRo5aEG4DnVG1HJfVgyxlhy7QrTQuDmxJYbK98ay0k+CcmDkaV+u41Gz/EuVfyMsfOZ00XUcZJZVJDYsrlZujbLi5lOwCJpvPtaiBasSjoBO9reND3P53GHZSJB7WGnSU=
+	t=1774976657; cv=none; b=DGRCiT4rKrZk/xtoF07dT2ECX4idnrrTx1gDPxfiD4mTNo0UNCyLKR6ElTS07k1CdaLjni24knaWt3lQkVEGV7mveacnQgxA6vu9hxV4Op0NIchAg9AVQQ7xWI8uwaTooJ6ycOwosaJfijbwIwNr8vTVQlTcQcPhlaPDDNtErkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976654; c=relaxed/simple;
-	bh=8+DWUzfcnS0j4YpiRRzEIZ+Jbhtqo2hUZkX0ZxecEsY=;
+	s=arc-20240116; t=1774976657; c=relaxed/simple;
+	bh=EYSShiSVo6SLntcp+/X6iQY0ObyWc89XPWp1JKayZjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t35U4hFjNvhDHA7Ilk8l7G3YMQnJQ73xtMR7lfaX7f75l5pxFuAjswnQwYTpW3zp3AECS4ZxX1KCyzeV4rruTe2OeLUFyj8F/Za/59kyrpjcjv98dwlgRi665b8Tr36CVn21AX+4kFS1BzOh0G+XLUE9hK+MbU6e1ZsbHxYd3Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdnpnTeH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DvsAMvfzGevoip76NwPPu2O07K7onxDU2Ox1qRIGOEK76CtfkMQvYnN/cwlMlNqDNQpMkwxLdsrTSYd9ANSy49bUNg40gVA91pQepdlR5Uauke8ZTnxCxSo8GCrbBj+VKse5jAsVpNxir2K5xIrcNwfJJ6qLFStKOOYjZJts4W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUY01rcB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdnpnTeH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36108C19423;
-	Tue, 31 Mar 2026 17:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUY01rcB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC55DC19423;
+	Tue, 31 Mar 2026 17:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976654;
-	bh=8+DWUzfcnS0j4YpiRRzEIZ+Jbhtqo2hUZkX0ZxecEsY=;
+	s=korg; t=1774976657;
+	bh=EYSShiSVo6SLntcp+/X6iQY0ObyWc89XPWp1JKayZjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AdnpnTeHTe0gV1aFD3LhmwQrT3cEXeyK8ylhHFjulvh5DTswdRqUFN5a7et8G+dPV
-	 VfPw98+bi6qZTpNB+tOL8yt3IFYRhrIv9zwaTvmyHPvk6kLcj8cxBIUfJkOWwHQkf1
-	 mdDXZUE6aNWEY/TLr7quyzb12cBGsod9y7TkIMbE=
+	b=zUY01rcBFVgU+aYtPcv328+aG6k6uxFlfz/2cpbZ80P+ghrff9vIjbGBMAY8JAiPT
+	 6ANWlDtfUlEWKKtHnSi9PmM/G6IykmAGtWHZXXILWdrezOZpo60//tgZdszO58KRHi
+	 +wyZphIhGp0xSVL1R8o9GGTqLZgiuI8L0DEtyHjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.18 177/309] s390/entry: Scrub r12 register on kernel entry
-Date: Tue, 31 Mar 2026 18:21:20 +0200
-Message-ID: <20260331161759.980779635@linuxfoundation.org>
+	mathieu.desnoyers@efficios.com,
+	zhang.run@zte.com.cn,
+	yang.tao172@zte.com.cn,
+	ran.xiaokai@zte.com.cn,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Luo Haiyang <luo.haiyang@zte.com.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.18 178/309] tracing: Fix potential deadlock in cpu hotplug with osnoise
+Date: Tue, 31 Mar 2026 18:21:21 +0200
+Message-ID: <20260331161800.016931002@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,54 +55,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Luo Haiyang <luo.haiyang@zte.com.cn>
 
-commit 0738d395aab8fae3b5a3ad3fc640630c91693c27 upstream.
+commit 1f9885732248d22f788e4992c739a98c88ab8a55 upstream.
 
-Before commit f33f2d4c7c80 ("s390/bp: remove TIF_ISOLATE_BP"),
-all entry handlers loaded r12 with the current task pointer
-(lg %r12,__LC_CURRENT) for use by the BPENTER/BPEXIT macros. That
-commit removed TIF_ISOLATE_BP, dropping both the branch prediction
-macros and the r12 load, but did not add r12 to the register clearing
-sequence.
+The following sequence may leads deadlock in cpu hotplug:
 
-Add the missing xgr %r12,%r12 to make the register scrub consistent
-across all entry points.
+    task1        task2        task3
+    -----        -----        -----
 
-Fixes: f33f2d4c7c80 ("s390/bp: remove TIF_ISOLATE_BP")
-Cc: stable@kernel.org
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+ mutex_lock(&interface_lock)
+
+            [CPU GOING OFFLINE]
+
+            cpus_write_lock();
+            osnoise_cpu_die();
+              kthread_stop(task3);
+                wait_for_completion();
+
+                      osnoise_sleep();
+                        mutex_lock(&interface_lock);
+
+ cpus_read_lock();
+
+ [DEAD LOCK]
+
+Fix by swap the order of cpus_read_lock() and mutex_lock(&interface_lock).
+
+Cc: stable@vger.kernel.org
+Cc: <mathieu.desnoyers@efficios.com>
+Cc: <zhang.run@zte.com.cn>
+Cc: <yang.tao172@zte.com.cn>
+Cc: <ran.xiaokai@zte.com.cn>
+Fixes: bce29ac9ce0bb ("trace: Add osnoise tracer")
+Link: https://patch.msgid.link/20260326141953414bVSj33dAYktqp9Oiyizq8@zte.com.cn
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Luo Haiyang <luo.haiyang@zte.com.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/entry.S |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/trace/trace_osnoise.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/arch/s390/kernel/entry.S
-+++ b/arch/s390/kernel/entry.S
-@@ -254,6 +254,7 @@ SYM_CODE_START(system_call)
- 	xgr	%r9,%r9
- 	xgr	%r10,%r10
- 	xgr	%r11,%r11
-+	xgr	%r12,%r12
- 	la	%r2,STACK_FRAME_OVERHEAD(%r15)	# pointer to pt_regs
- 	mvc	__PT_R8(64,%r2),__LC_SAVE_AREA(%r13)
- 	MBEAR	%r2,%r13
-@@ -390,6 +391,7 @@ SYM_CODE_START(\name)
- 	xgr	%r6,%r6
- 	xgr	%r7,%r7
- 	xgr	%r10,%r10
-+	xgr	%r12,%r12
- 	xc	__PT_FLAGS(8,%r11),__PT_FLAGS(%r11)
- 	mvc	__PT_R8(64,%r11),__LC_SAVE_AREA(%r13)
- 	MBEAR	%r11,%r13
-@@ -479,6 +481,7 @@ SYM_CODE_START(mcck_int_handler)
- 	xgr	%r6,%r6
- 	xgr	%r7,%r7
- 	xgr	%r10,%r10
-+	xgr	%r12,%r12
- 	stmg	%r8,%r9,__PT_PSW(%r11)
- 	xc	__PT_FLAGS(8,%r11),__PT_FLAGS(%r11)
- 	xc	__SF_BACKCHAIN(8,%r15),__SF_BACKCHAIN(%r15)
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -2073,8 +2073,8 @@ static void osnoise_hotplug_workfn(struc
+ 	if (!osnoise_has_registered_instances())
+ 		return;
+ 
+-	guard(mutex)(&interface_lock);
+ 	guard(cpus_read_lock)();
++	guard(mutex)(&interface_lock);
+ 
+ 	if (!cpu_online(cpu))
+ 		return;
+@@ -2237,11 +2237,11 @@ static ssize_t osnoise_options_write(str
+ 	if (running)
+ 		stop_per_cpu_kthreads();
+ 
+-	mutex_lock(&interface_lock);
+ 	/*
+ 	 * avoid CPU hotplug operations that might read options.
+ 	 */
+ 	cpus_read_lock();
++	mutex_lock(&interface_lock);
+ 
+ 	retval = cnt;
+ 
+@@ -2257,8 +2257,8 @@ static ssize_t osnoise_options_write(str
+ 			clear_bit(option, &osnoise_options);
+ 	}
+ 
+-	cpus_read_unlock();
+ 	mutex_unlock(&interface_lock);
++	cpus_read_unlock();
+ 
+ 	if (running)
+ 		start_per_cpu_kthreads();
+@@ -2345,16 +2345,16 @@ osnoise_cpus_write(struct file *filp, co
+ 	if (running)
+ 		stop_per_cpu_kthreads();
+ 
+-	mutex_lock(&interface_lock);
+ 	/*
+ 	 * osnoise_cpumask is read by CPU hotplug operations.
+ 	 */
+ 	cpus_read_lock();
++	mutex_lock(&interface_lock);
+ 
+ 	cpumask_copy(&osnoise_cpumask, osnoise_cpumask_new);
+ 
+-	cpus_read_unlock();
+ 	mutex_unlock(&interface_lock);
++	cpus_read_unlock();
+ 
+ 	if (running)
+ 		start_per_cpu_kthreads();
 
 
