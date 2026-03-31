@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FDF4218AF;
-	Tue, 31 Mar 2026 16:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67785413225;
+	Tue, 31 Mar 2026 16:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975710; cv=none; b=YR3hAg4e8x8CtHj27rb4o2tIElbpWM9TkMzwYWnJN8MjCG7IIxUFdLHgRTHGrwEsKKnSM4S3XFl05rsKBFSfPliGbz0jG6NxYwRQ9aO7ArJr1FCV8iYmt6agSs7vct1y1RpNzXo80k28CY9QTkXS4P9IJZkXdWi2iWv2+4pAf6k=
+	t=1774975712; cv=none; b=DNWY1XKqqkgC15ZHNSCqkyleX8+t0gAeW0blNzDPTp5mldUc5cf0pWR2dsRs23vmL+2SqqlJQG2hg/Ry+b75xXxelf4Tzm2v4IjhG0J+8GFe5vmuQ6trc2Fd0Pl6foVksFyZg+LubDjYWUqMDNjiKZuOBcaxz+cHyRgb9Vwx5kQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975710; c=relaxed/simple;
-	bh=4yxndi37QZSCY5RcbYlOnLX56AEg6Z4ZJTCWjlc92D4=;
+	s=arc-20240116; t=1774975712; c=relaxed/simple;
+	bh=eozfyc5pJoM3nPC8ESkHy1tR6ngWH0a6Lb9FvxTMan4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YRNhZqRme/yp46sDhopr8pHqG+dn97oT1qIhib1DkPt1Kl4nliIKYNSUULaW7bm40UU+S8/BLDAXCTlx0KzfU0LJFsN391mnmW/xfk0VBihFEwNBtDaf3ZaD2BoZNLGeWLSQ3PUrVqg9USQZ0r2BCA/3f04ly1ujKfKkZRnF3KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyNsG5k5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrnMCdbzFFkjBLbDdSPGv3IVxLBL0OniBFY3cGzOpjixUMTzJBPYlaSy26GbWNdnHVSijVn8Pz4hPVSv5CjxpBmKtXiUMAoK7dADC9RZDiUPgaDohwTrEAqp0ed1eLst4i5xc3mhrbNWl1on3PT9gdKxyic2b3KRwaQWVGWEHaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcswOKnw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyNsG5k5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520C5C19423;
-	Tue, 31 Mar 2026 16:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcswOKnw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C9AC19423;
+	Tue, 31 Mar 2026 16:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975709;
-	bh=4yxndi37QZSCY5RcbYlOnLX56AEg6Z4ZJTCWjlc92D4=;
+	s=korg; t=1774975712;
+	bh=eozfyc5pJoM3nPC8ESkHy1tR6ngWH0a6Lb9FvxTMan4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jyNsG5k5uRaycS6sqxSncyZmrnF6HN/m5XZcAsrW1NTgdH7Utg4VL3unSXTbu0Ajt
-	 YthAQFdKWRVUwUvVdwZZGoVpd1DMSm0KHBeSbtv31EZIcNnP0xMauz50CJ5mf/KYNS
-	 ntwI0TdHkpj/tDu22GMXZdbzO4Yaj9+2HXBpZnHo=
+	b=FcswOKnwrFZJubdtrslbh9VhrqbRpx6Sswft+9AjIePL9aC/eI4LSGIhkHwgoMcQI
+	 i5FPo5kA9h3vs7Egq9pzV/1QQq1V7+xGwR2BxDJu2Dwe9jwqC3M3E8GfpA/jzOP7zE
+	 o6cKVG6m+43yb8UjYDLo6tKQAz5OuAAQYAL0Nnc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chenguanyou <chenguanyou@xiaomi.com>,
-	Yunlei He <heyunlei@xiaomi.com>,
-	Sheng Yong <shengyong1@xiaomi.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/244] erofs: set fileio bio failed in short read case
-Date: Tue, 31 Mar 2026 18:20:06 +0200
-Message-ID: <20260331161743.761275876@linuxfoundation.org>
+Subject: [PATCH 6.12 057/244] can: statistics: add missing atomic access in hot path
+Date: Tue, 31 Mar 2026 18:20:07 +0200
+Message-ID: <20260331161743.797589558@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -54,58 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheng Yong <shengyong1@xiaomi.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit eade54040384f54b7fb330e4b0975c5734850b3c ]
+[ Upstream commit 46eee1661aa9b49966e6c43d07126fe408edda57 ]
 
-For file-backed mount, IO requests are handled by vfs_iocb_iter_read().
-However, it can be interrupted by SIGKILL, returning the number of
-bytes actually copied. Unused folios in bio are unexpectedly marked
-as uptodate.
+Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
+fixed a KCSAN issue in can_receive() but missed to convert the 'matches'
+variable used in can_rcv_filter().
 
-  vfs_read
-    filemap_read
-      filemap_get_pages
-        filemap_readahead
-          erofs_fileio_readahead
-            erofs_fileio_rq_submit
-              vfs_iocb_iter_read
-                filemap_read
-                  filemap_get_pages  <= detect signal
-              erofs_fileio_ki_complete  <= set all folios uptodate
-
-This patch addresses this by setting short read bio with an error
-directly.
-
-Fixes: bc804a8d7e86 ("erofs: handle end of filesystem properly for file-backed mounts")
-Reported-by: chenguanyou <chenguanyou@xiaomi.com>
-Signed-off-by: Yunlei He <heyunlei@xiaomi.com>
-Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260318173413.28235-1-socketcan@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/fileio.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/can/af_can.c | 4 ++--
+ net/can/af_can.h | 2 +-
+ net/can/proc.c   | 3 ++-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/erofs/fileio.c b/fs/erofs/fileio.c
-index 2c7f066daacdd..2c46c69f43295 100644
---- a/fs/erofs/fileio.c
-+++ b/fs/erofs/fileio.c
-@@ -25,10 +25,8 @@ static void erofs_fileio_ki_complete(struct kiocb *iocb, long ret)
- 			container_of(iocb, struct erofs_fileio_rq, iocb);
- 	struct folio_iter fi;
+diff --git a/net/can/af_can.c b/net/can/af_can.c
+index 65230e81fa08c..c86cbb3ed9c54 100644
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -467,7 +467,7 @@ int can_rx_register(struct net *net, struct net_device *dev, canid_t can_id,
  
--	if (ret >= 0 && ret != rq->bio.bi_iter.bi_size) {
--		bio_advance(&rq->bio, ret);
--		zero_fill_bio(&rq->bio);
--	}
-+	if (ret >= 0 && ret != rq->bio.bi_iter.bi_size)
-+		ret = -EIO;
- 	if (!rq->bio.bi_end_io) {
- 		bio_for_each_folio_all(fi, &rq->bio) {
- 			DBG_BUGON(folio_test_uptodate(fi.folio));
+ 	rcv->can_id = can_id;
+ 	rcv->mask = mask;
+-	rcv->matches = 0;
++	atomic_long_set(&rcv->matches, 0);
+ 	rcv->func = func;
+ 	rcv->data = data;
+ 	rcv->ident = ident;
+@@ -571,7 +571,7 @@ EXPORT_SYMBOL(can_rx_unregister);
+ static inline void deliver(struct sk_buff *skb, struct receiver *rcv)
+ {
+ 	rcv->func(skb, rcv->data);
+-	rcv->matches++;
++	atomic_long_inc(&rcv->matches);
+ }
+ 
+ static int can_rcv_filter(struct can_dev_rcv_lists *dev_rcv_lists, struct sk_buff *skb)
+diff --git a/net/can/af_can.h b/net/can/af_can.h
+index 22f3352c77fec..87887014f5628 100644
+--- a/net/can/af_can.h
++++ b/net/can/af_can.h
+@@ -52,7 +52,7 @@ struct receiver {
+ 	struct hlist_node list;
+ 	canid_t can_id;
+ 	canid_t mask;
+-	unsigned long matches;
++	atomic_long_t matches;
+ 	void (*func)(struct sk_buff *skb, void *data);
+ 	void *data;
+ 	char *ident;
+diff --git a/net/can/proc.c b/net/can/proc.c
+index 25fdf060e30d0..2f78ea8ac30b0 100644
+--- a/net/can/proc.c
++++ b/net/can/proc.c
+@@ -196,7 +196,8 @@ static void can_print_rcvlist(struct seq_file *m, struct hlist_head *rx_list,
+ 			"   %-5s     %03x    %08x  %pK  %pK  %8ld  %s\n";
+ 
+ 		seq_printf(m, fmt, DNAME(dev), r->can_id, r->mask,
+-				r->func, r->data, r->matches, r->ident);
++			   r->func, r->data, atomic_long_read(&r->matches),
++			   r->ident);
+ 	}
+ }
+ 
 -- 
 2.51.0
 
