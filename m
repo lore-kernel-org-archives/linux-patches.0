@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB9E2FE042;
-	Tue, 31 Mar 2026 17:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51DD2E11A6;
+	Tue, 31 Mar 2026 17:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976657; cv=none; b=DGRCiT4rKrZk/xtoF07dT2ECX4idnrrTx1gDPxfiD4mTNo0UNCyLKR6ElTS07k1CdaLjni24knaWt3lQkVEGV7mveacnQgxA6vu9hxV4Op0NIchAg9AVQQ7xWI8uwaTooJ6ycOwosaJfijbwIwNr8vTVQlTcQcPhlaPDDNtErkY=
+	t=1774976659; cv=none; b=f4PMJnRdQm3L6R717CQIOFv/AqZMaHaMaGrXFuiF5qUmjn4ThGVutT4p4UWDFaYUtPCDhmiPBwkSlQ1TsfFFy8emOySq9xnipEb+w8j80PD+ok+/8Vl/GhmsJlwnCO0p0VskvssM/6nOlr8GHmiXWHtLWNjjP1PnOrKM2izKUAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976657; c=relaxed/simple;
-	bh=EYSShiSVo6SLntcp+/X6iQY0ObyWc89XPWp1JKayZjA=;
+	s=arc-20240116; t=1774976659; c=relaxed/simple;
+	bh=OpVddjQ9P7C2zxJw3+qKGvK9ID/qs5wwypdpGPPewNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DvsAMvfzGevoip76NwPPu2O07K7onxDU2Ox1qRIGOEK76CtfkMQvYnN/cwlMlNqDNQpMkwxLdsrTSYd9ANSy49bUNg40gVA91pQepdlR5Uauke8ZTnxCxSo8GCrbBj+VKse5jAsVpNxir2K5xIrcNwfJJ6qLFStKOOYjZJts4W8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUY01rcB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gKS4jg4vfPlURHwOzO3KurkprMl4H+/VM19I+kHZlRRy05ZQQ5WCRbUitvpmrSmc5hWPLelpQM4vfVoQ9mniN4eTAcwUpu0USHAFP1G//E1F92PIFZm8g5T5400/121S1MpD0qfJPJa14B4agOqSjY6RL42/HbAZKxzpqWxX2sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erGNHAgZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUY01rcB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC55DC19423;
-	Tue, 31 Mar 2026 17:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erGNHAgZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E19C19423;
+	Tue, 31 Mar 2026 17:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976657;
-	bh=EYSShiSVo6SLntcp+/X6iQY0ObyWc89XPWp1JKayZjA=;
+	s=korg; t=1774976659;
+	bh=OpVddjQ9P7C2zxJw3+qKGvK9ID/qs5wwypdpGPPewNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zUY01rcBFVgU+aYtPcv328+aG6k6uxFlfz/2cpbZ80P+ghrff9vIjbGBMAY8JAiPT
-	 6ANWlDtfUlEWKKtHnSi9PmM/G6IykmAGtWHZXXILWdrezOZpo60//tgZdszO58KRHi
-	 +wyZphIhGp0xSVL1R8o9GGTqLZgiuI8L0DEtyHjU=
+	b=erGNHAgZsf2+qcS40hLtl6LXF9YLi0zW6eeCU3GryGqukEjrIY9qzgRBL66pUkfLO
+	 BrHAyxd7+PogAQLFqdApwsdvdpz8WQ7eKhijUsCq/agYtktfZRQ2MSoHWwHIx0Af6A
+	 a78K5SNkKya13sYfr1suo8P6ZDfQl1DS3xDC/sZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mathieu.desnoyers@efficios.com,
-	zhang.run@zte.com.cn,
-	yang.tao172@zte.com.cn,
-	ran.xiaokai@zte.com.cn,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Luo Haiyang <luo.haiyang@zte.com.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.18 178/309] tracing: Fix potential deadlock in cpu hotplug with osnoise
-Date: Tue, 31 Mar 2026 18:21:21 +0200
-Message-ID: <20260331161800.016931002@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.18 179/309] drm/xe: always keep track of remap prev/next
+Date: Tue, 31 Mar 2026 18:21:22 +0200
+Message-ID: <20260331161800.053707683@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -55,101 +51,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Haiyang <luo.haiyang@zte.com.cn>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit 1f9885732248d22f788e4992c739a98c88ab8a55 upstream.
+commit bfe9e314d7574d1c5c851972e7aee342733819d2 upstream.
 
-The following sequence may leads deadlock in cpu hotplug:
+During 3D workload, user is reporting hitting:
 
-    task1        task2        task3
-    -----        -----        -----
+[  413.361679] WARNING: drivers/gpu/drm/xe/xe_vm.c:1217 at vm_bind_ioctl_ops_unwind+0x1e2/0x2e0 [xe], CPU#7: vkd3d_queue/9925
+[  413.361944] CPU: 7 UID: 1000 PID: 9925 Comm: vkd3d_queue Kdump: loaded Not tainted 7.0.0-070000rc3-generic #202603090038 PREEMPT(lazy)
+[  413.361949] RIP: 0010:vm_bind_ioctl_ops_unwind+0x1e2/0x2e0 [xe]
+[  413.362074] RSP: 0018:ffffd4c25c3df930 EFLAGS: 00010282
+[  413.362077] RAX: 0000000000000000 RBX: ffff8f3ee817ed10 RCX: 0000000000000000
+[  413.362078] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+[  413.362079] RBP: ffffd4c25c3df980 R08: 0000000000000000 R09: 0000000000000000
+[  413.362081] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8f41fbf99380
+[  413.362082] R13: ffff8f3ee817e968 R14: 00000000ffffffef R15: ffff8f43d00bd380
+[  413.362083] FS:  00000001040ff6c0(0000) GS:ffff8f4696d89000(0000) knlGS:00000000330b0000
+[  413.362085] CS:  0010 DS: 002b ES: 002b CR0: 0000000080050033
+[  413.362086] CR2: 00007ddfc4747000 CR3: 00000002e6262005 CR4: 0000000000f72ef0
+[  413.362088] PKRU: 55555554
+[  413.362089] Call Trace:
+[  413.362092]  <TASK>
+[  413.362096]  xe_vm_bind_ioctl+0xa9a/0xc60 [xe]
 
- mutex_lock(&interface_lock)
+Which seems to hint that the vma we are re-inserting for the ops unwind
+is either invalid or overlapping with something already inserted in the
+vm. It shouldn't be invalid since this is a re-insertion, so must have
+worked before. Leaving the likely culprit as something already placed
+where we want to insert the vma.
 
-            [CPU GOING OFFLINE]
+Following from that, for the case where we do something like a rebind in
+the middle of a vma, and one or both mapped ends are already compatible,
+we skip doing the rebind of those vma and set next/prev to NULL. As well
+as then adjust the original unmap va range, to avoid unmapping the ends.
+However, if we trigger the unwind path, we end up with three va, with
+the two ends never being removed and the original va range in the middle
+still being the shrunken size.
 
-            cpus_write_lock();
-            osnoise_cpu_die();
-              kthread_stop(task3);
-                wait_for_completion();
+If this occurs, one failure mode is when another unwind op needs to
+interact with that range, which can happen with a vector of binds. For
+example, if we need to re-insert something in place of the original va.
+In this case the va is still the shrunken version, so when removing it
+and then doing a re-insert it can overlap with the ends, which were
+never removed, triggering a warning like above, plus leaving the vm in a
+bad state.
 
-                      osnoise_sleep();
-                        mutex_lock(&interface_lock);
+With that, we need two things here:
 
- cpus_read_lock();
+ 1) Stop nuking the prev/next tracking for the skip cases. Instead
+    relying on checking for skip prev/next, where needed. That way on the
+    unwind path, we now correctly remove both ends.
 
- [DEAD LOCK]
+ 2) Undo the unmap va shrinkage, on the unwind path. With the two ends
+    now removed the unmap va should expand back to the original size again,
+    before re-insertion.
 
-Fix by swap the order of cpus_read_lock() and mutex_lock(&interface_lock).
+v2:
+  - Update the explanation in the commit message, based on an actual IGT of
+    triggering this issue, rather than conjecture.
+  - Also undo the unmap shrinkage, for the skip case. With the two ends
+    now removed, the original unmap va range should expand back to the
+    original range.
+v3:
+  - Track the old start/range separately. vma_size/start() uses the va
+    info directly.
 
-Cc: stable@vger.kernel.org
-Cc: <mathieu.desnoyers@efficios.com>
-Cc: <zhang.run@zte.com.cn>
-Cc: <yang.tao172@zte.com.cn>
-Cc: <ran.xiaokai@zte.com.cn>
-Fixes: bce29ac9ce0bb ("trace: Add osnoise tracer")
-Link: https://patch.msgid.link/20260326141953414bVSj33dAYktqp9Oiyizq8@zte.com.cn
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Luo Haiyang <luo.haiyang@zte.com.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7602
+Fixes: 8f33b4f054fc ("drm/xe: Avoid doing rebinds")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260318100208.78097-2-matthew.auld@intel.com
+(cherry picked from commit aec6969f75afbf4e01fd5fb5850ed3e9c27043ac)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/xe/xe_pt.c       |   12 ++++++------
+ drivers/gpu/drm/xe/xe_vm.c       |   22 ++++++++++++++++++----
+ drivers/gpu/drm/xe/xe_vm_types.h |    4 ++++
+ 3 files changed, 28 insertions(+), 10 deletions(-)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -2073,8 +2073,8 @@ static void osnoise_hotplug_workfn(struc
- 	if (!osnoise_has_registered_instances())
- 		return;
+--- a/drivers/gpu/drm/xe/xe_pt.c
++++ b/drivers/gpu/drm/xe/xe_pt.c
+@@ -1451,9 +1451,9 @@ static int op_check_svm_userptr(struct x
+ 		err = vma_check_userptr(vm, op->map.vma, pt_update);
+ 		break;
+ 	case DRM_GPUVA_OP_REMAP:
+-		if (op->remap.prev)
++		if (op->remap.prev && !op->remap.skip_prev)
+ 			err = vma_check_userptr(vm, op->remap.prev, pt_update);
+-		if (!err && op->remap.next)
++		if (!err && op->remap.next && !op->remap.skip_next)
+ 			err = vma_check_userptr(vm, op->remap.next, pt_update);
+ 		break;
+ 	case DRM_GPUVA_OP_UNMAP:
+@@ -2038,12 +2038,12 @@ static int op_prepare(struct xe_vm *vm,
  
--	guard(mutex)(&interface_lock);
- 	guard(cpus_read_lock)();
-+	guard(mutex)(&interface_lock);
+ 		err = unbind_op_prepare(tile, pt_update_ops, old);
  
- 	if (!cpu_online(cpu))
- 		return;
-@@ -2237,11 +2237,11 @@ static ssize_t osnoise_options_write(str
- 	if (running)
- 		stop_per_cpu_kthreads();
+-		if (!err && op->remap.prev) {
++		if (!err && op->remap.prev && !op->remap.skip_prev) {
+ 			err = bind_op_prepare(vm, tile, pt_update_ops,
+ 					      op->remap.prev, false);
+ 			pt_update_ops->wait_vm_bookkeep = true;
+ 		}
+-		if (!err && op->remap.next) {
++		if (!err && op->remap.next && !op->remap.skip_next) {
+ 			err = bind_op_prepare(vm, tile, pt_update_ops,
+ 					      op->remap.next, false);
+ 			pt_update_ops->wait_vm_bookkeep = true;
+@@ -2267,10 +2267,10 @@ static void op_commit(struct xe_vm *vm,
  
--	mutex_lock(&interface_lock);
- 	/*
- 	 * avoid CPU hotplug operations that might read options.
- 	 */
- 	cpus_read_lock();
-+	mutex_lock(&interface_lock);
+ 		unbind_op_commit(vm, tile, pt_update_ops, old, fence, fence2);
  
- 	retval = cnt;
+-		if (op->remap.prev)
++		if (op->remap.prev && !op->remap.skip_prev)
+ 			bind_op_commit(vm, tile, pt_update_ops, op->remap.prev,
+ 				       fence, fence2, false);
+-		if (op->remap.next)
++		if (op->remap.next && !op->remap.skip_next)
+ 			bind_op_commit(vm, tile, pt_update_ops, op->remap.next,
+ 				       fence, fence2, false);
+ 		break;
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -2503,7 +2503,6 @@ static int xe_vma_op_commit(struct xe_vm
+ 			if (!err && op->remap.skip_prev) {
+ 				op->remap.prev->tile_present =
+ 					tile_present;
+-				op->remap.prev = NULL;
+ 			}
+ 		}
+ 		if (op->remap.next) {
+@@ -2513,11 +2512,13 @@ static int xe_vma_op_commit(struct xe_vm
+ 			if (!err && op->remap.skip_next) {
+ 				op->remap.next->tile_present =
+ 					tile_present;
+-				op->remap.next = NULL;
+ 			}
+ 		}
  
-@@ -2257,8 +2257,8 @@ static ssize_t osnoise_options_write(str
- 			clear_bit(option, &osnoise_options);
+-		/* Adjust for partial unbind after removing VMA from VM */
++		/*
++		 * Adjust for partial unbind after removing VMA from VM. In case
++		 * of unwind we might need to undo this later.
++		 */
+ 		if (!err) {
+ 			op->base.remap.unmap->va->va.addr = op->remap.start;
+ 			op->base.remap.unmap->va->va.range = op->remap.range;
+@@ -2636,6 +2637,8 @@ static int vm_bind_ioctl_ops_parse(struc
+ 
+ 			op->remap.start = xe_vma_start(old);
+ 			op->remap.range = xe_vma_size(old);
++			op->remap.old_start = op->remap.start;
++			op->remap.old_range = op->remap.range;
+ 
+ 			flags |= op->base.remap.unmap->va->flags & XE_VMA_CREATE_MASK;
+ 			if (op->base.remap.prev) {
+@@ -2783,8 +2786,19 @@ static void xe_vma_op_unwind(struct xe_v
+ 			xe_svm_notifier_lock(vm);
+ 			vma->gpuva.flags &= ~XE_VMA_DESTROYED;
+ 			xe_svm_notifier_unlock(vm);
+-			if (post_commit)
++			if (post_commit) {
++				/*
++				 * Restore the old va range, in case of the
++				 * prev/next skip optimisation. Otherwise what
++				 * we re-insert here could be smaller than the
++				 * original range.
++				 */
++				op->base.remap.unmap->va->va.addr =
++					op->remap.old_start;
++				op->base.remap.unmap->va->va.range =
++					op->remap.old_range;
+ 				xe_vm_insert_vma(vm, vma);
++			}
+ 		}
+ 		break;
  	}
- 
--	cpus_read_unlock();
- 	mutex_unlock(&interface_lock);
-+	cpus_read_unlock();
- 
- 	if (running)
- 		start_per_cpu_kthreads();
-@@ -2345,16 +2345,16 @@ osnoise_cpus_write(struct file *filp, co
- 	if (running)
- 		stop_per_cpu_kthreads();
- 
--	mutex_lock(&interface_lock);
- 	/*
- 	 * osnoise_cpumask is read by CPU hotplug operations.
- 	 */
- 	cpus_read_lock();
-+	mutex_lock(&interface_lock);
- 
- 	cpumask_copy(&osnoise_cpumask, osnoise_cpumask_new);
- 
--	cpus_read_unlock();
- 	mutex_unlock(&interface_lock);
-+	cpus_read_unlock();
- 
- 	if (running)
- 		start_per_cpu_kthreads();
+--- a/drivers/gpu/drm/xe/xe_vm_types.h
++++ b/drivers/gpu/drm/xe/xe_vm_types.h
+@@ -365,6 +365,10 @@ struct xe_vma_op_remap {
+ 	u64 start;
+ 	/** @range: range of the VMA unmap */
+ 	u64 range;
++	/** @old_start: Original start of the VMA we unmap */
++	u64 old_start;
++	/** @old_range: Original range of the VMA we unmap */
++	u64 old_range;
+ 	/** @skip_prev: skip prev rebind */
+ 	bool skip_prev;
+ 	/** @skip_next: skip next rebind */
 
 
