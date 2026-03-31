@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD13425CEE;
-	Tue, 31 Mar 2026 16:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2788C4279E9;
+	Tue, 31 Mar 2026 16:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975298; cv=none; b=UdvpZMR90QuBlVjMqAN0EClDGHbMdnXIEwqZPnqCTLJTrdHXDvdHhMLiHC+bOZyfQrL64oDf2Sw42EDZCFTK30Ani8wgfL//pM2Pd64eJarDuomEoN2R7ZpMmpGNXIijd1ZZkOAedxqumH+VUbFe2Vh4DizGL0qYjg0QTxR8KPc=
+	t=1774975301; cv=none; b=iyDfUKHFt3fZ953Cq/iT9eF6aS1QkgkQCzkXCDZpPPpYwjPnYIi56zISYLCMDRwF2yAl6gh0xpHgs+IgEUtYjIFYd417AiuCX/uWE+XUzcTSy0YrYb8lfmVRmm3iB1YGJl6xcXHMNCOpeP6Citqq3hDZ7IEnzGr0KNJGeHhWjkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975298; c=relaxed/simple;
-	bh=cBd3BFH4HSHhYij5vwvd3bfZG/MaIEiTokb0P9dwBJQ=;
+	s=arc-20240116; t=1774975301; c=relaxed/simple;
+	bh=9hsO5NeUuW008D7X1uyVC5gDP55msVd6wErRyAWY+Qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8MkKlIji08or4qvHhmxRB/GE/CsjypzpzuD/GoP5PBAFBFEtRo/VmYlahLG0ONHgLN8o+22FFkhgRLPYW4PSc3O8KXWe4ehYHr0CTthlShQH0cSaZkNygL5DSwwArIsemoWuvMdgUJfsE6q6c/rZFuC9zj8EmZq55dfPY3F5Ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Fg+sBva; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvqGfEkbRjWjg+BtNyv2zFIM2MJuknhBEOfOLYTxML5+C8vaUkFYtwvcIuxW8pcWWX8Oi+0F91JkuapFVdZj6wPMYNYAWRwEcp6sIDZXr+5Znu95x5XLP4Vxpqrk8/hTFzujuQIfqZHaC/cshc9DewSA3dv8x01+SVf5QuQTXX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rR2gfASe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Fg+sBva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E11C19424;
-	Tue, 31 Mar 2026 16:41:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rR2gfASe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1AB3C19423;
+	Tue, 31 Mar 2026 16:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975298;
-	bh=cBd3BFH4HSHhYij5vwvd3bfZG/MaIEiTokb0P9dwBJQ=;
+	s=korg; t=1774975301;
+	bh=9hsO5NeUuW008D7X1uyVC5gDP55msVd6wErRyAWY+Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Fg+sBvaR59iP7tzqdAOOBD3vQRCW8HbSkT6nIoCqOMEMkjVyfhlay2qNfPha74Dh
-	 9NlSL0p8LEALYHH3rAOL8WqF4T5TBMhTw9ahH5F2/m9V/1MJFLaRoLyihuKRVvvFZX
-	 1XMN6gqAcn5w7/42lZj5TifOHlcDfYWrPetobwMQ=
+	b=rR2gfASehcVm2nLl9Ip05EAgmNI396G3OQxCiyJpxIkcTyupRh3NGupQt2ZDLEMdG
+	 PFIPogarnv1W6Lx+Uw1hY9peXCPkAGAD8i7xRdoq1qi1Y9OmHVVDJA5TEJTLyXySNC
+	 rR8Kwy/40A+x3Cy7c/LZ3nrA0jp5xqkjP8L1+Frc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikunj A Dadhania <nikunj@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.19 241/342] x86/fred: Fix early boot failures on SEV-ES/SNP guests
-Date: Tue, 31 Mar 2026 18:21:14 +0200
-Message-ID: <20260331161807.831705972@linuxfoundation.org>
+	Nitin Rawat <nitin.rawat@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.19 242/342] phy: qcom: qmp-ufs: Fix SM8650 PCS table for Gear 4
+Date: Tue, 31 Mar 2026 18:21:15 +0200
+Message-ID: <20260331161807.869751182@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,89 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikunj A Dadhania <nikunj@amd.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-commit 3645eb7e3915990a149460c151a00894cb586253 upstream.
+commit 81af9e40e2e4e1aa95f09fb34811760be6742c58 upstream.
 
-FRED-enabled SEV-(ES,SNP) guests fail to boot due to the following issues
-in the early boot sequence:
+According to internal documentation, on SM8650, when the PHY is configured
+in Gear 4, the QPHY_V6_PCS_UFS_PLL_CNTL register needs to have the same
+value as for Gear 5.
 
-* FRED does not have a #VC exception handler in the dispatch logic
+At the moment, there is no board that comes with a UFS 3.x device, so
+this issue doesn't show up, but with the new Eliza SoC, which uses the
+same init sequence as SM8650, on the MTP board, the link startup fails
+with the current Gear 4 PCS table.
 
-* Early FRED #VC exceptions attempt to use uninitialized per-CPU GHCBs
-  instead of boot_ghcb
+So fix that by moving the entry into the PCS generic table instead,
+while keeping the value from Gear 5 configuration.
 
-Add X86_TRAP_VC case to fred_hwexc() with a new exc_vmm_communication()
-function that provides the unified entry point FRED requires, dispatching
-to existing user/kernel handlers based on privilege level. The function is
-already declared via DECLARE_IDTENTRY_VC().
-
-Fix early GHCB access by falling back to boot_ghcb in
-__sev_{get,put}_ghcb() when per-CPU GHCBs are not yet initialized.
-
-Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>  # 6.12+
-Link: https://patch.msgid.link/20260318075654.1792916-4-nikunj@amd.com
+Cc: stable@vger.kernel.org # v6.10
+Fixes: b9251e64a96f ("phy: qcom: qmp-ufs: update SM8650 tables for Gear 4 & 5")
+Suggested-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+Link: https://patch.msgid.link/20260219-phy-qcom-qmp-ufs-fix-sm8650-pcs-g4-table-v1-1-f136505b57f6@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/sev/noinstr.c |    6 ++++++
- arch/x86/entry/entry_fred.c |   14 ++++++++++++++
- 2 files changed, 20 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/x86/coco/sev/noinstr.c
-+++ b/arch/x86/coco/sev/noinstr.c
-@@ -120,6 +120,9 @@ noinstr struct ghcb *__sev_get_ghcb(stru
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+@@ -928,6 +928,7 @@ static const struct qmp_phy_init_tbl sm8
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PCS_CTRL1, 0xc1),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x33),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_SIGDET_CTRL2, 0x68),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_POST_EMP_LVL_S4, 0x0e),
+@@ -937,13 +938,11 @@ static const struct qmp_phy_init_tbl sm8
+ };
  
- 	WARN_ON(!irqs_disabled());
+ static const struct qmp_phy_init_tbl sm8650_ufsphy_g4_pcs[] = {
+-	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x13),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x04),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x04),
+ };
  
-+	if (!sev_cfg.ghcbs_initialized)
-+		return boot_ghcb;
-+
- 	data = this_cpu_read(runtime_data);
- 	ghcb = &data->ghcb_page;
- 
-@@ -163,6 +166,9 @@ noinstr void __sev_put_ghcb(struct ghcb_
- 
- 	WARN_ON(!irqs_disabled());
- 
-+	if (!sev_cfg.ghcbs_initialized)
-+		return;
-+
- 	data = this_cpu_read(runtime_data);
- 	ghcb = &data->ghcb_page;
- 
---- a/arch/x86/entry/entry_fred.c
-+++ b/arch/x86/entry/entry_fred.c
-@@ -176,6 +176,16 @@ static noinstr void fred_extint(struct p
- 	}
- }
- 
-+#ifdef CONFIG_AMD_MEM_ENCRYPT
-+noinstr void exc_vmm_communication(struct pt_regs *regs, unsigned long error_code)
-+{
-+	if (user_mode(regs))
-+		return user_exc_vmm_communication(regs, error_code);
-+	else
-+		return kernel_exc_vmm_communication(regs, error_code);
-+}
-+#endif
-+
- static noinstr void fred_hwexc(struct pt_regs *regs, unsigned long error_code)
- {
- 	/* Optimize for #PF. That's the only exception which matters performance wise */
-@@ -206,6 +216,10 @@ static noinstr void fred_hwexc(struct pt
- #ifdef CONFIG_X86_CET
- 	case X86_TRAP_CP: return exc_control_protection(regs, error_code);
- #endif
-+#ifdef CONFIG_AMD_MEM_ENCRYPT
-+	case X86_TRAP_VC: return exc_vmm_communication(regs, error_code);
-+#endif
-+
- 	default: return fred_bad_type(regs, error_code);
- 	}
- 
+ static const struct qmp_phy_init_tbl sm8650_ufsphy_g5_pcs[] = {
+-	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x33),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x05),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x05),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HS_G5_SYNC_LENGTH_CAPABILITY, 0x4d),
 
 
