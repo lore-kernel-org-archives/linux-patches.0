@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6936C2FE042;
-	Tue, 31 Mar 2026 17:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036FB3019D6;
+	Tue, 31 Mar 2026 17:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976737; cv=none; b=tHO5J2RajaAkU5hnaARMKlWFMtkWftGXkxz/f80MOGHkwiC+iVHjwzCUpLcaJv0P6OSkl58brj/gn5eKl9eLLeGExv1pkk3yeVv1ey0y7Ld1q88CdIaQ+ZziHsSk+P2oM+oo8wQVKtrRD5Q5R2vT+fC2dHn1aRC7c5lnk29PQII=
+	t=1774976740; cv=none; b=drA5q7sayAWetmvH1OrdNMMMrwdgs4BV6FMddEbhbIqNa7qwauq9v9JbVbTkG4fjOKMchPoLUeoY4Omzx30UNLlIb3+qt3Sby05Fb7Jsr1lQ0c94IxoDEBis9jxjJ7kXrzQsNsY2SE6nAvCCaCTXzlukObYmf80+k6e3jt8AgkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976737; c=relaxed/simple;
-	bh=RX1a4hkxdQ79zM8doB7ZSvtrnCCAbiRWS5Mxit0h/LQ=;
+	s=arc-20240116; t=1774976740; c=relaxed/simple;
+	bh=Pd5UcdUiD1lbpfX4ezbj3ivI1WJqa9SdvlvuSlcR5Iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q8sZbU2UzrHehU5zjz12MNu7rFd1UVFogzSWIruV5FyDXEbW0tLySrdNKGmnTKiLYrJ/UZFgaK55Z+4wJ4bqgi9z2QMnVj1rw0gxAMUlN36TO4rYPIDas5h06a8Dx/EoyP2LJitJmEbA7pVG5RJy8uA0Ke/FXDYKzj0k+SJDY0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIJcq7gz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IJQDeaMJPwwVIEeTt5yhNoRkz8BYDnvDVfxVOlO88lxfXgN8kxDVuwCjlDNg1lJVQaOREZFlnO2uZD+KpCSiqZ1K+7Ys+49JyEFgVtdTpgDZkQQ6lDnwnQzsro5t+nDNqlFut0nN7F3ZGSpCgze5FJGt3Ql21fh/vCdW22h26Mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keLkKYZN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIJcq7gz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006C4C19423;
-	Tue, 31 Mar 2026 17:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keLkKYZN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D99DC19423;
+	Tue, 31 Mar 2026 17:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976737;
-	bh=RX1a4hkxdQ79zM8doB7ZSvtrnCCAbiRWS5Mxit0h/LQ=;
+	s=korg; t=1774976739;
+	bh=Pd5UcdUiD1lbpfX4ezbj3ivI1WJqa9SdvlvuSlcR5Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIJcq7gzgYDfNBKibZgTZV7Kahlp904VzHQMwZnNsOnYVMaEbA2Xm94YPzikYBANZ
-	 pGsIAqvnHj6cE1mBrTUys+WCq6zr6rve9Hv2O5dLjFQloxM+/WTYwSx3U9HS8mXOAG
-	 XLmfaEeY7k8n+GFvl36GHtafG8M9WD0MsYeqXSxk=
+	b=keLkKYZNyvKKGQDbUSPwawL65AjgNKu80m4ziDibhyvU3JMY1nuF96A5X9YmDQMdG
+	 +qn0l5nqt6nKSMzLK+VnMIJVFUkeAXf9loHQ+PDNeBzGhtsn76rlvGMYAsXXhNXnQB
+	 /R76yMSK2lJpFc8hRv/g8pFuPFVllk81dIQ3uqzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.18 209/309] alarmtimer: Fix argument order in alarm_timer_forward()
-Date: Tue, 31 Mar 2026 18:21:52 +0200
-Message-ID: <20260331161801.141593950@linuxfoundation.org>
+	John <therealgraysky@proton.me>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.18 210/309] writeback: dont block sync for filesystems with no data integrity guarantees
+Date: Tue, 31 Mar 2026 18:21:53 +0200
+Message-ID: <20260331161801.177714988@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -50,51 +53,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-commit 5d16467ae56343b9205caedf85e3a131e0914ad8 upstream.
+commit 76f9377cd2ab7a9220c25d33940d9ca20d368172 upstream.
 
-alarm_timer_forward() passes arguments to alarm_forward() in the wrong
-order:
+Add a SB_I_NO_DATA_INTEGRITY superblock flag for filesystems that cannot
+guarantee data persistence on sync (eg fuse). For superblocks with this
+flag set, sync kicks off writeback of dirty inodes but does not wait
+for the flusher threads to complete the writeback.
 
-  alarm_forward(alarm, timr->it_interval, now);
+This replaces the per-inode AS_NO_DATA_INTEGRITY mapping flag added in
+commit f9a49aa302a0 ("fs/writeback: skip AS_NO_DATA_INTEGRITY mappings
+in wait_sb_inodes()"). The flag belongs at the superblock level because
+data integrity is a filesystem-wide property, not a per-inode one.
+Having this flag at the superblock level also allows us to skip having
+to iterate every dirty inode in wait_sb_inodes() only to skip each inode
+individually.
 
-However, alarm_forward() is defined as:
+Prior to this commit, mappings with no data integrity guarantees skipped
+waiting on writeback completion but still waited on the flusher threads
+to finish initiating the writeback. Waiting on the flusher threads is
+unnecessary. This commit kicks off writeback but does not wait on the
+flusher threads. This change properly addresses a recent report [1] for
+a suspend-to-RAM hang seen on fuse-overlayfs that was caused by waiting
+on the flusher threads to finish:
 
-  u64 alarm_forward(struct alarm *alarm, ktime_t now, ktime_t interval);
+Workqueue: pm_fs_sync pm_fs_sync_work_fn
+Call Trace:
+ <TASK>
+ __schedule+0x457/0x1720
+ schedule+0x27/0xd0
+ wb_wait_for_completion+0x97/0xe0
+ sync_inodes_sb+0xf8/0x2e0
+ __iterate_supers+0xdc/0x160
+ ksys_sync+0x43/0xb0
+ pm_fs_sync_work_fn+0x17/0xa0
+ process_one_work+0x193/0x350
+ worker_thread+0x1a1/0x310
+ kthread+0xfc/0x240
+ ret_from_fork+0x243/0x280
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-and uses the second argument as the current time:
+On fuse this is problematic because there are paths that may cause the
+flusher thread to block (eg if systemd freezes the user session cgroups
+first, which freezes the fuse daemon, before invoking the kernel
+suspend. The kernel suspend triggers ->write_node() which on fuse issues
+a synchronous setattr request, which cannot be processed since the
+daemon is frozen. Or if the daemon is buggy and cannot properly complete
+writeback, initiating writeback on a dirty folio already under writeback
+leads to writeback_get_folio() -> folio_prepare_writeback() ->
+unconditional wait on writeback to finish, which will cause a hang).
+This commit restores fuse to its prior behavior before tmp folios were
+removed, where sync was essentially a no-op.
 
-  delta = ktime_sub(now, alarm->node.expires);
+[1] https://lore.kernel.org/linux-fsdevel/CAJnrk1a-asuvfrbKXbEwwDSctvemF+6zfhdnuzO65Pt8HsFSRw@mail.gmail.com/T/#m632c4648e9cafc4239299887109ebd880ac6c5c1
 
-Passing the interval as "now" results in incorrect delta computation,
-which can lead to missed expirations or incorrect overrun accounting.
-
-This issue has been present since the introduction of
-alarm_timer_forward().
-
-Fix this by swapping the arguments.
-
-Fixes: e7561f1633ac ("alarmtimer: Implement forward callback")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: 0c58a97f919c ("fuse: remove tmp folio for writebacks and internal rb tree")
+Reported-by: John <therealgraysky@proton.me>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260323061130.29991-1-zhanxusheng@xiaomi.com
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Link: https://patch.msgid.link/20260320005145.2483161-2-joannelkoong@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/alarmtimer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fs-writeback.c       |   18 ++++++++++++------
+ fs/fuse/file.c          |    4 +---
+ fs/fuse/inode.c         |    1 +
+ include/linux/fs.h      |    1 +
+ include/linux/pagemap.h |   11 -----------
+ 5 files changed, 15 insertions(+), 20 deletions(-)
 
---- a/kernel/time/alarmtimer.c
-+++ b/kernel/time/alarmtimer.c
-@@ -540,7 +540,7 @@ static s64 alarm_timer_forward(struct k_
- {
- 	struct alarm *alarm = &timr->it.alarm.alarmtimer;
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -2735,13 +2735,8 @@ static void wait_sb_inodes(struct super_
+ 		 * The mapping can appear untagged while still on-list since we
+ 		 * do not have the mapping lock. Skip it here, wb completion
+ 		 * will remove it.
+-		 *
+-		 * If the mapping does not have data integrity semantics,
+-		 * there's no need to wait for the writeout to complete, as the
+-		 * mapping cannot guarantee that data is persistently stored.
+ 		 */
+-		if (!mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK) ||
+-		    mapping_no_data_integrity(mapping))
++		if (!mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK))
+ 			continue;
  
--	return alarm_forward(alarm, timr->it_interval, now);
-+	return alarm_forward(alarm, now, timr->it_interval);
+ 		spin_unlock_irq(&sb->s_inode_wblist_lock);
+@@ -2876,6 +2871,17 @@ void sync_inodes_sb(struct super_block *
+ 	 */
+ 	if (bdi == &noop_backing_dev_info)
+ 		return;
++
++	/*
++	 * If the superblock has SB_I_NO_DATA_INTEGRITY set, there's no need to
++	 * wait for the writeout to complete, as the filesystem cannot guarantee
++	 * data persistence on sync. Just kick off writeback and return.
++	 */
++	if (sb->s_iflags & SB_I_NO_DATA_INTEGRITY) {
++		wakeup_flusher_threads_bdi(bdi, WB_REASON_SYNC);
++		return;
++	}
++
+ 	WARN_ON(!rwsem_is_locked(&sb->s_umount));
+ 
+ 	/* protect against inode wb switch, see inode_switch_wbs_work_fn() */
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -3146,10 +3146,8 @@ void fuse_init_file_inode(struct inode *
+ 
+ 	inode->i_fop = &fuse_file_operations;
+ 	inode->i_data.a_ops = &fuse_file_aops;
+-	if (fc->writeback_cache) {
++	if (fc->writeback_cache)
+ 		mapping_set_writeback_may_deadlock_on_reclaim(&inode->i_data);
+-		mapping_set_no_data_integrity(&inode->i_data);
+-	}
+ 
+ 	INIT_LIST_HEAD(&fi->write_files);
+ 	INIT_LIST_HEAD(&fi->queued_writes);
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -1706,6 +1706,7 @@ static void fuse_sb_defaults(struct supe
+ 	sb->s_export_op = &fuse_export_operations;
+ 	sb->s_iflags |= SB_I_IMA_UNVERIFIABLE_SIGNATURE;
+ 	sb->s_iflags |= SB_I_NOIDMAP;
++	sb->s_iflags |= SB_I_NO_DATA_INTEGRITY;
+ 	if (sb->s_user_ns != &init_user_ns)
+ 		sb->s_iflags |= SB_I_UNTRUSTED_MOUNTER;
+ 	sb->s_flags &= ~(SB_NOSEC | SB_I_VERSION);
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1419,6 +1419,7 @@ extern int send_sigurg(struct file *file
+ #define SB_I_NOUMASK	0x00001000	/* VFS does not apply umask */
+ #define SB_I_NOIDMAP	0x00002000	/* No idmapped mounts on this superblock */
+ #define SB_I_ALLOW_HSM	0x00004000	/* Allow HSM events on this superblock */
++#define SB_I_NO_DATA_INTEGRITY	0x00008000 /* fs cannot guarantee data persistence on sync */
+ 
+ /* Possible states of 'frozen' field */
+ enum {
+--- a/include/linux/pagemap.h
++++ b/include/linux/pagemap.h
+@@ -213,7 +213,6 @@ enum mapping_flags {
+ 	AS_WRITEBACK_MAY_DEADLOCK_ON_RECLAIM = 9,
+ 	AS_KERNEL_FILE = 10,	/* mapping for a fake kernel file that shouldn't
+ 				   account usage to user cgroups */
+-	AS_NO_DATA_INTEGRITY = 11, /* no data integrity guarantees */
+ 	/* Bits 16-25 are used for FOLIO_ORDER */
+ 	AS_FOLIO_ORDER_BITS = 5,
+ 	AS_FOLIO_ORDER_MIN = 16,
+@@ -349,16 +348,6 @@ static inline bool mapping_writeback_may
+ 	return test_bit(AS_WRITEBACK_MAY_DEADLOCK_ON_RECLAIM, &mapping->flags);
  }
  
- /**
+-static inline void mapping_set_no_data_integrity(struct address_space *mapping)
+-{
+-	set_bit(AS_NO_DATA_INTEGRITY, &mapping->flags);
+-}
+-
+-static inline bool mapping_no_data_integrity(const struct address_space *mapping)
+-{
+-	return test_bit(AS_NO_DATA_INTEGRITY, &mapping->flags);
+-}
+-
+ static inline gfp_t mapping_gfp_mask(const struct address_space *mapping)
+ {
+ 	return mapping->gfp_mask;
 
 
