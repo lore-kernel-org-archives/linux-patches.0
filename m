@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FE13016E3;
-	Tue, 31 Mar 2026 17:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934233016EE;
+	Tue, 31 Mar 2026 17:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976831; cv=none; b=lU9yfOmxb/XNv76frUJ8tNbYE9nXqdaxK8siqv2RYSqmDJHMQbsl8VWdFYED1E7RTI7i0rqffaJ8pQprI+sdgZqAIAUHZJQfTzCXuHCwPLzVeknxy5/wh7RQFLVRO0uB+9yGisA0gxuWzG+BJB7+nGxFxXjAL0PE4cPNvI3aLKc=
+	t=1774976833; cv=none; b=beri+GUJOTAtwW0wFsWLEXRYcicSXnLv/z7+fsG+wa9wNlHKOaponi36PzUt/BTQ4zRvdlpt8VmtGclHHJSCL0YXlsNZgcJlhnT71m4h4yW7o8lo7ps+6w6HJNAr7gIPZhGowGtwpmIvNBQBlaYBFen9UIxUIRjKVYBUsdgpj6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976831; c=relaxed/simple;
-	bh=LLKFS79j+8zaNuUAI7RxsDTFMp55FGp54cr/u7YAK7I=;
+	s=arc-20240116; t=1774976833; c=relaxed/simple;
+	bh=ABDjbdBtkeQ+B2UU0lJpHZudfRrAn7XKiAnY6QWSwU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tw7vBLEnyGcGawNU9B58yJMnZEB7a02JFR8IRt/dgAcoVl5LwHEGzoE+V3+befOu8E5uoYoAgSj0klue2B4CBEY5uNUu6B4H3PGgrGsGJ9YSz7/eAkQ7sRnOkkMreqNidD5kWfvmdBNr8HCkaeL7+uiVzEt8nw29ajlDgSIMG2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLjAL7qe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uK8Bv9mackjdBthq15yGvWElALibA1oIe7JiGcOEvyASMoOpO6tr25CHkSLoZOOO48aeMMeowp+7xrzloBdAyX6y+A6YDueS9e0PxtZS43BhXn/cbR/hD3n0y9kH+OTxYWlrqgdyxhmCUheDYYvU5He+WciHJ7oRtleipVgX9CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUk6znxC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLjAL7qe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3D3C19423;
-	Tue, 31 Mar 2026 17:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUk6znxC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B7CC19423;
+	Tue, 31 Mar 2026 17:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976830;
-	bh=LLKFS79j+8zaNuUAI7RxsDTFMp55FGp54cr/u7YAK7I=;
+	s=korg; t=1774976833;
+	bh=ABDjbdBtkeQ+B2UU0lJpHZudfRrAn7XKiAnY6QWSwU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLjAL7qeCix2xnabpBzJ7xtMG6blOQd4O5cEAR3JtsgZ60Jn24ZK/NE7AD2Zfqgth
-	 os3Dj626YSE5Tt5MsJ8KjoNbgUOsrS2AvzL+h6L0CciBTlrSWvjeShd253RORujsRx
-	 +9SH8gdMXTIHfYakpvcFamcq4FCPbTHzFNN5DbM0=
+	b=kUk6znxCv4wjAs+V7cS55PFmblsLuL99DJCtvrUhjDf/GIcctAH5GUojaPTYx5rs2
+	 nukRgNgtefxK/y4qT0g/Lf55OiIDk3EL4JP9EImuTpSsaiLSh18xlGyS26O9jb31Uk
+	 9JmyjWCFwfFCr4jTOTl3FsG53b5BUmM/vI7TYKbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Law <objecting@objecting.org>,
-	SeongJae Park <sj@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Max Boone <mboone@akamai.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 245/309] mm/damon/sysfs: check contexts->nr in repeat_call_fn
-Date: Tue, 31 Mar 2026 18:22:28 +0200
-Message-ID: <20260331161802.588613976@linuxfoundation.org>
+Subject: [PATCH 6.18 246/309] mm/pagewalk: fix race between concurrent split and refault
+Date: Tue, 31 Mar 2026 18:22:29 +0200
+Message-ID: <20260331161802.625678585@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,52 +57,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Law <objecting@objecting.org>
+From: Max Boone <mboone@akamai.com>
 
-commit 6557004a8b59c7701e695f02be03c7e20ed1cc15 upstream.
+commit 3b89863c3fa482912911cd65a12a3aeef662c250 upstream.
 
-damon_sysfs_repeat_call_fn() calls damon_sysfs_upd_tuned_intervals(),
-damon_sysfs_upd_schemes_stats(), and
-damon_sysfs_upd_schemes_effective_quotas() without checking contexts->nr.
-If nr_contexts is set to 0 via sysfs while DAMON is running, these
-functions dereference contexts_arr[0] and cause a NULL pointer
-dereference.  Add the missing check.
+The splitting of a PUD entry in walk_pud_range() can race with a
+concurrent thread refaulting the PUD leaf entry causing it to try walking
+a PMD range that has disappeared.
 
-For example, the issue can be reproduced using DAMON sysfs interface and
-DAMON user-space tool (damo) [1] like below.
+An example and reproduction of this is to try reading numa_maps of a
+process while VFIO-PCI is setting up DMA (specifically the
+vfio_pin_pages_remote call) on a large BAR for that process.
 
-    $ sudo damo start --refresh_interval 1s
-    $ echo 0 | sudo tee \
-            /sys/kernel/mm/damon/admin/kdamonds/0/contexts/nr_contexts
+This will trigger a kernel BUG:
+vfio-pci 0000:03:00.0: enabling device (0000 -> 0002)
+BUG: unable to handle page fault for address: ffffa23980000000
+PGD 0 P4D 0
+Oops: Oops: 0000 [#1] SMP NOPTI
+...
+RIP: 0010:walk_pgd_range+0x3b5/0x7a0
+Code: 8d 43 ff 48 89 44 24 28 4d 89 ce 4d 8d a7 00 00 20 00 48 8b 4c 24
+28 49 81 e4 00 00 e0 ff 49 8d 44 24 ff 48 39 c8 4c 0f 43 e3 <49> f7 06
+   9f ff ff ff 75 3b 48 8b 44 24 20 48 8b 40 28 48 85 c0 74
+RSP: 0018:ffffac23e1ecf808 EFLAGS: 00010287
+RAX: 00007f44c01fffff RBX: 00007f4500000000 RCX: 00007f44ffffffff
+RDX: 0000000000000000 RSI: 000ffffffffff000 RDI: ffffffff93378fe0
+RBP: ffffac23e1ecf918 R08: 0000000000000004 R09: ffffa23980000000
+R10: 0000000000000020 R11: 0000000000000004 R12: 00007f44c0200000
+R13: 00007f44c0000000 R14: ffffa23980000000 R15: 00007f44c0000000
+FS:  00007fe884739580(0000) GS:ffff9b7d7a9c0000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffa23980000000 CR3: 000000c0650e2005 CR4: 0000000000770ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ __walk_page_range+0x195/0x1b0
+ walk_page_vma+0x62/0xc0
+ show_numa_map+0x12b/0x3b0
+ seq_read_iter+0x297/0x440
+ seq_read+0x11d/0x140
+ vfs_read+0xc2/0x340
+ ksys_read+0x5f/0xe0
+ do_syscall_64+0x68/0x130
+ ? get_page_from_freelist+0x5c2/0x17e0
+ ? mas_store_prealloc+0x17e/0x360
+ ? vma_set_page_prot+0x4c/0xa0
+ ? __alloc_pages_noprof+0x14e/0x2d0
+ ? __mod_memcg_lruvec_state+0x8d/0x140
+ ? __lruvec_stat_mod_folio+0x76/0xb0
+ ? __folio_mod_stat+0x26/0x80
+ ? do_anonymous_page+0x705/0x900
+ ? __handle_mm_fault+0xa8d/0x1000
+ ? __count_memcg_events+0x53/0xf0
+ ? handle_mm_fault+0xa5/0x360
+ ? do_user_addr_fault+0x342/0x640
+ ? arch_exit_to_user_mode_prepare.constprop.0+0x16/0xa0
+ ? irqentry_exit_to_user_mode+0x24/0x100
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7fe88464f47e
+Code: c0 e9 b6 fe ff ff 50 48 8d 3d be 07 0b 00 e8 69 01 02 00 66 0f 1f
+84 00 00 00 00 00 64 8b 04 25 18 00 00 00 85 c0 75 14 0f 05 <48> 3d 00
+   f0 ff ff 77 5a c3 66 0f 1f 84 00 00 00 00 00 48 83 ec 28
+RSP: 002b:00007ffe6cd9a9b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007fe88464f47e
+RDX: 0000000000020000 RSI: 00007fe884543000 RDI: 0000000000000003
+RBP: 00007fe884543000 R08: 00007fe884542010 R09: 0000000000000000
+R10: fffffffffffffbc5 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
+ </TASK>
 
-Link: https://patch.msgid.link/20260320163559.178101-3-objecting@objecting.org
-Link: https://lkml.kernel.org/r/20260321175427.86000-4-sj@kernel.org
-Link: https://github.com/damonitor/damo [1]
-Fixes: d809a7c64ba8 ("mm/damon/sysfs: implement refresh_ms file internal work")
-Signed-off-by: Josh Law <objecting@objecting.org>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.17+]
+Fix this by validating the PUD entry in walk_pmd_range() using a stable
+snapshot (pudp_get()).  If the PUD is not present or is a leaf, retry the
+walk via ACTION_AGAIN instead of descending further.  This mirrors the
+retry logic in walk_pte_range(), which lets walk_pmd_range() retry if the
+PTE is not being got by pte_offset_map_lock().
+
+Link: https://lkml.kernel.org/r/20260325-pagewalk-check-pmd-refault-v2-1-707bff33bc60@akamai.com
+Fixes: f9e54c3a2f5b ("vfio/pci: implement huge_fault support")
+Co-developed-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Max Boone <mboone@akamai.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/pagewalk.c |   25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1570,9 +1570,12 @@ static int damon_sysfs_repeat_call_fn(vo
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -97,6 +97,7 @@ static int walk_pte_range(pmd_t *pmd, un
+ static int walk_pmd_range(pud_t *pud, unsigned long addr, unsigned long end,
+ 			  struct mm_walk *walk)
+ {
++	pud_t pudval = pudp_get(pud);
+ 	pmd_t *pmd;
+ 	unsigned long next;
+ 	const struct mm_walk_ops *ops = walk->ops;
+@@ -105,6 +106,24 @@ static int walk_pmd_range(pud_t *pud, un
+ 	int err = 0;
+ 	int depth = real_depth(3);
  
- 	if (!mutex_trylock(&damon_sysfs_lock))
- 		return 0;
-+	if (sysfs_kdamond->contexts->nr != 1)
-+		goto out;
- 	damon_sysfs_upd_tuned_intervals(sysfs_kdamond);
- 	damon_sysfs_upd_schemes_stats(sysfs_kdamond);
- 	damon_sysfs_upd_schemes_effective_quotas(sysfs_kdamond);
-+out:
- 	mutex_unlock(&damon_sysfs_lock);
- 	return 0;
- }
++	/*
++	 * For PTE handling, pte_offset_map_lock() takes care of checking
++	 * whether there actually is a page table. But it also has to be
++	 * very careful about concurrent page table reclaim.
++	 *
++	 * Similarly, we have to be careful here - a PUD entry that points
++	 * to a PMD table cannot go away, so we can just walk it. But if
++	 * it's something else, we need to ensure we didn't race something,
++	 * so need to retry.
++	 *
++	 * A pertinent example of this is a PUD refault after PUD split -
++	 * we will need to split again or risk accessing invalid memory.
++	 */
++	if (!pud_present(pudval) || pud_leaf(pudval)) {
++		walk->action = ACTION_AGAIN;
++		return 0;
++	}
++
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+ again:
+@@ -218,12 +237,12 @@ static int walk_pud_range(p4d_t *p4d, un
+ 		else if (pud_leaf(*pud) || !pud_present(*pud))
+ 			continue; /* Nothing to do. */
+ 
+-		if (pud_none(*pud))
+-			goto again;
+-
+ 		err = walk_pmd_range(pud, addr, next, walk);
+ 		if (err)
+ 			break;
++
++		if (walk->action == ACTION_AGAIN)
++			goto again;
+ 	} while (pud++, addr = next, addr != end);
+ 
+ 	return err;
 
 
