@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF6B315D50;
-	Tue, 31 Mar 2026 17:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36231311592;
+	Tue, 31 Mar 2026 17:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976931; cv=none; b=mG9Ho6Za5w9HT4YGbQBjnAUK2WQU0By/NqrD0cKvB5VukA6M0vZLidPktZ3X8a1CzGjGyV/cqgX9eWSIa90eYroDgNhEilaZNRzMpansudyZ0RIyA+eMTHvGoVQre2fEZngW+HYDXSwF+veaPwfqqXdOnu4o6A6DP998rbioqiQ=
+	t=1774976934; cv=none; b=nM4Nh7AGDQ1N5693LrCmQq5/jTy2NYRasgrH54v2IRacmuGe6HTUO6ts5olhntucHLe5Ke5LLKsqPaSPzrS1xvIo4/uSAncTZDKgufZw9kXG9nm1C7Ag//01lScgGzguDkxQb2Gfuz3OrvOnRJc1+7DEUbsjewoyM44XZqO+lKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976931; c=relaxed/simple;
-	bh=+7XuOqYPSJcBoAXcSiPuSx/tgXR+W6UWUlx4W60VVZo=;
+	s=arc-20240116; t=1774976934; c=relaxed/simple;
+	bh=zHIhrC4qjL40FU1ZWl/LUcSnmX69jAYX2dQ2SWr9WJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEDHxUcjwnO6VzOC5xIBKFXVsyamEbCmW0O3QFOWfAkbiGlEsOJoRvSp7pXkTisrtS2UgsJ9HQ8pPY+cfHJSZ9jGNmebHM8qLqgbb2RYec61kk82KzDMrTGI5rg5gTQNHYfW5xvNqEj26HADa/lheaPRF7PZFQDlxT+ybTGOPmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syKL6mbI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QBQbVwUZpfHk0006kwiyPu6N2PQ8sgLwyzvQJ6iWLICJGKRFdqToYJjzfb3og901IxQpAbGZQLn53tioCiQ3xzN6tZMMdqHHrHnLO2dBpRPRvKD3DuCeqN+9Tzfgbdg4Rk/QWSOaCpHlZUaDiUHyY4ge0PREsA3cVxxYTJvPZg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWWcj6gJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syKL6mbI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3633DC2BCB1;
-	Tue, 31 Mar 2026 17:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWWcj6gJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A4EC19423;
+	Tue, 31 Mar 2026 17:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976931;
-	bh=+7XuOqYPSJcBoAXcSiPuSx/tgXR+W6UWUlx4W60VVZo=;
+	s=korg; t=1774976934;
+	bh=zHIhrC4qjL40FU1ZWl/LUcSnmX69jAYX2dQ2SWr9WJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=syKL6mbIw20o3rPdielF0Zu0nqH92J4v7GHR5YluYpJS3Fm74xRox52j1WtV/ijlW
-	 K7jyt/pXIsEHnQk8aqcqpq0qohZPnv7s9OhbfNhxwh15Z37WSQpy71vDdRxeD2ImGN
-	 ez5ZCDGzcFSgjrvffRh9ZtqO3VwnPMy+kuFHgtZg=
+	b=EWWcj6gJBRxWDwozF+1uNTQC8CBf9t8KDvzLe2+6LrasrPcv9KLhdiXEbuN3N2KuQ
+	 5w8VMSg82oZgH13DQTd09X1Hdj+6UXXvHqXeQ1jjjQrjMV6PQ/VZ0/FWRCTTPOufIu
+	 QbpY5HGDM9cpJt2oGhLUTi+LmruZpNaioN9Wq90M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 284/309] dmaengine: idxd: Fix possible invalid memory access after FLR
-Date: Tue, 31 Mar 2026 18:23:07 +0200
-Message-ID: <20260331161804.023121298@linuxfoundation.org>
+Subject: [PATCH 6.18 285/309] dmaengine: idxd: Fix not releasing workqueue on .release()
+Date: Tue, 31 Mar 2026 18:23:08 +0200
+Message-ID: <20260331161804.059628262@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -54,37 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-[ Upstream commit d6077df7b75d26e4edf98983836c05d00ebabd8d ]
+[ Upstream commit 3d33de353b1ff9023d5ec73b9becf80ea87af695 ]
 
-In the case that the first Function Level Reset (FLR) concludes
-correctly, but in the second FLR the scratch area for the saved
-configuration cannot be allocated, it's possible for a invalid memory
-access to happen.
+The workqueue associated with an DSA/IAA device is not released when
+the object is freed.
 
-Always set the deallocated scratch area to NULL after FLR completes.
-
-Fixes: 98d187a98903 ("dmaengine: idxd: Enable Function Level Reset (FLR) for halt")
+Fixes: 47c16ac27d4c ("dmaengine: idxd: fix idxd conf_dev 'struct device' lifetime")
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-3-7ed70658a9d1@intel.com
+Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-7-7ed70658a9d1@intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/init.c | 1 +
+ drivers/dma/idxd/sysfs.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 449424242631d..f2b37c63a964c 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -1137,6 +1137,7 @@ static void idxd_reset_done(struct pci_dev *pdev)
- 	}
- out:
- 	kfree(idxd->idxd_saved);
-+	idxd->idxd_saved = NULL;
- }
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 9f0701021af0e..cdd7a59140d90 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -1812,6 +1812,7 @@ static void idxd_conf_device_release(struct device *dev)
+ {
+ 	struct idxd_device *idxd = confdev_to_idxd(dev);
  
- static const struct pci_error_handlers idxd_error_handler = {
++	destroy_workqueue(idxd->wq);
+ 	kfree(idxd->groups);
+ 	bitmap_free(idxd->wq_enable_map);
+ 	kfree(idxd->wqs);
 -- 
 2.53.0
 
