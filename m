@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370092C15B2;
-	Tue, 31 Mar 2026 16:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FAF3DE431;
+	Tue, 31 Mar 2026 16:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975842; cv=none; b=uF3DEPlqO47zKsfOaGNy55R79paf2/fS2+CR40vNLR+XSTWrdpqsh/0zk6u/ebwDLTQLlpIN6yE6AWaVvvipskFcP2QR1hrucH+RqOFvh+C0gWEyXJFkREC2HVlP/XvyNUkUzP61DJq0d0VHW3xKAiv7KnqJsEa+scpJ2plwgXA=
+	t=1774975844; cv=none; b=CtdcD2gYT1TUk7MbaGkMPvk+/NLtqo56L/1m2RuxrNTSragOpVnOEsQK2F5hlKTPQdBcH6eXUXoM5gJ/NkuC3/5UekYXihdNZPzU01gkctkF1Eo4A7zG71M9E3KYMWCwoZVBT4JKyf+l9cyXrFueOvRVmZD5VsYEjTNn7drImOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975842; c=relaxed/simple;
-	bh=jxpl1g9cdUtOZizR6oSte4W15wkSwFg3wruiDEjLqXg=;
+	s=arc-20240116; t=1774975844; c=relaxed/simple;
+	bh=cdGgIiH36vXEoJLsp/isHuYFjcZNk+PcSURW4huTh9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGhdifwIJUIvJ3kPl1Yx6a1/t/yWCbsoAAO0z6hPIQ2ZUmg4qnbWQ2taZaOyeec2KnwnSPj8b7Hn1acc7frXv04cR5AFkLjO+qDWoXsWEw9gkxs+j5jD9xZnU9ybiXcvqRb8nORFtoRRELLk9l4BePJ3Fb31+rRHz3keTgtFgxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neCy6ddQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZzGwBl1AbHKit2Hm1pG/LilbGQUs8Sto/JC2L7uO0KfopSajYUtG0FJew2rxxyXqjB2Fnmrz+iBx3/iH4iLIyEtTfkYlLAJYYK8F9+fO4LcA0T5sNvngRgVGQ67LSyX90J1YuXVMdzWxp+Pxa/A/CFrI3VJN1a9tiXKxasMyz/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqOeYoQB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neCy6ddQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C159BC19423;
-	Tue, 31 Mar 2026 16:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqOeYoQB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B8EC19423;
+	Tue, 31 Mar 2026 16:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975842;
-	bh=jxpl1g9cdUtOZizR6oSte4W15wkSwFg3wruiDEjLqXg=;
+	s=korg; t=1774975844;
+	bh=cdGgIiH36vXEoJLsp/isHuYFjcZNk+PcSURW4huTh9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=neCy6ddQVusQt1zTctSOLSSx6M1wh8XUaBdW4NW522GvFhlgiKjPxJExT9gGiR7I4
-	 TlA+plU3t2a4tcqnDkDHOR3vsYZV6xrIEsvQlM3NU21lHN4/hdW/g53/kijcADuFEy
-	 XY/9Sposq36I0wcyqM1OTMcn5xGgVtBRm7M0TsX4=
+	b=BqOeYoQBbns+hgGN5Y9PU232ptxGmdfOgRjhZBQh2rEu/Zrs9ES8fuLoNIt9wLKQK
+	 /ALRS6PLVsNLW5TG10EWbGutoFNNdNLHGffhrXwgAoW02BKXRdk0V9YDyRceHWt5SG
+	 Bx8S/s8whJocDb6hosdAIEhvWfeQTdBVpYQ2L/j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/244] net: bcmasp: Remove support for asp-v2.0
-Date: Tue, 31 Mar 2026 18:20:25 +0200
-Message-ID: <20260331161744.456772272@linuxfoundation.org>
+Subject: [PATCH 6.12 076/244] net: bcmasp: streamline early exit in probe
+Date: Tue, 31 Mar 2026 18:20:26 +0200
+Message-ID: <20260331161744.492946725@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -54,375 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit 4ad8cb76bd0d17827fd0c84707c0d72c8710b0e9 ]
+[ Upstream commit 1fd1281250c38408d793863c8dcaa43c7de8932c ]
 
-The SoC that supported asp-v2.0 never saw the light of day. asp-v2.0 has
-quirks that makes the logic overly complicated. For example, asp-v2.0 is
-the only revision that has a different wake up IRQ hook up. Remove asp-v2.0
-support to make supporting future HW revisions cleaner.
+Streamline the bcmasp_probe early exit. As support for other
+functionality is added(i.e. ptp), it is easier to keep track of early
+exit cleanup when it is all in one place.
 
 Signed-off-by: Justin Chen <justin.chen@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250422233645.1931036-4-justin.chen@broadcom.com
+Link: https://patch.msgid.link/20260122194949.1145107-3-justin.chen@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: cbfa5be2bf64 ("net: bcmasp: fix double free of WoL irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp.c   | 97 ++-----------------
- drivers/net/ethernet/broadcom/asp2/bcmasp.h   | 45 ++-------
- .../ethernet/broadcom/asp2/bcmasp_ethtool.c   | 21 +---
- .../net/ethernet/broadcom/asp2/bcmasp_intf.c  |  2 +-
- .../ethernet/broadcom/asp2/bcmasp_intf_defs.h |  3 +-
- 5 files changed, 22 insertions(+), 146 deletions(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp.c | 27 +++++++++++----------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-index 297c2682a9cf9..57932e5c54e01 100644
+index 57932e5c54e01..1e73595096c13 100644
 --- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
 +++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-@@ -141,7 +141,7 @@ void bcmasp_flush_rx_port(struct bcmasp_intf *intf)
- 		return;
- 	}
+@@ -1286,6 +1286,8 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 	bcmasp_core_init(priv);
+ 	bcmasp_core_init_filters(priv);
  
--	rx_ctrl_core_wl(priv, mask, priv->hw_info->rx_ctrl_flush);
-+	rx_ctrl_core_wl(priv, mask, ASP_RX_CTRL_FLUSH);
- }
- 
- static void bcmasp_netfilt_hw_en_wake(struct bcmasp_priv *priv,
-@@ -1108,7 +1108,7 @@ static int bcmasp_get_and_request_irq(struct bcmasp_priv *priv, int i)
- 	return irq;
- }
- 
--static void bcmasp_init_wol_shared(struct bcmasp_priv *priv)
-+static void bcmasp_init_wol(struct bcmasp_priv *priv)
- {
- 	struct platform_device *pdev = priv->pdev;
- 	struct device *dev = &pdev->dev;
-@@ -1125,7 +1125,7 @@ static void bcmasp_init_wol_shared(struct bcmasp_priv *priv)
- 	device_set_wakeup_capable(&pdev->dev, 1);
- }
- 
--static void bcmasp_enable_wol_shared(struct bcmasp_intf *intf, bool en)
-+void bcmasp_enable_wol(struct bcmasp_intf *intf, bool en)
- {
- 	struct bcmasp_priv *priv = intf->parent;
- 	struct device *dev = &priv->pdev->dev;
-@@ -1154,54 +1154,12 @@ static void bcmasp_enable_wol_shared(struct bcmasp_intf *intf, bool en)
- 	}
- }
- 
--static void bcmasp_wol_irq_destroy_shared(struct bcmasp_priv *priv)
-+static void bcmasp_wol_irq_destroy(struct bcmasp_priv *priv)
- {
- 	if (priv->wol_irq > 0)
- 		free_irq(priv->wol_irq, priv);
- }
- 
--static void bcmasp_init_wol_per_intf(struct bcmasp_priv *priv)
--{
--	struct platform_device *pdev = priv->pdev;
--	struct device *dev = &pdev->dev;
--	struct bcmasp_intf *intf;
--	int irq;
--
--	list_for_each_entry(intf, &priv->intfs, list) {
--		irq = bcmasp_get_and_request_irq(priv, intf->port + 1);
--		if (irq < 0) {
--			dev_warn(dev, "Failed to init WoL irq(port %d): %d\n",
--				 intf->port, irq);
--			continue;
--		}
--
--		intf->wol_irq = irq;
--		intf->wol_irq_enabled = false;
--		device_set_wakeup_capable(&pdev->dev, 1);
--	}
--}
--
--static void bcmasp_enable_wol_per_intf(struct bcmasp_intf *intf, bool en)
--{
--	struct device *dev = &intf->parent->pdev->dev;
--
--	if (en ^ intf->wol_irq_enabled)
--		irq_set_irq_wake(intf->wol_irq, en);
--
--	intf->wol_irq_enabled = en;
--	device_set_wakeup_enable(dev, en);
--}
--
--static void bcmasp_wol_irq_destroy_per_intf(struct bcmasp_priv *priv)
--{
--	struct bcmasp_intf *intf;
--
--	list_for_each_entry(intf, &priv->intfs, list) {
--		if (intf->wol_irq > 0)
--			free_irq(intf->wol_irq, priv);
--	}
--}
--
- static void bcmasp_eee_fixup(struct bcmasp_intf *intf, bool en)
- {
- 	u32 reg, phy_lpi_overwrite;
-@@ -1220,60 +1178,22 @@ static void bcmasp_eee_fixup(struct bcmasp_intf *intf, bool en)
- 	usleep_range(50, 100);
- }
- 
--static struct bcmasp_hw_info v20_hw_info = {
--	.rx_ctrl_flush = ASP_RX_CTRL_FLUSH,
--	.umac2fb = UMAC2FB_OFFSET,
--	.rx_ctrl_fb_out_frame_count = ASP_RX_CTRL_FB_OUT_FRAME_COUNT,
--	.rx_ctrl_fb_filt_out_frame_count = ASP_RX_CTRL_FB_FILT_OUT_FRAME_COUNT,
--	.rx_ctrl_fb_rx_fifo_depth = ASP_RX_CTRL_FB_RX_FIFO_DEPTH,
--};
--
--static const struct bcmasp_plat_data v20_plat_data = {
--	.init_wol = bcmasp_init_wol_per_intf,
--	.enable_wol = bcmasp_enable_wol_per_intf,
--	.destroy_wol = bcmasp_wol_irq_destroy_per_intf,
--	.core_clock_select = bcmasp_core_clock_select_one,
--	.hw_info = &v20_hw_info,
--};
--
--static struct bcmasp_hw_info v21_hw_info = {
--	.rx_ctrl_flush = ASP_RX_CTRL_FLUSH_2_1,
--	.umac2fb = UMAC2FB_OFFSET_2_1,
--	.rx_ctrl_fb_out_frame_count = ASP_RX_CTRL_FB_OUT_FRAME_COUNT_2_1,
--	.rx_ctrl_fb_filt_out_frame_count =
--		ASP_RX_CTRL_FB_FILT_OUT_FRAME_COUNT_2_1,
--	.rx_ctrl_fb_rx_fifo_depth = ASP_RX_CTRL_FB_RX_FIFO_DEPTH_2_1,
--};
--
- static const struct bcmasp_plat_data v21_plat_data = {
--	.init_wol = bcmasp_init_wol_shared,
--	.enable_wol = bcmasp_enable_wol_shared,
--	.destroy_wol = bcmasp_wol_irq_destroy_shared,
- 	.core_clock_select = bcmasp_core_clock_select_one,
--	.hw_info = &v21_hw_info,
- };
- 
- static const struct bcmasp_plat_data v22_plat_data = {
--	.init_wol = bcmasp_init_wol_shared,
--	.enable_wol = bcmasp_enable_wol_shared,
--	.destroy_wol = bcmasp_wol_irq_destroy_shared,
- 	.core_clock_select = bcmasp_core_clock_select_many,
--	.hw_info = &v21_hw_info,
- 	.eee_fixup = bcmasp_eee_fixup,
- };
- 
- static void bcmasp_set_pdata(struct bcmasp_priv *priv, const struct bcmasp_plat_data *pdata)
- {
--	priv->init_wol = pdata->init_wol;
--	priv->enable_wol = pdata->enable_wol;
--	priv->destroy_wol = pdata->destroy_wol;
- 	priv->core_clock_select = pdata->core_clock_select;
- 	priv->eee_fixup = pdata->eee_fixup;
--	priv->hw_info = pdata->hw_info;
- }
- 
- static const struct of_device_id bcmasp_of_match[] = {
--	{ .compatible = "brcm,asp-v2.0", .data = &v20_plat_data },
- 	{ .compatible = "brcm,asp-v2.1", .data = &v21_plat_data },
- 	{ .compatible = "brcm,asp-v2.2", .data = &v22_plat_data },
- 	{ /* sentinel */ },
-@@ -1281,9 +1201,8 @@ static const struct of_device_id bcmasp_of_match[] = {
- MODULE_DEVICE_TABLE(of, bcmasp_of_match);
- 
- static const struct of_device_id bcmasp_mdio_of_match[] = {
--	{ .compatible = "brcm,asp-v2.2-mdio", },
- 	{ .compatible = "brcm,asp-v2.1-mdio", },
--	{ .compatible = "brcm,asp-v2.0-mdio", },
-+	{ .compatible = "brcm,asp-v2.2-mdio", },
- 	{ /* sentinel */ },
- };
- MODULE_DEVICE_TABLE(of, bcmasp_mdio_of_match);
-@@ -1387,7 +1306,7 @@ static int bcmasp_probe(struct platform_device *pdev)
- 	}
- 
- 	/* Check and enable WoL */
--	priv->init_wol(priv);
 +	bcmasp_init_wol(priv);
++
+ 	ports_node = of_find_node_by_name(dev->of_node, "ethernet-ports");
+ 	if (!ports_node) {
+ 		dev_warn(dev, "No ports found\n");
+@@ -1297,16 +1299,14 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 		intf = bcmasp_interface_create(priv, intf_node, i);
+ 		if (!intf) {
+ 			dev_err(dev, "Cannot create eth interface %d\n", i);
+-			bcmasp_remove_intfs(priv);
+-			ret = -ENOMEM;
+-			goto of_put_exit;
++			of_node_put(ports_node);
++			ret = -EINVAL;
++			goto err_cleanup;
+ 		}
+ 		list_add_tail(&intf->list, &priv->intfs);
+ 		i++;
+ 	}
+-
+-	/* Check and enable WoL */
+-	bcmasp_init_wol(priv);
++	of_node_put(ports_node);
  
  	/* Drop the clock reference count now and let ndo_open()/ndo_close()
  	 * manage it for us from now on.
-@@ -1404,7 +1323,7 @@ static int bcmasp_probe(struct platform_device *pdev)
+@@ -1321,19 +1321,20 @@ static int bcmasp_probe(struct platform_device *pdev)
+ 	list_for_each_entry(intf, &priv->intfs, list) {
+ 		ret = register_netdev(intf->ndev);
  		if (ret) {
- 			netdev_err(intf->ndev,
- 				   "failed to register net_device: %d\n", ret);
--			priv->destroy_wol(priv);
-+			bcmasp_wol_irq_destroy(priv);
- 			bcmasp_remove_intfs(priv);
- 			goto of_put_exit;
+-			netdev_err(intf->ndev,
+-				   "failed to register net_device: %d\n", ret);
+-			bcmasp_wol_irq_destroy(priv);
+-			bcmasp_remove_intfs(priv);
+-			goto of_put_exit;
++			dev_err(dev, "failed to register net_device: %d\n", ret);
++			goto err_cleanup;
  		}
-@@ -1425,7 +1344,7 @@ static void bcmasp_remove(struct platform_device *pdev)
- 	if (!priv)
- 		return;
+ 		count++;
+ 	}
  
--	priv->destroy_wol(priv);
+ 	dev_info(dev, "Initialized %d port(s)\n", count);
+ 
+-of_put_exit:
+-	of_node_put(ports_node);
++	return ret;
++
++err_cleanup:
 +	bcmasp_wol_irq_destroy(priv);
- 	bcmasp_remove_intfs(priv);
++	bcmasp_remove_intfs(priv);
++
+ 	return ret;
  }
  
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.h b/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-index 8fc75bcedb70f..6f49ebad4e99c 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-@@ -53,22 +53,15 @@
- #define ASP_RX_CTRL_FB_0_FRAME_COUNT		0x14
- #define ASP_RX_CTRL_FB_1_FRAME_COUNT		0x18
- #define ASP_RX_CTRL_FB_8_FRAME_COUNT		0x1c
--/* asp2.1 diverges offsets here */
--/* ASP2.0 */
--#define ASP_RX_CTRL_FB_OUT_FRAME_COUNT		0x20
--#define ASP_RX_CTRL_FB_FILT_OUT_FRAME_COUNT	0x24
--#define ASP_RX_CTRL_FLUSH			0x28
--#define  ASP_CTRL_UMAC0_FLUSH_MASK		(BIT(0) | BIT(12))
--#define  ASP_CTRL_UMAC1_FLUSH_MASK		(BIT(1) | BIT(13))
--#define  ASP_CTRL_SPB_FLUSH_MASK		(BIT(8) | BIT(20))
--#define ASP_RX_CTRL_FB_RX_FIFO_DEPTH		0x30
--/* ASP2.1 */
--#define ASP_RX_CTRL_FB_9_FRAME_COUNT_2_1	0x20
--#define ASP_RX_CTRL_FB_10_FRAME_COUNT_2_1	0x24
--#define ASP_RX_CTRL_FB_OUT_FRAME_COUNT_2_1	0x28
--#define ASP_RX_CTRL_FB_FILT_OUT_FRAME_COUNT_2_1	0x2c
--#define ASP_RX_CTRL_FLUSH_2_1			0x30
--#define ASP_RX_CTRL_FB_RX_FIFO_DEPTH_2_1	0x38
-+#define ASP_RX_CTRL_FB_9_FRAME_COUNT		0x20
-+#define ASP_RX_CTRL_FB_10_FRAME_COUNT		0x24
-+#define ASP_RX_CTRL_FB_OUT_FRAME_COUNT		0x28
-+#define ASP_RX_CTRL_FB_FILT_OUT_FRAME_COUNT	0x2c
-+#define ASP_RX_CTRL_FLUSH			0x30
-+#define  ASP_CTRL_UMAC0_FLUSH_MASK             (BIT(0) | BIT(12))
-+#define  ASP_CTRL_UMAC1_FLUSH_MASK             (BIT(1) | BIT(13))
-+#define  ASP_CTRL_SPB_FLUSH_MASK               (BIT(8) | BIT(20))
-+#define ASP_RX_CTRL_FB_RX_FIFO_DEPTH		0x38
- 
- #define ASP_RX_FILTER_OFFSET			0x80000
- #define  ASP_RX_FILTER_BLK_CTRL			0x0
-@@ -345,9 +338,6 @@ struct bcmasp_intf {
- 
- 	u32				wolopts;
- 	u8				sopass[SOPASS_MAX];
--	/* Used if per intf wol irq */
--	int				wol_irq;
--	unsigned int			wol_irq_enabled:1;
- };
- 
- #define NUM_NET_FILTERS				32
-@@ -370,21 +360,9 @@ struct bcmasp_mda_filter {
- 	u8		mask[ETH_ALEN];
- };
- 
--struct bcmasp_hw_info {
--	u32		rx_ctrl_flush;
--	u32		umac2fb;
--	u32		rx_ctrl_fb_out_frame_count;
--	u32		rx_ctrl_fb_filt_out_frame_count;
--	u32		rx_ctrl_fb_rx_fifo_depth;
--};
--
- struct bcmasp_plat_data {
--	void (*init_wol)(struct bcmasp_priv *priv);
--	void (*enable_wol)(struct bcmasp_intf *intf, bool en);
--	void (*destroy_wol)(struct bcmasp_priv *priv);
- 	void (*core_clock_select)(struct bcmasp_priv *priv, bool slow);
- 	void (*eee_fixup)(struct bcmasp_intf *priv, bool en);
--	struct bcmasp_hw_info		*hw_info;
- };
- 
- struct bcmasp_priv {
-@@ -399,14 +377,10 @@ struct bcmasp_priv {
- 	int				wol_irq;
- 	unsigned long			wol_irq_enabled_mask;
- 
--	void (*init_wol)(struct bcmasp_priv *priv);
--	void (*enable_wol)(struct bcmasp_intf *intf, bool en);
--	void (*destroy_wol)(struct bcmasp_priv *priv);
- 	void (*core_clock_select)(struct bcmasp_priv *priv, bool slow);
- 	void (*eee_fixup)(struct bcmasp_intf *intf, bool en);
- 
- 	void __iomem			*base;
--	struct	bcmasp_hw_info		*hw_info;
- 
- 	struct list_head		intfs;
- 
-@@ -599,4 +573,5 @@ int bcmasp_netfilt_get_all_active(struct bcmasp_intf *intf, u32 *rule_locs,
- 
- void bcmasp_netfilt_suspend(struct bcmasp_intf *intf);
- 
-+void bcmasp_enable_wol(struct bcmasp_intf *intf, bool en);
- #endif
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_ethtool.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_ethtool.c
-index c24107baefcfd..6d537fe461cc9 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_ethtool.c
-@@ -71,23 +71,6 @@ static const struct bcmasp_stats bcmasp_gstrings_stats[] = {
- 
- #define BCMASP_STATS_LEN	ARRAY_SIZE(bcmasp_gstrings_stats)
- 
--static u16 bcmasp_stat_fixup_offset(struct bcmasp_intf *intf,
--				    const struct bcmasp_stats *s)
--{
--	struct bcmasp_priv *priv = intf->parent;
--
--	if (!strcmp("Frames Out(Buffer)", s->stat_string))
--		return priv->hw_info->rx_ctrl_fb_out_frame_count;
--
--	if (!strcmp("Frames Out(Filters)", s->stat_string))
--		return priv->hw_info->rx_ctrl_fb_filt_out_frame_count;
--
--	if (!strcmp("RX Buffer FIFO Depth", s->stat_string))
--		return priv->hw_info->rx_ctrl_fb_rx_fifo_depth;
--
--	return s->reg_offset;
--}
--
- static int bcmasp_get_sset_count(struct net_device *dev, int string_set)
- {
- 	switch (string_set) {
-@@ -126,7 +109,7 @@ static void bcmasp_update_mib_counters(struct bcmasp_intf *intf)
- 		char *p;
- 
- 		s = &bcmasp_gstrings_stats[i];
--		offset = bcmasp_stat_fixup_offset(intf, s);
-+		offset = s->reg_offset;
- 		switch (s->type) {
- 		case BCMASP_STAT_SOFT:
- 			continue;
-@@ -215,7 +198,7 @@ static int bcmasp_set_wol(struct net_device *dev, struct ethtool_wolinfo *wol)
- 		memcpy(intf->sopass, wol->sopass, sizeof(wol->sopass));
- 
- 	mutex_lock(&priv->wol_lock);
--	priv->enable_wol(intf, !!intf->wolopts);
-+	bcmasp_enable_wol(intf, !!intf->wolopts);
- 	mutex_unlock(&priv->wol_lock);
- 
- 	return 0;
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-index acf45789d4493..3836456fcb9cf 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-@@ -1182,7 +1182,7 @@ static void bcmasp_map_res(struct bcmasp_priv *priv, struct bcmasp_intf *intf)
- {
- 	/* Per port */
- 	intf->res.umac = priv->base + UMC_OFFSET(intf);
--	intf->res.umac2fb = priv->base + (priv->hw_info->umac2fb +
-+	intf->res.umac2fb = priv->base + (UMAC2FB_OFFSET +
- 					  (intf->port * 0x4));
- 	intf->res.rgmii = priv->base + RGMII_OFFSET(intf);
- 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf_defs.h b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf_defs.h
-index ad742612895fc..af7418348e815 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf_defs.h
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf_defs.h
-@@ -118,8 +118,7 @@
- #define  UMC_PSW_MS			0x624
- #define  UMC_PSW_LS			0x628
- 
--#define UMAC2FB_OFFSET_2_1		0x9f044
--#define UMAC2FB_OFFSET			0x9f03c
-+#define UMAC2FB_OFFSET			0x9f044
- #define  UMAC2FB_CFG			0x0
- #define   UMAC2FB_CFG_OPUT_EN		BIT(0)
- #define   UMAC2FB_CFG_VLAN_EN		BIT(1)
 -- 
 2.51.0
 
