@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB348425CD9;
-	Tue, 31 Mar 2026 16:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D776423A7C;
+	Tue, 31 Mar 2026 16:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975231; cv=none; b=nShFuf7Kzn+FmWBAS3nm9ahqowDlEkiWoNGO5ogsbObHT/DbNaxtL0nzd8C9KxLD9zVcWCZQF5qPMTbACwO4zgR+igZaDkGKFap8M5eknADgrn5CDDcOVL9YKAFD4rUdTc/SPleaxaXCET+ePgNX2RVHoKzXUHY1ItsKdPt9nUg=
+	t=1774975234; cv=none; b=Z/SCplsTaKMTfLqoEKUv2YlsZKw2bN+Yc+UNZn466eULSxOL7nnX3aH8oAmEqxCsag4ekmoS1SahaC4OXPkpqdhEZS0Q1CtjO9H9QQ2FV3BsrScf3JLYgzaw1w+lsaTX0z0QOKZFo3tDDNNaR6qSWvMLmb0M5MipfU5eJ8aA6/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975231; c=relaxed/simple;
-	bh=+qqJsbbI6d+gsxz4Gg/PkL1OCROqGkFurY6Zx0lxUio=;
+	s=arc-20240116; t=1774975234; c=relaxed/simple;
+	bh=uW6r8if7xZ29/Qwg3OUdgVHvwlASKBGyaeiJ8sinMxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q94G58TvMuoB/Kqq8NjXmwoRxVilsD7Yd2PBCbHHyPKcaB4WbJIZtrOz2mI8qE/PBUUaSUhROzAW0HlTu1jT6Tzo9sqDVdTHVkzJXYaM7K1A/X8GNqeBb+i3+5jQtX0J/pa88C6M5hv501TCNIKdx0SyEDxMPC3HbDdkC/VkrSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAZnrguU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RPsA+T5+O6Wn9FXtlDwvT4Iq50Jt83WrUC8RxFJcfvX9nQf+ECW4D9TyINMZQ2LwdVi3UwIxAZlWgijAtxkdamd2NDTMoiCWuyfzv7OAAo+08dS4SIJ2V/f1yc9XE5xITwDH5sKlLdzRfcEOsI1Kp7wRkQywhv9fOBR9r3xQZ0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9FWg/Vi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAZnrguU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417ABC19423;
-	Tue, 31 Mar 2026 16:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9FWg/Vi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FEFC19423;
+	Tue, 31 Mar 2026 16:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975231;
-	bh=+qqJsbbI6d+gsxz4Gg/PkL1OCROqGkFurY6Zx0lxUio=;
+	s=korg; t=1774975234;
+	bh=uW6r8if7xZ29/Qwg3OUdgVHvwlASKBGyaeiJ8sinMxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bAZnrguUXKdqq5TlM/1qdw8n3fgragHxHAnjBxbPdc0QRb44EhFtVwEyJX3qCcGYz
-	 y1LORbhNvZODsxQ5GK2xtcMbIsV5hQMopf5uRzOUpM+z9WREOTFb1kf1X4VR3ejRKo
-	 tsG7LJUHS60UjetQHYJhO8Ffbe5mya1miqRgWIys=
+	b=i9FWg/Vid3C5uLARfu0onRdw4BcC6ISLYwoOwFGQewkcCkmOfR2uAc2CSe3IJdZqQ
+	 7Sbchl6PKvH7czrSkg5dZln1kGK9B2NwAbaivdwuCjHHoyEQrIa2Up5vXeQ/b9g/un
+	 /44eJTQKLHpsqgkSQHYIcwqzdmWMvW7zZfnnD/7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.19 197/342] s390/entry: Scrub r12 register on kernel entry
-Date: Tue, 31 Mar 2026 18:20:30 +0200
-Message-ID: <20260331161806.239435416@linuxfoundation.org>
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.19 215/342] cpufreq: Dont skip cpufreq_frequency_table_cpuinfo()
+Date: Tue, 31 Mar 2026 18:20:48 +0200
+Message-ID: <20260331161806.889242832@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,54 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-commit 0738d395aab8fae3b5a3ad3fc640630c91693c27 upstream.
+commit 8f13c0c6cb75cc4421d5a60fc060e9e6fd9d1097 upstream.
 
-Before commit f33f2d4c7c80 ("s390/bp: remove TIF_ISOLATE_BP"),
-all entry handlers loaded r12 with the current task pointer
-(lg %r12,__LC_CURRENT) for use by the BPENTER/BPEXIT macros. That
-commit removed TIF_ISOLATE_BP, dropping both the branch prediction
-macros and the r12 load, but did not add r12 to the register clearing
-sequence.
+The commit 6db0f533d320 ("cpufreq: preserve freq_table_sorted
+across suspend/hibernate") unintentionally made a change where
+cpufreq_frequency_table_cpuinfo() isn't getting called anymore
+for old policies getting re-initialized.
 
-Add the missing xgr %r12,%r12 to make the register scrub consistent
-across all entry points.
+This leads to potentially invalid values of policy->max and
+policy->cpuinfo_max_freq.
 
-Fixes: f33f2d4c7c80 ("s390/bp: remove TIF_ISOLATE_BP")
-Cc: stable@kernel.org
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fix the issue by reverting the original commit and adding the condition
+for just the sorting function.
+
+Fixes: 6db0f533d320 ("cpufreq: preserve freq_table_sorted across suspend/hibernate")
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: 6.19+ <stable@vger.kernel.org> # 6.19+
+Link: https://patch.msgid.link/65ba5c45749267c82e8a87af3dc788b37a0b3f48.1773998611.git.viresh.kumar@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/entry.S |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/cpufreq/cpufreq.c    |    9 +++------
+ drivers/cpufreq/freq_table.c |    4 ++++
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
---- a/arch/s390/kernel/entry.S
-+++ b/arch/s390/kernel/entry.S
-@@ -260,6 +260,7 @@ SYM_CODE_START(system_call)
- 	xgr	%r9,%r9
- 	xgr	%r10,%r10
- 	xgr	%r11,%r11
-+	xgr	%r12,%r12
- 	la	%r2,STACK_FRAME_OVERHEAD(%r15)	# pointer to pt_regs
- 	mvc	__PT_R8(64,%r2),__LC_SAVE_AREA(%r13)
- 	MBEAR	%r2,%r13
-@@ -396,6 +397,7 @@ SYM_CODE_START(\name)
- 	xgr	%r6,%r6
- 	xgr	%r7,%r7
- 	xgr	%r10,%r10
-+	xgr	%r12,%r12
- 	xc	__PT_FLAGS(8,%r11),__PT_FLAGS(%r11)
- 	mvc	__PT_R8(64,%r11),__LC_SAVE_AREA(%r13)
- 	MBEAR	%r11,%r13
-@@ -485,6 +487,7 @@ SYM_CODE_START(mcck_int_handler)
- 	xgr	%r6,%r6
- 	xgr	%r7,%r7
- 	xgr	%r10,%r10
-+	xgr	%r12,%r12
- 	stmg	%r8,%r9,__PT_PSW(%r11)
- 	xc	__PT_FLAGS(8,%r11),__PT_FLAGS(%r11)
- 	xc	__SF_BACKCHAIN(8,%r15),__SF_BACKCHAIN(%r15)
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1421,12 +1421,9 @@ static int cpufreq_policy_online(struct
+ 		 * If there is a problem with its frequency table, take it
+ 		 * offline and drop it.
+ 		 */
+-		if (policy->freq_table_sorted != CPUFREQ_TABLE_SORTED_ASCENDING &&
+-		    policy->freq_table_sorted != CPUFREQ_TABLE_SORTED_DESCENDING) {
+-			ret = cpufreq_table_validate_and_sort(policy);
+-			if (ret)
+-				goto out_offline_policy;
+-		}
++		ret = cpufreq_table_validate_and_sort(policy);
++		if (ret)
++			goto out_offline_policy;
+ 
+ 		/* related_cpus should at least include policy->cpus. */
+ 		cpumask_copy(policy->related_cpus, policy->cpus);
+--- a/drivers/cpufreq/freq_table.c
++++ b/drivers/cpufreq/freq_table.c
+@@ -360,6 +360,10 @@ int cpufreq_table_validate_and_sort(stru
+ 	if (policy_has_boost_freq(policy))
+ 		policy->boost_supported = true;
+ 
++	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING ||
++	    policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_DESCENDING)
++		return 0;
++
+ 	return set_freq_table_sorted(policy);
+ }
+ 
 
 
