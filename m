@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D042423A8A;
-	Tue, 31 Mar 2026 16:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C0C425CF0;
+	Tue, 31 Mar 2026 16:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975896; cv=none; b=SySVfrRRni+agC3O7O/sz5rsgLluma1Z5RalwZ9bXlbkU//ouOX/JXIaC/McBM8SsefAN9oOqY/dMttrCNF8MCmeMozfkAoQppmo2FLCbXmkgk8e2JNXsy8qIyyZJWYB5L/9XSN2SZ0hgVREjscEyK5HE51+q9GCVqNEQLqROS4=
+	t=1774975899; cv=none; b=kS1NP8sFqL2AZJ2Zw8wthdj/O9uudePPXlXxF3h15kbgNprmjAw0rtV4i4kDmSqCPPqQxKbd1VgqnPuABtNcHyinOB1bQddgyfbdMj/eM7RnpkiYeXAic6OmlWO74A8hkwbQ21b+gazBnZ24degadBS1BU/zYgoWs6bTqSCAzh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975896; c=relaxed/simple;
-	bh=cIL/Dy/AIdLDfP3mpLHo3+nvhS1aA+TeHi8ZNg/wggw=;
+	s=arc-20240116; t=1774975899; c=relaxed/simple;
+	bh=/xoixg/1ifMEdO1AWc2slFnCqjnjwpI5RuJTJ6U+amw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qSzKhP4G/cH5pNRisLt1kPGDBrd9t5JMigMsMw56ke6wyrP0h1Q9+5Ur92dGm36QfpodWt4jnPNkZv/wwUPCyGWtMQTSLWe84H03nlb8jnwuPuRyrVYr5JPLY86Fyd87DXsxQ1SlLLKyfAFde8pXicZvH8CUaGJrZbryPUlfiMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCX+S2VX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKkFR+24BkhXidH7k7yT0uX0sGvkqy4WkWZKMySHWCJnGsGcaP8/HOCoiXDwT4ywGBV4pSKpnDy0JEXPwB8kYg1aw4xyfUjM1t5ALK8XjlGhvBp6UeWk3Hw4bwUxDDLRt1HDEHQ+Vom/x/JBUrjmXuLFaouNTIyGU06rSryS/g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvyKyIg5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCX+S2VX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C0BC2BCB1;
-	Tue, 31 Mar 2026 16:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvyKyIg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7A5C19423;
+	Tue, 31 Mar 2026 16:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975896;
-	bh=cIL/Dy/AIdLDfP3mpLHo3+nvhS1aA+TeHi8ZNg/wggw=;
+	s=korg; t=1774975899;
+	bh=/xoixg/1ifMEdO1AWc2slFnCqjnjwpI5RuJTJ6U+amw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QCX+S2VXYTB+LO5hi4ZuBxkG8lOANXi0mEY2MC8ceaL7TZGzXhdPOFO14k35j1Jq7
-	 cb3att7QevR9S+c09Kfk/nxCtJLNPIHsdnY/oNmReBVuuxE8i38TS6rsk9R+o1FqqJ
-	 wkGgjq40kMYVQFDR5YykoNV0yKRwbP3ISHFUPJ6A=
+	b=DvyKyIg55AQQv3wh9yZy69tq+cMEVe+mCvpQs7OJtj3L+2cL0nlnKqmWK0sX4JTVs
+	 2Yvnx1qC+s7E5LNbPJ7CjpJnLT5pJJHR1qpx5aYs9nvwZGQryC7/43LTZHuMn7nfiI
+	 VZ1o7akSOaYW5krvgumOBnzOiiy6QB7N7QS3flLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Sanman Pradhan <psanman@juniper.net>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 128/244] hwmon: (pmbus/core) Fix various coding style issues
-Date: Tue, 31 Mar 2026 18:21:18 +0200
-Message-ID: <20260331161746.382506404@linuxfoundation.org>
+Subject: [PATCH 6.12 129/244] hwmon: (pmbus) Mark lowest/average/highest/rated attributes as read-only
+Date: Tue, 31 Mar 2026 18:21:19 +0200
+Message-ID: <20260331161746.419425650@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -53,194 +53,275 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 649b419f918fedf7213e590dba16e2fab5ea7259 ]
+[ Upstream commit 805a5bd1c3f307d45ae4e9cf8915ef16d585a54a ]
 
-Checkpatch reports bad multi-line comments, bad multi-line alignments,
-missing blank lines after variable declarations, unnecessary empty lines,
-unnecessary spaces, and unnecessary braces. Fix most of the reported
-problems except for some multi-line alignment problems.
+Writing those attributes is not supported, so mark them as read-only.
 
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Prior to this change, attempts to write into these attributes returned
+an error.
+
+Mark boolean fields in struct pmbus_limit_attr and in struct
+pmbus_sensor_attr as bit fields to reduce configuration data size.
+The data is scanned only while probing, so performance is not a concern.
+
+Fixes: 6f183d33a02e6 ("hwmon: (pmbus) Add support for peak attributes")
+Reviewed-by: Sanman Pradhan <psanman@juniper.net>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 805a5bd1c3f3 ("hwmon: (pmbus) Mark lowest/average/highest/rated attributes as read-only")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 41 +++++++++++++-------------------
- 1 file changed, 17 insertions(+), 24 deletions(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 48 ++++++++++++++++++++++++++++----
+ 1 file changed, 42 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index a68b0a98e8d4d..a8ffafc7411e3 100644
+index a8ffafc7411e3..f452876287556 100644
 --- a/drivers/hwmon/pmbus/pmbus_core.c
 +++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -41,8 +41,7 @@ struct pmbus_sensor {
- 	enum pmbus_sensor_classes class;	/* sensor class */
- 	bool update;		/* runtime sensor update needed */
- 	bool convert;		/* Whether or not to apply linear/vid/direct */
--	int data;		/* Sensor data.
--				   Negative if there was a read error */
-+	int data;		/* Sensor data; negative if there was a read error */
- };
- #define to_pmbus_sensor(_attr) \
- 	container_of(_attr, struct pmbus_sensor, attribute)
-@@ -189,11 +188,10 @@ static void pmbus_update_ts(struct i2c_client *client, bool write_op)
- 	struct pmbus_data *data = i2c_get_clientdata(client);
- 	const struct pmbus_driver_info *info = data->info;
- 
--	if (info->access_delay) {
-+	if (info->access_delay)
- 		data->access_time = ktime_get();
--	} else if (info->write_delay && write_op) {
-+	else if (info->write_delay && write_op)
- 		data->write_time = ktime_get();
--	}
- }
- 
- int pmbus_set_page(struct i2c_client *client, int page, int phase)
-@@ -289,7 +287,6 @@ int pmbus_write_word_data(struct i2c_client *client, int page, u8 reg,
- }
- EXPORT_SYMBOL_NS_GPL(pmbus_write_word_data, PMBUS);
- 
--
- static int pmbus_write_virt_reg(struct i2c_client *client, int page, int reg,
- 				u16 word)
- {
-@@ -378,14 +375,14 @@ int pmbus_update_fan(struct i2c_client *client, int page, int id,
- 	u8 to;
- 
- 	from = _pmbus_read_byte_data(client, page,
--				    pmbus_fan_config_registers[id]);
-+				     pmbus_fan_config_registers[id]);
- 	if (from < 0)
- 		return from;
- 
- 	to = (from & ~mask) | (config & mask);
- 	if (to != from) {
- 		rv = _pmbus_write_byte_data(client, page,
--					   pmbus_fan_config_registers[id], to);
-+					    pmbus_fan_config_registers[id], to);
- 		if (rv < 0)
- 			return rv;
- 	}
-@@ -560,7 +557,7 @@ static int pmbus_get_fan_rate(struct i2c_client *client, int page, int id,
- 	}
- 
- 	config = _pmbus_read_byte_data(client, page,
--				      pmbus_fan_config_registers[id]);
-+				       pmbus_fan_config_registers[id]);
- 	if (config < 0)
- 		return config;
- 
-@@ -785,7 +782,7 @@ static s64 pmbus_reg2data_linear(struct pmbus_data *data,
- 
- 	if (sensor->class == PSC_VOLTAGE_OUT) {	/* LINEAR16 */
- 		exponent = data->exponent[sensor->page];
--		mantissa = (u16) sensor->data;
-+		mantissa = (u16)sensor->data;
- 	} else {				/* LINEAR11 */
- 		exponent = ((s16)sensor->data) >> 11;
- 		mantissa = ((s16)((sensor->data & 0x7ff) << 5)) >> 5;
-@@ -1170,7 +1167,6 @@ static int pmbus_get_boolean(struct i2c_client *client, struct pmbus_boolean *b,
- 		} else {
- 			pmbus_clear_fault_page(client, page);
- 		}
--
- 	}
- 	if (s1 && s2) {
- 		s64 v1, v2;
-@@ -1497,8 +1493,7 @@ struct pmbus_limit_attr {
+@@ -1492,8 +1492,9 @@ static int pmbus_add_label(struct pmbus_data *data,
+ struct pmbus_limit_attr {
  	u16 reg;		/* Limit register */
  	u16 sbit;		/* Alarm attribute status bit */
- 	bool update;		/* True if register needs updates */
--	bool low;		/* True if low limit; for limits with compare
--				   functions only */
-+	bool low;		/* True if low limit; for limits with compare functions only */
+-	bool update;		/* True if register needs updates */
+-	bool low;		/* True if low limit; for limits with compare functions only */
++	bool readonly:1;	/* True if the attribute is read-only */
++	bool update:1;		/* True if register needs updates */
++	bool low:1;		/* True if low limit; for limits with compare functions only */
  	const char *attr;	/* Attribute name */
  	const char *alarm;	/* Alarm attribute name */
  };
-@@ -2209,8 +2204,8 @@ static const u32 pmbus_fan_status_flags[] = {
- 
- /* Precondition: FAN_CONFIG_x_y and FAN_COMMAND_x must exist for the fan ID */
- static int pmbus_add_fan_ctrl(struct i2c_client *client,
--		struct pmbus_data *data, int index, int page, int id,
--		u8 config)
-+			      struct pmbus_data *data, int index, int page,
-+			      int id, u8 config)
- {
- 	struct pmbus_sensor *sensor;
- 
-@@ -2222,7 +2217,7 @@ static int pmbus_add_fan_ctrl(struct i2c_client *client,
- 		return -ENOMEM;
- 
- 	if (!((data->info->func[page] & PMBUS_HAVE_PWM12) ||
--			(data->info->func[page] & PMBUS_HAVE_PWM34)))
-+	      (data->info->func[page] & PMBUS_HAVE_PWM34)))
- 		return 0;
- 
- 	sensor = pmbus_add_sensor(data, "pwm", NULL, index, page,
-@@ -2888,7 +2883,7 @@ static void pmbus_notify(struct pmbus_data *data, int page, int reg, int flags)
- }
- 
- static int _pmbus_get_flags(struct pmbus_data *data, u8 page, unsigned int *flags,
--			   unsigned int *event, bool notify)
-+			    unsigned int *event, bool notify)
- {
- 	int i, status;
- 	const struct pmbus_status_category *cat;
-@@ -2917,7 +2912,6 @@ static int _pmbus_get_flags(struct pmbus_data *data, u8 page, unsigned int *flag
- 
- 		if (notify && status)
- 			pmbus_notify(data, page, cat->reg, status);
--
- 	}
- 
- 	/*
-@@ -2968,7 +2962,6 @@ static int _pmbus_get_flags(struct pmbus_data *data, u8 page, unsigned int *flag
- 		*event |= REGULATOR_EVENT_OVER_TEMP_WARN;
- 	}
- 
--
- 	return 0;
- }
- 
-@@ -3181,7 +3174,7 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
- }
- 
- static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
--					 unsigned int selector)
-+					unsigned int selector)
- {
- 	struct device *dev = rdev_get_dev(rdev);
- 	struct i2c_client *client = to_i2c_client(dev->parent);
-@@ -3296,8 +3289,8 @@ static irqreturn_t pmbus_fault_handler(int irq, void *pdata)
- {
- 	struct pmbus_data *data = pdata;
- 	struct i2c_client *client = to_i2c_client(data->dev);
--
- 	int i, status, event;
-+
- 	mutex_lock(&data->update_lock);
- 	for (i = 0; i < data->info->pages; i++) {
- 		_pmbus_get_flags(data, i, &status, &event, true);
-@@ -3405,7 +3398,7 @@ DEFINE_DEBUGFS_ATTRIBUTE(pmbus_debugfs_ops_status, pmbus_debugfs_get_status,
- 			 NULL, "0x%04llx\n");
- 
- static ssize_t pmbus_debugfs_mfr_read(struct file *file, char __user *buf,
--				       size_t count, loff_t *ppos)
-+				      size_t count, loff_t *ppos)
- {
- 	int rc;
- 	struct pmbus_debugfs_entry *entry = file->private_data;
-@@ -3724,8 +3717,8 @@ int pmbus_do_probe(struct i2c_client *client, struct pmbus_driver_info *info)
- 
- 	data->groups[0] = &data->group;
- 	memcpy(data->groups + 1, info->groups, sizeof(void *) * groups_num);
--	data->hwmon_dev = devm_hwmon_device_register_with_groups(dev,
--					name, data, data->groups);
-+	data->hwmon_dev = devm_hwmon_device_register_with_groups(dev, name,
-+								 data, data->groups);
- 	if (IS_ERR(data->hwmon_dev)) {
- 		dev_err(dev, "Failed to register hwmon device\n");
- 		return PTR_ERR(data->hwmon_dev);
+@@ -1508,9 +1509,9 @@ struct pmbus_sensor_attr {
+ 	u8 nlimit;			/* # of limit registers */
+ 	enum pmbus_sensor_classes class;/* sensor class */
+ 	const char *label;		/* sensor label */
+-	bool paged;			/* true if paged sensor */
+-	bool update;			/* true if update needed */
+-	bool compare;			/* true if compare function needed */
++	bool paged:1;			/* true if paged sensor */
++	bool update:1;			/* true if update needed */
++	bool compare:1;			/* true if compare function needed */
+ 	u32 func;			/* sensor mask */
+ 	u32 sfunc;			/* sensor status mask */
+ 	int sreg;			/* status register */
+@@ -1541,7 +1542,7 @@ static int pmbus_add_limit_attrs(struct i2c_client *client,
+ 			curr = pmbus_add_sensor(data, name, l->attr, index,
+ 						page, 0xff, l->reg, attr->class,
+ 						attr->update || l->update,
+-						false, true);
++						l->readonly, true);
+ 			if (!curr)
+ 				return -ENOMEM;
+ 			if (l->sbit && (info->func[page] & attr->sfunc)) {
+@@ -1704,23 +1705,28 @@ static const struct pmbus_limit_attr vin_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VIN_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VIN_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VIN_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_VIN_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_VIN_MIN,
++		.readonly = true,
+ 		.attr = "rated_min",
+ 	}, {
+ 		.reg = PMBUS_MFR_VIN_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -1773,23 +1779,28 @@ static const struct pmbus_limit_attr vout_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VOUT_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VOUT_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_VOUT_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_VOUT_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_VOUT_MIN,
++		.readonly = true,
+ 		.attr = "rated_min",
+ 	}, {
+ 		.reg = PMBUS_MFR_VOUT_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -1849,20 +1860,24 @@ static const struct pmbus_limit_attr iin_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IIN_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IIN_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IIN_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_IIN_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_IIN_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -1886,20 +1901,24 @@ static const struct pmbus_limit_attr iout_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IOUT_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IOUT_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_IOUT_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_IOUT_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_IOUT_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -1940,20 +1959,24 @@ static const struct pmbus_limit_attr pin_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_PIN_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_PIN_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "input_lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_PIN_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "input_highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_PIN_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_PIN_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -1977,20 +2000,24 @@ static const struct pmbus_limit_attr pout_limit_attrs[] = {
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_POUT_AVG,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_POUT_MIN,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "input_lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_POUT_MAX,
+ 		.update = true,
++		.readonly = true,
+ 		.attr = "input_highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_POUT_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_POUT_MAX,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -2046,18 +2073,22 @@ static const struct pmbus_limit_attr temp_limit_attrs[] = {
+ 		.sbit = PB_TEMP_OT_FAULT,
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP_MIN,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP_AVG,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP_MAX,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_TEMP_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_MAX_TEMP_1,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -2087,18 +2118,22 @@ static const struct pmbus_limit_attr temp_limit_attrs2[] = {
+ 		.sbit = PB_TEMP_OT_FAULT,
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP2_MIN,
++		.readonly = true,
+ 		.attr = "lowest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP2_AVG,
++		.readonly = true,
+ 		.attr = "average",
+ 	}, {
+ 		.reg = PMBUS_VIRT_READ_TEMP2_MAX,
++		.readonly = true,
+ 		.attr = "highest",
+ 	}, {
+ 		.reg = PMBUS_VIRT_RESET_TEMP2_HISTORY,
+ 		.attr = "reset_history",
+ 	}, {
+ 		.reg = PMBUS_MFR_MAX_TEMP_2,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
+@@ -2128,6 +2163,7 @@ static const struct pmbus_limit_attr temp_limit_attrs3[] = {
+ 		.sbit = PB_TEMP_OT_FAULT,
+ 	}, {
+ 		.reg = PMBUS_MFR_MAX_TEMP_3,
++		.readonly = true,
+ 		.attr = "rated_max",
+ 	},
+ };
 -- 
 2.53.0
 
