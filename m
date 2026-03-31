@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68262D63E8;
-	Tue, 31 Mar 2026 17:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6312D63E8;
+	Tue, 31 Mar 2026 17:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976709; cv=none; b=Fc6HJF/MpAydquGJEsE/ncIeWBo0gqHHqHZCO/ep4D3Bzz/PP1+Co8K0nnp2sqrQrPYxsAZf6bd7ln7bwXqgRP+EfkNTikZWdw6LGYygy82E1blwMYj2yH1xBFaMGeEJCVAsG2CYNel4RWUFywwHPUifl8GMev9BOsDeEEPses8=
+	t=1774976711; cv=none; b=cUvyZnc3K05omvkm1ZJJ2j4BNC/BVaGSJRFXIdAkhNYm8YnM3VTkWQtZoRfrBLhCjQJWztNtX1PP9VwDQPpXry3enECq6Ip1MDPb38+3kuedjp9+ZRNE9VIU03X3OTx5Z5jhSA+q3iR0MbZchlHQIXmvAbZunXYAJ3WOZH1wu64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976709; c=relaxed/simple;
-	bh=pD78Wk7TFgwwJHCJP1yDY0jt2F6dRBFRWCmUjlg9zbc=;
+	s=arc-20240116; t=1774976711; c=relaxed/simple;
+	bh=NdC6bJoR7rub44bn5+05l20GmdXoyUCmTamqoqOqw0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YfPeau1Lhxgtx5g5MGD83bX7RHqbAyna9efJtaFnHTMc9S7WEYgu75SWzRGRWT8Yu5R9XkKKkpbEYDF9VQGxJ1F6EwFzrkgNH3tSsTfQ/+3zFPIvNbTDzrI4BXW2nnliMeX/Vre3REPlnJsoU/+Z3XGMFgnJqA1f+8+rSX57N8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jriLP7w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WzGYFFwt1k+YQR9d4zuhjIr31qITJnlAfGT9oyuIwV2Cd87cxnzQCLApPpV1g99E/E+Or/tJ4YJPNXCL6uXyxHwQHvu+TM4x2LxmzqtLpYYiXhhwx1uww1mngU6mveIy2bCNLdj4KehgAp1orSqWeZOtaJ7lWQyGxJCE2DgMf18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ci/2B1Le; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jriLP7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA68C19423;
-	Tue, 31 Mar 2026 17:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ci/2B1Le"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174D7C19423;
+	Tue, 31 Mar 2026 17:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976708;
-	bh=pD78Wk7TFgwwJHCJP1yDY0jt2F6dRBFRWCmUjlg9zbc=;
+	s=korg; t=1774976711;
+	bh=NdC6bJoR7rub44bn5+05l20GmdXoyUCmTamqoqOqw0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2jriLP7wp9yN5Nd/Jdk/Tp789M987bNUx8GGeagPdrOU4qdx9ykr2B9jSCOp++YkR
-	 UOkv8o7Zlfp3s1CmRrsJ7avJwq4443qeGvU8xYSsk6Ndna43wFW7UoPJUvi20aMj9+
-	 GtXx3ibeMuuQWRlW7+27O22JjVXu/ZlW5hlSmXYs=
+	b=ci/2B1Le8DXVJwUD2gODBf1eQ18uH555IssPvzM/LoqS30LrC4KghVClyBDzFzMLu
+	 AuttX+RD05O7ZOFgOWF3cgh3rRWQzB0szOiJdldl1uzv6Sl1bOuXasO/eobVMYJOsa
+	 BZnieL3zUJ4TwBKjC1osOtTnp8BfsoH4hDIKV/oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhijit Gangurde <abhijit.gangurde@amd.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.18 196/309] RDMA/ionic: Preserve and set Ethernet source MAC after ib_ud_header_init()
-Date: Tue, 31 Mar 2026 18:21:39 +0200
-Message-ID: <20260331161800.671068720@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.18 197/309] platform/x86: ISST: Correct locked bit width
+Date: Tue, 31 Mar 2026 18:21:40 +0200
+Message-ID: <20260331161800.707517074@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,60 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhijit Gangurde <abhijit.gangurde@amd.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit a08aaf3968aec5d05cd32c801b8cc0c61da69c41 upstream.
+commit fbddf68d7b4e1e6da7a78dd7fbd8ec376536584a upstream.
 
-ionic_build_hdr() populated the Ethernet source MAC (hdr->eth.smac_h) by
-passing the header’s storage directly to rdma_read_gid_l2_fields().
-However, ib_ud_header_init() is called after that and re-initializes the
-UD header, which wipes the previously written smac_h. As a result, packets
-are emitted with an zero source MAC address on the wire.
+SST-PP locked bit width is set to three bits. It should be only one bit.
+Use SST_PP_LOCK_WIDTH define instead of SST_PP_LEVEL_WIDTH.
 
-Correct the source MAC by reading the GID-derived smac into a temporary
-buffer and copy it after ib_ud_header_init() completes.
-
-Fixes: e8521822c733 ("RDMA/ionic: Register device ops for control path")
-Cc: stable@vger.kernel.org # 6.18
-Signed-off-by: Abhijit Gangurde <abhijit.gangurde@amd.com>
-Link: https://patch.msgid.link/20260227061809.2979990-1-abhijit.gangurde@amd.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: ea009e4769fa ("platform/x86: ISST: Add SST-PP support via TPMI")
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260323153635.3263828-1-srinivas.pandruvada@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/ionic/ionic_controlpath.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/ionic/ionic_controlpath.c b/drivers/infiniband/hw/ionic/ionic_controlpath.c
-index 4842931f5316..a5671da3db64 100644
---- a/drivers/infiniband/hw/ionic/ionic_controlpath.c
-+++ b/drivers/infiniband/hw/ionic/ionic_controlpath.c
-@@ -508,6 +508,7 @@ static int ionic_build_hdr(struct ionic_ibdev *dev,
- {
- 	const struct ib_global_route *grh;
- 	enum rdma_network_type net;
-+	u8 smac[ETH_ALEN];
- 	u16 vlan;
- 	int rc;
- 
-@@ -518,7 +519,7 @@ static int ionic_build_hdr(struct ionic_ibdev *dev,
- 
- 	grh = rdma_ah_read_grh(attr);
- 
--	rc = rdma_read_gid_l2_fields(grh->sgid_attr, &vlan, &hdr->eth.smac_h[0]);
-+	rc = rdma_read_gid_l2_fields(grh->sgid_attr, &vlan, smac);
- 	if (rc)
- 		return rc;
- 
-@@ -536,6 +537,7 @@ static int ionic_build_hdr(struct ionic_ibdev *dev,
- 	if (rc)
- 		return rc;
- 
-+	ether_addr_copy(hdr->eth.smac_h, smac);
- 	ether_addr_copy(hdr->eth.dmac_h, attr->roce.dmac);
- 
- 	if (net == RDMA_NETWORK_IPV4) {
--- 
-2.53.0
-
+--- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
++++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
+@@ -871,7 +871,7 @@ static int isst_if_get_perf_level(void _
+ 	_read_pp_info("current_level", perf_level.current_level, SST_PP_STATUS_OFFSET,
+ 		      SST_PP_LEVEL_START, SST_PP_LEVEL_WIDTH, SST_MUL_FACTOR_NONE)
+ 	_read_pp_info("locked", perf_level.locked, SST_PP_STATUS_OFFSET,
+-		      SST_PP_LOCK_START, SST_PP_LEVEL_WIDTH, SST_MUL_FACTOR_NONE)
++		      SST_PP_LOCK_START, SST_PP_LOCK_WIDTH, SST_MUL_FACTOR_NONE)
+ 	_read_pp_info("feature_state", perf_level.feature_state, SST_PP_STATUS_OFFSET,
+ 		      SST_PP_FEATURE_STATE_START, SST_PP_FEATURE_STATE_WIDTH, SST_MUL_FACTOR_NONE)
+ 	perf_level.enabled = !!(power_domain_info->sst_header.cap_mask & BIT(1));
 
 
