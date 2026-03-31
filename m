@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724B0423A62;
-	Tue, 31 Mar 2026 16:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126033F99EA;
+	Tue, 31 Mar 2026 16:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974853; cv=none; b=JyC+sg9UAeWDRv2VxhsJW2j47zIcJZ8FXidiEbDZ3j3FDXm35OILO6Pbmije3/qu+BJFHAAfgXMgB+tbgIakYN2oIlvTxKnnnsK5w1RNR23jxEeYe0EUc204EtYNSL9xdS5IgkFpG9nxKlnIAI7Y8pMH/nL+1qB8f7/glyeG8yQ=
+	t=1774974856; cv=none; b=o4dTUQpiQMRQf7U9eJOKA2ZwOsr3AF88IIrOUfHz7BiYKWjqsNwv3gMYsygf45MsAM8rBkl2mnZmX/ZNW0qqH041Ai2G+QwyxVTv1D4JdvDubm9P7VPQFCuLXchc2jqoJITegY3qmzaW4kpR4rEHvbOWGPWB5TeOdvzaXcsl4JU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974853; c=relaxed/simple;
-	bh=thCXMQgGjhMqNhcJq90CPaVvmleWit9k1GVwhVP/xkM=;
+	s=arc-20240116; t=1774974856; c=relaxed/simple;
+	bh=vI/IiYeMvou6skSuGd8Ql8jLf7dvSJDQUq6Vz5LaLVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSlHSkgPmLYW577wnK04uRhaJkyE6WOxHVBBuAJgfz/aTJ8dm4w2dBfrYRkKnwlW0f4ROokVS/bwF3I2aA/KVM3Hi2EMaiW+t/GMrakmhfF6tJQukOmNfeHPBZKNiV2cMFdDvbz7U2BzID0qdS0RG6shcmLz3HPE8wR/ZEjE8BU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkxRWdiK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H7uuCkCVLIuhWxNA/BIRLcTQX5mzvmCS2HPxZutSpJEE/v8o+zZwiNk3rSZdZWKdVIqd5Q/eQ4ppRnzcUN69D0CK6d+RzZNw+hQGTtQkj64DD7VkLOA5bjypQqy0KDu9eHVz0A1yP9fYzkccRcfm0MvoJVb8PtoXaQUqiPNuDCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5z2fmvB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkxRWdiK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07101C19423;
-	Tue, 31 Mar 2026 16:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5z2fmvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C69AC19423;
+	Tue, 31 Mar 2026 16:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974853;
-	bh=thCXMQgGjhMqNhcJq90CPaVvmleWit9k1GVwhVP/xkM=;
+	s=korg; t=1774974856;
+	bh=vI/IiYeMvou6skSuGd8Ql8jLf7dvSJDQUq6Vz5LaLVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fkxRWdiKlTuqRffatOT3n+0iJSxUygX2i7DzruEknJ2lzytvjGZ79BA792+CskVSZ
-	 zNHJ2IfgN+lLP1nmhISEKj1IMpfFjh2AhCEBdGPpyal6RvNh5Y3eGqXeHKcZperAMx
-	 TRoQT35w+i1PDINEdFOWbpbEB711WdvgoDI0HMoo=
+	b=V5z2fmvB3xABZLpQ+GOd2RbyVBTVzc09kOtDFH5r74wQ/1PlZS01aVmeZNzCKtzBp
+	 XQpaXWCLQXpC6NfB/IhTLV9kn+oZiE5eE75OsMsMDln0vQVyS8a/qBcNGO50ZYXAOm
+	 8rNh82SZNp7EIR2fRyhZxC4SqTDXJR/WHIJDz6hE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 070/342] objtool: Handle Clang RSP musical chairs
-Date: Tue, 31 Mar 2026 18:18:23 +0200
-Message-ID: <20260331161801.471818630@linuxfoundation.org>
+Subject: [PATCH 6.19 071/342] nvmet: move async event work off nvmet-wq
+Date: Tue, 31 Mar 2026 18:18:24 +0200
+Message-ID: <20260331161801.507271745@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,134 +52,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-[ Upstream commit 7fdaa640c810cb42090a182c33f905bcc47a616a ]
+[ Upstream commit 2922e3507f6d5caa7f1d07f145e186fc6f317a4e ]
 
-For no apparent reason (possibly related to CONFIG_KMSAN), Clang can
-randomly pass the value of RSP to other registers and then back again to
-RSP.  Handle that accordingly.
+For target nvmet_ctrl_free() flushes ctrl->async_event_work.
+If nvmet_ctrl_free() runs on nvmet-wq, the flush re-enters workqueue
+completion for the same worker:-
 
-Fixes the following warnings:
+A. Async event work queued on nvmet-wq (prior to disconnect):
+  nvmet_execute_async_event()
+     queue_work(nvmet_wq, &ctrl->async_event_work)
 
-  drivers/input/misc/uinput.o: warning: objtool: uinput_str_to_user+0x165: undefined stack state
-  drivers/input/misc/uinput.o: warning: objtool: uinput_str_to_user+0x165: unknown CFA base reg -1
+  nvmet_add_async_event()
+     queue_work(nvmet_wq, &ctrl->async_event_work)
 
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Closes: https://lore.kernel.org/90956545-2066-46e3-b547-10c884582eb0@app.fastmail.com
-Link: https://patch.msgid.link/240e6a172cc73292499334a3724d02ccb3247fc7.1772818491.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+B. Full pre-work chain (RDMA CM path):
+  nvmet_rdma_cm_handler()
+     nvmet_rdma_queue_disconnect()
+       __nvmet_rdma_queue_disconnect()
+         queue_work(nvmet_wq, &queue->release_work)
+           process_one_work()
+             lock((wq_completion)nvmet-wq)  <--------- 1st
+             nvmet_rdma_release_queue_work()
+
+C. Recursive path (same worker):
+  nvmet_rdma_release_queue_work()
+     nvmet_rdma_free_queue()
+       nvmet_sq_destroy()
+         nvmet_ctrl_put()
+           nvmet_ctrl_free()
+             flush_work(&ctrl->async_event_work)
+               __flush_work()
+                 touch_wq_lockdep_map()
+                 lock((wq_completion)nvmet-wq) <--------- 2nd
+
+Lockdep splat:
+
+  ============================================
+  WARNING: possible recursive locking detected
+  6.19.0-rc3nvme+ #14 Tainted: G                 N
+  --------------------------------------------
+  kworker/u192:42/44933 is trying to acquire lock:
+  ffff888118a00948 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x26/0x90
+
+  but task is already holding lock:
+  ffff888118a00948 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x53e/0x660
+
+  3 locks held by kworker/u192:42/44933:
+   #0: ffff888118a00948 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x53e/0x660
+   #1: ffffc9000e6cbe28 ((work_completion)(&queue->release_work)){+.+.}-{0:0}, at: process_one_work+0x1c5/0x660
+   #2: ffffffff82d4db60 (rcu_read_lock){....}-{1:3}, at: __flush_work+0x62/0x530
+
+  Workqueue: nvmet-wq nvmet_rdma_release_queue_work [nvmet_rdma]
+  Call Trace:
+   __flush_work+0x268/0x530
+   nvmet_ctrl_free+0x140/0x310 [nvmet]
+   nvmet_cq_put+0x74/0x90 [nvmet]
+   nvmet_rdma_free_queue+0x23/0xe0 [nvmet_rdma]
+   nvmet_rdma_release_queue_work+0x19/0x50 [nvmet_rdma]
+   process_one_work+0x206/0x660
+   worker_thread+0x184/0x320
+   kthread+0x10c/0x240
+   ret_from_fork+0x319/0x390
+
+Move async event work to a dedicated nvmet-aen-wq to avoid reentrant
+flush on nvmet-wq.
+
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/arch/x86/decode.c | 62 ++++++++++++---------------------
- tools/objtool/check.c           | 14 ++++++++
- 2 files changed, 37 insertions(+), 39 deletions(-)
+ drivers/nvme/target/admin-cmd.c |  2 +-
+ drivers/nvme/target/core.c      | 14 ++++++++++++--
+ drivers/nvme/target/nvmet.h     |  1 +
+ drivers/nvme/target/rdma.c      |  1 +
+ 4 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/tools/objtool/arch/x86/decode.c b/tools/objtool/arch/x86/decode.c
-index f4af825082284..4544c2cb44400 100644
---- a/tools/objtool/arch/x86/decode.c
-+++ b/tools/objtool/arch/x86/decode.c
-@@ -395,52 +395,36 @@ int arch_decode_instruction(struct objtool_file *file, const struct section *sec
- 		if (!rex_w)
- 			break;
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 3da31bb1183eb..100d1466ff841 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -1586,7 +1586,7 @@ void nvmet_execute_async_event(struct nvmet_req *req)
+ 	ctrl->async_event_cmds[ctrl->nr_async_event_cmds++] = req;
+ 	mutex_unlock(&ctrl->lock);
  
--		if (modrm_reg == CFI_SP) {
--
--			if (mod_is_reg()) {
--				/* mov %rsp, reg */
--				ADD_OP(op) {
--					op->src.type = OP_SRC_REG;
--					op->src.reg = CFI_SP;
--					op->dest.type = OP_DEST_REG;
--					op->dest.reg = modrm_rm;
--				}
--				break;
--
--			} else {
--				/* skip RIP relative displacement */
--				if (is_RIP())
--					break;
--
--				/* skip nontrivial SIB */
--				if (have_SIB()) {
--					modrm_rm = sib_base;
--					if (sib_index != CFI_SP)
--						break;
--				}
--
--				/* mov %rsp, disp(%reg) */
--				ADD_OP(op) {
--					op->src.type = OP_SRC_REG;
--					op->src.reg = CFI_SP;
--					op->dest.type = OP_DEST_REG_INDIRECT;
--					op->dest.reg = modrm_rm;
--					op->dest.offset = ins.displacement.value;
--				}
--				break;
-+		if (mod_is_reg()) {
-+			/* mov reg, reg */
-+			ADD_OP(op) {
-+				op->src.type = OP_SRC_REG;
-+				op->src.reg = modrm_reg;
-+				op->dest.type = OP_DEST_REG;
-+				op->dest.reg = modrm_rm;
- 			}
--
- 			break;
- 		}
+-	queue_work(nvmet_wq, &ctrl->async_event_work);
++	queue_work(nvmet_aen_wq, &ctrl->async_event_work);
+ }
  
--		if (rm_is_reg(CFI_SP)) {
-+		/* skip RIP relative displacement */
-+		if (is_RIP())
-+			break;
+ void nvmet_execute_keep_alive(struct nvmet_req *req)
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index cc88e5a28c8a9..5075f7123358a 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -26,6 +26,8 @@ static DEFINE_IDA(cntlid_ida);
  
--			/* mov reg, %rsp */
-+		/* skip nontrivial SIB */
-+		if (have_SIB()) {
-+			modrm_rm = sib_base;
-+			if (sib_index != CFI_SP)
-+				break;
-+		}
+ struct workqueue_struct *nvmet_wq;
+ EXPORT_SYMBOL_GPL(nvmet_wq);
++struct workqueue_struct *nvmet_aen_wq;
++EXPORT_SYMBOL_GPL(nvmet_aen_wq);
+ 
+ /*
+  * This read/write semaphore is used to synchronize access to configuration
+@@ -205,7 +207,7 @@ void nvmet_add_async_event(struct nvmet_ctrl *ctrl, u8 event_type,
+ 	list_add_tail(&aen->entry, &ctrl->async_events);
+ 	mutex_unlock(&ctrl->lock);
+ 
+-	queue_work(nvmet_wq, &ctrl->async_event_work);
++	queue_work(nvmet_aen_wq, &ctrl->async_event_work);
+ }
+ 
+ static void nvmet_add_to_changed_ns_log(struct nvmet_ctrl *ctrl, __le32 nsid)
+@@ -1958,9 +1960,14 @@ static int __init nvmet_init(void)
+ 	if (!nvmet_wq)
+ 		goto out_free_buffered_work_queue;
+ 
++	nvmet_aen_wq = alloc_workqueue("nvmet-aen-wq",
++			WQ_MEM_RECLAIM | WQ_UNBOUND, 0);
++	if (!nvmet_aen_wq)
++		goto out_free_nvmet_work_queue;
 +
-+		/* mov %rsp, disp(%reg) */
-+		if (modrm_reg == CFI_SP) {
- 			ADD_OP(op) {
- 				op->src.type = OP_SRC_REG;
--				op->src.reg = modrm_reg;
--				op->dest.type = OP_DEST_REG;
--				op->dest.reg = CFI_SP;
-+				op->src.reg = CFI_SP;
-+				op->dest.type = OP_DEST_REG_INDIRECT;
-+				op->dest.reg = modrm_rm;
-+				op->dest.offset = ins.displacement.value;
- 			}
- 			break;
- 		}
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index eba35bb8c0bdf..30609aed5d37e 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -2960,6 +2960,20 @@ static int update_cfi_state(struct instruction *insn,
- 				cfi->stack_size += 8;
- 			}
+ 	error = nvmet_init_debugfs();
+ 	if (error)
+-		goto out_free_nvmet_work_queue;
++		goto out_free_nvmet_aen_work_queue;
  
-+			else if (cfi->vals[op->src.reg].base == CFI_CFA) {
-+				/*
-+				 * Clang RSP musical chairs:
-+				 *
-+				 *   mov %rsp, %rdx [handled above]
-+				 *   ...
-+				 *   mov %rdx, %rbx [handled here]
-+				 *   ...
-+				 *   mov %rbx, %rsp [handled above]
-+				 */
-+				cfi->vals[op->dest.reg].base = CFI_CFA;
-+				cfi->vals[op->dest.reg].offset = cfi->vals[op->src.reg].offset;
-+			}
-+
+ 	error = nvmet_init_discovery();
+ 	if (error)
+@@ -1976,6 +1983,8 @@ static int __init nvmet_init(void)
+ 	nvmet_exit_discovery();
+ out_exit_debugfs:
+ 	nvmet_exit_debugfs();
++out_free_nvmet_aen_work_queue:
++	destroy_workqueue(nvmet_aen_wq);
+ out_free_nvmet_work_queue:
+ 	destroy_workqueue(nvmet_wq);
+ out_free_buffered_work_queue:
+@@ -1993,6 +2002,7 @@ static void __exit nvmet_exit(void)
+ 	nvmet_exit_discovery();
+ 	nvmet_exit_debugfs();
+ 	ida_destroy(&cntlid_ida);
++	destroy_workqueue(nvmet_aen_wq);
+ 	destroy_workqueue(nvmet_wq);
+ 	destroy_workqueue(buffered_io_wq);
+ 	destroy_workqueue(zbd_wq);
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index b664b584fdc8e..319d6a5e9cf05 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -501,6 +501,7 @@ extern struct kmem_cache *nvmet_bvec_cache;
+ extern struct workqueue_struct *buffered_io_wq;
+ extern struct workqueue_struct *zbd_wq;
+ extern struct workqueue_struct *nvmet_wq;
++extern struct workqueue_struct *nvmet_aen_wq;
  
- 			break;
+ static inline void nvmet_set_result(struct nvmet_req *req, u32 result)
+ {
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 9c12b2361a6d7..0384323649671 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -2088,6 +2088,7 @@ static void nvmet_rdma_remove_one(struct ib_device *ib_device, void *client_data
+ 	mutex_unlock(&nvmet_rdma_queue_mutex);
  
+ 	flush_workqueue(nvmet_wq);
++	flush_workqueue(nvmet_aen_wq);
+ }
+ 
+ static struct ib_client nvmet_rdma_ib_client = {
 -- 
 2.51.0
 
