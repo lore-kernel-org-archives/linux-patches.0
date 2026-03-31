@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3AC425CF0;
-	Tue, 31 Mar 2026 16:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A24E426694;
+	Tue, 31 Mar 2026 16:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975875; cv=none; b=qt3R7ia6r2fHCKzZkHPlgBYAEZ0BQKOcaNn7S003QylYUBhZOJaBrJrkf6uWOWEm7xTVbDv9gcCHEvyr+LGaxvoQVQEEqD4p8E0Ez9CIV992A3N2AvnY4aiwiysPGUHZun3tN4zGggXhtLSX3muowadOV4tARyX/HSwNLRVn6aM=
+	t=1774975878; cv=none; b=cJyX2zHPAbr/eRfUSCgwQ/VlKLv/q404gPf2QOJ3r/T0TjiYtYrXZrLG/DeWpwPy16OdrsErTtxifwar3ODb0Ip8jcqw/ymX8eR9mi9d8cZvl/3UKIy0AGV0oYCHYwF4ATIknCkLTiCSICPRrhz+gjFQ6tubmUE3rVPE8rQ97Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975875; c=relaxed/simple;
-	bh=eRAhFrtWvY7QCdhtLGAuYSp1GU2Er/t9asTNRrov6J4=;
+	s=arc-20240116; t=1774975878; c=relaxed/simple;
+	bh=KjX/vkrSvleMMaF1O+go7IjmLZ4IVcLYIsJV3SgNXDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fitk4UmCnjz42qlVW8Uv3pR7JrVfv4pMIigo+XfMTRUvSBs0FAFEKAmpcxtQxlJixd9p/uGQDecpg86HoBjGFwxK2+3lWhBdbB+wvU7fBBdkmhwvqW/oBXWOuvnSNZMqyHznc1J9A3l3jaUm1HRDVAw7KRZYM6u8b3hq+xkXllE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xklW3kdt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CtA14add5KcnU60cbhOJn/Cer4hc5Cg5f3KciOSTRkXaivyAftoK1kwCFT09dIHZTHhev94mwk9qtlpsWFQXf6qwY2kxm0pqpha0EiHY9ySNCxC37jwGdlGwYxEWa3uAyz3Dnt/a9BvgWJjN1HGESjx6uNpAH8vfiQUOjTu4mcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgC0+QVC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xklW3kdt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DB5C19423;
-	Tue, 31 Mar 2026 16:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgC0+QVC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BFEC19423;
+	Tue, 31 Mar 2026 16:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975875;
-	bh=eRAhFrtWvY7QCdhtLGAuYSp1GU2Er/t9asTNRrov6J4=;
+	s=korg; t=1774975878;
+	bh=KjX/vkrSvleMMaF1O+go7IjmLZ4IVcLYIsJV3SgNXDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xklW3kdtMDCXL0qHrucKjKepGaz7JUTyrTUUyQy2w3mMgsSqKZChf9+xpjGoCw2wc
-	 LMFJ0JftoIV/rowFCqUnXubK2wuozniCpvJX/D3TpGJevlxhCc0s7c2bAtuaJT8B1G
-	 VmzB+NMFS98tMa6RT/VQVdjKX511+x0n49FpZvRI=
+	b=TgC0+QVCrQ/0f29RVyxeB4RDc2H47/Rf6VNStz65/lUS2ewuxnI0QdUGtC4g7xRdD
+	 ekV2E5DSjD9XOv1hgQLSjDEwak1H2nAdCWr+8dAAUJJLUHR1scM4ig0KIT16o16HNW
+	 sMbhlGkqkYdsuSJwb+FjFObR4ZyWw+/bK5aoNqsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Paolo Valerio <pvalerio@redhat.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/244] spi: meson-spicc: Fix double-put in remove path
-Date: Tue, 31 Mar 2026 18:21:11 +0200
-Message-ID: <20260331161746.129842453@linuxfoundation.org>
+Subject: [PATCH 6.12 104/244] net: macb: use the current queue number for stats
+Date: Tue, 31 Mar 2026 18:20:54 +0200
+Message-ID: <20260331161745.512334389@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,42 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Paolo Valerio <pvalerio@redhat.com>
 
-[ Upstream commit 63542bb402b7013171c9f621c28b609eda4dbf1f ]
+[ Upstream commit 72d96e4e24bbefdcfbc68bdb9341a05d8f5cb6e5 ]
 
-meson_spicc_probe() registers the controller with
-devm_spi_register_controller(), so teardown already drops the
-controller reference via devm cleanup.
+There's a potential mismatch between the memory reserved for statistics
+and the amount of memory written.
 
-Calling spi_controller_put() again in meson_spicc_remove()
-causes a double-put.
+gem_get_sset_count() correctly computes the number of stats based on the
+active queues, whereas gem_get_ethtool_stats() indiscriminately copies
+data using the maximum number of queues, and in the case the number of
+active queues is less than MACB_MAX_QUEUES, this results in a OOB write
+as observed in the KASAN splat.
 
-Fixes: 8311ee2164c5 ("spi: meson-spicc: fix memory leak in meson_spicc_remove")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260322-rockchip-v1-1-fac3f0c6dad8@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+==================================================================
+BUG: KASAN: vmalloc-out-of-bounds in gem_get_ethtool_stats+0x54/0x78
+  [macb]
+Write of size 760 at addr ffff80008080b000 by task ethtool/1027
+
+CPU: [...]
+Tainted: [E]=UNSIGNED_MODULE
+Hardware name: raspberrypi rpi/rpi, BIOS 2025.10 10/01/2025
+Call trace:
+ show_stack+0x20/0x38 (C)
+ dump_stack_lvl+0x80/0xf8
+ print_report+0x384/0x5e0
+ kasan_report+0xa0/0xf0
+ kasan_check_range+0xe8/0x190
+ __asan_memcpy+0x54/0x98
+ gem_get_ethtool_stats+0x54/0x78 [macb
+   926c13f3af83b0c6fe64badb21ec87d5e93fcf65]
+ dev_ethtool+0x1220/0x38c0
+ dev_ioctl+0x4ac/0xca8
+ sock_do_ioctl+0x170/0x1d8
+ sock_ioctl+0x484/0x5d8
+ __arm64_sys_ioctl+0x12c/0x1b8
+ invoke_syscall+0xd4/0x258
+ el0_svc_common.constprop.0+0xb4/0x240
+ do_el0_svc+0x48/0x68
+ el0_svc+0x40/0xf8
+ el0t_64_sync_handler+0xa0/0xe8
+ el0t_64_sync+0x1b0/0x1b8
+
+The buggy address belongs to a 1-page vmalloc region starting at
+  0xffff80008080b000 allocated at dev_ethtool+0x11f0/0x38c0
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000
+  index:0xffff00000a333000 pfn:0xa333
+flags: 0x7fffc000000000(node=0|zone=0|lastcpupid=0x1ffff)
+raw: 007fffc000000000 0000000000000000 dead000000000122 0000000000000000
+raw: ffff00000a333000 0000000000000000 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff80008080b080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff80008080b100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff80008080b180: 00 00 00 00 00 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+                                  ^
+ ffff80008080b200: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+ ffff80008080b280: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+==================================================================
+
+Fix it by making sure the copied size only considers the active number of
+queues.
+
+Fixes: 512286bbd4b7 ("net: macb: Added some queue statistics")
+Signed-off-by: Paolo Valerio <pvalerio@redhat.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260323191634.2185840-1-pvalerio@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-meson-spicc.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-meson-spicc.c b/drivers/spi/spi-meson-spicc.c
-index 1d05590a74346..4ba95b148b1f6 100644
---- a/drivers/spi/spi-meson-spicc.c
-+++ b/drivers/spi/spi-meson-spicc.c
-@@ -903,8 +903,6 @@ static void meson_spicc_remove(struct platform_device *pdev)
- 
- 	/* Disable SPI */
- 	writel(0, spicc->base + SPICC_CONREG);
--
--	spi_controller_put(spicc->host);
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 89aa50893d360..3fed07b452cc1 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -3255,7 +3255,7 @@ static void gem_get_ethtool_stats(struct net_device *dev,
+ 	spin_lock_irq(&bp->stats_lock);
+ 	gem_update_stats(bp);
+ 	memcpy(data, &bp->ethtool_stats, sizeof(u64)
+-			* (GEM_STATS_LEN + QUEUE_STATS_LEN * MACB_MAX_QUEUES));
++			* (GEM_STATS_LEN + QUEUE_STATS_LEN * bp->num_queues));
+ 	spin_unlock_irq(&bp->stats_lock);
  }
  
- static const struct meson_spicc_data meson_spicc_gx_data = {
 -- 
-2.53.0
+2.51.0
 
 
 
