@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10393301471;
-	Tue, 31 Mar 2026 17:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63E73033D6;
+	Tue, 31 Mar 2026 17:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976766; cv=none; b=SmeLN40qsMbKGDIhzDYsDxZ76p5tPRqUgQ3J4rZ7DuRmSA59WeDsYeCNNgkvLSjgwPbGMlS+BtYsljABDFW0XbyNjzJtXq+NHYb4nd7S1OZYm3ndRezOfReZ2VEkLN6pn4vwCqDYUGlB+ufDRYVI9TPO4qs+EosjjV59MBxp7VQ=
+	t=1774976768; cv=none; b=ALcnRDsxij3IEQa2Yqk8aTj/tF5xoVdCIVYA4AM6ZAAVe0KNlMUtv0ngUht5tOTiN02UKMhb7soqnfN0xOv0az/NioNmGR359i6KOIKPG3LQImhsM8YgTj7cMUTQWXC/AWvMAkucmYrjKxKCU68cOs8c+Np7JKW5OuP/02LrsTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976766; c=relaxed/simple;
-	bh=J6E2+TF+8ePoO6X497RM3G/62fvW0TtLLovy+PCtaDY=;
+	s=arc-20240116; t=1774976768; c=relaxed/simple;
+	bh=y+B+QrWpSTDeIhyLnjrNtxlCt7TdNGzdYvvbXHoMOPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JbCmpm1OZ4NK74mhGMHD0Q+sTEMB2TajFXmDmvphngohg7KZr6sFYJhaZ5QeRDNcuqMZiycihqdiEr6gLO/7j5m4ogFDq2SRsVMwo7DsUqpgdjXV1WYkngkqYOK+myhGTDe6qSW6Gu4DyPHJxXF6KmsYmYqDy5pbAw90rGdMboM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2URPBnm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ui/s532wnHSdn9sBCCh9EDSoOl5zZBAHc8VEsvkeqfmrkNFQHY58sTsTbMX1upEG8uDIlQVnc+NzOuq2+atsvUAuBo3V0x1tqYQHvdQZMUmm19jN2/uHKzzDvLY09r+I/7ujIngtECHAFOYtSk50lIrNNhoz5mWBAV2s6a9l3kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLyCGjS9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2URPBnm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACBCC19423;
-	Tue, 31 Mar 2026 17:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLyCGjS9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D10BC19423;
+	Tue, 31 Mar 2026 17:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976766;
-	bh=J6E2+TF+8ePoO6X497RM3G/62fvW0TtLLovy+PCtaDY=;
+	s=korg; t=1774976768;
+	bh=y+B+QrWpSTDeIhyLnjrNtxlCt7TdNGzdYvvbXHoMOPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2URPBnmrNwEUTDk5YureqB2wMGG4lTuw0WQPt/inr2Cx3FcA+GLATvjmwrv0wBhW
-	 hRR+nBK2FssmnjTVkGpMwvgl11XqFfBYJ41Ba0WQKNiHQdEp6dRSlabBKnCFWeoCRu
-	 78gKuBzIK4Xkj6uis3dqeMMK4R6f73hjEhKDDoEY=
+	b=hLyCGjS9iymRQfDkjZZhQUxmGM8bQsbmKyQG1nQ/SbjpKKZXt2D9t6l8aBhUP5sAo
+	 62gxZ/N0Bf1X4gJyQffiu7LseQHFAXvpXOuoOxJ9KAKzF0QNDcHMvL3xGS98G20h4P
+	 Slu03INrtsAGWtsObEnb0MIM5eoYX15ZtO0JUMZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
 	Kevin Hao <haokexin@gmail.com>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 219/309] net: macb: Move devm_{free,request}_irq() out of spin lock area
-Date: Tue, 31 Mar 2026 18:22:02 +0200
-Message-ID: <20260331161801.509172436@linuxfoundation.org>
+Subject: [PATCH 6.18 220/309] net: macb: Protect access to net_device::ip_ptr with RCU lock
+Date: Tue, 31 Mar 2026 18:22:03 +0200
+Message-ID: <20260331161801.545100106@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -54,50 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Kevin Hao <haokexin@gmail.com>
 
-commit 317e49358ebbf6390fa439ef3c142f9239dd25fb upstream.
+commit baa35a698cea26930679a20a7550bbb4c8319725 upstream.
 
-The devm_free_irq() and devm_request_irq() functions should not be
-executed in an atomic context.
+Access to net_device::ip_ptr and its associated members must be
+protected by an RCU lock. Since we are modifying this piece of code,
+let's also move it to execute only when WAKE_ARP is enabled.
 
-During device suspend, all userspace processes and most kernel threads
-are frozen. Additionally, we flush all tx/rx status, disable all macb
-interrupts, and halt rx operations. Therefore, it is safe to split the
-region protected by bp->lock into two independent sections, allowing
-devm_free_irq() and devm_request_irq() to run in a non-atomic context.
-This modification resolves the following lockdep warning:
-  BUG: sleeping function called from invalid context at kernel/locking/mutex.c:591
-  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 501, name: rtcwake
-  preempt_count: 1, expected: 0
-  RCU nest depth: 1, expected: 0
-  7 locks held by rtcwake/501:
-   #0: ffff0008038c3408 (sb_writers#5){.+.+}-{0:0}, at: vfs_write+0xf8/0x368
-   #1: ffff0008049a5e88 (&of->mutex#2){+.+.}-{4:4}, at: kernfs_fop_write_iter+0xbc/0x1c8
+To minimize the duration of the RCU lock, a local variable is used to
+temporarily store the IP address. This change resolves the following
+RCU check warning:
+  WARNING: suspicious RCU usage
+  7.0.0-rc3-next-20260310-yocto-standard+ #122 Not tainted
+  -----------------------------
+  drivers/net/ethernet/cadence/macb_main.c:5944 suspicious rcu_dereference_check() usage!
+
+  other info that might help us debug this:
+
+  rcu_scheduler_active = 2, debug_locks = 1
+  5 locks held by rtcwake/518:
+   #0: ffff000803ab1408 (sb_writers#5){.+.+}-{0:0}, at: vfs_write+0xf8/0x368
+   #1: ffff0008090bf088 (&of->mutex#2){+.+.}-{4:4}, at: kernfs_fop_write_iter+0xbc/0x1c8
    #2: ffff00080098d588 (kn->active#70){.+.+}-{0:0}, at: kernfs_fop_write_iter+0xcc/0x1c8
    #3: ffff800081c84888 (system_transition_mutex){+.+.}-{4:4}, at: pm_suspend+0x1ec/0x290
    #4: ffff0008009ba0f8 (&dev->mutex){....}-{4:4}, at: device_suspend+0x118/0x4f0
-   #5: ffff800081d00458 (rcu_read_lock){....}-{1:3}, at: rcu_lock_acquire+0x4/0x48
-   #6: ffff0008031fb9e0 (&bp->lock){-.-.}-{3:3}, at: macb_suspend+0x144/0x558
-  irq event stamp: 8682
-  hardirqs last  enabled at (8681): [<ffff8000813c7d7c>] _raw_spin_unlock_irqrestore+0x44/0x88
-  hardirqs last disabled at (8682): [<ffff8000813c7b58>] _raw_spin_lock_irqsave+0x38/0x98
-  softirqs last  enabled at (7322): [<ffff8000800f1b4c>] handle_softirqs+0x52c/0x588
-  softirqs last disabled at (7317): [<ffff800080010310>] __do_softirq+0x20/0x2c
-  CPU: 1 UID: 0 PID: 501 Comm: rtcwake Not tainted 7.0.0-rc3-next-20260310-yocto-standard+ #125 PREEMPT
+
+  stack backtrace:
+  CPU: 3 UID: 0 PID: 518 Comm: rtcwake Not tainted 7.0.0-rc3-next-20260310-yocto-standard+ #122 PREEMPT
   Hardware name: ZynqMP ZCU102 Rev1.1 (DT)
   Call trace:
    show_stack+0x24/0x38 (C)
    __dump_stack+0x28/0x38
    dump_stack_lvl+0x64/0x88
    dump_stack+0x18/0x24
-   __might_resched+0x200/0x218
-   __might_sleep+0x38/0x98
-   __mutex_lock_common+0x7c/0x1378
-   mutex_lock_nested+0x38/0x50
-   free_irq+0x68/0x2b0
-   devm_irq_release+0x24/0x38
-   devres_release+0x40/0x80
-   devm_free_irq+0x48/0x88
-   macb_suspend+0x298/0x558
+   lockdep_rcu_suspicious+0x134/0x1d8
+   macb_suspend+0xd8/0x4c0
    device_suspend+0x218/0x4f0
    dpm_suspend+0x244/0x3a0
    dpm_suspend_start+0x50/0x78
@@ -117,76 +107,67 @@ This modification resolves the following lockdep warning:
    el0t_64_sync_handler+0x84/0x130
    el0t_64_sync+0x198/0x1a0
 
-Fixes: 558e35ccfe95 ("net: macb: WoL support for GEM type of Ethernet controller")
+Fixes: 0cb8de39a776 ("net: macb: Add ARP support to WOL")
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
 Cc: stable@vger.kernel.org
 Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Link: https://patch.msgid.link/20260318-macb-irq-v2-1-f1179768ab24@gmail.com
+Link: https://patch.msgid.link/20260318-macb-irq-v2-2-f1179768ab24@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
 --- a/drivers/net/ethernet/cadence/macb_main.c
 +++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -5832,6 +5832,7 @@ static int __maybe_unused macb_suspend(s
- 			/* write IP address into register */
- 			tmp |= MACB_BFEXT(IP, be32_to_cpu(ifa->ifa_local));
- 		}
-+		spin_unlock_irqrestore(&bp->lock, flags);
+@@ -5773,9 +5773,9 @@ static int __maybe_unused macb_suspend(s
+ 	struct macb_queue *queue;
+ 	struct in_device *idev;
+ 	unsigned long flags;
++	u32 tmp, ifa_local;
+ 	unsigned int q;
+ 	int err;
+-	u32 tmp;
  
- 		/* Change interrupt handler and
- 		 * Enable WoL IRQ on queue 0
-@@ -5844,11 +5845,12 @@ static int __maybe_unused macb_suspend(s
- 				dev_err(dev,
- 					"Unable to request IRQ %d (error %d)\n",
- 					bp->queues[0].irq, err);
--				spin_unlock_irqrestore(&bp->lock, flags);
- 				return err;
- 			}
-+			spin_lock_irqsave(&bp->lock, flags);
- 			queue_writel(bp->queues, IER, GEM_BIT(WOL));
- 			gem_writel(bp, WOL, tmp);
-+			spin_unlock_irqrestore(&bp->lock, flags);
- 		} else {
- 			err = devm_request_irq(dev, bp->queues[0].irq, macb_wol_interrupt,
- 					       IRQF_SHARED, netdev->name, bp->queues);
-@@ -5856,13 +5858,13 @@ static int __maybe_unused macb_suspend(s
- 				dev_err(dev,
- 					"Unable to request IRQ %d (error %d)\n",
- 					bp->queues[0].irq, err);
--				spin_unlock_irqrestore(&bp->lock, flags);
- 				return err;
- 			}
-+			spin_lock_irqsave(&bp->lock, flags);
- 			queue_writel(bp->queues, IER, MACB_BIT(WOL));
- 			macb_writel(bp, WOL, tmp);
-+			spin_unlock_irqrestore(&bp->lock, flags);
- 		}
--		spin_unlock_irqrestore(&bp->lock, flags);
+ 	if (!device_may_wakeup(&bp->dev->dev))
+ 		phy_exit(bp->sgmii_phy);
+@@ -5784,14 +5784,21 @@ static int __maybe_unused macb_suspend(s
+ 		return 0;
  
- 		enable_irq_wake(bp->queues[0].irq);
- 	}
-@@ -5929,6 +5931,8 @@ static int __maybe_unused macb_resume(st
- 		queue_readl(bp->queues, ISR);
- 		if (bp->caps & MACB_CAPS_ISR_CLEAR_ON_WRITE)
- 			queue_writel(bp->queues, ISR, -1);
-+		spin_unlock_irqrestore(&bp->lock, flags);
+ 	if (bp->wol & MACB_WOL_ENABLED) {
+-		/* Check for IP address in WOL ARP mode */
+-		idev = __in_dev_get_rcu(bp->dev);
+-		if (idev)
+-			ifa = rcu_dereference(idev->ifa_list);
+-		if ((bp->wolopts & WAKE_ARP) && !ifa) {
+-			netdev_err(netdev, "IP address not assigned as required by WoL walk ARP\n");
+-			return -EOPNOTSUPP;
++		if (bp->wolopts & WAKE_ARP) {
++			/* Check for IP address in WOL ARP mode */
++			rcu_read_lock();
++			idev = __in_dev_get_rcu(bp->dev);
++			if (idev)
++				ifa = rcu_dereference(idev->ifa_list);
++			if (!ifa) {
++				rcu_read_unlock();
++				netdev_err(netdev, "IP address not assigned as required by WoL walk ARP\n");
++				return -EOPNOTSUPP;
++			}
++			ifa_local = be32_to_cpu(ifa->ifa_local);
++			rcu_read_unlock();
+ 		}
 +
- 		/* Replace interrupt handler on queue 0 */
- 		devm_free_irq(dev, bp->queues[0].irq, bp->queues);
- 		err = devm_request_irq(dev, bp->queues[0].irq, macb_interrupt,
-@@ -5937,10 +5941,8 @@ static int __maybe_unused macb_resume(st
- 			dev_err(dev,
- 				"Unable to request IRQ %d (error %d)\n",
- 				bp->queues[0].irq, err);
--			spin_unlock_irqrestore(&bp->lock, flags);
- 			return err;
- 		}
--		spin_unlock_irqrestore(&bp->lock, flags);
+ 		spin_lock_irqsave(&bp->lock, flags);
  
- 		disable_irq_wake(bp->queues[0].irq);
+ 		/* Disable Tx and Rx engines before  disabling the queues,
+@@ -5830,7 +5837,7 @@ static int __maybe_unused macb_suspend(s
+ 		if (bp->wolopts & WAKE_ARP) {
+ 			tmp |= MACB_BIT(ARP);
+ 			/* write IP address into register */
+-			tmp |= MACB_BFEXT(IP, be32_to_cpu(ifa->ifa_local));
++			tmp |= MACB_BFEXT(IP, ifa_local);
+ 		}
+ 		spin_unlock_irqrestore(&bp->lock, flags);
  
 
 
