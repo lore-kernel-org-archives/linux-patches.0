@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFC2428472;
-	Tue, 31 Mar 2026 16:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5381D42B756;
+	Tue, 31 Mar 2026 16:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975148; cv=none; b=LjoMRQDouBE3qD8YHJsUhs5KV3deP5cryJCthzPKSfXKn6s3+lX7caJ9Op/QQFHPaPL3cWVj4+Dp3UrYvfVqFofWZy3j+5TR++R5liOyc4IbEIHmWWI34RzW+11vJ+6fNb3XwXxKWJjBUFoK9O7uwG/dD6PZw/DJvZpJgXDaTUY=
+	t=1774975151; cv=none; b=bOhNAOu5Gr6lnjuv2v6w04HX4c/Zla4pZrp8oD5Yyyl7ei9CR02YheRJ0BCttBksUqZn68MWQ+22W7LoH9u4MXcCyX9K8Ht84iBCExw7+vgy6vxPjQGZU7kngt2kN5HGWUMLjH3z+QB7kucylUOr1iBAvoWh8sr62d5HRepi2ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975148; c=relaxed/simple;
-	bh=TNRv886a4jUzLUipovmJH+F5DjVRGEEhls08dNlMDDI=;
+	s=arc-20240116; t=1774975151; c=relaxed/simple;
+	bh=Y5RFvPUwii6gSBEF/aZr2+JxJSfoCkeWfWMrFt+6o1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EUGXbku3aJ6TTZ/lLfgWnvFhRBa+7ud3YpZ2yaTs3ahX8W8q31pA2nRCJVduMVJ5xucTTUGWm/jlxFZmK3/l8IRx2rDAqgmWXCgnH3cZUbWWYgFbJ3OHy1xKQc9bCFHcm+gNBpd7rC+w57s73ryNS9fjNcGnU71ysOnBUa3CsGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgwjTStf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KY5a8fC+0WAni31eikFDWCDUcK3oJTgfTynEzcFM2P/EhLV1ZYOV7leLmaYebrUO4x1BLsbYJ2gvMyKDaeoIRJBiFW34xu8c6lDd9ujMu4Ees+behDdpIesaxlFRnVfGs0yp2iyqXxdopaA+pTxXbWCo8G2qc5qF4g9cBTZs+LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWDVSJ4i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgwjTStf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8B3C2BCB3;
-	Tue, 31 Mar 2026 16:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWDVSJ4i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02B3C19423;
+	Tue, 31 Mar 2026 16:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975148;
-	bh=TNRv886a4jUzLUipovmJH+F5DjVRGEEhls08dNlMDDI=;
+	s=korg; t=1774975151;
+	bh=Y5RFvPUwii6gSBEF/aZr2+JxJSfoCkeWfWMrFt+6o1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgwjTStfSVIEuZpuRu8kNSBtjSbU4HgUFbtjp9t0QEjd0YvP2JSNULd9vB2OPic7P
-	 BkjLxuHBFUJ4jN02r76VzYVm8VJ5cwHg9RDjF4nyb7ecEOzDDB0X6VkWypcq6f8xWh
-	 YaUqirpdZnp6oSfNchsbCO2WFMIB2A5B/73txq8Y=
+	b=OWDVSJ4iFbARsLnbHAAvGOHl7uxd9NjUPK715TEuSLU3NsEFBhVvBlPlmmqAX8Srh
+	 6j4JQNZoOhzLmMna/IVNsceblDvYVBqY8aVK8mPtaCxBuhhtJFu8V6chFyaxmX84nH
+	 pafitQrI6hBCacJUiDoenaBcbrS/YYtmi1gHr86s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Sanman Pradhan <psanman@juniper.net>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 182/342] drm/amdgpu: Fix fence put before wait in amdgpu_amdkfd_submit_ib
-Date: Tue, 31 Mar 2026 18:20:15 +0200
-Message-ID: <20260331161805.700515453@linuxfoundation.org>
+Subject: [PATCH 6.19 183/342] hwmon: (adm1177) fix sysfs ABI violation and current unit conversion
+Date: Tue, 31 Mar 2026 18:20:16 +0200
+Message-ID: <20260331161805.736520303@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -55,57 +53,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-[ Upstream commit 7150850146ebfa4ca998f653f264b8df6f7f85be ]
+[ Upstream commit bf08749a6abb6d1959bfdc0edc32c640df407558 ]
 
-amdgpu_amdkfd_submit_ib() submits a GPU job and gets a fence
-from amdgpu_ib_schedule(). This fence is used to wait for job
-completion.
+The adm1177 driver exposes the current alert threshold through
+hwmon_curr_max_alarm. This violates the hwmon sysfs ABI, where
+*_alarm attributes are read-only status flags and writable thresholds
+must use currN_max.
 
-Currently, the code drops the fence reference using dma_fence_put()
-before calling dma_fence_wait().
+The driver also stores the threshold internally in microamps, while
+currN_max is defined in milliamps. Convert the threshold accordingly
+on both the read and write paths.
 
-If dma_fence_put() releases the last reference, the fence may be
-freed before dma_fence_wait() is called. This can lead to a
-use-after-free.
+Widen the cached threshold and related calculations to 64 bits so
+that small shunt resistor values do not cause truncation or overflow.
+Also use 64-bit arithmetic for the mA/uA conversions, clamp writes
+to the range the hardware can represent, and propagate failures from
+adm1177_write_alert_thr() instead of silently ignoring them.
 
-Fix this by waiting on the fence first and releasing the reference
-only after dma_fence_wait() completes.
+Update the hwmon documentation to reflect the attribute rename and
+the correct units returned by the driver.
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c:697 amdgpu_amdkfd_submit_ib() warn: passing freed memory 'f' (line 696)
-
-Fixes: 9ae55f030dc5 ("drm/amdgpu: Follow up change to previous drm scheduler change.")
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8b9e5259adc385b61a6590a13b82ae0ac2bd3482)
+Fixes: 09b08ac9e8d5 ("hwmon: (adm1177) Add ADM1177 Hot Swap Controller and Digital Power Monitor driver")
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Acked-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20260325051246.28262-1-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/hwmon/adm1177.rst |  8 ++---
+ drivers/hwmon/adm1177.c         | 54 +++++++++++++++++++--------------
+ 2 files changed, 35 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-index a2879d2b7c8ec..1ec26be82f30e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-@@ -687,9 +687,9 @@ int amdgpu_amdkfd_submit_ib(struct amdgpu_device *adev,
- 		goto err_ib_sched;
+diff --git a/Documentation/hwmon/adm1177.rst b/Documentation/hwmon/adm1177.rst
+index 1c85a2af92bf7..375f6d6e03a7d 100644
+--- a/Documentation/hwmon/adm1177.rst
++++ b/Documentation/hwmon/adm1177.rst
+@@ -27,10 +27,10 @@ for details.
+ Sysfs entries
+ -------------
+ 
+-The following attributes are supported. Current maxim attribute
++The following attributes are supported. Current maximum attribute
+ is read-write, all other attributes are read-only.
+ 
+-in0_input		Measured voltage in microvolts.
++in0_input		Measured voltage in millivolts.
+ 
+-curr1_input		Measured current in microamperes.
+-curr1_max_alarm		Overcurrent alarm in microamperes.
++curr1_input		Measured current in milliamperes.
++curr1_max		Overcurrent shutdown threshold in milliamperes.
+diff --git a/drivers/hwmon/adm1177.c b/drivers/hwmon/adm1177.c
+index 8b2c965480e3f..7888afe8dafd6 100644
+--- a/drivers/hwmon/adm1177.c
++++ b/drivers/hwmon/adm1177.c
+@@ -10,6 +10,8 @@
+ #include <linux/hwmon.h>
+ #include <linux/i2c.h>
+ #include <linux/init.h>
++#include <linux/math64.h>
++#include <linux/minmax.h>
+ #include <linux/module.h>
+ #include <linux/regulator/consumer.h>
+ 
+@@ -33,7 +35,7 @@
+ struct adm1177_state {
+ 	struct i2c_client	*client;
+ 	u32			r_sense_uohm;
+-	u32			alert_threshold_ua;
++	u64			alert_threshold_ua;
+ 	bool			vrange_high;
+ };
+ 
+@@ -48,7 +50,7 @@ static int adm1177_write_cmd(struct adm1177_state *st, u8 cmd)
+ }
+ 
+ static int adm1177_write_alert_thr(struct adm1177_state *st,
+-				   u32 alert_threshold_ua)
++				   u64 alert_threshold_ua)
+ {
+ 	u64 val;
+ 	int ret;
+@@ -91,8 +93,8 @@ static int adm1177_read(struct device *dev, enum hwmon_sensor_types type,
+ 			*val = div_u64((105840000ull * dummy),
+ 				       4096 * st->r_sense_uohm);
+ 			return 0;
+-		case hwmon_curr_max_alarm:
+-			*val = st->alert_threshold_ua;
++		case hwmon_curr_max:
++			*val = div_u64(st->alert_threshold_ua, 1000);
+ 			return 0;
+ 		default:
+ 			return -EOPNOTSUPP;
+@@ -126,9 +128,10 @@ static int adm1177_write(struct device *dev, enum hwmon_sensor_types type,
+ 	switch (type) {
+ 	case hwmon_curr:
+ 		switch (attr) {
+-		case hwmon_curr_max_alarm:
+-			adm1177_write_alert_thr(st, val);
+-			return 0;
++		case hwmon_curr_max:
++			val = clamp_val(val, 0,
++					div_u64(105840000ULL, st->r_sense_uohm));
++			return adm1177_write_alert_thr(st, (u64)val * 1000);
+ 		default:
+ 			return -EOPNOTSUPP;
+ 		}
+@@ -156,7 +159,7 @@ static umode_t adm1177_is_visible(const void *data,
+ 			if (st->r_sense_uohm)
+ 				return 0444;
+ 			return 0;
+-		case hwmon_curr_max_alarm:
++		case hwmon_curr_max:
+ 			if (st->r_sense_uohm)
+ 				return 0644;
+ 			return 0;
+@@ -170,7 +173,7 @@ static umode_t adm1177_is_visible(const void *data,
+ 
+ static const struct hwmon_channel_info * const adm1177_info[] = {
+ 	HWMON_CHANNEL_INFO(curr,
+-			   HWMON_C_INPUT | HWMON_C_MAX_ALARM),
++			   HWMON_C_INPUT | HWMON_C_MAX),
+ 	HWMON_CHANNEL_INFO(in,
+ 			   HWMON_I_INPUT),
+ 	NULL
+@@ -192,7 +195,8 @@ static int adm1177_probe(struct i2c_client *client)
+ 	struct device *dev = &client->dev;
+ 	struct device *hwmon_dev;
+ 	struct adm1177_state *st;
+-	u32 alert_threshold_ua;
++	u64 alert_threshold_ua;
++	u32 prop;
+ 	int ret;
+ 
+ 	st = devm_kzalloc(dev, sizeof(*st), GFP_KERNEL);
+@@ -208,22 +212,26 @@ static int adm1177_probe(struct i2c_client *client)
+ 	if (device_property_read_u32(dev, "shunt-resistor-micro-ohms",
+ 				     &st->r_sense_uohm))
+ 		st->r_sense_uohm = 0;
+-	if (device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
+-				     &alert_threshold_ua)) {
+-		if (st->r_sense_uohm)
+-			/*
+-			 * set maximum default value from datasheet based on
+-			 * shunt-resistor
+-			 */
+-			alert_threshold_ua = div_u64(105840000000,
+-						     st->r_sense_uohm);
+-		else
+-			alert_threshold_ua = 0;
++	if (!device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
++				      &prop)) {
++		alert_threshold_ua = prop;
++	} else if (st->r_sense_uohm) {
++		/*
++		 * set maximum default value from datasheet based on
++		 * shunt-resistor
++		 */
++		alert_threshold_ua = div_u64(105840000000ULL,
++					     st->r_sense_uohm);
++	} else {
++		alert_threshold_ua = 0;
  	}
+ 	st->vrange_high = device_property_read_bool(dev,
+ 						    "adi,vrange-high-enable");
+-	if (alert_threshold_ua && st->r_sense_uohm)
+-		adm1177_write_alert_thr(st, alert_threshold_ua);
++	if (alert_threshold_ua && st->r_sense_uohm) {
++		ret = adm1177_write_alert_thr(st, alert_threshold_ua);
++		if (ret)
++			return ret;
++	}
  
--	/* Drop the initial kref_init count (see drm_sched_main as example) */
--	dma_fence_put(f);
- 	ret = dma_fence_wait(f, false);
-+	/* Drop the returned fence reference after the wait completes */
-+	dma_fence_put(f);
- 
- err_ib_sched:
- 	amdgpu_job_free(job);
+ 	ret = adm1177_write_cmd(st, ADM1177_CMD_V_CONT |
+ 				    ADM1177_CMD_I_CONT |
 -- 
 2.53.0
 
