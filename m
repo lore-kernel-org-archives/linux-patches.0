@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5A0402B9B;
-	Tue, 31 Mar 2026 16:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E97433F38A;
+	Tue, 31 Mar 2026 16:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974920; cv=none; b=MH2yZNiMAUUl4lL0XgloiUubNAOZ0No+XhRJKS4Wh1a2eZi9NBb7pQZnVSDgP0jv3zm9cbVBiwpYwmLkVLLDw8TGEsE4hUsGrfaZjKXAnMISjb2oNIrrZ9XHiwZDWorDn8+knTWqpkZZ1qWlCY47ntg/JTQ5TBWedrGIi6gUOvw=
+	t=1774974923; cv=none; b=hkPzO8jGxAYnggO6ZiCh5J7xrrfjB8tuS19+Zg5aYZlk3QIE1/dMd/q5fbgeQW9IOTy6/vcRcec5RJvCVMv9sxJ8AfMR70CyafVqMozcdWhngKW9oq4Sv0YaFDyu/JwFUAZfcC8XI2d2rYMEljaqIr5MNUCFokZoDiL5SWOqlzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974920; c=relaxed/simple;
-	bh=g1alI/EX3UJG35ZqCoc/IjRk/2Pa98SZpz9YsWVPj0A=;
+	s=arc-20240116; t=1774974923; c=relaxed/simple;
+	bh=yGMGiMwBi2laaGxMnr+N9hRYhpkEJ/XoiNP3+DM5Q58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LUI0gT3YFOMJO/9vzgt9pDnbFxG6bqBcR6COc5yogiPRS9SUvnlyFsxad9J24QX/H+GediW4F/5MewHdHaZwTS0cSPEExlzny6zHubbxa7gtvynDNZy9lDupF0ZqgOqlaPSchdreYiBEnAYNsFcQWLMX7sUlxlOxB8tP1f2ZDfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDV6W8+N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lyg07lvzIOdnlJ0TSjR3Z8f1SKetEH59Dt6xLtEAQu2psLvzLmTiRSNgvOJsOdaOZTOkxaaUac1eqvCVviXTNYxYabYRvIInFh3nKT7FXvRPvpjeh0Ti9GGXSw21yrNIBnTiycQ2KXS8MLWKOInzrsZlExv9Ag+Extw86tQvdWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoQjkxnh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDV6W8+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35029C2BCB2;
-	Tue, 31 Mar 2026 16:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoQjkxnh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B842AC19423;
+	Tue, 31 Mar 2026 16:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974920;
-	bh=g1alI/EX3UJG35ZqCoc/IjRk/2Pa98SZpz9YsWVPj0A=;
+	s=korg; t=1774974923;
+	bh=yGMGiMwBi2laaGxMnr+N9hRYhpkEJ/XoiNP3+DM5Q58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FDV6W8+N9J2y+pCHJXxP6B6eRUwl0x8uOnhPLej7FMTGi/6VokrfxI2UI5SYYZLoL
-	 dKH48UNBLmNVTPBhQCnCWGeZBaTP9i1XrexrRtO7YPEzLMI5u2Lxjq/2yJJw96w33Z
-	 VrKoIeaIZ1L3CBd0E3904+O3r/mA3Lfp86zfTolo=
+	b=WoQjkxnhaMZTmfcrnAbm0l4Uyc1mYHqFiKzgPDMmqnP1SCI9zViBZGUrcu23Cr/Ag
+	 M9CpRkLeDH1ZSnz4zbFD55LQlsoEkT6XAdQphKX+xxLXYIhJZEQRb3cGhAQm2J6kh4
+	 vs2JLEd3Ro51uRmRBiB7C/gfYfRuLgLsj8VaOmGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 053/342] ASoC: cs35l56: Only patch ASP registers if the DAI is part of a DAIlink
-Date: Tue, 31 Mar 2026 18:18:06 +0200
-Message-ID: <20260331161800.850396900@linuxfoundation.org>
+Subject: [PATCH 6.19 089/342] dma: swiotlb: add KMSAN annotations to swiotlb_bounce()
+Date: Tue, 31 Mar 2026 18:18:42 +0200
+Message-ID: <20260331161802.294926417@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,110 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 9351cf3fd92dc1349bb75f2f7f7324607dcf596f ]
+[ Upstream commit 6f770b73d0311a5b099277653199bb6421c4fed2 ]
 
-Move the ASP register patches to a separate struct and apply this from the
-ASP DAI probe() function so that the registers are only patched if the DAI
-is part of a DAI link.
+When a device performs DMA to a bounce buffer, KMSAN is unaware of
+the write and does not mark the data as initialized.  When
+swiotlb_bounce() later copies the bounce buffer back to the original
+buffer, memcpy propagates the uninitialized shadow to the original
+buffer, causing false positive uninit-value reports.
 
-Some systems use the ASP as a special-purpose interconnect and on these
-systems the ASP registers are configured by a third party (the firmware,
-the BIOS, or another device using the amp's secondary host control
-interface).
+Fix this by calling kmsan_unpoison_memory() on the bounce buffer
+before copying it back in the DMA_FROM_DEVICE path, so that memcpy
+naturally propagates initialized shadow to the destination.
 
-If the machine driver does not hook up the ASP DAI then the ASP registers
-must be omitted from the patch to prevent overwriting the third party
-configuration.
-
-If the machine driver includes the ASP DAI in a DAI link, this implies that
-the machine driver and higher components (such as alsa-ucm) are taking
-ownership of the ASP. In this case the ASP registers are patched to known
-defaults and the machine driver should configure the ASP.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260226110137.1664562-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Alexander Potapenko <glider@google.com>
+Link: https://lore.kernel.org/CAG_fn=WUGta-paG1BgsGRoAR+fmuCgh3xo=R3XdzOt_-DqSdHw@mail.gmail.com/
+Fixes: 7ade4f10779c ("dma: kmsan: unpoison DMA mappings")
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260315082750.2375581-1-syoshida@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/cs35l56.h           |  1 +
- sound/soc/codecs/cs35l56-shared.c | 16 +++++++++++++++-
- sound/soc/codecs/cs35l56.c        |  8 ++++++++
- 3 files changed, 24 insertions(+), 1 deletion(-)
+ kernel/dma/swiotlb.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
-index 5928af539c468..d0ae1ae2ae2a0 100644
---- a/include/sound/cs35l56.h
-+++ b/include/sound/cs35l56.h
-@@ -374,6 +374,7 @@ extern const char * const cs35l56_cal_set_status_text[3];
- extern const char * const cs35l56_tx_input_texts[CS35L56_NUM_INPUT_SRC];
- extern const unsigned int cs35l56_tx_input_values[CS35L56_NUM_INPUT_SRC];
+diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+index a547c7693135b..b4bc7ce01dadc 100644
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -30,6 +30,7 @@
+ #include <linux/gfp.h>
+ #include <linux/highmem.h>
+ #include <linux/io.h>
++#include <linux/kmsan-checks.h>
+ #include <linux/iommu-helper.h>
+ #include <linux/init.h>
+ #include <linux/memblock.h>
+@@ -901,10 +902,19 @@ static void swiotlb_bounce(struct device *dev, phys_addr_t tlb_addr, size_t size
  
-+int cs35l56_set_asp_patch(struct cs35l56_base *cs35l56_base);
- int cs35l56_set_patch(struct cs35l56_base *cs35l56_base);
- int cs35l56_mbox_send(struct cs35l56_base *cs35l56_base, unsigned int command);
- int cs35l56_firmware_shutdown(struct cs35l56_base *cs35l56_base);
-diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
-index 60100c8f8c952..0ec6a96e80858 100644
---- a/sound/soc/codecs/cs35l56-shared.c
-+++ b/sound/soc/codecs/cs35l56-shared.c
-@@ -23,7 +23,7 @@
+ 			local_irq_save(flags);
+ 			page = pfn_to_page(pfn);
+-			if (dir == DMA_TO_DEVICE)
++			if (dir == DMA_TO_DEVICE) {
++				/*
++				 * Ideally, kmsan_check_highmem_page()
++				 * could be used here to detect infoleaks,
++				 * but callers may map uninitialized buffers
++				 * that will be written by the device,
++				 * causing false positives.
++				 */
+ 				memcpy_from_page(vaddr, page, offset, sz);
+-			else
++			} else {
++				kmsan_unpoison_memory(vaddr, sz);
+ 				memcpy_to_page(page, offset, vaddr, sz);
++			}
+ 			local_irq_restore(flags);
  
- #include "cs35l56.h"
- 
--static const struct reg_sequence cs35l56_patch[] = {
-+static const struct reg_sequence cs35l56_asp_patch[] = {
- 	/*
- 	 * Firmware can change these to non-defaults to satisfy SDCA.
- 	 * Ensure that they are at known defaults.
-@@ -40,6 +40,20 @@ static const struct reg_sequence cs35l56_patch[] = {
- 	{ CS35L56_ASP1TX2_INPUT,		0x00000000 },
- 	{ CS35L56_ASP1TX3_INPUT,		0x00000000 },
- 	{ CS35L56_ASP1TX4_INPUT,		0x00000000 },
-+};
-+
-+int cs35l56_set_asp_patch(struct cs35l56_base *cs35l56_base)
-+{
-+	return regmap_register_patch(cs35l56_base->regmap, cs35l56_asp_patch,
-+				     ARRAY_SIZE(cs35l56_asp_patch));
-+}
-+EXPORT_SYMBOL_NS_GPL(cs35l56_set_asp_patch, "SND_SOC_CS35L56_SHARED");
-+
-+static const struct reg_sequence cs35l56_patch[] = {
-+	/*
-+	 * Firmware can change these to non-defaults to satisfy SDCA.
-+	 * Ensure that they are at known defaults.
-+	 */
- 	{ CS35L56_SWIRE_DP3_CH1_INPUT,		0x00000018 },
- 	{ CS35L56_SWIRE_DP3_CH2_INPUT,		0x00000019 },
- 	{ CS35L56_SWIRE_DP3_CH3_INPUT,		0x00000029 },
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 55b4d0d55712a..1c1924c6f4070 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -346,6 +346,13 @@ static int cs35l56_dsp_event(struct snd_soc_dapm_widget *w,
- 	return wm_adsp_event(w, kcontrol, event);
+ 			size -= sz;
+@@ -913,8 +923,15 @@ static void swiotlb_bounce(struct device *dev, phys_addr_t tlb_addr, size_t size
+ 			offset = 0;
+ 		}
+ 	} else if (dir == DMA_TO_DEVICE) {
++		/*
++		 * Ideally, kmsan_check_memory() could be used here to detect
++		 * infoleaks (uninitialized data being sent to device), but
++		 * callers may map uninitialized buffers that will be written
++		 * by the device, causing false positives.
++		 */
+ 		memcpy(vaddr, phys_to_virt(orig_addr), size);
+ 	} else {
++		kmsan_unpoison_memory(vaddr, size);
+ 		memcpy(phys_to_virt(orig_addr), vaddr, size);
+ 	}
  }
- 
-+static int cs35l56_asp_dai_probe(struct snd_soc_dai *codec_dai)
-+{
-+	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(codec_dai->component);
-+
-+	return cs35l56_set_asp_patch(&cs35l56->base);
-+}
-+
- static int cs35l56_asp_dai_set_fmt(struct snd_soc_dai *codec_dai, unsigned int fmt)
- {
- 	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(codec_dai->component);
-@@ -550,6 +557,7 @@ static int cs35l56_asp_dai_set_sysclk(struct snd_soc_dai *dai,
- }
- 
- static const struct snd_soc_dai_ops cs35l56_ops = {
-+	.probe = cs35l56_asp_dai_probe,
- 	.set_fmt = cs35l56_asp_dai_set_fmt,
- 	.set_tdm_slot = cs35l56_asp_dai_set_tdm_slot,
- 	.hw_params = cs35l56_asp_dai_hw_params,
 -- 
 2.51.0
 
