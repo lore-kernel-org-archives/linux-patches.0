@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA4A3EF0A2;
-	Tue, 31 Mar 2026 16:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1534E262A6;
+	Tue, 31 Mar 2026 16:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975411; cv=none; b=TiK9Clg88L4HwqpZTXz82S4kRYoHsWrMy1HODLg8z8gFFt7YQJAPG49AyuBsmXhSd/vtgzsWC6zXMBNFIkjl8UzDrTaDUhXaP0WoECKYax7jMoWFfxEYWLGBnNMWBObsjUk3BbzrgR4JODrIasr8415bu88A3INv/hPUbi33YN4=
+	t=1774975414; cv=none; b=OrsZHzVBki9l2ycjTKw1eAgkesY/MMbsgK7E4zvF2iBNZbHqQHfH/3eK+MTz06WaigQRzCO0ifiJZHIdSDaVc2PvgytG/jmvLPKkiY5ap5TmymgpZrb5taoN8hd7X3xuQStbSf3Tz530CCUn97HGyhy9QacuTIltcvo4Vqz4moI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975411; c=relaxed/simple;
-	bh=sUYWN1E9YxDQK7l/t6kovxoG9fy1xvJ107fkPAzBPyE=;
+	s=arc-20240116; t=1774975414; c=relaxed/simple;
+	bh=Hy9iMdSvtNxG9I4QeyUUT2iG7dFjgr1XJk3iYd8L6EA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQxY04PV7jZOUcHKyBQkORlSHTj9mAK+SYxN9LNTcCg/ADPYSVCUWEw6kcPVrYGve+FPO/07ry31Y8b2kOc3TPfjCuOeKvJOqPgbESoHk/48Wn6m/qbQkuOZ/Jhperp5qBg28vnkkrfATMSuCRV3wPSWKfUn3FZg0+UytoEpNJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuTilZNA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lZCKoMhQCFd5XXSc5PKznv6s32GpoIjEG98QAvoBiPwVWAI9CgwMf9UeVs1xO1BO+ZAFRSwRw//7Usb0d54U+yC9F5tqtxBuJJkk0eHHIvGQ6lYWZbT7PXUpG5vs+gIj6kageQiSdxZ4MOrj2Hje+gK4+B0bziUanvXi5PaVYqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXJe5Uv2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuTilZNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85B7C19423;
-	Tue, 31 Mar 2026 16:43:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXJe5Uv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABB1C19423;
+	Tue, 31 Mar 2026 16:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975411;
-	bh=sUYWN1E9YxDQK7l/t6kovxoG9fy1xvJ107fkPAzBPyE=;
+	s=korg; t=1774975414;
+	bh=Hy9iMdSvtNxG9I4QeyUUT2iG7dFjgr1XJk3iYd8L6EA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CuTilZNA3oXN1kNvQnaXnIomB2lCVFipiukSfqcZRat+e7QM+VOWSDhAgiAoS7Gar
-	 HFa3EEhDVw+yL0kR+ORPe7ZsGZxIUNhtbT54DZTh26etk2dsvHtFyvagzgyXD2pywc
-	 Y0WXQjYFY78Ln0CHysBu6R8P2VvGydRqUTsGX3fA=
+	b=JXJe5Uv2f1i5NJEEhoHiWLtEvBDYLF/ymtII2JlxwZbUflz2z78A4H7qnsfwPlym/
+	 6smefhFUAUQ0v9QPyvqkiu6BZvF7fwgDh+7YDl5MKHtQmelmVa+HZ1gnzjaBRVDRo9
+	 wOJV8ExDF69bof4o07gggR7E4ESDe3+x3rS37oTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
-	Yuto Ohnuki <ytohnuki@amazon.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.19 285/342] xfs: avoid dereferencing log items after push callbacks
-Date: Tue, 31 Mar 2026 18:21:58 +0200
-Message-ID: <20260331161809.427224663@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.19 268/342] drm/i915: Order OP vs. timeout correctly in __wait_for()
+Date: Tue, 31 Mar 2026 18:21:41 +0200
+Message-ID: <20260331161808.810394315@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -46,171 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuto Ohnuki <ytohnuki@amazon.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 79ef34ec0554ec04bdbafafbc9836423734e1bd6 upstream.
+commit 6ad2a661ff0d3d94884947d2a593311ba46d34c2 upstream.
 
-After xfsaild_push_item() calls iop_push(), the log item may have been
-freed if the AIL lock was dropped during the push. Background inode
-reclaim or the dquot shrinker can free the log item while the AIL lock
-is not held, and the tracepoints in the switch statement dereference
-the log item after iop_push() returns.
+Put the barrier() before the OP so that anything we read out in
+OP and check in COND will actually be read out after the timeout
+has been evaluated.
 
-Fix this by capturing the log item type, flags, and LSN before calling
-xfsaild_push_item(), and introducing a new xfs_ail_push_class trace
-event class that takes these pre-captured values and the ailp pointer
-instead of the log item pointer.
+Currently the only place where we use OP is __intel_wait_for_register(),
+but the use there is precisely susceptible to this reordering, assuming
+the ktime_*() stuff itself doesn't act as a sufficient barrier:
 
-Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
-Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
-Cc: stable@vger.kernel.org # v5.9
-Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+__intel_wait_for_register(...)
+{
+	...
+	ret = __wait_for(reg_value = intel_uncore_read_notrace(...),
+ 			 (reg_value & mask) == value, ...);
+	...
+}
+
+Cc: stable@vger.kernel.org
+Fixes: 1c3c1dc66a96 ("drm/i915: Add compiler barrier to wait_for")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patch.msgid.link/20260313110740.24620-1-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit a464bace0482aa9a83e9aa7beefbaf44cd58e6cf)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_trace.h     |   36 ++++++++++++++++++++++++++++++++----
- fs/xfs/xfs_trans_ail.c |   26 +++++++++++++++++++-------
- 2 files changed, 51 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/i915/i915_wait_util.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_trace.h
-+++ b/fs/xfs/xfs_trace.h
-@@ -56,6 +56,7 @@
- #include <linux/tracepoint.h>
- 
- struct xfs_agf;
-+struct xfs_ail;
- struct xfs_alloc_arg;
- struct xfs_attr_list_context;
- struct xfs_buf_log_item;
-@@ -1647,16 +1648,43 @@ TRACE_EVENT(xfs_log_force,
- DEFINE_EVENT(xfs_log_item_class, name, \
- 	TP_PROTO(struct xfs_log_item *lip), \
- 	TP_ARGS(lip))
--DEFINE_LOG_ITEM_EVENT(xfs_ail_push);
--DEFINE_LOG_ITEM_EVENT(xfs_ail_pinned);
--DEFINE_LOG_ITEM_EVENT(xfs_ail_locked);
--DEFINE_LOG_ITEM_EVENT(xfs_ail_flushing);
- DEFINE_LOG_ITEM_EVENT(xfs_cil_whiteout_mark);
- DEFINE_LOG_ITEM_EVENT(xfs_cil_whiteout_skip);
- DEFINE_LOG_ITEM_EVENT(xfs_cil_whiteout_unpin);
- DEFINE_LOG_ITEM_EVENT(xlog_ail_insert_abort);
- DEFINE_LOG_ITEM_EVENT(xfs_trans_free_abort);
- 
-+DECLARE_EVENT_CLASS(xfs_ail_push_class,
-+	TP_PROTO(struct xfs_ail *ailp, uint type, unsigned long flags, xfs_lsn_t lsn),
-+	TP_ARGS(ailp, type, flags, lsn),
-+	TP_STRUCT__entry(
-+		__field(dev_t, dev)
-+		__field(uint, type)
-+		__field(unsigned long, flags)
-+		__field(xfs_lsn_t, lsn)
-+	),
-+	TP_fast_assign(
-+		__entry->dev = ailp->ail_log->l_mp->m_super->s_dev;
-+		__entry->type = type;
-+		__entry->flags = flags;
-+		__entry->lsn = lsn;
-+	),
-+	TP_printk("dev %d:%d lsn %d/%d type %s flags %s",
-+		  MAJOR(__entry->dev), MINOR(__entry->dev),
-+		  CYCLE_LSN(__entry->lsn), BLOCK_LSN(__entry->lsn),
-+		  __print_symbolic(__entry->type, XFS_LI_TYPE_DESC),
-+		  __print_flags(__entry->flags, "|", XFS_LI_FLAGS))
-+)
-+
-+#define DEFINE_AIL_PUSH_EVENT(name) \
-+DEFINE_EVENT(xfs_ail_push_class, name, \
-+	TP_PROTO(struct xfs_ail *ailp, uint type, unsigned long flags, xfs_lsn_t lsn), \
-+	TP_ARGS(ailp, type, flags, lsn))
-+DEFINE_AIL_PUSH_EVENT(xfs_ail_push);
-+DEFINE_AIL_PUSH_EVENT(xfs_ail_pinned);
-+DEFINE_AIL_PUSH_EVENT(xfs_ail_locked);
-+DEFINE_AIL_PUSH_EVENT(xfs_ail_flushing);
-+
- DECLARE_EVENT_CLASS(xfs_ail_class,
- 	TP_PROTO(struct xfs_log_item *lip, xfs_lsn_t old_lsn, xfs_lsn_t new_lsn),
- 	TP_ARGS(lip, old_lsn, new_lsn),
---- a/fs/xfs/xfs_trans_ail.c
-+++ b/fs/xfs/xfs_trans_ail.c
-@@ -365,6 +365,12 @@ xfsaild_resubmit_item(
- 	return XFS_ITEM_SUCCESS;
- }
- 
-+/*
-+ * Push a single log item from the AIL.
-+ *
-+ * @lip may have been released and freed by the time this function returns,
-+ * so callers must not dereference the log item afterwards.
-+ */
- static inline uint
- xfsaild_push_item(
- 	struct xfs_ail		*ailp,
-@@ -505,7 +511,10 @@ xfsaild_push(
- 
- 	lsn = lip->li_lsn;
- 	while ((XFS_LSN_CMP(lip->li_lsn, ailp->ail_target) <= 0)) {
--		int	lock_result;
-+		int		lock_result;
-+		uint		type = lip->li_type;
-+		unsigned long	flags = lip->li_flags;
-+		xfs_lsn_t	item_lsn = lip->li_lsn;
- 
- 		if (test_bit(XFS_LI_FLUSHING, &lip->li_flags))
- 			goto next_item;
-@@ -514,14 +523,17 @@ xfsaild_push(
- 		 * Note that iop_push may unlock and reacquire the AIL lock.  We
- 		 * rely on the AIL cursor implementation to be able to deal with
- 		 * the dropped lock.
-+		 *
-+		 * The log item may have been freed by the push, so it must not
-+		 * be accessed or dereferenced below this line.
- 		 */
- 		lock_result = xfsaild_push_item(ailp, lip);
- 		switch (lock_result) {
- 		case XFS_ITEM_SUCCESS:
- 			XFS_STATS_INC(mp, xs_push_ail_success);
--			trace_xfs_ail_push(lip);
-+			trace_xfs_ail_push(ailp, type, flags, item_lsn);
- 
--			ailp->ail_last_pushed_lsn = lsn;
-+			ailp->ail_last_pushed_lsn = item_lsn;
- 			break;
- 
- 		case XFS_ITEM_FLUSHING:
-@@ -537,22 +549,22 @@ xfsaild_push(
- 			 * AIL is being flushed.
- 			 */
- 			XFS_STATS_INC(mp, xs_push_ail_flushing);
--			trace_xfs_ail_flushing(lip);
-+			trace_xfs_ail_flushing(ailp, type, flags, item_lsn);
- 
- 			flushing++;
--			ailp->ail_last_pushed_lsn = lsn;
-+			ailp->ail_last_pushed_lsn = item_lsn;
- 			break;
- 
- 		case XFS_ITEM_PINNED:
- 			XFS_STATS_INC(mp, xs_push_ail_pinned);
--			trace_xfs_ail_pinned(lip);
-+			trace_xfs_ail_pinned(ailp, type, flags, item_lsn);
- 
- 			stuck++;
- 			ailp->ail_log_flush++;
- 			break;
- 		case XFS_ITEM_LOCKED:
- 			XFS_STATS_INC(mp, xs_push_ail_locked);
--			trace_xfs_ail_locked(lip);
-+			trace_xfs_ail_locked(ailp, type, flags, item_lsn);
- 
- 			stuck++;
- 			break;
+--- a/drivers/gpu/drm/i915/i915_wait_util.h
++++ b/drivers/gpu/drm/i915/i915_wait_util.h
+@@ -25,9 +25,9 @@
+ 	might_sleep();							\
+ 	for (;;) {							\
+ 		const bool expired__ = ktime_after(ktime_get_raw(), end__); \
+-		OP;							\
+ 		/* Guarantee COND check prior to timeout */		\
+ 		barrier();						\
++		OP;							\
+ 		if (COND) {						\
+ 			ret__ = 0;					\
+ 			break;						\
 
 
