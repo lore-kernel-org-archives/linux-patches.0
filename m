@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64B22FE042;
-	Tue, 31 Mar 2026 17:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4B32C21F2;
+	Tue, 31 Mar 2026 17:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976696; cv=none; b=F1YkB+pt/y1BJ5r/ETdSIiBb/Ogbez7bMKaKeeB/hOXh6gkt2n4Or+EPIsLXNq6z2ObOcyrJMgH+M04ggPfpws/ouOjLoGBx3DEbPkdvCvt6/2yRxeelD0I4fKJhnvqZ8PeSUrVAwd9480PDpc4YVOcmx/iE1Elww+5FYmixEmg=
+	t=1774976698; cv=none; b=UWFaUOB8gkNAowRpTy0Sp/1w1GpFNmk8oYiNvHkB8XRWqfahEATNpox3QZpUVwF+AbbcEeYhgT8mowQvlrV0MnwquU2w4EO6sPn7zDp4CMuZ4aF/MlfeKmSoAlN5HNLdclpB8dMP//woow6vwrZDanwDeZwtekLVdAbTgC6wROY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976696; c=relaxed/simple;
-	bh=qD6CKMYxdq3rOQCjQg35OUzPGmH6UQLg1pQiWbCqkPY=;
+	s=arc-20240116; t=1774976698; c=relaxed/simple;
+	bh=ROzNKWRfHw3cbYvSgZfHeQD2z7jrMZonQEh9OeuHZtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SWlr5oIqSsuW1EwhAPly4ng3JLA+SURmOVya5E1JEuV4jdIGo4/IBar94EFMDyQ7obotaoQgut95IU8tvwL9w+Vv1znEzoacRy4JZs5XYWvzP57L8lMXwD66tOYVkz0g/5wPxIhRkVoM6ioCYiAd7zgG+QiY2xvsckczEVXuJlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOm2/ORP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=a3s1SxzuURKQstDq7pvD6c6L8xzHgQLOi+R2FX/oSCLG7m1/wqCzGs4D1v0t1uNv62a//+x3vMcK6O1pDmWDZXUfIc686SGgf4GRTZiwH0PbNBHnOZJIGaH0W+8CiqFPtswyeXqTnE5bjdyZiSshdkGlX1ojWlZq9xM2pJnDIbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSWc8yxm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOm2/ORP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE48C19423;
-	Tue, 31 Mar 2026 17:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSWc8yxm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12735C19423;
+	Tue, 31 Mar 2026 17:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976695;
-	bh=qD6CKMYxdq3rOQCjQg35OUzPGmH6UQLg1pQiWbCqkPY=;
+	s=korg; t=1774976698;
+	bh=ROzNKWRfHw3cbYvSgZfHeQD2z7jrMZonQEh9OeuHZtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOm2/ORPKpCSnSYsZl7zP26tlkJct8tyrM5d9n2P4hQ7kaVXzOjNO7/iPmSkPeMRh
-	 vXGKevqJphhqRF5VXyz9A47ZJ0RgA1e1vAuay4gVIDnzgZAmjaMKPqiyOfC8k01Idh
-	 h9ifsPEyV2sgOoactdTRCsdLatDaC5ztvyB62fAw=
+	b=RSWc8yxm/x2eVMqG2UJC7vpGMzUNOvXVUVXa6aL+ukkijFpmmi5F8TXTGvuNSFjxt
+	 0LPG4O+sjhG7BPteMssKxxjbkDGTemknvSdiFBCz0JthGu6Zg7m5WuzzjTSKt/noyc
+	 ERGPkguy5QX/AvWJUC7b2puPMeHVg2s4n/mXrCeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.18 192/309] can: netlink: can_changelink(): add missing error handling to call can_ctrlmode_changelink()
-Date: Tue, 31 Mar 2026 18:21:35 +0200
-Message-ID: <20260331161800.523828106@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 166/309] hwmon: (adm1177) fix sysfs ABI violation and current unit conversion
+Date: Tue, 31 Mar 2026 18:21:09 +0200
+Message-ID: <20260331161759.575490531@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -43,45 +46,191 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit cadf6019231b614ebbd9ec2a16e5997ecbd8d016 upstream.
+[ Upstream commit bf08749a6abb6d1959bfdc0edc32c640df407558 ]
 
-In commit e1a5cd9d6665 ("can: netlink: add can_ctrlmode_changelink()") the
-CAN Control Mode (IFLA_CAN_CTRLMODE) handling was factored out into the
-can_ctrlmode_changelink() function. But the call to
-can_ctrlmode_changelink() is missing the error handling.
+The adm1177 driver exposes the current alert threshold through
+hwmon_curr_max_alarm. This violates the hwmon sysfs ABI, where
+*_alarm attributes are read-only status flags and writable thresholds
+must use currN_max.
 
-Add the missing error handling and propagation to the call
-can_ctrlmode_changelink().
+The driver also stores the threshold internally in microamps, while
+currN_max is defined in milliamps. Convert the threshold accordingly
+on both the read and write paths.
 
-Cc: stable@vger.kernel.org
-Fixes: e1a5cd9d6665 ("can: netlink: add can_ctrlmode_changelink()")
-Link: https://patch.msgid.link/20260310-can_ctrlmode_changelink-add-error-handling-v1-1-0daf63d85922@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Widen the cached threshold and related calculations to 64 bits so
+that small shunt resistor values do not cause truncation or overflow.
+Also use 64-bit arithmetic for the mA/uA conversions, clamp writes
+to the range the hardware can represent, and propagate failures from
+adm1177_write_alert_thr() instead of silently ignoring them.
+
+Update the hwmon documentation to reflect the attribute rename and
+the correct units returned by the driver.
+
+Fixes: 09b08ac9e8d5 ("hwmon: (adm1177) Add ADM1177 Hot Swap Controller and Digital Power Monitor driver")
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Acked-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20260325051246.28262-1-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/netlink.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/hwmon/adm1177.rst |  8 ++---
+ drivers/hwmon/adm1177.c         | 54 +++++++++++++++++++--------------
+ 2 files changed, 35 insertions(+), 27 deletions(-)
 
---- a/drivers/net/can/dev/netlink.c
-+++ b/drivers/net/can/dev/netlink.c
-@@ -407,7 +407,9 @@ static int can_changelink(struct net_dev
- 	/* We need synchronization with dev->stop() */
- 	ASSERT_RTNL();
+diff --git a/Documentation/hwmon/adm1177.rst b/Documentation/hwmon/adm1177.rst
+index 1c85a2af92bf7..375f6d6e03a7d 100644
+--- a/Documentation/hwmon/adm1177.rst
++++ b/Documentation/hwmon/adm1177.rst
+@@ -27,10 +27,10 @@ for details.
+ Sysfs entries
+ -------------
  
--	can_ctrlmode_changelink(dev, data, extack);
-+	err = can_ctrlmode_changelink(dev, data, extack);
-+	if (err)
-+		return err;
+-The following attributes are supported. Current maxim attribute
++The following attributes are supported. Current maximum attribute
+ is read-write, all other attributes are read-only.
  
- 	if (data[IFLA_CAN_BITTIMING]) {
- 		struct can_bittiming bt;
+-in0_input		Measured voltage in microvolts.
++in0_input		Measured voltage in millivolts.
+ 
+-curr1_input		Measured current in microamperes.
+-curr1_max_alarm		Overcurrent alarm in microamperes.
++curr1_input		Measured current in milliamperes.
++curr1_max		Overcurrent shutdown threshold in milliamperes.
+diff --git a/drivers/hwmon/adm1177.c b/drivers/hwmon/adm1177.c
+index 8b2c965480e3f..7888afe8dafd6 100644
+--- a/drivers/hwmon/adm1177.c
++++ b/drivers/hwmon/adm1177.c
+@@ -10,6 +10,8 @@
+ #include <linux/hwmon.h>
+ #include <linux/i2c.h>
+ #include <linux/init.h>
++#include <linux/math64.h>
++#include <linux/minmax.h>
+ #include <linux/module.h>
+ #include <linux/regulator/consumer.h>
+ 
+@@ -33,7 +35,7 @@
+ struct adm1177_state {
+ 	struct i2c_client	*client;
+ 	u32			r_sense_uohm;
+-	u32			alert_threshold_ua;
++	u64			alert_threshold_ua;
+ 	bool			vrange_high;
+ };
+ 
+@@ -48,7 +50,7 @@ static int adm1177_write_cmd(struct adm1177_state *st, u8 cmd)
+ }
+ 
+ static int adm1177_write_alert_thr(struct adm1177_state *st,
+-				   u32 alert_threshold_ua)
++				   u64 alert_threshold_ua)
+ {
+ 	u64 val;
+ 	int ret;
+@@ -91,8 +93,8 @@ static int adm1177_read(struct device *dev, enum hwmon_sensor_types type,
+ 			*val = div_u64((105840000ull * dummy),
+ 				       4096 * st->r_sense_uohm);
+ 			return 0;
+-		case hwmon_curr_max_alarm:
+-			*val = st->alert_threshold_ua;
++		case hwmon_curr_max:
++			*val = div_u64(st->alert_threshold_ua, 1000);
+ 			return 0;
+ 		default:
+ 			return -EOPNOTSUPP;
+@@ -126,9 +128,10 @@ static int adm1177_write(struct device *dev, enum hwmon_sensor_types type,
+ 	switch (type) {
+ 	case hwmon_curr:
+ 		switch (attr) {
+-		case hwmon_curr_max_alarm:
+-			adm1177_write_alert_thr(st, val);
+-			return 0;
++		case hwmon_curr_max:
++			val = clamp_val(val, 0,
++					div_u64(105840000ULL, st->r_sense_uohm));
++			return adm1177_write_alert_thr(st, (u64)val * 1000);
+ 		default:
+ 			return -EOPNOTSUPP;
+ 		}
+@@ -156,7 +159,7 @@ static umode_t adm1177_is_visible(const void *data,
+ 			if (st->r_sense_uohm)
+ 				return 0444;
+ 			return 0;
+-		case hwmon_curr_max_alarm:
++		case hwmon_curr_max:
+ 			if (st->r_sense_uohm)
+ 				return 0644;
+ 			return 0;
+@@ -170,7 +173,7 @@ static umode_t adm1177_is_visible(const void *data,
+ 
+ static const struct hwmon_channel_info * const adm1177_info[] = {
+ 	HWMON_CHANNEL_INFO(curr,
+-			   HWMON_C_INPUT | HWMON_C_MAX_ALARM),
++			   HWMON_C_INPUT | HWMON_C_MAX),
+ 	HWMON_CHANNEL_INFO(in,
+ 			   HWMON_I_INPUT),
+ 	NULL
+@@ -192,7 +195,8 @@ static int adm1177_probe(struct i2c_client *client)
+ 	struct device *dev = &client->dev;
+ 	struct device *hwmon_dev;
+ 	struct adm1177_state *st;
+-	u32 alert_threshold_ua;
++	u64 alert_threshold_ua;
++	u32 prop;
+ 	int ret;
+ 
+ 	st = devm_kzalloc(dev, sizeof(*st), GFP_KERNEL);
+@@ -208,22 +212,26 @@ static int adm1177_probe(struct i2c_client *client)
+ 	if (device_property_read_u32(dev, "shunt-resistor-micro-ohms",
+ 				     &st->r_sense_uohm))
+ 		st->r_sense_uohm = 0;
+-	if (device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
+-				     &alert_threshold_ua)) {
+-		if (st->r_sense_uohm)
+-			/*
+-			 * set maximum default value from datasheet based on
+-			 * shunt-resistor
+-			 */
+-			alert_threshold_ua = div_u64(105840000000,
+-						     st->r_sense_uohm);
+-		else
+-			alert_threshold_ua = 0;
++	if (!device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
++				      &prop)) {
++		alert_threshold_ua = prop;
++	} else if (st->r_sense_uohm) {
++		/*
++		 * set maximum default value from datasheet based on
++		 * shunt-resistor
++		 */
++		alert_threshold_ua = div_u64(105840000000ULL,
++					     st->r_sense_uohm);
++	} else {
++		alert_threshold_ua = 0;
+ 	}
+ 	st->vrange_high = device_property_read_bool(dev,
+ 						    "adi,vrange-high-enable");
+-	if (alert_threshold_ua && st->r_sense_uohm)
+-		adm1177_write_alert_thr(st, alert_threshold_ua);
++	if (alert_threshold_ua && st->r_sense_uohm) {
++		ret = adm1177_write_alert_thr(st, alert_threshold_ua);
++		if (ret)
++			return ret;
++	}
+ 
+ 	ret = adm1177_write_cmd(st, ADM1177_CMD_V_CONT |
+ 				    ADM1177_CMD_I_CONT |
+-- 
+2.53.0
+
 
 
