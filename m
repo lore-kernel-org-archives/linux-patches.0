@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CEF4266A2;
-	Tue, 31 Mar 2026 16:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5D23E559E;
+	Tue, 31 Mar 2026 16:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975023; cv=none; b=T5YF5isld1R9Gk3dSvqsW2TYuMZ8ajd/Nla3oo/h3i/aRTpACCS0vFGGcCqhn0XsNsaMcDqST99xtho39oM+5r/A2kB+4ib8pCxPi4cnjoE3UF4xsb8cEiO/m3BbtbUrvlRt0nlrkZ1Z0iOnRSMY+4paJ6Ri7OaUNl6cfC5Kwm8=
+	t=1774975027; cv=none; b=uGSR16I5zp2/WHp240gCmUrnCpIYXtigGMqlzmtcrF3LT3eap+K0kb0Yxx0oxbPDzQBBfIXnP2e+BJmIzzyv8QsGn3VZ8eE+gkvpVX7ZfMZ71NFK8FRQ7W6ZLAviuB4udXZqxW2lmB4bMfnQ0qKt2Ppx69hYnmtZ+snR/Wpdlmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975023; c=relaxed/simple;
-	bh=wX07zwctiEYOALgpMvbW+rqzyiytxIDMShxdHHFFC1s=;
+	s=arc-20240116; t=1774975027; c=relaxed/simple;
+	bh=30s3aiYpbE0v70qhxFdE1j2SwGTsem8lE4bEejknTzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rj/A7In7HZW7/3zjayjjZKAf2eK/anBLR0K+cGelhdN85vGplhKLFl6y2K4TfJWtC5bybtf8JFPUo7rjJmLhsFbNtN4JsbPZt43dAINwJr6YvFURW1J4rrV/Kz8KZQgKLUiv7KZWItLfBG3Hm0DM1wLNOHD30Ql//XNk3Xvo+5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+/3MMU2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WwD8XUDQZ3eylIXuhIixuvtl3attdsQUpzvwQ5MZpEZByfVZancBmO8JPIOMYpxA8xXAcvA4QW8L+z8yrkOxejlHZQVVPCJll5TL4bUF5eO+oS59V4kbeTvM2yqY69ts6OsilCWTDp0Nv93kj7jrGwq9lhSZOyo0+JMOq6Gs9V8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euUCk6Hn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+/3MMU2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8DDC19424;
-	Tue, 31 Mar 2026 16:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euUCk6Hn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1114AC19424;
+	Tue, 31 Mar 2026 16:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975023;
-	bh=wX07zwctiEYOALgpMvbW+rqzyiytxIDMShxdHHFFC1s=;
+	s=korg; t=1774975026;
+	bh=30s3aiYpbE0v70qhxFdE1j2SwGTsem8lE4bEejknTzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+/3MMU2TBuUYCoinfHRNbPZNsO7TgWOrtwTV0XRrmOOjaO8loVuzTJXkjUJ6Iv5/
-	 jfdbudJF5spbU72Y5Up03acMq5WD5jIl1Rbb4Cx8RRPBZ5OcapdM2WSrjcJK1p7vf8
-	 qaTWtXwN+sDjCYjE4sotdTkEkJnZxVIEFbhYlS8g=
+	b=euUCk6HnPzOBnoKDHhyFbm29N2lg80Dy4gfNyQyjOrCIOZAgQIUmaOHLksIlB5z0w
+	 oIKCFpGIwf5uoSAoD/H/Smmn5ugfWs/PWb8KsmHgRTtmbaaqPAzApf3JvrOjPKbutm
+	 BGek0Wg3wBNRlLeSrCOJynJEOJW3yZ3oiiQBFhwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 135/342] Bluetooth: L2CAP: Fix not tracking outstanding TX ident
-Date: Tue, 31 Mar 2026 18:19:28 +0200
-Message-ID: <20260331161803.976233934@linuxfoundation.org>
+Subject: [PATCH 6.19 136/342] Bluetooth: L2CAP: Fix deadlock in l2cap_conn_del()
+Date: Tue, 31 Mar 2026 18:19:29 +0200
+Message-ID: <20260331161804.013152264@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,148 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 6c3ea155e5ee3e56606233acde8309afda66d483 ]
+[ Upstream commit 00fdebbbc557a2fc21321ff2eaa22fd70c078608 ]
 
-This attempts to proper track outstanding request by using struct ida
-and allocating from it in l2cap_get_ident using ida_alloc_range which
-would reuse ids as they are free, then upon completion release
-the id using ida_free.
+l2cap_conn_del() calls cancel_delayed_work_sync() for both info_timer
+and id_addr_timer while holding conn->lock. However, the work functions
+l2cap_info_timeout() and l2cap_conn_update_id_addr() both acquire
+conn->lock, creating a potential AB-BA deadlock if the work is already
+executing when l2cap_conn_del() takes the lock.
 
-This fixes the qualification test case L2CAP/COS/CED/BI-29-C which
-attempts to check if the host stack is able to work after 256 attempts
-to connect which requires Ident field to use the full range of possible
-values in order to pass the test.
+Move the work cancellations before acquiring conn->lock and use
+disable_delayed_work_sync() to additionally prevent the works from
+being rearmed after cancellation, consistent with the pattern used in
+hci_conn_del().
 
-Link: https://github.com/bluez/bluez/issues/1829
+Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Stable-dep-of: 00fdebbbc557 ("Bluetooth: L2CAP: Fix deadlock in l2cap_conn_del()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/l2cap.h |  3 +--
- net/bluetooth/l2cap_core.c    | 46 ++++++++++++++++++++++++-----------
- 2 files changed, 33 insertions(+), 16 deletions(-)
+ net/bluetooth/l2cap_core.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
-index f08ed93bb6fa3..010f1a8fd15f8 100644
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -657,8 +657,7 @@ struct l2cap_conn {
- 
- 	struct sk_buff		*rx_skb;
- 	__u32			rx_len;
--	__u8			tx_ident;
--	struct mutex		ident_lock;
-+	struct ida		tx_ida;
- 
- 	struct sk_buff_head	pending_rx;
- 	struct work_struct	pending_rx_work;
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index b5e393e4f3eb1..5bd5561a8dbf5 100644
+index 5bd5561a8dbf5..734cbb5dc1bfa 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -924,26 +924,18 @@ int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator)
- 				 initiator);
- }
+@@ -1748,6 +1748,9 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
  
--static u8 l2cap_get_ident(struct l2cap_conn *conn)
-+static int l2cap_get_ident(struct l2cap_conn *conn)
- {
--	u8 id;
-+	/* LE link does not support tools like l2ping so use the full range */
-+	if (conn->hcon->type == LE_LINK)
-+		return ida_alloc_range(&conn->tx_ida, 1, 255, GFP_ATOMIC);
+ 	BT_DBG("hcon %p conn %p, err %d", hcon, conn, err);
  
- 	/* Get next available identificator.
- 	 *    1 - 128 are used by kernel.
- 	 *  129 - 199 are reserved.
- 	 *  200 - 254 are used by utilities like l2ping, etc.
- 	 */
--
--	mutex_lock(&conn->ident_lock);
--
--	if (++conn->tx_ident > 128)
--		conn->tx_ident = 1;
--
--	id = conn->tx_ident;
--
--	mutex_unlock(&conn->ident_lock);
--
--	return id;
-+	return ida_alloc_range(&conn->tx_ida, 1, 128, GFP_ATOMIC);
- }
- 
- static void l2cap_send_acl(struct l2cap_conn *conn, struct sk_buff *skb,
-@@ -1769,6 +1761,8 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
- 	if (work_pending(&conn->pending_rx_work))
- 		cancel_work_sync(&conn->pending_rx_work);
- 
-+	ida_destroy(&conn->tx_ida);
++	disable_delayed_work_sync(&conn->info_timer);
++	disable_delayed_work_sync(&conn->id_addr_timer);
 +
- 	cancel_delayed_work_sync(&conn->id_addr_timer);
+ 	mutex_lock(&conn->lock);
  
+ 	kfree_skb(conn->rx_skb);
+@@ -1763,8 +1766,6 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+ 
+ 	ida_destroy(&conn->tx_ida);
+ 
+-	cancel_delayed_work_sync(&conn->id_addr_timer);
+-
  	l2cap_unregister_all_users(conn);
-@@ -4780,12 +4774,34 @@ static int l2cap_le_connect_rsp(struct l2cap_conn *conn,
- 	return err;
- }
  
-+static void l2cap_put_ident(struct l2cap_conn *conn, u8 code, u8 id)
-+{
-+	switch (code) {
-+	case L2CAP_COMMAND_REJ:
-+	case L2CAP_CONN_RSP:
-+	case L2CAP_CONF_RSP:
-+	case L2CAP_DISCONN_RSP:
-+	case L2CAP_ECHO_RSP:
-+	case L2CAP_INFO_RSP:
-+	case L2CAP_CONN_PARAM_UPDATE_RSP:
-+	case L2CAP_ECRED_CONN_RSP:
-+	case L2CAP_ECRED_RECONF_RSP:
-+		/* First do a lookup since the remote may send bogus ids that
-+		 * would make ida_free to generate warnings.
-+		 */
-+		if (ida_find_first_range(&conn->tx_ida, id, id) >= 0)
-+			ida_free(&conn->tx_ida, id);
-+	}
-+}
-+
- static inline int l2cap_bredr_sig_cmd(struct l2cap_conn *conn,
- 				      struct l2cap_cmd_hdr *cmd, u16 cmd_len,
- 				      u8 *data)
- {
- 	int err = 0;
+ 	/* Force the connection to be immediately dropped */
+@@ -1783,9 +1784,6 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+ 		l2cap_chan_put(chan);
+ 	}
  
-+	l2cap_put_ident(conn, cmd->code, cmd->ident);
-+
- 	switch (cmd->code) {
- 	case L2CAP_COMMAND_REJ:
- 		l2cap_command_rej(conn, cmd, cmd_len, data);
-@@ -5470,6 +5486,8 @@ static inline int l2cap_le_sig_cmd(struct l2cap_conn *conn,
- {
- 	int err = 0;
+-	if (conn->info_state & L2CAP_INFO_FEAT_MASK_REQ_SENT)
+-		cancel_delayed_work_sync(&conn->info_timer);
+-
+ 	hci_chan_del(conn->hchan);
+ 	conn->hchan = NULL;
  
-+	l2cap_put_ident(conn, cmd->code, cmd->ident);
-+
- 	switch (cmd->code) {
- 	case L2CAP_COMMAND_REJ:
- 		l2cap_le_command_rej(conn, cmd, cmd_len, data);
-@@ -6972,13 +6990,13 @@ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
- 	     hci_dev_test_flag(hcon->hdev, HCI_FORCE_BREDR_SMP)))
- 		conn->local_fixed_chan |= L2CAP_FC_SMP_BREDR;
- 
--	mutex_init(&conn->ident_lock);
- 	mutex_init(&conn->lock);
- 
- 	INIT_LIST_HEAD(&conn->chan_l);
- 	INIT_LIST_HEAD(&conn->users);
- 
- 	INIT_DELAYED_WORK(&conn->info_timer, l2cap_info_timeout);
-+	ida_init(&conn->tx_ida);
- 
- 	skb_queue_head_init(&conn->pending_rx);
- 	INIT_WORK(&conn->pending_rx_work, process_pending_rx);
 -- 
 2.51.0
 
