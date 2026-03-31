@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ED5421EE4;
-	Tue, 31 Mar 2026 16:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AFF423A7C;
+	Tue, 31 Mar 2026 16:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976153; cv=none; b=EuUfRsegpkR5uLdPnNTMKNY3DmTTC+kum3bCXeqHxLnzWwXrVdLmNBYPPOUFjSIXZgmBudKgq/cUIjXWKtrHDtUtH5Btgb5c4eydBK+wXb0p90Sh6kOHtNXPbSFUwfuZmLlrAAuPf+/8bUtbqP0qgrzdEKCxzo4Ml2j9J36po3M=
+	t=1774976155; cv=none; b=eFiVWKXyT2Fu1W2NV0Q1SvZFOTxJBTCBTCM4v0A1JK/n7ZKhCLv89/qSmUSLyWJXSC2T4P608UH5Orc82bnQeRPPs9A6SCx9ohe7x1IwfdM9MEGsjoeN/4++gStdP6EvDVjHiNgyb6gnNyymhXDo5PsYsGSZE2OIKkv/8B81w5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976153; c=relaxed/simple;
-	bh=Sdp0e1kEckKlHMU6Ar6G9hCy7thRn3XswreAc0UNPiY=;
+	s=arc-20240116; t=1774976155; c=relaxed/simple;
+	bh=TDFku8lxL5odH8eH/0ozHEouKBRaOmr/G+jd42FCnLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vd0nYFxeRPKouLxCouiotiAJUWJZNNpt7QemjjPIeVdGR4teucMKnUUOTM7GR7li5hdCyL03k5mqZNQjaH1t1iw0W7auJFXppcJqHtofDCEzN/AFdAfx498XcPQsMjz4djX5D6zbBUoX1m/a0q/5R+/FvjprM9aaXfVL2EZGiW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfrxD0RO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G5fPlMnR3Tvmd5mNixlc+EtaJPOEKcAt0Fa2sgLFbeGi/GkTB/r5bVAW/aVOlS+cmVh1CCJRfEQPfCAwRwkdTEG44oTZc0Fs9ezfW+M59Bwao/6GtaIaD5ZOqE5rgV/cjJ7XIFKcnh7bBtr+gmSh+9D7yZ7XWpHvTr9waN24ZYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rq5mGr+c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfrxD0RO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D667CC19423;
-	Tue, 31 Mar 2026 16:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rq5mGr+c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA30C19423;
+	Tue, 31 Mar 2026 16:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976153;
-	bh=Sdp0e1kEckKlHMU6Ar6G9hCy7thRn3XswreAc0UNPiY=;
+	s=korg; t=1774976155;
+	bh=TDFku8lxL5odH8eH/0ozHEouKBRaOmr/G+jd42FCnLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kfrxD0ROEjQber/z44Y3Kl9jdFAFEevgh5FUnA15IIoea0m0VGVTS1gtdOvMjqWB3
-	 crPz+AxidFOKugCU3mXA3HhUU7Xh2QstVvUkygt/vfxCWQZ8emirUpXQCNTPiaoDUu
-	 T7zcvC1ZcRbQZ9zHzATMzWLtIAArrRwahX7j6uy8=
+	b=rq5mGr+cxu8YFHmmRiC4WCRSxZJsYAtBtAlNVPagdx4BZyykRtvSe8wgPwAjDHSJz
+	 zf4UvY6gztUBZFms5+pChHBQ+bYhbsG2u9F6OAzFKaYlTQwbgdcAYtz/BxyTaEmhka
+	 lZi4wGOZAJ0N0q6jOp9TErwiwLNTwN+7pxzTU88Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LUO Haowen <luo-hw@foxmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 228/244] dmaengine: dw-edma: Fix multiple times setting of the CYCLE_STATE and CYCLE_BIT bits for HDMA.
-Date: Tue, 31 Mar 2026 18:22:58 +0200
-Message-ID: <20260331161750.186884453@linuxfoundation.org>
+	Chenglong Tang <chenglongtang@google.com>,
+	Fei Lv <feilv@asrmicro.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.12 211/244] ovl: make fsync after metadata copy-up opt-in mount option
+Date: Tue, 31 Mar 2026 18:22:41 +0200
+Message-ID: <20260331161749.548819396@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,69 +51,285 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: LUO Haowen <luo-hw@foxmail.com>
+From: Fei Lv <feilv@asrmicro.com>
 
-[ Upstream commit 3f63297ff61a994b99d710dcb6dbde41c4003233 ]
+commit 1f6ee9be92f8df85a8c9a5a78c20fd39c0c21a95 upstream.
 
-Others have submitted this issue (https://lore.kernel.org/dmaengine/
-20240722030405.3385-1-zhengdongxiong@gxmicro.cn/),
-but it has not been fixed yet. Therefore, more supplementary information
-is provided here.
+Commit 7d6899fb69d25 ("ovl: fsync after metadata copy-up") was done to
+fix durability of overlayfs copy up on an upper filesystem which does
+not enforce ordering on storing of metadata changes (e.g. ubifs).
 
-As mentioned in the "PCS-CCS-CB-TCB" Producer-Consumer Synchronization of
-"DesignWare Cores PCI Express Controller Databook, version 6.00a":
+In an earlier revision of the regressing commit by Lei Lv, the metadata
+fsync behavior was opt-in via a new "fsync=strict" mount option.
+We were hoping that the opt-in mount option could be avoided, so the
+change was only made to depend on metacopy=off, in the hope of not
+hurting performance of metadata heavy workloads, which are more likely
+to be using metacopy=on.
 
-1. The Consumer CYCLE_STATE (CCS) bit in the register only needs to be
-initialized once; the value will update automatically to be
-~CYCLE_BIT (CB) in the next chunk.
-2. The Consumer CYCLE_BIT bit in the register is loaded from the LL
-element and tested against CCS. When CB = CCS, the data transfer is
-executed. Otherwise not.
+This hope was proven wrong by a performance regression report from Google
+COS workload after upgrade to kernel 6.12.
 
-The current logic sets customer (HDMA) CS and CB bits to 1 in each chunk
-while setting the producer (software) CB of odd chunks to 0 and even
-chunks to 1 in the linked list. This is leading to a mismatch between
-the producer CB and consumer CS bits.
+This is an adaptation of Lei's original "fsync=strict" mount option
+to the existing upstream code.
 
-This issue can be reproduced by setting the transmission data size to
-exceed one chunk. By the way, in the EDMA using the same "PCS-CCS-CB-TCB"
-mechanism, the CS bit is only initialized once and this issue was not
-found. Refer to
-drivers/dma/dw-edma/dw-edma-v0-core.c:dw_edma_v0_core_start.
+The new mount option is mutually exclusive with the "volatile" mount
+option, so the latter is now an alias to the "fsync=volatile" mount
+option.
 
-So fix this issue by initializing the CYCLE_STATE and CYCLE_BIT bits
-only once.
-
-Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
-Signed-off-by: LUO Haowen <luo-hw@foxmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/tencent_CB11AA9F3920C1911AF7477A9BD8EFE0AD05@qq.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Chenglong Tang <chenglongtang@google.com>
+Closes: https://lore.kernel.org/linux-unionfs/CAOdxtTadAFH01Vui1FvWfcmQ8jH1O45owTzUcpYbNvBxnLeM7Q@mail.gmail.com/
+Link: https://lore.kernel.org/linux-unionfs/CAOQ4uxgKC1SgjMWre=fUb00v8rxtd6sQi-S+dxR8oDzAuiGu8g@mail.gmail.com/
+Fixes: 7d6899fb69d25 ("ovl: fsync after metadata copy-up")
+Depends: 50e638beb67e0 ("ovl: Use str_on_off() helper in ovl_show_options()")
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Fei Lv <feilv@asrmicro.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dw-edma/dw-hdma-v0-core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/filesystems/overlayfs.rst |   50 ++++++++++++++++++++++++++++++++
+ fs/overlayfs/copy_up.c                  |    6 +--
+ fs/overlayfs/overlayfs.h                |   21 +++++++++++++
+ fs/overlayfs/ovl_entry.h                |    7 ----
+ fs/overlayfs/params.c                   |   33 +++++++++++++++++----
+ fs/overlayfs/super.c                    |    2 -
+ 6 files changed, 104 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-index e3f8db4fe909a..ce8f7254bab21 100644
---- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-@@ -252,10 +252,10 @@ static void dw_hdma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
- 			  lower_32_bits(chunk->ll_region.paddr));
- 		SET_CH_32(dw, chan->dir, chan->id, llp.msb,
- 			  upper_32_bits(chunk->ll_region.paddr));
-+		/* Set consumer cycle */
-+		SET_CH_32(dw, chan->dir, chan->id, cycle_sync,
-+			HDMA_V0_CONSUMER_CYCLE_STAT | HDMA_V0_CONSUMER_CYCLE_BIT);
+--- a/Documentation/filesystems/overlayfs.rst
++++ b/Documentation/filesystems/overlayfs.rst
+@@ -745,6 +745,56 @@ controlled by the "uuid" mount option, w
+     mounted with "uuid=on".
+ 
+ 
++Durability and copy up
++----------------------
++
++The fsync(2) system call ensures that the data and metadata of a file
++are safely written to the backing storage, which is expected to
++guarantee the existence of the information post system crash.
++
++Without an fsync(2) call, there is no guarantee that the observed
++data after a system crash will be either the old or the new data, but
++in practice, the observed data after crash is often the old or new data
++or a mix of both.
++
++When an overlayfs file is modified for the first time, copy up will
++create a copy of the lower file and its parent directories in the upper
++layer.  Since the Linux filesystem API does not enforce any particular
++ordering on storing changes without explicit fsync(2) calls, in case
++of a system crash, the upper file could end up with no data at all
++(i.e. zeros), which would be an unusual outcome.  To avoid this
++experience, overlayfs calls fsync(2) on the upper file before completing
++data copy up with rename(2) or link(2) to make the copy up "atomic".
++
++By default, overlayfs does not explicitly call fsync(2) on copied up
++directories or on metadata-only copy up, so it provides no guarantee to
++persist the user's modification unless the user calls fsync(2).
++The fsync during copy up only guarantees that if a copy up is observed
++after a crash, the observed data is not zeroes or intermediate values
++from the copy up staging area.
++
++On traditional local filesystems with a single journal (e.g. ext4, xfs),
++fsync on a file also persists the parent directory changes, because they
++are usually modified in the same transaction, so metadata durability during
++data copy up effectively comes for free.  Overlayfs further limits risk by
++disallowing network filesystems as upper layer.
++
++Overlayfs can be tuned to prefer performance or durability when storing
++to the underlying upper layer.  This is controlled by the "fsync" mount
++option, which supports these values:
++
++- "auto": (default)
++    Call fsync(2) on upper file before completion of data copy up.
++    No explicit fsync(2) on directory or metadata-only copy up.
++- "strict":
++    Call fsync(2) on upper file and directories before completion of any
++    copy up.
++- "volatile": [*]
++    Prefer performance over durability (see `Volatile mount`_)
++
++[*] The mount option "volatile" is an alias to "fsync=volatile".
++
++
+ Volatile mount
+ --------------
+ 
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -1160,15 +1160,15 @@ static int ovl_copy_up_one(struct dentry
+ 		return -EOVERFLOW;
+ 
+ 	/*
+-	 * With metacopy disabled, we fsync after final metadata copyup, for
++	 * With "fsync=strict", we fsync after final metadata copyup, for
+ 	 * both regular files and directories to get atomic copyup semantics
+ 	 * on filesystems that do not use strict metadata ordering (e.g. ubifs).
+ 	 *
+-	 * With metacopy enabled we want to avoid fsync on all meta copyup
++	 * By default, we want to avoid fsync on all meta copyup, because
+ 	 * that will hurt performance of workloads such as chown -R, so we
+ 	 * only fsync on data copyup as legacy behavior.
+ 	 */
+-	ctx.metadata_fsync = !OVL_FS(dentry->d_sb)->config.metacopy &&
++	ctx.metadata_fsync = ovl_should_sync_metadata(OVL_FS(dentry->d_sb)) &&
+ 			     (S_ISREG(ctx.stat.mode) || S_ISDIR(ctx.stat.mode));
+ 	ctx.metacopy = ovl_need_meta_copy_up(dentry, ctx.stat.mode, flags);
+ 
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -99,6 +99,12 @@ enum {
+ 	OVL_VERITY_REQUIRE,
+ };
+ 
++enum {
++	OVL_FSYNC_VOLATILE,
++	OVL_FSYNC_AUTO,
++	OVL_FSYNC_STRICT,
++};
++
+ /*
+  * The tuple (fh,uuid) is a universal unique identifier for a copy up origin,
+  * where:
+@@ -618,6 +624,21 @@ static inline bool ovl_xino_warn(struct
+ 	return ofs->config.xino == OVL_XINO_ON;
+ }
+ 
++static inline bool ovl_should_sync(struct ovl_fs *ofs)
++{
++	return ofs->config.fsync_mode != OVL_FSYNC_VOLATILE;
++}
++
++static inline bool ovl_should_sync_metadata(struct ovl_fs *ofs)
++{
++	return ofs->config.fsync_mode == OVL_FSYNC_STRICT;
++}
++
++static inline bool ovl_is_volatile(struct ovl_config *config)
++{
++	return config->fsync_mode == OVL_FSYNC_VOLATILE;
++}
++
+ /*
+  * To avoid regressions in existing setups with overlay lower offline changes,
+  * we allow lower changes only if none of the new features are used.
+--- a/fs/overlayfs/ovl_entry.h
++++ b/fs/overlayfs/ovl_entry.h
+@@ -18,7 +18,7 @@ struct ovl_config {
+ 	int xino;
+ 	bool metacopy;
+ 	bool userxattr;
+-	bool ovl_volatile;
++	int fsync_mode;
+ };
+ 
+ struct ovl_sb {
+@@ -118,11 +118,6 @@ static inline struct ovl_fs *OVL_FS(stru
+ 	return (struct ovl_fs *)sb->s_fs_info;
+ }
+ 
+-static inline bool ovl_should_sync(struct ovl_fs *ofs)
+-{
+-	return !ofs->config.ovl_volatile;
+-}
+-
+ static inline unsigned int ovl_numlower(struct ovl_entry *oe)
+ {
+ 	return oe ? oe->__numlower : 0;
+--- a/fs/overlayfs/params.c
++++ b/fs/overlayfs/params.c
+@@ -58,6 +58,7 @@ enum ovl_opt {
+ 	Opt_xino,
+ 	Opt_metacopy,
+ 	Opt_verity,
++	Opt_fsync,
+ 	Opt_volatile,
+ };
+ 
+@@ -139,6 +140,23 @@ static int ovl_verity_mode_def(void)
+ 	return OVL_VERITY_OFF;
+ }
+ 
++static const struct constant_table ovl_parameter_fsync[] = {
++	{ "volatile",	OVL_FSYNC_VOLATILE },
++	{ "auto",	OVL_FSYNC_AUTO     },
++	{ "strict",	OVL_FSYNC_STRICT   },
++	{}
++};
++
++static const char *ovl_fsync_mode(struct ovl_config *config)
++{
++	return ovl_parameter_fsync[config->fsync_mode].name;
++}
++
++static int ovl_fsync_mode_def(void)
++{
++	return OVL_FSYNC_AUTO;
++}
++
+ const struct fs_parameter_spec ovl_parameter_spec[] = {
+ 	fsparam_string_empty("lowerdir",    Opt_lowerdir),
+ 	fsparam_string("lowerdir+",         Opt_lowerdir_add),
+@@ -154,6 +172,7 @@ const struct fs_parameter_spec ovl_param
+ 	fsparam_enum("xino",                Opt_xino, ovl_parameter_xino),
+ 	fsparam_enum("metacopy",            Opt_metacopy, ovl_parameter_bool),
+ 	fsparam_enum("verity",              Opt_verity, ovl_parameter_verity),
++	fsparam_enum("fsync",               Opt_fsync, ovl_parameter_fsync),
+ 	fsparam_flag("volatile",            Opt_volatile),
+ 	{}
+ };
+@@ -590,8 +609,11 @@ static int ovl_parse_param(struct fs_con
+ 	case Opt_verity:
+ 		config->verity_mode = result.uint_32;
+ 		break;
++	case Opt_fsync:
++		config->fsync_mode = result.uint_32;
++		break;
+ 	case Opt_volatile:
+-		config->ovl_volatile = true;
++		config->fsync_mode = OVL_FSYNC_VOLATILE;
+ 		break;
+ 	case Opt_userxattr:
+ 		config->userxattr = true;
+@@ -702,6 +724,7 @@ int ovl_init_fs_context(struct fs_contex
+ 	ofs->config.nfs_export		= ovl_nfs_export_def;
+ 	ofs->config.xino		= ovl_xino_def();
+ 	ofs->config.metacopy		= ovl_metacopy_def;
++	ofs->config.fsync_mode		= ovl_fsync_mode_def();
+ 
+ 	fc->s_fs_info		= ofs;
+ 	fc->fs_private		= ctx;
+@@ -770,9 +793,9 @@ int ovl_fs_params_verify(const struct ov
+ 		config->index = false;
  	}
--	/* Set consumer cycle */
--	SET_CH_32(dw, chan->dir, chan->id, cycle_sync,
--		  HDMA_V0_CONSUMER_CYCLE_STAT | HDMA_V0_CONSUMER_CYCLE_BIT);
  
- 	dw_hdma_v0_sync_ll_data(chunk);
+-	if (!config->upperdir && config->ovl_volatile) {
++	if (!config->upperdir && ovl_is_volatile(config)) {
+ 		pr_info("option \"volatile\" is meaningless in a non-upper mount, ignoring it.\n");
+-		config->ovl_volatile = false;
++		config->fsync_mode = ovl_fsync_mode_def();
+ 	}
  
--- 
-2.53.0
-
+ 	if (!config->upperdir && config->uuid == OVL_UUID_ON) {
+@@ -997,8 +1020,8 @@ int ovl_show_options(struct seq_file *m,
+ 		seq_printf(m, ",xino=%s", ovl_xino_mode(&ofs->config));
+ 	if (ofs->config.metacopy != ovl_metacopy_def)
+ 		seq_printf(m, ",metacopy=%s", str_on_off(ofs->config.metacopy));
+-	if (ofs->config.ovl_volatile)
+-		seq_puts(m, ",volatile");
++	if (ofs->config.fsync_mode != ovl_fsync_mode_def())
++		seq_printf(m, ",fsync=%s", ovl_fsync_mode(&ofs->config));
+ 	if (ofs->config.userxattr)
+ 		seq_puts(m, ",userxattr");
+ 	if (ofs->config.verity_mode != ovl_verity_mode_def())
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -744,7 +744,7 @@ static int ovl_make_workdir(struct super
+ 	 * For volatile mount, create a incompat/volatile/dirty file to keep
+ 	 * track of it.
+ 	 */
+-	if (ofs->config.ovl_volatile) {
++	if (ovl_is_volatile(&ofs->config)) {
+ 		err = ovl_create_volatile_dirty(ofs);
+ 		if (err < 0) {
+ 			pr_err("Failed to create volatile/dirty file.\n");
 
 
