@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4146A3EF0A2;
-	Tue, 31 Mar 2026 16:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660A530E0DC;
+	Tue, 31 Mar 2026 16:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974408; cv=none; b=q4R4aRFoSFaWS0kjedrrM4xI6vb9wUda5KmoPhKCjc4aDOxuKbmXjtiYR8zme9J2PFkEeTGgDZjLsilOWXs5V+g2gHnxPtXiMM8Awr0n1UMM6Liy1cuhT5OsC753p+vZyDeHqGxZ493B7tBATIVD9NzDZjIi4Vwb2J58ymkluYc=
+	t=1774974410; cv=none; b=feAAd2EwQKtP5N1HLtGZRuINGX8/pBvN5ZqkqnkmB8KkBVavpBGz6Ef965jZZekxqoKUlL9tVSv4qsz8lQyd+6WpOxpKf8RfCwfCT12oK3OtuqWyhPB6W7dkJuuMWkWTlzsc5C5KI7EWBPauPb19GMGK/wvIdxwguFRsGm19RB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974408; c=relaxed/simple;
-	bh=F7mggU0futZSty6ynyztJ5C+yL7RVGh+1hu0uydjsW0=;
+	s=arc-20240116; t=1774974410; c=relaxed/simple;
+	bh=CFz220xVR05Q5i3Sw4Ftfkz8FdsCM0Y4A7rzWEfFTLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0Dh0LJ1sPlm0WRMT8EOveU45rmc6rGe8E/qrQhgADRriHS2S/6jnO/X7ZNYg3R+ACilzerqO6MqcQZeElDKIoODv2vrk/Lg/SFS+A+5wWY3QO9/ijPascm4mmAhxzsiUqjvZlX4NCOTk9wlGAzDWrNd32P9xCZKB5vk9yI7JIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PT71Phbv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QwE30disoaTCCVrB9fH8e+o3NWUExuPT2WBuRvLBZd+DkJXMw7MzXlfHbVCLsnmpccLxkffci+ec/wiMW9yYu6OC3FtsWIeNzaNLxGsCUkdf/MzFsPN9KN4K+5tEvOC4EyOJhYn+lWR7SRZY5n9j3OL5ztEQkv+DfWThA2orO88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESiVXruu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PT71Phbv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68034C19423;
-	Tue, 31 Mar 2026 16:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESiVXruu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AE1C19423;
+	Tue, 31 Mar 2026 16:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974407;
-	bh=F7mggU0futZSty6ynyztJ5C+yL7RVGh+1hu0uydjsW0=;
+	s=korg; t=1774974410;
+	bh=CFz220xVR05Q5i3Sw4Ftfkz8FdsCM0Y4A7rzWEfFTLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PT71PhbviJLhncuZiwku3cB7xyQ9w0zDC+ieXsv6flqDhOwjm+Q5qr0Eng0ZxPcKG
-	 5/oMTzdrQ+TPpd13NNVjt2bdkqluJXTqXfJTiZ1P8oaZzobWQcbJW+CoPCliVtTTvd
-	 xHzIGk7upo+gXvLB6MZpKIqksHnT0LPhuHihTuus=
+	b=ESiVXruuv4O5x90yMRSfXj56BHxb3KmXOCP933T/CpgN0kSdaZfX5cARcX4m6MSXG
+	 o1ozK0xHrcbTxHJn+EHb+11N254HWDp/b1cc+zgRFkgqAxd0bpFfjLE51qR99Nzx+t
+	 u4aikRCczDHI4tB+Nd3nNJtt0XFc68ZG1uoiz4SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Helen Koike <koike@igalia.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/175] netfilter: nf_conntrack_sip: fix use of uninitialized rtp_addr in process_sdp
-Date: Tue, 31 Mar 2026 18:20:56 +0200
-Message-ID: <20260331161732.424239628@linuxfoundation.org>
+Subject: [PATCH 6.6 042/175] Bluetooth: L2CAP: Fix null-ptr-deref on l2cap_sock_ready_cb
+Date: Tue, 31 Mar 2026 18:20:26 +0200
+Message-ID: <20260331161731.331658328@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -53,90 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit 6a2b724460cb67caed500c508c2ae5cf012e4db4 ]
+[ Upstream commit b6552e0503973daf6f23bd6ed9273ef131ee364f ]
 
-process_sdp() declares union nf_inet_addr rtp_addr on the stack and
-passes it to the nf_nat_sip sdp_session hook after walking the SDP
-media descriptions. However rtp_addr is only initialized inside the
-media loop when a recognized media type with a non-zero port is found.
+Before using sk pointer, check if it is null.
 
-If the SDP body contains no m= lines, only inactive media sections
-(m=audio 0 ...) or only unrecognized media types, rtp_addr is never
-assigned. Despite that, the function still calls hooks->sdp_session()
-with &rtp_addr, causing nf_nat_sdp_session() to format the stale stack
-value as an IP address and rewrite the SDP session owner and connection
-lines with it.
+Fix the following:
 
-With CONFIG_INIT_STACK_ALL_ZERO (default on most distributions) this
-results in the session-level o= and c= addresses being rewritten to
-0.0.0.0 for inactive SDP sessions. Without stack auto-init the
-rewritten address is whatever happened to be on the stack.
+ KASAN: null-ptr-deref in range [0x0000000000000260-0x0000000000000267]
+ CPU: 0 UID: 0 PID: 5985 Comm: kworker/0:5 Not tainted 7.0.0-rc4-00029-ga989fde763f4 #1 PREEMPT(full)
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-9.fc43 06/10/2025
+ Workqueue: events l2cap_info_timeout
+ RIP: 0010:kasan_byte_accessible+0x12/0x30
+ Code: 79 ff ff ff 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 40 d6 48 c1 ef 03 48 b8 00 00 00 00 00 fc ff df <0f> b6 04 07 3c 08 0f 92 c0 c3 cc cce
+ veth0_macvtap: entered promiscuous mode
+ RSP: 0018:ffffc90006e0f808 EFLAGS: 00010202
+ RAX: dffffc0000000000 RBX: ffffffff89746018 RCX: 0000000080000001
+ RDX: 0000000000000000 RSI: ffffffff89746018 RDI: 000000000000004c
+ RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+ R10: dffffc0000000000 R11: ffffffff8aae3e70 R12: 0000000000000000
+ R13: 0000000000000260 R14: 0000000000000260 R15: 0000000000000001
+ FS:  0000000000000000(0000) GS:ffff8880983c2000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00005582615a5008 CR3: 000000007007e000 CR4: 0000000000752ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  __kasan_check_byte+0x12/0x40
+  lock_acquire+0x79/0x2e0
+  lock_sock_nested+0x48/0x100
+  ? l2cap_sock_ready_cb+0x46/0x160
+  l2cap_sock_ready_cb+0x46/0x160
+  l2cap_conn_start+0x779/0xff0
+  ? __pfx_l2cap_conn_start+0x10/0x10
+  ? l2cap_info_timeout+0x60/0xa0
+  ? __pfx___mutex_lock+0x10/0x10
+  l2cap_info_timeout+0x68/0xa0
+  ? process_scheduled_works+0xa8d/0x18c0
+  process_scheduled_works+0xb6e/0x18c0
+  ? __pfx_process_scheduled_works+0x10/0x10
+  ? assign_work+0x3d5/0x5e0
+  worker_thread+0xa53/0xfc0
+  kthread+0x388/0x470
+  ? __pfx_worker_thread+0x10/0x10
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x51e/0xb90
+  ? __pfx_ret_from_fork+0x10/0x10
+ veth1_macvtap: entered promiscuous mode
+  ? __switch_to+0xc7d/0x1450
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ Modules linked in:
+ ---[ end trace 0000000000000000 ]---
+ batman_adv: batadv0: Interface activated: batadv_slave_0
+ batman_adv: batadv0: Interface activated: batadv_slave_1
+ netdevsim netdevsim7 netdevsim0: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim1: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim2: set [1, 0] type 2 family 0 port 6081 - 0
+ netdevsim netdevsim7 netdevsim3: set [1, 0] type 2 family 0 port 6081 - 0
+ RIP: 0010:kasan_byte_accessible+0x12/0x30
+ Code: 79 ff ff ff 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 40 d6 48 c1 ef 03 48 b8 00 00 00 00 00 fc ff df <0f> b6 04 07 3c 08 0f 92 c0 c3 cc cce
+ ieee80211 phy39: Selected rate control algorithm 'minstrel_ht'
+ RSP: 0018:ffffc90006e0f808 EFLAGS: 00010202
+ RAX: dffffc0000000000 RBX: ffffffff89746018 RCX: 0000000080000001
+ RDX: 0000000000000000 RSI: ffffffff89746018 RDI: 000000000000004c
+ RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+ R10: dffffc0000000000 R11: ffffffff8aae3e70 R12: 0000000000000000
+ R13: 0000000000000260 R14: 0000000000000260 R15: 0000000000000001
+ FS:  0000000000000000(0000) GS:ffff8880983c2000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f7e16139e9c CR3: 000000000e74e000 CR4: 0000000000752ef0
+ PKRU: 55555554
+ Kernel panic - not syncing: Fatal exception
 
-Fix this by pre-initializing rtp_addr from the session-level connection
-address (caddr) when available, and tracking via a have_rtp_addr flag
-whether any valid address was established. Skip the sdp_session hook
-entirely when no valid address exists.
-
-Fixes: 4ab9e64e5e3c ("[NETFILTER]: nf_nat_sip: split up SDP mangling")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 54a59aa2b562 ("Bluetooth: Add l2cap_chan->ops->ready()")
+Signed-off-by: Helen Koike <koike@igalia.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_sip.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/bluetooth/l2cap_sock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
-index 657839a58782a..84334537c6067 100644
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -1040,6 +1040,7 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
- 	unsigned int port;
- 	const struct sdp_media_type *t;
- 	int ret = NF_ACCEPT;
-+	bool have_rtp_addr = false;
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 250cc0bc552e0..1960d35b3be0a 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1665,6 +1665,9 @@ static void l2cap_sock_ready_cb(struct l2cap_chan *chan)
+ 	struct sock *sk = chan->data;
+ 	struct sock *parent;
  
- 	hooks = rcu_dereference(nf_nat_sip_hooks);
++	if (!sk)
++		return;
++
+ 	lock_sock(sk);
  
-@@ -1056,8 +1057,11 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
- 	caddr_len = 0;
- 	if (ct_sip_parse_sdp_addr(ct, *dptr, sdpoff, *datalen,
- 				  SDP_HDR_CONNECTION, SDP_HDR_MEDIA,
--				  &matchoff, &matchlen, &caddr) > 0)
-+				  &matchoff, &matchlen, &caddr) > 0) {
- 		caddr_len = matchlen;
-+		memcpy(&rtp_addr, &caddr, sizeof(rtp_addr));
-+		have_rtp_addr = true;
-+	}
- 
- 	mediaoff = sdpoff;
- 	for (i = 0; i < ARRAY_SIZE(sdp_media_types); ) {
-@@ -1091,9 +1095,11 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
- 					  &matchoff, &matchlen, &maddr) > 0) {
- 			maddr_len = matchlen;
- 			memcpy(&rtp_addr, &maddr, sizeof(rtp_addr));
--		} else if (caddr_len)
-+			have_rtp_addr = true;
-+		} else if (caddr_len) {
- 			memcpy(&rtp_addr, &caddr, sizeof(rtp_addr));
--		else {
-+			have_rtp_addr = true;
-+		} else {
- 			nf_ct_helper_log(skb, ct, "cannot parse SDP message");
- 			return NF_DROP;
- 		}
-@@ -1125,7 +1131,7 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
- 
- 	/* Update session connection and owner addresses */
- 	hooks = rcu_dereference(nf_nat_sip_hooks);
--	if (hooks && ct->status & IPS_NAT_MASK)
-+	if (hooks && ct->status & IPS_NAT_MASK && have_rtp_addr)
- 		ret = hooks->sdp_session(skb, protoff, dataoff,
- 					 dptr, datalen, sdpoff,
- 					 &rtp_addr);
+ 	parent = bt_sk(sk)->parent;
 -- 
 2.51.0
 
