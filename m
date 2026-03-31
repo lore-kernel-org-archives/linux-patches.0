@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDD62D77F5;
-	Tue, 31 Mar 2026 17:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8522C21F8;
+	Tue, 31 Mar 2026 17:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976456; cv=none; b=KmgCrwUd9tqepC6wg1nNw+yoMdXHZJKOkBw7uEzUUpePU3HrCuygZlszj4vP9k0fzuzJ5Af+IqOnS8H6ONCXwczZN8So1S61cBzqdpVmaQLznAIbrLzQCNUZGKoQDfctqDEFNfoawd6jxpeG2ndyxiTbdU6phlW/7hJyqSgiPSM=
+	t=1774976459; cv=none; b=EYWSOx9764eTcEifLNtur4y3JwAL2g174Tw9dU5seKRfzmfA0nHoMayPOH1XiG6Kk0QDPDptJNfGFt/kVbkdhYkaoXFBfmCm4FGD6S2KLgmKr8iYYwITmIUTlZMbx17MCfsVqwA3LDOrVlG6EM2iA6AWoE4PyKrCmvlnWMjIQ74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976456; c=relaxed/simple;
-	bh=fBVCxeuY4TF3ISvtkVsEOBc1pouyzjHiuNOMDQ5LEXE=;
+	s=arc-20240116; t=1774976459; c=relaxed/simple;
+	bh=bF6zCXnuacN51BrQX7tP86OPex3I0KE3WILVFOM+TVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEYzMZ2l6gLupw0tF7uft38Xgwo4SeAUNzPtoThgaE9UnwAd6sfbanFhBYNu+zveVIIcLpOExX0j/8cCq7uJXx+3KBKSDXoriW8kAlQ3gQB8kSI0/gy5Z8MBhWQXXsnqd8K2yhdAeaKdq2Q/dkvF55jjYvJnKf0Sjh0cW/Ff4a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfAN3FGB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YZFqwjvxQEKpF9xH6BB/7M7c3QOnbKVVuNaA93q1ZwnUAw+LA3k67cdIaG4lUfrJ7yS+uhvOt9R6b+O+sFDOZUuezadjz9E8sb7EepwTvBoEvA0vpTZeymxnbFtaNdNmu3SS+36L1ndcrHRL19Xj/D4s4wKrZj1eyonvQSo5yIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HE/MJNjw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfAN3FGB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BF5C19423;
-	Tue, 31 Mar 2026 17:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HE/MJNjw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961A3C19423;
+	Tue, 31 Mar 2026 17:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976456;
-	bh=fBVCxeuY4TF3ISvtkVsEOBc1pouyzjHiuNOMDQ5LEXE=;
+	s=korg; t=1774976458;
+	bh=bF6zCXnuacN51BrQX7tP86OPex3I0KE3WILVFOM+TVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfAN3FGBgyYZQzsaozncJoWwFDPna84VJi9meDHG73sCeh5fCjcf707epKiNEL3aR
-	 4/X5X01Os6B0pnTX09VjQQCeSem5SBCBowI4U9jGgO2TxJayaRHZk3HWTUI9T9IVgB
-	 7mNckaWRnDJ5KVjPh+H7mxs5JgNY+hMKT3ilEo2o=
+	b=HE/MJNjweR8QIDqfcg+GR6Nne6H0qzhn/g4O0whx4U6T+oQPGNonU1UTj3JR+axHR
+	 wp+8tfcTCpy/eXDpPaIM3vGk/75LXSWXMp8GSKTQc47xIlMoEjYoYKMMXX/AFyGyql
+	 q8zctiBZH1cuQ/Ewo1af68E21E/dn9bjRjqK1FBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 057/309] powerpc64/ftrace: fix OOL stub count with clang
-Date: Tue, 31 Mar 2026 18:19:20 +0200
-Message-ID: <20260331161755.586101823@linuxfoundation.org>
+Subject: [PATCH 6.18 093/309] openvswitch: validate MPLS set/set_masked payload length
+Date: Tue, 31 Mar 2026 18:19:56 +0200
+Message-ID: <20260331161756.914147427@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,45 +56,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Bathini <hbathini@linux.ibm.com>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-[ Upstream commit 875612a7745013a43c67493cb0583ee3f7476344 ]
+[ Upstream commit 546b68ac893595877ffbd7751e5c55fd1c43ede6 ]
 
-The total number of out-of-line (OOL) stubs required for function
-tracing is determined using the following command:
+validate_set() accepted OVS_KEY_ATTR_MPLS as variable-sized payload for
+SET/SET_MASKED actions. In action handling, OVS expects fixed-size
+MPLS key data (struct ovs_key_mpls).
 
-    $(OBJDUMP) -r -j __patchable_function_entries vmlinux.o
+Use the already normalized key_len (masked case included) and reject
+non-matching MPLS action key sizes.
 
-While this works correctly with GNU objdump, llvm-objdump does not
-list the expected relocation records for this section. Fix this by
-using the -d option and counting R_PPC64_ADDR64 relocation entries.
-This works as desired with both objdump and llvm-objdump.
+Reject invalid MPLS action payload lengths early.
 
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260127084926.34497-3-hbathini@linux.ibm.com
+Fixes: fbdcdd78da7c ("Change in Openvswitch to support MPLS label depth of 3 in ingress direction")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
+Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260319080228.3423307-1-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/tools/ftrace-gen-ool-stubs.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/openvswitch/flow_netlink.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/tools/ftrace-gen-ool-stubs.sh b/arch/powerpc/tools/ftrace-gen-ool-stubs.sh
-index bac186bdf64a7..9218d43aeb548 100755
---- a/arch/powerpc/tools/ftrace-gen-ool-stubs.sh
-+++ b/arch/powerpc/tools/ftrace-gen-ool-stubs.sh
-@@ -15,9 +15,9 @@ if [ -z "$is_64bit" ]; then
- 	RELOCATION=R_PPC_ADDR32
- fi
+diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
+index 2d536901309ea..2dc4a6c2aecec 100644
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -2953,6 +2953,8 @@ static int validate_set(const struct nlattr *a,
+ 	case OVS_KEY_ATTR_MPLS:
+ 		if (!eth_p_mpls(eth_type))
+ 			return -EINVAL;
++		if (key_len != sizeof(struct ovs_key_mpls))
++			return -EINVAL;
+ 		break;
  
--num_ool_stubs_total=$($objdump -r -j __patchable_function_entries "$vmlinux_o" |
-+num_ool_stubs_total=$($objdump -r -j __patchable_function_entries -d "$vmlinux_o" |
- 		      grep -c "$RELOCATION")
--num_ool_stubs_inittext=$($objdump -r -j __patchable_function_entries "$vmlinux_o" |
-+num_ool_stubs_inittext=$($objdump -r -j __patchable_function_entries -d "$vmlinux_o" |
- 			 grep -e ".init.text" -e ".text.startup" | grep -c "$RELOCATION")
- num_ool_stubs_text=$((num_ool_stubs_total - num_ool_stubs_inittext))
- 
+ 	case OVS_KEY_ATTR_SCTP:
 -- 
 2.51.0
 
