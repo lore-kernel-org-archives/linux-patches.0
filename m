@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A31E3081D6;
-	Tue, 31 Mar 2026 17:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3490309DCF;
+	Tue, 31 Mar 2026 17:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976836; cv=none; b=CDa2PR3r/MEYgi+IboaHf0x/hgC0CTM9HqbEBOa6AZ98+YJqLtZRbCYalqUSNhMQBB8sU4l6fayNl9j/V4uvs5Ci5Gq7lRblYZcvlPn2cSQSwpPqUgseh/+XwxRDVrpAPDdlTN2UGeVOKXD7fE9NeB7YVAWKwgoRw0I61bGFJhI=
+	t=1774976838; cv=none; b=TKQhpUz9p35s2KfAY1dBR5j+0vcYqdZi2573lvB4mqhXnmu6PVUyhIoyBtWjUsH85meuLJOqGdSO3kb4P66HjOqG5j+o0z8XGVbodZ1LnpwZ34Isa8JB1vXdMjldAcCp1rQXSglMBHnRIWsKUGbv832wxSvlS5W25iOGwn/8w3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976836; c=relaxed/simple;
-	bh=S4PMCqFc9U9dsQDCLg+XtlM3JXLElOICe4kdwF+PbQw=;
+	s=arc-20240116; t=1774976838; c=relaxed/simple;
+	bh=oG4nJUNXk8nqLTUVt7dBn9voQMIdvDdT8QWoD/q3D6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rb4tETdXBKnpLWy0nOqJqUWkUI2jSU7rcT5qyD21RgNGWLbO68ehhQx0fFJNJNy3fkq46c5teGWOhFqO0fhkHMmUWT5ErcKp/B1S2n5oOh9f3eo9ILHwS7yp6WdJXSIPQGdntH1olCaKC+swK5xignNItv/J59dELi3knwWw9Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdHryI4f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iYatUQiNr47dR6Kcp23Bv6PZiuvh8uItDUQs9P9B+cHT0DyRWrqi/3g98OsYsY1NCSk+Hd5ZR380Z63WrFparOuAqINPqo+kzOkPfWRbKmxHfYplTxEzV+3g7ZOJDw3SpUBeDi9g/9XbH31m2bmzVDGtZ4e0i+niGHjFv8+JL0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkrvxUSg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdHryI4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C5FC19423;
-	Tue, 31 Mar 2026 17:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkrvxUSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49563C19423;
+	Tue, 31 Mar 2026 17:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976836;
-	bh=S4PMCqFc9U9dsQDCLg+XtlM3JXLElOICe4kdwF+PbQw=;
+	s=korg; t=1774976838;
+	bh=oG4nJUNXk8nqLTUVt7dBn9voQMIdvDdT8QWoD/q3D6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bdHryI4f7RjlON7Mllfzvny4j8hyf6ZhXR2DJmluOLHyHkS32UA06LN2mCyGuGPaw
-	 wT2GqAQrNHZ050lqBN4raCf3zFkAtJup9SPqgQhmrA1aBQA91yn7DeYe21SdSkdVoQ
-	 tNkLQorePqlsliYdQg0QxxG6ch7lUGKHZYrjfg4E=
+	b=fkrvxUSgzlcS2WUFWfmWeJUT0cadq1QiNMKhf8gHbKMCajgYMg4ybKMRRxz0XIP8+
+	 S7zBFdNjRJ58FNm7NKSHFHckJl12KW3GregZumY5Fj2HvQbhr4e4eSQzMdtHUQxt4O
+	 S15Cz6eGeYKF7yTHtlPW4xA+OpaUKaEIcHvdrgkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
-	Yuto Ohnuki <ytohnuki@amazon.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	Yuto Ohnuki <ytohnuki@amazon.com>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 247/309] xfs: stop reclaim before pushing AIL during unmount
-Date: Tue, 31 Mar 2026 18:22:30 +0200
-Message-ID: <20260331161802.662521736@linuxfoundation.org>
+Subject: [PATCH 6.18 248/309] xfs: save ailp before dropping the AIL lock in push callbacks
+Date: Tue, 31 Mar 2026 18:22:31 +0200
+Message-ID: <20260331161802.699830233@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -54,56 +55,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-commit 4f24a767e3d64a5f58c595b5c29b6063a201f1e3 upstream.
+commit 394d70b86fae9fe865e7e6d9540b7696f73aa9b6 upstream.
 
-The unmount sequence in xfs_unmount_flush_inodes() pushed the AIL while
-background reclaim and inodegc are still running. This is broken
-independently of any use-after-free issues - background reclaim and
-inodegc should not be running while the AIL is being pushed during
-unmount, as inodegc can dirty and insert inodes into the AIL during the
-flush, and background reclaim can race to abort and free dirty inodes.
+In xfs_inode_item_push() and xfs_qm_dquot_logitem_push(), the AIL lock
+is dropped to perform buffer IO. Once the cluster buffer no longer
+protects the log item from reclaim, the log item may be freed by
+background reclaim or the dquot shrinker. The subsequent spin_lock()
+call dereferences lip->li_ailp, which is a use-after-free.
 
-Reorder xfs_unmount_flush_inodes() to stop inodegc and cancel background
-reclaim before pushing the AIL. Stop inodegc before cancelling
-m_reclaim_work because the inodegc worker can re-queue m_reclaim_work
-via xfs_inodegc_set_reclaimable.
+Fix this by saving the ailp pointer in a local variable while the AIL
+lock is held and the log item is guaranteed to be valid.
 
 Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
 Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
 Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
 Cc: stable@vger.kernel.org # v5.9
-Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_mount.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_dquot_item.c |    9 +++++++--
+ fs/xfs/xfs_inode_item.c |    9 +++++++--
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
---- a/fs/xfs/xfs_mount.c
-+++ b/fs/xfs/xfs_mount.c
-@@ -607,8 +607,9 @@ xfs_unmount_check(
-  * have been retrying in the background.  This will prevent never-ending
-  * retries in AIL pushing from hanging the unmount.
-  *
-- * Finally, we can push the AIL to clean all the remaining dirty objects, then
-- * reclaim the remaining inodes that are still in memory at this point in time.
-+ * Stop inodegc and background reclaim before pushing the AIL so that they
-+ * are not running while the AIL is being flushed. Then push the AIL to
-+ * clean all the remaining dirty objects and reclaim the remaining inodes.
-  */
- static void
- xfs_unmount_flush_inodes(
-@@ -620,9 +621,9 @@ xfs_unmount_flush_inodes(
+--- a/fs/xfs/xfs_dquot_item.c
++++ b/fs/xfs/xfs_dquot_item.c
+@@ -126,6 +126,7 @@ xfs_qm_dquot_logitem_push(
+ 	struct xfs_dq_logitem	*qlip = DQUOT_ITEM(lip);
+ 	struct xfs_dquot	*dqp = qlip->qli_dquot;
+ 	struct xfs_buf		*bp;
++	struct xfs_ail		*ailp = lip->li_ailp;
+ 	uint			rval = XFS_ITEM_SUCCESS;
+ 	int			error;
  
- 	xfs_set_unmounting(mp);
+@@ -154,7 +155,7 @@ xfs_qm_dquot_logitem_push(
+ 		goto out_unlock;
+ 	}
  
--	xfs_ail_push_all_sync(mp->m_ail);
- 	xfs_inodegc_stop(mp);
- 	cancel_delayed_work_sync(&mp->m_reclaim_work);
-+	xfs_ail_push_all_sync(mp->m_ail);
- 	xfs_reclaim_inodes(mp);
- 	xfs_health_unmount(mp);
+-	spin_unlock(&lip->li_ailp->ail_lock);
++	spin_unlock(&ailp->ail_lock);
+ 
+ 	error = xfs_dquot_use_attached_buf(dqp, &bp);
+ 	if (error == -EAGAIN) {
+@@ -173,9 +174,13 @@ xfs_qm_dquot_logitem_push(
+ 			rval = XFS_ITEM_FLUSHING;
+ 	}
+ 	xfs_buf_relse(bp);
++	/*
++	 * The buffer no longer protects the log item from reclaim, so
++	 * do not reference lip after this point.
++	 */
+ 
+ out_relock_ail:
+-	spin_lock(&lip->li_ailp->ail_lock);
++	spin_lock(&ailp->ail_lock);
+ out_unlock:
+ 	xfs_dqunlock(dqp);
+ 	return rval;
+--- a/fs/xfs/xfs_inode_item.c
++++ b/fs/xfs/xfs_inode_item.c
+@@ -749,6 +749,7 @@ xfs_inode_item_push(
+ 	struct xfs_inode_log_item *iip = INODE_ITEM(lip);
+ 	struct xfs_inode	*ip = iip->ili_inode;
+ 	struct xfs_buf		*bp = lip->li_buf;
++	struct xfs_ail		*ailp = lip->li_ailp;
+ 	uint			rval = XFS_ITEM_SUCCESS;
+ 	int			error;
+ 
+@@ -774,7 +775,7 @@ xfs_inode_item_push(
+ 	if (!xfs_buf_trylock(bp))
+ 		return XFS_ITEM_LOCKED;
+ 
+-	spin_unlock(&lip->li_ailp->ail_lock);
++	spin_unlock(&ailp->ail_lock);
+ 
+ 	/*
+ 	 * We need to hold a reference for flushing the cluster buffer as it may
+@@ -798,7 +799,11 @@ xfs_inode_item_push(
+ 		rval = XFS_ITEM_LOCKED;
+ 	}
+ 
+-	spin_lock(&lip->li_ailp->ail_lock);
++	/*
++	 * The buffer no longer protects the log item from reclaim, so
++	 * do not reference lip after this point.
++	 */
++	spin_lock(&ailp->ail_lock);
+ 	return rval;
  }
+ 
 
 
