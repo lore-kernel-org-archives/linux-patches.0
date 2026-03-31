@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED631C861A;
-	Tue, 31 Mar 2026 16:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A75E402BA9;
+	Tue, 31 Mar 2026 16:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975472; cv=none; b=CKKHe77kcs4U/kPF+klr1PXihtwr+QtzFJ1JwQmSTZp3eonvH65/si83s4hzLMpoQfzqE9S74/MosifSdy+TCE5CQmRklyGaoNjuxjSsY2P1iaDEYpl8vdeTFeCJ160TKTpIqv20bMYyRTTHEraXJEN8cKr1V+eRL+xLxLz13jM=
+	t=1774975475; cv=none; b=J9vsljyl3ZNsnTipUkWxyWkJIqcTUe+4vJHkmvWUN+LdyJeZG+iF1Z9/lrmXc5pGt9uC08kn9HWNRBtESOrKGt7oJxSledU316kMnCbGGuLEPDywg86z4ut5T80lgYZaa/Sejh386KnIJHeRymBaraE0lb/1Io2j1BijIjpu9TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975472; c=relaxed/simple;
-	bh=MJQr4686QyzpIiU03xHb9bKcLOynI+yjGVI+cSuKkIw=;
+	s=arc-20240116; t=1774975475; c=relaxed/simple;
+	bh=2YJOqLQ8ygEY4oV4jLzbqPLbe90AMzCyvJB5wQ+3YFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Abc9qzSfdaj17RrZZg07R1xK6eYNJxqhZsTnmErANYpheye9xYx4uot5vs+JdY+bf5v2X6UY6Mjna3yYrlowobgaYA8vQLL3JijgnWrGDcdv4qQw5vedHud87XcToRax8aNOMWNPpNR4d8+Xr5bbNEQr4zpWYrA9Akqvt/97/zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDYfg36R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lm0tW38jSzMOWpvYeZKemoIH0cfmnYsw/P/KmMg8tUglnlypHYZZzGIQ5OiB3BTFwVnfCxSV44rRwEM/H3ASq6/dpaSmCd5BsGPOARz7Tu/dz6oabaRjIh1xlLRHlo4h3G3pUTUBdGpqFh6cIZoQM9yAx2ZGVMPvtmWfXsIy7JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzV9jb1F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDYfg36R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46008C19423;
-	Tue, 31 Mar 2026 16:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzV9jb1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2C0C19424;
+	Tue, 31 Mar 2026 16:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975472;
-	bh=MJQr4686QyzpIiU03xHb9bKcLOynI+yjGVI+cSuKkIw=;
+	s=korg; t=1774975475;
+	bh=2YJOqLQ8ygEY4oV4jLzbqPLbe90AMzCyvJB5wQ+3YFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XDYfg36RipLvyK1r6a9dMOKMSpTKciOPMw7PlSezkLVE/jtlBOR9WIkzIozlas+jw
-	 0nKW/TfNbxTVQ8S73aFEQBLo9L5aFCB4KXtcBtEbT9XbBSuuCKLYs6sphjk6XE6Czp
-	 d2fLwgCer5ZT7ZoRIR82KmyQDbDba1O0pe/mDzEY=
+	b=WzV9jb1FPMByd+fXZWoui1DJhNtEP3A0ZoNCMAX5x1QHnrPLlZ2E/yQfdBkOjJaWD
+	 SkHtdBAfy9sk3FwZfyg3R2zgY+IJ/H0BNrNyCF34gu37Sl/N+f5X/yfShYOx0MBAeh
+	 ZD47sV8POuUt68hL5rQdFYzA+ttV587o73oAizmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien Jarno <aurel32@debian.org>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.19 275/342] LoongArch: KVM: Handle the case that EIOINTCs coremap is empty
-Date: Tue, 31 Mar 2026 18:21:48 +0200
-Message-ID: <20260331161809.059690507@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.19 266/342] drm/amd/display: check if ext_caps is valid in BL setup
+Date: Tue, 31 Mar 2026 18:21:39 +0200
+Message-ID: <20260331161808.737188076@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -50,36 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit b97bd69eb0f67b5f961b304d28e9ba45e202d841 upstream.
+commit 9da4f9964abcaeb6e19797d5e3b10faad338a786 upstream.
 
-EIOINTC's coremap in eiointc_update_sw_coremap() can be empty, currently
-we get a cpuid with -1 in this case, but we actually need 0 because it's
-similar as the case that cpuid >= 4.
+LVDS connectors don't have extended backlight caps so check
+if the pointer is valid before accessing it.
 
-This fix an out-of-bounds access to kvm_arch::phyid_map::phys_map[].
-
-Cc: <stable@vger.kernel.org>
-Fixes: 3956a52bc05bd81 ("LoongArch: KVM: Add EIOINTC read and write functions")
-Reported-by: Aurelien Jarno <aurel32@debian.org>
-Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1131431
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5012
+Fixes: 1454642960b0 ("drm/amd: Re-introduce property to control adaptive backlight modulation")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 3f797396d7f4eb9bb6eded184bbc6f033628a6f6)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/eiointc.c |    2 +-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/kvm/intc/eiointc.c
-+++ b/arch/loongarch/kvm/intc/eiointc.c
-@@ -83,7 +83,7 @@ static inline void eiointc_update_sw_cor
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5406,7 +5406,7 @@ static void setup_backlight_device(struc
+ 	caps = &dm->backlight_caps[aconnector->bl_idx];
  
- 		if (!(s->status & BIT(EIOINTC_ENABLE_CPU_ENCODE))) {
- 			cpuid = ffs(cpuid) - 1;
--			cpuid = (cpuid >= 4) ? 0 : cpuid;
-+			cpuid = ((cpuid < 0) || (cpuid >= 4)) ? 0 : cpuid;
- 		}
- 
- 		vcpu = kvm_get_vcpu_by_cpuid(s->kvm, cpuid);
+ 	/* Only offer ABM property when non-OLED and user didn't turn off by module parameter */
+-	if (!caps->ext_caps->bits.oled && amdgpu_dm_abm_level < 0)
++	if (caps->ext_caps && !caps->ext_caps->bits.oled && amdgpu_dm_abm_level < 0)
+ 		drm_object_attach_property(&aconnector->base.base,
+ 					   dm->adev->mode_info.abm_level_property,
+ 					   ABM_SYSFS_CONTROL);
 
 
