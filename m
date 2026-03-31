@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173652D1F40;
-	Tue, 31 Mar 2026 16:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8414F25D527;
+	Tue, 31 Mar 2026 16:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975527; cv=none; b=hv9r3supwBi5wB/2kUzYGC32RAf/OMDRhsXqDqzHYNGLJ49qTuSETxq0KV52E8ly8sVH8kZE4Wk8tsdFuQOPlChdt43n0lBOrJeubnLF6CwsQozi4E/j7S75agGgiI8ebw4Q0NUoYx5qY5BCTbW/PeN6pzbieufsJ80dLvsYh3k=
+	t=1774975529; cv=none; b=J8ezd1WdtLu7Fw3Cs0RU4WLT+rXjkxwyJsrnem9szF3uCS7W1BnU4VGvPYTPOSgKmrkbb0Br/LpofDUxRfHJIWvoOa4L0XfYgXfD/Bd2Z7et+1O6BtWuUllhRhR9Hbsds+7ED5hemi+WDxHrnUzuNas3ZAxiOwU2d1Ev0ma0vog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975527; c=relaxed/simple;
-	bh=s/Cep65FNyVR7/Q6aRLC7zXx+nZsapVla7TcuHuvQ48=;
+	s=arc-20240116; t=1774975529; c=relaxed/simple;
+	bh=XNnUaPeBzKe3zSDBf8fN/VYNO8M0aW51n9t4bec64TE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwY+WwWMI5kmfZLVUS5ZO3t28YQtdrXu09foQUpVS2PGaYO4mfsjjtil4fOkqvI/fV4Whp7vT70EViZkgwiSjIk2XsJpmN7ZhHDycgR333qsstWly5Yb3CM+PZ92OnkPaT3W6+PR95JsBHBywZDJqQgCwLY6b8uJLuz2wrR46F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxOLsbH8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nOXpc2xBDeHHb7Sm+vQ/OJKP2VmC6QYoM9xBYRso3+zf3NNqYN0nMRmmi6HxPcxRPzj8swPyw4KlaGrr2aZD9TloWi/W7YGy7N52vDXHRics31R/bOEfJTjBJ5i49QxEeyxqXHvGcMnEe1JhhgU+g1ubV9XVy8QGK+Z7BAEPUZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxglHowv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxOLsbH8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A5FC19423;
-	Tue, 31 Mar 2026 16:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxglHowv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20655C19423;
+	Tue, 31 Mar 2026 16:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975527;
-	bh=s/Cep65FNyVR7/Q6aRLC7zXx+nZsapVla7TcuHuvQ48=;
+	s=korg; t=1774975529;
+	bh=XNnUaPeBzKe3zSDBf8fN/VYNO8M0aW51n9t4bec64TE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxOLsbH8dsuF/ZoUHOox7FzZiHpGF5iX+dNc5eumDxMTBKS5dARsaAB8JMhDJlcGT
-	 JIr1m+CLSJ0GRYWLyr28K+VxK1pc4Vv41OKcgKh92jD0tCWmiC9iFeiLKlyT3ODMwQ
-	 Z5UrVMcANavMQ95EdD2FEjn3QBu2Sa8ikTtzc8Ok=
+	b=oxglHowv/hR3iHuf7bTEdGPlN7TIz+iWyKR9bfhHMXBU+ytPjrfL/maCeGhSbiSCb
+	 kvhkV+JWfP2LkGCqNmZqTFrR0Pz9fNX0bIS06od/DNmu/iz+educC+EUWIlzzJ6chP
+	 hPhClioo8I43HDaLQs2ETIUWutZ+0HMY0zGGwyaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 329/342] selftests/mount_setattr: increase tmpfs size for idmapped mount tests
-Date: Tue, 31 Mar 2026 18:22:42 +0200
-Message-ID: <20260331161811.014096556@linuxfoundation.org>
+Subject: [PATCH 6.19 330/342] netfs: Fix read abandonment during retry
+Date: Tue, 31 Mar 2026 18:22:43 +0200
+Message-ID: <20260331161811.049703731@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -50,42 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c465f5591aa84a6f85d66d152e28b92844a45d4f ]
+[ Upstream commit 7e57523490cd2efb52b1ea97f2e0a74c0fb634cd ]
 
-The mount_setattr_idmapped fixture mounts a 2 MB tmpfs at /mnt and then
-creates a 2 GB sparse ext4 image at /mnt/C/ext4.img. While ftruncate()
-succeeds (sparse file), mkfs.ext4 needs to write actual metadata blocks
-(inode tables, journal, bitmaps) which easily exceeds the 2 MB tmpfs
-limit, causing ENOSPC and failing the fixture setup for all
-mount_setattr_idmapped tests.
+Under certain circumstances, all the remaining subrequests from a read
+request will get abandoned during retry.  The abandonment process expects
+the 'subreq' variable to be set to the place to start abandonment from, but
+it doesn't always have a useful value (it will be uninitialised on the
+first pass through the loop and it may point to a deleted subrequest on
+later passes).
 
-This was introduced by commit d37d4720c3e7 ("selftests/mount_settattr:
-ensure that ext4 filesystem can be created") which increased the image
-size from 2 MB to 2 GB but didn't adjust the tmpfs size.
+Fix the first jump to "abandon:" to set subreq to the start of the first
+subrequest expected to need retry (which, in this abandonment case, turned
+out unexpectedly to no longer have NEED_RETRY set).
 
-Bump the tmpfs size to 256 MB which is sufficient for the ext4 metadata.
+Also clear the subreq pointer after discarding superfluous retryable
+subrequests to cause an oops if we do try to access it.
 
-Fixes: d37d4720c3e7 ("selftests/mount_settattr: ensure that ext4 filesystem can be created")
+Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/3775287.1773848338@warthog.procyon.org.uk
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mount_setattr/mount_setattr_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/netfs/read_retry.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/mount_setattr/mount_setattr_test.c b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-index 7aec3ae82a446..c6dafb3cc1163 100644
---- a/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-+++ b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-@@ -1020,7 +1020,7 @@ FIXTURE_SETUP(mount_setattr_idmapped)
- 			"size=100000,mode=700"), 0);
+diff --git a/fs/netfs/read_retry.c b/fs/netfs/read_retry.c
+index 7793ba5e3e8fc..cca9ac43c0773 100644
+--- a/fs/netfs/read_retry.c
++++ b/fs/netfs/read_retry.c
+@@ -93,8 +93,10 @@ static void netfs_retry_read_subrequests(struct netfs_io_request *rreq)
+ 		       from->start, from->transferred, from->len);
  
- 	ASSERT_EQ(mount("testing", "/mnt", "tmpfs", MS_NOATIME | MS_NODEV,
--			"size=2m,mode=700"), 0);
-+			"size=256m,mode=700"), 0);
+ 		if (test_bit(NETFS_SREQ_FAILED, &from->flags) ||
+-		    !test_bit(NETFS_SREQ_NEED_RETRY, &from->flags))
++		    !test_bit(NETFS_SREQ_NEED_RETRY, &from->flags)) {
++			subreq = from;
+ 			goto abandon;
++		}
  
- 	ASSERT_EQ(mkdir("/mnt/A", 0777), 0);
+ 		list_for_each_continue(next, &stream->subrequests) {
+ 			subreq = list_entry(next, struct netfs_io_subrequest, rreq_link);
+@@ -178,6 +180,7 @@ static void netfs_retry_read_subrequests(struct netfs_io_request *rreq)
+ 				if (subreq == to)
+ 					break;
+ 			}
++			subreq = NULL;
+ 			continue;
+ 		}
  
 -- 
 2.53.0
