@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EB2303A07;
-	Tue, 31 Mar 2026 17:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C266303A07;
+	Tue, 31 Mar 2026 17:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976849; cv=none; b=p2AlCWmjkRI91GwtRn75T6cz0cAr7VcXALTYkexNAVEatykmG8wXRmhAjVllwdzqplWUPq4G1fXeBLp5461Y5Pipr2+suOoh49dPEfuIOHn6S6qgo2w8BikvGur+Mf105lk+qRF00xaheBSCgAmoJqyVfg7T+/6tyY/Yh8YaO4M=
+	t=1774976851; cv=none; b=qsFDFyagdoyVfn1N64XAQ3ZRNxVNQgIlRYS5fLr/sxfMJ2lDfM36/jomO/5r2PKtgNwEbYZ2ha06LqF0JfZQnljhQWHEXEP8kMKUbzGG3h6x084Vv8QrJZBMBGHIyVjKJC3qrW7nszakwk6NZemSd8XPS4elqGGhor1ndCH40g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976849; c=relaxed/simple;
-	bh=Ps+MzcUDJscKmNNmgzAZAzw1jdLBmHq4BH3PPhoQA+Y=;
+	s=arc-20240116; t=1774976851; c=relaxed/simple;
+	bh=Bu0mqBm5hAGai0nQ4xmqexTNMugJCONgT0d7dVOwHSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u31O0Kzb1nBiInZo7B+ZkLstM6PVZgvgffbaBlm1fPd1XgLIvY5gcx9rYRe7lfCNEIaq9o7BXJRscNZsh2JMhd60ruHBH8WBuxUTjFr+DpuHpSP1Gx/OsD1mVvsDqcmOmT9l1XB+4ux056rsd3c6TwVBJLbhdR6XEc4n5CXG5WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEHbUilq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D8Uicmc1QD0tEsfMdEJYL4T1hsc9VQ3kX9GnABfLxA427peBLiJYCHymzol5Z5T64VpVNQHr7JU3ZshAzv4IzQCqnxvOO1TuhV07AH7ZsHX1AIJr6AQJK2J64jqzNzvc0+PLCGgMWLAM7cU1nXP/V/o1xKy7psnhXPb1xKYT40s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcgSbkWt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEHbUilq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0F8C19423;
-	Tue, 31 Mar 2026 17:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcgSbkWt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3083DC19423;
+	Tue, 31 Mar 2026 17:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976849;
-	bh=Ps+MzcUDJscKmNNmgzAZAzw1jdLBmHq4BH3PPhoQA+Y=;
+	s=korg; t=1774976851;
+	bh=Bu0mqBm5hAGai0nQ4xmqexTNMugJCONgT0d7dVOwHSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hEHbUilqFeQLMSkMJOFVFB4A1jPaddlwBxEZvfJ0K2aLmP6eyuEO/z0zcRyOUKutD
-	 QNXR768ETcz2wDF04enLr/cfwlGYPLlcHVRqrDWPlr1NEjwXZLKKx5NYz83yof/h7X
-	 PvIS7fOruuIuW1EfcR7n7/dz6e4AALFpcIGUtomw=
+	b=CcgSbkWtIxjsEf1ayDsavQj6DdKFPFx/3zuBWeugX7PWhicEcmuFkjZfLtGSxkAGV
+	 958raSi6mD2ohWPnxL/lDgwR88IBGTEdmkw5JJDHmrWejYTRB7HZ7BFxX1uR7ZFsvz
+	 /g8Rmx5fhABiT9aQpSlbz6+McA6WHiiaJqJuOz/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	rostedt@goodmis.org,
+	david.laight.linux@gmail.com,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Long Li <leo.lilong@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cmaiolino@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 252/309] xfs: dont irele after failing to iget in xfs_attri_recover_work
-Date: Tue, 31 Mar 2026 18:22:35 +0200
-Message-ID: <20260331161802.848785912@linuxfoundation.org>
+Subject: [PATCH 6.18 253/309] xfs: remove file_path tracepoint data
+Date: Tue, 31 Mar 2026 18:22:36 +0200
+Message-ID: <20260331161802.886288307@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -55,32 +56,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 70685c291ef82269180758130394ecdc4496b52c upstream.
+commit e31c53a8060e134111ed095783fee0aa0c43b080 upstream.
 
-xlog_recovery_iget* never set @ip to a valid pointer if they return
-an error, so this irele will walk off a dangling pointer.  Fix that.
+The xfile/xmbuf shmem file descriptions are no longer as detailed as
+they were when online fsck was first merged, because moving to static
+strings in commit 60382993a2e180 ("xfs: get rid of the
+xchk_xfile_*_descr calls") removed a memory allocation and hence a
+source of failure.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: ae673f534a3097 ("xfs: record inode generation in xattr update log intent items")
+However this makes encoding the description in the tracepoints sort of a
+waste of memory.  David Laight also points out that file_path doesn't
+zero the whole buffer which causes exposure of stale trace bytes, and
+Steven Rostedt wonders why we're not using a dynamic array for the file
+path.
+
+I don't think this is worth fixing, so let's just rip it out.
+
+Cc: rostedt@goodmis.org
+Cc: david.laight.linux@gmail.com
+Link: https://lore.kernel.org/linux-xfs/20260323172204.work.979-kees@kernel.org/
+Cc: stable@vger.kernel.org # v6.11
+Fixes: 19ebc8f84ea12e ("xfs: fix file_path handling in tracepoints")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_attr_item.c |    1 -
- 1 file changed, 1 deletion(-)
+ fs/xfs/scrub/trace.h |   12 ++----------
+ fs/xfs/xfs_trace.h   |   11 ++---------
+ 2 files changed, 4 insertions(+), 19 deletions(-)
 
---- a/fs/xfs/xfs_attr_item.c
-+++ b/fs/xfs/xfs_attr_item.c
-@@ -656,7 +656,6 @@ xfs_attri_recover_work(
- 		break;
- 	}
- 	if (error) {
--		xfs_irele(ip);
- 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp, attrp,
- 				sizeof(*attrp));
- 		return ERR_PTR(-EFSCORRUPTED);
+--- a/fs/xfs/scrub/trace.h
++++ b/fs/xfs/scrub/trace.h
+@@ -972,20 +972,12 @@ TRACE_EVENT(xfile_create,
+ 	TP_STRUCT__entry(
+ 		__field(dev_t, dev)
+ 		__field(unsigned long, ino)
+-		__array(char, pathname, MAXNAMELEN)
+ 	),
+ 	TP_fast_assign(
+-		char		*path;
+-
+ 		__entry->ino = file_inode(xf->file)->i_ino;
+-		path = file_path(xf->file, __entry->pathname, MAXNAMELEN);
+-		if (IS_ERR(path))
+-			strncpy(__entry->pathname, "(unknown)",
+-					sizeof(__entry->pathname));
+ 	),
+-	TP_printk("xfino 0x%lx path '%s'",
+-		  __entry->ino,
+-		  __entry->pathname)
++	TP_printk("xfino 0x%lx",
++		  __entry->ino)
+ );
+ 
+ TRACE_EVENT(xfile_destroy,
+--- a/fs/xfs/xfs_trace.h
++++ b/fs/xfs/xfs_trace.h
+@@ -5117,23 +5117,16 @@ TRACE_EVENT(xmbuf_create,
+ 	TP_STRUCT__entry(
+ 		__field(dev_t, dev)
+ 		__field(unsigned long, ino)
+-		__array(char, pathname, MAXNAMELEN)
+ 	),
+ 	TP_fast_assign(
+-		char		*path;
+ 		struct file	*file = btp->bt_file;
+ 
+ 		__entry->dev = btp->bt_mount->m_super->s_dev;
+ 		__entry->ino = file_inode(file)->i_ino;
+-		path = file_path(file, __entry->pathname, MAXNAMELEN);
+-		if (IS_ERR(path))
+-			strncpy(__entry->pathname, "(unknown)",
+-					sizeof(__entry->pathname));
+ 	),
+-	TP_printk("dev %d:%d xmino 0x%lx path '%s'",
++	TP_printk("dev %d:%d xmino 0x%lx",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+-		  __entry->ino,
+-		  __entry->pathname)
++		  __entry->ino)
+ );
+ 
+ TRACE_EVENT(xmbuf_free,
 
 
