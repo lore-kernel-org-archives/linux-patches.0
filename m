@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CA33EE1DD;
-	Tue, 31 Mar 2026 16:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D8D2EE262;
+	Tue, 31 Mar 2026 16:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974449; cv=none; b=rYEDG6ETLg4ASpvgyZPUXM1CCWNYH0aVvbMqz1iiLhahTdowaUTJxLvoKor0nuiqTfY3hDInL7WyDIw4en+xHrvQYSkw8H8w2D4x2rBgS5thfnMEwp//pw/4c+0LYOKoCfvTLQUZkmA31yyOd9zmozJdexPHrPm/2UoNYW4AbMU=
+	t=1774974451; cv=none; b=JCN4LP0vH+AW+6T64/1SDp/+cf80e7cSMjvPUwN0vBZxO53f/rAb3mX09KhTrUaBY8hzqzh2zGngySbvIXHLf1iLEeqUFN/47P6yBlsGSVHAnfXYjk2lo70Tkrwmp+hvBLbFQVeR9nXQNh0GRKBJ4QVN+BnQf9svAJMj673vixQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974449; c=relaxed/simple;
-	bh=wiF+c+N8TKHPPcMWF12zSaG2uVVfJ47LKfgMGEQ4l+E=;
+	s=arc-20240116; t=1774974451; c=relaxed/simple;
+	bh=AzUSUHxLpBwcGg91HDZgbxC0ozwg9lXWD9Y07c8D2Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ntCyj8Ojcvg+zw4p7CMkGmYV8VtIHTUpsSgkLiduW0/7/iF2EcRm1pcfP49swm1TrU/QbEVYmGun8aixCoFUkT8tj2Z7SdEqDHIiHmeQBEQvVVrC/XKf/ubIbuJCl9Rm9T5YZVwlfJKZrjxQ5hJf8PnqK7XUA5Qzp896m/9l4SU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpxAfKWw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6NNjbmTsr9/SPxutO76IMrozA93O5oW1t4RPcp/VDixyBjNHqDU0l+NxJSKtpRstUJJl7WeLHcARMC/Ee1fowuoY5W1AOX0canqvOnvLgyxlKsp/A/75evsGutNhnwxXNjy8ohxxhNyyvHUZ3xf2ATDruH8RqMxk3w+AQL6Njs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEig3Njl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpxAfKWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C240DC19423;
-	Tue, 31 Mar 2026 16:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEig3Njl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66737C19423;
+	Tue, 31 Mar 2026 16:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974449;
-	bh=wiF+c+N8TKHPPcMWF12zSaG2uVVfJ47LKfgMGEQ4l+E=;
+	s=korg; t=1774974451;
+	bh=AzUSUHxLpBwcGg91HDZgbxC0ozwg9lXWD9Y07c8D2Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpxAfKWwG0HU5S8tA+21/qQM5f74lG2EPMA/Qat8dtnGeSZb9SA+rUtoCCI7JZd1C
-	 qDR8xOHqQtxfqF5uO3d63qsc6201nhpm29R84fzBFlQhWtJYbe4M7qKSXosXfC1YBg
-	 kIUWW5F2/CnKQ5/6tWycOe9/9isVU8UfgxdVieBs=
+	b=sEig3Njlo0UdxEUVBPP/2iEj44g0XPB+ojyy568g5xfDOARV1w4Z04YBjXU+th6eY
+	 0GAa2Ri0sucEe2d6uob72Y9z3wQ0R/NIdC38wRlmn3cHogMLVBdrxk8PTNZ48Vd2pe
+	 BtXSG/bqkael0Wbd5ioNn8OLh89eDpJtXKTqlW8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/175] ASoC: Intel: catpt: Fix the device initialization
-Date: Tue, 31 Mar 2026 18:21:14 +0200
-Message-ID: <20260331161733.077357677@linuxfoundation.org>
+Subject: [PATCH 6.6 091/175] ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()
+Date: Tue, 31 Mar 2026 18:21:15 +0200
+Message-ID: <20260331161733.113663255@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -52,61 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 5a184f1cb43a8e035251c635f5c47da5dc3e3049 ]
+[ Upstream commit f6484cadbcaf26b5844b51bd7307a663dda48ef6 ]
 
-The DMA mask shall be coerced before any buffer allocations for the
-device are done.  At the same time explain why DMA mask of 31 bits is
-used in the first place.
+When ec_install_handlers() returns -EPROBE_DEFER on reduced-hardware
+platforms, it has already started the EC and installed the address
+space handler with the struct acpi_ec pointer as handler context.
+However, acpi_ec_setup() propagates the error without any cleanup.
 
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Fixes: 7a10b66a5df9 ("ASoC: Intel: catpt: Device driver lifecycle")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260320101217.1243688-1-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The caller acpi_ec_add() then frees the struct acpi_ec for non-boot
+instances, leaving a dangling handler context in ACPICA.
+
+Any subsequent AML evaluation that accesses an EC OpRegion field
+dispatches into acpi_ec_space_handler() with the freed pointer,
+causing a use-after-free:
+
+ BUG: KASAN: slab-use-after-free in mutex_lock (kernel/locking/mutex.c:289)
+ Write of size 8 at addr ffff88800721de38 by task init/1
+ Call Trace:
+  <TASK>
+  mutex_lock (kernel/locking/mutex.c:289)
+  acpi_ec_space_handler (drivers/acpi/ec.c:1362)
+  acpi_ev_address_space_dispatch (drivers/acpi/acpica/evregion.c:293)
+  acpi_ex_access_region (drivers/acpi/acpica/exfldio.c:246)
+  acpi_ex_field_datum_io (drivers/acpi/acpica/exfldio.c:509)
+  acpi_ex_extract_from_field (drivers/acpi/acpica/exfldio.c:700)
+  acpi_ex_read_data_from_field (drivers/acpi/acpica/exfield.c:327)
+  acpi_ex_resolve_node_to_value (drivers/acpi/acpica/exresolv.c:392)
+  </TASK>
+
+ Allocated by task 1:
+  acpi_ec_alloc (drivers/acpi/ec.c:1424)
+  acpi_ec_add (drivers/acpi/ec.c:1692)
+
+ Freed by task 1:
+  kfree (mm/slub.c:6876)
+  acpi_ec_add (drivers/acpi/ec.c:1751)
+
+The bug triggers on reduced-hardware EC platforms (ec->gpe < 0)
+when the GPIO IRQ provider defers probing. Once the stale handler
+exists, any unprivileged sysfs read that causes AML to touch an
+EC OpRegion (battery, thermal, backlight) exercises the dangling
+pointer.
+
+Fix this by calling ec_remove_handlers() in the error path of
+acpi_ec_setup() before clearing first_ec. ec_remove_handlers()
+checks each EC_FLAGS_* bit before acting, so it is safe to call
+regardless of how far ec_install_handlers() progressed:
+
+  -ENODEV  (handler not installed): only calls acpi_ec_stop()
+  -EPROBE_DEFER (handler installed): removes handler, stops EC
+
+Fixes: 03e9a0e05739 ("ACPI: EC: Consolidate event handler installation code")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260324165458.1337233-2-bestswngs@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/catpt/device.c | 10 +++++++++-
- sound/soc/intel/catpt/dsp.c    |  3 ---
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/acpi/ec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/intel/catpt/device.c b/sound/soc/intel/catpt/device.c
-index cac3dffbd0d9f..6cc8b241f743e 100644
---- a/sound/soc/intel/catpt/device.c
-+++ b/sound/soc/intel/catpt/device.c
-@@ -271,7 +271,15 @@ static int catpt_acpi_probe(struct platform_device *pdev)
- 	if (IS_ERR(cdev->pci_ba))
- 		return PTR_ERR(cdev->pci_ba);
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index 8e304efde3429..f94cddbbb55ac 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1653,6 +1653,8 @@ static int acpi_ec_setup(struct acpi_ec *ec, struct acpi_device *device, bool ca
  
--	/* alloc buffer for storing DRAM context during dx transitions */
-+	/*
-+	 * As per design HOST is responsible for preserving firmware's runtime
-+	 * context during D0 -> D3 -> D0 transitions.  Addresses used for DMA
-+	 * to/from HOST memory shall be outside the reserved range of 0xFFFxxxxx.
-+	 */
-+	ret = dma_coerce_mask_and_coherent(cdev->dev, DMA_BIT_MASK(31));
-+	if (ret)
-+		return ret;
+ 	ret = ec_install_handlers(ec, device, call_reg);
+ 	if (ret) {
++		ec_remove_handlers(ec);
 +
- 	cdev->dxbuf_vaddr = dmam_alloc_coherent(dev, catpt_dram_size(cdev),
- 						&cdev->dxbuf_paddr, GFP_KERNEL);
- 	if (!cdev->dxbuf_vaddr)
-diff --git a/sound/soc/intel/catpt/dsp.c b/sound/soc/intel/catpt/dsp.c
-index 346bec0003066..3cde6b7ae9237 100644
---- a/sound/soc/intel/catpt/dsp.c
-+++ b/sound/soc/intel/catpt/dsp.c
-@@ -125,9 +125,6 @@ int catpt_dmac_probe(struct catpt_dev *cdev)
- 	dmac->dev = cdev->dev;
- 	dmac->irq = cdev->irq;
+ 		if (ec == first_ec)
+ 			first_ec = NULL;
  
--	ret = dma_coerce_mask_and_coherent(cdev->dev, DMA_BIT_MASK(31));
--	if (ret)
--		return ret;
- 	/*
- 	 * Caller is responsible for putting device in D0 to allow
- 	 * for I/O and memory access before probing DW.
 -- 
 2.53.0
 
