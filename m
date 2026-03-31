@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6C333F38A;
-	Tue, 31 Mar 2026 16:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3192D2EE262;
+	Tue, 31 Mar 2026 16:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974726; cv=none; b=Ko966qF6+nV11V93fAWtSjBkNmpvWgkEbslK5UzQhjkvHUKn0C5elp2d1Cli8zUEmtrUEF2A2tkgH64FDPthQd7V1UirZNiwi3pll690gcuN0ljnc0JmWpH6+POjKx2lBQGVTeeHbQTvbkOPt2seN5Esi/aGbM/nxjsDQotKU0I=
+	t=1774974729; cv=none; b=ZyDdEgLxX2luZU1SEbFOQNRM6T1iCsG9ADgnowyCCDoH+njwTrs638rhpiQ+JsBPnyKAJacSBWqlij/Ah5nGd2oDrDkvU7YOwGGRUsNMjOeWPPomYVDADzQzAaf/8PwhWEDmdIIn9bnqCYFdoiesqBmcMNw3j0STH1e127w1kGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974726; c=relaxed/simple;
-	bh=uLpMAzypNcTxDAyHMZbCOVNFpXu+wb3qp3E65n1jlZY=;
+	s=arc-20240116; t=1774974729; c=relaxed/simple;
+	bh=R50/Gjrw/lqbdunBmhpSWxqs5D1qpmDf8woIqJcRIow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZR7LPy9Kdu73UGgGmipouuz80PJfvhrIDJpNPetJND0ol3JJLzmQfbNnnrJY/8zWfk/XS5b8JEiIWfy0RgFicE24+pxTxmarMyWjAuJxEzvION6V2/Axws4q4iPcWXlnBPX91KeIdD57/2w4zrVCZZQBwvFp99IXV8Xk5sW6et8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7+64l6d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d7w6wRK0Siw1rh4D0tyxwwfxsmAvdr0PAoNYS8uajYq9HOkVTz/y81qmYohoWY55NXYBtu2qvPctlFpzxyoM1SAJU5I7e5yV4hJpLlG2d9VT3v7v4Gct3C97SK6N+8AE1qPZ0RVzgpsqGaKkq3CvHOCxlYvz/hNt4Fniwh1S0UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y456g68i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7+64l6d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33789C19424;
-	Tue, 31 Mar 2026 16:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y456g68i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC066C19423;
+	Tue, 31 Mar 2026 16:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974726;
-	bh=uLpMAzypNcTxDAyHMZbCOVNFpXu+wb3qp3E65n1jlZY=;
+	s=korg; t=1774974729;
+	bh=R50/Gjrw/lqbdunBmhpSWxqs5D1qpmDf8woIqJcRIow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c7+64l6d+IDyhrxALqnXKtUWLlrUOtvDdb4uZjR2KqUvT88k8F7MPj5iu2yV3/fTH
-	 6P5W40+MdIoVW/TuP0zl1YZzeWMDVaO8ljkiAGxkiPU9IDBjQMJ7B5O+WbjUCRDBsp
-	 U+cKZtpvOBIkor9gQBiwbaour1PMWmMLmKeFuvRs=
+	b=Y456g68i93Quq637d+QlIka6sT70nRm6+x/1+v3sEMYQUJarT0eXN0b2hbog69zQt
+	 CM7BsynJ/IKhv25Jow7re0WH8WoCNOULcocZKBrbSYAp/Da33t2+aBqLx+JcJbDarT
+	 iyFwukkyifnYTJf5Bwih87gw4NYOolt6sU73TUMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Rosenberg <olrose55@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ian Rogers <irogers@google.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 006/342] perf: Make sure to use pmu_ctx->pmu for groups
-Date: Tue, 31 Mar 2026 18:17:19 +0200
-Message-ID: <20260331161759.146315861@linuxfoundation.org>
+Subject: [PATCH 6.19 007/342] s390/mm: Add missing secure storage access fixups for donated memory
+Date: Tue, 31 Mar 2026 18:17:20 +0200
+Message-ID: <20260331161759.183390510@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,97 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Janosch Frank <frankja@linux.ibm.com>
 
-[ Upstream commit 4b9ce671960627b2505b3f64742544ae9801df97 ]
+[ Upstream commit b00be77302d7ec4ad0367bb236494fce7172b730 ]
 
-Oliver reported that x86_pmu_del() ended up doing an out-of-bound memory access
-when group_sched_in() fails and needs to roll back.
+There are special cases where secure storage access exceptions happen
+in a kernel context for pages that don't have the PG_arch_1 bit
+set. That bit is set for non-exported guest secure storage (memory)
+but is absent on storage donated to the Ultravisor since the kernel
+isn't allowed to export donated pages.
 
-This *should* be handled by the transaction callbacks, but he found that when
-the group leader is a software event, the transaction handlers of the wrong PMU
-are used. Despite the move_group case in perf_event_open() and group_sched_in()
-using pmu_ctx->pmu.
+Prior to this patch we would try to export the page by calling
+arch_make_folio_accessible() which would instantly return since the
+arch bit is absent signifying that the page was already exported and
+no further action is necessary. This leads to secure storage access
+exception loops which can never be resolved.
 
-Turns out, inherit uses event->pmu to clone the events, effectively undoing the
-move_group case for all inherited contexts. Fix this by also making inherit use
-pmu_ctx->pmu, ensuring all inherited counters end up in the same pmu context.
+With this patch we unconditionally try to export and if that fails we
+fixup.
 
-Similarly, __perf_event_read() should use equally use pmu_ctx->pmu for the
-group case.
-
-Fixes: bd2756811766 ("perf: Rewrite core context handling")
-Reported-by: Oliver Rosenberg <olrose55@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://patch.msgid.link/20260309133713.GB606826@noisy.programming.kicks-ass.net
+Fixes: 084ea4d611a3 ("s390/mm: add (non)secure page access exceptions handlers")
+Reported-by: Heiko Carstens <hca@linux.ibm.com>
+Suggested-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Tested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ arch/s390/mm/fault.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 84a79e977580e..39b35f280845b 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4672,7 +4672,7 @@ static void __perf_event_read(void *info)
- 	struct perf_event *sub, *event = data->event;
- 	struct perf_event_context *ctx = event->ctx;
- 	struct perf_cpu_context *cpuctx = this_cpu_ptr(&perf_cpu_context);
--	struct pmu *pmu = event->pmu;
-+	struct pmu *pmu;
- 
- 	/*
- 	 * If this is a task context, we need to check whether it is
-@@ -4684,7 +4684,7 @@ static void __perf_event_read(void *info)
- 	if (ctx->task && cpuctx->task_ctx != ctx)
- 		return;
- 
--	raw_spin_lock(&ctx->lock);
-+	guard(raw_spinlock)(&ctx->lock);
- 	ctx_time_update_event(ctx, event);
- 
- 	perf_event_update_time(event);
-@@ -4692,25 +4692,22 @@ static void __perf_event_read(void *info)
- 		perf_event_update_sibling_time(event);
- 
- 	if (event->state != PERF_EVENT_STATE_ACTIVE)
--		goto unlock;
-+		return;
- 
- 	if (!data->group) {
--		pmu->read(event);
-+		perf_pmu_read(event);
- 		data->ret = 0;
--		goto unlock;
-+		return;
- 	}
- 
-+	pmu = event->pmu_ctx->pmu;
- 	pmu->start_txn(pmu, PERF_PMU_TXN_READ);
- 
--	pmu->read(event);
--
-+	perf_pmu_read(event);
- 	for_each_sibling_event(sub, event)
- 		perf_pmu_read(sub);
- 
- 	data->ret = pmu->commit_txn(pmu);
--
--unlock:
--	raw_spin_unlock(&ctx->lock);
- }
- 
- static inline u64 perf_event_count(struct perf_event *event, bool self)
-@@ -14461,7 +14458,7 @@ inherit_event(struct perf_event *parent_event,
- 	get_ctx(child_ctx);
- 	child_event->ctx = child_ctx;
- 
--	pmu_ctx = find_get_pmu_context(child_event->pmu, child_ctx, child_event);
-+	pmu_ctx = find_get_pmu_context(parent_event->pmu_ctx->pmu, child_ctx, child_event);
- 	if (IS_ERR(pmu_ctx)) {
- 		free_event(child_event);
- 		return ERR_CAST(pmu_ctx);
+diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
+index e2e13778c36a9..b977150443550 100644
+--- a/arch/s390/mm/fault.c
++++ b/arch/s390/mm/fault.c
+@@ -441,10 +441,17 @@ void do_secure_storage_access(struct pt_regs *regs)
+ 		folio = phys_to_folio(addr);
+ 		if (unlikely(!folio_try_get(folio)))
+ 			return;
+-		rc = arch_make_folio_accessible(folio);
++		rc = uv_convert_from_secure(folio_to_phys(folio));
++		if (!rc)
++			clear_bit(PG_arch_1, &folio->flags.f);
+ 		folio_put(folio);
++		/*
++		 * There are some valid fixup types for kernel
++		 * accesses to donated secure memory. zeropad is one
++		 * of them.
++		 */
+ 		if (rc)
+-			BUG();
++			return handle_fault_error_nolock(regs, 0);
+ 	} else {
+ 		if (faulthandler_disabled())
+ 			return handle_fault_error_nolock(regs, 0);
 -- 
 2.51.0
 
