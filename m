@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7E941B373;
-	Tue, 31 Mar 2026 16:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ED5421EE4;
+	Tue, 31 Mar 2026 16:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976150; cv=none; b=b0wetrCRHPIA7lYT92spcqhxt1/8UU7X5M4oHqm3Pif5cezDmUl2oQTvJhOIVmORjZCkroKoQbYW1lnCr5xqe+Ojij/U9whZhQvUOgjh5YZg8SKZ16+QIuFA2FWh3tjdEHSH2rC3DsM6nmmiNwKYrkPN6CG+bEg8PiOjyy9urjA=
+	t=1774976153; cv=none; b=EuUfRsegpkR5uLdPnNTMKNY3DmTTC+kum3bCXeqHxLnzWwXrVdLmNBYPPOUFjSIXZgmBudKgq/cUIjXWKtrHDtUtH5Btgb5c4eydBK+wXb0p90Sh6kOHtNXPbSFUwfuZmLlrAAuPf+/8bUtbqP0qgrzdEKCxzo4Ml2j9J36po3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976150; c=relaxed/simple;
-	bh=n4uPy9im4uA85AD6+cSENbxGVjUqHaozwivBFvMVmF0=;
+	s=arc-20240116; t=1774976153; c=relaxed/simple;
+	bh=Sdp0e1kEckKlHMU6Ar6G9hCy7thRn3XswreAc0UNPiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RVMyjhE5JTPlDf1DtoNBwC9lqiKx/f6htZget+tQ/8z/ovaq9ZdJ6HppkXEwwWF9EEV7qsPknTPblGX/FGFzwDbSAIY/hhgWINzYY04jx9DssK8zYuqOeu3sd/KlC+oFUw2IH3lkynuc0NtjVuD3af4dgYI1kmv9ZgipS3Qn1vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFbhYDUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vd0nYFxeRPKouLxCouiotiAJUWJZNNpt7QemjjPIeVdGR4teucMKnUUOTM7GR7li5hdCyL03k5mqZNQjaH1t1iw0W7auJFXppcJqHtofDCEzN/AFdAfx498XcPQsMjz4djX5D6zbBUoX1m/a0q/5R+/FvjprM9aaXfVL2EZGiW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfrxD0RO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFbhYDUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48BCDC19423;
-	Tue, 31 Mar 2026 16:55:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfrxD0RO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D667CC19423;
+	Tue, 31 Mar 2026 16:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976150;
-	bh=n4uPy9im4uA85AD6+cSENbxGVjUqHaozwivBFvMVmF0=;
+	s=korg; t=1774976153;
+	bh=Sdp0e1kEckKlHMU6Ar6G9hCy7thRn3XswreAc0UNPiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BFbhYDUbHTBi97EyMe48jwJmc6awbwvZ+5HgVWY6ukBJ/EcLnfGEOalLwVfO8v6q2
-	 IIkhffUp6UkJ2/1Nm3hS7c1QnBXE1FBSYhYBiE7OEU71dkrV+pdCw4Fi865UhHcdlA
-	 PsW8ZLntS1OCQTcbMSJSryKGNnna721os7mJdef8=
+	b=kfrxD0ROEjQber/z44Y3Kl9jdFAFEevgh5FUnA15IIoea0m0VGVTS1gtdOvMjqWB3
+	 crPz+AxidFOKugCU3mXA3HhUU7Xh2QstVvUkygt/vfxCWQZ8emirUpXQCNTPiaoDUu
+	 T7zcvC1ZcRbQZ9zHzATMzWLtIAArrRwahX7j6uy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Felix Gu <ustc.gu@gmail.com>,
+	LUO Haowen <luo-hw@foxmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 227/244] phy: ti: j721e-wiz: Fix device node reference leak in wiz_get_lane_phy_types()
-Date: Tue, 31 Mar 2026 18:22:57 +0200
-Message-ID: <20260331161750.150093385@linuxfoundation.org>
+Subject: [PATCH 6.12 228/244] dmaengine: dw-edma: Fix multiple times setting of the CYCLE_STATE and CYCLE_BIT bits for HDMA.
+Date: Tue, 31 Mar 2026 18:22:58 +0200
+Message-ID: <20260331161750.186884453@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,47 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: LUO Haowen <luo-hw@foxmail.com>
 
-[ Upstream commit 584b457f4166293bdfa50f930228e9fb91a38392 ]
+[ Upstream commit 3f63297ff61a994b99d710dcb6dbde41c4003233 ]
 
-The serdes device_node is obtained using of_get_child_by_name(),
-which increments the reference count. However, it is never put,
-leading to a reference leak.
+Others have submitted this issue (https://lore.kernel.org/dmaengine/
+20240722030405.3385-1-zhengdongxiong@gxmicro.cn/),
+but it has not been fixed yet. Therefore, more supplementary information
+is provided here.
 
-Add the missing of_node_put() calls to ensure the reference count is
-properly balanced.
+As mentioned in the "PCS-CCS-CB-TCB" Producer-Consumer Synchronization of
+"DesignWare Cores PCI Express Controller Databook, version 6.00a":
 
-Fixes: 7ae14cf581f2 ("phy: ti: j721e-wiz: Implement DisplayPort mode to the wiz driver")
-Suggested-by: Vladimir Oltean <olteanv@gmail.com>
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20260212-wiz-v2-1-6e8bd4cc7a4a@gmail.com
+1. The Consumer CYCLE_STATE (CCS) bit in the register only needs to be
+initialized once; the value will update automatically to be
+~CYCLE_BIT (CB) in the next chunk.
+2. The Consumer CYCLE_BIT bit in the register is loaded from the LL
+element and tested against CCS. When CB = CCS, the data transfer is
+executed. Otherwise not.
+
+The current logic sets customer (HDMA) CS and CB bits to 1 in each chunk
+while setting the producer (software) CB of odd chunks to 0 and even
+chunks to 1 in the linked list. This is leading to a mismatch between
+the producer CB and consumer CS bits.
+
+This issue can be reproduced by setting the transmission data size to
+exceed one chunk. By the way, in the EDMA using the same "PCS-CCS-CB-TCB"
+mechanism, the CS bit is only initialized once and this issue was not
+found. Refer to
+drivers/dma/dw-edma/dw-edma-v0-core.c:dw_edma_v0_core_start.
+
+So fix this issue by initializing the CYCLE_STATE and CYCLE_BIT bits
+only once.
+
+Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
+Signed-off-by: LUO Haowen <luo-hw@foxmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/tencent_CB11AA9F3920C1911AF7477A9BD8EFE0AD05@qq.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/ti/phy-j721e-wiz.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/phy/ti/phy-j721e-wiz.c b/drivers/phy/ti/phy-j721e-wiz.c
-index cbcc7bd5dde0a..84c655b427a00 100644
---- a/drivers/phy/ti/phy-j721e-wiz.c
-+++ b/drivers/phy/ti/phy-j721e-wiz.c
-@@ -1426,6 +1426,7 @@ static int wiz_get_lane_phy_types(struct device *dev, struct wiz *wiz)
- 			dev_err(dev,
- 				"%s: Reading \"reg\" from \"%s\" failed: %d\n",
- 				__func__, subnode->name, ret);
-+			of_node_put(serdes);
- 			return ret;
- 		}
- 		of_property_read_u32(subnode, "cdns,num-lanes", &num_lanes);
-@@ -1440,6 +1441,7 @@ static int wiz_get_lane_phy_types(struct device *dev, struct wiz *wiz)
- 		}
+diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+index e3f8db4fe909a..ce8f7254bab21 100644
+--- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+@@ -252,10 +252,10 @@ static void dw_hdma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
+ 			  lower_32_bits(chunk->ll_region.paddr));
+ 		SET_CH_32(dw, chan->dir, chan->id, llp.msb,
+ 			  upper_32_bits(chunk->ll_region.paddr));
++		/* Set consumer cycle */
++		SET_CH_32(dw, chan->dir, chan->id, cycle_sync,
++			HDMA_V0_CONSUMER_CYCLE_STAT | HDMA_V0_CONSUMER_CYCLE_BIT);
  	}
+-	/* Set consumer cycle */
+-	SET_CH_32(dw, chan->dir, chan->id, cycle_sync,
+-		  HDMA_V0_CONSUMER_CYCLE_STAT | HDMA_V0_CONSUMER_CYCLE_BIT);
  
-+	of_node_put(serdes);
- 	return 0;
- }
+ 	dw_hdma_v0_sync_ll_data(chunk);
  
 -- 
 2.53.0
