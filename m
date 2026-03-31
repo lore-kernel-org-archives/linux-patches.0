@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9618426685;
-	Tue, 31 Mar 2026 16:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EF740710B;
+	Tue, 31 Mar 2026 16:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974612; cv=none; b=k+0KyHlZutnYxaQm3OTJOI9ILX5no6pEGGWnWqlLkUPUEj69LWnAYeMgRijJ27V9jiPm4vuEW71t7hnPWr+n/9+2pq9buKfMPk9Df2+vCoP6GT8mFY2OmAEpx1J2iTCKL+/qAkQz/G61gno1d3QYsCAuXw1fjSNnxsDjRmLYKPM=
+	t=1774974615; cv=none; b=krywMiEqiXPnDRgVy76uZSbFy8EIdItFjGhUZ2DklBOhPXngrFy2sfZrGwXl3Z2qIZVwe32AbpbXzlsu5g/r2GT9Ogu3ymtdyvtIDNVpn9XNjIrRevpqdR6sbQClUYn2DKnvWOkZoEleTgY8c6YJfgBCJiu+pgNupeZHulS7fAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974612; c=relaxed/simple;
-	bh=5yALuWCKZaQb7WUPCnBfwFCr797t9x1dye/TsZ2SU3s=;
+	s=arc-20240116; t=1774974615; c=relaxed/simple;
+	bh=4SfU4IyLLJYdGNeBeZaaOeeV8HaVZymP72fCavohIUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwvYsckJzDr5biBcS/oxdilFurQ7A8I95DBWG+R50XGaPGSujbAbL9NsMoBmKP1eyd406VHckXg/qQBxkwSbJGNZKQC9WgS3SMi6nQCSTAxhL01QGUMCcS3plpeBZ9Od0Omvt3qxIicISy5fhdQYoAnUfwh1JlRD7kS1JeStWRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jneEXrFB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dL53eIvKgQheqjjPsRtWu4HqcQTa0/+c5icE58EvNxHEE+9uqzUqrDFxaiIiy0nnKgpd9RAXtBX7Y6oNAzLaejQ0qipGy23Q2jpmeSS8PL2vDKvrg/daMTyrw2SJ3Qd64s0gYwJ2Yituxyk9O9u6cqvysy0PdfpjRosgbylXx5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQSTysb1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jneEXrFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70792C19423;
-	Tue, 31 Mar 2026 16:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQSTysb1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A11BC19423;
+	Tue, 31 Mar 2026 16:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974612;
-	bh=5yALuWCKZaQb7WUPCnBfwFCr797t9x1dye/TsZ2SU3s=;
+	s=korg; t=1774974615;
+	bh=4SfU4IyLLJYdGNeBeZaaOeeV8HaVZymP72fCavohIUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jneEXrFBHY6nhTkAxGdQulAcEx4RTKc3D+gDpfjebWC9aFsAaoOEw7zAtAXe/xE4x
-	 /apJKZ4WKY7Xj90xHUAN6M/R80wJQxD+Blo2O6TTEJh8zROGAbmlA6uq10WLYP6q5H
-	 c1ummyKfSomnJO1L+OWpRbJsokSLYxUDE2lkOTVg=
+	b=EQSTysb190xj/fI5ABaOY5BWnGcyE2a3V176I3T+8trC/wgM76RlgFeb2Phq1UWg1
+	 8oG2IpCyZJ+3hbsJ0awpvxUidfdSX+QyL39y3OAef9uTsXkxQ5kq0z5FFaV6KGzOJi
+	 8CsFSEJtni+Uf+TtzTgX87m/tNKNijb84947n/C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Werner Kasselman <werner@verivus.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 145/175] ksmbd: fix memory leaks and NULL deref in smb2_lock()
-Date: Tue, 31 Mar 2026 18:22:09 +0200
-Message-ID: <20260331161735.113666941@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.6 154/175] xattr: switch to CLASS(fd)
+Date: Tue, 31 Mar 2026 18:22:18 +0200
+Message-ID: <20260331161735.450792982@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -53,116 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Kasselman <werner@verivus.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 309b44ed684496ed3f9c5715d10b899338623512 ]
+[ Upstream commit a71874379ec8c6e788a61d71b3ad014a8d9a5c08 ]
 
-smb2_lock() has three error handling issues after list_del() detaches
-smb_lock from lock_list at no_check_cl:
-
-1) If vfs_lock_file() returns an unexpected error in the non-UNLOCK
-   path, goto out leaks smb_lock and its flock because the out:
-   handler only iterates lock_list and rollback_list, neither of
-   which contains the detached smb_lock.
-
-2) If vfs_lock_file() returns -ENOENT in the UNLOCK path, goto out
-   leaks smb_lock and flock for the same reason.  The error code
-   returned to the dispatcher is also stale.
-
-3) In the rollback path, smb_flock_init() can return NULL on
-   allocation failure.  The result is dereferenced unconditionally,
-   causing a kernel NULL pointer dereference.  Add a NULL check to
-   prevent the crash and clean up the bookkeeping; the VFS lock
-   itself cannot be rolled back without the allocation and will be
-   released at file or connection teardown.
-
-Fix cases 1 and 2 by hoisting the locks_free_lock()/kfree() to before
-the if(!rc) check in the UNLOCK branch so all exit paths share one
-free site, and by freeing smb_lock and flock before goto out in the
-non-UNLOCK branch.  Propagate the correct error code in both cases.
-Fix case 3 by wrapping the VFS unlock in an if(rlock) guard and adding
-a NULL check for locks_free_lock(rlock) in the shared cleanup.
-
-Found via call-graph analysis using sqry.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Suggested-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Werner Kasselman <werner@verivus.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ adapted rlock->c.flc_type to rlock->fl_type ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+[ Only switch to CLASS(fd) in v6.6.y for fd_empty() was introduced in commit
+88a2f6468d01 ("struct fd: representation change") in 6.12. ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ fs/xattr.c |   27 ++++++---------------------
+ 1 file changed, 6 insertions(+), 21 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -7536,14 +7536,15 @@ retry:
- 		rc = vfs_lock_file(filp, smb_lock->cmd, flock, NULL);
- skip:
- 		if (smb_lock->flags & SMB2_LOCKFLAG_UNLOCK) {
-+			locks_free_lock(flock);
-+			kfree(smb_lock);
- 			if (!rc) {
- 				ksmbd_debug(SMB, "File unlocked\n");
- 			} else if (rc == -ENOENT) {
- 				rsp->hdr.Status = STATUS_NOT_LOCKED;
-+				err = rc;
- 				goto out;
- 			}
--			locks_free_lock(flock);
--			kfree(smb_lock);
- 		} else {
- 			if (rc == FILE_LOCK_DEFERRED) {
- 				void **argv;
-@@ -7612,6 +7613,9 @@ skip:
- 				spin_unlock(&work->conn->llist_lock);
- 				ksmbd_debug(SMB, "successful in taking lock\n");
- 			} else {
-+				locks_free_lock(flock);
-+				kfree(smb_lock);
-+				err = rc;
- 				goto out;
- 			}
- 		}
-@@ -7642,13 +7646,17 @@ out:
- 		struct file_lock *rlock = NULL;
+--- a/fs/xattr.c
++++ b/fs/xattr.c
+@@ -698,8 +698,6 @@ SYSCALL_DEFINE5(fsetxattr, int, fd, cons
+ 	int error;
  
- 		rlock = smb_flock_init(filp);
--		rlock->fl_type = F_UNLCK;
--		rlock->fl_start = smb_lock->start;
--		rlock->fl_end = smb_lock->end;
--
--		rc = vfs_lock_file(filp, F_SETLK, rlock, NULL);
--		if (rc)
--			pr_err("rollback unlock fail : %d\n", rc);
-+		if (rlock) {
-+			rlock->fl_type = F_UNLCK;
-+			rlock->fl_start = smb_lock->start;
-+			rlock->fl_end = smb_lock->end;
-+
-+			rc = vfs_lock_file(filp, F_SETLK, rlock, NULL);
-+			if (rc)
-+				pr_err("rollback unlock fail : %d\n", rc);
-+		} else {
-+			pr_err("rollback unlock alloc failed\n");
-+		}
+ 	CLASS(fd, f)(fd);
+-	if (!f.file)
+-		return -EBADF;
  
- 		list_del(&smb_lock->llist);
- 		spin_lock(&work->conn->llist_lock);
-@@ -7658,7 +7666,8 @@ out:
- 		spin_unlock(&work->conn->llist_lock);
+ 	audit_file(f.file);
+ 	error = setxattr_copy(name, &ctx);
+@@ -810,16 +808,11 @@ SYSCALL_DEFINE4(lgetxattr, const char __
+ SYSCALL_DEFINE4(fgetxattr, int, fd, const char __user *, name,
+ 		void __user *, value, size_t, size)
+ {
+-	struct fd f = fdget(fd);
+-	ssize_t error = -EBADF;
++	CLASS(fd, f)(fd);
  
- 		locks_free_lock(smb_lock->fl);
--		locks_free_lock(rlock);
-+		if (rlock)
-+			locks_free_lock(rlock);
- 		kfree(smb_lock);
+-	if (!f.file)
+-		return error;
+ 	audit_file(f.file);
+-	error = getxattr(file_mnt_idmap(f.file), f.file->f_path.dentry,
++	return getxattr(file_mnt_idmap(f.file), f.file->f_path.dentry,
+ 			 name, value, size);
+-	fdput(f);
+-	return error;
+ }
+ 
+ /*
+@@ -886,15 +879,10 @@ SYSCALL_DEFINE3(llistxattr, const char _
+ 
+ SYSCALL_DEFINE3(flistxattr, int, fd, char __user *, list, size_t, size)
+ {
+-	struct fd f = fdget(fd);
+-	ssize_t error = -EBADF;
++	CLASS(fd, f)(fd);
+ 
+-	if (!f.file)
+-		return error;
+ 	audit_file(f.file);
+-	error = listxattr(f.file->f_path.dentry, list, size);
+-	fdput(f);
+-	return error;
++	return listxattr(f.file->f_path.dentry, list, size);
+ }
+ 
+ /*
+@@ -951,12 +939,10 @@ SYSCALL_DEFINE2(lremovexattr, const char
+ 
+ SYSCALL_DEFINE2(fremovexattr, int, fd, const char __user *, name)
+ {
+-	struct fd f = fdget(fd);
++	CLASS(fd, f)(fd);
+ 	char kname[XATTR_NAME_MAX + 1];
+-	int error = -EBADF;
++	int error;
+ 
+-	if (!f.file)
+-		return error;
+ 	audit_file(f.file);
+ 
+ 	error = strncpy_from_user(kname, name, sizeof(kname));
+@@ -971,7 +957,6 @@ SYSCALL_DEFINE2(fremovexattr, int, fd, c
+ 				    f.file->f_path.dentry, kname);
+ 		mnt_drop_write_file(f.file);
  	}
- out2:
+-	fdput(f);
+ 	return error;
+ }
+ 
 
 
