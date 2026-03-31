@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A104425CD2;
-	Tue, 31 Mar 2026 16:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1023E423A62;
+	Tue, 31 Mar 2026 16:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976354; cv=none; b=tN9mdcjM5ZL612r6pamhbXRVIW37RvthwuHTkTr2BAsj/XzOAkEfzhcFWSqtpyNrkFrG7SRuRMzeBfBfZ3K1YZ7oThdMYPjjdH0ObVVi/nGlqCWfHeKkXWihxFgengZW50J0CtR1Vl8FMl9KdXJBzXRUCfu88FJZp8/S8bfzeRk=
+	t=1774976357; cv=none; b=OgpYZWX/yUqkVrBPKyDraH3Cqexj8/X0pb61NmZOdg3NXD6JqyGqc0Tt4ZZKtX4JKnMp7w7uKsXmRQ8qE4UlnxfW+lWrWOkC1GjmjdprR5pr4JpGDwugpULqvM59aTOKHOXL1yTCwVKamrG/MJOZtPcE0m4jy2BvMEPf3yusfrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976354; c=relaxed/simple;
-	bh=0DfQpfS4Ne/1RjNiRFFFkcVaSTImgRd1QcLLPOu9XII=;
+	s=arc-20240116; t=1774976357; c=relaxed/simple;
+	bh=AzU/cS4ZkHL8EDkKxYl/pNQ2/7ynCP2r4B9O3RinjJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pt6W8Kf5RaWkGtdt0Rjt1xQx1Aj5gaSbyARq+ydgaZaFwyNNuCrd3IwjqmHDh7r5iX4aX1MycTd1ZQfkp/1SsbHI1Omc6OehoMCYQ6eB3Ccz96CW2ZrHD4fjlYvHFvhjjN9HYysWGFxkRMWI0KRj9ityHBLUYcFqyUDlZhvbWlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PuYC4WYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l7cZM/XUHhwCbBUMMjt8WyZU5v6b6EY8d5vusqrP815DxRV6W7LQM8hdijXED9mBF4AYqK+JTrzTkT7S55k56u+P+6zrV70iAbzAKoXay7PytBiYH8q+5ZBvpZUPfCoKH4fC2O73+vh2Gl0dkujwXuKfsNmp2+oI/C1metXjY7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7Fqz9DJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PuYC4WYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113E7C19423;
-	Tue, 31 Mar 2026 16:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7Fqz9DJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F46C19424;
+	Tue, 31 Mar 2026 16:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976354;
-	bh=0DfQpfS4Ne/1RjNiRFFFkcVaSTImgRd1QcLLPOu9XII=;
+	s=korg; t=1774976356;
+	bh=AzU/cS4ZkHL8EDkKxYl/pNQ2/7ynCP2r4B9O3RinjJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PuYC4WYkazoY5XngsduaG/cSQU761Bw9V7YXZIFX1F+W3w6AKj5MSm6oPWHvJbPY6
-	 w1CB/qSwn4DtFY3JSblKm0gMC73JPLAIC1yIqRww8zEk0V5gcZelReA7Z+nwK49aOb
-	 RsvxcdrReKfgbh5jaPRFynTgJrm+ApCgSMujM7Ss=
+	b=f7Fqz9DJjUZ1zk5GvPRP8FbM/lAOKjm0iXfcOTRHdlfDl593GIUmJSNmxobm6pTjF
+	 S9+k7TBAZxAbmx+Go7Eh/p7BNe0unE5Ho/tZDHNjMfewfgcZSXSg5oF93s2v5MGcEx
+	 2JzhkOaWVXRmTWHBEwPfbTb52s0DTesA72OMVy6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julius Lehmann <lehmanju@devpi.de>,
-	Jiri Kosina <jkosina@suse.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 027/309] HID: magicmouse: fix battery reporting for Apple Magic Trackpad 2
-Date: Tue, 31 Mar 2026 18:18:50 +0200
-Message-ID: <20260331161754.479766768@linuxfoundation.org>
+Subject: [PATCH 6.18 028/309] HID: magicmouse: avoid memory leak in magicmouse_report_fixup()
+Date: Tue, 31 Mar 2026 18:18:51 +0200
+Message-ID: <20260331161754.516736077@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -45,45 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Julius Lehmann <lehmanju@devpi.de>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit 5f3518d77419255f8b12bb23c8ec22acbeb6bc5b ]
+[ Upstream commit 91e8c6e601bdc1ccdf886479b6513c01c7e51c2c ]
 
-Battery reporting does not work for the Apple Magic Trackpad 2 if it is
-connected via USB. The current hid descriptor fixup code checks for a
-hid descriptor length of exactly 83 bytes. If the hid descriptor is
-larger, which is the case for newer apple mice, the fixup is not
-applied.
+The magicmouse_report_fixup() function was returning a
+newly kmemdup()-allocated buffer, but never freeing it.
 
-This fix checks for hid descriptor sizes greater/equal 83 bytes which
-applies the fixup for newer devices as well.
+The caller of report_fixup() does not take ownership of the returned
+pointer, but it *is* permitted to return a sub-portion of the input
+rdesc, whose lifetime is managed by the caller.
 
-Signed-off-by: Julius Lehmann <lehmanju@devpi.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-magicmouse.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-magicmouse.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/drivers/hid/hid-magicmouse.c b/drivers/hid/hid-magicmouse.c
-index 91f621ceb924b..f4cf29c2e8330 100644
+index f4cf29c2e8330..9eadf3252d0dc 100644
 --- a/drivers/hid/hid-magicmouse.c
 +++ b/drivers/hid/hid-magicmouse.c
-@@ -990,7 +990,7 @@ static const __u8 *magicmouse_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 	 */
- 	if ((is_usb_magicmouse2(hdev->vendor, hdev->product) ||
- 	     is_usb_magictrackpad2(hdev->vendor, hdev->product)) &&
--	    *rsize == 83 && rdesc[46] == 0x84 && rdesc[58] == 0x85) {
-+	    *rsize >= 83 && rdesc[46] == 0x84 && rdesc[58] == 0x85) {
+@@ -994,9 +994,7 @@ static const __u8 *magicmouse_report_fixup(struct hid_device *hdev, __u8 *rdesc,
  		hid_info(hdev,
  			 "fixing up magicmouse battery report descriptor\n");
  		*rsize = *rsize - 1;
+-		rdesc = kmemdup(rdesc + 1, *rsize, GFP_KERNEL);
+-		if (!rdesc)
+-			return NULL;
++		rdesc = rdesc + 1;
+ 
+ 		rdesc[0] = 0x05;
+ 		rdesc[1] = 0x01;
 -- 
 2.51.0
 
