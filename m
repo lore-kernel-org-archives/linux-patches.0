@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844B53E95A9;
-	Tue, 31 Mar 2026 16:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB373E95A9;
+	Tue, 31 Mar 2026 16:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975821; cv=none; b=NLAvvPBobyjHwwontchqUimCDtVw9Xvw5+jtdvjX+Sm0NT53MbzJqtPHZld294eJW2zrF7EV2ES72yk4r3hm3nGR4yRae/SvhhsATfheCgjDmfY9IgjkSEeQzYjJM9xRFkSe9/dugxFX1Q89Orgxjk1kXoU98fpWwX0Er6uGnqI=
+	t=1774975824; cv=none; b=ekY4t5iJGM5p5P2gK5XRKwyv4vO65bxw2gktsuXg4kTjWGlAUFwSWsSH/S7BDJQjgTR/FD97+9/MYUeYINgxxaOg4XUoO5506rmWBsI0P0HnKqu2zEtuPxPozl4vyPyd3Q/t7y7cShBKsPDBhPz9ZVN9XFBymQp8iUY7U0HZM1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975821; c=relaxed/simple;
-	bh=cJmtRqBQryDM7IItYRkApkzNqtPdTD5RR/fJ+bF/c48=;
+	s=arc-20240116; t=1774975824; c=relaxed/simple;
+	bh=gwTS92zKpL+ywj1zOdScEreModbxiVjaqeO1YEbrbQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGT8C6QQLi2jFqHJJNxgl3XtQZLBhz79/a4ReBM+1flLeSsPcqpanKjvOPhV1oDO+wNbMv3TfDELlaCBuJJeGm/QTBbOQyfH+PYelEvaz9YBkasbBxor4x9E0TR0Gw2wZsCMYARB2+6EalPgrdC7FFlsCxtCDa0vIOpN6kePqoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNUXJkmo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ve1h1R10bO/PT29p6W+lC3v1NOb5FFI7F3qtHlNCRe/Oe3+H/j1EUqFuP6sKzN6AsbbzIpVhBoG+dHEFQtUBa1tRwYpq8435U85nDA/MG8+G+FPWoaPwch3XPNAaaAIVQT2Rm46DE1bzh5ZMfrVHYyMVcZUnntH34uj6aO/97QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoyEz/Gk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNUXJkmo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19BE8C19423;
-	Tue, 31 Mar 2026 16:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoyEz/Gk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D81C19424;
+	Tue, 31 Mar 2026 16:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975821;
-	bh=cJmtRqBQryDM7IItYRkApkzNqtPdTD5RR/fJ+bF/c48=;
+	s=korg; t=1774975824;
+	bh=gwTS92zKpL+ywj1zOdScEreModbxiVjaqeO1YEbrbQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNUXJkmo6mjf/dy2iSKFVlRVcAJ/zVe4YPI3CJagAyzwsj13tgTKqpdB3x+37PVe3
-	 B3d/1wzdvx+7ta5iT6S+vGjGXxBP7pCjogwMXtxaK5x38zH5a2+8uvP14P5lh57+nN
-	 cmpgZUdAcxXsvJ7yvXJntlfOTrt9NPTEZqXjqo1U=
+	b=PoyEz/GkHPUANvA1y7E0PPnA91gUWRsFrWmQSpywVYUcTSEObo3SR1ouCcXuZyTG6
+	 CVEHpkhXolNiGuku0qmuvYoaUTGiRhrVIPemDod8YZtqWuzpnO/uzinvyVtfcJaY1y
+	 Hzcw2ydMzGizz6J4DTENI8WGy4fuy1JE2/1kJ4Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/244] tls: Purge async_hold in tls_decrypt_async_wait()
-Date: Tue, 31 Mar 2026 18:20:48 +0200
-Message-ID: <20260331161745.293673295@linuxfoundation.org>
+Subject: [PATCH 6.12 099/244] netfilter: nfnetlink_log: fix uninitialized padding leak in NFULA_PAYLOAD
+Date: Tue, 31 Mar 2026 18:20:49 +0200
+Message-ID: <20260331161745.330162785@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,64 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 84a8335d8300576f1b377ae24abca1d9f197807f ]
+[ Upstream commit 52025ebaa29f4eb4ed8bf92ce83a68f24ab7fdf7 ]
 
-The async_hold queue pins encrypted input skbs while
-the AEAD engine references their scatterlist data. Once
-tls_decrypt_async_wait() returns, every AEAD operation
-has completed and the engine no longer references those
-skbs, so they can be freed unconditionally.
+__build_packet_message() manually constructs the NFULA_PAYLOAD netlink
+attribute using skb_put() and skb_copy_bits(), bypassing the standard
+nla_reserve()/nla_put() helpers. While nla_total_size(data_len) bytes
+are allocated (including NLA alignment padding), only data_len bytes
+of actual packet data are copied. The trailing nla_padlen(data_len)
+bytes (1-3 when data_len is not 4-byte aligned) are never initialized,
+leaking stale heap contents to userspace via the NFLOG netlink socket.
 
-A subsequent patch adds batch async decryption to
-tls_sw_read_sock(), introducing a new call site that
-must drain pending AEAD operations and release held
-skbs. Move __skb_queue_purge(&ctx->async_hold) into
-tls_decrypt_async_wait() so the purge is centralized
-and every caller -- recvmsg's drain path, the -EBUSY
-fallback in tls_do_decryption(), and the new read_sock
-batch path -- releases held skbs on synchronization
-without each site managing the purge independently.
+Replace the manual attribute construction with nla_reserve(), which
+handles the tailroom check, header setup, and padding zeroing via
+__nla_reserve(). The subsequent skb_copy_bits() fills in the payload
+data on top of the properly initialized attribute.
 
-This fixes a leak when tls_strp_msg_hold() fails part-way through,
-after having added some cloned skbs to the async_hold
-queue. tls_decrypt_sg() will then call tls_decrypt_async_wait() to
-process all pending decrypts, and drop back to synchronous mode, but
-tls_sw_recvmsg() only flushes the async_hold queue when one record has
-been processed in "fully-async" mode, which may not be the case here.
-
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Fixes: b8a6ff84abbc ("tls: wait for pending async decryptions if tls_strp_msg_hold fails")
-Link: https://patch.msgid.link/20260324-tls-read-sock-v5-1-5408befe5774@oracle.com
-[pabeni@redhat.com: added leak comment]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: df6fb868d611 ("[NETFILTER]: nfnetlink: convert to generic netlink attribute functions")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nfnetlink_log.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index bf01155b1011a..e12aa76d1aa71 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -246,6 +246,7 @@ static int tls_decrypt_async_wait(struct tls_sw_context_rx *ctx)
- 		crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
- 	atomic_inc(&ctx->decrypt_pending);
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index 134e05d31061e..aa5fc9bffef0c 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -647,15 +647,11 @@ __build_packet_message(struct nfnl_log_net *log,
  
-+	__skb_queue_purge(&ctx->async_hold);
- 	return ctx->async_wait.err;
- }
+ 	if (data_len) {
+ 		struct nlattr *nla;
+-		int size = nla_attr_size(data_len);
  
-@@ -2191,7 +2192,6 @@ int tls_sw_recvmsg(struct sock *sk,
+-		if (skb_tailroom(inst->skb) < nla_total_size(data_len))
++		nla = nla_reserve(inst->skb, NFULA_PAYLOAD, data_len);
++		if (!nla)
+ 			goto nla_put_failure;
  
- 		/* Wait for all previously submitted records to be decrypted */
- 		ret = tls_decrypt_async_wait(ctx);
--		__skb_queue_purge(&ctx->async_hold);
- 
- 		if (ret) {
- 			if (err >= 0 || err == -EINPROGRESS)
+-		nla = skb_put(inst->skb, nla_total_size(data_len));
+-		nla->nla_type = NFULA_PAYLOAD;
+-		nla->nla_len = size;
+-
+ 		if (skb_copy_bits(skb, 0, nla_data(nla), data_len))
+ 			BUG();
+ 	}
 -- 
 2.51.0
 
