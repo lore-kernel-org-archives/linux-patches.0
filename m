@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0A842EEB8;
-	Tue, 31 Mar 2026 16:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9629440710B;
+	Tue, 31 Mar 2026 16:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975179; cv=none; b=ZSxMOoHcCdJsS/lVwoh+RS1QQrmDsnGAm17U/RBNSZcSeRGmi/OxBbjvW7E5geEKrqEoVh7tj82AY6aDTrYxTXjdt9BHQE9yHtBFX49wUtPs6VoGagCEr+IypbqL2BDSIOZBKilppyoX0dJ2KKmwVLSsweWOix8auhqWh2kZQ4k=
+	t=1774975182; cv=none; b=Sg9C8HQh+fp+/3s3tTvFSoz00rx2a1RseWJxB4UiHAYesuATB/hUSEzodhkgOn/T9sc8L1y7Q97qxN7ONJrYYVtN1nULzz+LaqEwowMXbbaBIrHyrfJlFowpaqHqFRHvZqtEVTrCmUXK83wVyzYDjpGOHCqFlN1qql3xmJx3mQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975179; c=relaxed/simple;
-	bh=Ya910JVZYBoxOBBBSRAjWMzN7EKNDSEOOBMsCK06gfI=;
+	s=arc-20240116; t=1774975182; c=relaxed/simple;
+	bh=+y9stYM9PIYSlglvvnGLNzZM772KK8PAD8ok1trZZ98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UizWaGXX/aByxkeyriiMBD6r6GbTBbKqYB+xesdp62xslO6Wi8QzMkikBRMlGHzeH2uoBbu1atuqwBD6qOVvAWp9ie0eTzlXGOHmKeN49lRDdPr2m1K1T7uZkOGWkblXyE590yht23V0Ww/1LA2+5GUw+nAz8l1Nn+lHfqBtw4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wB45YcbW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UZh6G1F5XCebhT/jif+s+TcIv52kkmZK9rMTAKME3KwK1WLTBkmA1US2do42NqDvFx3JFjVyNWXHYtz/IH0BX6B7VtniJ3awcjbGn2KpuEOIRIz9LrF1MSWJ2rxAIU3aZmKKLDFxDJCZpzbv8RNNAQ6G2RMflIfYSkJFsoYWxxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klNxLSFO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wB45YcbW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD39C19423;
-	Tue, 31 Mar 2026 16:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klNxLSFO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E077CC19423;
+	Tue, 31 Mar 2026 16:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975179;
-	bh=Ya910JVZYBoxOBBBSRAjWMzN7EKNDSEOOBMsCK06gfI=;
+	s=korg; t=1774975182;
+	bh=+y9stYM9PIYSlglvvnGLNzZM772KK8PAD8ok1trZZ98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wB45YcbW3zcMsnM/Uk4hj+1fu2LEh6Wek5StWLFDZUtLcb4i7DF0zTsMF1nNq7ezL
-	 jef+E0mBr3fOogUDWRNDPj/oeHXIC6mOmsgYXrdHXydHn2wEot9EcPx2QdH8q6h+ls
-	 PgF0kUenBkZiCnxKnQFvwNYjqDsb8AB3pqZMwfyY=
+	b=klNxLSFOSXpmlnPCA+fgm0BPPrpZn++ujbWFfI7oMvd2sBYxokj3innjcmlauNbpO
+	 QapND6rDkatlwa6U+j26xeU8h0SHKMDXXKGXfJX6y1dcch2gBXJ9ReQCfMCyjp1CXT
+	 81oFkCqaFlkLGp4KJO4y16mNJQXCUs+xrgveEFkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 193/342] io_uring/fdinfo: fix OOB read in SQE_MIXED wrap check
-Date: Tue, 31 Mar 2026 18:20:26 +0200
-Message-ID: <20260331161806.096460844@linuxfoundation.org>
+Subject: [PATCH 6.19 194/342] ALSA: usb-audio: Exclude Scarlett 2i4 1st Gen from SKIP_IFACE_SETUP
+Date: Tue, 31 Mar 2026 18:20:27 +0200
+Message-ID: <20260331161806.132701592@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,49 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Carlini <nicholas@carlini.com>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-[ Upstream commit 5170efd9c344c68a8075dcb8ed38d3f8a60e7ed4 ]
+[ Upstream commit 990a8b0732cf899d4a0f847b0a67efeb9a384c82 ]
 
-__io_uring_show_fdinfo() iterates over pending SQEs and, for 128-byte
-SQEs on an IORING_SETUP_SQE_MIXED ring, needs to detect when the second
-half of the SQE would be past the end of the sq_sqes array. The current
-check tests (++sq_head & sq_mask) == 0, but sq_head is only incremented
-when a 128-byte SQE is encountered, not on every iteration. The actual
-array index is sq_idx = (i + sq_head) & sq_mask, which can be sq_mask
-(the last slot) while the wrap check passes.
+Same issue that the Scarlett 2i2 1st Gen had:
+QUIRK_FLAG_SKIP_IFACE_SETUP causes distorted/flanging audio on the
+Scarlett 2i4 1st Gen (1235:800a).
 
-Fix by checking sq_idx directly. Keep the sq_head increment so the loop
-still skips the second half of the 128-byte SQE on the next iteration.
-
-Fixes: 1cba30bf9fdd ("io_uring: add support for IORING_SETUP_SQE_MIXED")
-Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
-Link: https://patch.msgid.link/20260327021823.3138396-1-nicholas@carlini.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 38c322068a26 ("ALSA: usb-audio: Add QUIRK_FLAG_SKIP_IFACE_SETUP")
+Reported-by: dcferreira [https://github.com/geoffreybennett/linux-fcp/issues/54]
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Link: https://patch.msgid.link/acEkEbftzyNe8W7C@m.b4.vu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/fdinfo.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/quirks.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/fdinfo.c b/io_uring/fdinfo.c
-index 25c92ace18bd1..c2d3e45544bb4 100644
---- a/io_uring/fdinfo.c
-+++ b/io_uring/fdinfo.c
-@@ -119,12 +119,13 @@ static void __io_uring_show_fdinfo(struct io_ring_ctx *ctx, struct seq_file *m)
- 					sq_idx);
- 				break;
- 			}
--			if ((++sq_head & sq_mask) == 0) {
-+			if (sq_idx == sq_mask) {
- 				seq_printf(m,
- 					"%5u: corrupted sqe, wrapping 128B entry\n",
- 					sq_idx);
- 				break;
- 			}
-+			sq_head++;
- 			i++;
- 			sqe128 = true;
- 		}
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 461d7d254e378..09ed935107580 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2426,6 +2426,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	VENDOR_FLG(0x07fd, /* MOTU */
+ 		   QUIRK_FLAG_VALIDATE_RATES),
+ 	DEVICE_FLG(0x1235, 0x8006, 0), /* Focusrite Scarlett 2i2 1st Gen */
++	DEVICE_FLG(0x1235, 0x800a, 0), /* Focusrite Scarlett 2i4 1st Gen */
+ 	VENDOR_FLG(0x1235, /* Focusrite Novation */
+ 		   QUIRK_FLAG_SKIP_IFACE_SETUP),
+ 	VENDOR_FLG(0x1511, /* AURALiC */
 -- 
 2.53.0
 
