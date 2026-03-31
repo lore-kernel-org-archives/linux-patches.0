@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B51D303A07;
-	Tue, 31 Mar 2026 17:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EB2303A07;
+	Tue, 31 Mar 2026 17:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976846; cv=none; b=meNTa7E7gttiSvmAbA65yERPqcSGGQnxqA5A3mu3VqMqC3OeGRd78dG86Blt8cU4eE2UwRaHRGfPRlhXplt5QhWY3bjppLx+R/5EmY3fsZj9WaNBg1Bk42P1uXRE21WOXPQOdet8ry9GWFby3BhJQYr8maSkF/oySUZClv2T9NA=
+	t=1774976849; cv=none; b=p2AlCWmjkRI91GwtRn75T6cz0cAr7VcXALTYkexNAVEatykmG8wXRmhAjVllwdzqplWUPq4G1fXeBLp5461Y5Pipr2+suOoh49dPEfuIOHn6S6qgo2w8BikvGur+Mf105lk+qRF00xaheBSCgAmoJqyVfg7T+/6tyY/Yh8YaO4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976846; c=relaxed/simple;
-	bh=xvJbMUZZU97Ymp9TJL+Esyi5E5/cCFFwJHkF2N/FhyI=;
+	s=arc-20240116; t=1774976849; c=relaxed/simple;
+	bh=Ps+MzcUDJscKmNNmgzAZAzw1jdLBmHq4BH3PPhoQA+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXJym5QK9pQdvaKag4m+jz1c5LL57sHSahGTeAGtzurapfb9gdaPOhffqDQ6d0M6boIk4Dt+ZSFW1ntQKfcSf7x55A8fL8lO7HjhcpbCNpVUNsJll/nlfwOHCc4w8Lwp6o3eiQXwPrwx9fzvC7MwDL+i+TXZcBBl0bKrTqcOrPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqjjhoDG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u31O0Kzb1nBiInZo7B+ZkLstM6PVZgvgffbaBlm1fPd1XgLIvY5gcx9rYRe7lfCNEIaq9o7BXJRscNZsh2JMhd60ruHBH8WBuxUTjFr+DpuHpSP1Gx/OsD1mVvsDqcmOmT9l1XB+4ux056rsd3c6TwVBJLbhdR6XEc4n5CXG5WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEHbUilq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqjjhoDG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E285C19423;
-	Tue, 31 Mar 2026 17:07:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEHbUilq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0F8C19423;
+	Tue, 31 Mar 2026 17:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976846;
-	bh=xvJbMUZZU97Ymp9TJL+Esyi5E5/cCFFwJHkF2N/FhyI=;
+	s=korg; t=1774976849;
+	bh=Ps+MzcUDJscKmNNmgzAZAzw1jdLBmHq4BH3PPhoQA+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PqjjhoDGuIIGyEoMqG/PoD9VtHsbOhgT7gNvNJMyCvhSMYRLN/W2Lv1Fth0/Uos2/
-	 VuCVyvr1Eg9fYr4q3DPyh2hsmcNnMhBSxZp5k9S/LPPeVvgT3sqGzey9WKUwBlRCUc
-	 aDeHveAyCJ1rTETYFbitv/BHbqTlq2+eu7Jm1c6M=
+	b=hEHbUilqFeQLMSkMJOFVFB4A1jPaddlwBxEZvfJ0K2aLmP6eyuEO/z0zcRyOUKutD
+	 QNXR768ETcz2wDF04enLr/cfwlGYPLlcHVRqrDWPlr1NEjwXZLKKx5NYz83yof/h7X
+	 PvIS7fOruuIuW1EfcR7n7/dz6e4AALFpcIGUtomw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,10 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Long Li <leo.lilong@huawei.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 251/309] xfs: fix ri_total validation in xlog_recover_attri_commit_pass2
-Date: Tue, 31 Mar 2026 18:22:34 +0200
-Message-ID: <20260331161802.812192218@linuxfoundation.org>
+Subject: [PATCH 6.18 252/309] xfs: dont irele after failing to iget in xfs_attri_recover_work
+Date: Tue, 31 Mar 2026 18:22:35 +0200
+Message-ID: <20260331161802.848785912@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,61 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit d72f2084e30966097c8eae762e31986a33c3c0ae upstream.
+commit 70685c291ef82269180758130394ecdc4496b52c upstream.
 
-The ri_total checks for SET/REPLACE operations are hardcoded to 3,
-but xfs_attri_item_size() only emits a value iovec when value_len > 0,
-so ri_total is 2 when value_len == 0.
+xlog_recovery_iget* never set @ip to a valid pointer if they return
+an error, so this irele will walk off a dangling pointer.  Fix that.
 
-For PPTR_SET/PPTR_REMOVE/PPTR_REPLACE, value_len is validated by
-xfs_attri_validate() to be exactly sizeof(struct xfs_parent_rec) and
-is never zero, so their hardcoded checks remain correct.
-
-This problem may cause log recovery failures. The following script can be
-used to reproduce the problem:
-
- #!/bin/bash
- mkfs.xfs -f /dev/sda
- mount /dev/sda /mnt/test/
- touch /mnt/test/file
- for i in {1..200}; do
-         attr -s "user.attr_$i" -V "value_$i" /mnt/test/file > /dev/null
- done
- echo 1 > /sys/fs/xfs/debug/larp
- echo 1 > /sys/fs/xfs/sda/errortag/larp
- attr -s "user.zero" -V "" /mnt/test/file
- echo 0 > /sys/fs/xfs/sda/errortag/larp
- umount /mnt/test
- mount /dev/sda /mnt/test/  # mount failed
-
-Fix this by deriving the expected count dynamically as "2 + !!value_len"
-for SET/REPLACE operations.
-
-Cc: stable@vger.kernel.org # v6.9
-Fixes: ad206ae50eca ("xfs: check opcode and iovec count match in xlog_recover_attri_commit_pass2")
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Long Li <leo.lilong@huawei.com>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: ae673f534a3097 ("xfs: record inode generation in xattr update log intent items")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Long Li <leo.lilong@huawei.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_attr_item.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_attr_item.c |    1 -
+ 1 file changed, 1 deletion(-)
 
 --- a/fs/xfs/xfs_attr_item.c
 +++ b/fs/xfs/xfs_attr_item.c
-@@ -1050,8 +1050,8 @@ xlog_recover_attri_commit_pass2(
+@@ -656,7 +656,6 @@ xfs_attri_recover_work(
  		break;
- 	case XFS_ATTRI_OP_FLAGS_SET:
- 	case XFS_ATTRI_OP_FLAGS_REPLACE:
--		/* Log item, attr name, attr value */
--		if (item->ri_total != 3) {
-+		/* Log item, attr name, optional attr value */
-+		if (item->ri_total != 2 + !!attri_formatp->alfi_value_len) {
- 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
- 					     attri_formatp, len);
- 			return -EFSCORRUPTED;
+ 	}
+ 	if (error) {
+-		xfs_irele(ip);
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp, attrp,
+ 				sizeof(*attrp));
+ 		return ERR_PTR(-EFSCORRUPTED);
 
 
