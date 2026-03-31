@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2453425CE5;
-	Tue, 31 Mar 2026 16:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEDA425CFF;
+	Tue, 31 Mar 2026 16:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975236; cv=none; b=tBmYWIjXqrRCfsw6eav3fZrJD4LYHgNBqfEg1uBRfmRDlqwR0ssN8B3FbVk1nuvUBxIkZbDpjZ7wo2KS7e639r73r8L/pKdihgJjZVT9wd/SzyJutyBPS7HgxdM5yURxLNH6ZAV2qv+NK6c2WuUMspYrHOOkGBKuE7V+/Y+vECI=
+	t=1774975239; cv=none; b=sxkuZiw+fpQ2fMSWeDYeupYBS+4Yf8ThIHFQVLSjd55viW4i0HcT0BLQNISaO1/pWtEU5HzZkGHGWlyzju73Oksk5Gpdm4FZZo6CZOkbHFAoUi3WgVoK4dGdO5pUQnh9OHxYRJf8bsbHxTy//jz7Iqjoq5KF/62LxbzjtHxcyEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975236; c=relaxed/simple;
-	bh=Reu0GdrV4O2AKWAIeez+CsX+rR93IywioFp/nXnZvhg=;
+	s=arc-20240116; t=1774975239; c=relaxed/simple;
+	bh=cJyHQtG7UFZuPeajUCcxsp9RIeYShhE+PgVzwrWYMXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LpDzsWXuV3nRRtSQ5Pn4HQO3Ykuun7LwJz23SxyOuG2ogRYgiXaU6u9lFYzvMO3q/Kt7cPjf+GL63apE7u92q05Z/pmQsICfSkoxxYUNefu0+onbMMeHS4xArzZZqulAdCVw+qNxYVa+bLEn2PlZBz1SeARqIihNePcCeC3zmbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlWc6gqd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cis4fdndWNCb6lrBva6pVH6wc0tVC3kP21E9ZNjV8cr0JBomQTu3+eaBeBvjau1GqyLiEEGiWLCD16osC9JMKQ0pnNzTCtAk3hFoOaFXWK05jCEiwKxMRHz+cJQOHA6TIli7ugUZ7zbrY7+7znA/+W5SWsEp/B45/KHqfGTkGPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxPn7RhD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlWc6gqd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59569C19423;
-	Tue, 31 Mar 2026 16:40:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxPn7RhD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E6CC19423;
+	Tue, 31 Mar 2026 16:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975236;
-	bh=Reu0GdrV4O2AKWAIeez+CsX+rR93IywioFp/nXnZvhg=;
+	s=korg; t=1774975239;
+	bh=cJyHQtG7UFZuPeajUCcxsp9RIeYShhE+PgVzwrWYMXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlWc6gqdeJMwaV9V1FIKQwHjhrdOMkF72G9c3QZGisyuWnsdMukUoF5ndm6xGpgir
-	 9I9q4JD3oUfG/vIBDcWMHS2JzAFKVyOJ2Aita24vZs0SlIVqzVrsCXH9NMvAlar3ix
-	 k5dcClCu09E8lusXqQUhmDmZYSDgVs9SeaMJnKEQ=
+	b=gxPn7RhD4TltMfjqHWz1HVZLMpKaY9yPeyPMmVMIUkUgJecgzIEHNs7hEmiB8Oixj
+	 TVZs9zVkAV1LpuQOmT+Dkx16oZ+VHNnfAKFxULzxiK6tF0ltOG7tni6XAyCPg8OzIV
+	 OpCG5THCou7cJeu6jy8zAo7M00keRRYcw3+ILMac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.19 216/342] cpufreq: conservative: Reset requested_freq on limits change
-Date: Tue, 31 Mar 2026 18:20:49 +0200
-Message-ID: <20260331161806.926076185@linuxfoundation.org>
+	Charles Mirabile <cmirabil@redhat.com>,
+	Nicolas Schier <nsc@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.19 217/342] kbuild: Delete .builtin-dtbs.S when running make clean
+Date: Tue, 31 Mar 2026 18:20:50 +0200
+Message-ID: <20260331161806.961922776@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,95 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Charles Mirabile <cmirabil@redhat.com>
 
-commit 6a28fb8cb28b9eb39a392e531d938a889eacafc5 upstream.
+commit a76e30c2479ce6ffa2aa6c8a8462897afc82bc90 upstream.
 
-A recently reported issue highlighted that the cached requested_freq
-is not guaranteed to stay in sync with policy->cur. If the platform
-changes the actual CPU frequency after the governor sets one (e.g.
-due to platform-specific frequency scaling) and a re-sync occurs
-later, policy->cur may diverge from requested_freq.
+The makefile tries to delete a file named ".builtin-dtb.S" but the file
+created by scripts/Makefile.vmlinux is actually called ".builtin-dtbs.S".
 
-This can lead to incorrect behavior in the conservative governor.
-For example, the governor may assume the CPU is already running at
-the maximum frequency and skip further increases even though there
-is still headroom.
-
-Avoid this by resetting the cached requested_freq to policy->cur on
-detecting a change in policy limits.
-
-Reported-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Tested-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://lore.kernel.org/all/20260210115458.3493646-1-zhenglifeng1@huawei.com/
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/d846a141a98ac0482f20560fcd7525c0f0ec2f30.1773999467.git.viresh.kumar@linaro.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 654102df2ac2a ("kbuild: add generic support for built-in boot DTBs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Charles Mirabile <cmirabil@redhat.com>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20260308044338.181403-1-cmirabil@redhat.com
+[nathan: Small commit message adjustments]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq_conservative.c |   12 ++++++++++++
- drivers/cpufreq/cpufreq_governor.c     |    3 +++
- drivers/cpufreq/cpufreq_governor.h     |    1 +
- 3 files changed, 16 insertions(+)
+ Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/cpufreq/cpufreq_conservative.c
-+++ b/drivers/cpufreq/cpufreq_conservative.c
-@@ -313,6 +313,17 @@ static void cs_start(struct cpufreq_poli
- 	dbs_info->requested_freq = policy->cur;
- }
+--- a/Makefile
++++ b/Makefile
+@@ -1622,7 +1622,7 @@ CLEAN_FILES += vmlinux.symvers modules-o
+ 	       modules.builtin.ranges vmlinux.o.map vmlinux.unstripped \
+ 	       compile_commands.json rust/test \
+ 	       rust-project.json .vmlinux.objs .vmlinux.export.c \
+-               .builtin-dtbs-list .builtin-dtb.S
++               .builtin-dtbs-list .builtin-dtbs.S
  
-+static void cs_limits(struct cpufreq_policy *policy)
-+{
-+	struct cs_policy_dbs_info *dbs_info = to_dbs_info(policy->governor_data);
-+
-+	/*
-+	 * The limits have changed, so may have the current frequency. Reset
-+	 * requested_freq to avoid any unintended outcomes due to the mismatch.
-+	 */
-+	dbs_info->requested_freq = policy->cur;
-+}
-+
- static struct dbs_governor cs_governor = {
- 	.gov = CPUFREQ_DBS_GOVERNOR_INITIALIZER("conservative"),
- 	.kobj_type = { .default_groups = cs_groups },
-@@ -322,6 +333,7 @@ static struct dbs_governor cs_governor =
- 	.init = cs_init,
- 	.exit = cs_exit,
- 	.start = cs_start,
-+	.limits = cs_limits,
- };
- 
- #define CPU_FREQ_GOV_CONSERVATIVE	(cs_governor.gov)
---- a/drivers/cpufreq/cpufreq_governor.c
-+++ b/drivers/cpufreq/cpufreq_governor.c
-@@ -563,6 +563,7 @@ EXPORT_SYMBOL_GPL(cpufreq_dbs_governor_s
- 
- void cpufreq_dbs_governor_limits(struct cpufreq_policy *policy)
- {
-+	struct dbs_governor *gov = dbs_governor_of(policy);
- 	struct policy_dbs_info *policy_dbs;
- 
- 	/* Protect gov->gdbs_data against cpufreq_dbs_governor_exit() */
-@@ -574,6 +575,8 @@ void cpufreq_dbs_governor_limits(struct
- 	mutex_lock(&policy_dbs->update_mutex);
- 	cpufreq_policy_apply_limits(policy);
- 	gov_update_sample_delay(policy_dbs, 0);
-+	if (gov->limits)
-+		gov->limits(policy);
- 	mutex_unlock(&policy_dbs->update_mutex);
- 
- out:
---- a/drivers/cpufreq/cpufreq_governor.h
-+++ b/drivers/cpufreq/cpufreq_governor.h
-@@ -138,6 +138,7 @@ struct dbs_governor {
- 	int (*init)(struct dbs_data *dbs_data);
- 	void (*exit)(struct dbs_data *dbs_data);
- 	void (*start)(struct cpufreq_policy *policy);
-+	void (*limits)(struct cpufreq_policy *policy);
- };
- 
- static inline struct dbs_governor *dbs_governor_of(struct cpufreq_policy *policy)
+ # Directories & files removed with 'make mrproper'
+ MRPROPER_FILES += include/config include/generated          \
 
 
