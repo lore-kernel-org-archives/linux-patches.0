@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F2F425CF0;
-	Tue, 31 Mar 2026 16:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997713DE431;
+	Tue, 31 Mar 2026 16:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975881; cv=none; b=OYXS81sCFnH0JyldPbbJcXGYC2UIOCp9ntqYw70ldgION/bbu3uNoEgjhHt+/Tx9zFlSPDCvNShp1JZP3RuB+5ogoB8ARXNtEhUi1+B9ovlv1qxziqkOxIYzasdMLLgseIRslJd/YJjmVCCT/u1dHpKHHz+8CGGE5v/6+NwVKAI=
+	t=1774975883; cv=none; b=bMVnO4sEAsRD9cHTefregwnm14Bc4/O80kTUZTyCS0zlGdixHgVdxYWaJPGCG8kbIddKvS/zajbgGa0KueF1rUJraHxfp/gtZZIqHpRDGSXjhbFRaDrKLoQdSh8Yq2x6nPzoF0Wzp3xlY7P+1pImav6gIV06m7HwVjA+YacmoMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975881; c=relaxed/simple;
-	bh=ZiV4h1TlozlSy1L2SqNNAAK5QqvnserBvE93dQSU2jY=;
+	s=arc-20240116; t=1774975883; c=relaxed/simple;
+	bh=YidEm3Dj6Q6EEqK6vcbqdXZaeVQ2Q4z112DeNjcNAYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kkGcEjmckFYf2KPixePxUcKqB48dHRWoFcFXybjzAy69qXV31v9E1ehbvrs5ZXn9/JmCUfsBxUTMxQkEB18/X6XikKjH4UnvgL6fODjfC7qKlRUgSizsfAJLdsC3Y9anOP2yxF+lSaSwuFI02o2AfcWwWWy57YQDHcoSDq5AVkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jyps+xhz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CDim/xmzvaaIcIGuCfBoRJB2npcD9+BHXhkXequHPNHICjai72MK3mrYqftc+VvK5q9e383SWr/PTrzXNOHT9Jqm7bdu0ZGSn0E103/cDW/5SddEomdigI2WsqSDPI8wlvLR4wMUP5FIoRX7webCwyAkQcfXwcIzd3lDCTUfxhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIle1viL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jyps+xhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91ED0C19423;
-	Tue, 31 Mar 2026 16:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIle1viL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30564C19423;
+	Tue, 31 Mar 2026 16:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975880;
-	bh=ZiV4h1TlozlSy1L2SqNNAAK5QqvnserBvE93dQSU2jY=;
+	s=korg; t=1774975883;
+	bh=YidEm3Dj6Q6EEqK6vcbqdXZaeVQ2Q4z112DeNjcNAYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jyps+xhzGpc8luXsmr0MWLfdQ7iRmfsU4clIwEM9s5TtfpcoZAvW8n8TyxNUvgj6s
-	 hWPWJXSn8onzr0JZhS31n83I3xxS1eMKwPQAtbM0gdioU84hsmdgS1TACXWFREdsgJ
-	 CXxhEh+t/8P4FsSjbr1tlQjxJf/xuPPUlA1E7ysc=
+	b=xIle1viLxBDCyVWKZ/Tw5FvZsLXmXw8m70Ub/LpmDIaSUkfrBxi1LiScC+V0iozrK
+	 Lh3vD6MTva6Jq3dlpnsAFUAAj8yT/DoBs4ygMBdeKLIZupW3C+iDgItnkdGbNhieGd
+	 AUsga8jqlaQ5t+tG7szrqqmOEwTJOaypr8wGCyms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yussuf Khalil <dev@pp3345.net>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 122/244] drm/amd/display: Do not skip unrelated mode changes in DSC validation
-Date: Tue, 31 Mar 2026 18:21:12 +0200
-Message-ID: <20260331161746.167292884@linuxfoundation.org>
+Subject: [PATCH 6.12 123/244] spi: Group CS related fields in struct spi_device
+Date: Tue, 31 Mar 2026 18:21:13 +0200
+Message-ID: <20260331161746.202714795@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,119 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yussuf Khalil <dev@pp3345.net>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit aed3d041ab061ec8a64f50a3edda0f4db7280025 ]
+[ Upstream commit dd8a9807fa03666bff52cb28472fb227eaac36c9 ]
 
-Starting with commit 17ce8a6907f7 ("drm/amd/display: Add dsc pre-validation in
-atomic check"), amdgpu resets the CRTC state mode_changed flag to false when
-recomputing the DSC configuration results in no timing change for a particular
-stream.
+The CS related fields are sparse in the struct spi_device. Group them.
+While at it, fix the comment style of cs_index_mask.
 
-However, this is incorrect in scenarios where a change in MST/DSC configuration
-happens in the same KMS commit as another (unrelated) mode change. For example,
-the integrated panel of a laptop may be configured differently (e.g., HDR
-enabled/disabled) depending on whether external screens are attached. In this
-case, plugging in external DP-MST screens may result in the mode_changed flag
-being dropped incorrectly for the integrated panel if its DSC configuration
-did not change during precomputation in pre_validate_dsc().
-
-At this point, however, dm_update_crtc_state() has already created new streams
-for CRTCs with DSC-independent mode changes. In turn,
-amdgpu_dm_commit_streams() will never release the old stream, resulting in a
-memory leak. amdgpu_dm_atomic_commit_tail() will never acquire a reference to
-the new stream either, which manifests as a use-after-free when the stream gets
-disabled later on:
-
-BUG: KASAN: use-after-free in dc_stream_release+0x25/0x90 [amdgpu]
-Write of size 4 at addr ffff88813d836524 by task kworker/9:9/29977
-
-Workqueue: events drm_mode_rmfb_work_fn
-Call Trace:
- <TASK>
- dump_stack_lvl+0x6e/0xa0
- print_address_description.constprop.0+0x88/0x320
- ? dc_stream_release+0x25/0x90 [amdgpu]
- print_report+0xfc/0x1ff
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __virt_addr_valid+0x225/0x4e0
- ? dc_stream_release+0x25/0x90 [amdgpu]
- kasan_report+0xe1/0x180
- ? dc_stream_release+0x25/0x90 [amdgpu]
- kasan_check_range+0x125/0x200
- dc_stream_release+0x25/0x90 [amdgpu]
- dc_state_destruct+0x14d/0x5c0 [amdgpu]
- dc_state_release.part.0+0x4e/0x130 [amdgpu]
- dm_atomic_destroy_state+0x3f/0x70 [amdgpu]
- drm_atomic_state_default_clear+0x8ee/0xf30
- ? drm_mode_object_put.part.0+0xb1/0x130
- __drm_atomic_state_free+0x15c/0x2d0
- atomic_remove_fb+0x67e/0x980
-
-Since there is no reliable way of figuring out whether a CRTC has unrelated
-mode changes pending at the time of DSC validation, remember the value of the
-mode_changed flag from before the point where a CRTC was marked as potentially
-affected by a change in DSC configuration. Reset the mode_changed flag to this
-earlier value instead in pre_validate_dsc().
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5004
-Fixes: 17ce8a6907f7 ("drm/amd/display: Add dsc pre-validation in atomic check")
-Signed-off-by: Yussuf Khalil <dev@pp3345.net>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit cc7c7121ae082b7b82891baa7280f1ff2608f22b)
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20250331103609.4160281-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: cc34d77dd487 ("spi: use generic driver_override infrastructure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c           | 5 +++++
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h           | 1 +
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 4 +++-
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ include/linux/spi/spi.h | 37 +++++++++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index e092d2372a4e6..1ed631006e63f 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -11722,6 +11722,11 @@ static int amdgpu_dm_atomic_check(struct drm_device *dev,
- 	}
- 
- 	if (dc_resource_is_dsc_encoding_supported(dc)) {
-+		for_each_oldnew_crtc_in_state(state, crtc, old_crtc_state, new_crtc_state, i) {
-+			dm_new_crtc_state = to_dm_crtc_state(new_crtc_state);
-+			dm_new_crtc_state->mode_changed_independent_from_dsc = new_crtc_state->mode_changed;
-+		}
+diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
+index 71ad766932d31..825c41611852a 100644
+--- a/include/linux/spi/spi.h
++++ b/include/linux/spi/spi.h
+@@ -134,13 +134,6 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
+  * @max_speed_hz: Maximum clock rate to be used with this chip
+  *	(on this board); may be changed by the device's driver.
+  *	The spi_transfer.speed_hz can override this for each transfer.
+- * @chip_select: Array of physical chipselect, spi->chipselect[i] gives
+- *	the corresponding physical CS for logical CS i.
+- * @mode: The spi mode defines how data is clocked out and in.
+- *	This may be changed by the device's driver.
+- *	The "active low" default for chipselect mode can be overridden
+- *	(by specifying SPI_CS_HIGH) as can the "MSB first" default for
+- *	each word in a transfer (by specifying SPI_LSB_FIRST).
+  * @bits_per_word: Data transfers involve one or more words; word sizes
+  *	like eight or 12 bits are common.  In-memory wordsizes are
+  *	powers of two bytes (e.g. 20 bit samples use 32 bits).
+@@ -148,6 +141,11 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
+  *	default (0) indicating protocol words are eight bit bytes.
+  *	The spi_transfer.bits_per_word can override this for each transfer.
+  * @rt: Make the pump thread real time priority.
++ * @mode: The spi mode defines how data is clocked out and in.
++ *	This may be changed by the device's driver.
++ *	The "active low" default for chipselect mode can be overridden
++ *	(by specifying SPI_CS_HIGH) as can the "MSB first" default for
++ *	each word in a transfer (by specifying SPI_LSB_FIRST).
+  * @irq: Negative, or the number passed to request_irq() to receive
+  *	interrupts from this device.
+  * @controller_state: Controller's runtime state
+@@ -160,8 +158,7 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
+  *	the device will bind to the named driver and only the named driver.
+  *	Do not set directly, because core frees it; use driver_set_override() to
+  *	set or clear it.
+- * @cs_gpiod: Array of GPIO descriptors of the corresponding chipselect lines
+- *	(optional, NULL when not using a GPIO line)
++ * @pcpu_statistics: statistics for the spi_device
+  * @word_delay: delay to be inserted between consecutive
+  *	words of a transfer
+  * @cs_setup: delay to be introduced by the controller after CS is asserted
+@@ -169,8 +166,11 @@ extern void spi_transfer_cs_change_delay_exec(struct spi_message *msg,
+  * @cs_inactive: delay to be introduced by the controller after CS is
+  *	deasserted. If @cs_change_delay is used from @spi_transfer, then the
+  *	two delays will be added up.
+- * @pcpu_statistics: statistics for the spi_device
++ * @chip_select: Array of physical chipselect, spi->chipselect[i] gives
++ *	the corresponding physical CS for logical CS i.
+  * @cs_index_mask: Bit mask of the active chipselect(s) in the chipselect array
++ * @cs_gpiod: Array of GPIO descriptors of the corresponding chipselect lines
++ *	(optional, NULL when not using a GPIO line)
+  *
+  * A @spi_device is used to interchange data between an SPI slave
+  * (usually a discrete chip) and CPU memory.
+@@ -185,7 +185,6 @@ struct spi_device {
+ 	struct device		dev;
+ 	struct spi_controller	*controller;
+ 	u32			max_speed_hz;
+-	u8			chip_select[SPI_CS_CNT_MAX];
+ 	u8			bits_per_word;
+ 	bool			rt;
+ #define SPI_NO_TX		BIT(31)		/* No transmit wire */
+@@ -216,23 +215,29 @@ struct spi_device {
+ 	void			*controller_data;
+ 	char			modalias[SPI_NAME_SIZE];
+ 	const char		*driver_override;
+-	struct gpio_desc	*cs_gpiod[SPI_CS_CNT_MAX];	/* Chip select gpio desc */
 +
- 		for_each_oldnew_crtc_in_state(state, crtc, old_crtc_state, new_crtc_state, i) {
- 			if (drm_atomic_crtc_needs_modeset(new_crtc_state)) {
- 				ret = add_affected_mst_dsc_crtcs(state, crtc);
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-index 2c0e1180706fa..9682c190e9524 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-@@ -881,6 +881,7 @@ struct dm_crtc_state {
- 
- 	bool freesync_vrr_info_changed;
- 
-+	bool mode_changed_independent_from_dsc;
- 	bool dsc_force_changed;
- 	bool vrr_supported;
- 	struct mod_freesync_config freesync_config;
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index a2a70c1e9afdc..9a3deb26149d8 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1703,9 +1703,11 @@ int pre_validate_dsc(struct drm_atomic_state *state,
- 			int ind = find_crtc_index_in_state_by_stream(state, stream);
- 
- 			if (ind >= 0) {
-+				struct dm_crtc_state *dm_new_crtc_state = to_dm_crtc_state(state->crtcs[ind].new_state);
++	/* The statistics */
++	struct spi_statistics __percpu	*pcpu_statistics;
 +
- 				DRM_INFO_ONCE("%s:%d MST_DSC no mode changed for stream 0x%p\n",
- 						__func__, __LINE__, stream);
--				state->crtcs[ind].new_state->mode_changed = 0;
-+				dm_new_crtc_state->base.mode_changed = dm_new_crtc_state->mode_changed_independent_from_dsc;
- 			}
- 		}
- 	}
+ 	struct spi_delay	word_delay; /* Inter-word delay */
++
+ 	/* CS delays */
+ 	struct spi_delay	cs_setup;
+ 	struct spi_delay	cs_hold;
+ 	struct spi_delay	cs_inactive;
+ 
+-	/* The statistics */
+-	struct spi_statistics __percpu	*pcpu_statistics;
++	u8			chip_select[SPI_CS_CNT_MAX];
+ 
+-	/* Bit mask of the chipselect(s) that the driver need to use from
+-	 * the chipselect array.When the controller is capable to handle
++	/*
++	 * Bit mask of the chipselect(s) that the driver need to use from
++	 * the chipselect array. When the controller is capable to handle
+ 	 * multiple chip selects & memories are connected in parallel
+ 	 * then more than one bit need to be set in cs_index_mask.
+ 	 */
+ 	u32			cs_index_mask : SPI_CS_CNT_MAX;
+ 
++	struct gpio_desc	*cs_gpiod[SPI_CS_CNT_MAX];	/* Chip select gpio desc */
++
+ 	/*
+ 	 * Likely need more hooks for more protocol options affecting how
+ 	 * the controller talks to each chip, like:
 -- 
 2.53.0
 
