@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964592F5491;
-	Tue, 31 Mar 2026 17:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293FC2E1C7C;
+	Tue, 31 Mar 2026 17:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976559; cv=none; b=TQWn4w9HkcpabC/8tsx8kpNSxHSWrYiBWxlq4LlzY8p2G77G59xKcbiL8Ik8JteLTVUTVkpJcMGDhub1NVVqQsdryqfDuFGWdVzLRu3WJXqI5gdFSUjbF7kHlF87VsVq20VKA7K0IvfBbTI+sn3PWgOT3aCNjVU9WO215PibB/w=
+	t=1774976562; cv=none; b=ompPyCi0h0glW+ZHcFrz9MuJRhhoJbRfBLHUzMvUtrIx3xdXh8JxdFB9LM4FObkVvZ26hWBs5920Sv827hHXiAkOnfu+kdtp5/LSusvDeZzawtQUdb6gRJOlHEOJtBduHN9mI4o6avMcrER4VqGL1Z6QGJOZpnrZS+/ig5cZ084=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976559; c=relaxed/simple;
-	bh=kZTNqkl7fFTTc3OEB3TVVYO9vAGU8iLtFhy7lGoVu94=;
+	s=arc-20240116; t=1774976562; c=relaxed/simple;
+	bh=h8kHVF6NVB/hROKPM5hFSn19A67G//oTRuh/qI6JIwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qYypAyCN3LzdL7+GNki+DxTuBza8mufPYMsGJyOBCmuV5BqarkxG5YTJRF1ZMcCxuPemc7cw+n2HkWtz+B4/r/iL5zvVUVIwZmMK+8rKz4wO7wrO7CNB+7RHPbJncoWe7jkM5kpawPI1tI8BzrD/StM9Mt+U87KnaPxOXsp6/3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iu3J2hn8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OGFKCiRTORiFDq4t8fKudFYjwE9CNvDZu0F445MMa9lUSQUcoV0qDVJ74ITuH2vLzTXfY+5z1mWTHXmfAhCSgpCYmZw++Du5atdfZbk/6dXNo3YvrP1chKC1uYCwesErHweYKtMavUViUP9sVTpV1MinzJ9LYmjeG+z955QiXs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S31ebuYV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iu3J2hn8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297E9C19423;
-	Tue, 31 Mar 2026 17:02:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S31ebuYV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BD9C19423;
+	Tue, 31 Mar 2026 17:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976559;
-	bh=kZTNqkl7fFTTc3OEB3TVVYO9vAGU8iLtFhy7lGoVu94=;
+	s=korg; t=1774976562;
+	bh=h8kHVF6NVB/hROKPM5hFSn19A67G//oTRuh/qI6JIwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iu3J2hn8sHN9+5+AX7QYEsLkZxD5I0PcX7MfEW+VSkmbu7vJzGexUnS7TXu3t4Acz
-	 u2H1Ec6SFfT2im9GhgcmPyIvMtepe8h5UF1NnhaRaK6OAqUCFaxPYPTEY7KEklSjRp
-	 NoVntaWBaCXfbqnP0H7ivXACaDt8juesK57kTBWo=
+	b=S31ebuYVqhMm7iAwrQmDx4Q6pvssoA0+1IpvzUTAx1WdaQMM7GOD3T1E21DLFo5kJ
+	 SW0r7IziSBOG6k+iY/mSBA81pF8klCeb6OzYpcD4SQGFrMwPMMBUTM/kJe1OrHNjFG
+	 xDN9iJmB5VCSAFNmmMY1VcosQRSx8+pjqaOPAU98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jacob Moroni <jmoroni@google.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 140/309] ALSA: usb-audio: Exclude Scarlett 2i2 1st Gen from SKIP_IFACE_SETUP
-Date: Tue, 31 Mar 2026 18:20:43 +0200
-Message-ID: <20260331161758.628261221@linuxfoundation.org>
+Subject: [PATCH 6.18 141/309] RDMA/irdma: Initialize free_qp completion before using it
+Date: Tue, 31 Mar 2026 18:20:44 +0200
+Message-ID: <20260331161758.664724336@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,43 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 8780f561f6717dec52351251881bff79e960eb46 ]
+[ Upstream commit 11a95521fb93c91e2d4ef9d53dc80ef0a755549b ]
 
-The Focusrite Scarlett 2i2 1st Gen (1235:8006) produces
-distorted/silent audio when QUIRK_FLAG_SKIP_IFACE_SETUP is active, as
-that flag causes the feedback format to be detected as 17.15 instead
-of 16.16.
+In irdma_create_qp, if ib_copy_to_udata fails, it will call
+irdma_destroy_qp to clean up which will attempt to wait on
+the free_qp completion, which is not initialized yet. Fix this
+by initializing the completion before the ib_copy_to_udata call.
 
-Add a DEVICE_FLG entry for this device before the Focusrite VENDOR_FLG
-entry so that it gets no quirk flags, overriding the vendor-wide
-SKIP_IFACE_SETUP. This device doesn't have the internal mixer, Air, or
-Safe modes that the quirk was designed to protect.
-
-Fixes: 38c322068a26 ("ALSA: usb-audio: Add QUIRK_FLAG_SKIP_IFACE_SETUP")
-Reported-by: pairomaniac [https://github.com/geoffreybennett/linux-fcp/issues/54]
-Tested-by: pairomaniac [https://github.com/geoffreybennett/linux-fcp/issues/54]
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://patch.msgid.link/abmsTjKmQMKbhYtK@m.b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/irdma/verbs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index fd50bf7c381d6..11823549900f1 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2422,6 +2422,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_CTL_MSG_DELAY | QUIRK_FLAG_IFACE_DELAY),
- 	VENDOR_FLG(0x07fd, /* MOTU */
- 		   QUIRK_FLAG_VALIDATE_RATES),
-+	DEVICE_FLG(0x1235, 0x8006, 0), /* Focusrite Scarlett 2i2 1st Gen */
- 	VENDOR_FLG(0x1235, /* Focusrite Novation */
- 		   QUIRK_FLAG_SKIP_IFACE_SETUP),
- 	VENDOR_FLG(0x1511, /* AURALiC */
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 5d027c04dba6f..f53b8f0d7ca83 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -1106,6 +1106,7 @@ static int irdma_create_qp(struct ib_qp *ibqp,
+ 	spin_lock_init(&iwqp->sc_qp.pfpdu.lock);
+ 	iwqp->sig_all = init_attr->sq_sig_type == IB_SIGNAL_ALL_WR;
+ 	rf->qp_table[qp_num] = iwqp;
++	init_completion(&iwqp->free_qp);
+ 
+ 	if (udata) {
+ 		/* GEN_1 legacy support with libi40iw does not have expanded uresp struct */
+@@ -1130,7 +1131,6 @@ static int irdma_create_qp(struct ib_qp *ibqp,
+ 		}
+ 	}
+ 
+-	init_completion(&iwqp->free_qp);
+ 	return 0;
+ 
+ error:
 -- 
 2.53.0
 
