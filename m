@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592C44218B4;
-	Tue, 31 Mar 2026 16:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AC433E372;
+	Tue, 31 Mar 2026 16:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974667; cv=none; b=h6dypROK2h3jlY+fUY9QwLr6uFJ4I//GzexBxxfgKEoxAQN/ruhwreDIcqvSnyq/bnbBm9ZNbV33QRbXfTQrmLZPxjEqH3kJFomB5ktWJd+ePyL6rusxPouTiiTLNzYbD+f3TSHgiMPz/aNNzdYo7lN4SKMY7P3gq19tCEcvjxM=
+	t=1774974670; cv=none; b=S3Es4LAR04RIIimqpzZc+z4sdK0AC6hNmPtHEgoLOUXAqG1tWF5B7j+/JnnKjXbiwUc1l55biml+Z/ogNbvGeCx+N94EO3dgDkcat00NXZpVGtcZoxGZcpOzltJdYho4bE3BUaIdVkSpOYpDy/AOisyqUjKPNS7RNhAP4AvWLXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974667; c=relaxed/simple;
-	bh=ULerxe3B3T16OSioGAOQCOb3U7fS/mN/ZP1l3PhOzgM=;
+	s=arc-20240116; t=1774974670; c=relaxed/simple;
+	bh=sszY2Ddhb5NRCDyyfWT1cctElgV6cgyxp89UMuZjWUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ekkMX/nWmnWUEfyahT28FhvOEgsSaG9KHsK5R+PP3cq5XuQvrFtHVuewt6JaaRCd5l07uJlWvp9LG4KdrGAiIyfcHboc9+/iMuYYKbpBBjfOF62Q3i+GvdCFXayPYhSfaR1AOoPDtP24P+EXMLwN1JFgJIpxcK0OPf+AcDAcffM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0WxzSOz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bgYI5fXtFIhnhmt9bhR6F/4FfTc600ib/CLrF3k+5mnQQ3lSf1cfDsKXruqJXFTMP1JZI97n2yq28zok/qAIW3n527ee1jjJVXEdSF4LvtcsmCWqyoBfDsxLanzIbmC/V37qFtnNaH1UwQwwdWFAD23VyDGGcV+BpD3PaE96rsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdd3ZceU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0WxzSOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29F9C19423;
-	Tue, 31 Mar 2026 16:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdd3ZceU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D19EC19423;
+	Tue, 31 Mar 2026 16:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974667;
-	bh=ULerxe3B3T16OSioGAOQCOb3U7fS/mN/ZP1l3PhOzgM=;
+	s=korg; t=1774974669;
+	bh=sszY2Ddhb5NRCDyyfWT1cctElgV6cgyxp89UMuZjWUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0WxzSOz0T+u+FvrZEeuKCf0ti5RLXYeXwx08Wn24ouR1tDK+Y5L3FyBYLW2ZKf2u
-	 6y2dF0bAQNiqSe6J8ZmPE2q0vIZ30C8P4qkLYCY/1nd8RYvFQznpgT++P6WKyf0dN4
-	 A3M7kMDQbsazaNDqtmBGl0oGFJs9fmM+vaslg8m0=
+	b=sdd3ZceUD7XUjwFMD6Zabvmk9kc/yKt11axowptuiXmIMCgBC747H5/1u7oYVmIWZ
+	 ggdPrHUBphD2Y4Ex3CNusDetfQGE+9oFX01TnjvXSktofiI8EEpC/0la6YRXKizvx8
+	 TXrS5YahnTeSYsLMuu5jbAen9SSB5DwKYHGZRjoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	mathieu.desnoyers@efficios.com,
+	zhang.run@zte.com.cn,
+	yang.tao172@zte.com.cn,
+	ran.xiaokai@zte.com.cn,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Luo Haiyang <luo.haiyang@zte.com.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 173/175] dmaengine: idxd: Fix freeing the allocated ida too late
-Date: Tue, 31 Mar 2026 18:22:37 +0200
-Message-ID: <20260331161736.150357196@linuxfoundation.org>
+Subject: [PATCH 6.6 147/175] tracing: Fix potential deadlock in cpu hotplug with osnoise
+Date: Tue, 31 Mar 2026 18:22:11 +0200
+Message-ID: <20260331161735.188984533@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -52,60 +56,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Luo Haiyang <luo.haiyang@zte.com.cn>
 
-[ Upstream commit c311f5e9248471a950f0a524c2fd736414d98900 ]
+[ Upstream commit 1f9885732248d22f788e4992c739a98c88ab8a55 ]
 
-It can happen that when the cdev .release() is called, the driver
-already called ida_destroy(). Move ida_free() to the _del() path.
+The following sequence may leads deadlock in cpu hotplug:
 
-We see with DEBUG_KOBJECT_RELEASE enabled and forcing an early PCI
-unbind.
+    task1        task2        task3
+    -----        -----        -----
 
-Fixes: 04922b7445a1 ("dmaengine: idxd: fix cdev setup and free device lifetime issues")
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-9-7ed70658a9d1@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+ mutex_lock(&interface_lock)
+
+            [CPU GOING OFFLINE]
+
+            cpus_write_lock();
+            osnoise_cpu_die();
+              kthread_stop(task3);
+                wait_for_completion();
+
+                      osnoise_sleep();
+                        mutex_lock(&interface_lock);
+
+ cpus_read_lock();
+
+ [DEAD LOCK]
+
+Fix by swap the order of cpus_read_lock() and mutex_lock(&interface_lock).
+
+Cc: stable@vger.kernel.org
+Cc: <mathieu.desnoyers@efficios.com>
+Cc: <zhang.run@zte.com.cn>
+Cc: <yang.tao172@zte.com.cn>
+Cc: <ran.xiaokai@zte.com.cn>
+Fixes: bce29ac9ce0bb ("trace: Add osnoise tracer")
+Link: https://patch.msgid.link/20260326141953414bVSj33dAYktqp9Oiyizq8@zte.com.cn
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Luo Haiyang <luo.haiyang@zte.com.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/cdev.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/trace/trace_osnoise.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index 20d380524f4ee..5ded4a0887bc8 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -161,11 +161,7 @@ static struct device_type idxd_cdev_file_type = {
- static void idxd_cdev_dev_release(struct device *dev)
- {
- 	struct idxd_cdev *idxd_cdev = dev_to_cdev(dev);
--	struct idxd_cdev_context *cdev_ctx;
--	struct idxd_wq *wq = idxd_cdev->wq;
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -2104,8 +2104,8 @@ static void osnoise_hotplug_workfn(struc
+ 	if (!osnoise_has_registered_instances())
+ 		return;
  
--	cdev_ctx = &ictx[wq->idxd->data->type];
--	ida_free(&cdev_ctx->minor_ida, idxd_cdev->minor);
- 	kfree(idxd_cdev);
- }
+-	guard(mutex)(&interface_lock);
+ 	guard(cpus_read_lock)();
++	guard(mutex)(&interface_lock);
  
-@@ -585,11 +581,15 @@ int idxd_wq_add_cdev(struct idxd_wq *wq)
+ 	if (!cpu_online(cpu))
+ 		return;
+@@ -2268,11 +2268,11 @@ static ssize_t osnoise_options_write(str
+ 	if (running)
+ 		stop_per_cpu_kthreads();
  
- void idxd_wq_del_cdev(struct idxd_wq *wq)
- {
-+	struct idxd_cdev_context *cdev_ctx;
- 	struct idxd_cdev *idxd_cdev;
+-	mutex_lock(&interface_lock);
+ 	/*
+ 	 * avoid CPU hotplug operations that might read options.
+ 	 */
+ 	cpus_read_lock();
++	mutex_lock(&interface_lock);
  
- 	idxd_cdev = wq->idxd_cdev;
- 	wq->idxd_cdev = NULL;
- 	cdev_device_del(&idxd_cdev->cdev, cdev_dev(idxd_cdev));
-+
-+	cdev_ctx = &ictx[wq->idxd->data->type];
-+	ida_free(&cdev_ctx->minor_ida, idxd_cdev->minor);
- 	put_device(cdev_dev(idxd_cdev));
- }
+ 	retval = cnt;
  
--- 
-2.53.0
-
+@@ -2288,8 +2288,8 @@ static ssize_t osnoise_options_write(str
+ 			clear_bit(option, &osnoise_options);
+ 	}
+ 
+-	cpus_read_unlock();
+ 	mutex_unlock(&interface_lock);
++	cpus_read_unlock();
+ 
+ 	if (running)
+ 		start_per_cpu_kthreads();
+@@ -2375,16 +2375,16 @@ osnoise_cpus_write(struct file *filp, co
+ 	if (running)
+ 		stop_per_cpu_kthreads();
+ 
+-	mutex_lock(&interface_lock);
+ 	/*
+ 	 * osnoise_cpumask is read by CPU hotplug operations.
+ 	 */
+ 	cpus_read_lock();
++	mutex_lock(&interface_lock);
+ 
+ 	cpumask_copy(&osnoise_cpumask, osnoise_cpumask_new);
+ 
+-	cpus_read_unlock();
+ 	mutex_unlock(&interface_lock);
++	cpus_read_unlock();
+ 
+ 	if (running)
+ 		start_per_cpu_kthreads();
 
 
