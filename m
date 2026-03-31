@@ -1,48 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E29F3D8114;
-	Tue, 31 Mar 2026 16:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A5E421EFC;
+	Tue, 31 Mar 2026 16:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975373; cv=none; b=rFxrgbd3TG+8f/QKLyCMfbkxkv6mCdoRkx8iMQL46t7dQ9rjWd4Comz/GXRxH13msxwO2xbjD1qDzVxRmq1fU0CPhUpA0Meps3GtPlxNFujcPKm218ql0tw9/oupZJ7tHOZpiknawKf47qTCm5i/R1fCvwDGA/qDHAKqJHbX1M8=
+	t=1774975376; cv=none; b=heAkN/KojQur0lH4/AVgmB77BrV4Sn19c/eN8j2yLJjBJTlaB2EgQWipwejR/LcUUf4+kcNSzQpLSksWUYLEDmfP722Y89I+nedGKTIhzUMcVTKRamdrgoVm+fRIb/DP0l6ASBj3JkEpx8YQfI+XgOsS4gdVykNAePhglvW4HFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975373; c=relaxed/simple;
-	bh=Tm9uJI/yByMh6fHuNQpxJigCnYOz4j50UViGSD3NrgY=;
+	s=arc-20240116; t=1774975376; c=relaxed/simple;
+	bh=PA0P4C1bFIfOg0cq1r5HX5RUM5+rMnJqCcJYSXc+duM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g8pcDXqPT+bt6A43vkoZ3JyiRvZwqWXixdwnUJMnrbVk675rf1W68hqZEyEkUO9xvTb59QfwQU/ZyLOCIv5bFe/nR2cATTPsJYbCrZLdOVaUoUZ97rMxZt345KJcK1ppkcdLb/0L4qvPXdL7oLltSdwA/vYL22ssSaFcEazyPUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvo/bWff; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ptBGwqYC3vWc3EgL0dc+psk0GCFHjbX8x83aYxZnUKjX0ugKPe6/GJ5ZTgJaunufx3sWngy9VEs2lfq9E4QREH12ksXVbwYR/bL4Uien1XoyqWzne97YE5euRKYuOLOlQ0FsS5fSMmKYRDlgxZxanOp8KKn/rQsPqmwji1QfSAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBhb7GG6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvo/bWff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824E0C19423;
-	Tue, 31 Mar 2026 16:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBhb7GG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B8FC19423;
+	Tue, 31 Mar 2026 16:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975373;
-	bh=Tm9uJI/yByMh6fHuNQpxJigCnYOz4j50UViGSD3NrgY=;
+	s=korg; t=1774975375;
+	bh=PA0P4C1bFIfOg0cq1r5HX5RUM5+rMnJqCcJYSXc+duM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvo/bWff4bIDMafWvNLXQMKihmQsol50Fa/4TEHeIy2iHlTVifHZWg0ntfWS+rl9V
-	 E+pcqsH/3OGg5PYL5ykUVfMlACmZiSbu0SDPJX+fySzCIkCneTy5E4MEOGkVTsPld7
-	 2Z7Q324JT6uHcXe/Bf501kH0rDE1bSuODorPcUZs=
+	b=hBhb7GG6jsql6Vk3/ajXY9WzlA5ptAfslTGy8uRwROysVIrBr7Fcu0xHTdRyiN8NW
+	 O4c79xloK8VJ/j3qkZj47T8nIVKVQuHPCMPmnbffugiuy3M8EBt8anvJUkAeovGFss
+	 k1hx4j1LXIUwUZZcvXmJmTl2KFkdhZkQVnbkkdpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
+	John <therealgraysky@proton.me>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 237/342] mm/huge_memory: fix folio isnt locked in softleaf_to_folio()
-Date: Tue, 31 Mar 2026 18:21:10 +0200
-Message-ID: <20260331161807.685915657@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.19 238/342] writeback: dont block sync for filesystems with no data integrity guarantees
+Date: Tue, 31 Mar 2026 18:21:11 +0200
+Message-ID: <20260331161807.722806399@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -61,122 +53,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-commit 4c5e7f0fcd592801c9cc18f29f80fbee84eb8669 upstream.
+commit 76f9377cd2ab7a9220c25d33940d9ca20d368172 upstream.
 
-On arm64 server, we found folio that get from migration entry isn't locked
-in softleaf_to_folio().  This issue triggers when mTHP splitting and
-zap_nonpresent_ptes() races, and the root cause is lack of memory barrier
-in softleaf_to_folio().  The race is as follows:
+Add a SB_I_NO_DATA_INTEGRITY superblock flag for filesystems that cannot
+guarantee data persistence on sync (eg fuse). For superblocks with this
+flag set, sync kicks off writeback of dirty inodes but does not wait
+for the flusher threads to complete the writeback.
 
-	CPU0                                             CPU1
+This replaces the per-inode AS_NO_DATA_INTEGRITY mapping flag added in
+commit f9a49aa302a0 ("fs/writeback: skip AS_NO_DATA_INTEGRITY mappings
+in wait_sb_inodes()"). The flag belongs at the superblock level because
+data integrity is a filesystem-wide property, not a per-inode one.
+Having this flag at the superblock level also allows us to skip having
+to iterate every dirty inode in wait_sb_inodes() only to skip each inode
+individually.
 
-deferred_split_scan()                              zap_nonpresent_ptes()
-  lock folio
-  split_folio()
-    unmap_folio()
-      change ptes to migration entries
-    __split_folio_to_order()                         softleaf_to_folio()
-      set flags(including PG_locked) for tail pages    folio = pfn_folio(softleaf_to_pfn(entry))
-      smp_wmb()                                        VM_WARN_ON_ONCE(!folio_test_locked(folio))
-      prep_compound_page() for tail pages
+Prior to this commit, mappings with no data integrity guarantees skipped
+waiting on writeback completion but still waited on the flusher threads
+to finish initiating the writeback. Waiting on the flusher threads is
+unnecessary. This commit kicks off writeback but does not wait on the
+flusher threads. This change properly addresses a recent report [1] for
+a suspend-to-RAM hang seen on fuse-overlayfs that was caused by waiting
+on the flusher threads to finish:
 
-In __split_folio_to_order(), smp_wmb() guarantees page flags of tail pages
-are visible before the tail page becomes non-compound.  smp_wmb() should
-be paired with smp_rmb() in softleaf_to_folio(), which is missed.  As a
-result, if zap_nonpresent_ptes() accesses migration entry that stores tail
-pfn, softleaf_to_folio() may see the updated compound_head of tail page
-before page->flags.
+Workqueue: pm_fs_sync pm_fs_sync_work_fn
+Call Trace:
+ <TASK>
+ __schedule+0x457/0x1720
+ schedule+0x27/0xd0
+ wb_wait_for_completion+0x97/0xe0
+ sync_inodes_sb+0xf8/0x2e0
+ __iterate_supers+0xdc/0x160
+ ksys_sync+0x43/0xb0
+ pm_fs_sync_work_fn+0x17/0xa0
+ process_one_work+0x193/0x350
+ worker_thread+0x1a1/0x310
+ kthread+0xfc/0x240
+ ret_from_fork+0x243/0x280
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-This issue will trigger VM_WARN_ON_ONCE() in pfn_swap_entry_folio()
-because of the race between folio split and zap_nonpresent_ptes()
-leading to a folio incorrectly undergoing modification without a folio
-lock being held.
+On fuse this is problematic because there are paths that may cause the
+flusher thread to block (eg if systemd freezes the user session cgroups
+first, which freezes the fuse daemon, before invoking the kernel
+suspend. The kernel suspend triggers ->write_node() which on fuse issues
+a synchronous setattr request, which cannot be processed since the
+daemon is frozen. Or if the daemon is buggy and cannot properly complete
+writeback, initiating writeback on a dirty folio already under writeback
+leads to writeback_get_folio() -> folio_prepare_writeback() ->
+unconditional wait on writeback to finish, which will cause a hang).
+This commit restores fuse to its prior behavior before tmp folios were
+removed, where sync was essentially a no-op.
 
-This is a BUG_ON() before commit 93976a20345b ("mm: eliminate further
-swapops predicates"), which in merged in v6.19-rc1.
+[1] https://lore.kernel.org/linux-fsdevel/CAJnrk1a-asuvfrbKXbEwwDSctvemF+6zfhdnuzO65Pt8HsFSRw@mail.gmail.com/T/#m632c4648e9cafc4239299887109ebd880ac6c5c1
 
-To fix it, add missing smp_rmb() if the softleaf entry is migration entry
-in softleaf_to_folio() and softleaf_to_page().
-
-[tujinjiang@huawei.com: update function name and comments]
-  Link: https://lkml.kernel.org/r/20260321075214.3305564-1-tujinjiang@huawei.com
-Link: https://lkml.kernel.org/r/20260319012541.4158561-1-tujinjiang@huawei.com
-Fixes: e9b61f19858a ("thp: reintroduce split_huge_page()")
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 0c58a97f919c ("fuse: remove tmp folio for writebacks and internal rb tree")
+Reported-by: John <therealgraysky@proton.me>
+Cc: stable@vger.kernel.org
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Link: https://patch.msgid.link/20260320005145.2483161-2-joannelkoong@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/leafops.h |   32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ fs/fs-writeback.c              |   18 ++++++++++++------
+ fs/fuse/file.c                 |    4 +---
+ fs/fuse/inode.c                |    1 +
+ include/linux/fs/super_types.h |    1 +
+ include/linux/pagemap.h        |   11 -----------
+ 5 files changed, 15 insertions(+), 20 deletions(-)
 
---- a/include/linux/leafops.h
-+++ b/include/linux/leafops.h
-@@ -363,6 +363,23 @@ static inline unsigned long softleaf_to_
- 	return swp_offset(entry) & SWP_PFN_MASK;
- }
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -2759,13 +2759,8 @@ static void wait_sb_inodes(struct super_
+ 		 * The mapping can appear untagged while still on-list since we
+ 		 * do not have the mapping lock. Skip it here, wb completion
+ 		 * will remove it.
+-		 *
+-		 * If the mapping does not have data integrity semantics,
+-		 * there's no need to wait for the writeout to complete, as the
+-		 * mapping cannot guarantee that data is persistently stored.
+ 		 */
+-		if (!mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK) ||
+-		    mapping_no_data_integrity(mapping))
++		if (!mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK))
+ 			continue;
  
-+static inline void softleaf_migration_sync(softleaf_t entry,
-+		struct folio *folio)
-+{
-+	/*
-+	 * Ensure we do not race with split, which might alter tail pages into new
-+	 * folios and thus result in observing an unlocked folio.
-+	 * This matches the write barrier in __split_folio_to_order().
-+	 */
-+	smp_rmb();
+ 		spin_unlock_irq(&sb->s_inode_wblist_lock);
+@@ -2900,6 +2895,17 @@ void sync_inodes_sb(struct super_block *
+ 	 */
+ 	if (bdi == &noop_backing_dev_info)
+ 		return;
 +
 +	/*
-+	 * Any use of migration entries may only occur while the
-+	 * corresponding page is locked
++	 * If the superblock has SB_I_NO_DATA_INTEGRITY set, there's no need to
++	 * wait for the writeout to complete, as the filesystem cannot guarantee
++	 * data persistence on sync. Just kick off writeback and return.
 +	 */
-+	VM_WARN_ON_ONCE(!folio_test_locked(folio));
-+}
++	if (sb->s_iflags & SB_I_NO_DATA_INTEGRITY) {
++		wakeup_flusher_threads_bdi(bdi, WB_REASON_SYNC);
++		return;
++	}
 +
- /**
-  * softleaf_to_page() - Obtains struct page for PFN encoded within leaf entry.
-  * @entry: Leaf entry, softleaf_has_pfn(@entry) must return true.
-@@ -374,11 +391,8 @@ static inline struct page *softleaf_to_p
- 	struct page *page = pfn_to_page(softleaf_to_pfn(entry));
+ 	WARN_ON(!rwsem_is_locked(&sb->s_umount));
  
- 	VM_WARN_ON_ONCE(!softleaf_has_pfn(entry));
--	/*
--	 * Any use of migration entries may only occur while the
--	 * corresponding page is locked
--	 */
--	VM_WARN_ON_ONCE(softleaf_is_migration(entry) && !PageLocked(page));
-+	if (softleaf_is_migration(entry))
-+		softleaf_migration_sync(entry, page_folio(page));
+ 	/* protect against inode wb switch, see inode_switch_wbs_work_fn() */
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -3200,10 +3200,8 @@ void fuse_init_file_inode(struct inode *
  
- 	return page;
+ 	inode->i_fop = &fuse_file_operations;
+ 	inode->i_data.a_ops = &fuse_file_aops;
+-	if (fc->writeback_cache) {
++	if (fc->writeback_cache)
+ 		mapping_set_writeback_may_deadlock_on_reclaim(&inode->i_data);
+-		mapping_set_no_data_integrity(&inode->i_data);
+-	}
+ 
+ 	INIT_LIST_HEAD(&fi->write_files);
+ 	INIT_LIST_HEAD(&fi->queued_writes);
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -1709,6 +1709,7 @@ static void fuse_sb_defaults(struct supe
+ 	sb->s_export_op = &fuse_export_operations;
+ 	sb->s_iflags |= SB_I_IMA_UNVERIFIABLE_SIGNATURE;
+ 	sb->s_iflags |= SB_I_NOIDMAP;
++	sb->s_iflags |= SB_I_NO_DATA_INTEGRITY;
+ 	if (sb->s_user_ns != &init_user_ns)
+ 		sb->s_iflags |= SB_I_UNTRUSTED_MOUNTER;
+ 	sb->s_flags &= ~(SB_NOSEC | SB_I_VERSION);
+--- a/include/linux/fs/super_types.h
++++ b/include/linux/fs/super_types.h
+@@ -332,5 +332,6 @@ struct super_block {
+ #define SB_I_NOUMASK	0x00001000	/* VFS does not apply umask */
+ #define SB_I_NOIDMAP	0x00002000	/* No idmapped mounts on this superblock */
+ #define SB_I_ALLOW_HSM	0x00004000	/* Allow HSM events on this superblock */
++#define SB_I_NO_DATA_INTEGRITY	0x00008000 /* fs cannot guarantee data persistence on sync */
+ 
+ #endif /* _LINUX_FS_SUPER_TYPES_H */
+--- a/include/linux/pagemap.h
++++ b/include/linux/pagemap.h
+@@ -210,7 +210,6 @@ enum mapping_flags {
+ 	AS_WRITEBACK_MAY_DEADLOCK_ON_RECLAIM = 9,
+ 	AS_KERNEL_FILE = 10,	/* mapping for a fake kernel file that shouldn't
+ 				   account usage to user cgroups */
+-	AS_NO_DATA_INTEGRITY = 11, /* no data integrity guarantees */
+ 	/* Bits 16-25 are used for FOLIO_ORDER */
+ 	AS_FOLIO_ORDER_BITS = 5,
+ 	AS_FOLIO_ORDER_MIN = 16,
+@@ -346,16 +345,6 @@ static inline bool mapping_writeback_may
+ 	return test_bit(AS_WRITEBACK_MAY_DEADLOCK_ON_RECLAIM, &mapping->flags);
  }
-@@ -394,12 +408,8 @@ static inline struct folio *softleaf_to_
- 	struct folio *folio = pfn_folio(softleaf_to_pfn(entry));
  
- 	VM_WARN_ON_ONCE(!softleaf_has_pfn(entry));
--	/*
--	 * Any use of migration entries may only occur while the
--	 * corresponding folio is locked.
--	 */
--	VM_WARN_ON_ONCE(softleaf_is_migration(entry) &&
--			!folio_test_locked(folio));
-+	if (softleaf_is_migration(entry))
-+		softleaf_migration_sync(entry, folio);
- 
- 	return folio;
- }
+-static inline void mapping_set_no_data_integrity(struct address_space *mapping)
+-{
+-	set_bit(AS_NO_DATA_INTEGRITY, &mapping->flags);
+-}
+-
+-static inline bool mapping_no_data_integrity(const struct address_space *mapping)
+-{
+-	return test_bit(AS_NO_DATA_INTEGRITY, &mapping->flags);
+-}
+-
+ static inline gfp_t mapping_gfp_mask(const struct address_space *mapping)
+ {
+ 	return mapping->gfp_mask;
 
 
