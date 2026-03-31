@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5942EE262;
-	Tue, 31 Mar 2026 16:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6C333F38A;
+	Tue, 31 Mar 2026 16:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974724; cv=none; b=dBD1O6cIVimV5Mx3/nDym7Vi5NVcZAka4xK752Xkn8u17bt1JA/rDT98A5PPJ9QuigAXuoROyaeZ3/Rt4nTSRD8mczL4Z6+QBxn52zqHtIdCfGtvAkPWSH8cFfwhSl7bup5tflljOhPRUIdmkxi6MnSx/qP3z5Nrpuxp3t2dFmU=
+	t=1774974726; cv=none; b=Ko966qF6+nV11V93fAWtSjBkNmpvWgkEbslK5UzQhjkvHUKn0C5elp2d1Cli8zUEmtrUEF2A2tkgH64FDPthQd7V1UirZNiwi3pll690gcuN0ljnc0JmWpH6+POjKx2lBQGVTeeHbQTvbkOPt2seN5Esi/aGbM/nxjsDQotKU0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974724; c=relaxed/simple;
-	bh=yNAioYHyMt9a+xKRysMcaYazigqequpv2Xqja5/vzls=;
+	s=arc-20240116; t=1774974726; c=relaxed/simple;
+	bh=uLpMAzypNcTxDAyHMZbCOVNFpXu+wb3qp3E65n1jlZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGZzXgUadI2I6WrBzZfGkIbUj1HM4J3llh5tTGOMmYArNZ9I6yreZ8jvqpbhr/6I1MpJbbRtkaDx6jSYoj2iB4GUrs5Mk6BfGuDK1fA2JgabI7uGEbc9gKYZN1d937FQnEIQbnFcW6jM+TYfbFzZTVSqMxEf7ZFwU3FY19ao2jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SbSykYj3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZR7LPy9Kdu73UGgGmipouuz80PJfvhrIDJpNPetJND0ol3JJLzmQfbNnnrJY/8zWfk/XS5b8JEiIWfy0RgFicE24+pxTxmarMyWjAuJxEzvION6V2/Axws4q4iPcWXlnBPX91KeIdD57/2w4zrVCZZQBwvFp99IXV8Xk5sW6et8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7+64l6d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbSykYj3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C55C19423;
-	Tue, 31 Mar 2026 16:32:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7+64l6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33789C19424;
+	Tue, 31 Mar 2026 16:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974723;
-	bh=yNAioYHyMt9a+xKRysMcaYazigqequpv2Xqja5/vzls=;
+	s=korg; t=1774974726;
+	bh=uLpMAzypNcTxDAyHMZbCOVNFpXu+wb3qp3E65n1jlZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SbSykYj3GoYpEtRm7EYeR0cWnDMt173/0lHCgFHznK/sfTNTvnmQCaUwcfZO4Mmkf
-	 ro5n9XWBATGt40h0x5eNmsdkKdYA+3tDXhgx1jAn2o04oWuG91R3F+1OF29lTuXfTd
-	 logfJCnaiESjbSP51J8yI4A0xtre5KixZIx2KJlk=
+	b=c7+64l6d+IDyhrxALqnXKtUWLlrUOtvDdb4uZjR2KqUvT88k8F7MPj5iu2yV3/fTH
+	 6P5W40+MdIoVW/TuP0zl1YZzeWMDVaO8ljkiAGxkiPU9IDBjQMJ7B5O+WbjUCRDBsp
+	 U+cKZtpvOBIkor9gQBiwbaour1PMWmMLmKeFuvRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
+	Oliver Rosenberg <olrose55@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ian Rogers <irogers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 005/342] x86/perf: Make sure to program the counter value for stopped events on migration
-Date: Tue, 31 Mar 2026 18:17:18 +0200
-Message-ID: <20260331161759.110873067@linuxfoundation.org>
+Subject: [PATCH 6.19 006/342] perf: Make sure to use pmu_ctx->pmu for groups
+Date: Tue, 31 Mar 2026 18:17:19 +0200
+Message-ID: <20260331161759.146315861@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -54,46 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit f1cac6ac62d28a9a57b17f51ac5795bf250c12d3 ]
+[ Upstream commit 4b9ce671960627b2505b3f64742544ae9801df97 ]
 
-Both Mi Dapeng and Ian Rogers noted that not everything that sets HES_STOPPED
-is required to EF_UPDATE. Specifically the 'step 1' loop of rescheduling
-explicitly does EF_UPDATE to ensure the counter value is read.
+Oliver reported that x86_pmu_del() ended up doing an out-of-bound memory access
+when group_sched_in() fails and needs to roll back.
 
-However, then 'step 2' simply leaves the new counter uninitialized when
-HES_STOPPED, even though, as noted above, the thing that stopped them might not
-be aware it needs to EF_RELOAD -- since it didn't EF_UPDATE on stop.
+This *should* be handled by the transaction callbacks, but he found that when
+the group leader is a software event, the transaction handlers of the wrong PMU
+are used. Despite the move_group case in perf_event_open() and group_sched_in()
+using pmu_ctx->pmu.
 
-One such location that is affected is throttling, throttle does pmu->stop(, 0);
-and unthrottle does pmu->start(, 0); possibly restarting an uninitialized counter.
+Turns out, inherit uses event->pmu to clone the events, effectively undoing the
+move_group case for all inherited contexts. Fix this by also making inherit use
+pmu_ctx->pmu, ensuring all inherited counters end up in the same pmu context.
 
-Fixes: a4eaf7f14675 ("perf: Rework the PMU methods")
-Reported-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Reported-by: Ian Rogers <irogers@google.com>
+Similarly, __perf_event_read() should use equally use pmu_ctx->pmu for the
+group case.
+
+Fixes: bd2756811766 ("perf: Rewrite core context handling")
+Reported-by: Oliver Rosenberg <olrose55@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20260311204035.GX606826@noisy.programming.kicks-ass.net
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://patch.msgid.link/20260309133713.GB606826@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/events/core.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
-index 818de24921a48..7a6b15b0f1c66 100644
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -1371,8 +1371,10 @@ static void x86_pmu_enable(struct pmu *pmu)
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 84a79e977580e..39b35f280845b 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -4672,7 +4672,7 @@ static void __perf_event_read(void *info)
+ 	struct perf_event *sub, *event = data->event;
+ 	struct perf_event_context *ctx = event->ctx;
+ 	struct perf_cpu_context *cpuctx = this_cpu_ptr(&perf_cpu_context);
+-	struct pmu *pmu = event->pmu;
++	struct pmu *pmu;
  
- 			cpuc->events[hwc->idx] = event;
+ 	/*
+ 	 * If this is a task context, we need to check whether it is
+@@ -4684,7 +4684,7 @@ static void __perf_event_read(void *info)
+ 	if (ctx->task && cpuctx->task_ctx != ctx)
+ 		return;
  
--			if (hwc->state & PERF_HES_ARCH)
-+			if (hwc->state & PERF_HES_ARCH) {
-+				static_call(x86_pmu_set_period)(event);
- 				continue;
-+			}
+-	raw_spin_lock(&ctx->lock);
++	guard(raw_spinlock)(&ctx->lock);
+ 	ctx_time_update_event(ctx, event);
  
- 			/*
- 			 * if cpuc->enabled = 0, then no wrmsr as
+ 	perf_event_update_time(event);
+@@ -4692,25 +4692,22 @@ static void __perf_event_read(void *info)
+ 		perf_event_update_sibling_time(event);
+ 
+ 	if (event->state != PERF_EVENT_STATE_ACTIVE)
+-		goto unlock;
++		return;
+ 
+ 	if (!data->group) {
+-		pmu->read(event);
++		perf_pmu_read(event);
+ 		data->ret = 0;
+-		goto unlock;
++		return;
+ 	}
+ 
++	pmu = event->pmu_ctx->pmu;
+ 	pmu->start_txn(pmu, PERF_PMU_TXN_READ);
+ 
+-	pmu->read(event);
+-
++	perf_pmu_read(event);
+ 	for_each_sibling_event(sub, event)
+ 		perf_pmu_read(sub);
+ 
+ 	data->ret = pmu->commit_txn(pmu);
+-
+-unlock:
+-	raw_spin_unlock(&ctx->lock);
+ }
+ 
+ static inline u64 perf_event_count(struct perf_event *event, bool self)
+@@ -14461,7 +14458,7 @@ inherit_event(struct perf_event *parent_event,
+ 	get_ctx(child_ctx);
+ 	child_event->ctx = child_ctx;
+ 
+-	pmu_ctx = find_get_pmu_context(child_event->pmu, child_ctx, child_event);
++	pmu_ctx = find_get_pmu_context(parent_event->pmu_ctx->pmu, child_ctx, child_event);
+ 	if (IS_ERR(pmu_ctx)) {
+ 		free_event(child_event);
+ 		return ERR_CAST(pmu_ctx);
 -- 
 2.51.0
 
