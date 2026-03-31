@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E24B2F5491;
-	Tue, 31 Mar 2026 17:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3F92E11A6;
+	Tue, 31 Mar 2026 17:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976675; cv=none; b=HU0qGJ8Mw+XzYKJBUKsH5B54ZWnjrSL9ycC+YPrhG5YlkY6uBfF3aCaNUul16fMeex4clKHyuhJxQzZwlc6bfnNUWe4BPVn0FcIxkYQ6EtVKjTfkyZwg8BgxKdiM8Y40LpuCjjIbNs4P5EQ7nwQdCJLMzW+0wi6tBOpLPuc49Sk=
+	t=1774976677; cv=none; b=Z9pf+0bJCWZOgnqzb3N8JfTb0qeUMCQZgOuM5mZXp4SoaR960NETFaSA/AXjCthA36A2BuO8tH15iG/UUk0ZKN233jg5/zr1o/8TPOtabTk979uBK7kXnSclLglHFC6LW9hH0zFLQakEvFlEqtey499GvI5CVYJr+mL7LoXv/hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976675; c=relaxed/simple;
-	bh=cJd7i8Y8CrkO2y4SB6KsTw1+7PQ3aW1q4OErz5csI6A=;
+	s=arc-20240116; t=1774976677; c=relaxed/simple;
+	bh=WnRptf6Bbl8/IdXOearYZJ0R0QtUVa0pe/n2uTXw+IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9CKtAPvu4PSAcqDAAkFeyL/NL0VhMq5IKcrlBpPUFbHIef55vbGZStDZHza5AFFEoGpvRY5swfYfmfRrtrhgjpcbiSvfK14XM3bXvt8U2bQNj77YmMKHiXwkLHOseWu1IQwz4b7igcoLBmd/JDt9EihsoHlzXJQSJ0O1odgO0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBPUhXkh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CwDTKBMK1H0VQPnW3/NMS0LBlr8Cuf2meSkKxBkvUY4Vbo3aO8gefNE5wEzSeUq37o3uwq5UTYQzVDrutKV40L79GoC0R3AT8Eea3/kXM98MLXtii0vH+uMr/NIVcIQk996ObpDCuw8cvdbb6661zk56kCFRAlJuI12ZzeBlCdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTJNxgAE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBPUhXkh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D721DC19423;
-	Tue, 31 Mar 2026 17:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTJNxgAE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8B2C19423;
+	Tue, 31 Mar 2026 17:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976675;
-	bh=cJd7i8Y8CrkO2y4SB6KsTw1+7PQ3aW1q4OErz5csI6A=;
+	s=korg; t=1774976677;
+	bh=WnRptf6Bbl8/IdXOearYZJ0R0QtUVa0pe/n2uTXw+IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBPUhXkhvkmNofrKHh686oIyPKtfEbrfUxj/gAGygykhmis4lO5VAffD42ov7uPH1
-	 c4GeksRrHVycyw/kUuCdGgkSheWw5jq/1bobTdmLLNcpKy6nGLnI40TpjXlqDxj+55
-	 Y2v49ruqzIc6uxiZJAaTQg/MbB/d83WerZ0T8bxU=
+	b=OTJNxgAEgwFgv06SnLsv7D90Ow0V4zaDeZ+6Ep8AIe9nN4mxvrFF1evv8C06IjQXL
+	 Ojfn9K2V/X49vMtNLa37Zxok4aFkefykF9id6J+eieAVg3TfSj72nWoy7/2zv+/bZn
+	 Ldm2VM1et7Va0NOpkg42s4EjEr+YPG0tRu7FYINA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juhyun Song <juju6985@outlook.kr>,
-	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 184/309] Revert "ALSA: hda/intel: Add MSI X870E Tomahawk to denylist"
-Date: Tue, 31 Mar 2026 18:21:27 +0200
-Message-ID: <20260331161800.234854005@linuxfoundation.org>
+Subject: [PATCH 6.18 185/309] ALSA: hda/realtek: add quirk for ASUS Strix G16 G615JMR
+Date: Tue, 31 Mar 2026 18:21:28 +0200
+Message-ID: <20260331161800.270794505@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,40 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-commit ed4da361bf943b9041fc63e5cb6af01b3c0de978 upstream.
+commit 0bdf27abaf8940592207be939142451436afe39f upstream.
 
-commit 30b3211aa2416 ("ALSA: hda/intel: Add MSI X870E Tomahawk
-to denylist") was added to silence a warning, but this effectively
-reintroduced commit df42ee7e22f03 ("ALSA: hda: Add ASRock
-X670E Taichi to denylist") which was already reported to cause
-problems and reverted in commit ee8f1613596ad ("Revert "ALSA: hda:
-Add ASRock X670E Taichi to denylist"")
+The machine is equipped with ALC294 and requires the
+ALC287_FIXUP_TXNW2781_I2C_ASUS quirk for the amplifier to work properly.
+Since the machine's PCI SSID is also 1043:1204, HDA_CODEC_QUIRK is
+used to retain the previous quirk.
 
-Revert it yet again.
-
-Cc: stable@vger.kernel.org
-Reported-by: Juhyun Song <juju6985@outlook.kr>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221274
-Cc: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260326190542.524515-1-mario.limonciello@amd.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221173
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260316022843.2809968-1-zhangheng@kylinos.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/controllers/intel.c |    1 -
- 1 file changed, 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/hda/controllers/intel.c
-+++ b/sound/hda/controllers/intel.c
-@@ -2077,7 +2077,6 @@ static const struct pci_device_id driver
- 	{ PCI_DEVICE_SUB(0x1022, 0x1487, 0x1043, 0x874f) }, /* ASUS ROG Zenith II / Strix */
- 	{ PCI_DEVICE_SUB(0x1022, 0x1487, 0x1462, 0xcb59) }, /* MSI TRX40 Creator */
- 	{ PCI_DEVICE_SUB(0x1022, 0x1487, 0x1462, 0xcb60) }, /* MSI TRX40 */
--	{ PCI_DEVICE_SUB(0x1022, 0x15e3, 0x1462, 0xee59) }, /* MSI X870E Tomahawk WiFi */
- 	{}
- };
- 
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7033,6 +7033,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1043, 0x115d, "Asus 1015E", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x1043, 0x1194, "ASUS UM3406KA", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x11c0, "ASUS X556UR", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
++	HDA_CODEC_QUIRK(0x1043, 0x1204, "ASUS Strix G16 G615JMR", ALC287_FIXUP_TXNW2781_I2C_ASUS),
+ 	SND_PCI_QUIRK(0x1043, 0x1204, "ASUS Strix G615JHR_JMR_JPR", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x1214, "ASUS Strix G615LH_LM_LP", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x125e, "ASUS Q524UQK", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
 
 
