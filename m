@@ -1,37 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B360C318EE4;
-	Tue, 31 Mar 2026 17:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6373E311592;
+	Tue, 31 Mar 2026 17:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976918; cv=none; b=Xwf/AsHvs1FFlRZwD2yrr8V20zGAUlWfFavrc2icEoUTFlu2YsMa4qQhPe2p4T7Q/IY0NE7Y22KM5J5lK97q1GN75QUks4dA9d/IOTv9qPtwqfWRkNJunzvpkTZoRqbzKGSpflQ3N+EZp5pkRmZ+oo2XI3XBM5SUgcS+K2agi7g=
+	t=1774976921; cv=none; b=F9oJQgAGLfrCNNB5gTpc6aeQS+mFGrZZ5Yn+ViQG00a3QXhbUZNX59HBYCKi1tCLl4dl7bMeu3JWhhB6dY9v5Cuq51i+OkHjvcScdPJx1Qr7ISBKyInAAeZ0tRG0qRG2OkU7OiA01sDs40DtxP1PrJZXtmaVCLt8uZ78lW6/kuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976918; c=relaxed/simple;
-	bh=abYoj2wsTh4DTwixxbGdQbATx6iyZhzak4bmi8K9wOw=;
+	s=arc-20240116; t=1774976921; c=relaxed/simple;
+	bh=JmquOdWSplFXLXkyGGIXQ+rEpRS7EMRvV4GghuBme5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twXGeYqlNCIYV36JGdk+JHhPLpYGZ6q7suj+ysJMt5VPtuf9lpvlpF8B84NvG3gGb0miFTGWPAxefacL1fP0psqAMPCeBhx07pqsTXlnFuvk7ngY1QnQjVjVluUKRTeHbSirsENxUUY2qZ02UjwJ8QIxygxO4/vhel1XBrq/tBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3i860f5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gELvL+fIEX+iLctVH8Kirt85sHVkzJ9NRPuz1prVwgpYeVfyq9eWT5j2Sfn+AA6fGsIZSeefFFImxnQI55KIgSa68uMtIsWK1QjRY2RNg5FMDaKZIhcDy564jggeWarIM4sW0rW/vWTaSM51T+H/nsdf0lVSM/rLmlQyovFHJaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQpMheie; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3i860f5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B930C19423;
-	Tue, 31 Mar 2026 17:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQpMheie"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62B4C19424;
+	Tue, 31 Mar 2026 17:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976918;
-	bh=abYoj2wsTh4DTwixxbGdQbATx6iyZhzak4bmi8K9wOw=;
+	s=korg; t=1774976921;
+	bh=JmquOdWSplFXLXkyGGIXQ+rEpRS7EMRvV4GghuBme5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3i860f5b2iYLi265VYrVQqysIBGsDBCkd3PhUSPQ1XvuSl65fXcOrdwCp03LCTCh
-	 Lsn08L9nZaciY7wK5RVIyjmuQnDa7qLB0rc9xP8yfclxRt9DkL1Z72g9W0lkfcra/2
-	 2Grh0KtQ/OALUEbibG41oENUPif4RA530O2vzwRk=
+	b=vQpMheiejOq6VjTU8blHcUiYLfRbR+0QSb7tctN+TrXwuBYb+AMn18DLFvdv0u5ky
+	 haOQ3vYXgbWEAMlEpQBZZmHrj/vuLxE80DfDcw1IllRbkcEdhNIREFIfbmUlDQRXbo
+	 nBhRyopzb48FZ4SCNGLxKIbxctn884IAJBh8uBoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.18 271/309] ext4: always drain queued discard work in ext4_mb_release()
-Date: Tue, 31 Mar 2026 18:22:54 +0200
-Message-ID: <20260331161803.538508086@linuxfoundation.org>
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 280/309] mm/huge_memory: fix folio isnt locked in softleaf_to_folio()
+Date: Tue, 31 Mar 2026 18:23:03 +0200
+Message-ID: <20260331161803.872940900@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -50,65 +62,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-commit 9ee29d20aab228adfb02ca93f87fb53c56c2f3af upstream.
+[ Upstream commit 4c5e7f0fcd592801c9cc18f29f80fbee84eb8669 ]
 
-While reviewing recent ext4 patch[1], Sashiko raised the following
-concern[2]:
+On arm64 server, we found folio that get from migration entry isn't locked
+in softleaf_to_folio().  This issue triggers when mTHP splitting and
+zap_nonpresent_ptes() races, and the root cause is lack of memory barrier
+in softleaf_to_folio().  The race is as follows:
 
-> If the filesystem is initially mounted with the discard option,
-> deleting files will populate sbi->s_discard_list and queue
-> s_discard_work. If it is then remounted with nodiscard, the
-> EXT4_MOUNT_DISCARD flag is cleared, but the pending s_discard_work is
-> neither cancelled nor flushed.
+	CPU0                                             CPU1
 
-[1] https://lore.kernel.org/r/20260319094545.19291-1-qiang.zhang@linux.dev/
-[2] https://sashiko.dev/#/patchset/20260319094545.19291-1-qiang.zhang%40linux.dev
+deferred_split_scan()                              zap_nonpresent_ptes()
+  lock folio
+  split_folio()
+    unmap_folio()
+      change ptes to migration entries
+    __split_folio_to_order()                         softleaf_to_folio()
+      set flags(including PG_locked) for tail pages    folio = pfn_folio(softleaf_to_pfn(entry))
+      smp_wmb()                                        VM_WARN_ON_ONCE(!folio_test_locked(folio))
+      prep_compound_page() for tail pages
 
-The concern was valid, but it had nothing to do with the patch[1].
-One of the problems with Sashiko in its current (early) form is that
-it will detect pre-existing issues and report it as a problem with the
-patch that it is reviewing.
+In __split_folio_to_order(), smp_wmb() guarantees page flags of tail pages
+are visible before the tail page becomes non-compound.  smp_wmb() should
+be paired with smp_rmb() in softleaf_to_folio(), which is missed.  As a
+result, if zap_nonpresent_ptes() accesses migration entry that stores tail
+pfn, softleaf_to_folio() may see the updated compound_head of tail page
+before page->flags.
 
-In practice, it would be hard to hit deliberately (unless you are a
-malicious syzkaller fuzzer), since it would involve mounting the file
-system with -o discard, and then deleting a large number of files,
-remounting the file system with -o nodiscard, and then immediately
-unmounting the file system before the queued discard work has a change
-to drain on its own.
+This issue will trigger VM_WARN_ON_ONCE() in pfn_swap_entry_folio()
+because of the race between folio split and zap_nonpresent_ptes()
+leading to a folio incorrectly undergoing modification without a folio
+lock being held.
 
-Fix it because it's a real bug, and to avoid Sashiko from raising this
-concern when analyzing future patches to mballoc.c.
+This is a BUG_ON() before commit 93976a20345b ("mm: eliminate further
+swapops predicates"), which in merged in v6.19-rc1.
 
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Fixes: 55cdd0af2bc5 ("ext4: get discard out of jbd2 commit kthread contex")
-Cc: stable@kernel.org
+To fix it, add missing smp_rmb() if the softleaf entry is migration entry
+in softleaf_to_folio() and softleaf_to_page().
+
+[tujinjiang@huawei.com: update function name and comments]
+  Link: https://lkml.kernel.org/r/20260321075214.3305564-1-tujinjiang@huawei.com
+Link: https://lkml.kernel.org/r/20260319012541.4158561-1-tujinjiang@huawei.com
+Fixes: e9b61f19858a ("thp: reintroduce split_huge_page()")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ applied fix to swapops.h using old pfn_swap_entry/swp_entry_t naming ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ include/linux/swapops.h |   27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3890,13 +3890,11 @@ void ext4_mb_release(struct super_block
- 	struct kmem_cache *cachep = get_groupinfo_cache(sb->s_blocksize_bits);
- 	int count;
+--- a/include/linux/swapops.h
++++ b/include/linux/swapops.h
+@@ -487,15 +487,29 @@ static inline int pte_none_mostly(pte_t
+ 	return pte_none(pte) || is_pte_marker(pte);
+ }
  
--	if (test_opt(sb, DISCARD)) {
--		/*
--		 * wait the discard work to drain all of ext4_free_data
--		 */
--		flush_work(&sbi->s_discard_work);
--		WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
--	}
+-static inline struct page *pfn_swap_entry_to_page(swp_entry_t entry)
++static inline void swap_entry_migration_sync(swp_entry_t entry,
++		struct folio *folio)
+ {
+-	struct page *p = pfn_to_page(swp_offset_pfn(entry));
 +	/*
-+	 * wait the discard work to drain all of ext4_free_data
++	 * Ensure we do not race with split, which might alter tail pages into new
++	 * folios and thus result in observing an unlocked folio.
++	 * This matches the write barrier in __split_folio_to_order().
 +	 */
-+	flush_work(&sbi->s_discard_work);
-+	WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
++	smp_rmb();
  
- 	group_info = rcu_access_pointer(sbi->s_group_info);
- 	if (group_info) {
+ 	/*
+ 	 * Any use of migration entries may only occur while the
+ 	 * corresponding page is locked
+ 	 */
+-	BUG_ON(is_migration_entry(entry) && !PageLocked(p));
++	BUG_ON(!folio_test_locked(folio));
++}
++
++static inline struct page *pfn_swap_entry_to_page(swp_entry_t entry)
++{
++	struct page *p = pfn_to_page(swp_offset_pfn(entry));
++
++	if (is_migration_entry(entry))
++		swap_entry_migration_sync(entry, page_folio(p));
+ 
+ 	return p;
+ }
+@@ -504,11 +518,8 @@ static inline struct folio *pfn_swap_ent
+ {
+ 	struct folio *folio = pfn_folio(swp_offset_pfn(entry));
+ 
+-	/*
+-	 * Any use of migration entries may only occur while the
+-	 * corresponding folio is locked
+-	 */
+-	BUG_ON(is_migration_entry(entry) && !folio_test_locked(folio));
++	if (is_migration_entry(entry))
++		swap_entry_migration_sync(entry, folio);
+ 
+ 	return folio;
+ }
 
 
