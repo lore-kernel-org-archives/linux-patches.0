@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D67425CC7;
-	Tue, 31 Mar 2026 16:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C34402435;
+	Tue, 31 Mar 2026 16:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975013; cv=none; b=WHslq7WO5GL94KOReCCV9ylZnxikGKh/LeItUDx7J4HA1ikCdD3MZ0B24WWtm9HFPaNwgFpEY0NRa4MZs1dlkwZNnCO9YQqJF8SULFjugAlFPwAWU9BZ1DTBzAh/0GDiA08FD0+M8nwrD2uBesHixR9tJs1CjNGyAoBqU3tNMOA=
+	t=1774975016; cv=none; b=kH/vQWcPrN5V+YQ00pufGVmToiXbansLMApe4JPaOB7uvXdo3szAgfMuP/rpdCU3ar9q03G2NDZoB1LpTt6o9sXUshVd8xWqYL6FY75iZ9z48TlHj4vXVR0g7hU0lXjkq2VI7N9rHYWBb3jGLy6o59NAaL6TxcdiTsIYlyzCJVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975013; c=relaxed/simple;
-	bh=LJGlFB5qp+C6Wy3sk/lwtsBqbkwujsVMEiPgZKtyyFs=;
+	s=arc-20240116; t=1774975016; c=relaxed/simple;
+	bh=UPdn529eRXOH35Vt0BnefWFO5btNqxHdJ2mY1jjSEII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxvaY+DtjTqfYUGGELR531DAYPcwIxwu11vlI+5EEEgqsU65AOoXCJzgQd/D5zDpL9AV7OvcPqC2XZW6BQmr6/InBrm3rjFwcuRCslMhLs23kCO9zsJvkT4SnTA73Z79jsI9eoYMUOw9qmy4P7SA9O0vWZ1GIMQ25lb8YxmHT9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGK087Lm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fsWio6ptLjw108sEmYiVR2AnUUOT0a4gyJ7bApnUHvCNgzq0YIv89YnGzm8LJzl+CB2+nm5nqa7Y1Lxj0k6utrMjwDAoFc25fJZLzWp50Cq4csfvyYuRxf8AgTj5TUSe1VJNBDANSXcfzWMsiO+0EbY6F/dZHmCfsOPL5jGEQ1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cq8oEmPp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGK087Lm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC23C19424;
-	Tue, 31 Mar 2026 16:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq8oEmPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4EEC2BCB1;
+	Tue, 31 Mar 2026 16:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975013;
-	bh=LJGlFB5qp+C6Wy3sk/lwtsBqbkwujsVMEiPgZKtyyFs=;
+	s=korg; t=1774975016;
+	bh=UPdn529eRXOH35Vt0BnefWFO5btNqxHdJ2mY1jjSEII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGK087LmjC+LLXvJ0lFcXebTHAKCHR4LlMOhgn+RMMxO3tJyDaloyTSnRDxV0kzd+
-	 TgaYmHHFe5LCgp7+Y31fK4W67a96okqC1JQ7sb5Jdcpy7qqMZHbFlpwWf2kfMuc4QT
-	 e4PvT5edFhaGhAh3spry+zEioWVkUJCp/W0hNN8Y=
+	b=cq8oEmPpVBYdtBH+KfVhy90rGCdDtmcPHHiiLwdytacfZCzP5o77gBJ9T+ipG8jwq
+	 +PJMiu9REal7Yu+2d+CyLOTWQZjYMgSW/UHjXOOGI1LXfOREF2dfniZ/xtmZ96WfVN
+	 cBhmLSE3VBLJ6SCzO0Svd9fkvis3Fc2rR9N4gCM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Anas Iqbal <mohd.abd.6602@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+b518dfc8e021988fbd55@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 097/342] Bluetooth: hci_ll: Fix firmware leak on error path
-Date: Tue, 31 Mar 2026 18:18:50 +0200
-Message-ID: <20260331161802.587051801@linuxfoundation.org>
+Subject: [PATCH 6.19 088/342] af_key: validate families in pfkey_send_migrate()
+Date: Tue, 31 Mar 2026 18:18:41 +0200
+Message-ID: <20260331161802.258756940@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,44 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anas Iqbal <mohd.abd.6602@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 31148a7be723aa9f2e8fbd62424825ab8d577973 ]
+[ Upstream commit eb2d16a7d599dc9d4df391b5e660df9949963786 ]
 
-Smatch reports:
+syzbot was able to trigger a crash in skb_put() [1]
 
-drivers/bluetooth/hci_ll.c:587 download_firmware() warn:
-'fw' from request_firmware() not released on lines: 544.
+Issue is that pfkey_send_migrate() does not check old/new families,
+and that set_ipsecrequest() @family argument was truncated,
+thus possibly overfilling the skb.
 
-In download_firmware(), if request_firmware() succeeds but the returned
-firmware content is invalid (no data or zero size), the function returns
-without releasing the firmware, resulting in a resource leak.
+Validate families early, do not wait set_ipsecrequest().
 
-Fix this by calling release_firmware() before returning when
-request_firmware() succeeded but the firmware content is invalid.
+[1]
 
-Fixes: 371805522f87 ("bluetooth: hci_uart: add LL protocol serdev driver support")
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Anas Iqbal <mohd.abd.6602@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+skbuff: skb_over_panic: text:ffffffff8a752120 len:392 put:16 head:ffff88802a4ad040 data:ffff88802a4ad040 tail:0x188 end:0x180 dev:<NULL>
+ kernel BUG at net/core/skbuff.c:214 !
+Call Trace:
+ <TASK>
+  skb_over_panic net/core/skbuff.c:219 [inline]
+  skb_put+0x159/0x210 net/core/skbuff.c:2655
+  skb_put_zero include/linux/skbuff.h:2788 [inline]
+  set_ipsecrequest net/key/af_key.c:3532 [inline]
+  pfkey_send_migrate+0x1270/0x2e50 net/key/af_key.c:3636
+  km_migrate+0x155/0x260 net/xfrm/xfrm_state.c:2848
+  xfrm_migrate+0x2140/0x2450 net/xfrm/xfrm_policy.c:4705
+  xfrm_do_migrate+0x8ff/0xaa0 net/xfrm/xfrm_user.c:3150
+
+Fixes: 08de61beab8a ("[PFKEYV2]: Extension for dynamic update of endpoint address(es)")
+Reported-by: syzbot+b518dfc8e021988fbd55@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69b5933c.050a0220.248e02.00f2.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_ll.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/key/af_key.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_ll.c b/drivers/bluetooth/hci_ll.c
-index 6f4e25917b863..c4584f4085766 100644
---- a/drivers/bluetooth/hci_ll.c
-+++ b/drivers/bluetooth/hci_ll.c
-@@ -541,6 +541,8 @@ static int download_firmware(struct ll_device *lldev)
- 	if (err || !fw->data || !fw->size) {
- 		bt_dev_err(lldev->hu.hdev, "request_firmware failed(errno %d) for %s",
- 			   err, bts_scr_name);
-+		if (!err)
-+			release_firmware(fw);
- 		return -EINVAL;
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index 571200433aa90..bc91aeeb74bbf 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -3518,7 +3518,7 @@ static int set_sadb_kmaddress(struct sk_buff *skb, const struct xfrm_kmaddress *
+ 
+ static int set_ipsecrequest(struct sk_buff *skb,
+ 			    uint8_t proto, uint8_t mode, int level,
+-			    uint32_t reqid, uint8_t family,
++			    uint32_t reqid, sa_family_t family,
+ 			    const xfrm_address_t *src, const xfrm_address_t *dst)
+ {
+ 	struct sadb_x_ipsecrequest *rq;
+@@ -3583,12 +3583,17 @@ static int pfkey_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 
+ 	/* ipsecrequests */
+ 	for (i = 0, mp = m; i < num_bundles; i++, mp++) {
+-		/* old locator pair */
+-		size_pol += sizeof(struct sadb_x_ipsecrequest) +
+-			    pfkey_sockaddr_pair_size(mp->old_family);
+-		/* new locator pair */
+-		size_pol += sizeof(struct sadb_x_ipsecrequest) +
+-			    pfkey_sockaddr_pair_size(mp->new_family);
++		int pair_size;
++
++		pair_size = pfkey_sockaddr_pair_size(mp->old_family);
++		if (!pair_size)
++			return -EINVAL;
++		size_pol += sizeof(struct sadb_x_ipsecrequest) + pair_size;
++
++		pair_size = pfkey_sockaddr_pair_size(mp->new_family);
++		if (!pair_size)
++			return -EINVAL;
++		size_pol += sizeof(struct sadb_x_ipsecrequest) + pair_size;
  	}
- 	ptr = (void *)fw->data;
+ 
+ 	size += sizeof(struct sadb_msg) + size_pol;
 -- 
 2.51.0
 
