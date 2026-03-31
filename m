@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A357C2C15B2;
-	Tue, 31 Mar 2026 16:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E643E95A9;
+	Tue, 31 Mar 2026 16:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975777; cv=none; b=PRQZm/Sd/KZaXFI7/6bZAWoFRASt1lJvW0+jAXwcQ7vkUvzSeuuWqNrWUbWPTTGCJJsnUe9UyjTLQf7Tbju4driW/M8YYlw4rqckHqG/vliud0khHCPlgjX/perX8LDh6k5QpRAvplV1/EEfbRRXfMpwNLgavVJXL1lYdpx8N4A=
+	t=1774975780; cv=none; b=BO+bssyBLS8/zPAQ9fxSypTpiiQv31g+sMlVTb2PhwP/uD9y5D4wLw2XMLMGsB913YH1B4AATJk5qVuaQmboyFj1h6ZiybvaEuQ+H5RD2vf2i3GLkb7oGkpM3fSvLY4b5/Vrvuaz6MqAxmFB297b4pF1Hy3OwYGeGYiAC1drrVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975777; c=relaxed/simple;
-	bh=DUcM354bLPMx2KxbgheHEXO0/w3Zlgu4JhxNAZ+4+G8=;
+	s=arc-20240116; t=1774975780; c=relaxed/simple;
+	bh=I/ej6eIQQAcoIktCt65wVEG83TPc7mdyTHoOeYTcDYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WZPNqDgv73vmIdIOhgoG1lujbw3GOeQcqN73ZP12XqifyXPlbZlyYL8xPSOP5rVqSp/LkXXBT17XWETVuDjxzjAth0gBihojAu8eDDdGppF3/XVmkvn15SBtVGp0uJUi3us9lZ9CoymS9vRevfW0OPSIWV0r8VwVjeCvsy+33HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNTGM/eS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ym+JUTQONUkY4TsHG8HEg2ncSwr3KLaCVHwF+Ce7BuKsApI0ZB5bGesbtdk9AGhIoB+6C7VEDOwcFRfkU0gz/+kciwx79UCr9yOXKybEESEYumfjd5tvMG+KL+ke9liOZGePI3zVHKgnClbvv4+x2x1Ucn5WVH9ojzIa0axQ/Yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TqMNvxS9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNTGM/eS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0323DC19423;
-	Tue, 31 Mar 2026 16:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqMNvxS9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94466C19423;
+	Tue, 31 Mar 2026 16:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975777;
-	bh=DUcM354bLPMx2KxbgheHEXO0/w3Zlgu4JhxNAZ+4+G8=;
+	s=korg; t=1774975779;
+	bh=I/ej6eIQQAcoIktCt65wVEG83TPc7mdyTHoOeYTcDYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cNTGM/eSLCY9JMInYg2dA9WkQvSkAIA5t5ymtWP1bvBdoWfucNEGcahv5k2G/CiBp
-	 9S4Y9+WzalQVbRGi5CKvVW9i/uM6AGf9VpNCz4B52Q6bR6mIOfbUIC7Nk0Fi1619Tq
-	 62hBW6Qh4h9BAaIwpgQT/UWSiRlLzGI495aFlwHs=
+	b=TqMNvxS92IGIV4vE3bnKYTOME1oQSXHt9QtaCl6ZYgG4t3DGbj/rGXZ6pG/OYkfGW
+	 g3QHGjOpZtutU33oO6nYCOvtSwOgrUyURgGvc2ALTVYGY3ape5a+IHh3nEOu7SyiLu
+	 noOwyCDdwAulEUYmUNPSf6vNYW5mcPtSjrp+LfsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Patryk Holda <patryk.holda@intel.com>,
+	Kohei Enju <kohei@enjuk.jp>,
+	Simon Horman <horms@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/244] ice: use ice_update_eth_stats() for representor stats
-Date: Tue, 31 Mar 2026 18:20:33 +0200
-Message-ID: <20260331161744.747072877@linuxfoundation.org>
+Subject: [PATCH 6.12 084/244] iavf: fix out-of-bounds writes in iavf_get_ethtool_stats()
+Date: Tue, 31 Mar 2026 18:20:34 +0200
+Message-ID: <20260331161744.783528957@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -53,98 +55,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Kohei Enju <kohei@enjuk.jp>
 
-[ Upstream commit 2526e440df2725e7328d59b835a164826f179b93 ]
+[ Upstream commit fecacfc95f195b99c71c579a472120d0b4ed65fa ]
 
-ice_repr_get_stats64() and __ice_get_ethtool_stats() call
-ice_update_vsi_stats() on the VF's src_vsi. This always returns early
-because ICE_VSI_DOWN is permanently set for VF VSIs - ice_up() is never
-called on them since queues are managed by iavf through virtchnl.
+iavf incorrectly uses real_num_tx_queues for ETH_SS_STATS. Since the
+value could change in runtime, we should use num_tx_queues instead.
 
-In __ice_get_ethtool_stats() the original code called
-ice_update_vsi_stats() for all VSIs including representors, iterated
-over ice_gstrings_vsi_stats[] to populate the data, and then bailed out
-with an early return before the per-queue ring stats section. That early
-return was necessary because representor VSIs have no rings on the PF
-side - the rings belong to the VF driver (iavf), so accessing per-queue
-stats would be invalid.
+Moreover iavf_get_ethtool_stats() uses num_active_queues while
+iavf_get_sset_count() and iavf_get_stat_strings() use
+real_num_tx_queues, which triggers out-of-bounds writes when we do
+"ethtool -L" and "ethtool -S" simultaneously [1].
 
-Move the representor handling to the top of __ice_get_ethtool_stats()
-and call ice_update_eth_stats() directly to read the hardware GLV_*
-counters. This matches ice_get_vf_stats() which already uses
-ice_update_eth_stats() for the same VF VSI in legacy mode. Apply the
-same fix to ice_repr_get_stats64().
+For example when we change channels from 1 to 8, Thread 3 could be
+scheduled before Thread 2, and out-of-bounds writes could be triggered
+in Thread 3:
 
-Note that ice_gstrings_vsi_stats[] contains five software ring counters
-(rx_buf_failed, rx_page_failed, tx_linearize, tx_busy, tx_restart) that
-are always zero for representors since the PF never processes packets on
-VF rings. This is pre-existing behavior unchanged by this patch.
+Thread 1 (ethtool -L)       Thread 2 (work)        Thread 3 (ethtool -S)
+iavf_set_channels()
+...
+iavf_alloc_queues()
+-> num_active_queues = 8
+iavf_schedule_finish_config()
+                                                   iavf_get_sset_count()
+                                                   real_num_tx_queues: 1
+                                                   -> buffer for 1 queue
+                                                   iavf_get_ethtool_stats()
+                                                   num_active_queues: 8
+                                                   -> out-of-bounds!
+                            iavf_finish_config()
+                            -> real_num_tx_queues = 8
 
-Fixes: 7aae80cef7ba ("ice: add port representor ethtool ops and stats")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Patryk Holda <patryk.holda@intel.com>
+Use immutable num_tx_queues in all related functions to avoid the issue.
+
+[1]
+ BUG: KASAN: vmalloc-out-of-bounds in iavf_add_one_ethtool_stat+0x200/0x270
+ Write of size 8 at addr ffffc900031c9080 by task ethtool/5800
+
+ CPU: 1 UID: 0 PID: 5800 Comm: ethtool Not tainted 6.19.0-enjuk-08403-g8137e3db7f1c #241 PREEMPT(full)
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x6f/0xb0
+  print_report+0x170/0x4f3
+  kasan_report+0xe1/0x180
+  iavf_add_one_ethtool_stat+0x200/0x270
+  iavf_get_ethtool_stats+0x14c/0x2e0
+  __dev_ethtool+0x3d0c/0x5830
+  dev_ethtool+0x12d/0x270
+  dev_ioctl+0x53c/0xe30
+  sock_do_ioctl+0x1a9/0x270
+  sock_ioctl+0x3d4/0x5e0
+  __x64_sys_ioctl+0x137/0x1c0
+  do_syscall_64+0xf3/0x690
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ RIP: 0033:0x7f7da0e6e36d
+ ...
+  </TASK>
+
+ The buggy address belongs to a 1-page vmalloc region starting at 0xffffc900031c9000 allocated at __dev_ethtool+0x3cc9/0x5830
+ The buggy address belongs to the physical page: page: refcount:1 mapcount:0 mapping:0000000000000000
+ index:0xffff88813a013de0 pfn:0x13a013
+ flags: 0x200000000000000(node=0|zone=2)
+ raw: 0200000000000000 0000000000000000 dead000000000122 0000000000000000
+ raw: ffff88813a013de0 0000000000000000 00000001ffffffff 0000000000000000
+ page dumped because: kasan: bad access detected
+
+ Memory state around the buggy address:
+  ffffc900031c8f80: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+  ffffc900031c9000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ >ffffc900031c9080: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+                    ^
+  ffffc900031c9100: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+  ffffc900031c9180: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+
+Fixes: 64430f70ba6f ("iavf: Fix displaying queue statistics shown by ethtool")
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c | 14 +++++++++++---
- drivers/net/ethernet/intel/ice/ice_repr.c    |  3 ++-
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ .../net/ethernet/intel/iavf/iavf_ethtool.c    | 31 +++++++++----------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index b2183d5670b8c..606994fa99da9 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -1930,6 +1930,17 @@ __ice_get_ethtool_stats(struct net_device *netdev,
- 	int i = 0;
- 	char *p;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+index 74a1e9fe18212..53e5a3bd9b956 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+@@ -311,14 +311,13 @@ static int iavf_get_sset_count(struct net_device *netdev, int sset)
+ {
+ 	/* Report the maximum number queues, even if not every queue is
+ 	 * currently configured. Since allocation of queues is in pairs,
+-	 * use netdev->real_num_tx_queues * 2. The real_num_tx_queues is set
+-	 * at device creation and never changes.
++	 * use netdev->num_tx_queues * 2. The num_tx_queues is set at
++	 * device creation and never changes.
+ 	 */
  
-+	if (ice_is_port_repr_netdev(netdev)) {
-+		ice_update_eth_stats(vsi);
-+
-+		for (j = 0; j < ICE_VSI_STATS_LEN; j++) {
-+			p = (char *)vsi + ice_gstrings_vsi_stats[j].stat_offset;
-+			data[i++] = (ice_gstrings_vsi_stats[j].sizeof_stat ==
-+				     sizeof(u64)) ? *(u64 *)p : *(u32 *)p;
-+		}
-+		return;
-+	}
-+
- 	ice_update_pf_stats(pf);
- 	ice_update_vsi_stats(vsi);
+ 	if (sset == ETH_SS_STATS)
+ 		return IAVF_STATS_LEN +
+-			(IAVF_QUEUE_STATS_LEN * 2 *
+-			 netdev->real_num_tx_queues);
++		       (IAVF_QUEUE_STATS_LEN * 2 * netdev->num_tx_queues);
+ 	else
+ 		return -EINVAL;
+ }
+@@ -343,19 +342,19 @@ static void iavf_get_ethtool_stats(struct net_device *netdev,
+ 	iavf_add_ethtool_stats(&data, adapter, iavf_gstrings_stats);
  
-@@ -1939,9 +1950,6 @@ __ice_get_ethtool_stats(struct net_device *netdev,
- 			     sizeof(u64)) ? *(u64 *)p : *(u32 *)p;
- 	}
- 
--	if (ice_is_port_repr_netdev(netdev))
--		return;
--
- 	/* populate per queue stats */
  	rcu_read_lock();
+-	/* As num_active_queues describe both tx and rx queues, we can use
+-	 * it to iterate over rings' stats.
++	/* Use num_tx_queues to report stats for the maximum number of queues.
++	 * Queues beyond num_active_queues will report zero.
+ 	 */
+-	for (i = 0; i < adapter->num_active_queues; i++) {
+-		struct iavf_ring *ring;
++	for (i = 0; i < netdev->num_tx_queues; i++) {
++		struct iavf_ring *tx_ring = NULL, *rx_ring = NULL;
  
-diff --git a/drivers/net/ethernet/intel/ice/ice_repr.c b/drivers/net/ethernet/intel/ice/ice_repr.c
-index 1b1288d243248..e8a9b6a5dd7ab 100644
---- a/drivers/net/ethernet/intel/ice/ice_repr.c
-+++ b/drivers/net/ethernet/intel/ice/ice_repr.c
-@@ -2,6 +2,7 @@
- /* Copyright (C) 2019-2021, Intel Corporation. */
+-		/* Tx rings stats */
+-		ring = &adapter->tx_rings[i];
+-		iavf_add_queue_stats(&data, ring);
++		if (i < adapter->num_active_queues) {
++			tx_ring = &adapter->tx_rings[i];
++			rx_ring = &adapter->rx_rings[i];
++		}
  
- #include "ice.h"
-+#include "ice_lib.h"
- #include "ice_eswitch.h"
- #include "devlink/devlink.h"
- #include "devlink/devlink_port.h"
-@@ -67,7 +68,7 @@ ice_repr_get_stats64(struct net_device *netdev, struct rtnl_link_stats64 *stats)
- 		return;
- 	vsi = repr->src_vsi;
+-		/* Rx rings stats */
+-		ring = &adapter->rx_rings[i];
+-		iavf_add_queue_stats(&data, ring);
++		iavf_add_queue_stats(&data, tx_ring);
++		iavf_add_queue_stats(&data, rx_ring);
+ 	}
+ 	rcu_read_unlock();
+ }
+@@ -374,9 +373,9 @@ static void iavf_get_stat_strings(struct net_device *netdev, u8 *data)
+ 	iavf_add_stat_strings(&data, iavf_gstrings_stats);
  
--	ice_update_vsi_stats(vsi);
-+	ice_update_eth_stats(vsi);
- 	eth_stats = &vsi->eth_stats;
- 
- 	stats->tx_packets = eth_stats->tx_unicast + eth_stats->tx_broadcast +
+ 	/* Queues are always allocated in pairs, so we just use
+-	 * real_num_tx_queues for both Tx and Rx queues.
++	 * num_tx_queues for both Tx and Rx queues.
+ 	 */
+-	for (i = 0; i < netdev->real_num_tx_queues; i++) {
++	for (i = 0; i < netdev->num_tx_queues; i++) {
+ 		iavf_add_stat_strings(&data, iavf_gstrings_queue_stats,
+ 				      "tx", i);
+ 		iavf_add_stat_strings(&data, iavf_gstrings_queue_stats,
 -- 
 2.51.0
 
