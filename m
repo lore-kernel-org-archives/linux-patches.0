@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24C2301708;
-	Tue, 31 Mar 2026 17:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6753081BE;
+	Tue, 31 Mar 2026 17:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976506; cv=none; b=H03V/qWfG1y0YoKtgpPGF1YFjLZJWunhqQ50HNafPeASaePTew8OeBBnrnyZwXtnYrsD6rZ9PKwtU/mXq4bYHCgE8sFdBr5cohtgBDE+8owvzR4e77qsCdib2myq3DeqAbx1G3z0tywPfmro5LwqOkLgoRsYljIcL6e4t6mtrhw=
+	t=1774976508; cv=none; b=aq5JKPT9HMhhcd9Os2Ahnz21lP4jqtVf27nJRNW0Rg7Yqev6mR2M9mObnR3G7LqctpS72RBqgmNtatcSgueDkgivWcEYW8Cv6KzvcExKU3Ht4bkDEIsaW8JWRxen/kR8JpqzXEM496OsGYRGK17e3divGt4nzSY7f1008NoXvig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976506; c=relaxed/simple;
-	bh=I2Q7z86sdIk89hcqk7wf/iqafhwawu71A9eBsITwxc0=;
+	s=arc-20240116; t=1774976508; c=relaxed/simple;
+	bh=YPrasaL+HPlQhaWzi/tc9n1jzhPEKzK+NrUs4O6dw1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qo/KU5cDOmkgLBcPdrK3zly78M6Ig1WDNH7zRHUQIPs23PiuDsKOtbhnG/QztvEMyItrYcwnqTwVIVG4dKkTGM/ASgTGlmaSNIPP2JYD+0YKfj4/C30HGQxZNggjUHJ/9yBJ3yt4q/LkTxeDjX3ZjpgrGKMlhIGwp9gJC6zICoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vm3O/saI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/sFsAzA/A9xHllgcDt/9Lxce0L1Gkl7i2rW+hbsJVtr4v2TTo0FaJsC22L1Zp7Cyonc/EFNsbbe49266ZMN4pv46kA/hjn5W4AE0YGXvM3aUiRiDi0t8b3oVTkt1xxZqjMOOBbccUcHFnov6jEmcYm0OMuGpP5wzFLmeFu4wRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2sFvLG0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vm3O/saI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F90BC19423;
-	Tue, 31 Mar 2026 17:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2sFvLG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76C0C2BCB1;
+	Tue, 31 Mar 2026 17:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976505;
-	bh=I2Q7z86sdIk89hcqk7wf/iqafhwawu71A9eBsITwxc0=;
+	s=korg; t=1774976508;
+	bh=YPrasaL+HPlQhaWzi/tc9n1jzhPEKzK+NrUs4O6dw1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vm3O/saIYQCUT0+MiXe+l/dRd5wr1ku+EGCja9Ug3+Pm+KAA/oQJ//IYXMGU65g3n
-	 IHnkdi/vk8I/z0p+BXBpjlS0ZyFhTj8KaanZ8BUv+Ci3j3MOgI0eEJ/ri91iuxLpJj
-	 wWWxHP4Yv8sX6gZiR3FkLMsgJXQopEMNFcmlHUZA=
+	b=s2sFvLG0zomUbya0nf7gXAvEg+gPdTtjqJQ4i9o5m2etGOD3mirTbUu239YlSQ0Tp
+	 PmVxNOrQBa4L00stRc6RiAg4nOBk5cHHKxRs1l2DlYK2Gox7bDV/tYLe+nHyLgJliN
+	 /D7QZiBk05ae8JahbNaMQ0wfmvy2LAEsrY6qS0pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Zhang Chen <zhangchen01@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 118/309] dma-mapping: add missing `inline` for `dma_free_attrs`
-Date: Tue, 31 Mar 2026 18:20:21 +0200
-Message-ID: <20260331161757.826619105@linuxfoundation.org>
+Subject: [PATCH 6.18 119/309] Bluetooth: L2CAP: Fix send LE flow credits in ACL link
+Date: Tue, 31 Mar 2026 18:20:22 +0200
+Message-ID: <20260331161757.862488905@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -51,53 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Zhang Chen <zhangchen01@kylinos.cn>
 
-[ Upstream commit 2cdaff22ed26f1e619aa2b43f27bb84f2c6ef8f8 ]
+[ Upstream commit f39f905e55f529b036321220af1ba4f4085564a5 ]
 
-Under an UML build for an upcoming series [1], I got `-Wstatic-in-inline`
-for `dma_free_attrs`:
+When the L2CAP channel mode is L2CAP_MODE_ERTM/L2CAP_MODE_STREAMING,
+l2cap_publish_rx_avail will be called and le flow credits will be sent in
+l2cap_chan_rx_avail, even though the link type is ACL.
 
-      BINDGEN rust/bindings/bindings_generated.rs - due to target missing
-    In file included from rust/helpers/helpers.c:59:
-    rust/helpers/dma.c:17:2: warning: static function 'dma_free_attrs' is used in an inline function with external linkage [-Wstatic-in-inline]
-       17 |         dma_free_attrs(dev, size, cpu_addr, dma_handle, attrs);
-          |         ^
-    rust/helpers/dma.c:12:1: note: use 'static' to give inline function 'rust_helper_dma_free_attrs' internal linkage
-       12 | __rust_helper void rust_helper_dma_free_attrs(struct device *dev, size_t size,
-          | ^
-          | static
+The logs in question as follows:
+> ACL Data RX: Handle 129 flags 0x02 dlen 12
+      L2CAP: Unknown (0x16) ident 4 len 4
+        40 00 ed 05
+< ACL Data TX: Handle 129 flags 0x00 dlen 10
+      L2CAP: Command Reject (0x01) ident 4 len 2
+        Reason: Command not understood (0x0000)
 
-The issue is that `dma_free_attrs` was not marked `inline` when it was
-introduced alongside the rest of the stubs.
+Bluetooth: Unknown BR/EDR signaling command 0x16
+Bluetooth: Wrong link type (-22)
 
-Thus mark it.
-
-Fixes: ed6ccf10f24b ("dma-mapping: properly stub out the DMA API for !CONFIG_HAS_DMA")
-Closes: https://lore.kernel.org/rust-for-linux/20260322194616.89847-1-ojeda@kernel.org/ [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260325015548.70912-1-ojeda@kernel.org
+Fixes: ce60b9231b66 ("Bluetooth: compute LE flow credits based on recvbuf space")
+Signed-off-by: Zhang Chen <zhangchen01@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dma-mapping.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
-index aa36a0d1d9df6..190eab9f5e8c2 100644
---- a/include/linux/dma-mapping.h
-+++ b/include/linux/dma-mapping.h
-@@ -240,8 +240,8 @@ static inline void *dma_alloc_attrs(struct device *dev, size_t size,
- {
- 	return NULL;
- }
--static void dma_free_attrs(struct device *dev, size_t size, void *cpu_addr,
--		dma_addr_t dma_handle, unsigned long attrs)
-+static inline void dma_free_attrs(struct device *dev, size_t size,
-+		void *cpu_addr, dma_addr_t dma_handle, unsigned long attrs)
- {
- }
- static inline void *dmam_alloc_attrs(struct device *dev, size_t size,
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 848a9b945de89..b5e393e4f3eb1 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6589,6 +6589,10 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
+ 	struct l2cap_le_credits pkt;
+ 	u16 return_credits = l2cap_le_rx_credits(chan);
+ 
++	if (chan->mode != L2CAP_MODE_LE_FLOWCTL &&
++	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
++		return;
++
+ 	if (chan->rx_credits >= return_credits)
+ 		return;
+ 
 -- 
 2.51.0
 
