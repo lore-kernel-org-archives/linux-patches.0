@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EAA2D0C94;
-	Tue, 31 Mar 2026 17:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475CF2D5C68;
+	Tue, 31 Mar 2026 17:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976422; cv=none; b=i2FEBfQQEXpsHF2pqclSP/8uuYvAUmDH1LXcGJ1zpGM3l4uTc7LHExwAAveuaCyBaC/Bc+8WW78fgTc/i+A8sxT74FtyXD6MTH7vjezgLknGUIKLTLqmWjOKL3Wxpmrwsnok9zZ8dWqzIfxpEsZjT22c2muWECGfgXLW1RP60hg=
+	t=1774976425; cv=none; b=haOIm5z7KIh+AhSlUYuXbZD5TLySIHIFUreQONmmVKSteUC7PttXiQ/VmOwX6YDGAi2hR71K8nImu+uUQCQyeMBcDEUS2ZkBaCWUYVvEzynKinh0AbBxafJ/U+UfkzSQ7S0Fmy6r2DSYQi7m46+TbWjTcmk/YfSl0lh/+Nxe7kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976422; c=relaxed/simple;
-	bh=CKkO1HYE2wf/UTaoNItdaWQN/aUrz4/xYyoKIjVMsFY=;
+	s=arc-20240116; t=1774976425; c=relaxed/simple;
+	bh=i7WbSDsaQMs4IR49vnHlXAH3uYHAc0yaejYpyhrIqR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5wrzF6KFyER8vhczuJccG6h9QkEom/kbUvhEqyQfEievx+8Gzm3LW7zvA/quEJ1DYzihPTdOYUqB+qRw/A2fBBSlXME2zoG0W7i4a0ayhy8nULGwDA61KZ9ssAU4C1WSjs875rSwbGuoVBzKi5GjrqfTIRZDQhEUysQ25vqKSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4SlnOQV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rlP8fUKT79MqPvXGhgkVlaVokkv2dxu3vGIdlsFS9Ku41blFAMxJcFhV652Uvp9C3G+LnBW3175Ji1IdA0hACYXH/Q3ychgdxW5MKJ4hUaoyJTxCxS8+udXAhA6xv9lORbGwBPARYgSHY1Cq4VQ2RBRViM9hkPqjCE4TczgvqH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egKRvGGR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4SlnOQV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DE9C19423;
-	Tue, 31 Mar 2026 17:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egKRvGGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2ABFC19423;
+	Tue, 31 Mar 2026 17:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976422;
-	bh=CKkO1HYE2wf/UTaoNItdaWQN/aUrz4/xYyoKIjVMsFY=;
+	s=korg; t=1774976425;
+	bh=i7WbSDsaQMs4IR49vnHlXAH3uYHAc0yaejYpyhrIqR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t4SlnOQVRLr89sxc2RJz9Ocp8NtKLk7ixPjL6JoEvBF8rlpSf2mgkXL7LvTqpu0zq
-	 5cmiDwEtUAmgfNOu+d7V8HHVxK/HGcBgxq3DGatzNMkhpp6nunNvsNU35bx4SbWB/v
-	 7Aekn82eY+kiRSeAus+FMMUgzf71+ROBAzUtnDyg=
+	b=egKRvGGRo8mHcSLQ6zpV8gbxTXIUSrKasess3chbCV98BPnH/VwyGb+Ohn3CYfDfm
+	 N71q71bTJ4Bi0uzAMoNDLzFRWMOJ2a2iQDz8TbReGokSwgfmCUAJQq2FTEeHKzoWke
+	 aYe94mkhJ1pb+dYy/PMJFoAxEMASbDEOsHi16qTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Anas Iqbal <mohd.abd.6602@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Uzair Mughal <contact@uzair.is-a.dev>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 086/309] Bluetooth: hci_ll: Fix firmware leak on error path
-Date: Tue, 31 Mar 2026 18:19:49 +0200
-Message-ID: <20260331161756.650255229@linuxfoundation.org>
+Subject: [PATCH 6.18 060/309] ALSA: hda/realtek: Add headset jack quirk for Thinkpad X390
+Date: Tue, 31 Mar 2026 18:19:23 +0200
+Message-ID: <20260331161755.698072847@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -52,44 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anas Iqbal <mohd.abd.6602@gmail.com>
+From: Uzair Mughal <contact@uzair.is-a.dev>
 
-[ Upstream commit 31148a7be723aa9f2e8fbd62424825ab8d577973 ]
+[ Upstream commit 542127f6528ca7cc3cf61e1651d6ccb58495f953 ]
 
-Smatch reports:
+The Lenovo ThinkPad X390 (ALC257 codec, subsystem ID 0x17aa2288)
+does not report headset button press events. Headphone insertion is
+detected (SW_HEADPHONE_INSERT), but pressing the inline microphone
+button on a headset produces no input events.
 
-drivers/bluetooth/hci_ll.c:587 download_firmware() warn:
-'fw' from request_firmware() not released on lines: 544.
+Add a SND_PCI_QUIRK entry that maps this subsystem ID to
+ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK, which enables
+headset jack button detection through alc_fixup_headset_jack()
+and ThinkPad ACPI integration. This is the same fixup used by
+similar ThinkPad models (P1 Gen 3, X1 Extreme Gen 3).
 
-In download_firmware(), if request_firmware() succeeds but the returned
-firmware content is invalid (no data or zero size), the function returns
-without releasing the firmware, resulting in a resource leak.
-
-Fix this by calling release_firmware() before returning when
-request_firmware() succeeded but the firmware content is invalid.
-
-Fixes: 371805522f87 ("bluetooth: hci_uart: add LL protocol serdev driver support")
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Anas Iqbal <mohd.abd.6602@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Uzair Mughal <contact@uzair.is-a.dev>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260307012906.20093-1-contact@uzair.is-a.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_ll.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/hci_ll.c b/drivers/bluetooth/hci_ll.c
-index 6f4e25917b863..c4584f4085766 100644
---- a/drivers/bluetooth/hci_ll.c
-+++ b/drivers/bluetooth/hci_ll.c
-@@ -541,6 +541,8 @@ static int download_firmware(struct ll_device *lldev)
- 	if (err || !fw->data || !fw->size) {
- 		bt_dev_err(lldev->hu.hdev, "request_firmware failed(errno %d) for %s",
- 			   err, bts_scr_name);
-+		if (!err)
-+			release_firmware(fw);
- 		return -EINVAL;
- 	}
- 	ptr = (void *)fw->data;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 437a7a2070e58..a42c3d43f5d93 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7323,6 +7323,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x224c, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
+ 	SND_PCI_QUIRK(0x17aa, 0x224d, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
+ 	SND_PCI_QUIRK(0x17aa, 0x225d, "Thinkpad T480", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
++	SND_PCI_QUIRK(0x17aa, 0x2288, "Thinkpad X390", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
+ 	SND_PCI_QUIRK(0x17aa, 0x2292, "Thinkpad X1 Carbon 7th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
+ 	SND_PCI_QUIRK(0x17aa, 0x22be, "Thinkpad X1 Carbon 8th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
+ 	SND_PCI_QUIRK(0x17aa, 0x22c1, "Thinkpad P1 Gen 3", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
 -- 
 2.51.0
 
