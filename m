@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAF1425CC6;
-	Tue, 31 Mar 2026 16:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1004035AB;
+	Tue, 31 Mar 2026 16:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975922; cv=none; b=hnQg0VdhpTDoDlQcdXCFBjepP9ZgT9LhULRPEVepOthI0WXx7ynOQjuK2jyUbQ75iGpLFxhCT3swjXzgIhaGETEOdWDt5IoJ/x/IgAGCg3MjK+duLyhO3tF8X0cYA8TRGqHxp37jo6xUAqTMuP+oqjkTPROqmPXHLKpa/X5wyko=
+	t=1774975925; cv=none; b=FizRkd9VgkG+Pc99V/kjsQqmV/dlSLNo2BlMv0sWiwZb0uMjVlYoCIwlf6dMX3jRI2pceuOvVl2q/QEIjC/Oqr5modG9hmXoWhuvn9UcYuQwot37JVPTZwAVzoj/mP+npm1o3/bbC53C9HMHtiu7rg1IpFwiU3jk4UXF43kzOTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975922; c=relaxed/simple;
-	bh=BxMXBBs47H7W3qPajzlwk+mpa0UpwSHfB1crGoQWDv8=;
+	s=arc-20240116; t=1774975925; c=relaxed/simple;
+	bh=Y++7Pd88Xw1LdnmQXLt9GG2MwgrrLihjDBX8EGtjls4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KGEasCPOGn6bDK+pO9xLZZGdXBK++kHT4U5QKs3d8CU1f4dwTjhmDSR2UvI01ftp1QsBjonU691VIQlNR7uqfXwyQqPl2WCrns9NjhcoDgpUYDQSZVF/9irmO7mLmqd6420JeFu2Z2QZVnXEsD8Bqk6KupB5/M5DblGaX7QH3OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5S6b3N5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IApmU3uO+JGGJ3O9Z8wHUyQplMaWRU5AVtVyG/leYY4mPjHRsPmmd/j20KcGyOZzKSCbHDcKuF3so4Lh0FWOEzJvu7Hz3t4kAXWypuMLk8rPHYEf9zolPWsP6DZvH4vAuKJMWVt2IlR1FgOFLTf99KwXwPYReMCN2ucTHuR51hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKyYMeHY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5S6b3N5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04406C19423;
-	Tue, 31 Mar 2026 16:52:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKyYMeHY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E58C19423;
+	Tue, 31 Mar 2026 16:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975922;
-	bh=BxMXBBs47H7W3qPajzlwk+mpa0UpwSHfB1crGoQWDv8=;
+	s=korg; t=1774975924;
+	bh=Y++7Pd88Xw1LdnmQXLt9GG2MwgrrLihjDBX8EGtjls4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5S6b3N591cmRtAQ8upeEkc1a3L7aPVOmnPc2QzcKhpZn5VO+WqInPnL5CdrHZxlg
-	 4+FJWB7abwt7Z5DprZvVhwloVu8a9kI5MMxYPF2u8OYp4snxmzIrBDUoc7RhujbId/
-	 cMVmAtxYeHlYdBGU+hea6kCQWtP5hloTWiFrfWfE=
+	b=NKyYMeHY9s+E509HNyJ29KZyHBTB8q5mIrpWfePZ+w/kcbvViUAek+nDcyX1esYPN
+	 Ba7ljRWVqZqB5rxaz3kraXTdyuvhJ/ceycwjZMYtPhNNuKrDP0hF9EzUQpk0Wxfz6I
+	 A1iEcU8gsnKzHdk6CVKXnja1l0JBI+ypwTmhp71s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.12 137/244] s390/entry: Scrub r12 register on kernel entry
-Date: Tue, 31 Mar 2026 18:21:27 +0200
-Message-ID: <20260331161746.711703870@linuxfoundation.org>
+	Sean Rhodes <sean@starlabs.systems>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 106/244] ALSA: hda/realtek: Sequence GPIO2 on Star Labs StarFighter
+Date: Tue, 31 Mar 2026 18:20:56 +0200
+Message-ID: <20260331161745.583670966@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -51,54 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Sean Rhodes <sean@starlabs.systems>
 
-commit 0738d395aab8fae3b5a3ad3fc640630c91693c27 upstream.
+[ Upstream commit a6919f2a01f8fbf807b015e5b26aecae7db8117b ]
 
-Before commit f33f2d4c7c80 ("s390/bp: remove TIF_ISOLATE_BP"),
-all entry handlers loaded r12 with the current task pointer
-(lg %r12,__LC_CURRENT) for use by the BPENTER/BPEXIT macros. That
-commit removed TIF_ISOLATE_BP, dropping both the branch prediction
-macros and the r12 load, but did not add r12 to the register clearing
-sequence.
+The initial StarFighter quirk fixed the runtime suspend pop by muting
+speakers in the shutup callback before power-down. Further hardware
+validation showed that the speaker path is controlled directly by LINE2
+EAPD on NID 0x1b together with GPIO2 for the external amplifier.
 
-Add the missing xgr %r12,%r12 to make the register scrub consistent
-across all entry points.
+Replace the shutup-delay workaround with explicit sequencing of those
+controls at playback start and stop:
+- assert LINE2 EAPD and drive GPIO2 high on PREPARE
+- deassert LINE2 EAPD and drive GPIO2 low on CLEANUP
 
-Fixes: f33f2d4c7c80 ("s390/bp: remove TIF_ISOLATE_BP")
-Cc: stable@kernel.org
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This avoids the runtime suspend pop without a sleep, and also fixes pops
+around G3 entry and display-manager start that the original workaround
+did not cover.
+
+Fixes: 1cb3c20688fc ("ALSA: hda/realtek: Fix speaker pop on Star Labs StarFighter")
+Tested-by: Sean Rhodes <sean@starlabs.systems>
+Signed-off-by: Sean Rhodes <sean@starlabs.systems>
+Link: https://patch.msgid.link/20260315201127.33744-1-sean@starlabs.systems
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/entry.S |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/patch_realtek.c | 38 +++++++++++++++++++++++++++++------
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
---- a/arch/s390/kernel/entry.S
-+++ b/arch/s390/kernel/entry.S
-@@ -286,6 +286,7 @@ SYM_CODE_START(system_call)
- 	xgr	%r9,%r9
- 	xgr	%r10,%r10
- 	xgr	%r11,%r11
-+	xgr	%r12,%r12
- 	la	%r2,STACK_FRAME_OVERHEAD(%r15)	# pointer to pt_regs
- 	mvc	__PT_R8(64,%r2),__LC_SAVE_AREA(%r13)
- 	MBEAR	%r2,%r13
-@@ -431,6 +432,7 @@ SYM_CODE_START(\name)
- 	xgr	%r6,%r6
- 	xgr	%r7,%r7
- 	xgr	%r10,%r10
-+	xgr	%r12,%r12
- 	xc	__PT_FLAGS(8,%r11),__PT_FLAGS(%r11)
- 	mvc	__PT_R8(64,%r11),__LC_SAVE_AREA(%r13)
- 	MBEAR	%r11,%r13
-@@ -523,6 +525,7 @@ SYM_CODE_START(mcck_int_handler)
- 	xgr	%r6,%r6
- 	xgr	%r7,%r7
- 	xgr	%r10,%r10
-+	xgr	%r12,%r12
- 	stmg	%r8,%r9,__PT_PSW(%r11)
- 	xc	__PT_FLAGS(8,%r11),__PT_FLAGS(%r11)
- 	xc	__SF_BACKCHAIN(8,%r15),__SF_BACKCHAIN(%r15)
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 689b5510a95e8..fad159187f445 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -4164,12 +4164,30 @@ static int alc269_resume(struct hda_codec *codec)
+ 	return 0;
+ }
+ 
+-#define STARLABS_STARFIGHTER_SHUTUP_DELAY_MS	30
++#define ALC233_STARFIGHTER_SPK_PIN	0x1b
++#define ALC233_STARFIGHTER_GPIO2	0x04
+ 
+-static void starlabs_starfighter_shutup(struct hda_codec *codec)
++static void alc233_starfighter_update_amp(struct hda_codec *codec, bool on)
+ {
+-	if (snd_hda_gen_shutup_speakers(codec))
+-		msleep(STARLABS_STARFIGHTER_SHUTUP_DELAY_MS);
++	snd_hda_codec_write(codec, ALC233_STARFIGHTER_SPK_PIN, 0,
++			    AC_VERB_SET_EAPD_BTLENABLE,
++			    on ? AC_EAPDBTL_EAPD : 0);
++	alc_update_gpio_data(codec, ALC233_STARFIGHTER_GPIO2, on);
++}
++
++static void alc233_starfighter_pcm_hook(struct hda_pcm_stream *hinfo,
++					struct hda_codec *codec,
++					struct snd_pcm_substream *substream,
++					int action)
++{
++	switch (action) {
++	case HDA_GEN_PCM_ACT_PREPARE:
++		alc233_starfighter_update_amp(codec, true);
++		break;
++	case HDA_GEN_PCM_ACT_CLEANUP:
++		alc233_starfighter_update_amp(codec, false);
++		break;
++	}
+ }
+ 
+ static void alc233_fixup_starlabs_starfighter(struct hda_codec *codec,
+@@ -4178,8 +4196,16 @@ static void alc233_fixup_starlabs_starfighter(struct hda_codec *codec,
+ {
+ 	struct alc_spec *spec = codec->spec;
+ 
+-	if (action == HDA_FIXUP_ACT_PRE_PROBE)
+-		spec->shutup = starlabs_starfighter_shutup;
++	switch (action) {
++	case HDA_FIXUP_ACT_PRE_PROBE:
++		spec->gpio_mask |= ALC233_STARFIGHTER_GPIO2;
++		spec->gpio_dir |= ALC233_STARFIGHTER_GPIO2;
++		spec->gpio_data &= ~ALC233_STARFIGHTER_GPIO2;
++		break;
++	case HDA_FIXUP_ACT_PROBE:
++		spec->gen.pcm_playback_hook = alc233_starfighter_pcm_hook;
++		break;
++	}
+ }
+ 
+ static void alc269_fixup_pincfg_no_hp_to_lineout(struct hda_codec *codec,
+-- 
+2.53.0
+
 
 
