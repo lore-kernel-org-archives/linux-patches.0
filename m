@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB4B2D5937;
-	Tue, 31 Mar 2026 16:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475AF1C861A;
+	Tue, 31 Mar 2026 16:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974713; cv=none; b=pEhzwON39h4ooMUaW0x8zGEZqqNejGTMS0cFmJ3Kl/Miv7Jk9IPzb2lgT28Vn7ZyHdZS9XvD7NPgl32W06BTP8k6ddyC80ftM9Oy2hpjNUHbL3TVpHUI68TFOcm3L+FNiXUF7BF6+eEWOLqM+ZS/OI0qgzuPjdaKkvCiOFEP5I0=
+	t=1774974716; cv=none; b=PeF7FI/E+p0uxHkDQZpFwfl/xvi54SaIvJGRraLdFL2GyULKr64joG3KOuiWXoUd8M5qiZF55gqKC6L4S7sMR4XentLNub12DyGjOOSmFeVN5CQRScr13ok3e+LdmYhnt3IJkoo7ea1V8/f3eeGHMwYKA+DSLL963o2wMZHtdBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974713; c=relaxed/simple;
-	bh=MPiCRyHhqByH8gtCUDhxFbPuTOPqaYPov3ipywF1tig=;
+	s=arc-20240116; t=1774974716; c=relaxed/simple;
+	bh=u6hxHSX6DgnsHt6BSru8T3Ll/EmdURINw3/xUTfoVpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SSVcqI3trNuEzlwjaG1wLKIyMK+3QleFov52cdk9O5KrL0Ukud16W4VsytS0e0DQatn5S6uZMTUpaPdyAabY/JL3EEW8AXudvcLHXik2fsRpQE6aDwCa+7TcI3wrqwMUxTHJg7qkT4S1UPwmYOCmB0/zTSA5QapbJUN/NqGjfhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgDTILm6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VuTH3Y8MuKygX5SA38Vj8IAtKPOb5XHg2qL9Kx365iVsN2ZTB4WXEQOLH38Z5uTKaPqE+mWz7h12gKsagFd/iGqw9VV+2FdUe6S2fCVGEFQK63c/LuAj5CqoFNCgxOq/bd+lqvUMugTvPVIfpHuAU9boAwaTNBMOmcP4sxFSmsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Szmc1Zk+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgDTILm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A71CC19423;
-	Tue, 31 Mar 2026 16:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Szmc1Zk+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1413C19423;
+	Tue, 31 Mar 2026 16:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974713;
-	bh=MPiCRyHhqByH8gtCUDhxFbPuTOPqaYPov3ipywF1tig=;
+	s=korg; t=1774974716;
+	bh=u6hxHSX6DgnsHt6BSru8T3Ll/EmdURINw3/xUTfoVpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BgDTILm6SzRV2ABV75tmMuudb65TC3yr1Hyg4+sLxE2yyL5DV9fjQhOS5yR/QqAxW
-	 7xZByEsDUKWSLeXaF2sGdEgKu1xr8AY2zwbrZJqcEhdi79xv2Dx6d2Rt3UjflK4xNV
-	 24gUOHB7GBajQ/Rteruvk8joZ2s7PIWWegfgDMN0=
+	b=Szmc1Zk+aGbs/egVJ6rPs9s3x2SWwgvZVOgp6B7KyGc8xwac87ZNwksTWtkV5UjnU
+	 3Speb27i/h2DowfkIGOiWPEapt1oMkFrNcawh4Q8NB4anVp+VfZz13qJbkNnOQgdrT
+	 qKhE7eaYguQkCBXFYYujU9oGXVlKMLRZe/tkGkAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Gregory Bell <grbell@redhat.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Gregory Price <gourry@gourry.net>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 016/342] bpf: Release module BTF IDR before module unload
-Date: Tue, 31 Mar 2026 18:17:29 +0200
-Message-ID: <20260331161759.504131728@linuxfoundation.org>
+Subject: [PATCH 6.19 002/342] cxl/region: Fix leakage in __construct_region()
+Date: Tue, 31 Mar 2026 18:17:15 +0200
+Message-ID: <20260331161759.003186609@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -54,126 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit 146bd2a87a65aa407bb17fac70d8d583d19aba06 ]
+[ Upstream commit 77b310bb7b5ff8c017524df83292e0242ba89791 ]
 
-Gregory reported in [0] that the global_map_resize test when run in
-repeatedly ends up failing during program load. This stems from the fact
-that BTF reference has not dropped to zero after the previous run's
-module is unloaded, and the older module's BTF is still discoverable and
-visible. Later, in libbpf, load_module_btfs() will find the ID for this
-stale BTF, open its fd, and then it will be used during program load
-where later steps taking module reference using btf_try_get_module()
-fail since the underlying module for the BTF is gone.
+Failing the first sysfs_update_group() needs to explicitly
+kfree the resource as it is too early for cxl_region_iomem_release()
+to do so.
 
-Logically, once a module is unloaded, it's associated BTF artifacts
-should become hidden. The BTF object inside the kernel may still remain
-alive as long its reference counts are alive, but it should no longer be
-discoverable.
-
-To fix this, let us call btf_free_id() from the MODULE_STATE_GOING case
-for the module unload to free the BTF associated IDR entry, and disable
-its discovery once module unload returns to user space. If a race
-happens during unload, the outcome is non-deterministic anyway. However,
-user space should be able to rely on the guarantee that once it has
-synchronously established a successful module unload, no more stale
-artifacts associated with this module can be obtained subsequently.
-
-Note that we must be careful to not invoke btf_free_id() in btf_put()
-when btf_is_module() is true now. There could be a window where the
-module unload drops a non-terminal reference, frees the IDR, but the
-same ID gets reused and the second unconditional btf_free_id() ends up
-releasing an unrelated entry.
-
-To avoid a special case for btf_is_module() case, set btf->id to zero to
-make btf_free_id() idempotent, such that we can unconditionally invoke it
-from btf_put(), and also from the MODULE_STATE_GOING case. Since zero is
-an invalid IDR, the idr_remove() should be a noop.
-
-Note that we can be sure that by the time we reach final btf_put() for
-btf_is_module() case, the btf_free_id() is already done, since the
-module itself holds the BTF reference, and it will call this function
-for the BTF before dropping its own reference.
-
-  [0]: https://lore.kernel.org/bpf/cover.1773170190.git.grbell@redhat.com
-
-Fixes: 36e68442d1af ("bpf: Load and verify kernel module BTFs")
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Suggested-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reported-by: Gregory Bell <grbell@redhat.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20260312205307.1346991-1-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Gregory Price <gourry@gourry.net>
+Fixes: d6602e25819d (cxl/region: Add support to indicate region has extended linear cache)
+Link: https://patch.msgid.link/20260202191330.245608-1-dave@stgolabs.net
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ drivers/cxl/core/region.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 0de8fc8a0e0b3..75a5df36f9170 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -1676,7 +1676,16 @@ static void btf_free_id(struct btf *btf)
- 	 * of the _bh() version.
- 	 */
- 	spin_lock_irqsave(&btf_idr_lock, flags);
--	idr_remove(&btf_idr, btf->id);
-+	if (btf->id) {
-+		idr_remove(&btf_idr, btf->id);
-+		/*
-+		 * Clear the id here to make this function idempotent, since it will get
-+		 * called a couple of times for module BTFs: on module unload, and then
-+		 * the final btf_put(). btf_alloc_id() starts IDs with 1, so we can use
-+		 * 0 as sentinel value.
-+		 */
-+		WRITE_ONCE(btf->id, 0);
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 5bd1213737fa2..a3d06b852d05e 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -3616,8 +3616,10 @@ static int __construct_region(struct cxl_region *cxlr,
+ 	}
+ 
+ 	rc = sysfs_update_group(&cxlr->dev.kobj, &cxl_region_group);
+-	if (rc)
++	if (rc) {
++		kfree(res);
+ 		return rc;
 +	}
- 	spin_unlock_irqrestore(&btf_idr_lock, flags);
- }
  
-@@ -7995,7 +8004,7 @@ static void bpf_btf_show_fdinfo(struct seq_file *m, struct file *filp)
- {
- 	const struct btf *btf = filp->private_data;
- 
--	seq_printf(m, "btf_id:\t%u\n", btf->id);
-+	seq_printf(m, "btf_id:\t%u\n", READ_ONCE(btf->id));
- }
- #endif
- 
-@@ -8077,7 +8086,7 @@ int btf_get_info_by_fd(const struct btf *btf,
- 	if (copy_from_user(&info, uinfo, info_copy))
- 		return -EFAULT;
- 
--	info.id = btf->id;
-+	info.id = READ_ONCE(btf->id);
- 	ubtf = u64_to_user_ptr(info.btf);
- 	btf_copy = min_t(u32, btf->data_size, info.btf_size);
- 	if (copy_to_user(ubtf, btf->data, btf_copy))
-@@ -8140,7 +8149,7 @@ int btf_get_fd_by_id(u32 id)
- 
- u32 btf_obj_id(const struct btf *btf)
- {
--	return btf->id;
-+	return READ_ONCE(btf->id);
- }
- 
- bool btf_is_kernel(const struct btf *btf)
-@@ -8262,6 +8271,13 @@ static int btf_module_notify(struct notifier_block *nb, unsigned long op,
- 			if (btf_mod->module != module)
- 				continue;
- 
-+			/*
-+			 * For modules, we do the freeing of BTF IDR as soon as
-+			 * module goes away to disable BTF discovery, since the
-+			 * btf_try_get_module() on such BTFs will fail. This may
-+			 * be called again on btf_put(), but it's ok to do so.
-+			 */
-+			btf_free_id(btf_mod->btf);
- 			list_del(&btf_mod->list);
- 			if (btf_mod->sysfs_attr)
- 				sysfs_remove_bin_file(btf_kobj, btf_mod->sysfs_attr);
+ 	rc = insert_resource(cxlrd->res, res);
+ 	if (rc) {
 -- 
 2.51.0
 
