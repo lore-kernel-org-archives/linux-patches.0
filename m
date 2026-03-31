@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309FF4218AF;
-	Tue, 31 Mar 2026 16:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FDF4218AF;
+	Tue, 31 Mar 2026 16:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975707; cv=none; b=NaxjfZo+CSv7VU+heSzL2RPiHRTh42N3fiIr7MiKSDmrXfnFxtlMrlPXCzMzY5zyn70j/gnp3juBEjGSHiMsWiIwYtfewN0mZ1laKKJJRlvHMesQNgbxY80RLR8s7SDNMSz2YuE95Z6xgm4wGyBQdUik6AkFu14uowcos3wBmcY=
+	t=1774975710; cv=none; b=YR3hAg4e8x8CtHj27rb4o2tIElbpWM9TkMzwYWnJN8MjCG7IIxUFdLHgRTHGrwEsKKnSM4S3XFl05rsKBFSfPliGbz0jG6NxYwRQ9aO7ArJr1FCV8iYmt6agSs7vct1y1RpNzXo80k28CY9QTkXS4P9IJZkXdWi2iWv2+4pAf6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975707; c=relaxed/simple;
-	bh=eU5dUlagvH6Y+Q/NPbM7xblN7GVCLdhW7imvJ178EVs=;
+	s=arc-20240116; t=1774975710; c=relaxed/simple;
+	bh=4yxndi37QZSCY5RcbYlOnLX56AEg6Z4ZJTCWjlc92D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfH8znhyJbZHpVYXtKHwWLqOiCJ2rNTsmm2NIAAQ3TjRpKjdyciRNbvhiY2X8aMM52R/Y+gmNciR3fvsZadMLuobwDZXC3rX5kSo5IDTpHWCdvk9MAvmTUrO8wd2zoRG+Bi/8p7bpLOj/tTZDmE1NMrhr8R8Vz92P+bQpjzJJ80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8yQqUgt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YRNhZqRme/yp46sDhopr8pHqG+dn97oT1qIhib1DkPt1Kl4nliIKYNSUULaW7bm40UU+S8/BLDAXCTlx0KzfU0LJFsN391mnmW/xfk0VBihFEwNBtDaf3ZaD2BoZNLGeWLSQ3PUrVqg9USQZ0r2BCA/3f04ly1ujKfKkZRnF3KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyNsG5k5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8yQqUgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC843C19423;
-	Tue, 31 Mar 2026 16:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyNsG5k5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520C5C19423;
+	Tue, 31 Mar 2026 16:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975707;
-	bh=eU5dUlagvH6Y+Q/NPbM7xblN7GVCLdhW7imvJ178EVs=;
+	s=korg; t=1774975709;
+	bh=4yxndi37QZSCY5RcbYlOnLX56AEg6Z4ZJTCWjlc92D4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X8yQqUgtSOZ/xZUo0xqM8rVsZtqk8PuYUSIeJ56goLxHRLEH68rAeUDfujf68z7xo
-	 iCpRDcbKR5wckrgoGDzE2tF7D5uaUyguq5oMRpa9NJV2niNTsxHYUxIz7T8Y9ot+QP
-	 aDGqHoUJ4BKtiPK/tVpS0jtqcWJ4U03V0fUT221c=
+	b=jyNsG5k5uRaycS6sqxSncyZmrnF6HN/m5XZcAsrW1NTgdH7Utg4VL3unSXTbu0Ajt
+	 YthAQFdKWRVUwUvVdwZZGoVpd1DMSm0KHBeSbtv31EZIcNnP0xMauz50CJ5mf/KYNS
+	 ntwI0TdHkpj/tDu22GMXZdbzO4Yaj9+2HXBpZnHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	chenguanyou <chenguanyou@xiaomi.com>,
+	Yunlei He <heyunlei@xiaomi.com>,
+	Sheng Yong <shengyong1@xiaomi.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/244] dma: swiotlb: add KMSAN annotations to swiotlb_bounce()
-Date: Tue, 31 Mar 2026 18:20:05 +0200
-Message-ID: <20260331161743.725894896@linuxfoundation.org>
+Subject: [PATCH 6.12 056/244] erofs: set fileio bio failed in short read case
+Date: Tue, 31 Mar 2026 18:20:06 +0200
+Message-ID: <20260331161743.761275876@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 References: <20260331161741.651718120@linuxfoundation.org>
@@ -52,81 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Sheng Yong <shengyong1@xiaomi.com>
 
-[ Upstream commit 6f770b73d0311a5b099277653199bb6421c4fed2 ]
+[ Upstream commit eade54040384f54b7fb330e4b0975c5734850b3c ]
 
-When a device performs DMA to a bounce buffer, KMSAN is unaware of
-the write and does not mark the data as initialized.  When
-swiotlb_bounce() later copies the bounce buffer back to the original
-buffer, memcpy propagates the uninitialized shadow to the original
-buffer, causing false positive uninit-value reports.
+For file-backed mount, IO requests are handled by vfs_iocb_iter_read().
+However, it can be interrupted by SIGKILL, returning the number of
+bytes actually copied. Unused folios in bio are unexpectedly marked
+as uptodate.
 
-Fix this by calling kmsan_unpoison_memory() on the bounce buffer
-before copying it back in the DMA_FROM_DEVICE path, so that memcpy
-naturally propagates initialized shadow to the destination.
+  vfs_read
+    filemap_read
+      filemap_get_pages
+        filemap_readahead
+          erofs_fileio_readahead
+            erofs_fileio_rq_submit
+              vfs_iocb_iter_read
+                filemap_read
+                  filemap_get_pages  <= detect signal
+              erofs_fileio_ki_complete  <= set all folios uptodate
 
-Suggested-by: Alexander Potapenko <glider@google.com>
-Link: https://lore.kernel.org/CAG_fn=WUGta-paG1BgsGRoAR+fmuCgh3xo=R3XdzOt_-DqSdHw@mail.gmail.com/
-Fixes: 7ade4f10779c ("dma: kmsan: unpoison DMA mappings")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260315082750.2375581-1-syoshida@redhat.com
+This patch addresses this by setting short read bio with an error
+directly.
+
+Fixes: bc804a8d7e86 ("erofs: handle end of filesystem properly for file-backed mounts")
+Reported-by: chenguanyou <chenguanyou@xiaomi.com>
+Signed-off-by: Yunlei He <heyunlei@xiaomi.com>
+Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/swiotlb.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ fs/erofs/fileio.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
-index abcf3fa63a569..e2445b3af7468 100644
---- a/kernel/dma/swiotlb.c
-+++ b/kernel/dma/swiotlb.c
-@@ -30,6 +30,7 @@
- #include <linux/gfp.h>
- #include <linux/highmem.h>
- #include <linux/io.h>
-+#include <linux/kmsan-checks.h>
- #include <linux/iommu-helper.h>
- #include <linux/init.h>
- #include <linux/memblock.h>
-@@ -903,10 +904,19 @@ static void swiotlb_bounce(struct device *dev, phys_addr_t tlb_addr, size_t size
+diff --git a/fs/erofs/fileio.c b/fs/erofs/fileio.c
+index 2c7f066daacdd..2c46c69f43295 100644
+--- a/fs/erofs/fileio.c
++++ b/fs/erofs/fileio.c
+@@ -25,10 +25,8 @@ static void erofs_fileio_ki_complete(struct kiocb *iocb, long ret)
+ 			container_of(iocb, struct erofs_fileio_rq, iocb);
+ 	struct folio_iter fi;
  
- 			local_irq_save(flags);
- 			page = pfn_to_page(pfn);
--			if (dir == DMA_TO_DEVICE)
-+			if (dir == DMA_TO_DEVICE) {
-+				/*
-+				 * Ideally, kmsan_check_highmem_page()
-+				 * could be used here to detect infoleaks,
-+				 * but callers may map uninitialized buffers
-+				 * that will be written by the device,
-+				 * causing false positives.
-+				 */
- 				memcpy_from_page(vaddr, page, offset, sz);
--			else
-+			} else {
-+				kmsan_unpoison_memory(vaddr, sz);
- 				memcpy_to_page(page, offset, vaddr, sz);
-+			}
- 			local_irq_restore(flags);
- 
- 			size -= sz;
-@@ -915,8 +925,15 @@ static void swiotlb_bounce(struct device *dev, phys_addr_t tlb_addr, size_t size
- 			offset = 0;
- 		}
- 	} else if (dir == DMA_TO_DEVICE) {
-+		/*
-+		 * Ideally, kmsan_check_memory() could be used here to detect
-+		 * infoleaks (uninitialized data being sent to device), but
-+		 * callers may map uninitialized buffers that will be written
-+		 * by the device, causing false positives.
-+		 */
- 		memcpy(vaddr, phys_to_virt(orig_addr), size);
- 	} else {
-+		kmsan_unpoison_memory(vaddr, size);
- 		memcpy(phys_to_virt(orig_addr), vaddr, size);
- 	}
- }
+-	if (ret >= 0 && ret != rq->bio.bi_iter.bi_size) {
+-		bio_advance(&rq->bio, ret);
+-		zero_fill_bio(&rq->bio);
+-	}
++	if (ret >= 0 && ret != rq->bio.bi_iter.bi_size)
++		ret = -EIO;
+ 	if (!rq->bio.bi_end_io) {
+ 		bio_for_each_folio_all(fi, &rq->bio) {
+ 			DBG_BUGON(folio_test_uptodate(fi.folio));
 -- 
 2.51.0
 
