@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DA3426694;
-	Tue, 31 Mar 2026 16:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3D7426686;
+	Tue, 31 Mar 2026 16:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975285; cv=none; b=km/t5Q1UZejbZr9kaETxL0OzwLYW6M5HyfyUkcG79BVBLTa58vwNFybIRYVv1YhJvqd+Jsb7Wiph28DTgkPUbUhRLfl0X3EKPcRcwFcINKilgJDZ98N2qQC57CH0RWuUWhPe8e+vjAdCvApOyxMUNxqjujvOEtFzJW6yFcW+ywY=
+	t=1774975288; cv=none; b=lBVR1S9dF3Ori6haZ+a2sQEcrGiHIHsH9JB5IyH7yIliFtetBn9thcvs7yGHMFS3wXtA2sRPFnbgthYY2SWV0WuTeL9BcQ6kygmsEkbXq55moLk/DARLHN5qYAbhifpnrWLB1oWCQ4cxw672cK3h9+b3uR23b21UuSDVEZ4kvkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975285; c=relaxed/simple;
-	bh=8EoATY5EhifzJpQU10s44AfR5AbsKRgoMzC0dmADOF0=;
+	s=arc-20240116; t=1774975288; c=relaxed/simple;
+	bh=r7MGkfJ0r64UoTF/HHCmKS9uhwUEF9/89ZONE2v39b0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJnpPsE/xU4gExs57O+AnApYlRW274oLA1urD5xwj50dNn8IrDiQA3he+WIlNygrIlL/jH3kS5fp55NQnimFBssAcayddyYLg6mWkM392wnNJx0LM6IudZavL9Fv/BFj7Xy8+L38b8eYLZxgQJhLrDIOwQAFY5PLr0JfbEPU2Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQUGf/ED; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p3GZP8+NgZCZRlDZuZ2QYBVmkXJtMzSv/pexBaW7XOHkfFvLiH7mE+KNs8nQ5QYte2RGXDBynzDC1M6tMuqjOQJ7L6My0IKS0dg2Cwbz1jPKxDa4zfMGdNQbgUIE5eMl+KIjS6RGOVrrDAqE5Q3AFgJV8bRjomJAphAKpr+01GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNcehgrz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQUGf/ED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE53C19423;
-	Tue, 31 Mar 2026 16:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNcehgrz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A1EC19423;
+	Tue, 31 Mar 2026 16:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975285;
-	bh=8EoATY5EhifzJpQU10s44AfR5AbsKRgoMzC0dmADOF0=;
+	s=korg; t=1774975288;
+	bh=r7MGkfJ0r64UoTF/HHCmKS9uhwUEF9/89ZONE2v39b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQUGf/EDYXB1/jx1MVgkAOXsfwYXyTh3JPcxoNQ7tSw3UFE8KTxtnMpEAKRKoYi7W
-	 /W3K2gMnUaH38+NNMz3Cu2Mhz7cU2ZgwQE1XWsUE+9Pumdh0gL8BTwwbVULD05gChk
-	 dEt4Mt5pQP6epauaiuDgQ10yH2XE35KDFfvVFh2A=
+	b=bNcehgrzkl6TmxlGmOb+OEAUXFy4b6xODX4Bd5umWqOuXR8Y5Kjv0oOLZ8STE1GDF
+	 lhPuKsX50DecM31ylkntq6OfRzadIPePQshnW+INfQ2c3zZwIjMW/pCNX4aH5McI21
+	 d9JYZgGsUQVDQS95vz2us4h1VDdZ3WBHzoMb5Jeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Werner Kasselman <werner@verivus.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.19 202/342] ksmbd: fix potencial OOB in get_file_all_info() for compound requests
-Date: Tue, 31 Mar 2026 18:20:35 +0200
-Message-ID: <20260331161806.420432757@linuxfoundation.org>
+Subject: [PATCH 6.19 203/342] ksmbd: fix memory leaks and NULL deref in smb2_lock()
+Date: Tue, 31 Mar 2026 18:20:36 +0200
+Message-ID: <20260331161806.456414197@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -51,72 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Werner Kasselman <werner@verivus.com>
 
-commit beef2634f81f1c086208191f7228bce1d366493d upstream.
+commit 309b44ed684496ed3f9c5715d10b899338623512 upstream.
 
-When a compound request consists of QUERY_DIRECTORY + QUERY_INFO
-(FILE_ALL_INFORMATION) and the first command consumes nearly the entire
-max_trans_size, get_file_all_info() would blindly call smbConvertToUTF16()
-with PATH_MAX, causing out-of-bounds write beyond the response buffer.
-In get_file_all_info(), there was a missing validation check for
-the client-provided OutputBufferLength before copying the filename into
-FileName field of the smb2_file_all_info structure.
-If the filename length exceeds the available buffer space, it could lead to
-potential buffer overflows or memory corruption during smbConvertToUTF16
-conversion. This calculating the actual free buffer size using
-smb2_calc_max_out_buf_len() and returning -EINVAL if the buffer is
-insufficient and updating smbConvertToUTF16 to use the actual filename
-length (clamped by PATH_MAX) to ensure a safe copy operation.
+smb2_lock() has three error handling issues after list_del() detaches
+smb_lock from lock_list at no_check_cl:
 
+1) If vfs_lock_file() returns an unexpected error in the non-UNLOCK
+   path, goto out leaks smb_lock and its flock because the out:
+   handler only iterates lock_list and rollback_list, neither of
+   which contains the detached smb_lock.
+
+2) If vfs_lock_file() returns -ENOENT in the UNLOCK path, goto out
+   leaks smb_lock and flock for the same reason.  The error code
+   returned to the dispatcher is also stale.
+
+3) In the rollback path, smb_flock_init() can return NULL on
+   allocation failure.  The result is dereferenced unconditionally,
+   causing a kernel NULL pointer dereference.  Add a NULL check to
+   prevent the crash and clean up the bookkeeping; the VFS lock
+   itself cannot be rolled back without the allocation and will be
+   released at file or connection teardown.
+
+Fix cases 1 and 2 by hoisting the locks_free_lock()/kfree() to before
+the if(!rc) check in the UNLOCK branch so all exit paths share one
+free site, and by freeing smb_lock and flock before goto out in the
+non-UNLOCK branch.  Propagate the correct error code in both cases.
+Fix case 3 by wrapping the VFS unlock in an if(rlock) guard and adding
+a NULL check for locks_free_lock(rlock) in the shared cleanup.
+
+Found via call-graph analysis using sqry.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
-Reported-by: Asim Viladi Oglu Manizada <manizada@pm.me>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Suggested-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Werner Kasselman <werner@verivus.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c |   29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -4933,7 +4933,8 @@ static int get_file_all_info(struct ksmb
- 	int conv_len;
- 	char *filename;
- 	u64 time;
--	int ret;
-+	int ret, buf_free_len, filename_len;
-+	struct smb2_query_info_req *req = ksmbd_req_buf_next(work);
+@@ -7600,14 +7600,15 @@ retry:
+ 		rc = vfs_lock_file(filp, smb_lock->cmd, flock, NULL);
+ skip:
+ 		if (smb_lock->flags & SMB2_LOCKFLAG_UNLOCK) {
++			locks_free_lock(flock);
++			kfree(smb_lock);
+ 			if (!rc) {
+ 				ksmbd_debug(SMB, "File unlocked\n");
+ 			} else if (rc == -ENOENT) {
+ 				rsp->hdr.Status = STATUS_NOT_LOCKED;
++				err = rc;
+ 				goto out;
+ 			}
+-			locks_free_lock(flock);
+-			kfree(smb_lock);
+ 		} else {
+ 			if (rc == FILE_LOCK_DEFERRED) {
+ 				void **argv;
+@@ -7676,6 +7677,9 @@ skip:
+ 				spin_unlock(&work->conn->llist_lock);
+ 				ksmbd_debug(SMB, "successful in taking lock\n");
+ 			} else {
++				locks_free_lock(flock);
++				kfree(smb_lock);
++				err = rc;
+ 				goto out;
+ 			}
+ 		}
+@@ -7706,13 +7710,17 @@ out:
+ 		struct file_lock *rlock = NULL;
  
- 	if (!(fp->daccess & FILE_READ_ATTRIBUTES_LE)) {
- 		ksmbd_debug(SMB, "no right to read the attributes : 0x%x\n",
-@@ -4945,6 +4946,16 @@ static int get_file_all_info(struct ksmb
- 	if (IS_ERR(filename))
- 		return PTR_ERR(filename);
- 
-+	filename_len = strlen(filename);
-+	buf_free_len = smb2_calc_max_out_buf_len(work,
-+			offsetof(struct smb2_query_info_rsp, Buffer) +
-+			offsetof(struct smb2_file_all_info, FileName),
-+			le32_to_cpu(req->OutputBufferLength));
-+	if (buf_free_len < (filename_len + 1) * 2) {
-+		kfree(filename);
-+		return -EINVAL;
-+	}
+ 		rlock = smb_flock_init(filp);
+-		rlock->c.flc_type = F_UNLCK;
+-		rlock->fl_start = smb_lock->start;
+-		rlock->fl_end = smb_lock->end;
+-
+-		rc = vfs_lock_file(filp, F_SETLK, rlock, NULL);
+-		if (rc)
+-			pr_err("rollback unlock fail : %d\n", rc);
++		if (rlock) {
++			rlock->c.flc_type = F_UNLCK;
++			rlock->fl_start = smb_lock->start;
++			rlock->fl_end = smb_lock->end;
 +
- 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
- 			  AT_STATX_SYNC_AS_STAT);
- 	if (ret) {
-@@ -4988,7 +4999,8 @@ static int get_file_all_info(struct ksmb
- 	file_info->Mode = fp->coption;
- 	file_info->AlignmentRequirement = 0;
- 	conv_len = smbConvertToUTF16((__le16 *)file_info->FileName, filename,
--				     PATH_MAX, conn->local_nls, 0);
-+				     min(filename_len, PATH_MAX),
-+				     conn->local_nls, 0);
- 	conv_len *= 2;
- 	file_info->FileNameLength = cpu_to_le32(conv_len);
- 	rsp->OutputBufferLength =
++			rc = vfs_lock_file(filp, F_SETLK, rlock, NULL);
++			if (rc)
++				pr_err("rollback unlock fail : %d\n", rc);
++		} else {
++			pr_err("rollback unlock alloc failed\n");
++		}
+ 
+ 		list_del(&smb_lock->llist);
+ 		spin_lock(&work->conn->llist_lock);
+@@ -7722,7 +7730,8 @@ out:
+ 		spin_unlock(&work->conn->llist_lock);
+ 
+ 		locks_free_lock(smb_lock->fl);
+-		locks_free_lock(rlock);
++		if (rlock)
++			locks_free_lock(rlock);
+ 		kfree(smb_lock);
+ 	}
+ out2:
 
 
