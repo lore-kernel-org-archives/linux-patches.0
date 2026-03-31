@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965363EE1DD;
-	Tue, 31 Mar 2026 16:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A873E92A5;
+	Tue, 31 Mar 2026 16:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974459; cv=none; b=NfsYfcN2wvW+xnJPpHY+YPynku+S8lPvVKP++7xJsiX6DuiJTkm5nPfEw5mXcOPBia3Q77Ji51+JEX4TA0vY4ukxFPzBEiZLMugfm9RNXlFOSXnjXTOsB3mN2X7JKrtICU/Zm7ge1q/Wsy/ul/O4K9z8QzPJkZvrtypL2glyYnI=
+	t=1774974462; cv=none; b=gaoNtdreopGi+9tBJHl7eW4iAJ/ffc19t5Orq+vxNtnFJKJK6Y39/fhoOr7DN/DMhLNEmXQiuSCew9nhWd2qXLl/ZLqbePVtMNf+Fb4XKOvtAyogM+XB8lsp3zoFw82zndtMsvDFUmHbAvwe4rQjF9ewHjK9sbX0Fwr0mZr1k3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974459; c=relaxed/simple;
-	bh=Ycy4heOfnZvBAmKYzMJlAZKA/ZOE8Qyt3PRcFyy08IM=;
+	s=arc-20240116; t=1774974462; c=relaxed/simple;
+	bh=Td4NrqaL2CcHD1DhkxXanRLMEFfLlEE0Tkfl6WoUVYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NUHYOyHX+WzHE3lvXmGknfwTDBL2kurVtLaQOjV4CdnHO2b83xi9ZNEqT4y99g8N4xEoM2Bf7c3OCPvc2SZLREXidJ1qJJsRzx3Ii7L4qPETuhN5a1wg9FpMEtHEbiEpUbmwCowPS770JkyzscKBTlnKON7+Z+w4F3MzKQNn250=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZqUNkGd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eY55xcx3fU9//ZynOf3P8D2I6tlsHa3l7oUwY/KouKiyIwfXaNTH+/egzx/sY6r1LHgfDaPKQocY1MlTj3buVwAFOeo4A8nUn73xqSC9AH4BASdf732zDaZgoFwVVOdTyAYSGU1OmujZxh0xkpbFick3KkSh3mbhFG41wl8wYVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCWSFWaU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZqUNkGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB1EC19423;
-	Tue, 31 Mar 2026 16:27:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCWSFWaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE928C19423;
+	Tue, 31 Mar 2026 16:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974459;
-	bh=Ycy4heOfnZvBAmKYzMJlAZKA/ZOE8Qyt3PRcFyy08IM=;
+	s=korg; t=1774974462;
+	bh=Td4NrqaL2CcHD1DhkxXanRLMEFfLlEE0Tkfl6WoUVYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZqUNkGdpo1Huq0RxTQQp4l/7kmjIUk9YFxpNOCtz8usw0PhYOYt12tQS0CX0zfzf
-	 m0bXv1ZkPsPKlFQ5jwS5HgNc6nct8TVuXotF2iJOjFg4GOv75BLT0qVxI+3qaEMi+3
-	 csoGnSbb1WjsmEbyQ6QPklObssI4AI1qJNqU3zbc=
+	b=WCWSFWaU+9NlvqGLU+6ImXv6/re3CboNqgx2T0XOuba247j7gAfHUENsmRtK53Syz
+	 j2AsIXj8RS21JpQeSD28nzd6fB5zYdkes1AlcQWjJLOwBoglowL9db5Q7cTkvl3/tj
+	 da7mu5crzItunmhlqi38Y3F5SOxDAgMqwn2smQXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Marc Buerg <buermarc@googlemail.com>,
+	Joel Granados <joel.granados@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/175] hwmon: (adm1177) fix sysfs ABI violation and current unit conversion
-Date: Tue, 31 Mar 2026 18:21:17 +0200
-Message-ID: <20260331161733.187584640@linuxfoundation.org>
+Subject: [PATCH 6.6 094/175] sysctl: fix uninitialized variable in proc_do_large_bitmap
+Date: Tue, 31 Mar 2026 18:21:18 +0200
+Message-ID: <20260331161733.223747141@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
 References: <20260331161729.779738837@linuxfoundation.org>
@@ -46,189 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Marc Buerg <buermarc@googlemail.com>
 
-[ Upstream commit bf08749a6abb6d1959bfdc0edc32c640df407558 ]
+[ Upstream commit f63a9df7e3f9f842945d292a19d9938924f066f9 ]
 
-The adm1177 driver exposes the current alert threshold through
-hwmon_curr_max_alarm. This violates the hwmon sysfs ABI, where
-*_alarm attributes are read-only status flags and writable thresholds
-must use currN_max.
+proc_do_large_bitmap() does not initialize variable c, which is expected
+to be set to a trailing character by proc_get_long().
 
-The driver also stores the threshold internally in microamps, while
-currN_max is defined in milliamps. Convert the threshold accordingly
-on both the read and write paths.
+However, proc_get_long() only sets c when the input buffer contains a
+trailing character after the parsed value.
 
-Widen the cached threshold and related calculations to 64 bits so
-that small shunt resistor values do not cause truncation or overflow.
-Also use 64-bit arithmetic for the mA/uA conversions, clamp writes
-to the range the hardware can represent, and propagate failures from
-adm1177_write_alert_thr() instead of silently ignoring them.
+If c is not initialized it may happen to contain a '-'. If this is the
+case proc_do_large_bitmap() expects to be able to parse a second part of
+the input buffer. If there is no second part an unjustified -EINVAL will
+be returned.
 
-Update the hwmon documentation to reflect the attribute rename and
-the correct units returned by the driver.
+Initialize c to 0 to prevent returning -EINVAL on valid input.
 
-Fixes: 09b08ac9e8d5 ("hwmon: (adm1177) Add ADM1177 Hot Swap Controller and Digital Power Monitor driver")
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20260325051246.28262-1-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 9f977fb7ae9d ("sysctl: add proc_do_large_bitmap")
+Signed-off-by: Marc Buerg <buermarc@googlemail.com>
+Reviewed-by: Joel Granados <joel.granados@kernel.org>
+Signed-off-by: Joel Granados <joel.granados@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/adm1177.rst |  8 ++---
- drivers/hwmon/adm1177.c         | 54 +++++++++++++++++++--------------
- 2 files changed, 35 insertions(+), 27 deletions(-)
+ kernel/sysctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/hwmon/adm1177.rst b/Documentation/hwmon/adm1177.rst
-index 1c85a2af92bf7..375f6d6e03a7d 100644
---- a/Documentation/hwmon/adm1177.rst
-+++ b/Documentation/hwmon/adm1177.rst
-@@ -27,10 +27,10 @@ for details.
- Sysfs entries
- -------------
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index 354a2d294f526..f8f07c0492388 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -1374,7 +1374,7 @@ int proc_do_large_bitmap(struct ctl_table *table, int write,
+ 	unsigned long bitmap_len = table->maxlen;
+ 	unsigned long *bitmap = *(unsigned long **) table->data;
+ 	unsigned long *tmp_bitmap = NULL;
+-	char tr_a[] = { '-', ',', '\n' }, tr_b[] = { ',', '\n', 0 }, c;
++	char tr_a[] = { '-', ',', '\n' }, tr_b[] = { ',', '\n', 0 }, c = 0;
  
--The following attributes are supported. Current maxim attribute
-+The following attributes are supported. Current maximum attribute
- is read-write, all other attributes are read-only.
- 
--in0_input		Measured voltage in microvolts.
-+in0_input		Measured voltage in millivolts.
- 
--curr1_input		Measured current in microamperes.
--curr1_max_alarm		Overcurrent alarm in microamperes.
-+curr1_input		Measured current in milliamperes.
-+curr1_max		Overcurrent shutdown threshold in milliamperes.
-diff --git a/drivers/hwmon/adm1177.c b/drivers/hwmon/adm1177.c
-index 60a893f271597..7581fd2456f9b 100644
---- a/drivers/hwmon/adm1177.c
-+++ b/drivers/hwmon/adm1177.c
-@@ -10,6 +10,8 @@
- #include <linux/hwmon.h>
- #include <linux/i2c.h>
- #include <linux/init.h>
-+#include <linux/math64.h>
-+#include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/regulator/consumer.h>
- 
-@@ -33,7 +35,7 @@
- struct adm1177_state {
- 	struct i2c_client	*client;
- 	u32			r_sense_uohm;
--	u32			alert_threshold_ua;
-+	u64			alert_threshold_ua;
- 	bool			vrange_high;
- };
- 
-@@ -48,7 +50,7 @@ static int adm1177_write_cmd(struct adm1177_state *st, u8 cmd)
- }
- 
- static int adm1177_write_alert_thr(struct adm1177_state *st,
--				   u32 alert_threshold_ua)
-+				   u64 alert_threshold_ua)
- {
- 	u64 val;
- 	int ret;
-@@ -91,8 +93,8 @@ static int adm1177_read(struct device *dev, enum hwmon_sensor_types type,
- 			*val = div_u64((105840000ull * dummy),
- 				       4096 * st->r_sense_uohm);
- 			return 0;
--		case hwmon_curr_max_alarm:
--			*val = st->alert_threshold_ua;
-+		case hwmon_curr_max:
-+			*val = div_u64(st->alert_threshold_ua, 1000);
- 			return 0;
- 		default:
- 			return -EOPNOTSUPP;
-@@ -126,9 +128,10 @@ static int adm1177_write(struct device *dev, enum hwmon_sensor_types type,
- 	switch (type) {
- 	case hwmon_curr:
- 		switch (attr) {
--		case hwmon_curr_max_alarm:
--			adm1177_write_alert_thr(st, val);
--			return 0;
-+		case hwmon_curr_max:
-+			val = clamp_val(val, 0,
-+					div_u64(105840000ULL, st->r_sense_uohm));
-+			return adm1177_write_alert_thr(st, (u64)val * 1000);
- 		default:
- 			return -EOPNOTSUPP;
- 		}
-@@ -156,7 +159,7 @@ static umode_t adm1177_is_visible(const void *data,
- 			if (st->r_sense_uohm)
- 				return 0444;
- 			return 0;
--		case hwmon_curr_max_alarm:
-+		case hwmon_curr_max:
- 			if (st->r_sense_uohm)
- 				return 0644;
- 			return 0;
-@@ -170,7 +173,7 @@ static umode_t adm1177_is_visible(const void *data,
- 
- static const struct hwmon_channel_info * const adm1177_info[] = {
- 	HWMON_CHANNEL_INFO(curr,
--			   HWMON_C_INPUT | HWMON_C_MAX_ALARM),
-+			   HWMON_C_INPUT | HWMON_C_MAX),
- 	HWMON_CHANNEL_INFO(in,
- 			   HWMON_I_INPUT),
- 	NULL
-@@ -192,7 +195,8 @@ static int adm1177_probe(struct i2c_client *client)
- 	struct device *dev = &client->dev;
- 	struct device *hwmon_dev;
- 	struct adm1177_state *st;
--	u32 alert_threshold_ua;
-+	u64 alert_threshold_ua;
-+	u32 prop;
- 	int ret;
- 
- 	st = devm_kzalloc(dev, sizeof(*st), GFP_KERNEL);
-@@ -208,22 +212,26 @@ static int adm1177_probe(struct i2c_client *client)
- 	if (device_property_read_u32(dev, "shunt-resistor-micro-ohms",
- 				     &st->r_sense_uohm))
- 		st->r_sense_uohm = 0;
--	if (device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
--				     &alert_threshold_ua)) {
--		if (st->r_sense_uohm)
--			/*
--			 * set maximum default value from datasheet based on
--			 * shunt-resistor
--			 */
--			alert_threshold_ua = div_u64(105840000000,
--						     st->r_sense_uohm);
--		else
--			alert_threshold_ua = 0;
-+	if (!device_property_read_u32(dev, "adi,shutdown-threshold-microamp",
-+				      &prop)) {
-+		alert_threshold_ua = prop;
-+	} else if (st->r_sense_uohm) {
-+		/*
-+		 * set maximum default value from datasheet based on
-+		 * shunt-resistor
-+		 */
-+		alert_threshold_ua = div_u64(105840000000ULL,
-+					     st->r_sense_uohm);
-+	} else {
-+		alert_threshold_ua = 0;
- 	}
- 	st->vrange_high = device_property_read_bool(dev,
- 						    "adi,vrange-high-enable");
--	if (alert_threshold_ua && st->r_sense_uohm)
--		adm1177_write_alert_thr(st, alert_threshold_ua);
-+	if (alert_threshold_ua && st->r_sense_uohm) {
-+		ret = adm1177_write_alert_thr(st, alert_threshold_ua);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	ret = adm1177_write_cmd(st, ADM1177_CMD_V_CONT |
- 				    ADM1177_CMD_I_CONT |
+ 	if (!bitmap || !bitmap_len || !left || (*ppos && !write)) {
+ 		*lenp = 0;
 -- 
 2.53.0
 
