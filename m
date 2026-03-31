@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DD53E3C40;
-	Tue, 31 Mar 2026 16:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B14042669C;
+	Tue, 31 Mar 2026 16:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975185; cv=none; b=dhblCbrZ4SRf9cTwoFvegXjmVRaaQ2CgRTyAjggEcv4BuncrW5aRrM+/xDDTImuAKRt9hVlKRW4gFvsJ7FiMh7yEk+umYXsBUzpWGKBTu3wdvLom0ZWc8gUJUqnBe+jrXbGMtE5n+X4BWPE47NHSYu4/SbuQ4C5Jq9irWqrx7KU=
+	t=1774975187; cv=none; b=WmtpvtXsIP/Kclf6plTOjDVzgkuDSYsVDprbhC6Erpuv1CuN+bJPAC3SdGQ42piCOoahoAIjQ/9eNEsmimq6YXQcSCpCcnZXH5Uvx2zPKusNWLHCqclbTyXL1q71tnwQI4CGnu24OdxoaX54ICFOYQfynkycHabjAMJWoAN6860=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975185; c=relaxed/simple;
-	bh=+UPPyOZqCu5ZvZ3cR14o+r7L7sDNbd6NqiN+7IvvY7A=;
+	s=arc-20240116; t=1774975187; c=relaxed/simple;
+	bh=Y5J8WQCoaGd0doGlH0/1GWAJCYnAc3Vq+QYbVgENRVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hQ0ofjO/rx4f7dA5aAWX8QmDrVRnSTT4bP/M5Cd+Tmvu39NYrak8Np2pOSOXqZbyfaJ067Ug7PjMehfdewmXPd/+HHc4/j0KMXI2rlFAebGaBudHMXA0q41DLHX2uO9EUpNLhj/16Vu7LHHnzItO3l5k7XDYHbZzh+r+WvJD18k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJ9ATgxa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dMlcpoNkEwINZd5VYNHq5OYBlpglu+pq723/j1t9bnAQ4JkFyyz3khirh4z5zPQ4NiwvVrnLp4jgd+3JiVwPxXe+3TZC981fJLXVeGqhSwYcRSdeM+qc0yZrwoq1SRrJJnbzIPpD6ezD/lQ7rwXNA4HEKwTK9OfXzxekcwc4obU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDA+w9HD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJ9ATgxa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF59C19423;
-	Tue, 31 Mar 2026 16:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDA+w9HD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA89C19423;
+	Tue, 31 Mar 2026 16:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774975184;
-	bh=+UPPyOZqCu5ZvZ3cR14o+r7L7sDNbd6NqiN+7IvvY7A=;
+	s=korg; t=1774975187;
+	bh=Y5J8WQCoaGd0doGlH0/1GWAJCYnAc3Vq+QYbVgENRVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJ9ATgxa18Lr8npwiRFRmBHeBKH4FBOJUPJrWLxqoljMeqfcFNslFy2wxwD40t3Jb
-	 wzZRIRrb1fk1Z087/w5TRcIFNvBls9NzbRgaEf65+EY145MOyxVWwkM3Nyk7FK7kiC
-	 kuOBJV5CU1x+3XrHmRkIRR8Ar1cOrTfYaXffT7gg=
+	b=iDA+w9HDEw5HTy/euqKXD7VuaK2XPNiJFe6ddlUQaNFfqt3Ap3AYN0akIEBmx4j9y
+	 x0gJTHcYYqfSm1IBYzUZhbz2cPRqHqPjZjql2p53KEc2hPIRDeJ7/KJDhDxzcqO4Ih
+	 ++w0QHt2d5WOvps7df1PfLqM90tTSqyU5yuhAa28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 163/342] RDMA/irdma: Harden depth calculation functions
-Date: Tue, 31 Mar 2026 18:19:56 +0200
-Message-ID: <20260331161805.010191324@linuxfoundation.org>
+Subject: [PATCH 6.19 164/342] ASoC: simple-card-utils: Check value of is_playback_only and is_capture_only
+Date: Tue, 31 Mar 2026 18:19:57 +0200
+Message-ID: <20260331161805.045966737@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -52,106 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiraz Saleem <shiraz.saleem@intel.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit e37afcb56ae070477741fe2d6e61fc0c542cce2d ]
+[ Upstream commit 0e9fc79132ce7ea1e48c388b864382aa38eb0ed4 ]
 
-An issue was exposed where OS can pass in U32_MAX for SQ/RQ/SRQ size.
-This can cause integer overflow and truncation of SQ/RQ/SRQ depth
-returning a success when it should have failed.
+The audio-graph-card2 gets the value of 'playback-only' and
+'capture_only' property in below sequence, if there is 'playback_only' or
+'capture_only' property in port_cpu and port_codec nodes, but no these
+properties in ep_cpu and ep_codec nodes, the value of playback_only and
+capture_only will be flushed to zero in the end.
 
-Harden the functions to do all depth calculations and boundary
-checking in u64 sizes.
+graph_util_parse_link_direction(lnk,            &playback_only, &capture_only);
+graph_util_parse_link_direction(ports_cpu,      &playback_only, &capture_only);
+graph_util_parse_link_direction(ports_codec,    &playback_only, &capture_only);
+graph_util_parse_link_direction(port_cpu,       &playback_only, &capture_only);
+graph_util_parse_link_direction(port_codec,     &playback_only, &capture_only);
+graph_util_parse_link_direction(ep_cpu,         &playback_only, &capture_only);
+graph_util_parse_link_direction(ep_codec,       &playback_only, &capture_only);
 
-Fixes: 563e1feb5f6e ("RDMA/irdma: Add SRQ support")
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+So check the value of is_playback_only and is_capture_only in
+graph_util_parse_link_direction() function, if they are true, then rewrite
+the values, and no need to check the np variable as
+of_property_read_bool() will ignore if it was NULL.
+
+Fixes: 3cc393d2232e ("ASoC: simple-card-utils: Fix pointer check in graph_util_parse_link_direction")
+Fixes: 22a507d7680f ("ASoC: simple-card-utils: Check device node before overwrite direction")
+Suggested-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260318102850.2794029-2-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/uk.c | 39 ++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 17 deletions(-)
+ sound/soc/generic/simple-card-utils.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/uk.c b/drivers/infiniband/hw/irdma/uk.c
-index f0846b800913d..3d6d0ee57c4c1 100644
---- a/drivers/infiniband/hw/irdma/uk.c
-+++ b/drivers/infiniband/hw/irdma/uk.c
-@@ -1442,7 +1442,7 @@ int irdma_uk_cq_poll_cmpl(struct irdma_cq_uk *cq,
-  * irdma_round_up_wq - return round up qp wq depth
-  * @wqdepth: wq depth in quanta to round up
-  */
--static int irdma_round_up_wq(u32 wqdepth)
-+static u64 irdma_round_up_wq(u64 wqdepth)
- {
- 	int scount = 1;
+diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
+index 9e5be0eaa77f3..89d694c2cbdda 100644
+--- a/sound/soc/generic/simple-card-utils.c
++++ b/sound/soc/generic/simple-card-utils.c
+@@ -1183,9 +1183,9 @@ void graph_util_parse_link_direction(struct device_node *np,
+ 	bool is_playback_only = of_property_read_bool(np, "playback-only");
+ 	bool is_capture_only  = of_property_read_bool(np, "capture-only");
  
-@@ -1495,15 +1495,16 @@ void irdma_get_wqe_shift(struct irdma_uk_attrs *uk_attrs, u32 sge,
- int irdma_get_sqdepth(struct irdma_uk_attrs *uk_attrs, u32 sq_size, u8 shift,
- 		      u32 *sqdepth)
- {
--	u32 min_size = (u32)uk_attrs->min_hw_wq_size << shift;
-+	u32 min_hw_quanta = (u32)uk_attrs->min_hw_wq_size << shift;
-+	u64 hw_quanta =
-+		irdma_round_up_wq(((u64)sq_size << shift) + IRDMA_SQ_RSVD);
- 
--	*sqdepth = irdma_round_up_wq((sq_size << shift) + IRDMA_SQ_RSVD);
--
--	if (*sqdepth < min_size)
--		*sqdepth = min_size;
--	else if (*sqdepth > uk_attrs->max_hw_wq_quanta)
-+	if (hw_quanta < min_hw_quanta)
-+		hw_quanta = min_hw_quanta;
-+	else if (hw_quanta > uk_attrs->max_hw_wq_quanta)
- 		return -EINVAL;
- 
-+	*sqdepth = hw_quanta;
- 	return 0;
+-	if (np && playback_only)
++	if (playback_only && is_playback_only)
+ 		*playback_only = is_playback_only;
+-	if (np && capture_only)
++	if (capture_only && is_capture_only)
+ 		*capture_only = is_capture_only;
  }
- 
-@@ -1517,15 +1518,16 @@ int irdma_get_sqdepth(struct irdma_uk_attrs *uk_attrs, u32 sq_size, u8 shift,
- int irdma_get_rqdepth(struct irdma_uk_attrs *uk_attrs, u32 rq_size, u8 shift,
- 		      u32 *rqdepth)
- {
--	u32 min_size = (u32)uk_attrs->min_hw_wq_size << shift;
--
--	*rqdepth = irdma_round_up_wq((rq_size << shift) + IRDMA_RQ_RSVD);
-+	u32 min_hw_quanta = (u32)uk_attrs->min_hw_wq_size << shift;
-+	u64 hw_quanta =
-+		irdma_round_up_wq(((u64)rq_size << shift) + IRDMA_RQ_RSVD);
- 
--	if (*rqdepth < min_size)
--		*rqdepth = min_size;
--	else if (*rqdepth > uk_attrs->max_hw_rq_quanta)
-+	if (hw_quanta < min_hw_quanta)
-+		hw_quanta = min_hw_quanta;
-+	else if (hw_quanta > uk_attrs->max_hw_rq_quanta)
- 		return -EINVAL;
- 
-+	*rqdepth = hw_quanta;
- 	return 0;
- }
- 
-@@ -1539,13 +1541,16 @@ int irdma_get_rqdepth(struct irdma_uk_attrs *uk_attrs, u32 rq_size, u8 shift,
- int irdma_get_srqdepth(struct irdma_uk_attrs *uk_attrs, u32 srq_size, u8 shift,
- 		       u32 *srqdepth)
- {
--	*srqdepth = irdma_round_up_wq((srq_size << shift) + IRDMA_RQ_RSVD);
-+	u32 min_hw_quanta = (u32)uk_attrs->min_hw_wq_size << shift;
-+	u64 hw_quanta =
-+		irdma_round_up_wq(((u64)srq_size << shift) + IRDMA_RQ_RSVD);
- 
--	if (*srqdepth < ((u32)uk_attrs->min_hw_wq_size << shift))
--		*srqdepth = uk_attrs->min_hw_wq_size << shift;
--	else if (*srqdepth > uk_attrs->max_hw_srq_quanta)
-+	if (hw_quanta < min_hw_quanta)
-+		hw_quanta = min_hw_quanta;
-+	else if (hw_quanta > uk_attrs->max_hw_srq_quanta)
- 		return -EINVAL;
- 
-+	*srqdepth = hw_quanta;
- 	return 0;
- }
- 
+ EXPORT_SYMBOL_GPL(graph_util_parse_link_direction);
 -- 
 2.53.0
 
