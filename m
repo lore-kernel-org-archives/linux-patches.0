@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0382FE042;
-	Tue, 31 Mar 2026 17:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A862FDC5E;
+	Tue, 31 Mar 2026 17:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774976750; cv=none; b=oliX/oVZ44Vx1JvwPcw7NGIlVA9JrNYC2lt9wvO63p/J4ZlZlxYkCIEtMPzWRC4eq+e1TtFHjZKW1OJ+UaXB3uAVOjtlw0f9zOvAko+BPcByyrYzsRFJ0WqmPc3KOPHYSRrExuUHCmfw3k7lyLv06xl2DtXS1g3Ae9g5786rcmQ=
+	t=1774976752; cv=none; b=d7FPkgQ1CvwfDH0uCOrpABJsIbX2H6swVDCZRzJMUSoP1xkLXnHS17Km4g383Qh/IC6GZP4lc1GIBoN5dPUdaG5reJJLxIBwmcqetzi7SEWnzFlnvu/XzBYaObaHVXz4mCjwr+nun2CluKIVs8JxwNQ0EG6C6bqODGebfILmGL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774976750; c=relaxed/simple;
-	bh=IG8hYLJOXVqzFYDwohPeWYVJ8Hjk8rTWArBYcKRMa9U=;
+	s=arc-20240116; t=1774976752; c=relaxed/simple;
+	bh=GtSwU+GevXD2dGRjshe7YtP0B6r56wtpwxq7NXyi70E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y1C8Wv8MgkNVgkqBq3SV/1abu+LdzDJX8PKYkYux8EIpPCugbV6DGucCWy25dxlvzwzYiroli5LtOQEVnnVP91PtcnqcTPj+KtnGZKXfoeYvvMh6LN2wIFStp15jjJGKt+0St4nroFEaMLdMbXhPvf74KdgvYphACgfzKCxk1TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBhVwMgk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KHyPxvylTl4Hl0eenZbGtBKCX3zzrK9HTXr2lSg1jUmOR5OvycBc0UvEmcjk+qlEeeBsUZ3AHO2pGCjXLqR7cZ1+ykV70CysU6vY+SdQjUN4qk+0j0lSBCYW8Ge7Ga6cNXtadlKIkgn8tYAkb+IlEvhGsfbklaeCkIif2p2cGiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEHQDVFm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBhVwMgk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58C4C19423;
-	Tue, 31 Mar 2026 17:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEHQDVFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF70C19423;
+	Tue, 31 Mar 2026 17:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774976750;
-	bh=IG8hYLJOXVqzFYDwohPeWYVJ8Hjk8rTWArBYcKRMa9U=;
+	s=korg; t=1774976752;
+	bh=GtSwU+GevXD2dGRjshe7YtP0B6r56wtpwxq7NXyi70E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBhVwMgk+g/fFUZ6xzeGR05cRx1diPJBEVizH5D8GpP8rmkoClgiTfkgPvv1cDvxB
-	 2lmRBBYRduiCMDmpBrbwKktuoGYnu+PgDltVG1utdNGgugVIVIFIzoY/nbb4sRbhWk
-	 ecK5/rJZqg07NheY+rsB0XWMt0yoSbVvi02FmzAM=
+	b=tEHQDVFmDeo0KXtcODtSLlb0iyjaeDc1k0pqjGjlHhrpN9AO7e6WXGjjNlS9TXK2M
+	 EmBri/++4GJExk5X0iH3Q6fSQ5SKU6z+F00ugiZ7IsG+wJZV0vSO4seEzpJB0xMqwI
+	 H9rPuEekJSbJ3qG1W79hTqMyL+5ru9sPk0M/3JkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Rawat <nitin.rawat@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.18 214/309] phy: qcom: qmp-ufs: Fix SM8650 PCS table for Gear 4
-Date: Tue, 31 Mar 2026 18:21:57 +0200
-Message-ID: <20260331161801.324205240@linuxfoundation.org>
+	Chenglong Tang <chenglongtang@google.com>,
+	Fei Lv <feilv@asrmicro.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.18 215/309] ovl: make fsync after metadata copy-up opt-in mount option
+Date: Tue, 31 Mar 2026 18:21:58 +0200
+Message-ID: <20260331161801.361702903@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
 References: <20260331161753.468533260@linuxfoundation.org>
@@ -53,59 +51,285 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Fei Lv <feilv@asrmicro.com>
 
-commit 81af9e40e2e4e1aa95f09fb34811760be6742c58 upstream.
+commit 1f6ee9be92f8df85a8c9a5a78c20fd39c0c21a95 upstream.
 
-According to internal documentation, on SM8650, when the PHY is configured
-in Gear 4, the QPHY_V6_PCS_UFS_PLL_CNTL register needs to have the same
-value as for Gear 5.
+Commit 7d6899fb69d25 ("ovl: fsync after metadata copy-up") was done to
+fix durability of overlayfs copy up on an upper filesystem which does
+not enforce ordering on storing of metadata changes (e.g. ubifs).
 
-At the moment, there is no board that comes with a UFS 3.x device, so
-this issue doesn't show up, but with the new Eliza SoC, which uses the
-same init sequence as SM8650, on the MTP board, the link startup fails
-with the current Gear 4 PCS table.
+In an earlier revision of the regressing commit by Lei Lv, the metadata
+fsync behavior was opt-in via a new "fsync=strict" mount option.
+We were hoping that the opt-in mount option could be avoided, so the
+change was only made to depend on metacopy=off, in the hope of not
+hurting performance of metadata heavy workloads, which are more likely
+to be using metacopy=on.
 
-So fix that by moving the entry into the PCS generic table instead,
-while keeping the value from Gear 5 configuration.
+This hope was proven wrong by a performance regression report from Google
+COS workload after upgrade to kernel 6.12.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: b9251e64a96f ("phy: qcom: qmp-ufs: update SM8650 tables for Gear 4 & 5")
-Suggested-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
-Link: https://patch.msgid.link/20260219-phy-qcom-qmp-ufs-fix-sm8650-pcs-g4-table-v1-1-f136505b57f6@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This is an adaptation of Lei's original "fsync=strict" mount option
+to the existing upstream code.
+
+The new mount option is mutually exclusive with the "volatile" mount
+option, so the latter is now an alias to the "fsync=volatile" mount
+option.
+
+Reported-by: Chenglong Tang <chenglongtang@google.com>
+Closes: https://lore.kernel.org/linux-unionfs/CAOdxtTadAFH01Vui1FvWfcmQ8jH1O45owTzUcpYbNvBxnLeM7Q@mail.gmail.com/
+Link: https://lore.kernel.org/linux-unionfs/CAOQ4uxgKC1SgjMWre=fUb00v8rxtd6sQi-S+dxR8oDzAuiGu8g@mail.gmail.com/
+Fixes: 7d6899fb69d25 ("ovl: fsync after metadata copy-up")
+Depends: 50e638beb67e0 ("ovl: Use str_on_off() helper in ovl_show_options()")
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Fei Lv <feilv@asrmicro.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ Documentation/filesystems/overlayfs.rst |   50 ++++++++++++++++++++++++++++++++
+ fs/overlayfs/copy_up.c                  |    6 +--
+ fs/overlayfs/overlayfs.h                |   21 +++++++++++++
+ fs/overlayfs/ovl_entry.h                |    7 ----
+ fs/overlayfs/params.c                   |   33 +++++++++++++++++----
+ fs/overlayfs/super.c                    |    2 -
+ 6 files changed, 104 insertions(+), 15 deletions(-)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -928,6 +928,7 @@ static const struct qmp_phy_init_tbl sm8
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PCS_CTRL1, 0xc1),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x33),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_SIGDET_CTRL2, 0x68),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_POST_EMP_LVL_S4, 0x0e),
-@@ -937,13 +938,11 @@ static const struct qmp_phy_init_tbl sm8
+--- a/Documentation/filesystems/overlayfs.rst
++++ b/Documentation/filesystems/overlayfs.rst
+@@ -783,6 +783,56 @@ controlled by the "uuid" mount option, w
+     mounted with "uuid=on".
+ 
+ 
++Durability and copy up
++----------------------
++
++The fsync(2) system call ensures that the data and metadata of a file
++are safely written to the backing storage, which is expected to
++guarantee the existence of the information post system crash.
++
++Without an fsync(2) call, there is no guarantee that the observed
++data after a system crash will be either the old or the new data, but
++in practice, the observed data after crash is often the old or new data
++or a mix of both.
++
++When an overlayfs file is modified for the first time, copy up will
++create a copy of the lower file and its parent directories in the upper
++layer.  Since the Linux filesystem API does not enforce any particular
++ordering on storing changes without explicit fsync(2) calls, in case
++of a system crash, the upper file could end up with no data at all
++(i.e. zeros), which would be an unusual outcome.  To avoid this
++experience, overlayfs calls fsync(2) on the upper file before completing
++data copy up with rename(2) or link(2) to make the copy up "atomic".
++
++By default, overlayfs does not explicitly call fsync(2) on copied up
++directories or on metadata-only copy up, so it provides no guarantee to
++persist the user's modification unless the user calls fsync(2).
++The fsync during copy up only guarantees that if a copy up is observed
++after a crash, the observed data is not zeroes or intermediate values
++from the copy up staging area.
++
++On traditional local filesystems with a single journal (e.g. ext4, xfs),
++fsync on a file also persists the parent directory changes, because they
++are usually modified in the same transaction, so metadata durability during
++data copy up effectively comes for free.  Overlayfs further limits risk by
++disallowing network filesystems as upper layer.
++
++Overlayfs can be tuned to prefer performance or durability when storing
++to the underlying upper layer.  This is controlled by the "fsync" mount
++option, which supports these values:
++
++- "auto": (default)
++    Call fsync(2) on upper file before completion of data copy up.
++    No explicit fsync(2) on directory or metadata-only copy up.
++- "strict":
++    Call fsync(2) on upper file and directories before completion of any
++    copy up.
++- "volatile": [*]
++    Prefer performance over durability (see `Volatile mount`_)
++
++[*] The mount option "volatile" is an alias to "fsync=volatile".
++
++
+ Volatile mount
+ --------------
+ 
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -1159,15 +1159,15 @@ static int ovl_copy_up_one(struct dentry
+ 		return -EOVERFLOW;
+ 
+ 	/*
+-	 * With metacopy disabled, we fsync after final metadata copyup, for
++	 * With "fsync=strict", we fsync after final metadata copyup, for
+ 	 * both regular files and directories to get atomic copyup semantics
+ 	 * on filesystems that do not use strict metadata ordering (e.g. ubifs).
+ 	 *
+-	 * With metacopy enabled we want to avoid fsync on all meta copyup
++	 * By default, we want to avoid fsync on all meta copyup, because
+ 	 * that will hurt performance of workloads such as chown -R, so we
+ 	 * only fsync on data copyup as legacy behavior.
+ 	 */
+-	ctx.metadata_fsync = !OVL_FS(dentry->d_sb)->config.metacopy &&
++	ctx.metadata_fsync = ovl_should_sync_metadata(OVL_FS(dentry->d_sb)) &&
+ 			     (S_ISREG(ctx.stat.mode) || S_ISDIR(ctx.stat.mode));
+ 	ctx.metacopy = ovl_need_meta_copy_up(dentry, ctx.stat.mode, flags);
+ 
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -99,6 +99,12 @@ enum {
+ 	OVL_VERITY_REQUIRE,
  };
  
- static const struct qmp_phy_init_tbl sm8650_ufsphy_g4_pcs[] = {
--	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x13),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x04),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x04),
++enum {
++	OVL_FSYNC_VOLATILE,
++	OVL_FSYNC_AUTO,
++	OVL_FSYNC_STRICT,
++};
++
+ /*
+  * The tuple (fh,uuid) is a universal unique identifier for a copy up origin,
+  * where:
+@@ -634,6 +640,21 @@ static inline bool ovl_xino_warn(struct
+ 	return ofs->config.xino == OVL_XINO_ON;
+ }
+ 
++static inline bool ovl_should_sync(struct ovl_fs *ofs)
++{
++	return ofs->config.fsync_mode != OVL_FSYNC_VOLATILE;
++}
++
++static inline bool ovl_should_sync_metadata(struct ovl_fs *ofs)
++{
++	return ofs->config.fsync_mode == OVL_FSYNC_STRICT;
++}
++
++static inline bool ovl_is_volatile(struct ovl_config *config)
++{
++	return config->fsync_mode == OVL_FSYNC_VOLATILE;
++}
++
+ /*
+  * To avoid regressions in existing setups with overlay lower offline changes,
+  * we allow lower changes only if none of the new features are used.
+--- a/fs/overlayfs/ovl_entry.h
++++ b/fs/overlayfs/ovl_entry.h
+@@ -18,7 +18,7 @@ struct ovl_config {
+ 	int xino;
+ 	bool metacopy;
+ 	bool userxattr;
+-	bool ovl_volatile;
++	int fsync_mode;
  };
  
- static const struct qmp_phy_init_tbl sm8650_ufsphy_g5_pcs[] = {
--	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x33),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x05),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x05),
- 	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HS_G5_SYNC_LENGTH_CAPABILITY, 0x4d),
+ struct ovl_sb {
+@@ -120,11 +120,6 @@ static inline struct ovl_fs *OVL_FS(stru
+ 	return (struct ovl_fs *)sb->s_fs_info;
+ }
+ 
+-static inline bool ovl_should_sync(struct ovl_fs *ofs)
+-{
+-	return !ofs->config.ovl_volatile;
+-}
+-
+ static inline unsigned int ovl_numlower(struct ovl_entry *oe)
+ {
+ 	return oe ? oe->__numlower : 0;
+--- a/fs/overlayfs/params.c
++++ b/fs/overlayfs/params.c
+@@ -58,6 +58,7 @@ enum ovl_opt {
+ 	Opt_xino,
+ 	Opt_metacopy,
+ 	Opt_verity,
++	Opt_fsync,
+ 	Opt_volatile,
+ 	Opt_override_creds,
+ };
+@@ -140,6 +141,23 @@ static int ovl_verity_mode_def(void)
+ 	return OVL_VERITY_OFF;
+ }
+ 
++static const struct constant_table ovl_parameter_fsync[] = {
++	{ "volatile",	OVL_FSYNC_VOLATILE },
++	{ "auto",	OVL_FSYNC_AUTO     },
++	{ "strict",	OVL_FSYNC_STRICT   },
++	{}
++};
++
++static const char *ovl_fsync_mode(struct ovl_config *config)
++{
++	return ovl_parameter_fsync[config->fsync_mode].name;
++}
++
++static int ovl_fsync_mode_def(void)
++{
++	return OVL_FSYNC_AUTO;
++}
++
+ const struct fs_parameter_spec ovl_parameter_spec[] = {
+ 	fsparam_string_empty("lowerdir",    Opt_lowerdir),
+ 	fsparam_file_or_string("lowerdir+", Opt_lowerdir_add),
+@@ -155,6 +173,7 @@ const struct fs_parameter_spec ovl_param
+ 	fsparam_enum("xino",                Opt_xino, ovl_parameter_xino),
+ 	fsparam_enum("metacopy",            Opt_metacopy, ovl_parameter_bool),
+ 	fsparam_enum("verity",              Opt_verity, ovl_parameter_verity),
++	fsparam_enum("fsync",               Opt_fsync, ovl_parameter_fsync),
+ 	fsparam_flag("volatile",            Opt_volatile),
+ 	fsparam_flag_no("override_creds",   Opt_override_creds),
+ 	{}
+@@ -665,8 +684,11 @@ static int ovl_parse_param(struct fs_con
+ 	case Opt_verity:
+ 		config->verity_mode = result.uint_32;
+ 		break;
++	case Opt_fsync:
++		config->fsync_mode = result.uint_32;
++		break;
+ 	case Opt_volatile:
+-		config->ovl_volatile = true;
++		config->fsync_mode = OVL_FSYNC_VOLATILE;
+ 		break;
+ 	case Opt_userxattr:
+ 		config->userxattr = true;
+@@ -800,6 +822,7 @@ int ovl_init_fs_context(struct fs_contex
+ 	ofs->config.nfs_export		= ovl_nfs_export_def;
+ 	ofs->config.xino		= ovl_xino_def();
+ 	ofs->config.metacopy		= ovl_metacopy_def;
++	ofs->config.fsync_mode		= ovl_fsync_mode_def();
+ 
+ 	fc->s_fs_info		= ofs;
+ 	fc->fs_private		= ctx;
+@@ -870,9 +893,9 @@ int ovl_fs_params_verify(const struct ov
+ 		config->index = false;
+ 	}
+ 
+-	if (!config->upperdir && config->ovl_volatile) {
++	if (!config->upperdir && ovl_is_volatile(config)) {
+ 		pr_info("option \"volatile\" is meaningless in a non-upper mount, ignoring it.\n");
+-		config->ovl_volatile = false;
++		config->fsync_mode = ovl_fsync_mode_def();
+ 	}
+ 
+ 	if (!config->upperdir && config->uuid == OVL_UUID_ON) {
+@@ -1070,8 +1093,8 @@ int ovl_show_options(struct seq_file *m,
+ 		seq_printf(m, ",xino=%s", ovl_xino_mode(&ofs->config));
+ 	if (ofs->config.metacopy != ovl_metacopy_def)
+ 		seq_printf(m, ",metacopy=%s", str_on_off(ofs->config.metacopy));
+-	if (ofs->config.ovl_volatile)
+-		seq_puts(m, ",volatile");
++	if (ofs->config.fsync_mode != ovl_fsync_mode_def())
++		seq_printf(m, ",fsync=%s", ovl_fsync_mode(&ofs->config));
+ 	if (ofs->config.userxattr)
+ 		seq_puts(m, ",userxattr");
+ 	if (ofs->config.verity_mode != ovl_verity_mode_def())
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -773,7 +773,7 @@ static int ovl_make_workdir(struct super
+ 	 * For volatile mount, create a incompat/volatile/dirty file to keep
+ 	 * track of it.
+ 	 */
+-	if (ofs->config.ovl_volatile) {
++	if (ovl_is_volatile(&ofs->config)) {
+ 		err = ovl_create_volatile_dirty(ofs);
+ 		if (err < 0) {
+ 			pr_err("Failed to create volatile/dirty file.\n");
 
 
