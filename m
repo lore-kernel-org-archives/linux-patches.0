@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1983DFC7D;
-	Tue, 31 Mar 2026 16:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C3633F38A;
+	Tue, 31 Mar 2026 16:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974910; cv=none; b=chXJr5U4idKuoRvTOtc5OgpJVamabGnglYm0LxYJOrICSVbgPVrau9DwabkfNBBOXCwd5UOxOHSyK+s/4ouIiKJJ6/yXd72YebA6GIflhO3z9uySRlraidpWfdJzsKrScU2RQPfJxXtgdglN9j2ikEW+Dguh9YGuifFjD2e6TXg=
+	t=1774974913; cv=none; b=iFncKhfBMkOE/doS/SHhxjdEisYAldAheuQIHRjf711xlpl2WSkXZ5Lm7ekUg5KLXD2NKdvRCE2yAWv0hhxloOd/iWelXz2zc1UyAJOid6r8yYhSeg8XVmt3bT1RmhPkFsoeZeUFpKDKDcYm3v4U//raItdU+CgizlVnqaP7eeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974910; c=relaxed/simple;
-	bh=1Gd/UmlUT5vBsw53tiIqw+u4YorwSf2hloUqE6uWZ5s=;
+	s=arc-20240116; t=1774974913; c=relaxed/simple;
+	bh=sJWMN/1TUaSMnLOW92szFA90sE00aVjtN9NewcpL5ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hL4oXGP3wBq6pAlAJV2cHv9fYQAvV0Uub9gvxr88mMqG4BGyvKlKlQUMLV2GLkFkBXzyXuRoeJ6UO96xlvwyeQcCofdTIjQj/EGkjoVkZjhYaD8Yw5x3eadRsCwPGnCPFUtGKaBPdKrWZnuM7jF0zBW7QwlJ4eUNaxC6KSBgVWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMCNRyZI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rj/tmjvp1WFwhKSmsCeG9otFq2MCM7P7deObAoRW5wiQcAY1Grb6IFmCAbz0ZjTg6qyE3zXlzcuWoLNlrHmOv/dcFAJ3ht7aDNOFxwPsmK+K4lKJMHeI0Kv+yURdvmz8uufVZCSbupRsLj9LZ49FCdFDMp7BP53JfKzyuHRa7t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3VlBeYO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMCNRyZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FA2C19423;
-	Tue, 31 Mar 2026 16:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3VlBeYO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B43EC19423;
+	Tue, 31 Mar 2026 16:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974910;
-	bh=1Gd/UmlUT5vBsw53tiIqw+u4YorwSf2hloUqE6uWZ5s=;
+	s=korg; t=1774974912;
+	bh=sJWMN/1TUaSMnLOW92szFA90sE00aVjtN9NewcpL5ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMCNRyZI3vM0OEtj/IyJlhGkxB3DoZiI8z5sjhXw0HbIpB1yMbOu6rN9/a0S8wOod
-	 fsoC250Bok4pLUVFvGtaFpdNYlQ9ms5Ii6UIP8IRf8t4deCVehmYNG53yllOKlnI47
-	 esbma6HU7DRqAU/EaZJMe8mp15ru51Q5KiMuRCwY=
+	b=A3VlBeYORSkkJ2yDMmBGSVztTYx9yeaM7mLBz2Vd4oKNgf9kK29oif4oaeBd7tsui
+	 9lVjQ+bKNX1KVDYp5qOBgUXz0PpCYioJ1CpuK/qOImo/eugiWj0i/KFG/zhJv//N8e
+	 5058kc17nYgR7nVywo6N3fkQ8mCTXdfG/yQI7YhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 059/342] ASoC: amd: acp: Add ACP6.3 match entries for Cirrus Logic parts
-Date: Tue, 31 Mar 2026 18:18:12 +0200
-Message-ID: <20260331161801.067911318@linuxfoundation.org>
+Subject: [PATCH 6.19 060/342] bpf: Fix u32/s32 bounds when ranges cross min/max boundary
+Date: Tue, 31 Mar 2026 18:18:13 +0200
+Message-ID: <20260331161801.104764279@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -45,512 +48,207 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit fd13fc700e3e239826a46448bf7f01847dd26f5a ]
+[ Upstream commit fbc7aef517d8765e4c425d2792409bb9bf2e1f13 ]
 
-This adds some match entries for a few system configurations:
+Same as in __reg64_deduce_bounds(), refine s32/u32 ranges
+in __reg32_deduce_bounds() in the following situations:
 
-cs42l43 link 0 UID 0
-cs35l56 link 1 UID 0
-cs35l56 link 1 UID 1
-cs35l56 link 1 UID 2
-cs35l56 link 1 UID 3
+- s32 range crosses U32_MAX/0 boundary, positive part of the s32 range
+  overlaps with u32 range:
 
-cs42l45 link 1 UID 0
-cs35l63 link 0 UID 0
-cs35l63 link 0 UID 2
-cs35l63 link 0 UID 4
-cs35l63 link 0 UID 6
+  0                                                   U32_MAX
+  |  [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]              |
+  |----------------------------|----------------------------|
+  |xxxxx s32 range xxxxxxxxx]                       [xxxxxxx|
+  0                     S32_MAX S32_MIN                    -1
 
-cs42l45 link 0 UID 0
-cs35l63 link 1 UID 0
-cs35l63 link 1 UID 1
+- s32 range crosses U32_MAX/0 boundary, negative part of the s32 range
+  overlaps with u32 range:
 
-cs42l45 link 0 UID 0
-cs35l63 link 1 UID 1
-cs35l63 link 1 UID 3
+  0                                                   U32_MAX
+  |              [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]  |
+  |----------------------------|----------------------------|
+  |xxxxxxxxx]                       [xxxxxxxxxxxx s32 range |
+  0                     S32_MAX S32_MIN                    -1
 
-cs42l45 link 1 UID 0
-cs35l63 link 0 UID 0
-cs35l63 link 0 UID 1
+- No refinement if ranges overlap in two intervals.
 
-cs42l43 link 1 UID 0
-cs35l56 link 1 UID 0
-cs35l56 link 1 UID 1
-cs35l56 link 1 UID 2
-cs35l56 link 1 UID 3
+This helps for e.g. consider the following program:
 
-cs35l56 link 1 UID 0
-cs35l56 link 1 UID 1
-cs35l56 link 1 UID 2
-cs35l56 link 1 UID 3
+   call %[bpf_get_prandom_u32];
+   w0 &= 0xffffffff;
+   if w0 < 0x3 goto 1f;    // on fall-through u32 range [3..U32_MAX]
+   if w0 s> 0x1 goto 1f;   // on fall-through s32 range [S32_MIN..1]
+   if w0 s< 0x0 goto 1f;   // range can be narrowed to  [S32_MIN..-1]
+   r10 = 0;
+1: ...;
 
-cs35l63 link 0 UID 0
-cs35l63 link 0 UID 2
-cs35l63 link 0 UID 4
-cs35l63 link 0 UID 6
+The reg_bounds.c selftest is updated to incorporate identical logic,
+refinement based on non-overflowing range halves:
 
-cs42l43 link 0 UID 1
+  ((x ∩ [0, smax]) ∩ (y ∩ [0, smax])) ∪
+  ((x ∩ [smin,-1]) ∩ (y ∩ [smin,-1]))
 
-cs42l43b link 0 UID 1
-
-cs42l45 link 0 UID 0
-
-cs42l45 link 1 UID 0
-
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260224130307.526626-1-simont@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Andrea Righi <arighi@nvidia.com>
+Reported-by: Emil Tsalapatis <emil@etsalapatis.com>
+Closes: https://lore.kernel.org/bpf/aakqucg4vcujVwif@gpd4/T/
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260306-bpf-32-bit-range-overflow-v3-1-f7f67e060a6b@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/amd-acp63-acpi-match.c | 413 +++++++++++++++++++++++
- 1 file changed, 413 insertions(+)
+ kernel/bpf/verifier.c                         | 24 +++++++
+ .../selftests/bpf/prog_tests/reg_bounds.c     | 62 +++++++++++++++++--
+ 2 files changed, 82 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/amd/acp/amd-acp63-acpi-match.c b/sound/soc/amd/acp/amd-acp63-acpi-match.c
-index 9b6a49c051cda..1dbbaba3c75b3 100644
---- a/sound/soc/amd/acp/amd-acp63-acpi-match.c
-+++ b/sound/soc/amd/acp/amd-acp63-acpi-match.c
-@@ -30,6 +30,20 @@ static const struct snd_soc_acpi_endpoint spk_r_endpoint = {
- 	.group_id = 1
- };
- 
-+static const struct snd_soc_acpi_endpoint spk_2_endpoint = {
-+	.num = 0,
-+	.aggregated = 1,
-+	.group_position = 2,
-+	.group_id = 1
-+};
-+
-+static const struct snd_soc_acpi_endpoint spk_3_endpoint = {
-+	.num = 0,
-+	.aggregated = 1,
-+	.group_position = 3,
-+	.group_id = 1
-+};
-+
- static const struct snd_soc_acpi_adr_device rt711_rt1316_group_adr[] = {
- 	{
- 		.adr = 0x000030025D071101ull,
-@@ -103,6 +117,345 @@ static const struct snd_soc_acpi_adr_device rt722_0_single_adr[] = {
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index ea312acf7d482..9032c6d4dbbcc 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2490,6 +2490,30 @@ static void __reg32_deduce_bounds(struct bpf_reg_state *reg)
+ 	if ((u32)reg->s32_min_value <= (u32)reg->s32_max_value) {
+ 		reg->u32_min_value = max_t(u32, reg->s32_min_value, reg->u32_min_value);
+ 		reg->u32_max_value = min_t(u32, reg->s32_max_value, reg->u32_max_value);
++	} else {
++		if (reg->u32_max_value < (u32)reg->s32_min_value) {
++			/* See __reg64_deduce_bounds() for detailed explanation.
++			 * Refine ranges in the following situation:
++			 *
++			 * 0                                                   U32_MAX
++			 * |  [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]              |
++			 * |----------------------------|----------------------------|
++			 * |xxxxx s32 range xxxxxxxxx]                       [xxxxxxx|
++			 * 0                     S32_MAX S32_MIN                    -1
++			 */
++			reg->s32_min_value = (s32)reg->u32_min_value;
++			reg->u32_max_value = min_t(u32, reg->u32_max_value, reg->s32_max_value);
++		} else if ((u32)reg->s32_max_value < reg->u32_min_value) {
++			/*
++			 * 0                                                   U32_MAX
++			 * |              [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]  |
++			 * |----------------------------|----------------------------|
++			 * |xxxxxxxxx]                       [xxxxxxxxxxxx s32 range |
++			 * 0                     S32_MAX S32_MIN                    -1
++			 */
++			reg->s32_max_value = (s32)reg->u32_max_value;
++			reg->u32_min_value = max_t(u32, reg->u32_min_value, reg->s32_min_value);
++		}
  	}
- };
+ }
  
-+static const struct snd_soc_acpi_endpoint cs42l43_endpoints[] = {
-+	{ /* Jack Playback Endpoint */
-+		.num = 0,
-+		.aggregated = 0,
-+		.group_position = 0,
-+		.group_id = 0,
-+	},
-+	{ /* DMIC Capture Endpoint */
-+		.num = 1,
-+		.aggregated = 0,
-+		.group_position = 0,
-+		.group_id = 0,
-+	},
-+	{ /* Jack Capture Endpoint */
-+		.num = 2,
-+		.aggregated = 0,
-+		.group_position = 0,
-+		.group_id = 0,
-+	},
-+	{ /* Speaker Playback Endpoint */
-+		.num = 3,
-+		.aggregated = 0,
-+		.group_position = 0,
-+		.group_id = 0,
-+	},
-+};
+diff --git a/tools/testing/selftests/bpf/prog_tests/reg_bounds.c b/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
+index 0322f817d07be..04938d0d431b3 100644
+--- a/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
++++ b/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
+@@ -422,15 +422,69 @@ static bool is_valid_range(enum num_t t, struct range x)
+ 	}
+ }
+ 
+-static struct range range_improve(enum num_t t, struct range old, struct range new)
++static struct range range_intersection(enum num_t t, struct range old, struct range new)
+ {
+ 	return range(t, max_t(t, old.a, new.a), min_t(t, old.b, new.b));
+ }
+ 
++/*
++ * Result is precise when 'x' and 'y' overlap or form a continuous range,
++ * result is an over-approximation if 'x' and 'y' do not overlap.
++ */
++static struct range range_union(enum num_t t, struct range x, struct range y)
++{
++	if (!is_valid_range(t, x))
++		return y;
++	if (!is_valid_range(t, y))
++		return x;
++	return range(t, min_t(t, x.a, y.a), max_t(t, x.b, y.b));
++}
 +
-+static const struct snd_soc_acpi_adr_device cs35l56x4_l1u3210_adr[] = {
-+	{
-+		.adr = 0x00013301FA355601ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_l_endpoint,
-+		.name_prefix = "AMP1"
-+	},
-+	{
-+		.adr = 0x00013201FA355601ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_r_endpoint,
-+		.name_prefix = "AMP2"
-+	},
-+	{
-+		.adr = 0x00013101FA355601ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_2_endpoint,
-+		.name_prefix = "AMP3"
-+	},
-+	{
-+		.adr = 0x00013001FA355601ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_3_endpoint,
-+		.name_prefix = "AMP4"
-+	},
-+};
++/*
++ * This function attempts to improve x range intersecting it with y.
++ * range_cast(... to_t ...) looses precision for ranges that pass to_t
++ * min/max boundaries. To avoid such precision loses this function
++ * splits both x and y into halves corresponding to non-overflowing
++ * sub-ranges: [0, smin] and [smax, -1].
++ * Final result is computed as follows:
++ *
++ *   ((x ∩ [0, smax]) ∩ (y ∩ [0, smax])) ∪
++ *   ((x ∩ [smin,-1]) ∩ (y ∩ [smin,-1]))
++ *
++ * Precision might still be lost if final union is not a continuous range.
++ */
++static struct range range_refine_in_halves(enum num_t x_t, struct range x,
++					   enum num_t y_t, struct range y)
++{
++	struct range x_pos, x_neg, y_pos, y_neg, r_pos, r_neg;
++	u64 smax, smin, neg_one;
 +
-+static const struct snd_soc_acpi_adr_device cs35l63x2_l0u01_adr[] = {
-+	{
-+		.adr = 0x00003001FA356301ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_l_endpoint,
-+		.name_prefix = "AMP1"
-+	},
-+	{
-+		.adr = 0x00003101FA356301ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_r_endpoint,
-+		.name_prefix = "AMP2"
-+	},
-+};
-+
-+static const struct snd_soc_acpi_adr_device cs35l63x2_l1u01_adr[] = {
-+	{
-+		.adr = 0x00013001FA356301ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_l_endpoint,
-+		.name_prefix = "AMP1"
-+	},
-+	{
-+		.adr = 0x00013101FA356301ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_r_endpoint,
-+		.name_prefix = "AMP2"
-+	},
-+};
-+
-+static const struct snd_soc_acpi_adr_device cs35l63x2_l1u13_adr[] = {
-+	{
-+		.adr = 0x00013101FA356301ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_l_endpoint,
-+		.name_prefix = "AMP1"
-+	},
-+	{
-+		.adr = 0x00013301FA356301ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_r_endpoint,
-+		.name_prefix = "AMP2"
-+	},
-+};
-+
-+static const struct snd_soc_acpi_adr_device cs35l63x4_l0u0246_adr[] = {
-+	{
-+		.adr = 0x00003001FA356301ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_l_endpoint,
-+		.name_prefix = "AMP1"
-+	},
-+	{
-+		.adr = 0x00003201FA356301ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_r_endpoint,
-+		.name_prefix = "AMP2"
-+	},
-+	{
-+		.adr = 0x00003401FA356301ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_2_endpoint,
-+		.name_prefix = "AMP3"
-+	},
-+	{
-+		.adr = 0x00003601FA356301ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_3_endpoint,
-+		.name_prefix = "AMP4"
-+	},
-+};
-+
-+static const struct snd_soc_acpi_adr_device cs42l43_l0u0_adr[] = {
-+	{
-+		.adr = 0x00003001FA424301ull,
-+		.num_endpoints = ARRAY_SIZE(cs42l43_endpoints),
-+		.endpoints = cs42l43_endpoints,
-+		.name_prefix = "cs42l43"
++	if (t_is_32(x_t)) {
++		smax = (u64)(u32)S32_MAX;
++		smin = (u64)(u32)S32_MIN;
++		neg_one = (u64)(u32)(s32)(-1);
++	} else {
++		smax = (u64)S64_MAX;
++		smin = (u64)S64_MIN;
++		neg_one = U64_MAX;
 +	}
-+};
++	x_pos = range_intersection(x_t, x, range(x_t, 0, smax));
++	x_neg = range_intersection(x_t, x, range(x_t, smin, neg_one));
++	y_pos = range_intersection(y_t, y, range(x_t, 0, smax));
++	y_neg = range_intersection(y_t, y, range(y_t, smin, neg_one));
++	r_pos = range_intersection(x_t, x_pos, range_cast(y_t, x_t, y_pos));
++	r_neg = range_intersection(x_t, x_neg, range_cast(y_t, x_t, y_neg));
++	return range_union(x_t, r_pos, r_neg);
 +
-+static const struct snd_soc_acpi_adr_device cs42l43_l0u1_adr[] = {
-+	{
-+		.adr = 0x00003101FA424301ull,
-+		.num_endpoints = ARRAY_SIZE(cs42l43_endpoints),
-+		.endpoints = cs42l43_endpoints,
-+		.name_prefix = "cs42l43"
-+	}
-+};
++}
 +
-+static const struct snd_soc_acpi_adr_device cs42l43b_l0u1_adr[] = {
-+	{
-+		.adr = 0x00003101FA2A3B01ull,
-+		.num_endpoints = ARRAY_SIZE(cs42l43_endpoints),
-+		.endpoints = cs42l43_endpoints,
-+		.name_prefix = "cs42l43"
-+	}
-+};
+ static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t, struct range y)
+ {
+ 	struct range y_cast;
+ 
++	if (t_is_32(x_t) == t_is_32(y_t))
++		x = range_refine_in_halves(x_t, x, y_t, y);
 +
-+static const struct snd_soc_acpi_adr_device cs42l43_l1u0_cs35l56x4_l1u0123_adr[] = {
-+	{
-+		.adr = 0x00013001FA424301ull,
-+		.num_endpoints = ARRAY_SIZE(cs42l43_endpoints),
-+		.endpoints = cs42l43_endpoints,
-+		.name_prefix = "cs42l43"
-+	},
-+	{
-+		.adr = 0x00013001FA355601ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_l_endpoint,
-+		.name_prefix = "AMP1"
-+	},
-+	{
-+		.adr = 0x00013101FA355601ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_r_endpoint,
-+		.name_prefix = "AMP2"
-+	},
-+	{
-+		.adr = 0x00013201FA355601ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_2_endpoint,
-+		.name_prefix = "AMP3"
-+	},
-+	{
-+		.adr = 0x00013301FA355601ull,
-+		.num_endpoints = 1,
-+		.endpoints = &spk_3_endpoint,
-+		.name_prefix = "AMP4"
-+	},
-+};
-+
-+static const struct snd_soc_acpi_adr_device cs42l45_l0u0_adr[] = {
-+	{
-+		.adr = 0x00003001FA424501ull,
-+		/* Re-use endpoints, but cs42l45 has no speaker */
-+		.num_endpoints = ARRAY_SIZE(cs42l43_endpoints) - 1,
-+		.endpoints = cs42l43_endpoints,
-+		.name_prefix = "cs42l45"
-+	}
-+};
-+
-+static const struct snd_soc_acpi_adr_device cs42l45_l1u0_adr[] = {
-+	{
-+		.adr = 0x00013001FA424501ull,
-+		/* Re-use endpoints, but cs42l45 has no speaker */
-+		.num_endpoints = ARRAY_SIZE(cs42l43_endpoints) - 1,
-+		.endpoints = cs42l43_endpoints,
-+		.name_prefix = "cs42l45"
-+	}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs35l56x4_l1u3210[] = {
-+	{
-+		.mask = BIT(1),
-+		.num_adr = ARRAY_SIZE(cs35l56x4_l1u3210_adr),
-+		.adr_d = cs35l56x4_l1u3210_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs35l63x4_l0u0246[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(cs35l63x4_l0u0246_adr),
-+		.adr_d = cs35l63x4_l0u0246_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs42l43_l0u1[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(cs42l43_l0u1_adr),
-+		.adr_d = cs42l43_l0u1_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs42l43b_l0u1[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(cs42l43b_l0u1_adr),
-+		.adr_d = cs42l43b_l0u1_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs42l43_l0u0_cs35l56x4_l1u3210[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(cs42l43_l0u0_adr),
-+		.adr_d = cs42l43_l0u0_adr,
-+	},
-+	{
-+		.mask = BIT(1),
-+		.num_adr = ARRAY_SIZE(cs35l56x4_l1u3210_adr),
-+		.adr_d = cs35l56x4_l1u3210_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs42l43_l1u0_cs35l56x4_l1u0123[] = {
-+	{
-+		.mask = BIT(1),
-+		.num_adr = ARRAY_SIZE(cs42l43_l1u0_cs35l56x4_l1u0123_adr),
-+		.adr_d = cs42l43_l1u0_cs35l56x4_l1u0123_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs42l45_l0u0[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(cs42l45_l0u0_adr),
-+		.adr_d = cs42l45_l0u0_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs42l45_l0u0_cs35l63x2_l1u01[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(cs42l45_l0u0_adr),
-+		.adr_d = cs42l45_l0u0_adr,
-+	},
-+	{
-+		.mask = BIT(1),
-+		.num_adr = ARRAY_SIZE(cs35l63x2_l1u01_adr),
-+		.adr_d = cs35l63x2_l1u01_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs42l45_l0u0_cs35l63x2_l1u13[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(cs42l45_l0u0_adr),
-+		.adr_d = cs42l45_l0u0_adr,
-+	},
-+	{
-+		.mask = BIT(1),
-+		.num_adr = ARRAY_SIZE(cs35l63x2_l1u13_adr),
-+		.adr_d = cs35l63x2_l1u13_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs42l45_l1u0[] = {
-+	{
-+		.mask = BIT(1),
-+		.num_adr = ARRAY_SIZE(cs42l45_l1u0_adr),
-+		.adr_d = cs42l45_l1u0_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs42l45_l1u0_cs35l63x2_l0u01[] = {
-+	{
-+		.mask = BIT(1),
-+		.num_adr = ARRAY_SIZE(cs42l45_l1u0_adr),
-+		.adr_d = cs42l45_l1u0_adr,
-+	},
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(cs35l63x2_l0u01_adr),
-+		.adr_d = cs35l63x2_l0u01_adr,
-+	},
-+	{}
-+};
-+
-+static const struct snd_soc_acpi_link_adr acp63_cs42l45_l1u0_cs35l63x4_l0u0246[] = {
-+	{
-+		.mask = BIT(1),
-+		.num_adr = ARRAY_SIZE(cs42l45_l1u0_adr),
-+		.adr_d = cs42l45_l1u0_adr,
-+	},
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(cs35l63x4_l0u0246_adr),
-+		.adr_d = cs35l63x4_l0u0246_adr,
-+	},
-+	{}
-+};
-+
- static const struct snd_soc_acpi_link_adr acp63_rt722_only[] = {
- 	{
- 		.mask = BIT(0),
-@@ -135,6 +488,66 @@ struct snd_soc_acpi_mach snd_soc_acpi_amd_acp63_sdw_machines[] = {
- 		.links = acp63_4_in_1_sdca,
- 		.drv_name = "amd_sdw",
- 	},
-+	{
-+		.link_mask = BIT(0) | BIT(1),
-+		.links = acp63_cs42l43_l0u0_cs35l56x4_l1u3210,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(0) | BIT(1),
-+		.links = acp63_cs42l45_l1u0_cs35l63x4_l0u0246,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(0) | BIT(1),
-+		.links = acp63_cs42l45_l0u0_cs35l63x2_l1u01,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(0) | BIT(1),
-+		.links = acp63_cs42l45_l0u0_cs35l63x2_l1u13,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(0) | BIT(1),
-+		.links = acp63_cs42l45_l1u0_cs35l63x2_l0u01,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(1),
-+		.links = acp63_cs42l43_l1u0_cs35l56x4_l1u0123,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(1),
-+		.links = acp63_cs35l56x4_l1u3210,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(0),
-+		.links = acp63_cs35l63x4_l0u0246,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(0),
-+		.links = acp63_cs42l43_l0u1,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(0),
-+		.links = acp63_cs42l43b_l0u1,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(0),
-+		.links = acp63_cs42l45_l0u0,
-+		.drv_name = "amd_sdw",
-+	},
-+	{
-+		.link_mask = BIT(1),
-+		.links = acp63_cs42l45_l1u0,
-+		.drv_name = "amd_sdw",
-+	},
- 	{},
- };
- EXPORT_SYMBOL(snd_soc_acpi_amd_acp63_sdw_machines);
+ 	y_cast = range_cast(y_t, x_t, y);
+ 
+ 	/* If we know that
+@@ -444,7 +498,7 @@ static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t,
+ 	 */
+ 	if (x_t == S64 && y_t == S32 && y_cast.a <= S32_MAX  && y_cast.b <= S32_MAX &&
+ 	    (s64)x.a >= S32_MIN && (s64)x.b <= S32_MAX)
+-		return range_improve(x_t, x, y_cast);
++		return range_intersection(x_t, x, y_cast);
+ 
+ 	/* the case when new range knowledge, *y*, is a 32-bit subregister
+ 	 * range, while previous range knowledge, *x*, is a full register
+@@ -462,7 +516,7 @@ static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t,
+ 		x_swap = range(x_t, swap_low32(x.a, y_cast.a), swap_low32(x.b, y_cast.b));
+ 		if (!is_valid_range(x_t, x_swap))
+ 			return x;
+-		return range_improve(x_t, x, x_swap);
++		return range_intersection(x_t, x, x_swap);
+ 	}
+ 
+ 	if (!t_is_32(x_t) && !t_is_32(y_t) && x_t != y_t) {
+@@ -480,7 +534,7 @@ static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t,
+ 	}
+ 
+ 	/* otherwise, plain range cast and intersection works */
+-	return range_improve(x_t, x, y_cast);
++	return range_intersection(x_t, x, y_cast);
+ }
+ 
+ /* =======================
 -- 
 2.51.0
 
