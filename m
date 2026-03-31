@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4275D4218B4;
-	Tue, 31 Mar 2026 16:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEAE3F23DD;
+	Tue, 31 Mar 2026 16:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974768; cv=none; b=M/DkcEtTR7rchUcv/i9fXF6I7S0Ar/78au3VG1WJhzNRcWSzyo1Zhm+bAY0id8w52Tutpfais/zXEsfpLyhw/hfrPnLzZXvBd9ParD4VOoQyXJf+oXx2eR1Hp+omExJH58S53+UFmrq8WuvYceEJdjYpm92ebhW+iQohns2EhPo=
+	t=1774974770; cv=none; b=Hrjs0Mg8jlNWBbg7o+f7e9q13lEP4LgXgwTa6Fzax2XdmoErWhAQ1o7ipgiIive5/2BCJZxQML/E5xUqnP1vcaU02XXzzOAbc6pxdBRohDw+FwS/OkRd0E9fg5kDggwdBhLrifxaTyNjIMAVUL+Kx0toiInXdntw2t3v2inoko4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974768; c=relaxed/simple;
-	bh=JCaSCCxLZFgjTHcM0KQlO1PHesIcKYdf86Dna93d02I=;
+	s=arc-20240116; t=1774974770; c=relaxed/simple;
+	bh=lolrRmHXvOImeMEg6ER8DkTxeAq2N3rtfi0TDpyK9GA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ycdi6KRQ+PwK51mDm9ZdxPzc4I1rzx8GH7M85vrPQQY5KRUO3fWuLnUU2rv1VESYIltwI7cTl7lkI1/edF1+7USFGR2ZSmWYDfGDOgQ05WI/PB9OKFGRkI95M3mYKoc/BwfXHVjXdC+1i92iC2Mti1knbK7ShJiA5IqUQZeBcKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbeW880l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1gascfziwa+0cZSB/MSNrDY4bwK5F3NMIjIaZYAPIV30JCfdr+UGaeM8wEOSRdz0Smkw/yAKVCoqQLd2HynMAfRIbiHmPl1OmDv2piPaC4+x0GEqaSLC5gmVPnz5rr4wa350maSGzJtdhdP3cZiTt8siY5yG6x3S6dYUPkA/yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/KGvX4D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbeW880l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC4BC19423;
-	Tue, 31 Mar 2026 16:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/KGvX4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661E0C19423;
+	Tue, 31 Mar 2026 16:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774974768;
-	bh=JCaSCCxLZFgjTHcM0KQlO1PHesIcKYdf86Dna93d02I=;
+	s=korg; t=1774974770;
+	bh=lolrRmHXvOImeMEg6ER8DkTxeAq2N3rtfi0TDpyK9GA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wbeW880lqVLdjtvvo1DLWauUFXf+Iqc7+rsK/LXvGcPiitdNJ6FG42XljjS3QknoH
-	 +qcq4BxlU5l/MtPQ0FUu6B9vUigbuIKxAuknuDFGj03Dtw2ZZoZojwbU8y4nDwgfWX
-	 LVjYJdd3p+UifF7sJrUFJs4DgfTlPciTo4HCtzlI=
+	b=s/KGvX4DqeH8pBH7Ck10LtlwXreEQP9vhQ6ds/KmMrCYHmR++14mB6ono5k26uTO2
+	 vwYLoKKvFXqaZwdrUoXSbU4ZMLhFIH6KMGKZgiWbWWMT4vT4p3ghGruNd4OsMKkSdf
+	 kc5gGIoVRaQscMZVCLcygIkB0QSELiQsvJ/ju9j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Jenny Guanni Qu <qguanni@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 019/342] bpf: Fix undefined behavior in interpreter sdiv/smod for INT_MIN
-Date: Tue, 31 Mar 2026 18:17:32 +0200
-Message-ID: <20260331161759.619343083@linuxfoundation.org>
+Subject: [PATCH 6.19 037/342] HID: apple: Add EPOMAKER TH87 to the non-apple keyboards list
+Date: Tue, 31 Mar 2026 18:17:50 +0200
+Message-ID: <20260331161800.270240890@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
 References: <20260331161758.909578033@linuxfoundation.org>
@@ -53,102 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jenny Guanni Qu <qguanni@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c77b30bd1dcb61f66c640ff7d2757816210c7cb0 ]
+[ Upstream commit 7c698de0dc5daa1e1a5fd1f0c6aa1b6bb2f5d867 ]
 
-The BPF interpreter's signed 32-bit division and modulo handlers use
-the kernel abs() macro on s32 operands. The abs() macro documentation
-(include/linux/math.h) explicitly states the result is undefined when
-the input is the type minimum. When DST contains S32_MIN (0x80000000),
-abs((s32)DST) triggers undefined behavior and returns S32_MIN unchanged
-on arm64/x86. This value is then sign-extended to u64 as
-0xFFFFFFFF80000000, causing do_div() to compute the wrong result.
+EPOMAKER TH87 has the very same ID as Apple Aluminum keyboard
+(05ac:024f) although it doesn't work as expected in compatible way.
 
-The verifier's abstract interpretation (scalar32_min_max_sdiv) computes
-the mathematically correct result for range tracking, creating a
-verifier/interpreter mismatch that can be exploited for out-of-bounds
-map value access.
+Put three entries to the non-apple keyboards list to exclude this
+device: one for BT ("TH87"), one for USB ("HFD Epomaker TH87") and one
+for dongle ("2.4G Wireless Receiver").
 
-Introduce abs_s32() which handles S32_MIN correctly by casting to u32
-before negating, avoiding signed overflow entirely. Replace all 8
-abs((s32)...) call sites in the interpreter's sdiv32/smod32 handlers.
-
-s32 is the only affected case -- the s64 division/modulo handlers do
-not use abs().
-
-Fixes: ec0e2da95f72 ("bpf: Support new signed div/mod instructions.")
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
-Link: https://lore.kernel.org/r/20260311011116.2108005-2-qguanni@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1258455
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/hid/hid-apple.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 1b32333d8f8c6..5a56bc2ab900d 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -1754,6 +1754,12 @@ bool bpf_opcode_in_insntable(u8 code)
- }
+diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
+index 233e367cce1d1..2f9a2e07c4263 100644
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -365,6 +365,9 @@ static const struct apple_non_apple_keyboard non_apple_keyboards[] = {
+ 	{ "A3R" },
+ 	{ "hfd.cn" },
+ 	{ "WKB603" },
++	{ "TH87" },			/* EPOMAKER TH87 BT mode */
++	{ "HFD Epomaker TH87" },	/* EPOMAKER TH87 USB mode */
++	{ "2.4G Wireless Receiver" },	/* EPOMAKER TH87 dongle */
+ };
  
- #ifndef CONFIG_BPF_JIT_ALWAYS_ON
-+/* Absolute value of s32 without undefined behavior for S32_MIN */
-+static u32 abs_s32(s32 x)
-+{
-+	return x >= 0 ? (u32)x : -(u32)x;
-+}
-+
- /**
-  *	___bpf_prog_run - run eBPF program on a given context
-  *	@regs: is the array of MAX_BPF_EXT_REG eBPF pseudo-registers
-@@ -1918,8 +1924,8 @@ static u64 ___bpf_prog_run(u64 *regs, const struct bpf_insn *insn)
- 			DST = do_div(AX, (u32) SRC);
- 			break;
- 		case 1:
--			AX = abs((s32)DST);
--			AX = do_div(AX, abs((s32)SRC));
-+			AX = abs_s32((s32)DST);
-+			AX = do_div(AX, abs_s32((s32)SRC));
- 			if ((s32)DST < 0)
- 				DST = (u32)-AX;
- 			else
-@@ -1946,8 +1952,8 @@ static u64 ___bpf_prog_run(u64 *regs, const struct bpf_insn *insn)
- 			DST = do_div(AX, (u32) IMM);
- 			break;
- 		case 1:
--			AX = abs((s32)DST);
--			AX = do_div(AX, abs((s32)IMM));
-+			AX = abs_s32((s32)DST);
-+			AX = do_div(AX, abs_s32((s32)IMM));
- 			if ((s32)DST < 0)
- 				DST = (u32)-AX;
- 			else
-@@ -1973,8 +1979,8 @@ static u64 ___bpf_prog_run(u64 *regs, const struct bpf_insn *insn)
- 			DST = (u32) AX;
- 			break;
- 		case 1:
--			AX = abs((s32)DST);
--			do_div(AX, abs((s32)SRC));
-+			AX = abs_s32((s32)DST);
-+			do_div(AX, abs_s32((s32)SRC));
- 			if (((s32)DST < 0) == ((s32)SRC < 0))
- 				DST = (u32)AX;
- 			else
-@@ -2000,8 +2006,8 @@ static u64 ___bpf_prog_run(u64 *regs, const struct bpf_insn *insn)
- 			DST = (u32) AX;
- 			break;
- 		case 1:
--			AX = abs((s32)DST);
--			do_div(AX, abs((s32)IMM));
-+			AX = abs_s32((s32)DST);
-+			do_div(AX, abs_s32((s32)IMM));
- 			if (((s32)DST < 0) == ((s32)IMM < 0))
- 				DST = (u32)AX;
- 			else
+ static bool apple_is_non_apple_keyboard(struct hid_device *hdev)
 -- 
 2.51.0
 
