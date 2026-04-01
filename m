@@ -1,154 +1,82 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7813859D4
-	for <patches@lists.linux.dev>; Wed,  1 Apr 2026 16:42:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B60314D1A;
+	Wed,  1 Apr 2026 17:35:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775061774; cv=none; b=TAdACMlpmV9lun2rhusb6EXHHLY9cu6fTEyPLJsgd4IuuNSoQS7+px/BKV8SDH1FYfCidYLwc7cpR2YXXw7CpCyIAbZYiUOHSt3nS3W4aYcpgfqs8049kNHRQztUYzXc4lplRxmo7bdxE2ouHtAQtY31sM3hQrFis9c2cNNRnGY=
+	t=1775064912; cv=none; b=EI5z7vEwVinWQHl31UxR2yQmMhU5NFG0NAE8pPdwh0maem1jqwNTqFUddcfy2QOdEO/rloiwjKhXJm/UTu4Z70/ghiQS3T6PHh/UfNjLNuT23XIXtUlsXyDceKrXgYisa3dvxFnFMTLsPBI+xQdH+rfMwZBe9apQCf6UpyZYqvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775061774; c=relaxed/simple;
-	bh=bK5VcBzFH7seN9+AMOZbQhRoAWaOmgP6bggqWtU0CKs=;
+	s=arc-20240116; t=1775064912; c=relaxed/simple;
+	bh=j5mT9KtFjIFVCDpPQWXEfoZimvSQRFa8OxWKIhLqOiU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j5e4q0HtInEJzhmoLxrEdbTi2+HuX8uffiUIFTCJml5QYgSxiBuiduujNxKI3yPoEnuGsz1HQDucDyVywWf3+3aK+aoRKpUiz0UD5Vq1xepqwFrDAqkjQKmLuW0rVnG81nSrTLvVcIk0pbjXbWp6zIEKjPelOOeEoN6Eedd8A5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rxnJC3MM; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=fELbVwudsbfUUK+u5QXRWk3EvpVeKlKLZAXxhjoonnWsrL9dBu/+Z9Y+F3uUDzGgeWAJQ0zZYTzX+QooGjJkAg3QNSeQPKYveuUJH895BBMl+Z67PAw3Fw129n2Xo8NU0WVLn+nKRLknWs7eeJqEHJEnUBANgIUdvAhdIYpKPrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q2api+Gt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rxnJC3MM"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-48374014a77so86121965e9.3
-        for <patches@lists.linux.dev>; Wed, 01 Apr 2026 09:42:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775061772; x=1775666572; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KV+tSC2Aqfk5AN8Gr0A0YOBmS6aIW69bjJ/AxSnLy9M=;
-        b=rxnJC3MMbJMKYjewYWDZl2/DYsl7MRom50swJ4JDa6v1rXSRuHibjZ3wPYipDj/W7r
-         8qbcuRiyLS1tKqw/+7nf6ajlRycOCYstqcu2rQI7SHde2v/7tEi3eJk4hORuGLEGU096
-         XVSDq6hW/CC6kg+rbL93KRJsDhWA0f8s/qD9LM3GXJMzSNdadlgdZhwI08VuSFefFK8a
-         tJF6cArDZajDDNv/3I9N7sPA0TitROIrCzwxTy5trycBqaHDu+lhIsrVbFWlur0chNF+
-         Jz/0Ftg0yLkoNsbcmm3rs4hLUwPQb6ccP+bTbKWuMsV7oQx+j6w5PGyRzZPm3rYtDicx
-         mA2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775061772; x=1775666572;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KV+tSC2Aqfk5AN8Gr0A0YOBmS6aIW69bjJ/AxSnLy9M=;
-        b=EF6gBlpIyf4i5Sb6eywh6NOeQ9HnUc0YutZs/FnP8QF+j+pXYaCUL+e6lqJbRDlSj/
-         UvxhnEoy8TK4egvIjjUB5CYQVafY1YaQpnzq0x6tiPCenIsBxJJUqCsIj2PtZpXCN/MB
-         pGKouhOfy3MeVs/FeCZKRGoQYYyRagyzQXLeX/ZvcYXnbEI1ICIUICvR96J35eO4qJlA
-         mTERMYf/Y7sVMV6UcrE14RY3s3bY5H7OjQfhBU6xz0+Zqm7SltL+vqTwuCigRsSTOw7f
-         pU0qHzGClt4KqT2NluQnjwg803y80nXr2sK1D16j7q/v+23cPr2Ta9IcL6FQeXXqdVJY
-         KpYA==
-X-Forwarded-Encrypted: i=1; AJvYcCVK4JovtNPzdzbGjsMXZpS8gbMBS5Trt7cOezxocKbAmiTVbxUVBXiheIM/JxiuP4Lansjm1WP0@lists.linux.dev
-X-Gm-Message-State: AOJu0Yys95H8hWfUSZG4ykyLVgURM0MIMYjCr5hfYKVp1pHggRXND4I6
-	u5M+nMGMECJgN9r/hdVVZMjGOjKC3Cxn9xjZbDveoz0jh6BWQXvYgvV7
-X-Gm-Gg: ATEYQzw4lMgxSgwQVtuaKRzQ6bswDATmb1Mqi1Jsmeh05IZpc5qt/Pw9fEt35NBJ0Rs
-	8VoJgGfv4xQD9c20QgjW5ykuVlwIR9PBDoJlnwhC2Nn2ETVlVf9AVPxvojw8oQRdNxUqhV04Dfc
-	pTwkX8mRtH58nlobNSUFUpYv4QDv1mQY2PsA83gEdy5OCNpJU0MgejmErxW1qH/il/KrnjkZOTP
-	T22NGuWTrHJBMBmOpbgWfuIUcThSU6jSJQw5dG1JKmYBA06IkKqezSX9gqZZkt8cBEGgU0ezOYC
-	k0keoPdmRVsC8RG8YKbQ/D+GFDsIyadbBTSTkjjJtPC7KzYBUY5lN3Cib6ucznYyKfBGI8tJ+M6
-	B1QGcR6eHUsq+LNtZ/nrzqMbUKdnbLeNu/4nwRvg1mo/+eeevhNDhbpezjp0L3zqZkrcVrM8qAC
-	ISCeghzjzRIuOlM3ph5i244ARNKh2hcu9WWDYMfScJaBtKMS/5+kGMz/s1SsvhmyxZtyPl2B0JV
-	gq1fI7F8WcZISXHFDiZ0liauEskhlXI3Z+VqpsZeNlQpAXz8tEep06OxnVVzrfeDlAbT8kW8mS7
-	2Es/g9WXIbMDBT5j+jU26HOaOXzmHO/FAPoSEgOaU1U=
-X-Received: by 2002:a05:600c:a4a:b0:487:21c7:2885 with SMTP id 5b1f17b1804b1-4888355e52cmr77059995e9.5.1775061771400;
-        Wed, 01 Apr 2026 09:42:51 -0700 (PDT)
-Received: from mail.gmail.com (2a01cb0889497e0077853c1cf79fe628.ipv6.abo.wanadoo.fr. [2a01:cb08:8949:7e00:7785:3c1c:f79f:e628])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4887c8b8e8asm44527295e9.25.2026.04.01.09.42.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2026 09:42:50 -0700 (PDT)
-Date: Wed, 1 Apr 2026 18:42:49 +0200
-From: Paul Chaignon <paul.chaignon@gmail.com>
-To: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	stable <stable@vger.kernel.org>, patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 034/244] bpf: Fix u32/s32 bounds when ranges cross
- min/max boundary
-Message-ID: <ac1LCTbV5ZnqUgG0@mail.gmail.com>
-References: <20260331161741.651718120@linuxfoundation.org>
- <20260331161742.960922011@linuxfoundation.org>
- <i4c753x3y67ek3r7dp774pcmaaaid3gvxcsvdssosdingre4in@od45qzitwtrf>
- <2026040115-dose-aerobics-7c6d@gregkh>
- <CAADnVQLSfDtqeLFw=DjG-dG=xD_qS7p2LHsT9jAxO5aAK0YJig@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q2api+Gt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC37AC4CEF7;
+	Wed,  1 Apr 2026 17:35:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775064912;
+	bh=j5mT9KtFjIFVCDpPQWXEfoZimvSQRFa8OxWKIhLqOiU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q2api+GtJocvt/iei2Zj/1BN0COvjoKxS8Ybyq60CjR+LZiXdTtXQNZ9MlZ10c0vl
+	 z1K/fsEjd3KCfePKVB8iR3Vxx9CrYKUZLXT+I11ohkhZlISaxAtFzqBvE0i8/YLMe3
+	 9Q7KSE8FHDvu6l3kMu9G4NUibbAQry792Ml3VGf0GASgk2aMpRJt4yYubGSX1wdsQz
+	 jyI53rpGMsAATgJboOvDkx8Xnz9PPsBkvy2qoOhpJPVo6krEoeSv7Cm1sxJ4fPQDUw
+	 UAxCNf+HDjWU3qm3y/hJKMaOnNfjc5SKjUUCfiYGjpwESFuqpj8ttD4Y447OpVAIj+
+	 myu0FSOZuk14w==
+Date: Wed, 1 Apr 2026 18:35:06 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.18 000/309] 6.18.21-rc1 review
+Message-ID: <94429ed9-b76f-4e08-9428-4897a81a81f9@sirena.org.uk>
+References: <20260331161753.468533260@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="1V59pTMIkSNm4VzD"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAADnVQLSfDtqeLFw=DjG-dG=xD_qS7p2LHsT9jAxO5aAK0YJig@mail.gmail.com>
+In-Reply-To: <20260331161753.468533260@linuxfoundation.org>
+X-Cookie: "Yo baby yo baby yo."
 
-On Wed, Apr 01, 2026 at 07:32:26AM -0700, Alexei Starovoitov wrote:
-> On Wed, Apr 1, 2026 at 4:44 AM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > On Wed, Apr 01, 2026 at 02:22:58PM +0800, Shung-Hsi Yu wrote:
-> > > Cc Eduard and Paul since they know this change better.
-> > >
-> > > On Tue, Mar 31, 2026 at 06:19:44PM +0200, Greg Kroah-Hartman wrote:
-> > > > 6.12-stable review patch.  If anyone has any objections, please let me know.
-> > > >
-> > > > ------------------
-> > > >
-> > > > From: Eduard Zingerman <eddyz87@gmail.com>
-> > > >
-> > > > [ Upstream commit fbc7aef517d8765e4c425d2792409bb9bf2e1f13 ]
-> > > >
-> > > > Same as in __reg64_deduce_bounds(), refine s32/u32 ranges
-> > > > in __reg32_deduce_bounds() in the following situations:
-> > > ...
-> > >
-> > > Hi Greg,
-> > >
-> > > This patch is causing the following BPF selftests to fail
-> > >
-> > >   #222 reg_bounds_crafted
-> > >   #222/27 reg_bounds_crafted/(u64)[0x7fffffffffffffff; 0xffffffff00000000] (s64)<op> 0
-> > >   #222/28 reg_bounds_crafted/(u64)0 (s64)<op> [0x7fffffffffffffff; 0xffffffff00000000]
-> > >   #222/29 reg_bounds_crafted/(u64)[0x7fffffff00000001; 0xffffffff00000000] (s64)<op> 0
-> > >   #222/30 reg_bounds_crafted/(u64)0 (s64)<op> [0x7fffffff00000001; 0xffffffff00000000]
-> > >   #222/59 reg_bounds_crafted/(s64)[0xffffffff00000001; 0] (u64)<op> 0xffffffff00000000
-> > >   #222/60 reg_bounds_crafted/(s64)0xffffffff00000000 (u64)<op> [0xffffffff00000001; 0]
-> > >   #222/79 reg_bounds_crafted/(s64)[S64_MIN; 0] (u64)<op> 0
-> > >   #222/80 reg_bounds_crafted/(s64)0 (u64)<op> [S64_MIN; 0]
-> > >   #262 reg_bounds_rand_consts_s64_u64
-> > >
-> > > The failure is caused by the selftests' expectation not aligning to the
-> > > stable 6.12 behavior. I believe the easier way out is to drop this, then
-> > > wait for [1] to land and pick it up in stable (or I'll try to backport
-> > > and send). That should address the root cause of what this patch is
-> > > trying to workaround.
-> > >
-> > > 1: https://lore.kernel.org/bpf/d4fe45f8bd5c6a48efd2ba3b66932bf7eb5aa020.1774025082.git.paul.chaignon@gmail.com/
-> >
-> > Now dropped, thanks.
-> 
-> I suggest ignoring the selftest failures.
-> The patch is necessary for stable and backports.
-> It's fixing a real issue.
 
-The selftest is failing because we're missing commit 1f8fe377855b
-("bpf: Improve bounds when s64 crosses sign boundary") in v6.12. It's
-the s64 counterpart to the s32 patch backported here.
+--1V59pTMIkSNm4VzD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-In bpf-next, we have both the s64 and the s32 patches. The s32 patch
-also updates the reg_bounds_crafted selftest to cover the logic for
-both the s64 and s32 patches. If we backport only the s32 patch, the
-updated selftest fails.
+On Tue, Mar 31, 2026 at 06:18:23PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.21 release.
+> There are 309 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-I can send v6.12 backports for both the s32 and s64 patchsets if that
-helps. There are a couple minor conflicts when backporting the new
-selftests. Or we can just cherry-pick 1f8fe377855b alone.
+Tested-by: Mark Brown <broonie@kernel.org>
 
+--1V59pTMIkSNm4VzD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnNV0kACgkQJNaLcl1U
+h9A7eAf9He7EhftlN+RNsrq5WRcid2tk4AAi0rIliRQYUrtQGFlYnlz9Wcw+By+R
+Ra5Ycf8rPeCSD9o1EgmyqIkwEL5fRVXL2QYjZFUMBkV0EWzSbv5u0UGczbN+BijO
+V3/tMlGvqfgEuS5AxIn+7hYgmerS9ypFGnecj8KQ8gQHw+7SgwT6LHnzydLjdxhp
+8toaADrYF11fYFEuig2kNZ2JvnvyrfkT/pSRIaVPsd117qPdCzVUadNMGHbx156q
+I2mmpo+eXion+eqHvZZEdGEGDV5a2PKqiNWwlGMeVvk0xvu6q0Z+F2TFwIYLE74S
+cqz9RaPacVW5TZSp1C7FZnc7OEhzVA==
+=OWxl
+-----END PGP SIGNATURE-----
+
+--1V59pTMIkSNm4VzD--
