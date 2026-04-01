@@ -1,70 +1,149 @@
-Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A182335DA63
-	for <patches@lists.linux.dev>; Wed,  1 Apr 2026 11:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80EC129405;
+	Wed,  1 Apr 2026 12:53:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775043925; cv=none; b=aP+tjlO9vLAJybCzLh759z7mUUL81bXfUdbWfMRSFm75NOQJB/6QnmNkRlnh2OGu70txUuy3/cRnamDhCjsNMIzckytyVxcTHRZZNKtWSIMy4oh9iVhT1dAyfOmn6XnrRjaWn2J8Ovu7YeRoyoWv7TLILdZe4xoKtC7UwS/hU4M=
+	t=1775047992; cv=none; b=MFroevjObSiONe50hpCpmnMTJxp/68uQd2ZjSK/4SgfoVRXz7dXn9HW7s+x3vvdc+KSr0GD/ytlkzNu/GeBwZz7IyjBzSbioXd4ByvIj2ox/MHeBfiOL5b4kHfb3eVoySjPrUq1RSsJI9Q/vy2iTPX4KoH2EiNEHmQLpZhHEflA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775043925; c=relaxed/simple;
-	bh=4jo6BTETHiyWpccqWA9MPJzlgYWvkHD6JRRiyt0kkhU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ga2qrGY18pHDq4DDOO6qfjnncv4eTYnFLvoNwkFOUYKq8W3mL8ipnmcwGzT3wwj/LDqU0cMUa3liPHWfS05Dj+g0Z3cbpqvN+39v9uW9tNwuYCB8NcHiM3QjIpHO4Bw9SSOS+f3lJfRybvav4bTZbiqKpQ8C/k8imKi50OZ76nI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=X+SyGWSq; arc=none smtp.client-ip=217.194.8.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
+	s=arc-20240116; t=1775047992; c=relaxed/simple;
+	bh=VtqdUmaN6v0sUlDrZ1wh5acNDB4v7exfl0mPMNT/GRc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uXBkuwIitK9yudMzJlIscoQAcyHwD3hq+lZfUJsyJvMVbo9+USvSAkdsK+udx/UIzf61wybM4eoGCIt7GwhFA80PqbevowVjVPQaf+NwvUhxcwD5DGOG/ItzJbUjRoilT6IIsNT8Bau9iV6pEetQpKcrj6pnO21EcP7QnqvYUA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=KnPQaqRi; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="X+SyGWSq"
-Received: from francesco-nb (93-49-2-63.ip317.fastwebnet.it [93.49.2.63])
-	by mail11.truemail.it (Postfix) with ESMTPA id 433FF1FF70;
-	Wed,  1 Apr 2026 13:39:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
-	s=default; t=1775043551;
-	bh=6qNd9bnbfnM+lpsSSdxoEjL198lA7nJU9UOBNjk9UHw=; h=From:To:Subject;
-	b=X+SyGWSq4MOzfX6jrM4brwx1EPv0L+s3XnM7FUUHfwdAMLeXHWSMpMmecrGUDWesv
-	 mDp2ECfFgiARMZD8JDISJZWZBX9kqlNj+/FsLySWYVbiDToU7YTYOVZ/E7kYJaVSwJ
-	 POgyqRoIXv3lGNnewA8UgTmrC+oiAVbublFRJcbLXmn5MHOHlx+7F60sSodK5qU08A
-	 9dChg0suW9VlshMXmIEUD2r2j2lqQLlpqt6eYl3Te58kPZPlk4zIhmvLQ/kQa4+ypQ
-	 hHoUNuFAFbpLuTt/gjwAYySKfXtEtkmlIveWS0G2HP4i1dmdyImj/D+Uv4N5+DLN2I
-	 a6IGKulbSOl/g==
-Date: Wed, 1 Apr 2026 13:39:07 +0200
-From: Francesco Dolcini <francesco@dolcini.it>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.6 000/175] 6.6.131-rc1 review
-Message-ID: <20260401113907.GA23291@francesco-nb>
-References: <20260331161729.779738837@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="KnPQaqRi"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 761E11F91;
+	Wed,  1 Apr 2026 05:53:03 -0700 (PDT)
+Received: from [10.57.77.192] (unknown [10.57.77.192])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AC26F3F915;
+	Wed,  1 Apr 2026 05:53:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1775047989; bh=VtqdUmaN6v0sUlDrZ1wh5acNDB4v7exfl0mPMNT/GRc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=KnPQaqRi0tCTRUB2d1G5ZWCeJmR+5w0WLKfS/DTDiUI87uUWvjLwaxuZVbYcF5Ey+
+	 +AIqNj6TC53qgajaKP1Af96Yfc/0NvV4virwmGEimOqLAuulFL7dPDF6steMi7rO9T
+	 hhNiiai2Vhbe7/cYk78O/xv6beFRRR/m4BEZDok4=
+Message-ID: <ce5c6be3-0a59-498b-ac0d-eb0dbc1530f6@arm.com>
+Date: Wed, 1 Apr 2026 13:53:05 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260331161729.779738837@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] iommu/dma: Always allow DMA-FQ when iommupt provides the
+ iommu_domain
+To: Jason Gunthorpe <jgg@nvidia.com>, Lu Baolu <baolu.lu@linux.intel.com>,
+ David Woodhouse <dwmw2@infradead.org>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Tomasz Jeznach <tjeznach@rivosinc.com>, Will Deacon <will@kernel.org>
+Cc: patches@lists.linux.dev
+References: <0-v1-9901ec033f96+3cc9-iommupt_fq_jgg@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <0-v1-9901ec033f96+3cc9-iommupt_fq_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 31, 2026 at 06:19:44PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.131 release.
-> There are 175 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 2026-03-26 7:30 pm, Jason Gunthorpe wrote:
+> iommupt always supports the semantics required for DMA-FQ, when drivers
+> are converted to use it they automatically get support.
+> 
+> Detect iommpt directly instead of using IOMMU_CAP_DEFERRED_FLUSH and
+> remove IOMMU_CAP_DEFERRED_FLUSH from converted drivers.
+> 
+> This will also enable DMA-FQ on RISC-V.
 
-Compiled and tested on
+I'd much prefer to just add the cap to the RISC-V driver so it's 
+obvious, rather than deliberately introduce a fiddly inconsistency. 
+Besides, having iommu-dma poke directly at driver-specific internal 
+implementation details seems exactly the kind of layering violation 
+you're normally the first to object to.
 
- - Verdin iMX8MM
- - Colibri iMX6
- - Apalis iMX6
- - Colibri iMX6ULL
- - Colibri iMX7
+Note that IOMMU_CAP_CACHE_COHERENCY is also arguably a property of 
+generic_pt, in as much as all its users are default-coherent with 
+IOMMU_CACHE implied, but again RISC_V doesn't report that where AMD and 
+Intel do.
 
-Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Thanks,
+Robin.
+
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/iommu/amd/iommu.c   |  2 --
+>   drivers/iommu/dma-iommu.c   | 13 ++++++++++++-
+>   drivers/iommu/intel/iommu.c |  2 --
+>   3 files changed, 12 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+> index 528ebdd26d71c9..daa9eac1184748 100644
+> --- a/drivers/iommu/amd/iommu.c
+> +++ b/drivers/iommu/amd/iommu.c
+> @@ -2991,8 +2991,6 @@ static bool amd_iommu_capable(struct device *dev, enum iommu_cap cap)
+>   		return amdr_ivrs_remap_support;
+>   	case IOMMU_CAP_ENFORCE_CACHE_COHERENCY:
+>   		return true;
+> -	case IOMMU_CAP_DEFERRED_FLUSH:
+> -		return true;
+>   	case IOMMU_CAP_DIRTY_TRACKING: {
+>   		struct amd_iommu *iommu = get_amd_iommu_from_dev(dev);
+>   
+> diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+> index 5dac64be61bb27..fbed93f8bf0adb 100644
+> --- a/drivers/iommu/dma-iommu.c
+> +++ b/drivers/iommu/dma-iommu.c
+> @@ -14,6 +14,7 @@
+>   #include <linux/device.h>
+>   #include <linux/dma-direct.h>
+>   #include <linux/dma-map-ops.h>
+> +#include <linux/generic_pt/iommu.h>
+>   #include <linux/gfp.h>
+>   #include <linux/huge_mm.h>
+>   #include <linux/iommu.h>
+> @@ -648,6 +649,15 @@ static void iommu_dma_init_options(struct iommu_dma_options *options,
+>   	}
+>   }
+>   
+> +static bool iommu_domain_supports_fq(struct device *dev,
+> +				     struct iommu_domain *domain)
+> +{
+> +	/* iommupt always supports DMA-FQ */
+> +	if (iommupt_from_domain(domain))
+> +		return true;
+> +	return device_iommu_capable(dev, IOMMU_CAP_DEFERRED_FLUSH);
+> +}
+> +
+>   /**
+>    * iommu_dma_init_domain - Initialise a DMA mapping domain
+>    * @domain: IOMMU domain previously prepared by iommu_get_dma_cookie()
+> @@ -706,7 +716,8 @@ static int iommu_dma_init_domain(struct iommu_domain *domain, struct device *dev
+>   
+>   	/* If the FQ fails we can simply fall back to strict mode */
+>   	if (domain->type == IOMMU_DOMAIN_DMA_FQ &&
+> -	    (!device_iommu_capable(dev, IOMMU_CAP_DEFERRED_FLUSH) || iommu_dma_init_fq(domain)))
+> +	    (!iommu_domain_supports_fq(dev, domain) ||
+> +	     iommu_dma_init_fq(domain)))
+>   		domain->type = IOMMU_DOMAIN_DMA;
+>   
+>   	return iova_reserve_iommu_regions(dev, domain);
+> diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+> index 5dca8e525c73c8..80b183e207e59b 100644
+> --- a/drivers/iommu/intel/iommu.c
+> +++ b/drivers/iommu/intel/iommu.c
+> @@ -3212,8 +3212,6 @@ static bool intel_iommu_capable(struct device *dev, enum iommu_cap cap)
+>   
+>   	switch (cap) {
+>   	case IOMMU_CAP_CACHE_COHERENCY:
+> -	case IOMMU_CAP_DEFERRED_FLUSH:
+> -		return true;
+>   	case IOMMU_CAP_PRE_BOOT_PROTECTION:
+>   		return dmar_platform_optin();
+>   	case IOMMU_CAP_ENFORCE_CACHE_COHERENCY:
+> 
+> base-commit: 447597c362ec566082b75688f2a8883771c066d5
 
