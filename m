@@ -1,143 +1,169 @@
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239D43CAE65
-	for <patches@lists.linux.dev>; Wed,  1 Apr 2026 11:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775042073; cv=pass; b=r7mx4s5F16ySK/gxncrKNvm9iW4yIIRSSqRSQ3U4LWo/DFnjnIrgSlJUG/iwAqlCcGe9tKUNejHIZQiMBBQ62W7ROzLiUKTYcDHH0Aa3Ia0Hl69AMWnttBflLUd/sikrX+++d3hdVxNf1FeoylXtAy8xgXIdJWVkeRx3tjnxbbs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775042073; c=relaxed/simple;
-	bh=pc5H36RuEHckCC4rxZiHAV25J1O0MfCUQosX2L+946Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OZp6wsIotQkvsh5tBkZxarmKkka4kI0+A+OvYzzcs7IucDvvcZcEI/9SGo+ZOJcRqUVT0PUItQz8Zelfz/PlWek+s6O3eeM6MDAF0YdnaIcHYa8hxZkgWUxm0Rv94CWe6qIy2tHOXPxAa8QU+20iqz4yjAxFlBKidWv3udMr5Ac=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=Y4FvWPVo; arc=pass smtp.client-ip=74.125.82.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA47C3F7A99
+	for <patches@lists.linux.dev>; Wed,  1 Apr 2026 11:23:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775042618; cv=none; b=CY35ourceazpin9WpOs4sXDTvTKmFhIPLo4VEFbAvX6Hlcoo/UVvyqmgAdNT+pdFjF2Y4snYpR9FChYeMG0ii8MYUXxhCin6f3kEV9z2yEG98qjpIG3cmf5iTvGVUtCCx3PWOZhS6lxLAo11cxIVkMeG8ZhJVffjyw6JWoxQS+Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775042618; c=relaxed/simple;
+	bh=tZ1qpc9jFWedWE8AwUzwx8Nqnc2oEi5R0JG7PTZIt4s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o7Be6tCY/K7Vwdy0uCL+9e2qxA0izXup3la/r4mcanv2lGjfpI4yzOTlQ6MxVvTopD7RXFDobuYiGiTGZyhQdp75J7q5OIbzDAiEXVvywI2cIXRVPqV5pq7qAeio1bXjgqELFEN04cPTEiVSfp5P65VP7zGRYKECpek5Fh9Xuds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tFfA36T0; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="Y4FvWPVo"
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-128ebee22caso393572c88.0
-        for <patches@lists.linux.dev>; Wed, 01 Apr 2026 04:14:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775042071; cv=none;
-        d=google.com; s=arc-20240605;
-        b=iuj2Xea9odU4/MMIxRlkwc7443pmMyEEiG5Z/x4SQdhMhjgxTUaiEpulnh60D3llli
-         Y7pl+nRqIYlAX40oe0eXi6kz6Esthr1Z1AkPwqrQ3aDSu8i8+JToTTQvmz08fl3lVSMy
-         Xu1ceFNFsJdeW/LfIDZE03iYtsEg3gBzHUZ3cNtSqDAwETLai7q7p79Q2Qm9h+EfKY5x
-         fXuOWLsBg5vTHz7RSE96XEhtI9zds10hhyvg8EmKPHkVJrpEkFBcAS1oHK7UcqHNpJ19
-         KrhMziTBOojjSktk6ppnB6aLJcO/sDG2490VFv0+nbxtQAvrLCWa8YjKuDo63POFaJho
-         rAFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=tZhdqGF0+1HrQa1yHew2N2aXTxqOA/y8rCZpynRhAAg=;
-        fh=wsueldCg6ylOrEdSgzJooN3FJycd3Ev/gihFLQKLsM8=;
-        b=gz64qUdjnGrV6mY79p19QwkVfUYxjv9t5k+sfVN/8M6/efJqjt0J8sLebDhEJLVFuj
-         Q9agPNZZBIEXgdyQ86zs56fKdLJ5I1yB96GgMOcPadLWhPFcyMRF2oHJgvVYbY7ct6M7
-         jRzugc5giVcgwNSss/uOagmUv6v10FjKr2bKG/IFQV+n4NMgTCBauOVZR7cnOjLvXU39
-         vrazFE6deVpLPOT9PGsWzpy/SpMn2lRTqRyFIs4UqNbKDbBvJc4XTvfj7M5zuoYPKeDJ
-         EEGVpbTXe/dmOvx6NcwM3sQDgyOKbQ4eYqmcp/l033U5ho8hOZK2pWMMQVSKaucXGWju
-         YRlA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tFfA36T0"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2b0b260d309so166185ad.1
+        for <patches@lists.linux.dev>; Wed, 01 Apr 2026 04:23:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl.com; s=google; t=1775042071; x=1775646871; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tZhdqGF0+1HrQa1yHew2N2aXTxqOA/y8rCZpynRhAAg=;
-        b=Y4FvWPVoZ9FS/d7jYbfSBQUwunRGa0PeZkQ3CnRWXZNas1+dzk7vuHRkvhz8etikDT
-         /pgAFhImpyHllswFUttNmtrg0Jf9zwgIFZT7wKPR9RKjhasLzUrzuBAuNoVIfEWNu3Yf
-         ihNH77rbzF0MxmsDMEYjKO9olCtdLMALTDkJ38mP35FTcYLBZrWYDiYx26qDLnEn/w4H
-         mlHCyPD9H53Vw3Aggmk59IwhtI7Bmy3rh5nlm8zrDCxpINNnAq2g28NM43Ufu9W+Pnbm
-         0MYDQzRy/yTf0Bui5sKjVcJH6uLQipzk9H11cti7LEKPHwtBERPFhdEjMpU2rvyyOn59
-         xN8A==
+        d=google.com; s=20251104; t=1775042616; x=1775647416; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+wLwW3RwfZlMNchucl4Q1BjkgKkbbVmuqcbZXsSlons=;
+        b=tFfA36T0L/p/3B8WwNcVd/ZnKEw0/jmZ1FVHVH6vUT7bZOQPdCKOKpyym+Xi5AdYle
+         +snvjJAW+VNqWpeos7Gdi9EXGemBRm91eNQ1AZVSnCXr/35xgy5hpLdBS4ebfORwLcHz
+         CfIOB8+8DbhgaTx9VKpREnvLoxSghZ+VJH6tYr5Xj/diZeXQoQzq6KTtkw05FfiwkESN
+         Q+xJ+xQt17mW41J7dqeLdoNukoH0smHXLk6d+zrlpbcIKNQQlV6ig5lguYjfOzOjl98b
+         PKrE0IiU49AXE33FPK9/JOCbLW3fgw5ndgDvKiA3EIYJohjS5sbqwXAFZgFcJRQporbV
+         +21w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775042071; x=1775646871;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tZhdqGF0+1HrQa1yHew2N2aXTxqOA/y8rCZpynRhAAg=;
-        b=Ufujb/2NLmrh0LVL+AIKXemElh4Ou6PnIaHTorusTuv+JLDsSclvswvqAMp2bMPZiI
-         Ji5AmHBUcIW+rWGpsOEsMu9WrNBPG2e/Yfo99nzlTnMYpKf0+QG615q+6KgEcFetQJt5
-         +wn3vTXF7JsrbbmqOWIHJ91X2i+IVdv7Nhkxu8/r6Sq9M9FOaHTDn7oLODaGGTudK/kH
-         wVVVtCAuzK9IwnArqfFzGbhslCbxlTYZebx6pb/xvWTpSPLhp5q+j8P9f0hjgFV4a4DI
-         +pYOMLVPdfDEzOrzsCVl+vWgRhUOLdgGPmmvi8fmnHYtSV8M6xsCXMFF8VY/w5GeF/8U
-         S64A==
-X-Forwarded-Encrypted: i=1; AJvYcCVbbisqmVjXR5DfzfQ6bdW0XiIS9a1/uNva7HZyCWKm0WjC4x+2plqDoOMNrsmWCAxPE8yYflNE@lists.linux.dev
-X-Gm-Message-State: AOJu0YyF6Ujcyz/E6dtXcA6G2L6FNDw9xO/WeKVMap6xlchjjlbSjgxB
-	Z8Y2Vd4Q9b6k3h7YfnLQcNhxYZ7bshhtVWOH40yDS93WnmzcHwP8lT/JuqYBcCVfagiWQZfUmIp
-	lmIHR0Jtjy/giGz/mYG56Jn95kHjSwKNVAlEzXHWwoQ==
-X-Gm-Gg: ATEYQzyo5TjRSXD1picYuqgfKQvRWAGxczOOsWEaqkFWLly5IFSQscCcSj65BaDtsEE
-	F3St8DZ07kKck70eYnm4Nb7Nhf/Ggmt/3vhMN+vPcGDRWC2afin8dkueHAu1a7ug07AKyjjCQyV
-	KH2yuhTNgtfFSS0f6TFjse52c+R6KYlOb/j82pX8QDTed7YrgglS81TrvZJXiJJrTgcba9lYx/z
-	4Nq8UrRNnzgk219hUpt36F49A+HReZ4e1H0ZAglkSK8dj5KmvrsptVmDvlUADZQAbtaOy6ggiUh
-	tc/75M8G
-X-Received: by 2002:a05:7022:6720:b0:11b:b179:6e17 with SMTP id
- a92af1059eb24-12be65988efmr1913619c88.34.1775042070889; Wed, 01 Apr 2026
- 04:14:30 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1775042616; x=1775647416;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+wLwW3RwfZlMNchucl4Q1BjkgKkbbVmuqcbZXsSlons=;
+        b=i9RnylUgKL7G8AGlQ/W+LtaefLjfj9VDOp/u+cLYi+q1tVBEg34pKprfVZJHrrwu/R
+         sfqLHBZFXUSybD/xvavvB6Jgsx2dGvEG1+lqLo7O/WY7yVLIOUTtWOG4XmyIpvlxn8ju
+         xvlQjn2C69LWr7hnhxYo/ZY4vthGQFDGiKkw1dOnwmjj8rr8rqg5GchVyoDdQ/0hTTjd
+         06VtN5HRhM/RkUzk2yVyCmws+oKtKVEVQS5ogEzjSI2iSYKSh2mLg38aeCRnMcFpizE+
+         VjyFIDOYg6IKdLILUJDV+4uVy6Ez8XYYS7i51v1hccgmH9PlKQgMnFdAC/SSkgM96yVG
+         TtPg==
+X-Forwarded-Encrypted: i=1; AJvYcCUNb5iV8gc4TqZoiscTGuTqf8raKi9fVZcTVTeATMfrd73sTUxWcTAsQRQfsAK7Yew+21XkRNEV@lists.linux.dev
+X-Gm-Message-State: AOJu0YxA7fpbUKFbiD/9KsTiTYCxGvU6oFJDp3t3kskQ+1L7e+GCrNYG
+	6ZoFkYQ9EpmjZVaHmvme5hZvrdnHBHqW+1Rk8J1V2YnQ4hfntXzh7RWMS9ZQFGrd1g==
+X-Gm-Gg: ATEYQzzyjNBDPM/Y/J7cZexpiKEXrhl26PFtM0lnB5aRKXMRBY4tRPHEnoXVbYvyhT0
+	nwgMnuvSngrbdeodgT0k1aKjszqN2nxE2A2JrxqmE9i9usIHtECzrsMYu5Unznl7XMyANj54qOd
+	Bz1Siaf4/OfzSqrbyFxg0DvsYqdqYiqQMR9c//SZrcu7Zbdb5yhVSFm6H7r4rrmmFjG/9zeofG6
+	V8g9wZ7Q4kh+Kxlx6qvTYwbsHeTqKS/JaIr2uakKx38b0CTr6TONpfXaYjyslQVKkzoAWUWN+lU
+	MGf4OCEdztakue6f9GyQRkzc9aUj8v+f8ykDLwPT7Ep7EUGaYxdE+T3ygmY1fwu7q0lirtOGbfy
+	u6w1jwL+0jZlmDnHldZiiB7TulmvBylpizzXLFCGyk+WcbYPdcXRfu1eOj6EpNj0+TF4x/9Plqa
+	y6PxzAf2BDjU1m8mphXJUR/aTYKij1pjlnYFuSftAHAmIvckwdZrTIqLjvYw==
+X-Received: by 2002:a17:902:ccca:b0:2ae:44db:570c with SMTP id d9443c01a7336-2b26b2b089amr2189835ad.12.1775042615401;
+        Wed, 01 Apr 2026 04:23:35 -0700 (PDT)
+Received: from google.com (10.129.124.34.bc.googleusercontent.com. [34.124.129.10])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35dbe606dd2sm6533691a91.3.2026.04.01.04.23.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Apr 2026 04:23:34 -0700 (PDT)
+Date: Wed, 1 Apr 2026 11:23:23 +0000
+From: Pranjal Shrivastava <praan@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev,
+	Baolin Wang <baolin.wang@linux.alibaba.com>, iommu@lists.linux.dev,
+	Janne Grunau <j@jannau.net>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Jean-Philippe Brucker <jpb@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, linux-riscv@lists.infradead.org,
+	linux-sunxi@lists.linux.dev,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Neal Gompa <neal@gompa.dev>, Orson Zhai <orsonzhai@gmail.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>,
+	Samuel Holland <samuel@sholland.org>, Sven Peter <sven@kernel.org>,
+	virtualization@lists.linux.dev, Chen-Yu Tsai <wens@kernel.org>,
+	Will Deacon <will@kernel.org>, Yong Wu <yong.wu@mediatek.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Jon Hunter <jonathanh@nvidia.com>, patches@lists.linux.dev,
+	Robin Murphy <robin.murphy@arm.com>,
+	Samiullah Khawaja <skhawaja@google.com>, stable@vger.kernel.org,
+	Vasant Hegde <vasant.hegde@amd.com>
+Subject: Re: [PATCH] iommu: Always fill in gather when unmapping
+Message-ID: <ac0AKyvHMYHlqL5i@google.com>
+References: <0-v1-664d3acaabb9+78b-iommu_gather_always_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260331161758.909578033@linuxfoundation.org>
-In-Reply-To: <20260331161758.909578033@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Wed, 1 Apr 2026 20:14:14 +0900
-X-Gm-Features: AQROBzCcWjpIDbqMiVDnMHwjdZ3Du7329NtkcMVFmn20aZQ4M0bdNteoauZCp2s
-Message-ID: <CAKL4bV6wXdd-FRft9p69+LDNfw6=yarXgRAmNVZTE6PYLW0kNA@mail.gmail.com>
-Subject: Re: [PATCH 6.19 000/342] 6.19.11-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0-v1-664d3acaabb9+78b-iommu_gather_always_jgg@nvidia.com>
 
-Hi Greg
+On Tue, Mar 31, 2026 at 04:56:22PM -0300, Jason Gunthorpe wrote:
+> The fixed commit assumed that the gather would always be populated if
+> an iotlb_sync was required.
+> 
+> arm-smmu-v3, amd, VT-d, riscv, s390, mtk all use information from the
+> gather during their iotlb_sync() and this approach works for them.
+> 
+> However, arm-smmu, qcom_iommu, ipmmu-vmsa, sun50i, sprd, virtio,
+> apple-dart all ignore the gather during their iotlb_sync(). They
+> mostly issue a full flush.
+> 
+> Unfortunately the latter set of drivers often don't bother to add
+> anything to the gather since they don't intend on using it. Since the
+> core code now blocks gathers that were never filled, this caused those
+> drivers to stop getting their iotlb_sync() calls and breaks them.
+> 
+> Since it is impossible to tell the difference between gathers that are
+> empty because there is nothing to do and gathers that are empty
+> because they are not used, fill in the gathers for the missing cases.
+> 
 
-On Wed, Apr 1, 2026 at 2:01=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+I believe the problem is a fundamental disagreement between the core
+layer and these drivers. The core assumes an empty gather means there
+is no work to do, while these drivers expect a sync regardless. With
+this, it seems we're forcing the drivers to lie to the core by 
+populating a gather they don't actually use just to trigger the sync.
+
+I was wondering if, as a longer-term direction, having an explicit flag
+for these drivers to indicate they always require a sync would be a
+cleaner way to handle this than the trivial population?
+
+Just a thought, not a hard disagreement with the current approach..
+
+> io-pgtable might have intended to allow the driver to choose between
+> gather or immediate flush because it passed gather to
+> ops->tlb_add_page(), however no driver does anything with it.
+> 
+> mtk uses io-pgtable-arm-v7s but added the range to the gather in the
+> unmap callback. Move this into the io-pgtable-arm unmap itself. That
+> will fix all the armv7 using drivers (arm-smmu, qcom_iommu,
+> ipmmu-vmsa).
+> 
+> arm-smmu uses both ARM_V7S and ARM LPAE formats. The LPAE formats
+> already have the gather population because SMMUv3 requires it, so it
+> becomes consistent.
+> 
+> Add a trivial gather population to io-pgtable-dart.
+> 
+> Add trivial populations to sprd, sun50i and virtio-iommu in their
+> unmap functions.
+> 
+> Fixes: 90c5def10bea ("iommu: Do not call drivers for empty gathers")
+> Reported-by: Jon Hunter <jonathanh@nvidia.com>
+> Closes: https://lore.kernel.org/r/8800a38b-8515-4bbe-af15-0dae81274bf7@nvidia.com
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/io-pgtable-arm.c  | 4 +++-
+>  drivers/iommu/io-pgtable-dart.c | 3 +++
+>  drivers/iommu/mtk_iommu.c       | 1 -
+>  drivers/iommu/sprd-iommu.c      | 1 +
+>  drivers/iommu/sun50i-iommu.c    | 1 +
+>  drivers/iommu/virtio-iommu.c    | 2 ++
+>  6 files changed, 10 insertions(+), 2 deletions(-)
 >
-> This is the start of the stable review cycle for the 6.19.11 release.
-> There are 342 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 02 Apr 2026 16:16:56 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.19.11-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.19.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-6.19.11-rc1 tested.
+Acked-by: Pranjal Shrivastava <praan@google.com>
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
-
-[    0.000000] Linux version 6.19.11-rc1rv-g411f8a553ae8
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 15.2.1 20260209, GNU ld (GNU
-Binutils) 2.46) #1 SMP PREEMPT_DYNAMIC Wed Apr  1 19:21:05 JST 2026
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Thanks,
+Praan
