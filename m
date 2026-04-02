@@ -1,33 +1,65 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DE6A1A01BE;
-	Thu,  2 Apr 2026 18:11:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9712374728
+	for <patches@lists.linux.dev>; Thu,  2 Apr 2026 22:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775153485; cv=none; b=lc9Wum67FQfRPa2LNdCuRckQTbp9AQbr1gHUbGSiWsXkhmYtE0nBiKU4d4lscBPrwjK720CEKPMVZdgYQm6rX60PEeRJD3HsaNLJD4kN83T7SriOGnogNB7VVCwbBlM8DCZAqO7pUK2jBXoHP8aJotAlCHSgq6Z85CkFrb4KnfE=
+	t=1775170267; cv=none; b=dJsCvS3XobPVPddcVoCxRukGwnVwZEy7DIxRvnr6T0x350y6upfljdzS3OGE3b/a5lqLD3A05XoS+IF1n8Oqzjmz3ZVo9TonQRb/NhR19LZl3uEN5w/0tTetNwn3pcNblQYzkyfuLhEz0TBkS9b/3Q8f6CB7PXk9uaLOl6oKC7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775153485; c=relaxed/simple;
-	bh=lWwySeUuucnSqrRMaEssqv+qa77TPxUWW5jml+8ovZo=;
+	s=arc-20240116; t=1775170267; c=relaxed/simple;
+	bh=0ZeeJM4QuJubzdrVlPnaK6gT4u5etGNsimdm2s6C0Pw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aOYzszcQfBEDSDOnHAAG+nBE4NvmXa/78h3MRcuSOnB/cCbvDlFYBSjch4mI64hJP/TictWXBI56ZIvSQb/oljWTKHpodYDEooVlJSPJCaz5AB6HpbEKnkpGcepXPuAlQJykBaF2i2bz6oO6+QyXcOI8eGnmtYSDUfFjuvb9xh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=nI+zbstn; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	 In-Reply-To:Content-Type; b=Pi8Ps8lGKnrYtSSLDrogpvSEyLmWE/FGiK/pdNaWswDqYcNHgA/XwBL0ZFSTn+LN+A8Qhi2JRp5EjCqJxD2uaoVOZN3OaVrAEF+pcnp2O0c4b3FDQouYhJwgnhdgI1HXVgWl1ovZZZQ3KeAYy6SEfzaqi2BKER5t90wOpAFWGUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JunoTd22; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="nI+zbstn"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 978AE1570;
-	Thu,  2 Apr 2026 11:11:16 -0700 (PDT)
-Received: from [10.57.75.194] (unknown [10.57.75.194])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0787B3F915;
-	Thu,  2 Apr 2026 11:11:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1775153482; bh=lWwySeUuucnSqrRMaEssqv+qa77TPxUWW5jml+8ovZo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nI+zbstndSHKJ/mynYHRuC64m8Z4xHAi45TXEjGH5rMJxTMtKiuXxjyjbxLarmMYn
-	 hXXkhX8l35nrPiZyzp+ZgYDe4uw+iI8Bv/L+f2xWNIa+OiQyxnU8y+avrnVGEPKVGX
-	 +wUG0AxZTOalhJkOHOlwae27JD/n0ccdlbnChrhg=
-Message-ID: <ec51ef14-e360-43a6-ae62-44a939ec8027@arm.com>
-Date: Thu, 2 Apr 2026 19:11:13 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JunoTd22"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8a151012558so18527016d6.3
+        for <patches@lists.linux.dev>; Thu, 02 Apr 2026 15:51:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775170265; x=1775775065; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cIQ39JUfKxuV8oXRIw8XFZkJM/CpnZ94rlBPTcNXAms=;
+        b=JunoTd228EATUL8E3kB9Pl9mej5dD4eyh1Ll6VdwKHFpEMtcoKjpNLdS+bnTbWMKvS
+         Yc0xTHeZmsr/nMfTyA1agXWwj+vNj2dRmU1Q8faQ30gFUXYdF/xZRc3LOSRNfNffd0sL
+         8PGsWJDySegZoc2M4dV4OUvSV6JAjesBtvIvez0h6nR1unxgR08V4hGsCKUlxIJdEqSb
+         ELS2N4rGJe1DJxI0HZx1ac3Hi4dtfjCOH0LDrxkrNgliRtUyrVF6wLPS9zk4weJgTMsc
+         Upt7wmfoEZW98ScLD9LN3ZqENf9+UYCqaI5aAwFh2SqvVRojbVjZMy/ooINU5mHJ1AX6
+         Cjjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775170265; x=1775775065;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cIQ39JUfKxuV8oXRIw8XFZkJM/CpnZ94rlBPTcNXAms=;
+        b=Ed1tjg5fpmt9tt+KglyK8ngZNjvspgVm2IPufK6RnYdOCAhR1t9YLA0MdaYWVZoK+O
+         OxUdaK1QIuY66mfwAPfbzlt5+rtc3FraMPVhjqx5AaqkXwD7dAJCy9d2BK3u+r3Sp4sm
+         VFI1ZTMOfjPpjunk9sPXKKTHf2Rjmr8iwBpP0++egXGS1WMVlh1A6cKYMZS3xhqgKzDZ
+         cOh4miSNVBlD3uAe7nBGMkjXfOfRIcOapiIYln1hEFmAXVLtlTXiM8a/BzBZu56LfxO9
+         38q2ddkUjqa1KlcOUmfZBm59Ba36z2d1JcY+wf9/PEMFEW0bHRhHFKvE50L7qhoGUV1c
+         4OVw==
+X-Gm-Message-State: AOJu0YybTP0xW3V0spDrSfEKE1ohV4K3/b0czBRaNgLfuxjtnTv1XsEF
+	0zM6xiXQD5UBaab1I2m78VxjcVPoH07slpCsDYKzJ3sDWsRGE1FtfjUZ
+X-Gm-Gg: AeBDietLAutKNgd90AqMB8OQK94nIvapFomHfPIFtiU6/ANBa+4UJsF+J7oK10Su3tc
+	Ywk9lgoG2oHu47fu/es6UlPKLkKoX1U20Dmg3tiPu1EG2QDSNEFuAFhpqTnA0hhG5ChGHHnGWDj
+	ocL0ZxUirhYS2BIn8g7p1MaSRzoaAh3wOC8vSiFoh+rrEmijkQHgxBTuwORB/Mj9nbsibp/loVw
+	fY6OReul5lvR7dK43I6latAL5yAlKyV4oBGnDBTlBTrO/Db6pg3IhWbSNFhhoVw8VYP+kBnO2kr
+	1lTlNpWbTzlSBRa9rpTG7sk4aM8oD3MygGu5roXYSo2TQZxlcrrBAn3EZpqJUL81KxGNrI1xycm
+	H/UI0xtGPAODpu95lpFZLNCzzC0DID/E3Pv7dXC5uxKufm0k28Gg8U2Cc5lWF28KH/SJjn+GXa6
+	t7/RI7oL83iTnJdVO+FvF73opl2CTgUMGjjGq3k/2qHSnvzKicQg==
+X-Received: by 2002:a05:6214:4e1b:b0:8a3:d463:da96 with SMTP id 6a1803df08f44-8a7046daafcmr15182986d6.43.1775170264726;
+        Thu, 02 Apr 2026 15:51:04 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a5977dac0esm32556306d6.46.2026.04.02.15.51.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Apr 2026 15:51:03 -0700 (PDT)
+Message-ID: <fb0e46ab-6ad0-4ad6-9113-89f8363df6d1@gmail.com>
+Date: Thu, 2 Apr 2026 15:51:00 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,133 +67,44 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iommu: Always fill in gather when unmapping
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev,
- Baolin Wang <baolin.wang@linux.alibaba.com>, iommu@lists.linux.dev,
- Janne Grunau <j@jannau.net>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Joerg Roedel <joro@8bytes.org>, Jean-Philippe Brucker <jpb@kernel.org>,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-riscv@lists.infradead.org, linux-sunxi@lists.linux.dev,
- Matthias Brugger <matthias.bgg@gmail.com>, Neal Gompa <neal@gompa.dev>,
- Orson Zhai <orsonzhai@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Paul Walmsley <pjw@kernel.org>, Samuel Holland <samuel@sholland.org>,
- Sven Peter <sven@kernel.org>, virtualization@lists.linux.dev,
- Chen-Yu Tsai <wens@kernel.org>, Will Deacon <will@kernel.org>,
- Yong Wu <yong.wu@mediatek.com>, Chunyan Zhang <zhang.lyra@gmail.com>,
- Lu Baolu <baolu.lu@linux.intel.com>,
- Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
- Joerg Roedel <joerg.roedel@amd.com>, Jon Hunter <jonathanh@nvidia.com>,
- patches@lists.linux.dev, Samiullah Khawaja <skhawaja@google.com>,
- stable@vger.kernel.org, Vasant Hegde <vasant.hegde@amd.com>
-References: <0-v1-664d3acaabb9+78b-iommu_gather_always_jgg@nvidia.com>
- <ee2c2044-e329-4cdd-ac35-9365824d3677@arm.com>
- <20260401173650.GD310919@nvidia.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20260401173650.GD310919@nvidia.com>
+Subject: Re: [PATCH 6.12 000/244] 6.12.80-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260331161741.651718120@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20260331161741.651718120@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2026-04-01 6:36 pm, Jason Gunthorpe wrote:
-> On Wed, Apr 01, 2026 at 05:33:28PM +0100, Robin Murphy wrote:
->>> io-pgtable might have intended to allow the driver to choose between
->>> gather or immediate flush because it passed gather to
->>> ops->tlb_add_page(), however no driver does anything with it.
->>
->> Apart from arm-smmu-v3...
+On 3/31/26 09:19, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.80 release.
+> There are 244 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Bah, I did my research on the wrong tree and missed this.
+> Responses should be made by Thu, 02 Apr 2026 16:16:56 +0000.
+> Anything received after that time might be too late.
 > 
->>> mtk uses io-pgtable-arm-v7s but added the range to the gather in the
->>> unmap callback. Move this into the io-pgtable-arm unmap itself. That
->>> will fix all the armv7 using drivers (arm-smmu, qcom_iommu,
->>> ipmmu-vmsa).
->>
->> io-pgtable-arm-v7s != io-pgtable-arm. You're *breaking* MTK (and failing
->> to fix the other v7s user, which is MSM).
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.80-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
 > 
-> I was very confused what you were talking about, but I see now that
-> the hunk adding iommu_iotlb_gather_add_range() to v7 got lost somehow!
+> thanks,
 > 
-> @@ -596,6 +596,9 @@ static size_t __arm_v7s_unmap(struct arm_v7s_io_pgtable *data,
->   
->                  __arm_v7s_set_pte(ptep, 0, num_entries, &iop->cfg);
->   
-> +               if (!iommu_iotlb_gather_queued(gather))
-> +                       iommu_iotlb_gather_add_range(gather, iova, size);
-> +
->                  for (i = 0; i < num_entries; i++) {
->                          if (ARM_V7S_PTE_IS_TABLE(pte[i], lvl)) {
->                                  /* Also flush any partial walks */
-> 
->>> arm-smmu uses both ARM_V7S and ARM LPAE formats. The LPAE formats
->>> already have the gather population because SMMUv3 requires it, so it
->>> becomes consistent.
->>
->> Huh? arm-smmu-v3 invokes iommu_iotlb_gather_add_page() itself, because
->> arm-smmu-v3 uses gathers
-> 
-> Yeah, I missed this whole bit, it needs some changes.
-> 
->> Invoking add range before add_page will end up defeating the
->> iommu_iotlb_gather_is_disjoint() check and making SMMUv3
->> overinvalidate between disjoint ranges.
-> 
-> Right, that flow needs fixing.
-> 
->> I guess now I remember why we weren't validating gathers in core code
->> before :(
-> 
-> My point is not filling the gather is a micro-optimization that
-> benefits a few drivers. I think it is so small compared to an IOTLB
-> flush that it isn't worth worrying about.
+> greg k-h
 
-It's hardly a "micro-optimisation" for drivers to just not touch an 
-optional mechanism which offers no benefit to them, especially when in 
-many cases said mechanism is newer than the code that isn't using it 
-anyway. The only required semantic of .iotlb_sync is to ensure that any 
-previous .unmap_pages calls are complete and their associated 
-translations invalidated. The entire concept of gathering and deferred 
-invalidation is irrelevant to many IOMMU designs where it would only 
-stand to make overall invalidation performance worse.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-I'm starting to wish I'd been able to page all this context back in 
-before reviewing the first patch, as I too only really had Intel and 
-SMMUv3 in mind at the time... :(
-
-> So, I'd like to make everything the same and populate the gather
-> correctly in all flows. I'll fix the SMMUv3 thing and lets look again,
-> this patch is not so scary to make me think we shouldn't do that.
-> 
->> @@ -2714,6 +2714,10 @@ static size_t __iommu_unmap(struct iommu_domain *domain,
->>   		pr_debug("unmapped: iova 0x%lx size 0x%zx\n",
->>   			 iova, unmapped_page);
->> +		/* If the driver itself isn't using the gather, mark it used */
->> +		if (iotlb_gather->end <= iotlb_gather->start)
->> +			iommu_iotlb_gather_add_range(&iotlb_gather, iova, unmapped_page);
-> 
-> The gathers can be joined across unmaps and now we are inviting subtly
-> ill-formed gathers as only the first unmap will get included.
-
-Ill-formed? It's a perfectly valid range for the purposes of any 
-subsequent generic check - which couldn't realistically be anything 
-beyond empty vs. non-empty anyway - and it's only being set at all in 
-the case where we know the driver doesn't care, because if the driver 
-*was* going to look at gather->start or gather->end in its .iotlb_sync 
-then it must have already set them to meaningful values in the prior 
-successful .unmap_pages call. I think we can safely consider it invalid 
-for a driver to suddenly decide to start using a gather mid-way through 
-an unmap (or indeed to use start/end in any intentionally non-obvious 
-manner either).
-
-> We do have error cases where the gather is legitimately empty, and
-> this would squash that, it probably needs to check unmapped_page for 0
-> too, at least.
-
-Maybe try looking at the rest of the code around these lines...
-
-Thanks,
-Robin.
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
