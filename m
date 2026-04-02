@@ -1,97 +1,92 @@
-Received: from n169-110.mail.139.com (n169-110.mail.139.com [120.232.169.110])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75545242D7F
-	for <patches@lists.linux.dev>; Thu,  2 Apr 2026 01:03:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.110
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F8F362130;
+	Thu,  2 Apr 2026 07:21:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775091834; cv=none; b=Mw+zpYvFtyqT4ZCbCSvrO5Z8GKYiiWRT+Kyv75bandb+BuF8Xg5P2YKCdHZEHOSQVfPO5WPbLv+Yw2QklPN8VZ2Zj4nvKddXvhE9OP1WkW+ZPK+L4yEw6f8xVasqHVhZVON+f289zYRpclyeUDt2/b1Xl3V42I+TI8vZkY199E8=
+	t=1775114515; cv=none; b=ZYi6BdI7RP6AmRQG7xaDB+CpkUAWav8IhNnf02ClKbl3tfcqQrf2xXTapwlA716CDNYa4VdlMLF/SPzcMFaWI7HNiZ+Udby6Zo22aIFaiulQ4e47yfG02mjWLKSChDP5bL05ZGnqCrKvkCAPOJyHFhYJLGwspotewzZQnt86hbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775091834; c=relaxed/simple;
-	bh=rclsxU6clkDHoiMZVx46nR3oO7v9vqI3oxlCqDzoUAM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WoPbjeFO6ebTi9w95240nNB3GymY0Ub1mvetDc3rAHV17V/dSryQTifX/94GddsQmvLRtZkz1BXDYYoDPw39SAYFAUjD0jX8cA6mPgGgUYbi/gQhMT74RLz1C3tGLgvajWrhfBqsR68Qtqpg52lWIdvDlSPFYiFy/9ISnYioehU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=nN8Y0VMG; arc=none smtp.client-ip=120.232.169.110
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
+	s=arc-20240116; t=1775114515; c=relaxed/simple;
+	bh=+JL6oivdWMuarfg8ypyK6cJSWP8sxlSEMnLAR6dnftQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KtMlNRYrmPypEQ7mcNxtCXzAE4++aP3lbpPXRhmW97/a1AwlNce/eMBZStvtUCkHA/uLBsD/P+vHi9j6AyZzVJNXuXqsQALQ3BPLmoEUaNEjDRQifnV3Sh/pNFYDCpEwFSlzemnyvZmNJ512FRRCPYKXHfd+IVkJqxOODN0zr+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=foizvHMb; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="nN8Y0VMG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=139.com; s=dkim; l=0;
-	h=from:subject:message-id:to:cc:mime-version;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=nN8Y0VMGXZbG4qPIBNAKfjUJz+sklfNog8SCnp8ar9by+bZCwZfulf5xdZBDRWYG/t/a4PFlqHwFa
-	 jcldxvu2L2BeKOyR2ONwXWh86OgI+h1QRdsjmSFJ6cN5AqTbMsQk7gjB9Bi8r+C4YhxhvnUx+9019c
-	 s61Z6WfO2j7xh0T4=
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM:                                                                                        
-X-RM-SPAM-FLAG:00000000
-Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-05-12083 (RichMail) with SMTP id 2f3369cdc06662b-0265c;
-	Thu, 02 Apr 2026 09:03:38 +0800 (CST)
-X-RM-TRANSID:2f3369cdc06662b-0265c
-From: Li hongliang <1468888505@139.com>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	fdmanana@suse.com
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	clm@fb.com,
-	josef@toxicpanda.com,
-	dsterba@suse.com,
-	linux-btrfs@vger.kernel.org,
-	wqu@suse.com
-Subject: [PATCH 6.12.y] btrfs: do not free data reservation in fallback from inline due to -ENOSPC
-Date: Thu,  2 Apr 2026 09:03:37 +0800
-Message-Id: <20260402010337.340100-1-1468888505@139.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="foizvHMb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1775114514; x=1806650514;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=+JL6oivdWMuarfg8ypyK6cJSWP8sxlSEMnLAR6dnftQ=;
+  b=foizvHMbqeOBL7OF6NGlNWPPbHhU22Twd/rtZW/CXL7B8d5HDWT4IDNA
+   iwQxgk3VNCuE2e83eUtRY2s9jwFGIoRT5rDQSEvw3kGiwTAbO7qDM3ECw
+   XHb+nDFJpeY3pqWghXlvyzCrxybxdLsRuXQMXF4wanE1YQkbHQbh6n6n+
+   JpWM0pQP8e+sprrrhBZ8Q3dmAmQaV5MILJiqFkzCupw1BOx9JgzgXYudT
+   YGLT0fm958RzcjJFNs9dsD62CZHshkAlu7fXAmas2plE/y68qUyJqVS7D
+   hdMltNsipLqFvJSp5Cd4Zx0uA8Ok17I3PJcuIe6mG6H98lRtHEiTQeDe0
+   g==;
+X-CSE-ConnectionGUID: SrwAZ7pWSFmSN4jBrUV3Qg==
+X-CSE-MsgGUID: x7sBt/a/T4eEjpZbcrq2XQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11746"; a="76132746"
+X-IronPort-AV: E=Sophos;i="6.23,155,1770624000"; 
+   d="scan'208";a="76132746"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Apr 2026 00:21:53 -0700
+X-CSE-ConnectionGUID: sdpQeQsERcOkb5V7Gt8O0g==
+X-CSE-MsgGUID: KSJRlnv9TImaJg/mr20mXA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,155,1770624000"; 
+   d="scan'208";a="226763487"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Apr 2026 00:21:50 -0700
+Message-ID: <0de8ad11-3520-492b-9411-a4ab9bac2dd3@linux.intel.com>
+Date: Thu, 2 Apr 2026 15:20:22 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] iommu/intel: Split piotlb invalidation into range and
+ all
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: David Woodhouse <dwmw2@infradead.org>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
+ Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+ patches@lists.linux.dev
+References: <1-v1-f175e27af136+11647-iommupt_inv_vtd_jgg@nvidia.com>
+ <ef82f6be-fecf-469b-9df0-88a7a004923a@linux.intel.com>
+ <20260330153126.GU310919@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <20260330153126.GU310919@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Filipe Manana <fdmanana@suse.com>
+On 3/30/26 23:31, Jason Gunthorpe wrote:
+>>> @@ -1168,6 +1166,7 @@ void qi_flush_iotlb(struct intel_iommu *iommu, u16 did, u64 addr,
+>>>    void qi_flush_dev_iotlb(struct intel_iommu *iommu, u16 sid, u16 pfsid,
+>>>    			u16 qdep, u64 addr, unsigned mask);
+>>> +void qi_flush_piotlb_all(struct intel_iommu *iommu, u16 did, u32 pasid);
+>> [...]
+>>
+>>>    void qi_flush_piotlb(struct intel_iommu *iommu, u16 did, u32 pasid, u64 addr,
+>>>    		     unsigned long npages, bool ih);
+>> qi_flush_piotlb() has been removed by this patch. Therefore above
+>> declaration should also be cleaned.
+> Ooops that hunk got into a later patch, I shifted it back
 
-[ Upstream commit f8da41de0bff9eb1d774a7253da0c9f637c4470a ]
+The rest of the series looks great to me. I have applied this change
+manually and included the patches in my pull request to Joerg:
 
-If we fail to create an inline extent due to -ENOSPC, we will attempt to
-go through the normal COW path, reserve an extent, create an ordered
-extent, etc. However we were always freeing the reserved qgroup data,
-which is wrong since we will use data. Fix this by freeing the reserved
-qgroup data in __cow_file_range_inline() only if we are not doing the
-fallback (ret is <= 0).
+https://lore.kernel.org/linux-iommu/20260402065734.1687476-1-baolu.lu@linux.intel.com/
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ Minor conflict resolved. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
----
- fs/btrfs/inode.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Please let me know if I missed anything.
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 4bff5d5953ed..73b950b58005 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -717,8 +717,12 @@ static noinline int __cow_file_range_inline(struct btrfs_inode *inode, u64 offse
- 	 * it won't count as data extent, free them directly here.
- 	 * And at reserve time, it's always aligned to page size, so
- 	 * just free one page here.
-+	 *
-+	 * If we fallback to non-inline (ret == 1) due to -ENOSPC, then we need
-+	 * to keep the data reservation.
- 	 */
--	btrfs_qgroup_free_data(inode, NULL, 0, PAGE_SIZE, NULL);
-+	if (ret <= 0)
-+		btrfs_qgroup_free_data(inode, NULL, 0, PAGE_SIZE, NULL);
- 	btrfs_free_path(path);
- 	if (trans)
- 		btrfs_end_transaction(trans);
--- 
-2.34.1
-
-
+Thanks,
+baolu
