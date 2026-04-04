@@ -1,86 +1,86 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DBE20C477
-	for <patches@lists.linux.dev>; Sat,  4 Apr 2026 00:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22443145355
+	for <patches@lists.linux.dev>; Sat,  4 Apr 2026 00:56:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.21
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775263959; cv=fail; b=VRyXHatEGz51wTzclgsff9UJlOguXNUnQS1zfEPRDbC7zkLF5ru27lnmB1hBT/IfUxZ/qCqhR7AhOrCpfeaMGwGW1RbC6WDxwDV68QvQDjJKx/S5GJRCmuIxh4KNOmWU88o1DJo7sy7KQPEnx2ysgabvLBEUVIADWEPFKHdSRIU=
+	t=1775264203; cv=fail; b=mLKSEILSs8CLdW5gP3YiMrNibPwGCc64ZgFQLWxOd7rrHe4M3dWLCCaNi3EPd+8QGeO6FuQvkY+7rH1vRh6aYJTKmb4lUhMLENSBUFJdcNsjEOm4IWZoJr0HQsmWNDTBv1tuom+enFgpzN+r4NdWji8qvuPkaV8oIlpVMavNbhY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775263959; c=relaxed/simple;
-	bh=2QEKDUpZZvgRCz+U4OcKHfWLLNFkGmuUcCU7zHkkCVA=;
+	s=arc-20240116; t=1775264203; c=relaxed/simple;
+	bh=aHL1va89fuqAvmtG287l4r46L6dBAwth29S5H2XDXSs=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=pJrFcmjFg6C6Lm9swb0QEGJeFyxjrT8vCEGbpH3577LPkePgpfL9nAx+bMJPAW5+L82AooTSCLeuE+aWH9bhLUw/UvgBDL4FwK9l1T3171JB86oFOZ14b6qpLcembsbpYh2wFIQcX6jYv2U3HYuCz2OdLGqIMDMPm2eI4VsplXs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TXTzpEXd; arc=fail smtp.client-ip=198.175.65.17
+	 Content-Type:MIME-Version; b=C15Wx3jRsC/enDUvrECImvscd3SONyhb+5/yc9eqdhAm/4z6VaKOQHt06c+oHaQu3uLlEvsy64cQBS3CrFqNquLjIzTRrB35xTbbZOfsV3l3PeJxihxzfZCjjrmWbxezVhxNF936GQr4jB9k7yQYIQ2JBaNg+vBsITxWfBc7jM0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TuPZuFUP; arc=fail smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TXTzpEXd"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TuPZuFUP"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1775263957; x=1806799957;
+  t=1775264201; x=1806800201;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=2QEKDUpZZvgRCz+U4OcKHfWLLNFkGmuUcCU7zHkkCVA=;
-  b=TXTzpEXd9FyA6ZQlxCrTV7RRaW/go6sd/qD28f5KKsx0/qv7P7t5zKkl
-   CaPSfaHsWi6C2SEMedM4vhswCnuTVDxoIl24Tfb81UoI/xA1P7h/OfdkX
-   5FP9ztjtJaoMgl0f9AHNi7l3zFLRDJMWeIZLC+M1VsfWdyOC2Nunao98A
-   6e6uXP/WjrEox9VllaQyC+ne5RPYfV5DMUDOSw/pIhzWKaVv8HgkGEM7H
-   UQED3NjBGh/1swmdQHN/kuDPPwaGV90Ft0X5Uw/rinBhR6UtFawzOJlUG
-   NIRK2FN4x6Ath718kW/5/V3gKGgGNuhNsBxox40E63fQr1ELU7QLTAK+n
+  bh=aHL1va89fuqAvmtG287l4r46L6dBAwth29S5H2XDXSs=;
+  b=TuPZuFUP3J2MXsYHhSzavrkvYxUsMkhww9GSD1dau6vdI/AyzHgqbM3S
+   u8LWPacs6P1Ukmc0zVn5x5ZVmXKMrctdXGMrPy298rc/r3RmJGfeZuvjE
+   niMVE+p/rINgL0vt2IHIkUhuOnxriFdDrp/nCiqRdnyoN94CMK5nxkT7T
+   FiBW/VCe9EmEVLjv51Ys8cCy0rk5n/XGZVYj93b2CfRnv07vXOwyHMwTx
+   QOUuZ0Zp3eUs6gStpN4ufJIbjLJQUqQOpKIKdhRYDY+HRwj8Les3hUH6t
+   OHglLCLVCypSQG04Wg+13mO3udUklqawOcnn5pjnkwdrkH/cXpKkBcx86
    w==;
-X-CSE-ConnectionGUID: FIl5iM7qS62N8JEsn8IeIQ==
-X-CSE-MsgGUID: E9+CwbRhRsOi2YMux3yRXw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11748"; a="76291455"
+X-CSE-ConnectionGUID: BmDhsfXTS4SG7DhimvVazw==
+X-CSE-MsgGUID: yXe9MeIZRluDheOsuLBV0g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11748"; a="76207561"
 X-IronPort-AV: E=Sophos;i="6.23,158,1770624000"; 
-   d="scan'208";a="76291455"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2026 17:52:36 -0700
-X-CSE-ConnectionGUID: hzovi07hQfmR9yPN68Hvpw==
-X-CSE-MsgGUID: z6I0/DlrTFGP0L6seyL2pQ==
+   d="scan'208";a="76207561"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2026 17:56:40 -0700
+X-CSE-ConnectionGUID: r1UFKXJ+Tlmz48XADD6V7w==
+X-CSE-MsgGUID: DjHGam0cTxeuiRAKwu+7CQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,158,1770624000"; 
-   d="scan'208";a="265326074"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
-  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2026 17:52:36 -0700
+   d="scan'208";a="226385663"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2026 17:56:41 -0700
 Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Fri, 3 Apr 2026 17:52:35 -0700
+ 15.2.2562.37; Fri, 3 Apr 2026 17:56:40 -0700
 Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
  ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Fri, 3 Apr 2026 17:52:35 -0700
-Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.27) by
+ 15.2.2562.37 via Frontend Transport; Fri, 3 Apr 2026 17:56:40 -0700
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.58) by
  edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Fri, 3 Apr 2026 17:52:35 -0700
+ 15.2.2562.37; Fri, 3 Apr 2026 17:56:39 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aNqk7swhQT3D/998mJrAboKj+wGkw31p7BRZXaIW3ZnHAL9QeJ7p4isTLyUuSOTALBIZCNLHAguppUCtBU+PITpc6WBfPfCDxBkZrfc6YgAZfI0o3fAJm0veM0zSJHu920fYVNkVLpvULHplXOE7vGLS59Rq+uyr299O6EfIO1sxPvF/c1nvfM8MOVnQA01wpoXG+5+eMPwUKIyblC5AXuwsX4nvwCNAY29D9Rl+4QAZCfb9CxYy7gglYudNT/EB+JKxIsyP1JeS97bLho6kdOYXGTqIQJXQgAF+zKarT6GVmHekFSqbYJCNykqUuy1BItbL2VDCalHseLFgZFq+4A==
+ b=XBTVbnkCHXJq8ATyvAGK2oGtW5KSZv5plsyy00FDyFmJGG6qzTqiAK7Coin4I7MUSXVsEYQUz9XxKDz9nhgm1LoOnt+VGkuxdikf16kA52Jl2P0qwlzCg0zwRhnAsO3cYnkIk81eLWennsda4Fz7kIAuaracx0++toGInuP9beDyDlxL9A9oHRj3C0XmPoQ7gAy27EaoogwTJFVT7jBZAUFjXZluUHil4qzRChZpEGmxk+0bFN3REUsPuDkDT8WG9zAcWNSq3NUtXbSk9+t76Oo838KDA62lFdqGcm4s1HJY7zcEc/sMFt/kTVk70ukxJQ1zdYkG7i0YrMsm5+VaFA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VRcynjqnvytrwQbnirYbqWwNL0wMUW4qD/EwrbDuG20=;
- b=SDH3f9BORf3c+y6ueIhpFHec+b5lQogJOSHwBlR+4qt1t+HOPiPeMHPyVt/rRMg+Ky9We9dUyc4xcVKLB0YJ6vcQmmsiga0tXupsgKErDYR+th2mpFaYcnvzaeW/zsYON8VYbqD3M8Dk46dovo2dIslqsqtpJ9ekrAI7HQ3vuDW+xGxmHigOKgsL3CH9beHb8EHpe7IhD3RUsb5t2uSBCICfYDX+iL0qCfbzB+4JxzxgWMM5BVv4H8k8IVgt+XqL1iPug7QGc/eRhR9B9Xm2BeHOl4lvPeORKgO5HxAS7GeI5liYLgpR2hFpTB8kmq/ihcpUGfxt2OipQ6jyOixwcA==
+ bh=La8Rg9aNvKlLVVhQgSM5MVjesfINgidnqZqC418QJNc=;
+ b=TwUM4F9C8uRZyqXJghJJ79lxkS1YTPFR3YchF7pvo0KZkej8Z1r/TCJhgkTal4lP+eliPdoLusREpV3vyYMn4Mfq2utDkkSmSBb9kR+6vThXst3NyxF0SqkDBFe3TgZVIM+wgdWr9Ww0sBrjSjdYGlbPRGPT/VaX38sa6Cxn90JADv5oUDN5RwWmyEZ7TjiaTDRUy1jeMwwy0IZi3yMqMenuuOZpKAxoWDOPWZ6hOjpXY351c9dsmm/PWku+Oa5VaaiGyV3hEiSK69ARoo1WGElkh7uZxEoq3YkAUvLXLRFqOP/lx0B4bVixl7a9zWOykRd9Vmn2hfTXPavVFqV5sA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by PH0PR11MB5175.namprd11.prod.outlook.com (2603:10b6:510:3d::8) with
+ by CYYPR11MB8431.namprd11.prod.outlook.com (2603:10b6:930:c7::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.20; Sat, 4 Apr
- 2026 00:52:33 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.17; Sat, 4 Apr
+ 2026 00:56:37 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::bfe:4ce1:556:4a9d]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::bfe:4ce1:556:4a9d%5]) with mapi id 15.20.9769.017; Sat, 4 Apr 2026
- 00:52:33 +0000
-Message-ID: <45436044-202b-4d77-b552-2156be47a52d@intel.com>
-Date: Fri, 3 Apr 2026 17:52:30 -0700
+ 00:56:37 +0000
+Message-ID: <435073c9-02c7-4816-ad07-fdec09610114@intel.com>
+Date: Fri, 3 Apr 2026 17:56:35 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/7] fs,x86/resctrl: Add architecture hooks for every
- mount/unmount
+Subject: Re: [PATCH v4 5/7] x86/resctrl: Resolve PMT and TPMI symbols at
+ runtime
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
  Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
 	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
@@ -89,14 +89,14 @@ To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
 	<david.e.box@intel.com>, <x86@kernel.org>
 CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
 References: <20260330214322.96686-1-tony.luck@intel.com>
- <20260330214322.96686-5-tony.luck@intel.com>
+ <20260330214322.96686-6-tony.luck@intel.com>
 Content-Language: en-US
 From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <20260330214322.96686-5-tony.luck@intel.com>
+In-Reply-To: <20260330214322.96686-6-tony.luck@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0328.namprd04.prod.outlook.com
- (2603:10b6:303:82::33) To SJ2PR11MB7573.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR04CA0304.namprd04.prod.outlook.com
+ (2603:10b6:303:82::9) To SJ2PR11MB7573.namprd11.prod.outlook.com
  (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -105,234 +105,286 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|PH0PR11MB5175:EE_
-X-MS-Office365-Filtering-Correlation-Id: ff608a7a-bc54-4af1-60c9-08de91e4749d
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|CYYPR11MB8431:EE_
+X-MS-Office365-Filtering-Correlation-Id: 470d5010-cfdb-4cfe-e8fb-08de91e50636
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|921020|22082099003|18002099003|56012099003;
-X-Microsoft-Antispam-Message-Info: BvvvaPNf6WlLO+nsWl9WGFQWtb5JKrIGI19VsRONVW8+/H/Q4iZeL8etpbzfFhgl3DhvZ9/J+ccm72vLVg5Al3YfHmh7aNEqFpHXLYEIc27wEYYJCMpKhGICRNMDeaHkO6uSH2XtYwZNYS5NfuJ6+90WNSUJJPK2G260auRnU1Lv0rCNN1692xhX6BHjDjGEXGsMpljpgqI/m3qR8egr6GIZQoPUvP8uSGV/GtlAxL9m7eF3X9qWphggkFLz43tGdT6SP/QCqqMPehDZ2bI1JiYF3avR9WfKR/68J10NvyVEtd8pCHimT3SfGXbFUOwaOJ5uOCyqXdup9JadgPo7oBjr/ak0AdglhTVlQWGhDrLe22M/RUGvKBj7GhNm/DC6Tpq/+igJYgllCl8oDHzwLblROqe/x0B9FSe44YE5mHafF/uwdbehDFzX8AhLO6uyGpeXtjk1moT81hozdinrOlqrEOTWUcVYBqycL+X9aitr/fo9aGSvX0NsjhNF3fPboYmEEX4BU7cYlu7E/kNb2g0gyUuMgmkdU6JJKDV+7/ZFk6lpD+J30aLFsnjZE+Zpx1gGEwR8cdHXLzYluMNClGqIan37UTKHjSrA44Y0aKIMo3tqoJKmFDSkKm4NbJcZl/h02PndJMBavVOiojNOHuc4oMUtCGp3bfhNZbAWWs86C0WHWE96GkVeOyBuDomnOoNFH7FgucSA4BhDNL7YXEBrtmANQAZGWgOz/GhfD2Xeo469LHo2n6imBvfVDPb6hnVjRxTd3fXUlbLg0RZ5ww==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(921020)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|921020|22082099003|18002099003|56012099003;
+X-Microsoft-Antispam-Message-Info: au5umMUcrCU0T2zkMPdNVGq+oxIpvYj1U7QfV6yFpSXZ0YtCWQRXtxjOTi8yk+gqoecu0EmB4iNhLTi4LzqfNtKj339Fy3nFz+hyFbrBSkCyIMufrBlFwTeK1trJK54wvC5xehKrFCBvGKSkREUOC1w6ikSnm9H4vAnyLc2u0ZE6cZi0xHVua05fFNqAZu0CpJh8+SboS3IYvQXZgvGDZa/ihDW2MB9MJLpNJTsDt12C/NcRkCbe2PmwcIkpTHUMVe0Wi84J2+aJywAnyiGY4F9WEHihJpfLLpSneWOIq+4L+mScHQYa/PHTsapZp+BtAQ03bzcehASCsLBYw8dEqz1ry3AwNVNguEkpAY9HCsZIMQFkLPG0iozEg7zvs9JPsaqrvncgbTXV9X7CmL3g74LceOjJ2rCo4Hk0mq2uLOIIq7FgebYCSI6w9OFCqba7K7czHGoltdEJ93yffkc1Gi5qg9lNhsandzeM1SpPazI3iG2cDngzEE/8s6U2f55zM0oMmH1ojB3yEP1yk/aH4KrIWHbdxS+nUasbP4sWSAOxo4SltucSPE5Irc43uQeTnUZKMdi1sC1e/UEiWzgedtk7vNyXUYRnZxTvrqGlddbKrXKbLDCivxq5Um3kF+cLc3EZUnndz8Q7VA9yCShC0IEA3OLBEOqRcGb6i0i2CW8au8uG9oimpLDpCZ1oUFWT7Fnld0s60OSxSJ7hF2owvKX2bkvb3PHmhwzuhyqunYuEL+Fc6dKtd7CL5oNaEaBVKF5SEtzJx4JsEKpwOAgCbw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(921020)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ckhmNWVlYnNIcFdVb29lbnhjbU9sNlZFNXFwYzdFRkJUY3Fqc0ozOEI2ZjB2?=
- =?utf-8?B?QnJRRm4zZnB3TWE5L1hIWVIvLzhWOWlCVXl3dlN3ME9UVFJXdG02blBGUGtH?=
- =?utf-8?B?MXI2UGdnanAvaHN3bjFtV3pSV2NaOW5UcjZKVTZGMktjV3RKcTd1Y2hVekJL?=
- =?utf-8?B?cmN5UzlCQkpwcVZJbWRsTXNrS3VqLzZ6b1RGU3ZPbHlYMTF6eWpOWHNBMkV2?=
- =?utf-8?B?bTQ1VGtzckIvQklZUG1wUENOT25aU2FWeHpPWVZRZy82aFJZcmxrRHZKOWxn?=
- =?utf-8?B?Ykxtb09keUFQRUdKUWwwNHJLYUQ0NGQ0eU9VclVnNy9hRm1xbTcwSGVvRWtk?=
- =?utf-8?B?R1JHcm5qRDZlTFoxL2hCVjhJakRaVlhVMFpBUVNvY0s5Q0F5dHNKOEd3TytS?=
- =?utf-8?B?SitJRFdoMGxFSTRpYjZHakpWeGl4VnVSSWZiM21RWGRCOU5jd1NyNjFLZGhm?=
- =?utf-8?B?aXQvQ1FpNlNyaU9UYUxzM3NwYko4SlZvZThqT0FxS01zRVFpNkxuTENwb2ds?=
- =?utf-8?B?Qm85WmYweHpiQkU2WG9xUG1rMzUyY3VHYUNlbjVTNTh1aG5nNXptcU9neE5n?=
- =?utf-8?B?Ri9MbjdoTnFnaGMvSkYyaHFpOURtTzV4Y1VhOUhZdU1KOUpvS29CRVdKdHI2?=
- =?utf-8?B?WSs0ODVGQ0hBV2tsajhOM1VnTC8rVmFrOGZIekdBM2lkbmtvanZ6U21hQXNN?=
- =?utf-8?B?YjRkZFlmdVV5MXBIUnpDcEFnbm9rUVJuNm1qMzFxL2NrUHJCcG1KcGF2NFlV?=
- =?utf-8?B?K0ZYUGU5bFlFZ2JacjBWa2Y0M3Z5bDlqOGN3UEZPRW1pUm45UmZiT3RXRnpJ?=
- =?utf-8?B?VExJaElvQkRFVmk5Vy9oVVNkaTl6anhpdjhCVUUrT216c2ZBY3FlSkxvOEQx?=
- =?utf-8?B?NWhlU3ZIV3ozRzFhTnlPUmRyd01nMVFMSGZpclFNZld2TzNkZGVTREpDeE8x?=
- =?utf-8?B?dWVaYUNzV3pLNklzYm1ObDEvTzRsL3pONjFEVHU4Z3BQOHZHbnNYbkMzaEFv?=
- =?utf-8?B?VGROdFlPZGhaOEhMU1BuSkdpSEZXVTYvLzhSejJINUUvSU0xVVpYN3lycjMw?=
- =?utf-8?B?R2h6TmNSZjdlNkwwNFFwOG1WU1YyTm8rMzJCQUZFWnpBYVNKYlZoak5QK1ho?=
- =?utf-8?B?bmsrM1VNRHd6dStTOWRnUkJvckFBLzdpb3ZKRXR4UGxmVDhja3l1VGRVTURQ?=
- =?utf-8?B?U3Z5VWF2R3dTUTJuOTN1eGI4T0luelI0ZlpHUUlBSGtaRDluQkpxRnd6bXNH?=
- =?utf-8?B?Zk5ueU9aTFNpRnVoOW9JaUg5ZkRKNHpXM2Y4R1ZXUmtlb1BzYjV0d05GQ2x5?=
- =?utf-8?B?T2x6OGRpK3hRbzdnay9uUlR3RjdRQTN0alZScTNJS25pVEo2YTYvbHJkeVpa?=
- =?utf-8?B?Z1JlTmhHb2RJb09QSkRvRE9xcHdiTytXMVduZm11MGJCbmxIWFhwd0s5WjB0?=
- =?utf-8?B?cUN3djFyaUZXWUNaOHA0ZHNSaXpWbzRxamI1ckpsYzk0RE5OZ01GVU1sTmNV?=
- =?utf-8?B?aTE0aUNEOTVySmJ5NE1Kbm8wN1RORTU4SmsrWUlmUFZqV014cDN0VUN3cFRS?=
- =?utf-8?B?S1lLU2diRFhjekQrVW1vY21nOXgyckVSajBMSXduRGFXVDJEekRsTUhvOXFv?=
- =?utf-8?B?NFArKzh4SUdqTXA1NWpVY2xrbVc1dll5WmIydTBlUlZGZDBBRmMxZG1FU2px?=
- =?utf-8?B?a2Z4bktTdDh3SEhOSlBCZ2l4ZGowcGxFbVUzQ2g5L1cyZEQwS1I5dmwva0M1?=
- =?utf-8?B?YTMrS3FPL0phZjlqV1piVWxmVmxpc2Z2RjNvcmp4eHU2bHBqTFhtQ2pkTCsx?=
- =?utf-8?B?SUdpbnNmbGFaTW9UbkpodTB3dG5RN3FOVzJDc2tKbTg5M1J4NG51QjNBVTdx?=
- =?utf-8?B?VjdYeGxKK0JKR2lNY1lxNTJka0I1Q3lxY0tQa0NsOG9VbFlOdmtGRnBhQjhJ?=
- =?utf-8?B?UlE3eUdBUEdVNmNKNXFGQUYxZUhOTC96NXZVM25wYjVDL2dTWkZLbytpZnEw?=
- =?utf-8?B?eFhDRmtSK1gvMmVIVVh4YW9kR3lPWDdtekZ2c1M4R3ZmVlp6YS9mLzFLT0hE?=
- =?utf-8?B?QmV1OXVXcjViMmxobDEvUGpsMUhabWJEZW5XQjRNMXlJc1psbHlFTkJhcG92?=
- =?utf-8?B?SkphM1p6MDEwVDIzclZyaStNL1NDemtIOWFyTWdPS0g0eGdtNm1DcTlISDNU?=
- =?utf-8?B?dWZGSkxHZjFBWUVrZGxqR2h2R1BGUmI2ZmtpVFBObnpUTUJNTmV2MkJwZDk0?=
- =?utf-8?B?UURKQmFCb2oxbllld0g2N05OQ1F1Q1UvNG9nNEt0WUdML0JZeUluRkUxZTY4?=
- =?utf-8?B?U3N5TEhSQnJiVlAwbjMrWktMTy9rSitDWHplU0dtdzV0a1FlcDNUMHhtOE9p?=
- =?utf-8?Q?w2ptYhz9TL8Ma4BQ=3D?=
-X-Exchange-RoutingPolicyChecked: iJuxxC06zgVE5klpQgm2Myxpk4gzM/eBwKEg5bGJA1JMbw18ea/DOx/4DzOyleJ04vygLswNZcQhEHqBvmOBD3sMvUIlcWmH0bidsih+M/vtIU5dcrpAavDAt0HWpMMoWZXpOORrqk5RlUO5zDLzJ7R8s0eADFL4gnwBB2fxXj1FHcTpf085dwJ6XgapZrmVuJ1R/PK4ACm9ByitfCooB8pBmhivt04mbLJjfHvFodmm1/Xp6E0U9k9QeqQgIbdvX0jDswlOkmxM9Q6Gznr/ZtbqhooYTz4tj9nlZX253H3hxQt8RIQCiMgqDz9z2fQZ1gOss8t2n9trEIHTvbz3BQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff608a7a-bc54-4af1-60c9-08de91e4749d
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YkxqUEhldi8rUG1POTFicmY3L3hYWEVYQ0NIV04vcmg3eE5CWEdyVHVUalQ3?=
+ =?utf-8?B?VXI1T01oRjNodS9JZlpuS001aHNhWENxNFRnWUJMRFRGeFdHRU81SlNSTCt4?=
+ =?utf-8?B?SmdPYkVRTWE2ZExoeXBlOThRcUU1ZkZmRXB4bU5mUTc3M3E4bjVrNGN3eUxk?=
+ =?utf-8?B?ekdkZ3l0eS9qMForYndoNVJlU0w3ZVJ6QWZnSzdkQzU0NmJud0p0aWEwN3dq?=
+ =?utf-8?B?T2V5NjZCUTFiUDBPY0hxTVBhbnU2MHNDeGVMNkpYU2JOL0dXa1Mrd21UWDJa?=
+ =?utf-8?B?RmE3dDkwNUJpL1VKTFdDRldqZDJWTllibmY3MmI0MkpPY1ZTeFdyeXJaNTJr?=
+ =?utf-8?B?ZzJTbzJ0SGsrUTR4QmdUV3J0R25jZGtHTlhoNEdQZ01Ncm1WdWN3bkxEME9v?=
+ =?utf-8?B?aUdwZi8vbXJZNHRTQW8rN2JtcEtFdkR0Z3JtWkpEY2RuT3c1RUZYUmttWTVZ?=
+ =?utf-8?B?dEFNODhrUnkwcnJCVWVHMTJFczlmZHRLUk5iZC9BUUNhM3dwRGNQRWJkcE55?=
+ =?utf-8?B?NGxwQlJodU15d2d4Y0tycVE2SStZbHhUK2FoVE5LeDNlRjlGME5OaVdRSVpZ?=
+ =?utf-8?B?a3RXMXo0VGpvUktET0xPMDFEeEZYQ0MzVjlzb0ZmZmF1WXFnK0dwRzdOYTBr?=
+ =?utf-8?B?ajl6dHArYkc3eG8xRG5qNlJUbTY4em1ZNVEyVDBoVjd0Nm1mb2N5NGFKUHJL?=
+ =?utf-8?B?OHJacDVKeU5rWitFaC9HNUd4V0xOYVA1eXNMUWh5NVZuNWM0eVM1K0FZUytx?=
+ =?utf-8?B?TnZFRWYwcDFtK1B1WWdBZmVaVzZFY1F5cDZlT09RcC9kK2dBOUpxSE1oK0Ja?=
+ =?utf-8?B?MDR0eWFqWjVuYlB0bTkxT0F3Vy90akhZOGZVMlFxY3dkbVVhUWNRYmR1amlR?=
+ =?utf-8?B?bUpQRXVYbVFuRWlrZHNVTzF0dUwxT1N2Y09FK1FQTVl6TURBQVNtNWNvckJ2?=
+ =?utf-8?B?bmZwdExzRUwzdnkzOUFJWWM1OU9TK3hkYmxBczFXS0Z5RmpOcEtSc3ZqTTla?=
+ =?utf-8?B?UlA0b3NndDFBSVRxanZwNDZreWxxb0xnWnVLZDA0aXh2WGJrSWgxUVFNeE9z?=
+ =?utf-8?B?V2t1VitaYjdDQVBtYTlzMEtnaVBFOGlHcHN5dWpYRlpSKzJuK0M5ZFdveVRY?=
+ =?utf-8?B?MDhwRmdmWVNCbzYyUFZtb0E1VWlKV2dPRWxQNjBRMEh2UzVoYkQyQTRDMkpt?=
+ =?utf-8?B?VW9ZTVpoU2l4SlpYVFdlbFJQNm9uak9XZ3pNd0FVZmVsaUZsdldSai9DcklB?=
+ =?utf-8?B?VjA3VjcvNHRTMXZZMzZMdC83b2tSNXJ3bkszRHZXM0JTanpYZU9JVng0czB2?=
+ =?utf-8?B?bjV6M2hLNWhKSXVBR1haZ3VhS1c1RytIZ0ptM1VzTlZiZ0NlZUh3TTk1eklr?=
+ =?utf-8?B?THBQVEFpekF1UWVvb0JJL2JlbDQ5UUFTOXVzWFlBalFTVUcrTTREd3l3ZVpD?=
+ =?utf-8?B?N2F4SnpCNVJoQ29JTkpvbFFMZDBWaU1ocEd3ZmM5amxhNjZqMEZMemJtanNt?=
+ =?utf-8?B?RTJkNFBzS3RDMXpVdVoxLzUwbERlWURWazBnT2E2OVFlZDZVNEVFYzA0OVFN?=
+ =?utf-8?B?TlpQcWp2MWVXbHJNSDRzdC85b1Q0REorN3AyYk1RZjVGTmJRc1FZL2xWUGwz?=
+ =?utf-8?B?aFgzWCtSemVFemtZMm5sOGMwUkFhSmNIaUZnSjMySmFTV2tpRVJrM1YrS1Rr?=
+ =?utf-8?B?YWp6ZkxmOUxIaGV4T2xXYjkyTEFSZ1dzVGFFVTRMZjdGZWN6TGU3U3YzTitj?=
+ =?utf-8?B?MkJpL2RTWnVNV0NuWHhmU0tCUFoyRmdwNktVM3l0cjlGa3hhZSs0Zkh4TU90?=
+ =?utf-8?B?d21oc085QUk4b3FxSUYzbmVyV29GeXlrMTBBaUhxY0xjMGc0ZWtxS1pwU2JV?=
+ =?utf-8?B?UUtyTWVGUTVLYWpzQ0hybUFQZkZTazJCM1hHWkxGR0Y5STBCbzIzNzJzd210?=
+ =?utf-8?B?UXFISDBlY0NFNlRkL2h2c0N6VytDci8wSWl4eVJUVlIxMnEyOTRFNHQ2THdr?=
+ =?utf-8?B?bTNxZmJ1ZWxRb09qaVNKdmZpaEpOcm9kcVJOY0xBT0pyN2FlZXNSaEVDczlQ?=
+ =?utf-8?B?OVRyTlErTkh4b3ZCMHpvRkw2ZE9WR21WTXhGRTIwQVVRRE4yVlk1VGdtYzl1?=
+ =?utf-8?B?TTNHeFFpOVJZTFRLOEc5dGZuMXFCSklUalp1b3k5WVdpMVVIMWRvTWhNYlBM?=
+ =?utf-8?B?OXRMYU9oTVdIektvOFJXSnQ3MzhMRDY1V2NwUThEdnlxVEtRak1ObkpOSjhN?=
+ =?utf-8?B?eW1DeHA3UHpwQmR2RURmc0U3M2dJTFEyWTZEdHRha00vaUxHVWNNTEY2V1NZ?=
+ =?utf-8?B?NG12Zld3dDRJd2dZUUpSRzVFcXJvNU91WVFTSEtUUU5MaDVqdXdhMWs2bExt?=
+ =?utf-8?Q?XaPjcNpQuhKvvpfU=3D?=
+X-Exchange-RoutingPolicyChecked: C/kYotwKwBqMg6PulgaX6umPGTugLKmDhoFCegG6q//0KVws5NMiazM0BPXrCoh4bSdYWYqR4GesRn25xeMvG5CEUf6cz88Zazk6bZZ550yiflRUTtWk3eBt+k09z2OA86wT65vLnNE8XkJkJx+liVkQj1LwTZ9XFF3YkT+ojpGw49Cm0OApjCAETZ82E4YBqCWUMD31IH+D+qTlo61xB7OLSFIEhK7XeLOv6SjMI0o+oE/Cmt+rrPewHd/BKc0+WOb7DD3UwrYTOUd5qVuXY1YqFGbGG1/Vyp7wT0NlBmtnEwPwKvsmgDbLKHqfJPVLPVHeI5s09OVjoMnnQ3QmpQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 470d5010-cfdb-4cfe-e8fb-08de91e50636
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Apr 2026 00:52:32.9542
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Apr 2026 00:56:37.2066
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: o/VyIRd8LMG4TokURNkR4sosBt/ECXrwUh/IjMLRlJXvvzQ/RgiIY0IUuaofsQEAirEe0dpORQWBeO9z83yDnYXsDjIEv0gKSwrsAqDCbpM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5175
+X-MS-Exchange-CrossTenant-UserPrincipalName: jgUvmeGZtbnT5mYgCmCT0B1hPfhd0tWylPhHUGaYjhwBLtW5gmWBZtdPNtz8CPckvfi2XFsdvot0pQuF6Xy5viHISbqxLoYYbWbg92xCumc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR11MB8431
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
 On 3/30/26 2:43 PM, Tony Luck wrote:
-> Add hooks for every mount/unmount of the resctrl file system so that
-> architecture code can allocate on mount and free on unmount.
+> The resctrl subsystem is always built-in. Currently, it has a direct
+> dependency on INTEL_PMT_TELEMETRY and INTEL_TPMI for Application Event
+> Telemetry (AET) features. This forces these drivers to be built-in as well,
+> even though they are logically separate.
+> 
+> Switch to using symbol_request() to resolve AET-related symbols at
+> runtime. This allows PMT and TPMI to be built as loadable modules.
+> 
+> Update the mount/unmount logic to manage these references:
+> - Acquire symbol references and pin the modules during resctrl mount.
+> - Ensure AET structures are cleaned up and events disabled on unmount.
+> - Release symbol references and unpin modules on unmount or if
+>   mounting fails.
 
-Please use the changelog to describe and motivate all the other things
-that this patch does.
+If I remember correctly resctrl depends on the mount being done much later
+than driver initialization to ensure all PMT load and enumeration is
+complete by the time resctrl fs is mounted.
+Now it looks like these modules can be loaded dynamically on resctrl mount
+with the functions learning about PMT feature groups called right after.
+Considering the change in timing, is it guaranteed that if
+intel_pmt_get_regions_by_feature() is called right after module probe that
+the telemetry driver would be done with its enumeration?
 
 > 
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
+>  arch/x86/kernel/cpu/resctrl/intel_aet.c | 93 ++++++++++++++++++++++---
+>  1 file changed, 83 insertions(+), 10 deletions(-)
 > 
-> Note this patch disables enumeration of AET monitor events because the
-> new mount/unmount hooks do not call intel_aet_get_events() (which is
-> not ready for the change from "just on first mount" to "called on
-> every mount"). That is resolved in the next patch.
-
-This could be part of the proper changelog.
-
-Could patches be re-ordered to support incremental changes?
-
-> 
->  include/linux/resctrl.h                 | 12 +++++--
->  arch/x86/kernel/cpu/resctrl/internal.h  |  8 +++--
->  arch/x86/kernel/cpu/resctrl/core.c      | 14 +++++++-
->  arch/x86/kernel/cpu/resctrl/intel_aet.c | 13 ++++++++
->  fs/resctrl/rdtgroup.c                   | 43 ++++++++++++++++++-------
->  5 files changed, 74 insertions(+), 16 deletions(-)
-> 
-> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index b312aaf76974..489c7d4ae3e9 100644
-> --- a/include/linux/resctrl.h
-> +++ b/include/linux/resctrl.h
-> @@ -518,11 +518,19 @@ void resctrl_online_cpu(unsigned int cpu);
->  void resctrl_offline_cpu(unsigned int cpu);
->  
->  /*
-> - * Architecture hook called at beginning of first file system mount attempt.
-> - * No locks are held.
-> + * Architecture hooks for resctrl mount/unmount.
-> + * Each is called with resctrl_mount_lock held.
->   */
-> +
-> +/* Called at beginning of each file system mount attempt. */
->  void resctrl_arch_pre_mount(void);
->  
-> +/* Called to report success/failure of mount. */
-> +void resctrl_arch_mount_result(int ret);
-
-Why is this needed? Why not just always call resctrl_arch_unmount()?
-
-> +
-> +/* Called to report unmount. */
-> +void resctrl_arch_unmount(void);
-> +
->  /**
->   * resctrl_arch_rmid_read() - Read the eventid counter corresponding to rmid
->   *			      for this resource and domain.
-> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-> index e3cfa0c10e92..6f322818a9e6 100644
-> --- a/arch/x86/kernel/cpu/resctrl/internal.h
-> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-> @@ -234,14 +234,18 @@ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
->  void resctrl_arch_mbm_cntr_assign_set_one(struct rdt_resource *r);
->  
->  #ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
-> -bool intel_aet_get_events(void);
-> +bool intel_aet_pre_mount(void);
-> +void intel_aet_mount_result(int ret);
-> +void intel_aet_unmount(void);
->  void __exit intel_aet_exit(void);
->  int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val);
->  void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
->  				struct list_head *add_pos);
->  bool intel_handle_aet_option(bool force_off, char *tok);
->  #else
-> -static inline bool intel_aet_get_events(void) { return false; }
-> +static inline bool intel_aet_pre_mount(void) { return false; }
-> +static inline void intel_aet_mount_result(int ret) { }
-> +static inline void intel_aet_unmount(void) { }
->  static inline void __exit intel_aet_exit(void) { }
->  static inline int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val)
->  {
-> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> index 7667cf7c4e94..162eca2cfcdb 100644
-> --- a/arch/x86/kernel/cpu/resctrl/core.c
-> +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -769,8 +769,10 @@ void resctrl_arch_pre_mount(void)
->  	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
->  	int cpu;
->  
-> -	if (!intel_aet_get_events())
-> +	if (!intel_aet_pre_mount()) {
-> +		r->mon_capable = false;
-
-Why is this needed?
-
->  		return;
-> +	}
->  
->  	/*
->  	 * Late discovery of telemetry events means the domains for the
-
-
-...
-
->  #include "internal.h"
->  
-> +/* Mutex protecting mount/unmount operations */
-> +static DEFINE_MUTEX(resctrl_mount_lock);
-> +
->  /* Mutex to protect rdtgroup access. */
->  DEFINE_MUTEX(rdtgroup_mutex);
->  
-> @@ -2788,17 +2790,8 @@ static int rdt_get_tree(struct fs_context *fc)
->  	struct rdt_resource *r;
->  	int ret;
->  
-> -	DO_ONCE_SLEEPABLE(resctrl_arch_pre_mount);
-> -
->  	cpus_read_lock();
->  	mutex_lock(&rdtgroup_mutex);
-> -	/*
-> -	 * resctrl file system can only be mounted once.
-> -	 */
-> -	if (resctrl_mounted) {
-> -		ret = -EBUSY;
-> -		goto out;
-> -	}
->  
->  	ret = setup_rmid_lru_list();
->  	if (ret)
-> @@ -2900,6 +2893,30 @@ static int rdt_get_tree(struct fs_context *fc)
->  	return ret;
+> diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+> index 743a1894fe9a..14b472106f52 100644
+> --- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
+> +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+> @@ -23,6 +23,7 @@
+>  #include <linux/intel_vsec.h>
+>  #include <linux/io.h>
+>  #include <linux/minmax.h>
+> +#include <linux/module.h>
+>  #include <linux/printk.h>
+>  #include <linux/rculist.h>
+>  #include <linux/rcupdate.h>
+> @@ -289,6 +290,9 @@ static enum pmt_feature_id lookup_pfid(const char *pfname)
+>  	return FEATURE_INVALID;
 >  }
 >  
-> +static int rdt_get_tree_wrapper(struct fs_context *fc)
+> +static struct pmt_feature_group *(*get_feature)(enum pmt_feature_id id);
+> +static void (*put_feature)(struct pmt_feature_group *p);
+> +
+>  /*
+>   * Request a copy of struct pmt_feature_group for each event group. If there is
+>   * one, the returned structure has an array of telemetry_region structures,
+> @@ -300,7 +304,7 @@ static enum pmt_feature_id lookup_pfid(const char *pfname)
+>   * struct pmt_feature_group to indicate that its events are successfully
+>   * enabled.
+>   */
+> -bool intel_aet_get_events(void)
+> +static bool aet_get_events(void)
+>  {
+>  	struct pmt_feature_group *p;
+>  	enum pmt_feature_id pfid;
+> @@ -309,14 +313,14 @@ bool intel_aet_get_events(void)
+>  
+>  	for_each_event_group(peg) {
+>  		pfid = lookup_pfid((*peg)->pfname);
+> -		p = intel_pmt_get_regions_by_feature(pfid);
+> +		p = get_feature(pfid);
+>  		if (IS_ERR_OR_NULL(p))
+>  			continue;
+>  		if (enable_events(*peg, p)) {
+>  			(*peg)->pfg = p;
+>  			ret = true;
+>  		} else {
+> -			intel_pmt_put_feature_group(p);
+> +			put_feature(p);
+>  		}
+>  	}
+>  
+> @@ -325,27 +329,96 @@ bool intel_aet_get_events(void)
+>  
+>  void __exit intel_aet_exit(void)
+>  {
+> -	struct event_group **peg;
+> +}
+>  
+> -	for_each_event_group(peg) {
+> -		if ((*peg)->pfg) {
+> -			intel_pmt_put_feature_group((*peg)->pfg);
+> -			(*peg)->pfg = NULL;
+> -		}
+> +static bool get_pmt_references(void)
 > +{
-> +	int ret;
-> +
-> +	mutex_lock(&resctrl_mount_lock);
-> +
-> +	/*
-> +	 * resctrl file system can only be mounted once.
-> +	 */
-> +	if (resctrl_mounted) {
-> +		mutex_unlock(&resctrl_mount_lock);
-> +		return -EBUSY;
+> +	get_feature = symbol_request(intel_pmt_get_regions_by_feature);
+> +	if (!get_feature)
+> +		return false;
+> +	put_feature = symbol_request(intel_pmt_put_feature_group);
+> +	if (!put_feature) {
+> +		symbol_put(intel_pmt_get_regions_by_feature);
+> +		get_feature = NULL;
+> +		return false;
 > +	}
 > +
-
-This does not look right. Here too is resctrl_mounted accessed without rdtgroup_mutex
-held. This change implies that resctrl_mounted is now protected by resctrl_mount_lock
-but resctrl is not changed to respect this throughout resulting in unsafe access of
-resctrl_mounted.
-
-Does this new resctrl_mount_lock need to be in resctrl fs? It really seems as though the
-needed synchronization belongs in the architecture. Could this instead be accomplished
-with a private mutex within the AET code?
-
-> +	resctrl_arch_pre_mount();
+> +	return true;
+> +}
 > +
-> +	ret = rdt_get_tree(fc);
+> +static void put_pmt_references(void)
+> +{
+> +	if (get_feature) {
+> +		symbol_put(intel_pmt_get_regions_by_feature);
+> +		get_feature = NULL;
+> +	}
+> +	if (put_feature) {
+> +		symbol_put(intel_pmt_put_feature_group);
+> +		put_feature = NULL;
+>  	}
+>  }
+>  
+> +static enum {
+> +	AET_UNINITIALIZED,
+> +	AET_PRESENT,
+> +	AET_NOT_PRESENT
+> +} aet_state;
 > +
-> +	resctrl_arch_mount_result(ret);
+>  bool intel_aet_pre_mount(void)
+>  {
+> -	return false; // Temporary stub
+> +	bool ret;
+> +
+> +	if (aet_state == AET_PRESENT)
+> +		return true;
+> +
+> +	if (aet_state == AET_NOT_PRESENT || !get_pmt_references())
+> +		return false;
+> +
+> +	ret = aet_get_events();
+> +
+> +	if (ret) {
+> +		aet_state = AET_PRESENT;
+> +	} else {
+> +		aet_state = AET_NOT_PRESENT;
+> +		put_pmt_references();
+> +	}
+> +
+> +	return ret;
+> +}
 
-Could this instead just call resctrl_arch_unmount() on failure?
+I think I am missing something here. This seems to build a new state
+machine on top of existing state tracking. 
+What if, instead, just do:
+	
+	aet_get_events() 
+	{
+
+		for_each_event_group(peg) {
+			if ((*peg)->pfg) /* This means "AET_PRESENT" ? */
+				continue;
+			...
+		}
+
+	}
+
+Similarly, get_feature and put_feature maintains state about
+the symbols.
+
+> +
+> +static void aet_cleanup(void)
+> +{
+> +	struct event_group **peg;
+> +
+> +	if (aet_state == AET_PRESENT) {
+
+I do not see why this check/state machine is needed, if enumeration was not
+done the loop should just do nothing because (*peg)->pfg will always be NULL. 
+
+> +		for_each_event_group(peg) {
+> +			if ((*peg)->pfg) {
+> +				struct event_group *e = *peg;
+> +
+> +				for (int j = 0; j < e->num_events; j++)
+> +					resctrl_disable_mon_event(e->evts[j].id);
+
+Can this be expected to clean up/reset all changes from enable_events()? For example,
+how about event_group::num_rmid and rdt_resource::resctrl_mon::num_rmid?
+
+> +				put_feature((*peg)->pfg);
+> +				(*peg)->pfg = NULL;
+> +			}
+> +		}
+> +		put_pmt_references();
+
+Similarly here, put_pmt_references() could just always be called and it will not
+do anything if there aren't references?
+
+> +		aet_state = AET_UNINITIALIZED;
+> +	}
+>  }
+>  
+>  void intel_aet_mount_result(int ret)
+>  {
+> +	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
+> +
+> +	if (ret) {
+> +		r->mon_capable = false;
+> +		aet_cleanup();
+> +	}
+>  }
+>  
+>  void intel_aet_unmount(void)
+>  {
+> +	aet_cleanup();
+>  }
+
+I am expecting intel_aet_mount_result() and intel_aet_unmount() to look the same and that
+intel_aet_mount_result() thus becomes unnecessary.
+Just setting r->mon_capable to false does not seem enough though ... how about all those
+monitoring domains that were created? This flow looks unexpected to me, what am I missing?
 
 Reinette
+
+
