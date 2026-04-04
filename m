@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D332C21EC
-	for <patches@lists.linux.dev>; Sat,  4 Apr 2026 01:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEE22D73B8
+	for <patches@lists.linux.dev>; Sat,  4 Apr 2026 01:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775267808; cv=none; b=kyIvwthnotZEUgW3VHzo8dH8SexDJliaMDK26S4ot0pam1ZNjDQiA4aA8Zqin3kYASXJ+hAkddbWYT0TkjOeLej+xDSC9Nix3/AD8iTKDtFEMZRA1UHPeptgCMI66iL97df516XRLY4AJ1K0SEiCMERaVNtDKgK1Jh75zI3mb1Q=
+	t=1775267809; cv=none; b=ktXf/7vnT822xSPpDGsAgZl2ZQ7jZguJoocIraFgsaqiOLJ2TY7tGWF3fDfINQq3GnRF1rglMh0lIPujGh3P+KpRlRkOmgdXOpWorvdFzgzJeyJ/cU0jTK+2bWpSttZbxYf0eYQ0dxK904sR1mYzQcmTXWbsiCvTlMZOuEFULLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775267808; c=relaxed/simple;
-	bh=fK5XQeBQzWMAEfkpexHViEcwK3WoZrQhjXaLzGSiMDA=;
+	s=arc-20240116; t=1775267809; c=relaxed/simple;
+	bh=UbEi4EyzUvCP0cqbMLxC0sNz/D5ML1LcivjHnWxizY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z4b7YkcXjC96iu+ivk4vvqF3gwUuv4OTiBkL8Q0a6BqIyk+3KzOOcSa8qm/zcwY8zt/VeGeSL69vuZXLw35g0Qt/0he0J98bQRIrwpklPzz16WIjbrAKAuaZBCOY2T9cKep9TkYxJynarQYKlmmUJpYrfywajm0hK5dRR1cUwpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nh/+1wal; arc=none smtp.client-ip=198.175.65.19
+	 MIME-Version:Content-Type; b=lJXg4D75S8g+2irWnxXH4B7FKrN840vRMQERnEDFNcTtqOtMnhN/VMlIHQLCtsLPGN9aeT+UNWsS0aMnm6/XWcFwLqsHc6nNSfTgIyCYcJwCDx5N4En0BO65zW2/rzHyzDgrSqw825u5yGbTUZOYXsuYN5CRMLTjW7rbwx2ExhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aUptRom4; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nh/+1wal"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aUptRom4"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1775267806; x=1806803806;
+  t=1775267808; x=1806803808;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=fK5XQeBQzWMAEfkpexHViEcwK3WoZrQhjXaLzGSiMDA=;
-  b=nh/+1walg23ir+9qpqbiZ4Xc25NTtTIF8bV4YX+m/f1z8jtFF70dlcn4
-   UYfxJ57tFqMLbmJsy0wg3O7CDY+WFN8NIsiIn/+aOHHxAN5HMiD4ML6Hj
-   edm+Z3/nRO4L3sOO7+WR72ApdI1wfObGmXMhRzMktdYQn8UEvdr8AP/2U
-   FoE9BTLgiVDRrYvF26vNMP0A1ZSlxoQbrxOqA/i6M5DWHzGPio5y4PfQ/
-   MkjF7nom7OCAQrb5EDpZI+299MGV97Rd8643sBoTDfQokOZvnNNoKXkWw
-   rh/V4i8Qb22M7/8E4bQVCF8rZrwAQO9Dv7zJB8/oF9WtgEzhPNXq0D9/3
-   Q==;
-X-CSE-ConnectionGUID: WAUwXGGNSFWRBPgP82m20A==
-X-CSE-MsgGUID: ChizVYsYTNutusjZ/0w0Hw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11748"; a="76219360"
+  bh=UbEi4EyzUvCP0cqbMLxC0sNz/D5ML1LcivjHnWxizY0=;
+  b=aUptRom4jvDwWaHG0WyBcAoyyIucdyiLN+vJKnSnNY2eipDFFGXz2bxw
+   MT0suk7OecEm8nve21TjIYCzGX9tpmY1vvolTneVSPLQpMuTvB2gR6qBP
+   xCfQH07T+MLE+4sn+BaPxGrZSvP22U1oNvbqqvU+mhRUpI90mDGgklGHT
+   7oMEY3aQr3lXx1Gui1Dr+4I3zGKI77nmF0+viOUrJ9dtShW54xwxdmkMD
+   s8R78VY1gMJ0lGaCGyEYYOpYobYOgF5/FZv6dOzVZAuEIgJbtTcrIShgC
+   V8ByTFkY8k7L5f/aehzoKcEhq6X3/faJnuNvI9mIuiMIZxCy5joP4Yf2P
+   g==;
+X-CSE-ConnectionGUID: EeKQcg7XQ2K/lfvdjfihnw==
+X-CSE-MsgGUID: ca9WBD/7TMuMfeH9v+Pqew==
+X-IronPort-AV: E=McAfee;i="6800,10657,11748"; a="76219363"
 X-IronPort-AV: E=Sophos;i="6.23,158,1770624000"; 
-   d="scan'208";a="76219360"
+   d="scan'208";a="76219363"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
   by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2026 18:56:43 -0700
-X-CSE-ConnectionGUID: Lxh12dmoT/enq5S79zXJlQ==
-X-CSE-MsgGUID: fjY+0pJ6Szywgp6MS4Ev2w==
+X-CSE-ConnectionGUID: EDEyMCCJRluNa2L6qU8EVA==
+X-CSE-MsgGUID: BYD5xNdCSvGkOVUjtwGJZA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,158,1770624000"; 
-   d="scan'208";a="224121495"
+   d="scan'208";a="224121499"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Apr 2026 18:56:16 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -61,9 +61,9 @@ Cc: fenghuay@nvidia.com,
 	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v4 01/10] selftests/resctrl: Improve accuracy of cache occupancy test
-Date: Fri,  3 Apr 2026 18:56:00 -0700
-Message-ID: <b160592179f88069cdc679563e152007998a0d76.1775266384.git.reinette.chatre@intel.com>
+Subject: [PATCH v4 02/10] selftests/resctrl: Reduce interference from L2 occupancy during cache occupancy test
+Date: Fri,  3 Apr 2026 18:56:01 -0700
+Message-ID: <00445fa64c251b86b86023f87220ee1ad8561460.1775266384.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1775266384.git.reinette.chatre@intel.com>
 References: <cover.1775266384.git.reinette.chatre@intel.com>
@@ -76,53 +76,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Dave Martin reported inconsistent CMT test failures. In one experiment
-the first run of the CMT test failed because of too large (24%) difference
-between measured and achievable cache occupancy while the second run passed
-with an acceptable 4% difference.
-
-The CMT test is susceptible to interference from the rest of the system.
-This can be demonstrated with a utility like stress-ng by running the CMT
-test while introducing cache misses using:
-
-   stress-ng --matrix-3d 0 --matrix-3d-zyx
-
-Below shows an example of the CMT test failing because of a significant
-difference between measured and achievable cache occupancy when run with
-interference:
-    # Starting CMT test ...
-    # Mounting resctrl to "/sys/fs/resctrl"
-    # Cache size :335544320
-    # Writing benchmark parameters to resctrl FS
-    # Benchmark PID: 7011
-    # Checking for pass/fail
-    # Fail: Check cache miss rate within 15%
-    # Percent diff=99
-    # Number of bits: 5
-    # Average LLC val: 235929
-    # Cache span (bytes): 83886080
-    not ok 1 CMT: test
-
 The CMT test creates a new control group that is also capable of monitoring
 and assigns the workload to it. The workload allocates a buffer that by
 default fills a portion of the L3 and keeps reading from the buffer,
 measuring the L3 occupancy at intervals. The test passes if the workload's
 L3 occupancy is within 15% of the buffer size.
 
-By not adjusting any capacity bitmasks the workload shares the cache with
-the rest of the system. Any other task that may be running could evict
-the workload's data from the cache causing it to have low cache occupancy.
+The CMT test does not take into account that some of the workload's data
+may land in L2/L1. Matching L3 occupancy to the size of the buffer while
+a portion of the buffer can be allocated into L2 is not accurate.
 
-Reduce interference from the rest of the system by ensuring that the
-workload's control group uses the capacity bitmask found in the user
-parameters for L3 and that the rest of the system can only allocate into
-the inverse of the workload's L3 cache portion. Other tasks can thus no
-longer evict the workload's data from L3.
+Take the L2 cache into account to improve test accuracy:
+ - Reduce the workload's L2 cache allocation to the minimum on systems that
+   support L2 cache allocation. Do so with a new utility in preparation for
+   all L3 cache allocation tests needing the same capability.
+ - Increase the buffer size to accommodate data that may be allocated into
+   the L2 cache. Use a buffer size double the L3 portion to keep using the
+   L3 portion size as goal for L3 occupancy while taking into account that
+   some of the data may be in L2.
 
-With the above adjustments the CMT test is more consistent. Repeating the
-CMT test while generating interference with stress-ng on a sample
-system after applying the fixes show significant improvement in test
-accuracy:
+Running the CMT test on a sample system while introducing significant
+cache misses using "stress-ng --matrix-3d 0 --matrix-3d-zyx" shows
+significant improvement in L3 cache occupancy:
+
+Before:
 
     # Starting CMT test ...
     # Mounting resctrl to "/sys/fs/resctrl"
@@ -139,132 +116,125 @@ accuracy:
     # Cache span (bytes): 83886080
     ok 1 CMT: test
 
+After:
+    # Starting CMT test ...
+    # Mounting resctrl to "/sys/fs/resctrl"
+    # Cache size :335544320
+    # Writing benchmark parameters to resctrl FS
+    # Write schema "L3:0=fffe0" to resctrl FS
+    # Write schema "L3:0=1f" to resctrl FS
+    # Write schema "L2:1=0x1" to resctrl FS
+    # Benchmark PID: 7171
+    # Checking for pass/fail
+    # Pass: Check cache miss rate within 15%
+    # Percent diff=0
+    # Number of bits: 5
+    # Average LLC val: 83755008
+    # Cache span (bytes): 83886080
+    ok 1 CMT: test
+
 Reported-by: Dave Martin <Dave.Martin@arm.com>
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 Tested-by: Chen Yu <yu.c.chen@intel.com>
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Link: https://lore.kernel.org/lkml/aO+7MeSMV29VdbQs@e133380.arm.com/
 ---
-Changes since v1:
-- Fix typo in changelog: "data my be in L2" -> "data may be in L2".
-
 Changes since v2:
-- Split patch to separate changes impacting L3 and L2 resource. (Ilpo)
-- Re-run tests after patch split to ensure test impact match patch
-  and update changelog with refreshed data.
-- Since fix is now split across two patches: "Closes:" -> "Link:"
-- Rename "long_mask" to "full_mask". (Ilpo)
+- New patch split from v1's "selftests/resctrl: Improve accuracy of cache
+  occupancy test". (Ilpo)
+- Reword changelog. (Ilpo)
+- Update data used in changelog to match code after patch split.
+- Introduce utility to reduce L2 cache allocation. (Ilpo)
 - Add Chen Yu's tag.
 
 Changes since v3:
 - Add Ilpo's RB tag.
 ---
- tools/testing/selftests/resctrl/cmt_test.c    | 26 +++++++++++++++++--
- tools/testing/selftests/resctrl/mba_test.c    |  4 ++-
- tools/testing/selftests/resctrl/mbm_test.c    |  4 ++-
- tools/testing/selftests/resctrl/resctrl.h     |  4 ++-
- tools/testing/selftests/resctrl/resctrl_val.c |  2 +-
- 5 files changed, 34 insertions(+), 6 deletions(-)
+ tools/testing/selftests/resctrl/cache.c    | 13 +++++++++++++
+ tools/testing/selftests/resctrl/cmt_test.c | 14 ++++++++++----
+ tools/testing/selftests/resctrl/resctrl.h  |  3 +++
+ 3 files changed, 26 insertions(+), 4 deletions(-)
 
+diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
+index 1ff1104e6575..bef71b6feacc 100644
+--- a/tools/testing/selftests/resctrl/cache.c
++++ b/tools/testing/selftests/resctrl/cache.c
+@@ -173,6 +173,19 @@ int measure_llc_resctrl(const char *filename, pid_t bm_pid)
+ 	return print_results_cache(filename, bm_pid, llc_occu_resc);
+ }
+ 
++/*
++ * Reduce L2 allocation to minimum when testing L3 cache allocation.
++ */
++int minimize_l2_occupancy(const struct resctrl_test *test,
++			  const struct user_params *uparams,
++			  const struct resctrl_val_param *param)
++{
++	if (!strcmp(test->resource, "L3") && resctrl_resource_exists("L2"))
++		return write_schemata(param->ctrlgrp, "0x1", uparams->cpu, "L2");
++
++	return 0;
++}
++
+ /*
+  * show_cache_info - Show generic cache test information
+  * @no_of_bits:		Number of bits
 diff --git a/tools/testing/selftests/resctrl/cmt_test.c b/tools/testing/selftests/resctrl/cmt_test.c
-index d09e693dc739..7bc6cf49c1c5 100644
+index 7bc6cf49c1c5..ccb6fe881a94 100644
 --- a/tools/testing/selftests/resctrl/cmt_test.c
 +++ b/tools/testing/selftests/resctrl/cmt_test.c
-@@ -19,12 +19,34 @@
- #define CON_MON_LCC_OCCUP_PATH		\
- 	"%s/%s/mon_data/mon_L3_%02d/llc_occupancy"
+@@ -23,7 +23,9 @@
+  * Initialize capacity bitmasks (CBMs) of:
+  * - control group being tested per test parameters,
+  * - default resource group as inverse of control group being tested to prevent
+- *   other tasks from interfering with test.
++ *   other tasks from interfering with test,
++ * - L2 resource of control group being tested to minimize allocations into
++ *   L2 if possible to better predict L3 occupancy.
+  */
+ static int cmt_init(const struct resctrl_test *test,
+ 		    const struct user_params *uparams,
+@@ -46,7 +48,11 @@ static int cmt_init(const struct resctrl_test *test,
+ 		return ret;
  
--static int cmt_init(const struct resctrl_val_param *param, int domain_id)
-+/*
-+ * Initialize capacity bitmasks (CBMs) of:
-+ * - control group being tested per test parameters,
-+ * - default resource group as inverse of control group being tested to prevent
-+ *   other tasks from interfering with test.
-+ */
-+static int cmt_init(const struct resctrl_test *test,
-+		    const struct user_params *uparams,
-+		    const struct resctrl_val_param *param, int domain_id)
- {
-+	unsigned long full_mask;
-+	char schemata[64];
-+	int ret;
-+
- 	sprintf(llc_occup_path, CON_MON_LCC_OCCUP_PATH, RESCTRL_PATH,
- 		param->ctrlgrp, domain_id);
- 
--	return 0;
-+	ret = get_full_cbm(test->resource, &full_mask);
+ 	snprintf(schemata, sizeof(schemata), "%lx", param->mask);
+-	return write_schemata(param->ctrlgrp, schemata, uparams->cpu, test->resource);
++	ret = write_schemata(param->ctrlgrp, schemata, uparams->cpu, test->resource);
 +	if (ret)
 +		return ret;
 +
-+	snprintf(schemata, sizeof(schemata), "%lx", ~param->mask & full_mask);
-+	ret = write_schemata("", schemata, uparams->cpu, test->resource);
-+	if (ret)
-+		return ret;
-+
-+	snprintf(schemata, sizeof(schemata), "%lx", param->mask);
-+	return write_schemata(param->ctrlgrp, schemata, uparams->cpu, test->resource);
++	return minimize_l2_occupancy(test, uparams, param);
  }
  
  static int cmt_setup(const struct resctrl_test *test,
-diff --git a/tools/testing/selftests/resctrl/mba_test.c b/tools/testing/selftests/resctrl/mba_test.c
-index c7e9adc0368f..cd4c715b7ffd 100644
---- a/tools/testing/selftests/resctrl/mba_test.c
-+++ b/tools/testing/selftests/resctrl/mba_test.c
-@@ -17,7 +17,9 @@
- #define ALLOCATION_MIN		10
- #define ALLOCATION_STEP		10
+@@ -175,11 +181,11 @@ static int cmt_run_test(const struct resctrl_test *test, const struct user_param
+ 	span = cache_portion_size(cache_total_size, param.mask, long_mask);
  
--static int mba_init(const struct resctrl_val_param *param, int domain_id)
-+static int mba_init(const struct resctrl_test *test,
-+		    const struct user_params *uparams,
-+		    const struct resctrl_val_param *param, int domain_id)
- {
- 	int ret;
- 
-diff --git a/tools/testing/selftests/resctrl/mbm_test.c b/tools/testing/selftests/resctrl/mbm_test.c
-index 84d8bc250539..58201f844740 100644
---- a/tools/testing/selftests/resctrl/mbm_test.c
-+++ b/tools/testing/selftests/resctrl/mbm_test.c
-@@ -83,7 +83,9 @@ static int check_results(size_t span)
- 	return ret;
- }
- 
--static int mbm_init(const struct resctrl_val_param *param, int domain_id)
-+static int mbm_init(const struct resctrl_test *test,
-+		    const struct user_params *uparams,
-+		    const struct resctrl_val_param *param, int domain_id)
- {
- 	int ret;
- 
+ 	if (uparams->fill_buf) {
+-		fill_buf.buf_size = span;
++		fill_buf.buf_size = span * 2;
+ 		fill_buf.memflush = uparams->fill_buf->memflush;
+ 		param.fill_buf = &fill_buf;
+ 	} else if (!uparams->benchmark_cmd[0]) {
+-		fill_buf.buf_size = span;
++		fill_buf.buf_size = span * 2;
+ 		fill_buf.memflush = true;
+ 		param.fill_buf = &fill_buf;
+ 	}
 diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
-index afe635b6e48d..c72045c74ac4 100644
+index c72045c74ac4..7f2ab28be857 100644
 --- a/tools/testing/selftests/resctrl/resctrl.h
 +++ b/tools/testing/selftests/resctrl/resctrl.h
-@@ -135,7 +135,9 @@ struct resctrl_val_param {
- 	char			filename[64];
- 	unsigned long		mask;
- 	int			num_of_runs;
--	int			(*init)(const struct resctrl_val_param *param,
-+	int			(*init)(const struct resctrl_test *test,
-+					const struct user_params *uparams,
-+					const struct resctrl_val_param *param,
- 					int domain_id);
- 	int			(*setup)(const struct resctrl_test *test,
- 					 const struct user_params *uparams,
-diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
-index 7c08e936572d..a5a8badb83d4 100644
---- a/tools/testing/selftests/resctrl/resctrl_val.c
-+++ b/tools/testing/selftests/resctrl/resctrl_val.c
-@@ -569,7 +569,7 @@ int resctrl_val(const struct resctrl_test *test,
- 		goto reset_affinity;
+@@ -216,6 +216,9 @@ int perf_event_reset_enable(int pe_fd);
+ int perf_event_measure(int pe_fd, struct perf_event_read *pe_read,
+ 		       const char *filename, pid_t bm_pid);
+ int measure_llc_resctrl(const char *filename, pid_t bm_pid);
++int minimize_l2_occupancy(const struct resctrl_test *test,
++			  const struct user_params *uparams,
++			  const struct resctrl_val_param *param);
+ void show_cache_info(int no_of_bits, __u64 avg_llc_val, size_t cache_span, bool lines);
  
- 	if (param->init) {
--		ret = param->init(param, domain_id);
-+		ret = param->init(test, uparams, param, domain_id);
- 		if (ret)
- 			goto reset_affinity;
- 	}
+ /*
 -- 
 2.50.1
 
