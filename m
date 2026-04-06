@@ -1,432 +1,208 @@
-Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazolkn19013073.outbound.protection.outlook.com [52.103.43.73])
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011018.outbound.protection.outlook.com [52.101.52.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99E530C63A;
-	Mon,  6 Apr 2026 12:02:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.43.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E690E31B823
+	for <patches@lists.linux.dev>; Mon,  6 Apr 2026 12:11:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.18
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775476938; cv=fail; b=BSzaAYbnZjh5Z72XkcSvx5DeQV30GS0nGZ4SsWdH4YU1WU7ScuvKWj9ekcH6H9Ft1IJpwzHPjoKChxDg1CDG5kayUU8XPjrdEod5vo7ohO7iocRQvSPsVazx0E6kKtlpNkJ+UAxuuH+xYK+9czegFyyQGb95o1oHoZw0zyM4iQE=
+	t=1775477492; cv=fail; b=iPH5OY3ZfWROM7Xr6vmt7fHsKTBTDGH1PPzRrxEEGbk/CpSwMnTF8B+73yn5viPkD5xkzy1knmQneXYVuE8MN5MaPwiRaqC2OYioyTAdAHDsuP508MVS44MJEe+mDB6RCP+ZQknspmtbh2jIZkKuEm3hMzrLuK6UT9+cbpSPqD8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775476938; c=relaxed/simple;
-	bh=SnH59y4HFAhmPR/dCvNKca6GD+Tdm7CUE+yE0j1dgYM=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=DO2krCwSfPp25tPTFNA1bRGvDmbvnm+FXsRLf6+TLN8UcmWNGtWvgVadr5QumFZccBylpPD0qMOc7a25qvnlw8GOL6/Z1L8DqZabWKwChzweJWWt8l6Yq3z5/b1LCh8aL/FYhqd4YTmvuJF4HrbYNoH4lF5tXgx/LZ0cVsWaDaE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=kjdmpvPf; arc=fail smtp.client-ip=52.103.43.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+	s=arc-20240116; t=1775477492; c=relaxed/simple;
+	bh=YPN6FQD1Pic+P+KhZkeEfp5RHnbg2GHEDMzoAk8GKmU=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=DNWOyepC5w5U+UP4pj/jerQcM5Hz8Qgrd0NeNKcvgk+lkd4IeTsjI5KRiB9FHAH2LcB0anYec4mq+M9vsRawp4gLxbjEqj8OIBsMNuetyBnIhoYd60X0Sdh+9xTrCJcu5r6khPhq0MbuH/CNL/mW+3/7SyXY2jLG0HB6LhLWTfA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=tyGby41k; arc=fail smtp.client-ip=52.101.52.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="kjdmpvPf"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tyGby41k"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iK/djvoVQ/CwepwOfvVSdffAdTdQqYGuWOxfi/C3CAPeVntkC6mlAdO+jdFqscR/vIC/xdf/4g8ws1Gq/WwKjYXME3q6Xaapw8rH0M4WQ7bF0OWc+hyrGNFDAvGOgp33UMP69ablHq36E2CymXLos5k1iL4Oj7OjRjGFGjBynRK9O9EteXT08ckrz8pGHoCCgTXg9ozCZ4oLyDfhRUY5V2bGl/we0TfaY4CnU8uW475WlXoXsBdXyUFLNdcdlgV+EyQdTr8KcG9kCtDSQszqFgywioZE3OcH0gUkNvWjl2gAK/yszJPmWvvUWojmoo7Ql1aYJI5aJ0V9hDMPZzhVWg==
+ b=IFY2743N0J3zH2lAJMYSqv0P9CYR9vFHLxO0L48/ogriBTGstGxqULTt/xahZh94FMEZ/PlyQT/V/MTqxG1DJorzZ+PgFCIPHPX7La6Fiw/4J7h9JST9feelDQaYqPjxp97OjDjoZWRtD/9mANmtgjXye9AzPE7xzY3+DGX+ZcvfxXbdL6ZUzwv+huMUgww9BC9nAkAKi2hw+QP9LXPQ0LU3IM9MibQ18jfmvcSWuT2CTYOlCTH5oZg9rmwCs5Lmh15sI07wXPc6SvfsN2vCZCqq4BfP79QVp9RU7cEoG6fYPnH1zlIThLQxx1Sw3Tl9PD2JH0/u51viP8m8SmMohg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pZHTY9OiS1366I45HkKBTF7TJV7v/PK/2sYIniAfTpI=;
- b=gWKlW3K5ZdFoDCnQ5bYRjfQ0n5U5o4J93RggL4gCis5W2AnJ/9eyKFzCsOGIYmkwS4RWPiCP4cORP8sPI/Dc297/bGW4EpnOVhwFHm8zrh6lVv6zqZN5rvFQPGkXbNrZR1kueoaOQP2RBKrlfySA+j/vO6IiPR8CaDovU/V0IVdRzqP53v5wwOcYoVmVDnkAwJzWHDxlNXW4TVkirZBFFYBwYU+ARAklGpo+43bGYMdCErsL8GYw7EJA8Lnq7tGJhgiaQOgAbik1PcwqlNGmuzGZ65BpiyEPGyNyIrFcDqeMhwH5h+XdHpx+doMJD00PimkXhRd0ZfjE9M0eI5bWIw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
+ bh=jXcytSsDwB4yt51MfH3JGUjY4EkU7RVdSaVchYMasPg=;
+ b=v5T0JXHjDC+kQ6ID8/7usmXTTbWWBcVTPJb1DbCjc+CrgbY/yFLviu4Z9sxKPiut7bGKFiOdDCbLGCSTg+S8Zc88oQVnSvY2ozYqmyzVh3pyGl4VLrPWqCwSeMCkNzgDGzzOl7cL9SmTqM/7jG+zkrdqBKfRbD/xGj/nRRYzfUW5KwqUM+lAyR0jaXesVvMZDfox3YkQwfG64KkzqSt3RaZ7VwFhRWW72r106PsKPl8hlrC0z64j81CS3sZQfNDNfzpua5gG5V8B46uFinP3Op26VT/CAQA0G2H6RFhLGGfaB+01n/t9iWJASq/WfAzg9CRAcTZim4MzCH4/qenOag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pZHTY9OiS1366I45HkKBTF7TJV7v/PK/2sYIniAfTpI=;
- b=kjdmpvPf7DGm/SbHCMZkevXMXhzF7+b7Hsby7TdIQ0NTwk2trfCEQr7o+9NM16OSpdk1LWNj1MRqssXflwBARDysQY85VZIbn707U9gfUVZhsBIOMc3tyeHRv/HmGj6qtbvTulunaFsiOiCFWtPiqty01skbV0V3vEf3Um110xFXIn7aO5u7fYNamXqodhc6bk5BnApIgAX0WP4EGic0GQg7ZJIPTF1dz9xI38QFX38xluh9+bWQjPznaQGGrN14kKv8tXt3CNriOsjXCrzM8pzlp5c1CdYAoPupOdBQ8EyYwfdSPUv0maPIBmaHLMijOniCdseLkFMaikTB/jBn0g==
-Received: from SI2PR01MB4393.apcprd01.prod.exchangelabs.com
- (2603:1096:4:1b0::7) by SEZPR01MB5342.apcprd01.prod.exchangelabs.com
- (2603:1096:101:e5::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.20; Mon, 6 Apr
- 2026 12:02:12 +0000
-Received: from SI2PR01MB4393.apcprd01.prod.exchangelabs.com
- ([fe80::c735:fab8:6e3d:6d1c]) by SI2PR01MB4393.apcprd01.prod.exchangelabs.com
- ([fe80::c735:fab8:6e3d:6d1c%4]) with mapi id 15.20.9769.015; Mon, 6 Apr 2026
- 12:02:12 +0000
-Message-ID:
- <SI2PR01MB4393B58045D81CD8E5F1F5AFDC5DA@SI2PR01MB4393.apcprd01.prod.exchangelabs.com>
-Date: Mon, 6 Apr 2026 20:02:08 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] iommu/amd: Pass last in through to
- build_inv_address()
-To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Will Deacon <will@kernel.org>
+ bh=jXcytSsDwB4yt51MfH3JGUjY4EkU7RVdSaVchYMasPg=;
+ b=tyGby41kshXPDNzsPJLg12QFVEJKKpMOWFdZWnV3IpuN9nKfCAaOjd+2aXyHNaCxMhIvG1zrZzj2qk674wWL3ruzQFO3bPG59zw3j5DdER62ebL00PZ+4QaVUokRoWGp/SzrhCRHMDlm3K9C1+oDPLKBAs6nv5tKy6Ld4IeLxB1EpQVIYJg4K/vMX9pfRIVE88U+dTqwt8KOrdIu5tg7QDsGeyUhjinncabwoGAknfgFOeuS59NzVxTHQvOR4AmTDmC3WL1JKxxOJgbD+Rf2FrwZ3ebLoN9EP7BMT1l2CNaRsV1737dgrg1+YrU5lCGNDuJyXDpvFdWEeQBaRJhDWg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by SJ0PR12MB5611.namprd12.prod.outlook.com (2603:10b6:a03:426::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.17; Mon, 6 Apr
+ 2026 12:11:25 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9769.017; Mon, 6 Apr 2026
+ 12:11:25 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Abhijit Gangurde <abhijit.gangurde@amd.com>,
+	Allen Hubbe <allen.hubbe@amd.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Bryan Tan <bryan-bt.tan@broadcom.com>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Gal Pressman <gal.pressman@linux.dev>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Kai Shen <kaishen@linux.alibaba.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Konstantin Taranov <kotaranov@microsoft.com>,
+	Krzysztof Czurylo <krzysztof.czurylo@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	linux-hyperv@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	Long Li <longli@microsoft.com>,
+	Michal Kalderon <mkalderon@marvell.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Nelson Escobar <neescoba@cisco.com>,
+	Satish Kharat <satishkh@cisco.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Yossi Leybovich <sleybo@amazon.com>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Yishai Hadas <yishaih@nvidia.com>
 Cc: patches@lists.linux.dev
-References: <2-v2-90ddd19c0894+13561-iommupt_inv_amd_jgg@nvidia.com>
-Content-Language: en-US
-From: Wei Wang <wei.w.wang@hotmail.com>
-In-Reply-To: <2-v2-90ddd19c0894+13561-iommupt_inv_amd_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TYCP286CA0252.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:456::10) To SI2PR01MB4393.apcprd01.prod.exchangelabs.com
- (2603:1096:4:1b0::7)
-X-Microsoft-Original-Message-ID:
- <2007b614-79c8-446d-9d88-963fc602571f@hotmail.com>
+Subject: [PATCH 00/10] Convert all drivers to the new udata response flow
+Date: Mon,  6 Apr 2026 09:11:14 -0300
+Message-ID: <0-v1-e911b76a94d1+65d95-rdma_udata_rep_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MN0PR05CA0030.namprd05.prod.outlook.com
+ (2603:10b6:208:52c::27) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SI2PR01MB4393:EE_|SEZPR01MB5342:EE_
-X-MS-Office365-Filtering-Correlation-Id: 04d56271-b98a-43a2-9de0-08de93d455da
-X-MS-Exchange-SLBlob-MailProps:
-	7qh87CJt6y2KqegnoS4V+KljWAyhwvUzcqHcQkVXanmJU+DH3/znqAPjxzHS5P8TXOenvwPhu7ZLmwRQdw/RFZL2EV+eLi1ZpYcfCrSXUmRA9JPI2496O6Q9xwBaXUva1g+BwuaPn8lsHFhorkcAeNSDXmmDFog9vwrw24CsGg/6wjcfF+4Yq0fv13PXNmbSNF7i+orpkNM4Jb+9mi00MiTl7KLepUZaxGIXCDmxXm2wbP9wooRmgehb/V4PpSVxdUmZSn6M+0Gyp9qc2cDvV7zHorGSVnSSwutDBCH3AuO2qFSA8bme6jQk7OKf2HtMVMxXGHFmcPAIVio3K5/LgiLlitWpSoNGc7oPSsle2LfNJ1kv9TKiw59RkoC3awXCAhKPf22LWBu8+ZA6hFO2C3HBvoMFgoT14OIWTgwL1ULgZeEShJxQH0jIyhL2DNBXQivXFwQomip1MiWkNLZgQGtxGvUkiHd5b2UPAZIi5xWFJypODTvKqudP+k4nis0c6PKgr1pwe3ixJ6QvLKcol+gWgQTyFaROhw2y5Qtk0MSM9uTzxzewPzwBWQkqhsZYUI6L6U3ASvpdEa+1BtEKBSOP+2JdnoOnM5kSdRr1uEHqat7hVzsG524QT2ZSDlIzXAVC5ZlZGGvCIZZo0rS63XyL/+W1+kmKkmiKbj+Jp8WVA7Ale3izzEqubLgKPunG8jZtRmNDbkIb3mLoLl9VCaf7CKZbv1lxVCy/S3wff63xXOQzNDqgZ1B60bPNKFJt
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SJ0PR12MB5611:EE_
+X-MS-Office365-Filtering-Correlation-Id: f0d4ac4d-893c-4df3-937d-08de93d59fe9
+X-LD-Processed: 43083d15-7273-40c1-b7db-39efd9ccc17a,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|41001999006|8060799015|19110799012|23021999003|37011999003|461199028|51005399006|6090799003|5072599009|7042599007|15080799012|13041999003|40105399003|19061999003|3412199025|440099028|26121999003;
+	BCL:0;ARA:13230040|366016|376014|7416014|1800799024|56012099003|18002099003|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?aVZ2Nlh0ZjArVEpXSEZhcVk0VzIzWXFJeFNvNHVWWlZDbGJPcjdsWDQwd1F6?=
- =?utf-8?B?NURzZ29WTGcrdG1LNDF5YkJiWEVnVmg1eUEvSlIvM0ZuLzQ2YjBYRFEzRHdV?=
- =?utf-8?B?YzJ4aEJGVWwrV3FwblZpVjAzMkFFNjRCWDIrRUV4MnhwUDRvUUx4cmhOcjJO?=
- =?utf-8?B?czdZNno2VUdhUzZwbUZWamJNVFE2Z2JlcjlKbSswZFhpRVV5U0g2M2NabVFu?=
- =?utf-8?B?dVFRc0VocGk3SjdydmMrMGNKMWVvcEYrUEhUTVQweXJrZGVQekFaNnlPbWl5?=
- =?utf-8?B?a09JVzlibE02cnZGK0ZrNUFKdWtrd0NkQUYxOUdyUFd6bEpWM1hkdTB0WlE5?=
- =?utf-8?B?V3VZdVFpWWd5Nm5jZUVsQ0dnS28yczNpcWJWbDdyVEg2bGV6SFVOcithREJP?=
- =?utf-8?B?VVE5UGwwc0MwbjcrL295aTFDUXM0RTBnNWFvbFZDcFdvNG1nMkVKVS9TcHpR?=
- =?utf-8?B?bitwZWVFaGZpODRtb05tVzdvaFZVWjY0NkYzbHA2ck9QYmoyQ1Jia0dkeDIy?=
- =?utf-8?B?ZlNDVzdpcisxTHNjNjArc2NscXZHaithcmVvNEhzOWJBSjZvQ2tHOTh1cUJZ?=
- =?utf-8?B?Y2VUUXErM00wcXh4TlZBSG8zam1PRkZRdVl0S1BSRUdLSTk4UFMrWitaU09w?=
- =?utf-8?B?MDhUTGtIWlhPd3NCLy84UmxSZnpiaVRVWjFPUjF4NGtocFd1TFBzbTAyUlJY?=
- =?utf-8?B?Sm5welJIeW85cUo4bU9Oemp5TkVrbnBJN2hJaDVhempESTR3S1BFSVF1OEpL?=
- =?utf-8?B?THE0bDN4aG4yVWg3eXRQcGFDaXhGMTFSYXJ6dmJGb3BFbG9JZGY0ZXg5aXBS?=
- =?utf-8?B?NzhaSnk3U2U5ckNCNnc4Y083eXN6SXBIdVpvY3did0l0SGczc3dFRHJkSlcw?=
- =?utf-8?B?KzZUVk5sZ0tKTFBibXExYVZ2VncwN2N1YjNZb1lZbTFRTG5yOXIvOFRkUXBR?=
- =?utf-8?B?U0l5dFJoNFNLOWNORHgzT2FaeExxOG1OTUIydmhvQXVndDU1dFFoemxrTWNj?=
- =?utf-8?B?b241M3ZJQ3J1WC83cVZGVUZMWWl2ZG0xeVhDcC9JZndMcXI1OXFoTWdkUEx0?=
- =?utf-8?B?eExIdUM1bk0xM21SeUpHTXJkT29UWkdmMHAzbWxBQ0ZnQkJESFVndkZCNmxO?=
- =?utf-8?B?WGRhVHc1dmVYZ1RhcU5oSm1jcUM2TnVCNVZyNXRyMFdxSEM2TmZibG9XVFlt?=
- =?utf-8?B?QW1IYzFzaDRjZ3ViNE41UHdtS1RRMHo1dXpzSWNFM2QrQXhxcElhOVc5TFdj?=
- =?utf-8?B?R1JIWWw4Ukg0T081cFFWeXhVbUQ1S2Q4VFVhNmc3OFZsU2trTDZiZjQzR2VI?=
- =?utf-8?B?NC9jb3RLbFo0TUNSWnJsZGpqTVg4WEJ6M0daOW9PTm91S0ZydDYxYkI0SytJ?=
- =?utf-8?B?SjhRbkZ1cTUzMktjYWVOS1R3c25lbGl6WFhYbCs4N3oybFFSOE92TWU4MDY5?=
- =?utf-8?B?NktCS2w2OHNkdHNOSkZHQVR6cWt3OHVqZkh4UHlON0dyOWF5b2FXaFo0VWRu?=
- =?utf-8?Q?Sien2mGLmGeMpaxEr8hD8s9vHak?=
+	/UQhOYO/87428d8l6tEQk5cYKwIG7fUwTFRw1A8aaNe2vaqN3o+aVZkEfJtAojZuQIZd+oUwQ2mSYI6P+JZ08jOBwumuV4jcUObKrL46KEmvAPgw3ici6Ak4KiTJTGI+tuSpbvQtFJiCl2ZtKrJv86hMc50ie0ACT58WRW8/MJDuadnWwrrbFRNZOuf/6osH3jUkd5yDvHPSBUDKXYVDT8/o/+hK5hmI3VI/WxzZ8BCRKrVGiIQ71aXOGgLTMjCHd0GaXiCxeb2YCCYYenu2eiU+3ib/5s5P74JlxczPxwWJxYi0LejIeTR0w5u67rh/+bdmLfDJJNd+LDhuJe7HM72dQathA1G4vcTYWzmj5p/fpSsUkRljxGCPLy+h5S9WL3P4JWUzM6mi8VL3TwW3H46ob8PJupTiWDvRLUyHWpxeeZPohMpUBQNIVnVHJ69NQBTo+UbuUKh5e1kKJOAzrw5+A/nPkdRPDl7Wh6vxBmfUfBi+/jB/2SLx/vtKthSrLQky6fZPu3fPwndJj9FiRLpJlo53bB+379aNYO0v3NIo37SHlHRnPJ3zyEQx5cJANGBi4YyylTP8YeZM726aSOgni6qju2UFWe1NyPmf3+8INq4dlV6XKUqHCTgryaGcvDRfKdJRs1w0ixSWwV2+zzdMxf2cDIQfZkX6TUZipa0z2FAKxVAAZuMsfsiWEL1Qk6QKlyrWU1IlSJVtg8pSDgtKyNVxWvXhDWFGJH4EqK1dyi4/VqugUfLEVbwarkMDLeK2whwgQkmYcttKAqxRxA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024)(56012099003)(18002099003)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?OStBaWZuWkFBMU9mYjljSC9lZUY3SzdKalVHWTUvUlNaQzBkSG5NNXQxTUZ1?=
- =?utf-8?B?YWZMTWtCNmFla0xHSGhVZnlSbzZFcUdqSkRsVWVrcDZlQkt0dW5uZGxBZWdT?=
- =?utf-8?B?NHVXTzQwRjd2VGY2TUxTK2ZjdkVaN3BHZ3JlcEMwMjJHVTVtYStPMVdZRTNV?=
- =?utf-8?B?UXFCd3pZWFdpa1RLY2JHWHM5RXMrY0ZCM25WZUQzMHFQK3JFNUt0dEw2SXcr?=
- =?utf-8?B?bkRpa0wyOVlDWDZXcldjWklZRnNZMmVNa1VYazR0eFJhNmVjaENLTXlNa1hm?=
- =?utf-8?B?OVdZUE85TDdMSVgyTmg3V3RBNVU0K21EVFZtNFh5TmZCbURuSzd5NjBqcmdk?=
- =?utf-8?B?eFNuYUNVb3h0ZUpQMGxLV1dnamdmMjk4UCtsamdkSCtmekZsL0w4WmR5aW5h?=
- =?utf-8?B?NE5ENEx0UmdRVkZDb2pOTU1QWHB5Q1FXeDY5K0grbHdUa2tsM0xtclBCcjgy?=
- =?utf-8?B?MTZmbHFCLzQxR25UVjZKNGRaemNqNXc0a0dDK1I4d2dWOURFZ1VNcTA2RGxs?=
- =?utf-8?B?dE9RVmtVOG5Danl2aklTdUFQQTBpS2FHU3RETkJhM3FPMU05NFh2cURtWDdN?=
- =?utf-8?B?S2R3TEJ4QVM0dUZnMngraUpqL216aHMrTEZHdWNHUlZwZWw3aW96ZEtQUkht?=
- =?utf-8?B?TzdQUEZ0WGFBdlBiemxOUWFpTW5QcTlnR3RSOVVTVzMvVDlWbmZwYjhEeEYv?=
- =?utf-8?B?cTRrbHlkdkhFT1pjSkJGcG9PV2Iza0RZcmVuTmlqRGJkWVp4RktJeE9naG1x?=
- =?utf-8?B?d0YyQThOT1RVMjlZK2ZGa1k1NTZxUGdFeC95alo1VnBKZWx6NWtBZmwydSt2?=
- =?utf-8?B?aHJnTTF5NWlQYTFrU2VTdDU5blpvRHpibGRpZFVaYWtMMnlseE80SFRVZGtn?=
- =?utf-8?B?Zlp3YWlYZ3A0WEZiTzBKT25FWncvbUt0MVZ5ZDA1cXl0bnY1K2hiK055UktW?=
- =?utf-8?B?S2hvOW9oRHpDbk8zTStrbmxzdVJYVWhGOHJLQVlWMUdCV0c1aEYveUcwcExW?=
- =?utf-8?B?b2FqeEpHUTRnSERNemVBcWdFaUtoUFRNTzU1bEczZm1uRmNOMnBmVGJrRDg3?=
- =?utf-8?B?Z01iR2JnMVVxdXdROGxIb0R5QTlqaGtHeGVqNGpuek15N1lBa0ZJQ1dJWWUy?=
- =?utf-8?B?eWQxemIzSWhnSTFLTm9vaEJTbzBJVUhubFY5UWhEaDBhOW5tdyttR2dDYkIw?=
- =?utf-8?B?VTZBd1JRdlhaT3psN0U1ZkhPSUdqTy9sczlXemExY3dXbEVzWEJkczVIcXZL?=
- =?utf-8?B?emdvazZGWHN4Si9vR3R3b3VrN0EycVdMMmtiTmh4OGlGUjc1ZVJBZ0tUKzVp?=
- =?utf-8?B?bmZ4L0E3SEgrZ3ZrM3dZc0N6WXMzYTEvZ1JiSU5OUjBwbHFtMnVBcW5uQmFP?=
- =?utf-8?B?Q045OUpXQ1V1Nkh5RzFrMWUrYzhNdUdpb01mam5CN2drVXBkUTNPYzB3NnhB?=
- =?utf-8?B?a05JSzBoRUFIOVVtcjJsa1BSck1nemhBc2VEa2VGK2hxbE9IcFlDZEhaZnVu?=
- =?utf-8?B?S1dWeUREdXFGZm43cmQ2YjZKSTFGNmJMbm5wSEZGYzF4aUJSRTQ5Mm9aNUUz?=
- =?utf-8?B?dStsdC9obVlHMmNFcHZ1VUtyVDJHem9IWXpyMzZLQ1pCZHozSTB2TmVSSTJu?=
- =?utf-8?B?RzdtNmMzVkFmS3UzZERxZ0lmNWx5Zy9ZL1oxTEVyZHczRHFjb3R0MWZlbjN5?=
- =?utf-8?B?c25EV05vemU4cUFkZVhLRVg4RlppZDhlL2x2OTVtZnZBd1pJS0MvdmV2SGFu?=
- =?utf-8?B?VUtzMnBkNURMRGhSck9hcVFaMks2NVNQQWFOVUl4STBPRXkvZFlabUF6a0NH?=
- =?utf-8?B?S2RTcFFwbm93TXYzS3d4bGFGRFQvSTNMYWFGMW9kWVBNZ21lMDRhZnp6NHBE?=
- =?utf-8?Q?XCEABNpuZkar+?=
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-3e488.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 04d56271-b98a-43a2-9de0-08de93d455da
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR01MB4393.apcprd01.prod.exchangelabs.com
+	=?us-ascii?Q?3zmPIP3McKIR9RejUnssfEVCMgUr3TFiqm9+LwmOs7l9vUTrMiWUj5gZzxMH?=
+ =?us-ascii?Q?1BIw532JbssrrXrWz0cF2QS89d6MR9rwH7udeX+3/6PoLbaWQgyKT2asz01O?=
+ =?us-ascii?Q?VIcMcphiE2RB2K48imi2hVgX2A3767mE6e0NL17a/6O7WQ+vhYUuU7EOR1eL?=
+ =?us-ascii?Q?7Nflq/TBQ+jZeg1VzikNGtiYbCnkg1g15rrn+H0JTeer9PTZHt3hiEn4H5+k?=
+ =?us-ascii?Q?VL/S8Tn6yNZVPkX79yrgPeankjhhYpLsOicAvjs50Ucp8kam2mj+ek0dFmu/?=
+ =?us-ascii?Q?LbUuymzkD4TD4gaHYvugFITNVh9gARGSp+IKjnhzfymqhNmjLEYRfrfz+dHR?=
+ =?us-ascii?Q?2Q7DT2K4V/rUP6HUVsSx3tZWv0XBGVyHDoYy4I9YPk2/FxCoIMWgQNITT+CA?=
+ =?us-ascii?Q?Y5UwO+WT4/PfabHZ9Mj1NJOE9/ox7qAkGOTiwiVaaD7BqoNPgD95tr6KJfls?=
+ =?us-ascii?Q?GVLJftVMllq5/6GIQZjGLM7BTbUNgzvFWCJV9pT8FENGc3C0LKN1GHxRzFU5?=
+ =?us-ascii?Q?F91xTQJdxxCpI7iN9FwWj3Ewz6U6R2VWApU7mK3t9fQRTwJJ0i51A1d6K+fp?=
+ =?us-ascii?Q?TNWjvJ55uyHekeU3wTYB/XbVVSFirBhGhGjqsfRcyFa8tOdXMcQUltxc8fMs?=
+ =?us-ascii?Q?jFc2CgowiSQmZ7a0WlxG1Zo4ReGkly6Bif7O0e5Q9qBgDLMgt26Y/XmLbR/6?=
+ =?us-ascii?Q?Yw2GbFhYfzdRtWYiVF+Q6t2mTEqDauivenCf8elZ4mmQobI4KlrVcHbSKV3y?=
+ =?us-ascii?Q?+B3RS/G5k+8QDMnSji35uL4yuVZKATODw7W9zzL8922DHpLCnU1OcGhXYOE2?=
+ =?us-ascii?Q?2wrGpF+JZM+PH6/0N+EElGqLvG9+XNVSXiHvwC2lkVYpVRsgGIcO3lA2hF2e?=
+ =?us-ascii?Q?txTXk1CTGZUBBbUKXWsjKss+7tzptzs+ieMwsnBtU7X5YZnQo9pxddvdfbWg?=
+ =?us-ascii?Q?4owULVIGYu2gPPh6/UWLK7vzyjYtSCu8MM6V0lbSusSDEultpz/KLkFtWZoS?=
+ =?us-ascii?Q?nDPtPbobbUytoCdboVcJZ+zvwwLEFzXuWeGMgGL0qkrq1+yqjIYOsVENlw8H?=
+ =?us-ascii?Q?A+31ooVhuWTMDjXXPVrEq1vqgw9U3zeRExUB1Ev8ri3VyfOWSkCBQb9Uf57H?=
+ =?us-ascii?Q?IENUIdoFVqD02zYqDc1p5Gn6o0Mul/ZdcKOZjbNXxUXlta3MXuqTprzEK0lV?=
+ =?us-ascii?Q?3OR6YP0l1qJTX1cJhpjkeCK7f2pmaV8ws65pIcsVt/zPMxdtUuYMIypvElK+?=
+ =?us-ascii?Q?yv/V0j+/rvXOiAWu8yTiNnh3HFK7N5gnRztwXGpAtw7mgNPnfzaQ/QHIwdyK?=
+ =?us-ascii?Q?VZEE/06HRhjlEnYwMOgo7ydEoRYstRzu+KogoiNS3gAhRj3aR4eU8kgyOI8p?=
+ =?us-ascii?Q?iRbzkFsLSLqhL8YzKYl8MNHbdPwJyQmoxswG4Gz1a5O23mF8icc2JdapZdFk?=
+ =?us-ascii?Q?DDcylS2OlgvBN+eDOvko2oDgM5OZhuu7cSqKjzKucB5fQQRxY4gCC6xGoIgt?=
+ =?us-ascii?Q?ZFl+Jrn5QgfGfqnS7Acw/E52No/2X23XuJPmQlRr9cf9kWIuvdeSWFKt/VTa?=
+ =?us-ascii?Q?4cUluQeJva+zcaTWH1B0yaBU+ccFHqndJ+E0tze4LCb7Hn6NjQI178UthQwh?=
+ =?us-ascii?Q?wJjgKuj7TotDOK/2EVFcvNF6ZUDMaqZVpTR7xO2AKO/buZXRQRl12UQW7GZf?=
+ =?us-ascii?Q?m14ADw8fRtLEWeqTry9x5IwiVv8/htZ+5iCGsoy6RhbfkJ2l?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f0d4ac4d-893c-4df3-937d-08de93d59fe9
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Apr 2026 12:02:12.2981
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Apr 2026 12:11:25.6963
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR01MB5342
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: BXrDFd4Mi8zH7Gmhr2W5JPfkL3RDg7lG94II6HWf1TWgNLWfahR9FkkRKlxwXclX
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB5611
 
-On 4/3/26 8:26 PM, Jason Gunthorpe wrote:
-> This is the trivial call chain below amd_iommu_domain_flush_pages().
-> 
-> Cases that are doing a full invalidate will pass a last of U64_MAX.
-> 
-> This avoids converting between size and last, and type confusion with
-> size_t, unsigned long and u64 all being used in different places along
-> the driver's invalidation path. Consistently use u64 in the internals.
-> 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/iommu/amd/amd_iommu.h |  2 +-
->   drivers/iommu/amd/iommu.c     | 71 +++++++++++++++++------------------
->   drivers/iommu/amd/pasid.c     |  2 +-
->   3 files changed, 36 insertions(+), 39 deletions(-)
-> 
-> diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
-> index 1342e764a5486d..831d457c8dad13 100644
-> --- a/drivers/iommu/amd/amd_iommu.h
-> +++ b/drivers/iommu/amd/amd_iommu.h
-> @@ -90,7 +90,7 @@ void amd_iommu_flush_all_caches(struct amd_iommu *iommu);
->   void amd_iommu_domain_flush_pages(struct protection_domain *domain,
->   				  u64 address, size_t size);
->   void amd_iommu_dev_flush_pasid_pages(struct iommu_dev_data *dev_data,
-> -				     ioasid_t pasid, u64 address, size_t size);
-> +				     ioasid_t pasid, u64 start, u64 last);
->   
->   #ifdef CONFIG_IRQ_REMAP
->   int amd_iommu_create_irq_domain(struct amd_iommu *iommu);
-> diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-> index e4a88879ca35d2..9ea40ab8398048 100644
-> --- a/drivers/iommu/amd/iommu.c
-> +++ b/drivers/iommu/amd/iommu.c
-> @@ -1266,9 +1266,8 @@ static void build_inv_dte(struct iommu_cmd *cmd, u16 devid)
->    * Builds an invalidation address which is suitable for one page or multiple
->    * pages. Sets the size bit (S) as needed is more than one page is flushed.
->    */
-> -static inline u64 build_inv_address(u64 address, size_t size)
-> +static inline u64 build_inv_address(u64 address, u64 last)
->   {
-> -	u64 last = address + size - 1;
->   	unsigned int sz_lg2;
->   
->   	address &= GENMASK_U64(63, 12);
-> @@ -1302,11 +1301,10 @@ static inline u64 build_inv_address(u64 address, size_t size)
->   	return address | CMD_INV_IOMMU_PAGES_SIZE_MASK;
->   }
->   
-> -static void build_inv_iommu_pages(struct iommu_cmd *cmd, u64 address,
-> -				  size_t size, u16 domid,
-> -				  ioasid_t pasid, bool gn)
-> +static void build_inv_iommu_pages(struct iommu_cmd *cmd, u64 start, u64 last,
-> +				  u16 domid, ioasid_t pasid, bool gn)
->   {
-> -	u64 inv_address = build_inv_address(address, size);
-> +	u64 inv_address = build_inv_address(start, last);
->   
->   	memset(cmd, 0, sizeof(*cmd));
->   
-> @@ -1323,10 +1321,9 @@ static void build_inv_iommu_pages(struct iommu_cmd *cmd, u64 address,
->   }
->   
->   static void build_inv_iotlb_pages(struct iommu_cmd *cmd, u16 devid, int qdep,
-> -				  u64 address, size_t size,
-> -				  ioasid_t pasid, bool gn)
-> +				  u64 start, u64 last, ioasid_t pasid, bool gn)
->   {
-> -	u64 inv_address = build_inv_address(address, size);
-> +	u64 inv_address = build_inv_address(start, last);
->   
->   	memset(cmd, 0, sizeof(*cmd));
->   
-> @@ -1524,7 +1521,7 @@ static void amd_iommu_flush_tlb_all(struct amd_iommu *iommu)
->   
->   	for (dom_id = 0; dom_id <= last_bdf; ++dom_id) {
->   		struct iommu_cmd cmd;
-> -		build_inv_iommu_pages(&cmd, 0, CMD_INV_IOMMU_ALL_PAGES_ADDRESS,
-> +		build_inv_iommu_pages(&cmd, 0, U64_MAX,
->   				      dom_id, IOMMU_NO_PASID, false);
->   		iommu_queue_command(iommu, &cmd);
->   	}
-> @@ -1536,14 +1533,15 @@ static void amd_iommu_flush_tlb_domid(struct amd_iommu *iommu, u32 dom_id)
->   {
->   	struct iommu_cmd cmd;
->   
-> -	build_inv_iommu_pages(&cmd, 0, CMD_INV_IOMMU_ALL_PAGES_ADDRESS,
-> +	build_inv_iommu_pages(&cmd, 0, U64_MAX,
->   			      dom_id, IOMMU_NO_PASID, false);
->   	iommu_queue_command(iommu, &cmd);
->   
->   	iommu_completion_wait(iommu);
->   }
->   
-> -static int iommu_flush_pages_v1_hdom_ids(struct protection_domain *pdom, u64 address, size_t size)
-> +static int iommu_flush_pages_v1_hdom_ids(struct protection_domain *pdom,
-> +					 u64 start, u64 last)
->   {
->   	int ret = 0;
->   	struct amd_iommu_viommu *aviommu;
-> @@ -1560,7 +1558,7 @@ static int iommu_flush_pages_v1_hdom_ids(struct protection_domain *pdom, u64 add
->   
->   			pr_debug("%s: iommu=%#x, hdom_id=%#x\n", __func__,
->   				 iommu->devid, gdom_info->hdom_id);
-> -			build_inv_iommu_pages(&cmd, address, size, gdom_info->hdom_id,
-> +			build_inv_iommu_pages(&cmd, start, last, gdom_info->hdom_id,
->   					      IOMMU_NO_PASID, false);
->   			ret |= iommu_queue_command(iommu, &cmd);
->   		}
-> @@ -1616,15 +1614,15 @@ void amd_iommu_flush_all_caches(struct amd_iommu *iommu)
->   /*
->    * Command send function for flushing on-device TLB
->    */
-> -static int device_flush_iotlb(struct iommu_dev_data *dev_data, u64 address,
-> -			      size_t size, ioasid_t pasid, bool gn)
-> +static int device_flush_iotlb(struct iommu_dev_data *dev_data, u64 start,
-> +			      u64 last, ioasid_t pasid, bool gn)
->   {
->   	struct amd_iommu *iommu = get_amd_iommu_from_dev_data(dev_data);
->   	struct iommu_cmd cmd;
->   	int qdep = dev_data->ats_qdep;
->   
-> -	build_inv_iotlb_pages(&cmd, dev_data->devid, qdep, address,
-> -			      size, pasid, gn);
-> +	build_inv_iotlb_pages(&cmd, dev_data->devid, qdep, start,
-> +			      last, pasid, gn);
->   
->   	return iommu_queue_command(iommu, &cmd);
->   }
-> @@ -1668,15 +1666,15 @@ static int device_flush_dte(struct iommu_dev_data *dev_data)
->   
->   	if (dev_data->ats_enabled) {
->   		/* Invalidate the entire contents of an IOTLB */
-> -		ret = device_flush_iotlb(dev_data, 0, ~0UL,
-> +		ret = device_flush_iotlb(dev_data, 0, U64_MAX,
->   					 IOMMU_NO_PASID, false);
->   	}
->   
->   	return ret;
->   }
->   
-> -static int domain_flush_pages_v2(struct protection_domain *pdom,
-> -				 u64 address, size_t size)
-> +static int domain_flush_pages_v2(struct protection_domain *pdom, u64 start,
-> +				 u64 last)
->   {
->   	struct iommu_dev_data *dev_data;
->   	struct iommu_cmd cmd;
-> @@ -1687,7 +1685,7 @@ static int domain_flush_pages_v2(struct protection_domain *pdom,
->   		struct amd_iommu *iommu = get_amd_iommu_from_dev(dev_data->dev);
->   		u16 domid = dev_data->gcr3_info.domid;
->   
-> -		build_inv_iommu_pages(&cmd, address, size,
-> +		build_inv_iommu_pages(&cmd, start, last,
->   				      domid, IOMMU_NO_PASID, true);
->   
->   		ret |= iommu_queue_command(iommu, &cmd);
-> @@ -1696,8 +1694,8 @@ static int domain_flush_pages_v2(struct protection_domain *pdom,
->   	return ret;
->   }
->   
-> -static int domain_flush_pages_v1(struct protection_domain *pdom,
-> -				 u64 address, size_t size)
-> +static int domain_flush_pages_v1(struct protection_domain *pdom, u64 start,
-> +				 u64 last)
->   {
->   	struct pdom_iommu_info *pdom_iommu_info;
->   	struct iommu_cmd cmd;
-> @@ -1706,7 +1704,7 @@ static int domain_flush_pages_v1(struct protection_domain *pdom,
->   
->   	lockdep_assert_held(&pdom->lock);
->   
-> -	build_inv_iommu_pages(&cmd, address, size,
-> +	build_inv_iommu_pages(&cmd, start, last,
->   			      pdom->id, IOMMU_NO_PASID, false);
->   
->   	xa_for_each(&pdom->iommu_array, i, pdom_iommu_info) {
-> @@ -1726,7 +1724,7 @@ static int domain_flush_pages_v1(struct protection_domain *pdom,
->   	 * See drivers/iommu/amd/nested.c: amd_iommu_alloc_domain_nested()
->   	 */
->   	if (!list_empty(&pdom->viommu_list))
-> -		ret |= iommu_flush_pages_v1_hdom_ids(pdom, address, size);
-> +		ret |= iommu_flush_pages_v1_hdom_ids(pdom, start, last);
->   
->   	return ret;
->   }
-> @@ -1735,8 +1733,8 @@ static int domain_flush_pages_v1(struct protection_domain *pdom,
->    * TLB invalidation function which is called from the mapping functions.
->    * It flushes range of PTEs of the domain.
->    */
-> -static void __domain_flush_pages(struct protection_domain *domain,
-> -				 u64 address, size_t size)
-> +static void __domain_flush_pages(struct protection_domain *domain, u64 start,
-> +				 u64 last)
->   {
->   	struct iommu_dev_data *dev_data;
->   	int ret = 0;
-> @@ -1747,9 +1745,9 @@ static void __domain_flush_pages(struct protection_domain *domain,
->   
->   	if (pdom_is_v2_pgtbl_mode(domain)) {
->   		gn = true;
-> -		ret = domain_flush_pages_v2(domain, address, size);
-> +		ret = domain_flush_pages_v2(domain, start, last);
->   	} else {
-> -		ret = domain_flush_pages_v1(domain, address, size);
-> +		ret = domain_flush_pages_v1(domain, start, last);
->   	}
->   
->   	list_for_each_entry(dev_data, &domain->dev_list, list) {
-> @@ -1757,7 +1755,7 @@ static void __domain_flush_pages(struct protection_domain *domain,
->   		if (!dev_data->ats_enabled)
->   			continue;
->   
-> -		ret |= device_flush_iotlb(dev_data, address, size, pasid, gn);
-> +		ret |= device_flush_iotlb(dev_data, start, last, pasid, gn);
->   	}
->   
->   	WARN_ON(ret);
-> @@ -1769,7 +1767,7 @@ void amd_iommu_domain_flush_pages(struct protection_domain *domain,
->   	lockdep_assert_held(&domain->lock);
->   
->   	if (likely(!amd_iommu_np_cache)) {
-> -		__domain_flush_pages(domain, address, size);
-> +		__domain_flush_pages(domain, address, address + size - 1);
->   
->   		/* Wait until IOMMU TLB and all device IOTLB flushes are complete */
->   		domain_flush_complete(domain);
-> @@ -1806,7 +1804,7 @@ void amd_iommu_domain_flush_pages(struct protection_domain *domain,
->   
->   		flush_size = 1ul << min_alignment;
->   
-> -		__domain_flush_pages(domain, address, flush_size);
-> +		__domain_flush_pages(domain, address, address + flush_size - 1);
->   		address += flush_size;
->   		size -= flush_size;
->   	}
-> @@ -1823,17 +1821,17 @@ static void amd_iommu_domain_flush_all(struct protection_domain *domain)
->   }
->   
->   void amd_iommu_dev_flush_pasid_pages(struct iommu_dev_data *dev_data,
-> -				     ioasid_t pasid, u64 address, size_t size)
-> +				     ioasid_t pasid, u64 start, u64 last)
->   {
->   	struct iommu_cmd cmd;
->   	struct amd_iommu *iommu = get_amd_iommu_from_dev(dev_data->dev);
->   
-> -	build_inv_iommu_pages(&cmd, address, size,
-> +	build_inv_iommu_pages(&cmd, start, last,
->   			      dev_data->gcr3_info.domid, pasid, true);
->   	iommu_queue_command(iommu, &cmd);
->   
->   	if (dev_data->ats_enabled)
-> -		device_flush_iotlb(dev_data, address, size, pasid, true);
-> +		device_flush_iotlb(dev_data, start, last, pasid, true);
->   
->   	iommu_completion_wait(iommu);
->   }
-> @@ -1841,8 +1839,7 @@ void amd_iommu_dev_flush_pasid_pages(struct iommu_dev_data *dev_data,
->   static void dev_flush_pasid_all(struct iommu_dev_data *dev_data,
->   				ioasid_t pasid)
->   {
-> -	amd_iommu_dev_flush_pasid_pages(dev_data, pasid, 0,
-> -					CMD_INV_IOMMU_ALL_PAGES_ADDRESS);
-> +	amd_iommu_dev_flush_pasid_pages(dev_data, pasid, 0, U64_MAX);
->   }
->   
->   int amd_iommu_complete_ppr(struct device *dev, u32 pasid, int status, int tag)
-> diff --git a/drivers/iommu/amd/pasid.c b/drivers/iommu/amd/pasid.c
-> index 67eace9809f16a..d708c6532480a4 100644
-> --- a/drivers/iommu/amd/pasid.c
-> +++ b/drivers/iommu/amd/pasid.c
-> @@ -71,7 +71,7 @@ static void sva_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
->   	for_each_pdom_dev_data(pdom_dev_data, sva_pdom) {
->   		amd_iommu_dev_flush_pasid_pages(pdom_dev_data->dev_data,
->   						pdom_dev_data->pasid,
-> -						start, end - start);
-> +						start, end - 1);
->   	}
->   
->   	spin_unlock_irqrestore(&sva_pdom->lock, flags);
+Go through the drivers and migrate them to use
+ib_respond_udata(). Remove debugging prints on failure paths.
+Ensure the error propagates from ib_respond_udata(). Use the = {}
+pattern to initialize the uresp.
+
+There are a couple of oddball cases which are fixed up in their own
+commits, but otherwise this is fairly straightforward.
+
+Jason Gunthorpe (10):
+  RDMA: Use ib_is_udata_in_empty() for places calling
+    ib_is_udata_cleared()
+  IB/rdmavt: Don't abuse udata and ib_respond_udata()
+  RDMA: Convert drivers using min to ib_respond_udata()
+  RDMA: Convert drivers using sizeof() to ib_respond_udata()
+  RDMA/cxgb4: Convert to ib_respond_udata()
+  RDMA/qedr: Replace qedr_ib_copy_to_udata() with ib_respond_udata()
+  RDMA/mlx: Replace response_len with ib_respond_udata()
+  RDMA: Use proper driver data response structs instead of open coding
+  RDMA: Add missed = {} initialization to uresp structs
+  RDMA: Replace memset with = {} pattern for ib_respond_udata()
+
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c      |  2 +-
+ drivers/infiniband/hw/cxgb4/cq.c              | 11 +--
+ drivers/infiniband/hw/cxgb4/provider.c        | 14 +--
+ drivers/infiniband/hw/cxgb4/qp.c              | 10 +--
+ drivers/infiniband/hw/efa/efa_verbs.c         | 87 ++++++-------------
+ drivers/infiniband/hw/erdma/erdma_verbs.c     | 13 ++-
+ drivers/infiniband/hw/hns/hns_roce_ah.c       |  4 +-
+ drivers/infiniband/hw/hns/hns_roce_cq.c       |  3 +-
+ drivers/infiniband/hw/hns/hns_roce_main.c     |  3 +-
+ drivers/infiniband/hw/hns/hns_roce_pd.c       |  8 +-
+ drivers/infiniband/hw/hns/hns_roce_qp.c       | 13 +--
+ drivers/infiniband/hw/hns/hns_roce_srq.c      |  6 +-
+ .../infiniband/hw/ionic/ionic_controlpath.c   |  8 +-
+ drivers/infiniband/hw/irdma/verbs.c           | 48 ++++------
+ drivers/infiniband/hw/mana/cq.c               |  6 +-
+ drivers/infiniband/hw/mana/qp.c               | 22 ++---
+ drivers/infiniband/hw/mlx4/cq.c               |  7 +-
+ drivers/infiniband/hw/mlx4/main.c             | 31 ++++---
+ drivers/infiniband/hw/mlx4/qp.c               |  9 +-
+ drivers/infiniband/hw/mlx4/srq.c              | 12 ++-
+ drivers/infiniband/hw/mlx5/ah.c               |  2 +-
+ drivers/infiniband/hw/mlx5/cq.c               |  7 +-
+ drivers/infiniband/hw/mlx5/main.c             | 16 ++--
+ drivers/infiniband/hw/mlx5/mr.c               |  2 +-
+ drivers/infiniband/hw/mlx5/qp.c               | 17 ++--
+ drivers/infiniband/hw/mlx5/srq.c              |  7 +-
+ drivers/infiniband/hw/mthca/mthca_provider.c  | 40 ++++++---
+ drivers/infiniband/hw/ocrdma/ocrdma_verbs.c   | 31 +++----
+ drivers/infiniband/hw/qedr/verbs.c            | 43 ++-------
+ drivers/infiniband/hw/usnic/usnic_ib_verbs.c  | 13 +--
+ drivers/infiniband/hw/vmw_pvrdma/pvrdma_cq.c  |  7 +-
+ drivers/infiniband/hw/vmw_pvrdma/pvrdma_qp.c  |  8 +-
+ drivers/infiniband/hw/vmw_pvrdma/pvrdma_srq.c |  6 +-
+ .../infiniband/hw/vmw_pvrdma/pvrdma_verbs.c   | 11 ++-
+ drivers/infiniband/sw/rdmavt/cq.c             |  2 +-
+ drivers/infiniband/sw/rdmavt/qp.c             |  3 +-
+ drivers/infiniband/sw/rdmavt/srq.c            | 19 ++--
+ drivers/infiniband/sw/siw/siw_verbs.c         | 10 +--
+ 38 files changed, 223 insertions(+), 338 deletions(-)
 
 
-Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
+base-commit: 69db255d5fafb5651013c79e54c1d535fc5015fb
+-- 
+2.43.0
+
