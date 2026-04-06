@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE45334681;
-	Mon,  6 Apr 2026 11:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2810933555F;
+	Mon,  6 Apr 2026 11:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775473559; cv=none; b=q0cRef/B/ctiKKVj/9SsINjv8yVhK7Dm0GCS2Bwji4WnAW8zkh+0gXp2TZhCl/WydY+O7NEjp+RH3HdcaBWcd6ECLnzVx3AKezHYPtZ3aufrt0rQPHtI2df/2AqrBiMebb9vP4E5xF3tVFxSR8+d8hgR5vUq8maLzTzdSlpK2yQ=
+	t=1775473561; cv=none; b=U7+A3+/KF2FaFr+o4AOfRA6N8aOSNYsu3y4MPI/8JKeE0rMbqrpnrQyG+cmQkvJjd+Apy7VQieueXWBG7UvmfpKm0nFfYwOaPN9nRaobiZ5rMVvZmVxugRPkXemA5xEfNJKpTSUEixTWqESX6y0JfK7txuS68Rc/Dda+0FPukT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775473559; c=relaxed/simple;
-	bh=jWeUY2y70ibESK6vxa61BStZDdMuUDNZRSOnfa8Ra98=;
+	s=arc-20240116; t=1775473561; c=relaxed/simple;
+	bh=Qe8DOIxAq+HU8ga3u1xmR2ZpZz+XnkjjX6LknOS2sgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dAKynEhppZSareI9O6Amr1NMLsbAVGJi/pi1Lv0s29uudUefgcBtm/pFB5WEzsuZZG6r7up2TtpgY769XP31secU/zjuapSPAzdAhNGtyJ0NTCYCgSthqE5MFfSsApse8Pqm0/TgRG8bajBBKdlfCir6TlRlIGrsquX1tuSqm48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uDSX8ZYT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=X2r6vDzRgTFCmbgFcUfa5QpstMuIYasJgEo8wJR/j879oK3hmQKgyhwQ5ZiDZyNws3cfgWpOMn2df2k0g3ZLlEbXP2zSHW1A/kI4E3cw0bO2lD0J1LPf0UDMRRQTDJcIJDKNKbHuutK8Vy3+OZhxk/UJaUvDCQGKs3ZXAxSnO2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sbs8XHDA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uDSX8ZYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E82C19425;
-	Mon,  6 Apr 2026 11:05:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sbs8XHDA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DECB6C19425;
+	Mon,  6 Apr 2026 11:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775473559;
-	bh=jWeUY2y70ibESK6vxa61BStZDdMuUDNZRSOnfa8Ra98=;
+	s=k20201202; t=1775473560;
+	bh=Qe8DOIxAq+HU8ga3u1xmR2ZpZz+XnkjjX6LknOS2sgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDSX8ZYTkh/NlJxxoGAd0cWMtzMGomo6b9LgNVmwu1mjYMTwy3jN1igt9EZHSX0Pe
-	 nyUYkJgLG/jm++5bhOnPxBxKS7i0w79JbVBJtudVzDHyEh7HM+sqg4kxsSsIIzw3Fe
-	 xn9sv32X9w1nvkWaRfS2BGv/lbL5tQZXgre8vkcZRUqdNmyFQUFDwkBzWUwIz3N1qi
-	 rXCW33txp62kPI+QMWImMxKmF3qQkNW8rYypFHiBtn1+c0VwFz4IAVFb5piR9CwZGK
-	 B7VFCsGCUxbvH5+hxgGKJcOUHqzm4DnK39PoYVvfnGrqLo2DNW7O4qSPhPjEMH8FRk
-	 3nJWONlYUOjtw==
+	b=sbs8XHDA7Odg+CWTzgY8H26swhD869r1PjtRAOKL7v7Sf972DvbBQokk8uyTTsVkN
+	 skDv57hScoepNX/cj+Oz4ets8G2w6UgA0b15sYbHQdrtyNAfmFtAK5rbW1Rn6nROBg
+	 4+WBS87CDNZV/FJqDjNNyUWSe5NEOK0bKEgU29b4xlA9gMZKRCwv00S9kn2lx+6qeD
+	 HBef+lzLQNMHlmnnF3Z7geIa5+FIes8jtQOeZnPldRroTSD/0yrC3qlGSD0Eb/GVa/
+	 VqrK+vp+M89u56m6mdNuJ2Sryi2vEamlJ9JJAfD3GyLF1zKFllWl87b2WBmOCYTvx6
+	 hAF2YP2bqDp2w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Donet Tom <donettom@linux.ibm.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Alexander Savenko <alex.sav4387@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	Felix.Kuehling@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] drm/amdkfd: Fix queue preemption/eviction failures by aligning control stack size to GPU page size
-Date: Mon,  6 Apr 2026 07:05:38 -0400
-Message-ID: <20260406110553.3783076-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14IMH9
+Date: Mon,  6 Apr 2026 07:05:39 -0400
+Message-ID: <20260406110553.3783076-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260406110553.3783076-1-sashal@kernel.org>
 References: <20260406110553.3783076-1-sashal@kernel.org>
@@ -58,460 +54,220 @@ X-stable-base: Linux 6.19.11
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Alexander Savenko <alex.sav4387@gmail.com>
 
-[ Upstream commit 78746a474e92fc7aaed12219bec7c78ae1bd6156 ]
+[ Upstream commit 217d5bc9f96272316ac5a3215c7cc32a5127bbf3 ]
 
-The control stack size is calculated based on the number of CUs and
-waves, and is then aligned to PAGE_SIZE. When the resulting control
-stack size is aligned to 64 KB, GPU hangs and queue preemption
-failures are observed while running RCCL unit tests on systems with
-more than two GPUs.
+The Lenovo Yoga Pro 7 14IMH9 (DMI: 83E2) shares PCI SSID 17aa:3847
+with the Legion 7 16ACHG6, but has a different codec subsystem ID
+(17aa:38cf). The existing SND_PCI_QUIRK for 17aa:3847 applies
+ALC287_FIXUP_LEGION_16ACHG6, which attempts to initialize an external
+I2C amplifier (CLSA0100) that is not present on the Yoga Pro 7 14IMH9.
 
-amdgpu 0048:0f:00.0: amdgpu: Queue preemption failed for queue with
-doorbell_id: 80030008
-amdgpu 0048:0f:00.0: amdgpu: Failed to evict process queues
-amdgpu 0048:0f:00.0: amdgpu: GPU reset begin!. Source: 4
-amdgpu 0048:0f:00.0: amdgpu: Queue preemption failed for queue with
-doorbell_id: 80030008
-amdgpu 0048:0f:00.0: amdgpu: Failed to evict process queues
-amdgpu 0048:0f:00.0: amdgpu: Failed to restore process queues
+As a result, pin 0x17 (bass speakers) is connected to DAC 0x06 which
+has no volume control, making hardware volume adjustment completely
+non-functional. Audio is either silent or at maximum volume regardless
+of the slider position.
 
-This issue is observed on both 4 KB and 64 KB system page-size
-configurations.
+Add a HDA_CODEC_QUIRK entry using the codec subsystem ID (17aa:38cf)
+to correctly identify the Yoga Pro 7 14IMH9 and apply
+ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN, which redirects pin 0x17 to
+DAC 0x02 and restores proper volume control. The existing Legion entry
+is preserved unchanged.
 
-This patch fixes the issue by aligning the control stack size to
-AMDGPU_GPU_PAGE_SIZE instead of PAGE_SIZE, so the control stack size
-will not be 64 KB on systems with a 64 KB page size and queue
-preemption works correctly.
+This follows the same pattern used for 17aa:386e, where Legion Y9000X
+and Yoga Pro 7 14ARP8 share a PCI SSID but are distinguished via
+HDA_CODEC_QUIRK.
 
-Additionally, In the current code, wg_data_size is aligned to PAGE_SIZE,
-which can waste memory if the system page size is large. In this patch,
-wg_data_size is aligned to AMDGPU_GPU_PAGE_SIZE. The cwsr_size, calculated
-from wg_data_size and the control stack size, is aligned to PAGE_SIZE.
-
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a3e14436304392fbada359edd0f1d1659850c9b7)
+Link: https://github.com/nomad4tech/lenovo-yoga-pro-7-linux
+Tested-by: Alexander Savenko <alex.sav4387@gmail.com>
+Signed-off-by: Alexander Savenko <alex.sav4387@gmail.com>
+Link: https://patch.msgid.link/20260331082929.44890-1-alex.sav4387@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis.
+Lore is blocking automated access. Let me check the GitHub link
+mentioned in the commit.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject Line Analysis
-- **Subsystem**: drm/amdkfd (AMD KFD - Kernel Fusion Driver for GPU
-  compute)
-- **Action verb**: "Fix" - explicitly a bug fix
-- **Summary**: Fixes GPU queue preemption/eviction failures by aligning
-  control stack size to GPU page size instead of system page size
-
-Record: [drm/amdkfd] [Fix] [Queue preemption/eviction failures from
-incorrect alignment to CPU page size]
-
-### Step 1.2: Tags
-- **Reviewed-by**: Felix Kuehling <felix.kuehling@amd.com> (AMD KFD
-  subsystem maintainer)
-- **Signed-off-by**: Donet Tom <donettom@linux.ibm.com> (author, IBM)
-- **Signed-off-by**: Alex Deucher <alexander.deucher@amd.com> (AMD GPU
-  maintainer)
-- **Cherry-picked from**: a3e14436304392fbada359edd0f1d1659850c9b7
-- No Fixes: tag (expected for manual review candidates)
-- No Cc: stable (expected)
-
-Record: Reviewed by AMD KFD maintainer. Author is from IBM (Power
-systems, which commonly use 64KB page sizes). Maintainer signoff from
-Alex Deucher.
-
-### Step 1.3: Commit Body Text
-The commit describes a clear, reproducible bug:
-- **Bug**: When control stack size aligns to 64 KB (on systems with
-  PAGE_SIZE=64KB), GPU hangs and queue preemption failures occur
-- **Symptom**: Real error messages included: "Queue preemption failed",
-  "Failed to evict process queues", "GPU reset begin!"
-- **Trigger**: Running RCCL unit tests on systems with more than two
-  GPUs
-- **Root cause**: Control stack size aligned to CPU PAGE_SIZE (which can
-  be 64KB) instead of AMDGPU_GPU_PAGE_SIZE (always 4KB)
-- **Affected configurations**: Both 4KB and 64KB system page-size
-  configurations (but the bug only manifests on 64KB page systems)
-
-Record: GPU hang, queue preemption failures, GPU resets. Clearly
-documented with error messages. IBM Power10 with AMD Instinct GPUs is
-the main platform affected.
-
-### Step 1.4: Hidden Bug Fix Detection
-This is not hidden - it is explicitly labeled as a fix with clear error
-messages and reproduction scenario.
-
-Record: Not a hidden fix; explicitly a bug fix with documented failure
-mode.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory of Changes
-- **Files changed**: 1 (drivers/gpu/drm/amd/amdkfd/kfd_queue.c)
-- **Lines changed**: ~5 lines modified in one function
-- **Functions modified**: `kfd_queue_ctx_save_restore_size()`
-- **Scope**: Single-file surgical fix
-
-Record: 1 file, ~5 lines, 1 function. Very small, very contained.
-
-### Step 2.2: Code Flow Changes
-
-**Hunk 1**: `wg_data_size` alignment changed from `PAGE_SIZE` to
-`AMDGPU_GPU_PAGE_SIZE`
-- Before: `ALIGN(..., PAGE_SIZE)` → on 64KB page systems, aligns to 64KB
-- After: `ALIGN(..., AMDGPU_GPU_PAGE_SIZE)` → always aligns to 4KB (GPU
-  page size)
-
-**Hunk 2**: `ctl_stack_size` alignment changed from `PAGE_SIZE` to
-`AMDGPU_GPU_PAGE_SIZE`
-- Before: `ALIGN(..., PAGE_SIZE)` → on 64KB page systems, could produce
-  64KB
-- After: `ALIGN(..., AMDGPU_GPU_PAGE_SIZE)` → always aligns to 4KB
-
-**Hunk 3**: `cwsr_size` now aligned to `PAGE_SIZE` for final system
-memory allocation
-- Before: `cwsr_size = ctl_stack_size + wg_data_size` (no final
-  alignment)
-- After: `cwsr_size = ALIGN(ctl_stack_size + wg_data_size, PAGE_SIZE)`
-  (ensures system page alignment for memory allocation)
-
-Record: Intermediate GPU-internal sizes align to GPU page (4KB), final
-allocation size aligns to CPU page. This is the correct design pattern.
-
-### Step 2.3: Bug Mechanism
-Category: **Logic/correctness fix** - wrong alignment boundary causes
-hardware-incompatible control stack sizes.
-
-On 64KB page systems, the control stack was being padded to 64KB, which
-is incompatible with the GPU hardware's expectations. The GPU hardware
-operates with 4KB pages, so GPU-internal structures should be aligned to
-GPU page boundaries (4KB), not CPU page boundaries.
-
-Record: Logic/correctness bug. Wrong alignment boundary (CPU vs GPU page
-size) causes GPU hardware to fail during queue preemption.
-
-### Step 2.4: Fix Quality
-- **Obviously correct**: Yes. GPU internal structures should align to
-  GPU page size, not CPU page size. The final allocation aligns to CPU
-  page size for system memory.
-- **Minimal/surgical**: Yes. Only 3 alignment changes in one function.
-- **Regression risk**: Very low. On 4KB page systems (majority), this is
-  a no-op since `AMDGPU_GPU_PAGE_SIZE == PAGE_SIZE == 4096`. The
-  `ALIGN(cwsr_size, PAGE_SIZE)` addition only rounds up, never down.
-- **Red flags**: None.
-
-Record: Obviously correct, minimal, very low regression risk. No-op on
-4KB page systems.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: Blame the Changed Lines
-The buggy code was introduced in commit `517fff221c1e6` ("drm/amdkfd:
-Store queue cwsr area size to node properties") by Philip Yang, which
-first appeared in v6.12.
-
-Record: Buggy code introduced in v6.12 (commit 517fff221c1e6). Present
-in stable trees v6.12.y and later.
-
-### Step 3.2: Fixes Tag
-No explicit Fixes: tag present. However, the buggy commit is clearly
-`517fff221c1e6` which introduced this function with PAGE_SIZE alignment.
-
-Record: No Fixes: tag, but root cause commit identified as 517fff221c1e6
-(v6.12).
-
-### Step 3.3: File History
-Recent changes to kfd_queue.c include relaxing size checks, bumping vgpr
-sizes, and GFX7/8 queue validation fixes. Several changes have occurred
-since v6.12 (7 commits) that modified the function and surrounding code.
-
-Record: 7 commits changed this file since v6.12. The function has had
-some macro changes (WG_CONTEXT_DATA_SIZE_PER_CU now takes props
-parameter). Minor backport adjustment may be needed.
-
-### Step 3.4: Author's Commits
-Donet Tom from IBM has authored related non-4K page size fixes:
-- "Fix GART PTE for non-4K pagesize in svm_migrate_gart_map()"
-- "Relax size checking during queue buffer get"
-- Companion patch: "drm/amd: Fix MQD and control stack alignment for
-  non-4K"
-
-Record: Author is actively fixing non-4K page size issues in AMD GPU
-drivers. Specialized domain knowledge from IBM Power platform.
-
-### Step 3.5: Dependencies
-The companion MQD alignment patch (`6caeace0d1471`) touches different
-files (amdgpu_gart.c, amdgpu_ttm.c, kfd_mqd_manager_v9.c) and is NOT in
-HEAD. It addresses a separate issue (memory type assignment for MQD vs
-control stack on gfx9). The commit under review is self-contained - it
-only changes size calculations.
-
-On stable 6.12.y, the `WG_CONTEXT_DATA_SIZE_PER_CU` macro takes only
-`(gfxv)` not `(gfxv, props)`. This means the patch will need a trivial
-context adjustment for clean application to 6.12.y.
-
-Record: Self-contained fix. Minor context adjustment needed for 6.12.y
-due to macro signature difference. Companion MQD patch is independent.
-
----
-
-## PHASE 4: MAILING LIST RESEARCH
-
-### Step 4.1: Patch Discussion
-The patch went through three RFC versions and a final PATCH v2:
-- **Christian König** initially raised concerns about debugger CPU-side
-  alignment, but later gave **Acked-by** after the fix was demonstrated
-  to resolve GPU hangs
-- **Felix Kuehling** gave formal **Reviewed-by** and stated "The series
-  looks good to me"
-- **Alex Deucher** confirmed inclusion for mainline
-- No NAKs
-- No explicit stable nomination found in discussion
-
-Record: Positive review from two AMD maintainers. Initial concern from
-König was addressed and resolved.
-
-### Step 4.2: Bug Report
-The bug was found during RCCL (AMD's collective communications library)
-unit testing on Power10 systems with multiple AMD GPUs. Real error
-messages in the commit show reproducible GPU hangs.
-
-Record: Real, reproducible bug found in multi-GPU compute testing on IBM
-Power systems.
-
----
+Record: [Phase 4: Could not access lore.kernel.org due to access
+restrictions. The patch was accepted by Takashi Iwai (ALSA maintainer)
+which is the strongest signal for ALSA patches.]
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-Modified function: `kfd_queue_ctx_save_restore_size()`
+**Step 5.1: Functions modified**
+No functions are modified. The change only adds a table entry to the
+`alc269_fixup_tbl[]` static array.
 
-### Step 5.2: Callers
-Called from `kfd_topology.c:2193` during topology device initialization.
-This runs during GPU driver initialization for every AMD GPU, affecting
-all KFD-capable AMD GPU users.
+**Step 5.2-5.4: Call chain**
+The quirk table is looked up during HDA codec probe. The
+`HDA_CODEC_QUIRK` macro matches on codec subsystem ID. When matched, it
+applies `ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN` which calls
+`alc287_fixup_yoga9_14iap7_bass_spk_pin` — a function that already
+exists and is already used by other quirk entries (Yoga 9 14IMH9 with
+PCI SSIDs 17aa:38d2 and 17aa:38d7).
 
-### Step 5.3-5.4: Call Chain
-The computed values (`ctl_stack_size`, `cwsr_size`) are stored in node
-properties and used during queue creation/validation in
-`kfd_queue_acquire_buffers()`. This is a critical path for any GPU
-compute workload.
+Record: [Only a static table entry addition. The fixup function and all
+supporting code already exist. No new code paths created.]
 
-Record: Called during GPU initialization. Values used for all compute
-queue operations. High impact surface.
+**Step 5.5: Similar patterns**
+Already verified: The same `HDA_CODEC_QUIRK` + `SND_PCI_QUIRK`
+disambiguation pattern is used for `0x17aa:0x386e` (Legion Y9000X vs
+Yoga Pro 7 14ARP8) and for `0x17aa:0x3802` (DuetITL vs Yoga Pro 9). This
+is a well-established pattern.
 
-### Step 5.5: Similar Patterns
-The companion MQD fix addresses the same root cause (CPU vs GPU page
-alignment mismatch) in different code paths, confirming this is a
-systematic issue for non-4K page systems.
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
----
+**Step 6.1: Does buggy code exist in stable?**
+The Legion 7 16ACHG6 PCI SSID quirk (17aa:3847) exists in the tree. The
+fixup definition `ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN` was added in
+v6.9-rc1. So stable trees >= 6.9 have the prerequisite. For older trees
+(6.6.y, 6.1.y), the fixup definition would need to be present (would
+need to check if it was backported).
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 6.2: Backport complications**
+The file was recently split (`ALSA: hda: Split Realtek HD-audio codec
+driver` in commit aeeb85f26c3bb). In stable trees, the code is likely
+still in the old location (`sound/pci/hda/patch_realtek.c`). The
+backport would need to target the old file path, but the actual change
+(adding one table entry) is trivial.
 
-### Step 6.1: Buggy Code in Stable Trees
-The function `kfd_queue_ctx_save_restore_size` was introduced in v6.12
-(commit 517fff221c1e6). It exists in stable trees v6.12.y and later.
+**Step 6.3: No related fixes already in stable for this specific
+device.**
 
-Record: Bug exists in v6.12.y, v6.13.y, v6.14.y stable trees.
-
-### Step 6.2: Backport Complications
-The `WG_CONTEXT_DATA_SIZE_PER_CU` macro signature changed (added `props`
-parameter) since v6.12. The patch will need a trivial context adjustment
-for 6.12.y (use `WG_CONTEXT_DATA_SIZE_PER_CU(gfxv)` instead of
-`WG_CONTEXT_DATA_SIZE_PER_CU(gfxv, props)`).
-
-Record: Minor context adjustment needed for 6.12.y. Should apply more
-cleanly to 6.13.y+.
-
-### Step 6.3: Related Fixes in Stable
-No related fix for this specific issue found in stable trees.
-
----
+Record: [Needs path adjustment for older stables where code is in
+sound/pci/hda/patch_realtek.c. The prerequisite fixup
+ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN must exist in the target stable
+tree (present since v6.9-rc1).]
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-- **Subsystem**: drm/amdkfd (GPU compute driver)
-- **Criticality**: IMPORTANT - affects users of AMD GPUs for compute
-  workloads (HPC, AI/ML, scientific computing)
+**Step 7.1:** Subsystem: sound/hda (ALSA HDA audio). Criticality:
+IMPORTANT — audio is essential for laptop users.
 
-### Step 7.2: Subsystem Activity
-Very active subsystem with frequent commits (20+ in recent history on
-kfd_queue.c alone).
-
-Record: Active, important subsystem for GPU compute users.
-
----
+**Step 7.2:** Very active subsystem with frequent quirk additions (the
+recent history shows many similar patches).
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Population
-Systems with non-4K CPU page sizes using AMD GPUs for compute.
-Primarily:
-- IBM Power systems (ppc64le, 64KB page size) with AMD Instinct GPUs
-- ARM64 systems with 64KB page configurations
-- Any system where PAGE_SIZE > 4096
+**Step 8.1: Who is affected**
+Users of the Lenovo Yoga Pro 7 14IMH9 laptop — a specific but popular
+consumer laptop.
 
-Record: Platform-specific but affects all GPU compute workloads on those
-platforms.
+**Step 8.2: Trigger conditions**
+Every boot. Volume control is completely broken without this quirk. The
+user cannot adjust volume at all.
 
-### Step 8.2: Trigger Conditions
-- Multi-GPU compute workloads (RCCL unit tests with >2 GPUs)
-- Queue preemption/eviction (normal GPU scheduling operations)
-- Trigger is common during real compute workloads
+**Step 8.3: Failure mode severity**
+Audio volume control completely non-functional — either silent or
+maximum volume. This is a HIGH severity usability issue for a laptop.
+Not a crash, but makes the device partially unusable.
 
-Record: Common trigger during normal GPU compute operations on affected
-platforms.
-
-### Step 8.3: Failure Mode Severity
-- **GPU hang** → CRITICAL
-- **Queue preemption failure** → CRITICAL (GPU becomes unusable)
-- **GPU reset** → CRITICAL (interrupts all GPU work)
-- **Failed to restore process queues** → Data loss for running GPU
-  workloads
-
-Record: CRITICAL severity - GPU hangs, forced resets, compute workload
-failures.
-
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit**: HIGH - prevents GPU hangs and resets on non-4K page
-  systems
-- **Risk**: VERY LOW -
-  - Only 3 alignment changes in one function
-  - No-op on 4KB page systems (the majority)
-  - Obviously correct - GPU internal structures should use GPU page
-    alignment
-  - Reviewed by AMD KFD maintainer
-
-Record: HIGH benefit, VERY LOW risk. Excellent ratio.
-
----
+**Step 8.4: Risk-benefit ratio**
+- BENEFIT: HIGH — restores volume control for all users of this specific
+  laptop model
+- RISK: VERY LOW — 1 table entry addition, using existing fixup,
+  following established pattern, no code logic changes, cannot affect
+  any other device
+- Ratio: Strongly favorable
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Compilation
+**Step 9.1: Evidence compiled**
 
-**FOR backporting:**
-- Fixes GPU hangs and forced GPU resets (CRITICAL severity)
-- Small, surgical fix (3 alignment changes in 1 function)
-- Obviously correct (GPU structures align to GPU page size)
-- Reviewed by AMD KFD maintainer (Felix Kuehling)
-- Acked by Christian König after initial concerns resolved
-- Real, reproducible bug with documented error messages
-- Self-contained - no dependencies on other patches
-- No-op on 4KB page systems - zero regression risk for majority of users
+FOR backporting:
+- Fixes completely broken volume control on a specific laptop (audio
+  either silent or max)
+- Trivial 1-line functional change (+ 3 comment lines)
+- Uses existing fixup definition — no new code
+- Follows established disambiguation pattern (HDA_CODEC_QUIRK)
+- Tested by the device owner
+- Accepted by ALSA maintainer Takashi Iwai
+- Classic hardware quirk — explicit exception category for stable
 
-**AGAINST backporting:**
-- No Fixes: tag or Cc: stable (expected for manual review candidates)
-- Minor context adjustment needed for 6.12.y backport
-- Affects only non-4K page size systems (smaller population)
+AGAINST backporting:
+- File path changed in recent mainline (code was split to new location)
+  — may need path adjustment
+- Prerequisite fixup enum/definition only exists since v6.9-rc1 — older
+  stable trees would need that too
+- No Cc: stable tag (but this is expected and not a negative signal)
 
-**UNRESOLVED:**
-- Exact impact on ARM64 with 64KB pages (only documented on Power10)
+**Step 9.2: Stable rules checklist**
+1. Obviously correct and tested? YES — tested by device owner, accepted
+   by maintainer
+2. Fixes a real bug? YES — broken volume control on a real laptop
+3. Important issue? YES — audio completely unusable (no volume control)
+4. Small and contained? YES — 4 lines, single table entry
+5. No new features or APIs? CORRECT — no new features, just a quirk
+   entry
+6. Can apply to stable? YES for 6.12.y+ (may need path adjustment);
+   6.9-6.11 needs path adjustment; <6.9 needs prerequisite
 
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES - Reviewed by maintainer,
-   tested on real hardware
-2. **Fixes a real bug?** YES - GPU hangs, queue preemption failures, GPU
-   resets
-3. **Important issue?** YES - GPU hangs are CRITICAL
-4. **Small and contained?** YES - 3 lines in 1 function
-5. **No new features or APIs?** YES - pure bugfix
-6. **Can apply to stable trees?** YES with minor context adjustment for
-   6.12.y
+**Step 9.3: Exception category**
+YES — this is a **hardware quirk/workaround** addition, one of the
+explicitly listed exception categories that are almost always
+appropriate for stable.
 
-### Step 9.3: Exception Categories
-Not an exception category - this is a straightforward bug fix that
-qualifies on its own merit.
-
-### Step 9.4: Decision
-The evidence overwhelmingly supports backporting. This is a small,
-obviously correct fix for a CRITICAL GPU hang issue. The fix is self-
-contained, reviewed by the subsystem maintainer, and carries effectively
-zero regression risk for the majority of systems.
-
----
+**Step 9.4: Decision**
+This is a textbook stable backport candidate: a tiny hardware quirk
+addition that fixes completely broken audio volume control on a specific
+laptop model, using an existing fixup, with zero risk to other devices.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Felix Kuehling (AMD KFD
-  maintainer), SOB from Alex Deucher (AMD GPU maintainer), author from
-  IBM
-- [Phase 2] Diff analysis: 3 alignment changes in
-  kfd_queue_ctx_save_restore_size(): wg_data_size and ctl_stack_size
-  changed from PAGE_SIZE to AMDGPU_GPU_PAGE_SIZE alignment, cwsr_size
-  gets ALIGN(PAGE_SIZE)
-- [Phase 2] Verified AMDGPU_GPU_PAGE_SIZE = 4096 (constant) defined in
-  amdgpu_gart.h:35
-- [Phase 3] git log: function introduced in commit 517fff221c1e6 ("Store
-  queue cwsr area size to node properties"), first in v6.12
-- [Phase 3] git merge-base: confirmed code is in v6.12 but NOT in v6.11
-- [Phase 3] git diff v6.12..HEAD: confirmed 7 commits changed the file
-  since v6.12, including macro signature change for
-  WG_CONTEXT_DATA_SIZE_PER_CU
-- [Phase 3] git log --author="Donet Tom": confirmed 2 other AMD non-4K
-  page fixes
-- [Phase 3] Confirmed companion MQD patch (6caeace0d) is NOT in HEAD and
-  touches different files (independent)
-- [Phase 4] Lore/mailing list research: patch went through RFC v1-v3 and
-  PATCH v2, received Reviewed-by and Acked-by, no NAKs
-- [Phase 5] Grep callers: kfd_queue_ctx_save_restore_size called from
-  kfd_topology.c during device init
-- [Phase 5] Grep cwsr_size: used in kfd_queue_acquire_buffers for queue
-  validation and allocation
-- [Phase 6] Confirmed buggy code exists in v6.12.y stable tree
-- [Phase 6] Minor context adjustment needed for v6.12.y (macro signature
-  difference)
-- [Phase 8] Failure mode: GPU hang, forced GPU reset → CRITICAL severity
-- [Phase 8] On 4KB page systems: AMDGPU_GPU_PAGE_SIZE == PAGE_SIZE ==
-  4096, so fix is a no-op → zero regression risk
+- [Phase 1] Parsed tags: Tested-by from author, Signed-off-by from
+  Takashi Iwai (ALSA maintainer)
+- [Phase 2] Diff analysis: +4 lines (1 HDA_CODEC_QUIRK entry + 3 comment
+  lines) in alc269_fixup_tbl[]
+- [Phase 2] Verified the fix reuses existing
+  ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN fixup (line 6361)
+- [Phase 3] git blame: Legion 16ACHG6 quirk at line 7574 exists in
+  current tree (from aeeb85f26c3bb split commit)
+- [Phase 3] git log -S: ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN was
+  introduced in commit 9b714a59b719b, which is in v6.9-rc1
+- [Phase 3] Verified same disambiguation pattern used for 0x17aa:0x386e
+  (HDA_CODEC_QUIRK at line 7582)
+- [Phase 4] lore.kernel.org: Could not access due to Anubis block —
+  UNVERIFIED mailing list discussion
+- [Phase 5] Verified fixup definition at line 6361-6366: chains to
+  alc287_fixup_yoga9_14iap7_bass_spk_pin + CS35L41_I2C_2
+- [Phase 5] Confirmed fixup is already used by two other quirk entries
+  (lines 7619, 7624)
+- [Phase 6] Prerequisite exists since v6.9-rc1 — stable trees >= 6.12.y
+  should have it; older may need check
+- [Phase 6] File was split from sound/pci/hda/patch_realtek.c — backport
+  needs path adjustment for older trees
+- [Phase 8] Impact: volume control completely broken (silent or max) —
+  confirmed from commit message
+- [Phase 8] Risk: near-zero — table entry only, cannot affect other
+  hardware
+- UNVERIFIED: Could not verify mailing list discussion for stable
+  nominations (lore blocked). This does not affect the decision since
+  the technical merits are clear.
 
 **YES**
 
- drivers/gpu/drm/amd/amdkfd/kfd_queue.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-index 2822c90bd7be4..b97f4a51db6e3 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-@@ -444,10 +444,11 @@ void kfd_queue_ctx_save_restore_size(struct kfd_topology_device *dev)
- 		    min(cu_num * 40, props->array_count / props->simd_arrays_per_engine * 512)
- 		    : cu_num * 32;
- 
--	wg_data_size = ALIGN(cu_num * WG_CONTEXT_DATA_SIZE_PER_CU(gfxv, props), PAGE_SIZE);
-+	wg_data_size = ALIGN(cu_num * WG_CONTEXT_DATA_SIZE_PER_CU(gfxv, props),
-+				AMDGPU_GPU_PAGE_SIZE);
- 	ctl_stack_size = wave_num * CNTL_STACK_BYTES_PER_WAVE(gfxv) + 8;
- 	ctl_stack_size = ALIGN(SIZEOF_HSA_USER_CONTEXT_SAVE_AREA_HEADER + ctl_stack_size,
--			       PAGE_SIZE);
-+			       AMDGPU_GPU_PAGE_SIZE);
- 
- 	if ((gfxv / 10000 * 10000) == 100000) {
- 		/* HW design limits control stack size to 0x7000.
-@@ -459,7 +460,7 @@ void kfd_queue_ctx_save_restore_size(struct kfd_topology_device *dev)
- 
- 	props->ctl_stack_size = ctl_stack_size;
- 	props->debug_memory_size = ALIGN(wave_num * DEBUGGER_BYTES_PER_WAVE, DEBUGGER_BYTES_ALIGN);
--	props->cwsr_size = ctl_stack_size + wg_data_size;
-+	props->cwsr_size = ALIGN(ctl_stack_size + wg_data_size, PAGE_SIZE);
- 
- 	if (gfxv == 80002)	/* GFX_VERSION_TONGA */
- 		props->eop_buffer_size = 0x8000;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index e55f57cca883a..22fbe9a277523 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7572,6 +7572,10 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3834, "Lenovo IdeaPad Slim 9i 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x383d, "Legion Y9000X 2019", ALC285_FIXUP_LEGION_Y9000X_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3843, "Lenovo Yoga 9i / Yoga Book 9i", ALC287_FIXUP_LENOVO_YOGA_BOOK_9I),
++	/* Yoga Pro 7 14IMH9 shares PCI SSID 17aa:3847 with Legion 7 16ACHG6;
++	 * use codec SSID to distinguish them
++	 */
++	HDA_CODEC_QUIRK(0x17aa, 0x38cf, "Lenovo Yoga Pro 7 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3847, "Legion 7 16ACHG6", ALC287_FIXUP_LEGION_16ACHG6),
+ 	SND_PCI_QUIRK(0x17aa, 0x384a, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
 -- 
 2.53.0
 
