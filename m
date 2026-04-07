@@ -1,191 +1,182 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011066.outbound.protection.outlook.com [40.107.208.66])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09A82036E9
-	for <patches@lists.linux.dev>; Tue,  7 Apr 2026 14:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.66
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775570616; cv=fail; b=uJO7pFpTqIoOJd2ArwsZ+OhNVkpdNelL11FFmYkHl47Pi4o/haBonmYL+LSD0N7XydfqHKAQMt424fzqzJOkoisH/fSHrgMs0iEghzyp9x68SIIg7vXiVStkY+oUmvYxTgapGWISxBK7GKmuB8vKV4Z/cFy0FVodc2/ts4Rzbw4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775570616; c=relaxed/simple;
-	bh=a/m5M7VdnT1xyK/xE97TsljA9JyGm/TjUGkrMXLCxEg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=YW/0kMMdLr+RlrTHDPEbvSKiI/yRufP17bq3f2Z6fziJ9BNysIKjvVONgR+pdmrXKflMCdmgcMxZka9a0Rpu5PLCUMKlNvdla+24PdBSc5Jj0HWhGLikrgQAbEkZTYVVyJo1ApFaFqlNH7pXIUZRJoqHpydspuWlM72ZHKXR51E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ZdBLf3MK; arc=fail smtp.client-ip=40.107.208.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43253AB275
+	for <patches@lists.linux.dev>; Tue,  7 Apr 2026 16:02:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775577747; cv=none; b=lKOsOMpprwiVrNFCyCu0Q7MpFu+KiZcrptkDjPmh1pLbLi1SKsc7R22G3g3DJXIbqpYg0ua2J98hgSd8+01GYpEF8wRO7pX4ZxU/j5Y3MDyIbMvNqD1yQyDcqOGw/GOiQPdo59x/Kjpqw2EU2nfhzqY0/uypoBTQOrFyv38cL18=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775577747; c=relaxed/simple;
+	bh=EkhkDmw+ds9/eOTSV+LXXneT2S29y5By4Zed2fnWFrg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VrwJaH52l0C5+LTU0GG2zi8aJp3+i2K0d+egC1y1BZVfnFnVqROFIsqJ2084EeWUzIIbYso27qjT2nOXxggDZ1MnpvzmCdid2bMLDDR1NkNPcA4urRd5GywbXX+pBMeP1nGL0xzNbPGdiuwYbDGjhUym/GNC2uV8dYEm1Gl2CYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b3W6Q4kq; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ZdBLf3MK"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uQRVpQ6ipkjd4E4dWvWKm/ZIJANZfIgcMcPwYg55k4myl9s/sqgLK2LZosawtDw8Te1Am41xhftr+76NdTo27x0qNzU0E3YKRbD4QkxuIpz7jQ2a4CELpXY/I67nx/WghpKd5O8IdBIRxvYTqe9ZmRKhei4WTbAiTr3mhvtaJMMsI4FGoGXko/cnU8jhlOrd0C9tqDxnaXXFda0/eU/qhJAH45A8vzsmjX5qq9l/E4z9eY5ngw+HakvnAitmTXlnoA9kaL4Gcr1tnBh8obV/pFuCu7WYCdEfx2tAPLN6uyv80R5FOyTWiMMf40Yzo9OXwVQpIyn+Wt/HdPxai1wlgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eXd7N7riOcu6JXsLuXzPXWGCBNL8AZE3i4QOARgUKII=;
- b=MIR2sgv1iGy64RlUeOT5Rxf5IwdPA2RXLcx9A3w2tiADXziuHYmgNWfthoTJD2spRV+F7SYe7OEInZW52GDzjHvPnnFotxN8YSxwK3zUyuR3q1UoqmpPllSxneN8EePO3zECUB9q1sgHj4G+dJfBkinUE37j1CURnd28pLmsJL5iuwMpD5q11lq9OnPkiQkzcur+3y3cHHZsu0AsHd8sFqbVYmYnYmycXtk3COoFv2fzT3oyRM53LRCDYAmK+N2wsqt7lIMaCWfEEFs/9wvlLjHImF52hdY2p9CV/tn2DFpPNB+GEAmaytjnoqSxyveajKQr5qCoplkbZVO0yPmfnw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eXd7N7riOcu6JXsLuXzPXWGCBNL8AZE3i4QOARgUKII=;
- b=ZdBLf3MKpF4/DfjameEOIDSs5jkk/utvf3gPu2BDdhyCMyKWHe+T68MibFuhTr6HhMonyJ6vgDDF07TxJj2Cd0TzmWEKlQedVruSVj4FSR/+1jKvX9UmYMCB5YyQc7HNw1HR2i06POaDYOtd/t6+MzWSc+o0y0TlNi676fOD69o2AkE+g7kYqDJ7v+iHOyQ0aPfGLu74+BkmVPQ+fAPolgAT2dUI057ui2A8qRfFD9SAX4ieQhJCwrPlu5cp91yYn3VXxnDXj689tFlhSmoF1J/iUtWE0ir8zN8X4uzD7RCKmpvV/DiCUp9vcetKzBX0xHBw+PVJ8g2otvwWO2aLhA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by SJ2PR12MB7797.namprd12.prod.outlook.com (2603:10b6:a03:4c5::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.17; Tue, 7 Apr
- 2026 14:03:28 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9769.017; Tue, 7 Apr 2026
- 14:03:27 +0000
-Date: Tue, 7 Apr 2026 11:03:26 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Junxian Huang <huangjunxian6@hisilicon.com>
-Cc: Abhijit Gangurde <abhijit.gangurde@amd.com>,
-	Allen Hubbe <allen.hubbe@amd.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Potnuri Bharat Teja <bharat@chelsio.com>,
-	Bryan Tan <bryan-bt.tan@broadcom.com>,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Gal Pressman <gal.pressman@linux.dev>,
-	Kai Shen <kaishen@linux.alibaba.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Konstantin Taranov <kotaranov@microsoft.com>,
-	Krzysztof Czurylo <krzysztof.czurylo@intel.com>,
-	Leon Romanovsky <leon@kernel.org>, linux-hyperv@vger.kernel.org,
-	linux-rdma@vger.kernel.org, Long Li <longli@microsoft.com>,
-	Michal Kalderon <mkalderon@marvell.com>,
-	Michael Margolin <mrgolin@amazon.com>,
-	Nelson Escobar <neescoba@cisco.com>,
-	Satish Kharat <satishkh@cisco.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Yossi Leybovich <sleybo@amazon.com>,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Vishnu Dasa <vishnu.dasa@broadcom.com>,
-	Yishai Hadas <yishaih@nvidia.com>, Adit Ranadive <aditr@vmware.com>,
-	Aditya Sarwade <asarwade@vmware.com>,
-	Bryan Tan <bryantan@vmware.com>, Dexuan Cui <decui@microsoft.com>,
-	Doug Ledford <dledford@redhat.com>,
-	George Zhang <georgezhang@vmware.com>,
-	Jorgen Hansen <jhansen@vmware.com>,
-	Leon Romanovsky <leonro@mellanox.com>,
-	Parav Pandit <parav.pandit@emulex.com>, patches@lists.linux.dev,
-	Roland Dreier <roland@purestorage.com>,
-	Roland Dreier <rolandd@cisco.com>,
-	Ajay Sharma <sharmaajay@microsoft.com>, stable@vger.kernel.org
-Subject: Re: [PATCH v2 06/16] RDMA/hns: Fix xarray race in
- hns_roce_create_srq()
-Message-ID: <20260407140326.GB3357077@nvidia.com>
-References: <6-v2-1c49eeb88c48+91-rdma_udata_rep_jgg@nvidia.com>
- <f1fb94fe-c86b-7866-d606-088343a56fab@hisilicon.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f1fb94fe-c86b-7866-d606-088343a56fab@hisilicon.com>
-X-ClientProxiedBy: YT4PR01CA0249.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:10f::16) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b3W6Q4kq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1775577741; x=1807113741;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=EkhkDmw+ds9/eOTSV+LXXneT2S29y5By4Zed2fnWFrg=;
+  b=b3W6Q4kqPf8AYSfR9LXyhXPXyEs4nBM8jRKAb90D6r6N47OBHzxQeL3n
+   saw8QvUhg72YW6L7Yx4BOkK6h0nULbG00FjgUg5bxxZNS7PHjStApvTzs
+   xNeFw3vBcLgrJgGPq5qQMbW6VFGCgu0kdEKjRpmn9ATxg4CxlNBPsWkMj
+   AOjjy1ljlQV7zC6wkToxvWV9xpg7P83PhqyMrTzSrqjRdRBvqGHOXKUdS
+   S2QGMLEQ/WdzyfiR1L0AVmFmDspXEsNX467RL++7fdk9jmMgNChRmXSjF
+   /R7EZgZhNN3QuT6vaMCfqephrR9ajj8id3MqUVUChFcz8IB99Bxmpp0T5
+   A==;
+X-CSE-ConnectionGUID: /Wy7GTF4SrmjLBx2TrAyXw==
+X-CSE-MsgGUID: d6ea9/qmTL6bV9a8B0ia1w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11752"; a="80432633"
+X-IronPort-AV: E=Sophos;i="6.23,165,1770624000"; 
+   d="scan'208";a="80432633"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2026 09:02:18 -0700
+X-CSE-ConnectionGUID: yP78gzZnRM2J4hpKjfXIOA==
+X-CSE-MsgGUID: zrRE+pCfTGOmvzlhKDDgLA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,165,1770624000"; 
+   d="scan'208";a="228119027"
+Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2026 09:02:18 -0700
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: tony.luck@intel.com,
+	james.morse@arm.com,
+	Dave.Martin@arm.com,
+	babu.moger@amd.com,
+	bp@alien8.de,
+	tglx@linutronix.de,
+	dave.hansen@linux.intel.com
+Cc: x86@kernel.org,
+	hpa@zytor.com,
+	ben.horgan@arm.com,
+	fustini@kernel.org,
+	fenghuay@nvidia.com,
+	peternewman@google.com,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	reinette.chatre@intel.com
+Subject: [PATCH v3 00/13] x86,fs/resctrl: Improve resctrl quality and consistency
+Date: Tue,  7 Apr 2026 09:01:57 -0700
+Message-ID: <cover.1775576382.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SJ2PR12MB7797:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6b0ee7e4-05a7-4298-a38f-08de94ae710d
-X-LD-Processed: 43083d15-7273-40c1-b7db-39efd9ccc17a,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|7416014|56012099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	Y00Z0qohceGwPLvzzORQUskEpyA/8EEP3NoynkIbTSABeysE6h46bYZwId7lTCPZqGVZhwL7A79jqK4QCAemPOKFCVxFHxVr87LxOhp1tmNtCmX5dXnB3faindZOOlNClrZLGnj+s4vuK1Hx4f/X56Vs7oUkEZObOy3ROsOvWQCXfEwxRnoAVsQN6xTIejFcpe7gDYprX0gNYhcwfXKu8dqd3jJ9s8Se8J6S9TjB4+Y8m1YYjjXm+M3i1tOyj3c7klySk3jnZXwEqcz54GS+tNNxNztYY8VATFmR5publFx3hJkeCQQ9+pVuE9z73D/s3bwiP4+QYeX1pvSI+fqipZAKymiN2IJiXo47L2Yp3ubVIbMLKJdlEtl+D0hZP2WoyZhh5WMB/fKYwUI/hkupuLQ7Oy3w6ei2FgieQMlXmpAxXI2SeMMnhB7MNQs+qw5qHQSw1Shn2+5tG7cLDKMODtLMLYPKb6hjNv55C85V7X1cv2Kp+JM8wAu33gFhl9hi9QR7kjedoQHXek0EX4XYKijSuaI1ZPLgCJycaQ7K6LxNe0HFiq8CEluHIVn/n4OOf88T+0heZZRmpCiiBD1hb5vu3dDXwwPmvx+fZqOm0NC4f59U2XCezJrXGFO4UAiX5rwMTt+BiVJs5twCa+/BMyoMeNkTH2E93hQnOcB9b7vNJQHIBC6eA5g0m7uX3fkVMQfr5BsOTIeUF9mTC6tA2OMTarDMqm2PZL/15ubpfLw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(7416014)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?JLl0H6lROgv3I5faA2Car+zGSO1UvnxsaNEWGk6f7mOnS9Ogs5OwLaAx4Oar?=
- =?us-ascii?Q?vkyBA494UdiGD5ouWsWSJhyrEV3VIe2L/IYnF2xZNS5BB/aXum7zQNirrLUX?=
- =?us-ascii?Q?2RfRYw2kl4Q9woe5DR+l7uAxnzF4dqZmyV6muMZQHU+gnFu0h5AnY8j0iWCS?=
- =?us-ascii?Q?0fTTTxOwBaCk4m0Hw0bq5lzMs/W9S8Bv+h6SUaphm10QhLAwCb7IKTmx1VMt?=
- =?us-ascii?Q?UP2F4h+UVENMjqmhyQTDkzQMFEB9FXDksHUpYHVWqbvHrMztgwUVkzViIybB?=
- =?us-ascii?Q?2FG7kWwUm+WErhEBj47tVg6ygXTzuvWNMKRxnVW81V2H5PZSjdnLHQWnj96U?=
- =?us-ascii?Q?bQWc+kL13inA/yS6fxn5YjQYUHg0iXlXLRvVaMMyj+ossE1/WpWXCsvtMuYq?=
- =?us-ascii?Q?Rqm3RlQiqxsuk0DGM6M13ELRpq7kL9iki4/820sh8AS86yPk9vAs7QTEf9i0?=
- =?us-ascii?Q?c3eDZlwsoFcn3KNhZF24yJLzoxb7I1oLawqr3im/C4bAK/Rh3UUIx5yRz6uH?=
- =?us-ascii?Q?4FobP9j4YUbcDYkae6Ls9Yf2yd7GoZCgvrpy6Jbhz/iq0Y8kEh8Ho8p7IURD?=
- =?us-ascii?Q?EgIoN45jbe+ipMqwQBHgKaJFQtdQI5bWNa024/KXfO2ZHHv52ejzneathjEY?=
- =?us-ascii?Q?lm43UnZvrZSM4fYg8DIOneCyK+vehSiodD6wLgZSf44qv9r5QWYGwtHBk+1E?=
- =?us-ascii?Q?2W49yKlN5wTVvtFx4PR7TqFUmU2NwGoYQ3pQ9EO567wOcCLYDxXXpCBp1lxJ?=
- =?us-ascii?Q?T/Kccnz3Ff/XoZerOvGd/0sf4iij6QoLXtA3jAbg9Sl10svw9AaH1uERhqaE?=
- =?us-ascii?Q?gqdOsmmlV0koCclnJc0TUP7kARzbyo1phVLlOuyLfvU0fh3XWhhcORj1XmpE?=
- =?us-ascii?Q?sdwjSh0FT0SJz42oBMhSZ4hEwst7/vXraQc7CLcxHzEwOg+jVaRQarO5XfjE?=
- =?us-ascii?Q?4guAfxh2Fzp1z5p0AQEG90fs4t1iE3zRFF1cNTKnPT/SDg61tJMaDA5oop7q?=
- =?us-ascii?Q?cbxM1V3XYTvBFaPzh5iGoJ4YPPXX7S8IicAy1wHGbquSFWZgTILy7TIEMg9N?=
- =?us-ascii?Q?Zr7hV9pRET2aNLmTWX4A6UzIE2+g1Nllm9NS/ZkAla3vXxW2iQG2+rNdKq4M?=
- =?us-ascii?Q?sGV0Az6IZK0wzCpmJjF18Dhau5IH/RamE82JyLXCUp8UgS2+f+IxiqJlFykU?=
- =?us-ascii?Q?zl6obj6f5NXSCcPpD6rAHkZrTPwY2bZERca/McXC/cv7TcWHGA+xPAWkIQTP?=
- =?us-ascii?Q?3UBfkNMa7I9R/kaPM6sOHjLcyOKDsObZTuRezUBuj+nkqx3EXW/PhsBOaWRu?=
- =?us-ascii?Q?XomF4CMYmi3lTaqCDYyrCMRtwGEg2EDaDmak3Gld2QCKE1Mgebixjf8H8UBw?=
- =?us-ascii?Q?yjK1OQLvaYOunCVkmbNXnCM7Z8hkiweb8S0HABTV5z0341YQjDMmTu7Qybna?=
- =?us-ascii?Q?cA5dH/JwC90LpwtBgbgKL2W3TW8Eb19qPHU4XfRXhkYIydszy5poNv1Gw+i2?=
- =?us-ascii?Q?7qc5Kj6d4b3MEfxtwl+IQQHQEhsAiw44ltKj//1q5SDKyNj8R99Yd5ggckjA?=
- =?us-ascii?Q?ZroGBNKCxZ89eWwdm1vcO5lAJfu+87vIehqAmA6qRXmhHcQcznpL5rMUfYUv?=
- =?us-ascii?Q?CkDqvJoekHoNtWi/cchB1MHcjSIcuHVJ9iojwhHnrTRJyY/OM2E+yepK9E5t?=
- =?us-ascii?Q?0i+lrovL8pGc3ba6lFKUc35hS2Pa/FiCIXGWpeRgvbw/vMgR?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6b0ee7e4-05a7-4298-a38f-08de94ae710d
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Apr 2026 14:03:27.6880
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ws19Kq3H6C3gU09qhHl6S79YhgGSbTXPNcazavJdoq3fecN8dJAncUXou7SDf0c3
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB7797
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 07, 2026 at 09:39:52PM +0800, Junxian Huang wrote:
-> 
-> 
-> On 2026/4/7 1:40, Jason Gunthorpe wrote:
-> > Sashiko points out that once the srq memory is stored into the xarray by
-> > alloc_srqc() it can immediately be looked up by:
-> > 
-> > 	xa_lock(&srq_table->xa);
-> > 	srq = xa_load(&srq_table->xa, srqn & (hr_dev->caps.num_srqs - 1));
-> > 	if (srq)
-> > 		refcount_inc(&srq->refcount);
-> > 	xa_unlock(&srq_table->xa);
-> > 
-> > Which will fail refcount debug because the refcount is 0 and then crash:
-> > 
-> > 	srq->event(srq, event_type);
-> > 
-> > Because event is NULL.
-> 
-> I don't think this will actually happen because HW won't report an SRQ
-> event before the SRQ is fully ready and actually used.
+Changes since v2:
+- v2: https://lore.kernel.org/lkml/cover.1774043709.git.reinette.chatre@intel.com/
+- Rebased on top of tip/master with pending resctrl selftest changes,
+  https://lore.kernel.org/lkml/cover.1775266384.git.reinette.chatre@intel.com/,
+  applied on top to support testing with latest kernel that has pending resctrl
+  changes merged.
+- Drop "fs/resctrl: Use stricter checks on input to cpus/cpus_list file"
+  that ended up being too strict and removed one use case. (Chris)
+- max_threshold_occ_write() switch to guard(). (Chenyu)
+- Add more detail to one return value description.
+- Add tags.
+- No opinions so far on needing to update last_cmd_status on success of all read
+  commands. At this time last_cmd_status will continue to return previous
+  failure message (if any) after a read command accessing static data succeeds.
 
-Probably, but also maybe there is some crazy race where EQ event can
-be generated and the SRQ cycled before it is collected..
+Changes since v1:
+- v1: https://lore.kernel.org/lkml/cover.1772476561.git.reinette.chatre@intel.com/
+- To simplify tracking, include patch to MAINTAINERS submitted separately:
+  https://lore.kernel.org/lkml/4274c478922c01f9ceebc805acf991f10a95519f.1771442788.git.reinette.chatre@intel.com/
+- Follow recent upstream changes to add reference to tip tree handbook in
+  MAINTAINERS entry.
+- Use new pattern in resctrl to enable looping over all entries of an enum
+  while making adding new enum entries more clear all while avoiding warnings
+  when compiling with -Wswitch. (Ben)
+- Add another last_cmd_status enhancement that appends "[truncated]" to
+  output of info/last_cmd_status if the backing buffer overflowed.
+- Please see patch changelogs for details of changes.
+- Add tags.
 
-There is also a second bug here that Shashiko noticed on this patch
-that the order is wrong, the goto unwind in create will call
-free_srqc() but it hasn't yet setup the completion. I will fix that in
-a v3..
+Hi Everybody,
 
-> From the perspective of coding, I'm fine with this change, but since
-> there is similar logic for QP event, could you also apply this change
-> to QP?
+This is a collection of resctrl cleanups assembled together for convenience
+and simpler tracking. I'd be happy to split them up if it makes review and/or
+handling easier.
 
-Sure
+Summary of changes:
 
-Jason
+- Let resctrl pass stricter checks from various tools to provide a cleaner
+  baseline with the goal to promote healthier contributions:
+  - ./tools/docs/kernel-doc -Wall -v <files>
+  - Build with W=12
+  - ./scripts/coccicheck
+  - Static checkers
+
+- Use accurate and consistent type for all uses of resource ID.
+
+- In the unlikely scenario that resctrl picked a wrong CPU to read an event
+  from, pass the error through to user space instead of claiming to succeed
+  and returning a (wrong) result.
+
+- Since inception of last_cmd_status feature there have been mismatches
+  between resctrl file operation failures and the contents of
+  info/last_cmd_status. This pattern keeps propagating with each new resctrl
+  feature. Establish a new baseline with a new pattern that ensures
+  info/last_cmd_status contains an accurate failure description that matches
+  the most recent resctrl file operation failure.
+
+One potential open:
+
+There remains an inconsistency between resctrl file operations that do/can
+_not_ fail and the contents of info/last_cmd_status. If a resctrl
+file operation fails and an informational error is printed to last_cmd_status
+then a subsequent reading of a resctrl file (specifically most of the files
+found in info/) may succeed while info/last_cmd_status may or may not return
+the error from previous failure.
+
+Ensuring last_cmd_status is reset on every read carries the cost of taking
+rdtgroup_mutex on several more user space initiated paths and thus increase
+contention on rdtgroup_mutex. I opted to not make this change and instead
+focus this work on ensuring that last_cmd_status is accurate whenever there is
+a failure during any resctrl file operation. Please let me know if you have
+opinions in this regard.
+
+Any feedback is appreciated.
+
+Regards,
+
+Reinette
+
+Reinette Chatre (13):
+  MAINTAINERS: Update resctrl entry
+  fs/resctrl: Add missing return value descriptions
+  fs/resctrl: Avoid "may be used uninitialized" warning
+  fs/resctrl: Use correct format specifier for printing error pointers
+  x86/resctrl: Protect against bad shift
+  fs/resctrl: Change pattern used to track number of entries in enum
+  fs/resctrl: Use accurate type for rdt_resource::rid
+  fs/resctrl: Pass error reading event through to user space
+  fs/resctrl: Add last_cmd_status support for writes to
+    max_threshold_occupancy
+  fs/resctrl: Use accurate and symmetric exit flows
+  fs/resctrl: Change last_cmd_status custom during input parsing
+  fs/resctrl: Communicate resource group deleted error via
+    last_cmd_status
+  fs/resctrl: Inform user space when status buffer overflowed
+
+ MAINTAINERS                        |   2 +
+ arch/x86/kernel/cpu/resctrl/core.c |   4 +-
+ fs/resctrl/ctrlmondata.c           |  70 +++++++++-------
+ fs/resctrl/monitor.c               |  80 ++++++++++--------
+ fs/resctrl/pseudo_lock.c           |   2 +-
+ fs/resctrl/rdtgroup.c              | 126 ++++++++++++++++++-----------
+ include/linux/resctrl.h            |  11 +--
+ 7 files changed, 180 insertions(+), 115 deletions(-)
+
+-- 
+2.50.1
+
