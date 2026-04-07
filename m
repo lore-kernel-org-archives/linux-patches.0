@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830FF3BB9E1
-	for <patches@lists.linux.dev>; Tue,  7 Apr 2026 16:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898253CCFCA
+	for <patches@lists.linux.dev>; Tue,  7 Apr 2026 16:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775577773; cv=none; b=P6Wb6GBIs19FEqiBhGX9PWAn4Y31malq1NRAuT3QS4j/HDzY8a6lF8mHRMWPJ/YUE3Q/b4U8S/JAKn1RF25jFWWduiklJ75gwI+KfOeDzytxf6YmFLLeSB+xRYAC+fTk2fVHtclJxvaclNdjrWrNUJDp04v1iXZp9vncGIYTROw=
+	t=1775577771; cv=none; b=Ijee9Ym4qhpFcd0+48kN2ftJmJEW+djeIInzOgo0bo8dpKz+DIYn0saemkD5TvI6TbYgp/N0jR7CCQXQ3crW/8qcZBM/66Oxiwg2EO9LuWv4/4iPCFmPj72J7qo7//3UjLkvS5kwRqEHJ1ZQO8kSKANeYJas6FRpSRMCH/vHsEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775577773; c=relaxed/simple;
-	bh=A21P6fI2hgZ/+eGK6RsbbZ/oeCdwqcvHzTT8GH5JBd0=;
+	s=arc-20240116; t=1775577771; c=relaxed/simple;
+	bh=/aVegcj2Gd/PPwuq0w7v0DVXLWgC36AnHuP/93CopIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tsq9DIMM1O3Ng5eijOvaa+5aBrN+knchFWIh2DBZvy3pfJvweYz/X8LoPY6ZXYxfJjhTr3iY//SQuuoS9gsDGH4J3EB3Eq3ObCZhpVez0PIyUXqld6jRh1MpBoV64Mo5Rk5CnJREccQejC2MnYRxkvZ7CTynLtN/1agH1PKGaa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hUmmvK1A; arc=none smtp.client-ip=192.198.163.12
+	 MIME-Version; b=pTvgUcaNbesaSvTUP1lnMKFwIGNu0ayylQwO6dYf00vpQysbb9/s6TBY1N14+cHKXhx4CzfszpLUqqQcQKZQwiLXN8nWHbHK+Jow9Sohxw2HRhgv8++uBkJ3Mf7uksFeEq4DmLGjDa9ngcvtcMbk7RgY/7RFQCpQxns7azkqSXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nurs0NBI; arc=none smtp.client-ip=192.198.163.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hUmmvK1A"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nurs0NBI"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1775577765; x=1807113765;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=A21P6fI2hgZ/+eGK6RsbbZ/oeCdwqcvHzTT8GH5JBd0=;
-  b=hUmmvK1ApSsjk/jF8NipCP3dylAH8ALomUXzlEw5/2qXa5lBXfhrYtot
-   I0oY1kmlu3WM4CEAKqqxOgecPV7ldFlSoiGG1L1ScvcqSQiGkyUa3ANH5
-   4pRVz0Rp+eOLp5UoPb4P926nEFhQdBxUyOXJxIK23Ep0tOa9aAidzt898
-   ZT7jsQLeJAi3dyPedgH4NHsSnHMRRFkBKh6pUZj7dY6X1ZZ6LP09ZlqmH
-   zszDbvNwST0r+WVx58JDMbdvZemICrlZGJnmMACYxUXTB86bJmFdf9PtU
-   v25cnbG3U76smmZrr/nrBtvb4/iq5oQDCh1qDR+/WYL7MRIjYUZf0M46Q
-   w==;
-X-CSE-ConnectionGUID: dksBEqN7QXOSr1diIAB0BA==
-X-CSE-MsgGUID: yOryXFb5RY6ko6zKZvfO1g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11752"; a="80432729"
+  bh=/aVegcj2Gd/PPwuq0w7v0DVXLWgC36AnHuP/93CopIQ=;
+  b=nurs0NBI+2iir0rhmjmrNDqVewR4Dfrb1u65eyj1Mw0u4gasCDTgiyJE
+   pbv2bbWkLH4Yubki35+otS0TAEtM79dZkHLtsbPq2GjSqGO0pHxN7xQgm
+   /ZXTINdihoqgHD8sLusmZZgbQsDSXLaPPuvm2RGb0Teu2Wi33L7PR1IdT
+   bvOlm+AOk5w0685IQx32CHxo15DjFYnpcSjUb1uTtl9DHz02QIizM6HDt
+   +ryQ2nXLrSa8KyLsXGeU1YWwaiWTX79d/QTg4+D6feTEbvGh9mgj+2thT
+   nwGT3rJL8XWAb0z3chgcs8tcEqQFB1zfIB65hDgSE5lde/w0D5CJPp0Rt
+   Q==;
+X-CSE-ConnectionGUID: Z0RgcBTaSzmRnjlns1F6rw==
+X-CSE-MsgGUID: liGWDfJlS4asPAS+xTrlsw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11752"; a="80432737"
 X-IronPort-AV: E=Sophos;i="6.23,165,1770624000"; 
-   d="scan'208";a="80432729"
+   d="scan'208";a="80432737"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
   by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2026 09:02:19 -0700
-X-CSE-ConnectionGUID: NXCIx0clSHml5fMfsl7FJQ==
-X-CSE-MsgGUID: zKgZjHhOSMKramdnomWG9g==
+X-CSE-ConnectionGUID: /8YAnnejSAaDG/xdgl374A==
+X-CSE-MsgGUID: tiC2GrJBRM2uvnQt2g6P5g==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,165,1770624000"; 
-   d="scan'208";a="228119053"
+   d="scan'208";a="228119056"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2026 09:02:18 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -60,9 +60,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v3 08/13] fs/resctrl: Pass error reading event through to user space
-Date: Tue,  7 Apr 2026 09:02:05 -0700
-Message-ID: <839082c54e02953f60706854cc0d250949b6d71d.1775576382.git.reinette.chatre@intel.com>
+Subject: [PATCH v3 09/13] fs/resctrl: Add last_cmd_status support for writes to max_threshold_occupancy
+Date: Tue,  7 Apr 2026 09:02:06 -0700
+Message-ID: <3a55b9a6ced4d1cfc69894840afa747de592ce5d.1775576382.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1775576382.git.reinette.chatre@intel.com>
 References: <cover.1775576382.git.reinette.chatre@intel.com>
@@ -74,57 +74,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Reading of event data is managed through populating a struct rmid_read with
-properties of event needing to be read. This data is dispatched to an
-appropriate CPU and upon completion any error can be found in rmid_read::err,
-or on success the event data will be in rmid_read::val.
-
-rmid_read::err is not updated in the unlikely scenario that the reading
-of the event was dispatched to a wrong CPU. If this ever occurs due to
-a bug in resctrl the user space read will return "success" but the data
-reported will be invalid.
-
-Ensure accurate error reporting so that if there may be an issue with
-how resctrl picks a CPU it could be learned with an error to user space
-instead of silent failure.
+info/last_cmd_status is intended to contain more information if a write to
+any resctrl file fails. Writes to max_threshold_occupancy did not receive
+last_cmd_status support during initial last_cmd_status enabling. Add it now.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 ---
 Changes since v1:
 - Add Ben's RB tag.
----
- fs/resctrl/monitor.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 8194fdfbea81..101b2911d582 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -453,8 +453,10 @@ static int __l3_mon_event_count(struct rdtgroup *rdtgrp, struct rmid_read *rr)
- 	}
+Changes since v2:
+- Switch to guard(). (Chenyu)
+- Drop Ben's RB tag due to significant code change.
+---
+ fs/resctrl/rdtgroup.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 5dfdaa6f9d8f..5e3ea92cc243 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -12,6 +12,7 @@
  
- 	/* Reading a single domain, must be on a CPU in that domain. */
--	if (!cpumask_test_cpu(cpu, &d->hdr.cpu_mask))
-+	if (!cpumask_test_cpu(cpu, &d->hdr.cpu_mask)) {
-+		rr->err = -EIO;
+ #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
+ 
++#include <linux/cleanup.h>
+ #include <linux/cpu.h>
+ #include <linux/debugfs.h>
+ #include <linux/fs.h>
+@@ -1238,12 +1239,20 @@ static ssize_t max_threshold_occ_write(struct kernfs_open_file *of,
+ 	unsigned int bytes;
+ 	int ret;
+ 
++	guard(mutex)(&rdtgroup_mutex);
++	rdt_last_cmd_clear();
++
+ 	ret = kstrtouint(buf, 0, &bytes);
+-	if (ret)
++	if (ret) {
++		rdt_last_cmd_puts("Invalid input\n");
+ 		return ret;
++	}
+ 
+-	if (bytes > resctrl_rmid_realloc_limit)
++	if (bytes > resctrl_rmid_realloc_limit) {
++		rdt_last_cmd_printf("Exceeds limit (before adjustment) of %u bytes\n",
++				    resctrl_rmid_realloc_limit);
  		return -EINVAL;
 +	}
- 	if (rr->is_mbm_cntr)
- 		rr->err = resctrl_arch_cntr_read(rr->r, d, closid, rmid, cntr_id,
- 						 rr->evt->evtid, &tval);
-@@ -491,8 +493,10 @@ static int __l3_mon_event_count_sum(struct rdtgroup *rdtgrp, struct rmid_read *r
- 	}
  
- 	/* Summing domains that share a cache, must be on a CPU for that cache. */
--	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map))
-+	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map)) {
-+		rr->err = -EIO;
- 		return -EINVAL;
-+	}
+ 	resctrl_rmid_realloc_threshold = resctrl_arch_round_mon_val(bytes);
  
- 	/*
- 	 * Legacy files must report the sum of an event across all
 -- 
 2.50.1
 
