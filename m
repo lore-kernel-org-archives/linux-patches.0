@@ -1,171 +1,150 @@
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013020.outbound.protection.outlook.com [40.93.201.20])
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C582A1B2;
-	Tue,  7 Apr 2026 01:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.20
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775525201; cv=fail; b=bFqp0l0l8Vj9M/WPyShKDsyYWBqdK2tY/0tqnhQD7vmyA+sAuWzmbmBDrBCYnY0moe0SaqLE4j13Nm4o6EjQylIYwMsP85nwjTu+tYcTsHl4g79MlF76qmdDXQdVuN0LVC3yweGrBwrRfGGMUbuRyaddbkYYeI6Pa6ZJI8/pHBA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775525201; c=relaxed/simple;
-	bh=LY8O5QHN87gJs8lTwMCb6m31OnYg29Ssbcxjk7DPRkk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=adHaBONZSAXBSWQ1n8HgJnQnj5RGq9/ol/toutlnaDG9OrWKMNjFZpq89jZkPuSIZ/PkLSWiosJh+yL0hhus1Z4v37Z3TZgh5ZITL2XgnqgsoPUlxnnJbrjc72FwBc+rbP/zMIl6CWBq/EcbsWXDHm/V1DDPRE2IKK5OOW7yLK4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dKIihNeU; arc=fail smtp.client-ip=40.93.201.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C962236F7
+	for <patches@lists.linux.dev>; Tue,  7 Apr 2026 03:38:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775533105; cv=none; b=emXx+7MDyTzBZHknVFxKM44mD1v3LmBuwJmRzD7sGAJNEfhk/+HstZou9yS15ua4MhNLdDBlQ0dTQcVYrUNi0DxgCa4HaB45BRKZ0hn3Van32pnW6Xvm+xuCbZploJ2EY2Fo+m5HidoijV4jPFvU7NIEZkr0HztG8hFmbOox2Ds=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775533105; c=relaxed/simple;
+	bh=XwUuTbs1hAhlLyoECrrFP0mApSwcp7K4Dx5DRnt0ErE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VteNb2FbGfhaqg0OwS88wf3YIM4kjKBH7rsZTMv+iiYkXdTg1epGjno/S6RYnxHVTYADR+rNSIQhksyY5dtqBwQux/IZYAOTXACKKkyqrnPX31GqJXk8c0lpW3fB+HNvEW4NwYX6GWYm0dQLr4TwF5Dg7K/5pHVHLr/iQRUH/Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=M2+nCCPP; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dKIihNeU"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VXIOe25Tezv4dHca0Mc6k91xm5uDmMMJ1L4R64wDZib3dQ/24a9eIV8VNEbtpGIA7mrea0MCBdRhQRf1uGTZywLKqUJDQyG9yZ0SAb7CRl7LkCSZTTSXYT9Dm90KGrA0cbq9Ztjqp70H2wsAL5zAqYtwMQJVqt8bE7ZW89r+hRgOC9kjSVBpYTBiDxfGXU2rKTjJJjgyCJ/lzj2G9HmvRqoRN2jNR2RYHiocvhyWXykpgu1jtxC6cmMfmZCS0FfDZqvubPPBYCYxwQHqq5kuYif3k8cKCepybkng31LYzFfvUcHiHzD12jP7nIWmBGYKspV3hgoYg9HdvQwJuQ9OMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sVXAMvD9jEn0GDEwsvUfvKBsV6EwhDPpgUknbaoisf4=;
- b=MezLwZ8qHaP8vfo0oP25FbKYHOEwfZDJ2eDWqud5wqQGBbriGAstaL6YZCoiaBub79s3viv8AoLrhyHwdbOTxeuocFs4AQUHH+EXzs+HCA38ZIfczE4PZLz2brTa2ubp4Z1Ogz1Lq5s8N+TyJ6ap9Rc7Dro7liyYKv1MoNTKmoDhMzdCyAgtdaU/xJNqPfk9AJT71rY/zw5HAENmhDI/rXCoBmj3Z9MB1KqJMr6j+FJ/kraTJh5nf8a7QC61iQ4Ahoyx6owBNHPTd6GG4XUO/FeokLz1NJOD3MMFZhgB2MKjjC/rgdp8wadNKI1BOCPnioNbm4GaHJS9Z7CUrFSUDg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sVXAMvD9jEn0GDEwsvUfvKBsV6EwhDPpgUknbaoisf4=;
- b=dKIihNeUfS5czjZJAzut80PuTZafEzi/Glbv9VDIKeRZlEGHmTdL8MFHTjqafW7i2fvGyR9m+yEJGLzETWdlZ76WwsudxYAeYmJsopx0mGuSSTgbZXbgch834TtCPnlyS3thtxGA9GRhs0QhefaIiVkgs1fvoDBtdO0vjfF/ms89zpnR2vHyXJhVpkV0RTDpF5EP8rI5x28oHBmg8R8eFAk6HIWVJQrw58Ibmz9ETsxw6cfF5o46Srp8LDZCHeXAEYYpnm8V6jruunIDv2XU4Lml4DDpBVUqcV8/BgSwugQ4duoCheXdmaU/w5q1DhDvqCIqjxZPL5MKZJkWHrOxrw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by CH1PPFDA9B3771F.namprd12.prod.outlook.com (2603:10b6:61f:fc00::626) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.20; Tue, 7 Apr
- 2026 01:26:35 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9769.017; Tue, 7 Apr 2026
- 01:26:34 +0000
-Date: Mon, 6 Apr 2026 22:26:33 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Wei Wang <wei.w.wang@hotmail.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Will Deacon <will@kernel.org>, patches@lists.linux.dev
-Subject: Re: [PATCH v2 1/5] iommu/amd: Simplify build_inv_address()
-Message-ID: <20260407012633.GA3357077@nvidia.com>
-References: <1-v2-90ddd19c0894+13561-iommupt_inv_amd_jgg@nvidia.com>
- <SI2PR01MB4393C1FF5BDB413E68BD018EDC5DA@SI2PR01MB4393.apcprd01.prod.exchangelabs.com>
- <20260406133047.GM310919@nvidia.com>
- <SI2PR01MB439366DBDB7EB03CC3729C03DC5AA@SI2PR01MB4393.apcprd01.prod.exchangelabs.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <SI2PR01MB439366DBDB7EB03CC3729C03DC5AA@SI2PR01MB4393.apcprd01.prod.exchangelabs.com>
-X-ClientProxiedBy: YT4PR01CA0185.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:110::29) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="M2+nCCPP"
+Received: from macsyma.thunk.org (pool-173-48-116-90.bstnma.fios.verizon.net [173.48.116.90])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 6373bAHJ000597
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 6 Apr 2026 23:37:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1775533039; bh=Ef29MIXHmCFvXd7qD+8FbEPi4SrYNu9WMXc8RtIZ9HY=;
+	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
+	b=M2+nCCPPwgabng56tJINbLlAugGW/3OSGVRV32qonNkRy/f491qWZhiSSbYkUVUtB
+	 5FDVVJbHLCtjs3FCt/S6ZYTtZ0Ol4YszrhIu+/27svn+1DEko8eWD5mT8AEIXs1QB3
+	 VYWWy8DnuykScDM84UD3d4xKEeZt2dfJ1Mz5rmxFn01smslA8f4182i2D1VbkSWZs8
+	 H0QHXhI9pXVvm6ruVYawSVd5hmp94o33uIKjxaQS27ak4QgQB6k1nAm4UbdMCagpB8
+	 LZee1GIWyFVpc4obSuMNRGx9pXX9n+NfkCJRvJ5ej53wuI1tUYoev4HuM94EHg/o4i
+	 LvLYa9Mgec3Nw==
+Received: by macsyma.thunk.org (Postfix, from userid 15806)
+	id 3A792621DF6A; Mon,  6 Apr 2026 23:37:10 -0400 (EDT)
+Date: Mon, 6 Apr 2026 23:37:10 -0400
+From: "Theodore Tso" <tytso@mit.edu>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Mark Brown <broonie@kernel.org>, Jan Kara <jack@suse.cz>,
+        Francesco Dolcini <francesco@dolcini.it>,
+        Brian Foster <bfoster@redhat.com>,
+        Yongjian Sun <sunyongjian1@huawei.com>,
+        Matthew Wilcox <willy@infradead.org>, Gou Hao <gouhao@uniontech.com>,
+        Kemeng Shi <shikemeng@huaweicloud.com>, Zhang Yi <yi.zhang@huawei.com>,
+        Baokun Li <libaokun1@huawei.com>, stable@vger.kernel.org,
+        patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        torvalds@linux-foundation.org, akpm@linux-foundation.org,
+        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+        lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+        conor@kernel.org, hargar@microsoft.com, achill@achill.org,
+        sr@sladewatkins.com
+Subject: Re: [PATCH 6.1 000/481] 6.1.167-rc1 review
+Message-ID: <20260407033710.GA12536@macsyma-wired.lan>
+References: <20260323134525.256603107@linuxfoundation.org>
+ <20260324073447.GA5062@francesco-nb>
+ <mhqesgj3u7dr33zit6iwjhykw2zpuallru4qvoloyyqzdqgvki@bpwwmihh357r>
+ <d8080343-20cd-4a4a-b726-b9e3c6a5c5eb@sirena.org.uk>
+ <20260325035931.GC61656@mac.lan>
+ <2026032535-casino-cable-e039@gregkh>
+ <20260325131110.GC2107@macsyma.local>
+ <2026032547-spleen-mortify-1cf9@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CH1PPFDA9B3771F:EE_
-X-MS-Office365-Filtering-Correlation-Id: b8dc0989-1d08-47ca-1849-08de9444b4e4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|3613699012|18002099003|56012099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	wexegoGsIxIleZdaN8KZN6Im+CPxZsO+u9/dKeSQVBRIn3MXqC9Qa41asg45HH+iRaFMjY+goZ+E12PulQnkLNkpCv0PVc93dOGcKhI3auJgVUflOl30f1a21IiZZOno8PMZVz2XB8TMzz+y/bfalpaNNed/81DHixYJL+9OUnFvKKeAR1Sv0IZILBKcC9l2TTFUTwGdfBeUIJUF5rp8OTIstP1jpThKciv7FkVOmRv5vl12n+RsINMnWBEJ8Ru6s/Fg1yJ70cmU30Mz3Q+x73EGsX2oF/s7zytr8Y5y7sgTTRUnx1gpsnqkEt2K9LUBtv6HSmtrICq4NK7K6VBM14KrEkwEWI5yVMp6mxnQVoO7T2FwcJhVN6BHpYGsYTGZFcugU2S/w7oFOMzgshUKd3t7Y7tPC72dN1Pw6CR/dJ2g9VpaJ43zk8CfojZR587xuVptFaqjDZFpAvU4BYoHu3OrhIJa2EQmBBqqvqVL8noBUg1rTZcwr/wXA579mVcRG0qTWy+ZEZsKxpbQ5i+ntjhEnWJzs7DTytAmxfuI96/aXgraQvXMBVXG2jbLiyslWJXzFDfWxrABloWtdSwlDv0a8Niw+NGHt4ARt+PFVyoeCNqHUo8dMxuVrxJEWTjxibljYaAtLxgzsCKM9yEODYhWwrtbjbyUTzNeFAg8KmLYhCrOPRudpQcbua+BuCBfyXJ7q71+D4ZwTuK068/uLSBg4nO7mRI68A50ssmUvIA8qkpx2x4VKx483USeH8aX9m65EVp5SNBETEWiW4Fs8gv7DwaNBkPIsYqwNIww6pw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(3613699012)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?M25BT05EWnFyd0M2U0FkVnFxOUVCVkZMUFlBVmttRXByVmVIWU92VXNRU3VP?=
- =?utf-8?B?aFpkR3FGZWhYeER4Vmdza0JkMUZ3d0FJaWRMekt2NXRienNaZ3RIaXZ0bXFq?=
- =?utf-8?B?c0dzNWxocCs4bE05ZjJrcmJxOTJqcXRKaFhpTkpjQTkvK1EyZ0JjRzc5MWtH?=
- =?utf-8?B?NDdiNlgraE5NejFFQ0xBakFDQXhJQVNBQ3FTdEtRMWEvdXRSLzVoblk0TXhD?=
- =?utf-8?B?Z0lseWJzN0gzQ0JQOFJJcHdZZHRHcG5Za1ltQVZCbWJGK2JpVy95Yit0bFBN?=
- =?utf-8?B?QXRMT2pFVGUyMU5FcWRIUFBtdjhFU3dZemZsMSs5Z1lzMFAxMnZQdFVQeXBw?=
- =?utf-8?B?SmtvNmNHbngvOFlBSEtBNlF5TDNWdm11SFkwSmV0aUNVWWtqWnJtV3BJM2Rq?=
- =?utf-8?B?akVEQm5ScjlicElzZFZrQWpZYTF2ajd4ZlB5ZnhaVHluWHppWHNxU05RWDll?=
- =?utf-8?B?b1I1S0c4Rm1mSjJjVllBQzU3Tjh5MWJOUmFQWkwvZlI0QVlwYUoweHhOUTAx?=
- =?utf-8?B?TDB0WFRCMHhVNjNIdU05Tk9EWVhPN1h0S1QreUJTWEh0enpSalRaUnNNVXZm?=
- =?utf-8?B?TmpsbDFDVDR5S3pEZXVjZ3prSXBRSWFYUWlNU29ta2pCd1RoMUZiUnJudUVS?=
- =?utf-8?B?WjM1dDNYZmdoc1JzY1NXdTc3SSt5VGhWSHRzeHVCY05XQktTNVYwdlhReHBr?=
- =?utf-8?B?ZWlOcjlGVVh4VkR2Rms0SEZEeGwvRFZwK1FvVHl0L3hZSGYxdkhJME1kVmxG?=
- =?utf-8?B?a21TSUtKNkRkZWFuaFRaci9iWkwyOE81SDZ1N2U2UUhPa3R3bW95ZnVaM3R0?=
- =?utf-8?B?STBleXJQU2VoaUhMbW9PYSt0WUluekxsUjJWWjBQMFZwWlV6WWFaY0IyakZY?=
- =?utf-8?B?UVcxWnpmSDVjcjFpVkhkTngyYkVTb0g0Qm1LREJ0Njh1cXcrdWZHMXVFTE9I?=
- =?utf-8?B?T2RBN2ptbnN5ZEJFeTJ6OHZXV0xLbTVVbXlYZy9aUjFHa1RPN1dqeThDNFRI?=
- =?utf-8?B?R0kzTmtQamp1RXB3cGNmL2grQTVjV281WWt1RytuWTV3VUZlS2Z2SHFXbUIv?=
- =?utf-8?B?dWozNzdIMHN0a040bVJPSlJmUzlaejRiVDF0TVp6N1JjdWg0bHhWaHhTWjVF?=
- =?utf-8?B?LzZLdDAyL21MZlFOUVNPcFhZd2IrMUlDQkNSZ1BHM2xydXl4NXZ6MUtINWgy?=
- =?utf-8?B?b3dFWlAySzJhY1BKejVkMndDaUFGTWZ4anM0RjV1SWVZRDNERFlpN0ZpUXN6?=
- =?utf-8?B?M3VwZ1YwQURhTVNrTEdOd3ZUUXpxTWtoTzg4ZG56cmJITFNtTW5tbHdoNG5v?=
- =?utf-8?B?aXVoUnNvc09TR2hxWGRqQ1VEeFJHeTA2UWMzKzlIOWFMNzZ0Y2Y1bU5xSERM?=
- =?utf-8?B?a1RMVFNZd3h0N0ZpTHVyTTA3OXNPYTVpb2JkUDdzT3pVWGJUN3AxcjFZSTA0?=
- =?utf-8?B?SDZ3UmVsMDR3YUh5V1hZTGhsbnVsNUxITnNQR2xIUFd5SmNrSkhPYnFvdkNY?=
- =?utf-8?B?R0t2KzV6R3ZaeWJZN3V3elBjK0RCY25FTTBSdzJzSEVROTk2MEpYVUd2Z2Zh?=
- =?utf-8?B?aVZjRFNxc0kxZjZNNzcrTlMxbVNtbllQc3dDZWltREJrZ1hzeTZJYm4xa3Ix?=
- =?utf-8?B?aE1QMDcweUFVZVNsWi9aV0hiSTZRZ0VId01xWTJDWnMzV2U0c1d6SCtpVjQz?=
- =?utf-8?B?ei9PTnBCNU4vdVZjeTNibWdSQ2RYVkZTTHhkcTc4WC91K3BFT0xKMWZjYWVn?=
- =?utf-8?B?RXBvRzFsaWxiYUV6Wk13UFBhMlllWG82SXpGQXFSVXZxZUxqMDZHSkVlYzhH?=
- =?utf-8?B?Ty9tWENGTmJYK1M0Wm9xZGFJVjdKeFZORHZmWGtxaTYvM3huOEQrcXN6eUVx?=
- =?utf-8?B?Y3h6WkxNUEpZblhhbk1KVkRpWjZ5a29FckVKM09OOVlDbjU2c3VkSTVldkpN?=
- =?utf-8?B?UVdGWnQzTlJaUFphRHl2d3RRY2tWWjM5U3lacEl3bFl5cDhiNmFtOFBUNmlT?=
- =?utf-8?B?aXZqc3cvWFhSNjJnaXl4aVRHK0hSUkFIS29aQnhHYUU0NEtHWFFIalRldEVo?=
- =?utf-8?B?VFJvekdtS1hIVVRVd1ZXcm1nVTFtT3hVcXB2RDI5ellSZ0VKR1R6NXMzTXpa?=
- =?utf-8?B?UkNuTm1LYVdLUm1HdXJYZU1Vcm5UWExHVkhBdllFVmhOek1BZmllTGNHRDMx?=
- =?utf-8?B?TndZNWszZWN0eVFSeTBDSDdqc0dFNnc2RmlLYURHMU1aeWNEOTQ0cFVkczFj?=
- =?utf-8?B?WkdCY2VCTjZITlBBaElwWTBoN1p3ckxySjF3dHdHQXArckpnVEhXdzV3SlZE?=
- =?utf-8?Q?hlONtX9g73wOLRGFl9?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b8dc0989-1d08-47ca-1849-08de9444b4e4
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Apr 2026 01:26:34.8849
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mErwdMVKNe8Im3c/YHrYkgbgmA1nK5okQD0W20QRBWcR9vYE/t1qLJN2cs0uqXoj
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PPFDA9B3771F
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2026032547-spleen-mortify-1cf9@gregkh>
 
-On Tue, Apr 07, 2026 at 09:15:40AM +0800, Wei Wang wrote:
-> On 4/6/26 9:30 PM, Jason Gunthorpe wrote:
-> > On Mon, Apr 06, 2026 at 09:18:19PM +0800, Wei Wang wrote:
+On Wed, Mar 25, 2026 at 02:31:28PM +0100, Greg Kroah-Hartman wrote:
+> > Thanks!  Just as another heads up, I decided to run a full regression
+> > test suite on 6.1.167-rc1 with those three reverts, and there ar still
+> > some crashes with generic/051 and ext4/039:
 > > 
-> > > > -	msb_diff = fls64(end ^ address) - 1;
-> > > > +	if (unlikely(sz_lg2 > 52))
-> > > > +		return (CMD_INV_IOMMU_ALL_PAGES_ADDRESS & PAGE_MASK) |
-> > > > +		       CMD_INV_IOMMU_PAGES_SIZE_MASK;
-> > 
-> > I was looking at Ankit's series and thinking this is slightly better as:
-> > 
-> > +	if (unlikely(sz_lg2 > min(52, BITS_PER_LONG - 1)))
-> > 
-> > So a ULONG_MAX gather will trigger full invalidation on 32 bit as
-> > well, though it shouldn't be necessary it seems a tish cleaner and
-> > matches how vt-d ended up
-> > 
-> 
-> I see the value in matching how VT‑d handles this. I’m slightly concerned
-> that adding the BITS_PER_LONG check might imply that AMD‑IOMMU supports
-> 32‑bit kernels.
-> 
-> Unlike VT‑d, the AMD IOMMU driver doesn’t build on 32‑bit at all. From
-> Kconfig:
-> 
-> config AMD_IOMMU
->         depends on X86_64 && PCI && ACPI && HAVE_CMPXCHG_DOUBLE
-> 
-> config INTEL_IOMMU
->         depends on PCI_MSI && ACPI && X86
-> 
-> Given that the 32‑bit case is unreachable for AMD‑IOMMU, keeping the
-> existing check might actually be clearer?
+> > ext4/4k: 711 tests, 1 errors, 83 skipped, 4645 seconds
+> >   Errors: generic/051
+> > ext4/1k: 636 tests, 7 failures, 1 errors, 78 skipped, 5612 seconds
+> >   Errors: ext4/039
+> > ....
 
-Ah, I didn't remember that, it makes sense. Let's leave it then
+> > I'll start trying to bisect this as I have time today.  Are you going
+> > to put out another rc and restart the 48 hour testing clock?
+> 
+> No, I've already done a release, I dropped more than just those 3, I
+> dropped all the dependent ext4 patches.
+> 
+> If you could test the last release and if I should do any reverts there,
+> please let me know.
 
-Jason
+I finally got around to doing the bisect, and found the guilty commit:
+
+# first bad commit: [b6a01b66cdaa2da526b512fc0f9938ea5d6c7a1c] ext4: get rid of ppath in ext4_ext_insert_extent()
+
+As it turns out, this is one of (5!) prerequisite commits needed for
+commit 1606176c5c6c ("ext4: subdivide EXT4_EXT_DATA_VALID1").  And
+unfortunately, commit 1606176c5c6c doesn't revert cleanly.
+
+... and with that, I've exhausted my available time to support ext4 on
+an ancient 6.1 LTS kernel.  I will note that I'm no longer regularly
+running ext4 regression tests on 6.1.  (I stopped last year, when 6.18
+got elevanted to be the YE2025 LTS kernel, since I only have bandwidth
+to evaluate the regression test results of 3 LTS kernels.)
+
+So if there's someone who is willing to the ext4 LTS 6.1 stable
+maintainer, I wonder if we should just stop trying to backport ext4
+fixes to 6.1 LTS, lest that attempts to backport patches all the way
+to 6.1 might result in more bug escapes.  If someone is interested in
+applying for the job, and/or working on figuring out how to revert
+these commits, please let me know:
+
+1606176c5c6c - ext4: subdivide EXT4_EXT_DATA_VALID1 (13 days ago)
+  4d03e2046f73 - ext4: get rid of ppath in ext4_split_extent_at() (13 days ago)
+  b6a01b66cdaa - ext4: get rid of ppath in ext4_ext_insert_extent() (13 days ago
+)
+  15908fc35056 - ext4: get rid of ppath in ext4_ext_create_new_leaf() (13 days a
+go)
+  b5a010bc7dba - ext4: get rid of ppath in ext4_find_extent() (13 days ago)
+  bfe24a48c1d5 - ext4: make ext4_es_remove_extent() return void (13 days ago)
+
+       	       	    			    	   - Ted
+							   
+git bisect start
+# status: waiting for both good and bad commits
+# good: [f2ddafa93a259310ca47507153b7811ec54ab7fd] Linux 6.1.166
+git bisect good f2ddafa93a259310ca47507153b7811ec54ab7fd
+# status: waiting for bad commit, 1 good commit known
+# bad: [1989cd3d56e257c783ac75200496a2341b50599c] Linux 6.1.167
+git bisect bad 1989cd3d56e257c783ac75200496a2341b50599c
+# bad: [7507fbaf81dab28d1d27216c533e228894e9d1f6] parisc: Check kernel mapping earlier at bootup
+git bisect bad 7507fbaf81dab28d1d27216c533e228894e9d1f6
+# bad: [30752d8bbd149abce36f37e83b89bd2934bfa33c] bpf: export bpf_link_inc_not_zero.
+git bisect bad 30752d8bbd149abce36f37e83b89bd2934bfa33c
+# bad: [6458b4908489029bc3bb3c0a7c2fc5cb0c2893f3] ALSA: hda/conexant: Fix headphone jack handling on Acer Swift SF314
+git bisect bad 6458b4908489029bc3bb3c0a7c2fc5cb0c2893f3
+# good: [5135f242e01e8fd602211703e94171b85bb87d4f] KVM: x86: Return "unsupported" instead of "invalid" on access to unsupported PV MSR
+git bisect good 5135f242e01e8fd602211703e94171b85bb87d4f
+# bad: [1606176c5c6c323167dcd7d4b4f7212b2c8d3d13] ext4: subdivide EXT4_EXT_DATA_VALID1
+git bisect bad 1606176c5c6c323167dcd7d4b4f7212b2c8d3d13
+# good: [b5452125f9bd60f90f06da080d3eb18445c61d24] drm/tegra: dsi: fix device leak on probe
+git bisect good b5452125f9bd60f90f06da080d3eb18445c61d24
+# good: [b5a010bc7dba7e3d0966c0231335ca76b3f8780e] ext4: get rid of ppath in ext4_find_extent()
+git bisect good b5a010bc7dba7e3d0966c0231335ca76b3f8780e
+# bad: [b6a01b66cdaa2da526b512fc0f9938ea5d6c7a1c] ext4: get rid of ppath in ext4_ext_insert_extent()
+git bisect bad b6a01b66cdaa2da526b512fc0f9938ea5d6c7a1c
+# good: [15908fc35056e9a6fd71552eda884a353496e6c7] ext4: get rid of ppath in ext4_ext_create_new_leaf()
+git bisect good 15908fc35056e9a6fd71552eda884a353496e6c7
+# first bad commit: [b6a01b66cdaa2da526b512fc0f9938ea5d6c7a1c] ext4: get rid of ppath in ext4_ext_insert_extent()
