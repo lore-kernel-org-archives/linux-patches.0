@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898253CCFCA
-	for <patches@lists.linux.dev>; Tue,  7 Apr 2026 16:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C523B3C6A56
+	for <patches@lists.linux.dev>; Tue,  7 Apr 2026 16:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775577771; cv=none; b=Ijee9Ym4qhpFcd0+48kN2ftJmJEW+djeIInzOgo0bo8dpKz+DIYn0saemkD5TvI6TbYgp/N0jR7CCQXQ3crW/8qcZBM/66Oxiwg2EO9LuWv4/4iPCFmPj72J7qo7//3UjLkvS5kwRqEHJ1ZQO8kSKANeYJas6FRpSRMCH/vHsEQ=
+	t=1775577777; cv=none; b=egAyUkJpnB0tRRHXjv0RWpp7ZjaluTEsckeP6ZNmwrzEPm/V2Rnl0sLqDwxr/1Rra8f5Tck2nqsbcntj/tZq+Q7sSgw4D4T+mWGbrm742YNRuANT8I/KAxL1f5wiHXXyw4NEpLJSA6JZBpx6LfWcQOZX8pUbSXKxdEpPDxTozj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775577771; c=relaxed/simple;
-	bh=/aVegcj2Gd/PPwuq0w7v0DVXLWgC36AnHuP/93CopIQ=;
+	s=arc-20240116; t=1775577777; c=relaxed/simple;
+	bh=DBmG70Xr4+Z1t3xjsxbRIErkOrffXvoW6wckmtG8CM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pTvgUcaNbesaSvTUP1lnMKFwIGNu0ayylQwO6dYf00vpQysbb9/s6TBY1N14+cHKXhx4CzfszpLUqqQcQKZQwiLXN8nWHbHK+Jow9Sohxw2HRhgv8++uBkJ3Mf7uksFeEq4DmLGjDa9ngcvtcMbk7RgY/7RFQCpQxns7azkqSXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nurs0NBI; arc=none smtp.client-ip=192.198.163.12
+	 MIME-Version; b=TvwFdEpC7R/S96+r8LvLHeCF8Xd8l7225ae6RxnneeZjFrESgooxZ4gHLA6oZ4XN1rUgPAz4YO2ZSBGJFXASNmO0Qy24PY4pBjowilZfxS5+DpCyGBEpxNr+bMpAbCgs/eKMwovzHWXaMc83q7besvaGYnODOifBbAKKKw3h824=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=k6rbc9l5; arc=none smtp.client-ip=192.198.163.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nurs0NBI"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="k6rbc9l5"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1775577765; x=1807113765;
+  t=1775577770; x=1807113770;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=/aVegcj2Gd/PPwuq0w7v0DVXLWgC36AnHuP/93CopIQ=;
-  b=nurs0NBI+2iir0rhmjmrNDqVewR4Dfrb1u65eyj1Mw0u4gasCDTgiyJE
-   pbv2bbWkLH4Yubki35+otS0TAEtM79dZkHLtsbPq2GjSqGO0pHxN7xQgm
-   /ZXTINdihoqgHD8sLusmZZgbQsDSXLaPPuvm2RGb0Teu2Wi33L7PR1IdT
-   bvOlm+AOk5w0685IQx32CHxo15DjFYnpcSjUb1uTtl9DHz02QIizM6HDt
-   +ryQ2nXLrSa8KyLsXGeU1YWwaiWTX79d/QTg4+D6feTEbvGh9mgj+2thT
-   nwGT3rJL8XWAb0z3chgcs8tcEqQFB1zfIB65hDgSE5lde/w0D5CJPp0Rt
-   Q==;
-X-CSE-ConnectionGUID: Z0RgcBTaSzmRnjlns1F6rw==
-X-CSE-MsgGUID: liGWDfJlS4asPAS+xTrlsw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11752"; a="80432737"
+  bh=DBmG70Xr4+Z1t3xjsxbRIErkOrffXvoW6wckmtG8CM4=;
+  b=k6rbc9l5Ott4idUX9gTvUeHNvDcNo1953bMCgU/HmqFrFdQ4D4u8S088
+   QYOFDqIzwA//U9vCqtsfCNIH3FQv3paQmwXGInQl7zM76rR9sBxLU8UkT
+   kZyYSsHTsJ5SrGdSCIZHO+EvTdoEbBgc8fLza9mWjtl4pq5ccETxJYtau
+   gbnAsPPRuevpLSVHV4XmjTszNj9CIVlAZsmlGMvBiB5tj3+zQ68xKzMHL
+   myDp3OsjGn2Gy4sYgKmITI+0kypPtizZCOz/A5QvTXENHgidBgZg4rKiC
+   8wkjYqMUOIGFjVtuz9PRDJ9lZyfZ9R3kYe9IVRiwl8CeWsOdKtW7aT0RC
+   A==;
+X-CSE-ConnectionGUID: 1zWyelOEQK6J/aRBVka5mA==
+X-CSE-MsgGUID: 3OHIyX20TQGzqWlwmYqmmA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11752"; a="80432745"
 X-IronPort-AV: E=Sophos;i="6.23,165,1770624000"; 
-   d="scan'208";a="80432737"
+   d="scan'208";a="80432745"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
   by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2026 09:02:19 -0700
-X-CSE-ConnectionGUID: /8YAnnejSAaDG/xdgl374A==
-X-CSE-MsgGUID: tiC2GrJBRM2uvnQt2g6P5g==
+X-CSE-ConnectionGUID: BSgNVgdgT+ml23rXCqpn/g==
+X-CSE-MsgGUID: SJZQJCeKT6WR5TCpc7f0bQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,165,1770624000"; 
-   d="scan'208";a="228119056"
+   d="scan'208";a="228119059"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2026 09:02:18 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -60,9 +60,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v3 09/13] fs/resctrl: Add last_cmd_status support for writes to max_threshold_occupancy
-Date: Tue,  7 Apr 2026 09:02:06 -0700
-Message-ID: <3a55b9a6ced4d1cfc69894840afa747de592ce5d.1775576382.git.reinette.chatre@intel.com>
+Subject: [PATCH v3 10/13] fs/resctrl: Use accurate and symmetric exit flows
+Date: Tue,  7 Apr 2026 09:02:07 -0700
+Message-ID: <1762225e701717c34ba544e9d92bc1af9f453f7e.1775576382.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1775576382.git.reinette.chatre@intel.com>
 References: <cover.1775576382.git.reinette.chatre@intel.com>
@@ -74,57 +74,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-info/last_cmd_status is intended to contain more information if a write to
-any resctrl file fails. Writes to max_threshold_occupancy did not receive
-last_cmd_status support during initial last_cmd_status enabling. Add it now.
+During schemata file write handling there is one error exit path labeled
+"out" that handles all cleanup and unlocking needed on exit. The staged
+configs cleared during an error exit may not have been used at the time
+of exit making the clearing of the staged configs unnecessary.
+
+Access the exit code using two labels and only clear the staged
+configuration if it was in use at the time of exit. Doing so makes the
+code flow obvious and simplifies upcoming changes that improve the
+handling of failures during early input parsing.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
-Changes since v1:
-- Add Ben's RB tag.
+ fs/resctrl/ctrlmondata.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-Changes since v2:
-- Switch to guard(). (Chenyu)
-- Drop Ben's RB tag due to significant code change.
----
- fs/resctrl/rdtgroup.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 5dfdaa6f9d8f..5e3ea92cc243 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -12,6 +12,7 @@
+diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
+index 9a7dfc48cb2e..8a43efe67a95 100644
+--- a/fs/resctrl/ctrlmondata.c
++++ b/fs/resctrl/ctrlmondata.c
+@@ -331,7 +331,7 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+ 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
+ 		ret = -EINVAL;
+ 		rdt_last_cmd_puts("Resource group is pseudo-locked\n");
+-		goto out;
++		goto out_unlock;
+ 	}
  
- #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
+ 	rdt_staged_configs_clear();
+@@ -341,16 +341,16 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+ 		if (!tok) {
+ 			rdt_last_cmd_puts("Missing ':'\n");
+ 			ret = -EINVAL;
+-			goto out;
++			goto out_clear_staged;
+ 		}
+ 		if (tok[0] == '\0') {
+ 			rdt_last_cmd_printf("Missing '%s' value\n", resname);
+ 			ret = -EINVAL;
+-			goto out;
++			goto out_clear_staged;
+ 		}
+ 		ret = rdtgroup_parse_resource(resname, tok, rdtgrp);
+ 		if (ret)
+-			goto out;
++			goto out_clear_staged;
+ 	}
  
-+#include <linux/cleanup.h>
- #include <linux/cpu.h>
- #include <linux/debugfs.h>
- #include <linux/fs.h>
-@@ -1238,12 +1239,20 @@ static ssize_t max_threshold_occ_write(struct kernfs_open_file *of,
- 	unsigned int bytes;
- 	int ret;
+ 	list_for_each_entry(s, &resctrl_schema_all, list) {
+@@ -365,7 +365,7 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
  
-+	guard(mutex)(&rdtgroup_mutex);
-+	rdt_last_cmd_clear();
-+
- 	ret = kstrtouint(buf, 0, &bytes);
--	if (ret)
-+	if (ret) {
-+		rdt_last_cmd_puts("Invalid input\n");
- 		return ret;
-+	}
+ 		ret = resctrl_arch_update_domains(r, rdtgrp->closid);
+ 		if (ret)
+-			goto out;
++			goto out_clear_staged;
+ 	}
  
--	if (bytes > resctrl_rmid_realloc_limit)
-+	if (bytes > resctrl_rmid_realloc_limit) {
-+		rdt_last_cmd_printf("Exceeds limit (before adjustment) of %u bytes\n",
-+				    resctrl_rmid_realloc_limit);
- 		return -EINVAL;
-+	}
+ 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
+@@ -378,8 +378,9 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+ 		ret = rdtgroup_pseudo_lock_create(rdtgrp);
+ 	}
  
- 	resctrl_rmid_realloc_threshold = resctrl_arch_round_mon_val(bytes);
- 
+-out:
++out_clear_staged:
+ 	rdt_staged_configs_clear();
++out_unlock:
+ 	rdtgroup_kn_unlock(of->kn);
+ 	return ret ?: nbytes;
+ }
 -- 
 2.50.1
 
