@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1875BB67E;
-	Wed,  8 Apr 2026 18:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6578348453;
+	Wed,  8 Apr 2026 18:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674621; cv=none; b=Hmg+vIIzBeSo0qlucfJVmYKxKGoig1zKcuyhkT7avn8aACMhjomffra81W59lZtLPaG9kMLCUptUmK2+1VzKspGzDktDU+r2Voa/JFBEqUlPIyD4sL6W4wCvG9q/LNP6JG4Wa3Qyrfa6nwRuFuIsraGv2HjcRhtdQmEUSe+ZYrI=
+	t=1775674623; cv=none; b=uxzbMYj8RX6G5BHo8zyKE8oPDnf3exaXRFCXkQuigHQxztHR7LdCTIB9CnXWfupsHSKNBN2M7fimTIU6LKaeL09cl4SqcBHc9VefK6LTb7mFnKIyDX9cyWTrh8ol9AvKr0cY9E+eILszQr/s5/gIFHyx5lszvCLMzd9oaEJ2CFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674621; c=relaxed/simple;
-	bh=cP3ZiiiHmQR0BLZT52I9ZQszdJyi2w+0/ruzurYSd9Q=;
+	s=arc-20240116; t=1775674623; c=relaxed/simple;
+	bh=Ky+Hl9RkNZVQv//mnY9f5LppVItdZRBnjewK71l3AQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N3tNIE6EPAl2GPk18DkOzFSLc5ddGlIwcp+0laOKTNBmNqvru1J0FZ3WdLNPoeIOpyb2SxZfzqtu1/wVZAbN1RadQ2jGRWZvG45MTck4Og9EOkUBCRSPfKt9c/MddIS4ZOd/vZ6KCB2EuMiOcj/xi2OldfV1Nk4dpjAW7gC7/58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pZ3z7OV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OmyzDmGCSED52KXiPIdPbZEsb2u7Xkqsu1PURRi9xX/9fwQiPOpMkFncAw6fs/yHgoyqXnMymxEwgOOCDlGzXJBNAIUZw3wJJ+Usg0Xzj2jcYUWkMrTYYd2niKSxp0wFeMbtQvBSKQnYZYeArK8xi/2pLnswBS1dTWfLnlksWNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KScmFFfe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pZ3z7OV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FEFC19421;
-	Wed,  8 Apr 2026 18:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KScmFFfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5DEC19421;
+	Wed,  8 Apr 2026 18:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674621;
-	bh=cP3ZiiiHmQR0BLZT52I9ZQszdJyi2w+0/ruzurYSd9Q=;
+	s=korg; t=1775674623;
+	bh=Ky+Hl9RkNZVQv//mnY9f5LppVItdZRBnjewK71l3AQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1pZ3z7OVOIe5qdqV9WtlNcYomLInu/S9VzFRLjacHogKg+wzLUEM2Pk7nqHIr8i9e
-	 Or8UCKjbVTbHAy8pb50yiJ5MIvepM/3Qn2kAM8ETJIUvWyFU7S0+wdf6RwpjN5QV6b
-	 phRLtSmUGIKBGH+p7WYIOzPEdMe5ZHzcbVDJlTHI=
+	b=KScmFFfey/i2HZ5uHv1s9s2eLUzi+xStH+l/Upi6EfiYFYeYvPMkPRQSIbVLALFNd
+	 DYeTSGWT7CNdDFi4l73sfad/OvG0JxGEjAQ82ZgoG2C9iD4aTZmrSYrIb7RrRwiXya
+	 3di9OR8dXrvlQqCMSWeTdjfC8+FSAbeodzVRBmwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.19 167/311] sched_ext: Fix inconsistent NUMA node lookup in scx_select_cpu_dfl()
-Date: Wed,  8 Apr 2026 20:02:47 +0200
-Message-ID: <20260408175945.641057377@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.19 168/311] lib/crypto: chacha: Zeroize permuted_state before it leaves scope
+Date: Wed,  8 Apr 2026 20:02:48 +0200
+Message-ID: <20260408175945.678317708@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,39 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit db08b1940f4beb25460b4a4e9da3446454f2e8fe upstream.
+commit e5046823f8fa3677341b541a25af2fcb99a5b1e0 upstream.
 
-In the WAKE_SYNC path of scx_select_cpu_dfl(), waker_node was computed
-with cpu_to_node(), while node (for prev_cpu) was computed with
-scx_cpu_node_if_enabled(). When scx_builtin_idle_per_node is disabled,
-idle_cpumask(waker_node) is called with a real node ID even though
-per-node idle tracking is disabled, resulting in undefined behavior.
+Since the ChaCha permutation is invertible, the local variable
+'permuted_state' is sufficient to compute the original 'state', and thus
+the key, even after the permutation has been done.
 
-Fix by using scx_cpu_node_if_enabled() for waker_node as well, ensuring
-both variables are computed consistently.
+While the kernel is quite inconsistent about zeroizing secrets on the
+stack (and some prominent userspace crypto libraries don't bother at all
+since it's not guaranteed to work anyway), the kernel does try to do it
+as a best practice, especially in cases involving the RNG.
 
-Fixes: 48849271e6611 ("sched_ext: idle: Per-node idle cpumasks")
-Cc: stable@vger.kernel.org # v6.15+
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Thus, explicitly zeroize 'permuted_state' before it goes out of scope.
+
+Fixes: c08d0e647305 ("crypto: chacha20 - Add a generic ChaCha20 stream cipher implementation")
+Cc: stable@vger.kernel.org
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20260326032920.39408-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext_idle.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/crypto/chacha-block-generic.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/sched/ext_idle.c
-+++ b/kernel/sched/ext_idle.c
-@@ -543,7 +543,7 @@ s32 scx_select_cpu_dfl(struct task_struc
- 		 * piled up on it even if there is an idle core elsewhere on
- 		 * the system.
- 		 */
--		waker_node = cpu_to_node(cpu);
-+		waker_node = scx_cpu_node_if_enabled(cpu);
- 		if (!(current->flags & PF_EXITING) &&
- 		    cpu_rq(cpu)->scx.local_dsq.nr == 0 &&
- 		    (!(flags & SCX_PICK_IDLE_IN_NODE) || (waker_node == node)) &&
+--- a/lib/crypto/chacha-block-generic.c
++++ b/lib/crypto/chacha-block-generic.c
+@@ -87,6 +87,8 @@ void chacha_block_generic(struct chacha_
+ 				   &out[i * sizeof(u32)]);
+ 
+ 	state->x[12]++;
++
++	chacha_zeroize_state(&permuted_state);
+ }
+ EXPORT_SYMBOL(chacha_block_generic);
+ 
+@@ -110,5 +112,7 @@ void hchacha_block_generic(const struct
+ 
+ 	memcpy(&out[0], &permuted_state.x[0], 16);
+ 	memcpy(&out[4], &permuted_state.x[12], 16);
++
++	chacha_zeroize_state(&permuted_state);
+ }
+ EXPORT_SYMBOL(hchacha_block_generic);
 
 
