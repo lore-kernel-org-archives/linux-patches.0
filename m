@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27403D902B;
-	Wed,  8 Apr 2026 18:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4029B3D4134;
+	Wed,  8 Apr 2026 18:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671755; cv=none; b=RWYQuqiOHRsJLtpt9c4FCxOvcJkIjqr8bPtbVVUNcbAeztmICPDrhas24xdT9/JUn6YddlhhsFIA3JUDvqw2BqbHli8GKZjl6moa0kNcSBIG1yUPXjEFow2MXR9qkLsOr7L+qdyQGx/URysjfW6i13Yqsd8E9ukUXNMpi9NXdKU=
+	t=1775671758; cv=none; b=IRL5qcdHDwQVkP8Cu1YK1meSTuUKqpUMDk+Sn/Bvg7Xc72EWJBjV/ZNUvcfo3+Vmyf5DUUFYSpjqZ5kKtMlNZOlDt1ftSOLpOmTgXMeHVrbfgP7lEge1hBpO3C6zpVanzqLX40+hTyx+LiuGPq/fVedIgGDHMjD14puS3cljhZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671755; c=relaxed/simple;
-	bh=nVuI85FVnnu07j7H5DfrZ0M5N1TnI1Y7MCQ8ciPKxqQ=;
+	s=arc-20240116; t=1775671758; c=relaxed/simple;
+	bh=P8WURBACfR6ZCCapAbixuSY0qp6BAWFHzr+MEwhmPbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JyVbSzfCsBmFITwFdtGNfC/kYxtGdIBoP5cyqFRjwlI336X62VRCLJLmNU7laMG+SnuJCVqgfXOGJky1iye8Lo8JyR+c1AHUGwLA/xU5qcf84T6RiTbtaHAr/jyYyVgLr01I5RuTcv+KLWEnYTbmpLaSlDQJkAYURzAFlxffHVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zpjctglz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EuXlr/AFiiLJC7He9ML04l6kdm9/9BLNMQa/9QMcWnUN/bJSe358me6KNVYCyR3nVxEsl4eO+msCtRKbSGpDt+aM6W/HIvOfcN/jCfWx97gK2M2eBKbnFICrpR5rl3tytm91VnOfvIUl9tSA6mkE6Wv5IaFWy8r/4v3Q7OYB5pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NaYyPm+d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zpjctglz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4911DC19421;
-	Wed,  8 Apr 2026 18:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NaYyPm+d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAED0C19421;
+	Wed,  8 Apr 2026 18:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671755;
-	bh=nVuI85FVnnu07j7H5DfrZ0M5N1TnI1Y7MCQ8ciPKxqQ=;
+	s=korg; t=1775671758;
+	bh=P8WURBACfR6ZCCapAbixuSY0qp6BAWFHzr+MEwhmPbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZpjctglzXHC2rHywnqwnwuqxijg6jwgtxZVUFEsFTQ7hRMTF7aYjVi2yDN9X7nTzP
-	 mzcJEHtHC6M4Y/o1DzcryZ1olqk/PWZgFuo81XVZOpP2TwhvzOY5uNuPgHBZFFrg43
-	 lppcXa1rUo6DDGmKwbnuobRRATADvhgX3f0azwNc=
+	b=NaYyPm+ddb/byKSwD7Kg0BuwVh8mRP62dkDgjpcQdtUgMdO+miDZ7kf6xsQ14oRHr
+	 hE++yaHxs2hRUnsYTqFeTS/XwscFJqPFQ9ovY4ZVTKLU11ysFkbV3sTiWVEezWHq0m
+	 Cg5TIz0Vp89lLA0ik3uqxhIhEV3xE9e7H+geaqJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/312] xfrm: call xdo_dev_state_delete during state update
-Date: Wed,  8 Apr 2026 19:59:00 +0200
-Message-ID: <20260408175934.594610782@linuxfoundation.org>
+Subject: [PATCH 6.1 014/312] module: Fix kernel panic when a symbol st_shndx is out of bounds
+Date: Wed,  8 Apr 2026 19:58:51 +0200
+Message-ID: <20260408175934.263543540@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,41 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
 
-[ Upstream commit 7d2fc41f91bc69acb6e01b0fa23cd7d0109a6a23 ]
+[ Upstream commit f9d69d5e7bde2295eb7488a56f094ac8f5383b92 ]
 
-When we update an SA, we construct a new state and call
-xdo_dev_state_add, but never insert it. The existing state is updated,
-then we immediately destroy the new state. Since we haven't added it,
-we don't go through the standard state delete code, and we're skipping
-removing it from the device (but xdo_dev_state_free will get called
-when we destroy the temporary state).
+The module loader doesn't check for bounds of the ELF section index in
+simplify_symbols():
 
-This is similar to commit c5d4d7d83165 ("xfrm: Fix deletion of
-offloaded SAs on failure.").
+       for (i = 1; i < symsec->sh_size / sizeof(Elf_Sym); i++) {
+		const char *name = info->strtab + sym[i].st_name;
 
-Fixes: d77e38e612a0 ("xfrm: Add an IPsec hardware offloading API")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+		switch (sym[i].st_shndx) {
+		case SHN_COMMON:
+
+		[...]
+
+		default:
+			/* Divert to percpu allocation if a percpu var. */
+			if (sym[i].st_shndx == info->index.pcpu)
+				secbase = (unsigned long)mod_percpu(mod);
+			else
+  /** HERE --> **/		secbase = info->sechdrs[sym[i].st_shndx].sh_addr;
+			sym[i].st_value += secbase;
+			break;
+		}
+	}
+
+A symbol with an out-of-bounds st_shndx value, for example 0xffff
+(known as SHN_XINDEX or SHN_HIRESERVE), may cause a kernel panic:
+
+  BUG: unable to handle page fault for address: ...
+  RIP: 0010:simplify_symbols+0x2b2/0x480
+  ...
+  Kernel panic - not syncing: Fatal exception
+
+This can happen when module ELF is legitimately using SHN_XINDEX or
+when it is corrupted.
+
+Add a bounds check in simplify_symbols() to validate that st_shndx is
+within the valid range before using it.
+
+This issue was discovered due to a bug in llvm-objcopy, see relevant
+discussion for details [1].
+
+[1] https://lore.kernel.org/linux-modules/20251224005752.201911-1-ihor.solodrai@linux.dev/
+
+Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/module/main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 38d9b0b5cc5db..7dd536d5f43f3 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -1768,6 +1768,7 @@ int xfrm_state_update(struct xfrm_state *x)
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index 3269f6c468145..6b3cffd9f8a8a 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -1343,6 +1343,13 @@ static int simplify_symbols(struct module *mod, const struct load_info *info)
+ 			break;
  
- 		err = 0;
- 		x->km.state = XFRM_STATE_DEAD;
-+		xfrm_dev_state_delete(x);
- 		__xfrm_state_put(x);
- 	}
- 
+ 		default:
++			if (sym[i].st_shndx >= info->hdr->e_shnum) {
++				pr_err("%s: Symbol %s has an invalid section index %u (max %u)\n",
++				       mod->name, name, sym[i].st_shndx, info->hdr->e_shnum - 1);
++				ret = -ENOEXEC;
++				break;
++			}
++
+ 			/* Divert to percpu allocation if a percpu var. */
+ 			if (sym[i].st_shndx == info->index.pcpu)
+ 				secbase = (unsigned long)mod_percpu(mod);
 -- 
 2.51.0
 
