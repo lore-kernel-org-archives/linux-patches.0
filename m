@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736C11A683C;
-	Wed,  8 Apr 2026 18:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79791A683C;
+	Wed,  8 Apr 2026 18:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672139; cv=none; b=XJpkaApR+ZD0IQGGVLa5j03lqo5L23wWAOOPQSUxI+pnzkWtkyv9goJ2qz1bdeVFNwVxf119ZWN/2FftN7fCH2B//tAPhlcOopdbCKEi33iEkk93UZF1mvylPvPBxQCEvFd9OVO8deLcmROjWyd7UcbJ7ecNm/fnc5wSYFtPTwg=
+	t=1775672141; cv=none; b=ub3XUB6pWnSqcbsvd9q9OAWquxZkM+ubVEfD9dB1O/nMybpIwklzRZcS6yygqUw+AE01alt2Lyj8lIUxTxkC9muUR52cEaYpHywAOzUdE0SJ8MSFovAn6m9rvROxCRqhDj0L2xdYWcwfiE0ioA9sagyIubRALKVuia1tYwNfnQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672139; c=relaxed/simple;
-	bh=1OKxzee3U3LF5QAs1vFUpb5UF9oIKIREkYiHRSiqQRM=;
+	s=arc-20240116; t=1775672141; c=relaxed/simple;
+	bh=I8r4XUnjGFgLNuTVLLZlB3VAYa53sE3ttTIFXAJQppQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tQIe79IrtK8z+0TQWRUtNM4ZYpjHTMmzQNyuNko4Vlsksw8stMICiiJLi7s42SXLuS5D9T809OrzTe0B8acHUt8tVfCHvlh3for1bdkI9fsVV003OgO8ax0izwWbkivwtLFnvUegQ5+cCCwp50dZj4mKPCQdyIDyzc4RVfWT0A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OPqIKCcK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FKXy1GUPnpa6BeKhfHB22FdocRgY9xGZwrksKJnltXvHwxIh1msY30GIbhB/63ojzmE1Fq1fVupOJR3+3mHcekj149EwzoOUT48Z83eS3Y7na9BIB0zT2m7lYitq1nUFvwhrIYzktKIco6WJYatDKWu+MILkzSm42x2U47FjWq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqD1a8CW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OPqIKCcK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62C0C19421;
-	Wed,  8 Apr 2026 18:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqD1a8CW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657A6C19421;
+	Wed,  8 Apr 2026 18:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672139;
-	bh=1OKxzee3U3LF5QAs1vFUpb5UF9oIKIREkYiHRSiqQRM=;
+	s=korg; t=1775672141;
+	bh=I8r4XUnjGFgLNuTVLLZlB3VAYa53sE3ttTIFXAJQppQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OPqIKCcKkaXbucbEhZy5rjSPEUo50UB6DuaCYn3/UyfaUUGZ1VJfmTFNP0TfZ/Jn+
-	 CLIlPzFgxXTJZrQp1VCM1rWpjW7Pk+JBFwddROeeK3/B3pX1lDgWEy6Gn6FUpTJZiX
-	 2o/5nNS4BpOT9R80tyxKTihQpeg5lUK4SJ/h7kH8=
+	b=PqD1a8CWu3lNxnEX8JaIZ+NDb48Nt6uRSdvK6ak6O/enj/I6KuehUoT6Z0IGW5Hwr
+	 AkB0e4OFWET+5jgd5XjGl3EML2wQUeBL7mjsAUVSCiOqsHctY8HpYxyUAwajiSqAEp
+	 GVWiozOK6wkTeZVLJTY5zhCEEqoIMSzL+YR8n7kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Oleh Konko <security@1seal.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 205/312] Bluetooth: SMP: force responder MITM requirements before building the pairing response
-Date: Wed,  8 Apr 2026 20:02:02 +0200
-Message-ID: <20260408175941.417323693@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.1 206/312] MIPS: Fix the GCC version check for `__multi3 workaround
+Date: Wed,  8 Apr 2026 20:02:03 +0200
+Message-ID: <20260408175941.454447945@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -51,55 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleh Konko <security@1seal.org>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit d05111bfe37bfd8bd4d2dfe6675d6bdeef43f7c7 upstream.
+commit ec8bf18814915460d9c617b556bf024efef26613 upstream.
 
-smp_cmd_pairing_req() currently builds the pairing response from the
-initiator auth_req before enforcing the local BT_SECURITY_HIGH
-requirement. If the initiator omits SMP_AUTH_MITM, the response can
-also omit it even though the local side still requires MITM.
+It was only GCC 10 that fixed a MIPS64r6 code generation issue with a
+`__multi3' libcall inefficiently produced to perform 64-bit widening
+multiplication while suitable machine instructions exist to do such a
+calculation.  The fix went in with GCC commit 48b2123f6336 ("re PR
+target/82981 (unnecessary __multi3 call for mips64r6 linux kernel)").
 
-tk_request() then sees an auth value without SMP_AUTH_MITM and may
-select JUST_CFM, making method selection inconsistent with the pairing
-policy the responder already enforces.
+Adjust our code accordingly, removing build failures such as:
 
-When the local side requires HIGH security, first verify that MITM can
-be achieved from the IO capabilities and then force SMP_AUTH_MITM in the
-response in both rsp.auth_req and auth. This keeps the responder auth bits
-and later method selection aligned.
+mips64-linux-ld: lib/math/div64.o: in function `mul_u64_add_u64_div_u64':
+div64.c:(.text+0x84): undefined reference to `__multi3'
 
-Fixes: 2b64d153a0cc ("Bluetooth: Add MITM mechanism to LE-SMP")
-Cc: stable@vger.kernel.org
-Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Oleh Konko <security@1seal.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+with the GCC versions affected.
+
+Fixes: ebabcf17bcd7 ("MIPS: Implement __multi3 for GCC7 MIPS64r6 builds")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202601140146.hMLODc6v-lkp@intel.com/
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v4.15+
+Reviewed-by: David Laight <david.laight.linux@gmail.com.
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/smp.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/mips/lib/multi3.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -1817,7 +1817,7 @@ static u8 smp_cmd_pairing_req(struct l2c
- 	if (sec_level > conn->hcon->pending_sec_level)
- 		conn->hcon->pending_sec_level = sec_level;
+--- a/arch/mips/lib/multi3.c
++++ b/arch/mips/lib/multi3.c
+@@ -4,12 +4,12 @@
+ #include "libgcc.h"
  
--	/* If we need MITM check that it can be achieved */
-+	/* If we need MITM check that it can be achieved. */
- 	if (conn->hcon->pending_sec_level >= BT_SECURITY_HIGH) {
- 		u8 method;
+ /*
+- * GCC 7 & older can suboptimally generate __multi3 calls for mips64r6, so for
++ * GCC 9 & older can suboptimally generate __multi3 calls for mips64r6, so for
+  * that specific case only we implement that intrinsic here.
+  *
+  * See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82981
+  */
+-#if defined(CONFIG_64BIT) && defined(CONFIG_CPU_MIPSR6) && (__GNUC__ < 8)
++#if defined(CONFIG_64BIT) && defined(CONFIG_CPU_MIPSR6) && (__GNUC__ < 10)
  
-@@ -1825,6 +1825,10 @@ static u8 smp_cmd_pairing_req(struct l2c
- 					 req->io_capability);
- 		if (method == JUST_WORKS || method == JUST_CFM)
- 			return SMP_AUTH_REQUIREMENTS;
-+
-+		/* Force MITM bit if it isn't set by the initiator. */
-+		auth |= SMP_AUTH_MITM;
-+		rsp.auth_req |= SMP_AUTH_MITM;
- 	}
+ /* multiply 64-bit values, low 64-bits returned */
+ static inline long long notrace dmulu(long long a, long long b)
+@@ -51,4 +51,4 @@ ti_type notrace __multi3(ti_type a, ti_t
+ }
+ EXPORT_SYMBOL(__multi3);
  
- 	key_size = min(req->max_key_size, rsp.max_key_size);
+-#endif /* 64BIT && CPU_MIPSR6 && GCC7 */
++#endif /* 64BIT && CPU_MIPSR6 && GCC9 */
 
 
