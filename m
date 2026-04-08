@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DC4324B1F;
-	Wed,  8 Apr 2026 18:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDAF324B1F;
+	Wed,  8 Apr 2026 18:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672426; cv=none; b=GuNBN/g27Nrl16HibIYbh7iRw3KktdIxIucjAb5OdlGhRkGHXEA9rVml3GTmD5jKnszqYsqZcfmlQ/z5aen68SHER7Pzia+3ES066iAXqxg3ZkCGRy3k2e12/+UlGXAM2PPVi0zqkHQwBiXorpCsZdklzeUWkMm/fI2G/keKS1w=
+	t=1775672429; cv=none; b=h7HIJvEMBUSPmFLln/Y7YH5co7jbvyP7fy7Zciu2/aWzvEWjUqBwuKlbSZfDMTLfHVTeTCwW5X3pM3AGODzAWSXhaSfAkNStHhamMOWylGQY1QxaBhREkm04d9pPkNeuCIUkmtkZEjuZex4xvjg2Odc148BRWtlI//f86Loogt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672426; c=relaxed/simple;
-	bh=rX7a8A1ovxw1/xUZPQidseIKRVxffrSNWH7dFeV2sJk=;
+	s=arc-20240116; t=1775672429; c=relaxed/simple;
+	bh=eE7ZUcllrQ+WBKs+VykX7iIMEAlB84d7jz1Ji4psPz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fuu1so31vxMI9afetvDyVDd5q/tlma8JBcRDLx9LiWSBVvQ/x5/kCcZrY5nxFuxt2/1PmVXn6KAi2JudFIyg1CriyEngnDEyEtsDr8xhOIRsf85DBktbmZnv1mnpqEg95klOo5SYunPPhMnDzrgUe6PQNwIk+fk0uJJiRhLfRBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGUBsXHC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=leeFT5k1HIzn8cg+W6oKzKpwR7lPdXtH5vNuJfEGEkckI5ej1bVzkoYTaCQ7bFV7raVN/QVwSVwNa9hDP5KCmiidLaDteVec+L13HWMoXHNtRY9gTL0v9ZZOOQ/a14BQIvcUKPml+SMgT3PyWYyMGQzlBzdSMpziW5aLmCV3mUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T33WDJgQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGUBsXHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A086C19421;
-	Wed,  8 Apr 2026 18:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T33WDJgQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7ACAC19421;
+	Wed,  8 Apr 2026 18:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672426;
-	bh=rX7a8A1ovxw1/xUZPQidseIKRVxffrSNWH7dFeV2sJk=;
+	s=korg; t=1775672429;
+	bh=eE7ZUcllrQ+WBKs+VykX7iIMEAlB84d7jz1Ji4psPz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PGUBsXHC1Fg7yC7LDwqNsSB7UxEs8MEIZg4rsQZjgvwK/3MTB09E8GomypBRgzbnM
-	 xGy+5SvPX+6UP64Z5m5jYlO54YW2K28C4Laog/W8yzy3Uj7yrnMBJKVj6EGw7XbwyA
-	 J1PxAnnIcHFe0E08fggaMYzHKRLuP694ai0U3CGY=
+	b=T33WDJgQfq1k8LfkkeyNMOM+OAh9D5myalwMy4G7VueMqrm+0U05PENUfIelsEqot
+	 xif5LShCqpxMYhJreeUfZXVTYzsgDfvcl/5WBnLt5L+r/XwRPSKsY1THZ8KxJH85jQ
+	 9uvzmLcCC4nF0TieyHG+ZIbWeE46HUnV0B3Vwu/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
-	Yuto Ohnuki <ytohnuki@amazon.com>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.1 301/312] xfs: save ailp before dropping the AIL lock in push callbacks
-Date: Wed,  8 Apr 2026 20:03:38 +0200
-Message-ID: <20260408175945.013606438@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rajani Kantha <681739313@139.com>
+Subject: [PATCH 6.1 302/312] net: phy: move phy_link_change() prior to mdio_bus_phy_may_suspend()
+Date: Wed,  8 Apr 2026 20:03:39 +0200
+Message-ID: <20260408175945.051517304@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -53,96 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuto Ohnuki <ytohnuki@amazon.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit 394d70b86fae9fe865e7e6d9540b7696f73aa9b6 upstream.
+[ Upstream commit f40a673d6b4a128fe95dd9b8c3ed02da50a6a862 ]
 
-In xfs_inode_item_push() and xfs_qm_dquot_logitem_push(), the AIL lock
-is dropped to perform buffer IO. Once the cluster buffer no longer
-protects the log item from reclaim, the log item may be freed by
-background reclaim or the dquot shrinker. The subsequent spin_lock()
-call dereferences lip->li_ailp, which is a use-after-free.
+In an upcoming change, mdio_bus_phy_may_suspend() will need to
+distinguish a phylib-based PHY client from a phylink PHY client.
+For that, it will need to compare the phydev->phy_link_change() function
+pointer with the eponymous phy_link_change() provided by phylib.
 
-Fix this by saving the ailp pointer in a local variable while the AIL
-lock is held and the log item is guaranteed to be valid.
+To avoid forward function declarations, the default PHY link state
+change method should be moved upwards. There is no functional change
+associated with this patch, it is only to reduce the noise from a real
+bug fix.
 
-Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
-Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
-Cc: stable@vger.kernel.org # v5.9
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20250407093900.2155112-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Minor context change fixed ]
+Signed-off-by: Rajani Kantha <681739313@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot_item.c |    9 +++++++--
- fs/xfs/xfs_inode_item.c |    9 +++++++--
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/net/phy/phy_device.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/fs/xfs/xfs_dquot_item.c
-+++ b/fs/xfs/xfs_dquot_item.c
-@@ -125,6 +125,7 @@ xfs_qm_dquot_logitem_push(
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -234,6 +234,19 @@ static struct phy_driver genphy_driver;
+ static LIST_HEAD(phy_fixup_list);
+ static DEFINE_MUTEX(phy_fixup_lock);
+ 
++static void phy_link_change(struct phy_device *phydev, bool up)
++{
++	struct net_device *netdev = phydev->attached_dev;
++
++	if (up)
++		netif_carrier_on(netdev);
++	else
++		netif_carrier_off(netdev);
++	phydev->adjust_link(netdev);
++	if (phydev->mii_ts && phydev->mii_ts->link_state)
++		phydev->mii_ts->link_state(phydev->mii_ts, phydev);
++}
++
+ static bool mdio_bus_phy_may_suspend(struct phy_device *phydev)
  {
- 	struct xfs_dquot	*dqp = DQUOT_ITEM(lip)->qli_dquot;
- 	struct xfs_buf		*bp = lip->li_buf;
-+	struct xfs_ail		*ailp = lip->li_ailp;
- 	uint			rval = XFS_ITEM_SUCCESS;
- 	int			error;
- 
-@@ -153,7 +154,7 @@ xfs_qm_dquot_logitem_push(
- 		goto out_unlock;
- 	}
- 
--	spin_unlock(&lip->li_ailp->ail_lock);
-+	spin_unlock(&ailp->ail_lock);
- 
- 	error = xfs_qm_dqflush(dqp, &bp);
- 	if (!error) {
-@@ -163,7 +164,11 @@ xfs_qm_dquot_logitem_push(
- 	} else if (error == -EAGAIN)
- 		rval = XFS_ITEM_LOCKED;
- 
--	spin_lock(&lip->li_ailp->ail_lock);
-+	/*
-+	 * The buffer no longer protects the log item from reclaim, so
-+	 * do not reference lip after this point.
-+	 */
-+	spin_lock(&ailp->ail_lock);
- out_unlock:
- 	xfs_dqunlock(dqp);
- 	return rval;
---- a/fs/xfs/xfs_inode_item.c
-+++ b/fs/xfs/xfs_inode_item.c
-@@ -727,6 +727,7 @@ xfs_inode_item_push(
- 	struct xfs_inode_log_item *iip = INODE_ITEM(lip);
- 	struct xfs_inode	*ip = iip->ili_inode;
- 	struct xfs_buf		*bp = lip->li_buf;
-+	struct xfs_ail		*ailp = lip->li_ailp;
- 	uint			rval = XFS_ITEM_SUCCESS;
- 	int			error;
- 
-@@ -749,7 +750,7 @@ xfs_inode_item_push(
- 	if (!xfs_buf_trylock(bp))
- 		return XFS_ITEM_LOCKED;
- 
--	spin_unlock(&lip->li_ailp->ail_lock);
-+	spin_unlock(&ailp->ail_lock);
- 
- 	/*
- 	 * We need to hold a reference for flushing the cluster buffer as it may
-@@ -773,7 +774,11 @@ xfs_inode_item_push(
- 		rval = XFS_ITEM_LOCKED;
- 	}
- 
--	spin_lock(&lip->li_ailp->ail_lock);
-+	/*
-+	 * The buffer no longer protects the log item from reclaim, so
-+	 * do not reference lip after this point.
-+	 */
-+	spin_lock(&ailp->ail_lock);
- 	return rval;
+ 	struct device_driver *drv = phydev->mdio.dev.driver;
+@@ -1036,19 +1049,6 @@ struct phy_device *phy_find_first(struct
  }
+ EXPORT_SYMBOL(phy_find_first);
  
+-static void phy_link_change(struct phy_device *phydev, bool up)
+-{
+-	struct net_device *netdev = phydev->attached_dev;
+-
+-	if (up)
+-		netif_carrier_on(netdev);
+-	else
+-		netif_carrier_off(netdev);
+-	phydev->adjust_link(netdev);
+-	if (phydev->mii_ts && phydev->mii_ts->link_state)
+-		phydev->mii_ts->link_state(phydev->mii_ts, phydev);
+-}
+-
+ /**
+  * phy_prepare_link - prepares the PHY layer to monitor link status
+  * @phydev: target phy_device struct
 
 
