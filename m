@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533D5328B75;
-	Wed,  8 Apr 2026 18:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E127932A3FD;
+	Wed,  8 Apr 2026 18:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673168; cv=none; b=XTj+ZMkGMJ9N9nIBQCcmbBe6bEqQcrA1Y4BvlSbwJfJjSohPqAwYyYs7E3yFpg2NUCEzzPM7Y7Fzn+Vtyrl5O0JyX5frDEL3N4kIK4JMu0o3PLirJr46HI7w6wHKUzam3Z6KYN706IYLvvnviDV9yBG6qgoXAC+QFdGCx/VyUfM=
+	t=1775673171; cv=none; b=W99zbFfqyaVk4gMR8gaseOt7E3ysZ8OfQGDEoYZjyKb6WLjnjzz4C4jXLgIif6K21HXNMsflqA5MIBn39biL7DdlxUhJB925Zgnjn9mxHQbjzrVmkFYmFZ1J5RAjzVLjfhrz789kBea0feVknTDqSNuwKqMGyihlbWpU0Rc6HvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673168; c=relaxed/simple;
-	bh=jffVQHPZ5LJCEvpYuwPAn09p1bK+fcHdg4B9bqpRbBs=;
+	s=arc-20240116; t=1775673171; c=relaxed/simple;
+	bh=V/OXbf89/Q8FMXM0AK1eiDqS0ndRLl7Ihgbu1VGqpGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4k6QCLyhlN+m2Ral0bdGhDOiJGFQkH4rztKGwddxI/REWAqSyimVVLUYLo3WR+ckOHHFSOVrBHihBWiqHPsNG3RsaRxEdrDsNPsUdrJ0bfTejUjOc3O/C4CJK2hPhpCmAfW+K1qpe863QeMh33RfZNzUquOgGcz8WAp9I2W5tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAHoSyEV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kayMZjF99TUpVcfhrIJu0pGnqZ/n3amRo0rQVQ3LI7T93c1RSNsinzrrYL6G5CPEMsnqA/Q5Vi9PT4jJevUZjXYaY8BPKuTmRxwT84InuXhy1N/0JASR+ssmu1a+rMmifOyMrd5ItD+I6u2qGgmp5DX6AWfo/dWqBc8GtPwPnbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJgcyER3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAHoSyEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E58C2BC87;
-	Wed,  8 Apr 2026 18:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJgcyER3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F06CC19421;
+	Wed,  8 Apr 2026 18:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673168;
-	bh=jffVQHPZ5LJCEvpYuwPAn09p1bK+fcHdg4B9bqpRbBs=;
+	s=korg; t=1775673170;
+	bh=V/OXbf89/Q8FMXM0AK1eiDqS0ndRLl7Ihgbu1VGqpGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AAHoSyEV0dD0wyL820egJdfVA3MmJnwUlxh0OyG/Y1/uLB+D0MUVA4ro7wSqWbhu3
-	 IBcwGl9ZnapOT1FevX5aiAKjju6i0g9c3nSNRNG0YQhofRE6fOXJl/2XhkpzNSNWO+
-	 Mj/3YuaO+T8FNqFvTRKk5D3FZ/QkMpkj+4/eSbjA=
+	b=rJgcyER3aJ4rrE4FIIpMvWWR4SUmLUyMFlmvz9hW8OEDstOlLE36XPgjwCKgsCeOE
+	 k2/YmpTkIfgUbDjJJXXfM5wXDuVhKuEJIht1jEEmuUV1dOmt7tvvDzDWcOMQKypyt0
+	 rJVMd8wtmzhiZ/Rx/9r8A39U+H6eWQmhjv9XICis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Sunil V L <sunilvl@oss.qualcomm.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 110/277] hwmon: (pxe1610) Check return value of page-select write in probe
-Date: Wed,  8 Apr 2026 20:01:35 +0200
-Message-ID: <20260408175937.981360021@linuxfoundation.org>
+Subject: [PATCH 6.18 128/277] ACPI: RIMT: Add dependency between iommu and devices
+Date: Wed,  8 Apr 2026 20:01:53 +0200
+Message-ID: <20260408175938.654992212@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,43 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Sunil V L <sunilvl@oss.qualcomm.com>
 
-[ Upstream commit ccf70c41e562b29d1c05d1bbf53391785e09c6fb ]
+[ Upstream commit 9156585280f161fc1c3552cf1860559edb2bb7e3 ]
 
-pxe1610_probe() writes PMBUS_PAGE to select page 0 but does not check
-the return value. If the write fails, subsequent register reads operate
-on an indeterminate page, leading to silent misconfiguration.
+EPROBE_DEFER ensures IOMMU devices are probed before the devices that
+depend on them. During shutdown, however, the IOMMU may be removed
+first, leading to issues. To avoid this, a device link is added
+which enforces the correct removal order.
 
-Check the return value and propagate the error using dev_err_probe(),
-which also handles -EPROBE_DEFER correctly without log spam.
-
-Fixes: 344757bac526 ("hwmon: (pmbus) Add Infineon PXE1610 VR driver")
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260329170925.34581-4-sanman.pradhan@hpe.com
-[groeck: Fix "Fixes" SHA]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 8f7729552582 ("ACPI: RISC-V: Add support for RIMT")
+Signed-off-by: Sunil V L <sunilvl@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260303061605.722949-1-sunilvl@oss.qualcomm.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pxe1610.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/acpi/riscv/rimt.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hwmon/pmbus/pxe1610.c b/drivers/hwmon/pmbus/pxe1610.c
-index 6a4a978eca7e8..24c1f961c7668 100644
---- a/drivers/hwmon/pmbus/pxe1610.c
-+++ b/drivers/hwmon/pmbus/pxe1610.c
-@@ -104,7 +104,10 @@ static int pxe1610_probe(struct i2c_client *client)
- 	 * By default this device doesn't boot to page 0, so set page 0
- 	 * to access all pmbus registers.
- 	 */
--	i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
-+	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
-+	if (ret < 0)
-+		return dev_err_probe(&client->dev, ret,
-+				     "Failed to set page 0\n");
+diff --git a/drivers/acpi/riscv/rimt.c b/drivers/acpi/riscv/rimt.c
+index 7f423405e5ef0..8eaa8731bddd6 100644
+--- a/drivers/acpi/riscv/rimt.c
++++ b/drivers/acpi/riscv/rimt.c
+@@ -263,6 +263,13 @@ static int rimt_iommu_xlate(struct device *dev, struct acpi_rimt_node *node, u32
+ 	if (!rimt_fwnode)
+ 		return -EPROBE_DEFER;
  
- 	/* Read Manufacturer id */
- 	ret = i2c_smbus_read_block_data(client, PMBUS_MFR_ID, buf);
++	/*
++	 * EPROBE_DEFER ensures IOMMU is probed before the devices that
++	 * depend on them. During shutdown, however, the IOMMU may be removed
++	 * first, leading to issues. To avoid this, a device link is added
++	 * which enforces the correct removal order.
++	 */
++	device_link_add(dev, rimt_fwnode->dev, DL_FLAG_AUTOREMOVE_CONSUMER);
+ 	return acpi_iommu_fwspec_init(dev, deviceid, rimt_fwnode);
+ }
+ 
 -- 
 2.53.0
 
