@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C35E3ACF11;
-	Wed,  8 Apr 2026 18:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5143D6694;
+	Wed,  8 Apr 2026 18:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672380; cv=none; b=MvKmc1yh0SX1TZdjEcDc1+3u9anVlc05lqzPhyOrHBZSPliyqlKZbvz1yDr+G3nP/YVUKK44EJUBr3Gz1Rvpza6p6uFygFaUOcvpzeFIP1MXtgrINIsKrIlIHiZ5+1N+3T4BtQ9i8LlCUZk+XqiJ377gxPpegPv81LKE7HaC1nQ=
+	t=1775672382; cv=none; b=YPKMLEGA3oiTHlELuB2bkA+rjJ07O4ZVIWScUOjIOMqMq+cfVVmEXzfwSP45NFk6hdjiPOR874YcLntNxwbc8ASMFjVIVtGDWyFlB1LDMHGPdE3Xl4BlmKsAn77eLIWrnB690Vjhutkuu60KusDkjEYLhscXi8ue7gQWBEUdTTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672380; c=relaxed/simple;
-	bh=fqzb25czcT2Mw8RBaMHYQqmOxIL+pYvoXTkJkZybWXU=;
+	s=arc-20240116; t=1775672382; c=relaxed/simple;
+	bh=FbfvpjzXhpKY2H5Ad2udY4sItoiRgKjoo4yU5Rea2HM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ufjeEVgeAZ9xGWnveUVdQJ6dhH4NYMc0kB4jk1uMxd8TnNX9CSo/qLvWSmuovw8d5Ck4ChibwpKyR1LNo1ImjUc0FP6bnVG9Q/TJ5kBKTNMLdoX7NrCFjQIalZ8mooH59oVL56QFWP+MzsinB4VHbsHJFpaXHQ3V9dP058as1uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2xsWX+Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hE/bxoLZwyS+iI6PDMDOADN4hT/S5HzU6VolL/zAoc+kq+ObdF9j5uYZD0PQLVioFEbdipdes5GXPkcIu5trnCQ9ogE94z4vAcx9qgCKh9m563lECw1+lGw9zKkcfXx3YDxkGG37hUK3WNCFGucSThfyUJ5iJ7rK7rRJMmDcxBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dtyxHDJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2xsWX+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85ACC19421;
-	Wed,  8 Apr 2026 18:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dtyxHDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60954C19421;
+	Wed,  8 Apr 2026 18:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672380;
-	bh=fqzb25czcT2Mw8RBaMHYQqmOxIL+pYvoXTkJkZybWXU=;
+	s=korg; t=1775672382;
+	bh=FbfvpjzXhpKY2H5Ad2udY4sItoiRgKjoo4yU5Rea2HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2xsWX+Q8QprsjVxihFfzjiu9rVVDpmHNb1ip7q5Kx8DxLEZqHZiyZJ5hZN1mqIm+
-	 iPHxyLLknSP4U3zmruIFxoHjunR9Q7cy5PrGSOJb1yq67gcVnwcL9AmIeZ8XeFewQy
-	 k4ZA+sQPDMYQmTO92pk6xIDkoClulbIYYyZn9bUs=
+	b=0dtyxHDJx19rJJSiAHTPhMbgHM6vhm2ysawuoafTq7op8mo46y0kcOPtvgEQylJuM
+	 nZjcJzqhNOZVukfGCWKEm4Sn+2dXnjKCYC98emv89sIxBW2lVXY3yNKCBAuUxyafcU
+	 rznN3Hn9MftywXyEdgzqxNk19jT/JhXlPLHsuEA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Ming Lei <ming.lei@redhat.com>,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Sasha Levin <sashal@kernel.org>,
-	Yi Zhang <yi.zhang@redhat.com>
-Subject: [PATCH 6.1 265/312] nvme: fix admin queue leak on controller reset
-Date: Wed,  8 Apr 2026 20:03:02 +0200
-Message-ID: <20260408175943.643904288@linuxfoundation.org>
+	Josh Law <objecting@objecting.org>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 266/312] mm/damon/sysfs: check contexts->nr before accessing contexts_arr[0]
+Date: Wed,  8 Apr 2026 20:03:03 +0200
+Message-ID: <20260408175943.681918013@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -54,71 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Josh Law <objecting@objecting.org>
 
-[ Upstream commit b84bb7bd913d8ca2f976ee6faf4a174f91c02b8d ]
+Multiple sysfs command paths dereference contexts_arr[0] without first
+verifying that kdamond->contexts->nr == 1.  A user can set nr_contexts to
+0 via sysfs while DAMON is running, causing NULL pointer dereferences.
 
-When nvme_alloc_admin_tag_set() is called during a controller reset,
-a previous admin queue may still exist. Release it properly before
-allocating a new one to avoid orphaning the old queue.
+In more detail, the issue can be triggered by privileged users like
+below.
 
-This fixes a regression introduced by commit 03b3bcd319b3 ("nvme: fix
-admin request_queue lifetime").
+First, start DAMON and make contexts directory empty
+(kdamond->contexts->nr == 0).
 
-[ Have to do analogous work in nvme_pci_alloc_admin_tag_set in pci.c due
-  to missing upstream commit 0da7feaa5913 ("nvme-pci: use the tagset
-  alloc/free helpers") ]
+    # damo start
+    # cd /sys/kernel/mm/damon/admin/kdamonds/0
+    # echo 0 > contexts/nr_contexts
 
-Cc: Keith Busch <kbusch@kernel.org>
-Fixes: 03b3bcd319b3 ("nvme: fix admin request_queue lifetime").
-Reported-and-tested-by: Yi Zhang <yi.zhang@redhat.com>
-Closes: https://lore.kernel.org/linux-block/CAHj4cs9wv3SdPo+N01Fw2SHBYDs9tj2M_e1-GdQOkRy=DsBB1w@mail.gmail.com/
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
-Tested-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Then, each of below commands will cause the NULL pointer dereference.
+
+    # echo update_schemes_stats > state
+    # echo update_schemes_tried_regions > state
+    # echo update_schemes_tried_bytes > state
+    # echo update_schemes_effective_quotas > state
+    # echo update_tuned_intervals > state
+
+Guard all commands (except OFF) at the entry point of
+damon_sysfs_handle_cmd().
+
+(cherry picked from commit 1bfe9fb5ed2667fb075682408b776b5273162615)
+
+Link: https://lkml.kernel.org/r/20260321175427.86000-3-sj@kernel.org
+Fixes: 0ac32b8affb5 ("mm/damon/sysfs: support DAMOS stats")
+Signed-off-by: Josh Law <objecting@objecting.org>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>	[5.18+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 7 +++++++
- drivers/nvme/host/pci.c  | 7 +++++++
- 2 files changed, 14 insertions(+)
+ mm/damon/sysfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index f17318f6c82b0..09439fa7d083a 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -5012,6 +5012,13 @@ int nvme_alloc_admin_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
- 	if (ret)
- 		return ret;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index a5a1e90e53e74..bdcf895a29a78 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2576,6 +2576,9 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
+ {
+ 	bool need_wait = true;
  
-+	/*
-+	 * If a previous admin queue exists (e.g., from before a reset),
-+	 * put it now before allocating a new one to avoid orphaning it.
-+	 */
-+	if (ctrl->admin_q)
-+		blk_put_queue(ctrl->admin_q);
++	if (cmd != DAMON_SYSFS_CMD_OFF && kdamond->contexts->nr != 1)
++		return -EINVAL;
 +
- 	ctrl->admin_q = blk_mq_init_queue(set);
- 	if (IS_ERR(ctrl->admin_q)) {
- 		ret = PTR_ERR(ctrl->admin_q);
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 2a74668739919..91f3ed726e700 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1805,6 +1805,13 @@ static int nvme_pci_alloc_admin_tag_set(struct nvme_dev *dev)
- 		return -ENOMEM;
- 	dev->ctrl.admin_tagset = set;
- 
-+	/*
-+	 * If a previous admin queue exists (e.g., from before a reset),
-+	 * put it now before allocating a new one to avoid orphaning it.
-+	 */
-+	if (dev->ctrl.admin_q)
-+		blk_put_queue(dev->ctrl.admin_q);
-+
- 	dev->ctrl.admin_q = blk_mq_init_queue(set);
- 	if (IS_ERR(dev->ctrl.admin_q)) {
- 		blk_mq_free_tag_set(set);
+ 	/* Handle commands that doesn't access DAMON context-internal data */
+ 	switch (cmd) {
+ 	case DAMON_SYSFS_CMD_ON:
 -- 
 2.53.0
 
