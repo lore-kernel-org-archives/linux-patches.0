@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7F7348477;
-	Wed,  8 Apr 2026 19:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C9A3DA5DD;
+	Wed,  8 Apr 2026 19:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674946; cv=none; b=Y0Hw/yS3dCI67ghDCu+l4GzT/dRWlO+Bmw4pSz4JbXxtUHt5HB7C4gdRL2n4NCt2MWtXbJ6eJTGYUo/V171k4iKM4KkK96dxhwkMymomFLpUBPLqSx4KScLJCwwm5ts9o7PRVff3GdFZ2SdQL/xBKNwQUakqt8EFlUNPVXlq+Jo=
+	t=1775674948; cv=none; b=JEf0XACIIBzYHLobdoLacS0snDBjeVn8OiTBekRVs7BIS7vaqxgBgjcc/qHV36MyW2V/sNDTBIkpZYk4VGJQ8Mzowfrt3XtpYnV6E2+cAQQ9rkvfEb4/yKqDa6LloVfFbL2RKlX75medYUS254KXBYQwY9EY8rQklQgEqyWCUjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674946; c=relaxed/simple;
-	bh=1QUusYiAuubIDkd40TcX3VFMf+lOfQJH4wgumGxDuEg=;
+	s=arc-20240116; t=1775674948; c=relaxed/simple;
+	bh=NLVYTfwiJkMldV8lSh7G3aSN4pGJh6T4zaJHgZeFiPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0lFmTlDInLSnJt+kYz5pFghBnCfJ6wNwlFV3yLhME+nk7AUxkWxGAU1P55lS7a+YXRuziW11bKUO51G0D1e8OjvuqfMcj81IwWhFL2GEvinsvygF6SKaIfLCbiC4kp3OAciq0DV/MSIoaKZggAtLhlglnME2VhbA8W9s+UCNCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klDuBFC2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MpWoGENI1etzClXKXEHwzu/uD/I0Hvp2KbwB8lhDtDVHG83bOw5Xq5r/4u+AtAnUIH/MDJOGlWBTE/gjw9edJ83eSvVYkq3Pgy3TsSp3qc5YSUzcmxWBFz4ddvtwATsfXMv+YCwEVcJMzcg22qneXw0FZ+VLgnxmFJQCrgcLVIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWSIF/sM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klDuBFC2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E81C19421;
-	Wed,  8 Apr 2026 19:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWSIF/sM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5994FC19425;
+	Wed,  8 Apr 2026 19:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674946;
-	bh=1QUusYiAuubIDkd40TcX3VFMf+lOfQJH4wgumGxDuEg=;
+	s=korg; t=1775674948;
+	bh=NLVYTfwiJkMldV8lSh7G3aSN4pGJh6T4zaJHgZeFiPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=klDuBFC2o7m1r0SPpT3hyxNRS6laTOG1HUtNfrNY4CrL7JrUHPQX4Z9wBtIitYPHQ
-	 p3F0JDkbalNod3SaKQ9d61nifR/hBiupO/Q0TAdm7w2kw4NBQVbilbQVMxNdPBjreX
-	 JRYbBgcUMfbpPNoECANszyoMT8Qrbbot+mnDpipU=
+	b=WWSIF/sM/sPK7dHXw+wTpmNlZbNgg/YaimsZ74OYjuoDborqdzeMUFiY6uJH/yiNK
+	 LBxvvNTwSvraUC/kt1Zweha53TfyAlXm2LpAIG8xLFVQZD+wujXXddEQJt3RbUn1Gp
+	 3L6a5RT7ouU018aWmed1WiVSoLNv59TDkqpTpNgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Garg <gargaditya08@live.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 295/311] HID: appletb-kbd: add .resume method in PM
-Date: Wed,  8 Apr 2026 20:04:55 +0200
-Message-ID: <20260408175950.390635184@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Kuen-Han Tsai <khtsai@google.com>
+Subject: [PATCH 6.19 296/311] usb: gadget: u_ether: Fix race between gether_disconnect and eth_stop
+Date: Wed,  8 Apr 2026 20:04:56 +0200
+Message-ID: <20260408175950.426746412@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,47 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Garg <gargaditya08@live.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-commit 1965445e13c09b79932ca8154977b4408cb9610c upstream.
+commit e1eabb072c75681f78312c484ccfffb7430f206e upstream.
 
-Upon resuming from suspend, the Touch Bar driver was missing a resume
-method in order to restore the original mode the Touch Bar was on before
-suspending. It is the same as the reset_resume method.
+A race condition between gether_disconnect() and eth_stop() leads to a
+NULL pointer dereference. Specifically, if eth_stop() is triggered
+concurrently while gether_disconnect() is tearing down the endpoints,
+eth_stop() attempts to access the cleared endpoint descriptor, causing
+the following NPE:
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  Unable to handle kernel NULL pointer dereference
+  Call trace:
+   __dwc3_gadget_ep_enable+0x60/0x788
+   dwc3_gadget_ep_enable+0x70/0xe4
+   usb_ep_enable+0x60/0x15c
+   eth_stop+0xb8/0x108
+
+Because eth_stop() crashes while holding the dev->lock, the thread
+running gether_disconnect() fails to acquire the same lock and spins
+forever, resulting in a hardlockup:
+
+  Core - Debugging Information for Hardlockup core(7)
+  Call trace:
+   queued_spin_lock_slowpath+0x94/0x488
+   _raw_spin_lock+0x64/0x6c
+   gether_disconnect+0x19c/0x1e8
+   ncm_set_alt+0x68/0x1a0
+   composite_setup+0x6a0/0xc50
+
+The root cause is that the clearing of dev->port_usb in
+gether_disconnect() is delayed until the end of the function.
+
+Move the clearing of dev->port_usb to the very beginning of
+gether_disconnect() while holding dev->lock. This cuts off the link
+immediately, ensuring eth_stop() will see dev->port_usb as NULL and
+safely bail out.
+
+Fixes: 2b3d942c4878 ("usb ethernet gadget: split out network core")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20260311-gether-disconnect-npe-v1-1-454966adf7c7@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-appletb-kbd.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/u_ether.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/hid-appletb-kbd.c b/drivers/hid/hid-appletb-kbd.c
-index b00687e67ce8e..0b10cff465e17 100644
---- a/drivers/hid/hid-appletb-kbd.c
-+++ b/drivers/hid/hid-appletb-kbd.c
-@@ -477,7 +477,7 @@ static int appletb_kbd_suspend(struct hid_device *hdev, pm_message_t msg)
- 	return 0;
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -1222,6 +1222,11 @@ void gether_disconnect(struct gether *li
+ 
+ 	DBG(dev, "%s\n", __func__);
+ 
++	spin_lock(&dev->lock);
++	dev->port_usb = NULL;
++	link->is_suspend = false;
++	spin_unlock(&dev->lock);
++
+ 	netif_stop_queue(dev->net);
+ 	netif_carrier_off(dev->net);
+ 
+@@ -1259,11 +1264,6 @@ void gether_disconnect(struct gether *li
+ 	dev->header_len = 0;
+ 	dev->unwrap = NULL;
+ 	dev->wrap = NULL;
+-
+-	spin_lock(&dev->lock);
+-	dev->port_usb = NULL;
+-	link->is_suspend = false;
+-	spin_unlock(&dev->lock);
  }
+ EXPORT_SYMBOL_GPL(gether_disconnect);
  
--static int appletb_kbd_reset_resume(struct hid_device *hdev)
-+static int appletb_kbd_resume(struct hid_device *hdev)
- {
- 	struct appletb_kbd *kbd = hid_get_drvdata(hdev);
- 
-@@ -503,7 +503,8 @@ static struct hid_driver appletb_kbd_hid_driver = {
- 	.input_configured = appletb_kbd_input_configured,
- #ifdef CONFIG_PM
- 	.suspend = appletb_kbd_suspend,
--	.reset_resume = appletb_kbd_reset_resume,
-+	.resume = appletb_kbd_resume,
-+	.reset_resume = appletb_kbd_resume,
- #endif
- 	.driver.dev_groups = appletb_kbd_groups,
- };
--- 
-2.53.0
-
 
 
