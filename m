@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C212F39C2;
-	Wed,  8 Apr 2026 18:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33ADF348453;
+	Wed,  8 Apr 2026 18:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674636; cv=none; b=PpXD+toPEvivJNKOmcKOaStm3A6SxlTkMuaCviSljgBzN/UVEl+p8pk+pZu2JVas4hdvunZyG580lFWvYCFzE0dWFJzR+mZqLqmcAk24SEywkoqsty6j95LIJ1LwMc1eKdIzME6vGQ6H9XUAMHqVrdFBOMM/sDib8Ctg2ugxdtA=
+	t=1775674639; cv=none; b=kh8hZnC9e6V9yIRHGzTB+B6ISCtTsESAOH2xTg3Tt2f/r8HvFyYcBR/B9dkOHYo1UV1rXGh71I4SuTFk0/slVbG5NQj0Tx99vEhJN1tnabuLf9lSPivbnzSLglcg2pRKlNXMDK5RiGUDp01nT6h7MljbNa32mizfHtnEvaxdu0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674636; c=relaxed/simple;
-	bh=XoISXFmUisSabrRvjDyTHy0QWhkdcwKiFL5JnhZaU2M=;
+	s=arc-20240116; t=1775674639; c=relaxed/simple;
+	bh=kvHFAqsmunY9+BT1J5cve/WwtqGe+ptjKJrovhHLIXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BiAb3GsDSZH4vQt0pBc8/5EAyEdF5APnPNlAXIGmgPmJk1j71dOmW2OIbo5094dffUPg/l4EvL86vy9rL+TjBpIUyeu1yEz8BG94x4/Nl99ZmuNnXye6FHjcEtnQSs088w1fmMnTqMkrmIy1XzqVZ/5/2jArFttWSEivj3KqcAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBDJKy9c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tItutc+zGhv3Wd4CV2rRRerh0Mg3ZIKdJwe8ZJcdDn+vM6aZMCQLe7gVuw+pT+Y/bURoF+D8MpYhSKtEUjEcatn3m5DlI+9TzTl/AQjmTNlzmnxyZDFEdV5ErDYN32Z1lI8Ueb3RI9BFHoU4OPOS8ZM6kdystylcSv3ve+r3xd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0opUh8v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBDJKy9c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0BAC19421;
-	Wed,  8 Apr 2026 18:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0opUh8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978F8C2BC87;
+	Wed,  8 Apr 2026 18:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674636;
-	bh=XoISXFmUisSabrRvjDyTHy0QWhkdcwKiFL5JnhZaU2M=;
+	s=korg; t=1775674638;
+	bh=kvHFAqsmunY9+BT1J5cve/WwtqGe+ptjKJrovhHLIXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cBDJKy9cJp6Zon3Gv8QOB2wddktmyeBX5CrNWceaIBDFL7fPj3jNapBB+CSXn6nLx
-	 I9B0hWx6kSba1M/cGv5n0MgN7zvrzjxMot9PgVollM5hKL+52Y8Fmbvjum57FJO301
-	 RZaQig7pettGY10CAgW1oV+jAKIiPkUW35XM1/8s=
+	b=F0opUh8vM2lI62Y5zn0s5qWf71Pxzar4M6dKH6O9QH1zXx7Md8/KiN3HhHTU0K1d+
+	 nzOsNOLvntiDVQ0LVUyGXrsw9OG1vKvHOXlXlWGQg6DQKRep3Gij3Vb+IAgpuyRZty
+	 VLVRaZiskj7nYDGsqeBUxiPWYaflBdopqWDS18tI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Gibbons <jamie.gibbons@microchip.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 141/311] dt-bindings: gpio: fix microchip #interrupt-cells
-Date: Wed,  8 Apr 2026 20:02:21 +0200
-Message-ID: <20260408175944.680401859@linuxfoundation.org>
+Subject: [PATCH 6.19 142/311] spi: stm32-ospi: Fix resource leak in remove() callback
+Date: Wed,  8 Apr 2026 20:02:22 +0200
+Message-ID: <20260408175944.716432657@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,45 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamie Gibbons <jamie.gibbons@microchip.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 6b5ef8c88854b343b733b574ea8754c9dab61f41 ]
+[ Upstream commit 73cd1f97946ae3796544448ff12c07f399bb2881 ]
 
-The GPIO controller on PolarFire SoC supports more than one type of
-interrupt and needs two interrupt cells.
+The remove() callback returned early if pm_runtime_resume_and_get()
+failed, skipping the cleanup of spi controller and other resources.
 
-Fixes: 735806d8a68e9 ("dt-bindings: gpio: add bindings for microchip mpfs gpio")
-Signed-off-by: Jamie Gibbons <jamie.gibbons@microchip.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://patch.msgid.link/20260326-wise-gumdrop-49217723a72a@spud
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Remove the early return so cleanup completes regardless of PM resume
+result.
+
+Fixes: 79b8a705e26c ("spi: stm32: Add OSPI driver")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Link: https://patch.msgid.link/20260329-ospi-v1-1-cc8cf1c82c4a@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/gpio/microchip,mpfs-gpio.yaml         | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-stm32-ospi.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml b/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml
-index 184432d24ea18..f42c54653d521 100644
---- a/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml
-+++ b/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml
-@@ -37,7 +37,7 @@ properties:
-     const: 2
+diff --git a/drivers/spi/spi-stm32-ospi.c b/drivers/spi/spi-stm32-ospi.c
+index f36fd36da2692..5fa27de89210a 100644
+--- a/drivers/spi/spi-stm32-ospi.c
++++ b/drivers/spi/spi-stm32-ospi.c
+@@ -963,11 +963,8 @@ static int stm32_ospi_probe(struct platform_device *pdev)
+ static void stm32_ospi_remove(struct platform_device *pdev)
+ {
+ 	struct stm32_ospi *ospi = platform_get_drvdata(pdev);
+-	int ret;
  
-   "#interrupt-cells":
--    const: 1
-+    const: 2
+-	ret = pm_runtime_resume_and_get(ospi->dev);
+-	if (ret < 0)
+-		return;
++	pm_runtime_resume_and_get(ospi->dev);
  
-   ngpios:
-     description:
-@@ -86,7 +86,7 @@ examples:
-         gpio-controller;
-         #gpio-cells = <2>;
-         interrupt-controller;
--        #interrupt-cells = <1>;
-+        #interrupt-cells = <2>;
-         interrupts = <53>, <53>, <53>, <53>,
-                      <53>, <53>, <53>, <53>,
-                      <53>, <53>, <53>, <53>,
+ 	spi_unregister_controller(ospi->ctrl);
+ 	/* Disable ospi */
 -- 
 2.53.0
 
