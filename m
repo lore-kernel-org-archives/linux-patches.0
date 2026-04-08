@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA4B3176E4;
-	Wed,  8 Apr 2026 18:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904F33D522C;
+	Wed,  8 Apr 2026 18:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674590; cv=none; b=tdeoe7YvycNupG/hRyaSFIc+w4k9kmIf36iK/1C4nydmbynadE7d4VK7hF1F6a3t+SYAfZbN4Do4AgaXRcG0anU4jFOIhZhJzcEnLHwtfJRmpHHW8ox58cFJmZHYLWkOpmCimeWWcGg/+l3A51mufT1fpBHjVghEgkcTphSIBAQ=
+	t=1775674592; cv=none; b=k7lFMOKNEUw7ChwUGnwY/NpQLlB4oTHXGITsBWLaerTQB9TCl5QosSd5V51vnQ3UUCbOhWfTySj8AcDYJ5WndpjV1aFJ0BnjhpKDefiKgAzjeAsH6/LJtd13KUEW/DPEKZiMQBSocls/nezXn2sQyLqJ3HhThDrHZ+M/KdFHLAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674590; c=relaxed/simple;
-	bh=hSvLg6pm9MbsoMqL/vTRxpAemWso7iewI89VsCFlFDA=;
+	s=arc-20240116; t=1775674592; c=relaxed/simple;
+	bh=xSMhfAPyXw2PdtMgF8dlwxLFdl1Qp/k43ipim1nG3sA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozL7m+91p2ZX39NPVNewES3oU0pONKhmEL6ryoQe1gGD+BZ1czwu30LX4DMyD85s7t469G7bAIrCgo8Yhx60e6LKVDU8uM8nbMXFFistAmWiKB8/Voo7n/4POdhBzJ1xBLT3dCknpiDOXaBfz3ZplDT/N9eRtxAqwiITR+9oDhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIDYQlhL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hQ3WDMgQ5Zkso+2Jgu32fHjAL46pHLttsyItErUfyNUfrMjI2pOGxCckNCCiGIfAXPpIkzph2Jpznycash3R8fjxr3Qc9U18d4kG8NWzBrj0W2jG1sWofcnT8+uhrCbRy+Q4pyB/oYfDpRnHySv0omtjBo6Z/DbgfylmjRSYv5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbvwfpmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIDYQlhL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD5FC19421;
-	Wed,  8 Apr 2026 18:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbvwfpmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A29C19421;
+	Wed,  8 Apr 2026 18:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674589;
-	bh=hSvLg6pm9MbsoMqL/vTRxpAemWso7iewI89VsCFlFDA=;
+	s=korg; t=1775674592;
+	bh=xSMhfAPyXw2PdtMgF8dlwxLFdl1Qp/k43ipim1nG3sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIDYQlhLtwGAD/+RPDqcyRIiuh2EXqYJp65wd+V5MUNqFK22yP4MiyY26JHaR0dpx
-	 xkrWPztHfJLGVReXj8mpwkq6knv1vKoky1Ed4MTp5oNT+Tnh0AQSa7MHcKhua45TtV
-	 SuTxRpN1/nrubOnt8JX1h36r6ixpqvg9gZtrSgQo=
+	b=zbvwfpmPbVd8LfNDKtg6lb23WRn1U0tNMsz94sdi1iSofvQRviZBbUcQVoQBmqRd0
+	 L1fYCLZ7zdwI9xjJa0o8G6+hDg8GVrHJkEoEjYHSJ53rfV2R/cWr3iif97b5PlxzPe
+	 KK3Sqq4syY3slVGH7/wr8cICJFjX9mQau6lBpCa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
+	Ian Rogers <irogers@google.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Thomas Falcon <thomas.falcon@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 156/311] sched/debug: Fix avg_vruntime() usage
-Date: Wed,  8 Apr 2026 20:02:36 +0200
-Message-ID: <20260408175945.231659867@linuxfoundation.org>
+Subject: [PATCH 6.19 157/311] perf/x86: Fix potential bad container_of in intel_pmu_hw_config
+Date: Wed,  8 Apr 2026 20:02:37 +0200
+Message-ID: <20260408175945.268422821@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -53,61 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit e08d007f9d813616ce7093600bc4fdb9c9d81d89 ]
+[ Upstream commit dbde07f06226438cd2cf1179745fa1bec5d8914a ]
 
-John reported that stress-ng-yield could make his machine unhappy and
-managed to bisect it to commit b3d99f43c72b ("sched/fair: Fix
-zero_vruntime tracking").
+Auto counter reload may have a group of events with software events
+present within it. The software event PMU isn't the x86_hybrid_pmu and
+a container_of operation in intel_pmu_set_acr_caused_constr (via the
+hybrid helper) could cause out of bound memory reads. Avoid this by
+guarding the call to intel_pmu_set_acr_caused_constr with an
+is_x86_event check.
 
-The commit in question changes avg_vruntime() from a function that is
-a pure reader, to a function that updates variables. This turns an
-unlocked sched/debug usage of this function from a minor mistake into
-a data corruptor.
-
-Fixes: af4cf40470c2 ("sched/fair: Add cfs_rq::avg_vruntime")
-Fixes: b3d99f43c72b ("sched/fair: Fix zero_vruntime tracking")
-Reported-by: John Stultz <jstultz@google.com>
+Fixes: ec980e4facef ("perf/x86/intel: Support auto counter reload")
+Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/20260401132355.196370805@infradead.org
+Reviewed-by: Thomas Falcon <thomas.falcon@intel.com>
+Link: https://patch.msgid.link/20260312194305.1834035-1-irogers@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/debug.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/events/intel/core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/debug.c b/kernel/sched/debug.c
-index 93f009e1076d8..3504ec9bd7307 100644
---- a/kernel/sched/debug.c
-+++ b/kernel/sched/debug.c
-@@ -798,6 +798,7 @@ static void print_rq(struct seq_file *m, struct rq *rq, int rq_cpu)
- void print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
- {
- 	s64 left_vruntime = -1, zero_vruntime, right_vruntime = -1, left_deadline = -1, spread;
-+	u64 avruntime;
- 	struct sched_entity *last, *first, *root;
- 	struct rq *rq = cpu_rq(cpu);
- 	unsigned long flags;
-@@ -821,6 +822,7 @@ void print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
- 	if (last)
- 		right_vruntime = last->vruntime;
- 	zero_vruntime = cfs_rq->zero_vruntime;
-+	avruntime = avg_vruntime(cfs_rq);
- 	raw_spin_rq_unlock_irqrestore(rq, flags);
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index 20f078ceb51da..bebaac1dbaeb3 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -4594,8 +4594,10 @@ static int intel_pmu_hw_config(struct perf_event *event)
+ 		intel_pmu_set_acr_caused_constr(leader, idx++, cause_mask);
  
- 	SEQ_printf(m, "  .%-30s: %Ld.%06ld\n", "left_deadline",
-@@ -830,7 +832,7 @@ void print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
- 	SEQ_printf(m, "  .%-30s: %Ld.%06ld\n", "zero_vruntime",
- 			SPLIT_NS(zero_vruntime));
- 	SEQ_printf(m, "  .%-30s: %Ld.%06ld\n", "avg_vruntime",
--			SPLIT_NS(avg_vruntime(cfs_rq)));
-+			SPLIT_NS(avruntime));
- 	SEQ_printf(m, "  .%-30s: %Ld.%06ld\n", "right_vruntime",
- 			SPLIT_NS(right_vruntime));
- 	spread = right_vruntime - left_vruntime;
+ 		if (leader->nr_siblings) {
+-			for_each_sibling_event(sibling, leader)
+-				intel_pmu_set_acr_caused_constr(sibling, idx++, cause_mask);
++			for_each_sibling_event(sibling, leader) {
++				if (is_x86_event(sibling))
++					intel_pmu_set_acr_caused_constr(sibling, idx++, cause_mask);
++			}
+ 		}
+ 
+ 		if (leader != event)
 -- 
 2.53.0
 
