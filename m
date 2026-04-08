@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8BE3AA4E4;
-	Wed,  8 Apr 2026 18:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF55C3A16A0;
+	Wed,  8 Apr 2026 18:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672667; cv=none; b=PupQIxz52kSC9beFC9T+mtYV81AMKN9BVs/fESnmIOAJQQ/nWwLb8oDs+zriQBkZ0rIjVu5Mb8pUOKNmHLhNffSBl9XKC5r1eYyAAM1KFxOPMR+puo62ztmgU60RZJscv/M4ZqnS0XB7DGjkwZj1TceG2+cWzzP8kznKATAxo5M=
+	t=1775672669; cv=none; b=Ht+i04M3RC16aTFTZUBEyHgf0XJ6vVgjJu+PR35u+bBMSppz9UMb/zwOZp/Ub2mmZhc0I7+43XhHYLtkCb+MHwv/YdPZeB4vlMWggDCOJQ4EX929w5nP63YZkmeIxnhdSFzluz2BmJq60eWg7usVnS+4K4uEnohXm8hKsOcbiUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672667; c=relaxed/simple;
-	bh=y9rQP4lfbzYu2DfDxAqBrgsHr5VtMrCVHkSutrDOnq8=;
+	s=arc-20240116; t=1775672669; c=relaxed/simple;
+	bh=I8ZWbEf6g9Wu1mBIZ/jW1xYpZ8TRyJOspUWW4WSq7Nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOcnoo1bq13yepLPTj3xP/vti9MYm3bH3lAVIHKDjFTWS2fQHxIRyrO1CWI+gyfd3v6RCVrnxqdvYRLnEDLGpL4DjDzKSow5AQSaT3QngHaRTnkC99o0r2YwrSvhTDE5llAvFiEDA6ZcA97Q827UM//STfZHypa7rzFKTCUAgNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiTFEPtD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j4EUZ+R3BRftR9MOBpG/B2LReTj/ktXfhjeXp0b6INOs53qJS3ryZsXXMSBgChlqONd4M9j/1MVpmV3tv51CPdmvZUXzDJTDCLu/swR8lWV9SUVUKPAypj9qPZuwR8M83cBVLdmb0c1cxIoSNuPtV8Kbzu0JXXwUlc9jDoyZeEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTWqxFaa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiTFEPtD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9570C19421;
-	Wed,  8 Apr 2026 18:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTWqxFaa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B72C19421;
+	Wed,  8 Apr 2026 18:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672667;
-	bh=y9rQP4lfbzYu2DfDxAqBrgsHr5VtMrCVHkSutrDOnq8=;
+	s=korg; t=1775672669;
+	bh=I8ZWbEf6g9Wu1mBIZ/jW1xYpZ8TRyJOspUWW4WSq7Nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QiTFEPtDWiXCT0ecWQ2G3wEJM6xyDTaVI23gLyv8ir0+Cdn6A9++BkDHqGEaMQFkM
-	 JXHK1ksqV96Q5bsloKL052KO/dxvttqA24viaaSmpw+tXcDobX++85zIT26IWhj2id
-	 8MRdEwE5LCtAcbYk5QTujnVl15UImaXlQyr9fOSE=
+	b=mTWqxFaagLsViZjETvYEJGa7dQVTAVYChjzh1s9sq0ZpjWOKznggj/NRE9k+BJtFK
+	 KlYogXyrf1cCw3xPNhWy/aeDgvh8ZdDbT0AUxyZxiy+B7+2d/nLhVLLpWKhR5OPf+B
+	 s8FOjYFFPTuDO0MR6UMDUNjqS0SI7FZbj4hgLSgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zoltan Illes <zoliviragh@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 094/160] Input: xpad - add support for Razer Wolverine V3 Pro
-Date: Wed,  8 Apr 2026 20:03:01 +0200
-Message-ID: <20260408175916.701169610@linuxfoundation.org>
+	Valek Andrej <andrej.v@skyrain.eu>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 095/160] iio: accel: fix ADXL355 temperature signature value
+Date: Wed,  8 Apr 2026 20:03:02 +0200
+Message-ID: <20260408175916.737140489@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -50,36 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zoltan Illes <zoliviragh@gmail.com>
+From: Valek Andrej <andrej.v@skyrain.eu>
 
-commit e2b0ae529db4766584e77647cefe3ec15c3d842e upstream.
+commit 4f51e6c0baae80e52bd013092e82a55678be31fc upstream.
 
-Add device IDs for the Razer Wolverine V3 Pro controller in both
-wired (0x0a57) and wireless 2.4 GHz dongle (0x0a59) modes.
+Temperature was wrongly represented as 12-bit signed, confirmed by checking
+the datasheet. Even if the temperature is negative, the value in the
+register stays unsigned.
 
-The controller uses the Xbox 360 protocol (vendor-specific class,
-subclass 93, protocol 1) on interface 0 with an identical 20-byte
-input report layout, so no additional processing is needed.
-
-Signed-off-by: Zoltan Illes <zoliviragh@gmail.com>
-Link: https://patch.msgid.link/20260329220031.1325509-1-137647604+ZlordHUN@users.noreply.github.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 12ed27863ea3 iio: accel: Add driver support for ADXL355
+Signed-off-by: Valek Andrej <andrej.v@skyrain.eu>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/accel/adxl355_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -307,6 +307,8 @@ static const struct xpad_device {
- 	{ 0x1532, 0x0a00, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x1532, 0x0a03, "Razer Wildcat", 0, XTYPE_XBOXONE },
- 	{ 0x1532, 0x0a29, "Razer Wolverine V2", 0, XTYPE_XBOXONE },
-+	{ 0x1532, 0x0a57, "Razer Wolverine V3 Pro (Wired)", 0, XTYPE_XBOX360 },
-+	{ 0x1532, 0x0a59, "Razer Wolverine V3 Pro (2.4 GHz Dongle)", 0, XTYPE_XBOX360 },
- 	{ 0x15e4, 0x3f00, "Power A Mini Pro Elite", 0, XTYPE_XBOX360 },
- 	{ 0x15e4, 0x3f0a, "Xbox Airflo wired controller", 0, XTYPE_XBOX360 },
- 	{ 0x15e4, 0x3f10, "Batarang Xbox 360 controller", 0, XTYPE_XBOX360 },
+--- a/drivers/iio/accel/adxl355_core.c
++++ b/drivers/iio/accel/adxl355_core.c
+@@ -745,7 +745,7 @@ static const struct iio_chan_spec adxl35
+ 				      BIT(IIO_CHAN_INFO_OFFSET),
+ 		.scan_index = 3,
+ 		.scan_type = {
+-			.sign = 's',
++			.sign = 'u',
+ 			.realbits = 12,
+ 			.storagebits = 16,
+ 			.endianness = IIO_BE,
 
 
