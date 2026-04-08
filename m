@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F8D2F39C2;
-	Wed,  8 Apr 2026 18:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FE63AEF5F;
+	Wed,  8 Apr 2026 18:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674685; cv=none; b=XnPz7WkKq2n60Rgr3oBkotD9eGqfUmuxmlt6EAW76JOMwlZoTUo7AsZDd/hdDp7kXmgq6CpYHlg05jOJ29xjdg9YYcefgHgDlWo9Y0MAXafkFdp1zdVA3J6GF/q5hGiqWSrRzlAKuA/JTLN62TSl4JY8qLielI5X28hiXSM7ROc=
+	t=1775674687; cv=none; b=PaxXXFYOt5vGexEwEYEeAEvE8ePwPUC8kb7cVXjFyi5J6+8RHGLR8PMJXXbUV6u5FdF6j0bdZscJgRqlmT+KHVgTvwOYtHXqKJALgghQaFYyJ076z840OHsss1zG6o8skU42wPxdz+ni/0WGyFnGceyD+0irrNxjPuE7F4nZ6u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674685; c=relaxed/simple;
-	bh=rdWtrNeBJOjnAQ1Ji753oJ9cwinxWGPuK6reTRXUtbU=;
+	s=arc-20240116; t=1775674687; c=relaxed/simple;
+	bh=sOoVPgd+mchd4nx78plcc3dwCroF0WyP0bQ+apwm1Uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ppK5vmFbhx3dWjlDwG9Yq7DeRyDML+9bsUB3myUnGR7ag+0aB4lpbYoB9qqBf773LNoV1aN7W3904U3pVUzBrOpuYqUlYac0qWlZvf0ttiFNFmIp6HV9RMZiOkT6khZQyCKwZWen63sMzRxWTyhwXyGVEYuxa5uLcP+JT6KIjZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNUl/agj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tSojZ5GopXhLu+nQENblc+TjeKR7Xj9yDNy/toVe5j9reeukDyXqmgjMiK4CzgzSDNbJhWe3nW6GHBm6+seI2O52gSxs3TjoqKaVJzL0NZsBDpH2keRRI2LpIwNA4H5iAlOhjXNqckqDE4BP2gJ0uaQhCWPAk8LfGzde6vcVZqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXNfapQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNUl/agj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA94FC19421;
-	Wed,  8 Apr 2026 18:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXNfapQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C922C19421;
+	Wed,  8 Apr 2026 18:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674685;
-	bh=rdWtrNeBJOjnAQ1Ji753oJ9cwinxWGPuK6reTRXUtbU=;
+	s=korg; t=1775674687;
+	bh=sOoVPgd+mchd4nx78plcc3dwCroF0WyP0bQ+apwm1Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNUl/agj77RrnTGlwQeFgKLUtzZxeFwcL3BgrcYfJJjw/4jiqfMG+Zf2SdQnwc8eP
-	 043txPY71buKxYBxDs6GeYjQpSzrU54tkclXm727/gLjvVMy320xy42wpgqadoPyPf
-	 gzTobdxQ0iPWx0hHs2LGQOTZbNDpy+/+jvvporio=
+	b=bXNfapQ/abQ+B55KIDM6zEYFSBCMJOjG0J4vfYOPmxY7GDYDcRf0YfoBQ1WucBjZC
+	 6+ExFXCbfrpcOW2gxIEy4ve/3hR0N0ei/YSfWDI8O7uImVA085jJsR0+IR5TBJoxj/
+	 7ahuQ/rQjr+cpPRhoRkvjO4u31mCAC0PWTnIZ+CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
 	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 193/311] iio: orientation: hid-sensor-rotation: add timestamp hack to not break userspace
-Date: Wed,  8 Apr 2026 20:03:13 +0200
-Message-ID: <20260408175946.617137115@linuxfoundation.org>
+Subject: [PATCH 6.19 194/311] iio: adc: ti-adc161s626: fix buffer read on big-endian
+Date: Wed,  8 Apr 2026 20:03:14 +0200
+Message-ID: <20260408175946.655472480@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -47,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
@@ -56,74 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 From: David Lechner <dlechner@baylibre.com>
 
-commit 79a86a6cc3669416a21fef32d0767d39ba84b3aa upstream.
+commit 24869650dff34a6fc8fd1cc91b2058a72f9abc95 upstream.
 
-Add a hack to push two timestamps in the hid-sensor-rotation scan data
-to avoid breaking userspace applications that depend on the timestamp
-being at the incorrect location in the scan data due to unintentional
-misalignment in older kernels.
+Rework ti_adc_trigger_handler() to properly handle data on big-endian
+architectures. The scan data format is 16-bit CPU-endian, so we can't
+cast it to a int * on big-endian and expect it to work. Instead, we
+introduce a local int variable to read the data into, and then copy it
+to the buffer.
 
-When this driver was written, the timestamp was in the correct location
-because of the way iio_compute_scan_bytes() was implemented at the time.
-(Samples were 24 bytes each.) Then commit 883f61653069 ("iio: buffer:
-align the size of scan bytes to size of the largest element") changed
-the computed scan_bytes to be a different size (32 bytes), which caused
-iio_push_to_buffers_with_timestamp() to place the timestamp at an
-incorrect offset.
+Since the buffer isn't passed to any SPI functions, we don't need it to
+be DMA-safe. So we can drop it from the driver data struct and just
+use stack memory for the scan data.
 
-There have been long periods of time (6 years each) where the timestamp
-was in either location, so to not break either case, we open-code the
-timestamps to be pushed to both locations in the scan data.
+Since there is only one data value (plus timestamp), we don't need an
+array and can just declare a struct with the correct data type instead.
 
-Reported-by: Jonathan Cameron <jic23@kernel.org>
-Closes: https://lore.kernel.org/linux-iio/20260215162351.79f40b32@jic23-huawei/
-Fixes: 883f61653069 ("iio: buffer: align the size of scan bytes to size of the largest element")
+Also fix alignment of iio_get_time_ns() to ( while we are touching this.
+
+Fixes: 4d671b71beef ("iio: adc: ti-adc161s626: add support for TI 1-channel differential ADCs")
 Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/orientation/hid-sensor-rotation.c |   22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ drivers/iio/adc/ti-adc161s626.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/drivers/iio/orientation/hid-sensor-rotation.c
-+++ b/drivers/iio/orientation/hid-sensor-rotation.c
-@@ -20,7 +20,12 @@ struct dev_rot_state {
- 	struct hid_sensor_hub_attribute_info quaternion;
- 	struct {
- 		IIO_DECLARE_QUATERNION(s32, sampled_vals);
--		aligned_s64 timestamp;
-+		/*
-+		 * ABI regression avoidance: There are two copies of the same
-+		 * timestamp in case of userspace depending on broken alignment
-+		 * from older kernels.
-+		 */
-+		aligned_s64 timestamp[2];
- 	} scan;
- 	int scale_pre_decml;
- 	int scale_post_decml;
-@@ -154,8 +159,19 @@ static int dev_rot_proc_event(struct hid
- 		if (!rot_state->timestamp)
- 			rot_state->timestamp = iio_get_time_ns(indio_dev);
+--- a/drivers/iio/adc/ti-adc161s626.c
++++ b/drivers/iio/adc/ti-adc161s626.c
+@@ -70,8 +70,6 @@ struct ti_adc_data {
  
--		iio_push_to_buffers_with_timestamp(indio_dev, &rot_state->scan,
--						   rot_state->timestamp);
-+		/*
-+		 * ABI regression avoidance: IIO previously had an incorrect
-+		 * implementation of iio_push_to_buffers_with_timestamp() that
-+		 * put the timestamp in the last 8 bytes of the buffer, which
-+		 * was incorrect according to the IIO ABI. To avoid breaking
-+		 * userspace that may be depending on this broken behavior, we
-+		 * put the timestamp in both the correct place [0] and the old
-+		 * incorrect place [1].
-+		 */
-+		rot_state->scan.timestamp[0] = rot_state->timestamp;
-+		rot_state->scan.timestamp[1] = rot_state->timestamp;
+ 	u8 read_size;
+ 	u8 shift;
+-
+-	u8 buffer[16] __aligned(IIO_DMA_MINALIGN);
+ };
+ 
+ static int ti_adc_read_measurement(struct ti_adc_data *data,
+@@ -114,15 +112,20 @@ static irqreturn_t ti_adc_trigger_handle
+ 	struct iio_poll_func *pf = private;
+ 	struct iio_dev *indio_dev = pf->indio_dev;
+ 	struct ti_adc_data *data = iio_priv(indio_dev);
+-	int ret;
++	struct {
++		s16 data;
++		aligned_s64 timestamp;
++	} scan = { };
++	int ret, val;
 +
-+		iio_push_to_buffers(indio_dev, &rot_state->scan);
++	ret = ti_adc_read_measurement(data, &indio_dev->channels[0], &val);
++	if (ret)
++		goto exit_notify_done;
  
- 		rot_state->timestamp = 0;
- 	}
+-	ret = ti_adc_read_measurement(data, &indio_dev->channels[0],
+-				     (int *) &data->buffer);
+-	if (!ret)
+-		iio_push_to_buffers_with_timestamp(indio_dev,
+-					data->buffer,
+-					iio_get_time_ns(indio_dev));
++	scan.data = val;
++	iio_push_to_buffers_with_timestamp(indio_dev, &scan, iio_get_time_ns(indio_dev));
+ 
++ exit_notify_done:
+ 	iio_trigger_notify_done(indio_dev->trig);
+ 
+ 	return IRQ_HANDLED;
 
 
