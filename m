@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719F93D75C9;
-	Wed,  8 Apr 2026 18:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF693D9025;
+	Wed,  8 Apr 2026 18:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673722; cv=none; b=e+wue6vEixjs3I0c1jLdJ9XPm0VZCcEN0BtESdOwttBcgUXiMefL5BMOSog92+skBnzmCZFaWaSj5nmt2QfMH3HydTyBNA3eZjvCiK/pWV37hb77kupdY0cIJdencrfVEzQk1o/BHepJXqzM8MpVjj/nWPQTxO58fZASYyOaLvg=
+	t=1775673725; cv=none; b=ETlWtdysAu0F1svC77c5+JV0dKw4aiRLFUtLYpOHutzFm6LHAxJIziKnoqeqr4cVm1RHWSzpCCZpT+hC/4E4Q3TYNdN2z6WKL6OsasSR9M/yBaQjfwhPCUDTj3Nw4k1lEhtYoeH41KK7ViMb2u61bQ1p1iLy4b4BOq2Ax2t5/i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673722; c=relaxed/simple;
-	bh=j71PcQxG+HxTzda9oy2CO6jiRKmCJZBxLIaU2NlgKXs=;
+	s=arc-20240116; t=1775673725; c=relaxed/simple;
+	bh=ZDRQlG8FvU+U/l/MSbQVold6YziuSPJoDbD0hMwFeWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSRI3uKsgra+g029pfOPIhZvUhVWEMIrJwPAIidldalx57Gmjt1DLleSSSm/tIN9fd4OPSs1sL+gJjb+zVtRXfFel1fAxs13HuPZ6/UR8TUjSzRuhLkI46/DRmWEkBZVCPJt2OPwG1uscAyCqYz89e7VppZ1J3VdRstY+KgSWJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+jaVR4/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=skw0BLoep6msW2dmCjAsHNw3NTJSgiSuvBBF2bgZa1EfzMUazkzR6j6Nb/a3Fg7s5M0rGUijxSOB0nUbsMBlteqC+QgI41zsD6v29AuD3RPC4N0tsRA9doAF0BACroy8kP6HtxjY6SFOlDyiV0XGVmS4V/sNid9WWvqN4H1Wyco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMVRTap5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+jaVR4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05558C19421;
-	Wed,  8 Apr 2026 18:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMVRTap5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D06C19421;
+	Wed,  8 Apr 2026 18:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673722;
-	bh=j71PcQxG+HxTzda9oy2CO6jiRKmCJZBxLIaU2NlgKXs=;
+	s=korg; t=1775673724;
+	bh=ZDRQlG8FvU+U/l/MSbQVold6YziuSPJoDbD0hMwFeWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+jaVR4/ksEaDpHDXDhLbNan3BLAGn4i72ZiEiL1VYYFlYvnfaObmwRpEgm/sIMV+
-	 pZsgfgZatL2XTUza5Dwyuo5r0HiIHjTRPiepEFF5qsPXRax9QUpZNtY4dfme4GHaHl
-	 OYNWLwM86ciOuJhGkkPyPz1Dq4RE+I2md7BxOk2k=
+	b=kMVRTap5kNqlA78517pAid9YlBp4W/qPesymPplZ/tGfrI7+asmDYXYw3kajGB777
+	 ndOEdZ9brWn5W9S6nz6aAcl9mqasYAsDXrA8ZpwKse2r/4q3fRbNE2zPLogvZ1C0ts
+	 8L9IWVnp07c2fZiGPRtA4jLlf0upxgGkDVkZ8lrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/242] i2c: tegra: Dont mark devices with pins as IRQ safe
-Date: Wed,  8 Apr 2026 20:01:17 +0200
-Message-ID: <20260408175928.461847831@linuxfoundation.org>
+Subject: [PATCH 6.12 064/242] net: xilinx: axienet: Correct BD length masks to match AXIDMA IP spec
+Date: Wed,  8 Apr 2026 20:01:44 +0200
+Message-ID: <20260408175929.477079729@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,56 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Suraj Gupta <suraj.gupta2@amd.com>
 
-[ Upstream commit ec69c9e88315c4be70c283f18c2ff130da6320b5 ]
+[ Upstream commit 393e0b4f178ec7fce1141dacc3304e3607a92ee9 ]
 
-I2C devices with associated pinctrl states (DPAUX I2C controllers)
-will change pinctrl state during runtime PM. This requires taking
-a mutex, so these devices cannot be marked as IRQ safe.
+The XAXIDMA_BD_CTRL_LENGTH_MASK and XAXIDMA_BD_STS_ACTUAL_LEN_MASK
+macros were defined as 0x007FFFFF (23 bits), but the AXI DMA IP
+product guide (PG021) specifies the buffer length field as bits 25:0
+(26 bits). Update both masks to match the IP documentation.
 
-Add PINCTRL as dependency to avoid build errors.
+In practice this had no functional impact, since Ethernet frames are
+far smaller than 2^23 bytes and the extra bits were always zero, but
+the masks should still reflect the hardware specification.
 
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Reported-by: Russell King <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/all/E1vsNBv-00000009nfA-27ZK@rmk-PC.armlinux.org.uk/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
+Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://patch.msgid.link/20260327073238.134948-2-suraj.gupta2@amd.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/Kconfig     | 2 ++
- drivers/i2c/busses/i2c-tegra.c | 5 ++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index 0e679cc501488..b0185c09660b2 100644
---- a/drivers/i2c/busses/Kconfig
-+++ b/drivers/i2c/busses/Kconfig
-@@ -1177,6 +1177,8 @@ config I2C_TEGRA
- 	tristate "NVIDIA Tegra internal I2C controller"
- 	depends on ARCH_TEGRA || (COMPILE_TEST && (ARC || ARM || ARM64 || M68K || RISCV || SUPERH || SPARC))
- 	# COMPILE_TEST needs architectures with readsX()/writesX() primitives
-+	depends on PINCTRL
-+	# ARCH_TEGRA implies PINCTRL, but the COMPILE_TEST side doesn't.
- 	help
- 	  If you say yes to this option, support will be included for the
- 	  I2C controller embedded in NVIDIA Tegra SOCs
-diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index fbab82d457fb0..c57a2af5ea8cc 100644
---- a/drivers/i2c/busses/i2c-tegra.c
-+++ b/drivers/i2c/busses/i2c-tegra.c
-@@ -1786,8 +1786,11 @@ static int tegra_i2c_probe(struct platform_device *pdev)
- 	 *
- 	 * VI I2C device shouldn't be marked as IRQ-safe because VI I2C won't
- 	 * be used for atomic transfers. ACPI device is not IRQ safe also.
-+	 *
-+	 * Devices with pinctrl states cannot be marked IRQ-safe as the pinctrl
-+	 * state transitions during runtime PM require mutexes.
- 	 */
--	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev))
-+	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev) && !i2c_dev->dev->pins)
- 		pm_runtime_irq_safe(i2c_dev->dev);
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
+index d64b8abcf0186..cbdca0fb89454 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
+@@ -104,7 +104,7 @@
+ #define XAXIDMA_BD_HAS_DRE_MASK		0xF00 /* Whether has DRE mask */
+ #define XAXIDMA_BD_WORDLEN_MASK		0xFF /* Whether has DRE mask */
  
- 	pm_runtime_enable(i2c_dev->dev);
+-#define XAXIDMA_BD_CTRL_LENGTH_MASK	0x007FFFFF /* Requested len */
++#define XAXIDMA_BD_CTRL_LENGTH_MASK	GENMASK(25, 0) /* Requested len */
+ #define XAXIDMA_BD_CTRL_TXSOF_MASK	0x08000000 /* First tx packet */
+ #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
+ #define XAXIDMA_BD_CTRL_ALL_MASK	0x0C000000 /* All control bits */
+@@ -130,7 +130,7 @@
+ #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
+ #define XAXIDMA_BD_CTRL_ALL_MASK	0x0C000000 /* All control bits */
+ 
+-#define XAXIDMA_BD_STS_ACTUAL_LEN_MASK	0x007FFFFF /* Actual len */
++#define XAXIDMA_BD_STS_ACTUAL_LEN_MASK	GENMASK(25, 0) /* Actual len */
+ #define XAXIDMA_BD_STS_COMPLETE_MASK	0x80000000 /* Completed */
+ #define XAXIDMA_BD_STS_DEC_ERR_MASK	0x40000000 /* Decode error */
+ #define XAXIDMA_BD_STS_SLV_ERR_MASK	0x20000000 /* Slave error */
 -- 
 2.53.0
 
