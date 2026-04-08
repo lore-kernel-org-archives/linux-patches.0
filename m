@@ -1,36 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288343ACA41;
-	Wed,  8 Apr 2026 18:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA1A3537FC;
+	Wed,  8 Apr 2026 18:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672237; cv=none; b=Fi6WPVXvIfbixN56Iv9/ZFtkHmJU1FRjPjFhcDOt5k1D1fWB54xI0Eqn7DziDp/Xd4i5eo2PZJBZAgvrfpDNJPz/y0IurmZctLz+V6Fz+mpRqBmV4pGGQLqcmrpf8iKt+pwy6qu3EYTOxuLPsoGhEndgBX+tdAiQWJSHvW7Wv+s=
+	t=1775672240; cv=none; b=D0RGnKPIFvS/MNhCpUazUcAkKFq5ffX0I+9wXMDLI/O7UrL7TqAeeQwVN03HjnmUveOLFTbZx18HVC976saQLl0eV7dRojqUnlITVoUVOL1Ya+jTLKulYR1V3yDnwkP1zih46ojlRspnljk5p+UQXHgsGXHg2NBb/yJZ/jCrTDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672237; c=relaxed/simple;
-	bh=sBQtVjr/Zc3NFJzw44J7Q9b92yqCgMwJNxErx6CBaME=;
+	s=arc-20240116; t=1775672240; c=relaxed/simple;
+	bh=QqOdRA/WrZ6KCjs7eOCp9KkKVM9ief5PNAWgY0CvSmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PPDUmbpANHFM0a6iEvUJnlFudg8WCjHxZPi/ns4JtacbdxOtSahcOJG3P4ricQdAnJnYsa/mI5qrZUgpfzKwbH9FZ5aC9jXipsnu5MTFf/HXVjxoAKCnrrs4O0HoF/H/yrco6zuh+fxxIX2sCauDgdVFLbxqlGXd0oawDfGfcGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlzFu66K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQm8abJSFkxT7fq5FvU4K3nn+JMjvf/a4ap48iGb1vCLI6tfxAGhmPbqfWztqpPZx8o0NYLhdfNY/TckeIg1kKM8JAhSwKo1h2/B3E0AI4wp5bRVAy/cvS2Fc6Y43FvN57z0TKcajn2t/OOvbq5ighkV8Sp7j2KKsEjaOpf837s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFtSfNU4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlzFu66K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D87C19421;
-	Wed,  8 Apr 2026 18:17:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFtSfNU4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BABC19421;
+	Wed,  8 Apr 2026 18:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672237;
-	bh=sBQtVjr/Zc3NFJzw44J7Q9b92yqCgMwJNxErx6CBaME=;
+	s=korg; t=1775672239;
+	bh=QqOdRA/WrZ6KCjs7eOCp9KkKVM9ief5PNAWgY0CvSmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xlzFu66KoA0Refmur79nt5/c6nGB+3B0gAgw+rO4sUPeKsK5dtLKekeFp9aQU9BxE
-	 Hp+Ggox/VlJR5dDCNFyI4Q8WxkBNwrRGI0ffvU7YAeZjn70nHLYtzmOVsbojYs/6rh
-	 UQD2EOQWqMzA2TVgGzjhtCNeckJ+cMKeE8lV5O2k=
+	b=QFtSfNU4V5V/z0VxWtfpx70gohrx+nliYVaXiXxrT3kCwcV0orwDj5RQRYR3f8LNF
+	 bJssbP9WRG5ejoSitylRAKJ1H9HGoQAhE6ZHhnmmX8WTxV98rQ8QGOBie+nycVIXil
+	 QzIv0I7I16VfhpVGDsfsg985f26AVKqLY78Wn7ZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 243/312] Revert "ext4: make ext4_es_remove_extent() return void"
-Date: Wed,  8 Apr 2026 20:02:40 +0200
-Message-ID: <20260408175942.825223567@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 244/312] bridge: br_nd_send: validate ND option lengths
+Date: Wed,  8 Apr 2026 20:02:41 +0200
+Message-ID: <20260408175942.862033831@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -49,186 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit bfe24a48c1d56b046052014534bde1680fadb9dc.
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 850837965af15707fd3142c1cf3c5bfaf022299b upstream.
+
+br_nd_send() walks ND options according to option-provided lengths.
+A malformed option can make the parser advance beyond the computed
+option span or use a too-short source LLADDR option payload.
+
+Validate option lengths against the remaining NS option area before
+advancing, and only read source LLADDR when the option is large enough
+for an Ethernet address.
+
+Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
+Cc: stable@vger.kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
+Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260326034441.2037420-3-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c        | 34 ++++++++++++++++++++++++++++------
- fs/ext4/extents_status.c | 12 ++++++------
- fs/ext4/extents_status.h |  4 ++--
- fs/ext4/inline.c         | 12 ++++++++++--
- fs/ext4/inode.c          |  8 ++++++--
- 5 files changed, 52 insertions(+), 18 deletions(-)
+ net/bridge/br_arp_nd_proxy.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index af4cae13685d7..1df7174774694 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4463,8 +4463,15 @@ int ext4_ext_truncate(handle_t *handle, struct inode *inode)
- 
- 	last_block = (inode->i_size + sb->s_blocksize - 1)
- 			>> EXT4_BLOCK_SIZE_BITS(sb);
--	ext4_es_remove_extent(inode, last_block, EXT_MAX_BLOCKS - last_block);
--
-+retry:
-+	err = ext4_es_remove_extent(inode, last_block,
-+				    EXT_MAX_BLOCKS - last_block);
-+	if (err == -ENOMEM) {
-+		memalloc_retry_wait(GFP_ATOMIC);
-+		goto retry;
-+	}
-+	if (err)
-+		return err;
- retry_remove_space:
- 	err = ext4_ext_remove_space(inode, last_block, EXT_MAX_BLOCKS - 1);
- 	if (err == -ENOMEM) {
-@@ -5412,7 +5419,13 @@ static int ext4_collapse_range(struct file *file, loff_t offset, loff_t len)
- 
- 	down_write(&EXT4_I(inode)->i_data_sem);
- 	ext4_discard_preallocations(inode, 0);
--	ext4_es_remove_extent(inode, punch_start, EXT_MAX_BLOCKS - punch_start);
-+
-+	ret = ext4_es_remove_extent(inode, punch_start,
-+				    EXT_MAX_BLOCKS - punch_start);
-+	if (ret) {
-+		up_write(&EXT4_I(inode)->i_data_sem);
-+		goto out_stop;
-+	}
- 
- 	ret = ext4_ext_remove_space(inode, punch_start, punch_stop - 1);
- 	if (ret) {
-@@ -5598,7 +5611,12 @@ static int ext4_insert_range(struct file *file, loff_t offset, loff_t len)
- 		ext4_free_ext_path(path);
+--- a/net/bridge/br_arp_nd_proxy.c
++++ b/net/bridge/br_arp_nd_proxy.c
+@@ -285,12 +285,14 @@ static void br_nd_send(struct net_bridge
+ 	ns_olen = request->len - (skb_network_offset(request) +
+ 				  sizeof(struct ipv6hdr)) - sizeof(*ns);
+ 	for (i = 0; i < ns_olen - 1; i += (ns->opt[i + 1] << 3)) {
+-		if (!ns->opt[i + 1]) {
++		if (!ns->opt[i + 1] || i + (ns->opt[i + 1] << 3) > ns_olen) {
+ 			kfree_skb(reply);
+ 			return;
+ 		}
+ 		if (ns->opt[i] == ND_OPT_SOURCE_LL_ADDR) {
+-			daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
++			if ((ns->opt[i + 1] << 3) >=
++			    sizeof(struct nd_opt_hdr) + ETH_ALEN)
++				daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
+ 			break;
+ 		}
  	}
- 
--	ext4_es_remove_extent(inode, offset_lblk, EXT_MAX_BLOCKS - offset_lblk);
-+	ret = ext4_es_remove_extent(inode, offset_lblk,
-+			EXT_MAX_BLOCKS - offset_lblk);
-+	if (ret) {
-+		up_write(&EXT4_I(inode)->i_data_sem);
-+		goto out_stop;
-+	}
- 
- 	/*
- 	 * if offset_lblk lies in a hole which is at start of file, use
-@@ -5657,8 +5675,12 @@ ext4_swap_extents(handle_t *handle, struct inode *inode1,
- 	BUG_ON(!inode_is_locked(inode1));
- 	BUG_ON(!inode_is_locked(inode2));
- 
--	ext4_es_remove_extent(inode1, lblk1, count);
--	ext4_es_remove_extent(inode2, lblk2, count);
-+	*erp = ext4_es_remove_extent(inode1, lblk1, count);
-+	if (unlikely(*erp))
-+		return 0;
-+	*erp = ext4_es_remove_extent(inode2, lblk2, count);
-+	if (unlikely(*erp))
-+		return 0;
- 
- 	while (count) {
- 		struct ext4_extent *ex1, *ex2, tmp_ex;
-diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
-index 862a8308cd9b0..592229027af72 100644
---- a/fs/ext4/extents_status.c
-+++ b/fs/ext4/extents_status.c
-@@ -1494,10 +1494,10 @@ static int __es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
-  * @len - number of blocks to remove
-  *
-  * Reduces block/cluster reservation count and for bigalloc cancels pending
-- * reservations as needed.
-+ * reservations as needed. Returns 0 on success, error code on failure.
-  */
--void ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
--			   ext4_lblk_t len)
-+int ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
-+			  ext4_lblk_t len)
- {
- 	ext4_lblk_t end;
- 	int err = 0;
-@@ -1505,14 +1505,14 @@ void ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
- 	struct extent_status *es = NULL;
- 
- 	if (EXT4_SB(inode->i_sb)->s_mount_state & EXT4_FC_REPLAY)
--		return;
-+		return 0;
- 
- 	trace_ext4_es_remove_extent(inode, lblk, len);
- 	es_debug("remove [%u/%u) from extent status tree of inode %lu\n",
- 		 lblk, len, inode->i_ino);
- 
- 	if (!len)
--		return;
-+		return err;
- 
- 	end = lblk + len - 1;
- 	BUG_ON(end < lblk);
-@@ -1539,7 +1539,7 @@ void ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
- 
- 	ext4_es_print_tree(inode);
- 	ext4_da_release_space(inode, reserved);
--	return;
-+	return 0;
- }
- 
- static int __es_shrink(struct ext4_sb_info *sbi, int nr_to_scan,
-diff --git a/fs/ext4/extents_status.h b/fs/ext4/extents_status.h
-index 1d1247bbfd477..481ec4381bee6 100644
---- a/fs/ext4/extents_status.h
-+++ b/fs/ext4/extents_status.h
-@@ -133,8 +133,8 @@ extern void ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
- extern void ext4_es_cache_extent(struct inode *inode, ext4_lblk_t lblk,
- 				 ext4_lblk_t len, ext4_fsblk_t pblk,
- 				 unsigned int status);
--extern void ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
--				  ext4_lblk_t len);
-+extern int ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
-+				 ext4_lblk_t len);
- extern void ext4_es_find_extent_range(struct inode *inode,
- 				      int (*match_fn)(struct extent_status *es),
- 				      ext4_lblk_t lblk, ext4_lblk_t end,
-diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
-index c15ea7589945f..a1fb99d2b472b 100644
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -2004,8 +2004,16 @@ int ext4_inline_data_truncate(struct inode *inode, int *has_inline)
- 		 * the extent status cache must be cleared to avoid leaving
- 		 * behind stale delayed allocated extent entries
- 		 */
--		if (!ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
--			ext4_es_remove_extent(inode, 0, EXT_MAX_BLOCKS);
-+		if (!ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)) {
-+retry:
-+			err = ext4_es_remove_extent(inode, 0, EXT_MAX_BLOCKS);
-+			if (err == -ENOMEM) {
-+				memalloc_retry_wait(GFP_ATOMIC);
-+				goto retry;
-+			}
-+			if (err)
-+				goto out_error;
-+		}
- 
- 		/* Clear the content in the xattr space. */
- 		if (inline_size > EXT4_MIN_INLINE_DATA_SIZE) {
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index bd66dec36da7b..3dd867b6ad657 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4134,8 +4134,12 @@ int ext4_punch_hole(struct file *file, loff_t offset, loff_t length)
- 		down_write(&EXT4_I(inode)->i_data_sem);
- 		ext4_discard_preallocations(inode, 0);
- 
--		ext4_es_remove_extent(inode, first_block,
--				      stop_block - first_block);
-+		ret = ext4_es_remove_extent(inode, first_block,
-+					    stop_block - first_block);
-+		if (ret) {
-+			up_write(&EXT4_I(inode)->i_data_sem);
-+			goto out_stop;
-+		}
- 
- 		if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
- 			ret = ext4_ext_remove_space(inode, first_block,
--- 
-2.53.0
-
 
 
