@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A0F37C10F;
-	Wed,  8 Apr 2026 18:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C183537FC;
+	Wed,  8 Apr 2026 18:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672364; cv=none; b=bTHeSvJFHpfAmj3AgHKDDRqs6uDuyDIuepplQDSai6zsV2+ksaxr9g4Q4Bnt82hqX6ztkbjIeTi8jTZvuSHH9IuJow5tfuYI+w60ew3mEznGTH109VgPqNW4LB743atrQBKCTmUS2ZZkgT9W4ZPbhLoof6oeiMYfifdx1y6QaYA=
+	t=1775672367; cv=none; b=jtm0zfAn4mZRF4IRvTDIMGqGtDWgGIPR21e+ojEMqE/xjemF7zMNKrWrKg4387LNWISmZySFKMa0+1j785gc2AJNp5oyc4/+PMFZyxnA/vvhdFrFDaoIPhqO/NMnMNQtHFEk8m9sflXj7guZ0JgCIrlM//UmBQRkDGB7QALZ8S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672364; c=relaxed/simple;
-	bh=UAh5s5+PECeEez7s3ugWePX7yiLCvyAhXLHHhSrasK0=;
+	s=arc-20240116; t=1775672367; c=relaxed/simple;
+	bh=nNBxK1L2Gr58Gf/+nQZ9vdroVaPZp/nV/zy94MGPXB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YqTiTyFMTa90FvsUfcDKFJOC9+WTxlAIYFz13yqPxU6guKF4x9BLq7XD4wwD3+pJaMLJ/qm2/LmnTan1YdXkHQ9RcekgReNlti4Dy39Bl0t4vpNNW2mj9CgbmaVTogWxYJLypO/5PLM/NXTiyzS4jUmvU1nv3sld0F3/G8qKFnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPJG6FAw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTX65HRqR6iQD4hi2Th3k2rknkc6IjCc7SLzfsbk7LSQb9jYcquSXCeZh3Gc6dteuL2PuqnTGwjZ4Jiyj3xbUdu6f7axLT2mkTepFouiHtq75x5q5UWMUQV567kiJm5xDeHgkKDpQL5GX7Cg6R6WL9mvEepfRUm1oCLss+4e+6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTvYyx5e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPJG6FAw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EB9C19421;
-	Wed,  8 Apr 2026 18:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTvYyx5e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC599C19421;
+	Wed,  8 Apr 2026 18:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672364;
-	bh=UAh5s5+PECeEez7s3ugWePX7yiLCvyAhXLHHhSrasK0=;
+	s=korg; t=1775672367;
+	bh=nNBxK1L2Gr58Gf/+nQZ9vdroVaPZp/nV/zy94MGPXB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPJG6FAwXu7oiOhOPbvOwrYjIjSf6yOUDRU4e9cwB5/PQwLxCSk4/FQzoboLj34iW
-	 Ket9ELvwwN9vgObAXrJ4hXMyy0i0Lm1axaSR/8XgSr22bF1+gO7y7lPrZ2/Ux18Gq0
-	 rnZW2+aNQBODOXpBmiaWD/U43+3eK+UMg6AFfSYM=
+	b=ZTvYyx5egwIEVzD3s11nsrZyRzrWyTfOfcD9XfcNUk3B7T45fnX4igIEZYYAlkRUq
+	 fbitp7/sIstZGxerx9mEAr+iLrzLrqS88Y73wu3F+H/P4Q9/xT50WozsY/Jz4sRpPr
+	 1wIwPqtyyg4q4H49Eb/PGGw3AFCntQdenDBuCb7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Casey Chen <cachen@purestorage.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 264/312] nvme: fix admin request_queue lifetime
-Date: Wed,  8 Apr 2026 20:03:01 +0200
-Message-ID: <20260408175943.606958905@linuxfoundation.org>
+	Li Xiasong <lixiasong1@huawei.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 291/312] MPTCP: fix lock class name family in pm_nl_create_listen_socket
+Date: Wed,  8 Apr 2026 20:03:28 +0200
+Message-ID: <20260408175944.631521363@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -57,117 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-[ Upstream commit 03b3bcd319b3ab5182bc9aaa0421351572c78ac0]
+commit 7ab4a7c5d969642782b8a5b608da0dd02aa9f229 upstream.
 
-The namespaces can access the controller's admin request_queue, and
-stale references on the namespaces may exist after tearing down the
-controller. Ensure the admin request_queue is active by moving the
-controller's 'put' to after all controller references have been released
-to ensure no one is can access the request_queue. This fixes a reported
-use-after-free bug:
+In mptcp_pm_nl_create_listen_socket(), use entry->addr.family
+instead of sk->sk_family for lock class setup. The 'sk' parameter
+is a netlink socket, not the MPTCP subflow socket being created.
 
-  BUG: KASAN: slab-use-after-free in blk_queue_enter+0x41c/0x4a0
-  Read of size 8 at addr ffff88c0a53819f8 by task nvme/3287
-  CPU: 67 UID: 0 PID: 3287 Comm: nvme Tainted: G            E       6.13.2-ga1582f1a031e #15
-  Tainted: [E]=UNSIGNED_MODULE
-  Hardware name: Jabil /EGS 2S MB1, BIOS 1.00 06/18/2025
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4f/0x60
-   print_report+0xc4/0x620
-   ? _raw_spin_lock_irqsave+0x70/0xb0
-   ? _raw_read_unlock_irqrestore+0x30/0x30
-   ? blk_queue_enter+0x41c/0x4a0
-   kasan_report+0xab/0xe0
-   ? blk_queue_enter+0x41c/0x4a0
-   blk_queue_enter+0x41c/0x4a0
-   ? __irq_work_queue_local+0x75/0x1d0
-   ? blk_queue_start_drain+0x70/0x70
-   ? irq_work_queue+0x18/0x20
-   ? vprintk_emit.part.0+0x1cc/0x350
-   ? wake_up_klogd_work_func+0x60/0x60
-   blk_mq_alloc_request+0x2b7/0x6b0
-   ? __blk_mq_alloc_requests+0x1060/0x1060
-   ? __switch_to+0x5b7/0x1060
-   nvme_submit_user_cmd+0xa9/0x330
-   nvme_user_cmd.isra.0+0x240/0x3f0
-   ? force_sigsegv+0xe0/0xe0
-   ? nvme_user_cmd64+0x400/0x400
-   ? vfs_fileattr_set+0x9b0/0x9b0
-   ? cgroup_update_frozen_flag+0x24/0x1c0
-   ? cgroup_leave_frozen+0x204/0x330
-   ? nvme_ioctl+0x7c/0x2c0
-   blkdev_ioctl+0x1a8/0x4d0
-   ? blkdev_common_ioctl+0x1930/0x1930
-   ? fdget+0x54/0x380
-   __x64_sys_ioctl+0x129/0x190
-   do_syscall_64+0x5b/0x160
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  RIP: 0033:0x7f765f703b0b
-  Code: ff ff ff 85 c0 79 9b 49 c7 c4 ff ff ff ff 5b 5d 4c 89 e0 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d dd 52 0f 00 f7 d8 64 89 01 48
-  RSP: 002b:00007ffe2cefe808 EFLAGS: 00000202 ORIG_RAX: 0000000000000010
-  RAX: ffffffffffffffda RBX: 00007ffe2cefe860 RCX: 00007f765f703b0b
-  RDX: 00007ffe2cefe860 RSI: 00000000c0484e41 RDI: 0000000000000003
-  RBP: 0000000000000000 R08: 0000000000000003 R09: 0000000000000000
-  R10: 00007f765f611d50 R11: 0000000000000202 R12: 0000000000000003
-  R13: 00000000c0484e41 R14: 0000000000000001 R15: 00007ffe2cefea60
-   </TASK>
-
-[ Because we're missing commit 0da7feaa5913 ("nvme-pci: use the tagset
-  alloc/free helpers") we need to additionally remove the blk_put_queue
-  from nvme_dev_remove_admin in pci.c to properly fix the UAF ]
-
-Reported-by: Casey Chen <cachen@purestorage.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
-Tested-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: cee4034a3db1 ("mptcp: fix lockdep false positive in mptcp_pm_nl_create_listen_socket()")
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260319112159.3118874-1-lixiasong1@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflict in pm_kernel.c, because commit 8617e85e04bd ("mptcp: pm:
+  split in-kernel PM specific code") is not in this version, and moves
+  code from pm_netlink.c to pm_kernel.c. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c | 3 ++-
- drivers/nvme/host/pci.c  | 1 -
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/mptcp/pm_netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 044e1a9c099b3..f17318f6c82b0 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -5043,7 +5043,6 @@ EXPORT_SYMBOL_GPL(nvme_alloc_admin_tag_set);
- void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl)
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1184,7 +1184,7 @@ static struct lock_class_key mptcp_keys[
+ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+ 					    struct mptcp_pm_addr_entry *entry)
  {
- 	blk_mq_destroy_queue(ctrl->admin_q);
--	blk_put_queue(ctrl->admin_q);
- 	if (ctrl->ops->flags & NVME_F_FABRICS) {
- 		blk_mq_destroy_queue(ctrl->fabrics_q);
- 		blk_put_queue(ctrl->fabrics_q);
-@@ -5186,6 +5185,8 @@ static void nvme_free_ctrl(struct device *dev)
- 		container_of(dev, struct nvme_ctrl, ctrl_device);
- 	struct nvme_subsystem *subsys = ctrl->subsys;
- 
-+	if (ctrl->admin_q)
-+		blk_put_queue(ctrl->admin_q);
- 	if (!subsys || ctrl->instance != subsys->instance)
- 		ida_free(&nvme_instance_ida, ctrl->instance);
- 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 8adce45f666c8..2a74668739919 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1783,7 +1783,6 @@ static void nvme_dev_remove_admin(struct nvme_dev *dev)
- 		 */
- 		nvme_start_admin_queue(&dev->ctrl);
- 		blk_mq_destroy_queue(dev->ctrl.admin_q);
--		blk_put_queue(dev->ctrl.admin_q);
- 		blk_mq_free_tag_set(&dev->admin_tagset);
- 	}
- }
--- 
-2.53.0
-
+-	bool is_ipv6 = sk->sk_family == AF_INET6;
++	bool is_ipv6 = entry->addr.family == AF_INET6;
+ 	int addrlen = sizeof(struct sockaddr_in);
+ 	struct sockaddr_storage addr;
+ 	struct socket *ssock;
 
 
