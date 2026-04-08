@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A1732A3FD;
-	Wed,  8 Apr 2026 18:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAA032A3FD;
+	Wed,  8 Apr 2026 18:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673702; cv=none; b=E8a+g13D7f9XNPz7++90appKQ/zdldc9idT6xlzT3LCbmqIDQpBVZS1XM8R2YCFSm21+FS2QaKcE0WUjJlxXzRZjT+0BYv9F8TBrxmt3ogPiT01kSYWf3NnhS2kyjaaVxYAIGR4Yt2EzKu51bRIzQMDCZIjnJvEzolGfYGO/77E=
+	t=1775673704; cv=none; b=elESvMZPe48yMgcY+wkMjlVebQ92S6QJl2HI6aewth+8abtpIbrUcP4JA/Z8wCaRdL9fN9KzaAjtBVzYnKiD5L61v7IxqNerkGsBGALxnRAd25UZbgxwPxCpz7FrmOrIApK4jLWjfW1n69+ZJGYPEJnpx55ecDg3ogCNChNFgOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673702; c=relaxed/simple;
-	bh=UXqbeUKFOTNhVU7iD9BQ62evjbtMScdPj9pnXD5Et+E=;
+	s=arc-20240116; t=1775673704; c=relaxed/simple;
+	bh=1lIqqPjOsgMXSLAhZ05COjpAU6QVhIZvFKanq9lv0iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nwzlgpnKH+Q3udRHnEXApzjU62r/pSaSDPMlE5VFoNQrDxbte46fVgrSTOhOC1VT5+v0qjI5YNqEgpHU0ibvFfgfuw/OjrGliXhDGiyJQGyaZxCTtbNJhPwkvjboWJvfm0SzKMKDQ76wftsZQqTmNnb4fZw96CYwjmf7op1rMoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iggNEXE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iV42eY6h9WpULRi2m6OidFMbDmnLgAl31HYqLP2r2boCmM4nXp2QMWQjnw6ittq+7t5jVZbAZqSphU45WdSXwfLG8Ft5YLI9JyvdX3j9ji1eod5GIdQro+0KXiQVz6xyjhQivh5XFHpTaxBvFSycy/ublwVwpw6KElnCe1nEmoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaX5cijp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iggNEXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C97C2BCB2;
-	Wed,  8 Apr 2026 18:41:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaX5cijp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1056AC19421;
+	Wed,  8 Apr 2026 18:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673701;
-	bh=UXqbeUKFOTNhVU7iD9BQ62evjbtMScdPj9pnXD5Et+E=;
+	s=korg; t=1775673704;
+	bh=1lIqqPjOsgMXSLAhZ05COjpAU6QVhIZvFKanq9lv0iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2iggNEXEOUaYlExiYXwwVoAS8PJEZOrWOrjQ0LfSq5JPOnZsFcd3AXhcVj9fq7Fcs
-	 m7Rt/6hmYlQ9sDFSiKT44Dg/ozrP7ZH3+rCJK1/zQabF3x2IIZKXFm6nA7cWSuti96
-	 WfOU5zzuEvjmBfXnWgp8yqHwK/2J03ovn5JM0oeM=
+	b=LaX5cijpSYh1I6l3dGpPlau3RJfMM6B97NS2KRiZ2i16TPnMagdv2Gdfk3u+WWabv
+	 lROWEOLBxQUuve0ckF/jYneP144bWRqE40neVFauUmpBYe1I695fLCqmIyatd14lc9
+	 3+LQ5Vjfxy3d7gq4p975l+CVm4Xizj8RfZOvUckU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/242] net: enetc: check whether the RSS algorithm is Toeplitz
-Date: Wed,  8 Apr 2026 20:01:36 +0200
-Message-ID: <20260408175929.174690672@linuxfoundation.org>
+Subject: [PATCH 6.12 057/242] ASoC: ep93xx: Fix unchecked clk_prepare_enable() and add rollback on failure
+Date: Wed,  8 Apr 2026 20:01:37 +0200
+Message-ID: <20260408175929.213291404@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -47,46 +45,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 
-[ Upstream commit d389954a6cae7bf76b7b082ac3511d177b77ef2d ]
+[ Upstream commit 622363757b2286dd2c2984b0d80255cbb35a0495 ]
 
-Both ENETC v1 and v4 only provide Toeplitz RSS support. This patch adds
-a validation check to reject attempts to configure other RSS algorithms,
-avoiding misleading configuration options for users.
+ep93xx_i2s_enable() calls clk_prepare_enable() on three clocks in
+sequence (mclk, sclk, lrclk) without checking the return value of any
+of them. If an intermediate enable fails, the clocks that were already
+enabled are never rolled back, leaking them until the next disable cycle
+— which may never come if the stream never started cleanly.
 
-Fixes: d382563f541b ("enetc: Add RFS and RSS support")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Clark Wang <xiaoning.wang@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Link: https://patch.msgid.link/20260326075233.3628047-2-wei.fang@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Change ep93xx_i2s_enable() from void to int. Add error checking after
+each clk_prepare_enable() call and unwind already-enabled clocks on
+failure. Propagate the error through ep93xx_i2s_startup() and
+ep93xx_i2s_resume(), both of which already return int.
+
+Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+Fixes: f4ff6b56bc8a ("ASoC: cirrus: i2s: Prepare clock before using it")
+Link: https://patch.msgid.link/20260324210909.45494-1-jihed.chaibi.dev@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_ethtool.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/cirrus/ep93xx-i2s.c | 34 ++++++++++++++++++++++++----------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-index 7ec6e4a54b8ec..0aac39e2acab1 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-@@ -731,6 +731,10 @@ static int enetc_set_rxfh(struct net_device *ndev,
- 	struct enetc_hw *hw = &priv->si->hw;
- 	int err = 0;
+diff --git a/sound/soc/cirrus/ep93xx-i2s.c b/sound/soc/cirrus/ep93xx-i2s.c
+index cca01c03f0486..5dba741594fab 100644
+--- a/sound/soc/cirrus/ep93xx-i2s.c
++++ b/sound/soc/cirrus/ep93xx-i2s.c
+@@ -91,16 +91,28 @@ static inline unsigned ep93xx_i2s_read_reg(struct ep93xx_i2s_info *info,
+ 	return __raw_readl(info->regs + reg);
+ }
  
-+	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
-+	    rxfh->hfunc != ETH_RSS_HASH_TOP)
-+		return -EOPNOTSUPP;
+-static void ep93xx_i2s_enable(struct ep93xx_i2s_info *info, int stream)
++static int ep93xx_i2s_enable(struct ep93xx_i2s_info *info, int stream)
+ {
+ 	unsigned base_reg;
++	int err;
+ 
+ 	if ((ep93xx_i2s_read_reg(info, EP93XX_I2S_TX0EN) & 0x1) == 0 &&
+ 	    (ep93xx_i2s_read_reg(info, EP93XX_I2S_RX0EN) & 0x1) == 0) {
+ 		/* Enable clocks */
+-		clk_prepare_enable(info->mclk);
+-		clk_prepare_enable(info->sclk);
+-		clk_prepare_enable(info->lrclk);
++		err = clk_prepare_enable(info->mclk);
++		if (err)
++			return err;
++		err = clk_prepare_enable(info->sclk);
++		if (err) {
++			clk_disable_unprepare(info->mclk);
++			return err;
++		}
++		err = clk_prepare_enable(info->lrclk);
++		if (err) {
++			clk_disable_unprepare(info->sclk);
++			clk_disable_unprepare(info->mclk);
++			return err;
++		}
+ 
+ 		/* Enable i2s */
+ 		ep93xx_i2s_write_reg(info, EP93XX_I2S_GLCTRL, 1);
+@@ -119,6 +131,8 @@ static void ep93xx_i2s_enable(struct ep93xx_i2s_info *info, int stream)
+ 		ep93xx_i2s_write_reg(info, EP93XX_I2S_TXCTRL,
+ 				     EP93XX_I2S_TXCTRL_TXEMPTY_LVL |
+ 				     EP93XX_I2S_TXCTRL_TXUFIE);
 +
- 	/* set hash key, if PF */
- 	if (rxfh->key && hw->port)
- 		enetc_set_rss_key(hw, rxfh->key);
++	return 0;
+ }
+ 
+ static void ep93xx_i2s_disable(struct ep93xx_i2s_info *info, int stream)
+@@ -195,9 +209,7 @@ static int ep93xx_i2s_startup(struct snd_pcm_substream *substream,
+ {
+ 	struct ep93xx_i2s_info *info = snd_soc_dai_get_drvdata(dai);
+ 
+-	ep93xx_i2s_enable(info, substream->stream);
+-
+-	return 0;
++	return ep93xx_i2s_enable(info, substream->stream);
+ }
+ 
+ static void ep93xx_i2s_shutdown(struct snd_pcm_substream *substream,
+@@ -373,14 +385,16 @@ static int ep93xx_i2s_suspend(struct snd_soc_component *component)
+ static int ep93xx_i2s_resume(struct snd_soc_component *component)
+ {
+ 	struct ep93xx_i2s_info *info = snd_soc_component_get_drvdata(component);
++	int err;
+ 
+ 	if (!snd_soc_component_active(component))
+ 		return 0;
+ 
+-	ep93xx_i2s_enable(info, SNDRV_PCM_STREAM_PLAYBACK);
+-	ep93xx_i2s_enable(info, SNDRV_PCM_STREAM_CAPTURE);
++	err = ep93xx_i2s_enable(info, SNDRV_PCM_STREAM_PLAYBACK);
++	if (err)
++		return err;
+ 
+-	return 0;
++	return ep93xx_i2s_enable(info, SNDRV_PCM_STREAM_CAPTURE);
+ }
+ #else
+ #define ep93xx_i2s_suspend	NULL
 -- 
 2.53.0
 
