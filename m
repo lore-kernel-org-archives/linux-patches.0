@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060453D75C9;
-	Wed,  8 Apr 2026 18:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD2E2727F3;
+	Wed,  8 Apr 2026 18:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674214; cv=none; b=pB5DdSati5F76QV+8J2SkNDh7bnENt9y41PLoVB2BhlmWMkVBHbc6XCYQEEBAkMvtdQfJSuD7YfsgoJt2oeUy3bwptwD0qf5ZKUrfMul9pVGotAANyrAdPcJ4Z1eaU06H+MKWssULFbEwHgQWDMEHFc6LjPBUTfbKeALE85/+pY=
+	t=1775674216; cv=none; b=VISN9mpFaCf/GTBt2OwS+ZdHuPe1AG/QwG9Refdqk3hPNDYc8uHqenayxBBVncqFzooCylqtLn6xZrek8GoSRTmzA9B244PanneGS6dh3GxI/ApxhFiY7pzw8t2yBD+/Us+fvHARrM/EzHYvCU6hHcdMvF343FEaaePJ2VaaR6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674214; c=relaxed/simple;
-	bh=qS03sR4Woma7CdGVuO+FLZwqwZRguUEqg0eW3xTTNO0=;
+	s=arc-20240116; t=1775674216; c=relaxed/simple;
+	bh=woszEe/owto8wA0bnEMtz6ROUAItgE0OfMA1vuDQTp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TS3nog3Soi61RfhGX2l9XY1sbZIEX9LtMj8XaBdR975f0kRDVJPo17WVuvMxJe3LoDnmNu+9lisdJo/nRg5TQo3K8tLSCQ2P/mQa3kG94d0A+yGBPp1mRAr1S7y93j13Z4bQW+j7s4lUWU+eTRw9Hu9OerUAQHHB80C06NiBH6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TFArMHC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fe454W8nEO/9V4cYiCQKdiM0Yv/Pfxt1cC65DeroyfKRPq4wB/Arprl5XmsxnJNpPtSVXjO/ekWILEwvnT/OnQLMjTB7+Ww3HUqUTU84P3HfR6T/85wzF971RU9aX5MNVs/L5PZAg4d22XvXuY+1wBPABhNX4mvI/Lh1AFLesD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vplhUvYp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TFArMHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9180DC19421;
-	Wed,  8 Apr 2026 18:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vplhUvYp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1C7C19421;
+	Wed,  8 Apr 2026 18:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674213;
-	bh=qS03sR4Woma7CdGVuO+FLZwqwZRguUEqg0eW3xTTNO0=;
+	s=korg; t=1775674216;
+	bh=woszEe/owto8wA0bnEMtz6ROUAItgE0OfMA1vuDQTp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TFArMHCF7nGEBmaLfZujFmjF0fP0+R+aXBvFBmrbxNgxJt/0unA2vmY6nvcHUxwI
-	 +N23x4tgpB/Qaaraig27GBxnFyGwrZP7ySBfAAf9ujyOEutCvWVqJizf5Jgm9z3cgl
-	 QxdWLAL6+87COxxAD97SkU8aILGVeCC+RytbAtdw=
+	b=vplhUvYpAtxwUoKycExMwbYzSyG/K8sS7qmA/t3mxb6zlrlhQhSwVK/6q8EoOreV5
+	 ld/PL9WL3bxDCQd+T0VDSPkpmkkJ1UUCJ4EnWYO0RhfA0fgEocZ9wnOkJKQTr7Ewaj
+	 xMlJD8KSR7HPbqfjtUcT64HH/8EU4PpWlLXOLnfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 011/311] wifi: mac80211: check tdls flag in ieee80211_tdls_oper
-Date: Wed,  8 Apr 2026 20:00:11 +0200
-Message-ID: <20260408175939.833584360@linuxfoundation.org>
+Subject: [PATCH 6.19 012/311] HID: wacom: fix out-of-bounds read in wacom_intuos_bt_irq
+Date: Wed,  8 Apr 2026 20:00:12 +0200
+Message-ID: <20260408175939.871235987@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -47,51 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Benoît Sevens <bsevens@google.com>
 
-[ Upstream commit 7d73872d949c488a1d7c308031d6a9d89b5e0a8b ]
+[ Upstream commit 2f1763f62909ccb6386ac50350fa0abbf5bb16a9 ]
 
-When NL80211_TDLS_ENABLE_LINK is called, the code only checks if the
-station exists but not whether it is actually a TDLS station. This
-allows the operation to proceed for non-TDLS stations, causing
-unintended side effects like modifying channel context and HT
-protection before failing.
+The wacom_intuos_bt_irq() function processes Bluetooth HID reports
+without sufficient bounds checking. A maliciously crafted short report
+can trigger an out-of-bounds read when copying data into the wacom
+structure.
 
-Add a check for sta->sta.tdls early in the ENABLE_LINK case, before
-any side effects occur, to ensure the operation is only allowed for
-actual TDLS peers.
+Specifically, report 0x03 requires at least 22 bytes to safely read
+the processed data and battery status, while report 0x04 (which
+falls through to 0x03) requires 32 bytes.
 
-Reported-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=56b6a844a4ea74487b7b
-Tested-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
-Suggested-by: Johannes Berg <johannes@sipsolutions.net>
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260313092417.520807-1-kartikey406@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Add explicit length checks for these report IDs and log a warning if
+a short report is received.
+
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tdls.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/wacom_wac.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
-index dbbfe2d6842fb..1dca2fae05a52 100644
---- a/net/mac80211/tdls.c
-+++ b/net/mac80211/tdls.c
-@@ -1449,7 +1449,7 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
- 		}
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index 9b2c710f8da18..da1f0ea85625d 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1208,10 +1208,20 @@ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
  
- 		sta = sta_info_get(sdata, peer);
--		if (!sta)
-+		if (!sta || !sta->sta.tdls)
- 			return -ENOLINK;
- 
- 		iee80211_tdls_recalc_chanctx(sdata, sta);
+ 	switch (data[0]) {
+ 	case 0x04:
++		if (len < 32) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x04 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		fallthrough;
+ 	case 0x03:
++		if (i == 1 && len < 22) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x03 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		wacom_intuos_bt_process_data(wacom, data + i);
 -- 
 2.53.0
 
