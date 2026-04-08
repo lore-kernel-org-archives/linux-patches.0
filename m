@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D7E3D9DBB;
-	Wed,  8 Apr 2026 18:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC7D3D522C;
+	Wed,  8 Apr 2026 18:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672598; cv=none; b=QEHapzxCEztmIkvYIkpbm2KP2Mv0XOYmnMqllwgLO1xPuiSGL50oMi5K9EDrFt9IK2sTh7rAPHlxUiAWCk+/xYD4TjNsFW1Gfxp1bxUByGRNJxMhaC5mhcQjyM+Mzmk8ZexlX+Q14LioJ3OfYeTqPYJz+W5H8uaMUmbpsaFDPYM=
+	t=1775672600; cv=none; b=uCdDRwWA98cCY6QWVl1s+vPJU+mT9ULocKqzM9KGhYKIYjH2SN+4kT/iD/rLMORDhu+0ISs9ihWsLhn0iskeJCaM39IsQ9O63N+rcdbh+9ImeffVeegn4TX05B+cJQGqRH3U/vF83gUosO1OqIikw6KBWksgj2TkaxwqUPamcDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672598; c=relaxed/simple;
-	bh=XOeCy5jYLYQeXQNJ3PdgIgSFqoMQwJQFtt6YpKcW4Vs=;
+	s=arc-20240116; t=1775672600; c=relaxed/simple;
+	bh=IRt/fKMCQ/kUfzILNXiTPIfOA935sa47FVcAvuQlvNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XWW8FKcQmnHf3YL74Im2YBur2F6ABqw58Df9THHhio1z9I/23Y8cUtj0Wvo5BO66IOCuNeQwfNkffJG/GXFQu+Jkve23r4aQArT4EE7cOscxjtA53vmt7Ky5vVx44hDuN8QW7g5AcOIfrdXeEwZ8qPhHz1TpGwNE4XWIS2OT/0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJzG7fxI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/531mpYLlSZBJzzYOLBHnLURzkIIMHKDs13yRncMz3+r3/duO84if1nynB9+qc1KDoHIaGqthCnDZmPH2u+lRy4Y1DIomvuXS0OnBdjoaHuyVOQ1FMvbl/hJWMRaFqLE2vbZYlJmlGxH7sY0tvJgS1XPm2eF/QwsAu24UOPvnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7kuxp7j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJzG7fxI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A210C19421;
-	Wed,  8 Apr 2026 18:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7kuxp7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21902C19421;
+	Wed,  8 Apr 2026 18:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672597;
-	bh=XOeCy5jYLYQeXQNJ3PdgIgSFqoMQwJQFtt6YpKcW4Vs=;
+	s=korg; t=1775672600;
+	bh=IRt/fKMCQ/kUfzILNXiTPIfOA935sa47FVcAvuQlvNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJzG7fxI2O5cgttzAjiqzuKJbQ5mPUfuwoOXTBaak8KcFbzVp3MYcpHTxQcssJhFL
-	 iutxPvi28h4rdx+3Z6XIt4gxY74qOPVYgZAo0kpexNVov1LQN6rPMEqIFXbWN+tsh/
-	 kWJcj9KBY3LRJY0gl6vQkltJPYae/q5HRV5HlB18=
+	b=a7kuxp7jKLW8Nk2LnfcBfXKeTSZdhCI//L+/Zu6W8VIFOg+IHTT8MfrTrD7c/lcv6
+	 vJB+d2Gy0pOXmcQrEhCRPCktqBuru/FGp5GefzwSq1Nvmawkn9G6juSK1IS9MqUWS+
+	 b8Qu9Uwy44r6YuuqBI6YI1hq6fBwB45RZJjEjris=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Luka Gejak <luka.gejak@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/160] net/sched: sch_hfsc: fix divide-by-zero in rtsc_min()
-Date: Wed,  8 Apr 2026 20:01:53 +0200
-Message-ID: <20260408175914.186503534@linuxfoundation.org>
+Subject: [PATCH 6.6 062/160] net: hsr: fix VLAN add unwind on slave errors
+Date: Wed,  8 Apr 2026 20:02:29 +0200
+Message-ID: <20260408175915.521370334@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -53,60 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Luka Gejak <luka.gejak@linux.dev>
 
-[ Upstream commit 4576100b8cd03118267513cafacde164b498b322 ]
+[ Upstream commit 2e3514e63bfb0e972b1f19668547a455d0129e88 ]
 
-m2sm() converts a u32 slope to a u64 scaled value.  For large inputs
-(e.g. m1=4000000000), the result can reach 2^32.  rtsc_min() stores
-the difference of two such u64 values in a u32 variable `dsm` and
-uses it as a divisor.  When the difference is exactly 2^32 the
-truncation yields zero, causing a divide-by-zero oops in the
-concave-curve intersection path:
+When vlan_vid_add() fails for a secondary slave, the error path calls
+vlan_vid_del() on the failing port instead of the peer slave that had
+already succeeded. This results in asymmetric VLAN state across the HSR
+pair.
 
-  Oops: divide error: 0000
-  RIP: 0010:rtsc_min (net/sched/sch_hfsc.c:601)
-  Call Trace:
-   init_ed (net/sched/sch_hfsc.c:629)
-   hfsc_enqueue (net/sched/sch_hfsc.c:1569)
-   [...]
+Fix this by switching to a centralized unwind path that removes the VID
+from any slave device that was already programmed.
 
-Widen `dsm` to u64 and replace do_div() with div64_u64() so the full
-difference is preserved.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260326204310.1549327-1-xmei5@asu.edu
+Fixes: 1a8a63a5305e ("net: hsr: Add VLAN CTAG filter support")
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
+Link: https://patch.msgid.link/20260401092243.52121-3-luka.gejak@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/hsr/hsr_device.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index 751b1e2c35b3f..1ac51d0249919 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -555,7 +555,7 @@ static void
- rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 70e958caa956d..b34a9b680aab3 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -473,8 +473,8 @@ static void hsr_change_rx_flags(struct net_device *dev, int change)
+ static int hsr_ndo_vlan_rx_add_vid(struct net_device *dev,
+ 				   __be16 proto, u16 vid)
  {
- 	u64 y1, y2, dx, dy;
--	u32 dsm;
-+	u64 dsm;
+-	bool is_slave_a_added = false;
+-	bool is_slave_b_added = false;
++	struct net_device *slave_a_dev = NULL;
++	struct net_device *slave_b_dev = NULL;
+ 	struct hsr_port *port;
+ 	struct hsr_priv *hsr;
+ 	int ret = 0;
+@@ -490,33 +490,35 @@ static int hsr_ndo_vlan_rx_add_vid(struct net_device *dev,
+ 		switch (port->type) {
+ 		case HSR_PT_SLAVE_A:
+ 			if (ret) {
+-				/* clean up Slave-B */
+ 				netdev_err(dev, "add vid failed for Slave-A\n");
+-				if (is_slave_b_added)
+-					vlan_vid_del(port->dev, proto, vid);
+-				return ret;
++				goto unwind;
+ 			}
+-
+-			is_slave_a_added = true;
++			slave_a_dev = port->dev;
+ 			break;
+-
+ 		case HSR_PT_SLAVE_B:
+ 			if (ret) {
+-				/* clean up Slave-A */
+ 				netdev_err(dev, "add vid failed for Slave-B\n");
+-				if (is_slave_a_added)
+-					vlan_vid_del(port->dev, proto, vid);
+-				return ret;
++				goto unwind;
+ 			}
+-
+-			is_slave_b_added = true;
++			slave_b_dev = port->dev;
+ 			break;
+ 		default:
++			if (ret)
++				goto unwind;
+ 			break;
+ 		}
+ 	}
  
- 	if (isc->sm1 <= isc->sm2) {
- 		/* service curve is convex */
-@@ -598,7 +598,7 @@ rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
- 	 */
- 	dx = (y1 - y) << SM_SHIFT;
- 	dsm = isc->sm1 - isc->sm2;
--	do_div(dx, dsm);
-+	dx = div64_u64(dx, dsm);
- 	/*
- 	 * check if (x, y1) belongs to the 1st segment of rtsc.
- 	 * if so, add the offset.
+ 	return 0;
++
++unwind:
++	if (slave_a_dev)
++		vlan_vid_del(slave_a_dev, proto, vid);
++
++	if (slave_b_dev)
++		vlan_vid_del(slave_b_dev, proto, vid);
++
++	return ret;
+ }
+ 
+ static int hsr_ndo_vlan_rx_kill_vid(struct net_device *dev,
 -- 
 2.53.0
 
