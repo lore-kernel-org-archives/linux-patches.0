@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF803D522C;
-	Wed,  8 Apr 2026 18:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201A53ACEFB;
+	Wed,  8 Apr 2026 18:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672770; cv=none; b=MRDGlzoAMIcLtYCiqFxK2YSEEL68e3rUOpMPvv6kRqf0DDr/7GTfTt03J21/D92epFb84AjsS5Sx15vNZWA7YDOKmbHe2lU6/gp2l7Y8Nu/4zpRc/sTErwbXs0VeBh2iKM9QLODVm5UC71YKYhUr7TrrZ2Gb1cKyi/evoFbGIag=
+	t=1775672773; cv=none; b=YUfvnt4Foe1QsanG3xbaQ6yK5lUzz1ozmFh5AKeUFJbHDYW8I6fbXLQVMXgZgxq9d8w4g9UzlqBb2Ce/xdFcImMjxTLYAjZWGK9IL4dDMx988bXl/jXaCNxe4Bcn0vVIqHJ65Coa2EAF8xlDAxg6LAkFemZZAC+Xt1Ap/jbV9S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672770; c=relaxed/simple;
-	bh=anGkHQOj3qjiIi0Ci1IPvbTqjfINji4KIYsePEoJiLs=;
+	s=arc-20240116; t=1775672773; c=relaxed/simple;
+	bh=N3uxZeYvsDZR3Ar1SRAEZMWUZMYEvO07IXbAEx4d/HM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sfEK7s+da6Iylhwjnsw3vYn05Je9rNGKpnr4YkKKRNo/P9DzcF7W1UoAPTBaT+H9vavmI9D4zXPbad1l24w6eZavZi0s69YGrlTLUKMPb5/fBYPRchzsgrtVF1D9URnexs1bwlDEg49KcB9RttDkVWNL8xYDyjNSp+Q7ykZwSyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sieKdaqs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TKjAGeTfE7Abfkwb9Z+KxfYBc0qj4LKa1GpYCj1XWTWFI+vcDWu3sNRlHU0uKBetE5efhwQVjB5rEmQ6qBn5X/vhbIB50Bn699A/RayIp4qqOpTLK5wsi/SkDXV9F9yOhbE4WmrCCVuCYPzBog9FKtGHM2Hc58o7P7uwZ+lweUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aC3xuODe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sieKdaqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA04FC19421;
-	Wed,  8 Apr 2026 18:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aC3xuODe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8309BC19421;
+	Wed,  8 Apr 2026 18:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672770;
-	bh=anGkHQOj3qjiIi0Ci1IPvbTqjfINji4KIYsePEoJiLs=;
+	s=korg; t=1775672773;
+	bh=N3uxZeYvsDZR3Ar1SRAEZMWUZMYEvO07IXbAEx4d/HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sieKdaqsyOUPq+MFNWCPh8Tl6VmpwN1wb/XLIgg/Pqxft4j45a6K7jC6glM0eSNGh
-	 Zs/cghBMPq1YtC6bpZA9/kvAnkrEbqoQ8jJnZeHy47oMFVgfcBkz8eWGZr/FrRdPEl
-	 r2RrUJ0JaYWGh+r8IAMrmJLVJk+Hy3nJEsnVtsrM=
+	b=aC3xuODeqlr18QJ9tsGmzc36vb8zN5qf2fWU8zFntb6SmtbOXa3oTE+P1IlfXGPs8
+	 atAh9dBkMWaoJ2aymiHAnrKg+XM6xU7BzB22BGEjkvyCibKc520dfWzRAOARr26/s7
+	 jNijsUEUhNcKG77wn6MUkyrIoeWwuY+g93LZmK5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 103/160] iio: gyro: mpu3050: Fix out-of-sequence free_irq()
-Date: Wed,  8 Apr 2026 20:03:10 +0200
-Message-ID: <20260408175917.030423114@linuxfoundation.org>
+	Miao Li <limiao@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 104/160] usb: quirks: add DELAY_INIT quirk for another Silicon Motion flash drive
+Date: Wed,  8 Apr 2026 20:03:11 +0200
+Message-ID: <20260408175917.066980598@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -54,41 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Miao Li <limiao@kylinos.cn>
 
-commit d14116f6529fa085b1a1b1f224dc9604e4d2a29c upstream.
+commit dd36014ec6042f424ef51b923e607772f7502ee7 upstream.
 
-The triggered buffer is initialized before the IRQ is requested. The
-removal path currently calls iio_triggered_buffer_cleanup() before
-free_irq(). This violates the expected LIFO.
+Another Silicon Motion flash drive also randomly work incorrectly
+(lsusb does not list the device) on Huawei hisi platforms during
+500 reboot cycles, and the DELAY_INIT quirk fixes this issue.
 
-Place free_irq() in the correct location relative to
-iio_triggered_buffer_cleanup().
-
-Fixes: 3904b28efb2c7 ("iio: gyro: Add driver for the MPU-3050 gyroscope")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Miao Li <limiao@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260319053927.264840-1-limiao870622@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/mpu3050-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/quirks.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/gyro/mpu3050-core.c
-+++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -1288,9 +1288,9 @@ void mpu3050_common_remove(struct device
- 	pm_runtime_get_sync(dev);
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
--	iio_triggered_buffer_cleanup(indio_dev);
- 	if (mpu3050->irq)
- 		free_irq(mpu3050->irq, mpu3050->trig);
-+	iio_triggered_buffer_cleanup(indio_dev);
- 	mpu3050_power_down(mpu3050);
- }
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -402,6 +402,7 @@ static const struct usb_device_id usb_qu
  
+ 	/* Silicon Motion Flash Drive */
+ 	{ USB_DEVICE(0x090c, 0x1000), .driver_info = USB_QUIRK_DELAY_INIT },
++	{ USB_DEVICE(0x090c, 0x2000), .driver_info = USB_QUIRK_DELAY_INIT },
+ 
+ 	/* Sound Devices USBPre2 */
+ 	{ USB_DEVICE(0x0926, 0x0202), .driver_info =
 
 
