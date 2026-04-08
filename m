@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4922727F3;
-	Wed,  8 Apr 2026 18:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106A7337B81;
+	Wed,  8 Apr 2026 18:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674175; cv=none; b=R/h6AFAx8can1K/Bm0GplV/90dQVaopxUchBbOgVAt6R1hq5MO8sLF5SelZJcvLpQpgvDYzO7abSx/+6kLX7pRBKBUdh+uz6n5ANITgotN8ip9AdOttbBzq4mmvMaVaAZ0BaUIeiqGvMK/ztN/ncLREFeJV0Uss5+CQHCrBccaU=
+	t=1775674178; cv=none; b=UlDu54wgLzyJJegXtl/BorIVWoNbQV9xIFcC8LYPBjYD6oz3PultVMaSKqws2dkZ38Ics05FquO4Dn97IpukbxjsoaQWzDHQfu39RwbwXuVKvbeFkMBZrDM+gd/cJUbIR0lDZwM6lv6FlaH1GYZoOGcv4JoZgwhm6EpL/fSwMj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674175; c=relaxed/simple;
-	bh=V5jBlWKkKkLQJh/flHAZ7VDTumCe6GrsVqPwKYm3Fd8=;
+	s=arc-20240116; t=1775674178; c=relaxed/simple;
+	bh=1ugt6zraiW+Dpbw/XOoGCVNBl/neoZN1HX+KWdgOeqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7esBnI8ol0b2zfnHhFbemHaw0pBBJnDjucM8jnnqF422eoF8kwPgmxAWS1ufxuzeRcfqCorM0q/bQxrIwtN7ibQdVNgbKiuwExL+Tvjj7RaSJZVKJjfTOgbg+hEEWB4zQvYEVAVKJnh/bCSnESfYeedsCUr7j4Wuh9We+z6Obw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZ/4fpTm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yl0H6zxokoCIMSDBb4CgECQjrRG6JBdOew0rezaq7atlkqqhFaGUUcN5VU1X1ZE709RbkiKEyv/4RpK/nKCLugFXO1SlWNMNeoXU3iIGfkPMvQPt7vF09reePqYIm5D6JxsHsr1G1LcRZIUvKUHLsN6FH+ZYZtYBye548M+xIiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4ezBdDp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZ/4fpTm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44B4C19421;
-	Wed,  8 Apr 2026 18:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4ezBdDp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530D5C19421;
+	Wed,  8 Apr 2026 18:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674175;
-	bh=V5jBlWKkKkLQJh/flHAZ7VDTumCe6GrsVqPwKYm3Fd8=;
+	s=korg; t=1775674177;
+	bh=1ugt6zraiW+Dpbw/XOoGCVNBl/neoZN1HX+KWdgOeqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZZ/4fpTmrOAEnGWf60T0DfAKoCIM2vIk7qY1WavXQhRZTeDXeBVkTtCwvYox5De9k
-	 8N0+k99EVZJ8UDXamtvTzWNxo7VagmrFzit1V4psoT65ejt2GrF9RQ6E1TIpY+MlbW
-	 gO0CQ4jncWmSxK/40KYd9Od+adkQx9eXgjGyj0n0=
+	b=X4ezBdDpeMDpxlyT2tdL4wm3f2Jh1gc9an5zBP6mPX4YRfhvsot7luybah7VId+my
+	 amHvn8Q7tCTIOQY7ksjtSO8A4MO3mmmbWrAPnVYyKv2urAfi51ffwu7HeDWRfofgRv
+	 jgFsogCwNmBadUcSg1HqZ2fsqu7w5X+pfL2q3K3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eduard Zingerman <eddyz87@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Paul Chaignon <paul.chaignon@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 237/242] bpf: Improve bounds when s64 crosses sign boundary
-Date: Wed,  8 Apr 2026 20:04:37 +0200
-Message-ID: <20260408175935.977382257@linuxfoundation.org>
+Subject: [PATCH 6.12 238/242] selftests/bpf: Test cross-sign 64bits range refinement
+Date: Wed,  8 Apr 2026 20:04:38 +0200
+Message-ID: <20260408175936.014486729@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -54,110 +53,167 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 00bf8d0c6c9be0c481fc45a3f7d87c7f8812f229 ]
+[ Upstream commit 26e5e346a52c796190e63af1c2a80a417fda261a ]
 
-__reg64_deduce_bounds currently improves the s64 range using the u64
-range and vice versa, but only if it doesn't cross the sign boundary.
+This patch adds coverage for the new cross-sign 64bits range refinement
+logic. The three tests cover the cases when the u64 and s64 ranges
+overlap (1) in the negative portion of s64, (2) in the positive portion
+of s64, and (3) in both portions.
 
-This patch improves __reg64_deduce_bounds to cover the case where the
-s64 range crosses the sign boundary but overlaps with the u64 range on
-only one end. In that case, we can improve both ranges. Consider the
-following example, with the s64 range crossing the sign boundary:
+The first test is a simplified version of a BPF program generated by
+syzkaller that caused an invariant violation [1]. It looks like
+syzkaller could not extract the reproducer itself (and therefore didn't
+report it to the mailing list), but I was able to extract it from the
+console logs of a crash.
 
-    0                                                   U64_MAX
-    |  [xxxxxxxxxxxxxx u64 range xxxxxxxxxxxxxx]              |
-    |----------------------------|----------------------------|
-    |xxxxx s64 range xxxxxxxxx]                       [xxxxxxx|
-    0                     S64_MAX S64_MIN                    -1
+The principle is similar to the invariant violation described in
+commit 6279846b9b25 ("bpf: Forget ranges when refining tnum after
+JSET"): the verifier walks a dead branch, uses the condition to refine
+ranges, and ends up with inconsistent ranges. In this case, the dead
+branch is when we fallthrough on both jumps. The new refinement logic
+improves the bounds such that the second jump is properly detected as
+always-taken and the verifier doesn't end up walking a dead branch.
 
-The u64 range overlaps only with positive portion of the s64 range. We
-can thus derive the following new s64 and u64 ranges.
+The second and third tests are inspired by the first, but rely on
+condition jumps to prepare the bounds instead of ALU instructions. An
+R10 write is used to trigger a verifier error when the bounds can't be
+refined.
 
-    0                                                   U64_MAX
-    |  [xxxxxx u64 range xxxxx]                               |
-    |----------------------------|----------------------------|
-    |  [xxxxxx s64 range xxxxx]                               |
-    0                     S64_MAX S64_MIN                    -1
-
-The same logic can probably apply to the s32/u32 ranges, but this patch
-doesn't implement that change.
-
-In addition to the selftests, the __reg64_deduce_bounds change was
-also tested with Agni, the formal verification tool for the range
-analysis [1].
-
-Link: https://github.com/bpfverif/agni [1]
+Link: https://syzkaller.appspot.com/bug?extid=c711ce17dd78e5d4fdcf [1]
 Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/933bd9ce1f36ded5559f92fdc09e5dbc823fa245.1753695655.git.paul.chaignon@gmail.com
+Link: https://lore.kernel.org/r/a0e17b00dab8dabcfa6f8384e7e151186efedfdd.1753695655.git.paul.chaignon@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
+ tools/testing/selftests/bpf/progs/verifier_bounds.c |  118 ++++++++++++++++++++
+ 1 file changed, 118 insertions(+)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2129,6 +2129,58 @@ static void __reg64_deduce_bounds(struct
- 	if ((u64)reg->smin_value <= (u64)reg->smax_value) {
- 		reg->umin_value = max_t(u64, reg->smin_value, reg->umin_value);
- 		reg->umax_value = min_t(u64, reg->smax_value, reg->umax_value);
-+	} else {
-+		/* If the s64 range crosses the sign boundary, then it's split
-+		 * between the beginning and end of the U64 domain. In that
-+		 * case, we can derive new bounds if the u64 range overlaps
-+		 * with only one end of the s64 range.
-+		 *
-+		 * In the following example, the u64 range overlaps only with
-+		 * positive portion of the s64 range.
-+		 *
-+		 * 0                                                   U64_MAX
-+		 * |  [xxxxxxxxxxxxxx u64 range xxxxxxxxxxxxxx]              |
-+		 * |----------------------------|----------------------------|
-+		 * |xxxxx s64 range xxxxxxxxx]                       [xxxxxxx|
-+		 * 0                     S64_MAX S64_MIN                    -1
-+		 *
-+		 * We can thus derive the following new s64 and u64 ranges.
-+		 *
-+		 * 0                                                   U64_MAX
-+		 * |  [xxxxxx u64 range xxxxx]                               |
-+		 * |----------------------------|----------------------------|
-+		 * |  [xxxxxx s64 range xxxxx]                               |
-+		 * 0                     S64_MAX S64_MIN                    -1
-+		 *
-+		 * If they overlap in two places, we can't derive anything
-+		 * because reg_state can't represent two ranges per numeric
-+		 * domain.
-+		 *
-+		 * 0                                                   U64_MAX
-+		 * |  [xxxxxxxxxxxxxxxxx u64 range xxxxxxxxxxxxxxxxx]        |
-+		 * |----------------------------|----------------------------|
-+		 * |xxxxx s64 range xxxxxxxxx]                    [xxxxxxxxxx|
-+		 * 0                     S64_MAX S64_MIN                    -1
-+		 *
-+		 * The first condition below corresponds to the first diagram
-+		 * above.
-+		 */
-+		if (reg->umax_value < (u64)reg->smin_value) {
-+			reg->smin_value = (s64)reg->umin_value;
-+			reg->umax_value = min_t(u64, reg->umax_value, reg->smax_value);
-+		} else if ((u64)reg->smax_value < reg->umin_value) {
-+			/* This second condition considers the case where the u64 range
-+			 * overlaps with the negative portion of the s64 range:
-+			 *
-+			 * 0                                                   U64_MAX
-+			 * |              [xxxxxxxxxxxxxx u64 range xxxxxxxxxxxxxx]  |
-+			 * |----------------------------|----------------------------|
-+			 * |xxxxxxxxx]                       [xxxxxxxxxxxx s64 range |
-+			 * 0                     S64_MAX S64_MIN                    -1
-+			 */
-+			reg->smax_value = (s64)reg->umax_value;
-+			reg->umin_value = max_t(u64, reg->umin_value, reg->smin_value);
-+		}
- 	}
+--- a/tools/testing/selftests/bpf/progs/verifier_bounds.c
++++ b/tools/testing/selftests/bpf/progs/verifier_bounds.c
+@@ -1200,4 +1200,122 @@ l0_%=:	r0 = 0;						\
+ 	: __clobber_all);
  }
  
++/* This test covers the bounds deduction on 64bits when the s64 and u64 ranges
++ * overlap on the negative side. At instruction 7, the ranges look as follows:
++ *
++ * 0          umin=0xfffffcf1                 umax=0xff..ff6e  U64_MAX
++ * |                [xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]        |
++ * |----------------------------|------------------------------|
++ * |xxxxxxxxxx]                                   [xxxxxxxxxxxx|
++ * 0    smax=0xeffffeee                       smin=-655        -1
++ *
++ * We should therefore deduce the following new bounds:
++ *
++ * 0                             u64=[0xff..ffd71;0xff..ff6e]  U64_MAX
++ * |                                              [xxx]        |
++ * |----------------------------|------------------------------|
++ * |                                              [xxx]        |
++ * 0                                        s64=[-655;-146]    -1
++ *
++ * Without the deduction cross sign boundary, we end up with an invariant
++ * violation error.
++ */
++SEC("socket")
++__description("bounds deduction cross sign boundary, negative overlap")
++__success __log_level(2) __flag(BPF_F_TEST_REG_INVARIANTS)
++__msg("7: (1f) r0 -= r6 {{.*}} R0=scalar(smin=-655,smax=smax32=-146,umin=0xfffffffffffffd71,umax=0xffffffffffffff6e,smin32=-783,umin32=0xfffffcf1,umax32=0xffffff6e,var_off=(0xfffffffffffffc00; 0x3ff))")
++__retval(0)
++__naked void bounds_deduct_negative_overlap(void)
++{
++	asm volatile("			\
++	call %[bpf_get_prandom_u32];	\
++	w3 = w0;			\
++	w6 = (s8)w0;			\
++	r0 = (s8)r0;			\
++	if w6 >= 0xf0000000 goto l0_%=;	\
++	r0 += r6;			\
++	r6 += 400;			\
++	r0 -= r6;			\
++	if r3 < r0 goto l0_%=;		\
++l0_%=:	r0 = 0;				\
++	exit;				\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
++/* This test covers the bounds deduction on 64bits when the s64 and u64 ranges
++ * overlap on the positive side. At instruction 3, the ranges look as follows:
++ *
++ * 0 umin=0                      umax=0xffffffffffffff00       U64_MAX
++ * [xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]            |
++ * |----------------------------|------------------------------|
++ * |xxxxxxxx]                                         [xxxxxxxx|
++ * 0      smax=127                                smin=-128    -1
++ *
++ * We should therefore deduce the following new bounds:
++ *
++ * 0  u64=[0;127]                                              U64_MAX
++ * [xxxxxxxx]                                                  |
++ * |----------------------------|------------------------------|
++ * [xxxxxxxx]                                                  |
++ * 0  s64=[0;127]                                              -1
++ *
++ * Without the deduction cross sign boundary, the program is rejected due to
++ * the frame pointer write.
++ */
++SEC("socket")
++__description("bounds deduction cross sign boundary, positive overlap")
++__success __log_level(2) __flag(BPF_F_TEST_REG_INVARIANTS)
++__msg("3: (2d) if r0 > r1 {{.*}} R0_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=127,var_off=(0x0; 0x7f))")
++__retval(0)
++__naked void bounds_deduct_positive_overlap(void)
++{
++	asm volatile("			\
++	call %[bpf_get_prandom_u32];	\
++	r0 = (s8)r0;			\
++	r1 = 0xffffffffffffff00;	\
++	if r0 > r1 goto l0_%=;		\
++	if r0 < 128 goto l0_%=;		\
++	r10 = 0;			\
++l0_%=:	r0 = 0;				\
++	exit;				\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
++/* This test is the same as above, but the s64 and u64 ranges overlap in two
++ * places. At instruction 3, the ranges look as follows:
++ *
++ * 0 umin=0                           umax=0xffffffffffffff80  U64_MAX
++ * [xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]        |
++ * |----------------------------|------------------------------|
++ * |xxxxxxxx]                                         [xxxxxxxx|
++ * 0      smax=127                                smin=-128    -1
++ *
++ * 0xffffffffffffff80 = (u64)-128. We therefore can't deduce anything new and
++ * the program should fail due to the frame pointer write.
++ */
++SEC("socket")
++__description("bounds deduction cross sign boundary, two overlaps")
++__failure __flag(BPF_F_TEST_REG_INVARIANTS)
++__msg("3: (2d) if r0 > r1 {{.*}} R0_w=scalar(smin=smin32=-128,smax=smax32=127,umax=0xffffffffffffff80)")
++__msg("frame pointer is read only")
++__naked void bounds_deduct_two_overlaps(void)
++{
++	asm volatile("			\
++	call %[bpf_get_prandom_u32];	\
++	r0 = (s8)r0;			\
++	r1 = 0xffffffffffffff80;	\
++	if r0 > r1 goto l0_%=;		\
++	if r0 < 128 goto l0_%=;		\
++	r10 = 0;			\
++l0_%=:	r0 = 0;				\
++	exit;				\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
+ char _license[] SEC("license") = "GPL";
 
 
