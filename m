@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D417A3D4134;
-	Wed,  8 Apr 2026 18:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719193D522C;
+	Wed,  8 Apr 2026 18:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673766; cv=none; b=hSBuTl6WjsxT3DriccFbixFJoCXkE/QtMSLVg5SVBg4w+AOEHpyElN/pOojsr4Je8YK1noEdhJNusWj4T1aVjTTLy9o0hwWW5t9sI9b8Zu4Ev7+x3TotGe1kZdMvl+AvM4JSP4XhDgO7F3jZ7j9P+RU+1X+otIDekeHgCYpmNhQ=
+	t=1775673769; cv=none; b=PRgJJmd4S4vvurJdgdOx78s8MLfkTVTCeX3Ef4Ntkg1FJi9hbNxnA36q6cPxg2zhjm+/BZgT2G28dYIDNIg+nx8/ZOkD7+1CnwmzCbi6d0FMKKJal1Fee474vz8VXPYsl001nZ1R8LLp+Oq2joqT1cBpj9mosSoJPrhv9EhuEvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673766; c=relaxed/simple;
-	bh=14/29+WYmZyhV+KqXtdNxIbMnrmiTbMdsrUC5SscGMs=;
+	s=arc-20240116; t=1775673769; c=relaxed/simple;
+	bh=N84Fbfag15lHq+i7gvU1St6sf9fWsvU5bunUeEuW1CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=biLObOFNTCLrJKFAheI76QVjjVXV+4y7hHL12bn4n2N21LM2ipPjCIMqLV6CZNH05v7T2iZZhjE1iqXYltEkdkkajezrfiJ+uQNSRmxr/JU+oYzSOu4CQsTNalAO5MkSWAm67qqn8zHffSjjqrb9E4y4WcaovBr4rVqBclyydek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpeQ67bp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cEuD3AzeJ6Z54ehvr1fBTiudN0sqgyCVui4bkULABLCzKwtsoDUqLkYsV1ofRY33AE9VS8Q2LCWwAvLwkzvxSeEf2WPdqCyhS/mDEN3MvNKXviCkHYdSgJS1toFIr06PUY5E3wMBCHdvkKROj6o6NztElwB3h0/JYobl7h62cfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDeeaaDo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpeQ67bp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D23EC19421;
-	Wed,  8 Apr 2026 18:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDeeaaDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FBDC19421;
+	Wed,  8 Apr 2026 18:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673766;
-	bh=14/29+WYmZyhV+KqXtdNxIbMnrmiTbMdsrUC5SscGMs=;
+	s=korg; t=1775673769;
+	bh=N84Fbfag15lHq+i7gvU1St6sf9fWsvU5bunUeEuW1CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OpeQ67bp/MzRHmzNLW4eIAJycydRHasWPZIXVsySVK+DpmGIfWtE2RTiwnJE1bGy0
-	 jSviGj0MKS9JS3wy0/cixB8kvJJwYNc6WV/Wl3sc0mxoknW7A2VQlR0qG6yPsPHE4+
-	 /M7IYh7FldSmcM7UAu4Psyp2zT50g8/irxeItANU=
+	b=zDeeaaDoCkVSPA3QhZjfYaS59+5YbdIC4OtYJUTNMhyPJAaMv2ignKXWhtRohY+5Y
+	 3IXm2v8bPt7pAxjCfAYTVSYSKYpDd8SREFDWVHAD+u9WtPdaCxsAcjFMZZTyV3jz88
+	 1MOrhBrOuDyXtqStZ2V30m5t/JKQ+mTpUCLOzakk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keenan Dong <keenanat2000@gmail.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 082/242] Bluetooth: MGMT: validate LTK enc_size on load
-Date: Wed,  8 Apr 2026 20:02:02 +0200
-Message-ID: <20260408175930.151700173@linuxfoundation.org>
+Subject: [PATCH 6.12 083/242] Bluetooth: hci_conn: fix potential UAF in set_cig_params_sync
+Date: Wed,  8 Apr 2026 20:02:03 +0200
+Message-ID: <20260408175930.189040913@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -51,41 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keenan Dong <keenanat2000@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit b8dbe9648d69059cfe3a28917bfbf7e61efd7f15 ]
+[ Upstream commit a2639a7f0f5bf7d73f337f8f077c19415c62ed2c ]
 
-Load Long Term Keys stores the user-provided enc_size and later uses
-it to size fixed-size stack operations when replying to LE LTK
-requests. An enc_size larger than the 16-byte key buffer can therefore
-overflow the reply stack buffer.
+hci_conn lookup and field access must be covered by hdev lock in
+set_cig_params_sync, otherwise it's possible it is freed concurrently.
 
-Reject oversized enc_size values while validating the management LTK
-record so invalid keys never reach the stored key state.
+Take hdev lock to prevent hci_conn from being deleted or modified
+concurrently.  Just RCU lock is not suitable here, as we also want to
+avoid "tearing" in the configuration.
 
-Fixes: 346af67b8d11 ("Bluetooth: Add MGMT handlers for dealing with SMP LTK's")
-Reported-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
+Fixes: a091289218202 ("Bluetooth: hci_conn: Fix hci_le_set_cig_params")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/hci_conn.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index ba6651f23d5d0..aa114fb218b2f 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -7265,6 +7265,9 @@ static bool ltk_is_valid(struct mgmt_ltk_info *key)
- 	if (key->initiator != 0x00 && key->initiator != 0x01)
- 		return false;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 447d29c67e7c1..b36fa056e8796 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1767,9 +1767,13 @@ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
+ 	u8 aux_num_cis = 0;
+ 	u8 cis_id;
  
-+	if (key->enc_size > sizeof(key->val))
-+		return false;
++	hci_dev_lock(hdev);
 +
- 	switch (key->addr.type) {
- 	case BDADDR_LE_PUBLIC:
- 		return true;
+ 	conn = hci_conn_hash_lookup_cig(hdev, cig_id);
+-	if (!conn)
++	if (!conn) {
++		hci_dev_unlock(hdev);
+ 		return 0;
++	}
+ 
+ 	qos = &conn->iso_qos;
+ 	pdu->cig_id = cig_id;
+@@ -1808,6 +1812,8 @@ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
+ 	}
+ 	pdu->num_cis = aux_num_cis;
+ 
++	hci_dev_unlock(hdev);
++
+ 	if (!pdu->num_cis)
+ 		return 0;
+ 
 -- 
 2.53.0
 
