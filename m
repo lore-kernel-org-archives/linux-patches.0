@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2BA33121F;
-	Wed,  8 Apr 2026 18:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5BC33121F;
+	Wed,  8 Apr 2026 18:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674035; cv=none; b=ggsFZCtyGOg9zgxYboCeKSxJM+NGPQc6mv9yIzI3QHVuJIzwrm1hiQhmO6nccL9NxAY5p2zGv6ZP463NzYO0oUJXO8BzNuTFO5dhQDUQ6WtHKXWLMh5B3tLlyfWTcjGjgbdoCxJR56fIAoKXZdpcckrXKG1OUDe/T2J0mbonCrU=
+	t=1775674038; cv=none; b=avRXkBgtMTzugqRfopNQmifRzTxR2SpyOa5TJfP+zkbiT3YIrj6TBLo50AxWl67JsOD72np8b7S0zSAReOVmSJ2boR0/obe0EvjTt0jAC9Hh3nD/SOfNvVuNMvB8lRNH21ynLPNkBoTX0q6iBStuQW2pCk2f7uf5+NHgtiZ/Hhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674035; c=relaxed/simple;
-	bh=n1KblLIjyxqJwZ8h+zBQcCZmA9unnHmie6wlfyQATrE=;
+	s=arc-20240116; t=1775674038; c=relaxed/simple;
+	bh=u5BCMxqfuwyUWZfVqRhoGRd+3zyJoTVy3FMA8v1E3XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+zzypWU4O+sP/Zl/3uWEjgh8/mqhVzvKPomBcFUIYSnEon1mcbYow9TpJrnH3mUR49ZjfiojyvxOiGY2rtja2B1rObRMS9ZGutG9kDOjaA10M6lsSnMkcPF4PWbSV0qwbmE7PxfT95Z5lA/OG2fRTJkkIun/06kImmsRMf1rWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N08OKsdB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mxfr8+9n5t4GhxqGibWcniSMlNg5WafD1K6uUz1W7do/BWEuz7IdDShXxmHi8mIacrdYfug/dHftnR35Sjh1F2PF1YxecCw8ZZZgUymkWhcjJMyV41wfVUbygnvAa5oky7SHiwI0x/VDWcgRu5234DMC3NAFZov2Tv1mFD1fGGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2NTw+YO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N08OKsdB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35857C19421;
-	Wed,  8 Apr 2026 18:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2NTw+YO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEBDC19421;
+	Wed,  8 Apr 2026 18:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674035;
-	bh=n1KblLIjyxqJwZ8h+zBQcCZmA9unnHmie6wlfyQATrE=;
+	s=korg; t=1775674038;
+	bh=u5BCMxqfuwyUWZfVqRhoGRd+3zyJoTVy3FMA8v1E3XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N08OKsdBFsgcb8KeeaYarcOseqkmudqjCYHnnfumIbW7NrL2HmGe2BcA7Ing1vPzz
-	 ivGaQJqNV0ZoEGEFs29px1FnmTmGdU4WpsiMdmvgWhtOetao//z5pmLbzJEyBF9vsA
-	 ZNsMUiRKnqkd288hOSaE2GKsdIxcb8U24G6oyiws=
+	b=h2NTw+YO1IbAf8RP2fT8VLPMqgZAZRQdcQ6rs+WQ7yuZlekdXmo7DtBor4vQQKRj6
+	 Oe6L7zB5fOu1wfE2fGkwjIb+TKhrdKHsqs0eAQTaW2jUhM5XnpX06TCitbxeS0HVy9
+	 RWhbFPQHBXveMfRxxuC+qdEvl2OfMhafJPh4EZdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zorro Lang <zlang@redhat.com>,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 185/242] crypto: tegra - Add missing CRYPTO_ALG_ASYNC
-Date: Wed,  8 Apr 2026 20:03:45 +0200
-Message-ID: <20260408175934.007785073@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 186/242] vxlan: validate ND option lengths in vxlan_na_create
+Date: Wed,  8 Apr 2026 20:03:46 +0200
+Message-ID: <20260408175934.045789759@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,214 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-commit 4b56770d345524fc2acc143a2b85539cf7d74bc1 upstream.
+commit afa9a05e6c4971bd5586f1b304e14d61fb3d9385 upstream.
 
-The tegra crypto driver failed to set the CRYPTO_ALG_ASYNC on its
-asynchronous algorithms, causing the crypto API to select them for users
-that request only synchronous algorithms.  This causes crashes (at
-least).  Fix this by adding the flag like what the other drivers do.
-Also remove the unnecessary CRYPTO_ALG_TYPE_* flags, since those just
-get ignored and overridden by the registration function anyway.
+vxlan_na_create() walks ND options according to option-provided
+lengths. A malformed option can make the parser advance beyond the
+computed option span or use a too-short source LLADDR option payload.
 
-Reported-by: Zorro Lang <zlang@redhat.com>
-Closes: https://lore.kernel.org/r/20260314080937.pghb4aa7d4je3mhh@dell-per750-06-vm-08.rhts.eng.pek2.redhat.com
-Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
+Validate option lengths against the remaining NS option area before
+advancing, and only read source LLADDR when the option is large enough
+for an Ethernet address.
+
+Fixes: 4b29dba9c085 ("vxlan: fix nonfunctional neigh_reduce()")
 Cc: stable@vger.kernel.org
-Cc: Akhil R <akhilrajeev@nvidia.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
+Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260326034441.2037420-4-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/tegra/tegra-se-aes.c  |   11 +++++++----
- drivers/crypto/tegra/tegra-se-hash.c |   30 +++++++++++++++++-------------
- 2 files changed, 24 insertions(+), 17 deletions(-)
+ drivers/net/vxlan/vxlan_core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/tegra/tegra-se-aes.c
-+++ b/drivers/crypto/tegra/tegra-se-aes.c
-@@ -480,7 +480,7 @@ static struct tegra_se_alg tegra_aes_alg
- 				.cra_name = "cbc(aes)",
- 				.cra_driver_name = "cbc-aes-tegra",
- 				.cra_priority = 500,
--				.cra_flags = CRYPTO_ALG_TYPE_SKCIPHER | CRYPTO_ALG_ASYNC,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = AES_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_aes_ctx),
- 				.cra_alignmask = 0xf,
-@@ -501,7 +501,7 @@ static struct tegra_se_alg tegra_aes_alg
- 				.cra_name = "ecb(aes)",
- 				.cra_driver_name = "ecb-aes-tegra",
- 				.cra_priority = 500,
--				.cra_flags = CRYPTO_ALG_TYPE_SKCIPHER | CRYPTO_ALG_ASYNC,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = AES_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_aes_ctx),
- 				.cra_alignmask = 0xf,
-@@ -523,7 +523,7 @@ static struct tegra_se_alg tegra_aes_alg
- 				.cra_name = "ctr(aes)",
- 				.cra_driver_name = "ctr-aes-tegra",
- 				.cra_priority = 500,
--				.cra_flags = CRYPTO_ALG_TYPE_SKCIPHER | CRYPTO_ALG_ASYNC,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = 1,
- 				.cra_ctxsize = sizeof(struct tegra_aes_ctx),
- 				.cra_alignmask = 0xf,
-@@ -545,6 +545,7 @@ static struct tegra_se_alg tegra_aes_alg
- 				.cra_name = "xts(aes)",
- 				.cra_driver_name = "xts-aes-tegra",
- 				.cra_priority = 500,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = AES_BLOCK_SIZE,
- 				.cra_ctxsize	   = sizeof(struct tegra_aes_ctx),
- 				.cra_alignmask	   = (__alignof__(u64) - 1),
-@@ -1804,6 +1805,7 @@ static struct tegra_se_alg tegra_aead_al
- 				.cra_name = "gcm(aes)",
- 				.cra_driver_name = "gcm-aes-tegra",
- 				.cra_priority = 500,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = 1,
- 				.cra_ctxsize = sizeof(struct tegra_aead_ctx),
- 				.cra_alignmask = 0xf,
-@@ -1826,6 +1828,7 @@ static struct tegra_se_alg tegra_aead_al
- 				.cra_name = "ccm(aes)",
- 				.cra_driver_name = "ccm-aes-tegra",
- 				.cra_priority = 500,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = 1,
- 				.cra_ctxsize = sizeof(struct tegra_aead_ctx),
- 				.cra_alignmask = 0xf,
-@@ -1853,7 +1856,7 @@ static struct tegra_se_alg tegra_cmac_al
- 				.cra_name = "cmac(aes)",
- 				.cra_driver_name = "tegra-se-cmac",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = AES_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_cmac_ctx),
- 				.cra_alignmask = 0,
---- a/drivers/crypto/tegra/tegra-se-hash.c
-+++ b/drivers/crypto/tegra/tegra-se-hash.c
-@@ -698,7 +698,7 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "sha1",
- 				.cra_driver_name = "tegra-se-sha1",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = SHA1_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -723,7 +723,7 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "sha224",
- 				.cra_driver_name = "tegra-se-sha224",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = SHA224_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -748,7 +748,7 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "sha256",
- 				.cra_driver_name = "tegra-se-sha256",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = SHA256_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -773,7 +773,7 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "sha384",
- 				.cra_driver_name = "tegra-se-sha384",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = SHA384_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -798,7 +798,7 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "sha512",
- 				.cra_driver_name = "tegra-se-sha512",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = SHA512_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -823,7 +823,7 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "sha3-224",
- 				.cra_driver_name = "tegra-se-sha3-224",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = SHA3_224_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -848,7 +848,7 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "sha3-256",
- 				.cra_driver_name = "tegra-se-sha3-256",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = SHA3_256_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -873,7 +873,7 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "sha3-384",
- 				.cra_driver_name = "tegra-se-sha3-384",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = SHA3_384_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -898,7 +898,7 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "sha3-512",
- 				.cra_driver_name = "tegra-se-sha3-512",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
-+				.cra_flags = CRYPTO_ALG_ASYNC,
- 				.cra_blocksize = SHA3_512_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -925,7 +925,8 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "hmac(sha224)",
- 				.cra_driver_name = "tegra-se-hmac-sha224",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH | CRYPTO_ALG_NEED_FALLBACK,
-+				.cra_flags = CRYPTO_ALG_ASYNC |
-+					     CRYPTO_ALG_NEED_FALLBACK,
- 				.cra_blocksize = SHA224_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -952,7 +953,8 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "hmac(sha256)",
- 				.cra_driver_name = "tegra-se-hmac-sha256",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH | CRYPTO_ALG_NEED_FALLBACK,
-+				.cra_flags = CRYPTO_ALG_ASYNC |
-+					     CRYPTO_ALG_NEED_FALLBACK,
- 				.cra_blocksize = SHA256_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -979,7 +981,8 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "hmac(sha384)",
- 				.cra_driver_name = "tegra-se-hmac-sha384",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH | CRYPTO_ALG_NEED_FALLBACK,
-+				.cra_flags = CRYPTO_ALG_ASYNC |
-+					     CRYPTO_ALG_NEED_FALLBACK,
- 				.cra_blocksize = SHA384_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
-@@ -1006,7 +1009,8 @@ static struct tegra_se_alg tegra_hash_al
- 				.cra_name = "hmac(sha512)",
- 				.cra_driver_name = "tegra-se-hmac-sha512",
- 				.cra_priority = 300,
--				.cra_flags = CRYPTO_ALG_TYPE_AHASH | CRYPTO_ALG_NEED_FALLBACK,
-+				.cra_flags = CRYPTO_ALG_ASYNC |
-+					     CRYPTO_ALG_NEED_FALLBACK,
- 				.cra_blocksize = SHA512_BLOCK_SIZE,
- 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
- 				.cra_alignmask = 0,
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1988,12 +1988,14 @@ static struct sk_buff *vxlan_na_create(s
+ 	ns_olen = request->len - skb_network_offset(request) -
+ 		sizeof(struct ipv6hdr) - sizeof(*ns);
+ 	for (i = 0; i < ns_olen-1; i += (ns->opt[i+1]<<3)) {
+-		if (!ns->opt[i + 1]) {
++		if (!ns->opt[i + 1] || i + (ns->opt[i + 1] << 3) > ns_olen) {
+ 			kfree_skb(reply);
+ 			return NULL;
+ 		}
+ 		if (ns->opt[i] == ND_OPT_SOURCE_LL_ADDR) {
+-			daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
++			if ((ns->opt[i + 1] << 3) >=
++			    sizeof(struct nd_opt_hdr) + ETH_ALEN)
++				daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
+ 			break;
+ 		}
+ 	}
 
 
