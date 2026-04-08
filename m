@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D41A3ACEFB;
-	Wed,  8 Apr 2026 18:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9BB3ACF11;
+	Wed,  8 Apr 2026 18:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672809; cv=none; b=lZ3T9hn7wcfgU3is7Wa07WTEYzKE7O4SzZCQUsGz56xjzu9/NcAcqPtZ/Vacf9q2vn9SAxw/7nTfh2Bt4uZgbv/cRS+VKHMvisxOuzBmUAMT451AvuQAByZi1XmPRDDdhCLOFUafCipeo9EvpNoxIFWyXEwV02KNROoSUSDu8qQ=
+	t=1775672811; cv=none; b=T8q7ePWASJwAOQZxThfWjpso//C9clQmYPhed3AP2i2u0w5kf5CoxwOeLqqrlhTcoPu+2LcIcW9c7kgg1blPLQxG2K/LGgy95ZAAwnBug5bixN5vhCRvit3wpkKrGIfO33dl5HxgTf/KKxvuytu+hK2qrIrfh5+bshEDau/bWig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672809; c=relaxed/simple;
-	bh=XYhH5Vq9aMY9YxO3Z9DIdDjLfNWDb0qemjIpz1rdcyk=;
+	s=arc-20240116; t=1775672811; c=relaxed/simple;
+	bh=AGz+Ha8Ga8jBj5O1w+XqPx5gPeBZSfIxaE82+WMuKuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kbJetYu+3NecKEZsaYH8z9hnUv8n94kKuhRhDoMVbgvfatnXrxeJrH+9VPCUG8ACbYyoHJ28qVC/LCewpIfiTYFhNNI1iJv35+GM8YWpI20UXAsYOcJUgKmFEWKE0mPCgOgdzVJntnMiMiouYakU+e9OxjMIh4GeuXpzfW6M6Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+wZ8bIB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VXUNOViTZZTzbh7qgfAJ6ITcR3ungIdULiTKdRbKToPNRkpYk90s+/am4qvjP0IhrzJjAmHR/JEaBmGkVCQowG5SR9Xd5nzCsTw9Lt/XMsTdX10Aqyq36uLiIwR7wuOa/W39ZFZljQzMU1LYR0utHmKG2b+cUFl9NQ2ubYerQ78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14FBFyj7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+wZ8bIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6571C19421;
-	Wed,  8 Apr 2026 18:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14FBFyj7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C7DC19425;
+	Wed,  8 Apr 2026 18:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672809;
-	bh=XYhH5Vq9aMY9YxO3Z9DIdDjLfNWDb0qemjIpz1rdcyk=;
+	s=korg; t=1775672811;
+	bh=AGz+Ha8Ga8jBj5O1w+XqPx5gPeBZSfIxaE82+WMuKuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+wZ8bIBoaiiuTRnQzqiue+R6lqRQIekQHZdwzsqfB4Jg285xsQUz+9FTV5xRnQUp
-	 +chLGatTIdhXplLX+sYq4oEpLJhzAnX55u/jrB/s6BC3VgJ4FCE16ngB2tpKbkM5T9
-	 vzck1Ep6kSjfIpT88UvNoQ2IBi2ugx7UWf0qZHLk=
+	b=14FBFyj7hZPofKyYy4uTDhBWVKU2GPJ9w6fWwYXL0enwLBZW2JtyWALEtiooveVhE
+	 EQApM7WvUUoA9s136pW4Idy2aGc+5D/95HM46V81MOsNYed5C141buEuFU5818HVx4
+	 c7i1I22REgLSB0154N26aYj9P4bPIuhQ5ieWYpeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 151/160] net: mana: fix use-after-free in add_adev() error path
-Date: Wed,  8 Apr 2026 20:03:58 +0200
-Message-ID: <20260408175918.834646757@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+19bed92c97bee999e5db@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 134/160] USB: dummy-hcd: Fix locking/synchronization error
+Date: Wed,  8 Apr 2026 20:03:41 +0200
+Message-ID: <20260408175918.194693110@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -52,62 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit c4ea7d8907cf72b259bf70bd8c2e791e1c4ff70f ]
+commit 616a63ff495df12863692ab3f9f7b84e3fa7a66d upstream.
 
-If auxiliary_device_add() fails, add_adev() jumps to add_fail and calls
-auxiliary_device_uninit(adev).
+Syzbot testing was able to provoke an addressing exception and crash
+in the usb_gadget_udc_reset() routine in
+drivers/usb/gadgets/udc/core.c, resulting from the fact that the
+routine was called with a second ("driver") argument of NULL.  The bad
+caller was set_link_state() in dummy_hcd.c, and the problem arose
+because of a race between a USB reset and driver unbind.
 
-The auxiliary device has its release callback set to adev_release(),
-which frees the containing struct mana_adev. Since adev is embedded in
-struct mana_adev, the subsequent fall-through to init_fail and access
-to adev->id may result in a use-after-free.
+These sorts of races were not supposed to be possible; commit
+7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous synchronization change"),
+along with a few followup commits, was written specifically to prevent
+them.  As it turns out, there are (at least) two errors remaining in
+the code.  Another patch will address the second error; this one is
+concerned with the first.
 
-Fix this by saving the allocated auxiliary device id in a local
-variable before calling auxiliary_device_add(), and use that saved id
-in the cleanup path after auxiliary_device_uninit().
+The error responsible for the syzbot crash occurred because the
+stop_activity() routine will sometimes drop and then re-acquire the
+dum->lock spinlock.  A call to stop_activity() occurs in
+set_link_state() when handling an emulated USB reset, after the test
+of dum->ints_enabled and before the increment of dum->callback_usage.
+This allowed another thread (doing a driver unbind) to sneak in and
+grab the spinlock, and then clear dum->ints_enabled and dum->driver.
+Normally this other thread would have to wait for dum->callback_usage
+to go down to 0 before it would clear dum->driver, but in this case it
+didn't have to wait since dum->callback_usage had not yet been
+incremented.
 
-Fixes: a69839d4327d ("net: mana: Add support for auxiliary device")
-Cc: stable@vger.kernel.org
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260323165730.945365-1-lgs201920130244@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The fix is to increment dum->callback_usage _before_ calling
+stop_activity() instead of after.  Then the thread doing the unbind
+will not clear dum->driver until after the call to
+usb_gadget_udc_reset() safely returns and dum->callback_usage has been
+decremented again.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-by: syzbot+19bed92c97bee999e5db@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/68fc7c9c.050a0220.346f24.023c.GAE@google.com/
+Tested-by: syzbot+19bed92c97bee999e5db@syzkaller.appspotmail.com
+Fixes: 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous synchronization change")
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/46135f42-fdbe-46b5-aac0-6ca70492af15@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -2759,6 +2759,7 @@ static int add_adev(struct gdma_dev *gd)
- 	struct auxiliary_device *adev;
- 	struct mana_adev *madev;
- 	int ret;
-+	int id;
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -461,8 +461,13 @@ static void set_link_state(struct dummy_
  
- 	madev = kzalloc(sizeof(*madev), GFP_KERNEL);
- 	if (!madev)
-@@ -2768,7 +2769,8 @@ static int add_adev(struct gdma_dev *gd)
- 	ret = mana_adev_idx_alloc();
- 	if (ret < 0)
- 		goto idx_fail;
--	adev->id = ret;
-+	id = ret;
-+	adev->id = id;
- 
- 	adev->name = "rdma";
- 	adev->dev.parent = gd->gdma_context->dev;
-@@ -2792,7 +2794,7 @@ add_fail:
- 	auxiliary_device_uninit(adev);
- 
- init_fail:
--	mana_adev_idx_free(adev->id);
-+	mana_adev_idx_free(id);
- 
- idx_fail:
- 	kfree(madev);
+ 		/* Report reset and disconnect events to the driver */
+ 		if (dum->ints_enabled && (disconnect || reset)) {
+-			stop_activity(dum);
+ 			++dum->callback_usage;
++			/*
++			 * stop_activity() can drop dum->lock, so it must
++			 * not come between the dum->ints_enabled test
++			 * and the ++dum->callback_usage.
++			 */
++			stop_activity(dum);
+ 			spin_unlock(&dum->lock);
+ 			if (reset)
+ 				usb_gadget_udc_reset(&dum->gadget, dum->driver);
 
 
