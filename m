@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EDA3D9041;
-	Wed,  8 Apr 2026 18:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9A33D9054;
+	Wed,  8 Apr 2026 18:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674441; cv=none; b=B8z960rqGaBfDZigQnvzDEMr7A7QqojC0Gcgtf3KbYm+g/P4ZJTgujL7gpdjYAVbwXWl0akAM+vZInQazUBwCGP7J2gdVFFtf5uXmGUpR/Uh+qTmC3u3Doa5EHDIj89IDjSto46mibhp3hwWSuHPA+zuNvMl8+5rr8m5ehro7ZY=
+	t=1775674443; cv=none; b=GXirwXuxGOVpM2jWG4ukuzdzl/ZjvAvN0dOB+kOJ5S3wTIkf6qHuq0V5m698G9inYs1W7Prhjapl2X6A83ThjiRY6ZZF/tIst4RrerhQDG7fsU8/JXTMRv+F388nGJUEMOt+clds9OU18sydW0LWfW0WseL6mQHg7acrgd2+Rv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674441; c=relaxed/simple;
-	bh=x9sTzbMmi98OQq5LCUy46siZVn8QbwvStTNVbY463EY=;
+	s=arc-20240116; t=1775674443; c=relaxed/simple;
+	bh=HFe7nCFAPOlbAvOwqUxU6L4XuGD6C31K7FV+Nie6qUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XqBUa7zO/tizvIWQ8HaKQP/tTrh3BTaNyfIZoUnKbaiKH+AhnzyEW+zExHm6rWPdYII/E0TPSAgcmcplQGA91xmS+0ytlLve1CZ8bY/5UFnkK4nmLKCflnbhiTNRXPfLbwPPI5HFY3/nYMIX/e4nf2nh9UKYgU8le8lfez2sARs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UROjQv1J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=esdUQuINPt1G1dVPZsDWNkoZI28pZB75Tu++LXrghM8R+FaMyuwI+AcsQfG8JP8l5VyQmHflUdSqzdBQ380EZ0G3wOlzTH2mzbz3oqAcDx3auLKB/bUp/kJXDOOpmTAMCxbHAyHrm2H+EcGm7VxJSRjPz0m+trvTI7Bo8VAP5fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyfTLfuG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UROjQv1J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D263C19425;
-	Wed,  8 Apr 2026 18:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyfTLfuG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE34C19421;
+	Wed,  8 Apr 2026 18:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674440;
-	bh=x9sTzbMmi98OQq5LCUy46siZVn8QbwvStTNVbY463EY=;
+	s=korg; t=1775674443;
+	bh=HFe7nCFAPOlbAvOwqUxU6L4XuGD6C31K7FV+Nie6qUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UROjQv1JEUAxtelh1a3uUOQYPDNwTUHszGAmBvMdLUXztDcL8jhH6Erc2v3UH/G0D
-	 VG2PuCGsmSd/S7Q1C+Oe9BkhBGENYtIv0W6aGx+gYNIlwCgoC43VzbZ/rGEzrcqcvK
-	 tz6CTs612NI0ngb7u6eKNQwIJFX3aKxYY8Pqk+7w=
+	b=GyfTLfuGdkOLK6ls1QPtKkIoLAhsRm7y02+Pfeut88igcC28h8FBmgSUOXtGn34is
+	 l53E2P/w97TG/ZpjH/oSFfs7ZRkxMYA23y6iwJ3hsKCDZH/XP9fgEOBjs/5gt9Zkpa
+	 yIMJ5zENA1QfLK3x3GaroFh9cvodZWZoIRL6Aj5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 097/311] Bluetooth: L2CAP: Add support for setting BT_PHY
-Date: Wed,  8 Apr 2026 20:01:37 +0200
-Message-ID: <20260408175943.035901694@linuxfoundation.org>
+Subject: [PATCH 6.19 098/311] Bluetooth: hci_sync: hci_cmd_sync_queue_once() return -EEXIST if exists
+Date: Wed,  8 Apr 2026 20:01:38 +0200
+Message-ID: <20260408175943.074261748@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -50,446 +51,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 132c0779d4a2d08541519cf04783bca52c6ec85c ]
+[ Upstream commit 2969554bcfccb5c609f6b6cd4a014933f3a66dd0 ]
 
-This enables client to use setsockopt(BT_PHY) to set the connection
-packet type/PHY:
+hci_cmd_sync_queue_once() needs to indicate whether a queue item was
+added, so caller can know if callbacks are called, so it can avoid
+leaking resources.
 
-Example setting BT_PHY_BR_1M_1SLOT:
+Change the function to return -EEXIST if queue item already exists.
 
-< HCI Command: Change Conne.. (0x01|0x000f) plen 4
-        Handle: 1 Address: 00:AA:01:01:00:00 (Intel Corporation)
-        Packet type: 0x331e
-          2-DH1 may not be used
-          3-DH1 may not be used
-          DM1 may be used
-          DH1 may be used
-          2-DH3 may not be used
-          3-DH3 may not be used
-          2-DH5 may not be used
-          3-DH5 may not be used
-> HCI Event: Command Status (0x0f) plen 4
-      Change Connection Packet Type (0x01|0x000f) ncmd 1
-        Status: Success (0x00)
-> HCI Event: Connection Packet Typ.. (0x1d) plen 5
-        Status: Success (0x00)
-        Handle: 1 Address: 00:AA:01:01:00:00 (Intel Corporation)
-        Packet type: 0x331e
-          2-DH1 may not be used
-          3-DH1 may not be used
-          DM1 may be used
-          DH1 may be used
-          2-DH3 may not be used
-          3-DH3 may not be used
-          2-DH5 may not be used
+Modify all callsites to handle that.
 
-Example setting BT_PHY_LE_1M_TX and BT_PHY_LE_1M_RX:
-
-< HCI Command: LE Set PHY (0x08|0x0032) plen 7
-        Handle: 1 Address: 00:AA:01:01:00:00 (Intel Corporation)
-        All PHYs preference: 0x00
-        TX PHYs preference: 0x01
-          LE 1M
-        RX PHYs preference: 0x01
-          LE 1M
-        PHY options preference: Reserved (0x0000)
-> HCI Event: Command Status (0x0f) plen 4
-      LE Set PHY (0x08|0x0032) ncmd 1
-        Status: Success (0x00)
-> HCI Event: LE Meta Event (0x3e) plen 6
-      LE PHY Update Complete (0x0c)
-        Status: Success (0x00)
-        Handle: 1 Address: 00:AA:01:01:00:00 (Intel Corporation)
-        TX PHY: LE 1M (0x01)
-        RX PHY: LE 1M (0x01)
-
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: 035c25007c9e ("Bluetooth: hci_sync: Fix UAF in le_read_features_complete")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/bluetooth.h |  39 ++++++-----
- include/net/bluetooth/hci.h       |   9 +++
- include/net/bluetooth/hci_core.h  |   1 +
- include/net/bluetooth/hci_sync.h  |   3 +
- net/bluetooth/hci_conn.c          | 105 ++++++++++++++++++++++++++++++
- net/bluetooth/hci_event.c         |  26 ++++++++
- net/bluetooth/hci_sync.c          |  72 ++++++++++++++++++++
- net/bluetooth/l2cap_sock.c        |  20 +++++-
- 8 files changed, 259 insertions(+), 16 deletions(-)
+ net/bluetooth/hci_sync.c | 53 +++++++++++++++++++++++++++-------------
+ 1 file changed, 36 insertions(+), 17 deletions(-)
 
-diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
-index d46ed9011ee5d..89a60919050b0 100644
---- a/include/net/bluetooth/bluetooth.h
-+++ b/include/net/bluetooth/bluetooth.h
-@@ -130,21 +130,30 @@ struct bt_voice {
- #define BT_RCVMTU		13
- #define BT_PHY			14
- 
--#define BT_PHY_BR_1M_1SLOT	0x00000001
--#define BT_PHY_BR_1M_3SLOT	0x00000002
--#define BT_PHY_BR_1M_5SLOT	0x00000004
--#define BT_PHY_EDR_2M_1SLOT	0x00000008
--#define BT_PHY_EDR_2M_3SLOT	0x00000010
--#define BT_PHY_EDR_2M_5SLOT	0x00000020
--#define BT_PHY_EDR_3M_1SLOT	0x00000040
--#define BT_PHY_EDR_3M_3SLOT	0x00000080
--#define BT_PHY_EDR_3M_5SLOT	0x00000100
--#define BT_PHY_LE_1M_TX		0x00000200
--#define BT_PHY_LE_1M_RX		0x00000400
--#define BT_PHY_LE_2M_TX		0x00000800
--#define BT_PHY_LE_2M_RX		0x00001000
--#define BT_PHY_LE_CODED_TX	0x00002000
--#define BT_PHY_LE_CODED_RX	0x00004000
-+#define BT_PHY_BR_1M_1SLOT	BIT(0)
-+#define BT_PHY_BR_1M_3SLOT	BIT(1)
-+#define BT_PHY_BR_1M_5SLOT	BIT(2)
-+#define BT_PHY_EDR_2M_1SLOT	BIT(3)
-+#define BT_PHY_EDR_2M_3SLOT	BIT(4)
-+#define BT_PHY_EDR_2M_5SLOT	BIT(5)
-+#define BT_PHY_EDR_3M_1SLOT	BIT(6)
-+#define BT_PHY_EDR_3M_3SLOT	BIT(7)
-+#define BT_PHY_EDR_3M_5SLOT	BIT(8)
-+#define BT_PHY_LE_1M_TX		BIT(9)
-+#define BT_PHY_LE_1M_RX		BIT(10)
-+#define BT_PHY_LE_2M_TX		BIT(11)
-+#define BT_PHY_LE_2M_RX		BIT(12)
-+#define BT_PHY_LE_CODED_TX	BIT(13)
-+#define BT_PHY_LE_CODED_RX	BIT(14)
-+
-+#define BT_PHY_BREDR_MASK	(BT_PHY_BR_1M_1SLOT | BT_PHY_BR_1M_3SLOT | \
-+				 BT_PHY_BR_1M_5SLOT | BT_PHY_EDR_2M_1SLOT | \
-+				 BT_PHY_EDR_2M_3SLOT | BT_PHY_EDR_2M_5SLOT | \
-+				 BT_PHY_EDR_3M_1SLOT | BT_PHY_EDR_3M_3SLOT | \
-+				 BT_PHY_EDR_3M_5SLOT)
-+#define BT_PHY_LE_MASK		(BT_PHY_LE_1M_TX | BT_PHY_LE_1M_RX | \
-+				 BT_PHY_LE_2M_TX | BT_PHY_LE_2M_RX | \
-+				 BT_PHY_LE_CODED_TX | BT_PHY_LE_CODED_RX)
- 
- #define BT_MODE			15
- 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index a27cd3626b872..a2beda3b0071d 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -1883,6 +1883,15 @@ struct hci_cp_le_set_default_phy {
- #define HCI_LE_SET_PHY_2M		0x02
- #define HCI_LE_SET_PHY_CODED		0x04
- 
-+#define HCI_OP_LE_SET_PHY		0x2032
-+struct hci_cp_le_set_phy {
-+	__le16  handle;
-+	__u8    all_phys;
-+	__u8    tx_phys;
-+	__u8    rx_phys;
-+	__le16   phy_opts;
-+} __packed;
-+
- #define HCI_OP_LE_SET_EXT_SCAN_PARAMS   0x2041
- struct hci_cp_le_set_ext_scan_params {
- 	__u8    own_addr_type;
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 8aadf4cdead2b..71bbaa7dc790b 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -2336,6 +2336,7 @@ void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
- void *hci_recv_event_data(struct hci_dev *hdev, __u8 event);
- 
- u32 hci_conn_get_phy(struct hci_conn *conn);
-+int hci_conn_set_phy(struct hci_conn *conn, u32 phys);
- 
- /* ----- HCI Sockets ----- */
- void hci_send_to_sock(struct hci_dev *hdev, struct sk_buff *skb);
-diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
-index 56076bbc981d9..73e494b2591de 100644
---- a/include/net/bluetooth/hci_sync.h
-+++ b/include/net/bluetooth/hci_sync.h
-@@ -191,3 +191,6 @@ int hci_connect_big_sync(struct hci_dev *hdev, struct hci_conn *conn);
- int hci_past_sync(struct hci_conn *conn, struct hci_conn *le);
- 
- int hci_le_read_remote_features(struct hci_conn *conn);
-+
-+int hci_acl_change_pkt_type(struct hci_conn *conn, u16 pkt_type);
-+int hci_le_set_phy(struct hci_conn *conn, u8 tx_phys, u8 rx_phys);
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 0f512c2c2fd3c..48aaccd35954a 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2958,6 +2958,111 @@ u32 hci_conn_get_phy(struct hci_conn *conn)
- 	return phys;
- }
- 
-+static u16 bt_phy_pkt_type(struct hci_conn *conn, u32 phys)
-+{
-+	u16 pkt_type = conn->pkt_type;
-+
-+	if (phys & BT_PHY_BR_1M_3SLOT)
-+		pkt_type |= HCI_DM3 | HCI_DH3;
-+	else
-+		pkt_type &= ~(HCI_DM3 | HCI_DH3);
-+
-+	if (phys & BT_PHY_BR_1M_5SLOT)
-+		pkt_type |= HCI_DM5 | HCI_DH5;
-+	else
-+		pkt_type &= ~(HCI_DM5 | HCI_DH5);
-+
-+	if (phys & BT_PHY_EDR_2M_1SLOT)
-+		pkt_type &= ~HCI_2DH1;
-+	else
-+		pkt_type |= HCI_2DH1;
-+
-+	if (phys & BT_PHY_EDR_2M_3SLOT)
-+		pkt_type &= ~HCI_2DH3;
-+	else
-+		pkt_type |= HCI_2DH3;
-+
-+	if (phys & BT_PHY_EDR_2M_5SLOT)
-+		pkt_type &= ~HCI_2DH5;
-+	else
-+		pkt_type |= HCI_2DH5;
-+
-+	if (phys & BT_PHY_EDR_3M_1SLOT)
-+		pkt_type &= ~HCI_3DH1;
-+	else
-+		pkt_type |= HCI_3DH1;
-+
-+	if (phys & BT_PHY_EDR_3M_3SLOT)
-+		pkt_type &= ~HCI_3DH3;
-+	else
-+		pkt_type |= HCI_3DH3;
-+
-+	if (phys & BT_PHY_EDR_3M_5SLOT)
-+		pkt_type &= ~HCI_3DH5;
-+	else
-+		pkt_type |= HCI_3DH5;
-+
-+	return pkt_type;
-+}
-+
-+static int bt_phy_le_phy(u32 phys, u8 *tx_phys, u8 *rx_phys)
-+{
-+	if (!tx_phys || !rx_phys)
-+		return -EINVAL;
-+
-+	*tx_phys = 0;
-+	*rx_phys = 0;
-+
-+	if (phys & BT_PHY_LE_1M_TX)
-+		*tx_phys |= HCI_LE_SET_PHY_1M;
-+
-+	if (phys & BT_PHY_LE_1M_RX)
-+		*rx_phys |= HCI_LE_SET_PHY_1M;
-+
-+	if (phys & BT_PHY_LE_2M_TX)
-+		*tx_phys |= HCI_LE_SET_PHY_2M;
-+
-+	if (phys & BT_PHY_LE_2M_RX)
-+		*rx_phys |= HCI_LE_SET_PHY_2M;
-+
-+	if (phys & BT_PHY_LE_CODED_TX)
-+		*tx_phys |= HCI_LE_SET_PHY_CODED;
-+
-+	if (phys & BT_PHY_LE_CODED_RX)
-+		*rx_phys |= HCI_LE_SET_PHY_CODED;
-+
-+	return 0;
-+}
-+
-+int hci_conn_set_phy(struct hci_conn *conn, u32 phys)
-+{
-+	u8 tx_phys, rx_phys;
-+
-+	switch (conn->type) {
-+	case SCO_LINK:
-+	case ESCO_LINK:
-+		return -EINVAL;
-+	case ACL_LINK:
-+		/* Only allow setting BR/EDR PHYs if link type is ACL */
-+		if (phys & ~BT_PHY_BREDR_MASK)
-+			return -EINVAL;
-+
-+		return hci_acl_change_pkt_type(conn,
-+					       bt_phy_pkt_type(conn, phys));
-+	case LE_LINK:
-+		/* Only allow setting LE PHYs if link type is LE */
-+		if (phys & ~BT_PHY_LE_MASK)
-+			return -EINVAL;
-+
-+		if (bt_phy_le_phy(phys, &tx_phys, &rx_phys))
-+			return -EINVAL;
-+
-+		return hci_le_set_phy(conn, tx_phys, rx_phys);
-+	default:
-+		return -EINVAL;
-+	}
-+}
-+
- static int abort_conn_sync(struct hci_dev *hdev, void *data)
- {
- 	struct hci_conn *conn = data;
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 58075bf720554..467710a42d453 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2869,6 +2869,31 @@ static void hci_cs_le_ext_create_conn(struct hci_dev *hdev, u8 status)
- 	hci_dev_unlock(hdev);
- }
- 
-+static void hci_cs_le_set_phy(struct hci_dev *hdev, u8 status)
-+{
-+	struct hci_cp_le_set_phy *cp;
-+	struct hci_conn *conn;
-+
-+	bt_dev_dbg(hdev, "status 0x%2.2x", status);
-+
-+	if (status)
-+		return;
-+
-+	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_PHY);
-+	if (!cp)
-+		return;
-+
-+	hci_dev_lock(hdev);
-+
-+	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
-+	if (conn) {
-+		conn->le_tx_def_phys = cp->tx_phys;
-+		conn->le_rx_def_phys = cp->rx_phys;
-+	}
-+
-+	hci_dev_unlock(hdev);
-+}
-+
- static void hci_cs_le_read_remote_features(struct hci_dev *hdev, u8 status)
- {
- 	struct hci_cp_le_read_remote_features *cp;
-@@ -4359,6 +4384,7 @@ static const struct hci_cs {
- 	HCI_CS(HCI_OP_LE_CREATE_CONN, hci_cs_le_create_conn),
- 	HCI_CS(HCI_OP_LE_READ_REMOTE_FEATURES, hci_cs_le_read_remote_features),
- 	HCI_CS(HCI_OP_LE_START_ENC, hci_cs_le_start_enc),
-+	HCI_CS(HCI_OP_LE_SET_PHY, hci_cs_le_set_phy),
- 	HCI_CS(HCI_OP_LE_EXT_CREATE_CONN, hci_cs_le_ext_create_conn),
- 	HCI_CS(HCI_OP_LE_CREATE_CIS, hci_cs_le_create_cis),
- 	HCI_CS(HCI_OP_LE_CREATE_BIG, hci_cs_le_create_big),
 diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index a7fc43273815c..b4b5789ef3ab0 100644
+index b4b5789ef3ab0..b501f89caf619 100644
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -7424,3 +7424,75 @@ int hci_le_read_remote_features(struct hci_conn *conn)
+@@ -780,7 +780,7 @@ int hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ 			    void *data, hci_cmd_sync_work_destroy_t destroy)
+ {
+ 	if (hci_cmd_sync_lookup_entry(hdev, func, data, destroy))
+-		return 0;
++		return -EEXIST;
  
- 	return err;
+ 	return hci_cmd_sync_queue(hdev, func, data, destroy);
  }
-+
-+static void pkt_type_changed(struct hci_dev *hdev, void *data, int err)
-+{
-+	struct hci_cp_change_conn_ptype *cp = data;
-+
-+	bt_dev_dbg(hdev, "err %d", err);
-+
-+	kfree(cp);
-+}
-+
-+static int hci_change_conn_ptype_sync(struct hci_dev *hdev, void *data)
-+{
-+	struct hci_cp_change_conn_ptype *cp = data;
-+
-+	return __hci_cmd_sync_status_sk(hdev, HCI_OP_CHANGE_CONN_PTYPE,
-+					sizeof(*cp), cp,
-+					HCI_EV_PKT_TYPE_CHANGE,
-+					HCI_CMD_TIMEOUT, NULL);
-+}
-+
-+int hci_acl_change_pkt_type(struct hci_conn *conn, u16 pkt_type)
-+{
-+	struct hci_dev *hdev = conn->hdev;
-+	struct hci_cp_change_conn_ptype *cp;
-+
-+	cp = kmalloc(sizeof(*cp), GFP_KERNEL);
-+	if (!cp)
-+		return -ENOMEM;
-+
-+	cp->handle = cpu_to_le16(conn->handle);
-+	cp->pkt_type = cpu_to_le16(pkt_type);
-+
-+	return hci_cmd_sync_queue_once(hdev, hci_change_conn_ptype_sync, cp,
-+				       pkt_type_changed);
-+}
-+
-+static void le_phy_update_complete(struct hci_dev *hdev, void *data, int err)
-+{
-+	struct hci_cp_le_set_phy *cp = data;
-+
-+	bt_dev_dbg(hdev, "err %d", err);
-+
-+	kfree(cp);
-+}
-+
-+static int hci_le_set_phy_sync(struct hci_dev *hdev, void *data)
-+{
-+	struct hci_cp_le_set_phy *cp = data;
-+
-+	return __hci_cmd_sync_status_sk(hdev, HCI_OP_LE_SET_PHY,
-+					sizeof(*cp), cp,
-+					HCI_EV_LE_PHY_UPDATE_COMPLETE,
-+					HCI_CMD_TIMEOUT, NULL);
-+}
-+
-+int hci_le_set_phy(struct hci_conn *conn, u8 tx_phys, u8 rx_phys)
-+{
-+	struct hci_dev *hdev = conn->hdev;
-+	struct hci_cp_le_set_phy *cp;
-+
-+	cp = kmalloc(sizeof(*cp), GFP_KERNEL);
-+	if (!cp)
-+		return -ENOMEM;
-+
-+	memset(cp, 0, sizeof(*cp));
-+	cp->handle = cpu_to_le16(conn->handle);
-+	cp->tx_phys = tx_phys;
-+	cp->rx_phys = rx_phys;
-+
-+	return hci_cmd_sync_queue_once(hdev, hci_le_set_phy_sync, cp,
-+				       le_phy_update_complete);
-+}
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index f1131e4415c95..e8106d09f2a42 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -885,7 +885,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 	struct bt_power pwr;
- 	struct l2cap_conn *conn;
- 	int err = 0;
--	u32 opt;
-+	u32 opt, phys;
- 	u16 mtu;
- 	u8 mode;
+@@ -3262,6 +3262,8 @@ static int update_passive_scan_sync(struct hci_dev *hdev, void *data)
  
-@@ -1066,6 +1066,24 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ int hci_update_passive_scan(struct hci_dev *hdev)
+ {
++	int err;
++
+ 	/* Only queue if it would have any effect */
+ 	if (!test_bit(HCI_UP, &hdev->flags) ||
+ 	    test_bit(HCI_INIT, &hdev->flags) ||
+@@ -3271,8 +3273,9 @@ int hci_update_passive_scan(struct hci_dev *hdev)
+ 	    hci_dev_test_flag(hdev, HCI_UNREGISTER))
+ 		return 0;
  
- 		break;
+-	return hci_cmd_sync_queue_once(hdev, update_passive_scan_sync, NULL,
+-				       NULL);
++	err = hci_cmd_sync_queue_once(hdev, update_passive_scan_sync, NULL,
++				      NULL);
++	return (err == -EEXIST) ? 0 : err;
+ }
  
-+	case BT_PHY:
-+		if (sk->sk_state != BT_CONNECTED) {
-+			err = -ENOTCONN;
-+			break;
-+		}
+ int hci_write_sc_support_sync(struct hci_dev *hdev, u8 val)
+@@ -6934,8 +6937,11 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
+ 
+ int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+-	return hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
+-				       NULL);
++	int err;
 +
-+		err = copy_safe_from_sockptr(&phys, sizeof(phys), optval,
-+					     optlen);
-+		if (err)
-+			break;
++	err = hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
++				      NULL);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+@@ -6971,8 +6977,11 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+ 
+ int hci_connect_le_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+-	return hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
+-				       create_le_conn_complete);
++	int err;
 +
-+		if (!chan->conn)
-+			break;
++	err = hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
++				      create_le_conn_complete);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ int hci_cancel_connect_sync(struct hci_dev *hdev, struct hci_conn *conn)
+@@ -7179,8 +7188,11 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
+ 
+ int hci_connect_pa_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+-	return hci_cmd_sync_queue_once(hdev, hci_le_pa_create_sync, conn,
+-				       create_pa_complete);
++	int err;
 +
-+		conn = chan->conn;
-+		err = hci_conn_set_phy(conn->hcon, phys);
-+		break;
++	err = hci_cmd_sync_queue_once(hdev, hci_le_pa_create_sync, conn,
++				      create_pa_complete);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ static void create_big_complete(struct hci_dev *hdev, void *data, int err)
+@@ -7242,8 +7254,11 @@ static int hci_le_big_create_sync(struct hci_dev *hdev, void *data)
+ 
+ int hci_connect_big_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+-	return hci_cmd_sync_queue_once(hdev, hci_le_big_create_sync, conn,
+-				       create_big_complete);
++	int err;
 +
- 	case BT_MODE:
- 		if (!enable_ecred) {
- 			err = -ENOPROTOOPT;
++	err = hci_cmd_sync_queue_once(hdev, hci_le_big_create_sync, conn,
++				      create_big_complete);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ struct past_data {
+@@ -7335,7 +7350,7 @@ int hci_past_sync(struct hci_conn *conn, struct hci_conn *le)
+ 	if (err)
+ 		kfree(data);
+ 
+-	return err;
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ static void le_read_features_complete(struct hci_dev *hdev, void *data, int err)
+@@ -7422,7 +7437,7 @@ int hci_le_read_remote_features(struct hci_conn *conn)
+ 	else
+ 		err = -EOPNOTSUPP;
+ 
+-	return err;
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ static void pkt_type_changed(struct hci_dev *hdev, void *data, int err)
+@@ -7448,6 +7463,7 @@ int hci_acl_change_pkt_type(struct hci_conn *conn, u16 pkt_type)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+ 	struct hci_cp_change_conn_ptype *cp;
++	int err;
+ 
+ 	cp = kmalloc(sizeof(*cp), GFP_KERNEL);
+ 	if (!cp)
+@@ -7456,8 +7472,9 @@ int hci_acl_change_pkt_type(struct hci_conn *conn, u16 pkt_type)
+ 	cp->handle = cpu_to_le16(conn->handle);
+ 	cp->pkt_type = cpu_to_le16(pkt_type);
+ 
+-	return hci_cmd_sync_queue_once(hdev, hci_change_conn_ptype_sync, cp,
+-				       pkt_type_changed);
++	err = hci_cmd_sync_queue_once(hdev, hci_change_conn_ptype_sync, cp,
++				      pkt_type_changed);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ static void le_phy_update_complete(struct hci_dev *hdev, void *data, int err)
+@@ -7483,6 +7500,7 @@ int hci_le_set_phy(struct hci_conn *conn, u8 tx_phys, u8 rx_phys)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+ 	struct hci_cp_le_set_phy *cp;
++	int err;
+ 
+ 	cp = kmalloc(sizeof(*cp), GFP_KERNEL);
+ 	if (!cp)
+@@ -7493,6 +7511,7 @@ int hci_le_set_phy(struct hci_conn *conn, u8 tx_phys, u8 rx_phys)
+ 	cp->tx_phys = tx_phys;
+ 	cp->rx_phys = rx_phys;
+ 
+-	return hci_cmd_sync_queue_once(hdev, hci_le_set_phy_sync, cp,
+-				       le_phy_update_complete);
++	err = hci_cmd_sync_queue_once(hdev, hci_le_set_phy_sync, cp,
++				      le_phy_update_complete);
++	return (err == -EEXIST) ? 0 : err;
+ }
 -- 
 2.53.0
 
