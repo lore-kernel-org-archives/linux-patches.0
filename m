@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13DC32A3FD;
-	Wed,  8 Apr 2026 18:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CF83176E4;
+	Wed,  8 Apr 2026 18:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674654; cv=none; b=LglxmIL/QIcrEkVhZZzGrYG2CKVJO5l5n71TtoOjcF38sbLirSbpW5PEE2OlvLDeezGyu8sp7gFsMdj9iA3sSTvyKdACNZKmDi+T/HpzK+v57ijmYbPukLTwjgs0Xr7FZWJE4P+lWCBa5nRqaFmY9Dmz8Oy/iYSEcIO9l+IOAcM=
+	t=1775674657; cv=none; b=MOWTy/1zMC6l/OZhCl1DPivvpctRgfzu9bmCPl7N9A95/FVV2vkcTa2I1yT0yyHUDolmMiQoZQNtFhgzABQrgaDRn6tvJImYzv+sZvOXjjHXpJquAcfjrlrU81f9fW4N7hlHnm1ZNqJ5gpAeWIf/Pt3owxAXeigec/K61L5Tatg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674654; c=relaxed/simple;
-	bh=uKNwwG2ItmOidRFblPZxRaZTZYl15nTKo5k/iO6lScQ=;
+	s=arc-20240116; t=1775674657; c=relaxed/simple;
+	bh=oGMVO+sO7z9aaZlkEOm1Zx/nliuXJ+37S9zEc8RDl24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXelPWtVOtYdsLkAHrj8CqvE2KvC4I774MF8jKI24poXOezlAVjixhsOKGyE0YhEhDKqzoeAnDneuFi4clLXRhuBOfsgwca7HdZuwL8Tut2x/dyY6k/AsjyYty1vOMn7eNpRUNP96/d7GabbGz+XRXKRxvr8rF7V9Ap0vLw376Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVh/gCQf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BmCYt9UK3T42YzeC/uT7uO/8buLnQ8Ksiu/HF9DAK8/Q22iEz+tNJSkarSNUGl/J4Ja+84IiBgV2JDFRjR0RL5Vrir+wRCMCpiYqE65PCRvJoPIaKySn0qaA4TA+mOJmnSGeNGozrrrMjjXGDQnDuXqC8uj+sGbWWl5LGFS8UfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfVKAIS2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVh/gCQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F19EC19421;
-	Wed,  8 Apr 2026 18:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfVKAIS2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF44C19421;
+	Wed,  8 Apr 2026 18:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674654;
-	bh=uKNwwG2ItmOidRFblPZxRaZTZYl15nTKo5k/iO6lScQ=;
+	s=korg; t=1775674657;
+	bh=oGMVO+sO7z9aaZlkEOm1Zx/nliuXJ+37S9zEc8RDl24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VVh/gCQfTOcE87E8wkXI+htN3Wh53HiUvHRfas00B3CEADWlRfIErJZp+3uD21VLz
-	 KJWME/Tz5tL2jp7HAex1UqaiNvOUGag21bWs1cnPidFW5IWWpaAded4yUipOn4Dg6r
-	 XzewKV3E2XciE8V+Oqj9Jv4zp29iItTi6OQUVteM=
+	b=BfVKAIS2RNOPhpLM7mn13Tk4/NW98k2pIqem0K78b1lT7beg24jY6m1kyXVw6T3G7
+	 N2T3R7maLJ2Eg1+DbzuCP91MgvHUnvrP2cTIh6H/bFWSe9axuCW0LyoC6SVJPoV4L9
+	 E4bca4ePQp+TpUoWCZngTwL/TFQI2NEerQSvnRqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleh Konko <security@1seal.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.19 182/311] Bluetooth: hci_event: move wake reason storage into validated event handlers
-Date: Wed,  8 Apr 2026 20:03:02 +0200
-Message-ID: <20260408175946.206839782@linuxfoundation.org>
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.19 183/311] ksmbd: fix OOB write in QUERY_INFO for compound requests
+Date: Wed,  8 Apr 2026 20:03:03 +0200
+Message-ID: <20260408175946.244862707@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -50,239 +51,328 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleh Konko <security@1seal.org>
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-commit 2b2bf47cd75518c36fa2d41380e4a40641cc89cd upstream.
+commit fda9522ed6afaec45cabc198d8492270c394c7bc upstream.
 
-hci_store_wake_reason() is called from hci_event_packet() immediately
-after stripping the HCI event header but before hci_event_func()
-enforces the per-event minimum payload length from hci_ev_table.
-This means a short HCI event frame can reach bacpy() before any bounds
-check runs.
+When a compound request such as READ + QUERY_INFO(Security) is received,
+and the first command (READ) consumes most of the response buffer,
+ksmbd could write beyond the allocated buffer while building a security
+descriptor.
 
-Rather than duplicating skb parsing and per-event length checks inside
-hci_store_wake_reason(), move wake-address storage into the individual
-event handlers after their existing event-length validation has
-succeeded. Convert hci_store_wake_reason() into a small helper that only
-stores an already-validated bdaddr while the caller holds hci_dev_lock().
-Use the same helper after hci_event_func() with a NULL address to
-preserve the existing unexpected-wake fallback semantics when no
-validated event handler records a wake address.
+The root cause was that smb2_get_info_sec() checked buffer space using
+ppntsd_size from xattr, while build_sec_desc() often synthesized a
+significantly larger descriptor from POSIX ACLs.
 
-Annotate the helper with __must_hold(&hdev->lock) and add
-lockdep_assert_held(&hdev->lock) so future call paths keep the lock
-contract explicit.
+This patch introduces smb_acl_sec_desc_scratch_len() to accurately
+compute the final descriptor size beforehand, performs proper buffer
+checking with smb2_calc_max_out_buf_len(), and uses exact-sized
+allocation + iov pinning.
 
-Call the helper from hci_conn_request_evt(), hci_conn_complete_evt(),
-hci_sync_conn_complete_evt(), le_conn_complete_evt(),
-hci_le_adv_report_evt(), hci_le_ext_adv_report_evt(),
-hci_le_direct_adv_report_evt(), hci_le_pa_sync_established_evt(), and
-hci_le_past_received_evt().
-
-Fixes: 2f20216c1d6f ("Bluetooth: Emit controller suspend and resume events")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleh Konko <security@1seal.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |   94 +++++++++++++++++-----------------------------
- 1 file changed, 35 insertions(+), 59 deletions(-)
+ fs/smb/server/smb2pdu.c |  121 +++++++++++++++++++++++++++++++++++-------------
+ fs/smb/server/smbacl.c  |   43 +++++++++++++++++
+ fs/smb/server/smbacl.h  |    2 
+ 3 files changed, 134 insertions(+), 32 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -80,6 +80,10 @@ static void *hci_le_ev_skb_pull(struct h
- 	return data;
- }
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3401,20 +3401,24 @@ int smb2_open(struct ksmbd_work *work)
+ 							   KSMBD_SHARE_FLAG_ACL_XATTR)) {
+ 					struct smb_fattr fattr;
+ 					struct smb_ntsd *pntsd;
+-					int pntsd_size, ace_num = 0;
++					int pntsd_size;
++					size_t scratch_len;
  
-+static void hci_store_wake_reason(struct hci_dev *hdev,
-+				  const bdaddr_t *bdaddr, u8 addr_type)
-+	__must_hold(&hdev->lock);
-+
- static u8 hci_cc_inquiry_cancel(struct hci_dev *hdev, void *data,
- 				struct sk_buff *skb)
- {
-@@ -3111,6 +3115,7 @@ static void hci_conn_complete_evt(struct
- 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
- 
- 	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
- 
- 	/* Check for existing connection:
- 	 *
-@@ -3274,6 +3279,10 @@ static void hci_conn_request_evt(struct
- 
- 	bt_dev_dbg(hdev, "bdaddr %pMR type 0x%x", &ev->bdaddr, ev->link_type);
- 
-+	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
-+	hci_dev_unlock(hdev);
-+
- 	/* Reject incoming connection from device with same BD ADDR against
- 	 * CVE-2020-26555
- 	 */
-@@ -5021,6 +5030,7 @@ static void hci_sync_conn_complete_evt(s
- 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
- 
- 	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
- 
- 	conn = hci_conn_hash_lookup_ba(hdev, ev->link_type, &ev->bdaddr);
- 	if (!conn) {
-@@ -5713,6 +5723,7 @@ static void le_conn_complete_evt(struct
- 	int err;
- 
- 	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, bdaddr, bdaddr_type);
- 
- 	/* All controllers implicitly stop advertising in the event of a
- 	 * connection, so ensure that the state bit is cleared.
-@@ -6005,6 +6016,7 @@ static void hci_le_past_received_evt(str
- 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
- 
- 	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, &ev->bdaddr, ev->bdaddr_type);
- 
- 	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
- 
-@@ -6403,6 +6415,8 @@ static void hci_le_adv_report_evt(struct
- 					info->length + 1))
- 			break;
- 
-+		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
-+
- 		if (info->length <= max_adv_len(hdev)) {
- 			rssi = info->data[info->length];
- 			process_adv_report(hdev, info->type, &info->bdaddr,
-@@ -6491,6 +6505,8 @@ static void hci_le_ext_adv_report_evt(st
- 					info->length))
- 			break;
- 
-+		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
-+
- 		evt_type = __le16_to_cpu(info->type) & LE_EXT_ADV_EVT_TYPE_MASK;
- 		legacy_evt_type = ext_evt_type_to_legacy(hdev, evt_type);
- 
-@@ -6536,6 +6552,7 @@ static void hci_le_pa_sync_established_e
- 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
- 
- 	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, &ev->bdaddr, ev->bdaddr_type);
- 
- 	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
- 
-@@ -6841,6 +6858,8 @@ static void hci_le_direct_adv_report_evt
- 	for (i = 0; i < ev->num; i++) {
- 		struct hci_ev_le_direct_adv_info *info = &ev->info[i];
- 
-+		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
-+
- 		process_adv_report(hdev, info->type, &info->bdaddr,
- 				   info->bdaddr_type, &info->direct_addr,
- 				   info->direct_addr_type, HCI_ADV_PHY_1M, 0,
-@@ -7509,73 +7528,29 @@ static bool hci_get_cmd_complete(struct
- 	return true;
- }
- 
--static void hci_store_wake_reason(struct hci_dev *hdev, u8 event,
--				  struct sk_buff *skb)
-+static void hci_store_wake_reason(struct hci_dev *hdev,
-+				  const bdaddr_t *bdaddr, u8 addr_type)
-+	__must_hold(&hdev->lock)
- {
--	struct hci_ev_le_advertising_info *adv;
--	struct hci_ev_le_direct_adv_info *direct_adv;
--	struct hci_ev_le_ext_adv_info *ext_adv;
--	const struct hci_ev_conn_complete *conn_complete = (void *)skb->data;
--	const struct hci_ev_conn_request *conn_request = (void *)skb->data;
+ 					ksmbd_acls_fattr(&fattr, idmap, inode);
+-					if (fattr.cf_acls)
+-						ace_num = fattr.cf_acls->a_count;
+-					if (fattr.cf_dacls)
+-						ace_num += fattr.cf_dacls->a_count;
 -
--	hci_dev_lock(hdev);
-+	lockdep_assert_held(&hdev->lock);
- 
- 	/* If we are currently suspended and this is the first BT event seen,
- 	 * save the wake reason associated with the event.
- 	 */
- 	if (!hdev->suspended || hdev->wake_reason)
--		goto unlock;
-+		return;
+-					pntsd = kmalloc(sizeof(struct smb_ntsd) +
+-							sizeof(struct smb_sid) * 3 +
+-							sizeof(struct smb_acl) +
+-							sizeof(struct smb_ace) * ace_num * 2,
+-							KSMBD_DEFAULT_GFP);
++					scratch_len = smb_acl_sec_desc_scratch_len(&fattr,
++							NULL, 0,
++							OWNER_SECINFO | GROUP_SECINFO |
++							DACL_SECINFO);
++					if (!scratch_len || scratch_len == SIZE_MAX) {
++						rc = -EFBIG;
++						posix_acl_release(fattr.cf_acls);
++						posix_acl_release(fattr.cf_dacls);
++						goto err_out;
++					}
 +
-+	if (!bdaddr) {
-+		hdev->wake_reason = MGMT_WAKE_REASON_UNEXPECTED;
-+		return;
++					pntsd = kvzalloc(scratch_len, KSMBD_DEFAULT_GFP);
+ 					if (!pntsd) {
++						rc = -ENOMEM;
+ 						posix_acl_release(fattr.cf_acls);
+ 						posix_acl_release(fattr.cf_dacls);
+ 						goto err_out;
+@@ -3429,7 +3433,7 @@ int smb2_open(struct ksmbd_work *work)
+ 					posix_acl_release(fattr.cf_acls);
+ 					posix_acl_release(fattr.cf_dacls);
+ 					if (rc) {
+-						kfree(pntsd);
++						kvfree(pntsd);
+ 						goto err_out;
+ 					}
+ 
+@@ -3439,7 +3443,7 @@ int smb2_open(struct ksmbd_work *work)
+ 								    pntsd,
+ 								    pntsd_size,
+ 								    false);
+-					kfree(pntsd);
++					kvfree(pntsd);
+ 					if (rc)
+ 						pr_err("failed to store ntacl in xattr : %d\n",
+ 						       rc);
+@@ -5371,8 +5375,9 @@ static int smb2_get_info_file(struct ksm
+ 	if (test_share_config_flag(work->tcon->share_conf,
+ 				   KSMBD_SHARE_FLAG_PIPE)) {
+ 		/* smb2 info file called for pipe */
+-		return smb2_get_info_file_pipe(work->sess, req, rsp,
++		rc = smb2_get_info_file_pipe(work->sess, req, rsp,
+ 					       work->response_buf);
++		goto iov_pin_out;
+ 	}
+ 
+ 	if (work->next_smb2_rcv_hdr_off) {
+@@ -5472,6 +5477,12 @@ static int smb2_get_info_file(struct ksm
+ 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
+ 				      rsp, work->response_buf);
+ 	ksmbd_fd_put(work, fp);
++
++iov_pin_out:
++	if (!rc)
++		rc = ksmbd_iov_pin_rsp(work, (void *)rsp,
++				offsetof(struct smb2_query_info_rsp, Buffer) +
++				le32_to_cpu(rsp->OutputBufferLength));
+ 	return rc;
+ }
+ 
+@@ -5698,6 +5709,11 @@ static int smb2_get_info_filesystem(stru
+ 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
+ 			      rsp, work->response_buf);
+ 	path_put(&path);
++
++	if (!rc)
++		rc = ksmbd_iov_pin_rsp(work, (void *)rsp,
++				offsetof(struct smb2_query_info_rsp, Buffer) +
++				le32_to_cpu(rsp->OutputBufferLength));
+ 	return rc;
+ }
+ 
+@@ -5707,13 +5723,14 @@ static int smb2_get_info_sec(struct ksmb
+ {
+ 	struct ksmbd_file *fp;
+ 	struct mnt_idmap *idmap;
+-	struct smb_ntsd *pntsd = (struct smb_ntsd *)rsp->Buffer, *ppntsd = NULL;
++	struct smb_ntsd *pntsd = NULL, *ppntsd = NULL;
+ 	struct smb_fattr fattr = {{0}};
+ 	struct inode *inode;
+ 	__u32 secdesclen = 0;
+ 	unsigned int id = KSMBD_NO_FID, pid = KSMBD_NO_FID;
+ 	int addition_info = le32_to_cpu(req->AdditionalInformation);
+-	int rc = 0, ppntsd_size = 0;
++	int rc = 0, ppntsd_size = 0, max_len;
++	size_t scratch_len = 0;
+ 
+ 	if (addition_info & ~(OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO |
+ 			      PROTECTED_DACL_SECINFO |
+@@ -5721,6 +5738,11 @@ static int smb2_get_info_sec(struct ksmb
+ 		ksmbd_debug(SMB, "Unsupported addition info: 0x%x)\n",
+ 		       addition_info);
+ 
++		pntsd = kzalloc(ALIGN(sizeof(struct smb_ntsd), 8),
++				KSMBD_DEFAULT_GFP);
++		if (!pntsd)
++			return -ENOMEM;
++
+ 		pntsd->revision = cpu_to_le16(1);
+ 		pntsd->type = cpu_to_le16(SELF_RELATIVE | DACL_PROTECTED);
+ 		pntsd->osidoffset = 0;
+@@ -5729,9 +5751,7 @@ static int smb2_get_info_sec(struct ksmb
+ 		pntsd->dacloffset = 0;
+ 
+ 		secdesclen = sizeof(struct smb_ntsd);
+-		rsp->OutputBufferLength = cpu_to_le32(secdesclen);
+-
+-		return 0;
++		goto iov_pin;
+ 	}
+ 
+ 	if (work->next_smb2_rcv_hdr_off) {
+@@ -5763,18 +5783,58 @@ static int smb2_get_info_sec(struct ksmb
+ 						     &ppntsd);
+ 
+ 	/* Check if sd buffer size exceeds response buffer size */
+-	if (smb2_resp_buf_len(work, 8) > ppntsd_size)
+-		rc = build_sec_desc(idmap, pntsd, ppntsd, ppntsd_size,
+-				    addition_info, &secdesclen, &fattr);
++	max_len = smb2_calc_max_out_buf_len(work,
++			offsetof(struct smb2_query_info_rsp, Buffer),
++			le32_to_cpu(req->OutputBufferLength));
++	if (max_len < 0) {
++		rc = -EINVAL;
++		goto release_acl;
 +	}
++
++	scratch_len = smb_acl_sec_desc_scratch_len(&fattr, ppntsd,
++			ppntsd_size, addition_info);
++	if (!scratch_len || scratch_len == SIZE_MAX) {
++		rc = -EFBIG;
++		goto release_acl;
++	}
++
++	pntsd = kvzalloc(scratch_len, KSMBD_DEFAULT_GFP);
++	if (!pntsd) {
++		rc = -ENOMEM;
++		goto release_acl;
++	}
++
++	rc = build_sec_desc(idmap, pntsd, ppntsd, ppntsd_size,
++			addition_info, &secdesclen, &fattr);
++
++release_acl:
+ 	posix_acl_release(fattr.cf_acls);
+ 	posix_acl_release(fattr.cf_dacls);
+ 	kfree(ppntsd);
+ 	ksmbd_fd_put(work, fp);
++
++	if (!rc && ALIGN(secdesclen, 8) > scratch_len)
++		rc = -EFBIG;
+ 	if (rc)
+-		return rc;
++		goto err_out;
  
- 	/* Default to remote wake. Values for wake_reason are documented in the
- 	 * Bluez mgmt api docs.
- 	 */
- 	hdev->wake_reason = MGMT_WAKE_REASON_REMOTE_WAKE;
--
--	/* Once configured for remote wakeup, we should only wake up for
--	 * reconnections. It's useful to see which device is waking us up so
--	 * keep track of the bdaddr of the connection event that woke us up.
--	 */
--	if (event == HCI_EV_CONN_REQUEST) {
--		bacpy(&hdev->wake_addr, &conn_request->bdaddr);
--		hdev->wake_addr_type = BDADDR_BREDR;
--	} else if (event == HCI_EV_CONN_COMPLETE) {
--		bacpy(&hdev->wake_addr, &conn_complete->bdaddr);
--		hdev->wake_addr_type = BDADDR_BREDR;
--	} else if (event == HCI_EV_LE_META) {
--		struct hci_ev_le_meta *le_ev = (void *)skb->data;
--		u8 subevent = le_ev->subevent;
--		u8 *ptr = &skb->data[sizeof(*le_ev)];
--		u8 num_reports = *ptr;
--
--		if ((subevent == HCI_EV_LE_ADVERTISING_REPORT ||
--		     subevent == HCI_EV_LE_DIRECT_ADV_REPORT ||
--		     subevent == HCI_EV_LE_EXT_ADV_REPORT) &&
--		    num_reports) {
--			adv = (void *)(ptr + 1);
--			direct_adv = (void *)(ptr + 1);
--			ext_adv = (void *)(ptr + 1);
--
--			switch (subevent) {
--			case HCI_EV_LE_ADVERTISING_REPORT:
--				bacpy(&hdev->wake_addr, &adv->bdaddr);
--				hdev->wake_addr_type = adv->bdaddr_type;
--				break;
--			case HCI_EV_LE_DIRECT_ADV_REPORT:
--				bacpy(&hdev->wake_addr, &direct_adv->bdaddr);
--				hdev->wake_addr_type = direct_adv->bdaddr_type;
--				break;
--			case HCI_EV_LE_EXT_ADV_REPORT:
--				bacpy(&hdev->wake_addr, &ext_adv->bdaddr);
--				hdev->wake_addr_type = ext_adv->bdaddr_type;
--				break;
--			}
--		}
--	} else {
--		hdev->wake_reason = MGMT_WAKE_REASON_UNEXPECTED;
++iov_pin:
+ 	rsp->OutputBufferLength = cpu_to_le32(secdesclen);
+-	return 0;
++	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
++			      rsp, work->response_buf);
++	if (rc)
++		goto err_out;
++
++	rc = ksmbd_iov_pin_rsp_read(work, (void *)rsp,
++			offsetof(struct smb2_query_info_rsp, Buffer),
++			pntsd, secdesclen);
++err_out:
++	if (rc) {
++		rsp->OutputBufferLength = 0;
++		kvfree(pntsd);
++	}
++
++	return rc;
+ }
+ 
+ /**
+@@ -5798,6 +5858,9 @@ int smb2_query_info(struct ksmbd_work *w
+ 		goto err_out;
+ 	}
+ 
++	rsp->StructureSize = cpu_to_le16(9);
++	rsp->OutputBufferOffset = cpu_to_le16(72);
++
+ 	switch (req->InfoType) {
+ 	case SMB2_O_INFO_FILE:
+ 		ksmbd_debug(SMB, "GOT SMB2_O_INFO_FILE\n");
+@@ -5818,14 +5881,6 @@ int smb2_query_info(struct ksmbd_work *w
+ 	}
+ 	ksmbd_revert_fsids(work);
+ 
+-	if (!rc) {
+-		rsp->StructureSize = cpu_to_le16(9);
+-		rsp->OutputBufferOffset = cpu_to_le16(72);
+-		rc = ksmbd_iov_pin_rsp(work, (void *)rsp,
+-				       offsetof(struct smb2_query_info_rsp, Buffer) +
+-					le32_to_cpu(rsp->OutputBufferLength));
 -	}
 -
--unlock:
--	hci_dev_unlock(hdev);
-+	bacpy(&hdev->wake_addr, bdaddr);
-+	hdev->wake_addr_type = addr_type;
+ err_out:
+ 	if (rc < 0) {
+ 		if (rc == -EACCES)
+@@ -5836,6 +5891,8 @@ err_out:
+ 			rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
+ 		else if (rc == -ENOMEM)
+ 			rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
++		else if (rc == -EINVAL && rsp->hdr.Status == 0)
++			rsp->hdr.Status = STATUS_INVALID_PARAMETER;
+ 		else if (rc == -EOPNOTSUPP || rsp->hdr.Status == 0)
+ 			rsp->hdr.Status = STATUS_INVALID_INFO_CLASS;
+ 		smb2_set_err_rsp(work);
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -915,6 +915,49 @@ int parse_sec_desc(struct mnt_idmap *idm
+ 	return 0;
  }
  
- #define HCI_EV_VL(_op, _func, _min_len, _max_len) \
-@@ -7822,14 +7797,15 @@ void hci_event_packet(struct hci_dev *hd
- 
- 	skb_pull(skb, HCI_EVENT_HDR_SIZE);
- 
--	/* Store wake reason if we're suspended */
--	hci_store_wake_reason(hdev, event, skb);
--
- 	bt_dev_dbg(hdev, "event 0x%2.2x", event);
- 
- 	hci_event_func(hdev, event, skb, &opcode, &status, &req_complete,
- 		       &req_complete_skb);
- 
-+	hci_dev_lock(hdev);
-+	hci_store_wake_reason(hdev, NULL, 0);
-+	hci_dev_unlock(hdev);
++size_t smb_acl_sec_desc_scratch_len(struct smb_fattr *fattr,
++		struct smb_ntsd *ppntsd, int ppntsd_size, int addition_info)
++{
++	size_t len = sizeof(struct smb_ntsd);
++	size_t tmp;
 +
- 	if (req_complete) {
- 		req_complete(hdev, status, opcode);
- 	} else if (req_complete_skb) {
++	if (addition_info & OWNER_SECINFO)
++		len += sizeof(struct smb_sid);
++	if (addition_info & GROUP_SECINFO)
++		len += sizeof(struct smb_sid);
++	if (!(addition_info & DACL_SECINFO))
++		return len;
++
++	len += sizeof(struct smb_acl);
++	if (ppntsd && ppntsd_size > 0) {
++		unsigned int dacl_offset = le32_to_cpu(ppntsd->dacloffset);
++
++		if (dacl_offset < ppntsd_size &&
++		    check_add_overflow(len, ppntsd_size - dacl_offset, &len))
++			return 0;
++	}
++
++	if (fattr->cf_acls) {
++		if (check_mul_overflow((size_t)fattr->cf_acls->a_count,
++					2 * sizeof(struct smb_ace), &tmp) ||
++		    check_add_overflow(len, tmp, &len))
++			return 0;
++	} else {
++		/* default/minimum DACL */
++		if (check_add_overflow(len, 5 * sizeof(struct smb_ace), &len))
++			return 0;
++	}
++
++	if (fattr->cf_dacls) {
++		if (check_mul_overflow((size_t)fattr->cf_dacls->a_count,
++					sizeof(struct smb_ace), &tmp) ||
++		    check_add_overflow(len, tmp, &len))
++			return 0;
++	}
++
++	return len;
++}
++
+ /* Convert permission bits from mode to equivalent CIFS ACL */
+ int build_sec_desc(struct mnt_idmap *idmap,
+ 		   struct smb_ntsd *pntsd, struct smb_ntsd *ppntsd,
+--- a/fs/smb/server/smbacl.h
++++ b/fs/smb/server/smbacl.h
+@@ -101,6 +101,8 @@ int set_info_sec(struct ksmbd_conn *conn
+ 		 bool type_check, bool get_write);
+ void id_to_sid(unsigned int cid, uint sidtype, struct smb_sid *ssid);
+ void ksmbd_init_domain(u32 *sub_auth);
++size_t smb_acl_sec_desc_scratch_len(struct smb_fattr *fattr,
++		struct smb_ntsd *ppntsd, int ppntsd_size, int addition_info);
+ 
+ static inline uid_t posix_acl_uid_translate(struct mnt_idmap *idmap,
+ 					    struct posix_acl_entry *pace)
 
 
