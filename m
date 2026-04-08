@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF52E25A321;
-	Wed,  8 Apr 2026 19:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC6F3BB4A;
+	Wed,  8 Apr 2026 19:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674997; cv=none; b=ihThaXoSrRMmNeA9AXjZqdMb807QPWKUUaoZ/95gEbrgNGOyEMOrGDurfmdLCi3trWa4BtLO1tCJb7Ks7i2AfgYJHapbWXaSJS5tnoiu3lu7Zd/bQJ1BniuJ7G0DFrLHYYKCiemZKsKjEjDD86J+kHaqStMMbf2WvfYZ/BFLBoo=
+	t=1775675000; cv=none; b=FucDznHDjD+dPbWtsSJlae75QNkPMFtc3AaBQKYKisKwDVRVGZa7Dl5QVGmAzXNt8RsXqpyYZwPLmJNQTUTd5xYxDM9j/DsbtHElCGsCA5y0RvxTkF9IXCIZQzRKGnM3rx6nFG+rOMrhm/2EXwTcS7YYuyV7pyvHhla/RIE64QA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674997; c=relaxed/simple;
-	bh=zymPJ5PT1IrAziK7Xl+rMvywNHsqOdPrdVsvg0mTq2E=;
+	s=arc-20240116; t=1775675000; c=relaxed/simple;
+	bh=mvH/uJ1tW4s+K7jSU6p+FEdHOJ3+nfkXKOHivuclwJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NYf/FrlB7YH+GmReGNxylqg2o7K+RNLgZdbkRtdk84KxuXCC66Uk/7Dao19WiGHyHfsDG04DnD67ejRRUuqpeyYK10FS48yaPRC55urvy9RqIK7hMXSyrUoPZLBrdm2JgYAny2PwjbRWAgRAlHvE+yGm9/9n1z3XPc8qlq8MIRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5+crX4K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqi7+B/69vk1v2KPwIjeIz5nYNXvMF7bcDsRPK5/gDm1Pu8HxcAyP2IVFrZw3CWE8bEuj+/7RCbQ6nZstdgJJWOxboIl1lr8tdNi/I78KuJEaA/9SBeDrNqhTJBy4N0SfzrS9gyPxA1YszvFjgF8oTVuRO7bqf2gxTbx0lJbP7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXDSE8pk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5+crX4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD0AC19421;
-	Wed,  8 Apr 2026 19:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXDSE8pk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D941CC19421;
+	Wed,  8 Apr 2026 19:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674997;
-	bh=zymPJ5PT1IrAziK7Xl+rMvywNHsqOdPrdVsvg0mTq2E=;
+	s=korg; t=1775675000;
+	bh=mvH/uJ1tW4s+K7jSU6p+FEdHOJ3+nfkXKOHivuclwJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a5+crX4K51vo6akjIL+z7TuBIPcLCzejUqRnq5Wbi72Jhs+wGFpCa16H2UNu7PrLi
-	 OBV6kJAEJNpIHs/nLeCiRYW7NK+vxrqsPDY9VAMcGzmxcWfr34PNFwY9mAV/geq54c
-	 Y6gAP4z9Q3EXj8Rj/i1BZ/9qYr8+PYai07gvXoHw=
+	b=pXDSE8pkPUwsnCLABrx4+m//MN9kgsY8Nf+SH0bAzjuRlLLSdqdcKmNS5YDEcKfI4
+	 LFJceftu48M0vO79b8Z6LL6qBSgdwcvfhcSiHqvtY6Rlc0QnU70aMkw6exdv0l9cuL
+	 vVF6wfK56QFb65qveLsPQfKfH3bVztgefMeUh+Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.19 283/311] gpio: mxc: map Both Edge pad wakeup to Rising Edge
-Date: Wed,  8 Apr 2026 20:04:43 +0200
-Message-ID: <20260408175949.949257760@linuxfoundation.org>
+Subject: [PATCH 6.19 284/311] gpio: Fix resource leaks on errors in gpiochip_add_data_with_key()
+Date: Wed,  8 Apr 2026 20:04:44 +0200
+Message-ID: <20260408175949.985701635@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,58 +51,238 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit c720fb57d56274213d027b3c5ab99080cf62a306 upstream.
+commit 16fdabe143fce2cbf89139677728e17e21b46c28 upstream.
 
-Suspend may fail on i.MX8QM when Falling Edge is used as a pad wakeup
-trigger due to a hardware bug in the detection logic. Since the hardware
-does not support Both Edge wakeup, remap requests for Both Edge to Rising
-Edge by default to avoid hitting this issue.
+Since commit aab5c6f20023 ("gpio: set device type for GPIO chips"),
+`gdev->dev.release` is unset.  As a result, the reference count to
+`gdev->dev` isn't dropped on the error handling paths.
 
-A warning is emitted when Falling Edge is selected on i.MX8QM.
+Drop the reference on errors.
 
-Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
-cc: stable@vger.kernel.org
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Link: https://patch.msgid.link/20260324192129.2797237-1-shenwei.wang@nxp.com
+Also reorder the instructions to make the error handling simpler.
+Now gpiochip_add_data_with_key() roughly looks like:
+
+   >>> Some memory allocation.  Go to ERR ZONE 1 on errors.
+   >>> device_initialize().
+
+   gpiodev_release() takes over the responsibility for freeing the
+   resources of `gdev->dev`.  The subsequent error handling paths
+   shouldn't go through ERR ZONE 1 again which leads to double free.
+
+   >>> Some initialization mainly on `gdev`.
+   >>> The rest of initialization.  Go to ERR ZONE 2 on errors.
+   >>> Chip registration success and exit.
+
+   >>> ERR ZONE 2.  gpio_device_put() and exit.
+   >>> ERR ZONE 1.
+
+Cc: stable@vger.kernel.org
+Fixes: aab5c6f20023 ("gpio: set device type for GPIO chips")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20260205092840.2574840-1-tzungbi@kernel.org
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mxc.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpio/gpiolib.c |  101 +++++++++++++++++++++++--------------------------
+ 1 file changed, 48 insertions(+), 53 deletions(-)
 
---- a/drivers/gpio/gpio-mxc.c
-+++ b/drivers/gpio/gpio-mxc.c
-@@ -584,12 +584,13 @@ static bool mxc_gpio_set_pad_wakeup(stru
- 	unsigned long config;
- 	bool ret = false;
- 	int i, type;
-+	bool is_imx8qm = of_device_is_compatible(port->dev->of_node, "fsl,imx8qm-gpio");
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -893,13 +893,15 @@ static const struct device_type gpio_dev
+ #define gcdev_unregister(gdev)		device_del(&(gdev)->dev)
+ #endif
  
- 	static const u32 pad_type_map[] = {
- 		IMX_SCU_WAKEUP_OFF,		/* 0 */
- 		IMX_SCU_WAKEUP_RISE_EDGE,	/* IRQ_TYPE_EDGE_RISING */
- 		IMX_SCU_WAKEUP_FALL_EDGE,	/* IRQ_TYPE_EDGE_FALLING */
--		IMX_SCU_WAKEUP_FALL_EDGE,	/* IRQ_TYPE_EDGE_BOTH */
-+		IMX_SCU_WAKEUP_RISE_EDGE,	/* IRQ_TYPE_EDGE_BOTH */
- 		IMX_SCU_WAKEUP_HIGH_LVL,	/* IRQ_TYPE_LEVEL_HIGH */
- 		IMX_SCU_WAKEUP_OFF,		/* 5 */
- 		IMX_SCU_WAKEUP_OFF,		/* 6 */
-@@ -604,6 +605,13 @@ static bool mxc_gpio_set_pad_wakeup(stru
- 				config = pad_type_map[type];
- 			else
- 				config = IMX_SCU_WAKEUP_OFF;
++/*
++ * An initial reference count has been held in gpiochip_add_data_with_key().
++ * The caller should drop the reference via gpio_device_put() on errors.
++ */
+ static int gpiochip_setup_dev(struct gpio_device *gdev)
+ {
+ 	struct fwnode_handle *fwnode = dev_fwnode(&gdev->dev);
+ 	int ret;
+ 
+-	device_initialize(&gdev->dev);
+-
+ 	/*
+ 	 * If fwnode doesn't belong to another device, it's safe to clear its
+ 	 * initialized flag.
+@@ -965,9 +967,11 @@ static void gpiochip_setup_devs(void)
+ 	list_for_each_entry_srcu(gdev, &gpio_devices, list,
+ 				 srcu_read_lock_held(&gpio_devices_srcu)) {
+ 		ret = gpiochip_setup_dev(gdev);
+-		if (ret)
++		if (ret) {
++			gpio_device_put(gdev);
+ 			dev_err(&gdev->dev,
+ 				"Failed to initialize gpio device (%d)\n", ret);
++		}
+ 	}
+ }
+ 
+@@ -1048,71 +1052,72 @@ int gpiochip_add_data_with_key(struct gp
+ 	int base = 0;
+ 	int ret;
+ 
+-	/*
+-	 * First: allocate and populate the internal stat container, and
+-	 * set up the struct device.
+-	 */
+ 	gdev = kzalloc(sizeof(*gdev), GFP_KERNEL);
+ 	if (!gdev)
+ 		return -ENOMEM;
+-
+-	gdev->dev.type = &gpio_dev_type;
+-	gdev->dev.bus = &gpio_bus_type;
+-	gdev->dev.parent = gc->parent;
+-	rcu_assign_pointer(gdev->chip, gc);
+-
+ 	gc->gpiodev = gdev;
+ 	gpiochip_set_data(gc, data);
+ 
+-	device_set_node(&gdev->dev, gpiochip_choose_fwnode(gc));
+-
+ 	ret = ida_alloc(&gpio_ida, GFP_KERNEL);
+ 	if (ret < 0)
+ 		goto err_free_gdev;
+ 	gdev->id = ret;
+ 
+-	ret = dev_set_name(&gdev->dev, GPIOCHIP_NAME "%d", gdev->id);
++	ret = init_srcu_struct(&gdev->srcu);
+ 	if (ret)
+ 		goto err_free_ida;
++	rcu_assign_pointer(gdev->chip, gc);
+ 
+-	if (gc->parent && gc->parent->driver)
+-		gdev->owner = gc->parent->driver->owner;
+-	else if (gc->owner)
+-		/* TODO: remove chip->owner */
+-		gdev->owner = gc->owner;
+-	else
+-		gdev->owner = THIS_MODULE;
++	ret = init_srcu_struct(&gdev->desc_srcu);
++	if (ret)
++		goto err_cleanup_gdev_srcu;
 +
-+			if (is_imx8qm && config == IMX_SCU_WAKEUP_FALL_EDGE) {
-+				dev_warn_once(port->dev,
-+					      "No falling-edge support for wakeup on i.MX8QM\n");
-+				config = IMX_SCU_WAKEUP_OFF;
-+			}
++	ret = dev_set_name(&gdev->dev, GPIOCHIP_NAME "%d", gdev->id);
++	if (ret)
++		goto err_cleanup_desc_srcu;
 +
- 			ret |= mxc_gpio_generic_config(port, i, config);
++	device_initialize(&gdev->dev);
++	/*
++	 * After this point any allocated resources to `gdev` will be
++	 * free():ed by gpiodev_release().  If you add new resources
++	 * then make sure they get free():ed there.
++	 */
++	gdev->dev.type = &gpio_dev_type;
++	gdev->dev.bus = &gpio_bus_type;
++	gdev->dev.parent = gc->parent;
++	device_set_node(&gdev->dev, gpiochip_choose_fwnode(gc));
+ 
+ 	ret = gpiochip_get_ngpios(gc, &gdev->dev);
+ 	if (ret)
+-		goto err_free_dev_name;
++		goto err_put_device;
++	gdev->ngpio = gc->ngpio;
+ 
+ 	gdev->descs = kcalloc(gc->ngpio, sizeof(*gdev->descs), GFP_KERNEL);
+ 	if (!gdev->descs) {
+ 		ret = -ENOMEM;
+-		goto err_free_dev_name;
++		goto err_put_device;
+ 	}
+ 
+ 	gdev->label = kstrdup_const(gc->label ?: "unknown", GFP_KERNEL);
+ 	if (!gdev->label) {
+ 		ret = -ENOMEM;
+-		goto err_free_descs;
++		goto err_put_device;
+ 	}
+ 
+-	gdev->ngpio = gc->ngpio;
+ 	gdev->can_sleep = gc->can_sleep;
+-
+ 	rwlock_init(&gdev->line_state_lock);
+ 	RAW_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
+ 	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
+-
+-	ret = init_srcu_struct(&gdev->srcu);
+-	if (ret)
+-		goto err_free_label;
+-
+-	ret = init_srcu_struct(&gdev->desc_srcu);
+-	if (ret)
+-		goto err_cleanup_gdev_srcu;
++#ifdef CONFIG_PINCTRL
++	INIT_LIST_HEAD(&gdev->pin_ranges);
++#endif
++	if (gc->parent && gc->parent->driver)
++		gdev->owner = gc->parent->driver->owner;
++	else if (gc->owner)
++		/* TODO: remove chip->owner */
++		gdev->owner = gc->owner;
++	else
++		gdev->owner = THIS_MODULE;
+ 
+ 	scoped_guard(mutex, &gpio_devices_lock) {
+ 		/*
+@@ -1128,7 +1133,7 @@ int gpiochip_add_data_with_key(struct gp
+ 			if (base < 0) {
+ 				ret = base;
+ 				base = 0;
+-				goto err_cleanup_desc_srcu;
++				goto err_put_device;
+ 			}
+ 
+ 			/*
+@@ -1148,14 +1153,10 @@ int gpiochip_add_data_with_key(struct gp
+ 		ret = gpiodev_add_to_list_unlocked(gdev);
+ 		if (ret) {
+ 			gpiochip_err(gc, "GPIO integer space overlap, cannot add chip\n");
+-			goto err_cleanup_desc_srcu;
++			goto err_put_device;
  		}
  	}
+ 
+-#ifdef CONFIG_PINCTRL
+-	INIT_LIST_HEAD(&gdev->pin_ranges);
+-#endif
+-
+ 	if (gc->names)
+ 		gpiochip_set_desc_names(gc);
+ 
+@@ -1249,25 +1250,19 @@ err_remove_from_list:
+ 	scoped_guard(mutex, &gpio_devices_lock)
+ 		list_del_rcu(&gdev->list);
+ 	synchronize_srcu(&gpio_devices_srcu);
+-	if (gdev->dev.release) {
+-		/* release() has been registered by gpiochip_setup_dev() */
+-		gpio_device_put(gdev);
+-		goto err_print_message;
+-	}
++err_put_device:
++	gpio_device_put(gdev);
++	goto err_print_message;
++
+ err_cleanup_desc_srcu:
+ 	cleanup_srcu_struct(&gdev->desc_srcu);
+ err_cleanup_gdev_srcu:
+ 	cleanup_srcu_struct(&gdev->srcu);
+-err_free_label:
+-	kfree_const(gdev->label);
+-err_free_descs:
+-	kfree(gdev->descs);
+-err_free_dev_name:
+-	kfree(dev_name(&gdev->dev));
+ err_free_ida:
+ 	ida_free(&gpio_ida, gdev->id);
+ err_free_gdev:
+ 	kfree(gdev);
++
+ err_print_message:
+ 	/* failures here can mean systems won't boot... */
+ 	if (ret != -EPROBE_DEFER) {
 
 
