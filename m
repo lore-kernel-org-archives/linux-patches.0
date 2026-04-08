@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7E83176E4;
-	Wed,  8 Apr 2026 18:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8830432A3FD;
+	Wed,  8 Apr 2026 18:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674646; cv=none; b=gbHiipeeiP1Kl5IKDaCoUgggS/Yp5fWWtsOJamTOZL7ld4f6ZmdKm8+Evnh61ro4N1kPoGmtwbjOAzNdL7vHeCLWTvjoh70egypDGx8F1MxeKdHoFHyzdmxQ/1//pWTx0nR9fejmP9kAaareduqViV+Yhnw+PckDQ6mH4E38F3I=
+	t=1775674649; cv=none; b=GT/cFCuRPFZcq7WRkw7QO88E5AKkPIAwhm2FnRjCWxbkB48w1+nBBNlXa5uYMWu95YaSlq5V5dklND/958DK0AVKUEWeB+ig6ia5zWpfvDwo82irQD/04ccQ4lmzot1yRj372kljXgg1Eo7O6PbFhOVizj6Z8N9RL0AWwXKm+H4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674646; c=relaxed/simple;
-	bh=9/wzK7qht0NaO7ZAv7LAxI7os9v5lSfdrYQDL2x4yb8=;
+	s=arc-20240116; t=1775674649; c=relaxed/simple;
+	bh=y1pX/X7OCQIP/KEjEPAe/LIgSMxHpWncSRJ4aoj3CUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mE5airuAKEx6yts+26MjzbnKSTt35eVzqJe111YgrSTkBQYyokudWnSbz/JwnLHQnFbyGBkbt17lyp8589WbfS4p6Z6J381vnQ62ODstsT4/2CUaL9v1cOxRF+PZYqbhTiewoTk/6/b9AZkQ9kpzNygkClic/NVHgakHoRpZH4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZ6AATxB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FTpgHW0KEUgmGAFXM/CEVadWKXAxxn8Z0d9flGeEPKTICqkeH4mtOTxr1MlOa0AZ5Mp17NQcYb4ykji8pSz+p0pzi635svxuaBRvtUrAJetMQmHo/u0H9a6Xf1e2idUyEXfwTUPLdgo1OMcT0UHqT1Fr4DyZ613glCvhjkWBXuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XN+w+XBI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZ6AATxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E98BC19421;
-	Wed,  8 Apr 2026 18:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XN+w+XBI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E6DC19421;
+	Wed,  8 Apr 2026 18:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674646;
-	bh=9/wzK7qht0NaO7ZAv7LAxI7os9v5lSfdrYQDL2x4yb8=;
+	s=korg; t=1775674649;
+	bh=y1pX/X7OCQIP/KEjEPAe/LIgSMxHpWncSRJ4aoj3CUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cZ6AATxBCMmh3pQCRFOPpJpz1RUgwZHE2TPxEZg9Qqe+f+PHu6dhHyz0OAqcuoUpS
-	 mOzLQdnCpVA3OBkH6n8q1pyLVyjXoHrENEOt5NOZomI0qYQPytw9UCFe8xGpfqIUEi
-	 JBwVYqW3izTAskdyBxHHhdP8NRt58c91daztYo1E=
+	b=XN+w+XBIKnLK141kJdMM06CasaPyWJALGKGZ/pxzKL8THIGuU/1iysvYxUPnH2GGj
+	 Q0Fh3eR/3lAhuFD9PqCtSdcphcHXaNUst1+W9pnoIObA6Djk3R2DJ7aZ+YiKq0j90I
+	 yW+E9LBt/vVDK89aMRQh2fQ+A3+zlGlqxe3rJhNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Alan Previn Teres Alexis <alan.previn.teres.alexis@intel.com>,
-	Julia Filipchuk <julia.filipchuk@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 145/311] drm/xe/pxp: Clean up termination status on failure
-Date: Wed,  8 Apr 2026 20:02:25 +0200
-Message-ID: <20260408175944.825305928@linuxfoundation.org>
+Subject: [PATCH 6.19 136/311] io_uring/rsrc: reject zero-length fixed buffer import
+Date: Wed,  8 Apr 2026 20:02:16 +0200
+Message-ID: <20260408175944.493368570@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -53,41 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Qi Tang <tpluszz77@gmail.com>
 
-[ Upstream commit e2628e670bb0923fcdc00828bfcd67b26a7df020 ]
+[ Upstream commit 111a12b422a8cfa93deabaef26fec48237163214 ]
 
-If the PXP HW termination fails during PXP start, the normal completion
-code won't be called, so the termination will remain uncomplete. To avoid
-unnecessary waits, mark the termination as completed from the error path.
-Note that we already do this if the termination fails when handling a
-termination irq from the HW.
+validate_fixed_range() admits buf_addr at the exact end of the
+registered region when len is zero, because the check uses strict
+greater-than (buf_end > imu->ubuf + imu->len).  io_import_fixed()
+then computes offset == imu->len, which causes the bvec skip logic
+to advance past the last bio_vec entry and read bv_offset from
+out-of-bounds slab memory.
 
-Fixes: f8caa80154c4 ("drm/xe/pxp: Add PXP queue tracking and session start")
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Alan Previn Teres Alexis <alan.previn.teres.alexis@intel.com>
-Cc: Julia Filipchuk <julia.filipchuk@intel.com>
-Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
-Link: https://patch.msgid.link/20260324153718.3155504-7-daniele.ceraolospurio@intel.com
-(cherry picked from commit 5d9e708d2a69ab1f64a17aec810cd7c70c5b9fab)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Return early from io_import_fixed() when len is zero.  A zero-length
+import has no data to transfer and should not walk the bvec array
+at all.
+
+  BUG: KASAN: slab-out-of-bounds in io_import_reg_buf+0x697/0x7f0
+  Read of size 4 at addr ffff888002bcc254 by task poc/103
+  Call Trace:
+   io_import_reg_buf+0x697/0x7f0
+   io_write_fixed+0xd9/0x250
+   __io_issue_sqe+0xad/0x710
+   io_issue_sqe+0x7d/0x1100
+   io_submit_sqes+0x86a/0x23c0
+   __do_sys_io_uring_enter+0xa98/0x1590
+  Allocated by task 103:
+  The buggy address is located 12 bytes to the right of
+   allocated 584-byte region [ffff888002bcc000, ffff888002bcc248)
+
+Fixes: 8622b20f23ed ("io_uring: add validate_fixed_range() for validate fixed buffer")
+Signed-off-by: Qi Tang <tpluszz77@gmail.com>
+Link: https://patch.msgid.link/20260329164936.240871-1-tpluszz77@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pxp.c | 1 +
- 1 file changed, 1 insertion(+)
+ io_uring/rsrc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_pxp.c b/drivers/gpu/drm/xe/xe_pxp.c
-index bdbdbbf6a6781..ba4d52001b853 100644
---- a/drivers/gpu/drm/xe/xe_pxp.c
-+++ b/drivers/gpu/drm/xe/xe_pxp.c
-@@ -603,6 +603,7 @@ static int pxp_start(struct xe_pxp *pxp, u8 type)
- 			drm_err(&pxp->xe->drm, "PXP termination failed before start\n");
- 			mutex_lock(&pxp->mutex);
- 			pxp->status = XE_PXP_ERROR;
-+			complete_all(&pxp->termination);
+diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
+index 41c89f5c616da..81446f9649ae9 100644
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -1084,6 +1084,10 @@ static int io_import_fixed(int ddir, struct iov_iter *iter,
+ 		return ret;
+ 	if (!(imu->dir & (1 << ddir)))
+ 		return -EFAULT;
++	if (unlikely(!len)) {
++		iov_iter_bvec(iter, ddir, NULL, 0, 0);
++		return 0;
++	}
  
- 			goto out_unlock;
- 		}
+ 	offset = buf_addr - imu->ubuf;
+ 
 -- 
 2.53.0
 
