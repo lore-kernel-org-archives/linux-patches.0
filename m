@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6977A32A3FD;
-	Wed,  8 Apr 2026 18:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08E03624B0;
+	Wed,  8 Apr 2026 18:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673743; cv=none; b=tK2j+vQp5vV3e1j5kdZyeDfwIHIKqCDVd45hpyj4hW+D3i8OiDlG9ZFTFjtnGDdY72oH/oOBUMxpIq3zeoZFKKAfuimUE3ZeFCebUkhHKeZb738NcSqWmBlxO+NcuF2y0FnTj1ycJiRsqUvLSZKAysIzWCk36CUdrJGIKoV78EQ=
+	t=1775673745; cv=none; b=mOcPja20+GKsGvG2SyA3xmrDGgxq7+04jyzD0gPXpejTiJuwjD/jz4xSOyq8lqitgvP4LJAVf1IqRdtmFqvFDcX6tteueJujogfdF8xi3pvCP33IA/McAKqqDCsKg68uce5p+Q839kw3SjRJxldci/ilKJqFhvAivAOHwZqtHmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673743; c=relaxed/simple;
-	bh=80akKGS4EHtlGwKTCAMsA1l5BViND3OAfO8DOvuRYhI=;
+	s=arc-20240116; t=1775673745; c=relaxed/simple;
+	bh=/sOa9BpRRMy91Q4ZSGPIyR4UKs8DeGOYo0LwRU6JkTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QzZxUg158dTvWIZJRQyKdqyl+aZGxwl6gTiuugtSA5PGBt63+V7DlMmU6OvlCeWjd3H+ufJx1p5zF0IdO5DbqDv2ZhkdFy2CHsq6HAaEuKHJGOc5QKeei3J/8p9JSDNjhN5snQ/g6V96IlIKMXBvG2/eTyiOoh0RvMCGORY3gtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RymwhKDa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NQ61qWNHiBSAn4yKz2XOcwtFjp5B58sc3Tcsrh1DzClFZtdftY7oYeZ5eWZL1mhwKPpLzMaUXwIFkC8rl9aNBV9EGffT0T82SuMhXqJF7J1HMWv7CvRk3TgRsqay5WLvbmYv7r984p7mVLp9ndU1IzEdQOQ8zBYzn498zkCoUzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDtNWSxW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RymwhKDa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A672FC19421;
-	Wed,  8 Apr 2026 18:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDtNWSxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41898C19421;
+	Wed,  8 Apr 2026 18:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673743;
-	bh=80akKGS4EHtlGwKTCAMsA1l5BViND3OAfO8DOvuRYhI=;
+	s=korg; t=1775673745;
+	bh=/sOa9BpRRMy91Q4ZSGPIyR4UKs8DeGOYo0LwRU6JkTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RymwhKDatnuEDaCP+mYqixV7NFEYY1c7iTQd2coUVNJnSI8pJiWRkqRgi79oYDlDD
-	 aHOrczhrGn52TraiNsfhVjw1R8LxHd6AKaoEoJ3jbbdsVvM5JjkoeSgpAU81cLH4I9
-	 2rHMgY+nw0PJ3b6bMW1+TuKsoXZeHxhigTXOYKmQ=
+	b=NDtNWSxWDI0CsmQJrZBYKu+e30SwRrizxw6EWMM5GjffYp10a7KixUqydDLtFTIYQ
+	 ac0TmiOX4qOH9Gwy9cMN1AKVAut3rl3ArftmczLyHwwd4r+x2h+2Ok4Oyvb0LLYap4
+	 3h1VsPDTn95fdp0oVNKmYqm3U0GR5fTCmTfIrxQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Reshma Immaculate Rajkumar <reshma.rajkumar@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/242] dt-bindings: auxdisplay: ht16k33: Use unevaluatedProperties to fix common property warning
-Date: Wed,  8 Apr 2026 20:01:20 +0200
-Message-ID: <20260408175928.572313942@linuxfoundation.org>
+Subject: [PATCH 6.12 041/242] wifi: ath11k: Pass the correct value of each TID during a stop AMPDU session
+Date: Wed,  8 Apr 2026 20:01:21 +0200
+Message-ID: <20260408175928.609464962@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,39 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Reshma Immaculate Rajkumar <reshma.rajkumar@oss.qualcomm.com>
 
-[ Upstream commit 398c0c8bbc8f5a9d2f43863275a427a9d3720b6f ]
+[ Upstream commit e225b36f83d7926c1f2035923bb0359d851fdb73 ]
 
-Change additionalProperties to unevaluatedProperties because it refs to
-/schemas/input/matrix-keymap.yaml.
+During ongoing traffic, a request to stop an AMPDU session
+for one TID could incorrectly affect other active sessions.
+This can happen because an incorrect TID reference would be
+passed when updating the BA session state, causing the wrong
+session to be stopped. As a result, the affected session would
+be reduced to a minimal BA size, leading to a noticeable
+throughput degradation.
 
-Fix below CHECK_DTBS warnings:
-arch/arm/boot/dts/nxp/imx/imx6dl-victgo.dtb: keypad@70 (holtek,ht16k33): 'keypad,num-columns', 'keypad,num-rows' do not match any of the regexes: '^pinctrl-[0-9]+$'
-        from schema $id: http://devicetree.org/schemas/auxdisplay/holtek,ht16k33.yaml#
+Fix this issue by passing the correct argument from
+ath11k_dp_rx_ampdu_stop() to ath11k_peer_rx_tid_reo_update()
+during a stop AMPDU session. Instead of passing peer->tx_tid, which
+is the base address of the array, corresponding to TID 0; pass
+the value of &peer->rx_tid[params->tid], where the different TID numbers
+are accounted for.
 
-Fixes: f12b457c6b25c ("dt-bindings: auxdisplay: ht16k33: Convert to json-schema")
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-02146-QCAHKSWPL_SILICONZ-1
+
+Fixes: d5c65159f2895 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Reshma Immaculate Rajkumar <reshma.rajkumar@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260319065608.2408179-1-reshma.rajkumar@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/auxdisplay/holtek,ht16k33.yaml          | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml b/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml
-index b90eec2077b4b..fe1272e86467e 100644
---- a/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml
-+++ b/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml
-@@ -66,7 +66,7 @@ then:
-   required:
-     - refresh-rate-hz
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index ff97c2649ce52..e3eabd9e223aa 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
--additionalProperties: false
-+unevaluatedProperties: false
+ #include <linux/ieee80211.h>
+@@ -1110,9 +1110,8 @@ int ath11k_dp_rx_ampdu_stop(struct ath11k *ar,
+ 	struct ath11k_base *ab = ar->ab;
+ 	struct ath11k_peer *peer;
+ 	struct ath11k_sta *arsta = ath11k_sta_to_arsta(params->sta);
++	struct dp_rx_tid *rx_tid;
+ 	int vdev_id = arsta->arvif->vdev_id;
+-	dma_addr_t paddr;
+-	bool active;
+ 	int ret;
  
- examples:
-   - |
+ 	spin_lock_bh(&ab->base_lock);
+@@ -1124,15 +1123,14 @@ int ath11k_dp_rx_ampdu_stop(struct ath11k *ar,
+ 		return -ENOENT;
+ 	}
+ 
+-	paddr = peer->rx_tid[params->tid].paddr;
+-	active = peer->rx_tid[params->tid].active;
++	rx_tid = &peer->rx_tid[params->tid];
+ 
+-	if (!active) {
++	if (!rx_tid->active) {
+ 		spin_unlock_bh(&ab->base_lock);
+ 		return 0;
+ 	}
+ 
+-	ret = ath11k_peer_rx_tid_reo_update(ar, peer, peer->rx_tid, 1, 0, false);
++	ret = ath11k_peer_rx_tid_reo_update(ar, peer, rx_tid, 1, 0, false);
+ 	spin_unlock_bh(&ab->base_lock);
+ 	if (ret) {
+ 		ath11k_warn(ab, "failed to update reo for rx tid %d: %d\n",
+@@ -1141,7 +1139,8 @@ int ath11k_dp_rx_ampdu_stop(struct ath11k *ar,
+ 	}
+ 
+ 	ret = ath11k_wmi_peer_rx_reorder_queue_setup(ar, vdev_id,
+-						     params->sta->addr, paddr,
++						     params->sta->addr,
++						     rx_tid->paddr,
+ 						     params->tid, 1, 1);
+ 	if (ret)
+ 		ath11k_warn(ab, "failed to send wmi to delete rx tid %d\n",
 -- 
 2.53.0
 
