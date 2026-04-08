@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04823B0AFC;
-	Wed,  8 Apr 2026 18:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BEAB67E;
+	Wed,  8 Apr 2026 18:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673621; cv=none; b=TWJdv5bf9uICOkuwPOvz0WmMqDypYiup7cfeJ8HXwrFt3CIHBD055cZSgJkUokXMcQybsHn3vv7NF2WeaBEXqGzBzsVZ8quKO8IS31WN5NtJRb4BR5wTgGlexNdrE7AiHTlY/hPLXZxjW/dAvdrCoCSslE/SGWMDGvvde74GlmQ=
+	t=1775673624; cv=none; b=c0/dbc/s1YAcwH2K1sgnkjkbjP32R7Ep254f86rZfHNwfMPfAG96g8OXXJiD5zf40irHqXGaBZse2zH2fflndvbeM2G9DxQC7Dn3XuzaWPN7w3vmxg7agULctFx46ZcAHZjEnI27xf1bZFD4z77ivLmeynpoqYDUW36joWplhz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673621; c=relaxed/simple;
-	bh=1V7o8+brqvdz5BtC88dJnkyh8tahEEWjvtglEnVYCZo=;
+	s=arc-20240116; t=1775673624; c=relaxed/simple;
+	bh=33RFgtVgxq7D71LqVXymWeNy6eNicyx/eNgfTZasb0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTrNOPCJJ4F8iJ+LDKoC77svyIfPXoSuvVJp7V2WWLxMzT4qGXhd38mP4V0tHj77Dxb2yjOSFa8GcsBg0GfSmGIbQuf/K1GhjvgPNWkDnZn2KyDbjL2R/sqiOsr6aEReW0JNp8wobqQoob/oM02yH5MwXzkBOXktstkQchOjKXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7IsIVBY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VtWYD5ZWTQePjdZDEkXX4E4iMkcpsSVT31mVa1liwGpz+2Z5bgNLwrR9ZP20IcxR9cvtp2oDWUC9saKFY3nXMPRd9b/Li7V1jPXAqIQoPsQ8kS/QB9o8OGRzbwYsq/8HEn8q3nz7z/SpySeYBiKKUBjaltcsaKMocQeTrf1w0fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hv8JNUtd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7IsIVBY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378BCC19421;
-	Wed,  8 Apr 2026 18:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hv8JNUtd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F13C19421;
+	Wed,  8 Apr 2026 18:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673621;
-	bh=1V7o8+brqvdz5BtC88dJnkyh8tahEEWjvtglEnVYCZo=;
+	s=korg; t=1775673624;
+	bh=33RFgtVgxq7D71LqVXymWeNy6eNicyx/eNgfTZasb0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7IsIVBY76zjAeI4cBFzk47eSLbPaGf1Cfd+bYnCKJ3prKKleBFfzdvUqCOQoCxnd
-	 ipQZlxmSz6G+XUFjDNUpThoOZJw2oQ9oFsJyS4R/d1KXvYe6MlGVTjKTvydNFYa6vm
-	 OXYJXMpWQY0SywzFTr++aEaNjXLaKNZ+LpVj9uek=
+	b=hv8JNUtd28+ftWHARgIQEOsvH5t3h2h8E+nW55MZ+N0M6SNGTuMAwrs3K1eUFxatG
+	 JnEzxe/3xKXhU37cPZboJI/FcRug01u6mbBj+7Usz8CU23CA+po9ng1Add73y2WmWP
+	 o2wBDWCcuJM8lkuqUAZ1lchUSQta1hzjkx8IIps8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Michaelis <code@mgjm.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 025/242] io_uring/kbuf: propagate BUF_MORE through early buffer commit path
-Date: Wed,  8 Apr 2026 20:01:05 +0200
-Message-ID: <20260408175928.012466638@linuxfoundation.org>
+	Pepper Gray <hello@peppergray.xyz>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 026/242] arm64/scs: Fix handling of advance_loc4
+Date: Wed,  8 Apr 2026 20:01:06 +0200
+Message-ID: <20260408175928.048933515@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -50,48 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Pepper Gray <hello@peppergray.xyz>
 
-Commit 418eab7a6f3c002d8e64d6e95ec27118017019af upstream.
+[ Upstream commit d499e9627d70b1269020d59b95ed3e18bee6b8cd ]
 
-When io_should_commit() returns true (eg for non-pollable files), buffer
-commit happens at buffer selection time and sel->buf_list is set to
-NULL. When __io_put_kbufs() generates CQE flags at completion time, it
-calls __io_put_kbuf_ring() which finds a NULL buffer_list and hence
-cannot determine whether the buffer was consumed or not. This means that
-IORING_CQE_F_BUF_MORE is never set for non-pollable input with
-incrementally consumed buffers.
+DW_CFA_advance_loc4 is defined but no handler is implemented. Its
+CFA opcode defaults to EDYNSCS_INVALID_CFA_OPCODE triggering an
+error which wrongfully prevents modules from loading.
 
-Likewise for io_buffers_select(), which always commits upfront and
-discards the return value of io_kbuf_commit().
-
-Add REQ_F_BUF_MORE to store the result of io_kbuf_commit() during early
-commit. Then __io_put_kbuf_ring() can check this flag and set
-IORING_F_BUF_MORE accordingy.
-
-Reported-by: Martin Michaelis <code@mgjm.de>
-Cc: stable@vger.kernel.org
-Fixes: ae98dbf43d75 ("io_uring/kbuf: add support for incremental buffer consumption")
-Link: https://github.com/axboe/liburing/issues/1553
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://bugs.gentoo.org/971060
+Signed-off-by: Pepper Gray <hello@peppergray.xyz>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/kbuf.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/kernel/pi/patch-scs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -387,7 +387,10 @@ static inline bool __io_put_kbuf_ring(st
- 		ret = io_kbuf_commit(req, bl, len, nr);
- 		req->buf_index = bl->bgid;
- 	}
--	req->flags &= ~REQ_F_BUFFER_RING;
-+	if (ret && (req->flags & REQ_F_BUF_MORE))
-+		ret = false;
-+
-+	req->flags &= ~(REQ_F_BUFFER_RING | REQ_F_BUF_MORE);
- 	return ret;
- }
+diff --git a/arch/arm64/kernel/pi/patch-scs.c b/arch/arm64/kernel/pi/patch-scs.c
+index 49d8b40e61bc0..be7050fdfbba0 100644
+--- a/arch/arm64/kernel/pi/patch-scs.c
++++ b/arch/arm64/kernel/pi/patch-scs.c
+@@ -174,6 +174,14 @@ static int scs_handle_fde_frame(const struct eh_frame *frame,
+ 			size -= 2;
+ 			break;
  
++		case DW_CFA_advance_loc4:
++			loc += *opcode++ * code_alignment_factor;
++			loc += (*opcode++ << 8) * code_alignment_factor;
++			loc += (*opcode++ << 16) * code_alignment_factor;
++			loc += (*opcode++ << 24) * code_alignment_factor;
++			size -= 4;
++		break;
++
+ 		case DW_CFA_def_cfa:
+ 		case DW_CFA_offset_extended:
+ 			size = skip_xleb128(&opcode, size);
+-- 
+2.53.0
+
 
 
