@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273402727F3;
-	Wed,  8 Apr 2026 18:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F832641FC;
+	Wed,  8 Apr 2026 18:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674069; cv=none; b=IIh2U5hyvISiOSS8aIznMm8B9tYlgZsUJOOSrKvNQhSvoOL5sjpu0ykraIbkxR42IZ2BH4tabrU4demNbXYZtFiBzpoG6tYbu2rrKDvhSkv/1zgf6ziVbXD0upM/6sF1gLcDn5KpCzsLPmEjfj2E078W9+LWDyE9PaIPZNuS4XY=
+	t=1775674072; cv=none; b=t7YVFxRCr1pGucZM5erYWYg/VNPbvMDYFdA8jIrdQXDN/+wwfmEX8dvC8HSRo+2rLWAHmlD76CgUEk/sMR/FxQCpIHYBAF+uVBsKW+ncL8z/rUHiZlM2NKt9lwxjoGb5UlbYRCirkX6U9QxU2d5gleeapOl9wa1HxsVVK2elgsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674069; c=relaxed/simple;
-	bh=KS23aE4q+grC5khx69v3SPq6OyUXDwybRkgwoza4b/4=;
+	s=arc-20240116; t=1775674072; c=relaxed/simple;
+	bh=1oF13jNas+qUKS2HS7V0lTmB+DDrRYmdSL7qIBR2Onk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EtkH8R89EROWFWjCPmPh0yb29XS1m0HnQIcVhjUfgfl2Z+idVSXlHWRYiNW2x3IeiChokijnss7t7XFSSrxqDLHwm3a9A1CrrR133gHGafbwvjPWeVKSHPNgV2p7+Ww26rW7NVl+LdPcfKBpa1AptM57uargVwwGEmZKQTWdhh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eow5+JD1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HSs0N0S2SL4I/QIT97CDM+aXVaLI/cSTa6f5ui1foIeYStuon6ElkgZn22UWorXq2BkDStiTdJdRqyMBS8CyqNLt95t53A+Z7QEOokuz03HsXa3yLgzijcgvXRUqDVQOKR9vFO6N+ob4uJKwCiHgtz2Q/s1Rk4KIjxx+gCD5ETo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bz2hUaD2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eow5+JD1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC64C19421;
-	Wed,  8 Apr 2026 18:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bz2hUaD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B22C19421;
+	Wed,  8 Apr 2026 18:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674069;
-	bh=KS23aE4q+grC5khx69v3SPq6OyUXDwybRkgwoza4b/4=;
+	s=korg; t=1775674071;
+	bh=1oF13jNas+qUKS2HS7V0lTmB+DDrRYmdSL7qIBR2Onk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eow5+JD1GcOMDEWmmuCsVFKoX3BiL+RHC5rscEX5mpgjqfmzXfv8qHloMhxOdtoC4
-	 hGcov4Lg4kPMbfTbosy54uYXNWQDhwiyewHRNF2efKBrf3ulZhmBFUlhtVOpaopiGB
-	 TZCUpX5UlePzQ9gvqNLm7sUXtRfxzzte7X1aS5lU=
+	b=bz2hUaD2Fl8rDeR6RxJxk+boc4Q6oirITS+96LGA9QIxes3DqCeLc0XPDsJqzCU4/
+	 7QhWHZhkf9x1uYw/29bxcLFVLvZ78SlqJ9x8Yqbyvgxc9oOFHNcz38MipBzPKD2aF6
+	 aFvX+WtEJyuHlGPHN/0WpUeSDHVX/JnqPNWFwOjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Nathan Rebello <nathan.c.rebello@gmail.com>
-Subject: [PATCH 6.12 197/242] usb: typec: ucsi: validate connector number in ucsi_notify_common()
-Date: Wed,  8 Apr 2026 20:03:57 +0200
-Message-ID: <20260408175934.456700429@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.12 198/242] ice: Fix memory leak in ice_set_ringparam()
+Date: Wed,  8 Apr 2026 20:03:58 +0200
+Message-ID: <20260408175934.493773211@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -51,50 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Rebello <nathan.c.rebello@gmail.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-commit d2d8c17ac01a1b1f638ea5d340a884ccc5015186 upstream.
+[ Upstream commit fe868b499d16f55bbeea89992edb98043c9de416 ]
 
-The connector number extracted from CCI via UCSI_CCI_CONNECTOR() is a
-7-bit field (0-127) that is used to index into the connector array in
-ucsi_connector_change(). However, the array is only allocated for the
-number of connectors reported by the device (typically 2-4 entries).
+In ice_set_ringparam, tx_rings and xdp_rings are allocated before
+rx_rings. If the allocation of rx_rings fails, the code jumps to
+the done label leaking both tx_rings and xdp_rings. Furthermore, if
+the setup of an individual Rx ring fails during the loop, the code jumps
+to the free_tx label which releases tx_rings but leaks xdp_rings.
 
-A malicious or malfunctioning device could report an out-of-range
-connector number in the CCI, causing an out-of-bounds array access in
-ucsi_connector_change().
+Fix this by introducing a free_xdp label and updating the error paths to
+ensure both xdp_rings and tx_rings are properly freed if rx_rings
+allocation or setup fails.
 
-Add a bounds check in ucsi_notify_common(), the central point where CCI
-is parsed after arriving from hardware, so that bogus connector numbers
-are rejected before they propagate further.
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-Fixes: bdc62f2bae8f ("usb: typec: ucsi: Simplified registration and I/O API")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Nathan Rebello <nathan.c.rebello@gmail.com>
-Link: https://patch.msgid.link/20260313222453.123-1-nathan.c.rebello@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
+Fixes: efc2214b6047 ("ice: Add support for XDP")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ethtool.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -42,8 +42,13 @@ void ucsi_notify_common(struct ucsi *ucs
- 	if (cci & UCSI_CCI_BUSY)
- 		return;
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index 606994fa99da9..c0bf93b38cbd8 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -3331,7 +3331,7 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
+ 	rx_rings = kcalloc(vsi->num_rxq, sizeof(*rx_rings), GFP_KERNEL);
+ 	if (!rx_rings) {
+ 		err = -ENOMEM;
+-		goto done;
++		goto free_xdp;
+ 	}
  
--	if (UCSI_CCI_CONNECTOR(cci))
--		ucsi_connector_change(ucsi, UCSI_CCI_CONNECTOR(cci));
-+	if (UCSI_CCI_CONNECTOR(cci)) {
-+		if (UCSI_CCI_CONNECTOR(cci) <= ucsi->cap.num_connectors)
-+			ucsi_connector_change(ucsi, UCSI_CCI_CONNECTOR(cci));
-+		else
-+			dev_err(ucsi->dev, "bogus connector number in CCI: %lu\n",
-+				UCSI_CCI_CONNECTOR(cci));
+ 	ice_for_each_rxq(vsi, i) {
+@@ -3361,7 +3361,7 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
+ 			}
+ 			kfree(rx_rings);
+ 			err = -ENOMEM;
+-			goto free_tx;
++			goto free_xdp;
+ 		}
+ 	}
+ 
+@@ -3412,6 +3412,13 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
+ 	}
+ 	goto done;
+ 
++free_xdp:
++	if (xdp_rings) {
++		ice_for_each_xdp_txq(vsi, i)
++			ice_free_tx_ring(&xdp_rings[i]);
++		kfree(xdp_rings);
 +	}
- 
- 	if (cci & UCSI_CCI_ACK_COMPLETE &&
- 	    test_and_clear_bit(ACK_PENDING, &ucsi->flags))
++
+ free_tx:
+ 	/* error cleanup if the Rx allocations failed after getting Tx */
+ 	if (tx_rings) {
+-- 
+2.53.0
+
 
 
