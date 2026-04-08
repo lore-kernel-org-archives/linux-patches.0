@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E222D3ACF16;
-	Wed,  8 Apr 2026 18:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C6D35B653;
+	Wed,  8 Apr 2026 18:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673192; cv=none; b=VzWYJCXUvMDduQSvxKnppTqc0uI149R35KI7I4NruJFkTTDp3QpXaStr1uKp3bubgWzWt/oMfOEDA6klXDBR39zj9tbNdgtVFbXqoX243P6MJPYTXm2Bmn3EeiEY+Nn1Iqqg0FZ1L3prQVXFzuMDXvnEFlGr2/wFFPfE+fLapNQ=
+	t=1775673194; cv=none; b=Z1cF9AptTjo1FTEt9cjax68Rs11doS6xbWsdJNucpLP3lKL+VVNaXhv9zdcm4uNgYYyZUp2U9M0zYRFDiSjjLK051xEBhXkQ667BOku+fbWcbJCaauxAvX5JO5+xHuozv9E57b5t1GwIhIhpOa0DUSJ6nFd3tHEUZNtx3eLeN08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673192; c=relaxed/simple;
-	bh=S/3KCJGT0PjMb9BA1PRjfk/99yQQRX2Bx/kKJ/KC2cE=;
+	s=arc-20240116; t=1775673194; c=relaxed/simple;
+	bh=25KDtHQw+YYd10L65TPy63xgXZCfkt5jrGN7Fb9nlZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXXLB5/Rx3DXarvGcNpDAWI+e29XKNXPyfXmtXW2PKkRpIKwy9tWL/e6W+bk8IzsLzHwS1jr7gfG/OUUfZG8YrlWEqwAh0CW8KiO/eCJg5xI7aNzWQ8u8huSOznEYlx3IWO3jCA9TbsLxkWJtIH+XQiVbLk0mOyjs5U5vuC/FzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWXcHOVX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qft0oti4XujvPzsHZBRUlAfimeHyKOgQjVsf8Fqoyn5PG/B++LLGzNQqUXsvj6C5B4Yi8kPM7oylGU9xySC4VgmuxK7+aiPBeryWqB9N1gSBJmJUet8+MiBpq6OR2MHrLlHF0+wCfjt4VPmiiUq3izco+9ACwu9Kbhpl8GwA+7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l02ExSwV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWXcHOVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794BCC19421;
-	Wed,  8 Apr 2026 18:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l02ExSwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB37C19421;
+	Wed,  8 Apr 2026 18:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673191;
-	bh=S/3KCJGT0PjMb9BA1PRjfk/99yQQRX2Bx/kKJ/KC2cE=;
+	s=korg; t=1775673194;
+	bh=25KDtHQw+YYd10L65TPy63xgXZCfkt5jrGN7Fb9nlZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWXcHOVXHMWbT422lAeJR331aL9Igeyf2eUFw50gU24w2I1JJNZp96y4M0vgHCCCH
-	 a15uf9DAM5M6qslyLm+7nivnCupwL6PyMzwUdptQHfyMy5a0AnSXcWI3s4wdx+NXo6
-	 DyXPGIUBE6fosYGxe3Yk10ipvnJ49bcnFuHdly+M=
+	b=l02ExSwVG8MWXx20zfgKP3hNXgEQlhXwm8bIX71aH7pNb9mzQg2U+0UJ/T68Bae/B
+	 uHbl/n8YOqzZwc2DjIuSHt+zequQXWpVr/XI0Hf0takqkfoYXSWxJtaY0PkqpHdVNM
+	 CiiUPu+Tku+xBk1tzBVf+fTND7gV2BDFWtAdC8LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.18 136/277] lib/crypto: chacha: Zeroize permuted_state before it leaves scope
-Date: Wed,  8 Apr 2026 20:02:01 +0200
-Message-ID: <20260408175938.954167040@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 137/277] ALSA: caiaq: fix stack out-of-bounds read in init_card
+Date: Wed,  8 Apr 2026 20:02:02 +0200
+Message-ID: <20260408175938.991705158@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -50,49 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-commit e5046823f8fa3677341b541a25af2fcb99a5b1e0 upstream.
+commit 45424e871abf2a152e247a9cff78359f18dd95c0 upstream.
 
-Since the ChaCha permutation is invertible, the local variable
-'permuted_state' is sufficient to compute the original 'state', and thus
-the key, even after the permutation has been done.
+The loop creates a whitespace-stripped copy of the card shortname
+where `len < sizeof(card->id)` is used for the bounds check. Since
+sizeof(card->id) is 16 and the local id buffer is also 16 bytes,
+writing 16 non-space characters fills the entire buffer,
+overwriting the terminating nullbyte.
 
-While the kernel is quite inconsistent about zeroizing secrets on the
-stack (and some prominent userspace crypto libraries don't bother at all
-since it's not guaranteed to work anyway), the kernel does try to do it
-as a best practice, especially in cases involving the RNG.
+When this non-null-terminated string is later passed to
+snd_card_set_id() -> copy_valid_id_string(), the function scans
+forward with `while (*nid && ...)` and reads past the end of the
+stack buffer, reading the contents of the stack.
 
-Thus, explicitly zeroize 'permuted_state' before it goes out of scope.
+A USB device with a product name containing many non-ASCII, non-space
+characters (e.g. multibyte UTF-8) will reliably trigger this as follows:
 
-Fixes: c08d0e647305 ("crypto: chacha20 - Add a generic ChaCha20 stream cipher implementation")
+  BUG: KASAN: stack-out-of-bounds in copy_valid_id_string
+       sound/core/init.c:696 [inline]
+  BUG: KASAN: stack-out-of-bounds in snd_card_set_id_no_lock+0x698/0x74c
+       sound/core/init.c:718
+
+The off-by-one has been present since commit bafeee5b1f8d ("ALSA:
+snd_usb_caiaq: give better shortname") from June 2009 (v2.6.31-rc1),
+which first introduced this whitespace-stripping loop. The original
+code never accounted for the null terminator when bounding the copy.
+
+Fix this by changing the loop bound to `sizeof(card->id) - 1`,
+ensuring at least one byte remains as the null terminator.
+
+Fixes: bafeee5b1f8d ("ALSA: snd_usb_caiaq: give better shortname")
 Cc: stable@vger.kernel.org
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20260326032920.39408-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Reported-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260329133825.581585-1-berkcgoksel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crypto/chacha-block-generic.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/usb/caiaq/device.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/lib/crypto/chacha-block-generic.c
-+++ b/lib/crypto/chacha-block-generic.c
-@@ -87,6 +87,8 @@ void chacha_block_generic(struct chacha_
- 				   &out[i * sizeof(u32)]);
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -488,7 +488,7 @@ static int init_card(struct snd_usb_caia
+ 		memset(id, 0, sizeof(id));
  
- 	state->x[12]++;
-+
-+	chacha_zeroize_state(&permuted_state);
- }
- EXPORT_SYMBOL(chacha_block_generic);
+ 		for (c = card->shortname, len = 0;
+-			*c && len < sizeof(card->id); c++)
++			*c && len < sizeof(card->id) - 1; c++)
+ 			if (*c != ' ')
+ 				id[len++] = *c;
  
-@@ -110,5 +112,7 @@ void hchacha_block_generic(const struct
- 
- 	memcpy(&out[0], &permuted_state.x[0], 16);
- 	memcpy(&out[4], &permuted_state.x[12], 16);
-+
-+	chacha_zeroize_state(&permuted_state);
- }
- EXPORT_SYMBOL(hchacha_block_generic);
 
 
