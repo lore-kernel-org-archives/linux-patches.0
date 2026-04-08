@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952E235C1B4;
-	Wed,  8 Apr 2026 19:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B507332692B;
+	Wed,  8 Apr 2026 19:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674890; cv=none; b=pPcFQonzq56RhBk6weeKB/6QwwDyYLM8en7ChhXY8cXEKIXoSKnHM8gBrlm3gRmVynHaUiJLBXtoX+wXqLj4F+dD02oTnOHUbmvQbYJHN8xhOvjA5FLzg7zZP3WMpQW0o/k2uC9ZNehUnHIXdergp7tynF4A/9dGL9/fgOZIbpk=
+	t=1775674892; cv=none; b=JFajm221FBiqDo87nXZ6q6SMI2aYBGmP/lRwCCMAjLYThQqZDBVcr0YrMzwxc81axSu/PYwrnGlHE3+/Piv1yqqWdcl6LYlhEelgIpagNG1S3++q4eykv2YrPVTg6IHHKXaLL7X5SLNfZKLTeBrpQb67q+z2geIHcFEpBlQjp/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674890; c=relaxed/simple;
-	bh=Z1aCAHQgnEaM1oxOyrFKyzrYGf7trL/J/TYeJ1OU4x4=;
+	s=arc-20240116; t=1775674892; c=relaxed/simple;
+	bh=Y7xmQpODWdBfxsOJxZEfIpWWlHCQG7g6t1I3iAaND3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JaBadUPtn8Z30SwtKd/b9f7U7x3T1UbVdE74kQ5qm7JZ0MURU0a8uSJTfjpjmdzUgteSySNGbUASCr5FQsuGKXaM8dFJGmk7Me9qKoCuovGbdFmTRv8ZHAixdsUedSHhweF4h3DiwoWmtcWBXWutgNo9ukDhbu3M0OHpHT6EOr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMNeIkRu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NCnMyLM8kdJ+fe3zlI5cIRcp4b+qftEiw6AANW3J70WFKhiP+i8yPB/boMzFkCtXg07B36slGybYe4/gTkAoG5f7BUqTo3KOksVY9AOrkC8FeTsV5D6ZbFhwTuXMBs0rVYc7iQQgPho78MQ46xmCG4wfpO2lm0BR/0CmGtQXQOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JP7SAg3X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMNeIkRu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C61C4AF09;
-	Wed,  8 Apr 2026 19:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JP7SAg3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4EEC19421;
+	Wed,  8 Apr 2026 19:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674889;
-	bh=Z1aCAHQgnEaM1oxOyrFKyzrYGf7trL/J/TYeJ1OU4x4=;
+	s=korg; t=1775674891;
+	bh=Y7xmQpODWdBfxsOJxZEfIpWWlHCQG7g6t1I3iAaND3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMNeIkRu+yH4DI19GT1myg51ufrOPI0ZSu30gI++iv3Ke4bgpR5gFKRIDG5erfcqj
-	 o0hsXVv/+iaGU6zVY6rk8m9l/JlSD3skZ8NmqFye7PTL4vbHMBclZI7FZu0C+GUj1a
-	 BELsGqMAluUFOIXUmhAoaDq0Ta4RRjdKUd/rZOU8=
+	b=JP7SAg3XCTQSGhvdTwBXvjiVRzlKLqhS13l6u9LQ04pyXbfGUhscAnxPVWE2cbwgk
+	 FjqpwP/SGWHouvQz4DSx8ZezrE8w3eFDI9UAozRW4BEetDWsw4DxDWtvBcXaJFELA7
+	 poosLaPr6XEGwKAUmgGzC1cySZIAy9h8fkT6VrYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Yongchao Wu <yongchao.wu@autochips.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.19 245/311] usb: cdns3: gadget: fix NULL pointer dereference in ep_queue
-Date: Wed,  8 Apr 2026 20:04:05 +0200
-Message-ID: <20260408175948.540077122@linuxfoundation.org>
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	William Breathitt Gray <wbg@kernel.org>
+Subject: [PATCH 6.19 272/311] counter: rz-mtu3-cnt: prevent counter from being toggled multiple times
+Date: Wed,  8 Apr 2026 20:04:32 +0200
+Message-ID: <20260408175949.538107710@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,41 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongchao Wu <yongchao.wu@autochips.com>
+From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-commit 7f6f127b9bc34bed35f56faf7ecb1561d6b39000 upstream.
+commit 67c3f99bed6f422ba343d2b70a2eeeccdfd91bef upstream.
 
-When the gadget endpoint is disabled or not yet configured, the ep->desc
-pointer can be NULL. This leads to a NULL pointer dereference when
-__cdns3_gadget_ep_queue() is called, causing a kernel crash.
+Runtime PM counter is incremented / decremented each time the sysfs
+enable file is written to.
 
-Add a check to return -ESHUTDOWN if ep->desc is NULL, which is the
-standard return code for unconfigured endpoints.
+If user writes 0 to the sysfs enable file multiple times, runtime PM
+usage count underflows, generating the following message.
 
-This prevents potential crashes when ep_queue is called on endpoints
-that are not ready.
+rz-mtu3-counter rz-mtu3-counter.0: Runtime PM usage count underflow!
 
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Yongchao Wu <yongchao.wu@autochips.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260331000407.613298-1-yongchao.wu@autochips.com
+At the same time, hardware registers end up being accessed with clocks
+off in rz_mtu3_terminate_counter() to disable an already disabled
+channel.
+
+If user writes 1 to the sysfs enable file multiple times, runtime PM
+usage count will be incremented each time, requiring the same number of
+0 writes to get it back to 0.
+
+If user writes 0 to the sysfs enable file while PWM is in progress, PWM
+is stopped without counter being the owner of the underlying MTU3
+channel.
+
+Check against the cached count_is_enabled value and exit if the user
+is trying to set the same enable value.
+
+Cc: stable@vger.kernel.org
+Fixes: 0be8907359df ("counter: Add Renesas RZ/G2L MTU3a counter driver")
+Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Link: https://lore.kernel.org/r/20260130122353.2263273-5-cosmin-gabriel.tanislav.xa@renesas.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-gadget.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/counter/rz-mtu3-cnt.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/cdns3/cdns3-gadget.c
-+++ b/drivers/usb/cdns3/cdns3-gadget.c
-@@ -2589,6 +2589,9 @@ static int __cdns3_gadget_ep_queue(struc
- 	struct cdns3_request *priv_req;
+--- a/drivers/counter/rz-mtu3-cnt.c
++++ b/drivers/counter/rz-mtu3-cnt.c
+@@ -499,21 +499,25 @@ static int rz_mtu3_count_enable_write(st
+ 	struct rz_mtu3_cnt *const priv = counter_priv(counter);
  	int ret = 0;
  
-+	if (!ep->desc)
-+		return -ESHUTDOWN;
++	mutex_lock(&priv->lock);
 +
- 	request->actual = 0;
- 	request->status = -EINPROGRESS;
- 	priv_req = to_cdns3_request(request);
++	if (priv->count_is_enabled[count->id] == enable)
++		goto exit;
++
+ 	if (enable) {
+-		mutex_lock(&priv->lock);
+ 		pm_runtime_get_sync(ch->dev);
+ 		ret = rz_mtu3_initialize_counter(counter, count->id);
+ 		if (ret == 0)
+ 			priv->count_is_enabled[count->id] = true;
+-		mutex_unlock(&priv->lock);
+ 	} else {
+-		mutex_lock(&priv->lock);
+ 		rz_mtu3_terminate_counter(counter, count->id);
+ 		priv->count_is_enabled[count->id] = false;
+ 		pm_runtime_put(ch->dev);
+-		mutex_unlock(&priv->lock);
+ 	}
+ 
++exit:
++	mutex_unlock(&priv->lock);
++
+ 	return ret;
+ }
+ 
 
 
