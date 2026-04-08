@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A392BEFFF;
-	Wed,  8 Apr 2026 18:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9729A331A44;
+	Wed,  8 Apr 2026 18:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673895; cv=none; b=ZnipcMff+M++HY6pGa2SBldUjT1d8I++0pxiaHQgqTJUm7kdWUEz1/S/wtX6plnzsCpViTgrbl1dmzlElwSsyr+ryx3yjCunpR/ZYTm+W4pH2HKXuh9AagEGTAf8me/pax60dHPf7k48pb58uUYgHQRDymvYWk9vaoFZ5VSqDX0=
+	t=1775673897; cv=none; b=tvKMfbLajcebozKHr358y+5VrGKrQEblDOQ9Bq76LyCoubSHlMuLyEZtkmObz7hp2rKTvV0retEZF4eaf4EDQ2pXqkdpV5Cpm1JVMHVuWTUZAU7GT4aKHn5jYIGpBjTF/arb/HamfI4rhB/bw9E/+o+2Fa+j/x8voSHlws3vo9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673895; c=relaxed/simple;
-	bh=VX2E4Vt00A01c3OqXk5ZDVQXCSm+HkcoRqBNozkilFI=;
+	s=arc-20240116; t=1775673897; c=relaxed/simple;
+	bh=sJylsfxK+Zek9WMfEPhlVvq1syd8vjP9IRC6/Pdej8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JIgCBjA67s89iNOD6bhNJIrv6TO9/7YMCdNKy3AU6baEG+lxKQO1E6uU7bioORFgTvhQmbl3t+TFhbar3RHrH3no5Eq+sSAUUywz1j1yITKavPK3/xQJILYxQyFIsCfG4PpI6IKHJQkGKjZLFDNxWqk9lxqXJQEnH8W27m4D9ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZXUsjRE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mmfv0XPEWFB6SG2mivFk8u/pbtx6qFIBxt9GvW3LO+lMNkYx2V38vksclppGjGu0QNe9Ehqnnvy3busGwlox5U3kOPnlBkP5G8cE4KIxh4f35mZihPDvPQ7PY4qgrKU5nSUBUA4WChfQm/aRtqt+NoLkxXmaXCXeujLCHa5YXCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlO7q1MH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZXUsjRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90623C19421;
-	Wed,  8 Apr 2026 18:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlO7q1MH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C22FC19421;
+	Wed,  8 Apr 2026 18:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673894;
-	bh=VX2E4Vt00A01c3OqXk5ZDVQXCSm+HkcoRqBNozkilFI=;
+	s=korg; t=1775673897;
+	bh=sJylsfxK+Zek9WMfEPhlVvq1syd8vjP9IRC6/Pdej8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZXUsjREMqXhJLKjCQIftPZNSrs24F0haT0pPJJ9wwntD59Uk8DTN6glc7rK66L1n
-	 Oqcv/M2Rl0ey3vsfgK0crwNUoy5XTGe5+VPqVEunAZmsyBmNXpaGROdjKPV6i3mi5t
-	 ibALpL9gkA3hytqIYmqSnWJVfPjCZqzzcLOMYUAw=
+	b=jlO7q1MHEin3Fs8Wqo0YsYhrvhUnTwcYE1mFTSIcAKvwFQPycClc9vmkQB4zVSdam
+	 bnV4NBFqKReHt0Qajd84+34m1zuw8UV982L4oSbNCM6Xe5i9l9TQ7t3/cAwOIDGmVC
+	 80W0LWftnAdD7Z2k2YoObm3PTXWVn7dufCzzhGiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Lechner <dlechner@baylibre.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 130/242] iio: adc: ti-adc161s626: fix buffer read on big-endian
-Date: Wed,  8 Apr 2026 20:02:50 +0200
-Message-ID: <20260408175931.955053724@linuxfoundation.org>
+Subject: [PATCH 6.12 131/242] iio: adc: ti-adc161s626: use DMA-safe memory for spi_read()
+Date: Wed,  8 Apr 2026 20:02:51 +0200
+Message-ID: <20260408175931.992344095@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,70 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 From: David Lechner <dlechner@baylibre.com>
 
-commit 24869650dff34a6fc8fd1cc91b2058a72f9abc95 upstream.
+commit 768461517a28d80fe81ea4d5d03a90cd184ea6ad upstream.
 
-Rework ti_adc_trigger_handler() to properly handle data on big-endian
-architectures. The scan data format is 16-bit CPU-endian, so we can't
-cast it to a int * on big-endian and expect it to work. Instead, we
-introduce a local int variable to read the data into, and then copy it
-to the buffer.
+Add a DMA-safe buffer and use it for spi_read() instead of a stack
+memory. All SPI buffers must be DMA-safe.
 
-Since the buffer isn't passed to any SPI functions, we don't need it to
-be DMA-safe. So we can drop it from the driver data struct and just
-use stack memory for the scan data.
-
-Since there is only one data value (plus timestamp), we don't need an
-array and can just declare a struct with the correct data type instead.
-
-Also fix alignment of iio_get_time_ns() to ( while we are touching this.
+Since we only need up to 3 bytes, we just use a u8[] instead of __be16
+and __be32 and change the conversion functions appropriately.
 
 Fixes: 4d671b71beef ("iio: adc: ti-adc161s626: add support for TI 1-channel differential ADCs")
 Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-adc161s626.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/iio/adc/ti-adc161s626.c |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
 --- a/drivers/iio/adc/ti-adc161s626.c
 +++ b/drivers/iio/adc/ti-adc161s626.c
-@@ -70,8 +70,6 @@ struct ti_adc_data {
+@@ -15,6 +15,7 @@
+ #include <linux/init.h>
+ #include <linux/err.h>
+ #include <linux/spi/spi.h>
++#include <linux/unaligned.h>
+ #include <linux/iio/iio.h>
+ #include <linux/iio/trigger.h>
+ #include <linux/iio/buffer.h>
+@@ -70,6 +71,7 @@ struct ti_adc_data {
  
  	u8 read_size;
  	u8 shift;
--
--	u8 buffer[16] __aligned(IIO_DMA_MINALIGN);
++	u8 buf[3] __aligned(IIO_DMA_MINALIGN);
  };
  
  static int ti_adc_read_measurement(struct ti_adc_data *data,
-@@ -114,15 +112,20 @@ static irqreturn_t ti_adc_trigger_handle
- 	struct iio_poll_func *pf = private;
- 	struct iio_dev *indio_dev = pf->indio_dev;
- 	struct ti_adc_data *data = iio_priv(indio_dev);
--	int ret;
-+	struct {
-+		s16 data;
-+		aligned_s64 timestamp;
-+	} scan = { };
-+	int ret, val;
-+
-+	ret = ti_adc_read_measurement(data, &indio_dev->channels[0], &val);
-+	if (ret)
-+		goto exit_notify_done;
+@@ -78,26 +80,20 @@ static int ti_adc_read_measurement(struc
+ 	int ret;
  
--	ret = ti_adc_read_measurement(data, &indio_dev->channels[0],
--				     (int *) &data->buffer);
--	if (!ret)
--		iio_push_to_buffers_with_timestamp(indio_dev,
--					data->buffer,
--					iio_get_time_ns(indio_dev));
-+	scan.data = val;
-+	iio_push_to_buffers_with_timestamp(indio_dev, &scan, iio_get_time_ns(indio_dev));
+ 	switch (data->read_size) {
+-	case 2: {
+-		__be16 buf;
+-
+-		ret = spi_read(data->spi, (void *) &buf, 2);
++	case 2:
++		ret = spi_read(data->spi, data->buf, 2);
+ 		if (ret)
+ 			return ret;
  
-+ exit_notify_done:
- 	iio_trigger_notify_done(indio_dev->trig);
+-		*val = be16_to_cpu(buf);
++		*val = get_unaligned_be16(data->buf);
+ 		break;
+-	}
+-	case 3: {
+-		__be32 buf;
+-
+-		ret = spi_read(data->spi, (void *) &buf, 3);
++	case 3:
++		ret = spi_read(data->spi, data->buf, 3);
+ 		if (ret)
+ 			return ret;
  
- 	return IRQ_HANDLED;
+-		*val = be32_to_cpu(buf) >> 8;
++		*val = get_unaligned_be24(data->buf);
+ 		break;
+-	}
+ 	default:
+ 		return -EINVAL;
+ 	}
 
 
