@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52496337B81;
-	Wed,  8 Apr 2026 18:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10E7337B81;
+	Wed,  8 Apr 2026 18:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674613; cv=none; b=jSqOrITdrS4OeJ6qhFR4I72CW69AmbzEu/vOAuFiwsx0JCIVihIVhmEpm8HBNcnmHAmvB4wfq81BM8sI0h5yIzbdPA3gZFnBUqvDYjIlU2yoE/TX+DnCFDd6f3dDmgGJ2hNSqnYe34HrlOJX9SlyFZO472XRA7dIjDicpi7vulk=
+	t=1775674615; cv=none; b=Z/ZNK4KRjCLHmHJ2ZW+XYXS1QAe5bzvwzZ88SyJ/oXkew1ZUzDAiIVhiRnVcC8YXeg97BQNPgxt1yTT+mDd2oRTzRpxFsiuLssSCAJnYwuHx6he6WWE71Q5Bb/qRasQY9exBRmT9q3D+46H4wZyVoEZr1RUuWFI18/7dEjnjDF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674613; c=relaxed/simple;
-	bh=QO5SBRriL+24ze8NoR2WWTzCpk+2YiGVbZ4CnE4bg/U=;
+	s=arc-20240116; t=1775674615; c=relaxed/simple;
+	bh=VgFTSPOUV6/JPMIMl8Ur/ZZc/qr9fcBscTc0MNk6yJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NIza9EVZ4WGAJt74YgJj2b5cGoUg2Ti52jBk4zNk/bTfHNOSh4Agk0LcyQ7W9d/T5Xkhf4Rq+cyioEkpjk2NHk5Lx11FjLD5W0la2C0gr3KbIZOrf4F0yIc1KUwN/h+iKKXYKwwkMX8vcMOLl3QtT+68bS+TNMWAIE75NV+5lfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7jO86br; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YAJuZYbJ894QEImk1WI15SKLWSlPul7Ybtvp5zkmyRzi8GgSAbNSBEaTx1GRM/rw79DaEHo7wlMiW/ohg+YLpwCjArfF7ZO3vrHcH/evMk36jq9l1qUSpLmNkYypQMB1mDKUABn+94iPJYzAN6qbdBLLnamhSVCgJ4DegX8vwFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xELsbM0b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7jO86br"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96EAC19421;
-	Wed,  8 Apr 2026 18:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xELsbM0b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4604FC19421;
+	Wed,  8 Apr 2026 18:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674613;
-	bh=QO5SBRriL+24ze8NoR2WWTzCpk+2YiGVbZ4CnE4bg/U=;
+	s=korg; t=1775674615;
+	bh=VgFTSPOUV6/JPMIMl8Ur/ZZc/qr9fcBscTc0MNk6yJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7jO86brgaRz4dbuPT5Z3o3CeFW4UceatK95iUhgVEZ9832O1bSN98UH+jESJsCRL
-	 Mh8xfRGvIJEvxCi273rRwyk1RJysv15lqwaopqoNTgYmrnhNLUZSMTJ1xHVfvoQzBq
-	 AWhPyk3TDV6lcG1tlPYoqMrthtnqcwTDOf9E5aiM=
+	b=xELsbM0bClCP5l6M3fnvbSSMvoM+caF75/Hs/gzhR/nAdu1eThxg79rYYmpnCU5Qf
+	 tMX8R5X+zwmrs60SsJGOEknsvG+lkGlRoRzi4hYGxIFf0N/L79thj9ZoDzDlEqMLyc
+	 Yz8x8HZ5n4gDbB3CP2YpWNpAqPODe+3r3489w7/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ernestas Kulik <ernestas.k@iconn-networks.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.19 165/311] USB: serial: option: add MeiG Smart SRM825WN
-Date: Wed,  8 Apr 2026 20:02:45 +0200
-Message-ID: <20260408175945.567979486@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 139/311] hwmon: (ltc4286) Add missing MODULE_IMPORT_NS("PMBUS")
+Date: Wed,  8 Apr 2026 20:02:19 +0200
+Message-ID: <20260408175944.603329184@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -50,67 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ernestas Kulik <ernestas.k@iconn-networks.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit e8d0ed37bd51da52da6225d278e330c2f18a6198 upstream.
+[ Upstream commit a9d2fbd3ad0e6ac588386e699beeccfe7516755f ]
 
-Add support for the SDX62-based MeiG Smart SRM825WN module.
+ltc4286.c uses PMBus core symbols exported in the PMBUS namespace,
+such as pmbus_do_probe(), but does not declare MODULE_IMPORT_NS("PMBUS").
 
-If#= 0: RNDIS
-If#= 1: RNDIS
-If#= 2: Diag
-If#= 3: AT
-If#= 4: AT
-If#= 5: NMEA
+Add the missing namespace import to avoid modpost warnings.
 
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#= 19 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2dee ProdID=4d38 Rev= 5.04
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=da47a175
-C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E:  Ad=81(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Ernestas Kulik <ernestas.k@iconn-networks.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0c459759ca97 ("hwmon: (pmbus) Add ltc4286 driver")
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260329170925.34581-5-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwmon/pmbus/ltc4286.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2441,6 +2441,9 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM825WN (Diag) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825WN (AT) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825WN (NMEA) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
+diff --git a/drivers/hwmon/pmbus/ltc4286.c b/drivers/hwmon/pmbus/ltc4286.c
+index aabd0bcdfeee3..8715d380784a0 100644
+--- a/drivers/hwmon/pmbus/ltc4286.c
++++ b/drivers/hwmon/pmbus/ltc4286.c
+@@ -173,3 +173,4 @@ module_i2c_driver(ltc4286_driver);
+ MODULE_AUTHOR("Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>");
+ MODULE_DESCRIPTION("PMBUS driver for LTC4286 and compatibles");
+ MODULE_LICENSE("GPL");
++MODULE_IMPORT_NS("PMBUS");
+-- 
+2.53.0
+
 
 
