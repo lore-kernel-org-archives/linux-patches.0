@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743C12BEFFF;
-	Wed,  8 Apr 2026 18:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A392BEFFF;
+	Wed,  8 Apr 2026 18:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673892; cv=none; b=kAJSsHgpsxJG54tRe/x1yOU4jELSmHxs48ErYIZHA4VwD6HYPHuppNU/S5xcjx6y1+UT78QI8LcSIQUtESm80hujkh/QneelvrVgqb9E4JdhmhtgI6Js2+Ew1NMviSNZLSy2T8e5UAit1Qwnse13GUtxJGLlDhmRV48KoUdohZg=
+	t=1775673895; cv=none; b=ZnipcMff+M++HY6pGa2SBldUjT1d8I++0pxiaHQgqTJUm7kdWUEz1/S/wtX6plnzsCpViTgrbl1dmzlElwSsyr+ryx3yjCunpR/ZYTm+W4pH2HKXuh9AagEGTAf8me/pax60dHPf7k48pb58uUYgHQRDymvYWk9vaoFZ5VSqDX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673892; c=relaxed/simple;
-	bh=w2K0wtB6HXak9ubKNuZnJAr8OqKjlYSgf8QdFfCWM4w=;
+	s=arc-20240116; t=1775673895; c=relaxed/simple;
+	bh=VX2E4Vt00A01c3OqXk5ZDVQXCSm+HkcoRqBNozkilFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TQwASqXhA9AgKHHT8x8/W6e3yFyQYv34Kz6izkV1xBeG29WyoOq8cC6k+zdN3nxr0BozZnFLxFqZXd1co7wy+LmSPMim8uhjcwpyQ7mt5TPC57ZJUiafnB9iu31rmD1MZp8XErKjYK45HcT4n5CLU3v3YMXVQgmE/qHVtpT8NuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b604gevn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JIgCBjA67s89iNOD6bhNJIrv6TO9/7YMCdNKy3AU6baEG+lxKQO1E6uU7bioORFgTvhQmbl3t+TFhbar3RHrH3no5Eq+sSAUUywz1j1yITKavPK3/xQJILYxQyFIsCfG4PpI6IKHJQkGKjZLFDNxWqk9lxqXJQEnH8W27m4D9ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZXUsjRE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b604gevn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A28AC19421;
-	Wed,  8 Apr 2026 18:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZXUsjRE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90623C19421;
+	Wed,  8 Apr 2026 18:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673892;
-	bh=w2K0wtB6HXak9ubKNuZnJAr8OqKjlYSgf8QdFfCWM4w=;
+	s=korg; t=1775673894;
+	bh=VX2E4Vt00A01c3OqXk5ZDVQXCSm+HkcoRqBNozkilFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b604gevn3Tl8k5n7l559oLySi5nkpZ81wtk4n/YLsL4om8PP4k4GEf9uYMfBoTPWX
-	 /UUQ3KRVJk8BY5X3zCofSCYFsbtn6zNeAm+oH6BQhNpYinktcc+p5R2Q1Zo3/igyZ6
-	 4p7oqvn23NAX14lAgmGLN7a4zrV/+TN5JhPIa4mY=
+	b=tZXUsjREMqXhJLKjCQIftPZNSrs24F0haT0pPJJ9wwntD59Uk8DTN6glc7rK66L1n
+	 Oqcv/M2Rl0ey3vsfgK0crwNUoy5XTGe5+VPqVEunAZmsyBmNXpaGROdjKPV6i3mi5t
+	 ibALpL9gkA3hytqIYmqSnWJVfPjCZqzzcLOMYUAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Prike Liang <Prike.Liang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 129/242] drm/amdgpu: fix the idr allocation flags
-Date: Wed,  8 Apr 2026 20:02:49 +0200
-Message-ID: <20260408175931.919153615@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 130/242] iio: adc: ti-adc161s626: fix buffer read on big-endian
+Date: Wed,  8 Apr 2026 20:02:50 +0200
+Message-ID: <20260408175931.955053724@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -46,60 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: David Lechner <dlechner@baylibre.com>
 
-commit 62f553d60a801384336f5867967c26ddf3b17038 upstream.
+commit 24869650dff34a6fc8fd1cc91b2058a72f9abc95 upstream.
 
-Fix the IDR allocation flags by using atomic GFP
-flags in non‑sleepable contexts to avoid the __might_sleep()
-complaint.
+Rework ti_adc_trigger_handler() to properly handle data on big-endian
+architectures. The scan data format is 16-bit CPU-endian, so we can't
+cast it to a int * on big-endian and expect it to work. Instead, we
+introduce a local int variable to read the data into, and then copy it
+to the buffer.
 
-  268.290239] [drm] Initialized amdgpu 3.64.0 for 0000:03:00.0 on minor 0
-[  268.294900] BUG: sleeping function called from invalid context at ./include/linux/sched/mm.h:323
-[  268.295355] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1744, name: modprobe
-[  268.295705] preempt_count: 1, expected: 0
-[  268.295886] RCU nest depth: 0, expected: 0
-[  268.296072] 2 locks held by modprobe/1744:
-[  268.296077]  #0: ffff8c3a44abd1b8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xe4/0x210
-[  268.296100]  #1: ffffffffc1a6ea78 (amdgpu_pasid_idr_lock){+.+.}-{3:3}, at: amdgpu_pasid_alloc+0x26/0xe0 [amdgpu]
-[  268.296494] CPU: 12 UID: 0 PID: 1744 Comm: modprobe Tainted: G     U     OE       6.19.0-custom #16 PREEMPT(voluntary)
-[  268.296498] Tainted: [U]=USER, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[  268.296499] Hardware name: AMD Majolica-RN/Majolica-RN, BIOS RMJ1009A 06/13/2021
-[  268.296501] Call Trace:
+Since the buffer isn't passed to any SPI functions, we don't need it to
+be DMA-safe. So we can drop it from the driver data struct and just
+use stack memory for the scan data.
 
-Fixes: 8f1de51f49be ("drm/amdgpu: prevent immediate PASID reuse case")
-Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ea56aa2625708eaf96f310032391ff37746310ef)
-Cc: stable@vger.kernel.org
+Since there is only one data value (plus timestamp), we don't need an
+array and can just declare a struct with the correct data type instead.
+
+Also fix alignment of iio_get_time_ns() to ( while we are touching this.
+
+Fixes: 4d671b71beef ("iio: adc: ti-adc161s626: add support for TI 1-channel differential ADCs")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/iio/adc/ti-adc161s626.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-@@ -68,8 +68,11 @@ int amdgpu_pasid_alloc(unsigned int bits
- 		return -EINVAL;
+--- a/drivers/iio/adc/ti-adc161s626.c
++++ b/drivers/iio/adc/ti-adc161s626.c
+@@ -70,8 +70,6 @@ struct ti_adc_data {
  
- 	spin_lock(&amdgpu_pasid_idr_lock);
-+	/* TODO: Need to replace the idr with an xarry, and then
-+	 * handle the internal locking with ATOMIC safe paths.
-+	 */
- 	pasid = idr_alloc_cyclic(&amdgpu_pasid_idr, NULL, 1,
--				 1U << bits, GFP_KERNEL);
-+				 1U << bits, GFP_ATOMIC);
- 	spin_unlock(&amdgpu_pasid_idr_lock);
+ 	u8 read_size;
+ 	u8 shift;
+-
+-	u8 buffer[16] __aligned(IIO_DMA_MINALIGN);
+ };
  
- 	if (pasid >= 0)
+ static int ti_adc_read_measurement(struct ti_adc_data *data,
+@@ -114,15 +112,20 @@ static irqreturn_t ti_adc_trigger_handle
+ 	struct iio_poll_func *pf = private;
+ 	struct iio_dev *indio_dev = pf->indio_dev;
+ 	struct ti_adc_data *data = iio_priv(indio_dev);
+-	int ret;
++	struct {
++		s16 data;
++		aligned_s64 timestamp;
++	} scan = { };
++	int ret, val;
++
++	ret = ti_adc_read_measurement(data, &indio_dev->channels[0], &val);
++	if (ret)
++		goto exit_notify_done;
+ 
+-	ret = ti_adc_read_measurement(data, &indio_dev->channels[0],
+-				     (int *) &data->buffer);
+-	if (!ret)
+-		iio_push_to_buffers_with_timestamp(indio_dev,
+-					data->buffer,
+-					iio_get_time_ns(indio_dev));
++	scan.data = val;
++	iio_push_to_buffers_with_timestamp(indio_dev, &scan, iio_get_time_ns(indio_dev));
+ 
++ exit_notify_done:
+ 	iio_trigger_notify_done(indio_dev->trig);
+ 
+ 	return IRQ_HANDLED;
 
 
