@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008F43D6674;
-	Wed,  8 Apr 2026 18:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D7B3ACA41;
+	Wed,  8 Apr 2026 18:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672918; cv=none; b=sBUzzthhp8rJ+N457xKiVj2IiFA2+GIK+JyyW/GAx64oM3zi19uIRNuzjvd/JpfjM7DYpAaq6wAxMQrgKa+rmPEoyedzEYuOVrJ7Wm5U/BtlvrJvqB2ynLORFIvWReYnoYUbbffAHidY3zPqCxbxPTOUY2FvGC556Y3SBm369jU=
+	t=1775672920; cv=none; b=P4k7njG7PmtwUslPGY0Lmgf+mSS4GED7o9AAqZzyLRsmBblnhEbCVrX2uORk0Rh3ndi0Etxoh3tziOpl/uaS0jcVEE1Cn79lQlRxsaH41wlteXMWze+Q5o7BarpyNdkkypQaZ3MbGyEN+SYygnAOUCzTIm9PjXxH6ZUGc++h/WA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672918; c=relaxed/simple;
-	bh=KOygfg7dPMPOD1kvdw8ZkeEuH//TVYl/7ajN3bc5O0k=;
+	s=arc-20240116; t=1775672920; c=relaxed/simple;
+	bh=Rx1okxNhHH1ycmZ40K9jdCKKgojLGk/6iREuzFPCztU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ip+IaG+NszuMPk8X+R9xdLfa7ROGHkqEA6JUFlGTrTmhNQxUcNoOFqErfd5Eai8nKwwwDhstNWZEr2WJC/CZAuQPljfVlv0q3OUl9LUsBj4B5mbm0rbTgMAhzo9ey3Yv0wZz6ZkhEh2v9S2OXi4iDmIFdpCYRY2wtHhgis5pf0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aexqV3IY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XqWr/2MSEqImWOQ+1ylA93J86R3/xHEqT91Ll6WfMZqYnJl7dFxLEhuP+xybVTt1Jb8ac2S3pceSe+MfUIrBQ9Bv+ug5KI8927LOYlt/ZYVh4lRUCxSEjXQs526JSKfOOdJRxuZwLXn1u0itnDQUWg+/nFose8rwaVmRg9ocUe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyUFltqx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aexqV3IY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297ABC19421;
-	Wed,  8 Apr 2026 18:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyUFltqx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA930C19421;
+	Wed,  8 Apr 2026 18:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672917;
-	bh=KOygfg7dPMPOD1kvdw8ZkeEuH//TVYl/7ajN3bc5O0k=;
+	s=korg; t=1775672920;
+	bh=Rx1okxNhHH1ycmZ40K9jdCKKgojLGk/6iREuzFPCztU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aexqV3IYSwtMw6W92CnyaB94RuU4G+lwupdPFszWvJ46gsgtyNEFRPddto0uwYFhN
-	 XwMkwdcT40BY8+1djxhWa8Nbv9rNQ1WDXW1SdL9pi+J+edpX4bWHldD8V0773F7JxB
-	 g6NGVwvGkwlvua+PEleXGQZtgWEl41JLfZg8HLoo=
+	b=IyUFltqxSJRqIBrg7KNDGrIWzBunnTBMC31/Gpx9nEEgAksGEVGmnZx+xnyAlG3gE
+	 xTZbKVaiXH7M0EG/LwbzxpA3NsfQNEp7vkMQUuiSfXmy3LKfuxCYPpn+dT1W4dVDOw
+	 4nwCa6kFIFIPSV6DCAZVzxhA07uI6hYOw8H2OS+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <dqfext@gmail.com>,
+	Buday Csaba <buday.csaba@prolan.hu>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/277] netdevsim: fix build if SKB_EXTENSIONS=n
-Date: Wed,  8 Apr 2026 20:00:15 +0200
-Message-ID: <20260408175934.976951415@linuxfoundation.org>
+Subject: [PATCH 6.18 031/277] net: fec: fix the PTP periodic output sysfs interface
+Date: Wed,  8 Apr 2026 20:00:16 +0200
+Message-ID: <20260408175935.015125121@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,43 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <dqfext@gmail.com>
+From: Buday Csaba <buday.csaba@prolan.hu>
 
-[ Upstream commit 57a04a13aac1f247d171c3f3aef93efc69e6979e ]
+[ Upstream commit e8e44c98f789dee45cfd24ffb9d4936e0606d7c6 ]
 
-__skb_ext_put() is not declared if SKB_EXTENSIONS is not enabled, which
-causes a build error:
+When the PPS channel configuration was implemented, the channel
+index for the periodic outputs was configured as the hardware
+channel number.
 
-drivers/net/netdevsim/netdev.c: In function 'nsim_forward_skb':
-drivers/net/netdevsim/netdev.c:114:25: error: implicit declaration of function '__skb_ext_put'; did you mean 'skb_ext_put'? [-Werror=implicit-function-declaration]
-  114 |                         __skb_ext_put(psp_ext);
-      |                         ^~~~~~~~~~~~~
-      |                         skb_ext_put
-cc1: some warnings being treated as errors
+The sysfs interface uses a logical channel index, and rejects numbers
+greater than `n_per_out` (see period_store() in ptp_sysfs.c).
+That property was left at 1, since the driver implements channel
+selection, not simultaneous operation of multiple PTP hardware timer
+channels.
 
-Add a stub to fix the build.
+A second check in fec_ptp_enable() returns -EOPNOTSUPP when the two
+channel numbers disagree, making channels 1..3 unusable from sysfs.
 
-Fixes: 7d9351435ebb ("netdevsim: drop PSP ext ref on forward failure")
-Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Link: https://patch.msgid.link/20260324140857.783-1-dqfext@gmail.com
+Fix by removing this redundant check in the FEC PTP driver.
+
+Fixes: 566c2d83887f ("net: fec: make PPS channel configurable")
+Signed-off-by: Buday Csaba <buday.csaba@prolan.hu>
+Link: https://patch.msgid.link/8ec2afe88423c2231f9cf8044d212ce57846670e.1774359059.git.buday.csaba@prolan.hu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/freescale/fec_ptp.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 50f127451dc65..def9cca948178 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -5018,6 +5018,7 @@ static inline bool skb_has_extensions(struct sk_buff *skb)
- 	return unlikely(skb->active_extensions);
- }
- #else
-+static inline void __skb_ext_put(struct skb_ext *ext) {}
- static inline void skb_ext_put(struct sk_buff *skb) {}
- static inline void skb_ext_reset(struct sk_buff *skb) {}
- static inline void skb_ext_del(struct sk_buff *skb, int unused) {}
+diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
+index 4b7bad9a485df..56801c2009d59 100644
+--- a/drivers/net/ethernet/freescale/fec_ptp.c
++++ b/drivers/net/ethernet/freescale/fec_ptp.c
+@@ -545,9 +545,6 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
+ 		if (rq->perout.flags)
+ 			return -EOPNOTSUPP;
+ 
+-		if (rq->perout.index != fep->pps_channel)
+-			return -EOPNOTSUPP;
+-
+ 		period.tv_sec = rq->perout.period.sec;
+ 		period.tv_nsec = rq->perout.period.nsec;
+ 		period_ns = timespec64_to_ns(&period);
 -- 
 2.53.0
 
