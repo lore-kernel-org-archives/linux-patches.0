@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF35328B75;
-	Wed,  8 Apr 2026 18:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6533D8134;
+	Wed,  8 Apr 2026 18:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673199; cv=none; b=IIY+nxWMC+wh0BQTRA096OxrHVs9f+S6hni+a3fqpDYiOa1B3QcIgxuTDWKTqmYY3LPZEGc5NVz6QcWbNY4l+T+FilntSgvOUKIZdHClHvBdb+GEWqMXm4f27BQ70eW+V4yucUOjJkIFhpzFU+p1rW7UDpEa7S60RpOeeOSw/aY=
+	t=1775673202; cv=none; b=TBzo7wV+futmaIrPkKoFJFFdYLjT/s6nA69TAMns+1b7L1unV+qN8W+s2VrNn3eEPaD2kPxziKGAqlNiWOtSsoyPoVzMIcW4Ty/m+J1fOr/rJQHPhb0Ajg0DQaLphlb7nCPvw6jLebDeE3VylfN1tDpBtMs2pjdcvY+2d6+zvhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673199; c=relaxed/simple;
-	bh=3hH7qNUyWXDMBE9WX/U4g8cI4J1tiz/N93ojkrIhxj4=;
+	s=arc-20240116; t=1775673202; c=relaxed/simple;
+	bh=HOa31KTSDjQCMZnvQrEIpc+kcbe64I/WgixEn8YLO4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PjxOzuqhWv2QeGcISz7zeUqwmbsgcsE3ZgiSZVUzO9H2PlnW0ggcYVIoc+9PehNfR4X2mS4uBl4IvJXw2Uua43g0/Po0sJgvEejWy/A/TnbCTjpz6NBx2567iIfKaY8FpUTG00W84xmzRrg7QiZtEYmpA1pjIH3+DCeEScCwtng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KG7KRJnu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bUqHFeotq/q3wBSd5wRX//Ndu9BJKMFneLj4JbvRcdUr5c6QQLaiFkFo4M0S1UhwQ3t8Ee5jQ/6UtZDhTqI8zO4tlJ6tlJVD30k/S3/FV+NrwMu9J0ReY9OY6H97KtRsIboyGvJaoH+whmxpMocigz9rZLO3qSd02zjZpcyKMyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCn46VF9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KG7KRJnu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A6EC19421;
-	Wed,  8 Apr 2026 18:33:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCn46VF9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42C8C19425;
+	Wed,  8 Apr 2026 18:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673199;
-	bh=3hH7qNUyWXDMBE9WX/U4g8cI4J1tiz/N93ojkrIhxj4=;
+	s=korg; t=1775673202;
+	bh=HOa31KTSDjQCMZnvQrEIpc+kcbe64I/WgixEn8YLO4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KG7KRJnuTrbtnA9b5OeX3sJ35IkNxb4+blSgOuwaNOQ3rfjCspfjDA/9okaNODuMS
-	 woRGKNnEA/fDJW9/sm2kDKI1G/R/Tdfin8qwahSLIEv+six8fAA5HRF00yXXPJbHSc
-	 dx2TQSy8n7Wc2LqwD18xx7Pj0UIMK3NxpHoMod20=
+	b=VCn46VF9gSwQBIdzXZdGYvrGd6UQh4V6QQ7eIQ9fe9EL1+gBFLwGHA1sm2gilvY8f
+	 UrMA+8piYg6xLv0+IPDFBh6f0Fa/QVySf8u5/HvIWaPNVUom+/ohFMoC2cXYl6tJHW
+	 9RpgGLf40Cy7h6s7geikjSyG8KLCjdM272sxSHPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Karsten Hohmeier <linux@hohmatik.de>
-Subject: [PATCH 6.18 138/277] ALSA: ctxfi: Fix missing SPDIFI1 index handling
-Date: Wed,  8 Apr 2026 20:02:03 +0200
-Message-ID: <20260408175939.029135148@linuxfoundation.org>
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 139/277] ALSA: hda/realtek: Add quirk for ASUS ROG Strix SCAR 15
+Date: Wed,  8 Apr 2026 20:02:04 +0200
+Message-ID: <20260408175939.065974282@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -50,34 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-commit b045ab3dff97edae6d538eeff900a34c098761f8 upstream.
+commit f1af71d568e55536d9297bfa7907ad497108cf30 upstream.
 
-SPDIF1 DAIO type isn't properly handled in daio_device_index() for
-hw20k2, and it returned -EINVAL, which ended up with the out-of-bounds
-array access.  Follow the hw20k1 pattern and return the proper index
-for this type, too.
+ASUS ROG Strix SCAR 15, like the Strix G15, requires the
+ALC285_FIXUP_ASUS_G533Z_PINS quirk to work properly.
 
-Reported-and-tested-by: Karsten Hohmeier <linux@hohmatik.de>
-Closes: https://lore.kernel.org/20260315155004.15633-1-linux@hohmatik.de
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221247
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260329091240.420194-1-tiwai@suse.de
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260330075334.50962-2-zhangheng@kylinos.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/ctdaio.c |    1 +
+ sound/hda/codecs/realtek/alc269.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/sound/pci/ctxfi/ctdaio.c
-+++ b/sound/pci/ctxfi/ctdaio.c
-@@ -119,6 +119,7 @@ static unsigned int daio_device_index(en
- 		switch (type) {
- 		case SPDIFOO:	return 0;
- 		case SPDIFIO:	return 0;
-+		case SPDIFI1:	return 1;
- 		case LINEO1:	return 4;
- 		case LINEO2:	return 7;
- 		case LINEO3:	return 5;
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7067,6 +7067,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1043, 0x1533, "ASUS GV302XA/XJ/XQ/XU/XV/XI", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1573, "ASUS GZ301VV/VQ/VU/VJ/VA/VC/VE/VVC/VQC/VUC/VJC/VEC/VCC", ALC285_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1584, "ASUS UM3406GA ", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x1043, 0x1602, "ASUS ROG Strix SCAR 15", ALC285_FIXUP_ASUS_G533Z_PINS),
+ 	SND_PCI_QUIRK(0x1043, 0x1652, "ASUS ROG Zephyrus Do 15 SE", ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1663, "ASUS GU603ZI/ZJ/ZQ/ZU/ZV", ALC285_FIXUP_ASUS_HEADSET_MIC),
 
 
