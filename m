@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9D636D50D;
-	Wed,  8 Apr 2026 18:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847523D9031;
+	Wed,  8 Apr 2026 18:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671644; cv=none; b=qvzzMOpdG0EsTA4mDwLxIi+RxMX04G9HipTyOxemN7vaw6Ovq80JSGWPyvLQh2Ky6VvethvoY7DaKJM9ffs95FN9WBwF0FouUiotOQwzyKOCu10/NM9/FZk5wwhfx26v4+GMG1WIMShFvRfg2mzdHazX2n1wXv/b3vYmPA/AFT8=
+	t=1775671646; cv=none; b=qrA0pKhGUqx+NiAT8sCXU2/BVaA7hk4goLJlLuf7dZsn73YhcfMUL9/iFK670LqO9bBjqQZ0ypHJPJbTDVapGQUjqDjqjRRjFDruWQamKJ8b159UGSxQN9RNbHYADU5hufXk40xiKLPCAV8dlHIzpLz91QvlMyVmQ9WUrjn8UzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671644; c=relaxed/simple;
-	bh=5UUYYmxB+PZWNOVxTgjvnIqwmSLyYfbTTcskrxqAp2Q=;
+	s=arc-20240116; t=1775671646; c=relaxed/simple;
+	bh=4QtF0fGUoB8UUK+so/ctrxJ8F1LbKT2dm2MAahXxzIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wqibg7+Nmh8Sh8IX8gLEl1A6lla2nmeIwq4scIZtXJxX+8JuUzZ+G+R4ulwjn1SFaBG2EBMTUdhnUCG5uliy5RlCi5mKuBktP/IQnGA9F5NhsUpaoFCexIFCb2F5MHtCTqCR9oaJmmWm6i+Bq7zaLX9sIiDATrNYZiN7tVY9l7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5ShfyPR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jklrJyyW5QyGsYj7ZViLbPieRkX3AxL8hcDdn6SxNq8A/e+++I9cMb0IM8o4kmAl0G/JLGUSF6+8gLvCjVkA/DXzYPDoMRGb3mV20ESXWAiZr4jOCpZImzjmE83FvF/AWQH/DiHAJ15dj/O434w6TYUhD/0CDffHqtdWG0lhcU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSZKEbSD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5ShfyPR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2A4C19425;
-	Wed,  8 Apr 2026 18:07:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSZKEbSD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB032C19421;
+	Wed,  8 Apr 2026 18:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671643;
-	bh=5UUYYmxB+PZWNOVxTgjvnIqwmSLyYfbTTcskrxqAp2Q=;
+	s=korg; t=1775671646;
+	bh=4QtF0fGUoB8UUK+so/ctrxJ8F1LbKT2dm2MAahXxzIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5ShfyPRIncrn7T6yoiNn2sswZWs7/fpbBaRvKnG9pchgJSUEXTuLtiCcuhg2jIBN
-	 C7Z9Wx3p90i2ll+jGJEZH62pNHVmf2RPXFZZ4VVwpQWmieebcqGtx2lhbFiJDP3WD7
-	 Xu+agNq3xUrjUYOL4VpiaRY72bLfVyuV/V/4M2BA=
+	b=CSZKEbSD+/CZURRvrx1RAL3VTKDiYMb99qsWYbBOrXrcIcUO/oZv4FVEdD/OMyflv
+	 Kt1LNMOV7Q5xp32r4p6W1+ipmbLn1KjuNz8lq0v8o9s9BYK6sl6+3Y5xqb6WAr6aTk
+	 9yaHIV7YE8FmOZMCytKXwW6bMnHBSF+bBA2+/nKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Romain Sioen <romain.sioen@microchip.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Gregory Bell <grbell@redhat.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/312] HID: mcp2221: cancel last I2C command on read error
-Date: Wed,  8 Apr 2026 19:58:50 +0200
-Message-ID: <20260408175934.224917668@linuxfoundation.org>
+Subject: [PATCH 6.1 002/312] bpf: Release module BTF IDR before module unload
+Date: Wed,  8 Apr 2026 19:58:39 +0200
+Message-ID: <20260408175933.812750547@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -51,39 +54,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Romain Sioen <romain.sioen@microchip.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit e31b556c0ba21f20c298aa61181b96541140b7b9 ]
+[ Upstream commit 146bd2a87a65aa407bb17fac70d8d583d19aba06 ]
 
-When an I2C SMBus read operation fails, the MCP2221 internal state machine
-may not reset correctly, causing subsequent transactions to fail.
+Gregory reported in [0] that the global_map_resize test when run in
+repeatedly ends up failing during program load. This stems from the fact
+that BTF reference has not dropped to zero after the previous run's
+module is unloaded, and the older module's BTF is still discoverable and
+visible. Later, in libbpf, load_module_btfs() will find the ID for this
+stale BTF, open its fd, and then it will be used during program load
+where later steps taking module reference using btf_try_get_module()
+fail since the underlying module for the BTF is gone.
 
-By adding a short delay and explicitly cancelling the last command,
-we ensure the device is ready for the next operation.
+Logically, once a module is unloaded, it's associated BTF artifacts
+should become hidden. The BTF object inside the kernel may still remain
+alive as long its reference counts are alive, but it should no longer be
+discoverable.
 
-Fix an issue where i2cdetect was not able to detect all devices correctly
-on the bus.
+To fix this, let us call btf_free_id() from the MODULE_STATE_GOING case
+for the module unload to free the BTF associated IDR entry, and disable
+its discovery once module unload returns to user space. If a race
+happens during unload, the outcome is non-deterministic anyway. However,
+user space should be able to rely on the guarantee that once it has
+synchronously established a successful module unload, no more stale
+artifacts associated with this module can be obtained subsequently.
 
-Signed-off-by: Romain Sioen <romain.sioen@microchip.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Note that we must be careful to not invoke btf_free_id() in btf_put()
+when btf_is_module() is true now. There could be a window where the
+module unload drops a non-terminal reference, frees the IDR, but the
+same ID gets reused and the second unconditional btf_free_id() ends up
+releasing an unrelated entry.
+
+To avoid a special case for btf_is_module() case, set btf->id to zero to
+make btf_free_id() idempotent, such that we can unconditionally invoke it
+from btf_put(), and also from the MODULE_STATE_GOING case. Since zero is
+an invalid IDR, the idr_remove() should be a noop.
+
+Note that we can be sure that by the time we reach final btf_put() for
+btf_is_module() case, the btf_free_id() is already done, since the
+module itself holds the BTF reference, and it will call this function
+for the BTF before dropping its own reference.
+
+  [0]: https://lore.kernel.org/bpf/cover.1773170190.git.grbell@redhat.com
+
+Fixes: 36e68442d1af ("bpf: Load and verify kernel module BTFs")
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Suggested-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reported-by: Gregory Bell <grbell@redhat.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20260312205307.1346991-1-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-mcp2221.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/bpf/btf.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
-index 474f563c23a43..e1bd1744bf307 100644
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -319,6 +319,8 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
- 				usleep_range(90, 100);
- 				retries++;
- 			} else {
-+				usleep_range(980, 1000);
-+				mcp_cancel_last_cmd(mcp);
- 				return ret;
- 			}
- 		} else {
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 9f9996cdb6e2f..d9f6ad515d890 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -1606,7 +1606,16 @@ static void btf_free_id(struct btf *btf)
+ 	 * of the _bh() version.
+ 	 */
+ 	spin_lock_irqsave(&btf_idr_lock, flags);
+-	idr_remove(&btf_idr, btf->id);
++	if (btf->id) {
++		idr_remove(&btf_idr, btf->id);
++		/*
++		 * Clear the id here to make this function idempotent, since it will get
++		 * called a couple of times for module BTFs: on module unload, and then
++		 * the final btf_put(). btf_alloc_id() starts IDs with 1, so we can use
++		 * 0 as sentinel value.
++		 */
++		WRITE_ONCE(btf->id, 0);
++	}
+ 	spin_unlock_irqrestore(&btf_idr_lock, flags);
+ }
+ 
+@@ -6875,7 +6884,7 @@ static void bpf_btf_show_fdinfo(struct seq_file *m, struct file *filp)
+ {
+ 	const struct btf *btf = filp->private_data;
+ 
+-	seq_printf(m, "btf_id:\t%u\n", btf->id);
++	seq_printf(m, "btf_id:\t%u\n", READ_ONCE(btf->id));
+ }
+ #endif
+ 
+@@ -6970,7 +6979,7 @@ int btf_get_info_by_fd(const struct btf *btf,
+ 	if (copy_from_user(&info, uinfo, info_copy))
+ 		return -EFAULT;
+ 
+-	info.id = btf->id;
++	info.id = READ_ONCE(btf->id);
+ 	ubtf = u64_to_user_ptr(info.btf);
+ 	btf_copy = min_t(u32, btf->data_size, info.btf_size);
+ 	if (copy_to_user(ubtf, btf->data, btf_copy))
+@@ -7033,7 +7042,7 @@ int btf_get_fd_by_id(u32 id)
+ 
+ u32 btf_obj_id(const struct btf *btf)
+ {
+-	return btf->id;
++	return READ_ONCE(btf->id);
+ }
+ 
+ bool btf_is_kernel(const struct btf *btf)
+@@ -7179,6 +7188,13 @@ static int btf_module_notify(struct notifier_block *nb, unsigned long op,
+ 			if (btf_mod->module != module)
+ 				continue;
+ 
++			/*
++			 * For modules, we do the freeing of BTF IDR as soon as
++			 * module goes away to disable BTF discovery, since the
++			 * btf_try_get_module() on such BTFs will fail. This may
++			 * be called again on btf_put(), but it's ok to do so.
++			 */
++			btf_free_id(btf_mod->btf);
+ 			list_del(&btf_mod->list);
+ 			if (btf_mod->sysfs_attr)
+ 				sysfs_remove_bin_file(btf_kobj, btf_mod->sysfs_attr);
 -- 
 2.51.0
 
