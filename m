@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD1636166F;
-	Wed,  8 Apr 2026 18:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C56A2DCF41;
+	Wed,  8 Apr 2026 18:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673426; cv=none; b=uaZzIzZ76c8IURhlNOHBoGP6HZdWkmHJ6hIN9vEQYXGU5eomEWWTKXRi/jipFZU7u2BhY3NnZ4xfDrfjxPS/jxEDoHsaipFhuX7bT5XWASDEd63n90/FNkafmy6JXb1jfytAtGgDwNlHN4Zy51zmgPj5J+GtqxiL++QYVW5Bx2M=
+	t=1775673429; cv=none; b=KcyUds6PndUKZhvuNp960Y9+hFr4p3enmwyUTanR6j5LADpQCS853Tkk2CgdCiewnThJo0M8MNpKSfpX2odT+FTtwQaJGvEuKFb1fyhROZ3JHxCdUPmOsfcC+AXftXBDNJ/QHvmSbWrZpNdrVBXE5ftUk3qGNzQQG19ghwOF/jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673426; c=relaxed/simple;
-	bh=hz3gd9/g2E6oCRvZiCLMzBrNbYzevVRssLVwrK9QOTM=;
+	s=arc-20240116; t=1775673429; c=relaxed/simple;
+	bh=rSBWiJqzDLdGmrB6XRIlvrvU7DWJFFxXUBd2TC7rI1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pe/2xMz9AwLYI9aCJF12zq7cmfRSz/s64c601mExJBEPw2RqJn5hL2OeiqoYc5pdV0oBlgbzrw0/28ffpoSjUxLFvFUYR7B7vGDYDbl2juZTWWfsVUL5DpKlG4ooehFYs1UqjcOoV5+HZH/z3NbzPqjDPDmSr99kOi6CNB/g3rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQtJCM6p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dJoAGythrpk0kQGPyDjqIL8eri1ai+OnzSGz9hs6+eTtIyOrTwo4UmPBR3YYv2idPwrwzSLkATQccpZdRYVPlcxcv/W+k2KKNe3hhcY/fPKdA7tzj3WLb42SvTvxM3yfRPIBPzaqQUglCGCOBxsqZtdRbaF8+QsBe07uWovkv34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APBP4xuj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQtJCM6p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBFCC19421;
-	Wed,  8 Apr 2026 18:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APBP4xuj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526C6C19421;
+	Wed,  8 Apr 2026 18:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673426;
-	bh=hz3gd9/g2E6oCRvZiCLMzBrNbYzevVRssLVwrK9QOTM=;
+	s=korg; t=1775673428;
+	bh=rSBWiJqzDLdGmrB6XRIlvrvU7DWJFFxXUBd2TC7rI1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQtJCM6po8Mwx6oezpNcPcNvjSYNX3CC8e4a/ydaNMkDX46btbw8ESNg+g/4+YCIs
-	 P+fWV5p1nV5xAFsm1gKLfhPb/UGEH/ZHASCo+R1Tjl/HTxPg4JwaRfSOFuGB9p596r
-	 Tfi6mS/ZEwzJuOPa9b8D+/rADh20mtnVv++cnQwc=
+	b=APBP4xuj6FMu6nYpHDZjnt8C/XBAkH/Rb7lMHUp33iukBxlhWkPLKflvwa7fd5RTA
+	 bXYGPVR7Om9j+ACZJcauNw4SRa/4c+T5pgU+hLNh54bQZFU2VwGMeyN7jIsLQ6X3VC
+	 fg8Ax4af/29io0BkEagA44BhOzlwNNYYndAwl2m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Nicolas Pitre <nico@fluxnic.net>
-Subject: [PATCH 6.18 228/277] vt: resize saved unicode buffer on alt screen exit after resize
-Date: Wed,  8 Apr 2026 20:03:33 +0200
-Message-ID: <20260408175942.373064733@linuxfoundation.org>
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	William Breathitt Gray <wbg@kernel.org>
+Subject: [PATCH 6.18 229/277] counter: rz-mtu3-cnt: prevent counter from being toggled multiple times
+Date: Wed,  8 Apr 2026 20:03:34 +0200
+Message-ID: <20260408175942.409905326@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -50,70 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Pitre <nico@fluxnic.net>
+From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-commit 3ddbea7542ae529c1a88ef9a8b1ce169126211f6 upstream.
+commit 67c3f99bed6f422ba343d2b70a2eeeccdfd91bef upstream.
 
-Instead of discarding the saved unicode buffer when the console was
-resized while in the alternate screen, resize it to the current
-dimensions using vc_uniscr_copy_area() to preserve its content. This
-properly restores the unicode screen on alt screen exit rather than
-lazily rebuilding it from a lossy reverse glyph translation.
+Runtime PM counter is incremented / decremented each time the sysfs
+enable file is written to.
 
-On allocation failure the stale buffer is freed and vc_uni_lines is
-set to NULL so it gets lazily rebuilt via vc_uniscr_check() when next
-needed.
+If user writes 0 to the sysfs enable file multiple times, runtime PM
+usage count underflows, generating the following message.
 
-Fixes: 40014493cece ("vt: discard stale unicode buffer on alt screen exit after resize")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
-Link: https://patch.msgid.link/3nsr334n-079q-125n-7807-n4nq818758ns@syhkavp.arg
+rz-mtu3-counter rz-mtu3-counter.0: Runtime PM usage count underflow!
+
+At the same time, hardware registers end up being accessed with clocks
+off in rz_mtu3_terminate_counter() to disable an already disabled
+channel.
+
+If user writes 1 to the sysfs enable file multiple times, runtime PM
+usage count will be incremented each time, requiring the same number of
+0 writes to get it back to 0.
+
+If user writes 0 to the sysfs enable file while PWM is in progress, PWM
+is stopped without counter being the owner of the underlying MTU3
+channel.
+
+Check against the cached count_is_enabled value and exit if the user
+is trying to set the same enable value.
+
+Cc: stable@vger.kernel.org
+Fixes: 0be8907359df ("counter: Add Renesas RZ/G2L MTU3a counter driver")
+Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Link: https://lore.kernel.org/r/20260130122353.2263273-5-cosmin-gabriel.tanislav.xa@renesas.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vt.c |   24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/counter/rz-mtu3-cnt.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -1907,7 +1907,6 @@ static void leave_alt_screen(struct vc_d
- 	unsigned int rows = min(vc->vc_saved_rows, vc->vc_rows);
- 	unsigned int cols = min(vc->vc_saved_cols, vc->vc_cols);
- 	u16 *src, *dest;
--	bool uni_lines_stale;
+--- a/drivers/counter/rz-mtu3-cnt.c
++++ b/drivers/counter/rz-mtu3-cnt.c
+@@ -499,21 +499,25 @@ static int rz_mtu3_count_enable_write(st
+ 	struct rz_mtu3_cnt *const priv = counter_priv(counter);
+ 	int ret = 0;
  
- 	if (vc->vc_saved_screen == NULL)
- 		return; /* Not inside an alt-screen */
-@@ -1918,16 +1917,23 @@ static void leave_alt_screen(struct vc_d
- 	}
- 	/*
- 	 * If the console was resized while in the alternate screen,
--	 * vc_saved_uni_lines was allocated for the old dimensions.
--	 * Restoring it would cause out-of-bounds accesses. Discard it
--	 * and let the unicode screen be lazily rebuilt.
-+	 * resize the saved unicode buffer to the current dimensions.
-+	 * On allocation failure new_uniscr is NULL, causing the old
-+	 * buffer to be freed and vc_uni_lines to be lazily rebuilt
-+	 * via vc_uniscr_check() when next needed.
- 	 */
--	uni_lines_stale = vc->vc_saved_rows != vc->vc_rows ||
--			  vc->vc_saved_cols != vc->vc_cols;
--	if (uni_lines_stale)
-+	if (vc->vc_saved_uni_lines &&
-+	    (vc->vc_saved_rows != vc->vc_rows ||
-+	     vc->vc_saved_cols != vc->vc_cols)) {
-+		u32 **new_uniscr = vc_uniscr_alloc(vc->vc_cols, vc->vc_rows);
++	mutex_lock(&priv->lock);
 +
-+		if (new_uniscr)
-+			vc_uniscr_copy_area(new_uniscr, vc->vc_cols, vc->vc_rows,
-+					    vc->vc_saved_uni_lines, cols, 0, rows);
- 		vc_uniscr_free(vc->vc_saved_uni_lines);
--	else
--		vc_uniscr_set(vc, vc->vc_saved_uni_lines);
-+		vc->vc_saved_uni_lines = new_uniscr;
-+	}
-+	vc_uniscr_set(vc, vc->vc_saved_uni_lines);
- 	vc->vc_saved_uni_lines = NULL;
- 	restore_cur(vc);
- 	/* Update the entire screen */
++	if (priv->count_is_enabled[count->id] == enable)
++		goto exit;
++
+ 	if (enable) {
+-		mutex_lock(&priv->lock);
+ 		pm_runtime_get_sync(ch->dev);
+ 		ret = rz_mtu3_initialize_counter(counter, count->id);
+ 		if (ret == 0)
+ 			priv->count_is_enabled[count->id] = true;
+-		mutex_unlock(&priv->lock);
+ 	} else {
+-		mutex_lock(&priv->lock);
+ 		rz_mtu3_terminate_counter(counter, count->id);
+ 		priv->count_is_enabled[count->id] = false;
+ 		pm_runtime_put(ch->dev);
+-		mutex_unlock(&priv->lock);
+ 	}
+ 
++exit:
++	mutex_unlock(&priv->lock);
++
+ 	return ret;
+ }
+ 
 
 
