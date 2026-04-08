@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41592727F3;
-	Wed,  8 Apr 2026 18:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E133AEF5F;
+	Wed,  8 Apr 2026 18:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674112; cv=none; b=oZ0QvwytU2TpiB7poHrJNPQ8nEOJxEbWyFCnWRw6iQNrMhqXYh/yvQ4/mUNnS+gDk038yldPTqw9IchAEb/BwYEIGXbzUaWPinTbqALIdyEJ3ct66Bc5CCi5daLbd1JGEJ2bA7NNY1Phb6G7lzKGepQXWgvJjY2UPxJmsts5YZE=
+	t=1775674115; cv=none; b=oX4xXyojj1fLqvFEfED+/66WaJ+M/GWgU0xDMrR6Jt5wl/QTn8kPr1Rx8a7ZL/7SrU9ZPYKlEhVyrdSRJ+AuurWWnINsaNupxm1n1HtKflXzGZPFZN9vlXH5GIRV9hdxs7tGzqq7sO0Dg30nJQyNd16hQzYwFNtJy/q2+VhaMik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674112; c=relaxed/simple;
-	bh=A8Yq6J+QruGxV7QpNZnLxUXPcDfVEWWysJmPpDfjdns=;
+	s=arc-20240116; t=1775674115; c=relaxed/simple;
+	bh=oyJ29RgZ4mUN173gcCKjauHAlWhFyx8X2+r1eYLEuao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r3TjVba7OKZV6RGH+HjDIN6QKuLLbsvOmWt8G9U5PE84IvzxzK/OiOTK8em+L+y/CXHRgygRUlsjc4qyInjkYepsPDkeFrdp0JHbpnXIP+Iea+WZyyeDY3IrgA0GCtjPmUWLPTs1oXjgowf8M5i0Cp7cZgN6LGtE2r1tCrPM9Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8YRNgma; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tu0DIUBgoZTA+8vQvR7Vy36lBX6j9H7V7KREpQjoqNJin8kuTWsA9IxmPkafXSws19AZakwC3+qwBSbs+cHRg9FSzzBvTzRt50oRbgm5lhxSLCl86heFSOASboZs9aSc8kKur/kN6cRMHCQU38dhBadrKG22aqfTHdw2cjwl2TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DienXFNJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8YRNgma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A240C19421;
-	Wed,  8 Apr 2026 18:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DienXFNJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FFEC2BC9E;
+	Wed,  8 Apr 2026 18:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674112;
-	bh=A8Yq6J+QruGxV7QpNZnLxUXPcDfVEWWysJmPpDfjdns=;
+	s=korg; t=1775674115;
+	bh=oyJ29RgZ4mUN173gcCKjauHAlWhFyx8X2+r1eYLEuao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8YRNgmaLf4j18DLs7SqviNSgON3ixCnkGzYqjUGoK+uLg8kyhd36E6s/NuMCJn/3
-	 nzAwxPinNtE0PWGvxGQ465HGTyRq35qgAZuVF0yZAIzoiBsXXD6mZtGFpQP91sQeqB
-	 JEOQ7Ifm20dyuy7D7sZvhDuWkEaf+sxJwCfIzmhU=
+	b=DienXFNJNtzQhOmvS1uOx5BH2I5ecoYtls0v5UtXIloRc4uiFDtn1UCBPuFMyMw2g
+	 R2sWD7fDCfd8R6H0zbwelIC7ADe+xnXEKewQOolkYvbrCRq/j7qRivKIUezFGuiuZp
+	 T8z8dKpwX4qxaD8cLmnHCA7k9RcAPeMtcwyZquQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 215/242] net: mana: fix use-after-free in add_adev() error path
-Date: Wed,  8 Apr 2026 20:04:15 +0200
-Message-ID: <20260408175935.127265019@linuxfoundation.org>
+Subject: [PATCH 6.12 216/242] scsi: target: tcm_loop: Drain commands in target_reset handler
+Date: Wed,  8 Apr 2026 20:04:16 +0200
+Message-ID: <20260408175935.166155970@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -46,68 +45,151 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit c4ea7d8907cf72b259bf70bd8c2e791e1c4ff70f ]
+[ Upstream commit 1333eee56cdf3f0cf67c6ab4114c2c9e0a952026 ]
 
-If auxiliary_device_add() fails, add_adev() jumps to add_fail and calls
-auxiliary_device_uninit(adev).
+tcm_loop_target_reset() violates the SCSI EH contract: it returns SUCCESS
+without draining any in-flight commands.  The SCSI EH documentation
+(scsi_eh.rst) requires that when a reset handler returns SUCCESS the driver
+has made lower layers "forget about timed out scmds" and is ready for new
+commands.  Every other SCSI LLD (virtio_scsi, mpt3sas, ipr, scsi_debug,
+mpi3mr) enforces this by draining or completing outstanding commands before
+returning SUCCESS.
 
-The auxiliary device has its release callback set to adev_release(),
-which frees the containing struct mana_adev. Since adev is embedded in
-struct mana_adev, the subsequent fall-through to init_fail and access
-to adev->id may result in a use-after-free.
+Because tcm_loop_target_reset() doesn't drain, the SCSI EH reuses in-flight
+scsi_cmnd structures for recovery commands (e.g. TUR) while the target core
+still has async completion work queued for the old se_cmd.  The memset in
+queuecommand zeroes se_lun and lun_ref_active, causing
+transport_lun_remove_cmd() to skip its percpu_ref_put().  The leaked LUN
+reference prevents transport_clear_lun_ref() from completing, hanging
+configfs LUN unlink forever in D-state:
 
-Fix this by saving the allocated auxiliary device id in a local
-variable before calling auxiliary_device_add(), and use that saved id
-in the cleanup path after auxiliary_device_uninit().
+  INFO: task rm:264 blocked for more than 122 seconds.
+  rm              D    0   264    258 0x00004000
+  Call Trace:
+   __schedule+0x3d0/0x8e0
+   schedule+0x36/0xf0
+   transport_clear_lun_ref+0x78/0x90 [target_core_mod]
+   core_tpg_remove_lun+0x28/0xb0 [target_core_mod]
+   target_fabric_port_unlink+0x50/0x60 [target_core_mod]
+   configfs_unlink+0x156/0x1f0 [configfs]
+   vfs_unlink+0x109/0x290
+   do_unlinkat+0x1d5/0x2d0
 
-Fixes: a69839d4327d ("net: mana: Add support for auxiliary device")
+Fix this by making tcm_loop_target_reset() actually drain commands:
+
+ 1. Issue TMR_LUN_RESET via tcm_loop_issue_tmr() to drain all commands that
+    the target core knows about (those not yet CMD_T_COMPLETE).
+
+ 2. Use blk_mq_tagset_busy_iter() to iterate all started requests and
+    flush_work() on each se_cmd — this drains any deferred completion work
+    for commands that already had CMD_T_COMPLETE set before the TMR (which
+    the TMR skips via __target_check_io_state()).  This is the same pattern
+    used by mpi3mr, scsi_debug, and libsas to drain outstanding commands
+    during reset.
+
+Fixes: e0eb5d38b732 ("scsi: target: tcm_loop: Use block cmd allocator for se_cmds")
 Cc: stable@vger.kernel.org
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260323165730.945365-1-lgs201920130244@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/27011aa34c8f6b1b94d2e3cf5655b6d037f53428.1773706803.git.josef@toxicpanda.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/target/loopback/tcm_loop.c |   52 ++++++++++++++++++++++++++++++++-----
+ 1 file changed, 46 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -2823,6 +2823,7 @@ static int add_adev(struct gdma_dev *gd)
- 	struct auxiliary_device *adev;
- 	struct mana_adev *madev;
- 	int ret;
-+	int id;
+--- a/drivers/target/loopback/tcm_loop.c
++++ b/drivers/target/loopback/tcm_loop.c
+@@ -26,6 +26,7 @@
+ #include <linux/slab.h>
+ #include <linux/types.h>
+ #include <linux/configfs.h>
++#include <linux/blk-mq.h>
+ #include <scsi/scsi.h>
+ #include <scsi/scsi_tcq.h>
+ #include <scsi/scsi_host.h>
+@@ -267,15 +268,27 @@ static int tcm_loop_device_reset(struct
+ 	return (ret == TMR_FUNCTION_COMPLETE) ? SUCCESS : FAILED;
+ }
  
- 	madev = kzalloc(sizeof(*madev), GFP_KERNEL);
- 	if (!madev)
-@@ -2832,7 +2833,8 @@ static int add_adev(struct gdma_dev *gd)
- 	ret = mana_adev_idx_alloc();
- 	if (ret < 0)
- 		goto idx_fail;
--	adev->id = ret;
-+	id = ret;
-+	adev->id = id;
++static bool tcm_loop_flush_work_iter(struct request *rq, void *data)
++{
++	struct scsi_cmnd *sc = blk_mq_rq_to_pdu(rq);
++	struct tcm_loop_cmd *tl_cmd = scsi_cmd_priv(sc);
++	struct se_cmd *se_cmd = &tl_cmd->tl_se_cmd;
++
++	flush_work(&se_cmd->work);
++	return true;
++}
++
+ static int tcm_loop_target_reset(struct scsi_cmnd *sc)
+ {
+ 	struct tcm_loop_hba *tl_hba;
+ 	struct tcm_loop_tpg *tl_tpg;
++	struct Scsi_Host *sh = sc->device->host;
++	int ret;
  
- 	adev->name = "rdma";
- 	adev->dev.parent = gd->gdma_context->dev;
-@@ -2856,7 +2858,7 @@ add_fail:
- 	auxiliary_device_uninit(adev);
+ 	/*
+ 	 * Locate the tcm_loop_hba_t pointer
+ 	 */
+-	tl_hba = *(struct tcm_loop_hba **)shost_priv(sc->device->host);
++	tl_hba = *(struct tcm_loop_hba **)shost_priv(sh);
+ 	if (!tl_hba) {
+ 		pr_err("Unable to perform device reset without active I_T Nexus\n");
+ 		return FAILED;
+@@ -284,11 +297,38 @@ static int tcm_loop_target_reset(struct
+ 	 * Locate the tl_tpg pointer from TargetID in sc->device->id
+ 	 */
+ 	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
+-	if (tl_tpg) {
+-		tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
+-		return SUCCESS;
+-	}
+-	return FAILED;
++	if (!tl_tpg)
++		return FAILED;
++
++	/*
++	 * Issue a LUN_RESET to drain all commands that the target core
++	 * knows about.  This handles commands not yet marked CMD_T_COMPLETE.
++	 */
++	ret = tcm_loop_issue_tmr(tl_tpg, sc->device->lun, 0, TMR_LUN_RESET);
++	if (ret != TMR_FUNCTION_COMPLETE)
++		return FAILED;
++
++	/*
++	 * Flush any deferred target core completion work that may still be
++	 * queued.  Commands that already had CMD_T_COMPLETE set before the TMR
++	 * are skipped by the TMR drain, but their async completion work
++	 * (transport_lun_remove_cmd → percpu_ref_put, release_cmd → scsi_done)
++	 * may still be pending in target_completion_wq.
++	 *
++	 * The SCSI EH will reuse in-flight scsi_cmnd structures for recovery
++	 * commands (e.g. TUR) immediately after this handler returns SUCCESS —
++	 * if deferred work is still pending, the memset in queuecommand would
++	 * zero the se_cmd while the work accesses it, leaking the LUN
++	 * percpu_ref and hanging configfs unlink forever.
++	 *
++	 * Use blk_mq_tagset_busy_iter() to find all started requests and
++	 * flush_work() on each — the same pattern used by mpi3mr, scsi_debug,
++	 * and other SCSI drivers to drain outstanding commands during reset.
++	 */
++	blk_mq_tagset_busy_iter(&sh->tag_set, tcm_loop_flush_work_iter, NULL);
++
++	tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
++	return SUCCESS;
+ }
  
- init_fail:
--	mana_adev_idx_free(adev->id);
-+	mana_adev_idx_free(id);
- 
- idx_fail:
- 	kfree(madev);
+ static const struct scsi_host_template tcm_loop_driver_template = {
 
 
