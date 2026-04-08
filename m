@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68387361DB5;
-	Wed,  8 Apr 2026 18:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7AE3D8912;
+	Wed,  8 Apr 2026 18:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674061; cv=none; b=f+wUVDXvVpUDmOUI6A12Hl7WIwp4QudKCbO4O1pfNFxFf4COdHbVBgmG8GBE9qm9Hlfd8LAVKnlmf5nv+wLPvgKyDSWPEB8/SSK9lW4FD+4DsGOYGCXcIBQwNSlNncS6uUFbjQHMlv3ExyOFYPSyQyQ/+EVOR6zKSozo3q/w1xE=
+	t=1775674064; cv=none; b=e6krHMxV1MWLrk37krGPHe053jZmeSs7zd+Yo95nfD3XLQ3mbcTi8pHlRn3fE6O9Bxa/vGflpTKH7jEaqmNAn8tfjbgl0H6khCG8DNgvpxu7dZ/ghPgRjsCfakVIhWS3B1TO4CwnXUWgEkLH4WZMxNmV902aC/6Y5SD+OXGPBnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674061; c=relaxed/simple;
-	bh=nMFYw/14ZXYMQ3XvuLdMEddFv6iG48H57hm4i5q/FOo=;
+	s=arc-20240116; t=1775674064; c=relaxed/simple;
+	bh=ezL5m6xhUdLfAP7ofbGUmoQk61DY1+QK5MHOdrDDAxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuI2r8Hp5K99xfHtEPtmqEiH1cRhfPCzAcfClBD9bCkDTIIixHqO2jn/uMDj72YK9TDtosKYXqBl1i7J01ErXnlTe45yh9u1Jl439A6b9AM3lPZTwtXgJmEAbIZ2XZpwDFX4q8ZOAz+1ym95PPKAuPZBmA3IbNcz/1GdkQqN2MM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1+AIYPq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dr7zsGUqurtB9FcBev/VBEkrEQMsOWGisPNUb9WwH3jo6Mm4tz6kdPHJxDh7qqvzrMMe0LXZVMXqn6nemyiuKRzvCmGU9tDMnuNafBCmc8lLp3G/e4dcdlmCPAyYvd+Ot4PbOlF/grwKTRY6dQ3M0EQFcgvYmfbHSrHZB3wQZ1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WptEcR/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1+AIYPq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1666C19425;
-	Wed,  8 Apr 2026 18:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WptEcR/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84987C19421;
+	Wed,  8 Apr 2026 18:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674061;
-	bh=nMFYw/14ZXYMQ3XvuLdMEddFv6iG48H57hm4i5q/FOo=;
+	s=korg; t=1775674063;
+	bh=ezL5m6xhUdLfAP7ofbGUmoQk61DY1+QK5MHOdrDDAxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E1+AIYPqqpPn5M0KmciBCtoLWLdx8dVbnOIorQu+hyKyAdGuz1t8lgoAcDIP4UwIa
-	 lReg9+Twn3nqjxTQf+vfCo48f/1C0ystqcUR0lXXIjMf1eg6Fs3HIt/tbbNlfI7Zoc
-	 geCb8++sBmGUSg4GlZ2qS93L85UkRT2TGS95Lzf0=
+	b=WptEcR/52OVspMKHwl58dwc7G++zCZD2p/z5LTso33CqpW3ECjJgw4apvmj/JoXnI
+	 F3lwnZPkzdCCdNr6lF/I6PT3NRnxKxKuIp91/hbeKoMRRlcS7k+E6eGnOj82cA8TXa
+	 gXocNHIzL/UZuvpIAoFrnYjZEL9KkUWZbRvJwSVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+19bed92c97bee999e5db@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.12 194/242] USB: dummy-hcd: Fix locking/synchronization error
-Date: Wed,  8 Apr 2026 20:03:54 +0200
-Message-ID: <20260408175934.345406973@linuxfoundation.org>
+Subject: [PATCH 6.12 195/242] USB: dummy-hcd: Fix interrupt synchronization error
+Date: Wed,  8 Apr 2026 20:03:55 +0200
+Message-ID: <20260408175934.382829964@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,68 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 616a63ff495df12863692ab3f9f7b84e3fa7a66d upstream.
+commit 2ca9e46f8f1f5a297eb0ac83f79d35d5b3a02541 upstream.
 
-Syzbot testing was able to provoke an addressing exception and crash
-in the usb_gadget_udc_reset() routine in
-drivers/usb/gadgets/udc/core.c, resulting from the fact that the
-routine was called with a second ("driver") argument of NULL.  The bad
-caller was set_link_state() in dummy_hcd.c, and the problem arose
-because of a race between a USB reset and driver unbind.
+This fixes an error in synchronization in the dummy-hcd driver.  The
+error has a somewhat involved history.  The synchronization mechanism
+was introduced by commit 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous
+synchronization change"), which added an emulated "interrupts enabled"
+flag together with code emulating synchronize_irq() (it waits until
+all current handler callbacks have returned).
 
-These sorts of races were not supposed to be possible; commit
-7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous synchronization change"),
-along with a few followup commits, was written specifically to prevent
-them.  As it turns out, there are (at least) two errors remaining in
-the code.  Another patch will address the second error; this one is
-concerned with the first.
+But the emulated interrupt-disable occurred too late, after the driver
+containing the handler callback routines had been told that it was
+unbound and no more callbacks would occur.  Commit 4a5d797a9f9c ("usb:
+gadget: dummy_hcd: fix gpf in gadget_setup") tried to fix this by
+moving the synchronize_irq() emulation code from dummy_stop() to
+dummy_pullup(), which runs before the unbind callback.
 
-The error responsible for the syzbot crash occurred because the
-stop_activity() routine will sometimes drop and then re-acquire the
-dum->lock spinlock.  A call to stop_activity() occurs in
-set_link_state() when handling an emulated USB reset, after the test
-of dum->ints_enabled and before the increment of dum->callback_usage.
-This allowed another thread (doing a driver unbind) to sneak in and
-grab the spinlock, and then clear dum->ints_enabled and dum->driver.
-Normally this other thread would have to wait for dum->callback_usage
-to go down to 0 before it would clear dum->driver, but in this case it
-didn't have to wait since dum->callback_usage had not yet been
-incremented.
+There still were races, though, because the emulated interrupt-disable
+still occurred too late.  It couldn't be moved to dummy_pullup(),
+because that routine can be called for reasons other than an impending
+unbind.  Therefore commits 7dc0c55e9f30 ("USB: UDC core: Add
+udc_async_callbacks gadget op") and 04145a03db9d ("USB: UDC: Implement
+udc_async_callbacks in dummy-hcd") added an API allowing the UDC core
+to tell dummy-hcd exactly when emulated interrupts and their callbacks
+should be disabled.
 
-The fix is to increment dum->callback_usage _before_ calling
-stop_activity() instead of after.  Then the thread doing the unbind
-will not clear dum->driver until after the call to
-usb_gadget_udc_reset() safely returns and dum->callback_usage has been
-decremented again.
+That brings us to the current state of things, which is still wrong
+because the emulated synchronize_irq() occurs before the emulated
+interrupt-disable!  That's no good, beause it means that more emulated
+interrupts can occur after the synchronize_irq() emulation has run,
+leading to the possibility that a callback handler may be running when
+the gadget driver is unbound.
+
+To fix this, we have to move the synchronize_irq() emulation code yet
+again, to the dummy_udc_async_callbacks() routine, which takes care of
+enabling and disabling emulated interrupt requests.  The
+synchronization will now run immediately after emulated interrupts are
+disabled, which is where it belongs.
 
 Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Reported-by: syzbot+19bed92c97bee999e5db@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/68fc7c9c.050a0220.346f24.023c.GAE@google.com/
-Tested-by: syzbot+19bed92c97bee999e5db@syzkaller.appspotmail.com
-Fixes: 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous synchronization change")
+Fixes: 04145a03db9d ("USB: UDC: Implement udc_async_callbacks in dummy-hcd")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/46135f42-fdbe-46b5-aac0-6ca70492af15@rowland.harvard.edu
+Link: https://patch.msgid.link/c7bc93fe-4241-4d04-bd56-27c12ba35c97@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |   29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
 --- a/drivers/usb/gadget/udc/dummy_hcd.c
 +++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -461,8 +461,13 @@ static void set_link_state(struct dummy_
+@@ -912,21 +912,6 @@ static int dummy_pullup(struct usb_gadge
+ 	spin_lock_irqsave(&dum->lock, flags);
+ 	dum->pullup = (value != 0);
+ 	set_link_state(dum_hcd);
+-	if (value == 0) {
+-		/*
+-		 * Emulate synchronize_irq(): wait for callbacks to finish.
+-		 * This seems to be the best place to emulate the call to
+-		 * synchronize_irq() that's in usb_gadget_remove_driver().
+-		 * Doing it in dummy_udc_stop() would be too late since it
+-		 * is called after the unbind callback and unbind shouldn't
+-		 * be invoked until all the other callbacks are finished.
+-		 */
+-		while (dum->callback_usage > 0) {
+-			spin_unlock_irqrestore(&dum->lock, flags);
+-			usleep_range(1000, 2000);
+-			spin_lock_irqsave(&dum->lock, flags);
+-		}
+-	}
+ 	spin_unlock_irqrestore(&dum->lock, flags);
  
- 		/* Report reset and disconnect events to the driver */
- 		if (dum->ints_enabled && (disconnect || reset)) {
--			stop_activity(dum);
- 			++dum->callback_usage;
-+			/*
-+			 * stop_activity() can drop dum->lock, so it must
-+			 * not come between the dum->ints_enabled test
-+			 * and the ++dum->callback_usage.
-+			 */
-+			stop_activity(dum);
- 			spin_unlock(&dum->lock);
- 			if (reset)
- 				usb_gadget_udc_reset(&dum->gadget, dum->driver);
+ 	usb_hcd_poll_rh_status(dummy_hcd_to_hcd(dum_hcd));
+@@ -949,6 +934,20 @@ static void dummy_udc_async_callbacks(st
+ 
+ 	spin_lock_irq(&dum->lock);
+ 	dum->ints_enabled = enable;
++	if (!enable) {
++		/*
++		 * Emulate synchronize_irq(): wait for callbacks to finish.
++		 * This has to happen after emulated interrupts are disabled
++		 * (dum->ints_enabled is clear) and before the unbind callback,
++		 * just like the call to synchronize_irq() in
++		 * gadget/udc/core:gadget_unbind_driver().
++		 */
++		while (dum->callback_usage > 0) {
++			spin_unlock_irq(&dum->lock);
++			usleep_range(1000, 2000);
++			spin_lock_irq(&dum->lock);
++		}
++	}
+ 	spin_unlock_irq(&dum->lock);
+ }
+ 
 
 
