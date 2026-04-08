@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB283D648A;
-	Wed,  8 Apr 2026 18:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC90A3D75AF;
+	Wed,  8 Apr 2026 18:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674783; cv=none; b=J1cXHDfk7PNoAMukeSBi0qWm3oKt7onMnXxYgxxXwM8WWUaSy5XUwU5XrVAP/efDQBHEHfz8Z7WJO3LX229aPMJvxIqyinzYz8gR4O4YGDGcgtHvTs9Sn+lPS9WVPZpNE1P9LK1n8CUUwM6yp+NwaR30hkcOtCj+tTdF+Rczmfw=
+	t=1775674785; cv=none; b=KLhvIGkTyLp+G0fslpL21EcTPptgeSOIYJrpc/HjBbJTlqq0i4q0OjabCnm+Iyd5WtYcItuYkhT7bEnMRu/8OPXtQg4zk26YDmJOWUMajALSpTncDXf+rtGexv6opRGZVLPxm36fqQFuLlkTC8+mpy5fgCLyEMsH1OtJYbOvu2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674783; c=relaxed/simple;
-	bh=NRU9B18qaH7tdoiyL/MN2X42iKMXNy0ZSWAtfI2F01U=;
+	s=arc-20240116; t=1775674785; c=relaxed/simple;
+	bh=S7fm5s8NjZBive+/qZtwt5FH4kh5iIyFppSAFCOzCxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o0fykZt7t3gGqxQIdNMYZzlxWKDY4TytH9iwWURFYnoaQZe6XADthxEVMtlkc0h0t+cHnorMUu8NjpZRjFyvV4+wt2Zew8yFgcWO/zVQ2Kchb00Oh107j/IAyarYNS1JsmFuCyI+poTsfJ4dkj2ECkii60VnzxIf758SWdwK+h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjzuVcDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qIMHWhxbfs11sOJwfeMVWFL1N33CdEYFCRjNSRG9zIg/fBF9Yftve4N217oed868b9On08TGcKilepkrpO5xXCIS+4S7Vfin+t0tZQJvyH2xVF7OfMWDlBKIpI7Lg+dIFp3JUOFT5269lRaj8qWarWCjqEbJtS3UZ+kDkjgHhdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YUB6iv2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjzuVcDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49A9C19421;
-	Wed,  8 Apr 2026 18:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YUB6iv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496EBC19421;
+	Wed,  8 Apr 2026 18:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674783;
-	bh=NRU9B18qaH7tdoiyL/MN2X42iKMXNy0ZSWAtfI2F01U=;
+	s=korg; t=1775674785;
+	bh=S7fm5s8NjZBive+/qZtwt5FH4kh5iIyFppSAFCOzCxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjzuVcDo2gOACU5S+GI0gov4V25o0PEqg3GFGKKCxxzNbWIVzDIyiTMsyXKcXnqbo
-	 Xx8wyZr1JOMttij3gC4gk/L6UL7tV0MfrjJs3bNCAdLfjTwC+q8dmsm62KzIwuDitq
-	 AQbrXeiP4rUC9Wo4vXbxvX4xhFJn/5KOMTbvWqWU=
+	b=0YUB6iv2aVvi3dcEidsc+8zx7jCGQWa+cF958M8cxdNzSjWt27yynrchQ75XRRhfD
+	 yGjmcWTjts7FL/ALiI2gCrqhA8XiLH6zbEIoNWIQlETK0I627A1H8yTfeJCq9YesNs
+	 gPM4QE1tiTHgFqa7YhnIfXts7EwB4UmnUsSM1ubs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 231/311] iio: gyro: mpu3050: Fix incorrect free_irq() variable
-Date: Wed,  8 Apr 2026 20:03:51 +0200
-Message-ID: <20260408175948.022743055@linuxfoundation.org>
+Subject: [PATCH 6.19 232/311] iio: gyro: mpu3050: Fix irq resource leak
+Date: Wed,  8 Apr 2026 20:03:52 +0200
+Message-ID: <20260408175948.059744678@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -55,12 +55,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-commit edb11a1aef4011a4b7b22cc3c3396c6fe371f4a6 upstream.
+commit 4216db1043a3be72ef9c2b7b9f393d7fa72496e6 upstream.
 
-The handler for the IRQ part of this driver is mpu3050->trig but,
-in the teardown free_irq() is called with handler mpu3050.
+The interrupt handler is setup but only a few lines down if
+iio_trigger_register() fails the function returns without properly
+releasing the handler.
 
-Use correct IRQ handler when calling free_irq().
+Add cleanup goto to resolve resource leak.
+
+Detected by Smatch:
+drivers/iio/gyro/mpu3050-core.c:1128 mpu3050_trigger_probe() warn:
+'irq' from request_threaded_irq() not released on lines: 1124.
 
 Fixes: 3904b28efb2c7 ("iio: gyro: Add driver for the MPU-3050 gyroscope")
 Reviewed-by: Linus Walleij <linusw@kernel.org>
@@ -70,19 +75,28 @@ Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/mpu3050-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/gyro/mpu3050-core.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/drivers/iio/gyro/mpu3050-core.c
 +++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -1269,7 +1269,7 @@ void mpu3050_common_remove(struct device
- 	pm_runtime_disable(dev);
- 	iio_triggered_buffer_cleanup(indio_dev);
- 	if (mpu3050->irq)
--		free_irq(mpu3050->irq, mpu3050);
-+		free_irq(mpu3050->irq, mpu3050->trig);
- 	iio_device_unregister(indio_dev);
- 	mpu3050_power_down(mpu3050);
+@@ -1129,11 +1129,16 @@ static int mpu3050_trigger_probe(struct
+ 
+ 	ret = iio_trigger_register(mpu3050->trig);
+ 	if (ret)
+-		return ret;
++		goto err_iio_trigger;
+ 
+ 	indio_dev->trig = iio_trigger_get(mpu3050->trig);
+ 
+ 	return 0;
++
++err_iio_trigger:
++	free_irq(mpu3050->irq, mpu3050->trig);
++
++	return ret;
  }
+ 
+ int mpu3050_common_probe(struct device *dev,
 
 
