@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAF5337B81;
-	Wed,  8 Apr 2026 18:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC85E25A321;
+	Wed,  8 Apr 2026 18:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674322; cv=none; b=iokp2uw2BUHSVJyuHS1mAdflJXLGvFbeql/o98EeiDsVlGjOd6OuS8vQIVTIumuPZx/2BydGdWdNSX8pVfgmtKeEAHUY7ABr/tMAdI/KReJTHLicZHfZ9AlnxGwli6eY+BZgPSrzcqRocRs5u57WO+9UlrOQQVuKcucSF+Zluj4=
+	t=1775674325; cv=none; b=tw61InOTPAurO/71ZXOid+RVp4MQfjwd44VM+Mo+HGqlYoB5rTyuTkANK3jmj1xuFOyb09W2sWGdbDjUBMqPwepkXRkaLeEArCbRMfxd7yclBvWZG4eNGzUZa3BFdEhesqrAruZle4I4pFZ6uPNNF/hw3zXcSQZYr7yh7qZAC3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674322; c=relaxed/simple;
-	bh=aYpJSWpOX8D1mqzt7R7eLmjM/v6wbKnMbAFW6zT/rhs=;
+	s=arc-20240116; t=1775674325; c=relaxed/simple;
+	bh=kvMho+YHdlMb8aqVys63W0OX7xqIjRhkBuwxV1ImGtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pt/5/icJ7u8AiXemxn9QMYJ4KoDo5n1huAV21CsxtCzjVWgZPaN3K9o+BrLxKXjSuhS4O/Zjo2lAlvJR1oYn0crWbtSsNPwKBua6hZ8KclDF1piATIjc9SQTTLP6HOtX0dJ3wxO85a4RcyxTfsK/OtkNjE5alxNYBly1dSXLHCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/yNJdc6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gW95AkPkezC66iYxKUh0tnWcZ3q/6/ctjvNxbstYDWIyBk7wcjOpoQuYidRThmvmziB1BzquPnDw3/hl2cJrualXmAxFS+d5sElCSWmyzoF+z+zNHDyAw+Ny2pT9J28vFZnjhCs2zwuFSY6dVxf004H4/gvqtRGGfYmDxrF3q7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRhFQKZb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/yNJdc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B5BC19421;
-	Wed,  8 Apr 2026 18:52:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRhFQKZb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805F5C19421;
+	Wed,  8 Apr 2026 18:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674322;
-	bh=aYpJSWpOX8D1mqzt7R7eLmjM/v6wbKnMbAFW6zT/rhs=;
+	s=korg; t=1775674324;
+	bh=kvMho+YHdlMb8aqVys63W0OX7xqIjRhkBuwxV1ImGtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/yNJdc6ivhoLgo8/O0fQwlVLHR0w1L93Jt67WAZhq9XWXT0aXQXd4NAhGodNf+6G
-	 mD993jri497OCmOBrP8P+IpmWBagiJqE4Z2omB7iL0KRYvRBEghssJoS7Wkdtz0Row
-	 i4HX92YAhbf5C99kqOCM4e+j4YYpbigTMGn/OQ1A=
+	b=FRhFQKZbIQNo00cy5h1lqLoosEvwVAXp/1L5beGQwIjbxrafhJy1p7LCNH/kFC/Vp
+	 HXRKhKD35kbv+akGm0u8coNxHVuu724JhZoWhELSuZvWcuuJBKzRtutPoDj6LNJ9rc
+	 5ozcPSCHIHsuMjLFUPyXyXaMQpHHooJ1qEF/Pw3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Oskar Kjos <oskar.kjos@hotmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 052/311] net: ti: icssg-prueth: fix missing data copy and wrong recycle in ZC RX dispatch
-Date: Wed,  8 Apr 2026 20:00:52 +0200
-Message-ID: <20260408175941.358917659@linuxfoundation.org>
+Subject: [PATCH 6.19 053/311] ipv6: icmp: clear skb2->cb[] in ip6_err_gen_icmpv6_unreach()
+Date: Wed,  8 Apr 2026 20:00:53 +0200
+Message-ID: <20260408175941.396181460@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,57 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5597dd284ff8c556c0b00f6a34473677426e3f81 ]
+[ Upstream commit 86ab3e55673a7a49a841838776f1ab18d23a67b5 ]
 
-emac_dispatch_skb_zc() allocates a new skb via napi_alloc_skb() but
-never copies the packet data from the XDP buffer into it. The skb is
-passed up the stack containing uninitialized heap memory instead of
-the actual received packet, leaking kernel heap contents to userspace.
+Sashiko AI-review observed:
 
-Copy the received packet data from the XDP buffer into the skb using
-skb_copy_to_linear_data().
+  In ip6_err_gen_icmpv6_unreach(), the skb is an outer IPv4 ICMP error packet
+  where its cb contains an IPv4 inet_skb_parm. When skb is cloned into skb2
+  and passed to icmp6_send(), it uses IP6CB(skb2).
 
-Additionally, remove the skb_mark_for_recycle() call since the skb is
-backed by the NAPI page frag allocator, not page_pool. Marking a
-non-page_pool skb for recycle causes the free path to return pages to
-a page_pool that does not own them, corrupting page_pool state.
+  IP6CB interprets the IPv4 inet_skb_parm as an inet6_skb_parm. The cipso
+  offset in inet_skb_parm.opt directly overlaps with dsthao in inet6_skb_parm
+  at offset 18.
 
-The non-ZC path (emac_rx_packet) does not have these issues because it
-uses napi_build_skb() to wrap the existing page_pool page directly,
-requiring no copy, and correctly marks for recycle since the page comes
-from page_pool_dev_alloc_pages().
+  If an attacker sends a forged ICMPv4 error with a CIPSO IP option, dsthao
+  would be a non-zero offset. Inside icmp6_send(), mip6_addr_swap() is called
+  and uses ipv6_find_tlv(skb, opt->dsthao, IPV6_TLV_HAO).
 
-Fixes: 7a64bb388df3 ("net: ti: icssg-prueth: Add AF_XDP zero copy for RX")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  This would scan the inner, attacker-controlled IPv6 packet starting at that
+  offset, potentially returning a fake TLV without checking if the remaining
+  packet length can hold the full 18-byte struct ipv6_destopt_hao.
+
+  Could mip6_addr_swap() then perform a 16-byte swap that extends past the end
+  of the packet data into skb_shared_info?
+
+  Should the cb array also be cleared in ip6_err_gen_icmpv6_unreach() and
+  ip6ip6_err() to prevent this?
+
+This patch implements the first suggestion.
+
+I am not sure if ip6ip6_err() needs to be changed.
+A separate patch would be better anyway.
+
+Fixes: ca15a078bd90 ("sit: generate icmpv6 error when receiving icmpv4 error")
+Reported-by: Ido Schimmel <idosch@nvidia.com>
+Closes: https://sashiko.dev/#/patchset/20260326155138.2429480-1-edumazet%40google.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Oskar Kjos <oskar.kjos@hotmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260326202608.2976021-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/icmp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_common.c b/drivers/net/ethernet/ti/icssg/icssg_common.c
-index 11d5b23a61bad..a74a41ad59c82 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_common.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_common.c
-@@ -902,6 +902,7 @@ static void emac_dispatch_skb_zc(struct prueth_emac *emac, struct xdp_buff *xdp,
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index 0f41ca6f3d83e..9844758252718 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -871,6 +871,9 @@ int ip6_err_gen_icmpv6_unreach(struct sk_buff *skb, int nhs, int type,
+ 	if (!skb2)
+ 		return 1;
  
- 	skb_reserve(skb, headroom);
- 	skb_put(skb, pkt_len);
-+	skb_copy_to_linear_data(skb, xdp->data, pkt_len);
- 	skb->dev = ndev;
- 
- 	/* RX HW timestamp */
-@@ -912,7 +913,6 @@ static void emac_dispatch_skb_zc(struct prueth_emac *emac, struct xdp_buff *xdp,
- 		skb->offload_fwd_mark = emac->offload_fwd_mark;
- 	skb->protocol = eth_type_trans(skb, ndev);
- 
--	skb_mark_for_recycle(skb);
- 	napi_gro_receive(&emac->napi_rx, skb);
- 	ndev->stats.rx_bytes += pkt_len;
- 	ndev->stats.rx_packets++;
++	/* Remove debris left by IPv4 stack. */
++	memset(IP6CB(skb2), 0, sizeof(*IP6CB(skb2)));
++
+ 	skb_dst_drop(skb2);
+ 	skb_pull(skb2, nhs);
+ 	skb_reset_network_header(skb2);
 -- 
 2.53.0
 
