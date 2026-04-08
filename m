@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A614FB67E;
-	Wed,  8 Apr 2026 18:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C513176E4;
+	Wed,  8 Apr 2026 18:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674641; cv=none; b=PxqfA4mYJ2wEEJkG8xeijaE1dXs+4Nd/YXxcnIRjpUoTWX+APqTqT7oE2AbIDhhSI1gyApy9rn+03JopEcYTEOEko1JryKRsIzPoEWMXqp1Mkphs6ujyHI80P/tslZRxmAOzXVKl/zm9nC0Rm0YAHa57Hn1tpS08d7Eoo6iBl9o=
+	t=1775674644; cv=none; b=esrrdp1XRCJTuQa0HQgpRgZgS7in4IFbWceDMJZWnGWGjhBxqs/x6nHFb/n1FQFztctLMcIYn7oiJ4HyuRr1yvcZ5EvS0mT6TVSdyN/m+uJobSMquNoVE0gBsRIJoXKIOiWINIfYBR6/WwJgF06UUPD6U1I7riEuCtvXjCWbM0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674641; c=relaxed/simple;
-	bh=c0JIgcpjfF52Xg7ewndRTvyUU8UN3lIsFLoS6PQeTtM=;
+	s=arc-20240116; t=1775674644; c=relaxed/simple;
+	bh=qOTkJLKvsL09Cn7cndlgV2DH4VlGfEfUjCtiWU2jQWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOOWDsmmGa4pO0hU2SWM0Khgw6QsTBAakYloLhgAkeDlPBsvyi5+W8Zot2SLDA4UNlpdPY8JBVUDknQfi7x29cZJaT+R9zX4er/ZkA7e4rdVqP5QQZsGs9yHrgwgSaYKwl7w+VhCksnfy3rdhRmh4z9w0vyL6yLtNDLJ1p/UYLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHIhTKK+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMYltOdAsQ4jGuRzRvujQrb55+KHFNEYM2I6zhCreHJr+Zon4/YhKSa/q1Ur/brIAaQIhzWc1qJhzaMkk0CTMbyojrJSguFoxxNQlYBOPXKxrBzEmurE/E92KOppFOeNrNaf/MI5nfEJSW+/NcEEIwctsVpVCDfC5X2ulBtQP0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIuz48WU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHIhTKK+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1E1C19421;
-	Wed,  8 Apr 2026 18:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIuz48WU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47B0C19421;
+	Wed,  8 Apr 2026 18:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674641;
-	bh=c0JIgcpjfF52Xg7ewndRTvyUU8UN3lIsFLoS6PQeTtM=;
+	s=korg; t=1775674644;
+	bh=qOTkJLKvsL09Cn7cndlgV2DH4VlGfEfUjCtiWU2jQWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHIhTKK+Z+EFLbO6PVFfPmJQg71reMr9jo5T2qs82YSSqI6z2+KPQaBeD6rBDGC4U
-	 +6z4B4RIcKeBR+5d+Qsx+ZYvs14LWecBmCOm9CNkAqVC4JxlTzf0SarBbP+72EzHOd
-	 Flk7zzJEu8W5TjySScOIf6yfJNxzv8SxA1z4Y3hg=
+	b=aIuz48WUyheBD3au49dyRXxLqSXpNT3dAXBPbcVaYB49Bt1nUZLsW/doB160Zb4Q2
+	 X/T7Pg3hioobV3mVmErhTEYCdLfD6Z41Yd7vdgRuGAWIq0tFBEYUnSPpkL18pBJKHJ
+	 PHUf9HI3DiIwX42KXuwK0jx0R14ERvDWdwbk7S5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 143/311] spi: stm32-ospi: Fix reset control leak on probe error
-Date: Wed,  8 Apr 2026 20:02:23 +0200
-Message-ID: <20260408175944.752518925@linuxfoundation.org>
+Subject: [PATCH 6.19 144/311] drm/xe/xe_pagefault: Disallow writes to read-only VMAs
+Date: Wed,  8 Apr 2026 20:02:24 +0200
+Message-ID: <20260408175944.789416498@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,47 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Jonathan Cavitt <jonathan.cavitt@intel.com>
 
-[ Upstream commit 5a570c8d6e55689253f6fcc4a198c56cca7e39d6 ]
+[ Upstream commit 6d192b4f2d644d15d9a9f1d33dab05af936f6540 ]
 
-When spi_register_controller() fails after reset_control_acquire()
-succeeds, the reset control is never released. This causes a resource
-leak in the error path.
+The page fault handler should reject write/atomic access to read only
+VMAs.  Add code to handle this in xe_pagefault_service after the VMA
+lookup.
 
-Add the missing reset_control_release() call in the error path.
+v2:
+- Apply max line length (Matthew)
 
-Fixes: cf2c3eceb757 ("spi: stm32-ospi: Make usage of reset_control_acquire/release() API")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Link: https://patch.msgid.link/20260329-stm32-ospi-v1-1-142122466412@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: fb544b844508 ("drm/xe: Implement xe_pagefault_queue_work")
+Signed-off-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Suggested-by: Matthew Brost <matthew.brost@intel.com>
+Cc: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260324152935.72444-7-jonathan.cavitt@intel.com
+(cherry picked from commit 714ee6754ac5fa3dc078856a196a6b124cd797a0)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-stm32-ospi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_pagefault.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/spi/spi-stm32-ospi.c b/drivers/spi/spi-stm32-ospi.c
-index 5fa27de89210a..2988ff288ff02 100644
---- a/drivers/spi/spi-stm32-ospi.c
-+++ b/drivers/spi/spi-stm32-ospi.c
-@@ -939,13 +939,15 @@ static int stm32_ospi_probe(struct platform_device *pdev)
- 	if (ret) {
- 		/* Disable ospi */
- 		writel_relaxed(0, ospi->regs_base + OSPI_CR);
--		goto err_pm_resume;
-+		goto err_reset_control;
+diff --git a/drivers/gpu/drm/xe/xe_pagefault.c b/drivers/gpu/drm/xe/xe_pagefault.c
+index afb06598b6e1a..0b625a52a5984 100644
+--- a/drivers/gpu/drm/xe/xe_pagefault.c
++++ b/drivers/gpu/drm/xe/xe_pagefault.c
+@@ -187,6 +187,12 @@ static int xe_pagefault_service(struct xe_pagefault *pf)
+ 		goto unlock_vm;
  	}
  
- 	pm_runtime_put_autosuspend(ospi->dev);
++	if (xe_vma_read_only(vma) &&
++	    pf->consumer.access_type != XE_PAGEFAULT_ACCESS_TYPE_READ) {
++		err = -EPERM;
++		goto unlock_vm;
++	}
++
+ 	atomic = xe_pagefault_access_is_atomic(pf->consumer.access_type);
  
- 	return 0;
- 
-+err_reset_control:
-+	reset_control_release(ospi->rstc);
- err_pm_resume:
- 	pm_runtime_put_sync_suspend(ospi->dev);
- 
+ 	if (xe_vma_is_cpu_addr_mirror(vma))
 -- 
 2.53.0
 
