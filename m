@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529733446CA;
-	Wed,  8 Apr 2026 18:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D963446CA;
+	Wed,  8 Apr 2026 18:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671696; cv=none; b=SrfWt6HY97/u2sYNAWEfto/i+xD3E5CIwG4wx3V//os40Z+4xv7cSY4pc5FLD+epjrNUOy9Z5Th2zC1oO5T7xnEcDar8oZA14V0YPcVnM+B0GG6nsyZ1EIdOMX9UKz4a/HIUUXU3Ac2D3XZRtES+FJ+rGoX1e4jFjP0wHToI5kk=
+	t=1775671699; cv=none; b=X8SQpPwPrnTTBdPVez8Mjk0/r0b9ebZnD0U4+uub0SxTW5mQLHXvru7ZATqI9kYhMpdRCkBAWtJLO+KL3lVN/fq6pnuN0Xk/iv7st8EWxGlEjteDIAlytU8OzeLNtn4cFQa/kC1AxjaWVAW8xflPYlWsa9hvkAscIAg+sBdAAIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671696; c=relaxed/simple;
-	bh=umjxvQZ2QvgGBgZ3SBYae+j64kbfrelxro4EviO3RII=;
+	s=arc-20240116; t=1775671699; c=relaxed/simple;
+	bh=CMyqyxTUE4UcnEFECNL2ghx2E5Bp6NXMgMky7PMx5y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKc5ha9HRY+Fhg2H5XfOZqotar5XM60uaRt31unFPQlQB35PO0FVDqPYst0eE11alnCT19gj1HkjxNRGiDqfd5dlp6WO96TbE4Px8wG5yPwnYsC/+goNTEPQGtvjeuByPt7zTQYA+3JJhMdtFsK3Pq1dfNWm9w6G3NzHSKkT1y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RckBaNPC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kProzeTM95HHnQM7RCmrlSQEcDWDah4m4ZLl395BKY+TvOL01dH7d+gt9AOqHfVyZsfImUUl3wAhXWmRP1GvQBnr9huB3KxJJSsGa+BMcP7/LUWExo35bYEO4g/HBcrUZ3xt6eNMoYgaWH5Phr03DKNgczYCr3D+8Cyc1Y9i+HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgDvz30n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RckBaNPC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8AEC19421;
-	Wed,  8 Apr 2026 18:08:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgDvz30n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD76C19421;
+	Wed,  8 Apr 2026 18:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671696;
-	bh=umjxvQZ2QvgGBgZ3SBYae+j64kbfrelxro4EviO3RII=;
+	s=korg; t=1775671698;
+	bh=CMyqyxTUE4UcnEFECNL2ghx2E5Bp6NXMgMky7PMx5y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RckBaNPCRkN0saja06WOSQgBwlBe0dTgwOU2qK87qRrzS+wXNy7MJQeIZndf5wSiV
-	 RUef9kSi3KV7dKASbF4ODW+z9s22ZmHBO6DMYbeSpIGvs8p3re3ciDOKxueHQAN2A3
-	 EvHLIcd66fvZeMa3u2i5oRXWnPkTyDkWBANZFrMQ=
+	b=VgDvz30n+4Clx1Rsa4OXMOZGWwhGtYCHc9HR//wyfJk9pQEeg96RL3AhFpmntEwFd
+	 boHNSf10qEwi85KgcnbYKO2AwJrg+uhr0v2VYg7lVB9EeFWNBJy/pPxs05FtvE8Mrc
+	 cBXIb8FoZW4dPxJddm/9m72LwTuz1YjdSlWQy4Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/312] pinctrl: mediatek: common: Fix probe failure for devices without EINT
-Date: Wed,  8 Apr 2026 19:59:10 +0200
-Message-ID: <20260408175934.965480729@linuxfoundation.org>
+Subject: [PATCH 6.1 016/312] ASoC: fsl_easrc: Fix event generation in fsl_easrc_iec958_put_bits()
+Date: Wed,  8 Apr 2026 19:58:53 +0200
+Message-ID: <20260408175934.337395346@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,47 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 8f9f64c8f90dca07d3b9f1d7ce5d34ccd246c9dd ]
+[ Upstream commit 54a86cf48eaa6d1ab5130d756b718775e81e1748 ]
 
-Some pinctrl devices like mt6397 or mt6392 don't support EINT at all, but
-the mtk_eint_init function is always called and returns -ENODEV, which
-then bubbles up and causes probe failure.
+ALSA controls should return 1 if the value in the control changed but the
+control put operation fsl_easrc_iec958_put_bits() unconditionally returns
+0, causing ALSA to not generate any change events. This is detected by
+mixer-test with large numbers of messages in the form:
 
-To address this only call mtk_eint_init if EINT pins are present.
+    No event generated for Context 3 IEC958 CS5
+    Context 3 IEC958 CS5.0 orig 5224 read 5225, is_volatile 0
 
-Tested on Xiaomi Mi Smart Clock x04g (mt6392).
+Add a suitable check.
 
-Fixes: e46df235b4e6 ("pinctrl: mediatek: refactor EINT related code for all MediaTek pinctrl can fit")
-Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260205-asoc-fsl-easrc-fix-events-v1-1-39d4c766918b@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-mtk-common.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/soc/fsl/fsl_easrc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-index f25b3e09386bc..096213d618839 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-@@ -1127,9 +1127,12 @@ int mtk_pctrl_init(struct platform_device *pdev,
- 		goto chip_error;
- 	}
+diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
+index 8cf414ab1295b..cbe1f48a58d23 100644
+--- a/sound/soc/fsl/fsl_easrc.c
++++ b/sound/soc/fsl/fsl_easrc.c
+@@ -52,10 +52,13 @@ static int fsl_easrc_iec958_put_bits(struct snd_kcontrol *kcontrol,
+ 	struct soc_mreg_control *mc =
+ 		(struct soc_mreg_control *)kcontrol->private_value;
+ 	unsigned int regval = ucontrol->value.integer.value[0];
++	int ret;
++
++	ret = (easrc_priv->bps_iec958[mc->regbase] != regval);
  
--	ret = mtk_eint_init(pctl, pdev);
--	if (ret)
--		goto chip_error;
-+	/* Only initialize EINT if we have EINT pins */
-+	if (data->eint_hw.ap_num > 0) {
-+		ret = mtk_eint_init(pctl, pdev);
-+		if (ret)
-+			goto chip_error;
-+	}
+ 	easrc_priv->bps_iec958[mc->regbase] = regval;
  
- 	return 0;
+-	return 0;
++	return ret;
+ }
  
+ static int fsl_easrc_iec958_get_bits(struct snd_kcontrol *kcontrol,
 -- 
 2.51.0
 
