@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D78B3ACF11;
-	Wed,  8 Apr 2026 18:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7E13ACEFB;
+	Wed,  8 Apr 2026 18:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672819; cv=none; b=goZSnulNKvx1+3LWEHbggGwcun82rTwZKzzWnSulyrEkGSdLgXknkf1AH2vYxaZTEqqHSW9eYojnCo6loUqytC0sEZGYSRV0YuoR23/uDRIj2cQragN9vBkQjUGFlWz5I+fiC7w5AL1iI7n0nhUzwz1afYNYt+9iz7i/DzRgUHc=
+	t=1775672822; cv=none; b=e2urBNqHrsyzYdukW7Txg1Q78XuulcAm7UUw50/2E2zGHKG8a3gXCPCWLIw3pavPhfgKTVAdoPYgZzq7kr8HauY88H9mdE4a0NVsUJHnSveFe2iGtiOCzlPcfBb8uu60lVFWg1mExxcUVKha0EkkCqfN/mBje/bBb8D+CaAm9DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672819; c=relaxed/simple;
-	bh=/OYOPPnUAmrH4ITzExyMLDq3eOzER8c/6EodyiSVPfI=;
+	s=arc-20240116; t=1775672822; c=relaxed/simple;
+	bh=fB3RwcYHzR2Bz87UR45wxmjVCK8K4fq/zUJ6PsjiS2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JWCX1/ee2+t9OCIMRBN/mPI1YAawx63C3aOZsZcgPOKW9b1yIqfY9OZqDNbChLDmFMxDpa/eAg0hTfT6xrpdxVnHJZfFj1mfPvy9wwL/pGR38ld7abuwEjsr00gZZ6oryN/1uMjJgJb6leU1JhbctGGB1RJBT6rgURo3TRZW/Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mc5T2yG/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ahO5U4NtLkfwTUdgALKC3rmHtgxCvGczkMFs8v/8NGCYqyEZukrXN/vkEvoDGAc2oH9IMu0uKLiQWY3w1mriEE/DuiKw8f30cVxYL1fqw2haAmJgQICrd9HP+FTVKhmzMqoCtzUIcsjx1YqNR4tLXVzkaoGsXVLixSZAa5lXXyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3zGThf9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mc5T2yG/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F61C19421;
-	Wed,  8 Apr 2026 18:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3zGThf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74FDC19421;
+	Wed,  8 Apr 2026 18:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672819;
-	bh=/OYOPPnUAmrH4ITzExyMLDq3eOzER8c/6EodyiSVPfI=;
+	s=korg; t=1775672822;
+	bh=fB3RwcYHzR2Bz87UR45wxmjVCK8K4fq/zUJ6PsjiS2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mc5T2yG/K9R0eM0XKqaTIKiiSzzmgZCUMY9uEK4id/NLjOkBv5g1pzmzDTEDzHh+2
-	 LNmmTy2USf+/7u4AdTATGNL3wRmI6tVltD3tkh+ufOaGsZPDxn4VD44KyuxWa6IGVP
-	 EYDtjFJQkaUo41k3dSy1s+Unp0mMOP0xxVTcmvQg=
+	b=c3zGThf9tstTFt0wTbY05tk9zfu6CBigr8khWzftdVYrzCgunKZeE9Xv+ZSj4E+qN
+	 kDsBImjh3JCa3oYUoAdJCJqk8P4omm4ovWBls/hX8/VZayaz2S2Kibk+WhZ+WaZTUx
+	 QsBTh1Mln3PcB4v6mLnmqoIeF+he5xLp+NFfnWsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	Nikunj A Dadhania <nikunj@amd.com>,
-	stable@kernel.org,
+	Joy Zou <joy.zou@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 154/160] x86/cpu: Enable FSGSBASE early in cpu_init_exception_handling()
-Date: Wed,  8 Apr 2026 20:04:01 +0200
-Message-ID: <20260408175918.950546872@linuxfoundation.org>
+Subject: [PATCH 6.6 155/160] dmaengine: fsl-edma: change to guard(mutex) within fsl_edma3_xlate()
+Date: Wed,  8 Apr 2026 20:04:02 +0200
+Message-ID: <20260408175918.988700416@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -53,139 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikunj A Dadhania <nikunj@amd.com>
+From: Joy Zou <joy.zou@nxp.com>
 
-[ Upstream commit 05243d490bb7852a8acca7b5b5658019c7797a52 ]
+[ Upstream commit 90d21f6e57a898ef02810404dd3866acaf707ebf ]
 
-Move FSGSBASE enablement from identify_cpu() to cpu_init_exception_handling()
-to ensure it is enabled before any exceptions can occur on both boot and
-secondary CPUs.
+Introduce a scope guard to automatically unlock the mutex within
+fsl_edma3_xlate() to simplify the code.
 
-== Background ==
+Prepare to add source ID checks in the future.
 
-Exception entry code (paranoid_entry()) uses ALTERNATIVE patching based on
-X86_FEATURE_FSGSBASE to decide whether to use RDGSBASE/WRGSBASE instructions
-or the slower RDMSR/SWAPGS sequence for saving/restoring GSBASE.
-
-On boot CPU, ALTERNATIVE patching happens after enabling FSGSBASE in CR4.
-When the feature is available, the code is permanently patched to use
-RDGSBASE/WRGSBASE, which require CR4.FSGSBASE=1 to execute without triggering
-
-== Boot Sequence ==
-
-Boot CPU (with CR pinning enabled):
-  trap_init()
-    cpu_init()                   <- Uses unpatched code (RDMSR/SWAPGS)
-      x2apic_setup()
-  ...
-  arch_cpu_finalize_init()
-    identify_boot_cpu()
-      identify_cpu()
-        cr4_set_bits(X86_CR4_FSGSBASE)  # Enables the feature
-	# This becomes part of cr4_pinned_bits
-    ...
-    alternative_instructions()   <- Patches code to use RDGSBASE/WRGSBASE
-
-Secondary CPUs (with CR pinning enabled):
-  start_secondary()
-    cr4_init()                   <- Code already patched, CR4.FSGSBASE=1
-                                    set implicitly via cr4_pinned_bits
-
-    cpu_init()                   <- exceptions work because FSGSBASE is
-                                    already enabled
-
-Secondary CPU (with CR pinning disabled):
-  start_secondary()
-    cr4_init()                   <- Code already patched, CR4.FSGSBASE=0
-    cpu_init()
-      x2apic_setup()
-        rdmsrq(MSR_IA32_APICBASE)  <- Triggers #VC in SNP guests
-          exc_vmm_communication()
-            paranoid_entry()       <- Uses RDGSBASE with CR4.FSGSBASE=0
-                                      (patched code)
-    ...
-    ap_starting()
-      identify_secondary_cpu()
-        identify_cpu()
-	  cr4_set_bits(X86_CR4_FSGSBASE)  <- Enables the feature, which is
-                                             too late
-
-== CR Pinning ==
-
-Currently, for secondary CPUs, CR4.FSGSBASE is set implicitly through
-CR-pinning: the boot CPU sets it during identify_cpu(), it becomes part of
-cr4_pinned_bits, and cr4_init() applies those pinned bits to secondary CPUs.
-This works but creates an undocumented dependency between cr4_init() and the
-pinning mechanism.
-
-== Problem ==
-
-Secondary CPUs boot after alternatives have been applied globally. They
-execute already-patched paranoid_entry() code that uses RDGSBASE/WRGSBASE
-instructions, which require CR4.FSGSBASE=1. Upcoming changes to CR pinning
-behavior will break the implicit dependency, causing secondary CPUs to
-generate #UD.
-
-This issue manifests itself on AMD SEV-SNP guests, where the rdmsrq() in
-x2apic_setup() triggers a #VC exception early during cpu_init(). The #VC
-handler (exc_vmm_communication()) executes the patched paranoid_entry() path.
-Without CR4.FSGSBASE enabled, RDGSBASE instructions trigger #UD.
-
-== Fix ==
-
-Enable FSGSBASE explicitly in cpu_init_exception_handling() before loading
-exception handlers. This makes the dependency explicit and ensures both
-boot and secondary CPUs have FSGSBASE enabled before paranoid_entry()
-executes.
-
-Fixes: c82965f9e530 ("x86/entry/64: Handle FSGSBASE enabled paranoid entry/exit")
-Reported-by: Borislav Petkov <bp@alien8.de>
-Suggested-by: Sohil Mehta <sohil.mehta@intel.com>
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260318075654.1792916-2-nikunj@amd.com
-[ adapted to cpu_init_exception_handling(void) lacking FRED and LASS support ]
+Signed-off-by: Joy Zou <joy.zou@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20240701070232.2519179-2-joy.zou@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 2e7b5cf72e51 ("dmaengine: fsl-edma: fix channel parameter config for fixed channel requests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/common.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/dma/fsl-edma-main.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2012,12 +2012,6 @@ static void identify_cpu(struct cpuinfo_
- 	setup_smap(c);
- 	setup_umip(c);
+--- a/drivers/dma/fsl-edma-main.c
++++ b/drivers/dma/fsl-edma-main.c
+@@ -142,7 +142,7 @@ static struct dma_chan *fsl_edma3_xlate(
  
--	/* Enable FSGSBASE instructions if available. */
--	if (cpu_has(c, X86_FEATURE_FSGSBASE)) {
--		cr4_set_bits(X86_CR4_FSGSBASE);
--		elf_hwcap2 |= HWCAP2_FSGSBASE;
--	}
--
- 	/*
- 	 * The vendor-specific functions might have changed features.
- 	 * Now we do "generic changes."
-@@ -2349,6 +2343,18 @@ void cpu_init_exception_handling(void)
- 	/* GHCB needs to be setup to handle #VC. */
- 	setup_ghcb();
+ 	b_chmux = !!(fsl_edma->drvdata->flags & FSL_EDMA_DRV_HAS_CHMUX);
  
-+	/*
-+	 * On CPUs with FSGSBASE support, paranoid_entry() uses
-+	 * ALTERNATIVE-patched RDGSBASE/WRGSBASE instructions. Secondary CPUs
-+	 * boot after alternatives are patched globally, so early exceptions
-+	 * execute patched code that depends on FSGSBASE. Enable the feature
-+	 * before any exceptions occur.
-+	 */
-+	if (cpu_feature_enabled(X86_FEATURE_FSGSBASE)) {
-+		cr4_set_bits(X86_CR4_FSGSBASE);
-+		elf_hwcap2 |= HWCAP2_FSGSBASE;
-+	}
-+
- 	/* Finally load the IDT */
- 	load_current_idt();
+-	mutex_lock(&fsl_edma->fsl_edma_mutex);
++	guard(mutex)(&fsl_edma->fsl_edma_mutex);
+ 	list_for_each_entry_safe(chan, _chan, &fsl_edma->dma_dev.channels,
+ 					device_node) {
+ 
+@@ -166,18 +166,15 @@ static struct dma_chan *fsl_edma3_xlate(
+ 		if (!b_chmux && i == dma_spec->args[0]) {
+ 			chan = dma_get_slave_channel(chan);
+ 			chan->device->privatecnt++;
+-			mutex_unlock(&fsl_edma->fsl_edma_mutex);
+ 			return chan;
+ 		} else if (b_chmux && !fsl_chan->srcid) {
+ 			/* if controller support channel mux, choose a free channel */
+ 			chan = dma_get_slave_channel(chan);
+ 			chan->device->privatecnt++;
+ 			fsl_chan->srcid = dma_spec->args[0];
+-			mutex_unlock(&fsl_edma->fsl_edma_mutex);
+ 			return chan;
+ 		}
+ 	}
+-	mutex_unlock(&fsl_edma->fsl_edma_mutex);
+ 	return NULL;
  }
+ 
 
 
