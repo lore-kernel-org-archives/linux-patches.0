@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B3C37F01B;
-	Wed,  8 Apr 2026 18:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113463D411F;
+	Wed,  8 Apr 2026 18:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672969; cv=none; b=Wno/C2rxIyQ53IPO8Vh2GHyvGkvY7VpVDU+5+C5ZNbv7DrpxQH2+vyj/0cTm7k8TSkr/F4zMIn+dw/B2XyXUiciQOjD8nSPbET3zqrbYx1AFg341FzJFqR+MbhsdgR9ay9GqEPG1r8P/R04mxm50bH3ocfmVDKQ3VxjvfGoJzTY=
+	t=1775672972; cv=none; b=r+NJ/5EfvCn7RPWs9EnokGbxiPxZ2ev1Kk/nYj+ISa/PguMLOQk1Fcul9ei3nIsipMqI9Jj99CFhZNNNaUgncKMHJ0CbnQASsdjmDahBLWkB9CDXxXC37LQf9/igDg4Tv9BZ2CGjHBJljKA2+QXhGNS4+qzOMOobiDUZOaePXSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672969; c=relaxed/simple;
-	bh=mBAo5M/4+N2Xs+tPWrIuyMVk5AYD1gLdPTsK4d0pCWI=;
+	s=arc-20240116; t=1775672972; c=relaxed/simple;
+	bh=4HMTr1SuL2uu4kJENCcJGboShPtj1dGsmIfysjlvEPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FwnpOeqpUTy9BxagXd6Sqbd4W40JOWlDfp0POj3AW8vJFFe4b0eWlyfsDq2v+96ptHIwG/QfTEasmaPgIPvFaMgQPNGWVinmOAr3/ptOdH7lIh3vuOwlXx/yf+9j3zqPamSvP1dc+CuEs0dGx1VchNBu7pI/N0rxowhz59U2LDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmT5I7p4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPNSYLsIO8RzKtyuwzOGkOQH98iNzpMmNoR5ZQn7pxiZ2JGcbqU9BmMyhz2zSI61JwQ4zsBHNS2oSnDbY2dWSQs3EtuuIqHXnSwnQrqZnf512UXVAqR2kwnqxPKpTmv3JtrWNzjzEhjbHCDcOidSasfJLJNfcoRBAqjRGyjpBJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOaC7LZ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmT5I7p4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11018C19421;
-	Wed,  8 Apr 2026 18:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOaC7LZ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97327C19421;
+	Wed,  8 Apr 2026 18:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672969;
-	bh=mBAo5M/4+N2Xs+tPWrIuyMVk5AYD1gLdPTsK4d0pCWI=;
+	s=korg; t=1775672971;
+	bh=4HMTr1SuL2uu4kJENCcJGboShPtj1dGsmIfysjlvEPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmT5I7p4pL7RXGUul4u1yQ9my3rsLP7gg0mqoBPwNdnRUm9uU2aixjx550RkT6aob
-	 G4dJLTBUOfhL/j3JpnsHYyBro2ubMOXggN79AfPPGOWzbXK5+HQXP7BqvOoCOIrqd3
-	 3Vg6c4gV7ymCNWUn2PHwJAwVIVb1BcC0mNGrmjwk=
+	b=nOaC7LZ3DgSoFctl9st6hC/xm7F8QFQp9LLFqfgTUo6opfRn2D9/uzC+c3zyBB67/
+	 h5e8K2FzZ5JynCDPWSCkbhIxrSSqed/hhP96RnjzOJvbROrdZOk5p9USqUv8S7fPP+
+	 fTYpYszN8/rFvpVto9JfLVjtifpuoPqFejfIiWzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yochai Eisenrich <echelonh@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 051/277] net: sched: cls_api: fix tc_chain_fill_node to initialize tcm_info to zero to prevent an info-leak
-Date: Wed,  8 Apr 2026 20:00:36 +0200
-Message-ID: <20260408175935.763835439@linuxfoundation.org>
+Subject: [PATCH 6.18 052/277] bnxt_en: set backing store type from query type
+Date: Wed,  8 Apr 2026 20:00:37 +0200
+Message-ID: <20260408175935.801867334@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -52,39 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yochai Eisenrich <echelonh@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit e6e3eb5ee89ac4c163d46429391c889a1bb5e404 ]
+[ Upstream commit 4ee937107d52f9e5c350e4b5e629760e328b3d9f ]
 
-When building netlink messages, tc_chain_fill_node() never initializes
-the tcm_info field of struct tcmsg. Since the allocation is not zeroed,
-kernel heap memory is leaked to userspace through this 4-byte field.
+bnxt_hwrm_func_backing_store_qcaps_v2() stores resp->type from the
+firmware response in ctxm->type and later uses that value to index
+fixed backing-store metadata arrays such as ctx_arr[] and
+bnxt_bstore_to_trace[].
 
-The fix simply zeroes tcm_info alongside the other fields that are
-already initialized.
+ctxm->type is fixed by the current backing-store query type and matches
+the array index of ctx->ctx_arr. Set ctxm->type from the current loop
+variable instead of depending on resp->type.
 
-Fixes: 32a4f5ecd738 ("net: sched: introduce chain object to uapi")
-Signed-off-by: Yochai Eisenrich <echelonh@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260328211436.1010152-1-echelonh@gmail.com
+Also update the loop to advance type from next_valid_type in the for
+statement, which keeps the control flow simpler for non-valid and
+unchanged entries.
+
+Fixes: 6a4d0774f02d ("bnxt_en: Add support for new backing store query firmware API")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Tested-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20260328234357.43669-1-pengpeng@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index bac9cd71ff8e9..b03dc4fe20e52 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -2969,6 +2969,7 @@ static int tc_chain_fill_node(const struct tcf_proto_ops *tmplt_ops,
- 	tcm->tcm__pad1 = 0;
- 	tcm->tcm__pad2 = 0;
- 	tcm->tcm_handle = 0;
-+	tcm->tcm_info = 0;
- 	if (block->q) {
- 		tcm->tcm_ifindex = qdisc_dev(block->q)->ifindex;
- 		tcm->tcm_parent = block->q->handle;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index e9f40ca8bb4fb..04aa5d9eb8513 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -8607,7 +8607,7 @@ static int bnxt_hwrm_func_backing_store_qcaps_v2(struct bnxt *bp)
+ 	struct hwrm_func_backing_store_qcaps_v2_output *resp;
+ 	struct hwrm_func_backing_store_qcaps_v2_input *req;
+ 	struct bnxt_ctx_mem_info *ctx = bp->ctx;
+-	u16 type;
++	u16 type, next_type = 0;
+ 	int rc;
+ 
+ 	rc = hwrm_req_init(bp, req, HWRM_FUNC_BACKING_STORE_QCAPS_V2);
+@@ -8623,7 +8623,7 @@ static int bnxt_hwrm_func_backing_store_qcaps_v2(struct bnxt *bp)
+ 
+ 	resp = hwrm_req_hold(bp, req);
+ 
+-	for (type = 0; type < BNXT_CTX_V2_MAX; ) {
++	for (type = 0; type < BNXT_CTX_V2_MAX; type = next_type) {
+ 		struct bnxt_ctx_mem_type *ctxm = &ctx->ctx_arr[type];
+ 		u8 init_val, init_off, i;
+ 		u32 max_entries;
+@@ -8636,7 +8636,7 @@ static int bnxt_hwrm_func_backing_store_qcaps_v2(struct bnxt *bp)
+ 		if (rc)
+ 			goto ctx_done;
+ 		flags = le32_to_cpu(resp->flags);
+-		type = le16_to_cpu(resp->next_valid_type);
++		next_type = le16_to_cpu(resp->next_valid_type);
+ 		if (!(flags & BNXT_CTX_MEM_TYPE_VALID)) {
+ 			bnxt_free_one_ctx_mem(bp, ctxm, true);
+ 			continue;
+@@ -8651,7 +8651,7 @@ static int bnxt_hwrm_func_backing_store_qcaps_v2(struct bnxt *bp)
+ 			else
+ 				continue;
+ 		}
+-		ctxm->type = le16_to_cpu(resp->type);
++		ctxm->type = type;
+ 		ctxm->entry_size = entry_size;
+ 		ctxm->flags = flags;
+ 		ctxm->instance_bmap = le32_to_cpu(resp->instance_bit_map);
 -- 
 2.53.0
 
