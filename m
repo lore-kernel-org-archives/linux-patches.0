@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470AB331A44;
-	Wed,  8 Apr 2026 19:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D154E25A321;
+	Wed,  8 Apr 2026 19:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674915; cv=none; b=DO9PhgpG+5/pRnncwf9c0HWrxSOkUSfdfmGnKOmDAizr6p5bkNqMUVSDNwToSylw+AwVv13oB6jxuKaHuqL1We6paeLF+/zgUV7V7c0jZb11h5TjQoAxw/vnUxKpRWACbOU3pM8v35Y8VZwFAid5+dTGSrrShywJ9X5PdSUbRf8=
+	t=1775674917; cv=none; b=Z5Yl1iloXSNFkvsJmU8cmfxs6Cv3LM6zH2kS4S9thwBQMr6IGlTsLotuTsSz9QFfqMKyhcFg5N0tq3fgNq/GzFGmLJH1pBWhzzUFVPaS5gEByLpkcEfNtPMK+v6WT8upOA9PdQbnLGvHybg4Y/783Htn/t4rm1gcjSc8kVbjS2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674915; c=relaxed/simple;
-	bh=rBAePdOoMyhsJBQfDWwpRPUi8UoGfuqzp/AbcQpP1jM=;
+	s=arc-20240116; t=1775674917; c=relaxed/simple;
+	bh=Lgs6dgge1HmBGir5HJvH4mfvlejdrVuDdz/7dttHhn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/LEwd4P+ABB3dMv+tl/9RzYN361kKqFSMqbJXZ8fMDRzyXof74rdfR9UMH4GjyIAX78cxyU3A3RO1nU9unANNyn7nDXOzrSMTBpPX98nZP9sbLH1rolDjl4vn2iD+Ij/plFAX9dXUbyfgnP7wPsRUctO5PfhmbNxGfr/MkO0Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iweOMYOH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cpemrNKdZ54izYv0WbyEKxFGOrgieoGFoLDv+ePKbi3C++0piT0PaLQAklIPlqsF9BBzgGck6M2gbL1/3WR5cw+oue+zbrghqJYzKnJCsFnnQIVwFhfSrzQRSB3liJy20t4LlN7PTy9961j/cJCfYW2EKn8XhApyQFMA1fpPUpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KktUAU3m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iweOMYOH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0032C19421;
-	Wed,  8 Apr 2026 19:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KktUAU3m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65779C19421;
+	Wed,  8 Apr 2026 19:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674915;
-	bh=rBAePdOoMyhsJBQfDWwpRPUi8UoGfuqzp/AbcQpP1jM=;
+	s=korg; t=1775674917;
+	bh=Lgs6dgge1HmBGir5HJvH4mfvlejdrVuDdz/7dttHhn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iweOMYOHq+6GvGfvRlSJkf8s0Xa92NQeIivB3hiM5s3aDp5tve5Wbhi5Li+vIEj+V
-	 dhLiad69Zlf67FfqvK79ZspVu/OrLlgIIx5Uh0069LRpHIItOIDA6tWyH4KCFW4zEn
-	 A+HyrMADo53zzZIhSvQN2MWQmdfrW/9RkvigJdlQ=
+	b=KktUAU3m8qyNYHNfxfhcuugoBtGEBfqY14xMWv1vFTjWrdFQOw/z42Bhz9yq1zxE6
+	 hTX7+CBLcsSi7w70ZEQgzN5KMLeGtxYhaap2kDFAKsUzh3jjv9WRnEu2WDcq9CP2n7
+	 +8W2ZrYUboWDs8Ob5uGjD1WIIfCmDAg/93k55IUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 249/311] io_uring: protect remaining lockless ctx->rings accesses with RCU
-Date: Wed,  8 Apr 2026 20:04:09 +0200
-Message-ID: <20260408175948.688178590@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.19 250/311] auxdisplay: line-display: fix NULL dereference in linedisp_release
+Date: Wed,  8 Apr 2026 20:04:10 +0200
+Message-ID: <20260408175948.725212353@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,253 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-Commit 61a11cf4812726aceaee17c96432e1c08f6ed6cb upstream.
+commit 7f138de156b20d9f9da6f72f90b63c01941d97d3 upstream.
 
-Commit 96189080265e addressed one case of ctx->rings being potentially
-accessed while a resize is happening on the ring, but there are still
-a few others that need handling. Add a helper for retrieving the
-rings associated with an io_uring context, and add some sanity checking
-to that to catch bad uses. ->rings_rcu is always valid, as long as it's
-used within RCU read lock. Any use of ->rings_rcu or ->rings inside
-either ->uring_lock or ->completion_lock is sane as well.
+linedisp_release() currently retrieves the enclosing struct linedisp via
+to_linedisp(). That lookup depends on the attachment list, but the
+attachment may already have been removed before put_device() invokes the
+release callback. This can happen in linedisp_unregister(), and can also
+be reached from some linedisp_register() error paths.
 
-Do the minimum fix for the current kernel, but set it up such that this
-basic infra can be extended for later kernels to make this harder to
-mess up in the future.
+In that case, to_linedisp() returns NULL and linedisp_release()
+dereferences it while freeing the display resources.
 
-Thanks to Junxi Qian for finding and debugging this issue.
+The struct device released here is the embedded linedisp->dev used by
+linedisp_register(), so retrieve the enclosing object directly with
+container_of() instead.
 
+Fixes: 66c93809487e ("auxdisplay: linedisp: encapsulate container_of usage within to_linedisp")
 Cc: stable@vger.kernel.org
-Fixes: 79cfe9e59c2a ("io_uring/register: add IORING_REGISTER_RESIZE_RINGS")
-Reviewed-by: Junxi Qian <qjx1298677004@gmail.com>
-Tested-by: Junxi Qian <qjx1298677004@gmail.com>
-Link: https://lore.kernel.org/io-uring/20260330172348.89416-1-qjx1298677004@gmail.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c | 62 +++++++++++++++++++++++++++++----------------
- io_uring/io_uring.h | 34 +++++++++++++++++++++----
- 2 files changed, 69 insertions(+), 27 deletions(-)
+ drivers/auxdisplay/line-display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index ac1a5cf102870..84fb1f7b0d818 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -189,12 +189,15 @@ static void io_poison_req(struct io_kiocb *req)
+diff --git a/drivers/auxdisplay/line-display.c b/drivers/auxdisplay/line-display.c
+index 81b4aac65807..fb6d9294140d 100644
+--- a/drivers/auxdisplay/line-display.c
++++ b/drivers/auxdisplay/line-display.c
+@@ -365,7 +365,7 @@ static DEFINE_IDA(linedisp_id);
  
- static inline unsigned int __io_cqring_events(struct io_ring_ctx *ctx)
+ static void linedisp_release(struct device *dev)
  {
--	return ctx->cached_cq_tail - READ_ONCE(ctx->rings->cq.head);
-+	struct io_rings *rings = io_get_rings(ctx);
-+	return ctx->cached_cq_tail - READ_ONCE(rings->cq.head);
- }
+-	struct linedisp *linedisp = to_linedisp(dev);
++	struct linedisp *linedisp = container_of(dev, struct linedisp, dev);
  
- static inline unsigned int __io_cqring_events_user(struct io_ring_ctx *ctx)
- {
--	return READ_ONCE(ctx->rings->cq.tail) - READ_ONCE(ctx->rings->cq.head);
-+	struct io_rings *rings = io_get_rings(ctx);
-+
-+	return READ_ONCE(rings->cq.tail) - READ_ONCE(rings->cq.head);
- }
- 
- static inline void req_fail_link_node(struct io_kiocb *req, int res)
-@@ -2536,12 +2539,15 @@ static enum hrtimer_restart io_cqring_min_timer_wakeup(struct hrtimer *timer)
- 	if (io_has_work(ctx))
- 		goto out_wake;
- 	/* got events since we started waiting, min timeout is done */
--	if (iowq->cq_min_tail != READ_ONCE(ctx->rings->cq.tail))
--		goto out_wake;
--	/* if we have any events and min timeout expired, we're done */
--	if (io_cqring_events(ctx))
--		goto out_wake;
-+	scoped_guard(rcu) {
-+		struct io_rings *rings = io_get_rings(ctx);
- 
-+		if (iowq->cq_min_tail != READ_ONCE(rings->cq.tail))
-+			goto out_wake;
-+		/* if we have any events and min timeout expired, we're done */
-+		if (io_cqring_events(ctx))
-+			goto out_wake;
-+	}
- 	/*
- 	 * If using deferred task_work running and application is waiting on
- 	 * more than one request, ensure we reset it now where we are switching
-@@ -2652,9 +2658,9 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
- 			  struct ext_arg *ext_arg)
- {
- 	struct io_wait_queue iowq;
--	struct io_rings *rings = ctx->rings;
-+	struct io_rings *rings;
- 	ktime_t start_time;
--	int ret;
-+	int ret, nr_wait;
- 
- 	min_events = min_t(int, min_events, ctx->cq_entries);
- 
-@@ -2667,15 +2673,23 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
- 
- 	if (unlikely(test_bit(IO_CHECK_CQ_OVERFLOW_BIT, &ctx->check_cq)))
- 		io_cqring_do_overflow_flush(ctx);
--	if (__io_cqring_events_user(ctx) >= min_events)
-+
-+	rcu_read_lock();
-+	rings = io_get_rings(ctx);
-+	if (__io_cqring_events_user(ctx) >= min_events) {
-+		rcu_read_unlock();
- 		return 0;
-+	}
- 
- 	init_waitqueue_func_entry(&iowq.wq, io_wake_function);
- 	iowq.wq.private = current;
- 	INIT_LIST_HEAD(&iowq.wq.entry);
- 	iowq.ctx = ctx;
--	iowq.cq_tail = READ_ONCE(ctx->rings->cq.head) + min_events;
--	iowq.cq_min_tail = READ_ONCE(ctx->rings->cq.tail);
-+	iowq.cq_tail = READ_ONCE(rings->cq.head) + min_events;
-+	iowq.cq_min_tail = READ_ONCE(rings->cq.tail);
-+	nr_wait = (int) iowq.cq_tail - READ_ONCE(rings->cq.tail);
-+	rcu_read_unlock();
-+	rings = NULL;
- 	iowq.nr_timeouts = atomic_read(&ctx->cq_timeouts);
- 	iowq.hit_timeout = 0;
- 	iowq.min_timeout = ext_arg->min_time;
-@@ -2706,14 +2720,6 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
- 	trace_io_uring_cqring_wait(ctx, min_events);
- 	do {
- 		unsigned long check_cq;
--		int nr_wait;
--
--		/* if min timeout has been hit, don't reset wait count */
--		if (!iowq.hit_timeout)
--			nr_wait = (int) iowq.cq_tail -
--					READ_ONCE(ctx->rings->cq.tail);
--		else
--			nr_wait = 1;
- 
- 		if (ctx->flags & IORING_SETUP_DEFER_TASKRUN) {
- 			atomic_set(&ctx->cq_wait_nr, nr_wait);
-@@ -2764,13 +2770,22 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
- 			break;
- 		}
- 		cond_resched();
-+
-+		/* if min timeout has been hit, don't reset wait count */
-+		if (!iowq.hit_timeout)
-+			scoped_guard(rcu)
-+				nr_wait = (int) iowq.cq_tail -
-+						READ_ONCE(io_get_rings(ctx)->cq.tail);
-+		else
-+			nr_wait = 1;
- 	} while (1);
- 
- 	if (!(ctx->flags & IORING_SETUP_DEFER_TASKRUN))
- 		finish_wait(&ctx->cq_wait, &iowq.wq);
- 	restore_saved_sigmask_unless(ret == -EINTR);
- 
--	return READ_ONCE(rings->cq.head) == READ_ONCE(rings->cq.tail) ? ret : 0;
-+	guard(rcu)();
-+	return READ_ONCE(io_get_rings(ctx)->cq.head) == READ_ONCE(io_get_rings(ctx)->cq.tail) ? ret : 0;
- }
- 
- static void io_rings_free(struct io_ring_ctx *ctx)
-@@ -2954,7 +2969,9 @@ static __poll_t io_uring_poll(struct file *file, poll_table *wait)
- 	 */
- 	poll_wait(file, &ctx->poll_wq, wait);
- 
--	if (!io_sqring_full(ctx))
-+	rcu_read_lock();
-+
-+	if (!__io_sqring_full(ctx))
- 		mask |= EPOLLOUT | EPOLLWRNORM;
- 
- 	/*
-@@ -2974,6 +2991,7 @@ static __poll_t io_uring_poll(struct file *file, poll_table *wait)
- 	if (__io_cqring_events_user(ctx) || io_has_work(ctx))
- 		mask |= EPOLLIN | EPOLLRDNORM;
- 
-+	rcu_read_unlock();
- 	return mask;
- }
- 
-diff --git a/io_uring/io_uring.h b/io_uring/io_uring.h
-index 0f096f44d34bf..6ee49991cec8b 100644
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -132,16 +132,28 @@ struct io_wait_queue {
- #endif
- };
- 
-+static inline struct io_rings *io_get_rings(struct io_ring_ctx *ctx)
-+{
-+	return rcu_dereference_check(ctx->rings_rcu,
-+			lockdep_is_held(&ctx->uring_lock) ||
-+			lockdep_is_held(&ctx->completion_lock));
-+}
-+
- static inline bool io_should_wake(struct io_wait_queue *iowq)
- {
- 	struct io_ring_ctx *ctx = iowq->ctx;
--	int dist = READ_ONCE(ctx->rings->cq.tail) - (int) iowq->cq_tail;
-+	struct io_rings *rings;
-+	int dist;
-+
-+	guard(rcu)();
-+	rings = io_get_rings(ctx);
- 
- 	/*
- 	 * Wake up if we have enough events, or if a timeout occurred since we
- 	 * started waiting. For timeouts, we always want to return to userspace,
- 	 * regardless of event count.
- 	 */
-+	dist = READ_ONCE(rings->cq.tail) - (int) iowq->cq_tail;
- 	return dist >= 0 || atomic_read(&ctx->cq_timeouts) != iowq->nr_timeouts;
- }
- 
-@@ -432,9 +444,9 @@ static inline void io_cqring_wake(struct io_ring_ctx *ctx)
- 	__io_wq_wake(&ctx->cq_wait);
- }
- 
--static inline bool io_sqring_full(struct io_ring_ctx *ctx)
-+static inline bool __io_sqring_full(struct io_ring_ctx *ctx)
- {
--	struct io_rings *r = ctx->rings;
-+	struct io_rings *r = io_get_rings(ctx);
- 
- 	/*
- 	 * SQPOLL must use the actual sqring head, as using the cached_sq_head
-@@ -446,9 +458,15 @@ static inline bool io_sqring_full(struct io_ring_ctx *ctx)
- 	return READ_ONCE(r->sq.tail) - READ_ONCE(r->sq.head) == ctx->sq_entries;
- }
- 
--static inline unsigned int io_sqring_entries(struct io_ring_ctx *ctx)
-+static inline bool io_sqring_full(struct io_ring_ctx *ctx)
- {
--	struct io_rings *rings = ctx->rings;
-+	guard(rcu)();
-+	return __io_sqring_full(ctx);
-+}
-+
-+static inline unsigned int __io_sqring_entries(struct io_ring_ctx *ctx)
-+{
-+	struct io_rings *rings = io_get_rings(ctx);
- 	unsigned int entries;
- 
- 	/* make sure SQ entry isn't read before tail */
-@@ -509,6 +527,12 @@ static inline void io_tw_lock(struct io_ring_ctx *ctx, io_tw_token_t tw)
- 	lockdep_assert_held(&ctx->uring_lock);
- }
- 
-+static inline unsigned int io_sqring_entries(struct io_ring_ctx *ctx)
-+{
-+	guard(rcu)();
-+	return __io_sqring_entries(ctx);
-+}
-+
- /*
-  * Don't complete immediately but use deferred completion infrastructure.
-  * Protected by ->uring_lock and can only be used either with
+ 	kfree(linedisp->map);
+ 	kfree(linedisp->message);
 -- 
 2.53.0
 
