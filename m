@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E6F28C87C;
-	Wed,  8 Apr 2026 18:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC07351C2E;
+	Wed,  8 Apr 2026 18:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673308; cv=none; b=Iby0OmwvkFbArHxhtbpOHqwb8remmyScgVXu310BTjBPQOR4sW2DaJlROe7iId+tTHUE/5zSVtwVMoUV+9ghmdVObxncvnbSDBC//uukuIIscaK+NfGF6iQgRDxGUGY858Tqje2P/5/DOZ1S8U7xZkZJvD/puBfpKFAEVnPjDfQ=
+	t=1775673310; cv=none; b=Limtcn7iqHUeC4aYgPEtBlUxWTitfdIYlpJhFMt0ouvAuGynuh6sUyaajJjYs8jFSBnEjSDhDeb20Qz6Zj9BBGwqIWy1mhuMvR0l6dsMXHpJkn3pWo4klGg3n2N2R2zJ678jBWdGDYaSxnM/jQCnAoJk3chNERmuJxA9vLCcjXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673308; c=relaxed/simple;
-	bh=JhhPzIA7U3tm1ui+9TSZhOarzmpAN5tnF9gAmW4GdUU=;
+	s=arc-20240116; t=1775673310; c=relaxed/simple;
+	bh=kaKQenjDFiu1wrYJIJAeG2w2Gzz/+yrkxCNkkO428w0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFDGEIRBQZt4LVUYAk1A8Kb31nrIq9eJYcrAtJ6dKtrP8jZwvWwSULvGBsEzLOvCyvUMzmkpLQzhwRaYmgWCN63jFoaIlp/yexFsNN/lXl4n/d7AFiDPZbk/vfmLvKvs72OPXwE5iTHahoYkJ2jxnRUk8DRI5+X46FPekfV1hwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFoUGzdN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WNGhmAiGpjCEZm1sX43ge8v3MYy8ynAJldWz51pQ3kMZAn9Mj3g/ltGMpOr47joxjZtnsZ4usWH5ZJPTu6ApD9ZoSk9AKwsPAExBZMk5sMUWIO+h3+AhuB/k/IYhujjk8K7laWIlvAzcpM9Mbx9KaNMMpxZ0lsoyY7H6ItRI5DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oejguH4O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFoUGzdN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D783C19421;
-	Wed,  8 Apr 2026 18:35:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oejguH4O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04166C19421;
+	Wed,  8 Apr 2026 18:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673307;
-	bh=JhhPzIA7U3tm1ui+9TSZhOarzmpAN5tnF9gAmW4GdUU=;
+	s=korg; t=1775673310;
+	bh=kaKQenjDFiu1wrYJIJAeG2w2Gzz/+yrkxCNkkO428w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PFoUGzdNjgq4SlsIFNIRgfIawMrwYjd/y855Hc5dD91B/6rcd3cXeCpYD6QiG92Cc
-	 J1e8GHvghZSBCUWkOali2r/2Oo2hRe8MINUxjL4ogbQ6eRNj/Vt2y5h8cfw0t++Emx
-	 77KyUKcWm4JgEB27Dz3WSanjmLfdGyt5piW9YTNM=
+	b=oejguH4OSQ6UGxknSgvunSQRoD3WMCaKbiRLVJjKivM2rEAYt1FEEldF4JAQYkfmq
+	 Qt58Px4KCYO64IU4dralxgSpR+4C8rOCW6SDD/X0/S8+zxCLeTYMvX/2WX75ZY9u3C
+	 SIJ0Q/ZR/DxqhJunw9vKwN3jvdfUd3TuyTEcWcjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wiehler <stefan.wiehler@nokia.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.18 149/277] mips: mm: Allocate tlb_vpn array atomically
-Date: Wed,  8 Apr 2026 20:02:14 +0200
-Message-ID: <20260408175939.438047150@linuxfoundation.org>
+	Aleksandr Nogikh <nogikh@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dmitry Vyukov <dvyukov@google.com>
+Subject: [PATCH 6.18 150/277] x86/kexec: Disable KCOV instrumentation after load_segments()
+Date: Wed,  8 Apr 2026 20:02:15 +0200
+Message-ID: <20260408175939.474457087@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -50,64 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wiehler <stefan.wiehler@nokia.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-commit 01cc50ea5167bb14117257ec084637abe9e5f691 upstream.
+commit 917e3ad3321e75ca0223d5ccf26ceda116aa51e1 upstream.
 
-Found by DEBUG_ATOMIC_SLEEP:
+The load_segments() function changes segment registers, invalidating GS base
+(which KCOV relies on for per-cpu data). When CONFIG_KCOV is enabled, any
+subsequent instrumented C code call (e.g. native_gdt_invalidate()) begins
+crashing the kernel in an endless loop.
 
-  BUG: sleeping function called from invalid context at /include/linux/sched/mm.h:306
-  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/1
-  preempt_count: 1, expected: 0
-  RCU nest depth: 0, expected: 0
-  no locks held by swapper/1/0.
-  irq event stamp: 0
-  hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-  hardirqs last disabled at (0): [<ffffffff801477fc>] copy_process+0x75c/0x1b68
-  softirqs last  enabled at (0): [<ffffffff801477fc>] copy_process+0x75c/0x1b68
-  softirqs last disabled at (0): [<0000000000000000>] 0x0
-  CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.6.119-d79e757675ec-fct #1
-  Stack : 800000000290bad8 0000000000000000 0000000000000008 800000000290bae8
-          800000000290bae8 800000000290bc78 0000000000000000 0000000000000000
-          ffffffff80c80000 0000000000000001 ffffffff80d8dee8 ffffffff810d09c0
-          784bb2a7ec10647d 0000000000000010 ffffffff80a6fd60 8000000001d8a9c0
-          0000000000000000 0000000000000000 ffffffff80d90000 0000000000000000
-          ffffffff80c9e0e8 0000000007ffffff 0000000000000cc0 0000000000000400
-          ffffffffffffffff 0000000000000001 0000000000000002 ffffffffc0149ed8
-          fffffffffffffffe 8000000002908000 800000000290bae0 ffffffff80a81b74
-          ffffffff80129fb0 0000000000000000 0000000000000000 0000000000000000
-          0000000000000000 0000000000000000 ffffffff80129fd0 0000000000000000
-          ...
-  Call Trace:
-  [<ffffffff80129fd0>] show_stack+0x60/0x158
-  [<ffffffff80a7f894>] dump_stack_lvl+0x88/0xbc
-  [<ffffffff8018d3c8>] __might_resched+0x268/0x288
-  [<ffffffff803648b0>] __kmem_cache_alloc_node+0x2e0/0x330
-  [<ffffffff80302788>] __kmalloc+0x58/0xd0
-  [<ffffffff80a81b74>] r4k_tlb_uniquify+0x7c/0x428
-  [<ffffffff80143e8c>] tlb_init+0x7c/0x110
-  [<ffffffff8012bdb4>] per_cpu_trap_init+0x16c/0x1d0
-  [<ffffffff80133258>] start_secondary+0x28/0x128
+To reproduce the problem, it's sufficient to do kexec on a KCOV-instrumented
+kernel:
 
-Fixes: 231ac951faba ("MIPS: mm: kmalloc tlb_vpn array to avoid stack overflow")
-Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
+  $ kexec -l /boot/otherKernel
+  $ kexec -e
+
+The real-world context for this problem is enabling crash dump collection in
+syzkaller. For this, the tool loads a panic kernel before fuzzing and then
+calls makedumpfile after the panic. This workflow requires both CONFIG_KEXEC
+and CONFIG_KCOV to be enabled simultaneously.
+
+Adding safeguards directly to the KCOV fast-path (__sanitizer_cov_trace_pc())
+is also undesirable as it would introduce an extra performance overhead.
+
+Disabling instrumentation for the individual functions would be too fragile,
+so disable KCOV instrumentation for the entire machine_kexec_64.c and
+physaddr.c. If coverage-guided fuzzing ever needs these components in the
+future, other approaches should be considered.
+
+The problem is not relevant for 32 bit kernels as CONFIG_KCOV is not supported
+there.
+
+  [ bp: Space out comment for better readability. ]
+
+Fixes: 0d345996e4cb ("x86/kernel: increase kcov coverage under arch/x86/kernel folder")
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://patch.msgid.link/20260325154825.551191-1-nogikh@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mm/tlb-r4k.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/Makefile |   14 ++++++++++++++
+ arch/x86/mm/Makefile     |    2 ++
+ 2 files changed, 16 insertions(+)
 
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -538,7 +538,7 @@ static void __ref r4k_tlb_uniquify(void)
+--- a/arch/x86/kernel/Makefile
++++ b/arch/x86/kernel/Makefile
+@@ -44,6 +44,20 @@ KCOV_INSTRUMENT_unwind_orc.o				:= n
+ KCOV_INSTRUMENT_unwind_frame.o				:= n
+ KCOV_INSTRUMENT_unwind_guess.o				:= n
  
- 	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
- 	tlb_vpns = (use_slab ?
--		    kmalloc(tlb_vpn_size, GFP_KERNEL) :
-+		    kmalloc(tlb_vpn_size, GFP_ATOMIC) :
- 		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
- 	if (WARN_ON(!tlb_vpns))
- 		return; /* Pray local_flush_tlb_all() is good enough. */
++# Disable KCOV to prevent crashes during kexec: load_segments() invalidates
++# the GS base, which KCOV relies on for per-CPU data.
++#
++# As KCOV and KEXEC compatibility should be preserved (e.g. syzkaller is
++# using it to collect crash dumps during kernel fuzzing), disabling
++# KCOV for KEXEC kernels is not an option. Selectively disabling KCOV
++# instrumentation for individual affected functions can be fragile, while
++# adding more checks to KCOV would slow it down.
++#
++# As a compromise solution, disable KCOV instrumentation for the whole
++# source code file. If its coverage is ever needed, other approaches
++# should be considered.
++KCOV_INSTRUMENT_machine_kexec_64.o			:= n
++
+ CFLAGS_head32.o := -fno-stack-protector
+ CFLAGS_head64.o := -fno-stack-protector
+ CFLAGS_irq.o := -I $(src)/../include/asm/trace
+--- a/arch/x86/mm/Makefile
++++ b/arch/x86/mm/Makefile
+@@ -4,6 +4,8 @@ KCOV_INSTRUMENT_tlb.o			:= n
+ KCOV_INSTRUMENT_mem_encrypt.o		:= n
+ KCOV_INSTRUMENT_mem_encrypt_amd.o	:= n
+ KCOV_INSTRUMENT_pgprot.o		:= n
++# See the "Disable KCOV" comment in arch/x86/kernel/Makefile.
++KCOV_INSTRUMENT_physaddr.o		:= n
+ 
+ KASAN_SANITIZE_mem_encrypt.o		:= n
+ KASAN_SANITIZE_mem_encrypt_amd.o	:= n
 
 
