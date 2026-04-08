@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718EA3D3D06;
-	Wed,  8 Apr 2026 18:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE913D4134;
+	Wed,  8 Apr 2026 18:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672077; cv=none; b=GhxlPv7+AmCIN464m8n2Chi0uBm46EgIbcvwxH4SQ1pUDncoc2Jr265QQCygf0aiscLgd13Yvcr0rUxF/ko5z2MrteoYpL3UIZtJyfNJ1W1Ljpog3zNpvm5za6us0xjPjxHo+FNDy2kNoTCJSCdSDgGG0aVX0B6xu4MS8KRNpvY=
+	t=1775672080; cv=none; b=ug/R+mZOW2EQ3VUNZvSx1GJCTnUGh0TG+lgvgMupvE4aa3wiIhlEHko5ocJeAm7jR4M9DAaGXXqQ+WLHW1Q79pzB2zsRq238AxWQXCW+P5W5Q9k2pgy+bztYFUPuMMSsfHpv0qcNzOzqqY2GWCoOjmXyLXWx/Mr8nL/kDfCjBaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672077; c=relaxed/simple;
-	bh=ZCt/rd8hFZyvSSmRrdbrdNkDFxidw9zMfmgHfMH6wnk=;
+	s=arc-20240116; t=1775672080; c=relaxed/simple;
+	bh=1orIIYt0bmZUIV86gQKBCPkfh+btqiAYKpwI/mo0+ZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D52bTpg/8qeP/Cm/gtVDKJGYMg7y8llRtYQ20VWXjYr/uHnuGcYpthzoJZQIaBAeX8RkCay+yqhr8DqHTE+N7r0mEk6fQkqEjPsYmJI0rRBsoHgCLvlI0rpzp697qJ1d/LFmM63GtgXQAJuOEs+dQyfZtBXMm56VPs6EaITyj7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LY24yfHd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qqyCeJ31pWoJC0Fa0FqZEZWgot6Iz9AQEF4hI46F8xAVcJ9rBZPoJ54Dqib7qEDnvUPPvyfdXM2yH1euaJ7Zxp0j2xAuFWwpEXjOr9d95+pkbWSB1k4+nh3fpf8caqUs5BKK+nrD7VT8Oh+zDZnOKN9dBkNTNf7vyUcjL/K0ECg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvfTfJLS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LY24yfHd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088D3C19421;
-	Wed,  8 Apr 2026 18:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvfTfJLS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96664C19425;
+	Wed,  8 Apr 2026 18:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672077;
-	bh=ZCt/rd8hFZyvSSmRrdbrdNkDFxidw9zMfmgHfMH6wnk=;
+	s=korg; t=1775672079;
+	bh=1orIIYt0bmZUIV86gQKBCPkfh+btqiAYKpwI/mo0+ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LY24yfHdjGLZzEOeuKxM88dOjs89+CfFhupu9ZuaiIhTdWyFXR47r4IzQzpMGC46R
-	 /p9IRFTnoH5svGKW7FKOtxPWbv9ZB3mVyNBXK/JazEFaui7/m3D/8glAAcqYOjLkpu
-	 nUIhwWuTziGCMz3um9KB6uu37o0OsWQn1uw3H8Ec=
+	b=XvfTfJLSK22J0+OVbfbmgfT5Gb/ADkaJnhMYAj2yn3x1yChJozZ52sYXCH5AwewGn
+	 7Y6QsnhaUkb9q5t+xZQmjgu1cTOPaVYne+lkzq6AusNKKfQzsw8hJ2Ab4BqM4l09Ab
+	 xMwqW1yJT19AdzpQt3HWEVzEqLCFA1aD8lr7pSBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 180/312] rds: ib: reject FRMR registration before IB connection is established
-Date: Wed,  8 Apr 2026 20:01:37 +0200
-Message-ID: <20260408175940.486647193@linuxfoundation.org>
+Subject: [PATCH 6.1 181/312] net: macb: fix clk handling on PCI glue driver removal
+Date: Wed,  8 Apr 2026 20:01:38 +0200
+Message-ID: <20260408175940.523348967@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -53,74 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit a54ecccfae62c5c85259ae5ea5d9c20009519049 ]
+[ Upstream commit ce8fe5287b87e24e225c342f3b0ec04f0b3680fe ]
 
-rds_ib_get_mr() extracts the rds_ib_connection from conn->c_transport_data
-and passes it to rds_ib_reg_frmr() for FRWR memory registration. On a
-fresh outgoing connection, ic is allocated in rds_ib_conn_alloc() with
-i_cm_id = NULL because the connection worker has not yet called
-rds_ib_conn_path_connect() to create the rdma_cm_id. When sendmsg() with
-RDS_CMSG_RDMA_MAP is called on such a connection, the sendmsg path parses
-the control message before any connection establishment, allowing
-rds_ib_post_reg_frmr() to dereference ic->i_cm_id->qp and crash the
-kernel.
+platform_device_unregister() may still want to use the registered clks
+during runtime resume callback.
 
-The existing guard in rds_ib_reg_frmr() only checks for !ic (added in
-commit 9e630bcb7701), which does not catch this case since ic is allocated
-early and is always non-NULL once the connection object exists.
+Note that there is a commit d82d5303c4c5 ("net: macb: fix use after free
+on rmmod") that addressed the similar problem of clk vs platform device
+unregistration but just moved the bug to another place.
 
- KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
- RIP: 0010:rds_ib_post_reg_frmr+0x50e/0x920
- Call Trace:
-  rds_ib_post_reg_frmr (net/rds/ib_frmr.c:167)
-  rds_ib_map_frmr (net/rds/ib_frmr.c:252)
-  rds_ib_reg_frmr (net/rds/ib_frmr.c:430)
-  rds_ib_get_mr (net/rds/ib_rdma.c:615)
-  __rds_rdma_map (net/rds/rdma.c:295)
-  rds_cmsg_rdma_map (net/rds/rdma.c:860)
-  rds_sendmsg (net/rds/send.c:1363)
-  ____sys_sendmsg
-  do_syscall_64
+Save the pointers to clks into local variables for reuse after platform
+device is unregistered.
 
-Add a check in rds_ib_get_mr() that verifies ic, i_cm_id, and qp are all
-non-NULL before proceeding with FRMR registration, mirroring the guard
-already present in rds_ib_post_inv(). Return -ENODEV when the connection
-is not ready, which the existing error handling in rds_cmsg_send() converts
-to -EAGAIN for userspace retry and triggers rds_conn_connect_if_down() to
-start the connection worker.
+BUG: KASAN: use-after-free in clk_prepare+0x5a/0x60
+Read of size 8 at addr ffff888104f85e00 by task modprobe/597
 
-Fixes: 1659185fb4d0 ("RDS: IB: Support Fastreg MR (FRMR) memory registration mode")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260330163237.2752440-2-bestswngs@gmail.com
+CPU: 2 PID: 597 Comm: modprobe Not tainted 6.1.164+ #114
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x8d/0xba
+ print_report+0x17f/0x496
+ kasan_report+0xd9/0x180
+ clk_prepare+0x5a/0x60
+ macb_runtime_resume+0x13d/0x410 [macb]
+ pm_generic_runtime_resume+0x97/0xd0
+ __rpm_callback+0xc8/0x4d0
+ rpm_callback+0xf6/0x230
+ rpm_resume+0xeeb/0x1a70
+ __pm_runtime_resume+0xb4/0x170
+ bus_remove_device+0x2e3/0x4b0
+ device_del+0x5b3/0xdc0
+ platform_device_del+0x4e/0x280
+ platform_device_unregister+0x11/0x50
+ pci_device_remove+0xae/0x210
+ device_remove+0xcb/0x180
+ device_release_driver_internal+0x529/0x770
+ driver_detach+0xd4/0x1a0
+ bus_remove_driver+0x135/0x260
+ driver_unregister+0x72/0xb0
+ pci_unregister_driver+0x26/0x220
+ __do_sys_delete_module+0x32e/0x550
+ do_syscall_64+0x35/0x80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+ </TASK>
+
+Allocated by task 519:
+ kasan_save_stack+0x2c/0x50
+ kasan_set_track+0x21/0x30
+ __kasan_kmalloc+0x8e/0x90
+ __clk_register+0x458/0x2890
+ clk_hw_register+0x1a/0x60
+ __clk_hw_register_fixed_rate+0x255/0x410
+ clk_register_fixed_rate+0x3c/0xa0
+ macb_probe+0x1d8/0x42e [macb_pci]
+ local_pci_probe+0xd7/0x190
+ pci_device_probe+0x252/0x600
+ really_probe+0x255/0x7f0
+ __driver_probe_device+0x1ee/0x330
+ driver_probe_device+0x4c/0x1f0
+ __driver_attach+0x1df/0x4e0
+ bus_for_each_dev+0x15d/0x1f0
+ bus_add_driver+0x486/0x5e0
+ driver_register+0x23a/0x3d0
+ do_one_initcall+0xfd/0x4d0
+ do_init_module+0x18b/0x5a0
+ load_module+0x5663/0x7950
+ __do_sys_finit_module+0x101/0x180
+ do_syscall_64+0x35/0x80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+Freed by task 597:
+ kasan_save_stack+0x2c/0x50
+ kasan_set_track+0x21/0x30
+ kasan_save_free_info+0x2a/0x50
+ __kasan_slab_free+0x106/0x180
+ __kmem_cache_free+0xbc/0x320
+ clk_unregister+0x6de/0x8d0
+ macb_remove+0x73/0xc0 [macb_pci]
+ pci_device_remove+0xae/0x210
+ device_remove+0xcb/0x180
+ device_release_driver_internal+0x529/0x770
+ driver_detach+0xd4/0x1a0
+ bus_remove_driver+0x135/0x260
+ driver_unregister+0x72/0xb0
+ pci_unregister_driver+0x26/0x220
+ __do_sys_delete_module+0x32e/0x550
+ do_syscall_64+0x35/0x80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+Fixes: d82d5303c4c5 ("net: macb: fix use after free on rmmod")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20260330184542.626619-1-pchelkin@ispras.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_rdma.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cadence/macb_pci.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/rds/ib_rdma.c b/net/rds/ib_rdma.c
-index 8f070ee7e7426..30fca2169aa7a 100644
---- a/net/rds/ib_rdma.c
-+++ b/net/rds/ib_rdma.c
-@@ -608,8 +608,13 @@ void *rds_ib_get_mr(struct scatterlist *sg, unsigned long nents,
- 		return ibmr;
- 	}
+diff --git a/drivers/net/ethernet/cadence/macb_pci.c b/drivers/net/ethernet/cadence/macb_pci.c
+index f66d22de5168d..4dd0cec2e5423 100644
+--- a/drivers/net/ethernet/cadence/macb_pci.c
++++ b/drivers/net/ethernet/cadence/macb_pci.c
+@@ -110,10 +110,12 @@ static void macb_remove(struct pci_dev *pdev)
+ {
+ 	struct platform_device *plat_dev = pci_get_drvdata(pdev);
+ 	struct macb_platform_data *plat_data = dev_get_platdata(&plat_dev->dev);
++	struct clk *pclk = plat_data->pclk;
++	struct clk *hclk = plat_data->hclk;
  
--	if (conn)
-+	if (conn) {
- 		ic = conn->c_transport_data;
-+		if (!ic || !ic->i_cm_id || !ic->i_cm_id->qp) {
-+			ret = -ENODEV;
-+			goto out;
-+		}
-+	}
+-	clk_unregister(plat_data->pclk);
+-	clk_unregister(plat_data->hclk);
+ 	platform_device_unregister(plat_dev);
++	clk_unregister(pclk);
++	clk_unregister(hclk);
+ }
  
- 	if (!rds_ibdev->mr_8k_pool || !rds_ibdev->mr_1m_pool) {
- 		ret = -ENODEV;
+ static const struct pci_device_id dev_id_table[] = {
 -- 
 2.53.0
 
