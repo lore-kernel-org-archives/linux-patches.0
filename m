@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CBB3D8918;
-	Wed,  8 Apr 2026 18:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B2B34AB06;
+	Wed,  8 Apr 2026 18:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674464; cv=none; b=EaKNAox8LeNHe9C9a+hvJnyA5f7pAk6WeJHE4ZwDfxMC4//jtkfNNcJX7PLrUj2/1rXY37yP2QVFmVuPbfmVFHDvD76iHQyMWHZ76/C0lzjsI25Z5WGFYeciipwJc0UuetOAtR9txvgoAWoeUL/h7BRa8puJhbT1hC2ERYde5is=
+	t=1775674466; cv=none; b=HJkjosJYYY5fLGN6n35mTtZimHcn8krzsZolEw3ZaYD9M5pPOiyodPatJ7FUcCwh2C4xiOKMs1coh0uOvWhjDxm2NphC21Z0QR57PD1qm8ffFFUA4hpqkaJaxZO83g93E+s3Rk6b7H3ahAB1FY3Mc40VYS6YLvK/W1U9h3dMhno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674464; c=relaxed/simple;
-	bh=bhc3jnLvxp7UJA/p6OTGx3dI3VW3ZS8MMEjipwUgRvc=;
+	s=arc-20240116; t=1775674466; c=relaxed/simple;
+	bh=DasIIP8qYNyVhKmu4svHjd/qS0dJych17gkdGFQvsCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pl50X6bgAbHfCs+7iZKaJIO3np5kv5x+k6/H0tDL21dC4atyawkOd+WUNYtckUF2FHIJyZjc6qBK/bpJY7dNT4DyPenmJJBElcQeJ7V7wralkR0I4U0O5q1/Ph/3W9qEZ51ZFibjMA+4KVSyi5JXalnIhIeWIKeLAvW0eNNoiIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoS2e9SL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oF0lddCXy1jTqSu7194p4kIa/OwvW+h+dRFTzUwoDXu5nMztYmn/BqsyamRpZvPkO+77I6J4k/2/p+R9+ghQW0GlaanQMHg6lLBwh84f7cGymRoNYTUm0dHCOh2KxYP2DLqqmgrn01vgcKUxC/PvE0RB2UjssUgQF8yW8vXx79I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHMB+9f1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoS2e9SL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C3EC19421;
-	Wed,  8 Apr 2026 18:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHMB+9f1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BA2C19421;
+	Wed,  8 Apr 2026 18:54:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674464;
-	bh=bhc3jnLvxp7UJA/p6OTGx3dI3VW3ZS8MMEjipwUgRvc=;
+	s=korg; t=1775674466;
+	bh=DasIIP8qYNyVhKmu4svHjd/qS0dJych17gkdGFQvsCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FoS2e9SLoWL1+pnIXVbYstHOe1gpWVSLG3cX2V7aSUgRpnfjWewHJAPAmW16VLr96
-	 im0uQfcaYrN6F1dMoHYYoLKbGRtNgtOcKkxWEDbBPsJxHqIPBV3OQE6nfeKf15JwIU
-	 KWqHJP1nEYIREJjnwA1iDVPugbpZnYWq0UBB9JdM=
+	b=bHMB+9f1X7UKegdwGRTsyUxJb+ar4EPtxnkZJH6kZxxTCUjKOpliojsYJL3sg4l6H
+	 GJokdz7WNcc0hf7h/xMrc8T39fI4feyU+XFI1QtcwsPbCHAlHpBQ4Gc8t3lx+zwxlG
+	 gdneg+UPTK3x2qUmGMd5oQS4xK7b9bG6KcFq9/Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Braha <julianbraha@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+1543a7d954d9c6d00407@syzkaller.appspotmail.com,
+	Guoyu Su <yss2813483011xxl@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 075/311] ASoC: Intel: boards: fix unmet dependency on PINCTRL
-Date: Wed,  8 Apr 2026 20:01:15 +0200
-Message-ID: <20260408175942.215837903@linuxfoundation.org>
+Subject: [PATCH 6.19 066/311] net: use skb_header_pointer() for TCPv4 GSO frag_off check
+Date: Wed,  8 Apr 2026 20:01:06 +0200
+Message-ID: <20260408175941.880037711@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,55 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Braha <julianbraha@gmail.com>
+From: Guoyu Su <yss2813483011xxl@gmail.com>
 
-[ Upstream commit e920c36f2073d533bdf19ba6ab690432c8173b63 ]
+[ Upstream commit ddc748a391dd8642ba6b2e4fe22e7f2ddf84b7f0 ]
 
-This reverts commit c073f0757663 ("ASoC: Intel: sof_sdw: select PINCTRL_CS42L43 and SPI_CS42L43")
+Syzbot reported a KMSAN uninit-value warning in gso_features_check()
+called from netif_skb_features() [1].
 
-Currently, SND_SOC_INTEL_SOUNDWIRE_SOF_MACH selects PINCTRL_CS42L43
-without also selecting or depending on PINCTRL, despite PINCTRL_CS42L43
-depending on PINCTRL.
+gso_features_check() reads iph->frag_off to decide whether to clear
+mangleid_features. Accessing the IPv4 header via ip_hdr()/inner_ip_hdr()
+can rely on skb header offsets that are not always safe for direct
+dereference on packets injected from PF_PACKET paths.
 
-See the following Kbuild warning:
+Use skb_header_pointer() for the TCPv4 frag_off check so the header read
+is robust whether data is already linear or needs copying.
 
-WARNING: unmet direct dependencies detected for PINCTRL_CS42L43
-  Depends on [n]: PINCTRL [=n] && MFD_CS42L43 [=m]
-  Selected by [m]:
-  - SND_SOC_INTEL_SOUNDWIRE_SOF_MACH [=m] && SOUND [=y] && SND [=m] && SND_SOC [=m] && SND_SOC_INTEL_MACH [=y] && (SND_SOC_SOF_INTEL_COMMON [=m] || !SND_SOC_SOF_INTEL_COMMON [=m]) && SND_SOC_SOF_INTEL_SOUNDWIRE [=m] && I2C [=y] && SPI_MASTER [=y] && ACPI [=y] && (MFD_INTEL_LPSS [=n] || COMPILE_TEST [=y]) && (SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES [=n] || COMPILE_TEST [=y]) && SOUNDWIRE [=m]
+[1] https://syzkaller.appspot.com/bug?extid=1543a7d954d9c6d00407
 
-In response to v1 of this patch [1], Arnd pointed out that there is
-no compile-time dependency sof_sdw and the PINCTRL_CS42L43 driver.
-After testing, I can confirm that the kernel compiled with
-SND_SOC_INTEL_SOUNDWIRE_SOF_MACH enabled and PINCTRL_CS42L43 disabled.
-
-This unmet dependency was detected by kconfirm, a static analysis
-tool for Kconfig.
-
-Link: https://lore.kernel.org/all/b8aecc71-1fed-4f52-9f6c-263fbe56d493@app.fastmail.com/ [1]
-Fixes: c073f0757663 ("ASoC: Intel: sof_sdw: select PINCTRL_CS42L43 and SPI_CS42L43")
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260325001522.1727678-1-julianbraha@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/netdev/willemdebruijn.kernel.1a9f35039caab@gmail.com/
+Fixes: cbc53e08a793 ("GSO: Add GSO type for fixed IPv4 ID")
+Reported-by: syzbot+1543a7d954d9c6d00407@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1543a7d954d9c6d00407
+Tested-by: syzbot+1543a7d954d9c6d00407@syzkaller.appspotmail.com
+Signed-off-by: Guoyu Su <yss2813483011xxl@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260327153507.39742-1-yss2813483011xxl@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/Kconfig | 2 --
- 1 file changed, 2 deletions(-)
+ net/core/dev.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
-index c23fdb6aad4ca..1031d6497f55e 100644
---- a/sound/soc/intel/boards/Kconfig
-+++ b/sound/soc/intel/boards/Kconfig
-@@ -525,8 +525,6 @@ config SND_SOC_INTEL_SOUNDWIRE_SOF_MACH
- 	select SND_SOC_CS42L43_SDW
- 	select MFD_CS42L43
- 	select MFD_CS42L43_SDW
--	select PINCTRL_CS42L43
--	select SPI_CS42L43
- 	select SND_SOC_CS35L56_SPI
- 	select SND_SOC_CS35L56_SDW
- 	select SND_SOC_DMIC
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 8439bac371b7d..384250c3a519c 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3815,10 +3815,15 @@ static netdev_features_t gso_features_check(const struct sk_buff *skb,
+ 	 * segmentation-offloads.rst).
+ 	 */
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV4) {
+-		struct iphdr *iph = skb->encapsulation ?
+-				    inner_ip_hdr(skb) : ip_hdr(skb);
++		const struct iphdr *iph;
++		struct iphdr _iph;
++		int nhoff = skb->encapsulation ?
++			    skb_inner_network_offset(skb) :
++			    skb_network_offset(skb);
+ 
+-		if (!(iph->frag_off & htons(IP_DF)))
++		iph = skb_header_pointer(skb, nhoff, sizeof(_iph), &_iph);
++
++		if (!iph || !(iph->frag_off & htons(IP_DF)))
+ 			features &= ~dev->mangleid_features;
+ 	}
+ 
 -- 
 2.53.0
 
