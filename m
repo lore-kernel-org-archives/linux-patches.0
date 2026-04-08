@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CD74317D;
-	Wed,  8 Apr 2026 18:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD33534AB06;
+	Wed,  8 Apr 2026 18:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674530; cv=none; b=KVeW4MGgGSntYRdQBUE4X2eyFjwDmSukq6Dpc9CFsABilAJtD6inaYAlapqqWcE1pKAOqcYWILobq/9+sDjoEABuRUer0UNvXCUm4LQDS+22d/dYZkt1EX6SoiWf2BKt49LfmaRqBx3hiQRXBMcMYVnRhNrg7rXISLwYeZpN0+k=
+	t=1775674533; cv=none; b=OapVcWOkmOBQrufM2engfsMXOhR+vnqf5NxUbJbC/Ss3Pj+SMdajLBcy64+x6XYyeQN4sfwRoLvQoyeCzFqkxZ3kgPuB1YWx8zNIzfSjtR/9lQ8GM5/Pb1tDIq7PPiaXpV3qXY0jnl2xgbNt2i43zXdr1X7+wqup7o9h/Whu40k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674530; c=relaxed/simple;
-	bh=nbKayHBrN+z+LS+zVq4dooOGSVJRbwGfb09MPz13IKo=;
+	s=arc-20240116; t=1775674533; c=relaxed/simple;
+	bh=LnJTqpQUY/1FGgSyUzBFDR6BXEO/ex1stkgHmQmS+c4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXlVmn0ZlLw7AqKb8igOw6no/eEnYxWwxxqFI1owscYcxPCAm4v4V+9rNneKWhSrytsVI10IkQx/9Ij9a3j5dkuZsUv02q0y8iGf7hpsmTgiQOgkAjBitW/cmvwBE+OJPoVfr5b0AjUw65iGibHQrViF2WkONqX+IuV8u4zBTsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOKtxSFS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mRzvx1IGkdtFvBkKidnZ0qBT9vuHb5mYZQRqkvK9RliLu+9DU5ezEpN63DOE42gFsD0dw6P6oC2UjXWz2W8hc8WQLWhfpnzej/9/DlbZvfWGCUz6Pmbova7pAqPzzd5ctCKFaYBkK203vE7X/SwvLb3lyLZanK/Px7GiMDhtCqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tR0pzit9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOKtxSFS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686A8C19421;
-	Wed,  8 Apr 2026 18:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tR0pzit9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03EE0C19421;
+	Wed,  8 Apr 2026 18:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674530;
-	bh=nbKayHBrN+z+LS+zVq4dooOGSVJRbwGfb09MPz13IKo=;
+	s=korg; t=1775674533;
+	bh=LnJTqpQUY/1FGgSyUzBFDR6BXEO/ex1stkgHmQmS+c4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jOKtxSFS84pUd8qwciJK6Mz6KMH+geisK4m18TwjPqMgqmqbjTSi/PlTqFvwLT5fd
-	 ITkwV7iumEoyv5SE4lwZp2QplRk/sDqokpblp9BLjIikSVB9g+mrKWp6mREb3CvlQm
-	 veDRqtp/sFamsHaOiDNp73YeMOIgHWGeMh9mEVS0=
+	b=tR0pzit9+BxBfxyqJeQeyhnaHPnevBxDUkrmvKJAkH+fkqo9FK8wgxTJQEMFWAU7/
+	 8I51lyGqsU4W7hdYu/pGSXA+IL/prBzbIDIqPcRBXbgab8++ay7g3MtakuJf06tBtm
+	 /R5PDUJU8DgZZnKg4iFcAbZl2xGPzTtFCoywIIh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 132/311] gpio: shared: handle pins shared by child nodes of devices
-Date: Wed,  8 Apr 2026 20:02:12 +0200
-Message-ID: <20260408175944.345279841@linuxfoundation.org>
+Subject: [PATCH 6.19 133/311] gpio: qixis-fpga: Fix error handling for devm_regmap_init_mmio()
+Date: Wed,  8 Apr 2026 20:02:13 +0200
+Message-ID: <20260408175944.383560416@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,98 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit ec42a3a90ae9ae64b16d01a2e5d32ec0865ca8cf ]
+[ Upstream commit 8de4e0f44c638c66cdc5eeb4d5ab9acd61c31e4f ]
 
-Shared GPIOs may be assigned to child nodes of device nodes which don't
-themselves bind to any struct device. We need to pass the firmware node
-that is the actual consumer to gpiolib-shared and compare against it
-instead of unconditionally using the fwnode of the consumer device.
+devm_regmap_init_mmio() returns an ERR_PTR() on failure, not NULL.
+The original code checked for NULL which would never trigger on error,
+potentially leading to an invalid pointer dereference.
+Use IS_ERR() and PTR_ERR() to properly handle the error case.
 
-Fixes: a060b8c511ab ("gpiolib: implement low-level, shared GPIO support")
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Closes: https://lore.kernel.org/all/921ba8ce-b18e-4a99-966d-c763d22081e2@nvidia.com/
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260318-gpio-shared-xlate-v2-2-0ce34c707e81@oss.qualcomm.com
+Fixes: e88500247dc3 ("gpio: add QIXIS FPGA GPIO controller")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260320-qixis-v1-1-a8efc22e8945@gmail.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-shared.c | 6 +++---
- drivers/gpio/gpiolib-shared.h | 7 +++++--
- drivers/gpio/gpiolib.c        | 4 ++--
- 3 files changed, 10 insertions(+), 7 deletions(-)
+ drivers/gpio/gpio-qixis-fpga.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
-index 6316ae5a1c310..9c31736d29b77 100644
---- a/drivers/gpio/gpiolib-shared.c
-+++ b/drivers/gpio/gpiolib-shared.c
-@@ -443,8 +443,8 @@ static bool gpio_shared_dev_is_reset_gpio(struct device *consumer,
- }
- #endif /* CONFIG_RESET_GPIO */
+diff --git a/drivers/gpio/gpio-qixis-fpga.c b/drivers/gpio/gpio-qixis-fpga.c
+index 6e67f43ac0bdd..3ced47db1521c 100644
+--- a/drivers/gpio/gpio-qixis-fpga.c
++++ b/drivers/gpio/gpio-qixis-fpga.c
+@@ -60,8 +60,8 @@ static int qixis_cpld_gpio_probe(struct platform_device *pdev)
+ 			return PTR_ERR(reg);
  
--int gpio_shared_add_proxy_lookup(struct device *consumer, const char *con_id,
--				 unsigned long lflags)
-+int gpio_shared_add_proxy_lookup(struct device *consumer, struct fwnode_handle *fwnode,
-+				 const char *con_id, unsigned long lflags)
- {
- 	const char *dev_id = dev_name(consumer);
- 	struct gpiod_lookup_table *lookup;
-@@ -463,7 +463,7 @@ int gpio_shared_add_proxy_lookup(struct device *consumer, const char *con_id,
- 			if (!ref->fwnode && strstarts(dev_name(consumer), "reset.gpio.")) {
- 				if (!gpio_shared_dev_is_reset_gpio(consumer, entry, ref))
- 					continue;
--			} else if (!device_match_fwnode(consumer, ref->fwnode)) {
-+			} else if (fwnode != ref->fwnode) {
- 				continue;
- 			}
+ 		regmap = devm_regmap_init_mmio(&pdev->dev, reg, &regmap_config_8r_8v);
+-		if (!regmap)
+-			return -ENODEV;
++		if (IS_ERR(regmap))
++			return PTR_ERR(regmap);
  
-diff --git a/drivers/gpio/gpiolib-shared.h b/drivers/gpio/gpiolib-shared.h
-index e11e260e1f590..15e72a8dcdb13 100644
---- a/drivers/gpio/gpiolib-shared.h
-+++ b/drivers/gpio/gpiolib-shared.h
-@@ -11,13 +11,15 @@
- struct gpio_device;
- struct gpio_desc;
- struct device;
-+struct fwnode_handle;
- 
- #if IS_ENABLED(CONFIG_GPIO_SHARED)
- 
- int gpiochip_setup_shared(struct gpio_chip *gc);
- void gpio_device_teardown_shared(struct gpio_device *gdev);
--int gpio_shared_add_proxy_lookup(struct device *consumer, const char *con_id,
--				 unsigned long lflags);
-+int gpio_shared_add_proxy_lookup(struct device *consumer,
-+				 struct fwnode_handle *fwnode,
-+				 const char *con_id, unsigned long lflags);
- 
- #else
- 
-@@ -29,6 +31,7 @@ static inline int gpiochip_setup_shared(struct gpio_chip *gc)
- static inline void gpio_device_teardown_shared(struct gpio_device *gdev) { }
- 
- static inline int gpio_shared_add_proxy_lookup(struct device *consumer,
-+					       struct fwnode_handle *fwnode,
- 					       const char *con_id,
- 					       unsigned long lflags)
- {
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 0285142893642..fc7c4bf2de2be 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -4720,8 +4720,8 @@ struct gpio_desc *gpiod_find_and_request(struct device *consumer,
- 			 * lookup table for the proxy device as previously
- 			 * we only knew the consumer's fwnode.
- 			 */
--			ret = gpio_shared_add_proxy_lookup(consumer, con_id,
--							   lookupflags);
-+			ret = gpio_shared_add_proxy_lookup(consumer, fwnode,
-+							   con_id, lookupflags);
- 			if (ret)
- 				return ERR_PTR(ret);
- 
+ 		/* In this case, the offset of our register is 0 inside the
+ 		 * regmap area that we just created.
 -- 
 2.53.0
 
