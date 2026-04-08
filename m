@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727563ACA41;
-	Wed,  8 Apr 2026 18:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276673B0ADA;
+	Wed,  8 Apr 2026 18:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672899; cv=none; b=iV2A+f6UBGpQrCtphhJ5EBuWIyTioDVieShplRqaSozwxLXhDdGo4RIB4l0CSKw5nxy0jJ/R/QjJZY4nZhhj+w45KNgg4pMaLx71LinWYLH5ZeJW0sZ5u6TcjadD5X4j9hKIlSWAtHU3+G2qcWChf4NpsECMu0b4U8eUPNWHcuA=
+	t=1775672902; cv=none; b=on54or6lwLKq2yINU70KbGLNNMRfBsLEAVuVu0mHGnhpKEG0R/IIv3yKKIF9hooVYoVNZlH7cLAE/2dgHXU9Kc0I55gWx2GVjp61t7LgFpSTm+OWt01JzTaLPaifDaniYBS+q1FMFQ+JOgZ0Za31TPsyrODrmntayoHhju5Unr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672899; c=relaxed/simple;
-	bh=oqicrxUnPqt2eeij4qhSKN6cBK3wJKaE/FQJS5tfJBE=;
+	s=arc-20240116; t=1775672902; c=relaxed/simple;
+	bh=kEp2KuphSHk2RFYvTF+bhDqCMyo2m9/jKtweOBKadDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBTdQpwYo+xWdCeSaq6sHDsFf7H4rwXK5GwmayBvCiJTlBUm+cF8rlJarJuX1CcGW8qrdfZaV5Fcy+14kIroaqaRw7f+3xzNfSIOykIelMiuycRoOzcJFt39RJv5w9XtJlvQTvhM0tkbZNnBZiMiA/Z5xWhaHzn1V6ZvHC9jqmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCaaURWd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UGU4e75VNAj4ACneNEstNpglUDlP6ueS5VzSZVBHdPp6w/LZHTZzaXD0FegDhLQ6/qCGCJPRIyyn3WbjGBtYImFzLLFcaCPvDCljoMQ3BSHRMP/o6MSPG6vQXbJf3uGxy5z+eW1Gb9+fIN7b3gEBjpx1q5rQjsSqERzvmF7V3QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWRSSpDN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCaaURWd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEAAC19421;
-	Wed,  8 Apr 2026 18:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWRSSpDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFBAC19421;
+	Wed,  8 Apr 2026 18:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672899;
-	bh=oqicrxUnPqt2eeij4qhSKN6cBK3wJKaE/FQJS5tfJBE=;
+	s=korg; t=1775672901;
+	bh=kEp2KuphSHk2RFYvTF+bhDqCMyo2m9/jKtweOBKadDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QCaaURWdoOpetby+TV6pKj7XNJv/y6eYI7uz9HQ9upCaPEg0IOfUmLLLV5lBBX/1p
-	 zUgcpmLSdds/sW5k2LzthB+fFJVPY3XEv1VU8kgUWP72+75RXId+VWoB2/4jv9HCJg
-	 ivTvM/moWj1a7LbdbOtmApSMa8Ani/VKgzLMDczo=
+	b=dWRSSpDNyIlo5Bf8FuO8MVzZpP97G5zvJUDWPu5RNag6EcAWlxIMxC4Q4eVp+h0+W
+	 jPyFPly73m5GVYvXslHyhJSYpJFVrtyS8dVOKDl2T8BSt1ITno0CZRXC3LwezguhTP
+	 1OKi5ipzNi+loiDMu+8YoaNZedjipzXM1fuslA9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	Reshma Immaculate Rajkumar <reshma.rajkumar@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 006/277] btrfs: dont take device_list_mutex when querying zone info
-Date: Wed,  8 Apr 2026 19:59:51 +0200
-Message-ID: <20260408175934.081170061@linuxfoundation.org>
+Subject: [PATCH 6.18 024/277] wifi: ath11k: Pass the correct value of each TID during a stop AMPDU session
+Date: Wed,  8 Apr 2026 20:00:09 +0200
+Message-ID: <20260408175934.755876937@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -53,194 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Reshma Immaculate Rajkumar <reshma.rajkumar@oss.qualcomm.com>
 
-[ Upstream commit 77603ab10429fe713a03345553ca8dbbfb1d91c6 ]
+[ Upstream commit e225b36f83d7926c1f2035923bb0359d851fdb73 ]
 
-Shin'ichiro reported sporadic hangs when running generic/013 in our CI
-system. When enabling lockdep, there is a lockdep splat when calling
-btrfs_get_dev_zone_info_all_devices() in the mount path that can be
-triggered by i.e. generic/013:
+During ongoing traffic, a request to stop an AMPDU session
+for one TID could incorrectly affect other active sessions.
+This can happen because an incorrect TID reference would be
+passed when updating the BA session state, causing the wrong
+session to be stopped. As a result, the affected session would
+be reduced to a minimal BA size, leading to a noticeable
+throughput degradation.
 
-  ======================================================
-  WARNING: possible circular locking dependency detected
-  7.0.0-rc1+ #355 Not tainted
-  ------------------------------------------------------
-  mount/1043 is trying to acquire lock:
-  ffff8881020b5470 (&vblk->vdev_mutex){+.+.}-{4:4}, at: virtblk_report_zones+0xda/0x430
+Fix this issue by passing the correct argument from
+ath11k_dp_rx_ampdu_stop() to ath11k_peer_rx_tid_reo_update()
+during a stop AMPDU session. Instead of passing peer->tx_tid, which
+is the base address of the array, corresponding to TID 0; pass
+the value of &peer->rx_tid[params->tid], where the different TID numbers
+are accounted for.
 
-  but task is already holding lock:
-  ffff888102a738e0 (&fs_devs->device_list_mutex){+.+.}-{4:4}, at: btrfs_get_dev_zone_info_all_devices+0x45/0x90
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-02146-QCAHKSWPL_SILICONZ-1
 
-  which lock already depends on the new lock.
-
-  the existing dependency chain (in reverse order) is:
-
-  -> #4 (&fs_devs->device_list_mutex){+.+.}-{4:4}:
-	 __mutex_lock+0xa3/0x1360
-	 btrfs_create_pending_block_groups+0x1f4/0x9d0
-	 __btrfs_end_transaction+0x3e/0x2e0
-	 btrfs_zoned_reserve_data_reloc_bg+0x2f8/0x390
-	 open_ctree+0x1934/0x23db
-	 btrfs_get_tree.cold+0x105/0x26c
-	 vfs_get_tree+0x28/0xb0
-	 __do_sys_fsconfig+0x324/0x680
-	 do_syscall_64+0x92/0x4f0
-	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #3 (btrfs_trans_num_extwriters){++++}-{0:0}:
-	 join_transaction+0xc2/0x5c0
-	 start_transaction+0x17c/0xbc0
-	 btrfs_zoned_reserve_data_reloc_bg+0x2b4/0x390
-	 open_ctree+0x1934/0x23db
-	 btrfs_get_tree.cold+0x105/0x26c
-	 vfs_get_tree+0x28/0xb0
-	 __do_sys_fsconfig+0x324/0x680
-	 do_syscall_64+0x92/0x4f0
-	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #2 (btrfs_trans_num_writers){++++}-{0:0}:
-	 lock_release+0x163/0x4b0
-	 __btrfs_end_transaction+0x1c7/0x2e0
-	 btrfs_dirty_inode+0x6f/0xd0
-	 touch_atime+0xe5/0x2c0
-	 btrfs_file_mmap_prepare+0x65/0x90
-	 __mmap_region+0x4b9/0xf00
-	 mmap_region+0xf7/0x120
-	 do_mmap+0x43d/0x610
-	 vm_mmap_pgoff+0xd6/0x190
-	 ksys_mmap_pgoff+0x7e/0xc0
-	 do_syscall_64+0x92/0x4f0
-	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #1 (&mm->mmap_lock){++++}-{4:4}:
-	 __might_fault+0x68/0xa0
-	 _copy_to_user+0x22/0x70
-	 blkdev_copy_zone_to_user+0x22/0x40
-	 virtblk_report_zones+0x282/0x430
-	 blkdev_report_zones_ioctl+0xfd/0x130
-	 blkdev_ioctl+0x20f/0x2c0
-	 __x64_sys_ioctl+0x86/0xd0
-	 do_syscall_64+0x92/0x4f0
-	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #0 (&vblk->vdev_mutex){+.+.}-{4:4}:
-	 __lock_acquire+0x1522/0x2680
-	 lock_acquire+0xd5/0x2f0
-	 __mutex_lock+0xa3/0x1360
-	 virtblk_report_zones+0xda/0x430
-	 blkdev_report_zones_cached+0x162/0x190
-	 btrfs_get_dev_zones+0xdc/0x2e0
-	 btrfs_get_dev_zone_info+0x219/0xe80
-	 btrfs_get_dev_zone_info_all_devices+0x62/0x90
-	 open_ctree+0x1200/0x23db
-	 btrfs_get_tree.cold+0x105/0x26c
-	 vfs_get_tree+0x28/0xb0
-	 __do_sys_fsconfig+0x324/0x680
-	 do_syscall_64+0x92/0x4f0
-	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  other info that might help us debug this:
-
-  Chain exists of:
-    &vblk->vdev_mutex --> btrfs_trans_num_extwriters --> &fs_devs->device_list_mutex
-
-   Possible unsafe locking scenario:
-
-	 CPU0                    CPU1
-	 ----                    ----
-    lock(&fs_devs->device_list_mutex);
-				 lock(btrfs_trans_num_extwriters);
-				 lock(&fs_devs->device_list_mutex);
-    lock(&vblk->vdev_mutex);
-
-   *** DEADLOCK ***
-
-  3 locks held by mount/1043:
-   #0: ffff88811063e878 (&fc->uapi_mutex){+.+.}-{4:4}, at: __do_sys_fsconfig+0x2ae/0x680
-   #1: ffff88810cb9f0e8 (&type->s_umount_key#31/1){+.+.}-{4:4}, at: alloc_super+0xc0/0x3e0
-   #2: ffff888102a738e0 (&fs_devs->device_list_mutex){+.+.}-{4:4}, at: btrfs_get_dev_zone_info_all_devices+0x45/0x90
-
-  stack backtrace:
-  CPU: 2 UID: 0 PID: 1043 Comm: mount Not tainted 7.0.0-rc1+ #355 PREEMPT(full)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-9.fc43 06/10/2025
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x5b/0x80
-   print_circular_bug.cold+0x18d/0x1d8
-   check_noncircular+0x10d/0x130
-   __lock_acquire+0x1522/0x2680
-   ? vmap_small_pages_range_noflush+0x3ef/0x820
-   lock_acquire+0xd5/0x2f0
-   ? virtblk_report_zones+0xda/0x430
-   ? lock_is_held_type+0xcd/0x130
-   __mutex_lock+0xa3/0x1360
-   ? virtblk_report_zones+0xda/0x430
-   ? virtblk_report_zones+0xda/0x430
-   ? __pfx_copy_zone_info_cb+0x10/0x10
-   ? virtblk_report_zones+0xda/0x430
-   virtblk_report_zones+0xda/0x430
-   ? __pfx_copy_zone_info_cb+0x10/0x10
-   blkdev_report_zones_cached+0x162/0x190
-   ? __pfx_copy_zone_info_cb+0x10/0x10
-   btrfs_get_dev_zones+0xdc/0x2e0
-   btrfs_get_dev_zone_info+0x219/0xe80
-   btrfs_get_dev_zone_info_all_devices+0x62/0x90
-   open_ctree+0x1200/0x23db
-   btrfs_get_tree.cold+0x105/0x26c
-   ? rcu_is_watching+0x18/0x50
-   vfs_get_tree+0x28/0xb0
-   __do_sys_fsconfig+0x324/0x680
-   do_syscall_64+0x92/0x4f0
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  RIP: 0033:0x7f615e27a40e
-  RSP: 002b:00007fff11b18fb8 EFLAGS: 00000246 ORIG_RAX: 00000000000001af
-  RAX: ffffffffffffffda RBX: 000055572e92ab10 RCX: 00007f615e27a40e
-  RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
-  RBP: 00007fff11b19100 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-  R13: 000055572e92bc40 R14: 00007f615e3faa60 R15: 000055572e92bd08
-   </TASK>
-
-Don't hold the device_list_mutex while calling into
-btrfs_get_dev_zone_info() in btrfs_get_dev_zone_info_all_devices() to
-mitigate the issue. This is safe, as no other thread can touch the device
-list at the moment of execution.
-
-Reported-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: d5c65159f2895 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Reshma Immaculate Rajkumar <reshma.rajkumar@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260319065608.2408179-1-reshma.rajkumar@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index e14a4234954ba..16818dbf48a46 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -335,7 +335,10 @@ int btrfs_get_dev_zone_info_all_devices(struct btrfs_fs_info *fs_info)
- 	if (!btrfs_fs_incompat(fs_info, ZONED))
- 		return 0;
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index b9e976ddcbbf6..44eea682c297b 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
--	mutex_lock(&fs_devices->device_list_mutex);
-+	/*
-+	 * No need to take the device_list mutex here, we're still in the mount
-+	 * path and devices cannot be added to or removed from the list yet.
-+	 */
- 	list_for_each_entry(device, &fs_devices->devices, dev_list) {
- 		/* We can skip reading of zone info for missing devices */
- 		if (!device->bdev)
-@@ -345,7 +348,6 @@ int btrfs_get_dev_zone_info_all_devices(struct btrfs_fs_info *fs_info)
- 		if (ret)
- 			break;
+ #include <linux/ieee80211.h>
+@@ -1110,9 +1110,8 @@ int ath11k_dp_rx_ampdu_stop(struct ath11k *ar,
+ 	struct ath11k_base *ab = ar->ab;
+ 	struct ath11k_peer *peer;
+ 	struct ath11k_sta *arsta = ath11k_sta_to_arsta(params->sta);
++	struct dp_rx_tid *rx_tid;
+ 	int vdev_id = arsta->arvif->vdev_id;
+-	dma_addr_t paddr;
+-	bool active;
+ 	int ret;
+ 
+ 	spin_lock_bh(&ab->base_lock);
+@@ -1124,15 +1123,14 @@ int ath11k_dp_rx_ampdu_stop(struct ath11k *ar,
+ 		return -ENOENT;
  	}
--	mutex_unlock(&fs_devices->device_list_mutex);
  
- 	return ret;
- }
+-	paddr = peer->rx_tid[params->tid].paddr;
+-	active = peer->rx_tid[params->tid].active;
++	rx_tid = &peer->rx_tid[params->tid];
+ 
+-	if (!active) {
++	if (!rx_tid->active) {
+ 		spin_unlock_bh(&ab->base_lock);
+ 		return 0;
+ 	}
+ 
+-	ret = ath11k_peer_rx_tid_reo_update(ar, peer, peer->rx_tid, 1, 0, false);
++	ret = ath11k_peer_rx_tid_reo_update(ar, peer, rx_tid, 1, 0, false);
+ 	spin_unlock_bh(&ab->base_lock);
+ 	if (ret) {
+ 		ath11k_warn(ab, "failed to update reo for rx tid %d: %d\n",
+@@ -1141,7 +1139,8 @@ int ath11k_dp_rx_ampdu_stop(struct ath11k *ar,
+ 	}
+ 
+ 	ret = ath11k_wmi_peer_rx_reorder_queue_setup(ar, vdev_id,
+-						     params->sta->addr, paddr,
++						     params->sta->addr,
++						     rx_tid->paddr,
+ 						     params->tid, 1, 1);
+ 	if (ret)
+ 		ath11k_warn(ab, "failed to send wmi to delete rx tid %d\n",
 -- 
 2.53.0
 
