@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E9E3D523F;
-	Wed,  8 Apr 2026 19:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99B232692B;
+	Wed,  8 Apr 2026 19:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674879; cv=none; b=E34WCFXUnvI8SonKdeuaGrURd6ObkBpTtXLpQX/t84nmliNoOZvSoP2oUT7hyofimlaIBmATRpGnv8gHK9qqdkUHwnqysiW2S3CAhwwVWkLiX/D0+hFWuiS49hYSyon4JEn7zhOc899EdbX8Ip7Io0dcPF3uyyj5ywd9QER4GIs=
+	t=1775674881; cv=none; b=nW5z2xEKI3GtTrER7YlIyguMEQTGKy4GJ/wF5VOS5zG2lWkfXOl+1hE0/0bpw9CRFTYeWNCZKj/ikOFrusnjyyq0I6DDQV6DIokNT51Z93oI3xglvrCUgFArsEgDO1dXW/RAtOOpeaf4/O6jkqxoZwLNw5ysUGN9fZ72vbr7rrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674879; c=relaxed/simple;
-	bh=/oJ7yGeOn1gooRz9lTmUVNxWjDqIqdKGROiDH70Ds+4=;
+	s=arc-20240116; t=1775674881; c=relaxed/simple;
+	bh=CxH7cOICM5Kcq+50rqL3IMOP/A7fIxBPWU8z33QWo2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WktTK81zfyJ7fKVfpX9JRGKVIXhlx8BgTU/oZPkjsZkgABSaseSfniQ/TFcri5SvtSSoprntEyL5grw3ChI6TI3J4MNULRr54WfV4sXVWeYiPWQYDIV1Rq3XS+7/ssVB3tKRsWl0Nk28ggu2x0r1MvCyt/IIc96AGNKWkTPSeRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vti8XD+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RGyFjfStLOYZYjOdZ1tmzf2N+FEw3+B43qdvulJ77E/O7Px+488QOclGnJ9OWwRUnJl8CncI52NiZoZ/zM6FMWFg3yYvL5YlxwJeIqCGjnqwiUKoTc/bbZAwBOIEeKQRGAuVKs+5IbyP1Jn3+SNMgbwKXW/Olc98ZyFm6i1xzz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2LITPdJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vti8XD+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11D8C19425;
-	Wed,  8 Apr 2026 19:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2LITPdJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB30C19421;
+	Wed,  8 Apr 2026 19:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674879;
-	bh=/oJ7yGeOn1gooRz9lTmUVNxWjDqIqdKGROiDH70Ds+4=;
+	s=korg; t=1775674881;
+	bh=CxH7cOICM5Kcq+50rqL3IMOP/A7fIxBPWU8z33QWo2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vti8XD+MQeF5DMSAWcHZMxTR5NRClA6xIYsGz1FduRyyTx5Du6SS5SDN8sHZJ2ZO5
-	 UaTcx0pCzGSFsn1ItK2K6QOFIoF7DrD/DDp61wyNn/HvOgUnqgRHcpehUwBIpcUozq
-	 kUV2j9n2fykBvoIS7l9OXchZ+xZj1+L2Un6YrWoo=
+	b=a2LITPdJ3t5etK9Pcy0AcKf/+ZqOLqxLIiVpn8dcKai7nKNlJ4PSWq3OxnWPbMnwY
+	 DsFgBBojT57wCjhj9xZK5uYFq4zhVZNWizKzMeWoUi8o9pWt7NyOHMdeI+tGyqahXp
+	 qd/ecDgcoruLWGyoDobJMjKtUv70tjOLWGT56Lf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <dstsmallbird@foxmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.19 268/311] netfilter: ipset: drop logically empty buckets in mtype_del
-Date: Wed,  8 Apr 2026 20:04:28 +0200
-Message-ID: <20260408175949.390037732@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	kernel test robot <lkp@intel.com>,
+	stable <stable@kernel.org>,
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.19 269/311] gpib: Fix fluke driver s390 compile issue
+Date: Wed,  8 Apr 2026 20:04:29 +0200
+Message-ID: <20260408175949.427297132@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -54,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifan Wu <yifanwucs@gmail.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-commit 9862ef9ab0a116c6dca98842aab7de13a252ae02 upstream.
+commit 579af7204d762587f9cce0d6236a710a771f1f6f upstream.
 
-mtype_del() counts empty slots below n->pos in k, but it only drops the
-bucket when both n->pos and k are zero. This misses buckets whose live
-entries have all been removed while n->pos still points past deleted slots.
+The following errors were reported for a s390 randconfig build
+of the fluke gpib driver:
 
-Treat a bucket as empty when all positions below n->pos are unused and
-release it directly instead of shrinking it further.
+>> drivers/gpib/eastwood/fluke_gpib.c:1002:23: error: call to undeclared function 'ioremap'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    1002 |         nec_priv->mmiobase = ioremap(e_priv->gpib_iomem_res->start,
+         |                              ^
+>> drivers/gpib/eastwood/fluke_gpib.c:1002:21: error: incompatible integer to pointer conversion assigning to 'void *' from 'int' [-Wint-conversion]
+    1002 |         nec_priv->mmiobase = ioremap(e_priv->gpib_iomem_res->start,
+         |                            ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    1003 |                                      resource_size(e_priv->gpib_iomem_res));
+         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/gpib/eastwood/fluke_gpib.c:1036:33: error: incompatible integer to pointer conversion assigning to 'void *' from 'int' [-Wint-conversion]
+    1036 |         e_priv->write_transfer_counter = ioremap(e_priv->write_transfer_counter_res->start,
+         |                                        ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    1037 |                                                  resource_size(e_priv->write_transfer_counter_res));
+         |                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 8af1c6fbd923 ("netfilter: ipset: Fix forceadd evaluation path")
-Cc: stable@vger.kernel.org
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <dstsmallbird@foxmail.com>
-Signed-off-by: Yifan Wu <yifanwucs@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Reviewed-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Add HAS_IOMEM dependency to Kconfig for fluke driver option
+
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202601221748.AFAqHieJ-lkp@intel.com/
+Fixes: baf8855c9160 ("staging: gpib: fix address space mixup")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://patch.msgid.link/20260202094755.4259-1-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_hash_gen.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpib/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -1099,7 +1099,7 @@ mtype_del(struct ip_set *set, void *valu
- 			if (!test_bit(i, n->used))
- 				k++;
- 		}
--		if (n->pos == 0 && k == 0) {
-+		if (k == n->pos) {
- 			t->hregion[r].ext_size -= ext_size(n->size, dsize);
- 			rcu_assign_pointer(hbucket(t, key), NULL);
- 			kfree_rcu(n, rcu);
+--- a/drivers/gpib/Kconfig
++++ b/drivers/gpib/Kconfig
+@@ -122,6 +122,7 @@ config GPIB_FLUKE
+ 	depends on OF
+        select GPIB_COMMON
+        select GPIB_NEC7210
++       depends on HAS_IOMEM
+        help
+          GPIB driver for Fluke based cda devices.
+ 
 
 
