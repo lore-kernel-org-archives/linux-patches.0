@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CC837F8C2;
-	Wed,  8 Apr 2026 18:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE75F37F8C2;
+	Wed,  8 Apr 2026 18:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671776; cv=none; b=DAy9G14NzhChRB6dRQQFVFHpg1tzomsPWtMwPQf+GX3TSQaR9FDjUe/FWXpv+iVvMUEs24IC4xn2KQ9k+DS+AParVL9/4xFsXqBV60quXcOCRSiw7iiPU8GTKpxkv84rHGHqPNHxuWrmeZdGnI94a1CSLSTwhBSJvSF1HVZJIc4=
+	t=1775671778; cv=none; b=Le95U5uuazEl+LdFrJ3JcztUeiyQ4Mk5bs0obZul0WhkeQvHXZPOeedVWqzfZWHlnDQZS/kRshMR5nH7abzS1+sNkCb4Byli9rVzOwWHL2/HDKaC5gKghB5LtffckbEBcdPRLMvacx6gI3IEpZh5CDKj7dFqMESnd2sk49yHXVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671776; c=relaxed/simple;
-	bh=A8z2x0Alu9IWmhS1PGm9rQfg9gBCzRdIn/YozEATbFg=;
+	s=arc-20240116; t=1775671778; c=relaxed/simple;
+	bh=xli/prbwVqbPgCWfKb6+rcAF+Jaa+bPO99jkxr7cwi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNMQ6pygCT4cmTtD/LnTHVgqqtP0nJvCWk8hmfv/aiTTsE0nRIXO87tNFH86cD63LRkFFgDfXK0GxmX6pL9T1nevrk1fQ0G5H9EXwmlhZkNbVlkogWINOe9mkuGXEEXMGWKFGT0gyHrlATeN1ppM8wuV1V0CoSTHPUckJgzdY8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gToFokmm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O+90TmJHjyUafkHNIp8y6yUl9xAsekb/CWNohYCthuliE+Z9dpr6Zv1OZhxnVydUVu3n+8YpCfGcI+Zo5V6JsB5nl3NbgaTeOwBX4Ol0miHFJwUl6wPaq+qZHg8L/9uFwuFJ/vVfoCxJuBsC3lqOgS6P/LbtRq8D415YIfWoPas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4iAc+w0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gToFokmm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D0FC19421;
-	Wed,  8 Apr 2026 18:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4iAc+w0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649ECC19421;
+	Wed,  8 Apr 2026 18:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671776;
-	bh=A8z2x0Alu9IWmhS1PGm9rQfg9gBCzRdIn/YozEATbFg=;
+	s=korg; t=1775671778;
+	bh=xli/prbwVqbPgCWfKb6+rcAF+Jaa+bPO99jkxr7cwi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gToFokmmP8Uw1TvsY0ElXp0WsdfI+nqVmrj+WIynNx8ZV0mtf5Js5G8MBtQ2e5biv
-	 4TUej0f0RycIpXdmNWFkgG4RIBjunnzJpiUmGX7vjiNUAZLiReDutef7XVmlKsrTd5
-	 j2il4DfRiGFRKx7aK57SteyiE1lQO/siyhHzKA8w=
+	b=M4iAc+w0dg7GMzYYcCkiPKXNaTqTKzV2cN1J23/nkekYga6iP+xArTC9mqKUtUNTo
+	 s67Z6zESTTvEkRKBr3rfpf8+pGT0OxFqvgbQbRjEaFGkgE88iq6ZJLUQWlET9vhhiw
+	 MdT1gu+uC1X0Wmae/DH6bYrOt6X3PzbZF5eLy7G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/312] regmap: Synchronize cache for the page selector
-Date: Wed,  8 Apr 2026 19:59:41 +0200
-Message-ID: <20260408175936.130905331@linuxfoundation.org>
+Subject: [PATCH 6.1 065/312] RDMA/rw: Fall back to direct SGE on MR pool exhaustion
+Date: Wed,  8 Apr 2026 19:59:42 +0200
+Message-ID: <20260408175936.167518176@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,110 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 09e70e4f119ff650d24c96161fd2f62ac7e424b0 ]
+[ Upstream commit 00da250c21b074ea9494c375d0117b69e5b1d0a4 ]
 
-If the selector register is represented in each page, its value
-according to the debugfs is stale because it gets synchronized
-only after the real page switch happens. Hence the regmap cache
-initialisation from the HW inherits outdated data in the selector
-register.
+When IOMMU passthrough mode is active, ib_dma_map_sgtable_attrs()
+produces no coalescing: each scatterlist page maps 1:1 to a DMA
+entry, so sgt.nents equals the raw page count. A 1 MB transfer
+yields 256 DMA entries. If that count exceeds the device's
+max_sgl_rd threshold (an optimization hint from mlx5 firmware),
+rdma_rw_io_needs_mr() steers the operation into the MR
+registration path. Each such operation consumes one or more MRs
+from a pool sized at max_rdma_ctxs -- roughly one MR per
+concurrent context. Under write-intensive workloads that issue
+many concurrent RDMA READs, the pool is rapidly exhausted,
+ib_mr_pool_get() returns NULL, and rdma_rw_init_one_mr() returns
+-EAGAIN. Upper layer protocols treat this as a fatal DMA mapping
+failure and tear down the connection.
 
-Synchronize cache for the page selector just in time.
+The max_sgl_rd check is a performance optimization, not a
+correctness requirement: the device can handle large SGE counts
+via direct posting, just less efficiently than with MR
+registration. When the MR pool cannot satisfy a request, falling
+back to the direct SGE (map_wrs) path avoids the connection
+reset while preserving the MR optimization for the common case
+where pool resources are available.
 
-Before (offset followed by hexdump, the first byte is selector):
+Add a fallback in rdma_rw_ctx_init() so that -EAGAIN from
+rdma_rw_init_mr_wrs() triggers direct SGE posting instead of
+propagating the error. iWARP devices, which mandate MR
+registration for RDMA READs, and force_mr debug mode continue
+to treat -EAGAIN as terminal.
 
-    // Real registers
-    18: 05 ff 00 00 ff 0f 00 00 f0 00 00 00
-    ...
-    // Virtual (per port)
-    40: 05 ff 00 00 e0 e0 00 00 00 00 00 1f
-    50: 00 ff 00 00 e0 e0 00 00 00 00 00 1f
-    60: 01 ff 00 00 ff ff 00 00 00 00 00 00
-    70: 02 ff 00 00 cf f3 00 00 00 00 00 0c
-    80: 03 ff 00 00 00 00 00 00 00 00 00 ff
-    90: 04 ff 00 00 ff 0f 00 00 f0 00 00 00
-
-After:
-
-    // Real registers
-    18: 05 ff 00 00 ff 0f 00 00 f0 00 00 00
-    ...
-    // Virtual (per port)
-    40: 00 ff 00 00 e0 e0 00 00 00 00 00 1f
-    50: 01 ff 00 00 e0 e0 00 00 00 00 00 1f
-    60: 02 ff 00 00 ff ff 00 00 00 00 00 00
-    70: 03 ff 00 00 cf f3 00 00 00 00 00 0c
-    80: 04 ff 00 00 00 00 00 00 00 00 00 ff
-    90: 05 ff 00 00 ff 0f 00 00 f0 00 00 00
-
-Fixes: 6863ca622759 ("regmap: Add support for register indirect addressing.")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260302184753.2693803-1-andriy.shevchenko@linux.intel.com
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 00bd1439f464 ("RDMA/rw: Support threshold for registration vs scattering to local pages")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260313194201.5818-2-cel@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap.c | 30 ++++++++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/rw.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index bc89790ff0ded..6d8ed7683a387 100644
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -1634,6 +1634,7 @@ static int _regmap_select_page(struct regmap *map, unsigned int *reg,
- 			       unsigned int val_num)
- {
- 	void *orig_work_buf;
-+	unsigned int selector_reg;
- 	unsigned int win_offset;
- 	unsigned int win_page;
- 	bool page_chg;
-@@ -1652,10 +1653,31 @@ static int _regmap_select_page(struct regmap *map, unsigned int *reg,
- 			return -EINVAL;
- 	}
- 
--	/* It is possible to have selector register inside data window.
--	   In that case, selector register is located on every page and
--	   it needs no page switching, when accessed alone. */
-+	/*
-+	 * Calculate the address of the selector register in the corresponding
-+	 * data window if it is located on every page.
-+	 */
-+	page_chg = in_range(range->selector_reg, range->window_start, range->window_len);
-+	if (page_chg)
-+		selector_reg = range->range_min + win_page * range->window_len +
-+			       range->selector_reg - range->window_start;
+diff --git a/drivers/infiniband/core/rw.c b/drivers/infiniband/core/rw.c
+index 2522ff1cc462c..49fbfe1cef689 100644
+--- a/drivers/infiniband/core/rw.c
++++ b/drivers/infiniband/core/rw.c
+@@ -326,14 +326,29 @@ int rdma_rw_ctx_init(struct rdma_rw_ctx *ctx, struct ib_qp *qp, u32 port_num,
+ 	if (rdma_rw_io_needs_mr(qp->device, port_num, dir, sg_cnt)) {
+ 		ret = rdma_rw_init_mr_wrs(ctx, qp, port_num, sg, sg_cnt,
+ 				sg_offset, remote_addr, rkey, dir);
+-	} else if (sg_cnt > 1) {
++		/*
++		 * If MR init succeeded or failed for a reason other
++		 * than pool exhaustion, that result is final.
++		 *
++		 * Pool exhaustion (-EAGAIN) from the max_sgl_rd
++		 * optimization is recoverable: fall back to
++		 * direct SGE posting. iWARP and force_mr require
++		 * MRs unconditionally, so -EAGAIN is terminal.
++		 */
++		if (ret != -EAGAIN ||
++		    rdma_protocol_iwarp(qp->device, port_num) ||
++		    unlikely(rdma_rw_force_mr))
++			goto out;
++	}
 +
-+	/*
-+	 * It is possible to have selector register inside data window.
-+	 * In that case, selector register is located on every page and it
-+	 * needs no page switching, when accessed alone.
-+	 *
-+	 * Nevertheless we should synchronize the cache values for it.
-+	 * This can't be properly achieved if the selector register is
-+	 * the first and the only one to be read inside the data window.
-+	 * That's why we update it in that case as well.
-+	 *
-+	 * However, we specifically avoid updating it for the default page,
-+	 * when it's overlapped with the real data window, to prevent from
-+	 * infinite looping.
-+	 */
- 	if (val_num > 1 ||
-+	    (page_chg && selector_reg != range->selector_reg) ||
- 	    range->window_start + win_offset != range->selector_reg) {
- 		/* Use separate work_buf during page switching */
- 		orig_work_buf = map->work_buf;
-@@ -1664,7 +1686,7 @@ static int _regmap_select_page(struct regmap *map, unsigned int *reg,
- 		ret = _regmap_update_bits(map, range->selector_reg,
- 					  range->selector_mask,
- 					  win_page << range->selector_shift,
--					  &page_chg, false);
-+					  NULL, false);
++	if (sg_cnt > 1)
+ 		ret = rdma_rw_init_map_wrs(ctx, qp, sg, sg_cnt, sg_offset,
+ 				remote_addr, rkey, dir);
+-	} else {
++	else
+ 		ret = rdma_rw_init_single_wr(ctx, qp, sg, sg_offset,
+ 				remote_addr, rkey, dir);
+-	}
  
- 		map->work_buf = orig_work_buf;
- 
++out:
+ 	if (ret < 0)
+ 		goto out_unmap_sg;
+ 	return ret;
 -- 
 2.53.0
 
