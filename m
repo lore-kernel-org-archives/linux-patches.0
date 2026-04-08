@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E713D8115;
-	Wed,  8 Apr 2026 18:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F9E3D9051;
+	Wed,  8 Apr 2026 18:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673544; cv=none; b=o7OGe47FLaJoDLjK7rsfTe/HbwDrZZrco5OkblqK/Pjurg7E7NSGl41jbvpsPzV2MmAaTz19b7GlvWUaJ4XLeuxFeVV3gd8Ut9ABsEt4IyzMQJ0SJpI9H2R1+C64l8xpXvclPf5p5jspVgCiFad0BunAu5YNYEp/czimWnSTrE0=
+	t=1775673547; cv=none; b=esy84LMfAP2x2PPVwRrshSlpEly8bZ3/uM4NZroe2aen9ifBnBaf0Ju2XiDDvrS0CAW299AbicKozJr5JCEzhTsiNigL/paRd2cjRyb+BTBMRS49oqSG04LAeRYCOVFfgmASG5yPoegGsYv2rvphPhG6XMBOjVP5DaWfpv0pWrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673544; c=relaxed/simple;
-	bh=nSGOhRZaUcITzQzuDaQevX/5c0owdNgkbtT9m8HyqPM=;
+	s=arc-20240116; t=1775673547; c=relaxed/simple;
+	bh=dCgGhe/VDutDV2POOx0/TE58F92yLD/guaSX/6v9kbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MfZXAyX3b8Uq+da7y18Xz/GHxBQbLZPMTFf4pZdu9WZLCQODPKmYo9n7B86DlOJLXSZDgiBj2qdCAPkFHEJR0rhOcLv1cbdrYIXf0HELlY1lHWMcuj+PpgKTvS8sLOxWR4bYPHbnny9ObJQmL5fdmT7TU1qtlRWtxb1Qkm76YHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AB9OKOLP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHOXISUSU03IdEd7yVPPN8dr40YTIKX/EhcBttbr6Y0vZewb9WhakTzBsGc0hWLCq4ncLTpb7Jg6TW+/VbkRmsrA5OmSby0u2dOeYU7pND7OQA1XWDEgWVuFDWFso+yDeAxCXyTjTvoEwwRwdscdXQbFus7xfJgeAxSgs2Mgcvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UWVXV7a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AB9OKOLP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B645C2BCB0;
-	Wed,  8 Apr 2026 18:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UWVXV7a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02B7C2BCB1;
+	Wed,  8 Apr 2026 18:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673544;
-	bh=nSGOhRZaUcITzQzuDaQevX/5c0owdNgkbtT9m8HyqPM=;
+	s=korg; t=1775673547;
+	bh=dCgGhe/VDutDV2POOx0/TE58F92yLD/guaSX/6v9kbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AB9OKOLP7Ue6NcdQo1dTImX9Ves5/0HeeWbhcpyhcsYaHg1D1tBLXEw/XbYAIBHdS
-	 50G9A2bkTmVH5DgmqHqSZusxrHGEuQWzW6CcpS14tblk06H76m/nGdxhM4w2A+Gy0t
-	 Vuv2NL3VXzyyMA8ahuLzaq8Eme9vM2Kls0QQNlKs=
+	b=2UWVXV7aj38Iwgp4nupkSM4/v2xbmHNJzGgAlr/bK+iR2wC2EXJrb5WurBtNnh6cD
+	 DkX40Jw64xXDsfq1Uj0kk/D3KUQvTC5PcV9DgXWCuQmYDbrtJ0ILNmXdc352ZDlR2/
+	 8N7DhoPaSR70Y0KsLAZLIaDEMheGb1qDvcCr42is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 273/277] scsi: target: tcm_loop: Drain commands in target_reset handler
-Date: Wed,  8 Apr 2026 20:04:18 +0200
-Message-ID: <20260408175944.060604461@linuxfoundation.org>
+Subject: [PATCH 6.18 274/277] mm: replace READ_ONCE() with standard page table accessors
+Date: Wed,  8 Apr 2026 20:04:19 +0200
+Message-ID: <20260408175944.098324288@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -45,151 +49,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit 1333eee56cdf3f0cf67c6ab4114c2c9e0a952026 ]
+[ Upstream commit c0efdb373c3aaacb32db59cadb0710cac13e44ae ]
 
-tcm_loop_target_reset() violates the SCSI EH contract: it returns SUCCESS
-without draining any in-flight commands.  The SCSI EH documentation
-(scsi_eh.rst) requires that when a reset handler returns SUCCESS the driver
-has made lower layers "forget about timed out scmds" and is ready for new
-commands.  Every other SCSI LLD (virtio_scsi, mpt3sas, ipr, scsi_debug,
-mpi3mr) enforces this by draining or completing outstanding commands before
-returning SUCCESS.
+Replace all READ_ONCE() with a standard page table accessors i.e
+pxdp_get() that defaults into READ_ONCE() in cases where platform does not
+override.
 
-Because tcm_loop_target_reset() doesn't drain, the SCSI EH reuses in-flight
-scsi_cmnd structures for recovery commands (e.g. TUR) while the target core
-still has async completion work queued for the old se_cmd.  The memset in
-queuecommand zeroes se_lun and lun_ref_active, causing
-transport_lun_remove_cmd() to skip its percpu_ref_put().  The leaked LUN
-reference prevents transport_clear_lun_ref() from completing, hanging
-configfs LUN unlink forever in D-state:
-
-  INFO: task rm:264 blocked for more than 122 seconds.
-  rm              D    0   264    258 0x00004000
-  Call Trace:
-   __schedule+0x3d0/0x8e0
-   schedule+0x36/0xf0
-   transport_clear_lun_ref+0x78/0x90 [target_core_mod]
-   core_tpg_remove_lun+0x28/0xb0 [target_core_mod]
-   target_fabric_port_unlink+0x50/0x60 [target_core_mod]
-   configfs_unlink+0x156/0x1f0 [configfs]
-   vfs_unlink+0x109/0x290
-   do_unlinkat+0x1d5/0x2d0
-
-Fix this by making tcm_loop_target_reset() actually drain commands:
-
- 1. Issue TMR_LUN_RESET via tcm_loop_issue_tmr() to drain all commands that
-    the target core knows about (those not yet CMD_T_COMPLETE).
-
- 2. Use blk_mq_tagset_busy_iter() to iterate all started requests and
-    flush_work() on each se_cmd — this drains any deferred completion work
-    for commands that already had CMD_T_COMPLETE set before the TMR (which
-    the TMR skips via __target_check_io_state()).  This is the same pattern
-    used by mpi3mr, scsi_debug, and libsas to drain outstanding commands
-    during reset.
-
-Fixes: e0eb5d38b732 ("scsi: target: tcm_loop: Use block cmd allocator for se_cmds")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/27011aa34c8f6b1b94d2e3cf5655b6d037f53428.1773706803.git.josef@toxicpanda.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lkml.kernel.org/r/20251007063100.2396936-1-anshuman.khandual@arm.com
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: ffef67b93aa3 ("mm/memory: fix PMD/PUD checks in follow_pfnmap_start()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/loopback/tcm_loop.c |   52 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 46 insertions(+), 6 deletions(-)
+ mm/gup.c            |   10 +++++-----
+ mm/hmm.c            |    2 +-
+ mm/memory.c         |    4 ++--
+ mm/mprotect.c       |    2 +-
+ mm/sparse-vmemmap.c |    2 +-
+ mm/vmscan.c         |    2 +-
+ 6 files changed, 11 insertions(+), 11 deletions(-)
 
---- a/drivers/target/loopback/tcm_loop.c
-+++ b/drivers/target/loopback/tcm_loop.c
-@@ -26,6 +26,7 @@
- #include <linux/slab.h>
- #include <linux/types.h>
- #include <linux/configfs.h>
-+#include <linux/blk-mq.h>
- #include <scsi/scsi.h>
- #include <scsi/scsi_tcq.h>
- #include <scsi/scsi_host.h>
-@@ -268,15 +269,27 @@ static int tcm_loop_device_reset(struct
- 	return (ret == TMR_FUNCTION_COMPLETE) ? SUCCESS : FAILED;
- }
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -950,7 +950,7 @@ static struct page *follow_pud_mask(stru
+ 	struct mm_struct *mm = vma->vm_mm;
  
-+static bool tcm_loop_flush_work_iter(struct request *rq, void *data)
-+{
-+	struct scsi_cmnd *sc = blk_mq_rq_to_pdu(rq);
-+	struct tcm_loop_cmd *tl_cmd = scsi_cmd_priv(sc);
-+	struct se_cmd *se_cmd = &tl_cmd->tl_se_cmd;
-+
-+	flush_work(&se_cmd->work);
-+	return true;
-+}
-+
- static int tcm_loop_target_reset(struct scsi_cmnd *sc)
- {
- 	struct tcm_loop_hba *tl_hba;
- 	struct tcm_loop_tpg *tl_tpg;
-+	struct Scsi_Host *sh = sc->device->host;
-+	int ret;
+ 	pudp = pud_offset(p4dp, address);
+-	pud = READ_ONCE(*pudp);
++	pud = pudp_get(pudp);
+ 	if (!pud_present(pud))
+ 		return no_page_table(vma, flags, address);
+ 	if (pud_leaf(pud)) {
+@@ -975,7 +975,7 @@ static struct page *follow_p4d_mask(stru
+ 	p4d_t *p4dp, p4d;
  
- 	/*
- 	 * Locate the tcm_loop_hba_t pointer
- 	 */
--	tl_hba = *(struct tcm_loop_hba **)shost_priv(sc->device->host);
-+	tl_hba = *(struct tcm_loop_hba **)shost_priv(sh);
- 	if (!tl_hba) {
- 		pr_err("Unable to perform device reset without active I_T Nexus\n");
- 		return FAILED;
-@@ -285,11 +298,38 @@ static int tcm_loop_target_reset(struct
- 	 * Locate the tl_tpg pointer from TargetID in sc->device->id
- 	 */
- 	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
--	if (tl_tpg) {
--		tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
--		return SUCCESS;
--	}
--	return FAILED;
-+	if (!tl_tpg)
-+		return FAILED;
-+
-+	/*
-+	 * Issue a LUN_RESET to drain all commands that the target core
-+	 * knows about.  This handles commands not yet marked CMD_T_COMPLETE.
-+	 */
-+	ret = tcm_loop_issue_tmr(tl_tpg, sc->device->lun, 0, TMR_LUN_RESET);
-+	if (ret != TMR_FUNCTION_COMPLETE)
-+		return FAILED;
-+
-+	/*
-+	 * Flush any deferred target core completion work that may still be
-+	 * queued.  Commands that already had CMD_T_COMPLETE set before the TMR
-+	 * are skipped by the TMR drain, but their async completion work
-+	 * (transport_lun_remove_cmd → percpu_ref_put, release_cmd → scsi_done)
-+	 * may still be pending in target_completion_wq.
-+	 *
-+	 * The SCSI EH will reuse in-flight scsi_cmnd structures for recovery
-+	 * commands (e.g. TUR) immediately after this handler returns SUCCESS —
-+	 * if deferred work is still pending, the memset in queuecommand would
-+	 * zero the se_cmd while the work accesses it, leaking the LUN
-+	 * percpu_ref and hanging configfs unlink forever.
-+	 *
-+	 * Use blk_mq_tagset_busy_iter() to find all started requests and
-+	 * flush_work() on each — the same pattern used by mpi3mr, scsi_debug,
-+	 * and other SCSI drivers to drain outstanding commands during reset.
-+	 */
-+	blk_mq_tagset_busy_iter(&sh->tag_set, tcm_loop_flush_work_iter, NULL);
-+
-+	tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
-+	return SUCCESS;
- }
+ 	p4dp = p4d_offset(pgdp, address);
+-	p4d = READ_ONCE(*p4dp);
++	p4d = p4dp_get(p4dp);
+ 	BUILD_BUG_ON(p4d_leaf(p4d));
  
- static const struct scsi_host_template tcm_loop_driver_template = {
+ 	if (!p4d_present(p4d) || p4d_bad(p4d))
+@@ -3060,7 +3060,7 @@ static int gup_fast_pud_range(p4d_t *p4d
+ 
+ 	pudp = pud_offset_lockless(p4dp, p4d, addr);
+ 	do {
+-		pud_t pud = READ_ONCE(*pudp);
++		pud_t pud = pudp_get(pudp);
+ 
+ 		next = pud_addr_end(addr, end);
+ 		if (unlikely(!pud_present(pud)))
+@@ -3086,7 +3086,7 @@ static int gup_fast_p4d_range(pgd_t *pgd
+ 
+ 	p4dp = p4d_offset_lockless(pgdp, pgd, addr);
+ 	do {
+-		p4d_t p4d = READ_ONCE(*p4dp);
++		p4d_t p4d = p4dp_get(p4dp);
+ 
+ 		next = p4d_addr_end(addr, end);
+ 		if (!p4d_present(p4d))
+@@ -3108,7 +3108,7 @@ static void gup_fast_pgd_range(unsigned
+ 
+ 	pgdp = pgd_offset(current->mm, addr);
+ 	do {
+-		pgd_t pgd = READ_ONCE(*pgdp);
++		pgd_t pgd = pgdp_get(pgdp);
+ 
+ 		next = pgd_addr_end(addr, end);
+ 		if (pgd_none(pgd))
+--- a/mm/hmm.c
++++ b/mm/hmm.c
+@@ -491,7 +491,7 @@ static int hmm_vma_walk_pud(pud_t *pudp,
+ 	/* Normally we don't want to split the huge page */
+ 	walk->action = ACTION_CONTINUE;
+ 
+-	pud = READ_ONCE(*pudp);
++	pud = pudp_get(pudp);
+ 	if (!pud_present(pud)) {
+ 		spin_unlock(ptl);
+ 		return hmm_vma_walk_hole(start, end, -1, walk);
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -6691,12 +6691,12 @@ retry:
+ 		goto out;
+ 
+ 	p4dp = p4d_offset(pgdp, address);
+-	p4d = READ_ONCE(*p4dp);
++	p4d = p4dp_get(p4dp);
+ 	if (p4d_none(p4d) || unlikely(p4d_bad(p4d)))
+ 		goto out;
+ 
+ 	pudp = pud_offset(p4dp, address);
+-	pud = READ_ONCE(*pudp);
++	pud = pudp_get(pudp);
+ 	if (pud_none(pud))
+ 		goto out;
+ 	if (pud_leaf(pud)) {
+--- a/mm/mprotect.c
++++ b/mm/mprotect.c
+@@ -599,7 +599,7 @@ again:
+ 			break;
+ 		}
+ 
+-		pud = READ_ONCE(*pudp);
++		pud = pudp_get(pudp);
+ 		if (pud_none(pud))
+ 			continue;
+ 
+--- a/mm/sparse-vmemmap.c
++++ b/mm/sparse-vmemmap.c
+@@ -439,7 +439,7 @@ int __meminit vmemmap_populate_hugepages
+ 			return -ENOMEM;
+ 
+ 		pmd = pmd_offset(pud, addr);
+-		if (pmd_none(READ_ONCE(*pmd))) {
++		if (pmd_none(pmdp_get(pmd))) {
+ 			void *p;
+ 
+ 			p = vmemmap_alloc_block_buf(PMD_SIZE, node, altmap);
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -3783,7 +3783,7 @@ static int walk_pud_range(p4d_t *p4d, un
+ 	pud = pud_offset(p4d, start & P4D_MASK);
+ restart:
+ 	for (i = pud_index(start), addr = start; addr != end; i++, addr = next) {
+-		pud_t val = READ_ONCE(pud[i]);
++		pud_t val = pudp_get(pud + i);
+ 
+ 		next = pud_addr_end(addr, end);
+ 
 
 
