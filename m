@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA3A3D88E1;
-	Wed,  8 Apr 2026 18:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A423D8917;
+	Wed,  8 Apr 2026 18:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671750; cv=none; b=cPifldZ+lZEnJ8tH/7jZ5tRRATpm15pRacDvJB4lU/P32VUi2H186A+WBIk9OkMJTuRaKf9xkc7PLMlpaUQxFEzS8bO0tgsyAVexvcOsPvHWwCvWB+SL2ot4IPBorPeDZh3rOoirCB/P+ao6RQ6ASmjau+s8JvEvz93NgSMD3QA=
+	t=1775671753; cv=none; b=My2wkcZ94FTEQeJtfDbpZ6T/oYgDDxQRVmGGbOQ8eIT1ql87Z8wvELsu6vX9diqOezuM+EAtd6mD/jmhceod+aWy505wcOOKrab4kiWLNDoZo//H2TBkl9gOuQJ5E12Gschq77ilfMTOaQ41fQeJU4w9qtaUa39SroAthL+m8Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671750; c=relaxed/simple;
-	bh=q8DUmNgMRlYqEBwz11n1RaHaEDlcAjRs9sLHY4aa0Lo=;
+	s=arc-20240116; t=1775671753; c=relaxed/simple;
+	bh=WD7pjCjXivwSV13UbKxR6epdCiEbqQCafNCbA1GzU1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dg79mBazdu6A6Y0brq421P1RCAUhwlIj6TAtZQAFvY1L5BoqKF8Cxc6Ux2O+7/D2Qjo6m3GI6GQSq4agRtxVssKAdMGCLTWIuZLNrjZom6kJn8Tty6EXULjlEyF6l/RNJlBSVXSRrc5PWzZNYZkg7dDe8JpCqhtZVz3CBdg1QrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4DhiMtd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b24hp8AQGNQmqHsvfNtrNglhbbelrl5z3dkj1366mf2gsS/+jnTr1S3R5b9slMwvwpCobZh1+TU3RawXjedPTfuBfZ315E6tCHgIL6nFClqUVSjSw8NRHIifiLqs3Rrsm2yQP+kMpeHVDCLV9ltDqHXG7I00E6i+9aYVA6Y/ibI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6g7GYif; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4DhiMtd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E808C19421;
-	Wed,  8 Apr 2026 18:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6g7GYif"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BA6C2BC9E;
+	Wed,  8 Apr 2026 18:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671750;
-	bh=q8DUmNgMRlYqEBwz11n1RaHaEDlcAjRs9sLHY4aa0Lo=;
+	s=korg; t=1775671753;
+	bh=WD7pjCjXivwSV13UbKxR6epdCiEbqQCafNCbA1GzU1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4DhiMtdPrgkxDFBzjD+hF/CnmMZ//nJdehyWVtLLzrQG2mqKz4cjOb+nb6YqGKJm
-	 KjaTsletxukvBi8kK3jc6QTbnq2AzmJQjnSIHixA7NHBAfNUBdFR6uwZBaGz8D9Mhf
-	 MYc3P6h4IWFBmI2Di8RwwLtcmpD61PA4mEhbJvvg=
+	b=K6g7GYifvcHcgc0SJN3xZ6Xj2BtJk2cw8YGJNf2f7pxc1NEM8MvasLz4hRPDaPYEz
+	 lW6CPWTHejMVIqSkdOt4WGyEAmLvud8ORte3gt5mg5ydik9/vd9yyblEmEJ8YAWJKi
+	 TNkhdGlR+kewhiTYYyTVHFdvhTRv+RRqJobgdfp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uzair Mughal <contact@uzair.is-a.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jie Deng <dengjie03@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/312] ALSA: hda/realtek: Add headset jack quirk for Thinkpad X390
-Date: Wed,  8 Apr 2026 19:58:58 +0200
-Message-ID: <20260408175934.521100015@linuxfoundation.org>
+Subject: [PATCH 6.1 022/312] usb: core: new quirk to handle devices with zero configurations
+Date: Wed,  8 Apr 2026 19:58:59 +0200
+Message-ID: <20260408175934.557554320@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -51,41 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uzair Mughal <contact@uzair.is-a.dev>
+From: Jie Deng <dengjie03@kylinos.cn>
 
-[ Upstream commit 542127f6528ca7cc3cf61e1651d6ccb58495f953 ]
+[ Upstream commit 9f6a983cfa22ac662c86e60816d3a357d4b551e9 ]
 
-The Lenovo ThinkPad X390 (ALC257 codec, subsystem ID 0x17aa2288)
-does not report headset button press events. Headphone insertion is
-detected (SW_HEADPHONE_INSERT), but pressing the inline microphone
-button on a headset produces no input events.
+Some USB devices incorrectly report bNumConfigurations as 0 in their
+device descriptor, which causes the USB core to reject them during
+enumeration.
+logs:
+usb 1-2: device descriptor read/64, error -71
+usb 1-2: no configurations
+usb 1-2: can't read configurations, error -22
 
-Add a SND_PCI_QUIRK entry that maps this subsystem ID to
-ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK, which enables
-headset jack button detection through alc_fixup_headset_jack()
-and ThinkPad ACPI integration. This is the same fixup used by
-similar ThinkPad models (P1 Gen 3, X1 Extreme Gen 3).
+However, these devices actually work correctly when
+treated as having a single configuration.
 
-Signed-off-by: Uzair Mughal <contact@uzair.is-a.dev>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260307012906.20093-1-contact@uzair.is-a.dev
+Add a new quirk USB_QUIRK_FORCE_ONE_CONFIG to handle such devices.
+When this quirk is set, assume the device has 1 configuration instead
+of failing with -EINVAL.
+
+This quirk is applied to the device with VID:PID 5131:2007 which
+exhibits this behavior.
+
+Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
+Link: https://patch.msgid.link/20260227084931.1527461-1-dengjie03@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/admin-guide/kernel-parameters.txt | 3 +++
+ drivers/usb/core/config.c                       | 6 +++++-
+ drivers/usb/core/quirks.c                       | 5 +++++
+ include/linux/usb/quirks.h                      | 3 +++
+ 4 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 1f069d7c3829f..9d6b3a6b8ed26 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10345,6 +10345,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x224c, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
- 	SND_PCI_QUIRK(0x17aa, 0x224d, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
- 	SND_PCI_QUIRK(0x17aa, 0x225d, "Thinkpad T480", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
-+	SND_PCI_QUIRK(0x17aa, 0x2288, "Thinkpad X390", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x2292, "Thinkpad X1 Carbon 7th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x22be, "Thinkpad X1 Carbon 8th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x22c1, "Thinkpad P1 Gen 3", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index b026eb1c4c7db..33744e931489a 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -6643,6 +6643,9 @@
+ 				p = USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT
+ 					(Reduce timeout of the SET_ADDRESS
+ 					request from 5000 ms to 500 ms);
++				q = USB_QUIRK_FORCE_ONE_CONFIG (Device
++					claims zero configurations,
++					forcing to 1);
+ 			Example: quirks=0781:5580:bk,0a5c:5834:gij
+ 
+ 	usbhid.mousepoll=
+diff --git a/drivers/usb/core/config.c b/drivers/usb/core/config.c
+index 4ca54506a1ac0..de9e885563985 100644
+--- a/drivers/usb/core/config.c
++++ b/drivers/usb/core/config.c
+@@ -891,7 +891,11 @@ int usb_get_configuration(struct usb_device *dev)
+ 		dev->descriptor.bNumConfigurations = ncfg = USB_MAXCONFIG;
+ 	}
+ 
+-	if (ncfg < 1) {
++	if (ncfg < 1 && dev->quirks & USB_QUIRK_FORCE_ONE_CONFIG) {
++		dev_info(ddev, "Device claims zero configurations, forcing to 1\n");
++		dev->descriptor.bNumConfigurations = 1;
++		ncfg = 1;
++	} else if (ncfg < 1) {
+ 		dev_err(ddev, "no configurations\n");
+ 		return -EINVAL;
+ 	}
+diff --git a/drivers/usb/core/quirks.c b/drivers/usb/core/quirks.c
+index c12942a533ce2..53b08d6cf7824 100644
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -141,6 +141,8 @@ static int quirks_param_set(const char *value, const struct kernel_param *kp)
+ 			case 'p':
+ 				flags |= USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT;
+ 				break;
++			case 'q':
++				flags |= USB_QUIRK_FORCE_ONE_CONFIG;
+ 			/* Ignore unrecognized flag characters */
+ 			}
+ 		}
+@@ -594,6 +596,9 @@ static const struct usb_device_id usb_quirk_list[] = {
+ 	/* VCOM device */
+ 	{ USB_DEVICE(0x4296, 0x7570), .driver_info = USB_QUIRK_CONFIG_INTF_STRINGS },
+ 
++	/* Noji-MCS SmartCard Reader */
++	{ USB_DEVICE(0x5131, 0x2007), .driver_info = USB_QUIRK_FORCE_ONE_CONFIG },
++
+ 	/* INTEL VALUE SSD */
+ 	{ USB_DEVICE(0x8086, 0xf1a5), .driver_info = USB_QUIRK_RESET_RESUME },
+ 
+diff --git a/include/linux/usb/quirks.h b/include/linux/usb/quirks.h
+index 2f7bd2fdc6164..b3cc7beab4a3c 100644
+--- a/include/linux/usb/quirks.h
++++ b/include/linux/usb/quirks.h
+@@ -78,4 +78,7 @@
+ /* skip BOS descriptor request */
+ #define USB_QUIRK_NO_BOS			BIT(17)
+ 
++/* Device claims zero configurations, forcing to 1 */
++#define USB_QUIRK_FORCE_ONE_CONFIG		BIT(18)
++
+ #endif /* __LINUX_USB_QUIRKS_H */
 -- 
 2.51.0
 
