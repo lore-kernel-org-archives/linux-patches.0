@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A34C324B1F;
-	Wed,  8 Apr 2026 18:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285E32494F0;
+	Wed,  8 Apr 2026 18:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672501; cv=none; b=PIhHl7L7YCFNVMGJHmx6Sk66lv3S0FmHeW8Mm9gN7XSqeyOeNmvUyrl8xoovJ9JC6JRwWmrlPJ23zsjVYvq9K4IQ4136fdRTauvTMitJzasMH0WKHMBncQudYHl8N8XFRnh4M7fQl0e1DmAs6m0JVJ91XE2m/mdlGLRi73RLUws=
+	t=1775672504; cv=none; b=l4oqlD1vMNW+rhiJy43RV7TeW0o9dN+l02P0MS0jjTgyDPwuVN/NFMMe4YIr5eKE4J3bfzMKyIqZQAEl6zLoUM+WWWejuLq24lbsWbsqX558bP6RLftKT1y09kmb9S7HY7+CEmS+uo3poAt0BzqJtoUfZsNWBYWgQcEq/A7wn1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672501; c=relaxed/simple;
-	bh=923NnilWvOK9vPTgriWgAp6f21SNseWFL3zTHrpPgzE=;
+	s=arc-20240116; t=1775672504; c=relaxed/simple;
+	bh=idofl+/T14n1RmHgeLqypxOT/ctzw4g/wR3VVx9ckYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRxOHCQQn7dwHi7xWarh1OOAjYjkDNJfIUBAHB2LFI0e2sVhcIbhMCv9wzbO6Fwj1tMYKdacrgzF+HPFxW7cfx4WLGXyRfH0wiXWRS8kzjDXDwJwJg7UVE6L4Gid2mh9C1c+eIfjVIeYLNnBDC3/B/c1fx4QxVLAmwQQqtM8lUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vm7TQCbX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CNVgGz02zlgVPHJMxP7LIlmX/zVoXFMcyosMazFFAagAInn6AU2cDzYAITxNAgmMdVE4kiZGx9bz5p3fVjP12L+KWbyTqLXnUymr5VCjzlWmcAYkr/h1Kz4fbdKv6JX4bj6qHbrJ70ZSXFgHcok39tMAnn6UdS+0e7KquJugnQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJBzxvtv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vm7TQCbX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22524C19421;
-	Wed,  8 Apr 2026 18:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJBzxvtv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96C8C19421;
+	Wed,  8 Apr 2026 18:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672501;
-	bh=923NnilWvOK9vPTgriWgAp6f21SNseWFL3zTHrpPgzE=;
+	s=korg; t=1775672504;
+	bh=idofl+/T14n1RmHgeLqypxOT/ctzw4g/wR3VVx9ckYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vm7TQCbXifR2/xShPBUbViEbYA/icaIm3DhLCAha09jWWtODadKsWsS3VTQELcB+f
-	 WP1Sgg4FQ2ozpuXoYc5cdv4Wwe2gkfl1RBvPW/dkbWoY6bmCp6bYUlk6selgGqEwxV
-	 X1QUEhDhDa2Nn99gYd6Rq1LBsqUdR6OHgEYRhmGE=
+	b=zJBzxvtvL1HKnKAv40Nz1V7l1soEOm+ZfF7x97gZ6XxQuMhOE0xZoZWmF/kOqq8eo
+	 lrCGCOM2/3ZAhRHypLHrcRyUKUEkQGXnY/5QWEs5vye//F7++Y6p2LdQm2Iz3cIwAB
+	 8lx06P+XKtLIVfqqALwUuYAmywbaKURXoW76sIs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Qu Wenruo <wqu@suse.com>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 008/160] i2c: tegra: Dont mark devices with pins as IRQ safe
-Date: Wed,  8 Apr 2026 20:01:35 +0200
-Message-ID: <20260408175913.497200105@linuxfoundation.org>
+Subject: [PATCH 6.6 009/160] btrfs: reject root items with drop_progress and zero drop_level
+Date: Wed,  8 Apr 2026 20:01:36 +0200
+Message-ID: <20260408175913.535189042@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -52,56 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit ec69c9e88315c4be70c283f18c2ff130da6320b5 ]
+[ Upstream commit b17b79ff896305fd74980a5f72afec370ee88ca4 ]
 
-I2C devices with associated pinctrl states (DPAUX I2C controllers)
-will change pinctrl state during runtime PM. This requires taking
-a mutex, so these devices cannot be marked as IRQ safe.
+[BUG]
+When recovering relocation at mount time, merge_reloc_root() and
+btrfs_drop_snapshot() both use BUG_ON(level == 0) to guard against
+an impossible state: a non-zero drop_progress combined with a zero
+drop_level in a root_item, which can be triggered:
 
-Add PINCTRL as dependency to avoid build errors.
+------------[ cut here ]------------
+kernel BUG at fs/btrfs/relocation.c:1545!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+CPU: 1 UID: 0 PID: 283 ... Tainted: 6.18.0+ #16 PREEMPT(voluntary)
+Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Hardware name: QEMU Ubuntu 24.04 PC v2, BIOS 1.16.3-debian-1.16.3-2
+RIP: 0010:merge_reloc_root+0x1266/0x1650 fs/btrfs/relocation.c:1545
+Code: ffff0000 00004589 d7e9acfa ffffe8a1 79bafebe 02000000
+Call Trace:
+ merge_reloc_roots+0x295/0x890 fs/btrfs/relocation.c:1861
+ btrfs_recover_relocation+0xd6e/0x11d0 fs/btrfs/relocation.c:4195
+ btrfs_start_pre_rw_mount+0xa4d/0x1810 fs/btrfs/disk-io.c:3130
+ open_ctree+0x5824/0x5fe0 fs/btrfs/disk-io.c:3640
+ btrfs_fill_super fs/btrfs/super.c:987 [inline]
+ btrfs_get_tree_super fs/btrfs/super.c:1951 [inline]
+ btrfs_get_tree_subvol fs/btrfs/super.c:2094 [inline]
+ btrfs_get_tree+0x111c/0x2190 fs/btrfs/super.c:2128
+ vfs_get_tree+0x9a/0x370 fs/super.c:1758
+ fc_mount fs/namespace.c:1199 [inline]
+ do_new_mount_fc fs/namespace.c:3642 [inline]
+ do_new_mount fs/namespace.c:3718 [inline]
+ path_mount+0x5b8/0x1ea0 fs/namespace.c:4028
+ do_mount fs/namespace.c:4041 [inline]
+ __do_sys_mount fs/namespace.c:4229 [inline]
+ __se_sys_mount fs/namespace.c:4206 [inline]
+ __x64_sys_mount+0x282/0x320 fs/namespace.c:4206
+ ...
+RIP: 0033:0x7f969c9a8fde
+Code: 0f1f4000 48c7c2b0 fffffff7 d8648902 b8ffffff ffc3660f
+---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Reported-by: Russell King <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/all/E1vsNBv-00000009nfA-27ZK@rmk-PC.armlinux.org.uk/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+The bug is reproducible on 7.0.0-rc2-next-20260310 with our dynamic
+metadata fuzzing tool that corrupts btrfs metadata at runtime.
+
+[CAUSE]
+A non-zero drop_progress.objectid means an interrupted
+btrfs_drop_snapshot() left a resume point on disk, and in that case
+drop_level must be greater than 0 because the checkpoint is only
+saved at internal node levels.
+
+Although this invariant is enforced when the kernel writes the root
+item, it is not validated when the root item is read back from disk.
+That allows on-disk corruption to provide an invalid state with
+drop_progress.objectid != 0 and drop_level == 0.
+
+When relocation recovery later processes such a root item,
+merge_reloc_root() reads drop_level and hits BUG_ON(level == 0). The
+same invalid metadata can also trigger the corresponding BUG_ON() in
+btrfs_drop_snapshot().
+
+[FIX]
+Fix this by validating the root_item invariant in tree-checker when
+reading root items from disk: if drop_progress.objectid is non-zero,
+drop_level must also be non-zero. Reject such malformed metadata with
+-EUCLEAN before it reaches merge_reloc_root() or btrfs_drop_snapshot()
+and triggers the BUG_ON.
+
+After the fix, the same corruption is correctly rejected by tree-checker
+and the BUG_ON is no longer triggered.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/Kconfig     | 2 ++
- drivers/i2c/busses/i2c-tegra.c | 5 ++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ fs/btrfs/tree-checker.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index 8d4270664ebd1..79ab924a4b2b9 100644
---- a/drivers/i2c/busses/Kconfig
-+++ b/drivers/i2c/busses/Kconfig
-@@ -1139,6 +1139,8 @@ config I2C_TEGRA
- 	tristate "NVIDIA Tegra internal I2C controller"
- 	depends on ARCH_TEGRA || (COMPILE_TEST && (ARC || ARM || ARM64 || M68K || RISCV || SUPERH || SPARC))
- 	# COMPILE_TEST needs architectures with readsX()/writesX() primitives
-+	depends on PINCTRL
-+	# ARCH_TEGRA implies PINCTRL, but the COMPILE_TEST side doesn't.
- 	help
- 	  If you say yes to this option, support will be included for the
- 	  I2C controller embedded in NVIDIA Tegra SOCs
-diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 5766231b13cd1..a882f0f65d82a 100644
---- a/drivers/i2c/busses/i2c-tegra.c
-+++ b/drivers/i2c/busses/i2c-tegra.c
-@@ -1788,8 +1788,11 @@ static int tegra_i2c_probe(struct platform_device *pdev)
- 	 *
- 	 * VI I2C device shouldn't be marked as IRQ-safe because VI I2C won't
- 	 * be used for atomic transfers. ACPI device is not IRQ safe also.
-+	 *
-+	 * Devices with pinctrl states cannot be marked IRQ-safe as the pinctrl
-+	 * state transitions during runtime PM require mutexes.
- 	 */
--	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev))
-+	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev) && !i2c_dev->dev->pins)
- 		pm_runtime_irq_safe(i2c_dev->dev);
+diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
+index d2c36b765c83a..0689bd3832f8c 100644
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1224,6 +1224,23 @@ static int check_root_item(struct extent_buffer *leaf, struct btrfs_key *key,
+ 			    btrfs_root_drop_level(&ri), BTRFS_MAX_LEVEL - 1);
+ 		return -EUCLEAN;
+ 	}
++	/*
++	 * If drop_progress.objectid is non-zero, a btrfs_drop_snapshot() was
++	 * interrupted and the resume point was recorded in drop_progress and
++	 * drop_level.  In that case drop_level must be >= 1: level 0 is the
++	 * leaf level and drop_snapshot never saves a checkpoint there (it
++	 * only records checkpoints at internal node levels in DROP_REFERENCE
++	 * stage).  A zero drop_level combined with a non-zero drop_progress
++	 * objectid indicates on-disk corruption and would cause a BUG_ON in
++	 * merge_reloc_root() and btrfs_drop_snapshot() at mount time.
++	 */
++	if (unlikely(btrfs_disk_key_objectid(&ri.drop_progress) != 0 &&
++		     btrfs_root_drop_level(&ri) == 0)) {
++		generic_err(leaf, slot,
++			    "invalid root drop_level 0 with non-zero drop_progress objectid %llu",
++			    btrfs_disk_key_objectid(&ri.drop_progress));
++		return -EUCLEAN;
++	}
  
- 	pm_runtime_enable(i2c_dev->dev);
+ 	/* Flags check */
+ 	if (unlikely(btrfs_root_flags(&ri) & ~valid_root_flags)) {
 -- 
 2.53.0
 
