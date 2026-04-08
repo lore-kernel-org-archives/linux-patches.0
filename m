@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D40B67E;
-	Wed,  8 Apr 2026 18:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C892B67E;
+	Wed,  8 Apr 2026 18:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672260; cv=none; b=hFniCn/MCI94HywzYu3o4EsQXlmOYMi99oKmCDTNREEjxQcQm2cmvXeMJx0yggmV9sBk5qtYPxF7NtKhoDa0b3v6Ft84YufzRj363QYS6orpvwcqwoOd4kmZ0BK0HZ5+kuCoFtCMeHsysT2yIjizwfPy87/KvHbWr4eXYAyGmik=
+	t=1775672263; cv=none; b=E7NUCMZYqE9UdsUeglgaV++IdeDbU9oc1fyeWaFvyAKjIE+u6FM6tmdwj+E0DqPsFGJ0ib9GqBKfeHxqgin7wDgIlMJXplpWKgIoGRRXA17Rx9GbbnxCrMYIMVUmMVSzczAw9LGF+oUl/f7pfT+AXvQ6c+99ivBhbw0a13Giqi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672260; c=relaxed/simple;
-	bh=fQ5NLxFA3f/R4YeJEVZKr9s/FNJG1od2d7GA12ESX5w=;
+	s=arc-20240116; t=1775672263; c=relaxed/simple;
+	bh=9J8jWHQEjxLXjgpLK+8oP9aSks7MR4wEX05Mtq1nuG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m6IXfiwUFELqmZUUcWeQrHbhKV6Kkwzcu0dvE0KIncJ8lSWMP0DVK7Qlx53vB/MUzTYhR7xtNeafOPhFBnqKwnXuDJ6ZHzGnm0ZIQTHrwqHEH394UIVq9VmU28SBLrH/8EAYaVQ6CzBF6+kYIKzUW3lT8T8wOsIshwmZP7MNt4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBTsEcNG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TvgSag75Dx/ow6g2ZefD4tvgDrYwj6TohAVtS752MkJkeibBg09PUEYj9weX/XXLUfypRYcAJnKCGMsTZlNKylYyj6o1OIsJBHVVqxIeOVChFLvW4VTuVPDfK82cWexlWemmHSAM7fJnHGf6uPlkoswGImtjqhekn6gL16G5Lxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIB/AF6/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBTsEcNG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287E7C19421;
-	Wed,  8 Apr 2026 18:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIB/AF6/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6815C19421;
+	Wed,  8 Apr 2026 18:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672260;
-	bh=fQ5NLxFA3f/R4YeJEVZKr9s/FNJG1od2d7GA12ESX5w=;
+	s=korg; t=1775672263;
+	bh=9J8jWHQEjxLXjgpLK+8oP9aSks7MR4wEX05Mtq1nuG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oBTsEcNG5tskj70d99Lim0iaJ8ppKDNi25CY8Lpe1/1nTDWUaQuqkqgJ184YbJbDA
-	 g/w0K4QUC8+msrdltqFi7LtR03s5RPE2Ctu1uZVf2Jy+yVmxDyZQtN4Y5gG+1ulnxg
-	 iU6ClJZItqXqfZ5bw4UpExDWtNzZzP5rytK3ZrV4=
+	b=AIB/AF6/ASgznfZC+d28OCKLUYCkc0AXB3ewpVw8N+xPepfvyRxehGYSYvZtQGRXN
+	 2yvFYiU/8gtE79CgX8SKYyownMsVpebWIvlhPmYQoTFZXX2CiqKhqB4qD/b4bcRdO5
+	 ibCpfhXF5xMVnP86Oqcl/JJmY4HLzGjMeAzqCD2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <dstsmallbird@foxmail.com>,
 	Yifan Wu <yifanwucs@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 251/312] netfilter: ipset: drop logically empty buckets in mtype_del
-Date: Wed,  8 Apr 2026 20:02:48 +0200
-Message-ID: <20260408175943.119289178@linuxfoundation.org>
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 252/312] vxlan: validate ND option lengths in vxlan_na_create
+Date: Wed,  8 Apr 2026 20:02:49 +0200
+Message-ID: <20260408175943.156799327@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -54,41 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifan Wu <yifanwucs@gmail.com>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-commit 9862ef9ab0a116c6dca98842aab7de13a252ae02 upstream.
+commit afa9a05e6c4971bd5586f1b304e14d61fb3d9385 upstream.
 
-mtype_del() counts empty slots below n->pos in k, but it only drops the
-bucket when both n->pos and k are zero. This misses buckets whose live
-entries have all been removed while n->pos still points past deleted slots.
+vxlan_na_create() walks ND options according to option-provided
+lengths. A malformed option can make the parser advance beyond the
+computed option span or use a too-short source LLADDR option payload.
 
-Treat a bucket as empty when all positions below n->pos are unused and
-release it directly instead of shrinking it further.
+Validate option lengths against the remaining NS option area before
+advancing, and only read source LLADDR when the option is large enough
+for an Ethernet address.
 
-Fixes: 8af1c6fbd923 ("netfilter: ipset: Fix forceadd evaluation path")
+Fixes: 4b29dba9c085 ("vxlan: fix nonfunctional neigh_reduce()")
 Cc: stable@vger.kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <dstsmallbird@foxmail.com>
-Signed-off-by: Yifan Wu <yifanwucs@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Reviewed-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
+Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260326034441.2037420-4-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_hash_gen.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/vxlan/vxlan_core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -1086,7 +1086,7 @@ mtype_del(struct ip_set *set, void *valu
- 			if (!test_bit(i, n->used))
- 				k++;
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2009,12 +2009,14 @@ static struct sk_buff *vxlan_na_create(s
+ 	ns_olen = request->len - skb_network_offset(request) -
+ 		sizeof(struct ipv6hdr) - sizeof(*ns);
+ 	for (i = 0; i < ns_olen-1; i += (ns->opt[i+1]<<3)) {
+-		if (!ns->opt[i + 1]) {
++		if (!ns->opt[i + 1] || i + (ns->opt[i + 1] << 3) > ns_olen) {
+ 			kfree_skb(reply);
+ 			return NULL;
  		}
--		if (n->pos == 0 && k == 0) {
-+		if (k == n->pos) {
- 			t->hregion[r].ext_size -= ext_size(n->size, dsize);
- 			rcu_assign_pointer(hbucket(t, key), NULL);
- 			kfree_rcu(n, rcu);
+ 		if (ns->opt[i] == ND_OPT_SOURCE_LL_ADDR) {
+-			daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
++			if ((ns->opt[i + 1] << 3) >=
++			    sizeof(struct nd_opt_hdr) + ETH_ALEN)
++				daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
+ 			break;
+ 		}
+ 	}
 
 
