@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5242336166F;
-	Wed,  8 Apr 2026 18:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D88357A20;
+	Wed,  8 Apr 2026 18:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673034; cv=none; b=N4lWeXOEIYTUyH6kxX+RyttiA7N5dMORdz8+EcvQRLxDt97i8VlSGW+K6cnFxujelXqWjFUFWXvQGj+UL6BfWtZIr+onoLE2QxPJj7ih1uuaj074OgUT8nEMCl5QgMdeyFb6V+EDWBjFy/R3aE/SGv1nyY0vM2X/hOBfwrcF+L0=
+	t=1775673036; cv=none; b=KrRJUwMwz/ojiv0tshT9HEH4kbK9jg5t/B0VHQ/xhwDwC6QjPILYmB+hGPWcrfb4aYCG1Kr/rzfDdwxQRZrVUhTb9NZTn2Ee6OMuQq9+an3J+lSpkoXTm9n5JvgDpcsqeg1lh7gd2PmriwyBUIchJlbEpN5gerfnKf8tirs1fzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673034; c=relaxed/simple;
-	bh=LMX8jLGHpOT+27LmV0TLJv0gkePblx3oP+io9x9Qydk=;
+	s=arc-20240116; t=1775673036; c=relaxed/simple;
+	bh=RMws8ZaPF3naf1I/WMkDbWb1zSv9HaWPCKL0pdEkmsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+xMdl/WwUs7M1NM1dDMbuSBuUxe4medbp4m+l6Sa/BuiW8poD2E1UVlqjahALaiGdRBmQj6ybXaCnVw9y9YgILxUah/BjSgDSXgFrPrmzmV5D/uJ8A333yYsIvE3otNAOcqwHK2WXvvgVXunJW+IsK8tuvasVF+EWMIFHgoWA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6+3SleO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h9Ba7ZLzqRrVXH1CvmyiEinzGPHkuaSxSz/i2aJsv0Lno/zh5w2FhiEd9quzuo1mqSMsI8mNC7LJKkqRiFfoJ3LpGVjRigP9Q+JpfLfDeVUT6PMMRQ6OYYcEKHq1N3ftk7IWURgcDXc5uGLvZvDMLWQw+GMakiGFqJEQSMGRBGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdXy99vQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6+3SleO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4393C2BC87;
-	Wed,  8 Apr 2026 18:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdXy99vQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB68C19421;
+	Wed,  8 Apr 2026 18:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673034;
-	bh=LMX8jLGHpOT+27LmV0TLJv0gkePblx3oP+io9x9Qydk=;
+	s=korg; t=1775673036;
+	bh=RMws8ZaPF3naf1I/WMkDbWb1zSv9HaWPCKL0pdEkmsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6+3SleOwVYFEPqjOAxJuuAQYN15eTIPtYUkzCsW43K91Nu308MLHSCggM3WJQzJ/
-	 AjTtsrPXS8pTC+smvLJeX64823s1vgiTLDb02f5gWzBMRrYw/T71VAbbtDmo2QOHCn
-	 UlceT+92GaOuZAn9giKSu/+9HoBRd5EDQ7gdl13I=
+	b=TdXy99vQFT0IgsJk9LHg4rSZShq9DoQwe4zKOQl+5GrVYSQaqGEmO2UwIaTeFoxsQ
+	 UnC0G8ClzGbNLAwldRMLjQDwTjd45+RC8j9z+3RKPu5FUUlnLPzMFcx/HC7KhmJDpL
+	 GFCi9Y+9YV6WCI9kuVd0Ym7tiCuJmNcjZdw/xfNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Claudiu Manoil <claudiu.manoil@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/277] net: enetc: check whether the RSS algorithm is Toeplitz
-Date: Wed,  8 Apr 2026 20:00:28 +0200
-Message-ID: <20260408175935.465681495@linuxfoundation.org>
+Subject: [PATCH 6.18 044/277] net: enetc: do not allow VF to configure the RSS key
+Date: Wed,  8 Apr 2026 20:00:29 +0200
+Message-ID: <20260408175935.503138325@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -55,38 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit d389954a6cae7bf76b7b082ac3511d177b77ef2d ]
+[ Upstream commit a142d139168cce8d5776245b5494c7f7f5d7fb7d ]
 
-Both ENETC v1 and v4 only provide Toeplitz RSS support. This patch adds
-a validation check to reject attempts to configure other RSS algorithms,
-avoiding misleading configuration options for users.
+VFs do not have privilege to configure the RSS key because the registers
+are owned by the PF. Currently, if VF attempts to configure the RSS key,
+enetc_set_rxfh() simply skips the configuration and does not generate a
+warning, which may mislead users into thinking the feature is supported.
+To improve this situation, add a check to reject RSS key configuration
+on VFs.
 
 Fixes: d382563f541b ("enetc: Add RFS and RSS support")
 Signed-off-by: Wei Fang <wei.fang@nxp.com>
 Reviewed-by: Clark Wang <xiaoning.wang@nxp.com>
 Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Link: https://patch.msgid.link/20260326075233.3628047-2-wei.fang@nxp.com
+Link: https://patch.msgid.link/20260326075233.3628047-3-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_ethtool.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc_ethtool.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-index 0250ed95e48ca..8349d38dbd896 100644
+index 8349d38dbd896..5166f16f196ff 100644
 --- a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
 +++ b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-@@ -770,6 +770,10 @@ static int enetc_set_rxfh(struct net_device *ndev,
- 	struct enetc_si *si = priv->si;
- 	int err = 0;
+@@ -775,8 +775,12 @@ static int enetc_set_rxfh(struct net_device *ndev,
+ 		return -EOPNOTSUPP;
  
-+	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
-+	    rxfh->hfunc != ETH_RSS_HASH_TOP)
-+		return -EOPNOTSUPP;
-+
  	/* set hash key, if PF */
- 	if (rxfh->key && enetc_si_is_pf(si))
+-	if (rxfh->key && enetc_si_is_pf(si))
++	if (rxfh->key) {
++		if (!enetc_si_is_pf(si))
++			return -EOPNOTSUPP;
++
  		enetc_set_rss_key(si, rxfh->key);
++	}
+ 
+ 	/* set RSS table */
+ 	if (rxfh->indir)
 -- 
 2.53.0
 
