@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4A73537EF;
-	Wed,  8 Apr 2026 18:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A264D3D5647;
+	Wed,  8 Apr 2026 18:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672941; cv=none; b=etucqts1744ew2KdZc320OzUE8fxj+VPIc6rCpZVVRgLlr9OCqGCUxxEns92Coa7ombNYYEf4zNinDxEvpGoC8Z1g/eKfW7C3pUPFLuaAwYW7bcbHRulPC0FPTqiKhPeFbSxI3/4Uf52BsWEqUv8z19KHLKWMPkIeam3zvliZyA=
+	t=1775672943; cv=none; b=t4TEjQb55foSWBB6Wj48YshPAIV8gJLi7fqCqIkiN4G+hKeMxOPvQSqeDAjnMvPo6ja4PyCEdKXKw2QnJjNkLm+/ZM+TdDnjIdGfbhqB8LRYSJLHOR94dbgIKCqgjGwvF4iuQjhHmgeEnuBREY3kVVOrLbGtRINeQGptUYnYMko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672941; c=relaxed/simple;
-	bh=e+xZHHsqGquhm7hvv2x1jc3VnF8qIneK9SerrtNIs0c=;
+	s=arc-20240116; t=1775672943; c=relaxed/simple;
+	bh=0grrv2a3/7tZocbFsxvOGkin7LUtFYcC66c+TSsFqgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2V3FaUkGS8mvXLgTzmre0SLRJfGMS7FQbZiWzFL0CEdvaOxulXF89AgqzFiKQozeMCziUN2RuGfTc0kwFgUEr/BrhoPjDWJajGrYHtnWUqApIc1z7s3ySD9bR9ygjz8jjHn0KqMzCQBE38wv5dW7TrsdUalqL9lstyV8O6+vQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOFjKIzT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TKV6UlaqsFwh3lDSiAy22zGTIH1uB34AvUxpUd2DicQlyeXduwOtwIVvVmR6meYRu4wzIcMH19ls2OnjqfCLEsr7WZYqKtpZkAb6Svg5qvRwaP/Xzk64zWNL/D9wjhhgnPfO9aAdHPpNS/BwnGiimhlf9Cu4e5GrjWsl2ztDHPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCUah9v2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOFjKIzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9145C19421;
-	Wed,  8 Apr 2026 18:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCUah9v2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3851CC19421;
+	Wed,  8 Apr 2026 18:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672941;
-	bh=e+xZHHsqGquhm7hvv2x1jc3VnF8qIneK9SerrtNIs0c=;
+	s=korg; t=1775672943;
+	bh=0grrv2a3/7tZocbFsxvOGkin7LUtFYcC66c+TSsFqgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOFjKIzTOvkMhsRtGX5v3lslK2eI85qmrwTBXGOaAFK1jVmjfzDNL41blSIm++Eyu
-	 7OS98Q3f4kIE3odGLTb4ECm75/WFzQHAJOea2i9bZBLhLlz0lvWkOwc2wL6zuoF28K
-	 165lYc1plnGQiZQlZWPU9uaCSnPZexKIUNlVjU1Q=
+	b=YCUah9v2qOtTYFXH2R1OouDuBQXCQ2DoeC680nov86QNmPHfeNPuC5quMmQ+hQu/W
+	 R5L1AiyMBU/lUTwFUXd9OzRzAz7BKtwYo1zCQdUIKzH5TnJ8BxtgGqQQYK+VQVapAB
+	 s8OVf0BTNTuGfQ6XOKjfac55zB7Av8MEl2GoCG8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/277] objtool: Fix Clang jump table detection
-Date: Wed,  8 Apr 2026 19:59:53 +0200
-Message-ID: <20260408175934.155898412@linuxfoundation.org>
+Subject: [PATCH 6.18 009/277] HID: logitech-hidpp: Prevent use-after-free on force feedback initialisation failure
+Date: Wed,  8 Apr 2026 19:59:54 +0200
+Message-ID: <20260408175934.193642479@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -45,51 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 4e5019216402ad0b4a84cff457b662d26803f103 ]
+[ Upstream commit f7a4c78bfeb320299c1b641500fe7761eadbd101 ]
 
-With Clang, there can be a conditional forward jump between the load of
-the jump table address and the indirect branch.
+Presently, if the force feedback initialisation fails when probing the
+Logitech G920 Driving Force Racing Wheel for Xbox One, an error number
+will be returned and propagated before the userspace infrastructure
+(sysfs and /dev/input) has been torn down.  If userspace ignores the
+errors and continues to use its references to these dangling entities, a
+UAF will promptly follow.
 
-Fixes the following warning:
+We have 2 options; continue to return the error, but ensure that all of
+the infrastructure is torn down accordingly or continue to treat this
+condition as a warning by emitting the message but returning success.
+It is thought that the original author's intention was to emit the
+warning but keep the device functional, less the force feedback feature,
+so let's go with that.
 
-  vmlinux.o: warning: objtool: ___bpf_prog_run+0x1c5: sibling call from callable instruction with modified stack frame
-
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Closes: https://lore.kernel.org/a426d669-58bb-4be1-9eaa-6f3d83109e2d@app.fastmail.com
-Link: https://patch.msgid.link/7d8600caed08901b6679767488acd639f6df9688.1773071992.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/hid/hid-logitech-hidpp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index bb34484046060..bbdc4be475b1b 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -2118,12 +2118,11 @@ static void mark_func_jump_tables(struct objtool_file *file,
- 			last = insn;
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 3522e69da78d7..faef80cb2adbd 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4486,10 +4486,12 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		if (!ret)
+ 			ret = hidpp_ff_init(hidpp, &data);
  
- 		/*
--		 * Store back-pointers for unconditional forward jumps such
-+		 * Store back-pointers for forward jumps such
- 		 * that find_jump_table() can back-track using those and
- 		 * avoid some potentially confusing code.
- 		 */
--		if (insn->type == INSN_JUMP_UNCONDITIONAL && insn->jump_dest &&
--		    insn->offset > last->offset &&
-+		if (insn->jump_dest &&
- 		    insn->jump_dest->offset > insn->offset &&
- 		    !insn->jump_dest->first_jump_src) {
+-		if (ret)
++		if (ret) {
+ 			hid_warn(hidpp->hid_dev,
+ 		     "Unable to initialize force feedback support, errno %d\n",
+ 				 ret);
++			ret = 0;
++		}
+ 	}
  
+ 	/*
 -- 
 2.53.0
 
