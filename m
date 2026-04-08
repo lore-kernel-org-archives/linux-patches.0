@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157F33D6CAE;
-	Wed,  8 Apr 2026 18:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFD6337B81;
+	Wed,  8 Apr 2026 18:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674392; cv=none; b=k1JcJNKhI4eNIuxw1ONvYPwUD7Q2m4ejUCG6KLuwgUv8FQ3eqZskG/lblfAF59oDUMfTPHORsfcSqjMIH3vRl0131k6ztBoZlX1BaE2yK+rR9JmEl++zZW0e6FaMy06KHypqHKPMVHot0ICXvo5aLxCKNfWlxMVQ2PCGsKRw/00=
+	t=1775674394; cv=none; b=bctv2KMtYGud7HcEUvQUEl00yvTyRIuh+hnzAbK39HK5o0swXtnZMK1700EnrdDgrfhSxvLeEEyLL822YowGy8b5Q5KOyGoEZfls3h/ajVS7Zm6Y0SHSAgptEtUitzPrXAInDLzHYIeiEUFvXDlVswFKH/gKOcOtd0HXfQNMld0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674392; c=relaxed/simple;
-	bh=BcoX519+ODlQTYUi7uPMge1I/1NjC+3mP6JxZkgmwkU=;
+	s=arc-20240116; t=1775674394; c=relaxed/simple;
+	bh=Gypbuf5lcsRSabVp+e7vpuvG9kE6N5Rc0dRsJ39718M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TbHRWKOOXQ5u7uLPyNL4qQWI2FQx5k2UVDUvzYJqxg2DfWBr8bHwuCzfT9lLJ4hViwzUBQKeUqoW/BadXshuxqb9os+PEJYgNJNkp4UYYDEU8Or6YJRat4S3V1AqVeRNDCscJgIEftSL9eas0y4AjNeKff8S+BdW2izIk+SqWLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PF7QH3Je; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0eyWYLqgcFsuR/VKp91hE3jbP2OiSTdNGQ1lnBmGJu7CzRvCtyLz56uQpQKLMv1GkVhCqiCC0o353nwDfl/9jfZ4qFUZn3kRUBIDJS12A8iSXJtKA9mtCoT2JOXaIzqX1aLg3cg6oCB7RowBdI/ooTb3tAyH6C/VB39qo8r3p8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+n/uizj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PF7QH3Je"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDCCC19421;
-	Wed,  8 Apr 2026 18:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+n/uizj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39523C19421;
+	Wed,  8 Apr 2026 18:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674392;
-	bh=BcoX519+ODlQTYUi7uPMge1I/1NjC+3mP6JxZkgmwkU=;
+	s=korg; t=1775674394;
+	bh=Gypbuf5lcsRSabVp+e7vpuvG9kE6N5Rc0dRsJ39718M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PF7QH3Jeswc9yOXAu5Bt5Mf87FercuzIZoW88aSxzARu09aQCHNSCYpouubfn9XD5
-	 0KAEMhROuZI180YSNx1/QRgY2R5o4V55byGsvpoCaTB+W0VmFyrFsCRsHw+tKSydTc
-	 K6D9diUS0SM3HB4SH9F5wiMA3LQmMX+lqejkUjtE=
+	b=z+n/uizjYUwROn92Qjhg/1G6+0Rj8HtDR9CIZ+ASxeTP0cgcgtzIQZA0ws/Lmy5pe
+	 k3hjbadUiV2i3WhGQF3fCtKDUgfdz/Y4WWoW7bzR+Kv53XFk+UuMyeaPeo0h5x0NBO
+	 XuG7zcaW91kxO1IFKCo1oW6WA4JwxBxS3w1oUKNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Michal Piekos <michal.piekos@mmpsystems.pl>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 080/311] mptcp: fix soft lockup in mptcp_recvmsg()
-Date: Wed,  8 Apr 2026 20:01:20 +0200
-Message-ID: <20260408175942.401192312@linuxfoundation.org>
+Subject: [PATCH 6.19 081/311] net: stmmac: skip VLAN restore when VLAN hash ops are missing
+Date: Wed,  8 Apr 2026 20:01:21 +0200
+Message-ID: <20260408175942.438018415@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,119 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Michal Piekos <michal.piekos@mmpsystems.pl>
 
-[ Upstream commit 5dd8025a49c268ab6b94d978532af3ad341132a7 ]
+[ Upstream commit 48b3cd69265f346f64b93064723492da46206e9b ]
 
-syzbot reported a soft lockup in mptcp_recvmsg() [0].
+stmmac_vlan_restore() unconditionally calls stmmac_vlan_update() when
+NETIF_F_VLAN_FEATURES is set. On platforms where priv->hw->vlan (or
+->update_vlan_hash) is not provided, stmmac_update_vlan_hash() returns
+-EINVAL via stmmac_do_void_callback(), resulting in a spurious
+"Failed to restore VLANs" error even when no VLAN filtering is in use.
 
-When receiving data with MSG_PEEK | MSG_WAITALL flags, the skb is not
-removed from the sk_receive_queue. This causes sk_wait_data() to always
-find available data and never perform actual waiting, leading to a soft
-lockup.
+Remove not needed comment.
+Remove not used return value from stmmac_vlan_restore().
 
-Fix this by adding a 'last' parameter to track the last peeked skb.
-This allows sk_wait_data() to make informed waiting decisions and prevent
-infinite loops when MSG_PEEK is used.
+Tested on Orange Pi Zero 3.
 
-[0]:
-watchdog: BUG: soft lockup - CPU#2 stuck for 156s! [server:1963]
-Modules linked in:
-CPU: 2 UID: 0 PID: 1963 Comm: server Not tainted 6.19.0-rc8 #61 PREEMPT(none)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:sk_wait_data+0x15/0x190
-Code: 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 41 56 41 55 41 54 49 89 f4 55 48 89 d5 53 48 89 fb <48> 83 ec 30 65 48 8b 05 17 a4 6b 01 48 89 44 24 28 31 c0 65 48 8b
-RSP: 0018:ffffc90000603ca0 EFLAGS: 00000246
-RAX: 0000000000000000 RBX: ffff888102bf0800 RCX: 0000000000000001
-RDX: 0000000000000000 RSI: ffffc90000603d18 RDI: ffff888102bf0800
-RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000101
-R10: 0000000000000000 R11: 0000000000000075 R12: ffffc90000603d18
-R13: ffff888102bf0800 R14: ffff888102bf0800 R15: 0000000000000000
-FS:  00007f6e38b8c4c0(0000) GS:ffff8881b877e000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055aa7bff1680 CR3: 0000000105cbe000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- mptcp_recvmsg+0x547/0x8c0 net/mptcp/protocol.c:2329
- inet_recvmsg+0x11f/0x130 net/ipv4/af_inet.c:891
- sock_recvmsg+0x94/0xc0 net/socket.c:1100
- __sys_recvfrom+0xb2/0x130 net/socket.c:2256
- __x64_sys_recvfrom+0x1f/0x30 net/socket.c:2267
- do_syscall_64+0x59/0x2d0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:131
-RIP: 0033:0x7f6e386a4a1d
-Code: 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 8d 05 f1 de 2c 00 41 89 ca 8b 00 85 c0 75 20 45 31 c9 45 31 c0 b8 2d 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 6b f3 c3 66 0f 1f 84 00 00 00 00 00 41 56 41
-RSP: 002b:00007ffc3c4bb078 EFLAGS: 00000246 ORIG_RAX: 000000000000002d
-RAX: ffffffffffffffda RBX: 000000000000861e RCX: 00007f6e386a4a1d
-RDX: 00000000000003ff RSI: 00007ffc3c4bb150 RDI: 0000000000000004
-RBP: 00007ffc3c4bb570 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000103 R11: 0000000000000246 R12: 00005605dbc00be0
-R13: 00007ffc3c4bb650 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
-
-Fixes: 8e04ce45a8db ("mptcp: fix MSG_PEEK stream corruption")
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260330120335.659027-1-lixiasong1@huawei.com
+Fixes: bd7ad51253a7 ("net: stmmac: Fix VLAN HW state restore")
+Signed-off-by: Michal Piekos <michal.piekos@mmpsystems.pl>
+Link: https://patch.msgid.link/20260328-vlan-restore-error-v4-1-f88624c530dc@mmpsystems.pl
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index a29f959b123a4..f1fa35cb8c000 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2003,7 +2003,7 @@ static void mptcp_eat_recv_skb(struct sock *sk, struct sk_buff *skb)
- static int __mptcp_recvmsg_mskq(struct sock *sk, struct msghdr *msg,
- 				size_t len, int flags, int copied_total,
- 				struct scm_timestamping_internal *tss,
--				int *cmsg_flags)
-+				int *cmsg_flags, struct sk_buff **last)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 01ede5148163e..cfe47a8e2c6d5 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -140,7 +140,7 @@ static void stmmac_tx_timer_arm(struct stmmac_priv *priv, u32 queue);
+ static void stmmac_flush_tx_descriptors(struct stmmac_priv *priv, int queue);
+ static void stmmac_set_dma_operation_mode(struct stmmac_priv *priv, u32 txmode,
+ 					  u32 rxmode, u32 chan);
+-static int stmmac_vlan_restore(struct stmmac_priv *priv);
++static void stmmac_vlan_restore(struct stmmac_priv *priv);
+ 
+ #ifdef CONFIG_DEBUG_FS
+ static const struct net_device_ops stmmac_netdev_ops;
+@@ -6811,21 +6811,15 @@ static int stmmac_vlan_rx_kill_vid(struct net_device *ndev, __be16 proto, u16 vi
+ 	return ret;
+ }
+ 
+-static int stmmac_vlan_restore(struct stmmac_priv *priv)
++static void stmmac_vlan_restore(struct stmmac_priv *priv)
  {
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 	struct sk_buff *skb, *tmp;
-@@ -2020,6 +2020,7 @@ static int __mptcp_recvmsg_mskq(struct sock *sk, struct msghdr *msg,
- 			/* skip already peeked skbs */
- 			if (total_data_len + data_len <= copied_total) {
- 				total_data_len += data_len;
-+				*last = skb;
- 				continue;
- 			}
+-	int ret;
+-
+ 	if (!(priv->dev->features & NETIF_F_VLAN_FEATURES))
+-		return 0;
++		return;
  
-@@ -2055,6 +2056,8 @@ static int __mptcp_recvmsg_mskq(struct sock *sk, struct msghdr *msg,
- 			}
+ 	if (priv->hw->num_vlan)
+ 		stmmac_restore_hw_vlan_rx_fltr(priv, priv->dev, priv->hw);
  
- 			mptcp_eat_recv_skb(sk, skb);
-+		} else {
-+			*last = skb;
- 		}
+-	ret = stmmac_vlan_update(priv, priv->num_double_vlans);
+-	if (ret)
+-		netdev_err(priv->dev, "Failed to restore VLANs\n");
+-
+-	return ret;
++	stmmac_vlan_update(priv, priv->num_double_vlans);
+ }
  
- 		if (copied >= len)
-@@ -2269,10 +2272,12 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		cmsg_flags = MPTCP_CMSG_INQ;
- 
- 	while (copied < len) {
-+		struct sk_buff *last = NULL;
- 		int err, bytes_read;
- 
- 		bytes_read = __mptcp_recvmsg_mskq(sk, msg, len - copied, flags,
--						  copied, &tss, &cmsg_flags);
-+						  copied, &tss, &cmsg_flags,
-+						  &last);
- 		if (unlikely(bytes_read < 0)) {
- 			if (!copied)
- 				copied = bytes_read;
-@@ -2324,7 +2329,7 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 
- 		pr_debug("block timeout %ld\n", timeo);
- 		mptcp_cleanup_rbuf(msk, copied);
--		err = sk_wait_data(sk, &timeo, NULL);
-+		err = sk_wait_data(sk, &timeo, last);
- 		if (err < 0) {
- 			err = copied ? : err;
- 			goto out_err;
+ static int stmmac_bpf(struct net_device *dev, struct netdev_bpf *bpf)
 -- 
 2.53.0
 
