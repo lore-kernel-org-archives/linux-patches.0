@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCA83D9DD3;
-	Wed,  8 Apr 2026 19:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1426B3DA7DA;
+	Wed,  8 Apr 2026 19:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674940; cv=none; b=iDxiiSXWZzrQUZyBzVL6uiVgi2vWbK4DoI4OauO1EBowPFUd9LEc2H+ZwHs64whR9LoZSMTjCgpG98FEL4ovLxKy5WTP/aYXym83tRAah5SLAxumnqFhp3/mpCEgLMs7DBCiaKHuUIUKYp7sdAjEpoXKVdcFGuAH4U78zewJ8BI=
+	t=1775674944; cv=none; b=ubQunaT8t7knxzSlmyw180SX4Dogz0TE+MlOYkImqbfTYye5S23Ubmvbl+DggD83ThrdvSYrySZ/PijAf6IGjksn77MY1kz38yvMKscjHNz/iekfVCfqgA3ovX5fxiEshJfvnXKsuTd7VRE1G/7HghAznOA1P101N4uEBZzzbjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674940; c=relaxed/simple;
-	bh=KC3T8Jz123uabIyfTx1Xo98vdVtkGWQPu8GkS2yIlMg=;
+	s=arc-20240116; t=1775674944; c=relaxed/simple;
+	bh=sLh7Z2hVTA/lC7vPsSCcPNpwSHE3VOQU+xdF0zatF/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kJ/5KFLumkZKI0IOsKSbyPlnG9bJWA/IywT9RHYcARzAF8mmnMfwAsZzPO7/fG69Q8B0S0aQFofumjNfwxwxGRl6XslXVNgHv/ISuifHEyF0uV+yOc418dH+32NV0G5YMI4n5BGvoWv39Hj2W8qygUGBsgh6NlmIqhLbuyXfSyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpkahsy5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rU/ePB+xtYvFmwnCSMIAMAV4/8yBUKU3t/M5drvEeJpQfm+GZ1OL8sPRw9sYHU6Ke4NJOtZ6K+DvKwCxME0W34d5SoHOf+XqQu8FY7vd2ol5qUwNLxBLaPuZCILgX+zfWetPVc1CKs3zurgVgcRRY7PrBfq5rCZMeD1swiRQNRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOVLEujK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpkahsy5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5F8C19421;
-	Wed,  8 Apr 2026 19:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOVLEujK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3188CC2BC87;
+	Wed,  8 Apr 2026 19:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674940;
-	bh=KC3T8Jz123uabIyfTx1Xo98vdVtkGWQPu8GkS2yIlMg=;
+	s=korg; t=1775674943;
+	bh=sLh7Z2hVTA/lC7vPsSCcPNpwSHE3VOQU+xdF0zatF/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpkahsy5jlDCveUFl5pyuMJS3D5YERp4L3njnyVL+vayG97gvjXE85V8ouIVwEC+H
-	 Ol0xZsC3Kjab1ktOfFFqhxT4+gwQdlY2Vi3ZVh1f7wCi/gSLu3nL9zgmuefRKcUj6S
-	 8xL960vcooNQcwRLTDXB4FNz+E8VxjN4VvXG2I4M=
+	b=HOVLEujKezRgbsJMkRfppwEAYmkPqMFVImKcOWzNKhE33wiUehZOeock730SBeR97
+	 GjJaGKzADQ+YDFdY6Zdv1lfBCvOPrZmtPHhZhdM9CyUgS3Q41mVYfqw53w1exlVW+l
+	 SDxZ8582niReTL+c7na77UG/3VLbvBU+4VXPJa4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Urban <surban@surban.net>,
 	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.19 293/311] usb: gadget: dummy_hcd: fix premature URB completion when ZLP follows partial transfer
-Date: Wed,  8 Apr 2026 20:04:53 +0200
-Message-ID: <20260408175950.318141769@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Nathan Rebello <nathan.c.rebello@gmail.com>
+Subject: [PATCH 6.19 294/311] usb: typec: ucsi: validate connector number in ucsi_notify_common()
+Date: Wed,  8 Apr 2026 20:04:54 +0200
+Message-ID: <20260408175950.354119499@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,70 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Urban <surban@surban.net>
+From: Nathan Rebello <nathan.c.rebello@gmail.com>
 
-commit f50200dd44125e445a6164e88c217472fa79cdbc upstream.
+commit d2d8c17ac01a1b1f638ea5d340a884ccc5015186 upstream.
 
-When a gadget request is only partially transferred in transfer()
-because the per-frame bandwidth budget is exhausted, the loop advances
-to the next queued request. If that next request is a zero-length
-packet (ZLP), len evaluates to zero and the code takes the
-unlikely(len == 0) path, which sets is_short = 1. This bypasses the
-bandwidth guard ("limit < ep->ep.maxpacket && limit < len") that
-lives in the else branch and would otherwise break out of the loop for
-non-zero requests. The is_short path then completes the URB before all
-data from the first request has been transferred.
+The connector number extracted from CCI via UCSI_CCI_CONNECTOR() is a
+7-bit field (0-127) that is used to index into the connector array in
+ucsi_connector_change(). However, the array is only allocated for the
+number of connectors reported by the device (typically 2-4 entries).
 
-Reproducer (bulk IN, high speed):
+A malicious or malfunctioning device could report an out-of-range
+connector number in the CCI, causing an out-of-bounds array access in
+ucsi_connector_change().
 
-  Device side (FunctionFS with Linux AIO):
-    1. Queue a 65024-byte write via io_submit (127 * 512, i.e. a
-       multiple of the HS bulk max packet size).
-    2. Immediately queue a zero-length write (ZLP) via io_submit.
+Add a bounds check in ucsi_notify_common(), the central point where CCI
+is parsed after arriving from hardware, so that bogus connector numbers
+are rejected before they propagate further.
 
-  Host side:
-    3. Submit a 65536-byte bulk IN URB.
-
-  Expected: URB completes with actual_length = 65024.
-  Actual:   URB completes with actual_length = 53248, losing 11776
-            bytes that leak into subsequent URBs.
-
-At high speed the per-frame budget is 53248 bytes (512 * 13 * 8).
-The 65024-byte request exhausts this budget after 53248 bytes, leaving
-the request incomplete (req->req.actual < req->req.length). Neither
-the request nor the URB is finished, and rescan is 0, so the loop
-advances to the ZLP. For the ZLP, dev_len = 0, so len = min(12288, 0)
-= 0, taking the unlikely(len == 0) path and setting is_short = 1.
-The is_short handler then sets *status = 0, completing the URB with
-only 53248 of the expected 65024 bytes.
-
-Fix this by breaking out of the loop when the current request has
-remaining data (req->req.actual < req->req.length). The request
-resumes on the next timer tick, preserving correct data ordering.
-
-Signed-off-by: Sebastian Urban <surban@surban.net>
+Fixes: bdc62f2bae8f ("usb: typec: ucsi: Simplified registration and I/O API")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260315151045.1155850-1-surban@surban.net
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Nathan Rebello <nathan.c.rebello@gmail.com>
+Link: https://patch.msgid.link/20260313222453.123-1-nathan.c.rebello@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/typec/ucsi/ucsi.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -1538,6 +1538,12 @@ top:
- 		/* rescan to continue with any other queued i/o */
- 		if (rescan)
- 			goto top;
-+
-+		/* request not fully transferred; stop iterating to
-+		 * preserve data ordering across queued requests.
-+		 */
-+		if (req->req.actual < req->req.length)
-+			break;
- 	}
- 	return sent;
- }
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -42,8 +42,13 @@ void ucsi_notify_common(struct ucsi *ucs
+ 	if (cci & UCSI_CCI_BUSY)
+ 		return;
+ 
+-	if (UCSI_CCI_CONNECTOR(cci))
+-		ucsi_connector_change(ucsi, UCSI_CCI_CONNECTOR(cci));
++	if (UCSI_CCI_CONNECTOR(cci)) {
++		if (UCSI_CCI_CONNECTOR(cci) <= ucsi->cap.num_connectors)
++			ucsi_connector_change(ucsi, UCSI_CCI_CONNECTOR(cci));
++		else
++			dev_err(ucsi->dev, "bogus connector number in CCI: %lu\n",
++				UCSI_CCI_CONNECTOR(cci));
++	}
+ 
+ 	if (cci & UCSI_CCI_ACK_COMPLETE &&
+ 	    test_and_clear_bit(ACK_PENDING, &ucsi->flags))
 
 
