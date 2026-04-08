@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4413D25A321;
-	Wed,  8 Apr 2026 18:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2992F39C2;
+	Wed,  8 Apr 2026 18:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674559; cv=none; b=pc/1hXSqR9EUKFilfylGtNL/9iZwir/LNUYzcWyugN4AXRxbxjZ01SO8b0/K13MzLJGACY9c/P9jbMc9SqgBXackDJbWnsabGoaDJs1oc95Pbgxi5KF5OSA/LAVp9RPfa36lz3DB5kE3wVd28ccuMLp0LStgnA0sjJ0JG78AfAY=
+	t=1775674561; cv=none; b=rzaEAGbHk91ntt3R0cQHuP4pz6396n2+zrvPQjx+/xzbh+42tR/+rNAoEiTZ91hksIOpop4kYiHJbGxX6tmnKZ2gcFcR+VQLf3GJg3tILVfCic5/EnW4sHpeWWpQQuiNPrO3mr7ALlhmND2ovlEjYv0nrGCMMpU/69PSXO62sR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674559; c=relaxed/simple;
-	bh=LUqhajeCNxMlisMAChXRBSVixPR0mmKAc6S0oDUD//c=;
+	s=arc-20240116; t=1775674561; c=relaxed/simple;
+	bh=NRj2j4kMQr3Uc+g4TeHGvn8WPVBRB4YC7v8itj42n1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nV4pSrv9M3hq3XQuS8PSh6kGJ7l8hnHN9ukzAJThugNVuUzRObw2G2bt/l6G8vQ8K+8CxqeGVxir1cdpVBcmxhQ7yd2YwlpM3LGN9AH5EqibAq+unB/51RzC+VTFdVFup01fBp2qYNloxwExU+arhRhlrw06FopLEdc/ZCMssbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEAcDFjn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l51RQ3EXwGmLyKb+ZTv8GzUTsTp38tzmm6RlNIJga0q4rXs+Ceogv5ejSTmB3zIgpqwh53YTVwV0qufk99Upvp8RTG4y5ewYOZxJI8uJ5BNl0XqclCg2mtns3V0PR8LRqQBZXWX1uFDylqaXij46qRWTfktyfZRsHUct0TF/N64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoELR50v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEAcDFjn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE70FC19421;
-	Wed,  8 Apr 2026 18:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoELR50v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637D4C19421;
+	Wed,  8 Apr 2026 18:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674559;
-	bh=LUqhajeCNxMlisMAChXRBSVixPR0mmKAc6S0oDUD//c=;
+	s=korg; t=1775674561;
+	bh=NRj2j4kMQr3Uc+g4TeHGvn8WPVBRB4YC7v8itj42n1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEAcDFjnoaAv0HSsjfUaGeqKej/NzSx77aS2WTJ8RuPaTgXSO0kOfblOWNNE3mdqA
-	 jk4uZLOhCQCr1pk93y+D/QcH5phf52ngV/OnBH2vQW/T1UZxasVFD7io/02S4msfrw
-	 vIZ4vaVkaSvvlPefX6TXWAoBzL0NShFbG/uNeAX8=
+	b=FoELR50vYKRcRM14oqR/CIWU7I4lMzKDkl/ntQDEESk+t0C1sv6kBf1osWlQzQUeg
+	 Lf1AiTEQngcDoHWzQwcF/FlkWVpCnAwyOjfR1f6MwdYkZXnbaNFPkTENnCXpo83q9D
+	 hSD6Tsa7SNB9hjNWnDQC68u/UHhgzwqvpqaTjxcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Alan Previn Teres Alexis <alan.previn.teres.alexis@intel.com>,
+	Julia Filipchuk <julia.filipchuk@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 137/311] hwmon: (tps53679) Fix array access with zero-length block read
-Date: Wed,  8 Apr 2026 20:02:17 +0200
-Message-ID: <20260408175944.529613368@linuxfoundation.org>
+Subject: [PATCH 6.19 146/311] drm/xe/pxp: Remove incorrect handling of impossible state during suspend
+Date: Wed,  8 Apr 2026 20:02:26 +0200
+Message-ID: <20260408175944.863049985@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,48 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-[ Upstream commit 0e211f6aaa6a00fd0ee0c1eea5498f168c6725e6 ]
+[ Upstream commit 4fed244954c2dc9aafa333d08f66b14345225e03 ]
 
-i2c_smbus_read_block_data() can return 0, indicating a zero-length
-read. When this happens, tps53679_identify_chip() accesses buf[ret - 1]
-which is buf[-1], reading one byte before the buffer on the stack.
+The default case of the PXP suspend switch is incorrectly exiting
+without releasing the lock. However, this case is impossible to hit
+because we're switching on an enum and all the valid enum values have
+their own cases. Therefore, we can just get rid of the default case
+and rely on the compiler to warn us if a new enum value is added and
+we forget to add it to the switch.
 
-Fix by changing the check from "ret < 0" to "ret <= 0", treating a
-zero-length read as an error (-EIO), which prevents the out-of-bounds
-array access.
-
-Also fix a typo in the adjacent comment: "if present" instead of
-duplicate "if".
-
-Fixes: 75ca1e5875fe ("hwmon: (pmbus/tps53679) Add support for TPS53685")
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260329170925.34581-2-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 51462211f4a9 ("drm/xe/pxp: add PXP PM support")
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Alan Previn Teres Alexis <alan.previn.teres.alexis@intel.com>
+Cc: Julia Filipchuk <julia.filipchuk@intel.com>
+Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
+Link: https://patch.msgid.link/20260324153718.3155504-8-daniele.ceraolospurio@intel.com
+(cherry picked from commit f1b5a77fc9b6a90cd9a5e3db9d4c73ae1edfcfac)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/tps53679.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_pxp.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/tps53679.c b/drivers/hwmon/pmbus/tps53679.c
-index ca2bfa25eb04c..3bca543817a60 100644
---- a/drivers/hwmon/pmbus/tps53679.c
-+++ b/drivers/hwmon/pmbus/tps53679.c
-@@ -103,10 +103,10 @@ static int tps53679_identify_chip(struct i2c_client *client,
+diff --git a/drivers/gpu/drm/xe/xe_pxp.c b/drivers/gpu/drm/xe/xe_pxp.c
+index ba4d52001b853..fdcecc026e937 100644
+--- a/drivers/gpu/drm/xe/xe_pxp.c
++++ b/drivers/gpu/drm/xe/xe_pxp.c
+@@ -891,11 +891,6 @@ int xe_pxp_pm_suspend(struct xe_pxp *pxp)
+ 		pxp->key_instance++;
+ 		needs_queue_inval = true;
+ 		break;
+-	default:
+-		drm_err(&pxp->xe->drm, "unexpected state during PXP suspend: %u",
+-			pxp->status);
+-		ret = -EIO;
+-		goto out;
  	}
  
- 	ret = i2c_smbus_read_block_data(client, PMBUS_IC_DEVICE_ID, buf);
--	if (ret < 0)
--		return ret;
-+	if (ret <= 0)
-+		return ret < 0 ? ret : -EIO;
+ 	/*
+@@ -920,7 +915,6 @@ int xe_pxp_pm_suspend(struct xe_pxp *pxp)
  
--	/* Adjust length if null terminator if present */
-+	/* Adjust length if null terminator is present */
- 	buf_len = (buf[ret - 1] != '\x00' ? ret : ret - 1);
+ 	pxp->last_suspend_key_instance = pxp->key_instance;
  
- 	id_len = strlen(id);
+-out:
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
