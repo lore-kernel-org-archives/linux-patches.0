@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6009D3D411F;
-	Wed,  8 Apr 2026 18:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7913ACF13;
+	Wed,  8 Apr 2026 18:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672884; cv=none; b=joR7CqSazYdHTZrcwyup/g1Glh9lxiK0+AbdweIx0XM+mWcBsxSzkh2mRBonyaDIFGO6no1h1EesyYrrF9KILIwvG7DctGwqXRFQwYBsyzT0wrGBxOYb2z5ANJ8+LznvydYiYR+bpEF2o/bT/fJ9A9mthaJn5/Vf7bWC8wZeTU0=
+	t=1775672886; cv=none; b=isYuA8OXaSmrTgRsFmjlVLd55HaMspUKNXotD+MUlHNE3vhxWH5Nrc5Zl+AB6ci/iLWAvsfaLM56z8BWeKgCRCZw2h69neSZ1VDFMYE29yYelljJoB8MzOTqTFEx4vk50xGlsfAjEApzuawZW7IYUSK5Nwx0q2UXpPAlKdl7Ibw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672884; c=relaxed/simple;
-	bh=MWriYVUWMGlb9l8NtZxeIZgOsfEb/qYrrkltlUExP2Q=;
+	s=arc-20240116; t=1775672886; c=relaxed/simple;
+	bh=GWfL1YQadqIKVi3pkr4wYkpx6mFu7mZskQeEKUWn0rk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwhg8rnR1j8BvHK+C2uTLuPikEVgLCDPlRan/RFRoyRCWNG+CuGd9MGAUkAqciC1UjT7kw/RhzP8udNur101LRLyUmvFLvme+kwnZNvedN7/0RjVVfqLQ3aR6Vg2q5DCqSEhATrGWIEVwo4VDtDlnpLjTKR8D9Vq0ItYxoeY88E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOq/FXWl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tGq9FpmmBCXIdWVP26VD4rLUGqRIfHsfzRvDahd49wx2/8ex/Qtda2HVxhLgNC9b4bgQKJFzYpcajK1DEN3Z5b4kcRbSEmzBFeJ2Zfoz0ppWfx1209LjWlpRI8oms+JS7NKNHQJaDguQVgHoQGQHlqiYwyBLRVN9WOWpwmsr11Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzwKiIhy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOq/FXWl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F664C19421;
-	Wed,  8 Apr 2026 18:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzwKiIhy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D92C19421;
+	Wed,  8 Apr 2026 18:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672883;
-	bh=MWriYVUWMGlb9l8NtZxeIZgOsfEb/qYrrkltlUExP2Q=;
+	s=korg; t=1775672886;
+	bh=GWfL1YQadqIKVi3pkr4wYkpx6mFu7mZskQeEKUWn0rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOq/FXWlmtEGJez4dC+Cp5ezu8aWFttXMmzrXeQdL24S9hb9jqq/D9ijx/Rr/J0fI
-	 akybaaxnAg/VhRrwvTOxKwR3lGG+ARk2DTvzDDrFdV+/saPgtx+Efwozzx8yNa4sWp
-	 jG34/pZgHBCLv0ct/ZtnKfMsn/vRPAsMtYUMOolI=
+	b=fzwKiIhyDqm1VHvyFp2v+g4agjEwxydKEENQg+kZ7L8SPas82WIwOMWPOMU//rqQ0
+	 u4LuHfOquCG7EREndbykqIC19Dz1VZLg9czc987kKzyX49iPc0HmnRIejfxrqFzTxC
+	 IK4J96s5Fg5R0/ZSnNWowkXogfShPf8lFnT83wy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 018/277] wifi: iwlwifi: fix remaining kernel-doc warnings
-Date: Wed,  8 Apr 2026 20:00:03 +0200
-Message-ID: <20260408175934.530470744@linuxfoundation.org>
+Subject: [PATCH 6.18 019/277] wifi: iwlwifi: mld: Fix MLO scan timing
+Date: Wed,  8 Apr 2026 20:00:04 +0200
+Message-ID: <20260408175934.570992705@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,1175 +51,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit 58a4ebe3168813a04bef08f7858a63b199e866e1 ]
+[ Upstream commit ec66ec6a5a8f53e7c70085749e8d68f4431c630f ]
 
-Fix the remaining kernel-doc warnings across the driver.
+Calculate MLO scan start time based on actual
+scan start notification from firmware instead of recording
+time when scan command is sent.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Currently, MLO scan start time was captured immediately
+after sending the scan command to firmware. However, the
+actual scan start time may differ due to the FW being busy
+with a previous scan.
+
+In that case, the link selection code will think that the MLO
+scan is too old, and will warn.
+
+To fix it, Implement start scan notification handling to
+capture the precise moment when firmware begins the scan
+operation.
+
+Fixes: 9324731b9985 ("wifi: iwlwifi: mld: avoid selecting bad links")
+Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250915113137.f94b6d4ef142.I91007eed4cf37125ca7a012f2021615b4fa9eb66@changeid
-Stable-dep-of: ec66ec6a5a8f ("wifi: iwlwifi: mld: Fix MLO scan timing")
+Link: https://patch.msgid.link/20260324113316.4c56b8bac533.I6e656d8cc30bb82c96aabadedd62bd67f4c46bf9@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/acpi.h  |  1 +
- .../wireless/intel/iwlwifi/fw/api/cmdhdr.h    |  4 +-
- .../net/wireless/intel/iwlwifi/fw/api/coex.h  |  4 +-
- .../wireless/intel/iwlwifi/fw/api/dbg-tlv.h   | 14 ++--
- .../net/wireless/intel/iwlwifi/fw/api/debug.h |  2 +-
- .../wireless/intel/iwlwifi/fw/api/location.h  |  8 +-
- .../net/wireless/intel/iwlwifi/fw/api/power.h |  5 +-
- .../net/wireless/intel/iwlwifi/fw/api/scan.h  | 78 ++++++++++---------
- .../net/wireless/intel/iwlwifi/fw/api/sta.h   |  6 +-
- .../net/wireless/intel/iwlwifi/fw/api/stats.h | 39 +++++-----
- .../net/wireless/intel/iwlwifi/fw/api/tx.h    |  2 +-
- .../wireless/intel/iwlwifi/fw/error-dump.h    |  4 +-
- drivers/net/wireless/intel/iwlwifi/fw/file.h  | 74 +++++++++++++-----
- drivers/net/wireless/intel/iwlwifi/fw/img.h   | 12 ++-
- .../net/wireless/intel/iwlwifi/fw/runtime.h   | 22 +++++-
- .../net/wireless/intel/iwlwifi/iwl-config.h   |  2 +-
- .../net/wireless/intel/iwlwifi/iwl-dbg-tlv.h  |  4 +-
- drivers/net/wireless/intel/iwlwifi/iwl-drv.h  |  3 +-
- .../wireless/intel/iwlwifi/iwl-modparams.h    |  4 +-
- .../wireless/intel/iwlwifi/iwl-nvm-parse.h    | 17 ++--
- .../net/wireless/intel/iwlwifi/iwl-op-mode.h  |  1 +
- .../net/wireless/intel/iwlwifi/iwl-trans.h    |  6 +-
- 22 files changed, 194 insertions(+), 118 deletions(-)
+ .../wireless/intel/iwlwifi/fw/api/commands.h  |  5 ++++
+ .../net/wireless/intel/iwlwifi/fw/api/scan.h  | 10 +++++++
+ drivers/net/wireless/intel/iwlwifi/mld/mld.c  |  1 +
+ drivers/net/wireless/intel/iwlwifi/mld/mlo.c  |  4 +--
+ .../net/wireless/intel/iwlwifi/mld/notif.c    |  5 ++++
+ drivers/net/wireless/intel/iwlwifi/mld/scan.c | 30 +++++++++++++++++--
+ drivers/net/wireless/intel/iwlwifi/mld/scan.h |  9 ++++--
+ 7 files changed, 56 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.h b/drivers/net/wireless/intel/iwlwifi/fw/acpi.h
-index 20bc6671f4eb2..06cece4ea6d95 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.h
-@@ -151,6 +151,7 @@ union acpi_object *iwl_acpi_get_dsm_object(struct device *dev, int rev,
-  * @mcc: output buffer (3 bytes) that will get the MCC
-  *
-  * This function tries to read the current MCC from ACPI if available.
-+ * Return: 0 on success, or a negative error code
-  */
- int iwl_acpi_get_mcc(struct iwl_fw_runtime *fwrt, char *mcc);
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/commands.h b/drivers/net/wireless/intel/iwlwifi/fw/api/commands.h
+index 997b0c9ce9840..6b3e7c614e54c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/api/commands.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/api/commands.h
+@@ -296,6 +296,11 @@ enum iwl_legacy_cmds {
+ 	 */
+ 	SCAN_OFFLOAD_UPDATE_PROFILES_CMD = 0x6E,
  
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/cmdhdr.h b/drivers/net/wireless/intel/iwlwifi/fw/api/cmdhdr.h
-index d130d4f854447..073f003bdc5d2 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/cmdhdr.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/cmdhdr.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2005-2014 Intel Corporation
-+ * Copyright (C) 2005-2014, 2025 Intel Corporation
-  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-  */
-@@ -98,7 +98,7 @@ struct iwl_cmd_header {
- } __packed;
- 
- /**
-- * struct iwl_cmd_header_wide
-+ * struct iwl_cmd_header_wide - wide command header
-  *
-  * This header format appears in the beginning of each command sent from the
-  * driver, and each response/notification received from uCode.
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/coex.h b/drivers/net/wireless/intel/iwlwifi/fw/api/coex.h
-index ddc84430d8959..616f00a8b6034 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/coex.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/coex.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2023-2024 Intel Corporation
-+ * Copyright (C) 2023-2025 Intel Corporation
-  * Copyright (C) 2013-2014, 2018-2019 Intel Corporation
-  * Copyright (C) 2013-2014 Intel Mobile Communications GmbH
-  * Copyright (C) 2017 Intel Deutschland GmbH
-@@ -52,7 +52,7 @@ struct iwl_bt_coex_cmd {
- } __packed; /* BT_COEX_CMD_API_S_VER_6 */
- 
- /**
-- * struct iwl_bt_coex_reduced_txp_update_cmd
-+ * struct iwl_bt_coex_reduced_txp_update_cmd - reduced TX power command
-  * @reduced_txp: bit BT_REDUCED_TX_POWER_BIT to enable / disable, rest of the
-  *	bits are the sta_id (value)
-  */
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
-index 3173fa96cb489..b62f0687327a6 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
-@@ -16,7 +16,7 @@
- #define IWL_FW_INI_PRESET_DISABLE		0xff
- 
- /**
-- * struct iwl_fw_ini_hcmd
-+ * struct iwl_fw_ini_hcmd - debug configuration host command
-  *
-  * @id: the debug configuration command type for instance: 0xf6 / 0xf5 / DHC
-  * @group: the desired cmd group
-@@ -199,7 +199,7 @@ struct iwl_fw_ini_region_tlv {
- } __packed; /* FW_TLV_DEBUG_REGION_API_S_VER_1 */
- 
- /**
-- * struct iwl_fw_ini_debug_info_tlv
-+ * struct iwl_fw_ini_debug_info_tlv - debug info TLV
-  *
-  * debug configuration name for a specific image
-  *
-@@ -311,7 +311,7 @@ struct iwl_fw_ini_conf_set_tlv {
- } __packed; /* FW_TLV_DEBUG_CONFIG_SET_API_S_VER_1 */
- 
- /**
-- * enum iwl_fw_ini_config_set_type
-+ * enum iwl_fw_ini_config_set_type - configuration set type
-  *
-  * @IWL_FW_INI_CONFIG_SET_TYPE_INVALID: invalid config set
-  * @IWL_FW_INI_CONFIG_SET_TYPE_DEVICE_PERIPHERY_MAC: for PERIPHERY MAC configuration
-@@ -337,7 +337,7 @@ enum iwl_fw_ini_config_set_type {
- } __packed;
- 
- /**
-- * enum iwl_fw_ini_allocation_id
-+ * enum iwl_fw_ini_allocation_id - allocation ID
-  *
-  * @IWL_FW_INI_ALLOCATION_INVALID: invalid
-  * @IWL_FW_INI_ALLOCATION_ID_DBGC1: allocation meant for DBGC1 configuration
-@@ -356,7 +356,7 @@ enum iwl_fw_ini_allocation_id {
- }; /* FW_DEBUG_TLV_ALLOCATION_ID_E_VER_1 */
- 
- /**
-- * enum iwl_fw_ini_buffer_location
-+ * enum iwl_fw_ini_buffer_location - buffer location
-  *
-  * @IWL_FW_INI_LOCATION_INVALID: invalid
-  * @IWL_FW_INI_LOCATION_SRAM_PATH: SRAM location
-@@ -373,7 +373,7 @@ enum iwl_fw_ini_buffer_location {
- }; /* FW_DEBUG_TLV_BUFFER_LOCATION_E_VER_1 */
- 
- /**
-- * enum iwl_fw_ini_region_type
-+ * enum iwl_fw_ini_region_type - region type
-  *
-  * @IWL_FW_INI_REGION_INVALID: invalid
-  * @IWL_FW_INI_REGION_TLV: uCode and debug TLVs
-@@ -437,7 +437,7 @@ enum iwl_fw_ini_region_device_memory_subtype {
- }; /* FW_TLV_DEBUG_REGION_DEVICE_MEMORY_SUBTYPE_API_E */
- 
- /**
-- * enum iwl_fw_ini_time_point
-+ * enum iwl_fw_ini_time_point - time point type
-  *
-  * Hard coded time points in which the driver can send hcmd or perform dump
-  * collection
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/debug.h b/drivers/net/wireless/intel/iwlwifi/fw/api/debug.h
-index 0cf1e5124fba7..61a850de26fcc 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/debug.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/debug.h
-@@ -421,7 +421,7 @@ struct iwl_dbgc1_info {
- } __packed; /* INIT_DRAM_FRAGS_ALLOCATIONS_S_VER_1 */
- 
- /**
-- * struct iwl_dbg_host_event_cfg_cmd
-+ * struct iwl_dbg_host_event_cfg_cmd - host event config command
-  * @enabled_severities: enabled severities
-  */
- struct iwl_dbg_host_event_cfg_cmd {
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/location.h b/drivers/net/wireless/intel/iwlwifi/fw/api/location.h
-index 33541f92c7c73..2ee3a48aa5dfe 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/location.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/location.h
-@@ -1092,7 +1092,7 @@ struct iwl_tof_range_req_ap_entry {
- } __packed; /* LOCATION_RANGE_REQ_AP_ENTRY_CMD_API_S_VER_9 */
- 
- /**
-- * enum iwl_tof_response_mode
-+ * enum iwl_tof_response_mode - TOF response mode
-  * @IWL_MVM_TOF_RESPONSE_ASAP: report each AP measurement separately as soon as
-  *			       possible (not supported for this release)
-  * @IWL_MVM_TOF_RESPONSE_TIMEOUT: report all AP measurements as a batch upon
-@@ -1108,7 +1108,7 @@ enum iwl_tof_response_mode {
- };
- 
- /**
-- * enum iwl_tof_initiator_flags
-+ * enum iwl_tof_initiator_flags - TOF initiator flags
-  *
-  * @IWL_TOF_INITIATOR_FLAGS_FAST_ALGO_DISABLED: disable fast algo, meaning run
-  *	the algo on ant A+B, instead of only one of them.
-@@ -1409,7 +1409,7 @@ enum iwl_tof_range_request_status {
- };
- 
- /**
-- * enum iwl_tof_entry_status
-+ * enum iwl_tof_entry_status - TOF entry status
-  *
-  * @IWL_TOF_ENTRY_SUCCESS: successful measurement.
-  * @IWL_TOF_ENTRY_GENERAL_FAILURE: General failure.
-@@ -1856,7 +1856,7 @@ struct iwl_tof_mcsi_notif {
- } __packed;
- 
- /**
-- * struct iwl_tof_range_abort_cmd
-+ * struct iwl_tof_range_abort_cmd - TOF range abort command
-  * @request_id: corresponds to a range request
-  * @reserved: reserved
-  */
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/power.h b/drivers/net/wireless/intel/iwlwifi/fw/api/power.h
-index 5eb8d10678fd4..535864e226260 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/power.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/power.h
-@@ -620,7 +620,7 @@ struct iwl_sar_offset_mapping_cmd {
- } __packed; /*SAR_OFFSET_MAPPING_TABLE_CMD_API_S*/
- 
- /**
-- * struct iwl_beacon_filter_cmd
-+ * struct iwl_beacon_filter_cmd - beacon filter command
-  * REPLY_BEACON_FILTERING_CMD = 0xd2 (command)
-  * @bf_energy_delta: Used for RSSI filtering, if in 'normal' state. Send beacon
-  *      to driver if delta in Energy values calculated for this and last
-@@ -762,7 +762,7 @@ enum iwl_6ghz_ap_type {
- }; /* PHY_AP_TYPE_API_E_VER_1 */
- 
- /**
-- * struct iwl_txpower_constraints_cmd
-+ * struct iwl_txpower_constraints_cmd - TX power constraints command
-  * AP_TX_POWER_CONSTRAINTS_CMD
-  * Used for VLP/LPI/AFC Access Point power constraints for 6GHz channels
-  * @link_id: linkId
-@@ -786,4 +786,5 @@ struct iwl_txpower_constraints_cmd {
- 	__s8 psd_pwr[IWL_MAX_TX_EIRP_PSD_PWR_MAX_SIZE];
- 	u8 reserved[3];
- } __packed; /* PHY_AP_TX_POWER_CONSTRAINTS_CMD_API_S_VER_1 */
++	/**
++	 * @SCAN_START_NOTIFICATION_UMAC: uses &struct iwl_umac_scan_start
++	 */
++	SCAN_START_NOTIFICATION_UMAC = 0xb2,
 +
- #endif /* __iwl_fw_api_power_h__ */
+ 	/**
+ 	 * @MATCH_FOUND_NOTIFICATION: scan match found
+ 	 */
 diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h b/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-index f486d624500be..60f0a4924ddfb 100644
+index 60f0a4924ddfb..46fcc32608e34 100644
 --- a/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
 +++ b/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2012-2014, 2018-2024 Intel Corporation
-+ * Copyright (C) 2012-2014, 2018-2025 Intel Corporation
-  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-  */
-@@ -129,7 +129,7 @@ struct iwl_scan_offload_profile {
- } __packed;
- 
- /**
-- * struct iwl_scan_offload_profile_cfg_data
-+ * struct iwl_scan_offload_profile_cfg_data - scan offload profile configs
-  * @blocklist_len:	length of blocklist
-  * @num_profiles:	num of profiles in the list
-  * @match_notify:	clients waiting for match found notification
-@@ -159,7 +159,7 @@ struct iwl_scan_offload_profile_cfg_v1 {
- } __packed; /* SCAN_OFFLOAD_PROFILES_CFG_API_S_VER_1-2*/
- 
- /**
-- * struct iwl_scan_offload_profile_cfg
-+ * struct iwl_scan_offload_profile_cfg - scan offload profile config
-  * @profiles:	profiles to search for match
-  * @data:	the rest of the data for profile_cfg
-  */
-@@ -507,7 +507,7 @@ enum iwl_uhb_chan_cfg_flags {
- 	IWL_UHB_CHAN_CFG_FLAG_FORCE_PASSIVE         = BIT(26),
- };
- /**
-- * struct iwl_scan_dwell
-+ * struct iwl_scan_dwell - scan dwell configuration
-  * @active:		default dwell time for active scan
-  * @passive:		default dwell time for passive scan
-  * @fragmented:		default dwell time for fragmented scan
-@@ -728,7 +728,7 @@ enum iwl_umac_scan_general_params_flags2 {
+@@ -1156,6 +1156,16 @@ enum iwl_umac_scan_abort_status {
+ 	IWL_UMAC_SCAN_ABORT_STATUS_NOT_FOUND,
  };
  
- /**
-- * struct iwl_scan_channel_cfg_umac
-+ * struct iwl_scan_channel_cfg_umac - scan channel config
-  * @flags:		bitmap - 0-19:	directed scan to i'th ssid.
-  * @channel_num:	channel number 1-13 etc.
-  * @v1:			command version 1
-@@ -774,7 +774,7 @@ struct  iwl_scan_channel_cfg_umac {
- } __packed;
- 
- /**
-- * struct iwl_scan_umac_schedule
-+ * struct iwl_scan_umac_schedule - scan schedule parameters
-  * @interval: interval in seconds between scan iterations
-  * @iter_count: num of scan iterations for schedule plan, 0xff for infinite loop
-  * @reserved: for alignment and future use
-@@ -815,7 +815,7 @@ struct iwl_scan_req_umac_tail_v2 {
- } __packed;
- 
- /**
-- * struct iwl_scan_umac_chan_param
-+ * struct iwl_scan_umac_chan_param - scan channel parameters
-  * @flags: channel flags &enum iwl_scan_channel_flags
-  * @count: num of channels in scan request
-  * @reserved: for future use and alignment
-@@ -827,33 +827,37 @@ struct iwl_scan_umac_chan_param {
- } __packed; /*SCAN_CHANNEL_PARAMS_API_S_VER_1 */
- 
- /**
-- * struct iwl_scan_req_umac
-+ * struct iwl_scan_req_umac - scan request command
-  * @flags: &enum iwl_umac_scan_flags
-  * @uid: scan id, &enum iwl_umac_scan_uid_offsets
-  * @ooc_priority: out of channel priority - &enum iwl_scan_priority
-  * @general_flags: &enum iwl_umac_scan_general_flags
-+ * @reserved: reserved
-  * @scan_start_mac_id: report the scan start TSF time according to this mac TSF
-- * @extended_dwell: dwell time for channels 1, 6 and 11
-- * @active_dwell: dwell time for active scan per LMAC
-- * @passive_dwell: dwell time for passive scan per LMAC
-- * @fragmented_dwell: dwell time for fragmented passive scan
-- * @adwell_default_n_aps: for adaptive dwell the default number of APs
-+ * @v1: version 1 command data
-+ * @v6: version 6 command data
-+ * @v7: version 7 command data
-+ * @v8: version 8 command data
-+ * @v9: version 9 command data
-+ * @v1.extended_dwell: dwell time for channels 1, 6 and 11
-+ * @v1.active_dwell: dwell time for active scan per LMAC
-+ * @v1.passive_dwell: dwell time for passive scan per LMAC
-+ * @v1.fragmented_dwell: dwell time for fragmented passive scan
-+ * @v7.adwell_default_n_aps: for adaptive dwell the default number of APs
-  *	per channel
-- * @adwell_default_n_aps_social: for adaptive dwell the default
-+ * @v7.adwell_default_n_aps_social: for adaptive dwell the default
-  *	number of APs per social (1,6,11) channel
-- * @general_flags2: &enum iwl_umac_scan_general_flags2
-- * @adwell_max_budget: for adaptive dwell the maximal budget of TU to be added
-- *	to total scan time
-- * @max_out_time: max out of serving channel time, per LMAC - for CDB there
-- *	are 2 LMACs
-- * @suspend_time: max suspend time, per LMAC - for CDB there are 2 LMACs
-- * @scan_priority: scan internal prioritization &enum iwl_scan_priority
-- * @num_of_fragments: Number of fragments needed for full coverage per band.
-+ * @v8.general_flags2: &enum iwl_umac_scan_general_flags2
-+ * @v7.adwell_max_budget: for adaptive dwell the maximal budget of TU to be
-+ *	added to total scan time
-+ * @v1.max_out_time: max out of serving channel time, per LMAC - for CDB
-+ *	there are 2 LMACs
-+ * @v1.suspend_time: max suspend time, per LMAC - for CDB there are 2 LMACs
-+ * @v1.scan_priority: scan internal prioritization &enum iwl_scan_priority
-+ * @v8.num_of_fragments: Number of fragments needed for full coverage per band.
-  *	Relevant only for fragmented scan.
-- * @channel: &struct iwl_scan_umac_chan_param
-- * @reserved: for future use and alignment
-- * @reserved3: for future use and alignment
-- * @data: &struct iwl_scan_channel_cfg_umac and
-+ * @v1.channel: &struct iwl_scan_umac_chan_param
-+ * @v1.data: &struct iwl_scan_channel_cfg_umac and
-  *	&struct iwl_scan_req_umac_tail
-  */
- struct iwl_scan_req_umac {
-@@ -939,7 +943,7 @@ struct iwl_scan_req_umac {
- #define IWL_SCAN_REQ_UMAC_SIZE_V1 36
- 
- /**
-- * struct iwl_scan_probe_params_v3
-+ * struct iwl_scan_probe_params_v3 - scan probe parameters
-  * @preq: scan probe request params
-  * @ssid_num: number of valid SSIDs in direct scan array
-  * @short_ssid_num: number of valid short SSIDs in short ssid array
-@@ -961,7 +965,7 @@ struct iwl_scan_probe_params_v3 {
- } __packed; /* SCAN_PROBE_PARAMS_API_S_VER_3 */
- 
- /**
-- * struct iwl_scan_probe_params_v4
-+ * struct iwl_scan_probe_params_v4 - scan probe parameters
-  * @preq: scan probe request params
-  * @short_ssid_num: number of valid short SSIDs in short ssid array
-  * @bssid_num: number of valid bssid in bssids array
-@@ -983,7 +987,7 @@ struct iwl_scan_probe_params_v4 {
- #define SCAN_MAX_NUM_CHANS_V3 67
- 
- /**
-- * struct iwl_scan_channel_params_v4
-+ * struct iwl_scan_channel_params_v4 - channel params
-  * @flags: channel flags &enum iwl_scan_channel_flags
-  * @count: num of channels in scan request
-  * @num_of_aps_override: override the number of APs the FW uses to calculate
-@@ -1006,7 +1010,7 @@ struct iwl_scan_channel_params_v4 {
- 	       SCAN_CHANNEL_PARAMS_API_S_VER_5 */
- 
- /**
-- * struct iwl_scan_channel_params_v7
-+ * struct iwl_scan_channel_params_v7 - channel params
-  * @flags: channel flags &enum iwl_scan_channel_flags
-  * @count: num of channels in scan request
-  * @n_aps_override: override the number of APs the FW uses to calculate dwell
-@@ -1024,7 +1028,7 @@ struct iwl_scan_channel_params_v7 {
- } __packed; /* SCAN_CHANNEL_PARAMS_API_S_VER_6 */
- 
- /**
-- * struct iwl_scan_general_params_v11
-+ * struct iwl_scan_general_params_v11 - channel params
-  * @flags: &enum iwl_umac_scan_general_flags_v2
-  * @reserved: reserved for future
-  * @scan_start_mac_or_link_id: report the scan start TSF time according to this
-@@ -1066,7 +1070,7 @@ struct iwl_scan_general_params_v11 {
- } __packed; /* SCAN_GENERAL_PARAMS_API_S_VER_12, *_VER_11  and *_VER_10 */
- 
- /**
-- * struct iwl_scan_periodic_parms_v1
-+ * struct iwl_scan_periodic_parms_v1 - periodicity parameters
-  * @schedule: can scheduling parameter
-  * @delay: initial delay of the periodic scan in seconds
-  * @reserved: reserved for future
-@@ -1078,7 +1082,7 @@ struct iwl_scan_periodic_parms_v1 {
- } __packed; /* SCAN_PERIODIC_PARAMS_API_S_VER_1 */
- 
- /**
-- * struct iwl_scan_req_params_v12
-+ * struct iwl_scan_req_params_v12 - scan request parameters (v12)
-  * @general_params: &struct iwl_scan_general_params_v11
-  * @channel_params: &struct iwl_scan_channel_params_v4
-  * @periodic_params: &struct iwl_scan_periodic_parms_v1
-@@ -1106,7 +1110,7 @@ struct iwl_scan_req_params_v17 {
- } __packed; /* SCAN_REQUEST_PARAMS_API_S_VER_17 - 14 */
- 
- /**
-- * struct iwl_scan_req_umac_v12
-+ * struct iwl_scan_req_umac_v12 - scan request command (v12)
-  * @uid: scan id, &enum iwl_umac_scan_uid_offsets
-  * @ooc_priority: out of channel priority - &enum iwl_scan_priority
-  * @scan_params: scan parameters
-@@ -1130,7 +1134,7 @@ struct iwl_scan_req_umac_v17 {
- } __packed; /* SCAN_REQUEST_CMD_UMAC_API_S_VER_17 - 14 */
- 
- /**
-- * struct iwl_umac_scan_abort
-+ * struct iwl_umac_scan_abort - scan abort command
-  * @uid: scan id, &enum iwl_umac_scan_uid_offsets
-  * @flags: reserved
-  */
-@@ -1140,7 +1144,7 @@ struct iwl_umac_scan_abort {
- } __packed; /* SCAN_ABORT_CMD_UMAC_API_S_VER_1 */
- 
- /**
-- * enum iwl_umac_scan_abort_status
-+ * enum iwl_umac_scan_abort_status - scan abort status
-  *
-  * @IWL_UMAC_SCAN_ABORT_STATUS_SUCCESS: scan was successfully aborted
-  * @IWL_UMAC_SCAN_ABORT_STATUS_IN_PROGRESS: scan abort is in progress
-@@ -1153,7 +1157,7 @@ enum iwl_umac_scan_abort_status {
- };
- 
- /**
-- * struct iwl_umac_scan_complete
-+ * struct iwl_umac_scan_complete - scan complete notification
-  * @uid: scan id, &enum iwl_umac_scan_uid_offsets
-  * @last_schedule: last scheduling line
-  * @last_iter: last scan iteration number
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/sta.h b/drivers/net/wireless/intel/iwlwifi/fw/api/sta.h
-index ecbcd5084cd8d..e6f9abdfa546d 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/sta.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/sta.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2012-2014, 2018-2021, 2023 Intel Corporation
-+ * Copyright (C) 2012-2014, 2018-2021, 2023, 2025 Intel Corporation
-  * Copyright (C) 2013-2014 Intel Mobile Communications GmbH
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-  */
-@@ -428,7 +428,7 @@ struct iwl_mvm_rm_sta_cmd {
- } __packed; /* REMOVE_STA_CMD_API_S_VER_2 */
- 
- /**
-- * struct iwl_mvm_mgmt_mcast_key_cmd_v1
-+ * struct iwl_mvm_mgmt_mcast_key_cmd_v1 - IGTK command
-  * ( MGMT_MCAST_KEY = 0x1f )
-  * @ctrl_flags: &enum iwl_sta_key_flag
-  * @igtk: IGTK key material
-@@ -449,7 +449,7 @@ struct iwl_mvm_mgmt_mcast_key_cmd_v1 {
- } __packed; /* SEC_MGMT_MULTICAST_KEY_CMD_API_S_VER_1 */
- 
- /**
-- * struct iwl_mvm_mgmt_mcast_key_cmd
-+ * struct iwl_mvm_mgmt_mcast_key_cmd - IGTK command
-  * ( MGMT_MCAST_KEY = 0x1f )
-  * @ctrl_flags: &enum iwl_sta_key_flag
-  * @igtk: IGTK master key
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/stats.h b/drivers/net/wireless/intel/iwlwifi/fw/api/stats.h
-index 00713a9918792..8d9a5058d5a54 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/stats.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/stats.h
-@@ -26,7 +26,7 @@ struct mvm_statistics_div {
- } __packed; /* STATISTICS_SLOW_DIV_API_S_VER_2 */
- 
- /**
-- * struct mvm_statistics_rx_non_phy
-+ * struct mvm_statistics_rx_non_phy - non-PHY RX statistics
-  * @bogus_cts: CTS received when not expecting CTS
-  * @bogus_ack: ACK received when not expecting ACK
-  * @non_channel_beacons: beacons with our bss id but not on our serving channel
-@@ -456,7 +456,7 @@ struct iwl_system_statistics_cmd {
- } __packed; /* STATISTICS_FW_CMD_API_S_VER_1 */
- 
- /**
-- * enum iwl_fw_statistics_type
-+ * enum iwl_fw_statistics_type - statistics type
-  *
-  * @FW_STATISTICS_OPERATIONAL: operational statistics
-  * @FW_STATISTICS_PHY: phy statistics
-@@ -478,7 +478,7 @@ enum iwl_fw_statistics_type {
- 
- #define IWL_STATISTICS_TYPE_MSK 0x7f
- /**
-- * struct iwl_statistics_ntfy_hdr
-+ * struct iwl_statistics_ntfy_hdr - statistics notification header
-  *
-  * @type: struct type
-  * @version: version of the struct
-@@ -491,7 +491,7 @@ struct iwl_statistics_ntfy_hdr {
- }; /* STATISTICS_NTFY_HDR_API_S_VER_1 */
- 
- /**
-- * struct iwl_stats_ntfy_per_link
-+ * struct iwl_stats_ntfy_per_link - per-link statistics
-  *
-  * @beacon_filter_average_energy: Average energy [-dBm] of the 2
-  *	 antennas.
-@@ -514,7 +514,7 @@ struct iwl_stats_ntfy_per_link {
- } __packed; /* STATISTICS_NTFY_PER_LINK_API_S_VER_1 */
- 
- /**
-- * struct iwl_stats_ntfy_part1_per_link
-+ * struct iwl_stats_ntfy_part1_per_link - part1 per link statistics
-  *
-  * @rx_time: rx time
-  * @tx_time: tx time
-@@ -533,7 +533,7 @@ struct iwl_stats_ntfy_part1_per_link {
- } __packed; /* STATISTICS_FW_NTFY_OPERATIONAL_PART1_PER_LINK_API_S_VER_1 */
- 
- /**
-- * struct iwl_stats_ntfy_per_mac
-+ * struct iwl_stats_ntfy_per_mac - per MAC statistics
-  *
-  * @beacon_filter_average_energy: Average energy [-dBm] of the 2
-  *	 antennas.
-@@ -556,7 +556,8 @@ struct iwl_stats_ntfy_per_mac {
- } __packed; /* STATISTICS_NTFY_PER_MAC_API_S_VER_1 */
- 
- #define IWL_STATS_MAX_BW_INDEX 5
--/** struct iwl_stats_ntfy_per_phy
 +/**
-+ * struct iwl_stats_ntfy_per_phy - per PHY statistics
-  * @channel_load: channel load
-  * @channel_load_by_us: device contribution to MCLM
-  * @channel_load_not_by_us: other devices' contribution to MCLM
-@@ -588,7 +589,7 @@ struct iwl_stats_ntfy_per_phy {
- #define IWL_STATS_UNKNOWN_CHANNEL_LOAD	0xffffffff
- 
- /**
-- * struct iwl_stats_ntfy_per_sta
-+ * struct iwl_stats_ntfy_per_sta - per STA statistics
-  *
-  * @average_energy: in fact it is minus the energy..
-  */
-@@ -600,7 +601,7 @@ struct iwl_stats_ntfy_per_sta {
- #define IWL_STATS_MAX_FW_LINKS	(IWL_FW_MAX_LINK_ID + 1)
- 
- /**
-- * struct iwl_system_statistics_notif_oper
-+ * struct iwl_system_statistics_notif_oper - statistics notification
-  *
-  * @time_stamp: time when the notification is sent from firmware
-  * @per_link: per link statistics, &struct iwl_stats_ntfy_per_link
-@@ -615,7 +616,7 @@ struct iwl_system_statistics_notif_oper {
- } __packed; /* STATISTICS_FW_NTFY_OPERATIONAL_API_S_VER_3 */
- 
- /**
-- * struct iwl_system_statistics_part1_notif_oper
-+ * struct iwl_system_statistics_part1_notif_oper - part1 stats notification
-  *
-  * @time_stamp: time when the notification is sent from firmware
-  * @per_link: per link statistics &struct iwl_stats_ntfy_part1_per_link
-@@ -628,7 +629,7 @@ struct iwl_system_statistics_part1_notif_oper {
- } __packed; /* STATISTICS_FW_NTFY_OPERATIONAL_PART1_API_S_VER_4 */
- 
- /**
-- * struct iwl_system_statistics_end_notif
-+ * struct iwl_system_statistics_end_notif - statistics end notification
-  *
-  * @time_stamp: time when the notification is sent from firmware
-  */
-@@ -637,7 +638,7 @@ struct iwl_system_statistics_end_notif {
- } __packed; /* STATISTICS_FW_NTFY_END_API_S_VER_1 */
- 
- /**
-- * struct iwl_statistics_operational_ntfy
-+ * struct iwl_statistics_operational_ntfy - operational stats notification
-  *
-  * @hdr: general statistics header
-  * @flags: bitmap of possible notification structures
-@@ -662,7 +663,7 @@ struct iwl_statistics_operational_ntfy {
- } __packed; /* STATISTICS_OPERATIONAL_NTFY_API_S_VER_15 */
- 
- /**
-- * struct iwl_statistics_operational_ntfy_ver_14
-+ * struct iwl_statistics_operational_ntfy_ver_14 - operational stats notification
-  *
-  * @hdr: general statistics header
-  * @flags: bitmap of possible notification structures
-@@ -707,7 +708,7 @@ struct iwl_statistics_operational_ntfy_ver_14 {
- } __packed; /* STATISTICS_OPERATIONAL_NTFY_API_S_VER_14 */
- 
- /**
-- * struct iwl_statistics_phy_ntfy
-+ * struct iwl_statistics_phy_ntfy - PHY statistics notification
-  *
-  * @hdr: general statistics header
-  * RX PHY related statistics
-@@ -808,7 +809,7 @@ struct iwl_statistics_phy_ntfy {
- } __packed; /* STATISTICS_PHY_NTFY_API_S_VER_1 */
- 
- /**
-- * struct iwl_statistics_mac_ntfy
-+ * struct iwl_statistics_mac_ntfy - MAC statistics notification
-  *
-  * @hdr: general statistics header
-  * @bcast_filter_passed_per_mac: bcast filter passed per mac
-@@ -827,7 +828,7 @@ struct iwl_statistics_mac_ntfy {
- } __packed; /* STATISTICS_MAC_NTFY_API_S_VER_1 */
- 
- /**
-- * struct iwl_statistics_rx_ntfy
-+ * struct iwl_statistics_rx_ntfy - RX statistics notification
-  *
-  * @hdr: general statistics header
-  * @rx_agg_mpdu_cnt: aggregation frame count (number of
-@@ -867,7 +868,7 @@ struct iwl_statistics_rx_ntfy {
- } __packed; /* STATISTICS_RX_NTFY_API_S_VER_1 */
- 
- /**
-- * struct iwl_statistics_tx_ntfy
-+ * struct iwl_statistics_tx_ntfy - TX statistics notification
-  *
-  * @hdr: general statistics header
-  * @cts_timeout: timeout when waiting for CTS
-@@ -976,7 +977,7 @@ struct iwl_statistics_tx_ntfy {
- } __packed; /* STATISTICS_TX_NTFY_API_S_VER_1 */
- 
- /**
-- * struct iwl_statistics_duration_ntfy
-+ * struct iwl_statistics_duration_ntfy - burst/duration statistics
-  *
-  * @hdr: general statistics header
-  * @cont_burst_chk_cnt: number of times continuation or
-@@ -995,7 +996,7 @@ struct iwl_statistics_duration_ntfy {
- } __packed; /* STATISTICS_DURATION_NTFY_API_S_VER_1 */
- 
- /**
-- * struct iwl_statistics_he_ntfy
-+ * struct iwl_statistics_he_ntfy - HE statistics
-  *
-  * @hdr: general statistics header
-  * received HE frames
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/tx.h b/drivers/net/wireless/intel/iwlwifi/fw/api/tx.h
-index 26d2013905ed9..31d3336726b42 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/tx.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/tx.h
-@@ -963,7 +963,7 @@ struct iwl_scd_txq_cfg_cmd {
- } __packed; /* SCD_QUEUE_CFG_CMD_API_S_VER_1 */
- 
- /**
-- * struct iwl_scd_txq_cfg_rsp
-+ * struct iwl_scd_txq_cfg_rsp - scheduler TXQ configuration response
-  * @token: taken from the command
-  * @sta_id: station id from the command
-  * @tid: tid from the command
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/error-dump.h b/drivers/net/wireless/intel/iwlwifi/fw/error-dump.h
-index c2a73cc85eff4..525a82030daa4 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/error-dump.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/error-dump.h
-@@ -266,7 +266,7 @@ struct iwl_fw_ini_error_dump_data {
- } __packed;
- 
- /**
-- * struct iwl_fw_ini_dump_entry
-+ * struct iwl_fw_ini_dump_entry - dump entry descriptor
-  * @list: list of dump entries
-  * @size: size of the data
-  * @data: entry data
-@@ -305,7 +305,7 @@ struct iwl_fw_ini_fifo_hdr {
-  * @dram_base_addr: base address of dram monitor range
-  * @page_num: page number of memory range
-  * @fifo_hdr: fifo header of memory range
-- * @fw_pkt: FW packet header of memory range
-+ * @fw_pkt_hdr: FW packet header of memory range
-  * @data: the actual memory
-  */
- struct iwl_fw_ini_error_dump_range {
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/file.h b/drivers/net/wireless/intel/iwlwifi/fw/file.h
-index b7c1ab7a30061..b9e0b69c66803 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/file.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/file.h
-@@ -222,7 +222,10 @@ typedef unsigned int __bitwise iwl_ucode_tlv_api_t;
-  * @IWL_UCODE_TLV_API_STA_TYPE: This ucode supports station type assignement.
-  * @IWL_UCODE_TLV_API_NAN2_VER2: This ucode supports NAN API version 2
-  * @IWL_UCODE_TLV_API_ADAPTIVE_DWELL: support for adaptive dwell in scanning
-+ * @IWL_UCODE_TLV_API_OCE: support for OCE
-+ * @IWL_UCODE_TLV_API_NEW_BEACON_TEMPLATE: new beacon template
-  * @IWL_UCODE_TLV_API_NEW_RX_STATS: should new RX STATISTICS API be used
-+ * @IWL_UCODE_TLV_API_WOWLAN_KEY_MATERIAL: WoWLAN key material support
-  * @IWL_UCODE_TLV_API_QUOTA_LOW_LATENCY: Quota command includes a field
-  *	indicating low latency direction.
-  * @IWL_UCODE_TLV_API_DEPRECATE_TTAK: RX status flag TTAK ok (bit 7) is
-@@ -245,6 +248,7 @@ typedef unsigned int __bitwise iwl_ucode_tlv_api_t;
-  *	SCAN_OFFLOAD_PROFILES_QUERY_RSP_S.
-  * @IWL_UCODE_TLV_API_MBSSID_HE: This ucode supports v2 of
-  *	STA_CONTEXT_DOT11AX_API_S
-+ * @IWL_UCODE_TLV_API_WOWLAN_TCP_SYN_WAKE: WoWLAN TCP-SYN wake support
-  * @IWL_UCODE_TLV_API_FTM_RTT_ACCURACY: version 7 of the range response API
-  *	is supported by FW, this indicates the RTT confidence value
-  * @IWL_UCODE_TLV_API_SAR_TABLE_VER: This ucode supports different sar
-@@ -253,6 +257,7 @@ typedef unsigned int __bitwise iwl_ucode_tlv_api_t;
-  *	SCAN_CONFIG_DB_CMD_API_S.
-  * @IWL_UCODE_TLV_API_ADWELL_HB_DEF_N_AP: support for setting adaptive dwell
-  *	number of APs in the 5 GHz band
-+ * @IWL_UCODE_TLV_API_SCAN_EXT_CHAN_VER: extended channel config in scan
-  * @IWL_UCODE_TLV_API_BAND_IN_RX_DATA: FW reports band number in RX notification
-  * @IWL_UCODE_TLV_API_NO_HOST_DISABLE_TX: Firmware offloaded the station disable tx
-  *	logic.
-@@ -352,16 +357,24 @@ typedef unsigned int __bitwise iwl_ucode_tlv_capa_t;
-  * @IWL_UCODE_TLV_CAPA_SOC_LATENCY_SUPPORT: the firmware supports setting
-  *	stabilization latency for SoCs.
-  * @IWL_UCODE_TLV_CAPA_STA_PM_NOTIF: firmware will send STA PM notification
-+ * @IWL_UCODE_TLV_CAPA_BINDING_CDB_SUPPORT: binding CDB support
-+ * @IWL_UCODE_TLV_CAPA_CDB_SUPPORT: CDB support
-+ * @IWL_UCODE_TLV_CAPA_D0I3_END_FIRST: D0I3 end command comes first
-  * @IWL_UCODE_TLV_CAPA_TLC_OFFLOAD: firmware implements rate scaling algorithm
-  * @IWL_UCODE_TLV_CAPA_DYNAMIC_QUOTA: firmware implements quota related
-  * @IWL_UCODE_TLV_CAPA_COEX_SCHEMA_2: firmware implements Coex Schema 2
-- * IWL_UCODE_TLV_CAPA_CHANNEL_SWITCH_CMD: firmware supports CSA command
-+ * @IWL_UCODE_TLV_CAPA_CHANNEL_SWITCH_CMD: firmware supports CSA command
-  * @IWL_UCODE_TLV_CAPA_ULTRA_HB_CHANNELS: firmware supports ultra high band
-  *	(6 GHz).
-  * @IWL_UCODE_TLV_CAPA_CS_MODIFY: firmware supports modify action CSA command
-+ * @IWL_UCODE_TLV_CAPA_SET_LTR_GEN2: LTR gen2 support
-+ * @IWL_UCODE_TLV_CAPA_TAS_CFG: TAS configuration support
-+ * @IWL_UCODE_TLV_CAPA_SESSION_PROT_CMD: session protection command
-+ * @IWL_UCODE_TLV_CAPA_SET_PPAG: PPAG support
-  * @IWL_UCODE_TLV_CAPA_EXTENDED_DTS_MEASURE: extended DTS measurement
-  * @IWL_UCODE_TLV_CAPA_SHORT_PM_TIMEOUTS: supports short PM timeouts
-  * @IWL_UCODE_TLV_CAPA_BT_MPLUT_SUPPORT: supports bt-coex Multi-priority LUT
-+ * @IWL_UCODE_TLV_CAPA_MULTI_QUEUE_RX_SUPPORT: MQ RX support
-  * @IWL_UCODE_TLV_CAPA_CSA_AND_TBTT_OFFLOAD: the firmware supports CSA
-  *	countdown offloading. Beacon notifications are not sent to the host.
-  *	The fw also offloads TBTT alignment.
-@@ -383,23 +396,46 @@ typedef unsigned int __bitwise iwl_ucode_tlv_capa_t;
-  *	command size (command version 4) that supports toggling ACK TX
-  *	power reduction.
-  * @IWL_UCODE_TLV_CAPA_D3_DEBUG: supports debug recording during D3
-+ * @IWL_UCODE_TLV_CAPA_LED_CMD_SUPPORT: LED command support
-  * @IWL_UCODE_TLV_CAPA_MCC_UPDATE_11AX_SUPPORT: MCC response support 11ax
-  *	capability.
-  * @IWL_UCODE_TLV_CAPA_CSI_REPORTING: firmware is capable of being configured
-  *	to report the CSI information with (certain) RX frames
-+ * @IWL_UCODE_TLV_CAPA_DBG_SUSPEND_RESUME_CMD_SUPP: suspend/resume command
-+ * @IWL_UCODE_TLV_CAPA_DBG_BUF_ALLOC_CMD_SUPP: support for DBGC
-+ *	buffer allocation command
-  * @IWL_UCODE_TLV_CAPA_FTM_CALIBRATED: has FTM calibrated and thus supports both
-  *	initiator and responder
-  * @IWL_UCODE_TLV_CAPA_BIOS_OVERRIDE_UNII4_US_CA: supports (de)activating UNII-4
-  *	for US/CA/WW from BIOS
-+ * @IWL_UCODE_TLV_CAPA_PSC_CHAN_SUPPORT: supports PSC channels
-+ * @IWL_UCODE_TLV_CAPA_BIGTK_SUPPORT: BIGTK support
-  * @IWL_UCODE_TLV_CAPA_PROTECTED_TWT: Supports protection of TWT action frames
-  * @IWL_UCODE_TLV_CAPA_FW_RESET_HANDSHAKE: Supports the firmware handshake in
-  *	reset flow
-  * @IWL_UCODE_TLV_CAPA_PASSIVE_6GHZ_SCAN: Support for passive scan on 6GHz PSC
-  *      channels even when these are not enabled.
-+ * @IWL_UCODE_TLV_CAPA_HIDDEN_6GHZ_SCAN: hidden SSID 6 GHz scan support
-+ * @IWL_UCODE_TLV_CAPA_BROADCAST_TWT: broadcast TWT support
-+ * @IWL_UCODE_TLV_CAPA_COEX_HIGH_PRIO: support for BT-coex high
-+ *	priority for 802.1X/4-way-HS
-+ * @IWL_UCODE_TLV_CAPA_BAID_ML_SUPPORT: multi-link BAID support
-+ * @IWL_UCODE_TLV_CAPA_SYNCED_TIME: synced time command support
-+ * @IWL_UCODE_TLV_CAPA_TIME_SYNC_BOTH_FTM_TM: time sync support
-+ * @IWL_UCODE_TLV_CAPA_BIGTK_TX_SUPPORT: BIGTK TX support
-+ * @IWL_UCODE_TLV_CAPA_MLD_API_SUPPORT: MLD API support
-+ * @IWL_UCODE_TLV_CAPA_SCAN_DONT_TOGGLE_ANT: fixed antenna scan support
-+ * @IWL_UCODE_TLV_CAPA_PPAG_CHINA_BIOS_SUPPORT: PPAG China BIOS support
-+ * @IWL_UCODE_TLV_CAPA_OFFLOAD_BTM_SUPPORT: BTM protocol offload support
-+ * @IWL_UCODE_TLV_CAPA_STA_EXP_MFP_SUPPORT: STA command MFP support
-+ * @IWL_UCODE_TLV_CAPA_SNIFF_VALIDATE_SUPPORT: sniffer validate bits support
-+ * @IWL_UCODE_TLV_CAPA_CHINA_22_REG_SUPPORT: China 2022 regulator support
-  * @IWL_UCODE_TLV_CAPA_DUMP_COMPLETE_SUPPORT: Support for indicating dump collection
-  *	complete to FW.
-  * @IWL_UCODE_TLV_CAPA_SPP_AMSDU_SUPPORT: Support SPP (signaling and payload
-  *	protected) A-MSDU.
-+ * @IWL_UCODE_TLV_CAPA_DRAM_FRAG_SUPPORT: support for DBGC fragmented
-+ *	DRAM buffers
-  * @IWL_UCODE_TLV_CAPA_SECURE_LTF_SUPPORT: Support secure LTF measurement.
-  * @IWL_UCODE_TLV_CAPA_MONITOR_PASSIVE_CHANS: Support monitor mode on otherwise
-  *	passive channels
-@@ -407,6 +443,8 @@ typedef unsigned int __bitwise iwl_ucode_tlv_capa_t;
-  *	for CA from BIOS.
-  * @IWL_UCODE_TLV_CAPA_UHB_CANADA_TAS_SUPPORT: supports %TAS_UHB_ALLOWED_CANADA
-  * @IWL_UCODE_TLV_CAPA_EXT_FSEQ_IMAGE_SUPPORT: external FSEQ image support
-+ * @IWL_UCODE_TLV_CAPA_RESET_DURING_ASSERT: FW reset handshake is needed
-+ *	during assert handling even if the dump isn't split
-  * @IWL_UCODE_TLV_CAPA_FW_ACCEPTS_RAW_DSM_TABLE: Firmware has capability of
-  *	handling raw DSM table data.
-  *
-@@ -487,12 +525,7 @@ enum iwl_ucode_tlv_capa {
- 
- 	/* set 3 */
- 	IWL_UCODE_TLV_CAPA_BIOS_OVERRIDE_UNII4_US_CA	= (__force iwl_ucode_tlv_capa_t)96,
--
--	/*
--	 * @IWL_UCODE_TLV_CAPA_PSC_CHAN_SUPPORT: supports PSC channels
--	 */
- 	IWL_UCODE_TLV_CAPA_PSC_CHAN_SUPPORT		= (__force iwl_ucode_tlv_capa_t)98,
--
- 	IWL_UCODE_TLV_CAPA_BIGTK_SUPPORT		= (__force iwl_ucode_tlv_capa_t)100,
- 	IWL_UCODE_TLV_CAPA_SPP_AMSDU_SUPPORT		= (__force iwl_ucode_tlv_capa_t)103,
- 	IWL_UCODE_TLV_CAPA_DRAM_FRAG_SUPPORT		= (__force iwl_ucode_tlv_capa_t)104,
-@@ -514,11 +547,8 @@ enum iwl_ucode_tlv_capa {
- 	IWL_UCODE_TLV_CAPA_EXT_FSEQ_IMAGE_SUPPORT	= (__force iwl_ucode_tlv_capa_t)125,
- 
- 	/* set 4 */
--	/**
--	 * @IWL_UCODE_TLV_CAPA_RESET_DURING_ASSERT: FW reset handshake is needed
--	 *	during assert handling even if the dump isn't split
--	 */
--	IWL_UCODE_TLV_CAPA_RESET_DURING_ASSERT		= (__force iwl_ucode_tlv_capa_t)(4 * 32 +  0),
++ * struct iwl_umac_scan_start - scan start notification
++ * @uid: scan id, &enum iwl_umac_scan_uid_offsets
++ * @reserved: for future use
++ */
++struct iwl_umac_scan_start {
++	__le32 uid;
++	__le32 reserved;
++} __packed; /* SCAN_START_UMAC_API_S_VER_1 */
 +
-+	IWL_UCODE_TLV_CAPA_RESET_DURING_ASSERT		= (__force iwl_ucode_tlv_capa_t)(4 * 32 + 0),
- 	IWL_UCODE_TLV_CAPA_FW_ACCEPTS_RAW_DSM_TABLE 	= (__force iwl_ucode_tlv_capa_t)(4 * 32 + 1),
- 	NUM_IWL_UCODE_TLV_CAPA
- /*
-@@ -852,6 +882,8 @@ struct iwl_fw_dbg_trigger_low_rssi {
-  * @start_assoc_denied: number of denied association to start recording
-  * @start_assoc_timeout: number of association timeout to start recording
-  * @start_connection_loss: number of connection loss to start recording
-+ * @reserved: reserved
-+ * @reserved2: reserved
-  */
- struct iwl_fw_dbg_trigger_mlme {
- 	u8 stop_auth_denied;
-@@ -885,6 +917,7 @@ struct iwl_fw_dbg_trigger_mlme {
-  * @p2p_device: timeout for the queues of a P2P device in ms
-  * @ibss: timeout for the queues of an IBSS in ms
-  * @tdls: timeout for the queues of a TDLS station in ms
-+ * @reserved: reserved
-  */
- struct iwl_fw_dbg_trigger_txq_timer {
- 	__le32 command_queue;
-@@ -900,7 +933,7 @@ struct iwl_fw_dbg_trigger_txq_timer {
- 
  /**
-  * struct iwl_fw_dbg_trigger_time_event - configures a time event trigger
-- * time_Events: a list of tuples <id, action_bitmap>. The driver will issue a
-+ * @time_events: a list of tuples <id, action_bitmap>. The driver will issue a
-  *	trigger each time a time event notification that relates to time event
-  *	id with one of the actions in the bitmap is received and
-  *	BIT(notif->status) is set in status_bitmap.
-@@ -916,19 +949,19 @@ struct iwl_fw_dbg_trigger_time_event {
+  * struct iwl_umac_scan_complete - scan complete notification
+  * @uid: scan id, &enum iwl_umac_scan_uid_offsets
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+index a6962256bdd12..3cfe1bcb7d4e5 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+@@ -171,6 +171,7 @@ static const struct iwl_hcmd_names iwl_mld_legacy_names[] = {
+ 	HCMD_NAME(MISSED_BEACONS_NOTIFICATION),
+ 	HCMD_NAME(MAC_PM_POWER_TABLE),
+ 	HCMD_NAME(MFUART_LOAD_NOTIFICATION),
++	HCMD_NAME(SCAN_START_NOTIFICATION_UMAC),
+ 	HCMD_NAME(RSS_CONFIG_CMD),
+ 	HCMD_NAME(SCAN_ITERATION_COMPLETE_UMAC),
+ 	HCMD_NAME(REPLY_RX_MPDU_CMD),
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mlo.c b/drivers/net/wireless/intel/iwlwifi/mld/mlo.c
+index bf70e71aa5143..836f15dc54b52 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mlo.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mlo.c
+@@ -732,7 +732,7 @@ iwl_mld_set_link_sel_data(struct iwl_mld *mld,
  
- /**
-  * struct iwl_fw_dbg_trigger_ba - configures BlockAck related trigger
-- * rx_ba_start: tid bitmap to configure on what tid the trigger should occur
-+ * @rx_ba_start: tid bitmap to configure on what tid the trigger should occur
-  *	when an Rx BlockAck session is started.
-- * rx_ba_stop: tid bitmap to configure on what tid the trigger should occur
-+ * @rx_ba_stop: tid bitmap to configure on what tid the trigger should occur
-  *	when an Rx BlockAck session is stopped.
-- * tx_ba_start: tid bitmap to configure on what tid the trigger should occur
-+ * @tx_ba_start: tid bitmap to configure on what tid the trigger should occur
-  *	when a Tx BlockAck session is started.
-- * tx_ba_stop: tid bitmap to configure on what tid the trigger should occur
-+ * @tx_ba_stop: tid bitmap to configure on what tid the trigger should occur
-  *	when a Tx BlockAck session is stopped.
-- * rx_bar: tid bitmap to configure on what tid the trigger should occur
-+ * @rx_bar: tid bitmap to configure on what tid the trigger should occur
-  *	when a BAR is received (for a Tx BlockAck session).
-- * tx_bar: tid bitmap to configure on what tid the trigger should occur
-+ * @tx_bar: tid bitmap to configure on what tid the trigger should occur
-  *	when a BAR is send (for an Rx BlocAck session).
-- * frame_timeout: tid bitmap to configure on what tid the trigger should occur
-+ * @frame_timeout: tid bitmap to configure on what tid the trigger should occur
-  *	when a frame times out in the reordering buffer.
-  */
- struct iwl_fw_dbg_trigger_ba {
-@@ -946,6 +979,7 @@ struct iwl_fw_dbg_trigger_ba {
-  * @action_bitmap: the TDLS action to trigger the collection upon
-  * @peer_mode: trigger on specific peer or all
-  * @peer: the TDLS peer to trigger the collection on
-+ * @reserved: reserved
-  */
- struct iwl_fw_dbg_trigger_tdls {
- 	u8 action_bitmap;
-@@ -958,6 +992,7 @@ struct iwl_fw_dbg_trigger_tdls {
-  * struct iwl_fw_dbg_trigger_tx_status - configures trigger for tx response
-  *  status.
-  * @statuses: the list of statuses to trigger the collection on
-+ * @reserved: reserved
-  */
- struct iwl_fw_dbg_trigger_tx_status {
- 	struct tx_status {
-@@ -971,6 +1006,7 @@ struct iwl_fw_dbg_trigger_tx_status {
-  * struct iwl_fw_dbg_conf_tlv - a TLV that describes a debug configuration.
-  * @id: conf id
-  * @usniffer: should the uSniffer image be used
-+ * @reserved: reserved
-  * @num_of_hcmds: how many HCMDs to send are present here
-  * @hcmd: a variable length host command to be sent to apply the configuration.
-  *	If there is more than one HCMD to send, they will appear one after the
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/img.h b/drivers/net/wireless/intel/iwlwifi/fw/img.h
-index 5256f20623e90..045a3e0094291 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/img.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/img.h
-@@ -14,14 +14,13 @@
- #include "error-dump.h"
+ 		/* Ignore any BSS that was not seen in the last MLO scan */
+ 		if (ktime_before(link_conf->bss->ts_boottime,
+-				 mld->scan.last_mlo_scan_time))
++				 mld->scan.last_mlo_scan_start_time))
+ 			continue;
  
- /**
-- * enum iwl_ucode_type
-- *
-- * The type of ucode.
-+ * enum iwl_ucode_type - type of ucode
-  *
-  * @IWL_UCODE_REGULAR: Normal runtime ucode
-  * @IWL_UCODE_INIT: Initial ucode
-  * @IWL_UCODE_WOWLAN: Wake on Wireless enabled ucode
-  * @IWL_UCODE_REGULAR_USNIFFER: Normal runtime ucode when using usniffer image
-+ * @IWL_UCODE_TYPE_MAX: (internal value)
-  */
- enum iwl_ucode_type {
- 	IWL_UCODE_REGULAR,
-@@ -122,7 +121,7 @@ struct fw_img {
- #define FW_ADDR_CACHE_CONTROL 0xC0000000UL
+ 		data[n_data].link_id = link_id;
+@@ -939,7 +939,7 @@ static void _iwl_mld_select_links(struct iwl_mld *mld,
+ 	if (!mld_vif->authorized || hweight16(usable_links) <= 1)
+ 		return;
  
- /**
-- * struct iwl_fw_paging
-+ * struct iwl_fw_paging - FW paging descriptor
-  * @fw_paging_phys: page phy pointer
-  * @fw_paging_block: pointer to the allocated block
-  * @fw_paging_size: page size
-@@ -197,6 +196,11 @@ struct iwl_dump_exclude {
-  * @dump_excl_wowlan: image dump exclusion areas for WoWLAN image
-  * @pnvm_data: PNVM data embedded in the .ucode file, if any
-  * @pnvm_size: size of the embedded PNVM data
-+ * @dbg: debug data, see &struct iwl_fw_dbg
-+ * @default_calib: default calibration data
-+ * @phy_config: PHY configuration flags
-+ * @valid_rx_ant: valid RX antenna bitmap
-+ * @valid_tx_ant: valid TX antenna bitmap
+-	if (WARN(ktime_before(mld->scan.last_mlo_scan_time,
++	if (WARN(ktime_before(mld->scan.last_mlo_scan_start_time,
+ 			      ktime_sub_ns(ktime_get_boottime_ns(),
+ 					   5ULL * NSEC_PER_SEC)),
+ 		"Last MLO scan was too long ago, can't select links\n"))
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/notif.c b/drivers/net/wireless/intel/iwlwifi/mld/notif.c
+index 884973d0b3440..a3fd0b7387d69 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/notif.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/notif.c
+@@ -284,6 +284,8 @@ static void iwl_mld_handle_beacon_notification(struct iwl_mld *mld,
+  * at least enough bytes to cover the structure listed in the CMD_VER_ENTRY.
   */
- struct iwl_fw {
- 	u32 ucode_ver;
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/runtime.h b/drivers/net/wireless/intel/iwlwifi/fw/runtime.h
-index 806f9bcdf4f50..57570ff15622e 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/runtime.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/runtime.h
-@@ -45,6 +45,8 @@ struct iwl_fwrt_shared_mem_cfg {
-  * struct iwl_fwrt_dump_data - dump data
-  * @trig: trigger the worker was scheduled upon
-  * @fw_pkt: packet received from FW
-+ * @desc: dump descriptor
-+ * @monitor_only: only dump for monitor
-  *
-  * Note that the decision which part of the union is used
-  * is based on iwl_trans_dbg_ini_valid(): the 'trig' part
-@@ -68,6 +70,7 @@ struct iwl_fwrt_dump_data {
-  * struct iwl_fwrt_wk_data - dump worker data struct
-  * @idx: index of the worker
-  * @wk: worker
-+ * @dump_data: dump data
-  */
- struct iwl_fwrt_wk_data  {
- 	u8 idx;
-@@ -91,8 +94,8 @@ struct iwl_txf_iter_data {
  
- /**
-  * struct iwl_fw_runtime - runtime data for firmware
-+ * @trans: transport pointer
-  * @fw: firmware image
-- * @cfg: NIC configuration
-  * @dev: device pointer
-  * @ops: user ops
-  * @ops_ctx: user ops context
-@@ -117,6 +120,23 @@ struct iwl_txf_iter_data {
-  *	zero (default initialization) means it hasn't been read yet,
-  *	and BIT(0) is set when it has since function 0 also has this
-  *	bitmap and is always supported
-+ * @geo_enabled: WGDS table is present
-+ * @geo_num_profiles: number of geo profiles
-+ * @geo_rev: geo profiles table revision
-+ * @ppag_chains: PPAG table data
-+ * @ppag_flags: PPAG flags
-+ * @reduced_power_flags: reduced power flags
-+ * @sanitize_ctx: context for dump sanitizer
-+ * @sanitize_ops: dump sanitizer ops
-+ * @sar_chain_a_profile: SAR chain A profile
-+ * @sar_chain_b_profile: SAR chain B profile
-+ * @sgom_enabled: SGOM enabled
-+ * @sgom_table: SGOM table
-+ * @timestamp: timestamp marker data
-+ * @timestamp.wk: timestamp marking worker
-+ * @timestamp.seq: timestamp marking sequence
-+ * @timestamp.delay: timestamp marking worker delay
-+ * @tpc_enabled: TPC enabled
-  */
- struct iwl_fw_runtime {
- 	struct iwl_trans *trans;
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-config.h b/drivers/net/wireless/intel/iwlwifi/iwl-config.h
-index a607e7ab914ba..502c6a1cf4f86 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-config.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-config.h
-@@ -385,7 +385,7 @@ struct iwl_mac_cfg {
- #define IWL_NUM_RBDS_EHT		(512 * 8)
++CMD_VERSIONS(scan_start_notif,
++	     CMD_VER_ENTRY(1, iwl_umac_scan_start))
+ CMD_VERSIONS(scan_complete_notif,
+ 	     CMD_VER_ENTRY(1, iwl_umac_scan_complete))
+ CMD_VERSIONS(scan_iter_complete_notif,
+@@ -355,6 +357,7 @@ DEFINE_SIMPLE_CANCELLATION(datapath_monitor, iwl_datapath_monitor_notif,
+ 			   link_id)
+ DEFINE_SIMPLE_CANCELLATION(roc, iwl_roc_notif, activity)
+ DEFINE_SIMPLE_CANCELLATION(scan_complete, iwl_umac_scan_complete, uid)
++DEFINE_SIMPLE_CANCELLATION(scan_start, iwl_umac_scan_start, uid)
+ DEFINE_SIMPLE_CANCELLATION(probe_resp_data, iwl_probe_resp_data_notif,
+ 			   mac_id)
+ DEFINE_SIMPLE_CANCELLATION(uapsd_misbehaving_ap, iwl_uapsd_misbehaving_ap_notif,
+@@ -397,6 +400,8 @@ const struct iwl_rx_handler iwl_mld_rx_handlers[] = {
+ 			     RX_HANDLER_SYNC)
+ 	RX_HANDLER_NO_OBJECT(LEGACY_GROUP, BA_NOTIF, compressed_ba_notif,
+ 			     RX_HANDLER_SYNC)
++	RX_HANDLER_OF_SCAN(LEGACY_GROUP, SCAN_START_NOTIFICATION_UMAC,
++			   scan_start_notif)
+ 	RX_HANDLER_OF_SCAN(LEGACY_GROUP, SCAN_COMPLETE_UMAC,
+ 			   scan_complete_notif)
+ 	RX_HANDLER_NO_OBJECT(LEGACY_GROUP, SCAN_ITERATION_COMPLETE_UMAC,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/scan.c b/drivers/net/wireless/intel/iwlwifi/mld/scan.c
+index fd1022ddc9122..76ac6fd5f9ff3 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/scan.c
+@@ -473,6 +473,9 @@ iwl_mld_scan_get_cmd_gen_flags(struct iwl_mld *mld,
+ 	    params->flags & NL80211_SCAN_FLAG_COLOCATED_6GHZ)
+ 		flags |= IWL_UMAC_SCAN_GEN_FLAGS_V2_TRIGGER_UHB_SCAN;
  
- /**
-- * struct iwl_rf_cfg
-+ * struct iwl_rf_cfg - RF/CRF configuration data
-  * @fw_name_pre: Firmware filename prefix. The api version and extension
-  *	(.ucode) will be added to filename before loading from disk. The
-  *	filename is constructed as <fw_name_pre>-<api>.ucode.
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
-index 7ed6329fd8ca1..fe4e46a0edbda 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2018-2023 Intel Corporation
-+ * Copyright (C) 2018-2023, 2025 Intel Corporation
++	if (scan_status == IWL_MLD_SCAN_INT_MLO)
++		flags |= IWL_UMAC_SCAN_GEN_FLAGS_V2_NTF_START;
++
+ 	if (params->enable_6ghz_passive)
+ 		flags |= IWL_UMAC_SCAN_GEN_FLAGS_V2_6GHZ_PASSIVE_SCAN;
+ 
+@@ -1817,9 +1820,6 @@ static void iwl_mld_int_mlo_scan_start(struct iwl_mld *mld,
+ 	ret = _iwl_mld_single_scan_start(mld, vif, req, &ies,
+ 					 IWL_MLD_SCAN_INT_MLO);
+ 
+-	if (!ret)
+-		mld->scan.last_mlo_scan_time = ktime_get_boottime_ns();
+-
+ 	IWL_DEBUG_SCAN(mld, "Internal MLO scan: ret=%d\n", ret);
+ }
+ 
+@@ -1904,6 +1904,30 @@ void iwl_mld_handle_match_found_notif(struct iwl_mld *mld,
+ 	ieee80211_sched_scan_results(mld->hw);
+ }
+ 
++void iwl_mld_handle_scan_start_notif(struct iwl_mld *mld,
++				     struct iwl_rx_packet *pkt)
++{
++	struct iwl_umac_scan_complete *notif = (void *)pkt->data;
++	u32 uid = le32_to_cpu(notif->uid);
++
++	if (IWL_FW_CHECK(mld, uid >= ARRAY_SIZE(mld->scan.uid_status),
++			 "FW reports out-of-range scan UID %d\n", uid))
++		return;
++
++	if (IWL_FW_CHECK(mld, !(mld->scan.uid_status[uid] & mld->scan.status),
++			 "FW reports scan UID %d we didn't trigger\n", uid))
++		return;
++
++	IWL_DEBUG_SCAN(mld, "Scan started: uid=%u type=%u\n", uid,
++		       mld->scan.uid_status[uid]);
++	if (IWL_FW_CHECK(mld, mld->scan.uid_status[uid] != IWL_MLD_SCAN_INT_MLO,
++			 "FW reports scan start notification %d we didn't trigger\n",
++			 mld->scan.uid_status[uid]))
++		return;
++
++	mld->scan.last_mlo_scan_start_time = ktime_get_boottime_ns();
++}
++
+ void iwl_mld_handle_scan_complete_notif(struct iwl_mld *mld,
+ 					struct iwl_rx_packet *pkt)
+ {
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/scan.h b/drivers/net/wireless/intel/iwlwifi/mld/scan.h
+index 69110f0cfc8e2..de5620e7f463b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/scan.h
++++ b/drivers/net/wireless/intel/iwlwifi/mld/scan.h
+@@ -27,6 +27,9 @@ int iwl_mld_sched_scan_start(struct iwl_mld *mld,
+ void iwl_mld_handle_match_found_notif(struct iwl_mld *mld,
+ 				      struct iwl_rx_packet *pkt);
+ 
++void iwl_mld_handle_scan_start_notif(struct iwl_mld *mld,
++				     struct iwl_rx_packet *pkt);
++
+ void iwl_mld_handle_scan_complete_notif(struct iwl_mld *mld,
+ 					struct iwl_rx_packet *pkt);
+ 
+@@ -114,8 +117,8 @@ enum iwl_mld_traffic_load {
+  *	in jiffies.
+  * @last_start_time_jiffies: stores the last start time in jiffies
+  *	(interface up/reset/resume).
+- * @last_mlo_scan_time: start time of the last MLO scan in nanoseconds since
+- *	boot.
++ * @last_mlo_scan_start_time: start time of the last MLO scan in nanoseconds
++ * since boot.
   */
- #ifndef __iwl_dbg_tlv_h__
- #define __iwl_dbg_tlv_h__
-@@ -32,7 +32,7 @@ union iwl_dbg_tlv_tp_data {
+ struct iwl_mld_scan {
+ 	/* Add here fields that need clean up on restart */
+@@ -136,7 +139,7 @@ struct iwl_mld_scan {
+ 	void *cmd;
+ 	unsigned long last_6ghz_passive_jiffies;
+ 	unsigned long last_start_time_jiffies;
+-	u64 last_mlo_scan_time;
++	u64 last_mlo_scan_start_time;
  };
  
  /**
-- * struct iwl_dbg_tlv_time_point_data
-+ * struct iwl_dbg_tlv_time_point_data - debug time point data
-  * @trig_list: list of triggers
-  * @active_trig_list: list of active triggers
-  * @hcmd_list: list of host commands
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.h b/drivers/net/wireless/intel/iwlwifi/iwl-drv.h
-index 595300a14639d..a0b67e8aba8da 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.h
-@@ -62,7 +62,8 @@ struct iwl_rf_cfg;
-  * starts the driver: fetches the firmware. This should be called by bus
-  * specific system flows implementations. For example, the bus specific probe
-  * function should do bus related operations only, and then call to this
-- * function. It returns the driver object or %NULL if an error occurred.
-+ * function.
-+ * Return: the driver object or %NULL if an error occurred.
-  */
- struct iwl_drv *iwl_drv_start(struct iwl_trans *trans);
- 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-modparams.h b/drivers/net/wireless/intel/iwlwifi/iwl-modparams.h
-index 21eabfc3ffc84..0476df7b7f179 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-modparams.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-modparams.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2005-2014, 2018-2022, 2024 Intel Corporation
-+ * Copyright (C) 2005-2014, 2018-2022, 2024-2025 Intel Corporation
-  */
- #ifndef __iwl_modparams_h__
- #define __iwl_modparams_h__
-@@ -42,7 +42,7 @@ enum iwl_uapsd_disable {
- };
- 
- /**
-- * struct iwl_mod_params
-+ * struct iwl_mod_params - module parameters for iwlwifi
-  *
-  * Holds the module parameters
-  *
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-nvm-parse.h b/drivers/net/wireless/intel/iwlwifi/iwl-nvm-parse.h
-index cbc92abf9f87a..12f28bb0e859d 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-nvm-parse.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-nvm-parse.h
-@@ -115,11 +115,12 @@ iwl_parse_nvm_data(struct iwl_trans *trans, const struct iwl_rf_cfg *cfg,
-  * iwl_parse_nvm_mcc_info - parse MCC (mobile country code) info coming from FW
-  *
-  * This function parses the regulatory channel data received as a
-- * MCC_UPDATE_CMD command. It returns a newly allocation regulatory domain,
-- * to be fed into the regulatory core. In case the geo_info is set handle
-- * accordingly. An ERR_PTR is returned on error.
-- * If not given to the regulatory core, the user is responsible for freeing
-- * the regdomain returned here with kfree.
-+ * MCC_UPDATE_CMD command.
-+ *
-+ * Return: a newly allocation regulatory domain, to be given to the regulatory
-+ *	core. In case the geo_info is set handle accordingly. An ERR_PTR is
-+ *	returned on error. If not given to the regulatory core, the user is
-+ *	responsible for freeing the regdomain returned here with kfree().
-  *
-  * @trans: the transport
-  * @num_of_ch: the number of channels
-@@ -140,6 +141,8 @@ iwl_parse_nvm_mcc_info(struct iwl_trans *trans,
-  * This struct holds an NVM section read from the NIC using NVM_ACCESS_CMD,
-  * and saved for later use by the driver. Not all NVM sections are saved
-  * this way, only the needed ones.
-+ * @length: length of the section
-+ * @data: section data
-  */
- struct iwl_nvm_section {
- 	u16 length;
-@@ -148,6 +151,10 @@ struct iwl_nvm_section {
- 
- /**
-  * iwl_read_external_nvm - Reads external NVM from a file into nvm_sections
-+ * @trans: the transport
-+ * @nvm_file_name: the filename to request
-+ * @nvm_sections: sections data to fill
-+ * Return: 0 on success or an error code
-  */
- int iwl_read_external_nvm(struct iwl_trans *trans,
- 			  const char *nvm_file_name,
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-op-mode.h b/drivers/net/wireless/intel/iwlwifi/iwl-op-mode.h
-index a146d0e399f22..df6341dfc4a12 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-op-mode.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-op-mode.h
-@@ -185,6 +185,7 @@ void iwl_opmode_deregister(const char *name);
- /**
-  * struct iwl_op_mode - operational mode
-  * @ops: pointer to its own ops
-+ * @op_mode_specific: per-opmode data
-  *
-  * This holds an implementation of the mac80211 / fw API.
-  */
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-index a0cc5d7745e8f..a552669db6e2a 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-@@ -121,7 +121,7 @@ enum CMD_MODE {
- #define DEF_CMD_PAYLOAD_SIZE 320
- 
- /**
-- * struct iwl_device_cmd
-+ * struct iwl_device_cmd - device command structure
-  *
-  * For allocation of the command and tx queues, this establishes the overall
-  * size of the largest command we send to uCode, except for commands that
-@@ -516,7 +516,7 @@ enum iwl_trans_state {
-  */
- 
- /**
-- * enum iwl_ini_cfg_state
-+ * enum iwl_ini_cfg_state - debug config state
-  * @IWL_INI_CFG_STATE_NOT_LOADED: no debug cfg was given
-  * @IWL_INI_CFG_STATE_LOADED: debug cfg was found and loaded
-  * @IWL_INI_CFG_STATE_CORRUPTED: debug cfg was found and some of the TLVs
-@@ -532,7 +532,7 @@ enum iwl_ini_cfg_state {
- #define IWL_TRANS_NMI_TIMEOUT (HZ / 4)
- 
- /**
-- * struct iwl_dram_data
-+ * struct iwl_dram_data - DRAM data descriptor
-  * @physical: page phy pointer
-  * @block: pointer to the allocated block/page
-  * @size: size of the block/page
 -- 
 2.53.0
 
