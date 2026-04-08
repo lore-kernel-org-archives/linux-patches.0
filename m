@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B55737C10F;
-	Wed,  8 Apr 2026 18:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3273FB67E;
+	Wed,  8 Apr 2026 18:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672180; cv=none; b=ihrN6WWySoF0Ur1tgAlUX5vCwiPWPvtWxjR1lhhwLTLvSwtaeCHicJy6F9Ri4VW+OLnWSdDda7MMYNW5qYlz1rzFlLOfIBhH0Bs8UOtL29FC6Bw367GhnSz0U5OPKbpphFkuPinT+0RFlcHtzKSYkl1yhNPr65lWzhkpOvx7HjY=
+	t=1775672183; cv=none; b=faP09wTtPCL7gd+JNpMqSMMW0o3u0PuiFFSsenqeHQqynlO6h65En4YXu2HUahSD0Ty5Xii5WWK0ndNd1ap9wBooyhNecG6oDlvCauN2bNBXNQE5VOm2nVxTvvjT9TUWOzC2/FazFa4W5DjCyXaOXih2b7zcrl78l4WGM6nq99A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672180; c=relaxed/simple;
-	bh=x5YwPnSfVOoitFMS5ysrgLI6/3H0f4C1maan9adVUws=;
+	s=arc-20240116; t=1775672183; c=relaxed/simple;
+	bh=ttNo7gZAsnhBXphsw84P+RmQgwQkd5VqBv+EcimnsiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUzkx+cZHcIsRXcB2i/i1DioR8oeOGuLY4yQT+f4lhcH+K3qUIPxraE2d4v/I5sUH2HhgjbtRViqlcKQ3JoUmLCPRihmir48cozletKzQxmfUBXZp2HFZba+AR6gyv+Si8qOEcvIcsZNoVNmpVmjdR6ofzk6Hx00d8donNGQfWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9Np6e8n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b5mQePghY1pY87e4FE7350GJhUcVt+wddxkDQih4fz1EsgjHQ+AkWkanAPr1WRx+PoQoZ8OkgPCHDAV5q2NfjHgmPe4AmcDnZEcztwIlU20QOg30O6CGwdm5NBeqbgDAjiDjVphfbN/OLq31Nc351hK8IP87OXnkNf7Sja8eZEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCjzSAtJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9Np6e8n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D01C19421;
-	Wed,  8 Apr 2026 18:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCjzSAtJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78739C19421;
+	Wed,  8 Apr 2026 18:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672180;
-	bh=x5YwPnSfVOoitFMS5ysrgLI6/3H0f4C1maan9adVUws=;
+	s=korg; t=1775672182;
+	bh=ttNo7gZAsnhBXphsw84P+RmQgwQkd5VqBv+EcimnsiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9Np6e8nfQu0HTuGFz2J7eT1WvrpzlYH/oMUVQqLUDyIzLCy1eFzApPalf7hNgq8U
-	 crqLspOG6MaYCcvquOG+GpLPjT9+8LtSai29OLilx7Kj8fPg60e2dgi+NfmIo2nHtG
-	 l4K8VYXkS84xFyz3wt7GhJlrOKTU+YQWMb56d+h8=
+	b=QCjzSAtJJTOo3a8Xz19l4eC6RsfYi1qK+c635jfEXDC04UJuF4W25RLiRXiWCRNM7
+	 OQ6IRM5xmpOt0IyFZDkKn8ard75vIuPoSuh3caq/Xtw15fISpWEWXOMTIe3ThhnqCc
+	 gCvfCImyUK4pCjN9yuB/lW3BCbOHcHkNucX4rJg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 193/312] hwmon: (pxe1610) Check return value of page-select write in probe
-Date: Wed,  8 Apr 2026 20:01:50 +0200
-Message-ID: <20260408175940.966693859@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 220/312] iio: light: vcnl4035: fix scan buffer on big-endian
+Date: Wed,  8 Apr 2026 20:02:17 +0200
+Message-ID: <20260408175941.975101559@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -51,45 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit ccf70c41e562b29d1c05d1bbf53391785e09c6fb ]
+commit fdc7aa54a5d44c05880a4aad7cfb41aacfd16d7b upstream.
 
-pxe1610_probe() writes PMBUS_PAGE to select page 0 but does not check
-the return value. If the write fails, subsequent register reads operate
-on an indeterminate page, leading to silent misconfiguration.
+Rework vcnl4035_trigger_consumer_handler() so that we are not passing
+what should be a u16 value as an int * to regmap_read(). This won't
+work on bit endian systems.
 
-Check the return value and propagate the error using dev_err_probe(),
-which also handles -EPROBE_DEFER correctly without log spam.
+Instead, add a new unsigned int variable to pass to regmap_read(). Then
+copy that value into the buffer struct.
 
-Fixes: 344757bac526 ("hwmon: (pmbus) Add Infineon PXE1610 VR driver")
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260329170925.34581-4-sanman.pradhan@hpe.com
-[groeck: Fix "Fixes" SHA]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The buffer array is replaced with a struct since there is only one value
+being read. This allows us to use the correct u16 data type and has a
+side-effect of simplifying the alignment specification.
+
+Also fix the endianness of the scan format from little-endian to CPU
+endianness. Since we are using regmap to read the value, it will be
+CPU-endian.
+
+Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/pxe1610.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/iio/light/vcnl4035.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/pxe1610.c b/drivers/hwmon/pmbus/pxe1610.c
-index 52bee5de29883..12d5d7297b5c9 100644
---- a/drivers/hwmon/pmbus/pxe1610.c
-+++ b/drivers/hwmon/pmbus/pxe1610.c
-@@ -104,7 +104,10 @@ static int pxe1610_probe(struct i2c_client *client)
- 	 * By default this device doesn't boot to page 0, so set page 0
- 	 * to access all pmbus registers.
- 	 */
--	i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
-+	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
-+	if (ret < 0)
-+		return dev_err_probe(&client->dev, ret,
-+				     "Failed to set page 0\n");
+--- a/drivers/iio/light/vcnl4035.c
++++ b/drivers/iio/light/vcnl4035.c
+@@ -105,17 +105,23 @@ static irqreturn_t vcnl4035_trigger_cons
+ 	struct iio_dev *indio_dev = pf->indio_dev;
+ 	struct vcnl4035_data *data = iio_priv(indio_dev);
+ 	/* Ensure naturally aligned timestamp */
+-	u8 buffer[ALIGN(sizeof(u16), sizeof(s64)) + sizeof(s64)]  __aligned(8) = { };
++	struct {
++		u16 als_data;
++		aligned_s64 timestamp;
++	} buffer = { };
++	unsigned int val;
+ 	int ret;
  
- 	/* Read Manufacturer id */
- 	ret = i2c_smbus_read_block_data(client, PMBUS_MFR_ID, buf);
--- 
-2.53.0
-
+-	ret = regmap_read(data->regmap, VCNL4035_ALS_DATA, (int *)buffer);
++	ret = regmap_read(data->regmap, VCNL4035_ALS_DATA, &val);
+ 	if (ret < 0) {
+ 		dev_err(&data->client->dev,
+ 			"Trigger consumer can't read from sensor.\n");
+ 		goto fail_read;
+ 	}
+-	iio_push_to_buffers_with_timestamp(indio_dev, buffer,
+-					iio_get_time_ns(indio_dev));
++
++	buffer.als_data = val;
++	iio_push_to_buffers_with_timestamp(indio_dev, &buffer,
++					   iio_get_time_ns(indio_dev));
+ 
+ fail_read:
+ 	iio_trigger_notify_done(indio_dev->trig);
+@@ -378,7 +384,7 @@ static const struct iio_chan_spec vcnl40
+ 			.sign = 'u',
+ 			.realbits = 16,
+ 			.storagebits = 16,
+-			.endianness = IIO_LE,
++			.endianness = IIO_CPU,
+ 		},
+ 	},
+ 	{
+@@ -392,7 +398,7 @@ static const struct iio_chan_spec vcnl40
+ 			.sign = 'u',
+ 			.realbits = 16,
+ 			.storagebits = 16,
+-			.endianness = IIO_LE,
++			.endianness = IIO_CPU,
+ 		},
+ 	},
+ };
 
 
