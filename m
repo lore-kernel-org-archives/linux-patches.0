@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB963D8918;
-	Wed,  8 Apr 2026 18:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A977D337B81;
+	Wed,  8 Apr 2026 18:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674472; cv=none; b=hwdyoc0Z+K66P68r2y6C/xkBF9JN7FvKNdTiUrlwigKxubCH71ezlL1Cnka9v7Y69DSBfoSQUseoGuNyRzj4r6nzOKAl7WqCpFhX3etzl/jl4XWc5RaBO1ZuoJvBsZw/huh8JpQKZ8o5aAPxfQHUvjf+0GwTrAYZYpcnwcIQ0S8=
+	t=1775674474; cv=none; b=s1fsnNSa7JGL+it8DMe/HYcwv7IoaksTeVwe8Ve3nfFV/J43oongH35BciNqywTqdUe2nxZ7egrFXon5iyknW983y+N6N2broPqKewqMO+yJkumZr/9D9iQmpcTyPa9Xhvt+x/va8pQNYxBNOovlq+fWw32P+21ChhNpNPny87o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674472; c=relaxed/simple;
-	bh=rUgJUSaaZ4Ut4AXWx8fmfVzTi02MGtD1oPLBFMcH9io=;
+	s=arc-20240116; t=1775674474; c=relaxed/simple;
+	bh=EXftcF8IxkGOja6Ej5witn+YMid9XCO9GpUJ+qcF+sI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEGzNL65NCTbbdelcsVFEvbVhoL+/9awmynHcLRNv0JzqlmEAagPjYP8KCxDfpOaMaNNEsmW6cbLoEBl58UuNrNmlF3bVK2SxL7pdKw1VPKiVGWrs03eQ+9af3Vq3bbfs1OUDpVVK+qb7veDC70E1td4qbmWP49ixfwWTEgIsf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRmuVRC9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iL3qQiwyfzgbTTlEh2HAT2fEtZfrz5JvhPSNJhxSl1M245qYC07Xl0nZMRmoBeNcDuUQh+lb66vyjs1Khj5DbmBhwZclia9YDmPYu00m1hWrHiQkZSBdqYa0h7aKP0W8731AYGuT6PbtLdZabtMy1hpvT6/pyPzKFxlGrlbO3WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfNuVdC9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRmuVRC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A03C19421;
-	Wed,  8 Apr 2026 18:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfNuVdC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0309FC19425;
+	Wed,  8 Apr 2026 18:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674471;
-	bh=rUgJUSaaZ4Ut4AXWx8fmfVzTi02MGtD1oPLBFMcH9io=;
+	s=korg; t=1775674474;
+	bh=EXftcF8IxkGOja6Ej5witn+YMid9XCO9GpUJ+qcF+sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRmuVRC9eAIqp6FYKt+E/dn3dnkjm4AitSXXQV9GkhhGnZGmB64zAd6i3ew7tTrr+
-	 SL7l0N8uA9UsJ+Gw/0YX7HgphKqU51mv+s8zel8TjJUZO8+VAggiQGFxZ64r/ju515
-	 2LO7e5xByHM6ZfOnw4p3Ykvx81+URgA0ly+MOhk8=
+	b=zfNuVdC9vQSflLZCkbv+rWIa197GQWhwZILegBP4amZlxzk4vBXicPQtz5EofdmBx
+	 bB7SErpgdFdIGDzIPVVRxatd+cVSbv99nAE5jTKSTv+kQtBKu5h+yV+qM9qdMc1l4d
+	 ZxdShhwrYfYTmmz+wyWjEdT2dLbLPmktwBEqYWig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 111/311] net/mlx5: lag: Check for LAG device before creating debugfs
-Date: Wed,  8 Apr 2026 20:01:51 +0200
-Message-ID: <20260408175943.558325877@linuxfoundation.org>
+Subject: [PATCH 6.19 112/311] net/mlx5: Avoid "No data available" when FW version queries fail
+Date: Wed,  8 Apr 2026 20:01:52 +0200
+Message-ID: <20260408175943.596720591@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -53,50 +53,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Saeed Mahameed <saeedm@nvidia.com>
 
-[ Upstream commit bf16bca6653679d8a514d6c1c5a2c67065033f14 ]
+[ Upstream commit 10dc35f6a443d488f219d1a1e3fb8f8dac422070 ]
 
-__mlx5_lag_dev_add_mdev() may return 0 (success) even when an error
-occurs that is handled gracefully. Consequently, the initialization
-flow proceeds to call mlx5_ldev_add_debugfs() even when there is no
-valid LAG context.
+Avoid printing the misleading "kernel answers: No data available" devlink
+output when querying firmware or pending firmware version fails
+(e.g. MLX5 fw state errors / flash failures).
 
-mlx5_ldev_add_debugfs() blindly created the debugfs directory and
-attributes. This exposed interfaces (like the members file) that rely on
-a valid ldev pointer, leading to potential NULL pointer dereferences if
-accessed when ldev is NULL.
+FW can fail on loading the pending flash image and get its version due
+to various reasons, examples:
 
-Add a check to verify that mlx5_lag_dev(dev) returns a valid pointer
-before attempting to create the debugfs entries.
+mlxfw: Firmware flash failed: key not applicable, err (7)
+mlx5_fw_image_pending: can't read pending fw version while fw state is 1
 
-Fixes: 7f46a0b7327a ("net/mlx5: Lag, add debugfs to query hardware lag state")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+and the resulting:
+$ devlink dev info
+kernel answers: No data available
+
+Instead, just report 0 or 0xfff.. versions in case of failure to indicate
+a problem, and let other information be shown.
+
+after the fix:
+$ devlink dev info
+pci/0000:00:06.0:
+  driver mlx5_core
+  serial_number xxx...
+  board.serial_number MT2225300179
+  versions:
+      fixed:
+        fw.psid MT_0000000436
+      running:
+        fw.version 22.41.0188
+        fw 22.41.0188
+      stored:
+        fw.version 255.255.65535
+        fw 255.255.65535
+
+Fixes: 9c86b07e3069 ("net/mlx5: Added fw version query command")
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260330194015.53585-2-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260330194015.53585-3-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/debugfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../net/ethernet/mellanox/mlx5/core/devlink.c |  4 +-
+ drivers/net/ethernet/mellanox/mlx5/core/fw.c  | 53 ++++++++++++-------
+ .../ethernet/mellanox/mlx5/core/mlx5_core.h   |  4 +-
+ 3 files changed, 37 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/debugfs.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/debugfs.c
-index 62b6faa4276aa..b8d5f6a44d26a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/debugfs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/debugfs.c
-@@ -160,8 +160,11 @@ DEFINE_SHOW_ATTRIBUTE(members);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+index ea77fbd98396a..055ee020c56f4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+@@ -107,9 +107,7 @@ mlx5_devlink_info_get(struct devlink *devlink, struct devlink_info_req *req,
+ 	if (err)
+ 		return err;
  
- void mlx5_ldev_add_debugfs(struct mlx5_core_dev *dev)
+-	err = mlx5_fw_version_query(dev, &running_fw, &stored_fw);
+-	if (err)
+-		return err;
++	mlx5_fw_version_query(dev, &running_fw, &stored_fw);
+ 
+ 	snprintf(version_str, sizeof(version_str), "%d.%d.%04d",
+ 		 mlx5_fw_ver_major(running_fw), mlx5_fw_ver_minor(running_fw),
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw.c b/drivers/net/ethernet/mellanox/mlx5/core/fw.c
+index eeb4437975f20..c1f220e5fe185 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw.c
+@@ -822,48 +822,63 @@ mlx5_fw_image_pending(struct mlx5_core_dev *dev,
+ 	return 0;
+ }
+ 
+-int mlx5_fw_version_query(struct mlx5_core_dev *dev,
+-			  u32 *running_ver, u32 *pending_ver)
++void mlx5_fw_version_query(struct mlx5_core_dev *dev,
++			   u32 *running_ver, u32 *pending_ver)
  {
-+	struct mlx5_lag *ldev = mlx5_lag_dev(dev);
- 	struct dentry *dbg;
+ 	u32 reg_mcqi_version[MLX5_ST_SZ_DW(mcqi_version)] = {};
+ 	bool pending_version_exists;
+ 	int component_index;
+ 	int err;
  
-+	if (!ldev)
++	*running_ver = 0;
++	*pending_ver = 0;
++
+ 	if (!MLX5_CAP_GEN(dev, mcam_reg) || !MLX5_CAP_MCAM_REG(dev, mcqi) ||
+ 	    !MLX5_CAP_MCAM_REG(dev, mcqs)) {
+ 		mlx5_core_warn(dev, "fw query isn't supported by the FW\n");
+-		return -EOPNOTSUPP;
 +		return;
- 	dbg = debugfs_create_dir("lag", mlx5_debugfs_get_dev_root(dev));
- 	dev->priv.dbg.lag_debugfs = dbg;
+ 	}
  
+ 	component_index = mlx5_get_boot_img_component_index(dev);
+-	if (component_index < 0)
+-		return component_index;
++	if (component_index < 0) {
++		mlx5_core_warn(dev, "fw query failed to find boot img component index, err %d\n",
++			       component_index);
++		return;
++	}
+ 
++	*running_ver = U32_MAX; /* indicate failure */
+ 	err = mlx5_reg_mcqi_version_query(dev, component_index,
+ 					  MCQI_FW_RUNNING_VERSION,
+ 					  reg_mcqi_version);
+-	if (err)
+-		return err;
+-
+-	*running_ver = MLX5_GET(mcqi_version, reg_mcqi_version, version);
+-
++	if (!err)
++		*running_ver = MLX5_GET(mcqi_version, reg_mcqi_version,
++					version);
++	else
++		mlx5_core_warn(dev, "failed to query running version, err %d\n",
++			       err);
++
++	*pending_ver = U32_MAX; /* indicate failure */
+ 	err = mlx5_fw_image_pending(dev, component_index, &pending_version_exists);
+-	if (err)
+-		return err;
++	if (err) {
++		mlx5_core_warn(dev, "failed to query pending image, err %d\n",
++			       err);
++		return;
++	}
+ 
+ 	if (!pending_version_exists) {
+ 		*pending_ver = 0;
+-		return 0;
++		return;
+ 	}
+ 
+ 	err = mlx5_reg_mcqi_version_query(dev, component_index,
+ 					  MCQI_FW_STORED_VERSION,
+ 					  reg_mcqi_version);
+-	if (err)
+-		return err;
+-
+-	*pending_ver = MLX5_GET(mcqi_version, reg_mcqi_version, version);
+-
+-	return 0;
++	if (!err)
++		*pending_ver = MLX5_GET(mcqi_version, reg_mcqi_version,
++					version);
++	else
++		mlx5_core_warn(dev, "failed to query pending version, err %d\n",
++			       err);
++
++	return;
+ }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+index f2d74382fb85d..c048839f07d6d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+@@ -392,8 +392,8 @@ int mlx5_port_max_linkspeed(struct mlx5_core_dev *mdev, u32 *speed);
+ 
+ int mlx5_firmware_flash(struct mlx5_core_dev *dev, const struct firmware *fw,
+ 			struct netlink_ext_ack *extack);
+-int mlx5_fw_version_query(struct mlx5_core_dev *dev,
+-			  u32 *running_ver, u32 *stored_ver);
++void mlx5_fw_version_query(struct mlx5_core_dev *dev, u32 *running_ver,
++			   u32 *stored_ver);
+ 
+ #ifdef CONFIG_MLX5_CORE_EN
+ int mlx5e_init(void);
 -- 
 2.53.0
 
