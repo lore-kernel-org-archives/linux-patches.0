@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0C42BEFFF;
-	Wed,  8 Apr 2026 18:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF593D669E;
+	Wed,  8 Apr 2026 18:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673810; cv=none; b=Q8YwVmcLrD79/DVyiLRuVl4Npf9iqQoFgUERT24u0C38Tomzxi6Y8Zr2+BKb5khpUs6Qm2ySizkn7Dh70ClNr+DCKt7qKIYOC04/W8qwpUv1M7KIOAsU4KQHE4FaLcoinim9Jyzq0UKv2JPjgshu/wYVZhkvEz4m3MDY/mLdcpY=
+	t=1775673813; cv=none; b=BTb6UhpJ8PpGfDb9aOAm2w+ngPhFP12Umce2m1ZFx9VjefENQDVfJAoCYn5kAzf2qACH6Sk1SeIE8JgW1SClsmYFefa9rGr7lK0H/ZXizpAgKaw8C17f4iQOdTwD8NXMSWMoPIRLhvgOtK/s/08C8f3xrt1htTZ3O3DO6h89jNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673810; c=relaxed/simple;
-	bh=6OqJVgA0yG/T+CLHN81Uq+bGzQbYI1p9c/Ha5ShHPeQ=;
+	s=arc-20240116; t=1775673813; c=relaxed/simple;
+	bh=qxzyRy6+nIo7xbYUuG5WLJnAWYry2Bp1/pgZcNyStQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=URWkS/Saq582Gr64lBhX7V7VT9cYkq6nZvOCrMGYwxI8SaCCR7daKRL0mEB+MTWBcH7dEJY0/QFtv/cFII1LTP0+yb9NqMdExZWE3BX5gz7FX6ARXTECfVHV7EMp3WH5sY2w+edTxKgvZIgFHo/7c7HXaO3qwYZI3px10mD8R3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qkss6/wm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e/G3M4SHOqGXa5HP++ty+H7lK1wRED1Dqh7CmllHi8kHZPZ7N+0/uyZoMH3AHHdrkAJXNpNmYUPM7Mo66oNBRpwZ1xErjrhaMHSV2gsyBZXPKsLrAZq8QjzetFX6EKjMFx74O1oKWmHUiDjqHLhHeaEX9MVrWVVsSKilNVJiwMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwbwKNAQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qkss6/wm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050DDC4AF09;
-	Wed,  8 Apr 2026 18:43:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwbwKNAQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5CFC19421;
+	Wed,  8 Apr 2026 18:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673810;
-	bh=6OqJVgA0yG/T+CLHN81Uq+bGzQbYI1p9c/Ha5ShHPeQ=;
+	s=korg; t=1775673812;
+	bh=qxzyRy6+nIo7xbYUuG5WLJnAWYry2Bp1/pgZcNyStQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qkss6/wmXU/zwEDsEWRZgo/aivSQFJWk1hhtVocncOKa4LxgXoAKkyykm3zHO34mM
-	 8TBz4PPXOo5sitE3AoMru/N27t27fHNnj3I+ff8+RzwN40SS4c9F+nA15pT2vJ4VlI
-	 pspUlkumW9CtGeK+VDsMj+S3gg5QovbCEbg5nCEQ=
+	b=BwbwKNAQo+BNHmFlI5xcjWoxjRmyHR7IABu9RFMb/1BdB5qEkmtUZpPuqw2GDjBQP
+	 t3PU/DzJbNE3+Pe3a1kySYFFJOHFw6atSAJ1BGos5gxbj9ANLss402xwzLSxw6lR7p
+	 1vwUKJB+CmhN5jcXL9u5Ptm00JYZYA2IXKCKdHEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/242] net/sched: cls_flow: fix NULL pointer dereference on shared blocks
-Date: Wed,  8 Apr 2026 20:02:18 +0200
-Message-ID: <20260408175930.752935789@linuxfoundation.org>
+Subject: [PATCH 6.12 072/242] netfilter: nf_conntrack_helper: pass helper to expect cleanup
+Date: Wed,  8 Apr 2026 20:01:52 +0200
+Message-ID: <20260408175929.778416842@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,60 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Qi Tang <tpluszz77@gmail.com>
 
-[ Upstream commit 1a280dd4bd1d616a01d6ffe0de284c907b555504 ]
+[ Upstream commit a242a9ae58aa46ff7dae51ce64150a93957abe65 ]
 
-flow_change() calls tcf_block_q() and dereferences q->handle to derive
-a default baseclass.  Shared blocks leave block->q NULL, causing a NULL
-deref when a flow filter without a fully qualified baseclass is created
-on a shared block.
+nf_conntrack_helper_unregister() calls nf_ct_expect_iterate_destroy()
+to remove expectations belonging to the helper being unregistered.
+However, it passes NULL instead of the helper pointer as the data
+argument, so expect_iter_me() never matches any expectation and all
+of them survive the cleanup.
 
-Check tcf_block_shared() before accessing block->q and return -EINVAL
-for shared blocks.  This avoids the null-deref shown below:
+After unregister returns, nfnl_cthelper_del() frees the helper
+object immediately.  Subsequent expectation dumps or packet-driven
+init_conntrack() calls then dereference the freed exp->helper,
+causing a use-after-free.
 
-=======================================================================
-KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]
-RIP: 0010:flow_change (net/sched/cls_flow.c:508)
-Call Trace:
- tc_new_tfilter (net/sched/cls_api.c:2432)
- rtnetlink_rcv_msg (net/core/rtnetlink.c:6980)
- [...]
-=======================================================================
+Pass the actual helper pointer so expectations referencing it are
+properly destroyed before the helper object is freed.
 
-Fixes: 1abf272022cf ("net: sched: tcindex, fw, flow: use tcf_block_q helper to get struct Qdisc")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260331050217.504278-2-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  BUG: KASAN: slab-use-after-free in string+0x38f/0x430
+  Read of size 1 at addr ffff888003b14d20 by task poc/103
+  Call Trace:
+   string+0x38f/0x430
+   vsnprintf+0x3cc/0x1170
+   seq_printf+0x17a/0x240
+   exp_seq_show+0x2e5/0x560
+   seq_read_iter+0x419/0x1280
+   proc_reg_read+0x1ac/0x270
+   vfs_read+0x179/0x930
+   ksys_read+0xef/0x1c0
+  Freed by task 103:
+  The buggy address is located 32 bytes inside of
+   freed 192-byte region [ffff888003b14d00, ffff888003b14dc0)
+
+Fixes: ac7b84839003 ("netfilter: expect: add and use nf_ct_expect_iterate helpers")
+Signed-off-by: Qi Tang <tpluszz77@gmail.com>
+Reviewed-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flow.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_flow.c b/net/sched/cls_flow.c
-index 5c2580a07530e..7eeead60ec23b 100644
---- a/net/sched/cls_flow.c
-+++ b/net/sched/cls_flow.c
-@@ -503,8 +503,16 @@ static int flow_change(struct net *net, struct sk_buff *in_skb,
- 		}
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index ceb48c3ca0a43..9d7d36ac83083 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -419,7 +419,7 @@ void nf_conntrack_helper_unregister(struct nf_conntrack_helper *me)
+ 	 */
+ 	synchronize_rcu();
  
- 		if (TC_H_MAJ(baseclass) == 0) {
--			struct Qdisc *q = tcf_block_q(tp->chain->block);
-+			struct tcf_block *block = tp->chain->block;
-+			struct Qdisc *q;
- 
-+			if (tcf_block_shared(block)) {
-+				NL_SET_ERR_MSG(extack,
-+					       "Must specify baseclass when attaching flow filter to block");
-+				goto err2;
-+			}
-+
-+			q = tcf_block_q(block);
- 			baseclass = TC_H_MAKE(q->handle, baseclass);
- 		}
- 		if (TC_H_MIN(baseclass) == 0)
+-	nf_ct_expect_iterate_destroy(expect_iter_me, NULL);
++	nf_ct_expect_iterate_destroy(expect_iter_me, me);
+ 	nf_ct_iterate_destroy(unhelp, me);
+ }
+ EXPORT_SYMBOL_GPL(nf_conntrack_helper_unregister);
 -- 
 2.53.0
 
