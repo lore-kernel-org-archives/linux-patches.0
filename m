@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93C31A285;
-	Wed,  8 Apr 2026 18:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0272BEFFF;
+	Wed,  8 Apr 2026 18:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673820; cv=none; b=DP0G/tqonnjdtyJ48f9MTRX6YbknMhN7zYDNH1bu9QdqFWpBiJbMobsemE3Ma5qtGRQsHNV/AQw4muonghvLlu/34JGd96cg8RvzII8m49YnoQhBVYfa83A4i5HDkVcLWh5CQRmAW1qZvQdDfr2KzSmGnh7HKF42URcgLkcDTjY=
+	t=1775673823; cv=none; b=oebkXXH+eyI77ZH1+/is9qZprcubeNejDxWhgUHs1Po+KO+lSyWb3QBnMm+JxOOAq5aICJeT7QVgIwYmXaRmEIZg8pEGBwXxJQ2bLAHYy0wk8eQy25BHoZy7nfnqokuCEJB+ahECDXoPb7eE0ObImh6alQq+oXM+NzTMiXCyiPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673820; c=relaxed/simple;
-	bh=nbrH7GJ1RLqfbA4U/lZAPWXa1drhCgbN1oXbWrR5uLs=;
+	s=arc-20240116; t=1775673823; c=relaxed/simple;
+	bh=ISEMvBMUegik5ZlBmxFyN60hRmILAn1xoGxFFHSZqOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hoxjTqCZaf0bz4cOMI2qJtMUEmeyiMrclfvVvmpfs6SSqZr49ZbrF1R9CQpEZJmzuBhLntkHmA2R1pel9GueA8SXJQSEEohnfdHSMHu6GJbsRTTqoaJZFW7rA9kkqlqMmw9fB44xgfD8ftpZCP7neiaHTcIqjwZbEYPVCk9NEUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ia52a8I3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u8aVJJR8gS9Ve40+by7ypwIe5CCFEdb5XotwIm+GnWKmPmIGQHWHuXfTtBnRYD8vDftsOSSVce5Eja2xowD2oYg3IV8EkiFoBjaUwKQxScnpZUXZgvcZKaOKL79x61VQnDC8Er1/LKDstBJu2BDydY3oM8w39wDGPvFiw5s79j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuMPLhBu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ia52a8I3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E299C2BC87;
-	Wed,  8 Apr 2026 18:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuMPLhBu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1847C19425;
+	Wed,  8 Apr 2026 18:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673820;
-	bh=nbrH7GJ1RLqfbA4U/lZAPWXa1drhCgbN1oXbWrR5uLs=;
+	s=korg; t=1775673823;
+	bh=ISEMvBMUegik5ZlBmxFyN60hRmILAn1xoGxFFHSZqOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ia52a8I3DHW2ax1J17Zn7JtZIapvHqR7ZJdvCQtX8jGhGnHDBBgVcTkv7ZDg3QSPp
-	 BPfr/GGGx9jsoO9nOS0IvTMufdTOniIOI/wlnzJ4AofhOKCYZ0ZksxaMplPV76/HyX
-	 2HrhQtDHwiA/ZsAbRzUPTHOlBDd8XBCH5RmDXy1Y=
+	b=VuMPLhBuidExF86+VZ0aVZQKOfaGXvb3wE+0DdeS/fsK4CzAnoQji1XX2/nIAz1GW
+	 BQd5Dieuu5ZhUV70ctKszqP+y1IY1FYlE4L+iuSiDeJEnunZvFLpWpBso8fj1MXX8X
+	 GPqicMOY/1WUKT5djx+01v18TSNG48OHhU1TnNAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Tang <tpluszz77@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/242] bpf: reject direct access to nullable PTR_TO_BUF pointers
-Date: Wed,  8 Apr 2026 20:02:21 +0200
-Message-ID: <20260408175930.865623256@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Maarten Lankhorst <dev@lankhorst.se>
+Subject: [PATCH 6.12 102/242] Revert "drm: Fix use-after-free on framebuffers and property blobs when calling drm_dev_unplug"
+Date: Wed,  8 Apr 2026 20:02:22 +0200
+Message-ID: <20260408175930.902983095@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -46,51 +46,180 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qi Tang <tpluszz77@gmail.com>
+From: Maarten Lankhorst <dev@lankhorst.se>
 
-[ Upstream commit b0db1accbc7395657c2b79db59fa9fae0d6656f3 ]
+commit 45ebe43ea00d6b9f5b3e0db9c35b8ca2a96b7e70 upstream.
 
-check_mem_access() matches PTR_TO_BUF via base_type() which strips
-PTR_MAYBE_NULL, allowing direct dereference without a null check.
+This reverts commit 6bee098b91417654703e17eb5c1822c6dfd0c01d.
 
-Map iterator ctx->key and ctx->value are PTR_TO_BUF | PTR_MAYBE_NULL.
-On stop callbacks these are NULL, causing a kernel NULL dereference.
+Den 2026-03-25 kl. 22:11, skrev Simona Vetter:
+> On Wed, Mar 25, 2026 at 10:26:40AM -0700, Guenter Roeck wrote:
+>> Hi,
+>>
+>> On Fri, Mar 13, 2026 at 04:17:27PM +0100, Maarten Lankhorst wrote:
+>>> When trying to do a rather aggressive test of igt's "xe_module_load
+>>> --r reload" with a full desktop environment and game running I noticed
+>>> a few OOPSes when dereferencing freed pointers, related to
+>>> framebuffers and property blobs after the compositor exits.
+>>>
+>>> Solve this by guarding the freeing in drm_file with drm_dev_enter/exit,
+>>> and immediately put the references from struct drm_file objects during
+>>> drm_dev_unplug().
+>>>
+>>
+>> With this patch in v6.18.20, I get the warning backtraces below.
+>> The backtraces are gone with the patch reverted.
+>
+> Yeah, this needs to be reverted, reasoning below. Maarten, can you please
+> take care of that and feed the revert through the usual channels? I don't
+> think it's critical enough that we need to fast-track this into drm.git
+> directly.
+>
+> Quoting the patch here again:
+>
+>>  drivers/gpu/drm/drm_file.c        | 5 ++++-
+>>  drivers/gpu/drm/drm_mode_config.c | 9 ++++++---
+>>  2 files changed, 10 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+>> index ec820686b3021..f52141f842a1f 100644
+>> --- a/drivers/gpu/drm/drm_file.c
+>> +++ b/drivers/gpu/drm/drm_file.c
+>> @@ -233,6 +233,7 @@ static void drm_events_release(struct drm_file *file_priv)
+>>  void drm_file_free(struct drm_file *file)
+>>  {
+>>  	struct drm_device *dev;
+>> +	int idx;
+>>
+>>  	if (!file)
+>>  		return;
+>> @@ -249,9 +250,11 @@ void drm_file_free(struct drm_file *file)
+>>
+>>  	drm_events_release(file);
+>>
+>> -	if (drm_core_check_feature(dev, DRIVER_MODESET)) {
+>> +	if (drm_core_check_feature(dev, DRIVER_MODESET) &&
+>> +	    drm_dev_enter(dev, &idx)) {
+>
+> This is misplaced for two reasons:
+>
+> - Even if we'd want to guarantee that we hold a drm_dev_enter/exit
+>   reference during framebuffer teardown, we'd need to do this
+>   _consistently over all callsites. Not ad-hoc in just one place that a
+>   testcase hits. This also means kerneldoc updates of the relevant hooks
+>   and at least a bunch of acks from other driver people to document the
+>   consensus.
+>
+> - More importantly, this is driver responsibilities in general unless we
+>   have extremely good reasons to the contrary. Which means this must be
+>   placed in xe.
+>
+>>  		drm_fb_release(file);
+>>  		drm_property_destroy_user_blobs(dev, file);
+>> +		drm_dev_exit(idx);
+>>  	}
+>>
+>>  	if (drm_core_check_feature(dev, DRIVER_SYNCOBJ))
+>> diff --git a/drivers/gpu/drm/drm_mode_config.c b/drivers/gpu/drm/drm_mode_config.c
+>> index 84ae8a23a3678..e349418978f79 100644
+>> --- a/drivers/gpu/drm/drm_mode_config.c
+>> +++ b/drivers/gpu/drm/drm_mode_config.c
+>> @@ -583,10 +583,13 @@ void drm_mode_config_cleanup(struct drm_device *dev)
+>>  	 */
+>>  	WARN_ON(!list_empty(&dev->mode_config.fb_list));
+>>  	list_for_each_entry_safe(fb, fbt, &dev->mode_config.fb_list, head) {
+>> -		struct drm_printer p = drm_dbg_printer(dev, DRM_UT_KMS, "[leaked fb]");
+>> +		if (list_empty(&fb->filp_head) || drm_framebuffer_read_refcount(fb) > 1) {
+>> +			struct drm_printer p = drm_dbg_printer(dev, DRM_UT_KMS, "[leaked fb]");
+>
+> This is also wrong:
+>
+> - Firstly, it's a completely independent bug, we do not smash two bugfixes
+>   into one patch.
+>
+> - Secondly, it's again a driver bug: drm_mode_cleanup must be called when
+>   the last drm_device reference disappears (hence the existence of
+>   drmm_mode_config_init), not when the driver gets unbound. The fact that
+>   this shows up in a callchain from a devres cleanup means the intel
+>   driver gets this wrong (like almost everyone else because historically
+>   we didn't know better).
+>
+>   If we don't follow this rule, then we get races with this code here
+>   running concurrently with drm_file fb cleanups, which just does not
+>   work. Review pointed that out, but then shrugged it off with a confused
+>   explanation:
+>
+>   https://lore.kernel.org/all/e61e64c796ccfb17ae673331a3df4b877bf42d82.camel@linux.intel.com/
+>
+>   Yes this also means a lot of the other drm_device teardown that drivers
+>   do happens way too early. There is a massive can of worms here of a
+>   magnitude that most likely is much, much bigger than what you can
+>   backport to stable kernels. Hotunplug is _hard_.
 
-Add a type_may_be_null() guard to the PTR_TO_BUF branch, matching the
-existing PTR_TO_BTF_ID pattern.
+Back to the drawing board, and fixing it in the intel display driver
+instead.
 
-Fixes: 20b2aff4bc15 ("bpf: Introduce MEM_RDONLY flag")
-Signed-off-by: Qi Tang <tpluszz77@gmail.com>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20260402092923.38357-2-tpluszz77@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 6bee098b9141 ("drm: Fix use-after-free on framebuffers and property blobs when calling drm_dev_unplug")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Acked-by: Simona Vetter <simona.vetter@ffwll.ch>
+Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
+Link: https://patch.msgid.link/20260326082217.39941-2-dev@lankhorst.se
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_file.c        |    5 +----
+ drivers/gpu/drm/drm_mode_config.c |    9 +++------
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 9bdc19587948c..ff16bc2bff589 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -7224,7 +7224,8 @@ static int check_mem_access(struct bpf_verifier_env *env, int insn_idx, u32 regn
- 	} else if (reg->type == CONST_PTR_TO_MAP) {
- 		err = check_ptr_to_map_access(env, regs, regno, off, size, t,
- 					      value_regno);
--	} else if (base_type(reg->type) == PTR_TO_BUF) {
-+	} else if (base_type(reg->type) == PTR_TO_BUF &&
-+		   !type_may_be_null(reg->type)) {
- 		bool rdonly_mem = type_is_rdonly_mem(reg->type);
- 		u32 *max_access;
+--- a/drivers/gpu/drm/drm_file.c
++++ b/drivers/gpu/drm/drm_file.c
+@@ -223,7 +223,6 @@ static void drm_events_release(struct dr
+ void drm_file_free(struct drm_file *file)
+ {
+ 	struct drm_device *dev;
+-	int idx;
  
--- 
-2.53.0
-
+ 	if (!file)
+ 		return;
+@@ -237,11 +236,9 @@ void drm_file_free(struct drm_file *file
+ 
+ 	drm_events_release(file);
+ 
+-	if (drm_core_check_feature(dev, DRIVER_MODESET) &&
+-	    drm_dev_enter(dev, &idx)) {
++	if (drm_core_check_feature(dev, DRIVER_MODESET)) {
+ 		drm_fb_release(file);
+ 		drm_property_destroy_user_blobs(dev, file);
+-		drm_dev_exit(idx);
+ 	}
+ 
+ 	if (drm_core_check_feature(dev, DRIVER_SYNCOBJ))
+--- a/drivers/gpu/drm/drm_mode_config.c
++++ b/drivers/gpu/drm/drm_mode_config.c
+@@ -553,13 +553,10 @@ void drm_mode_config_cleanup(struct drm_
+ 	 */
+ 	WARN_ON(!list_empty(&dev->mode_config.fb_list));
+ 	list_for_each_entry_safe(fb, fbt, &dev->mode_config.fb_list, head) {
+-		if (list_empty(&fb->filp_head) || drm_framebuffer_read_refcount(fb) > 1) {
+-			struct drm_printer p = drm_dbg_printer(dev, DRM_UT_KMS, "[leaked fb]");
++		struct drm_printer p = drm_dbg_printer(dev, DRM_UT_KMS, "[leaked fb]");
+ 
+-			drm_printf(&p, "framebuffer[%u]:\n", fb->base.id);
+-			drm_framebuffer_print_info(&p, 1, fb);
+-		}
+-		list_del_init(&fb->filp_head);
++		drm_printf(&p, "framebuffer[%u]:\n", fb->base.id);
++		drm_framebuffer_print_info(&p, 1, fb);
+ 		drm_framebuffer_free(&fb->base.refcount);
+ 	}
+ 
 
 
