@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E249B3537EF;
-	Wed,  8 Apr 2026 18:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727563ACA41;
+	Wed,  8 Apr 2026 18:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672897; cv=none; b=Ypm4bQmBCpoFazhdOI68EcANO4u4Eq8CiTwdnfu8d4MiK8btRt8w+lLkIkSaD+nyD5W6AFTs9bbUS2agnRIIPOiITN3NWaT7cFZptbKQqRjLf4I48wmqh1hy7iaycTdz6K7rzjHxrBR3GLMT5Ant+tJijg+FBOwwUWDfhgg5JzQ=
+	t=1775672899; cv=none; b=iV2A+f6UBGpQrCtphhJ5EBuWIyTioDVieShplRqaSozwxLXhDdGo4RIB4l0CSKw5nxy0jJ/R/QjJZY4nZhhj+w45KNgg4pMaLx71LinWYLH5ZeJW0sZ5u6TcjadD5X4j9hKIlSWAtHU3+G2qcWChf4NpsECMu0b4U8eUPNWHcuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672897; c=relaxed/simple;
-	bh=ccAkQgDMhm8OzdNY4tz6hA3XJZxnNDO1jOfm76E/d3Y=;
+	s=arc-20240116; t=1775672899; c=relaxed/simple;
+	bh=oqicrxUnPqt2eeij4qhSKN6cBK3wJKaE/FQJS5tfJBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FllnCADmJLzO3ZUrDs2v642X54KiAH6+rDv0UnmgFA7op2iNoXtBtij6nGxoUyU0qa8u3krErqlFiJTYBCCkPz9A7vAq6hFbRm4+NwNV4GdzLAYU7onYG/9f9Elrz/7u5MYf4+DeMMTVgscqFJV/7eWPRrDCHN8JMrJ1VuaCRNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMrxZIC8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mBTdQpwYo+xWdCeSaq6sHDsFf7H4rwXK5GwmayBvCiJTlBUm+cF8rlJarJuX1CcGW8qrdfZaV5Fcy+14kIroaqaRw7f+3xzNfSIOykIelMiuycRoOzcJFt39RJv5w9XtJlvQTvhM0tkbZNnBZiMiA/Z5xWhaHzn1V6ZvHC9jqmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCaaURWd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMrxZIC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F06C19421;
-	Wed,  8 Apr 2026 18:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCaaURWd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEAAC19421;
+	Wed,  8 Apr 2026 18:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672896;
-	bh=ccAkQgDMhm8OzdNY4tz6hA3XJZxnNDO1jOfm76E/d3Y=;
+	s=korg; t=1775672899;
+	bh=oqicrxUnPqt2eeij4qhSKN6cBK3wJKaE/FQJS5tfJBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMrxZIC84BOHE7eGNuo8LsU5WYrWNzQ59pV53ZuFwCvrjAYrmLcQE/vh2Af2WArbP
-	 3rCCafdu9RrFkSG9kMGb1aOB80GTXm2zP9Jm8wSCRb8GAfvVY/RUNOarZCs3+QwyzO
-	 f1CqaL6nFWUDAQNxHhCmEr6opBolx8xl2fY3XZNE=
+	b=QCaaURWdoOpetby+TV6pKj7XNJv/y6eYI7uz9HQ9upCaPEg0IOfUmLLLV5lBBX/1p
+	 zUgcpmLSdds/sW5k2LzthB+fFJVPY3XEv1VU8kgUWP72+75RXId+VWoB2/4jv9HCJg
+	 ivTvM/moWj1a7LbdbOtmApSMa8Ani/VKgzLMDczo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 023/277] wifi: iwlwifi: mld: correctly set wifi generation data
-Date: Wed,  8 Apr 2026 20:00:08 +0200
-Message-ID: <20260408175934.719303511@linuxfoundation.org>
+Subject: [PATCH 6.18 006/277] btrfs: dont take device_list_mutex when querying zone info
+Date: Wed,  8 Apr 2026 19:59:51 +0200
+Message-ID: <20260408175934.081170061@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,207 +53,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 687a95d204e72e52f2e6bc7a994cc82f76b2678f ]
+[ Upstream commit 77603ab10429fe713a03345553ca8dbbfb1d91c6 ]
 
-In each MAC context, the firmware expects the wifi generation
-data, i.e. whether or not HE/EHT (and in the future UHR) is
-enabled on that MAC.
+Shin'ichiro reported sporadic hangs when running generic/013 in our CI
+system. When enabling lockdep, there is a lockdep splat when calling
+btrfs_get_dev_zone_info_all_devices() in the mount path that can be
+triggered by i.e. generic/013:
 
-However, this is currently handled wrong in two ways:
- - EHT is only enabled when the interface is also an MLD, but
-   we currently allow (despite the spec) connecting with EHT
-   but without MLO.
- - when HE or EHT are used by TDLS peers, the firmware needs
-   to have them enabled regardless of the AP
+  ======================================================
+  WARNING: possible circular locking dependency detected
+  7.0.0-rc1+ #355 Not tainted
+  ------------------------------------------------------
+  mount/1043 is trying to acquire lock:
+  ffff8881020b5470 (&vblk->vdev_mutex){+.+.}-{4:4}, at: virtblk_report_zones+0xda/0x430
 
-Fix this by iterating setting up the data depending on the
-interface type:
- - for AP, just set it according to the BSS configuration
- - for monitor, set it according to HW capabilities
- - otherwise, particularly for client, iterate all stations
-   and then their links on the interface in question and set
-   according to their capabilities, this handles the AP and
-   TDLS peers. Re-calculate this whenever a TDLS station is
-   marked associated or removed so that it's kept updated,
-   for the AP it's already updated on assoc/disassoc.
+  but task is already holding lock:
+  ffff888102a738e0 (&fs_devs->device_list_mutex){+.+.}-{4:4}, at: btrfs_get_dev_zone_info_all_devices+0x45/0x90
 
-Fixes: d1e879ec600f ("wifi: iwlwifi: add iwlmld sub-driver")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260319110722.404713b22177.Ic972b5e557d011a5438f8f97c1e793cc829e2ea9@changeid
-Link: https://patch.msgid.link/20260324093333.2953495-1-miriam.rachel.korenblit@intel.com
+  which lock already depends on the new lock.
+
+  the existing dependency chain (in reverse order) is:
+
+  -> #4 (&fs_devs->device_list_mutex){+.+.}-{4:4}:
+	 __mutex_lock+0xa3/0x1360
+	 btrfs_create_pending_block_groups+0x1f4/0x9d0
+	 __btrfs_end_transaction+0x3e/0x2e0
+	 btrfs_zoned_reserve_data_reloc_bg+0x2f8/0x390
+	 open_ctree+0x1934/0x23db
+	 btrfs_get_tree.cold+0x105/0x26c
+	 vfs_get_tree+0x28/0xb0
+	 __do_sys_fsconfig+0x324/0x680
+	 do_syscall_64+0x92/0x4f0
+	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  -> #3 (btrfs_trans_num_extwriters){++++}-{0:0}:
+	 join_transaction+0xc2/0x5c0
+	 start_transaction+0x17c/0xbc0
+	 btrfs_zoned_reserve_data_reloc_bg+0x2b4/0x390
+	 open_ctree+0x1934/0x23db
+	 btrfs_get_tree.cold+0x105/0x26c
+	 vfs_get_tree+0x28/0xb0
+	 __do_sys_fsconfig+0x324/0x680
+	 do_syscall_64+0x92/0x4f0
+	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  -> #2 (btrfs_trans_num_writers){++++}-{0:0}:
+	 lock_release+0x163/0x4b0
+	 __btrfs_end_transaction+0x1c7/0x2e0
+	 btrfs_dirty_inode+0x6f/0xd0
+	 touch_atime+0xe5/0x2c0
+	 btrfs_file_mmap_prepare+0x65/0x90
+	 __mmap_region+0x4b9/0xf00
+	 mmap_region+0xf7/0x120
+	 do_mmap+0x43d/0x610
+	 vm_mmap_pgoff+0xd6/0x190
+	 ksys_mmap_pgoff+0x7e/0xc0
+	 do_syscall_64+0x92/0x4f0
+	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  -> #1 (&mm->mmap_lock){++++}-{4:4}:
+	 __might_fault+0x68/0xa0
+	 _copy_to_user+0x22/0x70
+	 blkdev_copy_zone_to_user+0x22/0x40
+	 virtblk_report_zones+0x282/0x430
+	 blkdev_report_zones_ioctl+0xfd/0x130
+	 blkdev_ioctl+0x20f/0x2c0
+	 __x64_sys_ioctl+0x86/0xd0
+	 do_syscall_64+0x92/0x4f0
+	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  -> #0 (&vblk->vdev_mutex){+.+.}-{4:4}:
+	 __lock_acquire+0x1522/0x2680
+	 lock_acquire+0xd5/0x2f0
+	 __mutex_lock+0xa3/0x1360
+	 virtblk_report_zones+0xda/0x430
+	 blkdev_report_zones_cached+0x162/0x190
+	 btrfs_get_dev_zones+0xdc/0x2e0
+	 btrfs_get_dev_zone_info+0x219/0xe80
+	 btrfs_get_dev_zone_info_all_devices+0x62/0x90
+	 open_ctree+0x1200/0x23db
+	 btrfs_get_tree.cold+0x105/0x26c
+	 vfs_get_tree+0x28/0xb0
+	 __do_sys_fsconfig+0x324/0x680
+	 do_syscall_64+0x92/0x4f0
+	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  other info that might help us debug this:
+
+  Chain exists of:
+    &vblk->vdev_mutex --> btrfs_trans_num_extwriters --> &fs_devs->device_list_mutex
+
+   Possible unsafe locking scenario:
+
+	 CPU0                    CPU1
+	 ----                    ----
+    lock(&fs_devs->device_list_mutex);
+				 lock(btrfs_trans_num_extwriters);
+				 lock(&fs_devs->device_list_mutex);
+    lock(&vblk->vdev_mutex);
+
+   *** DEADLOCK ***
+
+  3 locks held by mount/1043:
+   #0: ffff88811063e878 (&fc->uapi_mutex){+.+.}-{4:4}, at: __do_sys_fsconfig+0x2ae/0x680
+   #1: ffff88810cb9f0e8 (&type->s_umount_key#31/1){+.+.}-{4:4}, at: alloc_super+0xc0/0x3e0
+   #2: ffff888102a738e0 (&fs_devs->device_list_mutex){+.+.}-{4:4}, at: btrfs_get_dev_zone_info_all_devices+0x45/0x90
+
+  stack backtrace:
+  CPU: 2 UID: 0 PID: 1043 Comm: mount Not tainted 7.0.0-rc1+ #355 PREEMPT(full)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-9.fc43 06/10/2025
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5b/0x80
+   print_circular_bug.cold+0x18d/0x1d8
+   check_noncircular+0x10d/0x130
+   __lock_acquire+0x1522/0x2680
+   ? vmap_small_pages_range_noflush+0x3ef/0x820
+   lock_acquire+0xd5/0x2f0
+   ? virtblk_report_zones+0xda/0x430
+   ? lock_is_held_type+0xcd/0x130
+   __mutex_lock+0xa3/0x1360
+   ? virtblk_report_zones+0xda/0x430
+   ? virtblk_report_zones+0xda/0x430
+   ? __pfx_copy_zone_info_cb+0x10/0x10
+   ? virtblk_report_zones+0xda/0x430
+   virtblk_report_zones+0xda/0x430
+   ? __pfx_copy_zone_info_cb+0x10/0x10
+   blkdev_report_zones_cached+0x162/0x190
+   ? __pfx_copy_zone_info_cb+0x10/0x10
+   btrfs_get_dev_zones+0xdc/0x2e0
+   btrfs_get_dev_zone_info+0x219/0xe80
+   btrfs_get_dev_zone_info_all_devices+0x62/0x90
+   open_ctree+0x1200/0x23db
+   btrfs_get_tree.cold+0x105/0x26c
+   ? rcu_is_watching+0x18/0x50
+   vfs_get_tree+0x28/0xb0
+   __do_sys_fsconfig+0x324/0x680
+   do_syscall_64+0x92/0x4f0
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x7f615e27a40e
+  RSP: 002b:00007fff11b18fb8 EFLAGS: 00000246 ORIG_RAX: 00000000000001af
+  RAX: ffffffffffffffda RBX: 000055572e92ab10 RCX: 00007f615e27a40e
+  RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
+  RBP: 00007fff11b19100 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 000055572e92bc40 R14: 00007f615e3faa60 R15: 000055572e92bd08
+   </TASK>
+
+Don't hold the device_list_mutex while calling into
+btrfs_get_dev_zone_info() in btrfs_get_dev_zone_info_all_devices() to
+mitigate the issue. This is safe, as no other thread can touch the device
+list at the moment of execution.
+
+Reported-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/intel/iwlwifi/mld/iface.c    | 101 ++++++++++++------
- .../net/wireless/intel/iwlwifi/mld/mac80211.c |  19 ++++
- 2 files changed, 88 insertions(+), 32 deletions(-)
+ fs/btrfs/zoned.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/iface.c b/drivers/net/wireless/intel/iwlwifi/mld/iface.c
-index 240ce19996b34..80bcd18930c57 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/iface.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/iface.c
-@@ -111,14 +111,75 @@ static bool iwl_mld_is_nic_ack_enabled(struct iwl_mld *mld,
- 			       IEEE80211_HE_MAC_CAP2_ACK_EN);
- }
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index e14a4234954ba..16818dbf48a46 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -335,7 +335,10 @@ int btrfs_get_dev_zone_info_all_devices(struct btrfs_fs_info *fs_info)
+ 	if (!btrfs_fs_incompat(fs_info, ZONED))
+ 		return 0;
  
--static void iwl_mld_set_he_support(struct iwl_mld *mld,
--				   struct ieee80211_vif *vif,
--				   struct iwl_mac_config_cmd *cmd)
-+struct iwl_mld_mac_wifi_gen_sta_iter_data {
-+	struct ieee80211_vif *vif;
-+	struct iwl_mac_wifi_gen_support *support;
-+};
-+
-+static void iwl_mld_mac_wifi_gen_sta_iter(void *_data,
-+					  struct ieee80211_sta *sta)
- {
--	if (vif->type == NL80211_IFTYPE_AP)
--		cmd->wifi_gen.he_ap_support = 1;
--	else
--		cmd->wifi_gen.he_support = 1;
-+	struct iwl_mld_sta *mld_sta = iwl_mld_sta_from_mac80211(sta);
-+	struct iwl_mld_mac_wifi_gen_sta_iter_data *data = _data;
-+	struct ieee80211_link_sta *link_sta;
-+	unsigned int link_id;
-+
-+	if (mld_sta->vif != data->vif)
-+		return;
-+
-+	for_each_sta_active_link(data->vif, sta, link_sta, link_id) {
-+		if (link_sta->he_cap.has_he)
-+			data->support->he_support = 1;
-+		if (link_sta->eht_cap.has_eht)
-+			data->support->eht_support = 1;
-+	}
-+}
-+
-+static void iwl_mld_set_wifi_gen(struct iwl_mld *mld,
-+				 struct ieee80211_vif *vif,
-+				 struct iwl_mac_wifi_gen_support *support)
-+{
-+	struct iwl_mld_mac_wifi_gen_sta_iter_data sta_iter_data = {
-+		.vif = vif,
-+		.support = support,
-+	};
-+	struct ieee80211_bss_conf *link_conf;
-+	unsigned int link_id;
-+
-+	switch (vif->type) {
-+	case NL80211_IFTYPE_MONITOR:
-+		/* for sniffer, set to HW capabilities */
-+		support->he_support = 1;
-+		support->eht_support = mld->trans->cfg->eht_supported;
-+		break;
-+	case NL80211_IFTYPE_AP:
-+		/* for AP set according to the link configs */
-+		for_each_vif_active_link(vif, link_conf, link_id) {
-+			support->he_ap_support |= link_conf->he_support;
-+			support->eht_support |= link_conf->eht_support;
-+		}
-+		break;
-+	default:
-+		/*
-+		 * If we have MLO enabled, then the firmware needs to enable
-+		 * address translation for the station(s) we add. That depends
-+		 * on having EHT enabled in firmware, which in turn depends on
-+		 * mac80211 in the iteration below.
-+		 * However, mac80211 doesn't enable capabilities on the AP STA
-+		 * until it has parsed the association response successfully,
-+		 * so set EHT (and HE as a pre-requisite for EHT) when the vif
-+		 * is an MLD.
-+		 */
-+		if (ieee80211_vif_is_mld(vif)) {
-+			support->he_support = 1;
-+			support->eht_support = 1;
-+		}
-+
-+		ieee80211_iterate_stations_mtx(mld->hw,
-+					       iwl_mld_mac_wifi_gen_sta_iter,
-+					       &sta_iter_data);
-+		break;
-+	}
- }
- 
- /* fill the common part for all interface types */
-@@ -128,8 +189,6 @@ static void iwl_mld_mac_cmd_fill_common(struct iwl_mld *mld,
- 					u32 action)
- {
- 	struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(vif);
--	struct ieee80211_bss_conf *link_conf;
--	unsigned int link_id;
- 
- 	lockdep_assert_wiphy(mld->wiphy);
- 
-@@ -147,29 +206,7 @@ static void iwl_mld_mac_cmd_fill_common(struct iwl_mld *mld,
- 	cmd->nic_not_ack_enabled =
- 		cpu_to_le32(!iwl_mld_is_nic_ack_enabled(mld, vif));
- 
--	/* If we have MLO enabled, then the firmware needs to enable
--	 * address translation for the station(s) we add. That depends
--	 * on having EHT enabled in firmware, which in turn depends on
--	 * mac80211 in the code below.
--	 * However, mac80211 doesn't enable HE/EHT until it has parsed
--	 * the association response successfully, so just skip all that
--	 * and enable both when we have MLO.
--	 */
--	if (ieee80211_vif_is_mld(vif)) {
--		iwl_mld_set_he_support(mld, vif, cmd);
--		cmd->wifi_gen.eht_support = 1;
--		return;
--	}
--
--	for_each_vif_active_link(vif, link_conf, link_id) {
--		if (!link_conf->he_support)
--			continue;
--
--		iwl_mld_set_he_support(mld, vif, cmd);
--
--		/* EHT, if supported, was already set above */
--		break;
--	}
-+	iwl_mld_set_wifi_gen(mld, vif, &cmd->wifi_gen);
- }
- 
- static void iwl_mld_fill_mac_cmd_sta(struct iwl_mld *mld,
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-index 0f2db3ed58530..67b61765adf39 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-@@ -1686,6 +1686,16 @@ static int iwl_mld_move_sta_state_up(struct iwl_mld *mld,
- 
- 		if (vif->type == NL80211_IFTYPE_STATION)
- 			iwl_mld_link_set_2mhz_block(mld, vif, sta);
-+
-+		if (sta->tdls) {
-+			/*
-+			 * update MAC since wifi generation flags may change,
-+			 * we also update MAC on association to the AP via the
-+			 * vif assoc change
-+			 */
-+			iwl_mld_mac_fw_action(mld, vif, FW_CTXT_ACTION_MODIFY);
-+		}
-+
- 		/* Now the link_sta's capabilities are set, update the FW */
- 		iwl_mld_config_tlc(mld, vif, sta);
- 
-@@ -1795,6 +1805,15 @@ static int iwl_mld_move_sta_state_down(struct iwl_mld *mld,
- 			/* just removed last TDLS STA, so enable PM */
- 			iwl_mld_update_mac_power(mld, vif, false);
- 		}
-+
-+		if (sta->tdls) {
-+			/*
-+			 * update MAC since wifi generation flags may change,
-+			 * we also update MAC on disassociation to the AP via
-+			 * the vif assoc change
-+			 */
-+			iwl_mld_mac_fw_action(mld, vif, FW_CTXT_ACTION_MODIFY);
-+		}
- 	} else {
- 		return -EINVAL;
+-	mutex_lock(&fs_devices->device_list_mutex);
++	/*
++	 * No need to take the device_list mutex here, we're still in the mount
++	 * path and devices cannot be added to or removed from the list yet.
++	 */
+ 	list_for_each_entry(device, &fs_devices->devices, dev_list) {
+ 		/* We can skip reading of zone info for missing devices */
+ 		if (!device->bdev)
+@@ -345,7 +348,6 @@ int btrfs_get_dev_zone_info_all_devices(struct btrfs_fs_info *fs_info)
+ 		if (ret)
+ 			break;
  	}
+-	mutex_unlock(&fs_devices->device_list_mutex);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
