@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAE1B67E;
-	Wed,  8 Apr 2026 18:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DE937F01B;
+	Wed,  8 Apr 2026 18:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672211; cv=none; b=oFJqrvZnCN6JEIevTP7dtarjuXtl0TRR3tdLJt/oQe6bDQ9loNBPPeN5X41Zbxw6vJz+5C9b1aNpCh8Ol5QYkSRyU4TVjPeJMRX+a/Ng3WvtcnWtrqLhLHLgsF9orBq64H/PD1nk/9qgTB2TcXtxG7nsttgm64dzCr030XXDzBg=
+	t=1775672214; cv=none; b=A3YsqqTgwnUDmhLLghsX/uDExwQxsJ1wHX2Db3HlWo54hrUoTwLdnH63VMrZGm6bE3UtGgqwwYTAlGL09zTpeMbnjV2YtaQIqODC4Gx9VQwBPf/ieWCBRNnF3X9rxTtaYkc7ksxGo4sR8H0x3bDn/6mQHfRqHSqQGd/6Awuw1Lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672211; c=relaxed/simple;
-	bh=824t301g9+NRYF66bVo5iZw9zrQeoXviM3L2fH+9Eck=;
+	s=arc-20240116; t=1775672214; c=relaxed/simple;
+	bh=qeAk/PUrlojqxR+bBXUvAMmDrxsDzl9u9WnPz59oGtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OYMV9Qj2p/mIZl7wM5l4/6oWTRL2xZQayQKIGM4v9Z9fdJsR6A1kREsI+7gHBkgD88HL+0fbwh71jlV+OgrP8DpK3kr8hkwYnh28LfH9S8++fUiqMSH3AancF5yVwrL50rGdId8tpevYWx40tFE5cKNWfGCJqEyL/Gnm+A1fcWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4bQXkTM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=minMvQuow3WWOSJR0YAYpAlSHJ720QXaoSaxCwSR/bs6V2TbGgX62Ni0J/6EvZjQ6DoQZTzh6C216t8lLxWBEqn0VOEAtjDUOhtFklBlujoSdD6w3Vl5/GNBtJf58CsYXNrJryrnSoa0AQc9epi8/7vJ6LQyBvrju72RF7IST1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfUSuMKt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4bQXkTM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD43AC19421;
-	Wed,  8 Apr 2026 18:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfUSuMKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63677C19421;
+	Wed,  8 Apr 2026 18:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672211;
-	bh=824t301g9+NRYF66bVo5iZw9zrQeoXviM3L2fH+9Eck=;
+	s=korg; t=1775672213;
+	bh=qeAk/PUrlojqxR+bBXUvAMmDrxsDzl9u9WnPz59oGtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v4bQXkTMXC+yorD+jm2RiXz65fpVRbH4ziWM3hpZu6vNt0m3MVjrMVYLZtT5E55wB
-	 3u3KkQRI1XChg9pdwU0E6G0IEiDbQPToh784WgKiEgKPZ60uqdMwSsaZjeF+2N7YoV
-	 IPaM89Zl5bN/hGWKL2qAU33Hm7tUNDkImJoj/FBU=
+	b=XfUSuMKtgrjJCwFHIWQncBlLkb73Jk5vOJWoEeCaGZ8hZA5Un1dKPSTYvZ1CeJBkc
+	 OzLaeTY9sb9eTxk9Qdc2QozlmKSZNLxCYsqcmxWpGHApeXq24o9Yb5CplT4g3JipsT
+	 OOg7vMgf81o9U3ypFCPFHieeJN6fVtiLYErD/5vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 190/312] ipv6: avoid overflows in ip6_datagram_send_ctl()
-Date: Wed,  8 Apr 2026 20:01:47 +0200
-Message-ID: <20260408175940.856223889@linuxfoundation.org>
+	Jonathan Cameron <jic23@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 226/312] iio: gyro: mpu3050: Fix out-of-sequence free_irq()
+Date: Wed,  8 Apr 2026 20:02:23 +0200
+Message-ID: <20260408175942.197418911@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,189 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 4e453375561fc60820e6b9d8ebeb6b3ee177d42e ]
+commit d14116f6529fa085b1a1b1f224dc9604e4d2a29c upstream.
 
-Yiming Qian reported :
-<quote>
- I believe I found a locally triggerable kernel bug in the IPv6 sendmsg
- ancillary-data path that can panic the kernel via `skb_under_panic()`
- (local DoS).
+The triggered buffer is initialized before the IRQ is requested. The
+removal path currently calls iio_triggered_buffer_cleanup() before
+free_irq(). This violates the expected LIFO.
 
- The core issue is a mismatch between:
+Place free_irq() in the correct location relative to
+iio_triggered_buffer_cleanup().
 
- - a 16-bit length accumulator (`struct ipv6_txoptions::opt_flen`, type
- `__u16`) and
- - a pointer to the *last* provided destination-options header (`opt->dst1opt`)
-
- when multiple `IPV6_DSTOPTS` control messages (cmsgs) are provided.
-
- - `include/net/ipv6.h`:
-   - `struct ipv6_txoptions::opt_flen` is `__u16` (wrap possible).
- (lines 291-307, especially 298)
- - `net/ipv6/datagram.c:ip6_datagram_send_ctl()`:
-   - Accepts repeated `IPV6_DSTOPTS` and accumulates into `opt_flen`
- without rejecting duplicates. (lines 909-933)
- - `net/ipv6/ip6_output.c:__ip6_append_data()`:
-   - Uses `opt->opt_flen + opt->opt_nflen` to compute header
- sizes/headroom decisions. (lines 1448-1466, especially 1463-1465)
- - `net/ipv6/ip6_output.c:__ip6_make_skb()`:
-   - Calls `ipv6_push_frag_opts()` if `opt->opt_flen` is non-zero.
- (lines 1930-1934)
- - `net/ipv6/exthdrs.c:ipv6_push_frag_opts()` / `ipv6_push_exthdr()`:
-   - Push size comes from `ipv6_optlen(opt->dst1opt)` (based on the
- pointed-to header). (lines 1179-1185 and 1206-1211)
-
- 1. `opt_flen` is a 16-bit accumulator:
-
- - `include/net/ipv6.h:298` defines `__u16 opt_flen; /* after fragment hdr */`.
-
- 2. `ip6_datagram_send_ctl()` accepts *repeated* `IPV6_DSTOPTS` cmsgs
- and increments `opt_flen` each time:
-
- - In `net/ipv6/datagram.c:909-933`, for `IPV6_DSTOPTS`:
-   - It computes `len = ((hdr->hdrlen + 1) << 3);`
-   - It checks `CAP_NET_RAW` using `ns_capable(net->user_ns,
- CAP_NET_RAW)`. (line 922)
-   - Then it does:
-     - `opt->opt_flen += len;` (line 927)
-     - `opt->dst1opt = hdr;` (line 928)
-
- There is no duplicate rejection here (unlike the legacy
- `IPV6_2292DSTOPTS` path which rejects duplicates at
- `net/ipv6/datagram.c:901-904`).
-
- If enough large `IPV6_DSTOPTS` cmsgs are provided, `opt_flen` wraps
- while `dst1opt` still points to a large (2048-byte)
- destination-options header.
-
- In the attached PoC (`poc.c`):
-
- - 32 cmsgs with `hdrlen=255` => `len = (255+1)*8 = 2048`
- - 1 cmsg with `hdrlen=0` => `len = 8`
- - Total increment: `32*2048 + 8 = 65544`, so `(__u16)opt_flen == 8`
- - The last cmsg is 2048 bytes, so `dst1opt` points to a 2048-byte header.
-
- 3. The transmit path sizes headers using the wrapped `opt_flen`:
-
-- In `net/ipv6/ip6_output.c:1463-1465`:
-  - `headersize = sizeof(struct ipv6hdr) + (opt ? opt->opt_flen +
- opt->opt_nflen : 0) + ...;`
-
- With wrapped `opt_flen`, `headersize`/headroom decisions underestimate
- what will be pushed later.
-
- 4. When building the final skb, the actual push length comes from
- `dst1opt` and is not limited by wrapped `opt_flen`:
-
- - In `net/ipv6/ip6_output.c:1930-1934`:
-   - `if (opt->opt_flen) proto = ipv6_push_frag_opts(skb, opt, proto);`
- - In `net/ipv6/exthdrs.c:1206-1211`, `ipv6_push_frag_opts()` pushes
- `dst1opt` via `ipv6_push_exthdr()`.
- - In `net/ipv6/exthdrs.c:1179-1184`, `ipv6_push_exthdr()` does:
-   - `skb_push(skb, ipv6_optlen(opt));`
-   - `memcpy(h, opt, ipv6_optlen(opt));`
-
- With insufficient headroom, `skb_push()` underflows and triggers
- `skb_under_panic()` -> `BUG()`:
-
- - `net/core/skbuff.c:2669-2675` (`skb_push()` calls `skb_under_panic()`)
- - `net/core/skbuff.c:207-214` (`skb_panic()` ends in `BUG()`)
-
- - The `IPV6_DSTOPTS` cmsg path requires `CAP_NET_RAW` in the target
- netns user namespace (`ns_capable(net->user_ns, CAP_NET_RAW)`).
- - Root (or any task with `CAP_NET_RAW`) can trigger this without user
- namespaces.
- - An unprivileged `uid=1000` user can trigger this if unprivileged
- user namespaces are enabled and it can create a userns+netns to obtain
- namespaced `CAP_NET_RAW` (the attached PoC does this).
-
- - Local denial of service: kernel BUG/panic (system crash).
- - Reproducible with a small userspace PoC.
-</quote>
-
-This patch does not reject duplicated options, as this might break
-some user applications.
-
-Instead, it makes sure to adjust opt_flen and opt_nflen to correctly
-reflect the size of the current option headers, preventing the overflows
-and the potential for panics.
-
-This applies to IPV6_DSTOPTS, IPV6_HOPOPTS, and IPV6_RTHDR.
-
-Specifically:
-
-When a new IPV6_DSTOPTS is processed, the length of the old opt->dst1opt
-is subtracted from opt->opt_flen before adding the new length.
-
-When a new IPV6_HOPOPTS is processed, the length of the old opt->dst0opt
-is subtracted from opt->opt_nflen.
-
-When a new Routing Header (IPV6_RTHDR or IPV6_2292RTHDR) is processed,
-the length of the old opt->srcrt is subtracted from opt->opt_nflen.
-
-In the special case within IPV6_2292RTHDR handling where dst1opt is moved
-to dst0opt, the length of the old opt->dst0opt is subtracted from
-opt->opt_nflen before the new one is added.
-
-Fixes: 333fad5364d6 ("[IPV6]: Support several new sockopt / ancillary data in Advanced API (RFC3542).")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAL_bE8JNzawgr5OX5m+3jnQDHry2XxhQT5=jThW1zDPtUikRYA@mail.gmail.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260401154721.3740056-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3904b28efb2c7 ("iio: gyro: Add driver for the MPU-3050 gyroscope")
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/datagram.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/iio/gyro/mpu3050-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
-index e70ace403bbd0..4b8b9626428ca 100644
---- a/net/ipv6/datagram.c
-+++ b/net/ipv6/datagram.c
-@@ -761,6 +761,7 @@ int ip6_datagram_send_ctl(struct net *net, struct sock *sk,
- {
- 	struct in6_pktinfo *src_info;
- 	struct cmsghdr *cmsg;
-+	struct ipv6_rt_hdr *orthdr;
- 	struct ipv6_rt_hdr *rthdr;
- 	struct ipv6_opt_hdr *hdr;
- 	struct ipv6_txoptions *opt = ipc6->opt;
-@@ -922,9 +923,13 @@ int ip6_datagram_send_ctl(struct net *net, struct sock *sk,
- 				goto exit_f;
- 			}
- 			if (cmsg->cmsg_type == IPV6_DSTOPTS) {
-+				if (opt->dst1opt)
-+					opt->opt_flen -= ipv6_optlen(opt->dst1opt);
- 				opt->opt_flen += len;
- 				opt->dst1opt = hdr;
- 			} else {
-+				if (opt->dst0opt)
-+					opt->opt_nflen -= ipv6_optlen(opt->dst0opt);
- 				opt->opt_nflen += len;
- 				opt->dst0opt = hdr;
- 			}
-@@ -967,12 +972,17 @@ int ip6_datagram_send_ctl(struct net *net, struct sock *sk,
- 				goto exit_f;
- 			}
+--- a/drivers/iio/gyro/mpu3050-core.c
++++ b/drivers/iio/gyro/mpu3050-core.c
+@@ -1288,9 +1288,9 @@ void mpu3050_common_remove(struct device
+ 	pm_runtime_get_sync(dev);
+ 	pm_runtime_put_noidle(dev);
+ 	pm_runtime_disable(dev);
+-	iio_triggered_buffer_cleanup(indio_dev);
+ 	if (mpu3050->irq)
+ 		free_irq(mpu3050->irq, mpu3050->trig);
++	iio_triggered_buffer_cleanup(indio_dev);
+ 	mpu3050_power_down(mpu3050);
+ }
  
-+			orthdr = opt->srcrt;
-+			if (orthdr)
-+				opt->opt_nflen -= ((orthdr->hdrlen + 1) << 3);
- 			opt->opt_nflen += len;
- 			opt->srcrt = rthdr;
- 
- 			if (cmsg->cmsg_type == IPV6_2292RTHDR && opt->dst1opt) {
- 				int dsthdrlen = ((opt->dst1opt->hdrlen+1)<<3);
- 
-+				if (opt->dst0opt)
-+					opt->opt_nflen -= ipv6_optlen(opt->dst0opt);
- 				opt->opt_nflen += dsthdrlen;
- 				opt->dst0opt = opt->dst1opt;
- 				opt->dst1opt = NULL;
--- 
-2.53.0
-
 
 
