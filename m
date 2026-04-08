@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759E83D890F;
-	Wed,  8 Apr 2026 18:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F76331A44;
+	Wed,  8 Apr 2026 18:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673382; cv=none; b=MZhhhmkc/NUOcl1q1AQrM90GrYwenZbVOQK9GhvtACE8dKTrZnSY4d+y3m5UQWfc6L29voqAfwU20/NNpQGObgbic2QolL+sHLDzJQufehoM1zUUgaxV03d4bYfsKwGsE9LFnu3AeQ1ax6u/KglRO32m1jgLRPkMbmGKoe06ahA=
+	t=1775673384; cv=none; b=UpRxPbKQQvCbFREhxR3Oe1kHiKn6IkACTvNlK+93mU3PhWsYDikGcT1jsJVJNJHXmEO47oOLD7jjgHorQqb4OzgYwhXa5OslGzQmirPufj9mLJJOfxKGOdUfjzfbQopvWCsWkXeqbHNYoUvrovOGxqX55BT+9ahKReYY0x5EqJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673382; c=relaxed/simple;
-	bh=3dDsT7C370d6LLDpCsvHRTKAhWVv7wBiZZI1cEm92EQ=;
+	s=arc-20240116; t=1775673384; c=relaxed/simple;
+	bh=Spw4T/w+tPZSMEIF0WiaWkxAjYPx7uqs41eJGloytcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FlqfaEZgSNvXF0Wz5N3AqLIs7f5KTumzbaj9wePogWgwvLJUcFZ1cI7QeHOAcAmjb4H8fIeYeP23TiucfdfsEHAfhjpi8KgQqL3aUAte2+cGBMzBqUesN8RkiL9ubi9Sbw1T80qr5U5jRj3XmcxvjZH6fHmLz/yc49kHFP2jnO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBaLkuGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nKaUG/tIsMJ+GIl314U2TCjWDk2iZw7GWoH9KHQnTAJzOyuk8/wOscx3AdpxJY7Ykv0Wdy8WateBGikJxNi9WXufQ8VBXmwXzKaWZjwAVj5CF72Ng1TxbCIISI2ifEfN7LH5RJw4wDiuc6UXdQYHc7cpWwlkmzp82X1j8z1eaK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJBrZb/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBaLkuGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92D8C2BC9E;
-	Wed,  8 Apr 2026 18:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJBrZb/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC04C19421;
+	Wed,  8 Apr 2026 18:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673382;
-	bh=3dDsT7C370d6LLDpCsvHRTKAhWVv7wBiZZI1cEm92EQ=;
+	s=korg; t=1775673384;
+	bh=Spw4T/w+tPZSMEIF0WiaWkxAjYPx7uqs41eJGloytcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bBaLkuGxwC95uxhR2xt7aixQ7hgI/1Dh8j2z1W35C0uEcy0lIpbGYjC6vljUixGi8
-	 eWT4i0utNtjWa0Lu+/PIAyjJz6JLjfYK1GGL/PoyI+KG5Atii9sDHTb/3x3wu37d7+
-	 7qqHACFmHQQgP40klN6TFVwKIJoA5yoB3WcZI+T8=
+	b=qJBrZb/7i9vTS9svMHH97Noh3O+CRRRePfx3sOT/NBuQynd+RPuKDLzqr3jzqLLYe
+	 iWolU0rfbf/pyNveJvAmQZN2kj1rY5ChEChLzQwOSNAdZB1eHEFOhX4ZZfkW8myf5Q
+	 /yGu2HGId6u5fOGujjIioPH3UnIjRmr8TVn9wdjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 209/277] io_uring: protect remaining lockless ctx->rings accesses with RCU
-Date: Wed,  8 Apr 2026 20:03:14 +0200
-Message-ID: <20260408175941.667045979@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Xilin Wu <sophon@radxa.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Steev Klimaszewski <threeway@gmail.com>
+Subject: [PATCH 6.18 210/277] ASoC: qcom: sc7280: make use of common helpers
+Date: Wed,  8 Apr 2026 20:03:15 +0200
+Message-ID: <20260408175941.703845163@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,253 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-Commit 61a11cf4812726aceaee17c96432e1c08f6ed6cb upstream.
+commit 8fdb030fe283c84fd8d378c97ad0f32d6cdec6ce upstream.
 
-Commit 96189080265e addressed one case of ctx->rings being potentially
-accessed while a resize is happening on the ring, but there are still
-a few others that need handling. Add a helper for retrieving the
-rings associated with an io_uring context, and add some sanity checking
-to that to catch bad uses. ->rings_rcu is always valid, as long as it's
-used within RCU read lock. Any use of ->rings_rcu or ->rings inside
-either ->uring_lock or ->completion_lock is sane as well.
+sc7280 machine driver can make use of common sdw functions to do most of
+the soundwire related operations. Remove such redundant code from sc7280
+driver.
 
-Do the minimum fix for the current kernel, but set it up such that this
-basic infra can be extended for later kernels to make this harder to
-mess up in the future.
+[This is a partial backport containing only the sound/soc/qcom/sdw.c
+changes which add LPASS CDC DMA DAI IDs to qcom_snd_is_sdw_dai().
+The sc7280.c refactoring changes are omitted as they depend on
+intermediate patches not present in 6.18.y. The sdw.c change fixes a
+NULL pointer dereference for lpass-cpu based SoundWire links.]
 
-Thanks to Junxi Qian for finding and debugging this issue.
-
+Fixes: bcba17279327 ("ASoC: qcom: sdw: fix memory leak for sdw_stream_runtime")
 Cc: stable@vger.kernel.org
-Fixes: 79cfe9e59c2a ("io_uring/register: add IORING_REGISTER_RESIZE_RINGS")
-Reviewed-by: Junxi Qian <qjx1298677004@gmail.com>
-Tested-by: Junxi Qian <qjx1298677004@gmail.com>
-Link: https://lore.kernel.org/io-uring/20260330172348.89416-1-qjx1298677004@gmail.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Steev Klimaszewski <threeway@gmail.com> # Thinkpad X13s
+Link: https://patch.msgid.link/20251022143349.1081513-5-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Xilin Wu <sophon@radxa.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 62 +++++++++++++++++++++++++++++----------------
- io_uring/io_uring.h | 34 +++++++++++++++++++++----
- 2 files changed, 69 insertions(+), 27 deletions(-)
+ sound/soc/qcom/sdw.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index d10a38c9dbfb3..99cd5bcac201d 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -199,12 +199,15 @@ static void io_poison_req(struct io_kiocb *req)
+diff --git a/sound/soc/qcom/sdw.c b/sound/soc/qcom/sdw.c
+index 7b2cae92c8129..5f880c74c8dc2 100644
+--- a/sound/soc/qcom/sdw.c
++++ b/sound/soc/qcom/sdw.c
+@@ -2,6 +2,7 @@
+ // Copyright (c) 2018-2023, Linaro Limited.
+ // Copyright (c) 2018, The Linux Foundation. All rights reserved.
  
- static inline unsigned int __io_cqring_events(struct io_ring_ctx *ctx)
- {
--	return ctx->cached_cq_tail - READ_ONCE(ctx->rings->cq.head);
-+	struct io_rings *rings = io_get_rings(ctx);
-+	return ctx->cached_cq_tail - READ_ONCE(rings->cq.head);
- }
++#include <dt-bindings/sound/qcom,lpass.h>
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <linux/module.h>
+ #include <sound/soc.h>
+@@ -35,6 +36,16 @@ static bool qcom_snd_is_sdw_dai(int id)
+ 		break;
+ 	}
  
- static inline unsigned int __io_cqring_events_user(struct io_ring_ctx *ctx)
- {
--	return READ_ONCE(ctx->rings->cq.tail) - READ_ONCE(ctx->rings->cq.head);
-+	struct io_rings *rings = io_get_rings(ctx);
-+
-+	return READ_ONCE(rings->cq.tail) - READ_ONCE(rings->cq.head);
- }
- 
- static bool io_match_linked(struct io_kiocb *head)
-@@ -2550,12 +2553,15 @@ static enum hrtimer_restart io_cqring_min_timer_wakeup(struct hrtimer *timer)
- 	if (io_has_work(ctx))
- 		goto out_wake;
- 	/* got events since we started waiting, min timeout is done */
--	if (iowq->cq_min_tail != READ_ONCE(ctx->rings->cq.tail))
--		goto out_wake;
--	/* if we have any events and min timeout expired, we're done */
--	if (io_cqring_events(ctx))
--		goto out_wake;
-+	scoped_guard(rcu) {
-+		struct io_rings *rings = io_get_rings(ctx);
- 
-+		if (iowq->cq_min_tail != READ_ONCE(rings->cq.tail))
-+			goto out_wake;
-+		/* if we have any events and min timeout expired, we're done */
-+		if (io_cqring_events(ctx))
-+			goto out_wake;
++	/* DSP Bypass usecase, cpu dai index overlaps with DSP dai ids,
++	 * DO NOT MERGE into top switch case */
++	switch (id) {
++	case LPASS_CDC_DMA_TX3:
++	case LPASS_CDC_DMA_RX0:
++		return true;
++	default:
++		break;
 +	}
- 	/*
- 	 * If using deferred task_work running and application is waiting on
- 	 * more than one request, ensure we reset it now where we are switching
-@@ -2666,9 +2672,9 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
- 			  struct ext_arg *ext_arg)
- {
- 	struct io_wait_queue iowq;
--	struct io_rings *rings = ctx->rings;
-+	struct io_rings *rings;
- 	ktime_t start_time;
--	int ret;
-+	int ret, nr_wait;
- 
- 	min_events = min_t(int, min_events, ctx->cq_entries);
- 
-@@ -2681,15 +2687,23 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
- 
- 	if (unlikely(test_bit(IO_CHECK_CQ_OVERFLOW_BIT, &ctx->check_cq)))
- 		io_cqring_do_overflow_flush(ctx);
--	if (__io_cqring_events_user(ctx) >= min_events)
 +
-+	rcu_read_lock();
-+	rings = io_get_rings(ctx);
-+	if (__io_cqring_events_user(ctx) >= min_events) {
-+		rcu_read_unlock();
- 		return 0;
-+	}
- 
- 	init_waitqueue_func_entry(&iowq.wq, io_wake_function);
- 	iowq.wq.private = current;
- 	INIT_LIST_HEAD(&iowq.wq.entry);
- 	iowq.ctx = ctx;
--	iowq.cq_tail = READ_ONCE(ctx->rings->cq.head) + min_events;
--	iowq.cq_min_tail = READ_ONCE(ctx->rings->cq.tail);
-+	iowq.cq_tail = READ_ONCE(rings->cq.head) + min_events;
-+	iowq.cq_min_tail = READ_ONCE(rings->cq.tail);
-+	nr_wait = (int) iowq.cq_tail - READ_ONCE(rings->cq.tail);
-+	rcu_read_unlock();
-+	rings = NULL;
- 	iowq.nr_timeouts = atomic_read(&ctx->cq_timeouts);
- 	iowq.hit_timeout = 0;
- 	iowq.min_timeout = ext_arg->min_time;
-@@ -2720,14 +2734,6 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
- 	trace_io_uring_cqring_wait(ctx, min_events);
- 	do {
- 		unsigned long check_cq;
--		int nr_wait;
--
--		/* if min timeout has been hit, don't reset wait count */
--		if (!iowq.hit_timeout)
--			nr_wait = (int) iowq.cq_tail -
--					READ_ONCE(ctx->rings->cq.tail);
--		else
--			nr_wait = 1;
- 
- 		if (ctx->flags & IORING_SETUP_DEFER_TASKRUN) {
- 			atomic_set(&ctx->cq_wait_nr, nr_wait);
-@@ -2778,13 +2784,22 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
- 			break;
- 		}
- 		cond_resched();
-+
-+		/* if min timeout has been hit, don't reset wait count */
-+		if (!iowq.hit_timeout)
-+			scoped_guard(rcu)
-+				nr_wait = (int) iowq.cq_tail -
-+						READ_ONCE(io_get_rings(ctx)->cq.tail);
-+		else
-+			nr_wait = 1;
- 	} while (1);
- 
- 	if (!(ctx->flags & IORING_SETUP_DEFER_TASKRUN))
- 		finish_wait(&ctx->cq_wait, &iowq.wq);
- 	restore_saved_sigmask_unless(ret == -EINTR);
- 
--	return READ_ONCE(rings->cq.head) == READ_ONCE(rings->cq.tail) ? ret : 0;
-+	guard(rcu)();
-+	return READ_ONCE(io_get_rings(ctx)->cq.head) == READ_ONCE(io_get_rings(ctx)->cq.tail) ? ret : 0;
+ 	return false;
  }
  
- static void io_rings_free(struct io_ring_ctx *ctx)
-@@ -2956,7 +2971,9 @@ static __poll_t io_uring_poll(struct file *file, poll_table *wait)
- 	 */
- 	poll_wait(file, &ctx->poll_wq, wait);
- 
--	if (!io_sqring_full(ctx))
-+	rcu_read_lock();
-+
-+	if (!__io_sqring_full(ctx))
- 		mask |= EPOLLOUT | EPOLLWRNORM;
- 
- 	/*
-@@ -2976,6 +2993,7 @@ static __poll_t io_uring_poll(struct file *file, poll_table *wait)
- 	if (__io_cqring_events_user(ctx) || io_has_work(ctx))
- 		mask |= EPOLLIN | EPOLLRDNORM;
- 
-+	rcu_read_unlock();
- 	return mask;
- }
- 
-diff --git a/io_uring/io_uring.h b/io_uring/io_uring.h
-index 46d9141d772a7..05702288465b7 100644
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -112,16 +112,28 @@ struct io_wait_queue {
- #endif
- };
- 
-+static inline struct io_rings *io_get_rings(struct io_ring_ctx *ctx)
-+{
-+	return rcu_dereference_check(ctx->rings_rcu,
-+			lockdep_is_held(&ctx->uring_lock) ||
-+			lockdep_is_held(&ctx->completion_lock));
-+}
-+
- static inline bool io_should_wake(struct io_wait_queue *iowq)
- {
- 	struct io_ring_ctx *ctx = iowq->ctx;
--	int dist = READ_ONCE(ctx->rings->cq.tail) - (int) iowq->cq_tail;
-+	struct io_rings *rings;
-+	int dist;
-+
-+	guard(rcu)();
-+	rings = io_get_rings(ctx);
- 
- 	/*
- 	 * Wake up if we have enough events, or if a timeout occurred since we
- 	 * started waiting. For timeouts, we always want to return to userspace,
- 	 * regardless of event count.
- 	 */
-+	dist = READ_ONCE(rings->cq.tail) - (int) iowq->cq_tail;
- 	return dist >= 0 || atomic_read(&ctx->cq_timeouts) != iowq->nr_timeouts;
- }
- 
-@@ -413,9 +425,9 @@ static inline void io_cqring_wake(struct io_ring_ctx *ctx)
- 	__io_wq_wake(&ctx->cq_wait);
- }
- 
--static inline bool io_sqring_full(struct io_ring_ctx *ctx)
-+static inline bool __io_sqring_full(struct io_ring_ctx *ctx)
- {
--	struct io_rings *r = ctx->rings;
-+	struct io_rings *r = io_get_rings(ctx);
- 
- 	/*
- 	 * SQPOLL must use the actual sqring head, as using the cached_sq_head
-@@ -427,9 +439,15 @@ static inline bool io_sqring_full(struct io_ring_ctx *ctx)
- 	return READ_ONCE(r->sq.tail) - READ_ONCE(r->sq.head) == ctx->sq_entries;
- }
- 
--static inline unsigned int io_sqring_entries(struct io_ring_ctx *ctx)
-+static inline bool io_sqring_full(struct io_ring_ctx *ctx)
- {
--	struct io_rings *rings = ctx->rings;
-+	guard(rcu)();
-+	return __io_sqring_full(ctx);
-+}
-+
-+static inline unsigned int __io_sqring_entries(struct io_ring_ctx *ctx)
-+{
-+	struct io_rings *rings = io_get_rings(ctx);
- 	unsigned int entries;
- 
- 	/* make sure SQ entry isn't read before tail */
-@@ -490,6 +508,12 @@ static inline void io_tw_lock(struct io_ring_ctx *ctx, io_tw_token_t tw)
- 	lockdep_assert_held(&ctx->uring_lock);
- }
- 
-+static inline unsigned int io_sqring_entries(struct io_ring_ctx *ctx)
-+{
-+	guard(rcu)();
-+	return __io_sqring_entries(ctx);
-+}
-+
- /*
-  * Don't complete immediately but use deferred completion infrastructure.
-  * Protected by ->uring_lock and can only be used either with
 -- 
 2.53.0
 
