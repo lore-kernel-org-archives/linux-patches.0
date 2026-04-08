@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543B93D47A5;
-	Wed,  8 Apr 2026 18:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32127347517;
+	Wed,  8 Apr 2026 18:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671848; cv=none; b=KNhwSWCsbM5JZkmx6dMSI89P9q/27e9yOtAlpmiaZ1RjLLyQo4WrzUUCb4CP8y7jnoDf8HmFUBgmygoEPquji7RK+GV1ORhdy9ZSrVrhpDWxLIxPEoTwjVoRKYX0yrZrGUEZJQ6A0MZDwkBZYWsoNpj3CLGEja9upjd9jYr0KPQ=
+	t=1775671851; cv=none; b=gRYnSftLpcwweGQs3sv6tMlEQ2knLX4rTwD/QrD8plDG+oFXe1uzvAQ6BAkiGPufHElWTSRmmeWpGVDRN/t8ouG3CtCQ6nO0JhOj571B3BAX4Mq41qCOc/IJgg59WYHrghgTKqscBSPIRxxCcD4QIg+R32cBkuqU/h4g6ewWoYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671848; c=relaxed/simple;
-	bh=Yg93voCzoAprbqWdnHWMnTZxBX3/lpdqp2yWn0YhaPg=;
+	s=arc-20240116; t=1775671851; c=relaxed/simple;
+	bh=7F9W0YFqImvKzjR+3uaOhRZtjNHrStEg469KoBGPVJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZiG8OaEoughWd0bi1yXsGwtEULL2a+IJIZU/op0etJ1QVVr/F2ACzjgoj4HSkqIF5HNQsDGh9Z9gcV8YCfTookURN+tMta4v2D5YmqlwkOb1QUnGsDfRz2fOO9mGRQKsBqaQlk3gztW1d7epVef5CXKWZR/QVdwQS6AYPBfclw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wuqf4kpM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PN8DMB67AOhNP+DjbYF6ZumP3bAQodjpVQlNInpwuKLrsdeHg3UwZy1jc3iN79kQwzUE6LJb7RQHVGOsvIMczAXNkpvnJYy+8Iy5GhyMQEhxYWqf4fv3KJ2qxQXgcnQRPKtcNGxWI6M9JF5lr0hQkdpBegYpLWmqeNwBIDE+iVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0AJnGxU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wuqf4kpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBDFC19421;
-	Wed,  8 Apr 2026 18:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0AJnGxU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BD3C19421;
+	Wed,  8 Apr 2026 18:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671848;
-	bh=Yg93voCzoAprbqWdnHWMnTZxBX3/lpdqp2yWn0YhaPg=;
+	s=korg; t=1775671850;
+	bh=7F9W0YFqImvKzjR+3uaOhRZtjNHrStEg469KoBGPVJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wuqf4kpMvfx1+hXYmXaMIzeeX809+OsiSV6yPC+HVJY6RY7g3AqCQ0eTP6KlMsCUk
-	 YyFwL4G/+oiPisQzzrhAtxLuMyZaxzwYjoT1Ns22VEXgRLnO0g2DSJKGB1Dy70SrgN
-	 w/AxTJSHn+CBL9sImtqsYBfC0uTdEN1gSZLx2t8U=
+	b=O0AJnGxUr9IUHKS2n0PuNTcdvSL9ISVoinVWqY8zkLZXcJYBekal+CJiaPFx8QVtn
+	 z1mnbEXN8VKU8yfooXPaO5SXctVs9JTanCYxvUmNFUQpU/9rTudCbDhGU6TZGwabJu
+	 wuqKwz27v67L3HrisqNFgWImLzBeJBROQuZYGRYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuhang Zheng <z1652074432@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/312] netfilter: ip6t_rt: reject oversized addrnr in rt_mt6_check()
-Date: Wed,  8 Apr 2026 19:59:35 +0200
-Message-ID: <20260408175935.904270397@linuxfoundation.org>
+Subject: [PATCH 6.1 049/312] tcp: optimize inet_use_bhash2_on_bind()
+Date: Wed,  8 Apr 2026 19:59:26 +0200
+Message-ID: <20260408175935.567796049@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -57,46 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ren Wei <n05ec@lzu.edu.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9d3f027327c2fa265f7f85ead41294792c3296ed ]
+[ Upstream commit ca79d80b0b9f42362a893f06413a9fe91811158a ]
 
-Reject rt match rules whose addrnr exceeds IP6T_RT_HOPS.
+There is no reason to call ipv6_addr_type().
 
-rt_mt6() expects addrnr to stay within the bounds of rtinfo->addrs[].
-Validate addrnr during rule installation so malformed rules are rejected
-before the match logic can use an out-of-range value.
+Instead, use highly optimized ipv6_addr_any() and ipv6_addr_v4mapped().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Yuhang Zheng <z1652074432@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250302124237.3913746-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e537dd15d0d4 ("udp: Fix wildcard bind conflict check when using hash2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/ip6t_rt.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/inet_connection_sock.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/netfilter/ip6t_rt.c b/net/ipv6/netfilter/ip6t_rt.c
-index 4ad8b2032f1f9..5561bd9cea818 100644
---- a/net/ipv6/netfilter/ip6t_rt.c
-+++ b/net/ipv6/netfilter/ip6t_rt.c
-@@ -157,6 +157,10 @@ static int rt_mt6_check(const struct xt_mtchk_param *par)
- 		pr_debug("unknown flags %X\n", rtinfo->invflags);
- 		return -EINVAL;
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index abec5206a8d17..fd3bbcffce5e6 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -155,12 +155,10 @@ static bool inet_use_bhash2_on_bind(const struct sock *sk)
+ {
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (sk->sk_family == AF_INET6) {
+-		int addr_type = ipv6_addr_type(&sk->sk_v6_rcv_saddr);
+-
+-		if (addr_type == IPV6_ADDR_ANY)
++		if (ipv6_addr_any(&sk->sk_v6_rcv_saddr))
+ 			return false;
+ 
+-		if (addr_type != IPV6_ADDR_MAPPED)
++		if (!ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr))
+ 			return true;
  	}
-+	if (rtinfo->addrnr > IP6T_RT_HOPS) {
-+		pr_debug("too many addresses specified\n");
-+		return -EINVAL;
-+	}
- 	if ((rtinfo->flags & (IP6T_RT_RES | IP6T_RT_FST_MASK)) &&
- 	    (!(rtinfo->flags & IP6T_RT_TYP) ||
- 	     (rtinfo->rt_type != 0) ||
+ #endif
 -- 
 2.51.0
 
