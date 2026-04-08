@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FF63AEF45;
-	Wed,  8 Apr 2026 18:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887491A683C;
+	Wed,  8 Apr 2026 18:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672044; cv=none; b=kJrwsnOdcpiGId8z2VFDA1YMscHHsVvg9o/FQubglItLLYiESxRf9Ot5nuhIojmx63pJqvNpeheBhhpthNxbkz7g5hREA38WZH8xEWcxB8pZY3tmJ7pCJEUAct9bgCPn7jkG+2/SNddHyF0eorMrKoKysZsiv4f8kAQPClWjfPA=
+	t=1775672046; cv=none; b=sx15bCpfo4qlR+vTNPbe+ftg0EWvuM38AEVZcvfsGQJKZFKnozBKfRyOkiYDLbtPgQrAp7056fFXP3JB0WOiXHY4Ie/qU/TFkV6MO7YG5rNhu6TdyAbD5eK2eTeYJsN2hQqeRAk6PEKRD2lJDatoa5HZoqBTbc2h5O+PqL3jmng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672044; c=relaxed/simple;
-	bh=E2Xhq0lMt8+kSjjbwdGhp/Ypp4+f/f3fi9dm+gwMj3E=;
+	s=arc-20240116; t=1775672046; c=relaxed/simple;
+	bh=EM6vEcLlNLsucty2DCGQ/KHEORzEIxuQdEe0baU53Do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FQn6zvnETFlNTx9ZsmZ4vCPrsV/7vdmK0CHmuso/BzWkYKqVWNvjm8NAe1UAGopuyLLg3UscuYCPyYPJ+/I5qvpd2QcUhuydkDEg4W/hA/5d0073wM6wHAOIxhnW3g6lO62RN7ycZ5tgAWyfmHHsGXvafqEe2RZsWc6AoL0udns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYeL9cBq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yh0i+QjV2HiKpFsjmaoM82r/iogQbSvmsRIvuBzH1s6jQSh+aV2xbFOFbst+0kKDf5Vs1BERuQnCLVFKA/mtQzBZcnewhJea3ezxazRxBI5woIjHDsWdQKQo6ra5ay3Ksj9PDHaFCyL9nMs3297lL540S7JLhUHqdxoAvEWi0wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gh0Abqf1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYeL9cBq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E59FC19425;
-	Wed,  8 Apr 2026 18:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gh0Abqf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFAEC19421;
+	Wed,  8 Apr 2026 18:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672043;
-	bh=E2Xhq0lMt8+kSjjbwdGhp/Ypp4+f/f3fi9dm+gwMj3E=;
+	s=korg; t=1775672046;
+	bh=EM6vEcLlNLsucty2DCGQ/KHEORzEIxuQdEe0baU53Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aYeL9cBqnaduS1Mng5F+F0d8ngcPerh3czAl95+cQVvcrlo3kNszZWWBwQA3CGscq
-	 incFWOpPH9i4/7g/IPRTncYghe1DNERLrlMehoXIVBkiBXpAzIyzraSkpMUX816ZRh
-	 /thzEOKeo8Xe9W/MwxS6febvldZqOMU/WuqtTaJ4=
+	b=Gh0Abqf1xGk1EskS0N3mKqByrm7uB+eAlqD4yebtPdPJnReu6scG9E/H+I+piDSNM
+	 92aQSzVRKkRs0dS01tjxogSwEV1SoLaaUaXDVxYzrCLap7E4BPi9DQoKmDYkyCIxWP
+	 n0wz3tSFRCaI1coMkCEcKBxTmhY4WC9mMWH0GSDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Qi Tang <tpluszz77@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <simon.horman@corigine.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/312] netfilter: ctnetlink: zero expect NAT fields when CTA_EXPECT_NAT absent
-Date: Wed,  8 Apr 2026 20:01:25 +0200
-Message-ID: <20260408175940.039909563@linuxfoundation.org>
+Subject: [PATCH 6.1 169/312] netfilter: Reorder fields in struct nf_conntrack_expect
+Date: Wed,  8 Apr 2026 20:01:26 +0200
+Message-ID: <20260408175940.076877166@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,55 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Tang <tpluszz77@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 35177c6877134a21315f37d57a5577846225623e ]
+[ Upstream commit 61e03e912da8212c3de2529054502e8388dfd484 ]
 
-ctnetlink_alloc_expect() allocates expectations from a non-zeroing
-slab cache via nf_ct_expect_alloc().  When CTA_EXPECT_NAT is not
-present in the netlink message, saved_addr and saved_proto are
-never initialized.  Stale data from a previous slab occupant can
-then be dumped to userspace by ctnetlink_exp_dump_expect(), which
-checks these fields to decide whether to emit CTA_EXPECT_NAT.
+Group some variables based on their sizes to reduce holes.
+On x86_64, this shrinks the size of 'struct nf_conntrack_expect' from 264
+to 256 bytes.
 
-The safe sibling nf_ct_expect_init(), used by the packet path,
-explicitly zeroes these fields.
+This structure deserve a dedicated cache, so reducing its size looks nice.
 
-Zero saved_addr, saved_proto and dir in the else branch, guarded
-by IS_ENABLED(CONFIG_NF_NAT) since these fields only exist when
-NAT is enabled.
-
-Confirmed by priming the expect slab with NAT-bearing expectations,
-freeing them, creating a new expectation without CTA_EXPECT_NAT,
-and observing that the ctnetlink dump emits a spurious
-CTA_EXPECT_NAT containing stale data from the prior allocation.
-
-Fixes: 076a0ca02644 ("netfilter: ctnetlink: add NAT support for expectations")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Qi Tang <tpluszz77@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 917b61fa2042 ("netfilter: ctnetlink: ignore explicit helper on new expectations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ include/net/netfilter/nf_conntrack_expect.h | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 6190a1d062402..c5480f952f157 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3569,6 +3569,12 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
- 						 exp, nf_ct_l3num(ct));
- 		if (err < 0)
- 			goto err_out;
-+#if IS_ENABLED(CONFIG_NF_NAT)
-+	} else {
-+		memset(&exp->saved_addr, 0, sizeof(exp->saved_addr));
-+		memset(&exp->saved_proto, 0, sizeof(exp->saved_proto));
-+		exp->dir = 0;
-+#endif
- 	}
- 	return exp;
- err_out:
+diff --git a/include/net/netfilter/nf_conntrack_expect.h b/include/net/netfilter/nf_conntrack_expect.h
+index f642a87ea330a..165e7a03b8e9d 100644
+--- a/include/net/netfilter/nf_conntrack_expect.h
++++ b/include/net/netfilter/nf_conntrack_expect.h
+@@ -26,6 +26,15 @@ struct nf_conntrack_expect {
+ 	struct nf_conntrack_tuple tuple;
+ 	struct nf_conntrack_tuple_mask mask;
+ 
++	/* Usage count. */
++	refcount_t use;
++
++	/* Flags */
++	unsigned int flags;
++
++	/* Expectation class */
++	unsigned int class;
++
+ 	/* Function to call after setup and insertion */
+ 	void (*expectfn)(struct nf_conn *new,
+ 			 struct nf_conntrack_expect *this);
+@@ -39,15 +48,6 @@ struct nf_conntrack_expect {
+ 	/* Timer function; deletes the expectation. */
+ 	struct timer_list timeout;
+ 
+-	/* Usage count. */
+-	refcount_t use;
+-
+-	/* Flags */
+-	unsigned int flags;
+-
+-	/* Expectation class */
+-	unsigned int class;
+-
+ #if IS_ENABLED(CONFIG_NF_NAT)
+ 	union nf_inet_addr saved_addr;
+ 	/* This is the original per-proto part, used to map the
 -- 
 2.53.0
 
