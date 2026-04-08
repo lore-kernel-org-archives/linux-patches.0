@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733443DA5B1;
-	Wed,  8 Apr 2026 18:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3883DB631;
+	Wed,  8 Apr 2026 18:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672548; cv=none; b=pf5vzrUhE51TSKHCA0KPq0/mq+cW72n0JiLrspab8io4KzKh1tXr7ooUAGuWQ8Ca909bFOdcLQmebLwJBUDl7FrF+rGyjY8QBU9Mu2dbNrDPAoWKjWjV5Nlz5NCklBMaLF3rASoBq4PfZu3PBPIVE5deb3PPT9q/g88olzs4Y0w=
+	t=1775672551; cv=none; b=j54kGwq//vdSnVQ32tyu+GFWiLtWVU/eUZrk+xKqcr6kUb0KXw8kbBEdXGGBtFsRvOPbVoPXEI9lfxWG3CVtNmPKmXI2Fx5NK+lxzM1pHiKuJnx5gAwBKdg9e8ji4q7zY00Zpd4qk4oXhWtar35F+9ZMSwZFDFpoUa3+sl2Ea5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672548; c=relaxed/simple;
-	bh=oZa+AVb/tyD2DEgTz6nc3YrcPUXx6zvJ/KB2dNdoQ2E=;
+	s=arc-20240116; t=1775672551; c=relaxed/simple;
+	bh=rgDaad1V7b7gF/C10VNNdssLS1BwfoV/7c2RAEwrOlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iP/eE3jvbCFNgjrypD3SKP3lJsT9nCXJz6JGR5nyQ9kQ6jcfjPQ8YVzheM1k9y1B40Kc9MsoHqFH7c0YYVjs4uzdWQLCr2gdxkTmn5u8l3LZNx5QSD4apv4p+VlHOEdhTbdJPOez04Bm1iWMAKFPwhvSa74u0QRnWGWHcyrEPpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/QPyaqF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CEl7oqGLZlFw/yr+Dr7bpJAa2pnJly+f7kz7rrlWGvhqBUHiFxcwqvEj72Qd8ce36KDIbMxOUThiaZS5AKjyudYPgwiEn9lw+OLXjDVM+vGoM5sBg+QiHHKRadxkegvQEaBKNhRP9Nidi5h8KJBNtrH+/WiH4zowVy6IiXuCNHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dL6DHzPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/QPyaqF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D408AC2BC87;
-	Wed,  8 Apr 2026 18:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dL6DHzPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F51C19425;
+	Wed,  8 Apr 2026 18:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672548;
-	bh=oZa+AVb/tyD2DEgTz6nc3YrcPUXx6zvJ/KB2dNdoQ2E=;
+	s=korg; t=1775672550;
+	bh=rgDaad1V7b7gF/C10VNNdssLS1BwfoV/7c2RAEwrOlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/QPyaqFzSrsdN0OCAzdoNjXxSC2k/dN00Ov+nWFQv+DX9wxd4bFP2LjdAEErDXMP
-	 SkwHjIIP0IWzkEPHnx9sr4iy6cTM4pi0ZtZuSTAsdrSWN/usDOJ7jXUBqQKVYzHUjr
-	 2/3hdCQCX+kxzGf67a5aXge4ieoNbyAMjpTZLgDU=
+	b=dL6DHzPSc2w1JBc30I9NkmdqOSVyZ3/7bZF+Qqv1+sRnssQxKcBrq7j6VHUuzejGC
+	 12qGbM+ECCngf7YgSQ8UFKCvDkSoIyl2kiqQMgvQS/PmhlEtXhL3/JmajdeV1Ip+35
+	 u/ljcV47HkznT3lxFLMp20nue7zY28rxiozPyPxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Keenan Dong <keenanat2000@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/160] Bluetooth: hci_event: fix potential UAF in hci_le_remote_conn_param_req_evt
-Date: Wed,  8 Apr 2026 20:02:16 +0200
-Message-ID: <20260408175915.038330919@linuxfoundation.org>
+Subject: [PATCH 6.6 050/160] Bluetooth: MGMT: validate mesh send advertising payload length
+Date: Wed,  8 Apr 2026 20:02:17 +0200
+Message-ID: <20260408175915.075470620@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -51,90 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Keenan Dong <keenanat2000@gmail.com>
 
-[ Upstream commit b255531b27da336571411248c2a72a350662bd09 ]
+[ Upstream commit bda93eec78cdbfe5cda00785cefebd443e56b88b ]
 
-hci_conn lookup and field access must be covered by hdev lock in
-hci_le_remote_conn_param_req_evt, otherwise it's possible it is freed
-concurrently.
+mesh_send() currently bounds MGMT_OP_MESH_SEND by total command
+length, but it never verifies that the bytes supplied for the
+flexible adv_data[] array actually match the embedded adv_data_len
+field. MGMT_MESH_SEND_SIZE only covers the fixed header, so a
+truncated command can still pass the existing 20..50 byte range
+check and later drive the async mesh send path past the end of the
+queued command buffer.
 
-Extend the hci_dev_lock critical section to cover all conn usage.
+Keep rejecting zero-length and oversized advertising payloads, but
+validate adv_data_len explicitly and require the command length to
+exactly match the flexible array size before queueing the request.
 
-Fixes: 95118dd4edfec ("Bluetooth: hci_event: Use of a function table to handle LE subevents")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
+Reported-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ net/bluetooth/mgmt.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 4aa445e7f56bc..8b184839b013a 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6555,25 +6555,31 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev, void *data,
- 	latency = le16_to_cpu(ev->latency);
- 	timeout = le16_to_cpu(ev->timeout);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 81651f8ed03d0..51a6ad6a36c8d 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2388,6 +2388,7 @@ static int mesh_send(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
+ 	struct mgmt_mesh_tx *mesh_tx;
+ 	struct mgmt_cp_mesh_send *send = data;
+ 	struct mgmt_rp_mesh_read_features rp;
++	u16 expected_len;
+ 	bool sending;
+ 	int err = 0;
  
-+	hci_dev_lock(hdev);
+@@ -2395,12 +2396,19 @@ static int mesh_send(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
+ 	    !hci_dev_test_flag(hdev, HCI_MESH_EXPERIMENTAL))
+ 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_SEND,
+ 				       MGMT_STATUS_NOT_SUPPORTED);
+-	if (!hci_dev_test_flag(hdev, HCI_LE_ENABLED) ||
+-	    len <= MGMT_MESH_SEND_SIZE ||
+-	    len > (MGMT_MESH_SEND_SIZE + 31))
++	if (!hci_dev_test_flag(hdev, HCI_LE_ENABLED))
++		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_SEND,
++				       MGMT_STATUS_REJECTED);
 +
- 	hcon = hci_conn_hash_lookup_handle(hdev, handle);
--	if (!hcon || hcon->state != BT_CONNECTED)
--		return send_conn_param_neg_reply(hdev, handle,
--						 HCI_ERROR_UNKNOWN_CONN_ID);
-+	if (!hcon || hcon->state != BT_CONNECTED) {
-+		send_conn_param_neg_reply(hdev, handle,
-+					  HCI_ERROR_UNKNOWN_CONN_ID);
-+		goto unlock;
-+	}
++	if (!send->adv_data_len || send->adv_data_len > 31)
+ 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_SEND,
+ 				       MGMT_STATUS_REJECTED);
  
--	if (max > hcon->le_conn_max_interval)
--		return send_conn_param_neg_reply(hdev, handle,
--						 HCI_ERROR_INVALID_LL_PARAMS);
-+	if (max > hcon->le_conn_max_interval) {
-+		send_conn_param_neg_reply(hdev, handle,
-+					  HCI_ERROR_INVALID_LL_PARAMS);
-+		goto unlock;
-+	}
- 
--	if (hci_check_conn_params(min, max, latency, timeout))
--		return send_conn_param_neg_reply(hdev, handle,
--						 HCI_ERROR_INVALID_LL_PARAMS);
-+	if (hci_check_conn_params(min, max, latency, timeout)) {
-+		send_conn_param_neg_reply(hdev, handle,
-+					  HCI_ERROR_INVALID_LL_PARAMS);
-+		goto unlock;
-+	}
- 
- 	if (hcon->role == HCI_ROLE_MASTER) {
- 		struct hci_conn_params *params;
- 		u8 store_hint;
- 
--		hci_dev_lock(hdev);
--
- 		params = hci_conn_params_lookup(hdev, &hcon->dst,
- 						hcon->dst_type);
- 		if (params) {
-@@ -6586,8 +6592,6 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev, void *data,
- 			store_hint = 0x00;
- 		}
- 
--		hci_dev_unlock(hdev);
--
- 		mgmt_new_conn_param(hdev, &hcon->dst, hcon->dst_type,
- 				    store_hint, min, max, latency, timeout);
- 	}
-@@ -6601,6 +6605,9 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev, void *data,
- 	cp.max_ce_len = 0;
- 
- 	hci_send_cmd(hdev, HCI_OP_LE_CONN_PARAM_REQ_REPLY, sizeof(cp), &cp);
++	expected_len = struct_size(send, adv_data, send->adv_data_len);
++	if (expected_len != len)
++		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_SEND,
++				       MGMT_STATUS_INVALID_PARAMS);
 +
-+unlock:
-+	hci_dev_unlock(hdev);
- }
+ 	hci_dev_lock(hdev);
  
- static void hci_le_direct_adv_report_evt(struct hci_dev *hdev, void *data,
+ 	memset(&rp, 0, sizeof(rp));
 -- 
 2.53.0
 
