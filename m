@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6323D9DD6;
-	Wed,  8 Apr 2026 19:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2E43D7D79;
+	Wed,  8 Apr 2026 19:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674863; cv=none; b=OKZejmVsWn4KIhrmnS/DT2bOJHh8IpARly3oF3cSsUphWJ0SxEv3uQUhaqk8An2bk7C2wcRI9jDJsEsjr9EoI+LEdMRMCwkmLaZSFIGNyzrwaejOms5Q5svFa5SOBn4BymkpQa9t2D+gVt+Ec749CnBZNeszX9k8SJUQuNsOjoU=
+	t=1775674866; cv=none; b=ffgkGvCgdNyHceMEadAzPJ1dkWftXZMx2lPzUkBjcoNdnQbOk0/ug8Y3ex/HmjB2uGcfEriveRBzyH+ORhFMI6WW+2PWZ0cNrNo1OG/BOMNYgQv0mDA8Wxr+NvwA39YWOLlC6oUQjgwv0pvkNZrfRohIONwa4MeDf/TD6GeA4w0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674863; c=relaxed/simple;
-	bh=Pc64yaId9e8ftOLjVLmMp7Aic8OT3OzW10ORTSqQvyE=;
+	s=arc-20240116; t=1775674866; c=relaxed/simple;
+	bh=uzekdJQTwx0Aec9yhQuGoK1/XrGNXNUpJzDjk/MrMCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sL/9NgAKttGGzElMCMyLJkV2fDlA3FMM13D6kfH16a6VeqXdyaYlsY+he4RT7x7PY7o16WCcN5b8uyAkGh0MweSNPfbYVUSDOw+XrI3MR1v5APvL9gC1KGdSuPgLkvJfDD8sYnCxB73I6OFoHjLn7x3cwpsxxQHFsKMXO9Kij4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9HpuxyY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s1OuYtpywOQ7oY/uLLp7nTOEgX5wuJNa993zkd+mRQtEPN+wn5PEBoQpZnohpVC1+dkr5NOCb+NbBpOEWH7So6/C9WnzYzUF83BUgYeXho30+pdUFnyvETyi6V/PX2o+SRZo0bkj3IRimswE8jz2sR0Zh6Alhy+eP6jUbYJkk28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAmVjkgG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9HpuxyY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 436B2C19421;
-	Wed,  8 Apr 2026 19:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAmVjkgG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64FCC19421;
+	Wed,  8 Apr 2026 19:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674863;
-	bh=Pc64yaId9e8ftOLjVLmMp7Aic8OT3OzW10ORTSqQvyE=;
+	s=korg; t=1775674866;
+	bh=uzekdJQTwx0Aec9yhQuGoK1/XrGNXNUpJzDjk/MrMCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9HpuxyYHYD9HjlB+nVcL2wVqqYkaqs4rJyF89KrGOv1utpR9WJYhfTkUKubQ/E3j
-	 ymNHxe2HCkSZAXyq9/Gix5Kockj71uWe06iwTdY+QlnBSm9S3flbHUDRTZeRqFPlwB
-	 DX0T2NpssXiOn6X1/nOE1GFKU0Cgao6Ik04Pk2Bk=
+	b=rAmVjkgGe786kO/GdA0uSRtr0ifNOlE5yJ8GkWT9Gx1Xa4m8tGUeCxuAHOQ5Yz5/a
+	 bso0nIQ0feZEjlsVdQUYHGA7Ax0tAFGTUkssulm5QpCTVGjzDQPjuXVPhrSeX3mUyu
+	 uX9ZlcpnprTmcVfjGiMNYD2mMnOQhULwtvASFHik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Nadja Hariz <Nadia.Hariz@ibm.com>,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Hendrik Brueckner <brueckner@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.19 262/311] s390/zcrypt: Fix memory leak with CCA cards used as accelerator
-Date: Wed,  8 Apr 2026 20:04:22 +0200
-Message-ID: <20260408175949.166837126@linuxfoundation.org>
+Subject: [PATCH 6.19 263/311] s390/cpum_sf: Cap sampling rate to prevent lsctl exception
+Date: Wed,  8 Apr 2026 20:04:23 +0200
+Message-ID: <20260408175949.204022217@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -55,124 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-commit c8d46f17c2fc7d25c18e60c008928aecab26184d upstream.
+commit 57ad0d4a00f5d3e80f33ba2da8d560c73d83dc22 upstream.
 
-Tests showed that there is a memory leak if CCA cards are used as
-accelerator for clear key RSA requests (ME and CRT). With the last
-rework for the memory allocation the AP messages are allocated by
-ap_init_apmsg() but for some reason on two places (ME and CRT) the
-older allocation was still in place. So the first allocation simple
-was never freed.
+commit fcc43a7e294f ("s390/configs: Set HZ=1000") changed the interrupt
+frequency of the system. On machines with heavy load and many perf event
+overflows, this might lead to an exception. Dmesg displays these entries:
+  [112.242542] cpum_sf: Loading sampling controls failed: op 1 err -22
+One line per CPU online.
 
-Fixes: 57db62a130ce ("s390/ap/zcrypt: Rework AP message buffer allocation")
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Closes: https://lore.kernel.org/linux-s390/CAHj4cs9H67Uz0iVaRQv447p7JFPRPy3TKAT4=Y6_e=wSHCZM5w@mail.gmail.com/
-Reported-by: Nadja Hariz <Nadia.Hariz@ibm.com>
+The root cause is the CPU Measurement sampling facility overflow
+adjustment. Whenever an overflow (too much samples per tick) occurs, the
+sampling rate is adjusted and increased. This was done without observing
+the maximum sampling rate limit. When the current sampling interval is
+higher than the maximum sampling rate limit, the lsctl instruction raises
+an exception. The error messages is the result of such an exception.
+Observe the upper limit when the new sampling rate is recalculated.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Fixes: 39d4a501a9ef ("s390/cpum_sf: Adjust sampling interval to avoid hitting sample limits")
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Reviewed-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_msgtype6.c |   32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+ arch/s390/kernel/perf_cpum_sf.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/s390/crypto/zcrypt_msgtype6.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype6.c
-@@ -953,6 +953,10 @@ static atomic_t zcrypt_step = ATOMIC_INI
- /*
-  * The request distributor calls this function if it picked the CEXxC
-  * device to handle a modexpo request.
-+ * This function assumes that ap_msg has been initialized with
-+ * ap_init_apmsg() and thus a valid buffer with the size of
-+ * ap_msg->bufsize is available within ap_msg. Also the caller has
-+ * to make sure ap_release_apmsg() is always called even on failure.
-  * @zq: pointer to zcrypt_queue structure that identifies the
-  *	CEXxC device to the request distributor
-  * @mex: pointer to the modexpo request buffer
-@@ -964,21 +968,17 @@ static long zcrypt_msgtype6_modexpo(stru
- 	struct ap_response_type *resp_type = &ap_msg->response;
- 	int rc;
- 
--	ap_msg->msg = (void *)get_zeroed_page(GFP_KERNEL);
--	if (!ap_msg->msg)
--		return -ENOMEM;
--	ap_msg->bufsize = PAGE_SIZE;
- 	ap_msg->receive = zcrypt_msgtype6_receive;
- 	ap_msg->psmid = (((unsigned long)current->pid) << 32) +
- 		atomic_inc_return(&zcrypt_step);
- 	rc = icamex_msg_to_type6mex_msgx(zq, ap_msg, mex);
- 	if (rc)
--		goto out_free;
-+		goto out;
- 	resp_type->type = CEXXC_RESPONSE_TYPE_ICA;
- 	init_completion(&resp_type->work);
- 	rc = ap_queue_message(zq->queue, ap_msg);
- 	if (rc)
--		goto out_free;
-+		goto out;
- 	rc = wait_for_completion_interruptible(&resp_type->work);
- 	if (rc == 0) {
- 		rc = ap_msg->rc;
-@@ -991,15 +991,17 @@ static long zcrypt_msgtype6_modexpo(stru
- 		ap_cancel_message(zq->queue, ap_msg);
- 	}
- 
--out_free:
--	free_page((unsigned long)ap_msg->msg);
--	ap_msg->msg = NULL;
-+out:
- 	return rc;
+--- a/arch/s390/kernel/perf_cpum_sf.c
++++ b/arch/s390/kernel/perf_cpum_sf.c
+@@ -1168,6 +1168,7 @@ static void hw_collect_samples(struct pe
+ static void hw_perf_event_update(struct perf_event *event, int flush_all)
+ {
+ 	unsigned long long event_overflow, sampl_overflow, num_sdb;
++	struct cpu_hw_sf *cpuhw = this_cpu_ptr(&cpu_hw_sf);
+ 	struct hw_perf_event *hwc = &event->hw;
+ 	union hws_trailer_header prev, new;
+ 	struct hws_trailer_entry *te;
+@@ -1247,8 +1248,11 @@ static void hw_perf_event_update(struct
+ 	 * are dropped.
+ 	 * Slightly increase the interval to avoid hitting this limit.
+ 	 */
+-	if (event_overflow)
++	if (event_overflow) {
+ 		SAMPL_RATE(hwc) += DIV_ROUND_UP(SAMPL_RATE(hwc), 10);
++		if (SAMPL_RATE(hwc) > cpuhw->qsi.max_sampl_rate)
++			SAMPL_RATE(hwc) = cpuhw->qsi.max_sampl_rate;
++	}
  }
  
- /*
-  * The request distributor calls this function if it picked the CEXxC
-  * device to handle a modexpo_crt request.
-+ * This function assumes that ap_msg has been initialized with
-+ * ap_init_apmsg() and thus a valid buffer with the size of
-+ * ap_msg->bufsize is available within ap_msg. Also the caller has
-+ * to make sure ap_release_apmsg() is always called even on failure.
-  * @zq: pointer to zcrypt_queue structure that identifies the
-  *	CEXxC device to the request distributor
-  * @crt: pointer to the modexpoc_crt request buffer
-@@ -1011,21 +1013,17 @@ static long zcrypt_msgtype6_modexpo_crt(
- 	struct ap_response_type *resp_type = &ap_msg->response;
- 	int rc;
- 
--	ap_msg->msg = (void *)get_zeroed_page(GFP_KERNEL);
--	if (!ap_msg->msg)
--		return -ENOMEM;
--	ap_msg->bufsize = PAGE_SIZE;
- 	ap_msg->receive = zcrypt_msgtype6_receive;
- 	ap_msg->psmid = (((unsigned long)current->pid) << 32) +
- 		atomic_inc_return(&zcrypt_step);
- 	rc = icacrt_msg_to_type6crt_msgx(zq, ap_msg, crt);
- 	if (rc)
--		goto out_free;
-+		goto out;
- 	resp_type->type = CEXXC_RESPONSE_TYPE_ICA;
- 	init_completion(&resp_type->work);
- 	rc = ap_queue_message(zq->queue, ap_msg);
- 	if (rc)
--		goto out_free;
-+		goto out;
- 	rc = wait_for_completion_interruptible(&resp_type->work);
- 	if (rc == 0) {
- 		rc = ap_msg->rc;
-@@ -1038,9 +1036,7 @@ static long zcrypt_msgtype6_modexpo_crt(
- 		ap_cancel_message(zq->queue, ap_msg);
- 	}
- 
--out_free:
--	free_page((unsigned long)ap_msg->msg);
--	ap_msg->msg = NULL;
-+out:
- 	return rc;
- }
- 
+ static inline unsigned long aux_sdb_index(struct aux_buffer *aux,
 
 
