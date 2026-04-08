@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33172385513;
-	Wed,  8 Apr 2026 18:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9822727F3;
+	Wed,  8 Apr 2026 18:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672134; cv=none; b=j+P19t/rg0wr1NCxMYXp/Ql5RsCo1/tMwCvnL/YMXDwbQAzxwwdRiZHPnBTczCjvVZbtdT8UCVhovw7bmMLV6iFGkMd/1tzu1RGljJIkkc6AzzwxBddeSlTzqRJ3NFX4Kv4LmpDbNWA1UWJEKWOpCGmtKf/m/bhykaSsiI5OjCo=
+	t=1775672136; cv=none; b=dwqXSior0F8/WLKpdB1zvD2+NRcSR3NNmcVILQpVXAkEAMwJi+q3+V8djTHgD0/B89T/Ak3WhcphKOVOc839mGpXmwSSns+Q6MRdGKHz+on1T9aQrNYQbVExMryDFz6blcLzeCitP0tcxg+pO6+JRb1M1sFAwy+nqTFmVi4ChHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672134; c=relaxed/simple;
-	bh=HqQUYJYVFxIs8MdAWpCkj+nvK7t2ITfqL1wDpbiWHIQ=;
+	s=arc-20240116; t=1775672136; c=relaxed/simple;
+	bh=8IfEz7O82/qmdrA56oBo6l4h1W1L6na/pA1znPExpBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZO1k0eOItqZ5gpEacoBzVcjCaZcnprC8Meuntm4mqWjYI+T7rFJD1N8dgqJKn9odl1pfzuTQAXxonEwsnQSmTjJl7M3YhNURLDlVJgYzHy4eUsJDeEUJIE6YAER1J7T/haVDzn/PbohT+hB0c/wUxWHsY2K/xA83lRP9Mr83ihc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVsFBFig; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=boW9nkNVXuHeqpJEJj5c30tvfBaPrhach2YEnv64OtGq4M+/vc8PHx/bQp18ZXZsWzPs4hKwAJZFKAzRsJeyuY7d2gdCYBcnzUeKiLhwhkryY1PhqhB3j0jNC+sLDQlmLgqMXNEB0lFA9++DWp8NK5xZgLf/e3rIBy9fK1EHWCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efJIbBJw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVsFBFig"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA1EC19421;
-	Wed,  8 Apr 2026 18:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efJIbBJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527EFC19421;
+	Wed,  8 Apr 2026 18:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672134;
-	bh=HqQUYJYVFxIs8MdAWpCkj+nvK7t2ITfqL1wDpbiWHIQ=;
+	s=korg; t=1775672136;
+	bh=8IfEz7O82/qmdrA56oBo6l4h1W1L6na/pA1znPExpBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QVsFBFigLZP98w6SzCv5qT95iKxeCEqZvRtiSAKCdsW2qTUJKrdvZvZo5yS1FGeA6
-	 AdrAfFQb/4TKOsemoC4+wfM5qmz2dZWIfL4fhWsGMKhZbsTTOfR0pSBCyrHRflZG8c
-	 iak1m8dJGGAhCC6ENYrphnuye8+jZxiowaZrlrj8=
+	b=efJIbBJwtnQj723Pq144pIyxiBTTegA0Jw3Z9C+IKusRagdhsQ9m7x4ZNMaxgsd5l
+	 PKVLtXaE0vMIB9hN5aNfAd15TqSvZUBGkZeqAZTf7f43ZT1mS7msEYHLf+CRXRYUHj
+	 3/9GEFMGgqhe3n25wgNQtKO4XoDCcl7HLI11kt7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Karsten Hohmeier <linux@hohmatik.de>
-Subject: [PATCH 6.1 203/312] ALSA: ctxfi: Fix missing SPDIFI1 index handling
-Date: Wed,  8 Apr 2026 20:02:00 +0200
-Message-ID: <20260408175941.342344705@linuxfoundation.org>
+	Oleh Konko <security@1seal.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 204/312] Bluetooth: SMP: derive legacy responder STK authentication from MITM state
+Date: Wed,  8 Apr 2026 20:02:01 +0200
+Message-ID: <20260408175941.379571826@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -50,34 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Oleh Konko <security@1seal.org>
 
-commit b045ab3dff97edae6d538eeff900a34c098761f8 upstream.
+commit 20756fec2f0108cb88e815941f1ffff88dc286fe upstream.
 
-SPDIF1 DAIO type isn't properly handled in daio_device_index() for
-hw20k2, and it returned -EINVAL, which ended up with the out-of-bounds
-array access.  Follow the hw20k1 pattern and return the proper index
-for this type, too.
+The legacy responder path in smp_random() currently labels the stored
+STK as authenticated whenever pending_sec_level is BT_SECURITY_HIGH.
+That reflects what the local service requested, not what the pairing
+flow actually achieved.
 
-Reported-and-tested-by: Karsten Hohmeier <linux@hohmatik.de>
-Closes: https://lore.kernel.org/20260315155004.15633-1-linux@hohmatik.de
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260329091240.420194-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+For Just Works/Confirm legacy pairing, SMP_FLAG_MITM_AUTH stays clear
+and the resulting STK should remain unauthenticated even if the local
+side requested HIGH security. Use the established MITM state when
+storing the responder STK so the key metadata matches the pairing result.
+
+This also keeps the legacy path aligned with the Secure Connections code,
+which already treats JUST_WORKS/JUST_CFM as unauthenticated.
+
+Fixes: fff3490f4781 ("Bluetooth: Fix setting correct authentication information for SMP STK")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oleh Konko <security@1seal.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/ctdaio.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/smp.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/sound/pci/ctxfi/ctdaio.c
-+++ b/sound/pci/ctxfi/ctdaio.c
-@@ -119,6 +119,7 @@ static unsigned int daio_device_index(en
- 		switch (type) {
- 		case SPDIFOO:	return 0;
- 		case SPDIFIO:	return 0;
-+		case SPDIFI1:	return 1;
- 		case LINEO1:	return 4;
- 		case LINEO2:	return 7;
- 		case LINEO3:	return 5;
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -1017,10 +1017,7 @@ static u8 smp_random(struct smp_chan *sm
+ 
+ 		smp_s1(smp->tk, smp->prnd, smp->rrnd, stk);
+ 
+-		if (hcon->pending_sec_level == BT_SECURITY_HIGH)
+-			auth = 1;
+-		else
+-			auth = 0;
++		auth = test_bit(SMP_FLAG_MITM_AUTH, &smp->flags) ? 1 : 0;
+ 
+ 		/* Even though there's no _RESPONDER suffix this is the
+ 		 * responder STK we're adding for later lookup (the initiator
 
 
