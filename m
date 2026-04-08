@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B13232A3FD;
-	Wed,  8 Apr 2026 18:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83EE32A3FD;
+	Wed,  8 Apr 2026 18:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674690; cv=none; b=Shz1VIpfzqRqVjRL7O8hHXgaZC5zY/Jxt2pPGHj/kVJ0EjwrUbw8WknOx+mZ8cyyg0KPZNh9/HxsuYf7HeYl2SY67kubsn6dnEhYADJP+WMqpQm+sj2bUEMdTnKouY6Ak7TJLOxf7UDzbYDa/MuqcQjqftaVXjVGC1a56nprwyw=
+	t=1775674692; cv=none; b=OrBBbAQajPmZQM66qG0EiR86oDdPbOYtLv5pGEf+gUFhVQhnWe3u6e0WQoWJctS8/+p+xVxS0LJ3akAhY0twSGPqvywPxJzb1k8WX9tMrqNd4mKDzjUnyKU9lZDMwQVRgxggp90YIylWrZes93pLJ/xDIMQ9cWEdtmpFdAuk4YI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674690; c=relaxed/simple;
-	bh=thJ7Ba84pqwhLoB1iZAmp1aEFT5Nsz7j6zS9Z1Z3Y1c=;
+	s=arc-20240116; t=1775674692; c=relaxed/simple;
+	bh=AZeQ7LeH9VvXwat9tpi8UxHLvXrCxa2X4a5Iav3qj2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OXUQO3kKYueWC4pm0qsXsVlInnAYTyM1XMlbBmoU661slw/inEilY+QVvR3EgMQe68f6wHr0TtRjd3mk33n01JHWA18r9CWJp6FulYGrSfcx7/JciBepO4n+zDoq3v2hzZ1dOmC8SSRgS+8FJmyV/NElUYNK2GhQRUOOxj/Qn+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvfZ4d33; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sdaqTz7Ioun9viLT4RMv2j7iDZ6Ms4B3OU/2tqetStx6xh6mZkPSKs/IgRW7jbp440LyZ9DquTkq7TXs+B+jM/sKO4rey6h7wwTnzr9X5xGKoeRlglA1ErVDuL8e0iotpFfT3eDOH0+BJNlP0xNEfeR+O4uEAYQV2bvJsieTB3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Go21+Ykk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvfZ4d33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D2EC19421;
-	Wed,  8 Apr 2026 18:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Go21+Ykk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E964C19421;
+	Wed,  8 Apr 2026 18:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674690;
-	bh=thJ7Ba84pqwhLoB1iZAmp1aEFT5Nsz7j6zS9Z1Z3Y1c=;
+	s=korg; t=1775674692;
+	bh=AZeQ7LeH9VvXwat9tpi8UxHLvXrCxa2X4a5Iav3qj2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvfZ4d33WtOF7/4cXfEE6JVfvbTzQ+cmcr86omdFtmsEl8hOgR2dUjvUM6NW2DYSF
-	 TtZEdlH6NmOejebIQFdd7xt5KAtd73/m7hvjm+9ETK+98LsgeHgEj1wxe0Atv3X1m1
-	 2svqePR1U1RA2yNg5c8QEZjLLRM3cOM5w88/k3hA=
+	b=Go21+Ykknqv16XMTVGvdsvrtQQpeKluxiy1B60aOzHfnhNhjRTT2LCpJy5xLErUtg
+	 Nkckc4lTF3QQ8LejH1dNYYRRSQzHEGhoqcJq5mCfLcedFk5/VFbPRemBgGhMtaNhU1
+	 wDLTi6IAJH5St1f2q3magbBzCPBj+FhGuCpj8I+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	=?UTF-8?q?Jo=C3=A3o=20Paulo=20Gon=C3=A7alves?= <jpaulo.silvagoncalves@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 195/311] iio: adc: ti-adc161s626: use DMA-safe memory for spi_read()
-Date: Wed,  8 Apr 2026 20:03:15 +0200
-Message-ID: <20260408175946.695032125@linuxfoundation.org>
+Subject: [PATCH 6.19 196/311] iio: adc: ti-ads1119: Fix unbalanced pm reference count in ds1119_single_conversion()
+Date: Wed,  8 Apr 2026 20:03:16 +0200
+Message-ID: <20260408175946.732059008@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -46,82 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit 768461517a28d80fe81ea4d5d03a90cd184ea6ad upstream.
+commit 48a5c36577ebe0144f8ede70e59b59ea18b75089 upstream.
 
-Add a DMA-safe buffer and use it for spi_read() instead of a stack
-memory. All SPI buffers must be DMA-safe.
+In ads1119_single_conversion(), if pm_runtime_resume_and_get() fails,
+the code jumps to the pdown label, which calls
+pm_runtime_put_autosuspend().
 
-Since we only need up to 3 bytes, we just use a u8[] instead of __be16
-and __be32 and change the conversion functions appropriately.
+Since pm_runtime_resume_and_get() automatically decrements the usage
+counter on failure, the subsequent call to pm_runtime_put_autosuspend()
+causes an unbalanced reference counter.
 
-Fixes: 4d671b71beef ("iio: adc: ti-adc161s626: add support for TI 1-channel differential ADCs")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Fixes: a9306887eba4 ("iio: adc: ti-ads1119: Add driver")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: João Paulo Gonçalves <jpaulo.silvagoncalves@gmail.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-adc161s626.c |   20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/iio/adc/ti-ads1119.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ti-adc161s626.c
-+++ b/drivers/iio/adc/ti-adc161s626.c
-@@ -15,6 +15,7 @@
- #include <linux/init.h>
- #include <linux/err.h>
- #include <linux/spi/spi.h>
-+#include <linux/unaligned.h>
- #include <linux/iio/iio.h>
- #include <linux/iio/trigger.h>
- #include <linux/iio/buffer.h>
-@@ -70,6 +71,7 @@ struct ti_adc_data {
+--- a/drivers/iio/adc/ti-ads1119.c
++++ b/drivers/iio/adc/ti-ads1119.c
+@@ -274,7 +274,7 @@ static int ads1119_single_conversion(str
  
- 	u8 read_size;
- 	u8 shift;
-+	u8 buf[3] __aligned(IIO_DMA_MINALIGN);
- };
+ 	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret)
+-		goto pdown;
++		return ret;
  
- static int ti_adc_read_measurement(struct ti_adc_data *data,
-@@ -78,26 +80,20 @@ static int ti_adc_read_measurement(struc
- 	int ret;
- 
- 	switch (data->read_size) {
--	case 2: {
--		__be16 buf;
--
--		ret = spi_read(data->spi, (void *) &buf, 2);
-+	case 2:
-+		ret = spi_read(data->spi, data->buf, 2);
- 		if (ret)
- 			return ret;
- 
--		*val = be16_to_cpu(buf);
-+		*val = get_unaligned_be16(data->buf);
- 		break;
--	}
--	case 3: {
--		__be32 buf;
--
--		ret = spi_read(data->spi, (void *) &buf, 3);
-+	case 3:
-+		ret = spi_read(data->spi, data->buf, 3);
- 		if (ret)
- 			return ret;
- 
--		*val = be32_to_cpu(buf) >> 8;
-+		*val = get_unaligned_be24(data->buf);
- 		break;
--	}
- 	default:
- 		return -EINVAL;
- 	}
+ 	ret = ads1119_configure_channel(st, mux, gain, datarate);
+ 	if (ret)
 
 
