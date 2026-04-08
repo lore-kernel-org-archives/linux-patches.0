@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D077C3D9DA9;
-	Wed,  8 Apr 2026 18:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603D33D9044;
+	Wed,  8 Apr 2026 18:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673549; cv=none; b=tUhqwU9YZwfzrTAZ22zp4xTUifVMhnnFJzrOzTSxh7vclYyP+DacAa7rplIIs7SmNbcHwk6gGkJZ8OhkFeAYH5vkOEN9CKUHRiBk7zkIn6esqesRGLSuKktFUSteqkouL0mZSTjrJRA9kJ0yvuM78s4ue8our1zt8u2RYowAOXo=
+	t=1775673552; cv=none; b=CrbP12zxbKLpAd/SIBCBdC7Hv/lveevUVJRfWZKSpb92aBvp+2GeXQk5bidmo4yePQj39ZLQ1XK/LWa+PWH0j6IFkBS4QLcF8CKAJ8Q6oDRpxcYG5LF9Zz5PRuLPWXVGRvi0pM9MEd0AxaM6djQ1Y3e4m3fFl7ls984klHLOHUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673549; c=relaxed/simple;
-	bh=dK5pGVbJ0pNCNf17zrdLMcrVgxXTzTPEV68FfWS31Hc=;
+	s=arc-20240116; t=1775673552; c=relaxed/simple;
+	bh=A9qYQjsXwsfwEHsM4pVdUDs7Eim7Hk/fcmqIMzQkYJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MOtfxbmU1BTDvpGEuo+cQfSNr8WOC9W5r8uvkr6Qb6MiaRX7evUF4LxCOP5Ora62XBnZPoZmdRpt1a7iFGA1TpY8FYVuCm8fbIsvVmnyv1rw31Dr/v4INA6d7fRzOMeS6xLwIi/YlyDOrRJgv/jyLXsWDnC+6Z+Vf9jnsaci/3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ea6ti2hZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gFtJC8qLqXJxglj0p3YDduWMsH2zpFJTLngxKZmC9LE1Ho0FiT3QoCzOJu8FWAvzv8OGinhfeyMf3N2F9A+TkEvAHqhJ24CPnGd/MZma1rHtXtySz7dByfGRwNj89QVyKK/llwXSSIq+0XM00I7us54Q8QvcU7aWH/PNgv/3vlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhGYlVfC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ea6ti2hZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673D8C19425;
-	Wed,  8 Apr 2026 18:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhGYlVfC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC498C2BC87;
+	Wed,  8 Apr 2026 18:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673549;
-	bh=dK5pGVbJ0pNCNf17zrdLMcrVgxXTzTPEV68FfWS31Hc=;
+	s=korg; t=1775673552;
+	bh=A9qYQjsXwsfwEHsM4pVdUDs7Eim7Hk/fcmqIMzQkYJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ea6ti2hZgeQlEv3m6KDTgHVM7W37rL511TxRK8TSyU2a8/jqjFz8MHhnApnvEg4MY
-	 ZECF7RpKkcD+Hawy0ocuzmUiMaeLQ7FBEwiRPFLod4C2ZJ4l0eDCvMpnOPVY67VrVG
-	 oozxLC/DMXY48SzKYyGuywmvakazTq6KrhoGIAHQ=
+	b=yhGYlVfCtv6cAuh0Gd1GRis9udxD7V0BC0jYUIwnChf4z2ScotdMZ4ncsxcPflGgm
+	 DmSWVIQ4pQzJCz3dOOzIC26iKMRkcad9Yp7+oDaNfM7w/kO+WwBD9VpDQ8sMKezHG4
+	 QcmWlpIjIiqLoHcOJQ98XVXegdR5GF6nMesHLTAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Peter Xu <peterx@redhat.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 275/277] mm/memory: fix PMD/PUD checks in follow_pfnmap_start()
-Date: Wed,  8 Apr 2026 20:04:20 +0200
-Message-ID: <20260408175944.136781721@linuxfoundation.org>
+Subject: [PATCH 6.18 276/277] sched_ext: Refactor do_enqueue_task() local and global DSQ paths
+Date: Wed,  8 Apr 2026 20:04:21 +0200
+Message-ID: <20260408175944.174648788@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -58,100 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "David Hildenbrand (Arm)" <david@kernel.org>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit ffef67b93aa352b34e6aeba3d52c19a63885409a ]
+[ Upstream commit 3546119f18647d7ddbba579737d8a222b430cb1c ]
 
-follow_pfnmap_start() suffers from two problems:
+The local and global DSQ enqueue paths in do_enqueue_task() share the same
+slice refill logic. Factor out the common code into a shared enqueue label.
+This makes adding new enqueue cases easier. No functional changes.
 
-(1) We are not re-fetching the pmd/pud after taking the PTL
-
-Therefore, we are not properly stabilizing what the lock actually
-protects.  If there is concurrent zapping, we would indicate to the
-caller that we found an entry, however, that entry might already have
-been invalidated, or contain a different PFN after taking the lock.
-
-Properly use pmdp_get() / pudp_get() after taking the lock.
-
-(2) pmd_leaf() / pud_leaf() are not well defined on non-present entries
-
-pmd_leaf()/pud_leaf() could wrongly trigger on non-present entries.
-
-There is no real guarantee that pmd_leaf()/pud_leaf() returns something
-reasonable on non-present entries.  Most architectures indeed either
-perform a present check or make it work by smart use of flags.
-
-However, for example loongarch checks the _PAGE_HUGE flag in pmd_leaf(),
-and always sets the _PAGE_HUGE flag in __swp_entry_to_pmd().  Whereby
-pmd_trans_huge() explicitly checks pmd_present(), pmd_leaf() does not do
-that.
-
-Let's check pmd_present()/pud_present() before assuming "the is a present
-PMD leaf" when spotting pmd_leaf()/pud_leaf(), like other page table
-handling code that traverses user page tables does.
-
-Given that non-present PMD entries are likely rare in VM_IO|VM_PFNMAP, (1)
-is likely more relevant than (2).  It is questionable how often (1) would
-actually trigger, but let's CC stable to be sure.
-
-This was found by code inspection.
-
-Link: https://lkml.kernel.org/r/20260323-follow_pfnmap_fix-v1-1-5b0ec10872b3@kernel.org
-Fixes: 6da8e9634bb7 ("mm: new follow_pfnmap API")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 7e0ffb72de8a ("sched_ext: Fix stale direct dispatch state in ddsp_dsq_id")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ kernel/sched/ext.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -6697,11 +6697,16 @@ retry:
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1243,6 +1243,7 @@ static void do_enqueue_task(struct rq *r
+ {
+ 	struct scx_sched *sch = scx_root;
+ 	struct task_struct **ddsp_taskp;
++	struct scx_dispatch_q *dsq;
+ 	unsigned long qseq;
  
- 	pudp = pud_offset(p4dp, address);
- 	pud = pudp_get(pudp);
--	if (pud_none(pud))
-+	if (!pud_present(pud))
- 		goto out;
- 	if (pud_leaf(pud)) {
- 		lock = pud_lock(mm, pudp);
--		if (!unlikely(pud_leaf(pud))) {
-+		pud = pudp_get(pudp);
+ 	WARN_ON_ONCE(!(p->scx.flags & SCX_TASK_QUEUED));
+@@ -1310,8 +1311,17 @@ static void do_enqueue_task(struct rq *r
+ direct:
+ 	direct_dispatch(sch, p, enq_flags);
+ 	return;
+-
++local_norefill:
++	dispatch_enqueue(sch, &rq->scx.local_dsq, p, enq_flags);
++	return;
+ local:
++	dsq = &rq->scx.local_dsq;
++	goto enqueue;
++global:
++	dsq = find_global_dsq(sch, p);
++	goto enqueue;
 +
-+		if (unlikely(!pud_present(pud))) {
-+			spin_unlock(lock);
-+			goto out;
-+		} else if (unlikely(!pud_leaf(pud))) {
- 			spin_unlock(lock);
- 			goto retry;
- 		}
-@@ -6713,9 +6718,16 @@ retry:
++enqueue:
+ 	/*
+ 	 * For task-ordering, slice refill must be treated as implying the end
+ 	 * of the current slice. Otherwise, the longer @p stays on the CPU, the
+@@ -1319,14 +1329,7 @@ local:
+ 	 */
+ 	touch_core_sched(rq, p);
+ 	refill_task_slice_dfl(sch, p);
+-local_norefill:
+-	dispatch_enqueue(sch, &rq->scx.local_dsq, p, enq_flags);
+-	return;
+-
+-global:
+-	touch_core_sched(rq, p);	/* see the comment in local: */
+-	refill_task_slice_dfl(sch, p);
+-	dispatch_enqueue(sch, find_global_dsq(sch, p), p, enq_flags);
++	dispatch_enqueue(sch, dsq, p, enq_flags);
+ }
  
- 	pmdp = pmd_offset(pudp, address);
- 	pmd = pmdp_get_lockless(pmdp);
-+	if (!pmd_present(pmd))
-+		goto out;
- 	if (pmd_leaf(pmd)) {
- 		lock = pmd_lock(mm, pmdp);
--		if (!unlikely(pmd_leaf(pmd))) {
-+		pmd = pmdp_get(pmdp);
-+
-+		if (unlikely(!pmd_present(pmd))) {
-+			spin_unlock(lock);
-+			goto out;
-+		} else if (unlikely(!pmd_leaf(pmd))) {
- 			spin_unlock(lock);
- 			goto retry;
- 		}
+ static bool task_runnable(const struct task_struct *p)
 
 
