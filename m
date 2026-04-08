@@ -1,44 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB40D2641FC;
-	Wed,  8 Apr 2026 18:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5EF3624B9;
+	Wed,  8 Apr 2026 18:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673991; cv=none; b=or6VTwY/ort7Mm4M8YdrlUj5W95NRxaZlkOC0mqhAph3BzWk09kPd7VaabfzSCeePqPZeFRSGJTuy7Zh/302h77xbYxafl0YOQc0bZRLYVccuVVR8r+5ItqBaXKFeHmCXVSViCWby4ihTDCYv+aGaPPetflgl/cOwJO6VR6bQeg=
+	t=1775673994; cv=none; b=HMXbiNt2z71Z2voNMesVyCSALM6Yl9Hzh38fIKhkoh8yi+n6PmqAPWUvA5k3vjv74hk7oMi7C4jDvRHji6yw4mglFTjqyTbWYIgIfyjQUaBbQQegIbyHajmp/aagcUGiX4c2/chxuoFruB9/7pkfH1iDW2Tf8RttLOi8kQA64Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673991; c=relaxed/simple;
-	bh=u9GbXZDBRgNyUfcSI7c72cWfl89qFCdF0F9IUvsTEuo=;
+	s=arc-20240116; t=1775673994; c=relaxed/simple;
+	bh=mhJNsNwV42U+0Pp/j4ERyyyaLqHrbHv1MlADu+FWkpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KRwT0YJlN+2BdBGWBTh38zrg0E/gHES6JDK5YieaFVu236we4Gm6qbzBneK75Zff7R9l+L+11eQDUkbifoGy7LU9zQ6UJG3TTqkXXsx3yiikzf/BQXq8UA/Jf2K3ZY/7TETyl3vK904rg+MMty0W7Rft5f7w6hFFDPNPYK2rFns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZRZr7g4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SY4lrRuy5Qrn1CV+5ueeL3F/sHPpU/f0EQLU5HdKEICTFzeCQbXUdYzFobnrrxb1dTkZ0tENdAOH8/PZhp0YWrkxx/W2yU5GJpORe15jxpx9Zna4y+OMOW2QUwSRmQTDRJLpcuBzIfScM1NEa+MDu8PFt+ELq/Pn68GmZKqtSiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZdnTgnT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZRZr7g4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFAEC2BC87;
-	Wed,  8 Apr 2026 18:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZdnTgnT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74ACC2BC87;
+	Wed,  8 Apr 2026 18:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673991;
-	bh=u9GbXZDBRgNyUfcSI7c72cWfl89qFCdF0F9IUvsTEuo=;
+	s=korg; t=1775673994;
+	bh=mhJNsNwV42U+0Pp/j4ERyyyaLqHrbHv1MlADu+FWkpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZRZr7g4Wf+FSqtgv44YX6kSkvsqdKQp2+DIGZCFCIz9tO6nn3BFsrXVAi5CSl+hu
-	 3q7h/eC8hbpO4dlYCIMDTdTzJkwtkevcBxUfJ0RB0jCQ3/P7P4ysS8YHtxU5ShPiRW
-	 AqY2q3jGAva1rKwF0duKeZa+ILaMBP2V8mVtMRRI=
+	b=tZdnTgnTQsJIFg+RL1+dfhBHe02UoJjNSQER8tlXKpPJo4f2LSrRZ25xRF67MojIx
+	 PIo2cZFGdihGQ4QCqr0ynW5QABqBqFblaJj/HtOQMmpVtGWsOwRLsBNX/NzI1vnGkF
+	 qSj3rM9KolzqNQmE6QNIsrHdXiKkWr95odiDFyic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Daniel Scally <djrscally@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.12 167/242] x86/platform/geode: Fix on-stack property data use-after-return bug
-Date: Wed,  8 Apr 2026 20:03:27 +0200
-Message-ID: <20260408175933.340033175@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 168/242] Revert "LoongArch: Handle percpu handler address for ORC unwinder"
+Date: Wed,  8 Apr 2026 20:03:28 +0200
+Message-ID: <20260408175933.376731129@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -57,104 +49,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+This reverts commit 8eeb34ae9d4c743b1fd2cf58f9c51def37091cf5.
 
-commit b981e9e94c687b7b19ae8820963f005b842cb2f2 upstream.
-
-The PROPERTY_ENTRY_GPIO macro (and by extension PROPERTY_ENTRY_REF)
-creates a temporary software_node_ref_args structure on the stack
-when used in a runtime assignment. This results in the property
-pointing to data that is invalid once the function returns.
-
-Fix this by ensuring the GPIO reference data is not stored on stack and
-using PROPERTY_ENTRY_REF_ARRAY_LEN() to point directly to the persistent
-reference data.
-
-Fixes: 298c9babadb8 ("x86/platform/geode: switch GPIO buttons and LEDs to software properties")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Daniel Scally <djrscally@gmail.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Hans de Goede <hansg@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260329-property-gpio-fix-v2-1-3cca5ba136d8@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/geode/geode-common.c |   24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ arch/loongarch/include/asm/setup.h |  3 ---
+ arch/loongarch/kernel/unwind_orc.c | 16 +---------------
+ 2 files changed, 1 insertion(+), 18 deletions(-)
 
---- a/arch/x86/platform/geode/geode-common.c
-+++ b/arch/x86/platform/geode/geode-common.c
-@@ -28,8 +28,10 @@ static const struct software_node geode_
- 	.properties = geode_gpio_keys_props,
- };
+diff --git a/arch/loongarch/include/asm/setup.h b/arch/loongarch/include/asm/setup.h
+index f81375e5e89c0..3c2fb16b11b64 100644
+--- a/arch/loongarch/include/asm/setup.h
++++ b/arch/loongarch/include/asm/setup.h
+@@ -7,7 +7,6 @@
+ #define _LOONGARCH_SETUP_H
  
--static struct property_entry geode_restart_key_props[] = {
--	{ /* Placeholder for GPIO property */ },
-+static struct software_node_ref_args geode_restart_gpio_ref;
-+
-+static const struct property_entry geode_restart_key_props[] = {
-+	PROPERTY_ENTRY_REF_ARRAY_LEN("gpios", &geode_restart_gpio_ref, 1),
- 	PROPERTY_ENTRY_U32("linux,code", KEY_RESTART),
- 	PROPERTY_ENTRY_STRING("label", "Reset button"),
- 	PROPERTY_ENTRY_U32("debounce-interval", 100),
-@@ -64,8 +66,7 @@ int __init geode_create_restart_key(unsi
- 	struct platform_device *pd;
- 	int err;
+ #include <linux/types.h>
+-#include <linux/threads.h>
+ #include <asm/sections.h>
+ #include <uapi/asm/setup.h>
  
--	geode_restart_key_props[0] = PROPERTY_ENTRY_GPIO("gpios",
--							 &geode_gpiochip_node,
-+	geode_restart_gpio_ref = SOFTWARE_NODE_REFERENCE(&geode_gpiochip_node,
- 							 pin, GPIO_ACTIVE_LOW);
+@@ -15,8 +14,6 @@
  
- 	err = software_node_register_node_group(geode_gpio_keys_swnodes);
-@@ -99,6 +100,7 @@ int __init geode_create_leds(const char
- 	const struct software_node *group[MAX_LEDS + 2] = { 0 };
- 	struct software_node *swnodes;
- 	struct property_entry *props;
-+	struct software_node_ref_args *gpio_refs;
- 	struct platform_device_info led_info = {
- 		.name	= "leds-gpio",
- 		.id	= PLATFORM_DEVID_NONE,
-@@ -127,6 +129,12 @@ int __init geode_create_leds(const char
- 		goto err_free_swnodes;
- 	}
+ extern unsigned long eentry;
+ extern unsigned long tlbrentry;
+-extern unsigned long pcpu_handlers[NR_CPUS];
+-extern long exception_handlers[VECSIZE * 128 / sizeof(long)];
+ extern char init_command_line[COMMAND_LINE_SIZE];
+ extern void tlb_init(int cpu);
+ extern void cpu_cache_init(void);
+diff --git a/arch/loongarch/kernel/unwind_orc.c b/arch/loongarch/kernel/unwind_orc.c
+index e8b95f1bc5786..4924d1ecc4579 100644
+--- a/arch/loongarch/kernel/unwind_orc.c
++++ b/arch/loongarch/kernel/unwind_orc.c
+@@ -357,21 +357,7 @@ static bool is_entry_func(unsigned long addr)
  
-+	gpio_refs = kzalloc_objs(*gpio_refs, n_leds);
-+	if (!gpio_refs) {
-+		err = -ENOMEM;
-+		goto err_free_props;
-+	}
-+
- 	group[0] = &geode_gpio_leds_node;
- 	for (i = 0; i < n_leds; i++) {
- 		node_name = kasprintf(GFP_KERNEL, "%s:%d", label, i);
-@@ -135,9 +143,11 @@ int __init geode_create_leds(const char
- 			goto err_free_names;
- 		}
+ static inline unsigned long bt_address(unsigned long ra)
+ {
+-#if defined(CONFIG_NUMA) && !defined(CONFIG_PREEMPT_RT)
+-	int cpu;
+-	int vec_sz = sizeof(exception_handlers);
+-
+-	for_each_possible_cpu(cpu) {
+-		if (!pcpu_handlers[cpu])
+-			continue;
+-
+-		if (ra >= pcpu_handlers[cpu] &&
+-		    ra < pcpu_handlers[cpu] + vec_sz) {
+-			ra = ra + eentry - pcpu_handlers[cpu];
+-			break;
+-		}
+-	}
+-#endif
++	extern unsigned long eentry;
  
-+		gpio_refs[i] = SOFTWARE_NODE_REFERENCE(&geode_gpiochip_node,
-+						       leds[i].pin,
-+						       GPIO_ACTIVE_LOW);
- 		props[i * 3 + 0] =
--			PROPERTY_ENTRY_GPIO("gpios", &geode_gpiochip_node,
--					    leds[i].pin, GPIO_ACTIVE_LOW);
-+			PROPERTY_ENTRY_REF_ARRAY_LEN("gpios", &gpio_refs[i], 1);
- 		props[i * 3 + 1] =
- 			PROPERTY_ENTRY_STRING("linux,default-trigger",
- 					      leds[i].default_on ?
-@@ -171,6 +181,8 @@ err_unregister_group:
- err_free_names:
- 	while (--i >= 0)
- 		kfree(swnodes[i].name);
-+	kfree(gpio_refs);
-+err_free_props:
- 	kfree(props);
- err_free_swnodes:
- 	kfree(swnodes);
+ 	if (ra >= eentry && ra < eentry +  EXCCODE_INT_END * VECSIZE) {
+ 		unsigned long func;
+-- 
+2.53.0
+
 
 
