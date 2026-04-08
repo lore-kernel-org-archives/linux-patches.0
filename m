@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E568928C87C;
-	Wed,  8 Apr 2026 18:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41912331A44;
+	Wed,  8 Apr 2026 18:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673321; cv=none; b=Q8nRBXq+XCAISALdwI/IXaAFyaYiPbCCzXSVCeff2X7q6kYi2cIHsFh1ALoFQp/UpQRRBu6xvF52u29Tpv2xuyMgGKKzpYu0KDuDmyGK7h4Q0YaWTbOp6DRJwPk2I+w/7uCiYEoQ300Y8zChu4hPzheSNNX7TK/fake/MGh1igA=
+	t=1775673323; cv=none; b=dV40rj7zch9+NWsWwgXTM+ivBIsDmOcFelJ+B6uUUsE1uu51f2aj/8oo7SiF/aGRDGyBo+7IAnG6qKc/HTX470DtPmsNGzDhA0iwDe+gaOgAy69FQGrMcP/UZfMMTTxC+PvHkkpSpUul7LJQVV46YjcgInHUYQ/n1MZVepWg6qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673321; c=relaxed/simple;
-	bh=rQtpjtTJjGsJd29kjcByeePU5a7xaE5QCNznk0rrf+o=;
+	s=arc-20240116; t=1775673323; c=relaxed/simple;
+	bh=wOjg4yebH+AIMsAkwKJNMD2NsUxHCJXgNq5VID/7OFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UvbPCX9Wyf57LSc5JTv9v4W6AM7dxkKptTrpWP0Wn05NVkkCpqoCl7eSxF04kiSNGhpdekRhSGv3WsEMXJGUX8j2Ox8deIUARW1SLqIiNoVFbhzyHfDUDqwk7xE+nabFYAbTmhSRMlIbjQJgVHuJ9XMrlJBoIrUfwgT+az9IwbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=io0dJ/TE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Re/agIBXAAfxtQFsVO79dj+b9pqnJybbtOSiOU2r5VYbPIR9xeupOOutYg5L0H5r1hakWs6DwK1ZNY63Jil9GU9Kl00Wl6uhhw4z6TzahRRd4cAGvSz2PBh1wivQvdmuLdYji5V6lApj9NBqa88wXPvbyLRgwEgA1H75CK0wk/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsvdOojZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="io0dJ/TE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F30C19421;
-	Wed,  8 Apr 2026 18:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsvdOojZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDB1C19421;
+	Wed,  8 Apr 2026 18:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673320;
-	bh=rQtpjtTJjGsJd29kjcByeePU5a7xaE5QCNznk0rrf+o=;
+	s=korg; t=1775673323;
+	bh=wOjg4yebH+AIMsAkwKJNMD2NsUxHCJXgNq5VID/7OFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=io0dJ/TExfw0IpvmLy6GQfRj9bbSbcqNPMVC1Uy5xRnkFZPieCoB71gpvi69FgxRy
-	 LVFXidMWvJ5If7nZ20NvPuMfBs/cjG+mI31dSY5rmyeMfWgjbTsVnLAhAi35K8sYeD
-	 WTLFUFYA7fbrSTvDnCnBiqSYYfL/x2Q3BLZfYx1g=
+	b=EsvdOojZjZs6m8FP1h8DICz2V1UMX8hIetsb7Wm8jei75b28TOZF/o3Gsqu92T8/f
+	 BzjphxQ9VnpzwRbDMdTk0hHIkRwigAMxqvAsbNV3V/Mfw/4EAGp9XY6H446MepnRS3
+	 HvAu/8UJG+gkz87ZxD5XNF2gDsr6hozmTxAjjQ5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hkbinbin <hkbinbinbin@gmail.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 144/277] Bluetooth: hci_sync: fix stack buffer overflow in hci_le_big_create_sync
-Date: Wed,  8 Apr 2026 20:02:09 +0200
-Message-ID: <20260408175939.250261107@linuxfoundation.org>
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.18 180/277] iio: adc: ade9000: move mutex init before IRQ registration
+Date: Wed,  8 Apr 2026 20:02:45 +0200
+Message-ID: <20260408175940.585777706@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -45,58 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: hkbinbin <hkbinbinbin@gmail.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit bc39a094730ce062fa034a529c93147c096cb488 upstream.
+commit 0206dd36418c104c0b3dea4ed7047e21eccb30b0 upstream.
 
-hci_le_big_create_sync() uses DEFINE_FLEX to allocate a
-struct hci_cp_le_big_create_sync on the stack with room for 0x11 (17)
-BIS entries.  However, conn->num_bis can hold up to HCI_MAX_ISO_BIS (31)
-entries — validated against ISO_MAX_NUM_BIS (0x1f) in the caller
-hci_conn_big_create_sync().  When conn->num_bis is between 18 and 31,
-the memcpy that copies conn->bis into cp->bis writes up to 14 bytes
-past the stack buffer, corrupting adjacent stack memory.
+Move devm_mutex_init() before ade9000_request_irq() calls so that
+st->lock is initialized before any handler that depends on it can run.
 
-This is trivially reproducible: binding an ISO socket with
-bc_num_bis = ISO_MAX_NUM_BIS (31) and calling listen() will
-eventually trigger hci_le_big_create_sync() from the HCI command
-sync worker, causing a KASAN-detectable stack-out-of-bounds write:
-
-  BUG: KASAN: stack-out-of-bounds in hci_le_big_create_sync+0x256/0x3b0
-  Write of size 31 at addr ffffc90000487b48 by task kworker/u9:0/71
-
-Fix this by changing the DEFINE_FLEX count from the incorrect 0x11 to
-HCI_MAX_ISO_BIS, which matches the maximum number of BIS entries that
-conn->bis can actually carry.
-
-Fixes: 42ecf1947135 ("Bluetooth: ISO: Do not emit LE BIG Create Sync if previous is pending")
-Cc: stable@vger.kernel.org
-Signed-off-by: hkbinbin <hkbinbinbin@gmail.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 81de7b4619fc ("iio: adc: add ade9000 support")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/adc/ade9000.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -7131,7 +7131,8 @@ static void create_big_complete(struct h
+diff --git a/drivers/iio/adc/ade9000.c b/drivers/iio/adc/ade9000.c
+index db085dc5e526..c62c6480dd0a 100644
+--- a/drivers/iio/adc/ade9000.c
++++ b/drivers/iio/adc/ade9000.c
+@@ -1706,6 +1706,10 @@ static int ade9000_probe(struct spi_device *spi)
  
- static int hci_le_big_create_sync(struct hci_dev *hdev, void *data)
- {
--	DEFINE_FLEX(struct hci_cp_le_big_create_sync, cp, bis, num_bis, 0x11);
-+	DEFINE_FLEX(struct hci_cp_le_big_create_sync, cp, bis, num_bis,
-+		    HCI_MAX_ISO_BIS);
- 	struct hci_conn *conn = data;
- 	struct bt_iso_qos *qos = &conn->iso_qos;
- 	int err;
+ 	init_completion(&st->reset_completion);
+ 
++	ret = devm_mutex_init(dev, &st->lock);
++	if (ret)
++		return ret;
++
+ 	ret = ade9000_request_irq(dev, "irq0", ade9000_irq0_thread, indio_dev);
+ 	if (ret)
+ 		return ret;
+@@ -1718,10 +1722,6 @@ static int ade9000_probe(struct spi_device *spi)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = devm_mutex_init(dev, &st->lock);
+-	if (ret)
+-		return ret;
+-
+ 	/* External CMOS clock input (optional - crystal can be used instead) */
+ 	st->clkin = devm_clk_get_optional_enabled(dev, NULL);
+ 	if (IS_ERR(st->clkin))
+-- 
+2.53.0
+
 
 
