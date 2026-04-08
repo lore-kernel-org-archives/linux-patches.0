@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D293D47AC;
-	Wed,  8 Apr 2026 18:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C888E3D8906;
+	Wed,  8 Apr 2026 18:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672875; cv=none; b=eMDlg2frlpnYpyjLxrIqlfMXWoJwA//CYBb3UBuFaVJh2Hs+Tc23IZf6nCIHQX6xzxBUvFFRPzZZuNzAmZDcNyDNGakzQqvw3+Ez5+l40UXwl6YHtb2Iw77MqmjpZ03yq5Qclh8DEf4gZYcPuRPhJw0OpDF03qzElT2VNKoXY9U=
+	t=1775672878; cv=none; b=iAvUC+qHO1kAzh/GH25DvQo8pq3PP9fGbAHqw+X0c8P9n4bHBH0ChsLW5LOzMxR1z3Ev7oM2E8+n62UpZZ9Wj1gwevjHXBcCjpjGYifjWy3iJpq9uhaL5QC1AgKPLpwKuLC8bVkZQAwEuEHh4XfLe5cWtcvjrkIECKqLEsMkCcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672875; c=relaxed/simple;
-	bh=YfNFWGpkVAB+goc81Ij5h4rbkQhANCDrdj5qu8I9LQg=;
+	s=arc-20240116; t=1775672878; c=relaxed/simple;
+	bh=0QIOsRLHHlLPT5UG5o/0/L9fMhK9brXHBJ6D26N7DI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d/+6HQyOl6rlNoraYSFGVM+GGSZSczwQ3gT5QJOKa6IkZjnRtVOatvsBymzbFmB6JbXVJGHBG8nv4xbo1irUz+uYDpdeTuK34c4P2k0FgG/2Y8b6gglqZiuTKFrpl9wOVv1Ai+Jh+UClWzY4ArTZl2bn4N6cQIbE6klaIxBoi8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JpsuxFS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jjSkwFWuh+eV3NdLQY17m7YgIUZugnRgub7SHC2A/d6jbZYoLPuBotCK7v7moPkUD40DaCQ9pD3YSrPy3Yv1se7df+XETB9z8eq19tUsC4v7+lxcoR79tvpfv6ghPgiAnuknQ5LXfv95HeSpCn54KrOZuOuBrO8YociclYsvPl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2p6xg0l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JpsuxFS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E59C19421;
-	Wed,  8 Apr 2026 18:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2p6xg0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D441BC19421;
+	Wed,  8 Apr 2026 18:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672875;
-	bh=YfNFWGpkVAB+goc81Ij5h4rbkQhANCDrdj5qu8I9LQg=;
+	s=korg; t=1775672878;
+	bh=0QIOsRLHHlLPT5UG5o/0/L9fMhK9brXHBJ6D26N7DI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JpsuxFSn+PeizKkSDxmDtTefZfOIDiKbHJSNAEFE0nR/Qx93/mWgXCUJioyVrXZq
-	 78aolc+Bk4Y6d4ebntOwRxoor8JS25d075Bsdeb/UXWy3o3C6NSg95n+SC4PTSL+Bu
-	 P2J5MM6BV1QTfQ8m7Qz9+k1yepBh9/s+WpvpzrtU=
+	b=c2p6xg0laN245uwsTRY9VM5lEgrAhGzJSXvfVZGPJ8PtY8Yd1nQX2Z3dLfvPo6wOs
+	 Pe1BMBnw10hza1tmenemnfMcHlfauDAUzlnA2/cR1Yo7HqPrMFR21uOG1INc5qz/wn
+	 aw27l+zC1/kmel2TwEFNyv73qVyFX5kLAdsBm2CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	linux-cifs@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Praveen Talari <praveen.talari@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 015/277] smb: client: fix generic/694 due to wrong ->i_blocks
-Date: Wed,  8 Apr 2026 20:00:00 +0200
-Message-ID: <20260408175934.417864389@linuxfoundation.org>
+Subject: [PATCH 6.18 016/277] spi: geni-qcom: Check DMA interrupts early in ISR
+Date: Wed,  8 Apr 2026 20:00:01 +0200
+Message-ID: <20260408175934.455808924@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -54,150 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-[ Upstream commit 23b5df09c27aec13962b30d32a4167ebdd043f8e ]
+[ Upstream commit 8c89a077ca796a2fe248c584e9d7e66cff0388c8 ]
 
-When updating ->i_size, make sure to always update ->i_blocks as well
-until we query new allocation size from the server.
+The current interrupt handler only checks the GENI main IRQ status
+(m_irq) before deciding to return IRQ_NONE. This can lead to spurious
+IRQ_NONE returns when DMA interrupts are pending but m_irq is zero.
 
-generic/694 was failing because smb3_simple_falloc() was missing the
-update of ->i_blocks after calling cifs_setsize().  So, fix this by
-updating ->i_blocks directly in cifs_setsize(), so all places that
-call it doesn't need to worry about updating ->i_blocks later.
+Move the DMA TX/RX status register reads to the beginning of the ISR,
+right after reading m_irq. Update the early return condition to check
+all three status registers (m_irq, dma_tx_status, dma_rx_status) before
+returning IRQ_NONE.
 
-Reported-by: Shyam Prasad N <sprasad@microsoft.com>
-Closes: https://lore.kernel.org/r/CANT5p=rqgRwaADB=b_PhJkqXjtfq3SFv41SSTXSVEHnuh871pA@mail.gmail.com
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Cc: David Howells <dhowells@redhat.com>
-Cc: linux-cifs@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260313-spi-geni-qcom-fix-dma-irq-handling-v1-1-0bd122589e02@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h |  6 ++++++
- fs/smb/client/file.c     |  1 -
- fs/smb/client/inode.c    | 21 ++++++---------------
- fs/smb/client/smb2ops.c  | 20 ++++----------------
- 4 files changed, 16 insertions(+), 32 deletions(-)
+ drivers/spi/spi-geni-qcom.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index b82663f609ed9..3059fcf12ed13 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -2407,4 +2407,10 @@ static inline int cifs_open_create_options(unsigned int oflags, int opts)
- 	return opts;
- }
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index acfcf870efd84..736120107184f 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -958,10 +958,13 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+ 	struct spi_controller *spi = data;
+ 	struct spi_geni_master *mas = spi_controller_get_devdata(spi);
+ 	struct geni_se *se = &mas->se;
+-	u32 m_irq;
++	u32 m_irq, dma_tx_status, dma_rx_status;
  
-+/*
-+ * The number of blocks is not related to (i_size / i_blksize), but instead
-+ * 512 byte (2**9) size is required for calculating num blocks.
-+ */
-+#define CIFS_INO_BLOCKS(size) DIV_ROUND_UP_ULL((u64)(size), 512)
+ 	m_irq = readl(se->base + SE_GENI_M_IRQ_STATUS);
+-	if (!m_irq)
++	dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
++	dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
 +
- #endif	/* _CIFS_GLOB_H */
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index dfeb609d90e22..f0e7a8f69e8b8 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -993,7 +993,6 @@ static int cifs_do_truncate(const unsigned int xid, struct dentry *dentry)
- 		if (!rc) {
- 			netfs_resize_file(&cinode->netfs, 0, true);
- 			cifs_setsize(inode, 0);
--			inode->i_blocks = 0;
++	if (!m_irq && !dma_tx_status && !dma_rx_status)
+ 		return IRQ_NONE;
+ 
+ 	if (m_irq & (M_CMD_OVERRUN_EN | M_ILLEGAL_CMD_EN | M_CMD_FAILURE_EN |
+@@ -1009,8 +1012,6 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
  		}
- 	}
- 	if (cfile)
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index cac355364e43c..7cd718dd7cb70 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -218,13 +218,7 @@ cifs_fattr_to_inode(struct inode *inode, struct cifs_fattr *fattr,
- 	 */
- 	if (is_size_safe_to_change(cifs_i, fattr->cf_eof, from_readdir)) {
- 		i_size_write(inode, fattr->cf_eof);
--
--		/*
--		 * i_blocks is not related to (i_size / i_blksize),
--		 * but instead 512 byte (2**9) size is required for
--		 * calculating num blocks.
--		 */
--		inode->i_blocks = (512 - 1 + fattr->cf_bytes) >> 9;
-+		inode->i_blocks = CIFS_INO_BLOCKS(fattr->cf_bytes);
- 	}
+ 	} else if (mas->cur_xfer_mode == GENI_SE_DMA) {
+ 		const struct spi_transfer *xfer = mas->cur_xfer;
+-		u32 dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
+-		u32 dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
  
- 	if (S_ISLNK(fattr->cf_mode) && fattr->cf_symlink_target) {
-@@ -3008,6 +3002,11 @@ void cifs_setsize(struct inode *inode, loff_t offset)
- {
- 	spin_lock(&inode->i_lock);
- 	i_size_write(inode, offset);
-+	/*
-+	 * Until we can query the server for actual allocation size,
-+	 * this is best estimate we have for blocks allocated for a file.
-+	 */
-+	inode->i_blocks = CIFS_INO_BLOCKS(offset);
- 	spin_unlock(&inode->i_lock);
- 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
- 	truncate_pagecache(inode, offset);
-@@ -3080,14 +3079,6 @@ int cifs_file_set_size(const unsigned int xid, struct dentry *dentry,
- 	if (rc == 0) {
- 		netfs_resize_file(&cifsInode->netfs, size, true);
- 		cifs_setsize(inode, size);
--		/*
--		 * i_blocks is not related to (i_size / i_blksize), but instead
--		 * 512 byte (2**9) size is required for calculating num blocks.
--		 * Until we can query the server for actual allocation size,
--		 * this is best estimate we have for blocks allocated for a file
--		 * Number of blocks must be rounded up so size 1 is not 0 blocks
--		 */
--		inode->i_blocks = (512 - 1 + size) >> 9;
- 	}
- 
- 	return rc;
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 502b5cb05bc3e..478fa4bddb454 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -1492,6 +1492,7 @@ smb2_close_getattr(const unsigned int xid, struct cifs_tcon *tcon,
- {
- 	struct smb2_file_network_open_info file_inf;
- 	struct inode *inode;
-+	u64 asize;
- 	int rc;
- 
- 	rc = __SMB2_close(xid, tcon, cfile->fid.persistent_fid,
-@@ -1515,14 +1516,9 @@ smb2_close_getattr(const unsigned int xid, struct cifs_tcon *tcon,
- 		inode_set_atime_to_ts(inode,
- 				      cifs_NTtimeToUnix(file_inf.LastAccessTime));
- 
--	/*
--	 * i_blocks is not related to (i_size / i_blksize),
--	 * but instead 512 byte (2**9) size is required for
--	 * calculating num blocks.
--	 */
--	if (le64_to_cpu(file_inf.AllocationSize) > 4096)
--		inode->i_blocks =
--			(512 - 1 + le64_to_cpu(file_inf.AllocationSize)) >> 9;
-+	asize = le64_to_cpu(file_inf.AllocationSize);
-+	if (asize > 4096)
-+		inode->i_blocks = CIFS_INO_BLOCKS(asize);
- 
- 	/* End of file and Attributes should not have to be updated on close */
- 	spin_unlock(&inode->i_lock);
-@@ -2183,14 +2179,6 @@ smb2_duplicate_extents(const unsigned int xid,
- 		rc = smb2_set_file_size(xid, tcon, trgtfile, dest_off + len, false);
- 		if (rc)
- 			goto duplicate_extents_out;
--
--		/*
--		 * Although also could set plausible allocation size (i_blocks)
--		 * here in addition to setting the file size, in reflink
--		 * it is likely that the target file is sparse. Its allocation
--		 * size will be queried on next revalidate, but it is important
--		 * to make sure that file's cached size is updated immediately
--		 */
- 		netfs_resize_file(netfs_inode(inode), dest_off + len, true);
- 		cifs_setsize(inode, dest_off + len);
- 	}
+ 		if (dma_tx_status)
+ 			writel(dma_tx_status, se->base + SE_DMA_TX_IRQ_CLR);
 -- 
 2.53.0
 
