@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92FE3D88F7;
-	Wed,  8 Apr 2026 18:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6161F3D9037;
+	Wed,  8 Apr 2026 18:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672904; cv=none; b=edOZ9XqXowtAYNAbpaY/TrTXEJMtbUtvJvvzudpTlf8bgngspNkobBdoDqUTJSV1iep4v3V25/Ox+iHXS7kn/PrqaGSw54FYQyFHBBfMQh4L41QEpFrYgrUiC4Usy7yUiSQVlrvK/ruEK0zcIRKFDytvobhQhEGTvruOzbLeeqA=
+	t=1775672907; cv=none; b=pZ7bU+VdALHrc+/IC4dRRkbcChSy4oV4aLmIcgNhNJTUnk7ysSQZ2ckxO7YsLxap9d4kDko7tFxKi2fKMwF0ch2403e99QJ3j3nw/IVwR+ESgroEQqrFnHZIESLNC03/qXTrRke/cCCPknl2ZMlnkaGSYZRsRP4QUFbr9/QQ5TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672904; c=relaxed/simple;
-	bh=c2SbTEal2NHC+Pb6sqqI2EXqkNswO+wa1vMr2mCftwE=;
+	s=arc-20240116; t=1775672907; c=relaxed/simple;
+	bh=yzNmmhvVbyWjOargIUY+/BMjcN9KLtABjIxokZNFSLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KstfEOwWM5Rqu00uYavkbgRxwMQRfG7DW4l3tkk3fer/AAgYaumPh1IX2qnVgqSH+kFZXgsUsKWnxybQPA6YhW3KiBuTBvQ/uTZzy8y3Kth5RDZ5rBM/QDFagZL+tmBZ+k9n01dhvFhjl2zI3i8fPvYwLK8dUEbqRr1rvOPXdkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWz3K1+u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dpaZBHLUPf5tHY5AXZJS6rCs8vH9FdjwcJfr/lJVgTvJMwh0X4T0BRe9epz9KECGdbcy/vvcB3NwQo+8Rzc5CeNQ4HzO9fGzFLDPqZvZzSe6n7V3QoB4KKbwa9ib3GLJan3nhWJ1gpJsH/yxY7VwU/Lf7SSek18EYZZ+xYG1EHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbLUIJot; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWz3K1+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2605EC2BC87;
-	Wed,  8 Apr 2026 18:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbLUIJot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F94C4AF09;
+	Wed,  8 Apr 2026 18:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672904;
-	bh=c2SbTEal2NHC+Pb6sqqI2EXqkNswO+wa1vMr2mCftwE=;
+	s=korg; t=1775672907;
+	bh=yzNmmhvVbyWjOargIUY+/BMjcN9KLtABjIxokZNFSLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWz3K1+uZRx9M9WlYBcGU9D78BEEyV+QQStPOkN3CjsmjQHbbPe+jsYugAV9DngMN
-	 ocufp/DWOVeDpj21lYdjdYAAVPOvWMjc1N9UUTShrDwA3SlHRie9FI182Yhgt7XOdt
-	 KMIGvT8XhfsEF/hmRxexR5eIf3i3ergB/0B64rQU=
+	b=WbLUIJotn+3NNPPCnX32z1g4/T4q1hUGijf9lhdeOR9EzxIAIs7Z3y4o1GwQrt3vm
+	 fSu89Hgrg2YiC96BS0vKgz+NzetoYosTIQbMOWOebMLNQqL6ymxZy6akAk+wp7A+wH
+	 +bHRvS2VOtHCMKyBHJAkNI9UCFF6LdC00FDn2rKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Bunyan <pbunyan@redhat.com>,
 	=?UTF-8?q?Horia=20Geant=C4=83?= <horia.geanta@nxp.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 025/277] crypto: caam - fix DMA corruption on long hmac keys
-Date: Wed,  8 Apr 2026 20:00:10 +0200
-Message-ID: <20260408175934.791928564@linuxfoundation.org>
+Subject: [PATCH 6.18 026/277] crypto: caam - fix overflow on long hmac keys
+Date: Wed,  8 Apr 2026 20:00:11 +0200
+Message-ID: <20260408175934.829380804@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -55,35 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Horia Geantă <horia.geanta@nxp.com>
 
-[ Upstream commit 5ddfdcbe10dc5f97afc4e46ca22be2be717e8caf ]
+[ Upstream commit 80688afb9c35b3934ce2d6be9973758915e2e0ef ]
 
 When a key longer than block size is supplied, it is copied and then
 hashed into the real key.  The memory allocated for the copy needs to
 be rounded to DMA cache alignment, as otherwise the hashed key may
 corrupt neighbouring memory.
 
-The rounding was performed, but never actually used for the allocation.
-Fix this by replacing kmemdup with kmalloc for a larger buffer,
-followed by memcpy.
+The copying is performed using kmemdup, however this leads to an overflow:
+reading more bytes (aligned_len - keylen) from the keylen source buffer.
+Fix this by replacing kmemdup with kmalloc, followed by memcpy.
 
 Fixes: 199354d7fb6e ("crypto: caam - Remove GFP_DMA and add DMA alignment padding")
-Reported-by: Paul Bunyan <pbunyan@redhat.com>
 Signed-off-by: Horia Geantă <horia.geanta@nxp.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/caam/caamhash.c | 3 ++-
+ drivers/crypto/caam/caamalg_qi2.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/caam/caamhash.c b/drivers/crypto/caam/caamhash.c
-index 25c02e2672585..053af748be86d 100644
---- a/drivers/crypto/caam/caamhash.c
-+++ b/drivers/crypto/caam/caamhash.c
-@@ -441,9 +441,10 @@ static int ahash_setkey(struct crypto_ahash *ahash,
+diff --git a/drivers/crypto/caam/caamalg_qi2.c b/drivers/crypto/caam/caamalg_qi2.c
+index c6117c23eb25b..07665494c8758 100644
+--- a/drivers/crypto/caam/caamalg_qi2.c
++++ b/drivers/crypto/caam/caamalg_qi2.c
+@@ -3326,9 +3326,10 @@ static int ahash_setkey(struct crypto_ahash *ahash, const u8 *key,
  		if (aligned_len < keylen)
  			return -EOVERFLOW;
  
--		hashed_key = kmemdup(key, keylen, GFP_KERNEL);
+-		hashed_key = kmemdup(key, aligned_len, GFP_KERNEL);
 +		hashed_key = kmalloc(aligned_len, GFP_KERNEL);
  		if (!hashed_key)
  			return -ENOMEM;
