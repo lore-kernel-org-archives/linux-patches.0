@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECD62494F0;
-	Wed,  8 Apr 2026 18:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238B72494F0;
+	Wed,  8 Apr 2026 18:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672719; cv=none; b=K6/ZqobNQxLQ1XcTbCZ14XwNeCQ0iKIwuNkuGhgTP8Uee/SxHvGojn4k9vsw88x+IoObVOIZySR7idomvsQboF/zFkLcOkuL3/gFSv58tF0QYcyiMErg4x4qzChraphvXNNsh6PIgmnQhgx3F4/6Y9VBmmSU2G/aq28PfA/npbc=
+	t=1775672722; cv=none; b=NVaqsGgTwO7Un+LV+LyrXcHbrNE4fXRVaVtoNPP/E4AzjFcWwQEpH7xzpSJ+OJq0Au8pVGUjzG1QI0nvd4c6Yr/6ncQZaKvEI0iV2+wkxNsDW2hHgQVdftErUSCg2yKs7XIoBdZda/rP1KCsGy95rE0ySPtJw2ONNa1XV8q+3jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672719; c=relaxed/simple;
-	bh=tytLaR0HEfTur3CWA8vsIav3Qp9CMSfq6i8QS2J+4gQ=;
+	s=arc-20240116; t=1775672722; c=relaxed/simple;
+	bh=SozM447NlUotab9TySmNhiIWxiLodk0anVMYwbZEqnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q3N7IHAB0oGN9l7Vrm52/Vhem6sNAOQ5zgOFc8vJM6QQliIjswHiPBNdURAd2iuRPqA9GIaff7G0X8qtS6VA0NH5+rgc9ycx2Kxj8Kt2S62vaDNR0Zl7b2YWvQCZvcR/F0NABWiRHyO0G08yS7zdCXPGiTVs0godyn9yPBlRo3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIysdlYu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NldhSxRpz8m/yk6QVFSmntczhyYh1ydcY6gAjBRozNyQ8Lq2oI59cMWZFM2XoGw8tV6GFjyeHQKN1+O2PQ/S6jWsoN8pt5rXK5ObkTe5FreTKRWgkbPBxgWfM3FlltH+p//lF7HBsZ0cyWRPv2Vvc8dtgyLinOyiSNBQExXGWPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNVF/Oz3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIysdlYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9681C19421;
-	Wed,  8 Apr 2026 18:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNVF/Oz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4574FC19421;
+	Wed,  8 Apr 2026 18:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672719;
-	bh=tytLaR0HEfTur3CWA8vsIav3Qp9CMSfq6i8QS2J+4gQ=;
+	s=korg; t=1775672721;
+	bh=SozM447NlUotab9TySmNhiIWxiLodk0anVMYwbZEqnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIysdlYuZHcTdPSxQmRZyCmBevFQsc5+rvdQsirz9zd28dpVCQ56swrwDVzBrK3xP
-	 dkERH2+nYbrgUKqlE3F2PRhuf9qTMqXEPk+CoRhxM8eaWGQIyBqwumE3b1rRudJ315
-	 7rQ/nFwwpOQmsN39FeE6rtw3zaJqxUavBUowgxY4=
+	b=RNVF/Oz3P0aq2jNCXYdZqf1gQlX6Ctx43CVOnVxFtCoYjFS5HuVC0aL8r1YYF60t3
+	 YYf89buccDOHmr9xtIoqfi0Wthm76HHqEX91dzm17o9vbOv6hL2/YXTEfdGLVZO1j7
+	 HdxfTQCnhj1LwhnzPInmT7aD3T6jofEyIXxmkbW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 116/160] cdc-acm: new quirk for EPSON HMD
-Date: Wed,  8 Apr 2026 20:03:23 +0200
-Message-ID: <20260408175917.523575884@linuxfoundation.org>
+	Francesco Lavra <flavra@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 099/160] iio: imu: st_lsm6dsx: Set FIFO ODR for accelerometer and gyroscope only
+Date: Wed,  8 Apr 2026 20:03:06 +0200
+Message-ID: <20260408175916.883543837@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -50,60 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Francesco Lavra <flavra@baylibre.com>
 
-commit f97e96c303d689708f7f713d8f3afcc31f1237e9 upstream.
+commit 630748afa7030b272b7bee5df857e7bcf132ed51 upstream.
 
-This device has a union descriptor that is just garbage
-and needs a custom descriptor.
-In principle this could be done with a (conditionally
-activated) heuristic. That would match more devices
-without a need for defining a new quirk. However,
-this always carries the risk that the heuristics
-does the wrong thing and leads to more breakage.
-Defining the quirk and telling it exactly what to do
-is the safe and conservative approach.
+The st_lsm6dsx_set_fifo_odr() function, which is called when enabling and
+disabling the hardware FIFO, checks the contents of the hw->settings->batch
+array at index sensor->id, and then sets the current ODR value in sensor
+registers that depend on whether the register address is set in the above
+array element. This logic is valid for internal sensors only, i.e. the
+accelerometer and gyroscope; however, since commit c91c1c844ebd ("iio: imu:
+st_lsm6dsx: add i2c embedded controller support"), this function is called
+also when configuring the hardware FIFO for external sensors (i.e. sensors
+accessed through the sensor hub functionality), which can result in
+unrelated device registers being written.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260317084139.1461008-1-oneukum@suse.com
+Add a check to the beginning of st_lsm6dsx_set_fifo_odr() so that it does
+not touch any registers unless it is called for internal sensors.
+
+Fixes: c91c1c844ebd ("iio: imu: st_lsm6dsx: add i2c embedded controller support")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |    9 +++++++++
- drivers/usb/class/cdc-acm.h |    1 +
- 2 files changed, 10 insertions(+)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -1225,6 +1225,12 @@ static int acm_probe(struct usb_interfac
- 		if (!data_interface || !control_interface)
- 			return -ENODEV;
- 		goto skip_normal_probe;
-+	} else if (quirks == NO_UNION_12) {
-+		data_interface = usb_ifnum_to_if(usb_dev, 2);
-+		control_interface = usb_ifnum_to_if(usb_dev, 1);
-+		if (!data_interface || !control_interface)
-+			 return -ENODEV;
-+		goto skip_normal_probe;
- 	}
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
+@@ -202,6 +202,10 @@ static int st_lsm6dsx_set_fifo_odr(struc
+ 	const struct st_lsm6dsx_reg *batch_reg;
+ 	u8 data;
  
- 	/* normal probing*/
-@@ -1748,6 +1754,9 @@ static const struct usb_device_id acm_id
- 	{ USB_DEVICE(0x045b, 0x024D),	/* Renesas R-Car E3 USB Download mode */
- 	.driver_info = DISABLE_ECHO,	/* Don't echo banner */
- 	},
-+	{ USB_DEVICE(0x04b8, 0x0d12),	/* EPSON HMD Com&Sens */
-+	.driver_info = NO_UNION_12,	/* union descriptor is garbage */
-+	},
- 	{ USB_DEVICE(0x0e8d, 0x0003), /* FIREFLY, MediaTek Inc; andrey.arapov@gmail.com */
- 	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
- 	},
---- a/drivers/usb/class/cdc-acm.h
-+++ b/drivers/usb/class/cdc-acm.h
-@@ -114,3 +114,4 @@ struct acm {
- #define SEND_ZERO_PACKET		BIT(6)
- #define DISABLE_ECHO			BIT(7)
- #define MISSING_CAP_BRK			BIT(8)
-+#define NO_UNION_12			BIT(9)
++	/* Only internal sensors have a FIFO ODR configuration register. */
++	if (sensor->id >= ARRAY_SIZE(hw->settings->batch))
++		return 0;
++
+ 	batch_reg = &hw->settings->batch[sensor->id];
+ 	if (batch_reg->addr) {
+ 		int val;
 
 
