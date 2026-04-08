@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722AE331A44;
-	Wed,  8 Apr 2026 18:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31F3351C2E;
+	Wed,  8 Apr 2026 18:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673351; cv=none; b=Ph8luieMRc9Uiux6DKdzTNc8Zk9tYxe2acfihjy2x+1RhtDKPflAQAd+DDncs977HD4j+G3e438nVvQd8krIOmZ6oBdmLbmIg9fq5doqDXUhctehiz1lU8/KbKIsTfrFipGtcTGlya2W/743qwq9w6GGftNakr3dviW79fo2ZwU=
+	t=1775673354; cv=none; b=UfkYxyenJOYsbMv1yoFIJYge9C+TOZ7K2kC+UnbDK0QSPQnZrgCndW34Okicv+20DMoQEgWa7Jn20c87r8n6s4fdWulEnAwgut//AxuC3tNiENO7jm3y/PsbIVh53OkZD1K67ULgt+XJekVezoxx2ab1kQZoWZIiYmrGFBgrd60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673351; c=relaxed/simple;
-	bh=N7eAFyYbA3ngynmuxRbo5/fjMA0a8D/tK3uKk3Id4n0=;
+	s=arc-20240116; t=1775673354; c=relaxed/simple;
+	bh=q5MHcz58saa6vyp8BGyx/QDQRc2BFpoFjNDC5uOUXog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rgii+kdKAYq4OkErFHXsySQf/lMAtXcxPag/bS3jx5oFRqT3xj/+zTgmdfsU6mW//JSFcKe80KIMA4TFTBF9tVQ/z1aZd6G/4armWKWLKNLSSnmjWqEpap5K27Za+DZ09TOGISeDMp3UyXVeB/tCqOiSjLaasPbmR9b3HaD04uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OX1QFD3R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jUKLTxbtDa0LBNcyVkvGBx6mUmq/UC8dORe7Pd6WvNJPGjrwfbj31atKHzBWcKXy7jE2cWGKK2FsnRYi9kNJ5nrNmNLEtYK8LJZ9XfUkfc3C9KWgFg5YmDZZtC1bKeSkg9Dd5Y1QyZnqR3GbN6E1AMZJhP5lW8TFwEBK3ooig1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+7gObEH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OX1QFD3R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A813C19421;
-	Wed,  8 Apr 2026 18:35:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+7gObEH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B99EC19421;
+	Wed,  8 Apr 2026 18:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673351;
-	bh=N7eAFyYbA3ngynmuxRbo5/fjMA0a8D/tK3uKk3Id4n0=;
+	s=korg; t=1775673353;
+	bh=q5MHcz58saa6vyp8BGyx/QDQRc2BFpoFjNDC5uOUXog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OX1QFD3Rwevf1+COHjf04Kq1N0Vql9Y6oNeF1UOqFS2v4irY/lgS/j3g/PwXTDvtc
-	 UAoVXZt4nFWJdfSd+yuIxtH8CfHrNpmpybkF4ky7Ve5acv/cP/RE7S0mD90ZJPD3QT
-	 /TvY+erEaKrgrFaxW9YdM3FESCDcaa72cDaS/skA=
+	b=n+7gObEHApClgao+Pw+svfeU4Uma32aBjqfGsqqsrAZBFfkK0c0zP3Q3vsxLh3XFU
+	 BkN2p+9QFeA7szb0PYi98xnXe6daG4pfy9+WupKi47f+1tJ92pqIX35seO4/YaG+QG
+	 ATg/uEKcNeU6R7OvbLAw+7ngnC4Q+2tKkZsCJrck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.18 181/277] iio: adc: aspeed: clear reference voltage bits before configuring vref
-Date: Wed,  8 Apr 2026 20:02:46 +0200
-Message-ID: <20260408175940.622321112@linuxfoundation.org>
+	syzbot+9a3c54f52bd1edbd975f@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Heitor Alves de Siqueira <halves@igalia.com>
+Subject: [PATCH 6.18 199/277] usb: usbtmc: Flush anchored URBs in usbtmc_release
+Date: Wed,  8 Apr 2026 20:03:04 +0200
+Message-ID: <20260408175941.294625011@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,32 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Heitor Alves de Siqueira <halves@igalia.com>
 
-commit 7cf2f6ed8e7a3bf481ef70b6b4a2edb8abfa5c57 upstream.
+commit 8a768552f7a8276fb9e01d49773d2094ace7c8f1 upstream.
 
-Ensures the reference voltage bits are cleared in the ADC engine
-control register before configuring the voltage reference. This
-avoids potential misconfigurations caused by residual bits.
+When calling usbtmc_release, pending anchored URBs must be flushed or
+killed to prevent use-after-free errors (e.g. in the HCD giveback
+path). Call usbtmc_draw_down() to allow anchored URBs to be completed.
 
-Fixes: 1b5ceb55fec2 ("iio: adc: aspeed: Support ast2600 adc.")
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 4f3c8d6eddc2 ("usb: usbtmc: Support Read Status Byte with SRQ per file")
+Reported-by: syzbot+9a3c54f52bd1edbd975f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9a3c54f52bd1edbd975f
+Cc: stable <stable@kernel.org>
+Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
+Link: https://patch.msgid.link/20260312-usbtmc-flush-release-v1-1-5755e9f4336f@igalia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/aspeed_adc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/class/usbtmc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/adc/aspeed_adc.c
-+++ b/drivers/iio/adc/aspeed_adc.c
-@@ -415,6 +415,7 @@ static int aspeed_adc_vref_config(struct
- 	}
- 	adc_engine_control_reg_val =
- 		readl(data->base + ASPEED_REG_ENGINE_CONTROL);
-+	adc_engine_control_reg_val &= ~ASPEED_ADC_REF_VOLTAGE;
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -254,6 +254,9 @@ static int usbtmc_release(struct inode *
+ 	list_del(&file_data->file_elem);
  
- 	ret = devm_regulator_get_enable_read_voltage(data->dev, "vref");
- 	if (ret < 0 && ret != -ENODEV)
+ 	spin_unlock_irq(&file_data->data->dev_lock);
++
++	/* flush anchored URBs */
++	usbtmc_draw_down(file_data);
+ 	mutex_unlock(&file_data->data->io_mutex);
+ 
+ 	kref_put(&file_data->data->kref, usbtmc_delete);
 
 
