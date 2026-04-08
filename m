@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEE23D9030;
-	Wed,  8 Apr 2026 18:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CD83D522C;
+	Wed,  8 Apr 2026 18:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672616; cv=none; b=AHLdmaxrEen0bMQRn9keH1IcLtWvFudNMxXPdmqS6OoZzqRna8zP5L6rCeYh2tor97k25o5CI2AxbtodFlsxK9esyoR3tpCrIMMqeasaGDVrqJRhuSOqHeztL6vPNUq+AL4mYZXbvfxKsrGvofq04a/OFOzmJ5lODh5FsSDcKWk=
+	t=1775672618; cv=none; b=UH1SjpFusBgtSYsFny74CaFhT2pp0IspyOadPJOisoC0XUbps7l/5U3iYcWzzvChqoKXO3jZIcB2xNbJAIkiHVpQm3tzABJymRIAf7noI1YC3r2fDzWQJcWhZeINpuRGoPE7bh34SBThR0MFi0sxXjIkrDAIbMcfQozg4HHg4V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672616; c=relaxed/simple;
-	bh=fdaK+kn3jTHpAJVxKMsHteeL4vc0zcz3lvEt2pF4uFE=;
+	s=arc-20240116; t=1775672618; c=relaxed/simple;
+	bh=YITmQwIB4vSfdoxlZt0b3iTAVYCZ2ZXOqlJdsYwzfig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdHECtgkaZ7quXx1CU4hEQncqDxuq/cS95XWbMLRgVp0YqfhsZIgGGZ3qi1/KE4FfrVPqT0w8K6Npi20QfPJRraRMRITuwRLUAw0SZH9RXCIbx5vIgfgjKe3Z5FEdX81cKJMPOGRb79DZe/0XSYrYLChNFIFyMud/OIo9T5+FEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvz+jCCC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oTnw+GRdCLANMzalSBZcubQD+uxVwGpbfGXtWx9EK9EIHdl+exchDnFypSI7quVkZcu8K1msKbR3LHVSlm7NPCAtgg1QNQbl+cdK9gllNRwPzbW/GoIzHwak4cDunKrml9+nLjpuMeJ6qNi6dNcLHLGSmLK3i3Mh23DHXkKbw+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGwBAQXQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvz+jCCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CD6C19421;
-	Wed,  8 Apr 2026 18:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGwBAQXQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07761C19421;
+	Wed,  8 Apr 2026 18:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672615;
-	bh=fdaK+kn3jTHpAJVxKMsHteeL4vc0zcz3lvEt2pF4uFE=;
+	s=korg; t=1775672618;
+	bh=YITmQwIB4vSfdoxlZt0b3iTAVYCZ2ZXOqlJdsYwzfig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvz+jCCCIiMsQqab6S0F8nZQNP/ptubatKigqxXOjSyn3IcaSBV2w+xjPdO0zF5jo
-	 ctfs6GSflj6ynK7G1Q7HxliWRx+Vr4eWjIwVCA7sbIPZsy5h01W56+6ixS8v/t5y4P
-	 RStl2kfp6V0LI/fPxGs3jYZFp5XsDB5+aRoGMYek=
+	b=RGwBAQXQ2JlRc5QIoe9swKzO2uYeLd1VAD7hPJo8sh0eUevpcfcVjz5hn+TcbrZHk
+	 sR0esFn2Id5GDF2C0/myqkgjlpSbI0pixM+5lIfhb0N4Iumlz73cY1j/jgu3kZ0pA4
+	 z31i36RFcZU8GkWPmjx9CodkBUhZ7rJZIoo2hQXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ernestas Kulik <ernestas.k@iconn-networks.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 076/160] USB: serial: option: add MeiG Smart SRM825WN
-Date: Wed,  8 Apr 2026 20:02:43 +0200
-Message-ID: <20260408175916.036470083@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 077/160] ALSA: caiaq: fix stack out-of-bounds read in init_card
+Date: Wed,  8 Apr 2026 20:02:44 +0200
+Message-ID: <20260408175916.071717156@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -50,67 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ernestas Kulik <ernestas.k@iconn-networks.com>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-commit e8d0ed37bd51da52da6225d278e330c2f18a6198 upstream.
+commit 45424e871abf2a152e247a9cff78359f18dd95c0 upstream.
 
-Add support for the SDX62-based MeiG Smart SRM825WN module.
+The loop creates a whitespace-stripped copy of the card shortname
+where `len < sizeof(card->id)` is used for the bounds check. Since
+sizeof(card->id) is 16 and the local id buffer is also 16 bytes,
+writing 16 non-space characters fills the entire buffer,
+overwriting the terminating nullbyte.
 
-If#= 0: RNDIS
-If#= 1: RNDIS
-If#= 2: Diag
-If#= 3: AT
-If#= 4: AT
-If#= 5: NMEA
+When this non-null-terminated string is later passed to
+snd_card_set_id() -> copy_valid_id_string(), the function scans
+forward with `while (*nid && ...)` and reads past the end of the
+stack buffer, reading the contents of the stack.
 
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#= 19 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2dee ProdID=4d38 Rev= 5.04
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=da47a175
-C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E:  Ad=81(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+A USB device with a product name containing many non-ASCII, non-space
+characters (e.g. multibyte UTF-8) will reliably trigger this as follows:
 
-Signed-off-by: Ernestas Kulik <ernestas.k@iconn-networks.com>
+  BUG: KASAN: stack-out-of-bounds in copy_valid_id_string
+       sound/core/init.c:696 [inline]
+  BUG: KASAN: stack-out-of-bounds in snd_card_set_id_no_lock+0x698/0x74c
+       sound/core/init.c:718
+
+The off-by-one has been present since commit bafeee5b1f8d ("ALSA:
+snd_usb_caiaq: give better shortname") from June 2009 (v2.6.31-rc1),
+which first introduced this whitespace-stripping loop. The original
+code never accounted for the null terminator when bounding the copy.
+
+Fix this by changing the loop bound to `sizeof(card->id) - 1`,
+ensuring at least one byte remains as the null terminator.
+
+Fixes: bafeee5b1f8d ("ALSA: snd_usb_caiaq: give better shortname")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Reported-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260329133825.581585-1-berkcgoksel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/usb/caiaq/device.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2441,6 +2441,9 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM825WN (Diag) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825WN (AT) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825WN (NMEA) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -488,7 +488,7 @@ static int init_card(struct snd_usb_caia
+ 		memset(id, 0, sizeof(id));
+ 
+ 		for (c = card->shortname, len = 0;
+-			*c && len < sizeof(card->id); c++)
++			*c && len < sizeof(card->id) - 1; c++)
+ 			if (*c != ' ')
+ 				id[len++] = *c;
+ 
 
 
