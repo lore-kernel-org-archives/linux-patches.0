@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895B52F39C2;
-	Wed,  8 Apr 2026 18:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FF92F39C2;
+	Wed,  8 Apr 2026 18:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674700; cv=none; b=umkTdcc2zhJoxjrq3jElHpvGh2pPgK6soHHtW0zN5oochyTFXgjI7NAXogLmknu0eRRFpbXgYBqOqh+NjWYqvRRWgXtOpSwFhu7Jys4ad7Kj1L+ITfylniXfRCdpAEVZwwTNLED3xbQmlMX4KeBJ8urVYYjViwJNnYuiwRDE61Q=
+	t=1775674703; cv=none; b=qmznwVWPzB9aGo6YKToKo2ZKaJnP95rH0n89bYWH1fdGvHxbwb6hhn7q/zxHQ/cvC8w5snA85zZFusN8z5vOsiHlO2qLCKFPlbnTN+fPW6BynsFvmLSLdGPCI4WSzUR7EBCDfXZixskrDxnP+5ZVjEnqficwXIdZF02Nrg/Ro/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674700; c=relaxed/simple;
-	bh=NbKe9qMxcDLqWnsg97Aa0OkjRit3g/AcVgBNWn12pI8=;
+	s=arc-20240116; t=1775674703; c=relaxed/simple;
+	bh=P6itY0M9P4Bb6XrhmcdZE/gUzClh0wzHGFEoavr5Msg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p74SuO7HezL67CaplIQZBSDM4zK2Ljf5DjifXaGB2GBuBcbA0rGE2fIIq616G3EI1+/GFHkDu1Fd15cnJR5SvC2nTmlvR1h7hkVUyhyWAXGBPLXBBSx6ZM7wT7cwTM5sMTvfEgZgCWJCFHq8Pe2wdd1IHQ0FrZr8M2xAU2cp6Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQVi+Bfg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T72Pz78j6kLPv+53I4b21SL2OPNKZH1QJ7cPkQ0y7OeA74A6FlGs8zxo4uqoyZQPSWiOk0f3CLc8Aj9jlUxFM6wvDrlNdf/GTgmnnA5Y4zZ57kvy95+7enFG1bTU3mdLFnmFZEgW4V4CMgpLGVQPsE86oxos0LM23EtMLG0NQcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUBbXrHi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQVi+Bfg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F338C19421;
-	Wed,  8 Apr 2026 18:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUBbXrHi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF45C19421;
+	Wed,  8 Apr 2026 18:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674700;
-	bh=NbKe9qMxcDLqWnsg97Aa0OkjRit3g/AcVgBNWn12pI8=;
+	s=korg; t=1775674703;
+	bh=P6itY0M9P4Bb6XrhmcdZE/gUzClh0wzHGFEoavr5Msg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XQVi+BfgcgjWkKCMpyiGxnLytdPorVREeu431jGORhNnZFLGKcieOtXcaZXdUXm40
-	 6KmkWF6ygwpWGmnUMsPBa9JmnAabRMzFMVGP8h0a82p1SO/qfc6RNGEG30PDE7qZWR
-	 9T96C3zkwq1XLOQDIklgAMCxzBrZBjymPVDvUU8A=
+	b=YUBbXrHiV9r443dqUIiV7yVYLMfR1Udmpj9hJg0XTiyUbaVKbZlGdxEZAw4wJTnp2
+	 TCTOdXscV9ebBTMgquxKCS4Jc9wfHP0/9EaWdZi7+SLJdNIOHUgbyY+WFebjOu8fCF
+	 1BvllaaaPNZ5hBTCAcrVxEATcPkK1CX1sdT/Lk9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.19 199/311] drm/ast: dp501: Fix initialization of SCU2C
-Date: Wed,  8 Apr 2026 20:03:19 +0200
-Message-ID: <20260408175946.841873252@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.19 200/311] drm/i915/dsi: Dont do DSC horizontal timing adjustments in command mode
+Date: Wed,  8 Apr 2026 20:03:20 +0200
+Message-ID: <20260408175946.879560650@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -46,47 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 2f42c1a6161646cbd29b443459fd635d29eda634 upstream.
+commit 4dfce79e098915d8e5fc2b9e1d980bc3251dd32c upstream.
 
-Ast's DP501 initialization reads the register SCU2C at offset 0x1202c
-and tries to set it to source data from VGA. But writes the update to
-offset 0x0, with unknown results. Write the result to SCU instead.
+Stop adjusting the horizontal timing values based on the
+compression ratio in command mode. Bspec seems to be telling
+us to do this only in video mode, and this is also how the
+Windows driver does things.
 
-The bug only happens in ast_init_analog(). There's similar code in
-ast_init_dvo(), which works correctly.
+This should also fix a div-by-zero on some machines because
+the adjusted htotal ends up being so small that we end up with
+line_time_us==0 when trying to determine the vtotal value in
+command mode.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 83c6620bae3f ("drm/ast: initial DP501 support (v0.2)")
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v3.16+
-Link: https://patch.msgid.link/20260327133532.79696-2-tzimmermann@suse.de
+Note that this doesn't actually make the display on the
+Huawei Matebook E work, but at least the kernel no longer
+explodes when the driver loads.
+
+Cc: stable@vger.kernel.org
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/12045
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patch.msgid.link/20260326111814.9800-2-ville.syrjala@linux.intel.com
+Fixes: 53693f02d80e ("drm/i915/dsi: account for DSC in horizontal timings")
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 0b475e91ecc2313207196c6d7fd5c53e1a878525)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ast/ast_dp501.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/icl_dsi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/ast/ast_dp501.c
-+++ b/drivers/gpu/drm/ast/ast_dp501.c
-@@ -436,7 +436,7 @@ static void ast_init_analog(struct ast_d
- 	/* Finally, clear bits [17:16] of SCU2c */
- 	data = ast_read32(ast, 0x1202c);
- 	data &= 0xfffcffff;
--	ast_write32(ast, 0, data);
-+	ast_write32(ast, 0x1202c, data);
+--- a/drivers/gpu/drm/i915/display/icl_dsi.c
++++ b/drivers/gpu/drm/i915/display/icl_dsi.c
+@@ -889,7 +889,7 @@ gen11_dsi_set_transcoder_timings(struct
+ 	 * non-compressed link speeds, and simplifies down to the ratio between
+ 	 * compressed and non-compressed bpp.
+ 	 */
+-	if (crtc_state->dsc.compression_enable) {
++	if (is_vid_mode(intel_dsi) && crtc_state->dsc.compression_enable) {
+ 		mul = fxp_q4_to_int(crtc_state->dsc.compressed_bpp_x16);
+ 		div = mipi_dsi_pixel_format_to_bpp(intel_dsi->pixel_format);
+ 	}
+@@ -1503,7 +1503,7 @@ static void gen11_dsi_get_timings(struct
+ 	struct drm_display_mode *adjusted_mode =
+ 					&pipe_config->hw.adjusted_mode;
  
- 	/* Disable DVO */
- 	ast_set_index_reg_mask(ast, AST_IO_VGACRI, 0xa3, 0xcf, 0x00);
+-	if (pipe_config->dsc.compressed_bpp_x16) {
++	if (is_vid_mode(intel_dsi) && pipe_config->dsc.compressed_bpp_x16) {
+ 		int div = fxp_q4_to_int(pipe_config->dsc.compressed_bpp_x16);
+ 		int mul = mipi_dsi_pixel_format_to_bpp(intel_dsi->pixel_format);
+ 
 
 
