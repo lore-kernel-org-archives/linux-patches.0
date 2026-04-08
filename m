@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1170E3D4134;
-	Wed,  8 Apr 2026 18:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947C5351C2E;
+	Wed,  8 Apr 2026 18:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673295; cv=none; b=SAIz6MsBL+vmRQrzpk1lnj4eAD3srByYtIThHwx9b2Oh56J80LdMLyCodpgxe/gOD8qR2KtvMge7Z3Q+ZKKOboRl76qVHyMxLkaRcYvsdHFYpv+goyutxZYbXnwr/SmwE7Gv8GUHyP2wWLABJbBynZAgm6uJZ8pVZFOwYFERRPM=
+	t=1775673297; cv=none; b=naeXTj+ePPndBJNN5cTpbBuxWSYdW5Kg0JOID9yQylQTflW2Dj26lZtSTCNztx+L5L8I+uZ2/82GyZs36xHkwKzmlTl/mEQa944U798c1irmNZZ5fyLsAIae9slnH7erK2cEHOW0SGmTHnt4dq/6ghD8YnSKXtkJpy3WdP1Vfp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673295; c=relaxed/simple;
-	bh=VDMEODNKjDIJP1lTBbwl8Cid0CheowTzP9vGBvIY3ok=;
+	s=arc-20240116; t=1775673297; c=relaxed/simple;
+	bh=OuTO4H7+HfWKikubpDYOiPIqNGlrAFxtttGgbJiLNxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6qsRcKqVhxAUcyp1Ws016cFByCATN7phnrVyi05cYwKtR/EBstVj96rDrCywcNt6N7+r72Kt299BMsgoa7RKMGzoJBJo9MJQfuhqgkNDsESAJv/YQED8GPFsdWnsY9FyZIdGFvxD4kfsdlSn/RJWedGzQ6TZ1hr3IpyCt05OeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olh6FWGs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvI3PAdtz1g3B4hqH5SldPmiD5s7U1xzPg4PiSQTHXrmuDnU6n/zohkzBtU0BdT99p2sc3qsiFQdbjuY4Rm0Lv6LjNesZeSqKqaZjiZ3/Oly5QcEAHY3kT/QzlI0Z4ALCtZaoXWcz8vVFaEz3ofSAAJrZLu8ZpU2GpRDlNWykWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FaXrNEAl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olh6FWGs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E5AC19421;
-	Wed,  8 Apr 2026 18:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FaXrNEAl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A77EC19421;
+	Wed,  8 Apr 2026 18:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673294;
-	bh=VDMEODNKjDIJP1lTBbwl8Cid0CheowTzP9vGBvIY3ok=;
+	s=korg; t=1775673297;
+	bh=OuTO4H7+HfWKikubpDYOiPIqNGlrAFxtttGgbJiLNxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olh6FWGspTUrTI9ec3mnFuFpOdetbRo6JWQ0Q6CKOz6A8nBa0UlyimUahI6LMd8ex
-	 oCVKRvx696tFod/64k+G8FTTpw+3j9gNtXp1ZSmbpuwYdlt+NSmKS/qnF1QM+cqq8U
-	 aiAXETA/xf2+HD2WilVMsJm9efI4zjhejAa5GgKI=
+	b=FaXrNEAl8SWcAgNoVnWb6EJh//qg9IDpcNjB7vAVoUDLxwiPqaqZIvqt16IzFiQkx
+	 pgyikd3Y+1yUD/MyXvY9j7BycFDeSGEfJilBTLDaRkfEoc7jzN3GRk2NRVLzcGB1q5
+	 EuDX/nmb8tosNz0XqUfoM79t4/zyM6Gs5Bnrn4BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zoltan Illes <zoliviragh@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 175/277] Input: xpad - add support for Razer Wolverine V3 Pro
-Date: Wed,  8 Apr 2026 20:02:40 +0200
-Message-ID: <20260408175940.400438367@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.18 176/277] iio: adc: ti-ads7950: normalize return value of gpio_get
+Date: Wed,  8 Apr 2026 20:02:41 +0200
+Message-ID: <20260408175940.436965343@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -50,36 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zoltan Illes <zoliviragh@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit e2b0ae529db4766584e77647cefe3ec15c3d842e upstream.
+commit e2fa075d5ce1963e7cb7b0ac708ba567e5af66db upstream.
 
-Add device IDs for the Razer Wolverine V3 Pro controller in both
-wired (0x0a57) and wireless 2.4 GHz dongle (0x0a59) modes.
+The GPIO get callback is expected to return 0 or 1 (or a negative error
+code). Ensure that the value returned by ti_ads7950_get() for output
+pins is normalized to the [0, 1] range.
 
-The controller uses the Xbox 360 protocol (vendor-specific class,
-subclass 93, protocol 1) on interface 0 with an identical 20-byte
-input report layout, so no additional processing is needed.
-
-Signed-off-by: Zoltan Illes <zoliviragh@gmail.com>
-Link: https://patch.msgid.link/20260329220031.1325509-1-137647604+ZlordHUN@users.noreply.github.com
-Cc: stable@vger.kernel.org
+Fixes: 86ef402d805d ("gpiolib: sanitize the return value of gpio_chip::get()")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/ti-ads7950.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -313,6 +313,8 @@ static const struct xpad_device {
- 	{ 0x1532, 0x0a00, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x1532, 0x0a03, "Razer Wildcat", 0, XTYPE_XBOXONE },
- 	{ 0x1532, 0x0a29, "Razer Wolverine V2", 0, XTYPE_XBOXONE },
-+	{ 0x1532, 0x0a57, "Razer Wolverine V3 Pro (Wired)", 0, XTYPE_XBOX360 },
-+	{ 0x1532, 0x0a59, "Razer Wolverine V3 Pro (2.4 GHz Dongle)", 0, XTYPE_XBOX360 },
- 	{ 0x15e4, 0x3f00, "Power A Mini Pro Elite", 0, XTYPE_XBOX360 },
- 	{ 0x15e4, 0x3f0a, "Xbox Airflo wired controller", 0, XTYPE_XBOX360 },
- 	{ 0x15e4, 0x3f10, "Batarang Xbox 360 controller", 0, XTYPE_XBOX360 },
+--- a/drivers/iio/adc/ti-ads7950.c
++++ b/drivers/iio/adc/ti-ads7950.c
+@@ -433,7 +433,7 @@ static int ti_ads7950_get(struct gpio_ch
+ 
+ 	/* If set as output, return the output */
+ 	if (st->gpio_cmd_settings_bitmask & BIT(offset)) {
+-		ret = st->cmd_settings_bitmask & BIT(offset);
++		ret = (st->cmd_settings_bitmask & BIT(offset)) ? 1 : 0;
+ 		goto out;
+ 	}
+ 
 
 
