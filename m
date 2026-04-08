@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27924355F30;
-	Wed,  8 Apr 2026 18:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53B933121F;
+	Wed,  8 Apr 2026 18:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674273; cv=none; b=q5jF2ZxykHVCco/tqvVry2Yus3JqOhZZL3iDTj2/t69jd4aL8RT0+YvjUTu1jU9JNgyKf52a0zZpbb2HjmgjAMBYqoN+BMC/53xNTlPwa16TyjmzRjbfe/aBtjzLOpsFiCso2D+5ozw/KpYDxB6+j4d9nNXDeJk/lVWv/vsvWls=
+	t=1775674275; cv=none; b=a7Xlw3JrACrBakUuMxOIMRALSCepWYqH+2iEVJQ0VDAd7ijiHBw6Npxw4NG+cjZ8so+UBH2EwYdeOg+CiwdRuBXeHr0bF6zUdzRKkY7S6qp9825xCnukLH9ijDJz6SatyK6vMJuJSL0iXT2dRh2kBbADDZ/ewbkyYEH6nPknOHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674273; c=relaxed/simple;
-	bh=OTqQM1z+aI3tIW/YegV+OWEcQuB+uXonUkkEx3NcWqQ=;
+	s=arc-20240116; t=1775674275; c=relaxed/simple;
+	bh=NWK0l7qDse4O2nPSWFcVTFTg2ulekRmnQz7ZnzA9aHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pp4WDjUwyUn4rf51mzy09AxM489aiTxvM+n2BMQLHKUNe045afm1WyWxgxVkvqXuSgskuDjx83C7thq88U13Bl/uLM4hswlHScZtdSZ6S/qwISzv18bW8xUvSCgOrSwqZSmiQ31Y/ti4fSfyIpCwyMw+3DGKDhgHF+saiveuDFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKiTAAA9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GKDz5Esdbxbf1MyaYeymYR/dPxlIfcTLHzR9YlFs5RlrAA3qc9loFSRyQRQr5aD5iU0krTnxZzqi+/MBQPTWsvCQqmTyiNY9F9JHhTKd7OopPlH5ypZioFUb7vMNBdnUN5wXLQUKoj6AL8xvFvUyuT57xufpwFymjtoUTZCBSGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2t+Or+Gy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKiTAAA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2211C19421;
-	Wed,  8 Apr 2026 18:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2t+Or+Gy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334AFC19421;
+	Wed,  8 Apr 2026 18:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674273;
-	bh=OTqQM1z+aI3tIW/YegV+OWEcQuB+uXonUkkEx3NcWqQ=;
+	s=korg; t=1775674275;
+	bh=NWK0l7qDse4O2nPSWFcVTFTg2ulekRmnQz7ZnzA9aHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKiTAAA91OclX+6RLs5U6h7h9+YbWX8NYRJUp1ws50y3UJBf7+yR9VaAgQ6F4P6wq
-	 gPcafZbFt7hzBAXLTovZiXWcCWB3RcADlMkW7PG2sq3PYxNKUSCi8XIDAKPlNCZzBz
-	 MFGs18L+4MaWnFr5XpNwKVIvcAOErGOThCS5hktA=
+	b=2t+Or+GymlNqPIUV7R1BAkx2kj3AkDmJrrgebv+iGaoT53lyPSPTTA4hE3TXszYzc
+	 BZINnpDv//P49zvYSZA/0cefONE87FCumAdXemv/mEu0GffJnXzxlR1xMzbewYVsdS
+	 fx550irUZFHJHXZKU0Hy2P4dNSbd0+QyFTAHTE7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Long Li <leo.lilong@huawei.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 005/311] scsi: target: tcm_loop: Drain commands in target_reset handler
-Date: Wed,  8 Apr 2026 20:00:05 +0200
-Message-ID: <20260408175939.604806440@linuxfoundation.org>
+Subject: [PATCH 6.19 006/311] xfs: factor out xfs_attr3_node_entry_remove
+Date: Wed,  8 Apr 2026 20:00:06 +0200
+Message-ID: <20260408175939.642692276@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -45,151 +46,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit 1333eee56cdf3f0cf67c6ab4114c2c9e0a952026 ]
+[ Upstream commit ce4e789cf3561c9fac73cc24445bfed9ea0c514b ]
 
-tcm_loop_target_reset() violates the SCSI EH contract: it returns SUCCESS
-without draining any in-flight commands.  The SCSI EH documentation
-(scsi_eh.rst) requires that when a reset handler returns SUCCESS the driver
-has made lower layers "forget about timed out scmds" and is ready for new
-commands.  Every other SCSI LLD (virtio_scsi, mpt3sas, ipr, scsi_debug,
-mpi3mr) enforces this by draining or completing outstanding commands before
-returning SUCCESS.
+Factor out wrapper xfs_attr3_node_entry_remove function, which
+exported for external use.
 
-Because tcm_loop_target_reset() doesn't drain, the SCSI EH reuses in-flight
-scsi_cmnd structures for recovery commands (e.g. TUR) while the target core
-still has async completion work queued for the old se_cmd.  The memset in
-queuecommand zeroes se_lun and lun_ref_active, causing
-transport_lun_remove_cmd() to skip its percpu_ref_put().  The leaked LUN
-reference prevents transport_clear_lun_ref() from completing, hanging
-configfs LUN unlink forever in D-state:
-
-  INFO: task rm:264 blocked for more than 122 seconds.
-  rm              D    0   264    258 0x00004000
-  Call Trace:
-   __schedule+0x3d0/0x8e0
-   schedule+0x36/0xf0
-   transport_clear_lun_ref+0x78/0x90 [target_core_mod]
-   core_tpg_remove_lun+0x28/0xb0 [target_core_mod]
-   target_fabric_port_unlink+0x50/0x60 [target_core_mod]
-   configfs_unlink+0x156/0x1f0 [configfs]
-   vfs_unlink+0x109/0x290
-   do_unlinkat+0x1d5/0x2d0
-
-Fix this by making tcm_loop_target_reset() actually drain commands:
-
- 1. Issue TMR_LUN_RESET via tcm_loop_issue_tmr() to drain all commands that
-    the target core knows about (those not yet CMD_T_COMPLETE).
-
- 2. Use blk_mq_tagset_busy_iter() to iterate all started requests and
-    flush_work() on each se_cmd — this drains any deferred completion work
-    for commands that already had CMD_T_COMPLETE set before the TMR (which
-    the TMR skips via __target_check_io_state()).  This is the same pattern
-    used by mpi3mr, scsi_debug, and libsas to drain outstanding commands
-    during reset.
-
-Fixes: e0eb5d38b732 ("scsi: target: tcm_loop: Use block cmd allocator for se_cmds")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/27011aa34c8f6b1b94d2e3cf5655b6d037f53428.1773706803.git.josef@toxicpanda.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Stable-dep-of: b854e1c4eff3 ("xfs: close crash window in attr dabtree inactivation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/loopback/tcm_loop.c |   52 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 46 insertions(+), 6 deletions(-)
+ fs/xfs/libxfs/xfs_da_btree.c |   53 ++++++++++++++++++++++++++++++++++---------
+ fs/xfs/libxfs/xfs_da_btree.h |    2 +
+ 2 files changed, 44 insertions(+), 11 deletions(-)
 
---- a/drivers/target/loopback/tcm_loop.c
-+++ b/drivers/target/loopback/tcm_loop.c
-@@ -26,6 +26,7 @@
- #include <linux/slab.h>
- #include <linux/types.h>
- #include <linux/configfs.h>
-+#include <linux/blk-mq.h>
- #include <scsi/scsi.h>
- #include <scsi/scsi_tcq.h>
- #include <scsi/scsi_host.h>
-@@ -268,15 +269,27 @@ static int tcm_loop_device_reset(struct
- 	return (ret == TMR_FUNCTION_COMPLETE) ? SUCCESS : FAILED;
+--- a/fs/xfs/libxfs/xfs_da_btree.c
++++ b/fs/xfs/libxfs/xfs_da_btree.c
+@@ -1506,21 +1506,20 @@ xfs_da3_fixhashpath(
  }
  
-+static bool tcm_loop_flush_work_iter(struct request *rq, void *data)
-+{
-+	struct scsi_cmnd *sc = blk_mq_rq_to_pdu(rq);
-+	struct tcm_loop_cmd *tl_cmd = scsi_cmd_priv(sc);
-+	struct se_cmd *se_cmd = &tl_cmd->tl_se_cmd;
-+
-+	flush_work(&se_cmd->work);
-+	return true;
-+}
-+
- static int tcm_loop_target_reset(struct scsi_cmnd *sc)
+ /*
+- * Remove an entry from an intermediate node.
++ * Internal implementation to remove an entry from an intermediate node.
+  */
+ STATIC void
+-xfs_da3_node_remove(
+-	struct xfs_da_state	*state,
+-	struct xfs_da_state_blk	*drop_blk)
++__xfs_da3_node_remove(
++	struct xfs_trans	*tp,
++	struct xfs_inode	*dp,
++	struct xfs_da_geometry  *geo,
++	struct xfs_da_state_blk *drop_blk)
  {
- 	struct tcm_loop_hba *tl_hba;
- 	struct tcm_loop_tpg *tl_tpg;
-+	struct Scsi_Host *sh = sc->device->host;
-+	int ret;
+ 	struct xfs_da_intnode	*node;
+ 	struct xfs_da3_icnode_hdr nodehdr;
+ 	struct xfs_da_node_entry *btree;
+ 	int			index;
+ 	int			tmp;
+-	struct xfs_inode	*dp = state->args->dp;
+-
+-	trace_xfs_da_node_remove(state->args);
+ 
+ 	node = drop_blk->bp->b_addr;
+ 	xfs_da3_node_hdr_from_disk(dp->i_mount, &nodehdr, node);
+@@ -1536,17 +1535,17 @@ xfs_da3_node_remove(
+ 		tmp  = nodehdr.count - index - 1;
+ 		tmp *= (uint)sizeof(xfs_da_node_entry_t);
+ 		memmove(&btree[index], &btree[index + 1], tmp);
+-		xfs_trans_log_buf(state->args->trans, drop_blk->bp,
++		xfs_trans_log_buf(tp, drop_blk->bp,
+ 		    XFS_DA_LOGRANGE(node, &btree[index], tmp));
+ 		index = nodehdr.count - 1;
+ 	}
+ 	memset(&btree[index], 0, sizeof(xfs_da_node_entry_t));
+-	xfs_trans_log_buf(state->args->trans, drop_blk->bp,
++	xfs_trans_log_buf(tp, drop_blk->bp,
+ 	    XFS_DA_LOGRANGE(node, &btree[index], sizeof(btree[index])));
+ 	nodehdr.count -= 1;
+ 	xfs_da3_node_hdr_to_disk(dp->i_mount, node, &nodehdr);
+-	xfs_trans_log_buf(state->args->trans, drop_blk->bp,
+-	    XFS_DA_LOGRANGE(node, &node->hdr, state->args->geo->node_hdr_size));
++	xfs_trans_log_buf(tp, drop_blk->bp,
++	    XFS_DA_LOGRANGE(node, &node->hdr, geo->node_hdr_size));
  
  	/*
- 	 * Locate the tcm_loop_hba_t pointer
- 	 */
--	tl_hba = *(struct tcm_loop_hba **)shost_priv(sc->device->host);
-+	tl_hba = *(struct tcm_loop_hba **)shost_priv(sh);
- 	if (!tl_hba) {
- 		pr_err("Unable to perform device reset without active I_T Nexus\n");
- 		return FAILED;
-@@ -285,11 +298,38 @@ static int tcm_loop_target_reset(struct
- 	 * Locate the tl_tpg pointer from TargetID in sc->device->id
- 	 */
- 	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
--	if (tl_tpg) {
--		tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
--		return SUCCESS;
--	}
--	return FAILED;
-+	if (!tl_tpg)
-+		return FAILED;
-+
-+	/*
-+	 * Issue a LUN_RESET to drain all commands that the target core
-+	 * knows about.  This handles commands not yet marked CMD_T_COMPLETE.
-+	 */
-+	ret = tcm_loop_issue_tmr(tl_tpg, sc->device->lun, 0, TMR_LUN_RESET);
-+	if (ret != TMR_FUNCTION_COMPLETE)
-+		return FAILED;
-+
-+	/*
-+	 * Flush any deferred target core completion work that may still be
-+	 * queued.  Commands that already had CMD_T_COMPLETE set before the TMR
-+	 * are skipped by the TMR drain, but their async completion work
-+	 * (transport_lun_remove_cmd → percpu_ref_put, release_cmd → scsi_done)
-+	 * may still be pending in target_completion_wq.
-+	 *
-+	 * The SCSI EH will reuse in-flight scsi_cmnd structures for recovery
-+	 * commands (e.g. TUR) immediately after this handler returns SUCCESS —
-+	 * if deferred work is still pending, the memset in queuecommand would
-+	 * zero the se_cmd while the work accesses it, leaking the LUN
-+	 * percpu_ref and hanging configfs unlink forever.
-+	 *
-+	 * Use blk_mq_tagset_busy_iter() to find all started requests and
-+	 * flush_work() on each — the same pattern used by mpi3mr, scsi_debug,
-+	 * and other SCSI drivers to drain outstanding commands during reset.
-+	 */
-+	blk_mq_tagset_busy_iter(&sh->tag_set, tcm_loop_flush_work_iter, NULL);
-+
-+	tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
-+	return SUCCESS;
+ 	 * Copy the last hash value from the block to propagate upwards.
+@@ -1555,6 +1554,38 @@ xfs_da3_node_remove(
  }
  
- static const struct scsi_host_template tcm_loop_driver_template = {
+ /*
++ * Remove an entry from an intermediate node.
++ */
++STATIC void
++xfs_da3_node_remove(
++	struct xfs_da_state	*state,
++	struct xfs_da_state_blk	*drop_blk)
++{
++	trace_xfs_da_node_remove(state->args);
++
++	__xfs_da3_node_remove(state->args->trans, state->args->dp,
++			state->args->geo, drop_blk);
++}
++
++/*
++ * Remove an entry from an intermediate attr node at the specified index.
++ */
++void
++xfs_attr3_node_entry_remove(
++	struct xfs_trans	*tp,
++	struct xfs_inode	*dp,
++	struct xfs_buf		*bp,
++	int			index)
++{
++	struct xfs_da_state_blk blk = {
++		.index		= index,
++		.bp		= bp,
++	};
++
++	__xfs_da3_node_remove(tp, dp, dp->i_mount->m_attr_geo, &blk);
++}
++
++/*
+  * Unbalance the elements between two intermediate nodes,
+  * move all Btree elements from one node into another.
+  */
+--- a/fs/xfs/libxfs/xfs_da_btree.h
++++ b/fs/xfs/libxfs/xfs_da_btree.h
+@@ -184,6 +184,8 @@ int	xfs_da3_split(xfs_da_state_t *state)
+ int	xfs_da3_join(xfs_da_state_t *state);
+ void	xfs_da3_fixhashpath(struct xfs_da_state *state,
+ 			    struct xfs_da_state_path *path_to_to_fix);
++void	xfs_attr3_node_entry_remove(struct xfs_trans *tp, struct xfs_inode *dp,
++			    struct xfs_buf *bp, int index);
+ 
+ /*
+  * Routines used for finding things in the Btree.
 
 
