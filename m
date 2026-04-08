@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B45324B1F;
-	Wed,  8 Apr 2026 18:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3342494F0;
+	Wed,  8 Apr 2026 18:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672662; cv=none; b=An55tkPvFmfiGNxgyAC4nBlmpE7/L6G9Z/MGKPsNA+IQ4UYbQ66wgcgrLZ72ZiL8Umn2JIAeb8UoT5ORkIw8w2dglvB34ZysFFbmxFu4owa0jlecTKHD5TOL2wZpUHuwhNiBfM3Mft1Ml5lYjCOtZY5Ihh8MWaUQs0P1RaGUUI4=
+	t=1775672664; cv=none; b=rEeCz1lzqtirqg4p2E+eCsENa29tF6OJAKehE/42VYg/iU5JvggRH1a4qO+QlDKyykLrhKjWlPTbKZ242X0rg+zud+FMuoGNJH939Z/58xr04t7WRVoX2C1nOrCAhbjXTX7li5oAfIKexQnDQ4tQBgr8YX7A10Td7G7jBuCFeFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672662; c=relaxed/simple;
-	bh=FGD4YiSRJA5l3ATzv+O5oIn2Z9bnbQAIHNfUOi88uqc=;
+	s=arc-20240116; t=1775672664; c=relaxed/simple;
+	bh=x0JOOX/bTmzI309w3Dz+1YzJt9jCOJfACuwCIzD9Z+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NNIVLM0cjc4PD7zY2GADPg6Q5CV9e6rwq2kPKNqOKmWM1ZqZSq8vcoo2pHgT0KPuPSiUM5pP+eyTTHTKb9iT5DwUGL+9ZYcIkZ3sd0L9yemyXjY4zFrhFzGqvmqK435nHJ4112ARwEKmP2nAOzoyQYU6EsiZ/NkzNwlzQqcUck0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKW2Cn1p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gObRSU3AaHMbU+O5cs5HOCWnxCc5OJsmmpQiRTxkCH94Xb9RALHYcd0Ib6ASHn2YUUBV82GN4E2uWKrHpkHvzHcxTDWFTwecxQ6aGv+98NaWAFR6XNsXlGZ7UYaKZTLjB+s9ZNJvjAgrAJnaeJ/jlzZLFfDsMrTpBA8rnOOjCgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqYcz6bL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKW2Cn1p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DFDC19421;
-	Wed,  8 Apr 2026 18:24:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqYcz6bL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4FDC19421;
+	Wed,  8 Apr 2026 18:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672662;
-	bh=FGD4YiSRJA5l3ATzv+O5oIn2Z9bnbQAIHNfUOi88uqc=;
+	s=korg; t=1775672664;
+	bh=x0JOOX/bTmzI309w3Dz+1YzJt9jCOJfACuwCIzD9Z+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKW2Cn1pDFJ9zfHiEdX8YaRWYoJFyMYnMVbxpw69d26lXMbbvjwOTe+J5TXQdSBIJ
-	 uxUTDvwtOIZ53fUI21+kiY9TTi9VWsxGA+dZVf3AOdflsTNUj9udim98tknp2JcsEr
-	 /7r6/UqBC/8geIhOrKXx3LVZW4hPeajuICUd8tlk=
+	b=yqYcz6bLURrcr0v44Zrktf4OLhRj8HjpfvQoW7BDqqE8MFao/kkIiJUDaqL04rfEl
+	 r9ELJLd8b7Blkj4gMzA5jr7UCiaBVn2RiC6O0xfrERlbzjUKmZ5gp5o7fkLlz1+1aq
+	 N4eTa+lE4t8XGH4mwjsOve1mkzEXAJSKYXxjQP5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoffer Sandberg <cs@tuxedo.de>,
-	Werner Sembach <wse@tuxedocomputers.com>,
+	Shengyu Qu <wiagn233@outlook.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 092/160] Input: i8042 - add TUXEDO InfinityBook Max 16 Gen10 AMD to i8042 quirk table
-Date: Wed,  8 Apr 2026 20:02:59 +0200
-Message-ID: <20260408175916.628745205@linuxfoundation.org>
+Subject: [PATCH 6.6 093/160] Input: xpad - add support for BETOP BTP-KP50B/C controllers wireless mode
+Date: Wed,  8 Apr 2026 20:03:00 +0200
+Message-ID: <20260408175916.665428780@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -51,39 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoffer Sandberg <cs@tuxedo.de>
+From: Shengyu Qu <wiagn233@outlook.com>
 
-commit 5839419cffc7788a356428d321e3ec18055c0286 upstream.
+commit 0d9363a764d9d601a05591f9695cea8b429e9be3 upstream.
 
-The device occasionally wakes up from suspend with missing input on the
-internal keyboard and the following suspend attempt results in an instant
-wake-up. The quirks fix both issues for this device.
+BETOP's BTP-KP50B and BTP-KP50C controller's wireless dongles are both
+working as standard Xbox 360 controllers. Add USB device IDs for them to
+xpad driver.
 
-Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260223142054.50310-1-wse@tuxedocomputers.com
+Signed-off-by: Shengyu Qu <wiagn233@outlook.com>
+Link: https://patch.msgid.link/TY4PR01MB14432B4B298EA186E5F86C46B9855A@TY4PR01MB14432.jpnprd01.prod.outlook.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/input/joystick/xpad.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -1189,6 +1189,13 @@ static const struct dmi_system_id i8042_
- 	},
- 	{
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "X6KK45xU_X6SP45xU"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
-+					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+	},
-+	{
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "WUJIE Series-X5SP4NAG"),
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -354,6 +354,8 @@ static const struct xpad_device {
+ 	{ 0x1bad, 0xfd00, "Razer Onza TE", 0, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0xfd01, "Razer Onza", 0, XTYPE_XBOX360 },
+ 	{ 0x1ee9, 0x1590, "ZOTAC Gaming Zone", 0, XTYPE_XBOX360 },
++	{ 0x20bc, 0x5134, "BETOP BTP-KP50B Xinput Dongle", 0, XTYPE_XBOX360 },
++	{ 0x20bc, 0x514a, "BETOP BTP-KP50C Xinput Dongle", 0, XTYPE_XBOX360 },
+ 	{ 0x20d6, 0x2001, "BDA Xbox Series X Wired Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x20d6, 0x2009, "PowerA Enhanced Wired Controller for Xbox Series X|S", 0, XTYPE_XBOXONE },
+ 	{ 0x20d6, 0x2064, "PowerA Wired Controller for Xbox", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
+@@ -547,6 +549,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
+ 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harmonix Rock Band guitar and drums */
+ 	XPAD_XBOX360_VENDOR(0x1ee9),		/* ZOTAC Technology Limited */
++	XPAD_XBOX360_VENDOR(0x20bc),		/* BETOP wireless dongles */
+ 	XPAD_XBOX360_VENDOR(0x20d6),		/* PowerA controllers */
+ 	XPAD_XBOXONE_VENDOR(0x20d6),		/* PowerA controllers */
+ 	XPAD_XBOX360_VENDOR(0x24c6),		/* PowerA controllers */
 
 
