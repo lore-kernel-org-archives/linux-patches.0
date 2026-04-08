@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744AB3D564E;
-	Wed,  8 Apr 2026 18:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0498F3D411F;
+	Wed,  8 Apr 2026 18:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672987; cv=none; b=rc+aGpr1BkASPDADFrsnNCP7UBzRwUG76FThJbPM4E/LMi1KXaZIJ6niJzaNrp+/Oq/flvu58TnLqltr/+1TMMceLlXeozkI0llDSkt43bFbG3Y4t8ymjVd4RBgK+PvKY4y8a4usjiRgBu5DQuB4qDW9rIjHqu8QmrnQf5pKGL0=
+	t=1775672990; cv=none; b=qUfyKdiIJgM2Gqtw++qe7i17h75CQFgDzTF5CyNoQCe5COXIRgpvBvnA41w6KvTbmKoOD6ADGT+F7JCbqZOlHBr+Twr1WLZd5TyyobS4nBgV7NXCFbbor4BMs9iL47ecvNaVbyUMtkmLPmrjJ02ZB44iQhnPPadOzyMjtlCk9Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672987; c=relaxed/simple;
-	bh=XznMBCFTl91GIuLqgTLN86bwLrysfwo+HTRNOKk/TG4=;
+	s=arc-20240116; t=1775672990; c=relaxed/simple;
+	bh=jCNdRjqk940kXaeK3bHCpyVm1KHoKhy3TvRgzhwx3+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VGuwEf1k/z2imvWqvxcAU0JrlrPPAHf0h5mzWd/F6g/BIifveRnXXpZcIfK3RaHQNP0ACcNfWwJDFv9YqiL2eRBNhnjt9iPGsfHxdDhAYNNHfoehXLWLDl/sEs58YaDl+qSO8fAmwy4h3qbCBdibUTlfxOnB9NB3zo8LK9xiXD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVIkrFZT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PN/65TgnoNyKIT5bN1X7Ij9e7VZ2yin0QY+ZPYw/jhKwLXYPJybq7xnOWWFOPmqoyY0low5DblFJ4nKjW61i5eTr6B93+hXrTawcxR2VJhlk7jloB4dqL6WUEI5/l54Sa0RJV84Ng6OFKxRoLjkKCbNscdWy/53deqQIDtf+SgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CROlkh0D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVIkrFZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08ADAC19421;
-	Wed,  8 Apr 2026 18:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CROlkh0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE13C19421;
+	Wed,  8 Apr 2026 18:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672987;
-	bh=XznMBCFTl91GIuLqgTLN86bwLrysfwo+HTRNOKk/TG4=;
+	s=korg; t=1775672989;
+	bh=jCNdRjqk940kXaeK3bHCpyVm1KHoKhy3TvRgzhwx3+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nVIkrFZTVDUFErr3shPekLu1bVj1UFoqDuqSkqIMH2ERC4fCz+I7Syz7dfw0vGkK4
-	 Vp13IW3TG1LOTKzL3yUXhpZBooocVj+9rT2eCQsp4klLPemAyToP2jg3UP+gZQ9mBa
-	 MXDxYya45UG2k7QWuRfCCTVgDwHpn4m9oGhXhOEE=
+	b=CROlkh0DeZ2/D5zUZe/ME5YR/XajK5Jvp/urhR3dGINTENPzgjI826OcuViNSgQpl
+	 FsFND7p7mPTaG8Mqd9rfwl1IBHFBE2Hwt9kg5l9PSgjdAn5MmrRND1i2BwKMmetDMF
+	 EGYcS0yQxNzEBup7k9Pi0NVsq3f0RSuZmrn5k7+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 040/277] bridge: br_nd_send: linearize skb before parsing ND options
-Date: Wed,  8 Apr 2026 20:00:25 +0200
-Message-ID: <20260408175935.353235958@linuxfoundation.org>
+Subject: [PATCH 6.18 058/277] net: xilinx: axienet: Fix BQL accounting for multi-BD TX packets
+Date: Wed,  8 Apr 2026 20:00:43 +0200
+Message-ID: <20260408175936.026752440@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -57,86 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Suraj Gupta <suraj.gupta2@amd.com>
 
-[ Upstream commit a01aee7cafc575bb82f5529e8734e7052f9b16ea ]
+[ Upstream commit d1978d03e86785872871bff9c2623174b10740de ]
 
-br_nd_send() parses neighbour discovery options from ns->opt[] and
-assumes that these options are in the linear part of request.
+When a TX packet spans multiple buffer descriptors (scatter-gather),
+axienet_free_tx_chain sums the per-BD actual length from descriptor
+status into a caller-provided accumulator. That sum is reset on each
+NAPI poll. If the BDs for a single packet complete across different
+polls, the earlier bytes are lost and never credited to BQL. This
+causes BQL to think bytes are permanently in-flight, eventually
+stalling the TX queue.
 
-Its callers only guarantee that the ICMPv6 header and target address
-are available, so the option area can still be non-linear. Parsing
-ns->opt[] in that case can access data past the linear buffer.
+The SKB pointer is stored only on the last BD of a packet. When that
+BD completes, use skb->len for the byte count instead of summing
+per-BD status lengths. This matches netdev_sent_queue(), which debits
+skb->len, and naturally survives across polls because no partial
+packet contributes to the accumulator.
 
-Linearize request before option parsing and derive ns from the linear
-network header.
-
-Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
-Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260326034441.2037420-2-n05ec@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c900e49d58eb ("net: xilinx: axienet: Implement BQL")
+Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://patch.msgid.link/20260327073238.134948-3-suraj.gupta2@amd.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_arp_nd_proxy.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
-index 1e2b51769eec8..af3d1e33f50b8 100644
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -251,12 +251,12 @@ struct nd_msg *br_is_nd_neigh_msg(const struct sk_buff *skb, struct nd_msg *msg)
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 284031fb2e2c7..eefe54ce66852 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -770,8 +770,8 @@ static int axienet_device_reset(struct net_device *ndev)
+  * @first_bd:	Index of first descriptor to clean up
+  * @nr_bds:	Max number of descriptors to clean up
+  * @force:	Whether to clean descriptors even if not complete
+- * @sizep:	Pointer to a u32 filled with the total sum of all bytes
+- *		in all cleaned-up descriptors. Ignored if NULL.
++ * @sizep:	Pointer to a u32 accumulating the total byte count of
++ *		completed packets (using skb->len). Ignored if NULL.
+  * @budget:	NAPI budget (use 0 when not called from NAPI poll)
+  *
+  * Would either be called after a successful transmit operation, or after
+@@ -805,6 +805,8 @@ static int axienet_free_tx_chain(struct axienet_local *lp, u32 first_bd,
+ 				 DMA_TO_DEVICE);
  
- static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 		       struct sk_buff *request, struct neighbour *n,
--		       __be16 vlan_proto, u16 vlan_tci, struct nd_msg *ns)
-+		       __be16 vlan_proto, u16 vlan_tci)
- {
- 	struct net_device *dev = request->dev;
- 	struct net_bridge_vlan_group *vg;
-+	struct nd_msg *na, *ns;
- 	struct sk_buff *reply;
--	struct nd_msg *na;
- 	struct ipv6hdr *pip6;
- 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
- 	int ns_olen;
-@@ -264,7 +264,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	u8 *daddr;
- 	u16 pvid;
+ 		if (cur_p->skb && (status & XAXIDMA_BD_STS_COMPLETE_MASK)) {
++			if (sizep)
++				*sizep += cur_p->skb->len;
+ 			napi_consume_skb(cur_p->skb, budget);
+ 			packets++;
+ 		}
+@@ -818,9 +820,6 @@ static int axienet_free_tx_chain(struct axienet_local *lp, u32 first_bd,
+ 		wmb();
+ 		cur_p->cntrl = 0;
+ 		cur_p->status = 0;
+-
+-		if (sizep)
+-			*sizep += status & XAXIDMA_BD_STS_ACTUAL_LEN_MASK;
+ 	}
  
--	if (!dev)
-+	if (!dev || skb_linearize(request))
- 		return;
- 
- 	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
-@@ -281,6 +281,8 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	skb_set_mac_header(reply, 0);
- 
- 	daddr = eth_hdr(request)->h_source;
-+	ns = (struct nd_msg *)(skb_network_header(request) +
-+			       sizeof(struct ipv6hdr));
- 
- 	/* Do we need option processing ? */
- 	ns_olen = request->len - (skb_network_offset(request) +
-@@ -472,9 +474,9 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
- 				if (vid != 0)
- 					br_nd_send(br, p, skb, n,
- 						   skb->vlan_proto,
--						   skb_vlan_tag_get(skb), msg);
-+						   skb_vlan_tag_get(skb));
- 				else
--					br_nd_send(br, p, skb, n, 0, 0, msg);
-+					br_nd_send(br, p, skb, n, 0, 0);
- 				replied = true;
- 			}
- 
+ 	if (!force) {
 -- 
 2.53.0
 
