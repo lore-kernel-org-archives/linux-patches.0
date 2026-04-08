@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624D02494F0;
-	Wed,  8 Apr 2026 18:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87523A16A0;
+	Wed,  8 Apr 2026 18:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672649; cv=none; b=H0RX9AHhNIqM0MmtLAajDEF3RCWv9L0O8ssHRK2UCRMHAvVuKiSfrQPg6KABumD2U1msuY7LkISbcGiPbzULbg8EBNgobW0ztJ9OUrk7e6FkCTMINv+Z7Fq0XvM834C2/bfDHgS0/+PV/hihFCO0WUaPPA24FYiglNJD3ezB7nE=
+	t=1775672652; cv=none; b=ZE55OCwQksiNSF6hQetgpNGdtGCOCaseN4EZP4lTcf0jwjJxOJVRUGVDhi19cR7XbFo95WxfykNXG9dKnPb4EsCNDHhdfUnz/rcLnYScx1R7OuXiiAvwmQ8DL+8pIivwbYykLbND7/10Za0pyK4g/dhLDLsdhVyLxje60kJCslU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672649; c=relaxed/simple;
-	bh=pmdPxpQqPg3gfJ/Tqgy2jrntMMkjPsS3ySF7B6ufW3g=;
+	s=arc-20240116; t=1775672652; c=relaxed/simple;
+	bh=TV/IoixF+WciDy18SnMwcpulKHSQi7O5YQ+CSSNAG9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSe7zaSGaVEDgamO8zv0Gr3QqClkitUHUKYv/NbJRDHhqi56C7yE7zMtltMeotjrbFBUZnOU8fxB8H8ReFUkxHuu2q6YTOYly44XQglEOFJAVnuyDZJiH0fRyipjW4ny+7ZU3TbewFfzFjb6vClwUEkUmwsZoRvfu63TLNcl8ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQeeU9j5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DFX3wzEJNZcbYTnhSabJZdPMpc/4dcW96z+JBaVaZd2IuXzRrP55H+DoTAVNZp6nqu/tWZ9xR2OjE6g99/t28A71E326Z2yf3S0+V3II5lRL41F6+ivYG3UxRP3M10uBDnGsw/O0f4FED4UopaCktd8k3qkapp8j+MVwhRAvMmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLzqZ9O6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQeeU9j5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7B1C19421;
-	Wed,  8 Apr 2026 18:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLzqZ9O6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA13C19421;
+	Wed,  8 Apr 2026 18:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672649;
-	bh=pmdPxpQqPg3gfJ/Tqgy2jrntMMkjPsS3ySF7B6ufW3g=;
+	s=korg; t=1775672651;
+	bh=TV/IoixF+WciDy18SnMwcpulKHSQi7O5YQ+CSSNAG9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQeeU9j58mgM20eHoQS9vM2D/L5gZ4takiYO3LOD+EPzIyja6Dc+qhXRjNkBIRek6
-	 a7jysAcGr2NgZr+A+fH0UeuXdhYk6jtpjhqMu7/KZQxHa0OJIU90Ko7evVjlRi4JHo
-	 h6gPFw4ejqtzR7SDCnYSXO9qiKKsv5XzzmFtixqU=
+	b=XLzqZ9O60hSrNq5BGoEpIRZclEVyN41m2ukmZnl3jERUoE8RpXwz/Jtd1RErztBUq
+	 nkd67k7R2KFo9gbLpZpKiNiumSLL9h6iVaApVtk3zDkVTaCComsUcQ1MZZNbjjRZF8
+	 fMd/LZhOm72leJjhr0yCwkhVzCFf4I+R1FxaLWq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wanquan Zhong <wanquan.zhong@fibocom.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 088/160] USB: serial: option: add support for Rolling Wireless RW135R-GL
-Date: Wed,  8 Apr 2026 20:02:55 +0200
-Message-ID: <20260408175916.480808706@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	JP Hein <jp@jphein.com>
+Subject: [PATCH 6.6 089/160] USB: core: add NO_LPM quirk for Razer Kiyo Pro webcam
+Date: Wed,  8 Apr 2026 20:02:56 +0200
+Message-ID: <20260408175916.518307986@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -50,49 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wanquan Zhong <wanquan.zhong@fibocom.com>
+From: JP Hein <jp@jphein.com>
 
-commit 01e8d0f742222f1e68f48180d5480097adf7ae9f upstream.
+commit 8b7a42ecdcdeb55580d9345412f7f8fc5aca3f6c upstream.
 
-Add VID/PID 33f8:1003 for the Rolling Wireless RW135R-GL M.2 module,
-which is used in laptop debug cards with MBIM interface for
-Linux/Chrome OS. The device supports mbim, pipe functionalities.
+The Razer Kiyo Pro (1532:0e05) is a USB 3.0 UVC webcam whose firmware
+does not handle USB Link Power Management transitions reliably. When LPM
+is active, the device can enter a state where it fails to respond to
+control transfers, producing EPIPE (-32) errors on UVC probe control
+SET_CUR requests. In the worst case, the stalled endpoint triggers an
+xHCI stop-endpoint command that times out, causing the host controller
+to be declared dead and every USB device on the bus to be disconnected.
 
-Here are the outputs of usb-devices:
-T:  Bus=04 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=33f8 ProdID=1003 Rev=05.15
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling RW135R-GL Module
-S:  SerialNumber=12345678
-C:  #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+This has been reported as Ubuntu Launchpad Bug #2061177. The failure
+mode is:
 
-Signed-off-by: Wanquan Zhong <wanquan.zhong@fibocom.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+  1. UVC probe control SET_CUR returns -32 (EPIPE)
+  2. xHCI host not responding to stop endpoint command
+  3. xHCI host controller not responding, assume dead
+  4. All USB devices on the affected xHCI controller disconnect
+
+Disabling LPM prevents the firmware from entering the problematic low-
+power states that precede the stall. This is the same approach used for
+other webcams with similar firmware issues (e.g., Logitech HD Webcam C270).
+
+Cc: stable <stable@kernel.org>
+Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2061177
+Signed-off-by: JP Hein <jp@jphein.com>
+Link: https://patch.msgid.link/20260331003806.212565-2-jp@jphein.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/core/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2464,6 +2464,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0302, 0xff) },			/* Rolling RW101R-GL (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0802, 0xff),			/* Rolling RW350-GL (laptop MBIM) */
- 	  .driver_info = RSVD(5) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff) },			/* Rolling RW135R-GL (laptop MBIM) */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x40) },
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -490,6 +490,8 @@ static const struct usb_device_id usb_qu
+ 	/* Razer - Razer Blade Keyboard */
+ 	{ USB_DEVICE(0x1532, 0x0116), .driver_info =
+ 			USB_QUIRK_LINEAR_UFRAME_INTR_BINTERVAL },
++	/* Razer - Razer Kiyo Pro Webcam */
++	{ USB_DEVICE(0x1532, 0x0e05), .driver_info = USB_QUIRK_NO_LPM },
+ 
+ 	/* Lenovo ThinkPad OneLink+ Dock twin hub controllers (VIA Labs VL812) */
+ 	{ USB_DEVICE(0x17ef, 0x1018), .driver_info = USB_QUIRK_RESET_RESUME },
 
 
