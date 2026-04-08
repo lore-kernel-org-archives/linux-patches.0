@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E22A37F8C2;
-	Wed,  8 Apr 2026 18:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BCF347517;
+	Wed,  8 Apr 2026 18:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671936; cv=none; b=YtE3yuNYl4rtCQNMmIMUUJzN2ROLuKhTlWYIo/iM3EO5PSO/CHNw7IGPo/Y9Df5ZmiaXgVGIgAh5jqJAW5cf+AmevL7tVRdyaPKFcPLn6n+3O8qV6ameL4XNFxKrKcb71n2B3w82Pani8BlQN9h7f3ypD5szSCDNRVlSCQIQOG4=
+	t=1775671938; cv=none; b=a4ZFms+GCHfdnjCJcwXIxPAMZgM86Bja7wrTEK1ZVC/OOk9F/NNQw7a8jZ9ztkqYVpExTI9O9gylxJe+oI3R8c6iX/7+YoN6HqjTW4ubd3kdGRYonDolO48JziXFP8BXRB0dqpJy4KwS8ikj8ffBrBCIjaQHcLks5eZhGOdLDjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671936; c=relaxed/simple;
-	bh=w1H0WVOJhUGZTwkhCeHNe0/dDAQcLm1rfOpGyTNatJc=;
+	s=arc-20240116; t=1775671938; c=relaxed/simple;
+	bh=QgLzqnyMME1Q57wA6e3ufSUShOd+b75S1bICKFajrek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S3yTfJq6SVhbZ6g4QwVPuSj3U5sNHlqkB5NAqkcIeUs9NXmVzxJrE3a5X/u5Jd2/tPUDC4M9vWyHoOWsWjQ3jsTLejai3NykwTfhxBpzm2Yau1k4ISiWZah9MY5mSGdYJqb+CbJllTqmBdBrVcHra54M6PQsTjnPFPOaB8yTtKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWIAsDNT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TVAz7ZRiWBaFLJ+C8XO9QffRuWcZ99sgCEQsQ0AJL4nkO8HMuS/ijQwlZJLRM7KgC2jYuompquV9XHZvIz/1IuNDjRFlxP7N8wi/OTRwEdDR7v/FJVh8O5YZKS3+0ix3GCoh4W9Sk2+geYQBzLRmvjTn4EMWBFtjbaJpyyxq1/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2rvrQol; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWIAsDNT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85E8C19421;
-	Wed,  8 Apr 2026 18:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2rvrQol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41142C19421;
+	Wed,  8 Apr 2026 18:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671936;
-	bh=w1H0WVOJhUGZTwkhCeHNe0/dDAQcLm1rfOpGyTNatJc=;
+	s=korg; t=1775671938;
+	bh=QgLzqnyMME1Q57wA6e3ufSUShOd+b75S1bICKFajrek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWIAsDNT18YQXInZuznb7LJbWmTOa3r7q/rixjnzvHqb8p71ionnjJzBBo7n5nF6D
-	 yzmofQBY3lmpyWbzn15qQHFdV3fr22woNmRSaY6z6K5ninlvTOfMj5wBxkq3jtikIP
-	 RPPvKTVk2mBdos9CMoUShgfmBSdyo04md+PZNHA0=
+	b=v2rvrQolnzoxuqfgnYcmOkOo8gVcEUYC0iES7MNL5tUrg4muMEBj4qfUUO2HQyTEu
+	 CLRgRseJE9ZUu2++/3y3mkByCj/SnnyniyWvAPOpscS0wxUW72iuEUZoUtDOexps0g
+	 LW7Fll7svc55/sQtrObZPpchGcHmmxz5RPB9vUVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Norouzi <ali.norouzi@keysight.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 093/312] can: gw: fix OOB heap access in cgw_csum_crc8_rel()
-Date: Wed,  8 Apr 2026 20:00:10 +0200
-Message-ID: <20260408175937.235845430@linuxfoundation.org>
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 094/312] cpufreq: conservative: Reset requested_freq on limits change
+Date: Wed,  8 Apr 2026 20:00:11 +0200
+Message-ID: <20260408175937.274048776@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -51,77 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Norouzi <ali.norouzi@keysight.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-commit b9c310d72783cc2f30d103eed83920a5a29c671a upstream.
+commit 6a28fb8cb28b9eb39a392e531d938a889eacafc5 upstream.
 
-cgw_csum_crc8_rel() correctly computes bounds-safe indices via calc_idx():
+A recently reported issue highlighted that the cached requested_freq
+is not guaranteed to stay in sync with policy->cur. If the platform
+changes the actual CPU frequency after the governor sets one (e.g.
+due to platform-specific frequency scaling) and a re-sync occurs
+later, policy->cur may diverge from requested_freq.
 
-    int from = calc_idx(crc8->from_idx, cf->len);
-    int to   = calc_idx(crc8->to_idx,   cf->len);
-    int res  = calc_idx(crc8->result_idx, cf->len);
+This can lead to incorrect behavior in the conservative governor.
+For example, the governor may assume the CPU is already running at
+the maximum frequency and skip further increases even though there
+is still headroom.
 
-    if (from < 0 || to < 0 || res < 0)
-        return;
+Avoid this by resetting the cached requested_freq to policy->cur on
+detecting a change in policy limits.
 
-However, the loop and the result write then use the raw s8 fields directly
-instead of the computed variables:
-
-    for (i = crc8->from_idx; ...)        /* BUG: raw negative index */
-    cf->data[crc8->result_idx] = ...;    /* BUG: raw negative index */
-
-With from_idx = to_idx = result_idx = -64 on a 64-byte CAN FD frame,
-calc_idx(-64, 64) = 0 so the guard passes, but the loop iterates with
-i = -64, reading cf->data[-64], and the write goes to cf->data[-64].
-This write might end up to 56 (7.0-rc) or 40 (<= 6.19) bytes before the
-start of the canfd_frame on the heap.
-
-The companion function cgw_csum_xor_rel() uses `from`/`to`/`res`
-correctly throughout; fix cgw_csum_crc8_rel() to match.
-
-Confirmed with KASAN on linux-7.0-rc2:
-  BUG: KASAN: slab-out-of-bounds in cgw_csum_crc8_rel+0x515/0x5b0
-  Read of size 1 at addr ffff8880076619c8 by task poc_cgw_oob/62
-
-To configure the can-gw crc8 checksums CAP_NET_ADMIN is needed.
-
-Fixes: 456a8a646b25 ("can: gw: add support for CAN FD frames")
-Cc: stable@vger.kernel.org
-Reported-by: Ali Norouzi <ali.norouzi@keysight.com>
-Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Ali Norouzi <ali.norouzi@keysight.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260319-fix-can-gw-and-can-isotp-v2-1-c45d52c6d2d8@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reported-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Tested-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://lore.kernel.org/all/20260210115458.3493646-1-zhenglifeng1@huawei.com/
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/d846a141a98ac0482f20560fcd7525c0f0ec2f30.1773999467.git.viresh.kumar@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/gw.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/cpufreq/cpufreq_conservative.c |   12 ++++++++++++
+ drivers/cpufreq/cpufreq_governor.c     |    3 +++
+ drivers/cpufreq/cpufreq_governor.h     |    1 +
+ 3 files changed, 16 insertions(+)
 
---- a/net/can/gw.c
-+++ b/net/can/gw.c
-@@ -374,10 +374,10 @@ static void cgw_csum_crc8_rel(struct can
- 		return;
- 
- 	if (from <= to) {
--		for (i = crc8->from_idx; i <= crc8->to_idx; i++)
-+		for (i = from; i <= to; i++)
- 			crc = crc8->crctab[crc ^ cf->data[i]];
- 	} else {
--		for (i = crc8->from_idx; i >= crc8->to_idx; i--)
-+		for (i = from; i >= to; i--)
- 			crc = crc8->crctab[crc ^ cf->data[i]];
- 	}
- 
-@@ -396,7 +396,7 @@ static void cgw_csum_crc8_rel(struct can
- 		break;
- 	}
- 
--	cf->data[crc8->result_idx] = crc ^ crc8->final_xor_val;
-+	cf->data[res] = crc ^ crc8->final_xor_val;
+--- a/drivers/cpufreq/cpufreq_conservative.c
++++ b/drivers/cpufreq/cpufreq_conservative.c
+@@ -314,6 +314,17 @@ static void cs_start(struct cpufreq_poli
+ 	dbs_info->requested_freq = policy->cur;
  }
  
- static void cgw_csum_crc8_pos(struct canfd_frame *cf,
++static void cs_limits(struct cpufreq_policy *policy)
++{
++	struct cs_policy_dbs_info *dbs_info = to_dbs_info(policy->governor_data);
++
++	/*
++	 * The limits have changed, so may have the current frequency. Reset
++	 * requested_freq to avoid any unintended outcomes due to the mismatch.
++	 */
++	dbs_info->requested_freq = policy->cur;
++}
++
+ static struct dbs_governor cs_governor = {
+ 	.gov = CPUFREQ_DBS_GOVERNOR_INITIALIZER("conservative"),
+ 	.kobj_type = { .default_groups = cs_groups },
+@@ -323,6 +334,7 @@ static struct dbs_governor cs_governor =
+ 	.init = cs_init,
+ 	.exit = cs_exit,
+ 	.start = cs_start,
++	.limits = cs_limits,
+ };
+ 
+ #define CPU_FREQ_GOV_CONSERVATIVE	(cs_governor.gov)
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -561,6 +561,7 @@ EXPORT_SYMBOL_GPL(cpufreq_dbs_governor_s
+ 
+ void cpufreq_dbs_governor_limits(struct cpufreq_policy *policy)
+ {
++	struct dbs_governor *gov = dbs_governor_of(policy);
+ 	struct policy_dbs_info *policy_dbs;
+ 
+ 	/* Protect gov->gdbs_data against cpufreq_dbs_governor_exit() */
+@@ -572,6 +573,8 @@ void cpufreq_dbs_governor_limits(struct
+ 	mutex_lock(&policy_dbs->update_mutex);
+ 	cpufreq_policy_apply_limits(policy);
+ 	gov_update_sample_delay(policy_dbs, 0);
++	if (gov->limits)
++		gov->limits(policy);
+ 	mutex_unlock(&policy_dbs->update_mutex);
+ 
+ out:
+--- a/drivers/cpufreq/cpufreq_governor.h
++++ b/drivers/cpufreq/cpufreq_governor.h
+@@ -138,6 +138,7 @@ struct dbs_governor {
+ 	int (*init)(struct dbs_data *dbs_data);
+ 	void (*exit)(struct dbs_data *dbs_data);
+ 	void (*start)(struct cpufreq_policy *policy);
++	void (*limits)(struct cpufreq_policy *policy);
+ };
+ 
+ static inline struct dbs_governor *dbs_governor_of(struct cpufreq_policy *policy)
 
 
