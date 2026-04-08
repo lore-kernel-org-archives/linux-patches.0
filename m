@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC8F3019BA;
-	Wed,  8 Apr 2026 19:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB33525A321;
+	Wed,  8 Apr 2026 19:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674920; cv=none; b=T/TfQZVJpo0ToGCpaY+Luh2H+HotvO4BYFgIhc7m1ptYdgUHtFDPP1aty9ZZszYGJMLUgtUs3nn/ILNXuwh7rkzkdOsgudRRuZdnKl6XpvAl8gMfHtN5g+bnEhAnRNThOjnJlhnrbWNecQFKwTf+qrD8xyGmjTiLc8sgqs/vmto=
+	t=1775674923; cv=none; b=m/JeesLMKXuCNaPmI93a0nPdGhPEoQnpy5oLuQ+RsgF4D9rytE3aHhgbsl0DKOG2Y0CSqqLDFNnCjYrBWZAl2ubT+CItKodrYX/0cUmdrTCq6S+Z3OJc0ugKJFnmQxnT1S/Mzs3gNE7BXk8HXHfVB8s5nu012aRs+Ftq3BCzKLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674920; c=relaxed/simple;
-	bh=fs7D2/G71Hw/4aisqdmG+ZZlyeoujkagb4hEtjOmA8o=;
+	s=arc-20240116; t=1775674923; c=relaxed/simple;
+	bh=QO/AY42o/rDkS6LnCZIGQXVKHek46vJa5XwP96Zx1wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bLGqtyfpW6zxIhuL0YVMbWpKa5GLD/+9CcVbyzMVQK8aMgaFSmlTcuUI+zJAvTvKN1lklgj7aooD5dnlDbaD4bYn8D1mGwAxspkAXRKqOHePZFwNWhi+M1kVB/db7MH8ucquWuZ2+6MKpoWTMDr+qz46wiBmHdPhs5y8uZouhRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ns7T8KP2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ayTTKtmnPK5rQjaG74DkHVtmMzKaEjx7nQY7pKmBJhqqnNra7OexeWR9PhKZ3WakKD98/JHNhcZeFshckz31/4Jq564lF74OnGvTh/Vw4FHsMSUrkN8CGg0iOx421xwn3mu4jEi1GMFoIwx7CrDDUxiw3tpCDbm07k9XKVdlB6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OykeJMQP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ns7T8KP2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DE1C19421;
-	Wed,  8 Apr 2026 19:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OykeJMQP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8012BC19421;
+	Wed,  8 Apr 2026 19:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674920;
-	bh=fs7D2/G71Hw/4aisqdmG+ZZlyeoujkagb4hEtjOmA8o=;
+	s=korg; t=1775674922;
+	bh=QO/AY42o/rDkS6LnCZIGQXVKHek46vJa5XwP96Zx1wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ns7T8KP2OQquTiefhH14mi0e4rIvnJTkab45WWFHsR9E3GFIuxcAKm2hpZi1rF/OZ
-	 JSYRiCZuM6uRQUdQaAmgwARuugeJv9HY2LhN46NAyTDE7iYnJXM25gOJHLX4m1wHmJ
-	 yJ/NBSIIYwUpuCNlpHwvTX8X2FdqOpE+S7OR2raA=
+	b=OykeJMQPZ0EzwGXsNOlFUyLmzY2C7H62P3zKmojvc5TmTpRQHXpg8IJpIjw/INQMU
+	 mS4bS01JuENboBmiUx/7vSjL43Z1g4Q5Tztd8qL/eUaWYmjZk0Hxo9+qOoa7Ck8+U8
+	 3K7f66Ttq9N25GYhia3Dyko2jgwlO1V4Kple5+6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 251/311] bridge: br_nd_send: validate ND option lengths
-Date: Wed,  8 Apr 2026 20:04:11 +0200
-Message-ID: <20260408175948.761791488@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 6.19 242/311] usb: ehci-brcm: fix sleep during atomic
+Date: Wed,  8 Apr 2026 20:04:02 +0200
+Message-ID: <20260408175948.428115681@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -56,54 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Justin Chen <justin.chen@broadcom.com>
 
-commit 850837965af15707fd3142c1cf3c5bfaf022299b upstream.
+commit 679b771ea05ad0f8eeae83e14a91b8f4f39510c4 upstream.
 
-br_nd_send() walks ND options according to option-provided lengths.
-A malformed option can make the parser advance beyond the computed
-option span or use a too-short source LLADDR option payload.
+echi_brcm_wait_for_sof() gets called after disabling interrupts
+in ehci_brcm_hub_control(). Use the atomic version of poll_timeout
+to fix the warning.
 
-Validate option lengths against the remaining NS option area before
-advancing, and only read source LLADDR when the option is large enough
-for an Ethernet address.
-
-Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
-Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
-Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260326034441.2037420-3-n05ec@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9df231511bd6 ("usb: ehci: Add new EHCI driver for Broadcom STB SoC's")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260318185707.2588431-1-justin.chen@broadcom.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_arp_nd_proxy.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/host/ehci-brcm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -288,12 +288,14 @@ static void br_nd_send(struct net_bridge
- 	ns_olen = request->len - (skb_network_offset(request) +
- 				  sizeof(struct ipv6hdr)) - sizeof(*ns);
- 	for (i = 0; i < ns_olen - 1; i += (ns->opt[i + 1] << 3)) {
--		if (!ns->opt[i + 1]) {
-+		if (!ns->opt[i + 1] || i + (ns->opt[i + 1] << 3) > ns_olen) {
- 			kfree_skb(reply);
- 			return;
- 		}
- 		if (ns->opt[i] == ND_OPT_SOURCE_LL_ADDR) {
--			daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
-+			if ((ns->opt[i + 1] << 3) >=
-+			    sizeof(struct nd_opt_hdr) + ETH_ALEN)
-+				daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
- 			break;
- 		}
- 	}
+--- a/drivers/usb/host/ehci-brcm.c
++++ b/drivers/usb/host/ehci-brcm.c
+@@ -31,8 +31,8 @@ static inline void ehci_brcm_wait_for_so
+ 	int res;
+ 
+ 	/* Wait for next microframe (every 125 usecs) */
+-	res = readl_relaxed_poll_timeout(&ehci->regs->frame_index, val,
+-					 val != frame_idx, 1, 130);
++	res = readl_relaxed_poll_timeout_atomic(&ehci->regs->frame_index,
++						val, val != frame_idx, 1, 130);
+ 	if (res)
+ 		ehci_err(ehci, "Error waiting for SOF\n");
+ 	udelay(delay);
 
 
