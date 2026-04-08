@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE1037F8CA;
-	Wed,  8 Apr 2026 18:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96FF3D88F7;
+	Wed,  8 Apr 2026 18:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673073; cv=none; b=F1+bRK+9Hvd4EYNuVCpRSGphgKCM6xZAtM4myp9ukjE1iaEWsBgGHPemLYRHCIuvVYE7mHdA892E8ZtDgXHLRhGXYVdu5HoJpBezAkD8o8FjBrCD0xthZtZQQw8+oqMWLqTaqVS7vIo684/Ud0s0SGX0k7/i71BPLueQcVJO0Ds=
+	t=1775673075; cv=none; b=HPDRopMc5C0V5A0ZiTmpFNj8/j4NAtJ1j2iBAaiZhU0Y4SAsN/rbF12Hvu98cepAX/g+KPM679uCvswPF7BdbsbJDWRcCTJ0V9UrA6XShvsk55IM6R1hzrmtHwpC5blDj+UKRETH98fGTXegB4OnYF/Qt5yPKcNlaDcp3eLXbNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673073; c=relaxed/simple;
-	bh=D7EK64zlyUOJ+eFjjp10ej8pQkZwOwxJYBJM7BqUd5I=;
+	s=arc-20240116; t=1775673075; c=relaxed/simple;
+	bh=+8ArF1sGdu5weelo7Pe4cF/dejnIDoejcOk/lGVK3lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V92KglXGTJtlDzdWtkqktOWhquMQSb2U1WLiCUYhQZt8Nd0hbRT2LEs6r6NkSESWB2lZB9UMFno17pcTehhjUo/DUxOXIBhSE80+6QIoTtXZQ6mMpriru4iWB2q+HOhaKgdV/TqgzVOhEvqt13SPi4TL8QlsKk8CyFqVdjfdrvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gl//wPOf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sI2zYucaPlHEuV1nc7EZbf8BwKQvcwZX1PvCXtgsUFbb60IPdnIRbj2RowVVAAFNUfyxQWCf69CCODqOQE5HeMMtZsswmpB7Nqlu0vwftc/6yX1dc1I+BPxSY3FIajt605eB3TQexsB/TfBSD6f//33o1veQ6n1UkPs+6SEztY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nx6RPb+M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gl//wPOf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0163C19421;
-	Wed,  8 Apr 2026 18:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nx6RPb+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37262C19425;
+	Wed,  8 Apr 2026 18:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673073;
-	bh=D7EK64zlyUOJ+eFjjp10ej8pQkZwOwxJYBJM7BqUd5I=;
+	s=korg; t=1775673075;
+	bh=+8ArF1sGdu5weelo7Pe4cF/dejnIDoejcOk/lGVK3lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gl//wPOf+kGE8rvyEwB4AY+oyjyS2Imks5emX2P7XjpW7qzXefsDIrRKe1JgLeCP3
-	 okd5hQyvWKUx8NYxsP0QKfWEg8oCo4VUNy+VuDnYf6g/o+inzAmbwmWu5x0tirI2JN
-	 naXfvG7KFZUpm2Mhm2UX9cB8/VDs/8w1udsAQKow=
+	b=Nx6RPb+MF/YgHPAgc5LZoTWkezHG7sIZhdC0eUss8IhKtIVZjym5vPf31zXaw+ZiH
+	 ZOERvQ9G3LjUUgoUkujKsaJi1/fYrDSMj+cUkTKctvXzxIfjmImQn8Msnv3JrGZhJP
+	 hhUGcg73Aq4gFKukpDVnOM1VRqpQD1ct0FVKNMQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Saeed Mahameed <saeedm@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 091/277] net/mlx5: Avoid "No data available" when FW version queries fail
-Date: Wed,  8 Apr 2026 20:01:16 +0200
-Message-ID: <20260408175937.272694054@linuxfoundation.org>
+Subject: [PATCH 6.18 092/277] net/mlx5: Fix switchdev mode rollback in case of failure
+Date: Wed,  8 Apr 2026 20:01:17 +0200
+Message-ID: <20260408175937.309372058@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -55,171 +55,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Saeed Mahameed <saeedm@nvidia.com>
 
-[ Upstream commit 10dc35f6a443d488f219d1a1e3fb8f8dac422070 ]
+[ Upstream commit 403186400a1a6166efe7031edc549c15fee4723f ]
 
-Avoid printing the misleading "kernel answers: No data available" devlink
-output when querying firmware or pending firmware version fails
-(e.g. MLX5 fw state errors / flash failures).
+If for some internal reason switchdev mode fails, we rollback to legacy
+mode, before this patch, rollback will unregister the uplink netdev and
+leave it unregistered causing the below kernel bug.
 
-FW can fail on loading the pending flash image and get its version due
-to various reasons, examples:
+To fix this, we need to avoid netdev unregister by setting the proper
+rollback flag 'MLX5_PRIV_FLAGS_SWITCH_LEGACY' to indicate legacy mode.
 
-mlxfw: Firmware flash failed: key not applicable, err (7)
-mlx5_fw_image_pending: can't read pending fw version while fw state is 1
+devlink (431) used greatest stack depth: 11048 bytes left
+mlx5_core 0000:00:03.0: E-Switch: Disable: mode(LEGACY), nvfs(0), \
+	necvfs(0), active vports(0)
+mlx5_core 0000:00:03.0: E-Switch: Supported tc chains and prios offload
+mlx5_core 0000:00:03.0: Loading uplink representor for vport 65535
+mlx5_core 0000:00:03.0: mlx5_cmd_out_err:816:(pid 456): \
+	QUERY_HCA_CAP(0x100) op_mod(0x0) failed, \
+	status bad parameter(0x3), syndrome (0x3a3846), err(-22)
+mlx5_core 0000:00:03.0 enp0s3np0 (unregistered): Unloading uplink \
+	representor for vport 65535
+ ------------[ cut here ]------------
+kernel BUG at net/core/dev.c:12070!
+Oops: invalid opcode: 0000 [#1] SMP NOPTI
+CPU: 2 UID: 0 PID: 456 Comm: devlink Not tainted 6.16.0-rc3+ \
+	#9 PREEMPT(voluntary)
+RIP: 0010:unregister_netdevice_many_notify+0x123/0xae0
+...
+Call Trace:
+[   90.923094]  unregister_netdevice_queue+0xad/0xf0
+[   90.923323]  unregister_netdev+0x1c/0x40
+[   90.923522]  mlx5e_vport_rep_unload+0x61/0xc6
+[   90.923736]  esw_offloads_enable+0x8e6/0x920
+[   90.923947]  mlx5_eswitch_enable_locked+0x349/0x430
+[   90.924182]  ? is_mp_supported+0x57/0xb0
+[   90.924376]  mlx5_devlink_eswitch_mode_set+0x167/0x350
+[   90.924628]  devlink_nl_eswitch_set_doit+0x6f/0xf0
+[   90.924862]  genl_family_rcv_msg_doit+0xe8/0x140
+[   90.925088]  genl_rcv_msg+0x18b/0x290
+[   90.925269]  ? __pfx_devlink_nl_pre_doit+0x10/0x10
+[   90.925506]  ? __pfx_devlink_nl_eswitch_set_doit+0x10/0x10
+[   90.925766]  ? __pfx_devlink_nl_post_doit+0x10/0x10
+[   90.926001]  ? __pfx_genl_rcv_msg+0x10/0x10
+[   90.926206]  netlink_rcv_skb+0x52/0x100
+[   90.926393]  genl_rcv+0x28/0x40
+[   90.926557]  netlink_unicast+0x27d/0x3d0
+[   90.926749]  netlink_sendmsg+0x1f7/0x430
+[   90.926942]  __sys_sendto+0x213/0x220
+[   90.927127]  ? __sys_recvmsg+0x6a/0xd0
+[   90.927312]  __x64_sys_sendto+0x24/0x30
+[   90.927504]  do_syscall_64+0x50/0x1c0
+[   90.927687]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   90.927929] RIP: 0033:0x7f7d0363e047
 
-and the resulting:
-$ devlink dev info
-kernel answers: No data available
-
-Instead, just report 0 or 0xfff.. versions in case of failure to indicate
-a problem, and let other information be shown.
-
-after the fix:
-$ devlink dev info
-pci/0000:00:06.0:
-  driver mlx5_core
-  serial_number xxx...
-  board.serial_number MT2225300179
-  versions:
-      fixed:
-        fw.psid MT_0000000436
-      running:
-        fw.version 22.41.0188
-        fw 22.41.0188
-      stored:
-        fw.version 255.255.65535
-        fw 255.255.65535
-
-Fixes: 9c86b07e3069 ("net/mlx5: Added fw version query command")
+Fixes: 2a4f56fbcc47 ("net/mlx5e: Keep netdev when leave switchdev for devlink set legacy only")
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260330194015.53585-3-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260330194015.53585-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/devlink.c |  4 +-
- drivers/net/ethernet/mellanox/mlx5/core/fw.c  | 53 ++++++++++++-------
- .../ethernet/mellanox/mlx5/core/mlx5_core.h   |  4 +-
- 3 files changed, 37 insertions(+), 24 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-index ea77fbd98396a..055ee020c56f4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-@@ -107,9 +107,7 @@ mlx5_devlink_info_get(struct devlink *devlink, struct devlink_info_req *req,
- 	if (err)
- 		return err;
- 
--	err = mlx5_fw_version_query(dev, &running_fw, &stored_fw);
--	if (err)
--		return err;
-+	mlx5_fw_version_query(dev, &running_fw, &stored_fw);
- 
- 	snprintf(version_str, sizeof(version_str), "%d.%d.%04d",
- 		 mlx5_fw_ver_major(running_fw), mlx5_fw_ver_minor(running_fw),
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw.c b/drivers/net/ethernet/mellanox/mlx5/core/fw.c
-index eeb4437975f20..c1f220e5fe185 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fw.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fw.c
-@@ -822,48 +822,63 @@ mlx5_fw_image_pending(struct mlx5_core_dev *dev,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index f1585df13b732..8be0961cb6c7e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -3623,6 +3623,8 @@ int esw_offloads_enable(struct mlx5_eswitch *esw)
  	return 0;
- }
  
--int mlx5_fw_version_query(struct mlx5_core_dev *dev,
--			  u32 *running_ver, u32 *pending_ver)
-+void mlx5_fw_version_query(struct mlx5_core_dev *dev,
-+			   u32 *running_ver, u32 *pending_ver)
- {
- 	u32 reg_mcqi_version[MLX5_ST_SZ_DW(mcqi_version)] = {};
- 	bool pending_version_exists;
- 	int component_index;
- 	int err;
- 
-+	*running_ver = 0;
-+	*pending_ver = 0;
-+
- 	if (!MLX5_CAP_GEN(dev, mcam_reg) || !MLX5_CAP_MCAM_REG(dev, mcqi) ||
- 	    !MLX5_CAP_MCAM_REG(dev, mcqs)) {
- 		mlx5_core_warn(dev, "fw query isn't supported by the FW\n");
--		return -EOPNOTSUPP;
-+		return;
- 	}
- 
- 	component_index = mlx5_get_boot_img_component_index(dev);
--	if (component_index < 0)
--		return component_index;
-+	if (component_index < 0) {
-+		mlx5_core_warn(dev, "fw query failed to find boot img component index, err %d\n",
-+			       component_index);
-+		return;
-+	}
- 
-+	*running_ver = U32_MAX; /* indicate failure */
- 	err = mlx5_reg_mcqi_version_query(dev, component_index,
- 					  MCQI_FW_RUNNING_VERSION,
- 					  reg_mcqi_version);
--	if (err)
--		return err;
--
--	*running_ver = MLX5_GET(mcqi_version, reg_mcqi_version, version);
--
-+	if (!err)
-+		*running_ver = MLX5_GET(mcqi_version, reg_mcqi_version,
-+					version);
-+	else
-+		mlx5_core_warn(dev, "failed to query running version, err %d\n",
-+			       err);
-+
-+	*pending_ver = U32_MAX; /* indicate failure */
- 	err = mlx5_fw_image_pending(dev, component_index, &pending_version_exists);
--	if (err)
--		return err;
-+	if (err) {
-+		mlx5_core_warn(dev, "failed to query pending image, err %d\n",
-+			       err);
-+		return;
-+	}
- 
- 	if (!pending_version_exists) {
- 		*pending_ver = 0;
--		return 0;
-+		return;
- 	}
- 
- 	err = mlx5_reg_mcqi_version_query(dev, component_index,
- 					  MCQI_FW_STORED_VERSION,
- 					  reg_mcqi_version);
--	if (err)
--		return err;
--
--	*pending_ver = MLX5_GET(mcqi_version, reg_mcqi_version, version);
--
--	return 0;
-+	if (!err)
-+		*pending_ver = MLX5_GET(mcqi_version, reg_mcqi_version,
-+					version);
-+	else
-+		mlx5_core_warn(dev, "failed to query pending version, err %d\n",
-+			       err);
-+
-+	return;
- }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-index da5345e19082d..09c544bdf70da 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-@@ -391,8 +391,8 @@ int mlx5_port_max_linkspeed(struct mlx5_core_dev *mdev, u32 *speed);
- 
- int mlx5_firmware_flash(struct mlx5_core_dev *dev, const struct firmware *fw,
- 			struct netlink_ext_ack *extack);
--int mlx5_fw_version_query(struct mlx5_core_dev *dev,
--			  u32 *running_ver, u32 *stored_ver);
-+void mlx5_fw_version_query(struct mlx5_core_dev *dev, u32 *running_ver,
-+			   u32 *stored_ver);
- 
- #ifdef CONFIG_MLX5_CORE_EN
- int mlx5e_init(void);
+ err_vports:
++	/* rollback to legacy, indicates don't unregister the uplink netdev */
++	esw->dev->priv.flags |= MLX5_PRIV_FLAGS_SWITCH_LEGACY;
+ 	mlx5_esw_offloads_rep_unload(esw, MLX5_VPORT_UPLINK);
+ err_uplink:
+ 	esw_offloads_steering_cleanup(esw);
 -- 
 2.53.0
 
