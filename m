@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF6334B19F;
-	Wed,  8 Apr 2026 18:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F621355F30;
+	Wed,  8 Apr 2026 18:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674262; cv=none; b=J1eF1ReQT1XDwqFD0OwCRxAPvheDD7SvXn94QT2y56OKahHj7N3lJPZ+mOaW+OdbyQLP+vkl8XZ+BVGH7IuIsWeII1hXkW/YmGOpVmp31tq05t+UIA1/nCEtB6fjeGRFffUufXd6s4y6UTf5CXdSCxtKjjnZ8wamzTXqMt9HFQ4=
+	t=1775674265; cv=none; b=fi4KkbHsVfdtqdzjNIAWmR4cQZK6Bio0R6iqvFHngSihQ02Du50LbCcGZpyuWP9pe26PndNpukIHsZUYdus5gJ6fQFhuFfES9at0MF3yuT+P/KHOP4T1WU0clcrcWpi3jmZiAcN4tZlgURBZURVJgBwl59pJkIDk7nKoJjdnumc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674262; c=relaxed/simple;
-	bh=BjbBrmd6DDEoMsUcJAUVKey+3GkbRFfTAosDUgUEHQE=;
+	s=arc-20240116; t=1775674265; c=relaxed/simple;
+	bh=WpNNJ4cOrRWLqxrPK11JpUVTiraMO3LmT97qu7U7TLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KqSBu3LxYToSkO4eKzd6as95RWbw/dcli9Y9wDvBPOqUKU1imQDpXKutAcmF086l12K8VZ3O6tPip/I8cBhNK4Yj9tln9VfzNr0r6n5ZstGHiosQ39P1s85s4gRWtevb12gWgRVzIgBwee7JyWb7f2HugFw/gaNlZBG4476o2pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgQpVe7m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JqEUZLtSpiIfxpEFEIDyEgrU6WsHirx++WdS8bgvfxZDopzm4p9l5AcA3lLhgklkfA/bbdH+gXNL360LCKJQ7VTr3UgesIV49GlKWBAuDj6s083+PAumIfjxb2ppCXSGdMyOmhJvXy4QDDf5eSYAlscpKLPnTCWJycrGFNsdEMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkMfgs3x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgQpVe7m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A3EC19421;
-	Wed,  8 Apr 2026 18:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkMfgs3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E726BC19421;
+	Wed,  8 Apr 2026 18:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674262;
-	bh=BjbBrmd6DDEoMsUcJAUVKey+3GkbRFfTAosDUgUEHQE=;
+	s=korg; t=1775674265;
+	bh=WpNNJ4cOrRWLqxrPK11JpUVTiraMO3LmT97qu7U7TLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MgQpVe7mS2eSW19d3v/iZ+jvHnacfD7Jeq0DH9LsRjUp4zsxuivBFLv9d0EMFI+n5
-	 IhTw6cAm2YnHhiERjMccZGMVK/ZQSpssR+BLZtOjyhnbQY0U/8i4xkon1L8cgmijNn
-	 xy8BgZZGoFVtqcoAZ1TZB7ukQp5hVvkBDEsXDj/M=
+	b=pkMfgs3x+4bumXBqTtSbioVT4XHSLbN70Dm4uPQ/0UPuXGXlUemOY1w9UaqrfT4bo
+	 V2Uk8ztkgpsCHO6hNgj1smxWzuV7vUl0aLzKXZL9XXIilpLok7eIBgq4BKMwQ3nLem
+	 qJJJRqaacUj89sZu4xwvlCefxPjXeGwwmjxyPA+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Long Li <longli@microsoft.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 029/311] wifi: iwlwifi: mld: Fix MLO scan timing
-Date: Wed,  8 Apr 2026 20:00:29 +0200
-Message-ID: <20260408175940.501786977@linuxfoundation.org>
+Subject: [PATCH 6.19 003/311] net: mana: fix use-after-free in add_adev() error path
+Date: Wed,  8 Apr 2026 20:00:03 +0200
+Message-ID: <20260408175939.529390134@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,233 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit ec66ec6a5a8f53e7c70085749e8d68f4431c630f ]
+[ Upstream commit c4ea7d8907cf72b259bf70bd8c2e791e1c4ff70f ]
 
-Calculate MLO scan start time based on actual
-scan start notification from firmware instead of recording
-time when scan command is sent.
+If auxiliary_device_add() fails, add_adev() jumps to add_fail and calls
+auxiliary_device_uninit(adev).
 
-Currently, MLO scan start time was captured immediately
-after sending the scan command to firmware. However, the
-actual scan start time may differ due to the FW being busy
-with a previous scan.
+The auxiliary device has its release callback set to adev_release(),
+which frees the containing struct mana_adev. Since adev is embedded in
+struct mana_adev, the subsequent fall-through to init_fail and access
+to adev->id may result in a use-after-free.
 
-In that case, the link selection code will think that the MLO
-scan is too old, and will warn.
+Fix this by saving the allocated auxiliary device id in a local
+variable before calling auxiliary_device_add(), and use that saved id
+in the cleanup path after auxiliary_device_uninit().
 
-To fix it, Implement start scan notification handling to
-capture the precise moment when firmware begins the scan
-operation.
-
-Fixes: 9324731b9985 ("wifi: iwlwifi: mld: avoid selecting bad links")
-Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260324113316.4c56b8bac533.I6e656d8cc30bb82c96aabadedd62bd67f4c46bf9@changeid
+Fixes: a69839d4327d ("net: mana: Add support for auxiliary device")
+Cc: stable@vger.kernel.org
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260323165730.945365-1-lgs201920130244@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../wireless/intel/iwlwifi/fw/api/commands.h  |  5 ++++
- .../net/wireless/intel/iwlwifi/fw/api/scan.h  | 10 +++++++
- drivers/net/wireless/intel/iwlwifi/mld/mld.c  |  1 +
- drivers/net/wireless/intel/iwlwifi/mld/mlo.c  |  4 +--
- .../net/wireless/intel/iwlwifi/mld/notif.c    |  5 ++++
- drivers/net/wireless/intel/iwlwifi/mld/scan.c | 30 +++++++++++++++++--
- drivers/net/wireless/intel/iwlwifi/mld/scan.h |  9 ++++--
- 7 files changed, 56 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/commands.h b/drivers/net/wireless/intel/iwlwifi/fw/api/commands.h
-index 8d64a271bb945..36159a7699167 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/commands.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/commands.h
-@@ -296,6 +296,11 @@ enum iwl_legacy_cmds {
- 	 */
- 	SCAN_OFFLOAD_UPDATE_PROFILES_CMD = 0x6E,
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -3376,6 +3376,7 @@ static int add_adev(struct gdma_dev *gd,
+ 	struct auxiliary_device *adev;
+ 	struct mana_adev *madev;
+ 	int ret;
++	int id;
  
-+	/**
-+	 * @SCAN_START_NOTIFICATION_UMAC: uses &struct iwl_umac_scan_start
-+	 */
-+	SCAN_START_NOTIFICATION_UMAC = 0xb2,
-+
- 	/**
- 	 * @MATCH_FOUND_NOTIFICATION: scan match found
- 	 */
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h b/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-index 60f0a4924ddfb..46fcc32608e34 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
-@@ -1156,6 +1156,16 @@ enum iwl_umac_scan_abort_status {
- 	IWL_UMAC_SCAN_ABORT_STATUS_NOT_FOUND,
- };
+ 	madev = kzalloc(sizeof(*madev), GFP_KERNEL);
+ 	if (!madev)
+@@ -3385,7 +3386,8 @@ static int add_adev(struct gdma_dev *gd,
+ 	ret = mana_adev_idx_alloc();
+ 	if (ret < 0)
+ 		goto idx_fail;
+-	adev->id = ret;
++	id = ret;
++	adev->id = id;
  
-+/**
-+ * struct iwl_umac_scan_start - scan start notification
-+ * @uid: scan id, &enum iwl_umac_scan_uid_offsets
-+ * @reserved: for future use
-+ */
-+struct iwl_umac_scan_start {
-+	__le32 uid;
-+	__le32 reserved;
-+} __packed; /* SCAN_START_UMAC_API_S_VER_1 */
-+
- /**
-  * struct iwl_umac_scan_complete - scan complete notification
-  * @uid: scan id, &enum iwl_umac_scan_uid_offsets
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-index 8a4c96385640b..18691871bdacc 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-@@ -171,6 +171,7 @@ static const struct iwl_hcmd_names iwl_mld_legacy_names[] = {
- 	HCMD_NAME(MISSED_BEACONS_NOTIFICATION),
- 	HCMD_NAME(MAC_PM_POWER_TABLE),
- 	HCMD_NAME(MFUART_LOAD_NOTIFICATION),
-+	HCMD_NAME(SCAN_START_NOTIFICATION_UMAC),
- 	HCMD_NAME(RSS_CONFIG_CMD),
- 	HCMD_NAME(SCAN_ITERATION_COMPLETE_UMAC),
- 	HCMD_NAME(REPLY_RX_MPDU_CMD),
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mlo.c b/drivers/net/wireless/intel/iwlwifi/mld/mlo.c
-index 1efefc737248f..47d36f0149efb 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mlo.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mlo.c
-@@ -725,7 +725,7 @@ iwl_mld_set_link_sel_data(struct iwl_mld *mld,
+ 	adev->name = name;
+ 	adev->dev.parent = gd->gdma_context->dev;
+@@ -3411,7 +3413,7 @@ add_fail:
+ 	auxiliary_device_uninit(adev);
  
- 		/* Ignore any BSS that was not seen in the last MLO scan */
- 		if (ktime_before(link_conf->bss->ts_boottime,
--				 mld->scan.last_mlo_scan_time))
-+				 mld->scan.last_mlo_scan_start_time))
- 			continue;
+ init_fail:
+-	mana_adev_idx_free(adev->id);
++	mana_adev_idx_free(id);
  
- 		data[n_data].link_id = link_id;
-@@ -931,7 +931,7 @@ static void _iwl_mld_select_links(struct iwl_mld *mld,
- 	if (!mld_vif->authorized || hweight16(usable_links) <= 1)
- 		return;
- 
--	if (WARN(ktime_before(mld->scan.last_mlo_scan_time,
-+	if (WARN(ktime_before(mld->scan.last_mlo_scan_start_time,
- 			      ktime_sub_ns(ktime_get_boottime_ns(),
- 					   5ULL * NSEC_PER_SEC)),
- 		"Last MLO scan was too long ago, can't select links\n"))
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/notif.c b/drivers/net/wireless/intel/iwlwifi/mld/notif.c
-index 4cf3920b005fe..ca90a2f905262 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/notif.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/notif.c
-@@ -284,6 +284,8 @@ static void iwl_mld_handle_beacon_notification(struct iwl_mld *mld,
-  * at least enough bytes to cover the structure listed in the CMD_VER_ENTRY.
-  */
- 
-+CMD_VERSIONS(scan_start_notif,
-+	     CMD_VER_ENTRY(1, iwl_umac_scan_start))
- CMD_VERSIONS(scan_complete_notif,
- 	     CMD_VER_ENTRY(1, iwl_umac_scan_complete))
- CMD_VERSIONS(scan_iter_complete_notif,
-@@ -355,6 +357,7 @@ DEFINE_SIMPLE_CANCELLATION(datapath_monitor, iwl_datapath_monitor_notif,
- 			   link_id)
- DEFINE_SIMPLE_CANCELLATION(roc, iwl_roc_notif, activity)
- DEFINE_SIMPLE_CANCELLATION(scan_complete, iwl_umac_scan_complete, uid)
-+DEFINE_SIMPLE_CANCELLATION(scan_start, iwl_umac_scan_start, uid)
- DEFINE_SIMPLE_CANCELLATION(probe_resp_data, iwl_probe_resp_data_notif,
- 			   mac_id)
- DEFINE_SIMPLE_CANCELLATION(uapsd_misbehaving_ap, iwl_uapsd_misbehaving_ap_notif,
-@@ -397,6 +400,8 @@ const struct iwl_rx_handler iwl_mld_rx_handlers[] = {
- 			     RX_HANDLER_SYNC)
- 	RX_HANDLER_NO_OBJECT(LEGACY_GROUP, BA_NOTIF, compressed_ba_notif,
- 			     RX_HANDLER_SYNC)
-+	RX_HANDLER_OF_SCAN(LEGACY_GROUP, SCAN_START_NOTIFICATION_UMAC,
-+			   scan_start_notif)
- 	RX_HANDLER_OF_SCAN(LEGACY_GROUP, SCAN_COMPLETE_UMAC,
- 			   scan_complete_notif)
- 	RX_HANDLER_NO_OBJECT(LEGACY_GROUP, SCAN_ITERATION_COMPLETE_UMAC,
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/scan.c b/drivers/net/wireless/intel/iwlwifi/mld/scan.c
-index fd1022ddc9122..76ac6fd5f9ff3 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/scan.c
-@@ -473,6 +473,9 @@ iwl_mld_scan_get_cmd_gen_flags(struct iwl_mld *mld,
- 	    params->flags & NL80211_SCAN_FLAG_COLOCATED_6GHZ)
- 		flags |= IWL_UMAC_SCAN_GEN_FLAGS_V2_TRIGGER_UHB_SCAN;
- 
-+	if (scan_status == IWL_MLD_SCAN_INT_MLO)
-+		flags |= IWL_UMAC_SCAN_GEN_FLAGS_V2_NTF_START;
-+
- 	if (params->enable_6ghz_passive)
- 		flags |= IWL_UMAC_SCAN_GEN_FLAGS_V2_6GHZ_PASSIVE_SCAN;
- 
-@@ -1817,9 +1820,6 @@ static void iwl_mld_int_mlo_scan_start(struct iwl_mld *mld,
- 	ret = _iwl_mld_single_scan_start(mld, vif, req, &ies,
- 					 IWL_MLD_SCAN_INT_MLO);
- 
--	if (!ret)
--		mld->scan.last_mlo_scan_time = ktime_get_boottime_ns();
--
- 	IWL_DEBUG_SCAN(mld, "Internal MLO scan: ret=%d\n", ret);
- }
- 
-@@ -1904,6 +1904,30 @@ void iwl_mld_handle_match_found_notif(struct iwl_mld *mld,
- 	ieee80211_sched_scan_results(mld->hw);
- }
- 
-+void iwl_mld_handle_scan_start_notif(struct iwl_mld *mld,
-+				     struct iwl_rx_packet *pkt)
-+{
-+	struct iwl_umac_scan_complete *notif = (void *)pkt->data;
-+	u32 uid = le32_to_cpu(notif->uid);
-+
-+	if (IWL_FW_CHECK(mld, uid >= ARRAY_SIZE(mld->scan.uid_status),
-+			 "FW reports out-of-range scan UID %d\n", uid))
-+		return;
-+
-+	if (IWL_FW_CHECK(mld, !(mld->scan.uid_status[uid] & mld->scan.status),
-+			 "FW reports scan UID %d we didn't trigger\n", uid))
-+		return;
-+
-+	IWL_DEBUG_SCAN(mld, "Scan started: uid=%u type=%u\n", uid,
-+		       mld->scan.uid_status[uid]);
-+	if (IWL_FW_CHECK(mld, mld->scan.uid_status[uid] != IWL_MLD_SCAN_INT_MLO,
-+			 "FW reports scan start notification %d we didn't trigger\n",
-+			 mld->scan.uid_status[uid]))
-+		return;
-+
-+	mld->scan.last_mlo_scan_start_time = ktime_get_boottime_ns();
-+}
-+
- void iwl_mld_handle_scan_complete_notif(struct iwl_mld *mld,
- 					struct iwl_rx_packet *pkt)
- {
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/scan.h b/drivers/net/wireless/intel/iwlwifi/mld/scan.h
-index 69110f0cfc8e2..de5620e7f463b 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/scan.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/scan.h
-@@ -27,6 +27,9 @@ int iwl_mld_sched_scan_start(struct iwl_mld *mld,
- void iwl_mld_handle_match_found_notif(struct iwl_mld *mld,
- 				      struct iwl_rx_packet *pkt);
- 
-+void iwl_mld_handle_scan_start_notif(struct iwl_mld *mld,
-+				     struct iwl_rx_packet *pkt);
-+
- void iwl_mld_handle_scan_complete_notif(struct iwl_mld *mld,
- 					struct iwl_rx_packet *pkt);
- 
-@@ -114,8 +117,8 @@ enum iwl_mld_traffic_load {
-  *	in jiffies.
-  * @last_start_time_jiffies: stores the last start time in jiffies
-  *	(interface up/reset/resume).
-- * @last_mlo_scan_time: start time of the last MLO scan in nanoseconds since
-- *	boot.
-+ * @last_mlo_scan_start_time: start time of the last MLO scan in nanoseconds
-+ * since boot.
-  */
- struct iwl_mld_scan {
- 	/* Add here fields that need clean up on restart */
-@@ -136,7 +139,7 @@ struct iwl_mld_scan {
- 	void *cmd;
- 	unsigned long last_6ghz_passive_jiffies;
- 	unsigned long last_start_time_jiffies;
--	u64 last_mlo_scan_time;
-+	u64 last_mlo_scan_start_time;
- };
- 
- /**
--- 
-2.53.0
-
+ idx_fail:
+ 	kfree(madev);
 
 
