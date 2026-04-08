@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E702FF144;
-	Wed,  8 Apr 2026 18:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF8C324B1F;
+	Wed,  8 Apr 2026 18:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672997; cv=none; b=kXbeYpHxJfJAlWixdMR5mvqmSFA9NvYLfZzY+7oJqfCq9nSAHpwwcrFURO023ncu5P9ggqyJ7h/pdYBQt9YyT94Aj8uuM9q0o8/BCk1S7r8ChE99k7l292r+UVFJePrAL9opPt0yeMkd4UOW6wJdRo2R/8CN3HnHqtilG65vvgk=
+	t=1775673000; cv=none; b=fncpmINjQQ0Es+FkqdUrmhgZFIx7dCo4QeL6bnjE9T4Qq1ugo8muFZ1sScS3at3JWHY4W/vjwXO9n20V3y261ehHqpZM8+F2znfr8kV9dCyhpNjSef493bO1RgNAOhVdFswGbbGjditMEJUxIdgs8kccUxp5fFqlazdnhg83Fh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672997; c=relaxed/simple;
-	bh=/SMjH8ERygbfkJYbW/HwKLci+TSpZIwunHPd4amatiU=;
+	s=arc-20240116; t=1775673000; c=relaxed/simple;
+	bh=S/TA/gApBS6sSQBPi6RqLOzkAZXhC83+yReoC0nMyqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UEO7YYEtYmoFzCrCmu80OG4RgrXz8bc+8NUJVoEvX85dif5ZEwTjesMQwuGcyv+dWQypq1nHBGKf1xMtdSLUW3/pK6eDr05+tK+mLNLxoGw0nkXi8pAcdNhJOc4hkd827HuSkI3F2RQsPJEIYKcfl1fUZWZXBZ05XzbviRIrJD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEKei2hg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a82sXrHVhTBDJf4qkGk3shmBSMkATTWij4pLbW/h5lv6VwDtR6DIVPMFlTmB0x36qeSVFhZ28F13gRevxiBsYQ9WUE5tXYpmFnh8AhQLjEofpzAUM//8NdZas8vIDXN3GA5fuID9v//+44gVLLeRTfZCI8pTvGExOWCQXuwycSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZEqXNhJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEKei2hg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70116C19421;
-	Wed,  8 Apr 2026 18:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZEqXNhJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03054C19421;
+	Wed,  8 Apr 2026 18:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672997;
-	bh=/SMjH8ERygbfkJYbW/HwKLci+TSpZIwunHPd4amatiU=;
+	s=korg; t=1775673000;
+	bh=S/TA/gApBS6sSQBPi6RqLOzkAZXhC83+yReoC0nMyqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEKei2hgYFNg+LnvTzcahTlmbjpqj0+BZKPoC1bAayL3OLKxTJ2R1GAfGDMrLtnL7
-	 RUJGAPqTFg9kxOimhdsIOLw/nk6BOtbEndCwozmwVTVj+ahvkcQYItdKnGfGXTUftf
-	 DSbk0aFze8FALClI6OcIwojrUG5a0WsUsNZ608Uc=
+	b=uZEqXNhJiE+xu11f8VJguUdUpamU4KjTZwjMaKi/OO1M1TXEVh9gS7IdXhEYfUyHQ
+	 rJD6wj/4yvLybAM81fPIbTBa0OVDmI2aiHec4c30lX5I89jXXcbWnKxiQEKChrBiPD
+	 6sdV1P5iE5yagL8vJa7yUuBGz7J6F1K77vc3d+NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 061/277] net: ipv6: flowlabel: defer exclusive option free until RCU teardown
-Date: Wed,  8 Apr 2026 20:00:46 +0200
-Message-ID: <20260408175936.137937216@linuxfoundation.org>
+Subject: [PATCH 6.18 062/277] mptcp: add eat_recv_skb helper
+Date: Wed,  8 Apr 2026 20:00:47 +0200
+Message-ID: <20260408175936.174579030@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -58,61 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 9ca562bb8e66978b53028fa32b1a190708e6a091 ]
+[ Upstream commit 436510df0cafb1bc36f12e92e0e76599be28d8f4 ]
 
-`ip6fl_seq_show()` walks the global flowlabel hash under the seq-file
-RCU read-side lock and prints `fl->opt->opt_nflen` when an option block
-is present.
+This patch extracts the free skb related code in __mptcp_recvmsg_mskq()
+into a new helper mptcp_eat_recv_skb().
 
-Exclusive flowlabels currently free `fl->opt` as soon as `fl->users`
-drops to zero in `fl_release()`. However, the surrounding
-`struct ip6_flowlabel` remains visible in the global hash table until
-later garbage collection removes it and `fl_free_rcu()` finally tears it
-down.
+This new helper will be used in the next patch.
 
-A concurrent `/proc/net/ip6_flowlabel` reader can therefore race that
-early `kfree()` and dereference freed option state, triggering a crash
-in `ip6fl_seq_show()`.
-
-Fix this by keeping `fl->opt` alive until `fl_free_rcu()`. That matches
-the lifetime already required for the enclosing flowlabel while readers
-can still reach it under RCU.
-
-Fixes: d3aedd5ebd4b ("ipv6 flowlabel: Convert hash list to RCU.")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/07351f0ec47bcee289576f39f9354f4a64add6e4.1774855883.git.zcliangcn@gmail.com
+Link: https://patch.msgid.link/20260130-net-next-mptcp-splice-v2-1-31332ba70d7f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 5dd8025a49c2 ("mptcp: fix soft lockup in mptcp_recvmsg()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_flowlabel.c | 5 -----
- 1 file changed, 5 deletions(-)
+ net/mptcp/protocol.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv6/ip6_flowlabel.c b/net/ipv6/ip6_flowlabel.c
-index 60d0be47a9f31..8aa29b3d3daca 100644
---- a/net/ipv6/ip6_flowlabel.c
-+++ b/net/ipv6/ip6_flowlabel.c
-@@ -133,11 +133,6 @@ static void fl_release(struct ip6_flowlabel *fl)
- 		if (time_after(ttd, fl->expires))
- 			fl->expires = ttd;
- 		ttd = fl->expires;
--		if (fl->opt && fl->share == IPV6_FL_S_EXCL) {
--			struct ipv6_txoptions *opt = fl->opt;
--			fl->opt = NULL;
--			kfree(opt);
--		}
- 		if (!timer_pending(&ip6_fl_gc_timer) ||
- 		    time_after(ip6_fl_gc_timer.expires, ttd))
- 			mod_timer(&ip6_fl_gc_timer, ttd);
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 8f18509204b67..c14e5a1f13336 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1963,6 +1963,17 @@ static int mptcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 
+ static void mptcp_rcv_space_adjust(struct mptcp_sock *msk, int copied);
+ 
++static void mptcp_eat_recv_skb(struct sock *sk, struct sk_buff *skb)
++{
++	/* avoid the indirect call, we know the destructor is sock_rfree */
++	skb->destructor = NULL;
++	skb->sk = NULL;
++	atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
++	sk_mem_uncharge(sk, skb->truesize);
++	__skb_unlink(skb, &sk->sk_receive_queue);
++	skb_attempt_defer_free(skb);
++}
++
+ static int __mptcp_recvmsg_mskq(struct sock *sk, struct msghdr *msg,
+ 				size_t len, int flags, int copied_total,
+ 				struct scm_timestamping_internal *tss,
+@@ -2017,13 +2028,7 @@ static int __mptcp_recvmsg_mskq(struct sock *sk, struct msghdr *msg,
+ 				break;
+ 			}
+ 
+-			/* avoid the indirect call, we know the destructor is sock_rfree */
+-			skb->destructor = NULL;
+-			skb->sk = NULL;
+-			atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
+-			sk_mem_uncharge(sk, skb->truesize);
+-			__skb_unlink(skb, &sk->sk_receive_queue);
+-			skb_attempt_defer_free(skb);
++			mptcp_eat_recv_skb(sk, skb);
+ 		}
+ 
+ 		if (copied >= len)
 -- 
 2.53.0
 
