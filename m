@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B413D9034;
-	Wed,  8 Apr 2026 18:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFC1347503;
+	Wed,  8 Apr 2026 18:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671920; cv=none; b=qGnXZmJIYhV7PmYnQtcQ8wH6/DUkwcAwWb069IxetLNJo4skECb26BjkpKmRR0tleSqsSTlmToiJP1XwpmQgihnFXcg2L/pkzD0iwemEZW2e0aRxShO6ZSeDstfdLkHmufr2Y2g+r7VhVEYuihdLTzMrbJfMFwQclAV38QiWa8E=
+	t=1775671923; cv=none; b=d7gftm1rzBKO9kJ1hNBwwIlH7rOPoBa25DwpxEWSw9XQQo7R1KZ/9Z46fsJtOVe3KHoXwkAMpoYNPA1sCxModDlkrwIF4CaDhjYjT8TML5xxVFNA9d+jP/3XDpFXjPrXcFTDoPmvBf8g+FgZ5YYnDhXE0qeX513y16kjts9OaHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671920; c=relaxed/simple;
-	bh=y+ZQnmGH10cFPaa90mOrJOTJLZBN6/oa2LeJlLZTZ8E=;
+	s=arc-20240116; t=1775671923; c=relaxed/simple;
+	bh=oVAjcOHEHrYfCjz1m3+NLxn688oXI0cXYko3sMMzqAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWRITctf3H5NnPEz/mMqrw6CzXs046YgejXGA0DraawEzfr5QB3GCOR/kNBJxv+NhWpoShPO2/GDQfJrpCV1OQeiPGNLD6QLN8A8JRLkj2gETQjTaZVSaxLCjKSlLTgUsgFug+dWQLj/kp6loPZsB/U2SU94E8J9tEU0LfCT8tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2VU6zzlO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QFfKHYanDNkzgo0wwHMKjg1KESRDTT5rCboG8qf0FANKOfKVO6DfPOhHBR88jEC/5D2Guc51CBP5LxBkFEf6epRSIq7YnZyWp/kPlUQizaWTNC2Q83dj/3bK1J78Y94ezYQAomGsnay03SeFaOYTU6nEGviNk+9jq+afaG7fbeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWDALDUl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2VU6zzlO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BA7C19425;
-	Wed,  8 Apr 2026 18:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWDALDUl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BC1C19421;
+	Wed,  8 Apr 2026 18:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671920;
-	bh=y+ZQnmGH10cFPaa90mOrJOTJLZBN6/oa2LeJlLZTZ8E=;
+	s=korg; t=1775671923;
+	bh=oVAjcOHEHrYfCjz1m3+NLxn688oXI0cXYko3sMMzqAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2VU6zzlOPZL7ED0yScUnS8As8Y7ysUD2zDrS2aF7GSt6SkxwwXBmbKgLpgzRxGLAo
-	 X67RS4HTr8Rb0ryUrEre7uDfsRAG2a+0g0MUT5RhTUp7HVm8T8md+6Ai0OSk5rDgbz
-	 YJlyVorhW/4wSWwgk99EnMrFfCEe+ycGUn9yJvM4=
+	b=uWDALDUlPUeO7HbxfIGUrt85zx4zI39HYvvqAYRL9IAiq2YUOriApKFtnm30SzGSo
+	 /zF+6o8kCIEOu7K3ucnHa4jEm+HbU2nnX6x514I2DEm39qb15jNTKkIDgbXDOJlyhU
+	 ibtBzXZ4xzVfCy7HpQmdlhTj5HdGIHxrPj6rQbsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.1 118/312] ext4: fix iloc.bh leak in ext4_fc_replay_inode() error paths
-Date: Wed,  8 Apr 2026 20:00:35 +0200
-Message-ID: <20260408175938.177076653@linuxfoundation.org>
+Subject: [PATCH 6.1 119/312] ext4: always drain queued discard work in ext4_mb_release()
+Date: Wed,  8 Apr 2026 20:00:36 +0200
+Message-ID: <20260408175938.213306110@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -54,84 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit ec0a7500d8eace5b4f305fa0c594dd148f0e8d29 upstream.
+commit 9ee29d20aab228adfb02ca93f87fb53c56c2f3af upstream.
 
-During code review, Joseph found that ext4_fc_replay_inode() calls
-ext4_get_fc_inode_loc() to get the inode location, which holds a
-reference to iloc.bh that must be released via brelse().
+While reviewing recent ext4 patch[1], Sashiko raised the following
+concern[2]:
 
-However, several error paths jump to the 'out' label without
-releasing iloc.bh:
+> If the filesystem is initially mounted with the discard option,
+> deleting files will populate sbi->s_discard_list and queue
+> s_discard_work. If it is then remounted with nodiscard, the
+> EXT4_MOUNT_DISCARD flag is cleared, but the pending s_discard_work is
+> neither cancelled nor flushed.
 
- - ext4_handle_dirty_metadata() failure
- - sync_dirty_buffer() failure
- - ext4_mark_inode_used() failure
- - ext4_iget() failure
+[1] https://lore.kernel.org/r/20260319094545.19291-1-qiang.zhang@linux.dev/
+[2] https://sashiko.dev/#/patchset/20260319094545.19291-1-qiang.zhang%40linux.dev
 
-Fix this by introducing an 'out_brelse' label placed just before
-the existing 'out' label to ensure iloc.bh is always released.
+The concern was valid, but it had nothing to do with the patch[1].
+One of the problems with Sashiko in its current (early) form is that
+it will detect pre-existing issues and report it as a problem with the
+patch that it is reviewing.
 
-Additionally, make ext4_fc_replay_inode() propagate errors
-properly instead of always returning 0.
+In practice, it would be hard to hit deliberately (unless you are a
+malicious syzkaller fuzzer), since it would involve mounting the file
+system with -o discard, and then deleting a large number of files,
+remounting the file system with -o nodiscard, and then immediately
+unmounting the file system before the queued discard work has a change
+to drain on its own.
 
-Reported-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260323060836.3452660-1-libaokun@linux.alibaba.com
+Fix it because it's a real bug, and to avoid Sashiko from raising this
+concern when analyzing future patches to mballoc.c.
+
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 55cdd0af2bc5 ("ext4: get discard out of jbd2 commit kthread contex")
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ fs/ext4/mballoc.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -1623,19 +1623,21 @@ static int ext4_fc_replay_inode(struct s
- 	/* Immediately update the inode on disk. */
- 	ret = ext4_handle_dirty_metadata(NULL, NULL, iloc.bh);
- 	if (ret)
--		goto out;
-+		goto out_brelse;
- 	ret = sync_dirty_buffer(iloc.bh);
- 	if (ret)
--		goto out;
-+		goto out_brelse;
- 	ret = ext4_mark_inode_used(sb, ino);
- 	if (ret)
--		goto out;
-+		goto out_brelse;
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3591,13 +3591,11 @@ int ext4_mb_release(struct super_block *
+ 	struct kmem_cache *cachep = get_groupinfo_cache(sb->s_blocksize_bits);
+ 	int count;
  
- 	/* Given that we just wrote the inode on disk, this SHOULD succeed. */
- 	inode = ext4_iget(sb, ino, EXT4_IGET_NORMAL);
- 	if (IS_ERR(inode)) {
- 		ext4_debug("Inode not found.");
--		return -EFSCORRUPTED;
-+		inode = NULL;
-+		ret = -EFSCORRUPTED;
-+		goto out_brelse;
- 	}
+-	if (test_opt(sb, DISCARD)) {
+-		/*
+-		 * wait the discard work to drain all of ext4_free_data
+-		 */
+-		flush_work(&sbi->s_discard_work);
+-		WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
+-	}
++	/*
++	 * wait the discard work to drain all of ext4_free_data
++	 */
++	flush_work(&sbi->s_discard_work);
++	WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
  
- 	/*
-@@ -1652,13 +1654,14 @@ static int ext4_fc_replay_inode(struct s
- 	ext4_inode_csum_set(inode, ext4_raw_inode(&iloc), EXT4_I(inode));
- 	ret = ext4_handle_dirty_metadata(NULL, NULL, iloc.bh);
- 	sync_dirty_buffer(iloc.bh);
-+out_brelse:
- 	brelse(iloc.bh);
- out:
- 	iput(inode);
- 	if (!ret)
- 		blkdev_issue_flush(sb->s_bdev);
- 
--	return 0;
-+	return ret;
- }
- 
- /*
+ 	if (sbi->s_group_info) {
+ 		for (i = 0; i < ngroups; i++) {
 
 
