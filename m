@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411E22727F3;
-	Wed,  8 Apr 2026 18:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD68825A321;
+	Wed,  8 Apr 2026 18:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674335; cv=none; b=dOstBI1pG0L3Ci2Xvk6vgT7dOKyw5K0bak7j9O3MHlyhMpORcdMLNz6ilyLUw9Qlb3ENCMN+w9pf4YRx6tLmbmzhfphLoVbbrqABLEIMZrxkMBkvH0sOd3cOhweuKHlM/6rmmDp2OgjkN1dAUKP0AUB4LY2+2VE27E7FWdETsLo=
+	t=1775674337; cv=none; b=ou/IitrGceLc28xGmQo1MQ8JvojMrRmVBG1ZoNYL726eyFXKwhQu0n0ni4QDcqZ8mh0vYlEE/JIblwl7othBeLT9XF6f9flWWNhsz+X59B1+71VrEphc7GdXziGmeIM5RXcTjNwd0RWcb16Xtq/0uZMBzS2RL7b7UTYjb2lXXSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674335; c=relaxed/simple;
-	bh=D4Wt2TPJ/beOUs6eWayXc/vPs4Nww0PGLz61mbJfnJo=;
+	s=arc-20240116; t=1775674337; c=relaxed/simple;
+	bh=XSCCostlxw4oMMDlw3KPQfCo2OAS6i6crTn2bguWgeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmusoSrIw75DDIaZEewXfb0SrSegT4zhXvuBbbfQIK9LBPPYOJmtbVKkpMNuhzfCoMN0vVdMa6tRqHG6ZCHJYVr3ZFjYBSxYsZ7Nan4LqDaWW0nJNZTthU3Rya1wgkWpJGB/+5Ge1W9uHOWk0XxuLrn1Ik+6Wo7URfijf90wgQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGYrMuVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rdCj78bN+tXehVomOMIBIdX++Pp3Jn4H2CJaGxhnHZXkUVTVp858NZxwpRppQqMWgMLp8Y7pQAT78XScy0sZWkYwFKNvk+tFJ/d0xbGhNbbtJRcWqlqJIxwEu2x7M4n6Ssq+0415od8o4EtOCNdlgvBNkLeDJmGF5EoH+YAq6TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJPGsR5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGYrMuVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA223C19421;
-	Wed,  8 Apr 2026 18:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJPGsR5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BA2C19421;
+	Wed,  8 Apr 2026 18:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674335;
-	bh=D4Wt2TPJ/beOUs6eWayXc/vPs4Nww0PGLz61mbJfnJo=;
+	s=korg; t=1775674337;
+	bh=XSCCostlxw4oMMDlw3KPQfCo2OAS6i6crTn2bguWgeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGYrMuVdQxcBDCSsQS3Pr8q0fP7x6v4p+lNGzvT3bQ3901n0Zn25yo37JaXC81UHg
-	 bQSMLw8sokbZQEhruzglGlGNGeuMfIXRC7v+4LSXPrWl7P1DrdjfYiS+ntyJgTvVds
-	 H7nRFXOJ0YeYbLjR888KH2wqmP6Ir/0j8gfmFv+A=
+	b=PJPGsR5l6UI3eXdZEvMBF6ufGUHbnZFcMRXDW1Eo2r1KTILmGHngk0+zA+j1YyI94
+	 82eZdlnDkaKenHRxmmVvJQtsccmhUyqGOUvX4xRSQCzLfrwMwYIalwZtdGKF/Q1M5d
+	 AC7f+kZiDLhZ5R8OBp7CvKAFreSPWFzSxFZYaoCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 057/311] net/sched: sch_hfsc: fix divide-by-zero in rtsc_min()
-Date: Wed,  8 Apr 2026 20:00:57 +0200
-Message-ID: <20260408175941.544864894@linuxfoundation.org>
+Subject: [PATCH 6.19 058/311] net: sfp: Fix Ubiquiti U-Fiber Instant SFP module on mvneta
+Date: Wed,  8 Apr 2026 20:00:58 +0200
+Message-ID: <20260408175941.582818480@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -47,66 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 4576100b8cd03118267513cafacde164b498b322 ]
+[ Upstream commit eeee5a710f26ce57807024ef330fe5a850eaecd8 ]
 
-m2sm() converts a u32 slope to a u64 scaled value.  For large inputs
-(e.g. m1=4000000000), the result can reach 2^32.  rtsc_min() stores
-the difference of two such u64 values in a u32 variable `dsm` and
-uses it as a divisor.  When the difference is exactly 2^32 the
-truncation yields zero, causing a divide-by-zero oops in the
-concave-curve intersection path:
+In commit 8110633db49d7de2 ("net: sfp-bus: allow SFP quirks to override
+Autoneg and pause bits") we moved the setting of Autoneg and pause bits
+before the call to SFP quirk when parsing SFP module support.
 
-  Oops: divide error: 0000
-  RIP: 0010:rtsc_min (net/sched/sch_hfsc.c:601)
-  Call Trace:
-   init_ed (net/sched/sch_hfsc.c:629)
-   hfsc_enqueue (net/sched/sch_hfsc.c:1569)
-   [...]
+Since the quirk for Ubiquiti U-Fiber Instant SFP module zeroes the
+support bits and sets 1000baseX_Full only, the above mentioned commit
+changed the overall computed support from
+  1000baseX_Full, Autoneg, Pause, Asym_Pause
+to just
+  1000baseX_Full.
 
-Widen `dsm` to u64 and replace do_div() with div64_u64() so the full
-difference is preserved.
+This broke the SFP module for mvneta, which requires Autoneg for
+1000baseX since commit c762b7fac1b249a9 ("net: mvneta: deny disabling
+autoneg for 802.3z modes").
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260326204310.1549327-1-xmei5@asu.edu
+Fix this by setting back the Autoneg, Pause and Asym_Pause bits in the
+quirk.
+
+Fixes: 8110633db49d7de2 ("net: sfp-bus: allow SFP quirks to override Autoneg and pause bits")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20260326122038.2489589-1-kabel@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/sfp.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index d8fd35da32a7c..57221522fe56d 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -555,7 +555,7 @@ static void
- rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index ca09925335725..7a85b758fb1e6 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -480,11 +480,16 @@ static void sfp_quirk_ubnt_uf_instant(const struct sfp_eeprom_id *id,
  {
- 	u64 y1, y2, dx, dy;
--	u32 dsm;
-+	u64 dsm;
- 
- 	if (isc->sm1 <= isc->sm2) {
- 		/* service curve is convex */
-@@ -598,7 +598,7 @@ rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
+ 	/* Ubiquiti U-Fiber Instant module claims that support all transceiver
+ 	 * types including 10G Ethernet which is not truth. So clear all claimed
+-	 * modes and set only one mode which module supports: 1000baseX_Full.
++	 * modes and set only one mode which module supports: 1000baseX_Full,
++	 * along with the Autoneg and pause bits.
  	 */
- 	dx = (y1 - y) << SM_SHIFT;
- 	dsm = isc->sm1 - isc->sm2;
--	do_div(dx, dsm);
-+	dx = div64_u64(dx, dsm);
- 	/*
- 	 * check if (x, y1) belongs to the 1st segment of rtsc.
- 	 * if so, add the offset.
+ 	linkmode_zero(caps->link_modes);
+ 	linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
+ 			 caps->link_modes);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, caps->link_modes);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_Pause_BIT, caps->link_modes);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT, caps->link_modes);
++
+ 	phy_interface_zero(caps->interfaces);
+ 	__set_bit(PHY_INTERFACE_MODE_1000BASEX, caps->interfaces);
+ }
 -- 
 2.53.0
 
