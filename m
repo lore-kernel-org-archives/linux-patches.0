@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753883D9DA5;
-	Wed,  8 Apr 2026 18:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106293D75C9;
+	Wed,  8 Apr 2026 18:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674497; cv=none; b=FPOcFg4azB8v1KlbjdcpcwJ0hZldD/NHUo5Db02xhQX6ZH8jpjlieeuwCZ1fy2G6nT7Kc+lG0/dXXQ01NLyTo1QPPFeWwogWEnFwpKB9BsgVxqSgl9rz6AzVN+SQGR3AbISmLLAEiCbnqlgGjhrLdzoPDfg+aanSBYtIl7bWnWs=
+	t=1775674500; cv=none; b=gPXboH8UQcUI0XPePs7oDIVADWkmM2kZPyRwKe7QlTbooVUnQ1Tb3ljp20RikEsTtVX12sM2ANVqy0r5syQSRLgrXFdYzlSnt9cog9t8RVPe2uTzCbGA77oYpr9N8ErWZmqNkDywUm4HgRbBpb9RLLqMI1/PzXO6sxslQj4CYx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674497; c=relaxed/simple;
-	bh=FfwSmCIbN6y2+5vT/wrjsaIQH3x6K17+BOGuE/g3N1w=;
+	s=arc-20240116; t=1775674500; c=relaxed/simple;
+	bh=5dkvnvoWhUeAakwmhsxzpHkmx8VvEcumOu2CUDPdPuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cc34qKUJFkyQQzc8TRGyQvKylGP32TiA0gmdt+O70h+oNhefoHjaLtw5NEzECUybFGHsnh2RSlkZ3/jR08Om5uFztJRbSyosG34I+y349lAuPnCx737NjpL5rB4QlioZdj8IZBOdC4FXblQk7oPTxJ0pzaZJuSVSqh8qXonEdyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCB/jVnl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1ShQNkO+jIlMQivxNwEGPO3cEf2Gf0Q7x1TJtXV6TbZt9J1ks4bxecs6sqheT1c3PDYhHe+PC2UCcxIb32IsWefRJgWtai18SR6G6qMu4iL37SbcaPKdWklTYhV8fLlPIQ3YTBzynK75bRxf+o+8QS8ZJajJRC0Ycev3Vy0YAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQyy9fb1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCB/jVnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC52C2BC87;
-	Wed,  8 Apr 2026 18:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQyy9fb1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96698C19421;
+	Wed,  8 Apr 2026 18:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674497;
-	bh=FfwSmCIbN6y2+5vT/wrjsaIQH3x6K17+BOGuE/g3N1w=;
+	s=korg; t=1775674499;
+	bh=5dkvnvoWhUeAakwmhsxzpHkmx8VvEcumOu2CUDPdPuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCB/jVnl2IdGOL0qegwXE3aHreJ9ZXwwnaOh7YVHfGDojrlRzmwBId2yjpOTFpaNj
-	 VhM2vpJE+418y4oXpc7M84kIUAnTn1Siu/O/uR0mscDR4FW544F1H2eHJW15F2q4in
-	 rYVLnwm2WsEH8wkmOCcvYLua6vcv1jSDBJob8Fi0=
+	b=QQyy9fb1mkt4jD7nth4wOeELGOT9EEonO6bJneAfLn5lSRJZ1s5E74/E0oso/zmu/
+	 JBl53F4lNydCXTRKaZU22JzEI/qTqqqIzNXHKDxdAzDYWrIUHPYnLMUnC9qr6TLRTB
+	 aTzeOk3Q/VF++YaL7xY9sNe7lzIs8txwnot0hdJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 103/311] Bluetooth: hci_conn: fix potential UAF in set_cig_params_sync
-Date: Wed,  8 Apr 2026 20:01:43 +0200
-Message-ID: <20260408175943.260350722@linuxfoundation.org>
+Subject: [PATCH 6.19 121/311] net: hsr: fix VLAN add unwind on slave errors
+Date: Wed,  8 Apr 2026 20:02:01 +0200
+Message-ID: <20260408175943.934757109@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,53 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Luka Gejak <luka.gejak@linux.dev>
 
-[ Upstream commit a2639a7f0f5bf7d73f337f8f077c19415c62ed2c ]
+[ Upstream commit 2e3514e63bfb0e972b1f19668547a455d0129e88 ]
 
-hci_conn lookup and field access must be covered by hdev lock in
-set_cig_params_sync, otherwise it's possible it is freed concurrently.
+When vlan_vid_add() fails for a secondary slave, the error path calls
+vlan_vid_del() on the failing port instead of the peer slave that had
+already succeeded. This results in asymmetric VLAN state across the HSR
+pair.
 
-Take hdev lock to prevent hci_conn from being deleted or modified
-concurrently.  Just RCU lock is not suitable here, as we also want to
-avoid "tearing" in the configuration.
+Fix this by switching to a centralized unwind path that removes the VID
+from any slave device that was already programmed.
 
-Fixes: a091289218202 ("Bluetooth: hci_conn: Fix hci_le_set_cig_params")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 1a8a63a5305e ("net: hsr: Add VLAN CTAG filter support")
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
+Link: https://patch.msgid.link/20260401092243.52121-3-luka.gejak@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/hsr/hsr_device.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 48aaccd35954a..a966d36d0e798 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1843,9 +1843,13 @@ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
- 	u8 aux_num_cis = 0;
- 	u8 cis_id;
- 
-+	hci_dev_lock(hdev);
-+
- 	conn = hci_conn_hash_lookup_cig(hdev, cig_id);
--	if (!conn)
-+	if (!conn) {
-+		hci_dev_unlock(hdev);
- 		return 0;
-+	}
- 
- 	qos = &conn->iso_qos;
- 	pdu->cig_id = cig_id;
-@@ -1884,6 +1888,8 @@ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index d1bfc49b5f017..fd2fea25eff0d 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -532,8 +532,8 @@ static void hsr_change_rx_flags(struct net_device *dev, int change)
+ static int hsr_ndo_vlan_rx_add_vid(struct net_device *dev,
+ 				   __be16 proto, u16 vid)
+ {
+-	bool is_slave_a_added = false;
+-	bool is_slave_b_added = false;
++	struct net_device *slave_a_dev = NULL;
++	struct net_device *slave_b_dev = NULL;
+ 	struct hsr_port *port;
+ 	struct hsr_priv *hsr;
+ 	int ret = 0;
+@@ -549,33 +549,35 @@ static int hsr_ndo_vlan_rx_add_vid(struct net_device *dev,
+ 		switch (port->type) {
+ 		case HSR_PT_SLAVE_A:
+ 			if (ret) {
+-				/* clean up Slave-B */
+ 				netdev_err(dev, "add vid failed for Slave-A\n");
+-				if (is_slave_b_added)
+-					vlan_vid_del(port->dev, proto, vid);
+-				return ret;
++				goto unwind;
+ 			}
+-
+-			is_slave_a_added = true;
++			slave_a_dev = port->dev;
+ 			break;
+-
+ 		case HSR_PT_SLAVE_B:
+ 			if (ret) {
+-				/* clean up Slave-A */
+ 				netdev_err(dev, "add vid failed for Slave-B\n");
+-				if (is_slave_a_added)
+-					vlan_vid_del(port->dev, proto, vid);
+-				return ret;
++				goto unwind;
+ 			}
+-
+-			is_slave_b_added = true;
++			slave_b_dev = port->dev;
+ 			break;
+ 		default:
++			if (ret)
++				goto unwind;
+ 			break;
+ 		}
  	}
- 	pdu->num_cis = aux_num_cis;
  
-+	hci_dev_unlock(hdev);
+ 	return 0;
 +
- 	if (!pdu->num_cis)
- 		return 0;
++unwind:
++	if (slave_a_dev)
++		vlan_vid_del(slave_a_dev, proto, vid);
++
++	if (slave_b_dev)
++		vlan_vid_del(slave_b_dev, proto, vid);
++
++	return ret;
+ }
  
+ static int hsr_ndo_vlan_rx_kill_vid(struct net_device *dev,
 -- 
 2.53.0
 
