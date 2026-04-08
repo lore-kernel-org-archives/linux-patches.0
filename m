@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF65C3D903F;
-	Wed,  8 Apr 2026 18:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B95B34AB06;
+	Wed,  8 Apr 2026 18:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674536; cv=none; b=X4YqgBCY5HKREEaaY90uJ3CxkUkmkVcjfwRUg+78ns+WLmg197Y3HpO2xN4LcBcjfTTpSfJ1S8Q89P+U7HhVUmE0dyLona60EwAgUlviB1l81JRnHQDUVDdDmE2mSwA8+2QV4SWlz+l83LlPAdlZmeB6lmvdtwBcqptOnzg0XtA=
+	t=1775674538; cv=none; b=S9iRhlrhZxt56OerNNmzGIl0XgnAD+5IO36BAYqD3l6uNtO8f0myi9OgYtTqU0HuX7Yad9PBvfKzHKTebMIly9gIpLfz1L4jGDFWVdAQDuKmu+KrFdwrYky/iIPtWwsBt6bEe3U3AVMjmL0E0cCVt51D7jcMZh1LP1cwuDKhJwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674536; c=relaxed/simple;
-	bh=2ai167v6h4M3yl7d8vxSKyfNrtaDd/mHe34hyeaFyVg=;
+	s=arc-20240116; t=1775674538; c=relaxed/simple;
+	bh=5+9+tJy/6wf0SbFfIxDN3vIBRMmxct2A43l3PbRJdiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e2vAh8uXZad5clltZxNDj4JyQwJWqaKfP56gIXNWqt3PxG+TQCH6gxim5vd1o1W7SjhWVftQcvbM4lPkHcgfjxWmEWAQ3kZs02geX9gRD7lbVe+hQL+LL9vqR9UGa103SeBtB1Dhy6GQXJolUyok+vOd7KKlm0uQ23KvlxXewbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiQH5JmD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EHmMXQBaFq8lJhS2cKCU71MJuJbkTR3RVpGGZDCGcTFju3CBSZ+jbfAmyf+asj6oaKahkX9DF5XzRAsOotnHshk54kN6A/ayHC2b/LyYp7EkJxzjQNbvgT/0Jkgr8/xDbYTDlf9w0jPfmTkN1IQKbXyHKWhpjB+Zp8pvuZTROCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ka8VhwZe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiQH5JmD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862A1C19421;
-	Wed,  8 Apr 2026 18:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ka8VhwZe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214F2C19421;
+	Wed,  8 Apr 2026 18:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674535;
-	bh=2ai167v6h4M3yl7d8vxSKyfNrtaDd/mHe34hyeaFyVg=;
+	s=korg; t=1775674538;
+	bh=5+9+tJy/6wf0SbFfIxDN3vIBRMmxct2A43l3PbRJdiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hiQH5JmDQDGWmGBmDFSjF+dDDGL6DXAuWtsQd9KdRE6ezDwDiTJM06Aqk3pODrGvP
-	 2eeNUFV/VzZ+3V9B66fqmNZM1VaRT5NowabFXc+7YEKEpEeGECSsSyJxp2O/KmmfnH
-	 1k7ftrk2Cg1154ybS/cT/d/F/ZwKT7xnNQzGJ7aE=
+	b=Ka8VhwZeXwfA+i30O4vTv4fx3q/ddsF2zZmP593TLUFHHOz0Yu4agRLfqLDbZXh/R
+	 +uVlVHuEA9rb/O/iXlFr7zs51nDxOa+oEPSb1yAljtrruKLglW71haVBT6voHRJ1hw
+	 6YY4+8+fpzrQlC4KrPEeSIOx4Ujdo3zYmiNQRIEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 134/311] drm/bridge: Fix refcount shown via debugfs for encoder_bridges_show()
-Date: Wed,  8 Apr 2026 20:02:14 +0200
-Message-ID: <20260408175944.420164801@linuxfoundation.org>
+Subject: [PATCH 6.19 135/311] accel/qaic: Handle DBC deactivation if the owner went away
+Date: Wed,  8 Apr 2026 20:02:15 +0200
+Message-ID: <20260408175944.456505307@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,80 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Ying <victor.liu@nxp.com>
+From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 
-[ Upstream commit f078634c184a9b5ccaa056e8b8d6cd32f7bff1b6 ]
+[ Upstream commit 2feec5ae5df785658924ab6bd91280dc3926507c ]
 
-A typical bridge refcount value is 3 after a bridge chain is formed:
-- devm_drm_bridge_alloc() initializes the refcount value to be 1.
-- drm_bridge_add() gets an additional reference hence 2.
-- drm_bridge_attach() gets the third reference hence 3.
+When a DBC is released, the device sends a QAIC_TRANS_DEACTIVATE_FROM_DEV
+transaction to the host over the QAIC_CONTROL MHI channel. QAIC handles
+this by calling decode_deactivate() to release the resources allocated for
+that DBC. Since that handling is done in the qaic_manage_ioctl() context,
+if the user goes away before receiving and handling the deactivation, the
+host will be out-of-sync with the DBCs available for use, and the DBC
+resources will not be freed unless the device is removed. If another user
+loads and requests to activate a network, then the device assigns the same
+DBC to that network, QAIC will "indefinitely" wait for dbc->in_use = false,
+leading the user process to hang.
 
-This typical refcount value aligns with allbridges_show()'s behaviour.
-However, since encoder_bridges_show() uses
-drm_for_each_bridge_in_chain_scoped() to automatically get/put the
-bridge reference while iterating, a bogus reference is accidentally
-got when showing the wrong typical refcount value as 4 to users via
-debugfs.  Fix this by caching the refcount value returned from
-kref_read() while iterating and explicitly decreasing the cached
-refcount value by 1 before showing it to users.
+As a solution to this, handle QAIC_TRANS_DEACTIVATE_FROM_DEV transactions
+that are received after the user has gone away.
 
-Fixes: bd57048e4576 ("drm/bridge: use drm_for_each_bridge_in_chain_scoped()")
-Signed-off-by: Liu Ying <victor.liu@nxp.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260318-drm-misc-next-2026-03-05-fix-encoder-bridges-refcount-v3-1-147fea581279@nxp.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 129776ac2e38 ("accel/qaic: Add control path")
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260205123415.3870898-1-youssef.abdulrahman@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_bridge.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/accel/qaic/qaic_control.c | 47 +++++++++++++++++++++++++++++--
+ 1 file changed, 45 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index 8f355df883d8a..250bf8fa51677 100644
---- a/drivers/gpu/drm/drm_bridge.c
-+++ b/drivers/gpu/drm/drm_bridge.c
-@@ -1465,11 +1465,17 @@ EXPORT_SYMBOL(devm_drm_put_bridge);
- static void drm_bridge_debugfs_show_bridge(struct drm_printer *p,
- 					   struct drm_bridge *bridge,
- 					   unsigned int idx,
--					   bool lingering)
-+					   bool lingering,
-+					   bool scoped)
- {
-+	unsigned int refcount = kref_read(&bridge->refcount);
+diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
+index 428d8f65bff36..3842e59291b93 100644
+--- a/drivers/accel/qaic/qaic_control.c
++++ b/drivers/accel/qaic/qaic_control.c
+@@ -913,7 +913,7 @@ static int decode_deactivate(struct qaic_device *qdev, void *trans, u32 *msg_len
+ 		 */
+ 		return -ENODEV;
+ 
+-	if (status) {
++	if (usr && status) {
+ 		/*
+ 		 * Releasing resources failed on the device side, which puts
+ 		 * us in a bind since they may still be in use, so enable the
+@@ -1108,6 +1108,9 @@ static void *msg_xfer(struct qaic_device *qdev, struct wrapper_list *wrappers, u
+ 	mutex_lock(&qdev->cntl_mutex);
+ 	if (!list_empty(&elem.list))
+ 		list_del(&elem.list);
++	/* resp_worker() processed the response but the wait was interrupted */
++	else if (ret == -ERESTARTSYS)
++		ret = 0;
+ 	if (!ret && !elem.buf)
+ 		ret = -ETIMEDOUT;
+ 	else if (ret > 0 && !elem.buf)
+@@ -1418,9 +1421,49 @@ static void resp_worker(struct work_struct *work)
+ 	}
+ 	mutex_unlock(&qdev->cntl_mutex);
+ 
+-	if (!found)
++	if (!found) {
++		/*
++		 * The user might have gone away at this point without waiting
++		 * for QAIC_TRANS_DEACTIVATE_FROM_DEV transaction coming from
++		 * the device. If this is not handled correctly, the host will
++		 * not know that the DBC[n] has been freed on the device.
++		 * Due to this failure in synchronization between the device and
++		 * the host, if another user requests to activate a network, and
++		 * the device assigns DBC[n] again, save_dbc_buf() will hang,
++		 * waiting for dbc[n]->in_use to be set to false, which will not
++		 * happen unless the qaic_dev_reset_clean_local_state() gets
++		 * called by resetting the device (or re-inserting the module).
++		 *
++		 * As a solution, we look for QAIC_TRANS_DEACTIVATE_FROM_DEV
++		 * transactions in the message before disposing of it, then
++		 * handle releasing the DBC resources.
++		 *
++		 * Since the user has gone away, if the device could not
++		 * deactivate the network (status != 0), there is no way to
++		 * enable and reassign the DBC to the user. We can put trust in
++		 * the device that it will release all the active DBCs in
++		 * response to the QAIC_TRANS_TERMINATE_TO_DEV transaction,
++		 * otherwise, the user can issue an soc_reset to the device.
++		 */
++		u32 msg_count = le32_to_cpu(msg->hdr.count);
++		u32 msg_len = le32_to_cpu(msg->hdr.len);
++		u32 len = 0;
++		int j;
 +
-+	if (scoped)
-+		refcount--;
++		for (j = 0; j < msg_count && len < msg_len; ++j) {
++			struct wire_trans_hdr *trans_hdr;
 +
- 	drm_printf(p, "bridge[%u]: %ps\n", idx, bridge->funcs);
++			trans_hdr = (struct wire_trans_hdr *)(msg->data + len);
++			if (le32_to_cpu(trans_hdr->type) == QAIC_TRANS_DEACTIVATE_FROM_DEV) {
++				if (decode_deactivate(qdev, trans_hdr, &len, NULL))
++					len += le32_to_cpu(trans_hdr->len);
++			} else {
++				len += le32_to_cpu(trans_hdr->len);
++			}
++		}
+ 		/* request must have timed out, drop packet */
+ 		kfree(msg);
++	}
  
--	drm_printf(p, "\trefcount: %u%s\n", kref_read(&bridge->refcount),
-+	drm_printf(p, "\trefcount: %u%s\n", refcount,
- 		   lingering ? " [lingering]" : "");
- 
- 	drm_printf(p, "\ttype: [%d] %s\n",
-@@ -1503,10 +1509,10 @@ static int allbridges_show(struct seq_file *m, void *data)
- 	mutex_lock(&bridge_lock);
- 
- 	list_for_each_entry(bridge, &bridge_list, list)
--		drm_bridge_debugfs_show_bridge(&p, bridge, idx++, false);
-+		drm_bridge_debugfs_show_bridge(&p, bridge, idx++, false, false);
- 
- 	list_for_each_entry(bridge, &bridge_lingering_list, list)
--		drm_bridge_debugfs_show_bridge(&p, bridge, idx++, true);
-+		drm_bridge_debugfs_show_bridge(&p, bridge, idx++, true, false);
- 
- 	mutex_unlock(&bridge_lock);
- 
-@@ -1521,7 +1527,7 @@ static int encoder_bridges_show(struct seq_file *m, void *data)
- 	unsigned int idx = 0;
- 
- 	drm_for_each_bridge_in_chain_scoped(encoder, bridge)
--		drm_bridge_debugfs_show_bridge(&p, bridge, idx++, false);
-+		drm_bridge_debugfs_show_bridge(&p, bridge, idx++, false, true);
- 
- 	return 0;
+ 	kfree(resp);
  }
 -- 
 2.53.0
