@@ -1,40 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002A133121F;
-	Wed,  8 Apr 2026 18:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8166034AB06;
+	Wed,  8 Apr 2026 18:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674118; cv=none; b=G5CZDqrd1FRrH1jFTtZcxRJGX1wROGZzspjKCy9J+neTynKbV4lbOzCgIZeetSia3iAda63Lnc8zBlW9Tv57Uefjdz9ZouHoZKeEjz58T4Ct/+WqWQoj/ymHNV9z2TI/Cq21tslYEln2IfkRX/AbrVGkPmNMtfoxA6n5eG9ug0U=
+	t=1775674120; cv=none; b=Az3bnb1TQf8mjQo+C60UUlE+aLvdO25TNXNTnYEnnLpv+C3p+z8Y1LXdVyDwNt2TL9XtjMoeYnnyesYYK3Ss+VXsy+6W73sr6qzHbYBGJAQoNQKZJsxcljYn0XGnbYql2N/g9qVT5G0W62HWA6x0bIybGafua4F/1YxAi643FJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674118; c=relaxed/simple;
-	bh=Un9vnCqDHMzb5z12neur1JQRUCBqbC8t4QvjvwwI6/o=;
+	s=arc-20240116; t=1775674120; c=relaxed/simple;
+	bh=ObA3ryIffaJC5UirMvXga9HP6r38jKpJkMH6DZAA6Qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uUwxNCANG8mSuQXbTuEM9nkTuJI/dCI3sXoQQyZCV9Yg/7CVK/bMAL6Mbw/hysO3NK8SkkEq+aX54cTMUr+h3NXMdOLKUw33NiiO1aFSohNtiv/EvLb6gqZStzbkenHKVlGYNFGcp7KtW+rl1B8KtY9NEppA83dx59+aa7o6idY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNWufQeC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ovhorj8aRzq/t+S1T2L9ulhCzu84Id6Eqhs2zcuKMYRUU6JJxlYRD1FiULB7qvz7PxJX/grhibJHhXI8BdvJGf6oZfeYFXDSmIujNHDW1HGxvFsAXkZn+3I3AWTX6LuLtcs9ur4VaGJlmFFudd0VHEYHTTC19xY0Emg9OVn4/TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGh9TA1d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNWufQeC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A81AC19421;
-	Wed,  8 Apr 2026 18:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGh9TA1d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A2EC19425;
+	Wed,  8 Apr 2026 18:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674117;
-	bh=Un9vnCqDHMzb5z12neur1JQRUCBqbC8t4QvjvwwI6/o=;
+	s=korg; t=1775674120;
+	bh=ObA3ryIffaJC5UirMvXga9HP6r38jKpJkMH6DZAA6Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNWufQeCa/TXrLmmK/KN5RSk0t/+h/BTywmnoat7O4FQGkL6i6Jn32waikuWlYQ3A
-	 ry5KmiMUYdf8pQS4zHG006RdXYhIahMfL1AvlBE1zAZBEroE8qyS6lmENTcvckbtZe
-	 CPDgNJMXqnx99GVM//5nXSwSnt1mdbaHMwFlVvEI=
+	b=XGh9TA1dfFaH8hAF96iTWPNk96FHme5pH/EFb8BuTkXUxC6PLk5OROyo/ahWlUQkD
+	 1gqAY5w7DyO1euVnf7LaQdKpLG+v19tbwaiYegV2B2bfZCkAIIKXMAdxRwxstSAD+H
+	 ufNpJHYlMSkQKwjRYVJnItUjoQhuZNGeQVEdpxDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikunj A Dadhania <nikunj@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.12 217/242] x86/fred: Fix early boot failures on SEV-ES/SNP guests
-Date: Wed,  8 Apr 2026 20:04:17 +0200
-Message-ID: <20260408175935.204626092@linuxfoundation.org>
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 218/242] mm/huge_memory: fix folio isnt locked in softleaf_to_folio()
+Date: Wed,  8 Apr 2026 20:04:18 +0200
+Message-ID: <20260408175935.243020736@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,91 +62,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikunj A Dadhania <nikunj@amd.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit 3645eb7e3915990a149460c151a00894cb586253 ]
+[ Upstream commit 4c5e7f0fcd592801c9cc18f29f80fbee84eb8669 ]
 
-FRED-enabled SEV-(ES,SNP) guests fail to boot due to the following issues
-in the early boot sequence:
+On arm64 server, we found folio that get from migration entry isn't locked
+in softleaf_to_folio().  This issue triggers when mTHP splitting and
+zap_nonpresent_ptes() races, and the root cause is lack of memory barrier
+in softleaf_to_folio().  The race is as follows:
 
-* FRED does not have a #VC exception handler in the dispatch logic
+	CPU0                                             CPU1
 
-* Early FRED #VC exceptions attempt to use uninitialized per-CPU GHCBs
-  instead of boot_ghcb
+deferred_split_scan()                              zap_nonpresent_ptes()
+  lock folio
+  split_folio()
+    unmap_folio()
+      change ptes to migration entries
+    __split_folio_to_order()                         softleaf_to_folio()
+      set flags(including PG_locked) for tail pages    folio = pfn_folio(softleaf_to_pfn(entry))
+      smp_wmb()                                        VM_WARN_ON_ONCE(!folio_test_locked(folio))
+      prep_compound_page() for tail pages
 
-Add X86_TRAP_VC case to fred_hwexc() with a new exc_vmm_communication()
-function that provides the unified entry point FRED requires, dispatching
-to existing user/kernel handlers based on privilege level. The function is
-already declared via DECLARE_IDTENTRY_VC().
+In __split_folio_to_order(), smp_wmb() guarantees page flags of tail pages
+are visible before the tail page becomes non-compound.  smp_wmb() should
+be paired with smp_rmb() in softleaf_to_folio(), which is missed.  As a
+result, if zap_nonpresent_ptes() accesses migration entry that stores tail
+pfn, softleaf_to_folio() may see the updated compound_head of tail page
+before page->flags.
 
-Fix early GHCB access by falling back to boot_ghcb in
-__sev_{get,put}_ghcb() when per-CPU GHCBs are not yet initialized.
+This issue will trigger VM_WARN_ON_ONCE() in pfn_swap_entry_folio()
+because of the race between folio split and zap_nonpresent_ptes()
+leading to a folio incorrectly undergoing modification without a folio
+lock being held.
 
-Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>  # 6.12+
-Link: https://patch.msgid.link/20260318075654.1792916-4-nikunj@amd.com
-[ applied GHCB early-return changes to core.c instead of noinstr.c ]
+This is a BUG_ON() before commit 93976a20345b ("mm: eliminate further
+swapops predicates"), which in merged in v6.19-rc1.
+
+To fix it, add missing smp_rmb() if the softleaf entry is migration entry
+in softleaf_to_folio() and softleaf_to_page().
+
+[tujinjiang@huawei.com: update function name and comments]
+  Link: https://lkml.kernel.org/r/20260321075214.3305564-1-tujinjiang@huawei.com
+Link: https://lkml.kernel.org/r/20260319012541.4158561-1-tujinjiang@huawei.com
+Fixes: e9b61f19858a ("thp: reintroduce split_huge_page()")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ applied fix to swapops.h using old pfn_swap_entry/swp_entry_t naming ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/sev/core.c    |    6 ++++++
- arch/x86/entry/entry_fred.c |   14 ++++++++++++++
- 2 files changed, 20 insertions(+)
+ include/linux/swapops.h |   27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
---- a/arch/x86/coco/sev/core.c
-+++ b/arch/x86/coco/sev/core.c
-@@ -253,6 +253,9 @@ static noinstr struct ghcb *__sev_get_gh
- 
- 	WARN_ON(!irqs_disabled());
- 
-+	if (!sev_cfg.ghcbs_initialized)
-+		return boot_ghcb;
-+
- 	data = this_cpu_read(runtime_data);
- 	ghcb = &data->ghcb_page;
- 
-@@ -649,6 +652,9 @@ static noinstr void __sev_put_ghcb(struc
- 
- 	WARN_ON(!irqs_disabled());
- 
-+	if (!sev_cfg.ghcbs_initialized)
-+		return;
-+
- 	data = this_cpu_read(runtime_data);
- 	ghcb = &data->ghcb_page;
- 
---- a/arch/x86/entry/entry_fred.c
-+++ b/arch/x86/entry/entry_fred.c
-@@ -176,6 +176,16 @@ static noinstr void fred_extint(struct p
- 	}
+--- a/include/linux/swapops.h
++++ b/include/linux/swapops.h
+@@ -484,15 +484,29 @@ static inline int pte_none_mostly(pte_t
+ 	return pte_none(pte) || is_pte_marker(pte);
  }
  
-+#ifdef CONFIG_AMD_MEM_ENCRYPT
-+noinstr void exc_vmm_communication(struct pt_regs *regs, unsigned long error_code)
-+{
-+	if (user_mode(regs))
-+		return user_exc_vmm_communication(regs, error_code);
-+	else
-+		return kernel_exc_vmm_communication(regs, error_code);
-+}
-+#endif
-+
- static noinstr void fred_hwexc(struct pt_regs *regs, unsigned long error_code)
+-static inline struct page *pfn_swap_entry_to_page(swp_entry_t entry)
++static inline void swap_entry_migration_sync(swp_entry_t entry,
++		struct folio *folio)
  {
- 	/* Optimize for #PF. That's the only exception which matters performance wise */
-@@ -206,6 +216,10 @@ static noinstr void fred_hwexc(struct pt
- #ifdef CONFIG_X86_CET
- 	case X86_TRAP_CP: return exc_control_protection(regs, error_code);
- #endif
-+#ifdef CONFIG_AMD_MEM_ENCRYPT
-+	case X86_TRAP_VC: return exc_vmm_communication(regs, error_code);
-+#endif
-+
- 	default: return fred_bad_type(regs, error_code);
- 	}
+-	struct page *p = pfn_to_page(swp_offset_pfn(entry));
++	/*
++	 * Ensure we do not race with split, which might alter tail pages into new
++	 * folios and thus result in observing an unlocked folio.
++	 * This matches the write barrier in __split_folio_to_order().
++	 */
++	smp_rmb();
  
+ 	/*
+ 	 * Any use of migration entries may only occur while the
+ 	 * corresponding page is locked
+ 	 */
+-	BUG_ON(is_migration_entry(entry) && !PageLocked(p));
++	BUG_ON(!folio_test_locked(folio));
++}
++
++static inline struct page *pfn_swap_entry_to_page(swp_entry_t entry)
++{
++	struct page *p = pfn_to_page(swp_offset_pfn(entry));
++
++	if (is_migration_entry(entry))
++		swap_entry_migration_sync(entry, page_folio(p));
+ 
+ 	return p;
+ }
+@@ -501,11 +515,8 @@ static inline struct folio *pfn_swap_ent
+ {
+ 	struct folio *folio = pfn_folio(swp_offset_pfn(entry));
+ 
+-	/*
+-	 * Any use of migration entries may only occur while the
+-	 * corresponding folio is locked
+-	 */
+-	BUG_ON(is_migration_entry(entry) && !folio_test_locked(folio));
++	if (is_migration_entry(entry))
++		swap_entry_migration_sync(entry, folio);
+ 
+ 	return folio;
+ }
 
 
