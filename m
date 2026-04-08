@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57C1337B81;
-	Wed,  8 Apr 2026 18:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE9425A321;
+	Wed,  8 Apr 2026 18:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674198; cv=none; b=klRpXCXQuo/oI04Mb7pG6D1GDKiiJjQ1IIvdE192bFiqPhBU1gvlQTun2n0mxiIQXWWrfqTIxyWYPuq8DwBkewOd6SFNDK0IwvU/WoNUvzCSoNbsUHuMl5upkbA2usCWpVvhW+VY1TYYLK8uCFhUxDT3PIO5RUiuSFrXicmbjtk=
+	t=1775674201; cv=none; b=qdJw1i0gfhtDvybA5XBKSlrhJzpo2ENRDIyrCWEMlpQOToGAxilVxj+Dpx4oM8E++LXKUWYhyx09Z8qoXSSbLh17V8JSOqrBy7tTR5MISGVDi8Hme+8StdTQc8YGwFCurEMmZ8b/tZIYo4MLhaBu2JhmeZJs6rZyvqbMCS5dyC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674198; c=relaxed/simple;
-	bh=nz8bBU9H9ygZZHEOt1JIu81GEZAgEgm7207INAfEWxE=;
+	s=arc-20240116; t=1775674201; c=relaxed/simple;
+	bh=PyqLWYlWHOw2Bl2ZekQn+I51LDhohzHiL28ui6m87R4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7CLAQZUSGceZQ1l1aZmIHdjVPeIB8dROEvPgKE6Gnae7LQMqGcd/4za3I7Ijnyn+6JtvmH2f+ibmnnAZtQ9MyHe+FF8LoHDX2dvHfnuWYjKeoRsFQCbbQaNjXliwhKPduP87jZMuOmAveli91oaPp21gwVApDjWb3cgR0u5oZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQjMg3SK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ItasCdL58du9IokCWkDLpVQaSGKY3R0wxL6plq8h3cHVxqCfiAz8xhChdpAVqNrpa71JS/ci9mFS99sSLCkJsOC6n7eyPFY2h7M6QqRbwm0HmQZwe6PHrXleKmZbW+NUXgi75MAs07gnBz4tj+6Q5IdzEPFoob73E3uAp+JbcJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1xvpgbJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQjMg3SK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C18AC19421;
-	Wed,  8 Apr 2026 18:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1xvpgbJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4561C19421;
+	Wed,  8 Apr 2026 18:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674198;
-	bh=nz8bBU9H9ygZZHEOt1JIu81GEZAgEgm7207INAfEWxE=;
+	s=korg; t=1775674201;
+	bh=PyqLWYlWHOw2Bl2ZekQn+I51LDhohzHiL28ui6m87R4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQjMg3SKmRPQ+SCB1zGJT/UgJUXjwr2wKBHy1o4QJ33VHrOZ2c435Q+ur6CEU8QI8
-	 fSlUoRo25iO2wBUgXOTbvTKL4PdYiwztl+bHA/dZSDJOj6dj95F3RpcQ0QoqgdD+MS
-	 KuqPtTC0uBHGsMy5NmKZi5ijzX+jptQ3SpN2HwSw=
+	b=F1xvpgbJZhid8ckTPWEzNb/9dfEPNJYL4bLH09FBC+gj5Gx6cGrEOGSH4RSfsAIpM
+	 aDpNzOTy0acO+BsxUf3aHdPN4AtEwo2OAt+W8RYZ39hojxLBXv3Ge3nAYtl9Y/0wu6
+	 xI741JXFI9Nbiei/D8NWHvmGWw920P5yrxLx9oos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andrea Righi <arighi@nvidia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 240/242] bpf: Add third round of bounds deduction
-Date: Wed,  8 Apr 2026 20:04:40 +0200
-Message-ID: <20260408175936.087726108@linuxfoundation.org>
+	Alexei Starovoitov <ast@kernel.org>,
+	Paul Chaignon <paul.chaignon@gmail.com>
+Subject: [PATCH 6.12 241/242] bpf: Fix u32/s32 bounds when ranges cross min/max boundary
+Date: Wed,  8 Apr 2026 20:04:41 +0200
+Message-ID: <20260408175936.124866499@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -45,95 +48,199 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 5dbb19b16ac498b0b7f3a8a85f9d25d6d8af397d ]
+[ Upstream commit fbc7aef517d8765e4c425d2792409bb9bf2e1f13 ]
 
-Commit d7f008738171 ("bpf: try harder to deduce register bounds from
-different numeric domains") added a second call to __reg_deduce_bounds
-in reg_bounds_sync because a single call wasn't enough to converge to a
-fixed point in terms of register bounds.
+Same as in __reg64_deduce_bounds(), refine s32/u32 ranges
+in __reg32_deduce_bounds() in the following situations:
 
-With patch "bpf: Improve bounds when s64 crosses sign boundary" from
-this series, Eduard noticed that calling __reg_deduce_bounds twice isn't
-enough anymore to converge. The first selftest added in "selftests/bpf:
-Test cross-sign 64bits range refinement" highlights the need for a third
-call to __reg_deduce_bounds. After instruction 7, reg_bounds_sync
-performs the following bounds deduction:
+- s32 range crosses U32_MAX/0 boundary, positive part of the s32 range
+  overlaps with u32 range:
 
-  reg_bounds_sync entry:          scalar(smin=-655,smax=0xeffffeee,smin32=-783,smax32=-146)
-  __update_reg_bounds:            scalar(smin=-655,smax=0xeffffeee,smin32=-783,smax32=-146)
-  __reg_deduce_bounds:
-      __reg32_deduce_bounds:      scalar(smin=-655,smax=0xeffffeee,smin32=-783,smax32=-146,umin32=0xfffffcf1,umax32=0xffffff6e)
-      __reg64_deduce_bounds:      scalar(smin=-655,smax=0xeffffeee,smin32=-783,smax32=-146,umin32=0xfffffcf1,umax32=0xffffff6e)
-      __reg_deduce_mixed_bounds:  scalar(smin=-655,smax=0xeffffeee,umin=umin32=0xfffffcf1,umax=0xffffffffffffff6e,smin32=-783,smax32=-146,umax32=0xffffff6e)
-  __reg_deduce_bounds:
-      __reg32_deduce_bounds:      scalar(smin=-655,smax=0xeffffeee,umin=umin32=0xfffffcf1,umax=0xffffffffffffff6e,smin32=-783,smax32=-146,umax32=0xffffff6e)
-      __reg64_deduce_bounds:      scalar(smin=-655,smax=smax32=-146,umin=0xfffffffffffffd71,umax=0xffffffffffffff6e,smin32=-783,umin32=0xfffffcf1,umax32=0xffffff6e)
-      __reg_deduce_mixed_bounds:  scalar(smin=-655,smax=smax32=-146,umin=0xfffffffffffffd71,umax=0xffffffffffffff6e,smin32=-783,umin32=0xfffffcf1,umax32=0xffffff6e)
-  __reg_bound_offset:             scalar(smin=-655,smax=smax32=-146,umin=0xfffffffffffffd71,umax=0xffffffffffffff6e,smin32=-783,umin32=0xfffffcf1,umax32=0xffffff6e,var_off=(0xfffffffffffffc00; 0x3ff))
-  __update_reg_bounds:            scalar(smin=-655,smax=smax32=-146,umin=0xfffffffffffffd71,umax=0xffffffffffffff6e,smin32=-783,umin32=0xfffffcf1,umax32=0xffffff6e,var_off=(0xfffffffffffffc00; 0x3ff))
+  0                                                   U32_MAX
+  |  [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]              |
+  |----------------------------|----------------------------|
+  |xxxxx s32 range xxxxxxxxx]                       [xxxxxxx|
+  0                     S32_MAX S32_MIN                    -1
 
-In particular, notice how:
-1. In the first call to __reg_deduce_bounds, __reg32_deduce_bounds
-   learns new u32 bounds.
-2. __reg64_deduce_bounds is unable to improve bounds at this point.
-3. __reg_deduce_mixed_bounds derives new u64 bounds from the u32 bounds.
-4. In the second call to __reg_deduce_bounds, __reg64_deduce_bounds
-   improves the smax and umin bounds thanks to patch "bpf: Improve
-   bounds when s64 crosses sign boundary" from this series.
-5. Subsequent functions are unable to improve the ranges further (only
-   tnums). Yet, a better smin32 bound could be learned from the smin
-   bound.
+- s32 range crosses U32_MAX/0 boundary, negative part of the s32 range
+  overlaps with u32 range:
 
-__reg32_deduce_bounds is able to improve smin32 from smin, but for that
-we need a third call to __reg_deduce_bounds.
+  0                                                   U32_MAX
+  |              [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]  |
+  |----------------------------|----------------------------|
+  |xxxxxxxxx]                       [xxxxxxxxxxxx s32 range |
+  0                     S32_MAX S32_MIN                    -1
 
-As discussed in [1], there may be a better way to organize the deduction
-rules to learn the same information with less calls to the same
-functions. Such an optimization requires further analysis and is
-orthogonal to the present patchset.
+- No refinement if ranges overlap in two intervals.
 
-Link: https://lore.kernel.org/bpf/aIKtSK9LjQXB8FLY@mail.gmail.com/ [1]
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Co-developed-by: Eduard Zingerman <eddyz87@gmail.com>
+This helps for e.g. consider the following program:
+
+   call %[bpf_get_prandom_u32];
+   w0 &= 0xffffffff;
+   if w0 < 0x3 goto 1f;    // on fall-through u32 range [3..U32_MAX]
+   if w0 s> 0x1 goto 1f;   // on fall-through s32 range [S32_MIN..1]
+   if w0 s< 0x0 goto 1f;   // range can be narrowed to  [S32_MIN..-1]
+   r10 = 0;
+1: ...;
+
+The reg_bounds.c selftest is updated to incorporate identical logic,
+refinement based on non-overflowing range halves:
+
+  ((x ∩ [0, smax]) ∩ (y ∩ [0, smax])) ∪
+  ((x ∩ [smin,-1]) ∩ (y ∩ [smin,-1]))
+
+Reported-by: Andrea Righi <arighi@nvidia.com>
+Reported-by: Emil Tsalapatis <emil@etsalapatis.com>
+Closes: https://lore.kernel.org/bpf/aakqucg4vcujVwif@gpd4/T/
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/79619d3b42e5525e0e174ed534b75879a5ba15de.1753695655.git.paul.chaignon@gmail.com
+Link: https://lore.kernel.org/r/20260306-bpf-32-bit-range-overflow-v3-1-f7f67e060a6b@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c                               |    1 +
- tools/testing/selftests/bpf/progs/verifier_bounds.c |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c                               |   24 +++++++
+ tools/testing/selftests/bpf/prog_tests/reg_bounds.c |   62 ++++++++++++++++++--
+ 2 files changed, 82 insertions(+), 4 deletions(-)
 
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -2292,6 +2292,7 @@ static void reg_bounds_sync(struct bpf_r
- 	/* We might have learned something about the sign bit. */
- 	__reg_deduce_bounds(reg);
- 	__reg_deduce_bounds(reg);
-+	__reg_deduce_bounds(reg);
- 	/* We might have learned some bits from the bounds. */
- 	__reg_bound_offset(reg);
- 	/* Intersecting with the old var_off might have improved our bounds
---- a/tools/testing/selftests/bpf/progs/verifier_bounds.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_bounds.c
-@@ -1223,7 +1223,7 @@ l0_%=:	r0 = 0;						\
- SEC("socket")
- __description("bounds deduction cross sign boundary, negative overlap")
- __success __log_level(2) __flag(BPF_F_TEST_REG_INVARIANTS)
--__msg("7: (1f) r0 -= r6 {{.*}} R0=scalar(smin=-655,smax=smax32=-146,umin=0xfffffffffffffd71,umax=0xffffffffffffff6e,smin32=-783,umin32=0xfffffcf1,umax32=0xffffff6e,var_off=(0xfffffffffffffc00; 0x3ff))")
-+__msg("7: (1f) r0 -= r6 {{.*}} R0=scalar(smin=smin32=-655,smax=smax32=-146,umin=0xfffffffffffffd71,umax=0xffffffffffffff6e,umin32=0xfffffd71,umax32=0xffffff6e,var_off=(0xfffffffffffffc00; 0x3ff))")
- __retval(0)
- __naked void bounds_deduct_negative_overlap(void)
+@@ -2046,6 +2046,30 @@ static void __reg32_deduce_bounds(struct
+ 	if ((u32)reg->s32_min_value <= (u32)reg->s32_max_value) {
+ 		reg->u32_min_value = max_t(u32, reg->s32_min_value, reg->u32_min_value);
+ 		reg->u32_max_value = min_t(u32, reg->s32_max_value, reg->u32_max_value);
++	} else {
++		if (reg->u32_max_value < (u32)reg->s32_min_value) {
++			/* See __reg64_deduce_bounds() for detailed explanation.
++			 * Refine ranges in the following situation:
++			 *
++			 * 0                                                   U32_MAX
++			 * |  [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]              |
++			 * |----------------------------|----------------------------|
++			 * |xxxxx s32 range xxxxxxxxx]                       [xxxxxxx|
++			 * 0                     S32_MAX S32_MIN                    -1
++			 */
++			reg->s32_min_value = (s32)reg->u32_min_value;
++			reg->u32_max_value = min_t(u32, reg->u32_max_value, reg->s32_max_value);
++		} else if ((u32)reg->s32_max_value < reg->u32_min_value) {
++			/*
++			 * 0                                                   U32_MAX
++			 * |              [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]  |
++			 * |----------------------------|----------------------------|
++			 * |xxxxxxxxx]                       [xxxxxxxxxxxx s32 range |
++			 * 0                     S32_MAX S32_MIN                    -1
++			 */
++			reg->s32_max_value = (s32)reg->u32_max_value;
++			reg->u32_min_value = max_t(u32, reg->u32_min_value, reg->s32_min_value);
++		}
+ 	}
+ }
+ 
+--- a/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
++++ b/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
+@@ -422,15 +422,69 @@ static bool is_valid_range(enum num_t t,
+ 	}
+ }
+ 
+-static struct range range_improve(enum num_t t, struct range old, struct range new)
++static struct range range_intersection(enum num_t t, struct range old, struct range new)
  {
+ 	return range(t, max_t(t, old.a, new.a), min_t(t, old.b, new.b));
+ }
+ 
++/*
++ * Result is precise when 'x' and 'y' overlap or form a continuous range,
++ * result is an over-approximation if 'x' and 'y' do not overlap.
++ */
++static struct range range_union(enum num_t t, struct range x, struct range y)
++{
++	if (!is_valid_range(t, x))
++		return y;
++	if (!is_valid_range(t, y))
++		return x;
++	return range(t, min_t(t, x.a, y.a), max_t(t, x.b, y.b));
++}
++
++/*
++ * This function attempts to improve x range intersecting it with y.
++ * range_cast(... to_t ...) looses precision for ranges that pass to_t
++ * min/max boundaries. To avoid such precision loses this function
++ * splits both x and y into halves corresponding to non-overflowing
++ * sub-ranges: [0, smin] and [smax, -1].
++ * Final result is computed as follows:
++ *
++ *   ((x ∩ [0, smax]) ∩ (y ∩ [0, smax])) ∪
++ *   ((x ∩ [smin,-1]) ∩ (y ∩ [smin,-1]))
++ *
++ * Precision might still be lost if final union is not a continuous range.
++ */
++static struct range range_refine_in_halves(enum num_t x_t, struct range x,
++					   enum num_t y_t, struct range y)
++{
++	struct range x_pos, x_neg, y_pos, y_neg, r_pos, r_neg;
++	u64 smax, smin, neg_one;
++
++	if (t_is_32(x_t)) {
++		smax = (u64)(u32)S32_MAX;
++		smin = (u64)(u32)S32_MIN;
++		neg_one = (u64)(u32)(s32)(-1);
++	} else {
++		smax = (u64)S64_MAX;
++		smin = (u64)S64_MIN;
++		neg_one = U64_MAX;
++	}
++	x_pos = range_intersection(x_t, x, range(x_t, 0, smax));
++	x_neg = range_intersection(x_t, x, range(x_t, smin, neg_one));
++	y_pos = range_intersection(y_t, y, range(x_t, 0, smax));
++	y_neg = range_intersection(y_t, y, range(y_t, smin, neg_one));
++	r_pos = range_intersection(x_t, x_pos, range_cast(y_t, x_t, y_pos));
++	r_neg = range_intersection(x_t, x_neg, range_cast(y_t, x_t, y_neg));
++	return range_union(x_t, r_pos, r_neg);
++
++}
++
+ static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t, struct range y)
+ {
+ 	struct range y_cast;
+ 
++	if (t_is_32(x_t) == t_is_32(y_t))
++		x = range_refine_in_halves(x_t, x, y_t, y);
++
+ 	y_cast = range_cast(y_t, x_t, y);
+ 
+ 	/* If we know that
+@@ -444,7 +498,7 @@ static struct range range_refine(enum nu
+ 	 */
+ 	if (x_t == S64 && y_t == S32 && y_cast.a <= S32_MAX  && y_cast.b <= S32_MAX &&
+ 	    (s64)x.a >= S32_MIN && (s64)x.b <= S32_MAX)
+-		return range_improve(x_t, x, y_cast);
++		return range_intersection(x_t, x, y_cast);
+ 
+ 	/* the case when new range knowledge, *y*, is a 32-bit subregister
+ 	 * range, while previous range knowledge, *x*, is a full register
+@@ -462,11 +516,11 @@ static struct range range_refine(enum nu
+ 		x_swap = range(x_t, swap_low32(x.a, y_cast.a), swap_low32(x.b, y_cast.b));
+ 		if (!is_valid_range(x_t, x_swap))
+ 			return x;
+-		return range_improve(x_t, x, x_swap);
++		return range_intersection(x_t, x, x_swap);
+ 	}
+ 
+ 	/* otherwise, plain range cast and intersection works */
+-	return range_improve(x_t, x, y_cast);
++	return range_intersection(x_t, x, y_cast);
+ }
+ 
+ /* =======================
 
 
