@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA973176E4;
-	Wed,  8 Apr 2026 18:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767A73176E4;
+	Wed,  8 Apr 2026 18:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674741; cv=none; b=q3nusY3hLf/tTT0LTVCLXx0GuN/mpJ/FoC9NrTK+9u96TmVzDc5VXoscUsTELiX9w00tzxwJM0xMkiMTDPmJiMBaoAhfHjed1xiyAdQNFgPj7LH8iEgV+XHi0UvOLzzrUYhlEmwTWdh+K88Xz2L2ZQWHjWLE5nadU0ZOtzrve4A=
+	t=1775674744; cv=none; b=HFn2M3ljdzsZ4fC0gely7WLTG5+/mN5QjIcfoRGf7Wt0tIiGFgxuBaffLetb2vVevHcl6fyEQmaC3d2GeITOo+TV0muFTmEIX0FVT9EVlusepbJcSATYQ6MhcYTsBbTGjJDBw4+E20dio7080Bbcx25hVtgk4XdaLjKL9u83tAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674741; c=relaxed/simple;
-	bh=vvs2Wzr5jeUv3HrfHst0P/Dqow+8Ji8gmXBSg4cdNrc=;
+	s=arc-20240116; t=1775674744; c=relaxed/simple;
+	bh=D1Ao+C2LKcBpYRQQafRPHKvcS3fJbLuTAEOApojuBNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C6SVzPgknYMQIGtaCQW4CKcPUS8kJVNYvrVtf2QdFqh7ncwyiqrfvKtJEP9g0vyCM6E1CB9XWgm1EaVDKIROinaVAfHS7XYdlRMMUJTc9UxOBlKZvYX2im5dt3WY3jEy6zKK9Bu1zwazQuvyeyjwJHdWAUJKl1rciXRZec00KZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVRNJj3R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dboq/0d+i/U2t4yTplJ5nygeT4VIYbFSxxOJyaH6R9w3Bl1npTItlQyATPDKTPM33S0RgjZAeMfT0aEjuDCx0LRXqAbFERCmqO1OSAKqS7y3lk3n9dVlKSaxHBCShifNkrmqYOUZbeQPyqylW03p6f1GwVGVpLa/DHhkodN1vZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvRGDCC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVRNJj3R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706C7C19421;
-	Wed,  8 Apr 2026 18:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvRGDCC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAAFC19421;
+	Wed,  8 Apr 2026 18:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674741;
-	bh=vvs2Wzr5jeUv3HrfHst0P/Dqow+8Ji8gmXBSg4cdNrc=;
+	s=korg; t=1775674744;
+	bh=D1Ao+C2LKcBpYRQQafRPHKvcS3fJbLuTAEOApojuBNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVRNJj3RXp3Ka4+5de5Lr0bTNFyUSxoQz3Fg4tWbzCjCqr1lysoKH/62Lv3++agnA
-	 BJYBzPLIU/2zHrwZzTfM7Wyhw/nytMkgZpacnR/pK5Xios8bdvOx2q/RjzwU7wUqlL
-	 kCI0TWV1x0KJx8XzmB9B3njTbuy4bHPSqa0OcRwc=
+	b=bvRGDCC0MA4LV27HIYr3LyPFmQQe6cBFR8CMtZ6naSD8xYXo57GVenzYAQvj/8M3/
+	 aOBIFbUvieU92PdY02Wf7cV0kkgnonXYwa/3+ZS/txAVCm7JcKcrpQGwyjOrAZ4Pdx
+	 caKVnRj9AT8w4W+wtnGea9YpWNsr8Agr3z/AhwBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wanquan Zhong <wanquan.zhong@fibocom.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.19 208/311] USB: serial: option: add support for Rolling Wireless RW135R-GL
-Date: Wed,  8 Apr 2026 20:03:28 +0200
-Message-ID: <20260408175947.173108445@linuxfoundation.org>
+	Giorgi Tchankvetadze <giorgitchankvetadze1997@gmail.com>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.19 217/311] iio: adc: ade9000: fix wrong return type in streaming push
+Date: Wed,  8 Apr 2026 20:03:37 +0200
+Message-ID: <20260408175947.506547771@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -50,49 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wanquan Zhong <wanquan.zhong@fibocom.com>
+From: Giorgi Tchankvetadze <giorgitchankvetadze1997@gmail.com>
 
-commit 01e8d0f742222f1e68f48180d5480097adf7ae9f upstream.
+commit 57b207e38d414a27fda9fff638a0d3e7ef16b917 upstream.
 
-Add VID/PID 33f8:1003 for the Rolling Wireless RW135R-GL M.2 module,
-which is used in laptop debug cards with MBIM interface for
-Linux/Chrome OS. The device supports mbim, pipe functionalities.
+The else branch of ade9000_iio_push_streaming() incorrectly returns
+IRQ_HANDLED on regmap_write failure. This function returns int (0 on
+success, negative errno on failure), so IRQ_HANDLED (1) would be
+misinterpreted as a non-error by callers.
 
-Here are the outputs of usb-devices:
-T:  Bus=04 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=33f8 ProdID=1003 Rev=05.15
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling RW135R-GL Module
-S:  SerialNumber=12345678
-C:  #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+Return ret instead, consistent with every other error path in the
+function.
 
-Signed-off-by: Wanquan Zhong <wanquan.zhong@fibocom.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 81de7b4619fc ("iio: adc: add ade9000 support")
+Signed-off-by: Giorgi Tchankvetadze <giorgitchankvetadze1997@gmail.com>
+Reviewed-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/ade9000.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2464,6 +2464,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0302, 0xff) },			/* Rolling RW101R-GL (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0802, 0xff),			/* Rolling RW350-GL (laptop MBIM) */
- 	  .driver_info = RSVD(5) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff) },			/* Rolling RW135R-GL (laptop MBIM) */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x40) },
+--- a/drivers/iio/adc/ade9000.c
++++ b/drivers/iio/adc/ade9000.c
+@@ -787,7 +787,7 @@ static int ade9000_iio_push_streaming(st
+ 				   ADE9000_MIDDLE_PAGE_BIT);
+ 		if (ret) {
+ 			dev_err_ratelimited(dev, "IRQ0 WFB write fail");
+-			return IRQ_HANDLED;
++			return ret;
+ 		}
+ 
+ 		ade9000_configure_scan(indio_dev, ADE9000_REG_WF_BUFF);
 
 
