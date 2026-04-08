@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6A83624B9;
-	Wed,  8 Apr 2026 18:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252BC2F39C2;
+	Wed,  8 Apr 2026 18:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674626; cv=none; b=HvAycksZ6YXO81ZwUZYnOkeb/AI4w+xv4HKmpALFnwT4UJ6qaeOggODeMEAL1dVmTnEltvTMUAp40kG46qFJiWu7ktRbj6PDkgzoOp0SgrcL2mx1fE1ssV5Go6inZM64CqvkDRjB2sghWuJmJpUdVA/nd9wv1CoZQI0bO/W2b5s=
+	t=1775674629; cv=none; b=AF8AH+zE5t6t8/m5+AJ5zaVHQX9PPcQ50gS+NkHWpSRcmDYPI1x7G5hR5Eusp1W5a2wDE1ubWZpCX77EF2ky+5Hoq4ZEe5vfaCW+I43bztVcf4biaV3mgr+7Y4MWhDE3d5HrIBU4nGGzhqwci937X4TVFvdVhA7CUmM1pWu3wAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674626; c=relaxed/simple;
-	bh=WTOnXHODuVML4uYAKQJa2+4sdaV8AA+DGe1lRSERfEI=;
+	s=arc-20240116; t=1775674629; c=relaxed/simple;
+	bh=eQkBce7aDlPN8yKmzw762A8o5zXliHjK9D1Rg3nTMrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DrdBaGAb3VIrUBzg+nJGJVt2Vd2Hw4M7IrJAumhlK+96gDHIaagzJsF07deUj5SdhqQqBMhRaOh6O2heMJkO/Us3KO1bmXxJa1z0aMHWYQ1CvkmrX6G2ZDvS9wMZqThL/W5H4D9XZJ+T3BnWrFvgASFkCgHkuE9iGtFCb9bogkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9nbsgdb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FwCSqSGNX/fpNyBKZCNdldKMiNLWQcnfjEesxNsx87jBs5KbH5h5UYRd8ttPs9jRPwUjCi9iPPtnFiqZ3iXaimqiqkjDb+UmBBYQw+qLkQVDU6xPZNRSJ7hsZRPgB/TBss7Ygf/pv+Sodc4ky1N6R8HUHLP2/+vOyEYTL14q9K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJn8pmkq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9nbsgdb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4ED2C19421;
-	Wed,  8 Apr 2026 18:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJn8pmkq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACC0C19421;
+	Wed,  8 Apr 2026 18:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674626;
-	bh=WTOnXHODuVML4uYAKQJa2+4sdaV8AA+DGe1lRSERfEI=;
+	s=korg; t=1775674628;
+	bh=eQkBce7aDlPN8yKmzw762A8o5zXliHjK9D1Rg3nTMrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9nbsgdbVdwWrQ9amaUH0Q1wiNgjJs28clzveBo5ImB7GApb6Yo5Q3tgSszCxAATV
-	 fz8UqfQ6WvDJcCuzSc3yem/zCVIEq5rrDG4T5xvqesBVBtB567NVgKRtYEdghr9sZy
-	 tA3vZDZYVvFpTV8LSluEs12ABr/Ea+cdNU/NJvck=
+	b=iJn8pmkq9LXyme6T/4jAVjJGJGT8yTfA9Rh1rbhSzTTdzuXuNdSBSjzCZGbq3wMn0
+	 LWqSGfULdjqrkTs46QRhHgBd8sBDHy26pz+Hb+NRG96Nj3adm120EMm6flLkwHMyOc
+	 RJM3mzmvg10lfEy6KvsKlKgR4XHlF7KS4yKsAN6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.19 169/311] sched_ext: Fix SCX_KICK_WAIT deadlock by deferring wait to balance callback
-Date: Wed,  8 Apr 2026 20:02:49 +0200
-Message-ID: <20260408175945.714039488@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.19 170/311] ALSA: caiaq: fix stack out-of-bounds read in init_card
+Date: Wed,  8 Apr 2026 20:02:50 +0200
+Message-ID: <20260408175945.752387522@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -44,214 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-commit 415cb193bb9736f0e830286c72a6fa8eb2a9cc5c upstream.
+commit 45424e871abf2a152e247a9cff78359f18dd95c0 upstream.
 
-SCX_KICK_WAIT busy-waits in kick_cpus_irq_workfn() using
-smp_cond_load_acquire() until the target CPU's kick_sync advances. Because
-the irq_work runs in hardirq context, the waiting CPU cannot reschedule and
-its own kick_sync never advances. If multiple CPUs form a wait cycle, all
-CPUs deadlock.
+The loop creates a whitespace-stripped copy of the card shortname
+where `len < sizeof(card->id)` is used for the bounds check. Since
+sizeof(card->id) is 16 and the local id buffer is also 16 bytes,
+writing 16 non-space characters fills the entire buffer,
+overwriting the terminating nullbyte.
 
-Replace the busy-wait in kick_cpus_irq_workfn() with resched_curr() to
-force the CPU through do_pick_task_scx(), which queues a balance callback
-to perform the wait. The balance callback drops the rq lock and enables
-IRQs following the sched_core_balance() pattern, so the CPU can process
-IPIs while waiting. The local CPU's kick_sync is advanced on entry to
-do_pick_task_scx() and continuously during the wait, ensuring any CPU that
-starts waiting for us sees the advancement and cannot form cyclic
-dependencies.
+When this non-null-terminated string is later passed to
+snd_card_set_id() -> copy_valid_id_string(), the function scans
+forward with `while (*nid && ...)` and reads past the end of the
+stack buffer, reading the contents of the stack.
 
-Fixes: 90e55164dad4 ("sched_ext: Implement SCX_KICK_WAIT")
-Cc: stable@vger.kernel.org # v6.12+
-Reported-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://lore.kernel.org/r/20260316100249.1651641-1-christian.loehle@arm.com
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
+A USB device with a product name containing many non-ASCII, non-space
+characters (e.g. multibyte UTF-8) will reliably trigger this as follows:
+
+  BUG: KASAN: stack-out-of-bounds in copy_valid_id_string
+       sound/core/init.c:696 [inline]
+  BUG: KASAN: stack-out-of-bounds in snd_card_set_id_no_lock+0x698/0x74c
+       sound/core/init.c:718
+
+The off-by-one has been present since commit bafeee5b1f8d ("ALSA:
+snd_usb_caiaq: give better shortname") from June 2009 (v2.6.31-rc1),
+which first introduced this whitespace-stripping loop. The original
+code never accounted for the null terminator when bounding the copy.
+
+Fix this by changing the loop bound to `sizeof(card->id) - 1`,
+ensuring at least one byte remains as the null terminator.
+
+Fixes: bafeee5b1f8d ("ALSA: snd_usb_caiaq: give better shortname")
+Cc: stable@vger.kernel.org
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Reported-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260329133825.581585-1-berkcgoksel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c   |   95 +++++++++++++++++++++++++++++++++++++--------------
- kernel/sched/sched.h |    3 +
- 2 files changed, 73 insertions(+), 25 deletions(-)
+ sound/usb/caiaq/device.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -2394,7 +2394,7 @@ static void put_prev_task_scx(struct rq
- {
- 	struct scx_sched *sch = scx_root;
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -488,7 +488,7 @@ static int init_card(struct snd_usb_caia
+ 		memset(id, 0, sizeof(id));
  
--	/* see kick_cpus_irq_workfn() */
-+	/* see kick_sync_wait_bal_cb() */
- 	smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
+ 		for (c = card->shortname, len = 0;
+-			*c && len < sizeof(card->id); c++)
++			*c && len < sizeof(card->id) - 1; c++)
+ 			if (*c != ' ')
+ 				id[len++] = *c;
  
- 	update_curr_scx(rq);
-@@ -2437,6 +2437,48 @@ switch_class:
- 		switch_class(rq, next);
- }
- 
-+static void kick_sync_wait_bal_cb(struct rq *rq)
-+{
-+	struct scx_kick_syncs __rcu *ks = __this_cpu_read(scx_kick_syncs);
-+	unsigned long *ksyncs = rcu_dereference_sched(ks)->syncs;
-+	bool waited;
-+	s32 cpu;
-+
-+	/*
-+	 * Drop rq lock and enable IRQs while waiting. IRQs must be enabled
-+	 * — a target CPU may be waiting for us to process an IPI (e.g. TLB
-+	 * flush) while we wait for its kick_sync to advance.
-+	 *
-+	 * Also, keep advancing our own kick_sync so that new kick_sync waits
-+	 * targeting us, which can start after we drop the lock, cannot form
-+	 * cyclic dependencies.
-+	 */
-+retry:
-+	waited = false;
-+	for_each_cpu(cpu, rq->scx.cpus_to_sync) {
-+		/*
-+		 * smp_load_acquire() pairs with smp_store_release() on
-+		 * kick_sync updates on the target CPUs.
-+		 */
-+		if (cpu == cpu_of(rq) ||
-+		    smp_load_acquire(&cpu_rq(cpu)->scx.kick_sync) != ksyncs[cpu]) {
-+			cpumask_clear_cpu(cpu, rq->scx.cpus_to_sync);
-+			continue;
-+		}
-+
-+		raw_spin_rq_unlock_irq(rq);
-+		while (READ_ONCE(cpu_rq(cpu)->scx.kick_sync) == ksyncs[cpu]) {
-+			smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
-+			cpu_relax();
-+		}
-+		raw_spin_rq_lock_irq(rq);
-+		waited = true;
-+	}
-+
-+	if (waited)
-+		goto retry;
-+}
-+
- static struct task_struct *first_local_task(struct rq *rq)
- {
- 	return list_first_entry_or_null(&rq->scx.local_dsq.list,
-@@ -2450,7 +2492,7 @@ do_pick_task_scx(struct rq *rq, struct r
- 	bool keep_prev;
- 	struct task_struct *p;
- 
--	/* see kick_cpus_irq_workfn() */
-+	/* see kick_sync_wait_bal_cb() */
- 	smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
- 
- 	rq_modified_clear(rq);
-@@ -2461,6 +2503,17 @@ do_pick_task_scx(struct rq *rq, struct r
- 	maybe_queue_balance_callback(rq);
- 
- 	/*
-+	 * Defer to a balance callback which can drop rq lock and enable
-+	 * IRQs. Waiting directly in the pick path would deadlock against
-+	 * CPUs sending us IPIs (e.g. TLB flushes) while we wait for them.
-+	 */
-+	if (unlikely(rq->scx.kick_sync_pending)) {
-+		rq->scx.kick_sync_pending = false;
-+		queue_balance_callback(rq, &rq->scx.kick_sync_bal_cb,
-+				       kick_sync_wait_bal_cb);
-+	}
-+
-+	/*
- 	 * If any higher-priority sched class enqueued a runnable task on
- 	 * this rq during balance_one(), abort and return RETRY_TASK, so
- 	 * that the scheduler loop can restart.
-@@ -4673,6 +4726,9 @@ static void scx_dump_state(struct scx_ex
- 		if (!cpumask_empty(rq->scx.cpus_to_wait))
- 			dump_line(&ns, "  cpus_to_wait   : %*pb",
- 				  cpumask_pr_args(rq->scx.cpus_to_wait));
-+		if (!cpumask_empty(rq->scx.cpus_to_sync))
-+			dump_line(&ns, "  cpus_to_sync   : %*pb",
-+				  cpumask_pr_args(rq->scx.cpus_to_sync));
- 
- 		used = seq_buf_used(&ns);
- 		if (SCX_HAS_OP(sch, dump_cpu)) {
-@@ -5571,11 +5627,11 @@ static bool kick_one_cpu(s32 cpu, struct
- 
- 		if (cpumask_test_cpu(cpu, this_scx->cpus_to_wait)) {
- 			if (cur_class == &ext_sched_class) {
-+				cpumask_set_cpu(cpu, this_scx->cpus_to_sync);
- 				ksyncs[cpu] = rq->scx.kick_sync;
- 				should_wait = true;
--			} else {
--				cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
- 			}
-+			cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
- 		}
- 
- 		resched_curr(rq);
-@@ -5630,27 +5686,15 @@ static void kick_cpus_irq_workfn(struct
- 		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick_if_idle);
- 	}
- 
--	if (!should_wait)
--		return;
--
--	for_each_cpu(cpu, this_scx->cpus_to_wait) {
--		unsigned long *wait_kick_sync = &cpu_rq(cpu)->scx.kick_sync;
--
--		/*
--		 * Busy-wait until the task running at the time of kicking is no
--		 * longer running. This can be used to implement e.g. core
--		 * scheduling.
--		 *
--		 * smp_cond_load_acquire() pairs with store_releases in
--		 * pick_task_scx() and put_prev_task_scx(). The former breaks
--		 * the wait if SCX's scheduling path is entered even if the same
--		 * task is picked subsequently. The latter is necessary to break
--		 * the wait when $cpu is taken by a higher sched class.
--		 */
--		if (cpu != cpu_of(this_rq))
--			smp_cond_load_acquire(wait_kick_sync, VAL != ksyncs[cpu]);
--
--		cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
-+	/*
-+	 * Can't wait in hardirq — kick_sync can't advance, deadlocking if
-+	 * CPUs wait for each other. Defer to kick_sync_wait_bal_cb().
-+	 */
-+	if (should_wait) {
-+		raw_spin_rq_lock(this_rq);
-+		this_scx->kick_sync_pending = true;
-+		resched_curr(this_rq);
-+		raw_spin_rq_unlock(this_rq);
- 	}
- }
- 
-@@ -5755,6 +5799,7 @@ void __init init_sched_ext_class(void)
- 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_kick_if_idle, GFP_KERNEL, n));
- 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
- 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
-+		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_sync, GFP_KERNEL, n));
- 		rq->scx.deferred_irq_work = IRQ_WORK_INIT_HARD(deferred_irq_workfn);
- 		rq->scx.kick_cpus_irq_work = IRQ_WORK_INIT_HARD(kick_cpus_irq_workfn);
- 
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -803,9 +803,12 @@ struct scx_rq {
- 	cpumask_var_t		cpus_to_kick_if_idle;
- 	cpumask_var_t		cpus_to_preempt;
- 	cpumask_var_t		cpus_to_wait;
-+	cpumask_var_t		cpus_to_sync;
-+	bool			kick_sync_pending;
- 	unsigned long		kick_sync;
- 	local_t			reenq_local_deferred;
- 	struct balance_callback	deferred_bal_cb;
-+	struct balance_callback	kick_sync_bal_cb;
- 	struct irq_work		deferred_irq_work;
- 	struct irq_work		kick_cpus_irq_work;
- 	struct scx_dispatch_q	bypass_dsq;
 
 
