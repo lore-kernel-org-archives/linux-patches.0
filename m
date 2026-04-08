@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553CA3D4134;
-	Wed,  8 Apr 2026 18:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18BC37F8C2;
+	Wed,  8 Apr 2026 18:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671745; cv=none; b=IxMypDCuuyH38EQRrMwfrBMmiYKKMihBVRteFrSZWuN2DglhiqOyk+8O4Ik2RTSuD/6eNLnSVx8WWFhfCTndDb9UD+gTFtaMdpzwE3v8lfv9AXS7cYI8zS4BtbdAo7LYAES66t/Uwh073s1oOfKTc2awYPNVZNOGgE8ofzAPSw8=
+	t=1775671748; cv=none; b=HH/TDbBq/0OUrPzLfBsT1MPP7c+kfLZ+cL8ByIuPanIAkUrz0GvlssHPd6Zth//MfL59GbxpvUvj+CAYDRJUk1Lb3uKanH//mpIShS6hjAcaN7nOg848YQQC/pezkigzZhqnfCfsrIkBUfbugEvcBR9zIKQAXiNH6LfBg+Wvumc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671745; c=relaxed/simple;
-	bh=wcGVI9+6zRyf3rDbi05iADzuw+RQrfFz05kIHJSFKks=;
+	s=arc-20240116; t=1775671748; c=relaxed/simple;
+	bh=SPFCWTdsWPwyxiBZi9LWkyVvd9YFrioaMxayBD5cbWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KcnPqa1InmkjHxG5FNJm1RXk/nZrk0f56nxg1sKzz5w6BcPB9nZhO3ltlhBtGLTxrLeZW/u7Sj5ThXiYboRNOm8N0A1gUx7rPtxsKRKtYOd28vaF7JaYaLOTQpG1mRJi+OS64alFfPet986cmh+C6dE7s7RTRwqVxuCWXHO+0UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iglJ54Iq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jb+rSaBvpc4rEo8wHnXkgUshz+vK2nnHw/hK2/zelE9jCHFc03AIeWC4U6jXJTkuvLlSj8fhuoLNAJ2IpLEdnjHdbXtNrh5sdrse15bBBREYTRDu99MQOSl+mNRrnRLCxd7JOO3EnX2D5goWgxhLZcJ0hlrZmKZ4bnOUWSxG/8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCihl9Hn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iglJ54Iq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00BAC19421;
-	Wed,  8 Apr 2026 18:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCihl9Hn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781C3C19421;
+	Wed,  8 Apr 2026 18:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671745;
-	bh=wcGVI9+6zRyf3rDbi05iADzuw+RQrfFz05kIHJSFKks=;
+	s=korg; t=1775671747;
+	bh=SPFCWTdsWPwyxiBZi9LWkyVvd9YFrioaMxayBD5cbWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iglJ54Iqo/GJcPTVpDm9pOJpn+PcGWf06qZoxP55r+irQJPv05ALhq5NgegeV3u8x
-	 0ECA7x4lzRob2WSN8AaGl/QyDaAzBqHKzSJoCJznDXkyoYw7GwaswFIwqt2qILf0lb
-	 P8lhFAAHV6mg7ewtmDN6ZBJpRnn5tapBjna45Loc=
+	b=YCihl9HnqEE+CcTST1HR5fapIOx/FzwASvBGd8T163f6bToud9DN1ADIpSvtdUhvw
+	 zFpFtEIhTU89KD5UTobP3u2WjoByQN8tmgkaEdqDTqsZNBvCsxbMziYc7+UzePzRYl
+	 ZKIN5wmTI1KRgxDPA0aHx8WFDHtL346+9W3lBPdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Liucheng Lu <luliucheng100@outlook.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/312] btrfs: set BTRFS_ROOT_ORPHAN_CLEANUP during subvol create
-Date: Wed,  8 Apr 2026 19:58:56 +0200
-Message-ID: <20260408175934.448854090@linuxfoundation.org>
+Subject: [PATCH 6.1 020/312] ALSA: hda/realtek: add HP Laptop 14s-dr5xxx mute LED quirk
+Date: Wed,  8 Apr 2026 19:58:57 +0200
+Message-ID: <20260408175934.485142616@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,194 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Liucheng Lu <luliucheng100@outlook.com>
 
-[ Upstream commit 5131fa077f9bb386a1b901bf5b247041f0ec8f80 ]
+[ Upstream commit 178dd118c0f07fd63a9ed74cfbd8c31ae50e33af ]
 
-We have recently observed a number of subvolumes with broken dentries.
-ls-ing the parent dir looks like:
+HP Laptop 14s-dr5xxx with ALC236 codec does not handle the toggling of
+the mute LED.
+This patch adds a quirk entry for subsystem ID 0x8a1f using
+ALC236_FIXUP_HP_MUTE_LED_COEFBIT2 fixup, enabling correct mute LED
+behavior.
 
-drwxrwxrwt 1 root root 16 Jan 23 16:49 .
-drwxr-xr-x 1 root root 24 Jan 23 16:48 ..
-d????????? ? ?    ?     ?            ? broken_subvol
-
-and similarly stat-ing the file fails.
-
-In this state, deleting the subvol fails with ENOENT, but attempting to
-create a new file or subvol over it errors out with EEXIST and even
-aborts the fs. Which leaves us a bit stuck.
-
-dmesg contains a single notable error message reading:
-"could not do orphan cleanup -2"
-
-2 is ENOENT and the error comes from the failure handling path of
-btrfs_orphan_cleanup(), with the stack leading back up to
-btrfs_lookup().
-
-btrfs_lookup
-btrfs_lookup_dentry
-btrfs_orphan_cleanup // prints that message and returns -ENOENT
-
-After some detailed inspection of the internal state, it became clear
-that:
-- there are no orphan items for the subvol
-- the subvol is otherwise healthy looking, it is not half-deleted or
-  anything, there is no drop progress, etc.
-- the subvol was created a while ago and does the meaningful first
-  btrfs_orphan_cleanup() call that sets BTRFS_ROOT_ORPHAN_CLEANUP much
-  later.
-- after btrfs_orphan_cleanup() fails, btrfs_lookup_dentry() returns -ENOENT,
-  which results in a negative dentry for the subvolume via
-  d_splice_alias(NULL, dentry), leading to the observed behavior. The
-  bug can be mitigated by dropping the dentry cache, at which point we
-  can successfully delete the subvolume if we want.
-
-i.e.,
-btrfs_lookup()
-  btrfs_lookup_dentry()
-    if (!sb_rdonly(inode->vfs_inode)->vfs_inode)
-    btrfs_orphan_cleanup(sub_root)
-      test_and_set_bit(BTRFS_ROOT_ORPHAN_CLEANUP)
-      btrfs_search_slot() // finds orphan item for inode N
-      ...
-      prints "could not do orphan cleanup -2"
-  if (inode == ERR_PTR(-ENOENT))
-    inode = NULL;
-  return d_splice_alias(NULL, dentry) // NEGATIVE DENTRY for valid subvolume
-
-btrfs_orphan_cleanup() does test_and_set_bit(BTRFS_ROOT_ORPHAN_CLEANUP)
-on the root when it runs, so it cannot run more than once on a given
-root, so something else must run concurrently. However, the obvious
-routes to deleting an orphan when nlinks goes to 0 should not be able to
-run without first doing a lookup into the subvolume, which should run
-btrfs_orphan_cleanup() and set the bit.
-
-The final important observation is that create_subvol() calls
-d_instantiate_new() but does not set BTRFS_ROOT_ORPHAN_CLEANUP, so if
-the dentry cache gets dropped, the next lookup into the subvolume will
-make a real call into btrfs_orphan_cleanup() for the first time. This
-opens up the possibility of concurrently deleting the inode/orphan items
-but most typical evict() paths will be holding a reference on the parent
-dentry (child dentry holds parent->d_lockref.count via dget in
-d_alloc(), released in __dentry_kill()) and prevent the parent from
-being removed from the dentry cache.
-
-The one exception is delayed iputs. Ordered extent creation calls
-igrab() on the inode. If the file is unlinked and closed while those
-refs are held, iput() in __dentry_kill() decrements i_count but does
-not trigger eviction (i_count > 0). The child dentry is freed and the
-subvol dentry's d_lockref.count drops to 0, making it evictable while
-the inode is still alive.
-
-Since there are two races (the race between writeback and unlink and
-the race between lookup and delayed iputs), and there are too many moving
-parts, the following three diagrams show the complete picture.
-(Only the second and third are races)
-
-Phase 1:
-Create Subvol in dentry cache without BTRFS_ROOT_ORPHAN_CLEANUP set
-
-btrfs_mksubvol()
-  lookup_one_len()
-    __lookup_slow()
-      d_alloc_parallel()
-        __d_alloc() // d_lockref.count = 1
-  create_subvol(dentry)
-    // doesn't touch the bit..
-    d_instantiate_new(dentry, inode) // dentry in cache with d_lockref.count == 1
-
-Phase 2:
-Create a delayed iput for a file in the subvol but leave the subvol in
-state where its dentry can be evicted (d_lockref.count == 0)
-
-T1 (task)                    T2 (writeback)                   T3 (OE workqueue)
-
-write() // dirty pages
-                              btrfs_writepages()
-                                btrfs_run_delalloc_range()
-                                  cow_file_range()
-                                    btrfs_alloc_ordered_extent()
-                                      igrab() // i_count: 1 -> 2
-btrfs_unlink_inode()
-  btrfs_orphan_add()
-close()
-  __fput()
-    dput()
-      finish_dput()
-        __dentry_kill()
-          dentry_unlink_inode()
-            iput() // 2 -> 1
-          --parent->d_lockref.count // 1 -> 0; evictable
-                                                                finish_ordered_fn()
-                                                                  btrfs_finish_ordered_io()
-                                                                    btrfs_put_ordered_extent()
-                                                                      btrfs_add_delayed_iput()
-
-Phase 3:
-Once the delayed iput is pending and the subvol dentry is evictable,
-the shrinker can free it, causing the next lookup to go through
-btrfs_lookup() and call btrfs_orphan_cleanup() for the first time.
-If the cleaner kthread processes the delayed iput concurrently, the
-two race:
-
-  T1 (shrinker)              T2 (cleaner kthread)                          T3 (lookup)
-
-  super_cache_scan()
-    prune_dcache_sb()
-      __dentry_kill()
-      // subvol dentry freed
-                              btrfs_run_delayed_iputs()
-                                iput()  // i_count -> 0
-                                  evict()  // sets I_FREEING
-                                    btrfs_evict_inode()
-                                      // truncation loop
-                                                                            btrfs_lookup()
-                                                                              btrfs_lookup_dentry()
-                                                                                btrfs_orphan_cleanup()
-                                                                                  // first call (bit never set)
-                                                                                  btrfs_iget()
-                                                                                    // blocks on I_FREEING
-
-                                      btrfs_orphan_del()
-                                      // inode freed
-                                                                                    // returns -ENOENT
-                                                                                  btrfs_del_orphan_item()
-                                                                                    // -ENOENT
-                                                                                // "could not do orphan cleanup -2"
-                                                                            d_splice_alias(NULL, dentry)
-                                                                            // negative dentry for valid subvol
-
-The most straightforward fix is to ensure the invariant that a dentry
-for a subvolume can exist if and only if that subvolume has
-BTRFS_ROOT_ORPHAN_CLEANUP set on its root (and is known to have no
-orphans or ran btrfs_orphan_cleanup()).
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Liucheng Lu <luliucheng100@outlook.com>
+Link: https://patch.msgid.link/PAVPR03MB9774F3FCE9CCD181C585281AE37BA@PAVPR03MB9774.eurprd03.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index e491c7f3ec350..835ce20304104 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -744,6 +744,13 @@ static noinline int create_subvol(struct user_namespace *mnt_userns,
- 		goto out;
- 	}
- 
-+	/*
-+	 * Subvolumes have orphans cleaned on first dentry lookup. A new
-+	 * subvolume cannot have any orphans, so we should set the bit before we
-+	 * add the subvolume dentry to the dentry cache, so that it is in the
-+	 * same state as a subvolume after first lookup.
-+	 */
-+	set_bit(BTRFS_ROOT_ORPHAN_CLEANUP, &new_root->state);
- 	d_instantiate_new(dentry, new_inode_args.inode);
- 	new_inode_args.inode = NULL;
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 89410d40561d7..1f069d7c3829f 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10019,6 +10019,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x89ca, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x89d3, "HP EliteBook 645 G9 (MB 89D2)", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8a0f, "HP Pavilion 14-ec1xxx", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8a1f, "HP Laptop 14s-dr5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a20, "HP Laptop 15s-fq5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a25, "HP Victus 16-d1xxx (MB 8A25)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
 -- 
 2.51.0
 
