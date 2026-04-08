@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB29C34B19F;
-	Wed,  8 Apr 2026 18:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27924355F30;
+	Wed,  8 Apr 2026 18:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674270; cv=none; b=NsilKwxTsAf/kRe7P5pLfcb7Pr9LXWHV76/X/g0OHtA4bbU7m5Gsp9MTyNDXpoD3s1isP/4XIlN1FaaWOUa/nJRVtxqUdF4bAl62fCAscRVy78ua0gGuwvxNqYr66UOPM9uaNUhh1q3/2zBjLDj4ZnWQVNUjN7vA7kxBRIaZbyw=
+	t=1775674273; cv=none; b=q5jF2ZxykHVCco/tqvVry2Yus3JqOhZZL3iDTj2/t69jd4aL8RT0+YvjUTu1jU9JNgyKf52a0zZpbb2HjmgjAMBYqoN+BMC/53xNTlPwa16TyjmzRjbfe/aBtjzLOpsFiCso2D+5ozw/KpYDxB6+j4d9nNXDeJk/lVWv/vsvWls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674270; c=relaxed/simple;
-	bh=nH0XVTqeSA57cor7xfy10mY6wsMko0aqPQNESwqDQyo=;
+	s=arc-20240116; t=1775674273; c=relaxed/simple;
+	bh=OTqQM1z+aI3tIW/YegV+OWEcQuB+uXonUkkEx3NcWqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHG2NWjj644Nnfi1cHUq4YbDe8tvmLr5neIyiejKXzui+dLD9g9vhzbfKPjAnR15mmvYKG4VQQBmjp4iwVXj6xWlHbqv+L6nziv2l+00a3iQgb0hKWJTjRiSQjI6gaQbJqzhx1xrd0bwIyQphTkvpJzw5LqpCFU7qK8m1jrpgv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5CY2tRn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pp4WDjUwyUn4rf51mzy09AxM489aiTxvM+n2BMQLHKUNe045afm1WyWxgxVkvqXuSgskuDjx83C7thq88U13Bl/uLM4hswlHScZtdSZ6S/qwISzv18bW8xUvSCgOrSwqZSmiQ31Y/ti4fSfyIpCwyMw+3DGKDhgHF+saiveuDFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKiTAAA9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5CY2tRn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1920CC19421;
-	Wed,  8 Apr 2026 18:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKiTAAA9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2211C19421;
+	Wed,  8 Apr 2026 18:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674270;
-	bh=nH0XVTqeSA57cor7xfy10mY6wsMko0aqPQNESwqDQyo=;
+	s=korg; t=1775674273;
+	bh=OTqQM1z+aI3tIW/YegV+OWEcQuB+uXonUkkEx3NcWqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j5CY2tRnU852yX+9O1Lh20N16rACRk6s5T4yQII5t7yfkzps3Za4f12EZ6uWhNF7n
-	 sUqMDGQQeYJAk3v8Z7DAPYyiULTDGzwZEPc72h6EcRYiKElddP7o2bfKV2PWFG7Nu2
-	 1eY3d/WShMQ5ub9cgzFaZscj/yDyGcvCwRAYyOTg=
+	b=iKiTAAA91OclX+6RLs5U6h7h9+YbWX8NYRJUp1ws50y3UJBf7+yR9VaAgQ6F4P6wq
+	 gPcafZbFt7hzBAXLTovZiXWcCWB3RcADlMkW7PG2sq3PYxNKUSCi8XIDAKPlNCZzBz
+	 MFGs18L+4MaWnFr5XpNwKVIvcAOErGOThCS5hktA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 004/311] scsi: target: file: Use kzalloc_flex for aio_cmd
-Date: Wed,  8 Apr 2026 20:00:04 +0200
-Message-ID: <20260408175939.567077822@linuxfoundation.org>
+Subject: [PATCH 6.19 005/311] scsi: target: tcm_loop: Drain commands in target_reset handler
+Date: Wed,  8 Apr 2026 20:00:05 +0200
+Message-ID: <20260408175939.604806440@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -45,48 +45,151 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 01f784fc9d0ab2a6dac45ee443620e517cb2a19b ]
+[ Upstream commit 1333eee56cdf3f0cf67c6ab4114c2c9e0a952026 ]
 
-The target_core_file doesn't initialize the aio_cmd->iocb for the
-ki_write_stream. When a write command fd_execute_rw_aio() is executed,
-we may get a bogus ki_write_stream value, causing unintended write
-failure status when checking iocb->ki_write_stream > max_write_streams
-in the block device.
+tcm_loop_target_reset() violates the SCSI EH contract: it returns SUCCESS
+without draining any in-flight commands.  The SCSI EH documentation
+(scsi_eh.rst) requires that when a reset handler returns SUCCESS the driver
+has made lower layers "forget about timed out scmds" and is ready for new
+commands.  Every other SCSI LLD (virtio_scsi, mpt3sas, ipr, scsi_debug,
+mpi3mr) enforces this by draining or completing outstanding commands before
+returning SUCCESS.
 
-Let's just use kzalloc_flex when allocating the aio_cmd and let
-ki_write_stream=0 to fix this issue.
+Because tcm_loop_target_reset() doesn't drain, the SCSI EH reuses in-flight
+scsi_cmnd structures for recovery commands (e.g. TUR) while the target core
+still has async completion work queued for the old se_cmd.  The memset in
+queuecommand zeroes se_lun and lun_ref_active, causing
+transport_lun_remove_cmd() to skip its percpu_ref_put().  The leaked LUN
+reference prevents transport_clear_lun_ref() from completing, hanging
+configfs LUN unlink forever in D-state:
 
-Fixes: 732f25a2895a ("fs: add a write stream field to the kiocb")
-Fixes: c27683da6406 ("block: expose write streams for block device nodes")
+  INFO: task rm:264 blocked for more than 122 seconds.
+  rm              D    0   264    258 0x00004000
+  Call Trace:
+   __schedule+0x3d0/0x8e0
+   schedule+0x36/0xf0
+   transport_clear_lun_ref+0x78/0x90 [target_core_mod]
+   core_tpg_remove_lun+0x28/0xb0 [target_core_mod]
+   target_fabric_port_unlink+0x50/0x60 [target_core_mod]
+   configfs_unlink+0x156/0x1f0 [configfs]
+   vfs_unlink+0x109/0x290
+   do_unlinkat+0x1d5/0x2d0
+
+Fix this by making tcm_loop_target_reset() actually drain commands:
+
+ 1. Issue TMR_LUN_RESET via tcm_loop_issue_tmr() to drain all commands that
+    the target core knows about (those not yet CMD_T_COMPLETE).
+
+ 2. Use blk_mq_tagset_busy_iter() to iterate all started requests and
+    flush_work() on each se_cmd — this drains any deferred completion work
+    for commands that already had CMD_T_COMPLETE set before the TMR (which
+    the TMR skips via __target_check_io_state()).  This is the same pattern
+    used by mpi3mr, scsi_debug, and libsas to drain outstanding commands
+    during reset.
+
+Fixes: e0eb5d38b732 ("scsi: target: tcm_loop: Use block cmd allocator for se_cmds")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/f1a2f81c62f043e31f80bb92d5f29893400c8ee2.1773450782.git.Thinh.Nguyen@synopsys.com
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/27011aa34c8f6b1b94d2e3cf5655b6d037f53428.1773706803.git.josef@toxicpanda.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-[ changed kmalloc() to kzalloc() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_file.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/loopback/tcm_loop.c |   52 ++++++++++++++++++++++++++++++++-----
+ 1 file changed, 46 insertions(+), 6 deletions(-)
 
---- a/drivers/target/target_core_file.c
-+++ b/drivers/target/target_core_file.c
-@@ -276,7 +276,7 @@ fd_execute_rw_aio(struct se_cmd *cmd, st
- 	ssize_t len = 0;
- 	int ret = 0, i;
+--- a/drivers/target/loopback/tcm_loop.c
++++ b/drivers/target/loopback/tcm_loop.c
+@@ -26,6 +26,7 @@
+ #include <linux/slab.h>
+ #include <linux/types.h>
+ #include <linux/configfs.h>
++#include <linux/blk-mq.h>
+ #include <scsi/scsi.h>
+ #include <scsi/scsi_tcq.h>
+ #include <scsi/scsi_host.h>
+@@ -268,15 +269,27 @@ static int tcm_loop_device_reset(struct
+ 	return (ret == TMR_FUNCTION_COMPLETE) ? SUCCESS : FAILED;
+ }
  
--	aio_cmd = kmalloc(struct_size(aio_cmd, bvecs, sgl_nents), GFP_KERNEL);
-+	aio_cmd = kzalloc(struct_size(aio_cmd, bvecs, sgl_nents), GFP_KERNEL);
- 	if (!aio_cmd)
- 		return TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE;
++static bool tcm_loop_flush_work_iter(struct request *rq, void *data)
++{
++	struct scsi_cmnd *sc = blk_mq_rq_to_pdu(rq);
++	struct tcm_loop_cmd *tl_cmd = scsi_cmd_priv(sc);
++	struct se_cmd *se_cmd = &tl_cmd->tl_se_cmd;
++
++	flush_work(&se_cmd->work);
++	return true;
++}
++
+ static int tcm_loop_target_reset(struct scsi_cmnd *sc)
+ {
+ 	struct tcm_loop_hba *tl_hba;
+ 	struct tcm_loop_tpg *tl_tpg;
++	struct Scsi_Host *sh = sc->device->host;
++	int ret;
  
+ 	/*
+ 	 * Locate the tcm_loop_hba_t pointer
+ 	 */
+-	tl_hba = *(struct tcm_loop_hba **)shost_priv(sc->device->host);
++	tl_hba = *(struct tcm_loop_hba **)shost_priv(sh);
+ 	if (!tl_hba) {
+ 		pr_err("Unable to perform device reset without active I_T Nexus\n");
+ 		return FAILED;
+@@ -285,11 +298,38 @@ static int tcm_loop_target_reset(struct
+ 	 * Locate the tl_tpg pointer from TargetID in sc->device->id
+ 	 */
+ 	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
+-	if (tl_tpg) {
+-		tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
+-		return SUCCESS;
+-	}
+-	return FAILED;
++	if (!tl_tpg)
++		return FAILED;
++
++	/*
++	 * Issue a LUN_RESET to drain all commands that the target core
++	 * knows about.  This handles commands not yet marked CMD_T_COMPLETE.
++	 */
++	ret = tcm_loop_issue_tmr(tl_tpg, sc->device->lun, 0, TMR_LUN_RESET);
++	if (ret != TMR_FUNCTION_COMPLETE)
++		return FAILED;
++
++	/*
++	 * Flush any deferred target core completion work that may still be
++	 * queued.  Commands that already had CMD_T_COMPLETE set before the TMR
++	 * are skipped by the TMR drain, but their async completion work
++	 * (transport_lun_remove_cmd → percpu_ref_put, release_cmd → scsi_done)
++	 * may still be pending in target_completion_wq.
++	 *
++	 * The SCSI EH will reuse in-flight scsi_cmnd structures for recovery
++	 * commands (e.g. TUR) immediately after this handler returns SUCCESS —
++	 * if deferred work is still pending, the memset in queuecommand would
++	 * zero the se_cmd while the work accesses it, leaking the LUN
++	 * percpu_ref and hanging configfs unlink forever.
++	 *
++	 * Use blk_mq_tagset_busy_iter() to find all started requests and
++	 * flush_work() on each — the same pattern used by mpi3mr, scsi_debug,
++	 * and other SCSI drivers to drain outstanding commands during reset.
++	 */
++	blk_mq_tagset_busy_iter(&sh->tag_set, tcm_loop_flush_work_iter, NULL);
++
++	tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
++	return SUCCESS;
+ }
+ 
+ static const struct scsi_host_template tcm_loop_driver_template = {
 
 
