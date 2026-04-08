@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96FF3D88F7;
-	Wed,  8 Apr 2026 18:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373EA3A16A0;
+	Wed,  8 Apr 2026 18:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673075; cv=none; b=HPDRopMc5C0V5A0ZiTmpFNj8/j4NAtJ1j2iBAaiZhU0Y4SAsN/rbF12Hvu98cepAX/g+KPM679uCvswPF7BdbsbJDWRcCTJ0V9UrA6XShvsk55IM6R1hzrmtHwpC5blDj+UKRETH98fGTXegB4OnYF/Qt5yPKcNlaDcp3eLXbNs=
+	t=1775673078; cv=none; b=IJ0rBKaj8K4urBelm7i1VJ06t2m24mszne9y64aqGmQKUIf3AkcXMGNiDVXUDaQ1L1IWZL9YtRzhF1vhPGWHNLgLS28m65ty+2GRGFKrRlWsZVNtNYmLfYnCHeNm1esWHTdf52pKbNhDSG9yreb3dJDxciYFWBDki5Ovro41yx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673075; c=relaxed/simple;
-	bh=+8ArF1sGdu5weelo7Pe4cF/dejnIDoejcOk/lGVK3lw=;
+	s=arc-20240116; t=1775673078; c=relaxed/simple;
+	bh=GDgE1dJ+jESmhMdBS+sH+3RqwYDds1uJtemQ4KlqEPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sI2zYucaPlHEuV1nc7EZbf8BwKQvcwZX1PvCXtgsUFbb60IPdnIRbj2RowVVAAFNUfyxQWCf69CCODqOQE5HeMMtZsswmpB7Nqlu0vwftc/6yX1dc1I+BPxSY3FIajt605eB3TQexsB/TfBSD6f//33o1veQ6n1UkPs+6SEztY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nx6RPb+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JxZkRHBYx6KyFLL4qzGgaMcAts7peaqFt3mrZk/nSPbfcS1wYx+3PlEAYHTnaEQCU9AY3tctgVghhM0p0z/LPvoTp/FaszR6Uu+9BDOsc3eeWYIlZHKe4DOFSOxTZDN9++kyuLnLr1yOfkIx833vVVEna6zpfdPgaw7cmB9YFnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSlkwQRD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nx6RPb+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37262C19425;
-	Wed,  8 Apr 2026 18:31:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSlkwQRD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34CDC2BC9E;
+	Wed,  8 Apr 2026 18:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673075;
-	bh=+8ArF1sGdu5weelo7Pe4cF/dejnIDoejcOk/lGVK3lw=;
+	s=korg; t=1775673078;
+	bh=GDgE1dJ+jESmhMdBS+sH+3RqwYDds1uJtemQ4KlqEPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nx6RPb+MF/YgHPAgc5LZoTWkezHG7sIZhdC0eUss8IhKtIVZjym5vPf31zXaw+ZiH
-	 ZOERvQ9G3LjUUgoUkujKsaJi1/fYrDSMj+cUkTKctvXzxIfjmImQn8Msnv3JrGZhJP
-	 hhUGcg73Aq4gFKukpDVnOM1VRqpQD1ct0FVKNMQU=
+	b=LSlkwQRDLGepNa7hLYLqCOKLf9rw6QZdEsiT/nU3I3vxMUDh7+ctfIIRnzPeA4P52
+	 WcJBnpSOWFN1hatpo+nqoOaRKck/J5SNZL458NUrnqAWj49IzVnWaYLvByuSkKlXSI
+	 YrhiDJWDib+mdUMDLntoAsaa1cjjZKJeTed9iJXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 092/277] net/mlx5: Fix switchdev mode rollback in case of failure
-Date: Wed,  8 Apr 2026 20:01:17 +0200
-Message-ID: <20260408175937.309372058@linuxfoundation.org>
+Subject: [PATCH 6.18 075/277] netfilter: ctnetlink: ignore explicit helper on new expectations
+Date: Wed,  8 Apr 2026 20:01:00 +0200
+Message-ID: <20260408175936.663950596@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -53,84 +51,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saeed Mahameed <saeedm@nvidia.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 403186400a1a6166efe7031edc549c15fee4723f ]
+[ Upstream commit 917b61fa2042f11e2af4c428e43f08199586633a ]
 
-If for some internal reason switchdev mode fails, we rollback to legacy
-mode, before this patch, rollback will unregister the uplink netdev and
-leave it unregistered causing the below kernel bug.
+Use the existing master conntrack helper, anything else is not really
+supported and it just makes validation more complicated, so just ignore
+what helper userspace suggests for this expectation.
 
-To fix this, we need to avoid netdev unregister by setting the proper
-rollback flag 'MLX5_PRIV_FLAGS_SWITCH_LEGACY' to indicate legacy mode.
+This was uncovered when validating CTA_EXPECT_CLASS via different helper
+provided by userspace than the existing master conntrack helper:
 
-devlink (431) used greatest stack depth: 11048 bytes left
-mlx5_core 0000:00:03.0: E-Switch: Disable: mode(LEGACY), nvfs(0), \
-	necvfs(0), active vports(0)
-mlx5_core 0000:00:03.0: E-Switch: Supported tc chains and prios offload
-mlx5_core 0000:00:03.0: Loading uplink representor for vport 65535
-mlx5_core 0000:00:03.0: mlx5_cmd_out_err:816:(pid 456): \
-	QUERY_HCA_CAP(0x100) op_mod(0x0) failed, \
-	status bad parameter(0x3), syndrome (0x3a3846), err(-22)
-mlx5_core 0000:00:03.0 enp0s3np0 (unregistered): Unloading uplink \
-	representor for vport 65535
- ------------[ cut here ]------------
-kernel BUG at net/core/dev.c:12070!
-Oops: invalid opcode: 0000 [#1] SMP NOPTI
-CPU: 2 UID: 0 PID: 456 Comm: devlink Not tainted 6.16.0-rc3+ \
-	#9 PREEMPT(voluntary)
-RIP: 0010:unregister_netdevice_many_notify+0x123/0xae0
-...
-Call Trace:
-[   90.923094]  unregister_netdevice_queue+0xad/0xf0
-[   90.923323]  unregister_netdev+0x1c/0x40
-[   90.923522]  mlx5e_vport_rep_unload+0x61/0xc6
-[   90.923736]  esw_offloads_enable+0x8e6/0x920
-[   90.923947]  mlx5_eswitch_enable_locked+0x349/0x430
-[   90.924182]  ? is_mp_supported+0x57/0xb0
-[   90.924376]  mlx5_devlink_eswitch_mode_set+0x167/0x350
-[   90.924628]  devlink_nl_eswitch_set_doit+0x6f/0xf0
-[   90.924862]  genl_family_rcv_msg_doit+0xe8/0x140
-[   90.925088]  genl_rcv_msg+0x18b/0x290
-[   90.925269]  ? __pfx_devlink_nl_pre_doit+0x10/0x10
-[   90.925506]  ? __pfx_devlink_nl_eswitch_set_doit+0x10/0x10
-[   90.925766]  ? __pfx_devlink_nl_post_doit+0x10/0x10
-[   90.926001]  ? __pfx_genl_rcv_msg+0x10/0x10
-[   90.926206]  netlink_rcv_skb+0x52/0x100
-[   90.926393]  genl_rcv+0x28/0x40
-[   90.926557]  netlink_unicast+0x27d/0x3d0
-[   90.926749]  netlink_sendmsg+0x1f7/0x430
-[   90.926942]  __sys_sendto+0x213/0x220
-[   90.927127]  ? __sys_recvmsg+0x6a/0xd0
-[   90.927312]  __x64_sys_sendto+0x24/0x30
-[   90.927504]  do_syscall_64+0x50/0x1c0
-[   90.927687]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   90.927929] RIP: 0033:0x7f7d0363e047
+  BUG: KASAN: slab-out-of-bounds in nf_ct_expect_related_report+0x2479/0x27c0
+  Read of size 4 at addr ffff8880043fe408 by task poc/102
+  Call Trace:
+   nf_ct_expect_related_report+0x2479/0x27c0
+   ctnetlink_create_expect+0x22b/0x3b0
+   ctnetlink_new_expect+0x4bd/0x5c0
+   nfnetlink_rcv_msg+0x67a/0x950
+   netlink_rcv_skb+0x120/0x350
 
-Fixes: 2a4f56fbcc47 ("net/mlx5e: Keep netdev when leave switchdev for devlink set legacy only")
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260330194015.53585-4-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Allowing to read kernel memory bytes off the expectation boundary.
+
+CTA_EXPECT_HELP_NAME is still used to offer the helper name to userspace
+via netlink dump.
+
+Fixes: bd0779370588 ("netfilter: nfnetlink_queue: allow to attach expectations to conntracks")
+Reported-by: Qi Tang <tpluszz77@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_conntrack_netlink.c | 54 +++++-----------------------
+ 1 file changed, 9 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index f1585df13b732..8be0961cb6c7e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -3623,6 +3623,8 @@ int esw_offloads_enable(struct mlx5_eswitch *esw)
- 	return 0;
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 8c5ae0665eaa4..879413b9fa06a 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -2635,7 +2635,6 @@ static const struct nla_policy exp_nla_policy[CTA_EXPECT_MAX+1] = {
  
- err_vports:
-+	/* rollback to legacy, indicates don't unregister the uplink netdev */
-+	esw->dev->priv.flags |= MLX5_PRIV_FLAGS_SWITCH_LEGACY;
- 	mlx5_esw_offloads_rep_unload(esw, MLX5_VPORT_UPLINK);
- err_uplink:
- 	esw_offloads_steering_cleanup(esw);
+ static struct nf_conntrack_expect *
+ ctnetlink_alloc_expect(const struct nlattr *const cda[], struct nf_conn *ct,
+-		       struct nf_conntrack_helper *helper,
+ 		       struct nf_conntrack_tuple *tuple,
+ 		       struct nf_conntrack_tuple *mask);
+ 
+@@ -2864,7 +2863,6 @@ ctnetlink_glue_attach_expect(const struct nlattr *attr, struct nf_conn *ct,
+ {
+ 	struct nlattr *cda[CTA_EXPECT_MAX+1];
+ 	struct nf_conntrack_tuple tuple, mask;
+-	struct nf_conntrack_helper *helper = NULL;
+ 	struct nf_conntrack_expect *exp;
+ 	int err;
+ 
+@@ -2878,17 +2876,8 @@ ctnetlink_glue_attach_expect(const struct nlattr *attr, struct nf_conn *ct,
+ 	if (err < 0)
+ 		return err;
+ 
+-	if (cda[CTA_EXPECT_HELP_NAME]) {
+-		const char *helpname = nla_data(cda[CTA_EXPECT_HELP_NAME]);
+-
+-		helper = __nf_conntrack_helper_find(helpname, nf_ct_l3num(ct),
+-						    nf_ct_protonum(ct));
+-		if (helper == NULL)
+-			return -EOPNOTSUPP;
+-	}
+-
+ 	exp = ctnetlink_alloc_expect((const struct nlattr * const *)cda, ct,
+-				     helper, &tuple, &mask);
++				     &tuple, &mask);
+ 	if (IS_ERR(exp))
+ 		return PTR_ERR(exp);
+ 
+@@ -3517,11 +3506,11 @@ ctnetlink_parse_expect_nat(const struct nlattr *attr,
+ 
+ static struct nf_conntrack_expect *
+ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+-		       struct nf_conntrack_helper *helper,
+ 		       struct nf_conntrack_tuple *tuple,
+ 		       struct nf_conntrack_tuple *mask)
+ {
+ 	struct net *net = read_pnet(&ct->ct_net);
++	struct nf_conntrack_helper *helper;
+ 	struct nf_conntrack_expect *exp;
+ 	struct nf_conn_help *help;
+ 	u32 class = 0;
+@@ -3531,7 +3520,11 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 	if (!help)
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 
+-	if (cda[CTA_EXPECT_CLASS] && helper) {
++	helper = rcu_dereference(help->helper);
++	if (!helper)
++		return ERR_PTR(-EOPNOTSUPP);
++
++	if (cda[CTA_EXPECT_CLASS]) {
+ 		class = ntohl(nla_get_be32(cda[CTA_EXPECT_CLASS]));
+ 		if (class > helper->expect_class_max)
+ 			return ERR_PTR(-EINVAL);
+@@ -3565,8 +3558,6 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ #ifdef CONFIG_NF_CONNTRACK_ZONES
+ 	exp->zone = ct->zone;
+ #endif
+-	if (!helper)
+-		helper = rcu_dereference(help->helper);
+ 	rcu_assign_pointer(exp->helper, helper);
+ 	exp->tuple = *tuple;
+ 	exp->mask.src.u3 = mask->src.u3;
+@@ -3598,7 +3589,6 @@ ctnetlink_create_expect(struct net *net,
+ {
+ 	struct nf_conntrack_tuple tuple, mask, master_tuple;
+ 	struct nf_conntrack_tuple_hash *h = NULL;
+-	struct nf_conntrack_helper *helper = NULL;
+ 	struct nf_conntrack_expect *exp;
+ 	struct nf_conn *ct;
+ 	int err;
+@@ -3624,33 +3614,7 @@ ctnetlink_create_expect(struct net *net,
+ 	ct = nf_ct_tuplehash_to_ctrack(h);
+ 
+ 	rcu_read_lock();
+-	if (cda[CTA_EXPECT_HELP_NAME]) {
+-		const char *helpname = nla_data(cda[CTA_EXPECT_HELP_NAME]);
+-
+-		helper = __nf_conntrack_helper_find(helpname, u3,
+-						    nf_ct_protonum(ct));
+-		if (helper == NULL) {
+-			rcu_read_unlock();
+-#ifdef CONFIG_MODULES
+-			if (request_module("nfct-helper-%s", helpname) < 0) {
+-				err = -EOPNOTSUPP;
+-				goto err_ct;
+-			}
+-			rcu_read_lock();
+-			helper = __nf_conntrack_helper_find(helpname, u3,
+-							    nf_ct_protonum(ct));
+-			if (helper) {
+-				err = -EAGAIN;
+-				goto err_rcu;
+-			}
+-			rcu_read_unlock();
+-#endif
+-			err = -EOPNOTSUPP;
+-			goto err_ct;
+-		}
+-	}
+-
+-	exp = ctnetlink_alloc_expect(cda, ct, helper, &tuple, &mask);
++	exp = ctnetlink_alloc_expect(cda, ct, &tuple, &mask);
+ 	if (IS_ERR(exp)) {
+ 		err = PTR_ERR(exp);
+ 		goto err_rcu;
+@@ -3660,8 +3624,8 @@ ctnetlink_create_expect(struct net *net,
+ 	nf_ct_expect_put(exp);
+ err_rcu:
+ 	rcu_read_unlock();
+-err_ct:
+ 	nf_ct_put(ct);
++
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
