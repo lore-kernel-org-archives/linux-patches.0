@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601813D411F;
-	Wed,  8 Apr 2026 18:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6003D4134;
+	Wed,  8 Apr 2026 18:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672946; cv=none; b=lGIEEG8jZDeDq+hShhhA+Pq+Axsn8RcIe5imfxm3i7FmfAHyCffp5B/oPzJiMMkTBXmEgf2DWwo1wO73mzgPahFrl05WesD9qk+AFWxHyOmfvI4z/zP2U6LooIekGRbPcDAX3neU9j2Rj/T0KhgF7nk578e49zJ8DJoddmxq7Kc=
+	t=1775672949; cv=none; b=uQ+kwWJoTE2rZ+nMIZe2JVZJZ4YcCk+VPoc2hxLl3QkTRIK+RK62yxfoJL9LEWj0fyk+m3kqXex1X9setnrvz1saBLJ6GEHvKSn2x2wxxqi0xJrZyNcAzExaSBKBoA3WfuQo53aVgrzJ/wLtuNbcW0ODO0gaLBesFtk5TQQ4GM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672946; c=relaxed/simple;
-	bh=8enPmp2WT4ugWxww+xcvMZ9HRbxpvnuDI3thK1cle+c=;
+	s=arc-20240116; t=1775672949; c=relaxed/simple;
+	bh=0aVJQdyBYpBR6fkxRA0UtcDd+snSpECtqe0YyzfUUQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RcW5zx3A/RlxKZNPu4CDI/oon8vIr1jPDQc79/3Mja/Yycq1/9qB3fBSYuMJzAvyR0kDAD51PwiYUEgBWGzVr/QmRsoKYOGTsYDF7axX5uSwKy55DQfeLBlC8Mu0tS6R25jdL2R9P5hlPHAufhD4XH5u1fViMskvffc31kdQh90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W68u96/X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YoU+m90HcSkK3oPVlpYzwQkX3xmpXOccxU65tXm3KbI2gPOmqralRDIBEcKU5nam6Z8MKrvGHTTeowF0n7q40/fIyiHQkexT9OVStAQO2qglWSDQFTUg6bjjug4cTY3OJQqKj/GGGyob1nXD02/vUaksMcnijf9OOB7YbfB4MO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATb1xyEJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W68u96/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27D2C19425;
-	Wed,  8 Apr 2026 18:29:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATb1xyEJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFD6C19421;
+	Wed,  8 Apr 2026 18:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672946;
-	bh=8enPmp2WT4ugWxww+xcvMZ9HRbxpvnuDI3thK1cle+c=;
+	s=korg; t=1775672948;
+	bh=0aVJQdyBYpBR6fkxRA0UtcDd+snSpECtqe0YyzfUUQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W68u96/XdRAoFseIKBUfQrCpXw0fjgmYyYgMIvw5eAPb2WmE2m/c9oi+OpQATQUn1
-	 cmzvTMBeBGACIgGdFkySWuEc9paHZgujN2GvmXhxVZ5q13EJ2i72v35Mqp36q2S+RM
-	 NUcStbxiZVO7l5t1o6uR4FjXxBRC51Ui/JJ628wE=
+	b=ATb1xyEJZ75fuYgUBykLi4nsXqxoTSfbCFPH9LjsQysME0UyjfMhoWVKgKX3YBia2
+	 xmWgRZHy/Ow4bWSs4M7CmLnzLkW+pjSbDtI8K9FySltb/F0gbcgfIofNFT8l0R5Slv
+	 LYvF8BRicc1VPWhHE+gFj4RR2RfcOOrCID/W+4d8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lee Jones <lee@kernel.org>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 010/277] HID: core: Mitigate potential OOB by removing bogus memset()
-Date: Wed,  8 Apr 2026 19:59:55 +0200
-Message-ID: <20260408175934.230129845@linuxfoundation.org>
+Subject: [PATCH 6.18 011/277] HID: multitouch: Check to ensure report responses match the request
+Date: Wed,  8 Apr 2026 19:59:56 +0200
+Message-ID: <20260408175934.267481795@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -53,46 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 0a3fe972a7cb1404f693d6f1711f32bc1d244b1c ]
+[ Upstream commit e716edafedad4952fe3a4a273d2e039a84e8681a ]
 
-The memset() in hid_report_raw_event() has the good intention of
-clearing out bogus data by zeroing the area from the end of the incoming
-data string to the assumed end of the buffer.  However, as we have
-previously seen, doing so can easily result in OOB reads and writes in
-the subsequent thread of execution.
+It is possible for a malicious (or clumsy) device to respond to a
+specific report's feature request using a completely different report
+ID.  This can cause confusion in the HID core resulting in nasty
+side-effects such as OOB writes.
 
-The current suggestion from one of the HID maintainers is to remove the
-memset() and simply return if the incoming event buffer size is not
-large enough to fill the associated report.
-
-Suggested-by Benjamin Tissoires <bentiss@kernel.org>
+Add a check to ensure that the report ID in the response, matches the
+one that was requested.  If it doesn't, omit reporting the raw event and
+return early.
 
 Signed-off-by: Lee Jones <lee@kernel.org>
-[bentiss: changed the return value]
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hid/hid-multitouch.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index a5b3a8ca2fcbc..f5587b786f875 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2057,9 +2057,10 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
- 		rsize = max_buffer_size;
- 
- 	if (csize < rsize) {
--		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
--				csize, rsize);
--		memset(cdata + csize, 0, rsize - csize);
-+		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %d)\n",
-+				     report->id, rsize, csize);
-+		ret = -EINVAL;
-+		goto out;
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index af19e089b0122..21bfaf9bbd733 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -524,12 +524,19 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
+ 		dev_warn(&hdev->dev, "failed to fetch feature %d\n",
+ 			 report->id);
+ 	} else {
++		/* The report ID in the request and the response should match */
++		if (report->id != buf[0]) {
++			hid_err(hdev, "Returned feature report did not match the request\n");
++			goto free;
++		}
++
+ 		ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, buf,
+ 					   size, 0);
+ 		if (ret)
+ 			dev_warn(&hdev->dev, "failed to report feature\n");
  	}
  
- 	if ((hid->claimed & HID_CLAIMED_HIDDEV) && hid->hiddev_report_event)
++free:
+ 	kfree(buf);
+ }
+ 
 -- 
 2.53.0
 
