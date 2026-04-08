@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F1D35C1B4;
-	Wed,  8 Apr 2026 19:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB62A2857C1;
+	Wed,  8 Apr 2026 19:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674830; cv=none; b=TaNC8NUcev7eqX8ni74DKVN4swLJ9GCUHDynq83QiklU9g9s4InCLCUOIv7w0gzNWzeLx1RwCXzJOb2xzOlWrpu7A4owBQMxxL6z2KULRfQ8QWTzhOHk6SYPXeQlvBcceu7VvyK691HmXyvvGzX4IpHhLhFQGL2Z9tCm0Nk8x0k=
+	t=1775674832; cv=none; b=A7Pe8+tW3DKVmmJYsP11HraWg4YLxFv4kqi/8uP1DXovEZLGn7dlRZUDZZ8abzdZ7EyENUnLLMja018yLyYF8n1x7K44UBr+wRIuPzt1iVrvg6Va49LLmH9v68SoBaUOGx13aDI+qkF79mPRIsERZyX3b25X7l+DdJtmGMBvqq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674830; c=relaxed/simple;
-	bh=ftejznMcU91zhUj2HMB0h8miy1e5aEqJu9encK8XaLg=;
+	s=arc-20240116; t=1775674832; c=relaxed/simple;
+	bh=U6BkfyOm8knfHTLpou4VPXFcIguoZoJSeFJdP/ZPMDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yah2/072h8BRrx8UqyNu6tmWBwnvSccQIboB+R6uwuOVviNX6KU4PUhVINu7pOSVOeeeY5XRV7uaqsQIGVsB/YN3HOQMEkm3+fq48tYd/mCoVez3SeaZEV8Sc2jqV5Dz5H5iqnL84kuXDPyDHHfUsDSzklSI2XWSgIeS/i3mMmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gx3K2aP6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BybKygioH3Hd7C7wOwqfR40/wmWwpC7hAGwk1ZJSagVWJ5EZZ3akxyWa/q6d1qKpV0sggdeXsxWbl8/FEbrkhwzBZhsHRxijItRFz5cajtGbuBoFlunrKnf8O8Mhg3vu7qH0J/NP4kpadFO9R9fAPjIA8EHdGWyOmEACJXNIIB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1m3/ZHh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gx3K2aP6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5177C19425;
-	Wed,  8 Apr 2026 19:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1m3/ZHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71749C2BC87;
+	Wed,  8 Apr 2026 19:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674830;
-	bh=ftejznMcU91zhUj2HMB0h8miy1e5aEqJu9encK8XaLg=;
+	s=korg; t=1775674832;
+	bh=U6BkfyOm8knfHTLpou4VPXFcIguoZoJSeFJdP/ZPMDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gx3K2aP6m3ucGyaYO/eiVRzjG/vX3uywvMRPA5ZkK96OeTxp/0Zjz4mq3SvPgBTgt
-	 XPOnbWLQt+iTMEJ/5L/OfNWqcuwseJ3Q7MXTSwVNR7aFh52Yi/sTn4bHk7j4wA87/x
-	 8F5t+rc5qe3sTEz0rt33lSRSxzxeJ4WFXMWjigBc=
+	b=V1m3/ZHhQfLyZhWc84+G4ztu8hbbs0/h3e3m434u6YKExP1e2mBjcH3A8yVOQNiGn
+	 +Pla5IsbsaFykHFTeh5SblbPV2xljwZ6IAoBDKwveBcjxVMzVRYMCNlA48Y/3aZEh7
+	 5IP937HOKwsoHtZ+nkFnb1yEhIocS9+yve0waCBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frej Drejhammar <frej@stacken.kth.se>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.19 207/311] USB: serial: io_edgeport: add support for Blackbox IC135A
-Date: Wed,  8 Apr 2026 20:03:27 +0200
-Message-ID: <20260408175947.135457106@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Juno Choi <juno.choi@lge.com>
+Subject: [PATCH 6.19 243/311] usb: dwc2: gadget: Fix spin_lock/unlock mismatch in dwc2_hsotg_udc_stop()
+Date: Wed,  8 Apr 2026 20:04:03 +0200
+Message-ID: <20260408175948.466234317@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -50,57 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frej Drejhammar <frej@stacken.kth.se>
+From: Juno Choi <juno.choi@lge.com>
 
-commit 0e01c3416eb863ee7f156a9d7e7421ec0a9f68a0 upstream.
+commit 9bb4b5ed7f8c4f95cc556bdf042b0ba2fa13557a upstream.
 
-The Blackbox 724-746-5500 USB Director USB-RS-232 HUB, part number
-IC135A, is a rebadged Edgeport/4 with its own USB device id.
+dwc2_gadget_exit_clock_gating() internally calls call_gadget() macro,
+which expects hsotg->lock to be held since it does spin_unlock/spin_lock
+around the gadget driver callback invocation.
 
-Signed-off-by: Frej Drejhammar <frej@stacken.kth.se>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+However, dwc2_hsotg_udc_stop() calls dwc2_gadget_exit_clock_gating()
+without holding the lock. This leads to:
+ - spin_unlock on a lock that is not held (undefined behavior)
+ - The lock remaining held after dwc2_gadget_exit_clock_gating() returns,
+   causing a deadlock when spin_lock_irqsave() is called later in the
+   same function.
+
+Fix this by acquiring hsotg->lock before calling
+dwc2_gadget_exit_clock_gating() and releasing it afterwards, which
+satisfies the locking requirement of the call_gadget() macro.
+
+Fixes: af076a41f8a2 ("usb: dwc2: also exit clock_gating when stopping udc while suspended")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Juno Choi <juno.choi@lge.com>
+Link: https://patch.msgid.link/20260324014910.2798425-1-juno.choi@lge.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/io_edgeport.c |    3 +++
- drivers/usb/serial/io_usbvend.h  |    1 +
- 2 files changed, 4 insertions(+)
+ drivers/usb/dwc2/gadget.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/io_edgeport.c
-+++ b/drivers/usb/serial/io_edgeport.c
-@@ -73,6 +73,7 @@ static const struct usb_device_id edgepo
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_22I) },
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_412_4) },
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_COMPATIBLE) },
-+	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_BLACKBOX_IC135A) },
- 	{ }
- };
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -4607,7 +4607,9 @@ static int dwc2_hsotg_udc_stop(struct us
+ 	/* Exit clock gating when driver is stopped. */
+ 	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
+ 	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
++		spin_lock_irqsave(&hsotg->lock, flags);
+ 		dwc2_gadget_exit_clock_gating(hsotg, 0);
++		spin_unlock_irqrestore(&hsotg->lock, flags);
+ 	}
  
-@@ -121,6 +122,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_8R) },
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_8RR) },
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_412_8) },
-+	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_BLACKBOX_IC135A) },
- 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0202) },
- 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0203) },
- 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0310) },
-@@ -470,6 +472,7 @@ static void get_product_info(struct edge
- 	case ION_DEVICE_ID_EDGEPORT_2_DIN:
- 	case ION_DEVICE_ID_EDGEPORT_4_DIN:
- 	case ION_DEVICE_ID_EDGEPORT_16_DUAL_CPU:
-+	case ION_DEVICE_ID_BLACKBOX_IC135A:
- 		product_info->IsRS232 = 1;
- 		break;
- 
---- a/drivers/usb/serial/io_usbvend.h
-+++ b/drivers/usb/serial/io_usbvend.h
-@@ -211,6 +211,7 @@
- 
- //
- // Definitions for other product IDs
-+#define ION_DEVICE_ID_BLACKBOX_IC135A		0x0801	// OEM device (rebranded Edgeport/4)
- #define ION_DEVICE_ID_MT4X56USB			0x1403	// OEM device
- #define ION_DEVICE_ID_E5805A			0x1A01  // OEM device (rebranded Edgeport/4)
- 
+ 	/* all endpoints should be shutdown */
 
 
