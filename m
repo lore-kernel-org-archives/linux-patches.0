@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAA9B67E;
-	Wed,  8 Apr 2026 18:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E74CB67E;
+	Wed,  8 Apr 2026 18:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673616; cv=none; b=kxqcf7hzxzDvRL+beNtbN/uS2OLD+G8B8emG5UqTAajAgSHV/9yb6KG5YSbKt55KwbdtObFHVnkaJXHLextL0EX9SibeJ588C5oBSBt/5jEcSY/z5En+w0yS/a68/XlFQmhlgjB6x5b3wdItU6SWzsweA08B8kVpeaMa/bwE2yk=
+	t=1775673619; cv=none; b=MqYpKp2fy+MIc5/JV8CSPS0E0UgmPhHkKhsq+r+Dc2aE7bYwR2YcaysntyFqPiBCHyjW7Jt1uI35Nk+8Utw6KE9un8VQTkpNnfyt1U9qdjTjQ0M76ePydrj2T+q4NCl006fvy/CnAHPH2e2jphsGU8lu+Bo5d/iKnPWwOcGN4GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673616; c=relaxed/simple;
-	bh=B2K/pfd55T6Ej2fw8AfcXEyhhgo1LpDa3zerW9DgPIk=;
+	s=arc-20240116; t=1775673619; c=relaxed/simple;
+	bh=e68E8646vTgxmwKx96sipfn2DMNQGh3hHfNDLE0yJBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qpUbhQCdpsJH58gggQIWCpRUeFRO1wni+4RVaWslcUK0EmLVwoFuerGmMJVIkeJXsDkOl00VX3M+jFkrLZR2wyf87Pnq+M783cenkten3P1FFhBwEbPRVRmDVGIi/32AT1/ygiI2aF5cAve8cjUFQiZ51r9kVOaQtZ7HiMxkCcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoFI+ikw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XCUVPXGws9iVnG24Fee5vAdi2f5h33eL7W8uSLNEJpQorlTigAnsO6ifSk/Mcm1swRZMi4FtyjrudPos3TnZx2xlBNGQ//FLG43cIrWvRuLrwGqNiwwsb8YsUy4QNmuqeZBbx5TfLxX7bTheY+k+pwuaFULaXGTysDdV0xWs630=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqKRIiPF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoFI+ikw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C7CC19425;
-	Wed,  8 Apr 2026 18:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqKRIiPF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BA7C2BC9E;
+	Wed,  8 Apr 2026 18:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673616;
-	bh=B2K/pfd55T6Ej2fw8AfcXEyhhgo1LpDa3zerW9DgPIk=;
+	s=korg; t=1775673619;
+	bh=e68E8646vTgxmwKx96sipfn2DMNQGh3hHfNDLE0yJBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xoFI+ikwa4EFcnmIG9MKscgWu6ZVB8WUFBg4bqpNa7viW5y5CPZ/x2aHncK624Ajc
-	 uPCp0dKNytCD8GDswVpn5r+Za4zJZ+FmG4krrGJGaL+IEfilAxFUsbpbZznQcuZJwE
-	 IaiH9G5UdGtlaFt9APOl18ZEpIJPQ4188ZPB3XPs=
+	b=jqKRIiPFI72TKoKWba+TFhsexAGVswG61VHqqMoc3f7KauV+BbhtCPjQtSjLaOrWJ
+	 5RTqMsrrju9qZEpE4gFuDu17uejrTcuAWghomX24AZ9zg1EVaTqD3FAQ2DHfyu4c3l
+	 5iAgb49y0L3u3AB/seRGgHKrr4Ncx9IbB7yrINLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
+	Martin Michaelis <code@mgjm.de>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 023/242] io_uring/kbuf: use WRITE_ONCE() for userspace-shared buffer ring fields
-Date: Wed,  8 Apr 2026 20:01:03 +0200
-Message-ID: <20260408175927.938801992@linuxfoundation.org>
+Subject: [PATCH 6.12 024/242] io_uring/kbuf: fix missing BUF_MORE for incremental buffers at EOF
+Date: Wed,  8 Apr 2026 20:01:04 +0200
+Message-ID: <20260408175927.975326568@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -51,47 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-Commit a4c694bfc2455e82b7caf6045ca893d123e0ed11 upstream.
+Commit 3ecd3e03144b38a21a3b70254f1b9d2e16629b09 upstream.
 
-buf->addr and buf->len reside in memory shared with userspace. They
-should be written with WRITE_ONCE() to guarantee atomic stores and
-prevent tearing or other unsafe compiler optimizations.
+For a zero length transfer, io_kbuf_inc_commit() is called with !len.
+Since we never enter the while loop to consume the buffers,
+io_kbuf_inc_commit() ends up returning true, consuming the buffer. But
+if no data was consumed, by definition it cannot have consumed the
+buffer. Return false for that case.
 
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Cc: Caleb Sander Mateos <csander@purestorage.com>
+Reported-by: Martin Michaelis <code@mgjm.de>
+Cc: stable@vger.kernel.org
+Fixes: ae98dbf43d75 ("io_uring/kbuf: add support for incremental buffer consumption")
+Link: https://github.com/axboe/liburing/issues/1553
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ io_uring/kbuf.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/io_uring/kbuf.c
 +++ b/io_uring/kbuf.c
-@@ -44,11 +44,11 @@ static bool io_kbuf_inc_commit(struct io
- 		buf_len -= this_len;
- 		/* Stop looping for invalid buffer length of 0 */
- 		if (buf_len || !this_len) {
--			buf->addr = READ_ONCE(buf->addr) + this_len;
--			buf->len = buf_len;
-+			WRITE_ONCE(buf->addr, READ_ONCE(buf->addr) + this_len);
-+			WRITE_ONCE(buf->len, buf_len);
- 			return false;
- 		}
--		buf->len = 0;
-+		WRITE_ONCE(buf->len, 0);
- 		bl->head++;
- 		len -= this_len;
- 	}
-@@ -289,7 +289,7 @@ static int io_ring_buffers_peek(struct i
- 				arg->partial_map = 1;
- 				if (iov != arg->iovs)
- 					break;
--				buf->len = len;
-+				WRITE_ONCE(buf->len, len);
- 			}
- 		}
+@@ -34,6 +34,10 @@ struct io_provide_buf {
  
+ static bool io_kbuf_inc_commit(struct io_buffer_list *bl, int len)
+ {
++	/* No data consumed, return false early to avoid consuming the buffer */
++	if (!len)
++		return false;
++
+ 	while (len) {
+ 		struct io_uring_buf *buf;
+ 		u32 buf_len, this_len;
 
 
