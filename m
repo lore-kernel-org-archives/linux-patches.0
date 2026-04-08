@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172A2324B1F;
-	Wed,  8 Apr 2026 18:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CEE3D411F;
+	Wed,  8 Apr 2026 18:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672791; cv=none; b=pXh26O+QpD3WPeR3U0DzUrsBdbmIDEEmkqy9hxjEakOW9ZMliiNrlvkUt9APFRYSgAxKqvEF7wCQfmcp6Yibdb3xUk9hN7rNU3hTNfHmk5BS7JNz1w3LGI5bomtw1snlXTOoN5n4wtjm+I0DY1KfJcTo7Sh2PIysPTQifMKdRV4=
+	t=1775672793; cv=none; b=cSdsE25yoU2PhwAA+RwnzCed6SyJ5ZKZoaojmH2iCUmiJ9/fzXDPWZyTRuIxdEpxpztfsfEqDsDHaQmSS05uZhxVd3DFMNXpe+obQWaUwGumraTVe1jG50qdo0/d8HOC61PRdA1d2q9SEt58BzoZ4ZtFdXbgdjyqVhRojusAyHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672791; c=relaxed/simple;
-	bh=QV3iNBlDcw89yyORDOI0NFglyby/RW7RidZ8jU+O3EM=;
+	s=arc-20240116; t=1775672793; c=relaxed/simple;
+	bh=dYNEHLZ+BOwDOjCQ+nyE5wRFnVBxmY29YysCVJYSkok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ch+BOhB8fPIqOhocwvnXjUaTpst7+tDDKTkj0OaRHL5n4c5WPWpVLkAOAgTjcalQsoEZ5SSXanMpmZC6vW7n9Q33o/Rt/+VUy738rHrfGQfFAsc6I62SokHQamQNBvV6FKzF1XDekNx4rzNniCkV6a7b7ON1vnRMLrAk8CoA6yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvRtkjaK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ai/j/W/YRkBYvs27lvGb9LoSjzHzwy2ZDbMcTL/8IMsRiU/1UWHgavTwxzQyDWvFt1VaWfa7U7Xug6hVep0WuN6LX2ad7mJ5CV11n17tLU+EsHNoyu//p6roVWPqwfR6S2wcciOfRPbGwVn800CWS8wYJnxEDKNjMJcxL0dbHbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMrK3TyP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvRtkjaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B9EC19421;
-	Wed,  8 Apr 2026 18:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMrK3TyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378BDC19421;
+	Wed,  8 Apr 2026 18:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672791;
-	bh=QV3iNBlDcw89yyORDOI0NFglyby/RW7RidZ8jU+O3EM=;
+	s=korg; t=1775672793;
+	bh=dYNEHLZ+BOwDOjCQ+nyE5wRFnVBxmY29YysCVJYSkok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SvRtkjaKzCW9aC5NnK3Q7qoWtlLj+WsHPd7+FtH1K65tLq1Mpl2A6ON836XGtNimg
-	 fOkTGAyt775yDr2nVvaRrB/BP06ENvDgkbFs1F0+ujAwQjwqWePCGkH8vdOYpG+Y8F
-	 TXCusMtezyoU5ElmpEPIdqvT20rPFmE6Ux0shG14=
+	b=sMrK3TyPbM1TEq9qmSCVdj9jtgqM5vslKfIBUvtrJvWKTd7k97ufavPiH8arF7T4O
+	 UU7BbH+S9Ax/b7nlSQGENfNAF5TkPnew1Qf4Yb2pr/WZjVFGyIgFz3TFahIhAs67Bo
+	 kjIZlPlcxEkLMMsYNfWxKOsnamK8b5VpKgrm5izk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuen-Han Tsai <khtsai@google.com>
-Subject: [PATCH 6.6 144/160] usb: gadget: f_subset: Fix unbalanced refcnt in geth_free
-Date: Wed,  8 Apr 2026 20:03:51 +0200
-Message-ID: <20260408175918.569509260@linuxfoundation.org>
+Subject: [PATCH 6.6 145/160] usb: gadget: f_rndis: Protect RNDIS options with mutex
+Date: Wed,  8 Apr 2026 20:03:52 +0200
+Message-ID: <20260408175918.606535333@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -51,46 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuen-Han Tsai <khtsai@google.com>
 
-commit caa27923aacd8a5869207842f2ab1657c6c0c7bc upstream.
+commit 8d8c68b1fc06ece60cf43e1306ff0f4ac121547e upstream.
 
-geth_alloc() increments the reference count, but geth_free() fails to
-decrement it. This prevents the configuration of attributes via configfs
-after unlinking the function.
+The class/subclass/protocol options are suspectible to race conditions
+as they can be accessed concurrently through configfs.
 
-Decrement the reference count in geth_free() to ensure proper cleanup.
+Use existing mutex to protect these options. This issue was identified
+during code inspection.
 
-Fixes: 02832e56f88a ("usb: gadget: f_subset: add configfs support")
+Fixes: 73517cf49bd4 ("usb: gadget: add RNDIS configfs options for class/subclass/protocol")
 Cc: stable@vger.kernel.org
 Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-1-4886b578161b@google.com
+Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-2-4886b578161b@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_subset.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/gadget/function/f_rndis.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/function/f_subset.c
-+++ b/drivers/usb/gadget/function/f_subset.c
-@@ -6,6 +6,7 @@
-  * Copyright (C) 2008 Nokia Corporation
-  */
+--- a/drivers/usb/gadget/function/f_rndis.c
++++ b/drivers/usb/gadget/function/f_rndis.c
+@@ -11,6 +11,7 @@
+ 
+ /* #define VERBOSE_DEBUG */
  
 +#include <linux/cleanup.h>
  #include <linux/slab.h>
  #include <linux/kernel.h>
  #include <linux/module.h>
-@@ -449,8 +450,13 @@ static struct usb_function_instance *get
- static void geth_free(struct usb_function *f)
- {
- 	struct f_gether *eth;
-+	struct f_gether_opts *opts;
-+
-+	opts = container_of(f->fi, struct f_gether_opts, func_inst);
+@@ -678,9 +679,11 @@ rndis_bind(struct usb_configuration *c,
+ 			return -ENOMEM;
+ 	}
  
- 	eth = func_to_geth(f);
-+	scoped_guard(mutex, &opts->lock)
-+		opts->refcnt--;
- 	kfree(eth);
- }
+-	rndis_iad_descriptor.bFunctionClass = rndis_opts->class;
+-	rndis_iad_descriptor.bFunctionSubClass = rndis_opts->subclass;
+-	rndis_iad_descriptor.bFunctionProtocol = rndis_opts->protocol;
++	scoped_guard(mutex, &rndis_opts->lock) {
++		rndis_iad_descriptor.bFunctionClass = rndis_opts->class;
++		rndis_iad_descriptor.bFunctionSubClass = rndis_opts->subclass;
++		rndis_iad_descriptor.bFunctionProtocol = rndis_opts->protocol;
++	}
  
+ 	/*
+ 	 * in drivers/usb/gadget/configfs.c:configfs_composite_bind()
 
 
