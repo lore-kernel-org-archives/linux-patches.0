@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01493355F30;
-	Wed,  8 Apr 2026 18:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8376E355F30;
+	Wed,  8 Apr 2026 18:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673922; cv=none; b=jNBGBauG9E5Oq21kV1zUrwQj2dQBouYKwbt4n7NwZXS6HlhL7B6xkeXwyQwXls2QNLS/AQhbqzngfNJyTGUqWsABmj62EfONIgC4MxDXej/uZTJ2WLuRa+5XGLUY4tpHoUhu4oqAGeLPKq9tdOT7EVQThkiIl+jXLn6rm36bUdk=
+	t=1775673924; cv=none; b=ZJTVTwO2D6kCdi9TdN8BP7P99hAF+5FHUptYV1tVzt9ngwb4xZfS1E0F3bXlvReuZ/42kTZo2npkOyuyE1zj0ZnS5+9xfvPwojwP1HFpRawZVKpidKii+3MDTaqNCpc/qKVh+/Sw04fGgh0auzPCh4RkIHUZm/VcdOd4/jM0bgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673922; c=relaxed/simple;
-	bh=eaVzQPzmw/j2YmV2b8PLKYjdcroanikTnR2h2/SO5JA=;
+	s=arc-20240116; t=1775673924; c=relaxed/simple;
+	bh=cOru9OilVGQH4fpJDnPWiByPFe0hqzjyeuGITAinag0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B4hiUraYC/Pxn3OaMZPBMtQtB5LAYQsMs+IXUBWHp6zVYErSgTF8v1+r2zl+T6/zs+KGacPmL8ybE9OiO/pfb2Nc6lhiLy12rtf436jkpGObwqkzxEO5lVCxQbLklMYw/tZaCnAfztBwuITAhimWCF2BdCLavY7T03GTUd8lq5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmq8wAt0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VFqKM/D/yqGbzo2gM8LHuJ774OTO5Qpj/o6ZUbvs0vGtHgRy9kFy0NupffV9iwoLBXArtbmC0D+49BVg2Ue8o/yhZPi6lOKdz+EgpuJ5rcieLUvZAO912hUL6VO/ObSwlwLlgeC2t2ue99H5KG5EXj2/VVqNljn4iPPOAnpn+xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhkLruex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmq8wAt0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88202C19421;
-	Wed,  8 Apr 2026 18:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhkLruex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D2CC19421;
+	Wed,  8 Apr 2026 18:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673921;
-	bh=eaVzQPzmw/j2YmV2b8PLKYjdcroanikTnR2h2/SO5JA=;
+	s=korg; t=1775673924;
+	bh=cOru9OilVGQH4fpJDnPWiByPFe0hqzjyeuGITAinag0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qmq8wAt03li4FDOWqwmtldALyPypjdq31yMCugt4+MMEsRDMhgZFwqVQI9/Z0ATfE
-	 Cr+uU1u+j5uqHI0x5a7MUi2hN2qFYuRBTpcKHor9Om9r1BjDt8zjHzbmSpACG4vP1M
-	 JEbxdRXmwzlc9GWPybvQd8SIYqZij0aL5dAcWo6s=
+	b=FhkLruexne7Pmzy7EoKzLQFWT9NHFhYnGcGbPAenUoh/QGehq4ZAzJrCxSFAtifRG
+	 Vt3B4MdEwOJKPfNgUcAqt/hdhzHHeojwDjTTaAuQ65oAL6/Z+VvtVXbuulanR5ujlz
+	 WmnkZrSAH2Q1XRrmrlughxvL+b+5KmAEzwvKXLwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sanman Pradhan <psanman@juniper.net>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/242] hwmon: (tps53679) Fix device ID comparison and printing in tps53676_identify()
-Date: Wed,  8 Apr 2026 20:02:28 +0200
-Message-ID: <20260408175931.127790590@linuxfoundation.org>
+Subject: [PATCH 6.12 109/242] hwmon: (occ) Fix missing newline in occ_show_extended()
+Date: Wed,  8 Apr 2026 20:02:29 +0200
+Message-ID: <20260408175931.165941635@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,46 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Sanman Pradhan <psanman@juniper.net>
 
-[ Upstream commit ca34ee6d0307a0b4e52c870dfc1bb8a3c3eb956e ]
+[ Upstream commit 09773978879ecf71a7990fe9a28ce4eb92bce645 ]
 
-tps53676_identify() uses strncmp() to compare the device ID buffer
-against a byte sequence containing embedded non-printable bytes
-(\x53\x67\x60). strncmp() is semantically wrong for binary data
-comparison; use memcmp() instead.
+In occ_show_extended() case 0, when the EXTN_FLAG_SENSOR_ID flag
+is set, the sysfs_emit format string "%u" is missing the trailing
+newline that the sysfs ABI expects. The else branch correctly uses
+"%4phN\n", and all other show functions in this file include the
+trailing newline.
 
-Additionally, the buffer from i2c_smbus_read_block_data() is not
-NUL-terminated, so printing it with "%s" in the error path is
-undefined behavior and may read past the buffer. Use "%*ph" to
-hex-dump the actual bytes returned.
+Add the missing "\n" for consistency and correct sysfs output.
 
-Per the datasheet, the expected device ID is the 6-byte sequence
-54 49 53 67 60 00 ("TI\x53\x67\x60\x00"), so compare all 6 bytes
-including the trailing NUL.
-
-Fixes: cb3d37b59012 ("hwmon: (pmbus/tps53679) Add support for TI TPS53676")
+Fixes: c10e753d43eb ("hwmon (occ): Add sensor types and versions")
 Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260330155618.77403-1-sanman.pradhan@hpe.com
+Link: https://lore.kernel.org/r/20260326224510.294619-3-sanman.pradhan@hpe.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/tps53679.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/occ/common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/pmbus/tps53679.c b/drivers/hwmon/pmbus/tps53679.c
-index 5c9466244d70d..ecc1be33b3b1b 100644
---- a/drivers/hwmon/pmbus/tps53679.c
-+++ b/drivers/hwmon/pmbus/tps53679.c
-@@ -156,8 +156,8 @@ static int tps53676_identify(struct i2c_client *client,
- 	ret = i2c_smbus_read_block_data(client, PMBUS_IC_DEVICE_ID, buf);
- 	if (ret < 0)
- 		return ret;
--	if (strncmp("TI\x53\x67\x60", buf, 5)) {
--		dev_err(&client->dev, "Unexpected device ID: %s\n", buf);
-+	if (ret != 6 || memcmp(buf, "TI\x53\x67\x60\x00", 6)) {
-+		dev_err(&client->dev, "Unexpected device ID: %*ph\n", ret, buf);
- 		return -ENODEV;
- 	}
- 
+diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+index 89928d38831b6..86c79156a46b9 100644
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -725,7 +725,7 @@ static ssize_t occ_show_extended(struct device *dev,
+ 	switch (sattr->nr) {
+ 	case 0:
+ 		if (extn->flags & EXTN_FLAG_SENSOR_ID) {
+-			rc = sysfs_emit(buf, "%u",
++			rc = sysfs_emit(buf, "%u\n",
+ 					get_unaligned_be32(&extn->sensor_id));
+ 		} else {
+ 			rc = sysfs_emit(buf, "%4phN\n", extn->name);
 -- 
 2.53.0
 
