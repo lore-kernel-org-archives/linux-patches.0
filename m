@@ -1,38 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256D8B67E;
-	Wed,  8 Apr 2026 18:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A857EB67E;
+	Wed,  8 Apr 2026 18:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672328; cv=none; b=s+ZuJyYMV6+bCKp2qjMAqdmwS1ubW18LPkHGFFNsfsB3CYRy/pHeD2el2TlsRrQbYM51OLZp703k0qN5E2jUE6xqE3PVHVREuJfyb4gQkIPC/iaUwTAC/ppsHrTwBVU/hE1pPkW4B9ZEbNGN9PH1gAdj3gUv8PPN1WjInzE+1To=
+	t=1775672330; cv=none; b=qbocj5uCikFsuUQ8UC3EbEoS/XZm6Td4jhuXRYZjBQaYQj14UQkn02HxOb3KUC/t68kcVzHqL+TlLg/T9WqoXnUqzAaD+a2nssn4C5XiHIAZccQc7K7Wq+CzfEizzfjVpfBuiffPSDjPHmX44Od37Sz1fK5LGzu4DXWONluKCRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672328; c=relaxed/simple;
-	bh=00JUSUUjXycfEhVoRRiBcNvCrZsPSz3GAeE8yakLlcI=;
+	s=arc-20240116; t=1775672330; c=relaxed/simple;
+	bh=j9+fyB1YjuTQoKQyHhYNDxgZQTlIzEJq0spo3jfHBWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I0Juh7VL50RUcHT24VDES4lcxETUHIhEbe6KXrZi/THrwbELxYy9VuPp8oOwjCnBXihv7TFM1pWZySnP3sea+YAK0fwmA+e8Lx/vIXnpbq+M/zwcuRwArfWxl3yvafxkaq1Je712lEGtFbXqiY8t2dvtw9tYsngLZVYqCDzZbGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdZxi3N7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qogrnVeOkdM+m5sVtySTWcdykSh+AGrvhOPCJmlyA883i9y0gMz5u58EZ8u6NtI3u5RH1NSHK5qPJT+RUp6fFvpB/weH9JTJNLAouZm7CDdvw+RE6i1nRg/OFhfiH/0EHwKw5e0O9wKqAGXoQJB8S/6LpY+mkutm/yi8Oifv46c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyUQdQqq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdZxi3N7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893E0C19421;
-	Wed,  8 Apr 2026 18:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyUQdQqq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1414BC19421;
+	Wed,  8 Apr 2026 18:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672328;
-	bh=00JUSUUjXycfEhVoRRiBcNvCrZsPSz3GAeE8yakLlcI=;
+	s=korg; t=1775672330;
+	bh=j9+fyB1YjuTQoKQyHhYNDxgZQTlIzEJq0spo3jfHBWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdZxi3N7E7EjZRxNRDUZ9VPgqyE5ueZ+PYyYgQR5jcQyELm3hNEv/a/idhYUsP9Eq
-	 ukG7LyZ89VgDsUi1ZEcN+NwCGwVA4g0rMOSnyzAZW2lmqbFZCc4VXRkTTTv7ekQxHW
-	 uSnf/0OS19YdZO+XimEzlMMFSY7CFVzbkJFEuLTc=
+	b=ZyUQdQqqrMocFxIQ2hvlx14wupFe2atpCaiGrgqUYp0TaIqzpH4S8cymNHwXlCD0f
+	 tNiov5jYAddRzb7ydq8NoDkoUvhbv8KrmQuFpJyjCO2+hqAl78rhKp2Lbayu5NWmFm
+	 DZPmTjocmx0MF9Nb0NTldz9/21gV0caAm2c4SsRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 278/312] scsi: target: tcm_loop: Drain commands in target_reset handler
-Date: Wed,  8 Apr 2026 20:03:15 +0200
-Message-ID: <20260408175944.134198868@linuxfoundation.org>
+Subject: [PATCH 6.1 279/312] mm/huge_memory: fix folio isnt locked in softleaf_to_folio()
+Date: Wed,  8 Apr 2026 20:03:16 +0200
+Message-ID: <20260408175944.172068265@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -45,151 +56,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit 1333eee56cdf3f0cf67c6ab4114c2c9e0a952026 ]
+[ Upstream commit 4c5e7f0fcd592801c9cc18f29f80fbee84eb8669 ]
 
-tcm_loop_target_reset() violates the SCSI EH contract: it returns SUCCESS
-without draining any in-flight commands.  The SCSI EH documentation
-(scsi_eh.rst) requires that when a reset handler returns SUCCESS the driver
-has made lower layers "forget about timed out scmds" and is ready for new
-commands.  Every other SCSI LLD (virtio_scsi, mpt3sas, ipr, scsi_debug,
-mpi3mr) enforces this by draining or completing outstanding commands before
-returning SUCCESS.
+On arm64 server, we found folio that get from migration entry isn't locked
+in softleaf_to_folio().  This issue triggers when mTHP splitting and
+zap_nonpresent_ptes() races, and the root cause is lack of memory barrier
+in softleaf_to_folio().  The race is as follows:
 
-Because tcm_loop_target_reset() doesn't drain, the SCSI EH reuses in-flight
-scsi_cmnd structures for recovery commands (e.g. TUR) while the target core
-still has async completion work queued for the old se_cmd.  The memset in
-queuecommand zeroes se_lun and lun_ref_active, causing
-transport_lun_remove_cmd() to skip its percpu_ref_put().  The leaked LUN
-reference prevents transport_clear_lun_ref() from completing, hanging
-configfs LUN unlink forever in D-state:
+	CPU0                                             CPU1
 
-  INFO: task rm:264 blocked for more than 122 seconds.
-  rm              D    0   264    258 0x00004000
-  Call Trace:
-   __schedule+0x3d0/0x8e0
-   schedule+0x36/0xf0
-   transport_clear_lun_ref+0x78/0x90 [target_core_mod]
-   core_tpg_remove_lun+0x28/0xb0 [target_core_mod]
-   target_fabric_port_unlink+0x50/0x60 [target_core_mod]
-   configfs_unlink+0x156/0x1f0 [configfs]
-   vfs_unlink+0x109/0x290
-   do_unlinkat+0x1d5/0x2d0
+deferred_split_scan()                              zap_nonpresent_ptes()
+  lock folio
+  split_folio()
+    unmap_folio()
+      change ptes to migration entries
+    __split_folio_to_order()                         softleaf_to_folio()
+      set flags(including PG_locked) for tail pages    folio = pfn_folio(softleaf_to_pfn(entry))
+      smp_wmb()                                        VM_WARN_ON_ONCE(!folio_test_locked(folio))
+      prep_compound_page() for tail pages
 
-Fix this by making tcm_loop_target_reset() actually drain commands:
+In __split_folio_to_order(), smp_wmb() guarantees page flags of tail pages
+are visible before the tail page becomes non-compound.  smp_wmb() should
+be paired with smp_rmb() in softleaf_to_folio(), which is missed.  As a
+result, if zap_nonpresent_ptes() accesses migration entry that stores tail
+pfn, softleaf_to_folio() may see the updated compound_head of tail page
+before page->flags.
 
- 1. Issue TMR_LUN_RESET via tcm_loop_issue_tmr() to drain all commands that
-    the target core knows about (those not yet CMD_T_COMPLETE).
+This issue will trigger VM_WARN_ON_ONCE() in pfn_swap_entry_folio()
+because of the race between folio split and zap_nonpresent_ptes()
+leading to a folio incorrectly undergoing modification without a folio
+lock being held.
 
- 2. Use blk_mq_tagset_busy_iter() to iterate all started requests and
-    flush_work() on each se_cmd — this drains any deferred completion work
-    for commands that already had CMD_T_COMPLETE set before the TMR (which
-    the TMR skips via __target_check_io_state()).  This is the same pattern
-    used by mpi3mr, scsi_debug, and libsas to drain outstanding commands
-    during reset.
+This is a BUG_ON() before commit 93976a20345b ("mm: eliminate further
+swapops predicates"), which in merged in v6.19-rc1.
 
-Fixes: e0eb5d38b732 ("scsi: target: tcm_loop: Use block cmd allocator for se_cmds")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/27011aa34c8f6b1b94d2e3cf5655b6d037f53428.1773706803.git.josef@toxicpanda.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+To fix it, add missing smp_rmb() if the softleaf entry is migration entry
+in softleaf_to_folio() and softleaf_to_page().
+
+[tujinjiang@huawei.com: update function name and comments]
+  Link: https://lkml.kernel.org/r/20260321075214.3305564-1-tujinjiang@huawei.com
+Link: https://lkml.kernel.org/r/20260319012541.4158561-1-tujinjiang@huawei.com
+Fixes: e9b61f19858a ("thp: reintroduce split_huge_page()")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ adapted fix from leafops.h softleaf_to_page()/softleaf_to_folio() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/loopback/tcm_loop.c |   52 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 46 insertions(+), 6 deletions(-)
+ include/linux/swapops.h |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/drivers/target/loopback/tcm_loop.c
-+++ b/drivers/target/loopback/tcm_loop.c
-@@ -26,6 +26,7 @@
- #include <linux/slab.h>
- #include <linux/types.h>
- #include <linux/configfs.h>
-+#include <linux/blk-mq.h>
- #include <scsi/scsi.h>
- #include <scsi/scsi_tcq.h>
- #include <scsi/scsi_host.h>
-@@ -274,15 +275,27 @@ static int tcm_loop_device_reset(struct
- 	return (ret == TMR_FUNCTION_COMPLETE) ? SUCCESS : FAILED;
- }
- 
-+static bool tcm_loop_flush_work_iter(struct request *rq, void *data)
-+{
-+	struct scsi_cmnd *sc = blk_mq_rq_to_pdu(rq);
-+	struct tcm_loop_cmd *tl_cmd = scsi_cmd_priv(sc);
-+	struct se_cmd *se_cmd = &tl_cmd->tl_se_cmd;
-+
-+	flush_work(&se_cmd->work);
-+	return true;
-+}
-+
- static int tcm_loop_target_reset(struct scsi_cmnd *sc)
+--- a/include/linux/swapops.h
++++ b/include/linux/swapops.h
+@@ -541,11 +541,21 @@ static inline struct page *pfn_swap_entr
  {
- 	struct tcm_loop_hba *tl_hba;
- 	struct tcm_loop_tpg *tl_tpg;
-+	struct Scsi_Host *sh = sc->device->host;
-+	int ret;
+ 	struct page *p = pfn_to_page(swp_offset_pfn(entry));
  
- 	/*
- 	 * Locate the tcm_loop_hba_t pointer
- 	 */
--	tl_hba = *(struct tcm_loop_hba **)shost_priv(sc->device->host);
-+	tl_hba = *(struct tcm_loop_hba **)shost_priv(sh);
- 	if (!tl_hba) {
- 		pr_err("Unable to perform device reset without active I_T Nexus\n");
- 		return FAILED;
-@@ -291,11 +304,38 @@ static int tcm_loop_target_reset(struct
- 	 * Locate the tl_tpg pointer from TargetID in sc->device->id
- 	 */
- 	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
--	if (tl_tpg) {
--		tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
--		return SUCCESS;
--	}
--	return FAILED;
-+	if (!tl_tpg)
-+		return FAILED;
+-	/*
+-	 * Any use of migration entries may only occur while the
+-	 * corresponding page is locked
+-	 */
+-	BUG_ON(is_migration_entry(entry) && !PageLocked(p));
++	if (is_migration_entry(entry)) {
++		/*
++		 * Ensure we do not race with split, which might alter tail
++		 * pages into new folios and thus result in observing an
++		 * unlocked folio.
++		 * This matches the write barrier in __split_folio_to_order().
++		 */
++		smp_rmb();
 +
-+	/*
-+	 * Issue a LUN_RESET to drain all commands that the target core
-+	 * knows about.  This handles commands not yet marked CMD_T_COMPLETE.
-+	 */
-+	ret = tcm_loop_issue_tmr(tl_tpg, sc->device->lun, 0, TMR_LUN_RESET);
-+	if (ret != TMR_FUNCTION_COMPLETE)
-+		return FAILED;
-+
-+	/*
-+	 * Flush any deferred target core completion work that may still be
-+	 * queued.  Commands that already had CMD_T_COMPLETE set before the TMR
-+	 * are skipped by the TMR drain, but their async completion work
-+	 * (transport_lun_remove_cmd → percpu_ref_put, release_cmd → scsi_done)
-+	 * may still be pending in target_completion_wq.
-+	 *
-+	 * The SCSI EH will reuse in-flight scsi_cmnd structures for recovery
-+	 * commands (e.g. TUR) immediately after this handler returns SUCCESS —
-+	 * if deferred work is still pending, the memset in queuecommand would
-+	 * zero the se_cmd while the work accesses it, leaking the LUN
-+	 * percpu_ref and hanging configfs unlink forever.
-+	 *
-+	 * Use blk_mq_tagset_busy_iter() to find all started requests and
-+	 * flush_work() on each — the same pattern used by mpi3mr, scsi_debug,
-+	 * and other SCSI drivers to drain outstanding commands during reset.
-+	 */
-+	blk_mq_tagset_busy_iter(&sh->tag_set, tcm_loop_flush_work_iter, NULL);
-+
-+	tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
-+	return SUCCESS;
++		/*
++		 * Any use of migration entries may only occur while the
++		 * corresponding page is locked
++		 */
++		BUG_ON(!PageLocked(p));
++	}
+ 
+ 	return p;
  }
- 
- static struct scsi_host_template tcm_loop_driver_template = {
 
 
