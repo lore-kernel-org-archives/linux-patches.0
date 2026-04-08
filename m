@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E696525A321;
-	Wed,  8 Apr 2026 18:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4297B2FF144;
+	Wed,  8 Apr 2026 18:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672993; cv=none; b=RGt9UJ78Z6D9x9lWlHXRZ5zAkABV1LWeCgtr37juorjSdAp6WPg1iaOoE57JZpw9itHCzGcn93LsvdFMn6CP+BKZekfiksmViLKSeofyG1zIl0nwaA91zq0NtSc5/m3j6vynnu5NVaWIbzzQhv0g8GwhrRYnzjg7Q+b5TuHtFdY=
+	t=1775672995; cv=none; b=SjiFZyK9l+wPy0r8z764nrw70jk1ykrXiCEd+TEbrJyTtjKwkROkVmS6g2jyAYiiSGw+XEvbEXCQmlQZq7t14Bu7kypXsX9uLOuy+HbH4KCNTgUhAliliKDYwQo+E+JJUgkLzYQJ3optZH8zdh0J/1lN+R0bvfVkJWHQN/cwAZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672993; c=relaxed/simple;
-	bh=m0vZxFtZj3S4WMsXJ5mU1wtC0lR46wT79Cq1htyqw+s=;
+	s=arc-20240116; t=1775672995; c=relaxed/simple;
+	bh=dH88Z3BHRKyCAbknAU5jU7GL2QZRuj8AFZZ4V//hHDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XOIbrckRo4DSvix+8cKoZ2A6fRdyEcBNC6fcdTfwsrxtrpPE5qRhzI2ezLwdI7k5pJJ18YKNgPbQKPg/j0ulXr+BgX419V9n6/xM7l2YQfkZO8kW0EQ1mbSI3bjEtau+V8C5VfwJuaA8ZhZdQotXY9nI6CKYwzFQ30pUn2iUJk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lz/zJ9+U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d5XOkaE2qfEQGzmp7o9tHoHTREwaM7olHNx/0/w1P4GDPCQu60MaWBPUwBhx8b3aWMRwbdkh8mCHlK3bfL7ZC7rtTnysHzcuCMVtAVvxoq9unF9bfaJ8ktfu0nOPDN+znxfkgG8q3W0sagkfEjfKmqCi5jVCsNitL7Pj7q91rJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ii1MsoGf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lz/zJ9+U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2729CC19421;
-	Wed,  8 Apr 2026 18:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ii1MsoGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFEAEC19421;
+	Wed,  8 Apr 2026 18:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672992;
-	bh=m0vZxFtZj3S4WMsXJ5mU1wtC0lR46wT79Cq1htyqw+s=;
+	s=korg; t=1775672995;
+	bh=dH88Z3BHRKyCAbknAU5jU7GL2QZRuj8AFZZ4V//hHDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lz/zJ9+UDvT/uUbOQUt8bqtwdajPQrScs+INF0Z0mAriST2CdgIUs3mnyxDe5f4KA
-	 Rr1WxbuHnIxuOW1J1icoiPjH+sMkFj+PBRU4Fu0Jt0OGtf2PJhix+EC4YQgC+SQK0n
-	 beWU1F6qX/IQoCVMfZaAM6I04DVYPEN6Q6f5bfcw=
+	b=ii1MsoGfYBTvg7Q3wUp6EC1A0w85xTOlVsGGveZDRDR25LN7A7EYP+7tqWg8MltTU
+	 ZRr2xl5X0vbq7DxA6dATmGcJzOc+mD07YHqDstB+Y03fU/rGBposCDqkWYaUp6r3G0
+	 xmwjLXdLOhU0qHZNAZWur548n++8TOzXVWv3ikiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Braha <julianbraha@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Mark Brown <broonie@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Amery Hung <ameryhung@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 059/277] ASoC: Intel: boards: fix unmet dependency on PINCTRL
-Date: Wed,  8 Apr 2026 20:00:44 +0200
-Message-ID: <20260408175936.064214829@linuxfoundation.org>
+Subject: [PATCH 6.18 060/277] bpf: Fix regsafe() for pointers to packet
+Date: Wed,  8 Apr 2026 20:00:45 +0200
+Message-ID: <20260408175936.100668925@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -52,55 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Braha <julianbraha@gmail.com>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit e920c36f2073d533bdf19ba6ab690432c8173b63 ]
+[ Upstream commit a8502a79e832b861e99218cbd2d8f4312d62e225 ]
 
-This reverts commit c073f0757663 ("ASoC: Intel: sof_sdw: select PINCTRL_CS42L43 and SPI_CS42L43")
+In case rold->reg->range == BEYOND_PKT_END && rcur->reg->range == N
+regsafe() may return true which may lead to current state with
+valid packet range not being explored. Fix the bug.
 
-Currently, SND_SOC_INTEL_SOUNDWIRE_SOF_MACH selects PINCTRL_CS42L43
-without also selecting or depending on PINCTRL, despite PINCTRL_CS42L43
-depending on PINCTRL.
-
-See the following Kbuild warning:
-
-WARNING: unmet direct dependencies detected for PINCTRL_CS42L43
-  Depends on [n]: PINCTRL [=n] && MFD_CS42L43 [=m]
-  Selected by [m]:
-  - SND_SOC_INTEL_SOUNDWIRE_SOF_MACH [=m] && SOUND [=y] && SND [=m] && SND_SOC [=m] && SND_SOC_INTEL_MACH [=y] && (SND_SOC_SOF_INTEL_COMMON [=m] || !SND_SOC_SOF_INTEL_COMMON [=m]) && SND_SOC_SOF_INTEL_SOUNDWIRE [=m] && I2C [=y] && SPI_MASTER [=y] && ACPI [=y] && (MFD_INTEL_LPSS [=n] || COMPILE_TEST [=y]) && (SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES [=n] || COMPILE_TEST [=y]) && SOUNDWIRE [=m]
-
-In response to v1 of this patch [1], Arnd pointed out that there is
-no compile-time dependency sof_sdw and the PINCTRL_CS42L43 driver.
-After testing, I can confirm that the kernel compiled with
-SND_SOC_INTEL_SOUNDWIRE_SOF_MACH enabled and PINCTRL_CS42L43 disabled.
-
-This unmet dependency was detected by kconfirm, a static analysis
-tool for Kconfig.
-
-Link: https://lore.kernel.org/all/b8aecc71-1fed-4f52-9f6c-263fbe56d493@app.fastmail.com/ [1]
-Fixes: c073f0757663 ("ASoC: Intel: sof_sdw: select PINCTRL_CS42L43 and SPI_CS42L43")
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260325001522.1727678-1-julianbraha@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6d94e741a8ff ("bpf: Support for pointers beyond pkt_end.")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20260331204228.26726-1-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/Kconfig | 2 --
- 1 file changed, 2 deletions(-)
+ kernel/bpf/verifier.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
-index c23fdb6aad4ca..1031d6497f55e 100644
---- a/sound/soc/intel/boards/Kconfig
-+++ b/sound/soc/intel/boards/Kconfig
-@@ -525,8 +525,6 @@ config SND_SOC_INTEL_SOUNDWIRE_SOF_MACH
- 	select SND_SOC_CS42L43_SDW
- 	select MFD_CS42L43
- 	select MFD_CS42L43_SDW
--	select PINCTRL_CS42L43
--	select SPI_CS42L43
- 	select SND_SOC_CS35L56_SPI
- 	select SND_SOC_CS35L56_SDW
- 	select SND_SOC_DMIC
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 3eaff8453e9a9..ecdbc821bd1a4 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -18985,8 +18985,13 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
+ 		 * since someone could have accessed through (ptr - k), or
+ 		 * even done ptr -= k in a register, to get a safe access.
+ 		 */
+-		if (rold->range > rcur->range)
++		if (rold->range < 0 || rcur->range < 0) {
++			/* special case for [BEYOND|AT]_PKT_END */
++			if (rold->range != rcur->range)
++				return false;
++		} else if (rold->range > rcur->range) {
+ 			return false;
++		}
+ 		/* If the offsets don't match, we can't trust our alignment;
+ 		 * nor can we be sure that we won't fall out of range.
+ 		 */
 -- 
 2.53.0
 
