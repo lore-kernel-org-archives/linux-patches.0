@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255B13D75C3;
-	Wed,  8 Apr 2026 18:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D293D47AC;
+	Wed,  8 Apr 2026 18:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672873; cv=none; b=Ur8wRCk7XwkuL/f2rGPg0FZ7tmpqnvXiDX3Ni7MuMrUnwgkGX1ZXqlzXXfztNdTGhu7HnA9vlHdStGpCXWrZxoOVx3MO4iwSijUFTRmeQq7DzRN1o6J89CAAHmcmHLgHISZlvd6e8eFDCs1KSlLzruRbyGEBJQQRM6aX0GtvzsM=
+	t=1775672875; cv=none; b=eMDlg2frlpnYpyjLxrIqlfMXWoJwA//CYBb3UBuFaVJh2Hs+Tc23IZf6nCIHQX6xzxBUvFFRPzZZuNzAmZDcNyDNGakzQqvw3+Ez5+l40UXwl6YHtb2Iw77MqmjpZ03yq5Qclh8DEf4gZYcPuRPhJw0OpDF03qzElT2VNKoXY9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672873; c=relaxed/simple;
-	bh=D6NlHxG1I6ilnwzposXrkJt+tMErCaspkhC2oZ6Q8qE=;
+	s=arc-20240116; t=1775672875; c=relaxed/simple;
+	bh=YfNFWGpkVAB+goc81Ij5h4rbkQhANCDrdj5qu8I9LQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEqZbJKm/zbPihIKnd9Dqu8qED7ctr7jnOxHmIt8s2rnaFd5PNKn5l2FuGMSD2Q6TTGW9JjJfCWTel7GPWz/PCCne0RB6OVS9SbPtoyBWlidN+aq+pyRPkL54oy0YNbZ1i6qZazoZcjwwLp4/HoMmx5B3rRklq20xDPFLAxEbOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYXcjdFD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d/+6HQyOl6rlNoraYSFGVM+GGSZSczwQ3gT5QJOKa6IkZjnRtVOatvsBymzbFmB6JbXVJGHBG8nv4xbo1irUz+uYDpdeTuK34c4P2k0FgG/2Y8b6gglqZiuTKFrpl9wOVv1Ai+Jh+UClWzY4ArTZl2bn4N6cQIbE6klaIxBoi8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JpsuxFS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYXcjdFD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE396C19421;
-	Wed,  8 Apr 2026 18:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JpsuxFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E59C19421;
+	Wed,  8 Apr 2026 18:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672873;
-	bh=D6NlHxG1I6ilnwzposXrkJt+tMErCaspkhC2oZ6Q8qE=;
+	s=korg; t=1775672875;
+	bh=YfNFWGpkVAB+goc81Ij5h4rbkQhANCDrdj5qu8I9LQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VYXcjdFD7cu3zLHTk8FeoQxtwB8N9kUXLhi8B/Zoc88wB+mZeLdbduXPMoh8170Z8
-	 ZZb1nlmhAfvC3+iqRn0LZ0Ypf7JqCbnusgXA4LF9QcZD47lLJvnFaQwg8M+wVSpWn5
-	 vB4CkHAdDZ75/WVu2k7Fgh1nuweyjRgwRAWRBHS8=
+	b=1JpsuxFSn+PeizKkSDxmDtTefZfOIDiKbHJSNAEFE0nR/Qx93/mWgXCUJioyVrXZq
+	 78aolc+Bk4Y6d4ebntOwRxoor8JS25d075Bsdeb/UXWy3o3C6NSg95n+SC4PTSL+Bu
+	 P2J5MM6BV1QTfQ8m7Qz9+k1yepBh9/s+WpvpzrtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	ZhengYuan Huang <gality369@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	linux-cifs@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 014/277] btrfs: reject root items with drop_progress and zero drop_level
-Date: Wed,  8 Apr 2026 19:59:59 +0200
-Message-ID: <20260408175934.381294743@linuxfoundation.org>
+Subject: [PATCH 6.18 015/277] smb: client: fix generic/694 due to wrong ->i_blocks
+Date: Wed,  8 Apr 2026 20:00:00 +0200
+Message-ID: <20260408175934.417864389@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -52,112 +54,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit b17b79ff896305fd74980a5f72afec370ee88ca4 ]
+[ Upstream commit 23b5df09c27aec13962b30d32a4167ebdd043f8e ]
 
-[BUG]
-When recovering relocation at mount time, merge_reloc_root() and
-btrfs_drop_snapshot() both use BUG_ON(level == 0) to guard against
-an impossible state: a non-zero drop_progress combined with a zero
-drop_level in a root_item, which can be triggered:
+When updating ->i_size, make sure to always update ->i_blocks as well
+until we query new allocation size from the server.
 
-------------[ cut here ]------------
-kernel BUG at fs/btrfs/relocation.c:1545!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-CPU: 1 UID: 0 PID: 283 ... Tainted: 6.18.0+ #16 PREEMPT(voluntary)
-Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-Hardware name: QEMU Ubuntu 24.04 PC v2, BIOS 1.16.3-debian-1.16.3-2
-RIP: 0010:merge_reloc_root+0x1266/0x1650 fs/btrfs/relocation.c:1545
-Code: ffff0000 00004589 d7e9acfa ffffe8a1 79bafebe 02000000
-Call Trace:
- merge_reloc_roots+0x295/0x890 fs/btrfs/relocation.c:1861
- btrfs_recover_relocation+0xd6e/0x11d0 fs/btrfs/relocation.c:4195
- btrfs_start_pre_rw_mount+0xa4d/0x1810 fs/btrfs/disk-io.c:3130
- open_ctree+0x5824/0x5fe0 fs/btrfs/disk-io.c:3640
- btrfs_fill_super fs/btrfs/super.c:987 [inline]
- btrfs_get_tree_super fs/btrfs/super.c:1951 [inline]
- btrfs_get_tree_subvol fs/btrfs/super.c:2094 [inline]
- btrfs_get_tree+0x111c/0x2190 fs/btrfs/super.c:2128
- vfs_get_tree+0x9a/0x370 fs/super.c:1758
- fc_mount fs/namespace.c:1199 [inline]
- do_new_mount_fc fs/namespace.c:3642 [inline]
- do_new_mount fs/namespace.c:3718 [inline]
- path_mount+0x5b8/0x1ea0 fs/namespace.c:4028
- do_mount fs/namespace.c:4041 [inline]
- __do_sys_mount fs/namespace.c:4229 [inline]
- __se_sys_mount fs/namespace.c:4206 [inline]
- __x64_sys_mount+0x282/0x320 fs/namespace.c:4206
- ...
-RIP: 0033:0x7f969c9a8fde
-Code: 0f1f4000 48c7c2b0 fffffff7 d8648902 b8ffffff ffc3660f
----[ end trace 0000000000000000 ]---
+generic/694 was failing because smb3_simple_falloc() was missing the
+update of ->i_blocks after calling cifs_setsize().  So, fix this by
+updating ->i_blocks directly in cifs_setsize(), so all places that
+call it doesn't need to worry about updating ->i_blocks later.
 
-The bug is reproducible on 7.0.0-rc2-next-20260310 with our dynamic
-metadata fuzzing tool that corrupts btrfs metadata at runtime.
-
-[CAUSE]
-A non-zero drop_progress.objectid means an interrupted
-btrfs_drop_snapshot() left a resume point on disk, and in that case
-drop_level must be greater than 0 because the checkpoint is only
-saved at internal node levels.
-
-Although this invariant is enforced when the kernel writes the root
-item, it is not validated when the root item is read back from disk.
-That allows on-disk corruption to provide an invalid state with
-drop_progress.objectid != 0 and drop_level == 0.
-
-When relocation recovery later processes such a root item,
-merge_reloc_root() reads drop_level and hits BUG_ON(level == 0). The
-same invalid metadata can also trigger the corresponding BUG_ON() in
-btrfs_drop_snapshot().
-
-[FIX]
-Fix this by validating the root_item invariant in tree-checker when
-reading root items from disk: if drop_progress.objectid is non-zero,
-drop_level must also be non-zero. Reject such malformed metadata with
--EUCLEAN before it reaches merge_reloc_root() or btrfs_drop_snapshot()
-and triggers the BUG_ON.
-
-After the fix, the same corruption is correctly rejected by tree-checker
-and the BUG_ON is no longer triggered.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Shyam Prasad N <sprasad@microsoft.com>
+Closes: https://lore.kernel.org/r/CANT5p=rqgRwaADB=b_PhJkqXjtfq3SFv41SSTXSVEHnuh871pA@mail.gmail.com
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: linux-cifs@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-checker.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/smb/client/cifsglob.h |  6 ++++++
+ fs/smb/client/file.c     |  1 -
+ fs/smb/client/inode.c    | 21 ++++++---------------
+ fs/smb/client/smb2ops.c  | 20 ++++----------------
+ 4 files changed, 16 insertions(+), 32 deletions(-)
 
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index 9b11b0a529dba..33a45737c4cf4 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1260,6 +1260,23 @@ static int check_root_item(struct extent_buffer *leaf, struct btrfs_key *key,
- 			    btrfs_root_drop_level(&ri), BTRFS_MAX_LEVEL - 1);
- 		return -EUCLEAN;
- 	}
-+	/*
-+	 * If drop_progress.objectid is non-zero, a btrfs_drop_snapshot() was
-+	 * interrupted and the resume point was recorded in drop_progress and
-+	 * drop_level.  In that case drop_level must be >= 1: level 0 is the
-+	 * leaf level and drop_snapshot never saves a checkpoint there (it
-+	 * only records checkpoints at internal node levels in DROP_REFERENCE
-+	 * stage).  A zero drop_level combined with a non-zero drop_progress
-+	 * objectid indicates on-disk corruption and would cause a BUG_ON in
-+	 * merge_reloc_root() and btrfs_drop_snapshot() at mount time.
-+	 */
-+	if (unlikely(btrfs_disk_key_objectid(&ri.drop_progress) != 0 &&
-+		     btrfs_root_drop_level(&ri) == 0)) {
-+		generic_err(leaf, slot,
-+			    "invalid root drop_level 0 with non-zero drop_progress objectid %llu",
-+			    btrfs_disk_key_objectid(&ri.drop_progress));
-+		return -EUCLEAN;
-+	}
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index b82663f609ed9..3059fcf12ed13 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -2407,4 +2407,10 @@ static inline int cifs_open_create_options(unsigned int oflags, int opts)
+ 	return opts;
+ }
  
- 	/* Flags check */
- 	if (unlikely(btrfs_root_flags(&ri) & ~valid_root_flags)) {
++/*
++ * The number of blocks is not related to (i_size / i_blksize), but instead
++ * 512 byte (2**9) size is required for calculating num blocks.
++ */
++#define CIFS_INO_BLOCKS(size) DIV_ROUND_UP_ULL((u64)(size), 512)
++
+ #endif	/* _CIFS_GLOB_H */
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index dfeb609d90e22..f0e7a8f69e8b8 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -993,7 +993,6 @@ static int cifs_do_truncate(const unsigned int xid, struct dentry *dentry)
+ 		if (!rc) {
+ 			netfs_resize_file(&cinode->netfs, 0, true);
+ 			cifs_setsize(inode, 0);
+-			inode->i_blocks = 0;
+ 		}
+ 	}
+ 	if (cfile)
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index cac355364e43c..7cd718dd7cb70 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -218,13 +218,7 @@ cifs_fattr_to_inode(struct inode *inode, struct cifs_fattr *fattr,
+ 	 */
+ 	if (is_size_safe_to_change(cifs_i, fattr->cf_eof, from_readdir)) {
+ 		i_size_write(inode, fattr->cf_eof);
+-
+-		/*
+-		 * i_blocks is not related to (i_size / i_blksize),
+-		 * but instead 512 byte (2**9) size is required for
+-		 * calculating num blocks.
+-		 */
+-		inode->i_blocks = (512 - 1 + fattr->cf_bytes) >> 9;
++		inode->i_blocks = CIFS_INO_BLOCKS(fattr->cf_bytes);
+ 	}
+ 
+ 	if (S_ISLNK(fattr->cf_mode) && fattr->cf_symlink_target) {
+@@ -3008,6 +3002,11 @@ void cifs_setsize(struct inode *inode, loff_t offset)
+ {
+ 	spin_lock(&inode->i_lock);
+ 	i_size_write(inode, offset);
++	/*
++	 * Until we can query the server for actual allocation size,
++	 * this is best estimate we have for blocks allocated for a file.
++	 */
++	inode->i_blocks = CIFS_INO_BLOCKS(offset);
+ 	spin_unlock(&inode->i_lock);
+ 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+ 	truncate_pagecache(inode, offset);
+@@ -3080,14 +3079,6 @@ int cifs_file_set_size(const unsigned int xid, struct dentry *dentry,
+ 	if (rc == 0) {
+ 		netfs_resize_file(&cifsInode->netfs, size, true);
+ 		cifs_setsize(inode, size);
+-		/*
+-		 * i_blocks is not related to (i_size / i_blksize), but instead
+-		 * 512 byte (2**9) size is required for calculating num blocks.
+-		 * Until we can query the server for actual allocation size,
+-		 * this is best estimate we have for blocks allocated for a file
+-		 * Number of blocks must be rounded up so size 1 is not 0 blocks
+-		 */
+-		inode->i_blocks = (512 - 1 + size) >> 9;
+ 	}
+ 
+ 	return rc;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 502b5cb05bc3e..478fa4bddb454 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -1492,6 +1492,7 @@ smb2_close_getattr(const unsigned int xid, struct cifs_tcon *tcon,
+ {
+ 	struct smb2_file_network_open_info file_inf;
+ 	struct inode *inode;
++	u64 asize;
+ 	int rc;
+ 
+ 	rc = __SMB2_close(xid, tcon, cfile->fid.persistent_fid,
+@@ -1515,14 +1516,9 @@ smb2_close_getattr(const unsigned int xid, struct cifs_tcon *tcon,
+ 		inode_set_atime_to_ts(inode,
+ 				      cifs_NTtimeToUnix(file_inf.LastAccessTime));
+ 
+-	/*
+-	 * i_blocks is not related to (i_size / i_blksize),
+-	 * but instead 512 byte (2**9) size is required for
+-	 * calculating num blocks.
+-	 */
+-	if (le64_to_cpu(file_inf.AllocationSize) > 4096)
+-		inode->i_blocks =
+-			(512 - 1 + le64_to_cpu(file_inf.AllocationSize)) >> 9;
++	asize = le64_to_cpu(file_inf.AllocationSize);
++	if (asize > 4096)
++		inode->i_blocks = CIFS_INO_BLOCKS(asize);
+ 
+ 	/* End of file and Attributes should not have to be updated on close */
+ 	spin_unlock(&inode->i_lock);
+@@ -2183,14 +2179,6 @@ smb2_duplicate_extents(const unsigned int xid,
+ 		rc = smb2_set_file_size(xid, tcon, trgtfile, dest_off + len, false);
+ 		if (rc)
+ 			goto duplicate_extents_out;
+-
+-		/*
+-		 * Although also could set plausible allocation size (i_blocks)
+-		 * here in addition to setting the file size, in reflink
+-		 * it is likely that the target file is sparse. Its allocation
+-		 * size will be queried on next revalidate, but it is important
+-		 * to make sure that file's cached size is updated immediately
+-		 */
+ 		netfs_resize_file(netfs_inode(inode), dest_off + len, true);
+ 		cifs_setsize(inode, dest_off + len);
+ 	}
 -- 
 2.53.0
 
