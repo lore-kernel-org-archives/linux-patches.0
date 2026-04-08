@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B59F1A683C;
-	Wed,  8 Apr 2026 18:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322A2347517;
+	Wed,  8 Apr 2026 18:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671974; cv=none; b=M3ZB41D5W+7IQFlFtgeKh2Z9Vf4CYzTk1puQ/IVOyuHFOgyOs564A3cSjbJhWG9AO1lus44STOP5Gu0lOdPo8Z7ARfSCKtDwB84xejvHPRqCSpwWTSV4iLzf8CZOsmH517Hn8JMpTT+YHcCf8u80UaS9t4QPdKr+U/B+mLfYMLc=
+	t=1775671977; cv=none; b=Ske/Rr7sK7k9Jfm2kMdKIxoDfaVlMZedHTcNUPMV9NA4furfYhmsR1EuI7xS+S8I1NIMiBz7aC7ZPPi7b8zChS7FlKNLJn2ls4FEHlpPRLFYpfwCZnV8DA8tvaDtstc3YD/VlO0AZiukx3Xo3jUYER4cuwokdRpLoBn3D1C0PmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671974; c=relaxed/simple;
-	bh=U7adsIg+5AYMdys7w5thb/V3myND/b/iNl5/sHYt1n4=;
+	s=arc-20240116; t=1775671977; c=relaxed/simple;
+	bh=NFH3SOwC1n69KbNKrMpvVjdQp52s5NDpiwlT4MtrGXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwFpTcgX0jvFqpMTgE5VOYZKaN41u3Nr3nbcz+5Gn3zY2dk2I1LrazfD5Vz/77/4YAKY+RfMlC1+EehBZyTkQR/hDnCaq2yXrHOqlImQIFSN9i9+xg5TGLdsMGhX4yksXePCNbXO1G1owOM8RHD6Hhn7lG+eTJtZ2FEc++Lk/0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDpc7l02; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hfUD9Ifz/SxBp3+Q0vHVoF6afmTjpW504QlkW4i0jF5XV+C6PyDp0+SpLGBUwzGse6dsHKJRxAUgDwpqTXJiA6tiNqq2wcbEttLHs6rTnmas28GcJGiC2SpkM8yY4NZ1+1YR6y0mcqO4CeyQws5ANkGvh9gOmRiDjggxdrZrEpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uye9YzUG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDpc7l02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31AEFC19421;
-	Wed,  8 Apr 2026 18:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uye9YzUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEAAC19421;
+	Wed,  8 Apr 2026 18:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671974;
-	bh=U7adsIg+5AYMdys7w5thb/V3myND/b/iNl5/sHYt1n4=;
+	s=korg; t=1775671977;
+	bh=NFH3SOwC1n69KbNKrMpvVjdQp52s5NDpiwlT4MtrGXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDpc7l02vONqxrukE/PQgACzVZSPFLl4NHTsGMR5Y209gwgizXZZb7gUCg56qd3E5
-	 yso7fYtnHFjaENtEMXFHcVQJgEYfi5amT/o+KmsZz8gXUatGbJZNBS/46AHQzhtQ7m
-	 g53kPaW+29sV8GRi9bLf5FopFnU4lfNXw5aSPriQ=
+	b=Uye9YzUG0MHdsEa41PL3PsbzLPUxwpoZcnUMilc+G6uqS4goZTK1SOqZnJ9kJskrm
+	 KFEwRhrMohBQe2SNh1gLUzMzFYLFwatJmutVa05y/IgrDIJuDHFDSHLbdldDm7bu41
+	 MjJfdRSn4WYU4EQE1RI/rkkLhpWWZM1uSo3lKTnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishon Jonathan R <mithicalaviator85@gmail.com>,
-	Vincent MORVAN <vinc@42.fr>,
-	Paul SAGE <paul.sage@42.fr>,
-	Atharva Tiwari <atharvatiwarilinuxdev@gmail.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 140/312] tg3: replace placeholder MAC address with device property
-Date: Wed,  8 Apr 2026 20:00:57 +0200
-Message-ID: <20260408175938.999714257@linuxfoundation.org>
+Subject: [PATCH 6.1 141/312] objtool: Fix Clang jump table detection
+Date: Wed,  8 Apr 2026 20:00:58 +0200
+Message-ID: <20260408175939.036742749@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -55,66 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul SAGE <paul.sage@42.fr>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit e4c00ba7274b613e3ab19e27eb009f0ec2e28379 ]
+[ Upstream commit 4e5019216402ad0b4a84cff457b662d26803f103 ]
 
-On some systems (e.g. iMac 20,1 with BCM57766), the tg3 driver reads
-a default placeholder mac address (00:10:18:00:00:00) from the
-mailbox. The correct value on those systems are stored in the
-'local-mac-address' property.
+With Clang, there can be a conditional forward jump between the load of
+the jump table address and the indirect branch.
 
-This patch, detect the default value and tries to retrieve
-the correct address from the device_get_mac_address
-function instead.
+Fixes the following warning:
 
-The patch has been tested on two different systems:
-- iMac 20,1 (BCM57766) model which use the local-mac-address property
-- iMac 13,2 (BCM57766) model which can use the mailbox,
-    NVRAM or MAC control registers
+  vmlinux.o: warning: objtool: ___bpf_prog_run+0x1c5: sibling call from callable instruction with modified stack frame
 
-Tested-by: Rishon Jonathan R <mithicalaviator85@gmail.com>
-
-Co-developed-by: Vincent MORVAN <vinc@42.fr>
-Signed-off-by: Vincent MORVAN <vinc@42.fr>
-Signed-off-by: Paul SAGE <paul.sage@42.fr>
-Signed-off-by: Atharva Tiwari <atharvatiwarilinuxdev@gmail.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260314215432.3589-1-atharvatiwarilinuxdev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Closes: https://lore.kernel.org/a426d669-58bb-4be1-9eaa-6f3d83109e2d@app.fastmail.com
+Link: https://patch.msgid.link/7d8600caed08901b6679767488acd639f6df9688.1773071992.git.jpoimboe@kernel.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ tools/objtool/check.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 8e5236142aaca..e93e7d37c8262 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -16950,6 +16950,13 @@ static int tg3_get_invariants(struct tg3 *tp, const struct pci_device_id *ent)
- 	return err;
- }
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index bf75628c5389a..2754e46f0e5ad 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -1966,12 +1966,11 @@ static void mark_func_jump_tables(struct objtool_file *file,
+ 			last = insn;
  
-+static int tg3_is_default_mac_address(u8 *addr)
-+{
-+	static const u8 default_mac_address[ETH_ALEN] = { 0x00, 0x10, 0x18, 0x00, 0x00, 0x00 };
-+
-+	return ether_addr_equal(default_mac_address, addr);
-+}
-+
- static int tg3_get_device_address(struct tg3 *tp, u8 *addr)
- {
- 	u32 hi, lo, mac_offset;
-@@ -17021,6 +17028,10 @@ static int tg3_get_device_address(struct tg3 *tp, u8 *addr)
- 
- 	if (!is_valid_ether_addr(addr))
- 		return -EINVAL;
-+
-+	if (tg3_is_default_mac_address(addr))
-+		return device_get_mac_address(&tp->pdev->dev, addr);
-+
- 	return 0;
- }
+ 		/*
+-		 * Store back-pointers for unconditional forward jumps such
++		 * Store back-pointers for forward jumps such
+ 		 * that find_jump_table() can back-track using those and
+ 		 * avoid some potentially confusing code.
+ 		 */
+-		if (insn->type == INSN_JUMP_UNCONDITIONAL && insn->jump_dest &&
+-		    insn->offset > last->offset &&
++		if (insn->jump_dest &&
+ 		    insn->jump_dest->offset > insn->offset &&
+ 		    !insn->jump_dest->first_jump_src) {
  
 -- 
 2.53.0
