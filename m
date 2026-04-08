@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726863D47AC;
-	Wed,  8 Apr 2026 18:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4A73537EF;
+	Wed,  8 Apr 2026 18:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672938; cv=none; b=UzKg4WAb8iAVFoWSWbTDPBgwK/jI+JKWY5c0LW2ZqzkPXpIfUbXpaqOTng0q2mcEH7tR7b5eX4+SOX63JwYWWg3HvzpBmPc0b2bFSkYZFwe0ER39WeBqZTh4fMBb84KnIMFb1iJW6XlKCL8AxXcb2P+kjNmD9B65nrtW9iVrrSY=
+	t=1775672941; cv=none; b=etucqts1744ew2KdZc320OzUE8fxj+VPIc6rCpZVVRgLlr9OCqGCUxxEns92Coa7ombNYYEf4zNinDxEvpGoC8Z1g/eKfW7C3pUPFLuaAwYW7bcbHRulPC0FPTqiKhPeFbSxI3/4Uf52BsWEqUv8z19KHLKWMPkIeam3zvliZyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672938; c=relaxed/simple;
-	bh=8Xc1mJTZ5Dx1GYvf78nRoE22J/GIyKwjLRu59uURHvA=;
+	s=arc-20240116; t=1775672941; c=relaxed/simple;
+	bh=e+xZHHsqGquhm7hvv2x1jc3VnF8qIneK9SerrtNIs0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ng7oQOGh7iWC2brnmNWizrEOhYJDEOWWWedbKDdCP71rWha0qhxr27LCa9JkYB3Uz5SaApxbVgCOzRSemloLIH1M5f00PhRW1JtozDGCNgyzHLdE5Pk9YyW2wgku5TcvWzNg3vIYPMXh7qgF9RITlAXWCjoEp7cHFYQKbrTuowg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXHi+0ut; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I2V3FaUkGS8mvXLgTzmre0SLRJfGMS7FQbZiWzFL0CEdvaOxulXF89AgqzFiKQozeMCziUN2RuGfTc0kwFgUEr/BrhoPjDWJajGrYHtnWUqApIc1z7s3ySD9bR9ygjz8jjHn0KqMzCQBE38wv5dW7TrsdUalqL9lstyV8O6+vQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOFjKIzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXHi+0ut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C60C2BC87;
-	Wed,  8 Apr 2026 18:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOFjKIzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9145C19421;
+	Wed,  8 Apr 2026 18:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672938;
-	bh=8Xc1mJTZ5Dx1GYvf78nRoE22J/GIyKwjLRu59uURHvA=;
+	s=korg; t=1775672941;
+	bh=e+xZHHsqGquhm7hvv2x1jc3VnF8qIneK9SerrtNIs0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXHi+0utWfCmkY3gjXYtzu0xxKze9Ec3+cfX/ESTYH/PAK5gx6usT6+qH65XTUOHn
-	 a9uACfAiaWFuJegTrn4NiYQxF69xEDN00kWyWDQi/KkZ6RGGM1M0Urjn79X0ehdK3Z
-	 yB/qZODZobVUfkurAM/tI71vwHYp+iBMHbk6RE4A=
+	b=sOFjKIzTOvkMhsRtGX5v3lslK2eI85qmrwTBXGOaAFK1jVmjfzDNL41blSIm++Eyu
+	 7OS98Q3f4kIE3odGLTb4ECm75/WFzQHAJOea2i9bZBLhLlz0lvWkOwc2wL6zuoF28K
+	 165lYc1plnGQiZQlZWPU9uaCSnPZexKIUNlVjU1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Oskar Kjos <oskar.kjos@hotmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 037/277] ipv6: icmp: clear skb2->cb[] in ip6_err_gen_icmpv6_unreach()
-Date: Wed,  8 Apr 2026 20:00:22 +0200
-Message-ID: <20260408175935.239369689@linuxfoundation.org>
+Subject: [PATCH 6.18 008/277] objtool: Fix Clang jump table detection
+Date: Wed,  8 Apr 2026 19:59:53 +0200
+Message-ID: <20260408175934.155898412@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -53,66 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 86ab3e55673a7a49a841838776f1ab18d23a67b5 ]
+[ Upstream commit 4e5019216402ad0b4a84cff457b662d26803f103 ]
 
-Sashiko AI-review observed:
+With Clang, there can be a conditional forward jump between the load of
+the jump table address and the indirect branch.
 
-  In ip6_err_gen_icmpv6_unreach(), the skb is an outer IPv4 ICMP error packet
-  where its cb contains an IPv4 inet_skb_parm. When skb is cloned into skb2
-  and passed to icmp6_send(), it uses IP6CB(skb2).
+Fixes the following warning:
 
-  IP6CB interprets the IPv4 inet_skb_parm as an inet6_skb_parm. The cipso
-  offset in inet_skb_parm.opt directly overlaps with dsthao in inet6_skb_parm
-  at offset 18.
+  vmlinux.o: warning: objtool: ___bpf_prog_run+0x1c5: sibling call from callable instruction with modified stack frame
 
-  If an attacker sends a forged ICMPv4 error with a CIPSO IP option, dsthao
-  would be a non-zero offset. Inside icmp6_send(), mip6_addr_swap() is called
-  and uses ipv6_find_tlv(skb, opt->dsthao, IPV6_TLV_HAO).
-
-  This would scan the inner, attacker-controlled IPv6 packet starting at that
-  offset, potentially returning a fake TLV without checking if the remaining
-  packet length can hold the full 18-byte struct ipv6_destopt_hao.
-
-  Could mip6_addr_swap() then perform a 16-byte swap that extends past the end
-  of the packet data into skb_shared_info?
-
-  Should the cb array also be cleared in ip6_err_gen_icmpv6_unreach() and
-  ip6ip6_err() to prevent this?
-
-This patch implements the first suggestion.
-
-I am not sure if ip6ip6_err() needs to be changed.
-A separate patch would be better anyway.
-
-Fixes: ca15a078bd90 ("sit: generate icmpv6 error when receiving icmpv4 error")
-Reported-by: Ido Schimmel <idosch@nvidia.com>
-Closes: https://sashiko.dev/#/patchset/20260326155138.2429480-1-edumazet%40google.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Oskar Kjos <oskar.kjos@hotmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260326202608.2976021-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Closes: https://lore.kernel.org/a426d669-58bb-4be1-9eaa-6f3d83109e2d@app.fastmail.com
+Link: https://patch.msgid.link/7d8600caed08901b6679767488acd639f6df9688.1773071992.git.jpoimboe@kernel.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/icmp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/objtool/check.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index 54ad4c7578679..aa39aabe4417e 100644
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -675,6 +675,9 @@ int ip6_err_gen_icmpv6_unreach(struct sk_buff *skb, int nhs, int type,
- 	if (!skb2)
- 		return 1;
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index bb34484046060..bbdc4be475b1b 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -2118,12 +2118,11 @@ static void mark_func_jump_tables(struct objtool_file *file,
+ 			last = insn;
  
-+	/* Remove debris left by IPv4 stack. */
-+	memset(IP6CB(skb2), 0, sizeof(*IP6CB(skb2)));
-+
- 	skb_dst_drop(skb2);
- 	skb_pull(skb2, nhs);
- 	skb_reset_network_header(skb2);
+ 		/*
+-		 * Store back-pointers for unconditional forward jumps such
++		 * Store back-pointers for forward jumps such
+ 		 * that find_jump_table() can back-track using those and
+ 		 * avoid some potentially confusing code.
+ 		 */
+-		if (insn->type == INSN_JUMP_UNCONDITIONAL && insn->jump_dest &&
+-		    insn->offset > last->offset &&
++		if (insn->jump_dest &&
+ 		    insn->jump_dest->offset > insn->offset &&
+ 		    !insn->jump_dest->first_jump_src) {
+ 
 -- 
 2.53.0
 
