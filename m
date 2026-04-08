@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099BF32A3FD;
-	Wed,  8 Apr 2026 18:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6751331A44;
+	Wed,  8 Apr 2026 18:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673694; cv=none; b=RjjuH976+zW3pdOvd9RHRbOzqIQDowXrXlomuEqmuBj0suFN1AsA9oUjr1ZyWrfTbqObvSIitZdfROdaOszqjdNRWz7A8oU/kmk11eZGwFFzNvavbtheQPQZEUcJupS0LnW+FJ3kqzMV3J+VrszxOhFLr6EB8eOz+DiFVX4x8kw=
+	t=1775673696; cv=none; b=a0DrOg7Nr/Qo9kDkyuSO2s98tFPBeCMwSElm//r2zk8k8f9e3NhF3ts6Trb75v6u8AK1UZlcS5I0FB7i3pY/fuVReF+D0NjOBFkxUtkettaUW+OxM5Jf8qAcm2D1L6iOa69G6rcOvYgg/rVciOy91S4Gg/60mu1UZPIHCjRoX8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673694; c=relaxed/simple;
-	bh=eOMQvtSnUz8VVuL3IkL/DPEp7vI4hovPeO77nPXgJXQ=;
+	s=arc-20240116; t=1775673696; c=relaxed/simple;
+	bh=cuIxTCmC9vrHdgOpyNm3K7g+1PDnUrMbQgpJ/Rnwujg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hc1RZOsHF8ldVYyDm9lkfO2lPbI3J9IYkVMhk34vMEoMDqm6LrNYIzcY3dT9QQsaEBZlu1DOTOl7gz2bPb9zkJjgnXizrm8aobHp/ewQfrNyk+9AoEMPJhSPK9tr3aXJk8KOdrpO86FIOaCSV46syxSFJwURx9r0koJnmIp5emg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=visbgo5j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jDqfYjeYGg6oN61rEV4NqPZY8DRQSl9hNNpeJU6UxD7rH0yPR15uGxgir47S4EcaaRqDUhaSfkg5VN3nY4TRfY1ADVrBg2ndJw+acFSGcd1kW7f1yVUm3q567Rxq9e3eRTkJfgSfQm+PpyjUB4Iz+L8+F1/4V07ZjYZ5muNTs6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqYSJSPo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="visbgo5j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E8BC19421;
-	Wed,  8 Apr 2026 18:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqYSJSPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9E1C2BCB3;
+	Wed,  8 Apr 2026 18:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673693;
-	bh=eOMQvtSnUz8VVuL3IkL/DPEp7vI4hovPeO77nPXgJXQ=;
+	s=korg; t=1775673696;
+	bh=cuIxTCmC9vrHdgOpyNm3K7g+1PDnUrMbQgpJ/Rnwujg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=visbgo5jkz2zohkH53wtkp15IJdlAZOigbBBFb5Zm2eNnmt4MmSsWW0EtkIZTINE5
-	 PFOw12X7QpOpsMma5wlgENq6B3RXouZOggG3OJZ9rX7PbWyQP6tWBY5x9QBlBGmrfF
-	 l1g/T+5RscYXvj/MyhunapKBsd9Mp64GPsDq+e3M=
+	b=GqYSJSPoV5WyYGJ97/IFaDWC7lMymdg066gS1TBj7mYaUeOD6zVbLF/L7Ljk4ik0l
+	 akD0kjKkxyegjKQzjWHbi83chnItxFqrVEsifxaL6PLMRUOhYNoe97KSdH3fWnORMW
+	 MynSb//so5l+FGGXkYFzUU93Wv41bD8O/M7LvX7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 036/242] btrfs: reserve enough transaction items for qgroup ioctls
-Date: Wed,  8 Apr 2026 20:01:16 +0200
-Message-ID: <20260408175928.423853185@linuxfoundation.org>
+Subject: [PATCH 6.12 054/242] net/sched: sch_hfsc: fix divide-by-zero in rtsc_min()
+Date: Wed,  8 Apr 2026 20:01:34 +0200
+Message-ID: <20260408175929.098795279@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,145 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit f9a4e3015db1aeafbef407650eb8555445ca943e ]
+[ Upstream commit 4576100b8cd03118267513cafacde164b498b322 ]
 
-Currently our qgroup ioctls don't reserve any space, they just do a
-transaction join, which does not reserve any space, neither for the quota
-tree updates nor for the delayed refs generated when updating the quota
-tree. The quota root uses the global block reserve, which is fine most of
-the time since we don't expect a lot of updates to the quota root, or to
-be too close to -ENOSPC such that other critical metadata updates need to
-resort to the global reserve.
+m2sm() converts a u32 slope to a u64 scaled value.  For large inputs
+(e.g. m1=4000000000), the result can reach 2^32.  rtsc_min() stores
+the difference of two such u64 values in a u32 variable `dsm` and
+uses it as a divisor.  When the difference is exactly 2^32 the
+truncation yields zero, causing a divide-by-zero oops in the
+concave-curve intersection path:
 
-However this is not optimal, as not reserving proper space may result in a
-transaction abort due to not reserving space for delayed refs and then
-abusing the use of the global block reserve.
+  Oops: divide error: 0000
+  RIP: 0010:rtsc_min (net/sched/sch_hfsc.c:601)
+  Call Trace:
+   init_ed (net/sched/sch_hfsc.c:629)
+   hfsc_enqueue (net/sched/sch_hfsc.c:1569)
+   [...]
 
-For example, the following reproducer (which is unlikely to model any
-real world use case, but just to illustrate the problem), triggers such a
-transaction abort due to -ENOSPC when running delayed refs:
+Widen `dsm` to u64 and replace do_div() with div64_u64() so the full
+difference is preserved.
 
-  $ cat test.sh
-  #!/bin/bash
-
-  DEV=/dev/nullb0
-  MNT=/mnt/nullb0
-
-  umount $DEV &> /dev/null
-  # Limit device to 1G so that it's much faster to reproduce the issue.
-  mkfs.btrfs -f -b 1G $DEV
-  mount -o commit=600 $DEV $MNT
-
-  fallocate -l 800M $MNT/filler
-  btrfs quota enable $MNT
-
-  for ((i = 1; i <= 400000; i++)); do
-      btrfs qgroup create 1/$i $MNT
-  done
-
-  umount $MNT
-
-When running this, we can see in dmesg/syslog that a transaction abort
-happened:
-
-  [436.490] BTRFS error (device nullb0): failed to run delayed ref for logical 30408704 num_bytes 16384 type 176 action 1 ref_mod 1: -28
-  [436.493] ------------[ cut here ]------------
-  [436.494] BTRFS: Transaction aborted (error -28)
-  [436.495] WARNING: fs/btrfs/extent-tree.c:2247 at btrfs_run_delayed_refs+0xd9/0x110 [btrfs], CPU#4: umount/2495372
-  [436.497] Modules linked in: btrfs loop (...)
-  [436.508] CPU: 4 UID: 0 PID: 2495372 Comm: umount Tainted: G        W           6.19.0-rc8-btrfs-next-225+ #1 PREEMPT(full)
-  [436.510] Tainted: [W]=WARN
-  [436.511] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
-  [436.513] RIP: 0010:btrfs_run_delayed_refs+0xdf/0x110 [btrfs]
-  [436.514] Code: 0f 82 ea (...)
-  [436.518] RSP: 0018:ffffd511850b7d78 EFLAGS: 00010292
-  [436.519] RAX: 00000000ffffffe4 RBX: ffff8f120dad37e0 RCX: 0000000002040001
-  [436.520] RDX: 0000000000000002 RSI: 00000000ffffffe4 RDI: ffffffffc090fd80
-  [436.522] RBP: 0000000000000000 R08: 0000000000000001 R09: ffffffffc04d1867
-  [436.523] R10: ffff8f18dc1fffa8 R11: 0000000000000003 R12: ffff8f173aa89400
-  [436.524] R13: 0000000000000000 R14: ffff8f173aa89400 R15: 0000000000000000
-  [436.526] FS:  00007fe59045d840(0000) GS:ffff8f192e22e000(0000) knlGS:0000000000000000
-  [436.527] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [436.528] CR2: 00007fe5905ff2b0 CR3: 000000060710a002 CR4: 0000000000370ef0
-  [436.530] Call Trace:
-  [436.530]  <TASK>
-  [436.530]  btrfs_commit_transaction+0x73/0xc00 [btrfs]
-  [436.531]  ? btrfs_attach_transaction_barrier+0x1e/0x70 [btrfs]
-  [436.532]  sync_filesystem+0x7a/0x90
-  [436.533]  generic_shutdown_super+0x28/0x180
-  [436.533]  kill_anon_super+0x12/0x40
-  [436.534]  btrfs_kill_super+0x12/0x20 [btrfs]
-  [436.534]  deactivate_locked_super+0x2f/0xb0
-  [436.534]  cleanup_mnt+0xea/0x180
-  [436.535]  task_work_run+0x58/0xa0
-  [436.535]  exit_to_user_mode_loop+0xed/0x480
-  [436.536]  ? __x64_sys_umount+0x68/0x80
-  [436.536]  do_syscall_64+0x2a5/0xf20
-  [436.537]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  [436.537] RIP: 0033:0x7fe5906b6217
-  [436.538] Code: 0d 00 f7 (...)
-  [436.540] RSP: 002b:00007ffcd87a61f8 EFLAGS: 00000246 ORIG_RAX: 00000000000000a6
-  [436.541] RAX: 0000000000000000 RBX: 00005618b9ecadc8 RCX: 00007fe5906b6217
-  [436.541] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00005618b9ecb100
-  [436.542] RBP: 0000000000000000 R08: 00007ffcd87a4fe0 R09: 00000000ffffffff
-  [436.544] R10: 0000000000000103 R11: 0000000000000246 R12: 00007fe59081626c
-  [436.544] R13: 00005618b9ecb100 R14: 0000000000000000 R15: 00005618b9ecacc0
-  [436.545]  </TASK>
-  [436.545] ---[ end trace 0000000000000000 ]---
-
-Fix this by changing the qgroup ioctls to use start transaction instead of
-joining so that proper space is reserved for the delayed refs generated
-for the updates to the quota root. This way we don't get any transaction
-abort.
-
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260326204310.1549327-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/sched/sch_hfsc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 9a548f2eec3af..45852dbf9dfbc 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -3861,7 +3861,8 @@ static long btrfs_ioctl_qgroup_assign(struct file *file, void __user *arg)
- 		}
- 	}
+diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
+index d8fd35da32a7c..57221522fe56d 100644
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -555,7 +555,7 @@ static void
+ rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
+ {
+ 	u64 y1, y2, dx, dy;
+-	u32 dsm;
++	u64 dsm;
  
--	trans = btrfs_join_transaction(root);
-+	/* 2 BTRFS_QGROUP_RELATION_KEY items. */
-+	trans = btrfs_start_transaction(root, 2);
- 	if (IS_ERR(trans)) {
- 		ret = PTR_ERR(trans);
- 		goto out;
-@@ -3933,7 +3934,11 @@ static long btrfs_ioctl_qgroup_create(struct file *file, void __user *arg)
- 		goto out;
- 	}
- 
--	trans = btrfs_join_transaction(root);
-+	/*
-+	 * 1 BTRFS_QGROUP_INFO_KEY item.
-+	 * 1 BTRFS_QGROUP_LIMIT_KEY item.
-+	 */
-+	trans = btrfs_start_transaction(root, 2);
- 	if (IS_ERR(trans)) {
- 		ret = PTR_ERR(trans);
- 		goto out;
-@@ -3982,7 +3987,8 @@ static long btrfs_ioctl_qgroup_limit(struct file *file, void __user *arg)
- 		goto drop_write;
- 	}
- 
--	trans = btrfs_join_transaction(root);
-+	/* 1 BTRFS_QGROUP_LIMIT_KEY item. */
-+	trans = btrfs_start_transaction(root, 1);
- 	if (IS_ERR(trans)) {
- 		ret = PTR_ERR(trans);
- 		goto out;
+ 	if (isc->sm1 <= isc->sm2) {
+ 		/* service curve is convex */
+@@ -598,7 +598,7 @@ rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
+ 	 */
+ 	dx = (y1 - y) << SM_SHIFT;
+ 	dsm = isc->sm1 - isc->sm2;
+-	do_div(dx, dsm);
++	dx = div64_u64(dx, dsm);
+ 	/*
+ 	 * check if (x, y1) belongs to the 1st segment of rtsc.
+ 	 * if so, add the offset.
 -- 
 2.53.0
 
