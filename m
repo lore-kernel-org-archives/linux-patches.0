@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A10EB67E;
-	Wed,  8 Apr 2026 18:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C5127979A;
+	Wed,  8 Apr 2026 18:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673467; cv=none; b=kvu+j3OAqNE6ufntI822q5mEV7AoP0l7eQefk+ZtWjPNYVKhwXNxIWLtih+dv66Tq8lF1W6gLkFzc7vTJSWxJx6Q51dCfcRlb5vZiTeg+heXHGEPT316vN1Xcm4QKw+llpe4FZFPNx/G9e7g1IUiNpsMIVOMiCBeyb4t4CHDFxA=
+	t=1775673470; cv=none; b=OjFnVzwGkeDX4N6mCfokgV05qM45yfo6a1vBD3pOqOwno4JXV76BpY4luLIZHuJJTbTfhAr65cZXcJM5sohX80ZeEtsctW6wUORzHlGCoDQBxHtF7ye1pBlU+Hj+r9PE4SA4dHE7qvZZudkKqgnmgJGqVgElL3+jxwNXa875KF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673467; c=relaxed/simple;
-	bh=ngWPWngUaF22j/25YUBsyxuUC1+M7dcfex6/S5mUctg=;
+	s=arc-20240116; t=1775673470; c=relaxed/simple;
+	bh=H+4w+ySpAoGw1p8com/dP/Wn8c5OXOODcBkICVn/0HA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bA5BB6yv6/+0FXFmjdZ+Zs/CgCg2oTTok6J2jRIzr2AUzEyvqzA3uKCK6wqbGlG3ZEMyVzyS3GG7WnwOW9PIh0gJruYoo11Zyei3vW7U67KijtrgcYm1r3qOEFzmYOSEGgx1EmEp6XEEMJCxLKQSJnv+nqQPB6HEJ5FuM30wYoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqJe1Onk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y8k5jdQk0unRNljvDNetUZxj55LvVrnMzxCiK4kh78th3FX8/cLvlcFgqWlBlwpPdYDsF8rFnJxYci3Z156gfVjpU7TwII3skMT+7hoP6V5mSsVCMB2icTWiSbijEtPE+AcpnnpFmm1mFlVBH+lEH6bzhahJ6KdTSqCEKpC5+r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVFj29fk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqJe1Onk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02043C19421;
-	Wed,  8 Apr 2026 18:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVFj29fk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87664C19421;
+	Wed,  8 Apr 2026 18:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673467;
-	bh=ngWPWngUaF22j/25YUBsyxuUC1+M7dcfex6/S5mUctg=;
+	s=korg; t=1775673470;
+	bh=H+4w+ySpAoGw1p8com/dP/Wn8c5OXOODcBkICVn/0HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqJe1Onk1IvJnQ1TcXOlLPvoRbusU0KlhEPgaOf8pTABPea9tWunCde28IJcpUz3d
-	 CZ1rENxWdnZKqqweOaqg8zGqJJy5Kny6uObxM9vN2YGO2l0wen4hjCLW+jvuCMGqXy
-	 KjKZzxJrCNjycJTHrlh1wZO3qqVBMx9hjOEVteX4=
+	b=uVFj29fkFFBFuaBHpbahlfWOj2GeXMel3Hn3KBpYHbfN/TOUbnP4tW0e/K0rFFioW
+	 Up0kspN/w0/rE78paSNYFx+qRW49GHaQdvebB8sNlrUdW2HG9lMLwj30KfuWyGb1uV
+	 e3L/0BrwQQ7NpuZaJeuk9po9Sp/AI5YiOgUTsaZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingjing Deng <xjdeng@buaa.edu.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.18 243/277] misc: fastrpc: check qcom_scm_assign_mem() return in rpmsg_probe
-Date: Wed,  8 Apr 2026 20:03:48 +0200
-Message-ID: <20260408175942.933349023@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.18 217/277] comedi: me4000: Fix potential overrun of firmware buffer
+Date: Wed,  8 Apr 2026 20:03:22 +0200
+Message-ID: <20260408175941.963134276@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -50,45 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingjing Deng <micro6947@gmail.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 6a502776f4a4f80fb839b22f12aeaf0267fca344 upstream.
+commit 3fb43a7a5b44713f892c58ead2e5f3a1bc9f4ee7 upstream.
 
-In the SDSP probe path, qcom_scm_assign_mem() is used to assign the
-reserved memory to the configured VMIDs, but its return value was not checked.
+`me4000_xilinx_download()` loads the firmware that was requested by
+`request_firmware()`.  It is possible for it to overrun the source
+buffer because it blindly trusts the file format.  It reads a data
+stream length from the first 4 bytes into variable `file_length` and
+reads the data stream contents of length `file_length` from offset 16
+onwards.
 
-Fail the probe if the SCM call fails to avoid continuing with an
-unexpected/incorrect memory permission configuration.
+Add a test to ensure that the supplied firmware is long enough to
+contain the header and the data stream.  On failure, log an error and
+return `-EINVAL`.
 
-This issue was found by an in-house analysis workflow that extracts AST-based
-information and runs static checks, with LLM assistance for triage, and was
-confirmed by manual code review.
-No hardware testing was performed.
+Note: The firmware loading was totally broken before commit ac584af59945
+("staging: comedi: me4000: fix firmware downloading"), but that is the
+most sensible target for this fix.
 
-Fixes: c3c0363bc72d4 ("misc: fastrpc: support complete DMA pool access to the DSP")
-Cc: stable@vger.kernel.org # 6.11-rc1
-Signed-off-by: Xingjing Deng <xjdeng@buaa.edu.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260131065539.2124047-1-xjdeng@buaa.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ac584af59945 ("staging: comedi: me4000: fix firmware downloading")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260205133949.71722-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/comedi/drivers/me4000.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2338,8 +2338,10 @@ static int fastrpc_rpmsg_probe(struct rp
- 		if (!err) {
- 			src_perms = BIT(QCOM_SCM_VMID_HLOS);
+--- a/drivers/comedi/drivers/me4000.c
++++ b/drivers/comedi/drivers/me4000.c
+@@ -315,6 +315,18 @@ static int me4000_xilinx_download(struct
+ 	unsigned int val;
+ 	unsigned int i;
  
--			qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
-+			err = qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
- 				    data->vmperms, data->vmcount);
-+			if (err)
-+				goto err_free_data;
- 		}
++	/* Get data stream length from header. */
++	if (size >= 4) {
++		file_length = (((unsigned int)data[0] & 0xff) << 24) +
++			      (((unsigned int)data[1] & 0xff) << 16) +
++			      (((unsigned int)data[2] & 0xff) << 8) +
++			      ((unsigned int)data[3] & 0xff);
++	}
++	if (size < 16 || file_length > size - 16) {
++		dev_err(dev->class_dev, "Firmware length inconsistency\n");
++		return -EINVAL;
++	}
++
+ 	if (!xilinx_iobase)
+ 		return -ENODEV;
  
- 	}
+@@ -346,10 +358,6 @@ static int me4000_xilinx_download(struct
+ 	outl(val, devpriv->plx_regbase + PLX9052_CNTRL);
+ 
+ 	/* Download Xilinx firmware */
+-	file_length = (((unsigned int)data[0] & 0xff) << 24) +
+-		      (((unsigned int)data[1] & 0xff) << 16) +
+-		      (((unsigned int)data[2] & 0xff) << 8) +
+-		      ((unsigned int)data[3] & 0xff);
+ 	usleep_range(10, 1000);
+ 
+ 	for (i = 0; i < file_length; i++) {
 
 
