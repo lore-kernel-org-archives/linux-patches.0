@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18B03D9037;
-	Wed,  8 Apr 2026 18:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E92E2727F3;
+	Wed,  8 Apr 2026 18:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674191; cv=none; b=YOLat3r7gdr0/uhZOdPW8R4n6X5K0mmXa3QqKyyL9zb69NZFLjTH0tuPY8NkJofFsQqlUugVee9iJhJBzXmZgwUr22EVsxzoer6JnkDJO2EnFMOeSCT2DmvCmweWPV4Mr4RF1Q6rwDGPJMmMeqaZTg1izuWRj7PCaZv2gcivgJc=
+	t=1775674193; cv=none; b=P24pHLJW29Hv/DbbGw3zfqHMS1rly7dUjyRFKalOG/BIa3bOgjy9Ay/8Ve+nATVYNaloHgYQkzeLBoFf3wnWXU+2wLS7RD7Rc+VBQR56Pv3sO5SOAepl3+Lp6GAA/105zpvt99H6/4BJDcCDDbPrt2kES9tzcUJYdkShJbMpSPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674191; c=relaxed/simple;
-	bh=qnJLzJDRqFAXhb4vK+UOWlOYm7Te59HOwIiUnw3q2pc=;
+	s=arc-20240116; t=1775674193; c=relaxed/simple;
+	bh=gQirPgQOJVknIH1VkDPw5u2WNtSCzRUytGW/OTPcKnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aoo42m+/2jjiYB+k2mkq8DW3CrEWujKXfY+qrJp5R7b+T4o/kW2a7lQrQzzXKxBGWblDs+Dsnjx2PsIZx03veDfEn94OxxWGSKXvY39IqBw7zsNec5bYUnh7Dt5YtHk+qWnIrX2S2aXFh+8bleSozfsLCYlGymSI3OXvN8dcjx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNw5kJYn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m1yss9YxGkl19D/iEF3sIStKMO67n27nFppw4JLT3DUbgonun9slQJSEUa4bGH5ZrOhbYBMo9shVnW9MBEXsI8uv7xcU05IvupIH4EFfCWivP/z3owssWfINnpmF0Fvsd7XwDA+8X3gs4JcDASWEj2dpXVTBXCpj7qweD7RnotI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5sBRzRw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNw5kJYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3980DC2BC87;
-	Wed,  8 Apr 2026 18:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5sBRzRw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8200C2BCB0;
+	Wed,  8 Apr 2026 18:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674190;
-	bh=qnJLzJDRqFAXhb4vK+UOWlOYm7Te59HOwIiUnw3q2pc=;
+	s=korg; t=1775674193;
+	bh=gQirPgQOJVknIH1VkDPw5u2WNtSCzRUytGW/OTPcKnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNw5kJYn30mqnRULCJ35x8PF5tGZBwwJB9DfmlmprTrEfq86kBR9kzuExi5DeDMik
-	 vJFUrXJfokro4mwDgSWK1W8PkgheW4rj2yLffryu00ZDm/F6w4CqYy9D30b89gXXkb
-	 txxYpRGPSUfFFCfEAEu6uSP0o9mAGYoIsuIUSZLg=
+	b=Y5sBRzRwaDe9JXqeBYLBAJZtPIZAj3yvAjx/+leL3rb3ZV/E9Dt6KZ5F1+duHzRBO
+	 Hjt03/YeT3bkRVpZG0buXOxP0vx7yiw7LvL+twVWDJaeHdYEzPHd+K59WaNBOhGBCy
+	 QEL3qjjzI8NZhUFBgN+VDFrNGXN9Y2pksul/MbJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 213/242] spi: cadence-qspi: Fix exec_mem_op error handling
-Date: Wed,  8 Apr 2026 20:04:13 +0200
-Message-ID: <20260408175935.052127592@linuxfoundation.org>
+	Tangxin Xie <xietangxin@yeah.net>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 214/242] net: correctly handle tunneled traffic on IPV6_CSUM GSO fallback
+Date: Wed,  8 Apr 2026 20:04:14 +0200
+Message-ID: <20260408175935.088830927@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -50,64 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+From: Willem de Bruijn <willemb@google.com>
 
-commit 59e1be1278f064d7172b00473b7e0c453cb1ec52 upstream.
+[ Upstream commit c4336a07eb6b2526dc2b62928b5104b41a7f81f5 ]
 
-cqspi_exec_mem_op() increments the runtime PM usage counter before all
-refcount checks are performed. If one of these checks fails, the function
-returns without dropping the PM reference.
+NETIF_F_IPV6_CSUM only advertises support for checksum offload of
+packets without IPv6 extension headers. Packets with extension
+headers must fall back onto software checksumming. Since TSO
+depends on checksum offload, those must revert to GSO.
 
-Move the pm_runtime_resume_and_get() call after the refcount checks so
-that runtime PM is only acquired when the operation can proceed and
-drop the inflight_ops refcount if the PM resume fails.
+The below commit introduces that fallback. It always checks
+network header length. For tunneled packets, the inner header length
+must be checked instead. Extend the check accordingly.
+
+A special case is tunneled packets without inner IP protocol. Such as
+RFC 6951 SCTP in UDP. Those are not standard IPv6 followed by
+transport header either, so also must revert to the software GSO path.
 
 Cc: stable@vger.kernel.org
-Fixes: 7446284023e8 ("spi: cadence-quadspi: Implement refcount to handle unbind during busy")
-Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Link: https://patch.msgid.link/20260313135236.46642-1-ghidoliemanuele@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Fixes: 864e3396976e ("net: gso: Forbid IPv6 TSO with extensions on devices with only IPV6_CSUM")
+Reported-by: Tangxin Xie <xietangxin@yeah.net>
+Closes: https://lore.kernel.org/netdev/0414e7e2-9a1c-4d7c-a99d-b9039cf68f40@yeah.net/
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260320190148.2409107-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence-quadspi.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ net/core/dev.c |   22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1461,12 +1461,6 @@ static int cqspi_exec_mem_op(struct spi_
- 	if (refcount_read(&cqspi->inflight_ops) == 0)
- 		return -ENODEV;
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3579,6 +3579,22 @@ static netdev_features_t dflt_features_c
+ 	return vlan_features_check(skb, features);
+ }
  
--	ret = pm_runtime_resume_and_get(dev);
--	if (ret) {
--		dev_err(&mem->spi->dev, "resume failed with %d\n", ret);
--		return ret;
--	}
--
- 	if (!refcount_read(&cqspi->refcount))
- 		return -EBUSY;
- 
-@@ -1478,6 +1472,12 @@ static int cqspi_exec_mem_op(struct spi_
- 		return -EBUSY;
- 	}
- 
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret) {
-+		dev_err(&mem->spi->dev, "resume failed with %d\n", ret);
-+		goto dec_inflight_refcount;
-+	}
++static bool skb_gso_has_extension_hdr(const struct sk_buff *skb)
++{
++	if (!skb->encapsulation)
++		return ((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
++			 (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
++			  vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
++			skb_transport_header_was_set(skb) &&
++			skb_network_header_len(skb) != sizeof(struct ipv6hdr));
++	else
++		return (!skb_inner_network_header_was_set(skb) ||
++			((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
++			  (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
++			   inner_ip_hdr(skb)->version == 6)) &&
++			 skb_inner_network_header_len(skb) != sizeof(struct ipv6hdr)));
++}
 +
- 	ret = cqspi_mem_process(mem, op);
- 
- 	pm_runtime_mark_last_busy(dev);
-@@ -1486,6 +1486,7 @@ static int cqspi_exec_mem_op(struct spi_
- 	if (ret)
- 		dev_err(&mem->spi->dev, "operation failed with %d\n", ret);
- 
-+dec_inflight_refcount:
- 	if (refcount_read(&cqspi->inflight_ops) > 1)
- 		refcount_dec(&cqspi->inflight_ops);
+ static netdev_features_t gso_features_check(const struct sk_buff *skb,
+ 					    struct net_device *dev,
+ 					    netdev_features_t features)
+@@ -3625,11 +3641,7 @@ static netdev_features_t gso_features_ch
+ 	 * so neither does TSO that depends on it.
+ 	 */
+ 	if (features & NETIF_F_IPV6_CSUM &&
+-	    (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
+-	     (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
+-	      vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
+-	    skb_transport_header_was_set(skb) &&
+-	    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
++	    skb_gso_has_extension_hdr(skb) &&
+ 	    !ipv6_has_hopopt_jumbo(skb))
+ 		features &= ~(NETIF_F_IPV6_CSUM | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4);
  
 
 
