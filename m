@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602DD3D411F;
-	Wed,  8 Apr 2026 18:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F70A3ACF11;
+	Wed,  8 Apr 2026 18:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672783; cv=none; b=a6g3IAEBJIUdzITjcDW8JAGSkMNCcl4SiatId36t4l/T11uGP4lAFJxsOqd8l0t4t5m/SE+qxzVTRLlSrnEOrnweNoehjyGnxVBHco7P5RZy4y9X9xRKvyVS9xGm5Dc50VyY0gkE1AtuP//gIvhtyintK7kaPcDQGe+nqa1vPHk=
+	t=1775672786; cv=none; b=jrbBJYpZGOg4vkw06/ZAvi/0WP5jUkqagiNnUVwbIouzlGejfdBdbdSCrCcuvBNLg5owSGToFSwHGsRKw9Tmm6xt4J/7udBYiJeQ4MDH1FwAJV/Lyr03fVPo818QUfoYpqGNJGohQsGDUoZrVry54mIWnn5kYIoi1nF1iYaLeg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672783; c=relaxed/simple;
-	bh=QW8eyjumPUWKY6m70eGwzBTuGeZ+iBmBJNQzgDbcYEs=;
+	s=arc-20240116; t=1775672786; c=relaxed/simple;
+	bh=HZJpHZ7BMu/AbksjlAzynqiTnrSJpJtlbtbFeq5IwJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=St7ATvfb34nNMqQZOq07PuazlN87Dad8TirbdouUeXsjwwycxvFzn9fxkXoBeLLeSOskW3oIKACXKNOMnK2ZnIkzZx/JAU4tFyvKu1e7hmkyZZd6FDDkYQNnTyCnTIYJahow71wjbryZOz5/Oqg6AH2P9p5jFgsXCtY5YkS8Jeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7GFvYec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y/2GGqy0HcHbKwnCK5cFTg15LB7Op7aSyuarVKUzTFcsdVWMgBRLByoxJzWE5mY/AjQiXj56AkPO4zerPOF0H27kQxKOyPwRXfIantjy+iXrvWrjtQGXGxjiS8G15OzPg22qdz6cwu4OCKvUufzfRSjg9Fy3RbHpEhYXMkeueL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpP/W6wV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7GFvYec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA40CC19421;
-	Wed,  8 Apr 2026 18:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpP/W6wV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE4CC19421;
+	Wed,  8 Apr 2026 18:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672783;
-	bh=QW8eyjumPUWKY6m70eGwzBTuGeZ+iBmBJNQzgDbcYEs=;
+	s=korg; t=1775672785;
+	bh=HZJpHZ7BMu/AbksjlAzynqiTnrSJpJtlbtbFeq5IwJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7GFvYecGEAddG1Pyys/cvUuDrZ1ocPIlQDct9qqL/WMfG3QKzhBp01lQ157YfIrv
-	 QWNhnPJNaISrQoZEWfsMKgQ6bCc+P8Oi6vUGXo+m3nTkDJVeoGkchb+R+9EjP3vrN+
-	 Lldk9FmOZ8FVr/FHHhmZhxlIcDqVRnSBXu86NRY8=
+	b=mpP/W6wVYb9hUcNdqxFEul16Ugg3Q0qP7iGX1WMt67NNoxq4Xf3INmjY+F1F5cmTd
+	 0FzuG/seiuue6mZk/elCewtdcuEy/oRUUV2bRYrK4qCQBA1Y0kDhMiIP571OMpqmhd
+	 OShgtcCWtKJ3CPlv7/XUP6jIbV9YSyMW5mLJIXUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.6 133/160] thunderbolt: Fix property read in nhi_wake_supported()
-Date: Wed,  8 Apr 2026 20:03:40 +0200
-Message-ID: <20260408175918.158231735@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Kuen-Han Tsai <khtsai@google.com>
+Subject: [PATCH 6.6 142/160] usb: gadget: u_ether: Fix race between gether_disconnect and eth_stop
+Date: Wed,  8 Apr 2026 20:03:49 +0200
+Message-ID: <20260408175918.495787254@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -50,37 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-commit 73a505dc48144ec72e25874e2b2a72487b02d3bc upstream.
+commit e1eabb072c75681f78312c484ccfffb7430f206e upstream.
 
-device_property_read_foo() returns 0 on success and only then modifies
-'val'. Currently, val is left uninitialized if the aforementioned
-function returns non-zero, making nhi_wake_supported() return true
-almost always (random != 0) if the property is not present in device
-firmware.
+A race condition between gether_disconnect() and eth_stop() leads to a
+NULL pointer dereference. Specifically, if eth_stop() is triggered
+concurrently while gether_disconnect() is tearing down the endpoints,
+eth_stop() attempts to access the cleared endpoint descriptor, causing
+the following NPE:
 
-Invert the check to make it make sense.
+  Unable to handle kernel NULL pointer dereference
+  Call trace:
+   __dwc3_gadget_ep_enable+0x60/0x788
+   dwc3_gadget_ep_enable+0x70/0xe4
+   usb_ep_enable+0x60/0x15c
+   eth_stop+0xb8/0x108
 
-Fixes: 3cdb9446a117 ("thunderbolt: Add support for Intel Ice Lake")
-Cc: stable@vger.kernel.org
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Because eth_stop() crashes while holding the dev->lock, the thread
+running gether_disconnect() fails to acquire the same lock and spins
+forever, resulting in a hardlockup:
+
+  Core - Debugging Information for Hardlockup core(7)
+  Call trace:
+   queued_spin_lock_slowpath+0x94/0x488
+   _raw_spin_lock+0x64/0x6c
+   gether_disconnect+0x19c/0x1e8
+   ncm_set_alt+0x68/0x1a0
+   composite_setup+0x6a0/0xc50
+
+The root cause is that the clearing of dev->port_usb in
+gether_disconnect() is delayed until the end of the function.
+
+Move the clearing of dev->port_usb to the very beginning of
+gether_disconnect() while holding dev->lock. This cuts off the link
+immediately, ensuring eth_stop() will see dev->port_usb as NULL and
+safely bail out.
+
+Fixes: 2b3d942c4878 ("usb ethernet gadget: split out network core")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20260311-gether-disconnect-npe-v1-1-454966adf7c7@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/nhi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_ether.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -1010,7 +1010,7 @@ static bool nhi_wake_supported(struct pc
- 	 * If power rails are sustainable for wakeup from S4 this
- 	 * property is set by the BIOS.
- 	 */
--	if (device_property_read_u8(&pdev->dev, "WAKE_SUPPORTED", &val))
-+	if (!device_property_read_u8(&pdev->dev, "WAKE_SUPPORTED", &val))
- 		return !!val;
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -1200,6 +1200,11 @@ void gether_disconnect(struct gether *li
  
- 	return true;
+ 	DBG(dev, "%s\n", __func__);
+ 
++	spin_lock(&dev->lock);
++	dev->port_usb = NULL;
++	link->is_suspend = false;
++	spin_unlock(&dev->lock);
++
+ 	netif_stop_queue(dev->net);
+ 	netif_carrier_off(dev->net);
+ 
+@@ -1237,11 +1242,6 @@ void gether_disconnect(struct gether *li
+ 	dev->header_len = 0;
+ 	dev->unwrap = NULL;
+ 	dev->wrap = NULL;
+-
+-	spin_lock(&dev->lock);
+-	dev->port_usb = NULL;
+-	link->is_suspend = false;
+-	spin_unlock(&dev->lock);
+ }
+ EXPORT_SYMBOL_GPL(gether_disconnect);
+ 
 
 
