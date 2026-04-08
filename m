@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235EA1E5724;
-	Wed,  8 Apr 2026 18:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A4D1E5724;
+	Wed,  8 Apr 2026 18:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672026; cv=none; b=CmE3/KQEbOC4BMeG0bDqYZwzzfvjvRAGj64v+b6ZKuCEnxi6p2q9swd1cjJ7gjMaE6xKVmZaqNeeXdpfdqpC5nIQkTqL+rPMWB0GgcJ6t+bP2zIP/3p9YYumh463QgYl7FdCAQyirZyDKcfxlgpPcQk5K58i+e4gciyEvohouIk=
+	t=1775672028; cv=none; b=QebUq2IjiWb8hlKFaEcrfZPyZA3c1y14+PY7Vt0tiaj/gB7B66gphTlkkR3Tl1+FLMQZkPesrhDlsr98v73FSCvmS7baCVu5qy3gfdkFQr4jVWBjWV3d1RlCOWn0+g0GkGgrcPFSOFZ0w5PEqBZkHVq1gHogK8fvVGYL83qkn60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672026; c=relaxed/simple;
-	bh=GHccGmZOwDib1/wAUDnYj8Pu5cQDXB+83+GaXtkNnJA=;
+	s=arc-20240116; t=1775672028; c=relaxed/simple;
+	bh=37bC/imuJlIe3XfpqUCOWazQklF+pnJk1Dqy+vn0EHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOyIEd+WYlEpJFoCuu/lt42h1Zv7w5Q7ZrRLMT6BJEAGp+QVECjg9vSb8uIzdE2Mw097K7o6YPJSbZAvDPgIu38yV+gqIA0mW0EMzbpFTLfZrZy4ddEZs6akqSzmGpC3bQ8jwEzJTELcq5YY3BoTJq8siwJPzF5UkhK0QGWGaVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yodcgCJo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nQSZktlS9TMIe/iYmCgn9JExKB6X29oeLb0GYhzg2PC56iJw556lzHnsYVII6Js52tDrP0nqVVkGg7xQZ0rWz/rA6izR2C309clHwtN2LbdXRLSKrYRa4aU3ajldXWl9bfvaAvr1MDyzooai3Q5soRQbYNRg7Pay91Cn5hUEW3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClxbyJii; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yodcgCJo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5D3C19421;
-	Wed,  8 Apr 2026 18:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClxbyJii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47841C19421;
+	Wed,  8 Apr 2026 18:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672026;
-	bh=GHccGmZOwDib1/wAUDnYj8Pu5cQDXB+83+GaXtkNnJA=;
+	s=korg; t=1775672028;
+	bh=37bC/imuJlIe3XfpqUCOWazQklF+pnJk1Dqy+vn0EHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yodcgCJoaSMkPjf0Hb/wEPsyGrudrYiqRDHYNL1NImvt/flF2QenBaZ1Hx8mjOuW4
-	 CRBGFOcpxkaS3L+750G4sJduDF6PJag8h0G49nLb0OhpSb5jKVxYT+NPdd70y/E+8Y
-	 pty7DnZrST7ugG0IHoMZJbkwZiKGEBnAIz4mpYhI=
+	b=ClxbyJiixvbmTpsc6KzYfB9zynhM5K5Kok9G0nxKilVT46I0zKYMOD3Mh5aDNtLPI
+	 RCZQTmQ1qGh9Hko9K7LC5AYLOC6mkk8P8ZPDi3N0mIHJ0/dkDTvZAtNQIKZFFSXFeg
+	 cJVahucKxXVXIbc/JukERq8k+KgJwjbMyn/R1q2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <mark@harmstone.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/312] btrfs: fix super block offset in error message in btrfs_validate_super()
-Date: Wed,  8 Apr 2026 20:00:45 +0200
-Message-ID: <20260408175938.552926938@linuxfoundation.org>
+Subject: [PATCH 6.1 129/312] btrfs: fix leak of kobject name for sub-group space_info
+Date: Wed,  8 Apr 2026 20:00:46 +0200
+Message-ID: <20260408175938.590379407@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,43 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <mark@harmstone.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit b52fe51f724385b3ed81e37e510a4a33107e8161 ]
+[ Upstream commit a4376d9a5d4c9610e69def3fc0b32c86a7ab7a41 ]
 
-Fix the superblock offset mismatch error message in
-btrfs_validate_super(): we changed it so that it considers all the
-superblocks, but the message still assumes we're only looking at the
-first one.
+When create_space_info_sub_group() allocates elements of
+space_info->sub_group[], kobject_init_and_add() is called for each
+element via btrfs_sysfs_add_space_info_type(). However, when
+check_removing_space_info() frees these elements, it does not call
+btrfs_sysfs_remove_space_info() on them. As a result, kobject_put() is
+not called and the associated kobj->name objects are leaked.
 
-The change from %u to %llu is because we're changing from a constant to
-a u64.
+This memory leak is reproduced by running the blktests test case
+zbd/009 on kernels built with CONFIG_DEBUG_KMEMLEAK. The kmemleak
+feature reports the following error:
 
-Fixes: 069ec957c35e ("btrfs: Refactor btrfs_check_super_valid")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+unreferenced object 0xffff888112877d40 (size 16):
+  comm "mount", pid 1244, jiffies 4294996972
+  hex dump (first 16 bytes):
+    64 61 74 61 2d 72 65 6c 6f 63 00 c4 c6 a7 cb 7f  data-reloc......
+  backtrace (crc 53ffde4d):
+    __kmalloc_node_track_caller_noprof+0x619/0x870
+    kstrdup+0x42/0xc0
+    kobject_set_name_vargs+0x44/0x110
+    kobject_init_and_add+0xcf/0x150
+    btrfs_sysfs_add_space_info_type+0xfc/0x210 [btrfs]
+    create_space_info_sub_group.constprop.0+0xfb/0x1b0 [btrfs]
+    create_space_info+0x211/0x320 [btrfs]
+    btrfs_init_space_info+0x15a/0x1b0 [btrfs]
+    open_ctree+0x33c7/0x4a50 [btrfs]
+    btrfs_get_tree.cold+0x9f/0x1ee [btrfs]
+    vfs_get_tree+0x87/0x2f0
+    vfs_cmd_create+0xbd/0x280
+    __do_sys_fsconfig+0x3df/0x990
+    do_syscall_64+0x136/0x1540
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+To avoid the leak, call btrfs_sysfs_remove_space_info() instead of
+kfree() for the elements.
+
+Fixes: f92ee31e031c ("btrfs: introduce btrfs_space_info sub-group")
+Link: https://lore.kernel.org/linux-block/b9488881-f18d-4f47-91a5-3c9bf63955a5@wdc.com/
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/block-group.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index cf124944302f1..203ff9bbad431 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2759,8 +2759,8 @@ int btrfs_validate_super(struct btrfs_fs_info *fs_info,
- 
- 	if (mirror_num >= 0 &&
- 	    btrfs_super_bytenr(sb) != btrfs_sb_offset(mirror_num)) {
--		btrfs_err(fs_info, "super offset mismatch %llu != %u",
--			  btrfs_super_bytenr(sb), BTRFS_SUPER_INFO_OFFSET);
-+		btrfs_err(fs_info, "super offset mismatch %llu != %llu",
-+			  btrfs_super_bytenr(sb), btrfs_sb_offset(mirror_num));
- 		ret = -EINVAL;
- 	}
- 
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index 880288d7358e6..1f9fbec887c03 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -4154,7 +4154,7 @@ static void check_removing_space_info(struct btrfs_space_info *space_info)
+ 		for (int i = 0; i < BTRFS_SPACE_INFO_SUB_GROUP_MAX; i++) {
+ 			if (space_info->sub_group[i]) {
+ 				check_removing_space_info(space_info->sub_group[i]);
+-				kfree(space_info->sub_group[i]);
++				btrfs_sysfs_remove_space_info(space_info->sub_group[i]);
+ 				space_info->sub_group[i] = NULL;
+ 			}
+ 		}
 -- 
 2.53.0
 
