@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B755B67E;
-	Wed,  8 Apr 2026 18:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1875BB67E;
+	Wed,  8 Apr 2026 18:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674618; cv=none; b=fZcAq+eFm/BT2RnC+zkEeYx3m5gjQ6EtfB15lRracnvxUlJCjV5W2/hgTpK4RHccYH6FOaRtDffgtuKFDB6yPb+xMrmSlUzL2KO2Xso35wOMCeYVgzmzq4vCX9zd6VQwU+Jtwvr1N9jWKUM1n+YGEIGzCOdOiPCClZGGEIDYQ5A=
+	t=1775674621; cv=none; b=Hmg+vIIzBeSo0qlucfJVmYKxKGoig1zKcuyhkT7avn8aACMhjomffra81W59lZtLPaG9kMLCUptUmK2+1VzKspGzDktDU+r2Voa/JFBEqUlPIyD4sL6W4wCvG9q/LNP6JG4Wa3Qyrfa6nwRuFuIsraGv2HjcRhtdQmEUSe+ZYrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674618; c=relaxed/simple;
-	bh=V5PC+onqENC9Bhfv76sosszcM4B8uOsulDKD9bBilmk=;
+	s=arc-20240116; t=1775674621; c=relaxed/simple;
+	bh=cP3ZiiiHmQR0BLZT52I9ZQszdJyi2w+0/ruzurYSd9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c49n+nK8X540Pcz7/lLXVjoL7TFd6rtTgbi0MuHaXIfdGTXgbRfsR2wlwmXFwMYQHUVv+8SnzxM7gfhbcvFRsjBbwEyDLZlW2a1LkNKI7rVfs+GmoQYnLJFeqEd9nKZrp+DfLgrVUo0riUFjKnh6lc78bPz+6Xtc7xKMCuKjrXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/VPtnGn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N3tNIE6EPAl2GPk18DkOzFSLc5ddGlIwcp+0laOKTNBmNqvru1J0FZ3WdLNPoeIOpyb2SxZfzqtu1/wVZAbN1RadQ2jGRWZvG45MTck4Og9EOkUBCRSPfKt9c/MddIS4ZOd/vZ6KCB2EuMiOcj/xi2OldfV1Nk4dpjAW7gC7/58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pZ3z7OV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/VPtnGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D016BC19421;
-	Wed,  8 Apr 2026 18:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pZ3z7OV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FEFC19421;
+	Wed,  8 Apr 2026 18:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674618;
-	bh=V5PC+onqENC9Bhfv76sosszcM4B8uOsulDKD9bBilmk=;
+	s=korg; t=1775674621;
+	bh=cP3ZiiiHmQR0BLZT52I9ZQszdJyi2w+0/ruzurYSd9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/VPtnGnDnKUwKPYkGUNTv9d75H6IUNpwXCp3OpDGsYX0oBmohAiLEtuhub54PiSo
-	 5QLCfZ6jwOUwZgfllFgFlbevkNm6dEWi60c8L2tgkkKkhqXTQjFMfxFcZoILRWiQjT
-	 4Xn5HBkY0BfKKJeski0jBV5ycCXF72TtBZqugwoE=
+	b=1pZ3z7OVOIe5qdqV9WtlNcYomLInu/S9VzFRLjacHogKg+wzLUEM2Pk7nqHIr8i9e
+	 Or8UCKjbVTbHAy8pb50yiJ5MIvepM/3Qn2kAM8ETJIUvWyFU7S0+wdf6RwpjN5QV6b
+	 phRLtSmUGIKBGH+p7WYIOzPEdMe5ZHzcbVDJlTHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Sa <Daniel.Sa@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.19 166/311] drm/amd/display: Fix NULL pointer dereference in dcn401_init_hw()
-Date: Wed,  8 Apr 2026 20:02:46 +0200
-Message-ID: <20260408175945.604823279@linuxfoundation.org>
+	Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.19 167/311] sched_ext: Fix inconsistent NUMA node lookup in scx_select_cpu_dfl()
+Date: Wed,  8 Apr 2026 20:02:47 +0200
+Message-ID: <20260408175945.641057377@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -57,79 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 
-commit e927b36ae18b66b49219eaa9f46edc7b4fdbb25e upstream.
+commit db08b1940f4beb25460b4a4e9da3446454f2e8fe upstream.
 
-dcn401_init_hw() assumes that update_bw_bounding_box() is valid when
-entering the update path. However, the existing condition:
+In the WAKE_SYNC path of scx_select_cpu_dfl(), waker_node was computed
+with cpu_to_node(), while node (for prev_cpu) was computed with
+scx_cpu_node_if_enabled(). When scx_builtin_idle_per_node is disabled,
+idle_cpumask(waker_node) is called with a real node ID even though
+per-node idle tracking is disabled, resulting in undefined behavior.
 
-  ((!fams2_enable && update_bw_bounding_box) || freq_changed)
+Fix by using scx_cpu_node_if_enabled() for waker_node as well, ensuring
+both variables are computed consistently.
 
-does not guarantee this, as the freq_changed branch can evaluate to true
-independently of the callback pointer.
-
-This can result in calling update_bw_bounding_box() when it is NULL.
-
-Fix this by separating the update condition from the pointer checks and
-ensuring the callback, dc->clk_mgr, and bw_params are validated before
-use.
-
-Fixes the below:
-../dc/hwss/dcn401/dcn401_hwseq.c:367 dcn401_init_hw() error: we previously assumed 'dc->res_pool->funcs->update_bw_bounding_box' could be null (see line 362)
-
-Fixes: ca0fb243c3bb ("drm/amd/display: Underflow Seen on DCN401 eGPU")
-Cc: Daniel Sa <Daniel.Sa@amd.com>
-Cc: Alvin Lee <alvin.lee2@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 86117c5ab42f21562fedb0a64bffea3ee5fcd477)
-Cc: stable@vger.kernel.org
+Fixes: 48849271e6611 ("sched_ext: idle: Per-node idle cpumasks")
+Cc: stable@vger.kernel.org # v6.15+
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c |   17 +++++++++-----
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ kernel/sched/ext_idle.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -146,6 +146,7 @@ void dcn401_init_hw(struct dc *dc)
- 	int edp_num;
- 	uint32_t backlight = MAX_BACKLIGHT_LEVEL;
- 	uint32_t user_level = MAX_BACKLIGHT_LEVEL;
-+	bool dchub_ref_freq_changed;
- 	int current_dchub_ref_freq = 0;
- 
- 	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->init_clocks) {
-@@ -359,14 +360,18 @@ void dcn401_init_hw(struct dc *dc)
- 		dc->caps.dmub_caps.psr = dc->ctx->dmub_srv->dmub->feature_caps.psr;
- 		dc->caps.dmub_caps.mclk_sw = dc->ctx->dmub_srv->dmub->feature_caps.fw_assisted_mclk_switch_ver > 0;
- 		dc->caps.dmub_caps.fams_ver = dc->ctx->dmub_srv->dmub->feature_caps.fw_assisted_mclk_switch_ver;
-+
-+		/* sw and fw FAMS versions must match for support */
- 		dc->debug.fams2_config.bits.enable &=
--				dc->caps.dmub_caps.fams_ver == dc->debug.fams_version.ver; // sw & fw fams versions must match for support
--		if ((!dc->debug.fams2_config.bits.enable && dc->res_pool->funcs->update_bw_bounding_box)
--			|| res_pool->ref_clocks.dchub_ref_clock_inKhz / 1000 != current_dchub_ref_freq) {
-+			dc->caps.dmub_caps.fams_ver == dc->debug.fams_version.ver;
-+		dchub_ref_freq_changed =
-+			res_pool->ref_clocks.dchub_ref_clock_inKhz / 1000 != current_dchub_ref_freq;
-+		if ((!dc->debug.fams2_config.bits.enable || dchub_ref_freq_changed) &&
-+		    dc->res_pool->funcs->update_bw_bounding_box &&
-+		    dc->clk_mgr && dc->clk_mgr->bw_params) {
- 			/* update bounding box if FAMS2 disabled, or if dchub clk has changed */
--			if (dc->clk_mgr)
--				dc->res_pool->funcs->update_bw_bounding_box(dc,
--									    dc->clk_mgr->bw_params);
-+			dc->res_pool->funcs->update_bw_bounding_box(dc,
-+								    dc->clk_mgr->bw_params);
- 		}
- 	}
- }
+--- a/kernel/sched/ext_idle.c
++++ b/kernel/sched/ext_idle.c
+@@ -543,7 +543,7 @@ s32 scx_select_cpu_dfl(struct task_struc
+ 		 * piled up on it even if there is an idle core elsewhere on
+ 		 * the system.
+ 		 */
+-		waker_node = cpu_to_node(cpu);
++		waker_node = scx_cpu_node_if_enabled(cpu);
+ 		if (!(current->flags & PF_EXITING) &&
+ 		    cpu_rq(cpu)->scx.local_dsq.nr == 0 &&
+ 		    (!(flags & SCX_PICK_IDLE_IN_NODE) || (waker_node == node)) &&
 
 
