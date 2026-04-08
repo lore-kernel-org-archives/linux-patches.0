@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCA43B960C;
-	Wed,  8 Apr 2026 18:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A0F37C10F;
+	Wed,  8 Apr 2026 18:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672362; cv=none; b=lCm3qr0XgkEaxkSCpVsphQvkWWpGBObkZPAV1Cr0gDjIyBQNUrk6SofiJvaFh1maPwzboTTcGegaLKjtiez1Ol4CSLwukGv5GSiunvEfRThwQ7M+6nrVjh9+mO5zVpiigJqz/rE7tsYIFoLwvy+7qTt3JodEhu/oxmXNHQ8KXlI=
+	t=1775672364; cv=none; b=bTHeSvJFHpfAmj3AgHKDDRqs6uDuyDIuepplQDSai6zsV2+ksaxr9g4Q4Bnt82hqX6ztkbjIeTi8jTZvuSHH9IuJow5tfuYI+w60ew3mEznGTH109VgPqNW4LB743atrQBKCTmUS2ZZkgT9W4ZPbhLoof6oeiMYfifdx1y6QaYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672362; c=relaxed/simple;
-	bh=/YWLuS6Xy/BOu50HoJPsD+DJc+znJl7NcMmsbAy8YZU=;
+	s=arc-20240116; t=1775672364; c=relaxed/simple;
+	bh=UAh5s5+PECeEez7s3ugWePX7yiLCvyAhXLHHhSrasK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gdvKaozciKrkgNm+78lkNb22L8uEu00LQp62QxjmdBFCwPqedgMT535z6O6bXIgzzmvaeccL/zgPlfLIuiC51/W4UmHQ7VhPHC3hUhePC85PbheDEAPKY5szrwG/VpkmojQCtY40jI2dlFQvG+0gyhWD43wt83/iTIw/3e0TUGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bw2j8Ake; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YqTiTyFMTa90FvsUfcDKFJOC9+WTxlAIYFz13yqPxU6guKF4x9BLq7XD4wwD3+pJaMLJ/qm2/LmnTan1YdXkHQ9RcekgReNlti4Dy39Bl0t4vpNNW2mj9CgbmaVTogWxYJLypO/5PLM/NXTiyzS4jUmvU1nv3sld0F3/G8qKFnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPJG6FAw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bw2j8Ake"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 847CFC19421;
-	Wed,  8 Apr 2026 18:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPJG6FAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EB9C19421;
+	Wed,  8 Apr 2026 18:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672361;
-	bh=/YWLuS6Xy/BOu50HoJPsD+DJc+znJl7NcMmsbAy8YZU=;
+	s=korg; t=1775672364;
+	bh=UAh5s5+PECeEez7s3ugWePX7yiLCvyAhXLHHhSrasK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bw2j8AkeOVs5CdEpu2jh+x4KrrnYoGzJdlQndaVU+syMQzPeA1zmpj6hpfDA1M1o1
-	 D+1CuxT0YKaUpxulr3W9RXrGGCE/WFse0VG4crKJaQnpqIoJKEu3kwcnyln62h13/4
-	 idUsBK/BiL8hA5hXnBQnpIJQBd+4qTDBpDFXuNoo=
+	b=sPJG6FAwXu7oiOhOPbvOwrYjIjSf6yOUDRU4e9cwB5/PQwLxCSk4/FQzoboLj34iW
+	 Ket9ELvwwN9vgObAXrJ4hXMyy0i0Lm1axaSR/8XgSr22bF1+gO7y7lPrZ2/Ux18Gq0
+	 rnZW2+aNQBODOXpBmiaWD/U43+3eK+UMg6AFfSYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
+	Casey Chen <cachen@purestorage.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Maximilian Heyne <mheyne@amazon.de>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 290/312] ext4: publish jinode after initialization
-Date: Wed,  8 Apr 2026 20:03:27 +0200
-Message-ID: <20260408175944.592645083@linuxfoundation.org>
+Subject: [PATCH 6.1 264/312] nvme: fix admin request_queue lifetime
+Date: Wed,  8 Apr 2026 20:03:01 +0200
+Message-ID: <20260408175943.606958905@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -53,149 +57,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 1aec30021edd410b986c156f195f3d23959a9d11 ]
+[ Upstream commit 03b3bcd319b3ab5182bc9aaa0421351572c78ac0]
 
-ext4_inode_attach_jinode() publishes ei->jinode to concurrent users.
-It used to set ei->jinode before jbd2_journal_init_jbd_inode(),
-allowing a reader to observe a non-NULL jinode with i_vfs_inode
-still unset.
+The namespaces can access the controller's admin request_queue, and
+stale references on the namespaces may exist after tearing down the
+controller. Ensure the admin request_queue is active by moving the
+controller's 'put' to after all controller references have been released
+to ensure no one is can access the request_queue. This fixes a reported
+use-after-free bug:
 
-The fast commit flush path can then pass this jinode to
-jbd2_wait_inode_data(), which dereferences i_vfs_inode->i_mapping and
-may crash.
+  BUG: KASAN: slab-use-after-free in blk_queue_enter+0x41c/0x4a0
+  Read of size 8 at addr ffff88c0a53819f8 by task nvme/3287
+  CPU: 67 UID: 0 PID: 3287 Comm: nvme Tainted: G            E       6.13.2-ga1582f1a031e #15
+  Tainted: [E]=UNSIGNED_MODULE
+  Hardware name: Jabil /EGS 2S MB1, BIOS 1.00 06/18/2025
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x4f/0x60
+   print_report+0xc4/0x620
+   ? _raw_spin_lock_irqsave+0x70/0xb0
+   ? _raw_read_unlock_irqrestore+0x30/0x30
+   ? blk_queue_enter+0x41c/0x4a0
+   kasan_report+0xab/0xe0
+   ? blk_queue_enter+0x41c/0x4a0
+   blk_queue_enter+0x41c/0x4a0
+   ? __irq_work_queue_local+0x75/0x1d0
+   ? blk_queue_start_drain+0x70/0x70
+   ? irq_work_queue+0x18/0x20
+   ? vprintk_emit.part.0+0x1cc/0x350
+   ? wake_up_klogd_work_func+0x60/0x60
+   blk_mq_alloc_request+0x2b7/0x6b0
+   ? __blk_mq_alloc_requests+0x1060/0x1060
+   ? __switch_to+0x5b7/0x1060
+   nvme_submit_user_cmd+0xa9/0x330
+   nvme_user_cmd.isra.0+0x240/0x3f0
+   ? force_sigsegv+0xe0/0xe0
+   ? nvme_user_cmd64+0x400/0x400
+   ? vfs_fileattr_set+0x9b0/0x9b0
+   ? cgroup_update_frozen_flag+0x24/0x1c0
+   ? cgroup_leave_frozen+0x204/0x330
+   ? nvme_ioctl+0x7c/0x2c0
+   blkdev_ioctl+0x1a8/0x4d0
+   ? blkdev_common_ioctl+0x1930/0x1930
+   ? fdget+0x54/0x380
+   __x64_sys_ioctl+0x129/0x190
+   do_syscall_64+0x5b/0x160
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x7f765f703b0b
+  Code: ff ff ff 85 c0 79 9b 49 c7 c4 ff ff ff ff 5b 5d 4c 89 e0 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d dd 52 0f 00 f7 d8 64 89 01 48
+  RSP: 002b:00007ffe2cefe808 EFLAGS: 00000202 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00007ffe2cefe860 RCX: 00007f765f703b0b
+  RDX: 00007ffe2cefe860 RSI: 00000000c0484e41 RDI: 0000000000000003
+  RBP: 0000000000000000 R08: 0000000000000003 R09: 0000000000000000
+  R10: 00007f765f611d50 R11: 0000000000000202 R12: 0000000000000003
+  R13: 00000000c0484e41 R14: 0000000000000001 R15: 00007ffe2cefea60
+   </TASK>
 
-Below is the crash I observe:
-```
-BUG: unable to handle page fault for address: 000000010beb47f4
-PGD 110e51067 P4D 110e51067 PUD 0
-Oops: Oops: 0000 [#1] SMP NOPTI
-CPU: 1 UID: 0 PID: 4850 Comm: fc_fsync_bench_ Not tainted 6.18.0-00764-g795a690c06a5 #1 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.17.0-2-2 04/01/2014
-RIP: 0010:xas_find_marked+0x3d/0x2e0
-Code: e0 03 48 83 f8 02 0f 84 f0 01 00 00 48 8b 47 08 48 89 c3 48 39 c6 0f 82 fd 01 00 00 48 85 c9 74 3d 48 83 f9 03 77 63 4c 8b 0f <49> 8b 71 08 48 c7 47 18 00 00 00 00 48 89 f1 83 e1 03 48 83 f9 02
-RSP: 0018:ffffbbee806e7bf0 EFLAGS: 00010246
-RAX: 000000000010beb4 RBX: 000000000010beb4 RCX: 0000000000000003
-RDX: 0000000000000001 RSI: 0000002000300000 RDI: ffffbbee806e7c10
-RBP: 0000000000000001 R08: 0000002000300000 R09: 000000010beb47ec
-R10: ffff9ea494590090 R11: 0000000000000000 R12: 0000002000300000
-R13: ffffbbee806e7c90 R14: ffff9ea494513788 R15: ffffbbee806e7c88
-FS: 00007fc2f9e3e6c0(0000) GS:ffff9ea6b1444000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000010beb47f4 CR3: 0000000119ac5000 CR4: 0000000000750ef0
-PKRU: 55555554
-Call Trace:
-<TASK>
-filemap_get_folios_tag+0x87/0x2a0
-__filemap_fdatawait_range+0x5f/0xd0
-? srso_alias_return_thunk+0x5/0xfbef5
-? __schedule+0x3e7/0x10c0
-? srso_alias_return_thunk+0x5/0xfbef5
-? srso_alias_return_thunk+0x5/0xfbef5
-? srso_alias_return_thunk+0x5/0xfbef5
-? preempt_count_sub+0x5f/0x80
-? srso_alias_return_thunk+0x5/0xfbef5
-? cap_safe_nice+0x37/0x70
-? srso_alias_return_thunk+0x5/0xfbef5
-? preempt_count_sub+0x5f/0x80
-? srso_alias_return_thunk+0x5/0xfbef5
-filemap_fdatawait_range_keep_errors+0x12/0x40
-ext4_fc_commit+0x697/0x8b0
-? ext4_file_write_iter+0x64b/0x950
-? srso_alias_return_thunk+0x5/0xfbef5
-? preempt_count_sub+0x5f/0x80
-? srso_alias_return_thunk+0x5/0xfbef5
-? vfs_write+0x356/0x480
-? srso_alias_return_thunk+0x5/0xfbef5
-? preempt_count_sub+0x5f/0x80
-ext4_sync_file+0xf7/0x370
-do_fsync+0x3b/0x80
-? syscall_trace_enter+0x108/0x1d0
-__x64_sys_fdatasync+0x16/0x20
-do_syscall_64+0x62/0x2c0
-entry_SYSCALL_64_after_hwframe+0x76/0x7e
-...
-```
+[ Because we're missing commit 0da7feaa5913 ("nvme-pci: use the tagset
+  alloc/free helpers") we need to additionally remove the blk_put_queue
+  from nvme_dev_remove_admin in pci.c to properly fix the UAF ]
 
-Fix this by initializing the jbd2_inode first.
-Use smp_wmb() and WRITE_ONCE() to publish ei->jinode after
-initialization. Readers use READ_ONCE() to fetch the pointer.
-
-Fixes: a361293f5fede ("jbd2: Fix oops in jbd2_journal_file_inode()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Chen <me@linux.beauty>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260225082617.147957-1-me@linux.beauty
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ adapted READ_ONCE(jinode) wrapping to split ext4_fc_submit_inode_data_all() and ext4_fc_wait_inode_data_all() ]
+Reported-by: Casey Chen <cachen@purestorage.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
+Tested-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |    4 ++--
- fs/ext4/inode.c       |   15 +++++++++++----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/nvme/host/core.c | 3 ++-
+ drivers/nvme/host/pci.c  | 1 -
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -1019,7 +1019,7 @@ static int ext4_fc_submit_inode_data_all
- 			finish_wait(&ei->i_fc_wait, &wait);
- 		}
- 		spin_unlock(&sbi->s_fc_lock);
--		ret = jbd2_submit_inode_data(ei->jinode);
-+		ret = jbd2_submit_inode_data(READ_ONCE(ei->jinode));
- 		if (ret)
- 			return ret;
- 		spin_lock(&sbi->s_fc_lock);
-@@ -1044,7 +1044,7 @@ static int ext4_fc_wait_inode_data_all(j
- 			continue;
- 		spin_unlock(&sbi->s_fc_lock);
- 
--		ret = jbd2_wait_inode_data(journal, pos->jinode);
-+		ret = jbd2_wait_inode_data(journal, READ_ONCE(pos->jinode));
- 		if (ret)
- 			return ret;
- 		spin_lock(&sbi->s_fc_lock);
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -122,6 +122,8 @@ void ext4_inode_csum_set(struct inode *i
- static inline int ext4_begin_ordered_truncate(struct inode *inode,
- 					      loff_t new_size)
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 044e1a9c099b3..f17318f6c82b0 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -5043,7 +5043,6 @@ EXPORT_SYMBOL_GPL(nvme_alloc_admin_tag_set);
+ void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl)
  {
-+	struct jbd2_inode *jinode = READ_ONCE(EXT4_I(inode)->jinode);
-+
- 	trace_ext4_begin_ordered_truncate(inode, new_size);
- 	/*
- 	 * If jinode is zero, then we never opened the file for
-@@ -129,10 +131,10 @@ static inline int ext4_begin_ordered_tru
- 	 * jbd2_journal_begin_ordered_truncate() since there's no
- 	 * outstanding writes we need to flush.
- 	 */
--	if (!EXT4_I(inode)->jinode)
-+	if (!jinode)
- 		return 0;
- 	return jbd2_journal_begin_ordered_truncate(EXT4_JOURNAL(inode),
--						   EXT4_I(inode)->jinode,
-+						   jinode,
- 						   new_size);
- }
+ 	blk_mq_destroy_queue(ctrl->admin_q);
+-	blk_put_queue(ctrl->admin_q);
+ 	if (ctrl->ops->flags & NVME_F_FABRICS) {
+ 		blk_mq_destroy_queue(ctrl->fabrics_q);
+ 		blk_put_queue(ctrl->fabrics_q);
+@@ -5186,6 +5185,8 @@ static void nvme_free_ctrl(struct device *dev)
+ 		container_of(dev, struct nvme_ctrl, ctrl_device);
+ 	struct nvme_subsystem *subsys = ctrl->subsys;
  
-@@ -4184,8 +4186,13 @@ int ext4_inode_attach_jinode(struct inod
- 			spin_unlock(&inode->i_lock);
- 			return -ENOMEM;
- 		}
--		ei->jinode = jinode;
--		jbd2_journal_init_jbd_inode(ei->jinode, inode);
-+		jbd2_journal_init_jbd_inode(jinode, inode);
-+		/*
-+		 * Publish ->jinode only after it is fully initialized so that
-+		 * readers never observe a partially initialized jbd2_inode.
-+		 */
-+		smp_wmb();
-+		WRITE_ONCE(ei->jinode, jinode);
- 		jinode = NULL;
++	if (ctrl->admin_q)
++		blk_put_queue(ctrl->admin_q);
+ 	if (!subsys || ctrl->instance != subsys->instance)
+ 		ida_free(&nvme_instance_ida, ctrl->instance);
+ 
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 8adce45f666c8..2a74668739919 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1783,7 +1783,6 @@ static void nvme_dev_remove_admin(struct nvme_dev *dev)
+ 		 */
+ 		nvme_start_admin_queue(&dev->ctrl);
+ 		blk_mq_destroy_queue(dev->ctrl.admin_q);
+-		blk_put_queue(dev->ctrl.admin_q);
+ 		blk_mq_free_tag_set(&dev->admin_tagset);
  	}
- 	spin_unlock(&inode->i_lock);
+ }
+-- 
+2.53.0
+
 
 
