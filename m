@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A506733121F;
-	Wed,  8 Apr 2026 18:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4922727F3;
+	Wed,  8 Apr 2026 18:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674172; cv=none; b=cyOfqZFhq+5b+a3YZdD+LMWMDTIIV5PxWoOOTDRP9uJqw1TMuK13sKrVvNhPor4a36LdI3vFBIrlQX+Qj7aokvI/RUMibZHHh6qJHhwiAFatfRzWP4MIvQM0vFDm+uz2FsPT7R9S6ODQgJQQXAmE+X+ZoLveQgSV8OcqMkdGfT8=
+	t=1775674175; cv=none; b=R/h6AFAx8can1K/Bm0GplV/90dQVaopxUchBbOgVAt6R1hq5MO8sLF5SelZJcvLpQpgvDYzO7abSx/+6kLX7pRBKBUdh+uz6n5ANITgotN8ip9AdOttbBzq4mmvMaVaAZ0BaUIeiqGvMK/ztN/ncLREFeJV0Uss5+CQHCrBccaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674172; c=relaxed/simple;
-	bh=TGH1k/fYR+V9IEisBzJAf1HefklWZl/hs3l5kuMGA04=;
+	s=arc-20240116; t=1775674175; c=relaxed/simple;
+	bh=V5jBlWKkKkLQJh/flHAZ7VDTumCe6GrsVqPwKYm3Fd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZVp0h25NHqjNRVVnlArwdmsF6sVMALtSuY/uNdbDVu217x/KCUMmyrIcXGNH7dlFTgYKagTMNCLbnc8xMvs8zZIgt5bsBcwfs+4V9a+SkdtQBj+rMuHION4dq8MrlFw/sEHW1GtBRpAoy/oQl0M4yLrICZPOdQ/MjWGX85eDunE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ng8qmlwB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g7esBnI8ol0b2zfnHhFbemHaw0pBBJnDjucM8jnnqF422eoF8kwPgmxAWS1ufxuzeRcfqCorM0q/bQxrIwtN7ibQdVNgbKiuwExL+Tvjj7RaSJZVKJjfTOgbg+hEEWB4zQvYEVAVKJnh/bCSnESfYeedsCUr7j4Wuh9We+z6Obw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZ/4fpTm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ng8qmlwB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C850C19421;
-	Wed,  8 Apr 2026 18:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZ/4fpTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44B4C19421;
+	Wed,  8 Apr 2026 18:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674172;
-	bh=TGH1k/fYR+V9IEisBzJAf1HefklWZl/hs3l5kuMGA04=;
+	s=korg; t=1775674175;
+	bh=V5jBlWKkKkLQJh/flHAZ7VDTumCe6GrsVqPwKYm3Fd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ng8qmlwB9eMpSfsJFMLJzl56W5HIgiTsna5HFw5/LdvIp2bq9Q94aZnZFDE892z6I
-	 g3d7ztwIKso/bv6hO9+ey9NXcKOt/RKe7gt+C7meaPM4tjTD4X2DRgBJ/yhdY/OAFz
-	 9Nws6HhdDRmUcsCveejuIAvrwAMsu4rR/ZRB8i2U=
+	b=ZZ/4fpTmrOAEnGWf60T0DfAKoCIM2vIk7qY1WavXQhRZTeDXeBVkTtCwvYox5De9k
+	 8N0+k99EVZJ8UDXamtvTzWNxo7VagmrFzit1V4psoT65ejt2GrF9RQ6E1TIpY+MlbW
+	 gO0CQ4jncWmSxK/40KYd9Od+adkQx9eXgjGyj0n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <Mario.Limonciello@amd.com>,
-	Ovidiu Bunea <ovidiu.bunea@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rosen Penev <rosenp@gmail.com>
-Subject: [PATCH 6.12 236/242] drm/amd/display: Correct logic check error for fastboot
-Date: Wed,  8 Apr 2026 20:04:36 +0200
-Message-ID: <20260408175935.938231299@linuxfoundation.org>
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.12 237/242] bpf: Improve bounds when s64 crosses sign boundary
+Date: Wed,  8 Apr 2026 20:04:37 +0200
+Message-ID: <20260408175935.977382257@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -55,48 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charlene Liu <Charlene.Liu@amd.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit b6a65009e7ce3f0cc72da18f186adb60717b51a0 ]
+[ Upstream commit 00bf8d0c6c9be0c481fc45a3f7d87c7f8812f229 ]
 
-[Why]
-Fix fastboot broken in driver.
-This is caused by an open source backport change 7495962c.
+__reg64_deduce_bounds currently improves the s64 range using the u64
+range and vice versa, but only if it doesn't cross the sign boundary.
 
-from the comment, the intended check is to disable fastboot
-for pre-DCN10. but the logic check is reversed, and causes
-fastboot to be disabled on all DCN10 and after.
+This patch improves __reg64_deduce_bounds to cover the case where the
+s64 range crosses the sign boundary but overlaps with the u64 range on
+only one end. In that case, we can improve both ranges. Consider the
+following example, with the s64 range crossing the sign boundary:
 
-fastboot is for driver trying to pick up bios used hw setting
-and bypass reprogramming the hw if dc_validate_boot_timing()
-condition meets.
+    0                                                   U64_MAX
+    |  [xxxxxxxxxxxxxx u64 range xxxxxxxxxxxxxx]              |
+    |----------------------------|----------------------------|
+    |xxxxx s64 range xxxxxxxxx]                       [xxxxxxx|
+    0                     S64_MAX S64_MIN                    -1
 
-Fixes: 7495962cbceb ("drm/amd/display: Disable fastboot on DCE 6 too")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mario Limonciello <Mario.Limonciello@amd.com>
-Reviewed-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
-Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
+The u64 range overlaps only with positive portion of the s64 range. We
+can thus derive the following new s64 and u64 ranges.
+
+    0                                                   U64_MAX
+    |  [xxxxxx u64 range xxxxx]                               |
+    |----------------------------|----------------------------|
+    |  [xxxxxx s64 range xxxxx]                               |
+    0                     S64_MAX S64_MIN                    -1
+
+The same logic can probably apply to the s32/u32 ranges, but this patch
+doesn't implement that change.
+
+In addition to the selftests, the __reg64_deduce_bounds change was
+also tested with Agni, the formal verification tool for the range
+analysis [1].
+
+Link: https://github.com/bpfverif/agni [1]
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/933bd9ce1f36ded5559f92fdc09e5dbc823fa245.1753695655.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -1910,8 +1910,8 @@ void dce110_enable_accelerated_mode(stru
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2129,6 +2129,58 @@ static void __reg64_deduce_bounds(struct
+ 	if ((u64)reg->smin_value <= (u64)reg->smax_value) {
+ 		reg->umin_value = max_t(u64, reg->smin_value, reg->umin_value);
+ 		reg->umax_value = min_t(u64, reg->smax_value, reg->umax_value);
++	} else {
++		/* If the s64 range crosses the sign boundary, then it's split
++		 * between the beginning and end of the U64 domain. In that
++		 * case, we can derive new bounds if the u64 range overlaps
++		 * with only one end of the s64 range.
++		 *
++		 * In the following example, the u64 range overlaps only with
++		 * positive portion of the s64 range.
++		 *
++		 * 0                                                   U64_MAX
++		 * |  [xxxxxxxxxxxxxx u64 range xxxxxxxxxxxxxx]              |
++		 * |----------------------------|----------------------------|
++		 * |xxxxx s64 range xxxxxxxxx]                       [xxxxxxx|
++		 * 0                     S64_MAX S64_MIN                    -1
++		 *
++		 * We can thus derive the following new s64 and u64 ranges.
++		 *
++		 * 0                                                   U64_MAX
++		 * |  [xxxxxx u64 range xxxxx]                               |
++		 * |----------------------------|----------------------------|
++		 * |  [xxxxxx s64 range xxxxx]                               |
++		 * 0                     S64_MAX S64_MIN                    -1
++		 *
++		 * If they overlap in two places, we can't derive anything
++		 * because reg_state can't represent two ranges per numeric
++		 * domain.
++		 *
++		 * 0                                                   U64_MAX
++		 * |  [xxxxxxxxxxxxxxxxx u64 range xxxxxxxxxxxxxxxxx]        |
++		 * |----------------------------|----------------------------|
++		 * |xxxxx s64 range xxxxxxxxx]                    [xxxxxxxxxx|
++		 * 0                     S64_MAX S64_MIN                    -1
++		 *
++		 * The first condition below corresponds to the first diagram
++		 * above.
++		 */
++		if (reg->umax_value < (u64)reg->smin_value) {
++			reg->smin_value = (s64)reg->umin_value;
++			reg->umax_value = min_t(u64, reg->umax_value, reg->smax_value);
++		} else if ((u64)reg->smax_value < reg->umin_value) {
++			/* This second condition considers the case where the u64 range
++			 * overlaps with the negative portion of the s64 range:
++			 *
++			 * 0                                                   U64_MAX
++			 * |              [xxxxxxxxxxxxxx u64 range xxxxxxxxxxxxxx]  |
++			 * |----------------------------|----------------------------|
++			 * |xxxxxxxxx]                       [xxxxxxxxxxxx s64 range |
++			 * 0                     S64_MAX S64_MIN                    -1
++			 */
++			reg->smax_value = (s64)reg->umax_value;
++			reg->umin_value = max_t(u64, reg->umin_value, reg->smin_value);
++		}
+ 	}
+ }
  
- 	get_edp_streams(context, edp_streams, &edp_stream_num);
- 
--	/* Check fastboot support, disable on DCE 6-8 because of blank screens */
--	if (edp_num && edp_stream_num && dc->ctx->dce_version < DCE_VERSION_10_0) {
-+	/* Check fastboot support, disable on DCE 6-8-10 because of blank screens */
-+	if (edp_num && edp_stream_num && dc->ctx->dce_version > DCE_VERSION_10_0) {
- 		for (i = 0; i < edp_num; i++) {
- 			edp_link = edp_links[i];
- 			if (edp_link != edp_streams[0]->link)
 
 
