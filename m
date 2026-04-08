@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252BC2F39C2;
-	Wed,  8 Apr 2026 18:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2EF2F39C2;
+	Wed,  8 Apr 2026 18:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674629; cv=none; b=AF8AH+zE5t6t8/m5+AJ5zaVHQX9PPcQ50gS+NkHWpSRcmDYPI1x7G5hR5Eusp1W5a2wDE1ubWZpCX77EF2ky+5Hoq4ZEe5vfaCW+I43bztVcf4biaV3mgr+7Y4MWhDE3d5HrIBU4nGGzhqwci937X4TVFvdVhA7CUmM1pWu3wAo=
+	t=1775674631; cv=none; b=eChWZHGCFST0ACen+WjS+lrRUxNFQTvIEpcGy/sDlgFxlRmdN9Bph8Ze+Ey6fIxFSMPWegNyQcR0+3B6ntSH81JNdSo+muzlbEJXCuVBMMLcdFxc/zBb1agct3xC/06BJdLjIu6TeHqIP6Q8ihCN7YSE1ERvJSTu9nmmh6ML2Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674629; c=relaxed/simple;
-	bh=eQkBce7aDlPN8yKmzw762A8o5zXliHjK9D1Rg3nTMrk=;
+	s=arc-20240116; t=1775674631; c=relaxed/simple;
+	bh=b7ocjX8ingyJSsaJJGIqqKhyONNRNQt54EjIDrLuvMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FwCSqSGNX/fpNyBKZCNdldKMiNLWQcnfjEesxNsx87jBs5KbH5h5UYRd8ttPs9jRPwUjCi9iPPtnFiqZ3iXaimqiqkjDb+UmBBYQw+qLkQVDU6xPZNRSJ7hsZRPgB/TBss7Ygf/pv+Sodc4ky1N6R8HUHLP2/+vOyEYTL14q9K8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJn8pmkq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mft4i93W0cv/8iz83hayyUtZvXu1X+zSk5DICdRQ9AbDa3krl3Bz6k6PVpzMN1OharRJo9d7pU8Rsw0tWvVQhNX+a3faTutv6vXKjRGrQUH7hLMEXULF0JFiB5RXPMBXvHe+FXDnvpzOqh8yfB/APDUiY0AS4oVNP+i4gU4e1AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohGeNSOf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJn8pmkq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACC0C19421;
-	Wed,  8 Apr 2026 18:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohGeNSOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D7CC19421;
+	Wed,  8 Apr 2026 18:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674628;
-	bh=eQkBce7aDlPN8yKmzw762A8o5zXliHjK9D1Rg3nTMrk=;
+	s=korg; t=1775674631;
+	bh=b7ocjX8ingyJSsaJJGIqqKhyONNRNQt54EjIDrLuvMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJn8pmkq9LXyme6T/4jAVjJGJGT8yTfA9Rh1rbhSzTTdzuXuNdSBSjzCZGbq3wMn0
-	 LWqSGfULdjqrkTs46QRhHgBd8sBDHy26pz+Hb+NRG96Nj3adm120EMm6flLkwHMyOc
-	 RJM3mzmvg10lfEy6KvsKlKgR4XHlF7KS4yKsAN6c=
+	b=ohGeNSOfTF8frU4TZpOris23pQc60kTmsw9L1TXfKJUjAAKwrGyateJ7Bp340f88U
+	 83GQY57Z5V3KfVQ835ZGrfUp+QFmtZE9Gmodl3il4wpLn6Hdenfaf52yvOdpo3tRiF
+	 aHzaqNHzvg1Jgjc0DTy7kN9qLRG8VL24InsZohpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Berk Cem Goksel <berkcgoksel@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.19 170/311] ALSA: caiaq: fix stack out-of-bounds read in init_card
-Date: Wed,  8 Apr 2026 20:02:50 +0200
-Message-ID: <20260408175945.752387522@linuxfoundation.org>
+Subject: [PATCH 6.19 171/311] ALSA: ctxfi: Check the error for index mapping
+Date: Wed,  8 Apr 2026 20:02:51 +0200
+Message-ID: <20260408175945.789300635@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,59 +49,195 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Berk Cem Goksel <berkcgoksel@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 45424e871abf2a152e247a9cff78359f18dd95c0 upstream.
+commit 277c6960d4ddb94d16198afd70c92c3d4593d131 upstream.
 
-The loop creates a whitespace-stripped copy of the card shortname
-where `len < sizeof(card->id)` is used for the bounds check. Since
-sizeof(card->id) is 16 and the local id buffer is also 16 bytes,
-writing 16 non-space characters fills the entire buffer,
-overwriting the terminating nullbyte.
+The ctxfi driver blindly assumed a proper value returned from
+daio_device_index(), but it's not always true.  Add a proper error
+check to deal with the error from the function.
 
-When this non-null-terminated string is later passed to
-snd_card_set_id() -> copy_valid_id_string(), the function scans
-forward with `while (*nid && ...)` and reads past the end of the
-stack buffer, reading the contents of the stack.
-
-A USB device with a product name containing many non-ASCII, non-space
-characters (e.g. multibyte UTF-8) will reliably trigger this as follows:
-
-  BUG: KASAN: stack-out-of-bounds in copy_valid_id_string
-       sound/core/init.c:696 [inline]
-  BUG: KASAN: stack-out-of-bounds in snd_card_set_id_no_lock+0x698/0x74c
-       sound/core/init.c:718
-
-The off-by-one has been present since commit bafeee5b1f8d ("ALSA:
-snd_usb_caiaq: give better shortname") from June 2009 (v2.6.31-rc1),
-which first introduced this whitespace-stripping loop. The original
-code never accounted for the null terminator when bounding the copy.
-
-Fix this by changing the loop bound to `sizeof(card->id) - 1`,
-ensuring at least one byte remains as the null terminator.
-
-Fixes: bafeee5b1f8d ("ALSA: snd_usb_caiaq: give better shortname")
-Cc: stable@vger.kernel.org
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Reported-by: Berk Cem Goksel <berkcgoksel@gmail.com>
-Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
-Link: https://patch.msgid.link/20260329133825.581585-1-berkcgoksel@gmail.com
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/87cy149n6k.wl-tiwai@suse.de
+Link: https://patch.msgid.link/20260329091240.420194-2-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/ctxfi/ctdaio.c |   81 +++++++++++++++++++++++++++++------------------
+ 1 file changed, 50 insertions(+), 31 deletions(-)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -488,7 +488,7 @@ static int init_card(struct snd_usb_caia
- 		memset(id, 0, sizeof(id));
+--- a/sound/pci/ctxfi/ctdaio.c
++++ b/sound/pci/ctxfi/ctdaio.c
+@@ -99,7 +99,7 @@ static const struct rsc_ops daio_in_rsc_
+ 	.output_slot	= daio_index,
+ };
  
- 		for (c = card->shortname, len = 0;
--			*c && len < sizeof(card->id); c++)
-+			*c && len < sizeof(card->id) - 1; c++)
- 			if (*c != ' ')
- 				id[len++] = *c;
+-static unsigned int daio_device_index(enum DAIOTYP type, struct hw *hw)
++static int daio_device_index(enum DAIOTYP type, struct hw *hw)
+ {
+ 	switch (hw->chip_type) {
+ 	case ATC20K1:
+@@ -112,7 +112,9 @@ static unsigned int daio_device_index(en
+ 		case LINEO3:	return 5;
+ 		case LINEO4:	return 6;
+ 		case LINEIM:	return 7;
+-		default:	return -EINVAL;
++		default:
++			pr_err("ctxfi: Invalid type %d for hw20k1\n", type);
++			return -EINVAL;
+ 		}
+ 	case ATC20K2:
+ 		switch (type) {
+@@ -125,9 +127,12 @@ static unsigned int daio_device_index(en
+ 		case LINEIM:	return 4;
+ 		case MIC:	return 5;
+ 		case RCA:	return 3;
+-		default:	return -EINVAL;
++		default:
++			pr_err("ctxfi: Invalid type %d for hw20k2\n", type);
++			return -EINVAL;
+ 		}
+ 	default:
++		pr_err("ctxfi: Invalid chip type %d\n", hw->chip_type);
+ 		return -EINVAL;
+ 	}
+ }
+@@ -148,8 +153,11 @@ static int dao_spdif_set_spos(struct dao
+ 
+ static int dao_commit_write(struct dao *dao)
+ {
+-	dao->hw->dao_commit_write(dao->hw,
+-		daio_device_index(dao->daio.type, dao->hw), dao->ctrl_blk);
++	int idx = daio_device_index(dao->daio.type, dao->hw);
++
++	if (idx < 0)
++		return idx;
++	dao->hw->dao_commit_write(dao->hw, idx, dao->ctrl_blk);
+ 	return 0;
+ }
+ 
+@@ -287,8 +295,11 @@ static int dai_set_enb_srt(struct dai *d
+ 
+ static int dai_commit_write(struct dai *dai)
+ {
+-	dai->hw->dai_commit_write(dai->hw,
+-		daio_device_index(dai->daio.type, dai->hw), dai->ctrl_blk);
++	int idx = daio_device_index(dai->daio.type, dai->hw);
++
++	if (idx < 0)
++		return idx;
++	dai->hw->dai_commit_write(dai->hw, idx, dai->ctrl_blk);
+ 	return 0;
+ }
+ 
+@@ -367,7 +378,7 @@ static int dao_rsc_init(struct dao *dao,
+ {
+ 	struct hw *hw = mgr->mgr.hw;
+ 	unsigned int conf;
+-	int err;
++	int idx, err;
+ 
+ 	err = daio_rsc_init(&dao->daio, desc, mgr->mgr.hw);
+ 	if (err)
+@@ -386,15 +397,18 @@ static int dao_rsc_init(struct dao *dao,
+ 	if (err)
+ 		goto error2;
+ 
+-	hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk,
+-			daio_device_index(dao->daio.type, hw));
++	idx = daio_device_index(dao->daio.type, hw);
++	if (idx < 0) {
++		err = idx;
++		goto error2;
++	}
++
++	hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk, idx);
+ 	hw->daio_mgr_commit_write(hw, mgr->mgr.ctrl_blk);
+ 
+ 	conf = (desc->msr & 0x7) | (desc->passthru << 3);
+-	hw->daio_mgr_dao_init(hw, mgr->mgr.ctrl_blk,
+-			daio_device_index(dao->daio.type, hw), conf);
+-	hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
+-			daio_device_index(dao->daio.type, hw));
++	hw->daio_mgr_dao_init(hw, mgr->mgr.ctrl_blk, idx, conf);
++	hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk, idx);
+ 	hw->daio_mgr_commit_write(hw, mgr->mgr.ctrl_blk);
+ 
+ 	return 0;
+@@ -443,7 +457,7 @@ static int dai_rsc_init(struct dai *dai,
+ 			const struct daio_desc *desc,
+ 			struct daio_mgr *mgr)
+ {
+-	int err;
++	int idx, err;
+ 	struct hw *hw = mgr->mgr.hw;
+ 	unsigned int rsr, msr;
+ 
+@@ -457,6 +471,12 @@ static int dai_rsc_init(struct dai *dai,
+ 	if (err)
+ 		goto error1;
+ 
++	idx = daio_device_index(dai->daio.type, dai->hw);
++	if (idx < 0) {
++		err = idx;
++		goto error1;
++	}
++
+ 	for (rsr = 0, msr = desc->msr; msr > 1; msr >>= 1)
+ 		rsr++;
+ 
+@@ -465,8 +485,7 @@ static int dai_rsc_init(struct dai *dai,
+ 	/* default to disabling control of a SRC */
+ 	hw->dai_srt_set_ec(dai->ctrl_blk, 0);
+ 	hw->dai_srt_set_et(dai->ctrl_blk, 0); /* default to disabling SRT */
+-	hw->dai_commit_write(hw,
+-		daio_device_index(dai->daio.type, dai->hw), dai->ctrl_blk);
++	hw->dai_commit_write(hw, idx, dai->ctrl_blk);
+ 
+ 	return 0;
+ 
+@@ -581,28 +600,28 @@ static int put_daio_rsc(struct daio_mgr
+ static int daio_mgr_enb_daio(struct daio_mgr *mgr, struct daio *daio)
+ {
+ 	struct hw *hw = mgr->mgr.hw;
++	int idx = daio_device_index(daio->type, hw);
+ 
+-	if (daio->output) {
+-		hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk,
+-				daio_device_index(daio->type, hw));
+-	} else {
+-		hw->daio_mgr_enb_dai(mgr->mgr.ctrl_blk,
+-				daio_device_index(daio->type, hw));
+-	}
++	if (idx < 0)
++		return idx;
++	if (daio->output)
++		hw->daio_mgr_enb_dao(mgr->mgr.ctrl_blk, idx);
++	else
++		hw->daio_mgr_enb_dai(mgr->mgr.ctrl_blk, idx);
+ 	return 0;
+ }
+ 
+ static int daio_mgr_dsb_daio(struct daio_mgr *mgr, struct daio *daio)
+ {
+ 	struct hw *hw = mgr->mgr.hw;
++	int idx = daio_device_index(daio->type, hw);
+ 
+-	if (daio->output) {
+-		hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk,
+-				daio_device_index(daio->type, hw));
+-	} else {
+-		hw->daio_mgr_dsb_dai(mgr->mgr.ctrl_blk,
+-				daio_device_index(daio->type, hw));
+-	}
++	if (idx < 0)
++		return idx;
++	if (daio->output)
++		hw->daio_mgr_dsb_dao(mgr->mgr.ctrl_blk, idx);
++	else
++		hw->daio_mgr_dsb_dai(mgr->mgr.ctrl_blk, idx);
+ 	return 0;
+ }
  
 
 
