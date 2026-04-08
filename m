@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D963446CA;
-	Wed,  8 Apr 2026 18:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD9F3D88FE;
+	Wed,  8 Apr 2026 18:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671699; cv=none; b=X8SQpPwPrnTTBdPVez8Mjk0/r0b9ebZnD0U4+uub0SxTW5mQLHXvru7ZATqI9kYhMpdRCkBAWtJLO+KL3lVN/fq6pnuN0Xk/iv7st8EWxGlEjteDIAlytU8OzeLNtn4cFQa/kC1AxjaWVAW8xflPYlWsa9hvkAscIAg+sBdAAIc=
+	t=1775671701; cv=none; b=iDKa2Fhrw0Qa2B7Z2OnXbG/fd1qn3BwjrPe7gc40sxC450IDxoNL1GgcPhGxCFQf8aFbPXgNATna51I1Sl6Y9AaHo3dRAWjD/gIYynVOhjk/ljagUEqJkaO9oa3Hw0a9f48nYpoNGTU0ICNrv7RksftHQbcjY7yhAt0Wrrdtw04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671699; c=relaxed/simple;
-	bh=CMyqyxTUE4UcnEFECNL2ghx2E5Bp6NXMgMky7PMx5y4=;
+	s=arc-20240116; t=1775671701; c=relaxed/simple;
+	bh=sOhlq6p2vM3XBPaFtn4kcPNCe4Ze7/Znj1MyCqSwssE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kProzeTM95HHnQM7RCmrlSQEcDWDah4m4ZLl395BKY+TvOL01dH7d+gt9AOqHfVyZsfImUUl3wAhXWmRP1GvQBnr9huB3KxJJSsGa+BMcP7/LUWExo35bYEO4g/HBcrUZ3xt6eNMoYgaWH5Phr03DKNgczYCr3D+8Cyc1Y9i+HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgDvz30n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mJJi6pR9g0Ub0l4/wUyB0ewSz6EZ8aPrMVYPu3dgzeD7mvhj+i7MkPZHu2jZWZH24bBtRkjtu5+lJelDutAiwhfHVrs/Mp1Io6wokM4g15awFvnMWGyZ3Qy/Pc5hnBrMs36+m5G0gss0H3oLRuGFFbo1Qtn7/xWu6w2SsPGwBB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMQxC+hq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgDvz30n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD76C19421;
-	Wed,  8 Apr 2026 18:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMQxC+hq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EC3C19421;
+	Wed,  8 Apr 2026 18:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671698;
-	bh=CMyqyxTUE4UcnEFECNL2ghx2E5Bp6NXMgMky7PMx5y4=;
+	s=korg; t=1775671701;
+	bh=sOhlq6p2vM3XBPaFtn4kcPNCe4Ze7/Znj1MyCqSwssE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgDvz30n+4Clx1Rsa4OXMOZGWwhGtYCHc9HR//wyfJk9pQEeg96RL3AhFpmntEwFd
-	 boHNSf10qEwi85KgcnbYKO2AwJrg+uhr0v2VYg7lVB9EeFWNBJy/pPxs05FtvE8Mrc
-	 cBXIb8FoZW4dPxJddm/9m72LwTuz1YjdSlWQy4Wk=
+	b=WMQxC+hqqGDn/J2o5ppCO8Y/EmAcDkiohU0e48hBK2lKTRxBGsKOOc0QyD6jdw9ze
+	 V36nZcMMQiOe+WThJkrW+cNJGa99mVp2JzmMJG1Ch5OxsgjcUt7Pf8ah+J/3Hm1Jz+
+	 8nCUALb+6gKxjff4BJTw1h0jtSJcTdWA3jQ0En+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Mohammad Heib <mheib@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/312] ASoC: fsl_easrc: Fix event generation in fsl_easrc_iec958_put_bits()
-Date: Wed,  8 Apr 2026 19:58:53 +0200
-Message-ID: <20260408175934.337395346@linuxfoundation.org>
+Subject: [PATCH 6.1 034/312] ionic: fix persistent MAC address override on PF
+Date: Wed,  8 Apr 2026 19:59:11 +0200
+Message-ID: <20260408175935.002299293@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -50,47 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Mohammad Heib <mheib@redhat.com>
 
-[ Upstream commit 54a86cf48eaa6d1ab5130d756b718775e81e1748 ]
+[ Upstream commit cbcb3cfcdc436d6f91a3d95ecfa9c831abe14aed ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_easrc_iec958_put_bits() unconditionally returns
-0, causing ALSA to not generate any change events. This is detected by
-mixer-test with large numbers of messages in the form:
+The use of IONIC_CMD_LIF_SETATTR in the MAC address update path causes
+the ionic firmware to update the LIF's identity in its persistent state.
+Since the firmware state is maintained across host warm boots and driver
+reloads, any MAC change on the Physical Function (PF) becomes "sticky.
 
-    No event generated for Context 3 IEC958 CS5
-    Context 3 IEC958 CS5.0 orig 5224 read 5225, is_volatile 0
+This is problematic because it causes ethtool -P to report the
+user-configured MAC as the permanent factory address, which breaks
+system management tools that rely on a stable hardware identity.
 
-Add a suitable check.
+While Virtual Functions (VFs) need this hardware-level programming to
+properly handle MAC assignments in guest environments, the PF should
+maintain standard transient behavior. This patch gates the
+ionic_program_mac call using is_virtfn so that PF MAC changes remain
+local to the netdev filters and do not overwrite the firmware's
+permanent identity block.
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20260205-asoc-fsl-easrc-fix-events-v1-1-39d4c766918b@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 19058be7c48c ("ionic: VF initial random MAC address if no assigned mac")
+Signed-off-by: Mohammad Heib <mheib@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Link: https://patch.msgid.link/20260317170806.35390-1-mheib@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_easrc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index 8cf414ab1295b..cbe1f48a58d23 100644
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -52,10 +52,13 @@ static int fsl_easrc_iec958_put_bits(struct snd_kcontrol *kcontrol,
- 	struct soc_mreg_control *mc =
- 		(struct soc_mreg_control *)kcontrol->private_value;
- 	unsigned int regval = ucontrol->value.integer.value[0];
-+	int ret;
-+
-+	ret = (easrc_priv->bps_iec958[mc->regbase] != regval);
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index 7ed77a8304e68..c15d7dfce21e5 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -1665,13 +1665,18 @@ static int ionic_set_mac_address(struct net_device *netdev, void *sa)
+ 	if (ether_addr_equal(netdev->dev_addr, mac))
+ 		return 0;
  
- 	easrc_priv->bps_iec958[mc->regbase] = regval;
+-	err = ionic_program_mac(lif, mac);
+-	if (err < 0)
+-		return err;
++	/* Only program macs for virtual functions to avoid losing the permanent
++	 * Mac across warm reset/reboot.
++	 */
++	if (lif->ionic->pdev->is_virtfn) {
++		err = ionic_program_mac(lif, mac);
++		if (err < 0)
++			return err;
  
--	return 0;
-+	return ret;
- }
+-	if (err > 0)
+-		netdev_dbg(netdev, "%s: SET and GET ATTR Mac are not equal-due to old FW running\n",
+-			   __func__);
++		if (err > 0)
++			netdev_dbg(netdev, "%s: SET and GET ATTR Mac are not equal-due to old FW running\n",
++				   __func__);
++	}
  
- static int fsl_easrc_iec958_get_bits(struct snd_kcontrol *kcontrol,
+ 	err = eth_prepare_mac_addr_change(netdev, addr);
+ 	if (err)
 -- 
 2.51.0
 
