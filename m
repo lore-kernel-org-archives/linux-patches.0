@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3413D75AF;
-	Wed,  8 Apr 2026 18:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F193D522C;
+	Wed,  8 Apr 2026 18:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673560; cv=none; b=JkiJLki9FMdrbrvvuO+Qn6Ttc24b8n8j7O6NCD0ES2VV3fOJq1Q2TPZxUX8vpUMMT2Cgh2Ct0T+3z07iTXjjLPPV8e/9hRavI2BksEwe275Gv1G3ZaloVdaxm9ANXKj1IS8aRx9vnxaLZTR9VvirvDlBXpbKPvXx+69lNEGmQtg=
+	t=1775673562; cv=none; b=XJZVhx2oefW7xOvrOSo3ac8WMPhm0Tn8FWoqsIsQSPTc91MUyz/JGqROV9ePvhbYn2r4djhbP0U9x2QUMshrZ5+Rm2dG9APTzYoDV/QPgfL+zXcsgQfwsfqmXHjFJDhuF9ptb1fk3BTOzU778+IhZqo87FWC8CsAY+5vO8fsyz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673560; c=relaxed/simple;
-	bh=s67T6pENCQm5vPsiByc3heG0a5lAfwNFErsBcQ+kfwY=;
+	s=arc-20240116; t=1775673562; c=relaxed/simple;
+	bh=Gk/KXRGfAd/nFV5dDO4cR62rBiWDBd8Z8ODEujsNteU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aFvHyucyeXohosDIvt5AJ7pQGsJAIPtZpQADK0gpzSeRKyjoPJDTsa8uhh2SBV60DtYslbw96GcjMQsmQVGTFq+4s7lPL1hVQsoP/fQqJgqiaFSiBzl/wW2jwKWOZf8bzJeqKEGgclqyo9+R0B51vNvqFy3xCSRqtElGpYUPL+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKYKpgjZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvWt2Wk+yXlrfaiLFeNm7sMzGPTTmxz2BGeyUbj51C/1S7S1Zhl1zxpgK3NizhoEvsJF5PjN1VEv+tk0cc4xdtO4brRrKblvLYnUtwa18gK5SiIt2XtaaPd5HJLRltVdoPUZ+/ARqFdzWQ7NeQ+ihzmLEWVEYY354ifT+ZW6KJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBP83YwJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKYKpgjZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C18C19421;
-	Wed,  8 Apr 2026 18:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBP83YwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D183C19421;
+	Wed,  8 Apr 2026 18:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673560;
-	bh=s67T6pENCQm5vPsiByc3heG0a5lAfwNFErsBcQ+kfwY=;
+	s=korg; t=1775673562;
+	bh=Gk/KXRGfAd/nFV5dDO4cR62rBiWDBd8Z8ODEujsNteU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gKYKpgjZgeK3B+foWA2+EfFAn31twQT5mGHdqf34p06uMqHG6/DlXxmrdyRyWanRS
-	 jCT/6oB7nSsDisgaUFqL+y4kdrlNlQuTe9p44cfdkQpF19VxXIPTI7jljBCtDd10Ou
-	 HVYVPCeAxGCG7p0iq+56xUBuiKAZRgTgeEje6CYw=
+	b=pBP83YwJzuUTZWpYOMgzzSL/l8X2kIRJuqyqVXZqxQaM90nFAVXkNg4PBU2nzUxcc
+	 sEOT+tA4y+swX95V19s2s4WVkhZsU5U81/2RRu1Dsyy/yA0YfLR5PBsHsSjlL5MlYL
+	 ZJuSG4lPeyT/ZDnsbZKG7jdSw+OElIlWvMg2CO4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
 	stable <stable@kernel.org>,
-	Kuen-Han Tsai <khtsai@google.com>
-Subject: [PATCH 6.18 253/277] usb: gadget: u_ether: Fix NULL pointer deref in eth_get_drvinfo
-Date: Wed,  8 Apr 2026 20:03:58 +0200
-Message-ID: <20260408175943.306017928@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Jimmy Hu <hhhuuu@google.com>
+Subject: [PATCH 6.18 254/277] usb: gadget: uvc: fix NULL pointer dereference during unbind race
+Date: Wed,  8 Apr 2026 20:03:59 +0200
+Message-ID: <20260408175943.342406315@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,54 +51,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Jimmy Hu <hhhuuu@google.com>
 
-commit e002e92e88e12457373ed096b18716d97e7bbb20 upstream.
+commit eba2936bbe6b752a31725a9eb5c674ecbf21ee7d upstream.
 
-Commit ec35c1969650 ("usb: gadget: f_ncm: Fix net_device lifecycle with
-device_move") reparents the gadget device to /sys/devices/virtual during
-unbind, clearing the gadget pointer. If the userspace tool queries on
-the surviving interface during this detached window, this leads to a
-NULL pointer dereference.
+Commit b81ac4395bbe ("usb: gadget: uvc: allow for application to cleanly
+shutdown") introduced two stages of synchronization waits totaling 1500ms
+in uvc_function_unbind() to prevent several types of kernel panics.
+However, this timing-based approach is insufficient during power
+management (PM) transitions.
 
-Unable to handle kernel NULL pointer dereference
-Call trace:
- eth_get_drvinfo+0x50/0x90
- ethtool_get_drvinfo+0x5c/0x1f0
- __dev_ethtool+0xaec/0x1fe0
- dev_ethtool+0x134/0x2e0
- dev_ioctl+0x338/0x560
+When the PM subsystem starts freezing user space processes, the
+wait_event_interruptible_timeout() is aborted early, which allows the
+unbind thread to proceed and nullify the gadget pointer
+(cdev->gadget = NULL):
 
-Add a NULL check for dev->gadget in eth_get_drvinfo(). When detached,
-skip copying the fw_version and bus_info strings, which is natively
-handled by ethtool_get_drvinfo for empty strings.
+[  814.123447][  T947] configfs-gadget.g1 gadget.0: uvc: uvc_function_unbind()
+[  814.178583][ T3173] PM: suspend entry (deep)
+[  814.192487][ T3173] Freezing user space processes
+[  814.197668][  T947] configfs-gadget.g1 gadget.0: uvc: uvc_function_unbind no clean disconnect, wait for release
 
-Suggested-by: Val Packett <val@packett.cool>
-Reported-by: Val Packett <val@packett.cool>
-Closes: https://lore.kernel.org/linux-usb/10890524-cf83-4a71-b879-93e2b2cc1fcc@packett.cool/
-Fixes: ec35c1969650 ("usb: gadget: f_ncm: Fix net_device lifecycle with device_move")
+When the PM subsystem resumes or aborts the suspend and tasks are
+restarted, the V4L2 release path is executed and attempts to access the
+already nullified gadget pointer, triggering a kernel panic:
+
+[  814.292597][    C0] PM: pm_system_irq_wakeup: 479 triggered dhdpcie_host_wake
+[  814.386727][ T3173] Restarting tasks ...
+[  814.403522][ T4558] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000030
+[  814.404021][ T4558] pc : usb_gadget_deactivate+0x14/0xf4
+[  814.404031][ T4558] lr : usb_function_deactivate+0x54/0x94
+[  814.404078][ T4558] Call trace:
+[  814.404080][ T4558]  usb_gadget_deactivate+0x14/0xf4
+[  814.404083][ T4558]  usb_function_deactivate+0x54/0x94
+[  814.404087][ T4558]  uvc_function_disconnect+0x1c/0x5c
+[  814.404092][ T4558]  uvc_v4l2_release+0x44/0xac
+[  814.404095][ T4558]  v4l2_release+0xcc/0x130
+
+Address the race condition and NULL pointer dereference by:
+
+1. State Synchronization (flag + mutex)
+Introduce a 'func_unbound' flag in struct uvc_device. This allows
+uvc_function_disconnect() to safely skip accessing the nullified
+cdev->gadget pointer. As suggested by Alan Stern, this flag is protected
+by a new mutex (uvc->lock) to ensure proper memory ordering and prevent
+instruction reordering or speculative loads. This mutex is also used to
+protect 'func_connected' for consistent state management.
+
+2. Explicit Synchronization (completion)
+Use a completion to synchronize uvc_function_unbind() with the
+uvc_vdev_release() callback. This prevents Use-After-Free (UAF) by
+ensuring struct uvc_device is freed after all video device resources
+are released.
+
+Fixes: b81ac4395bbe ("usb: gadget: uvc: allow for application to cleanly shutdown")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260316-eth-null-deref-v1-1-07005f33be85@google.com
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Jimmy Hu <hhhuuu@google.com>
+Link: https://patch.msgid.link/20260320065427.1374555-1-hhhuuu@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_ether.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_uvc.c    |   39 ++++++++++++++++++++++++++++++---
+ drivers/usb/gadget/function/uvc.h      |    3 ++
+ drivers/usb/gadget/function/uvc_v4l2.c |    5 +++-
+ 3 files changed, 43 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/function/u_ether.c
-+++ b/drivers/usb/gadget/function/u_ether.c
-@@ -112,8 +112,10 @@ static void eth_get_drvinfo(struct net_d
+--- a/drivers/usb/gadget/function/f_uvc.c
++++ b/drivers/usb/gadget/function/f_uvc.c
+@@ -413,6 +413,12 @@ uvc_function_disconnect(struct uvc_devic
+ {
+ 	int ret;
  
- 	strscpy(p->driver, "g_ether", sizeof(p->driver));
- 	strscpy(p->version, UETH__VERSION, sizeof(p->version));
--	strscpy(p->fw_version, dev->gadget->name, sizeof(p->fw_version));
--	strscpy(p->bus_info, dev_name(&dev->gadget->dev), sizeof(p->bus_info));
-+	if (dev->gadget) {
-+		strscpy(p->fw_version, dev->gadget->name, sizeof(p->fw_version));
-+		strscpy(p->bus_info, dev_name(&dev->gadget->dev), sizeof(p->bus_info));
++	guard(mutex)(&uvc->lock);
++	if (uvc->func_unbound) {
++		dev_dbg(&uvc->vdev.dev, "skipping function deactivate (unbound)\n");
++		return;
 +	}
++
+ 	if ((ret = usb_function_deactivate(&uvc->func)) < 0)
+ 		uvcg_info(&uvc->func, "UVC disconnect failed with %d\n", ret);
+ }
+@@ -431,6 +437,15 @@ static ssize_t function_name_show(struct
+ 
+ static DEVICE_ATTR_RO(function_name);
+ 
++static void uvc_vdev_release(struct video_device *vdev)
++{
++	struct uvc_device *uvc = video_get_drvdata(vdev);
++
++	/* Signal uvc_function_unbind() that the video device has been released */
++	if (uvc->vdev_release_done)
++		complete(uvc->vdev_release_done);
++}
++
+ static int
+ uvc_register_video(struct uvc_device *uvc)
+ {
+@@ -443,7 +458,7 @@ uvc_register_video(struct uvc_device *uv
+ 	uvc->vdev.v4l2_dev->dev = &cdev->gadget->dev;
+ 	uvc->vdev.fops = &uvc_v4l2_fops;
+ 	uvc->vdev.ioctl_ops = &uvc_v4l2_ioctl_ops;
+-	uvc->vdev.release = video_device_release_empty;
++	uvc->vdev.release = uvc_vdev_release;
+ 	uvc->vdev.vfl_dir = VFL_DIR_TX;
+ 	uvc->vdev.lock = &uvc->video.mutex;
+ 	uvc->vdev.device_caps = V4L2_CAP_VIDEO_OUTPUT | V4L2_CAP_STREAMING;
+@@ -659,6 +674,8 @@ uvc_function_bind(struct usb_configurati
+ 	int ret = -EINVAL;
+ 
+ 	uvcg_info(f, "%s()\n", __func__);
++	scoped_guard(mutex, &uvc->lock)
++		uvc->func_unbound = false;
+ 
+ 	opts = fi_to_f_uvc_opts(f->fi);
+ 	/* Sanity check the streaming endpoint module parameters. */
+@@ -988,12 +1005,19 @@ static void uvc_free(struct usb_function
+ static void uvc_function_unbind(struct usb_configuration *c,
+ 				struct usb_function *f)
+ {
++	DECLARE_COMPLETION_ONSTACK(vdev_release_done);
+ 	struct usb_composite_dev *cdev = c->cdev;
+ 	struct uvc_device *uvc = to_uvc(f);
+ 	struct uvc_video *video = &uvc->video;
+ 	long wait_ret = 1;
++	bool connected;
+ 
+ 	uvcg_info(f, "%s()\n", __func__);
++	scoped_guard(mutex, &uvc->lock) {
++		uvc->func_unbound = true;
++		uvc->vdev_release_done = &vdev_release_done;
++		connected = uvc->func_connected;
++	}
+ 
+ 	kthread_cancel_work_sync(&video->hw_submit);
+ 
+@@ -1006,7 +1030,7 @@ static void uvc_function_unbind(struct u
+ 	 * though the video device removal uevent. Allow some time for the
+ 	 * application to close out before things get deleted.
+ 	 */
+-	if (uvc->func_connected) {
++	if (connected) {
+ 		uvcg_dbg(f, "waiting for clean disconnect\n");
+ 		wait_ret = wait_event_interruptible_timeout(uvc->func_connected_queue,
+ 				uvc->func_connected == false, msecs_to_jiffies(500));
+@@ -1017,7 +1041,10 @@ static void uvc_function_unbind(struct u
+ 	video_unregister_device(&uvc->vdev);
+ 	v4l2_device_unregister(&uvc->v4l2_dev);
+ 
+-	if (uvc->func_connected) {
++	scoped_guard(mutex, &uvc->lock)
++		connected = uvc->func_connected;
++
++	if (connected) {
+ 		/*
+ 		 * Wait for the release to occur to ensure there are no longer any
+ 		 * pending operations that may cause panics when resources are cleaned
+@@ -1029,6 +1056,10 @@ static void uvc_function_unbind(struct u
+ 		uvcg_dbg(f, "done waiting for release with ret: %ld\n", wait_ret);
+ 	}
+ 
++	/* Wait for the video device to be released */
++	wait_for_completion(&vdev_release_done);
++	uvc->vdev_release_done = NULL;
++
+ 	usb_ep_free_request(cdev->gadget->ep0, uvc->control_req);
+ 	kfree(uvc->control_buf);
+ 
+@@ -1047,6 +1078,8 @@ static struct usb_function *uvc_alloc(st
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	mutex_init(&uvc->video.mutex);
++	mutex_init(&uvc->lock);
++	uvc->func_unbound = true;
+ 	uvc->state = UVC_STATE_DISCONNECTED;
+ 	init_waitqueue_head(&uvc->func_connected_queue);
+ 	opts = fi_to_f_uvc_opts(fi);
+--- a/drivers/usb/gadget/function/uvc.h
++++ b/drivers/usb/gadget/function/uvc.h
+@@ -155,6 +155,9 @@ struct uvc_device {
+ 	enum uvc_state state;
+ 	struct usb_function func;
+ 	struct uvc_video video;
++	struct completion *vdev_release_done;
++	struct mutex lock;	/* protects func_unbound and func_connected */
++	bool func_unbound;
+ 	bool func_connected;
+ 	wait_queue_head_t func_connected_queue;
+ 
+--- a/drivers/usb/gadget/function/uvc_v4l2.c
++++ b/drivers/usb/gadget/function/uvc_v4l2.c
+@@ -574,6 +574,8 @@ uvc_v4l2_subscribe_event(struct v4l2_fh
+ 	if (sub->type < UVC_EVENT_FIRST || sub->type > UVC_EVENT_LAST)
+ 		return -EINVAL;
+ 
++	guard(mutex)(&uvc->lock);
++
+ 	if (sub->type == UVC_EVENT_SETUP && uvc->func_connected)
+ 		return -EBUSY;
+ 
+@@ -595,7 +597,8 @@ static void uvc_v4l2_disable(struct uvc_
+ 	uvc_function_disconnect(uvc);
+ 	uvcg_video_disable(&uvc->video);
+ 	uvcg_free_buffers(&uvc->video.queue);
+-	uvc->func_connected = false;
++	scoped_guard(mutex, &uvc->lock)
++		uvc->func_connected = false;
+ 	wake_up_interruptible(&uvc->func_connected_queue);
  }
  
- /* REVISIT can also support:
 
 
