@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C103D891A;
-	Wed,  8 Apr 2026 18:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332033B19A3;
+	Wed,  8 Apr 2026 18:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673328; cv=none; b=TgvKQi/Do4RhnDFkIp4BFkoW1Q5wkqzIBakR2ge5/xAl5FfrFHk97ERmGdqgOcOIfi4a3CrG2Sr75HMtT+saJBzcxRciip/Cf6n4K/QqNPcVB+v1zcU9eCZ7k2+2PQoIKUu7GgeuGCdfMmpcRMLYdhBDH3DhHVWWe2F5Nb0PgFU=
+	t=1775673331; cv=none; b=r+aA/5qQ4YXR7W3c+OfwSR38qTpRhL88eOqDs7vsEg+Wq63w8lZFVlTihgxwEGQQiviANHNabeLFNlAj15LhWruIR5E9ila/p7kD1VLljSeVGArIBxaj3HQNtkH4ydzQyE2t7N5sGxuEIA4hVWGXE6Qr2jyoeqsqvaPCgrWsURQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673328; c=relaxed/simple;
-	bh=oONyx2tUEYnd4qrAi00K5CmBppspR2tmwFfSCPTrxn4=;
+	s=arc-20240116; t=1775673331; c=relaxed/simple;
+	bh=nt+dONUeHL/J9lKjPcbxZEyv0wQRB3kgoSPls6wJB3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlKybE9/ALZW/wI3fT7VI4piULQKJKuBb0EwbsFsaKY0Kb3mQn0vY0hmBtluUQDdG00sdHaSMX97pLrL1faSPXzZOEGbjfKtjEGqnJ7Z5KXOdMXj4x3Xi0p7nw7d4hhJu7eUi31/KO81wacrBL9+ZSB9p60zONIZELs127Ws2AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyYxyYJM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SVXBhVaz2ipS87DKbmaM9jNOrJ1ebXVZFzKr1GgTSZQP4Mf2fq/Bc3xLQQ7IpuYHXK4nUSeXyR+U7YHP+58eo5wGyKu5n2nmMQjomX1tDQAaGjlVqhQce8tAOyIAEZ0vxaDbuy6Jv9YgSiAXbttTRf+ncJ7AvEe5d3fVTvgbEw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dc4I0nHs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyYxyYJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3569C19421;
-	Wed,  8 Apr 2026 18:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dc4I0nHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F738C19421;
+	Wed,  8 Apr 2026 18:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673328;
-	bh=oONyx2tUEYnd4qrAi00K5CmBppspR2tmwFfSCPTrxn4=;
+	s=korg; t=1775673330;
+	bh=nt+dONUeHL/J9lKjPcbxZEyv0wQRB3kgoSPls6wJB3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YyYxyYJMlUcDdzOvuDUSPOHcQ2MGmHp+lPE2jdfzhgUKpBoZiC07Cq1uav0eYbtV4
-	 1+eJ7CoxuQujs27WxARkUrI7hWM2rnY7ZMOQRqxFSH5OWIwfh2dBrwVH5w/2y6Qtab
-	 V3ZyXao+Vdto83LFSQQ9r1gwxDERMzdkjFMIxUT8=
+	b=dc4I0nHsAsW5EnH9i81yEY15bS88EEa8NplbepszDGecEaM21saqbXiPabRpJ9TSG
+	 2N/uJgdH6uE3aHZZExPCYd6ah2X2hICkDYttx91YxKsxxeuyoMkM4ObT87SwaRy6aL
+	 Jc7xoB9tirlL5XvL0l4YsKyB9ICH5ofLviHCgTTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.18 190/277] iio: imu: st_lsm6dsx: Set FIFO ODR for accelerometer and gyroscope only
-Date: Wed,  8 Apr 2026 20:02:55 +0200
-Message-ID: <20260408175940.959668774@linuxfoundation.org>
+Subject: [PATCH 6.18 191/277] iio: gyro: mpu3050: Fix incorrect free_irq() variable
+Date: Wed,  8 Apr 2026 20:02:56 +0200
+Message-ID: <20260408175940.996040781@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,45 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-commit 630748afa7030b272b7bee5df857e7bcf132ed51 upstream.
+commit edb11a1aef4011a4b7b22cc3c3396c6fe371f4a6 upstream.
 
-The st_lsm6dsx_set_fifo_odr() function, which is called when enabling and
-disabling the hardware FIFO, checks the contents of the hw->settings->batch
-array at index sensor->id, and then sets the current ODR value in sensor
-registers that depend on whether the register address is set in the above
-array element. This logic is valid for internal sensors only, i.e. the
-accelerometer and gyroscope; however, since commit c91c1c844ebd ("iio: imu:
-st_lsm6dsx: add i2c embedded controller support"), this function is called
-also when configuring the hardware FIFO for external sensors (i.e. sensors
-accessed through the sensor hub functionality), which can result in
-unrelated device registers being written.
+The handler for the IRQ part of this driver is mpu3050->trig but,
+in the teardown free_irq() is called with handler mpu3050.
 
-Add a check to the beginning of st_lsm6dsx_set_fifo_odr() so that it does
-not touch any registers unless it is called for internal sensors.
+Use correct IRQ handler when calling free_irq().
 
-Fixes: c91c1c844ebd ("iio: imu: st_lsm6dsx: add i2c embedded controller support")
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Fixes: 3904b28efb2c7 ("iio: gyro: Add driver for the MPU-3050 gyroscope")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/gyro/mpu3050-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
-@@ -224,6 +224,10 @@ static int st_lsm6dsx_set_fifo_odr(struc
- 	const struct st_lsm6dsx_reg *batch_reg;
- 	u8 data;
- 
-+	/* Only internal sensors have a FIFO ODR configuration register. */
-+	if (sensor->id >= ARRAY_SIZE(hw->settings->batch))
-+		return 0;
-+
- 	batch_reg = &hw->settings->batch[sensor->id];
- 	if (batch_reg->addr) {
- 		int val;
+--- a/drivers/iio/gyro/mpu3050-core.c
++++ b/drivers/iio/gyro/mpu3050-core.c
+@@ -1269,7 +1269,7 @@ void mpu3050_common_remove(struct device
+ 	pm_runtime_disable(dev);
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ 	if (mpu3050->irq)
+-		free_irq(mpu3050->irq, mpu3050);
++		free_irq(mpu3050->irq, mpu3050->trig);
+ 	iio_device_unregister(indio_dev);
+ 	mpu3050_power_down(mpu3050);
+ }
 
 
