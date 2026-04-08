@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EE8346FB0;
-	Wed,  8 Apr 2026 18:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11A7331A44;
+	Wed,  8 Apr 2026 18:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673863; cv=none; b=PpV8vOYZdsxI1WwkU3EFCrHOtShG7D/bQ8Z/Z61syqRwHY32hmBgAoqC8kpmdwjhoXV31AYRHO+AgsOZSoi9YHa7Ld72tON4rOZ2rQXlnVLQVWaDCJvG0dtIReiTCPLADor7jVSdx8Q5t0ZSZBlHVrX8lTXc6LKXJtFepHFCU5E=
+	t=1775673865; cv=none; b=O1KHLqBgnlmWE7BcsBzi9LmzIP4nodGpuvb99+UiRdN5ATyZixLaroUCgWPZLjiVVEYSW3VBTJDeOWPlFRVK0u1bmiUt4iOg8j9uUQDz7BbdncJmgyVHXCSJNfDVHdV1jey6wLsrZOx9g5TOiknfjzSPpwCI4UT5rYV8+VQHbec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673863; c=relaxed/simple;
-	bh=Ok9msOjVvjPdGwy0E8T3BMypb7tIUgRh3rKPtOj1LIc=;
+	s=arc-20240116; t=1775673865; c=relaxed/simple;
+	bh=Q9EigCx6THA2GJmggaYTOhufOyfH4HC2VWXPrkzxf/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EkuITSR91reu+eueRahX4yn9fe4OxgdmuWxrXA7slYX2LTi7mfRlt08mnEVfvuYBVGEk3ruieee//CKKuTOPS2ePnS22yyE5pvJ4HKPO+z5joi3jWY0u8LSiVz6uvhle809OOaxLh0+NXdMrf8jXcfD9W0XSFlv7GlzC8x61E6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPa7R1Zf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JTTobbFDatVdeB2G1u8whfUnA/aqCKd4La34FIo1y9ZKBIDC7ZjY6OCqFUqrYEjq5Q+U0JQCtbuU/UThefAxbmtVSkBm7UTPdbxwo37ud+pKtwTOQ3g8G+7O22s/tQFq0pl23PTzAkOKaSkAWi7iP4Bq1U3P7921dTJQp5e48Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+qTV8Aq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPa7R1Zf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A825CC19421;
-	Wed,  8 Apr 2026 18:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+qTV8Aq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CE7C19421;
+	Wed,  8 Apr 2026 18:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673863;
-	bh=Ok9msOjVvjPdGwy0E8T3BMypb7tIUgRh3rKPtOj1LIc=;
+	s=korg; t=1775673865;
+	bh=Q9EigCx6THA2GJmggaYTOhufOyfH4HC2VWXPrkzxf/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yPa7R1ZftoekVWqW/UgRYb80wl8x8Orv6dxMd1gPudICJsGcHT5+osytcWhD3yFc1
-	 SK6FUAGUDSAwWtIkBiA6rnzfUUy3yimes7F20kdsrrK2LP+jwgREDbGQf0JbtCjNuh
-	 LTw05buZkQwLYW579Z4QoYpbIjR2tUKhi5C57TgU=
+	b=j+qTV8AqohGbbvihh+AWxtPyWF1D/CFg4Gg4nhmJkxj+f0K73hVKULSly0hSk0tYv
+	 LaX+f1Fy9ZJ/oVgVxLYmXC29deFEWlDe8AGdx5hBDQfgWc7uUws843gyq1jIP/sdWp
+	 ugsegn6yYyHZXos5gX06b5NzQTDCHvJCzQLSxJEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Karsten Hohmeier <linux@hohmatik.de>
-Subject: [PATCH 6.12 119/242] ALSA: ctxfi: Fix missing SPDIFI1 index handling
-Date: Wed,  8 Apr 2026 20:02:39 +0200
-Message-ID: <20260408175931.541257263@linuxfoundation.org>
+	Junxi Qian <qjx1298677004@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 120/242] io_uring/net: fix slab-out-of-bounds read in io_bundle_nbufs()
+Date: Wed,  8 Apr 2026 20:02:40 +0200
+Message-ID: <20260408175931.578857942@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -50,34 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Junxi Qian <qjx1298677004@gmail.com>
 
-commit b045ab3dff97edae6d538eeff900a34c098761f8 upstream.
+commit b948f9d5d3057b01188e36664e7c7604d1c8ecb5 upstream.
 
-SPDIF1 DAIO type isn't properly handled in daio_device_index() for
-hw20k2, and it returned -EINVAL, which ended up with the out-of-bounds
-array access.  Follow the hw20k1 pattern and return the proper index
-for this type, too.
+sqe->len is __u32 but gets stored into sr->len which is int. When
+userspace passes sqe->len values exceeding INT_MAX (e.g. 0xFFFFFFFF),
+sr->len overflows to a negative value. This negative value propagates
+through the bundle recv/send path:
 
-Reported-and-tested-by: Karsten Hohmeier <linux@hohmatik.de>
-Closes: https://lore.kernel.org/20260315155004.15633-1-linux@hohmatik.de
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260329091240.420194-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  1. io_recv(): sel.val = sr->len (ssize_t gets -1)
+  2. io_recv_buf_select(): arg.max_len = sel->val (size_t gets
+     0xFFFFFFFFFFFFFFFF)
+  3. io_ring_buffers_peek(): buf->len is not clamped because max_len
+     is astronomically large
+  4. iov[].iov_len = 0xFFFFFFFF flows into io_bundle_nbufs()
+  5. io_bundle_nbufs(): min_t(int, 0xFFFFFFFF, ret) yields -1,
+     causing ret to increase instead of decrease, creating an
+     infinite loop that reads past the allocated iov[] array
+
+This results in a slab-out-of-bounds read in io_bundle_nbufs() from
+the kmalloc-64 slab, as nbufs increments past the allocated iovec
+entries.
+
+  BUG: KASAN: slab-out-of-bounds in io_bundle_nbufs+0x128/0x160
+  Read of size 8 at addr ffff888100ae05c8 by task exp/145
+  Call Trace:
+   io_bundle_nbufs+0x128/0x160
+   io_recv_finish+0x117/0xe20
+   io_recv+0x2db/0x1160
+
+Fix this by rejecting negative sr->len values early in both
+io_sendmsg_prep() and io_recvmsg_prep(). Since sqe->len is __u32,
+any value > INT_MAX indicates overflow and is not a valid length.
+
+Fixes: a05d1f625c7a ("io_uring/net: support bundles for send")
+Cc: stable@vger.kernel.org
+Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
+Link: https://patch.msgid.link/20260329153909.279046-1-qjx1298677004@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/ctdaio.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/net.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/pci/ctxfi/ctdaio.c
-+++ b/sound/pci/ctxfi/ctdaio.c
-@@ -119,6 +119,7 @@ static unsigned int daio_device_index(en
- 		switch (type) {
- 		case SPDIFOO:	return 0;
- 		case SPDIFIO:	return 0;
-+		case SPDIFI1:	return 1;
- 		case LINEO1:	return 4;
- 		case LINEO2:	return 7;
- 		case LINEO3:	return 5;
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -429,6 +429,8 @@ int io_sendmsg_prep(struct io_kiocb *req
+ 
+ 	sr->umsg = u64_to_user_ptr(READ_ONCE(sqe->addr));
+ 	sr->len = READ_ONCE(sqe->len);
++	if (unlikely(sr->len < 0))
++		return -EINVAL;
+ 	sr->flags = READ_ONCE(sqe->ioprio);
+ 	if (sr->flags & ~SENDMSG_FLAGS)
+ 		return -EINVAL;
+@@ -808,6 +810,8 @@ int io_recvmsg_prep(struct io_kiocb *req
+ 
+ 	sr->umsg = u64_to_user_ptr(READ_ONCE(sqe->addr));
+ 	sr->len = READ_ONCE(sqe->len);
++	if (unlikely(sr->len < 0))
++		return -EINVAL;
+ 	sr->flags = READ_ONCE(sqe->ioprio);
+ 	if (sr->flags & ~RECVMSG_FLAGS)
+ 		return -EINVAL;
 
 
