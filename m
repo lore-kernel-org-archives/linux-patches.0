@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6550DB67E;
-	Wed,  8 Apr 2026 18:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C0827979A;
+	Wed,  8 Apr 2026 18:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673449; cv=none; b=f8EWf8oHLAawJv7G/EiSR80SpcOIZ+4kFEx8O5SPDCmS6AhlPVLoxIyMBE1uWgavOaiIDqxveUdU37SuGeXccQodGTxGfkKbDNOgO1N/F4qBP9OM1LZCO+XF5hMy6daztXbbmxKVmwp9HylYS6c7vHQ2R/PDS4zvOg/zhLNxG7Y=
+	t=1775673452; cv=none; b=pB6MdmxaRHXKUX7h9q+1ekMEJkDHeyQPVIKMMEhDrGhEY54VYfFcY6ppShhCOXXzeqcGorV0s+THkYbXIOvE/SolXDiCy0NA4dlp7SER53mVwtrAJMnacNalO9WVy/Al6yUJt/NT4fohHrtgdGeAJYCzdoGfdD+O+U2N++Usolk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673449; c=relaxed/simple;
-	bh=V/mB7+pNEJVwFzTMydVj6TK20Qi927GkORKqwkG4dwY=;
+	s=arc-20240116; t=1775673452; c=relaxed/simple;
+	bh=ujUtUitJ9prwfI+J/Ad8lYPLG4JoXqujVXoArB8DEho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T0iPPUvpkyDWiYKi1yRWviBefJ51yrY9JEZffKVfu6Kb78ZT9m0GA/2nIP5ZUUDQ2OQmQ2sE3Rm/e5I660hkwye/+aeQ8BmXWKJJsAYEvvkq+Y1FpdKHVQX7QqjFqSv7ynVklGwfEBF+7a0bO39mfLKcrUG2IGtIN0C2qPzFnJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q4a82mnO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MfhixkfzFut98mC45cOMZSldUUNYpw5yVXueaHkQFS7rINRWNGx26Rc5PDfGDEVCc6jIHAYFKfc2mem61xfwrt3AFMj/nOPOX9nM6f0uGXD/uebLcSUxNu8/eDFYmyfKjaJNHfAOEjvQwo5jNU4HdK+3qSaS9Df0YkYtTfsh0Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nO94OMoB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4a82mnO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBE0C19421;
-	Wed,  8 Apr 2026 18:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nO94OMoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B55FC2BC87;
+	Wed,  8 Apr 2026 18:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673449;
-	bh=V/mB7+pNEJVwFzTMydVj6TK20Qi927GkORKqwkG4dwY=;
+	s=korg; t=1775673451;
+	bh=ujUtUitJ9prwfI+J/Ad8lYPLG4JoXqujVXoArB8DEho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q4a82mnO53YWvTbxDtvOSGhnWKZ2LvzP8VpX7ZcgYebcVB6pqjSMm4a3xg22dGk/R
-	 qWpYugVD8gJOlKxlRs0dOb8sSPHEM7A0AC+FrKiN2sEX37uoYIVZhJrQVLH5fhJ84g
-	 ZQvicHsei4W5Nkn5fkniVUDtnpgvtLMtNIcu1zoU=
+	b=nO94OMoBwfLAdeHvvnyjkoCZToNOsmO0TZDyJMwu36BsPIlwWSfRZZFFbdS+jyyqe
+	 hR5xgtZTJJTd/fXqnnkUfifpabFpGN1nEO+hAjKHxuYp4WWUo44Midk7D2+KrP9eDg
+	 8+dYPYHL5beouFcoWhmTobqHvUIYO8QPpI7ZA0HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 236/277] cpufreq: governor: fix double free in cpufreq_dbs_governor_init() error path
-Date: Wed,  8 Apr 2026 20:03:41 +0200
-Message-ID: <20260408175942.669843476@linuxfoundation.org>
+	Changwoo Min <changwoo@igalia.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.18 237/277] sched_ext: Fix is_bpf_migration_disabled() false negative on non-PREEMPT_RCU
+Date: Wed,  8 Apr 2026 20:03:42 +0200
+Message-ID: <20260408175942.707235386@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -52,52 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Changwoo Min <changwoo@igalia.com>
 
-commit 6dcf9d0064ce2f3e3dfe5755f98b93abe6a98e1e upstream.
+commit 0c4a59df370bea245695c00aaae6ae75747139bd upstream.
 
-When kobject_init_and_add() fails, cpufreq_dbs_governor_init() calls
-kobject_put(&dbs_data->attr_set.kobj).
+Since commit 8e4f0b1ebcf2 ("bpf: use rcu_read_lock_dont_migrate() for
+trampoline.c"), the BPF prolog (__bpf_prog_enter) calls migrate_disable()
+only when CONFIG_PREEMPT_RCU is enabled, via rcu_read_lock_dont_migrate().
+Without CONFIG_PREEMPT_RCU, the prolog never touches migration_disabled,
+so migration_disabled == 1 always means the task is truly
+migration-disabled regardless of whether it is the current task.
 
-The kobject release callback cpufreq_dbs_data_release() calls
-gov->exit(dbs_data) and kfree(dbs_data), but the current error path
-then calls gov->exit(dbs_data) and kfree(dbs_data) again, causing a
-double free.
+The old unconditional p == current check was a false negative in this
+case, potentially allowing a migration-disabled task to be dispatched to
+a remote CPU and triggering scx_error in task_can_run_on_remote_rq().
 
-Keep the direct kfree(dbs_data) for the gov->init() failure path, but
-after kobject_init_and_add() has been called, let kobject_put() handle
-the cleanup through cpufreq_dbs_data_release().
+Only apply the p == current disambiguation when CONFIG_PREEMPT_RCU is
+enabled, where the ambiguity with the BPF prolog still exists.
 
-Fixes: 4ebe36c94aed ("cpufreq: Fix kobject memleak")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260401024535.1395801-1-lgs201920130244@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 8e4f0b1ebcf2 ("bpf: use rcu_read_lock_dont_migrate() for trampoline.c")
+Cc: stable@vger.kernel.org # v6.18+
+Link: https://lore.kernel.org/lkml/20250821090609.42508-8-dongml2@chinatelecom.cn/
+Signed-off-by: Changwoo Min <changwoo@igalia.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq_governor.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/sched/ext_idle.c |   31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
---- a/drivers/cpufreq/cpufreq_governor.c
-+++ b/drivers/cpufreq/cpufreq_governor.c
-@@ -468,13 +468,13 @@ int cpufreq_dbs_governor_init(struct cpu
- 	/* Failure, so roll back. */
- 	pr_err("initialization failed (dbs_data kobject init error %d)\n", ret);
+--- a/kernel/sched/ext_idle.c
++++ b/kernel/sched/ext_idle.c
+@@ -861,25 +861,32 @@ static bool check_builtin_idle_enabled(s
+  * code.
+  *
+  * We can't simply check whether @p->migration_disabled is set in a
+- * sched_ext callback, because migration is always disabled for the current
+- * task while running BPF code.
++ * sched_ext callback, because the BPF prolog (__bpf_prog_enter) may disable
++ * migration for the current task while running BPF code.
+  *
+- * The prolog (__bpf_prog_enter) and epilog (__bpf_prog_exit) respectively
+- * disable and re-enable migration. For this reason, the current task
+- * inside a sched_ext callback is always a migration-disabled task.
++ * Since the BPF prolog calls migrate_disable() only when CONFIG_PREEMPT_RCU
++ * is enabled (via rcu_read_lock_dont_migrate()), migration_disabled == 1 for
++ * the current task is ambiguous only in that case: it could be from the BPF
++ * prolog rather than a real migrate_disable() call.
+  *
+- * Therefore, when @p->migration_disabled == 1, check whether @p is the
+- * current task or not: if it is, then migration was not disabled before
+- * entering the callback, otherwise migration was disabled.
++ * Without CONFIG_PREEMPT_RCU, the BPF prolog never calls migrate_disable(),
++ * so migration_disabled == 1 always means the task is truly
++ * migration-disabled.
++ *
++ * Therefore, when migration_disabled == 1 and CONFIG_PREEMPT_RCU is enabled,
++ * check whether @p is the current task or not: if it is, then migration was
++ * not disabled before entering the callback, otherwise migration was disabled.
+  *
+  * Returns true if @p is migration-disabled, false otherwise.
+  */
+ static bool is_bpf_migration_disabled(const struct task_struct *p)
+ {
+-	if (p->migration_disabled == 1)
+-		return p != current;
+-	else
+-		return p->migration_disabled;
++	if (p->migration_disabled == 1) {
++		if (IS_ENABLED(CONFIG_PREEMPT_RCU))
++			return p != current;
++		return true;
++	}
++	return p->migration_disabled;
+ }
  
--	kobject_put(&dbs_data->attr_set.kobj);
--
- 	policy->governor_data = NULL;
- 
- 	if (!have_governor_per_policy())
- 		gov->gdbs_data = NULL;
--	gov->exit(dbs_data);
-+
-+	kobject_put(&dbs_data->attr_set.kobj);
-+	goto free_policy_dbs_info;
- 
- free_dbs_data:
- 	kfree(dbs_data);
+ static s32 select_cpu_from_kfunc(struct scx_sched *sch, struct task_struct *p,
 
 
