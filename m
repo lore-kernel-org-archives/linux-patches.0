@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D154E25A321;
-	Wed,  8 Apr 2026 19:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC8F3019BA;
+	Wed,  8 Apr 2026 19:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674917; cv=none; b=Z5Yl1iloXSNFkvsJmU8cmfxs6Cv3LM6zH2kS4S9thwBQMr6IGlTsLotuTsSz9QFfqMKyhcFg5N0tq3fgNq/GzFGmLJH1pBWhzzUFVPaS5gEByLpkcEfNtPMK+v6WT8upOA9PdQbnLGvHybg4Y/783Htn/t4rm1gcjSc8kVbjS2E=
+	t=1775674920; cv=none; b=T/TfQZVJpo0ToGCpaY+Luh2H+HotvO4BYFgIhc7m1ptYdgUHtFDPP1aty9ZZszYGJMLUgtUs3nn/ILNXuwh7rkzkdOsgudRRuZdnKl6XpvAl8gMfHtN5g+bnEhAnRNThOjnJlhnrbWNecQFKwTf+qrD8xyGmjTiLc8sgqs/vmto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674917; c=relaxed/simple;
-	bh=Lgs6dgge1HmBGir5HJvH4mfvlejdrVuDdz/7dttHhn4=;
+	s=arc-20240116; t=1775674920; c=relaxed/simple;
+	bh=fs7D2/G71Hw/4aisqdmG+ZZlyeoujkagb4hEtjOmA8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpemrNKdZ54izYv0WbyEKxFGOrgieoGFoLDv+ePKbi3C++0piT0PaLQAklIPlqsF9BBzgGck6M2gbL1/3WR5cw+oue+zbrghqJYzKnJCsFnnQIVwFhfSrzQRSB3liJy20t4LlN7PTy9961j/cJCfYW2EKn8XhApyQFMA1fpPUpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KktUAU3m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bLGqtyfpW6zxIhuL0YVMbWpKa5GLD/+9CcVbyzMVQK8aMgaFSmlTcuUI+zJAvTvKN1lklgj7aooD5dnlDbaD4bYn8D1mGwAxspkAXRKqOHePZFwNWhi+M1kVB/db7MH8ucquWuZ2+6MKpoWTMDr+qz46wiBmHdPhs5y8uZouhRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ns7T8KP2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KktUAU3m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65779C19421;
-	Wed,  8 Apr 2026 19:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ns7T8KP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DE1C19421;
+	Wed,  8 Apr 2026 19:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674917;
-	bh=Lgs6dgge1HmBGir5HJvH4mfvlejdrVuDdz/7dttHhn4=;
+	s=korg; t=1775674920;
+	bh=fs7D2/G71Hw/4aisqdmG+ZZlyeoujkagb4hEtjOmA8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KktUAU3m8qyNYHNfxfhcuugoBtGEBfqY14xMWv1vFTjWrdFQOw/z42Bhz9yq1zxE6
-	 hTX7+CBLcsSi7w70ZEQgzN5KMLeGtxYhaap2kDFAKsUzh3jjv9WRnEu2WDcq9CP2n7
-	 +8W2ZrYUboWDs8Ob5uGjD1WIIfCmDAg/93k55IUc=
+	b=Ns7T8KP2OQquTiefhH14mi0e4rIvnJTkab45WWFHsR9E3GFIuxcAKm2hpZi1rF/OZ
+	 JSYRiCZuM6uRQUdQaAmgwARuugeJv9HY2LhN46NAyTDE7iYnJXM25gOJHLX4m1wHmJ
+	 yJ/NBSIIYwUpuCNlpHwvTX8X2FdqOpE+S7OR2raA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.19 250/311] auxdisplay: line-display: fix NULL dereference in linedisp_release
-Date: Wed,  8 Apr 2026 20:04:10 +0200
-Message-ID: <20260408175948.725212353@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.19 251/311] bridge: br_nd_send: validate ND option lengths
+Date: Wed,  8 Apr 2026 20:04:11 +0200
+Message-ID: <20260408175948.761791488@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,48 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-commit 7f138de156b20d9f9da6f72f90b63c01941d97d3 upstream.
+commit 850837965af15707fd3142c1cf3c5bfaf022299b upstream.
 
-linedisp_release() currently retrieves the enclosing struct linedisp via
-to_linedisp(). That lookup depends on the attachment list, but the
-attachment may already have been removed before put_device() invokes the
-release callback. This can happen in linedisp_unregister(), and can also
-be reached from some linedisp_register() error paths.
+br_nd_send() walks ND options according to option-provided lengths.
+A malformed option can make the parser advance beyond the computed
+option span or use a too-short source LLADDR option payload.
 
-In that case, to_linedisp() returns NULL and linedisp_release()
-dereferences it while freeing the display resources.
+Validate option lengths against the remaining NS option area before
+advancing, and only read source LLADDR when the option is large enough
+for an Ethernet address.
 
-The struct device released here is the embedded linedisp->dev used by
-linedisp_register(), so retrieve the enclosing object directly with
-container_of() instead.
-
-Fixes: 66c93809487e ("auxdisplay: linedisp: encapsulate container_of usage within to_linedisp")
+Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
+Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260326034441.2037420-3-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/auxdisplay/line-display.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/br_arp_nd_proxy.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/auxdisplay/line-display.c b/drivers/auxdisplay/line-display.c
-index 81b4aac65807..fb6d9294140d 100644
---- a/drivers/auxdisplay/line-display.c
-+++ b/drivers/auxdisplay/line-display.c
-@@ -365,7 +365,7 @@ static DEFINE_IDA(linedisp_id);
- 
- static void linedisp_release(struct device *dev)
- {
--	struct linedisp *linedisp = to_linedisp(dev);
-+	struct linedisp *linedisp = container_of(dev, struct linedisp, dev);
- 
- 	kfree(linedisp->map);
- 	kfree(linedisp->message);
--- 
-2.53.0
-
+--- a/net/bridge/br_arp_nd_proxy.c
++++ b/net/bridge/br_arp_nd_proxy.c
+@@ -288,12 +288,14 @@ static void br_nd_send(struct net_bridge
+ 	ns_olen = request->len - (skb_network_offset(request) +
+ 				  sizeof(struct ipv6hdr)) - sizeof(*ns);
+ 	for (i = 0; i < ns_olen - 1; i += (ns->opt[i + 1] << 3)) {
+-		if (!ns->opt[i + 1]) {
++		if (!ns->opt[i + 1] || i + (ns->opt[i + 1] << 3) > ns_olen) {
+ 			kfree_skb(reply);
+ 			return;
+ 		}
+ 		if (ns->opt[i] == ND_OPT_SOURCE_LL_ADDR) {
+-			daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
++			if ((ns->opt[i + 1] << 3) >=
++			    sizeof(struct nd_opt_hdr) + ETH_ALEN)
++				daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
+ 			break;
+ 		}
+ 	}
 
 
