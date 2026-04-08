@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7018E3D522C;
-	Wed,  8 Apr 2026 18:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101FC2BD030;
+	Wed,  8 Apr 2026 18:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673405; cv=none; b=fwQAa+xeCucMg9XENl40YBJTzC6JmBsI+D0BueoDwZ6YcENRBQbDcIKtoTsKpUOlalhL+dM0kLhBqD2r8kD2K8XOxsWKNX4BhM1Jec5MS6jqw2m8uz9n2KvjemZuvGsZepWPopcjVDeJ8QhQwOya9YuGO6Bfoiwy5QRotEtxNbc=
+	t=1775673408; cv=none; b=nD8tOqcC1ZFt/h5MEGJSUGLFmiCfiT7gJzRcx46DDrT6qohey9thWlBt8y/5epwiqDfjxcs7Igc72r1qpu81nWpS3KRLytMysSEEgCJCPf/oL1p8G9FGfJeFs3EwXghPxvRqupXj20NKGxthi6XVz//nW82DEl3q7b0aG54C/G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673405; c=relaxed/simple;
-	bh=bs2zepuK05dlO9JVpCD4e8rRAbfHHhcNjgraYZolqF4=;
+	s=arc-20240116; t=1775673408; c=relaxed/simple;
+	bh=eqXoi9ncWsWForYeSrpIpyXdTE7SyWQgQNcl9/gZCCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrWW4jx+JvfEZQO3Iryk1fxp9bX+FEot5XwZ6wC7rquKAjDp9TKooS/sTTWZ4T3CtX74B+gjAjcc6q6O+Cx8xmBR4dEwhhyJEGiuAGEhETyGpcNds5160+xyAkjaC8Q8TF/dWR8xvTNO0yy6sOGc0yMjyar7iIwDR8Kn14qu//g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fER4J921; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WUuaZcOJaAuVOKaXMAMPypbyEQ4cJX7eR9lG1Ta2SxX3jUbE8zXxLEfB5t5b3/9RkjxReiZFfkvJp9GhFm/6uxqzJ7+uNQv8GG0VkklOZZTJVWWqpkWItZFTxzPqwuqQi+uiNEMj0DrkjMFNZNSpAXmorbZcrbhPaE9uHh0fLM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJ+Obhvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fER4J921"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065A2C19421;
-	Wed,  8 Apr 2026 18:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJ+Obhvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A185C19421;
+	Wed,  8 Apr 2026 18:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673405;
-	bh=bs2zepuK05dlO9JVpCD4e8rRAbfHHhcNjgraYZolqF4=;
+	s=korg; t=1775673407;
+	bh=eqXoi9ncWsWForYeSrpIpyXdTE7SyWQgQNcl9/gZCCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fER4J9213WDkUxQquAXovHnBajSnrYELSuuMh6lztfijUjQFf0q+VXH7IvG5Z4vtu
-	 1ZABbok0tIoHazmu4IXNN48LIp4iMaIXUohgEYLmiqScSL+28u44uR5xOWK5x1lWbs
-	 QL3GHQPglj4C0QNE/7s6JLH3+VUMrnuPE19oQWzY=
+	b=UJ+Obhvq+u+Lq3IPOU9GiBoTNwg7XzSFCOmFyqz42VcJLV6U6UTZnThPNlWNwzKw0
+	 80S3nPSLg43M9t8JwjgqUNe4onoSWE9idTTxh2kMR+s28nlCv/mmocCtHZyOvHmbkS
+	 X+ulTVnbEFDejZIVxT3DX4ZghBZW3JXlyjd7LBsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
+	Aldo Conte <aldocontelk@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.18 187/277] iio: light: vcnl4035: fix scan buffer on big-endian
-Date: Wed,  8 Apr 2026 20:02:52 +0200
-Message-ID: <20260408175940.846918558@linuxfoundation.org>
+Subject: [PATCH 6.18 188/277] iio: light: veml6070: fix veml6070_read() return value
+Date: Wed,  8 Apr 2026 20:02:53 +0200
+Message-ID: <20260408175940.884137349@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -45,87 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Aldo Conte <aldocontelk@gmail.com>
 
-commit fdc7aa54a5d44c05880a4aad7cfb41aacfd16d7b upstream.
+commit d0b224cf9ab12e86a4d1ca55c760dfaa5c19cbe7 upstream.
 
-Rework vcnl4035_trigger_consumer_handler() so that we are not passing
-what should be a u16 value as an int * to regmap_read(). This won't
-work on bit endian systems.
+veml6070_read() computes the sensor value in ret but
+returns 0 instead of the actual result. This causes
+veml6070_read_raw() to always report 0.
 
-Instead, add a new unsigned int variable to pass to regmap_read(). Then
-copy that value into the buffer struct.
+Return the computed value instead of 0.
 
-The buffer array is replaced with a struct since there is only one value
-being read. This allows us to use the correct u16 data type and has a
-side-effect of simplifying the alignment specification.
+Running make W=1 returns no errors. I was unable
+to test the patch because I do not have the hardware.
+Found by code inspection.
 
-Also fix the endianness of the scan format from little-endian to CPU
-endianness. Since we are using regmap to read the value, it will be
-CPU-endian.
-
-Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
+Fixes: fc38525135dd ("iio: light: veml6070: use guard to handle mutex")
+Signed-off-by: Aldo Conte <aldocontelk@gmail.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/vcnl4035.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/iio/light/veml6070.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/iio/light/vcnl4035.c
-+++ b/drivers/iio/light/vcnl4035.c
-@@ -103,17 +103,23 @@ static irqreturn_t vcnl4035_trigger_cons
- 	struct iio_dev *indio_dev = pf->indio_dev;
- 	struct vcnl4035_data *data = iio_priv(indio_dev);
- 	/* Ensure naturally aligned timestamp */
--	u8 buffer[ALIGN(sizeof(u16), sizeof(s64)) + sizeof(s64)]  __aligned(8) = { };
-+	struct {
-+		u16 als_data;
-+		aligned_s64 timestamp;
-+	} buffer = { };
-+	unsigned int val;
- 	int ret;
+--- a/drivers/iio/light/veml6070.c
++++ b/drivers/iio/light/veml6070.c
+@@ -134,9 +134,7 @@ static int veml6070_read(struct veml6070
+ 	if (ret < 0)
+ 		return ret;
  
--	ret = regmap_read(data->regmap, VCNL4035_ALS_DATA, (int *)buffer);
-+	ret = regmap_read(data->regmap, VCNL4035_ALS_DATA, &val);
- 	if (ret < 0) {
- 		dev_err(&data->client->dev,
- 			"Trigger consumer can't read from sensor.\n");
- 		goto fail_read;
- 	}
--	iio_push_to_buffers_with_timestamp(indio_dev, buffer,
--					iio_get_time_ns(indio_dev));
-+
-+	buffer.als_data = val;
-+	iio_push_to_buffers_with_timestamp(indio_dev, &buffer,
-+					   iio_get_time_ns(indio_dev));
+-	ret = (msb << 8) | lsb;
+-
+-	return 0;
++	return (msb << 8) | lsb;
+ }
  
- fail_read:
- 	iio_trigger_notify_done(indio_dev->trig);
-@@ -381,7 +387,7 @@ static const struct iio_chan_spec vcnl40
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_LE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- 	{
-@@ -395,7 +401,7 @@ static const struct iio_chan_spec vcnl40
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_LE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- };
+ static const struct iio_chan_spec veml6070_channels[] = {
 
 
