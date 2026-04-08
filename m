@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297432494F0;
-	Wed,  8 Apr 2026 18:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB57B67E;
+	Wed,  8 Apr 2026 18:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672312; cv=none; b=dGgiuCfNFj129Lvx42REs4iQtbR5MxKWetosKYrx2ohmTihGqcrWNw8ik/FnUGeCELIaigKlTE6qxOeFqqOWC8zJZrZVRs4/RPlOKm3ss7VcnqKXdDX4jLEiy/0eWScQz6dFU7LrjaBTtLBFceIsFoKC4TpiYetpbSycjWrrACE=
+	t=1775672314; cv=none; b=FnQvuKdy0PAml4vEhoC38XzcX0pc+AqlHamVuPUVI/S3DyUVEpy/BthxzM4tu9TrDp1RZwNv1C71FKlfMbH6AYh0qdbIYtHDNpShcEamRfyuS0ZGyohXnCCFn4O9crY21A3izSQJz427RrEUULoJnkfoM+D7clet8dqIuom6V0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672312; c=relaxed/simple;
-	bh=2MZKU+qqG1GGcY/wAzS7BfAQR3d1wlpYCDMJj58vG+A=;
+	s=arc-20240116; t=1775672314; c=relaxed/simple;
+	bh=CPfSQ0Ue/yR7aSgKc8x8QeQeT8+Im44CXnFJPZfRzRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxI6JAUqYnZT6fBo1hnTVrs0t4nR5QP8fsAyQYKekajogC8zJfG6DB3Vq8RQ6P3H1OoZ8Eeps0SxPGuhB72F4604HKc+QjWa5tbEasq59nkNGN16RRz6JXzNVYhySvoIySpHQkTEm+U5GiXpGWbxrJCxG7l9VzWC3+RGY4NuOMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9tvDFKt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YWqGGIGGqSxOqdo+y2dvjKO4KkyUQNpZ+AzJUw39cc8vDLADObP6qlODv+58b/Qug182akLDF8HcweGcvxC40qmnVjn03hZDh3MvTMKYVLQ1uLvroM3Z6lDaOlUWbXei7bLwLgb3d7FTt2s4ivVpfQn9uxJAUjnHBqqATzWnKp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDtuKCiT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9tvDFKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33D0C19421;
-	Wed,  8 Apr 2026 18:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDtuKCiT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BB6C19421;
+	Wed,  8 Apr 2026 18:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672312;
-	bh=2MZKU+qqG1GGcY/wAzS7BfAQR3d1wlpYCDMJj58vG+A=;
+	s=korg; t=1775672314;
+	bh=CPfSQ0Ue/yR7aSgKc8x8QeQeT8+Im44CXnFJPZfRzRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9tvDFKt1hPIj7YFbyD8Uh6EeLG/43y7HGD72IAKK57HWrvR/PLWP8aLBGzUHIp16
-	 CyrXOZBe8vfULzEIm+X4ThksVH4PMEnSxts4orqnDNUbeMOzDBRgsNMI4mcAj5fx4Y
-	 sibu5m0atUabJrL7sKlV39t2RoWy8IVWL7DAXVns=
+	b=KDtuKCiTgBpU2YfTM/YfRFuHOfpg15rMLXTdtE8G2bSvULKSL5IQKmtnxDEYbpC0E
+	 lthbfnS2JL8B+TWIWngDPOOedHfduXqgOjzQ7APKkb31cTBW6mngGj34JF+cEqHDtH
+	 UFgZGHRxZ60cqmwuedB0WBh9b8ExKr1XX31drX9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Popov <alex.popov@linux.com>,
-	Breno Leitao <leitao@debian.org>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 272/312] wifi: virt_wifi: remove SET_NETDEV_DEV to avoid use-after-free
-Date: Wed,  8 Apr 2026 20:03:09 +0200
-Message-ID: <20260408175943.906211663@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jan Kara <jack@suse.cz>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 273/312] ext4: fix use-after-free in update_super_work when racing with umount
+Date: Wed,  8 Apr 2026 20:03:10 +0200
+Message-ID: <20260408175943.943218984@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -51,101 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Popov <alex.popov@linux.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-commit 789b06f9f39cdc7e895bdab2c034e39c41c8f8d6 upstream.
+[ Upstream commit d15e4b0a418537aafa56b2cb80d44add83e83697 ]
 
-Currently we execute `SET_NETDEV_DEV(dev, &priv->lowerdev->dev)` for
-the virt_wifi net devices. However, unregistering a virt_wifi device in
-netdev_run_todo() can happen together with the device referenced by
-SET_NETDEV_DEV().
+Commit b98535d09179 ("ext4: fix bug_on in start_this_handle during umount
+filesystem") moved ext4_unregister_sysfs() before flushing s_sb_upd_work
+to prevent new error work from being queued via /proc/fs/ext4/xx/mb_groups
+reads during unmount. However, this introduced a use-after-free because
+update_super_work calls ext4_notify_error_sysfs() -> sysfs_notify() which
+accesses the kobject's kernfs_node after it has been freed by kobject_del()
+in ext4_unregister_sysfs():
 
-It can result in use-after-free during the ethtool operations performed
-on a virt_wifi device that is currently being unregistered. Such a net
-device can have the `dev.parent` field pointing to the freed memory,
-but ethnl_ops_begin() calls `pm_runtime_get_sync(dev->dev.parent)`.
+  update_super_work                ext4_put_super
+  -----------------                --------------
+                                   ext4_unregister_sysfs(sb)
+                                     kobject_del(&sbi->s_kobj)
+                                       __kobject_del()
+                                         sysfs_remove_dir()
+                                           kobj->sd = NULL
+                                         sysfs_put(sd)
+                                           kernfs_put()  // RCU free
+  ext4_notify_error_sysfs(sbi)
+    sysfs_notify(&sbi->s_kobj)
+      kn = kobj->sd              // stale pointer
+      kernfs_get(kn)             // UAF on freed kernfs_node
+                                   ext4_journal_destroy()
+                                     flush_work(&sbi->s_sb_upd_work)
 
-Let's remove SET_NETDEV_DEV for virt_wifi to avoid bugs like this:
+Instead of reordering the teardown sequence, fix this by making
+ext4_notify_error_sysfs() detect that sysfs has already been torn down
+by checking s_kobj.state_in_sysfs, and skipping the sysfs_notify() call
+in that case. A dedicated mutex (s_error_notify_mutex) serializes
+ext4_notify_error_sysfs() against kobject_del() in ext4_unregister_sysfs()
+to prevent TOCTOU races where the kobject could be deleted between the
+state_in_sysfs check and the sysfs_notify() call.
 
- ==================================================================
- BUG: KASAN: slab-use-after-free in __pm_runtime_resume+0xe2/0xf0
- Read of size 2 at addr ffff88810cfc46f8 by task pm/606
-
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x4d/0x70
-  print_report+0x170/0x4f3
-  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-  kasan_report+0xda/0x110
-  ? __pm_runtime_resume+0xe2/0xf0
-  ? __pm_runtime_resume+0xe2/0xf0
-  __pm_runtime_resume+0xe2/0xf0
-  ethnl_ops_begin+0x49/0x270
-  ethnl_set_features+0x23c/0xab0
-  ? __pfx_ethnl_set_features+0x10/0x10
-  ? kvm_sched_clock_read+0x11/0x20
-  ? local_clock_noinstr+0xf/0xf0
-  ? local_clock+0x10/0x30
-  ? kasan_save_track+0x25/0x60
-  ? __kasan_kmalloc+0x7f/0x90
-  ? genl_family_rcv_msg_attrs_parse.isra.0+0x150/0x2c0
-  genl_family_rcv_msg_doit+0x1e7/0x2c0
-  ? __pfx_genl_family_rcv_msg_doit+0x10/0x10
-  ? __pfx_cred_has_capability.isra.0+0x10/0x10
-  ? stack_trace_save+0x8e/0xc0
-  genl_rcv_msg+0x411/0x660
-  ? __pfx_genl_rcv_msg+0x10/0x10
-  ? __pfx_ethnl_set_features+0x10/0x10
-  netlink_rcv_skb+0x121/0x380
-  ? __pfx_genl_rcv_msg+0x10/0x10
-  ? __pfx_netlink_rcv_skb+0x10/0x10
-  ? __pfx_down_read+0x10/0x10
-  genl_rcv+0x23/0x30
-  netlink_unicast+0x60f/0x830
-  ? __pfx_netlink_unicast+0x10/0x10
-  ? __pfx___alloc_skb+0x10/0x10
-  netlink_sendmsg+0x6ea/0xbc0
-  ? __pfx_netlink_sendmsg+0x10/0x10
-  ? __futex_queue+0x10b/0x1f0
-  ____sys_sendmsg+0x7a2/0x950
-  ? copy_msghdr_from_user+0x26b/0x430
-  ? __pfx_____sys_sendmsg+0x10/0x10
-  ? __pfx_copy_msghdr_from_user+0x10/0x10
-  ___sys_sendmsg+0xf8/0x180
-  ? __pfx____sys_sendmsg+0x10/0x10
-  ? __pfx_futex_wait+0x10/0x10
-  ? fdget+0x2e4/0x4a0
-  __sys_sendmsg+0x11f/0x1c0
-  ? __pfx___sys_sendmsg+0x10/0x10
-  do_syscall_64+0xe2/0x570
-  ? exc_page_fault+0x66/0xb0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  </TASK>
-
-This fix may be combined with another one in the ethtool subsystem:
-https://lore.kernel.org/all/20260322075917.254874-1-alex.popov@linux.com/T/#u
-
-Fixes: d43c65b05b848e0b ("ethtool: runtime-resume netdev parent in ethnl_ops_begin")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Popov <alex.popov@linux.com>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260324224607.374327-1-alex.popov@linux.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: b98535d09179 ("ext4: fix bug_on in start_this_handle during umount filesystem")
+Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260319120336.157873-1-jiayuan.chen@linux.dev
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ adapted mutex_init placement ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/virt_wifi.c |    1 -
- 1 file changed, 1 deletion(-)
+ fs/ext4/ext4.h  |    1 +
+ fs/ext4/super.c |    1 +
+ fs/ext4/sysfs.c |   10 +++++++++-
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/virt_wifi.c
-+++ b/drivers/net/wireless/virt_wifi.c
-@@ -553,7 +553,6 @@ static int virt_wifi_newlink(struct net
- 	eth_hw_addr_inherit(dev, priv->lowerdev);
- 	netif_stacked_transfer_operstate(priv->lowerdev, dev);
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -1557,6 +1557,7 @@ struct ext4_sb_info {
+ 	struct proc_dir_entry *s_proc;
+ 	struct kobject s_kobj;
+ 	struct completion s_kobj_unregister;
++	struct mutex s_error_notify_mutex; /* protects sysfs_notify vs kobject_del */
+ 	struct super_block *s_sb;
+ 	struct buffer_head *s_mmp_bh;
  
--	SET_NETDEV_DEV(dev, &priv->lowerdev->dev);
- 	dev->ieee80211_ptr = kzalloc(sizeof(*dev->ieee80211_ptr), GFP_KERNEL);
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5263,6 +5263,7 @@ static int __ext4_fill_super(struct fs_c
  
- 	if (!dev->ieee80211_ptr) {
+ 	timer_setup(&sbi->s_err_report, print_daily_error_info, 0);
+ 	spin_lock_init(&sbi->s_error_lock);
++	mutex_init(&sbi->s_error_notify_mutex);
+ 	INIT_WORK(&sbi->s_error_work, flush_stashed_error_work);
+ 
+ 	/* Register extent status tree shrinker */
+--- a/fs/ext4/sysfs.c
++++ b/fs/ext4/sysfs.c
+@@ -515,7 +515,10 @@ static struct kobj_type ext4_feat_ktype
+ 
+ void ext4_notify_error_sysfs(struct ext4_sb_info *sbi)
+ {
+-	sysfs_notify(&sbi->s_kobj, NULL, "errors_count");
++	mutex_lock(&sbi->s_error_notify_mutex);
++	if (sbi->s_kobj.state_in_sysfs)
++		sysfs_notify(&sbi->s_kobj, NULL, "errors_count");
++	mutex_unlock(&sbi->s_error_notify_mutex);
+ }
+ 
+ static struct kobject *ext4_root;
+@@ -528,8 +531,10 @@ int ext4_register_sysfs(struct super_blo
+ 	int err;
+ 
+ 	init_completion(&sbi->s_kobj_unregister);
++	mutex_lock(&sbi->s_error_notify_mutex);
+ 	err = kobject_init_and_add(&sbi->s_kobj, &ext4_sb_ktype, ext4_root,
+ 				   "%s", sb->s_id);
++	mutex_unlock(&sbi->s_error_notify_mutex);
+ 	if (err) {
+ 		kobject_put(&sbi->s_kobj);
+ 		wait_for_completion(&sbi->s_kobj_unregister);
+@@ -562,7 +567,10 @@ void ext4_unregister_sysfs(struct super_
+ 
+ 	if (sbi->s_proc)
+ 		remove_proc_subtree(sb->s_id, ext4_proc_root);
++
++	mutex_lock(&sbi->s_error_notify_mutex);
+ 	kobject_del(&sbi->s_kobj);
++	mutex_unlock(&sbi->s_error_notify_mutex);
+ }
+ 
+ int __init ext4_init_sysfs(void)
 
 
