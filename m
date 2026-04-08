@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CBB331A44;
-	Wed,  8 Apr 2026 18:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E3E2BEFFF;
+	Wed,  8 Apr 2026 18:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673842; cv=none; b=IdGZcko1L26laTy/gnqywzwdCJxKfsKWcMBQ8kdiex8Riv2GTwQG1tjQoMPeYd/5cT/iEY1JFqqOg0AF68ZE2X0iFJyfHrHvM1nYYjCJ68IAUXeQH+rV1Pp05uI1K2IcRJt2++UBAKj5G8ngJUYx6in3mv1WpK0HuAgUl78Hqis=
+	t=1775673845; cv=none; b=DKvHeRd6XtrolhIPadjnYu8RVWsZPMFhZ+I4E2bPEMZ+M3Zrf5e4bPIyAng6MMMen2dy9JhLzINjF16Jk1jmb3Avh82rwzQTH7kdUAujCGHt9xfQJeMPa+yMeBnuKZUAPKwmlpC9Dyxs9hyVAYyhgWGe3C1hZVu3wCqNn0yKUro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673842; c=relaxed/simple;
-	bh=0cFRT2My8LI64VjZaVY9cR6L7ANszmCpFsouDcz6BhE=;
+	s=arc-20240116; t=1775673845; c=relaxed/simple;
+	bh=BcW8o95v93zZOIkFUXiQwevzTsfErh8FRIwkgIQOu/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDUoVfUj9x1TK7rPGWNr+Vetel+VAE3VTy1CgDI9nbKJvlGI2HgcAaQZ8WCmlBUm0ysGz8vdRg+eoWOEtgmGECP17NPBVWR2T3d2bTtaIew0WT4Y738oilRtnc7N+I9m8OhWMyXeWDLmUs2Pz1T3Qsp3d6KAvjsSyAz+ZwNAsQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0eJPizCI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dceq3dr8+rxQnZnIhi0Nd4pdLDQTmuxwAoSmDMIKD5FVidLJcm77+YwNg5OWJY9iUJqFrKHmG8M8bWejKogsbMyrwSIEQ1nQhB2X5TYecp8zjC/yiQeulR1l4lFlk8Cz2RauE4BPIiQuJgoPwyb/eztGZil2A0cb1e8tEnDhscQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNJBTDMr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eJPizCI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEB5C19421;
-	Wed,  8 Apr 2026 18:44:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNJBTDMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB524C19421;
+	Wed,  8 Apr 2026 18:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673842;
-	bh=0cFRT2My8LI64VjZaVY9cR6L7ANszmCpFsouDcz6BhE=;
+	s=korg; t=1775673845;
+	bh=BcW8o95v93zZOIkFUXiQwevzTsfErh8FRIwkgIQOu/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0eJPizCI6MXwB+WIYbT+JN/ub9tgrTFFuHrNNHmBFHHx2RLIpdT0HvQfYTiFEMCDx
-	 8iQIznHduRLM71aNGsgqGdzcqN1mQFw1G+5L5VEbdC866H+nuPLptHWCLLiS5WaSUj
-	 SLrj5JtjJzSjkWqe87xUgRqoEhUkls8jGdhNxeww=
+	b=PNJBTDMrKJZU5aQXo0Ds8Xit9PUUcflphAaLBg7gbQLPMofRYqJfIu+Vt531xFqGK
+	 8eK2xR8EpVrzeuHW3NMMc6xWlXnRQyEKnxnbr/xp0X1pvh+jH8wL1Uxzt5f3VPhNI4
+	 FT99dLYWhJxIT13HhYzB2jRBUwZwWX67iiY4g2vU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
+	Yiming Qian <yimingqian591@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/242] netfilter: x_tables: restrict xt_check_match/xt_check_target extensions for NFPROTO_ARP
-Date: Wed,  8 Apr 2026 20:01:58 +0200
-Message-ID: <20260408175930.003336966@linuxfoundation.org>
+Subject: [PATCH 6.12 069/242] netfilter: nfnetlink_log: account for netlink header size
+Date: Wed,  8 Apr 2026 20:01:49 +0200
+Message-ID: <20260408175929.666639350@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,98 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3d5d488f11776738deab9da336038add95d342d1 ]
+[ Upstream commit 6d52a4a0520a6696bdde51caa11f2d6821cd0c01 ]
 
-Weiming Shi says:
+This is a followup to an old bug fix: NLMSG_DONE needs to account
+for the netlink header size, not just the attribute size.
 
-xt_match and xt_target structs registered with NFPROTO_UNSPEC can be
-loaded by any protocol family through nft_compat. When such a
-match/target sets .hooks to restrict which hooks it may run on, the
-bitmask uses NF_INET_* constants. This is only correct for families
-whose hook layout matches NF_INET_*: IPv4, IPv6, INET, and bridge
-all share the same five hooks (PRE_ROUTING ... POST_ROUTING).
+This can result in a WARN splat + drop of the netlink message,
+but other than this there are no ill effects.
 
-ARP only has three hooks (IN=0, OUT=1, FORWARD=2) with different
-semantics. Because NF_ARP_OUT == 1 == NF_INET_LOCAL_IN, the .hooks
-validation silently passes for the wrong reasons, allowing matches to
-run on ARP chains where the hook assumptions (e.g. state->in being
-set on input hooks) do not hold. This leads to NULL pointer
-dereferences; xt_devgroup is one concrete example:
-
- Oops: general protection fault, probably for non-canonical address 0xdffffc0000000044: 0000 [#1] SMP KASAN NOPTI
- KASAN: null-ptr-deref in range [0x0000000000000220-0x0000000000000227]
- RIP: 0010:devgroup_mt+0xff/0x350
- Call Trace:
-  <TASK>
-  nft_match_eval (net/netfilter/nft_compat.c:407)
-  nft_do_chain (net/netfilter/nf_tables_core.c:285)
-  nft_do_chain_arp (net/netfilter/nft_chain_filter.c:61)
-  nf_hook_slow (net/netfilter/core.c:623)
-  arp_xmit (net/ipv4/arp.c:666)
-  </TASK>
- Kernel panic - not syncing: Fatal exception in interrupt
-
-Fix it by restricting arptables to NFPROTO_ARP extensions only.
-Note that arptables-legacy only supports:
-
-- arpt_CLASSIFY
-- arpt_mangle
-- arpt_MARK
-
-that provide explicit NFPROTO_ARP match/target declarations.
-
-Fixes: 9291747f118d ("netfilter: xtables: add device group match")
-Reported-by: Xiang Mei <xmei5@asu.edu>
+Fixes: 9dfa1dfe4d5e ("netfilter: nf_log: account for size of NLMSG_DONE attribute")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/x_tables.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ net/netfilter/nfnetlink_log.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
-index ada27e24f7021..efe7b7d71e7f7 100644
---- a/net/netfilter/x_tables.c
-+++ b/net/netfilter/x_tables.c
-@@ -501,6 +501,17 @@ int xt_check_match(struct xt_mtchk_param *par,
- 				    par->match->table, par->table);
- 		return -EINVAL;
- 	}
-+
-+	/* NFPROTO_UNSPEC implies NF_INET_* hooks which do not overlap with
-+	 * NF_ARP_IN,OUT,FORWARD, allow explicit extensions with NFPROTO_ARP
-+	 * support.
-+	 */
-+	if (par->family == NFPROTO_ARP &&
-+	    par->match->family != NFPROTO_ARP) {
-+		pr_info_ratelimited("%s_tables: %s match: not valid for this family\n",
-+				    xt_prefix[par->family], par->match->name);
-+		return -EINVAL;
-+	}
- 	if (par->match->hooks && (par->hook_mask & ~par->match->hooks) != 0) {
- 		char used[64], allow[64];
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index aa5fc9bffef0c..f96421ad14afb 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -726,7 +726,7 @@ nfulnl_log_packet(struct net *net,
+ 		+ nla_total_size(plen)			/* prefix */
+ 		+ nla_total_size(sizeof(struct nfulnl_msg_packet_hw))
+ 		+ nla_total_size(sizeof(struct nfulnl_msg_packet_timestamp))
+-		+ nla_total_size(sizeof(struct nfgenmsg));	/* NLMSG_DONE */
++		+ nlmsg_total_size(sizeof(struct nfgenmsg));	/* NLMSG_DONE */
  
-@@ -1016,6 +1027,18 @@ int xt_check_target(struct xt_tgchk_param *par,
- 				    par->target->table, par->table);
- 		return -EINVAL;
- 	}
-+
-+	/* NFPROTO_UNSPEC implies NF_INET_* hooks which do not overlap with
-+	 * NF_ARP_IN,OUT,FORWARD, allow explicit extensions with NFPROTO_ARP
-+	 * support.
-+	 */
-+	if (par->family == NFPROTO_ARP &&
-+	    par->target->family != NFPROTO_ARP) {
-+		pr_info_ratelimited("%s_tables: %s target: not valid for this family\n",
-+				    xt_prefix[par->family], par->target->name);
-+		return -EINVAL;
-+	}
-+
- 	if (par->target->hooks && (par->hook_mask & ~par->target->hooks) != 0) {
- 		char used[64], allow[64];
- 
+ 	if (in && skb_mac_header_was_set(skb)) {
+ 		size += nla_total_size(skb->dev->hard_header_len)
 -- 
 2.53.0
 
