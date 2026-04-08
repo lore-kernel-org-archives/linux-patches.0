@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B62D3D9031;
-	Wed,  8 Apr 2026 18:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C6F3D4134;
+	Wed,  8 Apr 2026 18:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673777; cv=none; b=f8LZpKAK+INxwRDbd4yVsanJI09P88UwCCcfEIoZZB8wFn4CeoXbyjziMn1ZT+ZK4QnYyBoepWnv5gTcKQlwcDeTtDxn/cjPjm3ieQrvwSker3NpfB2evwuC3TWRN/dzadDfLM4iqpfLiPE9pkoAL0YAOmcLA7NWIQF5dJ0sFQg=
+	t=1775673779; cv=none; b=pQT8ZE/dQsAM7EJIyR9fAabDMQdGNNWQIK0xBNOpLiiGkrUpNZnwhDSw3JnVk7oRerCwnzYDuPpbE3QwE6h59OsoTmZOXLAZhnpIzjmrXikns4ZZe9NWNagV83OAuAL+Gv7EtauP1kuAgjqfHbqj1WTXFYkmmsIfOGJQEnqROb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673777; c=relaxed/simple;
-	bh=1K13T5X3Pp9jG9SKzuhWT4aC/+PchX2Ainbb5NTaihM=;
+	s=arc-20240116; t=1775673779; c=relaxed/simple;
+	bh=jp7TgvDWYxIB8I+BxH1vDJFFjieO9HX2Ht7VZ9y0JaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRlN7+Cyw3o1IZ/RNN/nJUk/yE+6qMdsOIQY5lq5p8QvueMk1QczZm9OueA496YLRpHjAHGCNtm9c8H/jEcEJnNQvjh9tfujIcHzAQHmS9AFMtiZDsM8ufKIO6BSnJ2dY9bH0qyWUueqZ18hYq00TkFn2ALaS3sA+22eNXx69MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r26LlldJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EoYkXd5rw4g7am1yARYoOzbY1Xg9dGVqN1mLzc5T+5JMGdRvwjwwUsk/c8YXg7bpUsIgwXa672+up9+xWQCTkT/YUyyGohIY98MaH0vkv8wcbmv/HIcX7fT7Zfy+fUiaVtl2gz6aHWdxnOSEn7ZSR9pt6egnQ3UzhjNxVLL3Gf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeRu4Boo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r26LlldJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5ECAC19421;
-	Wed,  8 Apr 2026 18:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeRu4Boo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A92C19421;
+	Wed,  8 Apr 2026 18:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673777;
-	bh=1K13T5X3Pp9jG9SKzuhWT4aC/+PchX2Ainbb5NTaihM=;
+	s=korg; t=1775673779;
+	bh=jp7TgvDWYxIB8I+BxH1vDJFFjieO9HX2Ht7VZ9y0JaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r26LlldJKxfugLmmkwVOXmmWaia/8z6VCKwOrHcsX98+X4qwv9J7huKZKVEsUs5jw
-	 EECWlaX5SAX50qwAHfv4WxRqnREeUhH2vj6TodChZ/mZMDnBPLvlNlbd/GhBjshjj7
-	 o6S/JCE39Pn0n976xBPHCgcSdqvCVQGXr3MDv03o=
+	b=EeRu4Bootov6hvjy/pVz3Rr6Gy4VKeGorxk0PkpZ6zObD237x4WHXAOIOIJJDFEb7
+	 9W2W/CeTzH5Kk4Ubg8HyJYeoLSiI5zUqPRbX8sC+wAG+RoPYkSGLiKxxI/mAaTsT+t
+	 zLEW+9nvoYTg1fE0NLUTX8lnmNe7xRWQitvtiRpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+2184232f07e3677fbaef@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 086/242] rds: ib: reject FRMR registration before IB connection is established
-Date: Wed,  8 Apr 2026 20:02:06 +0200
-Message-ID: <20260408175930.303304278@linuxfoundation.org>
+Subject: [PATCH 6.12 087/242] bpf: sockmap: Fix use-after-free of sk->sk_socket in sk_psock_verdict_data_ready().
+Date: Wed,  8 Apr 2026 20:02:07 +0200
+Message-ID: <20260408175930.340293431@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,74 +53,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit a54ecccfae62c5c85259ae5ea5d9c20009519049 ]
+[ Upstream commit ad8391d37f334ee73ba91926f8b4e4cf6d31ea04 ]
 
-rds_ib_get_mr() extracts the rds_ib_connection from conn->c_transport_data
-and passes it to rds_ib_reg_frmr() for FRWR memory registration. On a
-fresh outgoing connection, ic is allocated in rds_ib_conn_alloc() with
-i_cm_id = NULL because the connection worker has not yet called
-rds_ib_conn_path_connect() to create the rdma_cm_id. When sendmsg() with
-RDS_CMSG_RDMA_MAP is called on such a connection, the sendmsg path parses
-the control message before any connection establishment, allowing
-rds_ib_post_reg_frmr() to dereference ic->i_cm_id->qp and crash the
-kernel.
+syzbot reported use-after-free of AF_UNIX socket's sk->sk_socket
+in sk_psock_verdict_data_ready(). [0]
 
-The existing guard in rds_ib_reg_frmr() only checks for !ic (added in
-commit 9e630bcb7701), which does not catch this case since ic is allocated
-early and is always non-NULL once the connection object exists.
+In unix_stream_sendmsg(), the peer socket's ->sk_data_ready() is
+called after dropping its unix_state_lock().
 
- KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
- RIP: 0010:rds_ib_post_reg_frmr+0x50e/0x920
- Call Trace:
-  rds_ib_post_reg_frmr (net/rds/ib_frmr.c:167)
-  rds_ib_map_frmr (net/rds/ib_frmr.c:252)
-  rds_ib_reg_frmr (net/rds/ib_frmr.c:430)
-  rds_ib_get_mr (net/rds/ib_rdma.c:615)
-  __rds_rdma_map (net/rds/rdma.c:295)
-  rds_cmsg_rdma_map (net/rds/rdma.c:860)
-  rds_sendmsg (net/rds/send.c:1363)
-  ____sys_sendmsg
-  do_syscall_64
+Although the sender socket holds the peer's refcount, it does not
+prevent the peer's sock_orphan(), and the peer's sk_socket might
+be freed after one RCU grace period.
 
-Add a check in rds_ib_get_mr() that verifies ic, i_cm_id, and qp are all
-non-NULL before proceeding with FRMR registration, mirroring the guard
-already present in rds_ib_post_inv(). Return -ENODEV when the connection
-is not ready, which the existing error handling in rds_cmsg_send() converts
-to -EAGAIN for userspace retry and triggers rds_conn_connect_if_down() to
-start the connection worker.
+Let's fetch the peer's sk->sk_socket and sk->sk_socket->ops under
+RCU in sk_psock_verdict_data_ready().
 
-Fixes: 1659185fb4d0 ("RDS: IB: Support Fastreg MR (FRMR) memory registration mode")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260330163237.2752440-2-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[0]:
+BUG: KASAN: slab-use-after-free in sk_psock_verdict_data_ready+0xec/0x590 net/core/skmsg.c:1278
+Read of size 8 at addr ffff8880594da860 by task syz.4.1842/11013
+
+CPU: 1 UID: 0 PID: 11013 Comm: syz.4.1842 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2026
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xba/0x230 mm/kasan/report.c:482
+ kasan_report+0x117/0x150 mm/kasan/report.c:595
+ sk_psock_verdict_data_ready+0xec/0x590 net/core/skmsg.c:1278
+ unix_stream_sendmsg+0x8a3/0xe80 net/unix/af_unix.c:2482
+ sock_sendmsg_nosec net/socket.c:721 [inline]
+ __sock_sendmsg net/socket.c:736 [inline]
+ ____sys_sendmsg+0x972/0x9f0 net/socket.c:2585
+ ___sys_sendmsg+0x2a5/0x360 net/socket.c:2639
+ __sys_sendmsg net/socket.c:2671 [inline]
+ __do_sys_sendmsg net/socket.c:2676 [inline]
+ __se_sys_sendmsg net/socket.c:2674 [inline]
+ __x64_sys_sendmsg+0x1bd/0x2a0 net/socket.c:2674
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7facf899c819
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007facf9827028 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007facf8c15fa0 RCX: 00007facf899c819
+RDX: 0000000000000000 RSI: 0000200000000500 RDI: 0000000000000004
+RBP: 00007facf8a32c91 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007facf8c16038 R14: 00007facf8c15fa0 R15: 00007ffd41b01c78
+ </TASK>
+
+Allocated by task 11013:
+ kasan_save_stack mm/kasan/common.c:57 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+ unpoison_slab_object mm/kasan/common.c:340 [inline]
+ __kasan_slab_alloc+0x6c/0x80 mm/kasan/common.c:366
+ kasan_slab_alloc include/linux/kasan.h:253 [inline]
+ slab_post_alloc_hook mm/slub.c:4538 [inline]
+ slab_alloc_node mm/slub.c:4866 [inline]
+ kmem_cache_alloc_lru_noprof+0x2b8/0x640 mm/slub.c:4885
+ sock_alloc_inode+0x28/0xc0 net/socket.c:316
+ alloc_inode+0x6a/0x1b0 fs/inode.c:347
+ new_inode_pseudo include/linux/fs.h:3003 [inline]
+ sock_alloc net/socket.c:631 [inline]
+ __sock_create+0x12d/0x9d0 net/socket.c:1562
+ sock_create net/socket.c:1656 [inline]
+ __sys_socketpair+0x1c4/0x560 net/socket.c:1803
+ __do_sys_socketpair net/socket.c:1856 [inline]
+ __se_sys_socketpair net/socket.c:1853 [inline]
+ __x64_sys_socketpair+0x9b/0xb0 net/socket.c:1853
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 15:
+ kasan_save_stack mm/kasan/common.c:57 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+ kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
+ poison_slab_object mm/kasan/common.c:253 [inline]
+ __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:285
+ kasan_slab_free include/linux/kasan.h:235 [inline]
+ slab_free_hook mm/slub.c:2685 [inline]
+ slab_free mm/slub.c:6165 [inline]
+ kmem_cache_free+0x187/0x630 mm/slub.c:6295
+ rcu_do_batch kernel/rcu/tree.c:2617 [inline]
+ rcu_core+0x7cd/0x1070 kernel/rcu/tree.c:2869
+ handle_softirqs+0x22a/0x870 kernel/softirq.c:622
+ run_ksoftirqd+0x36/0x60 kernel/softirq.c:1063
+ smpboot_thread_fn+0x541/0xa50 kernel/smpboot.c:160
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+
+Fixes: c63829182c37 ("af_unix: Implement ->psock_update_sk_prot()")
+Closes: https://lore.kernel.org/bpf/69cc6b9f.a70a0220.128fd0.004b.GAE@google.com/
+Reported-by: syzbot+2184232f07e3677fbaef@syzkaller.appspotmail.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260401005418.2452999-1-kuniyu@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_rdma.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/core/skmsg.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/rds/ib_rdma.c b/net/rds/ib_rdma.c
-index 8f070ee7e7426..30fca2169aa7a 100644
---- a/net/rds/ib_rdma.c
-+++ b/net/rds/ib_rdma.c
-@@ -608,8 +608,13 @@ void *rds_ib_get_mr(struct scatterlist *sg, unsigned long nents,
- 		return ibmr;
- 	}
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 6ece4eaecd489..2e89087b95c24 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -1266,17 +1266,20 @@ static int sk_psock_verdict_recv(struct sock *sk, struct sk_buff *skb)
  
--	if (conn)
-+	if (conn) {
- 		ic = conn->c_transport_data;
-+		if (!ic || !ic->i_cm_id || !ic->i_cm_id->qp) {
-+			ret = -ENODEV;
-+			goto out;
-+		}
-+	}
+ static void sk_psock_verdict_data_ready(struct sock *sk)
+ {
+-	struct socket *sock = sk->sk_socket;
+-	const struct proto_ops *ops;
++	const struct proto_ops *ops = NULL;
++	struct socket *sock;
+ 	int copied;
  
- 	if (!rds_ibdev->mr_8k_pool || !rds_ibdev->mr_1m_pool) {
- 		ret = -ENODEV;
+ 	trace_sk_data_ready(sk);
+ 
+-	if (unlikely(!sock))
+-		return;
+-	ops = READ_ONCE(sock->ops);
++	rcu_read_lock();
++	sock = READ_ONCE(sk->sk_socket);
++	if (likely(sock))
++		ops = READ_ONCE(sock->ops);
++	rcu_read_unlock();
+ 	if (!ops || !ops->read_skb)
+ 		return;
++
+ 	copied = ops->read_skb(sk, sk_psock_verdict_recv);
+ 	if (copied >= 0) {
+ 		struct sk_psock *psock;
 -- 
 2.53.0
 
