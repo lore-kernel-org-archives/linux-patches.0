@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5B12641FC;
-	Wed,  8 Apr 2026 18:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AD033121F;
+	Wed,  8 Apr 2026 18:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673927; cv=none; b=Bx+g8RZyi+dUaAfaWg6MAa6Ka2HkakiAgWRceJSk/rrgnwuLOovZL4gtsKtvu4RpTLQavFUdh4Eof/mSRDjFZ+X+Nld8FbkSqg5osHRqjcUpQmwBHLTnECx5voSTQPjJVWCN7XObIM9r4DEjdIuWliQMTpx+0bCRG29I3FXnWP4=
+	t=1775673930; cv=none; b=bPtddJrhs4Pd45XzTabMQXgXqSX/UOI+RoNAfJRbUHsN9t2HgbuCZLoJ0xiMGi++LxxWC2iuMAeaSEhwXzzUzg9hHJGqq/LX0StEdeLOukoIlwP3k7wgpFXhfsd/E5Ux8sttTIknZ8rXZKB0kZztuNNMRVwyybqBuCP992OrA/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673927; c=relaxed/simple;
-	bh=QLRSuXijIoHL1h6X8c80ZnzOH5rkG0WqLkY5Oh959Ic=;
+	s=arc-20240116; t=1775673930; c=relaxed/simple;
+	bh=pKgmOuFKGeuCyjwAevWhhPfP+8GN38cFWTMViNjA+zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sla9/bC8rabZ158t+2WbSR+deT/CsO4u8oRUhlRBkatbJiODMy6rxilIiXe2ymLqMigQrK6nHIWF9dt5w0OjQTDrFXQaByfoqmdmYD0tsNXd4SaVPbQIWZlhyPQBsegtrVXLS0EW3Yf5cOa/q/gzLle7eGMRCM6Upb2MUadclYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3ANwFTX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jr3GEdsxp4/cDcuiMJuiBakYkHHF5+QfK5/NYrM5zqKxuUmmmfrJ+y/jvj/XVKrfrShZY0GnY0sPNMqBjMa+aetw2DZ1YFuKBi9VZ15zducO4uGlhouzyUM70cqp5bu2O12nN/fdoxSoCnMy1HvrNWWT45qZo+whW3b34S3oM2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vf4jk6qH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3ANwFTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A186CC19421;
-	Wed,  8 Apr 2026 18:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vf4jk6qH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DCAC19421;
+	Wed,  8 Apr 2026 18:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673927;
-	bh=QLRSuXijIoHL1h6X8c80ZnzOH5rkG0WqLkY5Oh959Ic=;
+	s=korg; t=1775673929;
+	bh=pKgmOuFKGeuCyjwAevWhhPfP+8GN38cFWTMViNjA+zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3ANwFTX+O61+l89kfNCdN52t4ukoog0CBrbCv5xNRyzggm+oe4imPjfQC6DLgtTq
-	 HJj6cbNBu0qQlTCg01NVBL3co6cyaDcd/kPOGPc+VCyxZtlqnlzKyPCsSJm6nXxUT3
-	 NRVzAuP3n9CJwHMql0Kt313GCpgxZMcZH9iJI3uA=
+	b=Vf4jk6qHHpeDCdEij1KeE/lR8e58RI/RONJU0j9SoRn9EcWgTgbXhIfHCm3Hz6vX6
+	 +CtO/JgBWq8nTgCk8psYC9O4IGRTFH48E/rdYeK3IQWChT27oCiwe0BnlK/VpRvoM4
+	 5mZNyDtlv+INGnmR7fOu0p9JglTojxNBcLBqmlnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Dhaval Giani (AMD)" <dhaval@gianis.ca>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/242] mips: ralink: update CPU clock index
-Date: Wed,  8 Apr 2026 20:02:30 +0200
-Message-ID: <20260408175931.205121293@linuxfoundation.org>
+Subject: [PATCH 6.12 111/242] sched/fair: Use protect_slice() instead of direct comparison
+Date: Wed,  8 Apr 2026 20:02:31 +0200
+Message-ID: <20260408175931.241700518@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,47 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiji Yang <yangshiji66@outlook.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 43985a62bab9d35e5e9af41118ce2f44c01b97d2 ]
+[ Upstream commit 9cdb4fe20cd239c848b5c3f5753d83a9443ba329 ]
 
-Update CPU clock index to match the clock driver changes.
+Replace the test by the relevant protect_slice() function.
 
-Fixes: d34db686a3d7 ("clk: ralink: mtmips: fix clocks probe order in oldest ralink SoCs")
-Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
-Reviewed-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dhaval Giani (AMD) <dhaval@gianis.ca>
+Link: https://lkml.kernel.org/r/20250708165630.1948751-2-vincent.guittot@linaro.org
+Stable-dep-of: 1319ea57529e ("sched/fair: Fix zero_vruntime tracking fix")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/ralink/clk.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/sched/fair.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/ralink/clk.c b/arch/mips/ralink/clk.c
-index 9db73fcac522e..5c1eb46ef5d07 100644
---- a/arch/mips/ralink/clk.c
-+++ b/arch/mips/ralink/clk.c
-@@ -21,16 +21,16 @@ static const char *clk_cpu(int *idx)
- {
- 	switch (ralink_soc) {
- 	case RT2880_SOC:
--		*idx = 0;
-+		*idx = 1;
- 		return "ralink,rt2880-sysc";
- 	case RT3883_SOC:
--		*idx = 0;
-+		*idx = 1;
- 		return "ralink,rt3883-sysc";
- 	case RT305X_SOC_RT3050:
--		*idx = 0;
-+		*idx = 1;
- 		return "ralink,rt3050-sysc";
- 	case RT305X_SOC_RT3052:
--		*idx = 0;
-+		*idx = 1;
- 		return "ralink,rt3052-sysc";
- 	case RT305X_SOC_RT3350:
- 		*idx = 1;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index efd3cbefb5a22..fff27f3378cbf 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -1181,7 +1181,7 @@ static inline bool did_preempt_short(struct cfs_rq *cfs_rq, struct sched_entity
+ 	if (!sched_feat(PREEMPT_SHORT))
+ 		return false;
+ 
+-	if (curr->vlag == curr->deadline)
++	if (protect_slice(curr))
+ 		return false;
+ 
+ 	return !entity_eligible(cfs_rq, curr);
 -- 
 2.53.0
 
