@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB1D3A16A0;
-	Wed,  8 Apr 2026 18:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602DD3D411F;
+	Wed,  8 Apr 2026 18:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672781; cv=none; b=C4ftRWYrg7phZJkk1S72pZ0XpEQTjvnRtzlrDtYzT2WlpZ6CiyrdieZGakQ/A6Pv0f3qEmFBldR60GhrZfxzbHOY38Opf3wFDZWswU5YbFM9QJeaITAC/vEui993jCOMpqcJ6XRpw2w+XF3z5WmlA1TpEe8piPuyP3XIZf02a+o=
+	t=1775672783; cv=none; b=a6g3IAEBJIUdzITjcDW8JAGSkMNCcl4SiatId36t4l/T11uGP4lAFJxsOqd8l0t4t5m/SE+qxzVTRLlSrnEOrnweNoehjyGnxVBHco7P5RZy4y9X9xRKvyVS9xGm5Dc50VyY0gkE1AtuP//gIvhtyintK7kaPcDQGe+nqa1vPHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672781; c=relaxed/simple;
-	bh=0nqjqK8tMAwN7J4cPYiU7zijY0uvyLs4LvWJmcPu/5k=;
+	s=arc-20240116; t=1775672783; c=relaxed/simple;
+	bh=QW8eyjumPUWKY6m70eGwzBTuGeZ+iBmBJNQzgDbcYEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSpYUDy7mewYjScWk5aQ+wabf2oYeDAwyjbU1TM9urfBoC2EkrZLuqenITWp+JNScgCjI4SLxFXGII6q8UVYJll+fgEBfIqiJyKF5fu1JCkEWPJAPGm8KBb/UPxC7vgm/iDu5i8uiiq8TKyrXxa/MKkQj07d+G2I1ygu4g1lkbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6B8iXIY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=St7ATvfb34nNMqQZOq07PuazlN87Dad8TirbdouUeXsjwwycxvFzn9fxkXoBeLLeSOskW3oIKACXKNOMnK2ZnIkzZx/JAU4tFyvKu1e7hmkyZZd6FDDkYQNnTyCnTIYJahow71wjbryZOz5/Oqg6AH2P9p5jFgsXCtY5YkS8Jeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7GFvYec; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6B8iXIY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6232BC19421;
-	Wed,  8 Apr 2026 18:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7GFvYec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA40CC19421;
+	Wed,  8 Apr 2026 18:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672780;
-	bh=0nqjqK8tMAwN7J4cPYiU7zijY0uvyLs4LvWJmcPu/5k=;
+	s=korg; t=1775672783;
+	bh=QW8eyjumPUWKY6m70eGwzBTuGeZ+iBmBJNQzgDbcYEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6B8iXIYbqaYBP/W9VWH7+K6JQaPfzehgW0fwJqJhvfiarbMjbN6CR1b09xLL4wp+
-	 ipWv8LCMsgJEVcvIPzXA45P6kCSgbcPilheMlR2ACFm0phfkna5/mL5M1CHGDFc7Ry
-	 nYAHm1znfx/JnlsxNVYpD0X0nAcHxoozRynOsVH8=
+	b=v7GFvYecGEAddG1Pyys/cvUuDrZ1ocPIlQDct9qqL/WMfG3QKzhBp01lQ157YfIrv
+	 QWNhnPJNaISrQoZEWfsMKgQ6bCc+P8Oi6vUGXo+m3nTkDJVeoGkchb+R+9EjP3vrN+
+	 Lldk9FmOZ8FVr/FHHhmZhxlIcDqVRnSBXu86NRY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 097/160] iio: light: vcnl4035: fix scan buffer on big-endian
-Date: Wed,  8 Apr 2026 20:03:04 +0200
-Message-ID: <20260408175916.809523783@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.6 133/160] thunderbolt: Fix property read in nhi_wake_supported()
+Date: Wed,  8 Apr 2026 20:03:40 +0200
+Message-ID: <20260408175918.158231735@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -51,81 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-commit fdc7aa54a5d44c05880a4aad7cfb41aacfd16d7b upstream.
+commit 73a505dc48144ec72e25874e2b2a72487b02d3bc upstream.
 
-Rework vcnl4035_trigger_consumer_handler() so that we are not passing
-what should be a u16 value as an int * to regmap_read(). This won't
-work on bit endian systems.
+device_property_read_foo() returns 0 on success and only then modifies
+'val'. Currently, val is left uninitialized if the aforementioned
+function returns non-zero, making nhi_wake_supported() return true
+almost always (random != 0) if the property is not present in device
+firmware.
 
-Instead, add a new unsigned int variable to pass to regmap_read(). Then
-copy that value into the buffer struct.
+Invert the check to make it make sense.
 
-The buffer array is replaced with a struct since there is only one value
-being read. This allows us to use the correct u16 data type and has a
-side-effect of simplifying the alignment specification.
-
-Also fix the endianness of the scan format from little-endian to CPU
-endianness. Since we are using regmap to read the value, it will be
-CPU-endian.
-
-Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 3cdb9446a117 ("thunderbolt: Add support for Intel Ice Lake")
+Cc: stable@vger.kernel.org
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/vcnl4035.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/thunderbolt/nhi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/light/vcnl4035.c
-+++ b/drivers/iio/light/vcnl4035.c
-@@ -105,17 +105,23 @@ static irqreturn_t vcnl4035_trigger_cons
- 	struct iio_dev *indio_dev = pf->indio_dev;
- 	struct vcnl4035_data *data = iio_priv(indio_dev);
- 	/* Ensure naturally aligned timestamp */
--	u8 buffer[ALIGN(sizeof(u16), sizeof(s64)) + sizeof(s64)]  __aligned(8) = { };
-+	struct {
-+		u16 als_data;
-+		aligned_s64 timestamp;
-+	} buffer = { };
-+	unsigned int val;
- 	int ret;
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -1010,7 +1010,7 @@ static bool nhi_wake_supported(struct pc
+ 	 * If power rails are sustainable for wakeup from S4 this
+ 	 * property is set by the BIOS.
+ 	 */
+-	if (device_property_read_u8(&pdev->dev, "WAKE_SUPPORTED", &val))
++	if (!device_property_read_u8(&pdev->dev, "WAKE_SUPPORTED", &val))
+ 		return !!val;
  
--	ret = regmap_read(data->regmap, VCNL4035_ALS_DATA, (int *)buffer);
-+	ret = regmap_read(data->regmap, VCNL4035_ALS_DATA, &val);
- 	if (ret < 0) {
- 		dev_err(&data->client->dev,
- 			"Trigger consumer can't read from sensor.\n");
- 		goto fail_read;
- 	}
--	iio_push_to_buffers_with_timestamp(indio_dev, buffer,
--					iio_get_time_ns(indio_dev));
-+
-+	buffer.als_data = val;
-+	iio_push_to_buffers_with_timestamp(indio_dev, &buffer,
-+					   iio_get_time_ns(indio_dev));
- 
- fail_read:
- 	iio_trigger_notify_done(indio_dev->trig);
-@@ -378,7 +384,7 @@ static const struct iio_chan_spec vcnl40
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_LE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- 	{
-@@ -392,7 +398,7 @@ static const struct iio_chan_spec vcnl40
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_LE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- };
+ 	return true;
 
 
