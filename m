@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137E1282F1E;
-	Wed,  8 Apr 2026 19:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF52E25A321;
+	Wed,  8 Apr 2026 19:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674995; cv=none; b=GdPV4xpZ0QLMkCBTGcxNUpy6OGuVTJVvTLkSGLcGihvfTNHj04TgaP+3v1RiC4ih3hYZN01Vs5eDM9aeionwQJ+KohygKv9zNNK/kGeA5TBJ3j5GqkloZF/P6QX5xzkPhq7sDsD+OAi5tAOgt9fiQoTfdI/SXqqVpNl8zuZSM4s=
+	t=1775674997; cv=none; b=ihThaXoSrRMmNeA9AXjZqdMb807QPWKUUaoZ/95gEbrgNGOyEMOrGDurfmdLCi3trWa4BtLO1tCJb7Ks7i2AfgYJHapbWXaSJS5tnoiu3lu7Zd/bQJ1BniuJ7G0DFrLHYYKCiemZKsKjEjDD86J+kHaqStMMbf2WvfYZ/BFLBoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674995; c=relaxed/simple;
-	bh=jdJUyovyX/HGhU54+nC+CCSscCTepssToI7plrxfHbI=;
+	s=arc-20240116; t=1775674997; c=relaxed/simple;
+	bh=zymPJ5PT1IrAziK7Xl+rMvywNHsqOdPrdVsvg0mTq2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RWqWNP7iQ570NRys8MG6qkQnuRgSmjCbXZvYzfTiUBYyqjLxEbi+4TlK5z+sZagIEYRtrML213H8mI0hiyzO8y997HRulOgdlKRQYaJiDv4BiCycKKYiG5bntYT1OeM/1YhnyxUFjMnsnVSwq/Gu+YhIXKd9880WdZVBZDSJ5v0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dw1Nq8J1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NYf/FrlB7YH+GmReGNxylqg2o7K+RNLgZdbkRtdk84KxuXCC66Uk/7Dao19WiGHyHfsDG04DnD67ejRRUuqpeyYK10FS48yaPRC55urvy9RqIK7hMXSyrUoPZLBrdm2JgYAny2PwjbRWAgRAlHvE+yGm9/9n1z3XPc8qlq8MIRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5+crX4K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dw1Nq8J1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC30C19421;
-	Wed,  8 Apr 2026 19:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5+crX4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD0AC19421;
+	Wed,  8 Apr 2026 19:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674995;
-	bh=jdJUyovyX/HGhU54+nC+CCSscCTepssToI7plrxfHbI=;
+	s=korg; t=1775674997;
+	bh=zymPJ5PT1IrAziK7Xl+rMvywNHsqOdPrdVsvg0mTq2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dw1Nq8J1cWO2lCJzrNvyJ3ItyjqQxUxuYUeodHUV5+kVrnq02E5I7ceZrAg4774Ue
-	 v3v+rE6focBkXRxK54+R0omEeZwXnJkMpZMTFgVG12eVtMR6QBBrII9l5wIiO2e4kw
-	 aGfFU/VYLNQFbVslOl4oflZiE448DgM2j11i6vOs=
+	b=a5+crX4K51vo6akjIL+z7TuBIPcLCzejUqRnq5Wbi72Jhs+wGFpCa16H2UNu7PrLi
+	 OBV6kJAEJNpIHs/nLeCiRYW7NK+vxrqsPDY9VAMcGzmxcWfr34PNFwY9mAV/geq54c
+	 Y6gAP4z9Q3EXj8Rj/i1BZ/9qYr8+PYai07gvXoHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hodges <hodgesd@meta.com>,
-	Patrick Somaru <patsomaru@meta.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.19 282/311] sched_ext: Fix stale direct dispatch state in ddsp_dsq_id
-Date: Wed,  8 Apr 2026 20:04:42 +0200
-Message-ID: <20260408175949.910996255@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.19 283/311] gpio: mxc: map Both Edge pad wakeup to Rising Edge
+Date: Wed,  8 Apr 2026 20:04:43 +0200
+Message-ID: <20260408175949.949257760@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,170 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-commit 7e0ffb72de8aa3b25989c2d980e81b829c577010 upstream.
+commit c720fb57d56274213d027b3c5ab99080cf62a306 upstream.
 
-@p->scx.ddsp_dsq_id can be left set (non-SCX_DSQ_INVALID) triggering a
-spurious warning in mark_direct_dispatch() when the next wakeup's
-ops.select_cpu() calls scx_bpf_dsq_insert(), such as:
+Suspend may fail on i.MX8QM when Falling Edge is used as a pad wakeup
+trigger due to a hardware bug in the detection logic. Since the hardware
+does not support Both Edge wakeup, remap requests for Both Edge to Rising
+Edge by default to avoid hitting this issue.
 
- WARNING: kernel/sched/ext.c:1273 at scx_dsq_insert_commit+0xcd/0x140
+A warning is emitted when Falling Edge is selected on i.MX8QM.
 
-The root cause is that ddsp_dsq_id was only cleared in dispatch_enqueue(),
-which is not reached in all paths that consume or cancel a direct dispatch
-verdict.
-
-Fix it by clearing it at the right places:
-
- - direct_dispatch(): cache the direct dispatch state in local variables
-   and clear it before dispatch_enqueue() on the synchronous path. For
-   the deferred path, the direct dispatch state must remain set until
-   process_ddsp_deferred_locals() consumes them.
-
- - process_ddsp_deferred_locals(): cache the dispatch state in local
-   variables and clear it before calling dispatch_to_local_dsq(), which
-   may migrate the task to another rq.
-
- - do_enqueue_task(): clear the dispatch state on the enqueue path
-   (local/global/bypass fallbacks), where the direct dispatch verdict is
-   ignored.
-
- - dequeue_task_scx(): clear the dispatch state after dispatch_dequeue()
-   to handle both the deferred dispatch cancellation and the holding_cpu
-   race, covering all cases where a pending direct dispatch is
-   cancelled.
-
- - scx_disable_task(): clear the direct dispatch state when
-   transitioning a task out of the current scheduler. Waking tasks may
-   have had the direct dispatch state set by the outgoing scheduler's
-   ops.select_cpu() and then been queued on a wake_list via
-   ttwu_queue_wakelist(), when SCX_OPS_ALLOW_QUEUED_WAKEUP is set. Such
-   tasks are not on the runqueue and are not iterated by scx_bypass(),
-   so their direct dispatch state won't be cleared. Without this clear,
-   any subsequent SCX scheduler that tries to direct dispatch the task
-   will trigger the WARN_ON_ONCE() in mark_direct_dispatch().
-
-Fixes: 5b26f7b920f7 ("sched_ext: Allow SCX_DSQ_LOCAL_ON for direct dispatches")
-Cc: stable@vger.kernel.org # v6.12+
-Cc: Daniel Hodges <hodgesd@meta.com>
-Cc: Patrick Somaru <patsomaru@meta.com>
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
+cc: stable@vger.kernel.org
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Link: https://patch.msgid.link/20260324192129.2797237-1-shenwei.wang@nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |   49 +++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 35 insertions(+), 14 deletions(-)
+ drivers/gpio/gpio-mxc.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -1104,15 +1104,6 @@ static void dispatch_enqueue(struct scx_
- 	p->scx.dsq = dsq;
+--- a/drivers/gpio/gpio-mxc.c
++++ b/drivers/gpio/gpio-mxc.c
+@@ -584,12 +584,13 @@ static bool mxc_gpio_set_pad_wakeup(stru
+ 	unsigned long config;
+ 	bool ret = false;
+ 	int i, type;
++	bool is_imx8qm = of_device_is_compatible(port->dev->of_node, "fsl,imx8qm-gpio");
  
- 	/*
--	 * scx.ddsp_dsq_id and scx.ddsp_enq_flags are only relevant on the
--	 * direct dispatch path, but we clear them here because the direct
--	 * dispatch verdict may be overridden on the enqueue path during e.g.
--	 * bypass.
--	 */
--	p->scx.ddsp_dsq_id = SCX_DSQ_INVALID;
--	p->scx.ddsp_enq_flags = 0;
--
--	/*
- 	 * We're transitioning out of QUEUEING or DISPATCHING. store_release to
- 	 * match waiters' load_acquire.
- 	 */
-@@ -1277,12 +1268,34 @@ static void mark_direct_dispatch(struct
- 	p->scx.ddsp_enq_flags = enq_flags;
- }
- 
-+/*
-+ * Clear @p direct dispatch state when leaving the scheduler.
-+ *
-+ * Direct dispatch state must be cleared in the following cases:
-+ *  - direct_dispatch(): cleared on the synchronous enqueue path, deferred
-+ *    dispatch keeps the state until consumed
-+ *  - process_ddsp_deferred_locals(): cleared after consuming deferred state,
-+ *  - do_enqueue_task(): cleared on enqueue fallbacks where the dispatch
-+ *    verdict is ignored (local/global/bypass)
-+ *  - dequeue_task_scx(): cleared after dispatch_dequeue(), covering deferred
-+ *    cancellation and holding_cpu races
-+ *  - scx_disable_task(): cleared for queued wakeup tasks, which are excluded by
-+ *    the scx_bypass() loop, so that stale state is not reused by a subsequent
-+ *    scheduler instance
-+ */
-+static inline void clear_direct_dispatch(struct task_struct *p)
-+{
-+	p->scx.ddsp_dsq_id = SCX_DSQ_INVALID;
-+	p->scx.ddsp_enq_flags = 0;
-+}
+ 	static const u32 pad_type_map[] = {
+ 		IMX_SCU_WAKEUP_OFF,		/* 0 */
+ 		IMX_SCU_WAKEUP_RISE_EDGE,	/* IRQ_TYPE_EDGE_RISING */
+ 		IMX_SCU_WAKEUP_FALL_EDGE,	/* IRQ_TYPE_EDGE_FALLING */
+-		IMX_SCU_WAKEUP_FALL_EDGE,	/* IRQ_TYPE_EDGE_BOTH */
++		IMX_SCU_WAKEUP_RISE_EDGE,	/* IRQ_TYPE_EDGE_BOTH */
+ 		IMX_SCU_WAKEUP_HIGH_LVL,	/* IRQ_TYPE_LEVEL_HIGH */
+ 		IMX_SCU_WAKEUP_OFF,		/* 5 */
+ 		IMX_SCU_WAKEUP_OFF,		/* 6 */
+@@ -604,6 +605,13 @@ static bool mxc_gpio_set_pad_wakeup(stru
+ 				config = pad_type_map[type];
+ 			else
+ 				config = IMX_SCU_WAKEUP_OFF;
 +
- static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
- 			    u64 enq_flags)
- {
- 	struct rq *rq = task_rq(p);
- 	struct scx_dispatch_q *dsq =
- 		find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, p);
-+	u64 ddsp_enq_flags;
- 
- 	touch_core_sched_dispatch(rq, p);
- 
-@@ -1323,8 +1336,10 @@ static void direct_dispatch(struct scx_s
- 		return;
++			if (is_imx8qm && config == IMX_SCU_WAKEUP_FALL_EDGE) {
++				dev_warn_once(port->dev,
++					      "No falling-edge support for wakeup on i.MX8QM\n");
++				config = IMX_SCU_WAKEUP_OFF;
++			}
++
+ 			ret |= mxc_gpio_generic_config(port, i, config);
+ 		}
  	}
- 
--	dispatch_enqueue(sch, dsq, p,
--			 p->scx.ddsp_enq_flags | SCX_ENQ_CLEAR_OPSS);
-+	ddsp_enq_flags = p->scx.ddsp_enq_flags;
-+	clear_direct_dispatch(p);
-+
-+	dispatch_enqueue(sch, dsq, p, ddsp_enq_flags | SCX_ENQ_CLEAR_OPSS);
- }
- 
- static bool scx_rq_online(struct rq *rq)
-@@ -1433,6 +1448,7 @@ enqueue:
- 	 */
- 	touch_core_sched(rq, p);
- 	refill_task_slice_dfl(sch, p);
-+	clear_direct_dispatch(p);
- 	dispatch_enqueue(sch, dsq, p, enq_flags);
- }
- 
-@@ -1600,6 +1616,7 @@ static bool dequeue_task_scx(struct rq *
- 	sub_nr_running(rq, 1);
- 
- 	dispatch_dequeue(rq, p);
-+	clear_direct_dispatch(p);
- 	return true;
- }
- 
-@@ -2283,13 +2300,15 @@ static void process_ddsp_deferred_locals
- 				struct task_struct, scx.dsq_list.node))) {
- 		struct scx_sched *sch = scx_root;
- 		struct scx_dispatch_q *dsq;
-+		u64 dsq_id = p->scx.ddsp_dsq_id;
-+		u64 enq_flags = p->scx.ddsp_enq_flags;
- 
- 		list_del_init(&p->scx.dsq_list.node);
-+		clear_direct_dispatch(p);
- 
--		dsq = find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, p);
-+		dsq = find_dsq_for_dispatch(sch, rq, dsq_id, p);
- 		if (!WARN_ON_ONCE(dsq->id != SCX_DSQ_LOCAL))
--			dispatch_to_local_dsq(sch, rq, dsq, p,
--					      p->scx.ddsp_enq_flags);
-+			dispatch_to_local_dsq(sch, rq, dsq, p, enq_flags);
- 	}
- }
- 
-@@ -2978,6 +2997,8 @@ static void scx_disable_task(struct task
- 	lockdep_assert_rq_held(rq);
- 	WARN_ON_ONCE(scx_get_task_state(p) != SCX_TASK_ENABLED);
- 
-+	clear_direct_dispatch(p);
-+
- 	if (SCX_HAS_OP(sch, disable))
- 		SCX_CALL_OP_TASK(sch, SCX_KF_REST, disable, rq, p);
- 	scx_set_task_state(p, SCX_TASK_READY);
 
 
