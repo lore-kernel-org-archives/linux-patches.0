@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E35E352C3C;
-	Wed,  8 Apr 2026 19:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF562857C1;
+	Wed,  8 Apr 2026 19:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674908; cv=none; b=kF+KMCF5x2bL1NOGBSp1NWru1ga8SAYFAr/OK5qV2Es6UuRYDXNmorm7P4PPUc9RTWnSSUqr809xCKekGf2qfiF4IN1pbNvGW8csLNXwfSA9YPWOmDkD1Qt+z9gIKLOxX+nBOtiRAkag+/yg/DYCTFaKV0KD6a4o3jj2uNVepSI=
+	t=1775674910; cv=none; b=p7TA5vlmMCNOY59etMvb79RufTl6G26lbgfyvCoJ1wY4PL/QPqf63eLypOd26FdzQuQgNsMCUxRB4U51o+6ERr8ctrFNIPY9QagbjkqVaFZKskK4Bftypj6TfecEN/TTjLkzKA5Y1U9f4oJBSCH10fSVbfuOEZkziUSm8/oh6ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674908; c=relaxed/simple;
-	bh=V5tFeSy0TFLtpt8bTkJ6tNdpMWVqwaD1C/OqguFoPwc=;
+	s=arc-20240116; t=1775674910; c=relaxed/simple;
+	bh=tmLa9BqIC9DnhVUslkRbNbgJdAwWMpyYnc4uB9WQqZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjjkD3TvAdWzsoNliHO1GPLXe+Wql5UtEKn6n5We47iiPNdaiyOWnhO1wCYK0PPyAeq7lOYo4W1K3vIKGcnr3VdPeDGZvJAcaiFKIBM03xtaOc+BZHQWuMmU0xHgJRpxx7sJGVPiU4GJEX8D6VMr5I0hCL9HTn7hJv7pa10N4F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0OR2gNz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6KqeXe269ViOEF7rBwXN758Sp5kjVD81/bZq6nuUa8w9GRXplCcLbX+gt/O8X94f89xpYeeTjy2JEHdgZehdfHLsBnW8BOk9++cFgwcX89qx0iukegIOWODGQ5bL9p3jhhenPYafQ9EFVj1i4SY6c3mVLaYlAcavnzgHTLiCuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5iur8nF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0OR2gNz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E99C19421;
-	Wed,  8 Apr 2026 19:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5iur8nF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C41C19421;
+	Wed,  8 Apr 2026 19:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674907;
-	bh=V5tFeSy0TFLtpt8bTkJ6tNdpMWVqwaD1C/OqguFoPwc=;
+	s=korg; t=1775674910;
+	bh=tmLa9BqIC9DnhVUslkRbNbgJdAwWMpyYnc4uB9WQqZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a0OR2gNzV18LE24ci7xRmSnjYLkBFDd2S4eW4JhzHzJNBCV8yQBFxqFl7GWdVHI0c
-	 emihGsPgyyuNM95hqBrGF6BCNB8ZXSvF+6M//gGUIBKqUILJkFlS6kygvNq07gzh84
-	 2gbE+K1l/11mVVavNWdi5Gjog4i9pkcN3ZMq9fmM=
+	b=A5iur8nFv0khI/crcvlJ6mRyiqbCPA1sXImyYFt9kem8Mnu//ZV1rdnxe6/W3CKOl
+	 2BXC0Xr85Qbd6G7pPzjpCcE93ZIwp7AWS4Ca+ru/trzIQ8N6szlXrCgukBwJyZnnle
+	 gNva7DG5kPbR6bCPW/CieHiVraZktuXMjvDewG7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Yongchao Wu <yongchao.wu@autochips.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.19 246/311] usb: cdns3: gadget: fix state inconsistency on gadget init failure
-Date: Wed,  8 Apr 2026 20:04:06 +0200
-Message-ID: <20260408175948.577705691@linuxfoundation.org>
+	Guan-Yu Lin <guanyulin@google.com>,
+	Hailong Liu <hailong.liu@oppo.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.19 247/311] usb: core: use dedicated spinlock for offload state
+Date: Wed,  8 Apr 2026 20:04:07 +0200
+Message-ID: <20260408175948.614635883@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,62 +52,364 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongchao Wu <yongchao.wu@autochips.com>
+From: Guan-Yu Lin <guanyulin@google.com>
 
-commit c32f8748d70c8fc77676ad92ed76cede17bf2c48 upstream.
+commit bd3d245b0fef571f93504904df62b8865b1c0d34 upstream.
 
-When cdns3_gadget_start() fails, the DRD hardware is left in gadget mode
-while software state remains INACTIVE, creating hardware/software state
-inconsistency.
+Replace the coarse USB device lock with a dedicated offload_lock
+spinlock to reduce contention during offload operations. Use
+offload_pm_locked to synchronize with PM transitions and replace
+the legacy offload_at_suspend flag.
 
-When switching to host mode via sysfs:
-  echo host > /sys/class/usb_role/13180000.usb-role-switch/role
+Optimize usb_offload_get/put by switching from auto-resume/suspend
+to pm_runtime_get_if_active(). This ensures offload state is only
+modified when the device is already active, avoiding unnecessary
+power transitions.
 
-The role state is not set to CDNS_ROLE_STATE_ACTIVE due to the error,
-so cdns_role_stop() skips cleanup because state is still INACTIVE.
-This violates the DRD controller design specification (Figure22),
-which requires returning to idle state before switching roles.
-
-This leads to a synchronous external abort in xhci_gen_setup() when
-setting up the host controller:
-
-[  516.440698] configfs-gadget 13180000.usb: failed to start g1: -19
-[  516.442035] cdns-usb3 13180000.usb: Failed to add gadget
-[  516.443278] cdns-usb3 13180000.usb: set role 2 has failed
-...
-[ 1301.375722] xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
-[ 1301.377716] Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
-[ 1301.382485] pc : xhci_gen_setup+0xa4/0x408
-[ 1301.393391] backtrace:
-    ...
-    xhci_gen_setup+0xa4/0x408    <-- CRASH
-    xhci_plat_setup+0x44/0x58
-    usb_add_hcd+0x284/0x678
-    ...
-    cdns_role_set+0x9c/0xbc        <-- Role switch
-
-Fix by calling cdns_drd_gadget_off() in the error path to properly
-clean up the DRD gadget state.
-
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Yongchao Wu <yongchao.wu@autochips.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260401001000.5761-1-yongchao.wu@autochips.com
+Fixes: ef82a4803aab ("xhci: sideband: add api to trace sideband usage")
+Signed-off-by: Guan-Yu Lin <guanyulin@google.com>
+Tested-by: Hailong Liu <hailong.liu@oppo.com>
+Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260401123238.3790062-2-guanyulin@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-gadget.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/core/driver.c        |   23 +++++---
+ drivers/usb/core/offload.c       |  102 ++++++++++++++++++++++-----------------
+ drivers/usb/core/usb.c           |    1 
+ drivers/usb/host/xhci-sideband.c |    4 -
+ include/linux/usb.h              |   10 +++
+ 5 files changed, 84 insertions(+), 56 deletions(-)
 
---- a/drivers/usb/cdns3/cdns3-gadget.c
-+++ b/drivers/usb/cdns3/cdns3-gadget.c
-@@ -3431,6 +3431,7 @@ static int __cdns3_gadget_init(struct cd
- 	ret = cdns3_gadget_start(cdns);
- 	if (ret) {
- 		pm_runtime_put_sync(cdns->dev);
-+		cdns_drd_gadget_off(cdns);
- 		return ret;
+--- a/drivers/usb/core/driver.c
++++ b/drivers/usb/core/driver.c
+@@ -1415,14 +1415,16 @@ static int usb_suspend_both(struct usb_d
+ 	int			status = 0;
+ 	int			i = 0, n = 0;
+ 	struct usb_interface	*intf;
++	bool			offload_active = false;
+ 
+ 	if (udev->state == USB_STATE_NOTATTACHED ||
+ 			udev->state == USB_STATE_SUSPENDED)
+ 		goto done;
+ 
++	usb_offload_set_pm_locked(udev, true);
+ 	if (msg.event == PM_EVENT_SUSPEND && usb_offload_check(udev)) {
+ 		dev_dbg(&udev->dev, "device offloaded, skip suspend.\n");
+-		udev->offload_at_suspend = 1;
++		offload_active = true;
  	}
  
+ 	/* Suspend all the interfaces and then udev itself */
+@@ -1436,8 +1438,7 @@ static int usb_suspend_both(struct usb_d
+ 			 * interrupt urbs, allowing interrupt events to be
+ 			 * handled during system suspend.
+ 			 */
+-			if (udev->offload_at_suspend &&
+-			    intf->needs_remote_wakeup) {
++			if (offload_active && intf->needs_remote_wakeup) {
+ 				dev_dbg(&intf->dev,
+ 					"device offloaded, skip suspend.\n");
+ 				continue;
+@@ -1452,7 +1453,7 @@ static int usb_suspend_both(struct usb_d
+ 		}
+ 	}
+ 	if (status == 0) {
+-		if (!udev->offload_at_suspend)
++		if (!offload_active)
+ 			status = usb_suspend_device(udev, msg);
+ 
+ 		/*
+@@ -1498,7 +1499,7 @@ static int usb_suspend_both(struct usb_d
+ 	 */
+ 	} else {
+ 		udev->can_submit = 0;
+-		if (!udev->offload_at_suspend) {
++		if (!offload_active) {
+ 			for (i = 0; i < 16; ++i) {
+ 				usb_hcd_flush_endpoint(udev, udev->ep_out[i]);
+ 				usb_hcd_flush_endpoint(udev, udev->ep_in[i]);
+@@ -1507,6 +1508,8 @@ static int usb_suspend_both(struct usb_d
+ 	}
+ 
+  done:
++	if (status != 0)
++		usb_offload_set_pm_locked(udev, false);
+ 	dev_vdbg(&udev->dev, "%s: status %d\n", __func__, status);
+ 	return status;
+ }
+@@ -1536,16 +1539,19 @@ static int usb_resume_both(struct usb_de
+ 	int			status = 0;
+ 	int			i;
+ 	struct usb_interface	*intf;
++	bool			offload_active = false;
+ 
+ 	if (udev->state == USB_STATE_NOTATTACHED) {
+ 		status = -ENODEV;
+ 		goto done;
+ 	}
+ 	udev->can_submit = 1;
++	if (msg.event == PM_EVENT_RESUME)
++		offload_active = usb_offload_check(udev);
+ 
+ 	/* Resume the device */
+ 	if (udev->state == USB_STATE_SUSPENDED || udev->reset_resume) {
+-		if (!udev->offload_at_suspend)
++		if (!offload_active)
+ 			status = usb_resume_device(udev, msg);
+ 		else
+ 			dev_dbg(&udev->dev,
+@@ -1562,8 +1568,7 @@ static int usb_resume_both(struct usb_de
+ 			 * pending interrupt urbs, allowing interrupt events
+ 			 * to be handled during system suspend.
+ 			 */
+-			if (udev->offload_at_suspend &&
+-			    intf->needs_remote_wakeup) {
++			if (offload_active && intf->needs_remote_wakeup) {
+ 				dev_dbg(&intf->dev,
+ 					"device offloaded, skip resume.\n");
+ 				continue;
+@@ -1572,11 +1577,11 @@ static int usb_resume_both(struct usb_de
+ 					udev->reset_resume);
+ 		}
+ 	}
+-	udev->offload_at_suspend = 0;
+ 	usb_mark_last_busy(udev);
+ 
+  done:
+ 	dev_vdbg(&udev->dev, "%s: status %d\n", __func__, status);
++	usb_offload_set_pm_locked(udev, false);
+ 	if (!status)
+ 		udev->reset_resume = 0;
+ 	return status;
+--- a/drivers/usb/core/offload.c
++++ b/drivers/usb/core/offload.c
+@@ -25,33 +25,30 @@
+  */
+ int usb_offload_get(struct usb_device *udev)
+ {
+-	int ret;
++	int ret = 0;
+ 
+-	usb_lock_device(udev);
+-	if (udev->state == USB_STATE_NOTATTACHED) {
+-		usb_unlock_device(udev);
++	if (!usb_get_dev(udev))
+ 		return -ENODEV;
+-	}
+ 
+-	if (udev->state == USB_STATE_SUSPENDED ||
+-		   udev->offload_at_suspend) {
+-		usb_unlock_device(udev);
+-		return -EBUSY;
++	if (pm_runtime_get_if_active(&udev->dev) != 1) {
++		ret = -EBUSY;
++		goto err_rpm;
+ 	}
+ 
+-	/*
+-	 * offload_usage could only be modified when the device is active, since
+-	 * it will alter the suspend flow of the device.
+-	 */
+-	ret = usb_autoresume_device(udev);
+-	if (ret < 0) {
+-		usb_unlock_device(udev);
+-		return ret;
++	spin_lock(&udev->offload_lock);
++
++	if (udev->offload_pm_locked) {
++		ret = -EAGAIN;
++		goto err;
+ 	}
+ 
+ 	udev->offload_usage++;
+-	usb_autosuspend_device(udev);
+-	usb_unlock_device(udev);
++
++err:
++	spin_unlock(&udev->offload_lock);
++	pm_runtime_put_autosuspend(&udev->dev);
++err_rpm:
++	usb_put_dev(udev);
+ 
+ 	return ret;
+ }
+@@ -69,35 +66,32 @@ EXPORT_SYMBOL_GPL(usb_offload_get);
+  */
+ int usb_offload_put(struct usb_device *udev)
+ {
+-	int ret;
++	int ret = 0;
+ 
+-	usb_lock_device(udev);
+-	if (udev->state == USB_STATE_NOTATTACHED) {
+-		usb_unlock_device(udev);
++	if (!usb_get_dev(udev))
+ 		return -ENODEV;
+-	}
+ 
+-	if (udev->state == USB_STATE_SUSPENDED ||
+-		   udev->offload_at_suspend) {
+-		usb_unlock_device(udev);
+-		return -EBUSY;
++	if (pm_runtime_get_if_active(&udev->dev) != 1) {
++		ret = -EBUSY;
++		goto err_rpm;
+ 	}
+ 
+-	/*
+-	 * offload_usage could only be modified when the device is active, since
+-	 * it will alter the suspend flow of the device.
+-	 */
+-	ret = usb_autoresume_device(udev);
+-	if (ret < 0) {
+-		usb_unlock_device(udev);
+-		return ret;
++	spin_lock(&udev->offload_lock);
++
++	if (udev->offload_pm_locked) {
++		ret = -EAGAIN;
++		goto err;
+ 	}
+ 
+ 	/* Drop the count when it wasn't 0, ignore the operation otherwise. */
+ 	if (udev->offload_usage)
+ 		udev->offload_usage--;
+-	usb_autosuspend_device(udev);
+-	usb_unlock_device(udev);
++
++err:
++	spin_unlock(&udev->offload_lock);
++	pm_runtime_put_autosuspend(&udev->dev);
++err_rpm:
++	usb_put_dev(udev);
+ 
+ 	return ret;
+ }
+@@ -112,25 +106,47 @@ EXPORT_SYMBOL_GPL(usb_offload_put);
+  * management.
+  *
+  * The caller must hold @udev's device lock. In addition, the caller should
+- * ensure downstream usb devices are all either suspended or marked as
+- * "offload_at_suspend" to ensure the correctness of the return value.
++ * ensure the device itself and the downstream usb devices are all marked as
++ * "offload_pm_locked" to ensure the correctness of the return value.
+  *
+  * Returns true on any offload activity, false otherwise.
+  */
+ bool usb_offload_check(struct usb_device *udev) __must_hold(&udev->dev->mutex)
+ {
+ 	struct usb_device *child;
+-	bool active;
++	bool active = false;
+ 	int port1;
+ 
++	if (udev->offload_usage)
++		return true;
++
+ 	usb_hub_for_each_child(udev, port1, child) {
+ 		usb_lock_device(child);
+ 		active = usb_offload_check(child);
+ 		usb_unlock_device(child);
++
+ 		if (active)
+-			return true;
++			break;
+ 	}
+ 
+-	return !!udev->offload_usage;
++	return active;
+ }
+ EXPORT_SYMBOL_GPL(usb_offload_check);
++
++/**
++ * usb_offload_set_pm_locked - set the PM lock state of a USB device
++ * @udev: the USB device to modify
++ * @locked: the new lock state
++ *
++ * Setting @locked to true prevents offload_usage from being modified. This
++ * ensures that offload activities cannot be started or stopped during critical
++ * power management transitions, maintaining a stable state for the duration
++ * of the transition.
++ */
++void usb_offload_set_pm_locked(struct usb_device *udev, bool locked)
++{
++	spin_lock(&udev->offload_lock);
++	udev->offload_pm_locked = locked;
++	spin_unlock(&udev->offload_lock);
++}
++EXPORT_SYMBOL_GPL(usb_offload_set_pm_locked);
+--- a/drivers/usb/core/usb.c
++++ b/drivers/usb/core/usb.c
+@@ -671,6 +671,7 @@ struct usb_device *usb_alloc_dev(struct
+ 	set_dev_node(&dev->dev, dev_to_node(bus->sysdev));
+ 	dev->state = USB_STATE_ATTACHED;
+ 	dev->lpm_disable_count = 1;
++	spin_lock_init(&dev->offload_lock);
+ 	dev->offload_usage = 0;
+ 	atomic_set(&dev->urbnum, 0);
+ 
+--- a/drivers/usb/host/xhci-sideband.c
++++ b/drivers/usb/host/xhci-sideband.c
+@@ -285,8 +285,8 @@ EXPORT_SYMBOL_GPL(xhci_sideband_get_even
+  * Allow other drivers, such as usb controller driver, to check if there are
+  * any sideband activity on the host controller. This information could be used
+  * for power management or other forms of resource management. The caller should
+- * ensure downstream usb devices are all either suspended or marked as
+- * "offload_at_suspend" to ensure the correctness of the return value.
++ * ensure downstream usb devices are all marked as "offload_pm_locked" to ensure
++ * the correctness of the return value.
+  *
+  * Returns true on any active sideband existence, false otherwise.
+  */
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -21,6 +21,7 @@
+ #include <linux/completion.h>	/* for struct completion */
+ #include <linux/sched.h>	/* for current && schedule_timeout */
+ #include <linux/mutex.h>	/* for struct mutex */
++#include <linux/spinlock.h>	/* for spinlock_t */
+ #include <linux/pm_runtime.h>	/* for runtime PM */
+ 
+ struct usb_device;
+@@ -636,8 +637,9 @@ struct usb3_lpm_parameters {
+  * @do_remote_wakeup:  remote wakeup should be enabled
+  * @reset_resume: needs reset instead of resume
+  * @port_is_suspended: the upstream port is suspended (L2 or U3)
+- * @offload_at_suspend: offload activities during suspend is enabled.
++ * @offload_pm_locked: prevents offload_usage changes during PM transitions.
+  * @offload_usage: number of offload activities happening on this usb device.
++ * @offload_lock: protects offload_usage and offload_pm_locked
+  * @slot_id: Slot ID assigned by xHCI
+  * @l1_params: best effor service latency for USB2 L1 LPM state, and L1 timeout.
+  * @u1_params: exit latencies for USB3 U1 LPM state, and hub-initiated timeout.
+@@ -726,8 +728,9 @@ struct usb_device {
+ 	unsigned do_remote_wakeup:1;
+ 	unsigned reset_resume:1;
+ 	unsigned port_is_suspended:1;
+-	unsigned offload_at_suspend:1;
++	unsigned offload_pm_locked:1;
+ 	int offload_usage;
++	spinlock_t offload_lock;
+ 	enum usb_link_tunnel_mode tunnel_mode;
+ 	struct device_link *usb4_link;
+ 
+@@ -849,6 +852,7 @@ static inline void usb_mark_last_busy(st
+ int usb_offload_get(struct usb_device *udev);
+ int usb_offload_put(struct usb_device *udev);
+ bool usb_offload_check(struct usb_device *udev);
++void usb_offload_set_pm_locked(struct usb_device *udev, bool locked);
+ #else
+ 
+ static inline int usb_offload_get(struct usb_device *udev)
+@@ -857,6 +861,8 @@ static inline int usb_offload_put(struct
+ { return 0; }
+ static inline bool usb_offload_check(struct usb_device *udev)
+ { return false; }
++static inline void usb_offload_set_pm_locked(struct usb_device *udev, bool locked)
++{ }
+ #endif
+ 
+ extern int usb_disable_lpm(struct usb_device *udev);
 
 
