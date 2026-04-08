@@ -1,49 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F25F27979A;
-	Wed,  8 Apr 2026 18:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9558227979A;
+	Wed,  8 Apr 2026 18:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673524; cv=none; b=nXUr/5EH0ECWWp2H/DGPnQz3rkPoe3meBDnN0Eej+W245mslnAwNyE3rl88kik/j9odoyEfbq+0gqQSA79dFhQ0XC4WRw1Dt32XB+JGEqHSy0AmQG22IS4hE/FhGR/TVnDrjJNlxO/dunjuhpa/TYqw4JoI6k1Tx1sgYqZGNNaI=
+	t=1775673526; cv=none; b=CEj4D1H3R/IJ4aYd0xcX7zlFkhsiaKV2IaVQt3djz1GLuf9q2/t0CQeCm0ozmWmPGj8Y0oHRD5HW/aKAdL+FUPkaTSFOdj6bczh8tiB8lYmsZc/5/YvsIj0vK9UPnG/Y7P0fj8OdJ2ZFMDN8iV51zBQ/OW1czDhviw0XBtS+n20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673524; c=relaxed/simple;
-	bh=eRixSItXFVb36JVdkVk4k6kHs/tHbQ5kFwYywSwSCsc=;
+	s=arc-20240116; t=1775673526; c=relaxed/simple;
+	bh=9999Rktd0IAjYaOiG/9FP0NLMDmaPsi8TESNvAR52DI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=anpiY0Ofpbka5ULb9pGTroZ82H2AYAPEJj3FuuBb/Fsf+xjakKFq3BhqpJQHgbFd2aQjhClUOpA6gtUFUsD3g0b/wGcq4BvEMk8DqQIkZ0x4qIr8Da1TrhnvD5drxPj9enlejgJNEDoIAKzgr+FRi2D2c6WWVarmHu3SzA9JgNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCiKaARd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WmWO2udbp5jaXES07N3ptCxCAGdOmMQ16baa+n+0hnpgjuziB1Sn+38CEY25tdPAaSJowFfRJwozJ0k2tDee3rtVlHUsLNmCdJgeCs2jOdf9mfI81toBtf6rn63jk7XfFeBXXmojfQTpOD1UI0xPvUC7OumvBQruN98oCnFePQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fn1EYsog; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCiKaARd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72413C19421;
-	Wed,  8 Apr 2026 18:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fn1EYsog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C88BC19421;
+	Wed,  8 Apr 2026 18:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673523;
-	bh=eRixSItXFVb36JVdkVk4k6kHs/tHbQ5kFwYywSwSCsc=;
+	s=korg; t=1775673526;
+	bh=9999Rktd0IAjYaOiG/9FP0NLMDmaPsi8TESNvAR52DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCiKaARdAECYe83Wx8RXIhUcrey5jCWYv/S3aJtEsHyt0qcXopcxP9X++CNqYMDY3
-	 utDzWtx1pQHuYb2Q5jBYHjKrMORHJDwyeVVDop5eTr+CJzpZNFNlHTR5V+dzA3RvHv
-	 jfQDwuwC32oG8WSNxD88ZUCX3lujzR/7xvo96Lyc=
+	b=fn1EYsognMY+NoC8F9P4gT8v2X9FAxDlrfLxAyh/RhH9y/omZ06/l8K7AAWb7WXYP
+	 oEco2J99+XlubLdWxSGjXFYc+4tlQqynBC0LjWr7IyEisvpPVuMGHH18PxpKmZlACF
+	 /DUWVQpAUV089tYtpp/R+5AWOcbCPJs/qfzaBfOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkman <daniel@iogearbox.net>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kees Cook <kees@kernel.org>,
-	Luis Chamberalin <mcgrof@kernel.org>,
-	Marc Rutland <mark.rutland@arm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 266/277] kallsyms: prevent module removal when printing module name and buildid
-Date: Wed,  8 Apr 2026 20:04:11 +0200
-Message-ID: <20260408175943.793184879@linuxfoundation.org>
+	Alexander Popov <alex.popov@linux.com>,
+	Breno Leitao <leitao@debian.org>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 267/277] wifi: virt_wifi: remove SET_NETDEV_DEV to avoid use-after-free
+Date: Wed,  8 Apr 2026 20:04:12 +0200
+Message-ID: <20260408175943.830978626@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -62,49 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Mladek <pmladek@suse.com>
+From: Alexander Popov <alex.popov@linux.com>
 
-commit 3b07086444f80c844351255fd94c2cb0a7224df2 upstream.
+commit 789b06f9f39cdc7e895bdab2c034e39c41c8f8d6 upstream.
 
-kallsyms_lookup_buildid() copies the symbol name into the given buffer so
-that it can be safely read anytime later.  But it just copies pointers to
-mod->name and mod->build_id which might get reused after the related
-struct module gets removed.
+Currently we execute `SET_NETDEV_DEV(dev, &priv->lowerdev->dev)` for
+the virt_wifi net devices. However, unregistering a virt_wifi device in
+netdev_run_todo() can happen together with the device referenced by
+SET_NETDEV_DEV().
 
-The lifetime of struct module is synchronized using RCU.  Take the rcu
-read lock for the entire __sprint_symbol().
+It can result in use-after-free during the ethtool operations performed
+on a virt_wifi device that is currently being unregistered. Such a net
+device can have the `dev.parent` field pointing to the freed memory,
+but ethnl_ops_begin() calls `pm_runtime_get_sync(dev->dev.parent)`.
 
-Link: https://lkml.kernel.org/r/20251128135920.217303-8-pmladek@suse.com
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkman <daniel@iogearbox.net>
-Cc: Daniel Gomez <da.gomez@samsung.com>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Luis Chamberalin <mcgrof@kernel.org>
-Cc: Marc Rutland <mark.rutland@arm.com>
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Petr Pavlu <petr.pavlu@suse.com>
-Cc: Sami Tolvanen <samitolvanen@google.com>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Let's remove SET_NETDEV_DEV for virt_wifi to avoid bugs like this:
+
+ ==================================================================
+ BUG: KASAN: slab-use-after-free in __pm_runtime_resume+0xe2/0xf0
+ Read of size 2 at addr ffff88810cfc46f8 by task pm/606
+
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x4d/0x70
+  print_report+0x170/0x4f3
+  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+  kasan_report+0xda/0x110
+  ? __pm_runtime_resume+0xe2/0xf0
+  ? __pm_runtime_resume+0xe2/0xf0
+  __pm_runtime_resume+0xe2/0xf0
+  ethnl_ops_begin+0x49/0x270
+  ethnl_set_features+0x23c/0xab0
+  ? __pfx_ethnl_set_features+0x10/0x10
+  ? kvm_sched_clock_read+0x11/0x20
+  ? local_clock_noinstr+0xf/0xf0
+  ? local_clock+0x10/0x30
+  ? kasan_save_track+0x25/0x60
+  ? __kasan_kmalloc+0x7f/0x90
+  ? genl_family_rcv_msg_attrs_parse.isra.0+0x150/0x2c0
+  genl_family_rcv_msg_doit+0x1e7/0x2c0
+  ? __pfx_genl_family_rcv_msg_doit+0x10/0x10
+  ? __pfx_cred_has_capability.isra.0+0x10/0x10
+  ? stack_trace_save+0x8e/0xc0
+  genl_rcv_msg+0x411/0x660
+  ? __pfx_genl_rcv_msg+0x10/0x10
+  ? __pfx_ethnl_set_features+0x10/0x10
+  netlink_rcv_skb+0x121/0x380
+  ? __pfx_genl_rcv_msg+0x10/0x10
+  ? __pfx_netlink_rcv_skb+0x10/0x10
+  ? __pfx_down_read+0x10/0x10
+  genl_rcv+0x23/0x30
+  netlink_unicast+0x60f/0x830
+  ? __pfx_netlink_unicast+0x10/0x10
+  ? __pfx___alloc_skb+0x10/0x10
+  netlink_sendmsg+0x6ea/0xbc0
+  ? __pfx_netlink_sendmsg+0x10/0x10
+  ? __futex_queue+0x10b/0x1f0
+  ____sys_sendmsg+0x7a2/0x950
+  ? copy_msghdr_from_user+0x26b/0x430
+  ? __pfx_____sys_sendmsg+0x10/0x10
+  ? __pfx_copy_msghdr_from_user+0x10/0x10
+  ___sys_sendmsg+0xf8/0x180
+  ? __pfx____sys_sendmsg+0x10/0x10
+  ? __pfx_futex_wait+0x10/0x10
+  ? fdget+0x2e4/0x4a0
+  __sys_sendmsg+0x11f/0x1c0
+  ? __pfx___sys_sendmsg+0x10/0x10
+  do_syscall_64+0xe2/0x570
+  ? exc_page_fault+0x66/0xb0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  </TASK>
+
+This fix may be combined with another one in the ethtool subsystem:
+https://lore.kernel.org/all/20260322075917.254874-1-alex.popov@linux.com/T/#u
+
+Fixes: d43c65b05b848e0b ("ethtool: runtime-resume netdev parent in ethnl_ops_begin")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexander Popov <alex.popov@linux.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260324224607.374327-1-alex.popov@linux.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kallsyms.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/virtual/virt_wifi.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/kernel/kallsyms.c
-+++ b/kernel/kallsyms.c
-@@ -474,6 +474,9 @@ static int __sprint_symbol(char *buffer,
- 	unsigned long offset, size;
- 	int len;
+--- a/drivers/net/wireless/virtual/virt_wifi.c
++++ b/drivers/net/wireless/virtual/virt_wifi.c
+@@ -557,7 +557,6 @@ static int virt_wifi_newlink(struct net_
+ 	eth_hw_addr_inherit(dev, priv->lowerdev);
+ 	netif_stacked_transfer_operstate(priv->lowerdev, dev);
  
-+	/* Prevent module removal until modname and modbuildid are printed */
-+	guard(rcu)();
-+
- 	address += symbol_offset;
- 	len = kallsyms_lookup_buildid(address, &size, &offset, &modname, &buildid,
- 				       buffer);
+-	SET_NETDEV_DEV(dev, &priv->lowerdev->dev);
+ 	dev->ieee80211_ptr = kzalloc(sizeof(*dev->ieee80211_ptr), GFP_KERNEL);
+ 
+ 	if (!dev->ieee80211_ptr) {
 
 
