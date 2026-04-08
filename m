@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA613D6CA2;
-	Wed,  8 Apr 2026 18:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6074B351C2E;
+	Wed,  8 Apr 2026 18:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673362; cv=none; b=f333Rs1zUDsdpkqV+VWjB6q1rS41aZfEiqxVPL38MOxL7f0U/WDaQvhZWjQQuS03lTPWwfW34dQTyGaskj/bDU5JXitSf0FsHOAwrX+Y6jFiBYK3wE4U/5GH1biZigLgsDo/peHXyHP1WwUOPezIsW5nSKaWiycLQvQN9pbN4WU=
+	t=1775673364; cv=none; b=PmLNdio/7hha3kV1qTZQkmvicz8XzZHqZsad2m9qZKiNLLnLxnjlQoKT0TMyo4F66vebJ7Hgz9b5F6XpopXVFmhTaIUJVJqE+mIVizhWO+8naZv3jb1WuUziw5/eb3b6/3IqUKlmgCUMeoTe1sF7gWF+E2v7xG94xsKuMongI/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673362; c=relaxed/simple;
-	bh=zHv5rUXX1wS7x07KXwy4PiOl1x3csQ/MUbKcZTz1Kl8=;
+	s=arc-20240116; t=1775673364; c=relaxed/simple;
+	bh=vcvg5Rwrn9M5eV9qepOslE0YJpva1VsFzcCtpRmanEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gs9rKbhiccW037ydpQCf1IvHnPeFpRj1e1m/3r/ojubHXGqPk6P+IOkzJ967V6thVom8CZqmQhjzM+7MlQ2SZLgE4jIAz0+piOsSOVf65FuXn7zfOsDf//lNywdm8alx4QkGCFQ8VhkFhQpoSh0CKt2NIb01WbzQaOjpaNSPwJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCl1s0pE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WGDmg7hmFajO3inNFdtQoCwVWr0KRx4qWPOuUDoYimZN8MXYuP98S1JxOkdUOVBaSMlN/3wZFC8L9mh5GsR/rlGWbkA5QHkH2o6gALaS1cJg5vPO/L0b6FZuxMEP2PvCCvK0wcs+Uos3cf5ZGZkL4A+rM5sI16qqy0CZ2u5kNPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfESnsrG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCl1s0pE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E51BC19421;
-	Wed,  8 Apr 2026 18:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfESnsrG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50CBC2BC87;
+	Wed,  8 Apr 2026 18:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673361;
-	bh=zHv5rUXX1wS7x07KXwy4PiOl1x3csQ/MUbKcZTz1Kl8=;
+	s=korg; t=1775673364;
+	bh=vcvg5Rwrn9M5eV9qepOslE0YJpva1VsFzcCtpRmanEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wCl1s0pEQfL37CsS1xSPKySN8SigpJp+qobFUflCpLKcNBOk13YiKKBFE8hcyk0im
-	 KrO4FhDfiR2LZ8sDfPeDo3HbjpRWfwbWfjad0tbLxGf79lij4vPTEogemvFHj52RY4
-	 oX+Ax1Q1mh00zN67OLEWnRxtfKrJC4LekpL9Tgxg=
+	b=bfESnsrGCzXYfsRn0IZEEv71Qn5gkgZyYYkLMXOL2jkHH267LdKatBvmA69/LDq8T
+	 IM9QuXtp4mb2o1HkJchLUK8OIVXWm8Dk97S3G3dTF+VUzDS9wIvwgbL+5PQqEP+1K2
+	 XpS60InURnmD4kR7CQ+kczbftEMTIA3a68jlaevI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 6.18 202/277] usb: ehci-brcm: fix sleep during atomic
-Date: Wed,  8 Apr 2026 20:03:07 +0200
-Message-ID: <20260408175941.406098325@linuxfoundation.org>
+	Juno Choi <juno.choi@lge.com>
+Subject: [PATCH 6.18 203/277] usb: dwc2: gadget: Fix spin_lock/unlock mismatch in dwc2_hsotg_udc_stop()
+Date: Wed,  8 Apr 2026 20:03:08 +0200
+Message-ID: <20260408175941.442558602@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,37 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Juno Choi <juno.choi@lge.com>
 
-commit 679b771ea05ad0f8eeae83e14a91b8f4f39510c4 upstream.
+commit 9bb4b5ed7f8c4f95cc556bdf042b0ba2fa13557a upstream.
 
-echi_brcm_wait_for_sof() gets called after disabling interrupts
-in ehci_brcm_hub_control(). Use the atomic version of poll_timeout
-to fix the warning.
+dwc2_gadget_exit_clock_gating() internally calls call_gadget() macro,
+which expects hsotg->lock to be held since it does spin_unlock/spin_lock
+around the gadget driver callback invocation.
 
-Fixes: 9df231511bd6 ("usb: ehci: Add new EHCI driver for Broadcom STB SoC's")
+However, dwc2_hsotg_udc_stop() calls dwc2_gadget_exit_clock_gating()
+without holding the lock. This leads to:
+ - spin_unlock on a lock that is not held (undefined behavior)
+ - The lock remaining held after dwc2_gadget_exit_clock_gating() returns,
+   causing a deadlock when spin_lock_irqsave() is called later in the
+   same function.
+
+Fix this by acquiring hsotg->lock before calling
+dwc2_gadget_exit_clock_gating() and releasing it afterwards, which
+satisfies the locking requirement of the call_gadget() macro.
+
+Fixes: af076a41f8a2 ("usb: dwc2: also exit clock_gating when stopping udc while suspended")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260318185707.2588431-1-justin.chen@broadcom.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Juno Choi <juno.choi@lge.com>
+Link: https://patch.msgid.link/20260324014910.2798425-1-juno.choi@lge.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ehci-brcm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/dwc2/gadget.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/host/ehci-brcm.c
-+++ b/drivers/usb/host/ehci-brcm.c
-@@ -31,8 +31,8 @@ static inline void ehci_brcm_wait_for_so
- 	int res;
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -4607,7 +4607,9 @@ static int dwc2_hsotg_udc_stop(struct us
+ 	/* Exit clock gating when driver is stopped. */
+ 	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
+ 	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
++		spin_lock_irqsave(&hsotg->lock, flags);
+ 		dwc2_gadget_exit_clock_gating(hsotg, 0);
++		spin_unlock_irqrestore(&hsotg->lock, flags);
+ 	}
  
- 	/* Wait for next microframe (every 125 usecs) */
--	res = readl_relaxed_poll_timeout(&ehci->regs->frame_index, val,
--					 val != frame_idx, 1, 130);
-+	res = readl_relaxed_poll_timeout_atomic(&ehci->regs->frame_index,
-+						val, val != frame_idx, 1, 130);
- 	if (res)
- 		ehci_err(ehci, "Error waiting for SOF\n");
- 	udelay(delay);
+ 	/* all endpoints should be shutdown */
 
 
