@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206AB28C87C;
-	Wed,  8 Apr 2026 18:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D893624B0;
+	Wed,  8 Apr 2026 18:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673377; cv=none; b=ARgIqsW9HqOPQ/nwTIPGqhFCcnrNMan3VLimEqMn4gdxZxJ/4zpqf8rSL9OZq5OsxU/IpboDU5NC5bS3j1xtfXrx59A9uoY0EZLEGHgrvCcyQ7LDHG/CctbydgbAZwcOWfyAb9GTwD0VT5pVt9dBZAyChTyLNAWyZoJnjHyt1U4=
+	t=1775673379; cv=none; b=C3uBC4YpNPU6MxF/3BzQ8fVqdy8ppgY+iTRF70GYvK6Qk8CnkenN+5u0FV8Q8VBdUqM2gjO4Cjoy8kvNjhN+xnfS3rw/VCeOiSRcp4Ppdvw7ZUGae4vXG93tUBFIVM4o8rtG+a+ijc3tt4NrEJNRXHCYuaZfHrydGmBuVFm6zgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673377; c=relaxed/simple;
-	bh=8gXc3rxtlhfBZSu8A80/8/8U54BTUOXL/EBsJJMh5v0=;
+	s=arc-20240116; t=1775673379; c=relaxed/simple;
+	bh=ADIadsSptDIqcYx5nkZO0A4jEsOcFgizmlhUZYUQCDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aGPUqLVbPZQ9ub81f12debJ+B04QYuDzhslNSnFTTpIAFGOjKHnVCguDG/srKV0dC75Ejj21H1GMQxAb/eogBoI/tR1LoBLdfilr0AQ2wGMprs4tAG+mqXlmXK8E1bQN3UOKiOuSNGgt3GTioQsaPUgPsg07QElWelt5eSM7ZfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glvOYgDn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hA1DdjrH37++V0mHPjc/a+kdt/ZquUzdPdKymFSmARHTXWMQKHBRVoOYFOBFBS3e8Z0Z44m/Y5q0Shi9qXVUZ+sqgDoCrrJA+fAt8Kavb142HoNLFwOfQhYv+JiML10gYorfIqIXauNCE3pc2n0S/h8qA9QFbAZOFmLM036uyFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxvzrWNx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glvOYgDn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5EBC2BC87;
-	Wed,  8 Apr 2026 18:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxvzrWNx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDF4C19425;
+	Wed,  8 Apr 2026 18:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673377;
-	bh=8gXc3rxtlhfBZSu8A80/8/8U54BTUOXL/EBsJJMh5v0=;
+	s=korg; t=1775673379;
+	bh=ADIadsSptDIqcYx5nkZO0A4jEsOcFgizmlhUZYUQCDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glvOYgDnFBSUzixhokjQ8nI3eKhK93a5HqhwWT2JuOBkpTay9AWFnWeQ76yiBw6/T
-	 lSzrXmZhwWNFzmW6i1keD6Ik9y3LpJtXPnvW95eyCQh4To7iqO8HAthpbLsnQI5F9m
-	 K4oEGRstQRko2BF+mhwf4rJrN+wuejl0QQpsYrLg=
+	b=OxvzrWNxpEyeY1mJnC7ohtzaf8WAcbYGk/UzTU8dV31K8d06Rf0w/4gZ4jJZSTXfS
+	 AVMR/FodU0hC+R+1nUaVRLfhxrdAy69t/PD95iTga17z5NA+GTdkKaWgljSMr6iQxg
+	 6Ar9qCL++O9NE9YKciC6MQaxuOBU3nSV0tOpwXzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Daniel Scally <djrscally@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.18 208/277] x86/platform/geode: Fix on-stack property data use-after-return bug
-Date: Wed,  8 Apr 2026 20:03:13 +0200
-Message-ID: <20260408175941.629523170@linuxfoundation.org>
+	Valek Andrej <andrej.v@skyrain.eu>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.18 182/277] iio: accel: fix ADXL355 temperature signature value
+Date: Wed,  8 Apr 2026 20:02:47 +0200
+Message-ID: <20260408175940.658535968@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -57,104 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Valek Andrej <andrej.v@skyrain.eu>
 
-commit b981e9e94c687b7b19ae8820963f005b842cb2f2 upstream.
+commit 4f51e6c0baae80e52bd013092e82a55678be31fc upstream.
 
-The PROPERTY_ENTRY_GPIO macro (and by extension PROPERTY_ENTRY_REF)
-creates a temporary software_node_ref_args structure on the stack
-when used in a runtime assignment. This results in the property
-pointing to data that is invalid once the function returns.
+Temperature was wrongly represented as 12-bit signed, confirmed by checking
+the datasheet. Even if the temperature is negative, the value in the
+register stays unsigned.
 
-Fix this by ensuring the GPIO reference data is not stored on stack and
-using PROPERTY_ENTRY_REF_ARRAY_LEN() to point directly to the persistent
-reference data.
-
-Fixes: 298c9babadb8 ("x86/platform/geode: switch GPIO buttons and LEDs to software properties")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Daniel Scally <djrscally@gmail.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Hans de Goede <hansg@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260329-property-gpio-fix-v2-1-3cca5ba136d8@gmail.com
+Fixes: 12ed27863ea3 iio: accel: Add driver support for ADXL355
+Signed-off-by: Valek Andrej <andrej.v@skyrain.eu>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/platform/geode/geode-common.c |   24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/iio/accel/adxl355_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/platform/geode/geode-common.c
-+++ b/arch/x86/platform/geode/geode-common.c
-@@ -28,8 +28,10 @@ static const struct software_node geode_
- 	.properties = geode_gpio_keys_props,
- };
- 
--static struct property_entry geode_restart_key_props[] = {
--	{ /* Placeholder for GPIO property */ },
-+static struct software_node_ref_args geode_restart_gpio_ref;
-+
-+static const struct property_entry geode_restart_key_props[] = {
-+	PROPERTY_ENTRY_REF_ARRAY_LEN("gpios", &geode_restart_gpio_ref, 1),
- 	PROPERTY_ENTRY_U32("linux,code", KEY_RESTART),
- 	PROPERTY_ENTRY_STRING("label", "Reset button"),
- 	PROPERTY_ENTRY_U32("debounce-interval", 100),
-@@ -64,8 +66,7 @@ int __init geode_create_restart_key(unsi
- 	struct platform_device *pd;
- 	int err;
- 
--	geode_restart_key_props[0] = PROPERTY_ENTRY_GPIO("gpios",
--							 &geode_gpiochip_node,
-+	geode_restart_gpio_ref = SOFTWARE_NODE_REFERENCE(&geode_gpiochip_node,
- 							 pin, GPIO_ACTIVE_LOW);
- 
- 	err = software_node_register_node_group(geode_gpio_keys_swnodes);
-@@ -99,6 +100,7 @@ int __init geode_create_leds(const char
- 	const struct software_node *group[MAX_LEDS + 2] = { 0 };
- 	struct software_node *swnodes;
- 	struct property_entry *props;
-+	struct software_node_ref_args *gpio_refs;
- 	struct platform_device_info led_info = {
- 		.name	= "leds-gpio",
- 		.id	= PLATFORM_DEVID_NONE,
-@@ -127,6 +129,12 @@ int __init geode_create_leds(const char
- 		goto err_free_swnodes;
- 	}
- 
-+	gpio_refs = kzalloc_objs(*gpio_refs, n_leds);
-+	if (!gpio_refs) {
-+		err = -ENOMEM;
-+		goto err_free_props;
-+	}
-+
- 	group[0] = &geode_gpio_leds_node;
- 	for (i = 0; i < n_leds; i++) {
- 		node_name = kasprintf(GFP_KERNEL, "%s:%d", label, i);
-@@ -135,9 +143,11 @@ int __init geode_create_leds(const char
- 			goto err_free_names;
- 		}
- 
-+		gpio_refs[i] = SOFTWARE_NODE_REFERENCE(&geode_gpiochip_node,
-+						       leds[i].pin,
-+						       GPIO_ACTIVE_LOW);
- 		props[i * 3 + 0] =
--			PROPERTY_ENTRY_GPIO("gpios", &geode_gpiochip_node,
--					    leds[i].pin, GPIO_ACTIVE_LOW);
-+			PROPERTY_ENTRY_REF_ARRAY_LEN("gpios", &gpio_refs[i], 1);
- 		props[i * 3 + 1] =
- 			PROPERTY_ENTRY_STRING("linux,default-trigger",
- 					      leds[i].default_on ?
-@@ -171,6 +181,8 @@ err_unregister_group:
- err_free_names:
- 	while (--i >= 0)
- 		kfree(swnodes[i].name);
-+	kfree(gpio_refs);
-+err_free_props:
- 	kfree(props);
- err_free_swnodes:
- 	kfree(swnodes);
+--- a/drivers/iio/accel/adxl355_core.c
++++ b/drivers/iio/accel/adxl355_core.c
+@@ -745,7 +745,7 @@ static const struct iio_chan_spec adxl35
+ 				      BIT(IIO_CHAN_INFO_OFFSET),
+ 		.scan_index = 3,
+ 		.scan_type = {
+-			.sign = 's',
++			.sign = 'u',
+ 			.realbits = 12,
+ 			.storagebits = 16,
+ 			.endianness = IIO_BE,
 
 
