@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D143176E4;
-	Wed,  8 Apr 2026 18:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1413176E4;
+	Wed,  8 Apr 2026 18:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674713; cv=none; b=QR1ZrMrZRbt8pVfn974Uu2TYpoIfMTq7NWc40WnRfRVFk7+igzSc4TQ+MqpLdsbwngRrRrHppTMqlXS6o2VoIe1X00kYYO4AY5Nl9RIjrxsvwyxMJfBcpyQksX9i/HmkpwINsK6+u2UhRkqjB+OAxXtxvRODyxaLylPIrn1/HSs=
+	t=1775674716; cv=none; b=Wq9kdvYBKTfGhgKdOcSYZivIlVcj/Q7P+6Dqrd0/g3uSnoGcm9r06HcinZT1RFACZlgcc6/JgxYga+7oMuwA4FugjFZo1CFpBi2gyXLgivyIN1a+Hli/1/AYY6NJvusO0TjTuGRd52L9L3Tyf2WW/tIMjtLjvdJq3zcMy/1p8Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674713; c=relaxed/simple;
-	bh=dGTm/AzTADo84Tn93kT4eXRD8xN90m7PZDU8RZHgEws=;
+	s=arc-20240116; t=1775674716; c=relaxed/simple;
+	bh=yo1PGd2l8RYgzPxKBKvn1aCl8ln5wqD884yBMYr5XU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/VJmNKZCORaPSxOg0HvUBtwoToC5dYt4aKDLlpN6uooFQvmsmBLcTt21mVmPxDbk/ekS5X9uLk4+JkApkn2G+FmcWKq/+gBei1Ub8+4YwU9tx8qKW2aoFQ3RiL6JbnGrifeJSB0VVxT2VrvhYnsB+LskP/GwgG+dprjNULvD14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZfeS+Ei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a2CdklmPK+tH6KzXe11E2KMfMFj6WCaVm/UHRJNbN9GSq8thNypEXYj72kTQ4Bie3bsWDIc3S5TVWXRM2OHZnSB/HZELqzaGc5bd7nHIyRh1NzexjbxEVPoPRzvPh5v58D2G7qAi8IlJpe2EvS7w7XS34hkwv1+vw2+yfPyX8xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEKvohMi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZfeS+Ei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197B2C19421;
-	Wed,  8 Apr 2026 18:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEKvohMi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6185C19421;
+	Wed,  8 Apr 2026 18:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674713;
-	bh=dGTm/AzTADo84Tn93kT4eXRD8xN90m7PZDU8RZHgEws=;
+	s=korg; t=1775674716;
+	bh=yo1PGd2l8RYgzPxKBKvn1aCl8ln5wqD884yBMYr5XU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZfeS+EiHzy0KsaySN0EkJkVKe8fB0YvW4FtJe82BhqFzBm2p7ShQo5qVoo2+uQGw
-	 D23yRgEyyh0X5VEZy2fmAWLVTO8De7H5sAXZrBnlbGjtZZDo1WewUmxuEb1jGQxHwI
-	 VblZndGzfIbNsUB71MgJDXelcJ687uzKyzxDdVEU=
+	b=aEKvohMiX/RzdA7Kn3PnrkGm/9yuGXGL/cwNdAT8+7mNlADAG5f1YO2f2/gdyxcp5
+	 DSehrEOr0wN6FWhixczC2RxhVSkCYR8RabkVCZdwhv+jRI5gOhVA6LO0/Qzf0e5sYB
+	 /JOsImFKrPYrS9o6S9vDynmqnme0mJwrYTG6+S5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.19 203/311] drm/amdgpu: Fix wait after reset sequence in S4
-Date: Wed,  8 Apr 2026 20:03:23 +0200
-Message-ID: <20260408175946.989919430@linuxfoundation.org>
+Subject: [PATCH 6.19 204/311] drm/amdgpu: validate doorbell_offset in user queue creation
+Date: Wed,  8 Apr 2026 20:03:24 +0200
+Message-ID: <20260408175947.026372427@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -50,54 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit daf470b8882b6f7f53cbfe9ec2b93a1b21528cdc upstream.
+commit a018d1819f158991b7308e4f74609c6c029b670c upstream.
 
-For a mode-1 reset done at the end of S4 on PSPv11 dGPUs, only check if
-TOS is unloaded.
+amdgpu_userq_get_doorbell_index() passes the user-provided
+doorbell_offset to amdgpu_doorbell_index_on_bar() without bounds
+checking. An arbitrarily large doorbell_offset can cause the
+calculated doorbell index to fall outside the allocated doorbell BO,
+potentially corrupting kernel doorbell space.
 
-Fixes: 32f73741d6ee ("drm/amdgpu: Wait for bootloader after PSPv11 reset")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/4853
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Validate that doorbell_offset falls within the doorbell BO before
+computing the BAR index, using u64 arithmetic to prevent overflow.
+
+Fixes: f09c1e6077ab ("drm/amdgpu: generate doorbell index for userqueue")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2fb4883b884a437d760bd7bdf7695a7e5a60bba3)
+(cherry picked from commit de1ef4ffd70e1d15f0bf584fd22b1f28cbd5e2ec)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    8 ++++++--
- drivers/gpu/drm/amd/amdgpu/psp_v11_0.c  |    3 ++-
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2703,8 +2703,12 @@ static int amdgpu_pmops_freeze(struct de
- 	if (r)
- 		return r;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -550,6 +550,13 @@ amdgpu_userq_get_doorbell_index(struct a
+ 		goto unpin_bo;
+ 	}
  
--	if (amdgpu_acpi_should_gpu_reset(adev))
--		return amdgpu_asic_reset(adev);
-+	if (amdgpu_acpi_should_gpu_reset(adev)) {
-+		amdgpu_device_lock_reset_domain(adev->reset_domain);
-+		r = amdgpu_asic_reset(adev);
-+		amdgpu_device_unlock_reset_domain(adev->reset_domain);
-+		return r;
++	/* Validate doorbell_offset is within the doorbell BO */
++	if ((u64)db_info->doorbell_offset * db_size + db_size >
++	    amdgpu_bo_size(db_obj->obj)) {
++		r = -EINVAL;
++		goto unpin_bo;
 +	}
- 	return 0;
- }
- 
---- a/drivers/gpu/drm/amd/amdgpu/psp_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/psp_v11_0.c
-@@ -170,7 +170,8 @@ static int psp_v11_0_wait_for_bootloader
- 	int retry_loop;
- 
- 	/* For a reset done at the end of S3, only wait for TOS to be unloaded */
--	if (adev->in_s3 && !(adev->flags & AMD_IS_APU) && amdgpu_in_reset(adev))
-+	if ((adev->in_s4 || adev->in_s3) && !(adev->flags & AMD_IS_APU) &&
-+	    amdgpu_in_reset(adev))
- 		return psp_v11_wait_for_tos_unload(psp);
- 
- 	for (retry_loop = 0; retry_loop < 20; retry_loop++) {
++
+ 	index = amdgpu_doorbell_index_on_bar(uq_mgr->adev, db_obj->obj,
+ 					     db_info->doorbell_offset, db_size);
+ 	drm_dbg_driver(adev_to_drm(uq_mgr->adev),
 
 
