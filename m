@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C4C2F39C2;
-	Wed,  8 Apr 2026 18:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F7535B658;
+	Wed,  8 Apr 2026 18:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674572; cv=none; b=Hfl2qlmYQgGy5+YgUrahsUZBIc7SHDW5XUx1rFJKoqQiymPAHwZazYoVp73U2kRvS/ywjgsxyKgYVlNMNCrXjvYIZYL8JG0l4Z8Ue7qfxvESk9c6m8nBYkc9WiYl0P1g+NEjeoZ9MTX5gwxbHV2/pi0uiYO+IOneMcolUoOW4g4=
+	t=1775674574; cv=none; b=kkQSlMOq8gLGF/ARfh/AVWXIjF80w9IzhRPB+l4waDFA2N2mdc6WQ9CYRYUCoLQcoEMpyoLN3iBQFoiR/o04OPwv9UpEPyXMjxPI1kX5qG5wTCb2LEO7VGbndEusBd24c3O4Hk/l5z3uvj312dUak1gff/ZBtnf4az/LW1qRrRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674572; c=relaxed/simple;
-	bh=nrgz6QTlb8DyX6F3DAhNIXOkSVATFKvtIAKwoWV48vE=;
+	s=arc-20240116; t=1775674574; c=relaxed/simple;
+	bh=Ubfd1RdePg9AcF9UvMAD5O0x1lxyMqymjWbQxeRHnGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hSdIlyDSbSe0gWodDB5usCgsQggUpUkYUBmUjMODxzr7Q8tzzAcSGq/lmztbz6gRH3Hxc8wYSlMV78hsuunqaSgPK+iYVVbDuAxuwJ0cHQk90qfiJ3Hfp3ANchF8VhxtTnQn+0Isn48hy1hf1Sej0DbWo4nxsU+m8s4pmfQtCA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gtyc5OHt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b0PdKHC0HXvuGbNgtDcYOIQdAq09HwGPsAN2ivYeXkUrQ94hVkMmdfBhGe//HrL0YDGANr5j8pEYH8wto88WRj2+0jyOamIaU05kk+XppZw1YSjtnvA5r6ewCFNuYPY/nG61knisOh6TAldNqSrySd0w1mBYsstrZ6DjSxQ1hhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zE12jli7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gtyc5OHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9890FC19421;
-	Wed,  8 Apr 2026 18:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zE12jli7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C3E4C19421;
+	Wed,  8 Apr 2026 18:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674571;
-	bh=nrgz6QTlb8DyX6F3DAhNIXOkSVATFKvtIAKwoWV48vE=;
+	s=korg; t=1775674574;
+	bh=Ubfd1RdePg9AcF9UvMAD5O0x1lxyMqymjWbQxeRHnGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gtyc5OHtSKTuijGmObYXB+yF6DuA9DJvPQvKIEXlVrys2xo2wJFBYLdebnGEBA0CQ
-	 IVcokbzaLeoWRrLMJPwCc7LTlfeilfu7J3wWZGUBkeaodKL1HukENbI1bxX9QEzMg7
-	 Ppd9OGk0md1uzDld+z0j+38gcwFKS/3YYxlVvXVI=
+	b=zE12jli7rDfRIkWF9j/MgDg5w0gJ9lbq8a5EzHyHxNbMcNaBpbtWmeg287DiHWKDh
+	 9X7MYi3/skf7oUkm34sB5D1ctsKe7PV3NVKhIAypzCexVClYp+ib6h6FbxBHghfpWN
+	 wcsWPAMHIIhcPgjow7WXTHv5ExaGnAcyS6Ncstig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jessica Liu <liu.xuemei1@zte.com.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 150/311] hwmon: (occ) Fix missing newline in occ_show_extended()
-Date: Wed,  8 Apr 2026 20:02:30 +0200
-Message-ID: <20260408175945.009973562@linuxfoundation.org>
+Subject: [PATCH 6.19 151/311] irqchip/riscv-aplic: Restrict genpd notifier to device tree only
+Date: Wed,  8 Apr 2026 20:02:31 +0200
+Message-ID: <20260408175945.046433136@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -45,46 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Jessica Liu <liu.xuemei1@zte.com.cn>
 
-[ Upstream commit 09773978879ecf71a7990fe9a28ce4eb92bce645 ]
+[ Upstream commit af416cd9b3fb9d17ac7f4cfa12d1ea83dfd0e4be ]
 
-In occ_show_extended() case 0, when the EXTN_FLAG_SENSOR_ID flag
-is set, the sysfs_emit format string "%u" is missing the trailing
-newline that the sysfs ABI expects. The else branch correctly uses
-"%4phN\n", and all other show functions in this file include the
-trailing newline.
+On ACPI systems, the aplic's pm_domain is set to acpi_general_pm_domain,
+which provides its own power management callbacks (e.g., runtime_suspend
+via acpi_subsys_runtime_suspend).
 
-Add the missing "\n" for consistency and correct sysfs output.
+aplic_pm_add() unconditionally calls dev_pm_genpd_add_notifier() when
+dev->pm_domain is non‑NULL, leading to a comparison between runtime_suspend
+and genpd_runtime_suspend. This results in the following errors when ACPI
+is enabled:
 
-Fixes: c10e753d43eb ("hwmon (occ): Add sensor types and versions")
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260326224510.294619-3-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  riscv-aplic RSCV0002:00: failed to create APLIC context
+  riscv-aplic RSCV0002:00: error -ENODEV: failed to setup APLIC in MSI mode
+
+Fix this by checking for dev->of_node before adding or removing the genpd
+notifier, ensuring it is only used for device tree based systems.
+
+Fixes: 95a8ddde3660 ("irqchip/riscv-aplic: Preserve APLIC states across suspend/resume")
+Signed-off-by: Jessica Liu <liu.xuemei1@zte.com.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260331093029749vRpdH-0qoEqjS0Wnn9M4x@zte.com.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/occ/common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-riscv-aplic-main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
-index 89928d38831b6..86c79156a46b9 100644
---- a/drivers/hwmon/occ/common.c
-+++ b/drivers/hwmon/occ/common.c
-@@ -725,7 +725,7 @@ static ssize_t occ_show_extended(struct device *dev,
- 	switch (sattr->nr) {
- 	case 0:
- 		if (extn->flags & EXTN_FLAG_SENSOR_ID) {
--			rc = sysfs_emit(buf, "%u",
-+			rc = sysfs_emit(buf, "%u\n",
- 					get_unaligned_be32(&extn->sensor_id));
- 		} else {
- 			rc = sysfs_emit(buf, "%4phN\n", extn->name);
+diff --git a/drivers/irqchip/irq-riscv-aplic-main.c b/drivers/irqchip/irq-riscv-aplic-main.c
+index 9f53979b69625..d9afb6ae98cf5 100644
+--- a/drivers/irqchip/irq-riscv-aplic-main.c
++++ b/drivers/irqchip/irq-riscv-aplic-main.c
+@@ -150,7 +150,7 @@ static void aplic_pm_remove(void *data)
+ 	struct device *dev = priv->dev;
+ 
+ 	list_del(&priv->head);
+-	if (dev->pm_domain)
++	if (dev->pm_domain && dev->of_node)
+ 		dev_pm_genpd_remove_notifier(dev);
+ }
+ 
+@@ -165,7 +165,7 @@ static int aplic_pm_add(struct device *dev, struct aplic_priv *priv)
+ 
+ 	priv->saved_hw_regs.srcs = srcs;
+ 	list_add(&priv->head, &aplics);
+-	if (dev->pm_domain) {
++	if (dev->pm_domain && dev->of_node) {
+ 		priv->genpd_nb.notifier_call = aplic_pm_notifier;
+ 		ret = dev_pm_genpd_add_notifier(dev, &priv->genpd_nb);
+ 		if (ret)
 -- 
 2.53.0
 
