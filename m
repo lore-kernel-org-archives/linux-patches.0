@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175B13D75C9;
-	Wed,  8 Apr 2026 18:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A189933121F;
+	Wed,  8 Apr 2026 18:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673953; cv=none; b=Q28QNDupSN6tHccBPVKREBHRCTBI5IcLq3QJohOntPqz+OnwkL00xPOZEV36/oUfLU507fQk7fKIMq3mtNzV7Nlzwwl4ncXBsQckkL3rNpV/wfk+KDS/TlHP91n5zn9xERzF/AT7CmSFZSxYSQkI77vkKOFa6iR4aHB/KxQwn9Q=
+	t=1775673955; cv=none; b=DkCPQUtMPJCUN+rFheXKeSc0KI5d6yZKOulzT3in8TVbJuRJN69xp3ElRtx5Oaj3xGy3Z+xg2+eLY3PmifDGzOGn2oy+Z7DD+TFt4he6NOMbOl1RORFmeXbOxo54Ejf9gyrnYCyA3/LTW7EYEhcjV+6PiN9D+qSTqg4LFym/SOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673953; c=relaxed/simple;
-	bh=oR2inzQHTcbJ6s46dqaY4MxXVlp16nnjwXYdcJan9E0=;
+	s=arc-20240116; t=1775673955; c=relaxed/simple;
+	bh=DFCDDfQ5yWimVnlYXsjU1aW03gs6NHIMYoi+BO46N7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lOQJ8sV8cBKe8XhrCgAk0qO/SIsETpCt1XXVbIaZ/5lGWiu2IbNkZdkOtKFSKYNImuCVxjtIOHYHXN6dGjtzOv8LlRA+S/jR442h7E22c2AZg0nTgFWF92weoB5D6QqX7HQFhvZ88AFeh8Li4mSZkZwO+A1L+IgwWxldFyakwU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUrxMSM8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SnhusDzXwhCVd7IeznYcMNPiSw+eIHkGygV/HzGkUMhlUCtV9wuJtFwEaAgqQ+dT/0qddoSa5mH4lT2tSo5XGhjNWI62fj8IiDNxLiEvb5YBGo6odFU1srvQVxdgo+vKCyJC+740Wt6kMrHzmMVZgI1oIgBS9gwEn7Fy67SJc0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+5XjaYG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUrxMSM8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F5FC19425;
-	Wed,  8 Apr 2026 18:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+5XjaYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3358EC2BC87;
+	Wed,  8 Apr 2026 18:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673953;
-	bh=oR2inzQHTcbJ6s46dqaY4MxXVlp16nnjwXYdcJan9E0=;
+	s=korg; t=1775673955;
+	bh=DFCDDfQ5yWimVnlYXsjU1aW03gs6NHIMYoi+BO46N7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AUrxMSM8uM/ugXUEvWz/3DO/TenkDEIGc+D91+bQuwK5Zl252hwvHWl9AS5116hSL
-	 kFR5T8/8LOqVVsBhoj9st2Zgl26hPcCVHet1MxOX4Oa0bB+olPbaRaoUzVAgZv823h
-	 xkRU8Kxi7psIRtJJsgZjBroyh42MWe2lScJZpviQ=
+	b=O+5XjaYG1tpSIvEVrGKl9OlPbYGJV0Gg05lzOxzFac9P1PIOokytGKu1gCPxO1IVM
+	 vJz+7rQRxcPmH8nE8bi8IIisNq4L+Nuw+vB9Tr/WjdHXDhe/5ORL1LAF4UYIP5vgbb
+	 1rdRmXXMezOk3JQKnIfTcSSHt1XYRMZukYzz47lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Francesco Lavra <flavra@baylibre.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 153/242] iio: imu: bmi160: Remove potential undefined behavior in bmi160_config_pin()
-Date: Wed,  8 Apr 2026 20:03:13 +0200
-Message-ID: <20260408175932.817197424@linuxfoundation.org>
+Subject: [PATCH 6.12 154/242] iio: imu: st_lsm6dsx: Set FIFO ODR for accelerometer and gyroscope only
+Date: Wed,  8 Apr 2026 20:03:14 +0200
+Message-ID: <20260408175932.854648003@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -48,80 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Francesco Lavra <flavra@baylibre.com>
 
-commit c05a87d9ec3bf8727a5d746ce855003c6f2f8bb4 upstream.
+commit 630748afa7030b272b7bee5df857e7bcf132ed51 upstream.
 
-If 'pin' is not one of its expected values, the value of
-'int_out_ctrl_shift' is undefined.  With UBSAN enabled, this causes
-Clang to generate undefined behavior, resulting in the following
-warning:
+The st_lsm6dsx_set_fifo_odr() function, which is called when enabling and
+disabling the hardware FIFO, checks the contents of the hw->settings->batch
+array at index sensor->id, and then sets the current ODR value in sensor
+registers that depend on whether the register address is set in the above
+array element. This logic is valid for internal sensors only, i.e. the
+accelerometer and gyroscope; however, since commit c91c1c844ebd ("iio: imu:
+st_lsm6dsx: add i2c embedded controller support"), this function is called
+also when configuring the hardware FIFO for external sensors (i.e. sensors
+accessed through the sensor hub functionality), which can result in
+unrelated device registers being written.
 
-  drivers/iio/imu/bmi160/bmi160_core.o: warning: objtool: bmi160_setup_irq() falls through to next function __cfi_bmi160_core_runtime_resume()
+Add a check to the beginning of st_lsm6dsx_set_fifo_odr() so that it does
+not touch any registers unless it is called for internal sensors.
 
-Prevent the UB and improve error handling by returning an error if 'pin'
-has an unexpected value.
-
-While at it, simplify the code a bit by moving the 'pin_name' assignment
-to the first switch statement.
-
-Fixes: 895bf81e6bbf ("iio:bmi160: add drdy interrupt support")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Closes: https://lore.kernel.org/a426d669-58bb-4be1-9eaa-6f3d83109e2d@app.fastmail.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Fixes: c91c1c844ebd ("iio: imu: st_lsm6dsx: add i2c embedded controller support")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/bmi160/bmi160_core.c |   15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iio/imu/bmi160/bmi160_core.c
-+++ b/drivers/iio/imu/bmi160/bmi160_core.c
-@@ -573,12 +573,16 @@ static int bmi160_config_pin(struct regm
- 		int_out_ctrl_shift = BMI160_INT1_OUT_CTRL_SHIFT;
- 		int_latch_mask = BMI160_INT1_LATCH_MASK;
- 		int_map_mask = BMI160_INT1_MAP_DRDY_EN;
-+		pin_name = "INT1";
- 		break;
- 	case BMI160_PIN_INT2:
- 		int_out_ctrl_shift = BMI160_INT2_OUT_CTRL_SHIFT;
- 		int_latch_mask = BMI160_INT2_LATCH_MASK;
- 		int_map_mask = BMI160_INT2_MAP_DRDY_EN;
-+		pin_name = "INT2";
- 		break;
-+	default:
-+		return -EINVAL;
- 	}
- 	int_out_ctrl_mask = BMI160_INT_OUT_CTRL_MASK << int_out_ctrl_shift;
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
+@@ -224,6 +224,10 @@ static int st_lsm6dsx_set_fifo_odr(struc
+ 	const struct st_lsm6dsx_reg *batch_reg;
+ 	u8 data;
  
-@@ -612,17 +616,8 @@ static int bmi160_config_pin(struct regm
- 	ret = bmi160_write_conf_reg(regmap, BMI160_REG_INT_MAP,
- 				    int_map_mask, int_map_mask,
- 				    write_usleep);
--	if (ret) {
--		switch (pin) {
--		case BMI160_PIN_INT1:
--			pin_name = "INT1";
--			break;
--		case BMI160_PIN_INT2:
--			pin_name = "INT2";
--			break;
--		}
-+	if (ret)
- 		dev_err(dev, "Failed to configure %s IRQ pin", pin_name);
--	}
- 
- 	return ret;
- }
++	/* Only internal sensors have a FIFO ODR configuration register. */
++	if (sensor->id >= ARRAY_SIZE(hw->settings->batch))
++		return 0;
++
+ 	batch_reg = &hw->settings->batch[sensor->id];
+ 	if (batch_reg->addr) {
+ 		int val;
 
 
