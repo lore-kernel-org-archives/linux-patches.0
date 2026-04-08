@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D903ACA41;
-	Wed,  8 Apr 2026 18:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B267324B1F;
+	Wed,  8 Apr 2026 18:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672755; cv=none; b=vC+0sZ/J8NFw07RO7EkcAoy3YfYd+k98HLRs2G+sN7QCZG7u2oA64+JASMBujBzWGUranf26NDbuxK5DH/Tc5J6lKBT+WpNXx7Bz1jY3tRvqRhMoXdrtI5XCR4DMXBixEeVZ5SzMJmTy+3G9e/c+9N6nH4YogLL8kIxdbZJHNTE=
+	t=1775672757; cv=none; b=EIlAOfAMettnc34kgo0gte8IqzMevYw9KpLF2bTXIe/p33tvXqrS2x+ESDEQxN5owv2gS5UF7IT6sCdv6OARrxvJKxxqaPpIDq3k1TsUkSf/Q7xi0v5cTjwkz51W6YNiNaX+5xNQQpt1M7MJLQYasDZzrSaen5f6ejdQJWrJBtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672755; c=relaxed/simple;
-	bh=440NII2QoyUDe4LmYD761m//rr9jHIC+2+4mt+VVCRk=;
+	s=arc-20240116; t=1775672757; c=relaxed/simple;
+	bh=lFci4sUtxS2yJCwmgP+zYjrxxFmb2vnC0jg7I8nMUNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYAguOg6vfVYZH6dMXvUBX2zJNx3MR86L6d02lekK7p68bQby8xIEzxyWCyKV7eqXBHuwauVCp3Y+eUSNPzt/neOPqzWLmdGFLP158Vmwr7sf+4ATihNpkc3cu3nJ32h7vlGaxz6fEBZSdHieJBSaodo0IjtnHbYlqu+eEREYPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPXjNOFj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lu9kFUd0XQSlekRuRaGsY++r4U5brNlQNtmaIZnANOnHZMffbv7xw37eptH7kN4l8niDFpHhSTyU9rc8RWi03rIKb++MkuXh+qjl2z/Ul2VgybhBcgXxKtvb6ClChiH951Ut+TZ/yDgLKh1wwFxUNni38Jzpl5ItuHpjurX+p4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfUAjOGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPXjNOFj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929C3C19421;
-	Wed,  8 Apr 2026 18:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfUAjOGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285F9C19421;
+	Wed,  8 Apr 2026 18:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672754;
-	bh=440NII2QoyUDe4LmYD761m//rr9jHIC+2+4mt+VVCRk=;
+	s=korg; t=1775672757;
+	bh=lFci4sUtxS2yJCwmgP+zYjrxxFmb2vnC0jg7I8nMUNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iPXjNOFjyTXKpB7QgQ3QXnnPmjUw6dYU9IEinrBGXVRhnl1J7v6zNanTVp02Eopd7
-	 Tg++OpR0YREuOttkeoeY19pIEsPR8SANpu2kU2FGXS1giaBO3BiMHbC3U5MfGVvrhz
-	 8q2cHKlmGl6Rd/ojvniMK8ZkvP9FXU2vDwCdytjU=
+	b=NfUAjOGxLkehv0beGzl81k6BZ49yHqs06m18q/wJb+7E8IiBNKx84heZ0onbIZK5l
+	 gyQO9Tn2E+6enianw2BHwk9wovhgplbs5nB8zE/Q3ky4PLr6rinSgrb+n1jIpdArdb
+	 05wc7vSu18YJMwkV+k9X8GCjTvbzT1+sU3RUqaAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yufan Chen <yufan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 128/160] net: ftgmac100: fix ring allocation unwind on open failure
-Date: Wed,  8 Apr 2026 20:03:35 +0200
-Message-ID: <20260408175917.970052774@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 129/160] cpufreq: governor: fix double free in cpufreq_dbs_governor_init() error path
+Date: Wed,  8 Apr 2026 20:03:36 +0200
+Message-ID: <20260408175918.008068980@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -50,83 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yufan Chen <yufan.chen@linux.dev>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit c0fd0fe745f5e8c568d898cd1513d0083e46204a upstream.
+commit 6dcf9d0064ce2f3e3dfe5755f98b93abe6a98e1e upstream.
 
-ftgmac100_alloc_rings() allocates rx_skbs, tx_skbs, rxdes, txdes, and
-rx_scratch in stages. On intermediate failures it returned -ENOMEM
-directly, leaking resources allocated earlier in the function.
+When kobject_init_and_add() fails, cpufreq_dbs_governor_init() calls
+kobject_put(&dbs_data->attr_set.kobj).
 
-Rework the failure path to use staged local unwind labels and free
-allocated resources in reverse order before returning -ENOMEM. This
-matches common netdev allocation cleanup style.
+The kobject release callback cpufreq_dbs_data_release() calls
+gov->exit(dbs_data) and kfree(dbs_data), but the current error path
+then calls gov->exit(dbs_data) and kfree(dbs_data) again, causing a
+double free.
 
-Fixes: d72e01a0430f ("ftgmac100: Use a scratch buffer for failed RX allocations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yufan Chen <yufan.chen@linux.dev>
-Link: https://patch.msgid.link/20260328163257.60836-1-yufan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Keep the direct kfree(dbs_data) for the gov->init() failure path, but
+after kobject_init_and_add() has been called, let kobject_put() handle
+the cleanup through cpufreq_dbs_data_release().
+
+Fixes: 4ebe36c94aed ("cpufreq: Fix kobject memleak")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260401024535.1395801-1-lgs201920130244@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/faraday/ftgmac100.c |   28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ drivers/cpufreq/cpufreq_governor.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/faraday/ftgmac100.c
-+++ b/drivers/net/ethernet/faraday/ftgmac100.c
-@@ -934,19 +934,19 @@ static int ftgmac100_alloc_rings(struct
- 	priv->tx_skbs = kcalloc(MAX_TX_QUEUE_ENTRIES, sizeof(void *),
- 				GFP_KERNEL);
- 	if (!priv->tx_skbs)
--		return -ENOMEM;
-+		goto err_free_rx_skbs;
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -468,13 +468,13 @@ int cpufreq_dbs_governor_init(struct cpu
+ 	/* Failure, so roll back. */
+ 	pr_err("initialization failed (dbs_data kobject init error %d)\n", ret);
  
- 	/* Allocate descriptors */
- 	priv->rxdes = dma_alloc_coherent(priv->dev,
- 					 MAX_RX_QUEUE_ENTRIES * sizeof(struct ftgmac100_rxdes),
- 					 &priv->rxdes_dma, GFP_KERNEL);
- 	if (!priv->rxdes)
--		return -ENOMEM;
-+		goto err_free_tx_skbs;
- 	priv->txdes = dma_alloc_coherent(priv->dev,
- 					 MAX_TX_QUEUE_ENTRIES * sizeof(struct ftgmac100_txdes),
- 					 &priv->txdes_dma, GFP_KERNEL);
- 	if (!priv->txdes)
--		return -ENOMEM;
-+		goto err_free_rxdes;
+-	kobject_put(&dbs_data->attr_set.kobj);
+-
+ 	policy->governor_data = NULL;
  
- 	/* Allocate scratch packet buffer */
- 	priv->rx_scratch = dma_alloc_coherent(priv->dev,
-@@ -954,9 +954,29 @@ static int ftgmac100_alloc_rings(struct
- 					      &priv->rx_scratch_dma,
- 					      GFP_KERNEL);
- 	if (!priv->rx_scratch)
--		return -ENOMEM;
-+		goto err_free_txdes;
- 
- 	return 0;
+ 	if (!have_governor_per_policy())
+ 		gov->gdbs_data = NULL;
+-	gov->exit(dbs_data);
 +
-+err_free_txdes:
-+	dma_free_coherent(priv->dev,
-+			  MAX_TX_QUEUE_ENTRIES *
-+			  sizeof(struct ftgmac100_txdes),
-+			  priv->txdes, priv->txdes_dma);
-+	priv->txdes = NULL;
-+err_free_rxdes:
-+	dma_free_coherent(priv->dev,
-+			  MAX_RX_QUEUE_ENTRIES *
-+			  sizeof(struct ftgmac100_rxdes),
-+			  priv->rxdes, priv->rxdes_dma);
-+	priv->rxdes = NULL;
-+err_free_tx_skbs:
-+	kfree(priv->tx_skbs);
-+	priv->tx_skbs = NULL;
-+err_free_rx_skbs:
-+	kfree(priv->rx_skbs);
-+	priv->rx_skbs = NULL;
-+	return -ENOMEM;
- }
++	kobject_put(&dbs_data->attr_set.kobj);
++	goto free_policy_dbs_info;
  
- static void ftgmac100_init_rings(struct ftgmac100 *priv)
+ free_dbs_data:
+ 	kfree(dbs_data);
 
 
