@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFC6324B1F;
-	Wed,  8 Apr 2026 18:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CA43ACA41;
+	Wed,  8 Apr 2026 18:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672837; cv=none; b=mB7ijUY6roKWWeLjV/YJ5kehhQTZkxNGsv3N6g7SZxb2J5iN730Kbj6kd29ppekFvhGUSH1utqEsDqXvpjxi2GZUlcNWFMzIAd7q6UDxG3TtPxWhXyFWHAzHejpVz0ZjGzRekcCRy+pKwl1OJHhYZv9Wdh+aFnSHnj/huNVO0Wk=
+	t=1775672840; cv=none; b=njow6W76AVVZr7ennMF0Uv5heQklYTd++RG9jKNBSzvGUx6XcVFRZhSjUCW4aKvQOFol9J1rQpsndk2UxakIlfSBkTP1G6S+L8Z0DxExgitx78d5KPhV+A+JGaqBs5S5fymSKsw4mDX5lNzBI4HLx+cPF6aUm0AEOfcwNqzYEMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672837; c=relaxed/simple;
-	bh=B4RAyDHgAXpsbiCDdR45GrmT2Sj1RS+vflb+VrmI+44=;
+	s=arc-20240116; t=1775672840; c=relaxed/simple;
+	bh=kA0kVuIgztu0cKdpwHIyWHSZcLPW8DWjIZVi+N8QRjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2cpTRPNHI8cJJ6UMI9V0Jhx2Ir3HvLrV6nH+xqep9lmaHcMzL14rH/pn2NHkrvP7fkpzfwT6vYJr1wU3TNnnGYLs8mK4yAy8O7+OJzNYDfAqkBVYOqXgn8AekvfhfUH7QO5cf/rDWRW0Ep2ZF5zogM5aYQiAPWrz7U58ebPUr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAFlr2tx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J5nuOPX9pPr7sZqaHpOJ1Fy7160/x0gW4xbegmlUGpu/vy8F9q9oXIKyKn6i0mlE1epg4FgLci80ZHmKoGU86FO3jsEbjXix46YsrwWD4VzBV1iZEgD4ZZaBlBQB3OFUTbFRkZppo3VBlUdlqROI/Z+oyfTXYr8kOW+ND+BMU00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/NAqoL7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAFlr2tx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CBDC19421;
-	Wed,  8 Apr 2026 18:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/NAqoL7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94134C19421;
+	Wed,  8 Apr 2026 18:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672837;
-	bh=B4RAyDHgAXpsbiCDdR45GrmT2Sj1RS+vflb+VrmI+44=;
+	s=korg; t=1775672839;
+	bh=kA0kVuIgztu0cKdpwHIyWHSZcLPW8DWjIZVi+N8QRjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aAFlr2txU2c0FQFbvgnB12o1S6L3gtrt+hLdQNZo8JTBAuJZZnjD1DL0mGG7CgrPf
-	 PEHOzJOvLsmhPCmh7DaHW7GlQMohC8bqrce61H8r48F61XrXaV9sQY2bKRxXiRG/yf
-	 VLs4gjh77ioYPS3JeAJ0DSQVSFOrrykfb8c90Xjw=
+	b=g/NAqoL73dIvBFPMHvcVba8dfipk/XNXFs37C9cRNBsZKNM5HTphRAN7T7EtxOGI9
+	 atN+QB/m8+3jKatOEPqdgBO8e+/FLuN99vTdNgTZG7esyXWsbebHc5XNuwaYHHDJ3j
+	 qhr18KWgGZeYXEy4dWiaOB8aJDyKVDTsbTeaWrXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 135/160] USB: dummy-hcd: Fix interrupt synchronization error
-Date: Wed,  8 Apr 2026 20:03:42 +0200
-Message-ID: <20260408175918.231282345@linuxfoundation.org>
+	Sebastian Urban <surban@surban.net>,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.6 136/160] usb: gadget: dummy_hcd: fix premature URB completion when ZLP follows partial transfer
+Date: Wed,  8 Apr 2026 20:03:43 +0200
+Message-ID: <20260408175918.266698217@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -50,99 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Sebastian Urban <surban@surban.net>
 
-commit 2ca9e46f8f1f5a297eb0ac83f79d35d5b3a02541 upstream.
+commit f50200dd44125e445a6164e88c217472fa79cdbc upstream.
 
-This fixes an error in synchronization in the dummy-hcd driver.  The
-error has a somewhat involved history.  The synchronization mechanism
-was introduced by commit 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous
-synchronization change"), which added an emulated "interrupts enabled"
-flag together with code emulating synchronize_irq() (it waits until
-all current handler callbacks have returned).
+When a gadget request is only partially transferred in transfer()
+because the per-frame bandwidth budget is exhausted, the loop advances
+to the next queued request. If that next request is a zero-length
+packet (ZLP), len evaluates to zero and the code takes the
+unlikely(len == 0) path, which sets is_short = 1. This bypasses the
+bandwidth guard ("limit < ep->ep.maxpacket && limit < len") that
+lives in the else branch and would otherwise break out of the loop for
+non-zero requests. The is_short path then completes the URB before all
+data from the first request has been transferred.
 
-But the emulated interrupt-disable occurred too late, after the driver
-containing the handler callback routines had been told that it was
-unbound and no more callbacks would occur.  Commit 4a5d797a9f9c ("usb:
-gadget: dummy_hcd: fix gpf in gadget_setup") tried to fix this by
-moving the synchronize_irq() emulation code from dummy_stop() to
-dummy_pullup(), which runs before the unbind callback.
+Reproducer (bulk IN, high speed):
 
-There still were races, though, because the emulated interrupt-disable
-still occurred too late.  It couldn't be moved to dummy_pullup(),
-because that routine can be called for reasons other than an impending
-unbind.  Therefore commits 7dc0c55e9f30 ("USB: UDC core: Add
-udc_async_callbacks gadget op") and 04145a03db9d ("USB: UDC: Implement
-udc_async_callbacks in dummy-hcd") added an API allowing the UDC core
-to tell dummy-hcd exactly when emulated interrupts and their callbacks
-should be disabled.
+  Device side (FunctionFS with Linux AIO):
+    1. Queue a 65024-byte write via io_submit (127 * 512, i.e. a
+       multiple of the HS bulk max packet size).
+    2. Immediately queue a zero-length write (ZLP) via io_submit.
 
-That brings us to the current state of things, which is still wrong
-because the emulated synchronize_irq() occurs before the emulated
-interrupt-disable!  That's no good, beause it means that more emulated
-interrupts can occur after the synchronize_irq() emulation has run,
-leading to the possibility that a callback handler may be running when
-the gadget driver is unbound.
+  Host side:
+    3. Submit a 65536-byte bulk IN URB.
 
-To fix this, we have to move the synchronize_irq() emulation code yet
-again, to the dummy_udc_async_callbacks() routine, which takes care of
-enabling and disabling emulated interrupt requests.  The
-synchronization will now run immediately after emulated interrupts are
-disabled, which is where it belongs.
+  Expected: URB completes with actual_length = 65024.
+  Actual:   URB completes with actual_length = 53248, losing 11776
+            bytes that leak into subsequent URBs.
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 04145a03db9d ("USB: UDC: Implement udc_async_callbacks in dummy-hcd")
+At high speed the per-frame budget is 53248 bytes (512 * 13 * 8).
+The 65024-byte request exhausts this budget after 53248 bytes, leaving
+the request incomplete (req->req.actual < req->req.length). Neither
+the request nor the URB is finished, and rescan is 0, so the loop
+advances to the ZLP. For the ZLP, dev_len = 0, so len = min(12288, 0)
+= 0, taking the unlikely(len == 0) path and setting is_short = 1.
+The is_short handler then sets *status = 0, completing the URB with
+only 53248 of the expected 65024 bytes.
+
+Fix this by breaking out of the loop when the current request has
+remaining data (req->req.actual < req->req.length). The request
+resumes on the next timer tick, preserving correct data ordering.
+
+Signed-off-by: Sebastian Urban <surban@surban.net>
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/c7bc93fe-4241-4d04-bd56-27c12ba35c97@rowland.harvard.edu
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260315151045.1155850-1-surban@surban.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |   29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/usb/gadget/udc/dummy_hcd.c
 +++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -912,21 +912,6 @@ static int dummy_pullup(struct usb_gadge
- 	spin_lock_irqsave(&dum->lock, flags);
- 	dum->pullup = (value != 0);
- 	set_link_state(dum_hcd);
--	if (value == 0) {
--		/*
--		 * Emulate synchronize_irq(): wait for callbacks to finish.
--		 * This seems to be the best place to emulate the call to
--		 * synchronize_irq() that's in usb_gadget_remove_driver().
--		 * Doing it in dummy_udc_stop() would be too late since it
--		 * is called after the unbind callback and unbind shouldn't
--		 * be invoked until all the other callbacks are finished.
--		 */
--		while (dum->callback_usage > 0) {
--			spin_unlock_irqrestore(&dum->lock, flags);
--			usleep_range(1000, 2000);
--			spin_lock_irqsave(&dum->lock, flags);
--		}
--	}
- 	spin_unlock_irqrestore(&dum->lock, flags);
- 
- 	usb_hcd_poll_rh_status(dummy_hcd_to_hcd(dum_hcd));
-@@ -949,6 +934,20 @@ static void dummy_udc_async_callbacks(st
- 
- 	spin_lock_irq(&dum->lock);
- 	dum->ints_enabled = enable;
-+	if (!enable) {
-+		/*
-+		 * Emulate synchronize_irq(): wait for callbacks to finish.
-+		 * This has to happen after emulated interrupts are disabled
-+		 * (dum->ints_enabled is clear) and before the unbind callback,
-+		 * just like the call to synchronize_irq() in
-+		 * gadget/udc/core:gadget_unbind_driver().
+@@ -1537,6 +1537,12 @@ top:
+ 		/* rescan to continue with any other queued i/o */
+ 		if (rescan)
+ 			goto top;
++
++		/* request not fully transferred; stop iterating to
++		 * preserve data ordering across queued requests.
 +		 */
-+		while (dum->callback_usage > 0) {
-+			spin_unlock_irq(&dum->lock);
-+			usleep_range(1000, 2000);
-+			spin_lock_irq(&dum->lock);
-+		}
-+	}
- 	spin_unlock_irq(&dum->lock);
++		if (req->req.actual < req->req.length)
++			break;
+ 	}
+ 	return sent;
  }
- 
 
 
