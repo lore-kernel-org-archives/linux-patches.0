@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD2134252D;
-	Wed,  8 Apr 2026 18:21:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC72DB67E;
+	Wed,  8 Apr 2026 18:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672486; cv=none; b=j40pUBJSYtA1qwhx1qpq/drVrNQTThkmGlqFro60WYEqK98kPRpbnbFOQBLvTpoYo/6+LTg7oqLD5ODZp4ZZTBAOC/ndkUMSsMK16dG6pNczMBxop38LpUjKNyZGIBG14HD+9sEzR02mEzJ/lOir+4ktq6mNdoubMmH1xiUvyfQ=
+	t=1775672488; cv=none; b=RvncnOUipzKkT2H74iPL7dJGbdj2yo/WhcGh4Pj/mPsEl8GrYf5gYSYjD4L+MvDWY+bbY9YHdY8d7FI1EzOL6UgD29FBd00CuJzgBLzOlqRtImStZeFUjG+bpYGly7adotW6COVefp2Q1icBdVeJAnVTx9x/JTJ1cOfzCBM+8Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672486; c=relaxed/simple;
-	bh=twIhOr40BkxJPioTRqgYrf1ZjGbS+6GUUrHXHWHEhJ8=;
+	s=arc-20240116; t=1775672488; c=relaxed/simple;
+	bh=N3JVmbOFNXhQAac/Z1Wi75H2S+/DskL/g7lAZ3SFpDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LrI35c2F17o7ZlwrU/tZPH8d/RYAnUh2/4/WvETyuLhueTcvbxNIZJbezslnMKzD10WUSQrmQGQdeBzSmX58eFZE+4c2EkAEXedFEorKM+QZpUJvNhd3+k2iVmuMPqbD8zG9kbas5JxYMFUaM0GCbm9OBoeL+PXA7mzFbkSmgUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAsfYQ/d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YmkFnHCWabKf05rvV/6yfGF7lyYAo04g/RLUOh7v4P8el9fzc0ZlwQEH1z8unpr93cJgn36Gvx9U+AgIlgrwrqOPiO9U/0Jg6xDu4rGT9JAZmuPtPgcQWyaJumooeMwDHswlKp9yGE7hmjJ7wbwaCu/XABQ7TlNFHCwKmhLhG/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7B7yyN/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAsfYQ/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC294C19425;
-	Wed,  8 Apr 2026 18:21:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7B7yyN/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACE3C2BC87;
+	Wed,  8 Apr 2026 18:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672486;
-	bh=twIhOr40BkxJPioTRqgYrf1ZjGbS+6GUUrHXHWHEhJ8=;
+	s=korg; t=1775672488;
+	bh=N3JVmbOFNXhQAac/Z1Wi75H2S+/DskL/g7lAZ3SFpDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RAsfYQ/d1wL46LIWLXLBCTfJ9xmh3xTE8GgZckQaObKmk6Gi28Mp4pbnRzR/3nEac
-	 Gq8/6Nj+xyCuO/LFEOe7YaNhxOT7v3u8xCh5ahR2023NKJA0uWI2uqlVh/JG1CYQl7
-	 ko40852gpRy434TGS6adWquX5I7zikTc/zS67NWw=
+	b=b7B7yyN/ZRbmcc+vlevE+ziFSVw4TmGOkQ1IaPEzW0R4CfW0U3kaehy6q2PPgM/UX
+	 XS1XDaHKHO3COgBLEIEb0srh2kaXn01RJU8mP6ovHEeyVTU3TuI/0KPmYH8FWammau
+	 rT1GUGiLh3Nwp/WfDgNPTVBQN1RF8O+TNR45BXlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	syzbot+f50072212ab792c86925@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/160] bridge: br_nd_send: linearize skb before parsing ND options
-Date: Wed,  8 Apr 2026 20:01:52 +0200
-Message-ID: <20260408175914.143366032@linuxfoundation.org>
+Subject: [PATCH 6.6 003/160] atm: lec: fix use-after-free in sock_def_readable()
+Date: Wed,  8 Apr 2026 20:01:30 +0200
+Message-ID: <20260408175913.311719828@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -57,86 +53,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit a01aee7cafc575bb82f5529e8734e7052f9b16ea ]
+[ Upstream commit 922814879542c2e397b0e9641fd36b8202a8e555 ]
 
-br_nd_send() parses neighbour discovery options from ns->opt[] and
-assumes that these options are in the linear part of request.
+A race condition exists between lec_atm_close() setting priv->lecd
+to NULL and concurrent access to priv->lecd in send_to_lecd(),
+lec_handle_bridge(), and lec_atm_send(). When the socket is freed
+via RCU while another thread is still using it, a use-after-free
+occurs in sock_def_readable() when accessing the socket's wait queue.
 
-Its callers only guarantee that the ICMPv6 header and target address
-are available, so the option area can still be non-linear. Parsing
-ns->opt[] in that case can access data past the linear buffer.
+The root cause is that lec_atm_close() clears priv->lecd without
+any synchronization, while callers dereference priv->lecd without
+any protection against concurrent teardown.
 
-Linearize request before option parsing and derive ns from the linear
-network header.
+Fix this by converting priv->lecd to an RCU-protected pointer:
+- Mark priv->lecd as __rcu in lec.h
+- Use rcu_assign_pointer() in lec_atm_close() and lecd_attach()
+  for safe pointer assignment
+- Use rcu_access_pointer() for NULL checks that do not dereference
+  the pointer in lec_start_xmit(), lec_push(), send_to_lecd() and
+  lecd_attach()
+- Use rcu_read_lock/rcu_dereference/rcu_read_unlock in send_to_lecd(),
+  lec_handle_bridge() and lec_atm_send() to safely access lecd
+- Use rcu_assign_pointer() followed by synchronize_rcu() in
+  lec_atm_close() to ensure all readers have completed before
+  proceeding. This is safe since lec_atm_close() is called from
+  vcc_release() which holds lock_sock(), a sleeping lock.
+- Remove the manual sk_receive_queue drain from lec_atm_close()
+  since vcc_destroy_socket() already drains it after lec_atm_close()
+  returns.
 
-Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
-Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260326034441.2037420-2-n05ec@lzu.edu.cn
+v2: Switch from spinlock + sock_hold/put approach to RCU to properly
+    fix the race. The v1 spinlock approach had two issues pointed out
+    by Eric Dumazet:
+    1. priv->lecd was still accessed directly after releasing the
+       lock instead of using a local copy.
+    2. The spinlock did not prevent packets being queued after
+       lec_atm_close() drains sk_receive_queue since timer and
+       workqueue paths bypass netif_stop_queue().
+
+Note: Syzbot patch testing was attempted but the test VM terminated
+    unexpectedly with "Connection to localhost closed by remote host",
+    likely due to a QEMU AHCI emulation issue unrelated to this fix.
+    Compile testing with "make W=1 net/atm/lec.o" passes cleanly.
+
+Reported-by: syzbot+f50072212ab792c86925@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f50072212ab792c86925
+Link: https://lore.kernel.org/all/20260309093614.502094-1-kartikey406@gmail.com/T/ [v1]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260309155908.508768-1-kartikey406@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_arp_nd_proxy.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/atm/lec.c | 72 +++++++++++++++++++++++++++++++++------------------
+ net/atm/lec.h |  2 +-
+ 2 files changed, 48 insertions(+), 26 deletions(-)
 
-diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
-index c7869a286df40..b8bfc336ff7a7 100644
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -248,12 +248,12 @@ struct nd_msg *br_is_nd_neigh_msg(struct sk_buff *skb, struct nd_msg *msg)
+diff --git a/net/atm/lec.c b/net/atm/lec.c
+index 0d4b8e5936dcf..d8ab969625790 100644
+--- a/net/atm/lec.c
++++ b/net/atm/lec.c
+@@ -154,10 +154,19 @@ static void lec_handle_bridge(struct sk_buff *skb, struct net_device *dev)
+ 					/* 0x01 is topology change */
  
- static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 		       struct sk_buff *request, struct neighbour *n,
--		       __be16 vlan_proto, u16 vlan_tci, struct nd_msg *ns)
-+		       __be16 vlan_proto, u16 vlan_tci)
+ 		priv = netdev_priv(dev);
+-		atm_force_charge(priv->lecd, skb2->truesize);
+-		sk = sk_atm(priv->lecd);
+-		skb_queue_tail(&sk->sk_receive_queue, skb2);
+-		sk->sk_data_ready(sk);
++		struct atm_vcc *vcc;
++
++		rcu_read_lock();
++		vcc = rcu_dereference(priv->lecd);
++		if (vcc) {
++			atm_force_charge(vcc, skb2->truesize);
++			sk = sk_atm(vcc);
++			skb_queue_tail(&sk->sk_receive_queue, skb2);
++			sk->sk_data_ready(sk);
++		} else {
++			dev_kfree_skb(skb2);
++		}
++		rcu_read_unlock();
+ 	}
+ }
+ #endif /* IS_ENABLED(CONFIG_BRIDGE) */
+@@ -216,7 +225,7 @@ static netdev_tx_t lec_start_xmit(struct sk_buff *skb,
+ 	int is_rdesc;
+ 
+ 	pr_debug("called\n");
+-	if (!priv->lecd) {
++	if (!rcu_access_pointer(priv->lecd)) {
+ 		pr_info("%s:No lecd attached\n", dev->name);
+ 		dev->stats.tx_errors++;
+ 		netif_stop_queue(dev);
+@@ -449,10 +458,19 @@ static int lec_atm_send(struct atm_vcc *vcc, struct sk_buff *skb)
+ 				break;
+ 			skb2->len = sizeof(struct atmlec_msg);
+ 			skb_copy_to_linear_data(skb2, mesg, sizeof(*mesg));
+-			atm_force_charge(priv->lecd, skb2->truesize);
+-			sk = sk_atm(priv->lecd);
+-			skb_queue_tail(&sk->sk_receive_queue, skb2);
+-			sk->sk_data_ready(sk);
++			struct atm_vcc *vcc;
++
++			rcu_read_lock();
++			vcc = rcu_dereference(priv->lecd);
++			if (vcc) {
++				atm_force_charge(vcc, skb2->truesize);
++				sk = sk_atm(vcc);
++				skb_queue_tail(&sk->sk_receive_queue, skb2);
++				sk->sk_data_ready(sk);
++			} else {
++				dev_kfree_skb(skb2);
++			}
++			rcu_read_unlock();
+ 		}
+ 	}
+ #endif /* IS_ENABLED(CONFIG_BRIDGE) */
+@@ -468,23 +486,16 @@ static int lec_atm_send(struct atm_vcc *vcc, struct sk_buff *skb)
+ 
+ static void lec_atm_close(struct atm_vcc *vcc)
  {
- 	struct net_device *dev = request->dev;
- 	struct net_bridge_vlan_group *vg;
-+	struct nd_msg *na, *ns;
- 	struct sk_buff *reply;
--	struct nd_msg *na;
- 	struct ipv6hdr *pip6;
- 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
- 	int ns_olen;
-@@ -261,7 +261,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	u8 *daddr;
- 	u16 pvid;
+-	struct sk_buff *skb;
+ 	struct net_device *dev = (struct net_device *)vcc->proto_data;
+ 	struct lec_priv *priv = netdev_priv(dev);
  
--	if (!dev)
-+	if (!dev || skb_linearize(request))
- 		return;
+-	priv->lecd = NULL;
++	rcu_assign_pointer(priv->lecd, NULL);
++	synchronize_rcu();
+ 	/* Do something needful? */
  
- 	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
-@@ -278,6 +278,8 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	skb_set_mac_header(reply, 0);
+ 	netif_stop_queue(dev);
+ 	lec_arp_destroy(priv);
  
- 	daddr = eth_hdr(request)->h_source;
-+	ns = (struct nd_msg *)(skb_network_header(request) +
-+			       sizeof(struct ipv6hdr));
+-	if (skb_peek(&sk_atm(vcc)->sk_receive_queue))
+-		pr_info("%s closing with messages pending\n", dev->name);
+-	while ((skb = skb_dequeue(&sk_atm(vcc)->sk_receive_queue))) {
+-		atm_return(vcc, skb->truesize);
+-		dev_kfree_skb(skb);
+-	}
+-
+ 	pr_info("%s: Shut down!\n", dev->name);
+ 	module_put(THIS_MODULE);
+ }
+@@ -510,12 +521,14 @@ send_to_lecd(struct lec_priv *priv, atmlec_msg_type type,
+ 	     const unsigned char *mac_addr, const unsigned char *atm_addr,
+ 	     struct sk_buff *data)
+ {
++	struct atm_vcc *vcc;
+ 	struct sock *sk;
+ 	struct sk_buff *skb;
+ 	struct atmlec_msg *mesg;
  
- 	/* Do we need option processing ? */
- 	ns_olen = request->len - (skb_network_offset(request) +
-@@ -465,9 +467,9 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
- 				if (vid != 0)
- 					br_nd_send(br, p, skb, n,
- 						   skb->vlan_proto,
--						   skb_vlan_tag_get(skb), msg);
-+						   skb_vlan_tag_get(skb));
- 				else
--					br_nd_send(br, p, skb, n, 0, 0, msg);
-+					br_nd_send(br, p, skb, n, 0, 0);
- 				replied = true;
- 			}
+-	if (!priv || !priv->lecd)
++	if (!priv || !rcu_access_pointer(priv->lecd))
+ 		return -1;
++
+ 	skb = alloc_skb(sizeof(struct atmlec_msg), GFP_ATOMIC);
+ 	if (!skb)
+ 		return -1;
+@@ -532,18 +545,27 @@ send_to_lecd(struct lec_priv *priv, atmlec_msg_type type,
+ 	if (atm_addr)
+ 		memcpy(&mesg->content.normal.atm_addr, atm_addr, ATM_ESA_LEN);
  
+-	atm_force_charge(priv->lecd, skb->truesize);
+-	sk = sk_atm(priv->lecd);
++	rcu_read_lock();
++	vcc = rcu_dereference(priv->lecd);
++	if (!vcc) {
++		rcu_read_unlock();
++		kfree_skb(skb);
++		return -1;
++	}
++
++	atm_force_charge(vcc, skb->truesize);
++	sk = sk_atm(vcc);
+ 	skb_queue_tail(&sk->sk_receive_queue, skb);
+ 	sk->sk_data_ready(sk);
+ 
+ 	if (data != NULL) {
+ 		pr_debug("about to send %d bytes of data\n", data->len);
+-		atm_force_charge(priv->lecd, data->truesize);
++		atm_force_charge(vcc, data->truesize);
+ 		skb_queue_tail(&sk->sk_receive_queue, data);
+ 		sk->sk_data_ready(sk);
+ 	}
+ 
++	rcu_read_unlock();
+ 	return 0;
+ }
+ 
+@@ -618,7 +640,7 @@ static void lec_push(struct atm_vcc *vcc, struct sk_buff *skb)
+ 
+ 		atm_return(vcc, skb->truesize);
+ 		if (*(__be16 *) skb->data == htons(priv->lecid) ||
+-		    !priv->lecd || !(dev->flags & IFF_UP)) {
++		    !rcu_access_pointer(priv->lecd) || !(dev->flags & IFF_UP)) {
+ 			/*
+ 			 * Probably looping back, or if lecd is missing,
+ 			 * lecd has gone down
+@@ -753,12 +775,12 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
+ 		priv = netdev_priv(dev_lec[i]);
+ 	} else {
+ 		priv = netdev_priv(dev_lec[i]);
+-		if (priv->lecd)
++		if (rcu_access_pointer(priv->lecd))
+ 			return -EADDRINUSE;
+ 	}
+ 	lec_arp_init(priv);
+ 	priv->itfnum = i;	/* LANE2 addition */
+-	priv->lecd = vcc;
++	rcu_assign_pointer(priv->lecd, vcc);
+ 	vcc->dev = &lecatm_dev;
+ 	vcc_insert_socket(sk_atm(vcc));
+ 
+diff --git a/net/atm/lec.h b/net/atm/lec.h
+index be0e2667bd8c3..ec85709bf8185 100644
+--- a/net/atm/lec.h
++++ b/net/atm/lec.h
+@@ -91,7 +91,7 @@ struct lec_priv {
+ 						 */
+ 	spinlock_t lec_arp_lock;
+ 	struct atm_vcc *mcast_vcc;		/* Default Multicast Send VCC */
+-	struct atm_vcc *lecd;
++	struct atm_vcc __rcu *lecd;
+ 	struct delayed_work lec_arp_work;	/* C10 */
+ 	unsigned int maximum_unknown_frame_count;
+ 						/*
 -- 
 2.53.0
 
