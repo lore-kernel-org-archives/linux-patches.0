@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5143D6694;
-	Wed,  8 Apr 2026 18:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD462DAFAA;
+	Wed,  8 Apr 2026 18:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672382; cv=none; b=YPKMLEGA3oiTHlELuB2bkA+rjJ07O4ZVIWScUOjIOMqMq+cfVVmEXzfwSP45NFk6hdjiPOR874YcLntNxwbc8ASMFjVIVtGDWyFlB1LDMHGPdE3Xl4BlmKsAn77eLIWrnB690Vjhutkuu60KusDkjEYLhscXi8ue7gQWBEUdTTk=
+	t=1775672385; cv=none; b=bJUrVa3rGDNy0829aTFDEiT797WMP89QtVHJes57UUiOrtKJ1xHKpwzz7pJib1WMijqK7PmuCvCmA6T5rFYv8oOxBi6Kb2EH4S0daEJc9OxF+xupNuKnCXHAHDQI6dKQNhJnNGhRSIRhy8tV9MiJln6FHQ/MbIkJNfDBAHO+jpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672382; c=relaxed/simple;
-	bh=FbfvpjzXhpKY2H5Ad2udY4sItoiRgKjoo4yU5Rea2HM=;
+	s=arc-20240116; t=1775672385; c=relaxed/simple;
+	bh=IdFcjQL3Ka70ATCGALsTa1Ayd6FG2f58j2caq7M8ebQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hE/bxoLZwyS+iI6PDMDOADN4hT/S5HzU6VolL/zAoc+kq+ObdF9j5uYZD0PQLVioFEbdipdes5GXPkcIu5trnCQ9ogE94z4vAcx9qgCKh9m563lECw1+lGw9zKkcfXx3YDxkGG37hUK3WNCFGucSThfyUJ5iJ7rK7rRJMmDcxBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dtyxHDJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sibQGHNJ3nwBLr1v5RD/itpV7JIEFRlnh3mw3Xvj+c7nFdjRB9fz9em/7AgeGRjV9XiaavIll7V37kiBfNdVxaYZy1SxUG4tXMna8Ux4cBdxkHvCG+dOYg7BN+QXtAoyDneBYYhqiTXO1MbDmyg2QHaF1r6ZP4MMb19G7LJNOMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlbY93mq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dtyxHDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60954C19421;
-	Wed,  8 Apr 2026 18:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlbY93mq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF10C19421;
+	Wed,  8 Apr 2026 18:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672382;
-	bh=FbfvpjzXhpKY2H5Ad2udY4sItoiRgKjoo4yU5Rea2HM=;
+	s=korg; t=1775672385;
+	bh=IdFcjQL3Ka70ATCGALsTa1Ayd6FG2f58j2caq7M8ebQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dtyxHDJx19rJJSiAHTPhMbgHM6vhm2ysawuoafTq7op8mo46y0kcOPtvgEQylJuM
-	 nZjcJzqhNOZVukfGCWKEm4Sn+2dXnjKCYC98emv89sIxBW2lVXY3yNKCBAuUxyafcU
-	 rznN3Hn9MftywXyEdgzqxNk19jT/JhXlPLHsuEA0=
+	b=PlbY93mqUiGYSXmJR1F5/tdyin4cyLOrIK7CVvBi8Kh5UOOM+klaGe3C3qp6ithHC
+	 x4uNG1kZP52ys+KgxKAZiOXfVRESpksVJ1zpgbgGcc5bnOLgRxWE+EqN8Wd85HQzwQ
+	 dpeKMfVLjVv2dVV9VFHWBrlL+GgdcAg2ed9HiISk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Law <objecting@objecting.org>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 266/312] mm/damon/sysfs: check contexts->nr before accessing contexts_arr[0]
-Date: Wed,  8 Apr 2026 20:03:03 +0200
-Message-ID: <20260408175943.681918013@linuxfoundation.org>
+Subject: [PATCH 6.1 267/312] net: enetc: fix PF !of_device_is_available() teardown path
+Date: Wed,  8 Apr 2026 20:03:04 +0200
+Message-ID: <20260408175943.720032599@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,62 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Law <objecting@objecting.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-Multiple sysfs command paths dereference contexts_arr[0] without first
-verifying that kdamond->contexts->nr == 1.  A user can set nr_contexts to
-0 via sysfs while DAMON is running, causing NULL pointer dereferences.
+Upstream commit e15c5506dd39 ("net: enetc: allocate vf_state during PF
+probes") was backported incorrectly to kernels where enetc_pf_probe()
+still has to manually check whether the OF node of the PCI device is
+enabled.
 
-In more detail, the issue can be triggered by privileged users like
-below.
+In kernels which contain commit bfce089ddd0e ("net: enetc: remove
+of_device_is_available() handling") and its dependent change, commit
+6fffbc7ae137 ("PCI: Honor firmware's device disabled status"), the
+"err_device_disabled" label has disappeared. Yet, linux-6.1.y and
+earlier still contains it.
 
-First, start DAMON and make contexts directory empty
-(kdamond->contexts->nr == 0).
+The trouble is that upstream commit e15c5506dd39 ("net: enetc: allocate
+vf_state during PF probes"), backported as 35668e29e979 in linux-6.1.y,
+introduces new code for the err_setup_mac_addresses and err_alloc_netdev
+labels which calls kfree(pf->vf_state). This code must not execute for
+the err_device_disabled label, because at that stage, the pf structure
+has not yet been allocated, and is an uninitialized pointer.
 
-    # damo start
-    # cd /sys/kernel/mm/damon/admin/kdamonds/0
-    # echo 0 > contexts/nr_contexts
+By moving the err_device_disabled label to undo just the previous
+operation, i.e. a successful enetc_psi_create() call with
+enetc_psi_destroy(), the dereference of uninitialized pf->vf_state is
+avoided.
 
-Then, each of below commands will cause the NULL pointer dereference.
-
-    # echo update_schemes_stats > state
-    # echo update_schemes_tried_regions > state
-    # echo update_schemes_tried_bytes > state
-    # echo update_schemes_effective_quotas > state
-    # echo update_tuned_intervals > state
-
-Guard all commands (except OFF) at the entry point of
-damon_sysfs_handle_cmd().
-
-(cherry picked from commit 1bfe9fb5ed2667fb075682408b776b5273162615)
-
-Link: https://lkml.kernel.org/r/20260321175427.86000-3-sj@kernel.org
-Fixes: 0ac32b8affb5 ("mm/damon/sysfs: support DAMOS stats")
-Signed-off-by: Josh Law <objecting@objecting.org>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[5.18+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Fixes: 35668e29e979 ("net: enetc: allocate vf_state during PF probes")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://lore.kernel.org/linux-patches/20260330073356.GA1017537@ax162/
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org> # build
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/sysfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc_pf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index a5a1e90e53e74..bdcf895a29a78 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -2576,6 +2576,9 @@ static int damon_sysfs_handle_cmd(enum damon_sysfs_cmd cmd,
- {
- 	bool need_wait = true;
- 
-+	if (cmd != DAMON_SYSFS_CMD_OFF && kdamond->contexts->nr != 1)
-+		return -EINVAL;
-+
- 	/* Handle commands that doesn't access DAMON context-internal data */
- 	switch (cmd) {
- 	case DAMON_SYSFS_CMD_ON:
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+index 99422c0b4a265..8cb4c759b165e 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+@@ -1393,10 +1393,10 @@ static int enetc_pf_probe(struct pci_dev *pdev,
+ 	si->ndev = NULL;
+ 	free_netdev(ndev);
+ err_alloc_netdev:
+-err_device_disabled:
+ err_setup_mac_addresses:
+ 	kfree(pf->vf_state);
+ err_alloc_vf_state:
++err_device_disabled:
+ 	enetc_psi_destroy(pdev);
+ err_psi_create:
+ 	return err;
 -- 
 2.53.0
 
