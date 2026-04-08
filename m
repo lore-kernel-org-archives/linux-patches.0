@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B15D33121F;
-	Wed,  8 Apr 2026 18:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3402BD030;
+	Wed,  8 Apr 2026 18:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674043; cv=none; b=GoRhSIkUuaVeA7NeT8mJZFe59btFdb8CoI5iTFhFKoQg4nHhbIsBGBytgylDLR1BPOLYbgzJj6D26H+gd30UM6P/4huA6SF2nkAyJe7okCzx+JTeV8L8Fokc3CbMjXWMPBu+ORx4DpiReK4zMn5theKf/yzqtd0hv1Yw86vvzUo=
+	t=1775674045; cv=none; b=FnWtKgiaPIcxx8Mp7FbQU3xEuOjRTM4NdFcjmHL9d5n6m4CUOCJwqsN8H9p4KELggZV1L+QYp+ShgMEFjZIRpT48wM/yrc/wYYGqVuBju2Q7vqesmxbn4w4SUNIxLnCzv01blMQobgeqSJ3FMtGXPdY5VflY1T0aluOUy9LAbdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674043; c=relaxed/simple;
-	bh=aEeDHQ+csSsrtIo/Uiild1BgL/ehQQWhHBe4iCxi7Aw=;
+	s=arc-20240116; t=1775674045; c=relaxed/simple;
+	bh=3XlNO0orh+0ctYaVZKi6RTopgCYOHGIE+7vF5Jab3qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4vWywPPmRvD41AbsyhAuh7yXXeWWobBRQd3kd+T6PN2KlNNUbV8D/tVZL82PJq4Xqm2SAkdt2GgQSn3Hu3pavdLudwL/r54gQuTxmCb0ROw3tNebSSCEDWJFOQp7xmZ4VPXUdpLUcUSemeMd0D2FN1r1Q0AFoK19xioj+PT9uA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynuzkPTx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTMOFxXlMS7gIRzmdE20eqhnrVvV/ZSmAIUkdQpWYTsNK55Rwp6w/1bm74du0e7y+Bz5vFZttNbMJTBTsruXPqjM3xgdnzSvkd7HW3U1vR/6voD4ktuUI1tn9KnMxKOpfi1j4TQfKrQcDuRAabf4sfwlg/4uoeO6viIzS2AebUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RF953mct; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynuzkPTx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCADDC19421;
-	Wed,  8 Apr 2026 18:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RF953mct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C8DC19421;
+	Wed,  8 Apr 2026 18:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674043;
-	bh=aEeDHQ+csSsrtIo/Uiild1BgL/ehQQWhHBe4iCxi7Aw=;
+	s=korg; t=1775674045;
+	bh=3XlNO0orh+0ctYaVZKi6RTopgCYOHGIE+7vF5Jab3qY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ynuzkPTxXXiIM6Lyv+/6eEZDQ9zBwMd4q5r6kzkJMRIJSl5qHBx+w5AUAh3I1AAi6
-	 L3deBRxKQVdgGjt8FB1p5cJgq4oliQhb2XvLKGR9OaLk/5HVKLlMI9BgLQlg3cGf8D
-	 moTieSiChFrw5uZAldkIUbreSy2yvtqwfo3z9sR8=
+	b=RF953mct3gixLle2l1bfwOhCKO5/4mrrhxxlYiLCgoAmBVW3hEru3K3hg8Pisvo4C
+	 ozPmK3oO0aIldMCAFT1BhLQFYDoroNo+uEoCcSaTgCt4VlugNutkojvZ/6pPSXUoo3
+	 +chWkJZMpzOpmoWpC23Y7VPNrwqz6AYbvK33C0Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sven Eckelmann (Plasma Cloud)" <se@simonwunderlich.de>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 188/242] net: ethernet: mtk_ppe: avoid NULL deref when gmac0 is disabled
-Date: Wed,  8 Apr 2026 20:03:48 +0200
-Message-ID: <20260408175934.119818643@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 189/242] cpufreq: governor: fix double free in cpufreq_dbs_governor_init() error path
+Date: Wed,  8 Apr 2026 20:03:49 +0200
+Message-ID: <20260408175934.159892115@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -51,66 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 976ff48c2ac6e6b25b01428c9d7997bcd0fb2949 upstream.
+commit 6dcf9d0064ce2f3e3dfe5755f98b93abe6a98e1e upstream.
 
-If the gmac0 is disabled, the precheck for a valid ingress device will
-cause a NULL pointer deref and crash the system. This happens because
-eth->netdev[0] will be NULL but the code will directly try to access
-netdev_ops.
+When kobject_init_and_add() fails, cpufreq_dbs_governor_init() calls
+kobject_put(&dbs_data->attr_set.kobj).
 
-Instead of just checking for the first net_device, it must be checked if
-any of the mtk_eth net_devices is matching the netdev_ops of the ingress
-device.
+The kobject release callback cpufreq_dbs_data_release() calls
+gov->exit(dbs_data) and kfree(dbs_data), but the current error path
+then calls gov->exit(dbs_data) and kfree(dbs_data) again, causing a
+double free.
 
-Cc: stable@vger.kernel.org
-Fixes: 73cfd947dbdb ("net: ethernet: mtk_eth_soc: ppe: prevent ppe update for non-mtk devices")
-Signed-off-by: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260324-wed-crash-gmac0-disabled-v1-1-3bc388aee565@simonwunderlich.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Keep the direct kfree(dbs_data) for the gov->init() failure path, but
+after kobject_init_and_add() has been called, let kobject_put() handle
+the cleanup through cpufreq_dbs_data_release().
+
+Fixes: 4ebe36c94aed ("cpufreq: Fix kobject memleak")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260401024535.1395801-1-lgs201920130244@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/mtk_ppe_offload.c |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq_governor.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-@@ -244,6 +244,25 @@ out:
- 	return 0;
- }
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -468,13 +468,13 @@ int cpufreq_dbs_governor_init(struct cpu
+ 	/* Failure, so roll back. */
+ 	pr_err("initialization failed (dbs_data kobject init error %d)\n", ret);
  
-+static bool
-+mtk_flow_is_valid_idev(const struct mtk_eth *eth, const struct net_device *idev)
-+{
-+	size_t i;
-+
-+	if (!idev)
-+		return false;
-+
-+	for (i = 0; i < ARRAY_SIZE(eth->netdev); i++) {
-+		if (!eth->netdev[i])
-+			continue;
-+
-+		if (idev->netdev_ops == eth->netdev[i]->netdev_ops)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- static int
- mtk_flow_offload_replace(struct mtk_eth *eth, struct flow_cls_offload *f,
- 			 int ppe_index)
-@@ -270,7 +289,7 @@ mtk_flow_offload_replace(struct mtk_eth
- 		flow_rule_match_meta(rule, &match);
- 		if (mtk_is_netsys_v2_or_greater(eth)) {
- 			idev = __dev_get_by_index(&init_net, match.key->ingress_ifindex);
--			if (idev && idev->netdev_ops == eth->netdev[0]->netdev_ops) {
-+			if (mtk_flow_is_valid_idev(eth, idev)) {
- 				struct mtk_mac *mac = netdev_priv(idev);
+-	kobject_put(&dbs_data->attr_set.kobj);
+-
+ 	policy->governor_data = NULL;
  
- 				if (WARN_ON(mac->ppe_idx >= eth->soc->ppe_num))
+ 	if (!have_governor_per_policy())
+ 		gov->gdbs_data = NULL;
+-	gov->exit(dbs_data);
++
++	kobject_put(&dbs_data->attr_set.kobj);
++	goto free_policy_dbs_info;
+ 
+ free_dbs_data:
+ 	kfree(dbs_data);
 
 
