@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3773624B0;
-	Wed,  8 Apr 2026 18:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208503624B0;
+	Wed,  8 Apr 2026 18:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673539; cv=none; b=e/WF6ERKwfIrTx3c0cQ//FajhqEd+aFEpz/6W7QJwpry3F79yFe1f+Vo5CjnQnw4uDl8JZ430R7vVo1y6dpVEnV9Xyqw5NeSDleCuXs/Vr7KBVlZpLu8g0fAqMf/2IwnEzB8dp8c9zFOEQyaDfL12fXsfkQmzjew51HiuCtqgkI=
+	t=1775673542; cv=none; b=M6ifdusMRES6dgJMKQVcuq0nfECU83F5HXsESsl0LkTUXUDcqXfJB6lYHTJXLxK2JTVPPT4zxlWoLEV8U+aW211FKNnYejRv+lUd+jRADITyQZBgSaXN9/R+x5Z3/ez71IqIJig6OiLIOKfph0aP0iiBfUltbQvnr2aF0QgOjDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673539; c=relaxed/simple;
-	bh=IT6+UoKQ/k40GylKfjioEVJvvT7J2EtpzjnP5cUp+cI=;
+	s=arc-20240116; t=1775673542; c=relaxed/simple;
+	bh=VcvZyT5lYfiG6eR8yv7LUiymJFGCof/5+nK9BGXbudo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfbOd3HPgZ+fHIKzudsNZYNs8E1TpGbfGysxUvZJVRl54CIZ0NxQr3nvTIhtjM5IrbLxpOTe4or9ecb6wwsbcNuPqqsmOIYsQKU3pLje5BlQwdk51toegIcwzPqyf+RHinWYnWh7jbd7EmaP9qhhuy8n6zpddjG5YgZAVnuKzLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSpby8c6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hGb/F3q/mNoYRSoPoLS6gf8MBIBR4AmbcmFUcLwk/IXTUpEA2V1WmNNiPaXrgWTLViigcpX4oLPpI+c7RzcDz4Kw6Z1hUFwqBzqH7JA/KLFnirdUqxQHT2C0NDhkjwCrgmOfVegANZ1kFuFDPXzk8Qr11YYM8Sbh2S3X2ezpg18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5MSCQQq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSpby8c6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F2DC19421;
-	Wed,  8 Apr 2026 18:38:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5MSCQQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AABFFC19421;
+	Wed,  8 Apr 2026 18:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673539;
-	bh=IT6+UoKQ/k40GylKfjioEVJvvT7J2EtpzjnP5cUp+cI=;
+	s=korg; t=1775673542;
+	bh=VcvZyT5lYfiG6eR8yv7LUiymJFGCof/5+nK9BGXbudo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSpby8c6k+VXHnrVio/RSTsVCK99GI9uyDUw9RNLHcEbAgP4oZyDFXXpGyES7j0g2
-	 BORpQYjplQCkVhV8mb2/KpU18fiFTNWKWu6kas+mmu23/QogIuDqkb0RcELd+vs3lH
-	 c/d6IYSAZXZEGcfezzY58SyMR6I0YKhBaAItR/VY=
+	b=E5MSCQQqw+vrwejB/hC7JAEMiYtnL4eQy6wbUtanARHtoBYPUhbLvBoHk+mq0J6SY
+	 0a0A7mKlJitkpT3NrmFEF6kBbCqQmQYXAsomrVILcWlAELoctjem9Cg0oFqjXi+gDy
+	 hOFdqGuoL4wkEwLzOGZK7AAl33GbvY6lR0S7a/G8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tangxin Xie <xietangxin@yeah.net>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 271/277] net: correctly handle tunneled traffic on IPV6_CSUM GSO fallback
-Date: Wed,  8 Apr 2026 20:04:16 +0200
-Message-ID: <20260408175943.984674369@linuxfoundation.org>
+Subject: [PATCH 6.18 272/277] scsi: target: file: Use kzalloc_flex for aio_cmd
+Date: Wed,  8 Apr 2026 20:04:17 +0200
+Message-ID: <20260408175944.022475855@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -52,74 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-[ Upstream commit c4336a07eb6b2526dc2b62928b5104b41a7f81f5 ]
+[ Upstream commit 01f784fc9d0ab2a6dac45ee443620e517cb2a19b ]
 
-NETIF_F_IPV6_CSUM only advertises support for checksum offload of
-packets without IPv6 extension headers. Packets with extension
-headers must fall back onto software checksumming. Since TSO
-depends on checksum offload, those must revert to GSO.
+The target_core_file doesn't initialize the aio_cmd->iocb for the
+ki_write_stream. When a write command fd_execute_rw_aio() is executed,
+we may get a bogus ki_write_stream value, causing unintended write
+failure status when checking iocb->ki_write_stream > max_write_streams
+in the block device.
 
-The below commit introduces that fallback. It always checks
-network header length. For tunneled packets, the inner header length
-must be checked instead. Extend the check accordingly.
+Let's just use kzalloc_flex when allocating the aio_cmd and let
+ki_write_stream=0 to fix this issue.
 
-A special case is tunneled packets without inner IP protocol. Such as
-RFC 6951 SCTP in UDP. Those are not standard IPv6 followed by
-transport header either, so also must revert to the software GSO path.
-
+Fixes: 732f25a2895a ("fs: add a write stream field to the kiocb")
+Fixes: c27683da6406 ("block: expose write streams for block device nodes")
 Cc: stable@vger.kernel.org
-Fixes: 864e3396976e ("net: gso: Forbid IPv6 TSO with extensions on devices with only IPV6_CSUM")
-Reported-by: Tangxin Xie <xietangxin@yeah.net>
-Closes: https://lore.kernel.org/netdev/0414e7e2-9a1c-4d7c-a99d-b9039cf68f40@yeah.net/
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260320190148.2409107-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/f1a2f81c62f043e31f80bb92d5f29893400c8ee2.1773450782.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[ changed kmalloc() to kzalloc() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/target/target_core_file.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3755,6 +3755,22 @@ static netdev_features_t dflt_features_c
- 	return vlan_features_check(skb, features);
- }
+--- a/drivers/target/target_core_file.c
++++ b/drivers/target/target_core_file.c
+@@ -276,7 +276,7 @@ fd_execute_rw_aio(struct se_cmd *cmd, st
+ 	ssize_t len = 0;
+ 	int ret = 0, i;
  
-+static bool skb_gso_has_extension_hdr(const struct sk_buff *skb)
-+{
-+	if (!skb->encapsulation)
-+		return ((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
-+			 (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
-+			  vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
-+			skb_transport_header_was_set(skb) &&
-+			skb_network_header_len(skb) != sizeof(struct ipv6hdr));
-+	else
-+		return (!skb_inner_network_header_was_set(skb) ||
-+			((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
-+			  (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
-+			   inner_ip_hdr(skb)->version == 6)) &&
-+			 skb_inner_network_header_len(skb) != sizeof(struct ipv6hdr)));
-+}
-+
- static netdev_features_t gso_features_check(const struct sk_buff *skb,
- 					    struct net_device *dev,
- 					    netdev_features_t features)
-@@ -3807,11 +3823,7 @@ static netdev_features_t gso_features_ch
- 	 * so neither does TSO that depends on it.
- 	 */
- 	if (features & NETIF_F_IPV6_CSUM &&
--	    (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
--	     (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
--	      vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
--	    skb_transport_header_was_set(skb) &&
--	    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
-+	    skb_gso_has_extension_hdr(skb) &&
- 	    !ipv6_has_hopopt_jumbo(skb))
- 		features &= ~(NETIF_F_IPV6_CSUM | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4);
+-	aio_cmd = kmalloc(struct_size(aio_cmd, bvecs, sgl_nents), GFP_KERNEL);
++	aio_cmd = kzalloc(struct_size(aio_cmd, bvecs, sgl_nents), GFP_KERNEL);
+ 	if (!aio_cmd)
+ 		return TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE;
  
 
 
