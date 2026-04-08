@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02D7B67E;
-	Wed,  8 Apr 2026 18:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DA134252D;
+	Wed,  8 Apr 2026 18:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672491; cv=none; b=GqVHDE3tghrYIRGDx/ixGQJIKAvTKz8VaGc3XsVFYZNr4hwq57PNzqQisjXwS9aQKaQVr1gQ8WhXEGcDuiCyHWZ87qmGYvs080e0ghu0XEc/mHLTTVB9aSAoox0PJ7Mjcs1xEQLzqZaIN5LQocbyvLOz57807HE6wA1vCY/B3GI=
+	t=1775672494; cv=none; b=rlHDjlDbw1aXMZydIZnQc8oub49RVJc0yDnAyTQCFwyWc3rIirtZ+gB+HoonycxJVifbu5gSDvAoGGhNOyovjsCEvrUDKY0C5IzB0tEqqgZD5TsTiFlptXvK8hUamwXZCVo/Iieo/he0qz1w48U6K9u8QyCArlib6BvCpv/HBS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672491; c=relaxed/simple;
-	bh=pr2hXuPucGcgql+upvjvfzoxk8YqW9lfEVRg89MScdI=;
+	s=arc-20240116; t=1775672494; c=relaxed/simple;
+	bh=rPtR0sy2m+HcWqk1NZDSknP9QAXQxn9Ft0wkBerbJ8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOcIJNW/ka5Q49qPpQifhb9cmomNBO/NHrvxaoihHzxx3Geu0YEq9amg0H94Hdi4NIGaTbKkcY4VZLJObxGUDYH27HkalA7tjLG+gywqtvMN4iqVzwEnFqNWUCiEWedJ7w7XTa1zW6EUTgr2GqRiXrzpENdPah533b5b7ZfcyNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sw433arz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sJirinIYHKGxpoMfGJyoGmsFqrlgUbeJ1EREfDVBaGJ0rrsHUdHZ+kLjvJSUu5vkHUfjrvQDTv6tr809n9fbK6XH/Cdbmp0PCqQVVkZo1U1aVBMsJDbynKh72OUCox+hr73zS8pJOpbuJzynQyMWMfPoBuIhYlFaeXB4HFiGgng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIa4LQa5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sw433arz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BA4C19421;
-	Wed,  8 Apr 2026 18:21:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIa4LQa5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7905DC19421;
+	Wed,  8 Apr 2026 18:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672491;
-	bh=pr2hXuPucGcgql+upvjvfzoxk8YqW9lfEVRg89MScdI=;
+	s=korg; t=1775672493;
+	bh=rPtR0sy2m+HcWqk1NZDSknP9QAXQxn9Ft0wkBerbJ8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sw433arzAYlbifkK87KOr/BP5mJdnnrKgYGe/TtLpuvNITf23x4BzPmRrYUN7fwip
-	 qASdp2tRdCnJ8tcNMu7tsjcZyL0w1Yuk5S/7kJRlaAbpGao8W5lA5WdJBr4JS4bUf9
-	 eGfV5woHXcvzLXiOEAmC3CuDHtWOu8at6yLz93gQ=
+	b=FIa4LQa5KV2Q31iobX6+dvSJZybykZ/KV3jMuFWBOwQ7Hgreb7BmpGBdVszolJYRf
+	 LbCmn2oHjIKx2Efj7I1JwbgRxu73hUFd3glfkcJnVQaR0zKME8PM66k8ipR4izGTX7
+	 Zil8u0FVf+WHwXJKRoSjcGglfaky39S6L6AigxY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	Rishon Jonathan R <mithicalaviator85@gmail.com>,
+	Vincent MORVAN <vinc@42.fr>,
+	Paul SAGE <paul.sage@42.fr>,
+	Atharva Tiwari <atharvatiwarilinuxdev@gmail.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/160] btrfs: dont take device_list_mutex when querying zone info
-Date: Wed,  8 Apr 2026 20:01:31 +0200
-Message-ID: <20260408175913.348462471@linuxfoundation.org>
+Subject: [PATCH 6.6 005/160] tg3: replace placeholder MAC address with device property
+Date: Wed,  8 Apr 2026 20:01:32 +0200
+Message-ID: <20260408175913.386503038@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -53,194 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Paul SAGE <paul.sage@42.fr>
 
-[ Upstream commit 77603ab10429fe713a03345553ca8dbbfb1d91c6 ]
+[ Upstream commit e4c00ba7274b613e3ab19e27eb009f0ec2e28379 ]
 
-Shin'ichiro reported sporadic hangs when running generic/013 in our CI
-system. When enabling lockdep, there is a lockdep splat when calling
-btrfs_get_dev_zone_info_all_devices() in the mount path that can be
-triggered by i.e. generic/013:
+On some systems (e.g. iMac 20,1 with BCM57766), the tg3 driver reads
+a default placeholder mac address (00:10:18:00:00:00) from the
+mailbox. The correct value on those systems are stored in the
+'local-mac-address' property.
 
-  ======================================================
-  WARNING: possible circular locking dependency detected
-  7.0.0-rc1+ #355 Not tainted
-  ------------------------------------------------------
-  mount/1043 is trying to acquire lock:
-  ffff8881020b5470 (&vblk->vdev_mutex){+.+.}-{4:4}, at: virtblk_report_zones+0xda/0x430
+This patch, detect the default value and tries to retrieve
+the correct address from the device_get_mac_address
+function instead.
 
-  but task is already holding lock:
-  ffff888102a738e0 (&fs_devs->device_list_mutex){+.+.}-{4:4}, at: btrfs_get_dev_zone_info_all_devices+0x45/0x90
+The patch has been tested on two different systems:
+- iMac 20,1 (BCM57766) model which use the local-mac-address property
+- iMac 13,2 (BCM57766) model which can use the mailbox,
+    NVRAM or MAC control registers
 
-  which lock already depends on the new lock.
+Tested-by: Rishon Jonathan R <mithicalaviator85@gmail.com>
 
-  the existing dependency chain (in reverse order) is:
-
-  -> #4 (&fs_devs->device_list_mutex){+.+.}-{4:4}:
-	 __mutex_lock+0xa3/0x1360
-	 btrfs_create_pending_block_groups+0x1f4/0x9d0
-	 __btrfs_end_transaction+0x3e/0x2e0
-	 btrfs_zoned_reserve_data_reloc_bg+0x2f8/0x390
-	 open_ctree+0x1934/0x23db
-	 btrfs_get_tree.cold+0x105/0x26c
-	 vfs_get_tree+0x28/0xb0
-	 __do_sys_fsconfig+0x324/0x680
-	 do_syscall_64+0x92/0x4f0
-	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #3 (btrfs_trans_num_extwriters){++++}-{0:0}:
-	 join_transaction+0xc2/0x5c0
-	 start_transaction+0x17c/0xbc0
-	 btrfs_zoned_reserve_data_reloc_bg+0x2b4/0x390
-	 open_ctree+0x1934/0x23db
-	 btrfs_get_tree.cold+0x105/0x26c
-	 vfs_get_tree+0x28/0xb0
-	 __do_sys_fsconfig+0x324/0x680
-	 do_syscall_64+0x92/0x4f0
-	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #2 (btrfs_trans_num_writers){++++}-{0:0}:
-	 lock_release+0x163/0x4b0
-	 __btrfs_end_transaction+0x1c7/0x2e0
-	 btrfs_dirty_inode+0x6f/0xd0
-	 touch_atime+0xe5/0x2c0
-	 btrfs_file_mmap_prepare+0x65/0x90
-	 __mmap_region+0x4b9/0xf00
-	 mmap_region+0xf7/0x120
-	 do_mmap+0x43d/0x610
-	 vm_mmap_pgoff+0xd6/0x190
-	 ksys_mmap_pgoff+0x7e/0xc0
-	 do_syscall_64+0x92/0x4f0
-	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #1 (&mm->mmap_lock){++++}-{4:4}:
-	 __might_fault+0x68/0xa0
-	 _copy_to_user+0x22/0x70
-	 blkdev_copy_zone_to_user+0x22/0x40
-	 virtblk_report_zones+0x282/0x430
-	 blkdev_report_zones_ioctl+0xfd/0x130
-	 blkdev_ioctl+0x20f/0x2c0
-	 __x64_sys_ioctl+0x86/0xd0
-	 do_syscall_64+0x92/0x4f0
-	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  -> #0 (&vblk->vdev_mutex){+.+.}-{4:4}:
-	 __lock_acquire+0x1522/0x2680
-	 lock_acquire+0xd5/0x2f0
-	 __mutex_lock+0xa3/0x1360
-	 virtblk_report_zones+0xda/0x430
-	 blkdev_report_zones_cached+0x162/0x190
-	 btrfs_get_dev_zones+0xdc/0x2e0
-	 btrfs_get_dev_zone_info+0x219/0xe80
-	 btrfs_get_dev_zone_info_all_devices+0x62/0x90
-	 open_ctree+0x1200/0x23db
-	 btrfs_get_tree.cold+0x105/0x26c
-	 vfs_get_tree+0x28/0xb0
-	 __do_sys_fsconfig+0x324/0x680
-	 do_syscall_64+0x92/0x4f0
-	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  other info that might help us debug this:
-
-  Chain exists of:
-    &vblk->vdev_mutex --> btrfs_trans_num_extwriters --> &fs_devs->device_list_mutex
-
-   Possible unsafe locking scenario:
-
-	 CPU0                    CPU1
-	 ----                    ----
-    lock(&fs_devs->device_list_mutex);
-				 lock(btrfs_trans_num_extwriters);
-				 lock(&fs_devs->device_list_mutex);
-    lock(&vblk->vdev_mutex);
-
-   *** DEADLOCK ***
-
-  3 locks held by mount/1043:
-   #0: ffff88811063e878 (&fc->uapi_mutex){+.+.}-{4:4}, at: __do_sys_fsconfig+0x2ae/0x680
-   #1: ffff88810cb9f0e8 (&type->s_umount_key#31/1){+.+.}-{4:4}, at: alloc_super+0xc0/0x3e0
-   #2: ffff888102a738e0 (&fs_devs->device_list_mutex){+.+.}-{4:4}, at: btrfs_get_dev_zone_info_all_devices+0x45/0x90
-
-  stack backtrace:
-  CPU: 2 UID: 0 PID: 1043 Comm: mount Not tainted 7.0.0-rc1+ #355 PREEMPT(full)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-9.fc43 06/10/2025
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x5b/0x80
-   print_circular_bug.cold+0x18d/0x1d8
-   check_noncircular+0x10d/0x130
-   __lock_acquire+0x1522/0x2680
-   ? vmap_small_pages_range_noflush+0x3ef/0x820
-   lock_acquire+0xd5/0x2f0
-   ? virtblk_report_zones+0xda/0x430
-   ? lock_is_held_type+0xcd/0x130
-   __mutex_lock+0xa3/0x1360
-   ? virtblk_report_zones+0xda/0x430
-   ? virtblk_report_zones+0xda/0x430
-   ? __pfx_copy_zone_info_cb+0x10/0x10
-   ? virtblk_report_zones+0xda/0x430
-   virtblk_report_zones+0xda/0x430
-   ? __pfx_copy_zone_info_cb+0x10/0x10
-   blkdev_report_zones_cached+0x162/0x190
-   ? __pfx_copy_zone_info_cb+0x10/0x10
-   btrfs_get_dev_zones+0xdc/0x2e0
-   btrfs_get_dev_zone_info+0x219/0xe80
-   btrfs_get_dev_zone_info_all_devices+0x62/0x90
-   open_ctree+0x1200/0x23db
-   btrfs_get_tree.cold+0x105/0x26c
-   ? rcu_is_watching+0x18/0x50
-   vfs_get_tree+0x28/0xb0
-   __do_sys_fsconfig+0x324/0x680
-   do_syscall_64+0x92/0x4f0
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  RIP: 0033:0x7f615e27a40e
-  RSP: 002b:00007fff11b18fb8 EFLAGS: 00000246 ORIG_RAX: 00000000000001af
-  RAX: ffffffffffffffda RBX: 000055572e92ab10 RCX: 00007f615e27a40e
-  RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
-  RBP: 00007fff11b19100 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-  R13: 000055572e92bc40 R14: 00007f615e3faa60 R15: 000055572e92bd08
-   </TASK>
-
-Don't hold the device_list_mutex while calling into
-btrfs_get_dev_zone_info() in btrfs_get_dev_zone_info_all_devices() to
-mitigate the issue. This is safe, as no other thread can touch the device
-list at the moment of execution.
-
-Reported-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Co-developed-by: Vincent MORVAN <vinc@42.fr>
+Signed-off-by: Vincent MORVAN <vinc@42.fr>
+Signed-off-by: Paul SAGE <paul.sage@42.fr>
+Signed-off-by: Atharva Tiwari <atharvatiwarilinuxdev@gmail.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20260314215432.3589-1-atharvatiwarilinuxdev@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 6e8b8c46ba18f..dabbfc3b7d776 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -342,7 +342,10 @@ int btrfs_get_dev_zone_info_all_devices(struct btrfs_fs_info *fs_info)
- 	if (!btrfs_fs_incompat(fs_info, ZONED))
- 		return 0;
- 
--	mutex_lock(&fs_devices->device_list_mutex);
-+	/*
-+	 * No need to take the device_list mutex here, we're still in the mount
-+	 * path and devices cannot be added to or removed from the list yet.
-+	 */
- 	list_for_each_entry(device, &fs_devices->devices, dev_list) {
- 		/* We can skip reading of zone info for missing devices */
- 		if (!device->bdev)
-@@ -352,7 +355,6 @@ int btrfs_get_dev_zone_info_all_devices(struct btrfs_fs_info *fs_info)
- 		if (ret)
- 			break;
- 	}
--	mutex_unlock(&fs_devices->device_list_mutex);
- 
- 	return ret;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index ea4973096aa28..840231ebbef71 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -16945,6 +16945,13 @@ static int tg3_get_invariants(struct tg3 *tp, const struct pci_device_id *ent)
+ 	return err;
  }
+ 
++static int tg3_is_default_mac_address(u8 *addr)
++{
++	static const u8 default_mac_address[ETH_ALEN] = { 0x00, 0x10, 0x18, 0x00, 0x00, 0x00 };
++
++	return ether_addr_equal(default_mac_address, addr);
++}
++
+ static int tg3_get_device_address(struct tg3 *tp, u8 *addr)
+ {
+ 	u32 hi, lo, mac_offset;
+@@ -17016,6 +17023,10 @@ static int tg3_get_device_address(struct tg3 *tp, u8 *addr)
+ 
+ 	if (!is_valid_ether_addr(addr))
+ 		return -EINVAL;
++
++	if (tg3_is_default_mac_address(addr))
++		return device_get_mac_address(&tp->pdev->dev, addr);
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
