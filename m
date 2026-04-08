@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DE626FA5A;
-	Wed,  8 Apr 2026 18:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB4D26FA5A;
+	Wed,  8 Apr 2026 18:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673098; cv=none; b=Qu28QPKhn5vtfX/zLs7EZ8je24MN5BWRRaCWyv/LB52U9OMufSqa28OT8OMWaXgTszgFScFiC9pWRkJiVoXSvsYXeBKByjFfm4JLJoHWieBmU66A1WQoPEjVFMCE+yKfiOgZ06M8frtYHLWP4Kku8IYql2n3uXGFHEvdfY4Py7M=
+	t=1775673101; cv=none; b=OZ8L+It2JNHm/iaJrINThxqr0sSppa/vq8I9LeBZSfjHaDmQt2P47catp7hqxtDJ9oSM+fO5P4igPyMzVektvLdZYWiBw5ubcQJHS0saoHBeOVB5TFhYQ9/9lju7/9Lu4TuTiy1RuPko4z4eXq2n1mwmbUJcpQS+Le88Ay2Zw/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673098; c=relaxed/simple;
-	bh=LXsFJuOAdiafTkHPaGb76En9O/keoaGhmnNgCkEmbCU=;
+	s=arc-20240116; t=1775673101; c=relaxed/simple;
+	bh=pMDpseXrGS1kV7Ms+jE3dSY+wTuef6m4xkDzHD3nbvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+q1tVyCb/UVljcDNBt74ti6jwe4mhTR4GjE3A+3P0yPb1OruPOoSz8X/B/x+CSGQ3aiZW3i8Wv7Hu1HaV4b14ILc61O5ZtXIVY3fHGtLtHoV5XFCN5Ay7y6lxmy/qHn3rp6OgZT+m8Os7RObf2UVu4zQJPXmCg3m6AC5i9OGYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLe639T0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Glv+9mQkoMMNjV7+Dz6bJ5gPI5soiCUcr7kAlTUtToYtzy2m/dSicYRRVmRIy1s+h0HZZd2xasalqBDuqVy01mSvq6bexAl/XXu4skslraLfRpxWIljLCBXyY0d5qfbiEG3UY5QOb/jIJWgUYNZNpDuEUZ/XK63j7h92NiVOejY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+H3qO6f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLe639T0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E840C19421;
-	Wed,  8 Apr 2026 18:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+H3qO6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A0DC19421;
+	Wed,  8 Apr 2026 18:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673098;
-	bh=LXsFJuOAdiafTkHPaGb76En9O/keoaGhmnNgCkEmbCU=;
+	s=korg; t=1775673101;
+	bh=pMDpseXrGS1kV7Ms+jE3dSY+wTuef6m4xkDzHD3nbvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CLe639T0UbPDYMp29KDQJ6j1i193VW/7sIDIVV0UCi8KmXhbIGPeNjoyO9re3Gjhe
-	 WwmDHq0vvwmFMAWoDeBG+8D3dtjtgV7zSUYR4gdy3RaHEGpVOFOsfWfhJShbWJU0n7
-	 wRtHw+GA2H6FKIFHYpFUzyP5aFNlSKQzATr2uxkY=
+	b=Z+H3qO6fIrYS5w/poMju52YXLSt1zUr6pSM0SyCI02RL3CiibMmvCGbO3BfzGZm6a
+	 IdpCSQ7LmjGuKpD58eZ7IlQTyPIKMFt996qZ8VJ00VHylQvveAj1537GUAG93hF+6z
+	 8QYQI9t0cQBkmVxAzqXLHpBpTrGKFgkF/hPg4BQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitri Daskalakis <daskald@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 100/277] eth: fbnic: Increase FBNIC_QUEUE_SIZE_MIN to 64
-Date: Wed,  8 Apr 2026 20:01:25 +0200
-Message-ID: <20260408175937.607018976@linuxfoundation.org>
+Subject: [PATCH 6.18 101/277] bpf: reject direct access to nullable PTR_TO_BUF pointers
+Date: Wed,  8 Apr 2026 20:01:26 +0200
+Message-ID: <20260408175937.643283673@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,45 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitri Daskalakis <daskald@meta.com>
+From: Qi Tang <tpluszz77@gmail.com>
 
-[ Upstream commit ec7067e661193403a7a00980bda8612db5954142 ]
+[ Upstream commit b0db1accbc7395657c2b79db59fa9fae0d6656f3 ]
 
-On systems with 64K pages, RX queues will be wedged if users set the
-descriptor count to the current minimum (16). Fbnic fragments large
-pages into 4K chunks, and scales down the ring size accordingly. With
-64K pages and 16 descriptors, the ring size mask is 0 and will never
-be filled.
+check_mem_access() matches PTR_TO_BUF via base_type() which strips
+PTR_MAYBE_NULL, allowing direct dereference without a null check.
 
-32 descriptors is another special case that wedges the RX rings.
-Internally, the rings track pages for the head/tail pointers, not page
-fragments. So with 32 descriptors, there's only 1 usable page as one
-ring slot is kept empty to disambiguate between an empty/full ring.
-As a result, the head pointer never advances and the HW stalls after
-consuming 16 page fragments.
+Map iterator ctx->key and ctx->value are PTR_TO_BUF | PTR_MAYBE_NULL.
+On stop callbacks these are NULL, causing a kernel NULL dereference.
 
-Fixes: 0cb4c0a13723 ("eth: fbnic: Implement Rx queue alloc/start/stop/free")
-Signed-off-by: Dimitri Daskalakis <daskald@meta.com>
-Link: https://patch.msgid.link/20260401162848.2335350-1-dimitri.daskalakis1@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add a type_may_be_null() guard to the PTR_TO_BUF branch, matching the
+existing PTR_TO_BTF_ID pattern.
+
+Fixes: 20b2aff4bc15 ("bpf: Introduce MEM_RDONLY flag")
+Signed-off-by: Qi Tang <tpluszz77@gmail.com>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20260402092923.38357-2-tpluszz77@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_txrx.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-index 51a98f27d5d91..f2ee2cbf3486b 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.h
-@@ -38,7 +38,7 @@ struct fbnic_net;
- #define FBNIC_MAX_XDPQS			128u
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index ecdbc821bd1a4..db1c591a1da3b 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -7737,7 +7737,8 @@ static int check_mem_access(struct bpf_verifier_env *env, int insn_idx, u32 regn
+ 	} else if (reg->type == CONST_PTR_TO_MAP) {
+ 		err = check_ptr_to_map_access(env, regs, regno, off, size, t,
+ 					      value_regno);
+-	} else if (base_type(reg->type) == PTR_TO_BUF) {
++	} else if (base_type(reg->type) == PTR_TO_BUF &&
++		   !type_may_be_null(reg->type)) {
+ 		bool rdonly_mem = type_is_rdonly_mem(reg->type);
+ 		u32 *max_access;
  
- /* These apply to TWQs, TCQ, RCQ */
--#define FBNIC_QUEUE_SIZE_MIN		16u
-+#define FBNIC_QUEUE_SIZE_MIN		64u
- #define FBNIC_QUEUE_SIZE_MAX		SZ_64K
- 
- #define FBNIC_TXQ_SIZE_DEFAULT		1024
 -- 
 2.53.0
 
