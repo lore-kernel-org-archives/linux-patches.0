@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684033176E4;
-	Wed,  8 Apr 2026 18:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93FF3176E4;
+	Wed,  8 Apr 2026 18:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674097; cv=none; b=ca72aXPIWGcg0Rh7F/51SJ8W16FgYuBfm3ADXT7QYPSJ9W0pm+FP0umlIRNyMekHwsn3+2vZEU05Rc/dENIkvMOM1ky75+FxsG3ViWdvWyVnUWXWB66dKcI0vJ/OcAmWyEexbeaAPDZChxKNyGPh80eEITNk4ha7znDEMRecQ74=
+	t=1775674100; cv=none; b=S1+hOSAFZr1lP4+eDk5TTybUqbLp4riUL/ZH1erQn3DsNSEIzmSef0qSLT90e5Z686iFW5sHqWmWogREv6zijCgMRWKmP/AmQNZC6uRxhm6jA0Z8s/Ze6+Rbwblq4cifX2FVhfatCIMmHL1YKhRjcgfbFsTxBcsyYhPClrY8aKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674097; c=relaxed/simple;
-	bh=6hJLGPHNV+EHI4jlWndflRlEdfNF4iQPD+1v9wtfci4=;
+	s=arc-20240116; t=1775674100; c=relaxed/simple;
+	bh=aVIa/h8HgN1B9xaBtqNTSWGo2LR76dlCExH3zyhdit8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duyyNLH+KjXhgf/exOKXL54V6ObZ+wwWCHr0/cT116qYLDUvtne5domU8VwVJX5ioc26aRTghnSxGqyKgnyOMHyNx66G3MB+nA68CFlBnDEXjGwu8exNLdexWyLArZTuSZW+w3G+WAnA6G07qdmB34GvgEcrPojSP3YfSl78k94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSy7ZqTR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KfMCdCYhMNxtp3rji1qKFg5+lb8/L8cFnO5X7lckm1seA6HFLzCUUzUBeOcRh6t8+uP439YmvlO/+TLJtBXfr0uKR8C/44Tmn+2sqT8vNp6+PvgCBDvWLswGwFeDfz5bvHcW1ks6b/Ld90RUOCRjJx/AgyR3ULm89nyPDIfkH3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtaX9FKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSy7ZqTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E811FC19421;
-	Wed,  8 Apr 2026 18:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtaX9FKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC11C19421;
+	Wed,  8 Apr 2026 18:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674097;
-	bh=6hJLGPHNV+EHI4jlWndflRlEdfNF4iQPD+1v9wtfci4=;
+	s=korg; t=1775674099;
+	bh=aVIa/h8HgN1B9xaBtqNTSWGo2LR76dlCExH3zyhdit8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mSy7ZqTR3l5kiaLi6j9jdddWZ5yc2KoUVmq0+I5mmI3IxcJ5X78AYYZRy/kSbiH7q
-	 1Wmw8bv7vGxXIP10LEApXfZN2oPfgnMgI2a1ERcqInrTlXH2iUllof2tphtgUKyTDf
-	 69ge5jm91JBgZw9pGAUMONbxm/Vy6a2ZDzrMWJ10=
+	b=dtaX9FKQt7KjlZ00m2Xz0ZfKxGgrNcIQ4XMNIahX+VdIEXugAymCltstDONRNB3wL
+	 jjbgxVPpdLtyqT0HEVLdkxSTxeoLcqG8jl77e2erZL+NQY8OlvHcRAWH02KUnrzyl6
+	 hV2PsOOdGC3UJNOffLCkw14PdysuUcVtl9bT/NYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.12 176/242] comedi: me_daq: Fix potential overrun of firmware buffer
-Date: Wed,  8 Apr 2026 20:03:36 +0200
-Message-ID: <20260408175933.674433465@linuxfoundation.org>
+Subject: [PATCH 6.12 177/242] comedi: me4000: Fix potential overrun of firmware buffer
+Date: Wed,  8 Apr 2026 20:03:37 +0200
+Message-ID: <20260408175933.711931115@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,44 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-commit cc797d4821c754c701d9714b58bea947e31dbbe0 upstream.
+commit 3fb43a7a5b44713f892c58ead2e5f3a1bc9f4ee7 upstream.
 
-`me2600_xilinx_download()` loads the firmware that was requested by
+`me4000_xilinx_download()` loads the firmware that was requested by
 `request_firmware()`.  It is possible for it to overrun the source
 buffer because it blindly trusts the file format.  It reads a data
 stream length from the first 4 bytes into variable `file_length` and
 reads the data stream contents of length `file_length` from offset 16
-onwards.  Although it checks that the supplied firmware is at least 16
-bytes long, it does not check that it is long enough to contain the data
-stream.
+onwards.
 
 Add a test to ensure that the supplied firmware is long enough to
 contain the header and the data stream.  On failure, log an error and
 return `-EINVAL`.
 
-Fixes: 85acac61096f9 ("Staging: comedi: add me_daq driver")
+Note: The firmware loading was totally broken before commit ac584af59945
+("staging: comedi: me4000: fix firmware downloading"), but that is the
+most sensible target for this fix.
+
+Fixes: ac584af59945 ("staging: comedi: me4000: fix firmware downloading")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260205140130.76697-1-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260205133949.71722-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/me_daq.c |   35 +++++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ drivers/comedi/drivers/me4000.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/comedi/drivers/me_daq.c
-+++ b/drivers/comedi/drivers/me_daq.c
-@@ -344,6 +344,25 @@ static int me2600_xilinx_download(struct
- 	unsigned int file_length;
+--- a/drivers/comedi/drivers/me4000.c
++++ b/drivers/comedi/drivers/me4000.c
+@@ -315,6 +315,18 @@ static int me4000_xilinx_download(struct
+ 	unsigned int val;
  	unsigned int i;
  
-+	/*
-+	 * Format of the firmware
-+	 * Build longs from the byte-wise coded header
-+	 * Byte 1-3:   length of the array
-+	 * Byte 4-7:   version
-+	 * Byte 8-11:  date
-+	 * Byte 12-15: reserved
-+	 */
++	/* Get data stream length from header. */
 +	if (size >= 4) {
 +		file_length = (((unsigned int)data[0] & 0xff) << 24) +
 +			      (((unsigned int)data[1] & 0xff) << 16) +
@@ -101,31 +96,19 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +		return -EINVAL;
 +	}
 +
- 	/* disable irq's on PLX */
- 	writel(0x00, devpriv->plx_regbase + PLX9052_INTCSR);
+ 	if (!xilinx_iobase)
+ 		return -ENODEV;
  
-@@ -358,22 +377,6 @@ static int me2600_xilinx_download(struct
- 	sleep(1);
+@@ -346,10 +358,6 @@ static int me4000_xilinx_download(struct
+ 	outl(val, devpriv->plx_regbase + PLX9052_CNTRL);
  
- 	/*
--	 * Format of the firmware
--	 * Build longs from the byte-wise coded header
--	 * Byte 1-3:   length of the array
--	 * Byte 4-7:   version
--	 * Byte 8-11:  date
--	 * Byte 12-15: reserved
--	 */
--	if (size < 16)
--		return -EINVAL;
--
+ 	/* Download Xilinx firmware */
 -	file_length = (((unsigned int)data[0] & 0xff) << 24) +
--	    (((unsigned int)data[1] & 0xff) << 16) +
--	    (((unsigned int)data[2] & 0xff) << 8) +
--	    ((unsigned int)data[3] & 0xff);
--
--	/*
- 	 * Loop for writing firmware byte by byte to xilinx
- 	 * Firmware data start at offset 16
- 	 */
+-		      (((unsigned int)data[1] & 0xff) << 16) +
+-		      (((unsigned int)data[2] & 0xff) << 8) +
+-		      ((unsigned int)data[3] & 0xff);
+ 	usleep_range(10, 1000);
+ 
+ 	for (i = 0; i < file_length; i++) {
 
 
