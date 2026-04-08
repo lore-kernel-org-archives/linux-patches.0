@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29035331A44;
-	Wed,  8 Apr 2026 18:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1062BD030;
+	Wed,  8 Apr 2026 18:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673413; cv=none; b=gf3/ko8Rw6nDdS9vqwY/Remd2Utj1DI1jDYN4mpb72gF0koMMky3Hl4iZE7LzECXAe9Vmgw4ckqf3UNb75xZ5A3dPU7H/sPzub88MDx3F8cMDPlmiTRCLs1DrgPRiv3tSIUbzQULgUiYX/r3aKSV3hWp/FQmoQjC8OdIOmWcq/Q=
+	t=1775673415; cv=none; b=jR1+TLipNmWw0IKUpCEYu5VpUdQP2/w2M4qdnsTkbQhNI37lVJgtC3416nwH2FYhM2O3uOIODLNjEkz4hw5oB5sE1lvVLpWRmlxoiXdcq8DYVtqnIeHm53dRlPzOQELlSF9sRnwjMOb+A+bQMvM92ESqXlo83+yR6JBj3N/ke/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673413; c=relaxed/simple;
-	bh=/sOD1dUkMU+6xAAI58EY1rLM/kjSWG8WB5dC/5R2WfU=;
+	s=arc-20240116; t=1775673415; c=relaxed/simple;
+	bh=VR8dn0fxucyoRzPiNpv+GQajfan2kSmOwMvtlYDkyLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lu+nFnScbQ2D3W4vUAUz7o5l3N3jonz3Guhi4WKdH64frS7icEYRYa6tBqCyDRS35zouXZjmL8UeS7DTOLYWNtZW/ogbniWhU+RwBm6WmjffwWIHCVryZGd4hitrn9seBd9NtIjxz3VYA5EjpSik8VL+5Rowo0zBwY9E876VJtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAnSDgJg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rk4KJ8pZYbkCtlN1t3OHdVL8atybBA0QqD/Qe9zR7QMyCzr3aAbSHCuvi126eQimtUCQFVteA4T5/5KSRaSqUCtHIlgT51ii8IBeZuZKCDTTO3cLM7yoP56AkiJ1UVanI+69vDWy/BYt8V5QbwFw8jx+TtjUWPMarlUiq/oZX3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqGEylvS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAnSDgJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58E4C19421;
-	Wed,  8 Apr 2026 18:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqGEylvS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45620C19421;
+	Wed,  8 Apr 2026 18:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673413;
-	bh=/sOD1dUkMU+6xAAI58EY1rLM/kjSWG8WB5dC/5R2WfU=;
+	s=korg; t=1775673415;
+	bh=VR8dn0fxucyoRzPiNpv+GQajfan2kSmOwMvtlYDkyLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAnSDgJg7xcCtfN0iCusaSr/7T02nEBGwwhtgOFdB5PG17LXN5BP2fJKkF4pFk99t
-	 G4LoksHwIsw2mkJmePKRRonF+eSraTCaN7AsZ+qgG4kKmCGmgLUCINrUK3u//gefHN
-	 6aQUsxK8+mKvuiIx/TZp/GGbHtYQK06zNFLhdXkQ=
+	b=vqGEylvSrvguj9vcaBWEwHzUUbNLamBXTRj1WshDMsaSWRSpu6acxG9i4nkkmVcvj
+	 5yC9B4vvjTbIGg7GMkc5QnqXdFk6GoiA/V8kCe5rQnqWZhXp43axevaM3n2Tvsy323
+	 6VyquEdUhkTx9K6BgCT59GlkSGAcN/bi27H2ykm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.18 215/277] comedi: ni_atmio16d: Fix invalid clean-up after failed attach
-Date: Wed,  8 Apr 2026 20:03:20 +0200
-Message-ID: <20260408175941.888274598@linuxfoundation.org>
+	Ivan Vera <ivanverasantos@gmail.com>,
+	Harish Ediga <harish.ediga@amd.com>,
+	Harsh Jain <h.jain@amd.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.18 224/277] nvmem: zynqmp_nvmem: Fix buffer size in DMA and memcpy
+Date: Wed,  8 Apr 2026 20:03:29 +0200
+Message-ID: <20260408175942.220516183@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -50,47 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Ivan Vera <ivanverasantos@gmail.com>
 
-commit 101ab946b79ad83b36d5cfd47de587492a80acf0 upstream.
+commit f9b88613ff402aa6fe8fd020573cb95867ae947e upstream.
 
-If the driver's COMEDI "attach" handler function (`atmio16d_attach()`)
-returns an error, the COMEDI core will call the driver's "detach"
-handler function (`atmio16d_detach()`) to clean up.  This calls
-`reset_atmio16d()` unconditionally, but depending on where the error
-occurred in the attach handler, the device may not have been
-sufficiently initialized to call `reset_atmio16d()`.  It uses
-`dev->iobase` as the I/O port base address and `dev->private` as the
-pointer to the COMEDI device's private data structure.  `dev->iobase`
-may still be set to its initial value of 0, which would result in
-undesired writes to low I/O port addresses.  `dev->private` may still be
-`NULL`, which would result in null pointer dereferences.
+Buffer size used in dma allocation and memcpy is wrong.
+It can lead to undersized DMA buffer access and possible
+memory corruption. use correct buffer size in dma_alloc_coherent
+and memcpy.
 
-Fix `atmio16d_detach()` by checking that `dev->private` is valid
-(non-null) before calling `reset_atmio16d()`.  This implies that
-`dev->iobase` was set correctly since that is set up before
-`dev->private`.
-
-Fixes: 2323b276308a ("Staging: comedi: add ni_at_atmio16d driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260128150011.5006-1-abbotti@mev.co.uk
+Fixes: 737c0c8d07b5 ("nvmem: zynqmp_nvmem: Add support to access efuse")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ivan Vera <ivanverasantos@gmail.com>
+Signed-off-by: Harish Ediga <harish.ediga@amd.com>
+Signed-off-by: Harsh Jain <h.jain@amd.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260327131645.3025781-3-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/ni_atmio16d.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvmem/zynqmp_nvmem.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/comedi/drivers/ni_atmio16d.c
-+++ b/drivers/comedi/drivers/ni_atmio16d.c
-@@ -698,7 +698,8 @@ static int atmio16d_attach(struct comedi
+--- a/drivers/nvmem/zynqmp_nvmem.c
++++ b/drivers/nvmem/zynqmp_nvmem.c
+@@ -66,7 +66,7 @@ static int zynqmp_efuse_access(void *con
+ 	dma_addr_t dma_buf;
+ 	size_t words = bytes / WORD_INBYTES;
+ 	int ret;
+-	int value;
++	unsigned int value;
+ 	char *data;
  
- static void atmio16d_detach(struct comedi_device *dev)
- {
--	reset_atmio16d(dev);
-+	if (dev->private)
-+		reset_atmio16d(dev);
- 	comedi_legacy_detach(dev);
- }
+ 	if (bytes % WORD_INBYTES != 0) {
+@@ -80,7 +80,7 @@ static int zynqmp_efuse_access(void *con
+ 	}
  
+ 	if (pufflag == 1 && flag == EFUSE_WRITE) {
+-		memcpy(&value, val, bytes);
++		memcpy(&value, val, sizeof(value));
+ 		if ((offset == EFUSE_PUF_START_OFFSET ||
+ 		     offset == EFUSE_PUF_MID_OFFSET) &&
+ 		    value & P_USER_0_64_UPPER_MASK) {
+@@ -100,7 +100,7 @@ static int zynqmp_efuse_access(void *con
+ 	if (!efuse)
+ 		return -ENOMEM;
+ 
+-	data = dma_alloc_coherent(dev, sizeof(bytes),
++	data = dma_alloc_coherent(dev, bytes,
+ 				  &dma_buf, GFP_KERNEL);
+ 	if (!data) {
+ 		ret = -ENOMEM;
+@@ -134,7 +134,7 @@ static int zynqmp_efuse_access(void *con
+ 	if (flag == EFUSE_READ)
+ 		memcpy(val, data, bytes);
+ efuse_access_err:
+-	dma_free_coherent(dev, sizeof(bytes),
++	dma_free_coherent(dev, bytes,
+ 			  data, dma_buf);
+ efuse_data_fail:
+ 	dma_free_coherent(dev, sizeof(struct xilinx_efuse),
 
 
