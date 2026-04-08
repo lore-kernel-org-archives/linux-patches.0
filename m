@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D646F3D47AC;
-	Wed,  8 Apr 2026 18:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744AB3D564E;
+	Wed,  8 Apr 2026 18:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672984; cv=none; b=holzyE8Z4fNIMK59wOvHuWr5fhlxNVrbQS+BYLO5fs5uZYqTOMChU5Y4kBN1uP6zrG+mfuNxmvxZxUdh3rCWtihvb0ckjf80jxhW7ezdmJcO6qkxiT9kMT/mwucHhINSCMvijZqrsUuro+ESEJREof4M1hghIBkGIFYkhY+O6jg=
+	t=1775672987; cv=none; b=rc+aGpr1BkASPDADFrsnNCP7UBzRwUG76FThJbPM4E/LMi1KXaZIJ6niJzaNrp+/Oq/flvu58TnLqltr/+1TMMceLlXeozkI0llDSkt43bFbG3Y4t8ymjVd4RBgK+PvKY4y8a4usjiRgBu5DQuB4qDW9rIjHqu8QmrnQf5pKGL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672984; c=relaxed/simple;
-	bh=jriySFuukDLtSWerJR24ShaosmgJEZPBm/DAObsqFZ8=;
+	s=arc-20240116; t=1775672987; c=relaxed/simple;
+	bh=XznMBCFTl91GIuLqgTLN86bwLrysfwo+HTRNOKk/TG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5vDLEy4k5Q5aHhA1Auz80EZVH5DEwFUXLNQ5t04mFEoRX8LdbMJqnhGobv6Sm3w6ACJ+/Neq+W8j6uv/bDHuagE0uYF7WmgpIblEFQww7jufVnDpWrbxHSB3HY2GFFCPOdX9ASQ0FShIro65IOrUUeLhxFU+QexHpnN+pRvaJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLi5WMK5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VGuwEf1k/z2imvWqvxcAU0JrlrPPAHf0h5mzWd/F6g/BIifveRnXXpZcIfK3RaHQNP0ACcNfWwJDFv9YqiL2eRBNhnjt9iPGsfHxdDhAYNNHfoehXLWLDl/sEs58YaDl+qSO8fAmwy4h3qbCBdibUTlfxOnB9NB3zo8LK9xiXD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVIkrFZT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLi5WMK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4D6C19425;
-	Wed,  8 Apr 2026 18:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVIkrFZT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08ADAC19421;
+	Wed,  8 Apr 2026 18:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672984;
-	bh=jriySFuukDLtSWerJR24ShaosmgJEZPBm/DAObsqFZ8=;
+	s=korg; t=1775672987;
+	bh=XznMBCFTl91GIuLqgTLN86bwLrysfwo+HTRNOKk/TG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nLi5WMK5JHXBfRYBfqVqsKHgLOpqabS0P2SJhQfdye9iggqdfeoIYTzGixv3zAS/s
-	 VXuXQ6O7cPykHiNFknU+aktz+0Mgq6lDA5/BU3cpzr3dpVtgVjbRtztOEIc99XBSAw
-	 UldZdd0yyMFGAb74+0D4GCKyuctoK5ejJC/EnRgI=
+	b=nVIkrFZTVDUFErr3shPekLu1bVj1UFoqDuqSkqIMH2ERC4fCz+I7Syz7dfw0vGkK4
+	 Vp13IW3TG1LOTKzL3yUXhpZBooocVj+9rT2eCQsp4klLPemAyToP2jg3UP+gZQ9mBa
+	 MXDxYya45UG2k7QWuRfCCTVgDwHpn4m9oGhXhOEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 057/277] net: xilinx: axienet: Correct BD length masks to match AXIDMA IP spec
-Date: Wed,  8 Apr 2026 20:00:42 +0200
-Message-ID: <20260408175935.989058362@linuxfoundation.org>
+Subject: [PATCH 6.18 040/277] bridge: br_nd_send: linearize skb before parsing ND options
+Date: Wed,  8 Apr 2026 20:00:25 +0200
+Message-ID: <20260408175935.353235958@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -52,51 +57,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-[ Upstream commit 393e0b4f178ec7fce1141dacc3304e3607a92ee9 ]
+[ Upstream commit a01aee7cafc575bb82f5529e8734e7052f9b16ea ]
 
-The XAXIDMA_BD_CTRL_LENGTH_MASK and XAXIDMA_BD_STS_ACTUAL_LEN_MASK
-macros were defined as 0x007FFFFF (23 bits), but the AXI DMA IP
-product guide (PG021) specifies the buffer length field as bits 25:0
-(26 bits). Update both masks to match the IP documentation.
+br_nd_send() parses neighbour discovery options from ns->opt[] and
+assumes that these options are in the linear part of request.
 
-In practice this had no functional impact, since Ethernet frames are
-far smaller than 2^23 bytes and the extra bits were always zero, but
-the masks should still reflect the hardware specification.
+Its callers only guarantee that the ICMPv6 header and target address
+are available, so the option area can still be non-linear. Parsing
+ns->opt[] in that case can access data past the linear buffer.
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20260327073238.134948-2-suraj.gupta2@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Linearize request before option parsing and derive ns from the linear
+network header.
+
+Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
+Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260326034441.2037420-2-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bridge/br_arp_nd_proxy.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index 5ff742103beb9..fcd3aaef27fc3 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -105,7 +105,7 @@
- #define XAXIDMA_BD_HAS_DRE_MASK		0xF00 /* Whether has DRE mask */
- #define XAXIDMA_BD_WORDLEN_MASK		0xFF /* Whether has DRE mask */
+diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
+index 1e2b51769eec8..af3d1e33f50b8 100644
+--- a/net/bridge/br_arp_nd_proxy.c
++++ b/net/bridge/br_arp_nd_proxy.c
+@@ -251,12 +251,12 @@ struct nd_msg *br_is_nd_neigh_msg(const struct sk_buff *skb, struct nd_msg *msg)
  
--#define XAXIDMA_BD_CTRL_LENGTH_MASK	0x007FFFFF /* Requested len */
-+#define XAXIDMA_BD_CTRL_LENGTH_MASK	GENMASK(25, 0) /* Requested len */
- #define XAXIDMA_BD_CTRL_TXSOF_MASK	0x08000000 /* First tx packet */
- #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
- #define XAXIDMA_BD_CTRL_ALL_MASK	0x0C000000 /* All control bits */
-@@ -130,7 +130,7 @@
- #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
- #define XAXIDMA_BD_CTRL_ALL_MASK	0x0C000000 /* All control bits */
+ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
+ 		       struct sk_buff *request, struct neighbour *n,
+-		       __be16 vlan_proto, u16 vlan_tci, struct nd_msg *ns)
++		       __be16 vlan_proto, u16 vlan_tci)
+ {
+ 	struct net_device *dev = request->dev;
+ 	struct net_bridge_vlan_group *vg;
++	struct nd_msg *na, *ns;
+ 	struct sk_buff *reply;
+-	struct nd_msg *na;
+ 	struct ipv6hdr *pip6;
+ 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
+ 	int ns_olen;
+@@ -264,7 +264,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
+ 	u8 *daddr;
+ 	u16 pvid;
  
--#define XAXIDMA_BD_STS_ACTUAL_LEN_MASK	0x007FFFFF /* Actual len */
-+#define XAXIDMA_BD_STS_ACTUAL_LEN_MASK	GENMASK(25, 0) /* Actual len */
- #define XAXIDMA_BD_STS_COMPLETE_MASK	0x80000000 /* Completed */
- #define XAXIDMA_BD_STS_DEC_ERR_MASK	0x40000000 /* Decode error */
- #define XAXIDMA_BD_STS_SLV_ERR_MASK	0x20000000 /* Slave error */
+-	if (!dev)
++	if (!dev || skb_linearize(request))
+ 		return;
+ 
+ 	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
+@@ -281,6 +281,8 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
+ 	skb_set_mac_header(reply, 0);
+ 
+ 	daddr = eth_hdr(request)->h_source;
++	ns = (struct nd_msg *)(skb_network_header(request) +
++			       sizeof(struct ipv6hdr));
+ 
+ 	/* Do we need option processing ? */
+ 	ns_olen = request->len - (skb_network_offset(request) +
+@@ -472,9 +474,9 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
+ 				if (vid != 0)
+ 					br_nd_send(br, p, skb, n,
+ 						   skb->vlan_proto,
+-						   skb_vlan_tag_get(skb), msg);
++						   skb_vlan_tag_get(skb));
+ 				else
+-					br_nd_send(br, p, skb, n, 0, 0, msg);
++					br_nd_send(br, p, skb, n, 0, 0);
+ 				replied = true;
+ 			}
+ 
 -- 
 2.53.0
 
