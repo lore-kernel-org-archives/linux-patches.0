@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DBA3D8134;
-	Wed,  8 Apr 2026 18:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C1C3D4134;
+	Wed,  8 Apr 2026 18:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672000; cv=none; b=RY60iyrTdYRbdVEWyyUExsQBquOlK/J4VwOP605kqoK7uNW5W2He3Y/uZNaCJg/mfC3cuygJ1o8m3R2+RGvucoqryxoKcdJHM3O+ZYnUXzf4yQf+ppH8JBiupWFh2WYYOxZJ9ZwvctHSl9YoYRDD/hJiA9QlYMZWYRSEDG5UToo=
+	t=1775672003; cv=none; b=cJCHaWZxu0CR0homDCLl0istVxrXz6x8wtjk6M2pUmY+gWzfdLS7WDXzs/ElAyUl0z+jhFBT2yAZDu7MrEykB7bA+cKcq8M0VyFCgdhLWM/hl48yXUZSnq+E0DxOwoBB/gV7F3oYfKouu758zRwim4v6UggXAaWGE5YUvXd5a4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672000; c=relaxed/simple;
-	bh=5TL52fJ8RaqjcEpVPv4w2nM0EzIcUBHxb63flmTSCH8=;
+	s=arc-20240116; t=1775672003; c=relaxed/simple;
+	bh=wXgkoOTCqTkID6ius1q7VS+XkHbsglpg2KzRgxF/KVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HkNKUc74ywF2gVbR/Nv1FChnuzA0nV2XU4VPurSz+IehkUmk8e7ICiPBRIkNdwPH9QAppACYggKUUvwpRXi9KVz46YliLvQGxLl6z4KF6AfkgeIUq1EV+UQ9XX5fyJxdXgZXfo7NfhmDodOTPn82W/+11/D+oWzsDr4RJ6i8rA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcUCIBKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XO2CfHmoptX4hEvR9xwO945yk0VdQ+8kdnybP66DVytcc2IrgNYC/wBZFurZWL8l4QP5B6+xYpRTfZPO80QejajogIxkCIBqEH1X50WpKCxhFev7KhLEZYAGXaULuCFe73X1gcGOfnli/ys6y5InEuy1Jl3LiwNAzdtBxc3AM/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zznIO1xW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcUCIBKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3BAC19421;
-	Wed,  8 Apr 2026 18:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zznIO1xW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDB5C19421;
+	Wed,  8 Apr 2026 18:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672000;
-	bh=5TL52fJ8RaqjcEpVPv4w2nM0EzIcUBHxb63flmTSCH8=;
+	s=korg; t=1775672002;
+	bh=wXgkoOTCqTkID6ius1q7VS+XkHbsglpg2KzRgxF/KVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KcUCIBKiKJzrfQPPKzqKYGvuLqV9K48omdaZcQdYhCcfM2xyJGZN5mMHFAiCkJOB/
-	 5dzIidZNXD2W1iRDJUTeG6mL4gu96VgPA0DqECMJF5amN6JQ5oOjwr4AGCxTYgwJS3
-	 dUt2AxU9nUGz0xC4IJrh3qS1Nbzp1qfA5qviYYQQ=
+	b=zznIO1xWvM7PlDdaFcIxz32D1bSc+byyLGzxzDd+8MqBYxcH6y4+8CFqtP3TkgaHl
+	 Ku95NQJxubPqeP+U64HkAbk9n13Y9L5QsWcbjrxoPYHh28ALCNCZP5Fl++28lEgN14
+	 rxe9dm4VHvwg2VVvIVjATOPZg6IF5TVOHMjGngoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/312] dmaengine: idxd: Fix memory leak when a wq is reset
-Date: Wed,  8 Apr 2026 20:00:40 +0200
-Message-ID: <20260408175938.362048524@linuxfoundation.org>
+Subject: [PATCH 6.1 150/312] tg3: Fix race for querying speed/duplex
+Date: Wed,  8 Apr 2026 20:01:07 +0200
+Message-ID: <20260408175939.369539191@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,54 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
 
-[ Upstream commit d9cfb5193a047a92a4d3c0e91ea4cc87c8f7c478 ]
+[ Upstream commit bb417456c7814d1493d98b7dd9c040bf3ce3b4ed ]
 
-idxd_wq_disable_cleanup() which is called from the reset path for a
-workqueue, sets the wq type to NONE, which for other parts of the
-driver mean that the wq is empty (all its resources were released).
+When driver signals carrier up via netif_carrier_on() its internal
+link_up state isn't updated immediately. This leads to inconsistent
+speed/duplex in /proc/net/bonding/bondX where the speed and duplex
+is shown as unknown while ethtool shows correct values. Fix this by
+using netif_carrier_ok() for link checking in get_ksettings function.
 
-Only set the wq type to NONE after its resources are released.
-
-Fixes: da32b28c95a7 ("dmaengine: idxd: cleanup workqueue config after disabling")
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-8-7ed70658a9d1@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 84421b99cedc ("tg3: Update link_up flag for phylib devices")
+Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/device.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 188f6b8625f78..8b72e26640084 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -174,6 +174,7 @@ void idxd_wq_free_resources(struct idxd_wq *wq)
- 	free_descs(wq);
- 	dma_free_coherent(dev, wq->compls_size, wq->compls, wq->compls_addr);
- 	sbitmap_queue_free(&wq->sbq);
-+	wq->type = IDXD_WQT_NONE;
- }
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index e93e7d37c8262..5e8c11fc5912a 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -12217,7 +12217,7 @@ static int tg3_get_link_ksettings(struct net_device *dev,
+ 	ethtool_convert_legacy_u32_to_link_mode(cmd->link_modes.advertising,
+ 						advertising);
  
- int idxd_wq_enable(struct idxd_wq *wq)
-@@ -381,7 +382,6 @@ static void idxd_wq_disable_cleanup(struct idxd_wq *wq)
- 	lockdep_assert_held(&wq->wq_lock);
- 	wq->state = IDXD_WQ_DISABLED;
- 	memset(wq->wqcfg, 0, idxd->wqcfg_size);
--	wq->type = IDXD_WQT_NONE;
- 	wq->threshold = 0;
- 	wq->priority = 0;
- 	wq->enqcmds_retries = IDXD_ENQCMDS_RETRIES;
-@@ -1426,7 +1426,6 @@ void drv_disable_wq(struct idxd_wq *wq)
- 	idxd_wq_reset(wq);
- 	idxd_wq_free_resources(wq);
- 	percpu_ref_exit(&wq->wq_active);
--	wq->type = IDXD_WQT_NONE;
- 	wq->client_count = 0;
- }
- 
+-	if (netif_running(dev) && tp->link_up) {
++	if (netif_running(dev) && netif_carrier_ok(dev)) {
+ 		cmd->base.speed = tp->link_config.active_speed;
+ 		cmd->base.duplex = tp->link_config.active_duplex;
+ 		ethtool_convert_legacy_u32_to_link_mode(
 -- 
 2.53.0
 
