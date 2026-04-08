@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5E2347517;
-	Wed,  8 Apr 2026 18:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B0537F8C2;
+	Wed,  8 Apr 2026 18:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671856; cv=none; b=imtkrIIMsHKPk1OuF+SWqiCBuk7gHlnuOnsCx/EBMrlQzJwDyn1WiQzQd9sDWsq6hGuqkVNutGsYsU6hH4t2QuDK0T3db6yHiZsdNG78PN0/308grsIg2HjI9OYxKCJw9hCRNPofJ4faCgelactX8cSCVYlizz80yfR6nNBi8xc=
+	t=1775671858; cv=none; b=Nec49CGrcSwdOS67ZXcU5Flh6H/SL242ED5Lh7QuN1d10LJNQU2LmVmhqcrTwDSJQYtykYy6v2QbL5bjfn1+sVPYIpTl8bXhMKNN084IG42x0MNXRowyU0eZxTNM2zJyAp84jTTwKkZnXjfcO0SpF1nDIGTScvgrzJfH973IPNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671856; c=relaxed/simple;
-	bh=bYR55SORdM91eAxvYDlS0qaUQRu3lPqkx6U5yubINKw=;
+	s=arc-20240116; t=1775671858; c=relaxed/simple;
+	bh=LzpA0uNotGTfnorKGXT/eTRfWJ98eIeKILXj4dxtatQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RjCdJV/W9KOOhAn8IugbLv5RDSORPw9MI31IcEh4yizMsEhDZb6Xtsejd2GR5arw7lNhaaW3Kf5P5mOwml8Jo9ZOQtb/MnEzy9m3IQ0F1Jv5bXkflPLc4vii4sWqDK3/a1a0KBF6c9Zap+PAAYxK3pB8w71UGn9D7Zhzu31/LUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBjMqPBy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HVnxwSFeODHplF0NQRxs6/IBF4v+PgL+zfZ7sojL3tHcxNJrbX8ifxBKBqVqm8uXfRwT6b7XYUZ6wmtbf8VSj030QF/q2OsvRcAVdrv4FnatEa6aqOj5Np1AXxqJKHCilnWUO5r94hdJB05o5GecpjCahHFjP/i5qoqPWj5bmu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJ/BlDAn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBjMqPBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D44C19421;
-	Wed,  8 Apr 2026 18:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJ/BlDAn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FEDEC19421;
+	Wed,  8 Apr 2026 18:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671855;
-	bh=bYR55SORdM91eAxvYDlS0qaUQRu3lPqkx6U5yubINKw=;
+	s=korg; t=1775671858;
+	bh=LzpA0uNotGTfnorKGXT/eTRfWJ98eIeKILXj4dxtatQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gBjMqPBynDEcAsbupELOFI3JQH8MGe/uHmb5jPM7D4q84xcDvmTgxlcrV7jtsj0UP
-	 CtDDw73p5DOjneekPYtPrlbwosXs5sk69iW0HxKTZ7/Sx/z8cDWefGIFct8fVCGmQ8
-	 fmTG4XJah/E194HBSVlP4srh6kMQNELYsMTfTkRM=
+	b=nJ/BlDAnNaGVxE7o1yoZMveYbdbnbYfjurkvRS5cVN8wgwLVcJMZzuoQ+W3wCvmDX
+	 9geFQtgjeUEtvE3hYR5bqIrLpm318B1O2q2PoezM8OjPTcF+YWBwYE+LlBdK6gilbT
+	 U6Z/HP3QgsFVvL41w/FQMcWM3hwiKMHD4BMvQi7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 095/312] KVM: arm64: Discard PC update state on vcpu reset
-Date: Wed,  8 Apr 2026 20:00:12 +0200
-Message-ID: <20260408175937.311700283@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 096/312] hwmon: (peci/cputemp) Fix crit_hyst returning delta instead of absolute temperature
+Date: Wed,  8 Apr 2026 20:00:13 +0200
+Message-ID: <20260408175937.348811015@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -51,81 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit 1744a6ef48b9a48f017e3e1a0d05de0a6978396e upstream.
+commit 0adc752b4f7d82af7bd14f7cad3091b3b5d702ba upstream.
 
-Our vcpu reset suffers from a particularly interesting flaw, as it
-does not correctly deal with state that will have an effect on the
-execution flow out of reset.
+The hwmon sysfs ABI expects tempN_crit_hyst to report the temperature at
+which the critical condition clears, not the hysteresis delta from the
+critical limit.
 
-Take the following completely random example, never seen in the wild
-and that never resulted in a couple of sleepless nights: /s
+The peci cputemp driver currently returns tjmax - tcontrol for
+crit_hyst_type, which is the hysteresis margin rather than the
+corresponding absolute temperature.
 
-- vcpu-A issues a PSCI_CPU_OFF using the SMC conduit
+Return tcontrol directly, and update the documentation accordingly.
 
-- SMC being a trapped instruction (as opposed to HVC which is always
-  normally executed), we annotate the vcpu as needing to skip the
-  next instruction, which is the SMC itself
-
-- vcpu-A is now safely off
-
-- vcpu-B issues a PSCI_CPU_ON for vcpu-A, providing a starting PC
-
-- vcpu-A gets reset, get the new PC, and is sent on its merry way
-
-- right at the point of entering the guest, we notice that a PC
-  increment is pending (remember the earlier SMC?)
-
-- vcpu-A skips its first instruction...
-
-What could possibly go wrong?
-
-Well, I'm glad you asked. For pKVM as a NV guest, that first instruction
-is extremely significant, as it indicates whether the CPU is booting
-or resuming. Having skipped that instruction, nothing makes any sense
-anymore, and CPU hotplugging fails.
-
-This is all caused by the decoupling of PC update from the handling
-of an exception that triggers such update, making it non-obvious
-what affects what when.
-
-Fix this train wreck by discarding all the PC-affecting state on
-vcpu reset.
-
-Fixes: f5e30680616ab ("KVM: arm64: Move __adjust_pc out of line")
+Fixes: bf3608f338e9 ("hwmon: peci: Add cputemp driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Joey Gouly <joey.gouly@arm.com>
-Link: https://patch.msgid.link/20260312140850.822968-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260323002352.93417-2-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/reset.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ Documentation/hwmon/peci-cputemp.rst |   10 ++++++----
+ drivers/hwmon/peci/cputemp.c         |    2 +-
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/kvm/reset.c
-+++ b/arch/arm64/kvm/reset.c
-@@ -339,6 +339,20 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu
- 			kvm_vcpu_set_be(vcpu);
+--- a/Documentation/hwmon/peci-cputemp.rst
++++ b/Documentation/hwmon/peci-cputemp.rst
+@@ -51,8 +51,9 @@ temp1_max		Provides thermal control temp
+ temp1_crit		Provides shutdown temperature of the CPU package which
+ 			is also known as the maximum processor junction
+ 			temperature, Tjmax or Tprochot.
+-temp1_crit_hyst		Provides the hysteresis value from Tcontrol to Tjmax of
+-			the CPU package.
++temp1_crit_hyst		Provides the hysteresis temperature of the CPU
++			package. Returns Tcontrol, the temperature at which
++			the critical condition clears.
  
- 		*vcpu_pc(vcpu) = target_pc;
-+
-+		/*
-+		 * We may come from a state where either a PC update was
-+		 * pending (SMC call resulting in PC being increpented to
-+		 * skip the SMC) or a pending exception. Make sure we get
-+		 * rid of all that, as this cannot be valid out of reset.
-+		 *
-+		 * Note that clearing the exception mask also clears PC
-+		 * updates, but that's an implementation detail, and we
-+		 * really want to make it explicit.
-+		 */
-+		vcpu_clear_flag(vcpu, PENDING_EXCEPTION);
-+		vcpu_clear_flag(vcpu, EXCEPT_MASK);
-+		vcpu_clear_flag(vcpu, INCREMENT_PC);
- 		vcpu_set_reg(vcpu, 0, reset_state.r0);
- 	}
+ temp2_label		"DTS"
+ temp2_input		Provides current temperature of the CPU package scaled
+@@ -62,8 +63,9 @@ temp2_max		Provides thermal control temp
+ temp2_crit		Provides shutdown temperature of the CPU package which
+ 			is also known as the maximum processor junction
+ 			temperature, Tjmax or Tprochot.
+-temp2_crit_hyst		Provides the hysteresis value from Tcontrol to Tjmax of
+-			the CPU package.
++temp2_crit_hyst		Provides the hysteresis temperature of the CPU
++			package. Returns Tcontrol, the temperature at which
++			the critical condition clears.
  
+ temp3_label		"Tcontrol"
+ temp3_input		Provides current Tcontrol temperature of the CPU
+--- a/drivers/hwmon/peci/cputemp.c
++++ b/drivers/hwmon/peci/cputemp.c
+@@ -133,7 +133,7 @@ static int get_temp_target(struct peci_c
+ 		*val = priv->temp.target.tjmax;
+ 		break;
+ 	case crit_hyst_type:
+-		*val = priv->temp.target.tjmax - priv->temp.target.tcontrol;
++		*val = priv->temp.target.tcontrol;
+ 		break;
+ 	default:
+ 		ret = -EOPNOTSUPP;
 
 
