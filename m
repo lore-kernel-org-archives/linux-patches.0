@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CF83176E4;
-	Wed,  8 Apr 2026 18:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B4637F01B;
+	Wed,  8 Apr 2026 18:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674657; cv=none; b=MOWTy/1zMC6l/OZhCl1DPivvpctRgfzu9bmCPl7N9A95/FVV2vkcTa2I1yT0yyHUDolmMiQoZQNtFhgzABQrgaDRn6tvJImYzv+sZvOXjjHXpJquAcfjrlrU81f9fW4N7hlHnm1ZNqJ5gpAeWIf/Pt3owxAXeigec/K61L5Tatg=
+	t=1775674659; cv=none; b=uo6fKtiTqlsxBD4SbQ/pCKlSVJNpmSCDaoW0Nhtq9tjGlW3iz92vflVl6g1IopWWLCOBO9+R41QdnEZ8Ony5SKhanq60Vj5+SnlFDTzOYQHtE6apNE0HT8ivdIRZthfrVC/QuyuISFdhjTrsltjisPZe2cBoME6GM5URrrKVOLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674657; c=relaxed/simple;
-	bh=oGMVO+sO7z9aaZlkEOm1Zx/nliuXJ+37S9zEc8RDl24=;
+	s=arc-20240116; t=1775674659; c=relaxed/simple;
+	bh=XnZGJPoPuesh6prm8Va91VrHW05AoAP4YLqmqqQm22M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BmCYt9UK3T42YzeC/uT7uO/8buLnQ8Ksiu/HF9DAK8/Q22iEz+tNJSkarSNUGl/J4Ja+84IiBgV2JDFRjR0RL5Vrir+wRCMCpiYqE65PCRvJoPIaKySn0qaA4TA+mOJmnSGeNGozrrrMjjXGDQnDuXqC8uj+sGbWWl5LGFS8UfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfVKAIS2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c817642vgBIRl84G676UBRv2c9JqEm78397YFd6yPyb/GfrD7J7tKBH3OhynO/YXZ8hgCT8H4uD1ZQVooaLqsfC9zwe/CXYljkwZbXKGkCPTJQO4A2auDPkhi9w1g4hzmEiHL/8OW9F11y5yboFwV03roYCv4maIb77dxlVG9Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3E6zo4E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfVKAIS2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF44C19421;
-	Wed,  8 Apr 2026 18:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3E6zo4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3880FC19421;
+	Wed,  8 Apr 2026 18:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674657;
-	bh=oGMVO+sO7z9aaZlkEOm1Zx/nliuXJ+37S9zEc8RDl24=;
+	s=korg; t=1775674659;
+	bh=XnZGJPoPuesh6prm8Va91VrHW05AoAP4YLqmqqQm22M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BfVKAIS2RNOPhpLM7mn13Tk4/NW98k2pIqem0K78b1lT7beg24jY6m1kyXVw6T3G7
-	 N2T3R7maLJ2Eg1+DbzuCP91MgvHUnvrP2cTIh6H/bFWSe9axuCW0LyoC6SVJPoV4L9
-	 E4bca4ePQp+TpUoWCZngTwL/TFQI2NEerQSvnRqI=
+	b=V3E6zo4E3fHhU2R0GJSZ4g7vSMs19Y00yPKCz6sSU1Mq3gYfcdRlruPkgN7T7UIM1
+	 WHtQx6Tov2hihs4g/Ns1g3XVyl+OSUhhbgecyXzR3H8RKGAbJDcJZ+qNKLf5xIaHkq
+	 2P7WFU1i7NG7g853orscbr6P7+sJpgvShmm49q7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.19 183/311] ksmbd: fix OOB write in QUERY_INFO for compound requests
-Date: Wed,  8 Apr 2026 20:03:03 +0200
-Message-ID: <20260408175946.244862707@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.19 184/311] MIPS: SiByte: Bring back cache initialisation
+Date: Wed,  8 Apr 2026 20:03:04 +0200
+Message-ID: <20260408175946.281528662@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,328 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asim Viladi Oglu Manizada <manizada@pm.me>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit fda9522ed6afaec45cabc198d8492270c394c7bc upstream.
+commit d62cf1511743526f530a4c169424e50c757f5a5e upstream.
 
-When a compound request such as READ + QUERY_INFO(Security) is received,
-and the first command (READ) consumes most of the response buffer,
-ksmbd could write beyond the allocated buffer while building a security
-descriptor.
+Bring back cache initialisation for Broadcom SiByte SB1 cores, which has
+been removed causing the kernel to hang at bootstrap right after:
 
-The root cause was that smb2_get_info_sec() checked buffer space using
-ppntsd_size from xattr, while build_sec_desc() often synthesized a
-significantly larger descriptor from POSIX ACLs.
+Dentry cache hash table entries: 524288 (order: 8, 4194304 bytes, linear)
+Inode-cache hash table entries: 262144 (order: 7, 2097152 bytes, linear)
 
-This patch introduces smb_acl_sec_desc_scratch_len() to accurately
-compute the final descriptor size beforehand, performs proper buffer
-checking with smb2_calc_max_out_buf_len(), and uses exact-sized
-allocation + iov pinning.
+The cause of the problem is R4k cache handlers are also used by Broadcom
+SiByte SB1 cores, however with a different cache error exception handler
+and therefore not using CPU_R4K_CACHE_TLB:
 
-Cc: stable@vger.kernel.org
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
-Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+obj-$(CONFIG_CPU_R4K_CACHE_TLB) += c-r4k.o cex-gen.o tlb-r4k.o
+obj-$(CONFIG_CPU_SB1)           += c-r4k.o cerr-sb1.o cex-sb1.o tlb-r4k.o
+
+(from arch/mips/mm/Makefile).
+
+Fixes: bbe4f634f48c ("mips: fix r3k_cache_init build regression")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v6.8+
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |  121 +++++++++++++++++++++++++++++++++++-------------
- fs/smb/server/smbacl.c  |   43 +++++++++++++++++
- fs/smb/server/smbacl.h  |    2 
- 3 files changed, 134 insertions(+), 32 deletions(-)
+ arch/mips/mm/cache.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3401,20 +3401,24 @@ int smb2_open(struct ksmbd_work *work)
- 							   KSMBD_SHARE_FLAG_ACL_XATTR)) {
- 					struct smb_fattr fattr;
- 					struct smb_ntsd *pntsd;
--					int pntsd_size, ace_num = 0;
-+					int pntsd_size;
-+					size_t scratch_len;
- 
- 					ksmbd_acls_fattr(&fattr, idmap, inode);
--					if (fattr.cf_acls)
--						ace_num = fattr.cf_acls->a_count;
--					if (fattr.cf_dacls)
--						ace_num += fattr.cf_dacls->a_count;
--
--					pntsd = kmalloc(sizeof(struct smb_ntsd) +
--							sizeof(struct smb_sid) * 3 +
--							sizeof(struct smb_acl) +
--							sizeof(struct smb_ace) * ace_num * 2,
--							KSMBD_DEFAULT_GFP);
-+					scratch_len = smb_acl_sec_desc_scratch_len(&fattr,
-+							NULL, 0,
-+							OWNER_SECINFO | GROUP_SECINFO |
-+							DACL_SECINFO);
-+					if (!scratch_len || scratch_len == SIZE_MAX) {
-+						rc = -EFBIG;
-+						posix_acl_release(fattr.cf_acls);
-+						posix_acl_release(fattr.cf_dacls);
-+						goto err_out;
-+					}
-+
-+					pntsd = kvzalloc(scratch_len, KSMBD_DEFAULT_GFP);
- 					if (!pntsd) {
-+						rc = -ENOMEM;
- 						posix_acl_release(fattr.cf_acls);
- 						posix_acl_release(fattr.cf_dacls);
- 						goto err_out;
-@@ -3429,7 +3433,7 @@ int smb2_open(struct ksmbd_work *work)
- 					posix_acl_release(fattr.cf_acls);
- 					posix_acl_release(fattr.cf_dacls);
- 					if (rc) {
--						kfree(pntsd);
-+						kvfree(pntsd);
- 						goto err_out;
- 					}
- 
-@@ -3439,7 +3443,7 @@ int smb2_open(struct ksmbd_work *work)
- 								    pntsd,
- 								    pntsd_size,
- 								    false);
--					kfree(pntsd);
-+					kvfree(pntsd);
- 					if (rc)
- 						pr_err("failed to store ntacl in xattr : %d\n",
- 						       rc);
-@@ -5371,8 +5375,9 @@ static int smb2_get_info_file(struct ksm
- 	if (test_share_config_flag(work->tcon->share_conf,
- 				   KSMBD_SHARE_FLAG_PIPE)) {
- 		/* smb2 info file called for pipe */
--		return smb2_get_info_file_pipe(work->sess, req, rsp,
-+		rc = smb2_get_info_file_pipe(work->sess, req, rsp,
- 					       work->response_buf);
-+		goto iov_pin_out;
- 	}
- 
- 	if (work->next_smb2_rcv_hdr_off) {
-@@ -5472,6 +5477,12 @@ static int smb2_get_info_file(struct ksm
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 				      rsp, work->response_buf);
- 	ksmbd_fd_put(work, fp);
-+
-+iov_pin_out:
-+	if (!rc)
-+		rc = ksmbd_iov_pin_rsp(work, (void *)rsp,
-+				offsetof(struct smb2_query_info_rsp, Buffer) +
-+				le32_to_cpu(rsp->OutputBufferLength));
- 	return rc;
- }
- 
-@@ -5698,6 +5709,11 @@ static int smb2_get_info_filesystem(stru
- 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
- 			      rsp, work->response_buf);
- 	path_put(&path);
-+
-+	if (!rc)
-+		rc = ksmbd_iov_pin_rsp(work, (void *)rsp,
-+				offsetof(struct smb2_query_info_rsp, Buffer) +
-+				le32_to_cpu(rsp->OutputBufferLength));
- 	return rc;
- }
- 
-@@ -5707,13 +5723,14 @@ static int smb2_get_info_sec(struct ksmb
+--- a/arch/mips/mm/cache.c
++++ b/arch/mips/mm/cache.c
+@@ -207,7 +207,8 @@ void cpu_cache_init(void)
  {
- 	struct ksmbd_file *fp;
- 	struct mnt_idmap *idmap;
--	struct smb_ntsd *pntsd = (struct smb_ntsd *)rsp->Buffer, *ppntsd = NULL;
-+	struct smb_ntsd *pntsd = NULL, *ppntsd = NULL;
- 	struct smb_fattr fattr = {{0}};
- 	struct inode *inode;
- 	__u32 secdesclen = 0;
- 	unsigned int id = KSMBD_NO_FID, pid = KSMBD_NO_FID;
- 	int addition_info = le32_to_cpu(req->AdditionalInformation);
--	int rc = 0, ppntsd_size = 0;
-+	int rc = 0, ppntsd_size = 0, max_len;
-+	size_t scratch_len = 0;
+ 	if (IS_ENABLED(CONFIG_CPU_R3000) && cpu_has_3k_cache)
+ 		r3k_cache_init();
+-	if (IS_ENABLED(CONFIG_CPU_R4K_CACHE_TLB) && cpu_has_4k_cache)
++	if ((IS_ENABLED(CONFIG_CPU_R4K_CACHE_TLB) ||
++	     IS_ENABLED(CONFIG_CPU_SB1)) && cpu_has_4k_cache)
+ 		r4k_cache_init();
  
- 	if (addition_info & ~(OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO |
- 			      PROTECTED_DACL_SECINFO |
-@@ -5721,6 +5738,11 @@ static int smb2_get_info_sec(struct ksmb
- 		ksmbd_debug(SMB, "Unsupported addition info: 0x%x)\n",
- 		       addition_info);
- 
-+		pntsd = kzalloc(ALIGN(sizeof(struct smb_ntsd), 8),
-+				KSMBD_DEFAULT_GFP);
-+		if (!pntsd)
-+			return -ENOMEM;
-+
- 		pntsd->revision = cpu_to_le16(1);
- 		pntsd->type = cpu_to_le16(SELF_RELATIVE | DACL_PROTECTED);
- 		pntsd->osidoffset = 0;
-@@ -5729,9 +5751,7 @@ static int smb2_get_info_sec(struct ksmb
- 		pntsd->dacloffset = 0;
- 
- 		secdesclen = sizeof(struct smb_ntsd);
--		rsp->OutputBufferLength = cpu_to_le32(secdesclen);
--
--		return 0;
-+		goto iov_pin;
- 	}
- 
- 	if (work->next_smb2_rcv_hdr_off) {
-@@ -5763,18 +5783,58 @@ static int smb2_get_info_sec(struct ksmb
- 						     &ppntsd);
- 
- 	/* Check if sd buffer size exceeds response buffer size */
--	if (smb2_resp_buf_len(work, 8) > ppntsd_size)
--		rc = build_sec_desc(idmap, pntsd, ppntsd, ppntsd_size,
--				    addition_info, &secdesclen, &fattr);
-+	max_len = smb2_calc_max_out_buf_len(work,
-+			offsetof(struct smb2_query_info_rsp, Buffer),
-+			le32_to_cpu(req->OutputBufferLength));
-+	if (max_len < 0) {
-+		rc = -EINVAL;
-+		goto release_acl;
-+	}
-+
-+	scratch_len = smb_acl_sec_desc_scratch_len(&fattr, ppntsd,
-+			ppntsd_size, addition_info);
-+	if (!scratch_len || scratch_len == SIZE_MAX) {
-+		rc = -EFBIG;
-+		goto release_acl;
-+	}
-+
-+	pntsd = kvzalloc(scratch_len, KSMBD_DEFAULT_GFP);
-+	if (!pntsd) {
-+		rc = -ENOMEM;
-+		goto release_acl;
-+	}
-+
-+	rc = build_sec_desc(idmap, pntsd, ppntsd, ppntsd_size,
-+			addition_info, &secdesclen, &fattr);
-+
-+release_acl:
- 	posix_acl_release(fattr.cf_acls);
- 	posix_acl_release(fattr.cf_dacls);
- 	kfree(ppntsd);
- 	ksmbd_fd_put(work, fp);
-+
-+	if (!rc && ALIGN(secdesclen, 8) > scratch_len)
-+		rc = -EFBIG;
- 	if (rc)
--		return rc;
-+		goto err_out;
- 
-+iov_pin:
- 	rsp->OutputBufferLength = cpu_to_le32(secdesclen);
--	return 0;
-+	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+			      rsp, work->response_buf);
-+	if (rc)
-+		goto err_out;
-+
-+	rc = ksmbd_iov_pin_rsp_read(work, (void *)rsp,
-+			offsetof(struct smb2_query_info_rsp, Buffer),
-+			pntsd, secdesclen);
-+err_out:
-+	if (rc) {
-+		rsp->OutputBufferLength = 0;
-+		kvfree(pntsd);
-+	}
-+
-+	return rc;
- }
- 
- /**
-@@ -5798,6 +5858,9 @@ int smb2_query_info(struct ksmbd_work *w
- 		goto err_out;
- 	}
- 
-+	rsp->StructureSize = cpu_to_le16(9);
-+	rsp->OutputBufferOffset = cpu_to_le16(72);
-+
- 	switch (req->InfoType) {
- 	case SMB2_O_INFO_FILE:
- 		ksmbd_debug(SMB, "GOT SMB2_O_INFO_FILE\n");
-@@ -5818,14 +5881,6 @@ int smb2_query_info(struct ksmbd_work *w
- 	}
- 	ksmbd_revert_fsids(work);
- 
--	if (!rc) {
--		rsp->StructureSize = cpu_to_le16(9);
--		rsp->OutputBufferOffset = cpu_to_le16(72);
--		rc = ksmbd_iov_pin_rsp(work, (void *)rsp,
--				       offsetof(struct smb2_query_info_rsp, Buffer) +
--					le32_to_cpu(rsp->OutputBufferLength));
--	}
--
- err_out:
- 	if (rc < 0) {
- 		if (rc == -EACCES)
-@@ -5836,6 +5891,8 @@ err_out:
- 			rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
- 		else if (rc == -ENOMEM)
- 			rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
-+		else if (rc == -EINVAL && rsp->hdr.Status == 0)
-+			rsp->hdr.Status = STATUS_INVALID_PARAMETER;
- 		else if (rc == -EOPNOTSUPP || rsp->hdr.Status == 0)
- 			rsp->hdr.Status = STATUS_INVALID_INFO_CLASS;
- 		smb2_set_err_rsp(work);
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -915,6 +915,49 @@ int parse_sec_desc(struct mnt_idmap *idm
- 	return 0;
- }
- 
-+size_t smb_acl_sec_desc_scratch_len(struct smb_fattr *fattr,
-+		struct smb_ntsd *ppntsd, int ppntsd_size, int addition_info)
-+{
-+	size_t len = sizeof(struct smb_ntsd);
-+	size_t tmp;
-+
-+	if (addition_info & OWNER_SECINFO)
-+		len += sizeof(struct smb_sid);
-+	if (addition_info & GROUP_SECINFO)
-+		len += sizeof(struct smb_sid);
-+	if (!(addition_info & DACL_SECINFO))
-+		return len;
-+
-+	len += sizeof(struct smb_acl);
-+	if (ppntsd && ppntsd_size > 0) {
-+		unsigned int dacl_offset = le32_to_cpu(ppntsd->dacloffset);
-+
-+		if (dacl_offset < ppntsd_size &&
-+		    check_add_overflow(len, ppntsd_size - dacl_offset, &len))
-+			return 0;
-+	}
-+
-+	if (fattr->cf_acls) {
-+		if (check_mul_overflow((size_t)fattr->cf_acls->a_count,
-+					2 * sizeof(struct smb_ace), &tmp) ||
-+		    check_add_overflow(len, tmp, &len))
-+			return 0;
-+	} else {
-+		/* default/minimum DACL */
-+		if (check_add_overflow(len, 5 * sizeof(struct smb_ace), &len))
-+			return 0;
-+	}
-+
-+	if (fattr->cf_dacls) {
-+		if (check_mul_overflow((size_t)fattr->cf_dacls->a_count,
-+					sizeof(struct smb_ace), &tmp) ||
-+		    check_add_overflow(len, tmp, &len))
-+			return 0;
-+	}
-+
-+	return len;
-+}
-+
- /* Convert permission bits from mode to equivalent CIFS ACL */
- int build_sec_desc(struct mnt_idmap *idmap,
- 		   struct smb_ntsd *pntsd, struct smb_ntsd *ppntsd,
---- a/fs/smb/server/smbacl.h
-+++ b/fs/smb/server/smbacl.h
-@@ -101,6 +101,8 @@ int set_info_sec(struct ksmbd_conn *conn
- 		 bool type_check, bool get_write);
- void id_to_sid(unsigned int cid, uint sidtype, struct smb_sid *ssid);
- void ksmbd_init_domain(u32 *sub_auth);
-+size_t smb_acl_sec_desc_scratch_len(struct smb_fattr *fattr,
-+		struct smb_ntsd *ppntsd, int ppntsd_size, int addition_info);
- 
- static inline uid_t posix_acl_uid_translate(struct mnt_idmap *idmap,
- 					    struct posix_acl_entry *pace)
+ 	if (IS_ENABLED(CONFIG_CPU_CAVIUM_OCTEON) && cpu_has_octeon_cache)
 
 
