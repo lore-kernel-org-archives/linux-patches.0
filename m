@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031523D8912;
-	Wed,  8 Apr 2026 18:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0493D8912;
+	Wed,  8 Apr 2026 18:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674477; cv=none; b=d46RjPVx2umxwDt5mfEj19pR50/6ZbgKQLqOFEbJFVaAxNfp6ho+IQUDLAXV33eQVUoZnA3+l5+dEvZwzKzucCOOwdfIuZdh+/moq0tEY2XtwR5aMAwGQ04su9ayP/cOezhPmoDmYk/B70WdsoAU00AOqEH03x15AHJ6QqJNDfE=
+	t=1775674479; cv=none; b=pvU3tlYJWo05DXs5mMCb1l4EZMw/JUYmWfCtQRI2Cz2fFNH7Q9UpAYOBhrgyPJQuWuiZBiLx6U3A9VNZX5V490CSnYDCsAZSusT1S5ySoaCmxPPNf42kf3Rb/fBQCfZF0RUK/zUKxnS70to2II4atbtMxcUXgbe5IJdTcPhQTAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674477; c=relaxed/simple;
-	bh=GsxTCNnWqUQQkh61ZNSYACfhp9jsEimRk8m7LTTQFm8=;
+	s=arc-20240116; t=1775674479; c=relaxed/simple;
+	bh=2E6VDJhKOCOlrhMiPtt4PJNsvw3aPKqU5nkSOGlqgMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNZqzmgqS0rmoknwNrBIxUi87asGmHba+4wVNQ/A5V0UqW31geqC40qdAaJu8TRhq1qkY6MaORSnpLG3I3mI+8KIQvU9GqGqa4IsLT5yxAQr7rwV64+fdfERuTV6Zn1eGWeRm0rKCYcsNvj5yJQEhYOA6HD6L1cI8tGo3ORgPAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKzzJPnL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTAmsX1NDNrX4QkZvaI24TGI/1cYzuvo12oGR3k21zS2kqmNUi9diKXda88h1uAaBnQr4yVOZhaSxNBCk2iBJB24pQ9cpCKm0Gsa9uAdofZQDLfFqlKF59OToiVmrTQCqVmBhh7u64TUWMkqIQSSTElLJR9Ba9p7ryHkHo+uI+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAZuouPD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKzzJPnL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E2CC19421;
-	Wed,  8 Apr 2026 18:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAZuouPD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F751C19421;
+	Wed,  8 Apr 2026 18:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674476;
-	bh=GsxTCNnWqUQQkh61ZNSYACfhp9jsEimRk8m7LTTQFm8=;
+	s=korg; t=1775674479;
+	bh=2E6VDJhKOCOlrhMiPtt4PJNsvw3aPKqU5nkSOGlqgMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKzzJPnLz1V+Msw3Z/3ER9fly6m5OCsBqInYQzERqlyWzckoxoZkZuFAaQp7rBI/p
-	 YMDC0JVHWZjMAzKcYkKRfVMWa8FpAP2E3jLGE2p8HWBRu3N/9s7os+2aLHureAgCC8
-	 0pr5gMqldVDECmF45OVKLETOb6AubHXVuf/lBdVI=
+	b=QAZuouPDz29yGuh2a+o+vd0mWdJ5IHom3E1Bn6uQs0LIgjGPCu7UhQhgnIyvkYUNw
+	 aAnImMmryQ9bgAfd7IWJyhTkNndygaIIDy7XHdLugUw0szt58YOEqbJyckf5xd8KeH
+	 KqBYdX7mjCv9bR1hFi5ihH4SnuiAcbiSw9pn55rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 113/311] net/mlx5: Fix switchdev mode rollback in case of failure
-Date: Wed,  8 Apr 2026 20:01:53 +0200
-Message-ID: <20260408175943.633675053@linuxfoundation.org>
+Subject: [PATCH 6.19 114/311] bnxt_en: Refactor some basic ring setup and adjustment logic
+Date: Wed,  8 Apr 2026 20:01:54 +0200
+Message-ID: <20260408175943.671096973@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -53,84 +54,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saeed Mahameed <saeedm@nvidia.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 403186400a1a6166efe7031edc549c15fee4723f ]
+[ Upstream commit ceee35e5674aa84cf9e504c2a9dae4587511556c ]
 
-If for some internal reason switchdev mode fails, we rollback to legacy
-mode, before this patch, rollback will unregister the uplink netdev and
-leave it unregistered causing the below kernel bug.
+Refactor out the basic code that trims the default rings, sets up and
+adjusts XDP TX rings and CP rings.  There is no change in behavior.
+This is to prepare for the next bug fix patch.
 
-To fix this, we need to avoid netdev unregister by setting the proper
-rollback flag 'MLX5_PRIV_FLAGS_SWITCH_LEGACY' to indicate legacy mode.
-
-devlink (431) used greatest stack depth: 11048 bytes left
-mlx5_core 0000:00:03.0: E-Switch: Disable: mode(LEGACY), nvfs(0), \
-	necvfs(0), active vports(0)
-mlx5_core 0000:00:03.0: E-Switch: Supported tc chains and prios offload
-mlx5_core 0000:00:03.0: Loading uplink representor for vport 65535
-mlx5_core 0000:00:03.0: mlx5_cmd_out_err:816:(pid 456): \
-	QUERY_HCA_CAP(0x100) op_mod(0x0) failed, \
-	status bad parameter(0x3), syndrome (0x3a3846), err(-22)
-mlx5_core 0000:00:03.0 enp0s3np0 (unregistered): Unloading uplink \
-	representor for vport 65535
- ------------[ cut here ]------------
-kernel BUG at net/core/dev.c:12070!
-Oops: invalid opcode: 0000 [#1] SMP NOPTI
-CPU: 2 UID: 0 PID: 456 Comm: devlink Not tainted 6.16.0-rc3+ \
-	#9 PREEMPT(voluntary)
-RIP: 0010:unregister_netdevice_many_notify+0x123/0xae0
-...
-Call Trace:
-[   90.923094]  unregister_netdevice_queue+0xad/0xf0
-[   90.923323]  unregister_netdev+0x1c/0x40
-[   90.923522]  mlx5e_vport_rep_unload+0x61/0xc6
-[   90.923736]  esw_offloads_enable+0x8e6/0x920
-[   90.923947]  mlx5_eswitch_enable_locked+0x349/0x430
-[   90.924182]  ? is_mp_supported+0x57/0xb0
-[   90.924376]  mlx5_devlink_eswitch_mode_set+0x167/0x350
-[   90.924628]  devlink_nl_eswitch_set_doit+0x6f/0xf0
-[   90.924862]  genl_family_rcv_msg_doit+0xe8/0x140
-[   90.925088]  genl_rcv_msg+0x18b/0x290
-[   90.925269]  ? __pfx_devlink_nl_pre_doit+0x10/0x10
-[   90.925506]  ? __pfx_devlink_nl_eswitch_set_doit+0x10/0x10
-[   90.925766]  ? __pfx_devlink_nl_post_doit+0x10/0x10
-[   90.926001]  ? __pfx_genl_rcv_msg+0x10/0x10
-[   90.926206]  netlink_rcv_skb+0x52/0x100
-[   90.926393]  genl_rcv+0x28/0x40
-[   90.926557]  netlink_unicast+0x27d/0x3d0
-[   90.926749]  netlink_sendmsg+0x1f7/0x430
-[   90.926942]  __sys_sendto+0x213/0x220
-[   90.927127]  ? __sys_recvmsg+0x6a/0xd0
-[   90.927312]  __x64_sys_sendto+0x24/0x30
-[   90.927504]  do_syscall_64+0x50/0x1c0
-[   90.927687]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   90.927929] RIP: 0033:0x7f7d0363e047
-
-Fixes: 2a4f56fbcc47 ("net/mlx5e: Keep netdev when leave switchdev for devlink set legacy only")
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260330194015.53585-4-tariqt@nvidia.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20260331065138.948205-2-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e4bf81dcad0a ("bnxt_en: Don't assume XDP is never enabled in bnxt_init_dflt_ring_mode()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 53 +++++++++++++------
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h     |  1 +
+ .../net/ethernet/broadcom/bnxt/bnxt_ethtool.c |  5 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |  5 +-
+ 4 files changed, 41 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index 166a88988904e..31e4eb6bd685b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -3761,6 +3761,8 @@ int esw_offloads_enable(struct mlx5_eswitch *esw)
- 	return 0;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 300324ea1e8aa..bf888be2c54ed 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -12917,6 +12917,21 @@ static int bnxt_tx_nr_rings_per_tc(struct bnxt *bp)
+ 	return bp->num_tc ? bp->tx_nr_rings / bp->num_tc : bp->tx_nr_rings;
+ }
  
- err_vports:
-+	/* rollback to legacy, indicates don't unregister the uplink netdev */
-+	esw->dev->priv.flags |= MLX5_PRIV_FLAGS_SWITCH_LEGACY;
- 	mlx5_esw_offloads_rep_unload(esw, MLX5_VPORT_UPLINK);
- err_uplink:
- 	esw_offloads_steering_cleanup(esw);
++static void bnxt_set_xdp_tx_rings(struct bnxt *bp)
++{
++	bp->tx_nr_rings_xdp = bp->tx_nr_rings_per_tc;
++	bp->tx_nr_rings += bp->tx_nr_rings_xdp;
++}
++
++static void bnxt_adj_tx_rings(struct bnxt *bp)
++{
++	/* Make adjustments if reserved TX rings are less than requested */
++	bp->tx_nr_rings -= bp->tx_nr_rings_xdp;
++	bp->tx_nr_rings_per_tc = bnxt_tx_nr_rings_per_tc(bp);
++	if (bp->tx_nr_rings_xdp)
++		bnxt_set_xdp_tx_rings(bp);
++}
++
+ static int __bnxt_open_nic(struct bnxt *bp, bool irq_re_init, bool link_re_init)
+ {
+ 	int rc = 0;
+@@ -12934,13 +12949,7 @@ static int __bnxt_open_nic(struct bnxt *bp, bool irq_re_init, bool link_re_init)
+ 	if (rc)
+ 		return rc;
+ 
+-	/* Make adjustments if reserved TX rings are less than requested */
+-	bp->tx_nr_rings -= bp->tx_nr_rings_xdp;
+-	bp->tx_nr_rings_per_tc = bnxt_tx_nr_rings_per_tc(bp);
+-	if (bp->tx_nr_rings_xdp) {
+-		bp->tx_nr_rings_xdp = bp->tx_nr_rings_per_tc;
+-		bp->tx_nr_rings += bp->tx_nr_rings_xdp;
+-	}
++	bnxt_adj_tx_rings(bp);
+ 	rc = bnxt_alloc_mem(bp, irq_re_init);
+ 	if (rc) {
+ 		netdev_err(bp->dev, "bnxt_alloc_mem err: %x\n", rc);
+@@ -15377,11 +15386,19 @@ static int bnxt_change_mtu(struct net_device *dev, int new_mtu)
+ 	return 0;
+ }
+ 
++void bnxt_set_cp_rings(struct bnxt *bp, bool sh)
++{
++	int tx_cp = bnxt_num_tx_to_cp(bp, bp->tx_nr_rings);
++
++	bp->cp_nr_rings = sh ? max_t(int, tx_cp, bp->rx_nr_rings) :
++			       tx_cp + bp->rx_nr_rings;
++}
++
+ int bnxt_setup_mq_tc(struct net_device *dev, u8 tc)
+ {
+ 	struct bnxt *bp = netdev_priv(dev);
+ 	bool sh = false;
+-	int rc, tx_cp;
++	int rc;
+ 
+ 	if (tc > bp->max_tc) {
+ 		netdev_err(dev, "Too many traffic classes requested: %d. Max supported is %d.\n",
+@@ -15414,9 +15431,7 @@ int bnxt_setup_mq_tc(struct net_device *dev, u8 tc)
+ 		bp->num_tc = 0;
+ 	}
+ 	bp->tx_nr_rings += bp->tx_nr_rings_xdp;
+-	tx_cp = bnxt_num_tx_to_cp(bp, bp->tx_nr_rings);
+-	bp->cp_nr_rings = sh ? max_t(int, tx_cp, bp->rx_nr_rings) :
+-			       tx_cp + bp->rx_nr_rings;
++	bnxt_set_cp_rings(bp, sh);
+ 
+ 	if (netif_running(bp->dev))
+ 		return bnxt_open_nic(bp, true, false);
+@@ -16421,6 +16436,15 @@ static void bnxt_trim_dflt_sh_rings(struct bnxt *bp)
+ 	bp->tx_nr_rings = bnxt_tx_nr_rings(bp);
+ }
+ 
++static void bnxt_adj_dflt_rings(struct bnxt *bp, bool sh)
++{
++	if (sh)
++		bnxt_trim_dflt_sh_rings(bp);
++	else
++		bp->cp_nr_rings = bp->tx_nr_rings_per_tc + bp->rx_nr_rings;
++	bp->tx_nr_rings = bnxt_tx_nr_rings(bp);
++}
++
+ static int bnxt_set_dflt_rings(struct bnxt *bp, bool sh)
+ {
+ 	int dflt_rings, max_rx_rings, max_tx_rings, rc;
+@@ -16446,11 +16470,8 @@ static int bnxt_set_dflt_rings(struct bnxt *bp, bool sh)
+ 		return rc;
+ 	bp->rx_nr_rings = min_t(int, dflt_rings, max_rx_rings);
+ 	bp->tx_nr_rings_per_tc = min_t(int, dflt_rings, max_tx_rings);
+-	if (sh)
+-		bnxt_trim_dflt_sh_rings(bp);
+-	else
+-		bp->cp_nr_rings = bp->tx_nr_rings_per_tc + bp->rx_nr_rings;
+-	bp->tx_nr_rings = bnxt_tx_nr_rings(bp);
++
++	bnxt_adj_dflt_rings(bp, sh);
+ 
+ 	avail_msix = bnxt_get_max_func_irqs(bp) - bp->cp_nr_rings;
+ 	if (avail_msix >= BNXT_MIN_ROCE_CP_RINGS) {
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 4d94bacf9f012..9413818788c4e 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -2971,6 +2971,7 @@ int bnxt_check_rings(struct bnxt *bp, int tx, int rx, bool sh, int tcs,
+ 		     int tx_xdp);
+ int bnxt_fw_init_one(struct bnxt *bp);
+ bool bnxt_hwrm_reset_permitted(struct bnxt *bp);
++void bnxt_set_cp_rings(struct bnxt *bp, bool sh);
+ int bnxt_setup_mq_tc(struct net_device *dev, u8 tc);
+ struct bnxt_ntuple_filter *bnxt_lookup_ntp_filter_from_idx(struct bnxt *bp,
+ 				struct bnxt_ntuple_filter *fltr, u32 idx);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index fa452d6272e0f..34d9264d51950 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -945,7 +945,6 @@ static int bnxt_set_channels(struct net_device *dev,
+ 	bool sh = false;
+ 	int tx_xdp = 0;
+ 	int rc = 0;
+-	int tx_cp;
+ 
+ 	if (channel->other_count)
+ 		return -EINVAL;
+@@ -1013,9 +1012,7 @@ static int bnxt_set_channels(struct net_device *dev,
+ 	if (tcs > 1)
+ 		bp->tx_nr_rings = bp->tx_nr_rings_per_tc * tcs + tx_xdp;
+ 
+-	tx_cp = bnxt_num_tx_to_cp(bp, bp->tx_nr_rings);
+-	bp->cp_nr_rings = sh ? max_t(int, tx_cp, bp->rx_nr_rings) :
+-			       tx_cp + bp->rx_nr_rings;
++	bnxt_set_cp_rings(bp, sh);
+ 
+ 	/* After changing number of rx channels, update NTUPLE feature. */
+ 	netdev_update_features(dev);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index c94a391b1ba5b..06f35a61c1774 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -384,7 +384,7 @@ int bnxt_xdp_xmit(struct net_device *dev, int num_frames,
+ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
+ {
+ 	struct net_device *dev = bp->dev;
+-	int tx_xdp = 0, tx_cp, rc, tc;
++	int tx_xdp = 0, rc, tc;
+ 	struct bpf_prog *old;
+ 
+ 	netdev_assert_locked(dev);
+@@ -431,8 +431,7 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
+ 	}
+ 	bp->tx_nr_rings_xdp = tx_xdp;
+ 	bp->tx_nr_rings = bp->tx_nr_rings_per_tc * tc + tx_xdp;
+-	tx_cp = bnxt_num_tx_to_cp(bp, bp->tx_nr_rings);
+-	bp->cp_nr_rings = max_t(int, tx_cp, bp->rx_nr_rings);
++	bnxt_set_cp_rings(bp, true);
+ 	bnxt_set_tpa_flags(bp);
+ 	bnxt_set_ring_params(bp);
+ 
 -- 
 2.53.0
 
