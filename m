@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABC13ACF11;
-	Wed,  8 Apr 2026 18:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33693ACF11;
+	Wed,  8 Apr 2026 18:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672626; cv=none; b=DyBGHHTWxrGcSnvpbvLURJeG/xcuVQqt7zi9rLbP+eC2pp9M5xwXYE8qeWkuBMOvkG3Sb6ll3B8JJhU2x15xQ8zxL8BmW9oTH3ihAfll5FwOkzUaXEbia9aFRLiWzGctcoxQik2YRU2shlP0lb+nosXt5kOYWAEWnjaPexSjrLY=
+	t=1775672628; cv=none; b=StzH9Ax7tPEgVcpQRXAW22RRmhTLVdt991FV0hHl5Z8GiiOK7KLnVYKPdKPO3e0Ms9B0omHggbRnFJFwAdm3akizhDkD0hZkZdS9geKu+sOWfTxRkqtCTzxJn/RKiIXJ79zqkQquhN4PHXqvx6i8yvtqH2ch3c1xprdgcW9qST4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672626; c=relaxed/simple;
-	bh=iWj+UO9YYmov4AOkGNJpEcYje+ThLoySEVCj5ie2sVQ=;
+	s=arc-20240116; t=1775672628; c=relaxed/simple;
+	bh=tEjswhgEYMKlAwQZ12Xj9pqZZCrJ933bk/tz6q7+bSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SW6LLiLle/61o1hoeER5U2mz9m57+ym0U+Y8qJhF5jE9QVcMC9NaPBTtQEihGwVD/jmTeL8FKK2mW4lQIzIvmmKdN5xVUwjJf61DcD9u8tY6v3+qhhRlUIz7E56ez+ZfQfyn1yzHnudd/Ma2vGMlbe6mDdkqLkPfHfwgJBv2yrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4JmPh8k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N1jEIlfb611CuWgpCiUCxNUgacv+tm0taDKELgzDbg8Fo8OAgjQt6BTOr2bLYlYEFFVOJy/jVdZtayNEEmbi93BbQXjk9rbQvClDATkfv/VpzTdUkMPwS/XF3ma6Tv2yTzqNvyq0BC78wzilLSWGsYC74gJGgoybEWu1nStcSCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEG3uBF/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4JmPh8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4CBCC19421;
-	Wed,  8 Apr 2026 18:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEG3uBF/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5907EC19421;
+	Wed,  8 Apr 2026 18:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672626;
-	bh=iWj+UO9YYmov4AOkGNJpEcYje+ThLoySEVCj5ie2sVQ=;
+	s=korg; t=1775672628;
+	bh=tEjswhgEYMKlAwQZ12Xj9pqZZCrJ933bk/tz6q7+bSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4JmPh8khpu0LxxTzxCw8777LbCyb8pBcDUeu/O5nsPrVJ/vX/NPQPnNHNnCsPSI7
-	 7tjnzZbMw025UmmZNnddNcNwbpONHHkGPeDI3ODvAvFqLBuiGffoOoWhu3AxfnzQGm
-	 Dc5wdNglCJIsoUqBcVfO7jFZjaGAauSm0PUkY+Hs=
+	b=yEG3uBF/hDCwiZusSItFYV4Ushy+frlRLYN7WQu97N+hC0DvN9zElB4aefyRzMZjK
+	 DKDeFdANQL7Z6zrwq4fb+OLffuL8mMCI7dU4u7T/3R2Dc3XntsUiihUEqiSmwuD189
+	 g6qJW7QQM6YzQ6jCN9ycS6PdMQBNoVoVl1FTgYwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Oleh Konko <security@1seal.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 080/160] Bluetooth: SMP: force responder MITM requirements before building the pairing response
-Date: Wed,  8 Apr 2026 20:02:47 +0200
-Message-ID: <20260408175916.180983634@linuxfoundation.org>
+	Yiming Qian <yimingqian591@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 063/160] ipv6: avoid overflows in ip6_datagram_send_ctl()
+Date: Wed,  8 Apr 2026 20:02:30 +0200
+Message-ID: <20260408175915.558664855@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -51,55 +52,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleh Konko <security@1seal.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit d05111bfe37bfd8bd4d2dfe6675d6bdeef43f7c7 upstream.
+[ Upstream commit 4e453375561fc60820e6b9d8ebeb6b3ee177d42e ]
 
-smp_cmd_pairing_req() currently builds the pairing response from the
-initiator auth_req before enforcing the local BT_SECURITY_HIGH
-requirement. If the initiator omits SMP_AUTH_MITM, the response can
-also omit it even though the local side still requires MITM.
+Yiming Qian reported :
+<quote>
+ I believe I found a locally triggerable kernel bug in the IPv6 sendmsg
+ ancillary-data path that can panic the kernel via `skb_under_panic()`
+ (local DoS).
 
-tk_request() then sees an auth value without SMP_AUTH_MITM and may
-select JUST_CFM, making method selection inconsistent with the pairing
-policy the responder already enforces.
+ The core issue is a mismatch between:
 
-When the local side requires HIGH security, first verify that MITM can
-be achieved from the IO capabilities and then force SMP_AUTH_MITM in the
-response in both rsp.auth_req and auth. This keeps the responder auth bits
-and later method selection aligned.
+ - a 16-bit length accumulator (`struct ipv6_txoptions::opt_flen`, type
+ `__u16`) and
+ - a pointer to the *last* provided destination-options header (`opt->dst1opt`)
 
-Fixes: 2b64d153a0cc ("Bluetooth: Add MITM mechanism to LE-SMP")
-Cc: stable@vger.kernel.org
-Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Oleh Konko <security@1seal.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ when multiple `IPV6_DSTOPTS` control messages (cmsgs) are provided.
+
+ - `include/net/ipv6.h`:
+   - `struct ipv6_txoptions::opt_flen` is `__u16` (wrap possible).
+ (lines 291-307, especially 298)
+ - `net/ipv6/datagram.c:ip6_datagram_send_ctl()`:
+   - Accepts repeated `IPV6_DSTOPTS` and accumulates into `opt_flen`
+ without rejecting duplicates. (lines 909-933)
+ - `net/ipv6/ip6_output.c:__ip6_append_data()`:
+   - Uses `opt->opt_flen + opt->opt_nflen` to compute header
+ sizes/headroom decisions. (lines 1448-1466, especially 1463-1465)
+ - `net/ipv6/ip6_output.c:__ip6_make_skb()`:
+   - Calls `ipv6_push_frag_opts()` if `opt->opt_flen` is non-zero.
+ (lines 1930-1934)
+ - `net/ipv6/exthdrs.c:ipv6_push_frag_opts()` / `ipv6_push_exthdr()`:
+   - Push size comes from `ipv6_optlen(opt->dst1opt)` (based on the
+ pointed-to header). (lines 1179-1185 and 1206-1211)
+
+ 1. `opt_flen` is a 16-bit accumulator:
+
+ - `include/net/ipv6.h:298` defines `__u16 opt_flen; /* after fragment hdr */`.
+
+ 2. `ip6_datagram_send_ctl()` accepts *repeated* `IPV6_DSTOPTS` cmsgs
+ and increments `opt_flen` each time:
+
+ - In `net/ipv6/datagram.c:909-933`, for `IPV6_DSTOPTS`:
+   - It computes `len = ((hdr->hdrlen + 1) << 3);`
+   - It checks `CAP_NET_RAW` using `ns_capable(net->user_ns,
+ CAP_NET_RAW)`. (line 922)
+   - Then it does:
+     - `opt->opt_flen += len;` (line 927)
+     - `opt->dst1opt = hdr;` (line 928)
+
+ There is no duplicate rejection here (unlike the legacy
+ `IPV6_2292DSTOPTS` path which rejects duplicates at
+ `net/ipv6/datagram.c:901-904`).
+
+ If enough large `IPV6_DSTOPTS` cmsgs are provided, `opt_flen` wraps
+ while `dst1opt` still points to a large (2048-byte)
+ destination-options header.
+
+ In the attached PoC (`poc.c`):
+
+ - 32 cmsgs with `hdrlen=255` => `len = (255+1)*8 = 2048`
+ - 1 cmsg with `hdrlen=0` => `len = 8`
+ - Total increment: `32*2048 + 8 = 65544`, so `(__u16)opt_flen == 8`
+ - The last cmsg is 2048 bytes, so `dst1opt` points to a 2048-byte header.
+
+ 3. The transmit path sizes headers using the wrapped `opt_flen`:
+
+- In `net/ipv6/ip6_output.c:1463-1465`:
+  - `headersize = sizeof(struct ipv6hdr) + (opt ? opt->opt_flen +
+ opt->opt_nflen : 0) + ...;`
+
+ With wrapped `opt_flen`, `headersize`/headroom decisions underestimate
+ what will be pushed later.
+
+ 4. When building the final skb, the actual push length comes from
+ `dst1opt` and is not limited by wrapped `opt_flen`:
+
+ - In `net/ipv6/ip6_output.c:1930-1934`:
+   - `if (opt->opt_flen) proto = ipv6_push_frag_opts(skb, opt, proto);`
+ - In `net/ipv6/exthdrs.c:1206-1211`, `ipv6_push_frag_opts()` pushes
+ `dst1opt` via `ipv6_push_exthdr()`.
+ - In `net/ipv6/exthdrs.c:1179-1184`, `ipv6_push_exthdr()` does:
+   - `skb_push(skb, ipv6_optlen(opt));`
+   - `memcpy(h, opt, ipv6_optlen(opt));`
+
+ With insufficient headroom, `skb_push()` underflows and triggers
+ `skb_under_panic()` -> `BUG()`:
+
+ - `net/core/skbuff.c:2669-2675` (`skb_push()` calls `skb_under_panic()`)
+ - `net/core/skbuff.c:207-214` (`skb_panic()` ends in `BUG()`)
+
+ - The `IPV6_DSTOPTS` cmsg path requires `CAP_NET_RAW` in the target
+ netns user namespace (`ns_capable(net->user_ns, CAP_NET_RAW)`).
+ - Root (or any task with `CAP_NET_RAW`) can trigger this without user
+ namespaces.
+ - An unprivileged `uid=1000` user can trigger this if unprivileged
+ user namespaces are enabled and it can create a userns+netns to obtain
+ namespaced `CAP_NET_RAW` (the attached PoC does this).
+
+ - Local denial of service: kernel BUG/panic (system crash).
+ - Reproducible with a small userspace PoC.
+</quote>
+
+This patch does not reject duplicated options, as this might break
+some user applications.
+
+Instead, it makes sure to adjust opt_flen and opt_nflen to correctly
+reflect the size of the current option headers, preventing the overflows
+and the potential for panics.
+
+This applies to IPV6_DSTOPTS, IPV6_HOPOPTS, and IPV6_RTHDR.
+
+Specifically:
+
+When a new IPV6_DSTOPTS is processed, the length of the old opt->dst1opt
+is subtracted from opt->opt_flen before adding the new length.
+
+When a new IPV6_HOPOPTS is processed, the length of the old opt->dst0opt
+is subtracted from opt->opt_nflen.
+
+When a new Routing Header (IPV6_RTHDR or IPV6_2292RTHDR) is processed,
+the length of the old opt->srcrt is subtracted from opt->opt_nflen.
+
+In the special case within IPV6_2292RTHDR handling where dst1opt is moved
+to dst0opt, the length of the old opt->dst0opt is subtracted from
+opt->opt_nflen before the new one is added.
+
+Fixes: 333fad5364d6 ("[IPV6]: Support several new sockopt / ancillary data in Advanced API (RFC3542).")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAL_bE8JNzawgr5OX5m+3jnQDHry2XxhQT5=jThW1zDPtUikRYA@mail.gmail.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260401154721.3740056-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/smp.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ipv6/datagram.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -1824,7 +1824,7 @@ static u8 smp_cmd_pairing_req(struct l2c
- 	if (sec_level > conn->hcon->pending_sec_level)
- 		conn->hcon->pending_sec_level = sec_level;
+diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
+index 41ebc4e574734..c1139f05a7942 100644
+--- a/net/ipv6/datagram.c
++++ b/net/ipv6/datagram.c
+@@ -763,6 +763,7 @@ int ip6_datagram_send_ctl(struct net *net, struct sock *sk,
+ {
+ 	struct in6_pktinfo *src_info;
+ 	struct cmsghdr *cmsg;
++	struct ipv6_rt_hdr *orthdr;
+ 	struct ipv6_rt_hdr *rthdr;
+ 	struct ipv6_opt_hdr *hdr;
+ 	struct ipv6_txoptions *opt = ipc6->opt;
+@@ -924,9 +925,13 @@ int ip6_datagram_send_ctl(struct net *net, struct sock *sk,
+ 				goto exit_f;
+ 			}
+ 			if (cmsg->cmsg_type == IPV6_DSTOPTS) {
++				if (opt->dst1opt)
++					opt->opt_flen -= ipv6_optlen(opt->dst1opt);
+ 				opt->opt_flen += len;
+ 				opt->dst1opt = hdr;
+ 			} else {
++				if (opt->dst0opt)
++					opt->opt_nflen -= ipv6_optlen(opt->dst0opt);
+ 				opt->opt_nflen += len;
+ 				opt->dst0opt = hdr;
+ 			}
+@@ -969,12 +974,17 @@ int ip6_datagram_send_ctl(struct net *net, struct sock *sk,
+ 				goto exit_f;
+ 			}
  
--	/* If we need MITM check that it can be achieved */
-+	/* If we need MITM check that it can be achieved. */
- 	if (conn->hcon->pending_sec_level >= BT_SECURITY_HIGH) {
- 		u8 method;
++			orthdr = opt->srcrt;
++			if (orthdr)
++				opt->opt_nflen -= ((orthdr->hdrlen + 1) << 3);
+ 			opt->opt_nflen += len;
+ 			opt->srcrt = rthdr;
  
-@@ -1832,6 +1832,10 @@ static u8 smp_cmd_pairing_req(struct l2c
- 					 req->io_capability);
- 		if (method == JUST_WORKS || method == JUST_CFM)
- 			return SMP_AUTH_REQUIREMENTS;
-+
-+		/* Force MITM bit if it isn't set by the initiator. */
-+		auth |= SMP_AUTH_MITM;
-+		rsp.auth_req |= SMP_AUTH_MITM;
- 	}
+ 			if (cmsg->cmsg_type == IPV6_2292RTHDR && opt->dst1opt) {
+ 				int dsthdrlen = ((opt->dst1opt->hdrlen+1)<<3);
  
- 	key_size = min(req->max_key_size, rsp.max_key_size);
++				if (opt->dst0opt)
++					opt->opt_nflen -= ipv6_optlen(opt->dst0opt);
+ 				opt->opt_nflen += dsthdrlen;
+ 				opt->dst0opt = opt->dst1opt;
+ 				opt->dst1opt = NULL;
+-- 
+2.53.0
+
 
 
