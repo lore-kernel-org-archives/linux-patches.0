@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E008E347503;
-	Wed,  8 Apr 2026 18:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725B4347503;
+	Wed,  8 Apr 2026 18:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671913; cv=none; b=ZLh3r+7c7uIUqxTmgLDx8ngMmn6uOGPeb3w+HrGNa/c7J2aFum7vh0Y+V1zvg/cOi2Rf4+mVOqjIriGItvah3USA7++bt71DBJHefJnHi4RuUGx4pH8/hDYw+bhvFCL0/LVhn3+sbhUOZcHs9llkk1Kjg+L+ZmyGp+Rm2I6ma24=
+	t=1775671915; cv=none; b=JI0LmoXqyyISY+eIxf5yZqaytvv/AmvWeCBpwlO0A3qKJYGxtVmBkuWVMC5ahFvLSqppnRM5qb0RAwEihguBAeRv9TBmhcFrn0mEAhKRw6lteulTmuWIZDvjKU0vwdzSLWnOnSGrRwqz/3WcK57k/PIDUrOI5zZVuEhChhJpNFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671913; c=relaxed/simple;
-	bh=JyqUrDmVluY9odbtKduui5UL+rtWP85j8ybGxxbiLVI=;
+	s=arc-20240116; t=1775671915; c=relaxed/simple;
+	bh=rTlk4Oj33RB2uv6AsBBpoyBKIvWVUTmVUs/sNdlUpdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MvswreSMP1J76PMsD/WliWJpwk/uauhEdYp02Z+qKeSdj3QODAuM504vIvQ1jnJ24XCppOvxHDpr6kedl3nPSawJLP+CFHnw3kAaq36Ix2M8mwnTEulN9oKVOcDReP16sXLfJWiUFCSe1tHRmdR3U0qRpw5oX79ST1U5mKK7M4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8bAZKwQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZIiBXQx29k8cpYx/ew773f+FN+xdtN3uCT4By4O9vVunEK5AU2Bh8KoV+7EZmnupfuinR5hjShVnSBs7NmJ9XfsNzi0O52QFucqutlMUG2qJTq7k4i6OMopKca3b0w6SkG+b+cqbSJCESrsT6ttSrLQZwpTEgFYwUfY8LtFDxF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orZ3OH6s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8bAZKwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB8DC19421;
-	Wed,  8 Apr 2026 18:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orZ3OH6s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08586C19421;
+	Wed,  8 Apr 2026 18:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671912;
-	bh=JyqUrDmVluY9odbtKduui5UL+rtWP85j8ybGxxbiLVI=;
+	s=korg; t=1775671915;
+	bh=rTlk4Oj33RB2uv6AsBBpoyBKIvWVUTmVUs/sNdlUpdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T8bAZKwQ8tGjEXS++hcAw2WdFZ+uvwEEaJ1yzwJngQwg7KTpSbSqS51bUmkcF0TZ5
-	 euNJOjRH72KdxQWg7rpyfM3Ye/Q4dGs+m4uFdU3d3UUfp195DWTnO5HSoZm+FKUju5
-	 +eT0fUhF9mHu+pqOMuWmCDVgMkzmeKoWUT+bEskg=
+	b=orZ3OH6s00il03XxaugRZP+To26wHazc3qYUkUvL+vCAOpw9VsrsFnkxBD5DaLn58
+	 a+5EkDCQVtQF7Tbr3YA1GTBq0B/QzLLOgdHZIdXaRnUrst4kH853t+mDWlkKysTTWT
+	 lb+pS6Z3ws0hj0uzSV5+LPpLMlld2e/UwTQn896c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+512459401510e2a9a39f@syzkaller.appspotmail.com,
-	syzbot+1659aaaaa8d9d11265d7@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
+	Ye Bin <yebin10@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Andreas Dilger <adilger@dilger.ca>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.1 115/312] ext4: avoid infinite loops caused by residual data
-Date: Wed,  8 Apr 2026 20:00:32 +0200
-Message-ID: <20260408175938.064930553@linuxfoundation.org>
+Subject: [PATCH 6.1 116/312] ext4: avoid allocate block from corrupted group in ext4_mb_find_by_goal()
+Date: Wed,  8 Apr 2026 20:00:33 +0200
+Message-ID: <20260408175938.102419593@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -54,81 +55,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 5422fe71d26d42af6c454ca9527faaad4e677d6c upstream.
+commit 46066e3a06647c5b186cc6334409722622d05c44 upstream.
 
-On the mkdir/mknod path, when mapping logical blocks to physical blocks,
-if inserting a new extent into the extent tree fails (in this example,
-because the file system disabled the huge file feature when marking the
-inode as dirty), ext4_ext_map_blocks() only calls ext4_free_blocks() to
-reclaim the physical block without deleting the corresponding data in
-the extent tree. This causes subsequent mkdir operations to reference
-the previously reclaimed physical block number again, even though this
-physical block is already being used by the xattr block. Therefore, a
-situation arises where both the directory and xattr are using the same
-buffer head block in memory simultaneously.
+There's issue as follows:
+...
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 206 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
 
-The above causes ext4_xattr_block_set() to enter an infinite loop about
-"inserted" and cannot release the inode lock, ultimately leading to the
-143s blocking problem mentioned in [1].
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 206 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
 
-If the metadata is corrupted, then trying to remove some extent space
-can do even more harm. Also in case EXT4_GET_BLOCKS_DELALLOC_RESERVE
-was passed, remove space wrongly update quota information.
-Jan Kara suggests distinguishing between two cases:
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 206 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
 
-1) The error is ENOSPC or EDQUOT - in this case the filesystem is fully
-consistent and we must maintain its consistency including all the
-accounting. However these errors can happen only early before we've
-inserted the extent into the extent tree. So current code works correctly
-for this case.
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 206 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
 
-2) Some other error - this means metadata is corrupted. We should strive to
-do as few modifications as possible to limit damage. So I'd just skip
-freeing of allocated blocks.
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 2243 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
 
-[1]
-INFO: task syz.0.17:5995 blocked for more than 143 seconds.
-Call Trace:
- inode_lock_nested include/linux/fs.h:1073 [inline]
- __start_dirop fs/namei.c:2923 [inline]
- start_dirop fs/namei.c:2934 [inline]
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 2239 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
 
-Reported-by: syzbot+512459401510e2a9a39f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1659aaaaa8d9d11265d7
-Tested-by: syzbot+1659aaaaa8d9d11265d7@syzkaller.appspotmail.com
-Reported-by: syzbot+1659aaaaa8d9d11265d7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=512459401510e2a9a39f
-Tested-by: syzbot+1659aaaaa8d9d11265d7@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+EXT4-fs (mmcblk0p1): error count since last fsck: 1
+EXT4-fs (mmcblk0p1): initial error at time 1765597433: ext4_mb_generate_buddy:760
+EXT4-fs (mmcblk0p1): last error at time 1765597433: ext4_mb_generate_buddy:760
+...
+
+According to the log analysis, blocks are always requested from the
+corrupted block group. This may happen as follows:
+ext4_mb_find_by_goal
+  ext4_mb_load_buddy
+   ext4_mb_load_buddy_gfp
+     ext4_mb_init_cache
+      ext4_read_block_bitmap_nowait
+      ext4_wait_block_bitmap
+       ext4_validate_block_bitmap
+        if (!grp || EXT4_MB_GRP_BBITMAP_CORRUPT(grp))
+         return -EFSCORRUPTED; // There's no logs.
+ if (err)
+  return err;  // Will return error
+ext4_lock_group(ac->ac_sb, group);
+  if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info))) // Unreachable
+   goto out;
+
+After commit 9008a58e5dce ("ext4: make the bitmap read routines return
+real error codes") merged, Commit 163a203ddb36 ("ext4: mark block group
+as corrupt on block bitmap error") is no real solution for allocating
+blocks from corrupted block groups. This is because if
+'EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info)' is true, then
+'ext4_mb_load_buddy()' may return an error. This means that the block
+allocation will fail.
+Therefore, check block group if corrupted when ext4_mb_load_buddy()
+returns error.
+
+Fixes: 163a203ddb36 ("ext4: mark block group as corrupt on block bitmap error")
+Fixes: 9008a58e5dce ("ext4: make the bitmap read routines return real error codes")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Tested-by: syzbot+512459401510e2a9a39f@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/tencent_43696283A68450B761D76866C6F360E36705@qq.com
+Link: https://patch.msgid.link/20260302134619.3145520-1-yebin@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/ext4/mballoc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4424,9 +4424,13 @@ got_allocated_blocks:
- 	path = ext4_ext_insert_extent(handle, inode, path, &newex, flags);
- 	if (IS_ERR(path)) {
- 		err = PTR_ERR(path);
--		if (allocated_clusters) {
-+		/*
-+		 * Gracefully handle out of space conditions. If the filesystem
-+		 * is inconsistent, we'll just leak allocated blocks to avoid
-+		 * causing even more damage.
-+		 */
-+		if (allocated_clusters && (err == -EDQUOT || err == -ENOSPC)) {
- 			int fb_flags = 0;
--
- 			/*
- 			 * free data blocks we just allocated.
- 			 * not a good idea to call discard here directly,
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -2236,8 +2236,12 @@ int ext4_mb_find_by_goal(struct ext4_all
+ 		return 0;
+ 
+ 	err = ext4_mb_load_buddy(ac->ac_sb, group, e4b);
+-	if (err)
++	if (err) {
++		if (EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info) &&
++		    !(ac->ac_flags & EXT4_MB_HINT_GOAL_ONLY))
++			return 0;
+ 		return err;
++	}
+ 
+ 	ext4_lock_group(ac->ac_sb, group);
+ 	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info)))
 
 
