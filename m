@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B680D3D6694;
-	Wed,  8 Apr 2026 19:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E35E352C3C;
+	Wed,  8 Apr 2026 19:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674905; cv=none; b=Osm34mFMMnd/SdkHdUYOSZjy3LtjkSaHOkMFv9KkhwV8Yo6tfz9+aSH8T9EdaGZQXFtRQxQm769CFgvTu9TPJ+KbPm7q7x8HdypPU3vMdrPSqb4kB1hmn4FNQ4xp7AtyTUu8nnPDYsJDTfP7yyimZQq7tGu/C6mvzGp52HfhtgU=
+	t=1775674908; cv=none; b=kF+KMCF5x2bL1NOGBSp1NWru1ga8SAYFAr/OK5qV2Es6UuRYDXNmorm7P4PPUc9RTWnSSUqr809xCKekGf2qfiF4IN1pbNvGW8csLNXwfSA9YPWOmDkD1Qt+z9gIKLOxX+nBOtiRAkag+/yg/DYCTFaKV0KD6a4o3jj2uNVepSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674905; c=relaxed/simple;
-	bh=IWYB195z31ONlyuMYdK/WZpe/shblcm6Uv4Ynda4R3A=;
+	s=arc-20240116; t=1775674908; c=relaxed/simple;
+	bh=V5tFeSy0TFLtpt8bTkJ6tNdpMWVqwaD1C/OqguFoPwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fhs+e7nfacnYihczLB0PHz0B6lEYiQ7877fDFqwFOXymtLbje6hvDGNz+0+aQIj7X0pIG3h9vb1/9ebLoq0xtdg+YJAOBeZDkvHCRl/89/93TS8kufawnAgyqJ7pU8408j8ccsFT3bY7z/zVB206cybNmstfTlyOx3lGHQQENyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoSan/L5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hjjkD3TvAdWzsoNliHO1GPLXe+Wql5UtEKn6n5We47iiPNdaiyOWnhO1wCYK0PPyAeq7lOYo4W1K3vIKGcnr3VdPeDGZvJAcaiFKIBM03xtaOc+BZHQWuMmU0xHgJRpxx7sJGVPiU4GJEX8D6VMr5I0hCL9HTn7hJv7pa10N4F0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0OR2gNz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoSan/L5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79496C19421;
-	Wed,  8 Apr 2026 19:01:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0OR2gNz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E99C19421;
+	Wed,  8 Apr 2026 19:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674904;
-	bh=IWYB195z31ONlyuMYdK/WZpe/shblcm6Uv4Ynda4R3A=;
+	s=korg; t=1775674907;
+	bh=V5tFeSy0TFLtpt8bTkJ6tNdpMWVqwaD1C/OqguFoPwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xoSan/L5JPrj8BU9Oi7E7ReBx5Mmqk4TEwKEwppIO85KhYTiFMZu9nNHq0P26xjSy
-	 h0k0zA83zR/Nf7IXSLxikeRNYafVCki50RytH6mG5ZMfTu3DPffc9mraZcryIv7hmg
-	 9kF3LY81b2CEnacPqIwtYpcCYREma0FaZEiTO0Es=
+	b=a0OR2gNzV18LE24ci7xRmSnjYLkBFDd2S4eW4JhzHzJNBCV8yQBFxqFl7GWdVHI0c
+	 emihGsPgyyuNM95hqBrGF6BCNB8ZXSvF+6M//gGUIBKqUILJkFlS6kygvNq07gzh84
+	 2gbE+K1l/11mVVavNWdi5Gjog4i9pkcN3ZMq9fmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sven Eckelmann (Plasma Cloud)" <se@simonwunderlich.de>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 277/311] net: ethernet: mtk_ppe: avoid NULL deref when gmac0 is disabled
-Date: Wed,  8 Apr 2026 20:04:37 +0200
-Message-ID: <20260408175949.722933213@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yongchao Wu <yongchao.wu@autochips.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.19 246/311] usb: cdns3: gadget: fix state inconsistency on gadget init failure
+Date: Wed,  8 Apr 2026 20:04:06 +0200
+Message-ID: <20260408175948.577705691@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,66 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
+From: Yongchao Wu <yongchao.wu@autochips.com>
 
-commit 976ff48c2ac6e6b25b01428c9d7997bcd0fb2949 upstream.
+commit c32f8748d70c8fc77676ad92ed76cede17bf2c48 upstream.
 
-If the gmac0 is disabled, the precheck for a valid ingress device will
-cause a NULL pointer deref and crash the system. This happens because
-eth->netdev[0] will be NULL but the code will directly try to access
-netdev_ops.
+When cdns3_gadget_start() fails, the DRD hardware is left in gadget mode
+while software state remains INACTIVE, creating hardware/software state
+inconsistency.
 
-Instead of just checking for the first net_device, it must be checked if
-any of the mtk_eth net_devices is matching the netdev_ops of the ingress
-device.
+When switching to host mode via sysfs:
+  echo host > /sys/class/usb_role/13180000.usb-role-switch/role
 
-Cc: stable@vger.kernel.org
-Fixes: 73cfd947dbdb ("net: ethernet: mtk_eth_soc: ppe: prevent ppe update for non-mtk devices")
-Signed-off-by: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260324-wed-crash-gmac0-disabled-v1-1-3bc388aee565@simonwunderlich.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The role state is not set to CDNS_ROLE_STATE_ACTIVE due to the error,
+so cdns_role_stop() skips cleanup because state is still INACTIVE.
+This violates the DRD controller design specification (Figure22),
+which requires returning to idle state before switching roles.
+
+This leads to a synchronous external abort in xhci_gen_setup() when
+setting up the host controller:
+
+[  516.440698] configfs-gadget 13180000.usb: failed to start g1: -19
+[  516.442035] cdns-usb3 13180000.usb: Failed to add gadget
+[  516.443278] cdns-usb3 13180000.usb: set role 2 has failed
+...
+[ 1301.375722] xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
+[ 1301.377716] Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
+[ 1301.382485] pc : xhci_gen_setup+0xa4/0x408
+[ 1301.393391] backtrace:
+    ...
+    xhci_gen_setup+0xa4/0x408    <-- CRASH
+    xhci_plat_setup+0x44/0x58
+    usb_add_hcd+0x284/0x678
+    ...
+    cdns_role_set+0x9c/0xbc        <-- Role switch
+
+Fix by calling cdns_drd_gadget_off() in the error path to properly
+clean up the DRD gadget state.
+
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Yongchao Wu <yongchao.wu@autochips.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260401001000.5761-1-yongchao.wu@autochips.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/mtk_ppe_offload.c |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/usb/cdns3/cdns3-gadget.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-@@ -244,6 +244,25 @@ out:
- 	return 0;
- }
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -3431,6 +3431,7 @@ static int __cdns3_gadget_init(struct cd
+ 	ret = cdns3_gadget_start(cdns);
+ 	if (ret) {
+ 		pm_runtime_put_sync(cdns->dev);
++		cdns_drd_gadget_off(cdns);
+ 		return ret;
+ 	}
  
-+static bool
-+mtk_flow_is_valid_idev(const struct mtk_eth *eth, const struct net_device *idev)
-+{
-+	size_t i;
-+
-+	if (!idev)
-+		return false;
-+
-+	for (i = 0; i < ARRAY_SIZE(eth->netdev); i++) {
-+		if (!eth->netdev[i])
-+			continue;
-+
-+		if (idev->netdev_ops == eth->netdev[i]->netdev_ops)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- static int
- mtk_flow_offload_replace(struct mtk_eth *eth, struct flow_cls_offload *f,
- 			 int ppe_index)
-@@ -270,7 +289,7 @@ mtk_flow_offload_replace(struct mtk_eth
- 		flow_rule_match_meta(rule, &match);
- 		if (mtk_is_netsys_v2_or_greater(eth)) {
- 			idev = __dev_get_by_index(&init_net, match.key->ingress_ifindex);
--			if (idev && idev->netdev_ops == eth->netdev[0]->netdev_ops) {
-+			if (mtk_flow_is_valid_idev(eth, idev)) {
- 				struct mtk_mac *mac = netdev_priv(idev);
- 
- 				if (WARN_ON(mac->ppe_idx >= eth->soc->ppe_num))
 
 
