@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55ED134AB06;
-	Wed,  8 Apr 2026 18:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C4C25A321;
+	Wed,  8 Apr 2026 18:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674242; cv=none; b=oQaaG0/m5Vnn4+jsvIfJ93yZ6irrjKxQb8VavDYTIL7Lb7/rVNfF7NxUJwiuXzQMjhUewMP1k0ygKc7Yhr8mamdbtaAxs8ZoUGIPHN0yQo6u2NgWWKUgyuPJTdr7MPlEIAs8aWxlNJavVemdixTwtDKjv6Dd0EYfAr92Eq3w5aE=
+	t=1775674244; cv=none; b=JJwH+MJXkYIlis2bQ0tui2EZMALXEdkDVhrF19msAQSmQAJ6NW1kej6yso/iaSMsIqLyWNBe0KrtCx3TZb5yRXUMvi/BCZPlToKZQyaqtDytXDV5N6Zjgz+mhxMIEoGLNAsSA5b7vbp8i6ZlrYI5SgAv/iuMCcn1VTtcoHlr4AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674242; c=relaxed/simple;
-	bh=/etAI/McEyrKAhhRKd/hId5GV0PaLCSpKuz8DXvJ6Hw=;
+	s=arc-20240116; t=1775674244; c=relaxed/simple;
+	bh=Vhc3wAGOBmSO+wJ+h46o4sp9vaBPLs+swRAHNebLy5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OSyhCFOGwTb6oC79AxnLupnH7ailP81T5j16nFfZW+GwHFSph+CHS+/r5iqp0pXtf9i6Ilt/yMwq8L9jR9fEe8QnUuALz9sZaTPL8AIBBuK0w4seCSpomWrnRirol7kROPUDoDi+GvyTzF4urmoFkK3gIXES8ax5OEdjlXQ3S64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgAxqPXC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ErJOPkX2f70PzVh1R+Tpwe1/R7nOdJVb9FD8RR82e5s25/WalUlIaE63hYGN+fzO+m5LKN0iPilN7wD32TBWdtg0jQYzipzxCmxdAZ7TEum+sJC7G/psJkOPdSkdlP48kj4u7TGvrD6+BXXZuGv182RxYXuLNfO6FcGao+u/g1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dawgIoiy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgAxqPXC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9821C19421;
-	Wed,  8 Apr 2026 18:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dawgIoiy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49513C19421;
+	Wed,  8 Apr 2026 18:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674242;
-	bh=/etAI/McEyrKAhhRKd/hId5GV0PaLCSpKuz8DXvJ6Hw=;
+	s=korg; t=1775674244;
+	bh=Vhc3wAGOBmSO+wJ+h46o4sp9vaBPLs+swRAHNebLy5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgAxqPXCyGq4nxfojpadFkwV7BOpLQecyGk1VZLkggI7BkGy98FeM0zXy5mZ2EN1r
-	 lvILzo4Ac+zs+h0UE+IRgWsHVV8roCfRC4B94UK6wafyK+E2iOVcxjXzeu0nlKMmrR
-	 kEVux6YXXsQlbkpdGDNyNKprBKdUJUfMi9qtL7Es=
+	b=dawgIoiyc3nOy5JUkoCFlypU3pakhqnuoH4WeLMjdb3XeDKuZAwPx3DCZ38wa+nvD
+	 qZRO/utuPkwt+ix+assD94iu8zF3KUJVozazH+ro4uern05hweVi+aGkNZ7M1epn+7
+	 1sFad37+X3uNxvMs9xzf22+sp+QCh47eJEbeUypw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 021/311] btrfs: reserve enough transaction items for qgroup ioctls
-Date: Wed,  8 Apr 2026 20:00:21 +0200
-Message-ID: <20260408175940.205143442@linuxfoundation.org>
+Subject: [PATCH 6.19 022/311] i2c: tegra: Dont mark devices with pins as IRQ safe
+Date: Wed,  8 Apr 2026 20:00:22 +0200
+Message-ID: <20260408175940.242789280@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -53,145 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit f9a4e3015db1aeafbef407650eb8555445ca943e ]
+[ Upstream commit ec69c9e88315c4be70c283f18c2ff130da6320b5 ]
 
-Currently our qgroup ioctls don't reserve any space, they just do a
-transaction join, which does not reserve any space, neither for the quota
-tree updates nor for the delayed refs generated when updating the quota
-tree. The quota root uses the global block reserve, which is fine most of
-the time since we don't expect a lot of updates to the quota root, or to
-be too close to -ENOSPC such that other critical metadata updates need to
-resort to the global reserve.
+I2C devices with associated pinctrl states (DPAUX I2C controllers)
+will change pinctrl state during runtime PM. This requires taking
+a mutex, so these devices cannot be marked as IRQ safe.
 
-However this is not optimal, as not reserving proper space may result in a
-transaction abort due to not reserving space for delayed refs and then
-abusing the use of the global block reserve.
+Add PINCTRL as dependency to avoid build errors.
 
-For example, the following reproducer (which is unlikely to model any
-real world use case, but just to illustrate the problem), triggers such a
-transaction abort due to -ENOSPC when running delayed refs:
-
-  $ cat test.sh
-  #!/bin/bash
-
-  DEV=/dev/nullb0
-  MNT=/mnt/nullb0
-
-  umount $DEV &> /dev/null
-  # Limit device to 1G so that it's much faster to reproduce the issue.
-  mkfs.btrfs -f -b 1G $DEV
-  mount -o commit=600 $DEV $MNT
-
-  fallocate -l 800M $MNT/filler
-  btrfs quota enable $MNT
-
-  for ((i = 1; i <= 400000; i++)); do
-      btrfs qgroup create 1/$i $MNT
-  done
-
-  umount $MNT
-
-When running this, we can see in dmesg/syslog that a transaction abort
-happened:
-
-  [436.490] BTRFS error (device nullb0): failed to run delayed ref for logical 30408704 num_bytes 16384 type 176 action 1 ref_mod 1: -28
-  [436.493] ------------[ cut here ]------------
-  [436.494] BTRFS: Transaction aborted (error -28)
-  [436.495] WARNING: fs/btrfs/extent-tree.c:2247 at btrfs_run_delayed_refs+0xd9/0x110 [btrfs], CPU#4: umount/2495372
-  [436.497] Modules linked in: btrfs loop (...)
-  [436.508] CPU: 4 UID: 0 PID: 2495372 Comm: umount Tainted: G        W           6.19.0-rc8-btrfs-next-225+ #1 PREEMPT(full)
-  [436.510] Tainted: [W]=WARN
-  [436.511] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
-  [436.513] RIP: 0010:btrfs_run_delayed_refs+0xdf/0x110 [btrfs]
-  [436.514] Code: 0f 82 ea (...)
-  [436.518] RSP: 0018:ffffd511850b7d78 EFLAGS: 00010292
-  [436.519] RAX: 00000000ffffffe4 RBX: ffff8f120dad37e0 RCX: 0000000002040001
-  [436.520] RDX: 0000000000000002 RSI: 00000000ffffffe4 RDI: ffffffffc090fd80
-  [436.522] RBP: 0000000000000000 R08: 0000000000000001 R09: ffffffffc04d1867
-  [436.523] R10: ffff8f18dc1fffa8 R11: 0000000000000003 R12: ffff8f173aa89400
-  [436.524] R13: 0000000000000000 R14: ffff8f173aa89400 R15: 0000000000000000
-  [436.526] FS:  00007fe59045d840(0000) GS:ffff8f192e22e000(0000) knlGS:0000000000000000
-  [436.527] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [436.528] CR2: 00007fe5905ff2b0 CR3: 000000060710a002 CR4: 0000000000370ef0
-  [436.530] Call Trace:
-  [436.530]  <TASK>
-  [436.530]  btrfs_commit_transaction+0x73/0xc00 [btrfs]
-  [436.531]  ? btrfs_attach_transaction_barrier+0x1e/0x70 [btrfs]
-  [436.532]  sync_filesystem+0x7a/0x90
-  [436.533]  generic_shutdown_super+0x28/0x180
-  [436.533]  kill_anon_super+0x12/0x40
-  [436.534]  btrfs_kill_super+0x12/0x20 [btrfs]
-  [436.534]  deactivate_locked_super+0x2f/0xb0
-  [436.534]  cleanup_mnt+0xea/0x180
-  [436.535]  task_work_run+0x58/0xa0
-  [436.535]  exit_to_user_mode_loop+0xed/0x480
-  [436.536]  ? __x64_sys_umount+0x68/0x80
-  [436.536]  do_syscall_64+0x2a5/0xf20
-  [436.537]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  [436.537] RIP: 0033:0x7fe5906b6217
-  [436.538] Code: 0d 00 f7 (...)
-  [436.540] RSP: 002b:00007ffcd87a61f8 EFLAGS: 00000246 ORIG_RAX: 00000000000000a6
-  [436.541] RAX: 0000000000000000 RBX: 00005618b9ecadc8 RCX: 00007fe5906b6217
-  [436.541] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00005618b9ecb100
-  [436.542] RBP: 0000000000000000 R08: 00007ffcd87a4fe0 R09: 00000000ffffffff
-  [436.544] R10: 0000000000000103 R11: 0000000000000246 R12: 00007fe59081626c
-  [436.544] R13: 00005618b9ecb100 R14: 0000000000000000 R15: 00005618b9ecacc0
-  [436.545]  </TASK>
-  [436.545] ---[ end trace 0000000000000000 ]---
-
-Fix this by changing the qgroup ioctls to use start transaction instead of
-joining so that proper space is reserved for the delayed refs generated
-for the updates to the quota root. This way we don't get any transaction
-abort.
-
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Reported-by: Russell King <rmk+kernel@armlinux.org.uk>
+Link: https://lore.kernel.org/all/E1vsNBv-00000009nfA-27ZK@rmk-PC.armlinux.org.uk/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/Kconfig     | 2 ++
+ drivers/i2c/busses/i2c-tegra.c | 5 ++++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index b78998815ce72..16c9b242e917f 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -3697,7 +3697,8 @@ static long btrfs_ioctl_qgroup_assign(struct file *file, void __user *arg)
- 		}
- 	}
+diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
+index 09ba55bae1fac..7d0afdc7d8862 100644
+--- a/drivers/i2c/busses/Kconfig
++++ b/drivers/i2c/busses/Kconfig
+@@ -1220,6 +1220,8 @@ config I2C_TEGRA
+ 	tristate "NVIDIA Tegra internal I2C controller"
+ 	depends on ARCH_TEGRA || (COMPILE_TEST && (ARC || ARM || ARM64 || M68K || RISCV || SUPERH || SPARC))
+ 	# COMPILE_TEST needs architectures with readsX()/writesX() primitives
++	depends on PINCTRL
++	# ARCH_TEGRA implies PINCTRL, but the COMPILE_TEST side doesn't.
+ 	help
+ 	  If you say yes to this option, support will be included for the
+ 	  I2C controller embedded in NVIDIA Tegra SOCs
+diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
+index e533460bccc39..a9aed411e3190 100644
+--- a/drivers/i2c/busses/i2c-tegra.c
++++ b/drivers/i2c/busses/i2c-tegra.c
+@@ -1837,8 +1837,11 @@ static int tegra_i2c_probe(struct platform_device *pdev)
+ 	 *
+ 	 * VI I2C device shouldn't be marked as IRQ-safe because VI I2C won't
+ 	 * be used for atomic transfers. ACPI device is not IRQ safe also.
++	 *
++	 * Devices with pinctrl states cannot be marked IRQ-safe as the pinctrl
++	 * state transitions during runtime PM require mutexes.
+ 	 */
+-	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev))
++	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev) && !i2c_dev->dev->pins)
+ 		pm_runtime_irq_safe(i2c_dev->dev);
  
--	trans = btrfs_join_transaction(root);
-+	/* 2 BTRFS_QGROUP_RELATION_KEY items. */
-+	trans = btrfs_start_transaction(root, 2);
- 	if (IS_ERR(trans)) {
- 		ret = PTR_ERR(trans);
- 		goto out;
-@@ -3769,7 +3770,11 @@ static long btrfs_ioctl_qgroup_create(struct file *file, void __user *arg)
- 		goto out;
- 	}
- 
--	trans = btrfs_join_transaction(root);
-+	/*
-+	 * 1 BTRFS_QGROUP_INFO_KEY item.
-+	 * 1 BTRFS_QGROUP_LIMIT_KEY item.
-+	 */
-+	trans = btrfs_start_transaction(root, 2);
- 	if (IS_ERR(trans)) {
- 		ret = PTR_ERR(trans);
- 		goto out;
-@@ -3818,7 +3823,8 @@ static long btrfs_ioctl_qgroup_limit(struct file *file, void __user *arg)
- 		goto drop_write;
- 	}
- 
--	trans = btrfs_join_transaction(root);
-+	/* 1 BTRFS_QGROUP_LIMIT_KEY item. */
-+	trans = btrfs_start_transaction(root, 1);
- 	if (IS_ERR(trans)) {
- 		ret = PTR_ERR(trans);
- 		goto out;
+ 	pm_runtime_enable(i2c_dev->dev);
 -- 
 2.53.0
 
