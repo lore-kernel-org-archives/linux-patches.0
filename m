@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B623624B2;
-	Wed,  8 Apr 2026 18:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76EB361DB5;
+	Wed,  8 Apr 2026 18:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673914; cv=none; b=Pkkk+nwGO86X4dUJsrwo46WtYF8YzP7ugGZ5F+EwccacaUS6sUM+WKHuOGaWOa+vTL+7vo3ucEPVUCL2N6e8M1GjL5K0BgxvPJuA0YmjXW0+65/5QD7JzpSOJKNFC2PNMddGywvhw/r+Le4rGmPn5/1aB+gZHqwiteeNDJl4M/E=
+	t=1775673916; cv=none; b=kVb4KDYl5VR9qlTI0zuBULutGXfHKbb3NztxmzYvOpQsdnDdqDHwGwp2UzA6GptdHKf7FmolesFvs2rOO9Fha4vz/az/7gBlDbwpAuXNaIVGSVOHmLGio5Cl8aD0e2LASj7pHsTkS6q7/FHxDd6u5y2cACOJ9FyyTsEYOOc31hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673914; c=relaxed/simple;
-	bh=VNILRe/sabgVSrZ9TiRwzrZLAIfRkux3Vaa/xKMnGO8=;
+	s=arc-20240116; t=1775673916; c=relaxed/simple;
+	bh=MtlpGGwKwboCGr+f491B43fbiBGxwKd+2GQi4EEjXd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HFrC0myQvRUC95It8XGpl0Dps1tUTMb9vgwyY/k2LBWXUmYn+1EHYWKH4bkzL34+4oTe2KOUai+DtoWd5ONJdoEi7DrWSEHQkmJVjsuMEpVzwUTtJE736IPFMFKZ+R8hC2VIQWPO/7d0OXMtV1JqOIKpppem6mA0QrIleHyzMTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEVqtxYb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GHyQRp5nwfYPyUWGgc90bH7XOVbJlaVGJ8itC7h8m0sSAhAkyfLqYAXzEYDBdaLGQmvs9TAPVqoG8Dv56mvCONIn9gi4VKYu+SbZcnXvenxNVKnNlUQMYDu3b0rjrK6DpAzd72ay5bXDyRVKmG7u92YcF8O5uwjtupOytGWpo7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbN62kjW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEVqtxYb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34AEC19421;
-	Wed,  8 Apr 2026 18:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbN62kjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDCFC19421;
+	Wed,  8 Apr 2026 18:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673914;
-	bh=VNILRe/sabgVSrZ9TiRwzrZLAIfRkux3Vaa/xKMnGO8=;
+	s=korg; t=1775673916;
+	bh=MtlpGGwKwboCGr+f491B43fbiBGxwKd+2GQi4EEjXd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nEVqtxYb9Y8Vx+q+HAkjAJ/DKzA9aBDfvRnHae22AFSxAuKKpcyggx/3O1s4Cdklv
-	 ajxeosuhl43e56RSNxCu7A3a+eBu6wLkyCaNwYqMC4HOo/kw2DLhB6RrZnoBgYTSK2
-	 kwFjSY4hoH82F0rYRijaG6ePE6ywCLR2liFZYvMY=
+	b=rbN62kjWKWGmLCbVWZjxQYIHEtjmZRFY3pSuql9VPRMzZFvLkoyTxNEWSi9o24tpT
+	 Eh9YnBlW9a6bp7FNVTKVnjSqwpHC8JVWkdEFrRHKRRxsJ5HOeKqvG83XQm3uagAC2+
+	 L5XRbsrEPptm9GdHRjCx3WVS+GzS30bbyGgMOPII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.12 136/242] drm/i915/dsi: Dont do DSC horizontal timing adjustments in command mode
-Date: Wed,  8 Apr 2026 20:02:56 +0200
-Message-ID: <20260408175932.179531832@linuxfoundation.org>
+Subject: [PATCH 6.12 137/242] drm/i915/dp: Use crtc_state->enhanced_framing properly on ivb/hsw CPU eDP
+Date: Wed,  8 Apr 2026 20:02:57 +0200
+Message-ID: <20260408175932.216501174@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -54,54 +54,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 4dfce79e098915d8e5fc2b9e1d980bc3251dd32c upstream.
+commit 9c9a57e4e337f94e23ddf69263fd0685c91155fb upstream.
 
-Stop adjusting the horizontal timing values based on the
-compression ratio in command mode. Bspec seems to be telling
-us to do this only in video mode, and this is also how the
-Windows driver does things.
-
-This should also fix a div-by-zero on some machines because
-the adjusted htotal ends up being so small that we end up with
-line_time_us==0 when trying to determine the vtotal value in
-command mode.
-
-Note that this doesn't actually make the display on the
-Huawei Matebook E work, but at least the kernel no longer
-explodes when the driver loads.
+Looks like I missed the drm_dp_enhanced_frame_cap() in the ivb/hsw CPU
+eDP code when I introduced crtc_state->enhanced_framing. Fix it up so
+that the state we program to the hardware is guaranteed to match what
+we computed earlier.
 
 Cc: stable@vger.kernel.org
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/12045
+Fixes: 3072a24c778a ("drm/i915: Introduce crtc_state->enhanced_framing")
 Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260326111814.9800-2-ville.syrjala@linux.intel.com
-Fixes: 53693f02d80e ("drm/i915/dsi: account for DSC in horizontal timings")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 0b475e91ecc2313207196c6d7fd5c53e1a878525)
+Link: https://patch.msgid.link/20260325135849.12603-3-ville.syrjala@linux.intel.com
+Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
+(cherry picked from commit 799fe8dc2af52f35c78c4ac97f8e34994dfd8760)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/icl_dsi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/g4x_dp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/icl_dsi.c
-+++ b/drivers/gpu/drm/i915/display/icl_dsi.c
-@@ -869,7 +869,7 @@ gen11_dsi_set_transcoder_timings(struct
- 	 * non-compressed link speeds, and simplifies down to the ratio between
- 	 * compressed and non-compressed bpp.
- 	 */
--	if (crtc_state->dsc.compression_enable) {
-+	if (is_vid_mode(intel_dsi) && crtc_state->dsc.compression_enable) {
- 		mul = fxp_q4_to_int(crtc_state->dsc.compressed_bpp_x16);
- 		div = mipi_dsi_pixel_format_to_bpp(intel_dsi->pixel_format);
- 	}
-@@ -1477,7 +1477,7 @@ static void gen11_dsi_get_timings(struct
- 	struct drm_display_mode *adjusted_mode =
- 					&pipe_config->hw.adjusted_mode;
+--- a/drivers/gpu/drm/i915/display/g4x_dp.c
++++ b/drivers/gpu/drm/i915/display/g4x_dp.c
+@@ -134,7 +134,7 @@ static void intel_dp_prepare(struct inte
+ 			intel_dp->DP |= DP_SYNC_VS_HIGH;
+ 		intel_dp->DP |= DP_LINK_TRAIN_OFF_CPT;
  
--	if (pipe_config->dsc.compressed_bpp_x16) {
-+	if (is_vid_mode(intel_dsi) && pipe_config->dsc.compressed_bpp_x16) {
- 		int div = fxp_q4_to_int(pipe_config->dsc.compressed_bpp_x16);
- 		int mul = mipi_dsi_pixel_format_to_bpp(intel_dsi->pixel_format);
+-		if (drm_dp_enhanced_frame_cap(intel_dp->dpcd))
++		if (pipe_config->enhanced_framing)
+ 			intel_dp->DP |= DP_ENHANCED_FRAMING;
  
+ 		intel_dp->DP |= DP_PIPE_SEL_IVB(crtc->pipe);
 
 
