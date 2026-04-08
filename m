@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05DA34252D;
-	Wed,  8 Apr 2026 18:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5A2324B1F;
+	Wed,  8 Apr 2026 18:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672514; cv=none; b=AUlMIcSRRCkeSrbRNiskd6hvqSPgwIy5q08fTpgSsaU0VQMY6zUQ3eN7Gz2UMgsWCWNAr98WkLMs36JnU2iQ5WIhAa5znRxYXR3neiS3t94fgm4o7U2ZS2NyXS2xiOKZoBn9yNsSQzqLInF9XAc8Em1XJJi+p1UqCUURHK/8XrU=
+	t=1775672517; cv=none; b=Z7s8ayLYxjDuAG5NJlbxCvmlKlvBTfkiXxX8kSzmcPK0DVeX8PvcSni5/z/HFI96WwhqXM3v+6U/8NvglZqNy0RVQpWC7OHyhiYidCDP0OfajJ+qBhEJL6MYpkBNiuOm/lf+9W4jeTv3YkPfuYxLjm5zGPGGHrrLf4eNK5nMcUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672514; c=relaxed/simple;
-	bh=L809Q6g1zNi6s8Fg1nfK0rJQCLcEAesU58zXvTmVZZ0=;
+	s=arc-20240116; t=1775672517; c=relaxed/simple;
+	bh=d5FKFN8IGk2RMXlMsekPxuyy+VHd2JkXBhigb1yKnGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ax3lLh4IAMV3M7Tv4F8kwy7fBYC6G+OJB56ku3u8AA6EgZlRDaTHURcE4AhamfxtpJ4eRHRHRr5TkbtzkH7xcoQsQyV6G8CC5+95+LBicTwpQNt1L6jzoJ54amXKUbJY1ssmckOoeM1v0oGDzUzh4OJPqG+fo93BVjGJ7MPltoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4PN92i9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iG/8cBsruemiFt3m0XrFrVE7gq+fnzhpMGxCRY7DIE6tsvbH05yB4c1JZ0Jg68eyQfJdkyOdXVIb23XxYVoTETAeDgu/vfhfbpgOt8AfccTeosO1+HImu6oaFxRwICyjGy8OSUlP9aSiggtMMlS0WFf6n+KOT8z3yFDpoWaxs60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aI/uPnHA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4PN92i9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D38C19421;
-	Wed,  8 Apr 2026 18:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aI/uPnHA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34DBC19421;
+	Wed,  8 Apr 2026 18:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672514;
-	bh=L809Q6g1zNi6s8Fg1nfK0rJQCLcEAesU58zXvTmVZZ0=;
+	s=korg; t=1775672517;
+	bh=d5FKFN8IGk2RMXlMsekPxuyy+VHd2JkXBhigb1yKnGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4PN92i9A90K4U8yGuITT+CfLyn1tKMx4XJACScq3SbVsowiny/4LbEsA4rZBvnrh
-	 SGlp5b0pjbSDhKqWEjtJBNvnelDaOrD19TtBGzoQqHO7/ycJsLWGMr3SRGrhd8OqW3
-	 6/dGk+VblrBk8o12D+JWN2jAvv4vkYlu9wgd97Ew=
+	b=aI/uPnHATnCj5QfjgUOvYnKZUblI0hi2zf36Q/bgKikgDHJi/6WE5nytzbgvaGYQN
+	 3RitnVLxKEL4jOc96Ns3r1qHEckPCU0dhcfIhMfeVDoSABRdYv/elXYU/h/Kw/WMOF
+	 ZnkZOpgWX6nNBISV8ECeK/Ak50GEuXNLDCJzh4w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Phil Sutter <phil@nwl.cc>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/160] netfilter: ipset: use nla_strcmp for IPSET_ATTR_NAME attr
-Date: Wed,  8 Apr 2026 20:02:04 +0200
-Message-ID: <20260408175914.595301867@linuxfoundation.org>
+Subject: [PATCH 6.6 038/160] netfilter: nf_conntrack_helper: pass helper to expect cleanup
+Date: Wed,  8 Apr 2026 20:02:05 +0200
+Message-ID: <20260408175914.632950635@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -51,83 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Qi Tang <tpluszz77@gmail.com>
 
-[ Upstream commit b7e8590987aa94c9dc51518fad0e58cb887b1db5 ]
+[ Upstream commit a242a9ae58aa46ff7dae51ce64150a93957abe65 ]
 
-IPSET_ATTR_NAME and IPSET_ATTR_NAMEREF are of NLA_STRING type, they
-cannot be treated like a c-string.
+nf_conntrack_helper_unregister() calls nf_ct_expect_iterate_destroy()
+to remove expectations belonging to the helper being unregistered.
+However, it passes NULL instead of the helper pointer as the data
+argument, so expect_iter_me() never matches any expectation and all
+of them survive the cleanup.
 
-They either have to be switched to NLA_NUL_STRING, or the compare
-operations need to use the nla functions.
+After unregister returns, nfnl_cthelper_del() frees the helper
+object immediately.  Subsequent expectation dumps or packet-driven
+init_conntrack() calls then dereference the freed exp->helper,
+causing a use-after-free.
 
-Fixes: f830837f0eed ("netfilter: ipset: list:set set type support")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Pass the actual helper pointer so expectations referencing it are
+properly destroyed before the helper object is freed.
+
+  BUG: KASAN: slab-use-after-free in string+0x38f/0x430
+  Read of size 1 at addr ffff888003b14d20 by task poc/103
+  Call Trace:
+   string+0x38f/0x430
+   vsnprintf+0x3cc/0x1170
+   seq_printf+0x17a/0x240
+   exp_seq_show+0x2e5/0x560
+   seq_read_iter+0x419/0x1280
+   proc_reg_read+0x1ac/0x270
+   vfs_read+0x179/0x930
+   ksys_read+0xef/0x1c0
+  Freed by task 103:
+  The buggy address is located 32 bytes inside of
+   freed 192-byte region [ffff888003b14d00, ffff888003b14dc0)
+
+Fixes: ac7b84839003 ("netfilter: expect: add and use nf_ct_expect_iterate helpers")
+Signed-off-by: Qi Tang <tpluszz77@gmail.com>
+Reviewed-by: Phil Sutter <phil@nwl.cc>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter/ipset/ip_set.h | 2 +-
- net/netfilter/ipset/ip_set_core.c      | 4 ++--
- net/netfilter/ipset/ip_set_list_set.c  | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ net/netfilter/nf_conntrack_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/netfilter/ipset/ip_set.h b/include/linux/netfilter/ipset/ip_set.h
-index e9f4f845d760a..b98331572ad29 100644
---- a/include/linux/netfilter/ipset/ip_set.h
-+++ b/include/linux/netfilter/ipset/ip_set.h
-@@ -309,7 +309,7 @@ enum {
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index 10f72b5b4e1ad..01d125fa2f76e 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -424,7 +424,7 @@ void nf_conntrack_helper_unregister(struct nf_conntrack_helper *me)
+ 	 */
+ 	synchronize_rcu();
  
- /* register and unregister set references */
- extern ip_set_id_t ip_set_get_byname(struct net *net,
--				     const char *name, struct ip_set **set);
-+				     const struct nlattr *name, struct ip_set **set);
- extern void ip_set_put_byindex(struct net *net, ip_set_id_t index);
- extern void ip_set_name_byindex(struct net *net, ip_set_id_t index, char *name);
- extern ip_set_id_t ip_set_nfnl_get_byindex(struct net *net, ip_set_id_t index);
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index cc20e6d56807c..a4e1d7951b2c6 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -821,7 +821,7 @@ EXPORT_SYMBOL_GPL(ip_set_del);
-  *
-  */
- ip_set_id_t
--ip_set_get_byname(struct net *net, const char *name, struct ip_set **set)
-+ip_set_get_byname(struct net *net, const struct nlattr *name, struct ip_set **set)
- {
- 	ip_set_id_t i, index = IPSET_INVALID_ID;
- 	struct ip_set *s;
-@@ -830,7 +830,7 @@ ip_set_get_byname(struct net *net, const char *name, struct ip_set **set)
- 	rcu_read_lock();
- 	for (i = 0; i < inst->ip_set_max; i++) {
- 		s = rcu_dereference(inst->ip_set_list)[i];
--		if (s && STRNCMP(s->name, name)) {
-+		if (s && nla_strcmp(name, s->name) == 0) {
- 			__ip_set_get(s);
- 			index = i;
- 			*set = s;
-diff --git a/net/netfilter/ipset/ip_set_list_set.c b/net/netfilter/ipset/ip_set_list_set.c
-index db794fe1300e6..83e1fdcc752d6 100644
---- a/net/netfilter/ipset/ip_set_list_set.c
-+++ b/net/netfilter/ipset/ip_set_list_set.c
-@@ -367,7 +367,7 @@ list_set_uadt(struct ip_set *set, struct nlattr *tb[],
- 	ret = ip_set_get_extensions(set, tb, &ext);
- 	if (ret)
- 		return ret;
--	e.id = ip_set_get_byname(map->net, nla_data(tb[IPSET_ATTR_NAME]), &s);
-+	e.id = ip_set_get_byname(map->net, tb[IPSET_ATTR_NAME], &s);
- 	if (e.id == IPSET_INVALID_ID)
- 		return -IPSET_ERR_NAME;
- 	/* "Loop detection" */
-@@ -389,7 +389,7 @@ list_set_uadt(struct ip_set *set, struct nlattr *tb[],
- 
- 	if (tb[IPSET_ATTR_NAMEREF]) {
- 		e.refid = ip_set_get_byname(map->net,
--					    nla_data(tb[IPSET_ATTR_NAMEREF]),
-+					    tb[IPSET_ATTR_NAMEREF],
- 					    &s);
- 		if (e.refid == IPSET_INVALID_ID) {
- 			ret = -IPSET_ERR_NAMEREF;
+-	nf_ct_expect_iterate_destroy(expect_iter_me, NULL);
++	nf_ct_expect_iterate_destroy(expect_iter_me, me);
+ 	nf_ct_iterate_destroy(unhelp, me);
+ }
+ EXPORT_SYMBOL_GPL(nf_conntrack_helper_unregister);
 -- 
 2.53.0
 
