@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6668B3A6B6B;
-	Wed,  8 Apr 2026 18:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABE1386550;
+	Wed,  8 Apr 2026 18:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672372; cv=none; b=pqurtJegEtCDOWIGq9bzlofUgAGgiKRkVZQpsw0WVF8nHt4wzVz8OZn9DTvl472JMvREJcGxrUbvgohm+lqDYzR4vH3Bx9XUACidQWGVpwInXGpJeNdu7pF7cbnEaEluLi0cLoxTsLAI3f938VsJQW3EGb4XcifN2U1j5pIAFuU=
+	t=1775672375; cv=none; b=cPj2YmMrERHUcONtKBq/tVC0pwsKE+gWCob5r7WOoGeUZJXJfV40b3nlH26CG3x87bMUQ4YhHhsE7KYMmeg6YGTbxqxjKQhO3oQYk7DPm2rjgUroHGoJLPzG9DQYCwZQXJVTrUj7AKaPA/yb9/tO49S+Jwf+FuY5VFIXlhXFO64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672372; c=relaxed/simple;
-	bh=a7pgviiFu1u9oNlE4dpYotKLbChCYSUjS/DGc5+Ftk8=;
+	s=arc-20240116; t=1775672375; c=relaxed/simple;
+	bh=DeHRFftgx8ajOeWAs5b0dQyaQF6qo7IAP9Utl/w34Oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iEBHlCVnw7xCl8sPgqoZE2gfnUS4gAacYiB8pf1iM6i4zdLCOlJDJEUyC39xsSAycDRkviKecVD16bKM1ECiEFEe/wdsD+LO1Xima2BvvE0yKN08Lz551oAil3BLObquaAaT0Z2bLrE2JdkrSQ+709GJBMSFJjCjqmH2Rm7wrqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbazVDIa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=akT8njaWRUAhc+xmhNJwU9/bYUjAJUqfiPPDrQ/C3HCUXUKpIVFNuFJB49TVdSVZnETT8IuuBghSkwVo9obG64f4TmxOGggRS56TyqVp/tvfsmmhoCGr9CxY/t6yCCfCdOF73eVsv7D2GuWdLv6rgVyRCFb2xJATY6nZh5Ni1MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwQfD5ny; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbazVDIa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B6CC2BC87;
-	Wed,  8 Apr 2026 18:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwQfD5ny"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D627C19425;
+	Wed,  8 Apr 2026 18:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672372;
-	bh=a7pgviiFu1u9oNlE4dpYotKLbChCYSUjS/DGc5+Ftk8=;
+	s=korg; t=1775672375;
+	bh=DeHRFftgx8ajOeWAs5b0dQyaQF6qo7IAP9Utl/w34Oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FbazVDIaEILEi/4kw6xFrRg8U6sB6ik98AIruyassofMW46jmFgg5mIt4M5vvmcU0
-	 hMNhxBp3GZDbYF/FdT4LaZLDmSL1Xl9tW8Bxe0+yrf4jfkOYzdJ1zBTW65Do9zrQz2
-	 AKBPDr55zF10IQ7WntVPtkHxnPu4fWdKbgoPNTto=
+	b=AwQfD5nyxlKljqNEsEOdYHvQN7oDoXsbWvpRS30UDw3DPxPbXtZBZOUDgIFpJb0UM
+	 lSy4h8TmscS19j/Q1fqObhLJvWTGWjZuqhQHbgbPTOXUBrLVm2+MA35/FvzVHJZi2x
+	 rAZI1R4XSQ4cIY6aghP3rlUJn6aBWJOxq8yIf0ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 293/312] cpufreq: governor: Free dbs_data directly when gov->init() fails
-Date: Wed,  8 Apr 2026 20:03:30 +0200
-Message-ID: <20260408175944.709973859@linuxfoundation.org>
+Subject: [PATCH 6.1 294/312] cpufreq: governor: fix double free in cpufreq_dbs_governor_init() error path
+Date: Wed,  8 Apr 2026 20:03:31 +0200
+Message-ID: <20260408175944.748148093@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,43 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 916f13884042f615cfbfc0b42cc68dadee826f2a ]
+[ Upstream commit 6dcf9d0064ce2f3e3dfe5755f98b93abe6a98e1e ]
 
-Due to the kobject embedded in the dbs_data doest not has a release()
-method yet, it needs to use kfree() to free dbs_data directly when
-governor fails to allocate the tunner field of dbs_data.
+When kobject_init_and_add() fails, cpufreq_dbs_governor_init() calls
+kobject_put(&dbs_data->attr_set.kobj).
 
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
+The kobject release callback cpufreq_dbs_data_release() calls
+gov->exit(dbs_data) and kfree(dbs_data), but the current error path
+then calls gov->exit(dbs_data) and kfree(dbs_data) again, causing a
+double free.
+
+Keep the direct kfree(dbs_data) for the gov->init() failure path, but
+after kobject_init_and_add() has been called, let kobject_put() handle
+the cleanup through cpufreq_dbs_data_release().
+
+Fixes: 4ebe36c94aed ("cpufreq: Fix kobject memleak")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260401024535.1395801-1-lgs201920130244@gmail.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 6dcf9d0064ce ("cpufreq: governor: fix double free in cpufreq_dbs_governor_init() error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq_governor.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq_governor.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/drivers/cpufreq/cpufreq_governor.c
 +++ b/drivers/cpufreq/cpufreq_governor.c
-@@ -440,7 +440,7 @@ int cpufreq_dbs_governor_init(struct cpu
+@@ -468,13 +468,13 @@ int cpufreq_dbs_governor_init(struct cpu
+ 	/* Failure, so roll back. */
+ 	pr_err("initialization failed (dbs_data kobject init error %d)\n", ret);
  
- 	ret = gov->init(dbs_data);
- 	if (ret)
--		goto free_policy_dbs_info;
-+		goto free_dbs_data;
+-	kobject_put(&dbs_data->attr_set.kobj);
+-
+ 	policy->governor_data = NULL;
  
- 	/*
- 	 * The sampling interval should not be less than the transition latency
-@@ -475,6 +475,8 @@ int cpufreq_dbs_governor_init(struct cpu
  	if (!have_governor_per_policy())
  		gov->gdbs_data = NULL;
- 	gov->exit(dbs_data);
+-	gov->exit(dbs_data);
 +
-+free_dbs_data:
- 	kfree(dbs_data);
++	kobject_put(&dbs_data->attr_set.kobj);
++	goto free_policy_dbs_info;
  
- free_policy_dbs_info:
+ free_dbs_data:
+ 	kfree(dbs_data);
 
 
