@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0CD3B19A3;
-	Wed,  8 Apr 2026 18:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B15D33121F;
+	Wed,  8 Apr 2026 18:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674040; cv=none; b=V6sMmDcvlxyGHsPcqNdXh/iTnHNcMdMJV5IGzBhVkEK5kY2JVCdixpMMlKky6kmSiVPoSUiUvOXhNWrhR309PxhDcF+PFLlhPQopXsltL+xpbaLVzaqr+W4Bv9M0vKPGMJX8SZCMU7qp2FnJqnRwoFcuYJiacS2pnBzRVaPeJQw=
+	t=1775674043; cv=none; b=GoRhSIkUuaVeA7NeT8mJZFe59btFdb8CoI5iTFhFKoQg4nHhbIsBGBytgylDLR1BPOLYbgzJj6D26H+gd30UM6P/4huA6SF2nkAyJe7okCzx+JTeV8L8Fokc3CbMjXWMPBu+ORx4DpiReK4zMn5theKf/yzqtd0hv1Yw86vvzUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674040; c=relaxed/simple;
-	bh=9Kq6rWosaXDQVHa3WOLYuoPkJhuws+l7oGXAXfAGSsE=;
+	s=arc-20240116; t=1775674043; c=relaxed/simple;
+	bh=aEeDHQ+csSsrtIo/Uiild1BgL/ehQQWhHBe4iCxi7Aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOJg6NjcQ42cGYlXoe3LIVe7+BLwtSZ8+ajiV7LDXzv3Cw4gAUSvZSDCPbvEyPE488M5RG1eN42SdOBSKsG+4NyrUBpjPq6PwOJH770gpSsaGmmYOrbmp4sbMtZ2iUtxH82/4JIq8Dh17kKFnPRh+XpIzf/VU4jG8vyMR8Tl3xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUjUiVeu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i4vWywPPmRvD41AbsyhAuh7yXXeWWobBRQd3kd+T6PN2KlNNUbV8D/tVZL82PJq4Xqm2SAkdt2GgQSn3Hu3pavdLudwL/r54gQuTxmCb0ROw3tNebSSCEDWJFOQp7xmZ4VPXUdpLUcUSemeMd0D2FN1r1Q0AFoK19xioj+PT9uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynuzkPTx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUjUiVeu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53871C19421;
-	Wed,  8 Apr 2026 18:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynuzkPTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCADDC19421;
+	Wed,  8 Apr 2026 18:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674040;
-	bh=9Kq6rWosaXDQVHa3WOLYuoPkJhuws+l7oGXAXfAGSsE=;
+	s=korg; t=1775674043;
+	bh=aEeDHQ+csSsrtIo/Uiild1BgL/ehQQWhHBe4iCxi7Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CUjUiVeuJXXpV/CJrtXzP4ntIjuKa5QnGZnQRbG0K2Z5pwOzIiCelVsJPWX5mzqCS
-	 JnnDGM98Srcg2OJr1Wz9X+xhqog+ylWWxr2pjuiA1RKC9r2gavfhk6dmnNkLYUcshf
-	 wfhtSvNLMAMmVN8NWkrTcJzlgPnjF3+4FNinbVr4=
+	b=ynuzkPTxXXiIM6Lyv+/6eEZDQ9zBwMd4q5r6kzkJMRIJSl5qHBx+w5AUAh3I1AAi6
+	 L3deBRxKQVdgGjt8FB1p5cJgq4oliQhb2XvLKGR9OaLk/5HVKLlMI9BgLQlg3cGf8D
+	 moTieSiChFrw5uZAldkIUbreSy2yvtqwfo3z9sR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yufan Chen <yufan.chen@linux.dev>,
+	"Sven Eckelmann (Plasma Cloud)" <se@simonwunderlich.de>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 187/242] net: ftgmac100: fix ring allocation unwind on open failure
-Date: Wed,  8 Apr 2026 20:03:47 +0200
-Message-ID: <20260408175934.082695891@linuxfoundation.org>
+Subject: [PATCH 6.12 188/242] net: ethernet: mtk_ppe: avoid NULL deref when gmac0 is disabled
+Date: Wed,  8 Apr 2026 20:03:48 +0200
+Message-ID: <20260408175934.119818643@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -50,83 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yufan Chen <yufan.chen@linux.dev>
+From: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
 
-commit c0fd0fe745f5e8c568d898cd1513d0083e46204a upstream.
+commit 976ff48c2ac6e6b25b01428c9d7997bcd0fb2949 upstream.
 
-ftgmac100_alloc_rings() allocates rx_skbs, tx_skbs, rxdes, txdes, and
-rx_scratch in stages. On intermediate failures it returned -ENOMEM
-directly, leaking resources allocated earlier in the function.
+If the gmac0 is disabled, the precheck for a valid ingress device will
+cause a NULL pointer deref and crash the system. This happens because
+eth->netdev[0] will be NULL but the code will directly try to access
+netdev_ops.
 
-Rework the failure path to use staged local unwind labels and free
-allocated resources in reverse order before returning -ENOMEM. This
-matches common netdev allocation cleanup style.
+Instead of just checking for the first net_device, it must be checked if
+any of the mtk_eth net_devices is matching the netdev_ops of the ingress
+device.
 
-Fixes: d72e01a0430f ("ftgmac100: Use a scratch buffer for failed RX allocations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yufan Chen <yufan.chen@linux.dev>
-Link: https://patch.msgid.link/20260328163257.60836-1-yufan.chen@linux.dev
+Fixes: 73cfd947dbdb ("net: ethernet: mtk_eth_soc: ppe: prevent ppe update for non-mtk devices")
+Signed-off-by: Sven Eckelmann (Plasma Cloud) <se@simonwunderlich.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260324-wed-crash-gmac0-disabled-v1-1-3bc388aee565@simonwunderlich.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/faraday/ftgmac100.c |   28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_ppe_offload.c |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/faraday/ftgmac100.c
-+++ b/drivers/net/ethernet/faraday/ftgmac100.c
-@@ -944,19 +944,19 @@ static int ftgmac100_alloc_rings(struct
- 	priv->tx_skbs = kcalloc(MAX_TX_QUEUE_ENTRIES, sizeof(void *),
- 				GFP_KERNEL);
- 	if (!priv->tx_skbs)
--		return -ENOMEM;
-+		goto err_free_rx_skbs;
- 
- 	/* Allocate descriptors */
- 	priv->rxdes = dma_alloc_coherent(priv->dev,
- 					 MAX_RX_QUEUE_ENTRIES * sizeof(struct ftgmac100_rxdes),
- 					 &priv->rxdes_dma, GFP_KERNEL);
- 	if (!priv->rxdes)
--		return -ENOMEM;
-+		goto err_free_tx_skbs;
- 	priv->txdes = dma_alloc_coherent(priv->dev,
- 					 MAX_TX_QUEUE_ENTRIES * sizeof(struct ftgmac100_txdes),
- 					 &priv->txdes_dma, GFP_KERNEL);
- 	if (!priv->txdes)
--		return -ENOMEM;
-+		goto err_free_rxdes;
- 
- 	/* Allocate scratch packet buffer */
- 	priv->rx_scratch = dma_alloc_coherent(priv->dev,
-@@ -964,9 +964,29 @@ static int ftgmac100_alloc_rings(struct
- 					      &priv->rx_scratch_dma,
- 					      GFP_KERNEL);
- 	if (!priv->rx_scratch)
--		return -ENOMEM;
-+		goto err_free_txdes;
- 
+--- a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
++++ b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
+@@ -244,6 +244,25 @@ out:
  	return 0;
-+
-+err_free_txdes:
-+	dma_free_coherent(priv->dev,
-+			  MAX_TX_QUEUE_ENTRIES *
-+			  sizeof(struct ftgmac100_txdes),
-+			  priv->txdes, priv->txdes_dma);
-+	priv->txdes = NULL;
-+err_free_rxdes:
-+	dma_free_coherent(priv->dev,
-+			  MAX_RX_QUEUE_ENTRIES *
-+			  sizeof(struct ftgmac100_rxdes),
-+			  priv->rxdes, priv->rxdes_dma);
-+	priv->rxdes = NULL;
-+err_free_tx_skbs:
-+	kfree(priv->tx_skbs);
-+	priv->tx_skbs = NULL;
-+err_free_rx_skbs:
-+	kfree(priv->rx_skbs);
-+	priv->rx_skbs = NULL;
-+	return -ENOMEM;
  }
  
- static void ftgmac100_init_rings(struct ftgmac100 *priv)
++static bool
++mtk_flow_is_valid_idev(const struct mtk_eth *eth, const struct net_device *idev)
++{
++	size_t i;
++
++	if (!idev)
++		return false;
++
++	for (i = 0; i < ARRAY_SIZE(eth->netdev); i++) {
++		if (!eth->netdev[i])
++			continue;
++
++		if (idev->netdev_ops == eth->netdev[i]->netdev_ops)
++			return true;
++	}
++
++	return false;
++}
++
+ static int
+ mtk_flow_offload_replace(struct mtk_eth *eth, struct flow_cls_offload *f,
+ 			 int ppe_index)
+@@ -270,7 +289,7 @@ mtk_flow_offload_replace(struct mtk_eth
+ 		flow_rule_match_meta(rule, &match);
+ 		if (mtk_is_netsys_v2_or_greater(eth)) {
+ 			idev = __dev_get_by_index(&init_net, match.key->ingress_ifindex);
+-			if (idev && idev->netdev_ops == eth->netdev[0]->netdev_ops) {
++			if (mtk_flow_is_valid_idev(eth, idev)) {
+ 				struct mtk_mac *mac = netdev_priv(idev);
+ 
+ 				if (WARN_ON(mac->ppe_idx >= eth->soc->ppe_num))
 
 
