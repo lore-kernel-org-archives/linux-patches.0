@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4A43ACA41;
-	Wed,  8 Apr 2026 18:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C072494F0;
+	Wed,  8 Apr 2026 18:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672928; cv=none; b=aqTo4+1B+Kv/Yulp9FNtuoe8IT+BY5CIHPOjW8xhh/0hm2+00bdkoAcjMkpzr/8wZNYIxFbsIjUTvmzbiuHuOdcCmVgV40l9fRA4kOzvqzHipHgDiD8jLEbc+hXyGZz3gJ8793V/HVzGpySsscdgW7Kz5o6n00qMPNo4kc4siAQ=
+	t=1775672930; cv=none; b=kIKOiA+xXXMltd+ClSnNhVBX5FPFRQg3jPDonLobQH5WePI08QPN+iECfQ1Er+p7Lc0ozlsjOL1C0yFq8o+Mu+SA84A2Vnl/0GfldVzYLazldP/hQ+RIC3YhzA/iLz9z/06VsOCBiwwUJ6/Bh7RBR1ZPP5FBS+CJ3Q6I+R1ZPxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672928; c=relaxed/simple;
-	bh=IbkNNMMtvdsSu+jSOZ6AONTynWyThQ3grGeBrhjuAm8=;
+	s=arc-20240116; t=1775672930; c=relaxed/simple;
+	bh=Fa7o4+lpXBr9kkTvG7ijtPfWlgcuo8EgYmC6pcUB5g8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcbxAIDbJkkCE38hruXIGDa9RM9yGErAFzVvjcu33JEbY7GJ7aMNeaSuhK7BVd/CTHdlv08J393ki+YCbxBiwCnxMyq9CyPGypXR3DDrTrZo5XYFbNwdwTbQwlhbB9c6BNG4sPxX0vIzolE4Iv5ekoRWaz+OmH7bbqyysxyQ6hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljpRgDnt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rkc0ICkJWgL/4q6lp9Th8XIOR/cAGl47ICkU+xaEDzY0ryHEznV0Ce8JPS6xNK2psl84TO4XbQaI52xCaF82idAwTiOxPCedhaXD5AQcNVaPZE8S2yHtf3AI4jP4bGi6xtuC8MqR+Sb4LrNEJC6jnKqsVDJLIFlOrztLGHfPvO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnC5fSGW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljpRgDnt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70AEC19421;
-	Wed,  8 Apr 2026 18:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnC5fSGW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E6BC19421;
+	Wed,  8 Apr 2026 18:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672928;
-	bh=IbkNNMMtvdsSu+jSOZ6AONTynWyThQ3grGeBrhjuAm8=;
+	s=korg; t=1775672930;
+	bh=Fa7o4+lpXBr9kkTvG7ijtPfWlgcuo8EgYmC6pcUB5g8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ljpRgDntmF65TS06JOPnSJYv8PEbzL2k9b11nkKa7jQm7s/kylt7xKef/Tai4f7QP
-	 1L9Cx/UVX+wWFsJYlI8N06aeCfKOPb7rUsStlZEhY94y4F4j4MdOFkZUKLsfy2cdKY
-	 Ok+m8K5YLJtOdF6oeHQ3wESW1rTLpGkgiZ+eNvKI=
+	b=wnC5fSGW2KPnHE1HbQSfMaSlMg5Pfax57RGMVoGzBsScaz0JVpKmbchq/wkF/lOQ+
+	 4JZCuqWe/rh8htlIyyQBm+V3hm3PNYJgMs5c9trDXya6bgVXvUIGEpCPui3rfYnoyF
+	 e6In+t9T+CCH9EaMbOf0mUlC5/Z6CRsFwh1nXrCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishon Jonathan R <mithicalaviator85@gmail.com>,
-	Vincent MORVAN <vinc@42.fr>,
-	Paul SAGE <paul.sage@42.fr>,
-	Atharva Tiwari <atharvatiwarilinuxdev@gmail.com>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Yochai Eisenrich <echelonh@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 007/277] tg3: replace placeholder MAC address with device property
-Date: Wed,  8 Apr 2026 19:59:52 +0200
-Message-ID: <20260408175934.118586411@linuxfoundation.org>
+Subject: [PATCH 6.18 034/277] net: ipv6: ndisc: fix ndisc_ra_useropt to initialize nduseropt_padX fields to zero to prevent an info-leak
+Date: Wed,  8 Apr 2026 20:00:19 +0200
+Message-ID: <20260408175935.127625167@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -55,66 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul SAGE <paul.sage@42.fr>
+From: Yochai Eisenrich <echelonh@gmail.com>
 
-[ Upstream commit e4c00ba7274b613e3ab19e27eb009f0ec2e28379 ]
+[ Upstream commit ae05340ccaa9d347fe85415609e075545bec589f ]
 
-On some systems (e.g. iMac 20,1 with BCM57766), the tg3 driver reads
-a default placeholder mac address (00:10:18:00:00:00) from the
-mailbox. The correct value on those systems are stored in the
-'local-mac-address' property.
+When processing Router Advertisements with user options the kernel
+builds an RTM_NEWNDUSEROPT netlink message. The nduseroptmsg struct
+has three padding fields that are never zeroed and can leak kernel data
 
-This patch, detect the default value and tries to retrieve
-the correct address from the device_get_mac_address
-function instead.
+The fix is simple, just zeroes the padding fields.
 
-The patch has been tested on two different systems:
-- iMac 20,1 (BCM57766) model which use the local-mac-address property
-- iMac 13,2 (BCM57766) model which can use the mailbox,
-    NVRAM or MAC control registers
-
-Tested-by: Rishon Jonathan R <mithicalaviator85@gmail.com>
-
-Co-developed-by: Vincent MORVAN <vinc@42.fr>
-Signed-off-by: Vincent MORVAN <vinc@42.fr>
-Signed-off-by: Paul SAGE <paul.sage@42.fr>
-Signed-off-by: Atharva Tiwari <atharvatiwarilinuxdev@gmail.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260314215432.3589-1-atharvatiwarilinuxdev@gmail.com
+Fixes: 31910575a9de ("[IPv6]: Export userland ND options through netlink (RDNSS support)")
+Signed-off-by: Yochai Eisenrich <echelonh@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260324224925.2437775-1-echelonh@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/ipv6/ndisc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 0397a6ebf20f9..a04b5eb02689d 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -17042,6 +17042,13 @@ static int tg3_get_invariants(struct tg3 *tp, const struct pci_device_id *ent)
- 	return err;
- }
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 0fd3f53dbb52e..ded2d3a0660c3 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -1209,6 +1209,9 @@ static void ndisc_ra_useropt(struct sk_buff *ra, struct nd_opt_hdr *opt)
+ 	ndmsg->nduseropt_icmp_type = icmp6h->icmp6_type;
+ 	ndmsg->nduseropt_icmp_code = icmp6h->icmp6_code;
+ 	ndmsg->nduseropt_opts_len = opt->nd_opt_len << 3;
++	ndmsg->nduseropt_pad1 = 0;
++	ndmsg->nduseropt_pad2 = 0;
++	ndmsg->nduseropt_pad3 = 0;
  
-+static int tg3_is_default_mac_address(u8 *addr)
-+{
-+	static const u8 default_mac_address[ETH_ALEN] = { 0x00, 0x10, 0x18, 0x00, 0x00, 0x00 };
-+
-+	return ether_addr_equal(default_mac_address, addr);
-+}
-+
- static int tg3_get_device_address(struct tg3 *tp, u8 *addr)
- {
- 	u32 hi, lo, mac_offset;
-@@ -17115,6 +17122,10 @@ static int tg3_get_device_address(struct tg3 *tp, u8 *addr)
- 
- 	if (!is_valid_ether_addr(addr))
- 		return -EINVAL;
-+
-+	if (tg3_is_default_mac_address(addr))
-+		return device_get_mac_address(&tp->pdev->dev, addr);
-+
- 	return 0;
- }
+ 	memcpy(ndmsg + 1, opt, opt->nd_opt_len << 3);
  
 -- 
 2.53.0
