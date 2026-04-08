@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6DB3D669E;
-	Wed,  8 Apr 2026 18:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C199D32A3FD;
+	Wed,  8 Apr 2026 18:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673712; cv=none; b=ccjyrfsaX0loxYUQdqMqnVGsHGehiur+J9E/axOGO2i9+XODh//yugvkWAEf4Mv8MBTx6r7nj9lHdRKC7yMgFbA8pLhfnOZugPghZY5av6LzygrdIAXDIFNOOlcaZMRTIr5Dz68mWt3pICXI4YHqQd9sfj8PiBfl+zhOobJEweM=
+	t=1775673714; cv=none; b=pdN42AtSTMpjdMgdtmnCFDYuqEmkkQzoC7yEMiauNVziCUaN2Ibr3IkaknMO5VyBUEsQm18MIdPJg8x6kC40RcJIUNCnXWit91bRBRD396sfoGK/gxJWsDUF3BiFv6u1+Gx0JD9MWysGUcWRb/Z/qMJfEthCEpWf5+B3UiC5Y2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673712; c=relaxed/simple;
-	bh=f4NN/5BdffefZIWJ4xAjs9m0RgcAe19g1wyRXcch6Tk=;
+	s=arc-20240116; t=1775673714; c=relaxed/simple;
+	bh=+nJ6H205fY+yS1pzemnMjEmLNjS+IdC4Zi9GTiM1L5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lAOlbtpfy7Nnh/Ko37PMLHY/MXZ2XAme/dzZjH0/f6/mMTTPkPtmrIbFUJanAcUdUtEqcoufO03N3A1wmedh7aYVwY7RjgLSBjCQQBs8JNJus/b/ZhoqTkXe74KxRyLLl6+0BY6K2sD2tZDMXFaM1FSFgeuCsiDrEAcIpkJQgQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbdjswQB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PTqVXqUO+TYhPAH8K1aSlfHUU7jTEMybwXvCVWLvd0q9t4LYCOo9UZq5cfjkyfJT6/Eyvc0o3bwDfahTeHif2biItOrS5nPLZYF87u9VgHU8NBv8ZdRkCucCaJfgBn42Ra9S0spVaDAHwmJ0uiDSSEr0gHkkCgerHJTtPV1f9Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UuyJozGF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbdjswQB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE046C19421;
-	Wed,  8 Apr 2026 18:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UuyJozGF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C28C19421;
+	Wed,  8 Apr 2026 18:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673712;
-	bh=f4NN/5BdffefZIWJ4xAjs9m0RgcAe19g1wyRXcch6Tk=;
+	s=korg; t=1775673714;
+	bh=+nJ6H205fY+yS1pzemnMjEmLNjS+IdC4Zi9GTiM1L5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TbdjswQBw2r7L24bPSCnLxCkChJQPw0ZUvivDq0m97c0TqiG9HFUMm4Dsn6FHJJQ2
-	 y/UP/sLwkHP6AWOM0c8gWlsdG3nOUoqrf3C3SaJm9FJWTThSCNxUZHVZ8OSQH4Ze/K
-	 TFcu+9t4cm+7AaeKREjHxrJE18N/6QQ5PLTP4hHc=
+	b=UuyJozGFht6GEaF6QNeADuilROpN7K+DczIFcMvxR4/RZUL4/jDFYIy7Ak9nf/Hba
+	 kCBQazVR19dmJfyIUhGoKZuG8QWVENq+VXUwULLfKgN4Q97BnjW9/1qxslF2RNYPy1
+	 ynIMCAi7MFbsgNopZc0gVR8Rz8A41j4VKIm4zjro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+1543a7d954d9c6d00407@syzkaller.appspotmail.com,
+	Guoyu Su <yss2813483011xxl@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/242] net: introduce mangleid_features
-Date: Wed,  8 Apr 2026 20:01:40 +0200
-Message-ID: <20260408175929.325928819@linuxfoundation.org>
+Subject: [PATCH 6.12 061/242] net: use skb_header_pointer() for TCPv4 GSO frag_off check
+Date: Wed,  8 Apr 2026 20:01:41 +0200
+Message-ID: <20260408175929.365051309@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,90 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Guoyu Su <yss2813483011xxl@gmail.com>
 
-[ Upstream commit 31c5a71d982b57df75858974634c2f0a338f2fc6 ]
+[ Upstream commit ddc748a391dd8642ba6b2e4fe22e7f2ddf84b7f0 ]
 
-Some/most devices implementing gso_partial need to disable the GSO partial
-features when the IP ID can't be mangled; to that extend each of them
-implements something alike the following[1]:
+Syzbot reported a KMSAN uninit-value warning in gso_features_check()
+called from netif_skb_features() [1].
 
-	if (skb->encapsulation && !(features & NETIF_F_TSO_MANGLEID))
-		features &= ~NETIF_F_TSO;
+gso_features_check() reads iph->frag_off to decide whether to clear
+mangleid_features. Accessing the IPv4 header via ip_hdr()/inner_ip_hdr()
+can rely on skb header offsets that are not always safe for direct
+dereference on packets injected from PF_PACKET paths.
 
-in the ndo_features_check() op, which leads to a bit of duplicate code.
+Use skb_header_pointer() for the TCPv4 frag_off check so the header read
+is robust whether data is already linear or needs copying.
 
-Later patch in the series will implement GSO partial support for virtual
-devices, and the current status quo will require more duplicate code and
-a new indirect call in the TX path for them.
+[1] https://syzkaller.appspot.com/bug?extid=1543a7d954d9c6d00407
 
-Introduce the mangleid_features mask, allowing the core to disable NIC
-features based on/requiring MANGLEID, without any further intervention
-from the driver.
-
-The same functionality could be alternatively implemented adding a single
-boolean flag to the struct net_device, but would require an additional
-checks in ndo_features_check().
-
-Also note that [1] is incorrect if the NIC additionally implements
-NETIF_F_GSO_UDP_L4, mangleid_features transparently handle even such a
-case.
-
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/5a7cdaeea40b0a29b88e525b6c942d73ed3b8ce7.1769011015.git.pabeni@redhat.com
+Link: https://lore.kernel.org/netdev/willemdebruijn.kernel.1a9f35039caab@gmail.com/
+Fixes: cbc53e08a793 ("GSO: Add GSO type for fixed IPv4 ID")
+Reported-by: syzbot+1543a7d954d9c6d00407@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1543a7d954d9c6d00407
+Tested-by: syzbot+1543a7d954d9c6d00407@syzkaller.appspotmail.com
+Signed-off-by: Guoyu Su <yss2813483011xxl@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260327153507.39742-1-yss2813483011xxl@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ddc748a391dd ("net: use skb_header_pointer() for TCPv4 GSO frag_off check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 3 +++
- net/core/dev.c            | 5 ++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ net/core/dev.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index fcc1509ca7cb8..ea9b40b196de2 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -1760,6 +1760,8 @@ enum netdev_reg_state {
-  *
-  *	@mpls_features:	Mask of features inheritable by MPLS
-  *	@gso_partial_features: value(s) from NETIF_F_GSO\*
-+ *	@mangleid_features:	Mask of features requiring MANGLEID, will be
-+ *				disabled together with the latter.
-  *
-  *	@ifindex:	interface index
-  *	@group:		The group the device belongs to
-@@ -2133,6 +2135,7 @@ struct net_device {
- 	netdev_features_t	vlan_features;
- 	netdev_features_t	hw_enc_features;
- 	netdev_features_t	mpls_features;
-+	netdev_features_t	mangleid_features;
- 
- 	unsigned int		min_mtu;
- 	unsigned int		max_mtu;
 diff --git a/net/core/dev.c b/net/core/dev.c
-index 336257b515f04..2748ee051bd1b 100644
+index 2748ee051bd1b..9c4f0e5f2c136 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -3613,7 +3613,7 @@ static netdev_features_t gso_features_check(const struct sk_buff *skb,
- 				    inner_ip_hdr(skb) : ip_hdr(skb);
+@@ -3609,10 +3609,15 @@ static netdev_features_t gso_features_check(const struct sk_buff *skb,
+ 	 * IPv4 header has the potential to be fragmented.
+ 	 */
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV4) {
+-		struct iphdr *iph = skb->encapsulation ?
+-				    inner_ip_hdr(skb) : ip_hdr(skb);
++		const struct iphdr *iph;
++		struct iphdr _iph;
++		int nhoff = skb->encapsulation ?
++			    skb_inner_network_offset(skb) :
++			    skb_network_offset(skb);
  
- 		if (!(iph->frag_off & htons(IP_DF)))
--			features &= ~NETIF_F_TSO_MANGLEID;
-+			features &= ~dev->mangleid_features;
+-		if (!(iph->frag_off & htons(IP_DF)))
++		iph = skb_header_pointer(skb, nhoff, sizeof(_iph), &_iph);
++
++		if (!iph || !(iph->frag_off & htons(IP_DF)))
+ 			features &= ~dev->mangleid_features;
  	}
  
- 	/* NETIF_F_IPV6_CSUM does not support IPv6 extension headers,
-@@ -10579,6 +10579,9 @@ int register_netdevice(struct net_device *dev)
- 	if (dev->hw_enc_features & NETIF_F_TSO)
- 		dev->hw_enc_features |= NETIF_F_TSO_MANGLEID;
- 
-+	/* TSO_MANGLEID belongs in mangleid_features by definition */
-+	dev->mangleid_features |= NETIF_F_TSO_MANGLEID;
-+
- 	/* Make NETIF_F_HIGHDMA inheritable to VLAN devices.
- 	 */
- 	dev->vlan_features |= NETIF_F_HIGHDMA;
 -- 
 2.53.0
 
