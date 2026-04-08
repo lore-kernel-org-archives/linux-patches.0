@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881B42F39C2;
-	Wed,  8 Apr 2026 18:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166982F39C2;
+	Wed,  8 Apr 2026 18:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674677; cv=none; b=CR7JQep4ZgIu8T2XrU3xiWf9lMw9CkEWEoQaWkvKTxplWGmIUome8YDo2Z+fLgjW2mrQjxhgKuaI9kbrBWXOazTpbREnsJNjiQ6GBmkTS5IRw3jBtkhXirDAaYxkVVAREQ16pkmb0sefw4dBvL5FW7BemVIGSV2HcvjFiyZaV80=
+	t=1775674680; cv=none; b=gBOf60BbHSCsyQCzVTIOlH3ZH1KIZMXM5WtyL5jwWiDs9bSfqdd4pHLuOfI8r/WgzA4aNHKv4DvTzhzdlYm42daeRCDIj2A0CljoVKKBDiRnufZAbp3f0N/zjxSgUv+vROyqQIsPCnjEhcJnoaJX9dSVXtkFcizUtSxnQHJMY4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674677; c=relaxed/simple;
-	bh=4izhUSMMit7nd+muM2pQBN9Ak6F1oFdORof1aIkZDMI=;
+	s=arc-20240116; t=1775674680; c=relaxed/simple;
+	bh=ROxwJ+2EIVG51ougz3/PwhgRhiqr5LwarUdhCcASsGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d8AdGAZciqYneqHnrp6rGPGmgQWr4FutWZhnrfbwJbRk7N5TdzVwEv+dCuxnosHTDhEsUENlu9XnluT8CL4WTaD4fZGdYseHQa/eDXOYV9RRMd4KW+LERIxJ09eZI0EegkJFyOJxVcQ3BLmglKX5ZDeDKcUNfNhXzvzsC6FcZGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZtW6aVsM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C+vj9bN32tvEPcxCWG6FJHSXCGpXR5K9ldR61Xq/SODsrcbMhoxJhhlEkDbv1ld+73GABs9KY2PQ3L6tXJ4dwGJxiD0FBY5bPO1T4HVUtunWEcaAuh6LnEgcZNxprwUF4mwW91JbWaAMJmRsz22hjkdk3qscz/wWwvFIRdpEPr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgWI+wr8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZtW6aVsM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BCA0C19421;
-	Wed,  8 Apr 2026 18:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgWI+wr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27B3C19421;
+	Wed,  8 Apr 2026 18:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674677;
-	bh=4izhUSMMit7nd+muM2pQBN9Ak6F1oFdORof1aIkZDMI=;
+	s=korg; t=1775674680;
+	bh=ROxwJ+2EIVG51ougz3/PwhgRhiqr5LwarUdhCcASsGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZtW6aVsMP36n+T3iBsktikXLyzMcqY++p/tB/6s9G0SQXFe5dilLzx6yLLddP0qnX
-	 t+2u8iUDGWqL/pWvLuCQwkhzdtbdA4BeX2gPpjplpptbtKSXcYl2UWLIDq9wQ3PpiY
-	 bZVqwTNygsdcln9KIzIlHFyZzB3BzrIMEMbFf780=
+	b=pgWI+wr8EeH0KMqsWR0U5ChO0TJh32CBq0cl0C8kc10kGOT8EBtPJh6tWbzoGmEZn
+	 PAhcn/BQuQcMf7lpjdDTRwSGQrvIVOo7sVuGPl5e8txfQ5TlPe3F5rrvhT+RyrUkJo
+	 0AYhx6IkpIRNOpiyEhYa8WnEAjthpqojPxELEQck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 191/311] iio: add IIO_DECLARE_QUATERNION() macro
-Date: Wed,  8 Apr 2026 20:03:11 +0200
-Message-ID: <20260408175946.542171037@linuxfoundation.org>
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.19 174/311] ALSA: hda/realtek: add quirk for Acer Swift SFG14-73
+Date: Wed,  8 Apr 2026 20:02:54 +0200
+Message-ID: <20260408175945.903846948@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,49 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-commit 56bd57e7b161f75535df91b229b0b2c64c6e5581 upstream.
+commit dd9b99b822684f421f9b7e1e5a69d791ffc1d48f upstream.
 
-Add a new IIO_DECLARE_QUATERNION() macro that is used to declare the
-field in an IIO buffer struct that contains a quaternion vector.
+fix mute/micmute LEDs and headset microphone for Acer Swift SFG14-73.
 
-Quaternions are currently the only IIO data type that uses the .repeat
-feature of struct iio_scan_type. This has an implicit rule that the
-element in the buffer must be aligned to the entire size of the repeated
-element. This macro will make that requirement explicit. Since this is
-the only user, we just call the macro IIO_DECLARE_QUATERNION() instead
-of something more generic.
-
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220279
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260331094614.186063-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/iio/iio.h |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/hda/codecs/realtek/alc269.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/iio/iio.h
-+++ b/include/linux/iio/iio.h
-@@ -816,6 +816,18 @@ static inline void *iio_device_get_drvda
- #define IIO_DECLARE_DMA_BUFFER_WITH_TS(type, name, count) \
- 	__IIO_DECLARE_BUFFER_WITH_TS(type, name, count) __aligned(IIO_DMA_MINALIGN)
- 
-+/**
-+ * IIO_DECLARE_QUATERNION() - Declare a quaternion element
-+ * @type: element type of the individual vectors
-+ * @name: identifier name
-+ *
-+ * Quaternions are a vector composed of 4 elements (W, X, Y, Z). Use this macro
-+ * to declare a quaternion element in a struct to ensure proper alignment in
-+ * an IIO buffer.
-+ */
-+#define IIO_DECLARE_QUATERNION(type, name) \
-+	type name[4] __aligned(sizeof(type) * 4)
-+
- struct iio_dev *iio_device_alloc(struct device *parent, int sizeof_priv);
- 
- /* The information at the returned address is guaranteed to be cacheline aligned */
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6685,6 +6685,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1025, 0x1597, "Acer Nitro 5 AN517-55", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x169a, "Acer Swift SFG16", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x1025, 0x171e, "Acer Nitro ANV15-51", ALC245_FIXUP_ACER_MICMUTE_LED),
++	SND_PCI_QUIRK(0x1025, 0x173a, "Acer Swift SFG14-73", ALC245_FIXUP_ACER_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x1025, 0x1826, "Acer Helios ZPC", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1025, 0x182c, "Acer Helios ZPD", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1025, 0x1844, "Acer Helios ZPS", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
 
 
