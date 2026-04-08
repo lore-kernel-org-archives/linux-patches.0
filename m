@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701DA3624B0;
-	Wed,  8 Apr 2026 18:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162373B0AFC;
+	Wed,  8 Apr 2026 18:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673681; cv=none; b=JjSYRiSjMqq63rcSmFmCPWou4zlxu0Twm6V06GlhqVBRL0c8B787XdlDncyo2OIfuxcx4tDDiwG2Th9IDtpxqvV6HkdWFcZHoHTs5xHDS7knc53dJSlHGxQW7dOPdbWYVrraI43axBrZcbpDv1pHZHngmOv6dsMctHdi0SVVgNY=
+	t=1775673684; cv=none; b=n+ZkrBo3j3mwic5cTcYoQ1zkYez3VRPnNfdUBJS0OJjvrPAmyeSbcTiTHhqoi1QHZrmYQI2eTzJljnKiNO9BllPyLh9FPkjG+W+Q2BiJ74XSAZBclSfERDOvT4/AcmqDinLStiSgHaTc2QT4dL+n8M4ZvQwR/UDwLD4596nG/k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673681; c=relaxed/simple;
-	bh=9q41mctMNnlftn9nUctsHujTzo3Feu5X3cZBUZlmxh0=;
+	s=arc-20240116; t=1775673684; c=relaxed/simple;
+	bh=yoq/FgCXm0Us15A6r5sL5HH3XDEcMu88ee/8PD7Ag2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXyqujABsDd/QBzYpEoEozASKFzK9+M4tnK0YWAYMvRNBaMwvGyfEYEru0Gx5r4DNyDg1G9c6Rmjwdl2p+HXItQftX89tvZYL/YWIwK7/hdpy41mXgRCfD86Fv/VU35Gv8fRaS+wZBQvZIMCRvQH1E3ICGUO+nR4ZehP20d5upE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHLHBBHY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hqryfxpj8HxXpHaeM3qQ9VwJn+wtlelMM51OqxNiTS0YZsVtESME4dgZ9thbnxNxxg5XwjIi/AMaOG9QmlcFXPjprFedu5Xlr8zLvSzmSjyNjoXrSA9pUDf3Dc4ZpGU28rbi4NmmfBSh/IZ3xzr/D0D2SYe5H/p2D3keGIi7byg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fI0V/wQ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHLHBBHY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B695DC19421;
-	Wed,  8 Apr 2026 18:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI0V/wQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4812CC19421;
+	Wed,  8 Apr 2026 18:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673681;
-	bh=9q41mctMNnlftn9nUctsHujTzo3Feu5X3cZBUZlmxh0=;
+	s=korg; t=1775673683;
+	bh=yoq/FgCXm0Us15A6r5sL5HH3XDEcMu88ee/8PD7Ag2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHLHBBHYjIId1zyYSZ+N3QlSkph48wsIZc9+l8vM8Q2ODPX9t6rqUZ2AQUAZNVMdq
-	 ergxMMUsmBFrrPfTR3/CIBfZHr5Sr2XOxQhqBsqgvDVAr8nAQlOfpDg0HgsPx/2oYq
-	 zILmKiY7BLc0yB2Pg8unWEAQUHayXwYtXav0p4Qc=
+	b=fI0V/wQ2dHhB702NmgoR+vMQifGOa6VROpkzlJs7kKHoU6c71nH+NpOajSotTZGpC
+	 S/JDc7NxL6GBYp4ud6YHdDhR7gdALIpd5L3gUl6zlpiiSlW6DPhWk3d8noFLAYHJCt
+	 R35HG0kdnJ1zKNxnpR9ZOwpDjmMotiZCOPu84Guw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Oskar Kjos <oskar.kjos@hotmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 049/242] tg3: Fix race for querying speed/duplex
-Date: Wed,  8 Apr 2026 20:01:29 +0200
-Message-ID: <20260408175928.906855653@linuxfoundation.org>
+Subject: [PATCH 6.12 050/242] ipv6: icmp: clear skb2->cb[] in ip6_err_gen_icmpv6_unreach()
+Date: Wed,  8 Apr 2026 20:01:30 +0200
+Message-ID: <20260408175928.945211606@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,38 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit bb417456c7814d1493d98b7dd9c040bf3ce3b4ed ]
+[ Upstream commit 86ab3e55673a7a49a841838776f1ab18d23a67b5 ]
 
-When driver signals carrier up via netif_carrier_on() its internal
-link_up state isn't updated immediately. This leads to inconsistent
-speed/duplex in /proc/net/bonding/bondX where the speed and duplex
-is shown as unknown while ethtool shows correct values. Fix this by
-using netif_carrier_ok() for link checking in get_ksettings function.
+Sashiko AI-review observed:
 
-Fixes: 84421b99cedc ("tg3: Update link_up flag for phylib devices")
-Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  In ip6_err_gen_icmpv6_unreach(), the skb is an outer IPv4 ICMP error packet
+  where its cb contains an IPv4 inet_skb_parm. When skb is cloned into skb2
+  and passed to icmp6_send(), it uses IP6CB(skb2).
+
+  IP6CB interprets the IPv4 inet_skb_parm as an inet6_skb_parm. The cipso
+  offset in inet_skb_parm.opt directly overlaps with dsthao in inet6_skb_parm
+  at offset 18.
+
+  If an attacker sends a forged ICMPv4 error with a CIPSO IP option, dsthao
+  would be a non-zero offset. Inside icmp6_send(), mip6_addr_swap() is called
+  and uses ipv6_find_tlv(skb, opt->dsthao, IPV6_TLV_HAO).
+
+  This would scan the inner, attacker-controlled IPv6 packet starting at that
+  offset, potentially returning a fake TLV without checking if the remaining
+  packet length can hold the full 18-byte struct ipv6_destopt_hao.
+
+  Could mip6_addr_swap() then perform a 16-byte swap that extends past the end
+  of the packet data into skb_shared_info?
+
+  Should the cb array also be cleared in ip6_err_gen_icmpv6_unreach() and
+  ip6ip6_err() to prevent this?
+
+This patch implements the first suggestion.
+
+I am not sure if ip6ip6_err() needs to be changed.
+A separate patch would be better anyway.
+
+Fixes: ca15a078bd90 ("sit: generate icmpv6 error when receiving icmpv4 error")
+Reported-by: Ido Schimmel <idosch@nvidia.com>
+Closes: https://sashiko.dev/#/patchset/20260326155138.2429480-1-edumazet%40google.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Oskar Kjos <oskar.kjos@hotmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260326202608.2976021-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/icmp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 288ab0e007557..752f33ae98383 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -12277,7 +12277,7 @@ static int tg3_get_link_ksettings(struct net_device *dev,
- 	ethtool_convert_legacy_u32_to_link_mode(cmd->link_modes.advertising,
- 						advertising);
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index e43b49f1ddbb2..387400829b207 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -681,6 +681,9 @@ int ip6_err_gen_icmpv6_unreach(struct sk_buff *skb, int nhs, int type,
+ 	if (!skb2)
+ 		return 1;
  
--	if (netif_running(dev) && tp->link_up) {
-+	if (netif_running(dev) && netif_carrier_ok(dev)) {
- 		cmd->base.speed = tp->link_config.active_speed;
- 		cmd->base.duplex = tp->link_config.active_duplex;
- 		ethtool_convert_legacy_u32_to_link_mode(
++	/* Remove debris left by IPv4 stack. */
++	memset(IP6CB(skb2), 0, sizeof(*IP6CB(skb2)));
++
+ 	skb_dst_drop(skb2);
+ 	skb_pull(skb2, nhs);
+ 	skb_reset_network_header(skb2);
 -- 
 2.53.0
 
