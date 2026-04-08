@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA1A3537FC;
-	Wed,  8 Apr 2026 18:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A30B37F01B;
+	Wed,  8 Apr 2026 18:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672240; cv=none; b=D0RGnKPIFvS/MNhCpUazUcAkKFq5ffX0I+9wXMDLI/O7UrL7TqAeeQwVN03HjnmUveOLFTbZx18HVC976saQLl0eV7dRojqUnlITVoUVOL1Ya+jTLKulYR1V3yDnwkP1zih46ojlRspnljk5p+UQXHgsGXHg2NBb/yJZ/jCrTDc=
+	t=1775672242; cv=none; b=YJdpg27ftGQc0YfGYH9TRpoh5e9ZIucZ7sE3RXxDdjaT7y1enr5UrCKGpg9bTxhsr5/N3PsybgxdghIFHm1GsYOu1uVomYSQX8TKGRr+zpeK+d65pQF6JGhoG7/cyaoP3rc8aH2n+kTkqV1RKhqqUuIPcWTyTJH+VoHFqZ9HWJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672240; c=relaxed/simple;
-	bh=QqOdRA/WrZ6KCjs7eOCp9KkKVM9ief5PNAWgY0CvSmU=;
+	s=arc-20240116; t=1775672242; c=relaxed/simple;
+	bh=BIr27KDaWQZYNgSfk5pxzo5sGYVvJzWYUWftVij5X8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQm8abJSFkxT7fq5FvU4K3nn+JMjvf/a4ap48iGb1vCLI6tfxAGhmPbqfWztqpPZx8o0NYLhdfNY/TckeIg1kKM8JAhSwKo1h2/B3E0AI4wp5bRVAy/cvS2Fc6Y43FvN57z0TKcajn2t/OOvbq5ighkV8Sp7j2KKsEjaOpf837s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFtSfNU4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IyJg3RQdgiKraZRFB5xpWkyL1m7L7vcpPlIHi2zp+RKh8J3I/elEhc2njxQhPGGvOA01rEpuXrMrSwu/Oq3Vy0tWusUHOqVCrsN+ICpS+Z2JBuWphWZm3NwT9PpAl2G5sc9fJSV6Kyrtew8ljMy8CPNrm1WFQTdR7zleb5vF2mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXaBzRWO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFtSfNU4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BABC19421;
-	Wed,  8 Apr 2026 18:17:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXaBzRWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD77C19421;
+	Wed,  8 Apr 2026 18:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672239;
-	bh=QqOdRA/WrZ6KCjs7eOCp9KkKVM9ief5PNAWgY0CvSmU=;
+	s=korg; t=1775672242;
+	bh=BIr27KDaWQZYNgSfk5pxzo5sGYVvJzWYUWftVij5X8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QFtSfNU4V5V/z0VxWtfpx70gohrx+nliYVaXiXxrT3kCwcV0orwDj5RQRYR3f8LNF
-	 bJssbP9WRG5ejoSitylRAKJ1H9HGoQAhE6ZHhnmmX8WTxV98rQ8QGOBie+nycVIXil
-	 QzIv0I7I16VfhpVGDsfsg985f26AVKqLY78Wn7ZM=
+	b=OXaBzRWODxBPRUKcmfDoQRyGCtstLYFrxsjFS+dBXKmRHAs7rQkV/h+eDFt0OUgIb
+	 PwFE86xztLI2Nkdjk2Kmx/Uc/tqVQyjKvj3jCM5iXXPRoZd/q7cddatdqiFsO/GKgO
+	 f5Zu27G2yNMUtSLvwJpgUS2p8rPAupb8W8kU3CuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 244/312] bridge: br_nd_send: validate ND option lengths
-Date: Wed,  8 Apr 2026 20:02:41 +0200
-Message-ID: <20260408175942.862033831@linuxfoundation.org>
+	Miao Li <limiao@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 227/312] usb: quirks: add DELAY_INIT quirk for another Silicon Motion flash drive
+Date: Wed,  8 Apr 2026 20:02:24 +0200
+Message-ID: <20260408175942.234243574@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -56,54 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Miao Li <limiao@kylinos.cn>
 
-commit 850837965af15707fd3142c1cf3c5bfaf022299b upstream.
+commit dd36014ec6042f424ef51b923e607772f7502ee7 upstream.
 
-br_nd_send() walks ND options according to option-provided lengths.
-A malformed option can make the parser advance beyond the computed
-option span or use a too-short source LLADDR option payload.
+Another Silicon Motion flash drive also randomly work incorrectly
+(lsusb does not list the device) on Huawei hisi platforms during
+500 reboot cycles, and the DELAY_INIT quirk fixes this issue.
 
-Validate option lengths against the remaining NS option area before
-advancing, and only read source LLADDR when the option is large enough
-for an Ethernet address.
-
-Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
-Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
-Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260326034441.2037420-3-n05ec@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Miao Li <limiao@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260319053927.264840-1-limiao870622@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_arp_nd_proxy.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/core/quirks.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -285,12 +285,14 @@ static void br_nd_send(struct net_bridge
- 	ns_olen = request->len - (skb_network_offset(request) +
- 				  sizeof(struct ipv6hdr)) - sizeof(*ns);
- 	for (i = 0; i < ns_olen - 1; i += (ns->opt[i + 1] << 3)) {
--		if (!ns->opt[i + 1]) {
-+		if (!ns->opt[i + 1] || i + (ns->opt[i + 1] << 3) > ns_olen) {
- 			kfree_skb(reply);
- 			return;
- 		}
- 		if (ns->opt[i] == ND_OPT_SOURCE_LL_ADDR) {
--			daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
-+			if ((ns->opt[i + 1] << 3) >=
-+			    sizeof(struct nd_opt_hdr) + ETH_ALEN)
-+				daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
- 			break;
- 		}
- 	}
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -402,6 +402,7 @@ static const struct usb_device_id usb_qu
+ 
+ 	/* Silicon Motion Flash Drive */
+ 	{ USB_DEVICE(0x090c, 0x1000), .driver_info = USB_QUIRK_DELAY_INIT },
++	{ USB_DEVICE(0x090c, 0x2000), .driver_info = USB_QUIRK_DELAY_INIT },
+ 
+ 	/* Sound Devices USBPre2 */
+ 	{ USB_DEVICE(0x0926, 0x0202), .driver_info =
 
 
