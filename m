@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B661346FB0;
-	Wed,  8 Apr 2026 18:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22104355F30;
+	Wed,  8 Apr 2026 18:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673932; cv=none; b=hg48d9Xb1kScG+22tBuwAxPWh/4MzmsblTXz1vzplb/i+0nbIs66AwMlHarM0SJAFruRAYA5RN6VhU7HSCxKDnwtbnjgYEWSRBj00n/DGATu4dX/3T2xz0nru/zLB1hCMtV4Br8rAEDiu9kor7SIuJL5Jc9ZWzOXA1Z9ueZ494g=
+	t=1775673935; cv=none; b=kucfvgDtPxt330b1+pAvU38PkcNN2xLSl4vP6csd5BjT4FoyjmL1N1v6MaU87RNOynQZZzA9p+dOKrOZol1M5qogGYc3Eol1wzaBbXasn+fA7y7dOPaO6H4buJtURIWV3QIMWTzsgyKGulzkeYdhqXDecioiAskZ7WVzfd9tZu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673932; c=relaxed/simple;
-	bh=/wkSsY9U/vVxEdM3kN9wlVaTpsYrlYhVxxmkZCXBLLk=;
+	s=arc-20240116; t=1775673935; c=relaxed/simple;
+	bh=d/8tqFAvOca783w9avI9zE2VHcDIInzm9JbpXsOorXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ox+bEB2Y16n1o644pGV43M0U9N3PU4BUvmv3A/whOhKR/AxMmMS9dtAvfs980CDPjNvyYTz+op6d6GQKYP1GTyltZSV8+PRL0SwirUAUmoWIu69FELj5DZ1+WfMY4VYHmajZY3Lfh5rdpKuGu5SZ3nBGuKlrogWB6VMgbTxqszI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVL5Ct/n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FEe2PqSU09dXOv98vA78cEZEhsyLT+1bYlY/EoFNFtQZbvfPStfmY4k4p0bwtr9ogbhfp5bO5QbSNE6+p7r3GXcP4A4WLK6jbmB72CoeBxFZDyhXWrcYpVnETFBMXNl/S3ley9rjMPtqw8J94wVYjwqMhoOYd1sGoW+PtiowGnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LADOB4HZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVL5Ct/n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2385FC19421;
-	Wed,  8 Apr 2026 18:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LADOB4HZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1C6C19425;
+	Wed,  8 Apr 2026 18:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673932;
-	bh=/wkSsY9U/vVxEdM3kN9wlVaTpsYrlYhVxxmkZCXBLLk=;
+	s=korg; t=1775673935;
+	bh=d/8tqFAvOca783w9avI9zE2VHcDIInzm9JbpXsOorXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVL5Ct/nSgmDYYXO9FYcwhEke3bO71H9d04jS/b2zKtIBHOgFpJDALmqXGOlunkf7
-	 C+tq3muy6h8RtHsrpQZI5BPyZ/ry7BSfsGtndpkLfXe9xKWPvDamzgxT3Ba4nAAqFB
-	 o5X5JNlJekrmVsUFOHCUw5xcZDy4NjvZCWRGR0jU=
+	b=LADOB4HZrsGMJqTLOS2vicmVu/pQT8a132ZLGESco9lgmomkMVAq8J17Tcis4ZXfW
+	 YcLiY86DDLrg/t6hJos1cUHrTrv/se+Yzrl2JH3yCUVY5bpa0Ni1Oxzfh9yWsNwFsJ
+	 rgH/4MkbKO0SvJqmUjU6bLdPOwYeTnJ4AB/I/+k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Vincent Chen <vincent.chen@sifive.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/242] sched/fair: Fix zero_vruntime tracking fix
-Date: Wed,  8 Apr 2026 20:02:32 +0200
-Message-ID: <20260408175931.279533886@linuxfoundation.org>
+Subject: [PATCH 6.12 113/242] riscv: kgdb: fix several debug register assignment bugs
+Date: Wed,  8 Apr 2026 20:02:33 +0200
+Message-ID: <20260408175931.316147150@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,99 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Paul Walmsley <pjw@kernel.org>
 
-[ Upstream commit 1319ea57529e131822bab56bf417c8edc2db9ae8 ]
+[ Upstream commit 834911eb8eef2501485d819b4eabebadc25c3497 ]
 
-John reported that stress-ng-yield could make his machine unhappy and
-managed to bisect it to commit b3d99f43c72b ("sched/fair: Fix
-zero_vruntime tracking").
+Fix several bugs in the RISC-V kgdb implementation:
 
-The combination of yield and that commit was specific enough to
-hypothesize the following scenario:
+- The element of dbg_reg_def[] that is supposed to pertain to the S1
+  register embeds instead the struct pt_regs offset of the A1
+  register.  Fix this to use the S1 register offset in struct pt_regs.
 
-Suppose we have 2 runnable tasks, both doing yield. Then one will be
-eligible and one will not be, because the average position must be in
-between these two entities.
+- The sleeping_thread_to_gdb_regs() function copies the value of the
+  S10 register into the gdb_regs[] array element meant for the S9
+  register, and copies the value of the S11 register into the array
+  element meant for the S10 register.  It also neglects to copy the
+  value of the S11 register.  Fix all of these issues.
 
-Therefore, the runnable task will be eligible, and be promoted a full
-slice (all the tasks do is yield after all). This causes it to jump over
-the other task and now the other task is eligible and current is no
-longer. So we schedule.
-
-Since we are runnable, there is no {de,en}queue. All we have is the
-__{en,de}queue_entity() from {put_prev,set_next}_task(). But per the
-fingered commit, those two no longer move zero_vruntime.
-
-All that moves zero_vruntime are tick and full {de,en}queue.
-
-This means, that if the two tasks playing leapfrog can reach the
-critical speed to reach the overflow point inside one tick's worth of
-time, we're up a creek.
-
-Additionally, when multiple cgroups are involved, there is no guarantee
-the tick will in fact hit every cgroup in a timely manner. Statistically
-speaking it will, but that same statistics does not rule out the
-possibility of one cgroup not getting a tick for a significant amount of
-time -- however unlikely.
-
-Therefore, just like with the yield() case, force an update at the end
-of every slice. This ensures the update is never more than a single
-slice behind and the whole thing is within 2 lag bounds as per the
-comment on entity_key().
-
-Fixes: b3d99f43c72b ("sched/fair: Fix zero_vruntime tracking")
-Reported-by: John Stultz <jstultz@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/20260401132355.081530332@infradead.org
+Fixes: fe89bd2be8667 ("riscv: Add KGDB support")
+Cc: Vincent Chen <vincent.chen@sifive.com>
+Link: https://patch.msgid.link/fde376f8-bcfd-bfe4-e467-07d8f7608d05@kernel.org
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ arch/riscv/kernel/kgdb.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index fff27f3378cbf..a0a47e50b71ca 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -669,7 +669,7 @@ void update_zero_vruntime(struct cfs_rq *cfs_rq, s64 delta)
-  * Called in:
-  *  - place_entity()      -- before enqueue
-  *  - update_entity_lag() -- before dequeue
-- *  - entity_tick()
-+ *  - update_deadline()   -- slice expiration
-  *
-  * This means it is one entry 'behind' but that puts it close enough to where
-  * the bound on entity_key() is at most two lag bounds.
-@@ -1036,6 +1036,7 @@ static bool update_deadline(struct cfs_rq *cfs_rq, struct sched_entity *se)
- 	 * EEVDF: vd_i = ve_i + r_i / w_i
- 	 */
- 	se->deadline = se->vruntime + calc_delta_fair(se->slice, se);
-+	avg_vruntime(cfs_rq);
- 
- 	/*
- 	 * The task has consumed its request, reschedule.
-@@ -5725,11 +5726,6 @@ entity_tick(struct cfs_rq *cfs_rq, struct sched_entity *curr, int queued)
- 	update_load_avg(cfs_rq, curr, UPDATE_TG);
- 	update_cfs_group(curr);
- 
--	/*
--	 * Pulls along cfs_rq::zero_vruntime.
--	 */
--	avg_vruntime(cfs_rq);
--
- #ifdef CONFIG_SCHED_HRTICK
- 	/*
- 	 * queued ticks are scheduled to match the slice, so don't bother
-@@ -9143,7 +9139,7 @@ static void yield_task_fair(struct rq *rq)
- 	 */
- 	if (entity_eligible(cfs_rq, se)) {
- 		se->vruntime = se->deadline;
--		se->deadline += calc_delta_fair(se->slice, se);
-+		update_deadline(cfs_rq, se);
- 	}
+diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
+index 9f3db3503dabd..edaab2aa16a3e 100644
+--- a/arch/riscv/kernel/kgdb.c
++++ b/arch/riscv/kernel/kgdb.c
+@@ -175,7 +175,7 @@ struct dbg_reg_def_t dbg_reg_def[DBG_MAX_REG_NUM] = {
+ 	{DBG_REG_T1, GDB_SIZEOF_REG, offsetof(struct pt_regs, t1)},
+ 	{DBG_REG_T2, GDB_SIZEOF_REG, offsetof(struct pt_regs, t2)},
+ 	{DBG_REG_FP, GDB_SIZEOF_REG, offsetof(struct pt_regs, s0)},
+-	{DBG_REG_S1, GDB_SIZEOF_REG, offsetof(struct pt_regs, a1)},
++	{DBG_REG_S1, GDB_SIZEOF_REG, offsetof(struct pt_regs, s1)},
+ 	{DBG_REG_A0, GDB_SIZEOF_REG, offsetof(struct pt_regs, a0)},
+ 	{DBG_REG_A1, GDB_SIZEOF_REG, offsetof(struct pt_regs, a1)},
+ 	{DBG_REG_A2, GDB_SIZEOF_REG, offsetof(struct pt_regs, a2)},
+@@ -244,8 +244,9 @@ sleeping_thread_to_gdb_regs(unsigned long *gdb_regs, struct task_struct *task)
+ 	gdb_regs[DBG_REG_S6_OFF] = task->thread.s[6];
+ 	gdb_regs[DBG_REG_S7_OFF] = task->thread.s[7];
+ 	gdb_regs[DBG_REG_S8_OFF] = task->thread.s[8];
+-	gdb_regs[DBG_REG_S9_OFF] = task->thread.s[10];
+-	gdb_regs[DBG_REG_S10_OFF] = task->thread.s[11];
++	gdb_regs[DBG_REG_S9_OFF] = task->thread.s[9];
++	gdb_regs[DBG_REG_S10_OFF] = task->thread.s[10];
++	gdb_regs[DBG_REG_S11_OFF] = task->thread.s[11];
+ 	gdb_regs[DBG_REG_EPC_OFF] = task->thread.ra;
  }
  
 -- 
