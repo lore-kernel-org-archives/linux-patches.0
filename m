@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E032C2E7F2C;
-	Wed,  8 Apr 2026 18:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED46A33121F;
+	Wed,  8 Apr 2026 18:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674080; cv=none; b=rD1te6r6fhZrz2hFaMZDGPzNtVhXEDC1JOHVH5fpZSLsEvoev/aacw0QgJXtmq4EMYYdzS/ThuC1QMXv4u9QRylkowx3UNXvXsSczFa3TZxSRsUF2HLb7P7rz1ygA6uquZRmO2HN+z3Njr4pb8DOEMuxVy1VBw84Zs5cMdF2E5k=
+	t=1775674082; cv=none; b=BRq3WxSZslIAduUUxjSzZqXf0nzsNSG2vGoSPKMSQpCmIXThK+w8NhMHqYA2lf7qWteiLTbT+7WnueDEZqx/64p+je96ois4Hti9pvLGAfY9+iVezk3neO4nQzMaQWTULt7d80TjHAjvytBga4VBx0zJOZPZnyoVf7z6cNlSYh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674080; c=relaxed/simple;
-	bh=uEHmr9teq67OoQuroBpzGuve8mfhC+ADAU+W4hD6CDU=;
+	s=arc-20240116; t=1775674082; c=relaxed/simple;
+	bh=p7VBz8VDBS25lM8Sy3pKPWDpd7sChbx7q1HExhSrhVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wrr65QCQ6Ye29knIw17/df48NVHkR+HNfJX9l5pJUisyHCHNPLaIOhg3aYqDUdNhIuqNUKrSvMENNzL7+TnIR995du17BxUo3QVV3x2MHknjc0YLKtEzMl/qeJMb//c+hiiLd9lOpbY295yIAngT+sP2BYwlWCKWBDbUPRNr1cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Evt+rEhJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PA1hC61C+tscaFPQ+JmadtY26nxB6HAwdksFYO8EHcbwr35JGvcJd2AyBXHoICyaH+cr63vBG3yEu8B+QTxMYHBZimRZ7sdSGZVhMHTwcyVpMZiDbXqIRrtA1T3rorCntwd/7AkFv+QrC1nGvX3nVof+G7htqBLV5TJqYmI/lSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMBG2Aj/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Evt+rEhJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA36C19421;
-	Wed,  8 Apr 2026 18:47:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMBG2Aj/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83758C19421;
+	Wed,  8 Apr 2026 18:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674079;
-	bh=uEHmr9teq67OoQuroBpzGuve8mfhC+ADAU+W4hD6CDU=;
+	s=korg; t=1775674081;
+	bh=p7VBz8VDBS25lM8Sy3pKPWDpd7sChbx7q1HExhSrhVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Evt+rEhJByzqIs5GjI/KQQApTjI2y2GiFRRWa+sZCBwpvaq2KrwiSqrYALtFrvN0N
-	 Kfafzirg3TAjerix9T+a1rO7ZMa5CeZfbkEi4IzT9EM7JnYQwvZGoBuBflUFlZB9Pg
-	 jmQn+QJkGSODbr8gwpOuf+SbLwIi5UeBJFCGx/oM=
+	b=OMBG2Aj/3lWLhrZdrtryKHxUP5Xc0ZwR3CvCm4i5JmTHsb5P18egeBgBsYYR+czDu
+	 dapyAGiuJcArcG+ySF5e2KATydNDNYuHBfMyfQIFPQItlBKwoJaRTGXIvBj1VBVzDx
+	 xbvr9F5yMzicM4akFPpJJC6BaGhLfZGeeYKdhGt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 200/242] btrfs: do not free data reservation in fallback from inline due to -ENOSPC
-Date: Wed,  8 Apr 2026 20:04:00 +0200
-Message-ID: <20260408175934.568206072@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Kuen-Han Tsai <khtsai@google.com>
+Subject: [PATCH 6.12 201/242] usb: gadget: u_ether: Fix race between gether_disconnect and eth_stop
+Date: Wed,  8 Apr 2026 20:04:01 +0200
+Message-ID: <20260408175934.604529159@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,46 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit f8da41de0bff9eb1d774a7253da0c9f637c4470a ]
+commit e1eabb072c75681f78312c484ccfffb7430f206e upstream.
 
-If we fail to create an inline extent due to -ENOSPC, we will attempt to
-go through the normal COW path, reserve an extent, create an ordered
-extent, etc. However we were always freeing the reserved qgroup data,
-which is wrong since we will use data. Fix this by freeing the reserved
-qgroup data in __cow_file_range_inline() only if we are not doing the
-fallback (ret is <= 0).
+A race condition between gether_disconnect() and eth_stop() leads to a
+NULL pointer dereference. Specifically, if eth_stop() is triggered
+concurrently while gether_disconnect() is tearing down the endpoints,
+eth_stop() attempts to access the cleared endpoint descriptor, causing
+the following NPE:
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  Unable to handle kernel NULL pointer dereference
+  Call trace:
+   __dwc3_gadget_ep_enable+0x60/0x788
+   dwc3_gadget_ep_enable+0x70/0xe4
+   usb_ep_enable+0x60/0x15c
+   eth_stop+0xb8/0x108
+
+Because eth_stop() crashes while holding the dev->lock, the thread
+running gether_disconnect() fails to acquire the same lock and spins
+forever, resulting in a hardlockup:
+
+  Core - Debugging Information for Hardlockup core(7)
+  Call trace:
+   queued_spin_lock_slowpath+0x94/0x488
+   _raw_spin_lock+0x64/0x6c
+   gether_disconnect+0x19c/0x1e8
+   ncm_set_alt+0x68/0x1a0
+   composite_setup+0x6a0/0xc50
+
+The root cause is that the clearing of dev->port_usb in
+gether_disconnect() is delayed until the end of the function.
+
+Move the clearing of dev->port_usb to the very beginning of
+gether_disconnect() while holding dev->lock. This cuts off the link
+immediately, ensuring eth_stop() will see dev->port_usb as NULL and
+safely bail out.
+
+Fixes: 2b3d942c4878 ("usb ethernet gadget: split out network core")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20260311-gether-disconnect-npe-v1-1-454966adf7c7@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_ether.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index fae4e8ac33844..28024c827b756 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -717,8 +717,12 @@ static noinline int __cow_file_range_inline(struct btrfs_inode *inode, u64 offse
- 	 * it won't count as data extent, free them directly here.
- 	 * And at reserve time, it's always aligned to page size, so
- 	 * just free one page here.
-+	 *
-+	 * If we fallback to non-inline (ret == 1) due to -ENOSPC, then we need
-+	 * to keep the data reservation.
- 	 */
--	btrfs_qgroup_free_data(inode, NULL, 0, fs_info->sectorsize, NULL);
-+	if (ret <= 0)
-+		btrfs_qgroup_free_data(inode, NULL, 0, fs_info->sectorsize, NULL);
- 	btrfs_free_path(path);
- 	if (trans)
- 		btrfs_end_transaction(trans);
--- 
-2.53.0
-
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -1222,6 +1222,11 @@ void gether_disconnect(struct gether *li
+ 
+ 	DBG(dev, "%s\n", __func__);
+ 
++	spin_lock(&dev->lock);
++	dev->port_usb = NULL;
++	link->is_suspend = false;
++	spin_unlock(&dev->lock);
++
+ 	netif_stop_queue(dev->net);
+ 	netif_carrier_off(dev->net);
+ 
+@@ -1259,11 +1264,6 @@ void gether_disconnect(struct gether *li
+ 	dev->header_len = 0;
+ 	dev->unwrap = NULL;
+ 	dev->wrap = NULL;
+-
+-	spin_lock(&dev->lock);
+-	dev->port_usb = NULL;
+-	link->is_suspend = false;
+-	spin_unlock(&dev->lock);
+ }
+ EXPORT_SYMBOL_GPL(gether_disconnect);
+ 
 
 
