@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0523537FC;
-	Wed,  8 Apr 2026 18:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619802DAFAA;
+	Wed,  8 Apr 2026 18:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672416; cv=none; b=g8GBtN5WcSe6XwD+JdDGBhCjxsdquNu0exsnsx8zyYY8BI1CNtQPac7AJ3n0XmctgdGzaimVHeJXlDhKsqd2dq378/MBPw9vobC1uJCzQp9o5p6fAKc/tk2VauSxhqR4bcUQtPx8iuyvt9NsSXdPuY3KaXD/jh1zWwBzG/PQhk8=
+	t=1775672419; cv=none; b=WPqM5w4iNjk6ctDaoDs25+mvBdcJQX3srKWpMMICW7vOJ+YUkkXspAKExvQBJebHKN9XZp6hcM7URgyi0oLifo+nPtBdSWoFmo0IzuY+R2i1bBykvMfS9WK+F5iWclE5hd4z4FQSbRWN2adtczAhhj9hHmuL5wpWJAQpryBMUPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672416; c=relaxed/simple;
-	bh=v0UQLkQGudkPupIIquqz2ckH3YsWTLQDeE2pX7rp720=;
+	s=arc-20240116; t=1775672419; c=relaxed/simple;
+	bh=YOQJzXraDIWw5tjqfGnuAriQgTXVlaq0aWWfaOzI+js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dWKMQJRyqsEM+hrEHKL089nvLP7OJdiLdTF4qkFcXfSK05bcLzHB/PHoCUO4lOIpBjEdCLGBPLerQ4wfiT8xdbUWQgliQe5S3Fiyhtzo1Vpp5j2y0j2XN03EZlW6WBX7ujsj8Xc0aOz5X0jTFftUdlwVy+ojsrtJ/Iqc1jpnXnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szsKO5Ua; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oitNMQmnZy50yOSLsM8zFOo5ZYWFMgGO+Gqv2LY6qzeIFmBIsTURw21K2/Db/HmYs9ekVBwpZ/70mDZzdrPwuffopsiLD309DFTe02pqbX/nw+DOqPN97Pbi18Zw+tjnjuvrQGT5luYVhPMLTyYsTAjADIjCB+E03Kv7hPlGeb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGbmpOpy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szsKO5Ua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248A7C19421;
-	Wed,  8 Apr 2026 18:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGbmpOpy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62EBC19421;
+	Wed,  8 Apr 2026 18:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672416;
-	bh=v0UQLkQGudkPupIIquqz2ckH3YsWTLQDeE2pX7rp720=;
+	s=korg; t=1775672419;
+	bh=YOQJzXraDIWw5tjqfGnuAriQgTXVlaq0aWWfaOzI+js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szsKO5Ua4Y/cFuV57Bmcr4f5plKx17F7uAnx2OU2Azhq9yjQmceRpZgwBKV9LhfMU
-	 zflj3c4kZI21FUo3DlfW4579RwWR1o+FiWjMb5s/Btl+0fN6O3hdAOn/Bkq1x1zjlu
-	 odBgvXiT7FTf8WDLCT73beK3y7exgbHAF9bi1qF8=
+	b=gGbmpOpyFBCvMUBKPHEYBFuMtiNogzX5LPLeM6YHibYOxhcNLNpLjzo4uga5JUD8u
+	 ygrD3h6jQwVpIrac9swJfwg/5nwIEtk2FZdK+vEs0zaLT9oRO3rWhkhAtLW07aYKGk
+	 nrQ2SFeIftJjTYpBNLniLmlJ6iEVRDzJNOl0kb1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VitaliiT <vitaly.torshyn@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 312/312] ACPI: EC: Evaluate orphan _REG under EC device
-Date: Wed,  8 Apr 2026 20:03:49 +0200
-Message-ID: <20260408175945.424469618@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Chao Yu <chao@kernel.org>,
+	Alexey Panov <apanov@astralinux.ru>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.1 298/312] erofs: fix PSI memstall accounting
+Date: Wed,  8 Apr 2026 20:03:35 +0200
+Message-ID: <20260408175944.896580830@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -50,152 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 0e6b6dedf16800df0ff73ffe2bb5066514db29c2 upstream.
+commit 1a2180f6859c73c674809f9f82e36c94084682ba upstream.
 
-After starting to install the EC address space handler at the ACPI
-namespace root, if there is an "orphan" _REG method in the EC device's
-scope, it will not be evaluated any more.  This breaks EC operation
-regions on some systems, like Asus gu605.
+Max Kellermann recently reported psi_group_cpu.tasks[NR_MEMSTALL] is
+incorrect in the 6.11.9 kernel.
 
-To address this, use a wrapper around an existing ACPICA function to
-look for an "orphan" _REG method in the EC device scope and evaluate
-it if present.
+The root cause appears to be that, since the problematic commit, bio
+can be NULL, causing psi_memstall_leave() to be skipped in
+z_erofs_submit_queue().
 
-Fixes: 60fa6ae6e6d0 ("ACPI: EC: Install address space handler at the namespace root")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218945
-Reported-by: VitaliiT <vitaly.torshyn@gmail.com>
-Tested-by: VitaliiT <vitaly.torshyn@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Max Kellermann <max.kellermann@ionos.com>
+Closes: https://lore.kernel.org/r/CAKPOu+8tvSowiJADW2RuKyofL_CSkm_SuyZA7ME5vMLWmL6pqw@mail.gmail.com
+Fixes: 9e2f9d34dd12 ("erofs: handle overlapped pclusters out of crafted images properly")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20241127085236.3538334-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Alexey Panov <apanov@astralinux.ru>
+Link: https://lore.kernel.org/r/20250304110558.8315-3-apanov@astralinux.ru
+Link: https://lore.kernel.org/r/20250304110558.8315-1-apanov@astralinux.ru
+[ Gao Xiang: re-address the previous Alexey's backport. ]
+CVE: CVE-2024-47736
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/acevents.h |    4 +++
- drivers/acpi/acpica/evregion.c |    6 ----
- drivers/acpi/acpica/evxfregn.c |   54 +++++++++++++++++++++++++++++++++++++++++
- drivers/acpi/ec.c              |    3 ++
- include/acpi/acpixf.h          |    4 +++
- 5 files changed, 66 insertions(+), 5 deletions(-)
+ fs/erofs/zdata.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/acpi/acpica/acevents.h
-+++ b/drivers/acpi/acpica/acevents.h
-@@ -191,6 +191,10 @@ void
- acpi_ev_execute_reg_methods(struct acpi_namespace_node *node,
- 			    acpi_adr_space_type space_id, u32 function);
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1574,11 +1574,10 @@ drain_io:
+ 			move_to_bypass_jobqueue(pcl, qtail, owned_head);
+ 	} while (owned_head != Z_EROFS_PCLUSTER_TAIL);
  
-+void
-+acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *node,
-+				  acpi_adr_space_type space_id);
-+
- acpi_status
- acpi_ev_execute_reg_method(union acpi_operand_object *region_obj, u32 function);
+-	if (bio) {
++	if (bio)
+ 		submit_bio(bio);
+-		if (memstall)
+-			psi_memstall_leave(&pflags);
+-	}
++	if (memstall)
++		psi_memstall_leave(&pflags);
  
---- a/drivers/acpi/acpica/evregion.c
-+++ b/drivers/acpi/acpica/evregion.c
-@@ -20,10 +20,6 @@ extern u8 acpi_gbl_default_address_space
- 
- /* Local prototypes */
- 
--static void
--acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *device_node,
--				  acpi_adr_space_type space_id);
--
- static acpi_status
- acpi_ev_reg_run(acpi_handle obj_handle,
- 		u32 level, void *context, void **return_value);
-@@ -811,7 +807,7 @@ acpi_ev_reg_run(acpi_handle obj_handle,
-  *
-  ******************************************************************************/
- 
--static void
-+void
- acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *device_node,
- 				  acpi_adr_space_type space_id)
- {
---- a/drivers/acpi/acpica/evxfregn.c
-+++ b/drivers/acpi/acpica/evxfregn.c
-@@ -304,3 +304,57 @@ acpi_execute_reg_methods(acpi_handle dev
- }
- 
- ACPI_EXPORT_SYMBOL(acpi_execute_reg_methods)
-+
-+/*******************************************************************************
-+ *
-+ * FUNCTION:    acpi_execute_orphan_reg_method
-+ *
-+ * PARAMETERS:  device          - Handle for the device
-+ *              space_id        - The address space ID
-+ *
-+ * RETURN:      Status
-+ *
-+ * DESCRIPTION: Execute an "orphan" _REG method that appears under an ACPI
-+ *              device. This is a _REG method that has no corresponding region
-+ *              within the device's scope.
-+ *
-+ ******************************************************************************/
-+acpi_status
-+acpi_execute_orphan_reg_method(acpi_handle device, acpi_adr_space_type space_id)
-+{
-+	struct acpi_namespace_node *node;
-+	acpi_status status;
-+
-+	ACPI_FUNCTION_TRACE(acpi_execute_orphan_reg_method);
-+
-+	/* Parameter validation */
-+
-+	if (!device) {
-+		return_ACPI_STATUS(AE_BAD_PARAMETER);
-+	}
-+
-+	status = acpi_ut_acquire_mutex(ACPI_MTX_NAMESPACE);
-+	if (ACPI_FAILURE(status)) {
-+		return_ACPI_STATUS(status);
-+	}
-+
-+	/* Convert and validate the device handle */
-+
-+	node = acpi_ns_validate_handle(device);
-+	if (node) {
-+
-+		/*
-+		 * If an "orphan" _REG method is present in the device's scope
-+		 * for the given address space ID, run it.
-+		 */
-+
-+		acpi_ev_execute_orphan_reg_method(node, space_id);
-+	} else {
-+		status = AE_BAD_PARAMETER;
-+	}
-+
-+	(void)acpi_ut_release_mutex(ACPI_MTX_NAMESPACE);
-+	return_ACPI_STATUS(status);
-+}
-+
-+ACPI_EXPORT_SYMBOL(acpi_execute_orphan_reg_method)
---- a/drivers/acpi/ec.c
-+++ b/drivers/acpi/ec.c
-@@ -1532,6 +1532,9 @@ static int ec_install_handlers(struct ac
- 
- 	if (call_reg && !test_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags)) {
- 		acpi_execute_reg_methods(scope_handle, ACPI_ADR_SPACE_EC);
-+		if (scope_handle != ec->handle)
-+			acpi_execute_orphan_reg_method(ec->handle, ACPI_ADR_SPACE_EC);
-+
- 		set_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags);
- 	}
- 
---- a/include/acpi/acpixf.h
-+++ b/include/acpi/acpixf.h
-@@ -669,6 +669,10 @@ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
- 						     acpi_adr_space_type
- 						     space_id))
- ACPI_EXTERNAL_RETURN_STATUS(acpi_status
-+			    acpi_execute_orphan_reg_method(acpi_handle device,
-+							   acpi_adr_space_type
-+							   space_id))
-+ACPI_EXTERNAL_RETURN_STATUS(acpi_status
- 			    acpi_remove_address_space_handler(acpi_handle
- 							      device,
- 							      acpi_adr_space_type
+ 	/*
+ 	 * although background is preferred, no one is pending for submission.
 
 
