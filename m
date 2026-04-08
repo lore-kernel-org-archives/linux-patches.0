@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7182C32692B;
-	Wed,  8 Apr 2026 19:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05ED432692B;
+	Wed,  8 Apr 2026 19:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775675005; cv=none; b=cF8DbDOQAzZ6J0q6oqtGnCSWle0iwBwLNjdAfyBHszrmP7ujeAzZWbzGWkXErPJ+DWN4pw8GV4YezfcIzZUFl/BIp6BMZFHxMqVTHziQY2KeKW/gd1tM5G+3VINz4t4s1x2FZCIpcOgYs4sf/0VbtKbViI15/yK5tZVone6vNCw=
+	t=1775675008; cv=none; b=SEVFK2lY2D54R/vtga1ve9fjuae6XaNE0xPM6im1EfpiA+1+rTkpUnzxs0hFDEB3/s8TsWVdZFmpAPTZE33KtaAOVQlZfSnjc3vzGjkU94WjUuEcGX1W3lpct6EMlXSIPVnDbJutwFWCDg3U2iUPQ5LPYn83jK8jXJ0FnZo5NOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775675005; c=relaxed/simple;
-	bh=7dXrzjnvFCSl62/TPtljVr98AienSRBE8BrDA0LEgYQ=;
+	s=arc-20240116; t=1775675008; c=relaxed/simple;
+	bh=7rV3f0dBtmtHxsx9/UutcESXXn5LmnaOstCbL6NRkaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BphXNUJQx30TlvZ7myrDOG31+4q0qCtl9UOZmjtr6NwUbEtluet1xGMepWWp/Y47WZPoXDNqhF/PxfOzTkO7n6lKXv2u3LT00tCMfee6riC/AJMQd/EtA3l/XrJfkkS8xpvYRK8UMFgOqrn3dK77hqyPBHCF1UHoBZdqoIYOXBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZATnmIkn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fZw2bQ0w1K79tQgB3PrkSB2VX+UB8mTDdR0M4c4yUfSE4ElhNojfy/mFlT/LFgZtm7W0mIHko+CECs3JC+tOpeZOgwWVnsbrGndocY2GSZ0iXPgetRqABG1rGinOh1fdh0/SHvkIFFCZ+ey1zo2pNpFDD3A+AwBpYcolI7wb4KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkUmpLEN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZATnmIkn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0756FC19421;
-	Wed,  8 Apr 2026 19:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkUmpLEN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E95BC19421;
+	Wed,  8 Apr 2026 19:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775675005;
-	bh=7dXrzjnvFCSl62/TPtljVr98AienSRBE8BrDA0LEgYQ=;
+	s=korg; t=1775675007;
+	bh=7rV3f0dBtmtHxsx9/UutcESXXn5LmnaOstCbL6NRkaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZATnmIknLZ1TdlM9ICAWJtVO229kPfAeeyAY/fnJH00EMLfMCpqBhMPHXfQBpfO80
-	 Y96FelZ141xXTLipl+IgkTQ86razpmo8wdow9WOF7hoYS6vURZcYj6/8ZKBD3kMDdT
-	 UXJROpsyWZQMccBt//VrDRQZaMrbIblscFkFBZ3s=
+	b=OkUmpLENqTKwyr9HTw+s+QmEfCnFO78ADxP/NNrsKm++JDrMsiBj7rQYmQPZeDxGK
+	 tQ5nnzqT4j7aAUr0iD9Rcgp2QmrWsRucqRe9m63UVh1Ic/8DffA2qjpL7hrtVWHrTe
+	 hxITd8VkRi3AFFNjDBe7oJw9E9E1ykasJ4mi7R8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>
-Subject: [PATCH 6.19 286/311] thermal: core: Fix thermal zone device registration error path
-Date: Wed,  8 Apr 2026 20:04:46 +0200
-Message-ID: <20260408175950.060376296@linuxfoundation.org>
+	Xingjing Deng <xjdeng@buaa.edu.cn>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 6.19 287/311] misc: fastrpc: possible double-free of cctx->remote_heap
+Date: Wed,  8 Apr 2026 20:04:47 +0200
+Message-ID: <20260408175950.097358707@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -50,40 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Xingjing Deng <micro6947@gmail.com>
 
-commit 9e07e3b81807edd356e1f794cffa00a428eff443 upstream.
+commit ba2c83167b215da30fa2aae56b140198cf8d8408 upstream.
 
-If thermal_zone_device_register_with_trips() fails after registering
-a thermal zone device, it needs to wait for the tz->removal completion
-like thermal_zone_device_unregister(), in case user space has managed
-to take a reference to the thermal zone device's kobject, in which case
-thermal_release() may not be called by the error path itself and tz may
-be freed prematurely.
+fastrpc_init_create_static_process() may free cctx->remote_heap on the
+err_map path but does not clear the pointer. Later, fastrpc_rpmsg_remove()
+frees cctx->remote_heap again if it is non-NULL, which can lead to a
+double-free if the INIT_CREATE_STATIC ioctl hits the error path and the rpmsg
+device is subsequently removed/unbound.
+Clear cctx->remote_heap after freeing it in the error path to prevent the
+later cleanup from freeing it again.
 
-Add the missing wait_for_completion() call to the thermal zone device
-registration error path.
+This issue was found by an in-house analysis workflow that extracts AST-based
+information and runs static checks, with LLM assistance for triage, and was
+confirmed by manual code review.
+No hardware testing was performed.
 
-Fixes: 04e6ccfc93c5 ("thermal: core: Fix NULL pointer dereference in zone registration error path")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: All applicable <stable@vger.kernel.org>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Tested-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/2849815.mvXUDI8C0e@rafael.j.wysocki
+Fixes: 0871561055e66 ("misc: fastrpc: Add support for audiopd")
+Cc: stable@vger.kernel.org # 6.2+
+Signed-off-by: Xingjing Deng <xjdeng@buaa.edu.cn>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260129234140.410983-1-xjdeng@buaa.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/thermal_core.c |    1 +
+ drivers/misc/fastrpc.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -1638,6 +1638,7 @@ unregister:
- 	device_del(&tz->device);
- release_device:
- 	put_device(&tz->device);
-+	wait_for_completion(&tz->removal);
- remove_id:
- 	ida_free(&thermal_tz_ida, id);
- free_tzp:
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1370,6 +1370,7 @@ err_invoke:
+ 	}
+ err_map:
+ 	fastrpc_buf_free(fl->cctx->remote_heap);
++	fl->cctx->remote_heap = NULL;
+ err_name:
+ 	kfree(name);
+ err:
 
 
