@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB3D2641FC;
-	Wed,  8 Apr 2026 18:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F6E2641FC;
+	Wed,  8 Apr 2026 18:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673968; cv=none; b=ouphyAH2quxC5RGKp12l5jwsPkibFycSFN7C4qCzdBovgbTj7+JagvkZI8WDLknZSOQBdJgi2+U4bS6iveEKuq0icSQfqt/eaONiUOtOY/mBHkceIlKXK9fDqVGEAvD+oGtU98h7Wkh8iZbHEXW5YEKtAqxL309hHndfB3mPUX8=
+	t=1775673971; cv=none; b=ZpRWjyiV8OxftIeYhhyMsGCC0iPWcJ786v5f8VqcFV4xmmgvqD44GI9zBJNqiLL/LJFKcKotQNKX+QPq5gg8BGUAu/PdPGTNdRAAhQH6wHWWuWVX4Kn7x+4VINMZNN+TF9ayN0sGKZB946sjNvffMON2kFiQ3ZLWJUb+KwsT3n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673968; c=relaxed/simple;
-	bh=gxAEjpREyoS+pxZH2xpMBW396G1316QKTm6W1MFnQRQ=;
+	s=arc-20240116; t=1775673971; c=relaxed/simple;
+	bh=0ccfJNY8sWzHCbx/qSVkcwxU7dM8MeqwsIvVqQ+xiWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A280TwpJPdODA1/Qfpxnr/BHhjkvlcQMIaYqgLNjJxClxMr7gN/ZQ5utAvAzauL4Pai/pipSW+AO5TY595WC6R//16AUft0UhLtM23iyMByTGoAwZv6kExkl6yDgF+hAKd2nxgXZwXoSUXMxLKnQyViUvOVhePSJz2KRwWNNnoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIDH22NC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GZoXrVc81i2pCiWlPARlkElQo7/Pt8EeIV7eBi5Y8WAhJK0OedZSlbJNV/ed5+OYaKHtaYHm00fC8Nq49cp9RXKj81qTBAl1Y/6nwePoiqQMP5Ro0wAQtJRugtUo3/Mj7sWYC5GZdEw0CGI4B51jZYpirzAIRTvamqoRo99nISo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1OVtkZJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIDH22NC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A65C19421;
-	Wed,  8 Apr 2026 18:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1OVtkZJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25CBC19425;
+	Wed,  8 Apr 2026 18:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673968;
-	bh=gxAEjpREyoS+pxZH2xpMBW396G1316QKTm6W1MFnQRQ=;
+	s=korg; t=1775673971;
+	bh=0ccfJNY8sWzHCbx/qSVkcwxU7dM8MeqwsIvVqQ+xiWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wIDH22NCbHGKsbfdzCpUdJftUV/20erWupRJH5lrJMgGLHjzMB90fGz3dDhL3mNfx
-	 mL//8XbQhSFwoknEGtTOCxCGVYFIYwYRu2PsyXo/jSKBg+QnpQSZj6ZXX62xyuSwp1
-	 VmoS+RN51LAoCcgp6JugVp4xdbN1ITQyfPLv/+bc=
+	b=L1OVtkZJaaWd7ICAHz/IYj0m9/fKfZrnNG6DlzUXrPfHNFSrK4SAbE/K4jMp7rmE+
+	 oYwF+PCZPqpUqyHR0yvsj/o25sPgX7O4SY7b5VBJ3M1+MdjhOtRbnFNbklGt0y08A+
+	 Q0uktPQIkbgbeWcA7VCieScYPcYmhxT4JQZXq6NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wanquan Zhong <wanquan.zhong@fibocom.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 141/242] USB: serial: option: add support for Rolling Wireless RW135R-GL
-Date: Wed,  8 Apr 2026 20:03:01 +0200
-Message-ID: <20260408175932.365019180@linuxfoundation.org>
+	Miao Li <limiao@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.12 159/242] usb: quirks: add DELAY_INIT quirk for another Silicon Motion flash drive
+Date: Wed,  8 Apr 2026 20:03:19 +0200
+Message-ID: <20260408175933.040475359@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -50,49 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wanquan Zhong <wanquan.zhong@fibocom.com>
+From: Miao Li <limiao@kylinos.cn>
 
-commit 01e8d0f742222f1e68f48180d5480097adf7ae9f upstream.
+commit dd36014ec6042f424ef51b923e607772f7502ee7 upstream.
 
-Add VID/PID 33f8:1003 for the Rolling Wireless RW135R-GL M.2 module,
-which is used in laptop debug cards with MBIM interface for
-Linux/Chrome OS. The device supports mbim, pipe functionalities.
+Another Silicon Motion flash drive also randomly work incorrectly
+(lsusb does not list the device) on Huawei hisi platforms during
+500 reboot cycles, and the DELAY_INIT quirk fixes this issue.
 
-Here are the outputs of usb-devices:
-T:  Bus=04 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=33f8 ProdID=1003 Rev=05.15
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling RW135R-GL Module
-S:  SerialNumber=12345678
-C:  #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-Signed-off-by: Wanquan Zhong <wanquan.zhong@fibocom.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Miao Li <limiao@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260319053927.264840-1-limiao870622@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    1 +
+ drivers/usb/core/quirks.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2464,6 +2464,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0302, 0xff) },			/* Rolling RW101R-GL (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0802, 0xff),			/* Rolling RW350-GL (laptop MBIM) */
- 	  .driver_info = RSVD(5) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff) },			/* Rolling RW135R-GL (laptop MBIM) */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x40) },
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -402,6 +402,7 @@ static const struct usb_device_id usb_qu
+ 
+ 	/* Silicon Motion Flash Drive */
+ 	{ USB_DEVICE(0x090c, 0x1000), .driver_info = USB_QUIRK_DELAY_INIT },
++	{ USB_DEVICE(0x090c, 0x2000), .driver_info = USB_QUIRK_DELAY_INIT },
+ 
+ 	/* Sound Devices USBPre2 */
+ 	{ USB_DEVICE(0x0926, 0x0202), .driver_info =
 
 
