@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0F7347517;
-	Wed,  8 Apr 2026 18:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C3B37F8C2;
+	Wed,  8 Apr 2026 18:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671961; cv=none; b=qLpivgP6+fA9cwGIOsKrnme01RGYiL4UsdBOBEW/yMlxJbJ0sONPqO8wF33JJfDlrikj3ABoVavWFuM9lfcngxWAh/gY4PNXJwdDnAnB3mPvqzXD1TGdaCRGolu2G2eFh75e8rQ29P1Pz7QdrQzfrswhwvCB/uNcUPRzkonsRsw=
+	t=1775671964; cv=none; b=cvI2JKhhtQJn7DnquoF/94K/nf1Q4wPVkJmNklLl0xg6RWIkn8V+qOOrp5d8VGDzyFYJtWK2JFUIy0B4sCmj+d/plgCacIYSAelUhJuisynRqt1FOXNTi9C8UCkmyCbI5NtJ4mixZRAIT54fI5mIoAb2b4iFngGJG2Ryu2zwpvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671961; c=relaxed/simple;
-	bh=hzx88QJjx01GoyGEYgWsl3+cd9WpKbVn9sJHSRXd0Co=;
+	s=arc-20240116; t=1775671964; c=relaxed/simple;
+	bh=KhkeNBoDQ9S9/t+BNFfgbH6FkyFepPyoTirFCu4b3fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jLSTGwXAD2nwZkzAxOW5D8IxD7JzAu9qPnEC/u38wPtPbZrFngBO1F6wQn/G77aryWu9TnIinEm+OPIVsA1EJxYO/JH2J7/9pDmH4/+qtdmyk5pGRP7lsSVqqjN+pKHKfWjRnxQaYTMgHrUjBne1JrmPI8qxyig0I2+BnNptQbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zoc1TZn4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JJOMCk1lRfZShKVNLjkMzPRtPnyUwremuo2OWGW20z7Wm2DYZlDKul+yd02gWZJ0hFpCPvF/GRY47YQMyFkXgHulxWBIirMXgPHI/w/dE8mQf/NJ/8+FjkxA1tIkC8Q2/lDg5lTI1dFtCYizz6RGt27BDrFy0AfysVxDHc+KaY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnSCz5za; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zoc1TZn4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5377FC19421;
-	Wed,  8 Apr 2026 18:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnSCz5za"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE75DC19421;
+	Wed,  8 Apr 2026 18:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671961;
-	bh=hzx88QJjx01GoyGEYgWsl3+cd9WpKbVn9sJHSRXd0Co=;
+	s=korg; t=1775671964;
+	bh=KhkeNBoDQ9S9/t+BNFfgbH6FkyFepPyoTirFCu4b3fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zoc1TZn4LqpUuxMHUR1wVUFarcVbIFIyzNVcsD5K2NLxauAch0Ma7rsf+OHyrz7ab
-	 vXtkQNFn8zPskfYlnoJKEjhfaiHoSKjnQXa0Ui3SdzGd88y+cGme0eeDq0j0VFOLnn
-	 4vXtVTyRk2gO3q8kbKidMTWHiY4pj7u082/cIR1U=
+	b=UnSCz5zaXi7UVRU8Q0gHW79Oav1o8z516InXzhEweU+evIDgeI4Fm3G48fmg9HExK
+	 fKjh1lSUSONfgcp0i7CMubNCnaXlPqTAnhKYBPK+AxLY9f+UX42q/jdDF/OnJap5dr
+	 QakviTNHRze7bWGGQihL3cevxaWYR0cdrgrGczeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 136/312] tcp: Fix bind() regression for v6-only wildcard and v4-mapped-v6 non-wildcard addresses.
-Date: Wed,  8 Apr 2026 20:00:53 +0200
-Message-ID: <20260408175938.850613225@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 137/312] HID: wacom: fix out-of-bounds read in wacom_intuos_bt_irq
+Date: Wed,  8 Apr 2026 20:00:54 +0200
+Message-ID: <20260408175938.887849786@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -44,79 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Benoît Sevens <bsevens@google.com>
 
-commit ea111449501ea32bf6da82750de860243691efc7 upstream.
+[ Upstream commit 2f1763f62909ccb6386ac50350fa0abbf5bb16a9 ]
 
-Commit 5e07e672412b ("tcp: Use bhash2 for v4-mapped-v6 non-wildcard
-address.") introduced bind() regression for v4-mapped-v6 address.
+The wacom_intuos_bt_irq() function processes Bluetooth HID reports
+without sufficient bounds checking. A maliciously crafted short report
+can trigger an out-of-bounds read when copying data into the wacom
+structure.
 
-When we bind() the following two addresses on the same port, the 2nd
-bind() should succeed but fails now.
+Specifically, report 0x03 requires at least 22 bytes to safely read
+the processed data and battery status, while report 0x04 (which
+falls through to 0x03) requires 32 bytes.
 
-  1. [::] w/ IPV6_ONLY
-  2. ::ffff:127.0.0.1
+Add explicit length checks for these report IDs and log a warning if
+a short report is received.
 
-After the chagne, v4-mapped-v6 uses bhash2 instead of bhash to
-detect conflict faster, but I forgot to add a necessary change.
-
-During the 2nd bind(), inet_bind2_bucket_match_addr_any() returns
-the tb2 bucket of [::], and inet_bhash2_conflict() finally calls
-inet_bind_conflict(), which returns true, meaning conflict.
-
-  inet_bhash2_addr_any_conflict
-  |- inet_bind2_bucket_match_addr_any  <-- return [::] bucket
-  `- inet_bhash2_conflict
-     `- __inet_bhash2_conflict <-- checks IPV6_ONLY for AF_INET
-        |                          but not for v4-mapped-v6 address
-        `- inet_bind_conflict  <-- does not check address
-
-inet_bind_conflict() does not check socket addresses because
-__inet_bhash2_conflict() is expected to do so.
-
-However, it checks IPV6_V6ONLY attribute only against AF_INET
-socket, and not for v4-mapped-v6 address.
-
-As a result, v4-mapped-v6 address conflicts with v6-only wildcard
-address.
-
-To avoid that, let's add the missing test to use bhash2 for
-v4-mapped-v6 address.
-
-Fixes: 5e07e672412b ("tcp: Use bhash2 for v4-mapped-v6 non-wildcard address.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240326204251.51301-2-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/hid/wacom_wac.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -185,8 +185,15 @@ static bool __inet_bhash2_conflict(const
- 				   kuid_t sk_uid, bool relax,
- 				   bool reuseport_cb_ok, bool reuseport_ok)
- {
--	if (sk->sk_family == AF_INET && ipv6_only_sock(sk2))
--		return false;
-+	if (ipv6_only_sock(sk2)) {
-+		if (sk->sk_family == AF_INET)
-+			return false;
-+
-+#if IS_ENABLED(CONFIG_IPV6)
-+		if (ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr))
-+			return false;
-+#endif
-+	}
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index 3837394f29a0b..614f2adab5635 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1253,10 +1253,20 @@ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
  
- 	return inet_bind_conflict(sk, sk2, sk_uid, relax,
- 				  reuseport_cb_ok, reuseport_ok);
+ 	switch (data[0]) {
+ 	case 0x04:
++		if (len < 32) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x04 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		fallthrough;
+ 	case 0x03:
++		if (i == 1 && len < 22) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x03 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+-- 
+2.53.0
+
 
 
