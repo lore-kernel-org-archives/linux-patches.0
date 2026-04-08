@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3342494F0;
-	Wed,  8 Apr 2026 18:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8BE3AA4E4;
+	Wed,  8 Apr 2026 18:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672664; cv=none; b=rEeCz1lzqtirqg4p2E+eCsENa29tF6OJAKehE/42VYg/iU5JvggRH1a4qO+QlDKyykLrhKjWlPTbKZ242X0rg+zud+FMuoGNJH939Z/58xr04t7WRVoX2C1nOrCAhbjXTX7li5oAfIKexQnDQ4tQBgr8YX7A10Td7G7jBuCFeFg=
+	t=1775672667; cv=none; b=PupQIxz52kSC9beFC9T+mtYV81AMKN9BVs/fESnmIOAJQQ/nWwLb8oDs+zriQBkZ0rIjVu5Mb8pUOKNmHLhNffSBl9XKC5r1eYyAAM1KFxOPMR+puo62ztmgU60RZJscv/M4ZqnS0XB7DGjkwZj1TceG2+cWzzP8kznKATAxo5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672664; c=relaxed/simple;
-	bh=x0JOOX/bTmzI309w3Dz+1YzJt9jCOJfACuwCIzD9Z+I=;
+	s=arc-20240116; t=1775672667; c=relaxed/simple;
+	bh=y9rQP4lfbzYu2DfDxAqBrgsHr5VtMrCVHkSutrDOnq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gObRSU3AaHMbU+O5cs5HOCWnxCc5OJsmmpQiRTxkCH94Xb9RALHYcd0Ib6ASHn2YUUBV82GN4E2uWKrHpkHvzHcxTDWFTwecxQ6aGv+98NaWAFR6XNsXlGZ7UYaKZTLjB+s9ZNJvjAgrAJnaeJ/jlzZLFfDsMrTpBA8rnOOjCgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqYcz6bL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tOcnoo1bq13yepLPTj3xP/vti9MYm3bH3lAVIHKDjFTWS2fQHxIRyrO1CWI+gyfd3v6RCVrnxqdvYRLnEDLGpL4DjDzKSow5AQSaT3QngHaRTnkC99o0r2YwrSvhTDE5llAvFiEDA6ZcA97Q827UM//STfZHypa7rzFKTCUAgNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiTFEPtD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqYcz6bL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4FDC19421;
-	Wed,  8 Apr 2026 18:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiTFEPtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9570C19421;
+	Wed,  8 Apr 2026 18:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672664;
-	bh=x0JOOX/bTmzI309w3Dz+1YzJt9jCOJfACuwCIzD9Z+I=;
+	s=korg; t=1775672667;
+	bh=y9rQP4lfbzYu2DfDxAqBrgsHr5VtMrCVHkSutrDOnq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yqYcz6bLURrcr0v44Zrktf4OLhRj8HjpfvQoW7BDqqE8MFao/kkIiJUDaqL04rfEl
-	 r9ELJLd8b7Blkj4gMzA5jr7UCiaBVn2RiC6O0xfrERlbzjUKmZ5gp5o7fkLlz1+1aq
-	 N4eTa+lE4t8XGH4mwjsOve1mkzEXAJSKYXxjQP5s=
+	b=QiTFEPtDWiXCT0ecWQ2G3wEJM6xyDTaVI23gLyv8ir0+Cdn6A9++BkDHqGEaMQFkM
+	 JXHK1ksqV96Q5bsloKL052KO/dxvttqA24viaaSmpw+tXcDobX++85zIT26IWhj2id
+	 8MRdEwE5LCtAcbYk5QTujnVl15UImaXlQyr9fOSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengyu Qu <wiagn233@outlook.com>,
+	Zoltan Illes <zoliviragh@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 093/160] Input: xpad - add support for BETOP BTP-KP50B/C controllers wireless mode
-Date: Wed,  8 Apr 2026 20:03:00 +0200
-Message-ID: <20260408175916.665428780@linuxfoundation.org>
+Subject: [PATCH 6.6 094/160] Input: xpad - add support for Razer Wolverine V3 Pro
+Date: Wed,  8 Apr 2026 20:03:01 +0200
+Message-ID: <20260408175916.701169610@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -50,41 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengyu Qu <wiagn233@outlook.com>
+From: Zoltan Illes <zoliviragh@gmail.com>
 
-commit 0d9363a764d9d601a05591f9695cea8b429e9be3 upstream.
+commit e2b0ae529db4766584e77647cefe3ec15c3d842e upstream.
 
-BETOP's BTP-KP50B and BTP-KP50C controller's wireless dongles are both
-working as standard Xbox 360 controllers. Add USB device IDs for them to
-xpad driver.
+Add device IDs for the Razer Wolverine V3 Pro controller in both
+wired (0x0a57) and wireless 2.4 GHz dongle (0x0a59) modes.
 
-Signed-off-by: Shengyu Qu <wiagn233@outlook.com>
-Link: https://patch.msgid.link/TY4PR01MB14432B4B298EA186E5F86C46B9855A@TY4PR01MB14432.jpnprd01.prod.outlook.com
+The controller uses the Xbox 360 protocol (vendor-specific class,
+subclass 93, protocol 1) on interface 0 with an identical 20-byte
+input report layout, so no additional processing is needed.
+
+Signed-off-by: Zoltan Illes <zoliviragh@gmail.com>
+Link: https://patch.msgid.link/20260329220031.1325509-1-137647604+ZlordHUN@users.noreply.github.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/input/joystick/xpad.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/drivers/input/joystick/xpad.c
 +++ b/drivers/input/joystick/xpad.c
-@@ -354,6 +354,8 @@ static const struct xpad_device {
- 	{ 0x1bad, 0xfd00, "Razer Onza TE", 0, XTYPE_XBOX360 },
- 	{ 0x1bad, 0xfd01, "Razer Onza", 0, XTYPE_XBOX360 },
- 	{ 0x1ee9, 0x1590, "ZOTAC Gaming Zone", 0, XTYPE_XBOX360 },
-+	{ 0x20bc, 0x5134, "BETOP BTP-KP50B Xinput Dongle", 0, XTYPE_XBOX360 },
-+	{ 0x20bc, 0x514a, "BETOP BTP-KP50C Xinput Dongle", 0, XTYPE_XBOX360 },
- 	{ 0x20d6, 0x2001, "BDA Xbox Series X Wired Controller", 0, XTYPE_XBOXONE },
- 	{ 0x20d6, 0x2009, "PowerA Enhanced Wired Controller for Xbox Series X|S", 0, XTYPE_XBOXONE },
- 	{ 0x20d6, 0x2064, "PowerA Wired Controller for Xbox", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
-@@ -547,6 +549,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
- 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harmonix Rock Band guitar and drums */
- 	XPAD_XBOX360_VENDOR(0x1ee9),		/* ZOTAC Technology Limited */
-+	XPAD_XBOX360_VENDOR(0x20bc),		/* BETOP wireless dongles */
- 	XPAD_XBOX360_VENDOR(0x20d6),		/* PowerA controllers */
- 	XPAD_XBOXONE_VENDOR(0x20d6),		/* PowerA controllers */
- 	XPAD_XBOX360_VENDOR(0x24c6),		/* PowerA controllers */
+@@ -307,6 +307,8 @@ static const struct xpad_device {
+ 	{ 0x1532, 0x0a00, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
+ 	{ 0x1532, 0x0a03, "Razer Wildcat", 0, XTYPE_XBOXONE },
+ 	{ 0x1532, 0x0a29, "Razer Wolverine V2", 0, XTYPE_XBOXONE },
++	{ 0x1532, 0x0a57, "Razer Wolverine V3 Pro (Wired)", 0, XTYPE_XBOX360 },
++	{ 0x1532, 0x0a59, "Razer Wolverine V3 Pro (2.4 GHz Dongle)", 0, XTYPE_XBOX360 },
+ 	{ 0x15e4, 0x3f00, "Power A Mini Pro Elite", 0, XTYPE_XBOX360 },
+ 	{ 0x15e4, 0x3f0a, "Xbox Airflo wired controller", 0, XTYPE_XBOX360 },
+ 	{ 0x15e4, 0x3f10, "Batarang Xbox 360 controller", 0, XTYPE_XBOX360 },
 
 
