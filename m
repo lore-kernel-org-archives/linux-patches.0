@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77073D6694;
-	Wed,  8 Apr 2026 18:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BD428980F;
+	Wed,  8 Apr 2026 18:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674790; cv=none; b=a+HVW4Ii8nFcKqwU46hSKcoGAJyM/j1sP+UJjEtPpfoOQIkcyYofey+wgFCfAw3Q36X+0UD8dC6NQkAKte1H/v1Hn7HlL7QMOP6KaN2FOjg/LE+rFRmztZlrn8tuyP5rEK94+3MzjkhP6Zq58KZwTCOQ1FewIcVZczqBElUkm8Q=
+	t=1775674793; cv=none; b=YQIT9o/6xSdJqcDUR93X9YfOYVeoHZ1vo4XNDePlLD77wQphNv60VYznRCpm2SELiAxvgAIU1QHZK8XNYZ5YYE4n+CQRB+dOrPqUIl1BpY6A+yKBCxlvh4jGoM5cHfoMEBfKLJu5+FgpGvwcPVWL+L36P6Z+nEbCcLuXL1f6Xdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674790; c=relaxed/simple;
-	bh=B4qLjOrNSgKhExoNNEfKLGCEl5grLH1KkVsEE8GjZgM=;
+	s=arc-20240116; t=1775674793; c=relaxed/simple;
+	bh=VFr1f+ghxRWxylhQ0GHgrPsyuIFedEbTZ0heJH6rRoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wz0cqXZObXB+LRSnTRzjIvRcCNQ8XoXNtRrTMy6u9s4hFF0pfHoKCGhYMLE2ff+H+TYMv45pTTTJUZsWoG/kKGLnSB3GV/iW9jul4JKtMizHQnUWnClyJSGXQXiw96oa6GDGQdbB/d+o5RtLdHAtKxzqmFy0LjMBQuDaxrHXF4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGW6Fkoq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tfp1eSKjAyTRWyKTErWQ9CzvxWnVuLN3/AHd4iT/4kuaznzU6EDtY6iPh4ohmCxQwsv3C8H6rxwDJuS5gqrxwjbIe5DCpTwYqw6XVv9I+kGzMNYELHtYpdzem9BhR+JMIPdtYuYS3WWihtEqtp++U/8LieCYsD91eFqTgQdNqqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mc/eWj6D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGW6Fkoq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF83C19421;
-	Wed,  8 Apr 2026 18:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mc/eWj6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF09CC19421;
+	Wed,  8 Apr 2026 18:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674790;
-	bh=B4qLjOrNSgKhExoNNEfKLGCEl5grLH1KkVsEE8GjZgM=;
+	s=korg; t=1775674793;
+	bh=VFr1f+ghxRWxylhQ0GHgrPsyuIFedEbTZ0heJH6rRoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VGW6FkoqPs1O+Kg+CLRxzRtYh/bKxhuS6JUwoCH3lewwzNE1O79ugn/3iMKlKHXj3
-	 KX9YKEV0U6TDBWChl6SxF3pN9lzOy/qWx2VGQl05gYPei3GM4CEhtu1/VtXL/LHYtU
-	 nCbsDLcog/bRsxcMS0vrKgApYddyzdQpvkJc+0K0=
+	b=mc/eWj6Dc0UoFJYClRM7SPUWI5xy3k/u763gz9jayzjlJYu3jtAh31635vZ9LToB3
+	 sODRiT4kka9A3eapqQvu0yr0HA8mMfOtwnqf3cQuwbplCGsjgUn16oMAydxFrCvXxQ
+	 xhfatoLuBw4oRdR18EFHWAR9Qzi28luIGKnVh04Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 234/311] iio: gyro: mpu3050: Fix out-of-sequence free_irq()
-Date: Wed,  8 Apr 2026 20:03:54 +0200
-Message-ID: <20260408175948.133426304@linuxfoundation.org>
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Todd Brandt <todd.e.brandt@linux.intel.com>,
+	stable <stable@kernel.org>,
+	Alexander Usyskin <alexander.usyskin@intel.com>
+Subject: [PATCH 6.19 235/311] mei: me: reduce the scope on unexpected reset
+Date: Wed,  8 Apr 2026 20:03:55 +0200
+Message-ID: <20260408175948.170009340@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -54,41 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit d14116f6529fa085b1a1b1f224dc9604e4d2a29c upstream.
+commit 8c27b1bce059a11a8d3c8682984e13866f0714af upstream.
 
-The triggered buffer is initialized before the IRQ is requested. The
-removal path currently calls iio_triggered_buffer_cleanup() before
-free_irq(). This violates the expected LIFO.
+After commit 2cedb296988c ("mei: me: trigger link reset if hw ready is unexpected")
+some devices started to show long resume times (5-7 seconds).
+This happens as mei falsely detects unready hardware,
+starts parallel link reset flow and triggers link reset timeouts
+in the resume callback.
 
-Place free_irq() in the correct location relative to
-iio_triggered_buffer_cleanup().
+Address it by performing detection of unready hardware only
+when driver is in the MEI_DEV_ENABLED state instead of blacklisting
+states as done in the original patch.
+This eliminates active waitqueue check as in MEI_DEV_ENABLED state
+there will be no active waitqueue.
 
-Fixes: 3904b28efb2c7 ("iio: gyro: Add driver for the MPU-3050 gyroscope")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reported-by: Todd Brandt <todd.e.brandt@linux.intel.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221023
+Tested-by: Todd Brandt <todd.e.brandt@linux.intel.com>
+Fixes: 2cedb296988c ("mei: me: trigger link reset if hw ready is unexpected")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://patch.msgid.link/20260330083830.536056-1-alexander.usyskin@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/mpu3050-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/mei/hw-me.c |   14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
---- a/drivers/iio/gyro/mpu3050-core.c
-+++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -1278,9 +1278,9 @@ void mpu3050_common_remove(struct device
- 	pm_runtime_get_sync(dev);
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
--	iio_triggered_buffer_cleanup(indio_dev);
- 	if (mpu3050->irq)
- 		free_irq(mpu3050->irq, mpu3050->trig);
-+	iio_triggered_buffer_cleanup(indio_dev);
- 	mpu3050_power_down(mpu3050);
- }
- 
+--- a/drivers/misc/mei/hw-me.c
++++ b/drivers/misc/mei/hw-me.c
+@@ -1337,19 +1337,13 @@ irqreturn_t mei_me_irq_thread_handler(in
+ 	/*  check if we need to start the dev */
+ 	if (!mei_host_is_ready(dev)) {
+ 		if (mei_hw_is_ready(dev)) {
+-			/* synchronized by dev mutex */
+-			if (waitqueue_active(&dev->wait_hw_ready)) {
+-				dev_dbg(&dev->dev, "we need to start the dev.\n");
+-				dev->recvd_hw_ready = true;
+-				wake_up(&dev->wait_hw_ready);
+-			} else if (dev->dev_state != MEI_DEV_UNINITIALIZED &&
+-				   dev->dev_state != MEI_DEV_POWERING_DOWN &&
+-				   dev->dev_state != MEI_DEV_POWER_DOWN) {
++			if (dev->dev_state == MEI_DEV_ENABLED) {
+ 				dev_dbg(&dev->dev, "Force link reset.\n");
+ 				schedule_work(&dev->reset_work);
+ 			} else {
+-				dev_dbg(&dev->dev, "Ignore this interrupt in state = %d\n",
+-					dev->dev_state);
++				dev_dbg(&dev->dev, "we need to start the dev.\n");
++				dev->recvd_hw_ready = true;
++				wake_up(&dev->wait_hw_ready);
+ 			}
+ 		} else {
+ 			dev_dbg(&dev->dev, "Spurious Interrupt\n");
 
 
