@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C0827979A;
-	Wed,  8 Apr 2026 18:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F8B27979A;
+	Wed,  8 Apr 2026 18:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673452; cv=none; b=pB6MdmxaRHXKUX7h9q+1ekMEJkDHeyQPVIKMMEhDrGhEY54VYfFcY6ppShhCOXXzeqcGorV0s+THkYbXIOvE/SolXDiCy0NA4dlp7SER53mVwtrAJMnacNalO9WVy/Al6yUJt/NT4fohHrtgdGeAJYCzdoGfdD+O+U2N++Usolk=
+	t=1775673454; cv=none; b=uNZX0iwnbzlYdyPlT6WXsYpuBvbsFenAGAc2aRjRU2XNJYKU8CoMKzqdRs0s9ZDxcJJHa4PfoobXMKCoTeTM0tuHQgOeoq4gPViUYPKVBkDtU0Cd+ZMi8wtsS6hAT99wmHJoLVGg8wytqMvMBG71UOipa7RXYmRKyzTdALwOIIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673452; c=relaxed/simple;
-	bh=ujUtUitJ9prwfI+J/Ad8lYPLG4JoXqujVXoArB8DEho=;
+	s=arc-20240116; t=1775673454; c=relaxed/simple;
+	bh=yK1tnI7MPHjGYah4owktHYYLHTRZaNspzmBNFh66hSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MfhixkfzFut98mC45cOMZSldUUNYpw5yVXueaHkQFS7rINRWNGx26Rc5PDfGDEVCc6jIHAYFKfc2mem61xfwrt3AFMj/nOPOX9nM6f0uGXD/uebLcSUxNu8/eDFYmyfKjaJNHfAOEjvQwo5jNU4HdK+3qSaS9Df0YkYtTfsh0Ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nO94OMoB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o+pgMRj/uLnjA82Hz1K5o/bfIIVPNpWxQLX8QEgHIsc0K5WPQjv9iaMf9AZlbw+f3OLM51MCyxOimWWomTfEH66g2YAHazRiVC2kFmqNPOkq6DkCOGm6GrTthUw6yH7JwtUJBE+gKRQv2mFEfQije4w/v7GEOZR7hwNv+Jli9Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8juZdCY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nO94OMoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B55FC2BC87;
-	Wed,  8 Apr 2026 18:37:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8juZdCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7D0C19421;
+	Wed,  8 Apr 2026 18:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673451;
-	bh=ujUtUitJ9prwfI+J/Ad8lYPLG4JoXqujVXoArB8DEho=;
+	s=korg; t=1775673454;
+	bh=yK1tnI7MPHjGYah4owktHYYLHTRZaNspzmBNFh66hSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nO94OMoBwfLAdeHvvnyjkoCZToNOsmO0TZDyJMwu36BsPIlwWSfRZZFFbdS+jyyqe
-	 hR5xgtZTJJTd/fXqnnkUfifpabFpGN1nEO+hAjKHxuYp4WWUo44Midk7D2+KrP9eDg
-	 8+dYPYHL5beouFcoWhmTobqHvUIYO8QPpI7ZA0HQ=
+	b=V8juZdCY5Hxz7+8t9ReEcDQXRAiu1j1qvmjRIVnWwoMCWw7EucYUJGIAkCW4vPtAx
+	 iCln7r5qKK1imPS16aroh+hcmJQAf/C0DgZ5tluadnYXCKR9Xung7gEtman4tiBVcg
+	 Eqlo61OxxyiVJrSTTbN0Zt6O3IT7+ZcU4taxfEsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changwoo Min <changwoo@igalia.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.18 237/277] sched_ext: Fix is_bpf_migration_disabled() false negative on non-PREEMPT_RCU
-Date: Wed,  8 Apr 2026 20:03:42 +0200
-Message-ID: <20260408175942.707235386@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.18 238/277] gpio: mxc: map Both Edge pad wakeup to Rising Edge
+Date: Wed,  8 Apr 2026 20:03:43 +0200
+Message-ID: <20260408175942.746510164@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,81 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Changwoo Min <changwoo@igalia.com>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-commit 0c4a59df370bea245695c00aaae6ae75747139bd upstream.
+commit c720fb57d56274213d027b3c5ab99080cf62a306 upstream.
 
-Since commit 8e4f0b1ebcf2 ("bpf: use rcu_read_lock_dont_migrate() for
-trampoline.c"), the BPF prolog (__bpf_prog_enter) calls migrate_disable()
-only when CONFIG_PREEMPT_RCU is enabled, via rcu_read_lock_dont_migrate().
-Without CONFIG_PREEMPT_RCU, the prolog never touches migration_disabled,
-so migration_disabled == 1 always means the task is truly
-migration-disabled regardless of whether it is the current task.
+Suspend may fail on i.MX8QM when Falling Edge is used as a pad wakeup
+trigger due to a hardware bug in the detection logic. Since the hardware
+does not support Both Edge wakeup, remap requests for Both Edge to Rising
+Edge by default to avoid hitting this issue.
 
-The old unconditional p == current check was a false negative in this
-case, potentially allowing a migration-disabled task to be dispatched to
-a remote CPU and triggering scx_error in task_can_run_on_remote_rq().
+A warning is emitted when Falling Edge is selected on i.MX8QM.
 
-Only apply the p == current disambiguation when CONFIG_PREEMPT_RCU is
-enabled, where the ambiguity with the BPF prolog still exists.
-
-Fixes: 8e4f0b1ebcf2 ("bpf: use rcu_read_lock_dont_migrate() for trampoline.c")
-Cc: stable@vger.kernel.org # v6.18+
-Link: https://lore.kernel.org/lkml/20250821090609.42508-8-dongml2@chinatelecom.cn/
-Signed-off-by: Changwoo Min <changwoo@igalia.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
+cc: stable@vger.kernel.org
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Link: https://patch.msgid.link/20260324192129.2797237-1-shenwei.wang@nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext_idle.c |   31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ drivers/gpio/gpio-mxc.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/kernel/sched/ext_idle.c
-+++ b/kernel/sched/ext_idle.c
-@@ -861,25 +861,32 @@ static bool check_builtin_idle_enabled(s
-  * code.
-  *
-  * We can't simply check whether @p->migration_disabled is set in a
-- * sched_ext callback, because migration is always disabled for the current
-- * task while running BPF code.
-+ * sched_ext callback, because the BPF prolog (__bpf_prog_enter) may disable
-+ * migration for the current task while running BPF code.
-  *
-- * The prolog (__bpf_prog_enter) and epilog (__bpf_prog_exit) respectively
-- * disable and re-enable migration. For this reason, the current task
-- * inside a sched_ext callback is always a migration-disabled task.
-+ * Since the BPF prolog calls migrate_disable() only when CONFIG_PREEMPT_RCU
-+ * is enabled (via rcu_read_lock_dont_migrate()), migration_disabled == 1 for
-+ * the current task is ambiguous only in that case: it could be from the BPF
-+ * prolog rather than a real migrate_disable() call.
-  *
-- * Therefore, when @p->migration_disabled == 1, check whether @p is the
-- * current task or not: if it is, then migration was not disabled before
-- * entering the callback, otherwise migration was disabled.
-+ * Without CONFIG_PREEMPT_RCU, the BPF prolog never calls migrate_disable(),
-+ * so migration_disabled == 1 always means the task is truly
-+ * migration-disabled.
-+ *
-+ * Therefore, when migration_disabled == 1 and CONFIG_PREEMPT_RCU is enabled,
-+ * check whether @p is the current task or not: if it is, then migration was
-+ * not disabled before entering the callback, otherwise migration was disabled.
-  *
-  * Returns true if @p is migration-disabled, false otherwise.
-  */
- static bool is_bpf_migration_disabled(const struct task_struct *p)
- {
--	if (p->migration_disabled == 1)
--		return p != current;
--	else
--		return p->migration_disabled;
-+	if (p->migration_disabled == 1) {
-+		if (IS_ENABLED(CONFIG_PREEMPT_RCU))
-+			return p != current;
-+		return true;
-+	}
-+	return p->migration_disabled;
- }
+--- a/drivers/gpio/gpio-mxc.c
++++ b/drivers/gpio/gpio-mxc.c
+@@ -584,12 +584,13 @@ static bool mxc_gpio_set_pad_wakeup(stru
+ 	unsigned long config;
+ 	bool ret = false;
+ 	int i, type;
++	bool is_imx8qm = of_device_is_compatible(port->dev->of_node, "fsl,imx8qm-gpio");
  
- static s32 select_cpu_from_kfunc(struct scx_sched *sch, struct task_struct *p,
+ 	static const u32 pad_type_map[] = {
+ 		IMX_SCU_WAKEUP_OFF,		/* 0 */
+ 		IMX_SCU_WAKEUP_RISE_EDGE,	/* IRQ_TYPE_EDGE_RISING */
+ 		IMX_SCU_WAKEUP_FALL_EDGE,	/* IRQ_TYPE_EDGE_FALLING */
+-		IMX_SCU_WAKEUP_FALL_EDGE,	/* IRQ_TYPE_EDGE_BOTH */
++		IMX_SCU_WAKEUP_RISE_EDGE,	/* IRQ_TYPE_EDGE_BOTH */
+ 		IMX_SCU_WAKEUP_HIGH_LVL,	/* IRQ_TYPE_LEVEL_HIGH */
+ 		IMX_SCU_WAKEUP_OFF,		/* 5 */
+ 		IMX_SCU_WAKEUP_OFF,		/* 6 */
+@@ -604,6 +605,13 @@ static bool mxc_gpio_set_pad_wakeup(stru
+ 				config = pad_type_map[type];
+ 			else
+ 				config = IMX_SCU_WAKEUP_OFF;
++
++			if (is_imx8qm && config == IMX_SCU_WAKEUP_FALL_EDGE) {
++				dev_warn_once(port->dev,
++					      "No falling-edge support for wakeup on i.MX8QM\n");
++				config = IMX_SCU_WAKEUP_OFF;
++			}
++
+ 			ret |= mxc_gpio_generic_config(port, i, config);
+ 		}
+ 	}
 
 
