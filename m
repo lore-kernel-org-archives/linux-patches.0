@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71FA37DE90;
-	Wed,  8 Apr 2026 19:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F1D35C1B4;
+	Wed,  8 Apr 2026 19:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674827; cv=none; b=XxMWYd1qNIZVnH2uwJAMed1CSWGiJhvg4tdAfPjOo2eIu8ujW4986zm+P7IByIpW8jt6n3/TQ0iNTdMk4pKNORZmnwTgiRIUU7hoRKa/LPUDlsPQcSp3s/+5PPSG1rFZE7JBRgNDOIrhEGNckqnXz3ivRkMWdpSfi+rJN1ErLXw=
+	t=1775674830; cv=none; b=TaNC8NUcev7eqX8ni74DKVN4swLJ9GCUHDynq83QiklU9g9s4InCLCUOIv7w0gzNWzeLx1RwCXzJOb2xzOlWrpu7A4owBQMxxL6z2KULRfQ8QWTzhOHk6SYPXeQlvBcceu7VvyK691HmXyvvGzX4IpHhLhFQGL2Z9tCm0Nk8x0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674827; c=relaxed/simple;
-	bh=VjrT1ZJp89cRG+7whp+wcjuF6I7/MWvemaDNw49JIGU=;
+	s=arc-20240116; t=1775674830; c=relaxed/simple;
+	bh=ftejznMcU91zhUj2HMB0h8miy1e5aEqJu9encK8XaLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qC+8W3ey6NtmJPMzqOQvO1c9DftzJvGdZRE3pSOQheHSYGR8rQtOfU+d4fhMgX0m3/faSHJik5epoEjwouJsBTuMyPIvfs0NbEcZoF8/vTeJk2SXwm57LdfBMAq3ZfF10tj2i+t2iN4DAhT1bmIpVhp6ZoZ4qcn4uuSV/Mlvy7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHUs+93O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yah2/072h8BRrx8UqyNu6tmWBwnvSccQIboB+R6uwuOVviNX6KU4PUhVINu7pOSVOeeeY5XRV7uaqsQIGVsB/YN3HOQMEkm3+fq48tYd/mCoVez3SeaZEV8Sc2jqV5Dz5H5iqnL84kuXDPyDHHfUsDSzklSI2XWSgIeS/i3mMmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gx3K2aP6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHUs+93O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C550C2BC87;
-	Wed,  8 Apr 2026 19:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gx3K2aP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5177C19425;
+	Wed,  8 Apr 2026 19:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674827;
-	bh=VjrT1ZJp89cRG+7whp+wcjuF6I7/MWvemaDNw49JIGU=;
+	s=korg; t=1775674830;
+	bh=ftejznMcU91zhUj2HMB0h8miy1e5aEqJu9encK8XaLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHUs+93OskiNoyJRuAgRGh58j8V8ahnqsHwafBEaxKA1UJwxqGXqTWIiP1mZvjaxi
-	 eWJejlGWaPgx5J81CvoCQyMzxg9gbUsjCrTxTtkPZUL7HoLml91x/Wbjwo3PxkDJYD
-	 FlXjC+pdGZI41P+HRXPD5mWfWkhafoNdel71fbaQ=
+	b=Gx3K2aP6m3ucGyaYO/eiVRzjG/vX3uywvMRPA5ZkK96OeTxp/0Zjz4mq3SvPgBTgt
+	 XPOnbWLQt+iTMEJ/5L/OfNWqcuwseJ3Q7MXTSwVNR7aFh52Yi/sTn4bHk7j4wA87/x
+	 8F5t+rc5qe3sTEz0rt33lSRSxzxeJ4WFXMWjigBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 216/311] iio: adc: ti-ads7950: do not clobber gpio state in ti_ads7950_get()
-Date: Wed,  8 Apr 2026 20:03:36 +0200
-Message-ID: <20260408175947.469189042@linuxfoundation.org>
+	Frej Drejhammar <frej@stacken.kth.se>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.19 207/311] USB: serial: io_edgeport: add support for Blackbox IC135A
+Date: Wed,  8 Apr 2026 20:03:27 +0200
+Message-ID: <20260408175947.135457106@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,61 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Frej Drejhammar <frej@stacken.kth.se>
 
-commit d20bbae6e5d408a8a7c2a4344d76dd1ac557a149 upstream.
+commit 0e01c3416eb863ee7f156a9d7e7421ec0a9f68a0 upstream.
 
-GPIO state was inadvertently overwritten by the result of spi_sync(),
-resulting in ti_ads7950_get() only returning 0 as GPIO state (or error).
+The Blackbox 724-746-5500 USB Director USB-RS-232 HUB, part number
+IC135A, is a rebadged Edgeport/4 with its own USB device id.
 
-Fix this by introducing a separate variable to hold the state.
-
-Fixes: c97dce792dc8 ("iio: adc: ti-ads7950: add GPIO support")
-Reported-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Frej Drejhammar <frej@stacken.kth.se>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-ads7950.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/usb/serial/io_edgeport.c |    3 +++
+ drivers/usb/serial/io_usbvend.h  |    1 +
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/iio/adc/ti-ads7950.c
-+++ b/drivers/iio/adc/ti-ads7950.c
-@@ -427,13 +427,15 @@ static int ti_ads7950_set(struct gpio_ch
- static int ti_ads7950_get(struct gpio_chip *chip, unsigned int offset)
- {
- 	struct ti_ads7950_state *st = gpiochip_get_data(chip);
-+	bool state;
- 	int ret;
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -73,6 +73,7 @@ static const struct usb_device_id edgepo
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_22I) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_412_4) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_COMPATIBLE) },
++	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_BLACKBOX_IC135A) },
+ 	{ }
+ };
  
- 	mutex_lock(&st->slock);
+@@ -121,6 +122,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_8R) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_8RR) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_412_8) },
++	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_BLACKBOX_IC135A) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0202) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0203) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0310) },
+@@ -470,6 +472,7 @@ static void get_product_info(struct edge
+ 	case ION_DEVICE_ID_EDGEPORT_2_DIN:
+ 	case ION_DEVICE_ID_EDGEPORT_4_DIN:
+ 	case ION_DEVICE_ID_EDGEPORT_16_DUAL_CPU:
++	case ION_DEVICE_ID_BLACKBOX_IC135A:
+ 		product_info->IsRS232 = 1;
+ 		break;
  
- 	/* If set as output, return the output */
- 	if (st->gpio_cmd_settings_bitmask & BIT(offset)) {
--		ret = (st->cmd_settings_bitmask & BIT(offset)) ? 1 : 0;
-+		state = st->cmd_settings_bitmask & BIT(offset);
-+		ret = 0;
- 		goto out;
- 	}
+--- a/drivers/usb/serial/io_usbvend.h
++++ b/drivers/usb/serial/io_usbvend.h
+@@ -211,6 +211,7 @@
  
-@@ -444,7 +446,7 @@ static int ti_ads7950_get(struct gpio_ch
- 	if (ret)
- 		goto out;
+ //
+ // Definitions for other product IDs
++#define ION_DEVICE_ID_BLACKBOX_IC135A		0x0801	// OEM device (rebranded Edgeport/4)
+ #define ION_DEVICE_ID_MT4X56USB			0x1403	// OEM device
+ #define ION_DEVICE_ID_E5805A			0x1A01  // OEM device (rebranded Edgeport/4)
  
--	ret = ((st->single_rx >> 12) & BIT(offset)) ? 1 : 0;
-+	state = (st->single_rx >> 12) & BIT(offset);
- 
- 	/* Revert back to original settings */
- 	st->cmd_settings_bitmask &= ~TI_ADS7950_CR_GPIO_DATA;
-@@ -456,7 +458,7 @@ static int ti_ads7950_get(struct gpio_ch
- out:
- 	mutex_unlock(&st->slock);
- 
--	return ret;
-+	return ret ?: state;
- }
- 
- static int ti_ads7950_get_direction(struct gpio_chip *chip,
 
 
