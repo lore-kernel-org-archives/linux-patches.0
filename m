@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F58A25A321;
-	Wed,  8 Apr 2026 18:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DB32727F3;
+	Wed,  8 Apr 2026 18:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674237; cv=none; b=JLnSlYXoSjg5Yz2Jl3HoAoDUOMNnwyTbUQlN2inI7MVrBw2gQwUiW7iSFDWbg/jJWKiDPH4/NDvyD95D1dXeDMWs7rYHSmTtsHZqZ+SKh3+fuKz1KL7SCOGcjesJvAygw+qJV/wowIDw/xZlQb9c4NvO+5WmWuWRm9UghS1kmek=
+	t=1775674239; cv=none; b=Eoxl0VJEYzEe1CZlHqHbbfjwqjJDvK7JcBQ/Imr+ZKH3AwLGZLUe5hZl0s/lgA/ciR2LnzMn8eqRjWa8gJabY5zKg+OMbddVIyREFEPQ5/sK7nFHj6mMLTc2HvFZwIUMvUJlpixL2iSOrbzC7XZF+r1TWv5SX3sGvKpBeEHMJxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674237; c=relaxed/simple;
-	bh=O49hh8m2GNYSfpqtjRfuh16E/ElV0lks4zlGQZw9r1w=;
+	s=arc-20240116; t=1775674239; c=relaxed/simple;
+	bh=/jgtYzdH71Ex1+O9SBRDBfk/n5lsiUHYxtCRyYCJ1T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sQI/t7BuopfTyX42iqNNGvCH64xI5Qr/pKVCuwH1jtjKftkKMpmuSQQfJ0/NDO6GlTBu220LJ1u8EJFW4nmz93Io/aMVPET4oXmxlCl/S+u7bIE+ARABCC18DsaRKXcAJN72BYSTXrhLHhymjsTiOo08LTnuhrkOKS+Pi96rHJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDLquKhC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZebgOUYBKeLWupOlmUUK6zGO8Mz3ugzT2y5tN28Cg44CHFvc52s4O+UITnUvxrde/MQzFAOyAuTRP0uOsbPYHv6vjYrQ4uWcVz2Etx6heNMlG2dbc21ZaumDk8bNVfNpldWc8NSWYUDyLa5taYR4pV4bHoTC+zRjCNJOKxA9fTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDNJUIce; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDLquKhC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9770CC19421;
-	Wed,  8 Apr 2026 18:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDNJUIce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34202C19421;
+	Wed,  8 Apr 2026 18:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674236;
-	bh=O49hh8m2GNYSfpqtjRfuh16E/ElV0lks4zlGQZw9r1w=;
+	s=korg; t=1775674239;
+	bh=/jgtYzdH71Ex1+O9SBRDBfk/n5lsiUHYxtCRyYCJ1T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IDLquKhCgzminBlJ9m2+IBXCM1t4YgbebR6Q9b9AU0cs5oHwSxE7WnlWtVoJJTmyo
-	 IhW4IyhRBi32cKCG7z+43mZ3SAmaXTAz7eg80FAfUtJdxE6MAY+5BIyWIeHuB+tibf
-	 ZIP3d4JKd4rVq+YmMEmVYlS1mzHGeJFu8j/uEPCA=
+	b=JDNJUIce7m1cdQRyHEKxpjyZ6JI3jNxWGRGlOe3z9Sfn92vlQ1TxEGh4z0YHNk0Fq
+	 Um9hKWJEpQO8wlxesIUZtNKrPBXR811cmcsooBGfR+Al2ln/bKp4vvS8f8PLH1maHI
+	 sYTtSTVT/S0rEaoiadrjNGNCCd7XhnVc6NEDBMaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tangxin Xie <xietangxin@yeah.net>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Lee Jones <lee@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 002/311] net: correctly handle tunneled traffic on IPV6_CSUM GSO fallback
-Date: Wed,  8 Apr 2026 20:00:02 +0200
-Message-ID: <20260408175939.490473844@linuxfoundation.org>
+Subject: [PATCH 6.19 020/311] HID: multitouch: Check to ensure report responses match the request
+Date: Wed,  8 Apr 2026 20:00:20 +0200
+Message-ID: <20260408175940.168322288@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,74 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit c4336a07eb6b2526dc2b62928b5104b41a7f81f5 ]
+[ Upstream commit e716edafedad4952fe3a4a273d2e039a84e8681a ]
 
-NETIF_F_IPV6_CSUM only advertises support for checksum offload of
-packets without IPv6 extension headers. Packets with extension
-headers must fall back onto software checksumming. Since TSO
-depends on checksum offload, those must revert to GSO.
+It is possible for a malicious (or clumsy) device to respond to a
+specific report's feature request using a completely different report
+ID.  This can cause confusion in the HID core resulting in nasty
+side-effects such as OOB writes.
 
-The below commit introduces that fallback. It always checks
-network header length. For tunneled packets, the inner header length
-must be checked instead. Extend the check accordingly.
+Add a check to ensure that the report ID in the response, matches the
+one that was requested.  If it doesn't, omit reporting the raw event and
+return early.
 
-A special case is tunneled packets without inner IP protocol. Such as
-RFC 6951 SCTP in UDP. Those are not standard IPv6 followed by
-transport header either, so also must revert to the software GSO path.
-
-Cc: stable@vger.kernel.org
-Fixes: 864e3396976e ("net: gso: Forbid IPv6 TSO with extensions on devices with only IPV6_CSUM")
-Reported-by: Tangxin Xie <xietangxin@yeah.net>
-Closes: https://lore.kernel.org/netdev/0414e7e2-9a1c-4d7c-a99d-b9039cf68f40@yeah.net/
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260320190148.2409107-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/hid/hid-multitouch.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3763,6 +3763,22 @@ static netdev_features_t dflt_features_c
- 	return vlan_features_check(skb, features);
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index b8a748bbf0fd8..e82a3c4e5b44e 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -526,12 +526,19 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
+ 		dev_warn(&hdev->dev, "failed to fetch feature %d\n",
+ 			 report->id);
+ 	} else {
++		/* The report ID in the request and the response should match */
++		if (report->id != buf[0]) {
++			hid_err(hdev, "Returned feature report did not match the request\n");
++			goto free;
++		}
++
+ 		ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, buf,
+ 					   size, 0);
+ 		if (ret)
+ 			dev_warn(&hdev->dev, "failed to report feature\n");
+ 	}
+ 
++free:
+ 	kfree(buf);
  }
  
-+static bool skb_gso_has_extension_hdr(const struct sk_buff *skb)
-+{
-+	if (!skb->encapsulation)
-+		return ((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
-+			 (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
-+			  vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
-+			skb_transport_header_was_set(skb) &&
-+			skb_network_header_len(skb) != sizeof(struct ipv6hdr));
-+	else
-+		return (!skb_inner_network_header_was_set(skb) ||
-+			((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
-+			  (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
-+			   inner_ip_hdr(skb)->version == 6)) &&
-+			 skb_inner_network_header_len(skb) != sizeof(struct ipv6hdr)));
-+}
-+
- static netdev_features_t gso_features_check(const struct sk_buff *skb,
- 					    struct net_device *dev,
- 					    netdev_features_t features)
-@@ -3810,11 +3826,7 @@ static netdev_features_t gso_features_ch
- 	 * so neither does TSO that depends on it.
- 	 */
- 	if (features & NETIF_F_IPV6_CSUM &&
--	    (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
--	     (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
--	      vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
--	    skb_transport_header_was_set(skb) &&
--	    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
-+	    skb_gso_has_extension_hdr(skb) &&
- 	    !ipv6_has_hopopt_jumbo(skb))
- 		features &= ~(NETIF_F_IPV6_CSUM | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4);
- 
+-- 
+2.53.0
+
 
 
