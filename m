@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38763ACF11;
-	Wed,  8 Apr 2026 18:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6668B3A6B6B;
+	Wed,  8 Apr 2026 18:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672369; cv=none; b=o8uIHXqQDFbc0TzzC0uV1n3lgG3KqTmmNTWbK647mtcJ8H8KNRVWJV02FlYvtJ34JAQG7zcsTYbCMOfMmpKFV7cZbp+r0C92UlAvGpQzeqh4YGyYVUvZJKqFEHBDYtyIhqVy9kJkPtl0g91IbAXJ38YkiPJUOF4TzEOLAqrE1mA=
+	t=1775672372; cv=none; b=pqurtJegEtCDOWIGq9bzlofUgAGgiKRkVZQpsw0WVF8nHt4wzVz8OZn9DTvl472JMvREJcGxrUbvgohm+lqDYzR4vH3Bx9XUACidQWGVpwInXGpJeNdu7pF7cbnEaEluLi0cLoxTsLAI3f938VsJQW3EGb4XcifN2U1j5pIAFuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672369; c=relaxed/simple;
-	bh=5QSiDOFZ/VL1XHcwCsE0uPq7iw7DoPr3uEBdNm1dJGY=;
+	s=arc-20240116; t=1775672372; c=relaxed/simple;
+	bh=a7pgviiFu1u9oNlE4dpYotKLbChCYSUjS/DGc5+Ftk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRhgne8L2G7SauiVGo0nX1IS6no9uJgFwdh5sibtsJqx9Y/8ZLdYNMRaTeDqDgH6HGWjQCU6c1WaRnhCYyoHvKozDc3esan6szwxbhBCWeflhXLfZloJsJmd5vyhxuyXLD6lWAUeh8DDEuHQYAePt2wQ2vcr4oEYZELOdPNCxnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlpBmgbs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iEBHlCVnw7xCl8sPgqoZE2gfnUS4gAacYiB8pf1iM6i4zdLCOlJDJEUyC39xsSAycDRkviKecVD16bKM1ECiEFEe/wdsD+LO1Xima2BvvE0yKN08Lz551oAil3BLObquaAaT0Z2bLrE2JdkrSQ+709GJBMSFJjCjqmH2Rm7wrqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbazVDIa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlpBmgbs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DCCC19421;
-	Wed,  8 Apr 2026 18:19:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbazVDIa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B6CC2BC87;
+	Wed,  8 Apr 2026 18:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672369;
-	bh=5QSiDOFZ/VL1XHcwCsE0uPq7iw7DoPr3uEBdNm1dJGY=;
+	s=korg; t=1775672372;
+	bh=a7pgviiFu1u9oNlE4dpYotKLbChCYSUjS/DGc5+Ftk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IlpBmgbskjTgFd5o+T/mFj/6Xo7k3LwUmv8azL3lL7iac+JLbxDeQGdZxDxtInNa8
-	 kdAy5Bz5bKnML9UD23/fs9pqoeWibUhpPYMho3wcgnpagAu77FTFh4CjuvQO+4kH8A
-	 JMUlUlL9GyJC/VKZ+Oo7PC8x0n1z7z5Ep/eE7lOE=
+	b=FbazVDIaEILEi/4kw6xFrRg8U6sB6ik98AIruyassofMW46jmFgg5mIt4M5vvmcU0
+	 hMNhxBp3GZDbYF/FdT4LaZLDmSL1Xl9tW8Bxe0+yrf4jfkOYzdJ1zBTW65Do9zrQz2
+	 AKBPDr55zF10IQ7WntVPtkHxnPu4fWdKbgoPNTto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
+	Liao Chang <liaochang1@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 292/312] ext4: handle wraparound when searching for blocks for indirect mapped blocks
-Date: Wed,  8 Apr 2026 20:03:29 +0200
-Message-ID: <20260408175944.671597745@linuxfoundation.org>
+Subject: [PATCH 6.1 293/312] cpufreq: governor: Free dbs_data directly when gov->init() fails
+Date: Wed,  8 Apr 2026 20:03:30 +0200
+Message-ID: <20260408175944.709973859@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -53,62 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Liao Chang <liaochang1@huawei.com>
 
-[ Upstream commit bb81702370fad22c06ca12b6e1648754dbc37e0f ]
+[ Upstream commit 916f13884042f615cfbfc0b42cc68dadee826f2a ]
 
-Commit 4865c768b563 ("ext4: always allocate blocks only from groups
-inode can use") restricts what blocks will be allocated for indirect
-block based files to block numbers that fit within 32-bit block
-numbers.
+Due to the kobject embedded in the dbs_data doest not has a release()
+method yet, it needs to use kfree() to free dbs_data directly when
+governor fails to allocate the tunner field of dbs_data.
 
-However, when using a review bot running on the latest Gemini LLM to
-check this commit when backporting into an LTS based kernel, it raised
-this concern:
-
-   If ac->ac_g_ex.fe_group is >= ngroups (for instance, if the goal
-   group was populated via stream allocation from s_mb_last_groups),
-   then start will be >= ngroups.
-
-   Does this allow allocating blocks beyond the 32-bit limit for
-   indirect block mapped files? The commit message mentions that
-   ext4_mb_scan_groups_linear() takes care to not select unsupported
-   groups. However, its loop uses group = *start, and the very first
-   iteration will call ext4_mb_scan_group() with this unsupported
-   group because next_linear_group() is only called at the end of the
-   iteration.
-
-After reviewing the code paths involved and considering the LLM
-review, I determined that this can happen when there is a file system
-where some files/directories are extent-mapped and others are
-indirect-block mapped.  To address this, add a safety clamp in
-ext4_mb_scan_groups().
-
-Fixes: 4865c768b563 ("ext4: always allocate blocks only from groups inode can use")
-Cc: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://patch.msgid.link/20260326045834.1175822-1-tytso@mit.edu
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ adapted fix from ext4_mb_scan_groups() to inline equivalent in ext4_mb_regular_allocator() ]
+Signed-off-by: Liao Chang <liaochang1@huawei.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 6dcf9d0064ce ("cpufreq: governor: fix double free in cpufreq_dbs_governor_init() error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cpufreq/cpufreq_governor.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -2733,6 +2733,8 @@ repeat:
- 		 * from the goal value specified
- 		 */
- 		group = ac->ac_g_ex.fe_group;
-+		if (group >= ngroups)
-+			group = 0;
- 		ac->ac_groups_linear_remaining = sbi->s_mb_max_linear_groups;
- 		prefetch_grp = group;
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -440,7 +440,7 @@ int cpufreq_dbs_governor_init(struct cpu
  
+ 	ret = gov->init(dbs_data);
+ 	if (ret)
+-		goto free_policy_dbs_info;
++		goto free_dbs_data;
+ 
+ 	/*
+ 	 * The sampling interval should not be less than the transition latency
+@@ -475,6 +475,8 @@ int cpufreq_dbs_governor_init(struct cpu
+ 	if (!have_governor_per_policy())
+ 		gov->gdbs_data = NULL;
+ 	gov->exit(dbs_data);
++
++free_dbs_data:
+ 	kfree(dbs_data);
+ 
+ free_policy_dbs_info:
 
 
