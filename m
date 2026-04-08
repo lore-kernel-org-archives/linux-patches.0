@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC891B67E;
-	Wed,  8 Apr 2026 18:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFDA3D522C;
+	Wed,  8 Apr 2026 18:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673673; cv=none; b=qTtlCyXmqzB9jqE5JorsFcqhmSKlJz3KEaTsR9IxdDc9HTwMhRrqozOZggJBINGUGtowsOpPe4xIeTrOLX937nEkgkjsUG+dPi9cl+8LE9WZGtj25Bga1DXddfs7g8INLEUeVMKWEgQG7ARKvC9273zgiPxSmi3ih3RZT1aujt0=
+	t=1775673676; cv=none; b=Ee+3GuFjRRVI2HclBlbkPx7NaH4Qq+s2bisDC2jOSYeVpbUfHG04kyFI+owHJZzSZngX2l1GO5aRJfsyLJ/A0UOVoP2EoNAWjlz8MZ2MVIjTnbNVqsoA0rABLkTdl/8b3+FUsscUBFAZhc7mDyL3/qer+guu8tjHOQoXouxtMCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673673; c=relaxed/simple;
-	bh=oPqi6+Xj1tEGDb/iYBT5Jfq5GDpCpcYtgOOjoDIlAVE=;
+	s=arc-20240116; t=1775673676; c=relaxed/simple;
+	bh=rl7D71K0Ngv9hZCczjZ8wIBzvcHapdee8A/W6bG/Deg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GrlczUwAW1SjodwgPAq+cwO46AS6oiX1N+R2F2N+V8Jm17aKQXlGCF7G2xrBYp//9OOFwUim2vU/xwznraINT6qko0pAFhn+hdoKaGUaar0iXxdF4xrLPU2ipVqEPR+R6D/dVromOmc1m1ts009qiM7Nz5JiNJAQ/l/dNeullkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVfzZ+Wd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uHlAPW7BhPQNWjPMBNcCscDKq+dy97tT/FSQaG9r2ClmNNPyy6z3tlGaoZYIVqmliMrT9uilG4mJj1OvCiam4AfBRudYZ1nNmv9rJkJPmvv0V1T1O9PFUhX/KbuEpdSzQ772t1dDY+iZGB5bApiJ3SJ1VDPGUGKC0l7qyy1+vmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6uTtOKL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVfzZ+Wd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF48C19421;
-	Wed,  8 Apr 2026 18:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6uTtOKL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953EBC19421;
+	Wed,  8 Apr 2026 18:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673673;
-	bh=oPqi6+Xj1tEGDb/iYBT5Jfq5GDpCpcYtgOOjoDIlAVE=;
+	s=korg; t=1775673675;
+	bh=rl7D71K0Ngv9hZCczjZ8wIBzvcHapdee8A/W6bG/Deg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVfzZ+Wd08Cklg0JklbNZxyJyROGQ8vz+gBl1XgR63FQKplr0DSfwqYKZ8yaX0Wdx
-	 Zpdhq6q5h3ZAs/ZaPceT0PgerQX9NSAps0IpglD7VV+BboJkITxoT+oUYKpVROuv4m
-	 YSlV8yusmJ7RkAD5yKxmefgBfP3S/wON+twljQwU=
+	b=H6uTtOKL3BgCPJ1qVcDg+Q6lwv7Ef8rDZ9sdYZ0j1bo+7BVqjlBbFoYhRo68dNIVS
+	 WS+7+CoqIYjlagxJmSvRHPc2KI53GM5JJnCSXkqc0Dkaa2yRCQXMhCkOpvmgPfMip5
+	 p9XE+/nn/2DRSpkW99dqEwaRoCRAerq0FSV2JdGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+006987d1be3586e13555@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Yochai Eisenrich <echelonh@gmail.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/242] net: qrtr: replace qrtr_tx_flow radix_tree with xarray to fix memory leak
-Date: Wed,  8 Apr 2026 20:01:26 +0200
-Message-ID: <20260408175928.795209270@linuxfoundation.org>
+Subject: [PATCH 6.12 047/242] net: ipv6: ndisc: fix ndisc_ra_useropt to initialize nduseropt_padX fields to zero to prevent an info-leak
+Date: Wed,  8 Apr 2026 20:01:27 +0200
+Message-ID: <20260408175928.831977894@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -47,153 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Yochai Eisenrich <echelonh@gmail.com>
 
-[ Upstream commit 2428083101f6883f979cceffa76cd8440751ffe6 ]
+[ Upstream commit ae05340ccaa9d347fe85415609e075545bec589f ]
 
-__radix_tree_create() allocates and links intermediate nodes into the
-tree one by one. If a subsequent allocation fails, the already-linked
-nodes remain in the tree with no corresponding leaf entry. These orphaned
-internal nodes are never reclaimed because radix_tree_for_each_slot()
-only visits slots containing leaf values.
+When processing Router Advertisements with user options the kernel
+builds an RTM_NEWNDUSEROPT netlink message. The nduseroptmsg struct
+has three padding fields that are never zeroed and can leak kernel data
 
-The radix_tree API is deprecated in favor of xarray. As suggested by
-Matthew Wilcox, migrate qrtr_tx_flow from radix_tree to xarray instead
-of fixing the radix_tree itself [1]. xarray properly handles cleanup of
-internal nodes — xa_destroy() frees all internal xarray nodes when the
-qrtr_node is released, preventing the leak.
+The fix is simple, just zeroes the padding fields.
 
-[1] https://lore.kernel.org/all/20260225071623.41275-1-jiayuan.chen@linux.dev/T/
-Reported-by: syzbot+006987d1be3586e13555@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000bfba3a060bf4ffcf@google.com/T/
-Fixes: 5fdeb0d372ab ("net: qrtr: Implement outgoing flow control")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Fixes: 31910575a9de ("[IPv6]: Export userland ND options through netlink (RDNSS support)")
+Signed-off-by: Yochai Eisenrich <echelonh@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260324080645.290197-1-jiayuan.chen@linux.dev
+Link: https://patch.msgid.link/20260324224925.2437775-1-echelonh@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 31 +++++++++++++------------------
- 1 file changed, 13 insertions(+), 18 deletions(-)
+ net/ipv6/ndisc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 00c51cf693f3d..b703e4c645853 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -118,7 +118,7 @@ static DEFINE_XARRAY_ALLOC(qrtr_ports);
-  * @ep: endpoint
-  * @ref: reference count for node
-  * @nid: node id
-- * @qrtr_tx_flow: tree of qrtr_tx_flow, keyed by node << 32 | port
-+ * @qrtr_tx_flow: xarray of qrtr_tx_flow, keyed by node << 32 | port
-  * @qrtr_tx_lock: lock for qrtr_tx_flow inserts
-  * @rx_queue: receive queue
-  * @item: list item for broadcast list
-@@ -129,7 +129,7 @@ struct qrtr_node {
- 	struct kref ref;
- 	unsigned int nid;
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 480c906cb374c..64bd0cbb67d70 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -1220,6 +1220,9 @@ static void ndisc_ra_useropt(struct sk_buff *ra, struct nd_opt_hdr *opt)
+ 	ndmsg->nduseropt_icmp_type = icmp6h->icmp6_type;
+ 	ndmsg->nduseropt_icmp_code = icmp6h->icmp6_code;
+ 	ndmsg->nduseropt_opts_len = opt->nd_opt_len << 3;
++	ndmsg->nduseropt_pad1 = 0;
++	ndmsg->nduseropt_pad2 = 0;
++	ndmsg->nduseropt_pad3 = 0;
  
--	struct radix_tree_root qrtr_tx_flow;
-+	struct xarray qrtr_tx_flow;
- 	struct mutex qrtr_tx_lock; /* for qrtr_tx_flow */
+ 	memcpy(ndmsg + 1, opt, opt->nd_opt_len << 3);
  
- 	struct sk_buff_head rx_queue;
-@@ -172,6 +172,7 @@ static void __qrtr_node_release(struct kref *kref)
- 	struct qrtr_tx_flow *flow;
- 	unsigned long flags;
- 	void __rcu **slot;
-+	unsigned long index;
- 
- 	spin_lock_irqsave(&qrtr_nodes_lock, flags);
- 	/* If the node is a bridge for other nodes, there are possibly
-@@ -189,11 +190,9 @@ static void __qrtr_node_release(struct kref *kref)
- 	skb_queue_purge(&node->rx_queue);
- 
- 	/* Free tx flow counters */
--	radix_tree_for_each_slot(slot, &node->qrtr_tx_flow, &iter, 0) {
--		flow = *slot;
--		radix_tree_iter_delete(&node->qrtr_tx_flow, &iter, slot);
-+	xa_for_each(&node->qrtr_tx_flow, index, flow)
- 		kfree(flow);
--	}
-+	xa_destroy(&node->qrtr_tx_flow);
- 	kfree(node);
- }
- 
-@@ -228,9 +227,7 @@ static void qrtr_tx_resume(struct qrtr_node *node, struct sk_buff *skb)
- 
- 	key = remote_node << 32 | remote_port;
- 
--	rcu_read_lock();
--	flow = radix_tree_lookup(&node->qrtr_tx_flow, key);
--	rcu_read_unlock();
-+	flow = xa_load(&node->qrtr_tx_flow, key);
- 	if (flow) {
- 		spin_lock(&flow->resume_tx.lock);
- 		flow->pending = 0;
-@@ -269,12 +266,13 @@ static int qrtr_tx_wait(struct qrtr_node *node, int dest_node, int dest_port,
- 		return 0;
- 
- 	mutex_lock(&node->qrtr_tx_lock);
--	flow = radix_tree_lookup(&node->qrtr_tx_flow, key);
-+	flow = xa_load(&node->qrtr_tx_flow, key);
- 	if (!flow) {
- 		flow = kzalloc(sizeof(*flow), GFP_KERNEL);
- 		if (flow) {
- 			init_waitqueue_head(&flow->resume_tx);
--			if (radix_tree_insert(&node->qrtr_tx_flow, key, flow)) {
-+			if (xa_err(xa_store(&node->qrtr_tx_flow, key, flow,
-+					    GFP_KERNEL))) {
- 				kfree(flow);
- 				flow = NULL;
- 			}
-@@ -326,9 +324,7 @@ static void qrtr_tx_flow_failed(struct qrtr_node *node, int dest_node,
- 	unsigned long key = (u64)dest_node << 32 | dest_port;
- 	struct qrtr_tx_flow *flow;
- 
--	rcu_read_lock();
--	flow = radix_tree_lookup(&node->qrtr_tx_flow, key);
--	rcu_read_unlock();
-+	flow = xa_load(&node->qrtr_tx_flow, key);
- 	if (flow) {
- 		spin_lock_irq(&flow->resume_tx.lock);
- 		flow->tx_failed = 1;
-@@ -599,7 +595,7 @@ int qrtr_endpoint_register(struct qrtr_endpoint *ep, unsigned int nid)
- 	node->nid = QRTR_EP_NID_AUTO;
- 	node->ep = ep;
- 
--	INIT_RADIX_TREE(&node->qrtr_tx_flow, GFP_KERNEL);
-+	xa_init(&node->qrtr_tx_flow);
- 	mutex_init(&node->qrtr_tx_lock);
- 
- 	qrtr_node_assign(node, nid);
-@@ -627,6 +623,7 @@ void qrtr_endpoint_unregister(struct qrtr_endpoint *ep)
- 	struct qrtr_tx_flow *flow;
- 	struct sk_buff *skb;
- 	unsigned long flags;
-+	unsigned long index;
- 	void __rcu **slot;
- 
- 	mutex_lock(&node->ep_lock);
-@@ -649,10 +646,8 @@ void qrtr_endpoint_unregister(struct qrtr_endpoint *ep)
- 
- 	/* Wake up any transmitters waiting for resume-tx from the node */
- 	mutex_lock(&node->qrtr_tx_lock);
--	radix_tree_for_each_slot(slot, &node->qrtr_tx_flow, &iter, 0) {
--		flow = *slot;
-+	xa_for_each(&node->qrtr_tx_flow, index, flow)
- 		wake_up_interruptible_all(&flow->resume_tx);
--	}
- 	mutex_unlock(&node->qrtr_tx_lock);
- 
- 	qrtr_node_release(node);
 -- 
 2.53.0
 
