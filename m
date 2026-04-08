@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB4D3D47A5;
-	Wed,  8 Apr 2026 18:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D31347517;
+	Wed,  8 Apr 2026 18:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671791; cv=none; b=LBNt+4B1Nu679LETWEZnTHWVo3tKRpTmYK2MstlEkyloLfoRDIy1YNoVZOoV04mO7pHvqMWjdN5HfYHSrKLNjipewRiAnECHUtBdpwW2FKlXM7P4ouR0txfpjdqe1hG+CKr2gB61JXh07O4FCnYR9Y4CQZlcW2M0Rg4fHrBb3iY=
+	t=1775671794; cv=none; b=mKOs+glZjU1N7rVbToF2xmtr53sy1EPqgAvJXIHSqS/CuQj/rtT0aoG6zMBBINorpgGKigFziLkKeZ2cbWC8MYIvPjxFaCJDRGiiOOwEnNZHh3FM+tWQQRLSb0HURE1NfkLONXd7VomNBauX3oiKteg2sA88WRrRhwyR9xrr3y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671791; c=relaxed/simple;
-	bh=qHt+/D2VW5aZ5b1iUx7TcyCXpZbTYurkCnQv/n3B8Ok=;
+	s=arc-20240116; t=1775671794; c=relaxed/simple;
+	bh=AggdHI+Znr7zTQreb9Nlw5j3IQDJVrRdP5nOcoLq3Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WsGSiGRyMUM9lpaMXVKXN38VLZivdKD0eDlcAcrhSzwChL+Um2ivtVdnOpDFT7tMnsc4mUO3WGG9oEGoQjeOlCpIoShhbEyLhP8e6VUB6LtWDFw6+VL/1dGVsJ/UMmlqT4FE0GlN+aLsvXOLATegwUXTT0wNLGRx8t6Va8cGJ98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqAJor0A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RN7hc+czhlASaQ3L21X7Wi2G0T6C6XMBELjmnHZf9D5yRjziFtppFyE5DRaUf79SMiU/ukJvDFNzYtqkNUaMvabJTgOwsOR2w1eTEbSlVgMOUtzxfxTBGuVVOZGFxvosOb4P0qWxQToduRsKjdi26BHjTkx1VMTVilGKndpzSRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lwImlom; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqAJor0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D56C19421;
-	Wed,  8 Apr 2026 18:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lwImlom"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5DEC19421;
+	Wed,  8 Apr 2026 18:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671791;
-	bh=qHt+/D2VW5aZ5b1iUx7TcyCXpZbTYurkCnQv/n3B8Ok=;
+	s=korg; t=1775671794;
+	bh=AggdHI+Znr7zTQreb9Nlw5j3IQDJVrRdP5nOcoLq3Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wqAJor0AUv6RaoeXUD7/j4wwGZ0KeA/SRP4z47cJ99du7DV6WRXA3phKEHp7WAKoI
-	 pXhmby2xkx7E1O16VKEVg/sIPkA6yMhcnSOajZ3rOCd7B8pcVWsqJ9RRA/dC1EszOi
-	 XFWZ6kbaEvXFJ0otyY5Vd3ECZ5B/osdVrxT9zcUU=
+	b=2lwImlomkphGpCDvWOIFPvWtcBBpWCHdxqA/V8Spqb6mbkq9DeefVZlh6RmI6ikPv
+	 ncZyl+Pt5S+MbhfqOdifk4vqZNqKl+sYwI1YeuY5v8rswVkWwYkAzDVGmlXY1M8yWX
+	 W9iRlpUzPeISUtoWlLDvO5q3ptI5lOsXdUIc6GOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Barrera <ivan.d.barrera@intel.com>,
 	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/312] RDMA/irdma: Clean up unnecessary dereference of event->cm_node
-Date: Wed,  8 Apr 2026 19:59:46 +0200
-Message-ID: <20260408175936.317272503@linuxfoundation.org>
+Subject: [PATCH 6.1 070/312] RDMA/irdma: Remove reset check from irdma_modify_qp_to_err()
+Date: Wed,  8 Apr 2026 19:59:47 +0200
+Message-ID: <20260408175936.355113199@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,62 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Barrera <ivan.d.barrera@intel.com>
+From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 
-[ Upstream commit b415399c9a024d574b65479636f0d4eb625b9abd ]
+[ Upstream commit c45c6ebd693b944f1ffe429fdfb6cc1674c237be ]
 
-The cm_node is available and the usage of cm_node and event->cm_node
-seems arbitrary. Clean up unnecessary dereference of event->cm_node.
+During reset, irdma_modify_qp() to error should be called to disconnect
+the QP. Without this fix, if not preceded by irdma_modify_qp() to error, the
+API call irdma_destroy_qp() gets stuck waiting for the QP refcount to go
+to zero, because the cm_node associated with this QP isn't disconnected.
 
-Fixes: 146b9756f14c ("RDMA/irdma: Add connection manager")
-Signed-off-by: Ivan Barrera <ivan.d.barrera@intel.com>
+Fixes: 915cc7ac0f8e ("RDMA/irdma: Add miscellaneous utility definitions")
 Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/cm.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/irdma/utils.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/cm.c b/drivers/infiniband/hw/irdma/cm.c
-index 691b9ed7f759d..b8f945576eb53 100644
---- a/drivers/infiniband/hw/irdma/cm.c
-+++ b/drivers/infiniband/hw/irdma/cm.c
-@@ -4181,21 +4181,21 @@ static void irdma_cm_event_handler(struct work_struct *work)
- 		irdma_cm_event_reset(event);
- 		break;
- 	case IRDMA_CM_EVENT_CONNECTED:
--		if (!event->cm_node->cm_id ||
--		    event->cm_node->state != IRDMA_CM_STATE_OFFLOADED)
-+		if (!cm_node->cm_id ||
-+		    cm_node->state != IRDMA_CM_STATE_OFFLOADED)
- 			break;
- 		irdma_cm_event_connected(event);
- 		break;
- 	case IRDMA_CM_EVENT_MPA_REJECT:
--		if (!event->cm_node->cm_id ||
-+		if (!cm_node->cm_id ||
- 		    cm_node->state == IRDMA_CM_STATE_OFFLOADED)
- 			break;
- 		irdma_send_cm_event(cm_node, cm_node->cm_id,
- 				    IW_CM_EVENT_CONNECT_REPLY, -ECONNREFUSED);
- 		break;
- 	case IRDMA_CM_EVENT_ABORTED:
--		if (!event->cm_node->cm_id ||
--		    event->cm_node->state == IRDMA_CM_STATE_OFFLOADED)
-+		if (!cm_node->cm_id ||
-+		    cm_node->state == IRDMA_CM_STATE_OFFLOADED)
- 			break;
- 		irdma_event_connect_error(event);
- 		break;
-@@ -4205,7 +4205,7 @@ static void irdma_cm_event_handler(struct work_struct *work)
- 		break;
- 	}
+diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
+index d236e4a27ca92..98a3849c39bf0 100644
+--- a/drivers/infiniband/hw/irdma/utils.c
++++ b/drivers/infiniband/hw/irdma/utils.c
+@@ -2456,8 +2456,6 @@ void irdma_modify_qp_to_err(struct irdma_sc_qp *sc_qp)
+ 	struct irdma_qp *qp = sc_qp->qp_uk.back_qp;
+ 	struct ib_qp_attr attr;
  
--	irdma_rem_ref_cm_node(event->cm_node);
-+	irdma_rem_ref_cm_node(cm_node);
- 	kfree(event);
- }
+-	if (qp->iwdev->rf->reset)
+-		return;
+ 	attr.qp_state = IB_QPS_ERR;
  
+ 	if (rdma_protocol_roce(qp->ibqp.device, 1))
 -- 
 2.53.0
 
