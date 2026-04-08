@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED46A33121F;
-	Wed,  8 Apr 2026 18:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2343624B2;
+	Wed,  8 Apr 2026 18:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674082; cv=none; b=BRq3WxSZslIAduUUxjSzZqXf0nzsNSG2vGoSPKMSQpCmIXThK+w8NhMHqYA2lf7qWteiLTbT+7WnueDEZqx/64p+je96ois4Hti9pvLGAfY9+iVezk3neO4nQzMaQWTULt7d80TjHAjvytBga4VBx0zJOZPZnyoVf7z6cNlSYh4=
+	t=1775674084; cv=none; b=ImtkXEobCn1ugacf4OpNVkLHNapq8Zx1DdHWtAqmRkJd9lJiaJ2ulvIH4c07F+KS4D53C17Kw7OkamP1LYe5rtQF1G/DRE+EgZ+6iJICyC3SffxEDCOuiNwPmpbWs3xOpBK2pjmZtv2ayTZGa3jqfTUiMbrQr+z3B5gUq2xxvhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674082; c=relaxed/simple;
-	bh=p7VBz8VDBS25lM8Sy3pKPWDpd7sChbx7q1HExhSrhVc=;
+	s=arc-20240116; t=1775674084; c=relaxed/simple;
+	bh=M2Onc25iO+4/rV73H0QVcGdmvUkcDFF2oTyS+4cbAzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PA1hC61C+tscaFPQ+JmadtY26nxB6HAwdksFYO8EHcbwr35JGvcJd2AyBXHoICyaH+cr63vBG3yEu8B+QTxMYHBZimRZ7sdSGZVhMHTwcyVpMZiDbXqIRrtA1T3rorCntwd/7AkFv+QrC1nGvX3nVof+G7htqBLV5TJqYmI/lSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMBG2Aj/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kRsq1jpcxjbBCb2/BijDNS5ZDHxwiCaStAMZ1CMsjGnpveyPC6atSc8PoQg8nh2htva0ws+aAaQ+V2NYxHtsOVvIlSAoXIBF8DsAQ+DVNjmt995uux8W2BFp1Mb97MjsL7kG1D+AZAgXCX4NuCs54KvQkJN0Cs3ioL84lOQsCzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKzte96o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMBG2Aj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83758C19421;
-	Wed,  8 Apr 2026 18:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKzte96o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226E2C19425;
+	Wed,  8 Apr 2026 18:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674081;
-	bh=p7VBz8VDBS25lM8Sy3pKPWDpd7sChbx7q1HExhSrhVc=;
+	s=korg; t=1775674084;
+	bh=M2Onc25iO+4/rV73H0QVcGdmvUkcDFF2oTyS+4cbAzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMBG2Aj/3lWLhrZdrtryKHxUP5Xc0ZwR3CvCm4i5JmTHsb5P18egeBgBsYYR+czDu
-	 dapyAGiuJcArcG+ySF5e2KATydNDNYuHBfMyfQIFPQItlBKwoJaRTGXIvBj1VBVzDx
-	 xbvr9F5yMzicM4akFPpJJC6BaGhLfZGeeYKdhGt4=
+	b=uKzte96ow+lhiL5DCItIIK3vrjFoOFFPlV+G8scBzltUmqxU21Z0Oalo/eVboM7D4
+	 hT1e7AlluKcz6RfnsxAIgMi/mjlqLC3zPSRSmhZVMRLIpXL1orE4rlIzRNSuV/mEZI
+	 1A6MgoNa/ggJBI0A1iyniAl7ymOOdZR7GKEyU3/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Val Packett <val@packett.cool>,
 	stable <stable@kernel.org>,
 	Kuen-Han Tsai <khtsai@google.com>
-Subject: [PATCH 6.12 201/242] usb: gadget: u_ether: Fix race between gether_disconnect and eth_stop
-Date: Wed,  8 Apr 2026 20:04:01 +0200
-Message-ID: <20260408175934.604529159@linuxfoundation.org>
+Subject: [PATCH 6.12 202/242] usb: gadget: u_ether: Fix NULL pointer deref in eth_get_drvinfo
+Date: Wed,  8 Apr 2026 20:04:02 +0200
+Message-ID: <20260408175934.641809909@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,75 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuen-Han Tsai <khtsai@google.com>
 
-commit e1eabb072c75681f78312c484ccfffb7430f206e upstream.
+commit e002e92e88e12457373ed096b18716d97e7bbb20 upstream.
 
-A race condition between gether_disconnect() and eth_stop() leads to a
-NULL pointer dereference. Specifically, if eth_stop() is triggered
-concurrently while gether_disconnect() is tearing down the endpoints,
-eth_stop() attempts to access the cleared endpoint descriptor, causing
-the following NPE:
+Commit ec35c1969650 ("usb: gadget: f_ncm: Fix net_device lifecycle with
+device_move") reparents the gadget device to /sys/devices/virtual during
+unbind, clearing the gadget pointer. If the userspace tool queries on
+the surviving interface during this detached window, this leads to a
+NULL pointer dereference.
 
-  Unable to handle kernel NULL pointer dereference
-  Call trace:
-   __dwc3_gadget_ep_enable+0x60/0x788
-   dwc3_gadget_ep_enable+0x70/0xe4
-   usb_ep_enable+0x60/0x15c
-   eth_stop+0xb8/0x108
+Unable to handle kernel NULL pointer dereference
+Call trace:
+ eth_get_drvinfo+0x50/0x90
+ ethtool_get_drvinfo+0x5c/0x1f0
+ __dev_ethtool+0xaec/0x1fe0
+ dev_ethtool+0x134/0x2e0
+ dev_ioctl+0x338/0x560
 
-Because eth_stop() crashes while holding the dev->lock, the thread
-running gether_disconnect() fails to acquire the same lock and spins
-forever, resulting in a hardlockup:
+Add a NULL check for dev->gadget in eth_get_drvinfo(). When detached,
+skip copying the fw_version and bus_info strings, which is natively
+handled by ethtool_get_drvinfo for empty strings.
 
-  Core - Debugging Information for Hardlockup core(7)
-  Call trace:
-   queued_spin_lock_slowpath+0x94/0x488
-   _raw_spin_lock+0x64/0x6c
-   gether_disconnect+0x19c/0x1e8
-   ncm_set_alt+0x68/0x1a0
-   composite_setup+0x6a0/0xc50
-
-The root cause is that the clearing of dev->port_usb in
-gether_disconnect() is delayed until the end of the function.
-
-Move the clearing of dev->port_usb to the very beginning of
-gether_disconnect() while holding dev->lock. This cuts off the link
-immediately, ensuring eth_stop() will see dev->port_usb as NULL and
-safely bail out.
-
-Fixes: 2b3d942c4878 ("usb ethernet gadget: split out network core")
+Suggested-by: Val Packett <val@packett.cool>
+Reported-by: Val Packett <val@packett.cool>
+Closes: https://lore.kernel.org/linux-usb/10890524-cf83-4a71-b879-93e2b2cc1fcc@packett.cool/
+Fixes: ec35c1969650 ("usb: gadget: f_ncm: Fix net_device lifecycle with device_move")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260311-gether-disconnect-npe-v1-1-454966adf7c7@google.com
+Link: https://patch.msgid.link/20260316-eth-null-deref-v1-1-07005f33be85@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_ether.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/function/u_ether.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/drivers/usb/gadget/function/u_ether.c
 +++ b/drivers/usb/gadget/function/u_ether.c
-@@ -1222,6 +1222,11 @@ void gether_disconnect(struct gether *li
+@@ -112,8 +112,10 @@ static void eth_get_drvinfo(struct net_d
  
- 	DBG(dev, "%s\n", __func__);
- 
-+	spin_lock(&dev->lock);
-+	dev->port_usb = NULL;
-+	link->is_suspend = false;
-+	spin_unlock(&dev->lock);
-+
- 	netif_stop_queue(dev->net);
- 	netif_carrier_off(dev->net);
- 
-@@ -1259,11 +1264,6 @@ void gether_disconnect(struct gether *li
- 	dev->header_len = 0;
- 	dev->unwrap = NULL;
- 	dev->wrap = NULL;
--
--	spin_lock(&dev->lock);
--	dev->port_usb = NULL;
--	link->is_suspend = false;
--	spin_unlock(&dev->lock);
+ 	strscpy(p->driver, "g_ether", sizeof(p->driver));
+ 	strscpy(p->version, UETH__VERSION, sizeof(p->version));
+-	strscpy(p->fw_version, dev->gadget->name, sizeof(p->fw_version));
+-	strscpy(p->bus_info, dev_name(&dev->gadget->dev), sizeof(p->bus_info));
++	if (dev->gadget) {
++		strscpy(p->fw_version, dev->gadget->name, sizeof(p->fw_version));
++		strscpy(p->bus_info, dev_name(&dev->gadget->dev), sizeof(p->bus_info));
++	}
  }
- EXPORT_SYMBOL_GPL(gether_disconnect);
  
+ /* REVISIT can also support:
 
 
