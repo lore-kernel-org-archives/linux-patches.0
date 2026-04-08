@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE9425A321;
-	Wed,  8 Apr 2026 18:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F263176E4;
+	Wed,  8 Apr 2026 18:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674201; cv=none; b=qdJw1i0gfhtDvybA5XBKSlrhJzpo2ENRDIyrCWEMlpQOToGAxilVxj+Dpx4oM8E++LXKUWYhyx09Z8qoXSSbLh17V8JSOqrBy7tTR5MISGVDi8Hme+8StdTQc8YGwFCurEMmZ8b/tZIYo4MLhaBu2JhmeZJs6rZyvqbMCS5dyC8=
+	t=1775674204; cv=none; b=Mgo1iL4ufA12FxhVScVJKac6sbsTxebkXBh4Mk58cL5Ts7oq26VDNu6GY7ktcwOw5Z4t6NCB2mhOqG6/+Rt1gDmAt5TX/mTUh/YetfHp2p58xrRapbRmb6x22M0IXSMC2RoNnvccOo8+igUU6wlx/AaK9t16GL5ZtSXjkQaXyiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674201; c=relaxed/simple;
-	bh=PyqLWYlWHOw2Bl2ZekQn+I51LDhohzHiL28ui6m87R4=;
+	s=arc-20240116; t=1775674204; c=relaxed/simple;
+	bh=U0GB9GY25p1yNGPITQRm3oK5h1AVeiq8LnpduvvSNxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ItasCdL58du9IokCWkDLpVQaSGKY3R0wxL6plq8h3cHVxqCfiAz8xhChdpAVqNrpa71JS/ci9mFS99sSLCkJsOC6n7eyPFY2h7M6QqRbwm0HmQZwe6PHrXleKmZbW+NUXgi75MAs07gnBz4tj+6Q5IdzEPFoob73E3uAp+JbcJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1xvpgbJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cu7/2x9bHce1nhirXb/hWafCSDFp1AQe2TNYTH8JsQCV5b7IoQUHPMA0Eq4KbmqhKvR4Q+3Z8sPAoQNHWISHLgdbj1GZf2BaCSu198DLzwi23sXhTz6SF81SWvxrnHGBQTFOv88xVqN9z3lqaEu91IMpXR+VqPCFtEI1Xh+Bhp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPMEixLq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1xvpgbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4561C19421;
-	Wed,  8 Apr 2026 18:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPMEixLq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CB6C19421;
+	Wed,  8 Apr 2026 18:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674201;
-	bh=PyqLWYlWHOw2Bl2ZekQn+I51LDhohzHiL28ui6m87R4=;
+	s=korg; t=1775674203;
+	bh=U0GB9GY25p1yNGPITQRm3oK5h1AVeiq8LnpduvvSNxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F1xvpgbJZhid8ckTPWEzNb/9dfEPNJYL4bLH09FBC+gj5Gx6cGrEOGSH4RSfsAIpM
-	 aDpNzOTy0acO+BsxUf3aHdPN4AtEwo2OAt+W8RYZ39hojxLBXv3Ge3nAYtl9Y/0wu6
-	 xI741JXFI9Nbiei/D8NWHvmGWw920P5yrxLx9oos=
+	b=rPMEixLqUGc6U7VXaGO+w+8OJRqAwvCR6cXcZwSwfKNAxJxc8lSWuyEWg05coDjtd
+	 fRlNX+uwps5orB/Pi/EIT77J72yZarROQNEOSy8+MyhKLQp31VSZBIUMeudwmPDKyu
+	 wAXou5yfka4lHDuyBI+RWdpBrQeeWQJkMWbbMoeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Paul Chaignon <paul.chaignon@gmail.com>
-Subject: [PATCH 6.12 241/242] bpf: Fix u32/s32 bounds when ranges cross min/max boundary
-Date: Wed,  8 Apr 2026 20:04:41 +0200
-Message-ID: <20260408175936.124866499@linuxfoundation.org>
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.12 242/242] selftests/bpf: test refining u32/s32 bounds when ranges cross min/max boundary
+Date: Wed,  8 Apr 2026 20:04:42 +0200
+Message-ID: <20260408175936.163099394@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -48,7 +47,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -57,190 +55,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit fbc7aef517d8765e4c425d2792409bb9bf2e1f13 ]
+[ Upstream commit f81fdfd16771e266753146bd83f6dd23515ebee9 ]
 
-Same as in __reg64_deduce_bounds(), refine s32/u32 ranges
-in __reg32_deduce_bounds() in the following situations:
+Two test cases for signed/unsigned 32-bit bounds refinement
+when s32 range crosses the sign boundary:
+- s32 range [S32_MIN..1] overlapping with u32 range [3..U32_MAX],
+  s32 range tail before sign boundary overlaps with u32 range.
+- s32 range [-3..5] overlapping with u32 range [0..S32_MIN+3],
+  s32 range head after the sign boundary overlaps with u32 range.
 
-- s32 range crosses U32_MAX/0 boundary, positive part of the s32 range
-  overlaps with u32 range:
+This covers both branches added in the __reg32_deduce_bounds().
 
-  0                                                   U32_MAX
-  |  [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]              |
-  |----------------------------|----------------------------|
-  |xxxxx s32 range xxxxxxxxx]                       [xxxxxxx|
-  0                     S32_MAX S32_MIN                    -1
+Also, crossing_32_bit_signed_boundary_2() no longer triggers invariant
+violations.
 
-- s32 range crosses U32_MAX/0 boundary, negative part of the s32 range
-  overlaps with u32 range:
-
-  0                                                   U32_MAX
-  |              [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]  |
-  |----------------------------|----------------------------|
-  |xxxxxxxxx]                       [xxxxxxxxxxxx s32 range |
-  0                     S32_MAX S32_MIN                    -1
-
-- No refinement if ranges overlap in two intervals.
-
-This helps for e.g. consider the following program:
-
-   call %[bpf_get_prandom_u32];
-   w0 &= 0xffffffff;
-   if w0 < 0x3 goto 1f;    // on fall-through u32 range [3..U32_MAX]
-   if w0 s> 0x1 goto 1f;   // on fall-through s32 range [S32_MIN..1]
-   if w0 s< 0x0 goto 1f;   // range can be narrowed to  [S32_MIN..-1]
-   r10 = 0;
-1: ...;
-
-The reg_bounds.c selftest is updated to incorporate identical logic,
-refinement based on non-overflowing range halves:
-
-  ((x ∩ [0, smax]) ∩ (y ∩ [0, smax])) ∪
-  ((x ∩ [smin,-1]) ∩ (y ∩ [smin,-1]))
-
-Reported-by: Andrea Righi <arighi@nvidia.com>
-Reported-by: Emil Tsalapatis <emil@etsalapatis.com>
-Closes: https://lore.kernel.org/bpf/aakqucg4vcujVwif@gpd4/T/
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Paul Chaignon <paul.chaignon@gmail.com>
 Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260306-bpf-32-bit-range-overflow-v3-1-f7f67e060a6b@gmail.com
+Link: https://lore.kernel.org/r/20260306-bpf-32-bit-range-overflow-v3-2-f7f67e060a6b@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c                               |   24 +++++++
- tools/testing/selftests/bpf/prog_tests/reg_bounds.c |   62 ++++++++++++++++++--
- 2 files changed, 82 insertions(+), 4 deletions(-)
+ tools/testing/selftests/bpf/progs/verifier_bounds.c |   39 +++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2046,6 +2046,30 @@ static void __reg32_deduce_bounds(struct
- 	if ((u32)reg->s32_min_value <= (u32)reg->s32_max_value) {
- 		reg->u32_min_value = max_t(u32, reg->s32_min_value, reg->u32_min_value);
- 		reg->u32_max_value = min_t(u32, reg->s32_max_value, reg->u32_max_value);
-+	} else {
-+		if (reg->u32_max_value < (u32)reg->s32_min_value) {
-+			/* See __reg64_deduce_bounds() for detailed explanation.
-+			 * Refine ranges in the following situation:
-+			 *
-+			 * 0                                                   U32_MAX
-+			 * |  [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]              |
-+			 * |----------------------------|----------------------------|
-+			 * |xxxxx s32 range xxxxxxxxx]                       [xxxxxxx|
-+			 * 0                     S32_MAX S32_MIN                    -1
-+			 */
-+			reg->s32_min_value = (s32)reg->u32_min_value;
-+			reg->u32_max_value = min_t(u32, reg->u32_max_value, reg->s32_max_value);
-+		} else if ((u32)reg->s32_max_value < reg->u32_min_value) {
-+			/*
-+			 * 0                                                   U32_MAX
-+			 * |              [xxxxxxxxxxxxxx u32 range xxxxxxxxxxxxxx]  |
-+			 * |----------------------------|----------------------------|
-+			 * |xxxxxxxxx]                       [xxxxxxxxxxxx s32 range |
-+			 * 0                     S32_MAX S32_MIN                    -1
-+			 */
-+			reg->s32_max_value = (s32)reg->u32_max_value;
-+			reg->u32_min_value = max_t(u32, reg->u32_min_value, reg->s32_min_value);
-+		}
- 	}
- }
- 
---- a/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-+++ b/tools/testing/selftests/bpf/prog_tests/reg_bounds.c
-@@ -422,15 +422,69 @@ static bool is_valid_range(enum num_t t,
- 	}
- }
- 
--static struct range range_improve(enum num_t t, struct range old, struct range new)
-+static struct range range_intersection(enum num_t t, struct range old, struct range new)
+--- a/tools/testing/selftests/bpf/progs/verifier_bounds.c
++++ b/tools/testing/selftests/bpf/progs/verifier_bounds.c
+@@ -1110,7 +1110,7 @@ l0_%=:	r0 = 0;						\
+ SEC("xdp")
+ __description("bound check with JMP32_JSLT for crossing 32-bit signed boundary")
+ __success __retval(0)
+-__flag(!BPF_F_TEST_REG_INVARIANTS) /* known invariants violation */
++__flag(BPF_F_TEST_REG_INVARIANTS)
+ __naked void crossing_32_bit_signed_boundary_2(void)
  {
- 	return range(t, max_t(t, old.a, new.a), min_t(t, old.b, new.b));
- }
- 
-+/*
-+ * Result is precise when 'x' and 'y' overlap or form a continuous range,
-+ * result is an over-approximation if 'x' and 'y' do not overlap.
-+ */
-+static struct range range_union(enum num_t t, struct range x, struct range y)
-+{
-+	if (!is_valid_range(t, x))
-+		return y;
-+	if (!is_valid_range(t, y))
-+		return x;
-+	return range(t, min_t(t, x.a, y.a), max_t(t, x.b, y.b));
+ 	asm volatile ("					\
+@@ -1316,6 +1316,43 @@ l0_%=:	r0 = 0;				\
+ "	:
+ 	: __imm(bpf_get_prandom_u32)
+ 	: __clobber_all);
 +}
 +
-+/*
-+ * This function attempts to improve x range intersecting it with y.
-+ * range_cast(... to_t ...) looses precision for ranges that pass to_t
-+ * min/max boundaries. To avoid such precision loses this function
-+ * splits both x and y into halves corresponding to non-overflowing
-+ * sub-ranges: [0, smin] and [smax, -1].
-+ * Final result is computed as follows:
-+ *
-+ *   ((x ∩ [0, smax]) ∩ (y ∩ [0, smax])) ∪
-+ *   ((x ∩ [smin,-1]) ∩ (y ∩ [smin,-1]))
-+ *
-+ * Precision might still be lost if final union is not a continuous range.
-+ */
-+static struct range range_refine_in_halves(enum num_t x_t, struct range x,
-+					   enum num_t y_t, struct range y)
++SEC("socket")
++__success
++__flag(BPF_F_TEST_REG_INVARIANTS)
++__naked void signed_unsigned_intersection32_case1(void *ctx)
 +{
-+	struct range x_pos, x_neg, y_pos, y_neg, r_pos, r_neg;
-+	u64 smax, smin, neg_one;
-+
-+	if (t_is_32(x_t)) {
-+		smax = (u64)(u32)S32_MAX;
-+		smin = (u64)(u32)S32_MIN;
-+		neg_one = (u64)(u32)(s32)(-1);
-+	} else {
-+		smax = (u64)S64_MAX;
-+		smin = (u64)S64_MIN;
-+		neg_one = U64_MAX;
-+	}
-+	x_pos = range_intersection(x_t, x, range(x_t, 0, smax));
-+	x_neg = range_intersection(x_t, x, range(x_t, smin, neg_one));
-+	y_pos = range_intersection(y_t, y, range(x_t, 0, smax));
-+	y_neg = range_intersection(y_t, y, range(y_t, smin, neg_one));
-+	r_pos = range_intersection(x_t, x_pos, range_cast(y_t, x_t, y_pos));
-+	r_neg = range_intersection(x_t, x_neg, range_cast(y_t, x_t, y_neg));
-+	return range_union(x_t, r_pos, r_neg);
-+
++	asm volatile("									\
++	call %[bpf_get_prandom_u32];							\
++	w0 &= 0xffffffff;								\
++	if w0 < 0x3 goto 1f;		/* on fall-through u32 range [3..U32_MAX]  */	\
++	if w0 s> 0x1 goto 1f;		/* on fall-through s32 range [S32_MIN..1]  */	\
++	if w0 s< 0x0 goto 1f;		/* range can be narrowed to  [S32_MIN..-1] */	\
++	r10 = 0;			/* thus predicting the jump. */			\
++1:	exit;										\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
 +}
 +
- static struct range range_refine(enum num_t x_t, struct range x, enum num_t y_t, struct range y)
- {
- 	struct range y_cast;
- 
-+	if (t_is_32(x_t) == t_is_32(y_t))
-+		x = range_refine_in_halves(x_t, x, y_t, y);
-+
- 	y_cast = range_cast(y_t, x_t, y);
- 
- 	/* If we know that
-@@ -444,7 +498,7 @@ static struct range range_refine(enum nu
- 	 */
- 	if (x_t == S64 && y_t == S32 && y_cast.a <= S32_MAX  && y_cast.b <= S32_MAX &&
- 	    (s64)x.a >= S32_MIN && (s64)x.b <= S32_MAX)
--		return range_improve(x_t, x, y_cast);
-+		return range_intersection(x_t, x, y_cast);
- 
- 	/* the case when new range knowledge, *y*, is a 32-bit subregister
- 	 * range, while previous range knowledge, *x*, is a full register
-@@ -462,11 +516,11 @@ static struct range range_refine(enum nu
- 		x_swap = range(x_t, swap_low32(x.a, y_cast.a), swap_low32(x.b, y_cast.b));
- 		if (!is_valid_range(x_t, x_swap))
- 			return x;
--		return range_improve(x_t, x, x_swap);
-+		return range_intersection(x_t, x, x_swap);
- 	}
- 
- 	/* otherwise, plain range cast and intersection works */
--	return range_improve(x_t, x, y_cast);
-+	return range_intersection(x_t, x, y_cast);
++SEC("socket")
++__success
++__flag(BPF_F_TEST_REG_INVARIANTS)
++__naked void signed_unsigned_intersection32_case2(void *ctx)
++{
++	asm volatile("									\
++	call %[bpf_get_prandom_u32];							\
++	w0 &= 0xffffffff;								\
++	if w0 > 0x80000003 goto 1f;	/* on fall-through u32 range [0..S32_MIN+3] */	\
++	if w0 s< -3 goto 1f;		/* on fall-through s32 range [-3..S32_MAX] */	\
++	if w0 s> 5 goto 1f;		/* on fall-through s32 range [-3..5] */		\
++	if w0 <= 5 goto 1f;		/* range can be narrowed to  [0..5] */		\
++	r10 = 0;			/* thus predicting the jump */			\
++1:	exit;										\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
  }
  
- /* =======================
+ char _license[] SEC("license") = "GPL";
 
 
