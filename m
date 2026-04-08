@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01D53176E4;
-	Wed,  8 Apr 2026 18:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F243537DF;
+	Wed,  8 Apr 2026 18:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674705; cv=none; b=CFZCBvL/8jkWzK9aUnxQJaeQXZ0tLQ2vAGVHuARNTzZ/zdObbjCqeB1MMAQCTBbJBccL3orjYktXrGsaGC50nBJDylqmHwtNL7abJIFasm7BDABxstBzhOvNf5ew/mnHikmbDHuY9avr28oVeaaChMWLMPJQGNekX0b8cEY74hU=
+	t=1775674708; cv=none; b=TvJ54wogrXwdWasPP1PJwQw18rVu8fRJfuUYfchZSBXnjLYaACF5FROyFSCCqZrp6CItggC+B4hjOk2wl3X7IxWIhlD5mXxrXvLn9Kl+t0hxwS5XkzEot9eersV6Zmf9rE97hPctm2L2pwFMKMG4mkWZXweG0UQEgJrgr8yOS34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674705; c=relaxed/simple;
-	bh=CDPUHbJbj4CFn+8npsgRtLW2Qv8hveX5SIKJ1Rt//TA=;
+	s=arc-20240116; t=1775674708; c=relaxed/simple;
+	bh=89V3d05Bsqjni3PiwPjbRdBNF2I1tCJZuJOuXy8vREU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dmb9MS59dFt5/y2MJZ6Nlb7CbBk7W1ceURufA9LTGyKAUCDpJa70KGXz3YB4Ep4iTzP3gSDxahAamBaScQEbDaDSYJWxf9DqgSu6bd1JqDNbMDPhh/WjBCeDtNoAvQogiNclsVeLuC9tprOWpa3V/y/z6a/h9e/Fzto3Z2qw/ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsM/X2Yt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZZ/XUyeBPVLPXyHPfRf+3P/znfv9hO5EH0Qy+wMdpK5zAbH4qUoJJzcRTdeEY4pNy9xqjImcfHNKAzAKIDRPLEQbyywX7sQxNkb7p04ENZL3XDVACsXi7zdJ6mEFV46gTLNMRsirbXXvqpZoXlnDJRCTWKM5/BUKaM3fzrw5eoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWGaI1Jl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsM/X2Yt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E61C2BC87;
-	Wed,  8 Apr 2026 18:58:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWGaI1Jl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4F5C19421;
+	Wed,  8 Apr 2026 18:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674705;
-	bh=CDPUHbJbj4CFn+8npsgRtLW2Qv8hveX5SIKJ1Rt//TA=;
+	s=korg; t=1775674708;
+	bh=89V3d05Bsqjni3PiwPjbRdBNF2I1tCJZuJOuXy8vREU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vsM/X2Yt5MFXFJ0xV8uWdjtg5A5rpAOEnUioXJ8f7nBlhxoxh8YBD5hPfI6moXAxA
-	 lRJwnCdTL5A9n5FqfauzBXVceLoNAnyK5OBn+cGww0mIOzS7Qi76Ibnk8sPVG81nCE
-	 iOx2+7g4wsNvZxtAAy3pFuxPBG2tOAyAekoNyWyE=
+	b=nWGaI1JlHuUJJ0WmzatRspZbQY+Pen1bvUFuQw9kxVf8YAXOjnYApytoEb/skecf3
+	 KfHzP0uFmCH35BT+ArsiiBPBpQs4USk1NMRqz1vD6AAEm+iut6vKPoKZilJyAIvp94
+	 9HEvP018H/oa4gK0sRxLJ2eHNodz5OOmrbOC6nUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.19 201/311] drm/i915/dp: Use crtc_state->enhanced_framing properly on ivb/hsw CPU eDP
-Date: Wed,  8 Apr 2026 20:03:21 +0200
-Message-ID: <20260408175946.916548142@linuxfoundation.org>
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.19 175/311] ALSA: hda/realtek: Add quirk for ASUS ROG Strix SCAR 15
+Date: Wed,  8 Apr 2026 20:02:55 +0200
+Message-ID: <20260408175945.940264805@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -45,44 +44,38 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-commit 9c9a57e4e337f94e23ddf69263fd0685c91155fb upstream.
+commit f1af71d568e55536d9297bfa7907ad497108cf30 upstream.
 
-Looks like I missed the drm_dp_enhanced_frame_cap() in the ivb/hsw CPU
-eDP code when I introduced crtc_state->enhanced_framing. Fix it up so
-that the state we program to the hardware is guaranteed to match what
-we computed earlier.
+ASUS ROG Strix SCAR 15, like the Strix G15, requires the
+ALC285_FIXUP_ASUS_G533Z_PINS quirk to work properly.
 
-Cc: stable@vger.kernel.org
-Fixes: 3072a24c778a ("drm/i915: Introduce crtc_state->enhanced_framing")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260325135849.12603-3-ville.syrjala@linux.intel.com
-Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
-(cherry picked from commit 799fe8dc2af52f35c78c4ac97f8e34994dfd8760)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221247
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260330075334.50962-2-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/g4x_dp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/i915/display/g4x_dp.c
-+++ b/drivers/gpu/drm/i915/display/g4x_dp.c
-@@ -137,7 +137,7 @@ static void intel_dp_prepare(struct inte
- 			intel_dp->DP |= DP_SYNC_VS_HIGH;
- 		intel_dp->DP |= DP_LINK_TRAIN_OFF_CPT;
- 
--		if (drm_dp_enhanced_frame_cap(intel_dp->dpcd))
-+		if (pipe_config->enhanced_framing)
- 			intel_dp->DP |= DP_ENHANCED_FRAMING;
- 
- 		intel_dp->DP |= DP_PIPE_SEL_IVB(crtc->pipe);
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7238,6 +7238,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1043, 0x1533, "ASUS GV302XA/XJ/XQ/XU/XV/XI", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1573, "ASUS GZ301VV/VQ/VU/VJ/VA/VC/VE/VVC/VQC/VUC/VJC/VEC/VCC", ALC285_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1584, "ASUS UM3406GA ", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x1043, 0x1602, "ASUS ROG Strix SCAR 15", ALC285_FIXUP_ASUS_G533Z_PINS),
+ 	SND_PCI_QUIRK(0x1043, 0x1652, "ASUS ROG Zephyrus Do 15 SE", ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1663, "ASUS GU603ZI/ZJ/ZQ/ZU/ZV", ALC285_FIXUP_ASUS_HEADSET_MIC),
 
 
