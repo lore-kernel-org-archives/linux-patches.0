@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306A83D9DB9;
-	Wed,  8 Apr 2026 18:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9624B3DA5A0;
+	Wed,  8 Apr 2026 18:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674608; cv=none; b=iy6Gqa7ffOxYjCkg1R+VsfhYMT64VMphbFR+SGcFfuYa8qfbDa7peM4K72kH+xB1ul3Oq5ND1JrbJxmccIG20lHjmfTmZ0iy/xU1PER8C/MQBTZAwR0aNHx7xddfranvOCznh73jpSfJi2IIi3WxKKRlq/bufMVVDreWaa2/Y1g=
+	t=1775674610; cv=none; b=q2VA0B3BhTX/XXuv6UDes3ZXIkdSoXekwZFOEzn0venAm1e+36z3duN0/eJRwL66rynrXbsomVyjn0Qzq4LqJB3NRU+C/4Z/MYTE4LgeYDokDaFSIU5Xi2T0CQRl5/AYLvIAdGwhC8amXIhRYiGlG4ONnKtZcR2uz29B1txlQ/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674608; c=relaxed/simple;
-	bh=aG3SaGh4nSzhRRLKdVmBxsx14HX0YTGSmlC1SUb1ezA=;
+	s=arc-20240116; t=1775674610; c=relaxed/simple;
+	bh=7GnW0qinQcn5ffJeRYx8l+aiwp2X0RrQ5YlX2VWnGZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqSQq7VkgMIQgiI2wpS/exwLBmQ9u689NE/IGzu9gF7RtPuJXanHVFOK2e8lETMXX8/5Hs57OZXQ3T8qPsqCQa9DS4QlLbbsoltMS7qZP8OW6Qi/AghTfGvbPkyJjKzAuJVApUS7vX7t+zXEZWG0Ec56aET/iufOIgX9vFNCRiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3QTkRs7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nZ3KPv4DeY0W+Qh7mmLwz9xR9xL/YtGw7EhdcecAIwXtfy4rKkQI3CPAdFtqwJIHHFAXOj4CbG3Qt1xztrCpKuLTXk1zZn0tVRiGO1nsJMYJdaUucFrZm3oWIprFXg5u4esdwKJd8Av8EsMM4mXP8izmqU/dKP5iFgB5NUxxwmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scG1v9fy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3QTkRs7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BAAC2BC87;
-	Wed,  8 Apr 2026 18:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scG1v9fy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C91FC19421;
+	Wed,  8 Apr 2026 18:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674607;
-	bh=aG3SaGh4nSzhRRLKdVmBxsx14HX0YTGSmlC1SUb1ezA=;
+	s=korg; t=1775674610;
+	bh=7GnW0qinQcn5ffJeRYx8l+aiwp2X0RrQ5YlX2VWnGZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3QTkRs7gN2UMGWNfgz1DDQ8lBbmmsYQy4CQwXFeceKnPICYv6hP1nV35EzezKOU5
-	 A8GMWU8HUdsvlGAlUDNMaBQkZrq71oAz9acTIPkS6tWIGG6UpQgHEk8S/eDuY68wk7
-	 pRFHB3UA4BYe4QUyZBYGJJoqhByAj9WiPEX+Pwq4=
+	b=scG1v9fypET2ScOgrTt0iHuGzcL9+kF8NHYctseuRo+mhviHtqFhKsae9xfqGfE8v
+	 wfwkVGCAfc4kEj/g8MpIxHN0W5ctGmUa0KXlIWpO5A+rH+twzdPpihz1JWfQFsI/Qv
+	 jRIJYs626xV5JnkcoXdxouiHkudMfsEdjGSsB8ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yasuaki Torimaru <yasuakitorimaru@gmail.com>,
+	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.19 163/311] wifi: wilc1000: fix u8 overflow in SSID scan buffer size calculation
-Date: Wed,  8 Apr 2026 20:02:43 +0200
-Message-ID: <20260408175945.489636600@linuxfoundation.org>
+Subject: [PATCH 6.19 164/311] wifi: iwlwifi: mvm: fix potential out-of-bounds read in iwl_mvm_nd_match_info_handler()
+Date: Wed,  8 Apr 2026 20:02:44 +0200
+Message-ID: <20260408175945.526531733@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -50,42 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
 
-commit d049e56b1739101d1c4d81deedb269c52a8dbba0 upstream.
+commit 744fabc338e87b95c4d1ff7c95bc8c0f834c6d99 upstream.
 
-The variable valuesize is declared as u8 but accumulates the total
-length of all SSIDs to scan. Each SSID contributes up to 33 bytes
-(IEEE80211_MAX_SSID_LEN + 1), and with WILC_MAX_NUM_PROBED_SSID (10)
-SSIDs the total can reach 330, which wraps around to 74 when stored
-in a u8.
+The memcpy function assumes the dynamic array notif->matches is at least
+as large as the number of bytes to copy. Otherwise, results->matches may
+contain unwanted data. To guarantee safety, extend the validation in one
+of the checks to ensure sufficient packet length.
 
-This causes kmalloc to allocate only 75 bytes while the subsequent
-memcpy writes up to 331 bytes into the buffer, resulting in a 256-byte
-heap buffer overflow.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Widen valuesize from u8 to u32 to accommodate the full range.
-
-Fixes: c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11 driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
-Link: https://patch.msgid.link/20260324100624.983458-1-yasuakitorimaru@gmail.com
+Fixes: 5ac54afd4d97 ("wifi: iwlwifi: mvm: Add handling for scan offload match info notification")
+Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
+Link: https://patch.msgid.link/20260207150335.1013646-1-a.velichayshiy@ispras.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/microchip/wilc1000/hif.c |    2 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/microchip/wilc1000/hif.c
-+++ b/drivers/net/wireless/microchip/wilc1000/hif.c
-@@ -163,7 +163,7 @@ int wilc_scan(struct wilc_vif *vif, u8 s
- 	u32 index = 0;
- 	u32 i, scan_timeout;
- 	u8 *buffer;
--	u8 valuesize = 0;
-+	u32 valuesize = 0;
- 	u8 *search_ssid_vals = NULL;
- 	const u8 ch_list_len = request->n_channels;
- 	struct host_if_drv *hif_drv = vif->hif_drv;
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+@@ -2834,7 +2834,7 @@ static void iwl_mvm_nd_match_info_handle
+ 	if (IS_ERR_OR_NULL(vif))
+ 		return;
+ 
+-	if (len < sizeof(struct iwl_scan_offload_match_info)) {
++	if (len < sizeof(struct iwl_scan_offload_match_info) + matches_len) {
+ 		IWL_ERR(mvm, "Invalid scan match info notification\n");
+ 		return;
+ 	}
 
 
