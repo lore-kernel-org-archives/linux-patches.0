@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89086347503;
-	Wed,  8 Apr 2026 18:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E22A37F8C2;
+	Wed,  8 Apr 2026 18:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671933; cv=none; b=ZIbqUleK6GJgbOgpM6oPvktogWuFGHAlLYYheG0wL+Qie4Fyxs8otet3SGXnr6p/X7/kauYcD3+RETqaeiBwVjSLzHoEM+S5PknfiAo2WzO+G9pItLTAL3/0UcJ7GHQY1YWM96BpXvaDzMKX0BqzZgYey9C6nmd5DcI2v67x/s0=
+	t=1775671936; cv=none; b=YtE3yuNYl4rtCQNMmIMUUJzN2ROLuKhTlWYIo/iM3EO5PSO/CHNw7IGPo/Y9Df5ZmiaXgVGIgAh5jqJAW5cf+AmevL7tVRdyaPKFcPLn6n+3O8qV6ameL4XNFxKrKcb71n2B3w82Pani8BlQN9h7f3ypD5szSCDNRVlSCQIQOG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671933; c=relaxed/simple;
-	bh=gSidCJ1TBd1w8FkGfLJlf4kJf37j0eLAilx6V/WOEb4=;
+	s=arc-20240116; t=1775671936; c=relaxed/simple;
+	bh=w1H0WVOJhUGZTwkhCeHNe0/dDAQcLm1rfOpGyTNatJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MrGiIQzZYA1zhGRae0zjl0KG+CumO+6d+93foavT6w7YrLQbEepbNhLODMwNqWjhb1LOExHzT9/M95f1x7ySirP8IQ5+pcZuTd0UWhBMUwh5aLK2u3nYM7e6taQQUzR9z0BVm1UWIPjDiDeRjGToWL+x5KchpzVnxx43QQHO9Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kk4fOXkM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S3yTfJq6SVhbZ6g4QwVPuSj3U5sNHlqkB5NAqkcIeUs9NXmVzxJrE3a5X/u5Jd2/tPUDC4M9vWyHoOWsWjQ3jsTLejai3NykwTfhxBpzm2Yau1k4ISiWZah9MY5mSGdYJqb+CbJllTqmBdBrVcHra54M6PQsTjnPFPOaB8yTtKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWIAsDNT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kk4fOXkM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDD1C19425;
-	Wed,  8 Apr 2026 18:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWIAsDNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85E8C19421;
+	Wed,  8 Apr 2026 18:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671933;
-	bh=gSidCJ1TBd1w8FkGfLJlf4kJf37j0eLAilx6V/WOEb4=;
+	s=korg; t=1775671936;
+	bh=w1H0WVOJhUGZTwkhCeHNe0/dDAQcLm1rfOpGyTNatJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kk4fOXkMEvkiYwmor7KY2ueEeXxfrJXXCquoAHIcb9hwXpkEnbNxj30maAy9iNEL1
-	 2EZezUWMvStXm622hU3EHhDCbOImcJY5oXAhVpr3meKHj7ugbo0FZqEruQpzmYmsxm
-	 Pu2Epn0zGs9SSwiEWqrUF1WURvYcwUHmeiIKFyTE=
+	b=bWIAsDNT18YQXInZuznb7LJbWmTOa3r7q/rixjnzvHqb8p71ionnjJzBBo7n5nF6D
+	 yzmofQBY3lmpyWbzn15qQHFdV3fr22woNmRSaY6z6K5ninlvTOfMj5wBxkq3jtikIP
+	 RPPvKTVk2mBdos9CMoUShgfmBSdyo04md+PZNHA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 092/312] ksmbd: do not expire session on binding failure
-Date: Wed,  8 Apr 2026 20:00:09 +0200
-Message-ID: <20260408175937.197346868@linuxfoundation.org>
+	Ali Norouzi <ali.norouzi@keysight.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.1 093/312] can: gw: fix OOB heap access in cgw_csum_crc8_rel()
+Date: Wed,  8 Apr 2026 20:00:10 +0200
+Message-ID: <20260408175937.235845430@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -51,49 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Ali Norouzi <ali.norouzi@keysight.com>
 
-commit 9bbb19d21ded7d78645506f20d8c44895e3d0fb9 upstream.
+commit b9c310d72783cc2f30d103eed83920a5a29c671a upstream.
 
-When a multichannel session binding request fails (e.g. wrong password),
-the error path unconditionally sets sess->state = SMB2_SESSION_EXPIRED.
-However, during binding, sess points to the target session looked up via
-ksmbd_session_lookup_slowpath() -- which belongs to another connection's
-user. This allows a remote attacker to invalidate any active session by
-simply sending a binding request with a wrong password (DoS).
+cgw_csum_crc8_rel() correctly computes bounds-safe indices via calc_idx():
 
-Fix this by skipping session expiration when the failed request was
-a binding attempt, since the session does not belong to the current
-connection. The reference taken by ksmbd_session_lookup_slowpath() is
-still correctly released via ksmbd_user_session_put().
+    int from = calc_idx(crc8->from_idx, cf->len);
+    int to   = calc_idx(crc8->to_idx,   cf->len);
+    int res  = calc_idx(crc8->result_idx, cf->len);
 
+    if (from < 0 || to < 0 || res < 0)
+        return;
+
+However, the loop and the result write then use the raw s8 fields directly
+instead of the computed variables:
+
+    for (i = crc8->from_idx; ...)        /* BUG: raw negative index */
+    cf->data[crc8->result_idx] = ...;    /* BUG: raw negative index */
+
+With from_idx = to_idx = result_idx = -64 on a 64-byte CAN FD frame,
+calc_idx(-64, 64) = 0 so the guard passes, but the loop iterates with
+i = -64, reading cf->data[-64], and the write goes to cf->data[-64].
+This write might end up to 56 (7.0-rc) or 40 (<= 6.19) bytes before the
+start of the canfd_frame on the heap.
+
+The companion function cgw_csum_xor_rel() uses `from`/`to`/`res`
+correctly throughout; fix cgw_csum_crc8_rel() to match.
+
+Confirmed with KASAN on linux-7.0-rc2:
+  BUG: KASAN: slab-out-of-bounds in cgw_csum_crc8_rel+0x515/0x5b0
+  Read of size 1 at addr ffff8880076619c8 by task poc_cgw_oob/62
+
+To configure the can-gw crc8 checksums CAP_NET_ADMIN is needed.
+
+Fixes: 456a8a646b25 ("can: gw: add support for CAN FD frames")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Ali Norouzi <ali.norouzi@keysight.com>
+Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Ali Norouzi <ali.norouzi@keysight.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260319-fix-can-gw-and-can-isotp-v2-1-c45d52c6d2d8@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/can/gw.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1928,8 +1928,14 @@ out_err:
- 			if (sess->user && sess->user->flags & KSMBD_USER_FLAG_DELAY_SESSION)
- 				try_delay = true;
+--- a/net/can/gw.c
++++ b/net/can/gw.c
+@@ -374,10 +374,10 @@ static void cgw_csum_crc8_rel(struct can
+ 		return;
  
--			sess->last_active = jiffies;
--			sess->state = SMB2_SESSION_EXPIRED;
-+			/*
-+			 * For binding requests, session belongs to another
-+			 * connection. Do not expire it.
-+			 */
-+			if (!(req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
-+				sess->last_active = jiffies;
-+				sess->state = SMB2_SESSION_EXPIRED;
-+			}
- 			ksmbd_user_session_put(sess);
- 			work->sess = NULL;
- 			if (try_delay) {
+ 	if (from <= to) {
+-		for (i = crc8->from_idx; i <= crc8->to_idx; i++)
++		for (i = from; i <= to; i++)
+ 			crc = crc8->crctab[crc ^ cf->data[i]];
+ 	} else {
+-		for (i = crc8->from_idx; i >= crc8->to_idx; i--)
++		for (i = from; i >= to; i--)
+ 			crc = crc8->crctab[crc ^ cf->data[i]];
+ 	}
+ 
+@@ -396,7 +396,7 @@ static void cgw_csum_crc8_rel(struct can
+ 		break;
+ 	}
+ 
+-	cf->data[crc8->result_idx] = crc ^ crc8->final_xor_val;
++	cf->data[res] = crc ^ crc8->final_xor_val;
+ }
+ 
+ static void cgw_csum_crc8_pos(struct canfd_frame *cf,
 
 
