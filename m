@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A1732A3FD;
-	Wed,  8 Apr 2026 18:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD27F3176E4;
+	Wed,  8 Apr 2026 18:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674564; cv=none; b=IPsQfRKGuKWhHvWtxKtwU00GORZGk8WzYbNKcToooRL8GSiIM1r4fn7jNwP6+3FAXFnzdqpnlyLKps++DFWI49A0nNkxjpKW4TODsoOXAUvBNbVx8BOpXx6Bk5i485SQlq2XKT/KH5ORWlPH/KylsW3TDNpdMouBxTzi0gptaKw=
+	t=1775674566; cv=none; b=S8PRiEKXPu7A5zvJNITVGEhnMf74V7/qI5vjn4UdhWd482quPgZCoFPHPjNQr2jt4Ryc33vfdf8GsKIYaGDfIkIWvSR/ny3U9mAQb2DZGO0V8nyX2ErSwktmIroHC1PANyJbXPcgK4o2Rr9vskgYMp9Qi5oSK2PudPvpeUlSUeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674564; c=relaxed/simple;
-	bh=4DG/VGxNV6s4nDdnQCOyPctoESdrYsglRxk3qwWCC/w=;
+	s=arc-20240116; t=1775674566; c=relaxed/simple;
+	bh=w+lk6yJjZ0SkX62kAQ40vITBPmZYjrzleQ6ryRuqBtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVFGwEXzEUJIDhflcZmLgPOR5ZwKoAR1Y1PvGLlCGErTm+cVxJBuckN2z+fIsOpThq35sXuFRvuJXn0M/oSZXNjGwiIl+an4HeS3BIu33A09VnbFidvdxVO+6jfGdkkamb4JMMTn2gQCAoFBGKj2a1+0gFeQLdSDNcHh4U5t48c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Vu/UZVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rlE72jz03yLt0C79xqm3XYaP5k2xmiOrUZ2ssF3w0LC1r++vKLTKFEKG2Tljkyrzmw0JyuFqsTfImbrcBANzyXy8nfjomJ+zanC6DyoG58QQXmHmxv4UxezSZ8tUwmsTx3Xpj0sO0XjATvF3RCEGZYHir1O1ed4fKmWONdknLy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6E5mAl7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Vu/UZVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7035C19421;
-	Wed,  8 Apr 2026 18:56:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6E5mAl7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73419C19421;
+	Wed,  8 Apr 2026 18:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674564;
-	bh=4DG/VGxNV6s4nDdnQCOyPctoESdrYsglRxk3qwWCC/w=;
+	s=korg; t=1775674566;
+	bh=w+lk6yJjZ0SkX62kAQ40vITBPmZYjrzleQ6ryRuqBtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Vu/UZVdzUVEXJ/DH2OD0QHDFsOauRFD/3znf1LYPSE93k/XrDLPrvMLf2q1sDh2y
-	 OrcJAHqp0ENY5dLoVw0lrQamyhVbX+ZN/q0bknZscwTpG5OQZyYN57i7uDtQlAGXOw
-	 dh43jDKc4nG/kFKe7fZGqgw690jWTfhK8sRtYxak=
+	b=Z6E5mAl7y9a3wth4lsPAkgMh6O5idMd61RhH6B4sdjpyvDSPF5Mql4UOqN0b7GyuJ
+	 tPpU4wb2HJWmCPkjFVzCYtK8lm6SD00BeXJp8/hpFG3ZHVh0a4qrNnKWilQnt2RMUH
+	 +fHDD9bDo/g6Z0CQQyxpEb2ko3aBzeHiamj8GKeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Julia Filipchuk <julia.filipchuk@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 147/311] drm/xe/pxp: Clear restart flag in pxp_start after jumping back
-Date: Wed,  8 Apr 2026 20:02:27 +0200
-Message-ID: <20260408175944.899881289@linuxfoundation.org>
+Subject: [PATCH 6.19 148/311] hwmon: (tps53679) Fix device ID comparison and printing in tps53676_identify()
+Date: Wed,  8 Apr 2026 20:02:28 +0200
+Message-ID: <20260408175944.936595172@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,47 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-[ Upstream commit 76903b2057c8677c2c006e87fede15f496555dc0 ]
+[ Upstream commit ca34ee6d0307a0b4e52c870dfc1bb8a3c3eb956e ]
 
-If we don't clear the flag we'll keep jumping back at the beginning of
-the function once we reach the end.
+tps53676_identify() uses strncmp() to compare the device ID buffer
+against a byte sequence containing embedded non-printable bytes
+(\x53\x67\x60). strncmp() is semantically wrong for binary data
+comparison; use memcmp() instead.
 
-Fixes: ccd3c6820a90 ("drm/xe/pxp: Decouple queue addition from PXP start")
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Julia Filipchuk <julia.filipchuk@intel.com>
-Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
-Link: https://patch.msgid.link/20260324153718.3155504-9-daniele.ceraolospurio@intel.com
-(cherry picked from commit 0850ec7bb2459602351639dccf7a68a03c9d1ee0)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Additionally, the buffer from i2c_smbus_read_block_data() is not
+NUL-terminated, so printing it with "%s" in the error path is
+undefined behavior and may read past the buffer. Use "%*ph" to
+hex-dump the actual bytes returned.
+
+Per the datasheet, the expected device ID is the 6-byte sequence
+54 49 53 67 60 00 ("TI\x53\x67\x60\x00"), so compare all 6 bytes
+including the trailing NUL.
+
+Fixes: cb3d37b59012 ("hwmon: (pmbus/tps53679) Add support for TI TPS53676")
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260330155618.77403-1-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pxp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/tps53679.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pxp.c b/drivers/gpu/drm/xe/xe_pxp.c
-index fdcecc026e937..9261a8412b64f 100644
---- a/drivers/gpu/drm/xe/xe_pxp.c
-+++ b/drivers/gpu/drm/xe/xe_pxp.c
-@@ -532,7 +532,7 @@ static int __exec_queue_add(struct xe_pxp *pxp, struct xe_exec_queue *q)
- static int pxp_start(struct xe_pxp *pxp, u8 type)
- {
- 	int ret = 0;
--	bool restart = false;
-+	bool restart;
- 
- 	if (!xe_pxp_is_enabled(pxp))
+diff --git a/drivers/hwmon/pmbus/tps53679.c b/drivers/hwmon/pmbus/tps53679.c
+index 3bca543817a60..249974c13aa39 100644
+--- a/drivers/hwmon/pmbus/tps53679.c
++++ b/drivers/hwmon/pmbus/tps53679.c
+@@ -175,8 +175,8 @@ static int tps53676_identify(struct i2c_client *client,
+ 	ret = i2c_smbus_read_block_data(client, PMBUS_IC_DEVICE_ID, buf);
+ 	if (ret < 0)
+ 		return ret;
+-	if (strncmp("TI\x53\x67\x60", buf, 5)) {
+-		dev_err(&client->dev, "Unexpected device ID: %s\n", buf);
++	if (ret != 6 || memcmp(buf, "TI\x53\x67\x60\x00", 6)) {
++		dev_err(&client->dev, "Unexpected device ID: %*ph\n", ret, buf);
  		return -ENODEV;
-@@ -561,6 +561,8 @@ static int pxp_start(struct xe_pxp *pxp, u8 type)
- 					 msecs_to_jiffies(PXP_ACTIVATION_TIMEOUT_MS)))
- 		return -ETIMEDOUT;
+ 	}
  
-+	restart = false;
-+
- 	mutex_lock(&pxp->mutex);
- 
- 	/* If PXP is not already active, turn it on */
 -- 
 2.53.0
 
