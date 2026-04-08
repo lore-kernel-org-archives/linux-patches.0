@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB5F33121F;
-	Wed,  8 Apr 2026 18:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4694433121F;
+	Wed,  8 Apr 2026 18:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674089; cv=none; b=Nd7NAT9rHJ09uJr6rKRXNa9JWLcaRqOdEQ6O9++zKSjKIEN0m6Ovwb/swLyzlAaETfwxAqP4+Op/Fwkd60auA2rwBieFAAURa5FP+WNjOdl4HMFngrbeqo6CayZMeWQmpRMWdVqoKgNJRf2LHHeTaH2+HcFY4gUlZ7RubqyILEk=
+	t=1775674092; cv=none; b=BHHNKh9ust1CUPnbe2Wf7fNrc7m+q9dnNydQZSn0niiyNBAbugq4UnHDu+9A9xSAPooerYrEUFssuA3Adnq+CSUcjtTOLc1dte6wB6MdWv3NXWLY9rcqh9PUQkxyDyVV55tl3Kegt0rN52OffQNoSBVpmdQDGow1/yalU7yO9Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674089; c=relaxed/simple;
-	bh=2/PAeZcKwFK9flos6bwIBLnfHzwJrv4krFJ77gtJt60=;
+	s=arc-20240116; t=1775674092; c=relaxed/simple;
+	bh=I+DQTiyYdzQ8zxqs5YBt0nH/7kZtvUWsO1WY3eONL2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0837GhCbv6qesU/Db1kN9yl33IzAAqnQQ+ZjVpg6pft182Rxy2RmKmEhe2Bnr8pKdCd8u2g+PjkcBIjbKtlQ50AeSbhvNj/sMuYrKgEH0MattxAaoyEa8BGlnUb9H5hIZYnWJTtPrUn8b7Eu1x0uYQT4ncrvCI3PK7gOMLX+Fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHNNAOeK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOZRfkFBXO41siw0f8FgQTL32E5tT/4p2gZ/i1NZSK+FjtdAhCuBHz25sOWkMrejYPyXLdj9fUS6GsF/CmRzOFZ9EatH7czIdb5RVIEiT7/mxqQb/sdaog9mmyZc/cDOgLJuDIEI4VaL+nzEKUojRMCuW08L0IdtqsSCDD4xyUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWIHBY9a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHNNAOeK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A6AC19421;
-	Wed,  8 Apr 2026 18:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWIHBY9a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1713C19421;
+	Wed,  8 Apr 2026 18:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674089;
-	bh=2/PAeZcKwFK9flos6bwIBLnfHzwJrv4krFJ77gtJt60=;
+	s=korg; t=1775674092;
+	bh=I+DQTiyYdzQ8zxqs5YBt0nH/7kZtvUWsO1WY3eONL2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WHNNAOeKg6/ZeY27OmL12TcYFbnvFTDr9AxD/TN5ynpVK/oLZxhuayH8+yEciKavz
-	 ifKwm9KIPgCbYp30xyi5FW1wkQwO/Ws5e1IYTjGeJhuuEDFt9n0Zbq1iWiwGGnsuhJ
-	 /wpg1JIXzfqOfwiIDNih65Vfog4i2e5QvsawgS/Y=
+	b=dWIHBY9a3o2LhHW/HfJRt7u5hC3l/ACu2LdY7mxbVJLl+68KOVaJufcaHmc8Hryfq
+	 9dT/XFixi+okeGcWwLjQeDrXnlMtUhFp+pwaddek3PU+bGzVW36DFQHLRAGkCyMtki
+	 yj8u0rA2iKMY5Km/WAQrINgoXvNuiBOReF6EsQvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuen-Han Tsai <khtsai@google.com>
-Subject: [PATCH 6.12 204/242] usb: gadget: f_subset: Fix unbalanced refcnt in geth_free
-Date: Wed,  8 Apr 2026 20:04:04 +0200
-Message-ID: <20260408175934.716862967@linuxfoundation.org>
+	syzbot+cc9f7f4a7df09f53c4a4@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.12 174/242] comedi: Reinit dev->spinlock between attachments to low-level drivers
+Date: Wed,  8 Apr 2026 20:03:34 +0200
+Message-ID: <20260408175933.600041244@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -49,48 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit caa27923aacd8a5869207842f2ab1657c6c0c7bc upstream.
+commit 4b9a9a6d71e3e252032f959fb3895a33acb5865c upstream.
 
-geth_alloc() increments the reference count, but geth_free() fails to
-decrement it. This prevents the configuration of attributes via configfs
-after unlinking the function.
+`struct comedi_device` is the main controlling structure for a COMEDI
+device created by the COMEDI subsystem.  It contains a member `spinlock`
+containing a spin-lock that is initialized by the COMEDI subsystem, but
+is reserved for use by a low-level driver attached to the COMEDI device
+(at least since commit 25436dc9d84f ("Staging: comedi: remove RT
+code")).
 
-Decrement the reference count in geth_free() to ensure proper cleanup.
+Some COMEDI devices (those created on initialization of the COMEDI
+subsystem when the "comedi.comedi_num_legacy_minors" parameter is
+non-zero) can be attached to different low-level drivers over their
+lifetime using the `COMEDI_DEVCONFIG` ioctl command.  This can result in
+inconsistent lock states being reported when there is a mismatch in the
+spin-lock locking levels used by each low-level driver to which the
+COMEDI device has been attached.  Fix it by reinitializing
+`dev->spinlock` before calling the low-level driver's `attach` function
+pointer if `CONFIG_LOCKDEP` is enabled.
 
-Fixes: 02832e56f88a ("usb: gadget: f_subset: add configfs support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-1-4886b578161b@google.com
+Reported-by: syzbot+cc9f7f4a7df09f53c4a4@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cc9f7f4a7df09f53c4a4
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260225132427.86578-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_subset.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/comedi/drivers.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/usb/gadget/function/f_subset.c
-+++ b/drivers/usb/gadget/function/f_subset.c
-@@ -6,6 +6,7 @@
-  * Copyright (C) 2008 Nokia Corporation
-  */
- 
-+#include <linux/cleanup.h>
- #include <linux/slab.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-@@ -449,8 +450,13 @@ static struct usb_function_instance *get
- static void geth_free(struct usb_function *f)
- {
- 	struct f_gether *eth;
-+	struct f_gether_opts *opts;
-+
-+	opts = container_of(f->fi, struct f_gether_opts, func_inst);
- 
- 	eth = func_to_geth(f);
-+	scoped_guard(mutex, &opts->lock)
-+		opts->refcnt--;
- 	kfree(eth);
- }
- 
+--- a/drivers/comedi/drivers.c
++++ b/drivers/comedi/drivers.c
+@@ -1001,6 +1001,14 @@ int comedi_device_attach(struct comedi_d
+ 		ret = -EIO;
+ 		goto out;
+ 	}
++	if (IS_ENABLED(CONFIG_LOCKDEP)) {
++		/*
++		 * dev->spinlock is for private use by the attached low-level
++		 * driver.  Reinitialize it to stop lock-dependency tracking
++		 * between attachments to different low-level drivers.
++		 */
++		spin_lock_init(&dev->spinlock);
++	}
+ 	dev->driver = driv;
+ 	dev->board_name = dev->board_ptr ? *(const char **)dev->board_ptr
+ 					 : dev->driver->driver_name;
 
 
