@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6726B2BD030;
-	Wed,  8 Apr 2026 18:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E702B2BD030;
+	Wed,  8 Apr 2026 18:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673431; cv=none; b=fMADuP+ZQetxoMIaN60MAbca7lk3puVoPR7AETD16eGGaoQxURauoiYCeRsykZ7hxWonL9uJi/6xCKGgwQeM/WwqP8N6pN6A4w4SDGXDJn+QgqITy8YPF+/KT9o+Fb+FCwy45wfjn8RFGjs8ZbBNifcuQuZm07hODRwwHbR4K4Y=
+	t=1775673434; cv=none; b=YsDG2gf34Yp2rWz+UR928iZjzKTehCNuZIlycWXqqj3O+CC36yK638vphauas/hzaWeBxcI7SZLwU0H/zEH/e1/5OJ2t+ve/8pt7WcuHAUiesAbeCfJ9jsz1UQbiW7Z3i+MFLO3FzIBOJbsQ71NsqxmapssNXMHEHstEPW/i4D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673431; c=relaxed/simple;
-	bh=67V8HZbsFl0DqS7DMG2SuchqUY9YQnYNdcFcwdEbEGI=;
+	s=arc-20240116; t=1775673434; c=relaxed/simple;
+	bh=ptfFUNd4uyqdiAzKkVYGcTF3os3sl42jIoAxoWrWP4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFjBbFuL/YheNs7Nv6eb4n3zYgcr/Ngcbi+KuixhHN+hcvw71Q0mcwF+WryBT+YNWKTnLjW8zfwafP3AsdECo0SxGC4nvm9WOpO/G3zr4ufaAyOfszCJptDalMULNNfDpZXEWd8ZgTeGIsXax7y6Y1k6wXjEpP8H3BDwFewGm7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egsYmckS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V9dXLhS6uuO/KzbteObv6GXi9TTVwRkgBsQL+5vwziBin7shK7q9xrG355yXaX8b+oak+4nRLmea2qaejpe9OmPLe6ibhppovcHtQObrYK06uj6BV4vcMXiK85P0ba5vbyaZcg/3XxH2k7lJSXfh9P5fRbpGjbwFNLSfwaKx6JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfpRiv7N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egsYmckS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9806C19421;
-	Wed,  8 Apr 2026 18:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfpRiv7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D39EC19421;
+	Wed,  8 Apr 2026 18:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673431;
-	bh=67V8HZbsFl0DqS7DMG2SuchqUY9YQnYNdcFcwdEbEGI=;
+	s=korg; t=1775673433;
+	bh=ptfFUNd4uyqdiAzKkVYGcTF3os3sl42jIoAxoWrWP4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=egsYmckSwmDgrMFbkvjG3yrUSYh4Z2EgKfWN1ptZZhjbRe2fxyr3ppAOPj1yb8kca
-	 NPEF8XoM15jrR+wBNQWMqVEZFw872gUUXMqUmFXBkLenWin8TcPxchYOEVfNV5GjeS
-	 Dv39ON3bayUTLQcE7pl5WxrnfTuihFrF3KgejFig=
+	b=DfpRiv7NjPy7993nWrUxpfmuqp3qx2vjNAq+Wj6RJdHwwtddzxFJYCb3wQtnRn2mO
+	 nNoWy3Ab+MSYOvrhHz1w1dJUcSzdeuYbhRPx+UoB+mVxo3blV9IxJSbFxBcOHvNLTq
+	 C1ljhGL3Zxd7tfX1XNegtw5LLC8r1OSVxTQNV4JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 6.18 230/277] counter: rz-mtu3-cnt: do not use struct rz_mtu3_channels dev member
-Date: Wed,  8 Apr 2026 20:03:35 +0200
-Message-ID: <20260408175942.447092947@linuxfoundation.org>
+	Zorro Lang <zlang@redhat.com>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 231/277] crypto: tegra - Add missing CRYPTO_ALG_ASYNC
+Date: Wed,  8 Apr 2026 20:03:36 +0200
+Message-ID: <20260408175942.483430554@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -50,236 +52,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 2932095c114b98cbb40ccf34fc00d613cb17cead upstream.
+commit 4b56770d345524fc2acc143a2b85539cf7d74bc1 upstream.
 
-The counter driver can use HW channels 1 and 2, while the PWM driver can
-use HW channels 0, 1, 2, 3, 4, 6, 7.
+The tegra crypto driver failed to set the CRYPTO_ALG_ASYNC on its
+asynchronous algorithms, causing the crypto API to select them for users
+that request only synchronous algorithms.  This causes crashes (at
+least).  Fix this by adding the flag like what the other drivers do.
+Also remove the unnecessary CRYPTO_ALG_TYPE_* flags, since those just
+get ignored and overridden by the registration function anyway.
 
-The dev member is assigned both by the counter driver and the PWM driver
-for channels 1 and 2, to their own struct device instance, overwriting
-the previous value.
-
-The sub-drivers race to assign their own struct device pointer to the
-same struct rz_mtu3_channel's dev member.
-
-The dev member of struct rz_mtu3_channel is used by the counter
-sub-driver for runtime PM.
-
-Depending on the probe order of the counter and PWM sub-drivers, the
-dev member may point to the wrong struct device instance, causing the
-counter sub-driver to do runtime PM actions on the wrong device.
-
-To fix this, use the parent pointer of the counter, which is assigned
-during probe to the correct struct device, not the struct device pointer
-inside the shared struct rz_mtu3_channel.
-
+Reported-by: Zorro Lang <zlang@redhat.com>
+Closes: https://lore.kernel.org/r/20260314080937.pghb4aa7d4je3mhh@dell-per750-06-vm-08.rhts.eng.pek2.redhat.com
+Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
 Cc: stable@vger.kernel.org
-Fixes: 0be8907359df ("counter: Add Renesas RZ/G2L MTU3a counter driver")
-Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Link: https://lore.kernel.org/r/20260130122353.2263273-6-cosmin-gabriel.tanislav.xa@renesas.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Cc: Akhil R <akhilrajeev@nvidia.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/rz-mtu3-cnt.c |   55 ++++++++++++++++++++----------------------
- 1 file changed, 27 insertions(+), 28 deletions(-)
+ drivers/crypto/tegra/tegra-se-aes.c  |   11 +++++++----
+ drivers/crypto/tegra/tegra-se-hash.c |   30 +++++++++++++++++-------------
+ 2 files changed, 24 insertions(+), 17 deletions(-)
 
---- a/drivers/counter/rz-mtu3-cnt.c
-+++ b/drivers/counter/rz-mtu3-cnt.c
-@@ -107,9 +107,9 @@ static bool rz_mtu3_is_counter_invalid(s
- 	struct rz_mtu3_cnt *const priv = counter_priv(counter);
- 	unsigned long tmdr;
- 
--	pm_runtime_get_sync(priv->ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	tmdr = rz_mtu3_shared_reg_read(priv->ch, RZ_MTU3_TMDR3);
--	pm_runtime_put(priv->ch->dev);
-+	pm_runtime_put(counter->parent);
- 
- 	if (id == RZ_MTU3_32_BIT_CH && test_bit(RZ_MTU3_TMDR3_LWA, &tmdr))
- 		return false;
-@@ -165,12 +165,12 @@ static int rz_mtu3_count_read(struct cou
- 	if (ret)
- 		return ret;
- 
--	pm_runtime_get_sync(ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	if (count->id == RZ_MTU3_32_BIT_CH)
- 		*val = rz_mtu3_32bit_ch_read(ch, RZ_MTU3_TCNTLW);
- 	else
- 		*val = rz_mtu3_16bit_ch_read(ch, RZ_MTU3_TCNT);
--	pm_runtime_put(ch->dev);
-+	pm_runtime_put(counter->parent);
- 	mutex_unlock(&priv->lock);
- 
- 	return 0;
-@@ -187,26 +187,26 @@ static int rz_mtu3_count_write(struct co
- 	if (ret)
- 		return ret;
- 
--	pm_runtime_get_sync(ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	if (count->id == RZ_MTU3_32_BIT_CH)
- 		rz_mtu3_32bit_ch_write(ch, RZ_MTU3_TCNTLW, val);
- 	else
- 		rz_mtu3_16bit_ch_write(ch, RZ_MTU3_TCNT, val);
--	pm_runtime_put(ch->dev);
-+	pm_runtime_put(counter->parent);
- 	mutex_unlock(&priv->lock);
- 
- 	return 0;
- }
- 
- static int rz_mtu3_count_function_read_helper(struct rz_mtu3_channel *const ch,
--					      struct rz_mtu3_cnt *const priv,
-+					      struct counter_device *const counter,
- 					      enum counter_function *function)
- {
- 	u8 timer_mode;
- 
--	pm_runtime_get_sync(ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	timer_mode = rz_mtu3_8bit_ch_read(ch, RZ_MTU3_TMDR1);
--	pm_runtime_put(ch->dev);
-+	pm_runtime_put(counter->parent);
- 
- 	switch (timer_mode & RZ_MTU3_TMDR1_PH_CNT_MODE_MASK) {
- 	case RZ_MTU3_TMDR1_PH_CNT_MODE_1:
-@@ -240,7 +240,7 @@ static int rz_mtu3_count_function_read(s
- 	if (ret)
- 		return ret;
- 
--	ret = rz_mtu3_count_function_read_helper(ch, priv, function);
-+	ret = rz_mtu3_count_function_read_helper(ch, counter, function);
- 	mutex_unlock(&priv->lock);
- 
- 	return ret;
-@@ -279,9 +279,9 @@ static int rz_mtu3_count_function_write(
- 		return -EINVAL;
- 	}
- 
--	pm_runtime_get_sync(ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	rz_mtu3_8bit_ch_write(ch, RZ_MTU3_TMDR1, timer_mode);
--	pm_runtime_put(ch->dev);
-+	pm_runtime_put(counter->parent);
- 	mutex_unlock(&priv->lock);
- 
- 	return 0;
-@@ -300,9 +300,9 @@ static int rz_mtu3_count_direction_read(
- 	if (ret)
- 		return ret;
- 
--	pm_runtime_get_sync(ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	tsr = rz_mtu3_8bit_ch_read(ch, RZ_MTU3_TSR);
--	pm_runtime_put(ch->dev);
-+	pm_runtime_put(counter->parent);
- 
- 	*direction = (tsr & RZ_MTU3_TSR_TCFD) ?
- 		COUNTER_COUNT_DIRECTION_FORWARD : COUNTER_COUNT_DIRECTION_BACKWARD;
-@@ -377,14 +377,14 @@ static int rz_mtu3_count_ceiling_write(s
- 		return -EINVAL;
- 	}
- 
--	pm_runtime_get_sync(ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	if (count->id == RZ_MTU3_32_BIT_CH)
- 		rz_mtu3_32bit_ch_write(ch, RZ_MTU3_TGRALW, ceiling);
- 	else
- 		rz_mtu3_16bit_ch_write(ch, RZ_MTU3_TGRA, ceiling);
- 
- 	rz_mtu3_8bit_ch_write(ch, RZ_MTU3_TCR, RZ_MTU3_TCR_CCLR_TGRA);
--	pm_runtime_put(ch->dev);
-+	pm_runtime_put(counter->parent);
- 	mutex_unlock(&priv->lock);
- 
- 	return 0;
-@@ -495,7 +495,6 @@ static int rz_mtu3_count_enable_read(str
- static int rz_mtu3_count_enable_write(struct counter_device *counter,
- 				      struct counter_count *count, u8 enable)
- {
--	struct rz_mtu3_channel *const ch = rz_mtu3_get_ch(counter, count->id);
- 	struct rz_mtu3_cnt *const priv = counter_priv(counter);
- 	int ret = 0;
- 
-@@ -505,14 +504,14 @@ static int rz_mtu3_count_enable_write(st
- 		goto exit;
- 
- 	if (enable) {
--		pm_runtime_get_sync(ch->dev);
-+		pm_runtime_get_sync(counter->parent);
- 		ret = rz_mtu3_initialize_counter(counter, count->id);
- 		if (ret == 0)
- 			priv->count_is_enabled[count->id] = true;
- 	} else {
- 		rz_mtu3_terminate_counter(counter, count->id);
- 		priv->count_is_enabled[count->id] = false;
--		pm_runtime_put(ch->dev);
-+		pm_runtime_put(counter->parent);
- 	}
- 
- exit:
-@@ -544,9 +543,9 @@ static int rz_mtu3_cascade_counts_enable
- 	if (ret)
- 		return ret;
- 
--	pm_runtime_get_sync(priv->ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	tmdr = rz_mtu3_shared_reg_read(priv->ch, RZ_MTU3_TMDR3);
--	pm_runtime_put(priv->ch->dev);
-+	pm_runtime_put(counter->parent);
- 	*cascade_enable = test_bit(RZ_MTU3_TMDR3_LWA, &tmdr);
- 	mutex_unlock(&priv->lock);
- 
-@@ -563,10 +562,10 @@ static int rz_mtu3_cascade_counts_enable
- 	if (ret)
- 		return ret;
- 
--	pm_runtime_get_sync(priv->ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	rz_mtu3_shared_reg_update_bit(priv->ch, RZ_MTU3_TMDR3,
- 				      RZ_MTU3_TMDR3_LWA, cascade_enable);
--	pm_runtime_put(priv->ch->dev);
-+	pm_runtime_put(counter->parent);
- 	mutex_unlock(&priv->lock);
- 
- 	return 0;
-@@ -583,9 +582,9 @@ static int rz_mtu3_ext_input_phase_clock
- 	if (ret)
- 		return ret;
- 
--	pm_runtime_get_sync(priv->ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	tmdr = rz_mtu3_shared_reg_read(priv->ch, RZ_MTU3_TMDR3);
--	pm_runtime_put(priv->ch->dev);
-+	pm_runtime_put(counter->parent);
- 	*ext_input_phase_clock_select = test_bit(RZ_MTU3_TMDR3_PHCKSEL, &tmdr);
- 	mutex_unlock(&priv->lock);
- 
-@@ -602,11 +601,11 @@ static int rz_mtu3_ext_input_phase_clock
- 	if (ret)
- 		return ret;
- 
--	pm_runtime_get_sync(priv->ch->dev);
-+	pm_runtime_get_sync(counter->parent);
- 	rz_mtu3_shared_reg_update_bit(priv->ch, RZ_MTU3_TMDR3,
- 				      RZ_MTU3_TMDR3_PHCKSEL,
- 				      ext_input_phase_clock_select);
--	pm_runtime_put(priv->ch->dev);
-+	pm_runtime_put(counter->parent);
- 	mutex_unlock(&priv->lock);
- 
- 	return 0;
-@@ -644,7 +643,7 @@ static int rz_mtu3_action_read(struct co
- 	if (ret)
- 		return ret;
- 
--	ret = rz_mtu3_count_function_read_helper(ch, priv, &function);
-+	ret = rz_mtu3_count_function_read_helper(ch, counter, &function);
- 	if (ret) {
- 		mutex_unlock(&priv->lock);
- 		return ret;
+--- a/drivers/crypto/tegra/tegra-se-aes.c
++++ b/drivers/crypto/tegra/tegra-se-aes.c
+@@ -529,7 +529,7 @@ static struct tegra_se_alg tegra_aes_alg
+ 				.cra_name = "cbc(aes)",
+ 				.cra_driver_name = "cbc-aes-tegra",
+ 				.cra_priority = 500,
+-				.cra_flags = CRYPTO_ALG_TYPE_SKCIPHER | CRYPTO_ALG_ASYNC,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = AES_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_aes_ctx),
+ 				.cra_alignmask = 0xf,
+@@ -550,7 +550,7 @@ static struct tegra_se_alg tegra_aes_alg
+ 				.cra_name = "ecb(aes)",
+ 				.cra_driver_name = "ecb-aes-tegra",
+ 				.cra_priority = 500,
+-				.cra_flags = CRYPTO_ALG_TYPE_SKCIPHER | CRYPTO_ALG_ASYNC,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = AES_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_aes_ctx),
+ 				.cra_alignmask = 0xf,
+@@ -572,7 +572,7 @@ static struct tegra_se_alg tegra_aes_alg
+ 				.cra_name = "ctr(aes)",
+ 				.cra_driver_name = "ctr-aes-tegra",
+ 				.cra_priority = 500,
+-				.cra_flags = CRYPTO_ALG_TYPE_SKCIPHER | CRYPTO_ALG_ASYNC,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = 1,
+ 				.cra_ctxsize = sizeof(struct tegra_aes_ctx),
+ 				.cra_alignmask = 0xf,
+@@ -594,6 +594,7 @@ static struct tegra_se_alg tegra_aes_alg
+ 				.cra_name = "xts(aes)",
+ 				.cra_driver_name = "xts-aes-tegra",
+ 				.cra_priority = 500,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = AES_BLOCK_SIZE,
+ 				.cra_ctxsize	   = sizeof(struct tegra_aes_ctx),
+ 				.cra_alignmask	   = (__alignof__(u64) - 1),
+@@ -1922,6 +1923,7 @@ static struct tegra_se_alg tegra_aead_al
+ 				.cra_name = "gcm(aes)",
+ 				.cra_driver_name = "gcm-aes-tegra",
+ 				.cra_priority = 500,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = 1,
+ 				.cra_ctxsize = sizeof(struct tegra_aead_ctx),
+ 				.cra_alignmask = 0xf,
+@@ -1944,6 +1946,7 @@ static struct tegra_se_alg tegra_aead_al
+ 				.cra_name = "ccm(aes)",
+ 				.cra_driver_name = "ccm-aes-tegra",
+ 				.cra_priority = 500,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = 1,
+ 				.cra_ctxsize = sizeof(struct tegra_aead_ctx),
+ 				.cra_alignmask = 0xf,
+@@ -1971,7 +1974,7 @@ static struct tegra_se_alg tegra_cmac_al
+ 				.cra_name = "cmac(aes)",
+ 				.cra_driver_name = "tegra-se-cmac",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = AES_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_cmac_ctx),
+ 				.cra_alignmask = 0,
+--- a/drivers/crypto/tegra/tegra-se-hash.c
++++ b/drivers/crypto/tegra/tegra-se-hash.c
+@@ -761,7 +761,7 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "sha1",
+ 				.cra_driver_name = "tegra-se-sha1",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = SHA1_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -786,7 +786,7 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "sha224",
+ 				.cra_driver_name = "tegra-se-sha224",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = SHA224_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -811,7 +811,7 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "sha256",
+ 				.cra_driver_name = "tegra-se-sha256",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = SHA256_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -836,7 +836,7 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "sha384",
+ 				.cra_driver_name = "tegra-se-sha384",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = SHA384_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -861,7 +861,7 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "sha512",
+ 				.cra_driver_name = "tegra-se-sha512",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = SHA512_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -886,7 +886,7 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "sha3-224",
+ 				.cra_driver_name = "tegra-se-sha3-224",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = SHA3_224_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -911,7 +911,7 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "sha3-256",
+ 				.cra_driver_name = "tegra-se-sha3-256",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = SHA3_256_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -936,7 +936,7 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "sha3-384",
+ 				.cra_driver_name = "tegra-se-sha3-384",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = SHA3_384_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -961,7 +961,7 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "sha3-512",
+ 				.cra_driver_name = "tegra-se-sha3-512",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH,
++				.cra_flags = CRYPTO_ALG_ASYNC,
+ 				.cra_blocksize = SHA3_512_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -988,7 +988,8 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "hmac(sha224)",
+ 				.cra_driver_name = "tegra-se-hmac-sha224",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH | CRYPTO_ALG_NEED_FALLBACK,
++				.cra_flags = CRYPTO_ALG_ASYNC |
++					     CRYPTO_ALG_NEED_FALLBACK,
+ 				.cra_blocksize = SHA224_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -1015,7 +1016,8 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "hmac(sha256)",
+ 				.cra_driver_name = "tegra-se-hmac-sha256",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH | CRYPTO_ALG_NEED_FALLBACK,
++				.cra_flags = CRYPTO_ALG_ASYNC |
++					     CRYPTO_ALG_NEED_FALLBACK,
+ 				.cra_blocksize = SHA256_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -1042,7 +1044,8 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "hmac(sha384)",
+ 				.cra_driver_name = "tegra-se-hmac-sha384",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH | CRYPTO_ALG_NEED_FALLBACK,
++				.cra_flags = CRYPTO_ALG_ASYNC |
++					     CRYPTO_ALG_NEED_FALLBACK,
+ 				.cra_blocksize = SHA384_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
+@@ -1069,7 +1072,8 @@ static struct tegra_se_alg tegra_hash_al
+ 				.cra_name = "hmac(sha512)",
+ 				.cra_driver_name = "tegra-se-hmac-sha512",
+ 				.cra_priority = 300,
+-				.cra_flags = CRYPTO_ALG_TYPE_AHASH | CRYPTO_ALG_NEED_FALLBACK,
++				.cra_flags = CRYPTO_ALG_ASYNC |
++					     CRYPTO_ALG_NEED_FALLBACK,
+ 				.cra_blocksize = SHA512_BLOCK_SIZE,
+ 				.cra_ctxsize = sizeof(struct tegra_sha_ctx),
+ 				.cra_alignmask = 0,
 
 
