@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4B72BEFFF;
-	Wed,  8 Apr 2026 18:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5265F3D6694;
+	Wed,  8 Apr 2026 18:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673585; cv=none; b=uMCMMh9l88U/4WUU49Ic1u8bSTB8S65wJsTOcMRTnmQlRH5x0QITWsf5ETZviKnd9qnHIuoIhsQL/p440vWVwn6LNuLx97SL7OhJwxeyf5zapqnJJX26jmF1jSo5nOnmzDIFTzOFXewtaNKwi3KK68bYBueWcFihgoqCSAKZE70=
+	t=1775673588; cv=none; b=ZxuNPZJkrsOj89lXTXHWPlFzNj0wsRTDeX3LX6PRoMmO4mCebEeo9U953vQMOv7QLaxOy0EEXGwsAdJhjwMyUDQDUu/M4IxOhcRG/IAsJtLZO5ZcojDyyEoYoX0JdBDqoipUY1mMO9hLDPv+KCXB2b7HRjBKhA+xOuaqtmxuL5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673585; c=relaxed/simple;
-	bh=wuRuvlsKYcuRwcjgl/5/kWzDM9AzKsJFb7c65ouNZvQ=;
+	s=arc-20240116; t=1775673588; c=relaxed/simple;
+	bh=YaICr2z5x/eCP5c5lSPADEI5/dx7IrjQ0+SjYJRfDTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWiNOYgu0cryeye80Pk0FyVQrp6JZ29gaRg0N6Ty/X2vl2TLqwPvxbvzBq5+0r+HIbCApa4UxGYx8QbXl+rNLW2Ua1i3LjNso4Gmm5voSFZhSxPWV75sMmvd55wu9jaknPR07APFdUUSteXxEs8jSJrGZAH7A1xuqVnrYv+Ws+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EbiyYCDj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mxTpLR4qF5otkYlxcifuHssJrzd7eiOwhYDWNSdywrvUW/T3g7frP2VifKAyHque0SL31HnHsH/H9a/bwSAiB2FeOmbLIpTdgQ9NIvIYg4eJ/ZIVYMorJNOOprn9OXFIGvnyA7KuDELlWBcWgAuGWCzv7IowWhw242Q31LvsQIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPexvmmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbiyYCDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE35C19421;
-	Wed,  8 Apr 2026 18:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPexvmmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC95AC19425;
+	Wed,  8 Apr 2026 18:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673585;
-	bh=wuRuvlsKYcuRwcjgl/5/kWzDM9AzKsJFb7c65ouNZvQ=;
+	s=korg; t=1775673588;
+	bh=YaICr2z5x/eCP5c5lSPADEI5/dx7IrjQ0+SjYJRfDTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EbiyYCDjmbp3Q2AZkh1vPg5TgnURmmkS1tP6OdQsbuBENWmXsCgwT1fY4RWKIy30q
-	 Mi2pI19BneTAHIPITRkCRiidgcCxY7XsvXoET/aPV6+EAWYJ+pVLS5AAR5WzPdEisL
-	 GHTHugW/VWf9i0bV3wIJ6DB5eJau24X9Nwn3DvXk=
+	b=pPexvmmdAZ92gH9/vnEz5evLrt81mByRn4/OONZni5qtSeOSFMCY8e61jSW80gIF1
+	 1prW9S8WsH6jO7u/v3R1JYSRkn87G7Qc2GndUpjR4ShJSjdJykBkwgKIBuJOGxb2mz
+	 UC8yxU+WzBVtLW7bl5KVNXwjw20pI/qa2bZB/tFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 012/242] io_uring/kbuf: introduce struct io_br_sel
-Date: Wed,  8 Apr 2026 20:00:52 +0200
-Message-ID: <20260408175927.532244495@linuxfoundation.org>
+Subject: [PATCH 6.12 013/242] io_uring/kbuf: use struct io_br_sel for multiple buffers picking
+Date: Wed,  8 Apr 2026 20:00:53 +0200
+Message-ID: <20260408175927.569058119@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -51,293 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-Commit ab6559bdbb08f6bee606435cd014fc5ba0f7b750 upstream.
+Commit 429884ff35f75a8ac3e8f822f483e220e3ea6394 upstream.
 
-Rather than return addresses directly from buffer selection, add a
-struct around it. No functional changes in this patch, it's in
-preparation for storing more buffer related information locally, rather
-than in struct io_kiocb.
+The networking side uses bundles, which is picking multiple buffers at
+the same time. Pass in struct io_br_sel to those helpers.
 
-Link: https://lore.kernel.org/r/20250821020750.598432-7-axboe@kernel.dk
+Link: https://lore.kernel.org/r/20250821020750.598432-9-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c |   26 +++++++++++++-------------
- io_uring/kbuf.h |   19 +++++++++++++++++--
- io_uring/net.c  |   18 +++++++++---------
- io_uring/rw.c   |   31 ++++++++++++++++++-------------
- 4 files changed, 57 insertions(+), 37 deletions(-)
+ io_uring/kbuf.c |    5 +++--
+ io_uring/kbuf.h |    5 +++--
+ io_uring/net.c  |   31 +++++++++++++++++--------------
+ 3 files changed, 23 insertions(+), 18 deletions(-)
 
 --- a/io_uring/kbuf.c
 +++ b/io_uring/kbuf.c
-@@ -152,18 +152,18 @@ static int io_provided_buffers_select(st
- 	return 1;
+@@ -312,7 +312,7 @@ static int io_ring_buffers_peek(struct i
  }
  
--static void __user *io_ring_buffer_select(struct io_kiocb *req, size_t *len,
--					  struct io_buffer_list *bl,
--					  unsigned int issue_flags)
-+static struct io_br_sel io_ring_buffer_select(struct io_kiocb *req, size_t *len,
-+					      struct io_buffer_list *bl,
-+					      unsigned int issue_flags)
- {
- 	struct io_uring_buf_ring *br = bl->buf_ring;
- 	__u16 tail, head = bl->head;
-+	struct io_br_sel sel = { };
- 	struct io_uring_buf *buf;
--	void __user *ret;
- 
- 	tail = smp_load_acquire(&br->tail);
- 	if (unlikely(tail == head))
--		return NULL;
-+		return sel;
- 
- 	if (head + 1 == tail)
- 		req->flags |= REQ_F_BL_EMPTY;
-@@ -174,7 +174,7 @@ static void __user *io_ring_buffer_selec
- 	req->flags |= REQ_F_BUFFER_RING | REQ_F_BUFFERS_COMMIT;
- 	req->buf_list = bl;
- 	req->buf_index = buf->bid;
--	ret = u64_to_user_ptr(buf->addr);
-+	sel.addr = u64_to_user_ptr(buf->addr);
- 
- 	if (issue_flags & IO_URING_F_UNLOCKED || !io_file_can_poll(req)) {
- 		/*
-@@ -191,27 +191,27 @@ static void __user *io_ring_buffer_selec
- 			req->flags |= REQ_F_BUF_MORE;
- 		req->buf_list = NULL;
- 	}
--	return ret;
-+	return sel;
- }
- 
--void __user *io_buffer_select(struct io_kiocb *req, size_t *len,
--			      unsigned int issue_flags)
-+struct io_br_sel io_buffer_select(struct io_kiocb *req, size_t *len,
-+				  unsigned int issue_flags)
+ int io_buffers_select(struct io_kiocb *req, struct buf_sel_arg *arg,
+-		      unsigned int issue_flags)
++		      struct io_br_sel *sel, unsigned int issue_flags)
  {
  	struct io_ring_ctx *ctx = req->ctx;
-+	struct io_br_sel sel = { };
  	struct io_buffer_list *bl;
--	void __user *ret = NULL;
- 
- 	io_ring_submit_lock(req->ctx, issue_flags);
- 
- 	bl = io_buffer_get_list(ctx, req->buf_index);
- 	if (likely(bl)) {
- 		if (bl->flags & IOBL_BUF_RING)
--			ret = io_ring_buffer_select(req, len, bl, issue_flags);
-+			sel = io_ring_buffer_select(req, len, bl, issue_flags);
- 		else
--			ret = io_provided_buffer_select(req, len, bl);
-+			sel.addr = io_provided_buffer_select(req, len, bl);
- 	}
- 	io_ring_submit_unlock(req->ctx, issue_flags);
--	return ret;
-+	return sel;
+@@ -345,7 +345,8 @@ out_unlock:
+ 	return ret;
  }
  
- /* cap it at a reasonable 256, will be one page even for 4K */
+-int io_buffers_peek(struct io_kiocb *req, struct buf_sel_arg *arg)
++int io_buffers_peek(struct io_kiocb *req, struct buf_sel_arg *arg,
++		    struct io_br_sel *sel)
+ {
+ 	struct io_ring_ctx *ctx = req->ctx;
+ 	struct io_buffer_list *bl;
 --- a/io_uring/kbuf.h
 +++ b/io_uring/kbuf.h
-@@ -64,8 +64,23 @@ struct buf_sel_arg {
- 	unsigned short partial_map;
- };
- 
--void __user *io_buffer_select(struct io_kiocb *req, size_t *len,
--			      unsigned int issue_flags);
-+/*
-+ * Return value from io_buffer_list selection. Just returns the error or
-+ * user address for now, will be extended to return the buffer list in the
-+ * future.
-+ */
-+struct io_br_sel {
-+	/*
-+	 * Some selection parts return the user address, others return an error.
-+	 */
-+	union {
-+		void __user *addr;
-+		ssize_t val;
-+	};
-+};
-+
-+struct io_br_sel io_buffer_select(struct io_kiocb *req, size_t *len,
-+				 unsigned int issue_flags);
+@@ -82,8 +82,9 @@ struct io_br_sel {
+ struct io_br_sel io_buffer_select(struct io_kiocb *req, size_t *len,
+ 				 unsigned int issue_flags);
  int io_buffers_select(struct io_kiocb *req, struct buf_sel_arg *arg,
- 		      unsigned int issue_flags);
- int io_buffers_peek(struct io_kiocb *req, struct buf_sel_arg *arg);
+-		      unsigned int issue_flags);
+-int io_buffers_peek(struct io_kiocb *req, struct buf_sel_arg *arg);
++		      struct io_br_sel *sel, unsigned int issue_flags);
++int io_buffers_peek(struct io_kiocb *req, struct buf_sel_arg *arg,
++		    struct io_br_sel *sel);
+ void io_destroy_buffers(struct io_ring_ctx *ctx);
+ 
+ int io_remove_buffers_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe);
 --- a/io_uring/net.c
 +++ b/io_uring/net.c
-@@ -1035,22 +1035,22 @@ int io_recvmsg(struct io_kiocb *req, uns
+@@ -597,6 +597,7 @@ int io_send(struct io_kiocb *req, unsign
+ {
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
+ 	struct io_async_msghdr *kmsg = req->async_data;
++	struct io_br_sel sel = { };
+ 	struct socket *sock;
+ 	unsigned flags;
+ 	int min_ret = 0;
+@@ -633,7 +634,7 @@ retry_bundle:
+ 		else
+ 			arg.mode |= KBUF_MODE_EXPAND;
+ 
+-		ret = io_buffers_select(req, &arg, issue_flags);
++		ret = io_buffers_select(req, &arg, &sel, issue_flags);
+ 		if (unlikely(ret < 0))
+ 			return ret;
+ 
+@@ -1015,6 +1016,7 @@ int io_recvmsg(struct io_kiocb *req, uns
+ {
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
+ 	struct io_async_msghdr *kmsg = req->async_data;
++	struct io_br_sel sel = { };
+ 	struct socket *sock;
+ 	unsigned flags;
+ 	int ret, min_ret = 0;
+@@ -1035,7 +1037,6 @@ int io_recvmsg(struct io_kiocb *req, uns
  
  retry_multishot:
  	if (io_do_buffer_select(req)) {
--		void __user *buf;
-+		struct io_br_sel sel;
+-		struct io_br_sel sel;
  		size_t len = sr->len;
  
--		buf = io_buffer_select(req, &len, issue_flags);
--		if (!buf)
-+		sel = io_buffer_select(req, &len, issue_flags);
-+		if (!sel.addr)
- 			return -ENOBUFS;
+ 		sel = io_buffer_select(req, &len, issue_flags);
+@@ -1096,7 +1097,7 @@ retry_multishot:
+ }
  
- 		if (req->flags & REQ_F_APOLL_MULTISHOT) {
--			ret = io_recvmsg_prep_multishot(kmsg, sr, &buf, &len);
-+			ret = io_recvmsg_prep_multishot(kmsg, sr, &sel.addr, &len);
- 			if (ret) {
- 				io_kbuf_recycle(req, req->buf_list, issue_flags);
- 				return ret;
- 			}
+ static int io_recv_buf_select(struct io_kiocb *req, struct io_async_msghdr *kmsg,
+-			      size_t *len, unsigned int issue_flags)
++			      struct io_br_sel *sel, unsigned int issue_flags)
+ {
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
+ 	int ret;
+@@ -1120,10 +1121,12 @@ static int io_recv_buf_select(struct io_
+ 			arg.mode |= KBUF_MODE_FREE;
  		}
  
--		iov_iter_ubuf(&kmsg->msg.msg_iter, ITER_DEST, buf, len);
-+		iov_iter_ubuf(&kmsg->msg.msg_iter, ITER_DEST, sel.addr, len);
- 	}
+-		if (kmsg->msg.msg_inq > 1)
+-			arg.max_len = min_not_zero(sr->len, kmsg->msg.msg_inq);
++		if (sel->val)
++			arg.max_len = sel->val;
++		else if (kmsg->msg.msg_inq > 1)
++			arg.max_len = min_not_zero(sel->val, (size_t) kmsg->msg.msg_inq);
  
- 	kmsg->msg.msg_get_inq = 1;
-@@ -1144,13 +1144,13 @@ static int io_recv_buf_select(struct io_
+-		ret = io_buffers_peek(req, &arg);
++		ret = io_buffers_peek(req, &arg, sel);
+ 		if (unlikely(ret < 0))
+ 			return ret;
+ 
+@@ -1144,14 +1147,13 @@ static int io_recv_buf_select(struct io_
  		iov_iter_init(&kmsg->msg.msg_iter, ITER_DEST, arg.iovs, ret,
  				arg.out_len);
  	} else {
--		void __user *buf;
-+		struct io_br_sel sel;
+-		struct io_br_sel sel;
++		size_t len = sel->val;
  
- 		*len = sr->len;
--		buf = io_buffer_select(req, len, issue_flags);
--		if (!buf)
-+		sel = io_buffer_select(req, len, issue_flags);
-+		if (!sel.addr)
+-		*len = sr->len;
+-		sel = io_buffer_select(req, len, issue_flags);
+-		if (!sel.addr)
++		*sel = io_buffer_select(req, &len, issue_flags);
++		if (!sel->addr)
  			return -ENOBUFS;
--		sr->buf = buf;
-+		sr->buf = sel.addr;
- 		sr->len = *len;
+-		sr->buf = sel.addr;
+-		sr->len = *len;
++		sr->buf = sel->addr;
++		sr->len = len;
  map_ubuf:
  		ret = import_ubuf(ITER_DEST, sr->buf, sr->len,
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -88,28 +88,28 @@ static int io_iov_buffer_select_prep(str
- 
- static int __io_import_iovec(int ddir, struct io_kiocb *req,
- 			     struct io_async_rw *io,
-+			     struct io_br_sel *sel,
- 			     unsigned int issue_flags)
+ 				  &kmsg->msg.msg_iter);
+@@ -1166,11 +1168,11 @@ int io_recv(struct io_kiocb *req, unsign
  {
- 	const struct io_issue_def *def = &io_issue_defs[req->opcode];
- 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
- 	struct iovec *iov;
--	void __user *buf;
- 	int nr_segs, ret;
- 	size_t sqe_len;
- 
--	buf = u64_to_user_ptr(rw->addr);
-+	sel->addr = u64_to_user_ptr(rw->addr);
- 	sqe_len = rw->len;
- 
- 	if (!def->vectored || req->flags & REQ_F_BUFFER_SELECT) {
- 		if (io_do_buffer_select(req)) {
--			buf = io_buffer_select(req, &sqe_len, issue_flags);
--			if (!buf)
-+			*sel = io_buffer_select(req, &sqe_len, issue_flags);
-+			if (!sel->addr)
- 				return -ENOBUFS;
--			rw->addr = (unsigned long) buf;
-+			rw->addr = (unsigned long) sel->addr;
- 			rw->len = sqe_len;
- 		}
- 
--		return import_ubuf(ddir, buf, sqe_len, &io->iter);
-+		return import_ubuf(ddir, sel->addr, sqe_len, &io->iter);
- 	}
- 
- 	if (io->free_iovec) {
-@@ -119,7 +119,7 @@ static int __io_import_iovec(int ddir, s
- 		iov = &io->fast_iov;
- 		nr_segs = 1;
- 	}
--	ret = __import_iovec(ddir, buf, sqe_len, nr_segs, &iov, &io->iter,
-+	ret = __import_iovec(ddir, sel->addr, sqe_len, nr_segs, &iov, &io->iter,
- 				req->ctx->compat);
- 	if (unlikely(ret < 0))
- 		return ret;
-@@ -134,11 +134,12 @@ static int __io_import_iovec(int ddir, s
- 
- static inline int io_import_iovec(int rw, struct io_kiocb *req,
- 				  struct io_async_rw *io,
-+				  struct io_br_sel *sel,
- 				  unsigned int issue_flags)
- {
- 	int ret;
- 
--	ret = __io_import_iovec(rw, req, io, issue_flags);
-+	ret = __io_import_iovec(rw, req, io, sel, issue_flags);
- 	if (unlikely(ret < 0))
- 		return ret;
- 
-@@ -240,6 +241,7 @@ done:
- static int io_prep_rw_setup(struct io_kiocb *req, int ddir, bool do_import)
- {
- 	struct io_async_rw *rw;
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
+ 	struct io_async_msghdr *kmsg = req->async_data;
 +	struct io_br_sel sel = { };
- 	int ret;
- 
- 	if (io_rw_alloc_async(req))
-@@ -249,7 +251,7 @@ static int io_prep_rw_setup(struct io_ki
- 		return 0;
- 
- 	rw = req->async_data;
--	ret = io_import_iovec(ddir, req, rw, 0);
-+	ret = io_import_iovec(ddir, req, rw, &sel, 0);
- 	if (unlikely(ret < 0))
- 		return ret;
- 
-@@ -827,7 +829,8 @@ static int io_rw_init_file(struct io_kio
- 	return 0;
- }
- 
--static int __io_read(struct io_kiocb *req, unsigned int issue_flags)
-+static int __io_read(struct io_kiocb *req, struct io_br_sel *sel,
-+		     unsigned int issue_flags)
- {
+ 	struct socket *sock;
+ 	unsigned flags;
+ 	int ret, min_ret = 0;
  	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
- 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
-@@ -837,7 +840,7 @@ static int __io_read(struct io_kiocb *re
- 	loff_t *ppos;
+-	size_t len = sr->len;
+ 	bool mshot_finished;
  
+ 	if (!(req->flags & REQ_F_POLLED) &&
+@@ -1187,7 +1189,8 @@ int io_recv(struct io_kiocb *req, unsign
+ 
+ retry_multishot:
  	if (io_do_buffer_select(req)) {
--		ret = io_import_iovec(ITER_DEST, req, io, issue_flags);
-+		ret = io_import_iovec(ITER_DEST, req, io, sel, issue_flags);
- 		if (unlikely(ret < 0))
- 			return ret;
- 	}
-@@ -947,9 +950,10 @@ done:
- 
- int io_read(struct io_kiocb *req, unsigned int issue_flags)
- {
-+	struct io_br_sel sel = { };
- 	int ret;
- 
--	ret = __io_read(req, issue_flags);
-+	ret = __io_read(req, &sel, issue_flags);
- 	if (ret >= 0)
- 		return kiocb_done(req, ret, issue_flags);
- 
-@@ -961,6 +965,7 @@ int io_read(struct io_kiocb *req, unsign
- int io_read_mshot(struct io_kiocb *req, unsigned int issue_flags)
- {
- 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
-+	struct io_br_sel sel = { };
- 	unsigned int cflags = 0;
- 	int ret;
- 
-@@ -970,7 +975,7 @@ int io_read_mshot(struct io_kiocb *req,
- 	if (!io_file_can_poll(req))
- 		return -EBADFD;
- 
--	ret = __io_read(req, issue_flags);
-+	ret = __io_read(req, &sel, issue_flags);
- 
- 	/*
- 	 * If we get -EAGAIN, recycle our buffer and just let normal poll
+-		ret = io_recv_buf_select(req, kmsg, &len, issue_flags);
++		sel.val = sr->len;
++		ret = io_recv_buf_select(req, kmsg, &sel, issue_flags);
+ 		if (unlikely(ret < 0)) {
+ 			kmsg->msg.msg_inq = -1;
+ 			goto out_free;
 
 
