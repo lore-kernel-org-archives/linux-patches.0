@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D406F34AB06;
-	Wed,  8 Apr 2026 18:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613193D6CAE;
+	Wed,  8 Apr 2026 18:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674381; cv=none; b=plZCBA25zg+t8FZK2+yhVe85i6MXG3tNYiMQxkBI532+pO0Jny+XGITsAJUPmO7P5LFacrjwVD5VByd4QmIdFhoYO0Dp8N6jqvAhYKuRZn3EtOhhml1mFrMS/nSJzgU0hSTxF+XrDtiOaMpT/p6i+1OIWhhSJCk7vlKz7c0bbfI=
+	t=1775674384; cv=none; b=uxPz1cPlHHPkzdgQ65qOArve86Chu8H7uTyBYYF/FaFG+K07chlTl9C2C6RgHzB/v5qvqgbTOVsC6IVfMrO40RYlBNYZbFgMIMbFUXEpDAQJ89vDr3vm+Cz2silKc9MzHQ6mDR3D9QjTt1SOmtYY1w8NwuPI2dSU0VqLi4sO3rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674381; c=relaxed/simple;
-	bh=DOoyPukuqzThOBva00ciyCNAgWIfy+aQ85MyN3twMT8=;
+	s=arc-20240116; t=1775674384; c=relaxed/simple;
+	bh=Jg/JylPPgraIh6aQOUNpPNWnamm/v3es7tNPO1zRvPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iIEZTP4aBczAxAHnj5MkZzQFYdnSLJFvZCyIPqB8GyL2EL5LTx2NRRMXXvWC9yuke7hfC9eU4Dbnu5G861RkdKNJbsRb8o7wDMk6UAIdJBOSfRX7wjnxpR+TCH9ZTR0QPRX/hkQ6a9mVFTsQ84O//VfTtqdIZnKqCSz4OgbDzMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INjdNoYu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=um2veTF3qN9rLFWXOH7VraJ93vmGFeMo+t6O6e7KGvPe/53ex7lTcIM9XUdrRdZCVnAvbzG1goTjIh+H1MKjifl4tcrmsT641VQ/xhINZFCsDHLWkjRtnNEAEHmmAhiCKBsvVxJWTkr56/f/VZIL4KuAZe33xX9efLRNMAb4s7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbTQ46Hu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INjdNoYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693BBC19421;
-	Wed,  8 Apr 2026 18:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbTQ46Hu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC90CC19421;
+	Wed,  8 Apr 2026 18:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674381;
-	bh=DOoyPukuqzThOBva00ciyCNAgWIfy+aQ85MyN3twMT8=;
+	s=korg; t=1775674384;
+	bh=Jg/JylPPgraIh6aQOUNpPNWnamm/v3es7tNPO1zRvPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INjdNoYuJZv8pDg4EytXLmfo0hy/A8w7JDMpyVUtTRyMoiK5uiZgoMrSaQ6bwBpyh
-	 mmKW1X4OXTmWj/SjatM/5UtrBGAhbgBMVlVE1buO7Ebj6QvXR7w0eprNec9sIluVDI
-	 E6KaT36gR88SMXqvsSCtrwW7f0NNWCoU5fzwOl6E=
+	b=qbTQ46Hu8UMkJfjAK5SBwqLhhXqKPoQcLLUIMrcogVHKEdWSYh2yUwZWJKCr88tdH
+	 bZtc4D5GipLoxtoWo16bfD68LgdlaEDpa3QnIkYd5AkvKj65TFaoT36N1nfyeMUB9W
+	 vqpUAI2HdBlL7/BKT2zI5X0tIXdaa+NEAgnYKnWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Amery Hung <ameryhung@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 076/311] bridge: mrp: reject zero test interval to avoid OOM panic
-Date: Wed,  8 Apr 2026 20:01:16 +0200
-Message-ID: <20260408175942.254145796@linuxfoundation.org>
+Subject: [PATCH 6.19 077/311] bpf: Fix regsafe() for pointers to packet
+Date: Wed,  8 Apr 2026 20:01:17 +0200
+Message-ID: <20260408175942.290540253@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -54,64 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit fa6e24963342de4370e3a3c9af41e38277b74cf3 ]
+[ Upstream commit a8502a79e832b861e99218cbd2d8f4312d62e225 ]
 
-br_mrp_start_test() and br_mrp_start_in_test() accept the user-supplied
-interval value from netlink without validation. When interval is 0,
-usecs_to_jiffies(0) yields 0, causing the delayed work
-(br_mrp_test_work_expired / br_mrp_in_test_work_expired) to reschedule
-itself with zero delay. This creates a tight loop on system_percpu_wq
-that allocates and transmits MRP test frames at maximum rate, exhausting
-all system memory and causing a kernel panic via OOM deadlock.
+In case rold->reg->range == BEYOND_PKT_END && rcur->reg->range == N
+regsafe() may return true which may lead to current state with
+valid packet range not being explored. Fix the bug.
 
-The same zero-interval issue applies to br_mrp_start_in_test_parse()
-for interconnect test frames.
-
-Use NLA_POLICY_MIN(NLA_U32, 1) in the nla_policy tables for both
-IFLA_BRIDGE_MRP_START_TEST_INTERVAL and
-IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL, so zero is rejected at the
-netlink attribute parsing layer before the value ever reaches the
-workqueue scheduling code. This is consistent with how other bridge
-subsystems (br_fdb, br_mst) enforce range constraints on netlink
-attributes.
-
-Fixes: 20f6a05ef635 ("bridge: mrp: Rework the MRP netlink interface")
-Fixes: 7ab1748e4ce6 ("bridge: mrp: Extend MRP netlink interface for configuring MRP interconnect")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260328063000.1845376-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6d94e741a8ff ("bpf: Support for pointers beyond pkt_end.")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20260331204228.26726-1-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mrp_netlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_mrp_netlink.c b/net/bridge/br_mrp_netlink.c
-index ce6f63c77cc0a..86f0e75d6e345 100644
---- a/net/bridge/br_mrp_netlink.c
-+++ b/net/bridge/br_mrp_netlink.c
-@@ -196,7 +196,7 @@ static const struct nla_policy
- br_mrp_start_test_policy[IFLA_BRIDGE_MRP_START_TEST_MAX + 1] = {
- 	[IFLA_BRIDGE_MRP_START_TEST_UNSPEC]	= { .type = NLA_REJECT },
- 	[IFLA_BRIDGE_MRP_START_TEST_RING_ID]	= { .type = NLA_U32 },
--	[IFLA_BRIDGE_MRP_START_TEST_INTERVAL]	= { .type = NLA_U32 },
-+	[IFLA_BRIDGE_MRP_START_TEST_INTERVAL]	= NLA_POLICY_MIN(NLA_U32, 1),
- 	[IFLA_BRIDGE_MRP_START_TEST_MAX_MISS]	= { .type = NLA_U32 },
- 	[IFLA_BRIDGE_MRP_START_TEST_PERIOD]	= { .type = NLA_U32 },
- 	[IFLA_BRIDGE_MRP_START_TEST_MONITOR]	= { .type = NLA_U32 },
-@@ -316,7 +316,7 @@ static const struct nla_policy
- br_mrp_start_in_test_policy[IFLA_BRIDGE_MRP_START_IN_TEST_MAX + 1] = {
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_UNSPEC]	= { .type = NLA_REJECT },
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_IN_ID]	= { .type = NLA_U32 },
--	[IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL]	= { .type = NLA_U32 },
-+	[IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL]	= NLA_POLICY_MIN(NLA_U32, 1),
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_MAX_MISS]	= { .type = NLA_U32 },
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_PERIOD]	= { .type = NLA_U32 },
- };
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 9032c6d4dbbcc..11fe83d6109d7 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -19343,8 +19343,13 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
+ 		 * since someone could have accessed through (ptr - k), or
+ 		 * even done ptr -= k in a register, to get a safe access.
+ 		 */
+-		if (rold->range > rcur->range)
++		if (rold->range < 0 || rcur->range < 0) {
++			/* special case for [BEYOND|AT]_PKT_END */
++			if (rold->range != rcur->range)
++				return false;
++		} else if (rold->range > rcur->range) {
+ 			return false;
++		}
+ 		/* If the offsets don't match, we can't trust our alignment;
+ 		 * nor can we be sure that we won't fall out of range.
+ 		 */
 -- 
 2.53.0
 
