@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1452727F3;
-	Wed,  8 Apr 2026 18:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708522727F3;
+	Wed,  8 Apr 2026 18:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674280; cv=none; b=kxgH+X7zV2QEFq7eveUpRStk9UQcQ06PlE2JeHWSkR5lDPI27ITfgN01Kn0To7GhQo60c2edC1TVUeFWGRvEbWOs6L7DyGT4F0xwy5I1R8B8wraooClLXrR2yOrMDNft9ECTquLHuqDED9RES7TMNdGCpXLDrCfRyb+PddJSrJU=
+	t=1775674283; cv=none; b=hTBZZ8c/fhlQtUSSBPFQHl7azHTyTsIPQRRrTxIdBixS7obaji+lUnM8txvtWjLBxHXZ7T0kyWlS+Zz+ARQWFz5Hu9IUr78P/NWM0rNARzIutYU1YSQijg1J9EtqTbexGLQiCMak5Hy4rPp3gbcNk7hcPHCVbIrkhAjun/3h1gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674280; c=relaxed/simple;
-	bh=Q6k7POYz9Rq2O9LDaYhnLjX6mbajFlLizpJolfLQCwE=;
+	s=arc-20240116; t=1775674283; c=relaxed/simple;
+	bh=OBJrZLgvCO52phuyv5JF/AJTtZZtB/cGe2spJfap/Eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ugBSIr9cJPiBATtzUS8FBLxTrwNRfKMo5xVBm9BrJafJ4cykJO6E8r+lOoA0AmbLRgOIv7j5aNTLHBPH5u5tp8TDnHVgPzsix4APh3HeLNnBDrw9XS1P/oDb2wuiHeelwbBCXn73Ya4uBGsBCousTqVaYnJeyQmF14DYeaJHPjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkl16SPi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k70uBk5QZXVSbqWtw8yTaKlpIJhV/O34RI98n8yF5RaZN4sUlYARoTIEouBKHqgaQnY2JdxPquNYuH0u/A0D3wU3QLFBVfqHfB2MtCyBFJ0N9ahlShyjy0ArksSBEbrRFc/O1ItlgahsqKicWjCJuEvK2NcwWexkINgGhV5fsOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYXxVppU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkl16SPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5495FC19421;
-	Wed,  8 Apr 2026 18:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYXxVppU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63F5C19421;
+	Wed,  8 Apr 2026 18:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674280;
-	bh=Q6k7POYz9Rq2O9LDaYhnLjX6mbajFlLizpJolfLQCwE=;
+	s=korg; t=1775674283;
+	bh=OBJrZLgvCO52phuyv5JF/AJTtZZtB/cGe2spJfap/Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkl16SPiBR+ROXSy38txGp92Yov8EAPPpkjhUOsYsmGEHqcTxworPMb6dTuIoaRbK
-	 YuwP2opinbd8iLqxklEq3qEO1q0fjoqqWubq9u0B6Rz583xcw5x+Q4oixEUP9yDdlM
-	 iIyel439ZcNxPspVcDh70TQvvBuLPOgQOw1Fnlss=
+	b=aYXxVppUHK5cW2HS+aecTz4nTMdY2rWFLGj6Zqn87ZUL5yJx+yBZoTuVU9xZoQMNR
+	 jZ4Y2368DfDCxCIZyavuxGNvESC5L5mgrt/tQV8AG3wOZfU2bF9kxtKFrYn7HaQIWK
+	 pecwVxufzor3Den7zjFXY5o7AV92CUTCXI1LSWwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
+	Pepper Gray <hello@peppergray.xyz>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 008/311] xfs: close crash window in attr dabtree inactivation
-Date: Wed,  8 Apr 2026 20:00:08 +0200
-Message-ID: <20260408175939.720196538@linuxfoundation.org>
+Subject: [PATCH 6.19 009/311] arm64/scs: Fix handling of advance_loc4
+Date: Wed,  8 Apr 2026 20:00:09 +0200
+Message-ID: <20260408175939.758807470@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,260 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Pepper Gray <hello@peppergray.xyz>
 
-[ Upstream commit b854e1c4eff3473b6d3a9ae74129ac5c48bc0b61 ]
+[ Upstream commit d499e9627d70b1269020d59b95ed3e18bee6b8cd ]
 
-When inactivating an inode with node-format extended attributes,
-xfs_attr3_node_inactive() invalidates all child leaf/node blocks via
-xfs_trans_binval(), but intentionally does not remove the corresponding
-entries from their parent node blocks.  The implicit assumption is that
-xfs_attr_inactive() will truncate the entire attr fork to zero extents
-afterwards, so log recovery will never reach the root node and follow
-those stale pointers.
+DW_CFA_advance_loc4 is defined but no handler is implemented. Its
+CFA opcode defaults to EDYNSCS_INVALID_CFA_OPCODE triggering an
+error which wrongfully prevents modules from loading.
 
-However, if a log shutdown occurs after the leaf/node block cancellations
-commit but before the attr bmap truncation commits, this assumption
-breaks.  Recovery replays the attr bmap intact (the inode still has
-attr fork extents), but suppresses replay of all cancelled leaf/node
-blocks, maybe leaving them as stale data on disk.  On the next mount,
-xlog_recover_process_iunlinks() retries inactivation and attempts to
-read the root node via the attr bmap. If the root node was not replayed,
-reading the unreplayed root block triggers a metadata verification
-failure immediately; if it was replayed, following its child pointers
-to unreplayed child blocks triggers the same failure:
-
- XFS (pmem0): Metadata corruption detected at
- xfs_da3_node_read_verify+0x53/0x220, xfs_da3_node block 0x78
- XFS (pmem0): Unmount and run xfs_repair
- XFS (pmem0): First 128 bytes of corrupted metadata buffer:
- 00000000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
- 00000010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
- 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
- 00000030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
- 00000040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
- 00000050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
- 00000060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
- 00000070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
- XFS (pmem0): metadata I/O error in "xfs_da_read_buf+0x104/0x190" at daddr 0x78 len 8 error 117
-
-Fix this in two places:
-
-In xfs_attr3_node_inactive(), after calling xfs_trans_binval() on a
-child block, immediately remove the entry that references it from the
-parent node in the same transaction.  This eliminates the window where
-the parent holds a pointer to a cancelled block.  Once all children are
-removed, the now-empty root node is converted to a leaf block within the
-same transaction. This node-to-leaf conversion is necessary for crash
-safety. If the system shutdown after the empty node is written to the
-log but before the second-phase bmap truncation commits, log recovery
-will attempt to verify the root block on disk. xfs_da3_node_verify()
-does not permit a node block with count == 0; such a block will fail
-verification and trigger a metadata corruption shutdown. on the other
-hand, leaf blocks are allowed to have this transient state.
-
-In xfs_attr_inactive(), split the attr fork truncation into two explicit
-phases.  First, truncate all extents beyond the root block (the child
-extents whose parent references have already been removed above).
-Second, invalidate the root block and truncate the attr bmap to zero in
-a single transaction.  The two operations in the second phase must be
-atomic: as long as the attr bmap has any non-zero length, recovery can
-follow it to the root block, so the root block invalidation must commit
-together with the bmap-to-zero truncation.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Link: https://bugs.gentoo.org/971060
+Signed-off-by: Pepper Gray <hello@peppergray.xyz>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_attr_inactive.c |   95 +++++++++++++++++++++++++++------------------
- 1 file changed, 57 insertions(+), 38 deletions(-)
+ arch/arm64/kernel/pi/patch-scs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/xfs/xfs_attr_inactive.c
-+++ b/fs/xfs/xfs_attr_inactive.c
-@@ -140,7 +140,7 @@ xfs_attr3_node_inactive(
- 	xfs_daddr_t		parent_blkno, child_blkno;
- 	struct xfs_buf		*child_bp;
- 	struct xfs_da3_icnode_hdr ichdr;
--	int			error, i;
-+	int			error;
+diff --git a/arch/arm64/kernel/pi/patch-scs.c b/arch/arm64/kernel/pi/patch-scs.c
+index bbe7d30ed12b3..dac568e4a54f2 100644
+--- a/arch/arm64/kernel/pi/patch-scs.c
++++ b/arch/arm64/kernel/pi/patch-scs.c
+@@ -192,6 +192,14 @@ static int scs_handle_fde_frame(const struct eh_frame *frame,
+ 			size -= 2;
+ 			break;
  
- 	/*
- 	 * Since this code is recursive (gasp!) we must protect ourselves.
-@@ -152,7 +152,7 @@ xfs_attr3_node_inactive(
- 		return -EFSCORRUPTED;
- 	}
- 
--	xfs_da3_node_hdr_from_disk(dp->i_mount, &ichdr, bp->b_addr);
-+	xfs_da3_node_hdr_from_disk(mp, &ichdr, bp->b_addr);
- 	parent_blkno = xfs_buf_daddr(bp);
- 	if (!ichdr.count) {
- 		xfs_trans_brelse(*trans, bp);
-@@ -167,7 +167,7 @@ xfs_attr3_node_inactive(
- 	 * over the leaves removing all of them.  If this is higher up
- 	 * in the tree, recurse downward.
- 	 */
--	for (i = 0; i < ichdr.count; i++) {
-+	while (ichdr.count > 0) {
- 		/*
- 		 * Read the subsidiary block to see what we have to work with.
- 		 * Don't do this in a transaction.  This is a depth-first
-@@ -218,29 +218,32 @@ xfs_attr3_node_inactive(
- 		xfs_trans_binval(*trans, child_bp);
- 		child_bp = NULL;
- 
-+		error = xfs_da3_node_read_mapped(*trans, dp,
-+				parent_blkno, &bp, XFS_ATTR_FORK);
-+		if (error)
-+			return error;
++		case DW_CFA_advance_loc4:
++			loc += *opcode++ * code_alignment_factor;
++			loc += (*opcode++ << 8) * code_alignment_factor;
++			loc += (*opcode++ << 16) * code_alignment_factor;
++			loc += (*opcode++ << 24) * code_alignment_factor;
++			size -= 4;
++		break;
 +
- 		/*
--		 * If we're not done, re-read the parent to get the next
--		 * child block number.
-+		 * Remove entry from parent node, prevents being indexed to.
- 		 */
--		if (i + 1 < ichdr.count) {
--			struct xfs_da3_icnode_hdr phdr;
-+		xfs_attr3_node_entry_remove(*trans, dp, bp, 0);
- 
--			error = xfs_da3_node_read_mapped(*trans, dp,
--					parent_blkno, &bp, XFS_ATTR_FORK);
-+		xfs_da3_node_hdr_from_disk(mp, &ichdr, bp->b_addr);
-+		bp = NULL;
-+
-+		if (ichdr.count > 0) {
-+			/*
-+			 * If we're not done, get the next child block number.
-+			 */
-+			child_fsb = be32_to_cpu(ichdr.btree[0].before);
-+
-+			/*
-+			 * Atomically commit the whole invalidate stuff.
-+			 */
-+			error = xfs_trans_roll_inode(trans, dp);
- 			if (error)
- 				return error;
--			xfs_da3_node_hdr_from_disk(dp->i_mount, &phdr,
--						  bp->b_addr);
--			child_fsb = be32_to_cpu(phdr.btree[i + 1].before);
--			xfs_trans_brelse(*trans, bp);
--			bp = NULL;
- 		}
--		/*
--		 * Atomically commit the whole invalidate stuff.
--		 */
--		error = xfs_trans_roll_inode(trans, dp);
--		if (error)
--			return  error;
- 	}
- 
- 	return 0;
-@@ -257,10 +260,8 @@ xfs_attr3_root_inactive(
- 	struct xfs_trans	**trans,
- 	struct xfs_inode	*dp)
- {
--	struct xfs_mount	*mp = dp->i_mount;
- 	struct xfs_da_blkinfo	*info;
- 	struct xfs_buf		*bp;
--	xfs_daddr_t		blkno;
- 	int			error;
- 
- 	/*
-@@ -272,7 +273,6 @@ xfs_attr3_root_inactive(
- 	error = xfs_da3_node_read(*trans, dp, 0, &bp, XFS_ATTR_FORK);
- 	if (error)
- 		return error;
--	blkno = xfs_buf_daddr(bp);
- 
- 	/*
- 	 * Invalidate the tree, even if the "tree" is only a single leaf block.
-@@ -283,10 +283,26 @@ xfs_attr3_root_inactive(
- 	case cpu_to_be16(XFS_DA_NODE_MAGIC):
- 	case cpu_to_be16(XFS_DA3_NODE_MAGIC):
- 		error = xfs_attr3_node_inactive(trans, dp, bp, 1);
-+		/*
-+		 * Empty root node block are not allowed, convert it to leaf.
-+		 */
-+		if (!error)
-+			error = xfs_attr3_leaf_init(*trans, dp, 0);
-+		if (!error)
-+			error = xfs_trans_roll_inode(trans, dp);
- 		break;
- 	case cpu_to_be16(XFS_ATTR_LEAF_MAGIC):
- 	case cpu_to_be16(XFS_ATTR3_LEAF_MAGIC):
- 		error = xfs_attr3_leaf_inactive(trans, dp, bp);
-+		/*
-+		 * Reinit the leaf before truncating extents so that a crash
-+		 * mid-truncation leaves an empty leaf rather than one with
-+		 * entries that may reference freed remote value blocks.
-+		 */
-+		if (!error)
-+			error = xfs_attr3_leaf_init(*trans, dp, 0);
-+		if (!error)
-+			error = xfs_trans_roll_inode(trans, dp);
- 		break;
- 	default:
- 		xfs_dirattr_mark_sick(dp, XFS_ATTR_FORK);
-@@ -295,21 +311,6 @@ xfs_attr3_root_inactive(
- 		xfs_trans_brelse(*trans, bp);
- 		break;
- 	}
--	if (error)
--		return error;
--
--	/*
--	 * Invalidate the incore copy of the root block.
--	 */
--	error = xfs_trans_get_buf(*trans, mp->m_ddev_targp, blkno,
--			XFS_FSB_TO_BB(mp, mp->m_attr_geo->fsbcount), 0, &bp);
--	if (error)
--		return error;
--	xfs_trans_binval(*trans, bp);	/* remove from cache */
--	/*
--	 * Commit the invalidate and start the next transaction.
--	 */
--	error = xfs_trans_roll_inode(trans, dp);
- 
- 	return error;
- }
-@@ -328,6 +329,7 @@ xfs_attr_inactive(
- {
- 	struct xfs_trans	*trans;
- 	struct xfs_mount	*mp;
-+	struct xfs_buf          *bp;
- 	int			lock_mode = XFS_ILOCK_SHARED;
- 	int			error = 0;
- 
-@@ -363,10 +365,27 @@ xfs_attr_inactive(
- 	 * removal below.
- 	 */
- 	if (dp->i_af.if_nextents > 0) {
-+		/*
-+		 * Invalidate and truncate all blocks but leave the root block.
-+		 */
- 		error = xfs_attr3_root_inactive(&trans, dp);
- 		if (error)
- 			goto out_cancel;
- 
-+		error = xfs_itruncate_extents(&trans, dp, XFS_ATTR_FORK,
-+				XFS_FSB_TO_B(mp, mp->m_attr_geo->fsbcount));
-+		if (error)
-+			goto out_cancel;
-+
-+		/*
-+		 * Invalidate and truncate the root block and ensure that the
-+		 * operation is completed within a single transaction.
-+		 */
-+		error = xfs_da_get_buf(trans, dp, 0, &bp, XFS_ATTR_FORK);
-+		if (error)
-+			goto out_cancel;
-+
-+		xfs_trans_binval(trans, bp);
- 		error = xfs_itruncate_extents(&trans, dp, XFS_ATTR_FORK, 0);
- 		if (error)
- 			goto out_cancel;
+ 		case DW_CFA_def_cfa:
+ 		case DW_CFA_offset_extended:
+ 			size = skip_xleb128(&opcode, size);
+-- 
+2.53.0
+
 
 
