@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0498F3D411F;
-	Wed,  8 Apr 2026 18:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E696525A321;
+	Wed,  8 Apr 2026 18:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672990; cv=none; b=qUfyKdiIJgM2Gqtw++qe7i17h75CQFgDzTF5CyNoQCe5COXIRgpvBvnA41w6KvTbmKoOD6ADGT+F7JCbqZOlHBr+Twr1WLZd5TyyobS4nBgV7NXCFbbor4BMs9iL47ecvNaVbyUMtkmLPmrjJ02ZB44iQhnPPadOzyMjtlCk9Kg=
+	t=1775672993; cv=none; b=RGt9UJ78Z6D9x9lWlHXRZ5zAkABV1LWeCgtr37juorjSdAp6WPg1iaOoE57JZpw9itHCzGcn93LsvdFMn6CP+BKZekfiksmViLKSeofyG1zIl0nwaA91zq0NtSc5/m3j6vynnu5NVaWIbzzQhv0g8GwhrRYnzjg7Q+b5TuHtFdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672990; c=relaxed/simple;
-	bh=jCNdRjqk940kXaeK3bHCpyVm1KHoKhy3TvRgzhwx3+o=;
+	s=arc-20240116; t=1775672993; c=relaxed/simple;
+	bh=m0vZxFtZj3S4WMsXJ5mU1wtC0lR46wT79Cq1htyqw+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PN/65TgnoNyKIT5bN1X7Ij9e7VZ2yin0QY+ZPYw/jhKwLXYPJybq7xnOWWFOPmqoyY0low5DblFJ4nKjW61i5eTr6B93+hXrTawcxR2VJhlk7jloB4dqL6WUEI5/l54Sa0RJV84Ng6OFKxRoLjkKCbNscdWy/53deqQIDtf+SgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CROlkh0D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XOIbrckRo4DSvix+8cKoZ2A6fRdyEcBNC6fcdTfwsrxtrpPE5qRhzI2ezLwdI7k5pJJ18YKNgPbQKPg/j0ulXr+BgX419V9n6/xM7l2YQfkZO8kW0EQ1mbSI3bjEtau+V8C5VfwJuaA8ZhZdQotXY9nI6CKYwzFQ30pUn2iUJk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lz/zJ9+U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CROlkh0D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE13C19421;
-	Wed,  8 Apr 2026 18:29:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lz/zJ9+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2729CC19421;
+	Wed,  8 Apr 2026 18:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672989;
-	bh=jCNdRjqk940kXaeK3bHCpyVm1KHoKhy3TvRgzhwx3+o=;
+	s=korg; t=1775672992;
+	bh=m0vZxFtZj3S4WMsXJ5mU1wtC0lR46wT79Cq1htyqw+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CROlkh0DeZ2/D5zUZe/ME5YR/XajK5Jvp/urhR3dGINTENPzgjI826OcuViNSgQpl
-	 FsFND7p7mPTaG8Mqd9rfwl1IBHFBE2Hwt9kg5l9PSgjdAn5MmrRND1i2BwKMmetDMF
-	 EGYcS0yQxNzEBup7k9Pi0NVsq3f0RSuZmrn5k7+A=
+	b=lz/zJ9+UDvT/uUbOQUt8bqtwdajPQrScs+INF0Z0mAriST2CdgIUs3mnyxDe5f4KA
+	 Rr1WxbuHnIxuOW1J1icoiPjH+sMkFj+PBRU4Fu0Jt0OGtf2PJhix+EC4YQgC+SQK0n
+	 beWU1F6qX/IQoCVMfZaAM6I04DVYPEN6Q6f5bfcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Julian Braha <julianbraha@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/277] net: xilinx: axienet: Fix BQL accounting for multi-BD TX packets
-Date: Wed,  8 Apr 2026 20:00:43 +0200
-Message-ID: <20260408175936.026752440@linuxfoundation.org>
+Subject: [PATCH 6.18 059/277] ASoC: Intel: boards: fix unmet dependency on PINCTRL
+Date: Wed,  8 Apr 2026 20:00:44 +0200
+Message-ID: <20260408175936.064214829@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -52,68 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit d1978d03e86785872871bff9c2623174b10740de ]
+[ Upstream commit e920c36f2073d533bdf19ba6ab690432c8173b63 ]
 
-When a TX packet spans multiple buffer descriptors (scatter-gather),
-axienet_free_tx_chain sums the per-BD actual length from descriptor
-status into a caller-provided accumulator. That sum is reset on each
-NAPI poll. If the BDs for a single packet complete across different
-polls, the earlier bytes are lost and never credited to BQL. This
-causes BQL to think bytes are permanently in-flight, eventually
-stalling the TX queue.
+This reverts commit c073f0757663 ("ASoC: Intel: sof_sdw: select PINCTRL_CS42L43 and SPI_CS42L43")
 
-The SKB pointer is stored only on the last BD of a packet. When that
-BD completes, use skb->len for the byte count instead of summing
-per-BD status lengths. This matches netdev_sent_queue(), which debits
-skb->len, and naturally survives across polls because no partial
-packet contributes to the accumulator.
+Currently, SND_SOC_INTEL_SOUNDWIRE_SOF_MACH selects PINCTRL_CS42L43
+without also selecting or depending on PINCTRL, despite PINCTRL_CS42L43
+depending on PINCTRL.
 
-Fixes: c900e49d58eb ("net: xilinx: axienet: Implement BQL")
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20260327073238.134948-3-suraj.gupta2@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+See the following Kbuild warning:
+
+WARNING: unmet direct dependencies detected for PINCTRL_CS42L43
+  Depends on [n]: PINCTRL [=n] && MFD_CS42L43 [=m]
+  Selected by [m]:
+  - SND_SOC_INTEL_SOUNDWIRE_SOF_MACH [=m] && SOUND [=y] && SND [=m] && SND_SOC [=m] && SND_SOC_INTEL_MACH [=y] && (SND_SOC_SOF_INTEL_COMMON [=m] || !SND_SOC_SOF_INTEL_COMMON [=m]) && SND_SOC_SOF_INTEL_SOUNDWIRE [=m] && I2C [=y] && SPI_MASTER [=y] && ACPI [=y] && (MFD_INTEL_LPSS [=n] || COMPILE_TEST [=y]) && (SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES [=n] || COMPILE_TEST [=y]) && SOUNDWIRE [=m]
+
+In response to v1 of this patch [1], Arnd pointed out that there is
+no compile-time dependency sof_sdw and the PINCTRL_CS42L43 driver.
+After testing, I can confirm that the kernel compiled with
+SND_SOC_INTEL_SOUNDWIRE_SOF_MACH enabled and PINCTRL_CS42L43 disabled.
+
+This unmet dependency was detected by kconfirm, a static analysis
+tool for Kconfig.
+
+Link: https://lore.kernel.org/all/b8aecc71-1fed-4f52-9f6c-263fbe56d493@app.fastmail.com/ [1]
+Fixes: c073f0757663 ("ASoC: Intel: sof_sdw: select PINCTRL_CS42L43 and SPI_CS42L43")
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260325001522.1727678-1-julianbraha@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ sound/soc/intel/boards/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 284031fb2e2c7..eefe54ce66852 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -770,8 +770,8 @@ static int axienet_device_reset(struct net_device *ndev)
-  * @first_bd:	Index of first descriptor to clean up
-  * @nr_bds:	Max number of descriptors to clean up
-  * @force:	Whether to clean descriptors even if not complete
-- * @sizep:	Pointer to a u32 filled with the total sum of all bytes
-- *		in all cleaned-up descriptors. Ignored if NULL.
-+ * @sizep:	Pointer to a u32 accumulating the total byte count of
-+ *		completed packets (using skb->len). Ignored if NULL.
-  * @budget:	NAPI budget (use 0 when not called from NAPI poll)
-  *
-  * Would either be called after a successful transmit operation, or after
-@@ -805,6 +805,8 @@ static int axienet_free_tx_chain(struct axienet_local *lp, u32 first_bd,
- 				 DMA_TO_DEVICE);
- 
- 		if (cur_p->skb && (status & XAXIDMA_BD_STS_COMPLETE_MASK)) {
-+			if (sizep)
-+				*sizep += cur_p->skb->len;
- 			napi_consume_skb(cur_p->skb, budget);
- 			packets++;
- 		}
-@@ -818,9 +820,6 @@ static int axienet_free_tx_chain(struct axienet_local *lp, u32 first_bd,
- 		wmb();
- 		cur_p->cntrl = 0;
- 		cur_p->status = 0;
--
--		if (sizep)
--			*sizep += status & XAXIDMA_BD_STS_ACTUAL_LEN_MASK;
- 	}
- 
- 	if (!force) {
+diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
+index c23fdb6aad4ca..1031d6497f55e 100644
+--- a/sound/soc/intel/boards/Kconfig
++++ b/sound/soc/intel/boards/Kconfig
+@@ -525,8 +525,6 @@ config SND_SOC_INTEL_SOUNDWIRE_SOF_MACH
+ 	select SND_SOC_CS42L43_SDW
+ 	select MFD_CS42L43
+ 	select MFD_CS42L43_SDW
+-	select PINCTRL_CS42L43
+-	select SPI_CS42L43
+ 	select SND_SOC_CS35L56_SPI
+ 	select SND_SOC_CS35L56_SDW
+ 	select SND_SOC_DMIC
 -- 
 2.53.0
 
