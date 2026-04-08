@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261BF26FA5A;
-	Wed,  8 Apr 2026 18:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A974032A3FD;
+	Wed,  8 Apr 2026 18:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673163; cv=none; b=ZG16X3PLvzg0I+bOqraP+ZGtxnTrYN5n/2djLy9j3fGkvvx2s51/wvOvBYBefKTSBdjJa7LKBfuwXfaSmZgDgnMlr2ej9dwmtT4ukoH6ZuYZmwgor4N9Z2KMc+v31YlytIu4BB/IUMkwVkGcCWlUxBZq882Y6hYuZ3ujAHUA+5E=
+	t=1775673165; cv=none; b=NXpvpdObEuEB9+X/0UwTFCHMabGC4TuLPxSd9Ti0h0Lmr5vjLaEmFzDRBPu8qcd/fStFuObCKc/HPyktpHZ87krH2A+fWB2RojwIoTdAR+ukID2zxD7BcP6MlbApgEv2FUc4dt/SrW/1GwWJ3aZnchwxboayrJtYFbWaAxhJZGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673163; c=relaxed/simple;
-	bh=r65fmGZdjwOiXdCeqveA/9T0G//zaSFC9O4IczDuROk=;
+	s=arc-20240116; t=1775673165; c=relaxed/simple;
+	bh=QZBQDN6pkmPHEq3Jew9SiPk1WbWYaoEy2t1Imo33GDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6aT3ygR13vHeqLaWZtw4bDNab4G0Kle0wfZUP0xVQlcVN7Uo6xdEon8vYa1Lv1NDjIQCqv4Hgt5gkwePAE+mbtUSqXw2/m+HUTm5YQiSfpEfEKBu49NkG8fW2+HNsW9ULB+T8Bz9PtEEAQCbT6rRYBwlb1FbRs5dx6VvhI1yrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2i5+5mNV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aqJKphpLzre2J6dyJhgkYLrtz7IL0vXvVNI4vdPrvbIpzkqm4ZZYpKcxqWw5iNmTA3spaZmrwet3+pOkdomZLixxyPyi1hmF3GTlHUrB543a/JFjDr4egyGxlh0YLh72YJvimYY8oddp5Sgdj3Gv+qUHcRshZODrdfltx3fBg6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvVekiKx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2i5+5mNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B182EC19421;
-	Wed,  8 Apr 2026 18:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvVekiKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407C6C19421;
+	Wed,  8 Apr 2026 18:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673163;
-	bh=r65fmGZdjwOiXdCeqveA/9T0G//zaSFC9O4IczDuROk=;
+	s=korg; t=1775673165;
+	bh=QZBQDN6pkmPHEq3Jew9SiPk1WbWYaoEy2t1Imo33GDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2i5+5mNVBlpJkBiUjdRfWSun+S/fMWXE50ZUoC54OfYy7BNH6u/SxUlaADakwb8Si
-	 uIx5s9K4Xy+Etr+17vDYWQWZ0SQ6n2ANsOVtDhy1PliYplivMDddUiKpTmOr4djld+
-	 UpRq/4QDGMYvmp4TbALA5qHKUemzykwe0j5E2q8U=
+	b=yvVekiKxQvtjdSlGVbxmGdjowYP9kdhT+l0j62QGQ9TDlvvJeK2073vmzp7WNWRR2
+	 OR91GBY7BdGyeBiNQbV4LeRBn3gkdERintdZGkBzdnLptMpQPqRFgY42xgpp9FvZZ6
+	 GA+GlQWcic1zMntirGj7fGEtqfBTd0TJInooLMF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Chen <vincent.chen@sifive.com>,
+	Zishun Yi <vulab@iscas.ac.cn>,
+	Samuel Holland <samuel.holland@sifive.com>,
 	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 126/277] riscv: kgdb: fix several debug register assignment bugs
-Date: Wed,  8 Apr 2026 20:01:51 +0200
-Message-ID: <20260408175938.580987328@linuxfoundation.org>
+Subject: [PATCH 6.18 127/277] riscv: Reset pmm when PR_TAGGED_ADDR_ENABLE is not set
+Date: Wed,  8 Apr 2026 20:01:52 +0200
+Message-ID: <20260408175938.618299137@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,56 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Walmsley <pjw@kernel.org>
+From: Zishun Yi <vulab@iscas.ac.cn>
 
-[ Upstream commit 834911eb8eef2501485d819b4eabebadc25c3497 ]
+[ Upstream commit 3033b2b1e3949274f33a140e2a97571b5a307298 ]
 
-Fix several bugs in the RISC-V kgdb implementation:
+In set_tagged_addr_ctrl(), when PR_TAGGED_ADDR_ENABLE is not set, pmlen
+is correctly set to 0, but it forgets to reset pmm. This results in the
+CPU pmm state not corresponding to the software pmlen state.
 
-- The element of dbg_reg_def[] that is supposed to pertain to the S1
-  register embeds instead the struct pt_regs offset of the A1
-  register.  Fix this to use the S1 register offset in struct pt_regs.
+Fix this by resetting pmm along with pmlen.
 
-- The sleeping_thread_to_gdb_regs() function copies the value of the
-  S10 register into the gdb_regs[] array element meant for the S9
-  register, and copies the value of the S11 register into the array
-  element meant for the S10 register.  It also neglects to copy the
-  value of the S11 register.  Fix all of these issues.
-
-Fixes: fe89bd2be8667 ("riscv: Add KGDB support")
-Cc: Vincent Chen <vincent.chen@sifive.com>
-Link: https://patch.msgid.link/fde376f8-bcfd-bfe4-e467-07d8f7608d05@kernel.org
+Fixes: 2e1743085887 ("riscv: Add support for the tagged address ABI")
+Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Reviewed-by: Samuel Holland <samuel.holland@sifive.com>
+Link: https://patch.msgid.link/20260322160022.21908-1-vulab@iscas.ac.cn
 Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/kgdb.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/riscv/kernel/process.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
-index 15fec5d1e6dec..0bf629204c76a 100644
---- a/arch/riscv/kernel/kgdb.c
-+++ b/arch/riscv/kernel/kgdb.c
-@@ -175,7 +175,7 @@ struct dbg_reg_def_t dbg_reg_def[DBG_MAX_REG_NUM] = {
- 	{DBG_REG_T1, GDB_SIZEOF_REG, offsetof(struct pt_regs, t1)},
- 	{DBG_REG_T2, GDB_SIZEOF_REG, offsetof(struct pt_regs, t2)},
- 	{DBG_REG_FP, GDB_SIZEOF_REG, offsetof(struct pt_regs, s0)},
--	{DBG_REG_S1, GDB_SIZEOF_REG, offsetof(struct pt_regs, a1)},
-+	{DBG_REG_S1, GDB_SIZEOF_REG, offsetof(struct pt_regs, s1)},
- 	{DBG_REG_A0, GDB_SIZEOF_REG, offsetof(struct pt_regs, a0)},
- 	{DBG_REG_A1, GDB_SIZEOF_REG, offsetof(struct pt_regs, a1)},
- 	{DBG_REG_A2, GDB_SIZEOF_REG, offsetof(struct pt_regs, a2)},
-@@ -244,8 +244,9 @@ sleeping_thread_to_gdb_regs(unsigned long *gdb_regs, struct task_struct *task)
- 	gdb_regs[DBG_REG_S6_OFF] = task->thread.s[6];
- 	gdb_regs[DBG_REG_S7_OFF] = task->thread.s[7];
- 	gdb_regs[DBG_REG_S8_OFF] = task->thread.s[8];
--	gdb_regs[DBG_REG_S9_OFF] = task->thread.s[10];
--	gdb_regs[DBG_REG_S10_OFF] = task->thread.s[11];
-+	gdb_regs[DBG_REG_S9_OFF] = task->thread.s[9];
-+	gdb_regs[DBG_REG_S10_OFF] = task->thread.s[10];
-+	gdb_regs[DBG_REG_S11_OFF] = task->thread.s[11];
- 	gdb_regs[DBG_REG_EPC_OFF] = task->thread.ra;
- }
+diff --git a/arch/riscv/kernel/process.c b/arch/riscv/kernel/process.c
+index 31a392993cb45..b5188dc74727d 100644
+--- a/arch/riscv/kernel/process.c
++++ b/arch/riscv/kernel/process.c
+@@ -324,8 +324,10 @@ long set_tagged_addr_ctrl(struct task_struct *task, unsigned long arg)
+ 	if (arg & PR_TAGGED_ADDR_ENABLE && (tagged_addr_disabled || !pmlen))
+ 		return -EINVAL;
  
+-	if (!(arg & PR_TAGGED_ADDR_ENABLE))
++	if (!(arg & PR_TAGGED_ADDR_ENABLE)) {
+ 		pmlen = PMLEN_0;
++		pmm = ENVCFG_PMM_PMLEN_0;
++	}
+ 
+ 	if (mmap_write_lock_killable(mm))
+ 		return -EINTR;
 -- 
 2.53.0
 
