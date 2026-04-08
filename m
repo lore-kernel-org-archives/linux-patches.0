@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B267324B1F;
-	Wed,  8 Apr 2026 18:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F432324B1F;
+	Wed,  8 Apr 2026 18:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672757; cv=none; b=EIlAOfAMettnc34kgo0gte8IqzMevYw9KpLF2bTXIe/p33tvXqrS2x+ESDEQxN5owv2gS5UF7IT6sCdv6OARrxvJKxxqaPpIDq3k1TsUkSf/Q7xi0v5cTjwkz51W6YNiNaX+5xNQQpt1M7MJLQYasDZzrSaen5f6ejdQJWrJBtc=
+	t=1775672760; cv=none; b=jEFhc4WNKHVV9GJ7EW34agEdEldVdcw43ggZcvvx1JzUMUTZetSI+MvjzVqUV2G8YQkqJZ6MD9JLAK6pfUML6dBM0CCLT1JQJXlJsb6oFZSOpLsbwy71nK+x7EUIlJjgR2rM9WYo9MeveidWpVrLArZBsEEtTcfJ0tA9V6Hc/Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672757; c=relaxed/simple;
-	bh=lFci4sUtxS2yJCwmgP+zYjrxxFmb2vnC0jg7I8nMUNU=;
+	s=arc-20240116; t=1775672760; c=relaxed/simple;
+	bh=QUidgcDW21PccUI7dp1IZ0JPtxA2btAo1pepttSOXdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lu9kFUd0XQSlekRuRaGsY++r4U5brNlQNtmaIZnANOnHZMffbv7xw37eptH7kN4l8niDFpHhSTyU9rc8RWi03rIKb++MkuXh+qjl2z/Ul2VgybhBcgXxKtvb6ClChiH951Ut+TZ/yDgLKh1wwFxUNni38Jzpl5ItuHpjurX+p4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfUAjOGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D3a2uYmAgsBb1dA2yu8AiGvGPnsUHPU4KYn1LznheVhWA5Gp5C3zre4MHa+OUso1K1ODR4h16xbhoAZyu4sZouxcDAlhQszisC7DP71LhEmbSKvuqO7WfuJckuia7hGgSAFH0UCm0Y3HeUHkGYfZcf+a3xoETrsEeg9ZCgknxjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/DkVBJ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfUAjOGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285F9C19421;
-	Wed,  8 Apr 2026 18:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/DkVBJ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE38CC19421;
+	Wed,  8 Apr 2026 18:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672757;
-	bh=lFci4sUtxS2yJCwmgP+zYjrxxFmb2vnC0jg7I8nMUNU=;
+	s=korg; t=1775672760;
+	bh=QUidgcDW21PccUI7dp1IZ0JPtxA2btAo1pepttSOXdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfUAjOGxLkehv0beGzl81k6BZ49yHqs06m18q/wJb+7E8IiBNKx84heZ0onbIZK5l
-	 gyQO9Tn2E+6enianw2BHwk9wovhgplbs5nB8zE/Q3ky4PLr6rinSgrb+n1jIpdArdb
-	 05wc7vSu18YJMwkV+k9X8GCjTvbzT1+sU3RUqaAw=
+	b=h/DkVBJ7ZRYPC2V0jk3KKKlMVul/GGqugBdQrTdSZAbzWfr5B5xJAXMFSffwgivDj
+	 KCHbumLJSJGpVoXC1KbNtrvGs8Gy8yzIIhfq4bDEy0RAWpabfsIDOp22rCEz+k3VsH
+	 mTqsk8nCu6dhYRu/KC1mjjdWS0k5nUpkQYyyw00E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 129/160] cpufreq: governor: fix double free in cpufreq_dbs_governor_init() error path
-Date: Wed,  8 Apr 2026 20:03:36 +0200
-Message-ID: <20260408175918.008068980@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.6 130/160] gpio: mxc: map Both Edge pad wakeup to Rising Edge
+Date: Wed,  8 Apr 2026 20:03:37 +0200
+Message-ID: <20260408175918.045289830@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -52,52 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-commit 6dcf9d0064ce2f3e3dfe5755f98b93abe6a98e1e upstream.
+commit c720fb57d56274213d027b3c5ab99080cf62a306 upstream.
 
-When kobject_init_and_add() fails, cpufreq_dbs_governor_init() calls
-kobject_put(&dbs_data->attr_set.kobj).
+Suspend may fail on i.MX8QM when Falling Edge is used as a pad wakeup
+trigger due to a hardware bug in the detection logic. Since the hardware
+does not support Both Edge wakeup, remap requests for Both Edge to Rising
+Edge by default to avoid hitting this issue.
 
-The kobject release callback cpufreq_dbs_data_release() calls
-gov->exit(dbs_data) and kfree(dbs_data), but the current error path
-then calls gov->exit(dbs_data) and kfree(dbs_data) again, causing a
-double free.
+A warning is emitted when Falling Edge is selected on i.MX8QM.
 
-Keep the direct kfree(dbs_data) for the gov->init() failure path, but
-after kobject_init_and_add() has been called, let kobject_put() handle
-the cleanup through cpufreq_dbs_data_release().
-
-Fixes: 4ebe36c94aed ("cpufreq: Fix kobject memleak")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260401024535.1395801-1-lgs201920130244@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
+cc: stable@vger.kernel.org
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Link: https://patch.msgid.link/20260324192129.2797237-1-shenwei.wang@nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq_governor.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpio/gpio-mxc.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/cpufreq/cpufreq_governor.c
-+++ b/drivers/cpufreq/cpufreq_governor.c
-@@ -468,13 +468,13 @@ int cpufreq_dbs_governor_init(struct cpu
- 	/* Failure, so roll back. */
- 	pr_err("initialization failed (dbs_data kobject init error %d)\n", ret);
+--- a/drivers/gpio/gpio-mxc.c
++++ b/drivers/gpio/gpio-mxc.c
+@@ -576,12 +576,13 @@ static bool mxc_gpio_set_pad_wakeup(stru
+ 	unsigned long config;
+ 	bool ret = false;
+ 	int i, type;
++	bool is_imx8qm = of_device_is_compatible(port->dev->of_node, "fsl,imx8qm-gpio");
  
--	kobject_put(&dbs_data->attr_set.kobj);
--
- 	policy->governor_data = NULL;
- 
- 	if (!have_governor_per_policy())
- 		gov->gdbs_data = NULL;
--	gov->exit(dbs_data);
+ 	static const u32 pad_type_map[] = {
+ 		IMX_SCU_WAKEUP_OFF,		/* 0 */
+ 		IMX_SCU_WAKEUP_RISE_EDGE,	/* IRQ_TYPE_EDGE_RISING */
+ 		IMX_SCU_WAKEUP_FALL_EDGE,	/* IRQ_TYPE_EDGE_FALLING */
+-		IMX_SCU_WAKEUP_FALL_EDGE,	/* IRQ_TYPE_EDGE_BOTH */
++		IMX_SCU_WAKEUP_RISE_EDGE,	/* IRQ_TYPE_EDGE_BOTH */
+ 		IMX_SCU_WAKEUP_HIGH_LVL,	/* IRQ_TYPE_LEVEL_HIGH */
+ 		IMX_SCU_WAKEUP_OFF,		/* 5 */
+ 		IMX_SCU_WAKEUP_OFF,		/* 6 */
+@@ -596,6 +597,13 @@ static bool mxc_gpio_set_pad_wakeup(stru
+ 				config = pad_type_map[type];
+ 			else
+ 				config = IMX_SCU_WAKEUP_OFF;
 +
-+	kobject_put(&dbs_data->attr_set.kobj);
-+	goto free_policy_dbs_info;
- 
- free_dbs_data:
- 	kfree(dbs_data);
++			if (is_imx8qm && config == IMX_SCU_WAKEUP_FALL_EDGE) {
++				dev_warn_once(port->dev,
++					      "No falling-edge support for wakeup on i.MX8QM\n");
++				config = IMX_SCU_WAKEUP_OFF;
++			}
++
+ 			ret |= mxc_gpio_generic_config(port, i, config);
+ 		}
+ 	}
 
 
