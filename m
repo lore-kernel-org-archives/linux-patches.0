@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858C63D8912;
-	Wed,  8 Apr 2026 18:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACD2347BA9;
+	Wed,  8 Apr 2026 18:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674185; cv=none; b=PAEkJSodo0fWofdC++KYb1NCaiRNJ8D7Zw1OkDlXvbIFkhKZYGfJinis0ULLyC4mO00ef/K4MWEDsa7G63n2t+DSusv6XlOZLyQSJsy8m+J2t7oZd66FrtgnmHxM+tKXCHS62/JQkJyG2TiZZkhyJOF9lWTi8JWlAJ2ipDjU10E=
+	t=1775674188; cv=none; b=ZWesZDloeJHi0c2V1YFlOZbma684gE+yNZ2krIrbCZMy3qaKasHeb0LefeffPw+uclk1e10HFp3qSkPfPBjnyV5eH4Y9332tCIgERQtfv+rDF1xpw7zYpEpHtvyg0FZaMX4HZT2Erxy7RTEI+CpmAoPgjKDjmHi+JTQN/nnLI7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674185; c=relaxed/simple;
-	bh=dW2z+4PlDKT2qPhznmgMZB+MUFlbWOzWe1JILRSxiPk=;
+	s=arc-20240116; t=1775674188; c=relaxed/simple;
+	bh=lkQxM0gQAkAY1PSq16/0+Y1duG+9DB3eI10z9uvKYMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DFESwdLhhfU387m1mmabgawOIzUxMfjhRifsz86GEEZo4uRr4sAG6rAGcs7ca2j80UfZrrk0KZr4RhRDXAD2Xb2+Fk6/177EGzLft/Xkc7qqoLKSUjH1zSVMREUaQ39YMlzCJ0/l6lbjU71m8uLjJon2dceOSnQ20LFpb5PIC7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOsFCx32; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uHbWqnIjoJ8//TWhh3pCpzCeXGQxOXyf0L5dHQAfxdOagHIr3cpmp9AmMm9UVHhEtrRt2y8cG21BpfgTpr6MXot51yln+9tmvxfzau9pLDv/wwgSZYVPxd4ZlJEMGKFE+aDrAuUWdQM2l1p0aD8RkL0fR57MSlYcKki2Eid1wPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9RNe4nh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOsFCx32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAA0C19421;
-	Wed,  8 Apr 2026 18:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9RNe4nh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E02C19421;
+	Wed,  8 Apr 2026 18:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674185;
-	bh=dW2z+4PlDKT2qPhznmgMZB+MUFlbWOzWe1JILRSxiPk=;
+	s=korg; t=1775674188;
+	bh=lkQxM0gQAkAY1PSq16/0+Y1duG+9DB3eI10z9uvKYMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOsFCx32ZiVaJrDhrhOCXDd2JlSdL/QwEHNRuoBCs0pMNwp8DbUCcPpvq04TdGKHP
-	 YBWa7l3NGNdVBCts7CVda8M/YvBocFrfVwB/8G3JrShWLzD4rjNG+p6RPzhr4TXjjO
-	 GI4FXeWegFUrLEO4QYVhsAuoI83Ek0HSSM26+Y1s=
+	b=D9RNe4nh/oKMqtSaAG5pRzsgLn5lVpSYgSO9eZpGJhmyV7Nr+naqv6lFeYuL16vEl
+	 CvKK2ZLfGgmMrZinhCokFhgEwISt4ErORXj8EHPpxg6aW8T937x/6TFSK+WLXTErFJ
+	 qzp27G+t/5NSkV/liA+41qI4SsCtctrVDnd88Jy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taegu Ha <hataegu0826@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 211/242] usb: gadget: f_uac1_legacy: validate control request size
-Date: Wed,  8 Apr 2026 20:04:11 +0200
-Message-ID: <20260408175934.978649245@linuxfoundation.org>
+	Alexander Popov <alex.popov@linux.com>,
+	Breno Leitao <leitao@debian.org>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 212/242] wifi: virt_wifi: remove SET_NETDEV_DEV to avoid use-after-free
+Date: Wed,  8 Apr 2026 20:04:12 +0200
+Message-ID: <20260408175935.014634704@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -50,92 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taegu Ha <hataegu0826@gmail.com>
+From: Alexander Popov <alex.popov@linux.com>
 
-commit 6e0e34d85cd46ceb37d16054e97a373a32770f6c upstream.
+commit 789b06f9f39cdc7e895bdab2c034e39c41c8f8d6 upstream.
 
-f_audio_complete() copies req->length bytes into a 4-byte stack
-variable:
+Currently we execute `SET_NETDEV_DEV(dev, &priv->lowerdev->dev)` for
+the virt_wifi net devices. However, unregistering a virt_wifi device in
+netdev_run_todo() can happen together with the device referenced by
+SET_NETDEV_DEV().
 
-  u32 data = 0;
-  memcpy(&data, req->buf, req->length);
+It can result in use-after-free during the ethtool operations performed
+on a virt_wifi device that is currently being unregistered. Such a net
+device can have the `dev.parent` field pointing to the freed memory,
+but ethnl_ops_begin() calls `pm_runtime_get_sync(dev->dev.parent)`.
 
-req->length is derived from the host-controlled USB request path,
-which can lead to a stack out-of-bounds write.
+Let's remove SET_NETDEV_DEV for virt_wifi to avoid bugs like this:
 
-Validate req->actual against the expected payload size for the
-supported control selectors and decode only the expected amount
-of data.
+ ==================================================================
+ BUG: KASAN: slab-use-after-free in __pm_runtime_resume+0xe2/0xf0
+ Read of size 2 at addr ffff88810cfc46f8 by task pm/606
 
-This avoids copying a host-influenced length into a fixed-size
-stack object.
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x4d/0x70
+  print_report+0x170/0x4f3
+  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+  kasan_report+0xda/0x110
+  ? __pm_runtime_resume+0xe2/0xf0
+  ? __pm_runtime_resume+0xe2/0xf0
+  __pm_runtime_resume+0xe2/0xf0
+  ethnl_ops_begin+0x49/0x270
+  ethnl_set_features+0x23c/0xab0
+  ? __pfx_ethnl_set_features+0x10/0x10
+  ? kvm_sched_clock_read+0x11/0x20
+  ? local_clock_noinstr+0xf/0xf0
+  ? local_clock+0x10/0x30
+  ? kasan_save_track+0x25/0x60
+  ? __kasan_kmalloc+0x7f/0x90
+  ? genl_family_rcv_msg_attrs_parse.isra.0+0x150/0x2c0
+  genl_family_rcv_msg_doit+0x1e7/0x2c0
+  ? __pfx_genl_family_rcv_msg_doit+0x10/0x10
+  ? __pfx_cred_has_capability.isra.0+0x10/0x10
+  ? stack_trace_save+0x8e/0xc0
+  genl_rcv_msg+0x411/0x660
+  ? __pfx_genl_rcv_msg+0x10/0x10
+  ? __pfx_ethnl_set_features+0x10/0x10
+  netlink_rcv_skb+0x121/0x380
+  ? __pfx_genl_rcv_msg+0x10/0x10
+  ? __pfx_netlink_rcv_skb+0x10/0x10
+  ? __pfx_down_read+0x10/0x10
+  genl_rcv+0x23/0x30
+  netlink_unicast+0x60f/0x830
+  ? __pfx_netlink_unicast+0x10/0x10
+  ? __pfx___alloc_skb+0x10/0x10
+  netlink_sendmsg+0x6ea/0xbc0
+  ? __pfx_netlink_sendmsg+0x10/0x10
+  ? __futex_queue+0x10b/0x1f0
+  ____sys_sendmsg+0x7a2/0x950
+  ? copy_msghdr_from_user+0x26b/0x430
+  ? __pfx_____sys_sendmsg+0x10/0x10
+  ? __pfx_copy_msghdr_from_user+0x10/0x10
+  ___sys_sendmsg+0xf8/0x180
+  ? __pfx____sys_sendmsg+0x10/0x10
+  ? __pfx_futex_wait+0x10/0x10
+  ? fdget+0x2e4/0x4a0
+  __sys_sendmsg+0x11f/0x1c0
+  ? __pfx___sys_sendmsg+0x10/0x10
+  do_syscall_64+0xe2/0x570
+  ? exc_page_fault+0x66/0xb0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  </TASK>
 
-Signed-off-by: Taegu Ha <hataegu0826@gmail.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260401191311.3604898-1-hataegu0826@gmail.com
+This fix may be combined with another one in the ethtool subsystem:
+https://lore.kernel.org/all/20260322075917.254874-1-alex.popov@linux.com/T/#u
+
+Fixes: d43c65b05b848e0b ("ethtool: runtime-resume netdev parent in ethnl_ops_begin")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexander Popov <alex.popov@linux.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260324224607.374327-1-alex.popov@linux.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uac1_legacy.c |   47 ++++++++++++++++++++++------
- 1 file changed, 37 insertions(+), 10 deletions(-)
+ drivers/net/wireless/virtual/virt_wifi.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_uac1_legacy.c
-+++ b/drivers/usb/gadget/function/f_uac1_legacy.c
-@@ -360,19 +360,46 @@ static int f_audio_out_ep_complete(struc
- static void f_audio_complete(struct usb_ep *ep, struct usb_request *req)
- {
- 	struct f_audio *audio = req->context;
--	int status = req->status;
--	u32 data = 0;
- 	struct usb_ep *out_ep = audio->out_ep;
+--- a/drivers/net/wireless/virtual/virt_wifi.c
++++ b/drivers/net/wireless/virtual/virt_wifi.c
+@@ -555,7 +555,6 @@ static int virt_wifi_newlink(struct net
+ 	eth_hw_addr_inherit(dev, priv->lowerdev);
+ 	netif_stacked_transfer_operstate(priv->lowerdev, dev);
  
--	switch (status) {
--
--	case 0:				/* normal completion? */
--		if (ep == out_ep)
-+	switch (req->status) {
-+	case 0:
-+		if (ep == out_ep) {
- 			f_audio_out_ep_complete(ep, req);
--		else if (audio->set_con) {
--			memcpy(&data, req->buf, req->length);
--			audio->set_con->set(audio->set_con, audio->set_cmd,
--					le16_to_cpu(data));
-+		} else if (audio->set_con) {
-+			struct usb_audio_control *con = audio->set_con;
-+			u8 type = con->type;
-+			u32 data;
-+			bool valid_request = false;
-+
-+			switch (type) {
-+			case UAC_FU_MUTE: {
-+				u8 value;
-+
-+				if (req->actual == sizeof(value)) {
-+					memcpy(&value, req->buf, sizeof(value));
-+					data = value;
-+					valid_request = true;
-+				}
-+				break;
-+			}
-+			case UAC_FU_VOLUME: {
-+				__le16 value;
-+
-+				if (req->actual == sizeof(value)) {
-+					memcpy(&value, req->buf, sizeof(value));
-+					data = le16_to_cpu(value);
-+					valid_request = true;
-+				}
-+				break;
-+			}
-+			}
-+
-+			if (valid_request)
-+				con->set(con, audio->set_cmd, data);
-+			else
-+				usb_ep_set_halt(ep);
-+
- 			audio->set_con = NULL;
- 		}
- 		break;
+-	SET_NETDEV_DEV(dev, &priv->lowerdev->dev);
+ 	dev->ieee80211_ptr = kzalloc(sizeof(*dev->ieee80211_ptr), GFP_KERNEL);
+ 
+ 	if (!dev->ieee80211_ptr) {
 
 
