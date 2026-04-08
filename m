@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF8D37F01B;
-	Wed,  8 Apr 2026 18:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65ECB67E;
+	Wed,  8 Apr 2026 18:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672193; cv=none; b=IwzfKxd7uBqXcD+9IGcAw9YDQul+A8or4HRfQz1Z3FwledatI/38f9hbG2ym4dSe43nQW06IJouXY51apMwa4yX0cu6PamjYwgJ3AHJF8HrUf0XhEJxUpDKNUThQXeCwNBPIo0HOgo4cKJqjSXyJ5U04C77xTWuKh5AWb/VxhXI=
+	t=1775672195; cv=none; b=UUW513zCCTRw75zx42LnHLN7StNSG/dlrYzjpVyz3Lf70iB8V1N+THAXF2SfKB5zgONLUCQWzp9jP63B1UDq3gT8epJAoQVf0AiHO1EnRfY0Oa2aFrpo7ABLo72xBqWR2i03QrBGxLVLX8uUVPelJfKnCsX//gCEQl5EWbUkR7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672193; c=relaxed/simple;
-	bh=ynzUBE7zVLYvfxNuz/O6aNLQ21Kr2NLjgNoU8kexKgg=;
+	s=arc-20240116; t=1775672195; c=relaxed/simple;
+	bh=cwctjBHK6+vrXV9koSqNkn/ugV4O8of1iUhAUCd0lMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TM7JmesGxYSM1oAULFxlh8hhomDJYznSUjpxjRRXMYlhMBjBbhfjlHGIswTY5n/3fwu2NK+cXjEfOfozJwSJ/WjuGiRsqjzul8FMr6lXsSl9Rmd1/aC6FnLwIGag4ltgVGfE+y/ymUjO9HjWsj+6tlEGgdJBB+JvOoMQ4RdiQsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7GzozTb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vo9bvmJ6Rwmn3Ratqwm0lvx1Vg6YzDDmXWU553RO35osKbtUoi8Mrn0nYo7TImSv3VGH1F6EgfW8pIqoRg7Ir/S4U8cL5Cp4x02LSqVcgQuFAC0KbZIKmTxyM43FpCS/UpkmZAak4h4XOMovaW15/SOqj3J0X7iCf8nQlOvrrSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJPyQKjU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7GzozTb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C354EC19421;
-	Wed,  8 Apr 2026 18:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJPyQKjU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558A1C19421;
+	Wed,  8 Apr 2026 18:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672193;
-	bh=ynzUBE7zVLYvfxNuz/O6aNLQ21Kr2NLjgNoU8kexKgg=;
+	s=korg; t=1775672195;
+	bh=cwctjBHK6+vrXV9koSqNkn/ugV4O8of1iUhAUCd0lMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7GzozTb/pt6gdu/Fc4gD/kapTKu3UhdVhcPJZ93eDSr0UQFi3ahbw9gVz3APYvWP
-	 ltddhKJnKNUI5M7eC7b1VQgZUExWUJjrjucS6wFnL8+qRiKk4q85cNdbTA7DPr2G2L
-	 j3l8aJC71KB/8pQ1l7IeCB0D9WSywLy/WvKAjVW8=
+	b=kJPyQKjUqWzVnnyxE2kuZwtXYyqgRPumvLyuaaquqoBf/9v1lfXQ7Vd4g3VN7Obxf
+	 Sp0ipFdCKLpfXXcbkMa5Kay6QQlBQiQ/ylGFHw9Niaoo4AVB+YEL5QUYs1bxmcXZhD
+	 IEkBUDVCAj5sLEcGkzJIHKn5xDav0dNY/GA+piOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 224/312] iio: gyro: mpu3050: Fix irq resource leak
-Date: Wed,  8 Apr 2026 20:02:21 +0200
-Message-ID: <20260408175942.122524033@linuxfoundation.org>
+	Jamie Gibbons <jamie.gibbons@microchip.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 194/312] dt-bindings: gpio: fix microchip #interrupt-cells
+Date: Wed,  8 Apr 2026 20:01:51 +0200
+Message-ID: <20260408175941.003593052@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -53,50 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Jamie Gibbons <jamie.gibbons@microchip.com>
 
-commit 4216db1043a3be72ef9c2b7b9f393d7fa72496e6 upstream.
+[ Upstream commit 6b5ef8c88854b343b733b574ea8754c9dab61f41 ]
 
-The interrupt handler is setup but only a few lines down if
-iio_trigger_register() fails the function returns without properly
-releasing the handler.
+The GPIO controller on PolarFire SoC supports more than one type of
+interrupt and needs two interrupt cells.
 
-Add cleanup goto to resolve resource leak.
-
-Detected by Smatch:
-drivers/iio/gyro/mpu3050-core.c:1128 mpu3050_trigger_probe() warn:
-'irq' from request_threaded_irq() not released on lines: 1124.
-
-Fixes: 3904b28efb2c7 ("iio: gyro: Add driver for the MPU-3050 gyroscope")
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 735806d8a68e9 ("dt-bindings: gpio: add bindings for microchip mpfs gpio")
+Signed-off-by: Jamie Gibbons <jamie.gibbons@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20260326-wise-gumdrop-49217723a72a@spud
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/gyro/mpu3050-core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../devicetree/bindings/gpio/microchip,mpfs-gpio.yaml         | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/gyro/mpu3050-core.c
-+++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -1139,11 +1139,16 @@ static int mpu3050_trigger_probe(struct
+diff --git a/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml b/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml
+index d481e78958a74..2c7355e9547a1 100644
+--- a/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml
++++ b/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml
+@@ -33,7 +33,7 @@ properties:
+     const: 2
  
- 	ret = iio_trigger_register(mpu3050->trig);
- 	if (ret)
--		return ret;
-+		goto err_iio_trigger;
+   "#interrupt-cells":
+-    const: 1
++    const: 2
  
- 	indio_dev->trig = iio_trigger_get(mpu3050->trig);
- 
- 	return 0;
-+
-+err_iio_trigger:
-+	free_irq(mpu3050->irq, mpu3050->trig);
-+
-+	return ret;
- }
- 
- int mpu3050_common_probe(struct device *dev,
+   ngpios:
+     description:
+@@ -84,7 +84,7 @@ examples:
+         gpio-controller;
+         #gpio-cells = <2>;
+         interrupt-controller;
+-        #interrupt-cells = <1>;
++        #interrupt-cells = <2>;
+         interrupts = <53>, <53>, <53>, <53>,
+                      <53>, <53>, <53>, <53>,
+                      <53>, <53>, <53>, <53>,
+-- 
+2.53.0
+
 
 
