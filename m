@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68123D6CB9;
-	Wed,  8 Apr 2026 18:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F01351C2E;
+	Wed,  8 Apr 2026 18:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673006; cv=none; b=mrf5G+HWhJyQFAWRawk8iL+4fp6u6hTqIciCiV9XG91+ZUUW9cfqQQOTokf20XqcMbwZorjX5Z8Gj9yiUAqRTOHgnNBH9Q07HejsflsCWq5bZ5SHWYQtjeuPzTOz6NC9zky71t1H4DdcsJsAQJPnNS8MyZ6/6zj/Vq0r5IBk2Ow=
+	t=1775673008; cv=none; b=CgIwzSzyALnUGHAyuQpWdCkX9R8M3m8wngx55YuMily/Aprmhesq9IQDb9Rg0lKVWg0+1+kYMCuG8nvHjOAJXo5V+1T0nUebd4YnfPbi3F23VinOcKtyNKbfbZ1JC5Z2ZZxAPOXYuhPMkl9K85fPt20aS2pQ6WiUE9OC8Ssu+po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673006; c=relaxed/simple;
-	bh=kvq+gltYEhVSlkYfAh+eQ7QII4aIlLyTHp/nUKBwy2A=;
+	s=arc-20240116; t=1775673008; c=relaxed/simple;
+	bh=aMu+O5Po24nSsEvmBmuNDUr0uWhkdT9QpPSvGFlQuF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sgDjSHWb/WpPX2+xofCs2WCE9TP3GsQxcsyeHtdWCAU5xQBlZl90HXL+woFcHOOabvK9lADvrn8r0kko9a4H3H4D8QPaZ1hBKhELHzwrd4MLywtq/vHd3ZY9CdRo08viLaVUDRUSof/2JIoUM9XSPgBmWntv+F/R8DW81MuO568=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrz980oz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U88QRxAO8wh/S+l22emStY1ElZCzRiYCrmQt6kRnEGPfhPaCB8VlmCYma60DUiofz1vlqBCGJ1ZgNdenopWYuYFhma9ttG+OdkzYQatwcFvG0zfRLkLe5cMaL+keV7cOlnESWZ8MjiKmN+AosJGqtOOoiu1X+uAJ0IA93hYObcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvdJ3QZc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrz980oz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB24C19421;
-	Wed,  8 Apr 2026 18:30:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvdJ3QZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D32BC19425;
+	Wed,  8 Apr 2026 18:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673005;
-	bh=kvq+gltYEhVSlkYfAh+eQ7QII4aIlLyTHp/nUKBwy2A=;
+	s=korg; t=1775673008;
+	bh=aMu+O5Po24nSsEvmBmuNDUr0uWhkdT9QpPSvGFlQuF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mrz980oz+k0jkZNFhA2CclOw4Wq27Bysvg6p67qiHCvIufuor/xYCHkZ8xnrG66I1
-	 j9Q61xHOXAuO0gj6S6GtIJGb22Lw5+8GlQ+662B0LHKlRdJKZJdiAZgCTAJgbXku0I
-	 +u3ivOeTTTATjX6fEXbmjXWfnOcBnXArFdGvcD6k=
+	b=jvdJ3QZcAYEWzUlLmdOvf6CLBoJ7XBseAi5Zb4Mz7oZX34G2mqy5lXuBokN1oqqQu
+	 /bNYgwU6eF8h7HHUi8XIYRHVYZVsPf/0+FdJA7NCl3avUCcNx15uuA8kYrlGDTRnNk
+	 J9xR3ir72nVJbcXwDR0PP7nqMNqtNC/MILMpQ7Xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Piekos <michal.piekos@mmpsystems.pl>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 064/277] net: stmmac: skip VLAN restore when VLAN hash ops are missing
-Date: Wed,  8 Apr 2026 20:00:49 +0200
-Message-ID: <20260408175936.249951745@linuxfoundation.org>
+Subject: [PATCH 6.18 065/277] ALSA: usb-audio: Exclude Scarlett 2i2 1st Gen (8016) from SKIP_IFACE_SETUP
+Date: Wed,  8 Apr 2026 20:00:50 +0200
+Message-ID: <20260408175936.286894938@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,68 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Piekos <michal.piekos@mmpsystems.pl>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-[ Upstream commit 48b3cd69265f346f64b93064723492da46206e9b ]
+[ Upstream commit a0dafdbd1049a8ea661a1a471be1b840bd8aed13 ]
 
-stmmac_vlan_restore() unconditionally calls stmmac_vlan_update() when
-NETIF_F_VLAN_FEATURES is set. On platforms where priv->hw->vlan (or
-->update_vlan_hash) is not provided, stmmac_update_vlan_hash() returns
--EINVAL via stmmac_do_void_callback(), resulting in a spurious
-"Failed to restore VLANs" error even when no VLAN filtering is in use.
+Same issue as the other 1st Gen Scarletts: QUIRK_FLAG_SKIP_IFACE_SETUP
+causes distorted audio on this revision of the Scarlett 2i2 1st Gen
+(1235:8016).
 
-Remove not needed comment.
-Remove not used return value from stmmac_vlan_restore().
-
-Tested on Orange Pi Zero 3.
-
-Fixes: bd7ad51253a7 ("net: stmmac: Fix VLAN HW state restore")
-Signed-off-by: Michal Piekos <michal.piekos@mmpsystems.pl>
-Link: https://patch.msgid.link/20260328-vlan-restore-error-v4-1-f88624c530dc@mmpsystems.pl
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 38c322068a26 ("ALSA: usb-audio: Add QUIRK_FLAG_SKIP_IFACE_SETUP")
+Reported-by: lukas-reineke [https://github.com/geoffreybennett/linux-fcp/issues/54]
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Link: https://patch.msgid.link/acytr8aEUba4VXmZ@m.b4.vu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ sound/usb/quirks.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index eeeb9f50c265c..f8df0609e0e69 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -139,7 +139,7 @@ static void stmmac_tx_timer_arm(struct stmmac_priv *priv, u32 queue);
- static void stmmac_flush_tx_descriptors(struct stmmac_priv *priv, int queue);
- static void stmmac_set_dma_operation_mode(struct stmmac_priv *priv, u32 txmode,
- 					  u32 rxmode, u32 chan);
--static int stmmac_vlan_restore(struct stmmac_priv *priv);
-+static void stmmac_vlan_restore(struct stmmac_priv *priv);
- 
- #ifdef CONFIG_DEBUG_FS
- static const struct net_device_ops stmmac_netdev_ops;
-@@ -6668,21 +6668,15 @@ static int stmmac_vlan_rx_kill_vid(struct net_device *ndev, __be16 proto, u16 vi
- 	return ret;
- }
- 
--static int stmmac_vlan_restore(struct stmmac_priv *priv)
-+static void stmmac_vlan_restore(struct stmmac_priv *priv)
- {
--	int ret;
--
- 	if (!(priv->dev->features & NETIF_F_VLAN_FEATURES))
--		return 0;
-+		return;
- 
- 	if (priv->hw->num_vlan)
- 		stmmac_restore_hw_vlan_rx_fltr(priv, priv->dev, priv->hw);
- 
--	ret = stmmac_vlan_update(priv, priv->num_double_vlans);
--	if (ret)
--		netdev_err(priv->dev, "Failed to restore VLANs\n");
--
--	return ret;
-+	stmmac_vlan_update(priv, priv->num_double_vlans);
- }
- 
- static int stmmac_bpf(struct net_device *dev, struct netdev_bpf *bpf)
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 2c01412a225ef..9f585dbc770cb 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2424,6 +2424,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_VALIDATE_RATES),
+ 	DEVICE_FLG(0x1235, 0x8006, 0), /* Focusrite Scarlett 2i2 1st Gen */
+ 	DEVICE_FLG(0x1235, 0x800a, 0), /* Focusrite Scarlett 2i4 1st Gen */
++	DEVICE_FLG(0x1235, 0x8016, 0), /* Focusrite Scarlett 2i2 1st Gen */
+ 	DEVICE_FLG(0x1235, 0x801c, 0), /* Focusrite Scarlett Solo 1st Gen */
+ 	VENDOR_FLG(0x1235, /* Focusrite Novation */
+ 		   QUIRK_FLAG_SKIP_IFACE_SETUP),
 -- 
 2.53.0
 
