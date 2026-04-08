@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC90A3D75AF;
-	Wed,  8 Apr 2026 18:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2DB3D522C;
+	Wed,  8 Apr 2026 18:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674785; cv=none; b=KLhvIGkTyLp+G0fslpL21EcTPptgeSOIYJrpc/HjBbJTlqq0i4q0OjabCnm+Iyd5WtYcItuYkhT7bEnMRu/8OPXtQg4zk26YDmJOWUMajALSpTncDXf+rtGexv6opRGZVLPxm36fqQFuLlkTC8+mpy5fgCLyEMsH1OtJYbOvu2I=
+	t=1775674788; cv=none; b=qrp2NylkjW6qySd2BGlGULy/K2wCYs5M2zVsAdeM4lT45NFJ+0O39I5cpTMW/5VEgU7dZ2CpCYTXpbmW+lvwf08UlAo1m2lwnMLsJj8eyCV18BGOwqLf+4BCIs9EokgJwvY8uPmso7N7nZ9s9LIuntC4atntbyLMODRu0xRwsE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674785; c=relaxed/simple;
-	bh=S7fm5s8NjZBive+/qZtwt5FH4kh5iIyFppSAFCOzCxw=;
+	s=arc-20240116; t=1775674788; c=relaxed/simple;
+	bh=CRr0XdeJaQzbbmnXqQYowO2FsYRjujOyrDYi4V/3aA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qIMHWhxbfs11sOJwfeMVWFL1N33CdEYFCRjNSRG9zIg/fBF9Yftve4N217oed868b9On08TGcKilepkrpO5xXCIS+4S7Vfin+t0tZQJvyH2xVF7OfMWDlBKIpI7Lg+dIFp3JUOFT5269lRaj8qWarWCjqEbJtS3UZ+kDkjgHhdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YUB6iv2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LmE8YMNfNOyTK2ufT+11CmFgAY0kX8SeyPw3I+t2nEvRpQRNiXPegTmqYu7GU7fUhN1ZG6A2VAadHnW+8XANW25CqnWos9CbdfVV7Imk13hwCIpKOvk0+QLRBCQ6DJotl7U5QxWxekSj0fFoH8rYcOQANGov2iPee8jgkFUxV4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIdYjblq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YUB6iv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496EBC19421;
-	Wed,  8 Apr 2026 18:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIdYjblq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6C8C19421;
+	Wed,  8 Apr 2026 18:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674785;
-	bh=S7fm5s8NjZBive+/qZtwt5FH4kh5iIyFppSAFCOzCxw=;
+	s=korg; t=1775674788;
+	bh=CRr0XdeJaQzbbmnXqQYowO2FsYRjujOyrDYi4V/3aA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0YUB6iv2aVvi3dcEidsc+8zx7jCGQWa+cF958M8cxdNzSjWt27yynrchQ75XRRhfD
-	 yGjmcWTjts7FL/ALiI2gCrqhA8XiLH6zbEIoNWIQlETK0I627A1H8yTfeJCq9YesNs
-	 gPM4QE1tiTHgFqa7YhnIfXts7EwB4UmnUsSM1ubs=
+	b=IIdYjblqV/G/H5MFnLmzrR2eUme9yvD44wdNxmeZB0GYfDElQRpb37hNaKDGS1QZ1
+	 qJAQEdkHKGZGGR/kCZSVhotqByGSqQ6dCbpsDBbnQgi93qmh9iv+m+aswidcp8PK4g
+	 8xdgQh0mrAPhTfFUflfTbaDQ8q41p02q0jI6+/Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jonathan Cameron <jic23@kernel.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Ethan Tidmore <ethantidmore06@gmail.com>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 232/311] iio: gyro: mpu3050: Fix irq resource leak
-Date: Wed,  8 Apr 2026 20:03:52 +0200
-Message-ID: <20260408175948.059744678@linuxfoundation.org>
+Subject: [PATCH 6.19 233/311] iio: gyro: mpu3050: Move iio_device_register() to correct location
+Date: Wed,  8 Apr 2026 20:03:53 +0200
+Message-ID: <20260408175948.096816170@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -55,19 +56,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-commit 4216db1043a3be72ef9c2b7b9f393d7fa72496e6 upstream.
+commit 4c05799449108fb0e0a6bd30e65fffc71e60db4d upstream.
 
-The interrupt handler is setup but only a few lines down if
-iio_trigger_register() fails the function returns without properly
-releasing the handler.
+iio_device_register() should be at the end of the probe function to
+prevent race conditions.
 
-Add cleanup goto to resolve resource leak.
-
-Detected by Smatch:
-drivers/iio/gyro/mpu3050-core.c:1128 mpu3050_trigger_probe() warn:
-'irq' from request_threaded_irq() not released on lines: 1124.
+Place iio_device_register() at the end of the probe function and place
+iio_device_unregister() accordingly.
 
 Fixes: 3904b28efb2c7 ("iio: gyro: Add driver for the MPU-3050 gyroscope")
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
 Reviewed-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
@@ -75,28 +73,60 @@ Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/mpu3050-core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/gyro/mpu3050-core.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
 --- a/drivers/iio/gyro/mpu3050-core.c
 +++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -1129,11 +1129,16 @@ static int mpu3050_trigger_probe(struct
+@@ -1226,12 +1226,6 @@ int mpu3050_common_probe(struct device *
+ 		goto err_power_down;
+ 	}
  
- 	ret = iio_trigger_register(mpu3050->trig);
- 	if (ret)
--		return ret;
-+		goto err_iio_trigger;
+-	ret = iio_device_register(indio_dev);
+-	if (ret) {
+-		dev_err(dev, "device register failed\n");
+-		goto err_cleanup_buffer;
+-	}
+-
+ 	dev_set_drvdata(dev, indio_dev);
  
- 	indio_dev->trig = iio_trigger_get(mpu3050->trig);
+ 	/* Check if we have an assigned IRQ to use as trigger */
+@@ -1254,9 +1248,20 @@ int mpu3050_common_probe(struct device *
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_put(dev);
  
++	ret = iio_device_register(indio_dev);
++	if (ret) {
++		dev_err(dev, "device register failed\n");
++		goto err_iio_device_register;
++	}
++
  	return 0;
-+
-+err_iio_trigger:
-+	free_irq(mpu3050->irq, mpu3050->trig);
-+
-+	return ret;
+ 
+-err_cleanup_buffer:
++err_iio_device_register:
++	pm_runtime_get_sync(dev);
++	pm_runtime_put_noidle(dev);
++	pm_runtime_disable(dev);
++	if (irq)
++		free_irq(mpu3050->irq, mpu3050->trig);
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ err_power_down:
+ 	mpu3050_power_down(mpu3050);
+@@ -1269,13 +1274,13 @@ void mpu3050_common_remove(struct device
+ 	struct iio_dev *indio_dev = dev_get_drvdata(dev);
+ 	struct mpu3050 *mpu3050 = iio_priv(indio_dev);
+ 
++	iio_device_unregister(indio_dev);
+ 	pm_runtime_get_sync(dev);
+ 	pm_runtime_put_noidle(dev);
+ 	pm_runtime_disable(dev);
+ 	iio_triggered_buffer_cleanup(indio_dev);
+ 	if (mpu3050->irq)
+ 		free_irq(mpu3050->irq, mpu3050->trig);
+-	iio_device_unregister(indio_dev);
+ 	mpu3050_power_down(mpu3050);
  }
  
- int mpu3050_common_probe(struct device *dev,
 
 
