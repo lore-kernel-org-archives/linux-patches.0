@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623B83ACF13;
-	Wed,  8 Apr 2026 18:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030F3324B1F;
+	Wed,  8 Apr 2026 18:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672832; cv=none; b=px8J54y2iqyK9jVA9Im3LHUs0xKUfFR2d6GtrLEUejA6FyyFCvWm9mckrVtlZaO4aDSgtfdEkZNGRpgSoIriqziLYuKCiOeB+1PxFAR64alEQyZXrUfE+oj3uEAFfM6bMdjuEENXtDrxdeiSDX5Kijn10Fi6hXGXuJCpuHQdDAg=
+	t=1775672835; cv=none; b=G6SF3JEyEdcylbvukZm3VHhZoDluTbF1/Aw+POHahlSqNiv9oaYBLIrY0YH/meR4Q5JzOalrAtiLe3LbW2HzgouB6Lw4Nnu8TfjUExBlC8DOnBsWgBJ+C92WEpgSXPjOmSqn9GS+ZM6Syn5HY5MYCS1SAUwsxs179ga8Ax88fn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672832; c=relaxed/simple;
-	bh=nfKDcCXEX4381tnWyHhCWW1ycbd6QmjHB7ajQio0My4=;
+	s=arc-20240116; t=1775672835; c=relaxed/simple;
+	bh=+T1ioicHgkXab4Z0rify9b0unKMaueW01Erb+ngcVR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxURdFmOhJq24LH2xr3hlr5NA1zBNdF/XaIEdX5JfgEmx3T8KjA7zSp3wRTZFrMrIZObNXvJV7aUBZTRbAPRkmm0Ua2GQ7WpTspkayQlCraOi3UKWDCixNiEErAQLDeENPjns+5EtUwt1BpV/IgjsSFMYRNJyDmDWer4mE1rjTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bujuV6D1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ErsKh9/wOfEb+TeNY6eOzUvSmwQ6pW+F0WqxTuYo1YDPi3T+gCAN7CJ1tWk9ZqBftPCYmnJkV4ALlNWl97SvUxmAZdS3sBoTIsZj+BJr4ZD+OoYRNrES+f/HnMp9uHdF4Q22wxHYJ6bEBquz2wkiQHN3SQTN3YR0m9zMmQphGU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoiPIqNA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bujuV6D1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB845C19421;
-	Wed,  8 Apr 2026 18:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoiPIqNA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8657DC19421;
+	Wed,  8 Apr 2026 18:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672832;
-	bh=nfKDcCXEX4381tnWyHhCWW1ycbd6QmjHB7ajQio0My4=;
+	s=korg; t=1775672834;
+	bh=+T1ioicHgkXab4Z0rify9b0unKMaueW01Erb+ngcVR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bujuV6D14IHtiF3au3iifMYvwHOw1+ouJHeVKzd/CLnsZDdDaejNOABYkZ8T6zsCK
-	 iiBxNvHvbUwQC5dFavacfxpmnF+mqx94T/k1xz+ngbySPkJLSuKxpn9v9eCwZfWGdP
-	 hXlkLfXo88K7sko9JojMhBijI5R7Hq8JoN8+uQ1w=
+	b=eoiPIqNAkIPeueX7QELt07kISEHXEmAiAR3JGaZmkzJdrNLAFjd+QQIRhWZzoIDrJ
+	 cdh5ux5sw7LO4V9W8TdvAooc/rXONF76mAJQdQDBebzguTlvo8YfFkVBXOITVPZ9ph
+	 uOg14QZwscIZpzsYqq+899Q9Kvrm02nRhWgBIjTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 159/160] MPTCP: fix lock class name family in pm_nl_create_listen_socket
-Date: Wed,  8 Apr 2026 20:04:06 +0200
-Message-ID: <20260408175919.141891561@linuxfoundation.org>
+Subject: [PATCH 6.6 160/160] net: sfp: Fix Ubiquiti U-Fiber Instant SFP module on mvneta
+Date: Wed,  8 Apr 2026 20:04:07 +0200
+Message-ID: <20260408175919.181356238@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -45,44 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: "Marek Behún" <kabel@kernel.org>
 
-commit 7ab4a7c5d969642782b8a5b608da0dd02aa9f229 upstream.
+[ Upstream commit eeee5a710f26ce57807024ef330fe5a850eaecd8 ]
 
-In mptcp_pm_nl_create_listen_socket(), use entry->addr.family
-instead of sk->sk_family for lock class setup. The 'sk' parameter
-is a netlink socket, not the MPTCP subflow socket being created.
+In commit 8110633db49d7de2 ("net: sfp-bus: allow SFP quirks to override
+Autoneg and pause bits") we moved the setting of Autoneg and pause bits
+before the call to SFP quirk when parsing SFP module support.
 
-Fixes: cee4034a3db1 ("mptcp: fix lockdep false positive in mptcp_pm_nl_create_listen_socket()")
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260319112159.3118874-1-lixiasong1@huawei.com
+Since the quirk for Ubiquiti U-Fiber Instant SFP module zeroes the
+support bits and sets 1000baseX_Full only, the above mentioned commit
+changed the overall computed support from
+  1000baseX_Full, Autoneg, Pause, Asym_Pause
+to just
+  1000baseX_Full.
+
+This broke the SFP module for mvneta, which requires Autoneg for
+1000baseX since commit c762b7fac1b249a9 ("net: mvneta: deny disabling
+autoneg for 802.3z modes").
+
+Fix this by setting back the Autoneg, Pause and Asym_Pause bits in the
+quirk.
+
+Fixes: 8110633db49d7de2 ("net: sfp-bus: allow SFP quirks to override Autoneg and pause bits")
+Signed-off-by: Marek BehÃºn <kabel@kernel.org>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20260326122038.2489589-1-kabel@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflict in pm_kernel.c, because commit 8617e85e04bd ("mptcp: pm:
-  split in-kernel PM specific code") is not in this version, and moves
-  code from pm_netlink.c to pm_kernel.c. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/sfp.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1189,7 +1189,7 @@ static struct lock_class_key mptcp_keys[
- static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
- 					    struct mptcp_pm_addr_entry *entry)
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -465,10 +465,15 @@ static void sfp_quirk_ubnt_uf_instant(co
  {
--	bool is_ipv6 = sk->sk_family == AF_INET6;
-+	bool is_ipv6 = entry->addr.family == AF_INET6;
- 	int addrlen = sizeof(struct sockaddr_in);
- 	struct sockaddr_storage addr;
- 	struct sock *newsk, *ssk;
+ 	/* Ubiquiti U-Fiber Instant module claims that support all transceiver
+ 	 * types including 10G Ethernet which is not truth. So clear all claimed
+-	 * modes and set only one mode which module supports: 1000baseX_Full.
++	 * modes and set only one mode which module supports: 1000baseX_Full,
++	 * along with the Autoneg and pause bits.
+ 	 */
+ 	linkmode_zero(modes);
+ 	linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT, modes);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, modes);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_Pause_BIT, modes);
++	linkmode_set_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT, modes);
++
+ 	phy_interface_zero(interfaces);
+ 	__set_bit(PHY_INTERFACE_MODE_1000BASEX, interfaces);
+ }
 
 
