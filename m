@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16403AEF45;
-	Wed,  8 Apr 2026 18:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569483D8917;
+	Wed,  8 Apr 2026 18:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672033; cv=none; b=GpMTOq2/KvDV38xzDrFka4JkSx9swFtxQc+aPxBXjWyjkAa6XnL93KR4S9cL45t+2r48lnmOF+GSAE+WMlwAtVBZO4fdsHYbVR/LfsUK1gIUWQ3WI+RGg5YocnXPJfz2P82kw3JV3BqdTvam031X4zGRojI0KoTN7Ni3bf5B57U=
+	t=1775672036; cv=none; b=SEoQXbQfFPqWbyZTq+hBBQP0+hopwgYEzR27JWs8e4TIt/x5K/YpMsbWBGTkkh2Ar6xlvsmrkXUWvm8B1lxgO1SVro1IUU37uSx2PVtipPij2fxxC+Mfuf+zLwFPp+Qb8yZBPZ6Q4c/htQEb3LjCYQP0/s7lLNnXNa2YysBPPPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672033; c=relaxed/simple;
-	bh=m4qUdH3BYZFoudEcPRjQAIbLILmlVtJohkdkNKje3gg=;
+	s=arc-20240116; t=1775672036; c=relaxed/simple;
+	bh=+/tCgzpLyuMq1gT6+LZZnCdxxYhQ3timONC5rukx05Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kB6ad5uq6e7M5IN2JGlKEISAEfU78J5FmrPf2pTvVNM9Ndzqg8VyxrSJY+bK/7oiCtULsAYMvefMoIdJSWIe5Momd71ixGBMfV8Xwtn6m+2hPz1eM/IfYz+5d2igcUqAJ893JOVVKWagINztvtAhKLR4CdpgSncCg0XgB2/5hww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWHHS9PY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TppVgghHHmA4VXFGiMVQ3489XTB+dv7IXjznps5mjQU4Sj1YavL0f6Robu7FrMT+D2zspBRVvmcbRpAconsrTOUv6FtzP2xoeuIhU/AZ5cprIF76GhHSBB9V92aADF7oQWFWGw1D+JORK9py8uDnzswUoBk/DBXHcQuLarSvRKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ux9kJCQn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWHHS9PY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D2EC19421;
-	Wed,  8 Apr 2026 18:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ux9kJCQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF72BC19421;
+	Wed,  8 Apr 2026 18:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672033;
-	bh=m4qUdH3BYZFoudEcPRjQAIbLILmlVtJohkdkNKje3gg=;
+	s=korg; t=1775672036;
+	bh=+/tCgzpLyuMq1gT6+LZZnCdxxYhQ3timONC5rukx05Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWHHS9PYlhTBG4CHc+XRhCLJIWaRd0erH7L19tquy5gOgdHj/F7sxbaf1mHGjHu+t
-	 v3+fG77QsEDL5JXkBzFL77cBxO2qq1EhlbBpwVQ5CeLUp3VD/AxAt1iFqCA4WDIQ6F
-	 EME9DTmjc0OMVqiplATA8gw7Kteiiep2D1gfYX78=
+	b=Ux9kJCQnXlUlRB2QBV9NjPHek+dJ7+tDP8Zq0PWE6/clF4M3ZfY9sl/UTo/oz48TQ
+	 Fo+DK0GjfXliwbx9iMFWxqpiK6Rz+WUF2e4aG/P+yBjVVtE8g0LAgepdXttFEvtvXd
+	 n3z7fmRLAhnjDQZfnAJb5RTsKGYZ87jOt9L8XfwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 156/312] ASoC: ep93xx: Fix unchecked clk_prepare_enable() and add rollback on failure
-Date: Wed,  8 Apr 2026 20:01:13 +0200
-Message-ID: <20260408175939.592343389@linuxfoundation.org>
+Subject: [PATCH 6.1 165/312] netfilter: x_tables: ensure names are nul-terminated
+Date: Wed,  8 Apr 2026 20:01:22 +0200
+Message-ID: <20260408175939.927183298@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -45,114 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 622363757b2286dd2c2984b0d80255cbb35a0495 ]
+[ Upstream commit a958a4f90ddd7de0800b33ca9d7b886b7d40f74e ]
 
-ep93xx_i2s_enable() calls clk_prepare_enable() on three clocks in
-sequence (mclk, sclk, lrclk) without checking the return value of any
-of them. If an intermediate enable fails, the clocks that were already
-enabled are never rolled back, leaking them until the next disable cycle
-— which may never come if the stream never started cleanly.
+Reject names that lack a \0 character before feeding them
+to functions that expect c-strings.
 
-Change ep93xx_i2s_enable() from void to int. Add error checking after
-each clk_prepare_enable() call and unwind already-enabled clocks on
-failure. Propagate the error through ep93xx_i2s_startup() and
-ep93xx_i2s_resume(), both of which already return int.
+Fixes tag is the most recent commit that needs this change.
 
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
-Fixes: f4ff6b56bc8a ("ASoC: cirrus: i2s: Prepare clock before using it")
-Link: https://patch.msgid.link/20260324210909.45494-1-jihed.chaibi.dev@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c38c4597e4bf ("netfilter: implement xt_cgroup cgroup2 path match")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/cirrus/ep93xx-i2s.c | 34 ++++++++++++++++++++++++----------
- 1 file changed, 24 insertions(+), 10 deletions(-)
+ net/netfilter/xt_cgroup.c  | 6 ++++++
+ net/netfilter/xt_rateest.c | 5 +++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/sound/soc/cirrus/ep93xx-i2s.c b/sound/soc/cirrus/ep93xx-i2s.c
-index 46160796af31a..f5034b03740f7 100644
---- a/sound/soc/cirrus/ep93xx-i2s.c
-+++ b/sound/soc/cirrus/ep93xx-i2s.c
-@@ -104,16 +104,28 @@ static inline unsigned ep93xx_i2s_read_reg(struct ep93xx_i2s_info *info,
- 	return __raw_readl(info->regs + reg);
- }
+diff --git a/net/netfilter/xt_cgroup.c b/net/netfilter/xt_cgroup.c
+index c0f5e9a4f3c65..bfc98719684e2 100644
+--- a/net/netfilter/xt_cgroup.c
++++ b/net/netfilter/xt_cgroup.c
+@@ -53,6 +53,9 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
  
--static void ep93xx_i2s_enable(struct ep93xx_i2s_info *info, int stream)
-+static int ep93xx_i2s_enable(struct ep93xx_i2s_info *info, int stream)
- {
- 	unsigned base_reg;
-+	int err;
- 
- 	if ((ep93xx_i2s_read_reg(info, EP93XX_I2S_TX0EN) & 0x1) == 0 &&
- 	    (ep93xx_i2s_read_reg(info, EP93XX_I2S_RX0EN) & 0x1) == 0) {
- 		/* Enable clocks */
--		clk_prepare_enable(info->mclk);
--		clk_prepare_enable(info->sclk);
--		clk_prepare_enable(info->lrclk);
-+		err = clk_prepare_enable(info->mclk);
-+		if (err)
-+			return err;
-+		err = clk_prepare_enable(info->sclk);
-+		if (err) {
-+			clk_disable_unprepare(info->mclk);
-+			return err;
-+		}
-+		err = clk_prepare_enable(info->lrclk);
-+		if (err) {
-+			clk_disable_unprepare(info->sclk);
-+			clk_disable_unprepare(info->mclk);
-+			return err;
-+		}
- 
- 		/* Enable i2s */
- 		ep93xx_i2s_write_reg(info, EP93XX_I2S_GLCTRL, 1);
-@@ -132,6 +144,8 @@ static void ep93xx_i2s_enable(struct ep93xx_i2s_info *info, int stream)
- 		ep93xx_i2s_write_reg(info, EP93XX_I2S_TXCTRL,
- 				     EP93XX_I2S_TXCTRL_TXEMPTY_LVL |
- 				     EP93XX_I2S_TXCTRL_TXUFIE);
+ 	info->priv = NULL;
+ 	if (info->has_path) {
++		if (strnlen(info->path, sizeof(info->path)) >= sizeof(info->path))
++			return -ENAMETOOLONG;
 +
-+	return 0;
- }
+ 		cgrp = cgroup_get_from_path(info->path);
+ 		if (IS_ERR(cgrp)) {
+ 			pr_info_ratelimited("invalid path, errno=%ld\n",
+@@ -85,6 +88,9 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
  
- static void ep93xx_i2s_disable(struct ep93xx_i2s_info *info, int stream)
-@@ -213,9 +227,7 @@ static int ep93xx_i2s_startup(struct snd_pcm_substream *substream,
- {
- 	struct ep93xx_i2s_info *info = snd_soc_dai_get_drvdata(dai);
+ 	info->priv = NULL;
+ 	if (info->has_path) {
++		if (strnlen(info->path, sizeof(info->path)) >= sizeof(info->path))
++			return -ENAMETOOLONG;
++
+ 		cgrp = cgroup_get_from_path(info->path);
+ 		if (IS_ERR(cgrp)) {
+ 			pr_info_ratelimited("invalid path, errno=%ld\n",
+diff --git a/net/netfilter/xt_rateest.c b/net/netfilter/xt_rateest.c
+index 72324bd976af8..b1d736c15fcbe 100644
+--- a/net/netfilter/xt_rateest.c
++++ b/net/netfilter/xt_rateest.c
+@@ -91,6 +91,11 @@ static int xt_rateest_mt_checkentry(const struct xt_mtchk_param *par)
+ 		goto err1;
+ 	}
  
--	ep93xx_i2s_enable(info, substream->stream);
--
--	return 0;
-+	return ep93xx_i2s_enable(info, substream->stream);
- }
- 
- static void ep93xx_i2s_shutdown(struct snd_pcm_substream *substream,
-@@ -389,14 +401,16 @@ static int ep93xx_i2s_suspend(struct snd_soc_component *component)
- static int ep93xx_i2s_resume(struct snd_soc_component *component)
- {
- 	struct ep93xx_i2s_info *info = snd_soc_component_get_drvdata(component);
-+	int err;
- 
- 	if (!snd_soc_component_active(component))
- 		return 0;
- 
--	ep93xx_i2s_enable(info, SNDRV_PCM_STREAM_PLAYBACK);
--	ep93xx_i2s_enable(info, SNDRV_PCM_STREAM_CAPTURE);
-+	err = ep93xx_i2s_enable(info, SNDRV_PCM_STREAM_PLAYBACK);
-+	if (err)
-+		return err;
- 
--	return 0;
-+	return ep93xx_i2s_enable(info, SNDRV_PCM_STREAM_CAPTURE);
- }
- #else
- #define ep93xx_i2s_suspend	NULL
++	if (strnlen(info->name1, sizeof(info->name1)) >= sizeof(info->name1))
++		return -ENAMETOOLONG;
++	if (strnlen(info->name2, sizeof(info->name2)) >= sizeof(info->name2))
++		return -ENAMETOOLONG;
++
+ 	ret  = -ENOENT;
+ 	est1 = xt_rateest_lookup(par->net, info->name1);
+ 	if (!est1)
 -- 
 2.53.0
 
