@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719193D522C;
-	Wed,  8 Apr 2026 18:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029C21A285;
+	Wed,  8 Apr 2026 18:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673769; cv=none; b=PRgJJmd4S4vvurJdgdOx78s8MLfkTVTCeX3Ef4Ntkg1FJi9hbNxnA36q6cPxg2zhjm+/BZgT2G28dYIDNIg+nx8/ZOkD7+1CnwmzCbi6d0FMKKJal1Fee474vz8VXPYsl001nZ1R8LLp+Oq2joqT1cBpj9mosSoJPrhv9EhuEvc=
+	t=1775673772; cv=none; b=KxfaJAvvRCqa9Luk8nUG5hCrVVAS3klJp0C5Fo+e4fwdYr0Ff6F8/3gHGbUqwDwi+zb35mOcwaSHbdyCveGGqRrk+LntE31kyX0rxyTXz9/GzvapYPlLytQgO9rd89kchHrcNdrlFomJC+di1EBdnEOu9HSGGruxrWWNZbm3RJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673769; c=relaxed/simple;
-	bh=N84Fbfag15lHq+i7gvU1St6sf9fWsvU5bunUeEuW1CI=;
+	s=arc-20240116; t=1775673772; c=relaxed/simple;
+	bh=dPS7+NNo3bKGkJEG1xeg0J44yxAlrucjh4tGIKGsOWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEuD3AzeJ6Z54ehvr1fBTiudN0sqgyCVui4bkULABLCzKwtsoDUqLkYsV1ofRY33AE9VS8Q2LCWwAvLwkzvxSeEf2WPdqCyhS/mDEN3MvNKXviCkHYdSgJS1toFIr06PUY5E3wMBCHdvkKROj6o6NztElwB3h0/JYobl7h62cfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDeeaaDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IxvWGUnKXxGNOfsVXVCBhwchlyT/zBRtpsOJ7g0/rjoAz0cVwQruWDA1VLphYkg1fPJMjqY33f14dKZsfiQ7y+xXW4BtUjPPSM4JlMhXmgfAnbhxyjU9XAkMi6hqo0/WtEoe5FAFgt8xBhxNEBi5WbhqH0y854A7ezfG6X8x8yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToxX/nBd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDeeaaDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FBDC19421;
-	Wed,  8 Apr 2026 18:42:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToxX/nBd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAB0C19421;
+	Wed,  8 Apr 2026 18:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673769;
-	bh=N84Fbfag15lHq+i7gvU1St6sf9fWsvU5bunUeEuW1CI=;
+	s=korg; t=1775673771;
+	bh=dPS7+NNo3bKGkJEG1xeg0J44yxAlrucjh4tGIKGsOWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDeeaaDoCkVSPA3QhZjfYaS59+5YbdIC4OtYJUTNMhyPJAaMv2ignKXWhtRohY+5Y
-	 3IXm2v8bPt7pAxjCfAYTVSYSKYpDd8SREFDWVHAD+u9WtPdaCxsAcjFMZZTyV3jz88
-	 1MOrhBrOuDyXtqStZ2V30m5t/JKQ+mTpUCLOzakk=
+	b=ToxX/nBd4Wugve19uYR9gSRSj5efHqcbInDsVhGv+QIcrJ6ynQ6DM/wN+xQntPqhi
+	 3DnHjvU+geffsn37YpYD9LUEX3d6MldYkVxCnG/nCkPirURfiu+BWq/xWUUQA+8neX
+	 EapOUR75FBy26dlwKmhGNcqfIf936mugIoZtAXHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/242] Bluetooth: hci_conn: fix potential UAF in set_cig_params_sync
-Date: Wed,  8 Apr 2026 20:02:03 +0200
-Message-ID: <20260408175930.189040913@linuxfoundation.org>
+Subject: [PATCH 6.12 084/242] Bluetooth: hci_event: fix potential UAF in hci_le_remote_conn_param_req_evt
+Date: Wed,  8 Apr 2026 20:02:04 +0200
+Message-ID: <20260408175930.225701897@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,51 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit a2639a7f0f5bf7d73f337f8f077c19415c62ed2c ]
+[ Upstream commit b255531b27da336571411248c2a72a350662bd09 ]
 
 hci_conn lookup and field access must be covered by hdev lock in
-set_cig_params_sync, otherwise it's possible it is freed concurrently.
+hci_le_remote_conn_param_req_evt, otherwise it's possible it is freed
+concurrently.
 
-Take hdev lock to prevent hci_conn from being deleted or modified
-concurrently.  Just RCU lock is not suitable here, as we also want to
-avoid "tearing" in the configuration.
+Extend the hci_dev_lock critical section to cover all conn usage.
 
-Fixes: a091289218202 ("Bluetooth: hci_conn: Fix hci_le_set_cig_params")
+Fixes: 95118dd4edfec ("Bluetooth: hci_event: Use of a function table to handle LE subevents")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_event.c | 33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 447d29c67e7c1..b36fa056e8796 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1767,9 +1767,13 @@ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
- 	u8 aux_num_cis = 0;
- 	u8 cis_id;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 498b7e4c76d59..0dd021c881cc4 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -6616,25 +6616,31 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev, void *data,
+ 	latency = le16_to_cpu(ev->latency);
+ 	timeout = le16_to_cpu(ev->timeout);
  
 +	hci_dev_lock(hdev);
 +
- 	conn = hci_conn_hash_lookup_cig(hdev, cig_id);
--	if (!conn)
-+	if (!conn) {
-+		hci_dev_unlock(hdev);
- 		return 0;
+ 	hcon = hci_conn_hash_lookup_handle(hdev, handle);
+-	if (!hcon || hcon->state != BT_CONNECTED)
+-		return send_conn_param_neg_reply(hdev, handle,
+-						 HCI_ERROR_UNKNOWN_CONN_ID);
++	if (!hcon || hcon->state != BT_CONNECTED) {
++		send_conn_param_neg_reply(hdev, handle,
++					  HCI_ERROR_UNKNOWN_CONN_ID);
++		goto unlock;
 +	}
  
- 	qos = &conn->iso_qos;
- 	pdu->cig_id = cig_id;
-@@ -1808,6 +1812,8 @@ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
+-	if (max > hcon->le_conn_max_interval)
+-		return send_conn_param_neg_reply(hdev, handle,
+-						 HCI_ERROR_INVALID_LL_PARAMS);
++	if (max > hcon->le_conn_max_interval) {
++		send_conn_param_neg_reply(hdev, handle,
++					  HCI_ERROR_INVALID_LL_PARAMS);
++		goto unlock;
++	}
+ 
+-	if (hci_check_conn_params(min, max, latency, timeout))
+-		return send_conn_param_neg_reply(hdev, handle,
+-						 HCI_ERROR_INVALID_LL_PARAMS);
++	if (hci_check_conn_params(min, max, latency, timeout)) {
++		send_conn_param_neg_reply(hdev, handle,
++					  HCI_ERROR_INVALID_LL_PARAMS);
++		goto unlock;
++	}
+ 
+ 	if (hcon->role == HCI_ROLE_MASTER) {
+ 		struct hci_conn_params *params;
+ 		u8 store_hint;
+ 
+-		hci_dev_lock(hdev);
+-
+ 		params = hci_conn_params_lookup(hdev, &hcon->dst,
+ 						hcon->dst_type);
+ 		if (params) {
+@@ -6647,8 +6653,6 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev, void *data,
+ 			store_hint = 0x00;
+ 		}
+ 
+-		hci_dev_unlock(hdev);
+-
+ 		mgmt_new_conn_param(hdev, &hcon->dst, hcon->dst_type,
+ 				    store_hint, min, max, latency, timeout);
  	}
- 	pdu->num_cis = aux_num_cis;
+@@ -6662,6 +6666,9 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev, void *data,
+ 	cp.max_ce_len = 0;
  
-+	hci_dev_unlock(hdev);
+ 	hci_send_cmd(hdev, HCI_OP_LE_CONN_PARAM_REQ_REPLY, sizeof(cp), &cp);
 +
- 	if (!pdu->num_cis)
- 		return 0;
++unlock:
++	hci_dev_unlock(hdev);
+ }
  
+ static void hci_le_direct_adv_report_evt(struct hci_dev *hdev, void *data,
 -- 
 2.53.0
 
