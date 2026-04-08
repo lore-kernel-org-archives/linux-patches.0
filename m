@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1EC324B1F;
-	Wed,  8 Apr 2026 18:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98633ACF11;
+	Wed,  8 Apr 2026 18:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672724; cv=none; b=bTjHe24OrDfq4y1/+F/BI2SMSxnsfn1+uGmnMLF9J6cay6Mu1B/kZvJMyP7jwlcOxAhv6/GoxktynPurlHk/8lZjZChbGWWoROI2Dbi8qlbinJzmiQaIGSjLbrK/8I84IuJ1i+pbbZ8zCqut7csDttBZJYr1bWEOPBU6bi17Z1Y=
+	t=1775672726; cv=none; b=JVkvpQFmuj8SNCbzPQvZchnjViNc3FMqajrX8ojxJY2XQioc+43ZBPI5qrPA4GsI7fMXHdilL3fcmEMLMpgv/l+CmkG6+ERo6mDRM+uhDhF2mUdW1PA8P1D8Ad9+21dI70WGqKBq2DACGY2WDzToseOQBHIfIcBMTpBf7rc6WqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672724; c=relaxed/simple;
-	bh=9wOXWwg09q4kFVSkJCS1wlxAk69q3LudumK2QW97doU=;
+	s=arc-20240116; t=1775672726; c=relaxed/simple;
+	bh=tMzVKdGHBcf5GP6i3l+vQ6aGN78KWLIq0/vSDFEO6Hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqoj8caIjEQAmcOkTaP66YqxLILdenO6ztiaoV1CxtUOVCtmMW07jp+z4Zm9pxTMWgd6UabNozIWX1vwsFr54wA4wjewSgCMGoJrMScQs3EuItJuplRjeURVjej114WtTFyUTXOi+01UZcgswxWwZSPu7qqB9vust/3rUmtUyF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EyIJ6ZjH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Awc1YQdinhloh0xNzpGwcEZvEVT85okQxGaPi9bgJDZYM+7K8D6tYxOemP6NlLinKPZS0/fHXDS+6gm/Oi+Roix77C79X1VYa+4vUD7d9GK4OYjY3LFnZemdj7kswvFxr1F9eshtMjJAfwsAL04yoFOKce+F3sdXYwLDJqbnpUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swpMGBaL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EyIJ6ZjH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D437DC19425;
-	Wed,  8 Apr 2026 18:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swpMGBaL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2CEC19421;
+	Wed,  8 Apr 2026 18:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672724;
-	bh=9wOXWwg09q4kFVSkJCS1wlxAk69q3LudumK2QW97doU=;
+	s=korg; t=1775672726;
+	bh=tMzVKdGHBcf5GP6i3l+vQ6aGN78KWLIq0/vSDFEO6Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EyIJ6ZjHSLIpjbIAsM5/kHe9Ecl6t6fYwuC0Gns8XC5oUrfRdXdl6HiT+FfEGFkd3
-	 AuIve/CZvwM4t3LLgOFKFRfKtcJv09tgZmIx0p4ws88uOlpxgE0H8F2Ic1OYahiZLQ
-	 GUGAvd2fGz4U6nlObJE0SgTrqJ/cBmtL4amySok8=
+	b=swpMGBaLCHQ1Zoyhq3GPJspI6ae83vs3hZ9zSd2BcOtyFhUosxRmWi9jDLVO54VGH
+	 WXLu8ytpHUYzcfd8NSUkm/mUgEax+uLbhZ7cTsClLrMOQbV/hkUdiWXWOFSCjqwOwm
+	 arfvF0rQOyUjisk9bY/OyLOHYNgNTjMxvDYUyk5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72f94b474d6e50b71ffc@syzkaller.appspotmail.com,
+	syzbot+cc9f7f4a7df09f53c4a4@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>,
-	Deepanshu Kartikey <kartikey406@gmail.com>
-Subject: [PATCH 6.6 117/160] comedi: dt2815: add hardware detection to prevent crash
-Date: Wed,  8 Apr 2026 20:03:24 +0200
-Message-ID: <20260408175917.561392060@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.6 118/160] comedi: Reinit dev->spinlock between attachments to low-level drivers
+Date: Wed,  8 Apr 2026 20:03:25 +0200
+Message-ID: <20260408175917.599495866@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -52,63 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 93853512f565e625df2397f0d8050d6aafd7c3ad upstream.
+commit 4b9a9a6d71e3e252032f959fb3895a33acb5865c upstream.
 
-The dt2815 driver crashes when attached to I/O ports without actual
-hardware present. This occurs because syzkaller or users can attach
-the driver to arbitrary I/O addresses via COMEDI_DEVCONFIG ioctl.
+`struct comedi_device` is the main controlling structure for a COMEDI
+device created by the COMEDI subsystem.  It contains a member `spinlock`
+containing a spin-lock that is initialized by the COMEDI subsystem, but
+is reserved for use by a low-level driver attached to the COMEDI device
+(at least since commit 25436dc9d84f ("Staging: comedi: remove RT
+code")).
 
-When no hardware exists at the specified port, inb() operations return
-0xff (floating bus), but outb() operations can trigger page faults due
-to undefined behavior, especially under race conditions:
+Some COMEDI devices (those created on initialization of the COMEDI
+subsystem when the "comedi.comedi_num_legacy_minors" parameter is
+non-zero) can be attached to different low-level drivers over their
+lifetime using the `COMEDI_DEVCONFIG` ioctl command.  This can result in
+inconsistent lock states being reported when there is a mismatch in the
+spin-lock locking levels used by each low-level driver to which the
+COMEDI device has been attached.  Fix it by reinitializing
+`dev->spinlock` before calling the low-level driver's `attach` function
+pointer if `CONFIG_LOCKDEP` is enabled.
 
-  BUG: unable to handle page fault for address: 000000007fffff90
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  RIP: 0010:dt2815_attach+0x6e0/0x1110
-
-Add hardware detection by reading the status register before attempting
-any write operations. If the read returns 0xff, assume no hardware is
-present and fail the attach with -ENODEV. This prevents crashes from
-outb() operations on non-existent hardware.
-
-Reported-by: syzbot+72f94b474d6e50b71ffc@syzkaller.appspotmail.com
+Reported-by: syzbot+cc9f7f4a7df09f53c4a4@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cc9f7f4a7df09f53c4a4
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
 Cc: stable <stable@kernel.org>
-Closes: https://syzkaller.appspot.com/bug?extid=72f94b474d6e50b71ffc
-Tested-by: syzbot+72f94b474d6e50b71ffc@syzkaller.appspotmail.com
-Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: [https://lore.kernel.org/all/20260126070458.10974-1-kartikey406@gmail.com/T/]
-Link: [https://lore.kernel.org/all/20260126070458.10974-1-kartikey406@gmail.com/T/
-Link: https://patch.msgid.link/20260309104859.503529-1-kartikey406@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260225132427.86578-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/dt2815.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/comedi/drivers.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/comedi/drivers/dt2815.c
-+++ b/drivers/comedi/drivers/dt2815.c
-@@ -175,6 +175,18 @@ static int dt2815_attach(struct comedi_d
- 		    ? current_range_type : voltage_range_type;
+--- a/drivers/comedi/drivers.c
++++ b/drivers/comedi/drivers.c
+@@ -1000,6 +1000,14 @@ int comedi_device_attach(struct comedi_d
+ 		ret = -EIO;
+ 		goto out;
  	}
- 
-+	/*
-+	 * Check if hardware is present before attempting any I/O operations.
-+	 * Reading 0xff from status register typically indicates no hardware
-+	 * on the bus (floating bus reads as all 1s).
-+	 */
-+	if (inb(dev->iobase + DT2815_STATUS) == 0xff) {
-+		dev_err(dev->class_dev,
-+			"No hardware detected at I/O base 0x%lx\n",
-+			dev->iobase);
-+		return -ENODEV;
++	if (IS_ENABLED(CONFIG_LOCKDEP)) {
++		/*
++		 * dev->spinlock is for private use by the attached low-level
++		 * driver.  Reinitialize it to stop lock-dependency tracking
++		 * between attachments to different low-level drivers.
++		 */
++		spin_lock_init(&dev->spinlock);
 +	}
-+
- 	/* Init the 2815 */
- 	outb(0x00, dev->iobase + DT2815_STATUS);
- 	for (i = 0; i < 100; i++) {
+ 	dev->driver = driv;
+ 	dev->board_name = dev->board_ptr ? *(const char **)dev->board_ptr
+ 					 : dev->driver->driver_name;
 
 
