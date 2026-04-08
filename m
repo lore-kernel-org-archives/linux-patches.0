@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D858A3D4129;
-	Wed,  8 Apr 2026 18:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C27386550;
+	Wed,  8 Apr 2026 18:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672408; cv=none; b=cs5hlUWO/mEntyDtkAfgTzMCF6bNS1vQbS+3m3/GyYfMn3dG8/9y7Kxk2vNN7USk0Yx3QEkEASmw0/PZ1kbOwFnUxZ9lz79hTIYh04O/kqoE+i3wVtwM0PKfR/ZseCR4Hqs+mpyRJoV7UptyK99n55qSmkr3YfDdt3G4PGo3UYs=
+	t=1775672411; cv=none; b=eF8pqd1nwaOnxpy0hx6P26ICkjPZDYs3yFo9rAX/RjruZ61I2X+rU4W693FaZ50RpLy3Z/BBHPGsZwCXY/hZfWaGr846tMHPGQhTF2HuzJNE4PSicfTblbp1SvoRsd7hL0r8rajl7UyOxwr82O8K3JrT9EeTWqm8tv1DiAA6M7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672408; c=relaxed/simple;
-	bh=MVKRdno0jnY7CzdP+oiCXWw6iCQFOPA6iGB0Sy8Me1Y=;
+	s=arc-20240116; t=1775672411; c=relaxed/simple;
+	bh=DvXGfJ9Oo7ghRsfDGJnIh3sp02I9zCEZEJtSy4jMH7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgguqQ3FPusRxbKcySlWCE0XyTlbfHs5LnmHFJc81YkkcnDn0k5d54+lQpmzzuIkolPQxkFeloDue+CG/PdLv2Ud3a/lJt7+DOcWokX4soHYf/QGfmFGcYVmOO1ZdM1gPaHhJzeyfiwBnVwHb5p6gAz0ewoEkdccURSoJY/Lzio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+0RDUti; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L6oqTReCn9/XJiCF4RcfCT7x5lQadupcrpvFDQLp6htVcV3gHY9SdY+8ueRYd+KNRYoEnKION6USBPqcKISO/wqXhY6yrfsYs+xuqNVpza2s4ovgrwPNzUlEjfLOBhuf6a/7N2scEUvwkZr9+QIvCkzKBNEHD6g5SorQOsD2/pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQ+hylml; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+0RDUti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F598C19421;
-	Wed,  8 Apr 2026 18:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQ+hylml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F92C19421;
+	Wed,  8 Apr 2026 18:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672408;
-	bh=MVKRdno0jnY7CzdP+oiCXWw6iCQFOPA6iGB0Sy8Me1Y=;
+	s=korg; t=1775672411;
+	bh=DvXGfJ9Oo7ghRsfDGJnIh3sp02I9zCEZEJtSy4jMH7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+0RDUtiZxo4qyl+BmVNlthF3OZQzA/HOKgpPzCAMwLrJnl2HutbO59UMjIE4hFzZ
-	 +skWcKARUSukNBtOUQESGNseUiFv/4VYJQx/WR01ivI9wHyPeue9SB5R4XH+JI8LTt
-	 lvRVJKkCopfH1PpafoY25KFGOorjB9jOi8Geixu0=
+	b=jQ+hylmlrE0De6hgy7r1U38U9DbxuuUJC+/kt4PXtuuPpmFTHCrCdBk7VnCBrfbNJ
+	 LtJtRxiu1Plxox1xaP+asCvM2XnENxeMHUIsWVfcscJJGbpAQVIVH51jdJJMOKlNLI
+	 nqgdM3eljGto3anQ9RtasoDsQIIqW3KmfHoKTYj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 309/312] block: Fix the blk_mq_destroy_queue() documentation
-Date: Wed,  8 Apr 2026 20:03:46 +0200
-Message-ID: <20260408175945.316627921@linuxfoundation.org>
+	syzbot+bbf0f9a213c94f283a5c@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>,
+	Jason Yan <yanaijie@huawei.com>
+Subject: [PATCH 6.1 310/312] ext4: fix lost error code reporting in __ext4_fill_super()
+Date: Wed,  8 Apr 2026 20:03:47 +0200
+Message-ID: <20260408175945.352602900@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -54,41 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 81ea42b9c3d61ea34d82d900ed93f4b4851f13b0 upstream.
+commit d5e72c4e3256335d6fb75c2e321144f93141f4f5 upstream.
 
-Commit 2b3f056f72e5 moved a blk_put_queue() call from
-blk_mq_destroy_queue() into its callers. Reflect this change in the
-documentation block above blk_mq_destroy_queue().
+When code was factored out of __ext4_fill_super() into
+ext4_percpu_param_init() the error return was discarded.  This meant
+that it was possible for __ext4_fill_super() to return zero,
+indicating success, without the struct super getting completely filled
+in, leading to a potential NULL pointer dereference.
 
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Cc: Keith Busch <kbusch@kernel.org>
-Fixes: 2b3f056f72e5 ("blk-mq: move the call to blk_put_queue out of blk_mq_destroy_queue")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230130211233.831613-1-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: syzbot+bbf0f9a213c94f283a5c@syzkaller.appspotmail.com
+Fixes: 1f79467c8a6b ("ext4: factor out ext4_percpu_param_init() ...")
+Link: https://syzkaller.appspot.com/bug?id=6dac47d5e58af770c0055f680369586ec32e144c
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ext4/super.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4175,8 +4175,9 @@ EXPORT_SYMBOL(blk_mq_init_queue);
-  * blk_mq_destroy_queue - shutdown a request queue
-  * @q: request queue to shutdown
-  *
-- * This shuts down a request queue allocated by blk_mq_init_queue() and drops
-- * the initial reference.  All future requests will failed with -ENODEV.
-+ * This shuts down a request queue allocated by blk_mq_init_queue(). All future
-+ * requests will be failed with -ENODEV. The caller is responsible for dropping
-+ * the reference from blk_mq_init_queue() by calling blk_put_queue().
-  *
-  * Context: can sleep
-  */
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5531,7 +5531,8 @@ static int __ext4_fill_super(struct fs_c
+ 		sbi->s_journal->j_commit_callback =
+ 			ext4_journal_commit_callback;
+ 
+-	if (ext4_percpu_param_init(sbi))
++	err = ext4_percpu_param_init(sbi);
++	if (err)
+ 		goto failed_mount6;
+ 
+ 	if (ext4_has_feature_flex_bg(sb))
 
 
