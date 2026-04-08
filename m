@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4049347517;
-	Wed,  8 Apr 2026 18:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD9F37F8C2;
+	Wed,  8 Apr 2026 18:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671820; cv=none; b=g0mwNzqsgHw5hpIcj9aAo16AxymLmdOMaIjDsD/WFc4ohnzZQ4tnOmbOrm85LQQ98ONcisadKnWWi+MJyTUJyldzhWopNBMdvkPWsff8WS1CuuUqx5R67mWnWmsvyfckOTyvU5G1HJWpg/yvR7sBeJfDHaUwMpDzNptSFX13oUo=
+	t=1775671822; cv=none; b=eqbcel2qsr7NIHgfmRf6YiwXg42x3iWGV9oJdXs6Y56i0v6QyjHdtFJn5kSDDuRYYvBPW/fD7DLWceELhrz3m4qlIzQchoLcORiqBbbh5jf6o2qrzuYBnbV1eeCFPCVf1NcjXlMNjNDJqI6z1QEV8qXFXkw5raTliPWOBJVHjss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671820; c=relaxed/simple;
-	bh=YjtnsapL4pAlDElDfRO74DsDjHj2fm0ovoeEd0vpnNc=;
+	s=arc-20240116; t=1775671822; c=relaxed/simple;
+	bh=RzmrwcqLgFvXf5NaKJaREoS5SduDlVWT9/gzkwU2E3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gchds9pLQ9zFHqyNalcZbGyGuYB3Qyf7WZMO8RO5Ua9SArRC46Nf9f/wd3wyczSC+fqBDS5hrX6PC+p36C6w5oZPycm/6Qm6HjW5NkeGnYPTM6XlUTF0Xl+fJcKvhZtoVKMJu/8xbES2N4pCSxnXFJ7zdufmfkboe4aO+dteyKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZUWRr2VI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rdfuqY3xou+hOi272TU2/emAugToGjyXSk2FQ5iCnydOL3pGId4YteBNFzWWhX3rmehQSg9VMDHnpyVqMgYiGU68fXG0YCwqRvXFofv7inqUsGcAYxyNeCOacLDHZsteGUM0Huyg6FL0PGPETTxE8LdwJ98HbGMo6JUnl3zugik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNjOz4JO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZUWRr2VI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE58C19421;
-	Wed,  8 Apr 2026 18:10:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNjOz4JO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D33C19421;
+	Wed,  8 Apr 2026 18:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671819;
-	bh=YjtnsapL4pAlDElDfRO74DsDjHj2fm0ovoeEd0vpnNc=;
+	s=korg; t=1775671822;
+	bh=RzmrwcqLgFvXf5NaKJaREoS5SduDlVWT9/gzkwU2E3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZUWRr2VIG+ymfoB/PohIDruqN0me9BAPEE0R8IxJkcYqEi4nrYkwkOjwKZvbGNPsG
-	 j7rfDy6Rumd15TQSaG/MCAdP3LKDFxE6l+yHAtW/r5T6qzRM46AQIzC4SjwVlgrTvM
-	 dY35D0MEGdw4RumJBZZZoFS3fSERLN4Z8zCBgzw0=
+	b=vNjOz4JOdt90dN6EEVS5SSQA4Of5ylPJ4lkBxIs21uYZmOUZg1lqAKSuZFsjaL0Ok
+	 yecDh/OwBmM/PCJmtd4cJbUoNceqPgPSubCsNox2DtV7t7KIPDQabhWBivF898oOv2
+	 VczWOx6zRONPUy+N6XrPAGOpRXC32a6aSm8fVauY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/312] ACPI: EC: Fix EC address space handler unregistration
-Date: Wed,  8 Apr 2026 19:59:56 +0200
-Message-ID: <20260408175936.695176334@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?Johannes=20Pen=C3=9Fel?= <johannespenssel@posteo.net>
+Subject: [PATCH 6.1 080/312] ACPI: EC: Fix ECDT probe ordering issues
+Date: Wed,  8 Apr 2026 19:59:57 +0200
+Message-ID: <20260408175936.731894059@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -46,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -54,60 +55,149 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit a5072078dbfaa9d70130805766dfa34bbb7bf2a7 ]
+[ Upstream commit ab4620f58d38206687b9f99d9d2cc1d5a2640985 ]
 
-When an ECDT table is present the EC address space handler gets registered
-on the root node. So to unregister it properly the unregister call also
-must be done on the root node.
+ACPI-2.0 says that the EC OpRegion handler must be available immediately
+(like the standard default OpRegion handlers):
 
-Store the ACPI handle used for the acpi_install_address_space_handler()
-call and use te same handle for the acpi_remove_address_space_handler()
-call.
+Quoting from the ACPI spec version 6.3: "6.5.4 _REG (Region) ...
+2. OSPM must make Embedded Controller operation regions, accessed via
+the Embedded Controllers described in ECDT, available before executing
+any control method. These operation regions may become inaccessible
+after OSPM runs _REG(EmbeddedControl, 0)."
 
-Reported-by: Rafael J. Wysocki <rafael@kernel.org>
+So acpi_bus_init() calls acpi_ec_ecdt_probe(), which calls
+acpi_install_address_space_handler() to install the EC's OpRegion
+handler, early on.
+
+This not only installs the OpRegion handler, but also calls the EC's
+_REG method. The _REG method call is a problem because it may rely on
+initialization done by the _INI methods of one of the PCI / _SB root devs,
+see for example: https://bugzilla.kernel.org/show_bug.cgi?id=214899 .
+
+Generally speaking _REG methods are executed when the ACPI-device they
+are part of has a driver bound to it. Where as _INI methods must be
+executed at table load time (according to the spec). The problem here
+is that the early acpi_install_address_space_handler() call causes
+the _REG handler to run too early.
+
+To allow fixing this the ACPICA code now allows to split the OpRegion
+handler installation and the executing of _REG into 2 separate steps.
+
+This commit uses this ACPICA functionality to fix the EC probe ordering
+by delaying the executing of _REG for ECDT described ECs till the matching
+EC device in the DSDT gets parsed and acpi_ec_add() for it gets called.
+This moves the calling of _REG for the EC on devices with an ECDT to
+the same point in time where it is called on devices without an ECDT table.
+
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=214899
+Reported-and-tested-by: Johannes Penßel <johannespenssel@posteo.net>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: f6484cadbcaf ("ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/ec.c       | 4 +++-
- drivers/acpi/internal.h | 1 +
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/acpi/ec.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
-index 15148513b050d..cecc521e2d30f 100644
+index cecc521e2d30f..a20b59a554414 100644
 --- a/drivers/acpi/ec.c
 +++ b/drivers/acpi/ec.c
-@@ -1524,6 +1524,7 @@ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device)
+@@ -94,6 +94,7 @@ enum {
+ 	EC_FLAGS_QUERY_ENABLED,		/* Query is enabled */
+ 	EC_FLAGS_EVENT_HANDLER_INSTALLED,	/* Event handler installed */
+ 	EC_FLAGS_EC_HANDLER_INSTALLED,	/* OpReg handler installed */
++	EC_FLAGS_EC_REG_CALLED,		/* OpReg ACPI _REG method called */
+ 	EC_FLAGS_QUERY_METHODS_INSTALLED, /* _Qxx handlers installed */
+ 	EC_FLAGS_STARTED,		/* Driver is started */
+ 	EC_FLAGS_STOPPED,		/* Driver is stopped */
+@@ -1495,6 +1496,7 @@ static bool install_gpio_irq_event_handler(struct acpi_ec *ec)
+  * ec_install_handlers - Install service callbacks and register query methods.
+  * @ec: Target EC.
+  * @device: ACPI device object corresponding to @ec.
++ * @call_reg: If _REG should be called to notify OpRegion availability
+  *
+  * Install a handler for the EC address space type unless it has been installed
+  * already.  If @device is not NULL, also look for EC query methods in the
+@@ -1507,7 +1509,8 @@ static bool install_gpio_irq_event_handler(struct acpi_ec *ec)
+  * -EPROBE_DEFER if GPIO IRQ acquisition needs to be deferred,
+  * or 0 (success) otherwise.
+  */
+-static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device)
++static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device,
++			       bool call_reg)
+ {
+ 	acpi_status status;
+ 
+@@ -1515,10 +1518,10 @@ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device)
+ 
+ 	if (!test_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags)) {
+ 		acpi_ec_enter_noirq(ec);
+-		status = acpi_install_address_space_handler(ec->handle,
+-							    ACPI_ADR_SPACE_EC,
+-							    &acpi_ec_space_handler,
+-							    NULL, ec);
++		status = acpi_install_address_space_handler_no_reg(ec->handle,
++								   ACPI_ADR_SPACE_EC,
++								   &acpi_ec_space_handler,
++								   NULL, ec);
+ 		if (ACPI_FAILURE(status)) {
+ 			acpi_ec_stop(ec, false);
  			return -ENODEV;
- 		}
- 		set_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags);
-+		ec->address_space_handler_holder = ec->handle;
+@@ -1527,6 +1530,11 @@ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device)
+ 		ec->address_space_handler_holder = ec->handle;
  	}
  
++	if (call_reg && !test_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags)) {
++		acpi_execute_reg_methods(ec->handle, ACPI_ADR_SPACE_EC);
++		set_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags);
++	}
++
  	if (!device)
-@@ -1575,7 +1576,8 @@ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device)
- static void ec_remove_handlers(struct acpi_ec *ec)
- {
- 	if (test_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags)) {
--		if (ACPI_FAILURE(acpi_remove_address_space_handler(ec->handle,
-+		if (ACPI_FAILURE(acpi_remove_address_space_handler(
-+					ec->address_space_handler_holder,
- 					ACPI_ADR_SPACE_EC, &acpi_ec_space_handler)))
- 			pr_err("failed to remove space handler\n");
- 		clear_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags);
-diff --git a/drivers/acpi/internal.h b/drivers/acpi/internal.h
-index 219c02df9a08c..ec584442fb298 100644
---- a/drivers/acpi/internal.h
-+++ b/drivers/acpi/internal.h
-@@ -173,6 +173,7 @@ enum acpi_ec_event_state {
+ 		return 0;
  
- struct acpi_ec {
- 	acpi_handle handle;
-+	acpi_handle address_space_handler_holder;
- 	int gpe;
- 	int irq;
- 	unsigned long command_addr;
+@@ -1613,11 +1621,11 @@ static void ec_remove_handlers(struct acpi_ec *ec)
+ 	}
+ }
+ 
+-static int acpi_ec_setup(struct acpi_ec *ec, struct acpi_device *device)
++static int acpi_ec_setup(struct acpi_ec *ec, struct acpi_device *device, bool call_reg)
+ {
+ 	int ret;
+ 
+-	ret = ec_install_handlers(ec, device);
++	ret = ec_install_handlers(ec, device, call_reg);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1682,7 +1690,7 @@ static int acpi_ec_add(struct acpi_device *device)
+ 		}
+ 	}
+ 
+-	ret = acpi_ec_setup(ec, device);
++	ret = acpi_ec_setup(ec, device, true);
+ 	if (ret)
+ 		goto err;
+ 
+@@ -1802,7 +1810,7 @@ void __init acpi_ec_dsdt_probe(void)
+ 	 * At this point, the GPE is not fully initialized, so do not to
+ 	 * handle the events.
+ 	 */
+-	ret = acpi_ec_setup(ec, NULL);
++	ret = acpi_ec_setup(ec, NULL, true);
+ 	if (ret) {
+ 		acpi_ec_free(ec);
+ 		return;
+@@ -2017,7 +2025,7 @@ void __init acpi_ec_ecdt_probe(void)
+ 	 * At this point, the namespace is not initialized, so do not find
+ 	 * the namespace objects, or handle the events.
+ 	 */
+-	ret = acpi_ec_setup(ec, NULL);
++	ret = acpi_ec_setup(ec, NULL, false);
+ 	if (ret) {
+ 		acpi_ec_free(ec);
+ 		goto out;
 -- 
 2.53.0
 
