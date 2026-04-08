@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F018B3AA4E4;
-	Wed,  8 Apr 2026 18:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7744D2494F0;
+	Wed,  8 Apr 2026 18:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672463; cv=none; b=gUAra9B+Y2XNgq+DL3x+3pyqwHi6F3vAz3ak8qSyWz1P2ZgIAAucOllYE/yYVrJbPBqIOlSZTogZvq2Ms2yu4KJ0/boQO2peIoVm2r4q+XuU4JcNqkGyCJsk+dpPouT7SwxPn6oxUxLamDSC4Xo0FWA7SAWyZV5eG9gR9vzxxZE=
+	t=1775672465; cv=none; b=iCVDX54NdTO3GQOj8/TJB1Qj4uE080srnkSfP+cQQMfTuzJ1uPr+jesL5Q9DGUB2Nxed7gsuUWpspQ/D4wXbiFqft/Fh+TPIK7qaVWWJ2ddL0kbNrCLuekgQjbnHHNWL+3SSrsuPBKUw5NyQGAlzqcOcAKZm/mmOrxX71t1/CxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672463; c=relaxed/simple;
-	bh=JuSeYLFPckp1VUtYNBoF/eXGhI8QbmFLiIqC74OgZGY=;
+	s=arc-20240116; t=1775672465; c=relaxed/simple;
+	bh=yGfcY09Af0kq0GjFrMA/19jdnmi7fLhxQSoPAiYqgRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cidRiYtjRxZQKu2kIWCSGq7icTVDzstHPnXtYwvBKDEOw70zk3rvhGuDiIoMdJFGDm/LQohCpNu6cxZp83lE/chWAT2Kohz8pDeo8f855qrT3P9i3WZqv0tVh9BAwUZq3+GpBgTkVRgZUE+EzYgb5Yp67VEO2nVdPHSpXcWzJPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AS/ZLAX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NcDFxCN9tUCT7Po3oO6mAq6/a3sT35SPHrE1AssWxK0zk1UKKM9J8gsT97A3vVY3jWz5FuE7essxaRAjc0RoZCKKZiTUKwcw1a3HFn3Q16rFLJhovuRngjVljfhTuq1v3I3VX5pm0hzZEiWklHF24f54Bl+V2HqdEKvUOVLvTGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WL3vf6L5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AS/ZLAX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864E4C19421;
-	Wed,  8 Apr 2026 18:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WL3vf6L5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E107C19421;
+	Wed,  8 Apr 2026 18:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672462;
-	bh=JuSeYLFPckp1VUtYNBoF/eXGhI8QbmFLiIqC74OgZGY=;
+	s=korg; t=1775672465;
+	bh=yGfcY09Af0kq0GjFrMA/19jdnmi7fLhxQSoPAiYqgRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0AS/ZLAXc7iVxz+TgBiucyW1gvKZHgiJkLLEcIKJ/ZOaISpnNlnn8MLxGayH07qt8
-	 EvOkX/1CUCtizuKCZ9J2BaJuge/6bJ8UU/c5RYNxZv+tx4x49JApvFEjTCICfChQBU
-	 hsjhkwQYpe0kbW+D3PThvzDzlCANEWAP1yCaNRXo=
+	b=WL3vf6L5Nba0Is+wm7slmqvyb4ocrC521OJUp0dMBTYMwljxYCM6+snTP9eKJjgbp
+	 Q3zy/ZXtoI96IJ7sC5YeLiR9hgyGI16Qs8GE8kAZAPzEzORQe7FccP9P+1Khi4F1th
+	 Yn5ChhxCRqG+qxmml2XIzbTBsJe4OObryP7MoBUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Buday Csaba <buday.csaba@prolan.hu>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/160] crypto: af-alg - fix NULL pointer dereference in scatterwalk
-Date: Wed,  8 Apr 2026 20:01:44 +0200
-Message-ID: <20260408175913.841139274@linuxfoundation.org>
+Subject: [PATCH 6.6 018/160] net: fec: fix the PTP periodic output sysfs interface
+Date: Wed,  8 Apr 2026 20:01:45 +0200
+Message-ID: <20260408175913.877844449@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -51,46 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Buday Csaba <buday.csaba@prolan.hu>
 
-[ Upstream commit 62397b493e14107ae82d8b80938f293d95425bcb ]
+[ Upstream commit e8e44c98f789dee45cfd24ffb9d4936e0606d7c6 ]
 
-The AF_ALG interface fails to unmark the end of a Scatter/Gather List (SGL)
-when chaining a new af_alg_tsgl structure. If a sendmsg() fills an SGL
-exactly to MAX_SGL_ENTS, the last entry is marked as the end. A subsequent
-sendmsg() allocates a new SGL and chains it, but fails to clear the end
-marker on the previous SGL's last data entry.
+When the PPS channel configuration was implemented, the channel
+index for the periodic outputs was configured as the hardware
+channel number.
 
-This causes the crypto scatterwalk to hit a premature end, returning NULL
-on sg_next() and leading to a kernel panic during dereference.
+The sysfs interface uses a logical channel index, and rejects numbers
+greater than `n_per_out` (see period_store() in ptp_sysfs.c).
+That property was left at 1, since the driver implements channel
+selection, not simultaneous operation of multiple PTP hardware timer
+channels.
 
-Fix this by explicitly unmarking the end of the previous SGL when
-performing sg_chain() in af_alg_alloc_tsgl().
+A second check in fec_ptp_enable() returns -EOPNOTSUPP when the two
+channel numbers disagree, making channels 1..3 unusable from sysfs.
 
-Fixes: 8ff590903d5f ("crypto: algif_skcipher - User-space interface for skcipher operations")
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fix by removing this redundant check in the FEC PTP driver.
+
+Fixes: 566c2d83887f ("net: fec: make PPS channel configurable")
+Signed-off-by: Buday Csaba <buday.csaba@prolan.hu>
+Link: https://patch.msgid.link/8ec2afe88423c2231f9cf8044d212ce57846670e.1774359059.git.buday.csaba@prolan.hu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/af_alg.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/fec_ptp.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index 3d0b7542f771c..24575ceae14bd 100644
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -622,8 +622,10 @@ static int af_alg_alloc_tsgl(struct sock *sk)
- 		sg_init_table(sgl->sg, MAX_SGL_ENTS + 1);
- 		sgl->cur = 0;
+diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
+index 4bb894b5afcb9..778713c2fed40 100644
+--- a/drivers/net/ethernet/freescale/fec_ptp.c
++++ b/drivers/net/ethernet/freescale/fec_ptp.c
+@@ -546,9 +546,6 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
+ 		if (rq->perout.flags)
+ 			return -EOPNOTSUPP;
  
--		if (sg)
-+		if (sg) {
-+			sg_unmark_end(sg + MAX_SGL_ENTS - 1);
- 			sg_chain(sg, MAX_SGL_ENTS + 1, sgl->sg);
-+		}
- 
- 		list_add_tail(&sgl->list, &ctx->tsgl_list);
- 	}
+-		if (rq->perout.index != fep->pps_channel)
+-			return -EOPNOTSUPP;
+-
+ 		period.tv_sec = rq->perout.period.sec;
+ 		period.tv_nsec = rq->perout.period.nsec;
+ 		period_ns = timespec64_to_ns(&period);
 -- 
 2.53.0
 
