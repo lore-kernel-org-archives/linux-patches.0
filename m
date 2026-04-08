@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F9E3D9051;
-	Wed,  8 Apr 2026 18:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D077C3D9DA9;
+	Wed,  8 Apr 2026 18:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673547; cv=none; b=esy84LMfAP2x2PPVwRrshSlpEly8bZ3/uM4NZroe2aen9ifBnBaf0Ju2XiDDvrS0CAW299AbicKozJr5JCEzhTsiNigL/paRd2cjRyb+BTBMRS49oqSG04LAeRYCOVFfgmASG5yPoegGsYv2rvphPhG6XMBOjVP5DaWfpv0pWrw=
+	t=1775673549; cv=none; b=tUhqwU9YZwfzrTAZ22zp4xTUifVMhnnFJzrOzTSxh7vclYyP+DacAa7rplIIs7SmNbcHwk6gGkJZ8OhkFeAYH5vkOEN9CKUHRiBk7zkIn6esqesRGLSuKktFUSteqkouL0mZSTjrJRA9kJ0yvuM78s4ue8our1zt8u2RYowAOXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673547; c=relaxed/simple;
-	bh=dCgGhe/VDutDV2POOx0/TE58F92yLD/guaSX/6v9kbo=;
+	s=arc-20240116; t=1775673549; c=relaxed/simple;
+	bh=dK5pGVbJ0pNCNf17zrdLMcrVgxXTzTPEV68FfWS31Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHOXISUSU03IdEd7yVPPN8dr40YTIKX/EhcBttbr6Y0vZewb9WhakTzBsGc0hWLCq4ncLTpb7Jg6TW+/VbkRmsrA5OmSby0u2dOeYU7pND7OQA1XWDEgWVuFDWFso+yDeAxCXyTjTvoEwwRwdscdXQbFus7xfJgeAxSgs2Mgcvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UWVXV7a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MOtfxbmU1BTDvpGEuo+cQfSNr8WOC9W5r8uvkr6Qb6MiaRX7evUF4LxCOP5Ora62XBnZPoZmdRpt1a7iFGA1TpY8FYVuCm8fbIsvVmnyv1rw31Dr/v4INA6d7fRzOMeS6xLwIi/YlyDOrRJgv/jyLXsWDnC+6Z+Vf9jnsaci/3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ea6ti2hZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UWVXV7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02B7C2BCB1;
-	Wed,  8 Apr 2026 18:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ea6ti2hZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673D8C19425;
+	Wed,  8 Apr 2026 18:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673547;
-	bh=dCgGhe/VDutDV2POOx0/TE58F92yLD/guaSX/6v9kbo=;
+	s=korg; t=1775673549;
+	bh=dK5pGVbJ0pNCNf17zrdLMcrVgxXTzTPEV68FfWS31Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UWVXV7aj38Iwgp4nupkSM4/v2xbmHNJzGgAlr/bK+iR2wC2EXJrb5WurBtNnh6cD
-	 DkX40Jw64xXDsfq1Uj0kk/D3KUQvTC5PcV9DgXWCuQmYDbrtJ0ILNmXdc352ZDlR2/
-	 8N7DhoPaSR70Y0KsLAZLIaDEMheGb1qDvcCr42is=
+	b=Ea6ti2hZgeQlEv3m6KDTgHVM7W37rL511TxRK8TSyU2a8/jqjFz8MHhnApnvEg4MY
+	 ZECF7RpKkcD+Hawy0ocuzmUiMaeLQ7FBEwiRPFLod4C2ZJ4l0eDCvMpnOPVY67VrVG
+	 oozxLC/DMXY48SzKYyGuywmvakazTq6KrhoGIAHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Dev Jain <dev.jain@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Peter Xu <peterx@redhat.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 274/277] mm: replace READ_ONCE() with standard page table accessors
-Date: Wed,  8 Apr 2026 20:04:19 +0200
-Message-ID: <20260408175944.098324288@linuxfoundation.org>
+Subject: [PATCH 6.18 275/277] mm/memory: fix PMD/PUD checks in follow_pfnmap_start()
+Date: Wed,  8 Apr 2026 20:04:20 +0200
+Message-ID: <20260408175944.136781721@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -55,140 +58,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
 
-[ Upstream commit c0efdb373c3aaacb32db59cadb0710cac13e44ae ]
+[ Upstream commit ffef67b93aa352b34e6aeba3d52c19a63885409a ]
 
-Replace all READ_ONCE() with a standard page table accessors i.e
-pxdp_get() that defaults into READ_ONCE() in cases where platform does not
-override.
+follow_pfnmap_start() suffers from two problems:
 
-Link: https://lkml.kernel.org/r/20251007063100.2396936-1-anshuman.khandual@arm.com
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
+(1) We are not re-fetching the pmd/pud after taking the PTL
+
+Therefore, we are not properly stabilizing what the lock actually
+protects.  If there is concurrent zapping, we would indicate to the
+caller that we found an entry, however, that entry might already have
+been invalidated, or contain a different PFN after taking the lock.
+
+Properly use pmdp_get() / pudp_get() after taking the lock.
+
+(2) pmd_leaf() / pud_leaf() are not well defined on non-present entries
+
+pmd_leaf()/pud_leaf() could wrongly trigger on non-present entries.
+
+There is no real guarantee that pmd_leaf()/pud_leaf() returns something
+reasonable on non-present entries.  Most architectures indeed either
+perform a present check or make it work by smart use of flags.
+
+However, for example loongarch checks the _PAGE_HUGE flag in pmd_leaf(),
+and always sets the _PAGE_HUGE flag in __swp_entry_to_pmd().  Whereby
+pmd_trans_huge() explicitly checks pmd_present(), pmd_leaf() does not do
+that.
+
+Let's check pmd_present()/pud_present() before assuming "the is a present
+PMD leaf" when spotting pmd_leaf()/pud_leaf(), like other page table
+handling code that traverses user page tables does.
+
+Given that non-present PMD entries are likely rare in VM_IO|VM_PFNMAP, (1)
+is likely more relevant than (2).  It is questionable how often (1) would
+actually trigger, but let's CC stable to be sure.
+
+This was found by code inspection.
+
+Link: https://lkml.kernel.org/r/20260323-follow_pfnmap_fix-v1-1-5b0ec10872b3@kernel.org
+Fixes: 6da8e9634bb7 ("mm: new follow_pfnmap API")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: ffef67b93aa3 ("mm/memory: fix PMD/PUD checks in follow_pfnmap_start()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c            |   10 +++++-----
- mm/hmm.c            |    2 +-
- mm/memory.c         |    4 ++--
- mm/mprotect.c       |    2 +-
- mm/sparse-vmemmap.c |    2 +-
- mm/vmscan.c         |    2 +-
- 6 files changed, 11 insertions(+), 11 deletions(-)
+ mm/memory.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -950,7 +950,7 @@ static struct page *follow_pud_mask(stru
- 	struct mm_struct *mm = vma->vm_mm;
- 
- 	pudp = pud_offset(p4dp, address);
--	pud = READ_ONCE(*pudp);
-+	pud = pudp_get(pudp);
- 	if (!pud_present(pud))
- 		return no_page_table(vma, flags, address);
- 	if (pud_leaf(pud)) {
-@@ -975,7 +975,7 @@ static struct page *follow_p4d_mask(stru
- 	p4d_t *p4dp, p4d;
- 
- 	p4dp = p4d_offset(pgdp, address);
--	p4d = READ_ONCE(*p4dp);
-+	p4d = p4dp_get(p4dp);
- 	BUILD_BUG_ON(p4d_leaf(p4d));
- 
- 	if (!p4d_present(p4d) || p4d_bad(p4d))
-@@ -3060,7 +3060,7 @@ static int gup_fast_pud_range(p4d_t *p4d
- 
- 	pudp = pud_offset_lockless(p4dp, p4d, addr);
- 	do {
--		pud_t pud = READ_ONCE(*pudp);
-+		pud_t pud = pudp_get(pudp);
- 
- 		next = pud_addr_end(addr, end);
- 		if (unlikely(!pud_present(pud)))
-@@ -3086,7 +3086,7 @@ static int gup_fast_p4d_range(pgd_t *pgd
- 
- 	p4dp = p4d_offset_lockless(pgdp, pgd, addr);
- 	do {
--		p4d_t p4d = READ_ONCE(*p4dp);
-+		p4d_t p4d = p4dp_get(p4dp);
- 
- 		next = p4d_addr_end(addr, end);
- 		if (!p4d_present(p4d))
-@@ -3108,7 +3108,7 @@ static void gup_fast_pgd_range(unsigned
- 
- 	pgdp = pgd_offset(current->mm, addr);
- 	do {
--		pgd_t pgd = READ_ONCE(*pgdp);
-+		pgd_t pgd = pgdp_get(pgdp);
- 
- 		next = pgd_addr_end(addr, end);
- 		if (pgd_none(pgd))
---- a/mm/hmm.c
-+++ b/mm/hmm.c
-@@ -491,7 +491,7 @@ static int hmm_vma_walk_pud(pud_t *pudp,
- 	/* Normally we don't want to split the huge page */
- 	walk->action = ACTION_CONTINUE;
- 
--	pud = READ_ONCE(*pudp);
-+	pud = pudp_get(pudp);
- 	if (!pud_present(pud)) {
- 		spin_unlock(ptl);
- 		return hmm_vma_walk_hole(start, end, -1, walk);
 --- a/mm/memory.c
 +++ b/mm/memory.c
-@@ -6691,12 +6691,12 @@ retry:
- 		goto out;
- 
- 	p4dp = p4d_offset(pgdp, address);
--	p4d = READ_ONCE(*p4dp);
-+	p4d = p4dp_get(p4dp);
- 	if (p4d_none(p4d) || unlikely(p4d_bad(p4d)))
- 		goto out;
+@@ -6697,11 +6697,16 @@ retry:
  
  	pudp = pud_offset(p4dp, address);
--	pud = READ_ONCE(*pudp);
-+	pud = pudp_get(pudp);
- 	if (pud_none(pud))
+ 	pud = pudp_get(pudp);
+-	if (pud_none(pud))
++	if (!pud_present(pud))
  		goto out;
  	if (pud_leaf(pud)) {
---- a/mm/mprotect.c
-+++ b/mm/mprotect.c
-@@ -599,7 +599,7 @@ again:
- 			break;
- 		}
- 
--		pud = READ_ONCE(*pudp);
+ 		lock = pud_lock(mm, pudp);
+-		if (!unlikely(pud_leaf(pud))) {
 +		pud = pudp_get(pudp);
- 		if (pud_none(pud))
- 			continue;
++
++		if (unlikely(!pud_present(pud))) {
++			spin_unlock(lock);
++			goto out;
++		} else if (unlikely(!pud_leaf(pud))) {
+ 			spin_unlock(lock);
+ 			goto retry;
+ 		}
+@@ -6713,9 +6718,16 @@ retry:
  
---- a/mm/sparse-vmemmap.c
-+++ b/mm/sparse-vmemmap.c
-@@ -439,7 +439,7 @@ int __meminit vmemmap_populate_hugepages
- 			return -ENOMEM;
- 
- 		pmd = pmd_offset(pud, addr);
--		if (pmd_none(READ_ONCE(*pmd))) {
-+		if (pmd_none(pmdp_get(pmd))) {
- 			void *p;
- 
- 			p = vmemmap_alloc_block_buf(PMD_SIZE, node, altmap);
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -3783,7 +3783,7 @@ static int walk_pud_range(p4d_t *p4d, un
- 	pud = pud_offset(p4d, start & P4D_MASK);
- restart:
- 	for (i = pud_index(start), addr = start; addr != end; i++, addr = next) {
--		pud_t val = READ_ONCE(pud[i]);
-+		pud_t val = pudp_get(pud + i);
- 
- 		next = pud_addr_end(addr, end);
- 
+ 	pmdp = pmd_offset(pudp, address);
+ 	pmd = pmdp_get_lockless(pmdp);
++	if (!pmd_present(pmd))
++		goto out;
+ 	if (pmd_leaf(pmd)) {
+ 		lock = pmd_lock(mm, pmdp);
+-		if (!unlikely(pmd_leaf(pmd))) {
++		pmd = pmdp_get(pmdp);
++
++		if (unlikely(!pmd_present(pmd))) {
++			spin_unlock(lock);
++			goto out;
++		} else if (unlikely(!pmd_leaf(pmd))) {
+ 			spin_unlock(lock);
+ 			goto retry;
+ 		}
 
 
