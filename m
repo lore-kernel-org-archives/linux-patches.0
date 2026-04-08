@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995F63D6CA2;
-	Wed,  8 Apr 2026 18:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310363D6CA2;
+	Wed,  8 Apr 2026 18:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673392; cv=none; b=WRRW0N68CWIBUA+hBOyDVLmCYq9kzDf8K8ka1ds/yfU2I/2lFUtWW2rLtnEkgtUYeG73ODt8y3SXGsEmE6/cJBmPzjT5kvK7HYcbj+4Z5y1/LZIFonk/OX/hbe1uts/qX+zrtWa3gXsLSQc3DFwPMbCtBNpwevrJ+iNTXkkxHSM=
+	t=1775673395; cv=none; b=lbuGs5sS1SN9WJkU4jwNtktr3U4nHJ8N/0pc6NqEvljkNQPJ6SGebz6ZALpSXspwu/lnhVzAJ+Kq66bS1XjW+A5IcUcGqlh79/J16HYMoCK9dFLjWMfRWABoGFrsoZ/WPBH76hsUmQEAsaRv2J3aL0Z6nsWU+wRUjs3YCpQtKBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673392; c=relaxed/simple;
-	bh=KmjAtXQmN1hwuhYSGNFjxsIJ/FF5UzLEGoxmxq8sMI4=;
+	s=arc-20240116; t=1775673395; c=relaxed/simple;
+	bh=qcn5M1ICZHCcfWKBSn111NoSDeYccj+Yy3UjW23l90g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnDXYI7wws2kbGeNRUxo11qcGMJVxc67MyUFvdRUk7shz8aHMVVYDpP49fMWDcgoejJHmTn5XsiW1qY09htsU95WrVjI2BGcg2FPGZD+puLQjqbPSzfL63uyxskG/ltDofKDRKxzntJa1oPzuoknwjJ2UehVpkzaxK/7AYe5hiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqOyRtOP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MJ6XuE9CBVVjTSjkciif2+qbFMIuR8phxjNAUZUGhvIxmYpis3MwqimOnniNNQUQl8CR5jBGUiMZ9oQzV6nYkkobHgFVQMsWmhNU8QGxcfWOINEUoviewNBqgtfo5ergviZ0yJSmT+wdHQzB9q6gWBR3nCdpJzXh4OzNGjdjLPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcrgc50o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqOyRtOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D3CC2BC87;
-	Wed,  8 Apr 2026 18:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcrgc50o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98E2C19421;
+	Wed,  8 Apr 2026 18:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673392;
-	bh=KmjAtXQmN1hwuhYSGNFjxsIJ/FF5UzLEGoxmxq8sMI4=;
+	s=korg; t=1775673395;
+	bh=qcn5M1ICZHCcfWKBSn111NoSDeYccj+Yy3UjW23l90g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vqOyRtOPOCTJq3W3InMy/GHNKYgNX/6rMiVkzOoqYqNNdkdfQ2zpZw0wMI61ECE0+
-	 ZxtY0/bXQnCgNjr4LDDJzZRoDjQ/lnujDSaS9TzR0bLsWdPR3HHXjSNqaIVB0/PnYf
-	 W3xdLNAa/SzrUiOUvXjEQJrZ4ZP89K0mXWxScwcs=
+	b=fcrgc50o0lQEC9/0fpCjsrqppTZiPBK2J3vgyUDBzOk8qzyvfjQh8DJ+T9yMIknEQ
+	 axl0wRpT35IwuD9AEI2nMSLU0Vf5y8A8tkM2xlvbI8bkBZHtMk5CphfoZ+yhPCHRiW
+	 OJ849H/O6uoGMMgdOVTyyJQwAFhw00/H53ooQ7Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72f94b474d6e50b71ffc@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>,
-	Deepanshu Kartikey <kartikey406@gmail.com>
-Subject: [PATCH 6.18 213/277] comedi: dt2815: add hardware detection to prevent crash
-Date: Wed,  8 Apr 2026 20:03:18 +0200
-Message-ID: <20260408175941.815069228@linuxfoundation.org>
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.18 183/277] iio: accel: adxl380: fix FIFO watermark bit 8 always written as 0
+Date: Wed,  8 Apr 2026 20:02:48 +0200
+Message-ID: <20260408175940.696201157@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -52,63 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit 93853512f565e625df2397f0d8050d6aafd7c3ad upstream.
+commit bd66aa1c8b8cabf459064a46d3430a5ec5138418 upstream.
 
-The dt2815 driver crashes when attached to I/O ports without actual
-hardware present. This occurs because syzkaller or users can attach
-the driver to arbitrary I/O addresses via COMEDI_DEVCONFIG ioctl.
+FIELD_PREP(BIT(0), fifo_samples & BIT(8)) produces either 0 or 256,
+and since FIELD_PREP masks to bit 0, 256 & 1 evaluates to 0. Use !!
+to convert the result to a proper 0-or-1 value.
 
-When no hardware exists at the specified port, inb() operations return
-0xff (floating bus), but outb() operations can trigger page faults due
-to undefined behavior, especially under race conditions:
-
-  BUG: unable to handle page fault for address: 000000007fffff90
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  RIP: 0010:dt2815_attach+0x6e0/0x1110
-
-Add hardware detection by reading the status register before attempting
-any write operations. If the read returns 0xff, assume no hardware is
-present and fail the attach with -ENODEV. This prevents crashes from
-outb() operations on non-existent hardware.
-
-Reported-by: syzbot+72f94b474d6e50b71ffc@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Closes: https://syzkaller.appspot.com/bug?extid=72f94b474d6e50b71ffc
-Tested-by: syzbot+72f94b474d6e50b71ffc@syzkaller.appspotmail.com
-Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: [https://lore.kernel.org/all/20260126070458.10974-1-kartikey406@gmail.com/T/]
-Link: [https://lore.kernel.org/all/20260126070458.10974-1-kartikey406@gmail.com/T/
-Link: https://patch.msgid.link/20260309104859.503529-1-kartikey406@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: df36de13677a ("iio: accel: add ADXL380 driver")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/dt2815.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/iio/accel/adxl380.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/dt2815.c
-+++ b/drivers/comedi/drivers/dt2815.c
-@@ -175,6 +175,18 @@ static int dt2815_attach(struct comedi_d
- 		    ? current_range_type : voltage_range_type;
- 	}
+--- a/drivers/iio/accel/adxl380.c
++++ b/drivers/iio/accel/adxl380.c
+@@ -888,7 +888,7 @@ static int adxl380_set_fifo_samples(stru
+ 	ret = regmap_update_bits(st->regmap, ADXL380_FIFO_CONFIG_0_REG,
+ 				 ADXL380_FIFO_SAMPLES_8_MSK,
+ 				 FIELD_PREP(ADXL380_FIFO_SAMPLES_8_MSK,
+-					    (fifo_samples & BIT(8))));
++					    !!(fifo_samples & BIT(8))));
+ 	if (ret)
+ 		return ret;
  
-+	/*
-+	 * Check if hardware is present before attempting any I/O operations.
-+	 * Reading 0xff from status register typically indicates no hardware
-+	 * on the bus (floating bus reads as all 1s).
-+	 */
-+	if (inb(dev->iobase + DT2815_STATUS) == 0xff) {
-+		dev_err(dev->class_dev,
-+			"No hardware detected at I/O base 0x%lx\n",
-+			dev->iobase);
-+		return -ENODEV;
-+	}
-+
- 	/* Init the 2815 */
- 	outb(0x00, dev->iobase + DT2815_STATUS);
- 	for (i = 0; i < 100; i++) {
 
 
