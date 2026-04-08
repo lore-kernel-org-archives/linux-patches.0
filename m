@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465A83D813D;
-	Wed,  8 Apr 2026 18:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73E93D47A5;
+	Wed,  8 Apr 2026 18:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671670; cv=none; b=SgjidcEIlZo1Y6Ie+S5/ZitGolBA6mATAZIt4W0SVZ0+2UjGni2xO1ONAY4PyhzWW/Iy3WhH4+QxGwWB1tHIFzllSomThYV4PeSJH8c+KSrBgmf/MG5xbByLf0AHrzvF3FQQDY3rIhgAawCgXQ30RnYAfGnYdRy+A6OOBlj4OCU=
+	t=1775671672; cv=none; b=WhWmz3p/CJfBaTOdAioOGOVdDYPhcFDxQI/ktMycxyBB9QJUD+EenTyAd/l+yEiCWz0a2zLjVVNtpFNxcfM+GMmYPhTMJKTH847jv/s1LTD2vAKUqiDHSd9kf9NeZbOHjbdKo7gjv5r4Ws10h2zf6eVlPoyWDyNsw2SkSq8cawc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671670; c=relaxed/simple;
-	bh=Rmh9Yqkx8IKpY/Km5qR8Y9/donU/l3NPdl3uyDePtIw=;
+	s=arc-20240116; t=1775671672; c=relaxed/simple;
+	bh=fZ1boC/dAbN71xFXPw4xFqFgeMJm0uT4pFgIfjluE70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFmRUyzCDICJ+vapifxlpqw6lfsX1qoZaQJmPgd9i5GpmPa0SEkjtfbKhfJ8Q5qOWA7HBuaH0HorqqapxbiaESjhF5DPHhqiW4yZV+8SO4HHHJOJDIlFevTJay4o2Wpwxt0FacsBza2cPRPUW/UbBwEZDaMHmBUqg6G0Mdx08SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2wDM7cX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XbpOmSKlG8y09NI3AWdBXvLxIqaFSYcS/U2rkmJ8bC5pTqCDyIFJEUaM4JkW0aObY0GjTMuwRVBhw4TpxVKjDZUdR2KtMGaeaGple2l00xhKg4va79/qpakhYcQ9KcOG9bheNTPy66/2GIiStTwzb8btnQ6XRFjkr3mUlvmL4/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ol9F70em; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2wDM7cX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AFAC19421;
-	Wed,  8 Apr 2026 18:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ol9F70em"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F089C19421;
+	Wed,  8 Apr 2026 18:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671670;
-	bh=Rmh9Yqkx8IKpY/Km5qR8Y9/donU/l3NPdl3uyDePtIw=;
+	s=korg; t=1775671672;
+	bh=fZ1boC/dAbN71xFXPw4xFqFgeMJm0uT4pFgIfjluE70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x2wDM7cXtO/GwlWZ7eYDFuiKLJm1LOCc0f6k+a8MlmbIvbLPEOl1LDY/tDwbRm/ct
-	 88ehAsKDMGPcKCr7HjkO6MaL1+b6oWg/uSxX+gU6morqcodq3G80AWnuJyMuUArsrR
-	 96SxA5WAKPoKiUQfoztX5OFONcH9xzBihDuYqpf4=
+	b=Ol9F70emPjKOT/kuNf7QMl/92v9qugdu7AewmvUnVoVxGc1j1mSeuKAksdgnvM3Ks
+	 p9ehv3ErFQXXIxccg4BhXdTb1RyM7FiCpbHJONPUjyh6KI//o6mUE8XBJ06fJPQ0kp
+	 qXdqrNf80VojHKuID14x91uL1UPIxJowJgGPYNqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/312] ASoC: fsl_easrc: Fix event generation in fsl_easrc_iec958_set_reg()
-Date: Wed,  8 Apr 2026 19:58:52 +0200
-Message-ID: <20260408175934.300545612@linuxfoundation.org>
+Subject: [PATCH 6.1 024/312] xfrm: Fix the usage of skb->sk
+Date: Wed,  8 Apr 2026 19:59:01 +0200
+Message-ID: <20260408175934.631235028@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -50,50 +51,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Steffen Klassert <steffen.klassert@secunet.com>
 
-[ Upstream commit 31ddc62c1cd92e51b9db61d7954b85ae2ec224da ]
+[ Upstream commit 1620c88887b16940e00dbe57dd38c74eda9bad9e ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_easrc_set_reg() only returns 0 or a negative
-error code, causing ALSA to not generate any change events. Add a suitable
-check by using regmap_update_bits_check() with the underlying regmap, this
-is more clearly and simply correct than trying to verify that one of the
-generic ops is exactly equivalent to this one.
+xfrm assumed to always have a full socket at skb->sk.
+This is not always true, so fix it by converting to a
+full socket before it is used.
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20260205-asoc-fsl-easrc-fix-events-v1-2-39d4c766918b@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Stable-dep-of: 0c0eef8ccd24 ("esp: fix skb leak with espintcp and async crypto")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_easrc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/ipv4/esp4.c                | 2 +-
+ net/ipv6/esp6.c                | 2 +-
+ net/ipv6/xfrm6_output.c        | 4 ++--
+ net/xfrm/xfrm_interface_core.c | 2 +-
+ net/xfrm/xfrm_output.c         | 7 ++++---
+ net/xfrm/xfrm_policy.c         | 2 +-
+ 6 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index 210ca7199adab..8cf414ab1295b 100644
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -93,14 +93,17 @@ static int fsl_easrc_set_reg(struct snd_kcontrol *kcontrol,
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct soc_mreg_control *mc =
- 		(struct soc_mreg_control *)kcontrol->private_value;
-+	struct fsl_asrc *easrc = snd_soc_component_get_drvdata(component);
- 	unsigned int regval = ucontrol->value.integer.value[0];
-+	bool changed;
- 	int ret;
- 
--	ret = snd_soc_component_write(component, mc->regbase, regval);
--	if (ret < 0)
-+	ret = regmap_update_bits_check(easrc->regmap, mc->regbase,
-+				       GENMASK(31, 0), regval, &changed);
-+	if (ret != 0)
- 		return ret;
- 
--	return 0;
-+	return changed;
+diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
+index a40f78a6474c6..70ad42826c3db 100644
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -236,7 +236,7 @@ static void esp_output_done(struct crypto_async_request *base, int err)
+ 		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
+ 			esp_output_tail_tcp(x, skb);
+ 		else
+-			xfrm_output_resume(skb->sk, skb, err);
++			xfrm_output_resume(skb_to_full_sk(skb), skb, err);
+ 	}
  }
  
- #define SOC_SINGLE_REG_RW(xname, xreg) \
+diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
+index 48963fc9057bc..a7cc96fc7c247 100644
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -272,7 +272,7 @@ static void esp_output_done(struct crypto_async_request *base, int err)
+ 		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
+ 			esp_output_tail_tcp(x, skb);
+ 		else
+-			xfrm_output_resume(skb->sk, skb, err);
++			xfrm_output_resume(skb_to_full_sk(skb), skb, err);
+ 	}
+ }
+ 
+diff --git a/net/ipv6/xfrm6_output.c b/net/ipv6/xfrm6_output.c
+index ad07904642cad..ff183bd76c998 100644
+--- a/net/ipv6/xfrm6_output.c
++++ b/net/ipv6/xfrm6_output.c
+@@ -82,14 +82,14 @@ static int __xfrm6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 
+ 	toobig = skb->len > mtu && !skb_is_gso(skb);
+ 
+-	if (toobig && xfrm6_local_dontfrag(skb->sk)) {
++	if (toobig && xfrm6_local_dontfrag(sk)) {
+ 		xfrm6_local_rxpmtu(skb, mtu);
+ 		kfree_skb(skb);
+ 		return -EMSGSIZE;
+ 	} else if (toobig && xfrm6_noneed_fragment(skb)) {
+ 		skb->ignore_df = 1;
+ 		goto skip_frag;
+-	} else if (!skb->ignore_df && toobig && skb->sk) {
++	} else if (!skb->ignore_df && toobig && sk) {
+ 		xfrm_local_error(skb, mtu);
+ 		kfree_skb(skb);
+ 		return -EMSGSIZE;
+diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
+index 45466fa4ace43..87983f963f4f6 100644
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -498,7 +498,7 @@ xfrmi_xmit2(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
+ 	skb_dst_set(skb, dst);
+ 	skb->dev = tdev;
+ 
+-	err = dst_output(xi->net, skb->sk, skb);
++	err = dst_output(xi->net, skb_to_full_sk(skb), skb);
+ 	if (net_xmit_eval(err) == 0) {
+ 		dev_sw_netstats_tx_add(dev, 1, length);
+ 	} else {
+diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
+index c59c548d8fc10..290059d9e08e0 100644
+--- a/net/xfrm/xfrm_output.c
++++ b/net/xfrm/xfrm_output.c
+@@ -782,7 +782,7 @@ static int xfrm4_tunnel_check_size(struct sk_buff *skb)
+ 	     !skb_gso_validate_network_len(skb, ip_skb_dst_mtu(skb->sk, skb)))) {
+ 		skb->protocol = htons(ETH_P_IP);
+ 
+-		if (skb->sk)
++		if (skb->sk && sk_fullsock(skb->sk))
+ 			xfrm_local_error(skb, mtu);
+ 		else
+ 			icmp_send(skb, ICMP_DEST_UNREACH,
+@@ -818,6 +818,7 @@ static int xfrm6_tunnel_check_size(struct sk_buff *skb)
+ {
+ 	int mtu, ret = 0;
+ 	struct dst_entry *dst = skb_dst(skb);
++	struct sock *sk = skb_to_full_sk(skb);
+ 
+ 	if (skb->ignore_df)
+ 		goto out;
+@@ -832,9 +833,9 @@ static int xfrm6_tunnel_check_size(struct sk_buff *skb)
+ 		skb->dev = dst->dev;
+ 		skb->protocol = htons(ETH_P_IPV6);
+ 
+-		if (xfrm6_local_dontfrag(skb->sk))
++		if (xfrm6_local_dontfrag(sk))
+ 			ipv6_stub->xfrm6_local_rxpmtu(skb, mtu);
+-		else if (skb->sk)
++		else if (sk)
+ 			xfrm_local_error(skb, mtu);
+ 		else
+ 			icmpv6_send(skb, ICMPV6_PKT_TOOBIG, 0, mtu);
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index e015ff225b27a..cd534803a0e42 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -2858,7 +2858,7 @@ static void xfrm_policy_queue_process(struct timer_list *t)
+ 		skb_dst_drop(skb);
+ 		skb_dst_set(skb, dst);
+ 
+-		dst_output(net, skb->sk, skb);
++		dst_output(net, skb_to_full_sk(skb), skb);
+ 	}
+ 
+ out:
 -- 
 2.51.0
 
