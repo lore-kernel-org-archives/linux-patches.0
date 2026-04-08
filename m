@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA743D9042;
-	Wed,  8 Apr 2026 19:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F334D3D75AF;
+	Wed,  8 Apr 2026 19:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674853; cv=none; b=HdZo3yb0/mULXFgKp5A3B3loFRBdiyqwp6OyEVHSBHWImoJ6uGQJvJ69S89YCyMbazjtKu2t1XS7qgANJImWCQR53+Q0oX/OWAd+Y5OVbucuT98v3+66Isop6GSMGl+xu3Pq2BA2hABFhUHlQ1fgvVxlRDIrUnttdqee0H37XoA=
+	t=1775674856; cv=none; b=bsSKxcv3D40+Roetx9mPBAgFoDQ8L0aYNOhiUQjdcANjSLFlWERl0NJ8D1Z+hdSJr+u0nFzf5J8MhDoBgMZFByafOtjrZ8rRcpg/9pIfZ+yGO3EGPgI+0kpqZD6eLU2zDV9UT9jFGfW2XmMAXPxdT0H4WHDj+Z0X/P8uKjZDO8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674853; c=relaxed/simple;
-	bh=wtWzoxnGCbaI96rY22+XLkPBe9cflemnjS3yGb/k/7k=;
+	s=arc-20240116; t=1775674856; c=relaxed/simple;
+	bh=Y9wOola1C63umNaqrTlUH3VJQlqxe455L68E2GqjXP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/DXwpwMomg4M+RgfNoJOeMPFsYX8RLNbmLAJBeImvzPnV/1PnHuITSvuc+9XPREcy1hIkIgLAR1J8B04XELapIqYk0HeZmM4wIGtBsRUP/q1XiIYcZtE7JYgmReLmEfh/ZU9IDSMypAvujvxkwNMkHpi+/WNfII1GIIYMmCimM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AS7DddO5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lKvj3X+GmqUig1H8DXqtSNyxUHGoh3xT05YqecaJGXh7pxaZVCIrtomKOyO9NdYoVS/jLviB2zQ+FJUpxF4J0r17SzZn4J9EJyD6s/m2u31YRjSC8ckG9Otk6PKQS7/D8QlXZBIhVM0W8Hp+gztW+QUvSG/bLj69g7w9txacHPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2S6ymbF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AS7DddO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BA4C19421;
-	Wed,  8 Apr 2026 19:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2S6ymbF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8938CC19421;
+	Wed,  8 Apr 2026 19:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674853;
-	bh=wtWzoxnGCbaI96rY22+XLkPBe9cflemnjS3yGb/k/7k=;
+	s=korg; t=1775674855;
+	bh=Y9wOola1C63umNaqrTlUH3VJQlqxe455L68E2GqjXP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AS7DddO5/BF3lWnJvbYGjzUTFa1GfCfdrrJB9UEyxp1qoSTurYbXUgHMaUOU3zLnw
-	 Mc0dycEJaPFegqQMOPuFH5WDehgAjIhJFKiJQBDO8FxwS/ZQTvAb6JWmhw7ioAprOj
-	 K6dlEGkfdStzDu8PA1ShjrcMPrNokBv+oRMuihl0=
+	b=w2S6ymbFrNlSK3WQ5BoVI+2ME/aUJoHDRYGlA5EwMjppgmpId16LXfmPztYpyU8SA
+	 q+MymHmG6ogdX5QhsgD7yNeP2fOuB6zyeywcSgxV6bdgn2WccypDRlhP/mWxyuHK3U
+	 hynMzOa9OYJjLcWLQmfGam/1+myqQedBL4NKp7Oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH 6.19 259/311] firmware: microchip: fail auto-update probe if no flash found
-Date: Wed,  8 Apr 2026 20:04:19 +0200
-Message-ID: <20260408175949.057675137@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	stable <stable@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.19 260/311] dt-bindings: connector: add pd-disable dependency
+Date: Wed,  8 Apr 2026 20:04:20 +0200
+Message-ID: <20260408175949.093950884@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -49,53 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit c7596f9001e2b83293e3658e4e1addde69bb335d upstream.
+commit 269c26464dcf8b54b0dd9c333721c30ee44ae297 upstream.
 
-There's no point letting the driver probe if there is no flash, as
-trying to do a firmware upload will fail. Move the code that attempts
-to get the flash from firmware upload to probe, and let it emit a
-message to users stating why auto-update is not supported.
-The code currently could have a problem if there's a flash in
-devicetree, but the system controller driver fails to get a pointer to
-it from the mtd subsystem, which will cause
-mpfs_sys_controller_get_flash() to return an error. Check for errors and
-null, instead of just null, in the new clause.
+When Power Delivery is not supported, the source is unable to obtain the
+current capability from the Source PDO. As a result, typec-power-opmode
+needs to be added to advertise such capability.
 
-CC: stable@vger.kernel.org
-Fixes: ec5b0f1193ad4 ("firmware: microchip: add PolarFire SoC Auto Update support")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260330063518.719345-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/microchip/mpfs-auto-update.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ Documentation/devicetree/bindings/connector/usb-connector.yaml |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/firmware/microchip/mpfs-auto-update.c
-+++ b/drivers/firmware/microchip/mpfs-auto-update.c
-@@ -113,10 +113,6 @@ static enum fw_upload_err mpfs_auto_upda
- 	 * be added here.
- 	 */
+--- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
++++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+@@ -301,6 +301,7 @@ properties:
+     maxItems: 4
  
--	priv->flash = mpfs_sys_controller_get_flash(priv->sys_controller);
--	if (!priv->flash)
--		return FW_UPLOAD_ERR_HW_ERROR;
--
- 	erase_size = round_up(erase_size, (u64)priv->flash->erasesize);
- 
- 	/*
-@@ -427,6 +423,12 @@ static int mpfs_auto_update_probe(struct
- 		return dev_err_probe(dev, PTR_ERR(priv->sys_controller),
- 				     "Could not register as a sub device of the system controller\n");
- 
-+	priv->flash = mpfs_sys_controller_get_flash(priv->sys_controller);
-+	if (IS_ERR_OR_NULL(priv->flash)) {
-+		dev_dbg(dev, "No flash connected to the system controller, auto-update not supported\n");
-+		return -ENODEV;
-+	}
-+
- 	priv->dev = dev;
- 	platform_set_drvdata(pdev, priv);
+ dependencies:
++  pd-disable: [typec-power-opmode]
+   sink-vdos-v1: [ sink-vdos ]
+   sink-vdos: [ sink-vdos-v1 ]
  
 
 
