@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3671E3D9043;
-	Wed,  8 Apr 2026 18:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1758D3DB658;
+	Wed,  8 Apr 2026 18:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672556; cv=none; b=CUTSjyAsYRM3RTZ8Xcymv6AlB+0NL1b07Qquz3me0DvLkXkAvtQf/8giXiY0oMPOHeyQBlfX3ztBDX4zLeXihqDvpstrcTMNZVR06nEKtiots0Nl4p+ZlDBPbYyeOokimhp3Z3bis04qjYoNNoYLX/zknNdECZKwRu7dOIC7y64=
+	t=1775672559; cv=none; b=FWHKAc2m0lhatwvk7bjynMXBa/MFvtsh3WwsprZNSSzdXAfQsgdXT4xhjoOco+rdXBZi53FhrlUqklRv9i0BCAt3C5BDQgLQqBRsjXT4cxanR1VqWgVrMk7cKuSUUG1q1Y1EWOWfUYwbj0rpUmn4dyVt7zJcvcRUenckZTbeVoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672556; c=relaxed/simple;
-	bh=NYNDvojfoZbPojVv4K5kvvc/Asa9mpuqSDNB10ntxlM=;
+	s=arc-20240116; t=1775672559; c=relaxed/simple;
+	bh=TTMJJ+07iGLrJzRnVlaxgAOcw4brE/fH7alZwhEuMeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOuIytrs4CPIH4tm2EP05qcfBOchr4b1xgYYXU+Y9Siip+1WuPaacZ+FZILKf/gZSM7jq3D9ZYcHTfcE/TcKHgh20VPPlYa/VCzraxZgIqg83HH9SViPoTE9idjon0O3GS/N0PoGByDXc/kwkqNBGSgjsOZi8bJM4PbpMRuI7Ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KsuHRCx5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZoWjoceeQYetGUQjOvcaLQpVpDk1ZSPoUyT7z9AkKip5yHmsY6rjTdeIw8rwgQ72z0FF81DzGx58OazsQy0BlF+NBtOyJtHuPwWe8BYfRNRHQZp+6yzxg6rQWRSziBq5aH0ZzwwL8q/rBobaEb57FIOVr59vK3dlFGse9n3iFTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuNTim6f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsuHRCx5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF56C19425;
-	Wed,  8 Apr 2026 18:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuNTim6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5567EC2BC87;
+	Wed,  8 Apr 2026 18:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672556;
-	bh=NYNDvojfoZbPojVv4K5kvvc/Asa9mpuqSDNB10ntxlM=;
+	s=korg; t=1775672558;
+	bh=TTMJJ+07iGLrJzRnVlaxgAOcw4brE/fH7alZwhEuMeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KsuHRCx5yO+vhLjdmkj+0zMtw6662nJlInYIeY48ZY0B87c/a+eFs1P5ir1zNzIf0
-	 rh+7QTkKwSpLdrRCRGrvEE/4P7trPLtfTDK7j/+uIU1CB87yJhgvxDUyRWUlncQCdh
-	 IK1j1x9/6FUOhNdZMI1zgQQeg4qJCTTEEdPQV8F0=
+	b=tuNTim6fQeOCqZN9Cstft15RWi+grUvYjUAhyHcan+j3rQKHIJe877xbcv8uGASS4
+	 OXR4nuAlu0HxhKAYlnRZ1qAXOCEfKz8VLPyjimD6FxlkLV6rVRH8pYwWdt/HUpMjs1
+	 eD0Z63WLQuA32fTp+gPJhwrhOczD94YOUT3Q4kNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2184232f07e3677fbaef@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuhang Zheng <z1652074432@gmail.com>,
+	Yucheng Lu <kanolyc@gmail.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/160] bpf: sockmap: Fix use-after-free of sk->sk_socket in sk_psock_verdict_data_ready().
-Date: Wed,  8 Apr 2026 20:02:19 +0200
-Message-ID: <20260408175915.148642910@linuxfoundation.org>
+Subject: [PATCH 6.6 053/160] net/sched: sch_netem: fix out-of-bounds access in packet corruption
+Date: Wed,  8 Apr 2026 20:02:20 +0200
+Message-ID: <20260408175915.185202705@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -53,142 +57,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Yucheng Lu <kanolyc@gmail.com>
 
-[ Upstream commit ad8391d37f334ee73ba91926f8b4e4cf6d31ea04 ]
+[ Upstream commit d64cb81dcbd54927515a7f65e5e24affdc73c14b ]
 
-syzbot reported use-after-free of AF_UNIX socket's sk->sk_socket
-in sk_psock_verdict_data_ready(). [0]
+In netem_enqueue(), the packet corruption logic uses
+get_random_u32_below(skb_headlen(skb)) to select an index for
+modifying skb->data. When an AF_PACKET TX_RING sends fully non-linear
+packets over an IPIP tunnel, skb_headlen(skb) evaluates to 0.
 
-In unix_stream_sendmsg(), the peer socket's ->sk_data_ready() is
-called after dropping its unix_state_lock().
+Passing 0 to get_random_u32_below() takes the variable-ceil slow path
+which returns an unconstrained 32-bit random integer. Using this
+unconstrained value as an offset into skb->data results in an
+out-of-bounds memory access.
 
-Although the sender socket holds the peer's refcount, it does not
-prevent the peer's sock_orphan(), and the peer's sk_socket might
-be freed after one RCU grace period.
+Fix this by verifying skb_headlen(skb) is non-zero before attempting
+to corrupt the linear data area. Fully non-linear packets will silently
+bypass the corruption logic.
 
-Let's fetch the peer's sk->sk_socket and sk->sk_socket->ops under
-RCU in sk_psock_verdict_data_ready().
-
-[0]:
-BUG: KASAN: slab-use-after-free in sk_psock_verdict_data_ready+0xec/0x590 net/core/skmsg.c:1278
-Read of size 8 at addr ffff8880594da860 by task syz.4.1842/11013
-
-CPU: 1 UID: 0 PID: 11013 Comm: syz.4.1842 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2026
-Call Trace:
- <TASK>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xba/0x230 mm/kasan/report.c:482
- kasan_report+0x117/0x150 mm/kasan/report.c:595
- sk_psock_verdict_data_ready+0xec/0x590 net/core/skmsg.c:1278
- unix_stream_sendmsg+0x8a3/0xe80 net/unix/af_unix.c:2482
- sock_sendmsg_nosec net/socket.c:721 [inline]
- __sock_sendmsg net/socket.c:736 [inline]
- ____sys_sendmsg+0x972/0x9f0 net/socket.c:2585
- ___sys_sendmsg+0x2a5/0x360 net/socket.c:2639
- __sys_sendmsg net/socket.c:2671 [inline]
- __do_sys_sendmsg net/socket.c:2676 [inline]
- __se_sys_sendmsg net/socket.c:2674 [inline]
- __x64_sys_sendmsg+0x1bd/0x2a0 net/socket.c:2674
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7facf899c819
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007facf9827028 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 00007facf8c15fa0 RCX: 00007facf899c819
-RDX: 0000000000000000 RSI: 0000200000000500 RDI: 0000000000000004
-RBP: 00007facf8a32c91 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007facf8c16038 R14: 00007facf8c15fa0 R15: 00007ffd41b01c78
- </TASK>
-
-Allocated by task 11013:
- kasan_save_stack mm/kasan/common.c:57 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
- unpoison_slab_object mm/kasan/common.c:340 [inline]
- __kasan_slab_alloc+0x6c/0x80 mm/kasan/common.c:366
- kasan_slab_alloc include/linux/kasan.h:253 [inline]
- slab_post_alloc_hook mm/slub.c:4538 [inline]
- slab_alloc_node mm/slub.c:4866 [inline]
- kmem_cache_alloc_lru_noprof+0x2b8/0x640 mm/slub.c:4885
- sock_alloc_inode+0x28/0xc0 net/socket.c:316
- alloc_inode+0x6a/0x1b0 fs/inode.c:347
- new_inode_pseudo include/linux/fs.h:3003 [inline]
- sock_alloc net/socket.c:631 [inline]
- __sock_create+0x12d/0x9d0 net/socket.c:1562
- sock_create net/socket.c:1656 [inline]
- __sys_socketpair+0x1c4/0x560 net/socket.c:1803
- __do_sys_socketpair net/socket.c:1856 [inline]
- __se_sys_socketpair net/socket.c:1853 [inline]
- __x64_sys_socketpair+0x9b/0xb0 net/socket.c:1853
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 15:
- kasan_save_stack mm/kasan/common.c:57 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
- kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
- poison_slab_object mm/kasan/common.c:253 [inline]
- __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:285
- kasan_slab_free include/linux/kasan.h:235 [inline]
- slab_free_hook mm/slub.c:2685 [inline]
- slab_free mm/slub.c:6165 [inline]
- kmem_cache_free+0x187/0x630 mm/slub.c:6295
- rcu_do_batch kernel/rcu/tree.c:2617 [inline]
- rcu_core+0x7cd/0x1070 kernel/rcu/tree.c:2869
- handle_softirqs+0x22a/0x870 kernel/softirq.c:622
- run_ksoftirqd+0x36/0x60 kernel/softirq.c:1063
- smpboot_thread_fn+0x541/0xa50 kernel/smpboot.c:160
- kthread+0x388/0x470 kernel/kthread.c:436
- ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-
-Fixes: c63829182c37 ("af_unix: Implement ->psock_update_sk_prot()")
-Closes: https://lore.kernel.org/bpf/69cc6b9f.a70a0220.128fd0.004b.GAE@google.com/
-Reported-by: syzbot+2184232f07e3677fbaef@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260401005418.2452999-1-kuniyu@google.com
+Fixes: c865e5d99e25 ("[PKT_SCHED] netem: packet corruption option")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yuhang Zheng <z1652074432@gmail.com>
+Signed-off-by: Yucheng Lu <kanolyc@gmail.com>
+Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
+Link: https://patch.msgid.link/45435c0935df877853a81e6d06205ac738ec65fa.1774941614.git.kanolyc@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/sched/sch_netem.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 5d557ba9c0cb4..e2bba1e86752e 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -1266,17 +1266,20 @@ static int sk_psock_verdict_recv(struct sock *sk, struct sk_buff *skb)
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 0ad231e94e14d..7361f90c8c1a1 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -517,8 +517,9 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			goto finish_segs;
+ 		}
  
- static void sk_psock_verdict_data_ready(struct sock *sk)
- {
--	struct socket *sock = sk->sk_socket;
--	const struct proto_ops *ops;
-+	const struct proto_ops *ops = NULL;
-+	struct socket *sock;
- 	int copied;
+-		skb->data[get_random_u32_below(skb_headlen(skb))] ^=
+-			1<<get_random_u32_below(8);
++		if (skb_headlen(skb))
++			skb->data[get_random_u32_below(skb_headlen(skb))] ^=
++				1 << get_random_u32_below(8);
+ 	}
  
- 	trace_sk_data_ready(sk);
- 
--	if (unlikely(!sock))
--		return;
--	ops = READ_ONCE(sock->ops);
-+	rcu_read_lock();
-+	sock = READ_ONCE(sk->sk_socket);
-+	if (likely(sock))
-+		ops = READ_ONCE(sock->ops);
-+	rcu_read_unlock();
- 	if (!ops || !ops->read_skb)
- 		return;
-+
- 	copied = ops->read_skb(sk, sk_psock_verdict_recv);
- 	if (copied >= 0) {
- 		struct sk_psock *psock;
+ 	if (unlikely(q->t_len >= sch->limit)) {
 -- 
 2.53.0
 
