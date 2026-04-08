@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF693D9025;
-	Wed,  8 Apr 2026 18:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D1F32A3FD;
+	Wed,  8 Apr 2026 18:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673725; cv=none; b=ETlWtdysAu0F1svC77c5+JV0dKw4aiRLFUtLYpOHutzFm6LHAxJIziKnoqeqr4cVm1RHWSzpCCZpT+hC/4E4Q3TYNdN2z6WKL6OsasSR9M/yBaQjfwhPCUDTj3Nw4k1lEhtYoeH41KK7ViMb2u61bQ1p1iLy4b4BOq2Ax2t5/i0=
+	t=1775673727; cv=none; b=qoN6fsmfnaI22fqEPbsapH1gPLAOgS8FnNwgLTuZHRhFZIvBTdBin1pxXYFs6JKfeEJ8S2gAgy5k4OkpOfKCe51mJIrjS0MOBA0bNlMt87PtQhFa4dorBJEagaYpKSzYGEx7CavB9v9l5CFWdPrAYrlnVKLNsB+GGmr5yNu1SnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673725; c=relaxed/simple;
-	bh=ZDRQlG8FvU+U/l/MSbQVold6YziuSPJoDbD0hMwFeWU=;
+	s=arc-20240116; t=1775673727; c=relaxed/simple;
+	bh=UpDJfP3eY9b5BDu8bKu5GgZ1Ub3qfYfGrg/yNAvngmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skw0BLoep6msW2dmCjAsHNw3NTJSgiSuvBBF2bgZa1EfzMUazkzR6j6Nb/a3Fg7s5M0rGUijxSOB0nUbsMBlteqC+QgI41zsD6v29AuD3RPC4N0tsRA9doAF0BACroy8kP6HtxjY6SFOlDyiV0XGVmS4V/sNid9WWvqN4H1Wyco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMVRTap5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bo0YL+Nn5vt6yYZfEY/YcMUfdiBtASdV/9IX5ZV6p4zlQ2uC1IJzAsI/vnBCltE/tQXn6lHyr6cPSia7/k1g9jMsyCI6bm6BtBsEI+XxOOI7Wizmn7j9VQwrJsvfIOQ+X5Y4QNv4mhAq87Tu5tDJBBYqi7YmpJpCi78dBfK+IV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X38rw1Db; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMVRTap5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D06C19421;
-	Wed,  8 Apr 2026 18:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X38rw1Db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23692C19421;
+	Wed,  8 Apr 2026 18:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673724;
-	bh=ZDRQlG8FvU+U/l/MSbQVold6YziuSPJoDbD0hMwFeWU=;
+	s=korg; t=1775673727;
+	bh=UpDJfP3eY9b5BDu8bKu5GgZ1Ub3qfYfGrg/yNAvngmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMVRTap5kNqlA78517pAid9YlBp4W/qPesymPplZ/tGfrI7+asmDYXYw3kajGB777
-	 ndOEdZ9brWn5W9S6nz6aAcl9mqasYAsDXrA8ZpwKse2r/4q3fRbNE2zPLogvZ1C0ts
-	 8L9IWVnp07c2fZiGPRtA4jLlf0upxgGkDVkZ8lrI=
+	b=X38rw1DbyUzk/Qwfrh6EF/QvEwaexORqqSsgKVOQMEJGqLnDQqRIW50ZlAPZObCAj
+	 AFcSqQ60NLNjyw+58pDxJaI8/2CXSACqSFq/KM1rSXuyzj0X8K5r77p95iLskGOHEb
+	 bTBj+MDFThNhlC995sE42e4NvNCk+UUFR8bpAixw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Julian Braha <julianbraha@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/242] net: xilinx: axienet: Correct BD length masks to match AXIDMA IP spec
-Date: Wed,  8 Apr 2026 20:01:44 +0200
-Message-ID: <20260408175929.477079729@linuxfoundation.org>
+Subject: [PATCH 6.12 065/242] ASoC: Intel: boards: fix unmet dependency on PINCTRL
+Date: Wed,  8 Apr 2026 20:01:45 +0200
+Message-ID: <20260408175929.514467908@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,51 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 393e0b4f178ec7fce1141dacc3304e3607a92ee9 ]
+[ Upstream commit e920c36f2073d533bdf19ba6ab690432c8173b63 ]
 
-The XAXIDMA_BD_CTRL_LENGTH_MASK and XAXIDMA_BD_STS_ACTUAL_LEN_MASK
-macros were defined as 0x007FFFFF (23 bits), but the AXI DMA IP
-product guide (PG021) specifies the buffer length field as bits 25:0
-(26 bits). Update both masks to match the IP documentation.
+This reverts commit c073f0757663 ("ASoC: Intel: sof_sdw: select PINCTRL_CS42L43 and SPI_CS42L43")
 
-In practice this had no functional impact, since Ethernet frames are
-far smaller than 2^23 bytes and the extra bits were always zero, but
-the masks should still reflect the hardware specification.
+Currently, SND_SOC_INTEL_SOUNDWIRE_SOF_MACH selects PINCTRL_CS42L43
+without also selecting or depending on PINCTRL, despite PINCTRL_CS42L43
+depending on PINCTRL.
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20260327073238.134948-2-suraj.gupta2@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+See the following Kbuild warning:
+
+WARNING: unmet direct dependencies detected for PINCTRL_CS42L43
+  Depends on [n]: PINCTRL [=n] && MFD_CS42L43 [=m]
+  Selected by [m]:
+  - SND_SOC_INTEL_SOUNDWIRE_SOF_MACH [=m] && SOUND [=y] && SND [=m] && SND_SOC [=m] && SND_SOC_INTEL_MACH [=y] && (SND_SOC_SOF_INTEL_COMMON [=m] || !SND_SOC_SOF_INTEL_COMMON [=m]) && SND_SOC_SOF_INTEL_SOUNDWIRE [=m] && I2C [=y] && SPI_MASTER [=y] && ACPI [=y] && (MFD_INTEL_LPSS [=n] || COMPILE_TEST [=y]) && (SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES [=n] || COMPILE_TEST [=y]) && SOUNDWIRE [=m]
+
+In response to v1 of this patch [1], Arnd pointed out that there is
+no compile-time dependency sof_sdw and the PINCTRL_CS42L43 driver.
+After testing, I can confirm that the kernel compiled with
+SND_SOC_INTEL_SOUNDWIRE_SOF_MACH enabled and PINCTRL_CS42L43 disabled.
+
+This unmet dependency was detected by kconfirm, a static analysis
+tool for Kconfig.
+
+Link: https://lore.kernel.org/all/b8aecc71-1fed-4f52-9f6c-263fbe56d493@app.fastmail.com/ [1]
+Fixes: c073f0757663 ("ASoC: Intel: sof_sdw: select PINCTRL_CS42L43 and SPI_CS42L43")
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260325001522.1727678-1-julianbraha@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/intel/boards/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index d64b8abcf0186..cbdca0fb89454 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -104,7 +104,7 @@
- #define XAXIDMA_BD_HAS_DRE_MASK		0xF00 /* Whether has DRE mask */
- #define XAXIDMA_BD_WORDLEN_MASK		0xFF /* Whether has DRE mask */
- 
--#define XAXIDMA_BD_CTRL_LENGTH_MASK	0x007FFFFF /* Requested len */
-+#define XAXIDMA_BD_CTRL_LENGTH_MASK	GENMASK(25, 0) /* Requested len */
- #define XAXIDMA_BD_CTRL_TXSOF_MASK	0x08000000 /* First tx packet */
- #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
- #define XAXIDMA_BD_CTRL_ALL_MASK	0x0C000000 /* All control bits */
-@@ -130,7 +130,7 @@
- #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
- #define XAXIDMA_BD_CTRL_ALL_MASK	0x0C000000 /* All control bits */
- 
--#define XAXIDMA_BD_STS_ACTUAL_LEN_MASK	0x007FFFFF /* Actual len */
-+#define XAXIDMA_BD_STS_ACTUAL_LEN_MASK	GENMASK(25, 0) /* Actual len */
- #define XAXIDMA_BD_STS_COMPLETE_MASK	0x80000000 /* Completed */
- #define XAXIDMA_BD_STS_DEC_ERR_MASK	0x40000000 /* Decode error */
- #define XAXIDMA_BD_STS_SLV_ERR_MASK	0x20000000 /* Slave error */
+diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
+index aed95d1583e09..1a05e701a9e00 100644
+--- a/sound/soc/intel/boards/Kconfig
++++ b/sound/soc/intel/boards/Kconfig
+@@ -532,8 +532,6 @@ config SND_SOC_INTEL_SOUNDWIRE_SOF_MACH
+ 	select SND_SOC_CS42L43_SDW
+ 	select MFD_CS42L43
+ 	select MFD_CS42L43_SDW
+-	select PINCTRL_CS42L43
+-	select SPI_CS42L43
+ 	select SND_SOC_CS35L56_SPI
+ 	select SND_SOC_CS35L56_SDW
+ 	select SND_SOC_DMIC
 -- 
 2.53.0
 
