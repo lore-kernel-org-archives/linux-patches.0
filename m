@@ -1,96 +1,144 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2337B37F8A2;
-	Wed,  8 Apr 2026 19:44:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775677482; cv=none; b=RhuX42v2bQDNJD7U+8DpF4vd8/5EHhIGbfYxv6SgB3gvfNnqCTd8K+DBT6TDcK7XP0nyDF2MHfTQTWOHB456QPP2HmY9gGWkomUPSKMS7FzvgXnBqAc6HsNvQpKtglvAGU0uzJ82tBWkU8yz8EB1B2idWPVbvLUVgqd+ofuamOE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775677482; c=relaxed/simple;
-	bh=JUpYxGyPQlp1KuwkrQ6xDUZhhBN+S9yq6i/Oyj1j8Jk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JjM0lZHZNML4wSR8XPTHkErM2NbmzcQ0H7RoFSxesrvQ2lMGycKDmsdWu9LAAhRXdxByZWs7I0mYxgKHGoLM0OgUUN1+nqc8qiMsvk4N714WWLI2/viRHT3MbVpCmR7RxhXFbsz7i/rud4oLc1kIjwHazr7N7NJna8mv2yxM7Ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svifh28n; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13699348865
+	for <patches@lists.linux.dev>; Wed,  8 Apr 2026 21:06:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775682418; cv=pass; b=PaGmoEwK3KC2oW1RkyDDfDlL0z667l0dbX2rih3ycLaHvXZf69UU54KjGxjEUkMcAIoH99Uf/mpVxWwQ8CzUe9rcDIRMcJOr9dCthaGxo/JoNQTl8JMyeuSkuOXBlU5610ai6RFYSN5UW/fP+zu/vdR5WuVyqyZSDtWehS6Vmr0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775682418; c=relaxed/simple;
+	bh=hYkns5toT0V2D4zbLc6ooeB7MXWi8+6q72CC0Yh9OQY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tLQ9KgzrLa+rQVS1ezNS0K/Pq8S0SIbAatnh1SWuJ7dZZwILUf2TjNh/rA0/SQuq7Akn2Ak/Bj7iSw5mPVOGeKosWJS1bMrHSryKy/g/tziBx+VCnITtvjL06rfgkZlV/SGbyujWmHJCZ9L9DUcL1Zsn59XFAiPTJ+kX68e1XA8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f2Dgwj7e; arc=pass smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svifh28n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2A1C19421;
-	Wed,  8 Apr 2026 19:44:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775677481;
-	bh=JUpYxGyPQlp1KuwkrQ6xDUZhhBN+S9yq6i/Oyj1j8Jk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=svifh28n3dFWyH9j6BCiTGtC16JR6vEZz0+zCIKy98bPVfQMagqzgaz7JMi5aqGP7
-	 u1lodhiu0T4ESe9NuP5uPLyrKILloLrrINEIEL3U5RpQhSX3oHGGOw1jDjWWJgXR4v
-	 +Tc7+aMpZ6Qgo3Jz5VV28mmgYFihB1badrx4f0PI=
-Date: Wed, 8 Apr 2026 21:44:13 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Jason Gunthorpe <jgg@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Tugrul Kukul <tugrul.kukul@est.tech>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"Pavel Machek (CIP)" <pavel@denx.de>, Ron Economos <re@w6rz.net>,
-	"Justin M. Forbes" <jforbes@fedoraproject.org>,
-	Mark Brown <broonie@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Peter Schneider <pschneider1968@googlemail.com>,
-	Alex Williamson <alex@shazbot.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.6 111/160] vfio: Create vfio_fs_type with inode per
- device
-Message-ID: <2026040839-around-uplifting-b023@gregkh>
-References: <20260408175913.177092714@linuxfoundation.org>
- <20260408175917.326372651@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f2Dgwj7e"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5a3d42263e4so191070e87.2
+        for <patches@lists.linux.dev>; Wed, 08 Apr 2026 14:06:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775682415; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ZzdGOf/0UkJk5lw6bjUjfuB9XEunpsXGl4gVQB+LJ3PZOGEPcGDeK7pneF4WpRnyYG
+         a7FEzxxagx84wV3TP+dnGc0/YQyUo4ME4H30G6I1inJFf8MpA+XMH9hJ4v/cDHIaZrxs
+         hBEKiobCVq2akyk60gOJGsWn2b0GlR+WaqfTcIB9sgMzfN4PkxzVPwS0i1S54PlnSFAq
+         hiF/tBJwbCzsTF3lswZpKL5/FPKmM0LkzsnhkcqRZZhhbHOkFqLtQp72HsHmHEUFskiJ
+         jVH53uEY6wBykwkniYFi6vLOPxyl/icazWv6gUcg3ytpE1e759nZHFEZIfyLMzh8erAQ
+         9BKw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=YtvBDzOl3ty8gCHQBP+mvKiVADctnqQd/26TJDkcWUc=;
+        fh=s1ZhOO2gup5LaWJBtqzORAB7z3dXjEdenYAFv6ipIw8=;
+        b=bFbZdkyAX8hwPw4Iu0EEGuaz3zjCe027lSRoIPapDdhOomD6AOvX67wvwqT0QLqDjq
+         ghdNHNq8h3m0mKGYbjVtmKKhR5Xpp+bLfTwo/VVZzBki+14jifqgDsM0Dbe+lcoK742N
+         Rl5hYsFzrreDTGVKlVOZXIZiYii/L3O3snb0itmzpFNDvfk2SR58P6eYhchoo3P/JqpQ
+         +SoV7fkZLi/SDSjDB6tQM2LNH3+tb20x8gruppaiXLbj+gGMtxLDaZkxVHAcuPlYVYfa
+         N83aANPi0+Ui3gKwkXfiienyLvy/Vkmy6aPDkwkshbcR9JpjbnAFTV9X8FTzCZPS/7D1
+         jYOg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775682415; x=1776287215; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YtvBDzOl3ty8gCHQBP+mvKiVADctnqQd/26TJDkcWUc=;
+        b=f2Dgwj7est/NDtYtNqAbZhkHYpL9BSlGOqfIRizA0gtlsiQKDGE7mb0tC9uhFPCsWn
+         DxWIo2UbxxUu+TXXgOuz+hSkQ9fPOzQ91SCAH6ZVb6bavf/bpB67Sqsfzi+r4cc3sZRJ
+         fVdiTD+ZZA48S/Cn6CqdaMGVu6Q8F+OSdHvfuaWWYeLj9qTUBbpspKfLtwPCbzYl93GT
+         ZP+dhKW4anDlG4rmPPlWqF5GtWmT9gjv3RBtKk6WVoaaEZZSq6MSjZciibAATBgUTcU8
+         UjDnf5kjXTUB1US5Gqo2vxKp/vhTuCNT3ShPtkUvYYI9SHGFEqUfhfaVrdDAJOcTyZ0L
+         k1Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775682415; x=1776287215;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YtvBDzOl3ty8gCHQBP+mvKiVADctnqQd/26TJDkcWUc=;
+        b=fHT+WNkopfijS5TmGJ0mVn8TPYafqifFGKs9n5anF/Un7cimJ6wvEdZXG+2SllCf3C
+         T6QngN6jmY3xGY+mfKaeo0fKOYIAspR62pqJXm9BtWu0xAVmRY5Eo03hss7MjEurmnJk
+         8bTIBYmTCPJ3iU2V6FcXIt0OfK2OhS3R64xO1JNCwy7uVH3RnvoGQyNANw85RG6HDbxd
+         xOvNm6pLtebvpQuPXsb6XBAmvba51VZih6ikBOfdWXp8UG4OJ8gRjSUiaAflhTiQZ1GC
+         xa36DuJ5a08Gy3RZE8aBJqLLbpIQB2E12N3l1ZSRVgBCPppT20VmDshTUFW1/LOKb9AB
+         dnVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV2+w/Lriu1tFvxwb/3CA5hWjtcSnDpDrqpTz8Yo+3ieagYU6DF4mCE8+KFYyNLs5rBC19sLHyf@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzm0oEzOyb92XxHc1GWXVL0drcR+xqp6rBANxcqxFHEcAjl3DHi
+	Fn4GilftuP3kNiRKX1ko7UdcldWvIkLiGVuckf4x8daRRjlUTpDmmuUsPyY4vza/yHcrOfqo2s4
+	qf6rjDA1i4G6e34jrGP5F2lj97514/+Q=
+X-Gm-Gg: AeBDiesvNKKGVX1Ktuvu44BzIwPE6/d1kkEDDvmLTS9eafwizA8bTVnb5oDl0XN64ck
+	pScsRa3nPgdeTbDErNypYozfyif13BcWboAyvLPvBR4io58FBSUIjWfDK++CXub8TkL2GYw5ez2
+	qpXYFIlG3bxm//vOk7pdz8tzhIRKUnJoZszClSeXpf2770E/fwmLWAGvSytkwVsylnzkCR9e1P7
+	75yh/03IgGo7zVUskXft7Ah02zbbLLJKcXFLFzvKmHxTwM39dXf/8G3Ot/yZ5bMUUsTMCU3gzyT
+	gdOgzEHuOte5VjZOf7fRLqP3vGVuxSnc/dVtshk=
+X-Received: by 2002:a05:6512:3b1f:b0:5a2:b43d:ac47 with SMTP id
+ 2adb3069b0e04-5a33754efb5mr7172806e87.5.1775682414811; Wed, 08 Apr 2026
+ 14:06:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260408175917.326372651@linuxfoundation.org>
+References: <20260408175939.393281918@linuxfoundation.org>
+In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
+From: Dileep malepu <dileep.debian@gmail.com>
+Date: Thu, 9 Apr 2026 02:36:41 +0530
+X-Gm-Features: AQROBzC3WNywR7tJ5aKj3tpHiHnUXa9bzv0i76xR9qfAhm0cn-jnN-xUeeOkZSA
+Message-ID: <CAC-m1rqrSn74FVxYpfMB-v15=EgcJG5Rp4R6kAhFw0k3pKf0qA@mail.gmail.com>
+Subject: Re: [PATCH 6.19 000/311] 6.19.12-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 08, 2026 at 08:03:18PM +0200, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Alex Williamson <alex.williamson@redhat.com>
-> 
-> commit b7c5e64fecfa88764791679cca4786ac65de739e upstream.
-> 
-> By linking all the device fds we provide to userspace to an
-> address space through a new pseudo fs, we can use tools like
-> unmap_mapping_range() to zap all vmas associated with a device.
-> 
-> Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-> Link: https://lore.kernel.org/r/20240530045236.1005864-2-alex.williamson@redhat.com
-> Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-> Signed-off-by: Axel Rasmussen <axelrasmussen@google.com>
-> Signed-off-by: Tugrul Kukul <tugrul.kukul@est.tech>
-> Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-> Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-> Tested-by: Ron Economos <re@w6rz.net>
-> Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
-> Tested-by: Mark Brown <broonie@kernel.org>
-> Tested-by: Conor Dooley <conor.dooley@microchip.com>
-> Tested-by: Jon Hunter <jonathanh@nvidia.com>
-> Tested-by: Shuah Khan <skhan@linuxfoundation.org>
-> Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-> Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-> Acked-by: Alex Williamson <alex@shazbot.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+On Thu, Apr 9, 2026 at 12:21=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.19.12 release.
+> There are 311 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 10 Apr 2026 17:58:42 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.19.12-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+> -------------
 
-Sasha, something went odd with your scripts to pull all of these names
-in as "tested-by", right?  The original commit did not say that :(
+Build and Boot Report for 6.19.12-rc1
 
-thanks,
+The build and boot testing was performed on version 6.19.12 using the
+default configuration on both x86_64 and arm64 architectures in
+a virtual environment. The kernel built and booted successfully,
+and no dmesg regressions were observed.
 
-greg k-h
+kernel version: 6.19.12-rc1
+Configurations: x86_64_defconfig, defconfig
+Architectures: arm64, x86_64
+Kernel Source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux=
+-stable-rc.git
+Commit: 571831a3f83a43f64984cacb7064dc31c25694bb
+
+Tested-by: Dileep Malepu <dileep.debian@gmail.com>
+
+Best regards,
+Dileep Malepu
