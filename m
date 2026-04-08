@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D513B0AFC;
-	Wed,  8 Apr 2026 18:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F97B67E;
+	Wed,  8 Apr 2026 18:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673626; cv=none; b=iaPtdjHAd/cJjKsskvvWPJEph49BPVOM7WsukcKTjV7zNS37XQbNfaRwjDImDW/4F5ImQxdexXnv0bcmx5fUthG1JNSs5WRkzX5bOoWumfXquz6gFjXwfSnChJODsb1asRsKO4vXTnNrlpDXT8YLjWiFpfsa8x3gnzwqOxfmItw=
+	t=1775673629; cv=none; b=f++crXlhyqEl4INSUKrAtAbSG182Pe6bK75+PZRVjWrC5hOlBvf+xIsGCuz3K5Fn8tPzfs/lls/Qf4j2FaJXUipjA/RVqqrlLdX9Pg2QzRWGzOH59McLJn/KcnUwWBS6C+Bhkf2rONw+O06vU4qVUQTdLuZrWbXO7BqJJNGkHO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673626; c=relaxed/simple;
-	bh=tsCkIEt0fQUOT3GLkBf2L8N9uUC8i/bAStE781xl/xk=;
+	s=arc-20240116; t=1775673629; c=relaxed/simple;
+	bh=A/cDTU/G3ZskOnsMjBKikO3ly12YuRfYpBcaJPMMgSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwiOCrHlTZyo/rfJmf/pI5Lbzx+7NOJnHikt6QbZsuW/YAr2mq/pqBK2Lri4Qx43VGzeZsODqtCD4lT8TSkm1kt6EocWN6OZAHrhUO2ngvxwus/5logU+onTVAnqNkWDzhymyNO9JqXkzgClafAxrrk8OVGwN0IvhcLbYUTDRoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFA4UoFV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pWIYU5etFa2xIA+lJCGeoCbzKDMvbzcU2tFC662JBQmg71J+Kp6GUbe2vzb3XIZy1MGei+vYPKxDVfBjMg1uRjwf5WjAfiIj1J6WR3kMtnaLJkIOHgxYmjEnQ5q7gvY7aHJ5aB4IiBeYiz+X+yFn782HL7UPtUHTRrnFkVYoDAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2CCsr1C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFA4UoFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606A7C19421;
-	Wed,  8 Apr 2026 18:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2CCsr1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2C2C19421;
+	Wed,  8 Apr 2026 18:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673626;
-	bh=tsCkIEt0fQUOT3GLkBf2L8N9uUC8i/bAStE781xl/xk=;
+	s=korg; t=1775673629;
+	bh=A/cDTU/G3ZskOnsMjBKikO3ly12YuRfYpBcaJPMMgSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFA4UoFVluosNxp2mwrnwTt1oTEqTXkWk25oNLA2fUodUS4C07llw6pTB4Y93cVa8
-	 5Oo/lzKHAIkdYF2QCRe767+M7yuLpD65VIXnes3eHCkqfgY/Thz3MyUK/fbm2JEud0
-	 13MJjdU5/zA22kjrOB2f8mYdQOq8e/TRYhLFaiDg=
+	b=d2CCsr1CGtf1Pvhzx9RyC8xFMteLC5Jirvz57VkNQPXRFB8wnnGW7VfGvJHr8Wj9P
+	 ZGA4tkJ3tI7HVwToKFPUXVuCcC+ODjdx6vrH26OpJUVj2SktpB3p70FrC5qbs2C2p+
+	 61ZIkMtDqzDL5tz1rJwX1Cik4KZ02DGyAULXlyI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Freund <adrian@freund.io>,
-	Jiri Kosina <jkosina@suse.com>,
+	syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/242] HID: logitech-hidpp: Enable MX Master 4 over bluetooth
-Date: Wed,  8 Apr 2026 20:01:07 +0200
-Message-ID: <20260408175928.086072166@linuxfoundation.org>
+Subject: [PATCH 6.12 028/242] wifi: mac80211: check tdls flag in ieee80211_tdls_oper
+Date: Wed,  8 Apr 2026 20:01:08 +0200
+Message-ID: <20260408175928.123582495@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -51,37 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Freund <adrian@freund.io>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 70031e70ca15ede6a39db4d978e53a6cc720d454 ]
+[ Upstream commit 7d73872d949c488a1d7c308031d6a9d89b5e0a8b ]
 
-The Logitech MX Master 4 can be connected over bluetooth or through a
-Logitech Bolt receiver. This change adds support for non-standard HID
-features, such as high resolution scrolling when the mouse is connected
-over bluetooth.
-Because no Logitech Bolt receiver driver exists yet those features
-won't be available when the mouse is connected through the receiver.
+When NL80211_TDLS_ENABLE_LINK is called, the code only checks if the
+station exists but not whether it is actually a TDLS station. This
+allows the operation to proceed for non-TDLS stations, causing
+unintended side effects like modifying channel context and HT
+protection before failing.
 
-Signed-off-by: Adrian Freund <adrian@freund.io>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Add a check for sta->sta.tdls early in the ENABLE_LINK case, before
+any side effects occur, to ensure the operation is only allowed for
+actual TDLS peers.
+
+Reported-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=56b6a844a4ea74487b7b
+Tested-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260313092417.520807-1-kartikey406@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/tdls.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 492a02ca80594..c9df222e894a1 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4695,6 +4695,8 @@ static const struct hid_device_id hidpp_devices[] = {
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb038) },
- 	{ /* Slim Solar+ K980 Keyboard over Bluetooth */
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb391) },
-+	{ /* MX Master 4 mouse over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb042) },
- 	{}
- };
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index 1cb42c5b9b04b..92ab7be3d4824 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -1448,7 +1448,7 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
+ 		}
  
+ 		sta = sta_info_get(sdata, peer);
+-		if (!sta)
++		if (!sta || !sta->sta.tdls)
+ 			return -ENOLINK;
+ 
+ 		iee80211_tdls_recalc_chanctx(sdata, sta);
 -- 
 2.53.0
 
