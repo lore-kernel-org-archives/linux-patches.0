@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DD6337B81;
-	Wed,  8 Apr 2026 18:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13DC32A3FD;
+	Wed,  8 Apr 2026 18:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674652; cv=none; b=Wp3m7wmHCPoo1Arv/310TQuUvqzlNc3pPyvmBItclrg0+zJIpj/MvY4xJL2m+jlPGqfZV3C9uSJHdjURJ0MDjhbNXfiIXBooECyp74oy+Ft0JeeAsNBgWHRPzZ4ItAAa39vVhbo9KwzQX4GF+RlNNYa4DSITVQLHAxTH1zaWMUw=
+	t=1775674654; cv=none; b=LglxmIL/QIcrEkVhZZzGrYG2CKVJO5l5n71TtoOjcF38sbLirSbpW5PEE2OlvLDeezGyu8sp7gFsMdj9iA3sSTvyKdACNZKmDi+T/HpzK+v57ijmYbPukLTwjgs0Xr7FZWJE4P+lWCBa5nRqaFmY9Dmz8Oy/iYSEcIO9l+IOAcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674652; c=relaxed/simple;
-	bh=xy1gW/Rf33a0l/WK5XlieSN/lPk85gAHmbe+gT/cwrc=;
+	s=arc-20240116; t=1775674654; c=relaxed/simple;
+	bh=uKNwwG2ItmOidRFblPZxRaZTZYl15nTKo5k/iO6lScQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O8XDjtwsCAQRhXwQxvA5gR4E1QMHQD0KBpTmc5ykf/l1FYmZjeAL0LbwVW1CFhUl5c6gkpgvm0up5cm2PinAWMl5hus6XdCLDg4IPl20BWEz9QFxMScsB4GN9Mb/wSp8gJjD7ttgSlKLXzFNcjMAWeW1VaTrPYVoiWtbmT64R4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1tbbhWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rXelPWtVOtYdsLkAHrj8CqvE2KvC4I774MF8jKI24poXOezlAVjixhsOKGyE0YhEhDKqzoeAnDneuFi4clLXRhuBOfsgwca7HdZuwL8Tut2x/dyY6k/AsjyYty1vOMn7eNpRUNP96/d7GabbGz+XRXKRxvr8rF7V9Ap0vLw376Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVh/gCQf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1tbbhWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7E2C19421;
-	Wed,  8 Apr 2026 18:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVh/gCQf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F19EC19421;
+	Wed,  8 Apr 2026 18:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674651;
-	bh=xy1gW/Rf33a0l/WK5XlieSN/lPk85gAHmbe+gT/cwrc=;
+	s=korg; t=1775674654;
+	bh=uKNwwG2ItmOidRFblPZxRaZTZYl15nTKo5k/iO6lScQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v1tbbhWVCirheIgffQHWFVgxzxdpZcTAkkG+9UD7S+KQEuzwDzCNas03MH3MJD1w4
-	 YU1lUvvoxm+8uR76Me9DJ0cs5M53yKYSehBZNDayTSxahdf1sw04ZGi+b81p8FUYMm
-	 cFaQ/PAgj72fDBPEmoiN23IufGnmHibEqiiC0pdc=
+	b=VVh/gCQfTOcE87E8wkXI+htN3Wh53HiUvHRfas00B3CEADWlRfIErJZp+3uD21VLz
+	 KJWME/Tz5tL2jp7HAex1UqaiNvOUGag21bWs1cnPidFW5IWWpaAded4yUipOn4Dg6r
+	 XzewKV3E2XciE8V+Oqj9Jv4zp29iItTi6OQUVteM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.19 173/311] ALSA: ctxfi: Dont enumerate SPDIF1 at DAIO initialization
-Date: Wed,  8 Apr 2026 20:02:53 +0200
-Message-ID: <20260408175945.867231254@linuxfoundation.org>
+	Oleh Konko <security@1seal.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.19 182/311] Bluetooth: hci_event: move wake reason storage into validated event handlers
+Date: Wed,  8 Apr 2026 20:03:02 +0200
+Message-ID: <20260408175946.206839782@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -49,54 +50,239 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Oleh Konko <security@1seal.org>
 
-commit 75dc1980cf48826287e43dc7a49e310c6691f97e upstream.
+commit 2b2bf47cd75518c36fa2d41380e4a40641cc89cd upstream.
 
-The recent refactoring of xfi driver changed the assignment of
-atc->daios[] at atc_get_resources(); now it loops over all enum
-DAIOTYP entries while it looped formerly only a part of them.
-The problem is that the last entry, SPDIF1, is a special type that
-is used only for hw20k1 CTSB073X model (as a replacement of SPDIFIO),
-and there is no corresponding definition for hw20k2.  Due to the lack
-of the info, it caused a kernel crash on hw20k2, which was already
-worked around by the commit b045ab3dff97 ("ALSA: ctxfi: Fix missing
-SPDIFI1 index handling").
+hci_store_wake_reason() is called from hci_event_packet() immediately
+after stripping the HCI event header but before hci_event_func()
+enforces the per-event minimum payload length from hci_ev_table.
+This means a short HCI event frame can reach bacpy() before any bounds
+check runs.
 
-This patch addresses the root cause of the regression above properly,
-simply by skipping the incorrect SPDIF1 type in the parser loop.
+Rather than duplicating skb parsing and per-event length checks inside
+hci_store_wake_reason(), move wake-address storage into the individual
+event handlers after their existing event-length validation has
+succeeded. Convert hci_store_wake_reason() into a small helper that only
+stores an already-validated bdaddr while the caller holds hci_dev_lock().
+Use the same helper after hci_event_func() with a NULL address to
+preserve the existing unexpected-wake fallback semantics when no
+validated event handler records a wake address.
 
-For making the change clearer, the code is slightly arranged, too.
+Annotate the helper with __must_hold(&hdev->lock) and add
+lockdep_assert_held(&hdev->lock) so future call paths keep the lock
+contract explicit.
 
-Fixes: a2dbaeb5c61e ("ALSA: ctxfi: Refactor resource alloc for sparse mappings")
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1259925
-Link: https://patch.msgid.link/20260331081227.216134-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Call the helper from hci_conn_request_evt(), hci_conn_complete_evt(),
+hci_sync_conn_complete_evt(), le_conn_complete_evt(),
+hci_le_adv_report_evt(), hci_le_ext_adv_report_evt(),
+hci_le_direct_adv_report_evt(), hci_le_pa_sync_established_evt(), and
+hci_le_past_received_evt().
+
+Fixes: 2f20216c1d6f ("Bluetooth: Emit controller suspend and resume events")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oleh Konko <security@1seal.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/ctatc.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_event.c |   94 +++++++++++++++++-----------------------------
+ 1 file changed, 35 insertions(+), 59 deletions(-)
 
---- a/sound/pci/ctxfi/ctatc.c
-+++ b/sound/pci/ctxfi/ctatc.c
-@@ -1427,10 +1427,14 @@ static int atc_get_resources(struct ct_a
- 	daio_mgr = (struct daio_mgr *)atc->rsc_mgrs[DAIO];
- 	da_desc.msr = atc->msr;
- 	for (i = 0; i < NUM_DAIOTYP; i++) {
--		if (((i == MIC) && !cap.dedicated_mic) || ((i == RCA) && !cap.dedicated_rca))
-+		if (((i == MIC) && !cap.dedicated_mic) ||
-+		    ((i == RCA) && !cap.dedicated_rca) ||
-+		    i == SPDIFI1)
- 			continue;
--		da_desc.type = (atc->model != CTSB073X) ? i :
--			     ((i == SPDIFIO) ? SPDIFI1 : i);
-+		if (atc->model == CTSB073X && i == SPDIFIO)
-+			da_desc.type = SPDIFI1;
-+		else
-+			da_desc.type = i;
- 		da_desc.output = (i < LINEIM) || (i == RCA);
- 		err = daio_mgr->get_daio(daio_mgr, &da_desc,
- 					(struct daio **)&atc->daios[i]);
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -80,6 +80,10 @@ static void *hci_le_ev_skb_pull(struct h
+ 	return data;
+ }
+ 
++static void hci_store_wake_reason(struct hci_dev *hdev,
++				  const bdaddr_t *bdaddr, u8 addr_type)
++	__must_hold(&hdev->lock);
++
+ static u8 hci_cc_inquiry_cancel(struct hci_dev *hdev, void *data,
+ 				struct sk_buff *skb)
+ {
+@@ -3111,6 +3115,7 @@ static void hci_conn_complete_evt(struct
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+ 
+ 	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
+ 
+ 	/* Check for existing connection:
+ 	 *
+@@ -3274,6 +3279,10 @@ static void hci_conn_request_evt(struct
+ 
+ 	bt_dev_dbg(hdev, "bdaddr %pMR type 0x%x", &ev->bdaddr, ev->link_type);
+ 
++	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
++	hci_dev_unlock(hdev);
++
+ 	/* Reject incoming connection from device with same BD ADDR against
+ 	 * CVE-2020-26555
+ 	 */
+@@ -5021,6 +5030,7 @@ static void hci_sync_conn_complete_evt(s
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+ 
+ 	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, &ev->bdaddr, BDADDR_BREDR);
+ 
+ 	conn = hci_conn_hash_lookup_ba(hdev, ev->link_type, &ev->bdaddr);
+ 	if (!conn) {
+@@ -5713,6 +5723,7 @@ static void le_conn_complete_evt(struct
+ 	int err;
+ 
+ 	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, bdaddr, bdaddr_type);
+ 
+ 	/* All controllers implicitly stop advertising in the event of a
+ 	 * connection, so ensure that the state bit is cleared.
+@@ -6005,6 +6016,7 @@ static void hci_le_past_received_evt(str
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
+ 
+ 	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, &ev->bdaddr, ev->bdaddr_type);
+ 
+ 	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
+ 
+@@ -6403,6 +6415,8 @@ static void hci_le_adv_report_evt(struct
+ 					info->length + 1))
+ 			break;
+ 
++		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
++
+ 		if (info->length <= max_adv_len(hdev)) {
+ 			rssi = info->data[info->length];
+ 			process_adv_report(hdev, info->type, &info->bdaddr,
+@@ -6491,6 +6505,8 @@ static void hci_le_ext_adv_report_evt(st
+ 					info->length))
+ 			break;
+ 
++		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
++
+ 		evt_type = __le16_to_cpu(info->type) & LE_EXT_ADV_EVT_TYPE_MASK;
+ 		legacy_evt_type = ext_evt_type_to_legacy(hdev, evt_type);
+ 
+@@ -6536,6 +6552,7 @@ static void hci_le_pa_sync_established_e
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
+ 
+ 	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, &ev->bdaddr, ev->bdaddr_type);
+ 
+ 	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
+ 
+@@ -6841,6 +6858,8 @@ static void hci_le_direct_adv_report_evt
+ 	for (i = 0; i < ev->num; i++) {
+ 		struct hci_ev_le_direct_adv_info *info = &ev->info[i];
+ 
++		hci_store_wake_reason(hdev, &info->bdaddr, info->bdaddr_type);
++
+ 		process_adv_report(hdev, info->type, &info->bdaddr,
+ 				   info->bdaddr_type, &info->direct_addr,
+ 				   info->direct_addr_type, HCI_ADV_PHY_1M, 0,
+@@ -7509,73 +7528,29 @@ static bool hci_get_cmd_complete(struct
+ 	return true;
+ }
+ 
+-static void hci_store_wake_reason(struct hci_dev *hdev, u8 event,
+-				  struct sk_buff *skb)
++static void hci_store_wake_reason(struct hci_dev *hdev,
++				  const bdaddr_t *bdaddr, u8 addr_type)
++	__must_hold(&hdev->lock)
+ {
+-	struct hci_ev_le_advertising_info *adv;
+-	struct hci_ev_le_direct_adv_info *direct_adv;
+-	struct hci_ev_le_ext_adv_info *ext_adv;
+-	const struct hci_ev_conn_complete *conn_complete = (void *)skb->data;
+-	const struct hci_ev_conn_request *conn_request = (void *)skb->data;
+-
+-	hci_dev_lock(hdev);
++	lockdep_assert_held(&hdev->lock);
+ 
+ 	/* If we are currently suspended and this is the first BT event seen,
+ 	 * save the wake reason associated with the event.
+ 	 */
+ 	if (!hdev->suspended || hdev->wake_reason)
+-		goto unlock;
++		return;
++
++	if (!bdaddr) {
++		hdev->wake_reason = MGMT_WAKE_REASON_UNEXPECTED;
++		return;
++	}
+ 
+ 	/* Default to remote wake. Values for wake_reason are documented in the
+ 	 * Bluez mgmt api docs.
+ 	 */
+ 	hdev->wake_reason = MGMT_WAKE_REASON_REMOTE_WAKE;
+-
+-	/* Once configured for remote wakeup, we should only wake up for
+-	 * reconnections. It's useful to see which device is waking us up so
+-	 * keep track of the bdaddr of the connection event that woke us up.
+-	 */
+-	if (event == HCI_EV_CONN_REQUEST) {
+-		bacpy(&hdev->wake_addr, &conn_request->bdaddr);
+-		hdev->wake_addr_type = BDADDR_BREDR;
+-	} else if (event == HCI_EV_CONN_COMPLETE) {
+-		bacpy(&hdev->wake_addr, &conn_complete->bdaddr);
+-		hdev->wake_addr_type = BDADDR_BREDR;
+-	} else if (event == HCI_EV_LE_META) {
+-		struct hci_ev_le_meta *le_ev = (void *)skb->data;
+-		u8 subevent = le_ev->subevent;
+-		u8 *ptr = &skb->data[sizeof(*le_ev)];
+-		u8 num_reports = *ptr;
+-
+-		if ((subevent == HCI_EV_LE_ADVERTISING_REPORT ||
+-		     subevent == HCI_EV_LE_DIRECT_ADV_REPORT ||
+-		     subevent == HCI_EV_LE_EXT_ADV_REPORT) &&
+-		    num_reports) {
+-			adv = (void *)(ptr + 1);
+-			direct_adv = (void *)(ptr + 1);
+-			ext_adv = (void *)(ptr + 1);
+-
+-			switch (subevent) {
+-			case HCI_EV_LE_ADVERTISING_REPORT:
+-				bacpy(&hdev->wake_addr, &adv->bdaddr);
+-				hdev->wake_addr_type = adv->bdaddr_type;
+-				break;
+-			case HCI_EV_LE_DIRECT_ADV_REPORT:
+-				bacpy(&hdev->wake_addr, &direct_adv->bdaddr);
+-				hdev->wake_addr_type = direct_adv->bdaddr_type;
+-				break;
+-			case HCI_EV_LE_EXT_ADV_REPORT:
+-				bacpy(&hdev->wake_addr, &ext_adv->bdaddr);
+-				hdev->wake_addr_type = ext_adv->bdaddr_type;
+-				break;
+-			}
+-		}
+-	} else {
+-		hdev->wake_reason = MGMT_WAKE_REASON_UNEXPECTED;
+-	}
+-
+-unlock:
+-	hci_dev_unlock(hdev);
++	bacpy(&hdev->wake_addr, bdaddr);
++	hdev->wake_addr_type = addr_type;
+ }
+ 
+ #define HCI_EV_VL(_op, _func, _min_len, _max_len) \
+@@ -7822,14 +7797,15 @@ void hci_event_packet(struct hci_dev *hd
+ 
+ 	skb_pull(skb, HCI_EVENT_HDR_SIZE);
+ 
+-	/* Store wake reason if we're suspended */
+-	hci_store_wake_reason(hdev, event, skb);
+-
+ 	bt_dev_dbg(hdev, "event 0x%2.2x", event);
+ 
+ 	hci_event_func(hdev, event, skb, &opcode, &status, &req_complete,
+ 		       &req_complete_skb);
+ 
++	hci_dev_lock(hdev);
++	hci_store_wake_reason(hdev, NULL, 0);
++	hci_dev_unlock(hdev);
++
+ 	if (req_complete) {
+ 		req_complete(hdev, status, opcode);
+ 	} else if (req_complete_skb) {
 
 
