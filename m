@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF55C3A16A0;
-	Wed,  8 Apr 2026 18:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743D12494F0;
+	Wed,  8 Apr 2026 18:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672669; cv=none; b=Ht+i04M3RC16aTFTZUBEyHgf0XJ6vVgjJu+PR35u+bBMSppz9UMb/zwOZp/Ub2mmZhc0I7+43XhHYLtkCb+MHwv/YdPZeB4vlMWggDCOJQ4EX929w5nP63YZkmeIxnhdSFzluz2BmJq60eWg7usVnS+4K4uEnohXm8hKsOcbiUE=
+	t=1775672672; cv=none; b=afYLIZ7nHoVe7GcJzQN4r+o8PoOmSDZmLoS6cIjcM4izHdhJqi/woYicHjMvsfJK46b7hjNXIdqEHusHQkoVETAdY9Jj6/EHEnxnWYjkm8T5FZnIGui/qaECqQUXtKw8Sd1c1L+lfzmJ4yEm5pBP9HEs/N+buF5appdlOPUY+DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672669; c=relaxed/simple;
-	bh=I8ZWbEf6g9Wu1mBIZ/jW1xYpZ8TRyJOspUWW4WSq7Nk=;
+	s=arc-20240116; t=1775672672; c=relaxed/simple;
+	bh=JwfdKG4odwZmyayD1hRQnzMzxeQHe+l+ijpBM3Ucuho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j4EUZ+R3BRftR9MOBpG/B2LReTj/ktXfhjeXp0b6INOs53qJS3ryZsXXMSBgChlqONd4M9j/1MVpmV3tv51CPdmvZUXzDJTDCLu/swR8lWV9SUVUKPAypj9qPZuwR8M83cBVLdmb0c1cxIoSNuPtV8Kbzu0JXXwUlc9jDoyZeEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTWqxFaa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYLkTJgyVATYzrH/lAmavvvbSHNE8+z9IMumE4Iln5T23sGcPhCqp/w2cU1w8k01dG0kQmfEqD3A0Gs4vhs2Ybqx/gltkfYYnQWlq/Et80vVi2GqpHccXIMrELFkh4K010MtPVGRBbbeiKA5pKgD3Zx0edss2zohPjmoOnflD6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQsBYhZR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTWqxFaa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B72C19421;
-	Wed,  8 Apr 2026 18:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQsBYhZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB24C19421;
+	Wed,  8 Apr 2026 18:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672669;
-	bh=I8ZWbEf6g9Wu1mBIZ/jW1xYpZ8TRyJOspUWW4WSq7Nk=;
+	s=korg; t=1775672672;
+	bh=JwfdKG4odwZmyayD1hRQnzMzxeQHe+l+ijpBM3Ucuho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTWqxFaagLsViZjETvYEJGa7dQVTAVYChjzh1s9sq0ZpjWOKznggj/NRE9k+BJtFK
-	 KlYogXyrf1cCw3xPNhWy/aeDgvh8ZdDbT0AUxyZxiy+B7+2d/nLhVLLpWKhR5OPf+B
-	 s8FOjYFFPTuDO0MR6UMDUNjqS0SI7FZbj4hgLSgE=
+	b=fQsBYhZRbeyaH3s2IZC+cI2nUAFkiFM0EfVAXKZ3EbcnnawlK/9svh6j1S2BUWxcd
+	 bgyw8cVvsB1sKQK04XB/QL6Xm9f+vs70oFdUT2QEF+VwMifb2k3qEd/wIdGbKCIDFE
+	 TzqA+uY7ZaIvfO9BCFTNleHuNtY5S8FdJCocwB94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valek Andrej <andrej.v@skyrain.eu>,
-	Stable@vger.kernel.org,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 095/160] iio: accel: fix ADXL355 temperature signature value
-Date: Wed,  8 Apr 2026 20:03:02 +0200
-Message-ID: <20260408175916.737140489@linuxfoundation.org>
+Subject: [PATCH 6.6 096/160] iio: dac: ad5770r: fix error return in ad5770r_read_raw()
+Date: Wed,  8 Apr 2026 20:03:03 +0200
+Message-ID: <20260408175916.773600415@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -51,33 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valek Andrej <andrej.v@skyrain.eu>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit 4f51e6c0baae80e52bd013092e82a55678be31fc upstream.
+commit c354521708175d776d896f8bdae44b18711eccb6 upstream.
 
-Temperature was wrongly represented as 12-bit signed, confirmed by checking
-the datasheet. Even if the temperature is negative, the value in the
-register stays unsigned.
+Return the error code from regmap_bulk_read() instead of 0 so
+that I/O failures are properly propagated.
 
-Fixes: 12ed27863ea3 iio: accel: Add driver support for ADXL355
-Signed-off-by: Valek Andrej <andrej.v@skyrain.eu>
-Cc: <Stable@vger.kernel.org>
+Fixes: cbbb819837f6 ("iio: dac: ad5770r: Add AD5770R support")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/adxl355_core.c |    2 +-
+ drivers/iio/dac/ad5770r.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/accel/adxl355_core.c
-+++ b/drivers/iio/accel/adxl355_core.c
-@@ -745,7 +745,7 @@ static const struct iio_chan_spec adxl35
- 				      BIT(IIO_CHAN_INFO_OFFSET),
- 		.scan_index = 3,
- 		.scan_type = {
--			.sign = 's',
-+			.sign = 'u',
- 			.realbits = 12,
- 			.storagebits = 16,
- 			.endianness = IIO_BE,
+--- a/drivers/iio/dac/ad5770r.c
++++ b/drivers/iio/dac/ad5770r.c
+@@ -323,7 +323,7 @@ static int ad5770r_read_raw(struct iio_d
+ 				       chan->address,
+ 				       st->transf_buf, 2);
+ 		if (ret)
+-			return 0;
++			return ret;
+ 
+ 		buf16 = st->transf_buf[0] + (st->transf_buf[1] << 8);
+ 		*val = buf16 >> 2;
 
 
