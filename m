@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6CF2494F0;
-	Wed,  8 Apr 2026 18:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7343AA4E4;
+	Wed,  8 Apr 2026 18:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672468; cv=none; b=S4gh/WhhsCSUdJx2oa0/e0lM1HANTlZkGT7axac3rEZvc7Fv272XSfpAyfCaG3++qZ6rkrT3aZmsntFwkH3nc3UN/BE+q0aYjjQ27kONBuaYaF0DbvUT0EmUPpUqtVwHaZ/c3wZm9CTh8/v/uH1nv3V1E3SKj/U+wpM+fFFlRY8=
+	t=1775672471; cv=none; b=MENB4OB8udjcQAMm9xbiH9FQ89TXC3ZajWh9KcSp8PBztZMFt0EonB7dKshqNIVeoro8/Y3djt2xAgmVz5NUG6j6bVn1rUeAdrXbww2YK5qksG1/7agpoVhvavFleIJ62Km921hnxFL8otVJdq+6j7df5etcxHOw9pcBngssMBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672468; c=relaxed/simple;
-	bh=Op4bCCpI/xZd6yKkusjgszdGVFyYacLtRD7dcgVFdCE=;
+	s=arc-20240116; t=1775672471; c=relaxed/simple;
+	bh=QxT5RzA4fegV37LDE0A+VXGklnWkHZ3cmcdfmylrqrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J/oqx2yKtThaKHiZy0+PsN952loW+Eq0ahwaxxd4a981jXSojomCVdUcqI28LhUz74COaT/5lKS1kbz4VndJmNSFnWGsNkjgA7wYfcGkkNbLEsYhIMDPAousOx4AfG3hOhWDCCBWuR1WU8Xee27Nl0ozM8JljsMFsQCd/s7U9bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqXB6eEe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mT1b7W1Jwao+wLf7PQliRvXEN1KjbWO/x9qx7TZERS7KBWdLlPFUWCxtovYa5JGNuZBF23HD1kuIp7S/Ijrvm9fLKFtrVsbggJvbDGKncVHF8ZZ44pXB5VTK/D7BYfMic9hX7HXqXuvBCUM2HsY7mSu7FXbG8Ww4KOHhOgobmCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyDgJNfv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqXB6eEe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E11C19421;
-	Wed,  8 Apr 2026 18:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyDgJNfv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DF6C19421;
+	Wed,  8 Apr 2026 18:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672467;
-	bh=Op4bCCpI/xZd6yKkusjgszdGVFyYacLtRD7dcgVFdCE=;
+	s=korg; t=1775672470;
+	bh=QxT5RzA4fegV37LDE0A+VXGklnWkHZ3cmcdfmylrqrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqXB6eEeK247apwGXOErjjruxhBWcI7EROo+HJas1EYD3rxf4itJQzHLeZQqIywM+
-	 Gl1hU5W1tok37Wzs/iEb7nOwWI3qJ8lIRCMnugw3EXOCzLlamB/95O9XY54H1pSDEZ
-	 iPAgnsw5Oox3GAcC+JhHZIq5X66OmCSxDFWhXlIQ=
+	b=zyDgJNfv4T+gmlhT/onmbX6hWGyYXYkhO4WxXJyt742+YQjr4PaAvnVl0Y24jjeOw
+	 fFtRvF1xBy/zjzn/wmyehLhxpumIqPObno8lQVXEjdQaoCi1p4gDkmUwm4slbCprdn
+	 8P9fqJRCCa4L9mKtBnfjOBlcsZcVbciDtMtrNXsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+006987d1be3586e13555@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/160] net: qrtr: replace qrtr_tx_flow radix_tree with xarray to fix memory leak
-Date: Wed,  8 Apr 2026 20:01:46 +0200
-Message-ID: <20260408175913.915190178@linuxfoundation.org>
+Subject: [PATCH 6.6 002/160] HID: wacom: fix out-of-bounds read in wacom_intuos_bt_irq
+Date: Wed,  8 Apr 2026 20:01:29 +0200
+Message-ID: <20260408175913.274602926@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -54,146 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Benoît Sevens <bsevens@google.com>
 
-[ Upstream commit 2428083101f6883f979cceffa76cd8440751ffe6 ]
+[ Upstream commit 2f1763f62909ccb6386ac50350fa0abbf5bb16a9 ]
 
-__radix_tree_create() allocates and links intermediate nodes into the
-tree one by one. If a subsequent allocation fails, the already-linked
-nodes remain in the tree with no corresponding leaf entry. These orphaned
-internal nodes are never reclaimed because radix_tree_for_each_slot()
-only visits slots containing leaf values.
+The wacom_intuos_bt_irq() function processes Bluetooth HID reports
+without sufficient bounds checking. A maliciously crafted short report
+can trigger an out-of-bounds read when copying data into the wacom
+structure.
 
-The radix_tree API is deprecated in favor of xarray. As suggested by
-Matthew Wilcox, migrate qrtr_tx_flow from radix_tree to xarray instead
-of fixing the radix_tree itself [1]. xarray properly handles cleanup of
-internal nodes — xa_destroy() frees all internal xarray nodes when the
-qrtr_node is released, preventing the leak.
+Specifically, report 0x03 requires at least 22 bytes to safely read
+the processed data and battery status, while report 0x04 (which
+falls through to 0x03) requires 32 bytes.
 
-[1] https://lore.kernel.org/all/20260225071623.41275-1-jiayuan.chen@linux.dev/T/
-Reported-by: syzbot+006987d1be3586e13555@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000bfba3a060bf4ffcf@google.com/T/
-Fixes: 5fdeb0d372ab ("net: qrtr: Implement outgoing flow control")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260324080645.290197-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add explicit length checks for these report IDs and log a warning if
+a short report is received.
+
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 31 +++++++++++++------------------
- 1 file changed, 13 insertions(+), 18 deletions(-)
+ drivers/hid/wacom_wac.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 00c51cf693f3d..b703e4c645853 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -118,7 +118,7 @@ static DEFINE_XARRAY_ALLOC(qrtr_ports);
-  * @ep: endpoint
-  * @ref: reference count for node
-  * @nid: node id
-- * @qrtr_tx_flow: tree of qrtr_tx_flow, keyed by node << 32 | port
-+ * @qrtr_tx_flow: xarray of qrtr_tx_flow, keyed by node << 32 | port
-  * @qrtr_tx_lock: lock for qrtr_tx_flow inserts
-  * @rx_queue: receive queue
-  * @item: list item for broadcast list
-@@ -129,7 +129,7 @@ struct qrtr_node {
- 	struct kref ref;
- 	unsigned int nid;
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index 42bc8f05e2635..859d0d9c5894e 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1256,10 +1256,20 @@ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
  
--	struct radix_tree_root qrtr_tx_flow;
-+	struct xarray qrtr_tx_flow;
- 	struct mutex qrtr_tx_lock; /* for qrtr_tx_flow */
- 
- 	struct sk_buff_head rx_queue;
-@@ -172,6 +172,7 @@ static void __qrtr_node_release(struct kref *kref)
- 	struct qrtr_tx_flow *flow;
- 	unsigned long flags;
- 	void __rcu **slot;
-+	unsigned long index;
- 
- 	spin_lock_irqsave(&qrtr_nodes_lock, flags);
- 	/* If the node is a bridge for other nodes, there are possibly
-@@ -189,11 +190,9 @@ static void __qrtr_node_release(struct kref *kref)
- 	skb_queue_purge(&node->rx_queue);
- 
- 	/* Free tx flow counters */
--	radix_tree_for_each_slot(slot, &node->qrtr_tx_flow, &iter, 0) {
--		flow = *slot;
--		radix_tree_iter_delete(&node->qrtr_tx_flow, &iter, slot);
-+	xa_for_each(&node->qrtr_tx_flow, index, flow)
- 		kfree(flow);
--	}
-+	xa_destroy(&node->qrtr_tx_flow);
- 	kfree(node);
- }
- 
-@@ -228,9 +227,7 @@ static void qrtr_tx_resume(struct qrtr_node *node, struct sk_buff *skb)
- 
- 	key = remote_node << 32 | remote_port;
- 
--	rcu_read_lock();
--	flow = radix_tree_lookup(&node->qrtr_tx_flow, key);
--	rcu_read_unlock();
-+	flow = xa_load(&node->qrtr_tx_flow, key);
- 	if (flow) {
- 		spin_lock(&flow->resume_tx.lock);
- 		flow->pending = 0;
-@@ -269,12 +266,13 @@ static int qrtr_tx_wait(struct qrtr_node *node, int dest_node, int dest_port,
- 		return 0;
- 
- 	mutex_lock(&node->qrtr_tx_lock);
--	flow = radix_tree_lookup(&node->qrtr_tx_flow, key);
-+	flow = xa_load(&node->qrtr_tx_flow, key);
- 	if (!flow) {
- 		flow = kzalloc(sizeof(*flow), GFP_KERNEL);
- 		if (flow) {
- 			init_waitqueue_head(&flow->resume_tx);
--			if (radix_tree_insert(&node->qrtr_tx_flow, key, flow)) {
-+			if (xa_err(xa_store(&node->qrtr_tx_flow, key, flow,
-+					    GFP_KERNEL))) {
- 				kfree(flow);
- 				flow = NULL;
- 			}
-@@ -326,9 +324,7 @@ static void qrtr_tx_flow_failed(struct qrtr_node *node, int dest_node,
- 	unsigned long key = (u64)dest_node << 32 | dest_port;
- 	struct qrtr_tx_flow *flow;
- 
--	rcu_read_lock();
--	flow = radix_tree_lookup(&node->qrtr_tx_flow, key);
--	rcu_read_unlock();
-+	flow = xa_load(&node->qrtr_tx_flow, key);
- 	if (flow) {
- 		spin_lock_irq(&flow->resume_tx.lock);
- 		flow->tx_failed = 1;
-@@ -599,7 +595,7 @@ int qrtr_endpoint_register(struct qrtr_endpoint *ep, unsigned int nid)
- 	node->nid = QRTR_EP_NID_AUTO;
- 	node->ep = ep;
- 
--	INIT_RADIX_TREE(&node->qrtr_tx_flow, GFP_KERNEL);
-+	xa_init(&node->qrtr_tx_flow);
- 	mutex_init(&node->qrtr_tx_lock);
- 
- 	qrtr_node_assign(node, nid);
-@@ -627,6 +623,7 @@ void qrtr_endpoint_unregister(struct qrtr_endpoint *ep)
- 	struct qrtr_tx_flow *flow;
- 	struct sk_buff *skb;
- 	unsigned long flags;
-+	unsigned long index;
- 	void __rcu **slot;
- 
- 	mutex_lock(&node->ep_lock);
-@@ -649,10 +646,8 @@ void qrtr_endpoint_unregister(struct qrtr_endpoint *ep)
- 
- 	/* Wake up any transmitters waiting for resume-tx from the node */
- 	mutex_lock(&node->qrtr_tx_lock);
--	radix_tree_for_each_slot(slot, &node->qrtr_tx_flow, &iter, 0) {
--		flow = *slot;
-+	xa_for_each(&node->qrtr_tx_flow, index, flow)
- 		wake_up_interruptible_all(&flow->resume_tx);
--	}
- 	mutex_unlock(&node->qrtr_tx_lock);
- 
- 	qrtr_node_release(node);
+ 	switch (data[0]) {
+ 	case 0x04:
++		if (len < 32) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x04 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		fallthrough;
+ 	case 0x03:
++		if (i == 1 && len < 22) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x03 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		wacom_intuos_bt_process_data(wacom, data + i);
 -- 
 2.53.0
 
