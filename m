@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CA43ACA41;
-	Wed,  8 Apr 2026 18:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94323ACF11;
+	Wed,  8 Apr 2026 18:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672840; cv=none; b=njow6W76AVVZr7ennMF0Uv5heQklYTd++RG9jKNBSzvGUx6XcVFRZhSjUCW4aKvQOFol9J1rQpsndk2UxakIlfSBkTP1G6S+L8Z0DxExgitx78d5KPhV+A+JGaqBs5S5fymSKsw4mDX5lNzBI4HLx+cPF6aUm0AEOfcwNqzYEMM=
+	t=1775672844; cv=none; b=Wa/5l7uCTNTC+LvukoyGDFXC9AqAVP9FPJZk9Sf4esItiSau25TS6RCu5nuZ+9QJzarBKiIHtFNFCqXzpYtGUHzOvbmu4cWW3BK1nznZNUj4X0w/nxU6hON/Dt0bE8POK8ld5lTVa+5SnIRrXk2kM+DK8BWcls5TgSMZpPFHReQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672840; c=relaxed/simple;
-	bh=kA0kVuIgztu0cKdpwHIyWHSZcLPW8DWjIZVi+N8QRjo=;
+	s=arc-20240116; t=1775672844; c=relaxed/simple;
+	bh=gHa+A+OK07Q1qHkc9d5xIyZiuo4JnZQjQHlXml+HCaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5nuOPX9pPr7sZqaHpOJ1Fy7160/x0gW4xbegmlUGpu/vy8F9q9oXIKyKn6i0mlE1epg4FgLci80ZHmKoGU86FO3jsEbjXix46YsrwWD4VzBV1iZEgD4ZZaBlBQB3OFUTbFRkZppo3VBlUdlqROI/Z+oyfTXYr8kOW+ND+BMU00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/NAqoL7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEv8BLQLjFGTKM7JttEFR2QnnH7lSE2NzGdXI8HzhBoLcQvVmC6CZ6HWr0KCbb7g1aOZ/VMTaIeviJm9z8rhybqNKE4HAyt8hBOFVcsO+nJ2lOjHJvvvhRDqUOGsh/7EjmtExyjX/YzxSek18BxHFqKsrydK/nVRVyfbNIz/yBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ID60Vpql; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/NAqoL7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94134C19421;
-	Wed,  8 Apr 2026 18:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ID60Vpql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA91C19425;
+	Wed,  8 Apr 2026 18:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672839;
-	bh=kA0kVuIgztu0cKdpwHIyWHSZcLPW8DWjIZVi+N8QRjo=;
+	s=korg; t=1775672844;
+	bh=gHa+A+OK07Q1qHkc9d5xIyZiuo4JnZQjQHlXml+HCaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/NAqoL73dIvBFPMHvcVba8dfipk/XNXFs37C9cRNBsZKNM5HTphRAN7T7EtxOGI9
-	 atN+QB/m8+3jKatOEPqdgBO8e+/FLuN99vTdNgTZG7esyXWsbebHc5XNuwaYHHDJ3j
-	 qhr18KWgGZeYXEy4dWiaOB8aJDyKVDTsbTeaWrXg=
+	b=ID60VpqlA0FOsnvBtHughmLoGkKd3UEF13JDPQN4ZkkWMTYP4FAQmod9wH85pBmdf
+	 q6UtYXikuHhu9DEywSLBqc+1VeBMFeo9skvOidTGFalj/2rOx5PBarclzwg/xrk23i
+	 O+m1FvjLXn1CIBHKx0xj6s4f17FAWpM4DKn3Aw/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Urban <surban@surban.net>,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.6 136/160] usb: gadget: dummy_hcd: fix premature URB completion when ZLP follows partial transfer
-Date: Wed,  8 Apr 2026 20:03:43 +0200
-Message-ID: <20260408175918.266698217@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 137/160] btrfs: fix the qgroup data free range for inline data extents
+Date: Wed,  8 Apr 2026 20:03:44 +0200
+Message-ID: <20260408175918.303052443@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -51,70 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Urban <surban@surban.net>
+From: Qu Wenruo <wqu@suse.com>
 
-commit f50200dd44125e445a6164e88c217472fa79cdbc upstream.
+[ Upstream commit 0bb067ca64e35536f1f5d9ef6aaafc40f4833623 ]
 
-When a gadget request is only partially transferred in transfer()
-because the per-frame bandwidth budget is exhausted, the loop advances
-to the next queued request. If that next request is a zero-length
-packet (ZLP), len evaluates to zero and the code takes the
-unlikely(len == 0) path, which sets is_short = 1. This bypasses the
-bandwidth guard ("limit < ep->ep.maxpacket && limit < len") that
-lives in the else branch and would otherwise break out of the loop for
-non-zero requests. The is_short path then completes the URB before all
-data from the first request has been transferred.
+Inside function __cow_file_range_inline() since the inlined data no
+longer take any data space, we need to free up the reserved space.
 
-Reproducer (bulk IN, high speed):
+However the code is still using the old page size == sector size
+assumption, and will not handle subpage case well.
 
-  Device side (FunctionFS with Linux AIO):
-    1. Queue a 65024-byte write via io_submit (127 * 512, i.e. a
-       multiple of the HS bulk max packet size).
-    2. Immediately queue a zero-length write (ZLP) via io_submit.
+Thankfully it is not going to cause any problems because we have two extra
+safe nets:
 
-  Host side:
-    3. Submit a 65536-byte bulk IN URB.
+- Inline data extents creation is disabled for sector size < page size
+  cases for now
+  But it won't stay that for long.
 
-  Expected: URB completes with actual_length = 65024.
-  Actual:   URB completes with actual_length = 53248, losing 11776
-            bytes that leak into subsequent URBs.
+- btrfs_qgroup_free_data() will only clear ranges which have been already
+  reserved
+  So even if we pass a range larger than what we need, it should still
+  be fine, especially there is only reserved space for a single block at
+  file offset 0 of an inline data extent.
 
-At high speed the per-frame budget is 53248 bytes (512 * 13 * 8).
-The 65024-byte request exhausts this budget after 53248 bytes, leaving
-the request incomplete (req->req.actual < req->req.length). Neither
-the request nor the URB is finished, and rescan is 0, so the loop
-advances to the ZLP. For the ZLP, dev_len = 0, so len = min(12288, 0)
-= 0, taking the unlikely(len == 0) path and setting is_short = 1.
-The is_short handler then sets *status = 0, completing the URB with
-only 53248 of the expected 65024 bytes.
+But just for the sake of consistency, fix the call site to use
+sectorsize instead of page size.
 
-Fix this by breaking out of the loop when the current request has
-remaining data (req->req.actual < req->req.length). The request
-resumes on the next timer tick, preserving correct data ordering.
-
-Signed-off-by: Sebastian Urban <surban@surban.net>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260315151045.1155850-1-surban@surban.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: f8da41de0bff ("btrfs: do not free data reservation in fallback from inline due to -ENOSPC")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/btrfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -1537,6 +1537,12 @@ top:
- 		/* rescan to continue with any other queued i/o */
- 		if (rescan)
- 			goto top;
-+
-+		/* request not fully transferred; stop iterating to
-+		 * preserve data ordering across queued requests.
-+		 */
-+		if (req->req.actual < req->req.length)
-+			break;
- 	}
- 	return sent;
- }
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index cf39f52fc0484..28625e504972e 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -692,7 +692,7 @@ static noinline int cow_file_range_inline(struct btrfs_inode *inode, u64 size,
+ 	 * And at reserve time, it's always aligned to page size, so
+ 	 * just free one page here.
+ 	 */
+-	btrfs_qgroup_free_data(inode, NULL, 0, PAGE_SIZE, NULL);
++	btrfs_qgroup_free_data(inode, NULL, 0, fs_info->sectorsize, NULL);
+ 	btrfs_free_path(path);
+ 	if (trans)
+ 		btrfs_end_transaction(trans);
+-- 
+2.53.0
+
 
 
