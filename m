@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F621355F30;
-	Wed,  8 Apr 2026 18:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA78A3D75C9;
+	Wed,  8 Apr 2026 18:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674265; cv=none; b=fi4KkbHsVfdtqdzjNIAWmR4cQZK6Bio0R6iqvFHngSihQ02Du50LbCcGZpyuWP9pe26PndNpukIHsZUYdus5gJ6fQFhuFfES9at0MF3yuT+P/KHOP4T1WU0clcrcWpi3jmZiAcN4tZlgURBZURVJgBwl59pJkIDk7nKoJjdnumc=
+	t=1775674268; cv=none; b=B8harbGp3+VTdlYujKhYnOZ7rImID93sKg+z+lAcgrMMRsEYBHO/1pJ8Iy/iHYKEBGXCZJdtpaI2FoAk2IXu5mMJXDs9PUqSH5Dh88Rm4Pk81Tg7A4h8H/B4GWdubHWINcs12bff3B5sl/nfdlXkmRJHm2+3g+58g3r/+77hLmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674265; c=relaxed/simple;
-	bh=WpNNJ4cOrRWLqxrPK11JpUVTiraMO3LmT97qu7U7TLc=;
+	s=arc-20240116; t=1775674268; c=relaxed/simple;
+	bh=N6pF9w4vPW6a/3GQd4PiSZExHtXYazbs29P/n9fHC/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JqEUZLtSpiIfxpEFEIDyEgrU6WsHirx++WdS8bgvfxZDopzm4p9l5AcA3lLhgklkfA/bbdH+gXNL360LCKJQ7VTr3UgesIV49GlKWBAuDj6s083+PAumIfjxb2ppCXSGdMyOmhJvXy4QDDf5eSYAlscpKLPnTCWJycrGFNsdEMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkMfgs3x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I4AnAd+Jy1YQNZsULZaaznsNyuHQ+fSxBmFaJglmQBU2hYNiDbHiOOkQcK5ByrewllQ/+th2Zu+DZ+WLqvfQmsA5QldgzT0A0/tabnioNOdk+GLhx3SOSsszud1GNOGrkIY0BlXuYzMDYBO2RZ32aMoWe/jI4n4amMwJMjz+zt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNAhjSlv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkMfgs3x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E726BC19421;
-	Wed,  8 Apr 2026 18:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNAhjSlv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805B7C19421;
+	Wed,  8 Apr 2026 18:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674265;
-	bh=WpNNJ4cOrRWLqxrPK11JpUVTiraMO3LmT97qu7U7TLc=;
+	s=korg; t=1775674267;
+	bh=N6pF9w4vPW6a/3GQd4PiSZExHtXYazbs29P/n9fHC/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkMfgs3x+4bumXBqTtSbioVT4XHSLbN70Dm4uPQ/0UPuXGXlUemOY1w9UaqrfT4bo
-	 V2Uk8ztkgpsCHO6hNgj1smxWzuV7vUl0aLzKXZL9XXIilpLok7eIBgq4BKMwQ3nLem
-	 qJJJRqaacUj89sZu4xwvlCefxPjXeGwwmjxyPA+E=
+	b=ZNAhjSlvsb1+aWrnM4IlGOWK9eauzG8OI+vcXTq+nc9i0Q2aIbmcmR6n1wL9sK+5N
+	 frpXGFEqs1jP9htABEY5uVNnjMasaWj70I8OA9AU85vWbjKvSB6dwlQhdH8g3OKtBY
+	 /GzaU5wkbyHq3Bw/Jw7g4qXhIGLsgANdc+N4xlo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 003/311] net: mana: fix use-after-free in add_adev() error path
-Date: Wed,  8 Apr 2026 20:00:03 +0200
-Message-ID: <20260408175939.529390134@linuxfoundation.org>
+Subject: [PATCH 6.19 030/311] wifi: iwlwifi: mvm: dont send a 6E related command when not supported
+Date: Wed,  8 Apr 2026 20:00:30 +0200
+Message-ID: <20260408175940.540688436@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,62 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit c4ea7d8907cf72b259bf70bd8c2e791e1c4ff70f ]
+[ Upstream commit 323156c3541e23da7e582008a7ac30cd51b60acd ]
 
-If auxiliary_device_add() fails, add_adev() jumps to add_fail and calls
-auxiliary_device_uninit(adev).
+MCC_ALLOWED_AP_TYPE_CMD is related to 6E support. Do not send it if the
+device doesn't support 6E.
+Apparently, the firmware is mistakenly advertising support for this
+command even on AX201 which does not support 6E and then the firmware
+crashes.
 
-The auxiliary device has its release callback set to adev_release(),
-which frees the containing struct mana_adev. Since adev is embedded in
-struct mana_adev, the subsequent fall-through to init_fail and access
-to adev->id may result in a use-after-free.
-
-Fix this by saving the allocated auxiliary device id in a local
-variable before calling auxiliary_device_add(), and use that saved id
-in the cleanup path after auxiliary_device_uninit().
-
-Fixes: a69839d4327d ("net: mana: Add support for auxiliary device")
-Cc: stable@vger.kernel.org
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260323165730.945365-1-lgs201920130244@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0d2fc8821a7d ("wifi: iwlwifi: nvm: parse the VLP/AFC bit from regulatory")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220804
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260324113316.e171f0163f2a.I0c444d1f82d1773054e7ffc391ad49697d58f44e@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -3376,6 +3376,7 @@ static int add_adev(struct gdma_dev *gd,
- 	struct auxiliary_device *adev;
- 	struct mana_adev *madev;
- 	int ret;
-+	int id;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+index edae13755ee61..b9c9ee30272ec 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+@@ -470,7 +470,8 @@ static void iwl_mvm_uats_init(struct iwl_mvm *mvm)
+ 		.dataflags[0] = IWL_HCMD_DFL_NOCOPY,
+ 	};
  
- 	madev = kzalloc(sizeof(*madev), GFP_KERNEL);
- 	if (!madev)
-@@ -3385,7 +3386,8 @@ static int add_adev(struct gdma_dev *gd,
- 	ret = mana_adev_idx_alloc();
- 	if (ret < 0)
- 		goto idx_fail;
--	adev->id = ret;
-+	id = ret;
-+	adev->id = id;
- 
- 	adev->name = name;
- 	adev->dev.parent = gd->gdma_context->dev;
-@@ -3411,7 +3413,7 @@ add_fail:
- 	auxiliary_device_uninit(adev);
- 
- init_fail:
--	mana_adev_idx_free(adev->id);
-+	mana_adev_idx_free(id);
- 
- idx_fail:
- 	kfree(madev);
+-	if (mvm->trans->mac_cfg->device_family < IWL_DEVICE_FAMILY_AX210) {
++	if (mvm->trans->mac_cfg->device_family < IWL_DEVICE_FAMILY_AX210 ||
++	    !mvm->trans->cfg->uhb_supported) {
+ 		IWL_DEBUG_RADIO(mvm, "UATS feature is not supported\n");
+ 		return;
+ 	}
+-- 
+2.53.0
+
 
 
