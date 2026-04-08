@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9283D8112;
-	Wed,  8 Apr 2026 18:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0393D3D06;
+	Wed,  8 Apr 2026 18:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672432; cv=none; b=jnoTNf+ecSPLihugex5UC/6hB7WZlI8yaAjiG6vIKDFn/Yd47FuyegyFAcglw3s2MzYsXf13+ApcORwgolOTcaO5TQfqLTZiH3ZX295/DOq/ocZqIJgEUMf3CzHGtPHDCwblphz2Q6t7DhckULQcRh2c5T1iX5TJXthgzhmUI34=
+	t=1775672434; cv=none; b=tBuTQTQ2hB9qV3yowgkDoEDvoCMvlZNAf7LI7XXuIKNklxmUxR0N3f/tke+WF7WsWGeWqv8dWo7K1t6tmlH3MXSSZo6cYB9eBtxu8D4gWKMQUhNR0sCNhgPJBx037ay4ZkpSZj0oq6GsftY5FjLcBfU1xez7PYXXPUrYEzMiyJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672432; c=relaxed/simple;
-	bh=9tzlEfYEPV6GlLR36ePkDYiuHzpElCg2DG654Aqqmfw=;
+	s=arc-20240116; t=1775672434; c=relaxed/simple;
+	bh=vP4tSGiM7SusYeCawu572V1IPd5BkIfF+9xHuWNl+eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Igd8jHRKCaNZZLjL4VERYq2Nutczi7dKP1oip9eZhyvt9T7C+GCvxGC5f+oNa8ku50YgM/AMN0rTGEyFhcFSCadL5RKKFBzRQSv8oYq9xhp5aHXm7FYsVYRdjqbetYqHxoXdOasZdDY4+MWq6RRjxHjEFViiUYsBIZWWFYs432Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3ZcHSYl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bo8PzThaL/6QRNJDxf1MhjVh5FVGUWPhqG0+OPxUTFrbfGQEEOyqo3cdmWGab09HfG62RqYlDPzONgmVsjZ4ukz+4IOf1+ae+F2R/d1Mbvj1yzkNFHVynvzZtIJGHxLRRDX9ZvGtE/nDXNzyGoNGRveO+bytjR3F9RxwdR77VF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnyOLi+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3ZcHSYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C5BC19421;
-	Wed,  8 Apr 2026 18:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnyOLi+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F3DC19421;
+	Wed,  8 Apr 2026 18:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672431;
-	bh=9tzlEfYEPV6GlLR36ePkDYiuHzpElCg2DG654Aqqmfw=;
+	s=korg; t=1775672434;
+	bh=vP4tSGiM7SusYeCawu572V1IPd5BkIfF+9xHuWNl+eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s3ZcHSYlcph7cN84sgDJd6n6oMzPNKTsJpmtMI8/KRL/LRgAjDoHuvBGZhvHn6Dr0
-	 g99izeoo9sIqcl5piVcLWBtoudh2f890aaPTKODfwROCstePO7lgdE8+ITXQFeoF6E
-	 w5T9cJ2CR1Lrt95AeIAjWgFDQzew7N13/eVVutgg=
+	b=BnyOLi+PVT3axfEICm/Zt5m6I2815AhHlVEHePNd/HbY8JpoWaHo2vva80LJWI6MF
+	 P63QILUmZ9Ypdysp+xExaYkAz2a0w6C3a7EHfq+0LS+vAKpKiNphe0hwLpmUUkmPdn
+	 s2AL7vKQRh1j7wkwp4vOkpGiwhUAuwRVznro3vgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Rajani Kantha <681739313@139.com>
-Subject: [PATCH 6.1 303/312] net: phy: allow MDIO bus PM ops to start/stop state machine for phylink-controlled PHY
-Date: Wed,  8 Apr 2026 20:03:40 +0200
-Message-ID: <20260408175945.090379325@linuxfoundation.org>
+Subject: [PATCH 6.1 304/312] net: phy: fix phy_uses_state_machine()
+Date: Wed,  8 Apr 2026 20:03:41 +0200
+Message-ID: <20260408175945.128007403@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,158 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit fc75ea20ffb452652f0d4033f38fe88d7cfdae35 ]
+[ Upstream commit e0d1c55501d377163eb57feed863777ed1c973ad ]
 
-DSA has 2 kinds of drivers:
+The blamed commit changed the conditions which phylib uses to stop
+and start the state machine in the suspend and resume paths, and
+while improving it, has caused two issues.
 
-1. Those who call dsa_switch_suspend() and dsa_switch_resume() from
-   their device PM ops: qca8k-8xxx, bcm_sf2, microchip ksz
-2. Those who don't: all others. The above methods should be optional.
+The original code used this test:
 
-For type 1, dsa_switch_suspend() calls dsa_user_suspend() -> phylink_stop(),
-and dsa_switch_resume() calls dsa_user_resume() -> phylink_start().
-These seem good candidates for setting mac_managed_pm = true because
-that is essentially its definition [1], but that does not seem to be the
-biggest problem for now, and is not what this change focuses on.
+	phydev->attached_dev && phydev->adjust_link
 
-Talking strictly about the 2nd category of DSA drivers here (which
-do not have MAC managed PM, meaning that for their attached PHYs,
-mdio_bus_phy_suspend() and mdio_bus_phy_resume() should run in full),
-I have noticed that the following warning from mdio_bus_phy_resume() is
-triggered:
+and if true, the paths would handle the PHY state machine. This test
+evaluates true for normal drivers that are using phylib directly
+while the PHY is attached to the network device, but false in all
+other cases, which include the following cases:
 
-	WARN_ON(phydev->state != PHY_HALTED && phydev->state != PHY_READY &&
-		phydev->state != PHY_UP);
+- when the PHY has never been attached to a network device.
+- when the PHY has been detached from a network device (as phy_detach()
+   sets phydev->attached_dev to NULL, phy_disconnect() calls
+   phy_detach() and additionally sets phydev->adjust_link NULL.)
+- when phylink is using the driver (as phydev->adjust_link is NULL.)
 
-because the PHY state machine is running.
+Only the third case was incorrect, and the blamed commit attempted to
+fix this by changing this test to (simplified for brevity, see
+phy_uses_state_machine()):
 
-It's running as a result of a previous dsa_user_open() -> ... ->
-phylink_start() -> phy_start() having been initiated by the user.
+	phydev->phy_link_change == phy_link_change ?
+		phydev->attached_dev && phydev->adjust_link : true
 
-The previous mdio_bus_phy_suspend() was supposed to have called
-phy_stop_machine(), but it didn't. So this is why the PHY is in state
-PHY_NOLINK by the time mdio_bus_phy_resume() runs.
+However, this also incorrectly evaluates true in the first two cases.
 
-mdio_bus_phy_suspend() did not call phy_stop_machine() because for
-phylink, the phydev->adjust_link function pointer is NULL. This seems a
-technicality introduced by commit fddd91016d16 ("phylib: fix PAL state
-machine restart on resume"). That commit was written before phylink
-existed, and was intended to avoid crashing with consumer drivers which
-don't use the PHY state machine - phylink always does, when using a PHY.
-But phylink itself has historically not been developed with
-suspend/resume in mind, and apparently not tested too much in that
-scenario, allowing this bug to exist unnoticed for so long. Plus, prior
-to the WARN_ON(), it would have likely been invisible.
+Fix the first case by ensuring that phy_uses_state_machine() returns
+false when phydev->phy_link_change is NULL.
 
-This issue is not in fact restricted to type 2 DSA drivers (according to
-the above ad-hoc classification), but can be extrapolated to any MAC
-driver with phylink and MDIO-bus-managed PHY PM ops. DSA is just where
-the issue was reported. Assuming mac_managed_pm is set correctly, a
-quick search indicates the following other drivers might be affected:
+Fix the second case by ensuring that phydev->phy_link_change is set to
+NULL when phy_detach() is called.
 
-$ grep -Zlr PHYLINK_NETDEV drivers/ | xargs -0 grep -L mac_managed_pm
-drivers/net/ethernet/atheros/ag71xx.c
-drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c
-drivers/net/ethernet/freescale/fs_enet/fs_enet-main.c
-drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
-drivers/net/ethernet/freescale/ucc_geth.c
-drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
-drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-drivers/net/ethernet/marvell/mvneta.c
-drivers/net/ethernet/marvell/prestera/prestera_main.c
-drivers/net/ethernet/mediatek/mtk_eth_soc.c
-drivers/net/ethernet/altera/altera_tse_main.c
-drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
-drivers/net/ethernet/meta/fbnic/fbnic_phylink.c
-drivers/net/ethernet/tehuti/tn40_phy.c
-drivers/net/ethernet/mscc/ocelot_net.c
-
-Make the existing conditions dependent on the PHY device having a
-phydev->phy_link_change() implementation equal to the default
-phy_link_change() provided by phylib. Otherwise, we implicitly know that
-the phydev has the phylink-provided phylink_phy_change() callback, and
-when phylink is used, the PHY state machine always needs to be stopped/
-started on the suspend/resume path. The code is structured as such that
-if phydev->phy_link_change() is absent, it is a matter of time until the
-kernel will crash - no need to further complicate the test.
-
-Thus, for the situation where the PM is not managed by the MAC, we will
-make the MDIO bus PM ops treat identically the phylink-controlled PHYs
-with the phylib-controlled PHYs where an adjust_link() callback is
-supplied. In both cases, the MDIO bus PM ops should stop and restart the
-PHY state machine.
-
-[1] https://lore.kernel.org/netdev/Z-1tiW9zjcoFkhwc@shell.armlinux.org.uk/
-
-Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
-Reported-by: Wei Fang <wei.fang@nxp.com>
-Tested-by: Wei Fang <wei.fang@nxp.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250407094042.2155633-1-vladimir.oltean@nxp.com
+Reported-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20250806082931.3289134-1-xu.yang_2@nxp.com
+Fixes: fc75ea20ffb4 ("net: phy: allow MDIO bus PM ops to start/stop state machine for phylink-controlled PHY")
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/E1uvMEz-00000003Aoe-3qWe@rmk-PC.armlinux.org.uk
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Rajani Kantha <681739313@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/phy_device.c |   31 +++++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+ drivers/net/phy/phy_device.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/drivers/net/phy/phy_device.c
 +++ b/drivers/net/phy/phy_device.c
-@@ -247,6 +247,33 @@ static void phy_link_change(struct phy_d
- 		phydev->mii_ts->link_state(phydev->mii_ts, phydev);
+@@ -270,8 +270,7 @@ static bool phy_uses_state_machine(struc
+ 	if (phydev->phy_link_change == phy_link_change)
+ 		return phydev->attached_dev && phydev->adjust_link;
+ 
+-	/* phydev->phy_link_change is implicitly phylink_phy_change() */
+-	return true;
++	return !!phydev->phy_link_change;
  }
  
-+/**
-+ * phy_uses_state_machine - test whether consumer driver uses PAL state machine
-+ * @phydev: the target PHY device structure
-+ *
-+ * Ultimately, this aims to indirectly determine whether the PHY is attached
-+ * to a consumer which uses the state machine by calling phy_start() and
-+ * phy_stop().
-+ *
-+ * When the PHY driver consumer uses phylib, it must have previously called
-+ * phy_connect_direct() or one of its derivatives, so that phy_prepare_link()
-+ * has set up a hook for monitoring state changes.
-+ *
-+ * When the PHY driver is used by the MAC driver consumer through phylink (the
-+ * only other provider of a phy_link_change() method), using the PHY state
-+ * machine is not optional.
-+ *
-+ * Return: true if consumer calls phy_start() and phy_stop(), false otherwise.
-+ */
-+static bool phy_uses_state_machine(struct phy_device *phydev)
-+{
-+	if (phydev->phy_link_change == phy_link_change)
-+		return phydev->attached_dev && phydev->adjust_link;
-+
-+	/* phydev->phy_link_change is implicitly phylink_phy_change() */
-+	return true;
-+}
-+
  static bool mdio_bus_phy_may_suspend(struct phy_device *phydev)
- {
- 	struct device_driver *drv = phydev->mdio.dev.driver;
-@@ -307,7 +334,7 @@ static __maybe_unused int mdio_bus_phy_s
- 	 * may call phy routines that try to grab the same lock, and that may
- 	 * lead to a deadlock.
- 	 */
--	if (phydev->attached_dev && phydev->adjust_link)
-+	if (phy_uses_state_machine(phydev))
- 		phy_stop_machine(phydev);
- 
- 	if (!mdio_bus_phy_may_suspend(phydev))
-@@ -361,7 +388,7 @@ no_resume:
- 		}
+@@ -1791,6 +1790,8 @@ void phy_detach(struct phy_device *phyde
+ 		phydev->attached_dev->phydev = NULL;
+ 		phydev->attached_dev = NULL;
  	}
++
++	phydev->phy_link_change = NULL;
+ 	phydev->phylink = NULL;
  
--	if (phydev->attached_dev && phydev->adjust_link)
-+	if (phy_uses_state_machine(phydev))
- 		phy_start_machine(phydev);
- 
- 	return 0;
+ 	if (phydev->mdio.dev.driver)
 
 
