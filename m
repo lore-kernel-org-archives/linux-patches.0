@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A223D8905;
-	Wed,  8 Apr 2026 18:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB9C3D8125;
+	Wed,  8 Apr 2026 18:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674025; cv=none; b=UffvtjgyOZKGKhgjhj6xO248hIDaJM5CpqQVTWPQt1ZX88RqZa4d8aHwKPnCjw27xP0KHRT/kGfuVWCOCiWVF9vLHpjlI8JejEcTNaNOR0gSdbZwQGNpcHMoXJOf/EwFiCmKICRi31ThIrKVvqM+uBIRBAmblE3vXWl6zlnHNNQ=
+	t=1775674027; cv=none; b=qPK+5eiZsmGiyIUzv9ScROi4wLNk3haS29FslJUTfiWUIMqQEDQU8Pj3my98ojT5vNNOtenMXKDDcG9OnrR4jfA+dENwoo83UCqPFOSpK6TxCltG6LqDBuqf8jJsFT/VG7kGu2sBWvy45HeW58IV85MNHTwYFcgxtaAsb3D4ie4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674025; c=relaxed/simple;
-	bh=WuXshUvCa9zx6IPXF2z/LoDXYdpv0DncGDMuCO9uSo0=;
+	s=arc-20240116; t=1775674027; c=relaxed/simple;
+	bh=uxoahiDBuq3ssqvIrIf4Gu8KHjEs9QHfgKKU82/sMvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBbdLRIj4/QIVkc1CDqdcNVnQPeVoMnVdPd6YRoso8u+SE/OFR8AGKN8p+bsPY/hCndvZnwTMBrkfFbU6A+2DfSmLp2sUIYHQGHfh3D/VVwO8cxkGuWesQz7uCC6p5uDdupyVwr6wvWdmnq0UGPh5bdagggWh5XqCF/K1LlDINo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3uqQU4+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MWq9TeJsfrzQi1KrqQnRooOB+x7GxRaq863IDgaPBuco5lQcpfqg/tHNFRrrv54g11I466lDN6CjUnbNB6iJUyXxHRfCfgNtEbzIFhlbgFedwe1p7ATka+sJMVcH445fPRS6VFLFAF4Hkj/SM79ieO0UaiRlhQ/opn7agY9K/PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfkNw2wz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3uqQU4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0753C2BC87;
-	Wed,  8 Apr 2026 18:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfkNw2wz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5569EC19421;
+	Wed,  8 Apr 2026 18:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674025;
-	bh=WuXshUvCa9zx6IPXF2z/LoDXYdpv0DncGDMuCO9uSo0=;
+	s=korg; t=1775674027;
+	bh=uxoahiDBuq3ssqvIrIf4Gu8KHjEs9QHfgKKU82/sMvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p3uqQU4+vRfzpaCGTNhPZrhSYMekTojByV1dlO0JsG275sGKGz6cdXqoe/ZWZA08j
-	 o/+H6xNFpsgQklsliV8Skzn+yEwTE3pvS3jgHiBc2Yk4YiOpVTTQOfdDMQC75u0j+d
-	 UaYxUzAZ/LcLDXIdrjpnHWYw1dabRSP6Zi33huWA=
+	b=nfkNw2wzBNIHf4caDgR+u+H8RUiyGYz/0MtNdR86o9V+nKPmNCVQhB7N1S0XgU/6L
+	 lrMtADMkogienqBsLzMBm5Z6pnuh8zlmf+QuTsDHIxkDz7vP/bDhIxFIQv+rWeQgEJ
+	 /kdd2si3IPW/RPyWcJuDXmmFc/yAb6PmMNtk/Rk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vera <ivanverasantos@gmail.com>,
-	Harish Ediga <harish.ediga@amd.com>,
-	Harsh Jain <h.jain@amd.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.12 181/242] nvmem: zynqmp_nvmem: Fix buffer size in DMA and memcpy
-Date: Wed,  8 Apr 2026 20:03:41 +0200
-Message-ID: <20260408175933.858891230@linuxfoundation.org>
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <dstsmallbird@foxmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.12 182/242] netfilter: ipset: drop logically empty buckets in mtype_del
+Date: Wed,  8 Apr 2026 20:03:42 +0200
+Message-ID: <20260408175933.896441949@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,64 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vera <ivanverasantos@gmail.com>
+From: Yifan Wu <yifanwucs@gmail.com>
 
-commit f9b88613ff402aa6fe8fd020573cb95867ae947e upstream.
+commit 9862ef9ab0a116c6dca98842aab7de13a252ae02 upstream.
 
-Buffer size used in dma allocation and memcpy is wrong.
-It can lead to undersized DMA buffer access and possible
-memory corruption. use correct buffer size in dma_alloc_coherent
-and memcpy.
+mtype_del() counts empty slots below n->pos in k, but it only drops the
+bucket when both n->pos and k are zero. This misses buckets whose live
+entries have all been removed while n->pos still points past deleted slots.
 
-Fixes: 737c0c8d07b5 ("nvmem: zynqmp_nvmem: Add support to access efuse")
+Treat a bucket as empty when all positions below n->pos are unused and
+release it directly instead of shrinking it further.
+
+Fixes: 8af1c6fbd923 ("netfilter: ipset: Fix forceadd evaluation path")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ivan Vera <ivanverasantos@gmail.com>
-Signed-off-by: Harish Ediga <harish.ediga@amd.com>
-Signed-off-by: Harsh Jain <h.jain@amd.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260327131645.3025781-3-srini@kernel.org
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <dstsmallbird@foxmail.com>
+Signed-off-by: Yifan Wu <yifanwucs@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Reviewed-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/zynqmp_nvmem.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/netfilter/ipset/ip_set_hash_gen.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvmem/zynqmp_nvmem.c
-+++ b/drivers/nvmem/zynqmp_nvmem.c
-@@ -66,7 +66,7 @@ static int zynqmp_efuse_access(void *con
- 	dma_addr_t dma_buf;
- 	size_t words = bytes / WORD_INBYTES;
- 	int ret;
--	int value;
-+	unsigned int value;
- 	char *data;
- 
- 	if (bytes % WORD_INBYTES != 0) {
-@@ -80,7 +80,7 @@ static int zynqmp_efuse_access(void *con
- 	}
- 
- 	if (pufflag == 1 && flag == EFUSE_WRITE) {
--		memcpy(&value, val, bytes);
-+		memcpy(&value, val, sizeof(value));
- 		if ((offset == EFUSE_PUF_START_OFFSET ||
- 		     offset == EFUSE_PUF_MID_OFFSET) &&
- 		    value & P_USER_0_64_UPPER_MASK) {
-@@ -100,7 +100,7 @@ static int zynqmp_efuse_access(void *con
- 	if (!efuse)
- 		return -ENOMEM;
- 
--	data = dma_alloc_coherent(dev, sizeof(bytes),
-+	data = dma_alloc_coherent(dev, bytes,
- 				  &dma_buf, GFP_KERNEL);
- 	if (!data) {
- 		ret = -ENOMEM;
-@@ -134,7 +134,7 @@ static int zynqmp_efuse_access(void *con
- 	if (flag == EFUSE_READ)
- 		memcpy(val, data, bytes);
- efuse_access_err:
--	dma_free_coherent(dev, sizeof(bytes),
-+	dma_free_coherent(dev, bytes,
- 			  data, dma_buf);
- efuse_data_fail:
- 	dma_free_coherent(dev, sizeof(struct xilinx_efuse),
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -1099,7 +1099,7 @@ mtype_del(struct ip_set *set, void *valu
+ 			if (!test_bit(i, n->used))
+ 				k++;
+ 		}
+-		if (n->pos == 0 && k == 0) {
++		if (k == n->pos) {
+ 			t->hregion[r].ext_size -= ext_size(n->size, dsize);
+ 			rcu_assign_pointer(hbucket(t, key), NULL);
+ 			kfree_rcu(n, rcu);
 
 
