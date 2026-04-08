@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB1834753A;
-	Wed,  8 Apr 2026 18:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0633D347503;
+	Wed,  8 Apr 2026 18:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672095; cv=none; b=pIREZrk6AjhwgZRYJrYfkVfpqtJiA9qja51rQ0tA/AssZMJ219ThQw73TWNsAAsvKfRbn765rnBEpkE3zLTzXqGFuSYRBjzWVUPQQyN+TFV6T2Sg2We6IelORabfh3I5vxF7U3oQMHfmZp8IgqcJ7PoCZOKohSrx33UsDd6njW4=
+	t=1775672098; cv=none; b=SeUToxilRCNMLd5iulERQdWM7+2NDJxwEFNFpJQD9ulx9fE6YWErCToum4eyorSC/a+UXFQbVhQl5zVShbxWW1ZPD26bDqq7XOKnTunxFQYwsUfaVbRivdYWpUgN6Fq5dAtcIBge8S4v4yvGnkosU7fS3iQBQHALUVckzdiCoXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672095; c=relaxed/simple;
-	bh=v0OtTbN6oCJuUd61lsL7gOe9Lq8WD2y0Oy+aOz0PBYE=;
+	s=arc-20240116; t=1775672098; c=relaxed/simple;
+	bh=maAm/lsly3Rk1xmvhk//M5FLiXfKIKKE6tyy7TY9rCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BseJdsD6AA5vXoxdeXNGfX4bjxpo9VgrW/Sv1vjKXl+aECH0euYAiePwA6SxBTMqFVa7k6MOmt1lPcy/zQg4shuS8UA1TMZKhbHzYd7KPigRcQY6U9BebUMcXKXqEdybPjQ+6GKiRtjB/R6j7MgIaVSRQ4CBA4TubULA6lxG9oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIW6yXeb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QrY+BeQFdgF1LvupZD0nCQqVAxCCpK7E85mKPI1E77nMKCEBH+4RisDD923SS7U7LlhcSQnhqSVQemn0Y6Qq5JQFaaMfvcZ7Zi3XzJGGlNPvRmNQa7UMPJ3zFln2z1GXxq0O0SyKnnYLdLGpUD2yF+FU9Oi9U/PmfFipytCpv08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEvNzvEB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIW6yXeb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B34C19421;
-	Wed,  8 Apr 2026 18:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEvNzvEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89173C19425;
+	Wed,  8 Apr 2026 18:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672095;
-	bh=v0OtTbN6oCJuUd61lsL7gOe9Lq8WD2y0Oy+aOz0PBYE=;
+	s=korg; t=1775672097;
+	bh=maAm/lsly3Rk1xmvhk//M5FLiXfKIKKE6tyy7TY9rCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gIW6yXebfxH4CZDfPoEx74fYF4QvY99k90SljS8Y+Q9GXBgSmnpNnaidIro4W6iq/
-	 VK1voJBvW9yNa62roRsYkcZ/m6JlgAZx2On5riBtwmf2dQt0FL0086taXIVlPOpgYn
-	 jC+jevE63YMhXWkaWf3qyGZ36yYr/HzWMzPLbSzk=
+	b=JEvNzvEBUds5FTOz/V2PObFC5jf1tTaiewxxFJRs0Z77hHLqKcYDhLwHyyllj8JgD
+	 584wdu1PaQT/irYqJCwKXbpDu9paoHSzCcJ7I2hNh+XHSOG7raoNJe6yEGbxVQba5L
+	 84FmwKGn3XC2Vr/k9NIi5rJuV80lVAeh5ddTKErw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Martin Schiller <ms@dev.tdt.de>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 186/312] net/x25: Fix overflow when accumulating packets
-Date: Wed,  8 Apr 2026 20:01:43 +0200
-Message-ID: <20260408175940.708976344@linuxfoundation.org>
+Subject: [PATCH 6.1 187/312] net/sched: cls_fw: fix NULL pointer dereference on shared blocks
+Date: Wed,  8 Apr 2026 20:01:44 +0200
+Message-ID: <20260408175940.745136683@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,53 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Schiller <ms@dev.tdt.de>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit a1822cb524e89b4cd2cf0b82e484a2335496a6d9 ]
+[ Upstream commit faeea8bbf6e958bf3c00cb08263109661975987c ]
 
-Add a check to ensure that `x25_sock.fraglen` does not overflow.
+The old-method path in fw_classify() calls tcf_block_q() and
+dereferences q->handle.  Shared blocks leave block->q NULL, causing a
+NULL deref when an empty cls_fw filter is attached to a shared block
+and a packet with a nonzero major skb mark is classified.
 
-The `fraglen` also needs to be resetted when purging `fragment_queue` in
-`x25_clear_queues()`.
+Reject the configuration in fw_change() when the old method (no
+TCA_OPTIONS) is used on a shared block, since fw_classify()'s
+old-method path needs block->q which is NULL for shared blocks.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Suggested-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
-Link: https://patch.msgid.link/20260331-x25_fraglen-v4-2-3e69f18464b4@dev.tdt.de
+The fixed null-ptr-deref calling stack:
+ KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]
+ RIP: 0010:fw_classify (net/sched/cls_fw.c:81)
+ Call Trace:
+  tcf_classify (./include/net/tc_wrapper.h:197 net/sched/cls_api.c:1764 net/sched/cls_api.c:1860)
+  tc_run (net/core/dev.c:4401)
+  __dev_queue_xmit (net/core/dev.c:4535 net/core/dev.c:4790)
+
+Fixes: 1abf272022cf ("net: sched: tcindex, fw, flow: use tcf_block_q helper to get struct Qdisc")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260331050217.504278-1-xmei5@asu.edu
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/x25/x25_in.c   | 4 ++++
- net/x25/x25_subr.c | 1 +
- 2 files changed, 5 insertions(+)
+ net/sched/cls_fw.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/net/x25/x25_in.c b/net/x25/x25_in.c
-index 0dbc73efab1cb..e47ebd8acd21b 100644
---- a/net/x25/x25_in.c
-+++ b/net/x25/x25_in.c
-@@ -34,6 +34,10 @@ static int x25_queue_rx_frame(struct sock *sk, struct sk_buff *skb, int more)
- 	struct sk_buff *skbo, *skbn = skb;
- 	struct x25_sock *x25 = x25_sk(sk);
+diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
+index 6160ef7d646ac..366bcc960e43e 100644
+--- a/net/sched/cls_fw.c
++++ b/net/sched/cls_fw.c
+@@ -245,8 +245,18 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
+ 	struct nlattr *tb[TCA_FW_MAX + 1];
+ 	int err;
  
-+	/* make sure we don't overflow */
-+	if (x25->fraglen + skb->len > USHRT_MAX)
-+		return 1;
+-	if (!opt)
+-		return handle ? -EINVAL : 0; /* Succeed if it is old method. */
++	if (!opt) {
++		if (handle)
++			return -EINVAL;
 +
- 	if (more) {
- 		x25->fraglen += skb->len;
- 		skb_queue_tail(&x25->fragment_queue, skb);
-diff --git a/net/x25/x25_subr.c b/net/x25/x25_subr.c
-index 0285aaa1e93c1..159708d9ad20c 100644
---- a/net/x25/x25_subr.c
-+++ b/net/x25/x25_subr.c
-@@ -40,6 +40,7 @@ void x25_clear_queues(struct sock *sk)
- 	skb_queue_purge(&x25->interrupt_in_queue);
- 	skb_queue_purge(&x25->interrupt_out_queue);
- 	skb_queue_purge(&x25->fragment_queue);
-+	x25->fraglen = 0;
- }
++		if (tcf_block_shared(tp->chain->block)) {
++			NL_SET_ERR_MSG(extack,
++				       "Must specify mark when attaching fw filter to block");
++			return -EINVAL;
++		}
++
++		return 0; /* Succeed if it is old method. */
++	}
  
- 
+ 	err = nla_parse_nested_deprecated(tb, TCA_FW_MAX, opt, fw_policy,
+ 					  NULL);
 -- 
 2.53.0
 
