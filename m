@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B2826FA5A;
-	Wed,  8 Apr 2026 18:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7EF26FA5A;
+	Wed,  8 Apr 2026 18:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673047; cv=none; b=fgbBr6eXbaJcb/EcIt9PdyhyFHGMCUESHkDZlwA+wizIi6vImVevOWBWR9YkyIIEYdfJWGl5uxy496N85h9KtUoAZwaJbO33tsyNRGHRLechn6wSc3lGJwHCaCIFZSBgKf/PHuZGmjLmRC+1fOg6We3H2dkwOzfJcRSZIo1ez+M=
+	t=1775673049; cv=none; b=kXLqhRJHYRAdtKASaxLoyKABauFx5xBr+/xj6nzvN1QJu91SuTS2q2qU/SR9w3vP6qdg+hCCK1Lwcy05OfqNIWPYTeE+PIlHO22z74k7vHpFx7lgMNTAwu0PxF8BHdwc+Ym5hl0+FxssUz1Ag+cdWQE7gvfB9+JZR+2a8dojHAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673047; c=relaxed/simple;
-	bh=KGdplWXZVJ2lOq33oHu6bW+hn2/zHLaWCfJknMd6XwU=;
+	s=arc-20240116; t=1775673049; c=relaxed/simple;
+	bh=6KNo6czChJYp54Et2IFBSszvYfRqAZyot5dqzlRUKRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DbOJ1DvvF/IT1/44QsVCke0Wag7oZNruSdNX9ap5EztqMrp1m7igWIFN99JelHp9jocbqB1+tCSYtvZ706a6/krFWZENYX+77Qj3HtT/S3e8eyHsWFPmivMQuYk0mcL58lQRxlBBwu3nLSQ/0eP7MlG5S25Bv+NZmEU4ls27CIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oT9b0EqJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ItCUeq4CD2uIt4FZIhFACM+ldRnFULi91HBZ5BnaWLFdfnykID8z6eNyzA0UJvjCWA+vf2br9zZY2GqChRQKsy7Xmhx2XLakuRDyKGd3xPrqG67cR2r8mUuiBtLZdQCqKodXNU6CL1S69rxYwRi3EJQQKKQQ6HAao83Z9tPZtvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNaSIteI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oT9b0EqJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E24C19421;
-	Wed,  8 Apr 2026 18:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNaSIteI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D3AC19421;
+	Wed,  8 Apr 2026 18:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673047;
-	bh=KGdplWXZVJ2lOq33oHu6bW+hn2/zHLaWCfJknMd6XwU=;
+	s=korg; t=1775673049;
+	bh=6KNo6czChJYp54Et2IFBSszvYfRqAZyot5dqzlRUKRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oT9b0EqJkjgNyfdvjOMio1QveFvTYOwAGumprxbwcOhkf1BQ2FB2KiuXlrLpSgA4C
-	 vAPWSkQ/PnS1WNyDcS0hz5NMRV+9AtGj2/38ySv+s6ax4GkE7oTnk4RZz8rgybusoI
-	 EONeOlalFhAebF90/OgaPQC4Kc1G7xQHuoVZWX8Y=
+	b=MNaSIteIcXPLItcZNgGH6dnIoe2D9EKcZrv8ivCzvkuLl4MCpVXe6oklhdGshz2IX
+	 T5MSwiS6l5lAQkNUfXbwag7MVqMKSbdvgffzTlhfxuoKUJnFa0s9Xuoy3Z4e58qXO+
+	 DGryqSaYYh4Nw9mrPutjNQfr2iBdZIkHWs+0QU1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oskar Kjos <oskar.kjos@hotmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 038/277] ip6_tunnel: clear skb2->cb[] in ip4ip6_err()
-Date: Wed,  8 Apr 2026 20:00:23 +0200
-Message-ID: <20260408175935.277275926@linuxfoundation.org>
+Subject: [PATCH 6.18 074/277] netfilter: nf_conntrack_expect: store netns and zone in expectation
+Date: Wed,  8 Apr 2026 20:00:59 +0200
+Message-ID: <20260408175936.627190022@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -53,57 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 2edfa31769a4add828a7e604b21cb82aaaa05925 ]
+[ Upstream commit 02a3231b6d82efe750da6554ebf280e4a6f78756 ]
 
-Oskar Kjos reported the following problem.
+__nf_ct_expect_find() and nf_ct_expect_find_get() are called under
+rcu_read_lock() but they dereference the master conntrack via
+exp->master.
 
-ip4ip6_err() calls icmp_send() on a cloned skb whose cb[] was written
-by the IPv6 receive path as struct inet6_skb_parm. icmp_send() passes
-IPCB(skb2) to __ip_options_echo(), which interprets that cb[] region
-as struct inet_skb_parm (IPv4). The layouts differ: inet6_skb_parm.nhoff
-at offset 14 overlaps inet_skb_parm.opt.rr, producing a non-zero rr
-value. __ip_options_echo() then reads optlen from attacker-controlled
-packet data at sptr[rr+1] and copies that many bytes into dopt->__data,
-a fixed 40-byte stack buffer (IP_OPTIONS_DATA_FIXED_SIZE).
+Since the expectation does not hold a reference on the master conntrack,
+this could be dying conntrack or different recycled conntrack than the
+real master due to SLAB_TYPESAFE_RCU.
 
-To fix this we clear skb2->cb[], as suggested by Oskar Kjos.
+Store the netns, the master_tuple and the zone in struct
+nf_conntrack_expect as a safety measure.
 
-Also add minimal IPv4 header validation (version == 4, ihl >= 5).
+This patch is required by the follow up fix not to dump expectations
+that do not belong to this netns.
 
-Fixes: c4d3efafcc93 ("[IPV6] IP6TUNNEL: Add support to IPv4 over IPv6 tunnel.")
-Reported-by: Oskar Kjos <oskar.kjos@hotmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260326155138.2429480-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 917b61fa2042 ("netfilter: ctnetlink: ignore explicit helper on new expectations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_tunnel.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/net/netfilter/nf_conntrack_expect.h | 18 +++++++++++++++++-
+ net/netfilter/nf_conntrack_broadcast.c      |  6 +++++-
+ net/netfilter/nf_conntrack_expect.c         |  9 +++++++--
+ net/netfilter/nf_conntrack_netlink.c        |  5 +++++
+ 4 files changed, 34 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index c1f39735a2367..9e2449db0bdf2 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -601,11 +601,16 @@ ip4ip6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 	if (!skb2)
- 		return 0;
+diff --git a/include/net/netfilter/nf_conntrack_expect.h b/include/net/netfilter/nf_conntrack_expect.h
+index 1b01400b10bdb..e9a8350e7ccfb 100644
+--- a/include/net/netfilter/nf_conntrack_expect.h
++++ b/include/net/netfilter/nf_conntrack_expect.h
+@@ -22,10 +22,16 @@ struct nf_conntrack_expect {
+ 	/* Hash member */
+ 	struct hlist_node hnode;
  
-+	/* Remove debris left by IPv6 stack. */
-+	memset(IPCB(skb2), 0, sizeof(*IPCB(skb2)));
++	/* Network namespace */
++	possible_net_t net;
 +
- 	skb_dst_drop(skb2);
+ 	/* We expect this tuple, with the following mask */
+ 	struct nf_conntrack_tuple tuple;
+ 	struct nf_conntrack_tuple_mask mask;
  
- 	skb_pull(skb2, offset);
- 	skb_reset_network_header(skb2);
- 	eiph = ip_hdr(skb2);
-+	if (eiph->version != 4 || eiph->ihl < 5)
-+		goto out;
++#ifdef CONFIG_NF_CONNTRACK_ZONES
++	struct nf_conntrack_zone zone;
++#endif
+ 	/* Usage count. */
+ 	refcount_t use;
  
- 	/* Try to guess incoming interface */
- 	rt = ip_route_output_ports(dev_net(skb->dev), &fl4, NULL, eiph->saddr,
+@@ -62,7 +68,17 @@ struct nf_conntrack_expect {
+ 
+ static inline struct net *nf_ct_exp_net(struct nf_conntrack_expect *exp)
+ {
+-	return nf_ct_net(exp->master);
++	return read_pnet(&exp->net);
++}
++
++static inline bool nf_ct_exp_zone_equal_any(const struct nf_conntrack_expect *a,
++					    const struct nf_conntrack_zone *b)
++{
++#ifdef CONFIG_NF_CONNTRACK_ZONES
++	return a->zone.id == b->id;
++#else
++	return true;
++#endif
+ }
+ 
+ #define NF_CT_EXP_POLICY_NAME_LEN	16
+diff --git a/net/netfilter/nf_conntrack_broadcast.c b/net/netfilter/nf_conntrack_broadcast.c
+index 1964c596c6468..4f39bf7c843f2 100644
+--- a/net/netfilter/nf_conntrack_broadcast.c
++++ b/net/netfilter/nf_conntrack_broadcast.c
+@@ -21,6 +21,7 @@ int nf_conntrack_broadcast_help(struct sk_buff *skb,
+ 				unsigned int timeout)
+ {
+ 	const struct nf_conntrack_helper *helper;
++	struct net *net = read_pnet(&ct->ct_net);
+ 	struct nf_conntrack_expect *exp;
+ 	struct iphdr *iph = ip_hdr(skb);
+ 	struct rtable *rt = skb_rtable(skb);
+@@ -71,7 +72,10 @@ int nf_conntrack_broadcast_help(struct sk_buff *skb,
+ 	exp->flags                = NF_CT_EXPECT_PERMANENT;
+ 	exp->class		  = NF_CT_EXPECT_CLASS_DEFAULT;
+ 	rcu_assign_pointer(exp->helper, helper);
+-
++	write_pnet(&exp->net, net);
++#ifdef CONFIG_NF_CONNTRACK_ZONES
++	exp->zone = ct->zone;
++#endif
+ 	nf_ct_expect_related(exp, 0);
+ 	nf_ct_expect_put(exp);
+ 
+diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
+index b37ff73efb3e2..2234c444a320e 100644
+--- a/net/netfilter/nf_conntrack_expect.c
++++ b/net/netfilter/nf_conntrack_expect.c
+@@ -112,8 +112,8 @@ nf_ct_exp_equal(const struct nf_conntrack_tuple *tuple,
+ 		const struct net *net)
+ {
+ 	return nf_ct_tuple_mask_cmp(tuple, &i->tuple, &i->mask) &&
+-	       net_eq(net, nf_ct_net(i->master)) &&
+-	       nf_ct_zone_equal_any(i->master, zone);
++	       net_eq(net, read_pnet(&i->net)) &&
++	       nf_ct_exp_zone_equal_any(i, zone);
+ }
+ 
+ bool nf_ct_remove_expect(struct nf_conntrack_expect *exp)
+@@ -321,6 +321,7 @@ void nf_ct_expect_init(struct nf_conntrack_expect *exp, unsigned int class,
+ {
+ 	struct nf_conntrack_helper *helper = NULL;
+ 	struct nf_conn *ct = exp->master;
++	struct net *net = read_pnet(&ct->ct_net);
+ 	struct nf_conn_help *help;
+ 	int len;
+ 
+@@ -338,6 +339,10 @@ void nf_ct_expect_init(struct nf_conntrack_expect *exp, unsigned int class,
+ 		helper = rcu_dereference(help->helper);
+ 
+ 	rcu_assign_pointer(exp->helper, helper);
++	write_pnet(&exp->net, net);
++#ifdef CONFIG_NF_CONNTRACK_ZONES
++	exp->zone = ct->zone;
++#endif
+ 	exp->tuple.src.l3num = family;
+ 	exp->tuple.dst.protonum = proto;
+ 
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index f00afa6648376..8c5ae0665eaa4 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3521,6 +3521,7 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 		       struct nf_conntrack_tuple *tuple,
+ 		       struct nf_conntrack_tuple *mask)
+ {
++	struct net *net = read_pnet(&ct->ct_net);
+ 	struct nf_conntrack_expect *exp;
+ 	struct nf_conn_help *help;
+ 	u32 class = 0;
+@@ -3560,6 +3561,10 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 
+ 	exp->class = class;
+ 	exp->master = ct;
++	write_pnet(&exp->net, net);
++#ifdef CONFIG_NF_CONNTRACK_ZONES
++	exp->zone = ct->zone;
++#endif
+ 	if (!helper)
+ 		helper = rcu_dereference(help->helper);
+ 	rcu_assign_pointer(exp->helper, helper);
 -- 
 2.53.0
 
