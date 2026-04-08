@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C063B0AFC;
-	Wed,  8 Apr 2026 18:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE3132A3FD;
+	Wed,  8 Apr 2026 18:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673751; cv=none; b=DozEu8ok8A85DeYwE/kU++ABiMLHnuNulIg2EFgo91BpNwcxpVWJ9oG05s5XxHX9vG1oYb0cmjKMcGQinPqWhx0uQQPB37cU97TiJtBzE5D2w0mkNlRYkVB4bOWJbkx1V7rXFmFK1xrwQRmELwxmBRrCQ9V4/ogrO9SmVrkX5FE=
+	t=1775673753; cv=none; b=pVXtSnUD4bx39L0hkC4vZAgA0Qg/rBTWYQ8T7AKMh4yp+FDAN/hh6+wOK/uCKyjLc6ejTqBEh/OGKJY8THF1EZSafJdWh225GZvpsjXyEme3iQvvLYv/knQLBNMi9kPXWizHuXRtq587MR6Erk5OThKLJa2DK+o5qf9sIz7awks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673751; c=relaxed/simple;
-	bh=cl/HefTZwC6ZcBrFJbpIILahK0ggyw5uME+OdteULq0=;
+	s=arc-20240116; t=1775673753; c=relaxed/simple;
+	bh=X8xKL0zaf8uYiWU3qid33Nra1xTSPOS5aEZuATTQlyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GxjFZgsDuwWlfJVAA3PAoQJB85U/lq2bGAUjUTbpIBqkqr5lOuHIb3bSapzayoHspg4pc3jMGLc2WQLdglazBylb+0ZnrhmgQxxfColVZyhWkkwm4XxRgi7w61mihujrOwO7smFz2ec//4SaDFRgX1WyCOsW21rsfLtM3xI8Z7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAE9qdoJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oKj4tj90ppXesVcfM6f8Z8MNVDUEpwjTqh3ImTd5nBlcRX2OO7zvzwTSZRuhd5LKt1TQXZDu7GqFREOZvcN+6F/gGNE8/iDuaTufDl+wDrzv8KH68UAGBNRtMJe6ZblXikMDF7vofOu7Y0JVBCJysMHYwUmMDD0QiVCJpKUPB8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpKb0nQM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAE9qdoJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A95C19421;
-	Wed,  8 Apr 2026 18:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpKb0nQM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C94C19421;
+	Wed,  8 Apr 2026 18:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673750;
-	bh=cl/HefTZwC6ZcBrFJbpIILahK0ggyw5uME+OdteULq0=;
+	s=korg; t=1775673753;
+	bh=X8xKL0zaf8uYiWU3qid33Nra1xTSPOS5aEZuATTQlyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAE9qdoJIqFTszuAodRUtl17Q4hmunSMVZZd44GiCEAG8mtMvnRx/33Dq02JiPksX
-	 QyQKl5hTBtXcOfHMWEapzH0TcCP2Y1S5+qpm3zOfNRY4R8sFrx9SyR0IE2DzfoS98U
-	 mIJNJAMHIftqsHbnMCS+3bQ6mOf6i32uKkc3b2Sw=
+	b=jpKb0nQMXkqELBZmIftHdF+cRlKAjzqG1KuzLcWdr11s701UAaXmAVlTI9Od9PhjG
+	 Fb84WTO85rTw2tdCt1EpICY3M57d92GdfTdQ/DR4M88BfPhW6Ps6Sl9oFTm7MRXyPp
+	 AYg1O4azs9qeBvU1bIzxxwdrsxYo6n6R8HJFAL1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Horia=20Geant=C4=83?= <horia.geanta@nxp.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/242] crypto: caam - fix overflow on long hmac keys
-Date: Wed,  8 Apr 2026 20:01:23 +0200
-Message-ID: <20260408175928.684563440@linuxfoundation.org>
+Subject: [PATCH 6.12 034/242] HID: logitech-hidpp: Prevent use-after-free on force feedback initialisation failure
+Date: Wed,  8 Apr 2026 20:01:14 +0200
+Message-ID: <20260408175928.348708808@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,43 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horia Geantă <horia.geanta@nxp.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 80688afb9c35b3934ce2d6be9973758915e2e0ef ]
+[ Upstream commit f7a4c78bfeb320299c1b641500fe7761eadbd101 ]
 
-When a key longer than block size is supplied, it is copied and then
-hashed into the real key.  The memory allocated for the copy needs to
-be rounded to DMA cache alignment, as otherwise the hashed key may
-corrupt neighbouring memory.
+Presently, if the force feedback initialisation fails when probing the
+Logitech G920 Driving Force Racing Wheel for Xbox One, an error number
+will be returned and propagated before the userspace infrastructure
+(sysfs and /dev/input) has been torn down.  If userspace ignores the
+errors and continues to use its references to these dangling entities, a
+UAF will promptly follow.
 
-The copying is performed using kmemdup, however this leads to an overflow:
-reading more bytes (aligned_len - keylen) from the keylen source buffer.
-Fix this by replacing kmemdup with kmalloc, followed by memcpy.
+We have 2 options; continue to return the error, but ensure that all of
+the infrastructure is torn down accordingly or continue to treat this
+condition as a warning by emitting the message but returning success.
+It is thought that the original author's intention was to emit the
+warning but keep the device functional, less the force feedback feature,
+so let's go with that.
 
-Fixes: 199354d7fb6e ("crypto: caam - Remove GFP_DMA and add DMA alignment padding")
-Signed-off-by: Horia Geantă <horia.geanta@nxp.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/caam/caamalg_qi2.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/hid-logitech-hidpp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/caam/caamalg_qi2.c b/drivers/crypto/caam/caamalg_qi2.c
-index ece9f1e5a689f..9ef8ee77c52aa 100644
---- a/drivers/crypto/caam/caamalg_qi2.c
-+++ b/drivers/crypto/caam/caamalg_qi2.c
-@@ -3325,9 +3325,10 @@ static int ahash_setkey(struct crypto_ahash *ahash, const u8 *key,
- 		if (aligned_len < keylen)
- 			return -EOVERFLOW;
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index c9df222e894a1..d60cd4379e866 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4514,10 +4514,12 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		if (!ret)
+ 			ret = hidpp_ff_init(hidpp, &data);
  
--		hashed_key = kmemdup(key, aligned_len, GFP_KERNEL);
-+		hashed_key = kmalloc(aligned_len, GFP_KERNEL);
- 		if (!hashed_key)
- 			return -ENOMEM;
-+		memcpy(hashed_key, key, keylen);
- 		ret = hash_digest_key(ctx, &keylen, hashed_key, digestsize);
- 		if (ret)
- 			goto bad_free_key;
+-		if (ret)
++		if (ret) {
+ 			hid_warn(hidpp->hid_dev,
+ 		     "Unable to initialize force feedback support, errno %d\n",
+ 				 ret);
++			ret = 0;
++		}
+ 	}
+ 
+ 	/*
 -- 
 2.53.0
 
