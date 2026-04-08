@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EAF3537EF;
-	Wed,  8 Apr 2026 18:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDE53ACF13;
+	Wed,  8 Apr 2026 18:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672824; cv=none; b=NDJG6NdEzFvj+qtyJmDocBbLKDS0lJxs0V56FNdn8Z25ayC8Fqzek1LDGSLXfzP8u782kpbeDTwfBHBnpRnrBMKvu1RxAN+/DfO4ush5sLzCQ2McmkXZG/hLsUbSfM0jfKRJS1bsP0IMuAj+xMathpGODMiIE8LHzxFzuuuVshg=
+	t=1775672827; cv=none; b=Qq0ZnLXW8p+BewXKa8qqlRhJvTopEuswp/sOdLPQXmxmbBiRo+wXoGgkCRFk8B7DxkzUYaXR4lzNURDUctcBtSoh4vdkvt/xiv/F0skJwc7HivDcT8cIv3L6AWfq82OCXqpzOKlFpqKHxc0t/W/hZvpf82qRev85vTqySvg44iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672824; c=relaxed/simple;
-	bh=i74bwffvYDm4lfyypdi2kBdj3+cIF4xSElw4K0cqaQE=;
+	s=arc-20240116; t=1775672827; c=relaxed/simple;
+	bh=fFDGMXFfeSBbcV6QZ+4SnGMfm0gMfeOELttuZilbbkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2aFffmv0M1QD9t67Rj+nIjkrf85QnjqiS/R+r1Zk+Vf06Jntw17uSXKqe49EGOTW579nqIrYJ0kwI1JhuPgJH8C/8h5I8SdFdagPfm8SA2EbJZ/peRlZ4RL78S2W4pK+RZ6gRIaM/TOWUsTXlbPphLo5WzI/xaSfDFtSh+r6Vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9a6sNx5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V2YYyRNI+PDppWzbO5awA6WiPiC/mUhzBa9w55+02DcVFyRQfYqsQsSGkEZp5cMegu8YEbwgAfSe/3i9nfH7nci1nbJlb+6NjxtxKnZCKBdaV7eaOvb+Y/FMJvEmE/4fO/Zj97LzC14CSO3SgUunt1NLhLkXicxAYFWC9XXUm5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZ6rfGlo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9a6sNx5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472E2C19421;
-	Wed,  8 Apr 2026 18:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZ6rfGlo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8832C19421;
+	Wed,  8 Apr 2026 18:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672824;
-	bh=i74bwffvYDm4lfyypdi2kBdj3+cIF4xSElw4K0cqaQE=;
+	s=korg; t=1775672827;
+	bh=fFDGMXFfeSBbcV6QZ+4SnGMfm0gMfeOELttuZilbbkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9a6sNx5BFAhZdpoC7pT3u/Tc2iqdrUpEuh6PL4yl6LnQmI/18p2B3hwdm6VzJ6Zt
-	 Bv/oYpHF4zGFcf56OxsQ9I1HhXQj2dYR6eyHNq/xxYhcPdLv1iiPWsGeoZnCnz3j6F
-	 BDRy1mvsyLC7VMseycPV2Mtp64TUHz5SDb27Zmwo=
+	b=uZ6rfGloCPY074ujk4GyJDFLM6zM2aDh9g5YuuHbJRS/beWm4ZRI5JbXaFp7iI2td
+	 YDyseKwwInYCwLUvpZAiD1DsoBz1xolreySZBh1JkHRsw8zHQmwCzicjDebnaLiMOC
+	 x8EjiZHsqY7u5cdUY1tPvCyNdyzswre7g0uI+Z8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joy Zou <joy.zou@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Li Chen <me@linux.beauty>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/160] dmaengine: fsl-edma: fix channel parameter config for fixed channel requests
-Date: Wed,  8 Apr 2026 20:04:03 +0200
-Message-ID: <20260408175919.026836901@linuxfoundation.org>
+Subject: [PATCH 6.6 157/160] ext4: publish jinode after initialization
+Date: Wed,  8 Apr 2026 20:04:04 +0200
+Message-ID: <20260408175919.066572155@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -52,76 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joy Zou <joy.zou@nxp.com>
+From: Li Chen <me@linux.beauty>
 
-[ Upstream commit 2e7b5cf72e51c9cf9c8b75190189c757df31ddd9 ]
+[ Upstream commit 1aec30021edd410b986c156f195f3d23959a9d11 ]
 
-Configure only the requested channel when a fixed channel is specified
-to avoid modifying other channels unintentionally.
+ext4_inode_attach_jinode() publishes ei->jinode to concurrent users.
+It used to set ei->jinode before jbd2_journal_init_jbd_inode(),
+allowing a reader to observe a non-NULL jinode with i_vfs_inode
+still unset.
 
-Fix parameter configuration when a fixed DMA channel is requested on
-i.MX9 AON domain and i.MX8QM/QXP/DXL platforms. When a client requests
-a fixed channel (e.g., channel 6), the driver traverses channels 0-5
-and may unintentionally modify their configuration if they are unused.
+The fast commit flush path can then pass this jinode to
+jbd2_wait_inode_data(), which dereferences i_vfs_inode->i_mapping and
+may crash.
 
-This leads to issues such as setting the `is_multi_fifo` flag unexpectedly,
-causing memcpy tests to fail when using the dmatest tool.
+Below is the crash I observe:
+```
+BUG: unable to handle page fault for address: 000000010beb47f4
+PGD 110e51067 P4D 110e51067 PUD 0
+Oops: Oops: 0000 [#1] SMP NOPTI
+CPU: 1 UID: 0 PID: 4850 Comm: fc_fsync_bench_ Not tainted 6.18.0-00764-g795a690c06a5 #1 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.17.0-2-2 04/01/2014
+RIP: 0010:xas_find_marked+0x3d/0x2e0
+Code: e0 03 48 83 f8 02 0f 84 f0 01 00 00 48 8b 47 08 48 89 c3 48 39 c6 0f 82 fd 01 00 00 48 85 c9 74 3d 48 83 f9 03 77 63 4c 8b 0f <49> 8b 71 08 48 c7 47 18 00 00 00 00 48 89 f1 83 e1 03 48 83 f9 02
+RSP: 0018:ffffbbee806e7bf0 EFLAGS: 00010246
+RAX: 000000000010beb4 RBX: 000000000010beb4 RCX: 0000000000000003
+RDX: 0000000000000001 RSI: 0000002000300000 RDI: ffffbbee806e7c10
+RBP: 0000000000000001 R08: 0000002000300000 R09: 000000010beb47ec
+R10: ffff9ea494590090 R11: 0000000000000000 R12: 0000002000300000
+R13: ffffbbee806e7c90 R14: ffff9ea494513788 R15: ffffbbee806e7c88
+FS: 00007fc2f9e3e6c0(0000) GS:ffff9ea6b1444000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000010beb47f4 CR3: 0000000119ac5000 CR4: 0000000000750ef0
+PKRU: 55555554
+Call Trace:
+<TASK>
+filemap_get_folios_tag+0x87/0x2a0
+__filemap_fdatawait_range+0x5f/0xd0
+? srso_alias_return_thunk+0x5/0xfbef5
+? __schedule+0x3e7/0x10c0
+? srso_alias_return_thunk+0x5/0xfbef5
+? srso_alias_return_thunk+0x5/0xfbef5
+? srso_alias_return_thunk+0x5/0xfbef5
+? preempt_count_sub+0x5f/0x80
+? srso_alias_return_thunk+0x5/0xfbef5
+? cap_safe_nice+0x37/0x70
+? srso_alias_return_thunk+0x5/0xfbef5
+? preempt_count_sub+0x5f/0x80
+? srso_alias_return_thunk+0x5/0xfbef5
+filemap_fdatawait_range_keep_errors+0x12/0x40
+ext4_fc_commit+0x697/0x8b0
+? ext4_file_write_iter+0x64b/0x950
+? srso_alias_return_thunk+0x5/0xfbef5
+? preempt_count_sub+0x5f/0x80
+? srso_alias_return_thunk+0x5/0xfbef5
+? vfs_write+0x356/0x480
+? srso_alias_return_thunk+0x5/0xfbef5
+? preempt_count_sub+0x5f/0x80
+ext4_sync_file+0xf7/0x370
+do_fsync+0x3b/0x80
+? syscall_trace_enter+0x108/0x1d0
+__x64_sys_fdatasync+0x16/0x20
+do_syscall_64+0x62/0x2c0
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+...
+```
 
-Only affect edma memcpy test when the channel is fixed.
+Fix this by initializing the jbd2_inode first.
+Use smp_wmb() and WRITE_ONCE() to publish ei->jinode after
+initialization. Readers use READ_ONCE() to fetch the pointer.
 
-Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
-Signed-off-by: Joy Zou <joy.zou@nxp.com>
+Fixes: a361293f5fede ("jbd2: Fix oops in jbd2_journal_file_inode()")
 Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250917-b4-edma-chanconf-v1-1-886486e02e91@nxp.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Li Chen <me@linux.beauty>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260225082617.147957-1-me@linux.beauty
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ adapted READ_ONCE(ei->jinode) to use pos->jinode ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/fsl-edma-main.c |   26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ fs/ext4/fast_commit.c |    4 ++--
+ fs/ext4/inode.c       |   15 +++++++++++----
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/dma/fsl-edma-main.c
-+++ b/drivers/dma/fsl-edma-main.c
-@@ -152,10 +152,8 @@ static struct dma_chan *fsl_edma3_xlate(
- 		fsl_chan = to_fsl_edma_chan(chan);
- 		i = fsl_chan - fsl_edma->chans;
- 
--		fsl_chan->priority = dma_spec->args[1];
--		fsl_chan->is_rxchan = dma_spec->args[2] & FSL_EDMA_RX;
--		fsl_chan->is_remote = dma_spec->args[2] & FSL_EDMA_REMOTE;
--		fsl_chan->is_multi_fifo = dma_spec->args[2] & FSL_EDMA_MULTI_FIFO;
-+		if (!b_chmux && i != dma_spec->args[0])
-+			continue;
- 
- 		if ((dma_spec->args[2] & FSL_EDMA_EVEN_CH) && (i & 0x1))
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -997,7 +997,7 @@ static int ext4_fc_submit_inode_data_all
+ 			finish_wait(&ei->i_fc_wait, &wait);
+ 		}
+ 		spin_unlock(&sbi->s_fc_lock);
+-		ret = jbd2_submit_inode_data(journal, ei->jinode);
++		ret = jbd2_submit_inode_data(journal, READ_ONCE(ei->jinode));
+ 		if (ret)
+ 			return ret;
+ 		spin_lock(&sbi->s_fc_lock);
+@@ -1022,7 +1022,7 @@ static int ext4_fc_wait_inode_data_all(j
  			continue;
-@@ -163,17 +161,15 @@ static struct dma_chan *fsl_edma3_xlate(
- 		if ((dma_spec->args[2] & FSL_EDMA_ODD_CH) && !(i & 0x1))
- 			continue;
+ 		spin_unlock(&sbi->s_fc_lock);
  
--		if (!b_chmux && i == dma_spec->args[0]) {
--			chan = dma_get_slave_channel(chan);
--			chan->device->privatecnt++;
--			return chan;
--		} else if (b_chmux && !fsl_chan->srcid) {
--			/* if controller support channel mux, choose a free channel */
--			chan = dma_get_slave_channel(chan);
--			chan->device->privatecnt++;
--			fsl_chan->srcid = dma_spec->args[0];
--			return chan;
--		}
-+		fsl_chan->srcid = dma_spec->args[0];
-+		fsl_chan->priority = dma_spec->args[1];
-+		fsl_chan->is_rxchan = dma_spec->args[2] & FSL_EDMA_RX;
-+		fsl_chan->is_remote = dma_spec->args[2] & FSL_EDMA_REMOTE;
-+		fsl_chan->is_multi_fifo = dma_spec->args[2] & FSL_EDMA_MULTI_FIFO;
+-		ret = jbd2_wait_inode_data(journal, pos->jinode);
++		ret = jbd2_wait_inode_data(journal, READ_ONCE(pos->jinode));
+ 		if (ret)
+ 			return ret;
+ 		spin_lock(&sbi->s_fc_lock);
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -123,6 +123,8 @@ void ext4_inode_csum_set(struct inode *i
+ static inline int ext4_begin_ordered_truncate(struct inode *inode,
+ 					      loff_t new_size)
+ {
++	struct jbd2_inode *jinode = READ_ONCE(EXT4_I(inode)->jinode);
 +
-+		chan = dma_get_slave_channel(chan);
-+		chan->device->privatecnt++;
-+		return chan;
- 	}
- 	return NULL;
+ 	trace_ext4_begin_ordered_truncate(inode, new_size);
+ 	/*
+ 	 * If jinode is zero, then we never opened the file for
+@@ -130,10 +132,10 @@ static inline int ext4_begin_ordered_tru
+ 	 * jbd2_journal_begin_ordered_truncate() since there's no
+ 	 * outstanding writes we need to flush.
+ 	 */
+-	if (!EXT4_I(inode)->jinode)
++	if (!jinode)
+ 		return 0;
+ 	return jbd2_journal_begin_ordered_truncate(EXT4_JOURNAL(inode),
+-						   EXT4_I(inode)->jinode,
++						   jinode,
+ 						   new_size);
  }
+ 
+@@ -4160,8 +4162,13 @@ int ext4_inode_attach_jinode(struct inod
+ 			spin_unlock(&inode->i_lock);
+ 			return -ENOMEM;
+ 		}
+-		ei->jinode = jinode;
+-		jbd2_journal_init_jbd_inode(ei->jinode, inode);
++		jbd2_journal_init_jbd_inode(jinode, inode);
++		/*
++		 * Publish ->jinode only after it is fully initialized so that
++		 * readers never observe a partially initialized jbd2_inode.
++		 */
++		smp_wmb();
++		WRITE_ONCE(ei->jinode, jinode);
+ 		jinode = NULL;
+ 	}
+ 	spin_unlock(&inode->i_lock);
 
 
