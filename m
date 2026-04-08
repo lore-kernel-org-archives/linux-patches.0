@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A752F3D411F;
-	Wed,  8 Apr 2026 18:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEE23D9030;
+	Wed,  8 Apr 2026 18:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672613; cv=none; b=eYfr23FaDZT6Zygugmc5kW09ihPKAbP5n8684TuZYZjXxyRsAlaWHd0wZ0UytVCl6Mh1E0MKi+zbgVMXYp48F8gqjY0nBi3UTHLcdOEjDVBgrX+F57dgWzoHXzUdAYY9tDPmrWAGxY/LON9bzvYoG/EFjxWG0MfDH2qkCKY0voE=
+	t=1775672616; cv=none; b=AHLdmaxrEen0bMQRn9keH1IcLtWvFudNMxXPdmqS6OoZzqRna8zP5L6rCeYh2tor97k25o5CI2AxbtodFlsxK9esyoR3tpCrIMMqeasaGDVrqJRhuSOqHeztL6vPNUq+AL4mYZXbvfxKsrGvofq04a/OFOzmJ5lODh5FsSDcKWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672613; c=relaxed/simple;
-	bh=f9GV3IPL7xnY9eM1X2SRNfXfvFqzZUAiDWCzGNR5Kl0=;
+	s=arc-20240116; t=1775672616; c=relaxed/simple;
+	bh=fdaK+kn3jTHpAJVxKMsHteeL4vc0zcz3lvEt2pF4uFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRso02ir22qBnJRc+0gf5qEWUkYo3ral6Zs2/2XOOtOtJdcJOek1kwRT1k30s9zPPhAjikJAi2yDHZsQp5Mln5ZfUjAxaSsQ8pLckFHP48SERFG3KFLmxGpKmFC+f9XROq7kwEk0P+LbEfCXbEqfruf/ZZ/Kj9y5slIgsBkBksI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2p2XU+f/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdHECtgkaZ7quXx1CU4hEQncqDxuq/cS95XWbMLRgVp0YqfhsZIgGGZ3qi1/KE4FfrVPqT0w8K6Npi20QfPJRraRMRITuwRLUAw0SZH9RXCIbx5vIgfgjKe3Z5FEdX81cKJMPOGRb79DZe/0XSYrYLChNFIFyMud/OIo9T5+FEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvz+jCCC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2p2XU+f/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFE3C19421;
-	Wed,  8 Apr 2026 18:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvz+jCCC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CD6C19421;
+	Wed,  8 Apr 2026 18:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672613;
-	bh=f9GV3IPL7xnY9eM1X2SRNfXfvFqzZUAiDWCzGNR5Kl0=;
+	s=korg; t=1775672615;
+	bh=fdaK+kn3jTHpAJVxKMsHteeL4vc0zcz3lvEt2pF4uFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2p2XU+f/xRKjMKj17K6tX8PhIGn0EIdjb4914thqxfMrSfK10PzcFPqmLM6Eq0TT+
-	 o/TlHEwSj06JzJ+Y/zxUP6MVLnXwfrMQYjmyvgW7UksKEzQCtZ+SxRVTSpjXrb1V0w
-	 MAFSSLoQCszz/FEKMRkcVNk0OIc01AFx8BjNy1BU=
+	b=uvz+jCCCIiMsQqab6S0F8nZQNP/ptubatKigqxXOjSyn3IcaSBV2w+xjPdO0zF5jo
+	 ctfs6GSflj6ynK7G1Q7HxliWRx+Vr4eWjIwVCA7sbIPZsy5h01W56+6ixS8v/t5y4P
+	 RStl2kfp6V0LI/fPxGs3jYZFp5XsDB5+aRoGMYek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 075/160] wifi: iwlwifi: mvm: fix potential out-of-bounds read in iwl_mvm_nd_match_info_handler()
-Date: Wed,  8 Apr 2026 20:02:42 +0200
-Message-ID: <20260408175915.999911147@linuxfoundation.org>
+	Ernestas Kulik <ernestas.k@iconn-networks.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 076/160] USB: serial: option: add MeiG Smart SRM825WN
+Date: Wed,  8 Apr 2026 20:02:43 +0200
+Message-ID: <20260408175916.036470083@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -50,37 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
+From: Ernestas Kulik <ernestas.k@iconn-networks.com>
 
-commit 744fabc338e87b95c4d1ff7c95bc8c0f834c6d99 upstream.
+commit e8d0ed37bd51da52da6225d278e330c2f18a6198 upstream.
 
-The memcpy function assumes the dynamic array notif->matches is at least
-as large as the number of bytes to copy. Otherwise, results->matches may
-contain unwanted data. To guarantee safety, extend the validation in one
-of the checks to ensure sufficient packet length.
+Add support for the SDX62-based MeiG Smart SRM825WN module.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+If#= 0: RNDIS
+If#= 1: RNDIS
+If#= 2: Diag
+If#= 3: AT
+If#= 4: AT
+If#= 5: NMEA
 
+T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#= 19 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2dee ProdID=4d38 Rev= 5.04
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=da47a175
+C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
+E:  Ad=81(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Ernestas Kulik <ernestas.k@iconn-networks.com>
 Cc: stable@vger.kernel.org
-Fixes: 5ac54afd4d97 ("wifi: iwlwifi: mvm: Add handling for scan offload match info notification")
-Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
-Link: https://patch.msgid.link/20260207150335.1013646-1-a.velichayshiy@ispras.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -2863,7 +2863,7 @@ static void iwl_mvm_nd_match_info_handle
- 	if (IS_ERR_OR_NULL(vif))
- 		return;
- 
--	if (len < sizeof(struct iwl_scan_offload_match_info)) {
-+	if (len < sizeof(struct iwl_scan_offload_match_info) + matches_len) {
- 		IWL_ERR(mvm, "Invalid scan match info notification\n");
- 		return;
- 	}
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2441,6 +2441,9 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM825WN (Diag) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825WN (AT) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825WN (NMEA) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
 
 
