@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C072494F0;
-	Wed,  8 Apr 2026 18:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D53A3B0ADA;
+	Wed,  8 Apr 2026 18:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672930; cv=none; b=kIKOiA+xXXMltd+ClSnNhVBX5FPFRQg3jPDonLobQH5WePI08QPN+iECfQ1Er+p7Lc0ozlsjOL1C0yFq8o+Mu+SA84A2Vnl/0GfldVzYLazldP/hQ+RIC3YhzA/iLz9z/06VsOCBiwwUJ6/Bh7RBR1ZPP5FBS+CJ3Q6I+R1ZPxg=
+	t=1775672933; cv=none; b=ihye5kSeVwR5mRMGZvshwslPSj5fcUvv+kK6BADKPBNXc0dEpOuv3QMmbun7ACozalQtvb7+73tvbRNpvk1cdan6NJ3KC8vS4W2amO+roHPBdvskdzHkMzPnWASmbOq9runugJ4BEBzZ6WqFGXxt8PRGzKw+jU30n/DNNeYwrHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672930; c=relaxed/simple;
-	bh=Fa7o4+lpXBr9kkTvG7ijtPfWlgcuo8EgYmC6pcUB5g8=;
+	s=arc-20240116; t=1775672933; c=relaxed/simple;
+	bh=a2qWKsT4iBq8ZofHpRPZmw+LmUzrHfDQeYVBtyr2QMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rkc0ICkJWgL/4q6lp9Th8XIOR/cAGl47ICkU+xaEDzY0ryHEznV0Ce8JPS6xNK2psl84TO4XbQaI52xCaF82idAwTiOxPCedhaXD5AQcNVaPZE8S2yHtf3AI4jP4bGi6xtuC8MqR+Sb4LrNEJC6jnKqsVDJLIFlOrztLGHfPvO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnC5fSGW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pITncexwUsk9QccdYnSZtU+/ioa1v8CRhh3Z1M9SByUXNNvcYfYL0o46OzCgh1w6urHmRDJ4BX70iWZlXyks1RaT8L8t3rU0Ty3gcFAmr8cdK8qGrQ+9z6I7VEQJwLc0759ko4ArUUt3SbTgwNXVnNVbtSUZEuKK8uhD/SdpWFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKjYIiT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnC5fSGW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E6BC19421;
-	Wed,  8 Apr 2026 18:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKjYIiT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC514C19421;
+	Wed,  8 Apr 2026 18:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672930;
-	bh=Fa7o4+lpXBr9kkTvG7ijtPfWlgcuo8EgYmC6pcUB5g8=;
+	s=korg; t=1775672933;
+	bh=a2qWKsT4iBq8ZofHpRPZmw+LmUzrHfDQeYVBtyr2QMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wnC5fSGW2KPnHE1HbQSfMaSlMg5Pfax57RGMVoGzBsScaz0JVpKmbchq/wkF/lOQ+
-	 4JZCuqWe/rh8htlIyyQBm+V3hm3PNYJgMs5c9trDXya6bgVXvUIGEpCPui3rfYnoyF
-	 e6In+t9T+CCH9EaMbOf0mUlC5/Z6CRsFwh1nXrCA=
+	b=KKjYIiT13Ri0xmwk2ONIi22lJY6gI08i4JklB2Bwwm3UeSPrXRupKAtPR1PW67STj
+	 +dRB4ewEbhv7KcBubYmmX102S630BknpcwrUzNP+BqFIdYzvGEeirN5tzIe3c3tqfV
+	 b7R3GyOR4oXfkbCvgnxVb2wVCUpBR3wM/vncy8gk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yochai Eisenrich <echelonh@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 034/277] net: ipv6: ndisc: fix ndisc_ra_useropt to initialize nduseropt_padX fields to zero to prevent an info-leak
-Date: Wed,  8 Apr 2026 20:00:19 +0200
-Message-ID: <20260408175935.127625167@linuxfoundation.org>
+Subject: [PATCH 6.18 035/277] net/ipv6: ioam6: prevent schema length wraparound in trace fill
+Date: Wed,  8 Apr 2026 20:00:20 +0200
+Message-ID: <20260408175935.164956468@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -52,40 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yochai Eisenrich <echelonh@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ae05340ccaa9d347fe85415609e075545bec589f ]
+[ Upstream commit 5e67ba9bb531e1ec6599a82a065dea9040b9ce50 ]
 
-When processing Router Advertisements with user options the kernel
-builds an RTM_NEWNDUSEROPT netlink message. The nduseroptmsg struct
-has three padding fields that are never zeroed and can leak kernel data
+ioam6_fill_trace_data() stores the schema contribution to the trace
+length in a u8. With bit 22 enabled and the largest schema payload,
+sclen becomes 1 + 1020 / 4, wraps from 256 to 0, and bypasses the
+remaining-space check. __ioam6_fill_trace_data() then positions the
+write cursor without reserving the schema area but still copies the
+4-byte schema header and the full schema payload, overrunning the trace
+buffer.
 
-The fix is simple, just zeroes the padding fields.
+Keep sclen in an unsigned int so the remaining-space check and the write
+cursor calculation both see the full schema length.
 
-Fixes: 31910575a9de ("[IPv6]: Export userland ND options through netlink (RDNSS support)")
-Signed-off-by: Yochai Eisenrich <echelonh@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260324224925.2437775-1-echelonh@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8c6f6fa67726 ("ipv6: ioam: IOAM Generic Netlink API")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ndisc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv6/ioam6.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index 0fd3f53dbb52e..ded2d3a0660c3 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -1209,6 +1209,9 @@ static void ndisc_ra_useropt(struct sk_buff *ra, struct nd_opt_hdr *opt)
- 	ndmsg->nduseropt_icmp_type = icmp6h->icmp6_type;
- 	ndmsg->nduseropt_icmp_code = icmp6h->icmp6_code;
- 	ndmsg->nduseropt_opts_len = opt->nd_opt_len << 3;
-+	ndmsg->nduseropt_pad1 = 0;
-+	ndmsg->nduseropt_pad2 = 0;
-+	ndmsg->nduseropt_pad3 = 0;
+diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
+index 08b7ac8c99b7e..8db7f965696aa 100644
+--- a/net/ipv6/ioam6.c
++++ b/net/ipv6/ioam6.c
+@@ -708,7 +708,7 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 				    struct ioam6_namespace *ns,
+ 				    struct ioam6_trace_hdr *trace,
+ 				    struct ioam6_schema *sc,
+-				    u8 sclen, bool is_input)
++				    unsigned int sclen, bool is_input)
+ {
+ 	struct net_device *dev = skb_dst_dev(skb);
+ 	struct timespec64 ts;
+@@ -939,7 +939,7 @@ void ioam6_fill_trace_data(struct sk_buff *skb,
+ 			   bool is_input)
+ {
+ 	struct ioam6_schema *sc;
+-	u8 sclen = 0;
++	unsigned int sclen = 0;
  
- 	memcpy(ndmsg + 1, opt, opt->nd_opt_len << 3);
- 
+ 	/* Skip if Overflow flag is set
+ 	 */
 -- 
 2.53.0
 
