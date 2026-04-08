@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D822857C1;
-	Wed,  8 Apr 2026 19:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB7835C1B4;
+	Wed,  8 Apr 2026 19:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674812; cv=none; b=cFpc3/4H4hhyAy8U5TNH2RGfB5upJmXp562+6T7OBKNnclEUKEpiIt0999EcWm8ouSeNcm/s6UMULTKY8YEtQhC1vo+T8sj34TU6a0PEB7evize8ks+H/R4RCB29EM6rINJRCXQzEvahKI9Az9eQqL8Ur0D/SxJ6IfY6PCs0Ktk=
+	t=1775674814; cv=none; b=hkRbIr5aegXynFBAUOcLoCWb1Eg1ztvm57CZ80CXGtiKZzSeoe1RbAazBrXLeeqJAgVEE3zFV1BNsrwfktk0JfKL87hJU9zfcliwc5Spt6DiaYa7MWkzWjekL9/Pv0JgSYvqbG6WiZoRnHj9a10pg4aRL2VDzW96gpLcuT4Epgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674812; c=relaxed/simple;
-	bh=iCQWWGDVPEcKUMegOQuCpo6KN3v5FZZnJ4Cj8Pezqtc=;
+	s=arc-20240116; t=1775674814; c=relaxed/simple;
+	bh=vpBxsaKq2j4fPGiyD7rePcSWM4LNPUY3NyYtLWOJ4NQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uEC5wuYmMX1CHh32cyOocrXqPAFg5lw111LWW8zUFQCPFphkllXN/kWokCnpvLt77w5aoUm2jJILI5qEOpX84cK/5YArEDMnENLhaZ00YUYSn6NI7wNZofbyv6lwOWExbkWMiTgpzcVycQuXS85kxzYW6U0ZolpKpJwNltexctc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgJYDknQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UQRP0cuHYG5J8w4DsD6V96eFL52AkQIboX7Ck6ZBxP5u+LFAq7cE98tobuBTZdbvT4igFTyjdt573JK5U1rdoDWSISZ0lWND5XLTX6iJBque8R8MR3OR5iGdkBXDube2UcmAN5HnR9I2xaZTz74diqOVDsUs/OoFhd2lX8l/95E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mObdDmET; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgJYDknQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1247C19421;
-	Wed,  8 Apr 2026 19:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mObdDmET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742A5C19421;
+	Wed,  8 Apr 2026 19:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674812;
-	bh=iCQWWGDVPEcKUMegOQuCpo6KN3v5FZZnJ4Cj8Pezqtc=;
+	s=korg; t=1775674814;
+	bh=vpBxsaKq2j4fPGiyD7rePcSWM4LNPUY3NyYtLWOJ4NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vgJYDknQ+iwsup0QFtf1a+Z6Nk5yFHq+MJMiESJjRkt1fmRG3FGtzGAxw4SwUEw1A
-	 +evj8ocqYo4BZhDS4K7RNFuGQxWk3QWr2VXygFoSFbq80eSl8p0g0MERasiMu/BfXw
-	 OlObIhppad0c68R/qPNUHalrB9XT1jMzBSMR/BEg=
+	b=mObdDmETRzLUb476t1+F35giOQywUlUiiZxV96jsGt8q9oLX/jDT0TRU3k3ndVQYe
+	 cXeca3A8sLQv+gJUBjjNZLEcxVBgqSzHr3N+wstLkZFdP7/1OcfyqcZGfWgMygYJ8O
+	 WwwLJl57nUBoG6DeniyV6BE1DG0pF2A1gdxlq28k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Guan-Yu Lin <guanyulin@google.com>,
-	Hailong Liu <hailong.liu@oppo.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.19 241/311] usb: host: xhci-sideband: delegate offload_usage tracking to class drivers
-Date: Wed,  8 Apr 2026 20:04:01 +0200
-Message-ID: <20260408175948.392107572@linuxfoundation.org>
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.19 211/311] Input: i8042 - add TUXEDO InfinityBook Max 16 Gen10 AMD to i8042 quirk table
+Date: Wed,  8 Apr 2026 20:03:31 +0200
+Message-ID: <20260408175947.281975415@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,122 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guan-Yu Lin <guanyulin@google.com>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-commit 5abbe6ecc6203355c770bf232ade88e29c960049 upstream.
+commit 5839419cffc7788a356428d321e3ec18055c0286 upstream.
 
-Remove usb_offload_get() and usb_offload_put() from the xHCI sideband
-interrupter creation and removal paths.
+The device occasionally wakes up from suspend with missing input on the
+internal keyboard and the following suspend attempt results in an instant
+wake-up. The quirks fix both issues for this device.
 
-The responsibility of manipulating offload_usage now lies entirely with
-the USB class drivers. They have the precise context of when an offload
-data stream actually starts and stops, ensuring a much more accurate
-representation of offload activity for power management.
-
-Cc: stable <stable@kernel.org>
-Fixes: ef82a4803aab ("xhci: sideband: add api to trace sideband usage")
-Signed-off-by: Guan-Yu Lin <guanyulin@google.com>
-Tested-by: Hailong Liu <hailong.liu@oppo.com>
-Tested-by: hailong.liu@oppo.com
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260401123238.3790062-3-guanyulin@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20260223142054.50310-1-wse@tuxedocomputers.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-sideband.c  |   14 +-------------
- sound/usb/qcom/qc_audio_offload.c |   10 +++++++++-
- 2 files changed, 10 insertions(+), 14 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/host/xhci-sideband.c
-+++ b/drivers/usb/host/xhci-sideband.c
-@@ -93,8 +93,6 @@ __xhci_sideband_remove_endpoint(struct x
- static void
- __xhci_sideband_remove_interrupter(struct xhci_sideband *sb)
- {
--	struct usb_device *udev;
--
- 	lockdep_assert_held(&sb->mutex);
- 
- 	if (!sb->ir)
-@@ -102,10 +100,6 @@ __xhci_sideband_remove_interrupter(struc
- 
- 	xhci_remove_secondary_interrupter(xhci_to_hcd(sb->xhci), sb->ir);
- 	sb->ir = NULL;
--	udev = sb->vdev->udev;
--
--	if (udev->state != USB_STATE_NOTATTACHED)
--		usb_offload_put(udev);
- }
- 
- /* sideband api functions */
-@@ -328,9 +322,6 @@ int
- xhci_sideband_create_interrupter(struct xhci_sideband *sb, int num_seg,
- 				 bool ip_autoclear, u32 imod_interval, int intr_num)
- {
--	int ret = 0;
--	struct usb_device *udev;
--
- 	if (!sb || !sb->xhci)
- 		return -ENODEV;
- 
-@@ -348,12 +339,9 @@ xhci_sideband_create_interrupter(struct
- 	if (!sb->ir)
- 		return -ENOMEM;
- 
--	udev = sb->vdev->udev;
--	ret = usb_offload_get(udev);
--
- 	sb->ir->ip_autoclear = ip_autoclear;
- 
--	return ret;
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(xhci_sideband_create_interrupter);
- 
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -699,6 +699,7 @@ static void uaudio_event_ring_cleanup_fr
- 		uaudio_iommu_unmap(MEM_EVENT_RING, IOVA_BASE, PAGE_SIZE,
- 				   PAGE_SIZE);
- 		xhci_sideband_remove_interrupter(uadev[dev->chip->card->number].sb);
-+		usb_offload_put(dev->udev);
- 	}
- }
- 
-@@ -1182,12 +1183,16 @@ static int uaudio_event_ring_setup(struc
- 	dma_coherent = dev_is_dma_coherent(subs->dev->bus->sysdev);
- 	er_pa = 0;
- 
-+	ret = usb_offload_get(subs->dev);
-+	if (ret < 0)
-+		goto exit;
-+
- 	/* event ring */
- 	ret = xhci_sideband_create_interrupter(uadev[card_num].sb, 1, false,
- 					       0, uaudio_qdev->data->intr_num);
- 	if (ret < 0) {
- 		dev_err(&subs->dev->dev, "failed to fetch interrupter\n");
--		goto exit;
-+		goto put_offload;
- 	}
- 
- 	sgt = xhci_sideband_get_event_buffer(uadev[card_num].sb);
-@@ -1219,6 +1224,8 @@ clear_pa:
- 	mem_info->dma = 0;
- remove_interrupter:
- 	xhci_sideband_remove_interrupter(uadev[card_num].sb);
-+put_offload:
-+	usb_offload_put(subs->dev);
- exit:
- 	return ret;
- }
-@@ -1483,6 +1490,7 @@ unmap_er:
- 	uaudio_iommu_unmap(MEM_EVENT_RING, IOVA_BASE, PAGE_SIZE, PAGE_SIZE);
- free_sec_ring:
- 	xhci_sideband_remove_interrupter(uadev[card_num].sb);
-+	usb_offload_put(subs->dev);
- drop_sync_ep:
- 	if (subs->sync_endpoint) {
- 		uaudio_iommu_unmap(MEM_XFER_RING,
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1189,6 +1189,13 @@ static const struct dmi_system_id i8042_
+ 	},
+ 	{
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "X6KK45xU_X6SP45xU"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	{
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "WUJIE Series-X5SP4NAG"),
+ 		},
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
 
 
