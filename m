@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1691C331A44;
-	Wed,  8 Apr 2026 18:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E568928C87C;
+	Wed,  8 Apr 2026 18:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673318; cv=none; b=l8ibsPmvXtTtguUd6Mt1ZNfgodYPI2RFeESts2k8Dmx2U/zwIDlyfmq301xIeh751RS2QrXpop8+V8nfACxdAZnoBAAihQXn8GwtGSF6hDcq6sI+NYJgSeXrQQPSFB0rRHPigeJ1mzyu1cHPozKBBVJpYCcg8wOlXbengvrz5uo=
+	t=1775673321; cv=none; b=Q8nRBXq+XCAISALdwI/IXaAFyaYiPbCCzXSVCeff2X7q6kYi2cIHsFh1ALoFQp/UpQRRBu6xvF52u29Tpv2xuyMgGKKzpYu0KDuDmyGK7h4Q0YaWTbOp6DRJwPk2I+w/7uCiYEoQ300Y8zChu4hPzheSNNX7TK/fake/MGh1igA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673318; c=relaxed/simple;
-	bh=sTjnLvwRp+RL8INqBgO9Rp8928g6r66VSFPFhKfK00A=;
+	s=arc-20240116; t=1775673321; c=relaxed/simple;
+	bh=rQtpjtTJjGsJd29kjcByeePU5a7xaE5QCNznk0rrf+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZjyUa6plqD/K/1/8bqZ4nGa2FshOzPCONQKaNCrYMHDSE8v1BBEC7x8BbuaQdal/+ZcyHTgmNbS6IUbOek/tP2r3N5cgZ1h9i4pvngJ/PwDFlOboiaoPfNsIPuw1ZummUTnKY1MSyXckzxmdmd64sVk/kbXLtRXBPRgtvYEBCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifp1gQvJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UvbPCX9Wyf57LSc5JTv9v4W6AM7dxkKptTrpWP0Wn05NVkkCpqoCl7eSxF04kiSNGhpdekRhSGv3WsEMXJGUX8j2Ox8deIUARW1SLqIiNoVFbhzyHfDUDqwk7xE+nabFYAbTmhSRMlIbjQJgVHuJ9XMrlJBoIrUfwgT+az9IwbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=io0dJ/TE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifp1gQvJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9A4C19421;
-	Wed,  8 Apr 2026 18:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="io0dJ/TE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F30C19421;
+	Wed,  8 Apr 2026 18:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673318;
-	bh=sTjnLvwRp+RL8INqBgO9Rp8928g6r66VSFPFhKfK00A=;
+	s=korg; t=1775673320;
+	bh=rQtpjtTJjGsJd29kjcByeePU5a7xaE5QCNznk0rrf+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ifp1gQvJM65fmLaBQfZPNsWh6oA5DppbJDtbYW12fWvUs1S18DIzaeqg29RBCaCL/
-	 BOU9E3TvIQLbXseBdDjjK6KHaxkcizTlzlZLFsyD5DwMoy774Og9AgWPfeYM0SQyJC
-	 EEa2uM4/96T4iWHqffmZSzE2Pc1Ue+Fkh+IlcubQ=
+	b=io0dJ/TExfw0IpvmLy6GQfRj9bbSbcqNPMVC1Uy5xRnkFZPieCoB71gpvi69FgxRy
+	 LVFXidMWvJ5If7nZ20NvPuMfBs/cjG+mI31dSY5rmyeMfWgjbTsVnLAhAi35K8sYeD
+	 WTLFUFYA7fbrSTvDnCnBiqSYYfL/x2Q3BLZfYx1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.18 153/277] iio: add IIO_DECLARE_QUATERNION() macro
-Date: Wed,  8 Apr 2026 20:02:18 +0200
-Message-ID: <20260408175939.585329955@linuxfoundation.org>
+	hkbinbin <hkbinbinbin@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 144/277] Bluetooth: hci_sync: fix stack buffer overflow in hci_le_big_create_sync
+Date: Wed,  8 Apr 2026 20:02:09 +0200
+Message-ID: <20260408175939.250261107@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -46,55 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: hkbinbin <hkbinbinbin@gmail.com>
 
-commit 56bd57e7b161f75535df91b229b0b2c64c6e5581 upstream.
+commit bc39a094730ce062fa034a529c93147c096cb488 upstream.
 
-Add a new IIO_DECLARE_QUATERNION() macro that is used to declare the
-field in an IIO buffer struct that contains a quaternion vector.
+hci_le_big_create_sync() uses DEFINE_FLEX to allocate a
+struct hci_cp_le_big_create_sync on the stack with room for 0x11 (17)
+BIS entries.  However, conn->num_bis can hold up to HCI_MAX_ISO_BIS (31)
+entries — validated against ISO_MAX_NUM_BIS (0x1f) in the caller
+hci_conn_big_create_sync().  When conn->num_bis is between 18 and 31,
+the memcpy that copies conn->bis into cp->bis writes up to 14 bytes
+past the stack buffer, corrupting adjacent stack memory.
 
-Quaternions are currently the only IIO data type that uses the .repeat
-feature of struct iio_scan_type. This has an implicit rule that the
-element in the buffer must be aligned to the entire size of the repeated
-element. This macro will make that requirement explicit. Since this is
-the only user, we just call the macro IIO_DECLARE_QUATERNION() instead
-of something more generic.
+This is trivially reproducible: binding an ISO socket with
+bc_num_bis = ISO_MAX_NUM_BIS (31) and calling listen() will
+eventually trigger hci_le_big_create_sync() from the HCI command
+sync worker, causing a KASAN-detectable stack-out-of-bounds write:
 
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+  BUG: KASAN: stack-out-of-bounds in hci_le_big_create_sync+0x256/0x3b0
+  Write of size 31 at addr ffffc90000487b48 by task kworker/u9:0/71
+
+Fix this by changing the DEFINE_FLEX count from the incorrect 0x11 to
+HCI_MAX_ISO_BIS, which matches the maximum number of BIS entries that
+conn->bis can actually carry.
+
+Fixes: 42ecf1947135 ("Bluetooth: ISO: Do not emit LE BIG Create Sync if previous is pending")
+Cc: stable@vger.kernel.org
+Signed-off-by: hkbinbin <hkbinbinbin@gmail.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/iio/iio.h |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/bluetooth/hci_sync.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/linux/iio/iio.h
-+++ b/include/linux/iio/iio.h
-@@ -816,6 +816,18 @@ static inline void *iio_device_get_drvda
- #define IIO_DECLARE_DMA_BUFFER_WITH_TS(type, name, count) \
- 	__IIO_DECLARE_BUFFER_WITH_TS(type, name, count) __aligned(IIO_DMA_MINALIGN)
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -7131,7 +7131,8 @@ static void create_big_complete(struct h
  
-+/**
-+ * IIO_DECLARE_QUATERNION() - Declare a quaternion element
-+ * @type: element type of the individual vectors
-+ * @name: identifier name
-+ *
-+ * Quaternions are a vector composed of 4 elements (W, X, Y, Z). Use this macro
-+ * to declare a quaternion element in a struct to ensure proper alignment in
-+ * an IIO buffer.
-+ */
-+#define IIO_DECLARE_QUATERNION(type, name) \
-+	type name[4] __aligned(sizeof(type) * 4)
-+
- struct iio_dev *iio_device_alloc(struct device *parent, int sizeof_priv);
- 
- /* The information at the returned address is guaranteed to be cacheline aligned */
+ static int hci_le_big_create_sync(struct hci_dev *hdev, void *data)
+ {
+-	DEFINE_FLEX(struct hci_cp_le_big_create_sync, cp, bis, num_bis, 0x11);
++	DEFINE_FLEX(struct hci_cp_le_big_create_sync, cp, bis, num_bis,
++		    HCI_MAX_ISO_BIS);
+ 	struct hci_conn *conn = data;
+ 	struct bt_iso_qos *qos = &conn->iso_qos;
+ 	int err;
 
 
