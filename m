@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EDE3537EF;
-	Wed,  8 Apr 2026 18:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BAF3D411F;
+	Wed,  8 Apr 2026 18:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672954; cv=none; b=ZjG8nC5udSHSsqINTa9+hgV5mbwENhxeKrpw/XYClpg9fHrbtAGB14G0eavbTfasy0PQNqoXEgeQpFZM+l6s6wcpNs0aL4HTDQcTgRRQ6e6yl0Xa6mm/djAy/eNpOd52rGzKai35Ih569qQsz66dQ5WSb6kqd91PdU3BYUYufVo=
+	t=1775672957; cv=none; b=m9q7xatUh9biSO5gpGMxycqWfxeAQWRc+i3vT29gERdvHv/NtqunVkTPKSNWwVKdI2jwDe2eVUF3eBjlyVjgIAu26nNRGlt+uzzi045Nf0C9dJXET72nFROkXjw7rAWsJ+u+Okb4I3PbmymNUiiMtr1HQIqa+UwdGbLxZQAumtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672954; c=relaxed/simple;
-	bh=ME9oSJzFv6kgINM3VN76LZeNHGi+4r1X1JMTsMdUoZo=;
+	s=arc-20240116; t=1775672957; c=relaxed/simple;
+	bh=3naH0bNCqlPKz7PJL4NqObSOPDYQEn28HldCYmOeqGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbyXpus8aAG/BHLBPlKIvsCSWzu4Fv0XvTUvVq4SJWFRqElLonDSLaV2Dp5S0PjpGz87YyVdiUAbHw5PFUgNZM6ik7nSudRa77+PJeEKLw+2ezKQq2QCUdg4YNR6Vd/nicusNlT9GD4i/Nm94rPZ7YpkK6AlBI8v16qsn/Kt27M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5DjR/9I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HyE0aTOBctJYzBfRcmUNFtDjxdka1hGwzzINTBxBU5J/X4AW+FpGW4tPXOfHY//KRms8357UyDSnGCijySZBfTobHhFfpn/Z8Ui7BbWMRbNQjskY+BfzSau1Pv3ltCkAyN7sUCtBfyBK2Anv+o2XzUPRrjpoowsHuyeTGC2vajM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVUHcDbW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5DjR/9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C70CC19421;
-	Wed,  8 Apr 2026 18:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVUHcDbW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC26C19421;
+	Wed,  8 Apr 2026 18:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672954;
-	bh=ME9oSJzFv6kgINM3VN76LZeNHGi+4r1X1JMTsMdUoZo=;
+	s=korg; t=1775672956;
+	bh=3naH0bNCqlPKz7PJL4NqObSOPDYQEn28HldCYmOeqGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E5DjR/9IoUjGx1JBOGvr7PGytER5hYaNSQlTpcMn+uyEAEFtGnU+dfHBciR0IhF+V
-	 AfBYYC6V3JTLx5EtkdftDl2B1oALcZcI6xcT3/kuj4fxbg3gNeuTDmvMaIni9ouCR9
-	 t5GK/PSI1Z0oNbL/QRvmD87PRSo43vhcvPghFxrg=
+	b=kVUHcDbW/1wZNWNsbtaihtlGli4WfLR7lZm0Kn6iInJw3zmB+6Q9utTu6zK6pyKCh
+	 acPL86rsMPvgtKfNUEWRDsPcuM+rlQmWjFaEb2NIjFsgPahY5Qhw/oVJ4GxGWFjb/+
+	 KeBXwGj2sIvzVEDh0GK7g2fzwZcNgq/Fl0axhSZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 013/277] i2c: tegra: Dont mark devices with pins as IRQ safe
-Date: Wed,  8 Apr 2026 19:59:58 +0200
-Message-ID: <20260408175934.343708915@linuxfoundation.org>
+Subject: [PATCH 6.18 004/277] HID: wacom: fix out-of-bounds read in wacom_intuos_bt_irq
+Date: Wed,  8 Apr 2026 19:59:49 +0200
+Message-ID: <20260408175934.007289656@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -46,62 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Benoît Sevens <bsevens@google.com>
 
-[ Upstream commit ec69c9e88315c4be70c283f18c2ff130da6320b5 ]
+[ Upstream commit 2f1763f62909ccb6386ac50350fa0abbf5bb16a9 ]
 
-I2C devices with associated pinctrl states (DPAUX I2C controllers)
-will change pinctrl state during runtime PM. This requires taking
-a mutex, so these devices cannot be marked as IRQ safe.
+The wacom_intuos_bt_irq() function processes Bluetooth HID reports
+without sufficient bounds checking. A maliciously crafted short report
+can trigger an out-of-bounds read when copying data into the wacom
+structure.
 
-Add PINCTRL as dependency to avoid build errors.
+Specifically, report 0x03 requires at least 22 bytes to safely read
+the processed data and battery status, while report 0x04 (which
+falls through to 0x03) requires 32 bytes.
 
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Reported-by: Russell King <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/all/E1vsNBv-00000009nfA-27ZK@rmk-PC.armlinux.org.uk/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Add explicit length checks for these report IDs and log a warning if
+a short report is received.
+
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/Kconfig     | 2 ++
- drivers/i2c/busses/i2c-tegra.c | 5 ++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/hid/wacom_wac.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index fd81e49638aaa..4515ded4338c5 100644
---- a/drivers/i2c/busses/Kconfig
-+++ b/drivers/i2c/busses/Kconfig
-@@ -1218,6 +1218,8 @@ config I2C_TEGRA
- 	tristate "NVIDIA Tegra internal I2C controller"
- 	depends on ARCH_TEGRA || (COMPILE_TEST && (ARC || ARM || ARM64 || M68K || RISCV || SUPERH || SPARC))
- 	# COMPILE_TEST needs architectures with readsX()/writesX() primitives
-+	depends on PINCTRL
-+	# ARCH_TEGRA implies PINCTRL, but the COMPILE_TEST side doesn't.
- 	help
- 	  If you say yes to this option, support will be included for the
- 	  I2C controller embedded in NVIDIA Tegra SOCs
-diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index e533460bccc39..a9aed411e3190 100644
---- a/drivers/i2c/busses/i2c-tegra.c
-+++ b/drivers/i2c/busses/i2c-tegra.c
-@@ -1837,8 +1837,11 @@ static int tegra_i2c_probe(struct platform_device *pdev)
- 	 *
- 	 * VI I2C device shouldn't be marked as IRQ-safe because VI I2C won't
- 	 * be used for atomic transfers. ACPI device is not IRQ safe also.
-+	 *
-+	 * Devices with pinctrl states cannot be marked IRQ-safe as the pinctrl
-+	 * state transitions during runtime PM require mutexes.
- 	 */
--	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev))
-+	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev) && !i2c_dev->dev->pins)
- 		pm_runtime_irq_safe(i2c_dev->dev);
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index 9b2c710f8da18..da1f0ea85625d 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1208,10 +1208,20 @@ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
  
- 	pm_runtime_enable(i2c_dev->dev);
+ 	switch (data[0]) {
+ 	case 0x04:
++		if (len < 32) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x04 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		fallthrough;
+ 	case 0x03:
++		if (i == 1 && len < 22) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x03 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		wacom_intuos_bt_process_data(wacom, data + i);
 -- 
 2.53.0
 
