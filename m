@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5068228C87C;
-	Wed,  8 Apr 2026 18:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E18331A44;
+	Wed,  8 Apr 2026 18:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673346; cv=none; b=DyIWhuWbzRvrVPCKAqqtevS+MNdyRTpqN6o5i3YXf/lwOlp6KNAoYRgGPeccJx09bsB7zPV+ipJW385MRODvWRKkpXCLApkACsa8r+cMcnQcrzOmZv5KAACk4h9UrD/ALovKZQJFagxBxklm3yE17jYiCnu5pz0GNTnlN46nCnY=
+	t=1775673348; cv=none; b=udsO4EKGDHCeTsBWZKqKRnlhwYmhCFmZoDPaXrJw5Y0UnFwm/EXqO3Lf1aRP5mFZL2FB1/Ez4Poz/OfTp9z6FQL1tBbZ182VGpmD0ak3LOc0mRE+EZsqIY3Nb9iktFDoE4OmdA7TotgdNXNfVfk/28TDAODI+02A53J8StS0P1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673346; c=relaxed/simple;
-	bh=S71i804vrW49FZUAB4QP43k7sslYHOC0CauljVVs5ko=;
+	s=arc-20240116; t=1775673348; c=relaxed/simple;
+	bh=OKI1kv8uU2AblKJJRSFUfIrlKHes6kC21SmGHZ0wL08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7nGu00XXyghA4vEwKB7NfrnHmVXCsTOJRjrcR3lYU75p+NH+ibaan35PzjGM/q9TecYXqm8QkUZOwlVM340HMNzGtM653m54IbzRPPLJ9ZarDoWqC8vFVU308xwLya5SuWAO0qvhVgzrjiRh+yw+XDyaRAKy6EXU238HOHRFEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BK4Elb6+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEyQAQ5r9rH7UfYy0VAClgb0dgBWANw9Xw1IYeDfRCFlr8yZCTLawMb5Pn1i9vs9WH+y8OemDTnnFxQDghoM8TvSHJB6TLLah3VDHLRePnSaumWGMCw4sMvfEJIqoNni7No3wxpBN8NiRj1nzbwFjMggKVIKegwBOit8VpQVIcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTLde+E/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BK4Elb6+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCB0C19421;
-	Wed,  8 Apr 2026 18:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTLde+E/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF80C19421;
+	Wed,  8 Apr 2026 18:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673346;
-	bh=S71i804vrW49FZUAB4QP43k7sslYHOC0CauljVVs5ko=;
+	s=korg; t=1775673348;
+	bh=OKI1kv8uU2AblKJJRSFUfIrlKHes6kC21SmGHZ0wL08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BK4Elb6+pMiXUmCPcXRtvHN1WyxXH0a41z8axBd6IojVWubyf4Zo9qbSHtCUpXaqe
-	 S7nDlc7XJIPDM2PKlWpH7rNXGElvjpcF2F+J2IRXBZbgFb32CHMgpggI0F+a0jZOW0
-	 knry3+S8iGr3q5rkihkm5WO6MKjUY8AK5T36A/XQ=
+	b=QTLde+E/JmW6wiIfQNMXMVUt/SK5xwXK2stTEbbhd3bxaZ4QlsV6hlz4XATA7K7yi
+	 hTVbrT85yIajqn5eU+pQsLTdqj8ztQA2ADqZfeuNslGJDzI/S4JwGQ2idZqw4NyK0s
+	 6NPaorkVF0wgkw0A5KBUwlzd9vsQM0B5oOzOs69M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Li <limiao@kylinos.cn>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 197/277] usb: quirks: add DELAY_INIT quirk for another Silicon Motion flash drive
-Date: Wed,  8 Apr 2026 20:03:02 +0200
-Message-ID: <20260408175941.221465752@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.18 198/277] usb: ulpi: fix double free in ulpi_register_interface() error path
+Date: Wed,  8 Apr 2026 20:03:03 +0200
+Message-ID: <20260408175941.257589270@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -50,31 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miao Li <limiao@kylinos.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit dd36014ec6042f424ef51b923e607772f7502ee7 upstream.
+commit 01af542392b5d41fd659d487015a71f627accce3 upstream.
 
-Another Silicon Motion flash drive also randomly work incorrectly
-(lsusb does not list the device) on Huawei hisi platforms during
-500 reboot cycles, and the DELAY_INIT quirk fixes this issue.
+When device_register() fails, ulpi_register() calls put_device() on
+ulpi->dev.
 
-Signed-off-by: Miao Li <limiao@kylinos.cn>
+The device release callback ulpi_dev_release() drops the OF node
+reference and frees ulpi, but the current error path in
+ulpi_register_interface() then calls kfree(ulpi) again, causing a
+double free.
+
+Let put_device() handle the cleanup through ulpi_dev_release() and
+avoid freeing ulpi again in ulpi_register_interface().
+
+Fixes: 289fcff4bcdb1 ("usb: add bus type for USB ULPI")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260319053927.264840-1-limiao870622@163.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260401025142.1398996-1-lgs201920130244@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/common/ulpi.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -402,6 +402,7 @@ static const struct usb_device_id usb_qu
+--- a/drivers/usb/common/ulpi.c
++++ b/drivers/usb/common/ulpi.c
+@@ -331,10 +331,9 @@ struct ulpi *ulpi_register_interface(str
+ 	ulpi->ops = ops;
  
- 	/* Silicon Motion Flash Drive */
- 	{ USB_DEVICE(0x090c, 0x1000), .driver_info = USB_QUIRK_DELAY_INIT },
-+	{ USB_DEVICE(0x090c, 0x2000), .driver_info = USB_QUIRK_DELAY_INIT },
+ 	ret = ulpi_register(dev, ulpi);
+-	if (ret) {
+-		kfree(ulpi);
++	if (ret)
+ 		return ERR_PTR(ret);
+-	}
++
  
- 	/* Sound Devices USBPre2 */
- 	{ USB_DEVICE(0x0926, 0x0202), .driver_info =
+ 	return ulpi;
+ }
 
 
