@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84103331A44;
-	Wed,  8 Apr 2026 18:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1059E2F39C2;
+	Wed,  8 Apr 2026 18:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673436; cv=none; b=ebHEgmTAxjJlhkO2C6hqWuA46TCtsHkr8abCgKMJDTqeniqb0mH/etncMZ34D8JtDqZxS8iXNRTk5rBYhUKH6RGkj6fjrJFx78eN4x8BSAaz3UFrJjngmBag9nOxsSohdun2MHdfR3p5c86g86GkTodOM+Ep5tqEDux2OKvAzlg=
+	t=1775673439; cv=none; b=X/byQicyqwXWJ8yXFgsUmLMRoMK6ITFYxqWmBe1jiLNTqKMRdP0CJKQvfH7otrN2eKmx0rE+IiPRFU6pmz2hBnftedwQAvw2x1vPIAFNbOCfss/msy7aGaR7C1e+OdOxKZiHPB9LfTkMUjKr6n35mFiawSXL+KnYNBCLngEfDyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673436; c=relaxed/simple;
-	bh=TloRW3vMGEQniJyPC+qRmm2C0/OsiGsGt5BZpNfhhUA=;
+	s=arc-20240116; t=1775673439; c=relaxed/simple;
+	bh=aiGrJashckrkjjXZQJ0poqgrrH4onajL3n78iu+1x00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nThLNgpVqEVuWU8De7GnzUpR29yE0vuxvg7lgw7ZBUlE/3lpwvoAvq0HCpROTvJeVS41RjqjYtpjtIyxqyAj3Y7YCZL8RNssQoUrc2GtM927aaqTM2x+jOlDlLQ5yLAtPXcmPRaEWLCl2Zdl7JnPWLpyq4jjOStbnREKzNTt0DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jNJTRpKy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=exxbdyTeAAmPenRQIbqJLyUu4eSh0bdN4Y3YkmMe9VczMI4pClB69W+ixq8pmlpfP+7Jd4tkx3d+q4k9WrFc1yGi/f9uVOJO4ha2bxi8xFzD1h3weYZUOaDOqMWtBjlooSHQnL1hdRomYjllONvTQJWhZl1SaCTvBAWPqXw4Uxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdGwkHm5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jNJTRpKy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F62C19421;
-	Wed,  8 Apr 2026 18:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdGwkHm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B663C19421;
+	Wed,  8 Apr 2026 18:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673436;
-	bh=TloRW3vMGEQniJyPC+qRmm2C0/OsiGsGt5BZpNfhhUA=;
+	s=korg; t=1775673439;
+	bh=aiGrJashckrkjjXZQJ0poqgrrH4onajL3n78iu+1x00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNJTRpKytcxFE3hcrbHe9aAXuFuqHXEz+mmAs6tKhyDXHsMF+u9BSMpa+kINzsxdo
-	 Y0ttLOjjpYBCE+vqdQFv1HOP8G/Zv8P8+VI91CM6H7+JT9wj4UpltKzCGI1Yax/uao
-	 7qwdz+Jk8A8j6HzkPCdhKDPSNyPg5QXkMjvEl0AA=
+	b=jdGwkHm5+/fNCozI21nU5vujAhC4Yv24/8erJFhhw0IvdXGX8yQfj1HXsEMHi8we8
+	 T5g3qfrxF43uZJvRtyS2u/QM5g6p2cu6QISUo8MbCxxnO+g2RGqAbskQfKrt8esl5R
+	 4YcOx4ZXDqDZDNzWXqgZQMLHc9GY8tmCQVMttAsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Yufan Chen <yufan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 232/277] vxlan: validate ND option lengths in vxlan_na_create
-Date: Wed,  8 Apr 2026 20:03:37 +0200
-Message-ID: <20260408175942.519887879@linuxfoundation.org>
+Subject: [PATCH 6.18 233/277] net: ftgmac100: fix ring allocation unwind on open failure
+Date: Wed,  8 Apr 2026 20:03:38 +0200
+Message-ID: <20260408175942.558153034@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -56,54 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Yufan Chen <yufan.chen@linux.dev>
 
-commit afa9a05e6c4971bd5586f1b304e14d61fb3d9385 upstream.
+commit c0fd0fe745f5e8c568d898cd1513d0083e46204a upstream.
 
-vxlan_na_create() walks ND options according to option-provided
-lengths. A malformed option can make the parser advance beyond the
-computed option span or use a too-short source LLADDR option payload.
+ftgmac100_alloc_rings() allocates rx_skbs, tx_skbs, rxdes, txdes, and
+rx_scratch in stages. On intermediate failures it returned -ENOMEM
+directly, leaking resources allocated earlier in the function.
 
-Validate option lengths against the remaining NS option area before
-advancing, and only read source LLADDR when the option is large enough
-for an Ethernet address.
+Rework the failure path to use staged local unwind labels and free
+allocated resources in reverse order before returning -ENOMEM. This
+matches common netdev allocation cleanup style.
 
-Fixes: 4b29dba9c085 ("vxlan: fix nonfunctional neigh_reduce()")
+Fixes: d72e01a0430f ("ftgmac100: Use a scratch buffer for failed RX allocations")
 Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
-Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260326034441.2037420-4-n05ec@lzu.edu.cn
+Signed-off-by: Yufan Chen <yufan.chen@linux.dev>
+Link: https://patch.msgid.link/20260328163257.60836-1-yufan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/faraday/ftgmac100.c |   28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1965,12 +1965,14 @@ static struct sk_buff *vxlan_na_create(s
- 	ns_olen = request->len - skb_network_offset(request) -
- 		sizeof(struct ipv6hdr) - sizeof(*ns);
- 	for (i = 0; i < ns_olen-1; i += (ns->opt[i+1]<<3)) {
--		if (!ns->opt[i + 1]) {
-+		if (!ns->opt[i + 1] || i + (ns->opt[i + 1] << 3) > ns_olen) {
- 			kfree_skb(reply);
- 			return NULL;
- 		}
- 		if (ns->opt[i] == ND_OPT_SOURCE_LL_ADDR) {
--			daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
-+			if ((ns->opt[i + 1] << 3) >=
-+			    sizeof(struct nd_opt_hdr) + ETH_ALEN)
-+				daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
- 			break;
- 		}
- 	}
+--- a/drivers/net/ethernet/faraday/ftgmac100.c
++++ b/drivers/net/ethernet/faraday/ftgmac100.c
+@@ -964,19 +964,19 @@ static int ftgmac100_alloc_rings(struct
+ 	priv->tx_skbs = kcalloc(MAX_TX_QUEUE_ENTRIES, sizeof(void *),
+ 				GFP_KERNEL);
+ 	if (!priv->tx_skbs)
+-		return -ENOMEM;
++		goto err_free_rx_skbs;
+ 
+ 	/* Allocate descriptors */
+ 	priv->rxdes = dma_alloc_coherent(priv->dev,
+ 					 MAX_RX_QUEUE_ENTRIES * sizeof(struct ftgmac100_rxdes),
+ 					 &priv->rxdes_dma, GFP_KERNEL);
+ 	if (!priv->rxdes)
+-		return -ENOMEM;
++		goto err_free_tx_skbs;
+ 	priv->txdes = dma_alloc_coherent(priv->dev,
+ 					 MAX_TX_QUEUE_ENTRIES * sizeof(struct ftgmac100_txdes),
+ 					 &priv->txdes_dma, GFP_KERNEL);
+ 	if (!priv->txdes)
+-		return -ENOMEM;
++		goto err_free_rxdes;
+ 
+ 	/* Allocate scratch packet buffer */
+ 	priv->rx_scratch = dma_alloc_coherent(priv->dev,
+@@ -984,9 +984,29 @@ static int ftgmac100_alloc_rings(struct
+ 					      &priv->rx_scratch_dma,
+ 					      GFP_KERNEL);
+ 	if (!priv->rx_scratch)
+-		return -ENOMEM;
++		goto err_free_txdes;
+ 
+ 	return 0;
++
++err_free_txdes:
++	dma_free_coherent(priv->dev,
++			  MAX_TX_QUEUE_ENTRIES *
++			  sizeof(struct ftgmac100_txdes),
++			  priv->txdes, priv->txdes_dma);
++	priv->txdes = NULL;
++err_free_rxdes:
++	dma_free_coherent(priv->dev,
++			  MAX_RX_QUEUE_ENTRIES *
++			  sizeof(struct ftgmac100_rxdes),
++			  priv->rxdes, priv->rxdes_dma);
++	priv->rxdes = NULL;
++err_free_tx_skbs:
++	kfree(priv->tx_skbs);
++	priv->tx_skbs = NULL;
++err_free_rx_skbs:
++	kfree(priv->rx_skbs);
++	priv->rx_skbs = NULL;
++	return -ENOMEM;
+ }
+ 
+ static void ftgmac100_init_rings(struct ftgmac100 *priv)
 
 
