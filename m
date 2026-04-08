@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F86C3624B0;
-	Wed,  8 Apr 2026 18:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6977A32A3FD;
+	Wed,  8 Apr 2026 18:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673740; cv=none; b=USXm107caMshPQAPCJmu0ZcgWWNFO7wtmJFfjjAQJyjbLGsPmSObaNVwbwqf0VGspePi7rGjJQbh7g0YmdmZ4961pCMiDDDU9/ag3s9g0xA7+sOKQNj+y+P8gTijI5c7d+4UVLH1UI4Una2ivL6RzRLKCNbfNTiDEZeBbqy59Og=
+	t=1775673743; cv=none; b=tK2j+vQp5vV3e1j5kdZyeDfwIHIKqCDVd45hpyj4hW+D3i8OiDlG9ZFTFjtnGDdY72oH/oOBUMxpIq3zeoZFKKAfuimUE3ZeFCebUkhHKeZb738NcSqWmBlxO+NcuF2y0FnTj1ycJiRsqUvLSZKAysIzWCk36CUdrJGIKoV78EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673740; c=relaxed/simple;
-	bh=QSFRvWX0nnPnpa9OzPYSieI5bqYTxZlSK8YKVPjh6Xk=;
+	s=arc-20240116; t=1775673743; c=relaxed/simple;
+	bh=80akKGS4EHtlGwKTCAMsA1l5BViND3OAfO8DOvuRYhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4z4GXmnZ2ISoWDYyBLd56HmurSKQzZ6x7c0f3Uvcn1J7J8QqKO0vCNKNTomdVxM6+pcscJkbmn8p4kt6/1jDUXbdKSTWKO0y5uw18ZXamix26DMLIUnBzKuOTRAH8ms/e6bPtFoddw5/xfWRErApGOGUXdlNwtzeOyjy6pYTAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7974+Uw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QzZxUg158dTvWIZJRQyKdqyl+aZGxwl6gTiuugtSA5PGBt63+V7DlMmU6OvlCeWjd3H+ufJx1p5zF0IdO5DbqDv2ZhkdFy2CHsq6HAaEuKHJGOc5QKeei3J/8p9JSDNjhN5snQ/g6V96IlIKMXBvG2/eTyiOoh0RvMCGORY3gtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RymwhKDa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7974+Uw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E25C19421;
-	Wed,  8 Apr 2026 18:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RymwhKDa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A672FC19421;
+	Wed,  8 Apr 2026 18:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673740;
-	bh=QSFRvWX0nnPnpa9OzPYSieI5bqYTxZlSK8YKVPjh6Xk=;
+	s=korg; t=1775673743;
+	bh=80akKGS4EHtlGwKTCAMsA1l5BViND3OAfO8DOvuRYhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7974+UwEvGf+OZgksegQnesdRfCF3S+jlJdqlKXL8BzieVmdKQ/CR+uQViUQcZTu
-	 GPgXVCFx7IaQr+vpts7qoWcihq5/zkvrpvaUw5h7HSBjthVqmRupmsOs7zGEge5EDc
-	 GF6LO8J+35BJC8fV8DbApo76KGv6hRXRTAmP107A=
+	b=RymwhKDatnuEDaCP+mYqixV7NFEYY1c7iTQd2coUVNJnSI8pJiWRkqRgi79oYDlDD
+	 aHOrczhrGn52TraiNsfhVjw1R8LxHd6AKaoEoJ3jbbdsVvM5JjkoeSgpAU81cLH4I9
+	 2rHMgY+nw0PJ3b6bMW1+TuKsoXZeHxhigTXOYKmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/242] spi: geni-qcom: Check DMA interrupts early in ISR
-Date: Wed,  8 Apr 2026 20:01:19 +0200
-Message-ID: <20260408175928.534570044@linuxfoundation.org>
+Subject: [PATCH 6.12 040/242] dt-bindings: auxdisplay: ht16k33: Use unevaluatedProperties to fix common property warning
+Date: Wed,  8 Apr 2026 20:01:20 +0200
+Message-ID: <20260408175928.572313942@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,57 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 8c89a077ca796a2fe248c584e9d7e66cff0388c8 ]
+[ Upstream commit 398c0c8bbc8f5a9d2f43863275a427a9d3720b6f ]
 
-The current interrupt handler only checks the GENI main IRQ status
-(m_irq) before deciding to return IRQ_NONE. This can lead to spurious
-IRQ_NONE returns when DMA interrupts are pending but m_irq is zero.
+Change additionalProperties to unevaluatedProperties because it refs to
+/schemas/input/matrix-keymap.yaml.
 
-Move the DMA TX/RX status register reads to the beginning of the ISR,
-right after reading m_irq. Update the early return condition to check
-all three status registers (m_irq, dma_tx_status, dma_rx_status) before
-returning IRQ_NONE.
+Fix below CHECK_DTBS warnings:
+arch/arm/boot/dts/nxp/imx/imx6dl-victgo.dtb: keypad@70 (holtek,ht16k33): 'keypad,num-columns', 'keypad,num-rows' do not match any of the regexes: '^pinctrl-[0-9]+$'
+        from schema $id: http://devicetree.org/schemas/auxdisplay/holtek,ht16k33.yaml#
 
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260313-spi-geni-qcom-fix-dma-irq-handling-v1-1-0bd122589e02@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f12b457c6b25c ("dt-bindings: auxdisplay: ht16k33: Convert to json-schema")
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-geni-qcom.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ .../devicetree/bindings/auxdisplay/holtek,ht16k33.yaml          | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 38606c9e12ee8..dea4e524553c4 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -952,10 +952,13 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
- 	struct spi_controller *spi = data;
- 	struct spi_geni_master *mas = spi_controller_get_devdata(spi);
- 	struct geni_se *se = &mas->se;
--	u32 m_irq;
-+	u32 m_irq, dma_tx_status, dma_rx_status;
+diff --git a/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml b/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml
+index b90eec2077b4b..fe1272e86467e 100644
+--- a/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml
++++ b/Documentation/devicetree/bindings/auxdisplay/holtek,ht16k33.yaml
+@@ -66,7 +66,7 @@ then:
+   required:
+     - refresh-rate-hz
  
- 	m_irq = readl(se->base + SE_GENI_M_IRQ_STATUS);
--	if (!m_irq)
-+	dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
-+	dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
-+
-+	if (!m_irq && !dma_tx_status && !dma_rx_status)
- 		return IRQ_NONE;
+-additionalProperties: false
++unevaluatedProperties: false
  
- 	if (m_irq & (M_CMD_OVERRUN_EN | M_ILLEGAL_CMD_EN | M_CMD_FAILURE_EN |
-@@ -1003,8 +1006,6 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
- 		}
- 	} else if (mas->cur_xfer_mode == GENI_SE_DMA) {
- 		const struct spi_transfer *xfer = mas->cur_xfer;
--		u32 dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
--		u32 dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
- 
- 		if (dma_tx_status)
- 			writel(dma_tx_status, se->base + SE_DMA_TX_IRQ_CLR);
+ examples:
+   - |
 -- 
 2.53.0
 
