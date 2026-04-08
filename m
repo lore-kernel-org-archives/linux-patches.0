@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030F3324B1F;
-	Wed,  8 Apr 2026 18:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFC6324B1F;
+	Wed,  8 Apr 2026 18:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672835; cv=none; b=G6SF3JEyEdcylbvukZm3VHhZoDluTbF1/Aw+POHahlSqNiv9oaYBLIrY0YH/meR4Q5JzOalrAtiLe3LbW2HzgouB6Lw4Nnu8TfjUExBlC8DOnBsWgBJ+C92WEpgSXPjOmSqn9GS+ZM6Syn5HY5MYCS1SAUwsxs179ga8Ax88fn8=
+	t=1775672837; cv=none; b=mB7ijUY6roKWWeLjV/YJ5kehhQTZkxNGsv3N6g7SZxb2J5iN730Kbj6kd29ppekFvhGUSH1utqEsDqXvpjxi2GZUlcNWFMzIAd7q6UDxG3TtPxWhXyFWHAzHejpVz0ZjGzRekcCRy+pKwl1OJHhYZv9Wdh+aFnSHnj/huNVO0Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672835; c=relaxed/simple;
-	bh=+T1ioicHgkXab4Z0rify9b0unKMaueW01Erb+ngcVR8=;
+	s=arc-20240116; t=1775672837; c=relaxed/simple;
+	bh=B4RAyDHgAXpsbiCDdR45GrmT2Sj1RS+vflb+VrmI+44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ErsKh9/wOfEb+TeNY6eOzUvSmwQ6pW+F0WqxTuYo1YDPi3T+gCAN7CJ1tWk9ZqBftPCYmnJkV4ALlNWl97SvUxmAZdS3sBoTIsZj+BJr4ZD+OoYRNrES+f/HnMp9uHdF4Q22wxHYJ6bEBquz2wkiQHN3SQTN3YR0m9zMmQphGU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoiPIqNA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z2cpTRPNHI8cJJ6UMI9V0Jhx2Ir3HvLrV6nH+xqep9lmaHcMzL14rH/pn2NHkrvP7fkpzfwT6vYJr1wU3TNnnGYLs8mK4yAy8O7+OJzNYDfAqkBVYOqXgn8AekvfhfUH7QO5cf/rDWRW0Ep2ZF5zogM5aYQiAPWrz7U58ebPUr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAFlr2tx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoiPIqNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8657DC19421;
-	Wed,  8 Apr 2026 18:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAFlr2tx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CBDC19421;
+	Wed,  8 Apr 2026 18:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672834;
-	bh=+T1ioicHgkXab4Z0rify9b0unKMaueW01Erb+ngcVR8=;
+	s=korg; t=1775672837;
+	bh=B4RAyDHgAXpsbiCDdR45GrmT2Sj1RS+vflb+VrmI+44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoiPIqNAkIPeueX7QELt07kISEHXEmAiAR3JGaZmkzJdrNLAFjd+QQIRhWZzoIDrJ
-	 cdh5ux5sw7LO4V9W8TdvAooc/rXONF76mAJQdQDBebzguTlvo8YfFkVBXOITVPZ9ph
-	 uOg14QZwscIZpzsYqq+899Q9Kvrm02nRhWgBIjTk=
+	b=aAFlr2txU2c0FQFbvgnB12o1S6L3gtrt+hLdQNZo8JTBAuJZZnjD1DL0mGG7CgrPf
+	 PEHOzJOvLsmhPCmh7DaHW7GlQMohC8bqrce61H8r48F61XrXaV9sQY2bKRxXiRG/yf
+	 VLs4gjh77ioYPS3JeAJ0DSQVSFOrrykfb8c90Xjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 160/160] net: sfp: Fix Ubiquiti U-Fiber Instant SFP module on mvneta
-Date: Wed,  8 Apr 2026 20:04:07 +0200
-Message-ID: <20260408175919.181356238@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 135/160] USB: dummy-hcd: Fix interrupt synchronization error
+Date: Wed,  8 Apr 2026 20:03:42 +0200
+Message-ID: <20260408175918.231282345@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -45,63 +44,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Marek Behún" <kabel@kernel.org>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit eeee5a710f26ce57807024ef330fe5a850eaecd8 ]
+commit 2ca9e46f8f1f5a297eb0ac83f79d35d5b3a02541 upstream.
 
-In commit 8110633db49d7de2 ("net: sfp-bus: allow SFP quirks to override
-Autoneg and pause bits") we moved the setting of Autoneg and pause bits
-before the call to SFP quirk when parsing SFP module support.
+This fixes an error in synchronization in the dummy-hcd driver.  The
+error has a somewhat involved history.  The synchronization mechanism
+was introduced by commit 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous
+synchronization change"), which added an emulated "interrupts enabled"
+flag together with code emulating synchronize_irq() (it waits until
+all current handler callbacks have returned).
 
-Since the quirk for Ubiquiti U-Fiber Instant SFP module zeroes the
-support bits and sets 1000baseX_Full only, the above mentioned commit
-changed the overall computed support from
-  1000baseX_Full, Autoneg, Pause, Asym_Pause
-to just
-  1000baseX_Full.
+But the emulated interrupt-disable occurred too late, after the driver
+containing the handler callback routines had been told that it was
+unbound and no more callbacks would occur.  Commit 4a5d797a9f9c ("usb:
+gadget: dummy_hcd: fix gpf in gadget_setup") tried to fix this by
+moving the synchronize_irq() emulation code from dummy_stop() to
+dummy_pullup(), which runs before the unbind callback.
 
-This broke the SFP module for mvneta, which requires Autoneg for
-1000baseX since commit c762b7fac1b249a9 ("net: mvneta: deny disabling
-autoneg for 802.3z modes").
+There still were races, though, because the emulated interrupt-disable
+still occurred too late.  It couldn't be moved to dummy_pullup(),
+because that routine can be called for reasons other than an impending
+unbind.  Therefore commits 7dc0c55e9f30 ("USB: UDC core: Add
+udc_async_callbacks gadget op") and 04145a03db9d ("USB: UDC: Implement
+udc_async_callbacks in dummy-hcd") added an API allowing the UDC core
+to tell dummy-hcd exactly when emulated interrupts and their callbacks
+should be disabled.
 
-Fix this by setting back the Autoneg, Pause and Asym_Pause bits in the
-quirk.
+That brings us to the current state of things, which is still wrong
+because the emulated synchronize_irq() occurs before the emulated
+interrupt-disable!  That's no good, beause it means that more emulated
+interrupts can occur after the synchronize_irq() emulation has run,
+leading to the possibility that a callback handler may be running when
+the gadget driver is unbound.
 
-Fixes: 8110633db49d7de2 ("net: sfp-bus: allow SFP quirks to override Autoneg and pause bits")
-Signed-off-by: Marek BehÃºn <kabel@kernel.org>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20260326122038.2489589-1-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+To fix this, we have to move the synchronize_irq() emulation code yet
+again, to the dummy_udc_async_callbacks() routine, which takes care of
+enabling and disabling emulated interrupt requests.  The
+synchronization will now run immediately after emulated interrupts are
+disabled, which is where it belongs.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 04145a03db9d ("USB: UDC: Implement udc_async_callbacks in dummy-hcd")
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/c7bc93fe-4241-4d04-bd56-27c12ba35c97@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/sfp.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |   29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -465,10 +465,15 @@ static void sfp_quirk_ubnt_uf_instant(co
- {
- 	/* Ubiquiti U-Fiber Instant module claims that support all transceiver
- 	 * types including 10G Ethernet which is not truth. So clear all claimed
--	 * modes and set only one mode which module supports: 1000baseX_Full.
-+	 * modes and set only one mode which module supports: 1000baseX_Full,
-+	 * along with the Autoneg and pause bits.
- 	 */
- 	linkmode_zero(modes);
- 	linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT, modes);
-+	linkmode_set_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, modes);
-+	linkmode_set_bit(ETHTOOL_LINK_MODE_Pause_BIT, modes);
-+	linkmode_set_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT, modes);
-+
- 	phy_interface_zero(interfaces);
- 	__set_bit(PHY_INTERFACE_MODE_1000BASEX, interfaces);
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -912,21 +912,6 @@ static int dummy_pullup(struct usb_gadge
+ 	spin_lock_irqsave(&dum->lock, flags);
+ 	dum->pullup = (value != 0);
+ 	set_link_state(dum_hcd);
+-	if (value == 0) {
+-		/*
+-		 * Emulate synchronize_irq(): wait for callbacks to finish.
+-		 * This seems to be the best place to emulate the call to
+-		 * synchronize_irq() that's in usb_gadget_remove_driver().
+-		 * Doing it in dummy_udc_stop() would be too late since it
+-		 * is called after the unbind callback and unbind shouldn't
+-		 * be invoked until all the other callbacks are finished.
+-		 */
+-		while (dum->callback_usage > 0) {
+-			spin_unlock_irqrestore(&dum->lock, flags);
+-			usleep_range(1000, 2000);
+-			spin_lock_irqsave(&dum->lock, flags);
+-		}
+-	}
+ 	spin_unlock_irqrestore(&dum->lock, flags);
+ 
+ 	usb_hcd_poll_rh_status(dummy_hcd_to_hcd(dum_hcd));
+@@ -949,6 +934,20 @@ static void dummy_udc_async_callbacks(st
+ 
+ 	spin_lock_irq(&dum->lock);
+ 	dum->ints_enabled = enable;
++	if (!enable) {
++		/*
++		 * Emulate synchronize_irq(): wait for callbacks to finish.
++		 * This has to happen after emulated interrupts are disabled
++		 * (dum->ints_enabled is clear) and before the unbind callback,
++		 * just like the call to synchronize_irq() in
++		 * gadget/udc/core:gadget_unbind_driver().
++		 */
++		while (dum->callback_usage > 0) {
++			spin_unlock_irq(&dum->lock);
++			usleep_range(1000, 2000);
++			spin_lock_irq(&dum->lock);
++		}
++	}
+ 	spin_unlock_irq(&dum->lock);
  }
+ 
 
 
