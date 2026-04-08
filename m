@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE303D6694;
-	Wed,  8 Apr 2026 18:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3A1331A44;
+	Wed,  8 Apr 2026 18:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673686; cv=none; b=gffGQDf+gL4skMMcre+10BQ8edRv8JrDcTDVkBme0/PC1q8EvOCM+dc6pfrLNAYwvx4TP93oRjGGHhq02gLj/IFVa6eu4VxnNljZ7xylBPneaUflRoZmTiChlgNWg6V+H2VzOA+Oty3A/RTo1JXEDsoGqyCLhPiH/tQUD7VZMMo=
+	t=1775673688; cv=none; b=hz2NrcaNSf9qd+NSZD81gB2vZXUYDSNtDm05jl1j+ox7OIInzVnrCybb21ZuWxSYVIpHzGC+lz6+Hiyi3ko0qqTbuFMymKG0Tq0LHayvOsObojEQGO96qddNCPP6medPs5dk8bNXPhZm9TaSe7BKP8KJ1VxR11Y0wHUuzUf+vUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673686; c=relaxed/simple;
-	bh=9zE1/NJSZVZOkLvD79sGvG/WOpF3ClnsffASSz8Yv1A=;
+	s=arc-20240116; t=1775673688; c=relaxed/simple;
+	bh=hmHrzGwp2ZW4cRjvLRzUQ1tOcTlpq2wNldCKLDqd8e0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L9vuaNbizokXSIiosdq/b24kgpxAKtzC3yvEkqHXJtUU5LopBj5Ru1EW4oBcwoSXNAIBQLn3QjChQHsiaDFDjCJION3phxJpMN2v9L26HwLY/OzmbtkhC51pEtHbh3DbaZ6sku3AJVt7XnpbffnO4eQDkXJoY2N9BBuT6YQgqNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tltyl/x1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kbarRWS47/ooMYr2hVGqFNy4JjFWHT6oR0xn68uIpzlqzBDIFzxVHQXTJ3+fclwjUwtljA8WYaV7EGuh1N0TIhooXjoboqEpbGN3tNQFbMaCxPsHzsvdrrS96NgQwr4I/dHlqT7AcoZe9h6FW5NBi7L2EcYqYaP3kLQQ1av/cOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3i5lpHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tltyl/x1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D733CC19421;
-	Wed,  8 Apr 2026 18:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3i5lpHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716CAC19421;
+	Wed,  8 Apr 2026 18:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673686;
-	bh=9zE1/NJSZVZOkLvD79sGvG/WOpF3ClnsffASSz8Yv1A=;
+	s=korg; t=1775673688;
+	bh=hmHrzGwp2ZW4cRjvLRzUQ1tOcTlpq2wNldCKLDqd8e0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tltyl/x1gHkGHrzg2JNTxZcJi78ulAdX6/BJkjLBSvzA9C9NGilsPHcsGg4MFjf8s
-	 8qHzcLb8ZkY5hyCYQTaoq+TP7QvzJ3idxHsHVKq3j+fL0asfEtZs8zQU8QdrApDuPg
-	 FmhWSjeZs2x0CnJoT2IXVWhAupb2RZN5ReuyBYUg=
+	b=G3i5lpHOUgvF6vgLxZzS/EesMhbRUsz/ty8g1JiHKAKd3s9NFKismyQxHYmYZQVV8
+	 nOWwkI6yvvNGCZspWr9Cwf2cpRyzPgF2PnipdcbE3o6ahPio/O3Z9SW+ZuQK+5kmE/
+	 I/atDtuIdm8ohYBPoNg8/cuBKVpXBREV/TC+Z4/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oskar Kjos <oskar.kjos@hotmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Dimitri Daskalakis <daskald@meta.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/242] ip6_tunnel: clear skb2->cb[] in ip4ip6_err()
-Date: Wed,  8 Apr 2026 20:01:31 +0200
-Message-ID: <20260408175928.981896461@linuxfoundation.org>
+Subject: [PATCH 6.12 052/242] eth: fbnic: Account for page fragments when updating BDQ tail
+Date: Wed,  8 Apr 2026 20:01:32 +0200
+Message-ID: <20260408175929.024538416@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -53,57 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dimitri Daskalakis <daskald@meta.com>
 
-[ Upstream commit 2edfa31769a4add828a7e604b21cb82aaaa05925 ]
+[ Upstream commit b38c55320bf85a84a4f04803c57b261fc87e9b4b ]
 
-Oskar Kjos reported the following problem.
+FBNIC supports fixed size buffers of 4K. When PAGE_SIZE > 4K, we
+fragment the page across multiple descriptors (FBNIC_BD_FRAG_COUNT).
+When refilling the BDQ, the correct number of entries are populated,
+but tail was only incremented by one. So on a system with 64K pages,
+HW would get one descriptor refilled for every 16 we populate.
 
-ip4ip6_err() calls icmp_send() on a cloned skb whose cb[] was written
-by the IPv6 receive path as struct inet6_skb_parm. icmp_send() passes
-IPCB(skb2) to __ip_options_echo(), which interprets that cb[] region
-as struct inet_skb_parm (IPv4). The layouts differ: inet6_skb_parm.nhoff
-at offset 14 overlaps inet_skb_parm.opt.rr, producing a non-zero rr
-value. __ip_options_echo() then reads optlen from attacker-controlled
-packet data at sptr[rr+1] and copies that many bytes into dopt->__data,
-a fixed 40-byte stack buffer (IP_OPTIONS_DATA_FIXED_SIZE).
+Additionally, we program the ring size in the HW when enabling the BDQ.
+This was not accounting for page fragments, so on systems with 64K pages,
+the HW used 1/16th of the ring.
 
-To fix this we clear skb2->cb[], as suggested by Oskar Kjos.
-
-Also add minimal IPv4 header validation (version == 4, ihl >= 5).
-
-Fixes: c4d3efafcc93 ("[IPV6] IP6TUNNEL: Add support to IPv4 over IPv6 tunnel.")
-Reported-by: Oskar Kjos <oskar.kjos@hotmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260326155138.2429480-1-edumazet@google.com
+Fixes: 0cb4c0a13723 ("eth: fbnic: Implement Rx queue alloc/start/stop/free")
+Signed-off-by: Dimitri Daskalakis <daskald@meta.com>
+Link: https://patch.msgid.link/20260324195123.3486219-2-dimitri.daskalakis1@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_tunnel.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/meta/fbnic/fbnic_txrx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index 9f1b66bb513c7..f0a8350eb52eb 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -601,11 +601,16 @@ ip4ip6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 	if (!skb2)
- 		return 0;
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
+index fc52db8e36f2e..16a0e30f8aaa5 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
+@@ -544,7 +544,7 @@ static void fbnic_fill_bdq(struct fbnic_napi_vector *nv, struct fbnic_ring *bdq)
+ 		/* Force DMA writes to flush before writing to tail */
+ 		dma_wmb();
  
-+	/* Remove debris left by IPv6 stack. */
-+	memset(IPCB(skb2), 0, sizeof(*IPCB(skb2)));
-+
- 	skb_dst_drop(skb2);
+-		writel(i, bdq->doorbell);
++		writel(i * FBNIC_BD_FRAG_COUNT, bdq->doorbell);
+ 	}
+ }
  
- 	skb_pull(skb2, offset);
- 	skb_reset_network_header(skb2);
- 	eiph = ip_hdr(skb2);
-+	if (eiph->version != 4 || eiph->ihl < 5)
-+		goto out;
+@@ -1783,7 +1783,7 @@ static void fbnic_enable_bdq(struct fbnic_ring *hpq, struct fbnic_ring *ppq)
+ 	hpq->tail = 0;
+ 	hpq->head = 0;
  
- 	/* Try to guess incoming interface */
- 	rt = ip_route_output_ports(dev_net(skb->dev), &fl4, NULL, eiph->saddr,
+-	log_size = fls(hpq->size_mask);
++	log_size = fls(hpq->size_mask) + ilog2(FBNIC_BD_FRAG_COUNT);
+ 
+ 	/* Store descriptor ring address and size */
+ 	fbnic_ring_wr32(hpq, FBNIC_QUEUE_BDQ_HPQ_BAL, lower_32_bits(hpq->dma));
+@@ -1795,7 +1795,7 @@ static void fbnic_enable_bdq(struct fbnic_ring *hpq, struct fbnic_ring *ppq)
+ 	if (!ppq->size_mask)
+ 		goto write_ctl;
+ 
+-	log_size = fls(ppq->size_mask);
++	log_size = fls(ppq->size_mask) + ilog2(FBNIC_BD_FRAG_COUNT);
+ 
+ 	/* Add enabling of PPQ to BDQ control */
+ 	bdq_ctl |= FBNIC_QUEUE_BDQ_CTL_PPQ_ENABLE;
 -- 
 2.53.0
 
