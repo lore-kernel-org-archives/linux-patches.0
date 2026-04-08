@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA7537C10F;
-	Wed,  8 Apr 2026 18:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A216F3859FE;
+	Wed,  8 Apr 2026 18:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672152; cv=none; b=NvUD+Wmt5+Az1Y9yiO31U9nL8HTNeSP7AS4+Vbh1sbhavdgpKB3hI5cZb6L1QPQngDGEwOCpNZ4RltXlDE/05VJtPCAhzSm8z+SLhg7dCibfNBmXCK8fSHPDuwUmphh9PK7j4amic07E7BC7x8yy26FfHRzlJxszRNkhA2+UmPk=
+	t=1775672154; cv=none; b=AB40RxCTtBt5P8sAhnduvqM9jmzMxBXjdR/2pfHHwbX4eik2fkR9aewUZtZmDM+8Y9+gfGywfrgEH5grtxjgSEvIy8YECAItpFgsHI8zquzFVRMQUGpYKRyzsA/ENXxFtnBkF2nlP9X82V0giK5TJUD7dFOYwd/RGsHYmKOPu1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672152; c=relaxed/simple;
-	bh=769dEdSdeUAf9bic1/HaKQBzDu4tcfsTK8I2xp/t67o=;
+	s=arc-20240116; t=1775672154; c=relaxed/simple;
+	bh=E8VZkQcf8+2+RHXM9acIXX6++BywUUXX7ha1To94IGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t9dLJwzxhWhk69cy3663717ICudCKDkIWWjYLVHJsTghZ1OFatTI7RTsRRmqKYn0Y+HHuCDGc4YtzHti5UeLzXKJp4YDNzvb+S71eqsaBspAoRVxImaGbitqN4J7LXj4op+rjwSWjgexr3gxoDPVx/scR7VmsvDWzEAbk7kIL7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsLHQIQG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZdPmT8iV5zw4UYIvjsnp548FRTIZ/HzmU0jDEw+qFBT/FvK9DE3fprS35hkSOHNwKqCobP3zPIpyPiBU+RaZ7KNR0gynRfGWVpOTrao7XufMib+51670FTecUmZgpGF6UFrB1Wz+GPlLifo2PiGhtFZeSSRyEdycvyuApF0q2kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xMQujKj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsLHQIQG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C125C19421;
-	Wed,  8 Apr 2026 18:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xMQujKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39390C19421;
+	Wed,  8 Apr 2026 18:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672152;
-	bh=769dEdSdeUAf9bic1/HaKQBzDu4tcfsTK8I2xp/t67o=;
+	s=korg; t=1775672154;
+	bh=E8VZkQcf8+2+RHXM9acIXX6++BywUUXX7ha1To94IGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsLHQIQG9KdvLQqYEXjR/YX7CJXYlucD8oJJnRCGaMwt0nfS29oQu5MVzK47X5dGS
-	 vZE3lpQjtQCpgEkr+JyvaBq0f4Fmg92b60NhwKT+alH8o3vz01QPkDnK/q4UCJPnHV
-	 9BAP1F5ulFDGjMpM0djZe7F7bqMzlTrIYDnyRgfA=
+	b=0xMQujKjdzQ/onbKeFssqexCxfHVroNi9DsJI5NOJdnFg/YMWLPjKH5MwuPERQV2Q
+	 DVxx6GNEbhIE8W9q2p9YNRO9VXAewRvCb/HWJi34vPkFfFUYYzUZbOT6H9bBYIQViW
+	 GQOW2cmCRcxJ2YRnLw0LjqXZ3JCGvniX6Pbcl+nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 192/312] iio: imu: bno055: fix BNO055_SCAN_CH_COUNT off by one
-Date: Wed,  8 Apr 2026 20:01:49 +0200
-Message-ID: <20260408175940.930205563@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Dave Airlie <airlied@redhat.com>,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.1 210/312] drm/ast: dp501: Fix initialization of SCU2C
+Date: Wed,  8 Apr 2026 20:02:07 +0200
+Message-ID: <20260408175941.603231218@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -51,43 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 773ef9f95385bae52dcb7fd129fefba3a71a04db ]
+commit 2f42c1a6161646cbd29b443459fd635d29eda634 upstream.
 
-Fix an off-by-one error in the BNO055_SCAN_CH_COUNT macro. The count
-is derived by taking the difference of the last and first register
-addresses, dividing by the size of each channel (2 bytes). It needs to
-also add 1 to account for the fact that the count is inclusive of both
-the first and last channels.
+Ast's DP501 initialization reads the register SCU2C at offset 0x1202c
+and tries to set it to source data from VGA. But writes the update to
+offset 0x0, with unknown results. Write the result to SCU instead.
 
-Thanks to the aligned_s64 timestamp field, there was already extra
-padding in the buffer, so there were no runtime issues caused by this
-bug.
+The bug only happens in ast_init_analog(). There's similar code in
+ast_init_dvo(), which works correctly.
 
-Fixes: 4aefe1c2bd0c ("iio: imu: add Bosch Sensortec BNO055 core driver")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 83c6620bae3f ("drm/ast: initial DP501 support (v0.2)")
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v3.16+
+Link: https://patch.msgid.link/20260327133532.79696-2-tzimmermann@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/bno055/bno055.c | 2 +-
+ drivers/gpu/drm/ast/ast_dp501.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/imu/bno055/bno055.c b/drivers/iio/imu/bno055/bno055.c
-index 98f17c29da69b..7b58b418b8a8b 100644
---- a/drivers/iio/imu/bno055/bno055.c
-+++ b/drivers/iio/imu/bno055/bno055.c
-@@ -64,7 +64,7 @@
- #define BNO055_GRAVITY_DATA_X_LSB_REG	0x2E
- #define BNO055_GRAVITY_DATA_Y_LSB_REG	0x30
- #define BNO055_GRAVITY_DATA_Z_LSB_REG	0x32
--#define BNO055_SCAN_CH_COUNT ((BNO055_GRAVITY_DATA_Z_LSB_REG - BNO055_ACC_DATA_X_LSB_REG) / 2)
-+#define BNO055_SCAN_CH_COUNT ((BNO055_GRAVITY_DATA_Z_LSB_REG - BNO055_ACC_DATA_X_LSB_REG) / 2 + 1)
- #define BNO055_TEMP_REG			0x34
- #define BNO055_CALIB_STAT_REG		0x35
- #define BNO055_CALIB_STAT_MAGN_SHIFT 0
--- 
-2.53.0
-
+--- a/drivers/gpu/drm/ast/ast_dp501.c
++++ b/drivers/gpu/drm/ast/ast_dp501.c
+@@ -426,7 +426,7 @@ static void ast_init_analog(struct drm_d
+ 	/* Finally, clear bits [17:16] of SCU2c */
+ 	data = ast_read32(ast, 0x1202c);
+ 	data &= 0xfffcffff;
+-	ast_write32(ast, 0, data);
++	ast_write32(ast, 0x1202c, data);
+ 
+ 	/* Disable DVO */
+ 	ast_set_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xa3, 0xcf, 0x00);
 
 
