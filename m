@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4029B3D4134;
-	Wed,  8 Apr 2026 18:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75473D8912;
+	Wed,  8 Apr 2026 18:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671758; cv=none; b=IRL5qcdHDwQVkP8Cu1YK1meSTuUKqpUMDk+Sn/Bvg7Xc72EWJBjV/ZNUvcfo3+Vmyf5DUUFYSpjqZ5kKtMlNZOlDt1ftSOLpOmTgXMeHVrbfgP7lEge1hBpO3C6zpVanzqLX40+hTyx+LiuGPq/fVedIgGDHMjD14puS3cljhZU=
+	t=1775671760; cv=none; b=mnwoyctqzaHsAMtOWJeR1OXVsEVfvL+uwNTUe8fkDbFtnYMW56OWmbRaNwiyyFj5LEHyY9orLlTbnxQYtF41BqodNRdhcwcxnwMyytTGOTdV6kH+FHzg9tYSA/UXBy686F91k0hJ5ZCscOLVaXMsO1oZIrLcn6U0mQ7KuiBz1UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671758; c=relaxed/simple;
-	bh=P8WURBACfR6ZCCapAbixuSY0qp6BAWFHzr+MEwhmPbY=;
+	s=arc-20240116; t=1775671760; c=relaxed/simple;
+	bh=EGKkOfjQZGWrif4fg5+m9TBR3qIbjbzeU2kI6A6Bv2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EuXlr/AFiiLJC7He9ML04l6kdm9/9BLNMQa/9QMcWnUN/bJSe358me6KNVYCyR3nVxEsl4eO+msCtRKbSGpDt+aM6W/HIvOfcN/jCfWx97gK2M2eBKbnFICrpR5rl3tytm91VnOfvIUl9tSA6mkE6Wv5IaFWy8r/4v3Q7OYB5pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NaYyPm+d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P1rNOg6/wYl5aNsB1SHULmZqfiWClhjdkKgx7IKU9gY9PEjzd2ydd6TQsrxBFkWw3UNldn7A01mbV+6VgXqPcc2ySOxDujn9v9AmOAsnPA9yPSowm6hIyEnFsmvP5MLObSunmbA2kd8K2lXb+VNSJr8giDBiwoGELFP5WuXA4IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxjJPtwC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NaYyPm+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAED0C19421;
-	Wed,  8 Apr 2026 18:09:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxjJPtwC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDB6C19421;
+	Wed,  8 Apr 2026 18:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671758;
-	bh=P8WURBACfR6ZCCapAbixuSY0qp6BAWFHzr+MEwhmPbY=;
+	s=korg; t=1775671760;
+	bh=EGKkOfjQZGWrif4fg5+m9TBR3qIbjbzeU2kI6A6Bv2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NaYyPm+ddb/byKSwD7Kg0BuwVh8mRP62dkDgjpcQdtUgMdO+miDZ7kf6xsQ14oRHr
-	 hE++yaHxs2hRUnsYTqFeTS/XwscFJqPFQ9ovY4ZVTKLU11ysFkbV3sTiWVEezWHq0m
-	 Cg5TIz0Vp89lLA0ik3uqxhIhEV3xE9e7H+geaqJc=
+	b=JxjJPtwCeyJOulRZYvkGQAUxOFUr/u6sA1ZvvOB9XfSwQ15gBTAB2EyLurNpAoDZn
+	 izUA5YjRLKK2KRCo+Wkmq2VWnRtdQqzsYbKUoJmbn0aaEiiMvMDR1DjF5Du6GYt4Ee
+	 G3l/pHOBXJBJCGVXbZm6djSVIQsVL5OMaSvlLjnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
+	Andrew Onyshchuk <oandrew@meta.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/312] module: Fix kernel panic when a symbol st_shndx is out of bounds
-Date: Wed,  8 Apr 2026 19:58:51 +0200
-Message-ID: <20260408175934.263543540@linuxfoundation.org>
+Subject: [PATCH 6.1 050/312] udp: Fix wildcard bind conflict check when using hash2
+Date: Wed,  8 Apr 2026 19:59:27 +0200
+Message-ID: <20260408175935.605418017@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -53,78 +53,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit f9d69d5e7bde2295eb7488a56f094ac8f5383b92 ]
+[ Upstream commit e537dd15d0d4ad989d56a1021290f0c674dd8b28 ]
 
-The module loader doesn't check for bounds of the ELF section index in
-simplify_symbols():
+When binding a udp_sock to a local address and port, UDP uses
+two hashes (udptable->hash and udptable->hash2) for collision
+detection. The current code switches to "hash2" when
+hslot->count > 10.
 
-       for (i = 1; i < symsec->sh_size / sizeof(Elf_Sym); i++) {
-		const char *name = info->strtab + sym[i].st_name;
+"hash2" is keyed by local address and local port.
+"hash" is keyed by local port only.
 
-		switch (sym[i].st_shndx) {
-		case SHN_COMMON:
+The issue can be shown in the following bind sequence (pseudo code):
 
-		[...]
+bind(fd1,  "[fd00::1]:8888")
+bind(fd2,  "[fd00::2]:8888")
+bind(fd3,  "[fd00::3]:8888")
+bind(fd4,  "[fd00::4]:8888")
+bind(fd5,  "[fd00::5]:8888")
+bind(fd6,  "[fd00::6]:8888")
+bind(fd7,  "[fd00::7]:8888")
+bind(fd8,  "[fd00::8]:8888")
+bind(fd9,  "[fd00::9]:8888")
+bind(fd10, "[fd00::10]:8888")
 
-		default:
-			/* Divert to percpu allocation if a percpu var. */
-			if (sym[i].st_shndx == info->index.pcpu)
-				secbase = (unsigned long)mod_percpu(mod);
-			else
-  /** HERE --> **/		secbase = info->sechdrs[sym[i].st_shndx].sh_addr;
-			sym[i].st_value += secbase;
-			break;
-		}
-	}
+/* Correctly return -EADDRINUSE because "hash" is used
+ * instead of "hash2". udp_lib_lport_inuse() detects the
+ * conflict.
+ */
+bind(fail_fd, "[::]:8888")
 
-A symbol with an out-of-bounds st_shndx value, for example 0xffff
-(known as SHN_XINDEX or SHN_HIRESERVE), may cause a kernel panic:
+/* After one more socket is bound to "[fd00::11]:8888",
+ * hslot->count exceeds 10 and "hash2" is used instead.
+ */
+bind(fd11, "[fd00::11]:8888")
+bind(fail_fd, "[::]:8888")      /* succeeds unexpectedly */
 
-  BUG: unable to handle page fault for address: ...
-  RIP: 0010:simplify_symbols+0x2b2/0x480
-  ...
-  Kernel panic - not syncing: Fatal exception
+The same issue applies to the IPv4 wildcard address "0.0.0.0"
+and the IPv4-mapped wildcard address "::ffff:0.0.0.0". For
+example, if there are existing sockets bound to
+"192.168.1.[1-11]:8888", then binding "0.0.0.0:8888" or
+"[::ffff:0.0.0.0]:8888" can also miss the conflict when
+hslot->count > 10.
 
-This can happen when module ELF is legitimately using SHN_XINDEX or
-when it is corrupted.
+TCP inet_csk_get_port() already has the correct check in
+inet_use_bhash2_on_bind(). Rename it to
+inet_use_hash2_on_bind() and move it to inet_hashtables.h
+so udp.c can reuse it in this fix.
 
-Add a bounds check in simplify_symbols() to validate that st_shndx is
-within the valid range before using it.
-
-This issue was discovered due to a bug in llvm-objcopy, see relevant
-discussion for details [1].
-
-[1] https://lore.kernel.org/linux-modules/20251224005752.201911-1-ihor.solodrai@linux.dev/
-
-Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Fixes: 30fff9231fad ("udp: bind() optimisation")
+Reported-by: Andrew Onyshchuk <oandrew@meta.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260319181817.1901357-1-martin.lau@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/net/inet_hashtables.h   | 14 ++++++++++++++
+ net/ipv4/inet_connection_sock.c | 20 +++-----------------
+ net/ipv4/udp.c                  |  2 +-
+ 3 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 3269f6c468145..6b3cffd9f8a8a 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -1343,6 +1343,13 @@ static int simplify_symbols(struct module *mod, const struct load_info *info)
- 			break;
+diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
+index ddfa2e67fdb51..ce58cf10ecb43 100644
+--- a/include/net/inet_hashtables.h
++++ b/include/net/inet_hashtables.h
+@@ -278,6 +278,20 @@ inet_bhashfn_portaddr(const struct inet_hashinfo *hinfo, const struct sock *sk,
+ 	return &hinfo->bhash2[hash & (hinfo->bhash_size - 1)];
+ }
  
- 		default:
-+			if (sym[i].st_shndx >= info->hdr->e_shnum) {
-+				pr_err("%s: Symbol %s has an invalid section index %u (max %u)\n",
-+				       mod->name, name, sym[i].st_shndx, info->hdr->e_shnum - 1);
-+				ret = -ENOEXEC;
-+				break;
-+			}
++static inline bool inet_use_hash2_on_bind(const struct sock *sk)
++{
++#if IS_ENABLED(CONFIG_IPV6)
++	if (sk->sk_family == AF_INET6) {
++		if (ipv6_addr_any(&sk->sk_v6_rcv_saddr))
++			return false;
 +
- 			/* Divert to percpu allocation if a percpu var. */
- 			if (sym[i].st_shndx == info->index.pcpu)
- 				secbase = (unsigned long)mod_percpu(mod);
++		if (!ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr))
++			return true;
++	}
++#endif
++	return sk->sk_rcv_saddr != htonl(INADDR_ANY);
++}
++
+ struct inet_bind_hashbucket *
+ inet_bhash2_addr_any_hashbucket(const struct sock *sk, const struct net *net, int port);
+ 
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index fd3bbcffce5e6..dfa27273fa755 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -151,20 +151,6 @@ void inet_sk_get_local_port_range(const struct sock *sk, int *low, int *high)
+ }
+ EXPORT_SYMBOL(inet_sk_get_local_port_range);
+ 
+-static bool inet_use_bhash2_on_bind(const struct sock *sk)
+-{
+-#if IS_ENABLED(CONFIG_IPV6)
+-	if (sk->sk_family == AF_INET6) {
+-		if (ipv6_addr_any(&sk->sk_v6_rcv_saddr))
+-			return false;
+-
+-		if (!ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr))
+-			return true;
+-	}
+-#endif
+-	return sk->sk_rcv_saddr != htonl(INADDR_ANY);
+-}
+-
+ static bool inet_bind_conflict(const struct sock *sk, struct sock *sk2,
+ 			       kuid_t sk_uid, bool relax,
+ 			       bool reuseport_cb_ok, bool reuseport_ok)
+@@ -254,7 +240,7 @@ static int inet_csk_bind_conflict(const struct sock *sk,
+ 	 * checks separately because their spinlocks have to be acquired/released
+ 	 * independently of each other, to prevent possible deadlocks
+ 	 */
+-	if (inet_use_bhash2_on_bind(sk))
++	if (inet_use_hash2_on_bind(sk))
+ 		return tb2 && inet_bhash2_conflict(sk, tb2, uid, relax,
+ 						   reuseport_cb_ok, reuseport_ok);
+ 
+@@ -371,7 +357,7 @@ inet_csk_find_open_port(const struct sock *sk, struct inet_bind_bucket **tb_ret,
+ 		head = &hinfo->bhash[inet_bhashfn(net, port,
+ 						  hinfo->bhash_size)];
+ 		spin_lock_bh(&head->lock);
+-		if (inet_use_bhash2_on_bind(sk)) {
++		if (inet_use_hash2_on_bind(sk)) {
+ 			if (inet_bhash2_addr_any_conflict(sk, port, l3mdev, relax, false))
+ 				goto next_port;
+ 		}
+@@ -556,7 +542,7 @@ int inet_csk_get_port(struct sock *sk, unsigned short snum)
+ 				check_bind_conflict = false;
+ 		}
+ 
+-		if (check_bind_conflict && inet_use_bhash2_on_bind(sk)) {
++		if (check_bind_conflict && inet_use_hash2_on_bind(sk)) {
+ 			if (inet_bhash2_addr_any_conflict(sk, port, l3mdev, true, true))
+ 				goto fail_unlock;
+ 		}
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index da96252dd8a16..d50c2b67c08d7 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -280,7 +280,7 @@ int udp_lib_get_port(struct sock *sk, unsigned short snum,
+ 	} else {
+ 		hslot = udp_hashslot(udptable, net, snum);
+ 		spin_lock_bh(&hslot->lock);
+-		if (hslot->count > 10) {
++		if (inet_use_hash2_on_bind(sk) && hslot->count > 10) {
+ 			int exist;
+ 			unsigned int slot2 = udp_sk(sk)->udp_portaddr_hash ^ snum;
+ 
 -- 
 2.51.0
 
