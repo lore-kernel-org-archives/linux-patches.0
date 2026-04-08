@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DB32727F3;
-	Wed,  8 Apr 2026 18:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55ED134AB06;
+	Wed,  8 Apr 2026 18:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674239; cv=none; b=Eoxl0VJEYzEe1CZlHqHbbfjwqjJDvK7JcBQ/Imr+ZKH3AwLGZLUe5hZl0s/lgA/ciR2LnzMn8eqRjWa8gJabY5zKg+OMbddVIyREFEPQ5/sK7nFHj6mMLTc2HvFZwIUMvUJlpixL2iSOrbzC7XZF+r1TWv5SX3sGvKpBeEHMJxM=
+	t=1775674242; cv=none; b=oQaaG0/m5Vnn4+jsvIfJ93yZ6irrjKxQb8VavDYTIL7Lb7/rVNfF7NxUJwiuXzQMjhUewMP1k0ygKc7Yhr8mamdbtaAxs8ZoUGIPHN0yQo6u2NgWWKUgyuPJTdr7MPlEIAs8aWxlNJavVemdixTwtDKjv6Dd0EYfAr92Eq3w5aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674239; c=relaxed/simple;
-	bh=/jgtYzdH71Ex1+O9SBRDBfk/n5lsiUHYxtCRyYCJ1T8=;
+	s=arc-20240116; t=1775674242; c=relaxed/simple;
+	bh=/etAI/McEyrKAhhRKd/hId5GV0PaLCSpKuz8DXvJ6Hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZebgOUYBKeLWupOlmUUK6zGO8Mz3ugzT2y5tN28Cg44CHFvc52s4O+UITnUvxrde/MQzFAOyAuTRP0uOsbPYHv6vjYrQ4uWcVz2Etx6heNMlG2dbc21ZaumDk8bNVfNpldWc8NSWYUDyLa5taYR4pV4bHoTC+zRjCNJOKxA9fTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDNJUIce; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OSyhCFOGwTb6oC79AxnLupnH7ailP81T5j16nFfZW+GwHFSph+CHS+/r5iqp0pXtf9i6Ilt/yMwq8L9jR9fEe8QnUuALz9sZaTPL8AIBBuK0w4seCSpomWrnRirol7kROPUDoDi+GvyTzF4urmoFkK3gIXES8ax5OEdjlXQ3S64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgAxqPXC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDNJUIce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34202C19421;
-	Wed,  8 Apr 2026 18:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgAxqPXC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9821C19421;
+	Wed,  8 Apr 2026 18:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674239;
-	bh=/jgtYzdH71Ex1+O9SBRDBfk/n5lsiUHYxtCRyYCJ1T8=;
+	s=korg; t=1775674242;
+	bh=/etAI/McEyrKAhhRKd/hId5GV0PaLCSpKuz8DXvJ6Hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDNJUIce7m1cdQRyHEKxpjyZ6JI3jNxWGRGlOe3z9Sfn92vlQ1TxEGh4z0YHNk0Fq
-	 Um9hKWJEpQO8wlxesIUZtNKrPBXR811cmcsooBGfR+Al2ln/bKp4vvS8f8PLH1maHI
-	 sYTtSTVT/S0rEaoiadrjNGNCCd7XhnVc6NEDBMaw=
+	b=qgAxqPXCyGq4nxfojpadFkwV7BOpLQecyGk1VZLkggI7BkGy98FeM0zXy5mZ2EN1r
+	 lvILzo4Ac+zs+h0UE+IRgWsHVV8roCfRC4B94UK6wafyK+E2iOVcxjXzeu0nlKMmrR
+	 kEVux6YXXsQlbkpdGDNyNKprBKdUJUfMi9qtL7Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 020/311] HID: multitouch: Check to ensure report responses match the request
-Date: Wed,  8 Apr 2026 20:00:20 +0200
-Message-ID: <20260408175940.168322288@linuxfoundation.org>
+Subject: [PATCH 6.19 021/311] btrfs: reserve enough transaction items for qgroup ioctls
+Date: Wed,  8 Apr 2026 20:00:21 +0200
+Message-ID: <20260408175940.205143442@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,50 +53,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit e716edafedad4952fe3a4a273d2e039a84e8681a ]
+[ Upstream commit f9a4e3015db1aeafbef407650eb8555445ca943e ]
 
-It is possible for a malicious (or clumsy) device to respond to a
-specific report's feature request using a completely different report
-ID.  This can cause confusion in the HID core resulting in nasty
-side-effects such as OOB writes.
+Currently our qgroup ioctls don't reserve any space, they just do a
+transaction join, which does not reserve any space, neither for the quota
+tree updates nor for the delayed refs generated when updating the quota
+tree. The quota root uses the global block reserve, which is fine most of
+the time since we don't expect a lot of updates to the quota root, or to
+be too close to -ENOSPC such that other critical metadata updates need to
+resort to the global reserve.
 
-Add a check to ensure that the report ID in the response, matches the
-one that was requested.  If it doesn't, omit reporting the raw event and
-return early.
+However this is not optimal, as not reserving proper space may result in a
+transaction abort due to not reserving space for delayed refs and then
+abusing the use of the global block reserve.
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+For example, the following reproducer (which is unlikely to model any
+real world use case, but just to illustrate the problem), triggers such a
+transaction abort due to -ENOSPC when running delayed refs:
+
+  $ cat test.sh
+  #!/bin/bash
+
+  DEV=/dev/nullb0
+  MNT=/mnt/nullb0
+
+  umount $DEV &> /dev/null
+  # Limit device to 1G so that it's much faster to reproduce the issue.
+  mkfs.btrfs -f -b 1G $DEV
+  mount -o commit=600 $DEV $MNT
+
+  fallocate -l 800M $MNT/filler
+  btrfs quota enable $MNT
+
+  for ((i = 1; i <= 400000; i++)); do
+      btrfs qgroup create 1/$i $MNT
+  done
+
+  umount $MNT
+
+When running this, we can see in dmesg/syslog that a transaction abort
+happened:
+
+  [436.490] BTRFS error (device nullb0): failed to run delayed ref for logical 30408704 num_bytes 16384 type 176 action 1 ref_mod 1: -28
+  [436.493] ------------[ cut here ]------------
+  [436.494] BTRFS: Transaction aborted (error -28)
+  [436.495] WARNING: fs/btrfs/extent-tree.c:2247 at btrfs_run_delayed_refs+0xd9/0x110 [btrfs], CPU#4: umount/2495372
+  [436.497] Modules linked in: btrfs loop (...)
+  [436.508] CPU: 4 UID: 0 PID: 2495372 Comm: umount Tainted: G        W           6.19.0-rc8-btrfs-next-225+ #1 PREEMPT(full)
+  [436.510] Tainted: [W]=WARN
+  [436.511] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+  [436.513] RIP: 0010:btrfs_run_delayed_refs+0xdf/0x110 [btrfs]
+  [436.514] Code: 0f 82 ea (...)
+  [436.518] RSP: 0018:ffffd511850b7d78 EFLAGS: 00010292
+  [436.519] RAX: 00000000ffffffe4 RBX: ffff8f120dad37e0 RCX: 0000000002040001
+  [436.520] RDX: 0000000000000002 RSI: 00000000ffffffe4 RDI: ffffffffc090fd80
+  [436.522] RBP: 0000000000000000 R08: 0000000000000001 R09: ffffffffc04d1867
+  [436.523] R10: ffff8f18dc1fffa8 R11: 0000000000000003 R12: ffff8f173aa89400
+  [436.524] R13: 0000000000000000 R14: ffff8f173aa89400 R15: 0000000000000000
+  [436.526] FS:  00007fe59045d840(0000) GS:ffff8f192e22e000(0000) knlGS:0000000000000000
+  [436.527] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [436.528] CR2: 00007fe5905ff2b0 CR3: 000000060710a002 CR4: 0000000000370ef0
+  [436.530] Call Trace:
+  [436.530]  <TASK>
+  [436.530]  btrfs_commit_transaction+0x73/0xc00 [btrfs]
+  [436.531]  ? btrfs_attach_transaction_barrier+0x1e/0x70 [btrfs]
+  [436.532]  sync_filesystem+0x7a/0x90
+  [436.533]  generic_shutdown_super+0x28/0x180
+  [436.533]  kill_anon_super+0x12/0x40
+  [436.534]  btrfs_kill_super+0x12/0x20 [btrfs]
+  [436.534]  deactivate_locked_super+0x2f/0xb0
+  [436.534]  cleanup_mnt+0xea/0x180
+  [436.535]  task_work_run+0x58/0xa0
+  [436.535]  exit_to_user_mode_loop+0xed/0x480
+  [436.536]  ? __x64_sys_umount+0x68/0x80
+  [436.536]  do_syscall_64+0x2a5/0xf20
+  [436.537]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [436.537] RIP: 0033:0x7fe5906b6217
+  [436.538] Code: 0d 00 f7 (...)
+  [436.540] RSP: 002b:00007ffcd87a61f8 EFLAGS: 00000246 ORIG_RAX: 00000000000000a6
+  [436.541] RAX: 0000000000000000 RBX: 00005618b9ecadc8 RCX: 00007fe5906b6217
+  [436.541] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00005618b9ecb100
+  [436.542] RBP: 0000000000000000 R08: 00007ffcd87a4fe0 R09: 00000000ffffffff
+  [436.544] R10: 0000000000000103 R11: 0000000000000246 R12: 00007fe59081626c
+  [436.544] R13: 00005618b9ecb100 R14: 0000000000000000 R15: 00005618b9ecacc0
+  [436.545]  </TASK>
+  [436.545] ---[ end trace 0000000000000000 ]---
+
+Fix this by changing the qgroup ioctls to use start transaction instead of
+joining so that proper space is reserved for the delayed refs generated
+for the updates to the quota root. This way we don't get any transaction
+abort.
+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/btrfs/ioctl.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index b8a748bbf0fd8..e82a3c4e5b44e 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -526,12 +526,19 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
- 		dev_warn(&hdev->dev, "failed to fetch feature %d\n",
- 			 report->id);
- 	} else {
-+		/* The report ID in the request and the response should match */
-+		if (report->id != buf[0]) {
-+			hid_err(hdev, "Returned feature report did not match the request\n");
-+			goto free;
-+		}
-+
- 		ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, buf,
- 					   size, 0);
- 		if (ret)
- 			dev_warn(&hdev->dev, "failed to report feature\n");
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index b78998815ce72..16c9b242e917f 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3697,7 +3697,8 @@ static long btrfs_ioctl_qgroup_assign(struct file *file, void __user *arg)
+ 		}
  	}
  
-+free:
- 	kfree(buf);
- }
+-	trans = btrfs_join_transaction(root);
++	/* 2 BTRFS_QGROUP_RELATION_KEY items. */
++	trans = btrfs_start_transaction(root, 2);
+ 	if (IS_ERR(trans)) {
+ 		ret = PTR_ERR(trans);
+ 		goto out;
+@@ -3769,7 +3770,11 @@ static long btrfs_ioctl_qgroup_create(struct file *file, void __user *arg)
+ 		goto out;
+ 	}
  
+-	trans = btrfs_join_transaction(root);
++	/*
++	 * 1 BTRFS_QGROUP_INFO_KEY item.
++	 * 1 BTRFS_QGROUP_LIMIT_KEY item.
++	 */
++	trans = btrfs_start_transaction(root, 2);
+ 	if (IS_ERR(trans)) {
+ 		ret = PTR_ERR(trans);
+ 		goto out;
+@@ -3818,7 +3823,8 @@ static long btrfs_ioctl_qgroup_limit(struct file *file, void __user *arg)
+ 		goto drop_write;
+ 	}
+ 
+-	trans = btrfs_join_transaction(root);
++	/* 1 BTRFS_QGROUP_LIMIT_KEY item. */
++	trans = btrfs_start_transaction(root, 1);
+ 	if (IS_ERR(trans)) {
+ 		ret = PTR_ERR(trans);
+ 		goto out;
 -- 
 2.53.0
 
