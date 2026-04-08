@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E2C3BB4A;
-	Wed,  8 Apr 2026 19:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1C135C1B5;
+	Wed,  8 Apr 2026 19:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674974; cv=none; b=jVRp7cm1EPIosglYc1UMtzrTk2NtQ+jDntgW2naF7ervgVHOOu8o/0K91hL4NQ0xnfWjGWiVP3W3s4E9QrZAB2kO39gEuYjjUe5UZsak+vyNGmVUtj8ztC5F8Q1ifPd0NFZhY4OLf8OtHJU37n9G4cJtbdykztaOQ7wj29YEb4o=
+	t=1775674977; cv=none; b=TPY6Vfx8HZPGLy6fthnLxYya4hFIc8uN5VliHiMFQaVyCceNw3U0EgEzdHJa6h1xR3a1Ri6WTYBrkC5FnTEK/jAxrKoWMV/nVD9exu2u9hs9ryIvL0nckFxjDsjD0lr17mhjQnZlMXxcDOZYyKOYRppHr751kMX6IMqjdkfBfto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674974; c=relaxed/simple;
-	bh=BkvcciFQdfzrknvbTFDHtfCVccZja8BHt1Go6ArZsKY=;
+	s=arc-20240116; t=1775674977; c=relaxed/simple;
+	bh=dN1QLUCfHvT1bq1E3nygc8RMEel6eYcw9vSTWAYZflA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kEVEbs/xOETee2mh84H/1Y/K1NZMFinIcUal7tSi8AufY8XfJ/i2/Q0LbE4xiR9PAxDCyStVvXP5DLxHdamB93PUrd85mlawJ9FjUaskdG/NtW/9V9UNtkT5ErfOkkVDmh9X84A/rE3Zmirfo9IISxL5IOB94hS8XRqz8G2ST3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mptK/gBo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FnyXlyElXfFe1zm2r9nDNDFWhTbVlEnbUHfwnEzRnenE4Oln8JdxIS1PToygArmJG4s/wWVYmC+JYxj4HNakXlB0xd8Y/MquD1KM1PrWeM3s84x55N1/RwnAD5pIwAEumRbgjhiXhUDlxuyyzSk0t+FtHKjPZL/ZktWr0QsI50c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPrZrSOC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mptK/gBo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C9CC2BC87;
-	Wed,  8 Apr 2026 19:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPrZrSOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC50C19421;
+	Wed,  8 Apr 2026 19:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674974;
-	bh=BkvcciFQdfzrknvbTFDHtfCVccZja8BHt1Go6ArZsKY=;
+	s=korg; t=1775674977;
+	bh=dN1QLUCfHvT1bq1E3nygc8RMEel6eYcw9vSTWAYZflA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mptK/gBo0qIl3limsKKMAHm4RCZoNsdgAGchnFY7a3mdQIqLFFz5dYyWSfTrh4eTQ
-	 Fe3C9Y8D1L4v4aaoV+I8kjtGf+QsJn9VoXSxsX1Fkk/ugqzg+cxKap50djxcKOBbFz
-	 DoYpy5QZuIACg+whW30ohRKSswNGQ1taqxXdGSI4=
+	b=NPrZrSOC2FWTEsfT92p6xRR7PrD5rvGRR8Z8G999xcWp+vPgCjwGdRV5GN/7O4yDU
+	 ka4RRT43ydGSwl+kdJ69JDlutURjlJ3C91B1T7Tkk6X0prg2zuYCA6wgRvxnQrXqnV
+	 JqsHbURLVWRHDWOCJBT5dVqeLxjLyrSZwunOK5D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Zimmermann <sigmaepsilon92@gmail.com>,
+	Taegu Ha <hataegu0826@gmail.com>,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.19 305/311] usb: gadget: f_hid: move list and spinlock inits from bind to alloc
-Date: Wed,  8 Apr 2026 20:05:05 +0200
-Message-ID: <20260408175950.755246751@linuxfoundation.org>
+Subject: [PATCH 6.19 306/311] usb: gadget: f_uac1_legacy: validate control request size
+Date: Wed,  8 Apr 2026 20:05:06 +0200
+Message-ID: <20260408175950.792129135@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -50,75 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Zimmermann <sigmaepsilon92@gmail.com>
+From: Taegu Ha <hataegu0826@gmail.com>
 
-commit 4e0a88254ad59f6c53a34bf5fa241884ec09e8b2 upstream.
+commit 6e0e34d85cd46ceb37d16054e97a373a32770f6c upstream.
 
-There was an issue when you did the following:
-- setup and bind an hid gadget
-- open /dev/hidg0
-- use the resulting fd in EPOLL_CTL_ADD
-- unbind the UDC
-- bind the UDC
-- use the fd in EPOLL_CTL_DEL
+f_audio_complete() copies req->length bytes into a 4-byte stack
+variable:
 
-When CONFIG_DEBUG_LIST was enabled, a list_del corruption was reported
-within remove_wait_queue (via ep_remove_wait_queue). After some
-debugging I found out that the queues, which f_hid registers via
-poll_wait were the problem. These were initialized using
-init_waitqueue_head inside hidg_bind. So effectively, the bind function
-re-initialized the queues while there were still items in them.
+  u32 data = 0;
+  memcpy(&data, req->buf, req->length);
 
-The solution is to move the initialization from hidg_bind to hidg_alloc
-to extend their lifetimes to the lifetime of the function instance.
+req->length is derived from the host-controlled USB request path,
+which can lead to a stack out-of-bounds write.
 
-Additionally, I found many other possibly problematic init calls in the
-bind function, which I moved as well.
+Validate req->actual against the expected payload size for the
+supported control selectors and decode only the expected amount
+of data.
 
-Signed-off-by: Michael Zimmermann <sigmaepsilon92@gmail.com>
+This avoids copying a host-influenced length into a fixed-size
+stack object.
+
+Signed-off-by: Taegu Ha <hataegu0826@gmail.com>
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260331184844.2388761-1-sigmaepsilon92@gmail.com
+Link: https://patch.msgid.link/20260401191311.3604898-1-hataegu0826@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_hid.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/usb/gadget/function/f_uac1_legacy.c |   47 ++++++++++++++++++++++------
+ 1 file changed, 37 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1262,17 +1262,8 @@ static int hidg_bind(struct usb_configur
- 	if (status)
- 		goto fail;
+--- a/drivers/usb/gadget/function/f_uac1_legacy.c
++++ b/drivers/usb/gadget/function/f_uac1_legacy.c
+@@ -360,19 +360,46 @@ static int f_audio_out_ep_complete(struc
+ static void f_audio_complete(struct usb_ep *ep, struct usb_request *req)
+ {
+ 	struct f_audio *audio = req->context;
+-	int status = req->status;
+-	u32 data = 0;
+ 	struct usb_ep *out_ep = audio->out_ep;
  
--	spin_lock_init(&hidg->write_spinlock);
- 	hidg->write_pending = 1;
- 	hidg->req = NULL;
--	spin_lock_init(&hidg->read_spinlock);
--	spin_lock_init(&hidg->get_report_spinlock);
--	init_waitqueue_head(&hidg->write_queue);
--	init_waitqueue_head(&hidg->read_queue);
--	init_waitqueue_head(&hidg->get_queue);
--	init_waitqueue_head(&hidg->get_id_queue);
--	INIT_LIST_HEAD(&hidg->completed_out_req);
--	INIT_LIST_HEAD(&hidg->report_list);
- 
- 	INIT_WORK(&hidg->work, get_report_workqueue_handler);
- 	hidg->workqueue = alloc_workqueue("report_work",
-@@ -1608,6 +1599,16 @@ static struct usb_function *hidg_alloc(s
- 
- 	mutex_lock(&opts->lock);
- 
-+	spin_lock_init(&hidg->write_spinlock);
-+	spin_lock_init(&hidg->read_spinlock);
-+	spin_lock_init(&hidg->get_report_spinlock);
-+	init_waitqueue_head(&hidg->write_queue);
-+	init_waitqueue_head(&hidg->read_queue);
-+	init_waitqueue_head(&hidg->get_queue);
-+	init_waitqueue_head(&hidg->get_id_queue);
-+	INIT_LIST_HEAD(&hidg->completed_out_req);
-+	INIT_LIST_HEAD(&hidg->report_list);
+-	switch (status) {
+-
+-	case 0:				/* normal completion? */
+-		if (ep == out_ep)
++	switch (req->status) {
++	case 0:
++		if (ep == out_ep) {
+ 			f_audio_out_ep_complete(ep, req);
+-		else if (audio->set_con) {
+-			memcpy(&data, req->buf, req->length);
+-			audio->set_con->set(audio->set_con, audio->set_cmd,
+-					le16_to_cpu(data));
++		} else if (audio->set_con) {
++			struct usb_audio_control *con = audio->set_con;
++			u8 type = con->type;
++			u32 data;
++			bool valid_request = false;
 +
- 	device_initialize(&hidg->dev);
- 	hidg->dev.release = hidg_release;
- 	hidg->dev.class = &hidg_class;
++			switch (type) {
++			case UAC_FU_MUTE: {
++				u8 value;
++
++				if (req->actual == sizeof(value)) {
++					memcpy(&value, req->buf, sizeof(value));
++					data = value;
++					valid_request = true;
++				}
++				break;
++			}
++			case UAC_FU_VOLUME: {
++				__le16 value;
++
++				if (req->actual == sizeof(value)) {
++					memcpy(&value, req->buf, sizeof(value));
++					data = le16_to_cpu(value);
++					valid_request = true;
++				}
++				break;
++			}
++			}
++
++			if (valid_request)
++				con->set(con, audio->set_cmd, data);
++			else
++				usb_ep_set_halt(ep);
++
+ 			audio->set_con = NULL;
+ 		}
+ 		break;
 
 
