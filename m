@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A223D4134;
-	Wed,  8 Apr 2026 18:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA6A347517;
+	Wed,  8 Apr 2026 18:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671706; cv=none; b=KgA0H/26iwYjdlXctGyV93XWfnQYya3Wk6ngaldE3WptonUy2QF99yUJfkmLKovgQ4F2QryVzzBLfRT2/THT32TNXAmXdUJg7vQLCAHiiXBDRRAXzHa+mzeWB+A27tvRcXbeA0LbDOvrxyCqxcMtCQJJf2CUSSLFAbLP0clTU9Y=
+	t=1775671709; cv=none; b=rI3CPHQp6s4uLucHnICe/27hRuyiUowTFz+pdA2gMdwNaeGng75L+zPDqPzTdF+uTla4b17RctVvn+ujiRz/CsxIPw12qhXCbI+504gCmVUpPXU112G3eaKh24AXO8XFXBN5kHW+pBHm4gHw/LFIh8SI3hvZmypNll45s2xV6Lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671706; c=relaxed/simple;
-	bh=BNzBezyoW4n7eHc901M2I/ou4h81I4etxmafjTuLDIY=;
+	s=arc-20240116; t=1775671709; c=relaxed/simple;
+	bh=6NlSo09tEX9ry/95AmoRBmpZUfMBsUWnhXoY1HTdclU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=psI3Cqw0Th9zbQdGAhVFi6ykEvhOSAuqjsDo0iG58Rh8t6qNNyOGnoVtSGWiED1vBmxo1f/+p9OZKdRqI7TFQEkfNXpz/cxpli/TsLfV7NytV6eS8KiMRDdLTLDUi9dOkPVNUmYd92KjTz1Y758RtvM4fLiXsV9Jg79QnJZ9tnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTQay3sb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XGz+964eU/rSQEnJQ3BUnwGrmljEdikhRWbb+5EssxhW8ujzdhOXvOs7caLQmlqZ+7y/5EQ16MQ/NhA7xiSohj6MrbGSsfaUXDmzjDn+dDTUt22Ce/gHFJ78WKt9OL/rJrB7f6iUDqIl/7jBmAGzAh6hZ8bgCFpKwQvfe1Oj4eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJEcD+YW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTQay3sb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D97FC19421;
-	Wed,  8 Apr 2026 18:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJEcD+YW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73C4C19421;
+	Wed,  8 Apr 2026 18:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671706;
-	bh=BNzBezyoW4n7eHc901M2I/ou4h81I4etxmafjTuLDIY=;
+	s=korg; t=1775671709;
+	bh=6NlSo09tEX9ry/95AmoRBmpZUfMBsUWnhXoY1HTdclU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTQay3sbg836oTrp4rXuKeD3dWK07/5EeMwLLFBJXnJJvMBvEXNxcwYsO25oQll+A
-	 rgQG1AxkrdiXm+EOsW1y0BDdnMoiqG6XQhmRR4PsIh2WmX1XId7CzPX0TlWyWcMaoi
-	 9pmL1tSxV83Y2qajZBox2gR/WGcByq+2gWnbc29s=
+	b=UJEcD+YW7mJNd+Yyw5qC5RwL8cnYZ/8XXsvVUAtKkxVuaZoyz0fUq4mUeMGHx1nfm
+	 +K2WZNMBwELQhtZXtt+ClHFhN5XYy8E8LacAsvRcrE+iZcF4+Iz3xmUjzGEUWvjchL
+	 YFOj1JBq+U2An7L5hxGbC7rSGXgYjdTfgMQOy4PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minxi Hou <mhou@redhat.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Guillaume Nault <gnault@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/312] net: openvswitch: Avoid releasing netdev before teardown completes
-Date: Wed,  8 Apr 2026 19:59:13 +0200
-Message-ID: <20260408175935.076882384@linuxfoundation.org>
+Subject: [PATCH 6.1 037/312] rtnetlink: pass netlink message header and portid to rtnl_configure_link()
+Date: Wed,  8 Apr 2026 19:59:14 +0200
+Message-ID: <20260408175935.115609094@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -46,129 +46,467 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 7c770dadfda5cbbde6aa3c4363ed513f1d212bf8 ]
+[ Upstream commit 1d997f1013079c05b642c739901e3584a3ae558d ]
 
-The patch cited in the Fixes tag below changed the teardown code for
-OVS ports to no longer unconditionally take the RTNL. After this change,
-the netdev_destroy() callback can proceed immediately to the call_rcu()
-invocation if the IFF_OVS_DATAPATH flag is already cleared on the
-netdev.
+This patch pass netlink message header and portid to rtnl_configure_link()
+All the functions in this call chain need to add the parameters so we can
+use them in the last call rtnl_notify(), and notify the userspace about
+the new link info if NLM_F_ECHO flag is set.
 
-The ovs_netdev_detach_dev() function clears the flag before completing
-the unregistration, and if it gets preempted after clearing the flag (as
-can happen on an -rt kernel), netdev_destroy() can complete and the
-device can be freed before the unregistration completes. This leads to a
-splat like:
+- rtnl_configure_link()
+  - __dev_notify_flags()
+    - rtmsg_ifinfo()
+      - rtmsg_ifinfo_event()
+        - rtmsg_ifinfo_build_skb()
+        - rtmsg_ifinfo_send()
+	  - rtnl_notify()
 
-[  998.393867] Oops: general protection fault, probably for non-canonical address 0xff00000001000239: 0000 [#1] SMP PTI
-[  998.393877] CPU: 42 UID: 0 PID: 55177 Comm: ip Kdump: loaded Not tainted 6.12.0-211.1.1.el10_2.x86_64+rt #1 PREEMPT_RT
-[  998.393886] Hardware name: Dell Inc. PowerEdge R740/0JMK61, BIOS 2.24.0 03/27/2025
-[  998.393889] RIP: 0010:dev_set_promiscuity+0x8d/0xa0
-[  998.393901] Code: 00 00 75 d8 48 8b 53 08 48 83 ba b0 02 00 00 00 75 ca 48 83 c4 08 5b c3 cc cc cc cc 48 83 bf 48 09 00 00 00 75 91 48 8b 47 08 <48> 83 b8 b0 02 00 00 00 74 97 eb 81 0f 1f 80 00 00 00 00 90 90 90
-[  998.393906] RSP: 0018:ffffce5864a5f6a0 EFLAGS: 00010246
-[  998.393912] RAX: ff00000000ffff89 RBX: ffff894d0adf5a05 RCX: 0000000000000000
-[  998.393917] RDX: 0000000000000000 RSI: 00000000ffffffff RDI: ffff894d0adf5a05
-[  998.393921] RBP: ffff894d19252000 R08: ffff894d19252000 R09: 0000000000000000
-[  998.393924] R10: ffff894d19252000 R11: ffff894d192521b8 R12: 0000000000000006
-[  998.393927] R13: ffffce5864a5f738 R14: 00000000ffffffe2 R15: 0000000000000000
-[  998.393931] FS:  00007fad61971800(0000) GS:ffff894cc0140000(0000) knlGS:0000000000000000
-[  998.393936] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  998.393940] CR2: 000055df0a2a6e40 CR3: 000000011c7fe003 CR4: 00000000007726f0
-[  998.393944] PKRU: 55555554
-[  998.393946] Call Trace:
-[  998.393949]  <TASK>
-[  998.393952]  ? show_trace_log_lvl+0x1b0/0x2f0
-[  998.393961]  ? show_trace_log_lvl+0x1b0/0x2f0
-[  998.393975]  ? dp_device_event+0x41/0x80 [openvswitch]
-[  998.394009]  ? __die_body.cold+0x8/0x12
-[  998.394016]  ? die_addr+0x3c/0x60
-[  998.394027]  ? exc_general_protection+0x16d/0x390
-[  998.394042]  ? asm_exc_general_protection+0x26/0x30
-[  998.394058]  ? dev_set_promiscuity+0x8d/0xa0
-[  998.394066]  ? ovs_netdev_detach_dev+0x3a/0x80 [openvswitch]
-[  998.394092]  dp_device_event+0x41/0x80 [openvswitch]
-[  998.394102]  notifier_call_chain+0x5a/0xd0
-[  998.394106]  unregister_netdevice_many_notify+0x51b/0xa60
-[  998.394110]  rtnl_dellink+0x169/0x3e0
-[  998.394121]  ? rt_mutex_slowlock.constprop.0+0x95/0xd0
-[  998.394125]  rtnetlink_rcv_msg+0x142/0x3f0
-[  998.394128]  ? avc_has_perm_noaudit+0x69/0xf0
-[  998.394130]  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
-[  998.394132]  netlink_rcv_skb+0x50/0x100
-[  998.394138]  netlink_unicast+0x292/0x3f0
-[  998.394141]  netlink_sendmsg+0x21b/0x470
-[  998.394145]  ____sys_sendmsg+0x39d/0x3d0
-[  998.394149]  ___sys_sendmsg+0x9a/0xe0
-[  998.394156]  __sys_sendmsg+0x7a/0xd0
-[  998.394160]  do_syscall_64+0x7f/0x170
-[  998.394162]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  998.394165] RIP: 0033:0x7fad61bf4724
-[  998.394188] Code: 89 02 b8 ff ff ff ff eb bb 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 80 3d c5 e9 0c 00 00 74 13 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 48 83 ec 28 89 54 24 1c 48 89
-[  998.394189] RSP: 002b:00007ffd7e2f7cb8 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
-[  998.394191] RAX: ffffffffffffffda RBX: 0000000000000001 RCX: 00007fad61bf4724
-[  998.394193] RDX: 0000000000000000 RSI: 00007ffd7e2f7d20 RDI: 0000000000000003
-[  998.394194] RBP: 00007ffd7e2f7d90 R08: 0000000000000010 R09: 000000000000003f
-[  998.394195] R10: 000055df11558010 R11: 0000000000000202 R12: 00007ffd7e2f8380
-[  998.394196] R13: 0000000069b233d7 R14: 000055df0a256040 R15: 0000000000000000
-[  998.394200]  </TASK>
+Also move __dev_notify_flags() declaration to net/core/dev.h, as Jakub
+suggested.
 
-To fix this, reorder the operations in ovs_netdev_detach_dev() to only
-clear the flag after completing the other operations, and introduce an
-smp_wmb() to make the ordering requirement explicit. The smp_wmb() is
-paired with a full smp_mb() in netdev_destroy() to make sure the
-call_rcu() invocation does not happen before the unregister operations
-are visible.
-
-Reported-by: Minxi Hou <mhou@redhat.com>
-Tested-by: Minxi Hou <mhou@redhat.com>
-Fixes: 549822767630 ("net: openvswitch: Avoid needlessly taking the RTNL on vport destroy")
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20260318155554.1133405-1-toke@redhat.com
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 6931d21f87bc ("openvswitch: defer tunnel netdev_put to RCU release")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/vport-netdev.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/can/vxcan.c        |  2 +-
+ drivers/net/geneve.c           |  2 +-
+ drivers/net/veth.c             |  2 +-
+ drivers/net/vxlan/vxlan_core.c |  4 ++--
+ drivers/net/wwan/wwan_core.c   |  2 +-
+ include/linux/netdevice.h      |  2 --
+ include/linux/rtnetlink.h      |  9 +++++----
+ include/net/netlink.h          | 11 +++++++++++
+ include/net/rtnetlink.h        |  3 ++-
+ net/core/dev.c                 | 25 ++++++++++++------------
+ net/core/dev.h                 |  4 ++++
+ net/core/rtnetlink.c           | 35 ++++++++++++++++++----------------
+ net/ipv4/ip_gre.c              |  2 +-
+ 13 files changed, 61 insertions(+), 42 deletions(-)
 
-diff --git a/net/openvswitch/vport-netdev.c b/net/openvswitch/vport-netdev.c
-index 7126ff1045503..5bae7ca4abbc0 100644
---- a/net/openvswitch/vport-netdev.c
-+++ b/net/openvswitch/vport-netdev.c
-@@ -144,11 +144,15 @@ static void vport_netdev_free(struct rcu_head *rcu)
- void ovs_netdev_detach_dev(struct vport *vport)
- {
- 	ASSERT_RTNL();
--	vport->dev->priv_flags &= ~IFF_OVS_DATAPATH;
- 	netdev_rx_handler_unregister(vport->dev);
- 	netdev_upper_dev_unlink(vport->dev,
- 				netdev_master_upper_dev_get(vport->dev));
- 	dev_set_promiscuity(vport->dev, -1);
-+
-+	/* paired with smp_mb() in netdev_destroy() */
-+	smp_wmb();
-+
-+	vport->dev->priv_flags &= ~IFF_OVS_DATAPATH;
- }
+diff --git a/drivers/net/can/vxcan.c b/drivers/net/can/vxcan.c
+index 6d549dbdb4674..98c669ad51414 100644
+--- a/drivers/net/can/vxcan.c
++++ b/drivers/net/can/vxcan.c
+@@ -231,7 +231,7 @@ static int vxcan_newlink(struct net *net, struct net_device *dev,
  
- static void netdev_destroy(struct vport *vport)
-@@ -167,6 +171,9 @@ static void netdev_destroy(struct vport *vport)
- 		rtnl_unlock();
+ 	netif_carrier_off(peer);
+ 
+-	err = rtnl_configure_link(peer, ifmp);
++	err = rtnl_configure_link(peer, ifmp, 0, NULL);
+ 	if (err < 0)
+ 		goto unregister_network_device;
+ 
+diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
+index 6234a3c711c53..8ebdf39771878 100644
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -1924,7 +1924,7 @@ struct net_device *geneve_dev_create_fb(struct net *net, const char *name,
+ 	if (err)
+ 		goto err;
+ 
+-	err = rtnl_configure_link(dev, NULL);
++	err = rtnl_configure_link(dev, NULL, 0, NULL);
+ 	if (err < 0)
+ 		goto err;
+ 
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index ce90b093bb45c..e1e8c825483aa 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1734,7 +1734,7 @@ static int veth_newlink(struct net *src_net, struct net_device *dev,
+ 	veth_disable_gro(peer);
+ 	netif_carrier_off(peer);
+ 
+-	err = rtnl_configure_link(peer, ifmp);
++	err = rtnl_configure_link(peer, ifmp, 0, NULL);
+ 	if (err < 0)
+ 		goto err_configure_peer;
+ 
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 9c3a12feb25d2..acee0efd4c200 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -3880,7 +3880,7 @@ static int __vxlan_dev_create(struct net *net, struct net_device *dev,
+ 			goto errout;
  	}
  
-+	/* paired with smp_wmb() in ovs_netdev_detach_dev() */
-+	smp_mb();
-+
- 	call_rcu(&vport->rcu, vport_netdev_free);
+-	err = rtnl_configure_link(dev, NULL);
++	err = rtnl_configure_link(dev, NULL, 0, NULL);
+ 	if (err < 0)
+ 		goto unlink;
+ 
+@@ -4516,7 +4516,7 @@ struct net_device *vxlan_dev_create(struct net *net, const char *name,
+ 		return ERR_PTR(err);
+ 	}
+ 
+-	err = rtnl_configure_link(dev, NULL);
++	err = rtnl_configure_link(dev, NULL, 0, NULL);
+ 	if (err < 0) {
+ 		LIST_HEAD(list_kill);
+ 
+diff --git a/drivers/net/wwan/wwan_core.c b/drivers/net/wwan/wwan_core.c
+index 7089cb103885d..2b01fc351747b 100644
+--- a/drivers/net/wwan/wwan_core.c
++++ b/drivers/net/wwan/wwan_core.c
+@@ -1058,7 +1058,7 @@ static void wwan_create_default_link(struct wwan_device *wwandev,
+ 		goto unlock;
+ 	}
+ 
+-	rtnl_configure_link(dev, NULL); /* Link initialized, notify new link */
++	rtnl_configure_link(dev, NULL, 0, NULL); /* Link initialized, notify new link */
+ 
+ unlock:
+ 	rtnl_unlock();
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 1c47ab59a2c7f..e0df5fc672790 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -3911,8 +3911,6 @@ int __dev_change_flags(struct net_device *dev, unsigned int flags,
+ 		       struct netlink_ext_ack *extack);
+ int dev_change_flags(struct net_device *dev, unsigned int flags,
+ 		     struct netlink_ext_ack *extack);
+-void __dev_notify_flags(struct net_device *, unsigned int old_flags,
+-			unsigned int gchanges);
+ int dev_set_alias(struct net_device *, const char *, size_t);
+ int dev_get_alias(const struct net_device *, char *, size_t);
+ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
+diff --git a/include/linux/rtnetlink.h b/include/linux/rtnetlink.h
+index f532d1eda761c..9494b7647e812 100644
+--- a/include/linux/rtnetlink.h
++++ b/include/linux/rtnetlink.h
+@@ -12,21 +12,22 @@
+ extern int rtnetlink_send(struct sk_buff *skb, struct net *net, u32 pid, u32 group, int echo);
+ extern int rtnl_unicast(struct sk_buff *skb, struct net *net, u32 pid);
+ extern void rtnl_notify(struct sk_buff *skb, struct net *net, u32 pid,
+-			u32 group, struct nlmsghdr *nlh, gfp_t flags);
++			u32 group, const struct nlmsghdr *nlh, gfp_t flags);
+ extern void rtnl_set_sk_err(struct net *net, u32 group, int error);
+ extern int rtnetlink_put_metrics(struct sk_buff *skb, u32 *metrics);
+ extern int rtnl_put_cacheinfo(struct sk_buff *skb, struct dst_entry *dst,
+ 			      u32 id, long expires, u32 error);
+ 
+-void rtmsg_ifinfo(int type, struct net_device *dev, unsigned change, gfp_t flags);
++void rtmsg_ifinfo(int type, struct net_device *dev, unsigned int change, gfp_t flags,
++		  u32 portid, const struct nlmsghdr *nlh);
+ void rtmsg_ifinfo_newnet(int type, struct net_device *dev, unsigned int change,
+ 			 gfp_t flags, int *new_nsid, int new_ifindex);
+ struct sk_buff *rtmsg_ifinfo_build_skb(int type, struct net_device *dev,
+ 				       unsigned change, u32 event,
+ 				       gfp_t flags, int *new_nsid,
+-				       int new_ifindex);
++				       int new_ifindex, u32 portid, u32 seq);
+ void rtmsg_ifinfo_send(struct sk_buff *skb, struct net_device *dev,
+-		       gfp_t flags);
++		       gfp_t flags, u32 portid, const struct nlmsghdr *nlh);
+ 
+ 
+ /* RTNL is used as a global lock for all changes to network configuration  */
+diff --git a/include/net/netlink.h b/include/net/netlink.h
+index a686c9041ddc0..6e1e670e06bc4 100644
+--- a/include/net/netlink.h
++++ b/include/net/netlink.h
+@@ -905,6 +905,17 @@ static inline int nlmsg_report(const struct nlmsghdr *nlh)
+ 	return nlh ? !!(nlh->nlmsg_flags & NLM_F_ECHO) : 0;
  }
+ 
++/**
++ * nlmsg_seq - return the seq number of netlink message
++ * @nlh: netlink message header
++ *
++ * Returns 0 if netlink message is NULL
++ */
++static inline u32 nlmsg_seq(const struct nlmsghdr *nlh)
++{
++	return nlh ? nlh->nlmsg_seq : 0;
++}
++
+ /**
+  * nlmsg_for_each_attr - iterate over a stream of attributes
+  * @pos: loop counter, set to current attribute
+diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
+index fdc7b4ce0ef7b..ad8786c9777c9 100644
+--- a/include/net/rtnetlink.h
++++ b/include/net/rtnetlink.h
+@@ -204,7 +204,8 @@ struct net_device *rtnl_create_link(struct net *net, const char *ifname,
+ 				    struct nlattr *tb[],
+ 				    struct netlink_ext_ack *extack);
+ int rtnl_delete_link(struct net_device *dev);
+-int rtnl_configure_link(struct net_device *dev, const struct ifinfomsg *ifm);
++int rtnl_configure_link(struct net_device *dev, const struct ifinfomsg *ifm,
++			u32 portid, const struct nlmsghdr *nlh);
+ 
+ int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
+ 			     struct netlink_ext_ack *exterr);
+diff --git a/net/core/dev.c b/net/core/dev.c
+index a97239cd1b3a5..7c743a39747fa 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -1402,7 +1402,7 @@ void netdev_state_change(struct net_device *dev)
+ 
+ 		call_netdevice_notifiers_info(NETDEV_CHANGE,
+ 					      &change_info.info);
+-		rtmsg_ifinfo(RTM_NEWLINK, dev, 0, GFP_KERNEL);
++		rtmsg_ifinfo(RTM_NEWLINK, dev, 0, GFP_KERNEL, 0, NULL);
+ 	}
+ }
+ EXPORT_SYMBOL(netdev_state_change);
+@@ -1538,7 +1538,7 @@ int dev_open(struct net_device *dev, struct netlink_ext_ack *extack)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	rtmsg_ifinfo(RTM_NEWLINK, dev, IFF_UP|IFF_RUNNING, GFP_KERNEL);
++	rtmsg_ifinfo(RTM_NEWLINK, dev, IFF_UP | IFF_RUNNING, GFP_KERNEL, 0, NULL);
+ 	call_netdevice_notifiers(NETDEV_UP, dev);
+ 
+ 	return ret;
+@@ -1610,7 +1610,7 @@ void dev_close_many(struct list_head *head, bool unlink)
+ 	__dev_close_many(head);
+ 
+ 	list_for_each_entry_safe(dev, tmp, head, close_list) {
+-		rtmsg_ifinfo(RTM_NEWLINK, dev, IFF_UP|IFF_RUNNING, GFP_KERNEL);
++		rtmsg_ifinfo(RTM_NEWLINK, dev, IFF_UP | IFF_RUNNING, GFP_KERNEL, 0, NULL);
+ 		call_netdevice_notifiers(NETDEV_DOWN, dev);
+ 		if (unlink)
+ 			list_del_init(&dev->close_list);
+@@ -8472,7 +8472,7 @@ static int __dev_set_promiscuity(struct net_device *dev, int inc, bool notify)
+ 		dev_change_rx_flags(dev, IFF_PROMISC);
+ 	}
+ 	if (notify)
+-		__dev_notify_flags(dev, old_flags, IFF_PROMISC);
++		__dev_notify_flags(dev, old_flags, IFF_PROMISC, 0, NULL);
+ 	return 0;
+ }
+ 
+@@ -8527,7 +8527,7 @@ static int __dev_set_allmulti(struct net_device *dev, int inc, bool notify)
+ 		dev_set_rx_mode(dev);
+ 		if (notify)
+ 			__dev_notify_flags(dev, old_flags,
+-					   dev->gflags ^ old_gflags);
++					   dev->gflags ^ old_gflags, 0, NULL);
+ 	}
+ 	return 0;
+ }
+@@ -8690,12 +8690,13 @@ int __dev_change_flags(struct net_device *dev, unsigned int flags,
+ }
+ 
+ void __dev_notify_flags(struct net_device *dev, unsigned int old_flags,
+-			unsigned int gchanges)
++			unsigned int gchanges, u32 portid,
++			const struct nlmsghdr *nlh)
+ {
+ 	unsigned int changes = dev->flags ^ old_flags;
+ 
+ 	if (gchanges)
+-		rtmsg_ifinfo(RTM_NEWLINK, dev, gchanges, GFP_ATOMIC);
++		rtmsg_ifinfo(RTM_NEWLINK, dev, gchanges, GFP_ATOMIC, portid, nlh);
+ 
+ 	if (changes & IFF_UP) {
+ 		if (dev->flags & IFF_UP)
+@@ -8737,7 +8738,7 @@ int dev_change_flags(struct net_device *dev, unsigned int flags,
+ 		return ret;
+ 
+ 	changes = (old_flags ^ dev->flags) | (old_gflags ^ dev->gflags);
+-	__dev_notify_flags(dev, old_flags, changes);
++	__dev_notify_flags(dev, old_flags, changes, 0, NULL);
+ 	return ret;
+ }
+ EXPORT_SYMBOL(dev_change_flags);
+@@ -10274,7 +10275,7 @@ int register_netdevice(struct net_device *dev)
+ 	 */
+ 	if (!dev->rtnl_link_ops ||
+ 	    dev->rtnl_link_state == RTNL_LINK_INITIALIZED)
+-		rtmsg_ifinfo(RTM_NEWLINK, dev, ~0U, GFP_KERNEL);
++		rtmsg_ifinfo(RTM_NEWLINK, dev, ~0U, GFP_KERNEL, 0, NULL);
+ 
+ out:
+ 	return ret;
+@@ -11018,7 +11019,7 @@ void unregister_netdevice_many(struct list_head *head)
+ 		if (!dev->rtnl_link_ops ||
+ 		    dev->rtnl_link_state == RTNL_LINK_INITIALIZED)
+ 			skb = rtmsg_ifinfo_build_skb(RTM_DELLINK, dev, ~0U, 0,
+-						     GFP_KERNEL, NULL, 0);
++						     GFP_KERNEL, NULL, 0, 0, 0);
+ 
+ 		/*
+ 		 *	Flush the unicast and multicast chains
+@@ -11033,7 +11034,7 @@ void unregister_netdevice_many(struct list_head *head)
+ 			dev->netdev_ops->ndo_uninit(dev);
+ 
+ 		if (skb)
+-			rtmsg_ifinfo_send(skb, dev, GFP_KERNEL);
++			rtmsg_ifinfo_send(skb, dev, GFP_KERNEL, 0, NULL);
+ 
+ 		/* Notifier chain MUST detach us all upper devices. */
+ 		WARN_ON(netdev_has_any_upper_dev(dev));
+@@ -11221,7 +11222,7 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
+ 	 *	Prevent userspace races by waiting until the network
+ 	 *	device is fully setup before sending notifications.
+ 	 */
+-	rtmsg_ifinfo(RTM_NEWLINK, dev, ~0U, GFP_KERNEL);
++	rtmsg_ifinfo(RTM_NEWLINK, dev, ~0U, GFP_KERNEL, 0, NULL);
+ 
+ 	synchronize_net();
+ 	err = 0;
+diff --git a/net/core/dev.h b/net/core/dev.h
+index db9ff8cd8d46d..8d1afb9887dec 100644
+--- a/net/core/dev.h
++++ b/net/core/dev.h
+@@ -94,6 +94,10 @@ int dev_change_carrier(struct net_device *dev, bool new_carrier);
+ 
+ void __dev_set_rx_mode(struct net_device *dev);
+ 
++void __dev_notify_flags(struct net_device *dev, unsigned int old_flags,
++			unsigned int gchanges, u32 portid,
++			const struct nlmsghdr *nlh);
++
+ static inline void netif_set_gso_max_size(struct net_device *dev,
+ 					  unsigned int size)
+ {
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 6fd6c717d1e39..73453a92ea492 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -789,7 +789,7 @@ int rtnl_unicast(struct sk_buff *skb, struct net *net, u32 pid)
+ EXPORT_SYMBOL(rtnl_unicast);
+ 
+ void rtnl_notify(struct sk_buff *skb, struct net *net, u32 pid, u32 group,
+-		 struct nlmsghdr *nlh, gfp_t flags)
++		 const struct nlmsghdr *nlh, gfp_t flags)
+ {
+ 	struct sock *rtnl = net->rtnl;
+ 
+@@ -3232,7 +3232,8 @@ static int rtnl_dellink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	return err;
+ }
+ 
+-int rtnl_configure_link(struct net_device *dev, const struct ifinfomsg *ifm)
++int rtnl_configure_link(struct net_device *dev, const struct ifinfomsg *ifm,
++			u32 portid, const struct nlmsghdr *nlh)
+ {
+ 	unsigned int old_flags;
+ 	int err;
+@@ -3246,10 +3247,10 @@ int rtnl_configure_link(struct net_device *dev, const struct ifinfomsg *ifm)
+ 	}
+ 
+ 	if (dev->rtnl_link_state == RTNL_LINK_INITIALIZED) {
+-		__dev_notify_flags(dev, old_flags, (old_flags ^ dev->flags));
++		__dev_notify_flags(dev, old_flags, (old_flags ^ dev->flags), portid, nlh);
+ 	} else {
+ 		dev->rtnl_link_state = RTNL_LINK_INITIALIZED;
+-		__dev_notify_flags(dev, old_flags, ~0U);
++		__dev_notify_flags(dev, old_flags, ~0U, portid, nlh);
+ 	}
+ 	return 0;
+ }
+@@ -3427,7 +3428,7 @@ static int rtnl_newlink_create(struct sk_buff *skb, struct ifinfomsg *ifm,
+ 		goto out;
+ 	}
+ 
+-	err = rtnl_configure_link(dev, ifm);
++	err = rtnl_configure_link(dev, ifm, 0, NULL);
+ 	if (err < 0)
+ 		goto out_unregister;
+ 	if (link_net) {
+@@ -3957,7 +3958,7 @@ static int rtnl_dump_all(struct sk_buff *skb, struct netlink_callback *cb)
+ struct sk_buff *rtmsg_ifinfo_build_skb(int type, struct net_device *dev,
+ 				       unsigned int change,
+ 				       u32 event, gfp_t flags, int *new_nsid,
+-				       int new_ifindex)
++				       int new_ifindex, u32 portid, u32 seq)
+ {
+ 	struct net *net = dev_net(dev);
+ 	struct sk_buff *skb;
+@@ -3968,7 +3969,7 @@ struct sk_buff *rtmsg_ifinfo_build_skb(int type, struct net_device *dev,
+ 		goto errout;
+ 
+ 	err = rtnl_fill_ifinfo(skb, dev, dev_net(dev),
+-			       type, 0, 0, change, 0, 0, event,
++			       type, portid, seq, change, 0, 0, event,
+ 			       new_nsid, new_ifindex, -1, flags);
+ 	if (err < 0) {
+ 		/* -EMSGSIZE implies BUG in if_nlmsg_size() */
+@@ -3983,16 +3984,18 @@ struct sk_buff *rtmsg_ifinfo_build_skb(int type, struct net_device *dev,
+ 	return NULL;
+ }
+ 
+-void rtmsg_ifinfo_send(struct sk_buff *skb, struct net_device *dev, gfp_t flags)
++void rtmsg_ifinfo_send(struct sk_buff *skb, struct net_device *dev, gfp_t flags,
++		       u32 portid, const struct nlmsghdr *nlh)
+ {
+ 	struct net *net = dev_net(dev);
+ 
+-	rtnl_notify(skb, net, 0, RTNLGRP_LINK, NULL, flags);
++	rtnl_notify(skb, net, portid, RTNLGRP_LINK, nlh, flags);
+ }
+ 
+ static void rtmsg_ifinfo_event(int type, struct net_device *dev,
+ 			       unsigned int change, u32 event,
+-			       gfp_t flags, int *new_nsid, int new_ifindex)
++			       gfp_t flags, int *new_nsid, int new_ifindex,
++			       u32 portid, const struct nlmsghdr *nlh)
+ {
+ 	struct sk_buff *skb;
+ 
+@@ -4000,23 +4003,23 @@ static void rtmsg_ifinfo_event(int type, struct net_device *dev,
+ 		return;
+ 
+ 	skb = rtmsg_ifinfo_build_skb(type, dev, change, event, flags, new_nsid,
+-				     new_ifindex);
++				     new_ifindex, portid, nlmsg_seq(nlh));
+ 	if (skb)
+-		rtmsg_ifinfo_send(skb, dev, flags);
++		rtmsg_ifinfo_send(skb, dev, flags, portid, nlh);
+ }
+ 
+ void rtmsg_ifinfo(int type, struct net_device *dev, unsigned int change,
+-		  gfp_t flags)
++		  gfp_t flags, u32 portid, const struct nlmsghdr *nlh)
+ {
+ 	rtmsg_ifinfo_event(type, dev, change, rtnl_get_event(0), flags,
+-			   NULL, 0);
++			   NULL, 0, portid, nlh);
+ }
+ 
+ void rtmsg_ifinfo_newnet(int type, struct net_device *dev, unsigned int change,
+ 			 gfp_t flags, int *new_nsid, int new_ifindex)
+ {
+ 	rtmsg_ifinfo_event(type, dev, change, rtnl_get_event(0), flags,
+-			   new_nsid, new_ifindex);
++			   new_nsid, new_ifindex, 0, NULL);
+ }
+ 
+ static int nlmsg_populate_fdb_fill(struct sk_buff *skb,
+@@ -6199,7 +6202,7 @@ static int rtnetlink_event(struct notifier_block *this, unsigned long event, voi
+ 	case NETDEV_CHANGELOWERSTATE:
+ 	case NETDEV_CHANGE_TX_QUEUE_LEN:
+ 		rtmsg_ifinfo_event(RTM_NEWLINK, dev, 0, rtnl_get_event(event),
+-				   GFP_KERNEL, NULL, 0);
++				   GFP_KERNEL, NULL, 0, 0, NULL);
+ 		break;
+ 	default:
+ 		break;
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index b90241aff93c3..2c1228ddaa22f 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -1690,7 +1690,7 @@ struct net_device *gretap_fb_dev_create(struct net *net, const char *name,
+ 	if (err)
+ 		goto out;
+ 
+-	err = rtnl_configure_link(dev, NULL);
++	err = rtnl_configure_link(dev, NULL, 0, NULL);
+ 	if (err < 0)
+ 		goto out;
  
 -- 
 2.51.0
