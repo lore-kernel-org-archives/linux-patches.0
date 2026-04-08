@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55850351C2E;
-	Wed,  8 Apr 2026 18:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8542F351C2E;
+	Wed,  8 Apr 2026 18:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673313; cv=none; b=J6ZuzML8jQG/PmcSov3YnDjQMPNUATQ1guqFMHGs3hCA3T4h0RHANEdw186tWPqqBapWfnbYYCS83ojtamn0n6+daLEw5L2BT//HZ8grA+NTUl1TiS9qf9HruUtMU9YcfxJRXadd27dzAjQYXIP6V5D+plgcchbDF9uOIaRERj4=
+	t=1775673315; cv=none; b=ggWs45XrWhwsjRIOBxYvik+dTNW6ACO8Ph7TN2IMkHi6LqoSWQlOo7egXImMISQdhGwm3+hkkECDO02f0crWoS8GPMIkwWX9qjriUAeNhwv4raPRZW2CtIMmXNRkqeKggoVWoS1g/rGkfIJiXqGmxatiWLR1DE5KM1R976oA3Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673313; c=relaxed/simple;
-	bh=Y15BEEZ0xqpCn+EOkJYZnf4HWfx3TbjEibUlAvCoTCs=;
+	s=arc-20240116; t=1775673315; c=relaxed/simple;
+	bh=HkbH23aUITlCj1zC/k2tPE+cljdL4GOiboMRDmqUKzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oH0Rd+KMDvsHipP4msCZTis7LTYjrc5ytwymnCrJ99+Iot53AYYrMDRFO2nrIpzG3Q2K2crCsADXjyTX3bcAtNHosDNcSw1ej9cDPJVOzi60Oe2f0bqpe8Ye7YrVwq/qxuTvwaf77YKKZfHRQAXOqT8gYHO6SHJpdFnR/eSmEjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsSqcaFc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GNHzVA0ujV13r3NxFXguWIp4pnOR3D9jxnB5z0WYpNCfB6yz1ebxBMZS/Ijq3Hv5/U6JZz/sunL12BOpD4Q5ntWoEzGrvBCNgPwdUcnGUnpEkwVu+Fqz6QrS7xR13i+FR1yU4DxFhUihCrUtQDH/pySPaIWTMnwlBrvzm4UrC+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QruJj2tR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsSqcaFc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905DDC19421;
-	Wed,  8 Apr 2026 18:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QruJj2tR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDAEC19421;
+	Wed,  8 Apr 2026 18:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673312;
-	bh=Y15BEEZ0xqpCn+EOkJYZnf4HWfx3TbjEibUlAvCoTCs=;
+	s=korg; t=1775673315;
+	bh=HkbH23aUITlCj1zC/k2tPE+cljdL4GOiboMRDmqUKzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lsSqcaFcw+3ssn51ayGcHoeCBEWHcjrWJguCLHq2tcOU29BAQfb4oqQzPc6K6HApc
-	 5zb8iKJzU2TtgTeL0tJAdqkcNK/HCqep2Lqg7YQTIxnaQh9uq1bvpZ+BddEiFZi8Is
-	 0hhZWy37hfCnbTA2dv2cxjJJn9iFYPwKqp8JV848=
+	b=QruJj2tR7CJEq39JaJIi5+zwPP7qgBzE3x7frnKTBMfm3tDztBQ+Yesm2smgv74D6
+	 CW867IdQZvkFDlTRwOz7c12I1pMbAJZ+vw7K3AKUzHeIO9y7s2zXG+yW5hZ/nvUR5a
+	 0wSgSxbIVO/9caK8bKjHY+EM8a+Kz3GC9XHYWY74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Prike Liang <Prike.Liang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 151/277] drm/amdgpu: fix the idr allocation flags
-Date: Wed,  8 Apr 2026 20:02:16 +0200
-Message-ID: <20260408175939.511229271@linuxfoundation.org>
+	Adam Crosser <adam.crosser@praetorian.com>,
+	stable <stable@kernel.org>,
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.18 152/277] gpib: fix use-after-free in IO ioctl handlers
+Date: Wed,  8 Apr 2026 20:02:17 +0200
+Message-ID: <20260408175939.548572310@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -46,60 +45,278 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Adam Crosser <adam.crosser@praetorian.com>
 
-commit 62f553d60a801384336f5867967c26ddf3b17038 upstream.
+commit d1857f8296dceb75d00ab857fc3c61bc00c7f5c6 upstream.
 
-Fix the IDR allocation flags by using atomic GFP
-flags in non‑sleepable contexts to avoid the __might_sleep()
-complaint.
+The IBRD, IBWRT, IBCMD, and IBWAIT ioctl handlers use a gpib_descriptor
+pointer after board->big_gpib_mutex has been released.  A concurrent
+IBCLOSEDEV ioctl can free the descriptor via close_dev_ioctl() during
+this window, causing a use-after-free.
 
-  268.290239] [drm] Initialized amdgpu 3.64.0 for 0000:03:00.0 on minor 0
-[  268.294900] BUG: sleeping function called from invalid context at ./include/linux/sched/mm.h:323
-[  268.295355] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1744, name: modprobe
-[  268.295705] preempt_count: 1, expected: 0
-[  268.295886] RCU nest depth: 0, expected: 0
-[  268.296072] 2 locks held by modprobe/1744:
-[  268.296077]  #0: ffff8c3a44abd1b8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xe4/0x210
-[  268.296100]  #1: ffffffffc1a6ea78 (amdgpu_pasid_idr_lock){+.+.}-{3:3}, at: amdgpu_pasid_alloc+0x26/0xe0 [amdgpu]
-[  268.296494] CPU: 12 UID: 0 PID: 1744 Comm: modprobe Tainted: G     U     OE       6.19.0-custom #16 PREEMPT(voluntary)
-[  268.296498] Tainted: [U]=USER, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[  268.296499] Hardware name: AMD Majolica-RN/Majolica-RN, BIOS RMJ1009A 06/13/2021
-[  268.296501] Call Trace:
+The IO handlers (read_ioctl, write_ioctl, command_ioctl) explicitly
+release big_gpib_mutex before calling their handler.  wait_ioctl() is
+called with big_gpib_mutex held, but ibwait() releases it internally
+when wait_mask is non-zero.  In all four cases, the descriptor pointer
+obtained from handle_to_descriptor() becomes unprotected.
 
-Fixes: 8f1de51f49be ("drm/amdgpu: prevent immediate PASID reuse case")
-Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ea56aa2625708eaf96f310032391ff37746310ef)
-Cc: stable@vger.kernel.org
+Fix this by introducing a kernel-only descriptor_busy reference count
+in struct gpib_descriptor.  Each handler atomically increments
+descriptor_busy under file_priv->descriptors_mutex before releasing the
+lock, and decrements it when done.  close_dev_ioctl() checks
+descriptor_busy under the same lock and rejects the close with -EBUSY
+if the count is non-zero.
+
+A reference count rather than a simple flag is necessary because
+multiple handlers can operate on the same descriptor concurrently
+(e.g. IBRD and IBWAIT on the same handle from different threads).
+
+A separate counter is needed because io_in_progress can be cleared from
+unprivileged userspace via the IBWAIT ioctl (through general_ibstatus()
+with set_mask containing CMPL), which would allow an attacker to bypass
+a check based solely on io_in_progress.  The new descriptor_busy
+counter is only modified by the kernel IO paths.
+
+The lock ordering is consistent (big_gpib_mutex -> descriptors_mutex)
+and the handlers only hold descriptors_mutex briefly during the lookup,
+so there is no deadlock risk and no impact on IO throughput.
+
+Signed-off-by: Adam Crosser <adam.crosser@praetorian.com>
+Cc: stable <stable@kernel.org>
+Reviewed-by: Dave Penkler <dpenkler@gmail.com>
+Tested-by: Dave Penkler <dpenkler@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/staging/gpib/common/gpib_os.c     |   96 ++++++++++++++++++++++--------
+ drivers/staging/gpib/include/gpib_types.h |    8 ++
+ 2 files changed, 81 insertions(+), 23 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-@@ -68,8 +68,11 @@ int amdgpu_pasid_alloc(unsigned int bits
+--- a/drivers/staging/gpib/common/gpib_os.c
++++ b/drivers/staging/gpib/common/gpib_os.c
+@@ -888,10 +888,6 @@ static int read_ioctl(struct gpib_file_p
+ 	if (read_cmd.completed_transfer_count > read_cmd.requested_transfer_count)
  		return -EINVAL;
  
- 	spin_lock(&amdgpu_pasid_idr_lock);
-+	/* TODO: Need to replace the idr with an xarry, and then
-+	 * handle the internal locking with ATOMIC safe paths.
-+	 */
- 	pasid = idr_alloc_cyclic(&amdgpu_pasid_idr, NULL, 1,
--				 1U << bits, GFP_KERNEL);
-+				 1U << bits, GFP_ATOMIC);
- 	spin_unlock(&amdgpu_pasid_idr_lock);
+-	desc = handle_to_descriptor(file_priv, read_cmd.handle);
+-	if (!desc)
+-		return -EINVAL;
+-
+ 	if (WARN_ON_ONCE(sizeof(userbuf) > sizeof(read_cmd.buffer_ptr)))
+ 		return -EFAULT;
  
- 	if (pasid >= 0)
+@@ -904,6 +900,17 @@ static int read_ioctl(struct gpib_file_p
+ 	if (!access_ok(userbuf, remain))
+ 		return -EFAULT;
+ 
++	/* Lock descriptors to prevent concurrent close from freeing descriptor */
++	if (mutex_lock_interruptible(&file_priv->descriptors_mutex))
++		return -ERESTARTSYS;
++	desc = handle_to_descriptor(file_priv, read_cmd.handle);
++	if (!desc) {
++		mutex_unlock(&file_priv->descriptors_mutex);
++		return -EINVAL;
++	}
++	atomic_inc(&desc->descriptor_busy);
++	mutex_unlock(&file_priv->descriptors_mutex);
++
+ 	atomic_set(&desc->io_in_progress, 1);
+ 
+ 	/* Read buffer loads till we fill the user supplied buffer */
+@@ -937,6 +944,7 @@ static int read_ioctl(struct gpib_file_p
+ 		retval = copy_to_user((void __user *)arg, &read_cmd, sizeof(read_cmd));
+ 
+ 	atomic_set(&desc->io_in_progress, 0);
++	atomic_dec(&desc->descriptor_busy);
+ 
+ 	wake_up_interruptible(&board->wait);
+ 	if (retval)
+@@ -964,10 +972,6 @@ static int command_ioctl(struct gpib_fil
+ 	if (cmd.completed_transfer_count > cmd.requested_transfer_count)
+ 		return -EINVAL;
+ 
+-	desc = handle_to_descriptor(file_priv, cmd.handle);
+-	if (!desc)
+-		return -EINVAL;
+-
+ 	userbuf = (u8 __user *)(unsigned long)cmd.buffer_ptr;
+ 	userbuf += cmd.completed_transfer_count;
+ 
+@@ -980,6 +984,17 @@ static int command_ioctl(struct gpib_fil
+ 	if (!access_ok(userbuf, remain))
+ 		return -EFAULT;
+ 
++	/* Lock descriptors to prevent concurrent close from freeing descriptor */
++	if (mutex_lock_interruptible(&file_priv->descriptors_mutex))
++		return -ERESTARTSYS;
++	desc = handle_to_descriptor(file_priv, cmd.handle);
++	if (!desc) {
++		mutex_unlock(&file_priv->descriptors_mutex);
++		return -EINVAL;
++	}
++	atomic_inc(&desc->descriptor_busy);
++	mutex_unlock(&file_priv->descriptors_mutex);
++
+ 	/*
+ 	 * Write buffer loads till we empty the user supplied buffer.
+ 	 * Call drivers at least once, even if remain is zero, in
+@@ -1003,6 +1018,7 @@ static int command_ioctl(struct gpib_fil
+ 		userbuf += bytes_written;
+ 		if (retval < 0) {
+ 			atomic_set(&desc->io_in_progress, 0);
++			atomic_dec(&desc->descriptor_busy);
+ 
+ 			wake_up_interruptible(&board->wait);
+ 			break;
+@@ -1022,6 +1038,7 @@ static int command_ioctl(struct gpib_fil
+ 	 */
+ 	if (!no_clear_io_in_prog || fault)
+ 		atomic_set(&desc->io_in_progress, 0);
++	atomic_dec(&desc->descriptor_busy);
+ 
+ 	wake_up_interruptible(&board->wait);
+ 	if (fault)
+@@ -1047,10 +1064,6 @@ static int write_ioctl(struct gpib_file_
+ 	if (write_cmd.completed_transfer_count > write_cmd.requested_transfer_count)
+ 		return -EINVAL;
+ 
+-	desc = handle_to_descriptor(file_priv, write_cmd.handle);
+-	if (!desc)
+-		return -EINVAL;
+-
+ 	userbuf = (u8 __user *)(unsigned long)write_cmd.buffer_ptr;
+ 	userbuf += write_cmd.completed_transfer_count;
+ 
+@@ -1060,6 +1073,17 @@ static int write_ioctl(struct gpib_file_
+ 	if (!access_ok(userbuf, remain))
+ 		return -EFAULT;
+ 
++	/* Lock descriptors to prevent concurrent close from freeing descriptor */
++	if (mutex_lock_interruptible(&file_priv->descriptors_mutex))
++		return -ERESTARTSYS;
++	desc = handle_to_descriptor(file_priv, write_cmd.handle);
++	if (!desc) {
++		mutex_unlock(&file_priv->descriptors_mutex);
++		return -EINVAL;
++	}
++	atomic_inc(&desc->descriptor_busy);
++	mutex_unlock(&file_priv->descriptors_mutex);
++
+ 	atomic_set(&desc->io_in_progress, 1);
+ 
+ 	/* Write buffer loads till we empty the user supplied buffer */
+@@ -1094,6 +1118,7 @@ static int write_ioctl(struct gpib_file_
+ 		fault = copy_to_user((void __user *)arg, &write_cmd, sizeof(write_cmd));
+ 
+ 	atomic_set(&desc->io_in_progress, 0);
++	atomic_dec(&desc->descriptor_busy);
+ 
+ 	wake_up_interruptible(&board->wait);
+ 	if (fault)
+@@ -1276,6 +1301,9 @@ static int close_dev_ioctl(struct file *
+ {
+ 	struct gpib_close_dev_ioctl cmd;
+ 	struct gpib_file_private *file_priv = filep->private_data;
++	struct gpib_descriptor *desc;
++	unsigned int pad;
++	int sad;
+ 	int retval;
+ 
+ 	retval = copy_from_user(&cmd, (void __user *)arg, sizeof(cmd));
+@@ -1284,19 +1312,27 @@ static int close_dev_ioctl(struct file *
+ 
+ 	if (cmd.handle >= GPIB_MAX_NUM_DESCRIPTORS)
+ 		return -EINVAL;
+-	if (!file_priv->descriptors[cmd.handle])
+-		return -EINVAL;
+-
+-	retval = decrement_open_device_count(board, &board->device_list,
+-					     file_priv->descriptors[cmd.handle]->pad,
+-					     file_priv->descriptors[cmd.handle]->sad);
+-	if (retval < 0)
+-		return retval;
+ 
+-	kfree(file_priv->descriptors[cmd.handle]);
++	mutex_lock(&file_priv->descriptors_mutex);
++	desc = file_priv->descriptors[cmd.handle];
++	if (!desc) {
++		mutex_unlock(&file_priv->descriptors_mutex);
++		return -EINVAL;
++	}
++	if (atomic_read(&desc->descriptor_busy)) {
++		mutex_unlock(&file_priv->descriptors_mutex);
++		return -EBUSY;
++	}
++	/* Remove from table while holding lock to prevent new IO from starting */
+ 	file_priv->descriptors[cmd.handle] = NULL;
++	pad = desc->pad;
++	sad = desc->sad;
++	mutex_unlock(&file_priv->descriptors_mutex);
+ 
+-	return 0;
++	retval = decrement_open_device_count(board, &board->device_list, pad, sad);
++
++	kfree(desc);
++	return retval;
+ }
+ 
+ static int serial_poll_ioctl(struct gpib_board *board, unsigned long arg)
+@@ -1331,12 +1367,25 @@ static int wait_ioctl(struct gpib_file_p
+ 	if (retval)
+ 		return -EFAULT;
+ 
++	/*
++	 * Lock descriptors to prevent concurrent close from freeing
++	 * descriptor.  ibwait() releases big_gpib_mutex when wait_mask
++	 * is non-zero, so desc must be pinned with descriptor_busy.
++	 */
++	mutex_lock(&file_priv->descriptors_mutex);
+ 	desc = handle_to_descriptor(file_priv, wait_cmd.handle);
+-	if (!desc)
++	if (!desc) {
++		mutex_unlock(&file_priv->descriptors_mutex);
+ 		return -EINVAL;
++	}
++	atomic_inc(&desc->descriptor_busy);
++	mutex_unlock(&file_priv->descriptors_mutex);
+ 
+ 	retval = ibwait(board, wait_cmd.wait_mask, wait_cmd.clear_mask,
+ 			wait_cmd.set_mask, &wait_cmd.ibsta, wait_cmd.usec_timeout, desc);
++
++	atomic_dec(&desc->descriptor_busy);
++
+ 	if (retval < 0)
+ 		return retval;
+ 
+@@ -2035,6 +2084,7 @@ void init_gpib_descriptor(struct gpib_de
+ 	desc->is_board = 0;
+ 	desc->autopoll_enabled = 0;
+ 	atomic_set(&desc->io_in_progress, 0);
++	atomic_set(&desc->descriptor_busy, 0);
+ }
+ 
+ int gpib_register_driver(struct gpib_interface *interface, struct module *provider_module)
+--- a/drivers/staging/gpib/include/gpib_types.h
++++ b/drivers/staging/gpib/include/gpib_types.h
+@@ -364,6 +364,14 @@ struct gpib_descriptor {
+ 	unsigned int pad;	/* primary gpib address */
+ 	int sad;	/* secondary gpib address (negative means disabled) */
+ 	atomic_t io_in_progress;
++	/*
++	 * Kernel-only reference count to prevent descriptor from being
++	 * freed while IO handlers hold a pointer to it.  Incremented
++	 * before each IO operation, decremented when done.  Unlike
++	 * io_in_progress, this cannot be modified from userspace via
++	 * general_ibstatus().
++	 */
++	atomic_t descriptor_busy;
+ 	unsigned is_board : 1;
+ 	unsigned autopoll_enabled : 1;
+ };
 
 
