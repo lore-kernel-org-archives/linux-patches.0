@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CB533F5A4;
-	Wed,  8 Apr 2026 18:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930F537C10F;
+	Wed,  8 Apr 2026 18:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672165; cv=none; b=enp4ldmtKAhgHE6STGCfUoqK62o4W3/70YY3wzUoFbeIB6Nm3kcfu6g7gqkhEgwpzR+DlBcGIt9i6UwjGOw1uZPuTNmrQyRkIn4+9gE/vdcOet/9s/oAnZq6LjbufAKVOyVO8fKPEjwMcldMfN8zsIURZPlVRzmymzJxnp+tA4k=
+	t=1775672167; cv=none; b=JrEAnxkvC+AJVaqxF1OxwQffjh/lnqPqnkMJnUdVYmHoRiclQ8pqAuTceewIL+UcrDkz1SWarj5TgEBc9zCEm2euq/Pmh1PmqT6m7DqPqwolZkb+nIq9ffgmWaZnO9yJcTuPAqn1ODKUC+rumh7IcgoND0ObT55OXXN+FQDvXYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672165; c=relaxed/simple;
-	bh=mgAJT1eDiq+iHlJl6r03ajKAAlAl2Pg1qm05rYFqED4=;
+	s=arc-20240116; t=1775672167; c=relaxed/simple;
+	bh=RpoLwvpIqkT1HOrgDDm1Hxntlbz+9rrXJZSGNP0r6Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehSLGkj63qPgfLHsp9sMV0klZgp6kd3nrGgWals3UXDvBG18q6kdYuQo3dHsdMb0Cl0hV0CqarJZTae1LZXI/lvS6MzXJ85X6WVfZVULrLi811A4HayOaWIg6wLXvO4w79H0WgukFprzqGB5SqezDKlu74SdEQGDHjav44KovP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpwUCkgy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hl4hbiokjZ2JAT+mGyt/7GF4wsDguk+yxwJP29f9d90z+livFAdlobNKuxrIgWSZo0puNmkYtpOPd1fYDMNjElqVSwEdmbbX+c/nbPQqJZhA2y9NADSjCb7PBwZzVLf853OyAEXi4QE8PxAl3NXcdO1Hn2EnPoETgc4CgVAdRPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trnRbxwH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpwUCkgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82274C19421;
-	Wed,  8 Apr 2026 18:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trnRbxwH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1589AC19421;
+	Wed,  8 Apr 2026 18:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672164;
-	bh=mgAJT1eDiq+iHlJl6r03ajKAAlAl2Pg1qm05rYFqED4=;
+	s=korg; t=1775672167;
+	bh=RpoLwvpIqkT1HOrgDDm1Hxntlbz+9rrXJZSGNP0r6Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QpwUCkgyoCNXEzGRq84e5wecdJwfBWNbwwd9qcqnvyR09CBqdFPEyL7LeZUuFnuU1
-	 EtCbkWhN2gM+390S9Fx0q81ASQ5y3inSX0S+HUtQqgXIar/AtQtJdgXkwGMvf4BJgo
-	 K/tN6UPElBrtpW2PusDVcuo7Gp99i4SGUJjV3qE0=
+	b=trnRbxwHGpQPGuMpR+bGHqogLQdAICBtEExEH3GPDGaFpsjGRP7Gb2eEP3nxiJ129
+	 El64ZRISM+6a99oLqYUdBAOO0+NrRRx+VgJpGk8M0S4dgHqkVQ4A5u9qzfkgWIndhd
+	 R9F4QLuTYkFVoDo7DEXau0ypVdhQOdwR8Mvfq+bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 214/312] iio: adc: ti-adc161s626: use DMA-safe memory for spi_read()
-Date: Wed,  8 Apr 2026 20:02:11 +0200
-Message-ID: <20260408175941.750757491@linuxfoundation.org>
+	Bart Van Assche <bvanassche@acm.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 215/312] Input: synaptics-rmi4 - fix a locking bug in an error path
+Date: Wed,  8 Apr 2026 20:02:12 +0200
+Message-ID: <20260408175941.787211217@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,76 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 768461517a28d80fe81ea4d5d03a90cd184ea6ad upstream.
+commit 7adaaee5edd35a423ae199c41b86bd1ed60ed483 upstream.
 
-Add a DMA-safe buffer and use it for spi_read() instead of a stack
-memory. All SPI buffers must be DMA-safe.
+Lock f54->data_mutex when entering the function statement since jumping
+to the 'error' label when checking report_size fails causes that mutex
+to be unlocked.
 
-Since we only need up to 3 bytes, we just use a u8[] instead of __be16
-and __be32 and change the conversion functions appropriately.
+This bug has been detected by the Clang thread-safety checker.
 
-Fixes: 4d671b71beef ("iio: adc: ti-adc161s626: add support for TI 1-channel differential ADCs")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260223215118.2154194-16-bvanassche@acm.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-adc161s626.c |   20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/input/rmi4/rmi_f54.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/ti-adc161s626.c
-+++ b/drivers/iio/adc/ti-adc161s626.c
-@@ -15,6 +15,7 @@
- #include <linux/init.h>
- #include <linux/err.h>
- #include <linux/spi/spi.h>
-+#include <asm/unaligned.h>
- #include <linux/iio/iio.h>
- #include <linux/iio/trigger.h>
- #include <linux/iio/buffer.h>
-@@ -70,6 +71,7 @@ struct ti_adc_data {
+--- a/drivers/input/rmi4/rmi_f54.c
++++ b/drivers/input/rmi4/rmi_f54.c
+@@ -540,6 +540,8 @@ static void rmi_f54_work(struct work_str
+ 	int error;
+ 	int i;
  
- 	u8 read_size;
- 	u8 shift;
-+	u8 buf[3] __aligned(IIO_DMA_MINALIGN);
- };
- 
- static int ti_adc_read_measurement(struct ti_adc_data *data,
-@@ -78,26 +80,20 @@ static int ti_adc_read_measurement(struc
- 	int ret;
- 
- 	switch (data->read_size) {
--	case 2: {
--		__be16 buf;
--
--		ret = spi_read(data->spi, (void *) &buf, 2);
-+	case 2:
-+		ret = spi_read(data->spi, data->buf, 2);
- 		if (ret)
- 			return ret;
- 
--		*val = be16_to_cpu(buf);
-+		*val = get_unaligned_be16(data->buf);
- 		break;
--	}
--	case 3: {
--		__be32 buf;
--
--		ret = spi_read(data->spi, (void *) &buf, 3);
-+	case 3:
-+		ret = spi_read(data->spi, data->buf, 3);
- 		if (ret)
- 			return ret;
- 
--		*val = be32_to_cpu(buf) >> 8;
-+		*val = get_unaligned_be24(data->buf);
- 		break;
--	}
- 	default:
- 		return -EINVAL;
++	mutex_lock(&f54->data_mutex);
++
+ 	report_size = rmi_f54_get_report_size(f54);
+ 	if (report_size == 0) {
+ 		dev_err(&fn->dev, "Bad report size, report type=%d\n",
+@@ -548,8 +550,6 @@ static void rmi_f54_work(struct work_str
+ 		goto error;     /* retry won't help */
  	}
+ 
+-	mutex_lock(&f54->data_mutex);
+-
+ 	/*
+ 	 * Need to check if command has completed.
+ 	 * If not try again later.
 
 
