@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B507332692B;
-	Wed,  8 Apr 2026 19:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3E33D9DA9;
+	Wed,  8 Apr 2026 19:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674892; cv=none; b=JFajm221FBiqDo87nXZ6q6SMI2aYBGmP/lRwCCMAjLYThQqZDBVcr0YrMzwxc81axSu/PYwrnGlHE3+/Piv1yqqWdcl6LYlhEelgIpagNG1S3++q4eykv2YrPVTg6IHHKXaLL7X5SLNfZKLTeBrpQb67q+z2geIHcFEpBlQjp/c=
+	t=1775674895; cv=none; b=pUNHxkpbtNe7TEBHHZMEsj1yPKyoL/ltmp1Tl1OTHG0WjNMvR0J4sUnERQDSXbUG0ibdj1/Udz2/SV1cwG5cCBuaZHjxOfqRLWcoipSUisZowj52e+xAiv4ykFMkztxpYS5xfpkRD0q1Mvk+16J3f0b22Q1ztvAim7OT+cMpbiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674892; c=relaxed/simple;
-	bh=Y7xmQpODWdBfxsOJxZEfIpWWlHCQG7g6t1I3iAaND3Y=;
+	s=arc-20240116; t=1775674895; c=relaxed/simple;
+	bh=zoZIaICfBIUbxYIbDDTS7nhHZdNIygGqluZ+x/a8nOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCnMyLM8kdJ+fe3zlI5cIRcp4b+qftEiw6AANW3J70WFKhiP+i8yPB/boMzFkCtXg07B36slGybYe4/gTkAoG5f7BUqTo3KOksVY9AOrkC8FeTsV5D6ZbFhwTuXMBs0rVYc7iQQgPho78MQ46xmCG4wfpO2lm0BR/0CmGtQXQOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JP7SAg3X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QW0UnWBHwr41DTTcVP5AhYCH+dbI28CpKbE1dP5B/+QO8cCVncurwyuNNH89a3dm+hJzusxqrvbu9elB2grH1JmnZXy7r+MhRPmYlpi2dzuKt/6Q/A7Diql1xNRMoqq/rPSKRLIKDvB7WVKYqC7R1Gdvi+7Ovrf0AFbvA5cINwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfyywprQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JP7SAg3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4EEC19421;
-	Wed,  8 Apr 2026 19:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfyywprQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C55C19421;
+	Wed,  8 Apr 2026 19:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674891;
-	bh=Y7xmQpODWdBfxsOJxZEfIpWWlHCQG7g6t1I3iAaND3Y=;
+	s=korg; t=1775674894;
+	bh=zoZIaICfBIUbxYIbDDTS7nhHZdNIygGqluZ+x/a8nOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JP7SAg3XCTQSGhvdTwBXvjiVRzlKLqhS13l6u9LQ04pyXbfGUhscAnxPVWE2cbwgk
-	 FjqpwP/SGWHouvQz4DSx8ZezrE8w3eFDI9UAozRW4BEetDWsw4DxDWtvBcXaJFELA7
-	 poosLaPr6XEGwKAUmgGzC1cySZIAy9h8fkT6VrYM=
+	b=jfyywprQj/DF5XDae1R9yFSJms6YMhqPz36/P15dNfc2GJQ4a3R0FkQ6kC7G9ddhe
+	 q7EWUGP9I7wga36XfH2Egmx4uWwMB9V31z0v0TkhcMnkeb0M+RERblJMN1F6iz+8or
+	 n4kLNgw3uFX7DO3q2/vH76dNYogd1AEDdViAXhrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
 	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 6.19 272/311] counter: rz-mtu3-cnt: prevent counter from being toggled multiple times
-Date: Wed,  8 Apr 2026 20:04:32 +0200
-Message-ID: <20260408175949.538107710@linuxfoundation.org>
+Subject: [PATCH 6.19 273/311] counter: rz-mtu3-cnt: do not use struct rz_mtu3_channels dev member
+Date: Wed,  8 Apr 2026 20:04:33 +0200
+Message-ID: <20260408175949.575197763@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,72 +52,234 @@ Content-Transfer-Encoding: 8bit
 
 From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-commit 67c3f99bed6f422ba343d2b70a2eeeccdfd91bef upstream.
+commit 2932095c114b98cbb40ccf34fc00d613cb17cead upstream.
 
-Runtime PM counter is incremented / decremented each time the sysfs
-enable file is written to.
+The counter driver can use HW channels 1 and 2, while the PWM driver can
+use HW channels 0, 1, 2, 3, 4, 6, 7.
 
-If user writes 0 to the sysfs enable file multiple times, runtime PM
-usage count underflows, generating the following message.
+The dev member is assigned both by the counter driver and the PWM driver
+for channels 1 and 2, to their own struct device instance, overwriting
+the previous value.
 
-rz-mtu3-counter rz-mtu3-counter.0: Runtime PM usage count underflow!
+The sub-drivers race to assign their own struct device pointer to the
+same struct rz_mtu3_channel's dev member.
 
-At the same time, hardware registers end up being accessed with clocks
-off in rz_mtu3_terminate_counter() to disable an already disabled
-channel.
+The dev member of struct rz_mtu3_channel is used by the counter
+sub-driver for runtime PM.
 
-If user writes 1 to the sysfs enable file multiple times, runtime PM
-usage count will be incremented each time, requiring the same number of
-0 writes to get it back to 0.
+Depending on the probe order of the counter and PWM sub-drivers, the
+dev member may point to the wrong struct device instance, causing the
+counter sub-driver to do runtime PM actions on the wrong device.
 
-If user writes 0 to the sysfs enable file while PWM is in progress, PWM
-is stopped without counter being the owner of the underlying MTU3
-channel.
-
-Check against the cached count_is_enabled value and exit if the user
-is trying to set the same enable value.
+To fix this, use the parent pointer of the counter, which is assigned
+during probe to the correct struct device, not the struct device pointer
+inside the shared struct rz_mtu3_channel.
 
 Cc: stable@vger.kernel.org
 Fixes: 0be8907359df ("counter: Add Renesas RZ/G2L MTU3a counter driver")
 Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Link: https://lore.kernel.org/r/20260130122353.2263273-5-cosmin-gabriel.tanislav.xa@renesas.com
+Link: https://lore.kernel.org/r/20260130122353.2263273-6-cosmin-gabriel.tanislav.xa@renesas.com
 Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/rz-mtu3-cnt.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/counter/rz-mtu3-cnt.c |   55 ++++++++++++++++++++----------------------
+ 1 file changed, 27 insertions(+), 28 deletions(-)
 
 --- a/drivers/counter/rz-mtu3-cnt.c
 +++ b/drivers/counter/rz-mtu3-cnt.c
-@@ -499,21 +499,25 @@ static int rz_mtu3_count_enable_write(st
+@@ -107,9 +107,9 @@ static bool rz_mtu3_is_counter_invalid(s
+ 	struct rz_mtu3_cnt *const priv = counter_priv(counter);
+ 	unsigned long tmdr;
+ 
+-	pm_runtime_get_sync(priv->ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	tmdr = rz_mtu3_shared_reg_read(priv->ch, RZ_MTU3_TMDR3);
+-	pm_runtime_put(priv->ch->dev);
++	pm_runtime_put(counter->parent);
+ 
+ 	if (id == RZ_MTU3_32_BIT_CH && test_bit(RZ_MTU3_TMDR3_LWA, &tmdr))
+ 		return false;
+@@ -165,12 +165,12 @@ static int rz_mtu3_count_read(struct cou
+ 	if (ret)
+ 		return ret;
+ 
+-	pm_runtime_get_sync(ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	if (count->id == RZ_MTU3_32_BIT_CH)
+ 		*val = rz_mtu3_32bit_ch_read(ch, RZ_MTU3_TCNTLW);
+ 	else
+ 		*val = rz_mtu3_16bit_ch_read(ch, RZ_MTU3_TCNT);
+-	pm_runtime_put(ch->dev);
++	pm_runtime_put(counter->parent);
+ 	mutex_unlock(&priv->lock);
+ 
+ 	return 0;
+@@ -187,26 +187,26 @@ static int rz_mtu3_count_write(struct co
+ 	if (ret)
+ 		return ret;
+ 
+-	pm_runtime_get_sync(ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	if (count->id == RZ_MTU3_32_BIT_CH)
+ 		rz_mtu3_32bit_ch_write(ch, RZ_MTU3_TCNTLW, val);
+ 	else
+ 		rz_mtu3_16bit_ch_write(ch, RZ_MTU3_TCNT, val);
+-	pm_runtime_put(ch->dev);
++	pm_runtime_put(counter->parent);
+ 	mutex_unlock(&priv->lock);
+ 
+ 	return 0;
+ }
+ 
+ static int rz_mtu3_count_function_read_helper(struct rz_mtu3_channel *const ch,
+-					      struct rz_mtu3_cnt *const priv,
++					      struct counter_device *const counter,
+ 					      enum counter_function *function)
+ {
+ 	u8 timer_mode;
+ 
+-	pm_runtime_get_sync(ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	timer_mode = rz_mtu3_8bit_ch_read(ch, RZ_MTU3_TMDR1);
+-	pm_runtime_put(ch->dev);
++	pm_runtime_put(counter->parent);
+ 
+ 	switch (timer_mode & RZ_MTU3_TMDR1_PH_CNT_MODE_MASK) {
+ 	case RZ_MTU3_TMDR1_PH_CNT_MODE_1:
+@@ -240,7 +240,7 @@ static int rz_mtu3_count_function_read(s
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = rz_mtu3_count_function_read_helper(ch, priv, function);
++	ret = rz_mtu3_count_function_read_helper(ch, counter, function);
+ 	mutex_unlock(&priv->lock);
+ 
+ 	return ret;
+@@ -279,9 +279,9 @@ static int rz_mtu3_count_function_write(
+ 		return -EINVAL;
+ 	}
+ 
+-	pm_runtime_get_sync(ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	rz_mtu3_8bit_ch_write(ch, RZ_MTU3_TMDR1, timer_mode);
+-	pm_runtime_put(ch->dev);
++	pm_runtime_put(counter->parent);
+ 	mutex_unlock(&priv->lock);
+ 
+ 	return 0;
+@@ -300,9 +300,9 @@ static int rz_mtu3_count_direction_read(
+ 	if (ret)
+ 		return ret;
+ 
+-	pm_runtime_get_sync(ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	tsr = rz_mtu3_8bit_ch_read(ch, RZ_MTU3_TSR);
+-	pm_runtime_put(ch->dev);
++	pm_runtime_put(counter->parent);
+ 
+ 	*direction = (tsr & RZ_MTU3_TSR_TCFD) ?
+ 		COUNTER_COUNT_DIRECTION_FORWARD : COUNTER_COUNT_DIRECTION_BACKWARD;
+@@ -377,14 +377,14 @@ static int rz_mtu3_count_ceiling_write(s
+ 		return -EINVAL;
+ 	}
+ 
+-	pm_runtime_get_sync(ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	if (count->id == RZ_MTU3_32_BIT_CH)
+ 		rz_mtu3_32bit_ch_write(ch, RZ_MTU3_TGRALW, ceiling);
+ 	else
+ 		rz_mtu3_16bit_ch_write(ch, RZ_MTU3_TGRA, ceiling);
+ 
+ 	rz_mtu3_8bit_ch_write(ch, RZ_MTU3_TCR, RZ_MTU3_TCR_CCLR_TGRA);
+-	pm_runtime_put(ch->dev);
++	pm_runtime_put(counter->parent);
+ 	mutex_unlock(&priv->lock);
+ 
+ 	return 0;
+@@ -495,7 +495,6 @@ static int rz_mtu3_count_enable_read(str
+ static int rz_mtu3_count_enable_write(struct counter_device *counter,
+ 				      struct counter_count *count, u8 enable)
+ {
+-	struct rz_mtu3_channel *const ch = rz_mtu3_get_ch(counter, count->id);
  	struct rz_mtu3_cnt *const priv = counter_priv(counter);
  	int ret = 0;
  
-+	mutex_lock(&priv->lock);
-+
-+	if (priv->count_is_enabled[count->id] == enable)
-+		goto exit;
-+
+@@ -505,14 +504,14 @@ static int rz_mtu3_count_enable_write(st
+ 		goto exit;
+ 
  	if (enable) {
--		mutex_lock(&priv->lock);
- 		pm_runtime_get_sync(ch->dev);
+-		pm_runtime_get_sync(ch->dev);
++		pm_runtime_get_sync(counter->parent);
  		ret = rz_mtu3_initialize_counter(counter, count->id);
  		if (ret == 0)
  			priv->count_is_enabled[count->id] = true;
--		mutex_unlock(&priv->lock);
  	} else {
--		mutex_lock(&priv->lock);
  		rz_mtu3_terminate_counter(counter, count->id);
  		priv->count_is_enabled[count->id] = false;
- 		pm_runtime_put(ch->dev);
--		mutex_unlock(&priv->lock);
+-		pm_runtime_put(ch->dev);
++		pm_runtime_put(counter->parent);
  	}
  
-+exit:
-+	mutex_unlock(&priv->lock);
-+
- 	return ret;
- }
+ exit:
+@@ -544,9 +543,9 @@ static int rz_mtu3_cascade_counts_enable
+ 	if (ret)
+ 		return ret;
  
+-	pm_runtime_get_sync(priv->ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	tmdr = rz_mtu3_shared_reg_read(priv->ch, RZ_MTU3_TMDR3);
+-	pm_runtime_put(priv->ch->dev);
++	pm_runtime_put(counter->parent);
+ 	*cascade_enable = test_bit(RZ_MTU3_TMDR3_LWA, &tmdr);
+ 	mutex_unlock(&priv->lock);
+ 
+@@ -563,10 +562,10 @@ static int rz_mtu3_cascade_counts_enable
+ 	if (ret)
+ 		return ret;
+ 
+-	pm_runtime_get_sync(priv->ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	rz_mtu3_shared_reg_update_bit(priv->ch, RZ_MTU3_TMDR3,
+ 				      RZ_MTU3_TMDR3_LWA, cascade_enable);
+-	pm_runtime_put(priv->ch->dev);
++	pm_runtime_put(counter->parent);
+ 	mutex_unlock(&priv->lock);
+ 
+ 	return 0;
+@@ -583,9 +582,9 @@ static int rz_mtu3_ext_input_phase_clock
+ 	if (ret)
+ 		return ret;
+ 
+-	pm_runtime_get_sync(priv->ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	tmdr = rz_mtu3_shared_reg_read(priv->ch, RZ_MTU3_TMDR3);
+-	pm_runtime_put(priv->ch->dev);
++	pm_runtime_put(counter->parent);
+ 	*ext_input_phase_clock_select = test_bit(RZ_MTU3_TMDR3_PHCKSEL, &tmdr);
+ 	mutex_unlock(&priv->lock);
+ 
+@@ -602,11 +601,11 @@ static int rz_mtu3_ext_input_phase_clock
+ 	if (ret)
+ 		return ret;
+ 
+-	pm_runtime_get_sync(priv->ch->dev);
++	pm_runtime_get_sync(counter->parent);
+ 	rz_mtu3_shared_reg_update_bit(priv->ch, RZ_MTU3_TMDR3,
+ 				      RZ_MTU3_TMDR3_PHCKSEL,
+ 				      ext_input_phase_clock_select);
+-	pm_runtime_put(priv->ch->dev);
++	pm_runtime_put(counter->parent);
+ 	mutex_unlock(&priv->lock);
+ 
+ 	return 0;
+@@ -644,7 +643,7 @@ static int rz_mtu3_action_read(struct co
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = rz_mtu3_count_function_read_helper(ch, priv, &function);
++	ret = rz_mtu3_count_function_read_helper(ch, counter, &function);
+ 	if (ret) {
+ 		mutex_unlock(&priv->lock);
+ 		return ret;
 
 
