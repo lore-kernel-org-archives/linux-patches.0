@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1C635BDDB;
-	Wed,  8 Apr 2026 19:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C95332692B;
+	Wed,  8 Apr 2026 19:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674817; cv=none; b=YEL817ARMeJkST5pnesIEcTORt8yx9tgP2k3WSGzbkvgmOrpppDgef2XxPOOtaoyqZ2hccIXb6xHEQbTJIkpPUOb4s6LiIVdzeuljFCfrI7a3H36RtMH9z48sFCsOTngCA/uIrMn5avYV6Ei8oyvErvnvKaN5rDBc+oSHAUKa6s=
+	t=1775674820; cv=none; b=NvftJlZmU2WUYe5w0JXZdB5bvRPxnVRvbT8S0kmvwaf9tMYJJ2CnVIFG+/2fn8eK9VYzqMJcS5kTEk6jHyv+ELn6UT1/4jNkXzJFiG48dgMVdTSvvpiQRI6qZL2u3/yhLmeyfqDbk3QURUQ8CoTVqT/YUXI9eAY0p48abhlAC4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674817; c=relaxed/simple;
-	bh=QmTIiQJTpuYCcXTkdfL3kVLgBdCypttUP0QSbo3ZfbE=;
+	s=arc-20240116; t=1775674820; c=relaxed/simple;
+	bh=wpO0Toxa+FobcNptLefx23CeL9sPulQsr6AiybseePM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EBrauNz8Uu+llV/0m0oNv2TaXY/cP/WJ9tUaiWUiUhnipfAjq5HZCyEGllJt7GGnws3wG7I90HVr8LRZjEXVc3kvy6wOlg59g4hQLosfP/oOhQWC0lKBNcPO9IG8UhEjOsgIfflKjSG/dMbc5ZDRvp1Z0iKHmCIKtd0ncZnawLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pu8UKGV+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tAQCA3fUlqA3W/LgHUCFfGkhfOjAgQV8atE7BAxS4DH4WyEk2lpFHdpM4sbFyXR1rvEFZNGB9tzJz1ZPckXO0BKFTfEeUyS+SrgdsvGwkRvLhUVzAtJuHnL/A5ogiNkqC9NVtAFxiliTJyU+wBNZQJdUmFYX9U/1H0CLrvWr2VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXit0ERJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pu8UKGV+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B7BC19425;
-	Wed,  8 Apr 2026 19:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXit0ERJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95515C2BC9E;
+	Wed,  8 Apr 2026 19:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674817;
-	bh=QmTIiQJTpuYCcXTkdfL3kVLgBdCypttUP0QSbo3ZfbE=;
+	s=korg; t=1775674819;
+	bh=wpO0Toxa+FobcNptLefx23CeL9sPulQsr6AiybseePM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pu8UKGV+pPRaYMNhW3wi7XGrEBc37CXeLs5QNuMfSm9zNPqblVqzrZW4OY/TxI44b
-	 f0FqZUsFhS4l28eHnWMJmpSfpIWsqYp4ewFStPytuzgF8IyTEDcMb0bbL0k5ELgju1
-	 SIzqW6yQseAau5+wEdVHsp3pTA2WHFkFJQxWSJvk=
+	b=NXit0ERJT36S30gijXIRZE9//NNo3QNNhVh8lDa0QWuXgChVwYkntM1lhIUWxj942
+	 YHpchIhpsjymLXnHj9n6VMwP1IJYcQ4ZX9C6oSSsMxHfCjFvZlMkgw2YIjBM9zP4GA
+	 6bypN7aPYXYWIhLgtMW5VtoTdsXlpN8aFwezjD0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Mitchell <mitchell.liam@gmail.com>,
-	Henrik Rydberg <rydberg@bitmath.org>,
+	Shengyu Qu <wiagn233@outlook.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.19 212/311] Input: bcm5974 - recover from failed mode switch
-Date: Wed,  8 Apr 2026 20:03:32 +0200
-Message-ID: <20260408175947.319473593@linuxfoundation.org>
+Subject: [PATCH 6.19 213/311] Input: xpad - add support for BETOP BTP-KP50B/C controllers wireless mode
+Date: Wed,  8 Apr 2026 20:03:33 +0200
+Message-ID: <20260408175947.356454336@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,110 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liam Mitchell <mitchell.liam@gmail.com>
+From: Shengyu Qu <wiagn233@outlook.com>
 
-commit fc1e8a6f129d87c64ac8e58b50d9dfa66217cfda upstream.
+commit 0d9363a764d9d601a05591f9695cea8b429e9be3 upstream.
 
-Mode switches sent before control response are ignored. This results in
-an unresponsive trackpad and "bcm5974: bad trackpad package, length: 8"
-repeated in logs.
+BETOP's BTP-KP50B and BTP-KP50C controller's wireless dongles are both
+working as standard Xbox 360 controllers. Add USB device IDs for them to
+xpad driver.
 
-On receiving unknown 8-byte packets, assume that mode switch was ignored
-and schedule an asynchronous mode reset. The reset will switch the
-device to normal mode, wait, then switch back to wellspring mode.
-
-Signed-off-by: Liam Mitchell <mitchell.liam@gmail.com>
-Link: https://lore.kernel.org/linux-input/CAOQ1CL4+DP1TuLAGNsz5GdFBTHvnTg=5q=Dr2Z1OQc6RXydSYA@mail.gmail.com/
-Acked-by: Henrik Rydberg <rydberg@bitmath.org>
-Link: https://patch.msgid.link/20260213-bcm5974-reset-v2-1-1837851336b0@gmail.com
+Signed-off-by: Shengyu Qu <wiagn233@outlook.com>
+Link: https://patch.msgid.link/TY4PR01MB14432B4B298EA186E5F86C46B9855A@TY4PR01MB14432.jpnprd01.prod.outlook.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/bcm5974.c |   42 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 41 insertions(+), 1 deletion(-)
+ drivers/input/joystick/xpad.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/input/mouse/bcm5974.c
-+++ b/drivers/input/mouse/bcm5974.c
-@@ -286,6 +286,8 @@ struct bcm5974 {
- 	const struct tp_finger *index[MAX_FINGERS];	/* finger index data */
- 	struct input_mt_pos pos[MAX_FINGERS];		/* position array */
- 	int slots[MAX_FINGERS];				/* slot assignments */
-+	struct work_struct mode_reset_work;
-+	unsigned long last_mode_reset;
- };
- 
- /* trackpad finger block data, le16-aligned */
-@@ -696,6 +698,32 @@ static int bcm5974_wellspring_mode(struc
- 	return retval;
- }
- 
-+/*
-+ * Mode switches sent before the control response are ignored.
-+ * Fixing this state requires switching to normal mode and waiting
-+ * about 1ms before switching back to wellspring mode.
-+ */
-+static void bcm5974_mode_reset_work(struct work_struct *work)
-+{
-+	struct bcm5974 *dev = container_of(work, struct bcm5974, mode_reset_work);
-+	int error;
-+
-+	guard(mutex)(&dev->pm_mutex);
-+	dev->last_mode_reset = jiffies;
-+
-+	error = bcm5974_wellspring_mode(dev, false);
-+	if (error) {
-+		dev_err(&dev->intf->dev, "reset to normal mode failed\n");
-+		return;
-+	}
-+
-+	fsleep(1000);
-+
-+	error = bcm5974_wellspring_mode(dev, true);
-+	if (error)
-+		dev_err(&dev->intf->dev, "mode switch after reset failed\n");
-+}
-+
- static void bcm5974_irq_button(struct urb *urb)
- {
- 	struct bcm5974 *dev = urb->context;
-@@ -752,10 +780,20 @@ static void bcm5974_irq_trackpad(struct
- 	if (dev->tp_urb->actual_length == 2)
- 		goto exit;
- 
--	if (report_tp_state(dev, dev->tp_urb->actual_length))
-+	if (report_tp_state(dev, dev->tp_urb->actual_length)) {
- 		dprintk(1, "bcm5974: bad trackpad package, length: %d\n",
- 			dev->tp_urb->actual_length);
- 
-+		/*
-+		 * Receiving a HID packet means we aren't in wellspring mode.
-+		 * If we haven't tried a reset in the last second, try now.
-+		 */
-+		if (dev->tp_urb->actual_length == 8 &&
-+		    time_after(jiffies, dev->last_mode_reset + msecs_to_jiffies(1000))) {
-+			schedule_work(&dev->mode_reset_work);
-+		}
-+	}
-+
- exit:
- 	error = usb_submit_urb(dev->tp_urb, GFP_ATOMIC);
- 	if (error)
-@@ -906,6 +944,7 @@ static int bcm5974_probe(struct usb_inte
- 	dev->intf = iface;
- 	dev->input = input_dev;
- 	dev->cfg = *cfg;
-+	INIT_WORK(&dev->mode_reset_work, bcm5974_mode_reset_work);
- 	mutex_init(&dev->pm_mutex);
- 
- 	/* setup urbs */
-@@ -998,6 +1037,7 @@ static void bcm5974_disconnect(struct us
- {
- 	struct bcm5974 *dev = usb_get_intfdata(iface);
- 
-+	disable_work_sync(&dev->mode_reset_work);
- 	usb_set_intfdata(iface, NULL);
- 
- 	input_unregister_device(dev->input);
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -360,6 +360,8 @@ static const struct xpad_device {
+ 	{ 0x1bad, 0xfd00, "Razer Onza TE", 0, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0xfd01, "Razer Onza", 0, XTYPE_XBOX360 },
+ 	{ 0x1ee9, 0x1590, "ZOTAC Gaming Zone", 0, XTYPE_XBOX360 },
++	{ 0x20bc, 0x5134, "BETOP BTP-KP50B Xinput Dongle", 0, XTYPE_XBOX360 },
++	{ 0x20bc, 0x514a, "BETOP BTP-KP50C Xinput Dongle", 0, XTYPE_XBOX360 },
+ 	{ 0x20d6, 0x2001, "BDA Xbox Series X Wired Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x20d6, 0x2009, "PowerA Enhanced Wired Controller for Xbox Series X|S", 0, XTYPE_XBOXONE },
+ 	{ 0x20d6, 0x2064, "PowerA Wired Controller for Xbox", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
+@@ -562,6 +564,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
+ 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harmonix Rock Band guitar and drums */
+ 	XPAD_XBOX360_VENDOR(0x1ee9),		/* ZOTAC Technology Limited */
++	XPAD_XBOX360_VENDOR(0x20bc),		/* BETOP wireless dongles */
+ 	XPAD_XBOX360_VENDOR(0x20d6),		/* PowerA controllers */
+ 	XPAD_XBOXONE_VENDOR(0x20d6),		/* PowerA controllers */
+ 	XPAD_XBOX360_VENDOR(0x2345),		/* Machenike Controllers */
 
 
