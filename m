@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C9BB67E;
-	Wed,  8 Apr 2026 18:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E226EB67E;
+	Wed,  8 Apr 2026 18:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673457; cv=none; b=OpdltPiJzplV9G9wmO5jn6Y4TsFAC6EwUaM+WP07l7q6W61Z2NhaM7hb3Y3XrHPLjaWNpKBs73U0H2wljQD7NL4cPRyKehbCpkGMhQm75T6aJXwY5VodvozzFyX/4yQoxK5subViunf/dt9hTNOYHQ3HBtpTayBrLpZh7oAebdA=
+	t=1775673460; cv=none; b=dKVMAa0Rxn9c+2otrAIZRycJXEa+TQfuOuAr7lTbSUg0EB16pHT/4/MBrXbBi5lT8xZCOk7Zjii2+Yx14lDAcfLozwrgm0JW+S6fH+P2bfCtnLijYfBHUFo5hd4q3FdpLyc08rSpGrW2aNMe+8VWuyT2PcQnZJXkXWkxlmpuEmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673457; c=relaxed/simple;
-	bh=j0d/xoyke+T3cf3brdl+FxERuAiLs1eqBW9DFAhjgLw=;
+	s=arc-20240116; t=1775673460; c=relaxed/simple;
+	bh=3tbIyaAjAFUO17MuR18a9mkL1YsTn8hGo7L7c7YrAyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcXxH9HfV5NYE1a9iCPFFyjWJg83pntX48gepxRzFxIsMUVEIhO3XFBihSDmBiGc1m5W0copBlqy0PvBAgRSI25O9lpP+KIZy4c2I69qifPOpED2s1r2GV9HA340ydFvnlD6pFkETxQVi9p2ZakFtKtyHPYXCGpy9drr7JvLfhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KR/sYh06; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EpAdP8INjZblDzg9ADvueqeyYUv6c4kKKj/6bHHWuDWluTtqbSYQBDIHsUWGipkGv0+Z7SCKfWKeoV1OtIXPjJdtXWeMFevyKZZSj4Lxm/6q2VWBBzwuHOi9CNs53ITK1PoC1NSrdn/hBHn9HsDyfhMOmVSQ52rYBsYnblGrHWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWkzWHsW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KR/sYh06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEB7C19421;
-	Wed,  8 Apr 2026 18:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWkzWHsW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C55C19421;
+	Wed,  8 Apr 2026 18:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673457;
-	bh=j0d/xoyke+T3cf3brdl+FxERuAiLs1eqBW9DFAhjgLw=;
+	s=korg; t=1775673459;
+	bh=3tbIyaAjAFUO17MuR18a9mkL1YsTn8hGo7L7c7YrAyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KR/sYh06GVSwaiF/vRMmIBfhlcJHuN9u2IxI5cimSob0ji6v8IKxHsaWkPO+n2v80
-	 vfq0kFzItbiT/LBLt8mOJ+qCDEMZ9nGevETPjXrzPkTMotsGusLi0ylWXGV8uOALxF
-	 333ySUYo1TlmOSVMlxJtdaQsTNgE4WWrYSy4A73E=
+	b=zWkzWHsWRn6OHKaZiJTcSIy5bwP6OliSuOC2GJsRHVEWLf4xtZiOukaL8t651Z1Pb
+	 oafFafygl9JFqA98HbjofCWksZR0dLmpsJtyszV1yx4RTwRZe4s2yXkPu9R4Gfci0V
+	 abdmk1DqeNH0M/syjlIEBKFGY/V5nvXFNcBkrVcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 239/277] gpio: Fix resource leaks on errors in gpiochip_add_data_with_key()
-Date: Wed,  8 Apr 2026 20:03:44 +0200
-Message-ID: <20260408175942.784055392@linuxfoundation.org>
+	syzbot+3b3852c6031d0f30dfaf@syzkaller.appspotmail.com,
+	Mauricio Faria de Oliveira <mfo@igalia.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>
+Subject: [PATCH 6.18 240/277] thermal: core: Address thermal zone removal races with resume
+Date: Wed,  8 Apr 2026 20:03:45 +0200
+Message-ID: <20260408175942.821192224@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,238 +52,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 16fdabe143fce2cbf89139677728e17e21b46c28 upstream.
+commit 45b859b0728267a6199ee5002d62e6c6f3e8c89d upstream.
 
-Since commit aab5c6f20023 ("gpio: set device type for GPIO chips"),
-`gdev->dev.release` is unset.  As a result, the reference count to
-`gdev->dev` isn't dropped on the error handling paths.
+Since thermal_zone_pm_complete() and thermal_zone_device_resume()
+re-initialize the poll_queue delayed work for the given thermal zone,
+the cancel_delayed_work_sync() in thermal_zone_device_unregister()
+may miss some already running work items and the thermal zone may
+be freed prematurely [1].
 
-Drop the reference on errors.
+There are two failing scenarios that both start with
+running thermal_pm_notify_complete() right before invoking
+thermal_zone_device_unregister() for one of the thermal zones.
 
-Also reorder the instructions to make the error handling simpler.
-Now gpiochip_add_data_with_key() roughly looks like:
+In the first scenario, there is a work item already running for
+the given thermal zone when thermal_pm_notify_complete() calls
+thermal_zone_pm_complete() for that thermal zone and it continues to
+run when thermal_zone_device_unregister() starts.  Since the poll_queue
+delayed work has been re-initialized by thermal_pm_notify_complete(), the
+running work item will be missed by the cancel_delayed_work_sync() in
+thermal_zone_device_unregister() and if it continues to run past the
+freeing of the thermal zone object, a use-after-free will occur.
 
-   >>> Some memory allocation.  Go to ERR ZONE 1 on errors.
-   >>> device_initialize().
+In the second scenario, thermal_zone_device_resume() queued up by
+thermal_pm_notify_complete() runs right after the thermal_zone_exit()
+called by thermal_zone_device_unregister() has returned.  The poll_queue
+delayed work is re-initialized by it before cancel_delayed_work_sync() is
+called by thermal_zone_device_unregister(), so it may continue to run
+after the freeing of the thermal zone object, which also leads to a
+use-after-free.
 
-   gpiodev_release() takes over the responsibility for freeing the
-   resources of `gdev->dev`.  The subsequent error handling paths
-   shouldn't go through ERR ZONE 1 again which leads to double free.
+Address the first failing scenario by ensuring that no thermal work
+items will be running when thermal_pm_notify_complete() is called.
+For this purpose, first move the cancel_delayed_work() call from
+thermal_zone_pm_complete() to thermal_zone_pm_prepare() to prevent
+new work from entering the workqueue going forward.  Next, switch
+over to using a dedicated workqueue for thermal events and update
+the code in thermal_pm_notify() to flush that workqueue after
+thermal_pm_notify_prepare() has returned which will take care of
+all leftover thermal work already on the workqueue (that leftover
+work would do nothing useful anyway because all of the thermal zones
+have been flagged as suspended).
 
-   >>> Some initialization mainly on `gdev`.
-   >>> The rest of initialization.  Go to ERR ZONE 2 on errors.
-   >>> Chip registration success and exit.
+The second failing scenario is addressed by adding a tz->state check
+to thermal_zone_device_resume() to prevent it from re-initializing
+the poll_queue delayed work if the thermal zone is going away.
 
-   >>> ERR ZONE 2.  gpio_device_put() and exit.
-   >>> ERR ZONE 1.
+Note that the above changes will also facilitate relocating the suspend
+and resume of thermal zones closer to the suspend and resume of devices,
+respectively.
 
-Cc: stable@vger.kernel.org
-Fixes: aab5c6f20023 ("gpio: set device type for GPIO chips")
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260205092840.2574840-1-tzungbi@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 5a5efdaffda5 ("thermal: core: Resume thermal zones asynchronously")
+Reported-by: syzbot+3b3852c6031d0f30dfaf@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=3b3852c6031d0f30dfaf
+Reported-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Closes: https://lore.kernel.org/linux-pm/20260324-thermal-core-uaf-init_delayed_work-v1-1-6611ae76a8a1@igalia.com/ [1]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Tested-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/6267615.lOV4Wx5bFT@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib.c |  101 +++++++++++++++++++++++--------------------------
- 1 file changed, 48 insertions(+), 53 deletions(-)
+ drivers/thermal/thermal_core.c |   31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -882,13 +882,15 @@ static const struct device_type gpio_dev
- #define gcdev_unregister(gdev)		device_del(&(gdev)->dev)
- #endif
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -41,6 +41,8 @@ static struct thermal_governor *def_gove
  
-+/*
-+ * An initial reference count has been held in gpiochip_add_data_with_key().
-+ * The caller should drop the reference via gpio_device_put() on errors.
-+ */
- static int gpiochip_setup_dev(struct gpio_device *gdev)
- {
- 	struct fwnode_handle *fwnode = dev_fwnode(&gdev->dev);
- 	int ret;
+ static bool thermal_pm_suspended;
  
--	device_initialize(&gdev->dev);
--
- 	/*
- 	 * If fwnode doesn't belong to another device, it's safe to clear its
- 	 * initialized flag.
-@@ -954,9 +956,11 @@ static void gpiochip_setup_devs(void)
- 	list_for_each_entry_srcu(gdev, &gpio_devices, list,
- 				 srcu_read_lock_held(&gpio_devices_srcu)) {
- 		ret = gpiochip_setup_dev(gdev);
--		if (ret)
-+		if (ret) {
-+			gpio_device_put(gdev);
- 			dev_err(&gdev->dev,
- 				"Failed to initialize gpio device (%d)\n", ret);
-+		}
- 	}
++static struct workqueue_struct *thermal_wq __ro_after_init;
++
+ /*
+  * Governor section: set of functions to handle thermal governors
+  *
+@@ -313,7 +315,7 @@ static void thermal_zone_device_set_poll
+ 	if (delay > HZ)
+ 		delay = round_jiffies_relative(delay);
+ 
+-	mod_delayed_work(system_freezable_power_efficient_wq, &tz->poll_queue, delay);
++	mod_delayed_work(thermal_wq, &tz->poll_queue, delay);
  }
  
-@@ -1037,71 +1041,72 @@ int gpiochip_add_data_with_key(struct gp
- 	int base = 0;
- 	int ret;
+ static void thermal_zone_recheck(struct thermal_zone_device *tz, int error)
+@@ -1781,6 +1783,10 @@ static void thermal_zone_device_resume(s
  
--	/*
--	 * First: allocate and populate the internal stat container, and
--	 * set up the struct device.
--	 */
- 	gdev = kzalloc(sizeof(*gdev), GFP_KERNEL);
- 	if (!gdev)
- 		return -ENOMEM;
--
--	gdev->dev.type = &gpio_dev_type;
--	gdev->dev.bus = &gpio_bus_type;
--	gdev->dev.parent = gc->parent;
--	rcu_assign_pointer(gdev->chip, gc);
--
- 	gc->gpiodev = gdev;
- 	gpiochip_set_data(gc, data);
+ 	guard(thermal_zone)(tz);
  
--	device_set_node(&gdev->dev, gpiochip_choose_fwnode(gc));
--
- 	ret = ida_alloc(&gpio_ida, GFP_KERNEL);
- 	if (ret < 0)
- 		goto err_free_gdev;
- 	gdev->id = ret;
- 
--	ret = dev_set_name(&gdev->dev, GPIOCHIP_NAME "%d", gdev->id);
-+	ret = init_srcu_struct(&gdev->srcu);
- 	if (ret)
- 		goto err_free_ida;
-+	rcu_assign_pointer(gdev->chip, gc);
- 
--	if (gc->parent && gc->parent->driver)
--		gdev->owner = gc->parent->driver->owner;
--	else if (gc->owner)
--		/* TODO: remove chip->owner */
--		gdev->owner = gc->owner;
--	else
--		gdev->owner = THIS_MODULE;
-+	ret = init_srcu_struct(&gdev->desc_srcu);
-+	if (ret)
-+		goto err_cleanup_gdev_srcu;
++	/* If the thermal zone is going away, there's nothing to do. */
++	if (tz->state & TZ_STATE_FLAG_EXIT)
++		return;
 +
-+	ret = dev_set_name(&gdev->dev, GPIOCHIP_NAME "%d", gdev->id);
-+	if (ret)
-+		goto err_cleanup_desc_srcu;
-+
-+	device_initialize(&gdev->dev);
-+	/*
-+	 * After this point any allocated resources to `gdev` will be
-+	 * free():ed by gpiodev_release().  If you add new resources
-+	 * then make sure they get free():ed there.
-+	 */
-+	gdev->dev.type = &gpio_dev_type;
-+	gdev->dev.bus = &gpio_bus_type;
-+	gdev->dev.parent = gc->parent;
-+	device_set_node(&gdev->dev, gpiochip_choose_fwnode(gc));
+ 	tz->state &= ~(TZ_STATE_FLAG_SUSPENDED | TZ_STATE_FLAG_RESUMING);
  
- 	ret = gpiochip_get_ngpios(gc, &gdev->dev);
- 	if (ret)
--		goto err_free_dev_name;
-+		goto err_put_device;
-+	gdev->ngpio = gc->ngpio;
- 
- 	gdev->descs = kcalloc(gc->ngpio, sizeof(*gdev->descs), GFP_KERNEL);
- 	if (!gdev->descs) {
- 		ret = -ENOMEM;
--		goto err_free_dev_name;
-+		goto err_put_device;
+ 	thermal_debug_tz_resume(tz);
+@@ -1807,6 +1813,9 @@ static void thermal_zone_pm_prepare(stru
  	}
  
- 	gdev->label = kstrdup_const(gc->label ?: "unknown", GFP_KERNEL);
- 	if (!gdev->label) {
- 		ret = -ENOMEM;
--		goto err_free_descs;
-+		goto err_put_device;
- 	}
- 
--	gdev->ngpio = gc->ngpio;
- 	gdev->can_sleep = gc->can_sleep;
--
- 	rwlock_init(&gdev->line_state_lock);
- 	RAW_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
- 	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
--
--	ret = init_srcu_struct(&gdev->srcu);
--	if (ret)
--		goto err_free_label;
--
--	ret = init_srcu_struct(&gdev->desc_srcu);
--	if (ret)
--		goto err_cleanup_gdev_srcu;
-+#ifdef CONFIG_PINCTRL
-+	INIT_LIST_HEAD(&gdev->pin_ranges);
-+#endif
-+	if (gc->parent && gc->parent->driver)
-+		gdev->owner = gc->parent->driver->owner;
-+	else if (gc->owner)
-+		/* TODO: remove chip->owner */
-+		gdev->owner = gc->owner;
-+	else
-+		gdev->owner = THIS_MODULE;
- 
- 	scoped_guard(mutex, &gpio_devices_lock) {
- 		/*
-@@ -1117,7 +1122,7 @@ int gpiochip_add_data_with_key(struct gp
- 			if (base < 0) {
- 				ret = base;
- 				base = 0;
--				goto err_cleanup_desc_srcu;
-+				goto err_put_device;
- 			}
- 
- 			/*
-@@ -1137,14 +1142,10 @@ int gpiochip_add_data_with_key(struct gp
- 		ret = gpiodev_add_to_list_unlocked(gdev);
- 		if (ret) {
- 			gpiochip_err(gc, "GPIO integer space overlap, cannot add chip\n");
--			goto err_cleanup_desc_srcu;
-+			goto err_put_device;
- 		}
- 	}
- 
--#ifdef CONFIG_PINCTRL
--	INIT_LIST_HEAD(&gdev->pin_ranges);
--#endif
--
- 	if (gc->names)
- 		gpiochip_set_desc_names(gc);
- 
-@@ -1231,25 +1232,19 @@ err_remove_from_list:
- 	scoped_guard(mutex, &gpio_devices_lock)
- 		list_del_rcu(&gdev->list);
- 	synchronize_srcu(&gpio_devices_srcu);
--	if (gdev->dev.release) {
--		/* release() has been registered by gpiochip_setup_dev() */
--		gpio_device_put(gdev);
--		goto err_print_message;
--	}
-+err_put_device:
-+	gpio_device_put(gdev);
-+	goto err_print_message;
+ 	tz->state |= TZ_STATE_FLAG_SUSPENDED;
 +
- err_cleanup_desc_srcu:
- 	cleanup_srcu_struct(&gdev->desc_srcu);
- err_cleanup_gdev_srcu:
- 	cleanup_srcu_struct(&gdev->srcu);
--err_free_label:
--	kfree_const(gdev->label);
--err_free_descs:
--	kfree(gdev->descs);
--err_free_dev_name:
--	kfree(dev_name(&gdev->dev));
- err_free_ida:
- 	ida_free(&gpio_ida, gdev->id);
- err_free_gdev:
- 	kfree(gdev);
++	/* Prevent new work from getting to the workqueue subsequently. */
++	cancel_delayed_work(&tz->poll_queue);
+ }
+ 
+ static void thermal_pm_notify_prepare(void)
+@@ -1825,8 +1834,6 @@ static void thermal_zone_pm_complete(str
+ {
+ 	guard(thermal_zone)(tz);
+ 
+-	cancel_delayed_work(&tz->poll_queue);
+-
+ 	reinit_completion(&tz->resume);
+ 	tz->state |= TZ_STATE_FLAG_RESUMING;
+ 
+@@ -1836,7 +1843,7 @@ static void thermal_zone_pm_complete(str
+ 	 */
+ 	INIT_DELAYED_WORK(&tz->poll_queue, thermal_zone_device_resume);
+ 	/* Queue up the work without a delay. */
+-	mod_delayed_work(system_freezable_power_efficient_wq, &tz->poll_queue, 0);
++	mod_delayed_work(thermal_wq, &tz->poll_queue, 0);
+ }
+ 
+ static void thermal_pm_notify_complete(void)
+@@ -1859,6 +1866,11 @@ static int thermal_pm_notify(struct noti
+ 	case PM_RESTORE_PREPARE:
+ 	case PM_SUSPEND_PREPARE:
+ 		thermal_pm_notify_prepare();
++		/*
++		 * Allow any leftover thermal work items already on the
++		 * worqueue to complete so they don't get in the way later.
++		 */
++		flush_workqueue(thermal_wq);
+ 		break;
+ 	case PM_POST_HIBERNATION:
+ 	case PM_POST_RESTORE:
+@@ -1891,9 +1903,16 @@ static int __init thermal_init(void)
+ 	if (result)
+ 		goto error;
+ 
++	thermal_wq = alloc_workqueue("thermal_events",
++				      WQ_FREEZABLE | WQ_POWER_EFFICIENT | WQ_PERCPU, 0);
++	if (!thermal_wq) {
++		result = -ENOMEM;
++		goto unregister_netlink;
++	}
 +
- err_print_message:
- 	/* failures here can mean systems won't boot... */
- 	if (ret != -EPROBE_DEFER) {
+ 	result = thermal_register_governors();
+ 	if (result)
+-		goto unregister_netlink;
++		goto destroy_workqueue;
+ 
+ 	thermal_class = kzalloc(sizeof(*thermal_class), GFP_KERNEL);
+ 	if (!thermal_class) {
+@@ -1920,6 +1939,8 @@ static int __init thermal_init(void)
+ 
+ unregister_governors:
+ 	thermal_unregister_governors();
++destroy_workqueue:
++	destroy_workqueue(thermal_wq);
+ unregister_netlink:
+ 	thermal_netlink_exit();
+ error:
 
 
