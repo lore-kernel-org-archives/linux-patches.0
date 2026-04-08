@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA53E27979A;
-	Wed,  8 Apr 2026 18:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6550DB67E;
+	Wed,  8 Apr 2026 18:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673446; cv=none; b=hcd6qxLo+xyvsmgCIwg4HXI8WGJc0Df8S6B9qossTJC19O3UVSDJUvNLVGu23R4Pvj7b4S96HCJRWhjpNz+OcQCltHbCCHXojqhjfFoPe4ol4vACe8iQNJOL4DNfRLIEm/TLmeMUCQJ9YjN2dm5dJP9JpzK867m7sva4nbMrkzs=
+	t=1775673449; cv=none; b=f8EWf8oHLAawJv7G/EiSR80SpcOIZ+4kFEx8O5SPDCmS6AhlPVLoxIyMBE1uWgavOaiIDqxveUdU37SuGeXccQodGTxGfkKbDNOgO1N/F4qBP9OM1LZCO+XF5hMy6daztXbbmxKVmwp9HylYS6c7vHQ2R/PDS4zvOg/zhLNxG7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673446; c=relaxed/simple;
-	bh=abNVh3+9x4fyjIF2hOtKeEjN1e9cj/4CRgmm/bCMEH0=;
+	s=arc-20240116; t=1775673449; c=relaxed/simple;
+	bh=V/mB7+pNEJVwFzTMydVj6TK20Qi927GkORKqwkG4dwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ldWCYZWeYKa9YnynUS6whqhRD6PI9sZrUMhztT+zqA/wGyfaFZ/FcBRJbXUcO1fZpi0WyZ5J2CdDZYxpyfTSL/aC/EXeBiFuzZO/wVWSO0ciKfA24gpAS14k3kTLPmGqhLrY5cIRFUEHLummsHs8h6x4v3px5uRuPhuSaxWaJZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJtkPOKj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T0iPPUvpkyDWiYKi1yRWviBefJ51yrY9JEZffKVfu6Kb78ZT9m0GA/2nIP5ZUUDQ2OQmQ2sE3Rm/e5I660hkwye/+aeQ8BmXWKJJsAYEvvkq+Y1FpdKHVQX7QqjFqSv7ynVklGwfEBF+7a0bO39mfLKcrUG2IGtIN0C2qPzFnJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q4a82mnO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJtkPOKj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B81C19421;
-	Wed,  8 Apr 2026 18:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4a82mnO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBE0C19421;
+	Wed,  8 Apr 2026 18:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673446;
-	bh=abNVh3+9x4fyjIF2hOtKeEjN1e9cj/4CRgmm/bCMEH0=;
+	s=korg; t=1775673449;
+	bh=V/mB7+pNEJVwFzTMydVj6TK20Qi927GkORKqwkG4dwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rJtkPOKj8oPbiqYoJV+MtcR80AKC2T5zP9SpK01QIj6XsWemjjLMYaAxCuxWSCoip
-	 0Tl0+xtMsD+mM6Zm3mL1TLyovC7Dcw22NMkFghUpQmWvYJi08vivH3rCAekqG2CL8O
-	 yk1KJNMBwy2MPvU9jFkBHhjeMHD1JOHn6iN8UDu0=
+	b=Q4a82mnO53YWvTbxDtvOSGhnWKZ2LvzP8VpX7ZcgYebcVB6pqjSMm4a3xg22dGk/R
+	 qWpYugVD8gJOlKxlRs0dOb8sSPHEM7A0AC+FrKiN2sEX37uoYIVZhJrQVLH5fhJ84g
+	 ZQvicHsei4W5Nkn5fkniVUDtnpgvtLMtNIcu1zoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srujana Challa <schalla@marvell.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 235/277] virtio_net: clamp rss_max_key_size to NETDEV_RSS_KEY_LEN
-Date: Wed,  8 Apr 2026 20:03:40 +0200
-Message-ID: <20260408175942.632962273@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 236/277] cpufreq: governor: fix double free in cpufreq_dbs_governor_init() error path
+Date: Wed,  8 Apr 2026 20:03:41 +0200
+Message-ID: <20260408175942.669843476@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,82 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srujana Challa <schalla@marvell.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit b4e5f04c58a29c499faa85d12952ca9a4faf1cb9 upstream.
+commit 6dcf9d0064ce2f3e3dfe5755f98b93abe6a98e1e upstream.
 
-rss_max_key_size in the virtio spec is the maximum key size supported by
-the device, not a mandatory size the driver must use. Also the value 40
-is a spec minimum, not a spec maximum.
+When kobject_init_and_add() fails, cpufreq_dbs_governor_init() calls
+kobject_put(&dbs_data->attr_set.kobj).
 
-The current code rejects RSS and can fail probe when the device reports a
-larger rss_max_key_size than the driver buffer limit. Instead, clamp the
-effective key length to min(device rss_max_key_size, NETDEV_RSS_KEY_LEN)
-and keep RSS enabled.
+The kobject release callback cpufreq_dbs_data_release() calls
+gov->exit(dbs_data) and kfree(dbs_data), but the current error path
+then calls gov->exit(dbs_data) and kfree(dbs_data) again, causing a
+double free.
 
-This keeps probe working on devices that advertise larger maximum key sizes
-while respecting the netdev RSS key buffer size limit.
+Keep the direct kfree(dbs_data) for the gov->init() failure path, but
+after kobject_init_and_add() has been called, let kobject_put() handle
+the cleanup through cpufreq_dbs_data_release().
 
-Fixes: 3f7d9c1964fc ("virtio_net: Add hash_key_length check")
-Cc: stable@vger.kernel.org
-Signed-off-by: Srujana Challa <schalla@marvell.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260326142344.1171317-1-schalla@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4ebe36c94aed ("cpufreq: Fix kobject memleak")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260401024535.1395801-1-lgs201920130244@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ drivers/cpufreq/cpufreq_governor.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -381,8 +381,6 @@ struct receive_queue {
- 	struct xdp_buff **xsk_buffs;
- };
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -468,13 +468,13 @@ int cpufreq_dbs_governor_init(struct cpu
+ 	/* Failure, so roll back. */
+ 	pr_err("initialization failed (dbs_data kobject init error %d)\n", ret);
  
--#define VIRTIO_NET_RSS_MAX_KEY_SIZE     40
+-	kobject_put(&dbs_data->attr_set.kobj);
 -
- /* Control VQ buffers: protected by the rtnl lock */
- struct control_buf {
- 	struct virtio_net_ctrl_hdr hdr;
-@@ -495,7 +493,7 @@ struct virtnet_info {
+ 	policy->governor_data = NULL;
  
- 	/* Must be last as it ends in a flexible-array member. */
- 	TRAILING_OVERLAP(struct virtio_net_rss_config_trailer, rss_trailer, hash_key_data,
--		u8 rss_hash_key_data[VIRTIO_NET_RSS_MAX_KEY_SIZE];
-+		u8 rss_hash_key_data[NETDEV_RSS_KEY_LEN];
- 	);
- };
- static_assert(offsetof(struct virtnet_info, rss_trailer.hash_key_data) ==
-@@ -6794,6 +6792,7 @@ static int virtnet_probe(struct virtio_d
- 	struct virtnet_info *vi;
- 	u16 max_queue_pairs;
- 	int mtu = 0;
-+	u16 key_sz;
- 
- 	/* Find if host supports multiqueue/rss virtio_net device */
- 	max_queue_pairs = 1;
-@@ -6929,14 +6928,13 @@ static int virtnet_probe(struct virtio_d
- 	}
- 
- 	if (vi->has_rss || vi->has_rss_hash_report) {
--		vi->rss_key_size =
--			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
--		if (vi->rss_key_size > VIRTIO_NET_RSS_MAX_KEY_SIZE) {
--			dev_err(&vdev->dev, "rss_max_key_size=%u exceeds the limit %u.\n",
--				vi->rss_key_size, VIRTIO_NET_RSS_MAX_KEY_SIZE);
--			err = -EINVAL;
--			goto free;
--		}
-+		key_sz = virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
+ 	if (!have_governor_per_policy())
+ 		gov->gdbs_data = NULL;
+-	gov->exit(dbs_data);
 +
-+		vi->rss_key_size = min_t(u16, key_sz, NETDEV_RSS_KEY_LEN);
-+		if (key_sz > vi->rss_key_size)
-+			dev_warn(&vdev->dev,
-+				 "rss_max_key_size=%u exceeds driver limit %u, clamping\n",
-+				 key_sz, vi->rss_key_size);
++	kobject_put(&dbs_data->attr_set.kobj);
++	goto free_policy_dbs_info;
  
- 		vi->rss_hash_types_supported =
- 		    virtio_cread32(vdev, offsetof(struct virtio_net_config, supported_hash_types));
+ free_dbs_data:
+ 	kfree(dbs_data);
 
 
