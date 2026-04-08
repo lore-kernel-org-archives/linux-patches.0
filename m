@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465DE324B1F;
-	Wed,  8 Apr 2026 18:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCC03537FC;
+	Wed,  8 Apr 2026 18:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672268; cv=none; b=nU7JCAAzZI7Kq/B8EJjxG+AflPjabwm3k1YcUereeJRspT5iiBSf/mFKByDdvv3lvtFy0p15UiBQoFfaQd09o+xY99imcM42aPDCn3ubPZqslJlVygcZYox+kPiMAzpFz8r3Fn4SW01zRFGLBgSfdDsE1d+fK5lbXnjJ2eyFUQ4=
+	t=1775672270; cv=none; b=TIQSK7tDqGutqk0yausmoiUpq/VHbl2Oue3IBv3kFmmdYwqGx1k9k+ynJ7b0pykSnQNJNebxMDUQL9sZiGmakBKy6pBdYS2X/owUR0NIwuTEuTtV9NAqke4f8palSVRwTUMKKTmJj//OOc1jlmNhYi/FBTC0ARCr+PTvoFRLHps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672268; c=relaxed/simple;
-	bh=f+yJ/eoio4jCfh6Tcr+6PnZ7LsRbf4eksKFRbO+bVfQ=;
+	s=arc-20240116; t=1775672270; c=relaxed/simple;
+	bh=XsiJ8vOaSjyJqF679fkw/MPKtzT4H71QYZ5mD/mseP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z9mdnzq01CFIdtWkJRr9WAjp0PBfJou3OkdhgOlU4VXjgOF1XeSb/N2ThDqQR6uCqlmiowu29GtJB1kfRhUwiyxkFSXzFNnoOnKozciEsUg5DX5vUlRQxqF3H6NtBzw4/DHr1NCSQWiM3/Mh5GWsQywqSM0titvqENs7kXDwiQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+J6x09J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F4eV+2HQyy836i2TBGzE7+4DKglDqeZz+7HrnG/xFZYnrGDmep7ahXxWAtNexLE8z3id124gtf3JPjcp/8DmUypG7lz5bpmUR1dGTluqpxF4dN9Be34QRvjr3BXw9XO/f5E4gbEbgQDWIF8PD1KLd0QjffBraiav0coLuZAnqEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pvodc9Gn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+J6x09J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32AEC19421;
-	Wed,  8 Apr 2026 18:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pvodc9Gn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66601C19421;
+	Wed,  8 Apr 2026 18:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672268;
-	bh=f+yJ/eoio4jCfh6Tcr+6PnZ7LsRbf4eksKFRbO+bVfQ=;
+	s=korg; t=1775672270;
+	bh=XsiJ8vOaSjyJqF679fkw/MPKtzT4H71QYZ5mD/mseP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+J6x09JdoirxCJvQ16uJxPrqlkD/iBKwKFhuwOUlfk8u4SgkVaytZM1qZCiCOUUk
-	 iVqpbzhlKTTEfIaw5xSYz3yEBsBvEbdehg2k5O9iyNiCytXCAOdlArt+ZahzxfDpnV
-	 SswCKPB3mI1UkXOZ2S9bLh24SfyOzmL1hnHihJXY=
+	b=Pvodc9GnN9jVFevuZr5xHzZKP06y/DeOkj73WLZHJeLIBFGuj3e0FxRZPN3VgLG6Q
+	 F/ITNriKlKbtsQ7w5RFFPgVr8wPpENHuiST1jINZMsdaCRFbQA6goDrcbVpBn82lEJ
+	 DBHPVoaiVeFzdm8TYd6NzPuRnoZpAIQe0Nhfdb1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 254/312] thunderbolt: Fix property read in nhi_wake_supported()
-Date: Wed,  8 Apr 2026 20:02:51 +0200
-Message-ID: <20260408175943.234484228@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 228/312] usb: ulpi: fix double free in ulpi_register_interface() error path
+Date: Wed,  8 Apr 2026 20:02:25 +0200
+Message-ID: <20260408175942.271353036@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -50,37 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 73a505dc48144ec72e25874e2b2a72487b02d3bc upstream.
+commit 01af542392b5d41fd659d487015a71f627accce3 upstream.
 
-device_property_read_foo() returns 0 on success and only then modifies
-'val'. Currently, val is left uninitialized if the aforementioned
-function returns non-zero, making nhi_wake_supported() return true
-almost always (random != 0) if the property is not present in device
-firmware.
+When device_register() fails, ulpi_register() calls put_device() on
+ulpi->dev.
 
-Invert the check to make it make sense.
+The device release callback ulpi_dev_release() drops the OF node
+reference and frees ulpi, but the current error path in
+ulpi_register_interface() then calls kfree(ulpi) again, causing a
+double free.
 
-Fixes: 3cdb9446a117 ("thunderbolt: Add support for Intel Ice Lake")
-Cc: stable@vger.kernel.org
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Let put_device() handle the cleanup through ulpi_dev_release() and
+avoid freeing ulpi again in ulpi_register_interface().
+
+Fixes: 289fcff4bcdb1 ("usb: add bus type for USB ULPI")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260401025142.1398996-1-lgs201920130244@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/nhi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/common/ulpi.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -1005,7 +1005,7 @@ static bool nhi_wake_supported(struct pc
- 	 * If power rails are sustainable for wakeup from S4 this
- 	 * property is set by the BIOS.
- 	 */
--	if (device_property_read_u8(&pdev->dev, "WAKE_SUPPORTED", &val))
-+	if (!device_property_read_u8(&pdev->dev, "WAKE_SUPPORTED", &val))
- 		return !!val;
+--- a/drivers/usb/common/ulpi.c
++++ b/drivers/usb/common/ulpi.c
+@@ -331,10 +331,9 @@ struct ulpi *ulpi_register_interface(str
+ 	ulpi->ops = ops;
  
- 	return true;
+ 	ret = ulpi_register(dev, ulpi);
+-	if (ret) {
+-		kfree(ulpi);
++	if (ret)
+ 		return ERR_PTR(ret);
+-	}
++
+ 
+ 	return ulpi;
+ }
 
 
