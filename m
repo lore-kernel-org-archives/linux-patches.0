@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C6D35B653;
-	Wed,  8 Apr 2026 18:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C24F35B653;
+	Wed,  8 Apr 2026 18:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673194; cv=none; b=Z1cF9AptTjo1FTEt9cjax68Rs11doS6xbWsdJNucpLP3lKL+VVNaXhv9zdcm4uNgYYyZUp2U9M0zYRFDiSjjLK051xEBhXkQ667BOku+fbWcbJCaauxAvX5JO5+xHuozv9E57b5t1GwIhIhpOa0DUSJ6nFd3tHEUZNtx3eLeN08=
+	t=1775673197; cv=none; b=Ij/YXSiv5JFwwC8o1Ykt3OlzovSPpXPJXVFS/m6vtcYn3wsqYhr0Vm9O8WfnvFVEXwLj7ndIJu3h1r3ACMrcsbOHrq7TOTJx9txZ05+vkP+DvJmoZQDwrXAmMlzdnk6/PX9r26Er6GGBOPwhoEjdWUcPHnA7IG6CTs6VcgbPvew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673194; c=relaxed/simple;
-	bh=25KDtHQw+YYd10L65TPy63xgXZCfkt5jrGN7Fb9nlZo=;
+	s=arc-20240116; t=1775673197; c=relaxed/simple;
+	bh=p09tsTnsl1MpVSDaybH/PMtdsogbvKPHTRDuIM2By44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qft0oti4XujvPzsHZBRUlAfimeHyKOgQjVsf8Fqoyn5PG/B++LLGzNQqUXsvj6C5B4Yi8kPM7oylGU9xySC4VgmuxK7+aiPBeryWqB9N1gSBJmJUet8+MiBpq6OR2MHrLlHF0+wCfjt4VPmiiUq3izco+9ACwu9Kbhpl8GwA+7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l02ExSwV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t3jM+YsAY8zjFtwGcuJ5Ze75uMW4tYDpYyKmLVAowxJfLFuIpdPH59Dxq31un5J9Uzb8mCwvWUHb+MTIBU2L2yQQqZUD3N1FJUBlhvmfaOYBz1QLCDOA3+9j7JoMuLrOGYFVmWiElEwZ2Pxiv+0mgTC3nAaEqWe1NFIWoIu7ApA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXQZlm8Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l02ExSwV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB37C19421;
-	Wed,  8 Apr 2026 18:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXQZlm8Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D86C19421;
+	Wed,  8 Apr 2026 18:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673194;
-	bh=25KDtHQw+YYd10L65TPy63xgXZCfkt5jrGN7Fb9nlZo=;
+	s=korg; t=1775673197;
+	bh=p09tsTnsl1MpVSDaybH/PMtdsogbvKPHTRDuIM2By44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l02ExSwVG8MWXx20zfgKP3hNXgEQlhXwm8bIX71aH7pNb9mzQg2U+0UJ/T68Bae/B
-	 uHbl/n8YOqzZwc2DjIuSHt+zequQXWpVr/XI0Hf0takqkfoYXSWxJtaY0PkqpHdVNM
-	 CiiUPu+Tku+xBk1tzBVf+fTND7gV2BDFWtAdC8LM=
+	b=QXQZlm8Z5QJ+jbE1SNxvUSuQyrxIo4cerMbII+O+I8CcE8kSFRYisSWeqSHz1+mVD
+	 znR/2Ai9XCBOJ+YwIK/2Go6LPqjWg766hgnP43jCPRjgYAWo9G+43SGFF2RVokxOuM
+	 5YbZpUaqvpK8NY5oqz8L9zuQqySg6lYX2E+AYcCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Berk Cem Goksel <berkcgoksel@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 137/277] ALSA: caiaq: fix stack out-of-bounds read in init_card
-Date: Wed,  8 Apr 2026 20:02:02 +0200
-Message-ID: <20260408175938.991705158@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 111/277] hwmon: (ltc4286) Add missing MODULE_IMPORT_NS("PMBUS")
+Date: Wed,  8 Apr 2026 20:01:36 +0200
+Message-ID: <20260408175938.018329722@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,59 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Berk Cem Goksel <berkcgoksel@gmail.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit 45424e871abf2a152e247a9cff78359f18dd95c0 upstream.
+[ Upstream commit a9d2fbd3ad0e6ac588386e699beeccfe7516755f ]
 
-The loop creates a whitespace-stripped copy of the card shortname
-where `len < sizeof(card->id)` is used for the bounds check. Since
-sizeof(card->id) is 16 and the local id buffer is also 16 bytes,
-writing 16 non-space characters fills the entire buffer,
-overwriting the terminating nullbyte.
+ltc4286.c uses PMBus core symbols exported in the PMBUS namespace,
+such as pmbus_do_probe(), but does not declare MODULE_IMPORT_NS("PMBUS").
 
-When this non-null-terminated string is later passed to
-snd_card_set_id() -> copy_valid_id_string(), the function scans
-forward with `while (*nid && ...)` and reads past the end of the
-stack buffer, reading the contents of the stack.
+Add the missing namespace import to avoid modpost warnings.
 
-A USB device with a product name containing many non-ASCII, non-space
-characters (e.g. multibyte UTF-8) will reliably trigger this as follows:
-
-  BUG: KASAN: stack-out-of-bounds in copy_valid_id_string
-       sound/core/init.c:696 [inline]
-  BUG: KASAN: stack-out-of-bounds in snd_card_set_id_no_lock+0x698/0x74c
-       sound/core/init.c:718
-
-The off-by-one has been present since commit bafeee5b1f8d ("ALSA:
-snd_usb_caiaq: give better shortname") from June 2009 (v2.6.31-rc1),
-which first introduced this whitespace-stripping loop. The original
-code never accounted for the null terminator when bounding the copy.
-
-Fix this by changing the loop bound to `sizeof(card->id) - 1`,
-ensuring at least one byte remains as the null terminator.
-
-Fixes: bafeee5b1f8d ("ALSA: snd_usb_caiaq: give better shortname")
-Cc: stable@vger.kernel.org
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Reported-by: Berk Cem Goksel <berkcgoksel@gmail.com>
-Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
-Link: https://patch.msgid.link/20260329133825.581585-1-berkcgoksel@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0c459759ca97 ("hwmon: (pmbus) Add ltc4286 driver")
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260329170925.34581-5-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/pmbus/ltc4286.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -488,7 +488,7 @@ static int init_card(struct snd_usb_caia
- 		memset(id, 0, sizeof(id));
- 
- 		for (c = card->shortname, len = 0;
--			*c && len < sizeof(card->id); c++)
-+			*c && len < sizeof(card->id) - 1; c++)
- 			if (*c != ' ')
- 				id[len++] = *c;
- 
+diff --git a/drivers/hwmon/pmbus/ltc4286.c b/drivers/hwmon/pmbus/ltc4286.c
+index aabd0bcdfeee3..8715d380784a0 100644
+--- a/drivers/hwmon/pmbus/ltc4286.c
++++ b/drivers/hwmon/pmbus/ltc4286.c
+@@ -173,3 +173,4 @@ module_i2c_driver(ltc4286_driver);
+ MODULE_AUTHOR("Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>");
+ MODULE_DESCRIPTION("PMBUS driver for LTC4286 and compatibles");
+ MODULE_LICENSE("GPL");
++MODULE_IMPORT_NS("PMBUS");
+-- 
+2.53.0
+
 
 
