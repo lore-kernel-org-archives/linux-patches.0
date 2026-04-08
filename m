@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D2B3D3D06;
-	Wed,  8 Apr 2026 18:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69141E5724;
+	Wed,  8 Apr 2026 18:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672013; cv=none; b=Dzi3DFB2X+7EaMc8ETV3mLAJOavhAkz7R+z3uRkRw7jZ8Gl1bfU8hWTbG5IbTbhCpKvEhQ1EmEkFmA7lp61dRCjDEpsLhPkzRhoKNaSYgmTz6gXbxm1LVrPD9tmzowq5i+rqp0rCtEfhfJ2kFwQ5Ikxc1ft3YD4avThXiXioJCU=
+	t=1775672015; cv=none; b=suGJvafgnRZVWyPX33angqbcW4Oz7ym/iubE+BsgRO2T8+ECj0BjqrBOHrN4h/qhufWPkBNhtubd7LqikpYz7TgxqbS1CVVosr1GGO0bmoA7qCWcF/wfqcWEUagxl07fW+3F9eQijWkKDph4lDAQ2nkXQdm3/KA769Id4YiRpFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672013; c=relaxed/simple;
-	bh=dE+4CUakmjqriWrFhic/Pzih7lB0VWoqJUQIX3QjtZw=;
+	s=arc-20240116; t=1775672015; c=relaxed/simple;
+	bh=EVkKKZK6KJqx6fSK+JCydLmas8fscAgbwEvbg1vkf1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRrfK7WHN3pRSIHBci9YL0inTaV7ID93uX6h8jMr/wSD2H1HyziIBD1wmjd1sjME+/GOIBU2fvcJ/MNqGuecTzQoCcW/Fvahumr3cDVex5xZA8rKZ4C6Dq+6S3pKEZtdR0K7ra2QGMe9CfgmUXZE5p1Zsma8jMy3Qni5NnXt7AI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSqv53JB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eHGI2YLrPwt/RS+hRBQCouLXypp+JwfrRAlaroqdmN2z5FyQogfVFxD1DkP0dSAVTZ8hPtpS9P/1KIaWvwfZ1irTZZo9UW98OOEVJHXUdSHcojA7wyUHNocvcej9snLBv+km/VZDMbJPTZBblgBUvCG+z8S1ll/3+2VWVxQw2QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVCviuTh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSqv53JB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CFFC19421;
-	Wed,  8 Apr 2026 18:13:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVCviuTh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D394C19421;
+	Wed,  8 Apr 2026 18:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672013;
-	bh=dE+4CUakmjqriWrFhic/Pzih7lB0VWoqJUQIX3QjtZw=;
+	s=korg; t=1775672015;
+	bh=EVkKKZK6KJqx6fSK+JCydLmas8fscAgbwEvbg1vkf1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSqv53JBD0yR+k4FxF2g4kfWsbgToZEBMkOEnU7gOs0vsMipZ1adiSmjycaJf+Tau
-	 ogXt+975dGzNvxDuKcwKkfCNYversR9WozJ3BJT7oxGG6mMf47rPSXUdv5lafIy93D
-	 g0kIN6cPLj8koe160a33LXwa7QjchHZZBI74rEK0=
+	b=GVCviuThEfCblGmux30a/YnSKb8DiDtw+wY3j9fCWqHqtMKpxm93o1fU6bRaG6wk6
+	 eHc6Y+4g4lnin3/0Wh5iLCVMpAAa07BB+6QYfKQV4tZ8YhMxTnYN9grTwv0FwVVRim
+	 ZySiAWOW3CsmaWOwlONGvkuvWnCR3AemUWRa01Uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/312] net/sched: sch_hfsc: fix divide-by-zero in rtsc_min()
-Date: Wed,  8 Apr 2026 20:01:11 +0200
-Message-ID: <20260408175939.517036773@linuxfoundation.org>
+Subject: [PATCH 6.1 124/312] phy: ti: j721e-wiz: Fix device node reference leak in wiz_get_lane_phy_types()
+Date: Wed,  8 Apr 2026 20:00:41 +0200
+Message-ID: <20260408175938.398851688@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -53,60 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 4576100b8cd03118267513cafacde164b498b322 ]
+[ Upstream commit 584b457f4166293bdfa50f930228e9fb91a38392 ]
 
-m2sm() converts a u32 slope to a u64 scaled value.  For large inputs
-(e.g. m1=4000000000), the result can reach 2^32.  rtsc_min() stores
-the difference of two such u64 values in a u32 variable `dsm` and
-uses it as a divisor.  When the difference is exactly 2^32 the
-truncation yields zero, causing a divide-by-zero oops in the
-concave-curve intersection path:
+The serdes device_node is obtained using of_get_child_by_name(),
+which increments the reference count. However, it is never put,
+leading to a reference leak.
 
-  Oops: divide error: 0000
-  RIP: 0010:rtsc_min (net/sched/sch_hfsc.c:601)
-  Call Trace:
-   init_ed (net/sched/sch_hfsc.c:629)
-   hfsc_enqueue (net/sched/sch_hfsc.c:1569)
-   [...]
+Add the missing of_node_put() calls to ensure the reference count is
+properly balanced.
 
-Widen `dsm` to u64 and replace do_div() with div64_u64() so the full
-difference is preserved.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260326204310.1549327-1-xmei5@asu.edu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7ae14cf581f2 ("phy: ti: j721e-wiz: Implement DisplayPort mode to the wiz driver")
+Suggested-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20260212-wiz-v2-1-6e8bd4cc7a4a@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/ti/phy-j721e-wiz.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index 302413e0aceff..a01ff859cc03b 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -556,7 +556,7 @@ static void
- rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
- {
- 	u64 y1, y2, dx, dy;
--	u32 dsm;
-+	u64 dsm;
+diff --git a/drivers/phy/ti/phy-j721e-wiz.c b/drivers/phy/ti/phy-j721e-wiz.c
+index 6a63380f6a71f..c4ff31d0df192 100644
+--- a/drivers/phy/ti/phy-j721e-wiz.c
++++ b/drivers/phy/ti/phy-j721e-wiz.c
+@@ -1339,6 +1339,7 @@ static int wiz_get_lane_phy_types(struct device *dev, struct wiz *wiz)
+ 			dev_err(dev,
+ 				"%s: Reading \"reg\" from \"%s\" failed: %d\n",
+ 				__func__, subnode->name, ret);
++			of_node_put(serdes);
+ 			return ret;
+ 		}
+ 		of_property_read_u32(subnode, "cdns,num-lanes", &num_lanes);
+@@ -1351,6 +1352,7 @@ static int wiz_get_lane_phy_types(struct device *dev, struct wiz *wiz)
+ 			wiz->lane_phy_type[i] = phy_type;
+ 	}
  
- 	if (isc->sm1 <= isc->sm2) {
- 		/* service curve is convex */
-@@ -599,7 +599,7 @@ rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
- 	 */
- 	dx = (y1 - y) << SM_SHIFT;
- 	dsm = isc->sm1 - isc->sm2;
--	do_div(dx, dsm);
-+	dx = div64_u64(dx, dsm);
- 	/*
- 	 * check if (x, y1) belongs to the 1st segment of rtsc.
- 	 * if so, add the offset.
++	of_node_put(serdes);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
