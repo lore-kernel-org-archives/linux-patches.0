@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5903D4134;
-	Wed,  8 Apr 2026 18:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E95B36166F;
+	Wed,  8 Apr 2026 18:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673271; cv=none; b=nfvsgd0NsgKo/c8UA0dtThb2sDpnKJjm9/W+XVGgJ31YQNdBuLK+FVEh+QacRY0wXa838MqORi0H3z7zxLj+0erElo0vj83flwPIDkdqsmNNg8tiZmjcfGZNTfxQnbztfVyW1OwzR7PB9HyDplAcUKLYqaWpdnqaHirQojr/Grk=
+	t=1775673274; cv=none; b=PHdi0YTY38LLixs6wpxm0FVWkGu3Y5cyeUBtr8IOTwqt/w4SVUGLnOkc0IGTHc78YOVWBcg13l0Y4Zyv7XwNhhBy0OYdBP+37kYvSeoaaK04Khs35bMTgVbRAGv14Os3B6/nc9zSh9yAKRCjE5BtJgvq78J4pvHekyYVbt7w2yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673271; c=relaxed/simple;
-	bh=x0f6+FaPHDQqUWJoXZT9Z4FWLhlSowPwGyi4mIMpBEA=;
+	s=arc-20240116; t=1775673274; c=relaxed/simple;
+	bh=Zwh/ofN+JnNYob8vPFc19kWoIZyXRcQKxISWm2xwKkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AKY52DEVxWcmcA87JsQ3KRIZJCiSRsGdeb3SBJ1oG2p1NAbsPsM05eNRjZK2oR+0Ai9N+ov/DT2ifX7O827eJBer1WUdEnRoZbzh4hcyLBWTmQFf7mJXLXEU+6mnw8qRWgo4jKWpu01ZxFcd45EuPKBknY08cYv8FrouIl0K0kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNMKViyN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z7v9YpEqSaBmU+UtANvdcbwPaJ5oDNHsQFQVNPW9l6v2d8PznwXpyFcgW/iEq5BL5W0DxA5cCAM8uf8UK5wbXHVSSGjcqx+fgcaGX6MDHSVQicZYWwdIOf9M2zpKEiwqn5siGkFfzNokLVGo5QG4iswLai0mBSfT9T29Dj23SKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LMJ2+58; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNMKViyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72235C19421;
-	Wed,  8 Apr 2026 18:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LMJ2+58"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F41C19421;
+	Wed,  8 Apr 2026 18:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673271;
-	bh=x0f6+FaPHDQqUWJoXZT9Z4FWLhlSowPwGyi4mIMpBEA=;
+	s=korg; t=1775673274;
+	bh=Zwh/ofN+JnNYob8vPFc19kWoIZyXRcQKxISWm2xwKkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNMKViyNHE5QrNL7wlV2bYeFHxT0WeYpSYa41fAb8CPBBj4jKyy3/eexlVtahHpHV
-	 zhRign9IUiLE+dO3ydosO+tZqUaeo+1sol6oqVrt2hlzkRPvKhGAwEEW8wVxap0Sa3
-	 08FtNOvzovMawZeBUyxDrjA+ag6RDc2HtDfcYrxM=
+	b=1LMJ2+58bcLbUyg+OCzEdLZAWVqgXmibeWfG1tkhcQh22KbKqhRPaHw7lK8qU02Mo
+	 9VvpYv8ZuTT5sPLdYWYtF/0MkG7tCWUOmZStJJ2csH9ZRc+RBtdoqcXgsX9RIJitPx
+	 KLGW4WKy/RJvSLaBcq3t6CwLGGW7G9ZPRDzg7qUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 167/277] drm/amdgpu/pm: drop SMU driver if version not matched messages
-Date: Wed,  8 Apr 2026 20:02:32 +0200
-Message-ID: <20260408175940.103870902@linuxfoundation.org>
+	Frej Drejhammar <frej@stacken.kth.se>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 168/277] USB: serial: io_edgeport: add support for Blackbox IC135A
+Date: Wed,  8 Apr 2026 20:02:33 +0200
+Message-ID: <20260408175940.141468061@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,55 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Frej Drejhammar <frej@stacken.kth.se>
 
-commit a3ffaa5b397f4df9d6ac16b10583e9df8e6fa471 upstream.
+commit 0e01c3416eb863ee7f156a9d7e7421ec0a9f68a0 upstream.
 
-It just leads to user confusion.
+The Blackbox 724-746-5500 USB Director USB-RS-232 HUB, part number
+IC135A, is a rebadged Edgeport/4 with its own USB device id.
 
-Cc: Yang Wang <kevinyang.wang@amd.com>
-Cc: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e471627d56272a791972f25e467348b611c31713)
+Signed-off-by: Frej Drejhammar <frej@stacken.kth.se>
 Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c |    1 -
- drivers/gpu/drm/amd/pm/swsmu/smu12/smu_v12_0.c |    1 -
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c |    1 -
- 3 files changed, 3 deletions(-)
+ drivers/usb/serial/io_edgeport.c |    3 +++
+ drivers/usb/serial/io_usbvend.h  |    1 +
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
-@@ -262,7 +262,6 @@ int smu_v11_0_check_fw_version(struct sm
- 			"smu fw program = %d, version = 0x%08x (%d.%d.%d)\n",
- 			smu->smc_driver_if_version, if_version,
- 			smu_program, smu_version, smu_major, smu_minor, smu_debug);
--		dev_info(smu->adev->dev, "SMU driver if version not matched\n");
- 	}
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -73,6 +73,7 @@ static const struct usb_device_id edgepo
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_22I) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_412_4) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_COMPATIBLE) },
++	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_BLACKBOX_IC135A) },
+ 	{ }
+ };
  
- 	return ret;
---- a/drivers/gpu/drm/amd/pm/swsmu/smu12/smu_v12_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu12/smu_v12_0.c
-@@ -101,7 +101,6 @@ int smu_v12_0_check_fw_version(struct sm
- 			"smu fw program = %d, smu fw version = 0x%08x (%d.%d.%d)\n",
- 			smu->smc_driver_if_version, if_version,
- 			smu_program, smu_version, smu_major, smu_minor, smu_debug);
--		dev_info(smu->adev->dev, "SMU driver if version not matched\n");
- 	}
+@@ -121,6 +122,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_8R) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_8RR) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_412_8) },
++	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_BLACKBOX_IC135A) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0202) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0203) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0310) },
+@@ -470,6 +472,7 @@ static void get_product_info(struct edge
+ 	case ION_DEVICE_ID_EDGEPORT_2_DIN:
+ 	case ION_DEVICE_ID_EDGEPORT_4_DIN:
+ 	case ION_DEVICE_ID_EDGEPORT_16_DUAL_CPU:
++	case ION_DEVICE_ID_BLACKBOX_IC135A:
+ 		product_info->IsRS232 = 1;
+ 		break;
  
- 	return ret;
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c
-@@ -284,7 +284,6 @@ int smu_v14_0_check_fw_version(struct sm
- 			 "smu fw program = %d, smu fw version = 0x%08x (%d.%d.%d)\n",
- 			 smu->smc_driver_if_version, if_version,
- 			 smu_program, smu_version, smu_major, smu_minor, smu_debug);
--		dev_info(adev->dev, "SMU driver if version not matched\n");
- 	}
+--- a/drivers/usb/serial/io_usbvend.h
++++ b/drivers/usb/serial/io_usbvend.h
+@@ -211,6 +211,7 @@
  
- 	return ret;
+ //
+ // Definitions for other product IDs
++#define ION_DEVICE_ID_BLACKBOX_IC135A		0x0801	// OEM device (rebranded Edgeport/4)
+ #define ION_DEVICE_ID_MT4X56USB			0x1403	// OEM device
+ #define ION_DEVICE_ID_E5805A			0x1A01  // OEM device (rebranded Edgeport/4)
+ 
 
 
