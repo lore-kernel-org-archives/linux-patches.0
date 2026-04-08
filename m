@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D76733121F;
-	Wed,  8 Apr 2026 18:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26AC337B81;
+	Wed,  8 Apr 2026 18:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674255; cv=none; b=pJycXcecmVo7S5qsVEM2oB1hEKI4f5ppwEV2IhJbvg3g0MAtRU+/MJjs3zMkJ5RMsLT6wqfZ4dAwCHQLdjDi5QJkcQcmNSPyGRox//0RGIbjZeOHYMfTRK6CyZf/q14n8C8KNvaGvCCZCIMf2AqBYficQP0xEnY7ELwseV0LAzI=
+	t=1775674257; cv=none; b=az8eod2fQOevTh0opogFnqPHhwda7RG+FbCiFIvLl6796WR88fPcrNBHExy3MBWixzm0JiJgmZehvhXVwa2813DZlSB14/flIom7lW7W9rgHJNseFUWbkFfHrrbUV9PhORltDhA368dXm79rfkaDsw94j8NmdzXbABKNd45/8X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674255; c=relaxed/simple;
-	bh=KTgiWp6p/wpqEuPuy0/II7+fsRHXeHWX9ptWNsxQWWw=;
+	s=arc-20240116; t=1775674257; c=relaxed/simple;
+	bh=uDhN1L24SQ5dHx5TsrDIIg0gNryAy6uyR/mTgIhK9Hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CW64VX1xApgsi7obHfLvilSq8CjGxcDBGzmVajnlbcmXUeDTXQu2ofOOaVeNcWcJWS6VbgsubLiNGqXqfFWYdEl3czd3PhwAscxZC3hwLeAN/e0ivicdeaDj9r67dyeu8czKPV6+VRIqDV45DLdtvqMxuNfh5kTYnWe/L78WSu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDtNZbaP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdLP3f6O2ohUlR8wHwvP6DvuR8xCb4lRGkjejDXGu68Dm23o0wUWQbSk+Ci0Hl/0b4ZVp1eHtfGkR2pUb5NkJP0dUIt872bMgMF6g5KG+6S0SyrbKH94DKRNXqoa2H8H56fIPP2csif/X0OR/JPOBDT8Lp74OVJKK9v4vElXUsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PM3/Dmcu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDtNZbaP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8917BC19425;
-	Wed,  8 Apr 2026 18:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PM3/Dmcu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9F8C19421;
+	Wed,  8 Apr 2026 18:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674254;
-	bh=KTgiWp6p/wpqEuPuy0/II7+fsRHXeHWX9ptWNsxQWWw=;
+	s=korg; t=1775674257;
+	bh=uDhN1L24SQ5dHx5TsrDIIg0gNryAy6uyR/mTgIhK9Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDtNZbaPyJm7aGdV3y7B0eGrFfeNmdxjT0hLY2dS7JzhpYFo4xI2aGm+mjKCE9nJl
-	 hyWiTi30Evb+B/mwfbgYYEqYUPGNKh8fT20mhJrmHmymjIZyVIV4jTRsSY+bQ3yBLd
-	 tAYs94p91algGUpJXw55S21kl3+zFFgJBh+3cUjU=
+	b=PM3/DmcuxPPAldU2i89cj2QJbstws+W68JbGBDxjeMUmsYATj+3tH4gVyyXC4Lf4+
+	 FTiJgBthNocu76AMRhNvzlO/XuJzh0qEzy84u8mTfuwzhO7Jat4iheoS7BEY8p0b3K
+	 qrIvK8PwjmH/4eJPg5MSQ2ldNgfBTjY9/APlS+Pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 026/311] spi: geni-qcom: Check DMA interrupts early in ISR
-Date: Wed,  8 Apr 2026 20:00:26 +0200
-Message-ID: <20260408175940.389759486@linuxfoundation.org>
+Subject: [PATCH 6.19 027/311] mshv: Fix error handling in mshv_region_pin
+Date: Wed,  8 Apr 2026 20:00:27 +0200
+Message-ID: <20260408175940.426789107@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,57 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+From: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
 
-[ Upstream commit 8c89a077ca796a2fe248c584e9d7e66cff0388c8 ]
+[ Upstream commit c0e296f257671ba10249630fe58026f29e4804d9 ]
 
-The current interrupt handler only checks the GENI main IRQ status
-(m_irq) before deciding to return IRQ_NONE. This can lead to spurious
-IRQ_NONE returns when DMA interrupts are pending but m_irq is zero.
+The current error handling has two issues:
 
-Move the DMA TX/RX status register reads to the beginning of the ISR,
-right after reading m_irq. Update the early return condition to check
-all three status registers (m_irq, dma_tx_status, dma_rx_status) before
-returning IRQ_NONE.
+First, pin_user_pages_fast() can return a short pin count (less than
+requested but greater than zero) when it cannot pin all requested pages.
+This is treated as success, leading to partially pinned regions being
+used, which causes memory corruption.
 
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260313-spi-geni-qcom-fix-dma-irq-handling-v1-1-0bd122589e02@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Second, when an error occurs mid-loop, already pinned pages from the
+current batch are not properly accounted for before calling
+mshv_region_invalidate_pages(), causing a page reference leak.
+
+Treat short pins as errors and fix partial batch accounting before
+cleanup.
+
+Signed-off-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-geni-qcom.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/hv/mshv_regions.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index acfcf870efd84..736120107184f 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -958,10 +958,13 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
- 	struct spi_controller *spi = data;
- 	struct spi_geni_master *mas = spi_controller_get_devdata(spi);
- 	struct geni_se *se = &mas->se;
--	u32 m_irq;
-+	u32 m_irq, dma_tx_status, dma_rx_status;
+diff --git a/drivers/hv/mshv_regions.c b/drivers/hv/mshv_regions.c
+index adba3564d9f1a..baa864cac375a 100644
+--- a/drivers/hv/mshv_regions.c
++++ b/drivers/hv/mshv_regions.c
+@@ -314,15 +314,17 @@ int mshv_region_pin(struct mshv_mem_region *region)
+ 		ret = pin_user_pages_fast(userspace_addr, nr_pages,
+ 					  FOLL_WRITE | FOLL_LONGTERM,
+ 					  pages);
+-		if (ret < 0)
++		if (ret != nr_pages)
+ 			goto release_pages;
+ 	}
  
- 	m_irq = readl(se->base + SE_GENI_M_IRQ_STATUS);
--	if (!m_irq)
-+	dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
-+	dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
-+
-+	if (!m_irq && !dma_tx_status && !dma_rx_status)
- 		return IRQ_NONE;
+ 	return 0;
  
- 	if (m_irq & (M_CMD_OVERRUN_EN | M_ILLEGAL_CMD_EN | M_CMD_FAILURE_EN |
-@@ -1009,8 +1012,6 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
- 		}
- 	} else if (mas->cur_xfer_mode == GENI_SE_DMA) {
- 		const struct spi_transfer *xfer = mas->cur_xfer;
--		u32 dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
--		u32 dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
+ release_pages:
++	if (ret > 0)
++		done_count += ret;
+ 	mshv_region_invalidate_pages(region, 0, done_count);
+-	return ret;
++	return ret < 0 ? ret : -ENOMEM;
+ }
  
- 		if (dma_tx_status)
- 			writel(dma_tx_status, se->base + SE_DMA_TX_IRQ_CLR);
+ static int mshv_region_chunk_unmap(struct mshv_mem_region *region,
 -- 
 2.53.0
 
