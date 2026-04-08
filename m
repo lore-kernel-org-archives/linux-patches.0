@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EE73D8917;
-	Wed,  8 Apr 2026 18:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F34347517;
+	Wed,  8 Apr 2026 18:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671879; cv=none; b=M2Of9cjBfYYAXzuSsL5FBpUi66e87QNtvO36kdkkxJwBgpJ0F/7YlDsuv/X9O2x6PQ9G+e3nJx71Fh00DvqdBkkNHPsmynY2ZTQxs4p9JQu4wotLUit2zA34RdiFNjxLEsNCl3k9gnGvIbOYv9Zm/TG7FslEl4dHuTAY1v5FB30=
+	t=1775671882; cv=none; b=COW61KDAqtCSKq3yAniic6BBRD+ZUUlto8sIqGVZPxBr/EzprcQvihLMwvkWm+AuvZUA0/S8fAUYGSoqPuGLmLpToURn/MfXUFIl0ccmVMWBsXGKNrPfyLjPpeis0RgsP5jCYU9kolM9NMyP1dXTfksar70mBXEduoL14r3X3ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671879; c=relaxed/simple;
-	bh=DHfrR5mTozJuL8dFwEKhcDYn1BgH+wV1ybuAJXXqMfI=;
+	s=arc-20240116; t=1775671882; c=relaxed/simple;
+	bh=hpQ0s08QH4LXcQg1WrqwAgWvNMXxgNV2upHDjUwkkig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llOu9jFi+ys8YraCMi5c+ebOqRbnkPS7y4OrTJfC4+AsmGXABUXTKiTkx4GFEGDG/0h3ru0s57mUsQc3wsXVNiqv9YaSn72ynSRC0XYg3lgQOJtynkg34G/8mICnFw//24E+CiLzCtn2r0Ljt9SBYQDzUCyzZ860aOZjzfRU1so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJQilRY5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ANJXD6TBCN6g/BcIETWi9fOTASZggiwJ9FcPJuAP/7M6YOecyWTgykuL32rVCGJUhesMONAKLFCYVQ3qe6utZMZ/XYwPD+vIkVfRoEmEQLJ1EcTb28kJFavavpRzK0frd4ZVxeudVAOmi+2lqroIyhndpx4yCwiSaELEpy7ky9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcqKIXnT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJQilRY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9D8C19421;
-	Wed,  8 Apr 2026 18:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcqKIXnT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885C1C19421;
+	Wed,  8 Apr 2026 18:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671879;
-	bh=DHfrR5mTozJuL8dFwEKhcDYn1BgH+wV1ybuAJXXqMfI=;
+	s=korg; t=1775671881;
+	bh=hpQ0s08QH4LXcQg1WrqwAgWvNMXxgNV2upHDjUwkkig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJQilRY5vxqxq+oQaJgX1xTxMyVU6l0xgVqjCX1VUR4HXWLCPMb1mIkYxc8FAJrWQ
-	 NQxkPTRX3B/saufvMdPRfHbuk9E0wKYNAsa98s+FdXwn0FQriHaeKkUANyI6uzHYTB
-	 LzRQHE3vCYyR3QnMARrkrKQY2UY0WhgSriNF8rms=
+	b=KcqKIXnTLdMMtD2lrZf4WyUXex/Q0NWSfPZLOb5Q0EMoBIvxgRKqpZGY8j32bEE2Z
+	 lOkzn6bJ3YswEUfOPakIFrkaeT0ojboX3VRo3xMJa1thvFbfzVLupgtRa38D+xRrSG
+	 BtWwSMA7HnfL7b5BdbMjwiUa4muMRoY2fCi0nQxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 104/312] net: macb: Use dev_consume_skb_any() to free TX SKBs
-Date: Wed,  8 Apr 2026 20:00:21 +0200
-Message-ID: <20260408175937.648011282@linuxfoundation.org>
+	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 087/312] ASoC: adau1372: Fix clock leak on PLL lock failure
+Date: Wed,  8 Apr 2026 20:00:04 +0200
+Message-ID: <20260408175936.996076032@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -45,79 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 
-commit 647b8a2fe474474704110db6bd07f7a139e621eb upstream.
+[ Upstream commit bfe6a264effcb6fe99ad7ceaf9e8c7439fc9555b ]
 
-The napi_consume_skb() function is not intended to be called in an IRQ
-disabled context. However, after commit 6bc8a5098bf4 ("net: macb: Fix
-tx_ptr_lock locking"), the freeing of TX SKBs is performed with IRQs
-disabled. To resolve the following call trace, use dev_consume_skb_any()
-for freeing TX SKBs:
-   WARNING: kernel/softirq.c:430 at __local_bh_enable_ip+0x174/0x188, CPU#0: ksoftirqd/0/15
-   Modules linked in:
-   CPU: 0 UID: 0 PID: 15 Comm: ksoftirqd/0 Not tainted 7.0.0-rc4-next-20260319-yocto-standard-dirty #37 PREEMPT
-   Hardware name: ZynqMP ZCU102 Rev1.1 (DT)
-   pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-   pc : __local_bh_enable_ip+0x174/0x188
-   lr : local_bh_enable+0x24/0x38
-   sp : ffff800082b3bb10
-   x29: ffff800082b3bb10 x28: ffff0008031f3c00 x27: 000000000011ede0
-   x26: ffff000800a7ff00 x25: ffff800083937ce8 x24: 0000000000017a80
-   x23: ffff000803243a78 x22: 0000000000000040 x21: 0000000000000000
-   x20: ffff000800394c80 x19: 0000000000000200 x18: 0000000000000001
-   x17: 0000000000000001 x16: ffff000803240000 x15: 0000000000000000
-   x14: ffffffffffffffff x13: 0000000000000028 x12: ffff000800395650
-   x11: ffff8000821d1528 x10: ffff800081c2bc08 x9 : ffff800081c1e258
-   x8 : 0000000100000301 x7 : ffff8000810426ec x6 : 0000000000000000
-   x5 : 0000000000000001 x4 : 0000000000000001 x3 : 0000000000000000
-   x2 : 0000000000000008 x1 : 0000000000000200 x0 : ffff8000810428dc
-   Call trace:
-    __local_bh_enable_ip+0x174/0x188 (P)
-    local_bh_enable+0x24/0x38
-    skb_attempt_defer_free+0x190/0x1d8
-    napi_consume_skb+0x58/0x108
-    macb_tx_poll+0x1a4/0x558
-    __napi_poll+0x50/0x198
-    net_rx_action+0x1f4/0x3d8
-    handle_softirqs+0x16c/0x560
-    run_ksoftirqd+0x44/0x80
-    smpboot_thread_fn+0x1d8/0x338
-    kthread+0x120/0x150
-    ret_from_fork+0x10/0x20
-   irq event stamp: 29751
-   hardirqs last  enabled at (29750): [<ffff8000813be184>] _raw_spin_unlock_irqrestore+0x44/0x88
-   hardirqs last disabled at (29751): [<ffff8000813bdf60>] _raw_spin_lock_irqsave+0x38/0x98
-   softirqs last  enabled at (29150): [<ffff8000800f1aec>] handle_softirqs+0x504/0x560
-   softirqs last disabled at (29153): [<ffff8000800f2fec>] run_ksoftirqd+0x44/0x80
+adau1372_enable_pll() was a void function that logged a dev_err() on
+PLL lock timeout but did not propagate the error. As a result,
+adau1372_set_power() would continue with adau1372->enabled set to true
+despite the PLL being unlocked, and the mclk left enabled with no
+corresponding disable on the error path.
 
-Fixes: 6bc8a5098bf4 ("net: macb: Fix tx_ptr_lock locking")
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260321-macb-tx-v1-1-b383a58dd4e6@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Convert adau1372_enable_pll() to return int, using -ETIMEDOUT on lock
+timeout and propagating regmap errors directly. In adau1372_set_power(),
+check the return value and unwind in reverse order: restore regcache to
+cache-only mode, reassert GPIO power-down, and disable the clock before
+returning the error.
+
+Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20260325210704.76847-3-jihed.chaibi.dev@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/adau1372.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -1075,7 +1075,7 @@ static void macb_tx_unmap(struct macb *b
- 	}
- 
- 	if (tx_skb->skb) {
--		napi_consume_skb(tx_skb->skb, budget);
-+		dev_consume_skb_any(tx_skb->skb);
- 		tx_skb->skb = NULL;
- 	}
+diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
+index 79446c4458cc6..1a4ab7c993d28 100644
+--- a/sound/soc/codecs/adau1372.c
++++ b/sound/soc/codecs/adau1372.c
+@@ -761,7 +761,7 @@ static int adau1372_startup(struct snd_pcm_substream *substream, struct snd_soc_
+ 	return 0;
  }
+ 
+-static void adau1372_enable_pll(struct adau1372 *adau1372)
++static int adau1372_enable_pll(struct adau1372 *adau1372)
+ {
+ 	unsigned int val, timeout = 0;
+ 	int ret;
+@@ -777,8 +777,12 @@ static void adau1372_enable_pll(struct adau1372 *adau1372)
+ 		timeout++;
+ 	} while (!(val & 1) && timeout < 3);
+ 
+-	if (ret < 0 || !(val & 1))
++	if (ret < 0 || !(val & 1)) {
+ 		dev_err(adau1372->dev, "Failed to lock PLL\n");
++		return ret < 0 ? ret : -ETIMEDOUT;
++	}
++
++	return 0;
+ }
+ 
+ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+@@ -806,7 +810,14 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+ 		 * accessed.
+ 		 */
+ 		if (adau1372->use_pll) {
+-			adau1372_enable_pll(adau1372);
++			ret = adau1372_enable_pll(adau1372);
++			if (ret) {
++				regcache_cache_only(adau1372->regmap, true);
++				if (adau1372->pd_gpio)
++					gpiod_set_value(adau1372->pd_gpio, 1);
++				clk_disable_unprepare(adau1372->mclk);
++				return ret;
++			}
+ 			clk_ctrl |= ADAU1372_CLK_CTRL_CLKSRC;
+ 		}
+ 
+-- 
+2.53.0
+
 
 
