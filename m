@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E18331A44;
-	Wed,  8 Apr 2026 18:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722AE331A44;
+	Wed,  8 Apr 2026 18:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673348; cv=none; b=udsO4EKGDHCeTsBWZKqKRnlhwYmhCFmZoDPaXrJw5Y0UnFwm/EXqO3Lf1aRP5mFZL2FB1/Ez4Poz/OfTp9z6FQL1tBbZ182VGpmD0ak3LOc0mRE+EZsqIY3Nb9iktFDoE4OmdA7TotgdNXNfVfk/28TDAODI+02A53J8StS0P1M=
+	t=1775673351; cv=none; b=Ph8luieMRc9Uiux6DKdzTNc8Zk9tYxe2acfihjy2x+1RhtDKPflAQAd+DDncs977HD4j+G3e438nVvQd8krIOmZ6oBdmLbmIg9fq5doqDXUhctehiz1lU8/KbKIsTfrFipGtcTGlya2W/743qwq9w6GGftNakr3dviW79fo2ZwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673348; c=relaxed/simple;
-	bh=OKI1kv8uU2AblKJJRSFUfIrlKHes6kC21SmGHZ0wL08=;
+	s=arc-20240116; t=1775673351; c=relaxed/simple;
+	bh=N7eAFyYbA3ngynmuxRbo5/fjMA0a8D/tK3uKk3Id4n0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OEyQAQ5r9rH7UfYy0VAClgb0dgBWANw9Xw1IYeDfRCFlr8yZCTLawMb5Pn1i9vs9WH+y8OemDTnnFxQDghoM8TvSHJB6TLLah3VDHLRePnSaumWGMCw4sMvfEJIqoNni7No3wxpBN8NiRj1nzbwFjMggKVIKegwBOit8VpQVIcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTLde+E/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rgii+kdKAYq4OkErFHXsySQf/lMAtXcxPag/bS3jx5oFRqT3xj/+zTgmdfsU6mW//JSFcKe80KIMA4TFTBF9tVQ/z1aZd6G/4armWKWLKNLSSnmjWqEpap5K27Za+DZ09TOGISeDMp3UyXVeB/tCqOiSjLaasPbmR9b3HaD04uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OX1QFD3R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTLde+E/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF80C19421;
-	Wed,  8 Apr 2026 18:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OX1QFD3R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A813C19421;
+	Wed,  8 Apr 2026 18:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673348;
-	bh=OKI1kv8uU2AblKJJRSFUfIrlKHes6kC21SmGHZ0wL08=;
+	s=korg; t=1775673351;
+	bh=N7eAFyYbA3ngynmuxRbo5/fjMA0a8D/tK3uKk3Id4n0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QTLde+E/JmW6wiIfQNMXMVUt/SK5xwXK2stTEbbhd3bxaZ4QlsV6hlz4XATA7K7yi
-	 hTVbrT85yIajqn5eU+pQsLTdqj8ztQA2ADqZfeuNslGJDzI/S4JwGQ2idZqw4NyK0s
-	 6NPaorkVF0wgkw0A5KBUwlzd9vsQM0B5oOzOs69M=
+	b=OX1QFD3Rwevf1+COHjf04Kq1N0Vql9Y6oNeF1UOqFS2v4irY/lgS/j3g/PwXTDvtc
+	 UAoVXZt4nFWJdfSd+yuIxtH8CfHrNpmpybkF4ky7Ve5acv/cP/RE7S0mD90ZJPD3QT
+	 /TvY+erEaKrgrFaxW9YdM3FESCDcaa72cDaS/skA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.18 198/277] usb: ulpi: fix double free in ulpi_register_interface() error path
-Date: Wed,  8 Apr 2026 20:03:03 +0200
-Message-ID: <20260408175941.257589270@linuxfoundation.org>
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.18 181/277] iio: adc: aspeed: clear reference voltage bits before configuring vref
+Date: Wed,  8 Apr 2026 20:02:46 +0200
+Message-ID: <20260408175940.622321112@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -51,46 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-commit 01af542392b5d41fd659d487015a71f627accce3 upstream.
+commit 7cf2f6ed8e7a3bf481ef70b6b4a2edb8abfa5c57 upstream.
 
-When device_register() fails, ulpi_register() calls put_device() on
-ulpi->dev.
+Ensures the reference voltage bits are cleared in the ADC engine
+control register before configuring the voltage reference. This
+avoids potential misconfigurations caused by residual bits.
 
-The device release callback ulpi_dev_release() drops the OF node
-reference and frees ulpi, but the current error path in
-ulpi_register_interface() then calls kfree(ulpi) again, causing a
-double free.
-
-Let put_device() handle the cleanup through ulpi_dev_release() and
-avoid freeing ulpi again in ulpi_register_interface().
-
-Fixes: 289fcff4bcdb1 ("usb: add bus type for USB ULPI")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260401025142.1398996-1-lgs201920130244@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1b5ceb55fec2 ("iio: adc: aspeed: Support ast2600 adc.")
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/common/ulpi.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/iio/adc/aspeed_adc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -331,10 +331,9 @@ struct ulpi *ulpi_register_interface(str
- 	ulpi->ops = ops;
+--- a/drivers/iio/adc/aspeed_adc.c
++++ b/drivers/iio/adc/aspeed_adc.c
+@@ -415,6 +415,7 @@ static int aspeed_adc_vref_config(struct
+ 	}
+ 	adc_engine_control_reg_val =
+ 		readl(data->base + ASPEED_REG_ENGINE_CONTROL);
++	adc_engine_control_reg_val &= ~ASPEED_ADC_REF_VOLTAGE;
  
- 	ret = ulpi_register(dev, ulpi);
--	if (ret) {
--		kfree(ulpi);
-+	if (ret)
- 		return ERR_PTR(ret);
--	}
-+
- 
- 	return ulpi;
- }
+ 	ret = devm_regulator_get_enable_read_voltage(data->dev, "vref");
+ 	if (ret < 0 && ret != -ENODEV)
 
 
