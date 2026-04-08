@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0062F37F8C2;
-	Wed,  8 Apr 2026 18:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963BE347503;
+	Wed,  8 Apr 2026 18:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671900; cv=none; b=CoaEWzYpS4w0UV48beP12ty7wM5XlCGiRXdOh3DouS6aalfuARFSHtvShQ+WhJ9MkJ4hHqcGTZMvxbgz2wn3Y24PWiDQL/qCRBeoyO82AE0+MqKfGWCo7NFmNpc44H1WxC0AlP8aDAqb1a/tPAbu8f3KQS1RJe4GvACf8yVx9/s=
+	t=1775671902; cv=none; b=PzZ7H5n7ivgseV6k0Zvf4uYDuQOfctrpBvUL4oxrrCiu94tEZPuu/a30CCCPrp0TAD5gQCvp1miOjovz8e0S2LVHAzJgGcI96g1wnISAo16IT4q64drtnDeG3rHpGW8d9ibt2yx442Cy7lQCkswyvvHXKcvYjxDlFXi6LmOTPJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671900; c=relaxed/simple;
-	bh=xYzVZKNk6pneEnkdU4dGTq5ntB1j5mVNY1DbUSWrR7w=;
+	s=arc-20240116; t=1775671902; c=relaxed/simple;
+	bh=6eVQyAxEY9oiRdZBm5Fqu6vBjTUlDT/RK0Ydnk9KSl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aMUlbOXmrJR4oVP+488xRzK3N7UhgDBVZWqKNuW11URF2T5UuEWLWyyn2vUKBuB5q0jCYrUl3XrsQ4sEWUOlbrxCF6YsSdiZNh7uiCpXF8lQc+AOD7K+LxISfK4MrE+HhvtLg0gfEqxtUtTY18tlrn6ZxQe75k7zgx9GooNpBUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4d4gnT6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SFnJEWKfw8Nt2Iv89ghrwrlCQi/8ogXhWLFFKpFZJiW/yd1ECpjSQvpcLYxNwBrcA87RJCtNN0/DCIONM3MKwtjl8Y8fkcVZqQe9506Z3LhX7FR4CHvig1YtBSgGFurPXbiXoP9pbvgwqmt2m7/ulEi7vWs0wvLMq/8619HcfUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQl1LExC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4d4gnT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2BDC19421;
-	Wed,  8 Apr 2026 18:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQl1LExC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25682C19421;
+	Wed,  8 Apr 2026 18:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671899;
-	bh=xYzVZKNk6pneEnkdU4dGTq5ntB1j5mVNY1DbUSWrR7w=;
+	s=korg; t=1775671902;
+	bh=6eVQyAxEY9oiRdZBm5Fqu6vBjTUlDT/RK0Ydnk9KSl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4d4gnT6kmnfXuVZcCsQahE9XAy4zx8cw4+1aVWzNPKgIss8Ap4zthicJ1iOL5nF2
-	 nxhDJt4G/AGT29sMTf8T89PDf3sEVBssSenfZpQNBLszOzE36GxHeuU3fFEf0PuRgQ
-	 2hTLX+mdubkfY+Stvxr5H7FYd4XM+p1ccRiuTkQU=
+	b=cQl1LExCGgDASmGmdBOb7MHDUB6DJXUVvjLaZwKxMtYd78G+0gSlzadgO1AoQD4KW
+	 TajUBUDPk8Keh2JUcR0BmUbJWgGO/nEeoSD3ezOe+Dz+eyD1N0FDLIWfnKP0wvY2QF
+	 Vw3AIZKkz2QxEQAY0oC7HG3Q6Uzoz3T1CaZmU64s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Long Li <leo.lilong@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.1 111/312] xfs: fix ri_total validation in xlog_recover_attri_commit_pass2
-Date: Wed,  8 Apr 2026 20:00:28 +0200
-Message-ID: <20260408175937.912547922@linuxfoundation.org>
+	Anthony Durrer <anthonydev@fastmail.com>,
+	Simon Weber <simon.weber.39@gmail.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 112/312] ext4: fix journal credit check when setting fscrypt context
+Date: Wed,  8 Apr 2026 20:00:29 +0200
+Message-ID: <20260408175937.951735061@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -52,61 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Simon Weber <simon.weber.39@gmail.com>
 
-commit d72f2084e30966097c8eae762e31986a33c3c0ae upstream.
+commit b1d682f1990c19fb1d5b97d13266210457092bcd upstream.
 
-The ri_total checks for SET/REPLACE operations are hardcoded to 3,
-but xfs_attri_item_size() only emits a value iovec when value_len > 0,
-so ri_total is 2 when value_len == 0.
+Fix an issue arising when ext4 features has_journal, ea_inode, and encrypt
+are activated simultaneously, leading to ENOSPC when creating an encrypted
+file.
 
-For PPTR_SET/PPTR_REMOVE/PPTR_REPLACE, value_len is validated by
-xfs_attri_validate() to be exactly sizeof(struct xfs_parent_rec) and
-is never zero, so their hardcoded checks remain correct.
+Fix by passing XATTR_CREATE flag to xattr_set_handle function if a handle
+is specified, i.e., when the function is called in the control flow of
+creating a new inode. This aligns the number of jbd2 credits set_handle
+checks for with the number allocated for creating a new inode.
 
-This problem may cause log recovery failures. The following script can be
-used to reproduce the problem:
+ext4_set_context must not be called with a non-null handle (fs_data) if
+fscrypt context xattr is not guaranteed to not exist yet. The only other
+usage of this function currently is when handling the ioctl
+FS_IOC_SET_ENCRYPTION_POLICY, which calls it with fs_data=NULL.
 
- #!/bin/bash
- mkfs.xfs -f /dev/sda
- mount /dev/sda /mnt/test/
- touch /mnt/test/file
- for i in {1..200}; do
-         attr -s "user.attr_$i" -V "value_$i" /mnt/test/file > /dev/null
- done
- echo 1 > /sys/fs/xfs/debug/larp
- echo 1 > /sys/fs/xfs/sda/errortag/larp
- attr -s "user.zero" -V "" /mnt/test/file
- echo 0 > /sys/fs/xfs/sda/errortag/larp
- umount /mnt/test
- mount /dev/sda /mnt/test/  # mount failed
+Fixes: c1a5d5f6ab21eb7e ("ext4: improve journal credit handling in set xattr paths")
 
-Fix this by deriving the expected count dynamically as "2 + !!value_len"
-for SET/REPLACE operations.
-
-Cc: stable@vger.kernel.org # v6.9
-Fixes: ad206ae50eca ("xfs: check opcode and iovec count match in xlog_recover_attri_commit_pass2")
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Co-developed-by: Anthony Durrer <anthonydev@fastmail.com>
+Signed-off-by: Anthony Durrer <anthonydev@fastmail.com>
+Signed-off-by: Simon Weber <simon.weber.39@gmail.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://patch.msgid.link/20260207100148.724275-4-simon.weber.39@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_attr_item.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/crypto.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_attr_item.c
-+++ b/fs/xfs/xfs_attr_item.c
-@@ -739,8 +739,8 @@ xlog_recover_attri_commit_pass2(
- 	switch (op) {
- 	case XFS_ATTRI_OP_FLAGS_SET:
- 	case XFS_ATTRI_OP_FLAGS_REPLACE:
--		/* Log item, attr name, attr value */
--		if (item->ri_total != 3) {
-+		/* Log item, attr name, optional attr value */
-+		if (item->ri_total != 2 + !!attri_formatp->alfi_value_len) {
- 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
- 					     attri_formatp, len);
- 			return -EFSCORRUPTED;
+--- a/fs/ext4/crypto.c
++++ b/fs/ext4/crypto.c
+@@ -169,10 +169,17 @@ static int ext4_set_context(struct inode
+ 	 */
+ 
+ 	if (handle) {
++		/*
++		 * Since the inode is new it is ok to pass the
++		 * XATTR_CREATE flag. This is necessary to match the
++		 * remaining journal credits check in the set_handle
++		 * function with the credits allocated for the new
++		 * inode.
++		 */
+ 		res = ext4_xattr_set_handle(handle, inode,
+ 					    EXT4_XATTR_INDEX_ENCRYPTION,
+ 					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
+-					    ctx, len, 0);
++					    ctx, len, XATTR_CREATE);
+ 		if (!res) {
+ 			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
+ 			ext4_clear_inode_state(inode,
 
 
