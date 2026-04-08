@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB513D903F;
-	Wed,  8 Apr 2026 19:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA743D9042;
+	Wed,  8 Apr 2026 19:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674850; cv=none; b=tTePi786QK6SiJ6xt9xwRJI+WQsJu+X7QOMVMOCTUo4Zkm3O0pswFh9qAKextqaJT2w1Gn6Fot5Gt1wZdhaSy0Vdlhmk79LtxNXPZcEfyel1mKPZBuvIPhrta523tEyR/bDlqCkLWKqJzxKLMnSOofHaRTF4H+K8t3trrWUiooo=
+	t=1775674853; cv=none; b=HdZo3yb0/mULXFgKp5A3B3loFRBdiyqwp6OyEVHSBHWImoJ6uGQJvJ69S89YCyMbazjtKu2t1XS7qgANJImWCQR53+Q0oX/OWAd+Y5OVbucuT98v3+66Isop6GSMGl+xu3Pq2BA2hABFhUHlQ1fgvVxlRDIrUnttdqee0H37XoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674850; c=relaxed/simple;
-	bh=vBp5UnmWa1ZOCL5yIw1xSzs8AatCefvgF3kH0ZGsibI=;
+	s=arc-20240116; t=1775674853; c=relaxed/simple;
+	bh=wtWzoxnGCbaI96rY22+XLkPBe9cflemnjS3yGb/k/7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UsK4U1QHDwmGRI5VGWR0uANVa/E2R4BGU+1oWV0Wyb3keJFNN5MRsMcXWJpn4tz7FknlUooOgqfSnwHWsnj40ZA3zmZuLwHjyKsoFyVEKsyVqPkHt09Piha1AweGcWGC3K5oHo3bm8RXe7smtdmcSEqcAdqlh0KK38fb1vUVVWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hm63BSoq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q/DXwpwMomg4M+RgfNoJOeMPFsYX8RLNbmLAJBeImvzPnV/1PnHuITSvuc+9XPREcy1hIkIgLAR1J8B04XELapIqYk0HeZmM4wIGtBsRUP/q1XiIYcZtE7JYgmReLmEfh/ZU9IDSMypAvujvxkwNMkHpi+/WNfII1GIIYMmCimM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AS7DddO5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hm63BSoq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63231C19421;
-	Wed,  8 Apr 2026 19:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AS7DddO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BA4C19421;
+	Wed,  8 Apr 2026 19:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674850;
-	bh=vBp5UnmWa1ZOCL5yIw1xSzs8AatCefvgF3kH0ZGsibI=;
+	s=korg; t=1775674853;
+	bh=wtWzoxnGCbaI96rY22+XLkPBe9cflemnjS3yGb/k/7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hm63BSoq2E86tYWG46p1s/77OPHs9MdtbHm5ByLsoXgF6OTmZsWiZ70yNLV6P7HgC
-	 GHTy8jQIpFpwlNCIzQz6DmkymXadOKTO137nlrHKnL/xpuMWNBSLl9IZSCGw2yAjUn
-	 Wl3wyNjLQ0f1xmey+++4U628Ly+94f019lLgwM7k=
+	b=AS7DddO5/BF3lWnJvbYGjzUTFa1GfCfdrrJB9UEyxp1qoSTurYbXUgHMaUOU3zLnw
+	 Mc0dycEJaPFegqQMOPuFH5WDehgAjIhJFKiJQBDO8FxwS/ZQTvAb6JWmhw7ioAprOj
+	 K6dlEGkfdStzDu8PA1ShjrcMPrNokBv+oRMuihl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.19 258/311] comedi: me4000: Fix potential overrun of firmware buffer
-Date: Wed,  8 Apr 2026 20:04:18 +0200
-Message-ID: <20260408175949.021236431@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 6.19 259/311] firmware: microchip: fail auto-update probe if no flash found
+Date: Wed,  8 Apr 2026 20:04:19 +0200
+Message-ID: <20260408175949.057675137@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -50,65 +49,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-commit 3fb43a7a5b44713f892c58ead2e5f3a1bc9f4ee7 upstream.
+commit c7596f9001e2b83293e3658e4e1addde69bb335d upstream.
 
-`me4000_xilinx_download()` loads the firmware that was requested by
-`request_firmware()`.  It is possible for it to overrun the source
-buffer because it blindly trusts the file format.  It reads a data
-stream length from the first 4 bytes into variable `file_length` and
-reads the data stream contents of length `file_length` from offset 16
-onwards.
+There's no point letting the driver probe if there is no flash, as
+trying to do a firmware upload will fail. Move the code that attempts
+to get the flash from firmware upload to probe, and let it emit a
+message to users stating why auto-update is not supported.
+The code currently could have a problem if there's a flash in
+devicetree, but the system controller driver fails to get a pointer to
+it from the mtd subsystem, which will cause
+mpfs_sys_controller_get_flash() to return an error. Check for errors and
+null, instead of just null, in the new clause.
 
-Add a test to ensure that the supplied firmware is long enough to
-contain the header and the data stream.  On failure, log an error and
-return `-EINVAL`.
-
-Note: The firmware loading was totally broken before commit ac584af59945
-("staging: comedi: me4000: fix firmware downloading"), but that is the
-most sensible target for this fix.
-
-Fixes: ac584af59945 ("staging: comedi: me4000: fix firmware downloading")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260205133949.71722-1-abbotti@mev.co.uk
+CC: stable@vger.kernel.org
+Fixes: ec5b0f1193ad4 ("firmware: microchip: add PolarFire SoC Auto Update support")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/me4000.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/firmware/microchip/mpfs-auto-update.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/comedi/drivers/me4000.c
-+++ b/drivers/comedi/drivers/me4000.c
-@@ -315,6 +315,18 @@ static int me4000_xilinx_download(struct
- 	unsigned int val;
- 	unsigned int i;
+--- a/drivers/firmware/microchip/mpfs-auto-update.c
++++ b/drivers/firmware/microchip/mpfs-auto-update.c
+@@ -113,10 +113,6 @@ static enum fw_upload_err mpfs_auto_upda
+ 	 * be added here.
+ 	 */
  
-+	/* Get data stream length from header. */
-+	if (size >= 4) {
-+		file_length = (((unsigned int)data[0] & 0xff) << 24) +
-+			      (((unsigned int)data[1] & 0xff) << 16) +
-+			      (((unsigned int)data[2] & 0xff) << 8) +
-+			      ((unsigned int)data[3] & 0xff);
-+	}
-+	if (size < 16 || file_length > size - 16) {
-+		dev_err(dev->class_dev, "Firmware length inconsistency\n");
-+		return -EINVAL;
+-	priv->flash = mpfs_sys_controller_get_flash(priv->sys_controller);
+-	if (!priv->flash)
+-		return FW_UPLOAD_ERR_HW_ERROR;
+-
+ 	erase_size = round_up(erase_size, (u64)priv->flash->erasesize);
+ 
+ 	/*
+@@ -427,6 +423,12 @@ static int mpfs_auto_update_probe(struct
+ 		return dev_err_probe(dev, PTR_ERR(priv->sys_controller),
+ 				     "Could not register as a sub device of the system controller\n");
+ 
++	priv->flash = mpfs_sys_controller_get_flash(priv->sys_controller);
++	if (IS_ERR_OR_NULL(priv->flash)) {
++		dev_dbg(dev, "No flash connected to the system controller, auto-update not supported\n");
++		return -ENODEV;
 +	}
 +
- 	if (!xilinx_iobase)
- 		return -ENODEV;
+ 	priv->dev = dev;
+ 	platform_set_drvdata(pdev, priv);
  
-@@ -346,10 +358,6 @@ static int me4000_xilinx_download(struct
- 	outl(val, devpriv->plx_regbase + PLX9052_CNTRL);
- 
- 	/* Download Xilinx firmware */
--	file_length = (((unsigned int)data[0] & 0xff) << 24) +
--		      (((unsigned int)data[1] & 0xff) << 16) +
--		      (((unsigned int)data[2] & 0xff) << 8) +
--		      ((unsigned int)data[3] & 0xff);
- 	usleep_range(10, 1000);
- 
- 	for (i = 0; i < file_length; i++) {
 
 
