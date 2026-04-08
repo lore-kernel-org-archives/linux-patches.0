@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC277357A20;
-	Wed,  8 Apr 2026 18:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5242336166F;
+	Wed,  8 Apr 2026 18:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673031; cv=none; b=eNAmg9a/BISDETQ2Au9SYY2mcbPvwSy1ZWFUnJY7cxMU4VuNsyqNkg9zIWwVeG5g9p4zHOeqNKSHbV6YOpTx+0B88Ypo0Mm+cY8CVl+w7//i8/dJwKTPS4TXrs723c+AqOokBGSzhyO5p6b+Ua/Q2HxOc0DZC/IfdvYJprdXoiE=
+	t=1775673034; cv=none; b=N4lWeXOEIYTUyH6kxX+RyttiA7N5dMORdz8+EcvQRLxDt97i8VlSGW+K6cnFxujelXqWjFUFWXvQGj+UL6BfWtZIr+onoLE2QxPJj7ih1uuaj074OgUT8nEMCl5QgMdeyFb6V+EDWBjFy/R3aE/SGv1nyY0vM2X/hOBfwrcF+L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673031; c=relaxed/simple;
-	bh=9Neg9evD9hr01IB0M2OCMj9kq3bk/umRppM0237nFOg=;
+	s=arc-20240116; t=1775673034; c=relaxed/simple;
+	bh=LMX8jLGHpOT+27LmV0TLJv0gkePblx3oP+io9x9Qydk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y7QnZiK0X4zyrylP7w37xPsjDXWpS9RIK2Gq7RW3YyUNDeAKSzjMKiwNfkjr7uPHLZsH+MAokbLf/lcmP4li3XAgUwWFJQSfwbnVz8Biqi+i6qX4Sm0ws6TrRxCasRxrAG4Tp4jCnOrqsfK8iu7NpXR811dEdjN1id7D0DKW3V0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOoXbqN0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+xMdl/WwUs7M1NM1dDMbuSBuUxe4medbp4m+l6Sa/BuiW8poD2E1UVlqjahALaiGdRBmQj6ybXaCnVw9y9YgILxUah/BjSgDSXgFrPrmzmV5D/uJ8A333yYsIvE3otNAOcqwHK2WXvvgVXunJW+IsK8tuvasVF+EWMIFHgoWA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6+3SleO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOoXbqN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C3BC19421;
-	Wed,  8 Apr 2026 18:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6+3SleO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4393C2BC87;
+	Wed,  8 Apr 2026 18:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673031;
-	bh=9Neg9evD9hr01IB0M2OCMj9kq3bk/umRppM0237nFOg=;
+	s=korg; t=1775673034;
+	bh=LMX8jLGHpOT+27LmV0TLJv0gkePblx3oP+io9x9Qydk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TOoXbqN047MPmm/W83ZjNNOXxRe7i28B+nudUaqhOpMmWyrLNApTLaLa8GOesPWQg
-	 Y8ttJBZeZoYTWgEIQjV4bhZSCzpxpQLYOeEN/mNPJM9kcXbEoAlITtJxRS2YclL7i7
-	 KJsRUXymXHSO5FvjmV7ToMNr4OTiq2h9OnW6dQPY=
+	b=l6+3SleOwVYFEPqjOAxJuuAQYN15eTIPtYUkzCsW43K91Nu308MLHSCggM3WJQzJ/
+	 AjTtsrPXS8pTC+smvLJeX64823s1vgiTLDb02f5gWzBMRrYw/T71VAbbtDmo2QOHCn
+	 UlceT+92GaOuZAn9giKSu/+9HoBRd5EDQ7gdl13I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Wei Fang <wei.fang@nxp.com>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/277] net: sfp: Fix Ubiquiti U-Fiber Instant SFP module on mvneta
-Date: Wed,  8 Apr 2026 20:00:27 +0200
-Message-ID: <20260408175935.428125247@linuxfoundation.org>
+Subject: [PATCH 6.18 043/277] net: enetc: check whether the RSS algorithm is Toeplitz
+Date: Wed,  8 Apr 2026 20:00:28 +0200
+Message-ID: <20260408175935.465681495@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -46,67 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit eeee5a710f26ce57807024ef330fe5a850eaecd8 ]
+[ Upstream commit d389954a6cae7bf76b7b082ac3511d177b77ef2d ]
 
-In commit 8110633db49d7de2 ("net: sfp-bus: allow SFP quirks to override
-Autoneg and pause bits") we moved the setting of Autoneg and pause bits
-before the call to SFP quirk when parsing SFP module support.
+Both ENETC v1 and v4 only provide Toeplitz RSS support. This patch adds
+a validation check to reject attempts to configure other RSS algorithms,
+avoiding misleading configuration options for users.
 
-Since the quirk for Ubiquiti U-Fiber Instant SFP module zeroes the
-support bits and sets 1000baseX_Full only, the above mentioned commit
-changed the overall computed support from
-  1000baseX_Full, Autoneg, Pause, Asym_Pause
-to just
-  1000baseX_Full.
-
-This broke the SFP module for mvneta, which requires Autoneg for
-1000baseX since commit c762b7fac1b249a9 ("net: mvneta: deny disabling
-autoneg for 802.3z modes").
-
-Fix this by setting back the Autoneg, Pause and Asym_Pause bits in the
-quirk.
-
-Fixes: 8110633db49d7de2 ("net: sfp-bus: allow SFP quirks to override Autoneg and pause bits")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20260326122038.2489589-1-kabel@kernel.org
+Fixes: d382563f541b ("enetc: Add RFS and RSS support")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Clark Wang <xiaoning.wang@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
+Link: https://patch.msgid.link/20260326075233.3628047-2-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/enetc/enetc_ethtool.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index ca09925335725..7a85b758fb1e6 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -480,11 +480,16 @@ static void sfp_quirk_ubnt_uf_instant(const struct sfp_eeprom_id *id,
- {
- 	/* Ubiquiti U-Fiber Instant module claims that support all transceiver
- 	 * types including 10G Ethernet which is not truth. So clear all claimed
--	 * modes and set only one mode which module supports: 1000baseX_Full.
-+	 * modes and set only one mode which module supports: 1000baseX_Full,
-+	 * along with the Autoneg and pause bits.
- 	 */
- 	linkmode_zero(caps->link_modes);
- 	linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
- 			 caps->link_modes);
-+	linkmode_set_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, caps->link_modes);
-+	linkmode_set_bit(ETHTOOL_LINK_MODE_Pause_BIT, caps->link_modes);
-+	linkmode_set_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT, caps->link_modes);
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
+index 0250ed95e48ca..8349d38dbd896 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
+@@ -770,6 +770,10 @@ static int enetc_set_rxfh(struct net_device *ndev,
+ 	struct enetc_si *si = priv->si;
+ 	int err = 0;
+ 
++	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
++	    rxfh->hfunc != ETH_RSS_HASH_TOP)
++		return -EOPNOTSUPP;
 +
- 	phy_interface_zero(caps->interfaces);
- 	__set_bit(PHY_INTERFACE_MODE_1000BASEX, caps->interfaces);
- }
+ 	/* set hash key, if PF */
+ 	if (rxfh->key && enetc_si_is_pf(si))
+ 		enetc_set_rss_key(si, rxfh->key);
 -- 
 2.53.0
 
