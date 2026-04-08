@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247263D75C9;
-	Wed,  8 Apr 2026 18:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A380B34AB06;
+	Wed,  8 Apr 2026 18:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674459; cv=none; b=YYOQRolTa8MEe0LCS/eI8o2YFxsy5K7k6u+z/Im0FNbhLxS6NuzLuhzQtnsKAQoxFybA2EEU/SPoRVgx2Gb6IhRlRkRH3GQZJFrOu/J1XHRuLB1iwODYAMlw+Vu4Zo6Suh+4ACCJgrxdjt3NMH6eauci4gge7M5+cpCwAsZ6v6U=
+	t=1775674461; cv=none; b=eWmcN2dabwL/u3hmPdT5w0SpRRD2cSTgga1C2q9HNV2Is+jgNZjgB/i/saDGlx1rrJBgu83Pt7HTDQt4yUz76BlKK0x7EN6gaekb+5BW3DoanC5dd60MIuac54/9rPIXuY+NG45DINiOa+k6f6JlhWqIrn/ZZJFlauM9rabHj6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674459; c=relaxed/simple;
-	bh=KV7hHzf4TaqbyrNeh30HtLlTs0+8QH72/Dp3v6O7pWA=;
+	s=arc-20240116; t=1775674461; c=relaxed/simple;
+	bh=obE+PHJHkPfOA9oiWL8p2h28d5RYIr6IKDfHuJkZ/uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UEZlqMyMchwzuZx4p9Ad1WXund4I6NFQ8nc3xzPcZb5oVmzcXHTjT2KE6hPYLFuPHxff/XsQRRSWm/fSnjCzJGZAn/TfeAqtt0D/Vxr3iseo+9Q54Vhz8Q8sprKDfMUTGtMtsJE7ixcM7qQDCiRppPcmQnMyfDmJXx97CVTJtq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8IKFoJq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G+frZi5ynM2h1bNoJIMSrVfinBxp9LGZI0wsomERvZd3GbJjKnddCrWyLxk2XgL6JCdsUKkJ1GdbCv4nUI9prx1suRAXwfod05tXg6qu5IFLJRTwOA/6LkzQIgHAFZj+bz4rwuKyvhUFGUEg9zPZgdTAG+ZuIdxaluxji5yxdrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhLkfbXk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8IKFoJq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4E0C19421;
-	Wed,  8 Apr 2026 18:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhLkfbXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD23C19421;
+	Wed,  8 Apr 2026 18:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674459;
-	bh=KV7hHzf4TaqbyrNeh30HtLlTs0+8QH72/Dp3v6O7pWA=;
+	s=korg; t=1775674461;
+	bh=obE+PHJHkPfOA9oiWL8p2h28d5RYIr6IKDfHuJkZ/uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8IKFoJqsbtVsN1YVD9trXe3dqZfpzyZJXK1T+aC57sgU0M+6pLscVsGWnfYLkI+L
-	 pVVAfN1OQEmXpHSD7OZ3cMY+i+vOo4np3q2Ky6gUGYFltQUsJ7EZ4mp7olYXkQoXG+
-	 WJbkui4QpKzVvVkgY7ulbmtAtdPvJw/TSKUMDj/c=
+	b=FhLkfbXkoLWrGx54jBFvZWNSMnS4pEXG3lLQpWKzS7KdoBaVx8p+D7obLA1+2HwQ5
+	 u89QXQsUEYQ33g4fQAqJofaCxIxLiLCqZqittDeMyodI38valzLskizxMLqIlHHU1D
+	 KL+S1OzU8uGMSUkxLGAXvmEI0Vsm6Pj9cOGRZT7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Anderson <sean.anderson@linux.dev>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 073/311] net: xilinx: axienet: Correct BD length masks to match AXIDMA IP spec
-Date: Wed,  8 Apr 2026 20:01:13 +0200
-Message-ID: <20260408175942.140046820@linuxfoundation.org>
+Subject: [PATCH 6.19 074/311] net: xilinx: axienet: Fix BQL accounting for multi-BD TX packets
+Date: Wed,  8 Apr 2026 20:01:14 +0200
+Message-ID: <20260408175942.178735081@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -54,49 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Suraj Gupta <suraj.gupta2@amd.com>
 
-[ Upstream commit 393e0b4f178ec7fce1141dacc3304e3607a92ee9 ]
+[ Upstream commit d1978d03e86785872871bff9c2623174b10740de ]
 
-The XAXIDMA_BD_CTRL_LENGTH_MASK and XAXIDMA_BD_STS_ACTUAL_LEN_MASK
-macros were defined as 0x007FFFFF (23 bits), but the AXI DMA IP
-product guide (PG021) specifies the buffer length field as bits 25:0
-(26 bits). Update both masks to match the IP documentation.
+When a TX packet spans multiple buffer descriptors (scatter-gather),
+axienet_free_tx_chain sums the per-BD actual length from descriptor
+status into a caller-provided accumulator. That sum is reset on each
+NAPI poll. If the BDs for a single packet complete across different
+polls, the earlier bytes are lost and never credited to BQL. This
+causes BQL to think bytes are permanently in-flight, eventually
+stalling the TX queue.
 
-In practice this had no functional impact, since Ethernet frames are
-far smaller than 2^23 bytes and the extra bits were always zero, but
-the masks should still reflect the hardware specification.
+The SKB pointer is stored only on the last BD of a packet. When that
+BD completes, use skb->len for the byte count instead of summing
+per-BD status lengths. This matches netdev_sent_queue(), which debits
+skb->len, and naturally survives across polls because no partial
+packet contributes to the accumulator.
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
+Fixes: c900e49d58eb ("net: xilinx: axienet: Implement BQL")
 Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
 Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20260327073238.134948-2-suraj.gupta2@amd.com
+Link: https://patch.msgid.link/20260327073238.134948-3-suraj.gupta2@amd.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index 5ff742103beb9..fcd3aaef27fc3 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -105,7 +105,7 @@
- #define XAXIDMA_BD_HAS_DRE_MASK		0xF00 /* Whether has DRE mask */
- #define XAXIDMA_BD_WORDLEN_MASK		0xFF /* Whether has DRE mask */
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 284031fb2e2c7..eefe54ce66852 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -770,8 +770,8 @@ static int axienet_device_reset(struct net_device *ndev)
+  * @first_bd:	Index of first descriptor to clean up
+  * @nr_bds:	Max number of descriptors to clean up
+  * @force:	Whether to clean descriptors even if not complete
+- * @sizep:	Pointer to a u32 filled with the total sum of all bytes
+- *		in all cleaned-up descriptors. Ignored if NULL.
++ * @sizep:	Pointer to a u32 accumulating the total byte count of
++ *		completed packets (using skb->len). Ignored if NULL.
+  * @budget:	NAPI budget (use 0 when not called from NAPI poll)
+  *
+  * Would either be called after a successful transmit operation, or after
+@@ -805,6 +805,8 @@ static int axienet_free_tx_chain(struct axienet_local *lp, u32 first_bd,
+ 				 DMA_TO_DEVICE);
  
--#define XAXIDMA_BD_CTRL_LENGTH_MASK	0x007FFFFF /* Requested len */
-+#define XAXIDMA_BD_CTRL_LENGTH_MASK	GENMASK(25, 0) /* Requested len */
- #define XAXIDMA_BD_CTRL_TXSOF_MASK	0x08000000 /* First tx packet */
- #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
- #define XAXIDMA_BD_CTRL_ALL_MASK	0x0C000000 /* All control bits */
-@@ -130,7 +130,7 @@
- #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
- #define XAXIDMA_BD_CTRL_ALL_MASK	0x0C000000 /* All control bits */
+ 		if (cur_p->skb && (status & XAXIDMA_BD_STS_COMPLETE_MASK)) {
++			if (sizep)
++				*sizep += cur_p->skb->len;
+ 			napi_consume_skb(cur_p->skb, budget);
+ 			packets++;
+ 		}
+@@ -818,9 +820,6 @@ static int axienet_free_tx_chain(struct axienet_local *lp, u32 first_bd,
+ 		wmb();
+ 		cur_p->cntrl = 0;
+ 		cur_p->status = 0;
+-
+-		if (sizep)
+-			*sizep += status & XAXIDMA_BD_STS_ACTUAL_LEN_MASK;
+ 	}
  
--#define XAXIDMA_BD_STS_ACTUAL_LEN_MASK	0x007FFFFF /* Actual len */
-+#define XAXIDMA_BD_STS_ACTUAL_LEN_MASK	GENMASK(25, 0) /* Actual len */
- #define XAXIDMA_BD_STS_COMPLETE_MASK	0x80000000 /* Completed */
- #define XAXIDMA_BD_STS_DEC_ERR_MASK	0x40000000 /* Decode error */
- #define XAXIDMA_BD_STS_SLV_ERR_MASK	0x20000000 /* Slave error */
+ 	if (!force) {
 -- 
 2.53.0
 
