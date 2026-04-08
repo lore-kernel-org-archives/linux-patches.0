@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D121C347503;
-	Wed,  8 Apr 2026 18:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6456F347503;
+	Wed,  8 Apr 2026 18:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671894; cv=none; b=GzsIUQeO1hZh9HCUAopY0VbRNC2FggaZrQ/MrBzb6nvnrRVH+iNW7+DGi2dWvmqA56K/QLPPmqaTQWXcb4GrXBNPXRUuqjKyuUZBwBYwSPHdMh7XtsjUfiTWtmzaDfFnPkCPMWrjeTFeIkBwJrbbcDcs8MBTs0uqmiYqNN1pBOY=
+	t=1775671897; cv=none; b=En2bYsa4+AAKPjk/U32JFXN/iL6WDT/rxRNE+8enptOsqeugXhfdC7Yk6Wlhl4MGYUjkfjQG4sj+5ZvNC2OE6juEWXxTka4l63vM8CpORDG9J3GlJ/AN0jPF4PbvXQ3/t1hFeh+yz93quJTRB3RmO1IapwOUpJvEmNDdN2/MxEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671894; c=relaxed/simple;
-	bh=xbxF11FvUogAO/N0hxb6ws70HCb3za140qdYxklfVio=;
+	s=arc-20240116; t=1775671897; c=relaxed/simple;
+	bh=8+bY4mGVsZhOim3Ea6eQx2axF7I16QXCrFMk1oyP4fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=myYaN5xDjbBPDMnytF+Jx8aQlDTQXKcKgBGJM1pqanLL2PtU6eXSyjtYSdDkhg9V52mAYxmVmrmcbZzbbzDs632yB5/xJgDBvnWxf786TIMJOM1866D3fLzutjqD2/E6J6A0pFgM4PfoPTcBrgaRPTTZU5UsK+oRgkVJAkH1xaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ji9hyBg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZNuaUYaccpatqSGWuWC9NaJ7Q/vdPb+0kvesE0sWQkhCvt9pvIogWxtndBGSBquEK7VdGV8hjKmgX34mMXVyegDiEkhQS45VenMzNdjowY9Xd32CPvxHROFnkYfekeimDWI0zivkXHKD03LfhxhyH9G8F2UoxKGggAMiA37kut4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUpJqj0l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ji9hyBg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65890C19421;
-	Wed,  8 Apr 2026 18:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUpJqj0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB0BC19421;
+	Wed,  8 Apr 2026 18:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775671894;
-	bh=xbxF11FvUogAO/N0hxb6ws70HCb3za140qdYxklfVio=;
+	s=korg; t=1775671897;
+	bh=8+bY4mGVsZhOim3Ea6eQx2axF7I16QXCrFMk1oyP4fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ji9hyBgeu9tI3a2uSY+IbooKKfDJoNkJM1zoZ4Dqr9iWyHSQf9ZmT+5NRChD2Jz5
-	 P80JdhcQPx4y8YiJXhtsbQ6CybQ0Nmf6QpUaWJFVAdP/o7lu58unn1RdQBVN5DD36/
-	 XMnE2NuEhUCFlGuUQH6ImACDvNE3LoiICJqermbE=
+	b=KUpJqj0lAfd7Zs3Ha/btrsmHQs0bhFif9G1ds3MI4htaPpJDwN22w3qA93DPaFVcR
+	 CxZjQbjppGb0VmSwpcnfu4bY2AhNHajw5yDsMF1xo7qSVCVU0tICNtHqcSanIWVH/S
+	 x6/IxkDKyYajpXPydGNwt6CdjqukvJXu4aFZtbg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianhai Wu <wuqianhai@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 109/312] LoongArch: Workaround LS2K/LS7A GPU DMA hang bug
-Date: Wed,  8 Apr 2026 20:00:26 +0200
-Message-ID: <20260408175937.834059847@linuxfoundation.org>
+	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
+	Yuto Ohnuki <ytohnuki@amazon.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.1 110/312] xfs: stop reclaim before pushing AIL during unmount
+Date: Wed,  8 Apr 2026 20:00:27 +0200
+Message-ID: <20260408175937.873424494@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -50,131 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-commit 95db0c9f526d583634cddb2e5914718570fbac87 upstream.
+commit 4f24a767e3d64a5f58c595b5c29b6063a201f1e3 upstream.
 
-1. Hardware limitation: GPU, DC and VPU are typically PCI device 06.0,
-06.1 and 06.2. They share some hardware resources, so when configure the
-PCI 06.0 device BAR1, DMA memory access cannot be performed through this
-BAR, otherwise it will cause hardware abnormalities.
+The unmount sequence in xfs_unmount_flush_inodes() pushed the AIL while
+background reclaim and inodegc are still running. This is broken
+independently of any use-after-free issues - background reclaim and
+inodegc should not be running while the AIL is being pushed during
+unmount, as inodegc can dirty and insert inodes into the AIL during the
+flush, and background reclaim can race to abort and free dirty inodes.
 
-2. In typical scenarios of reboot or S3/S4, DC access to memory through
-BAR is not prohibited, resulting in GPU DMA hangs.
+Reorder xfs_unmount_flush_inodes() to stop inodegc and cancel background
+reclaim before pushing the AIL. Stop inodegc before cancelling
+m_reclaim_work because the inodegc worker can re-queue m_reclaim_work
+via xfs_inodegc_set_reclaimable.
 
-3. Workaround method: When configuring the 06.0 device BAR1, turn off
-the memory access of DC, GPU and VPU (via DC's CRTC registers).
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Qianhai Wu <wuqianhai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
+Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
+Cc: stable@vger.kernel.org # v5.9
+Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/pci/pci.c |   80 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
+ fs/xfs/xfs_mount.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/arch/loongarch/pci/pci.c
-+++ b/arch/loongarch/pci/pci.c
-@@ -6,9 +6,11 @@
- #include <linux/export.h>
- #include <linux/init.h>
- #include <linux/acpi.h>
-+#include <linux/delay.h>
- #include <linux/types.h>
- #include <linux/pci.h>
- #include <linux/vgaarb.h>
-+#include <linux/io-64-nonatomic-lo-hi.h>
- #include <asm/cacheflush.h>
- #include <asm/loongson.h>
+--- a/fs/xfs/xfs_mount.c
++++ b/fs/xfs/xfs_mount.c
+@@ -575,8 +575,9 @@ xfs_unmount_check(
+  * have been retrying in the background.  This will prevent never-ending
+  * retries in AIL pushing from hanging the unmount.
+  *
+- * Finally, we can push the AIL to clean all the remaining dirty objects, then
+- * reclaim the remaining inodes that are still in memory at this point in time.
++ * Stop inodegc and background reclaim before pushing the AIL so that they
++ * are not running while the AIL is being flushed. Then push the AIL to
++ * clean all the remaining dirty objects and reclaim the remaining inodes.
+  */
+ static void
+ xfs_unmount_flush_inodes(
+@@ -588,9 +589,9 @@ xfs_unmount_flush_inodes(
  
-@@ -16,6 +18,9 @@
- #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
- #define PCI_DEVICE_ID_LOONGSON_DC2      0x7a36
- #define PCI_DEVICE_ID_LOONGSON_DC3      0x7a46
-+#define PCI_DEVICE_ID_LOONGSON_GPU1     0x7a15
-+#define PCI_DEVICE_ID_LOONGSON_GPU2     0x7a25
-+#define PCI_DEVICE_ID_LOONGSON_GPU3     0x7a35
+ 	set_bit(XFS_OPSTATE_UNMOUNTING, &mp->m_opstate);
  
- int raw_pci_read(unsigned int domain, unsigned int bus, unsigned int devfn,
- 						int reg, int len, u32 *val)
-@@ -100,3 +105,78 @@ static void pci_fixup_vgadev(struct pci_
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC1, pci_fixup_vgadev);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC2, pci_fixup_vgadev);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_DC3, pci_fixup_vgadev);
-+
-+#define CRTC_NUM_MAX		2
-+#define CRTC_OUTPUT_ENABLE	0x100
-+
-+static void loongson_gpu_fixup_dma_hang(struct pci_dev *pdev, bool on)
-+{
-+	u32 i, val, count, crtc_offset, device;
-+	void __iomem *crtc_reg, *base, *regbase;
-+	static u32 crtc_status[CRTC_NUM_MAX] = { 0 };
-+
-+	base = pdev->bus->ops->map_bus(pdev->bus, pdev->devfn + 1, 0);
-+	device = readw(base + PCI_DEVICE_ID);
-+
-+	regbase = ioremap(readq(base + PCI_BASE_ADDRESS_0) & ~0xffull, SZ_64K);
-+	if (!regbase) {
-+		pci_err(pdev, "Failed to ioremap()\n");
-+		return;
-+	}
-+
-+	switch (device) {
-+	case PCI_DEVICE_ID_LOONGSON_DC2:
-+		crtc_reg = regbase + 0x1240;
-+		crtc_offset = 0x10;
-+		break;
-+	case PCI_DEVICE_ID_LOONGSON_DC3:
-+		crtc_reg = regbase;
-+		crtc_offset = 0x400;
-+		break;
-+	}
-+
-+	for (i = 0; i < CRTC_NUM_MAX; i++, crtc_reg += crtc_offset) {
-+		val = readl(crtc_reg);
-+
-+		if (!on)
-+			crtc_status[i] = val;
-+
-+		/* No need to fixup if the status is off at startup. */
-+		if (!(crtc_status[i] & CRTC_OUTPUT_ENABLE))
-+			continue;
-+
-+		if (on)
-+			val |= CRTC_OUTPUT_ENABLE;
-+		else
-+			val &= ~CRTC_OUTPUT_ENABLE;
-+
-+		mb();
-+		writel(val, crtc_reg);
-+
-+		for (count = 0; count < 40; count++) {
-+			val = readl(crtc_reg) & CRTC_OUTPUT_ENABLE;
-+			if ((on && val) || (!on && !val))
-+				break;
-+			udelay(1000);
-+		}
-+
-+		pci_info(pdev, "DMA hang fixup at reg[0x%lx]: 0x%x\n",
-+				(unsigned long)crtc_reg & 0xffff, readl(crtc_reg));
-+	}
-+
-+	iounmap(regbase);
-+}
-+
-+static void pci_fixup_dma_hang_early(struct pci_dev *pdev)
-+{
-+	loongson_gpu_fixup_dma_hang(pdev, false);
-+}
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU2, pci_fixup_dma_hang_early);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU3, pci_fixup_dma_hang_early);
-+
-+static void pci_fixup_dma_hang_final(struct pci_dev *pdev)
-+{
-+	loongson_gpu_fixup_dma_hang(pdev, true);
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU2, pci_fixup_dma_hang_final);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, PCI_DEVICE_ID_LOONGSON_GPU3, pci_fixup_dma_hang_final);
+-	xfs_ail_push_all_sync(mp->m_ail);
+ 	xfs_inodegc_stop(mp);
+ 	cancel_delayed_work_sync(&mp->m_reclaim_work);
++	xfs_ail_push_all_sync(mp->m_ail);
+ 	xfs_reclaim_inodes(mp);
+ 	xfs_health_unmount(mp);
+ }
 
 
