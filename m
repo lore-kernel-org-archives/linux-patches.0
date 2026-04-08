@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197EA3A16A0;
-	Wed,  8 Apr 2026 18:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74BC37F01B;
+	Wed,  8 Apr 2026 18:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672437; cv=none; b=XMhZIjvm8GVOhwka9eM5+2c19L1oIau5sLv77C2Ud7iwCheAOMzvXNGj6B0M6VTlCa0U1eG8GCvCmwJgvWGWMu//yo8ExcZwamDQEj7vbwFGAVro+STorkpaaMlOhIlh/LB/zi2kmnSxOnvj8tL+fRcOaSs/YPSbRaA/yCSfuWo=
+	t=1775672439; cv=none; b=XxyUDze7xjsHbBxFkAeDUZCkIPrt4sGJ1MtKkenQwBptlV4XBBDUh78Q/J/HqyD5Ht9m3q1hnaqzJ4X0D6Kz9yPBBYFTvlzyx7hAlKX6nAH5zYktyFtyXv1ps1vIUL0Wul3I5s+Kfrlny7ggqfCL+WPVt4nbMoJgbuV7GjmO8N8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672437; c=relaxed/simple;
-	bh=zsLjqHaKcM8opO6GmCkwpnjLEhiljrA0vURDcQudVtg=;
+	s=arc-20240116; t=1775672439; c=relaxed/simple;
+	bh=v0fxr9OK2qVunBcI8BJilk3bFuyQJ0+59FXYkTgrfC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WhG7N9UpVg33ksqLacXcSEwnycj+BSJZydf7rnqmtan3WP6OcP1sbEVNAbA02jRLHSOmYY5vcvpc4yIZeAFxZM4oxm+zjsprrQ2XNeH0DsTjEOlSIyAFmjeKfyio3rsBHy3zKHeQWCDydZsY77SGzR+dLJ87VPqJvCcFUh7QdBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hfat/jHr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e+fVhDsARh200IcMP2oLx1gsW1K4U38e2xoUDgeFhYs7Lb41o20t7Go48WYFoWW+MY9OJM6+p2FQ8GpQMO4dfnyy575p43LfRf4E59MNM40mnqubfReVm9hNhAWdaM6h7g3eyIhQ3qijv3XpAy7akRGwtfYrgWtWPLkTIrTfPkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CV6QG8Nm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hfat/jHr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A379EC19421;
-	Wed,  8 Apr 2026 18:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CV6QG8Nm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1ACC19421;
+	Wed,  8 Apr 2026 18:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672437;
-	bh=zsLjqHaKcM8opO6GmCkwpnjLEhiljrA0vURDcQudVtg=;
+	s=korg; t=1775672439;
+	bh=v0fxr9OK2qVunBcI8BJilk3bFuyQJ0+59FXYkTgrfC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hfat/jHrIdzU4GXbQ1thzLdkN/7A+GFJ/5kRxMVzHBpWTZc1NUNHQvMfjzNbwuHbY
-	 O7s2HMexTVAIjUUvm2nMevdJPrWTRF1fCxK5Z7cod2KAZI4J6uFfzaooO7keyExTqa
-	 G3TeknZaJO5SRyWmsKVYySoBH7jJVHsl/JYdNcZU=
+	b=CV6QG8Nm4TZaeSVpd+LxhHHRhjgosnj9s9NQEgFoUWKvT8M5C/c0CMKjgjG/qjmVA
+	 VeOWnluUsP01fhmZRxaCDYAsXZXHDmGHIvdb08h35UyatXSoB5cWfXMSt2y+4NUs+F
+	 3QoAtwv0YcTb/mjNdKBU1z5gouAvPWPh1V9Xz4Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	"stable@vger.kernel.org, Andreas Gruenbacher" <agruenba@redhat.com>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Price <anprice@redhat.com>,
-	Robert Garcia <rob_garcia@163.com>
-Subject: [PATCH 6.1 305/312] gfs2: Fix unlikely race in gdlm_put_lock
-Date: Wed,  8 Apr 2026 20:03:42 +0200
-Message-ID: <20260408175945.165763511@linuxfoundation.org>
+	Pratyush Yadav <p.yadav@ti.com>,
+	Michael Walle <michael@walle.cc>,
+	Luke Wang <ziniu.wang_1@nxp.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Liyin Zhang <liyin.zhang.cn@windriver.com>
+Subject: [PATCH 6.1 296/312] mtd: spi-nor: core: avoid odd length/address writes in 8D-8D-8D mode
+Date: Wed,  8 Apr 2026 20:03:33 +0200
+Message-ID: <20260408175944.822170418@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -51,50 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Pratyush Yadav <p.yadav@ti.com>
 
-[ Upstream commit 28c4d9bc0708956c1a736a9e49fee71b65deee81 ]
+[ Upstream commit 17926cd770ec837ed27d9856cf07f2da8dda4131 ]
 
-In gdlm_put_lock(), there is a small window of time in which the
-DFL_UNMOUNT flag has been set but the lockspace hasn't been released,
-yet.  In that window, dlm may still call gdlm_ast() and gdlm_bast().
-To prevent it from dereferencing freed glock objects, only free the
-glock if the lockspace has actually been released.
+On Octal DTR capable flashes like Micron Xcella the writes cannot start
+or end at an odd address in Octal DTR mode. Extra 0xff bytes need to be
+appended or prepended to make sure the start address and end address are
+even. 0xff is used because on NOR flashes a program operation can only
+flip bits from 1 to 0, not the other way round. 0 to 1 flip needs to
+happen via erases.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Reviewed-by: Andrew Price <anprice@redhat.com>
-[ Minor context change fixed. ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
+Reviewed-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Link: https://lore.kernel.org/r/20250708091646.292-2-ziniu.wang_1@nxp.com
+[ Resolve conflict in drivers/mtd/spi-nor/core.c.
+  In spi_nor_write(), the spi_nor_lock_device() and
+  spi_nor_unlock_device() mechanism was not yet introduced in 6.1.y.
+  Drop the spi_nor_unlock_device() call from the patch. ]
+Signed-off-by: Liyin Zhang <liyin.zhang.cn@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/lock_dlm.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/mtd/spi-nor/core.c |   69 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 68 insertions(+), 1 deletion(-)
 
---- a/fs/gfs2/lock_dlm.c
-+++ b/fs/gfs2/lock_dlm.c
-@@ -301,11 +301,6 @@ static void gdlm_put_lock(struct gfs2_gl
- 	gfs2_sbstats_inc(gl, GFS2_LKS_DCOUNT);
- 	gfs2_update_request_times(gl);
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -1791,6 +1791,68 @@ read_err:
+ }
  
--	/* don't want to call dlm if we've unmounted the lock protocol */
--	if (test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
--		gfs2_glock_free(gl);
--		return;
--	}
- 	/* don't want to skip dlm_unlock writing the lvb when lock has one */
- 
- 	if (test_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags) &&
-@@ -322,6 +317,11 @@ again:
- 		goto again;
- 	}
- 
-+	if (error == -ENODEV) {
-+		gfs2_glock_free(gl);
-+		return;
-+	}
+ /*
++ * On Octal DTR capable flashes, writes cannot start or end at an odd address
++ * in Octal DTR mode. Extra 0xff bytes need to be appended or prepended to
++ * make sure the start address and end address are even. 0xff is used because
++ * on NOR flashes a program operation can only flip bits from 1 to 0, not the
++ * other way round. 0 to 1 flip needs to happen via erases.
++ */
++static int spi_nor_octal_dtr_write(struct spi_nor *nor, loff_t to, size_t len,
++				   const u8 *buf)
++{
++	u8 *tmp_buf;
++	size_t bytes_written;
++	loff_t start, end;
++	int ret;
 +
- 	if (error) {
- 		fs_err(sdp, "gdlm_unlock %x,%llx err=%d\n",
- 		       gl->gl_name.ln_type,
++	if (IS_ALIGNED(to, 2) && IS_ALIGNED(len, 2))
++		return spi_nor_write_data(nor, to, len, buf);
++
++	tmp_buf = kmalloc(nor->params->page_size, GFP_KERNEL);
++	if (!tmp_buf)
++		return -ENOMEM;
++
++	memset(tmp_buf, 0xff, nor->params->page_size);
++
++	start = round_down(to, 2);
++	end = round_up(to + len, 2);
++
++	memcpy(tmp_buf + (to - start), buf, len);
++
++	ret = spi_nor_write_data(nor, start, end - start, tmp_buf);
++	if (ret == 0) {
++		ret = -EIO;
++		goto out;
++	}
++	if (ret < 0)
++		goto out;
++
++	/*
++	 * More bytes are written than actually requested, but that number can't
++	 * be reported to the calling function or it will confuse its
++	 * calculations. Calculate how many of the _requested_ bytes were
++	 * written.
++	 */
++	bytes_written = ret;
++
++	if (to != start)
++		ret -= to - start;
++
++	/*
++	 * Only account for extra bytes at the end if they were actually
++	 * written. For example, if for some reason the controller could only
++	 * complete a partial write then the adjustment for the extra bytes at
++	 * the end is not needed.
++	 */
++	if (start + bytes_written == end)
++		ret -= end - (to + len);
++
++out:
++	kfree(tmp_buf);
++	return ret;
++}
++
++/*
+  * Write an address range to the nor chip.  Data must be written in
+  * FLASH_PAGESIZE chunks.  The address range may be any size provided
+  * it is within the physical boundaries.
+@@ -1834,7 +1896,12 @@ static int spi_nor_write(struct mtd_info
+ 		if (ret)
+ 			goto write_err;
+ 
+-		ret = spi_nor_write_data(nor, addr, page_remain, buf + i);
++		if (nor->write_proto == SNOR_PROTO_8_8_8_DTR)
++			ret = spi_nor_octal_dtr_write(nor, addr, page_remain,
++						      buf + i);
++		else
++			ret = spi_nor_write_data(nor, addr, page_remain,
++						 buf + i);
+ 		if (ret < 0)
+ 			goto write_err;
+ 		written = ret;
 
 
