@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E92E2727F3;
-	Wed,  8 Apr 2026 18:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D2D337B81;
+	Wed,  8 Apr 2026 18:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674193; cv=none; b=P24pHLJW29Hv/DbbGw3zfqHMS1rly7dUjyRFKalOG/BIa3bOgjy9Ay/8Ve+nATVYNaloHgYQkzeLBoFf3wnWXU+2wLS7RD7Rc+VBQR56Pv3sO5SOAepl3+Lp6GAA/105zpvt99H6/4BJDcCDDbPrt2kES9tzcUJYdkShJbMpSPM=
+	t=1775674196; cv=none; b=TK6W7i7qlYUvSmjs5jL4V63WCGEP5nuOpcxLtM2z7HED2x+3dCadpjPwjbLp8qg0iptlQvtuwXqBVyWCYHIcI6udgU0DBlqQynycx81nA/drTTR9rFKFuuN7dhezVg5C188F2p4gtR8r4hmvE37YBWATz1Z/rp4J66FhyN6xA74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674193; c=relaxed/simple;
-	bh=gQirPgQOJVknIH1VkDPw5u2WNtSCzRUytGW/OTPcKnQ=;
+	s=arc-20240116; t=1775674196; c=relaxed/simple;
+	bh=2zhafJloL/I26UAgL8tXfIMA2c/3PlLrAFQUhZB/CQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1yss9YxGkl19D/iEF3sIStKMO67n27nFppw4JLT3DUbgonun9slQJSEUa4bGH5ZrOhbYBMo9shVnW9MBEXsI8uv7xcU05IvupIH4EFfCWivP/z3owssWfINnpmF0Fvsd7XwDA+8X3gs4JcDASWEj2dpXVTBXCpj7qweD7RnotI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5sBRzRw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AxnyUWKyWVjThrcEnVsZ0P3MBGQZV2qTMUQv1myqCA12wNapMoX4yimVuYkbeFG8Oj3OmxlbuDCGJgijv0Vw4XgpYKXCa16NH4ueb4DOS1C5beJWJ5TapEmlHqAcbMwGDpWXCIT/MuVdNMLorNg5cweaHMT7U9GXuciIA7ltLLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuzmA88q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5sBRzRw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8200C2BCB0;
-	Wed,  8 Apr 2026 18:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuzmA88q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A75EC2BC87;
+	Wed,  8 Apr 2026 18:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674193;
-	bh=gQirPgQOJVknIH1VkDPw5u2WNtSCzRUytGW/OTPcKnQ=;
+	s=korg; t=1775674195;
+	bh=2zhafJloL/I26UAgL8tXfIMA2c/3PlLrAFQUhZB/CQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5sBRzRwaDe9JXqeBYLBAJZtPIZAj3yvAjx/+leL3rb3ZV/E9Dt6KZ5F1+duHzRBO
-	 Hjt03/YeT3bkRVpZG0buXOxP0vx7yiw7LvL+twVWDJaeHdYEzPHd+K59WaNBOhGBCy
-	 QEL3qjjzI8NZhUFBgN+VDFrNGXN9Y2pksul/MbJk=
+	b=IuzmA88quWmsHGHmkXobcwZ3oMnA2Im+8PZ27gmR20wf0QsPlk5NjK7MzNu2l3hhH
+	 fOLEyujceuTAxeo0XJMEcyS5+1XFcrqbvoRKRnw8GShz7XSPh46cQ/kHg9w71SlLhS
+	 e9qFXGlKY0gNqCVmybBOloElPtqERlOz0rddS3SY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tangxin Xie <xietangxin@yeah.net>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 214/242] net: correctly handle tunneled traffic on IPV6_CSUM GSO fallback
-Date: Wed,  8 Apr 2026 20:04:14 +0200
-Message-ID: <20260408175935.088830927@linuxfoundation.org>
+	Kuen-Han Tsai <khtsai@google.com>
+Subject: [PATCH 6.12 205/242] usb: gadget: f_rndis: Protect RNDIS options with mutex
+Date: Wed,  8 Apr 2026 20:04:05 +0200
+Message-ID: <20260408175934.755063652@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,74 +49,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit c4336a07eb6b2526dc2b62928b5104b41a7f81f5 ]
+commit 8d8c68b1fc06ece60cf43e1306ff0f4ac121547e upstream.
 
-NETIF_F_IPV6_CSUM only advertises support for checksum offload of
-packets without IPv6 extension headers. Packets with extension
-headers must fall back onto software checksumming. Since TSO
-depends on checksum offload, those must revert to GSO.
+The class/subclass/protocol options are suspectible to race conditions
+as they can be accessed concurrently through configfs.
 
-The below commit introduces that fallback. It always checks
-network header length. For tunneled packets, the inner header length
-must be checked instead. Extend the check accordingly.
+Use existing mutex to protect these options. This issue was identified
+during code inspection.
 
-A special case is tunneled packets without inner IP protocol. Such as
-RFC 6951 SCTP in UDP. Those are not standard IPv6 followed by
-transport header either, so also must revert to the software GSO path.
-
+Fixes: 73517cf49bd4 ("usb: gadget: add RNDIS configfs options for class/subclass/protocol")
 Cc: stable@vger.kernel.org
-Fixes: 864e3396976e ("net: gso: Forbid IPv6 TSO with extensions on devices with only IPV6_CSUM")
-Reported-by: Tangxin Xie <xietangxin@yeah.net>
-Closes: https://lore.kernel.org/netdev/0414e7e2-9a1c-4d7c-a99d-b9039cf68f40@yeah.net/
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260320190148.2409107-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-2-4886b578161b@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/function/f_rndis.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3579,6 +3579,22 @@ static netdev_features_t dflt_features_c
- 	return vlan_features_check(skb, features);
- }
+--- a/drivers/usb/gadget/function/f_rndis.c
++++ b/drivers/usb/gadget/function/f_rndis.c
+@@ -11,6 +11,7 @@
  
-+static bool skb_gso_has_extension_hdr(const struct sk_buff *skb)
-+{
-+	if (!skb->encapsulation)
-+		return ((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
-+			 (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
-+			  vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
-+			skb_transport_header_was_set(skb) &&
-+			skb_network_header_len(skb) != sizeof(struct ipv6hdr));
-+	else
-+		return (!skb_inner_network_header_was_set(skb) ||
-+			((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
-+			  (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
-+			   inner_ip_hdr(skb)->version == 6)) &&
-+			 skb_inner_network_header_len(skb) != sizeof(struct ipv6hdr)));
-+}
-+
- static netdev_features_t gso_features_check(const struct sk_buff *skb,
- 					    struct net_device *dev,
- 					    netdev_features_t features)
-@@ -3625,11 +3641,7 @@ static netdev_features_t gso_features_ch
- 	 * so neither does TSO that depends on it.
- 	 */
- 	if (features & NETIF_F_IPV6_CSUM &&
--	    (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
--	     (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
--	      vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
--	    skb_transport_header_was_set(skb) &&
--	    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
-+	    skb_gso_has_extension_hdr(skb) &&
- 	    !ipv6_has_hopopt_jumbo(skb))
- 		features &= ~(NETIF_F_IPV6_CSUM | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4);
+ /* #define VERBOSE_DEBUG */
  
++#include <linux/cleanup.h>
+ #include <linux/slab.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+@@ -678,9 +679,11 @@ rndis_bind(struct usb_configuration *c,
+ 			return -ENOMEM;
+ 	}
+ 
+-	rndis_iad_descriptor.bFunctionClass = rndis_opts->class;
+-	rndis_iad_descriptor.bFunctionSubClass = rndis_opts->subclass;
+-	rndis_iad_descriptor.bFunctionProtocol = rndis_opts->protocol;
++	scoped_guard(mutex, &rndis_opts->lock) {
++		rndis_iad_descriptor.bFunctionClass = rndis_opts->class;
++		rndis_iad_descriptor.bFunctionSubClass = rndis_opts->subclass;
++		rndis_iad_descriptor.bFunctionProtocol = rndis_opts->protocol;
++	}
+ 
+ 	/*
+ 	 * in drivers/usb/gadget/configfs.c:configfs_composite_bind()
 
 
