@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAA23624B0;
-	Wed,  8 Apr 2026 18:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB233D6CAE;
+	Wed,  8 Apr 2026 18:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673902; cv=none; b=tux3Lhpdjzv32JZdyTsq6OAfqDn1GahT3ZuD29jSah5A6qRUuZvfVJKgmPdFHA9Aasfg6KhwU02Tv4fuRIPP2HWIc9nhXZxMv7KOmFrno0GiyyHsOgwXcgSLODTfWiMAcnV0gs0DpU2NsdtcBCMSLiJ9O3GFUcMCLrCuhHDX1Ps=
+	t=1775673905; cv=none; b=gD65qMQwJOoX9MDBUTMKMd3yXms34GbXFZV4p+i1GhbmYUVrYak6mpeasw33kLHn+YAWiW1HtiAn/k3swqcCOfm+vjIscq2RxT/aHbqVuejiJVEHLDapC4LjsUjNupOd1IX2kZlw8CQpwUmK3K2yju880RQa6A7sJHC5OGWUvIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673902; c=relaxed/simple;
-	bh=mazdgVNQfl+W8y9Y+p/tKW+3zis3WsRX/autgB31b8U=;
+	s=arc-20240116; t=1775673905; c=relaxed/simple;
+	bh=6Iq3LuEYpJBBypHhyUKFgIbMsjGN8VM91zGCABA6Ij0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjP0PTgtfirF1HA2287OqmlbeieLfex62F6NmkIKyA8SlCLDNrjf4cXjW+6epiWeMiGnNqTGLtdUDq0cyteyIBT5JvYA3c26StztI/RLvli7MmRsQOw6Tlux4YtOBgFZCumURiXYqPPi8AyVgQ/ivKp3QcMpgnKqG/DxXu325Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRF3hMFR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kyAL9xnhurH8rP1b8AdRKogJy5gzvFbmVC867mR2GdYXZg9JmfKCSAHWyPRTvHZhAdtmNjWGzXy7a4PS0u/SSFIJmJFID1UCXpRiLkZeVYlk89E7uFcTO4RFL5n+xO7slXYW8R8LWa7oYEs799XrS7EXloOn/mQ8LhEmNy1QFwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g3TuRPTJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRF3hMFR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 582CDC2BCB4;
-	Wed,  8 Apr 2026 18:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3TuRPTJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FB7C2BCB0;
+	Wed,  8 Apr 2026 18:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673902;
-	bh=mazdgVNQfl+W8y9Y+p/tKW+3zis3WsRX/autgB31b8U=;
+	s=korg; t=1775673905;
+	bh=6Iq3LuEYpJBBypHhyUKFgIbMsjGN8VM91zGCABA6Ij0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRF3hMFRHqf4RiMWA07MnapzfbSxSGQs7IGyukZdJtuAI2pvrqbSIUkByYdYU1RJO
-	 YU4LGoFjyg0o1P6o9hW58trUMH8su8x9JN7oZoZ0pYfO6ZZCtA88S1DKfT1Jzeq0ud
-	 EF3G8ZlfQ67fIyY/MMmG+Dyb2aZJs1PiMlyxnUHU=
+	b=g3TuRPTJukKmZv7H+/AaOr+kHfQ781PBIBN9bzMUqFFuRTvPG/fTMLkiolWMvag6K
+	 7FAIb1pdKLy7sjb75bb8Ljc3PjCNfCUiX7fycDK71HyXFdHFTIcSPBHQJCfMmkBlN8
+	 XK1NL6+8mHRY3OXaQEa1pbh4G+4jzlgBZXiiaZ6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 133/242] iio: adc: ti-ads1119: Reinit completion before wait_for_completion_timeout()
-Date: Wed,  8 Apr 2026 20:02:53 +0200
-Message-ID: <20260408175932.067070754@linuxfoundation.org>
+	Jamie Gibbons <jamie.gibbons@microchip.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 107/242] dt-bindings: gpio: fix microchip #interrupt-cells
+Date: Wed,  8 Apr 2026 20:02:27 +0200
+Message-ID: <20260408175931.089413997@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,35 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Jamie Gibbons <jamie.gibbons@microchip.com>
 
-commit 2f168094177f8553a36046afce139001801ca917 upstream.
+[ Upstream commit 6b5ef8c88854b343b733b574ea8754c9dab61f41 ]
 
-The completion is not reinit before wait_for_completion_timeout(),
-so wait_for_completion_timeout() will return immediately after
-the first successful completion.
+The GPIO controller on PolarFire SoC supports more than one type of
+interrupt and needs two interrupt cells.
 
-Fixes: a9306887eba4 ("iio: adc: ti-ads1119: Add driver")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 735806d8a68e9 ("dt-bindings: gpio: add bindings for microchip mpfs gpio")
+Signed-off-by: Jamie Gibbons <jamie.gibbons@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20260326-wise-gumdrop-49217723a72a@spud
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ti-ads1119.c |    3 +++
- 1 file changed, 3 insertions(+)
+ .../devicetree/bindings/gpio/microchip,mpfs-gpio.yaml         | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/ti-ads1119.c
-+++ b/drivers/iio/adc/ti-ads1119.c
-@@ -280,6 +280,9 @@ static int ads1119_single_conversion(str
- 	if (ret)
- 		goto pdown;
+diff --git a/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml b/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml
+index d78da7dd2a566..dafd80bdd23aa 100644
+--- a/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml
++++ b/Documentation/devicetree/bindings/gpio/microchip,mpfs-gpio.yaml
+@@ -34,7 +34,7 @@ properties:
+     const: 2
  
-+	if (st->client->irq)
-+		reinit_completion(&st->completion);
-+
- 	ret = i2c_smbus_write_byte(st->client, ADS1119_CMD_START_SYNC);
- 	if (ret)
- 		goto pdown;
+   "#interrupt-cells":
+-    const: 1
++    const: 2
+ 
+   ngpios:
+     description:
+@@ -83,7 +83,7 @@ examples:
+         gpio-controller;
+         #gpio-cells = <2>;
+         interrupt-controller;
+-        #interrupt-cells = <1>;
++        #interrupt-cells = <2>;
+         interrupts = <53>, <53>, <53>, <53>,
+                      <53>, <53>, <53>, <53>,
+                      <53>, <53>, <53>, <53>,
+-- 
+2.53.0
+
 
 
