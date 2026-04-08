@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7523624B0;
-	Wed,  8 Apr 2026 18:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701DA3624B0;
+	Wed,  8 Apr 2026 18:41:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673678; cv=none; b=PGAl6X24jodsvTyAPNin9/i3CCvoduvqCItOp9/2zZiVHKGqGlYFaBtY2sTL4GXqUC+A/lPKTEhIHe7dfatYt2TAJcoCcQopmlo1C6ObL51/oCD2Wuvu7J6f1bnXq1NMSuiQIYOE2KrRbX7oJoVb4Vudq+rCSTXFsasT12TmAVc=
+	t=1775673681; cv=none; b=JjSYRiSjMqq63rcSmFmCPWou4zlxu0Twm6V06GlhqVBRL0c8B787XdlDncyo2OIfuxcx4tDDiwG2Th9IDtpxqvV6HkdWFcZHoHTs5xHDS7knc53dJSlHGxQW7dOPdbWYVrraI43axBrZcbpDv1pHZHngmOv6dsMctHdi0SVVgNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673678; c=relaxed/simple;
-	bh=bDAZWNXD40VU5JBzeUITB98NAoVvRM/s6sj9wG94ttY=;
+	s=arc-20240116; t=1775673681; c=relaxed/simple;
+	bh=9q41mctMNnlftn9nUctsHujTzo3Feu5X3cZBUZlmxh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mn64uAW5swBDXE3APm5/dkONmk+kvUK1OkzN5qVpuSf+VcpeadexjKfrdVZqwGaVx5W39cgc06pQc/+Zrm0i5c/hxZ+WuR+dXLeHZJ8PEyxmej+g2Z/ZrFG5POBmUn9SmBvfKVeoAmUyHnfIr4Tbss6liUoE50sBqGj3Oynjui0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Afa1620c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXyqujABsDd/QBzYpEoEozASKFzK9+M4tnK0YWAYMvRNBaMwvGyfEYEru0Gx5r4DNyDg1G9c6Rmjwdl2p+HXItQftX89tvZYL/YWIwK7/hdpy41mXgRCfD86Fv/VU35Gv8fRaS+wZBQvZIMCRvQH1E3ICGUO+nR4ZehP20d5upE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHLHBBHY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Afa1620c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7C8C19421;
-	Wed,  8 Apr 2026 18:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHLHBBHY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B695DC19421;
+	Wed,  8 Apr 2026 18:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673678;
-	bh=bDAZWNXD40VU5JBzeUITB98NAoVvRM/s6sj9wG94ttY=;
+	s=korg; t=1775673681;
+	bh=9q41mctMNnlftn9nUctsHujTzo3Feu5X3cZBUZlmxh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Afa1620c5wNf6FyXwTLiKZEwNS20gyeOllKJPxos8ClNzCid5PIX69VcqDeT8XYvd
-	 glGsGcanqEuU+ddTt6ADxT5KNN8j4cygRVpEoGdDAHK2KP/rgA5qICWfvKNqzlPKZe
-	 j3ttqePKvjtJzt+XFRN7+Ymm0b7XZU5eWT1T6pfs=
+	b=mHLHBBHYjIId1zyYSZ+N3QlSkph48wsIZc9+l8vM8Q2ODPX9t6rqUZ2AQUAZNVMdq
+	 ergxMMUsmBFrrPfTR3/CIBfZHr5Sr2XOxQhqBsqgvDVAr8nAQlOfpDg0HgsPx/2oYq
+	 zILmKiY7BLc0yB2Pg8unWEAQUHayXwYtXav0p4Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Justin Iurman <justin.iurman@gmail.com>,
+	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/242] net/ipv6: ioam6: prevent schema length wraparound in trace fill
-Date: Wed,  8 Apr 2026 20:01:28 +0200
-Message-ID: <20260408175928.869770551@linuxfoundation.org>
+Subject: [PATCH 6.12 049/242] tg3: Fix race for querying speed/duplex
+Date: Wed,  8 Apr 2026 20:01:29 +0200
+Message-ID: <20260408175928.906855653@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,52 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
 
-[ Upstream commit 5e67ba9bb531e1ec6599a82a065dea9040b9ce50 ]
+[ Upstream commit bb417456c7814d1493d98b7dd9c040bf3ce3b4ed ]
 
-ioam6_fill_trace_data() stores the schema contribution to the trace
-length in a u8. With bit 22 enabled and the largest schema payload,
-sclen becomes 1 + 1020 / 4, wraps from 256 to 0, and bypasses the
-remaining-space check. __ioam6_fill_trace_data() then positions the
-write cursor without reserving the schema area but still copies the
-4-byte schema header and the full schema payload, overrunning the trace
-buffer.
+When driver signals carrier up via netif_carrier_on() its internal
+link_up state isn't updated immediately. This leads to inconsistent
+speed/duplex in /proc/net/bonding/bondX where the speed and duplex
+is shown as unknown while ethtool shows correct values. Fix this by
+using netif_carrier_ok() for link checking in get_ksettings function.
 
-Keep sclen in an unsigned int so the remaining-space check and the write
-cursor calculation both see the full schema length.
-
-Fixes: 8c6f6fa67726 ("ipv6: ioam: IOAM Generic Netlink API")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Fixes: 84421b99cedc ("tg3: Update link_up flag for phylib devices")
+Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ioam6.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
-index b6ed67d7027c1..868a25c57b924 100644
---- a/net/ipv6/ioam6.c
-+++ b/net/ipv6/ioam6.c
-@@ -712,7 +712,7 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 				    struct ioam6_namespace *ns,
- 				    struct ioam6_trace_hdr *trace,
- 				    struct ioam6_schema *sc,
--				    u8 sclen, bool is_input)
-+				    unsigned int sclen, bool is_input)
- {
- 	struct timespec64 ts;
- 	ktime_t tstamp;
-@@ -942,7 +942,7 @@ void ioam6_fill_trace_data(struct sk_buff *skb,
- 			   bool is_input)
- {
- 	struct ioam6_schema *sc;
--	u8 sclen = 0;
-+	unsigned int sclen = 0;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 288ab0e007557..752f33ae98383 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -12277,7 +12277,7 @@ static int tg3_get_link_ksettings(struct net_device *dev,
+ 	ethtool_convert_legacy_u32_to_link_mode(cmd->link_modes.advertising,
+ 						advertising);
  
- 	/* Skip if Overflow flag is set
- 	 */
+-	if (netif_running(dev) && tp->link_up) {
++	if (netif_running(dev) && netif_carrier_ok(dev)) {
+ 		cmd->base.speed = tp->link_config.active_speed;
+ 		cmd->base.duplex = tp->link_config.active_duplex;
+ 		ethtool_convert_legacy_u32_to_link_mode(
 -- 
 2.53.0
 
