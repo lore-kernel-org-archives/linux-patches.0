@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA1232692B;
-	Wed,  8 Apr 2026 19:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C29E25A321;
+	Wed,  8 Apr 2026 19:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674925; cv=none; b=VbRtXIJ5rbZIWAQYAGYuqRBrisXogooSUZAcQ6QYAqq9xVMzQh6iaIoxjb0Y1QCwQ4lnXg/nzbN02TiasgVVoCQrDxg4Y9m80gy2QGdXsT8tz8wqc5NAcxHp6uaOQ794/MRDFymCtOAHQz6VpfHwEEaIx3eM2JwgsuYpxcKlnG4=
+	t=1775674928; cv=none; b=Rhnj05Xl2tXJPOBIKwwRAMDGiIK2x7s8aGo6+Coj0GJiJpTuSYt+IaViwEv36fkIn+2A0TxLEZMWJgSKzFnwWGyvYYClvJqa+8kkOOfrYjhh1j+RV4wFiQKn3W0UO7JQmJiFD3Ek79SACW8gsNdyhwJRHLVBkKKRYXxWYXvA2TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674925; c=relaxed/simple;
-	bh=dXaP59EI5+tcNDh6U+k3NHP53kWSZOMBXRpOptHfgUc=;
+	s=arc-20240116; t=1775674928; c=relaxed/simple;
+	bh=QYpRlk/Vs5MdEXJWWw7+IHtDm7TqEoC2i97dscSvIbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VCcdE6ngiFsRaxKgXZhfzmUGmHuCRk22kYVZleK+XdnSXctPNXnbbZNO3eMjXtcYuuNJ6VOWmFMRvDhFippYp7qscvcJy1IxLhmL0qvLjviBQtg7l7qNLESV/ppWpYl4YuqVLnU5pUeRzCQAh34YLVtkkEWI/Ab5d5xaOkxTfT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Po41f+kf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qzH1d3zPoGIpfDK32FZoVoSyaOgfEP8EXRnyFpPhBWb0RT6hvRoVSAmIAbJg21qT3/j7KeGkZZFrdrxOBHHvf8yLvxiQ/UYMB6EMtTOgr5T/SjI1Pv29501prHiUwDpq4/EM+klK+yFhBe3SVTVTjTstrDMqw2ztEIGKCZiPDUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWDd5Ro9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Po41f+kf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EBBC19421;
-	Wed,  8 Apr 2026 19:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWDd5Ro9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951A1C19421;
+	Wed,  8 Apr 2026 19:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674925;
-	bh=dXaP59EI5+tcNDh6U+k3NHP53kWSZOMBXRpOptHfgUc=;
+	s=korg; t=1775674927;
+	bh=QYpRlk/Vs5MdEXJWWw7+IHtDm7TqEoC2i97dscSvIbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Po41f+kfZzhdgBgIgd09hacJn1Mg7bhtWCBors2GF57QrvZjX47JzEg7d/DvWszbv
-	 EEPHH6LWmyKO9JyzxwJoUVjJJl7flqJL3Q2/8LLsJyeGrvO4NbZCASsXbVGZtnYOOt
-	 ZSlKfu7OAo1OhcUcWO36yXy7cuuDKWtTyojUUOFM=
+	b=bWDd5Ro9HLHVLDCVTAGg4rkmaW15Z3NQBtgE+HXMl2+HxDaSzlzAbvjEk2VnAOx+2
+	 tGcNIdT/ML27IlCgXwM9xCYw6FwalG7yxyB9DFYHktfBVteLVI1V4uWexgOt6aL592
+	 eQTtLFZYMeZgscPM6utRtIlX7iO0X1dxnNRUvJPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srujana Challa <schalla@marvell.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 279/311] virtio_net: clamp rss_max_key_size to NETDEV_RSS_KEY_LEN
-Date: Wed,  8 Apr 2026 20:04:39 +0200
-Message-ID: <20260408175949.798289079@linuxfoundation.org>
+	Xingjing Deng <xjdeng@buaa.edu.cn>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 6.19 288/311] misc: fastrpc: check qcom_scm_assign_mem() return in rpmsg_probe
+Date: Wed,  8 Apr 2026 20:04:48 +0200
+Message-ID: <20260408175950.134236281@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,82 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srujana Challa <schalla@marvell.com>
+From: Xingjing Deng <micro6947@gmail.com>
 
-commit b4e5f04c58a29c499faa85d12952ca9a4faf1cb9 upstream.
+commit 6a502776f4a4f80fb839b22f12aeaf0267fca344 upstream.
 
-rss_max_key_size in the virtio spec is the maximum key size supported by
-the device, not a mandatory size the driver must use. Also the value 40
-is a spec minimum, not a spec maximum.
+In the SDSP probe path, qcom_scm_assign_mem() is used to assign the
+reserved memory to the configured VMIDs, but its return value was not checked.
 
-The current code rejects RSS and can fail probe when the device reports a
-larger rss_max_key_size than the driver buffer limit. Instead, clamp the
-effective key length to min(device rss_max_key_size, NETDEV_RSS_KEY_LEN)
-and keep RSS enabled.
+Fail the probe if the SCM call fails to avoid continuing with an
+unexpected/incorrect memory permission configuration.
 
-This keeps probe working on devices that advertise larger maximum key sizes
-while respecting the netdev RSS key buffer size limit.
+This issue was found by an in-house analysis workflow that extracts AST-based
+information and runs static checks, with LLM assistance for triage, and was
+confirmed by manual code review.
+No hardware testing was performed.
 
-Fixes: 3f7d9c1964fc ("virtio_net: Add hash_key_length check")
-Cc: stable@vger.kernel.org
-Signed-off-by: Srujana Challa <schalla@marvell.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260326142344.1171317-1-schalla@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c3c0363bc72d4 ("misc: fastrpc: support complete DMA pool access to the DSP")
+Cc: stable@vger.kernel.org # 6.11-rc1
+Signed-off-by: Xingjing Deng <xjdeng@buaa.edu.cn>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260131065539.2124047-1-xjdeng@buaa.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ drivers/misc/fastrpc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -381,8 +381,6 @@ struct receive_queue {
- 	struct xdp_buff **xsk_buffs;
- };
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -2338,8 +2338,10 @@ static int fastrpc_rpmsg_probe(struct rp
+ 		if (!err) {
+ 			src_perms = BIT(QCOM_SCM_VMID_HLOS);
  
--#define VIRTIO_NET_RSS_MAX_KEY_SIZE     40
--
- /* Control VQ buffers: protected by the rtnl lock */
- struct control_buf {
- 	struct virtio_net_ctrl_hdr hdr;
-@@ -486,7 +484,7 @@ struct virtnet_info {
+-			qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
++			err = qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
+ 				    data->vmperms, data->vmcount);
++			if (err)
++				goto err_free_data;
+ 		}
  
- 	/* Must be last as it ends in a flexible-array member. */
- 	TRAILING_OVERLAP(struct virtio_net_rss_config_trailer, rss_trailer, hash_key_data,
--		u8 rss_hash_key_data[VIRTIO_NET_RSS_MAX_KEY_SIZE];
-+		u8 rss_hash_key_data[NETDEV_RSS_KEY_LEN];
- 	);
- };
- static_assert(offsetof(struct virtnet_info, rss_trailer.hash_key_data) ==
-@@ -6708,6 +6706,7 @@ static int virtnet_probe(struct virtio_d
- 	struct virtnet_info *vi;
- 	u16 max_queue_pairs;
- 	int mtu = 0;
-+	u16 key_sz;
- 
- 	/* Find if host supports multiqueue/rss virtio_net device */
- 	max_queue_pairs = 1;
-@@ -6842,14 +6841,13 @@ static int virtnet_probe(struct virtio_d
  	}
- 
- 	if (vi->has_rss || vi->has_rss_hash_report) {
--		vi->rss_key_size =
--			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
--		if (vi->rss_key_size > VIRTIO_NET_RSS_MAX_KEY_SIZE) {
--			dev_err(&vdev->dev, "rss_max_key_size=%u exceeds the limit %u.\n",
--				vi->rss_key_size, VIRTIO_NET_RSS_MAX_KEY_SIZE);
--			err = -EINVAL;
--			goto free;
--		}
-+		key_sz = virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
-+
-+		vi->rss_key_size = min_t(u16, key_sz, NETDEV_RSS_KEY_LEN);
-+		if (key_sz > vi->rss_key_size)
-+			dev_warn(&vdev->dev,
-+				 "rss_max_key_size=%u exceeds driver limit %u, clamping\n",
-+				 key_sz, vi->rss_key_size);
- 
- 		vi->rss_hash_types_supported =
- 		    virtio_cread32(vdev, offsetof(struct virtio_net_config, supported_hash_types));
 
 
