@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1535E2BEFFF;
-	Wed,  8 Apr 2026 18:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5321A285;
+	Wed,  8 Apr 2026 18:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673882; cv=none; b=t4Rl/Sf2yu7qg/uoBXyzImaxRSYh1vhIJlYucHn750M4HfJL7YtJpnCeBIGQ+VNw8gipEaH5GhsR2elwuAjAL3632byfHt2FmhNxBxpf0Ylosm3uAwEISEC9WyeFd5ishGeYqCPjMqVIDPMC3kfTZmJLGHVXw/Kidoh2sUYdxis=
+	t=1775673884; cv=none; b=Rrk35G1GGvyQlPv2xdKKgUQvzIIo1d9DLrvDZetWwc+v+xq9qNrlID8CRXB8fTnRnnDN5Xh3Qggduv5Ow5IAAdH28Xm/yGBVYHQbgOp9+OLk83ww04ZjvVc6QodA5IsjxITyDsVfNhCJ+MViZQUVDPCujHGTn4UpEIDxBQNfFjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673882; c=relaxed/simple;
-	bh=5dweHuRdvT022ZfN6OLeC2hkhstfrb/vHyL/dngZqJU=;
+	s=arc-20240116; t=1775673884; c=relaxed/simple;
+	bh=UFSubLCLYrQERRLFvtCFg0Ez1BRg3M+HVvug7eqXCgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rSCDsaiGfm7fmbjn4ik4if9xR6ejVzGDfKUVH3XZPp6LWxJLbsG3VyVGoblR8M7UGO37uIGG97bHFtUX7Fp536wJ7yr8QHu0oLy39dVRSlk94HYhlEu0SiIS0wPtaxaj06f2E5f77Yw5sjr+lyaTjWBNodt9QOfap9IqGbqUU0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PE81m2Fy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kVSYfXmzvyF0Q2a1f2t22dOoSuOLSy/h+alyW6Anf/u15nJPxAimFbaBNkS6quvPgheoNiWmy4yf6BnIR9bywI+mngxcBAaalT0dpHd/rlRYLVHhUnp8thRCEicDpK9RhogluVIqOTBvj0mE9V7Vk3KabYk7t1xSzBFCmbdW6XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+PO/iYl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PE81m2Fy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05F1C19421;
-	Wed,  8 Apr 2026 18:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+PO/iYl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ADFDC19421;
+	Wed,  8 Apr 2026 18:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673882;
-	bh=5dweHuRdvT022ZfN6OLeC2hkhstfrb/vHyL/dngZqJU=;
+	s=korg; t=1775673884;
+	bh=UFSubLCLYrQERRLFvtCFg0Ez1BRg3M+HVvug7eqXCgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PE81m2FyHa1PnIjRqoZKyVUabE/ERl8dPVQkcXnj7KZaGVg2KYrzyNAjVKsKpuJMb
-	 iBGO7uj2dZl1Yoxx67LFlA/f3Z3CsWAGIrvktkO2KrvHXH8Ue1hFBQ/OrKtwTkaZt5
-	 /ra4X33QYlTt7OgaNz2OIo/AkCKaWpoljaEt/Njg=
+	b=l+PO/iYlEfi7CmqbCuzDh6tgCyravygB7CZqlYK0guok/Hk00hhF0q7Ew2hNk8wo8
+	 Ajcwz7eINShyc1D8pardl8eGn2ElvhQt+ouUFVIcW2CnNO20avMkL3z68k10g2B3aw
+	 97cbxAdi7sun2LslYuPzhWPC4EZ/rS1Vz4oLp/34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	"Maciej W. Rozycki" <macro@orcam.me.uk>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.12 125/242] MIPS: SiByte: Bring back cache initialisation
-Date: Wed,  8 Apr 2026 20:02:45 +0200
-Message-ID: <20260408175931.765741961@linuxfoundation.org>
+Subject: [PATCH 6.12 126/242] MIPS: Fix the GCC version check for `__multi3 workaround
+Date: Wed,  8 Apr 2026 20:02:46 +0200
+Message-ID: <20260408175931.804321693@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,43 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit d62cf1511743526f530a4c169424e50c757f5a5e upstream.
+commit ec8bf18814915460d9c617b556bf024efef26613 upstream.
 
-Bring back cache initialisation for Broadcom SiByte SB1 cores, which has
-been removed causing the kernel to hang at bootstrap right after:
+It was only GCC 10 that fixed a MIPS64r6 code generation issue with a
+`__multi3' libcall inefficiently produced to perform 64-bit widening
+multiplication while suitable machine instructions exist to do such a
+calculation.  The fix went in with GCC commit 48b2123f6336 ("re PR
+target/82981 (unnecessary __multi3 call for mips64r6 linux kernel)").
 
-Dentry cache hash table entries: 524288 (order: 8, 4194304 bytes, linear)
-Inode-cache hash table entries: 262144 (order: 7, 2097152 bytes, linear)
+Adjust our code accordingly, removing build failures such as:
 
-The cause of the problem is R4k cache handlers are also used by Broadcom
-SiByte SB1 cores, however with a different cache error exception handler
-and therefore not using CPU_R4K_CACHE_TLB:
+mips64-linux-ld: lib/math/div64.o: in function `mul_u64_add_u64_div_u64':
+div64.c:(.text+0x84): undefined reference to `__multi3'
 
-obj-$(CONFIG_CPU_R4K_CACHE_TLB) += c-r4k.o cex-gen.o tlb-r4k.o
-obj-$(CONFIG_CPU_SB1)           += c-r4k.o cerr-sb1.o cex-sb1.o tlb-r4k.o
+with the GCC versions affected.
 
-(from arch/mips/mm/Makefile).
-
-Fixes: bbe4f634f48c ("mips: fix r3k_cache_init build regression")
+Fixes: ebabcf17bcd7 ("MIPS: Implement __multi3 for GCC7 MIPS64r6 builds")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202601140146.hMLODc6v-lkp@intel.com/
 Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v6.8+
+Cc: stable@vger.kernel.org # v4.15+
+Reviewed-by: David Laight <david.laight.linux@gmail.com.
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mm/cache.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/mips/lib/multi3.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/mips/mm/cache.c
-+++ b/arch/mips/mm/cache.c
-@@ -207,7 +207,8 @@ void cpu_cache_init(void)
- {
- 	if (IS_ENABLED(CONFIG_CPU_R3000) && cpu_has_3k_cache)
- 		r3k_cache_init();
--	if (IS_ENABLED(CONFIG_CPU_R4K_CACHE_TLB) && cpu_has_4k_cache)
-+	if ((IS_ENABLED(CONFIG_CPU_R4K_CACHE_TLB) ||
-+	     IS_ENABLED(CONFIG_CPU_SB1)) && cpu_has_4k_cache)
- 		r4k_cache_init();
+--- a/arch/mips/lib/multi3.c
++++ b/arch/mips/lib/multi3.c
+@@ -4,12 +4,12 @@
+ #include "libgcc.h"
  
- 	if (IS_ENABLED(CONFIG_CPU_CAVIUM_OCTEON) && cpu_has_octeon_cache)
+ /*
+- * GCC 7 & older can suboptimally generate __multi3 calls for mips64r6, so for
++ * GCC 9 & older can suboptimally generate __multi3 calls for mips64r6, so for
+  * that specific case only we implement that intrinsic here.
+  *
+  * See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82981
+  */
+-#if defined(CONFIG_64BIT) && defined(CONFIG_CPU_MIPSR6) && (__GNUC__ < 8)
++#if defined(CONFIG_64BIT) && defined(CONFIG_CPU_MIPSR6) && (__GNUC__ < 10)
+ 
+ /* multiply 64-bit values, low 64-bits returned */
+ static inline long long notrace dmulu(long long a, long long b)
+@@ -51,4 +51,4 @@ ti_type notrace __multi3(ti_type a, ti_t
+ }
+ EXPORT_SYMBOL(__multi3);
+ 
+-#endif /* 64BIT && CPU_MIPSR6 && GCC7 */
++#endif /* 64BIT && CPU_MIPSR6 && GCC9 */
 
 
