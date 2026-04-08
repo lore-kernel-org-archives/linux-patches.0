@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B103D8907;
-	Wed,  8 Apr 2026 18:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8533ACF11;
+	Wed,  8 Apr 2026 18:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672216; cv=none; b=YuBHu5bERFhOUscyvn2SQxw3FbKTGLWa0eDD2So7xaeu2SdxJbtlPW8zHG3ijl7RWjht1arFRclcFVGUWggLdU/2O//DCySpfC6DkxvvYVN4QJcK9kKzNZLtWO1tgBlCWTfy/QxZpdsCBOUg7jTCcasa+fqf+UKEzuoXDWzR5Ds=
+	t=1775672219; cv=none; b=ab8if61mya7necw6MHY/CF3g1bdWZSxccIdAarrPQ+N1Iaeco3SV9HPnxSXAYz6FqagnTENnQW/bGz/RcO5yiEgAv4Zc7dum7UJBXOFSjK/yrTyoWvAox/pc8rEbYnqyII2OSIU+gRIuzjzJ85HyB5py98iBq6b244GNTjW/SUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672216; c=relaxed/simple;
-	bh=7PXe5XEyGf96as/aRkmdNnga09Iu0PrhrudTPeoi/s0=;
+	s=arc-20240116; t=1775672219; c=relaxed/simple;
+	bh=MaWTuVnhcvf5XTGc9ygRpblr8W8gxVmctOHiNvJ02Ig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XO7QyXcAb/hCHWJgjbzdcc8lpYk338xXnlLt6wS1c0qFTAuxhi5Cd3hM6d50UDFiSxtdB9TSBrvmQsT79eMy/mPpVjYxnZBRT6Itqtxe4gXhSbAjmTBEO5LfLFVEpBsfzuv+0S5dpyIlNBKiNL79jFbsU+Ek8uglP7mSHSduYaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nPnkY7Tv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bCqZgOfrTX4dW0d01lsE58/wWIpymaQn/RN+K3OXiRS8suxpQ+vJB/TYQ/A0XSuwBb/QsNnp5juCgsF1uMOpWXDnuMWHZjq2UIbsZw0FltNVZrrHHpFygIx3OSJuAlwdQFbcWA4YitwiOL7IjOGefBRO/5TiM7FqW2FyjogdcPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S058IPlY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nPnkY7Tv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09012C19421;
-	Wed,  8 Apr 2026 18:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S058IPlY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E70C19421;
+	Wed,  8 Apr 2026 18:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672216;
-	bh=7PXe5XEyGf96as/aRkmdNnga09Iu0PrhrudTPeoi/s0=;
+	s=korg; t=1775672218;
+	bh=MaWTuVnhcvf5XTGc9ygRpblr8W8gxVmctOHiNvJ02Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nPnkY7Tv7ZgoKJrsPWuEh2/ZhEFXfQ75QGvABpMyJcEYZ/Pjtp53AOk/xUDYoxlRW
-	 TUradz2vkqkXUE1WwNEdceuXlNJHUQHzwhlABRDzfXfZWFWfsRnHwqROoUtODYC8Cs
-	 JLic2klqDvCDqRJ3KhcVXNZr6S3mYoUwBMsf72aE=
+	b=S058IPlYo0swjSc+rk4aJ3UFGFwfMjVwK+ZgFwQUcHLADOjPFH+yWryARAnimpnsR
+	 RiOeoqFy3TLZgatblmftZh3VswNwdAwjbbd0xx8AfMvzjGLPFuWw5HPYfb/E1F37ki
+	 VKztUYops3r7CCEu7t+ECnCPnoTV9yCwgSXB6T5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 235/312] Revert "ext4: drop extent cache when splitting extent fails"
-Date: Wed,  8 Apr 2026 20:02:32 +0200
-Message-ID: <20260408175942.529389949@linuxfoundation.org>
+Subject: [PATCH 6.1 236/312] Revert "ext4: drop extent cache after doing PARTIAL_VALID1 zeroout"
+Date: Wed,  8 Apr 2026 20:02:33 +0200
+Message-ID: <20260408175942.565739515@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -49,46 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit de8e1b17e3876a44c4537bff0bc2dfd244efe8d9.
+This reverts commit 9e79460b3aae6bbf33f5ccea6c44bf2eefa45daf.
 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ fs/ext4/extents.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
 diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index bb27c04798d2b..30b0b25aac9ff 100644
+index 30b0b25aac9ff..da7414e84ead8 100644
 --- a/fs/ext4/extents.c
 +++ b/fs/ext4/extents.c
-@@ -3252,7 +3252,7 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
+@@ -3304,16 +3304,8 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
+ 			 * extent length and ext4_split_extent() split will the
+ 			 * first half again.
+ 			 */
+-			if (split_flag & EXT4_EXT_DATA_PARTIAL_VALID1) {
+-				/*
+-				 * Drop extent cache to prevent stale unwritten
+-				 * extents remaining after zeroing out.
+-				 */
+-				ext4_es_remove_extent(inode,
+-					le32_to_cpu(zero_ex.ee_block),
+-					ext4_ext_get_actual_len(&zero_ex));
++			if (split_flag & EXT4_EXT_DATA_PARTIAL_VALID1)
+ 				goto fix_extent_len;
+-			}
  
- 	err = PTR_ERR(path);
- 	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
--		goto out_path;
-+		return path;
- 
- 	/*
- 	 * Get a new path to try to zeroout or fix the extent length.
-@@ -3266,7 +3266,7 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
- 	if (IS_ERR(path)) {
- 		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
- 				 split, PTR_ERR(path));
--		goto out_path;
-+		return path;
- 	}
- 	depth = ext_depth(inode);
- 	ex = path[depth].p_ext;
-@@ -3343,10 +3343,6 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
- 		ext4_free_ext_path(path);
- 		path = ERR_PTR(err);
- 	}
--out_path:
--	if (IS_ERR(path))
--		/* Remove all remaining potentially stale extents. */
--		ext4_es_remove_extent(inode, ee_block, ee_len);
- 	ext4_ext_show_leaf(inode, path);
- 	return path;
- }
+ 			/* update the extent length and mark as initialized */
+ 			ex->ee_len = cpu_to_le16(ee_len);
 -- 
 2.53.0
 
