@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76EB361DB5;
-	Wed,  8 Apr 2026 18:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F0433121F;
+	Wed,  8 Apr 2026 18:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673916; cv=none; b=kVb4KDYl5VR9qlTI0zuBULutGXfHKbb3NztxmzYvOpQsdnDdqDHwGwp2UzA6GptdHKf7FmolesFvs2rOO9Fha4vz/az/7gBlDbwpAuXNaIVGSVOHmLGio5Cl8aD0e2LASj7pHsTkS6q7/FHxDd6u5y2cACOJ9FyyTsEYOOc31hw=
+	t=1775673919; cv=none; b=O3FqMnOzo8wKfyK9+heE9xcaVfelDYCiEAkILW07DpdRw52NsGQerq3/6M5cvmWeNwS8DeKV388RFtiistwQ1+YDDxx2KZMLYcYv89/UOcr1MOcmP0ItjmcIn2tWC2o8v/ls0G67APeodYj91zgjBGN/lZV/6TLgHm39YDsFs9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673916; c=relaxed/simple;
-	bh=MtlpGGwKwboCGr+f491B43fbiBGxwKd+2GQi4EEjXd8=;
+	s=arc-20240116; t=1775673919; c=relaxed/simple;
+	bh=+WyNpBznUguNk7tgs8P68HihyzW2jrJBUUaHB7capR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GHyQRp5nwfYPyUWGgc90bH7XOVbJlaVGJ8itC7h8m0sSAhAkyfLqYAXzEYDBdaLGQmvs9TAPVqoG8Dv56mvCONIn9gi4VKYu+SbZcnXvenxNVKnNlUQMYDu3b0rjrK6DpAzd72ay5bXDyRVKmG7u92YcF8O5uwjtupOytGWpo7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbN62kjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nz6isd1Vv9gUk4r8pfjWKXSlET8msAowWkiDpTFZgsjfT0BVouaBgMCp4zsExivYcPYiWLH4viWZtYFFH2YbQTYfSTRP19e8mY/16sS6tg9oaLTfhYX0yCg29JLsFnO0J6l72qKZx1YmP3GfJvdMNl25WDsOSrZ+AOFn4MOOIAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPyDsUhH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbN62kjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDCFC19421;
-	Wed,  8 Apr 2026 18:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPyDsUhH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B85C19421;
+	Wed,  8 Apr 2026 18:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673916;
-	bh=MtlpGGwKwboCGr+f491B43fbiBGxwKd+2GQi4EEjXd8=;
+	s=korg; t=1775673919;
+	bh=+WyNpBznUguNk7tgs8P68HihyzW2jrJBUUaHB7capR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rbN62kjWKWGmLCbVWZjxQYIHEtjmZRFY3pSuql9VPRMzZFvLkoyTxNEWSi9o24tpT
-	 Eh9YnBlW9a6bp7FNVTKVnjSqwpHC8JVWkdEFrRHKRRxsJ5HOeKqvG83XQm3uagAC2+
-	 L5XRbsrEPptm9GdHRjCx3WVS+GzS30bbyGgMOPII=
+	b=pPyDsUhHejkWJdnBBILtDBaJkigldN9CcL2ynQ8SDr4zXXtoTD/cNcTyYaCAqpUAv
+	 hazuxJPBWaM1mhZFI+BxQtne3rAeV1frNjqlAInkomgTEtiwomOUdLVVsR1P9pgyTJ
+	 3oBxQHBFGIon1w8V9AQUJRiwt/Y/qkIvffstgWDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.12 137/242] drm/i915/dp: Use crtc_state->enhanced_framing properly on ivb/hsw CPU eDP
-Date: Wed,  8 Apr 2026 20:02:57 +0200
-Message-ID: <20260408175932.216501174@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 138/242] drm/amdgpu: Change AMDGPU_VA_RESERVED_TRAP_SIZE to 64KB
+Date: Wed,  8 Apr 2026 20:02:58 +0200
+Message-ID: <20260408175932.254021863@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,37 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Donet Tom <donettom@linux.ibm.com>
 
-commit 9c9a57e4e337f94e23ddf69263fd0685c91155fb upstream.
+commit 4487571ef17a30d274600b3bd6965f497a881299 upstream.
 
-Looks like I missed the drm_dp_enhanced_frame_cap() in the ivb/hsw CPU
-eDP code when I introduced crtc_state->enhanced_framing. Fix it up so
-that the state we program to the hardware is guaranteed to match what
-we computed earlier.
+Currently, AMDGPU_VA_RESERVED_TRAP_SIZE is hardcoded to 8KB, while
+KFD_CWSR_TBA_TMA_SIZE is defined as 2 * PAGE_SIZE. On systems with
+4K pages, both values match (8KB), so allocation and reserved space
+are consistent.
 
+However, on 64K page-size systems, KFD_CWSR_TBA_TMA_SIZE becomes 128KB,
+while the reserved trap area remains 8KB. This mismatch causes the
+kernel to crash when running rocminfo or rccl unit tests.
+
+Kernel attempted to read user page (2) - exploit attempt? (uid: 1001)
+BUG: Kernel NULL pointer dereference on read at 0x00000002
+Faulting instruction address: 0xc0000000002c8a64
+Oops: Kernel access of bad area, sig: 11 [#1]
+LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
+CPU: 34 UID: 1001 PID: 9379 Comm: rocminfo Tainted: G E
+6.19.0-rc4-amdgpu-00320-gf23176405700 #56 VOLUNTARY
+Tainted: [E]=UNSIGNED_MODULE
+Hardware name: IBM,9105-42A POWER10 (architected) 0x800200 0xf000006
+of:IBM,FW1060.30 (ML1060_896) hv:phyp pSeries
+NIP:  c0000000002c8a64 LR: c00000000125dbc8 CTR: c00000000125e730
+REGS: c0000001e0957580 TRAP: 0300 Tainted: G E
+MSR:  8000000000009033 <SF,EE,ME,IR,DR,RI,LE> CR: 24008268
+XER: 00000036
+CFAR: c00000000125dbc4 DAR: 0000000000000002 DSISR: 40000000
+IRQMASK: 1
+GPR00: c00000000125d908 c0000001e0957820 c0000000016e8100
+c00000013d814540
+GPR04: 0000000000000002 c00000013d814550 0000000000000045
+0000000000000000
+GPR08: c00000013444d000 c00000013d814538 c00000013d814538
+0000000084002268
+GPR12: c00000000125e730 c000007e2ffd5f00 ffffffffffffffff
+0000000000020000
+GPR16: 0000000000000000 0000000000000002 c00000015f653000
+0000000000000000
+GPR20: c000000138662400 c00000013d814540 0000000000000000
+c00000013d814500
+GPR24: 0000000000000000 0000000000000002 c0000001e0957888
+c0000001e0957878
+GPR28: c00000013d814548 0000000000000000 c00000013d814540
+c0000001e0957888
+NIP [c0000000002c8a64] __mutex_add_waiter+0x24/0xc0
+LR [c00000000125dbc8] __mutex_lock.constprop.0+0x318/0xd00
+Call Trace:
+0xc0000001e0957890 (unreliable)
+__mutex_lock.constprop.0+0x58/0xd00
+amdgpu_amdkfd_gpuvm_alloc_memory_of_gpu+0x6fc/0xb60 [amdgpu]
+kfd_process_alloc_gpuvm+0x54/0x1f0 [amdgpu]
+kfd_process_device_init_cwsr_dgpu+0xa4/0x1a0 [amdgpu]
+kfd_process_device_init_vm+0xd8/0x2e0 [amdgpu]
+kfd_ioctl_acquire_vm+0xd0/0x130 [amdgpu]
+kfd_ioctl+0x514/0x670 [amdgpu]
+sys_ioctl+0x134/0x180
+system_call_exception+0x114/0x300
+system_call_vectored_common+0x15c/0x2ec
+
+This patch changes AMDGPU_VA_RESERVED_TRAP_SIZE to 64 KB and
+KFD_CWSR_TBA_TMA_SIZE to the AMD GPU page size. This means we reserve
+64 KB for the trap in the address space, but only allocate 8 KB within
+it. With this approach, the allocation size never exceeds the reserved
+area.
+
+Fixes: 34a1de0f7935 ("drm/amdkfd: Relocate TBA/TMA to opposite side of VM hole")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Suggested-by: Felix Kuehling <felix.kuehling@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 31b8de5e55666f26ea7ece5f412b83eab3f56dbb)
 Cc: stable@vger.kernel.org
-Fixes: 3072a24c778a ("drm/i915: Introduce crtc_state->enhanced_framing")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260325135849.12603-3-ville.syrjala@linux.intel.com
-Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
-(cherry picked from commit 799fe8dc2af52f35c78c4ac97f8e34994dfd8760)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/g4x_dp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h |    2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h  |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/g4x_dp.c
-+++ b/drivers/gpu/drm/i915/display/g4x_dp.c
-@@ -134,7 +134,7 @@ static void intel_dp_prepare(struct inte
- 			intel_dp->DP |= DP_SYNC_VS_HIGH;
- 		intel_dp->DP |= DP_LINK_TRAIN_OFF_CPT;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
+@@ -172,7 +172,7 @@ struct amdgpu_mem_stats;
+ #define AMDGPU_VA_RESERVED_SEQ64_SIZE		(2ULL << 20)
+ #define AMDGPU_VA_RESERVED_SEQ64_START(adev)	(AMDGPU_VA_RESERVED_CSA_START(adev) \
+ 						 - AMDGPU_VA_RESERVED_SEQ64_SIZE)
+-#define AMDGPU_VA_RESERVED_TRAP_SIZE		(2ULL << 12)
++#define AMDGPU_VA_RESERVED_TRAP_SIZE		(1ULL << 16)
+ #define AMDGPU_VA_RESERVED_TRAP_START(adev)	(AMDGPU_VA_RESERVED_SEQ64_START(adev) \
+ 						 - AMDGPU_VA_RESERVED_TRAP_SIZE)
+ #define AMDGPU_VA_RESERVED_BOTTOM		(1ULL << 16)
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -102,8 +102,8 @@
+  * The first chunk is the TBA used for the CWSR ISA code. The second
+  * chunk is used as TMA for user-mode trap handler setup in daisy-chain mode.
+  */
+-#define KFD_CWSR_TBA_TMA_SIZE (PAGE_SIZE * 2)
+-#define KFD_CWSR_TMA_OFFSET (PAGE_SIZE + 2048)
++#define KFD_CWSR_TBA_TMA_SIZE (AMDGPU_GPU_PAGE_SIZE * 2)
++#define KFD_CWSR_TMA_OFFSET (AMDGPU_GPU_PAGE_SIZE + 2048)
  
--		if (drm_dp_enhanced_frame_cap(intel_dp->dpcd))
-+		if (pipe_config->enhanced_framing)
- 			intel_dp->DP |= DP_ENHANCED_FRAMING;
- 
- 		intel_dp->DP |= DP_PIPE_SEL_IVB(crtc->pipe);
+ #define KFD_MAX_NUM_OF_QUEUES_PER_DEVICE		\
+ 	(KFD_MAX_NUM_OF_PROCESSES *			\
 
 
