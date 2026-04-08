@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE9825A321;
-	Wed,  8 Apr 2026 18:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3D72727F3;
+	Wed,  8 Apr 2026 18:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674353; cv=none; b=efW+ofbPneZcEZ2S3YgfgZcaoU1mMif2RClpKOQMX76FkVAHjgtU2P3ouDNvQLpvTBc+xzu1+1LvlH1HP4vN+6ZhUsrzB0rN+zA0PAEMg9mdo3WQkNtpuWFmph7SGqMuPAmaLIi9tEfWHUlSWuEI98qPMDFl+tTBPGVtYB2uJLo=
+	t=1775674355; cv=none; b=hHV7VqOaXmtN+gKcTiJAD8Gu1pwsZ+B5qBdVKjdHXc7wu9vOfc1rPleRJrw2TsDTMCHHdBNKYCUSo98qznS4/8Xrw2uFdB34iKRY+N8A/H2eozlZCGOl0RqzZaZRxJkjwknxMdDCAwJvpv7r7zggTxaxQ61tddDaJCUMbcP3jmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674353; c=relaxed/simple;
-	bh=cQwh2KMflZFAOwtEyM/oZ7UjkNUqUGDsWFAqRYYNNwI=;
+	s=arc-20240116; t=1775674355; c=relaxed/simple;
+	bh=rIKMcHQ+J3XufiN/IsinPKCsIPFWo5q6DeRjsQ4vAiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvyTpowTDuAZ8zSwBhv3e/f31K1CALqccsKU1yIdAmy67YrHSO3NNZoL0ry4u8+sIh4Jzxn1lMgHdojpTXVmtteJYlvFkggR4Iyh3rZmLjNthNL0bbHyOYsIRWZ0aLW9HMkcHMLXhdeC47dOh5jx1WPfZqaWupygMxDl5+2PMAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+xjCIhS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h1t7w4Xo05FSPTrwMAT+B3Tt5pRlKDVFJrneWuLP1/xsZX3QBNa2RlcN0ixBoL38N/L5GY7tP00Dt+7aI6ZnVMdM0J654aOZ55NePZiVBFXkLUpgZRn8hqaxAtwrHqnXqmv7RZ1zCnGtMmI11BbYryG8+zUVSE3+D4s7PUZIOEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDFBB033; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+xjCIhS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9516C19421;
-	Wed,  8 Apr 2026 18:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDFBB033"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D2DC19421;
+	Wed,  8 Apr 2026 18:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674353;
-	bh=cQwh2KMflZFAOwtEyM/oZ7UjkNUqUGDsWFAqRYYNNwI=;
+	s=korg; t=1775674355;
+	bh=rIKMcHQ+J3XufiN/IsinPKCsIPFWo5q6DeRjsQ4vAiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+xjCIhSh2nnTbYm8quf7UGuYvqSdNZid7m/+oBdnjLtiJZuO4YJCaCO3LECVUObg
-	 s5hF/sLT4hYZw2l1oVPqdMUjldwzJDizrWzZtnBcVacDmwQ31OoPLSuhnqpT4x++vx
-	 TmOEIuqROJCW5VMBmqesm04r7wQcVV9HBixEZAKU=
+	b=uDFBB033/g8AtKUASaHLv8xiKRv2MTaYK2vY0b8LvlWC07ptx/U6lNNf7wYIp7Klr
+	 txf4zTDXYMIHGcWSo4wFbnetdDPyGvLoOlIcm0P8qTLsEMBmOQPp5w1lgDmHXERVOJ
+	 D3gUa41VlQKwjL6SvTpdL6a+OpihmXjSz4xjS70E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Madhur Agrawal <Madhur.Agrawal@airoha.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 063/311] ipv6: prevent possible UaF in addrconf_permanent_addr()
-Date: Wed,  8 Apr 2026 20:01:03 +0200
-Message-ID: <20260408175941.769086164@linuxfoundation.org>
+Subject: [PATCH 6.19 064/311] net: airoha: Add missing cleanup bits in airoha_qdma_cleanup_rx_queue()
+Date: Wed,  8 Apr 2026 20:01:04 +0200
+Message-ID: <20260408175941.807207778@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -51,48 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit fd63f185979b047fb22a0dfc6bd94d0cab6a6a70 ]
+[ Upstream commit 514aac3599879a7ed48b7dc19e31145beb6958ac ]
 
-The mentioned helper try to warn the user about an exceptional
-condition, but the message is delivered too late, accessing the ipv6
-after its possible deletion.
+In order to properly cleanup hw rx QDMA queues and bring the device to
+the initial state, reset rx DMA queue head/tail index. Moreover, reset
+queued DMA descriptor fields.
 
-Reorder the statement to avoid the possible UaF; while at it, place the
-warning outside the idev->lock as it needs no protection.
-
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://sashiko.dev/#/patchset/8c8bfe2e1a324e501f0e15fef404a77443fd8caf.1774365668.git.pabeni%40redhat.com
-Fixes: f1705ec197e7 ("net: ipv6: Make address flushing on ifdown optional")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/ef973c3a8cb4f8f1787ed469f3e5391b9fe95aa0.1774601542.git.pabeni@redhat.com
+Fixes: 23020f049327 ("net: airoha: Introduce ethernet support for EN7581 SoC")
+Tested-by: Madhur Agrawal <Madhur.Agrawal@airoha.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260327-airoha_qdma_cleanup_rx_queue-fix-v1-1-369d6ab1511a@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 3dcfa4b3094a8..272dd1a0acd0e 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -3621,12 +3621,12 @@ static void addrconf_permanent_addr(struct net *net, struct net_device *dev)
- 		if ((ifp->flags & IFA_F_PERMANENT) &&
- 		    fixup_permanent_addr(net, idev, ifp) < 0) {
- 			write_unlock_bh(&idev->lock);
--			in6_ifa_hold(ifp);
--			ipv6_del_addr(ifp);
--			write_lock_bh(&idev->lock);
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index c37a1b86180f3..454d7dcf198d9 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -794,18 +794,34 @@ static int airoha_qdma_init_rx_queue(struct airoha_queue *q,
  
- 			net_info_ratelimited("%s: Failed to add prefix route for address %pI6c; dropping\n",
- 					     idev->dev->name, &ifp->addr);
-+			in6_ifa_hold(ifp);
-+			ipv6_del_addr(ifp);
-+			write_lock_bh(&idev->lock);
- 		}
+ static void airoha_qdma_cleanup_rx_queue(struct airoha_queue *q)
+ {
+-	struct airoha_eth *eth = q->qdma->eth;
++	struct airoha_qdma *qdma = q->qdma;
++	struct airoha_eth *eth = qdma->eth;
++	int qid = q - &qdma->q_rx[0];
+ 
+ 	while (q->queued) {
+ 		struct airoha_queue_entry *e = &q->entry[q->tail];
++		struct airoha_qdma_desc *desc = &q->desc[q->tail];
+ 		struct page *page = virt_to_head_page(e->buf);
+ 
+ 		dma_sync_single_for_cpu(eth->dev, e->dma_addr, e->dma_len,
+ 					page_pool_get_dma_dir(q->page_pool));
+ 		page_pool_put_full_page(q->page_pool, page, false);
++		/* Reset DMA descriptor */
++		WRITE_ONCE(desc->ctrl, 0);
++		WRITE_ONCE(desc->addr, 0);
++		WRITE_ONCE(desc->data, 0);
++		WRITE_ONCE(desc->msg0, 0);
++		WRITE_ONCE(desc->msg1, 0);
++		WRITE_ONCE(desc->msg2, 0);
++		WRITE_ONCE(desc->msg3, 0);
++
+ 		q->tail = (q->tail + 1) % q->ndesc;
+ 		q->queued--;
  	}
++
++	q->head = q->tail;
++	airoha_qdma_rmw(qdma, REG_RX_DMA_IDX(qid), RX_RING_DMA_IDX_MASK,
++			FIELD_PREP(RX_RING_DMA_IDX_MASK, q->tail));
+ }
  
+ static int airoha_qdma_init_rx(struct airoha_qdma *qdma)
 -- 
 2.53.0
 
