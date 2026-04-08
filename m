@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0418C3B960C;
-	Wed,  8 Apr 2026 18:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0523537FC;
+	Wed,  8 Apr 2026 18:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672414; cv=none; b=p3u1LM22QIxUngrD9qewZ0L9CXPt5ABOkzIp4v7GE6HN+uicof/hGLCdMOWBcffQOEKxaBecXf6X0yQLP8kJnuUzIv96COTeCu5Mkaf+gM5n93HVtYIqpCDR+PSaZx1hcb2jonf1rk5iVgIC59IIhzzHylFFzVGyxL2dXqO8nAU=
+	t=1775672416; cv=none; b=g8GBtN5WcSe6XwD+JdDGBhCjxsdquNu0exsnsx8zyYY8BI1CNtQPac7AJ3n0XmctgdGzaimVHeJXlDhKsqd2dq378/MBPw9vobC1uJCzQp9o5p6fAKc/tk2VauSxhqR4bcUQtPx8iuyvt9NsSXdPuY3KaXD/jh1zWwBzG/PQhk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672414; c=relaxed/simple;
-	bh=tWGTr0r7Wxuiwgp5u6NJ3fS2tLgIaDqN/Tif9qkX5GY=;
+	s=arc-20240116; t=1775672416; c=relaxed/simple;
+	bh=v0UQLkQGudkPupIIquqz2ckH3YsWTLQDeE2pX7rp720=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGiLmd289o0WetwP2kplH4OrwpiONTQ+9vRHEYZ9Wizusj3cFAyOFNX0sqb/UUDYk3r5VFduPWPc+CRivnw6oDezwUfoJb5k/WZCxUgBnJfyiR9lcW3zp1dtGhg0DEGJRcS/MBk/+P43nVJACm10IgfW/pKkNG4VMYDT3F2NN/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8b/tWDP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dWKMQJRyqsEM+hrEHKL089nvLP7OJdiLdTF4qkFcXfSK05bcLzHB/PHoCUO4lOIpBjEdCLGBPLerQ4wfiT8xdbUWQgliQe5S3Fiyhtzo1Vpp5j2y0j2XN03EZlW6WBX7ujsj8Xc0aOz5X0jTFftUdlwVy+ojsrtJ/Iqc1jpnXnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szsKO5Ua; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8b/tWDP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E680C19421;
-	Wed,  8 Apr 2026 18:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szsKO5Ua"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248A7C19421;
+	Wed,  8 Apr 2026 18:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672413;
-	bh=tWGTr0r7Wxuiwgp5u6NJ3fS2tLgIaDqN/Tif9qkX5GY=;
+	s=korg; t=1775672416;
+	bh=v0UQLkQGudkPupIIquqz2ckH3YsWTLQDeE2pX7rp720=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m8b/tWDPe5Xw4bjFp/7FmVYQkQFJvivLWwkBHSj8UTjNsK7mDXKTvMPfcbRaRScAl
-	 GuMeaCrsoBjNXx0S34FyXXRRN1LecDR2ZIsnmt1RUc/sXmSuyI0IPrWlNNOATBmO3y
-	 6xTDQWpzzeEMNCax4u8w1Tu8g/ALUunmk6iobAdM=
+	b=szsKO5Ua4Y/cFuV57Bmcr4f5plKx17F7uAnx2OU2Azhq9yjQmceRpZgwBKV9LhfMU
+	 zflj3c4kZI21FUo3DlfW4579RwWR1o+FiWjMb5s/Btl+0fN6O3hdAOn/Bkq1x1zjlu
+	 odBgvXiT7FTf8WDLCT73beK3y7exgbHAF9bi1qF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Jan Kara <jack@suse.cz>,
-	Jason Yan <yanaijie@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 311/312] ext4: fix unused iterator variable warnings
-Date: Wed,  8 Apr 2026 20:03:48 +0200
-Message-ID: <20260408175945.388343530@linuxfoundation.org>
+	VitaliiT <vitaly.torshyn@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 312/312] ACPI: EC: Evaluate orphan _REG under EC device
+Date: Wed,  8 Apr 2026 20:03:49 +0200
+Message-ID: <20260408175945.424469618@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
 References: <20260408175933.715315542@linuxfoundation.org>
@@ -53,74 +50,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 856dd6c5981260b4d1aa84b78373ad54a203db48 upstream.
+commit 0e6b6dedf16800df0ff73ffe2bb5066514db29c2 upstream.
 
-When CONFIG_QUOTA is disabled, there are warnings around unused iterator
-variables:
+After starting to install the EC address space handler at the ACPI
+namespace root, if there is an "orphan" _REG method in the EC device's
+scope, it will not be evaluated any more.  This breaks EC operation
+regions on some systems, like Asus gu605.
 
-  fs/ext4/super.c: In function 'ext4_put_super':
-  fs/ext4/super.c:1262:13: error: unused variable 'i' [-Werror=unused-variable]
-   1262 |         int i, err;
-        |             ^
-  fs/ext4/super.c: In function '__ext4_fill_super':
-  fs/ext4/super.c:5200:22: error: unused variable 'i' [-Werror=unused-variable]
-   5200 |         unsigned int i;
-        |                      ^
-  cc1: all warnings being treated as errors
+To address this, use a wrapper around an existing ACPICA function to
+look for an "orphan" _REG method in the EC device scope and evaluate
+it if present.
 
-The kernel has updated to GNU11, allowing the variables to be declared
-within the for loop.  Do so to clear up the warnings.
-
-Fixes: dcbf87589d90 ("ext4: factor out ext4_flex_groups_free()")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Link: https://lore.kernel.org/r/20230420-ext4-unused-variables-super-c-v1-1-138b6db6c21c@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 60fa6ae6e6d0 ("ACPI: EC: Install address space handler at the namespace root")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218945
+Reported-by: VitaliiT <vitaly.torshyn@gmail.com>
+Tested-by: VitaliiT <vitaly.torshyn@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/acpi/acpica/acevents.h |    4 +++
+ drivers/acpi/acpica/evregion.c |    6 ----
+ drivers/acpi/acpica/evxfregn.c |   54 +++++++++++++++++++++++++++++++++++++++++
+ drivers/acpi/ec.c              |    3 ++
+ include/acpi/acpixf.h          |    4 +++
+ 5 files changed, 66 insertions(+), 5 deletions(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1265,7 +1265,7 @@ static void ext4_put_super(struct super_
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	struct ext4_super_block *es = sbi->s_es;
- 	int aborted = 0;
--	int i, err;
-+	int err;
+--- a/drivers/acpi/acpica/acevents.h
++++ b/drivers/acpi/acpica/acevents.h
+@@ -191,6 +191,10 @@ void
+ acpi_ev_execute_reg_methods(struct acpi_namespace_node *node,
+ 			    acpi_adr_space_type space_id, u32 function);
  
- 	/*
- 	 * Unregister sysfs before destroying jbd2 journal.
-@@ -1316,7 +1316,7 @@ static void ext4_put_super(struct super_
- 	ext4_flex_groups_free(sbi);
- 	ext4_percpu_param_destroy(sbi);
- #ifdef CONFIG_QUOTA
--	for (i = 0; i < EXT4_MAXQUOTAS; i++)
-+	for (int i = 0; i < EXT4_MAXQUOTAS; i++)
- 		kfree(get_qf_name(sb, sbi, i));
- #endif
++void
++acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *node,
++				  acpi_adr_space_type space_id);
++
+ acpi_status
+ acpi_ev_execute_reg_method(union acpi_operand_object *region_obj, u32 function);
  
-@@ -5127,7 +5127,6 @@ static int __ext4_fill_super(struct fs_c
- 	ext4_fsblk_t logical_sb_block;
- 	struct inode *root;
- 	int ret = -ENOMEM;
--	unsigned int i;
- 	int needs_recovery, has_huge_files;
- 	int err = 0;
- 	ext4_group_t first_not_zeroed;
-@@ -5658,7 +5657,7 @@ failed_mount:
- #endif
+--- a/drivers/acpi/acpica/evregion.c
++++ b/drivers/acpi/acpica/evregion.c
+@@ -20,10 +20,6 @@ extern u8 acpi_gbl_default_address_space
  
- #ifdef CONFIG_QUOTA
--	for (i = 0; i < EXT4_MAXQUOTAS; i++)
-+	for (unsigned int i = 0; i < EXT4_MAXQUOTAS; i++)
- 		kfree(get_qf_name(sb, sbi, i));
- #endif
- 	fscrypt_free_dummy_policy(&sbi->s_dummy_enc_policy);
+ /* Local prototypes */
+ 
+-static void
+-acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *device_node,
+-				  acpi_adr_space_type space_id);
+-
+ static acpi_status
+ acpi_ev_reg_run(acpi_handle obj_handle,
+ 		u32 level, void *context, void **return_value);
+@@ -811,7 +807,7 @@ acpi_ev_reg_run(acpi_handle obj_handle,
+  *
+  ******************************************************************************/
+ 
+-static void
++void
+ acpi_ev_execute_orphan_reg_method(struct acpi_namespace_node *device_node,
+ 				  acpi_adr_space_type space_id)
+ {
+--- a/drivers/acpi/acpica/evxfregn.c
++++ b/drivers/acpi/acpica/evxfregn.c
+@@ -304,3 +304,57 @@ acpi_execute_reg_methods(acpi_handle dev
+ }
+ 
+ ACPI_EXPORT_SYMBOL(acpi_execute_reg_methods)
++
++/*******************************************************************************
++ *
++ * FUNCTION:    acpi_execute_orphan_reg_method
++ *
++ * PARAMETERS:  device          - Handle for the device
++ *              space_id        - The address space ID
++ *
++ * RETURN:      Status
++ *
++ * DESCRIPTION: Execute an "orphan" _REG method that appears under an ACPI
++ *              device. This is a _REG method that has no corresponding region
++ *              within the device's scope.
++ *
++ ******************************************************************************/
++acpi_status
++acpi_execute_orphan_reg_method(acpi_handle device, acpi_adr_space_type space_id)
++{
++	struct acpi_namespace_node *node;
++	acpi_status status;
++
++	ACPI_FUNCTION_TRACE(acpi_execute_orphan_reg_method);
++
++	/* Parameter validation */
++
++	if (!device) {
++		return_ACPI_STATUS(AE_BAD_PARAMETER);
++	}
++
++	status = acpi_ut_acquire_mutex(ACPI_MTX_NAMESPACE);
++	if (ACPI_FAILURE(status)) {
++		return_ACPI_STATUS(status);
++	}
++
++	/* Convert and validate the device handle */
++
++	node = acpi_ns_validate_handle(device);
++	if (node) {
++
++		/*
++		 * If an "orphan" _REG method is present in the device's scope
++		 * for the given address space ID, run it.
++		 */
++
++		acpi_ev_execute_orphan_reg_method(node, space_id);
++	} else {
++		status = AE_BAD_PARAMETER;
++	}
++
++	(void)acpi_ut_release_mutex(ACPI_MTX_NAMESPACE);
++	return_ACPI_STATUS(status);
++}
++
++ACPI_EXPORT_SYMBOL(acpi_execute_orphan_reg_method)
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1532,6 +1532,9 @@ static int ec_install_handlers(struct ac
+ 
+ 	if (call_reg && !test_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags)) {
+ 		acpi_execute_reg_methods(scope_handle, ACPI_ADR_SPACE_EC);
++		if (scope_handle != ec->handle)
++			acpi_execute_orphan_reg_method(ec->handle, ACPI_ADR_SPACE_EC);
++
+ 		set_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags);
+ 	}
+ 
+--- a/include/acpi/acpixf.h
++++ b/include/acpi/acpixf.h
+@@ -669,6 +669,10 @@ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+ 						     acpi_adr_space_type
+ 						     space_id))
+ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
++			    acpi_execute_orphan_reg_method(acpi_handle device,
++							   acpi_adr_space_type
++							   space_id))
++ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+ 			    acpi_remove_address_space_handler(acpi_handle
+ 							      device,
+ 							      acpi_adr_space_type
 
 
