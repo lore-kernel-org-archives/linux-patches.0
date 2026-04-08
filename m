@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A6F32A3FD;
-	Wed,  8 Apr 2026 18:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C159C328B75;
+	Wed,  8 Apr 2026 18:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673184; cv=none; b=LHHj7rrTMMW2XrsfccIfg2zjU4+whrkAse8WNeSoxBZWpBalpPv4jIjNjMhigsiwGC2PeUVKc5c6sJQ5DiRe4pjuQMAKEdl304lJ4WNTpF1K8zhRU/MVRTSV0pTxKqOcrTv2u2W0dpIqjbjkWH/oUMHgPIsAII1Cq3cI4SbX4bk=
+	t=1775673186; cv=none; b=DfOZmn9/iNtNDiIwFayViXs4GIbUK+eP4rTMMjMzujy4qmii1gtzFnGIMz8rnp+bdFupH40AByT2aFDOqd/lLYZtbGOf7x3gHuMnl6EdMVF9vZFAUAiwJsCMldYVv7rL7P0lY3et2EXNw1reAjNFWNh6OdVEtQyUb6Z/OxrejOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673184; c=relaxed/simple;
-	bh=1OWHU2K79V4Cfg3JaSXo4V8tz/Lx0fq6bSwbUCY1s4U=;
+	s=arc-20240116; t=1775673186; c=relaxed/simple;
+	bh=huPQM7iv7AuMqhMqvFo+Y04L3A9EXe1znMLw2dzIsso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYQgsGhkRH91Lbzm3SkGsD/gvZhuj3QRpcxzPoJorIwolaoVkBVz99XRogjgav1eVpDuKXYwJiCU/aaSjdpVUd+/EXkUsBkH8y18pCPXnfjbNzaVg0TLR2302MNTeVyCS+rLJL5dG5CbFFRTSbpIzNthpTNtD2RAgmQ9efj9YyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPB3vMkr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tTRJPGLoOgac178Im7Wij7oypK8w6VsqHQ7TXzqmA8m1KLen9Rn3ExtpiAqEe3PxLV0a4onSgTJ7cP5ZNslNu5tp6m8TO3V2G8GzYZhHMovcG93tjw+DBKUlh0aeKSE/Rg9BixKVBGd4GpIrub6A6T97dpANZgeYnLREoTTVLBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=roksawTJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPB3vMkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF776C19421;
-	Wed,  8 Apr 2026 18:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roksawTJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578BCC19421;
+	Wed,  8 Apr 2026 18:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673184;
-	bh=1OWHU2K79V4Cfg3JaSXo4V8tz/Lx0fq6bSwbUCY1s4U=;
+	s=korg; t=1775673186;
+	bh=huPQM7iv7AuMqhMqvFo+Y04L3A9EXe1znMLw2dzIsso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CPB3vMkrRYsGbTveDd2qBtVbKgKUFpN+3BLRV3pWhpcaEDEk+yYVOyYWiM/xFolsA
-	 sBnSHI0UX6Sa2aCVL9glIJ56xEJffFauSIh5uv11eMR4j6sjDWH5mcKDqq2C+17xkK
-	 6TZqkE16AwGBKCHztY1b3imlXcGKepHw3H7CP0zo=
+	b=roksawTJbA2ioE8niW7WzR98VzP9bueuKR062oeYbKBabmhr7dDYr3qXvhmyWfh7M
+	 lrJKsIyiXDHWXCsAKaTYxtFlVxjGlC/JCmheluIVRRpH2gacIr5Fz/kGSGyWCbbRvt
+	 ser3CTSgkZG7wY+/rptOvcbWBbK8Gs6H5AUr9jGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ernestas Kulik <ernestas.k@iconn-networks.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 133/277] USB: serial: option: add MeiG Smart SRM825WN
-Date: Wed,  8 Apr 2026 20:01:58 +0200
-Message-ID: <20260408175938.840623219@linuxfoundation.org>
+	Daniel Sa <Daniel.Sa@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 134/277] drm/amd/display: Fix NULL pointer dereference in dcn401_init_hw()
+Date: Wed,  8 Apr 2026 20:01:59 +0200
+Message-ID: <20260408175938.878113399@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175933.836769063@linuxfoundation.org>
 References: <20260408175933.836769063@linuxfoundation.org>
@@ -50,67 +57,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ernestas Kulik <ernestas.k@iconn-networks.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit e8d0ed37bd51da52da6225d278e330c2f18a6198 upstream.
+commit e927b36ae18b66b49219eaa9f46edc7b4fdbb25e upstream.
 
-Add support for the SDX62-based MeiG Smart SRM825WN module.
+dcn401_init_hw() assumes that update_bw_bounding_box() is valid when
+entering the update path. However, the existing condition:
 
-If#= 0: RNDIS
-If#= 1: RNDIS
-If#= 2: Diag
-If#= 3: AT
-If#= 4: AT
-If#= 5: NMEA
+  ((!fams2_enable && update_bw_bounding_box) || freq_changed)
 
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#= 19 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2dee ProdID=4d38 Rev= 5.04
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=da47a175
-C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E:  Ad=81(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+does not guarantee this, as the freq_changed branch can evaluate to true
+independently of the callback pointer.
 
-Signed-off-by: Ernestas Kulik <ernestas.k@iconn-networks.com>
+This can result in calling update_bw_bounding_box() when it is NULL.
+
+Fix this by separating the update condition from the pointer checks and
+ensuring the callback, dc->clk_mgr, and bw_params are validated before
+use.
+
+Fixes the below:
+../dc/hwss/dcn401/dcn401_hwseq.c:367 dcn401_init_hw() error: we previously assumed 'dc->res_pool->funcs->update_bw_bounding_box' could be null (see line 362)
+
+Fixes: ca0fb243c3bb ("drm/amd/display: Underflow Seen on DCN401 eGPU")
+Cc: Daniel Sa <Daniel.Sa@amd.com>
+Cc: Alvin Lee <alvin.lee2@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 86117c5ab42f21562fedb0a64bffea3ee5fcd477)
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c |   17 +++++++++-----
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2441,6 +2441,9 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM825WN (Diag) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825WN (AT) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825WN (NMEA) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -143,6 +143,7 @@ void dcn401_init_hw(struct dc *dc)
+ 	int edp_num;
+ 	uint32_t backlight = MAX_BACKLIGHT_LEVEL;
+ 	uint32_t user_level = MAX_BACKLIGHT_LEVEL;
++	bool dchub_ref_freq_changed;
+ 	int current_dchub_ref_freq = 0;
+ 
+ 	if (dc->clk_mgr && dc->clk_mgr->funcs && dc->clk_mgr->funcs->init_clocks) {
+@@ -357,14 +358,18 @@ void dcn401_init_hw(struct dc *dc)
+ 		dc->caps.dmub_caps.psr = dc->ctx->dmub_srv->dmub->feature_caps.psr;
+ 		dc->caps.dmub_caps.mclk_sw = dc->ctx->dmub_srv->dmub->feature_caps.fw_assisted_mclk_switch_ver > 0;
+ 		dc->caps.dmub_caps.fams_ver = dc->ctx->dmub_srv->dmub->feature_caps.fw_assisted_mclk_switch_ver;
++
++		/* sw and fw FAMS versions must match for support */
+ 		dc->debug.fams2_config.bits.enable &=
+-				dc->caps.dmub_caps.fams_ver == dc->debug.fams_version.ver; // sw & fw fams versions must match for support
+-		if ((!dc->debug.fams2_config.bits.enable && dc->res_pool->funcs->update_bw_bounding_box)
+-			|| res_pool->ref_clocks.dchub_ref_clock_inKhz / 1000 != current_dchub_ref_freq) {
++			dc->caps.dmub_caps.fams_ver == dc->debug.fams_version.ver;
++		dchub_ref_freq_changed =
++			res_pool->ref_clocks.dchub_ref_clock_inKhz / 1000 != current_dchub_ref_freq;
++		if ((!dc->debug.fams2_config.bits.enable || dchub_ref_freq_changed) &&
++		    dc->res_pool->funcs->update_bw_bounding_box &&
++		    dc->clk_mgr && dc->clk_mgr->bw_params) {
+ 			/* update bounding box if FAMS2 disabled, or if dchub clk has changed */
+-			if (dc->clk_mgr)
+-				dc->res_pool->funcs->update_bw_bounding_box(dc,
+-									    dc->clk_mgr->bw_params);
++			dc->res_pool->funcs->update_bw_bounding_box(dc,
++								    dc->clk_mgr->bw_params);
+ 		}
+ 	}
+ }
 
 
