@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F03B32A3FD;
-	Wed,  8 Apr 2026 18:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F86C3624B0;
+	Wed,  8 Apr 2026 18:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673738; cv=none; b=K8ggOf6Vf8Ga5CUgHsdtgz17JZauEqYOS/TTXP+TU9LNuN3JXiNdoON6XOXY8QW9zP5O+KlDTgVqIh0qW3Fil0divP8ebN4R1uTVGdprcpIDbElI3gUlU4hUT3BRY4AeJnV1yXY08SGOFDKwzQpy2m0+P/fNepCqdUL6y9KvyxQ=
+	t=1775673740; cv=none; b=USXm107caMshPQAPCJmu0ZcgWWNFO7wtmJFfjjAQJyjbLGsPmSObaNVwbwqf0VGspePi7rGjJQbh7g0YmdmZ4961pCMiDDDU9/ag3s9g0xA7+sOKQNj+y+P8gTijI5c7d+4UVLH1UI4Una2ivL6RzRLKCNbfNTiDEZeBbqy59Og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673738; c=relaxed/simple;
-	bh=sdEp236AGpt/XpkOna407EEtuV39ILivodWY86nmY8g=;
+	s=arc-20240116; t=1775673740; c=relaxed/simple;
+	bh=QSFRvWX0nnPnpa9OzPYSieI5bqYTxZlSK8YKVPjh6Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kz/X6SdVbaYi+CQBep6jHQQJPeLAq82lCgMelJI+w79kyWM6ywRF5KO6OiZilYHcIyfmN3jt2EM2Gd/dFpd/4i7uuWcsOSUU7wMbB1k+puXqh1glIchPpNrS/2JdKc0cZzrhFweAbxzrdQ58uX8TOYFQHi7RaMmAP7wYAfVMWHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zB61pQMJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T4z4GXmnZ2ISoWDYyBLd56HmurSKQzZ6x7c0f3Uvcn1J7J8QqKO0vCNKNTomdVxM6+pcscJkbmn8p4kt6/1jDUXbdKSTWKO0y5uw18ZXamix26DMLIUnBzKuOTRAH8ms/e6bPtFoddw5/xfWRErApGOGUXdlNwtzeOyjy6pYTAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7974+Uw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zB61pQMJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D97C19421;
-	Wed,  8 Apr 2026 18:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7974+Uw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E25C19421;
+	Wed,  8 Apr 2026 18:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775673737;
-	bh=sdEp236AGpt/XpkOna407EEtuV39ILivodWY86nmY8g=;
+	s=korg; t=1775673740;
+	bh=QSFRvWX0nnPnpa9OzPYSieI5bqYTxZlSK8YKVPjh6Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zB61pQMJla8WaOSQUJ/jcopMDgaHjHejnEfn91aVImlYtjyFagWnNdrMDSWD2eD2G
-	 pga5UrnFnraCxiL+Ly8RIkSRkNku5O1Hsl8vQUrdH3juqNhGW+8eNWfkO3WZkvL+8x
-	 oOM1rb5kT7eDlxrMufcwd5toA5X7bplcCpD80cDw=
+	b=f7974+UwEvGf+OZgksegQnesdRfCF3S+jlJdqlKXL8BzieVmdKQ/CR+uQViUQcZTu
+	 GPgXVCFx7IaQr+vpts7qoWcihq5/zkvrpvaUw5h7HSBjthVqmRupmsOs7zGEge5EDc
+	 GF6LO8J+35BJC8fV8DbApo76KGv6hRXRTAmP107A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	ZhengYuan Huang <gality369@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Praveen Talari <praveen.talari@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/242] btrfs: reject root items with drop_progress and zero drop_level
-Date: Wed,  8 Apr 2026 20:01:18 +0200
-Message-ID: <20260408175928.497692751@linuxfoundation.org>
+Subject: [PATCH 6.12 039/242] spi: geni-qcom: Check DMA interrupts early in ISR
+Date: Wed,  8 Apr 2026 20:01:19 +0200
+Message-ID: <20260408175928.534570044@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175927.064985309@linuxfoundation.org>
 References: <20260408175927.064985309@linuxfoundation.org>
@@ -52,112 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-[ Upstream commit b17b79ff896305fd74980a5f72afec370ee88ca4 ]
+[ Upstream commit 8c89a077ca796a2fe248c584e9d7e66cff0388c8 ]
 
-[BUG]
-When recovering relocation at mount time, merge_reloc_root() and
-btrfs_drop_snapshot() both use BUG_ON(level == 0) to guard against
-an impossible state: a non-zero drop_progress combined with a zero
-drop_level in a root_item, which can be triggered:
+The current interrupt handler only checks the GENI main IRQ status
+(m_irq) before deciding to return IRQ_NONE. This can lead to spurious
+IRQ_NONE returns when DMA interrupts are pending but m_irq is zero.
 
-------------[ cut here ]------------
-kernel BUG at fs/btrfs/relocation.c:1545!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-CPU: 1 UID: 0 PID: 283 ... Tainted: 6.18.0+ #16 PREEMPT(voluntary)
-Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-Hardware name: QEMU Ubuntu 24.04 PC v2, BIOS 1.16.3-debian-1.16.3-2
-RIP: 0010:merge_reloc_root+0x1266/0x1650 fs/btrfs/relocation.c:1545
-Code: ffff0000 00004589 d7e9acfa ffffe8a1 79bafebe 02000000
-Call Trace:
- merge_reloc_roots+0x295/0x890 fs/btrfs/relocation.c:1861
- btrfs_recover_relocation+0xd6e/0x11d0 fs/btrfs/relocation.c:4195
- btrfs_start_pre_rw_mount+0xa4d/0x1810 fs/btrfs/disk-io.c:3130
- open_ctree+0x5824/0x5fe0 fs/btrfs/disk-io.c:3640
- btrfs_fill_super fs/btrfs/super.c:987 [inline]
- btrfs_get_tree_super fs/btrfs/super.c:1951 [inline]
- btrfs_get_tree_subvol fs/btrfs/super.c:2094 [inline]
- btrfs_get_tree+0x111c/0x2190 fs/btrfs/super.c:2128
- vfs_get_tree+0x9a/0x370 fs/super.c:1758
- fc_mount fs/namespace.c:1199 [inline]
- do_new_mount_fc fs/namespace.c:3642 [inline]
- do_new_mount fs/namespace.c:3718 [inline]
- path_mount+0x5b8/0x1ea0 fs/namespace.c:4028
- do_mount fs/namespace.c:4041 [inline]
- __do_sys_mount fs/namespace.c:4229 [inline]
- __se_sys_mount fs/namespace.c:4206 [inline]
- __x64_sys_mount+0x282/0x320 fs/namespace.c:4206
- ...
-RIP: 0033:0x7f969c9a8fde
-Code: 0f1f4000 48c7c2b0 fffffff7 d8648902 b8ffffff ffc3660f
----[ end trace 0000000000000000 ]---
+Move the DMA TX/RX status register reads to the beginning of the ISR,
+right after reading m_irq. Update the early return condition to check
+all three status registers (m_irq, dma_tx_status, dma_rx_status) before
+returning IRQ_NONE.
 
-The bug is reproducible on 7.0.0-rc2-next-20260310 with our dynamic
-metadata fuzzing tool that corrupts btrfs metadata at runtime.
-
-[CAUSE]
-A non-zero drop_progress.objectid means an interrupted
-btrfs_drop_snapshot() left a resume point on disk, and in that case
-drop_level must be greater than 0 because the checkpoint is only
-saved at internal node levels.
-
-Although this invariant is enforced when the kernel writes the root
-item, it is not validated when the root item is read back from disk.
-That allows on-disk corruption to provide an invalid state with
-drop_progress.objectid != 0 and drop_level == 0.
-
-When relocation recovery later processes such a root item,
-merge_reloc_root() reads drop_level and hits BUG_ON(level == 0). The
-same invalid metadata can also trigger the corresponding BUG_ON() in
-btrfs_drop_snapshot().
-
-[FIX]
-Fix this by validating the root_item invariant in tree-checker when
-reading root items from disk: if drop_progress.objectid is non-zero,
-drop_level must also be non-zero. Reject such malformed metadata with
--EUCLEAN before it reaches merge_reloc_root() or btrfs_drop_snapshot()
-and triggers the BUG_ON.
-
-After the fix, the same corruption is correctly rejected by tree-checker
-and the BUG_ON is no longer triggered.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260313-spi-geni-qcom-fix-dma-irq-handling-v1-1-0bd122589e02@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-checker.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/spi/spi-geni-qcom.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index 7e9475e2a047b..7376ce6049a92 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1248,6 +1248,23 @@ static int check_root_item(struct extent_buffer *leaf, struct btrfs_key *key,
- 			    btrfs_root_drop_level(&ri), BTRFS_MAX_LEVEL - 1);
- 		return -EUCLEAN;
- 	}
-+	/*
-+	 * If drop_progress.objectid is non-zero, a btrfs_drop_snapshot() was
-+	 * interrupted and the resume point was recorded in drop_progress and
-+	 * drop_level.  In that case drop_level must be >= 1: level 0 is the
-+	 * leaf level and drop_snapshot never saves a checkpoint there (it
-+	 * only records checkpoints at internal node levels in DROP_REFERENCE
-+	 * stage).  A zero drop_level combined with a non-zero drop_progress
-+	 * objectid indicates on-disk corruption and would cause a BUG_ON in
-+	 * merge_reloc_root() and btrfs_drop_snapshot() at mount time.
-+	 */
-+	if (unlikely(btrfs_disk_key_objectid(&ri.drop_progress) != 0 &&
-+		     btrfs_root_drop_level(&ri) == 0)) {
-+		generic_err(leaf, slot,
-+			    "invalid root drop_level 0 with non-zero drop_progress objectid %llu",
-+			    btrfs_disk_key_objectid(&ri.drop_progress));
-+		return -EUCLEAN;
-+	}
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 38606c9e12ee8..dea4e524553c4 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -952,10 +952,13 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+ 	struct spi_controller *spi = data;
+ 	struct spi_geni_master *mas = spi_controller_get_devdata(spi);
+ 	struct geni_se *se = &mas->se;
+-	u32 m_irq;
++	u32 m_irq, dma_tx_status, dma_rx_status;
  
- 	/* Flags check */
- 	if (unlikely(btrfs_root_flags(&ri) & ~valid_root_flags)) {
+ 	m_irq = readl(se->base + SE_GENI_M_IRQ_STATUS);
+-	if (!m_irq)
++	dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
++	dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
++
++	if (!m_irq && !dma_tx_status && !dma_rx_status)
+ 		return IRQ_NONE;
+ 
+ 	if (m_irq & (M_CMD_OVERRUN_EN | M_ILLEGAL_CMD_EN | M_CMD_FAILURE_EN |
+@@ -1003,8 +1006,6 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+ 		}
+ 	} else if (mas->cur_xfer_mode == GENI_SE_DMA) {
+ 		const struct spi_transfer *xfer = mas->cur_xfer;
+-		u32 dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
+-		u32 dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
+ 
+ 		if (dma_tx_status)
+ 			writel(dma_tx_status, se->base + SE_DMA_TX_IRQ_CLR);
 -- 
 2.53.0
 
