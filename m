@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E2D37DE90;
-	Wed,  8 Apr 2026 19:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAA13D9030;
+	Wed,  8 Apr 2026 19:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674845; cv=none; b=biRUZq1hs+7X8zS4NLqgXdV/sLDulXerBPcsPC2PnIJbsF390wBvyaibaEdnrk9V39o8jbv/muXD2tY5xByHQ7c34R3OmKHaedK+Krnm/mAqIRm+5N4I4Lws27WAdKwXUITo4pk9UtDhmvwr2hqcT+FgRBz7/hqVF/KzaVvpKP8=
+	t=1775674848; cv=none; b=uAnPPAz555XWL2tT8rRpdgr9ufBfi6JlZLIogVEVuPL1XIVrjKl8mjASUQILVGmeqlzRQG/4PCC2KO+PtaI1vGv6q4wuq6gSd7hywU6vB8GhIBeSdcNTLJhLXTerdhb6AGoTj2IvnptjqwaAIcQuf1RgBaSm8R3oesVPdJsyN8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674845; c=relaxed/simple;
-	bh=92Arm4OG/SKmNHikezFamedggrUaOeouGtGoP7bSiHE=;
+	s=arc-20240116; t=1775674848; c=relaxed/simple;
+	bh=OhpWR9eTadG3UIcbBPwUd+oG6X7wF5OPaUKEI2L3fzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NIAT+5LM+n1V10ycb3iwsrjxEEnhbC06StZVo4+cioWH0IdyjGO2ByL/2HlcoLK8LPb7NfTlRnt/lJjwlECtZGwGrpjpQWkmkaoEABv3fLf4VbQV9IScw0XtGFfWvG+bYcwhxkjuAf1+AXtvFJGFaDRWkTPmsfTQkLyLaKAOyBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9SfrD0y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EJIEeHoUx33y1Vry30viAHwNX74rxow2XfL7KidvrE1z/GAg2Or4hQ39sdLlNMotf566NkRmXkDIymv8XJqSXCEjidK4K+nqICILw/54tpZvSC/7Yv5ENGkK7mRpKNjFxC/vAOVT6qrN2EQdcpGIvTNWC83ugmS3sdWxpASp9x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sN9JafkV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9SfrD0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7C8C19421;
-	Wed,  8 Apr 2026 19:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sN9JafkV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A09C19421;
+	Wed,  8 Apr 2026 19:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674845;
-	bh=92Arm4OG/SKmNHikezFamedggrUaOeouGtGoP7bSiHE=;
+	s=korg; t=1775674848;
+	bh=OhpWR9eTadG3UIcbBPwUd+oG6X7wF5OPaUKEI2L3fzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s9SfrD0y8iWUnZAjI/mkf070Ttmz63wIo7athWNcgHHi5Y9rw+NbSIfyGhfKezbgV
-	 1dO7qMGH9Z7tKAbIEsPPmMhaunBoIVv1923RLhSMVI5Vcjj1/iSBJHMT+r+nmnWX6Z
-	 q6S4gV6waLWWygDY8i5VdGOlHkhK/aYjzOi/LmUc=
+	b=sN9JafkV9LKVIWAa1ngTuOcarI6KiMwI3YOEhfQ29AmaCePJtVCV0jamATy4QdkKi
+	 06uxr01X1v48VNZJ28Yf1/88oNBhTY80MzD19brdZqQce9WN/9lFdEZGKz3IWW0n9D
+	 9lOz1jIjdOdazHVTNWh9P5LgUO6EkcvlvCVWteKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.19 256/311] comedi: ni_atmio16d: Fix invalid clean-up after failed attach
-Date: Wed,  8 Apr 2026 20:04:16 +0200
-Message-ID: <20260408175948.947673824@linuxfoundation.org>
+Subject: [PATCH 6.19 257/311] comedi: me_daq: Fix potential overrun of firmware buffer
+Date: Wed,  8 Apr 2026 20:04:17 +0200
+Message-ID: <20260408175948.983686202@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,45 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 101ab946b79ad83b36d5cfd47de587492a80acf0 upstream.
+commit cc797d4821c754c701d9714b58bea947e31dbbe0 upstream.
 
-If the driver's COMEDI "attach" handler function (`atmio16d_attach()`)
-returns an error, the COMEDI core will call the driver's "detach"
-handler function (`atmio16d_detach()`) to clean up.  This calls
-`reset_atmio16d()` unconditionally, but depending on where the error
-occurred in the attach handler, the device may not have been
-sufficiently initialized to call `reset_atmio16d()`.  It uses
-`dev->iobase` as the I/O port base address and `dev->private` as the
-pointer to the COMEDI device's private data structure.  `dev->iobase`
-may still be set to its initial value of 0, which would result in
-undesired writes to low I/O port addresses.  `dev->private` may still be
-`NULL`, which would result in null pointer dereferences.
+`me2600_xilinx_download()` loads the firmware that was requested by
+`request_firmware()`.  It is possible for it to overrun the source
+buffer because it blindly trusts the file format.  It reads a data
+stream length from the first 4 bytes into variable `file_length` and
+reads the data stream contents of length `file_length` from offset 16
+onwards.  Although it checks that the supplied firmware is at least 16
+bytes long, it does not check that it is long enough to contain the data
+stream.
 
-Fix `atmio16d_detach()` by checking that `dev->private` is valid
-(non-null) before calling `reset_atmio16d()`.  This implies that
-`dev->iobase` was set correctly since that is set up before
-`dev->private`.
+Add a test to ensure that the supplied firmware is long enough to
+contain the header and the data stream.  On failure, log an error and
+return `-EINVAL`.
 
-Fixes: 2323b276308a ("Staging: comedi: add ni_at_atmio16d driver")
+Fixes: 85acac61096f9 ("Staging: comedi: add me_daq driver")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260128150011.5006-1-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260205140130.76697-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/ni_atmio16d.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/comedi/drivers/me_daq.c |   35 +++++++++++++++++++----------------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
---- a/drivers/comedi/drivers/ni_atmio16d.c
-+++ b/drivers/comedi/drivers/ni_atmio16d.c
-@@ -698,7 +698,8 @@ static int atmio16d_attach(struct comedi
+--- a/drivers/comedi/drivers/me_daq.c
++++ b/drivers/comedi/drivers/me_daq.c
+@@ -344,6 +344,25 @@ static int me2600_xilinx_download(struct
+ 	unsigned int file_length;
+ 	unsigned int i;
  
- static void atmio16d_detach(struct comedi_device *dev)
- {
--	reset_atmio16d(dev);
-+	if (dev->private)
-+		reset_atmio16d(dev);
- 	comedi_legacy_detach(dev);
- }
++	/*
++	 * Format of the firmware
++	 * Build longs from the byte-wise coded header
++	 * Byte 1-3:   length of the array
++	 * Byte 4-7:   version
++	 * Byte 8-11:  date
++	 * Byte 12-15: reserved
++	 */
++	if (size >= 4) {
++		file_length = (((unsigned int)data[0] & 0xff) << 24) +
++			      (((unsigned int)data[1] & 0xff) << 16) +
++			      (((unsigned int)data[2] & 0xff) << 8) +
++			      ((unsigned int)data[3] & 0xff);
++	}
++	if (size < 16 || file_length > size - 16) {
++		dev_err(dev->class_dev, "Firmware length inconsistency\n");
++		return -EINVAL;
++	}
++
+ 	/* disable irq's on PLX */
+ 	writel(0x00, devpriv->plx_regbase + PLX9052_INTCSR);
  
+@@ -358,22 +377,6 @@ static int me2600_xilinx_download(struct
+ 	sleep(1);
+ 
+ 	/*
+-	 * Format of the firmware
+-	 * Build longs from the byte-wise coded header
+-	 * Byte 1-3:   length of the array
+-	 * Byte 4-7:   version
+-	 * Byte 8-11:  date
+-	 * Byte 12-15: reserved
+-	 */
+-	if (size < 16)
+-		return -EINVAL;
+-
+-	file_length = (((unsigned int)data[0] & 0xff) << 24) +
+-	    (((unsigned int)data[1] & 0xff) << 16) +
+-	    (((unsigned int)data[2] & 0xff) << 8) +
+-	    ((unsigned int)data[3] & 0xff);
+-
+-	/*
+ 	 * Loop for writing firmware byte by byte to xilinx
+ 	 * Firmware data start at offset 16
+ 	 */
 
 
