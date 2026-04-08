@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98633ACF11;
-	Wed,  8 Apr 2026 18:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46ED3A16A0;
+	Wed,  8 Apr 2026 18:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775672726; cv=none; b=JVkvpQFmuj8SNCbzPQvZchnjViNc3FMqajrX8ojxJY2XQioc+43ZBPI5qrPA4GsI7fMXHdilL3fcmEMLMpgv/l+CmkG6+ERo6mDRM+uhDhF2mUdW1PA8P1D8Ad9+21dI70WGqKBq2DACGY2WDzToseOQBHIfIcBMTpBf7rc6WqM=
+	t=1775672729; cv=none; b=n3nQBd+B03yhJwvASJDS8To/AD91PLJHMH23XcEtX5XDMdws9bNGvLKwUhOKfgDt2wXjWbqxQAnjICRcVNshB7LzbH2VuNJszBQW9QfUYBw9M9Fg+eLLCZMUgey4vO6mgK3OPmoXvfJA4riCuhQsYz6SHeuzpldrblJYGhwpGyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775672726; c=relaxed/simple;
-	bh=tMzVKdGHBcf5GP6i3l+vQ6aGN78KWLIq0/vSDFEO6Hg=;
+	s=arc-20240116; t=1775672729; c=relaxed/simple;
+	bh=I6DoBRU0xVRmGcteYsnuAg2CdscR3NGdYpxSlrYmQV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Awc1YQdinhloh0xNzpGwcEZvEVT85okQxGaPi9bgJDZYM+7K8D6tYxOemP6NlLinKPZS0/fHXDS+6gm/Oi+Roix77C79X1VYa+4vUD7d9GK4OYjY3LFnZemdj7kswvFxr1F9eshtMjJAfwsAL04yoFOKce+F3sdXYwLDJqbnpUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swpMGBaL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=azBYiA3ueZzGMK1htTgE6nu8FVjIeRHamrIjUPBV6tpYbRPWyD2cHPLsuBYrcXS9RCPTHYpDjWizfDHgNaSbnr6s7247Y4vZ3LAw/Xq7nVSU8vEiol0SOReQlDbIBpTrSM73/IsOIMLjXj1jJKPeFH5rIx5rxQHJS3bFbqQRofQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrahNkNg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swpMGBaL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2CEC19421;
-	Wed,  8 Apr 2026 18:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrahNkNg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03186C19421;
+	Wed,  8 Apr 2026 18:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775672726;
-	bh=tMzVKdGHBcf5GP6i3l+vQ6aGN78KWLIq0/vSDFEO6Hg=;
+	s=korg; t=1775672729;
+	bh=I6DoBRU0xVRmGcteYsnuAg2CdscR3NGdYpxSlrYmQV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=swpMGBaLCHQ1Zoyhq3GPJspI6ae83vs3hZ9zSd2BcOtyFhUosxRmWi9jDLVO54VGH
-	 WXLu8ytpHUYzcfd8NSUkm/mUgEax+uLbhZ7cTsClLrMOQbV/hkUdiWXWOFSCjqwOwm
-	 arfvF0rQOyUjisk9bY/OyLOHYNgNTjMxvDYUyk5Y=
+	b=mrahNkNgQjHZMbdBT3edGyggk4RKjpVNbvQ5x4Ha5G22lpn5EIAZ2aXW9TJoc6CIr
+	 4Tn3JUuSR/bTckXVs/RPswf3uKtI69qRanhlRzprRMjgSb7kUfSes3xrTCoKn0cEbM
+	 0Hbw/5ifrTE8fR0342x6TcoLcBpehEupc8P4cLvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cc9f7f4a7df09f53c4a4@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
 	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.6 118/160] comedi: Reinit dev->spinlock between attachments to low-level drivers
-Date: Wed,  8 Apr 2026 20:03:25 +0200
-Message-ID: <20260408175917.599495866@linuxfoundation.org>
+Subject: [PATCH 6.6 119/160] comedi: ni_atmio16d: Fix invalid clean-up after failed attach
+Date: Wed,  8 Apr 2026 20:03:26 +0200
+Message-ID: <20260408175917.635992101@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
 References: <20260408175913.177092714@linuxfoundation.org>
@@ -53,52 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 4b9a9a6d71e3e252032f959fb3895a33acb5865c upstream.
+commit 101ab946b79ad83b36d5cfd47de587492a80acf0 upstream.
 
-`struct comedi_device` is the main controlling structure for a COMEDI
-device created by the COMEDI subsystem.  It contains a member `spinlock`
-containing a spin-lock that is initialized by the COMEDI subsystem, but
-is reserved for use by a low-level driver attached to the COMEDI device
-(at least since commit 25436dc9d84f ("Staging: comedi: remove RT
-code")).
+If the driver's COMEDI "attach" handler function (`atmio16d_attach()`)
+returns an error, the COMEDI core will call the driver's "detach"
+handler function (`atmio16d_detach()`) to clean up.  This calls
+`reset_atmio16d()` unconditionally, but depending on where the error
+occurred in the attach handler, the device may not have been
+sufficiently initialized to call `reset_atmio16d()`.  It uses
+`dev->iobase` as the I/O port base address and `dev->private` as the
+pointer to the COMEDI device's private data structure.  `dev->iobase`
+may still be set to its initial value of 0, which would result in
+undesired writes to low I/O port addresses.  `dev->private` may still be
+`NULL`, which would result in null pointer dereferences.
 
-Some COMEDI devices (those created on initialization of the COMEDI
-subsystem when the "comedi.comedi_num_legacy_minors" parameter is
-non-zero) can be attached to different low-level drivers over their
-lifetime using the `COMEDI_DEVCONFIG` ioctl command.  This can result in
-inconsistent lock states being reported when there is a mismatch in the
-spin-lock locking levels used by each low-level driver to which the
-COMEDI device has been attached.  Fix it by reinitializing
-`dev->spinlock` before calling the low-level driver's `attach` function
-pointer if `CONFIG_LOCKDEP` is enabled.
+Fix `atmio16d_detach()` by checking that `dev->private` is valid
+(non-null) before calling `reset_atmio16d()`.  This implies that
+`dev->iobase` was set correctly since that is set up before
+`dev->private`.
 
-Reported-by: syzbot+cc9f7f4a7df09f53c4a4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cc9f7f4a7df09f53c4a4
-Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Fixes: 2323b276308a ("Staging: comedi: add ni_at_atmio16d driver")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260225132427.86578-1-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260128150011.5006-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/comedi/drivers/ni_atmio16d.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers.c
-+++ b/drivers/comedi/drivers.c
-@@ -1000,6 +1000,14 @@ int comedi_device_attach(struct comedi_d
- 		ret = -EIO;
- 		goto out;
- 	}
-+	if (IS_ENABLED(CONFIG_LOCKDEP)) {
-+		/*
-+		 * dev->spinlock is for private use by the attached low-level
-+		 * driver.  Reinitialize it to stop lock-dependency tracking
-+		 * between attachments to different low-level drivers.
-+		 */
-+		spin_lock_init(&dev->spinlock);
-+	}
- 	dev->driver = driv;
- 	dev->board_name = dev->board_ptr ? *(const char **)dev->board_ptr
- 					 : dev->driver->driver_name;
+--- a/drivers/comedi/drivers/ni_atmio16d.c
++++ b/drivers/comedi/drivers/ni_atmio16d.c
+@@ -698,7 +698,8 @@ static int atmio16d_attach(struct comedi
+ 
+ static void atmio16d_detach(struct comedi_device *dev)
+ {
+-	reset_atmio16d(dev);
++	if (dev->private)
++		reset_atmio16d(dev);
+ 	comedi_legacy_detach(dev);
+ }
+ 
 
 
