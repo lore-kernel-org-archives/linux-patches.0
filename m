@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99B232692B;
-	Wed,  8 Apr 2026 19:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F333D648A;
+	Wed,  8 Apr 2026 19:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775674881; cv=none; b=nW5z2xEKI3GtTrER7YlIyguMEQTGKy4GJ/wF5VOS5zG2lWkfXOl+1hE0/0bpw9CRFTYeWNCZKj/ikOFrusnjyyq0I6DDQV6DIokNT51Z93oI3xglvrCUgFArsEgDO1dXW/RAtOOpeaf4/O6jkqxoZwLNw5ysUGN9fZ72vbr7rrs=
+	t=1775674885; cv=none; b=QLV3ZpBANGg+QHXHAfiE5uN/qwJDBLgPhsCkEqC6cvKDLaU2ZpZpH/TIHQnn2GoRV6/aOfFFCfpxQVdWqEBGDLOC45FvSGMmMd0JyTzR+xSu4OsKk7ePW15uSDegQ1oO0YisWkzY8mtjyqgrlrGrYllBLsMb8XyzjrQ3XCDqKcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775674881; c=relaxed/simple;
-	bh=CxH7cOICM5Kcq+50rqL3IMOP/A7fIxBPWU8z33QWo2E=;
+	s=arc-20240116; t=1775674885; c=relaxed/simple;
+	bh=hA1V/klznBu6TVT6VowyTXL+7C40ckjqtpoIih94qtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RGyFjfStLOYZYjOdZ1tmzf2N+FEw3+B43qdvulJ77E/O7Px+488QOclGnJ9OWwRUnJl8CncI52NiZoZ/zM6FMWFg3yYvL5YlxwJeIqCGjnqwiUKoTc/bbZAwBOIEeKQRGAuVKs+5IbyP1Jn3+SNMgbwKXW/Olc98ZyFm6i1xzz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2LITPdJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eG2SMI0R9KE5Tzo0Hbi/02LxBQJB/C0QyWQUAR/XT4RHDLjwZ2UTF3pIl4C69mw6uPU5U/ZfHlt8eRsa2dFm6CzRKSTrx880ungs2Q/X0M50/Z5388p7ya0pNDclhJFWRc1NaNB6iWvY4SBI+dBBMz8K5GeCH8esCeUAmXp0Axo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvfFkNAJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2LITPdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB30C19421;
-	Wed,  8 Apr 2026 19:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvfFkNAJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A32C19421;
+	Wed,  8 Apr 2026 19:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775674881;
-	bh=CxH7cOICM5Kcq+50rqL3IMOP/A7fIxBPWU8z33QWo2E=;
+	s=korg; t=1775674884;
+	bh=hA1V/klznBu6TVT6VowyTXL+7C40ckjqtpoIih94qtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a2LITPdJ3t5etK9Pcy0AcKf/+ZqOLqxLIiVpn8dcKai7nKNlJ4PSWq3OxnWPbMnwY
-	 DsFgBBojT57wCjhj9xZK5uYFq4zhVZNWizKzMeWoUi8o9pWt7NyOHMdeI+tGyqahXp
-	 qd/ecDgcoruLWGyoDobJMjKtUv70tjOLWGT56Lf4=
+	b=JvfFkNAJOa8I06EVng+SyO9VJx7PxA5DlRDcbMQrSCfRITtq4ljOJmohXUfpe6G8v
+	 22NJxEihWZDxShZ6L6u5XUBgg6HHSIcburnd4w/VVeR8fKT+ie3RSf1+bSeHdm/SWD
+	 lOcXHBhE03RmUus2hmCSp7tOrOI+8GAV3bjxkJFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	kernel test robot <lkp@intel.com>,
 	stable <stable@kernel.org>,
-	Dave Penkler <dpenkler@gmail.com>
-Subject: [PATCH 6.19 269/311] gpib: Fix fluke driver s390 compile issue
-Date: Wed,  8 Apr 2026 20:04:29 +0200
-Message-ID: <20260408175949.427297132@linuxfoundation.org>
+	Liav Mordouch <liavmordouch@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+Subject: [PATCH 6.19 270/311] vt: discard stale unicode buffer on alt screen exit after resize
+Date: Wed,  8 Apr 2026 20:04:30 +0200
+Message-ID: <20260408175949.463910947@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 References: <20260408175939.393281918@linuxfoundation.org>
@@ -52,50 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Liav Mordouch <liavmordouch@gmail.com>
 
-commit 579af7204d762587f9cce0d6236a710a771f1f6f upstream.
+commit 40014493cece72a0be5672cd86763e53fb3ec613 upstream.
 
-The following errors were reported for a s390 randconfig build
-of the fluke gpib driver:
+When enter_alt_screen() saves vc_uni_lines into vc_saved_uni_lines and
+sets vc_uni_lines to NULL, a subsequent console resize via vc_do_resize()
+skips reallocating the unicode buffer because vc_uni_lines is NULL.
+However, vc_saved_uni_lines still points to the old buffer allocated for
+the original dimensions.
 
->> drivers/gpib/eastwood/fluke_gpib.c:1002:23: error: call to undeclared function 'ioremap'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-    1002 |         nec_priv->mmiobase = ioremap(e_priv->gpib_iomem_res->start,
-         |                              ^
->> drivers/gpib/eastwood/fluke_gpib.c:1002:21: error: incompatible integer to pointer conversion assigning to 'void *' from 'int' [-Wint-conversion]
-    1002 |         nec_priv->mmiobase = ioremap(e_priv->gpib_iomem_res->start,
-         |                            ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    1003 |                                      resource_size(e_priv->gpib_iomem_res));
-         |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/gpib/eastwood/fluke_gpib.c:1036:33: error: incompatible integer to pointer conversion assigning to 'void *' from 'int' [-Wint-conversion]
-    1036 |         e_priv->write_transfer_counter = ioremap(e_priv->write_transfer_counter_res->start,
-         |                                        ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    1037 |                                                  resource_size(e_priv->write_transfer_counter_res));
-         |                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+When leave_alt_screen() later restores vc_saved_uni_lines, the buffer
+dimensions no longer match vc_rows/vc_cols. Any operation that iterates
+over the unicode buffer using the current dimensions (e.g. csi_J clearing
+the screen) will access memory out of bounds, causing a kernel oops:
 
-Add HAS_IOMEM dependency to Kconfig for fluke driver option
+  BUG: unable to handle page fault for address: 0x0000002000000020
+  RIP: 0010:csi_J+0x133/0x2d0
 
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202601221748.AFAqHieJ-lkp@intel.com/
-Fixes: baf8855c9160 ("staging: gpib: fix address space mixup")
+The faulting address 0x0000002000000020 is two adjacent u32 space
+characters (0x20) interpreted as a pointer, read from the row data area
+past the end of the 25-entry pointer array in a buffer allocated for
+80x25 but accessed with 240x67 dimensions.
+
+Fix this by checking whether the console dimensions changed while in the
+alternate screen. If they did, free the stale saved buffer instead of
+restoring it. The unicode screen will be lazily rebuilt via
+vc_uniscr_check() when next needed.
+
+Fixes: 5eb608319bb5 ("vt: save/restore unicode screen buffer for alternate screen")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://patch.msgid.link/20260202094755.4259-1-dpenkler@gmail.com
+Tested-by: Liav Mordouch <liavmordouch@gmail.com>
+Signed-off-by: Liav Mordouch <liavmordouch@gmail.com>
+Reviewed-by: Nicolas Pitre <nico@fluxnic.net>
+Link: https://patch.msgid.link/20260327170204.29706-1-liavmordouch@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpib/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/vt/vt.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/gpib/Kconfig
-+++ b/drivers/gpib/Kconfig
-@@ -122,6 +122,7 @@ config GPIB_FLUKE
- 	depends on OF
-        select GPIB_COMMON
-        select GPIB_NEC7210
-+       depends on HAS_IOMEM
-        help
-          GPIB driver for Fluke based cda devices.
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -1907,6 +1907,7 @@ static void leave_alt_screen(struct vc_d
+ 	unsigned int rows = min(vc->vc_saved_rows, vc->vc_rows);
+ 	unsigned int cols = min(vc->vc_saved_cols, vc->vc_cols);
+ 	u16 *src, *dest;
++	bool uni_lines_stale;
  
+ 	if (vc->vc_saved_screen == NULL)
+ 		return; /* Not inside an alt-screen */
+@@ -1915,7 +1916,18 @@ static void leave_alt_screen(struct vc_d
+ 		dest = ((u16 *)vc->vc_origin) + r * vc->vc_cols;
+ 		memcpy(dest, src, 2 * cols);
+ 	}
+-	vc_uniscr_set(vc, vc->vc_saved_uni_lines);
++	/*
++	 * If the console was resized while in the alternate screen,
++	 * vc_saved_uni_lines was allocated for the old dimensions.
++	 * Restoring it would cause out-of-bounds accesses. Discard it
++	 * and let the unicode screen be lazily rebuilt.
++	 */
++	uni_lines_stale = vc->vc_saved_rows != vc->vc_rows ||
++			  vc->vc_saved_cols != vc->vc_cols;
++	if (uni_lines_stale)
++		vc_uniscr_free(vc->vc_saved_uni_lines);
++	else
++		vc_uniscr_set(vc, vc->vc_saved_uni_lines);
+ 	vc->vc_saved_uni_lines = NULL;
+ 	restore_cur(vc);
+ 	/* Update the entire screen */
 
 
