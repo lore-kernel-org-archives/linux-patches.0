@@ -1,56 +1,74 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA2128E0;
-	Thu,  9 Apr 2026 05:41:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED71E31196F
+	for <patches@lists.linux.dev>; Thu,  9 Apr 2026 06:15:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775713292; cv=none; b=UN26hqNtPMWjA8YPycuZF/m6cs7yyNBZu+6NQEl5KffQYqbcRtFUkBilYfLw2iOH2eWQX1+C4y72s9FzNk2BZK0zXxltY1K7MlAPELve5XPfZYkBLMYAH/ZM+ZbSBPhExsJbqDm2FTsbd8Lek7yAtV/rlCjH55tlzfwF5cMJDmo=
+	t=1775715337; cv=none; b=BXnKrNRt/lWcBeLfbcHSxfmBta4NMDYk5ez5B5uskL9/kPWgMhrv8rMLrDqEmXUTSEqGMLrXax0bg38KvCj/bpiRkR0p2/zdh7mPfJ8N/JjCtZljdoRky3CIAj1WwceOEM1Y7/Sc4Zbzdj7BIHcJ8SFK4C5Q/2knPZ7R+Hm+BaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775713292; c=relaxed/simple;
-	bh=nGirnteKIO3RjaMYyQUGiDeSJgAys7LoIRU3oePa7oI=;
+	s=arc-20240116; t=1775715337; c=relaxed/simple;
+	bh=gynYxE/cJH5GXtEhmWuEkMGUWBTMJgN5AYOWIKIc/fw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SZbJoMAZC45pNSxdQjNDHxLwJT2PzU78MFqfvk45CBom0a4kJe3LyRJ4dRfMGAA07fUNtYMHi2bkxSa5OVRyJYPfIhRZH2R0/eN1A6OdOtY3dw12BfbKu/FXdgl0Cz/YBJdOvjAM7vKKX8xasgcM2fwlGE9iz5EPlFB3Vk7U7CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Sizuifu7; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=q6c0AeRBxvxyoTO7T5kdhsu6SQiNbM/67kZq+BXGI9Pv5ohymnCh1tFpr185KPtjOQlu9lvKJXPQiZ3st9Gbdm+ba423NroIFB0USmdX3YmY3tAm49GgLS+sLqJE59PATK1/3J89TVPQ+bpYs3qJlzwX7rkrnMs4kW6y46A73hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=ZmkYTwBH; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Sizuifu7"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=ZLCCyzWYFHEQR7tg/cTuWmU89fPgRi7uYotr+oWPAE0=; b=Sizuifu7Wa8FmNknKdxXPk7do7
-	t4vtHx/O+vz6SbNTuNb9CIR59ljLrOkQL+U6J5xGYiiK4ln/eDsiHk76OWvxhzpV7R/VF6Pb2NAk+
-	0Wdd8360/FGxZXmw74Rle7EKGgbjD9YIYFwcdNTMJppwbe2Zuwdxu0/CoxHGmwVNyKq5dNhC5J9GB
-	lIc8eoc3PCfr6GyTKI7bsLGh58KQn9Zhbi5LM1TJKJhYQlSXr5+uIZH55SISn7cDm96dqa5FXYHfh
-	13IXy5fF9xhLpibOb91gdi0gjqRgdKHQyseJ7QNBnTe1ljy85ADQ8eEbmjtQuAONEPj3Y/Jk2S0RM
-	TpzuZ9Wg==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1wAi8r-00000009jDH-1p02;
-	Thu, 09 Apr 2026 05:41:25 +0000
-Date: Wed, 8 Apr 2026 22:41:25 -0700
-From: Christoph Hellwig <hch@infradead.org>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: Christoph Hellwig <hch@infradead.org>, Fenghua Yu <fenghuay@nvidia.com>,
-	"Chatre, Reinette" <reinette.chatre@intel.com>,
-	"Wieczor-Retman, Maciej" <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	"Chen, Yu C" <yu.c.chen@intel.com>,
-	"Box, David E" <david.e.box@intel.com>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v4 1/7] platform/x86/intel/pmt: Export PMT enumeration
- functions as GPL
-Message-ID: <adc8BWwX2xZOlO3_@infradead.org>
-References: <20260330214322.96686-1-tony.luck@intel.com>
- <20260330214322.96686-2-tony.luck@intel.com>
- <adXiozY7LdDNvAd-@infradead.org>
- <SJ1PR11MB6083ECB77F9AC85C2E8F94F0FC5B2@SJ1PR11MB6083.namprd11.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="ZmkYTwBH"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-488c21c636dso2506595e9.2
+        for <patches@lists.linux.dev>; Wed, 08 Apr 2026 23:15:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1775715334; x=1776320134; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=unrWXz/BvVWB09BOLpqqeC5jaEKVeUeeeLOkPeGWieU=;
+        b=ZmkYTwBHCA2Y9dY+5Gln4KP90urRqpn8/qUfsMKQ0/Ft2Vi/uU6qRUtneDwe1FgpPO
+         YVRxNnXRIo7IhsGd44CqeffC4ynFMCXh5U+3JJsgZMCEr3rPoVGUi7p3SEeGomwoz0vg
+         fYWi8+ipifUHVqM+wc6VevvPfTeyCdp1db3b4yx9/JRa3FLeqj1EHX2DxVDIfpOhDDio
+         hnvwGWEphvBsQxYihZ+w+F+HYjmk7acBNC5zPLT+qdRgSIYU36eNY6hSyvFYO7tsCXI2
+         do8BErQHaJqg9W4yHulRZ80w8p4Mm/QXe7x+HNMatAZxLVvd8lUNyTV0Nwz6Cpm4b+v5
+         ubQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775715334; x=1776320134;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=unrWXz/BvVWB09BOLpqqeC5jaEKVeUeeeLOkPeGWieU=;
+        b=RjXdGcQx/9JUKy1XuZV4MHXPx0nARmvk2CODSK1DJtl2qvpSjwzG4L0M8uG37Q5q9H
+         +m+FH21Znm+UsRSveRtLFkKN71jC33Wkcd21zq/USsIZevRTytwBHGGXH+RaTAZjAmX9
+         lucmUgm+DR5vxJyK+O78BsFf33MBktZCghzzNIMRRg7/vHrmrSeK/HWBmAHX135J8if/
+         os3HuY4srhnWV9LacSi0BRshiwYo/8fc193wkYsjZMM5tc0A0KVTstq0HsIjWqOu/O8F
+         xeDnBH4t2xvDD4iRKzqXgVDY3tird4omKsz8f65AAYnMUVVy9xoHvexvMetmWEni4Z73
+         H+zQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVa2+PwMEDUzwb8zjQuXVSpwPLGagGUPcFRNrUACwfRNqjcOp/Hd4xWuLUKR4A1KYa65ORoRM6I@lists.linux.dev
+X-Gm-Message-State: AOJu0YwtYgstCGmy/OqSmrvfrR2klf5e1fnMgzcFR1V9pfG/QBGXC1K1
+	rJecYBZ6NhkAkMCE7QsdbhTZwwablPdwcm3JiCB36kJXjzQVALeI+3JUxtAM7A6Zws0=
+X-Gm-Gg: AeBDiet7uQ3EFGJytY5UZ1WKG8/aJzcRxEoWDJft/O+MukysHxXi29C/X5z8dO1jj8Z
+	4fxDhVN6odMy3ZYNDudURNcaIHTupOwgwY2YEyPyU9+vw3/vQYlEUmfTfigcUXzk7ATJf1FFmLp
+	7K8TCsqRvpqpgPqoVgti68Efwpwda/kagWIvj+NOrbYI6c7aqmCKoakv1VzP5dgYUw3/wPvMyOS
+	72H7KcbX8DTZ76OIPbboyHZm1FxPhktyVIZPkxjPVsbf0P11zkLgaplMFiPZfbQv7E4+ZmXg/is
+	UjxLBjPeaLkGNz6Fp9eollGKJRDFHG3EHdsWz7FPNbfosK9xYfED7koJR2EBzhjHE/Z0vKPd+4F
+	SxscskQTnw+301AF15hson/pvPqTqKgdYcMHs+1N8N7BVP6RdKw40W18NzdibkpwalpdUtLwdn2
+	WUg10BeNeRKW2FVF8uGtGOM0FfmBGP7Doc/soMUx7ZGafRRyc9
+X-Received: by 2002:a05:600c:5292:b0:486:fe39:28b7 with SMTP id 5b1f17b1804b1-488996f08f5mr359918855e9.9.1775715334280;
+        Wed, 08 Apr 2026 23:15:34 -0700 (PDT)
+Received: from u94a (114-140-130-35.adsl.fetnet.net. [114.140.130.35])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-9546344aae6sm4114265241.5.2026.04.08.23.15.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Apr 2026 23:15:32 -0700 (PDT)
+Date: Thu, 9 Apr 2026 14:15:08 +0800
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.19 000/311] 6.19.12-rc1 review
+Message-ID: <7we3hoy35kjuwbrzarr4266ylu4x4zcurpuhuhkuzhijbhq2fx@o3zp2r6kgvoh>
+References: <20260408175939.393281918@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,25 +77,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <SJ1PR11MB6083ECB77F9AC85C2E8F94F0FC5B2@SJ1PR11MB6083.namprd11.prod.outlook.com>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+In-Reply-To: <20260408175939.393281918@linuxfoundation.org>
 
-On Wed, Apr 08, 2026 at 05:01:54PM +0000, Luck, Tony wrote:
-> >> The symbol_get() function requires that objects be GPL licensed.
-> >
-> > Please don't add new uses of symbol_get, as we've been slowly trying
-> > to kill it off.  If you have bidirectional dependencies just add an
-> > registration module in the middle to resolve it.
+On Wed, Apr 08, 2026 at 08:00:00PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.19.12 release.
+> There are 311 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> In my case I have "resctrl" (which is built-in, and likely to stay that way) that
-> needs functions from the "pmt_discovery" module to enumerate which
-> event counters are present.
-> 
-> Should I add  EXPORT_SYMBOL_GPL(some registration function) to resctrl
-> 
-> and have the pmt_discovery code call that to provide pointers to resctrl?
+> Responses should be made by Fri, 10 Apr 2026 17:58:42 +0000.
+> Anything received after that time might be too late.
 
-Yes, if your dependency only goes one-way against the normal flow,
-that's by far the easiest.  Bonus point for bounding that registration
-on an object fitting the natural scope through OF/fwnode/acpi_dev or
-whatever fits here.
+test_progs, test_progs-no_alu32, test_progs-cpuv4, test_maps,
+test_verifier in BPF selftests all passes[1] on x86_64.
+
+Tested-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+
+1: https://github.com/shunghsiyu/libbpf/actions/runs/24153838933/job/70487760072
+
+[...]
