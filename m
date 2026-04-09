@@ -1,52 +1,33 @@
-Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A421E2FF66B
-	for <patches@lists.linux.dev>; Thu,  9 Apr 2026 08:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037F938F620;
+	Thu,  9 Apr 2026 08:10:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775721870; cv=none; b=UPE89pZ6VAthPkAluH831+oFZzrSQajX7MCjzjcofVJ26f8OyS35Q5/VbIYzXs/WV7lLNQTYVwZNieGmx6ZNuteDkQ3CdK/9GmLtRphO5Ugp9nNKvaUji4Z+v+fOAoRgjloCeYY+VuFePD1VGHC9sTsEH2WllRFM8Wq1Vjr6OsY=
+	t=1775722204; cv=none; b=W0NrF8deDl+F80mdoIbytzmrPXmlUjZsVJ/2E4jn1/OzA7hjJWl4FFwxRd4k5k8GcT9Rm//tnzq5yDX/mJsMhHnMJ/g0TRiUTmR2VfFCzo+QzJU+1QeWhstNQcOvF7CBkq2BLdWiCxJ0cr8wSWo3qv4OFunBNQCRBMLBaag6nV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775721870; c=relaxed/simple;
-	bh=DAjGfGNhTLUWGHJkAzrmGT3q5uYITREul4k8BNoPzcY=;
+	s=arc-20240116; t=1775722204; c=relaxed/simple;
+	bh=3FoYSPwgoiADw0tIkPFXceKwEkBdsSCbLMezfGGtIYE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XS4gZ7MgOBZ1GBxWeko8JW2oUKwu3bEojKRAnlss19JGSROTUQlpdxx0osHF4GTxl4X4+OiQ2Xzw7eqbhLYaPWhbnjEHS0RtXYUJqaNJniFfC2PLX+NsKYQ8VrkVDrCP3F819qDauFita8pCRuhfLMmmKkBYLXkF0OIZAvV1wZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=ISJMtDb0; arc=none smtp.client-ip=35.89.44.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	 In-Reply-To:Content-Type; b=ZnUECTxRFFz9x5fFLZbkzWYgfYwatcyCu86LuIJtMkGJCbWG59bOlXUfFcuwAxxEppScWVck6HoIarDTZPIVoAAUcIDbRIFfVTO8XjqjN+jVvElUJ7hljKznL1sKChquAjF2tKnPwKV5FHCnEnz9UhEUaCBxDjNhEF0Z/ywQB7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q5LVIopK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="ISJMtDb0"
-Received: from eig-obgw-6002b.ext.cloudfilter.net ([10.0.30.203])
-	by cmsmtp with ESMTPS
-	id AhPDwEwpJshqQAkNJwinjN; Thu, 09 Apr 2026 08:04:29 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id AkNIwNcokwWe6AkNIwVls2; Thu, 09 Apr 2026 08:04:28 +0000
-X-Authority-Analysis: v=2.4 cv=RfSQC0tv c=1 sm=1 tr=0 ts=69d75d8d
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=9Tqn9AUVQInYdLDqjz6sHTb9iOj57lRCPIqCNLhhAGw=; b=ISJMtDb01oqXfOxGMuxOlNXRRW
-	fXgUg79DXJuIRkQj5xXjfmAuBv+NJ9IpDsEtML9D/xNk2/1rYhnj2sng7lro5m4CAiq0XpYZyx+1E
-	wl4qc2o1Yx3n36sbu5Q+KnabjwJvcSWE3QVHcpWeMaDTHIAjhNQXp4vafw4NkW/Iim+QUGSPF8UwX
-	3qZqHdkZSpuZG9M2AQe0ZVH4XydHR3KaG7v8n1npHc0Oc5cPeOc33FKU/2SUU1aeodHGZe5HJf2LW
-	nltaF1iglEbBWRsPggu//5xSalKTX81g7xwB9Cqpm8WmctzHqBsLCHYmPKNFsBgBXcKutbG5QHsqG
-	Isv0vY1w==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:40974 helo=[10.0.1.180])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <re@w6rz.net>)
-	id 1wAkNH-00000001y0s-2vhY;
-	Thu, 09 Apr 2026 02:04:27 -0600
-Message-ID: <76dff695-827c-419d-990b-5b7845a46c3f@w6rz.net>
-Date: Thu, 9 Apr 2026 01:04:26 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q5LVIopK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3610FC4CEF7;
+	Thu,  9 Apr 2026 08:10:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775722203;
+	bh=3FoYSPwgoiADw0tIkPFXceKwEkBdsSCbLMezfGGtIYE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Q5LVIopKAcTIiuu/6ivk1rHqFd0MrueA8629H8T10Xo5X5iust/BGiEy3elBvMilZ
+	 lrmZLHBs1C1J9TfQhY/lS18i94+qN8KgW27hW6JB+rBBJYdT48GqsknEvywf6MDoou
+	 2v2nSkID85avOSEvCZN8fos+UiVAEvvvQU3pv560DPbEJDb68CXiz1mg2j7cdhqDg/
+	 VGl4bWmeIwRS6uYBKQ5dpYc1Tvhpp8M1VWHnA2/n06tlnDLZVrkQdPd0B7Sm2HlpUW
+	 bCvRuJK+o2QpT3Nv+wGpu85Ow2wVZPwyhaW5drcrxDp2uLCoRWXHWrPQJmwdUgdEQC
+	 8h0hgy9hNLiBA==
+Message-ID: <bfda5183-df4b-4f7a-b867-031f046aa2ee@kernel.org>
+Date: Thu, 9 Apr 2026 10:09:59 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,62 +35,100 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/160] 6.6.134-rc1 review
+Subject: Re: [PATCH 6.19 248/311] x86/platform/geode: Fix on-stack property
+ data use-after-return bug
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260408175913.177092714@linuxfoundation.org>
+Cc: patches@lists.linux.dev, Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Ingo Molnar <mingo@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Daniel Scally <djrscally@gmail.com>, Danilo Krummrich <dakr@kernel.org>,
+ Hans de Goede <hansg@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>
+References: <20260408175939.393281918@linuxfoundation.org>
+ <20260408175948.651696885@linuxfoundation.org>
 Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20260408175948.651696885@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.206.103
-X-Source-L: No
-X-Exim-ID: 1wAkNH-00000001y0s-2vhY
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:40974
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 78
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfLcORTpDN5TU9g2R24j2Yivk+oWgkPQFhtdikIOVy74/r/t7SMKvOZY6MU5rygnawrubkZuiDn9JfzfulMu1mV+7ivtJT5c541lTwnAEanx2pamkVL26
- I48EA/meBTm5ts1kjiSjDqgiQBzEAku3HwMkPJZy/UBsXdaRgI0wirkcvNANQhTgZ/PWiQYKTJuV/Q==
+Content-Transfer-Encoding: 8bit
 
-On 4/8/26 11:01, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.134 release.
-> There are 160 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 10 Apr 2026 17:58:42 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.134-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi,
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+On 08. 04. 26, 20:04, Greg Kroah-Hartman wrote:
+> 6.19-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+> 
+> commit b981e9e94c687b7b19ae8820963f005b842cb2f2 upstream.
+...
+> --- a/arch/x86/platform/geode/geode-common.c
+> +++ b/arch/x86/platform/geode/geode-common.c
+...
+> @@ -127,6 +129,12 @@ int __init geode_create_leds(const char
+>   		goto err_free_swnodes;
+>   	}
+>   
+> +	gpio_refs = kzalloc_objs(*gpio_refs, n_leds);
 
-Tested-by: Ron Economos <re@w6rz.net>
+On x86_32, this fails to build:
+arch/x86/platform/geode/geode-common.c:132:21: error: implicit 
+declaration of function ‘kzalloc_objs’; did you mean ‘kzalloc_node’? 
+[-Wimplicit-function-declaration]
+arch/x86/platform/geode/geode-common.c:132:19: error: assignment to 
+‘struct software_node_ref_args *’ from ‘int’ makes pointer from integer 
+without a cast [-Wint-conversion]
+   132 |         gpio_refs = kzalloc_objs(*gpio_refs, n_leds);
+
+
+6.19 does not have kzalloc_objs() yet.
+
+thanks,
+-- 
+js
+suse labs
 
