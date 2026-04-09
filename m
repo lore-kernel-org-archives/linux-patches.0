@@ -1,82 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB7B2EC0A1;
-	Thu,  9 Apr 2026 14:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9E53DE44D;
+	Thu,  9 Apr 2026 15:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775744208; cv=none; b=oipbB8iZwkcLu8/GbH/RaF4DaZfTUKgVwhT0ougm+6yPxnjEaT7A/t+bRUsqCOd1oiR9cPl9y1Mm1Zefz5yc0LE7+fjqe/PJT4tUss0aEzO/njIn98dPbBn9Ihw4k746DkHKaACBHDUAl0rrkWfhAPZ6TQTI/HiIsPDpElXrvm4=
+	t=1775749151; cv=none; b=abm4TGkLh29oawIyLQ7S0d53UBLJY6+u31wNlCU69gh3V1mSK2DHqYquZyTiUFKdduUfh0pODoBiZkFUG4+fI8m5nUF4deZBhdpq65XgP3GhCjWGsKDJpCwZO1IrGC1UYqveaPajEWbxy/6lh3h9T/N26naj+Jo7gHnJAWKtK54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775744208; c=relaxed/simple;
-	bh=9GCDqvf3ouE1tZChLaCxCFk0pdlg3TigRyHsCi6kqYo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K/VtbZcTbrWFNIruaRXUCu+dq1/luDyyNAe3pCP84KUBaWL+0wni14DNReIO74e1Xq5tnnauvGnSEPpT5Vx7TEi+pbSaIPh3nPd4SMY5dmIsJ4mG4Z5N1gz6RLILH2kF0bIuK5LrquB69z8ZyMQ9003OSnhdWFLS41zg4ouaZ7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qmal5Jwt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775749151; c=relaxed/simple;
+	bh=AEeUX2SQdCTAmhUr44kqm08QLCmXgxQOLC8qM/EqwxU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=vFw+fSf7+DL8AjPdSVtJYnHXZxNYt7vQqijlX5axm5NzLvQNxIY5kAg5ub2PmvrUaAG0F4OGZdXTOlmTWZFf86V07GSpZ1nWcozbwmLSVQDM+7eCvlnMzFwuPyDn3BTKkmJiqGTCFf04iUSY8+6F0O/AG/cJvBvLZ14sJewvhYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oDcDHtJ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qmal5Jwt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F58FC4CEF7;
-	Thu,  9 Apr 2026 14:16:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oDcDHtJ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2675C116C6;
+	Thu,  9 Apr 2026 15:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775744208;
-	bh=9GCDqvf3ouE1tZChLaCxCFk0pdlg3TigRyHsCi6kqYo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qmal5JwtT3w1nRruUKdqyYRHQyOnwPnxWpM0cQnZbAz/q/gostrAHu/ofb+lnoF4z
-	 sidAJk/IL+ig6zEoh7lBb9TiKLfwXOpJtgXEj7FFaACtqkC3tDOOYSZV51KKw6dYEE
-	 I1XE+ApGlXRSXFo3/qpemlcF44AgpoBdOeOvQ+WSVHueu8QTNNrRmPHrTkMcqWWNAB
-	 oO0zpOwdyfrSNaR3WWRUEibKXATF6lERYe2Yo/8RBXwQzL3ZzrAsVfZEq6+I84byNf
-	 5A7bUDLEb8AVOEw5/JmgsFAWUqoS4r5BnEn84+qx/YwAY4q9NkJ3OtvWefJM+PVEir
-	 BFZJ2lEGSebHg==
-Date: Thu, 9 Apr 2026 15:16:41 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.6 000/160] 6.6.134-rc1 review
-Message-ID: <9716b9fa-132f-415a-8998-89d6d032dd73@sirena.org.uk>
-References: <20260408175913.177092714@linuxfoundation.org>
+	s=k20201202; t=1775749151;
+	bh=AEeUX2SQdCTAmhUr44kqm08QLCmXgxQOLC8qM/EqwxU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=oDcDHtJ1eGecHB0ySf1aux6IMYyVbGsrF4Ausr5KlOQD3WqN5/w/dDCs/7tbIpyAQ
+	 JsJFkZx8mnkMIGYIEEQs1TyAmxyO/SEuoTIT2pOdtVltzLXfjpoq0rAKXxVYmF3xCh
+	 sbH75IZeKqHq2T2WBPKOjOqCTOnuDuIBz1panvF0bUGnxSTgV9zooOgjnXja+Q96UF
+	 sX9AykfUr4ZsfcPVTVAF/oiDfOpVPSHY2dUIjAK4WjsEPG3MuHsHD69Q6xwfh6IO41
+	 y5R87URAEOPMp5Res4lu7xZsmQHoIJqyKTX0vbLw4rSd71L4hfxsd0tKcymgqDwFiN
+	 BkGoYkzzJ3puA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@nabladev.com,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.1 000/312] 6.1.168-rc1 review
+Date: Thu,  9 Apr 2026 17:38:48 +0200
+Message-ID: <20260409153848.32578-1-ojeda@kernel.org>
+In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
+References: <20260408175933.715315542@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="azmIMgNWjcBpCevv"
-Content-Disposition: inline
-In-Reply-To: <20260408175913.177092714@linuxfoundation.org>
-X-Cookie: Hailing frequencies open, Captain.
+Content-Transfer-Encoding: 8bit
 
-
---azmIMgNWjcBpCevv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Apr 08, 2026 at 08:01:27PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.134 release.
-> There are 160 patches in this series, all will be posted as a response
+On Wed, 08 Apr 2026 19:58:37 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.168 release.
+> There are 312 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Fri, 10 Apr 2026 17:58:42 +0000.
+> Anything received after that time might be too late.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Boot-tested under QEMU for Rust x86_64:
 
---azmIMgNWjcBpCevv
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
------BEGIN PGP SIGNATURE-----
+Thanks!
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnXtMkACgkQJNaLcl1U
-h9CJywf/UMKmsSEO9sIQtprejPg5ou7FJWY24miX8C4zlOJ0v5PvMS2vHBWqoYCV
-krEr4UxHOmHJriess081e10duDg2cwj1rvMlC8zkB2eWBPtOfp9fp1SqtmH7Hlo4
-q0qbhs3RfoHE3hRfRUmG/6Up3O5/VR7qCbB7xJLbohNsuPo5xPRv69RgDcrxI5AL
-DlDB1aZix9MN2a3hlDkqn6qiXItowaV6IpQ91aA6wCF/JO6ZDg+i6njL1dDyl9Ev
-MbFsB2mewdXIXrpaecQ7mXqV13YVCDBTtShsEUHd1SOOKweCAp833qbwVJx1XS2P
-PikHm4YqjcO7xg+MpbL8C3RZFDCScQ==
-=aPaK
------END PGP SIGNATURE-----
-
---azmIMgNWjcBpCevv--
+Cheers,
+Miguel
