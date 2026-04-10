@@ -1,38 +1,38 @@
-Received: from mail115-24.sinamail.sina.com.cn (mail115-24.sinamail.sina.com.cn [218.30.115.24])
+Received: from mail115-63.sinamail.sina.com.cn (mail115-63.sinamail.sina.com.cn [218.30.115.63])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DFC1E2614
-	for <patches@lists.linux.dev>; Fri, 10 Apr 2026 02:41:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4A92ECD3A
+	for <patches@lists.linux.dev>; Fri, 10 Apr 2026 02:42:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.63
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775788896; cv=none; b=gjzZP1pinNptZbAkbzb8EaXyiS2ExHx4/mZT7eh7bmMXhUC7ylSiNoRgEJZNRm/OHOfqI76WrX+sbpwokiltDq8vAwE7ycWQ5SWOvnrEfjc+Myrw6ORVo7HQwS8yur3Xum2vc5govv9fNXoTKwglhXQKUJEEPPT+a1dOoEMw9Hg=
+	t=1775788927; cv=none; b=IkCtLs7zzpW3SAHP3ma5gUW3C/hzuHqac7qqjawoQNtqGDwYD0CDC/V/YlwT9DLLPZ4BlMqzdOaIMITGTiXnknuWImG0LWmfPdsYxYvArJzu4dpF4NtZTb1pKy0/vvKah9Zqe3IZFOBe9OwijJ9xrSfP4rMF2Ww3ApMQIFIr9+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775788896; c=relaxed/simple;
+	s=arc-20240116; t=1775788927; c=relaxed/simple;
 	bh=a4lni9hcsti9FZ1wRpFGW1X6Y+us/2ONM6YdbyDS/ig=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Y2YfTjxsx/ZyXmKQrYONAdNGj7+TG/xUzKYygajQ1YWcXgX9A3LJTt5bETT7poIOkx0kqDw60xHJYVtRlH2E6x5GLTZFGzrofLqm/ClW4Brdq+Z/81vG73SShyG1Cmx0zjNJK2ifwZd1tUMqRfxHyNZwtn79zqXQ8TgsLw1pND0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=EZ9wirjF; arc=none smtp.client-ip=218.30.115.24
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=bw04SuVPRXTGs0A9z+C8P1eI2AvEUzg7rOHGH18bz2NaVhRBCSCLO0yq2GJcCynIypJYthtFmIxPpz+yZKU4VYke5fzpLHDqYQrqHaK2Z/jm5A+OAn+TQev64Z+PKx++5IuK8Os9k6ZkqyPq83qcDb+XPd3FhC6mgq2X7f+w/pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=KItVt9wK; arc=none smtp.client-ip=218.30.115.63
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="EZ9wirjF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1775788892;
+	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="KItVt9wK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1775788923;
 	bh=ruYH7ms7tY97YQislZdAnstwK+shvlV+EpfW2XTw8BM=;
 	h=From:Subject:Date:Message-Id;
-	b=EZ9wirjFkt53a1uAyzKKzQ45O60kZHr+9GMUGbN5T5yL4sJ0H402v4LIs54mrLULO
-	 A1iMUZ/CxsVyK+JQvFhYxPWAL8cLN9RsI6xr8LHhQ8xQ87h8v4n31qebKJelWWRb+O
-	 jKZCvDfohxJWKGZwlK07kLUdlgFgnNYLtLpVSSQ8=
+	b=KItVt9wKLHzB+W40SxDPW0oUFzAkSPlRErLEM5pTb05qUa3voV+hYwA3n53Vw/Hd3
+	 jDi1EhnuVkF2eeSnhN4ICxzLuDbfJaNJw/Ky8xqKXHEpoh/hpBtLHZm5gIFzVPqilr
+	 eNAVT460HLrCshLXQes/Y0+o0NKToS1AnbrbIjhI=
 X-SMAIL-HELO: NTT-kernel-dev
 Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
 	by sina.cn (10.185.250.22) with ESMTP
-	id 69D863300000308F; Fri, 10 Apr 2026 10:40:51 +0800 (CST)
+	id 69D8637300004E7D; Fri, 10 Apr 2026 10:42:00 +0800 (CST)
 X-Sender: jianqkang@sina.cn
 X-Auth-ID: jianqkang@sina.cn
 Authentication-Results: sina.cn;
 	 spf=none smtp.mailfrom=jianqkang@sina.cn;
 	 dkim=none header.i=none;
 	 dmarc=none action=none header.from=jianqkang@sina.cn
-X-SMAIL-MID: 2701797602325
-X-SMAIL-UIID: 35D1CE780ABD41B7A80F43E657DA5241-20260410-104051-1
+X-SMAIL-MID: 5399577602229
+X-SMAIL-UIID: 4C3470BD7AEE45A6807157EBF20EDA74-20260410-104200-1
 From: Jianqiang kang <jianqkang@sina.cn>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -42,9 +42,9 @@ Cc: patches@lists.linux.dev,
 	mchehab@kernel.org,
 	linux-media@vger.kernel.org,
 	mchehab+huawei@kernel.org
-Subject: [PATCH 5.15.y] media: dvb-net: fix OOB access in ULE extension header tables
-Date: Fri, 10 Apr 2026 10:40:48 +0800
-Message-Id: <20260410024048.3765362-1-jianqkang@sina.cn>
+Subject: [PATCH 5.10.y] media: dvb-net: fix OOB access in ULE extension header tables
+Date: Fri, 10 Apr 2026 10:41:55 +0800
+Message-Id: <20260410024155.3765938-1-jianqkang@sina.cn>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
