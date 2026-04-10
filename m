@@ -1,47 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DD8382F27
-	for <patches@lists.linux.dev>; Fri, 10 Apr 2026 20:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F2F3859DC
+	for <patches@lists.linux.dev>; Fri, 10 Apr 2026 20:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775851541; cv=none; b=sWq8sMxilUVQwOBz6SB8sLYm+xnKduduso2pPIYoS6DpGYMq5bR+vu+KWlWrRHXLu1iXLbXuD8pkRu9zmDPZ5RlBPvPXpS23MhjYMqEPr85f9mQmjmfo0/Fzh0mki0vjWVpn5oJXH19UywcF/SyFNoWjNgaJqIuDiMuOQSAs1Ao=
+	t=1775851543; cv=none; b=ErjcTpGt3ScBqZcofBklqnh6tkz9/Fky8Q/ZYgjc6VOciZOxCQ8UYB7QCdaBtkRCC0dkgqwAQIvFr/KQGEcEb/UHeTl1ECJFkmOOS3kzzXFvYnmvGLE1wTmuq5/lbVeKinIwg5JdA6NQB8YYQSFrbnTcr5VxxefeuSqEoim6xLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775851541; c=relaxed/simple;
-	bh=5cU9F5tKGmBMI3FGLw/JyEKm55TBNhUi/V3YRuRIX70=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GHeW5Kg+7e7YI4+Ts3oEAOWkDpiwVvlrgDG2buRrlIUFnC67yD06BJScjLW99Rm/gI54fjR2Huhtvod1B+eTQaej89M4lDNDEgE3EDeK5sIBm40YstxdRG6GzForjFCZna3nLifOD4JGsYxS+aG77OWc1qGSgnBSqf/920f4lIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OIiF1baA; arc=none smtp.client-ip=198.175.65.18
+	s=arc-20240116; t=1775851543; c=relaxed/simple;
+	bh=TpqgBuTQel4V5/BGOHX3wAgyHeUcGtOmEJQ2AKSmzOg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=D3KN+x1Q/Z09HVTTTFFc1jwDATL/UVdbRdjHAfR5t4CxdEh4eFDfDZpnX1FrKD99x8aVlQ/8BrJCLisoHQezK01sNEhhub+drgURl+urByx8axShkIeoPlXXx5vyzbAf6aQ26EWI28bm2iN82xaAIWAFn3Shr9ySaXnabATGpNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AsSpZrCw; arc=none smtp.client-ip=198.175.65.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OIiF1baA"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AsSpZrCw"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1775851540; x=1807387540;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=5cU9F5tKGmBMI3FGLw/JyEKm55TBNhUi/V3YRuRIX70=;
-  b=OIiF1baAgKoi7mPg5PdlhDUzoAqmnEF5rM0aMwPk32Sq+ZWjpJCAANDh
-   OW+6aTPWe0zIDVI8hry8t8v4Ws+9F4DB3zN/qO/JZ2FmpPnzmQx2LArcP
-   L+LbFyB3Q95T7OB5o44YQhq/5ZKSWO00ZDmmHBQXNzwG0TIPScPqf1YjU
-   7odrgUbZDZJ2FYupQdq+xust2H0752HsDCJtamMz7qFv07KPIM1s9NtHA
-   MjirXV8sF7dzQ+Vnmcn+yu7OTXbVdnJdJffK4tdbbzBpravkb/95j4qLx
-   HLShuEjLY7Uvxq+wcQFU8FuzhLocoOEdW6aj/bOKbAkacVrVpGF9bvkep
+  t=1775851541; x=1807387541;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=TpqgBuTQel4V5/BGOHX3wAgyHeUcGtOmEJQ2AKSmzOg=;
+  b=AsSpZrCwsWje5iKA4D1KPQFi4Mip3xtudK6oTW/eP2cRbir0WD/F7xat
+   4oRKVSXLCIwpPCAQNfpacaqqXjJv1WU67ZrJIIIDPIe4SZohel8kx2rmn
+   Zad/KtMZpBUYrlDTvL0YoL6rcmqsJiZVTZslUqN/E7NOuZVdGKAqAvbG8
+   6Y5r0vkcy+niSSYqd58z07bbZ1zoTTy/V0l5wI31pcw1kK8j9p3oLqHBk
+   hmOaLbTOFHVqdjnOdpGr5VpOekzwPHfkx0EnTi6EKjYR79iadNSSGkWWL
+   3aaQPSV25IKjxry+FFK2i9n2mGFSdSUXKdqxegzUaZNKIQz7GsNn4OsWT
    w==;
-X-CSE-ConnectionGUID: GHd6eE+0SESlTvTWYIN8KA==
-X-CSE-MsgGUID: hTr3fcK6SVa0jUFBzdVQpw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11755"; a="76898053"
+X-CSE-ConnectionGUID: 7w06vap4S429p25d35xxmA==
+X-CSE-MsgGUID: 9Q2MU5HZQl21/KNtqAJ+iw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11755"; a="76898061"
 X-IronPort-AV: E=Sophos;i="6.23,172,1770624000"; 
-   d="scan'208";a="76898053"
+   d="scan'208";a="76898061"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2026 13:05:39 -0700
-X-CSE-ConnectionGUID: o/H/YTFSQtOjjvOEHiAPXw==
-X-CSE-MsgGUID: 8gVGsrgPT4GFXtREh+jZ0w==
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2026 13:05:40 -0700
+X-CSE-ConnectionGUID: RAow2HSwTw6pLENSIsE6EQ==
+X-CSE-MsgGUID: n0RpBQcMTnCXaCWFyY2vyg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,172,1770624000"; 
-   d="scan'208";a="228154995"
+   d="scan'208";a="228155001"
 Received: from khuang2-desk.gar.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.106])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2026 13:05:38 -0700
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2026 13:05:39 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -58,10 +59,12 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [RFC PATCH v5 0/7] Allow AET to use PMT/TPMI as loadable modules
-Date: Fri, 10 Apr 2026 13:05:25 -0700
-Message-ID: <20260410200532.58602-1-tony.luck@intel.com>
+Subject: [RFC PATCH v5 1/7] x86/resctrl: Stop setting event_group::force_off on RMID shortage
+Date: Fri, 10 Apr 2026 13:05:26 -0700
+Message-ID: <20260410200532.58602-2-tony.luck@intel.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260410200532.58602-1-tony.luck@intel.com>
+References: <20260410200532.58602-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -70,55 +73,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Requiring INTEL_PMT_TELEMETRY=y to enable AET is a functional
-workaround to enable enumeration of Application Energy Telemetry
-(AET) events, but unacceptable to many users. It results in increased
-kernel memory footprint and inability to patch problems by unloading
-a module and loading an updated version.
-
-Add a registration function to the AET code that can be used by
-INTEL_PMT_TELEMETRY to provide the enumeration functions.
-
-INTEL_PMT_TELEMETRY can be loaded/unloaded independently of
-resctrl file system mount/unmount. Perform enumeration on
-every mount and cleanup on every unmount.
+Drop the force_off assignment from all_regions_have_sufficient_rmid().
+This preserves current single-enumeration behaviour while preparing for
+the upcoming per-mount enumeration, where latching force_off would
+incorrectly suppress re-enumeration on subsequent mounts - even when the
+user explicitly requested the feature via "rdt={feature}".
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-
 ---
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-Changes since v4:
-
-Abandon use of symbol_request() - new uses are deprecated.
-Implement the registration mechanism suggested by Christoph.
-Re-order patches to avoid breaking AET enumeration.
-Kerneldoc comments on limits to enable/disable events.
-Add resctrl_mount_lock inline in rdt_get_tree() instead of adding a
-wrapper.
-
-Tony Luck (7):
-  x86/resctrl: Stop setting event_group::force_off on RMID shortage
-  fs/resctrl: Add interface to disable a monitor event
-  x86/resctrl: x86/resctrl: Add PMT registration API for AET enumeration
-    callbacks
-  platform/x86/intel/pmt: Register enumeration functions with resctrl
-  x86/resctrl: Resolve INTEL_PMT_TELEMETRY symbols at runtime
-  fs/resctrl: Call architecture hooks for every mount/unmount
-  x86/resctrl: Relax Kconfig dependency on INTEL_PMT_TELEMETRY
-
- include/linux/resctrl.h                    | 44 +++++++++++++-
- arch/x86/include/asm/resctrl.h             | 19 ++++++
- arch/x86/kernel/cpu/resctrl/internal.h     |  8 +--
- arch/x86/kernel/cpu/resctrl/core.c         | 23 +++++++-
- arch/x86/kernel/cpu/resctrl/intel_aet.c    | 67 ++++++++++++++++++----
- drivers/platform/x86/intel/pmt/telemetry.c | 10 ++++
- fs/resctrl/monitor.c                       | 12 ++++
- fs/resctrl/rdtgroup.c                      | 35 ++++++++---
- arch/x86/Kconfig                           |  2 +-
- 9 files changed, 193 insertions(+), 27 deletions(-)
-
-
-base-commit: 591cd656a1bf5ea94a222af5ef2ee76df029c1d2
+diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+index 89b8b619d5d5..e2af700bca04 100644
+--- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
++++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+@@ -60,8 +60,8 @@ struct pmt_event {
+  *			data for all telemetry regions of type @pfname.
+  *			Valid if the system supports the event group,
+  *			NULL otherwise.
+- * @force_off:		True when "rdt" command line or architecture code disables
+- *			this event group due to insufficient RMIDs.
++ * @force_off:		True when "rdt" command line disables this event group
++ *			to avoid system limitations due to insufficient RMIDs.
+  * @force_on:		True when "rdt" command line overrides disable of this
+  *			event group.
+  * @guid:		Unique number per XML description file.
+@@ -214,10 +214,8 @@ static bool all_regions_have_sufficient_rmid(struct event_group *e, struct pmt_f
+ 		if (!p->regions[i].addr)
+ 			continue;
+ 		tr = &p->regions[i];
+-		if (tr->num_rmids < e->num_rmid) {
+-			e->force_off = true;
++		if (tr->num_rmids < e->num_rmid)
+ 			return false;
+-		}
+ 	}
+ 
+ 	return true;
 -- 
 2.53.0
 
