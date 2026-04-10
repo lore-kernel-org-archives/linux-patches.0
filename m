@@ -1,190 +1,437 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C773B38B4
-	for <patches@lists.linux.dev>; Fri, 10 Apr 2026 21:20:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6633A6F19
+	for <patches@lists.linux.dev>; Fri, 10 Apr 2026 21:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.15
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775856057; cv=pass; b=RmfMkz+z0/4bHGdy0jHmmdoB7Y9U8sg2jSHwMuUI3Z7Cy3LUG52yHPbDOZtSN0R04G6pjSvanMXcCunUshQ59dUi1VF198zTIfXYcIoWetO9Zlh7EbDlgx6rLlU2Vav0ml4PDZTjHYuqsuE5i/nq5109/WT+Df4mhc7cNuwluEM=
+	t=1775856106; cv=fail; b=L00TgppnBvT/xzaPeCc3/hw5RZJn+gvTTgDf5Zhiy0jxHWnHK4ffJvnAAulqs0nh/brkRBDAhs5fmT08usmX3B7EdUKse098QsYFaOS/E41Tjq++etZpMKnAT3/bsc1qZV/hn8WXu0F0wa46Us0MlxvN2EWcYVcBY90A8pVq2xA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775856057; c=relaxed/simple;
-	bh=Ss3l4fQSrxu+4aX5Y3uEpQN7nCCMUS3AsDLwQiEMG/I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ovw/dN8S8p1Fo36oe3uNp6k6ghbsFUuYQJtiynWu+6FEtlqxkRetzcXKVhWCgdKAu4iwc9AHk6hErF9rce+PM2dO4fRN6zDs/CorXlwDG73n2ucjOd/EW3YXulLiCtyMz/lecoVm9bf8cp7NuiCv53EHLbU4LpRsNeg0lHLZASw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VlH7qGfw; arc=pass smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775856106; c=relaxed/simple;
+	bh=NzPjdpryOdmA36jur5GBxt2Vh5YIXAV1yGlG3KFoFEE=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=ilQtVXeWz63d1uhu75SYVWvjhLlhOvFXQ7h7Z7cc7TXnImtO0LPkpxRB8jh3lzoQCWn/gEWZPDG5fwyYBcfH0bKuB7RpZL+wTSIEFO7/iidF+9C7bi3KkBXIalcB6CIGBs4kplTZCmy+pVvrCnUKAB0dv8chDKTxNyOsg2jRJCY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=F1hlgYRs; arc=fail smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VlH7qGfw"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b9bff57cb62so384659966b.2
-        for <patches@lists.linux.dev>; Fri, 10 Apr 2026 14:20:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775856055; cv=none;
-        d=google.com; s=arc-20240605;
-        b=I6dg/AUqyM+DP84FoLOEnsAqyDtVx8QpN5eIAiSBXj1WZIed16iWoOFzrxJYZjMGcK
-         +xUSmTGP868BPWW7NmO1yLK74HFXBo0E6ojU5tC/RRoCjht5F2fX+Sh/cTXZ3yuH84G+
-         8hIxUs3sfFhjwQHmUcMJaXNw26TDYBheEYkRvI7ibwvyg6ZtFuXM2CaYjzQxSb46AiYF
-         7wLegwb/FUQHFeDMmrczGtyQtuL0BI4RufLG6dosBhd3NMnNGLxf03Gy1motxZKSs1Ag
-         L+a+nG8LiAeYnoh+50aurtaubVGo53lxQhULlxQ2kmm9zrqsBdBWD9tDjFHgJe1ISx8B
-         gjaQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=WhaJJ8eoOLYXc/7WgoEtcKV9TdCM7BV5ydK19zk2ja8=;
-        fh=Sd1Tc/kcVApEDyK40f0rrLOZdUMrwjHeK1v59xStr0c=;
-        b=A68AH+NjAXD6A8tHIb7BHKZF+itEGjOzuOUBvfGXOxF8rtDdbkhE7hfdT/NnzpNV3e
-         Q3wQ1wGbrtSz4hLvtHH7m/qq3Mbha03Xqk0LEvawZAM3z80dEcOYOpAKzeNLdcgKKOgz
-         hH6Prnesk9/tA5qfVZxFHUP408vbnh2UlTygXBa0fIw8zJ5WWp659KcxSzHHuO2BGEl4
-         7yWzjvLjumKuLkEqBElLkfrPDp5OBPalr/ffaC12ZDVxdjuJr/TVWmhC0ahJXVXIeU1v
-         TMyFT4QBRjQMFgOsq55n6sI4w1TJ2+2P02YJAV9fXJAL8hqkru+NTeDv0DO+/LhHfvNL
-         qrrg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775856055; x=1776460855; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WhaJJ8eoOLYXc/7WgoEtcKV9TdCM7BV5ydK19zk2ja8=;
-        b=VlH7qGfwQy8TbMMQqixENzS51cByxcoHE3j64OjuNhTpyKEmvMmrVY1I4c5V+3LKxY
-         ksH8NjXdT/iBocKRXlm8yGARasAzg4N9IiMLSHaKGmpb0ulVIUOEknr8svA6iNAvEVyX
-         GukLsHwsma7zv5ZUB91KLsMWmIG3UxmH1Nw5elyncxcf3o1cdo+/0Mhb5ynFGS6guT5B
-         Q8ddHi6PsmdSjcl9/piZXJXEfvpV8SFQVgF/SwNeX+28xiUQKt5niTBRkPmoWv5MWPzM
-         giM8hydgMgiXWmpP52gxqjsVHBQhScB/aVfQfs/A91hUt+yKiDodQ4XDeL9+HnMde9Q3
-         D3fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775856055; x=1776460855;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=WhaJJ8eoOLYXc/7WgoEtcKV9TdCM7BV5ydK19zk2ja8=;
-        b=XHts9GTBdBOoEtkFyHMExt7NM28qqRIeTetPutw38oOH46NCxWAjriLQL0ZrXtJkOF
-         HnVxtcj6ohW6Kuh4yBg2jWoQQdh82zYmaHkJ0cdrKYp/kyQjP8XCcThZkP2JwXQcZYdY
-         CjEvnaxbCxRUAI85h6wF/H6aetPvOVJ4hNkLiRNj4fx7Trflut9lRSFMpWndIdL++TiF
-         GxrRRbss2AlWD50qN/WEUWUMWXNj8nzbgq5dvifH0Kg6NEAD1vfKc/p3C4ET9byc5uVW
-         e2YJq/nVG0jPQP+qr5CjQ9cD7uCeaCJK8cnLnvDUJGlM2GaJ96zlLQnGtQVX1lJboBwB
-         i/lg==
-X-Forwarded-Encrypted: i=1; AJvYcCWDwdfR9EnRy1hYw3ulXJ6BAwc70zuYg3Uu0Xro4rvtvA5qvQ4W9kAS3t6VZy572+L8Z5So5uCu@lists.linux.dev
-X-Gm-Message-State: AOJu0YyHZaMWO/rbtcjVpavB9FCvUrQMOkzKOIkSF/npK5VzM1rnSBZv
-	zNt7CABDMcLzemO8RyAyxJQ6Q0AnQ0lpZnj1fkRBfBody8qTjvVb2IUb5sV+4hdIAWP5l5krwn5
-	Ovcd5pJ3E6iO7IjbOYwPLwGVTt9MzxCk=
-X-Gm-Gg: AeBDieu7V6yvpbGFd2YxNssDMdP6b2gktEYefv8H5Bz1Kv8HfnB7l+XhQcjXjyRJIPX
-	FmeXC7lwQR3ic5XyAyKKenxy6MOEUlIJ9+zUfnZn7lGbFNLBCrR4cMcB/suodd/CsWF1ZZWDVV9
-	v/T6KjlyGAxD2Y/DQ5YnK+OLoF66tzHaLNxhYnpOZJ65ZlwE90dEwFD+zxg8D7CiKILdmhRyrcY
-	ndH4M8yQYZYHy+KqJE+i9zcZ1E8DboG98AOYBnTqjetY62nBV/iI6swRK9GJ5wBa6G92OiMjUi1
-	4ct+WCnlvpY/9YxJ9bpK5uARGoTIDSg+C/RKJySAoQy9Gd/y+HjAwTGoiW65WDKAnDWosO+T3Tz
-	zNt2C6Q==
-X-Received: by 2002:a17:907:c908:b0:b9d:3b68:954c with SMTP id
- a640c23a62f3a-b9d727aa0cbmr220907566b.24.1775856054482; Fri, 10 Apr 2026
- 14:20:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="F1hlgYRs"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1775856105; x=1807392105;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=NzPjdpryOdmA36jur5GBxt2Vh5YIXAV1yGlG3KFoFEE=;
+  b=F1hlgYRs61eAR8brdbUGC/c1kf6CSS3YaRYEe7zA9Eha0kJcUL0nEH6I
+   +BF93pL7iTLkhnIKr5ESA2UaQUiopaaviOamdRPrAcreFAptDrVJCWtgk
+   owP3+q1wuuFeq0PdmwB++x/Sd/X0HL49CRXFpUlGsKWwCw+gyHlggKNZX
+   fhs6Fx0+kTr1b3uru76dSVoye+ocWxS/hK4fJZWTvaJ6Efh1JgraZshO9
+   sWUvDd7a1Kmj+qEuVFkUYfqaJiQcYbmX482oSPHW9gN/21J4WVAdm2p+h
+   TEwit93+t3DXkK+08k+h/orJNw75jPrbwlIkTDWYvcEVsOD0J2WgRg5Rz
+   g==;
+X-CSE-ConnectionGUID: v/y4o7kQRQyLaJ8DBwXYDg==
+X-CSE-MsgGUID: IgeJlSdTTFuW87rjlWufZA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11755"; a="80473303"
+X-IronPort-AV: E=Sophos;i="6.23,172,1770624000"; 
+   d="scan'208";a="80473303"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2026 14:21:44 -0700
+X-CSE-ConnectionGUID: tg35kT8LSTmYBYnGHJ9ceQ==
+X-CSE-MsgGUID: BC7RR3fLQZqTDf82uMkK4A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,172,1770624000"; 
+   d="scan'208";a="252563688"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2026 14:21:43 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Fri, 10 Apr 2026 14:21:42 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Fri, 10 Apr 2026 14:21:42 -0700
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.45)
+ by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Fri, 10 Apr 2026 14:21:42 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YsNHos5YaC4rkh6GV9MR3aerfALlLXGfY8QI7ccy+QwKQ5Gv3I1v8htk5prlv6XXx6L0LVcinoj8b+BRfyHlP3kLH6j0wvJ1bwl0DbKsY5g+Nvhv1dngfITK/CzPuEIQuOXpScP6+NgHMZUjOPJM7ooqqR11zOOCgmx3R4xyBdz/sHZ8mvrt9MuEV+qL3SgPm65f2Tu61BIF2VVFIaI3mRqqmq/z4Mq1HpaQkk8TLiC6jQlGtdJe8umsv8mBMMz3K3/cM8KGqA2GKET4FSRFoSE/Wh5CPIxmEouKYbOGJYyYXGcoX0yhXsZtot/pyiGwPFmP7NSLXtu4wQ7hIvl+wA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=POIoLAFd++yNzu2lKMnu3mB94xs4U6dcy/DSJYCdxXU=;
+ b=N563vXvfBzqE4+HdhBSF8gXRrZl74aZYTtUGTiDloCuzHgqvjc6TyDPy/RH/IUFRPCgosYnEPSrl8s5pJwvFj7LKO53KUgy/C3fq2YB/PnQRfwFg8GspIvl3lKJMHtMVaYbh3EA9m1Dgb8EpCMXvUEqTwCQYJkX7XVOPWGJ+yq4agdJ8f0Mmh1KtgGN1QBGdyf0rPcCBNtXxh2pQJ73vfj/89qq517HcyJzKqvugLdnSMKAbLH2u2+WelHJvuW0W695BY4SrzaSVnpUFwj5AvUhiSlnmtaNE7Fk+5C+VpNXSnKTDMSNg5fbk6mzQ1BWWNjPV5Boh3Gp2CS6t6PD8/Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by SA0PR11MB4560.namprd11.prod.outlook.com (2603:10b6:806:93::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.15; Fri, 10 Apr
+ 2026 21:21:37 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::bfe:4ce1:556:4a9d]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::bfe:4ce1:556:4a9d%5]) with mapi id 15.20.9769.017; Fri, 10 Apr 2026
+ 21:21:37 +0000
+Message-ID: <5a62a2b8-fef8-4808-bbcc-c268f9013651@intel.com>
+Date: Fri, 10 Apr 2026 14:21:35 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 4/7] fs,x86/resctrl: Add architecture hooks for every
+ mount/unmount
+To: "Luck, Tony" <tony.luck@intel.com>
+CC: Fenghua Yu <fenghuay@nvidia.com>, Maciej Wieczor-Retman
+	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
+ Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
+	<yu.c.chen@intel.com>, David E Box <david.e.box@intel.com>, <x86@kernel.org>,
+	<linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+References: <20260330214322.96686-1-tony.luck@intel.com>
+ <20260330214322.96686-5-tony.luck@intel.com>
+ <45436044-202b-4d77-b552-2156be47a52d@intel.com>
+ <adQY_m8I2jUiR88k@agluck-desk3>
+ <e85cd466-2202-4b40-82ed-91e421d8e073@intel.com>
+ <adgNfJSeHVyBXumt@agluck-desk3>
+ <c948c358-1dcb-4896-9c0d-239e99d89e72@intel.com>
+ <adlIdusn61pKB3oq@agluck-desk3>
+Content-Language: en-US
+From: Reinette Chatre <reinette.chatre@intel.com>
+In-Reply-To: <adlIdusn61pKB3oq@agluck-desk3>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR04CA0108.namprd04.prod.outlook.com
+ (2603:10b6:303:83::23) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260408175927.064985309@linuxfoundation.org> <20260408175935.705507105@linuxfoundation.org>
- <eee63d31-f7a2-4737-b33b-cfea7f04e960@oracle.com>
-In-Reply-To: <eee63d31-f7a2-4737-b33b-cfea7f04e960@oracle.com>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Fri, 10 Apr 2026 14:20:42 -0700
-X-Gm-Features: AQROBzDc2Nu5LoD9cVK_3hSpGRPzX5o7HU6msz-Juo7W2QvQF2OvoWhA9GmtpqY
-Message-ID: <CAKxU2N-WvGmbG=Zge=C1F6a+pR3kNW6J7uExUGTOxudBDT8YqQ@mail.gmail.com>
-Subject: Re: [PATCH 6.12 230/242] drm/amd/display: Reject modes with too high
- pixel clock on DCE6-10
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, Alex Deucher <alexander.deucher@amd.com>, 
-	=?UTF-8?Q?Timur_Krist=C3=B3f?= <timur.kristof@gmail.com>, 
-	Mario Limonciello <mario.limonciello@amd.com>, Vegard Nossum <vegard.nossum@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SA0PR11MB4560:EE_
+X-MS-Office365-Filtering-Correlation-Id: fd410011-9da3-424c-872d-08de97472639
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 7mqxNW0cSDM3HA+oy7Pz+mavwN+v2EN4hiJbX0Zyv/d3U7hH4PcY6XDE+Znz31uTgwimiVfrBET1r/i6knIlD/LAfOx6hX7KSY3WifYGuUb3CMhZvOe4ve6u4x6gJXTrnrDysRcW9FJmTi6UupMyuNjodaSOopr2OHynVQPrN5tBicngL4ycPap+VUNJmWST9WDK5FlC0kRB6n6qE/aNVwtxwCW5qM0NFRPbhhgg3AfT+dWoUGRP09kv7NWR36X7Yg4byxN1mUCpPEkYDC7y6QrDR8G5msapKTzPUmWGqy+d8No9Jqvmg1SC35YZFtjObDXMRnd2AE6BpUb8rxechLcCSI64U16CLiwTQ2VOTWQp8MGF0BJnH3unpierp9xNSfl+u8OJg2FhzD8Y4a6wvawjB10ANWVhO9Z11ijLAs/t3EaDPDs+Se/Uvf4oFCUruwv2c3Kg1mrai2/RrX+Bh71Xbhj14pPg4+zyMrdnUqws50hVhqVC9w+hZV0+B9GKSF1TZepzhr01HAI02Dh9+s0impz4j2QRmLZiUBiU5rpIouhRe/J2XT4wHlln8rulbouWsB0dNBSiSkeM13+qKzNILtMowDqAfYQ+GCIZyvVMV+wMqtUaYsEIzrPY2XU4Af4e74xHN2HEGcYCn/2tG4s9yGiw3+x6jqspjAv7npkIledzO+DBdd0/46+otO+d0tOwHV4zk8Q9a+NkZPvaMTImQ8pFnEdOnpNVLmHhJqc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aG1IRjV5WmgzbERwMWxCbFROaFk2ZEdSbFRBVnUrNzA5K2VmcGhlTGxSa2hD?=
+ =?utf-8?B?d1dFWVB4NCtyeEJtWmpqZ2VPUEJoVWI3SXRXbTExOTZVL0xHUWk5VUdud3F1?=
+ =?utf-8?B?L3NHY3N4c0p1SnZ5N0QwanExTlRtMzdaSTJUeWI0RDFaVlhjbEdPc2wvc2tw?=
+ =?utf-8?B?RHVDS2tkekxaWXJmbytZb1YvcjYwbDBvN1NGZFZDTDhVTVVUaWk5MkdxM2Jx?=
+ =?utf-8?B?UDMwOEdpRGVuUVMyODJwcldLaC83bmNxM0NzZVdra3NVR2grT3R2L0FGMWli?=
+ =?utf-8?B?OTZKN1NtNlNyejdyZXNGRjlFclVZUTgwbkxpVnNXTnB0RldqSXpXcjd2dEtV?=
+ =?utf-8?B?a213NitnQ1hBVlhwbU5vaFhhM1ZWRG9sbUJXell5ZWEweUxydFg1TlRnb3FT?=
+ =?utf-8?B?ZlJ2THRKVUo4NDlnd0YzVnYzT1NxT0k3ajBRdU5QOWlhd200TzZpZXBQTUNn?=
+ =?utf-8?B?NnBsTWFWS2VTYWRjeFg5cEVNa2pFUUVLd1dFaGFneU9xaldickNPayt2QkJt?=
+ =?utf-8?B?aGdnT3o0cDVMaVJtRFFqOE9VYkZYeEhXUXpLZmlhSDgvbnRrQkx2aEhTNENX?=
+ =?utf-8?B?cUNuOUttN1lzenlnNGl4SWVtNFI2MzExbEVtdkRhSWVXam9hbkt2aWI3RmxU?=
+ =?utf-8?B?c0trOXNDQ0FJUWZzUzBXR0dxZUdoLzgycTQwWFNQV1FXZ1VVRXR3S2dtTjVt?=
+ =?utf-8?B?ZXVlUlVUVmx5YmtDemVpWEI0ZDkxWkVMancxZ0VUbnN1MkRFckgwNWxzT1Mz?=
+ =?utf-8?B?NHQwa2kzRStPaUVCUnBSTURCb2ZSRU4xN0JCaWRQdDcrTWNUWTZxMGZxVHBl?=
+ =?utf-8?B?Umc5WVZkSUZHSmFqQUliTTBQNWFVVnVrT2JtSEp2alpSMkxKTnAwa1ZaRUtk?=
+ =?utf-8?B?OEJVei9TMHBadFVld0NKdEIyb1ArQ01UQWZpYUJOVENxU2x3NW5TMFo0czhp?=
+ =?utf-8?B?L0E4VCtQOGU3THcvdGgxZ2FZZ1JOYU5zVlRhVVVXdnY1TTZHeEFXQ3BMQVd6?=
+ =?utf-8?B?MVZvOE5TY1BPVkZFTkxVUHc1Y3Vjc1Z5NnU5b2YrVnlCQ0xTTVdONDFNeTZn?=
+ =?utf-8?B?enVEOTM5S2xheXVUc2ltM3NocklRZXZkdG9FanZPb2U4QkJRay9vcDFqWWNr?=
+ =?utf-8?B?ZUxvWGQxekZrZGVERXlrYjF5V04yL0JSMXV0NnBmbkwrY0FJMjkrQUF2ZU1Z?=
+ =?utf-8?B?TWxzdktVL1ZrM3dycVpuUm5NV2k5Skp4WnRNRitxbldKaElzWjVoQ21GQVF2?=
+ =?utf-8?B?L3A0OE9uWEdadUN4bWVZdkZOek1pNWZ1UWczL09XYWsvc0Q0Zm9FTmZsR1Nq?=
+ =?utf-8?B?SUpueU9mVktucEorTlNrS3I3RktFbWZMQmsweEpPOGc0ZHFPUzRJQ0hMd3Fu?=
+ =?utf-8?B?ZDdiTERJOUFmem81MUFQa01NT21rakRDeWpGWjl6ajg5VlJZMVBPNWtmeEhP?=
+ =?utf-8?B?eEx6VFJ2c3V5M01WOVNVZGhiTlFKclAzSXFEeElUWlo1UG1kMnBjS0p0RmRU?=
+ =?utf-8?B?aHE1c0JRZjllZ29US1JsbnhhZU85b25Sc01lTjBsNlQwUkJ0Q3ZpTDc5RmlN?=
+ =?utf-8?B?UDlrV2FFNi9lMnNZWkZyTDRWN0xuSjM1alVlUThCaVBZUXFGRW5iWnpYS0FM?=
+ =?utf-8?B?NjR0NEpHTDhENzJDUHdLaHZ0VyttcU8ybGZZbUdLWTJqRzVOSklHMVFoTHhw?=
+ =?utf-8?B?bTNBZXMvczBhY2t0QWRXMnhlbVM4VFBtcWhGcDdJMHVDTjNGZzIydXcwb3dh?=
+ =?utf-8?B?OVZLRmVZMjBUZFJPZzNheTBSYjZhWWJLOElFSnpscTV2a0hkQUVQT09kSXZ4?=
+ =?utf-8?B?N25YWnBaenBXSExuUVR4TzU0Nk5Na3F4SHhvZk15dlFPRDBjSE1MTFdTVjdi?=
+ =?utf-8?B?bVpVUnRBZkZma1JGVkxkeUtKbUIvb0V4RTZhMXljSDlYTXdwNWsrVWwxazdj?=
+ =?utf-8?B?QmlVc0IxV2RrS2F2THU2bHZBMlBmK3ZxQTVtcTFuWU1GTmx6OGtPdGxRMlhy?=
+ =?utf-8?B?bEF1RGlMaFNoRmlwWnBvTSthTGh1SWU5bitOZmNFako5cDlZYytka2ZVaFVn?=
+ =?utf-8?B?ZEViUmRWR2xtUnhjUmdhVU5KOFlmNVNKUDZZQnc4WGZpcVRBYVRLZXl2dkwr?=
+ =?utf-8?B?QjB3OTVwWTQ3UVUyQ2gwOHpRVVQ4QzBWakNOR3J3a2NSaStBd1ZmY1BpMDU3?=
+ =?utf-8?B?WmphWVhqMjVWS3ZQV2w3UTBtcjB3WVQ3ZC9IQ29zQy9qYU9CRVhhdDB2Y1Nq?=
+ =?utf-8?B?MWFyTzcxekRoZmxxbzJjWS91RlFTVTYzM3g1OUxsV3RSZ015bWxEL05QLzFG?=
+ =?utf-8?B?UDZReHBib3hOWlRNV3RMN0F5MmUrZTlrMlA5SHVhazVzTDlscFFvTzNoaXg2?=
+ =?utf-8?Q?GRiLiO44LjfzZDUo=3D?=
+X-Exchange-RoutingPolicyChecked: q7HkiWX4rXgtnHRycKxI/Nv0LikpoHBXlJfx7Ydiw3x/7w5tro+h7of7ZsTypExDgnB5i1hCgAtCWxq717ds44/Up4F1V2JENcDlXbvX+cWniY4MIiYmWUOfyxfbBo+xnrlWsslklbeXtVkGeKsZNGwNPzBG2unVBFKHwyHDNAFVIA/ExR436DtxJqSY3v4XRGPHhLfo6K0GUtNEFFlkmuX+1SslhYbp6+6tQAPvTa3FY2id5bYbnvkAeZTS6MEoCiTh8WX3unspmqep4+jy/0LBZSJdxrGOTLx4ySPE4Cy07tKRtOHbZ8Yz1AbSVcDW0D5WOpIzl3VV4NyDpx8nKQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: fd410011-9da3-424c-872d-08de97472639
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2026 21:21:37.4528
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: mxDXUvBCPFhtZsA/CeCmq+7KLbHuLYmFdckMI0DCGZ7JksARg+45Pn0GCNspHuZCrGM4pqEqhp0sn2wsEz3BATsXudf6i8fAonhgD5OV4kU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR11MB4560
+X-OriginatorOrg: intel.com
 
-On Fri, Apr 10, 2026 at 12:08=E2=80=AFPM Harshit Mogalapalli
-<harshit.m.mogalapalli@oracle.com> wrote:
->
-> Hi,
->
-> On 08/04/26 23:34, Greg Kroah-Hartman wrote:
-> >   #include "resource.h"
-> > +#include "clk_mgr.h"
-> >   #include "include/irq_service_interface.h"
-> >   #include "virtual/virtual_stream_encoder.h"
-> >   #include "dce110/dce110_resource.h"
-> > @@ -843,10 +844,17 @@ static bool dce100_validate_bandwidth(
-> >   {
-> >       int i;
-> >       bool at_least_one_pipe =3D false;
-> > +     struct dc_stream_state *stream =3D NULL;
-> > +     const uint32_t max_pix_clk_khz =3D max(dc->clk_mgr->clks.max_supp=
-orted_dispclk_khz, 400000);
-> >
-> >       for (i =3D 0; i < dc->res_pool->pipe_count; i++) {
-> > -             if (context->res_ctx.pipe_ctx[i].stream)
-> > +             stream =3D context->res_ctx.pipe_ctx[i].stream;
-> > +             if (stream) {
-> >                       at_least_one_pipe =3D true;
-> > +
-> > +                     if (stream->timing.pix_clk_100hz >=3D max_pix_clk=
-_khz * 10)
-> > +                             return DC_FAIL_BANDWIDTH_VALIDATE;
-> > +             }
-> >       }
->
-> This is a backport of commit: 118800b0797a ("drm/amd/display: Reject
-> modes with too high pixel clock on DCE6-10").
->
-> The backport adds return DC_FAIL_BANDWIDTH_VALIDATE, in
-> validate_bandwidth functions that return bool;
->
-> drivers/gpu/drm/amd/display/dc/inc/core_status.h:
-> DC_FAIL_BANDWIDTH_VALIDATE =3D 13, /* BW and Watermark validation */
->
-> In this branch DC_FAIL_BANDWIDTH_VALIDATE is integer 13, which converts
-> to true, so the reject path is inverted into success.
->
-> So I think we need to fix this. Thoughts ?
-Best to drop.
->
-> Maybe we need to revert this or backport commit: 4465dd0e41e8
-> ("drm/amd/display: Refactor SubVP cursor limiting logic") to stable branc=
-h.
->
->
-> Thanks,
-> Harshit
->
->
-> >
-> >       if (at_least_one_pipe) {
-> > --- a/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-> > +++ b/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
-> > @@ -32,6 +32,7 @@
-> >   #include "stream_encoder.h"
-> >
-> >   #include "resource.h"
-> > +#include "clk_mgr.h"
-> >   #include "include/irq_service_interface.h"
-> >   #include "irq/dce80/irq_service_dce80.h"
-> >   #include "dce110/dce110_timing_generator.h"
-> > @@ -876,10 +877,17 @@ static bool dce80_validate_bandwidth(
-> >   {
-> >       int i;
-> >       bool at_least_one_pipe =3D false;
-> > +     struct dc_stream_state *stream =3D NULL;
-> > +     const uint32_t max_pix_clk_khz =3D max(dc->clk_mgr->clks.max_supp=
-orted_dispclk_khz, 400000);
-> >
-> >       for (i =3D 0; i < dc->res_pool->pipe_count; i++) {
-> > -             if (context->res_ctx.pipe_ctx[i].stream)
-> > +             stream =3D context->res_ctx.pipe_ctx[i].stream;
-> > +             if (stream) {
-> >                       at_least_one_pipe =3D true;
-> > +
-> > +                     if (stream->timing.pix_clk_100hz >=3D max_pix_clk=
-_khz * 10)
-> > +                             return DC_FAIL_BANDWIDTH_VALIDATE;
-> > +             }
-> >       }
-> >
-> >       if (at_least_one_pipe) {
->
+Hi Tony,
+
+On 4/10/26 11:59 AM, Luck, Tony wrote:
+> On Fri, Apr 10, 2026 at 08:16:50AM -0700, Reinette Chatre wrote:
+>> On 4/9/26 1:35 PM, Luck, Tony wrote:
+>>> On Mon, Apr 06, 2026 at 02:16:46PM -0700, Reinette Chatre wrote:
+>>>> On 4/6/26 1:35 PM, Luck, Tony wrote:
+>>>>> On Fri, Apr 03, 2026 at 05:52:30PM -0700, Reinette Chatre wrote:
+>>>>>> On 3/30/26 2:43 PM, Tony Luck wrote:
+>>
+>>>>>>> @@ -2900,6 +2893,30 @@ static int rdt_get_tree(struct fs_context *fc)
+>>>>>>>  	return ret;
+>>>>>>>  }
+>>>>>>>  
+>>>>>>> +static int rdt_get_tree_wrapper(struct fs_context *fc)
+>>>>>>> +{
+>>>>>>> +	int ret;
+>>>>>>> +
+>>>>>>> +	mutex_lock(&resctrl_mount_lock);
+>>>>>>> +
+>>>>>>> +	/*
+>>>>>>> +	 * resctrl file system can only be mounted once.
+>>>>>>> +	 */
+>>>>>>> +	if (resctrl_mounted) {
+>>>>>>> +		mutex_unlock(&resctrl_mount_lock);
+>>>>>>> +		return -EBUSY;
+>>>>>>> +	}
+>>>>>>> +
+>>>>>>
+>>>>>> This does not look right. Here too is resctrl_mounted accessed without rdtgroup_mutex
+>>>>>> held. This change implies that resctrl_mounted is now protected by resctrl_mount_lock
+>>>>>> but resctrl is not changed to respect this throughout resulting in unsafe access of
+>>>>>> resctrl_mounted.
+>>>>>>
+>>>>>> Does this new resctrl_mount_lock need to be in resctrl fs? It really seems as though the
+>>>>>> needed synchronization belongs in the architecture. Could this instead be accomplished
+>>>>>> with a private mutex within the AET code?
+>>>>>
+>>>>> If you dig in lore for the v3 of this patch, you'll see I had the mutex in the
+>>>>> AET code. But there were some complications.
+>>>>>
+>>>>> 1) Need to acquire in intel_aet_pre_mount() and release in intel_aet_mount_result()
+>>>>> which is legal, but makes code more complex when call chains need to be compared to
+>>>>> check that the mutex is being released correctly.
+>>>>
+>>>> Why was it needed to hold mutex for so long? I cannot find explanation here or in changelog
+>>>> of v3. I did not remember correctly and considered the AET code to be doing the domain
+>>>> addition. Even so, I do think a mutex internal to the arch code can be used to manage
+>>>> the synchronization. Could you please elaborate why this cannot be done?
+>>>
+>>> I tried to move the locks into architecture code. But main problem is still
+>>> handling when a user tries to mount an already mounted resctrl file system
+>>> and gets -EBUSY.
+>>>
+>>> In that case file system calls resctrl_arch_pre_mount() with the file system
+>>> mounted. You suggested that the AET code could detect and ignore a repeat
+>>> enumeration by noting that the event_group "(*peg)->pfg" is non-NULL, set by
+>>
+>> It would be great if resctrl only needs to enumerate once but I do not see how that
+>> is possible since there is no clear indication from PMT driver whether (all) its 
+>> data is ready or not.
+> 
+> That was the root problem. But allowing INTEL_PMT_TELEMETRY to be a
+> module adds the additional constraint that the module cannot be unloaded
+> while resctrl is mounted. If that happens, the mappings to the MMIO
+> space disappear. The existing intel_pmt_get_regions_by_feature() and
+> intel_pmt_put_feature_group() do not do module_{get,put}() to prevent
+> that. New series under development addresses this.
+
+ack.
+
+> 
+>>> the original enumeration. But that fails in this scenario:
+>>>
+>>> 	# rmmod pmt_telemetry
+>>> 	# mount -t resctrl resctrl /sys/fs/resctrl
+>>> 		... succeeds, but without AET present
+>>> 	# modprobe pmt_telemetry
+>>> 	# mount -t resctrl resctrl /sys/fs/resctrl
+>>> 		... enumeration success, but now calls resctrl_enable_mon_event()
+>>> 		... with the file system mounted
+>>
+>> Thank you for catching this.
+>>
+>>>
+>>> I think the bast solution for this is to change definition of resctrl_arch_pre_mount()
+>>> from "called on every mount attempt" to "called only when resctrl is NOT mounted".
+>>> This is because architecture code cannot tell whether the file system is mounted.
+>>
+>> Does this mean the addition of the extra locking in resctrl fs? I am not comfortable with
+>> that asymmetrical locking.
+> 
+> Conceptually the change here is from "architecture must do all
+> enumeration before file system code starts" to "architecture is allowed
+> to make changes when the file system is not mounted".
+
+This does not seem to be something that resctrl should enforce in general. Architecture
+could theoretically make changes any time it wants and stage them for resctrl fs to
+consume when it is able to do so.
+
+> There are currently several limits to what is safe to do because file
+> system only does a partial cleanup on unmount. But general development
+> direction has been to move initialization code into mount path. For AET
+> things need minimal tweaks today. For some future feature more
+> refactoring from "init" to "mount" might be needed.
+
+Right ... and we need to consider how the architecture and filesystem boundaries are consistent
+so that this is managed well. Just adding a lock for convenience does not seem appropriate to me.
+
+> 
+>> I think a problem here is that resctrl_enable_mon_event() gives the architecture code the
+>> capability of manipulating internal resctrl fs state directly. This is a consequence
+>> of the original design before the arch/fs split. I see the additional resctrl fs locking
+>> as an attempt to make it easier for the arch to manipulate fs state but I do not think we
+>> should go in that direction, instead I think it is better to improve the arch/fs boundaries
+>> here.
+>>
+>> To that end, what if resctrl uses its familiar "capable" vs "enable" separation here?
+>> That is, the architecture informs resctrl fs whether it is *capable* of a feature and
+>> resctrl fs, based on interactions with user space, determines whether the feature is
+>> *enabled*?
+> 
+> For the AET features user space could look at /sys/class/intel_pmt/*/guid to see
+> which events could be upgraded from "capable" to "enabled". But how can that
+> be conveyed to "resctrl fs"? Adding more mount options would seem to be
+
+User space should not be involved here and I do not see any need to add new mount
+options. It is the architecture that marks events as capable if it supports the events.
+
+> the only choice. Config files under "info/" are only available after
+> mount. But by then domains have been created and the top level mon_data
+> directory populated.
+
+Why would this be needed? 
+
+Here is how I understand the relationship:
+
+- arch enumerates a new feature at any time and calls resctrl_capable_mon_event()
+  to mark any event discovered during enumeration as "capable".
+- arch is responsible for domain creation and is trusted to do so *after*
+  marking any events as "capable", any needed per-domain state is created for
+  the "capable" events.
+
+- when resctrl fs is mounted, before creating any files, resctrl fs automatically
+  sets all "capable" events to "enabled". resctrl fs will create needed files only for
+  "enabled" events. 
+
+- if an arch discovers new events after resctrl is mounted then it can still
+  enumerate the events and mark them as "capable" - resctrl fs will pick that up
+  on remount.
+
+- arch can only disable an event as part of the unmount handler, this will clear
+  "capable" as well as "enabled". This can be enforced with a check in the
+  callback where only rdtgroup_mutex should be needed to access resctrl_mounted.
+
+> 
+> This also runs into problems if INTEL_PMT_TELEMETRY is unloaded between
+> telling the file system that some set of events are "capable" and the
+> file system asking to enable them.
+
+This is existing problem and sounds like you are solving this with the module_get()
+and module_put(). 
+
+> 
+>> For a simpler addition resctrl could obtain a new helper, for example,
+>> resctrl_capable_mon_event() that only marks an event as "capable". resctrl_enable_mon_event()
+>> could remain as the "early" call that marks events as capable
+>> and enabled but may be deprecated. Both of these *have* to be called before any domains
+>> are created since per-domain state would now depend on whether the system is "capable"
+>> of an event or not. resctrl fs can assume that all "capable" events needs to be enabled
+>> and it can mark them so at the beginning of each mount, resctrl will only expose
+>> "enabled" events.
+>>
+>> There are likely some simplifications on top of current implementation to not make
+>> this too invasive.
+>>
+>> What do you think?
+> 
+> I think it opens a new can of worms. Maybe the most challenging is for
+> the file system to add a "hold" to the INTEL_PMT_TELEMETRY module when
+> enabling an event.
+
+This is a different problem that needs to be solved also and it sounds as though you
+have a solution for that.
+
+>>>>> 2) The "only mounted once" case meant extra state (AET_PRESENT, which you note
+>>>>> in next patch may be redundant) because intel_aet_pre_mount() is called, but
+>>>>> needs to do nothing.
+>>>>
+>>>> Right, I do not see need for extra state. In fact, since it is not clear to me that
+>>>> PMT enumeration will be complete when intel_pmt_get_regions_by_feature() is called it
+>>>> seemed worthwhile to only rely on event_group::pfg - if PMT enumeration was not complete
+>>>> during mount N it may be complete on mount N+1? This creates a poor user interface
+>>>> though since user would need an alternate way to know if AET is supported and then
+>>>> a "remount until it works" approach.
+>>>
+>>> The race remains, and is lost if resctrl is auto-mounted at boot from /etc/fstab.
+>>>
+>>> The user can tell if AET is supported with:
+>>>
+>>> 	$ grep ^ /sys/class/intel_pmt/*/guid
+>>>
+>>> and checking if any of the RMID based event guids are present on the system.
+>>>
+>>> Delta T for the race is small enough that delaying the mount to some other
+>>> startup script should be sufficient. Users are likely to have such a script
+>>> to create the CTRL_MON directories and configure schemata for their workload.
+>>> So annoying, but easily solved.
+>>
+>> I do not have a clear understanding of how the new implementation with registration
+>> function will look to understand the races involved.
+> 
+> I think I'm ready with v5 of the series. I can post (as "RFC") so you
+
+You consider it ready without completing this discussion? I interpret this to mean that
+I am wasting my time trying to discuss. 
+
+> can see, and comment, on the details.
+
+... and it is already posted ... before this discussion is complete ... unless you feel
+that the hour between your response here and the posting of the new version is sufficient
+grace for me to respond.
+The first four versions of this work were all sent within one week. I tried to
+collaborate with you on v4 but now you sent v5 without completing the discussion.
+I cannot collaborate with such rapid attempts at throwing stuff to see what sticks.
+
+>>>>> Adding resctrl_mount_lock to the file system code made things simpler. The
+>>>>
+>>>> Adding complications to resctrl fs to make things simpler for x86?
+>>>
+>>> I believe it is necessary, since architecture cannot tell if the file system
+>>> is mounted.
+>>>
+>>>>> pre-mount code can't be called with rdtgroup_mutex held because it needs to
+>>>>> build the domains. That needs cpus_read_lock() + mutex_lock(&domain_list_lock);
+>>>>
+>>>> ack. Can an arch-specific mutex be used instead?
+>>>
+>>> See above.
+>>>
+>>>>> I need to add more comments on locking. resctrl_mounted is only modified when both
+>>>>> resctrl_mount_lock AND rdtgroup_mutex are held. I believe that makes it safe to
+>>>>> read the value of resctrl_mounted with just rdtgroup_mutex held.
+>>>>
+>>>> ...but not to read it with only resctrl_mount_lock held as in snippet above.
+>>>
+>>> Holding either of resctrl_mount_lock or rdtgroup_mutex makes it safe to
+>>> read the value of resctrl_mounted as it can only be modified when both
+>>> mutexes are held.
+>>
+>> I am concerned about this approach due to it not being symmetrical and how resctrl fs
+>> now adds additional locking to accommodate drivers.
+> 
+> I'm not sure I see the asymmetry. File system code already calls architecture
+> code with some set of locks held. This just adds a new lock (at the top of
+> the locking hierarchy) that is held across calls to resctrl_arch_pre_mount()
+> and resctrl_arch_unmount().
+
+The asymmetry is in the inconsistency which locks are used to interact with
+resctrl_mounted ... in this version at least.
+
+Reinette
+
