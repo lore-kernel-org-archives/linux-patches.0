@@ -1,113 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7442DF13F;
-	Fri, 10 Apr 2026 03:06:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC3932E729
+	for <patches@lists.linux.dev>; Fri, 10 Apr 2026 08:29:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775790389; cv=none; b=G1ZI8tGsDxkTnYMvxERbhfjZdIC3jbxsV/ULcsfBPzLoHXW2+2TICWVDWNaKEmyJs7Yx1n0Or1owuOka47ngpr2t9RyJF+eUuwsxqR1kXIFTwh6VxRQnY5fEBW4fp/gIAdIEbUdRFLY/B+0xQzcGIkDkSoDFX+JQlIySBGWO5I4=
+	t=1775809799; cv=none; b=cgFXMGX4yFcXukeZ06a0pdK7+vgjrICwOsVyF2Z2MSkBJ71/e4yd4YtxNu4cwMaHtDF3Kdv9BGmnlBc9BdcRxN6tprOoexAa8bMZ5EbqePe66wupVabn5zrz4sWofSLXz0Qqddphn/rO4sABRF1DlrYOFVxLCOJXig+L9/Dorjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775790389; c=relaxed/simple;
-	bh=Tf8vCgldFUBRr9Xt5B+9qq6kfVEzE04QacFG7bCoGFE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lv3NfJM3URlHcvMl+3jhaXGb6bj8PVySMhLDY78bd9dOdrY57KEFCOclGBnJBprsVK4N5yPjYmHkAPyxxQBtB0J0Dh7eQx4SS4Z64M26leFRyR1JKgP4mukwPZny8HFjpc0SVdknXdHFl1kjuOm/rZkpc45mkYS6vJk5/SflQHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l1oJ2TKm; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775809799; c=relaxed/simple;
+	bh=I845HGEPxbH0IkaZYvI2SfdBV6Ys39TgT7kwhiO494g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pJ2Ugmyt4d0z0QU63UWXI+Iu0Zlq/4GOEdlq8amt/7D4dFbFMkUEeucKMtLgxTgoSiJNeOMsQrpHvkbsbuHzWNgnwz7RFMfriy5b9DJAP0q3Mb0w6YeCbnKlzv13R5ej58KZL8ctAPtSdGp/xrNCtdn21Ac/Gi8vh0zq1qIkWfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=H20Ou+xe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ggQYyror; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l1oJ2TKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF09AC4CEF7;
-	Fri, 10 Apr 2026 03:06:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775790389;
-	bh=Tf8vCgldFUBRr9Xt5B+9qq6kfVEzE04QacFG7bCoGFE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l1oJ2TKmq0qshfhrFhFWA40LRRNBn8qvWLYrIqsxmR9ww82hBGV29HIOjOp6Ru/Zf
-	 HSs3rnxcHa+KntGbTXym6NkG81piXT64XWSqjln+Nf4UdG7s2ZgM4yZrud9Jpay25O
-	 PgG9FtyXm+xByp6FNWuaIDCEGZygzfnuBQhUnJdTquT3tm89KlmLyPK8yD4gFEr4C5
-	 /HiV1N3avL7oLXur714EyF4DmDq8x7PbQY0qdxPBS8P4TGOPoPYx2RqK2zU0hvNJ0w
-	 HPjNIhkkqXeVyHVk53/wxGJVzBE6TIxe34PnxIAahuDCtRt2DBs2v68z2gd1PujvKj
-	 A5RHL4aI4zh3g==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	WANG Xuerui <kernel@xen0n.name>,
-	loongarch@lists.linux.dev,
-	Benno Lossin <lossin@kernel.org>
-Subject: Re: [PATCH 6.12 000/241] 6.12.81-rc2 review
-Date: Fri, 10 Apr 2026 05:06:03 +0200
-Message-ID: <20260410030603.70733-1-ojeda@kernel.org>
-In-Reply-To: <20260409091733.126574279@linuxfoundation.org>
-References: <20260409091733.126574279@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="H20Ou+xe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ggQYyror"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AD3A31400207;
+	Fri, 10 Apr 2026 04:29:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 10 Apr 2026 04:29:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1775809796;
+	 x=1775896196; bh=jeGjcpICleST8v24rZwvokkHatWhWcj7ixN9vXhTAYQ=; b=
+	H20Ou+xeOitXxGG9Sm9uMhpyX1aX19BfJNhTiU7RAWorlc3iwE3r67AfVAU/D9jE
+	LPn7px1lFiaA+dobaAutvUqVL55URe1sGuP5sFfZmDdDFWVe8HoMJkoqIkrn64KE
+	dF3fFJDLmLHgj+qr/F+4Iua5mEe/Z/82QvNdAygSI4kW9XqY/LXDRqdHiK6XEoA0
+	ZVflQOc/ZCRDsp1bYEeda81XOdpfdiH4vSjH2dQGw9QuAErzJGnwdCztt+uk03X2
+	Mcc8wdOY+fByFEXd2Q5tW54CNGrsxZ7YG7KZ3J3L5qnyH1GmOGSZHfcR+Tj4XZHz
+	p590/XsFaAcqwBEHv7SqgQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775809796; x=
+	1775896196; bh=jeGjcpICleST8v24rZwvokkHatWhWcj7ixN9vXhTAYQ=; b=g
+	gQYyrorXvxDm7GpMylst7lpoVsXAfZx0SFXHp9o0PQ6FjnbZ8NEV5WZNiCtwoduM
+	EesK5Ij1JRBM23fs43w8f8iqL094DW7SQSjFAGhyPhuNHLi9J/zq8epgJfOwnG97
+	shBdVneWeqKbiRp9irz9lqtEc93QY7cpFL/wmO0Wz6vf8+g7Ay+O+giJ8lRA99HI
+	xWVpSESatVuxP4Z9KDyftL2Vgctp9ci9q7vkf0/buapWMAvBfYFry6yoCzdLAy+8
+	RYDqgXtwFr9zkVRn0HGfF9OI5Xh5NEh7+NqW24ENsPzcBO2CJYyar1Mglrjj2sjX
+	WUpmouq60PQqFuNSPfABw==
+X-ME-Sender: <xms:A7XYaSoAYvsWO2AE6h7XSGjmTHlVsVH0m7BI9OiKOPGyIy8FxsMTBw>
+    <xme:A7XYacgcm4MkpXm96XOh--V1vDMVA5m6YWj4iOqHc1688wamhXBMuXz44jVQPlvfc
+    u4J9XH3KtdidGih_0utTXg7MY6xZWFciSp4WEZarKoSM4eaM3uv6Sg>
+X-ME-Received: <xmr:A7XYaSvYWmYm9zz74Z_7nGmoNpmdm3LlMdK9vF7lHUr0OuBb2slPtmZkHz-Fa1_O37fqfEjdeSUsnwzcWFCW_DETKoJ0jnxT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvkeelfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefkffggfgfuvfevfhfhjggtgfesthejredttddvjeenucfhrhhomhepfdeurghrrhih
+    ucfmrdcupfgrthhhrghnfdcuoegsrghrrhihnhesphhosghogidrtghomheqnecuggftrf
+    grthhtvghrnhepfeelheekheelkeejlefffefhvdeljeetheeltdeiudffveetffelteeg
+    gfefhfejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrghrrhihnhesphhosghogidrtgho
+    mhdpnhgspghrtghpthhtohepvddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hgrhgvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehs
+    thgrsghlvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghttghhvg
+    hssehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqkhgvrhhn
+    vghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhorhhvrghlughsse
+    hlihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopegrkhhpmheslhhi
+    nhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheplhhinhhugiesrhhovg
+    gtkhdquhhsrdhnvghtpdhrtghpthhtohepshhhuhgrhheskhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphgrthgthhgvsheskhgvrhhnvghltghirdhorhhg
+X-ME-Proxy: <xmx:A7XYaV2W-xdTEeL7GkC8E3HMyhkkXOrpdV3E0TwR2t6Qof9tpdA5Tg>
+    <xmx:A7XYaZxMXv7jh_HJTyVTn3oinyu4JsBWEO7zBxttcklTKJJ-8dX1BQ>
+    <xmx:A7XYaQVdJq8AqZLGINYpmuwXgMNtOhUVIlQAazSiVPrVeVvo-zexmQ>
+    <xmx:A7XYabA6TivAk7yG-lwQjlnXLQ3x013HiZTgdEZ8UgZGpbRFX0uGUg>
+    <xmx:BLXYaT-gx7g_N4I0bZ5UMqr69oa7QLbCDB7Z1HEnluuEUUySm23ZeuNF>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Apr 2026 04:29:53 -0400 (EDT)
+Message-ID: <be550d5f-a5bc-4cab-aa75-1c7481ba39c8@pobox.com>
+Date: Fri, 10 Apr 2026 01:29:52 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/312] 6.1.168-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260408175933.715315542@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260408175933.715315542@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, 09 Apr 2026 11:25:21 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.12.81 release.
-> There are 241 patches in this series, all will be posted as a response
+On 4/8/26 10:58, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.168 release.
+> There are 312 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Sat, 11 Apr 2026 09:16:49 +0000.
+> 
+> Responses should be made by Fri, 10 Apr 2026 17:58:42 +0000.
 > Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.168-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64:
+Tested on an amd64 laptop (Lenovo ThinkPad T14 Gen 1). Working well, no
+regressions observed.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
+However, I'm curious about what's happening with 6.1.y and the "CrackArmor"
+AppArmor fixes. As far as I can tell, they're still not in 6.1.168-rc1
+(and presumably won't be in 6.1.168). Assuming it's not too early to talk
+about it in public yet, where does this stand? Is it just a matter of
+waiting a bit longer for stuff to happen behind the scenes (or for other
+bugs/patches to be dealt with first), or is there something else going on
+(such as a specific problem blocking it that needs to be resolved first)?
 
-In loongarch64 I am seeing:
-
-    arch/loongarch/mm/tlb.c:292:19: error: use of undeclared identifier 'exception_handlers'; did you mean 'exception_table'?
-      292 |                 vec_sz = sizeof(exception_handlers);
-          |                                 ^~~~~~~~~~~~~~~~~~
-          |                                 exception_table
-    ./arch/loongarch/include/asm/exception.h:9:14: note: 'exception_table' declared here
-        9 | extern void *exception_table[];
-          |              ^
-    arch/loongarch/mm/tlb.c:292:18: error: invalid application of 'sizeof' to an incomplete type 'void *[]'
-      292 |                 vec_sz = sizeof(exception_handlers);
-          |                                ^~~~~~~~~~~~~~~~~~~~
-
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: WANG Xuerui <kernel@xen0n.name>
-Cc: loongarch@lists.linux.dev
-
-
-And then the many missing safety comments Clippy warnings we expected,
-i.e. the ones that we discussed recently, e.g.:
-
-    warning: unsafe block missing a safety comment
-        --> rust/kernel/init/macros.rs:1015:25
-
-Cc: Benno Lossin <lossin@kernel.org>
-
-I hope this helps!
-
-
-Cheers,
-Miguel
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
