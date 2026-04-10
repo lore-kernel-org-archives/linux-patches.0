@@ -1,206 +1,190 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B0D392C21
-	for <patches@lists.linux.dev>; Fri, 10 Apr 2026 20:05:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775851556; cv=none; b=lKEKipOUZSsSWuNp6ES1zp3h/WCx2HSu/1ZVYXv60XplHgd45ojmRGNAJFGA/hfbBmDJkdKqx4MsZXicpkxpIHDDqS7ol4U6MMIAcj61r9V9SxC4qlGmzfNVAkZY1RBMR6az8/2zkbLlirLhRneKuG51BGZ7UM6/7i5cIKwlrWQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775851556; c=relaxed/simple;
-	bh=8+xCiqAx7z0gGvhV6GHtmnlfV71IyVd56yR7wAWwwTU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJyQFr1DS1vTEWGv1NCOS8L4kLe8LwTFDkvvyv/FesSU+OXu1ru4LoAYRlWsMC8qT5Upz0O68cXQ9hJc0mAMFyNg9llC68SWz1PRQKre6VKsSRvPSLl4yKO5ojBEt6yj43crTFgTujAvWugaGZrXCXi3Hdap//3ps0KDniN/+u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ed2jUDMg; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C773B38B4
+	for <patches@lists.linux.dev>; Fri, 10 Apr 2026 21:20:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775856057; cv=pass; b=RmfMkz+z0/4bHGdy0jHmmdoB7Y9U8sg2jSHwMuUI3Z7Cy3LUG52yHPbDOZtSN0R04G6pjSvanMXcCunUshQ59dUi1VF198zTIfXYcIoWetO9Zlh7EbDlgx6rLlU2Vav0ml4PDZTjHYuqsuE5i/nq5109/WT+Df4mhc7cNuwluEM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775856057; c=relaxed/simple;
+	bh=Ss3l4fQSrxu+4aX5Y3uEpQN7nCCMUS3AsDLwQiEMG/I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ovw/dN8S8p1Fo36oe3uNp6k6ghbsFUuYQJtiynWu+6FEtlqxkRetzcXKVhWCgdKAu4iwc9AHk6hErF9rce+PM2dO4fRN6zDs/CorXlwDG73n2ucjOd/EW3YXulLiCtyMz/lecoVm9bf8cp7NuiCv53EHLbU4LpRsNeg0lHLZASw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VlH7qGfw; arc=pass smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ed2jUDMg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1775851545; x=1807387545;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=8+xCiqAx7z0gGvhV6GHtmnlfV71IyVd56yR7wAWwwTU=;
-  b=ed2jUDMgYJpVTos6xV7VOFppTiTg8+H2WhX1gKU/vlLiNWZxYZz3RT9I
-   X8M3vpRmtLJswwzeZBpZvF+4X1WMqByl3SnhJZz+sG+KvResoDPisFOFk
-   hCKH2tfjxzdz2/trsR8ZefKNLN/X3s09BKsMvUnX1BkzA+vvps6CDLHVE
-   9/J2lvqNpDnPi8VlnD89m6Q/XWXEvSOb3Lg+iFTcyoX18O0LSajECJFVU
-   /jbmR/F1sVfj0rP6C8ZrLCgV45D21nNrZ8yWctETFY3DMrjnLOdqZZoMi
-   5sGEtW9zJv1duTjFMJX9ICNAozz9oAp2ALj6/ad8jYWCM64opRWQUDiEa
-   A==;
-X-CSE-ConnectionGUID: s6RWBJPRSLyAU9M3Ff4/fg==
-X-CSE-MsgGUID: 1r6KL0LITwidrxOIQaZejQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11755"; a="76898107"
-X-IronPort-AV: E=Sophos;i="6.23,172,1770624000"; 
-   d="scan'208";a="76898107"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2026 13:05:42 -0700
-X-CSE-ConnectionGUID: Qf75QDRhQHCJLvKXJkN5BA==
-X-CSE-MsgGUID: Yw7VLsxaTuiHmyMwK/u8Gw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,172,1770624000"; 
-   d="scan'208";a="228155028"
-Received: from khuang2-desk.gar.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.106])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2026 13:05:41 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	David E Box <david.e.box@intel.com>,
-	x86@kernel.org
-Cc: Christoph Hellwig <hch@infradead.org>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [RFC PATCH v5 6/7] fs/resctrl: Call architecture hooks for every mount/unmount
-Date: Fri, 10 Apr 2026 13:05:31 -0700
-Message-ID: <20260410200532.58602-7-tony.luck@intel.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260410200532.58602-1-tony.luck@intel.com>
-References: <20260410200532.58602-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VlH7qGfw"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b9bff57cb62so384659966b.2
+        for <patches@lists.linux.dev>; Fri, 10 Apr 2026 14:20:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775856055; cv=none;
+        d=google.com; s=arc-20240605;
+        b=I6dg/AUqyM+DP84FoLOEnsAqyDtVx8QpN5eIAiSBXj1WZIed16iWoOFzrxJYZjMGcK
+         +xUSmTGP868BPWW7NmO1yLK74HFXBo0E6ojU5tC/RRoCjht5F2fX+Sh/cTXZ3yuH84G+
+         8hIxUs3sfFhjwQHmUcMJaXNw26TDYBheEYkRvI7ibwvyg6ZtFuXM2CaYjzQxSb46AiYF
+         7wLegwb/FUQHFeDMmrczGtyQtuL0BI4RufLG6dosBhd3NMnNGLxf03Gy1motxZKSs1Ag
+         L+a+nG8LiAeYnoh+50aurtaubVGo53lxQhULlxQ2kmm9zrqsBdBWD9tDjFHgJe1ISx8B
+         gjaQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=WhaJJ8eoOLYXc/7WgoEtcKV9TdCM7BV5ydK19zk2ja8=;
+        fh=Sd1Tc/kcVApEDyK40f0rrLOZdUMrwjHeK1v59xStr0c=;
+        b=A68AH+NjAXD6A8tHIb7BHKZF+itEGjOzuOUBvfGXOxF8rtDdbkhE7hfdT/NnzpNV3e
+         Q3wQ1wGbrtSz4hLvtHH7m/qq3Mbha03Xqk0LEvawZAM3z80dEcOYOpAKzeNLdcgKKOgz
+         hH6Prnesk9/tA5qfVZxFHUP408vbnh2UlTygXBa0fIw8zJ5WWp659KcxSzHHuO2BGEl4
+         7yWzjvLjumKuLkEqBElLkfrPDp5OBPalr/ffaC12ZDVxdjuJr/TVWmhC0ahJXVXIeU1v
+         TMyFT4QBRjQMFgOsq55n6sI4w1TJ2+2P02YJAV9fXJAL8hqkru+NTeDv0DO+/LhHfvNL
+         qrrg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775856055; x=1776460855; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WhaJJ8eoOLYXc/7WgoEtcKV9TdCM7BV5ydK19zk2ja8=;
+        b=VlH7qGfwQy8TbMMQqixENzS51cByxcoHE3j64OjuNhTpyKEmvMmrVY1I4c5V+3LKxY
+         ksH8NjXdT/iBocKRXlm8yGARasAzg4N9IiMLSHaKGmpb0ulVIUOEknr8svA6iNAvEVyX
+         GukLsHwsma7zv5ZUB91KLsMWmIG3UxmH1Nw5elyncxcf3o1cdo+/0Mhb5ynFGS6guT5B
+         Q8ddHi6PsmdSjcl9/piZXJXEfvpV8SFQVgF/SwNeX+28xiUQKt5niTBRkPmoWv5MWPzM
+         giM8hydgMgiXWmpP52gxqjsVHBQhScB/aVfQfs/A91hUt+yKiDodQ4XDeL9+HnMde9Q3
+         D3fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775856055; x=1776460855;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=WhaJJ8eoOLYXc/7WgoEtcKV9TdCM7BV5ydK19zk2ja8=;
+        b=XHts9GTBdBOoEtkFyHMExt7NM28qqRIeTetPutw38oOH46NCxWAjriLQL0ZrXtJkOF
+         HnVxtcj6ohW6Kuh4yBg2jWoQQdh82zYmaHkJ0cdrKYp/kyQjP8XCcThZkP2JwXQcZYdY
+         CjEvnaxbCxRUAI85h6wF/H6aetPvOVJ4hNkLiRNj4fx7Trflut9lRSFMpWndIdL++TiF
+         GxrRRbss2AlWD50qN/WEUWUMWXNj8nzbgq5dvifH0Kg6NEAD1vfKc/p3C4ET9byc5uVW
+         e2YJq/nVG0jPQP+qr5CjQ9cD7uCeaCJK8cnLnvDUJGlM2GaJ96zlLQnGtQVX1lJboBwB
+         i/lg==
+X-Forwarded-Encrypted: i=1; AJvYcCWDwdfR9EnRy1hYw3ulXJ6BAwc70zuYg3Uu0Xro4rvtvA5qvQ4W9kAS3t6VZy572+L8Z5So5uCu@lists.linux.dev
+X-Gm-Message-State: AOJu0YyHZaMWO/rbtcjVpavB9FCvUrQMOkzKOIkSF/npK5VzM1rnSBZv
+	zNt7CABDMcLzemO8RyAyxJQ6Q0AnQ0lpZnj1fkRBfBody8qTjvVb2IUb5sV+4hdIAWP5l5krwn5
+	Ovcd5pJ3E6iO7IjbOYwPLwGVTt9MzxCk=
+X-Gm-Gg: AeBDieu7V6yvpbGFd2YxNssDMdP6b2gktEYefv8H5Bz1Kv8HfnB7l+XhQcjXjyRJIPX
+	FmeXC7lwQR3ic5XyAyKKenxy6MOEUlIJ9+zUfnZn7lGbFNLBCrR4cMcB/suodd/CsWF1ZZWDVV9
+	v/T6KjlyGAxD2Y/DQ5YnK+OLoF66tzHaLNxhYnpOZJ65ZlwE90dEwFD+zxg8D7CiKILdmhRyrcY
+	ndH4M8yQYZYHy+KqJE+i9zcZ1E8DboG98AOYBnTqjetY62nBV/iI6swRK9GJ5wBa6G92OiMjUi1
+	4ct+WCnlvpY/9YxJ9bpK5uARGoTIDSg+C/RKJySAoQy9Gd/y+HjAwTGoiW65WDKAnDWosO+T3Tz
+	zNt2C6Q==
+X-Received: by 2002:a17:907:c908:b0:b9d:3b68:954c with SMTP id
+ a640c23a62f3a-b9d727aa0cbmr220907566b.24.1775856054482; Fri, 10 Apr 2026
+ 14:20:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260408175927.064985309@linuxfoundation.org> <20260408175935.705507105@linuxfoundation.org>
+ <eee63d31-f7a2-4737-b33b-cfea7f04e960@oracle.com>
+In-Reply-To: <eee63d31-f7a2-4737-b33b-cfea7f04e960@oracle.com>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Fri, 10 Apr 2026 14:20:42 -0700
+X-Gm-Features: AQROBzDc2Nu5LoD9cVK_3hSpGRPzX5o7HU6msz-Juo7W2QvQF2OvoWhA9GmtpqY
+Message-ID: <CAKxU2N-WvGmbG=Zge=C1F6a+pR3kNW6J7uExUGTOxudBDT8YqQ@mail.gmail.com>
+Subject: Re: [PATCH 6.12 230/242] drm/amd/display: Reject modes with too high
+ pixel clock on DCE6-10
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, Alex Deucher <alexander.deucher@amd.com>, 
+	=?UTF-8?Q?Timur_Krist=C3=B3f?= <timur.kristof@gmail.com>, 
+	Mario Limonciello <mario.limonciello@amd.com>, Vegard Nossum <vegard.nossum@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Architecture code for AET needs to acquire INTEL_PMT_TELEMETRY module
-references on mount and release them on unmount.
-
-Add hooks for every mount/unmount of the resctrl file system so that
-architecture code can allocate on mount and free on unmount.
-
-Add resctrl_mount_lock to protect mount/unmount operations and write access
-to "resctrl_mounted". This simplifies the code flow around the repeat mount
-with -EBUSY return to avoid calling resctrl_arch_pre_mount() when the file
-system is mounted.
-
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- include/linux/resctrl.h |  9 ++++++---
- fs/resctrl/rdtgroup.c   | 35 ++++++++++++++++++++++++++++-------
- 2 files changed, 34 insertions(+), 10 deletions(-)
-
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index f3eb6dfa61d4..f3da533e182c 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -551,12 +551,15 @@ void resctrl_online_cpu(unsigned int cpu);
- void resctrl_offline_cpu(unsigned int cpu);
- 
- /*
-- * Architecture hook called at beginning of first file system mount attempt.
-- * No locks are held.
-+ * Architecture hook called before attempting to mount the file system.
-+ * Called with just resctrl_mount_lock held.
-  */
- void resctrl_arch_pre_mount(void);
- 
--/* Called to report unmount. */
-+/*
-+ * Architecture hook called when mount fails, or on unmount.
-+ * Called with just resctrl_mount_lock held.
-+ */
- void resctrl_arch_unmount(void);
- 
- /**
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 5da305bd36c9..444bc359e4a7 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -18,7 +18,6 @@
- #include <linux/fs_parser.h>
- #include <linux/sysfs.h>
- #include <linux/kernfs.h>
--#include <linux/once.h>
- #include <linux/resctrl.h>
- #include <linux/seq_buf.h>
- #include <linux/seq_file.h>
-@@ -48,7 +47,14 @@ LIST_HEAD(resctrl_schema_all);
-  */
- static LIST_HEAD(mon_data_kn_priv_list);
- 
--/* The filesystem can only be mounted once. */
-+/* Mutex protecting mount/unmount operations */
-+static DEFINE_MUTEX(resctrl_mount_lock);
-+
-+/*
-+ * The filesystem can only be mounted once.
-+ * Updated with both rdtgroup_mutex and resctrl_mount_lock held.
-+ * Safe to read while holding either rdtgroup_mutex or resctrl_mount_lock.
-+ */
- bool resctrl_mounted;
- 
- /* Kernel fs node for "info" directory under root */
-@@ -2788,18 +2794,21 @@ static int rdt_get_tree(struct fs_context *fc)
- 	struct rdt_resource *r;
- 	int ret;
- 
--	DO_ONCE_SLEEPABLE(resctrl_arch_pre_mount);
-+	mutex_lock(&resctrl_mount_lock);
- 
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
- 	/*
- 	 * resctrl file system can only be mounted once.
- 	 */
- 	if (resctrl_mounted) {
--		ret = -EBUSY;
--		goto out;
-+		mutex_unlock(&resctrl_mount_lock);
-+		return -EBUSY;
- 	}
- 
-+	resctrl_arch_pre_mount();
-+
-+	cpus_read_lock();
-+	mutex_lock(&rdtgroup_mutex);
-+
- 	ret = setup_rmid_lru_list();
- 	if (ret)
- 		goto out;
-@@ -2897,6 +2906,12 @@ static int rdt_get_tree(struct fs_context *fc)
- 	rdt_last_cmd_clear();
- 	mutex_unlock(&rdtgroup_mutex);
- 	cpus_read_unlock();
-+
-+	if (ret)
-+		resctrl_arch_unmount();
-+
-+	mutex_unlock(&resctrl_mount_lock);
-+
- 	return ret;
- }
- 
-@@ -3169,6 +3184,8 @@ static void rdt_kill_sb(struct super_block *sb)
- {
- 	struct rdt_resource *r;
- 
-+	mutex_lock(&resctrl_mount_lock);
-+
- 	cpus_read_lock();
- 	mutex_lock(&rdtgroup_mutex);
- 
-@@ -3187,6 +3204,10 @@ static void rdt_kill_sb(struct super_block *sb)
- 	kernfs_kill_sb(sb);
- 	mutex_unlock(&rdtgroup_mutex);
- 	cpus_read_unlock();
-+
-+	resctrl_arch_unmount();
-+
-+	mutex_unlock(&resctrl_mount_lock);
- }
- 
- static struct file_system_type rdt_fs_type = {
--- 
-2.53.0
-
+On Fri, Apr 10, 2026 at 12:08=E2=80=AFPM Harshit Mogalapalli
+<harshit.m.mogalapalli@oracle.com> wrote:
+>
+> Hi,
+>
+> On 08/04/26 23:34, Greg Kroah-Hartman wrote:
+> >   #include "resource.h"
+> > +#include "clk_mgr.h"
+> >   #include "include/irq_service_interface.h"
+> >   #include "virtual/virtual_stream_encoder.h"
+> >   #include "dce110/dce110_resource.h"
+> > @@ -843,10 +844,17 @@ static bool dce100_validate_bandwidth(
+> >   {
+> >       int i;
+> >       bool at_least_one_pipe =3D false;
+> > +     struct dc_stream_state *stream =3D NULL;
+> > +     const uint32_t max_pix_clk_khz =3D max(dc->clk_mgr->clks.max_supp=
+orted_dispclk_khz, 400000);
+> >
+> >       for (i =3D 0; i < dc->res_pool->pipe_count; i++) {
+> > -             if (context->res_ctx.pipe_ctx[i].stream)
+> > +             stream =3D context->res_ctx.pipe_ctx[i].stream;
+> > +             if (stream) {
+> >                       at_least_one_pipe =3D true;
+> > +
+> > +                     if (stream->timing.pix_clk_100hz >=3D max_pix_clk=
+_khz * 10)
+> > +                             return DC_FAIL_BANDWIDTH_VALIDATE;
+> > +             }
+> >       }
+>
+> This is a backport of commit: 118800b0797a ("drm/amd/display: Reject
+> modes with too high pixel clock on DCE6-10").
+>
+> The backport adds return DC_FAIL_BANDWIDTH_VALIDATE, in
+> validate_bandwidth functions that return bool;
+>
+> drivers/gpu/drm/amd/display/dc/inc/core_status.h:
+> DC_FAIL_BANDWIDTH_VALIDATE =3D 13, /* BW and Watermark validation */
+>
+> In this branch DC_FAIL_BANDWIDTH_VALIDATE is integer 13, which converts
+> to true, so the reject path is inverted into success.
+>
+> So I think we need to fix this. Thoughts ?
+Best to drop.
+>
+> Maybe we need to revert this or backport commit: 4465dd0e41e8
+> ("drm/amd/display: Refactor SubVP cursor limiting logic") to stable branc=
+h.
+>
+>
+> Thanks,
+> Harshit
+>
+>
+> >
+> >       if (at_least_one_pipe) {
+> > --- a/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
+> > +++ b/drivers/gpu/drm/amd/display/dc/resource/dce80/dce80_resource.c
+> > @@ -32,6 +32,7 @@
+> >   #include "stream_encoder.h"
+> >
+> >   #include "resource.h"
+> > +#include "clk_mgr.h"
+> >   #include "include/irq_service_interface.h"
+> >   #include "irq/dce80/irq_service_dce80.h"
+> >   #include "dce110/dce110_timing_generator.h"
+> > @@ -876,10 +877,17 @@ static bool dce80_validate_bandwidth(
+> >   {
+> >       int i;
+> >       bool at_least_one_pipe =3D false;
+> > +     struct dc_stream_state *stream =3D NULL;
+> > +     const uint32_t max_pix_clk_khz =3D max(dc->clk_mgr->clks.max_supp=
+orted_dispclk_khz, 400000);
+> >
+> >       for (i =3D 0; i < dc->res_pool->pipe_count; i++) {
+> > -             if (context->res_ctx.pipe_ctx[i].stream)
+> > +             stream =3D context->res_ctx.pipe_ctx[i].stream;
+> > +             if (stream) {
+> >                       at_least_one_pipe =3D true;
+> > +
+> > +                     if (stream->timing.pix_clk_100hz >=3D max_pix_clk=
+_khz * 10)
+> > +                             return DC_FAIL_BANDWIDTH_VALIDATE;
+> > +             }
+> >       }
+> >
+> >       if (at_least_one_pipe) {
+>
