@@ -1,85 +1,100 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076A221ADCB
-	for <patches@lists.linux.dev>; Sat, 11 Apr 2026 01:28:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8E533030F;
+	Sat, 11 Apr 2026 09:49:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775870910; cv=none; b=iPGM8bpOsZW9lexP+Xs8LaRf5EtFPpEwrA7xPIV5mD1d6Y72txgMrt4LWRGTd0QlqlFhTkr/Z979ayprsCnpIkjOBtUaewo+VAtBswAtoMefmFZQESCr4u5VqS7bYV6a29LM/1Kbqnvox5uYV0awSwYEWYHNcFZPQ+g4RUEAFVk=
+	t=1775900947; cv=none; b=pM2cRmwyp19ez4YcyqvgVrfp82FeCf2OyCnbGODyHXOAvRU1CgnNq9jUgTJnW5k4m9ZV6dAbokHW/eKxPzjH5FEQ+A89SljwlSazVD1kFgQUgOxx012+CFMxe4T30Naoduomg0GIRK1YJd3QS4nF3dkdzNJndf7c+V1TW9+IbU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775870910; c=relaxed/simple;
-	bh=QBESViLoUMaOvRo3YjwM21rRh/6OI+lAc8gz6A9NrgY=;
-	h=Date:From:To:CC:Subject:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=Wp7mGHtgRSMM4GbxzxJJk85W3/0kwnFhb2FuM/m5Rvf6ltpZlYCjU5GJgd+gqJ1sieE5ChB06yvuNW+vhRxS1neF+QyUBXVk6jUfEp9zxaCmq4/sUd0rWEc5H0EG5BG77siivyUC1PU+Ulf6OKsX59tYmmHisas0gPWXM4pwEp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m2hHjnZs; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775900947; c=relaxed/simple;
+	bh=8tb5B89ZJnX50rlWAJvkXtWTKTyNnROQsAJGmIcWveY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EezYgS0Aft/y9DnOMZITSBPf2BT9muk6JcTUWnH2CyZMPKk4mvtJavhPbbTkw/FLCrWcuCnAKVuID7xRxZlzhv8p8UggPKRU9dItj2T8NYN8/ivBqDIyoBepEwsSjetM3pBCtp+55FLLBCJowoBXWTjyritse6fm4beL6F7M+p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuS/CZkp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m2hHjnZs"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-43b8982c2f4so1562846f8f.2
-        for <patches@lists.linux.dev>; Fri, 10 Apr 2026 18:28:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775870907; x=1776475707; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QBESViLoUMaOvRo3YjwM21rRh/6OI+lAc8gz6A9NrgY=;
-        b=m2hHjnZspQaQRw+JjfKxzvlIssFpXZfzIFSGJs4gyfsTObZWrHPVwUYRMwofXxhXid
-         s/NrEZu3niHKqimnkp/epl1g8Ydu2gS8luQv7pnXLnVtcqNOAWqD8eaYsyGTGJ7H3SLK
-         4NnnAj/FYpxM/GLgaU/R7J+02GAfc/HzayZQQr48c0zoU6n4PY8ldp24aB2FYwBqk6XO
-         6tBgrJefo2rIFiRQaqXoDQ6BmGQFAyIhtB4OflY32tkrlMWqhggcpCoVZesJEJJ8YF11
-         5iqX8ea7a6laFcaYJjlvF4bf45XH9ZL21iq35u4VaueHOX54jWetHrECfR6SIXfO9mWN
-         +QLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775870907; x=1776475707;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QBESViLoUMaOvRo3YjwM21rRh/6OI+lAc8gz6A9NrgY=;
-        b=gXJUrpubYirYTbZ6UCKK9IXUx9e5SZ/LAcX2XuUTwlSBQkGAwHf2M/+7IrqIvhu/P5
-         U8vFOrRQdShud/vtu6wB31BJ9FelGow5ovH7/FpKYbiViECTgcM29+P4Wr1BsscxzK3h
-         iQ3J2gRSslmLTC4fWMdpYlIxOShD/Y3VHpb+Rr3YrSAc3krGTQwCO992SaCw3fVxT32O
-         6a7JKaFrpo/eYuhcRGpSq03jQyXGd0OspF0fdNwUuKVyr+4Eqk/rrVn62mrWR3qZUDXX
-         g8EIAeJHPkofxmOrqZj8P2KQRjEjHWOqsRpVQqaCPylzv5pmdnzeu3BFmhX/uiyAW4FV
-         v5Hw==
-X-Forwarded-Encrypted: i=1; AJvYcCVWUUdAOaKYW8Qnm8i/REk//GWCqsTKPLFxhgdPzearxYocEPKTvXIXv8JsKqZviQgu2n7rhzB8@lists.linux.dev
-X-Gm-Message-State: AOJu0YwDHp4haSieCX+RfwOFaJp81sZgQvahPAxNiT98/sA85WV/Bbt6
-	rR2ysZy6vLSDVHJtE7RRzqsBLAGGgh+5izx5v57kpSKZ/DkgxdDgM6zw
-X-Gm-Gg: AeBDies5A1M1UUvg6qmRTSdfIADCqeb2pnWIw4aK1h2UA5xp9+JV6LjqeMdyHtLE3hY
-	JTugKYKdJRL6/UtlU3j4JlwhUx+pokUEHxzGKMYv2bWTZV2WyeTjRpi6jxZMfVligiDobg6/rN0
-	8D0jzR6hIb+S4P4jA08z7livuWfLImTYJZNuky/cFOgbFc20lHRoQSfYZNOWG8HAm9w6x7G6fei
-	cdhDFItIjw5a8SrpEsjXYLkyDOD4jzMpJDbyGUlbi5EQPp4ODs1DIwzUpaFkXP/rupMbD2V9UA4
-	S1vGV8YFSz8hSmq3sSZQWyqwNsw+vzIA27IR+dNddo9YWl9EryP5ebAEy/3UdMJlEUSS2Lp8+L0
-	QlA+ZIKYh863DUpv2TVnR8+FVhkgczhQZ9+WRaQ3UIL+onOkxKcq2ssICySt8Z1XmEnn2gSsrBv
-	YDgZocHu0h+WvnB9NZi9lCjMtRBhkHEPaK1FreaZUcMl95/P+4JHU=
-X-Received: by 2002:a05:6000:2211:b0:43d:2fc7:4816 with SMTP id ffacd0b85a97d-43d641e7d3cmr7775174f8f.0.1775870907203;
-        Fri, 10 Apr 2026 18:28:27 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([86.1.69.5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d63e468c5sm12268373f8f.20.2026.04.10.18.28.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Apr 2026 18:28:26 -0700 (PDT)
-Date: Sat, 11 Apr 2026 02:28:26 +0100
-From: Josh Law <joshlaw48@gmail.com>
-To: barryn@pobox.com
-CC: achill@achill.org, akpm@linux-foundation.org, broonie@kernel.org,
- conor@kernel.org, f.fainelli@gmail.com, gregkh@linuxfoundation.org,
- hargar@microsoft.com, jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
- linux@roeck-us.net, lkft-triage@lists.linaro.org, patches@kernelci.org,
- patches@lists.linux.dev, pavel@nabladev.com, rwarsow@gmx.de,
- shuah@kernel.org, sr@sladewatkins.com, stable@vger.kernel.org,
- sudipm.mukherjee@gmail.com, torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.1 000/312] 6.1.168-rc1 review
-In-Reply-To: <be550d5f-a5bc-4cab-aa75-1c7481ba39c8@pobox.com>
-Message-ID: <6F70FC25-AE09-4A97-9798-D1CE49239B00@gmail.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuS/CZkp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DBDC4CEF7;
+	Sat, 11 Apr 2026 09:49:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1775900947;
+	bh=8tb5B89ZJnX50rlWAJvkXtWTKTyNnROQsAJGmIcWveY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=vuS/CZkpkQ3tdhWH9vxV+iQ83O73hVV4bUSV61YOFV2B9k98j0b2VYhHwREqO2Cbu
+	 rt7EnzgZRDWqhW48C/8YbxWMulXN0eXaOsibuLmiRckWXVG59zb2dmEB45noO6nCEg
+	 d2wtJRnOho7fB8kdjfURTzfmSfzO10FooZsLHX7g=
+Date: Sat, 11 Apr 2026 11:49:04 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Rosen Penev <rosenp@gmail.com>
+Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Timur =?iso-8859-1?Q?Krist=F3f?= <timur.kristof@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>
+Subject: Re: [PATCH 6.12 230/242] drm/amd/display: Reject modes with too high
+ pixel clock on DCE6-10
+Message-ID: <2026041152-slogan-chariot-c87b@gregkh>
+References: <20260408175927.064985309@linuxfoundation.org>
+ <20260408175935.705507105@linuxfoundation.org>
+ <eee63d31-f7a2-4737-b33b-cfea7f04e960@oracle.com>
+ <CAKxU2N-WvGmbG=Zge=C1F6a+pR3kNW6J7uExUGTOxudBDT8YqQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKxU2N-WvGmbG=Zge=C1F6a+pR3kNW6J7uExUGTOxudBDT8YqQ@mail.gmail.com>
 
-(Compiled and booted on Geobook 1E without any dmesg oddities)
+On Fri, Apr 10, 2026 at 02:20:42PM -0700, Rosen Penev wrote:
+> On Fri, Apr 10, 2026 at 12:08 PM Harshit Mogalapalli
+> <harshit.m.mogalapalli@oracle.com> wrote:
+> >
+> > Hi,
+> >
+> > On 08/04/26 23:34, Greg Kroah-Hartman wrote:
+> > >   #include "resource.h"
+> > > +#include "clk_mgr.h"
+> > >   #include "include/irq_service_interface.h"
+> > >   #include "virtual/virtual_stream_encoder.h"
+> > >   #include "dce110/dce110_resource.h"
+> > > @@ -843,10 +844,17 @@ static bool dce100_validate_bandwidth(
+> > >   {
+> > >       int i;
+> > >       bool at_least_one_pipe = false;
+> > > +     struct dc_stream_state *stream = NULL;
+> > > +     const uint32_t max_pix_clk_khz = max(dc->clk_mgr->clks.max_supported_dispclk_khz, 400000);
+> > >
+> > >       for (i = 0; i < dc->res_pool->pipe_count; i++) {
+> > > -             if (context->res_ctx.pipe_ctx[i].stream)
+> > > +             stream = context->res_ctx.pipe_ctx[i].stream;
+> > > +             if (stream) {
+> > >                       at_least_one_pipe = true;
+> > > +
+> > > +                     if (stream->timing.pix_clk_100hz >= max_pix_clk_khz * 10)
+> > > +                             return DC_FAIL_BANDWIDTH_VALIDATE;
+> > > +             }
+> > >       }
+> >
+> > This is a backport of commit: 118800b0797a ("drm/amd/display: Reject
+> > modes with too high pixel clock on DCE6-10").
+> >
+> > The backport adds return DC_FAIL_BANDWIDTH_VALIDATE, in
+> > validate_bandwidth functions that return bool;
+> >
+> > drivers/gpu/drm/amd/display/dc/inc/core_status.h:
+> > DC_FAIL_BANDWIDTH_VALIDATE = 13, /* BW and Watermark validation */
+> >
+> > In this branch DC_FAIL_BANDWIDTH_VALIDATE is integer 13, which converts
+> > to true, so the reject path is inverted into success.
+> >
+> > So I think we need to fix this. Thoughts ?
+> Best to drop.
 
-Tested-by: Josh Law <joshlaw48@gmail.com>
+I'll drop this commit now, thanks!
+
+greg k-h
