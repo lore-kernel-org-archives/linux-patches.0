@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B87346E7B;
-	Mon, 13 Apr 2026 17:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E1D33EB17;
+	Mon, 13 Apr 2026 17:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099684; cv=none; b=icQ9V1sZJ7MIQOjoiimkJLfLZnTLi/6mVLGKWpn7H4q/n7xWgzrzIqO53vOaPXdlPb49i9ns9MgRnoCk3YYAaezupYdkDeSLxem/LDWYgm4GvyJCYiP1zFX5cg99zU2ZKJ0Jb9dBZLT61pjvmguTmU6Am4chzbRPoldOsjqwn/A=
+	t=1776099686; cv=none; b=C+sOsqu8FM8o7mqphjw7Nr+j8RWWK+5NTMW/Qww1qTPnY2WWJvm96CBwBndIqb5UQH7gEW8kKi5XvsoYDMYeLWkCE3WvqKQc0/3QPvco0UWw66906HuR7jY7yjlZYShXeOcHfasdbBty3TmGlbr2z/zpdzdEs/J/JVPfbfL4CJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099684; c=relaxed/simple;
-	bh=40diKpSCrj8J2O04uXfAEzpKPyEG/GTI2UcU8kG3AAg=;
+	s=arc-20240116; t=1776099686; c=relaxed/simple;
+	bh=iCjaUugmerTOq7+ik1I5SXb6QWYHdtu+PsU1BXn5Eu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OIyT7n2O9xRhEt73Jg6yHDuvc9027xc1jYazoTXu3/hdXr3c10n2w1cj1l4Jt5RoPkRPcHglAEaYVEq5sWWMxswQdtZYj6V1ZKOrRl9tb0h1bInUsfqtpjCDTmxIVvj6CChVzJoQFpGiCiqNK1nP2pxUu1naIcIAhVCxqRslV1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHm6+kXg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rO9dRVDidu+TWXtpLqE/GS17SbP4A91YuDHqEuFTsPQuMHKLTXZTn44KvT7sfANvWEweranFzwbLQ0Wac6ZDRqWo6VvO/bPBNEgb4H0t+Ytv4XR/4Y0Z2YRCI1KDCvseXrQShvEU/Y7wbnYvLctEGIXL6Pvj2xLaK5B5pwGq+Dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnLXEIyN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHm6+kXg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA79C2BCAF;
-	Mon, 13 Apr 2026 17:01:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnLXEIyN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659F0C2BCAF;
+	Mon, 13 Apr 2026 17:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099684;
-	bh=40diKpSCrj8J2O04uXfAEzpKPyEG/GTI2UcU8kG3AAg=;
+	s=korg; t=1776099686;
+	bh=iCjaUugmerTOq7+ik1I5SXb6QWYHdtu+PsU1BXn5Eu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rHm6+kXgPzg8S5/kE5/6meozYwwxwC5hbOmWQeahVT/Scujuck6uYZf8fGYfuKGFb
-	 Z/oROahM8ZJQqDHSpUe2A2gDbFQ9FMrgn301vjXyngv4d155FqMYl5fTVnlQOCREDB
-	 OJzMfxedeOrBbRS+zz8fWuG2ilTBkXTMOshIj03Q=
+	b=dnLXEIyNBDCmh7Ah2y8ekwkStbZ1O1cT9yVypK7jxCnnz5IuEA7NBryv5ugs9OkxP
+	 DnX/FXHse2246LQmxW3BMPW9AfBMiL3duZkHCbxVoayVZYBZdWjbwRQ+twerTyOR+7
+	 VhcU6LUrXxZhBHiCN0PgKrgS3NppwqvzlF8CzdzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,11 +31,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Salvatore Bonaccorso <carnil@debian.org>,
 	Georgia Garcia <georgia.garcia@canonical.com>,
 	Cengiz Can <cengiz.can@canonical.com>,
-	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
 	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 5.10 435/491] apparmor: fix missing bounds check on DEFAULT table in verify_dfa()
-Date: Mon, 13 Apr 2026 18:01:20 +0200
-Message-ID: <20260413155835.313154328@linuxfoundation.org>
+Subject: [PATCH 5.10 436/491] apparmor: Fix double free of ns_name in aa_replace_profiles()
+Date: Mon, 13 Apr 2026 18:01:21 +0200
+Message-ID: <20260413155835.351024608@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -54,91 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+From: John Johansen <john.johansen@canonical.com>
 
-commit d352873bbefa7eb39995239d0b44ccdf8aaa79a4 upstream.
+commit 5df0c44e8f5f619d3beb871207aded7c78414502 upstream.
 
-The verify_dfa() function only checks DEFAULT_TABLE bounds when the state
-is not differentially encoded.
+if ns_name is NULL after
+1071         error = aa_unpack(udata, &lh, &ns_name);
 
-When the verification loop traverses the differential encoding chain,
-it reads k = DEFAULT_TABLE[j] and uses k as an array index without
-validation. A malformed DFA with DEFAULT_TABLE[j] >= state_count,
-therefore, causes both out-of-bounds reads and writes.
+and if ent->ns_name contains an ns_name in
+1089                 } else if (ent->ns_name) {
 
-[   57.179855] ==================================================================
-[   57.180549] BUG: KASAN: slab-out-of-bounds in verify_dfa+0x59a/0x660
-[   57.180904] Read of size 4 at addr ffff888100eadec4 by task su/993
+then ns_name is assigned the ent->ns_name
+1095                         ns_name = ent->ns_name;
 
-[   57.181554] CPU: 1 UID: 0 PID: 993 Comm: su Not tainted 6.19.0-rc7-next-20260127 #1 PREEMPT(lazy)
-[   57.181558] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   57.181563] Call Trace:
-[   57.181572]  <TASK>
-[   57.181577]  dump_stack_lvl+0x5e/0x80
-[   57.181596]  print_report+0xc8/0x270
-[   57.181605]  ? verify_dfa+0x59a/0x660
-[   57.181608]  kasan_report+0x118/0x150
-[   57.181620]  ? verify_dfa+0x59a/0x660
-[   57.181623]  verify_dfa+0x59a/0x660
-[   57.181627]  aa_dfa_unpack+0x1610/0x1740
-[   57.181629]  ? __kmalloc_cache_noprof+0x1d0/0x470
-[   57.181640]  unpack_pdb+0x86d/0x46b0
-[   57.181647]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   57.181653]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   57.181656]  ? aa_unpack_nameX+0x1a8/0x300
-[   57.181659]  aa_unpack+0x20b0/0x4c30
-[   57.181662]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   57.181664]  ? stack_depot_save_flags+0x33/0x700
-[   57.181681]  ? kasan_save_track+0x4f/0x80
-[   57.181683]  ? kasan_save_track+0x3e/0x80
-[   57.181686]  ? __kasan_kmalloc+0x93/0xb0
-[   57.181688]  ? __kvmalloc_node_noprof+0x44a/0x780
-[   57.181693]  ? aa_simple_write_to_buffer+0x54/0x130
-[   57.181697]  ? policy_update+0x154/0x330
-[   57.181704]  aa_replace_profiles+0x15a/0x1dd0
-[   57.181707]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   57.181710]  ? __kvmalloc_node_noprof+0x44a/0x780
-[   57.181712]  ? aa_loaddata_alloc+0x77/0x140
-[   57.181715]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   57.181717]  ? _copy_from_user+0x2a/0x70
-[   57.181730]  policy_update+0x17a/0x330
-[   57.181733]  profile_replace+0x153/0x1a0
-[   57.181735]  ? rw_verify_area+0x93/0x2d0
-[   57.181740]  vfs_write+0x235/0xab0
-[   57.181745]  ksys_write+0xb0/0x170
-[   57.181748]  do_syscall_64+0x8e/0x660
-[   57.181762]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   57.181765] RIP: 0033:0x7f6192792eb2
+however ent->ns_name is freed at
+1262                 aa_load_ent_free(ent);
 
-Remove the MATCH_FLAG_DIFF_ENCODE condition to validate all DEFAULT_TABLE
-entries unconditionally.
+and then again when freeing ns_name at
+1270         kfree(ns_name);
 
-Fixes: 031dcc8f4e84 ("apparmor: dfa add support for state differential encoding")
+Fix this by NULLing out ent->ns_name after it is transferred to ns_name
+
+Fixes: 145a0ef21c8e9 ("apparmor: fix blob compression when ns is forced on a policy load
+")
 Reported-by: Qualys Security Advisory <qsa@qualys.com>
 Tested-by: Salvatore Bonaccorso <carnil@debian.org>
 Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
 Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/match.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ security/apparmor/policy.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -204,9 +204,10 @@ static int verify_dfa(struct aa_dfa *dfa
- 	if (state_count == 0)
- 		goto out;
- 	for (i = 0; i < state_count; i++) {
--		if (!(BASE_TABLE(dfa)[i] & MATCH_FLAG_DIFF_ENCODE) &&
--		    (DEFAULT_TABLE(dfa)[i] >= state_count))
-+		if (DEFAULT_TABLE(dfa)[i] >= state_count) {
-+			pr_err("AppArmor DFA default state out of bounds");
- 			goto out;
-+		}
- 		if (BASE_TABLE(dfa)[i] & MATCH_FLAGS_INVALID) {
- 			pr_err("AppArmor DFA state with invalid match flags");
- 			goto out;
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -917,6 +917,7 @@ ssize_t aa_replace_profiles(struct aa_ns
+ 				goto fail;
+ 			}
+ 			ns_name = ent->ns_name;
++			ent->ns_name = NULL;
+ 		} else
+ 			count++;
+ 	}
 
 
