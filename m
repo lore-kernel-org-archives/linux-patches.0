@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F18D328255;
-	Mon, 13 Apr 2026 16:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE4E328255;
+	Mon, 13 Apr 2026 16:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099447; cv=none; b=mWFSfey2CFZcHzi1j6CjOYotYmXOj4G/z1ZhSu7aDV9EpjmRh/YVoAWe8TF7Qv9htMdd+0FUYBUGGG0Q1hG/c8f4iQJhhQAo+T3jZqOc1acCJhrBaaUkazXhQryGrswnsWc3eLgVE2Ygy6v67PkpwaH8QIpG1WsjEMRCIIQOauk=
+	t=1776099450; cv=none; b=KWlCVqFOcdZGVLn+9YLel9ytNO2+n9iR5M6MZIXexix2YHgRf9v7T5ZAi1Zb+7UqnCKh+Ue9kpJ3CpwSTQsmu/W87pXkAEP2f3p3oh2i/wlA3dM8Jn6xbCWIPprx1ujDWQiiUfJkXjjtyYu4kXVZXbRAPALSHSusNHeTvrF160s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099447; c=relaxed/simple;
-	bh=27rknvOs6r6Ei4ETSGt6AC2D0LqTfMmu8QGxEpoNEBI=;
+	s=arc-20240116; t=1776099450; c=relaxed/simple;
+	bh=AGP4TF8R+gJdvf82m4S7QxZ5fTDIVQ/vCeLvcDeJGmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=huQ/idsInCZxu8qQNoOnjgDiLUNTcoj5vhV2/P4qxWU8O0SwRIfBAMkenpw2hhBVCdS+CrrExb8H6odXzWXFctMhPc+NPhotdJ8SOGIFULJeuUU+zsrwlvoc2V0NQDr8fB9gG3VzwwnFSRA0BPiDI98R+3FrQfcwVDsysriOwqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iq73lOT9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eUFOXSerHubqgLDERXEKiTK//ta+uGRr6bSjBN4sX2+Nlf+7A9kNZr5KMC/lPUGFdmO5YEU7ZLlmf1xQ5CUqeGAYkAjroQNjUKQL/L2hs/vqBTnnvkVblreXfAHpEymPedmpYQaPzLxvpkWWpav36VWtFzT2o1X8lRWqsTmMQvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUoRsMuC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iq73lOT9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142AFC2BCAF;
-	Mon, 13 Apr 2026 16:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUoRsMuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DD4C2BCAF;
+	Mon, 13 Apr 2026 16:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099447;
-	bh=27rknvOs6r6Ei4ETSGt6AC2D0LqTfMmu8QGxEpoNEBI=;
+	s=korg; t=1776099450;
+	bh=AGP4TF8R+gJdvf82m4S7QxZ5fTDIVQ/vCeLvcDeJGmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iq73lOT9HsZg/ad/p90RKxkvtkyBNA047lxEpzomFisd7ynxmxEC1MtAlXNekvwEU
-	 g2Z2pRs6rmrFLcQCSxZbn0mI4OiUjlqVSsrNR9BWTFuRi3cnLYK4Pp9gb/FkCCA9fC
-	 I4vwrSBj+ThUdF5SmAG+Th9M5drx0fWmaU0w4srU=
+	b=QUoRsMuCSdBu+scRe6J0rqViXDD3vgKkxQGwyQmG4PdAHLqqCGRvSWMEymxuG1X54
+	 cvaM3hcie1koohQ26Cbw8MbBRl8yS35QhvwEnvFgXGUU5mBcdU3N6VGvy+nWteCgqO
+	 sAPMCrBOz+3cMIVB+jSPJuorxtOKusse+2iJ3F8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 5.10 316/491] futex: Clear stale exiting pointer in futex_lock_pi() retry path
-Date: Mon, 13 Apr 2026 17:59:21 +0200
-Message-ID: <20260413155830.868557573@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 343/491] netfilter: nf_tables: reject immediate NF_QUEUE verdict
+Date: Mon, 13 Apr 2026 17:59:48 +0200
+Message-ID: <20260413155831.880603463@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,78 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 210d36d892de5195e6766c45519dfb1e65f3eb83 upstream.
+[ Upstream commit da107398cbd4bbdb6bffecb2ce86d5c9384f4cec ]
 
-Fuzzying/stressing futexes triggered:
+nft_queue is always used from userspace nftables to deliver the NF_QUEUE
+verdict. Immediately emitting an NF_QUEUE verdict is never used by the
+userspace nft tools, so reject immediate NF_QUEUE verdicts.
 
-    WARNING: kernel/futex/core.c:825 at wait_for_owner_exiting+0x7a/0x80, CPU#11: futex_lock_pi_s/524
+The arp family does not provide queue support, but such an immediate
+verdict is still reachable. Globally reject NF_QUEUE immediate verdicts
+to address this issue.
 
-When futex_lock_pi_atomic() sees the owner is exiting, it returns -EBUSY
-and stores a refcounted task pointer in 'exiting'.
-
-After wait_for_owner_exiting() consumes that reference, the local pointer
-is never reset to nil. Upon a retry, if futex_lock_pi_atomic() returns a
-different error, the bogus pointer is passed to wait_for_owner_exiting().
-
-  CPU0			     CPU1		       CPU2
-  futex_lock_pi(uaddr)
-  // acquires the PI futex
-  exit()
-    futex_cleanup_begin()
-      futex_state = EXITING;
-			     futex_lock_pi(uaddr)
-			       futex_lock_pi_atomic()
-				 attach_to_pi_owner()
-				   // observes EXITING
-				   *exiting = owner;  // takes ref
-				   return -EBUSY
-			       wait_for_owner_exiting(-EBUSY, owner)
-				 put_task_struct();   // drops ref
-			       // exiting still points to owner
-			       goto retry;
-			       futex_lock_pi_atomic()
-				 lock_pi_update_atomic()
-				   cmpxchg(uaddr)
-					*uaddr ^= WAITERS // whatever
-				   // value changed
-				 return -EAGAIN;
-			       wait_for_owner_exiting(-EAGAIN, exiting) // stale
-				 WARN_ON_ONCE(exiting)
-
-Fix this by resetting upon retry, essentially aligning it with requeue_pi.
-
-Fixes: 3ef240eaff36 ("futex: Prevent exit livelock")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260326001759.4129680-1-dave@stgolabs.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f342de4e2f33 ("netfilter: nf_tables: reject QUEUE/DROP verdict parameters")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -2785,9 +2785,9 @@ static int futex_lock_pi(u32 __user *uad
- 			 ktime_t *time, int trylock)
- {
- 	struct hrtimer_sleeper timeout, *to;
--	struct task_struct *exiting = NULL;
- 	struct rt_mutex_waiter rt_waiter;
- 	struct futex_hash_bucket *hb;
-+	struct task_struct *exiting;
- 	struct futex_q q = futex_q_init;
- 	int res, ret;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 189997bcaeef5..15486d3051f6b 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -9362,8 +9362,6 @@ static int nft_verdict_init(const struct nft_ctx *ctx, struct nft_data *data,
+ 	switch (data->verdict.code) {
+ 	case NF_ACCEPT:
+ 	case NF_DROP:
+-	case NF_QUEUE:
+-		break;
+ 	case NFT_CONTINUE:
+ 	case NFT_BREAK:
+ 	case NFT_RETURN:
+@@ -9398,6 +9396,11 @@ static int nft_verdict_init(const struct nft_ctx *ctx, struct nft_data *data,
  
-@@ -2800,6 +2800,7 @@ static int futex_lock_pi(u32 __user *uad
- 	to = futex_setup_timer(time, &timeout, FLAGS_CLOCKRT, 0);
- 
- retry:
-+	exiting = NULL;
- 	ret = get_futex_key(uaddr, flags & FLAGS_SHARED, &q.key, FUTEX_WRITE);
- 	if (unlikely(ret != 0))
- 		goto out;
+ 		data->verdict.chain = chain;
+ 		break;
++	case NF_QUEUE:
++		/* The nft_queue expression is used for this purpose, an
++		 * immediate NF_QUEUE verdict should not ever be seen here.
++		 */
++		fallthrough;
+ 	default:
+ 		return -EINVAL;
+ 	}
+-- 
+2.53.0
+
 
 
