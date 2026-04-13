@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB25030DEB5;
-	Mon, 13 Apr 2026 16:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C0430EF6B;
+	Mon, 13 Apr 2026 16:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098138; cv=none; b=hukuMcmElNC6k9/a/7TpNNtKv+HnhfxzD1GxClN85iF8dt+bhkqVQvjS+6u8KzFg/Ua3hm6mtX/du0IL59MmWvIP1EBsibim6pgjolwbdiW18W5m1Xi9GthNQg6l51KE4pS3MPOO0FEaD6o9VUymqEE9EpgqTLlOMWFiQzTHpSw=
+	t=1776098141; cv=none; b=aZItf5gaF/YLdR1EbDScxbFl4D6G+a+B8Ud92aS35+OnD1DXgn5pOIBWiBEf1/+FrPtUJFysXKbyjDlfD8uPe4BCCtBxvuXdmtxIeTx14GS/V/aqFRX/LdMNumKP8W6Z7u0gf27zH91nrV19yKmtKO3x+2QNEGs/5g5/RsikVbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098138; c=relaxed/simple;
-	bh=+5akIcFXDa0yd/qqYMSfqYw+PYBUmBVpQct/b/iz3IE=;
+	s=arc-20240116; t=1776098141; c=relaxed/simple;
+	bh=AgA9ctiQpqUdRdz16LAKaDStF8aNeNVcr6K2xIN3My0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IzTRR4mr25XARCUlR2ou1+Lb0sTRvSNvHWR2jjk8SFX6Sz/vTh6g3dQOi+G1z8B2ZewcRL7Q3VwGJ6LZda/njAb5FkKRGMUU8vqi/Pxs65zTJSRPie86HCLgc6/0KqFF7AnLvN+col9kkpOHHQNmZmY4rHRjK4td+K0Am3IaWlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=en3rAsrD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EhH9sNYbAeKNSsfSWp0P5BNtn8vf01r3BnE02WL9QY7eYZEcK1KKm5frjUVIPoKHf/se36ILY9LNup9zBVQKA8N1S+GxaKP4PsyQI8uDCSiL2zBqo2khrjOBDT6KfoWylRbFGwPA8OQC6x42sPDeM8adCnMRFLCh7BFw5eMd+QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnCeGMei; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="en3rAsrD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6A0C2BCAF;
-	Mon, 13 Apr 2026 16:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnCeGMei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51683C2BCAF;
+	Mon, 13 Apr 2026 16:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098138;
-	bh=+5akIcFXDa0yd/qqYMSfqYw+PYBUmBVpQct/b/iz3IE=;
+	s=korg; t=1776098140;
+	bh=AgA9ctiQpqUdRdz16LAKaDStF8aNeNVcr6K2xIN3My0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=en3rAsrDsL5gcgTZtDQAgbGxwhJsnAS5fwSTGtlj3m5pi8gN3ArsnbWZux5aGREOB
-	 8FIELdOH6Mn+YOaiyjkaOeuRLQiqsAXz5QjocDiMNHo77r/bPM71MwqvcuWMLGeLsJ
-	 CpL2c1fEYGWcn+kBvQqvs3x8HtiBoCchRZyU3ask=
+	b=PnCeGMei4eWTRFneaoAvDkuqjLGm4Rcg5OoFf2XpXSTE12HD1LX9Hc2YcyLt6oZu2
+	 Xk4lZ9mtJlq/WQtnJU0UxIdRyXGJIgkDr1cizjdnX1ogcAZWyBh4txJC1nxqk5PnM1
+	 0J7bCXOpS1mYlzdYGtdq+B89G10JdwYQ7hzk/PV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 366/570] ASoC: adau1372: Fix clock leak on PLL lock failure
-Date: Mon, 13 Apr 2026 17:58:17 +0200
-Message-ID: <20260413155844.191065270@linuxfoundation.org>
+Subject: [PATCH 5.15 402/570] HID: multitouch: Check to ensure report responses match the request
+Date: Mon, 13 Apr 2026 17:58:53 +0200
+Message-ID: <20260413155845.528734014@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -46,81 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit bfe6a264effcb6fe99ad7ceaf9e8c7439fc9555b ]
+[ Upstream commit e716edafedad4952fe3a4a273d2e039a84e8681a ]
 
-adau1372_enable_pll() was a void function that logged a dev_err() on
-PLL lock timeout but did not propagate the error. As a result,
-adau1372_set_power() would continue with adau1372->enabled set to true
-despite the PLL being unlocked, and the mclk left enabled with no
-corresponding disable on the error path.
+It is possible for a malicious (or clumsy) device to respond to a
+specific report's feature request using a completely different report
+ID.  This can cause confusion in the HID core resulting in nasty
+side-effects such as OOB writes.
 
-Convert adau1372_enable_pll() to return int, using -ETIMEDOUT on lock
-timeout and propagating regmap errors directly. In adau1372_set_power(),
-check the return value and unwind in reverse order: restore regcache to
-cache-only mode, reassert GPIO power-down, and disable the clock before
-returning the error.
+Add a check to ensure that the report ID in the response, matches the
+one that was requested.  If it doesn't, omit reporting the raw event and
+return early.
 
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
-Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20260325210704.76847-3-jihed.chaibi.dev@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau1372.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/hid/hid-multitouch.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
-index 0997d5f3e4039..e20145812f12b 100644
---- a/sound/soc/codecs/adau1372.c
-+++ b/sound/soc/codecs/adau1372.c
-@@ -761,7 +761,7 @@ static int adau1372_startup(struct snd_pcm_substream *substream, struct snd_soc_
- 	return 0;
- }
- 
--static void adau1372_enable_pll(struct adau1372 *adau1372)
-+static int adau1372_enable_pll(struct adau1372 *adau1372)
- {
- 	unsigned int val, timeout = 0;
- 	int ret;
-@@ -777,8 +777,12 @@ static void adau1372_enable_pll(struct adau1372 *adau1372)
- 		timeout++;
- 	} while (!(val & 1) && timeout < 3);
- 
--	if (ret < 0 || !(val & 1))
-+	if (ret < 0 || !(val & 1)) {
- 		dev_err(adau1372->dev, "Failed to lock PLL\n");
-+		return ret < 0 ? ret : -ETIMEDOUT;
-+	}
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 30769b37aabe7..7a092a2a1bf00 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -472,12 +472,19 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
+ 		dev_warn(&hdev->dev, "failed to fetch feature %d\n",
+ 			 report->id);
+ 	} else {
++		/* The report ID in the request and the response should match */
++		if (report->id != buf[0]) {
++			hid_err(hdev, "Returned feature report did not match the request\n");
++			goto free;
++		}
 +
-+	return 0;
- }
+ 		ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, buf,
+ 					   size, 0);
+ 		if (ret)
+ 			dev_warn(&hdev->dev, "failed to report feature\n");
+ 	}
  
- static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
-@@ -806,7 +810,14 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 		 * accessed.
- 		 */
- 		if (adau1372->use_pll) {
--			adau1372_enable_pll(adau1372);
-+			ret = adau1372_enable_pll(adau1372);
-+			if (ret) {
-+				regcache_cache_only(adau1372->regmap, true);
-+				if (adau1372->pd_gpio)
-+					gpiod_set_value(adau1372->pd_gpio, 1);
-+				clk_disable_unprepare(adau1372->mclk);
-+				return ret;
-+			}
- 			clk_ctrl |= ADAU1372_CLK_CTRL_CLKSRC;
- 		}
++free:
+ 	kfree(buf);
+ }
  
 -- 
 2.53.0
