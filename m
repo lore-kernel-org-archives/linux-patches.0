@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FA232ABC0;
-	Mon, 13 Apr 2026 17:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439FD23C8C7;
+	Mon, 13 Apr 2026 17:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099733; cv=none; b=FmlH6WG1/srT+1k8sA4zNg8GMLUhFL4qiJiyD9pU9XLLevApd9bSUkbZCiEcfz33u2qYxfNvposXkbV7wfeFId6oxrbdLrdRehmxDjn87fdf53RW1jt9pk8eCEl9T1DyOpl5kitlzIob2/QB89fnGSrW3L49Rbl8y9Wrw0RCjsg=
+	t=1776099736; cv=none; b=NotSxZtkPyWmjGrgyl1Un6jU7qkIP/vxK1YBTnJ2EA0UmtcyTBpbcWET25wYXHrstHTHEHVjN8yWZp9ZJo/JVIAIgJJMdZgbfcK7X1iLMzJpwid04mORbIJVbbpWlvkvP50Fly5wA3lOR1I/FnETZrlHAOkRdgjPIW7tteAYvp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099733; c=relaxed/simple;
-	bh=OQt2TxnjaFhJKnyXvOlM1+1Gmga7O2nFuLQGUy/gSGU=;
+	s=arc-20240116; t=1776099736; c=relaxed/simple;
+	bh=FRTqWM0bE09i3RJVzL6vaqAO2DxljnwwAOPI4C3wAPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CaR66TMtuM+dyYJ7OCNLb2T8o2KnHI4gRC27nao38jzHau6R2ESRXLItLfbQT2VKybHmN+I2G/ayXXrgoPDIppBnrGzojHdFXYtJpJJqpR4EK+vm7wBIkq8oL54ccfrsOSmtIwxyk2/dg3T3bairjBc66S4NtXOLxUT7VSaafBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJnVxcXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gAIYcpH2P0HxSCj36pSZZWxoztPZuoH3aRsl8DoC4aTnNUpu4xA22x6Aep+gZgKYS8cy/RnvVr8u3rsUvcDTdMqdAGcXWfG4aQTh1BAQbOLfy8H/0bqa0fE/7Lbupz2n5knONlUwVRpXrVlk2TZ4CGGQhB1+wxgZUGu9xbL61O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=my3huhR8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJnVxcXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E153C2BCAF;
-	Mon, 13 Apr 2026 17:02:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="my3huhR8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5719C2BCAF;
+	Mon, 13 Apr 2026 17:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099733;
-	bh=OQt2TxnjaFhJKnyXvOlM1+1Gmga7O2nFuLQGUy/gSGU=;
+	s=korg; t=1776099736;
+	bh=FRTqWM0bE09i3RJVzL6vaqAO2DxljnwwAOPI4C3wAPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJnVxcXp9aj6kX87wSSV/bI2dmQirWluffYb7DZuNH5RN6kWxoulmERO+XoKup3u4
-	 I9/pHSt5d5GciUb7jWU0YH0uWP+15zI4BuHj5wMRgWtkqhcs7fnpOF0RvcABBXOqbO
-	 w3YmVbul37uknWO6hDDjDCuBEVJOrVp+IKCJXe1s=
+	b=my3huhR8m8o3dERik/Lojd2lWBwqKyWjemoDKZFlqLLqWNUGBSa1JkWZa9z9QcA12
+	 jUJI9NkRFRnfG7s61HIuvt7V6Y83WOkn6z5hf8ejmq9ElLqeknLg3nQXEtM7+IMgax
+	 4dXXaa8ohtOzCEgIUGnS5Qf/gCRD2vOcO5lRsHKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 452/491] rxrpc: Fix key/keyring checks in setsockopt(RXRPC_SECURITY_KEY/KEYRING)
-Date: Mon, 13 Apr 2026 18:01:37 +0200
-Message-ID: <20260413155835.958077507@linuxfoundation.org>
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Uschakow, Stanislav" <suschako@amazon.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 422/491] mm/hugetlb: fix two comments related to huge_pmd_unshare()
+Date: Mon, 13 Apr 2026 18:01:07 +0200
+Message-ID: <20260413155834.824938636@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -57,87 +59,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: David Hildenbrand (Red Hat) <david@kernel.org>
 
-commit 2afd86ccbb2082a3c4258aea8c07e5bb6267bc2f upstream.
+Ever since we stopped using the page count to detect shared PMD page
+tables, these comments are outdated.
 
-An AF_RXRPC socket can be both client and server at the same time.  When
-sending new calls (ie. it's acting as a client), it uses rx->key to set the
-security, and when accepting incoming calls (ie. it's acting as a server),
-it uses rx->securities.
+The only reason we have to flush the TLB early is because once we drop the
+i_mmap_rwsem, the previously shared page table could get freed (to then
+get reallocated and used for other purpose).  So we really have to flush
+the TLB before that could happen.
 
-setsockopt(RXRPC_SECURITY_KEY) sets rx->key to point to an rxrpc-type key
-and setsockopt(RXRPC_SECURITY_KEYRING) sets rx->securities to point to a
-keyring of rxrpc_s-type keys.
+So let's simplify the comments a bit.
 
-Now, it should be possible to use both rx->key and rx->securities on the
-same socket - but for userspace AF_RXRPC sockets rxrpc_setsockopt()
-prevents that.
+The "If we unshared PMDs, the TLB flush was not recorded in mmu_gather."
+part introduced as in commit a4a118f2eead ("hugetlbfs: flush TLBs
+correctly after huge_pmd_unshare") was confusing: sure it is recorded in
+the mmu_gather, otherwise tlb_flush_mmu_tlbonly() wouldn't do anything.
+So let's drop that comment while at it as well.
 
-Fix this by:
+We'll centralize these comments in a single helper as we rework the code
+next.
 
- (1) Remove the incorrect check rxrpc_setsockopt(RXRPC_SECURITY_KEYRING)
-     makes on rx->key.
-
- (2) Move the check that rxrpc_setsockopt(RXRPC_SECURITY_KEY) makes on
-     rx->key down into rxrpc_request_key().
-
- (3) Remove rxrpc_request_key()'s check on rx->securities.
-
-This (in combination with a previous patch) pushes the checks down into the
-functions that set those pointers and removes the cross-checks that prevent
-both key and keyring being set.
-
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Closes: https://sashiko.dev/#/patchset/20260401105614.1696001-10-dhowells@redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Anderson Nascimento <anderson@allelesecurity.com>
-cc: Luxiao Xu <rakukuip@gmail.com>
-cc: Yuan Tan <yuantan098@gmail.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-16-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20251223214037.580860-3-david@kernel.org
+Fixes: 59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count")
+Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Tested-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Cc: Liu Shixin <liushixin2@huawei.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: "Uschakow, Stanislav" <suschako@amazon.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 3937027caecb4f8251e82dd857ba1d749bb5a428)
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/af_rxrpc.c |    6 ------
- net/rxrpc/key.c      |    2 +-
- 2 files changed, 1 insertion(+), 7 deletions(-)
+ mm/hugetlb.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
---- a/net/rxrpc/af_rxrpc.c
-+++ b/net/rxrpc/af_rxrpc.c
-@@ -614,9 +614,6 @@ static int rxrpc_setsockopt(struct socke
- 			goto success;
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 8fa34032bc173..33302279ab5ff 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -4027,17 +4027,10 @@ void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
+ 	tlb_end_vma(tlb, vma);
  
- 		case RXRPC_SECURITY_KEY:
--			ret = -EINVAL;
--			if (rx->key)
--				goto error;
- 			ret = -EISCONN;
- 			if (rx->sk.sk_state != RXRPC_UNBOUND)
- 				goto error;
-@@ -624,9 +621,6 @@ static int rxrpc_setsockopt(struct socke
- 			goto error;
- 
- 		case RXRPC_SECURITY_KEYRING:
--			ret = -EINVAL;
--			if (rx->key)
--				goto error;
- 			ret = -EISCONN;
- 			if (rx->sk.sk_state != RXRPC_UNBOUND)
- 				goto error;
---- a/net/rxrpc/key.c
-+++ b/net/rxrpc/key.c
-@@ -903,7 +903,7 @@ int rxrpc_request_key(struct rxrpc_sock
- 
- 	_enter("");
- 
--	if (optlen <= 0 || optlen > PAGE_SIZE - 1 || rx->securities)
-+	if (optlen <= 0 || optlen > PAGE_SIZE - 1 || rx->key)
- 		return -EINVAL;
- 
- 	description = memdup_sockptr_nul(optval, optlen);
+ 	/*
+-	 * If we unshared PMDs, the TLB flush was not recorded in mmu_gather. We
+-	 * could defer the flush until now, since by holding i_mmap_rwsem we
+-	 * guaranteed that the last refernece would not be dropped. But we must
+-	 * do the flushing before we return, as otherwise i_mmap_rwsem will be
+-	 * dropped and the last reference to the shared PMDs page might be
+-	 * dropped as well.
+-	 *
+-	 * In theory we could defer the freeing of the PMD pages as well, but
+-	 * huge_pmd_unshare() relies on the exact page_count for the PMD page to
+-	 * detect sharing, so we cannot defer the release of the page either.
+-	 * Instead, do flush now.
++	 * There is nothing protecting a previously-shared page table that we
++	 * unshared through huge_pmd_unshare() from getting freed after we
++	 * release i_mmap_rwsem, so flush the TLB now. If huge_pmd_unshare()
++	 * succeeded, flush the range corresponding to the pud.
+ 	 */
+ 	if (force_flush)
+ 		tlb_flush_mmu_tlbonly(tlb);
+@@ -5113,11 +5106,10 @@ unsigned long hugetlb_change_protection(struct vm_area_struct *vma,
+ 		cond_resched();
+ 	}
+ 	/*
+-	 * Must flush TLB before releasing i_mmap_rwsem: x86's huge_pmd_unshare
+-	 * may have cleared our pud entry and done put_page on the page table:
+-	 * once we release i_mmap_rwsem, another task can do the final put_page
+-	 * and that page table be reused and filled with junk.  If we actually
+-	 * did unshare a page of pmds, flush the range corresponding to the pud.
++	 * There is nothing protecting a previously-shared page table that we
++	 * unshared through huge_pmd_unshare() from getting freed after we
++	 * release i_mmap_rwsem, so flush the TLB now. If huge_pmd_unshare()
++	 * succeeded, flush the range corresponding to the pud.
+ 	 */
+ 	if (shared_pmd)
+ 		flush_hugetlb_tlb_range(vma, range.start, range.end);
+-- 
+2.53.0
+
 
 
