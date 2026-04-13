@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FAE30AACB;
-	Mon, 13 Apr 2026 16:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EECC27280A;
+	Mon, 13 Apr 2026 16:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097001; cv=none; b=hCHKYcSu4gN22WKij2oNnmXMG5osm6VElJXKhXeNkW1ytM6G1b7ZIJDPvJf5jt4U+QI9h9HZ51kfKhB/qqCHnsBmkkO+sRsVEjgbsoDERSEnZT2ZUXCbxNYHsW6SWBrGk+c7kxqoKoXI5je5k5/cG/NWWM23JvTm22VfNCOHqqM=
+	t=1776097003; cv=none; b=pEYqRHNJNPanwEYh+TfvHXVnv4W/pOXQlCx0kXW2AytKTbJzflmUTKVHTGCDtg8uXab6xAJsb6jBuCAjUFWDfUijncm388yClw1qHPWIGkG9laDhf7Z1F8apyCE7VCg8bz8PsGbBPCroer05hOG5/FoPFnvqeG8Rc2zB2TxirUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097001; c=relaxed/simple;
-	bh=DsCzmfL5pIH7T6Tx3+p2NREQvdBXKjai2uoflallKFo=;
+	s=arc-20240116; t=1776097003; c=relaxed/simple;
+	bh=emCCImVyosW8Mm+qOCcCSzkMrziAvVw4JRBZiS1subQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9uhY4Eakcfx0jAotCE5UJ9tmxZN8xTQEWn4sHqHhTq26c4V6uYw/t05+Hvs81IxdJEf5gvGoEwEX/C3C/dOymzj7bJtOlDIBYXl19e9Z1XEPsg6u4xrMT9fgAHyRkQfmWx8FQUhePoubwzGJrZScjoqVu2NBNR0EizCTqqe//8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHUYWdrD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fjIW82dakeNMSnA2Rj+3m2eCJcLpiJEw1plBaIbDI021EOEqOSgEhqIeYuNeF8wZqQt9QyKZIWYoqYmSn3ZX9Bfo0iWRp5C42uwKKOuI25VrBeNSRHgiQ+1eS8F8fho1GBbcQplzNJhSL8QFelTy504izq7Xkpr8JsMbB2/Mvb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIHWsYfx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHUYWdrD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8147DC2BCAF;
-	Mon, 13 Apr 2026 16:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIHWsYfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163FAC2BCAF;
+	Mon, 13 Apr 2026 16:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097000;
-	bh=DsCzmfL5pIH7T6Tx3+p2NREQvdBXKjai2uoflallKFo=;
+	s=korg; t=1776097003;
+	bh=emCCImVyosW8Mm+qOCcCSzkMrziAvVw4JRBZiS1subQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHUYWdrDYDVp9/VqqcpUPe8l9EnVlA+dqpE1Yyvi16PUnXAPtiJktSkdUP32v/s77
-	 26GQyyYHM9VS8lN+9N1x4KTMRbBp/4BbNw1CNP0ajvKlquy9ZEH/NlbUCEH5ktzTY+
-	 0YVwGay4T4uwXOFmBYhRBhqrUiG5kosxdf53Zxss=
+	b=bIHWsYfxoar8czmvVwrPjXH1G6a+VzTWcf3Odb77kVIAeLXEzsZqxnvHsEnhyhiKG
+	 N36Lpow4N6yqL4wRX3/c6fIQclsEAsqusY/55IW0JPswUAlqlNY6VOT9ko9kEXHZEr
+	 Usne+++k9qeJnLRURg+mO5B314lxEqDap8F64akA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qualys Security Advisory <qsa@qualys.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.1 16/55] apparmor: fix side-effect bug in match_char() macro usage
-Date: Mon, 13 Apr 2026 18:00:50 +0200
-Message-ID: <20260413155725.433391186@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 25/55] ACPICA: Add a depth argument to acpi_execute_reg_methods()
+Date: Mon, 13 Apr 2026 18:00:59 +0200
+Message-ID: <20260413155725.769602533@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 References: <20260413155724.820472494@linuxfoundation.org>
@@ -54,123 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-commit 8756b68edae37ff546c02091989a4ceab3f20abd upstream.
+[ Upstream commit cdf65d73e001fde600b18d7e45afadf559425ce5 ]
 
-The match_char() macro evaluates its character parameter multiple
-times when traversing differential encoding chains. When invoked
-with *str++, the string pointer advances on each iteration of the
-inner do-while loop, causing the DFA to check different characters
-at each iteration and therefore skip input characters.
-This results in out-of-bounds reads when the pointer advances past
-the input buffer boundary.
+A subsequent change will need to pass a depth argument to
+acpi_execute_reg_methods(), so prepare that function for it.
 
-[   94.984676] ==================================================================
-[   94.985301] BUG: KASAN: slab-out-of-bounds in aa_dfa_match+0x5ae/0x760
-[   94.985655] Read of size 1 at addr ffff888100342000 by task file/976
+No intentional functional changes.
 
-[   94.986319] CPU: 7 UID: 1000 PID: 976 Comm: file Not tainted 6.19.0-rc7-next-20260127 #1 PREEMPT(lazy)
-[   94.986322] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   94.986329] Call Trace:
-[   94.986341]  <TASK>
-[   94.986347]  dump_stack_lvl+0x5e/0x80
-[   94.986374]  print_report+0xc8/0x270
-[   94.986384]  ? aa_dfa_match+0x5ae/0x760
-[   94.986388]  kasan_report+0x118/0x150
-[   94.986401]  ? aa_dfa_match+0x5ae/0x760
-[   94.986405]  aa_dfa_match+0x5ae/0x760
-[   94.986408]  __aa_path_perm+0x131/0x400
-[   94.986418]  aa_path_perm+0x219/0x2f0
-[   94.986424]  apparmor_file_open+0x345/0x570
-[   94.986431]  security_file_open+0x5c/0x140
-[   94.986442]  do_dentry_open+0x2f6/0x1120
-[   94.986450]  vfs_open+0x38/0x2b0
-[   94.986453]  ? may_open+0x1e2/0x2b0
-[   94.986466]  path_openat+0x231b/0x2b30
-[   94.986469]  ? __x64_sys_openat+0xf8/0x130
-[   94.986477]  do_file_open+0x19d/0x360
-[   94.986487]  do_sys_openat2+0x98/0x100
-[   94.986491]  __x64_sys_openat+0xf8/0x130
-[   94.986499]  do_syscall_64+0x8e/0x660
-[   94.986515]  ? count_memcg_events+0x15f/0x3c0
-[   94.986526]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   94.986540]  ? handle_mm_fault+0x1639/0x1ef0
-[   94.986551]  ? vma_start_read+0xf0/0x320
-[   94.986558]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   94.986561]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   94.986563]  ? fpregs_assert_state_consistent+0x50/0xe0
-[   94.986572]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   94.986574]  ? arch_exit_to_user_mode_prepare+0x9/0xb0
-[   94.986587]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   94.986588]  ? irqentry_exit+0x3c/0x590
-[   94.986595]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   94.986597] RIP: 0033:0x7fda4a79c3ea
-
-Fix by extracting the character value before invoking match_char,
-ensuring single evaluation per outer loop.
-
-Fixes: 074c1cd798cb ("apparmor: dfa move character match into a macro")
-Reported-by: Qualys Security Advisory <qsa@qualys.com>
-Tested-by: Salvatore Bonaccorso <carnil@debian.org>
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/8451567.NyiUUSuA9g@rjwysocki.net
+Stable-dep-of: 71bf41b8e913 ("ACPI: EC: Evaluate _REG outside the EC scope more carefully")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/match.c |   30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ drivers/acpi/acpica/acevents.h |    2 +-
+ drivers/acpi/acpica/evregion.c |    6 ++++--
+ drivers/acpi/acpica/evxfregn.c |   10 +++++++---
+ drivers/acpi/ec.c              |    2 +-
+ include/acpi/acpixf.h          |    1 +
+ 5 files changed, 14 insertions(+), 7 deletions(-)
 
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -452,13 +452,18 @@ unsigned int aa_dfa_match_len(struct aa_
- 	if (dfa->tables[YYTD_ID_EC]) {
- 		/* Equivalence class table defined */
- 		u8 *equiv = EQUIV_TABLE(dfa);
--		for (; len; len--)
--			match_char(state, def, base, next, check,
--				   equiv[(u8) *str++]);
-+		for (; len; len--) {
-+			u8 c = equiv[(u8) *str];
-+
-+			match_char(state, def, base, next, check, c);
-+			str++;
-+		}
- 	} else {
- 		/* default is direct to next state */
--		for (; len; len--)
--			match_char(state, def, base, next, check, (u8) *str++);
-+		for (; len; len--) {
-+			match_char(state, def, base, next, check, (u8) *str);
-+			str++;
-+		}
+--- a/drivers/acpi/acpica/acevents.h
++++ b/drivers/acpi/acpica/acevents.h
+@@ -188,7 +188,7 @@ acpi_ev_detach_region(union acpi_operand
+ 		      u8 acpi_ns_is_locked);
+ 
+ void
+-acpi_ev_execute_reg_methods(struct acpi_namespace_node *node,
++acpi_ev_execute_reg_methods(struct acpi_namespace_node *node, u32 max_depth,
+ 			    acpi_adr_space_type space_id, u32 function);
+ 
+ acpi_status
+--- a/drivers/acpi/acpica/evregion.c
++++ b/drivers/acpi/acpica/evregion.c
+@@ -65,6 +65,7 @@ acpi_status acpi_ev_initialize_op_region
+ 						acpi_gbl_default_address_spaces
+ 						[i])) {
+ 			acpi_ev_execute_reg_methods(acpi_gbl_root_node,
++						    ACPI_UINT32_MAX,
+ 						    acpi_gbl_default_address_spaces
+ 						    [i], ACPI_REG_CONNECT);
+ 		}
+@@ -665,6 +666,7 @@ cleanup1:
+  * FUNCTION:    acpi_ev_execute_reg_methods
+  *
+  * PARAMETERS:  node            - Namespace node for the device
++ *              max_depth       - Depth to which search for _REG
+  *              space_id        - The address space ID
+  *              function        - Passed to _REG: On (1) or Off (0)
+  *
+@@ -676,7 +678,7 @@ cleanup1:
+  ******************************************************************************/
+ 
+ void
+-acpi_ev_execute_reg_methods(struct acpi_namespace_node *node,
++acpi_ev_execute_reg_methods(struct acpi_namespace_node *node, u32 max_depth,
+ 			    acpi_adr_space_type space_id, u32 function)
+ {
+ 	struct acpi_reg_walk_info info;
+@@ -710,7 +712,7 @@ acpi_ev_execute_reg_methods(struct acpi_
+ 	 * regions and _REG methods. (i.e. handlers must be installed for all
+ 	 * regions of this Space ID before we can run any _REG methods)
+ 	 */
+-	(void)acpi_ns_walk_namespace(ACPI_TYPE_ANY, node, ACPI_UINT32_MAX,
++	(void)acpi_ns_walk_namespace(ACPI_TYPE_ANY, node, max_depth,
+ 				     ACPI_NS_WALK_UNLOCK, acpi_ev_reg_run, NULL,
+ 				     &info, NULL);
+ 
+--- a/drivers/acpi/acpica/evxfregn.c
++++ b/drivers/acpi/acpica/evxfregn.c
+@@ -85,7 +85,8 @@ acpi_install_address_space_handler_inter
+ 	/* Run all _REG methods for this address space */
+ 
+ 	if (run_reg) {
+-		acpi_ev_execute_reg_methods(node, space_id, ACPI_REG_CONNECT);
++		acpi_ev_execute_reg_methods(node, ACPI_UINT32_MAX, space_id,
++					    ACPI_REG_CONNECT);
  	}
  
- 	return state;
-@@ -493,13 +498,18 @@ unsigned int aa_dfa_match(struct aa_dfa
- 		/* Equivalence class table defined */
- 		u8 *equiv = EQUIV_TABLE(dfa);
- 		/* default is direct to next state */
--		while (*str)
--			match_char(state, def, base, next, check,
--				   equiv[(u8) *str++]);
-+		while (*str) {
-+			u8 c = equiv[(u8) *str];
-+
-+			match_char(state, def, base, next, check, c);
-+			str++;
-+		}
+ unlock_and_exit:
+@@ -261,6 +262,7 @@ ACPI_EXPORT_SYMBOL(acpi_remove_address_s
+  * FUNCTION:    acpi_execute_reg_methods
+  *
+  * PARAMETERS:  device          - Handle for the device
++ *              max_depth       - Depth to which search for _REG
+  *              space_id        - The address space ID
+  *
+  * RETURN:      Status
+@@ -269,7 +271,8 @@ ACPI_EXPORT_SYMBOL(acpi_remove_address_s
+  *
+  ******************************************************************************/
+ acpi_status
+-acpi_execute_reg_methods(acpi_handle device, acpi_adr_space_type space_id)
++acpi_execute_reg_methods(acpi_handle device, u32 max_depth,
++			 acpi_adr_space_type space_id)
+ {
+ 	struct acpi_namespace_node *node;
+ 	acpi_status status;
+@@ -294,7 +297,8 @@ acpi_execute_reg_methods(acpi_handle dev
+ 
+ 		/* Run all _REG methods for this address space */
+ 
+-		acpi_ev_execute_reg_methods(node, space_id, ACPI_REG_CONNECT);
++		acpi_ev_execute_reg_methods(node, max_depth, space_id,
++					    ACPI_REG_CONNECT);
  	} else {
- 		/* default is direct to next state */
--		while (*str)
--			match_char(state, def, base, next, check, (u8) *str++);
-+		while (*str) {
-+			match_char(state, def, base, next, check, (u8) *str);
-+			str++;
-+		}
+ 		status = AE_BAD_PARAMETER;
+ 	}
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1531,7 +1531,7 @@ static int ec_install_handlers(struct ac
  	}
  
- 	return state;
+ 	if (call_reg && !test_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags)) {
+-		acpi_execute_reg_methods(scope_handle, ACPI_ADR_SPACE_EC);
++		acpi_execute_reg_methods(scope_handle, ACPI_UINT32_MAX, ACPI_ADR_SPACE_EC);
+ 		set_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags);
+ 	}
+ 
+--- a/include/acpi/acpixf.h
++++ b/include/acpi/acpixf.h
+@@ -666,6 +666,7 @@ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+ 			     void *context))
+ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+ 			    acpi_execute_reg_methods(acpi_handle device,
++						     u32 nax_depth,
+ 						     acpi_adr_space_type
+ 						     space_id))
+ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
 
 
