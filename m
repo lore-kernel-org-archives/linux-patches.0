@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0257C3016EE;
-	Mon, 13 Apr 2026 16:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2752F8BC3;
+	Mon, 13 Apr 2026 16:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097273; cv=none; b=RFAGfYCAGqnniYz5Iqepkb+X7v2IoP5yZDhLTDZoN8pjanq9gYc48a8cmCMLYguU4rPGL81pWhROrWikV8fm9nskfTXUaR3OawNvnk7Z33wWA8c5RF4AZiOjNGtf1JdX13AjiFJWouT2qwqfoC0k+8oUR/G1B5KZl/mABR4AsSI=
+	t=1776097275; cv=none; b=SWOKKqDmCxkXmqUJ63g5zsyFZDzXlBpemJmxx1zhaLDkB1yk8LBO0XSqo23cfPAeDZppj5Hav7jg/ZnSAeClTAnVHdP1BhPHqdOV+bTCpr7F9s/iiap+/3Vz1aC1uV6oZFn7FM8Cq5KIFE5Q4a7EgJGRUlyYELELAjzJquKi4tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097273; c=relaxed/simple;
-	bh=VG6BtYzakPBS4cjf/crF5zkNrOUQn3fcelZ27j1fCxo=;
+	s=arc-20240116; t=1776097275; c=relaxed/simple;
+	bh=PBo392yP+dROg9RRdKPoOq4B80BjBYJtwlOcpjmggd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kc6aJcnKHZXIzzwCG93T9RfbCFxypwWqK64MX0lh4V3EGu39dKpiyTJm0TlBb49FVwMvjvl+53PACvDcjK9IPV0GJVdx4ysKY9U/JK72Cl9ywsHYf2iWEWFC5lPWGaMtOyutg1bCApDV0+w0JvUxnf4ldcD7db/h3z2FPFpvR8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avfGTrgD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vC7zXtnODu+/02YgyYE2SxywW0QRj3lcVxlzsSQNzv3TJ5cAGBK8DXbtSVwXGKdJOFDhY7Md47NYsGz+XuqZmIQFyH1soDl7yNG5/7CpAVaiPAmocTtusz9FizO9xYOG/W+avJNSzkZUcEMt2Nth/5UTbrX7gNFoLU9EQWX70Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNpjsK0l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avfGTrgD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C816C2BCAF;
-	Mon, 13 Apr 2026 16:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNpjsK0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E87C2BCAF;
+	Mon, 13 Apr 2026 16:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097272;
-	bh=VG6BtYzakPBS4cjf/crF5zkNrOUQn3fcelZ27j1fCxo=;
+	s=korg; t=1776097275;
+	bh=PBo392yP+dROg9RRdKPoOq4B80BjBYJtwlOcpjmggd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avfGTrgD4i49lKyYSafb5xJqmk7NgPB9UpTWfmf/BeXSckXyh2ZfCU0siWNq1LKIh
-	 dPvdjt7P/BFwCIc2tDAiynUFXTJPK2IQbLEIkNVlpedoKsTA6KVDC5iVxDyvN5VAzJ
-	 lNunLXt3bQ81X2qbyUrf0H2UNmdf6bumSZ3Ceigk=
+	b=oNpjsK0lPHiusXzf61Hc9DdHBxRuTY/2VSB4po841KmmLZBkrizSZjGsUz9rfSs06
+	 NEkoU+QasSHbiVAnEIVov0OXP9cB3fPQoZ1jLp+4fcAUEmX7qdtGxYHceFXxiq3t61
+	 X+GpSfyp4GfrTV7n5okVOA6Kxc0EG9om5qexPVr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5b11eccc403dd1cea9f8@syzkaller.appspotmail.com,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Alban Bedel <alban.bedel@lht.dlh.de>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/570] can: bcm: fix locking for bcm_op runtime updates
-Date: Mon, 13 Apr 2026 17:53:23 +0200
-Message-ID: <20260413155833.139881134@linuxfoundation.org>
+Subject: [PATCH 5.15 073/570] can: mcp251x: fix deadlock in error path of mcp251x_open
+Date: Mon, 13 Apr 2026 17:53:24 +0200
+Message-ID: <20260413155833.176784271@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,44 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Alban Bedel <alban.bedel@lht.dlh.de>
 
-[ Upstream commit c35636e91e392e1540949bbc67932167cb48bc3a ]
+[ Upstream commit ab3f894de216f4a62adc3b57e9191888cbf26885 ]
 
-Commit c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
-added a locking for some variables that can be modified at runtime when
-updating the sending bcm_op with a new TX_SETUP command in bcm_tx_setup().
+The mcp251x_open() function call free_irq() in its error path with the
+mpc_lock mutex held. But if an interrupt already occurred the
+interrupt handler will be waiting for the mpc_lock and free_irq() will
+deadlock waiting for the handler to finish.
 
-Usually the RX_SETUP only handles and filters incoming traffic with one
-exception: When the RX_RTR_FRAME flag is set a predefined CAN frame is
-sent when a specific RTR frame is received. Therefore the rx bcm_op uses
-bcm_can_tx() which uses the bcm_tx_lock that was only initialized in
-bcm_tx_setup(). Add the missing spin_lock_init() when allocating the
-bcm_op in bcm_rx_setup() to handle the RTR case properly.
+This issue is similar to the one fixed in commit 7dd9c26bd6cf ("can:
+mcp251x: fix deadlock if an interrupt occurs during mcp251x_open") but
+for the error path.
 
-Fixes: c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
-Reported-by: syzbot+5b11eccc403dd1cea9f8@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-can/699466e4.a70a0220.2c38d7.00ff.GAE@google.com/
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260218-bcm_spin_lock_init-v1-1-592634c8a5b5@hartkopp.net
+To solve this issue move the call to free_irq() after the lock is
+released. Setting `priv->force_quit = 1` beforehand ensure that the IRQ
+handler will exit right away once it acquired the lock.
+
+Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
+Link: https://patch.msgid.link/20260209144706.2261954-1-alban.bedel@lht.dlh.de
+Fixes: bf66f3736a94 ("can: mcp251x: Move to threaded interrupts instead of workqueues.")
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/spi/mcp251x.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index e2325f5ba7e54..c77d8bafde653 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -1123,6 +1123,7 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		if (!op)
- 			return -ENOMEM;
+diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
+index 653566c570df8..e71edca7afbb2 100644
+--- a/drivers/net/can/spi/mcp251x.c
++++ b/drivers/net/can/spi/mcp251x.c
+@@ -1207,6 +1207,7 @@ static int mcp251x_open(struct net_device *net)
+ {
+ 	struct mcp251x_priv *priv = netdev_priv(net);
+ 	struct spi_device *spi = priv->spi;
++	bool release_irq = false;
+ 	unsigned long flags = 0;
+ 	int ret;
  
-+		spin_lock_init(&op->bcm_tx_lock);
- 		op->can_id = msg_head->can_id;
- 		op->nframes = msg_head->nframes;
- 		op->cfsiz = CFSIZ(msg_head->flags);
+@@ -1252,12 +1253,24 @@ static int mcp251x_open(struct net_device *net)
+ 	return 0;
+ 
+ out_free_irq:
+-	free_irq(spi->irq, priv);
++	/* The IRQ handler might be running, and if so it will be waiting
++	 * for the lock. But free_irq() must wait for the handler to finish
++	 * so calling it here would deadlock.
++	 *
++	 * Setting priv->force_quit will let the handler exit right away
++	 * without any access to the hardware. This make it safe to call
++	 * free_irq() after the lock is released.
++	 */
++	priv->force_quit = 1;
++	release_irq = true;
++
+ 	mcp251x_hw_sleep(spi);
+ out_close:
+ 	mcp251x_power_enable(priv->transceiver, 0);
+ 	close_candev(net);
+ 	mutex_unlock(&priv->mcp_lock);
++	if (release_irq)
++		free_irq(spi->irq, priv);
+ 	return ret;
+ }
+ 
 -- 
 2.51.0
 
