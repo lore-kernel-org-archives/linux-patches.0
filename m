@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4DD302146;
-	Mon, 13 Apr 2026 17:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8754330649;
+	Mon, 13 Apr 2026 17:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099837; cv=none; b=SXcSHOFX9BhnxOklH9lf0+xmA1La2/qJVsXXY4a5iUH1yETPzAeOkrUnmMGYXLS9kHDGuSG0FYGfLjuT2tCAqTdNbbDFbJRUm2/aILbhmGFrtpI+Bf40faYiXvN9q2x5oGnTiMPPcwvkSjeMtTmD7K2qKFknfyA4amyb6G9Dazc=
+	t=1776099839; cv=none; b=imcDxl0nxPltqEoFfbIiV49NjB7PZQI+hZT47M7zgw3szqkw/nyV0HRG47PeaojBAqonkpWZYCaHJ/6faBSFvAAJQ6UztqDwgnj2TNrX2wpggN4OnZOAqWxbFfV1p3d/LbTnIYWP7I1ga5zDkkphPytY1h2wINIFTLaoBvhuSZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099837; c=relaxed/simple;
-	bh=+VRtjaB+Nj8ww9JOtdhW5OOM5oXaYB6dZC0uyjNiDng=;
+	s=arc-20240116; t=1776099839; c=relaxed/simple;
+	bh=Gr5jJ5pnmchs25gxcd+3TTDIcE+ni/ZpslwZrt/2FVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvE4BQVZzDs1BcZ8ZzWG2g9zg1r9MLLhOKxkQnq1W23CiWaM0Ia35TUqgNP+3F3N2xvMRtlyZkm5JuhqwKKKRV6H3e1FdoLN1zoMOBjkN0n9il6UrEpMiDCeI7qeQ1BwqNyi64X3MWcGia+7M7JbogaPqw2AquGj9no1zOA81rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Epxu25O1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PHrla71nOtQvh/5f4UlKcbGGq78Fq54pjFjxlPOndJj1JymFaSJytZpxpSZnm1Wczh2aI+7vOZFzq/u3RAK8ibIwdPtLnKiZ3Gq94fHCIqXv5VeP4oOB0meDhsvhXudTVP8uNegoQrYoeqwNvfd8kVkjsRYsfP3aRRmj5CNHJHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLN/ZF+T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Epxu25O1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860AEC2BCAF;
-	Mon, 13 Apr 2026 17:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLN/ZF+T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7F8C2BCAF;
+	Mon, 13 Apr 2026 17:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099836;
-	bh=+VRtjaB+Nj8ww9JOtdhW5OOM5oXaYB6dZC0uyjNiDng=;
+	s=korg; t=1776099839;
+	bh=Gr5jJ5pnmchs25gxcd+3TTDIcE+ni/ZpslwZrt/2FVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Epxu25O1GOdvi0HJ+kKtOKAl6N9eh1N+UeBWhlEdz5AwgCikM3z5ChZ78pSH9lC9G
-	 KTmwFVe8NZm7sFzFPg32yyZ+PhJXW74r6SAjuwPr8uQa3vVPCLvRnoJoSTC65zO0dX
-	 /xa4AuPydz//mGEjMFT9okRUwDpPBU3Ry3BtHVEI=
+	b=PLN/ZF+TqSkcNJzMs1r56qWZPJ04UKeCJiBJqZiBVbEfEw/EO3giAx6TLLLgscEIh
+	 7hVPahSpqtyzl06JzsSrlqyhh075cLkt844bOkA4CDmT5JoW6qrAmCQVKrbXRcpoX4
+	 CZSNyfKgwAjW39cEcE0t3k3ONEWdvfO9g6/gVMVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Zimmermann <sigmaepsilon92@gmail.com>,
 	stable <stable@kernel.org>,
+	Kuen-Han Tsai <khtsai@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 461/491] usb: gadget: f_hid: move list and spinlock inits from bind to alloc
-Date: Mon, 13 Apr 2026 18:01:46 +0200
-Message-ID: <20260413155836.296921487@linuxfoundation.org>
+Subject: [PATCH 5.10 462/491] usb: gadget: u_ether: Fix race between gether_disconnect and eth_stop
+Date: Mon, 13 Apr 2026 18:01:47 +0200
+Message-ID: <20260413155836.334742408@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,69 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Zimmermann <sigmaepsilon92@gmail.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit 4e0a88254ad59f6c53a34bf5fa241884ec09e8b2 ]
+[ Upstream commit e1eabb072c75681f78312c484ccfffb7430f206e ]
 
-There was an issue when you did the following:
-- setup and bind an hid gadget
-- open /dev/hidg0
-- use the resulting fd in EPOLL_CTL_ADD
-- unbind the UDC
-- bind the UDC
-- use the fd in EPOLL_CTL_DEL
+A race condition between gether_disconnect() and eth_stop() leads to a
+NULL pointer dereference. Specifically, if eth_stop() is triggered
+concurrently while gether_disconnect() is tearing down the endpoints,
+eth_stop() attempts to access the cleared endpoint descriptor, causing
+the following NPE:
 
-When CONFIG_DEBUG_LIST was enabled, a list_del corruption was reported
-within remove_wait_queue (via ep_remove_wait_queue). After some
-debugging I found out that the queues, which f_hid registers via
-poll_wait were the problem. These were initialized using
-init_waitqueue_head inside hidg_bind. So effectively, the bind function
-re-initialized the queues while there were still items in them.
+  Unable to handle kernel NULL pointer dereference
+  Call trace:
+   __dwc3_gadget_ep_enable+0x60/0x788
+   dwc3_gadget_ep_enable+0x70/0xe4
+   usb_ep_enable+0x60/0x15c
+   eth_stop+0xb8/0x108
 
-The solution is to move the initialization from hidg_bind to hidg_alloc
-to extend their lifetimes to the lifetime of the function instance.
+Because eth_stop() crashes while holding the dev->lock, the thread
+running gether_disconnect() fails to acquire the same lock and spins
+forever, resulting in a hardlockup:
 
-Additionally, I found many other possibly problematic init calls in the
-bind function, which I moved as well.
+  Core - Debugging Information for Hardlockup core(7)
+  Call trace:
+   queued_spin_lock_slowpath+0x94/0x488
+   _raw_spin_lock+0x64/0x6c
+   gether_disconnect+0x19c/0x1e8
+   ncm_set_alt+0x68/0x1a0
+   composite_setup+0x6a0/0xc50
 
-Signed-off-by: Michael Zimmermann <sigmaepsilon92@gmail.com>
+The root cause is that the clearing of dev->port_usb in
+gether_disconnect() is delayed until the end of the function.
+
+Move the clearing of dev->port_usb to the very beginning of
+gether_disconnect() while holding dev->lock. This cuts off the link
+immediately, ensuring eth_stop() will see dev->port_usb as NULL and
+safely bail out.
+
+Fixes: 2b3d942c4878 ("usb ethernet gadget: split out network core")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260331184844.2388761-1-sigmaepsilon92@gmail.com
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20260311-gether-disconnect-npe-v1-1-454966adf7c7@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_hid.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/function/u_ether.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -996,13 +996,8 @@ static int hidg_bind(struct usb_configur
- 	if (status)
- 		goto fail;
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -1141,6 +1141,10 @@ void gether_disconnect(struct gether *li
  
--	spin_lock_init(&hidg->write_spinlock);
- 	hidg->write_pending = 1;
- 	hidg->req = NULL;
--	spin_lock_init(&hidg->read_spinlock);
--	init_waitqueue_head(&hidg->write_queue);
--	init_waitqueue_head(&hidg->read_queue);
--	INIT_LIST_HEAD(&hidg->completed_out_req);
+ 	DBG(dev, "%s\n", __func__);
  
- 	/* create char device */
- 	cdev_init(&hidg->cdev, &f_hidg_fops);
-@@ -1272,6 +1267,12 @@ static struct usb_function *hidg_alloc(s
- 	mutex_lock(&opts->lock);
- 	++opts->refcnt;
- 
-+	spin_lock_init(&hidg->write_spinlock);
-+	spin_lock_init(&hidg->read_spinlock);
-+	init_waitqueue_head(&hidg->write_queue);
-+	init_waitqueue_head(&hidg->read_queue);
-+	INIT_LIST_HEAD(&hidg->completed_out_req);
++	spin_lock(&dev->lock);
++	dev->port_usb = NULL;
++	spin_unlock(&dev->lock);
 +
- 	device_initialize(&hidg->dev);
- 	hidg->dev.release = hidg_release;
- 	hidg->dev.class = hidg_class;
+ 	netif_stop_queue(dev->net);
+ 	netif_carrier_off(dev->net);
+ 
+@@ -1178,10 +1182,6 @@ void gether_disconnect(struct gether *li
+ 	dev->header_len = 0;
+ 	dev->unwrap = NULL;
+ 	dev->wrap = NULL;
+-
+-	spin_lock(&dev->lock);
+-	dev->port_usb = NULL;
+-	spin_unlock(&dev->lock);
+ }
+ EXPORT_SYMBOL_GPL(gether_disconnect);
+ 
 
 
