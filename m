@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AAF317152;
-	Mon, 13 Apr 2026 16:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB53313298;
+	Mon, 13 Apr 2026 16:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099215; cv=none; b=Pqd5qHMyDavb5BOqw5Jus9mqIuYwL8I4t6ENTVrXfzSkQUXQG1FmrSvTTRfipCwpspj8AJxH7pWTZi+ZoLSxRyHJs6jSQvaqDlfIO7mDICncNM47UugxMd/mnSIEgNoPZj0L2KIX1AuUDsA2MFroiBjq4kNuKUebIc2gCVBE+m0=
+	t=1776099217; cv=none; b=t/qAF9eWx1BMwBzqCHpAxAAatA8krjsEhp6X8U03b8HDZXKh2LL0Ir19bEZ9fDOkrS+hrVVfaGFkeY/uy37i++9Gta/mu5ZVlx+rneFWAA/6A7t7Yyjju0X8BCHhVcqzkY6m3uefr3FlxaU8VXqhERvNnWCPO0NItIM/RK6lu9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099215; c=relaxed/simple;
-	bh=kCnbIt9u7LfJgAiLHfez8Yq7bTEhlyjfi/GyGt7eY+4=;
+	s=arc-20240116; t=1776099217; c=relaxed/simple;
+	bh=Y6mi3CIInFwTPuZXfPESwvPhDM5oLPDO7JqzCgcbVP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbx2i3VmLN6wBGC4syoXlldmq8MO2n1c389VoDK7wQy9Zc6+jYOer1r6niFaFe0Ll+CODqp0FQvaNcM1kj33bNEa+f9IJU458byNI0r6Bk2Jl7OD/d6PyL5a3Zy9gY6A2l+woaI0PnZ7rcFK8btIWcdVU7Xxx2J2KZHgdyQs/oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sF6wiAey; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MeXrsaGD7g5Trk75+xHH1pUSHdTau/s4fLfEUBgpytMwpJcbA95LuO7rFeQ2dlJKQvC0tBbH2fakeVrwSEQ/PnhUYktY+pAae0SUiyCkRGAGEqzqCqHa2CVtR74clVrw3tfSz7wyEr86b4txrPraYNqUbi+0XSnf78uo7YJwQqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LeoUyeM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sF6wiAey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1C3C2BCB3;
-	Mon, 13 Apr 2026 16:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LeoUyeM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1414EC2BCAF;
+	Mon, 13 Apr 2026 16:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099214;
-	bh=kCnbIt9u7LfJgAiLHfez8Yq7bTEhlyjfi/GyGt7eY+4=;
+	s=korg; t=1776099217;
+	bh=Y6mi3CIInFwTPuZXfPESwvPhDM5oLPDO7JqzCgcbVP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sF6wiAeyju4UDoZAtw6/bVeFM1s+CQDbV/5Dct/ce0rdr79dda27F+sY0a9GAq4Y9
-	 SZNZY2xSyNNvV9huO5BHEFhOUDnsCld1ZbMhMi8J4ccjilct6x8cJN/gGZfX6IxM06
-	 vxmDo9A8pqRVOdMn1EsdqDofqunl8Lps3+R+pzDE=
+	b=2LeoUyeM9UJZc2DL9ramoMcjh4IOOxkzNxtBjctPXisO7Diw2pPZ48PP+ULFg7s48
+	 vVbp+z8r4iwPHi4CRNr9wOwLtFY20rNDShnBLV+3um9gcVFX3kFzq81aMTxAz2ueD2
+	 jedVVELcGlZ/93vpftOTNj/SVyfgVRwTH02Lqj0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Ian Ray <ian.ray@gehealthcare.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 255/491] pinctrl: mediatek: common: Fix probe failure for devices without EINT
-Date: Mon, 13 Apr 2026 17:58:20 +0200
-Message-ID: <20260413155828.599734765@linuxfoundation.org>
+Subject: [PATCH 5.10 256/491] nfc: nci: fix circular locking dependency in nci_close_device
+Date: Mon, 13 Apr 2026 17:58:21 +0200
+Message-ID: <20260413155828.636557312@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,46 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 8f9f64c8f90dca07d3b9f1d7ce5d34ccd246c9dd ]
+[ Upstream commit 4527025d440ce84bf56e75ce1df2e84cb8178616 ]
 
-Some pinctrl devices like mt6397 or mt6392 don't support EINT at all, but
-the mtk_eint_init function is always called and returns -ENODEV, which
-then bubbles up and causes probe failure.
+nci_close_device() flushes rx_wq and tx_wq while holding req_lock.
+This causes a circular locking dependency because nci_rx_work()
+running on rx_wq can end up taking req_lock too:
 
-To address this only call mtk_eint_init if EINT pins are present.
+  nci_rx_work -> nci_rx_data_packet -> nci_data_exchange_complete
+    -> __sk_destruct -> rawsock_destruct -> nfc_deactivate_target
+    -> nci_deactivate_target -> nci_request -> mutex_lock(&ndev->req_lock)
 
-Tested on Xiaomi Mi Smart Clock x04g (mt6392).
+Move the flush of rx_wq after req_lock has been released.
+This should safe (I think) because NCI_UP has already been cleared
+and the transport is closed, so the work will see it and return
+-ENETDOWN.
 
-Fixes: e46df235b4e6 ("pinctrl: mediatek: refactor EINT related code for all MediaTek pinctrl can fit")
-Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+NIPA has been hitting this running the nci selftest with a debug
+kernel on roughly 4% of the runs.
+
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reviewed-by: Ian Ray <ian.ray@gehealthcare.com>
+Link: https://patch.msgid.link/20260317193334.988609-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-mtk-common.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/nfc/nci/core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-index 730581d130649..8045475583186 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-@@ -1111,9 +1111,12 @@ int mtk_pctrl_init(struct platform_device *pdev,
- 		goto chip_error;
- 	}
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 873c9073e4111..78472b1929705 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -562,8 +562,7 @@ static int nci_close_device(struct nci_dev *ndev)
+ 	skb_queue_purge(&ndev->rx_q);
+ 	skb_queue_purge(&ndev->tx_q);
  
--	ret = mtk_eint_init(pctl, pdev);
--	if (ret)
--		goto chip_error;
-+	/* Only initialize EINT if we have EINT pins */
-+	if (data->eint_hw.ap_num > 0) {
-+		ret = mtk_eint_init(pctl, pdev);
-+		if (ret)
-+			goto chip_error;
-+	}
+-	/* Flush RX and TX wq */
+-	flush_workqueue(ndev->rx_wq);
++	/* Flush TX wq, RX wq flush can't be under the lock */
+ 	flush_workqueue(ndev->tx_wq);
  
+ 	/* Reset device */
+@@ -575,13 +574,13 @@ static int nci_close_device(struct nci_dev *ndev)
+ 		      msecs_to_jiffies(NCI_RESET_TIMEOUT));
+ 
+ 	/* After this point our queues are empty
+-	 * and no works are scheduled.
++	 * rx work may be running but will see that NCI_UP was cleared
+ 	 */
+ 	ndev->ops->close(ndev);
+ 
+ 	clear_bit(NCI_INIT, &ndev->flags);
+ 
+-	/* Flush cmd wq */
++	/* Flush cmd and tx wq */
+ 	flush_workqueue(ndev->cmd_wq);
+ 
+ 	del_timer_sync(&ndev->cmd_timer);
+@@ -591,6 +590,9 @@ static int nci_close_device(struct nci_dev *ndev)
+ 
+ 	mutex_unlock(&ndev->req_lock);
+ 
++	/* rx_work may take req_lock via nci_deactivate_target */
++	flush_workqueue(ndev->rx_wq);
++
  	return 0;
+ }
  
 -- 
 2.51.0
