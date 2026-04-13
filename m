@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCA82D8364;
-	Mon, 13 Apr 2026 16:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E164307AC7;
+	Mon, 13 Apr 2026 16:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098622; cv=none; b=n2nP9hDF7xY1a1hcpDsIqoqRnAifM3kz1p+OWIMINU3xIdAhj+sMI0k3xvRNiKs/JNnoKSNSkivuM2/u8LH/ThWyJl35FPWjax1EZn3M/b/ZNTtjZYKwG6lb6uOFvTRUSIDQuUGAsYY4fDl2CY80O8SNc6J0uVyrdfkMMWtvTXI=
+	t=1776098624; cv=none; b=V1BlfYA/KSqNm6soUUK/opONn6bKTXrmhKgv6LmkEoRkEptFOaxvPhI3t1uaXIuiRZa5t0vaOrf+7MmqGu71efumWJOVr2tFEWS9VoW9tUkOfMlYxDcg8iWRdG/NCp2j9LEy23KTCHY+0BW4Fi9Aw42Lyxa/cXJV/grQX1FgAPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098622; c=relaxed/simple;
-	bh=gGLenJcSukN/DEDiawBVr7xmehRkT60mJRmVofTEWSw=;
+	s=arc-20240116; t=1776098624; c=relaxed/simple;
+	bh=Wi7yVG87MFOJt5g8iJNBjGxQekhjHH9MQypli/5XHno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lLWxNEtKF0IeCMr/28dmtyC4uuoPuxAKZ0vLY5Q21xd4sOL8Ve1FtMo5Tfc/QHmuwZCEYrAk61tsoTJMQDHS8YXHMbo8fd/9Xk0JOaiIqFzZx6iRY4t6y8cvVBQgd+7jCDWvTybO4OGHwinxq5dITjcrIPdiWXuFHTFqHc+pNSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2t9b2Ti; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nWVQM33r1cPzTFWXT7UvA+0r/W/rfWmRxrLWMT/yBNdY06i7iEe0s0uOieHv7lpvBe+FnRy+WnirsNBgifaS/+moi8k1t1Cf15aq4HgrKyrwcPAy0xWy3ZpsFlpPUBjsAlYc9P7H1436RvI6RBIe8ZjuFXEGGoji8Vn2RrFdjAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VH5342Yy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2t9b2Ti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908ABC2BCAF;
-	Mon, 13 Apr 2026 16:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VH5342Yy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26543C2BCAF;
+	Mon, 13 Apr 2026 16:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098621;
-	bh=gGLenJcSukN/DEDiawBVr7xmehRkT60mJRmVofTEWSw=;
+	s=korg; t=1776098624;
+	bh=Wi7yVG87MFOJt5g8iJNBjGxQekhjHH9MQypli/5XHno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2t9b2TibJAhDk7mNNVm8mwuk2EdFgjxr9x8psWIIo7yiuu50sIQp0MrHnfCim3iD
-	 2mDKzpDB/bGZTJjuZx2yFJGBXF3luZqyd6fMpQ3JW6nzrH0DsKn+NmxlcPIDPmDu68
-	 gcU5N0jve/tWEgaFtp+9NRrvn6hL/SprHNLV8aAk=
+	b=VH5342Yy1HX5LitBivB53CP8zQ3yuI1uZsR35vgfwlSrbTyGDnqPv4l0P6aKYRaGN
+	 hRGa+Ojlf6fz5AwUhySjBMN2Zt4PsJE6WgjBoobq0486qxJxRNdHQoVh8sJe3hUgNd
+	 eneL3AdXqxPyAmuLnoDmsMHVX7VxrdMlqqpR3AxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Vincent Mailhol <mailhol@kernel.org>,
 	stable@kernel.org
-Subject: [PATCH 5.10 024/491] can: ems_usb: ems_usb_read_bulk_callback(): check the proper length of a message
-Date: Mon, 13 Apr 2026 17:54:29 +0200
-Message-ID: <20260413155819.958170934@linuxfoundation.org>
+Subject: [PATCH 5.10 025/491] can: ucan: Fix infinite loop from zero-length messages
+Date: Mon, 13 Apr 2026 17:54:30 +0200
+Message-ID: <20260413155819.995406049@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,53 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 38a01c9700b0dcafe97dfa9dc7531bf4a245deff upstream.
+commit 1e446fd0582ad8be9f6dafb115fc2e7245f9bea7 upstream.
 
-When looking at the data in a USB urb, the actual_length is the size of
-the buffer passed to the driver, not the transfer_buffer_length which is
-set by the driver as the max size of the buffer.
+If a broken ucan device gets a message with the message length field set
+to 0, then the driver will loop for forever in
+ucan_read_bulk_callback(), hanging the system.  If the length is 0, just
+skip the message and go on to the next one.
 
-When parsing the messages in ems_usb_read_bulk_callback() properly check
-the size both at the beginning of parsing the message to make sure it is
-big enough for the expected structure, and at the end of the message to
-make sure we don't overflow past the end of the buffer for the next
-message.
+This has been fixed in the kvaser_usb driver in the past in commit
+0c73772cd2b8 ("can: kvaser_usb: leaf: Fix potential infinite loop in
+command parsers"), so there must be some broken devices out there like
+this somewhere.
 
-Cc: Vincent Mailhol <mailhol@kernel.org>
 Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Vincent Mailhol <mailhol@kernel.org>
 Cc: stable@kernel.org
 Assisted-by: gkh_clanker_2000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026022316-answering-strainer-a5db@gregkh
-Fixes: 702171adeed3 ("ems_usb: Added support for EMS CPC-USB/ARM7 CAN/USB interface")
+Link: https://patch.msgid.link/2026022319-huff-absurd-6a18@gregkh
+Fixes: 9f2d3eae88d2 ("can: ucan: add driver for Theobroma Systems UCAN devices")
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/ems_usb.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/ucan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/can/usb/ems_usb.c
-+++ b/drivers/net/can/usb/ems_usb.c
-@@ -438,6 +438,11 @@ static void ems_usb_read_bulk_callback(s
- 		start = CPC_HEADER_SIZE;
+--- a/drivers/net/can/usb/ucan.c
++++ b/drivers/net/can/usb/ucan.c
+@@ -745,7 +745,7 @@ static void ucan_read_bulk_callback(stru
+ 		len = le16_to_cpu(m->len);
  
- 		while (msg_count) {
-+			if (start + CPC_MSG_HEADER_LEN > urb->actual_length) {
-+				netdev_err(netdev, "format error\n");
-+				break;
-+			}
-+
- 			msg = (struct ems_cpc_msg *)&ibuf[start];
- 
- 			switch (msg->type) {
-@@ -467,7 +472,7 @@ static void ems_usb_read_bulk_callback(s
- 			start += CPC_MSG_HEADER_LEN + msg->length;
- 			msg_count--;
- 
--			if (start > urb->transfer_buffer_length) {
-+			if (start > urb->actual_length) {
- 				netdev_err(netdev, "format error\n");
- 				break;
- 			}
+ 		/* check sanity (length of content) */
+-		if (urb->actual_length - pos < len) {
++		if ((len == 0) || (urb->actual_length - pos < len)) {
+ 			netdev_warn(up->netdev,
+ 				    "invalid message (short; no data; l:%d)\n",
+ 				    urb->actual_length);
 
 
