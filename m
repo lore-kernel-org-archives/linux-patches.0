@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98D63385AA;
-	Mon, 13 Apr 2026 17:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510E7339870;
+	Mon, 13 Apr 2026 17:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099702; cv=none; b=GrwTtnkkW1BKQWhfe0d++SnrePPzBC8U7tZlSlcV6Qt51gioi2AuSxha7zPYSAe5nEcr24QYlXsVBH0fU9A4bIMSS2NM70Fz8Weij3k6w+dETlRMkbC0pmf6McZPxKhpuRAHZEgVBcsd+vtvE4/rQOjrYFFpAiZ3uE8Kl3dliw4=
+	t=1776099705; cv=none; b=MFLOl0XlADcPWYvZf+PptZhFrWA3cM2amNB6RQKMv2CBFEtOtUwHwz5TdKGqoLxaeilfIGNTd6DgpLWcZ3yuEGv9chihraa7mjJhG5ZRuGa7SmWaaGC2gPil4dRSrtlaoXupe6mcyl0Ew8HPWe7CqzenmTQZAELRisheJWCOynw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099702; c=relaxed/simple;
-	bh=iG8anjoZ8am5e/N8UnoWpP8kjHLm9lqR9FeHLCnP4Mo=;
+	s=arc-20240116; t=1776099705; c=relaxed/simple;
+	bh=qIULiA+l2kezeIIURFp40r5prabimM6NdS2JlLBJOso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YL4gYwiaSfGfHXSIu9U+pOWMnJfo3ZXvXDPMc5QNcMrqPcKB2Hh+yvujBuDp70L8o4uf1n1Kn480OIB9UL3EY53hAKtkat76RYrg+x366y7rO44OR0oVs9dvBXQKuGjRGUVC/myN/jxnNlVtsK95Js8m4psXKs+Yy3gonhjkwLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAhTpe4S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rqdt2i54QsYIZrnGp/arNiAkpIkhOJUE05RTt8B7XpFtAj8m220D2kZ+OQsuF97G2fk3H1WqVPkaeZDgFnTq0UDSMOuj3rZth+9/r8nX4j94TmQvGXYAeOZxUry/SFKtt5bJz9WOMjVhJ0mQRlULI9psYtCDvmgI83OSEVTUVQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5+otxMQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAhTpe4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC94C2BCAF;
-	Mon, 13 Apr 2026 17:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5+otxMQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97BAFC2BCB6;
+	Mon, 13 Apr 2026 17:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099702;
-	bh=iG8anjoZ8am5e/N8UnoWpP8kjHLm9lqR9FeHLCnP4Mo=;
+	s=korg; t=1776099704;
+	bh=qIULiA+l2kezeIIURFp40r5prabimM6NdS2JlLBJOso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BAhTpe4S5pKmxitctf73+kq/qUCsGCK7IMV4gSMVXUeIraPrrjz8cqX4HIYx+npx5
-	 nfMfL58iud/MVHsPw2B/DM8g85SEMAHJ4bTSfxfO+Uj8/A66cI9PzwltwTSF29DSmP
-	 Pyfrt+9UPznCgEd6IfQK7iUem2Rxapt2PnGbBuGw=
+	b=p5+otxMQYQGKAb8oGYvR67TWa04zkCbvzBB5xvqQb0M5bBcl9uXjj6vl85rQQnbIL
+	 XOA84a+xy/ydBWekWYV/r5wvp0i1yxWE2s1/lo3v+c7r8f9w/BaBbdWpHa0HZqwd54
+	 hPgf5MCygxxpU9PAJBA7Da+hYZeV99/G1ovkxChE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tuan Do <tuan@calif.io>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.10 441/491] netfilter: nft_ct: fix use-after-free in timeout object destroy
-Date: Mon, 13 Apr 2026 18:01:26 +0200
-Message-ID: <20260413155835.538236570@linuxfoundation.org>
+	Oleh Konko <security@1seal.org>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 442/491] tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG
+Date: Mon, 13 Apr 2026 18:01:27 +0200
+Message-ID: <20260413155835.576526398@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,73 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tuan Do <tuan@calif.io>
+From: Oleh Konko <security@1seal.org>
 
-commit f8dca15a1b190787bbd03285304b569631160eda upstream.
+commit 48a5fe38772b6f039522469ee6131a67838221a8 upstream.
 
-nft_ct_timeout_obj_destroy() frees the timeout object with kfree()
-immediately after nf_ct_untimeout(), without waiting for an RCU grace
-period. Concurrent packet processing on other CPUs may still hold
-RCU-protected references to the timeout object obtained via
-rcu_dereference() in nf_ct_timeout_data().
+The GRP_ACK_MSG handler in tipc_group_proto_rcv() currently decrements
+bc_ackers on every inbound group ACK, even when the same member has
+already acknowledged the current broadcast round.
 
-Add an rcu_head to struct nf_ct_timeout and use kfree_rcu() to defer
-freeing until after an RCU grace period, matching the approach already
-used in nfnetlink_cttimeout.c.
+Because bc_ackers is a u16, a duplicate ACK received after the last
+legitimate ACK wraps the counter to 65535. Once wrapped,
+tipc_group_bc_cong() keeps reporting congestion and later group
+broadcasts on the affected socket stay blocked until the group is
+recreated.
 
-KASAN report:
- BUG: KASAN: slab-use-after-free in nf_conntrack_tcp_packet+0x1381/0x29d0
- Read of size 4 at addr ffff8881035fe19c by task exploit/80
+Fix this by ignoring duplicate or stale ACKs before touching bc_acked or
+bc_ackers. This makes repeated GRP_ACK_MSG handling idempotent and
+prevents the underflow path.
 
- Call Trace:
-  nf_conntrack_tcp_packet+0x1381/0x29d0
-  nf_conntrack_in+0x612/0x8b0
-  nf_hook_slow+0x70/0x100
-  __ip_local_out+0x1b2/0x210
-  tcp_sendmsg_locked+0x722/0x1580
-  __sys_sendto+0x2d8/0x320
-
- Allocated by task 75:
-  nft_ct_timeout_obj_init+0xf6/0x290
-  nft_obj_init+0x107/0x1b0
-  nf_tables_newobj+0x680/0x9c0
-  nfnetlink_rcv_batch+0xc29/0xe00
-
- Freed by task 26:
-  nft_obj_destroy+0x3f/0xa0
-  nf_tables_trans_destroy_work+0x51c/0x5c0
-  process_one_work+0x2c4/0x5a0
-
-Fixes: 7e0b2b57f01d ("netfilter: nft_ct: add ct timeout support")
+Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tuan Do <tuan@calif.io>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Oleh Konko <security@1seal.org>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/41a4833f368641218e444fdcff822039.security@1seal.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_conntrack_timeout.h |    1 +
- net/netfilter/nft_ct.c                       |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ net/tipc/group.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/include/net/netfilter/nf_conntrack_timeout.h
-+++ b/include/net/netfilter/nf_conntrack_timeout.h
-@@ -14,6 +14,7 @@
- struct nf_ct_timeout {
- 	__u16			l3num;
- 	const struct nf_conntrack_l4proto *l4proto;
-+	struct rcu_head		rcu;
- 	char			data[];
- };
+--- a/net/tipc/group.c
++++ b/net/tipc/group.c
+@@ -745,6 +745,7 @@ void tipc_group_proto_rcv(struct tipc_gr
+ 	u32 port = msg_origport(hdr);
+ 	struct tipc_member *m, *pm;
+ 	u16 remitted, in_flight;
++	u16 acked;
  
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -935,7 +935,7 @@ static void nft_ct_timeout_obj_destroy(c
- 	nf_queue_nf_hook_drop(ctx->net);
- 	nf_ct_untimeout(ctx->net, timeout);
- 	nf_ct_netns_put(ctx->net, ctx->family);
--	kfree(priv->timeout);
-+	kfree_rcu(priv->timeout, rcu);
- }
- 
- static int nft_ct_timeout_obj_dump(struct sk_buff *skb,
+ 	if (!grp)
+ 		return;
+@@ -797,7 +798,10 @@ void tipc_group_proto_rcv(struct tipc_gr
+ 	case GRP_ACK_MSG:
+ 		if (!m)
+ 			return;
+-		m->bc_acked = msg_grp_bc_acked(hdr);
++		acked = msg_grp_bc_acked(hdr);
++		if (less_eq(acked, m->bc_acked))
++			return;
++		m->bc_acked = acked;
+ 		if (--grp->bc_ackers)
+ 			return;
+ 		list_del_init(&m->small_win);
 
 
