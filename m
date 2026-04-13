@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEA824E4A1;
-	Mon, 13 Apr 2026 16:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6437924E4A1;
+	Mon, 13 Apr 2026 16:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098346; cv=none; b=sMUck7Q6QyBt0tzBSj/NCZ6o30v2in9HLGPU/4KrSEYCoAmYAGGImz8dmmg9oypR90f7KJzYd/xMqSl08EhpCysht+RLWxoKVzpDMZhP4b1ERjSwM6fc42FPNPiTRRSe9QzXuvVs0nggDDeEMkFqjUdbH90xcwJ4JFdymPcHWHk=
+	t=1776098349; cv=none; b=HzsS0O8BPivx5rPgCLl5ZVRJmEamA/R1NiD0AAW0/UYF/5FObmIpftnmcHEGsQzrUw+Qu4t7UteCNcpAxOPAyNElxnIZr5KyDIJjBs/tYaT/B14BWMBuDDmU3qslYWh+TlJBU9UgOoyYl/8kYmSviktYhCT3CIOK3ADYD7kzQc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098346; c=relaxed/simple;
-	bh=ocx7hBLfpHSe1QinprgKcmEOWy8hBDmmajmIywpq6MI=;
+	s=arc-20240116; t=1776098349; c=relaxed/simple;
+	bh=k+QVXL1KjFCvARB3kwk0lP3ZZBQK0sQHKATkqTwQXmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qT7iFF7P1nIQl1j8aDDcXaAwmD/7u9AuKawKwdTX2YfWOHsiLG7ZD5j5IBenXjjhrQw91SQxIdy5V1nmW6DpUYIspFZ3tLvy9MOGTV9MR0AfDdDFMXez4YP2nTVfXudlPCq8XYJseYLCSLZ+e9OfwhcZFBUx9f44WHqZPLOMBik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kx9SswMD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OFGzh0WCVo90l6293b0u0sbPm2X7LP7GhZIg6Vr1IcF2YuE2uj8yh3m4YMOxMz/PriwWFB8tAOJFbPknzFQhoBIsX/jee/h7/TuhqDT04xwbdIUgrgC3xDVbaDYEKRae6pxLubCsoeg9qVxOlOH6Z7xLwAYuuT4cAt96aMTc9Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AllDHoV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kx9SswMD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6603FC2BCAF;
-	Mon, 13 Apr 2026 16:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AllDHoV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE83BC2BCAF;
+	Mon, 13 Apr 2026 16:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098346;
-	bh=ocx7hBLfpHSe1QinprgKcmEOWy8hBDmmajmIywpq6MI=;
+	s=korg; t=1776098349;
+	bh=k+QVXL1KjFCvARB3kwk0lP3ZZBQK0sQHKATkqTwQXmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kx9SswMDTHMZBNkHZjZoeEe+hs6Zd7WN0K5AJFFmHQuh04KDPb4aV9RrliRFYDzlA
-	 unYbBsDLBQg1R07VYLg3YmmqURjLi0ZuVTrL8riaT5TpDH+CuVb+1llmkhjIqFWY4H
-	 aO8aMwbszmrDYXBBCsOqJnd+4WUdd/H0vSi2VSXc=
+	b=AllDHoV2edm779Afn0MMc5swZDQ+i1x4yw4iQzwjHsHQA7iFJLWAhzILfdr0qIXDw
+	 23VU5NKsCgDqaxTq5zHWlb3rTHW3JBUhmgEXO6ChnANwSCvTEin7s+2u3wbNwe0VGz
+	 azgbEVAMhQjYY/NO63ZeA3VMe+46qhk6kHQvDY/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 490/570] USB: dummy-hcd: Fix interrupt synchronization error
-Date: Mon, 13 Apr 2026 18:00:21 +0200
-Message-ID: <20260413155848.814494471@linuxfoundation.org>
+	YunJe Shin <ioerts@kookmin.ac.kr>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
+	linux-nvme@lists.infradead.org,
+	Cengiz Can <cengiz.can@canonical.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 473/570] nvmet-tcp: fix use-before-check of sg in bounds validation
+Date: Mon, 13 Apr 2026 18:00:04 +0200
+Message-ID: <20260413155848.182068742@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,99 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Cengiz Can <cengiz.can@canonical.com>
 
-commit 2ca9e46f8f1f5a297eb0ac83f79d35d5b3a02541 upstream.
+The stable backport of commit 52a0a9854934 ("nvmet-tcp: add bounds
+checks in nvmet_tcp_build_pdu_iovec") placed the bounds checks after
+the iov_len calculation:
 
-This fixes an error in synchronization in the dummy-hcd driver.  The
-error has a somewhat involved history.  The synchronization mechanism
-was introduced by commit 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous
-synchronization change"), which added an emulated "interrupts enabled"
-flag together with code emulating synchronize_irq() (it waits until
-all current handler callbacks have returned).
+    while (length) {
+        u32 iov_len = min_t(u32, length, sg->length - sg_offset);
 
-But the emulated interrupt-disable occurred too late, after the driver
-containing the handler callback routines had been told that it was
-unbound and no more callbacks would occur.  Commit 4a5d797a9f9c ("usb:
-gadget: dummy_hcd: fix gpf in gadget_setup") tried to fix this by
-moving the synchronize_irq() emulation code from dummy_stop() to
-dummy_pullup(), which runs before the unbind callback.
+        if (!sg_remaining) {    /* too late: sg already dereferenced */
 
-There still were races, though, because the emulated interrupt-disable
-still occurred too late.  It couldn't be moved to dummy_pullup(),
-because that routine can be called for reasons other than an impending
-unbind.  Therefore commits 7dc0c55e9f30 ("USB: UDC core: Add
-udc_async_callbacks gadget op") and 04145a03db9d ("USB: UDC: Implement
-udc_async_callbacks in dummy-hcd") added an API allowing the UDC core
-to tell dummy-hcd exactly when emulated interrupts and their callbacks
-should be disabled.
+In mainline, the checks come first because C99 allows mid-block variable
+declarations. The stable backport moved the declaration to the top of the
+loop to satisfy C89 declaration rules, but this ended up placing the
+sg->length dereference before the sg_remaining and sg->length guards.
 
-That brings us to the current state of things, which is still wrong
-because the emulated synchronize_irq() occurs before the emulated
-interrupt-disable!  That's no good, beause it means that more emulated
-interrupts can occur after the synchronize_irq() emulation has run,
-leading to the possibility that a callback handler may be running when
-the gadget driver is unbound.
+If sg_next() returns NULL at the end of the scatterlist, the next
+iteration dereferences a NULL pointer in the iov_len calculation before
+the sg_remaining check can prevent it.
 
-To fix this, we have to move the synchronize_irq() emulation code yet
-again, to the dummy_udc_async_callbacks() routine, which takes care of
-enabling and disabling emulated interrupt requests.  The
-synchronization will now run immediately after emulated interrupts are
-disabled, which is where it belongs.
+Fix this by moving the iov_len declaration to function scope and
+keeping the assignment after the bounds checks, matching the ordering
+in mainline.
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 04145a03db9d ("USB: UDC: Implement udc_async_callbacks in dummy-hcd")
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/c7bc93fe-4241-4d04-bd56-27c12ba35c97@rowland.harvard.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 42afe8ed8ad2 ("nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec")
+Cc: stable@vger.kernel.org
+Cc: YunJe Shin <ioerts@kookmin.ac.kr>
+Cc: Sagi Grimberg <sagi@grimberg.me>
+Cc: Keith Busch <kbusch@kernel.org>
+Cc: linux-nvme@lists.infradead.org
+Signed-off-by: Cengiz Can <cengiz.can@canonical.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |   29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ drivers/nvme/target/tcp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -909,21 +909,6 @@ static int dummy_pullup(struct usb_gadge
- 	spin_lock_irqsave(&dum->lock, flags);
- 	dum->pullup = (value != 0);
- 	set_link_state(dum_hcd);
--	if (value == 0) {
--		/*
--		 * Emulate synchronize_irq(): wait for callbacks to finish.
--		 * This seems to be the best place to emulate the call to
--		 * synchronize_irq() that's in usb_gadget_remove_driver().
--		 * Doing it in dummy_udc_stop() would be too late since it
--		 * is called after the unbind callback and unbind shouldn't
--		 * be invoked until all the other callbacks are finished.
--		 */
--		while (dum->callback_usage > 0) {
--			spin_unlock_irqrestore(&dum->lock, flags);
--			usleep_range(1000, 2000);
--			spin_lock_irqsave(&dum->lock, flags);
--		}
--	}
- 	spin_unlock_irqrestore(&dum->lock, flags);
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 8f7984c53f3f2..c6cc1dfef92cf 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -312,7 +312,7 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ {
+ 	struct bio_vec *iov = cmd->iov;
+ 	struct scatterlist *sg;
+-	u32 length, offset, sg_offset;
++	u32 length, offset, sg_offset, iov_len;
+ 	unsigned int sg_remaining;
+ 	int nr_pages;
  
- 	usb_hcd_poll_rh_status(dummy_hcd_to_hcd(dum_hcd));
-@@ -946,6 +931,20 @@ static void dummy_udc_async_callbacks(st
+@@ -329,8 +329,6 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ 	sg_remaining = cmd->req.sg_cnt - cmd->sg_idx;
  
- 	spin_lock_irq(&dum->lock);
- 	dum->ints_enabled = enable;
-+	if (!enable) {
-+		/*
-+		 * Emulate synchronize_irq(): wait for callbacks to finish.
-+		 * This has to happen after emulated interrupts are disabled
-+		 * (dum->ints_enabled is clear) and before the unbind callback,
-+		 * just like the call to synchronize_irq() in
-+		 * gadget/udc/core:gadget_unbind_driver().
-+		 */
-+		while (dum->callback_usage > 0) {
-+			spin_unlock_irq(&dum->lock);
-+			usleep_range(1000, 2000);
-+			spin_lock_irq(&dum->lock);
-+		}
-+	}
- 	spin_unlock_irq(&dum->lock);
- }
+ 	while (length) {
+-		u32 iov_len = min_t(u32, length, sg->length - sg_offset);
+-
+ 		if (!sg_remaining) {
+ 			nvmet_tcp_fatal_error(cmd->queue);
+ 			return;
+@@ -340,6 +338,8 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ 			return;
+ 		}
  
++		iov_len = min_t(u32, length, sg->length - sg_offset);
++
+ 		iov->bv_page = sg_page(sg);
+ 		iov->bv_len = iov_len;
+ 		iov->bv_offset = sg->offset + sg_offset;
+-- 
+2.53.0
+
 
 
