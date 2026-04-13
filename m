@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072C1307AC7;
-	Mon, 13 Apr 2026 16:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3BB30C371;
+	Mon, 13 Apr 2026 16:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098528; cv=none; b=kQ2v7EY5wz/ytjVNmTHUKXK04me6TplzsoA50JSQ/YsYj5LBXhpsIJEOai9tdy7l8NvqgTCKhwumXYg07pdovI3ehE3viRhdWKNp9r146mE3HuIutpFL7//0pal9OhYL07UH8LrCtS2BID0Mgc8xaPQypGXiQpI90h2sekch/VI=
+	t=1776098531; cv=none; b=l6hoZ+k4pbeR1MGK0aaYdCCGKHONEumtjdflRHsKjb6oH+wFR/xx4IgPZkqea/EZ9E9TmXGgAxHWpbcEXYOzr4BWTqmweY89Ggn0gTwRqeBozCUWlCa2aSH4avbbFjPKtF7TDd+2uSaLEvdNdTqhAH4g/eldapFRDIdmkpc7jDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098528; c=relaxed/simple;
-	bh=fykuKx+Utz7rd7t7CZmQwqw2MnLMEQObMNXsR6jcyTE=;
+	s=arc-20240116; t=1776098531; c=relaxed/simple;
+	bh=pSpHiebUu3bUEaY72l/GWi0P7sXe4IbT9Z30oJ8oiPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfDMuXBRYKzxgMWnaJym2E/L0/i1HB2b73A7alOnOkZU65e5VQqIbnBivIWh2+9dx0Ku3w7fXfjaLFVBQaWRSU9h4XZh52g9iRWx9xqP88rf2MCoPXNrb0N3FQL/NEMMWxYyHYmbUf0JZbTwF+3HvyKRcFTylUYAWR9iTaBOXQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTHJSYpM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uO55z0EspnDY7sJ2DBBG3Qkdh686sG6aNSp6sc6cAULdt37h/V7HLuq4nwr5OBGnmG1XVzwXx3umlfWzSJpiSWVslBcIGF3UjHU4ul+SXZZblAigvb3LEiWGgn73eRXFVUA8Yt8ccLBHA2BMB3+0/+mCcqN2ma2ZR4l5RByGSBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xb6bTPqt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTHJSYpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F679C2BCAF;
-	Mon, 13 Apr 2026 16:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xb6bTPqt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32651C2BCAF;
+	Mon, 13 Apr 2026 16:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098527;
-	bh=fykuKx+Utz7rd7t7CZmQwqw2MnLMEQObMNXsR6jcyTE=;
+	s=korg; t=1776098530;
+	bh=pSpHiebUu3bUEaY72l/GWi0P7sXe4IbT9Z30oJ8oiPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTHJSYpM6vI/7jxCOHJyuTcdSjsNBVOqejm+OUxBENAMiQ+5fFcIfF/vPuXDmCv4e
-	 8Fy+k5+E1iZGt07SjWIfOLXw3xM1NSHrw1vQJdpz+TqLTS5Kk6jY3y7I7Zl9fbZ0yv
-	 uOPkVQTqlW4KhB9dx4xhKCgJjY+BSYh6bAviQSbw=
+	b=xb6bTPqtULWIpqz+Wxt2ICOM6kzRpcLI3HEd0sVH8rfEuctKZX026goiMR6O+eAYE
+	 vu7F3HPI9yDwj+KZ8HctRsX7VCYsDKN+KEVBkL7OnqeY0lmKcnjNfOoEAMfdXCn5Gk
+	 Q966te7H4L8/9yL6B1EhNWY7DkDiJFbC8GVq8Tg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mathieu.desnoyers@efficios.com,
-	zhang.run@zte.com.cn,
-	yang.tao172@zte.com.cn,
-	ran.xiaokai@zte.com.cn,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Luo Haiyang <luo.haiyang@zte.com.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 560/570] tracing: Fix potential deadlock in cpu hotplug with osnoise
-Date: Mon, 13 Apr 2026 18:01:31 +0200
-Message-ID: <20260413155851.449717833@linuxfoundation.org>
+Subject: [PATCH 5.15 543/570] Revert "mptcp: add needs_id for netlink appending addr"
+Date: Mon, 13 Apr 2026 18:01:14 +0200
+Message-ID: <20260413155850.786692199@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -56,90 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Haiyang <luo.haiyang@zte.com.cn>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 1f9885732248d22f788e4992c739a98c88ab8a55 ]
+[ Upstream commit 8e2760eaab778494fc1fa257031e0e1799647f46 ]
 
-The following sequence may leads deadlock in cpu hotplug:
+This commit was originally adding the ability to add MPTCP endpoints
+with ID 0 by accident. The in-kernel PM, handling MPTCP endpoints at the
+net namespace level, is not supposed to handle endpoints with such ID,
+because this ID 0 is reserved to the initial subflow, as mentioned in
+the MPTCPv1 protocol [1], a per-connection setting.
 
-    task1        task2        task3
-    -----        -----        -----
+Note that 'ip mptcp endpoint add id 0' stops early with an error, but
+other tools might still request the in-kernel PM to create MPTCP
+endpoints with this restricted ID 0.
 
- mutex_lock(&interface_lock)
+In other words, it was wrong to call the mptcp_pm_has_addr_attr_id
+helper to check whether the address ID attribute is set: if it was set
+to 0, a new MPTCP endpoint would be created with ID 0, which is not
+expected, and might cause various issues later.
 
-            [CPU GOING OFFLINE]
-
-            cpus_write_lock();
-            osnoise_cpu_die();
-              kthread_stop(task3);
-                wait_for_completion();
-
-                      osnoise_sleep();
-                        mutex_lock(&interface_lock);
-
- cpus_read_lock();
-
- [DEAD LOCK]
-
-Fix by swap the order of cpus_read_lock() and mutex_lock(&interface_lock).
-
+Fixes: 584f38942626 ("mptcp: add needs_id for netlink appending addr")
 Cc: stable@vger.kernel.org
-Cc: <mathieu.desnoyers@efficios.com>
-Cc: <zhang.run@zte.com.cn>
-Cc: <yang.tao172@zte.com.cn>
-Cc: <ran.xiaokai@zte.com.cn>
-Fixes: bce29ac9ce0bb ("trace: Add osnoise tracer")
-Link: https://patch.msgid.link/20260326141953414bVSj33dAYktqp9Oiyizq8@zte.com.cn
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Luo Haiyang <luo.haiyang@zte.com.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-[ adapted guard() macros to lock/unlock calls ]
+Link: https://datatracker.ietf.org/doc/html/rfc8684#section-3.2-9 [1]
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260407-net-mptcp-revert-pm-needs-id-v2-1-7a25cbc324f8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted changes from pm_kernel.c to pm_netlink.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mptcp/pm_netlink.c |   24 +++++-------------------
+ 1 file changed, 5 insertions(+), 19 deletions(-)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -1620,8 +1620,8 @@ static void osnoise_hotplug_workfn(struc
- 	if (!osnoise_busy)
- 		goto out_unlock_trace;
- 
--	mutex_lock(&interface_lock);
- 	cpus_read_lock();
-+	mutex_lock(&interface_lock);
- 
- 	if (!cpu_online(cpu))
- 		goto out_unlock;
-@@ -1634,8 +1634,8 @@ static void osnoise_hotplug_workfn(struc
- 	start_kthread(cpu);
- 
- out_unlock:
--	cpus_read_unlock();
- 	mutex_unlock(&interface_lock);
-+	cpus_read_unlock();
- out_unlock_trace:
- 	mutex_unlock(&trace_types_lock);
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -972,8 +972,7 @@ static bool address_use_port(struct mptc
  }
-@@ -1772,16 +1772,16 @@ osnoise_cpus_write(struct file *filp, co
- 	if (running)
- 		osnoise_tracer_stop(tr);
  
--	mutex_lock(&interface_lock);
- 	/*
- 	 * osnoise_cpumask is read by CPU hotplug operations.
- 	 */
- 	cpus_read_lock();
-+	mutex_lock(&interface_lock);
+ static int mptcp_pm_nl_append_new_local_addr(struct pm_nl_pernet *pernet,
+-					     struct mptcp_pm_addr_entry *entry,
+-					     bool needs_id)
++					     struct mptcp_pm_addr_entry *entry)
+ {
+ 	struct mptcp_pm_addr_entry *cur;
+ 	unsigned int addr_max;
+@@ -1000,7 +999,7 @@ static int mptcp_pm_nl_append_new_local_
+ 			goto out;
+ 	}
  
- 	cpumask_copy(&osnoise_cpumask, osnoise_cpumask_new);
+-	if (!entry->addr.id && needs_id) {
++	if (!entry->addr.id) {
+ find_next:
+ 		entry->addr.id = find_next_zero_bit(pernet->id_bitmap,
+ 						    MAX_ADDR_ID + 1,
+@@ -1011,7 +1010,7 @@ find_next:
+ 		}
+ 	}
  
--	cpus_read_unlock();
- 	mutex_unlock(&interface_lock);
-+	cpus_read_unlock();
+-	if (!entry->addr.id && needs_id)
++	if (!entry->addr.id)
+ 		goto out;
  
- 	if (running)
- 		osnoise_tracer_start(tr);
+ 	__set_bit(entry->addr.id, pernet->id_bitmap);
+@@ -1152,7 +1151,7 @@ int mptcp_pm_nl_get_local_id(struct mptc
+ 	entry->ifindex = 0;
+ 	entry->flags = 0;
+ 	entry->lsk = NULL;
+-	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, true);
++	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry);
+ 	if (ret < 0)
+ 		kfree(entry);
+ 
+@@ -1374,18 +1373,6 @@ next:
+ 	return 0;
+ }
+ 
+-static bool mptcp_pm_has_addr_attr_id(const struct nlattr *attr,
+-				      struct genl_info *info)
+-{
+-	struct nlattr *tb[MPTCP_PM_ADDR_ATTR_MAX + 1];
+-
+-	if (!nla_parse_nested_deprecated(tb, MPTCP_PM_ADDR_ATTR_MAX, attr,
+-					 mptcp_pm_addr_policy, info->extack) &&
+-	    tb[MPTCP_PM_ADDR_ATTR_ID])
+-		return true;
+-	return false;
+-}
+-
+ static int mptcp_nl_cmd_add_addr(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct nlattr *attr = info->attrs[MPTCP_PM_ATTR_ADDR];
+@@ -1412,8 +1399,7 @@ static int mptcp_nl_cmd_add_addr(struct
+ 			return ret;
+ 		}
+ 	}
+-	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry,
+-						!mptcp_pm_has_addr_attr_id(attr, info));
++	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry);
+ 	if (ret < 0) {
+ 		GENL_SET_ERR_MSG(info, "too many addresses or duplicate one");
+ 		if (entry->lsk)
 
 
