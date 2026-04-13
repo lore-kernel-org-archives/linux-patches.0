@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BC227BF6C;
-	Mon, 13 Apr 2026 16:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B75B2472B6;
+	Mon, 13 Apr 2026 16:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097924; cv=none; b=XPRHW7Bx9M9ADqK0kS1WCcYvec9qiu3VUCuhSS6RACC+FPtv15ZBugz5QnVI0YNGjKkIhmti1Os5dx9nymgokGkc3DxVUUGgXzA5DymUFtdrCuk0fKd5/hpC9v3fZMscNZJ+XrVInhyRswAtyZNE7LNYqXwlmiXY4sHDSK3gonE=
+	t=1776097927; cv=none; b=Q1X01FqZc7hRyNTKihsVqq8gtgim+eAoW9B106Sx35chUKji+QnZPeawlDjLa4uIyZTs/mffrJCrfC94pYxbgc+DSLPuJNiTUQYbfhCfrgC99r8Iaj37uZ0XObZblpMCoknWNIllkMRLtqwQDi1bmH7AjDdnt04s4/uqn+QBPA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097924; c=relaxed/simple;
-	bh=EDqms9xHizVYciZp7AUkFZXV3N8hXF9hjpwSzgt+NPI=;
+	s=arc-20240116; t=1776097927; c=relaxed/simple;
+	bh=qeKZBoHuWdo80oECOXDMrN/4a7TQo+2w7JtWdz6x7ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TjkCRHl7m7F+i3WJH9OD9Zj1Tad5c6LaMeBk8/kXY+lXAtygfoHmKvMy/YoBVbMaOF36SzkTVN6k7thDkYrb6VSl3YFdwbarBzMcC7OEdzThFBc0RM0NyJ+0svufrPhOZm3ojvysg5g6ZOA0ecLfKHbZ5UMSDMAc7JcVNJOebD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMPD65aI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lPf+0Z9qAcdovxByDtj+Sp5HTnVK1N7zP3/VnJKdyl26y6xL94Q2/Dzh55GmQxgxXCxD7c4C9nsPEna0vVt6C8YAizW0DGj+RCoFlwq6SY5v2iq3m7BIV/yyiGx71kvFEhpkZyt8fmniJCmKOLqkGl13BiNUehhoHQHE6aHg83s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQbzCIfe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMPD65aI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4152BC2BCAF;
-	Mon, 13 Apr 2026 16:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQbzCIfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63DDC2BCAF;
+	Mon, 13 Apr 2026 16:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097924;
-	bh=EDqms9xHizVYciZp7AUkFZXV3N8hXF9hjpwSzgt+NPI=;
+	s=korg; t=1776097927;
+	bh=qeKZBoHuWdo80oECOXDMrN/4a7TQo+2w7JtWdz6x7ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PMPD65aIHXr/cGuXTOXlzL3iy9QCrdsKTNJinoBHJwTBQW1ruIVyR2piaFT71Zex3
-	 2+iHy2xSswwQRaw8JoqEgswhMpizuLvV6uFpZxEgIAIXc/NgjsrliJZw4Ziog0DoO/
-	 9zXhvGFiObIOgLPT8DRuOkclw2SNJDep3y0pmsT8=
+	b=FQbzCIfeuTQ4KkRN2cXiYpvRvqCtUuJRsRLKOvPNdjUSsfP2qrSzepz3UMEtK1V/U
+	 Cj7t6pgGt7Unl+tPnLtVQuINJEzRztmwNjIGjVpKrMXgornxNJfxxB4bicgYD+NhmF
+	 1ERE7ZZd+XqVDZznohrmS928f1pFhdjpP1euvmRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 325/570] openvswitch: validate MPLS set/set_masked payload length
-Date: Mon, 13 Apr 2026 17:57:36 +0200
-Message-ID: <20260413155842.671008762@linuxfoundation.org>
+Subject: [PATCH 5.15 299/570] nvme-pci: cap queue creation to used queues
+Date: Mon, 13 Apr 2026 17:57:10 +0200
+Message-ID: <20260413155841.702597166@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -56,48 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 546b68ac893595877ffbd7751e5c55fd1c43ede6 ]
+[ Upstream commit 4735b510a00fb2d4ac9e8d21a8c9552cb281f585 ]
 
-validate_set() accepted OVS_KEY_ATTR_MPLS as variable-sized payload for
-SET/SET_MASKED actions. In action handling, OVS expects fixed-size
-MPLS key data (struct ovs_key_mpls).
+If the user reduces the special queue count at runtime and resets the
+controller, we need to reduce the number of queues and interrupts
+requested accordingly rather than start with the pre-allocated queue
+count.
 
-Use the already normalized key_len (masked case included) and reject
-non-matching MPLS action key sizes.
-
-Reject invalid MPLS action payload lengths early.
-
-Fixes: fbdcdd78da7c ("Change in Openvswitch to support MPLS label depth of 3 in ingress direction")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
-Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260319080228.3423307-1-n05ec@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Kanchan Joshi <joshi.k@samsung.com>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow_netlink.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/host/pci.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index a7a9e4df3f600..1b2941e9c6d14 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2908,6 +2908,8 @@ static int validate_set(const struct nlattr *a,
- 	case OVS_KEY_ATTR_MPLS:
- 		if (!eth_p_mpls(eth_type))
- 			return -EINVAL;
-+		if (key_len != sizeof(struct ovs_key_mpls))
-+			return -EINVAL;
- 		break;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 04cccbb05372a..c4a33e9d2c717 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2306,7 +2306,13 @@ static int nvme_setup_io_queues(struct nvme_dev *dev)
+ 	dev->nr_write_queues = write_queues;
+ 	dev->nr_poll_queues = poll_queues;
  
- 	case OVS_KEY_ATTR_SCTP:
+-	nr_io_queues = dev->nr_allocated_queues - 1;
++	/*
++	 * The initial number of allocated queue slots may be too large if the
++	 * user reduced the special queue parameters. Cap the value to the
++	 * number we need for this round.
++	 */
++	nr_io_queues = min(nvme_max_io_queues(dev),
++			   dev->nr_allocated_queues - 1);
+ 	result = nvme_set_queue_count(&dev->ctrl, &nr_io_queues);
+ 	if (result < 0)
+ 		return result;
 -- 
 2.51.0
 
