@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99ECC327BEC;
-	Mon, 13 Apr 2026 16:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7823A31F9BC;
+	Mon, 13 Apr 2026 16:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099550; cv=none; b=YH4BFPSer3QnWEjzfCCS1lnKF0HcWMpOw0Jt+o7rJZ/yz0y8RApfP8sz+gJ4RUV7e2PLtHSAp3cvdxY3bA2Vk5wZPULC9TOEv5zaXQ+nw8OrM0BAGplfb1q/J9mzDSoB34/fhew9zgodpo4vmME+N9W2D2DNT3xtHB8pMv80QTo=
+	t=1776099553; cv=none; b=Zvoe/cv7OKj8JzYz7oak2rKIx4TXqkZR2pDg4OoeXZUEgNhaPH22uex+CmrQ/hnxpAcKV725Vs+5RsA3e+DIp1Uq0OtJrBwyribrhCMQDqZ+jlUlAIyaRVy3qyUqopDGgYl1frXynnpD3DgQtreGTwW6BBaWzYIWsiMnjXslnzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099550; c=relaxed/simple;
-	bh=JU1F+aGs7c0Jk4YRyHx8sGY77Z3G2Kjb6lK87OeLulI=;
+	s=arc-20240116; t=1776099553; c=relaxed/simple;
+	bh=JJGYQhMqwU8/ejRHk+hBkKSxD9ZjyIxQQbpSfghtby4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrHCYtp3c+cBmlHNjrBgoaI1tM3UIfqunVhj9KLoBEr0V98V45kIxiDfOUVvtD73gR2Hfl7+0j4GfHaWY5aEehUBGHow9o5I9z2ciHc9MfNT+EEZc6jtX+C4uF20d0AdYuiHAFy0oZFAC5qo6xNedcM6lF1tsyX+UkIrVsaQcnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh/GWA5b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fU+QAmR05esalTovw9ubEEPWbHLWvLFt4Nfn6mCI019sTZKAYHHU5La8lO/cIPIOWrWucvPoB3DVP5vfWpY8yWxmQazd6bNbUINyE/fKzacYR1qZAIpx17DRQQ18LDG27tYEdTpV55w2fzWRK2GRihXXYhZSVUY/Y14+W+WYzbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frKp1XRu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh/GWA5b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30968C2BCAF;
-	Mon, 13 Apr 2026 16:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frKp1XRu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC84C2BCAF;
+	Mon, 13 Apr 2026 16:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099550;
-	bh=JU1F+aGs7c0Jk4YRyHx8sGY77Z3G2Kjb6lK87OeLulI=;
+	s=korg; t=1776099553;
+	bh=JJGYQhMqwU8/ejRHk+hBkKSxD9ZjyIxQQbpSfghtby4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fh/GWA5brPzzmVyHH/AlGNOHiX+YJz4yvrcgZcDVYKS7m9DfthPHlv725e9aNkKnf
-	 pFc184gEvESvyN1L6rnKgJuhGRZQz6JvD/tonL7kv56cXJDRjFjNcVeXUG+lwQ5CFO
-	 vtyPC2iP+WD6H0xKQvMXz5WQigF5VNBUc1KalYnE=
+	b=frKp1XRuvJH1mFOwlXSUtKi/FgnF/GcqvpAu/btgcSYxXFflyMdu5aC0TTFFKRF1j
+	 DYhVzVZ1ozenMpKXwTY316H2nI5zWyIAyozxrCDEbCAKMb/4+MbdeDh2R5AJ/6P5D8
+	 nsOVJ2Wz06AvIHU1viY9Qy/HlHe3qohCuUMhC9Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 382/491] iio: imu: st_lsm6dsx: Set FIFO ODR for accelerometer and gyroscope only
-Date: Mon, 13 Apr 2026 18:00:27 +0200
-Message-ID: <20260413155833.334604050@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 352/491] net/sched: cls_flow: fix NULL pointer dereference on shared blocks
+Date: Mon, 13 Apr 2026 17:59:57 +0200
+Message-ID: <20260413155832.217643175@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,45 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 630748afa7030b272b7bee5df857e7bcf132ed51 upstream.
+[ Upstream commit 1a280dd4bd1d616a01d6ffe0de284c907b555504 ]
 
-The st_lsm6dsx_set_fifo_odr() function, which is called when enabling and
-disabling the hardware FIFO, checks the contents of the hw->settings->batch
-array at index sensor->id, and then sets the current ODR value in sensor
-registers that depend on whether the register address is set in the above
-array element. This logic is valid for internal sensors only, i.e. the
-accelerometer and gyroscope; however, since commit c91c1c844ebd ("iio: imu:
-st_lsm6dsx: add i2c embedded controller support"), this function is called
-also when configuring the hardware FIFO for external sensors (i.e. sensors
-accessed through the sensor hub functionality), which can result in
-unrelated device registers being written.
+flow_change() calls tcf_block_q() and dereferences q->handle to derive
+a default baseclass.  Shared blocks leave block->q NULL, causing a NULL
+deref when a flow filter without a fully qualified baseclass is created
+on a shared block.
 
-Add a check to the beginning of st_lsm6dsx_set_fifo_odr() so that it does
-not touch any registers unless it is called for internal sensors.
+Check tcf_block_shared() before accessing block->q and return -EINVAL
+for shared blocks.  This avoids the null-deref shown below:
 
-Fixes: c91c1c844ebd ("iio: imu: st_lsm6dsx: add i2c embedded controller support")
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+=======================================================================
+KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]
+RIP: 0010:flow_change (net/sched/cls_flow.c:508)
+Call Trace:
+ tc_new_tfilter (net/sched/cls_api.c:2432)
+ rtnetlink_rcv_msg (net/core/rtnetlink.c:6980)
+ [...]
+=======================================================================
+
+Fixes: 1abf272022cf ("net: sched: tcindex, fw, flow: use tcf_block_q helper to get struct Qdisc")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260331050217.504278-2-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/sched/cls_flow.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
-@@ -201,6 +201,10 @@ static int st_lsm6dsx_set_fifo_odr(struc
- 	const struct st_lsm6dsx_reg *batch_reg;
- 	u8 data;
+diff --git a/net/sched/cls_flow.c b/net/sched/cls_flow.c
+index 117c7b038591e..7918ecdcfe696 100644
+--- a/net/sched/cls_flow.c
++++ b/net/sched/cls_flow.c
+@@ -501,8 +501,16 @@ static int flow_change(struct net *net, struct sk_buff *in_skb,
+ 		}
  
-+	/* Only internal sensors have a FIFO ODR configuration register. */
-+	if (sensor->id >= ARRAY_SIZE(hw->settings->batch))
-+		return 0;
+ 		if (TC_H_MAJ(baseclass) == 0) {
+-			struct Qdisc *q = tcf_block_q(tp->chain->block);
++			struct tcf_block *block = tp->chain->block;
++			struct Qdisc *q;
+ 
++			if (tcf_block_shared(block)) {
++				NL_SET_ERR_MSG(extack,
++					       "Must specify baseclass when attaching flow filter to block");
++				goto err2;
++			}
 +
- 	batch_reg = &hw->settings->batch[sensor->id];
- 	if (batch_reg->addr) {
- 		int val;
++			q = tcf_block_q(block);
+ 			baseclass = TC_H_MAKE(q->handle, baseclass);
+ 		}
+ 		if (TC_H_MIN(baseclass) == 0)
+-- 
+2.53.0
+
 
 
