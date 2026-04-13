@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BC83168EE;
-	Mon, 13 Apr 2026 16:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119723164BB;
+	Mon, 13 Apr 2026 16:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098936; cv=none; b=cWOm/jpNStSnag64Rb1KiP4lOEUJ4sRl8stRBZdayvQXHhSqgLPGU8CX50mxHG1jzNAxU19pixvoLFKbqgy4bK699lvTnkB5P4/PRb7kNc+jDHRPXZZOojcAdyba+RUTq4IjoGywuxCWjEKXrD+ZVSi7bx046Uec9k+Gv78RyZk=
+	t=1776098939; cv=none; b=eBZZo07m3lXVM131HXLYkGK1yKCS2Y4aaFnmaSM3pPaHZVGtX27f1C1axmllxhjhvsRgnQkA/qmP8AqUVzc5wmDXzxSM4CXHvYTUB7/bRvo0j5tgGShOf51unXMVYFNyfPy4dtbfJQgdSiNgvcFo+031/WdqPM2IqxNylQ55DVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098936; c=relaxed/simple;
-	bh=KyGRFv4U+MmtwfYvJIsH6egzS4Hi8PWH8/J5nqUvKj8=;
+	s=arc-20240116; t=1776098939; c=relaxed/simple;
+	bh=qa27mWJRGBgCKTxaRqKncRLXCeitxf1QUjldlvVOnww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JIPWZu7A3mNhBWXGOw08BJJUoA6zD6lMRv5643ULQFJZ4nUdyv/7gGiI0XggJxh0sOynsUbSnX/cWe9f5pZXSzWrUfFieUU+pkniD0P+vjgGpJ0p59RmeqaPfcz7w66OX56RP89dyGKEYamBenNeXjME8tKwIR2/PfJkSoqtWNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kC/oZB6B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mB9fKvpc43GD8T4xZ6yKNrX46eBdLzBclj6lnjYT3yByDe+Ti6iRbUcP+AZ+kDUcnA9UhUauCmMA03+H0DvfOQG6tA2PtN7EVy20DKR5t1gINrBv88YixtjPxsMj7l0zhmzRfvpLa8nPgAjrppvLNnbeo0zaQP8HSk2BeVkbmKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fX3g70G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kC/oZB6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11810C2BCAF;
-	Mon, 13 Apr 2026 16:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fX3g70G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DA5C2BCAF;
+	Mon, 13 Apr 2026 16:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098936;
-	bh=KyGRFv4U+MmtwfYvJIsH6egzS4Hi8PWH8/J5nqUvKj8=;
+	s=korg; t=1776098938;
+	bh=qa27mWJRGBgCKTxaRqKncRLXCeitxf1QUjldlvVOnww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kC/oZB6BPUn/h0AbDZvqdG7SV0ZaydTE0OyhquOxoXtiOFUbTr5Y00y6PwWlzc/h+
-	 CA6NdCvRV+usZXR1hcmkuyuauIpXG8UDNVBmLad7RAhivpyIW9Hp1oOmm0okRoOuDz
-	 vK9fC9knZJsERDUXZXw1y1n/89wTlX4S5/2KUEJY=
+	b=2fX3g70G8Qtgjg6zazOZtOO0dXAQtlqXKk49KHFgXI2VNNPNrE/eRrzDfi5wHuGP5
+	 BJ1uAhuceTq5+1e6HJ+B27EAmeglgt1WZxkZS7gmbKwsaYmmXMNk/N2Y2ShioI2dCP
+	 WbF/SMFI++yIvV51GXrp7WPRk5X5/YOrDV/lQXro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 104/491] usb: image: mdc800: kill download URB on timeout
-Date: Mon, 13 Apr 2026 17:55:49 +0200
-Message-ID: <20260413155822.937130058@linuxfoundation.org>
+	Ian Ray <ian.ray@gehealthcare.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 140/491] NFC: nxp-nci: allow GPIOs to sleep
+Date: Mon, 13 Apr 2026 17:56:25 +0200
+Message-ID: <20260413155824.280258517@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,49 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Ian Ray <ian.ray@gehealthcare.com>
 
-commit 1be3b77de4eb89af8ae2fd6610546be778e25589 upstream.
+commit 55dc632ab2ac2889b15995a9eef56c753d48ebc7 upstream.
 
-mdc800_device_read() submits download_urb and waits for completion.
-If the timeout fires and the device has not responded, the function
-returns without killing the URB, leaving it active.
+Allow the firmware and enable GPIOs to sleep.
 
-A subsequent read() resubmits the same URB while it is still
-in-flight, triggering the WARN in usb_submit_urb():
+This fixes a `WARN_ON' and allows the driver to operate GPIOs which are
+connected to I2C GPIO expanders.
 
-  "URB submitted while active"
+-- >8 --
+kernel: WARNING: CPU: 3 PID: 2636 at drivers/gpio/gpiolib.c:3880 gpiod_set_value+0x88/0x98
+-- >8 --
 
-Check the return value of wait_event_timeout() and kill the URB if
-it indicates timeout, ensuring the URB is complete before its status
-is inspected or the URB is resubmitted.
-
-Similar to
-- commit 372c93131998 ("USB: yurex: fix control-URB timeout handling")
-- commit b98d5000c505 ("media: rc: iguanair: handle timeouts")
-
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260209151937.2247202-1-n7l8m4@u.northwestern.edu
+Fixes: 43201767b44c ("NFC: nxp-nci: Convert to use GPIO descriptor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Link: https://patch.msgid.link/20260317085337.146545-1-ian.ray@gehealthcare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/image/mdc800.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nfc/nxp-nci/i2c.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/image/mdc800.c
-+++ b/drivers/usb/image/mdc800.c
-@@ -731,9 +731,11 @@ static ssize_t mdc800_device_read (struc
- 					mutex_unlock(&mdc800->io_lock);
- 					return len-left;
- 				}
--				wait_event_timeout(mdc800->download_wait,
-+				retval = wait_event_timeout(mdc800->download_wait,
- 				     mdc800->downloaded,
- 				     msecs_to_jiffies(TO_DOWNLOAD_GET_READY));
-+				if (!retval)
-+					usb_kill_urb(mdc800->download_urb);
- 				mdc800->downloaded = 0;
- 				if (mdc800->download_urb->status != 0)
- 				{
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -47,8 +47,8 @@ static int nxp_nci_i2c_set_mode(void *ph
+ {
+ 	struct nxp_nci_i2c_phy *phy = (struct nxp_nci_i2c_phy *) phy_id;
+ 
+-	gpiod_set_value(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
+-	gpiod_set_value(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
++	gpiod_set_value_cansleep(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
++	gpiod_set_value_cansleep(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
+ 	usleep_range(10000, 15000);
+ 
+ 	if (mode == NXP_NCI_MODE_COLD)
 
 
