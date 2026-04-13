@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08E73093B2;
-	Mon, 13 Apr 2026 16:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D40309F1C;
+	Mon, 13 Apr 2026 16:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097469; cv=none; b=cXrz4ZWhmEYUhqo3Xhy7qck1UoaigAUJl3DSgPxiDxClEzXYaSl4+YyCj2XcypektJu1tSAPk378xsX2tF6LaB6agdMQnnfDcBuKLiRnI6pCyPHAJ73K8VB4F0biGGJsUHyzpRdj0PT06H4YnD9aMSGMO+ybGibITmzX0XZvj78=
+	t=1776097471; cv=none; b=n17yAhuSg+Ui1//xfnWya6NtirfWq4IrHjDIEPU/O3BXutdJy0qaj11NL3M0X/7TLcmn2FKXc1uG4o1ma1qQZ1Jg60ntdC0zwNqambFwHrPexOzugKqymIaDkmiEOzIziFktlwRI7BKn25QbJlce/HJkQeYH26mCVn0ROCjcjfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097469; c=relaxed/simple;
-	bh=k1A6dXVdmnExaIZZzF5BdrvoXruakdLcrT2cFjTpn/M=;
+	s=arc-20240116; t=1776097471; c=relaxed/simple;
+	bh=m2IOVs2cMLw4UP4GM6ybtRy0tjMrZW7fIoiVzf+vqYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cAILNKwXrEBmZJ1YIZMbOsDMwfttvERPnPD9KBlCKfexZIO4zbg2vLohJqUk9vHecg/u7Qw9np2kgHF9K2lHe9Ro2qjvHpv1RMYGv3H/W4GGvVm/Wgq1QuzGQXit+oOYpg4AxGxFD4zNGBruF4qsUYhNO+7bnsbXAImEQlrhhmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMGr5mQQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ui3A6+cg3bzbATgVgvTM9CvEkl/RJZoiyivJ+VNfxtV7txatoFqc+mEJgxZySJpQDofFXZdr8sa3y7GFC2riveCilK5ryWrmpT1bdR0uCYKZt3ogL2+bdzFVK90BnYBJ+3x4X/2adScNO8pYMyT5b66nKCWvW8XhYrX+V4Za9fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRvDapsm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMGr5mQQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756A7C2BCB3;
-	Mon, 13 Apr 2026 16:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRvDapsm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA14C2BCB0;
+	Mon, 13 Apr 2026 16:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097468;
-	bh=k1A6dXVdmnExaIZZzF5BdrvoXruakdLcrT2cFjTpn/M=;
+	s=korg; t=1776097471;
+	bh=m2IOVs2cMLw4UP4GM6ybtRy0tjMrZW7fIoiVzf+vqYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FMGr5mQQcH8vSWnU5U4pej2+rqDx9ktmV1ujrxblcgVmeVDpYJdW5JrXTWx1kOAPz
-	 un0kSh+hyVbRwCJgfzw7JR1jJ7Azy5wfUBvXsetELo0fN6HcooUXb6zAzOf490RwvI
-	 z4AjNR2X7yZzFOOmHL8IS8mRcBxUYYwMWgq5Bgn8=
+	b=iRvDapsm9sAvaaDKfpZzeOkwn0rz6OyQWQUK63RKKQ8714bMRERov2+qDEJJ6Fgjy
+	 zNWXZtS/zG+JWJZz8mVZ0vB8+5BJMxPK/+azsDHPrirr5iaVlH95NJ0WbugB85cfU6
+	 sSy+HVAG7xGSsfo0Q2k4sarxHEAozF5aGSdtcs/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <gu_0233@qq.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Penghe Geng <pgeng@nvidia.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 148/570] mmc: mmci: Fix device_node reference leak in of_get_dml_pipe_index()
-Date: Mon, 13 Apr 2026 17:54:39 +0200
-Message-ID: <20260413155835.995557439@linuxfoundation.org>
+Subject: [PATCH 5.15 149/570] mmc: core: Avoid bitfield RMW for claim/retune flags
+Date: Mon, 13 Apr 2026 17:54:40 +0200
+Message-ID: <20260413155836.032130628@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,32 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Penghe Geng <pgeng@nvidia.com>
 
-commit af12e64ae0661546e8b4f5d30d55c5f53a11efe7 upstream.
+commit 901084c51a0a8fb42a3f37d2e9c62083c495f824 upstream.
 
-When calling of_parse_phandle_with_args(), the caller is responsible
-to call of_node_put() to release the reference of device node.
-In of_get_dml_pipe_index(), it does not release the reference.
+Move claimed and retune control flags out of the bitfield word to
+avoid unrelated RMW side effects in asynchronous contexts.
 
-Fixes: 9cb15142d0e3 ("mmc: mmci: Add qcom dml support to the driver.")
-Signed-off-by: Felix Gu <gu_0233@qq.com>
+The host->claimed bit shared a word with retune flags. Writes to claimed
+in __mmc_claim_host() or retune_now in mmc_mq_queue_rq() can overwrite
+other bits when concurrent updates happen in other contexts, triggering
+spurious WARN_ON(!host->claimed). Convert claimed, can_retune,
+retune_now and retune_paused to bool to remove shared-word coupling.
+
+Fixes: 6c0cedd1ef952 ("mmc: core: Introduce host claiming by context")
+Fixes: 1e8e55b67030c ("mmc: block: Add CQE support")
 Cc: stable@vger.kernel.org
+Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Penghe Geng <pgeng@nvidia.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmci_qcom_dml.c |    1 +
- 1 file changed, 1 insertion(+)
+ include/linux/mmc/host.h |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/mmc/host/mmci_qcom_dml.c
-+++ b/drivers/mmc/host/mmci_qcom_dml.c
-@@ -109,6 +109,7 @@ static int of_get_dml_pipe_index(struct
- 				       &dma_spec))
- 		return -ENODEV;
+--- a/include/linux/mmc/host.h
++++ b/include/linux/mmc/host.h
+@@ -418,14 +418,12 @@ struct mmc_host {
  
-+	of_node_put(dma_spec.np);
- 	if (dma_spec.args_count)
- 		return dma_spec.args[0];
+ 	struct mmc_ios		ios;		/* current io bus settings */
  
++	bool			claimed;	/* host exclusively claimed */
++
+ 	/* group bitfields together to minimize padding */
+ 	unsigned int		use_spi_crc:1;
+-	unsigned int		claimed:1;	/* host exclusively claimed */
+ 	unsigned int		doing_init_tune:1; /* initial tuning in progress */
+-	unsigned int		can_retune:1;	/* re-tuning can be used */
+ 	unsigned int		doing_retune:1;	/* re-tuning in progress */
+-	unsigned int		retune_now:1;	/* do re-tuning at next req */
+-	unsigned int		retune_paused:1; /* re-tuning is temporarily disabled */
+ 	unsigned int		retune_crc_disable:1; /* don't trigger retune upon crc */
+ 	unsigned int		can_dma_map_merge:1; /* merging can be used */
+ 	unsigned int		vqmmc_enabled:1; /* vqmmc regulator is enabled */
+@@ -433,6 +431,9 @@ struct mmc_host {
+ 	int			rescan_disable;	/* disable card detection */
+ 	int			rescan_entered;	/* used with nonremovable devices */
+ 
++	bool			can_retune;	/* re-tuning can be used */
++	bool			retune_now;	/* do re-tuning at next req */
++	bool			retune_paused;	/* re-tuning is temporarily disabled */
+ 	int			need_retune;	/* re-tuning is needed */
+ 	int			hold_retune;	/* hold off re-tuning */
+ 	unsigned int		retune_period;	/* re-tuning period in secs */
 
 
