@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5E231619A;
-	Mon, 13 Apr 2026 16:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367723161AB;
+	Mon, 13 Apr 2026 16:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098972; cv=none; b=BwYDGUfwXMIPdSPE54PnaK2kd5oTQLROuQsZ0pFNFYb6TR0AqBEaANBpAwF4g0cMo8+qHCdmiPEi9EejlsVMmiIGQuTm6Skl5IBYq8+yOlsHu5tjEOnY8XI2Z0jJhlfKxwMTqRzRbZ57L3Qes/cv969JgmvyMEUq0tp0yMAF5c0=
+	t=1776098975; cv=none; b=RvkGCWT7HScSjsbKr4mCGQlJq91QPRTIe93P2pjoBhsBUxvFkpcgShGiZrCAFCbM6wGmgLwahrWzwYiQ0QGv/t7+Je7+Cv8YE65YQGmlqC3rDFJOhJrXgNGUItSQxDXC/dIDD65TBvOihQpCmNQcpgso+gpnYSLSoH/K1PkcveE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098972; c=relaxed/simple;
-	bh=RZkIlkckFuQkvz3Qiiq6AY0YuGopz66SWpqXonrCurw=;
+	s=arc-20240116; t=1776098975; c=relaxed/simple;
+	bh=PyeYQtwAZJaTc/BQrsHgtlW7XdSWVSKD25J8zILHCo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0QUpDqHMh0BBFbuQH7Pe5sMRQr5XrHv5WiN6OK+9SFnU4qYvGQIUiAHSUB6U5UTHanb/QBksGAtjv4iASwR1ejNpaKyNzunwcrPdVYMwhQgRdvW4lh4H0wO4igQ5vyQizTRcT6YeEFhwlTBwwSvGwFaIsuN1tUFaIMowSN64Lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEjHEY3/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TbA6Zy5PCPx5m8lx9ACxyqS/iaQWibtfJ0Nnd+/opWDkE0HfyHiY9zJ7EkWgtA+7SAznev9JmLtZbZkDZz+qMCaICahF76v+q/5JPIC3C9ZMPv90FYqxzuajqyma4Vx7QzJu27R3ztCX2I9yHWIe+5BrIi6ISWPGIxaoCcLEXWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUkqixk3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEjHEY3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40ACFC2BCAF;
-	Mon, 13 Apr 2026 16:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUkqixk3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC397C2BCAF;
+	Mon, 13 Apr 2026 16:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098972;
-	bh=RZkIlkckFuQkvz3Qiiq6AY0YuGopz66SWpqXonrCurw=;
+	s=korg; t=1776098975;
+	bh=PyeYQtwAZJaTc/BQrsHgtlW7XdSWVSKD25J8zILHCo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cEjHEY3/uuGCkfjgKPWCa+c+TN0VEp55iuA3HfhaCmJaQ6OaMybx3MWtgzZDmdBjL
-	 KNRUtNxbrvwlGO+NumorfbLF3YmoiMOUJ8oUewVV3xZLCTOt16VB+NX/F+oASsObfL
-	 AolEgOyT+LDmJuOb5Iv5bJSoXJ98L42i3syolbPg=
+	b=HUkqixk3gN3dLA8iGeAQ/IdRxfBx0q4cS+wIgUwSmVUVvE3thzguoFrfhi52oy6qn
+	 /CHujnEGDwUoeraO6z1HPrB7gn5SwQEh4Vz040qAaRH+JSfSBkROXYxohdEN2pq8vU
+	 24hVLXTxXyfkmw8mjCcThg9v//9ddUmu6je7I2TA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Igor Pylypiv <ipylypiv@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 160/491] ata: libata: remove pointless VPRINTK() calls
-Date: Mon, 13 Apr 2026 17:56:45 +0200
-Message-ID: <20260413155825.025011352@linuxfoundation.org>
+Subject: [PATCH 5.10 161/491] ata: libata-scsi: refactor ata_scsi_translate()
+Date: Mon, 13 Apr 2026 17:56:46 +0200
+Message-ID: <20260413155825.063751787@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,229 +54,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@suse.de>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit e1553351d747cbcd62db01d579dff916edcc782c ]
+[ Upstream commit bb3a8154b1a1dc2c86d037482c0a2cf9186829ed ]
 
-Most of the information is already covered by tracepoints
-(if not downright pointless), so remove the VPRINTK() calls.
-And while we're at it, remove ata_scsi_dump_cdb(), too,
-as this information can be retrieved from scsi tracing.
+Factor out of ata_scsi_translate() the code handling queued command
+deferral using the port qc_defer callback and issuing the queued
+command with ata_qc_issue() into the new function ata_scsi_qc_issue(),
+and simplify the goto used in ata_scsi_translate().
+While at it, also add a lockdep annotation to check that the port lock
+is held when ata_scsi_translate() is called.
 
-Signed-off-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Stable-dep-of: bb3a8154b1a1 ("ata: libata-scsi: refactor ata_scsi_translate()")
+No functional changes.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
+[ scsi_done(cmd) => cmd->scsi_done(cmd) + DPRINTK ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |    3 ---
- drivers/ata/libata-sata.c |    2 --
- drivers/ata/libata-scsi.c |   42 ------------------------------------------
- drivers/ata/libata-sff.c  |    4 ----
- drivers/ata/libata.h      |    1 -
- 5 files changed, 52 deletions(-)
+ drivers/ata/libata-scsi.c |   83 +++++++++++++++++++++++++++-------------------
+ 1 file changed, 50 insertions(+), 33 deletions(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4461,8 +4461,6 @@ static void ata_sg_clean(struct ata_queu
- 
- 	WARN_ON_ONCE(sg == NULL);
- 
--	VPRINTK("unmapping %u sg elements\n", qc->n_elem);
--
- 	if (qc->n_elem)
- 		dma_unmap_sg(ap->dev, sg, qc->orig_n_elem, dir);
- 
-@@ -4494,7 +4492,6 @@ static int ata_sg_setup(struct ata_queue
- 	if (n_elem < 1)
- 		return -1;
- 
--	VPRINTK("%d sg elements mapped\n", n_elem);
- 	qc->orig_n_elem = qc->n_elem;
- 	qc->n_elem = n_elem;
- 	qc->flags |= ATA_QCFLAG_DMAMAP;
---- a/drivers/ata/libata-sata.c
-+++ b/drivers/ata/libata-sata.c
-@@ -1258,8 +1258,6 @@ int ata_sas_queuecmd(struct scsi_cmnd *c
- {
- 	int rc = 0;
- 
--	ata_scsi_dump_cdb(ap, cmd);
--
- 	if (likely(ata_dev_enabled(ap->link.device)))
- 		rc = __ata_scsi_queuecmd(cmd, ap->link.device);
- 	else {
 --- a/drivers/ata/libata-scsi.c
 +++ b/drivers/ata/libata-scsi.c
-@@ -1296,8 +1296,6 @@ static void scsi_6_lba_len(const u8 *cdb
- 	u64 lba = 0;
- 	u32 len;
- 
--	VPRINTK("six-byte command\n");
--
- 	lba |= ((u64)(cdb[1] & 0x1f)) << 16;
- 	lba |= ((u64)cdb[2]) << 8;
- 	lba |= ((u64)cdb[3]);
-@@ -1323,8 +1321,6 @@ static void scsi_10_lba_len(const u8 *cd
- 	u64 lba = 0;
- 	u32 len = 0;
- 
--	VPRINTK("ten-byte command\n");
--
- 	lba |= ((u64)cdb[2]) << 24;
- 	lba |= ((u64)cdb[3]) << 16;
- 	lba |= ((u64)cdb[4]) << 8;
-@@ -1352,8 +1348,6 @@ static void scsi_16_lba_len(const u8 *cd
- 	u64 lba = 0;
- 	u32 len = 0;
- 
--	VPRINTK("sixteen-byte command\n");
--
- 	lba |= ((u64)cdb[2]) << 56;
- 	lba |= ((u64)cdb[3]) << 48;
- 	lba |= ((u64)cdb[4]) << 40;
-@@ -1707,8 +1701,6 @@ static int ata_scsi_translate(struct ata
- 	struct ata_queued_cmd *qc;
- 	int rc;
- 
--	VPRINTK("ENTER\n");
--
- 	qc = ata_scsi_qc_new(dev, cmd);
- 	if (!qc)
- 		goto err_mem;
-@@ -1739,7 +1731,6 @@ static int ata_scsi_translate(struct ata
- 	/* select device, send command to hardware */
- 	ata_qc_issue(qc);
- 
--	VPRINTK("EXIT\n");
- 	return 0;
- 
- early_finish:
-@@ -1897,8 +1888,6 @@ static unsigned int ata_scsiop_inq_std(s
- 		2
- 	};
- 
--	VPRINTK("ENTER\n");
--
- 	/* set scsi removable (RMB) bit per ata bit, or if the
- 	 * AHCI port says it's external (Hotplug-capable, eSATA).
- 	 */
-@@ -2309,8 +2298,6 @@ static unsigned int ata_scsiop_mode_sens
- 	u8 dpofua, bp = 0xff;
- 	u16 fp;
- 
--	VPRINTK("ENTER\n");
--
- 	six_byte = (scsicmd[0] == MODE_SENSE);
- 	ebd = !(scsicmd[1] & 0x8);      /* dbd bit inverted == edb */
- 	/*
-@@ -2428,8 +2415,6 @@ static unsigned int ata_scsiop_read_cap(
- 	log2_per_phys = ata_id_log2_per_physical_sector(dev->id);
- 	lowest_aligned = ata_id_logical_sector_offset(dev->id, log2_per_phys);
- 
--	VPRINTK("ENTER\n");
--
- 	if (args->cmd->cmnd[0] == READ_CAPACITY) {
- 		if (last_lba >= 0xffffffffULL)
- 			last_lba = 0xffffffff;
-@@ -2496,7 +2481,6 @@ static unsigned int ata_scsiop_read_cap(
-  */
- static unsigned int ata_scsiop_report_luns(struct ata_scsi_args *args, u8 *rbuf)
- {
--	VPRINTK("ENTER\n");
- 	rbuf[3] = 8;	/* just one lun, LUN 0, size 8 bytes */
- 
- 	return 0;
-@@ -2596,8 +2580,6 @@ static void atapi_qc_complete(struct ata
- 	struct scsi_cmnd *cmd = qc->scsicmd;
- 	unsigned int err_mask = qc->err_mask;
- 
--	VPRINTK("ENTER, err_mask 0x%X\n", err_mask);
--
- 	/* handle completion from new EH */
- 	if (unlikely(qc->ap->ops->error_handler &&
- 		     (err_mask || qc->flags & ATA_QCFLAG_SENSE_VALID))) {
-@@ -3732,8 +3714,6 @@ static unsigned int ata_scsi_mode_select
- 	u8 buffer[64];
- 	const u8 *p = buffer;
- 
--	VPRINTK("ENTER\n");
--
- 	six_byte = (cdb[0] == MODE_SELECT);
- 	if (six_byte) {
- 		if (scmd->cmd_len < 5) {
-@@ -4032,26 +4012,6 @@ static inline ata_xlat_func_t ata_get_xl
- 	return NULL;
+@@ -1668,6 +1668,42 @@ static void ata_scsi_qc_complete(struct
+ 	ata_qc_done(qc);
  }
  
--/**
-- *	ata_scsi_dump_cdb - dump SCSI command contents to dmesg
-- *	@ap: ATA port to which the command was being sent
-- *	@cmd: SCSI command to dump
-- *
-- *	Prints the contents of a SCSI command via printk().
-- */
--
--void ata_scsi_dump_cdb(struct ata_port *ap, struct scsi_cmnd *cmd)
--{
--#ifdef ATA_VERBOSE_DEBUG
--	struct scsi_device *scsidev = cmd->device;
--
--	VPRINTK("CDB (%u:%d,%d,%lld) %9ph\n",
--		ap->print_id,
--		scsidev->channel, scsidev->id, scsidev->lun,
--		cmd->cmnd);
--#endif
--}
--
- int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev)
++static int ata_scsi_qc_issue(struct ata_port *ap, struct ata_queued_cmd *qc)
++{
++	int ret;
++
++	if (!ap->ops->qc_defer)
++		goto issue;
++
++	/* Check if the command needs to be deferred. */
++	ret = ap->ops->qc_defer(qc);
++	switch (ret) {
++	case 0:
++		break;
++	case ATA_DEFER_LINK:
++		ret = SCSI_MLQUEUE_DEVICE_BUSY;
++		break;
++	case ATA_DEFER_PORT:
++		ret = SCSI_MLQUEUE_HOST_BUSY;
++		break;
++	default:
++		WARN_ON_ONCE(1);
++		ret = SCSI_MLQUEUE_HOST_BUSY;
++		break;
++	}
++
++	if (ret) {
++		/* Force a requeue of the command to defer its execution. */
++		ata_qc_free(qc);
++		return ret;
++	}
++
++issue:
++	ata_qc_issue(qc);
++
++	return 0;
++}
++
+ /**
+  *	ata_scsi_translate - Translate then issue SCSI command to ATA device
+  *	@dev: ATA device to which the command is addressed
+@@ -1691,69 +1727,50 @@ static void ata_scsi_qc_complete(struct
+  *	spin_lock_irqsave(host lock)
+  *
+  *	RETURNS:
+- *	0 on success, SCSI_ML_QUEUE_DEVICE_BUSY if the command
+- *	needs to be deferred.
++ *	0 on success, SCSI_ML_QUEUE_DEVICE_BUSY or SCSI_MLQUEUE_HOST_BUSY if the
++ *	command needs to be deferred.
+  */
+ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
+ 			      ata_xlat_func_t xlat_func)
  {
  	struct ata_port *ap = dev->link->ap;
-@@ -4139,8 +4099,6 @@ int ata_scsi_queuecmd(struct Scsi_Host *
+ 	struct ata_queued_cmd *qc;
+-	int rc;
  
- 	spin_lock_irqsave(ap->lock, irq_flags);
++	lockdep_assert_held(ap->lock);
++
++	/*
++	 * ata_scsi_qc_new() calls scsi_done(cmd) in case of failure. So we
++	 * have nothing further to do when allocating a qc fails.
++	 */
+ 	qc = ata_scsi_qc_new(dev, cmd);
+ 	if (!qc)
+-		goto err_mem;
++		return 0;
  
--	ata_scsi_dump_cdb(ap, cmd);
+ 	/* data is present; dma-map it */
+ 	if (cmd->sc_data_direction == DMA_FROM_DEVICE ||
+ 	    cmd->sc_data_direction == DMA_TO_DEVICE) {
+ 		if (unlikely(scsi_bufflen(cmd) < 1)) {
+ 			ata_dev_warn(dev, "WARNING: zero len r/w req\n");
+-			goto err_did;
++			cmd->result = (DID_ERROR << 16);
++			goto done;
+ 		}
+ 
+ 		ata_sg_init(qc, scsi_sglist(cmd), scsi_sg_count(cmd));
 -
- 	dev = ata_scsi_find_dev(ap, scsidev);
- 	if (likely(dev))
- 		rc = __ata_scsi_queuecmd(cmd, dev);
---- a/drivers/ata/libata-sff.c
-+++ b/drivers/ata/libata-sff.c
-@@ -888,8 +888,6 @@ static void atapi_pio_bytes(struct ata_q
- 	if (unlikely(!bytes))
- 		goto atapi_check;
+ 		qc->dma_dir = cmd->sc_data_direction;
+ 	}
  
--	VPRINTK("ata%u: xfering %d bytes\n", ap->print_id, bytes);
+ 	qc->complete_fn = ata_scsi_qc_complete;
+ 
+ 	if (xlat_func(qc))
+-		goto early_finish;
 -
- 	if (unlikely(__atapi_pio_bytes(qc, bytes)))
- 		goto err_out;
- 	ata_sff_sync(ap); /* flush */
-@@ -2614,7 +2612,6 @@ static void ata_bmdma_fill_sg(struct ata
+-	if (ap->ops->qc_defer) {
+-		if ((rc = ap->ops->qc_defer(qc)))
+-			goto defer;
+-	}
++		goto done;
  
- 			prd[pi].addr = cpu_to_le32(addr);
- 			prd[pi].flags_len = cpu_to_le32(len & 0xffff);
--			VPRINTK("PRD[%u] = (0x%X, 0x%X)\n", pi, addr, len);
+-	/* select device, send command to hardware */
+-	ata_qc_issue(qc);
+-
+-	return 0;
++	return ata_scsi_qc_issue(ap, qc);
  
- 			pi++;
- 			sg_len -= len;
-@@ -2674,7 +2671,6 @@ static void ata_bmdma_fill_sg_dumb(struc
- 				prd[++pi].addr = cpu_to_le32(addr + 0x8000);
- 			}
- 			prd[pi].flags_len = cpu_to_le32(blen);
--			VPRINTK("PRD[%u] = (0x%X, 0x%X)\n", pi, addr, len);
+-early_finish:
++done:
+ 	ata_qc_free(qc);
+ 	cmd->scsi_done(cmd);
+ 	DPRINTK("EXIT - early finish (good or error)\n");
+ 	return 0;
+-
+-err_did:
+-	ata_qc_free(qc);
+-	cmd->result = (DID_ERROR << 16);
+-	cmd->scsi_done(cmd);
+-err_mem:
+-	DPRINTK("EXIT - internal\n");
+-	return 0;
+-
+-defer:
+-	ata_qc_free(qc);
+-	DPRINTK("EXIT - defer\n");
+-	if (rc == ATA_DEFER_LINK)
+-		return SCSI_MLQUEUE_DEVICE_BUSY;
+-	else
+-		return SCSI_MLQUEUE_HOST_BUSY;
+ }
  
- 			pi++;
- 			sg_len -= len;
---- a/drivers/ata/libata.h
-+++ b/drivers/ata/libata.h
-@@ -150,7 +150,6 @@ extern int ata_scsi_user_scan(struct Scs
- 			      unsigned int id, u64 lun);
- void ata_scsi_sdev_config(struct scsi_device *sdev);
- int ata_scsi_dev_config(struct scsi_device *sdev, struct ata_device *dev);
--void ata_scsi_dump_cdb(struct ata_port *ap, struct scsi_cmnd *cmd);
- int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev);
- 
- /* libata-eh.c */
+ struct ata_scsi_args {
 
 
