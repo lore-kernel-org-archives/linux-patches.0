@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F442FE056;
-	Mon, 13 Apr 2026 16:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAAE306B0A;
+	Mon, 13 Apr 2026 16:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097492; cv=none; b=B3WkxDDL6B2iZWruL2pLwxeIQ5V37qKKgjZ+ZWeGOnGCn5dsFTLjixtLlCIDBPmtYhhcHJITexQan+O7f5HLgd1Ft5TdAAmoRyFB3BSOh4bST933pHkYcagkh2VJgB078SS5LkSpgV/gkVaA0z5prVDoomPndfmE6rug5WU0dO4=
+	t=1776097494; cv=none; b=Z+joELbiZSxQU9RyhhOHpXWaCPBldRrutskjznT0VI77jezunmh6o4ig4AMolYEz6+HWeeDskjmvgGUe4XADyMphVw+XiOK0RmX5zje2C+99G26xVM7Wes4+sdSSR9eyWlPMHvn1H9FI7llP1HkchdpmAU4vyvNdlrtmAuxSjOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097492; c=relaxed/simple;
-	bh=tGYB8T0ZLn3+BTH2j4pFAFw8KEr7DVKJ7xQyKMcTsDc=;
+	s=arc-20240116; t=1776097494; c=relaxed/simple;
+	bh=DxmSehe1Lfe5252h0F+E30v1vp2kmr5f2HXDwIcbUE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eCZfcf8ByHdZDwzCqSMNBOdQgP7uQWshyyaOtu6hrOM/ODz/OAMw83k6HU1I7VcuCzq5qzVQjrlJyxayzfj7uaapCb10ulQRV65ifYEU/MPDscr8sHb3N4BBepqRR4KEr/dPjlA2kxf1z513Kn9EMAt+2/dxpFUbdEybtC7bFms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4gFPMfF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P+f8ojQ+TtnjNeLMBNGm//Q6snuavl83rnH9hTJpUFtIyLPD9vWEvKVteRKdaVGiHUJkcGmMiWQm/tB0cRDgcxGDMbbYag7GaTcWsde4BW4NvcaF7Dly835Bf2Os4TJQrrMVBiPhBdxLVbrZNk5BNoMJ1niK1lbZgHfUH2eEpuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBGRn+1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4gFPMfF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB37C2BCAF;
-	Mon, 13 Apr 2026 16:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBGRn+1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AD8C2BCB3;
+	Mon, 13 Apr 2026 16:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097491;
-	bh=tGYB8T0ZLn3+BTH2j4pFAFw8KEr7DVKJ7xQyKMcTsDc=;
+	s=korg; t=1776097494;
+	bh=DxmSehe1Lfe5252h0F+E30v1vp2kmr5f2HXDwIcbUE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4gFPMfFdqVUNogCYqt44SIZK3MouvzDZzq7l/pNOQi3WDKBL9767S3Ev2AsgNJR9
-	 dF2Xc2ISGuwmYRx5BF/tIyWy8VxXLc/0fHHNFoWCkF8pIGHPVpUkANvOrIr0VimlWU
-	 zKalicFE7t00YECAAQV/BFQeNlD27XdzTeZKYlpI=
+	b=VBGRn+1vdi5HBK/fOQsoPSZLgQoeL8bzS8xZtRB6n1N0195nU7GjCQNsP6JRpUtf0
+	 PcLO1xwpQdaV8RkP1Ap3qgNXa8UChq96GvRVANuUa44RrWu1q4+RaqDrgCSWWmr5HM
+	 W5B4oGQ4ro6OWAIsMHKWAg6vKK2NVChdnXfSLGjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Dooks <ben.dooks@codethink.co.uk>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 124/570] ACPI: OSL: fix __iomem type on return from acpi_os_map_generic_address()
-Date: Mon, 13 Apr 2026 17:54:15 +0200
-Message-ID: <20260413155835.088680212@linuxfoundation.org>
+Subject: [PATCH 5.15 125/570] ASoC: amd: acp3x-rt5682-max9836: Add missing error check for clock acquisition
+Date: Mon, 13 Apr 2026 17:54:16 +0200
+Message-ID: <20260413155835.125478029@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,43 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 393815f57651101f1590632092986d1d5a3a41bd ]
+[ Upstream commit 53f3a900e9a383d47af7253076e19f510c5708d0 ]
 
-The pointer returned from acpi_os_map_generic_address() is
-tagged with __iomem, so make the rv it is returned to also
-of void __iomem * type.
+The acp3x_5682_init() function did not check the return value of
+clk_get(), which could lead to dereferencing error pointers in
+rt5682_clk_enable().
 
-Fixes the following sparse warning:
+Fix this by:
+1. Changing clk_get() to the device-managed devm_clk_get().
+2. Adding proper IS_ERR() checks for both clock acquisitions.
 
-drivers/acpi/osl.c:1686:20: warning: incorrect type in assignment (different address spaces)
-drivers/acpi/osl.c:1686:20:    expected void *rv
-drivers/acpi/osl.c:1686:20:    got void [noderef] __iomem *
-
-Fixes: 6915564dc5a8 ("ACPI: OSL: Change the type of acpi_os_map_generic_address() return value")
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-[ rjw: Subject tweak, added Fixes tag ]
-Link: https://patch.msgid.link/20260311105835.463030-1-ben.dooks@codethink.co.uk
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 6b8e4e7db3cd ("ASoC: amd: Add machine driver for Raven based platform")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Link: https://patch.msgid.link/20260310024246.2153827-1-nichen@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/osl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/acp3x-rt5682-max9836.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/osl.c b/drivers/acpi/osl.c
-index 45c5c0e45e332..ee9123d553c83 100644
---- a/drivers/acpi/osl.c
-+++ b/drivers/acpi/osl.c
-@@ -1739,7 +1739,7 @@ acpi_status __init acpi_os_initialize(void)
- 		 * Use acpi_os_map_generic_address to pre-map the reset
- 		 * register if it's in system memory.
- 		 */
--		void *rv;
-+		void __iomem *rv;
+diff --git a/sound/soc/amd/acp3x-rt5682-max9836.c b/sound/soc/amd/acp3x-rt5682-max9836.c
+index e561464f7d603..f8f268090d8a8 100644
+--- a/sound/soc/amd/acp3x-rt5682-max9836.c
++++ b/sound/soc/amd/acp3x-rt5682-max9836.c
+@@ -83,8 +83,13 @@ static int acp3x_5682_init(struct snd_soc_pcm_runtime *rtd)
+ 		return ret;
+ 	}
  
- 		rv = acpi_os_map_generic_address(&acpi_gbl_FADT.reset_register);
- 		pr_debug("%s: Reset register mapping %s\n", __func__,
+-	rt5682_dai_wclk = clk_get(component->dev, "rt5682-dai-wclk");
+-	rt5682_dai_bclk = clk_get(component->dev, "rt5682-dai-bclk");
++	rt5682_dai_wclk = devm_clk_get(component->dev, "rt5682-dai-wclk");
++	if (IS_ERR(rt5682_dai_wclk))
++		return PTR_ERR(rt5682_dai_wclk);
++
++	rt5682_dai_bclk = devm_clk_get(component->dev, "rt5682-dai-bclk");
++	if (IS_ERR(rt5682_dai_bclk))
++		return PTR_ERR(rt5682_dai_bclk);
+ 
+ 	ret = snd_soc_card_jack_new(card, "Headset Jack",
+ 				SND_JACK_HEADSET | SND_JACK_LINEOUT |
 -- 
 2.51.0
 
