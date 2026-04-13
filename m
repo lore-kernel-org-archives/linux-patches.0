@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D671727280A;
-	Mon, 13 Apr 2026 16:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E3D27280A;
+	Mon, 13 Apr 2026 16:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097059; cv=none; b=TWQOxpKW6dxv5gEdvD6/RPrAkgO/whLOg6/ci479Z3FeuOhL2i264WzzQbSsIgu7Gnsh/tyUI25GgyK37Xmitw1cpdmX2Jp6koPSvs5RahylQbgWFwwEYMA/rzsyk8iDxuVPpC/8UCa+QyjCp8NAJstmQKRsPHglhDutjZf+Xk4=
+	t=1776097062; cv=none; b=WOiM7tWIoyqQn0gYoAmBfG2iY/nKBwL9Ss5wGJpj4i9fJuA1UqeQCMONP3RTG2QlsqzWslrp8W+FlJqB9riqcZnks+dsl1Vsy3RUnqrJ4jG/+11uqBbVuxKJdh01zh54O2/TRccb4617h9v1tX0eQBETayFrZhFIwDN3ACLcJeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097059; c=relaxed/simple;
-	bh=Lu8vlu+osOi8Hcj+P9ltH0gC+R2LCQ9rSSwLdbsBnJ4=;
+	s=arc-20240116; t=1776097062; c=relaxed/simple;
+	bh=k+kvv0DGvdHeMpcVpHhfQcmaFJtlWInRzbXn+SIjXuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjcQVeBPyIvhXToJwleE1gzytBuIVF/IfQEiOsiepEhxXHbEX2oNQTHWnBgbGjpxm/ZZ1/DwM5B0i3gwnMBn3ywygrkN44cXg+sZQJPp8RXBY6tIQAXoQTjpUymHuQIRsceM6e2YkxBxShkigs5mMPpe0UOYD9gCoT96m7H/Tjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6dO119x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gIoFICEaFAzIYd2TDamhpw3crD0zdr+tAZZXYlqUXAgBxDOr6YrDOWQXhRBuhF5Jqzpg/RXf1zLnIMC3tO9r7/2b3DRFhU5zIMy1QBRQ+vUTXlBtl7v6508RU80IysuhVE2ydjISv9evwHNTCwhA3A/+/dfRoPAH6+N+Y8yqiX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQEhayBr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6dO119x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC23C2BCAF;
-	Mon, 13 Apr 2026 16:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQEhayBr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB45CC2BCAF;
+	Mon, 13 Apr 2026 16:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097059;
-	bh=Lu8vlu+osOi8Hcj+P9ltH0gC+R2LCQ9rSSwLdbsBnJ4=;
+	s=korg; t=1776097062;
+	bh=k+kvv0DGvdHeMpcVpHhfQcmaFJtlWInRzbXn+SIjXuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6dO119xQZRYLypeCF7jNpHneUSZZqA7da9e6H5kyps91X9Uhn+nWCFaKePfVZQmb
-	 3BkeXC6YxTRIjsBo0Mxgzg8Ke3BPfP0TzYXejyCAD0d54pSthoiHMHlPRTvaHp+MOc
-	 D+scaGy3E2nQ9FMD97mpI9Tkrt1gdWDNhuRZLM4U=
+	b=uQEhayBrrHK/+HNq4bQHccUBsGTsPwfZ3H9K6d/hGQczONFqu3fXXF4JNi9d/qmPd
+	 oOTPVB5ak+iowG/WXj49kTiXyUAaxgZEfLRevhV20Ce/9Hmofze4qIpejTohuDBfR+
+	 BlZ5DcEFQwD2rkXFVe8+dvxa49JZf14U3mk/6Cyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 45/55] net/tls: fix use-after-free in -EBUSY error path of tls_do_encryption
-Date: Mon, 13 Apr 2026 18:01:19 +0200
-Message-ID: <20260413155726.512839888@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 46/55] net: altera-tse: fix skb leak on DMA mapping error in tse_start_xmit()
+Date: Mon, 13 Apr 2026 18:01:20 +0200
+Message-ID: <20260413155726.549055629@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 References: <20260413155724.820472494@linuxfoundation.org>
@@ -51,64 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
+From: David Carlier <devnexen@gmail.com>
 
-commit a9b8b18364fffce4c451e6f6fd218fa4ab646705 upstream.
+commit 6dede3967619b5944003227a5d09fdc21ed57d10 upstream.
 
-The -EBUSY handling in tls_do_encryption(), introduced by commit
-859054147318 ("net: tls: handle backlogging of crypto requests"), has
-a use-after-free due to double cleanup of encrypt_pending and the
-scatterlist entry.
+When dma_map_single() fails in tse_start_xmit(), the function returns
+NETDEV_TX_OK without freeing the skb. Since NETDEV_TX_OK tells the
+stack the packet was consumed, the skb is never freed, leaking memory
+on every DMA mapping failure.
 
-When crypto_aead_encrypt() returns -EBUSY, the request is enqueued to
-the cryptd backlog and the async callback tls_encrypt_done() will be
-invoked upon completion. That callback unconditionally restores the
-scatterlist entry (sge->offset, sge->length) and decrements
-ctx->encrypt_pending. However, if tls_encrypt_async_wait() returns an
-error, the synchronous error path in tls_do_encryption() performs the
-same cleanup again, double-decrementing encrypt_pending and
-double-restoring the scatterlist.
+Add dev_kfree_skb_any() before returning to properly free the skb.
 
-The double-decrement corrupts the encrypt_pending sentinel (initialized
-to 1), making tls_encrypt_async_wait() permanently skip the wait for
-pending async callbacks. A subsequent sendmsg can then free the
-tls_rec via bpf_exec_tx_verdict() while a cryptd callback is still
-pending, resulting in a use-after-free when the callback fires on the
-freed record.
-
-Fix this by skipping the synchronous cleanup when the -EBUSY async
-wait returns an error, since the callback has already handled
-encrypt_pending and sge restoration.
-
-Fixes: 859054147318 ("net: tls: handle backlogging of crypto requests")
+Fixes: bbd2190ce96d ("Altera TSE: Add main and header file for Altera Ethernet Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260403013617.2838875-1-ramdhan@starlabs.sg
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Link: https://patch.msgid.link/20260401211218.279185-1-devnexen@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ethernet/altera/altera_tse_main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -585,6 +585,16 @@ static int tls_do_encryption(struct sock
- 	if (rc == -EBUSY) {
- 		rc = tls_encrypt_async_wait(ctx);
- 		rc = rc ?: -EINPROGRESS;
-+		/*
-+		 * The async callback tls_encrypt_done() has already
-+		 * decremented encrypt_pending and restored the sge on
-+		 * both success and error. Skip the synchronous cleanup
-+		 * below on error, just remove the record and return.
-+		 */
-+		if (rc != -EINPROGRESS) {
-+			list_del(&rec->list);
-+			return rc;
-+		}
+--- a/drivers/net/ethernet/altera/altera_tse_main.c
++++ b/drivers/net/ethernet/altera/altera_tse_main.c
+@@ -572,6 +572,7 @@ static netdev_tx_t tse_start_xmit(struct
+ 				  DMA_TO_DEVICE);
+ 	if (dma_mapping_error(priv->device, dma_addr)) {
+ 		netdev_err(priv->dev, "%s: DMA mapping error\n", __func__);
++		dev_kfree_skb_any(skb);
+ 		ret = NETDEV_TX_OK;
+ 		goto out;
  	}
- 	if (!rc || rc != -EINPROGRESS) {
- 		atomic_dec(&ctx->encrypt_pending);
 
 
