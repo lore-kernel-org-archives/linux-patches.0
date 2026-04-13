@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4747D2D8364;
-	Mon, 13 Apr 2026 16:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E882280CFB;
+	Mon, 13 Apr 2026 16:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098102; cv=none; b=WicNzC9m02xHz3QGXRDTrAMCgvUEM4rT/5RkDKaDULx79DWJ6ijhf3WbrwAGJMiHrs9EO6F1YUyrl6aFau9gAc1ieCweXrHpSgLEzeHGpB438rzSSyGwaIIWrAdjPcYuNRKeajdCSa2QZxxFP3aUvKCQXQ1bXVq+LVXOc0v8kTg=
+	t=1776098105; cv=none; b=R3fqIdiPe37tcNKDrNbqgUQzVbzzIVH6MN7DboDv/AqTZvMQHkPd/hPsiWO+7myYAscCZnLfumkZC0Lagh743JvCsKJd0uYkQpx3dtvkcAv+C6xtvIPlDTAOWdwOaKksrWHeX6bAvT4UM6GnXArxVQ2vK2h0ael2bWACmnnPsHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098102; c=relaxed/simple;
-	bh=9d+XPW/m46RAz3Xx++TNbZgW3MBj48jQWBXeikUo5Yc=;
+	s=arc-20240116; t=1776098105; c=relaxed/simple;
+	bh=SIYZnvMGBy/gycH4Bx0/1Tzi4vP0cIVTcGJRKNGFk/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfVMwuz2HUF59hmPOac/wvDVc4PC5O2yJTt/GZt0F7kZzIwhDtl6PzRlMHv4R5zl2pOfemfbPFvp3xriHJiCvZdmhSOhP7tLCirwfoxGqo3BS3TbLl0bgUX+D46EAPEr4WkRw9pszFHJfLBzCV04xqadrd6LYpiboFOfaPn0dp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNtq4Kcf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pjaKiNcmoCgfMYtku1Gc1oYDL5q7hdwnicgoXI/BtctxoDFFrI4BrOJXUfL7ua2bVAAuk2uiC/9mVJYmdG+hbTIs2SC4j9rapMiFJ2OZgOYKXvgiUvYcBcf6o2Je832CMZmk+ZfTArKoOiGYkUHi7nuMJVwmZHFAxayygyo+EK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXlaDsc6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNtq4Kcf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16CEC2BCAF;
-	Mon, 13 Apr 2026 16:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXlaDsc6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FE0C2BCAF;
+	Mon, 13 Apr 2026 16:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098102;
-	bh=9d+XPW/m46RAz3Xx++TNbZgW3MBj48jQWBXeikUo5Yc=;
+	s=korg; t=1776098104;
+	bh=SIYZnvMGBy/gycH4Bx0/1Tzi4vP0cIVTcGJRKNGFk/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNtq4Kcf+5jZQgWnOtB/9wEZg8RrgvcaOvPp1sxLQp4dU5u6rdYJ/nO4I53bKSfap
-	 EoDbopWdCmw2I6jHW5p3RFkOHXoDKwGgDYT5Pnmyw804jHxmUbnpWnLjYM7CRavjc3
-	 sioE+H79jWSMiPPtiF+IBQSHKtlNempP285jRESo=
+	b=LXlaDsc6jMI7ON1/ua8ewAc8A7GhUedBO6zcvjgr1b+H/M+eJ3VQnYIbL6jyA0U9o
+	 r8n0GLEwNTvDw3dSvooqtIBuOzS+5LN1X3ZxFynzY6t1u+jUeTujLpUxnvv/Oufkyk
+	 JOpwjQskAYyD4TcyLGGV8mLEAlxRghZgCN/EB4W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 394/570] dmaengine: idxd: Fix freeing the allocated ida too late
-Date: Mon, 13 Apr 2026 17:58:45 +0200
-Message-ID: <20260413155845.233672517@linuxfoundation.org>
+Subject: [PATCH 5.15 395/570] dmaengine: xilinx_dma: Program interrupt delay timeout
+Date: Mon, 13 Apr 2026 17:58:46 +0200
+Message-ID: <20260413155845.270474192@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,58 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit c311f5e9248471a950f0a524c2fd736414d98900 ]
+[ Upstream commit 84b798fedf3fa8f0ab0c096593ba817abc454fe5 ]
 
-It can happen that when the cdev .release() is called, the driver
-already called ida_destroy(). Move ida_free() to the _del() path.
+Program IRQDelay for AXI DMA. The interrupt timeout mechanism causes
+the DMA engine to generate an interrupt after the delay time period
+has expired. It enables dmaengine to respond in real-time even though
+interrupt coalescing is configured. It also remove the placeholder
+for delay interrupt and merge it with frame completion interrupt.
+Since by default interrupt delay timeout is disabled this feature
+addition has no functional impact on VDMA, MCDMA and CDMA IP's.
 
-We see with DEBUG_KOBJECT_RELEASE enabled and forcing an early PCI
-unbind.
-
-Fixes: 04922b7445a1 ("dmaengine: idxd: fix cdev setup and free device lifetime issues")
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-9-7ed70658a9d1@intel.com
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/1691387509-2113129-8-git-send-email-radhey.shyam.pandey@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: a17ce4bc6f4f ("dmaengine: xilinx_dma: Fix reset related timeout with two-channel AXIDMA")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/xilinx/xilinx_dma.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index 8172c3f1f782e..005eef4df2162 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -42,11 +42,7 @@ struct idxd_user_context {
- static void idxd_cdev_dev_release(struct device *dev)
- {
- 	struct idxd_cdev *idxd_cdev = dev_to_cdev(dev);
--	struct idxd_cdev_context *cdev_ctx;
--	struct idxd_wq *wq = idxd_cdev->wq;
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 00971b867ade2..f1162f7c9a52c 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -174,8 +174,10 @@
+ #define XILINX_DMA_MAX_TRANS_LEN_MAX	23
+ #define XILINX_DMA_V2_MAX_TRANS_LEN_MAX	26
+ #define XILINX_DMA_CR_COALESCE_MAX	GENMASK(23, 16)
++#define XILINX_DMA_CR_DELAY_MAX		GENMASK(31, 24)
+ #define XILINX_DMA_CR_CYCLIC_BD_EN_MASK	BIT(4)
+ #define XILINX_DMA_CR_COALESCE_SHIFT	16
++#define XILINX_DMA_CR_DELAY_SHIFT	24
+ #define XILINX_DMA_BD_SOP		BIT(27)
+ #define XILINX_DMA_BD_EOP		BIT(26)
+ #define XILINX_DMA_COALESCE_MAX		255
+@@ -411,6 +413,7 @@ struct xilinx_dma_tx_descriptor {
+  * @stop_transfer: Differentiate b/w DMA IP's quiesce
+  * @tdest: TDEST value for mcdma
+  * @has_vflip: S2MM vertical flip
++ * @irq_delay: Interrupt delay timeout
+  */
+ struct xilinx_dma_chan {
+ 	struct xilinx_dma_device *xdev;
+@@ -449,6 +452,7 @@ struct xilinx_dma_chan {
+ 	int (*stop_transfer)(struct xilinx_dma_chan *chan);
+ 	u16 tdest;
+ 	bool has_vflip;
++	u8 irq_delay;
+ };
  
--	cdev_ctx = &ictx[wq->idxd->data->type];
--	ida_free(&cdev_ctx->minor_ida, idxd_cdev->minor);
- 	kfree(idxd_cdev);
- }
+ /**
+@@ -1559,6 +1563,9 @@ static void xilinx_dma_start_transfer(struct xilinx_dma_chan *chan)
+ 	if (chan->has_sg)
+ 		xilinx_write(chan, XILINX_DMA_REG_CURDESC,
+ 			     head_desc->async_tx.phys);
++	reg  &= ~XILINX_DMA_CR_DELAY_MAX;
++	reg  |= chan->irq_delay << XILINX_DMA_CR_DELAY_SHIFT;
++	dma_ctrl_write(chan, XILINX_DMA_REG_DMACR, reg);
  
-@@ -295,11 +291,15 @@ int idxd_wq_add_cdev(struct idxd_wq *wq)
+ 	xilinx_dma_start(chan);
  
- void idxd_wq_del_cdev(struct idxd_wq *wq)
- {
-+	struct idxd_cdev_context *cdev_ctx;
- 	struct idxd_cdev *idxd_cdev;
+@@ -1886,15 +1893,8 @@ static irqreturn_t xilinx_dma_irq_handler(int irq, void *data)
+ 		}
+ 	}
  
- 	idxd_cdev = wq->idxd_cdev;
- 	wq->idxd_cdev = NULL;
- 	cdev_device_del(&idxd_cdev->cdev, cdev_dev(idxd_cdev));
+-	if (status & XILINX_DMA_DMASR_DLY_CNT_IRQ) {
+-		/*
+-		 * Device takes too long to do the transfer when user requires
+-		 * responsiveness.
+-		 */
+-		dev_dbg(chan->dev, "Inter-packet latency too long\n");
+-	}
+-
+-	if (status & XILINX_DMA_DMASR_FRM_CNT_IRQ) {
++	if (status & (XILINX_DMA_DMASR_FRM_CNT_IRQ |
++		      XILINX_DMA_DMASR_DLY_CNT_IRQ)) {
+ 		spin_lock(&chan->lock);
+ 		xilinx_dma_complete_descriptor(chan);
+ 		chan->idle = true;
+@@ -2818,6 +2818,8 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
+ 	/* Retrieve the channel properties from the device tree */
+ 	has_dre = of_property_read_bool(node, "xlnx,include-dre");
+ 
++	of_property_read_u8(node, "xlnx,irq-delay", &chan->irq_delay);
 +
-+	cdev_ctx = &ictx[wq->idxd->data->type];
-+	ida_free(&cdev_ctx->minor_ida, idxd_cdev->minor);
- 	put_device(cdev_dev(idxd_cdev));
- }
+ 	chan->genlock = of_property_read_bool(node, "xlnx,genlock-mode");
  
+ 	err = of_property_read_u32(node, "xlnx,datawidth", &value);
 -- 
 2.53.0
 
