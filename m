@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434D530FF08;
-	Mon, 13 Apr 2026 16:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D1130C359;
+	Mon, 13 Apr 2026 16:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098159; cv=none; b=dumPa5WFEVu8XeAOv+5nwnjXacOL1LFD1QoauuN3Uq48f7BGsNqRuhV5qTx+cBFJEVjIsz1wBoNRpz7Rvi9mCVDP+ZBQobAkaRybRDBKmWlLGbwT0Q7O9ktGKN0cW3eInI29yjoMJTIx7jnnkSnJGMTPw6xG5KG+MPaK1wDj5hU=
+	t=1776098161; cv=none; b=oeNnPiYaj0D71/iGOjIGhUCxGhFLU9i93AxOIw7UkAP/ZVz80qrAdEuut7RnMjT6PeRWOMC+NGNr21BLKc4q5WFxBITdb7QJZC6ADvMonUc7rYWKw5ZlAeBThrFso+IbztD1UL9JyUZeSWM3+PVlDkBR36RqihyHp51+g5tQjCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098159; c=relaxed/simple;
-	bh=9gcqSvZajY9Ellc3zS3W1W8ywBzF9Y7B3Pak/nqBHW8=;
+	s=arc-20240116; t=1776098161; c=relaxed/simple;
+	bh=u4WJGrvIMo94GMp/zvF+9NZsvaeRsd10Qa0EnI+GQMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RT2Dj9ZE8ufzNP0To9OWS9ZR+7ztQC+TR4Y5z7O6hifPNYq8e7Nx9jNrq0KgI2ib5+GHtqSALVnJy0vrSbqe0z7d1DQlnNPcMOZW5LzUSqgUToigkAlbvjxChlNpWVmx0CP37r45lR7G/y28Qbto3JuQ3HfVszhP9tu1ne1UhR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4N2bJcX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gDmJXl1oFW+Ltjnt5SZzEdQpnMwoy5FJJEYV9zstxhrVtKJ0Uo32UDppn7TVs1GehCm23sAMpoMPmM85u0tv39YKCGkls6CcuGU6mfTHLVRnVpmI68O/1LFJbTzveAMognuz6msggSL6oaDYdOF+QDqTbKkggRIaf8m3gdvHEVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMFK01UX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4N2bJcX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2D6C2BCB3;
-	Mon, 13 Apr 2026 16:35:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMFK01UX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43CAC2BCAF;
+	Mon, 13 Apr 2026 16:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098158;
-	bh=9gcqSvZajY9Ellc3zS3W1W8ywBzF9Y7B3Pak/nqBHW8=;
+	s=korg; t=1776098161;
+	bh=u4WJGrvIMo94GMp/zvF+9NZsvaeRsd10Qa0EnI+GQMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d4N2bJcXRShihkEpSpxaJ0egJLjWNgL7kV0c1bNxvE1E/ptEOtHq7FUxczsyF/97s
-	 zgW1zHM/etkgOudzUgjSDnKxONESTTcoAvFzBVmeWH7CICqmTKQhNwedTyHRbpROlk
-	 nwqXu3aBxZTuGLKvRcpJOz9AXJGbZeKHEnUvm2Dw=
+	b=YMFK01UXg+Y9AtEQINZMOD7Y48QrXIcjILUDaIdLfYxox0qK8ZJYtyKGS9wMb4kaU
+	 2jyXTa0zXN9poN6GcgZSLxtTmiYIduYjNp3b3EEhwfoiZ8rV0erCD5p5VMShHrIH2O
+	 6y21xKOKJQLEqx/0aCgKccubHrzWhi6/z30eHNWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Amery Hung <ameryhung@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 417/570] bpf: Fix regsafe() for pointers to packet
-Date: Mon, 13 Apr 2026 17:59:08 +0200
-Message-ID: <20260413155846.092969315@linuxfoundation.org>
+Subject: [PATCH 5.15 418/570] net: ipv6: flowlabel: defer exclusive option free until RCU teardown
+Date: Mon, 13 Apr 2026 17:59:09 +0200
+Message-ID: <20260413155846.131867028@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,45 +58,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-[ Upstream commit a8502a79e832b861e99218cbd2d8f4312d62e225 ]
+[ Upstream commit 9ca562bb8e66978b53028fa32b1a190708e6a091 ]
 
-In case rold->reg->range == BEYOND_PKT_END && rcur->reg->range == N
-regsafe() may return true which may lead to current state with
-valid packet range not being explored. Fix the bug.
+`ip6fl_seq_show()` walks the global flowlabel hash under the seq-file
+RCU read-side lock and prints `fl->opt->opt_nflen` when an option block
+is present.
 
-Fixes: 6d94e741a8ff ("bpf: Support for pointers beyond pkt_end.")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20260331204228.26726-1-alexei.starovoitov@gmail.com
+Exclusive flowlabels currently free `fl->opt` as soon as `fl->users`
+drops to zero in `fl_release()`. However, the surrounding
+`struct ip6_flowlabel` remains visible in the global hash table until
+later garbage collection removes it and `fl_free_rcu()` finally tears it
+down.
+
+A concurrent `/proc/net/ip6_flowlabel` reader can therefore race that
+early `kfree()` and dereference freed option state, triggering a crash
+in `ip6fl_seq_show()`.
+
+Fix this by keeping `fl->opt` alive until `fl_free_rcu()`. That matches
+the lifetime already required for the enclosing flowlabel while readers
+can still reach it under RCU.
+
+Fixes: d3aedd5ebd4b ("ipv6 flowlabel: Convert hash list to RCU.")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/07351f0ec47bcee289576f39f9354f4a64add6e4.1774855883.git.zcliangcn@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ipv6/ip6_flowlabel.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 78daffc474899..13eede4c43d48 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -10599,8 +10599,13 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
- 		 * since someone could have accessed through (ptr - k), or
- 		 * even done ptr -= k in a register, to get a safe access.
- 		 */
--		if (rold->range > rcur->range)
-+		if (rold->range < 0 || rcur->range < 0) {
-+			/* special case for [BEYOND|AT]_PKT_END */
-+			if (rold->range != rcur->range)
-+				return false;
-+		} else if (rold->range > rcur->range) {
- 			return false;
-+		}
- 		/* If the offsets don't match, we can't trust our alignment;
- 		 * nor can we be sure that we won't fall out of range.
- 		 */
+diff --git a/net/ipv6/ip6_flowlabel.c b/net/ipv6/ip6_flowlabel.c
+index ceb85c67ce395..bb528d0ddb73a 100644
+--- a/net/ipv6/ip6_flowlabel.c
++++ b/net/ipv6/ip6_flowlabel.c
+@@ -133,11 +133,6 @@ static void fl_release(struct ip6_flowlabel *fl)
+ 		if (time_after(ttd, fl->expires))
+ 			fl->expires = ttd;
+ 		ttd = fl->expires;
+-		if (fl->opt && fl->share == IPV6_FL_S_EXCL) {
+-			struct ipv6_txoptions *opt = fl->opt;
+-			fl->opt = NULL;
+-			kfree(opt);
+-		}
+ 		if (!timer_pending(&ip6_fl_gc_timer) ||
+ 		    time_after(ip6_fl_gc_timer.expires, ttd))
+ 			mod_timer(&ip6_fl_gc_timer, ttd);
 -- 
 2.53.0
 
