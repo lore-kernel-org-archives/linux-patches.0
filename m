@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC8F2E2850;
-	Mon, 13 Apr 2026 16:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8830428C874;
+	Mon, 13 Apr 2026 16:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098691; cv=none; b=ClLq9peN79R/fGNxNz8p61b6MHh9Re5ANzdc5+Ro9drrmeccJqKUEZpOcl60TQsA0CgJSZRfMaaxUe1W5QAiVOdi5kf1PRmflWnlsKSTefNIlqJ2cJDxpVH5MlyVVhuIoM8NczF/+zblAwLZZeBuVH/S20QiJEqfw+GAbuSxuvg=
+	t=1776098694; cv=none; b=VVpyoGCYzHb8irS6Dn9NyAGHpS0O+1LFc+LXh2q+I2bGq2y1Si9c61LafB7DGtTa39TbRhR21IBAsCMoME1eLJpiP3WB4jDeEJDO/GaYguZT+yy6Vl2XQViLT9RQhugyVMDO5bExhIWWj2vKSEw1vZ0MsaRKn2WLkmrCVTjDqSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098691; c=relaxed/simple;
-	bh=EdtrL/eR0hHYctOvUw1vz98ROOgWUsSa/bHDHMwcfm8=;
+	s=arc-20240116; t=1776098694; c=relaxed/simple;
+	bh=OKQ38aPNQN9WeV44oizr50/bjkkffVgp7o9lTBFYrcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3uGv0K0xN2EuQHMzddMvVHE4Hhk+du4LaXagJ4sQoeY6kL8itl/EudZqPvUzXyH7CW5BXO5FjcIt7UCzF5WHe97OIELc+Ts8rsI0WkJv1BvWDxg8vgDcikI5hhUPErDbLvP9dm/pemTdce6noUrvYaqLdkkXItbeeM7hhCf7ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zxa/L6WA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sfECk+BCXNEqygUj5LnKvJowL9CbtaNoNY/YeXnkOUrFMCGcEwkpXN8kt/sI5LowYULOhx+eGL6JuojJcef72/r2LwQOiVmPeVPDB15SQe/EBs1vhd/Feaq022BjaAlIodYXSFT+O6Z+texVozgvVfnVAjoCkxTiR+IBrheB8d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXmzFTXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zxa/L6WA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52432C2BCAF;
-	Mon, 13 Apr 2026 16:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXmzFTXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9BF0C2BCAF;
+	Mon, 13 Apr 2026 16:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098691;
-	bh=EdtrL/eR0hHYctOvUw1vz98ROOgWUsSa/bHDHMwcfm8=;
+	s=korg; t=1776098694;
+	bh=OKQ38aPNQN9WeV44oizr50/bjkkffVgp7o9lTBFYrcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zxa/L6WARgpYmkk0h92ZqHlij19f84UG3P2x9tDjcJSt1Oss8AV1Y7z99BGpkOee1
-	 4fUMrKOBhY1h52rwT7j1gvhFozJ2n4Js0U/jYHbK2XH+eBiKns0jEglil4c5WowtBU
-	 mhm3PUO4RK5af3VEkAOzruoZsaq9ttvpQHD4fV/s=
+	b=eXmzFTXhijmtT6eHoSBtEK1r2qmYfRk/gADTvCCeyKcN/HS03CHukmU12YPpQrlGK
+	 tq65YE1YE5WW+DBULsxo4/oEjVWYx5+FXs1VX4yhnkVfr/ewoGgRNnDBYZY3HJMvB6
+	 p5Sy6pzOkLogzh7vAW2SSIACwo4FFbA4uw1YhnWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	syzbot+334190e097a98a1b81bb@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Florian Bezdeka <florian.bezdeka@siemens.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/491] net: ipv6: fix panic when IPv4 route references loopback IPv6 nexthop
-Date: Mon, 13 Apr 2026 17:54:57 +0200
-Message-ID: <20260413155820.999861396@linuxfoundation.org>
+Subject: [PATCH 5.10 053/491] scsi: storvsc: Fix scheduling while atomic on PREEMPT_RT
+Date: Mon, 13 Apr 2026 17:54:58 +0200
+Message-ID: <20260413155821.036883221@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -54,81 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-[ Upstream commit 21ec92774d1536f71bdc90b0e3d052eff99cf093 ]
+[ Upstream commit 57297736c08233987e5d29ce6584c6ca2a831b12 ]
 
-When a standalone IPv6 nexthop object is created with a loopback device
-(e.g., "ip -6 nexthop add id 100 dev lo"), fib6_nh_init() misclassifies
-it as a reject route. This is because nexthop objects have no destination
-prefix (fc_dst=::), causing fib6_is_reject() to match any loopback
-nexthop. The reject path skips fib_nh_common_init(), leaving
-nhc_pcpu_rth_output unallocated. If an IPv4 route later references this
-nexthop, __mkroute_output() dereferences NULL nhc_pcpu_rth_output and
-panics.
+This resolves the follow splat and lock-up when running with PREEMPT_RT
+enabled on Hyper-V:
 
-Simplify the check in fib6_nh_init() to only match explicit reject
-routes (RTF_REJECT) instead of using fib6_is_reject(). The loopback
-promotion heuristic in fib6_is_reject() is handled separately by
-ip6_route_info_create_nh(). After this change, the three cases behave
-as follows:
+[  415.140818] BUG: scheduling while atomic: stress-ng-iomix/1048/0x00000002
+[  415.140822] INFO: lockdep is turned off.
+[  415.140823] Modules linked in: intel_rapl_msr intel_rapl_common intel_uncore_frequency_common intel_pmc_core pmt_telemetry pmt_discovery pmt_class intel_pmc_ssram_telemetry intel_vsec ghash_clmulni_intel aesni_intel rapl binfmt_misc nls_ascii nls_cp437 vfat fat snd_pcm hyperv_drm snd_timer drm_client_lib drm_shmem_helper snd sg soundcore drm_kms_helper pcspkr hv_balloon hv_utils evdev joydev drm configfs efi_pstore nfnetlink vsock_loopback vmw_vsock_virtio_transport_common hv_sock vmw_vsock_vmci_transport vsock vmw_vmci efivarfs autofs4 ext4 crc16 mbcache jbd2 sr_mod sd_mod cdrom hv_storvsc serio_raw hid_generic scsi_transport_fc hid_hyperv scsi_mod hid hv_netvsc hyperv_keyboard scsi_common
+[  415.140846] Preemption disabled at:
+[  415.140847] [<ffffffffc0656171>] storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
+[  415.140854] CPU: 8 UID: 0 PID: 1048 Comm: stress-ng-iomix Not tainted 6.19.0-rc7 #30 PREEMPT_{RT,(full)}
+[  415.140856] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 09/04/2024
+[  415.140857] Call Trace:
+[  415.140861]  <TASK>
+[  415.140861]  ? storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
+[  415.140863]  dump_stack_lvl+0x91/0xb0
+[  415.140870]  __schedule_bug+0x9c/0xc0
+[  415.140875]  __schedule+0xdf6/0x1300
+[  415.140877]  ? rtlock_slowlock_locked+0x56c/0x1980
+[  415.140879]  ? rcu_is_watching+0x12/0x60
+[  415.140883]  schedule_rtlock+0x21/0x40
+[  415.140885]  rtlock_slowlock_locked+0x502/0x1980
+[  415.140891]  rt_spin_lock+0x89/0x1e0
+[  415.140893]  hv_ringbuffer_write+0x87/0x2a0
+[  415.140899]  vmbus_sendpacket_mpb_desc+0xb6/0xe0
+[  415.140900]  ? rcu_is_watching+0x12/0x60
+[  415.140902]  storvsc_queuecommand+0x669/0xbe0 [hv_storvsc]
+[  415.140904]  ? HARDIRQ_verbose+0x10/0x10
+[  415.140908]  ? __rq_qos_issue+0x28/0x40
+[  415.140911]  scsi_queue_rq+0x760/0xd80 [scsi_mod]
+[  415.140926]  __blk_mq_issue_directly+0x4a/0xc0
+[  415.140928]  blk_mq_issue_direct+0x87/0x2b0
+[  415.140931]  blk_mq_dispatch_queue_requests+0x120/0x440
+[  415.140933]  blk_mq_flush_plug_list+0x7a/0x1a0
+[  415.140935]  __blk_flush_plug+0xf4/0x150
+[  415.140940]  __submit_bio+0x2b2/0x5c0
+[  415.140944]  ? submit_bio_noacct_nocheck+0x272/0x360
+[  415.140946]  submit_bio_noacct_nocheck+0x272/0x360
+[  415.140951]  ext4_read_bh_lock+0x3e/0x60 [ext4]
+[  415.140995]  ext4_block_write_begin+0x396/0x650 [ext4]
+[  415.141018]  ? __pfx_ext4_da_get_block_prep+0x10/0x10 [ext4]
+[  415.141038]  ext4_da_write_begin+0x1c4/0x350 [ext4]
+[  415.141060]  generic_perform_write+0x14e/0x2c0
+[  415.141065]  ext4_buffered_write_iter+0x6b/0x120 [ext4]
+[  415.141083]  vfs_write+0x2ca/0x570
+[  415.141087]  ksys_write+0x76/0xf0
+[  415.141089]  do_syscall_64+0x99/0x1490
+[  415.141093]  ? rcu_is_watching+0x12/0x60
+[  415.141095]  ? finish_task_switch.isra.0+0xdf/0x3d0
+[  415.141097]  ? rcu_is_watching+0x12/0x60
+[  415.141098]  ? lock_release+0x1f0/0x2a0
+[  415.141100]  ? rcu_is_watching+0x12/0x60
+[  415.141101]  ? finish_task_switch.isra.0+0xe4/0x3d0
+[  415.141103]  ? rcu_is_watching+0x12/0x60
+[  415.141104]  ? __schedule+0xb34/0x1300
+[  415.141106]  ? hrtimer_try_to_cancel+0x1d/0x170
+[  415.141109]  ? do_nanosleep+0x8b/0x160
+[  415.141111]  ? hrtimer_nanosleep+0x89/0x100
+[  415.141114]  ? __pfx_hrtimer_wakeup+0x10/0x10
+[  415.141116]  ? xfd_validate_state+0x26/0x90
+[  415.141118]  ? rcu_is_watching+0x12/0x60
+[  415.141120]  ? do_syscall_64+0x1e0/0x1490
+[  415.141121]  ? do_syscall_64+0x1e0/0x1490
+[  415.141123]  ? rcu_is_watching+0x12/0x60
+[  415.141124]  ? do_syscall_64+0x1e0/0x1490
+[  415.141125]  ? do_syscall_64+0x1e0/0x1490
+[  415.141127]  ? irqentry_exit+0x140/0x7e0
+[  415.141129]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-1. Explicit reject route ("ip -6 route add unreachable 2001:db8::/64"):
-   RTF_REJECT is set, enters reject path, skips fib_nh_common_init().
-   No behavior change.
+get_cpu() disables preemption while the spinlock hv_ringbuffer_write is
+using is converted to an rt-mutex under PREEMPT_RT.
 
-2. Implicit loopback reject route ("ip -6 route add 2001:db8::/32 dev lo"):
-   RTF_REJECT is not set, takes normal path, fib_nh_common_init() is
-   called. ip6_route_info_create_nh() still promotes it to reject
-   afterward. nhc_pcpu_rth_output is allocated but unused, which is
-   harmless.
-
-3. Standalone nexthop object ("ip -6 nexthop add id 100 dev lo"):
-   RTF_REJECT is not set, takes normal path, fib_nh_common_init() is
-   called. nhc_pcpu_rth_output is properly allocated, fixing the crash
-   when IPv4 routes reference this nexthop.
-
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Fixes: 493ced1ac47c ("ipv4: Allow routes to use nexthop objects")
-Reported-by: syzbot+334190e097a98a1b81bb@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/698f8482.a70a0220.2c38d7.00ca.GAE@google.com/T/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260304113817.294966-2-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Tested-by: Florian Bezdeka <florian.bezdeka@siemens.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://patch.msgid.link/0c7fb5cd-fb21-4760-8593-e04bade84744@siemens.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/scsi/storvsc_drv.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index ac24f8b624e34..27736b5847378 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3408,7 +3408,6 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
- {
- 	struct net_device *dev = NULL;
- 	struct inet6_dev *idev = NULL;
--	int addr_type;
- 	int err;
+diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
+index 917ba169d418b..d91e022a0154c 100644
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1832,8 +1832,9 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
+ 	cmd_request->payload_sz = payload_sz;
  
- 	fib6_nh->fib_nh_family = AF_INET6;
-@@ -3449,11 +3448,10 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
+ 	/* Invokes the vsc to start an IO */
+-	ret = storvsc_do_io(dev, cmd_request, get_cpu());
+-	put_cpu();
++	migrate_disable();
++	ret = storvsc_do_io(dev, cmd_request, smp_processor_id());
++	migrate_enable();
  
- 	fib6_nh->fib_nh_weight = 1;
- 
--	/* We cannot add true routes via loopback here,
--	 * they would result in kernel looping; promote them to reject routes
-+	/* Reset the nexthop device to the loopback device in case of reject
-+	 * routes.
- 	 */
--	addr_type = ipv6_addr_type(&cfg->fc_dst);
--	if (fib6_is_reject(cfg->fc_flags, dev, addr_type)) {
-+	if (cfg->fc_flags & RTF_REJECT) {
- 		/* hold loopback dev/idev if we haven't done so. */
- 		if (dev != net->loopback_dev) {
- 			if (dev) {
+ 	if (ret == -EAGAIN) {
+ 		if (payload_sz > sizeof(cmd_request->mpb))
 -- 
 2.51.0
 
