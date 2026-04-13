@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB6823C8C7;
-	Mon, 13 Apr 2026 17:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AD73346A5;
+	Mon, 13 Apr 2026 17:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099635; cv=none; b=EMpenASZWNijjVBCOO37+FprWfWlfWP5XPZam7zueeB8XDlxFg7OIvEmkNzPB4XPSLR74x7fVRRjs6YkjXpcGEYCXuMa6PHPfKoaPpBmUjDUyeymi2JcxUC/SL+zwHi4w0qJBAj8w06TI3djPkNxlN0jWEUUyY6her4TlrE+8P8=
+	t=1776099638; cv=none; b=MCsNmRqT0TaHTTPHS+mYu6mbvju8fDIaQBKaVa012gtaKDiXrZIU/bi28/8/9dc/3TIIbKVkUCYxMU8RKmfTT7/P6C9V7c+bEJ3oJCoRV4iMlOaOh98hk2/xDgGLHoJwAIXLflbrKZu5Ss3HVCC9AnOMjAsBhlvsE5gTdmMvf/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099635; c=relaxed/simple;
-	bh=dc+x41aXunnCpixEOw9pcpct4SjwhG8KrGoLcujoPkU=;
+	s=arc-20240116; t=1776099638; c=relaxed/simple;
+	bh=eMbi51dIYYh4DVZBhDRN6UacBdwR8l5ggQ0VB6e1L2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZCXgk2UjpLGKbbNA5hw1EkkN5/T84zzZ0zjldUK4ZdFSLXjO4lwMJWPoBb5hRmy8raZny20kBKKWM3k1UeLFI3NFc+t9rL88VwHLljScbBLbX04JXstEosaxRpHqV8kUSjP5xYI7S8d3jI8uyzebbDQuEUPMv0Wuw6/SZdNE9eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQklDR6m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uu2t5OgxAa72yi9uHnx8EdV2pDdE1RJ/qApYEof88LiqxQaYmVa4S+TdveXJjJAC1D/OVHVqz9pJ3XsN4SIxDl7MESb6EImzk8ggvCwA6hXjuKKZ3XmdytLXVAf7uAlgvrJAlwWQYkBHZuxVWm6fe8bGAUNioogQ9gh7cYJvnMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA4uac+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQklDR6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA64C2BCAF;
-	Mon, 13 Apr 2026 17:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA4uac+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AD2C2BCAF;
+	Mon, 13 Apr 2026 17:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099635;
-	bh=dc+x41aXunnCpixEOw9pcpct4SjwhG8KrGoLcujoPkU=;
+	s=korg; t=1776099637;
+	bh=eMbi51dIYYh4DVZBhDRN6UacBdwR8l5ggQ0VB6e1L2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eQklDR6mxWMRUaRODf9xaZ2b8253nBgEDEUc0ttxZscPY0gM3ARYFhaWM67DFQQbR
-	 XlK1ev5ZNgqWeE3gJsOKp1dGyxAzJIi44emUp8KWEsf73xYZND/fZu6mfs+9efZk/+
-	 G27QzhQrsFT+Krdk+sBCQ8YF01XVkM/OXfz2Ty7g=
+	b=BA4uac+o2wkyL4YGcdAEeZtX+SD9VLwuJXGHAndXS4t2jMA/Mz+XkQxzp34Sq1+RM
+	 phcWkPiT0fCF2y1MhgadvK7QIGognW1rosLOnYAhOIxFhOnHdGtFpMwaUWe+cgQX1V
+	 Oog1HcAZVIenWBSLJ9LxUYP6SEM4QpCcqzulL7eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Thanki <vishalthanki@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 414/491] wifi: rt2x00usb: fix devres lifetime
-Date: Mon, 13 Apr 2026 18:00:59 +0200
-Message-ID: <20260413155834.526875387@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>
+Subject: [PATCH 5.10 415/491] xfrm_user: fix info leak in build_report()
+Date: Mon, 13 Apr 2026 18:01:00 +0200
+Message-ID: <20260413155834.565058734@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,41 +56,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 25369b22223d1c56e42a0cd4ac9137349d5a898e upstream.
+commit d10119968d0e1f2b669604baf2a8b5fdb72fa6b4 upstream.
 
-USB drivers bind to USB interfaces and any device managed resources
-should have their lifetime tied to the interface rather than parent USB
-device. This avoids issues like memory leaks when drivers are unbound
-without their devices being physically disconnected (e.g. on probe
-deferral or configuration changes).
+struct xfrm_user_report is a __u8 proto field followed by a struct
+xfrm_selector which means there is three "empty" bytes of padding, but
+the padding is never zeroed before copying to userspace.  Fix that up by
+zeroing the structure before setting individual member variables.
 
-Fix the USB anchor lifetime so that it is released on driver unbind.
-
-Fixes: 8b4c0009313f ("rt2x00usb: Use usb anchor to manage URB")
-Cc: stable@vger.kernel.org	# 4.7
-Cc: Vishal Thanki <vishalthanki@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260327113219.1313748-1-johan@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Cc: stable <stable@kernel.org>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ralink/rt2x00/rt2x00usb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/xfrm/xfrm_user.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/ralink/rt2x00/rt2x00usb.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2x00usb.c
-@@ -830,7 +830,7 @@ int rt2x00usb_probe(struct usb_interface
- 	if (retval)
- 		goto exit_free_device;
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -3445,6 +3445,7 @@ static int build_report(struct sk_buff *
+ 		return -EMSGSIZE;
  
--	rt2x00dev->anchor = devm_kmalloc(&usb_dev->dev,
-+	rt2x00dev->anchor = devm_kmalloc(&usb_intf->dev,
- 					sizeof(struct usb_anchor),
- 					GFP_KERNEL);
- 	if (!rt2x00dev->anchor) {
+ 	ur = nlmsg_data(nlh);
++	memset(ur, 0, sizeof(*ur));
+ 	ur->proto = proto;
+ 	memcpy(&ur->sel, sel, sizeof(ur->sel));
+ 
 
 
