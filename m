@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA1331E846;
-	Mon, 13 Apr 2026 16:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2503325490;
+	Mon, 13 Apr 2026 16:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099295; cv=none; b=Pezfr7lqrfQ98Wfx9dTFbdw26qfvDJoMnlxnZvJ4jVk5Gfiv3kpLZIJm0FN81qqENEV5Q8nWEwMFjOHbPSmrpnu5NEGZDzRNTPD2HzZy+nqBkGP2sxJakQ6jjZfyI5ZDP3tCRAYI60fuPhW7OxMPaQxo7WjxvlA2z5kAOd5TKaw=
+	t=1776099298; cv=none; b=on0vapQ+j2Evd5lDpBe1XetWwoiObmILGm60kFujtBzMBdUqYNXOyh1s7CPF9+l4WQ1n2sui8SWrMzderpspgeIl58+n956/tBDqnb+79cvMMJufdDLzJqwsMo/EEN6jVnMVeg7E347l/GeGsXzXcLWLAfRMqOEzG7nD7toD1tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099295; c=relaxed/simple;
-	bh=i75o3YCfjVk4LagfWNiCaZq6Hr+oYkBTUQ4BgxnQfaQ=;
+	s=arc-20240116; t=1776099298; c=relaxed/simple;
+	bh=ZnmTJwZICbbo/pL2tfJPMWdcVEAZXofwBP5k4a8YSw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHU/1EiCgRrO3ZB5grMSLxL1yhjgMmUVXwan6SUUukKLm0UNql+VT0kxaVkxI0X7HZHyaqfgg2eE7/u9h0/BK2wjobRkBxhLn9KbwDKJzs7LdfJDYFNim+uCJIPqYfkzsbhmFau65Q9u46N5k6Qda3iWm99FISsHiNztPg6huX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpPNeXrM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GCcwo1GISUFv9cCySFQdfsvTYK8XPV0ANLehzLyJSnYAXycbFuhDVjENCyRUCDj/In2D/pbjT4OJvVBolQPUq+zMFCCAZSyJGT/3yNQU/Igliv/Hi/1jzRnTRluEhJ7lCM2RfmWRXd5cxz6su3how1P/ooAj0mfjWtF+SqbqxF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+xs2BgI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpPNeXrM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5984C2BCB0;
-	Mon, 13 Apr 2026 16:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+xs2BgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850BCC2BCAF;
+	Mon, 13 Apr 2026 16:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099295;
-	bh=i75o3YCfjVk4LagfWNiCaZq6Hr+oYkBTUQ4BgxnQfaQ=;
+	s=korg; t=1776099297;
+	bh=ZnmTJwZICbbo/pL2tfJPMWdcVEAZXofwBP5k4a8YSw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bpPNeXrM1PysBw/3HtqaDg07kb3A7Lo3eaGM7nbrefplhtEVx79Aa+xJTG+IjOguS
-	 jhhEeVyAIqy9OSuuiOiKMpyeh4g/ra4VZecte8VelmfnmWqCom7svqymwZQCE7EUa+
-	 RjXczN5ekCQJvJJavdeCbazKekJfNf34siZTXY+g=
+	b=b+xs2BgIi40bZtAkBEG/UUkfV/GogoOLvQP7m6Sug4VA1ljB8Mm2UUtoZYUe34exe
+	 vnPZ4nTEhwjo5GJoHKVooRx3x9udbKQ7G9UN8kO1UtjJuZY1aUsV9mWorq3GSGZ1bE
+	 UQPKEdqO+SnAwBazNdEbyScQg79i/JFUCOrScRmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 244/491] ASoC: fsl_easrc: Fix event generation in fsl_easrc_iec958_put_bits()
-Date: Mon, 13 Apr 2026 17:58:09 +0200
-Message-ID: <20260413155828.191955962@linuxfoundation.org>
+Subject: [PATCH 5.10 279/491] RDMA/rw: Fall back to direct SGE on MR pool exhaustion
+Date: Mon, 13 Apr 2026 17:58:44 +0200
+Message-ID: <20260413155829.490866953@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,49 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 54a86cf48eaa6d1ab5130d756b718775e81e1748 ]
+[ Upstream commit 00da250c21b074ea9494c375d0117b69e5b1d0a4 ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_easrc_iec958_put_bits() unconditionally returns
-0, causing ALSA to not generate any change events. This is detected by
-mixer-test with large numbers of messages in the form:
+When IOMMU passthrough mode is active, ib_dma_map_sgtable_attrs()
+produces no coalescing: each scatterlist page maps 1:1 to a DMA
+entry, so sgt.nents equals the raw page count. A 1 MB transfer
+yields 256 DMA entries. If that count exceeds the device's
+max_sgl_rd threshold (an optimization hint from mlx5 firmware),
+rdma_rw_io_needs_mr() steers the operation into the MR
+registration path. Each such operation consumes one or more MRs
+from a pool sized at max_rdma_ctxs -- roughly one MR per
+concurrent context. Under write-intensive workloads that issue
+many concurrent RDMA READs, the pool is rapidly exhausted,
+ib_mr_pool_get() returns NULL, and rdma_rw_init_one_mr() returns
+-EAGAIN. Upper layer protocols treat this as a fatal DMA mapping
+failure and tear down the connection.
 
-    No event generated for Context 3 IEC958 CS5
-    Context 3 IEC958 CS5.0 orig 5224 read 5225, is_volatile 0
+The max_sgl_rd check is a performance optimization, not a
+correctness requirement: the device can handle large SGE counts
+via direct posting, just less efficiently than with MR
+registration. When the MR pool cannot satisfy a request, falling
+back to the direct SGE (map_wrs) path avoids the connection
+reset while preserving the MR optimization for the common case
+where pool resources are available.
 
-Add a suitable check.
+Add a fallback in rdma_rw_ctx_init() so that -EAGAIN from
+rdma_rw_init_mr_wrs() triggers direct SGE posting instead of
+propagating the error. iWARP devices, which mandate MR
+registration for RDMA READs, and force_mr debug mode continue
+to treat -EAGAIN as terminal.
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20260205-asoc-fsl-easrc-fix-events-v1-1-39d4c766918b@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 00bd1439f464 ("RDMA/rw: Support threshold for registration vs scattering to local pages")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260313194201.5818-2-cel@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_easrc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/rw.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index 52b3f2d44f681..6af5c1735e2ed 100644
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -52,10 +52,13 @@ static int fsl_easrc_iec958_put_bits(struct snd_kcontrol *kcontrol,
- 	struct soc_mreg_control *mc =
- 		(struct soc_mreg_control *)kcontrol->private_value;
- 	unsigned int regval = ucontrol->value.integer.value[0];
-+	int ret;
+diff --git a/drivers/infiniband/core/rw.c b/drivers/infiniband/core/rw.c
+index d479408a2cf73..58ce6c7eec4ef 100644
+--- a/drivers/infiniband/core/rw.c
++++ b/drivers/infiniband/core/rw.c
+@@ -341,14 +341,29 @@ int rdma_rw_ctx_init(struct rdma_rw_ctx *ctx, struct ib_qp *qp, u8 port_num,
+ 	if (rdma_rw_io_needs_mr(qp->device, port_num, dir, sg_cnt)) {
+ 		ret = rdma_rw_init_mr_wrs(ctx, qp, port_num, sg, sg_cnt,
+ 				sg_offset, remote_addr, rkey, dir);
+-	} else if (sg_cnt > 1) {
++		/*
++		 * If MR init succeeded or failed for a reason other
++		 * than pool exhaustion, that result is final.
++		 *
++		 * Pool exhaustion (-EAGAIN) from the max_sgl_rd
++		 * optimization is recoverable: fall back to
++		 * direct SGE posting. iWARP and force_mr require
++		 * MRs unconditionally, so -EAGAIN is terminal.
++		 */
++		if (ret != -EAGAIN ||
++		    rdma_protocol_iwarp(qp->device, port_num) ||
++		    unlikely(rdma_rw_force_mr))
++			goto out;
++	}
 +
-+	ret = (easrc_priv->bps_iec958[mc->regbase] != regval);
++	if (sg_cnt > 1)
+ 		ret = rdma_rw_init_map_wrs(ctx, qp, sg, sg_cnt, sg_offset,
+ 				remote_addr, rkey, dir);
+-	} else {
++	else
+ 		ret = rdma_rw_init_single_wr(ctx, qp, sg, sg_offset,
+ 				remote_addr, rkey, dir);
+-	}
  
- 	easrc_priv->bps_iec958[mc->regbase] = regval;
- 
--	return 0;
-+	return ret;
- }
- 
- static int fsl_easrc_iec958_get_bits(struct snd_kcontrol *kcontrol,
++out:
+ 	if (ret < 0)
+ 		goto out_unmap_sg;
+ 	return ret;
 -- 
-2.51.0
+2.53.0
 
 
 
