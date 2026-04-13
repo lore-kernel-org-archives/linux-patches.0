@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BEF30C361;
-	Mon, 13 Apr 2026 16:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7520A1A680C;
+	Mon, 13 Apr 2026 16:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098576; cv=none; b=edknzCotQBnjns+u79suNxM1liqtAcummAmQIig9VpoYCbEc54RwOYT7ftBB2/rVSBiprKUrBdMwg6qBjJgkkRse/gadE6Dd2P17dbKXcNpCYcYIpHnQZ7LqkGi3VTpqq32Nx/CjmJdUqq5N6NmX2PHB0pcb7yhat17vYvs3o94=
+	t=1776098583; cv=none; b=PPkwdBObOTVkOtHjMITK3CO65E302L5MSZBzJqj6c7ECPBY2vkMj8H+JTYOscJLGZjYFPFz2iqc1YletR6Bnd6yWdPasDonf0wUJhYfywP/qwtyZlUbqUOg5Ty+vnmDNTmrTEsAv7MB1wo+ZFVwYmlDKyBGrna65HjRzbBlsm6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098576; c=relaxed/simple;
-	bh=6VQFNCUvIfVhnchIiWN5jOStlYzwzzPfKL1GopQk2C0=;
+	s=arc-20240116; t=1776098583; c=relaxed/simple;
+	bh=OwI75ENEfIAX9+a6hCbJH13PBOaV0DiXgsHNOXmQQ7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nO5thDAAxFa7ulEx5gx9y+/PUQ1TE9jttwITRXm8E+XOkMEiY81O/IdSK/JxZDYF3MM/Z75MRE+ZyHsgySLx6xc6PR+Efe/BtKOZh9GHxr8o5F6kDOBJcy3uNq7uMmjVR01XAzFQuIQlntZoyI+fpq2FYZQED11R3Q9963Jwi+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9ugjVsq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=khYV7NPzGS50vl0axqhcPuMVAiI/B58UsXd1MM0962+y2GhQVhspGSOIoqYMfeP8MQvCkGC3A0KQDLtb+nrKmqTwyu0cxFcHJCGYgsU6iGyAOxHF0dqwK8dYtKDLkEthqqhRebruOTSBdnz+6sCatMh1EWkBUkHKl1I3oGQ//i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3RD3q1M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9ugjVsq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B10EC2BCAF;
-	Mon, 13 Apr 2026 16:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3RD3q1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A526C2BCAF;
+	Mon, 13 Apr 2026 16:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098576;
-	bh=6VQFNCUvIfVhnchIiWN5jOStlYzwzzPfKL1GopQk2C0=;
+	s=korg; t=1776098583;
+	bh=OwI75ENEfIAX9+a6hCbJH13PBOaV0DiXgsHNOXmQQ7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9ugjVsqgigyOJKIJwQXWqMrkG0/oEXrt2Ly3XzKiiQCbTC2OT1TbS/yn4uV65O9W
-	 7vZ3+2XiDETgRYmjbsTvA44R/ec7Gh6b8khR9zflnzN0gbi8+YV6PCjiRPJ7n49//Q
-	 RkYZ5mj3QzCka56R8mfTKDegvgBQ2AolPlN+3a+I=
+	b=t3RD3q1MFyZoSYzZ92JWl+suMrIZsd7hNUsetTEfg6hOzPh3IamvbpK8QsE1JeiHF
+	 gnl+KuPdfiKRATnHlmKI8wFFD68/s6PQt6azOvHwuPQIXUpfDmAF2e0+ZEcHxNHu64
+	 9BYpoT2atwKUzD8jmBU+ek6B5uwT0bslG6AMuWA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3f497b07aa3baf2fb4d0@syzkaller.appspotmail.com,
-	xingwei lee <xrivendell7@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 541/570] netlink: add nla be16/32 types to minlen array
-Date: Mon, 13 Apr 2026 18:01:12 +0200
-Message-ID: <20260413155850.712743099@linuxfoundation.org>
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 010/491] bus: fsl-mc: fix use-after-free in driver_override_show()
+Date: Mon, 13 Apr 2026 17:54:15 +0200
+Message-ID: <20260413155819.436681483@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
-References: <20260413155830.386096114@linuxfoundation.org>
+In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
+References: <20260413155819.042779211@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,64 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-commit 9a0d18853c280f6a0ee99f91619f2442a17a323a upstream.
+[ Upstream commit 148891e95014b5dc5878acefa57f1940c281c431 ]
 
-BUG: KMSAN: uninit-value in nla_validate_range_unsigned lib/nlattr.c:222 [inline]
-BUG: KMSAN: uninit-value in nla_validate_int_range lib/nlattr.c:336 [inline]
-BUG: KMSAN: uninit-value in validate_nla lib/nlattr.c:575 [inline]
-BUG: KMSAN: uninit-value in __nla_validate_parse+0x2e20/0x45c0 lib/nlattr.c:631
- nla_validate_range_unsigned lib/nlattr.c:222 [inline]
- nla_validate_int_range lib/nlattr.c:336 [inline]
- validate_nla lib/nlattr.c:575 [inline]
-...
+The driver_override_show() function reads the driver_override string
+without holding the device_lock. However, driver_override_store() uses
+driver_set_override(), which modifies and frees the string while holding
+the device_lock.
 
-The message in question matches this policy:
+This can result in a concurrent use-after-free if the string is freed
+by the store function while being read by the show function.
 
- [NFTA_TARGET_REV]       = NLA_POLICY_MAX(NLA_BE32, 255),
+Fix this by holding the device_lock around the read operation.
 
-but because NLA_BE32 size in minlen array is 0, the validation
-code will read past the malformed (too small) attribute.
-
-Note: Other attributes, e.g. BITFIELD32, SINT, UINT.. are also missing:
-those likely should be added too.
-
-Reported-by: syzbot+3f497b07aa3baf2fb4d0@syzkaller.appspotmail.com
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Closes: https://lore.kernel.org/all/CABOYnLzFYHSnvTyS6zGa-udNX55+izqkOt2sB9WDqUcEGW6n8w@mail.gmail.com/raw
-Fixes: ecaf75ffd5f5 ("netlink: introduce bigendian integer types")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Link: https://lore.kernel.org/r/20240221172740.5092-1-fw@strlen.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1f86a00c1159 ("bus/fsl-mc: add support for 'driver_override' in the mc-bus")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20251202174438.12658-1-hanguidong02@gmail.com
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/nlattr.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bus/fsl-mc/fsl-mc-bus.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/lib/nlattr.c
-+++ b/lib/nlattr.c
-@@ -30,6 +30,8 @@ static const u8 nla_attr_len[NLA_TYPE_MA
- 	[NLA_S16]	= sizeof(s16),
- 	[NLA_S32]	= sizeof(s32),
- 	[NLA_S64]	= sizeof(s64),
-+	[NLA_BE16]	= sizeof(__be16),
-+	[NLA_BE32]	= sizeof(__be32),
- };
+diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
+index 8f7448da9258d..49eaf5bddd5ad 100644
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -194,8 +194,12 @@ static ssize_t driver_override_show(struct device *dev,
+ 				    struct device_attribute *attr, char *buf)
+ {
+ 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
++	ssize_t len;
  
- static const u8 nla_attr_minlen[NLA_TYPE_MAX+1] = {
-@@ -43,6 +45,8 @@ static const u8 nla_attr_minlen[NLA_TYPE
- 	[NLA_S16]	= sizeof(s16),
- 	[NLA_S32]	= sizeof(s32),
- 	[NLA_S64]	= sizeof(s64),
-+	[NLA_BE16]	= sizeof(__be16),
-+	[NLA_BE32]	= sizeof(__be32),
- };
+-	return sysfs_emit(buf, "%s\n", mc_dev->driver_override);
++	device_lock(dev);
++	len = sysfs_emit(buf, "%s\n", mc_dev->driver_override);
++	device_unlock(dev);
++	return len;
+ }
+ static DEVICE_ATTR_RW(driver_override);
  
- /*
+-- 
+2.51.0
+
 
 
