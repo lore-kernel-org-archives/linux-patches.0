@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE4E328255;
-	Mon, 13 Apr 2026 16:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06335328255;
+	Mon, 13 Apr 2026 16:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099450; cv=none; b=KWlCVqFOcdZGVLn+9YLel9ytNO2+n9iR5M6MZIXexix2YHgRf9v7T5ZAi1Zb+7UqnCKh+Ue9kpJ3CpwSTQsmu/W87pXkAEP2f3p3oh2i/wlA3dM8Jn6xbCWIPprx1ujDWQiiUfJkXjjtyYu4kXVZXbRAPALSHSusNHeTvrF160s=
+	t=1776099453; cv=none; b=ERVE+38b+Izbs5kEU0PP/ZRmMws6usHUAuutwY01VTuYx0wjfDpNfJotOLQgb3wXmKTEqILaBtPQXWPVvc2PqIpr4CdqkIE646IJtf4DznrkDAB7DLWx6xqCPgwMFs0z4mM3Zbkkw7ifp/vxOS/UMkRoUM5t3sU093kWhuhAwYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099450; c=relaxed/simple;
-	bh=AGP4TF8R+gJdvf82m4S7QxZ5fTDIVQ/vCeLvcDeJGmk=;
+	s=arc-20240116; t=1776099453; c=relaxed/simple;
+	bh=dtULmERuCE3An5+Fg1e6cxY27HfzA7+0zIlmh66NZc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUFOXSerHubqgLDERXEKiTK//ta+uGRr6bSjBN4sX2+Nlf+7A9kNZr5KMC/lPUGFdmO5YEU7ZLlmf1xQ5CUqeGAYkAjroQNjUKQL/L2hs/vqBTnnvkVblreXfAHpEymPedmpYQaPzLxvpkWWpav36VWtFzT2o1X8lRWqsTmMQvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUoRsMuC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DhC06FaAI+euPHgaW0ighDQawV3AtMwmtD9p9QoeYKin4dmrcXSzPhcdfU3xzw3TCxekppOaJwYSo8bwSJMCwP1PRr8r/F9MSRSA6ltAQ8pb+c43I6bdsabtoVuLlWUWpNHqq76NCGKeJemnctCv5SRMXR7VsnDICQObeBnr2KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvQ3w5/z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUoRsMuC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DD4C2BCAF;
-	Mon, 13 Apr 2026 16:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvQ3w5/z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F547C2BCAF;
+	Mon, 13 Apr 2026 16:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099450;
-	bh=AGP4TF8R+gJdvf82m4S7QxZ5fTDIVQ/vCeLvcDeJGmk=;
+	s=korg; t=1776099452;
+	bh=dtULmERuCE3An5+Fg1e6cxY27HfzA7+0zIlmh66NZc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUoRsMuCSdBu+scRe6J0rqViXDD3vgKkxQGwyQmG4PdAHLqqCGRvSWMEymxuG1X54
-	 cvaM3hcie1koohQ26Cbw8MbBRl8yS35QhvwEnvFgXGUU5mBcdU3N6VGvy+nWteCgqO
-	 sAPMCrBOz+3cMIVB+jSPJuorxtOKusse+2iJ3F8I=
+	b=ZvQ3w5/zzzooPQ5WNqi6o1ghihElYQQX+8FZyIwgmKFNiOwA96esmaym+0BBd6tNu
+	 YWSEvOaciMDDaEaKj6Gr0VxwEwI8XQjnNTZc8vce75pkuiZQ2wvlL8qsCj59AbXwvA
+	 q34QtXag5VZymf8TQ8naID31Io/mNQAcWa2YwioA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 343/491] netfilter: nf_tables: reject immediate NF_QUEUE verdict
-Date: Mon, 13 Apr 2026 17:59:48 +0200
-Message-ID: <20260413155831.880603463@linuxfoundation.org>
+Subject: [PATCH 5.10 344/491] Bluetooth: MGMT: validate LTK enc_size on load
+Date: Mon, 13 Apr 2026 17:59:49 +0200
+Message-ID: <20260413155831.917261071@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,50 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Keenan Dong <keenanat2000@gmail.com>
 
-[ Upstream commit da107398cbd4bbdb6bffecb2ce86d5c9384f4cec ]
+[ Upstream commit b8dbe9648d69059cfe3a28917bfbf7e61efd7f15 ]
 
-nft_queue is always used from userspace nftables to deliver the NF_QUEUE
-verdict. Immediately emitting an NF_QUEUE verdict is never used by the
-userspace nft tools, so reject immediate NF_QUEUE verdicts.
+Load Long Term Keys stores the user-provided enc_size and later uses
+it to size fixed-size stack operations when replying to LE LTK
+requests. An enc_size larger than the 16-byte key buffer can therefore
+overflow the reply stack buffer.
 
-The arp family does not provide queue support, but such an immediate
-verdict is still reachable. Globally reject NF_QUEUE immediate verdicts
-to address this issue.
+Reject oversized enc_size values while validating the management LTK
+record so invalid keys never reach the stored key state.
 
-Fixes: f342de4e2f33 ("netfilter: nf_tables: reject QUEUE/DROP verdict parameters")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 346af67b8d11 ("Bluetooth: Add MGMT handlers for dealing with SMP LTK's")
+Reported-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/bluetooth/mgmt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 189997bcaeef5..15486d3051f6b 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -9362,8 +9362,6 @@ static int nft_verdict_init(const struct nft_ctx *ctx, struct nft_data *data,
- 	switch (data->verdict.code) {
- 	case NF_ACCEPT:
- 	case NF_DROP:
--	case NF_QUEUE:
--		break;
- 	case NFT_CONTINUE:
- 	case NFT_BREAK:
- 	case NFT_RETURN:
-@@ -9398,6 +9396,11 @@ static int nft_verdict_init(const struct nft_ctx *ctx, struct nft_data *data,
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index fda0bd990dcb7..b768abbf2b121 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5948,6 +5948,9 @@ static bool ltk_is_valid(struct mgmt_ltk_info *key)
+ 	if (key->initiator != 0x00 && key->initiator != 0x01)
+ 		return false;
  
- 		data->verdict.chain = chain;
- 		break;
-+	case NF_QUEUE:
-+		/* The nft_queue expression is used for this purpose, an
-+		 * immediate NF_QUEUE verdict should not ever be seen here.
-+		 */
-+		fallthrough;
- 	default:
- 		return -EINVAL;
- 	}
++	if (key->enc_size > sizeof(key->val))
++		return false;
++
+ 	switch (key->addr.type) {
+ 	case BDADDR_LE_PUBLIC:
+ 		return true;
 -- 
 2.53.0
 
