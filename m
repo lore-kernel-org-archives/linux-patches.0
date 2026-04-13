@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BBC30B50F;
-	Mon, 13 Apr 2026 16:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048902FFFA4;
+	Mon, 13 Apr 2026 16:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097203; cv=none; b=FqtsFUvZl2JxcfBD9jdy+rc5WtaN7km/rxan564SILUTaSUiNMtsK5hl76sCzEPHLyYz+9PJ0cPIC/bP48fXktcuj64qBwKEo76t9v3zMYjyG7lcDOTrSwQtD6+3K5TJqMHGRrboW/38zTB0BPY3GtbvMxYsRlWmmi09eTZxAJQ=
+	t=1776097206; cv=none; b=Z+ZAe0N37jlzHb5EAe7JN2Ka+NNOh1opeECQ/06ZmE5uo2MOP87isbEvf0fBsB00buP9VsZzIlelEyC9rH4pyGhmsJ08PVpuSwmkRzYwyW7OSon9CYScVs7kmm/5wL+6aphQhvd2xQ3fH+M5txH1qDGTwLsW/4ALc5CttQQgREw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097203; c=relaxed/simple;
-	bh=sDNAnCR/5SDianAe6HhAER6PHq2avq0d258Nw3U/Pwk=;
+	s=arc-20240116; t=1776097206; c=relaxed/simple;
+	bh=7vuLjE+3cV/iqVu0CGff11SVg4qvfsd5zSOsNZ2Z424=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgSR9qspbIeiOY/Qp96G266uTN99oHL8YVAyJ30XEFEeQfQlrS5sC8VbzX9YNRGAVDX1P/Mu6yxYoqP8tzuNQ7qoT29j4j2gkwSunMIPuPreUJzivC850QwRM94qZaNp9nYlWOavJLxix/gEjCWr5JA3Sz/VEiGB20rnidj+lFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6KlNQO6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EgrLsOfAYMGK/stGQdpfcdrdWFLFCh8bPNGzP+C5YAc3OIQ9hILwdPwPSgBzb1LirqnhwfDPiXtjf0YSjwrQDEfwSRxTx/6M8kkEMgLiLfcXLE3SGyC6C1LIZ2+l3nVQ/EJJCw1+80kTg4oHxxq4+mrJljIyjibPkky8JLYJR5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YthM2GD/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6KlNQO6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E901AC2BCAF;
-	Mon, 13 Apr 2026 16:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YthM2GD/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9BEC2BCAF;
+	Mon, 13 Apr 2026 16:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097203;
-	bh=sDNAnCR/5SDianAe6HhAER6PHq2avq0d258Nw3U/Pwk=;
+	s=korg; t=1776097205;
+	bh=7vuLjE+3cV/iqVu0CGff11SVg4qvfsd5zSOsNZ2Z424=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6KlNQO6gp6TtewATFywUoK4hgLa6cDYhjySDwxZYTw+1OH8Iq9EqEL+qDXr8VZHO
-	 SUhE0qFPFxS+OA1d7JCuEvcsW92bm+XclA4DF/tLxWLJ0FQ4mhH/u/RkLE2I48yipG
-	 aVbXwZaYvXmiczZW0xAAWnxnD3IIVUKxESdsnI5Y=
+	b=YthM2GD/6JMp+0JbCTa+JXPMb7JsnnksabIeG7VD4swZ5uBu+M4cI6f7w86oiOfbA
+	 Is0rCaf3p3abJTNZRaBeytA83xkOEMWFDhquK+LZEuvs1D6UkUEDTvuTLYzRgJLHe4
+	 zhXFWOGRAsrBraJtg0z0x49xBKGc+H6YhYyf30Io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/570] ata: libata: remove pointless VPRINTK() calls
-Date: Mon, 13 Apr 2026 17:52:29 +0200
-Message-ID: <20260413155831.099572857@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 045/570] net: usb: kalmia: validate USB endpoints
+Date: Mon, 13 Apr 2026 17:52:56 +0200
+Message-ID: <20260413155832.116230189@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,241 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@suse.de>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit e1553351d747cbcd62db01d579dff916edcc782c ]
+commit c58b6c29a4c9b8125e8ad3bca0637e00b71e2693 upstream.
 
-Most of the information is already covered by tracepoints
-(if not downright pointless), so remove the VPRINTK() calls.
-And while we're at it, remove ata_scsi_dump_cdb(), too,
-as this information can be retrieved from scsi tracing.
+The kalmia driver should validate that the device it is probing has the
+proper number and types of USB endpoints it is expecting before it binds
+to it.  If a malicious device were to not have the same urbs the driver
+will crash later on when it blindly accesses these endpoints.
 
-Signed-off-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Stable-dep-of: bb3a8154b1a1 ("ata: libata-scsi: refactor ata_scsi_translate()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
+Link: https://patch.msgid.link/2026022326-shack-headstone-ef6f@gregkh
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |  3 ---
- drivers/ata/libata-sata.c |  2 --
- drivers/ata/libata-scsi.c | 42 ---------------------------------------
- drivers/ata/libata-sff.c  |  4 ----
- drivers/ata/libata.h      |  1 -
- 5 files changed, 52 deletions(-)
+ drivers/net/usb/kalmia.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index 3df057d381a73..acc78416be8ee 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4486,8 +4486,6 @@ static void ata_sg_clean(struct ata_queued_cmd *qc)
- 
- 	WARN_ON_ONCE(sg == NULL);
- 
--	VPRINTK("unmapping %u sg elements\n", qc->n_elem);
--
- 	if (qc->n_elem)
- 		dma_unmap_sg(ap->dev, sg, qc->orig_n_elem, dir);
- 
-@@ -4519,7 +4517,6 @@ static int ata_sg_setup(struct ata_queued_cmd *qc)
- 	if (n_elem < 1)
- 		return -1;
- 
--	VPRINTK("%d sg elements mapped\n", n_elem);
- 	qc->orig_n_elem = qc->n_elem;
- 	qc->n_elem = n_elem;
- 	qc->flags |= ATA_QCFLAG_DMAMAP;
-diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
-index bac569736c937..be41c2a715545 100644
---- a/drivers/ata/libata-sata.c
-+++ b/drivers/ata/libata-sata.c
-@@ -1270,8 +1270,6 @@ int ata_sas_queuecmd(struct scsi_cmnd *cmd, struct ata_port *ap)
+--- a/drivers/net/usb/kalmia.c
++++ b/drivers/net/usb/kalmia.c
+@@ -132,11 +132,18 @@ kalmia_bind(struct usbnet *dev, struct u
  {
- 	int rc = 0;
+ 	int status;
+ 	u8 ethernet_addr[ETH_ALEN];
++	static const u8 ep_addr[] = {
++		1 | USB_DIR_IN,
++		2 | USB_DIR_OUT,
++		0};
  
--	ata_scsi_dump_cdb(ap, cmd);
--
- 	if (likely(ata_dev_enabled(ap->link.device)))
- 		rc = __ata_scsi_queuecmd(cmd, ap->link.device);
- 	else {
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 22c45bc64a95e..4fd8fcab5f972 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1302,8 +1302,6 @@ static void scsi_6_lba_len(const u8 *cdb, u64 *plba, u32 *plen)
- 	u64 lba = 0;
- 	u32 len;
+ 	/* Don't bind to AT command interface */
+ 	if (intf->cur_altsetting->desc.bInterfaceClass != USB_CLASS_VENDOR_SPEC)
+ 		return -EINVAL;
  
--	VPRINTK("six-byte command\n");
--
- 	lba |= ((u64)(cdb[1] & 0x1f)) << 16;
- 	lba |= ((u64)cdb[2]) << 8;
- 	lba |= ((u64)cdb[3]);
-@@ -1329,8 +1327,6 @@ static void scsi_10_lba_len(const u8 *cdb, u64 *plba, u32 *plen)
- 	u64 lba = 0;
- 	u32 len = 0;
- 
--	VPRINTK("ten-byte command\n");
--
- 	lba |= ((u64)cdb[2]) << 24;
- 	lba |= ((u64)cdb[3]) << 16;
- 	lba |= ((u64)cdb[4]) << 8;
-@@ -1358,8 +1354,6 @@ static void scsi_16_lba_len(const u8 *cdb, u64 *plba, u32 *plen)
- 	u64 lba = 0;
- 	u32 len = 0;
- 
--	VPRINTK("sixteen-byte command\n");
--
- 	lba |= ((u64)cdb[2]) << 56;
- 	lba |= ((u64)cdb[3]) << 48;
- 	lba |= ((u64)cdb[4]) << 40;
-@@ -1709,8 +1703,6 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- 	struct ata_queued_cmd *qc;
- 	int rc;
- 
--	VPRINTK("ENTER\n");
--
- 	qc = ata_scsi_qc_new(dev, cmd);
- 	if (!qc)
- 		goto err_mem;
-@@ -1741,7 +1733,6 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- 	/* select device, send command to hardware */
- 	ata_qc_issue(qc);
- 
--	VPRINTK("EXIT\n");
- 	return 0;
- 
- early_finish:
-@@ -1854,8 +1845,6 @@ static unsigned int ata_scsiop_inq_std(struct ata_scsi_args *args, u8 *rbuf)
- 		2
- 	};
- 
--	VPRINTK("ENTER\n");
--
- 	/* set scsi removable (RMB) bit per ata bit, or if the
- 	 * AHCI port says it's external (Hotplug-capable, eSATA).
- 	 */
-@@ -2266,8 +2255,6 @@ static unsigned int ata_scsiop_mode_sense(struct ata_scsi_args *args, u8 *rbuf)
- 	u8 dpofua, bp = 0xff;
- 	u16 fp;
- 
--	VPRINTK("ENTER\n");
--
- 	six_byte = (scsicmd[0] == MODE_SENSE);
- 	ebd = !(scsicmd[1] & 0x8);      /* dbd bit inverted == edb */
- 	/*
-@@ -2385,8 +2372,6 @@ static unsigned int ata_scsiop_read_cap(struct ata_scsi_args *args, u8 *rbuf)
- 	log2_per_phys = ata_id_log2_per_physical_sector(dev->id);
- 	lowest_aligned = ata_id_logical_sector_offset(dev->id, log2_per_phys);
- 
--	VPRINTK("ENTER\n");
--
- 	if (args->cmd->cmnd[0] == READ_CAPACITY) {
- 		if (last_lba >= 0xffffffffULL)
- 			last_lba = 0xffffffff;
-@@ -2453,7 +2438,6 @@ static unsigned int ata_scsiop_read_cap(struct ata_scsi_args *args, u8 *rbuf)
-  */
- static unsigned int ata_scsiop_report_luns(struct ata_scsi_args *args, u8 *rbuf)
- {
--	VPRINTK("ENTER\n");
- 	rbuf[3] = 8;	/* just one lun, LUN 0, size 8 bytes */
- 
- 	return 0;
-@@ -2549,8 +2533,6 @@ static void atapi_qc_complete(struct ata_queued_cmd *qc)
- 	struct scsi_cmnd *cmd = qc->scsicmd;
- 	unsigned int err_mask = qc->err_mask;
- 
--	VPRINTK("ENTER, err_mask 0x%X\n", err_mask);
--
- 	/* handle completion from new EH */
- 	if (unlikely(qc->ap->ops->error_handler &&
- 		     (err_mask || qc->flags & ATA_QCFLAG_SENSE_VALID))) {
-@@ -3684,8 +3666,6 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 	u8 buffer[64];
- 	const u8 *p = buffer;
- 
--	VPRINTK("ENTER\n");
--
- 	six_byte = (cdb[0] == MODE_SELECT);
- 	if (six_byte) {
- 		if (scmd->cmd_len < 5) {
-@@ -3984,26 +3964,6 @@ static inline ata_xlat_func_t ata_get_xlat_func(struct ata_device *dev, u8 cmd)
- 	return NULL;
- }
- 
--/**
-- *	ata_scsi_dump_cdb - dump SCSI command contents to dmesg
-- *	@ap: ATA port to which the command was being sent
-- *	@cmd: SCSI command to dump
-- *
-- *	Prints the contents of a SCSI command via printk().
-- */
--
--void ata_scsi_dump_cdb(struct ata_port *ap, struct scsi_cmnd *cmd)
--{
--#ifdef ATA_VERBOSE_DEBUG
--	struct scsi_device *scsidev = cmd->device;
--
--	VPRINTK("CDB (%u:%d,%d,%lld) %9ph\n",
--		ap->print_id,
--		scsidev->channel, scsidev->id, scsidev->lun,
--		cmd->cmnd);
--#endif
--}
--
- int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev)
- {
- 	struct ata_port *ap = dev->link->ap;
-@@ -4089,8 +4049,6 @@ int ata_scsi_queuecmd(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
- 
- 	spin_lock_irqsave(ap->lock, irq_flags);
- 
--	ata_scsi_dump_cdb(ap, cmd);
--
- 	dev = ata_scsi_find_dev(ap, scsidev);
- 	if (likely(dev))
- 		rc = __ata_scsi_queuecmd(cmd, dev);
-diff --git a/drivers/ata/libata-sff.c b/drivers/ata/libata-sff.c
-index 8409e53b7b7a0..ab1fe23810707 100644
---- a/drivers/ata/libata-sff.c
-+++ b/drivers/ata/libata-sff.c
-@@ -888,8 +888,6 @@ static void atapi_pio_bytes(struct ata_queued_cmd *qc)
- 	if (unlikely(!bytes))
- 		goto atapi_check;
- 
--	VPRINTK("ata%u: xfering %d bytes\n", ap->print_id, bytes);
--
- 	if (unlikely(__atapi_pio_bytes(qc, bytes)))
- 		goto err_out;
- 	ata_sff_sync(ap); /* flush */
-@@ -2614,7 +2612,6 @@ static void ata_bmdma_fill_sg(struct ata_queued_cmd *qc)
- 
- 			prd[pi].addr = cpu_to_le32(addr);
- 			prd[pi].flags_len = cpu_to_le32(len & 0xffff);
--			VPRINTK("PRD[%u] = (0x%X, 0x%X)\n", pi, addr, len);
- 
- 			pi++;
- 			sg_len -= len;
-@@ -2674,7 +2671,6 @@ static void ata_bmdma_fill_sg_dumb(struct ata_queued_cmd *qc)
- 				prd[++pi].addr = cpu_to_le32(addr + 0x8000);
- 			}
- 			prd[pi].flags_len = cpu_to_le32(blen);
--			VPRINTK("PRD[%u] = (0x%X, 0x%X)\n", pi, addr, len);
- 
- 			pi++;
- 			sg_len -= len;
-diff --git a/drivers/ata/libata.h b/drivers/ata/libata.h
-index bf71bd9e66cd8..d71fffe48495f 100644
---- a/drivers/ata/libata.h
-+++ b/drivers/ata/libata.h
-@@ -150,7 +150,6 @@ extern int ata_scsi_user_scan(struct Scsi_Host *shost, unsigned int channel,
- 			      unsigned int id, u64 lun);
- void ata_scsi_sdev_config(struct scsi_device *sdev);
- int ata_scsi_dev_config(struct scsi_device *sdev, struct ata_device *dev);
--void ata_scsi_dump_cdb(struct ata_port *ap, struct scsi_cmnd *cmd);
- int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev);
- 
- /* libata-eh.c */
--- 
-2.51.0
-
++	if (!usb_check_bulk_endpoints(intf, ep_addr))
++		return -ENODEV;
++
+ 	dev->in = usb_rcvbulkpipe(dev->udev, 0x81 & USB_ENDPOINT_NUMBER_MASK);
+ 	dev->out = usb_sndbulkpipe(dev->udev, 0x02 & USB_ENDPOINT_NUMBER_MASK);
+ 	dev->status = NULL;
 
 
