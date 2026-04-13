@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8025E28A1E6;
-	Mon, 13 Apr 2026 16:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D74928B4FD;
+	Mon, 13 Apr 2026 16:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097901; cv=none; b=u9GJ1EaKuAB8abvvl2f5K3lmGFJYChsdfbzkppn0Wjjf6iAPcWFDFd6crVQdX5jbcIOxhEPjS9Lmczv968/7BfNXe0kYTdTx2vO426U9ZE1Yw4Jd8dn7n3TXnIliTzX0zGOFt6gXhGJWRUq3Xap9EoDNq6us8sAC7+Ozn4Cb460=
+	t=1776097904; cv=none; b=TuL9P7ly6s9qff2/APxWyZb26Oz1ERI+1BlD6w1cvY3S5x3/8BCV+/VodB5HpnEeN0CFvSknBoPV5AqVlbHJifEtJwry7AOM0tzr1b4o8Xh+tRkRynA0tvYZBlCuOFg9dY311cfNB1UIQ5FJTtlHObbBTdD6+zPCThd3bW2Z7eA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097901; c=relaxed/simple;
-	bh=wxhqkamsxio5rUIqzZ9AiCt9k+HUdn04b/6acVG2MmE=;
+	s=arc-20240116; t=1776097904; c=relaxed/simple;
+	bh=gRtouCgv0KftyvxvCu4TA8mMbXflmtyh4oKsgm8EhiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oR/Tg+cASfe0bl/1beYYBseZzMe4b5P76IeceeD/xXbM3QIuElLGxQgSTBqKYpW0ToxyYzzrKjqBeUoEFqMM2qyc5OphIo3xCZAyudQ4fLXyFxJ0HvD3ah3pm+n0tgbPQdHGa0JhOeDCFoIB6U8igiYbcTbUZr4/Y1JkODHsp+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opkmbZ9i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PWOxBIfzUSPOncNRH5u57iI6jLyGMJ8q7nKLjY//pajl5TOPo8t/7rF5nuxuJeuHP52gxt8HfWmYlvWuavBkoIJpCftNsq7aa2WQ7UqfMpAQIdyxnnNQMa/Kl4USypXbmLT/wJn5c1cpapwGpOpuzOgB3r/3eod/sJtPe4ZZZqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xspKuK6B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opkmbZ9i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158A1C2BCB7;
-	Mon, 13 Apr 2026 16:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xspKuK6B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ADEC2BCAF;
+	Mon, 13 Apr 2026 16:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097901;
-	bh=wxhqkamsxio5rUIqzZ9AiCt9k+HUdn04b/6acVG2MmE=;
+	s=korg; t=1776097904;
+	bh=gRtouCgv0KftyvxvCu4TA8mMbXflmtyh4oKsgm8EhiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opkmbZ9iaJZu5rYI7KeB0NxeKjtZBda13Rwzb2LFw7N+GPYHsHlfxCpmBH05WpchT
-	 wFyDSlgQ/z9e6DO0BcYn+lSwgYsk18k7KO76NQeM9vFzOMEEl/2CyGCrEHMXzvD+u0
-	 Kppm63JLNCqZB2BITaoQe39xyicaaivXcYfHI+cI=
+	b=xspKuK6BADIWH1pGqY/x/cPG6ck6fOt9hquStiBTKhVWPm9dOJabCcMeoyMxMs5gv
+	 rgH2oZTVI+M3p7ni/f6f0z0ZkSeY801U2C42JOxza+6E0x9HM0wMir6TZ74chybjrE
+	 szZFdX7fqdgGpb1QDEXOPWweYzAx16Jt4oJZwTMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 316/570] can: statistics: add missing atomic access in hot path
-Date: Mon, 13 Apr 2026 17:57:27 +0200
-Message-ID: <20260413155842.334301638@linuxfoundation.org>
+Subject: [PATCH 5.15 317/570] Bluetooth: L2CAP: Validate PDU length before reading SDU length in l2cap_ecred_data_rcv()
+Date: Mon, 13 Apr 2026 17:57:28 +0200
+Message-ID: <20260413155842.370745547@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,73 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 46eee1661aa9b49966e6c43d07126fe408edda57 ]
+[ Upstream commit c65bd945d1c08c3db756821b6bf9f1c4a77b29c6 ]
 
-Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-fixed a KCSAN issue in can_receive() but missed to convert the 'matches'
-variable used in can_rcv_filter().
+l2cap_ecred_data_rcv() reads the SDU length field from skb->data using
+get_unaligned_le16() without first verifying that skb contains at least
+L2CAP_SDULEN_SIZE (2) bytes. When skb->len is less than 2, this reads
+past the valid data in the skb.
 
-Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260318173413.28235-1-socketcan@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The ERTM reassembly path correctly calls pskb_may_pull() before reading
+the SDU length (l2cap_reassemble_sdu, L2CAP_SAR_START case). Apply the
+same validation to the Enhanced Credit Based Flow Control data path.
+
+Fixes: aac23bf63659 ("Bluetooth: Implement LE L2CAP reassembly")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/af_can.c | 4 ++--
- net/can/af_can.h | 2 +-
- net/can/proc.c   | 3 ++-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ net/bluetooth/l2cap_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/can/af_can.c b/net/can/af_can.c
-index edf01b73d2878..85b01dea76dff 100644
---- a/net/can/af_can.c
-+++ b/net/can/af_can.c
-@@ -469,7 +469,7 @@ int can_rx_register(struct net *net, struct net_device *dev, canid_t can_id,
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 5010c200b2c41..e69c6041437b0 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -7650,6 +7650,11 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
+ 	if (!chan->sdu) {
+ 		u16 sdu_len;
  
- 	rcv->can_id = can_id;
- 	rcv->mask = mask;
--	rcv->matches = 0;
-+	atomic_long_set(&rcv->matches, 0);
- 	rcv->func = func;
- 	rcv->data = data;
- 	rcv->ident = ident;
-@@ -573,7 +573,7 @@ EXPORT_SYMBOL(can_rx_unregister);
- static inline void deliver(struct sk_buff *skb, struct receiver *rcv)
- {
- 	rcv->func(skb, rcv->data);
--	rcv->matches++;
-+	atomic_long_inc(&rcv->matches);
- }
- 
- static int can_rcv_filter(struct can_dev_rcv_lists *dev_rcv_lists, struct sk_buff *skb)
-diff --git a/net/can/af_can.h b/net/can/af_can.h
-index 22f3352c77fec..87887014f5628 100644
---- a/net/can/af_can.h
-+++ b/net/can/af_can.h
-@@ -52,7 +52,7 @@ struct receiver {
- 	struct hlist_node list;
- 	canid_t can_id;
- 	canid_t mask;
--	unsigned long matches;
-+	atomic_long_t matches;
- 	void (*func)(struct sk_buff *skb, void *data);
- 	void *data;
- 	char *ident;
-diff --git a/net/can/proc.c b/net/can/proc.c
-index 0533a3c4ff0e1..f81f8a698071e 100644
---- a/net/can/proc.c
-+++ b/net/can/proc.c
-@@ -196,7 +196,8 @@ static void can_print_rcvlist(struct seq_file *m, struct hlist_head *rx_list,
- 			"   %-5s     %03x    %08x  %pK  %pK  %8ld  %s\n";
- 
- 		seq_printf(m, fmt, DNAME(dev), r->can_id, r->mask,
--				r->func, r->data, r->matches, r->ident);
-+			   r->func, r->data, atomic_long_read(&r->matches),
-+			   r->ident);
- 	}
- }
++		if (!pskb_may_pull(skb, L2CAP_SDULEN_SIZE)) {
++			err = -EINVAL;
++			goto failed;
++		}
++
+ 		sdu_len = get_unaligned_le16(skb->data);
+ 		skb_pull(skb, L2CAP_SDULEN_SIZE);
  
 -- 
 2.51.0
