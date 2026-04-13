@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E7F29B22F;
-	Mon, 13 Apr 2026 16:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560B7271464;
+	Mon, 13 Apr 2026 16:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096413; cv=none; b=LG0njnZ2BT0SACyaeMltd++js9/vUxg+sRdP+g7UeA/1kUXb6SfzMvMcMYck/bksc6fAP0o/7tVbIZ+Y9sYi5sgT8jaD7WtbCsGOAqE8KKYu72FEBl+QjKM+0r0rJsWSLKYIaso7h1oMkOAub9RGr9F0klqOxHtW9BW9qrxTdq4=
+	t=1776096416; cv=none; b=miWQ+rsaCT/cSJZgl8MscKI7oSvMCGgwcoNQnNBWpcEcik8TOIBWkAGxgkAuO+hgfFYEss9wJDWxdnaGPp1TVkEwpTgslS1IcqmF6gF5N5o6PAjus5C05mU5OxA1tYySwEaSrj4IrftPiBMMH7zXfzrjyutDK5lZWfr3eXuKRpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096413; c=relaxed/simple;
-	bh=KufDdCGvjaI0O5+fgoaVg4PllarQ4G7MFFX651lwqDE=;
+	s=arc-20240116; t=1776096416; c=relaxed/simple;
+	bh=pkP1vDWGsowcJQfhqENB0YFn9UB9Vz8s3nSUiqT3Ijc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhhWnhbFBcoM7DqkuRd/7WAixhPVkq6MYMfasMo3pWeGNqq1KVkHE7uP11+G4XDwTGQsWD3Amp9ISstIskqAewEW3xntRyCnOW5FSW71EUZ7boBfI+Fd9cnWe5RR6v7FwIJfOLIQy92Q+X+BMYZIpOD3RlRPGmAELmw+bDbTQvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVMSx1QZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQLaRfOLE66nLhWSFt37CJfW5GsrJTkBEWzaA+wxxv16+PM2sBU1fLbHroKLScBlzODp3HEASddExE1rnP+Nl18sSjfxQs7vmIVjHGQ+OoXS1teBEmEeuxtUxjNkdt2+tsGe0KZMLB41pz1iyzPV4EvqU/oOq5gpgkzm4938Bpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LLHxFml; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVMSx1QZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB0CC2BCAF;
-	Mon, 13 Apr 2026 16:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LLHxFml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB942C2BCAF;
+	Mon, 13 Apr 2026 16:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096413;
-	bh=KufDdCGvjaI0O5+fgoaVg4PllarQ4G7MFFX651lwqDE=;
+	s=korg; t=1776096416;
+	bh=pkP1vDWGsowcJQfhqENB0YFn9UB9Vz8s3nSUiqT3Ijc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EVMSx1QZ1wcSPZDKfWlqjx8ZCIqMxEQUK8gyi8mwbxtZNecTF57TloW6+A7of4q1u
-	 5rdoJgWa+6PZJTMLaMpisvBgiBoQcnstUKTeSU2pSP8HNVMBEu0+/ovJH2cpIyG/tV
-	 cxB9VwecQnB4R/Q6Ix/Y5GWOr5uX2DuN7XvzP8VY=
+	b=1LLHxFml/S+kkKs/4bNK7NMziAFC6WChrcLUMggAfLbWr+pC/Qexy3r5SkPF3Rz6V
+	 oRuWyF+fWNWiMmCMgMvANq7ide2+EdIP2ZrR1IvwBuoXZlvtzxVucTgqWMEo4//jKY
+	 69XaesTCPDDfEpuNA7Y/og7JcV3OUG6gAWfR4AiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Oleh Konko <security@1seal.org>,
 	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
 	Jeffrey Altman <jaltman@auristor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Marc Dionne <marc.dionne@auristor.com>,
 	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 68/86] rxrpc: Fix call removal to use RCU safe deletion
-Date: Mon, 13 Apr 2026 18:00:15 +0200
-Message-ID: <20260413155734.090025373@linuxfoundation.org>
+Subject: [PATCH 6.19 69/86] rxrpc: Fix RxGK token loading to check bounds
+Date: Mon, 13 Apr 2026 18:00:16 +0200
+Message-ID: <20260413155734.125852555@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -56,101 +56,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Oleh Konko <security@1seal.org>
 
-commit 146d4ab94cf129ee06cd467cb5c71368a6b5bad6 upstream.
+commit d179a868dd755b0cfcf7582e00943d702b9943b8 upstream.
 
-Fix rxrpc call removal from the rxnet->calls list to use list_del_rcu()
-rather than list_del_init() to prevent stuffing up reading
-/proc/net/rxrpc/calls from potentially getting into an infinite loop.
+rxrpc_preparse_xdr_yfs_rxgk() reads the raw key length and ticket length
+from the XDR token as u32 values and passes each through round_up(x, 4)
+before using the rounded value for validation and allocation.  When the raw
+length is >= 0xfffffffd, round_up() wraps to 0, so the bounds check and
+kzalloc both use 0 while the subsequent memcpy still copies the original
+~4 GiB value, producing a heap buffer overflow reachable from an
+unprivileged add_key() call.
 
-This, however, means that list_empty() no longer works on an entry that's
-been deleted from the list, making it harder to detect prior deletion.  Fix
-this by:
+Fix this by:
 
-Firstly, make rxrpc_destroy_all_calls() only dump the first ten calls that
-are unexpectedly still on the list.  Limiting the number of steps means
-there's no need to call cond_resched() or to remove calls from the list
-here, thereby eliminating the need for rxrpc_put_call() to check for that.
+ (1) Rejecting raw key lengths above AFSTOKEN_GK_KEY_MAX and raw ticket
+     lengths above AFSTOKEN_GK_TOKEN_MAX before rounding, consistent with
+     the caps that the RxKAD path already enforces via AFSTOKEN_RK_TIX_MAX.
 
-rxrpc_put_call() can then be fixed to unconditionally delete the call from
-the list as it is the only place that the deletion occurs.
+ (2) Sizing the flexible-array allocation from the validated raw key
+     length via struct_size_t() instead of the rounded value.
 
-Fixes: 2baec2c3f854 ("rxrpc: Support network namespacing")
-Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
+ (3) Caching the raw lengths so that the later field assignments and
+     memcpy calls do not re-read from the token, eliminating a class of
+     TOCTOU re-parse.
+
+The control path (valid token with lengths within bounds) is unaffected.
+
+Fixes: 0ca100ff4df6 ("rxrpc: Add YFS RxGK (GSSAPI) security class")
+Signed-off-by: Oleh Konko <security@1seal.org>
 Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Linus Torvalds <torvalds@linux-foundation.org>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-5-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-6-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |    2 +-
- net/rxrpc/call_object.c      |   24 +++++++++---------------
- 2 files changed, 10 insertions(+), 16 deletions(-)
+ net/rxrpc/key.c |   30 +++++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -347,7 +347,7 @@
- 	EM(rxrpc_call_see_release,		"SEE release ") \
- 	EM(rxrpc_call_see_userid_exists,	"SEE u-exists") \
- 	EM(rxrpc_call_see_waiting_call,		"SEE q-conn  ") \
--	E_(rxrpc_call_see_zap,			"SEE zap     ")
-+	E_(rxrpc_call_see_still_live,		"SEE !still-l")
+--- a/net/rxrpc/key.c
++++ b/net/rxrpc/key.c
+@@ -13,6 +13,7 @@
+ #include <crypto/skcipher.h>
+ #include <linux/module.h>
+ #include <linux/net.h>
++#include <linux/overflow.h>
+ #include <linux/skbuff.h>
+ #include <linux/key-type.h>
+ #include <linux/ctype.h>
+@@ -171,7 +172,7 @@ static int rxrpc_preparse_xdr_yfs_rxgk(s
+ 	size_t plen;
+ 	const __be32 *ticket, *key;
+ 	s64 tmp;
+-	u32 tktlen, keylen;
++	size_t raw_keylen, raw_tktlen, keylen, tktlen;
  
- #define rxrpc_txqueue_traces \
- 	EM(rxrpc_txqueue_await_reply,		"AWR") \
---- a/net/rxrpc/call_object.c
-+++ b/net/rxrpc/call_object.c
-@@ -654,11 +654,9 @@ void rxrpc_put_call(struct rxrpc_call *c
- 	if (dead) {
- 		ASSERTCMP(__rxrpc_call_state(call), ==, RXRPC_CALL_COMPLETE);
+ 	_enter(",{%x,%x,%x,%x},%x",
+ 	       ntohl(xdr[0]), ntohl(xdr[1]), ntohl(xdr[2]), ntohl(xdr[3]),
+@@ -181,18 +182,22 @@ static int rxrpc_preparse_xdr_yfs_rxgk(s
+ 		goto reject;
  
--		if (!list_empty(&call->link)) {
--			spin_lock(&rxnet->call_lock);
--			list_del_init(&call->link);
--			spin_unlock(&rxnet->call_lock);
--		}
-+		spin_lock(&rxnet->call_lock);
-+		list_del_rcu(&call->link);
-+		spin_unlock(&rxnet->call_lock);
+ 	key = xdr + (6 * 2 + 1);
+-	keylen = ntohl(key[-1]);
+-	_debug("keylen: %x", keylen);
+-	keylen = round_up(keylen, 4);
++	raw_keylen = ntohl(key[-1]);
++	_debug("keylen: %zx", raw_keylen);
++	if (raw_keylen > AFSTOKEN_GK_KEY_MAX)
++		goto reject;
++	keylen = round_up(raw_keylen, 4);
+ 	if ((6 * 2 + 2) * 4 + keylen > toklen)
+ 		goto reject;
  
- 		rxrpc_cleanup_call(call);
- 	}
-@@ -730,24 +728,20 @@ void rxrpc_destroy_all_calls(struct rxrp
- 	_enter("");
+ 	ticket = xdr + (6 * 2 + 1 + (keylen / 4) + 1);
+-	tktlen = ntohl(ticket[-1]);
+-	_debug("tktlen: %x", tktlen);
+-	tktlen = round_up(tktlen, 4);
++	raw_tktlen = ntohl(ticket[-1]);
++	_debug("tktlen: %zx", raw_tktlen);
++	if (raw_tktlen > AFSTOKEN_GK_TOKEN_MAX)
++		goto reject;
++	tktlen = round_up(raw_tktlen, 4);
+ 	if ((6 * 2 + 2) * 4 + keylen + tktlen != toklen) {
+-		kleave(" = -EKEYREJECTED [%x!=%x, %x,%x]",
++		kleave(" = -EKEYREJECTED [%zx!=%x, %zx,%zx]",
+ 		       (6 * 2 + 2) * 4 + keylen + tktlen, toklen,
+ 		       keylen, tktlen);
+ 		goto reject;
+@@ -206,7 +211,7 @@ static int rxrpc_preparse_xdr_yfs_rxgk(s
+ 	if (!token)
+ 		goto nomem;
  
- 	if (!list_empty(&rxnet->calls)) {
--		spin_lock(&rxnet->call_lock);
-+		int shown = 0;
+-	token->rxgk = kzalloc(sizeof(*token->rxgk) + keylen, GFP_KERNEL);
++	token->rxgk = kzalloc(struct_size_t(struct rxgk_key, _key, raw_keylen), GFP_KERNEL);
+ 	if (!token->rxgk)
+ 		goto nomem_token;
  
--		while (!list_empty(&rxnet->calls)) {
--			call = list_entry(rxnet->calls.next,
--					  struct rxrpc_call, link);
--			_debug("Zapping call %p", call);
-+		spin_lock(&rxnet->call_lock);
+@@ -221,9 +226,9 @@ static int rxrpc_preparse_xdr_yfs_rxgk(s
+ 	token->rxgk->enctype	= tmp = xdr_dec64(xdr + 5 * 2);
+ 	if (tmp < 0 || tmp > UINT_MAX)
+ 		goto reject_token;
+-	token->rxgk->key.len	= ntohl(key[-1]);
++	token->rxgk->key.len	= raw_keylen;
+ 	token->rxgk->key.data	= token->rxgk->_key;
+-	token->rxgk->ticket.len = ntohl(ticket[-1]);
++	token->rxgk->ticket.len = raw_tktlen;
  
--			rxrpc_see_call(call, rxrpc_call_see_zap);
--			list_del_init(&call->link);
-+		list_for_each_entry(call, &rxnet->calls, link) {
-+			rxrpc_see_call(call, rxrpc_call_see_still_live);
+ 	if (token->rxgk->endtime != 0) {
+ 		expiry = rxrpc_s64_to_time64(token->rxgk->endtime);
+@@ -236,8 +241,7 @@ static int rxrpc_preparse_xdr_yfs_rxgk(s
+ 	memcpy(token->rxgk->key.data, key, token->rxgk->key.len);
  
- 			pr_err("Call %p still in use (%d,%s,%lx,%lx)!\n",
- 			       call, refcount_read(&call->ref),
- 			       rxrpc_call_states[__rxrpc_call_state(call)],
- 			       call->flags, call->events);
- 
--			spin_unlock(&rxnet->call_lock);
--			cond_resched();
--			spin_lock(&rxnet->call_lock);
-+			if (++shown >= 10)
-+				break;
- 		}
- 
- 		spin_unlock(&rxnet->call_lock);
+ 	/* Pad the ticket so that we can use it directly in XDR */
+-	token->rxgk->ticket.data = kzalloc(round_up(token->rxgk->ticket.len, 4),
+-					   GFP_KERNEL);
++	token->rxgk->ticket.data = kzalloc(tktlen, GFP_KERNEL);
+ 	if (!token->rxgk->ticket.data)
+ 		goto nomem_yrxgk;
+ 	memcpy(token->rxgk->ticket.data, ticket, token->rxgk->ticket.len);
 
 
