@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB52930BB91;
-	Mon, 13 Apr 2026 16:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4775928505E;
+	Mon, 13 Apr 2026 16:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097463; cv=none; b=M4KTPf/o1Xawcqc59iwku7V0moyWeNPDUBRbJOdjK9PLLj2Pr9dEnhErxKr73HqV2Xr7LWFU8Z3Yq89gJcEy0BFztdSZtllEI+/MkZPMxwdc2VJE0ZPqrpx00qdIsklbo5qqg/MAR8BgsXvTBLBA4GU54Yrbb3OtzKIkg3I6M6I=
+	t=1776097466; cv=none; b=m86R+b2zxw7znvwmDlVllMyHIx2+6ggcnTPv/nZyzLyikRojtfWmLqKnk/H4CQOGYoDJSIjBmyYBxNDJQw83B7T5sjp8awu2jX4hNfeFuAzio64hM63r8HTm725lgi0+2HjaznZJLfLtsVHb1GFOKnOiEjATNrG3id28byQl0yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097463; c=relaxed/simple;
-	bh=NCOJik7O6pjaQNUmc2q9yds9fQMaeLbEj4SuaSKZZp8=;
+	s=arc-20240116; t=1776097466; c=relaxed/simple;
+	bh=RUzSB0zXUD+ZQOtO51xqoXSmweDOFdIIjtvzUwKR0c0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGuYilMSlrMSLCF8UBdlI9XEUq78Q5zUAD6eza5OQUphqCjXEaaXuXA2eYC9EJfXVTTYS4RY/zL6NDLH9/JjHkYR1p4akX6XJgb0Q2eakwNcPm1cqfd2pRhwYOHal/Nt91TznG7VONEO2P1Dczwmd8LwFLIYUZdFDBM82AkOEuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0S0lcaOQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KlhS+2to7KwH20yvlWNkIvMcQ/k15lRlEEPqsyAI7KOqYxoaOPcRVypqP1vobjpSBh411L6l3NnYI0Hj607zHU/az6WGUImBjIJcOOmiFSSPbxWfi/f1JGTuCn2Pv1+6ggoNee1qLY+9sYOsWkovMA4ik4G56EVnSJQyPCmBZds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKBXxhOt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0S0lcaOQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41872C2BCB0;
-	Mon, 13 Apr 2026 16:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKBXxhOt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9028C2BCAF;
+	Mon, 13 Apr 2026 16:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097463;
-	bh=NCOJik7O6pjaQNUmc2q9yds9fQMaeLbEj4SuaSKZZp8=;
+	s=korg; t=1776097466;
+	bh=RUzSB0zXUD+ZQOtO51xqoXSmweDOFdIIjtvzUwKR0c0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0S0lcaOQPibOSE/Fc9aDpiap+G0y0JB6wtDsMpbSYMFT2uyFJsUatb8RkllD0rfoa
-	 Cldgj32z6v8+gZcNy4Z/WjBlPvOOBKum17zoW/1aPjFwHTcITxJ3HjP/SKYXAWEsmV
-	 bW28gk5w/hMJRtJ+0nSYoPRaHqSUPa5v894JFR8Q=
+	b=ZKBXxhOtBtqqEwvQlFhRfRkhnppGeDLXN/klNVT0jPbz2zAzCMQvAHVGPVDz+iF23
+	 +AH56tq26Ri9WFw1tRnvXFdD94HBXW+PLQBidMX8m5eiT+qMmND/TYcLNS2rzkeI/t
+	 9lpiUxfQZw6uBW9mzx+Yc9w8yplRR7Nd4b94kQ1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 146/570] usb: image: mdc800: kill download URB on timeout
-Date: Mon, 13 Apr 2026 17:54:37 +0200
-Message-ID: <20260413155835.920459256@linuxfoundation.org>
+	Kalesh Singh <kaleshsingh@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	SeongJae Park <sj@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 147/570] mm/tracing: rss_stat: ensure curr is false from kthread context
+Date: Mon, 13 Apr 2026 17:54:38 +0200
+Message-ID: <20260413155835.957036413@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,49 +59,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Kalesh Singh <kaleshsingh@google.com>
 
-commit 1be3b77de4eb89af8ae2fd6610546be778e25589 upstream.
+commit 079c24d5690262e83ee476e2a548e416f3237511 upstream.
 
-mdc800_device_read() submits download_urb and waits for completion.
-If the timeout fires and the device has not responded, the function
-returns without killing the URB, leaving it active.
+The rss_stat trace event allows userspace tools, like Perfetto [1], to
+inspect per-process RSS metric changes over time.
 
-A subsequent read() resubmits the same URB while it is still
-in-flight, triggering the WARN in usb_submit_urb():
+The curr field was introduced to rss_stat in commit e4dcad204d3a
+("rss_stat: add support to detect RSS updates of external mm").  Its
+intent is to indicate whether the RSS update is for the mm_struct of the
+current execution context; and is set to false when operating on a remote
+mm_struct (e.g., via kswapd or a direct reclaimer).
 
-  "URB submitted while active"
+However, an issue arises when a kernel thread temporarily adopts a user
+process's mm_struct.  Kernel threads do not have their own mm_struct and
+normally have current->mm set to NULL.  To operate on user memory, they
+can "borrow" a memory context using kthread_use_mm(), which sets
+current->mm to the user process's mm.
 
-Check the return value of wait_event_timeout() and kill the URB if
-it indicates timeout, ensuring the URB is complete before its status
-is inspected or the URB is resubmitted.
+This can be observed, for example, in the USB Function Filesystem (FFS)
+driver.  The ffs_user_copy_worker() handles AIO completions and uses
+kthread_use_mm() to copy data to a user-space buffer.  If a page fault
+occurs during this copy, the fault handler executes in the kthread's
+context.
 
-Similar to
-- commit 372c93131998 ("USB: yurex: fix control-URB timeout handling")
-- commit b98d5000c505 ("media: rc: iguanair: handle timeouts")
+At this point, current is the kthread, but current->mm points to the user
+process's mm.  Since the rss_stat event (from the page fault) is for that
+same mm, the condition current->mm == mm becomes true, causing curr to be
+incorrectly set to true when the trace event is emitted.
 
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260209151937.2247202-1-n7l8m4@u.northwestern.edu
+This is misleading because it suggests the mm belongs to the kthread,
+confusing userspace tools that track per-process RSS changes and
+corrupting their mm_id-to-process association.
+
+Fix this by ensuring curr is always false when the trace event is emitted
+from a kthread context by checking for the PF_KTHREAD flag.
+
+Link: https://lkml.kernel.org/r/20260219233708.1971199-1-kaleshsingh@google.com
+Link: https://perfetto.dev/ [1]
+Fixes: e4dcad204d3a ("rss_stat: add support to detect RSS updates of external mm")
+Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Acked-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Cc: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>	[5.10+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/image/mdc800.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/trace/events/kmem.h |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/image/mdc800.c
-+++ b/drivers/usb/image/mdc800.c
-@@ -731,9 +731,11 @@ static ssize_t mdc800_device_read (struc
- 					mutex_unlock(&mdc800->io_lock);
- 					return len-left;
- 				}
--				wait_event_timeout(mdc800->download_wait,
-+				retval = wait_event_timeout(mdc800->download_wait,
- 				     mdc800->downloaded,
- 				     msecs_to_jiffies(TO_DOWNLOAD_GET_READY));
-+				if (!retval)
-+					usb_kill_urb(mdc800->download_urb);
- 				mdc800->downloaded = 0;
- 				if (mdc800->download_urb->status != 0)
- 				{
+--- a/include/trace/events/kmem.h
++++ b/include/trace/events/kmem.h
+@@ -384,7 +384,13 @@ TRACE_EVENT(rss_stat,
+ 
+ 	TP_fast_assign(
+ 		__entry->mm_id = mm_ptr_to_hash(mm);
+-		__entry->curr = !!(current->mm == mm);
++		/*
++		 * curr is true if the mm matches the current task's mm_struct.
++		 * Since kthreads (PF_KTHREAD) have no mm_struct of their own
++		 * but can borrow one via kthread_use_mm(), we must filter them
++		 * out to avoid incorrectly attributing the RSS update to them.
++		 */
++		__entry->curr = current->mm == mm && !(current->flags & PF_KTHREAD);
+ 		__entry->member = member;
+ 		__entry->size = (count << PAGE_SHIFT);
+ 	),
 
 
