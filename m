@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA4428C2DD;
-	Mon, 13 Apr 2026 16:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508DC24DCF6;
+	Mon, 13 Apr 2026 16:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096640; cv=none; b=H5yqAgZ8HOE/TGzjPENhUkRtOzP+1PwuY3+sv0yiHmkgfW4cDNDU67+TnFvHFSOU9IleoTnHqe5Mxv9s2qDxLfjA4fv1RhTeVdg58kLRKlV3J2tACsZV7oF53TzVycnNhZyHb7O5A3ZlTlmL2WGpwyHna7BWZDEp5bgfFUf5WZ4=
+	t=1776096643; cv=none; b=gxLLXcADEeSOqB+jAhAq1Z/70/EkqtPcVi0UhfslmIZsSBBPr9UtK+H9ElOqiYuVFM6ci3UHdqmT3cES4anQ1EY8BwfKne0G5+QDSePiIHwNSWa6cjzu/AfGj0k7t9Zr9BWXfkIu7AGAG4rEPzMNmiMc5NCMuHlF13cLTrR4jjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096640; c=relaxed/simple;
-	bh=PK4BtdYHe41+hnBjswLrdCgExZVGNQT3FC8nugEBfmA=;
+	s=arc-20240116; t=1776096643; c=relaxed/simple;
+	bh=tu6opv2WOhV6rWZv6WnOlg2CgXmhp5xNoL2rBI2K5Jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mnki3nexr3G0SDF36AJqnCEj89nSE34C8EXo0aNhxKzjSgxpG4zQj3pW/8+f8pFeVZkLC+LsNVl0n3F/UW44ui3JaRWjOV70mxNceGZIosgubTRvpTfOwTH8sH92N3TJ+/HzfFfv0B36zQE4mPpX1l+T1PXVnWIBBmDgl19vSGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B15JeouP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l0d59eY10IlPdKOSVZfq86kEA3pFXSBUMEwX5UPvjBbd8rwWlm88Y1g5LOsnSWYq8k3JtRXTZMkfgUbszSeYm5QTypKimuavrH/wosXIUXRpv/jvJUWerhqV7H4wcZBlAaw7PgsBkCN8jsG6/kIVNlF2hMGyS/ia3yT18LXULYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pP+3ujVB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B15JeouP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AD1C2BCAF;
-	Mon, 13 Apr 2026 16:10:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pP+3ujVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7BEC2BCB0;
+	Mon, 13 Apr 2026 16:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096640;
-	bh=PK4BtdYHe41+hnBjswLrdCgExZVGNQT3FC8nugEBfmA=;
+	s=korg; t=1776096643;
+	bh=tu6opv2WOhV6rWZv6WnOlg2CgXmhp5xNoL2rBI2K5Jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B15JeouPGG7CpDWJxMamWGLKy5u6tPGRBYFCzd8/r7X6WKAqzamHKH6xKe05cMayh
-	 5hz7dvIgC/tEIadFU7vujXHzzm/+anDSwgczjVpLzLO2OTHxviBxCwgvgvi+uZ6d29
-	 i8O0uhnWq82iuemC1+TAnpJYLqLoqxVa7Gha2mkc=
+	b=pP+3ujVBM6Z4iFsdEO5jwdpi9iIWGvgBJp7kIE/22TUeNxRFzyXfjyazWdFdw5xkX
+	 yLpTh1jHMp6Rr5iPrHbPvw9kNX8rTDWRpbehx658eEbfRoaKKsG9L0iCaTPURAliu/
+	 XRR/7qVGLOzWFCn+jh7dPZMsH5VBANrrPSKO5q5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
+	Antonius <antonius@bluedragonsec.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 82/83] rxrpc: proc: size address buffers for %pISpc output
-Date: Mon, 13 Apr 2026 18:00:50 +0200
-Message-ID: <20260413155734.051563396@linuxfoundation.org>
+Subject: [PATCH 6.18 83/83] net: skb: fix cross-cache free of KFENCE-allocated skb head
+Date: Mon, 13 Apr 2026 18:00:51 +0200
+Message-ID: <20260413155734.087006692@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -56,164 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit a44ce6aa2efb61fe44f2cfab72bb01544bbca272 upstream.
+commit 0f42e3f4fe2a58394e37241d02d9ca6ab7b7d516 upstream.
 
-The AF_RXRPC procfs helpers format local and remote socket addresses into
-fixed 50-byte stack buffers with "%pISpc".
+SKB_SMALL_HEAD_CACHE_SIZE is intentionally set to a non-power-of-2
+value (e.g. 704 on x86_64) to avoid collisions with generic kmalloc
+bucket sizes. This ensures that skb_kfree_head() can reliably use
+skb_end_offset to distinguish skb heads allocated from
+skb_small_head_cache vs. generic kmalloc caches.
 
-That is too small for the longest current-tree IPv6-with-port form the
-formatter can produce. In lib/vsprintf.c, the compressed IPv6 path uses a
-dotted-quad tail not only for v4mapped addresses, but also for ISATAP
-addresses via ipv6_addr_is_isatap().
+However, when KFENCE is enabled, kfence_ksize() returns the exact
+requested allocation size instead of the slab bucket size. If a caller
+(e.g. bpf_test_init) allocates skb head data via kzalloc() and the
+requested size happens to equal SKB_SMALL_HEAD_CACHE_SIZE, then
+slab_build_skb() -> ksize() returns that exact value. After subtracting
+skb_shared_info overhead, skb_end_offset ends up matching
+SKB_SMALL_HEAD_HEADROOM, causing skb_kfree_head() to incorrectly free
+the object to skb_small_head_cache instead of back to the original
+kmalloc cache, resulting in a slab cross-cache free:
 
-As a result, a case such as
+  kmem_cache_free(skbuff_small_head): Wrong slab cache. Expected
+  skbuff_small_head but got kmalloc-1k
 
-  [ffff:ffff:ffff:ffff:0:5efe:255.255.255.255]:65535
+Fix this by always calling kfree(head) in skb_kfree_head(). This keeps
+the free path generic and avoids allocator-specific misclassification
+for KFENCE objects.
 
-is possible with the current formatter. That is 50 visible characters, so
-51 bytes including the trailing NUL, which does not fit in the existing
-char[50] buffers used by net/rxrpc/proc.c.
-
-Size the buffers from the formatter's maximum textual form and switch the
-call sites to scnprintf().
-
-Changes since v1:
-- correct the changelog to cite the actual maximum current-tree case
-  explicitly
-- frame the proof around the ISATAP formatting path instead of the earlier
-  mapped-v4 example
-
-Fixes: 75b54cb57ca3 ("rxrpc: Add IPv6 support")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Anderson Nascimento <anderson@allelesecurity.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-22-dhowells@redhat.com
+Fixes: bf9f1baa279f ("net: add dedicated kmem_cache for typical/small skb->head")
+Reported-by: Antonius <antonius@bluedragonsec.com>
+Closes: https://lore.kernel.org/netdev/CAK8a0jxC5L5N7hq-DT2_NhUyjBxrPocoiDazzsBk4TGgT1r4-A@mail.gmail.com/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260403014517.142550-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/proc.c |   32 ++++++++++++++++++--------------
- 1 file changed, 18 insertions(+), 14 deletions(-)
+ net/core/skbuff.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/net/rxrpc/proc.c
-+++ b/net/rxrpc/proc.c
-@@ -10,6 +10,10 @@
- #include <net/af_rxrpc.h>
- #include "ar-internal.h"
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1042,10 +1042,7 @@ static int skb_pp_frag_ref(struct sk_buf
  
-+#define RXRPC_PROC_ADDRBUF_SIZE \
-+	(sizeof("[xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:255.255.255.255]") + \
-+	 sizeof(":12345"))
-+
- static const char *const rxrpc_conn_states[RXRPC_CONN__NR_STATES] = {
- 	[RXRPC_CONN_UNUSED]			= "Unused  ",
- 	[RXRPC_CONN_CLIENT_UNSECURED]		= "ClUnsec ",
-@@ -53,7 +57,7 @@ static int rxrpc_call_seq_show(struct se
- 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
- 	enum rxrpc_call_state state;
- 	rxrpc_seq_t tx_bottom;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 	long timeout = 0;
- 
- 	if (v == &rxnet->calls) {
-@@ -69,11 +73,11 @@ static int rxrpc_call_seq_show(struct se
- 
- 	local = call->local;
- 	if (local)
--		sprintf(lbuff, "%pISpc", &local->srx.transport);
-+		scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
- 	else
- 		strcpy(lbuff, "no_local");
- 
--	sprintf(rbuff, "%pISpc", &call->dest_srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &call->dest_srx.transport);
- 
- 	state = rxrpc_call_state(call);
- 	if (state != RXRPC_CALL_SERVER_PREALLOC)
-@@ -142,7 +146,7 @@ static int rxrpc_connection_seq_show(str
- 	struct rxrpc_connection *conn;
- 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
- 	const char *state;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == &rxnet->conn_proc_list) {
- 		seq_puts(seq,
-@@ -161,8 +165,8 @@ static int rxrpc_connection_seq_show(str
- 		goto print;
- 	}
- 
--	sprintf(lbuff, "%pISpc", &conn->local->srx.transport);
--	sprintf(rbuff, "%pISpc", &conn->peer->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &conn->local->srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &conn->peer->srx.transport);
- print:
- 	state = rxrpc_is_conn_aborted(conn) ?
- 		rxrpc_call_completions[conn->completion] :
-@@ -228,7 +232,7 @@ static int rxrpc_bundle_seq_show(struct
+ static void skb_kfree_head(void *head, unsigned int end_offset)
  {
- 	struct rxrpc_bundle *bundle;
- 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+-	if (end_offset == SKB_SMALL_HEAD_HEADROOM)
+-		kmem_cache_free(net_hotdata.skb_small_head_cache, head);
+-	else
+-		kfree(head);
++	kfree(head);
+ }
  
- 	if (v == &rxnet->bundle_proc_list) {
- 		seq_puts(seq,
-@@ -242,8 +246,8 @@ static int rxrpc_bundle_seq_show(struct
- 
- 	bundle = list_entry(v, struct rxrpc_bundle, proc_link);
- 
--	sprintf(lbuff, "%pISpc", &bundle->local->srx.transport);
--	sprintf(rbuff, "%pISpc", &bundle->peer->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &bundle->local->srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &bundle->peer->srx.transport);
- 	seq_printf(seq,
- 		   "UDP   %-47.47s %-47.47s %4x %3u %3d"
- 		   " %c%c%c %08x | %08x %08x %08x %08x %08x\n",
-@@ -279,7 +283,7 @@ static int rxrpc_peer_seq_show(struct se
- {
- 	struct rxrpc_peer *peer;
- 	time64_t now;
--	char lbuff[50], rbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == SEQ_START_TOKEN) {
- 		seq_puts(seq,
-@@ -290,9 +294,9 @@ static int rxrpc_peer_seq_show(struct se
- 
- 	peer = list_entry(v, struct rxrpc_peer, hash_link);
- 
--	sprintf(lbuff, "%pISpc", &peer->local->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &peer->local->srx.transport);
- 
--	sprintf(rbuff, "%pISpc", &peer->srx.transport);
-+	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &peer->srx.transport);
- 
- 	now = ktime_get_seconds();
- 	seq_printf(seq,
-@@ -401,7 +405,7 @@ const struct seq_operations rxrpc_peer_s
- static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
- {
- 	struct rxrpc_local *local;
--	char lbuff[50];
-+	char lbuff[RXRPC_PROC_ADDRBUF_SIZE];
- 
- 	if (v == SEQ_START_TOKEN) {
- 		seq_puts(seq,
-@@ -412,7 +416,7 @@ static int rxrpc_local_seq_show(struct s
- 
- 	local = hlist_entry(v, struct rxrpc_local, link);
- 
--	sprintf(lbuff, "%pISpc", &local->srx.transport);
-+	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
- 
- 	seq_printf(seq,
- 		   "UDP   %-47.47s %3u %3u %3u\n",
+ static void skb_free_head(struct sk_buff *skb)
 
 
