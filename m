@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF9223E342;
-	Mon, 13 Apr 2026 16:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0674C23E342;
+	Mon, 13 Apr 2026 16:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098774; cv=none; b=V4DAbDzUEn5IyjgM8ALgKXCK2WfgYkLIlXDYD8tCP31VCdoBOSNCzTWRCpWTxrC18Yj9jhCCSaRQhpvsnvAUbz/ZSn4U40Cv5nbmAY5s8nhpB1nEkOMzW0/9Z5/DLnjUi+QbnEZTDMwCr7/NmGVsFdHHALVVxl/JBCHeNe7QxxM=
+	t=1776098777; cv=none; b=WwrU3ZwyQn22OYwA7pbxog9VX98O8HsfXjnGp7CT+S2bDdFjnDhVQ1WBho6hHbCmteppUyD0wLedSzAtOzPAwVQWZWvNUJ3seh/5U1jjYf2IZ1ITFVnVMW62mdv4/Qb+hdryBXqPMlU77Fw/oSyMIbQDOKRexrBLxhUIipc7WWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098774; c=relaxed/simple;
-	bh=EdeTsZT2d3LEfFQszP5dClnpjz6wOLxt/xbmUrpcU+0=;
+	s=arc-20240116; t=1776098777; c=relaxed/simple;
+	bh=+32/NHL/Hs/S7OSCUX8XQJyiAPRoev1Ms/TxaNTFma8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4oI+PnQoRVeZbbN7PJDOmcN7VT4OoK3NZr+lHuqPrKxFO7yG96jwwK/k2Z7ktrbpV1RrasvMJvB5BrLHhT1hkD52JA3SMZKMPpBIipr97tu6AzFEqACyK60MLZpjHWvLePkxLanqiuQupPbuhiVXbK4RIkB0NaIlX6sVIhtv7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KelD3RUz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KZmMyEDBlGTUFV24bZYIPMxtx/zGgYKF4XV0nHMp51peiXuozrj/k4whFcO/+FcNV4g8+8wr/VkLs1G/aDoGp49HhZeXK6hJXiTgM0d1xeDF0q6BzgEDxO0u96Ue6sxz23JrSCtrEWWd8TSZsXQW5mitIw5ED8bKfXNQHNeCQp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzHI/cAR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KelD3RUz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B0CC2BCAF;
-	Mon, 13 Apr 2026 16:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzHI/cAR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A086C2BCAF;
+	Mon, 13 Apr 2026 16:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098774;
-	bh=EdeTsZT2d3LEfFQszP5dClnpjz6wOLxt/xbmUrpcU+0=;
+	s=korg; t=1776098776;
+	bh=+32/NHL/Hs/S7OSCUX8XQJyiAPRoev1Ms/TxaNTFma8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KelD3RUzL7PTNUTOUxv55Sbfkvbc3e+ZooZKnZotqY2EHBCI46bPJOc0oPR1at6PC
-	 0AprrSRK59rKN6Mdl7m2b8Ri1Sa7wDjLKrKjsWepzt3Sw80UKJid0rWqZtaZnBTGs6
-	 zNnVhIn/euLb/pVVtNaUOEQLpX7JcNWaLXLYmig4=
+	b=lzHI/cARHDMoZ65nmGsAc5c8ZkGqCNh+0dg4UKbCzMuL0qgo6ICaoC2yg/AYWqKkY
+	 QuWHQS2hbNT5AfbHLxV9p9xod+VxUubSYOIr0mmVk1qh4hev7SeD9xFvDgRhWvvvlM
+	 gQg0JWa5CharSOb7IQFFE7ExKPKoR6CdTGCSVnok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Matt Vollrath <tactii@gmail.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 084/491] i40e: fix src IP mask checks and memcpy argument names in cloud filter
-Date: Mon, 13 Apr 2026 17:55:29 +0200
-Message-ID: <20260413155822.189382750@linuxfoundation.org>
+Subject: [PATCH 5.10 085/491] e1000/e1000e: Fix leak in DMA error cleanup
+Date: Mon, 13 Apr 2026 17:55:30 +0200
+Message-ID: <20260413155822.226231287@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,83 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Matt Vollrath <tactii@gmail.com>
 
-[ Upstream commit e809085f492842ce7a519c9ef72d40f4bca89c13 ]
+[ Upstream commit e94eaef11142b01f77bf8ba4d0b59720b7858109 ]
 
-Fix following issues in the IPv4 and IPv6 cloud filter handling logic in
-both the add and delete paths:
+If an error is encountered while mapping TX buffers, the driver should
+unmap any buffers already mapped for that skb.
 
-- The source-IP mask check incorrectly compares mask.src_ip[0] against
-  tcf.dst_ip[0]. Update it to compare against tcf.src_ip[0]. This likely
-  goes unnoticed because the check is in an "else if" path that only
-  executes when dst_ip is not set, most cloud filter use cases focus on
-  destination-IP matching, and the buggy condition can accidentally
-  evaluate true in some cases.
+Because count is incremented after a successful mapping, it will always
+match the correct number of unmappings needed when dma_error is reached.
+Decrementing count before the while loop in dma_error causes an
+off-by-one error. If any mapping was successful before an unsuccessful
+mapping, exactly one DMA mapping would leak.
 
-- memcpy() for the IPv4 source address incorrectly uses
-  ARRAY_SIZE(tcf.dst_ip) instead of ARRAY_SIZE(tcf.src_ip), although
-  both arrays are the same size.
+In these commits, a faulty while condition caused an infinite loop in
+dma_error:
+Commit 03b1320dfcee ("e1000e: remove use of skb_dma_map from e1000e
+driver")
+Commit 602c0554d7b0 ("e1000: remove use of skb_dma_map from e1000 driver")
 
-- The IPv4 memcpy operations used ARRAY_SIZE(tcf.dst_ip) and ARRAY_SIZE
-  (tcf.src_ip), Update these to use sizeof(cfilter->ip.v4.dst_ip) and
-  sizeof(cfilter->ip.v4.src_ip) to ensure correct and explicit copy size.
+Commit c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of
+unsigned in *_tx_map()") fixed the infinite loop, but introduced the
+off-by-one error.
 
-- In the IPv6 delete path, memcmp() uses sizeof(src_ip6) when comparing
-  dst_ip6 fields. Replace this with sizeof(dst_ip6) to make the intent
-  explicit, even though both fields are struct in6_addr.
+This issue may still exist in the igbvf driver, but I did not address it
+in this patch.
 
-Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Fixes: c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of unsigned in *_tx_map()")
+Assisted-by: Claude:claude-4.6-opus
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/e1000/e1000_main.c | 2 --
+ drivers/net/ethernet/intel/e1000e/netdev.c    | 2 --
+ 2 files changed, 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 3ddb712b732d5..014734ea71ff3 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3655,10 +3655,10 @@ static int i40e_vc_del_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 		cfilter.n_proto = ETH_P_IP;
- 		if (mask.dst_ip[0] & tcf.dst_ip[0])
- 			memcpy(&cfilter.ip.v4.dst_ip, tcf.dst_ip,
--			       ARRAY_SIZE(tcf.dst_ip));
--		else if (mask.src_ip[0] & tcf.dst_ip[0])
-+			       sizeof(cfilter.ip.v4.dst_ip));
-+		else if (mask.src_ip[0] & tcf.src_ip[0])
- 			memcpy(&cfilter.ip.v4.src_ip, tcf.src_ip,
--			       ARRAY_SIZE(tcf.dst_ip));
-+			       sizeof(cfilter.ip.v4.src_ip));
- 		break;
- 	case VIRTCHNL_TCP_V6_FLOW:
- 		cfilter.n_proto = ETH_P_IPV6;
-@@ -3713,7 +3713,7 @@ static int i40e_vc_del_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 		/* for ipv6, mask is set for all sixteen bytes (4 words) */
- 		if (cfilter.n_proto == ETH_P_IPV6 && mask.dst_ip[3])
- 			if (memcmp(&cfilter.ip.v6.dst_ip6, &cf->ip.v6.dst_ip6,
--				   sizeof(cfilter.ip.v6.src_ip6)))
-+				   sizeof(cfilter.ip.v6.dst_ip6)))
- 				continue;
- 		if (mask.vlan_id)
- 			if (cfilter.vlan_id != cf->vlan_id)
-@@ -3799,10 +3799,10 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 		cfilter->n_proto = ETH_P_IP;
- 		if (mask.dst_ip[0] & tcf.dst_ip[0])
- 			memcpy(&cfilter->ip.v4.dst_ip, tcf.dst_ip,
--			       ARRAY_SIZE(tcf.dst_ip));
--		else if (mask.src_ip[0] & tcf.dst_ip[0])
-+			       sizeof(cfilter->ip.v4.dst_ip));
-+		else if (mask.src_ip[0] & tcf.src_ip[0])
- 			memcpy(&cfilter->ip.v4.src_ip, tcf.src_ip,
--			       ARRAY_SIZE(tcf.dst_ip));
-+			       sizeof(cfilter->ip.v4.src_ip));
- 		break;
- 	case VIRTCHNL_TCP_V6_FLOW:
- 		cfilter->n_proto = ETH_P_IPV6;
+diff --git a/drivers/net/ethernet/intel/e1000/e1000_main.c b/drivers/net/ethernet/intel/e1000/e1000_main.c
+index 0b75029029132..d7e7c619a98e2 100644
+--- a/drivers/net/ethernet/intel/e1000/e1000_main.c
++++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
+@@ -2951,8 +2951,6 @@ static int e1000_tx_map(struct e1000_adapter *adapter,
+ dma_error:
+ 	dev_err(&pdev->dev, "TX DMA map failed\n");
+ 	buffer_info->dma = 0;
+-	if (count)
+-		count--;
+ 
+ 	while (count--) {
+ 		if (i == 0)
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index b700663a634d2..902ada6a3b06c 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -5633,8 +5633,6 @@ static int e1000_tx_map(struct e1000_ring *tx_ring, struct sk_buff *skb,
+ dma_error:
+ 	dev_err(&pdev->dev, "Tx DMA map failed\n");
+ 	buffer_info->dma = 0;
+-	if (count)
+-		count--;
+ 
+ 	while (count--) {
+ 		if (i == 0)
 -- 
 2.51.0
 
