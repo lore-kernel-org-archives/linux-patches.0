@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3482874F8;
-	Mon, 13 Apr 2026 16:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515C626CE32;
+	Mon, 13 Apr 2026 16:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096694; cv=none; b=uKkQ/WJJsZzWEIe89h/CX2M+1PFDW9Q7PAr7klCwQnNg/MWyv7o3amI9TixQwlSlq/la0bbZzY8FJsp74Ku43KsC1U4bcJ8v442ZZQidU0EOwniV0yH0jjOABoOIAN+heY2MZpCCaLz0mzhG4H5iQYKLsGfgbcIcO4g8MBJZh7Q=
+	t=1776096697; cv=none; b=J7giglk7DRroat5kCkz3EdUbyCX7AWSb/kKb2SSFSLHeF8KhQoD3UwVLKCL5Kxrc7yBGE+mweQ1MwF7uDH3lzSVhBP1KwCC7xcGabN32KY0OVWvHeGv5MHR7HegRxIXrrDqlBWuqJFD+AgUJ4VGPSmWKojPlVCRCyq9mA0l+M/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096694; c=relaxed/simple;
-	bh=n0E1ain8IkoprFXpzmV3VTweofGR1fZh0PfQyh1mADE=;
+	s=arc-20240116; t=1776096697; c=relaxed/simple;
+	bh=ssNk2we/VRow1CJ72jjh+MosBIgSG9X4p8ODEmxIrGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ao3ZXFQdM2Y2CoN/6usLAg2Y564TTkL08zP/L/6rNWp6dNGwX5S9J9R34hHz5bvN7y1tnJfgu8QOcUCfpWnXQFUO9eqOV95mcBK1yXa7AtUiEYwS3gwvc59qoJ4f8G3cFZAeX1uMI9wFFs8dwV4n5IJb1sRCKwpUMPjzx+9H7WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aC8A/tcS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HAE1w27EZXGPh32Bi7hbAXHPhX/K73oYUhzRrT9NOo0I5lNKQL3gdwQ/S0PsyZJrg3uO7+ONG81zZs+ww56uiuTnAMerAj91+ya0QHhHbl4MCblnoXTUEn3IHCPlsjhBQtAuWnh49/rOPKW7bZulXI6VPcZ3NyAZG8xWj1IvCnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxDE0NkE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aC8A/tcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540FAC2BCAF;
-	Mon, 13 Apr 2026 16:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxDE0NkE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD757C2BCAF;
+	Mon, 13 Apr 2026 16:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096694;
-	bh=n0E1ain8IkoprFXpzmV3VTweofGR1fZh0PfQyh1mADE=;
+	s=korg; t=1776096697;
+	bh=ssNk2we/VRow1CJ72jjh+MosBIgSG9X4p8ODEmxIrGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aC8A/tcSshqrbn3xI4yXrJMAUc0HtPDX0/w+KKisgodnrfzz8GhjCbsNJIvwtTiFH
-	 MjHIIsK1iqeaNqZhAGK4cRip1XPBTAqWKqhhRGkXO82FegY3DxBamIySMoj4FyXQaX
-	 rQ7xj48HWMOUzOBOj5elljDU52NOTF0de/klJu6k=
+	b=NxDE0NkEMns0J+kx6pMZcb5cCsT1VUV+kGPMlPqeKaZxLxtN5Gf5QvnrzH1JBLJ0m
+	 b3Tc/xkSxjIjP2qyHz/x6nonBbSenslT/qRPdFVq5IE9CNUcEfFnwmk86v8WDQSheV
+	 qSeO9fCUOv61iSNs9AH5sgBgSah10Wl3qpnxTWOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+87f770387a9e5dc6b79b@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Leon Chen <leonchen.oss@139.com>
-Subject: [PATCH 6.12 27/70] net: annotate data-races around sk->sk_{data_ready,write_space}
-Date: Mon, 13 Apr 2026 18:00:22 +0200
-Message-ID: <20260413155729.202479357@linuxfoundation.org>
+	Li Xiasong <lixiasong1@huawei.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 28/70] mptcp: fix soft lockup in mptcp_recvmsg()
+Date: Mon, 13 Apr 2026 18:00:23 +0200
+Message-ID: <20260413155729.239617101@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -57,243 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-[ Upstream commit 2ef2b20cf4e04ac8a6ba68493f8780776ff84300 ]
+commit 5dd8025a49c268ab6b94d978532af3ad341132a7 upstream.
 
-skmsg (and probably other layers) are changing these pointers
-while other cpus might read them concurrently.
+syzbot reported a soft lockup in mptcp_recvmsg() [0].
 
-Add corresponding READ_ONCE()/WRITE_ONCE() annotations
-for UDP, TCP and AF_UNIX.
+When receiving data with MSG_PEEK | MSG_WAITALL flags, the skb is not
+removed from the sk_receive_queue. This causes sk_wait_data() to always
+find available data and never perform actual waiting, leading to a soft
+lockup.
 
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Reported-by: syzbot+87f770387a9e5dc6b79b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/699ee9fc.050a0220.1cd54b.0009.GAE@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Jakub Sitnicki <jakub@cloudflare.com>
-Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260225131547.1085509-1-edumazet@google.com
+Fix this by adding a 'last' parameter to track the last peeked skb.
+This allows sk_wait_data() to make informed waiting decisions and prevent
+infinite loops when MSG_PEEK is used.
+
+[0]:
+watchdog: BUG: soft lockup - CPU#2 stuck for 156s! [server:1963]
+Modules linked in:
+CPU: 2 UID: 0 PID: 1963 Comm: server Not tainted 6.19.0-rc8 #61 PREEMPT(none)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:sk_wait_data+0x15/0x190
+Code: 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 41 56 41 55 41 54 49 89 f4 55 48 89 d5 53 48 89 fb <48> 83 ec 30 65 48 8b 05 17 a4 6b 01 48 89 44 24 28 31 c0 65 48 8b
+RSP: 0018:ffffc90000603ca0 EFLAGS: 00000246
+RAX: 0000000000000000 RBX: ffff888102bf0800 RCX: 0000000000000001
+RDX: 0000000000000000 RSI: ffffc90000603d18 RDI: ffff888102bf0800
+RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000101
+R10: 0000000000000000 R11: 0000000000000075 R12: ffffc90000603d18
+R13: ffff888102bf0800 R14: ffff888102bf0800 R15: 0000000000000000
+FS:  00007f6e38b8c4c0(0000) GS:ffff8881b877e000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000055aa7bff1680 CR3: 0000000105cbe000 CR4: 00000000000006f0
+Call Trace:
+ <TASK>
+ mptcp_recvmsg+0x547/0x8c0 net/mptcp/protocol.c:2329
+ inet_recvmsg+0x11f/0x130 net/ipv4/af_inet.c:891
+ sock_recvmsg+0x94/0xc0 net/socket.c:1100
+ __sys_recvfrom+0xb2/0x130 net/socket.c:2256
+ __x64_sys_recvfrom+0x1f/0x30 net/socket.c:2267
+ do_syscall_64+0x59/0x2d0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:131
+RIP: 0033:0x7f6e386a4a1d
+Code: 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 8d 05 f1 de 2c 00 41 89 ca 8b 00 85 c0 75 20 45 31 c9 45 31 c0 b8 2d 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 6b f3 c3 66 0f 1f 84 00 00 00 00 00 41 56 41
+RSP: 002b:00007ffc3c4bb078 EFLAGS: 00000246 ORIG_RAX: 000000000000002d
+RAX: ffffffffffffffda RBX: 000000000000861e RCX: 00007f6e386a4a1d
+RDX: 00000000000003ff RSI: 00007ffc3c4bb150 RDI: 0000000000000004
+RBP: 00007ffc3c4bb570 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000103 R11: 0000000000000246 R12: 00005605dbc00be0
+R13: 00007ffc3c4bb650 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
+
+Fixes: 8e04ce45a8db ("mptcp: fix MSG_PEEK stream corruption")
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260330120335.659027-1-lixiasong1@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Leon Chen <leonchen.oss@139.com>
+[ Conflicts in protocol.c, because commit bc68b0efa1bf ("mptcp: move the
+  whole rx path under msk socket lock protection") and commit
+  d88b2127b242 ("mptcp: add eat_recv_skb helper") (with some
+  dependences) are not in this version. These conflicts were in the
+  context, and not related to this fix. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skmsg.c         |   14 +++++++-------
- net/ipv4/tcp.c           |    4 ++--
- net/ipv4/tcp_bpf.c       |    2 +-
- net/ipv4/tcp_input.c     |   14 ++++++++------
- net/ipv4/tcp_minisocks.c |    2 +-
- net/ipv4/udp.c           |    3 ++-
- net/ipv4/udp_bpf.c       |    2 +-
- net/unix/af_unix.c       |    8 ++++----
- 8 files changed, 26 insertions(+), 23 deletions(-)
+ net/mptcp/protocol.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -1204,8 +1204,8 @@ void sk_psock_start_strp(struct sock *sk
- 		return;
- 
- 	psock->saved_data_ready = sk->sk_data_ready;
--	sk->sk_data_ready = sk_psock_strp_data_ready;
--	sk->sk_write_space = sk_psock_write_space;
-+	WRITE_ONCE(sk->sk_data_ready, sk_psock_strp_data_ready);
-+	WRITE_ONCE(sk->sk_write_space, sk_psock_write_space);
- }
- 
- void sk_psock_stop_strp(struct sock *sk, struct sk_psock *psock)
-@@ -1215,8 +1215,8 @@ void sk_psock_stop_strp(struct sock *sk,
- 	if (!psock->saved_data_ready)
- 		return;
- 
--	sk->sk_data_ready = psock->saved_data_ready;
--	psock->saved_data_ready = NULL;
-+	WRITE_ONCE(sk->sk_data_ready, psock->saved_data_ready);
-+	WRITE_ONCE(psock->saved_data_ready, NULL);
- 	strp_stop(&psock->strp);
- }
- 
-@@ -1298,8 +1298,8 @@ void sk_psock_start_verdict(struct sock
- 		return;
- 
- 	psock->saved_data_ready = sk->sk_data_ready;
--	sk->sk_data_ready = sk_psock_verdict_data_ready;
--	sk->sk_write_space = sk_psock_write_space;
-+	WRITE_ONCE(sk->sk_data_ready, sk_psock_verdict_data_ready);
-+	WRITE_ONCE(sk->sk_write_space, sk_psock_write_space);
- }
- 
- void sk_psock_stop_verdict(struct sock *sk, struct sk_psock *psock)
-@@ -1310,6 +1310,6 @@ void sk_psock_stop_verdict(struct sock *
- 	if (!psock->saved_data_ready)
- 		return;
- 
--	sk->sk_data_ready = psock->saved_data_ready;
-+	WRITE_ONCE(sk->sk_data_ready, psock->saved_data_ready);
- 	psock->saved_data_ready = NULL;
- }
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1346,7 +1346,7 @@ out_err:
- 	err = sk_stream_error(sk, flags, err);
- 	/* make sure we wake any epoll edge trigger waiter */
- 	if (unlikely(tcp_rtx_and_write_queues_empty(sk) && err == -EAGAIN)) {
--		sk->sk_write_space(sk);
-+		READ_ONCE(sk->sk_write_space)(sk);
- 		tcp_chrono_stop(sk, TCP_CHRONO_SNDBUF_LIMITED);
- 	}
- 	return err;
-@@ -4023,7 +4023,7 @@ ao_parse:
- 		break;
- 	case TCP_NOTSENT_LOWAT:
- 		WRITE_ONCE(tp->notsent_lowat, val);
--		sk->sk_write_space(sk);
-+		READ_ONCE(sk->sk_write_space)(sk);
- 		break;
- 	case TCP_INQ:
- 		if (val > 1 || val < 0)
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -725,7 +725,7 @@ int tcp_bpf_update_proto(struct sock *sk
- 			WRITE_ONCE(sk->sk_prot->unhash, psock->saved_unhash);
- 			tcp_update_ulp(sk, psock->sk_proto, psock->saved_write_space);
- 		} else {
--			sk->sk_write_space = psock->saved_write_space;
-+			WRITE_ONCE(sk->sk_write_space, psock->saved_write_space);
- 			/* Pairs with lockless read in sk_clone_lock() */
- 			sock_replace_proto(sk, psock->sk_proto);
- 		}
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -5034,7 +5034,7 @@ static void tcp_data_queue_ofo(struct so
- 
- 	if (unlikely(tcp_try_rmem_schedule(sk, skb, skb->truesize))) {
- 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPOFODROP);
--		sk->sk_data_ready(sk);
-+		READ_ONCE(sk->sk_data_ready)(sk);
- 		tcp_drop_reason(sk, skb, SKB_DROP_REASON_PROTO_MEM);
- 		return;
- 	}
-@@ -5241,7 +5241,7 @@ err:
- void tcp_data_ready(struct sock *sk)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1997,7 +1997,7 @@ static int __mptcp_recvmsg_mskq(struct m
+ 				struct msghdr *msg,
+ 				size_t len, int flags, int copied_total,
+ 				struct scm_timestamping_internal *tss,
+-				int *cmsg_flags)
++				int *cmsg_flags, struct sk_buff **last)
  {
- 	if (tcp_epollin_ready(sk, sk->sk_rcvlowat) || sock_flag(sk, SOCK_DONE))
--		sk->sk_data_ready(sk);
-+		READ_ONCE(sk->sk_data_ready)(sk);
- }
+ 	struct sk_buff *skb, *tmp;
+ 	int total_data_len = 0;
+@@ -2013,6 +2013,7 @@ static int __mptcp_recvmsg_mskq(struct m
+ 			/* skip already peeked skbs */
+ 			if (total_data_len + data_len <= copied_total) {
+ 				total_data_len += data_len;
++				*last = skb;
+ 				continue;
+ 			}
  
- static void tcp_data_queue(struct sock *sk, struct sk_buff *skb)
-@@ -5297,7 +5297,7 @@ queue_and_out:
- 			inet_csk(sk)->icsk_ack.pending |=
- 					(ICSK_ACK_NOMEM | ICSK_ACK_NOW);
- 			inet_csk_schedule_ack(sk);
--			sk->sk_data_ready(sk);
-+			READ_ONCE(sk->sk_data_ready)(sk);
- 
- 			if (skb_queue_len(&sk->sk_receive_queue) && skb->len) {
- 				reason = SKB_DROP_REASON_PROTO_MEM;
-@@ -5735,7 +5735,9 @@ static void tcp_new_space(struct sock *s
- 		tp->snd_cwnd_stamp = tcp_jiffies32;
- 	}
- 
--	INDIRECT_CALL_1(sk->sk_write_space, sk_stream_write_space, sk);
-+	INDIRECT_CALL_1(READ_ONCE(sk->sk_write_space),
-+			sk_stream_write_space,
-+			sk);
- }
- 
- /* Caller made space either from:
-@@ -5941,7 +5943,7 @@ static void tcp_urg(struct sock *sk, str
- 				BUG();
- 			WRITE_ONCE(tp->urg_data, TCP_URG_VALID | tmp);
- 			if (!sock_flag(sk, SOCK_DEAD))
--				sk->sk_data_ready(sk);
-+				READ_ONCE(sk->sk_data_ready)(sk);
+@@ -2053,6 +2054,8 @@ static int __mptcp_recvmsg_mskq(struct m
+ 			WRITE_ONCE(msk->rmem_released, msk->rmem_released + skb->truesize);
+ 			__skb_unlink(skb, &msk->receive_queue);
+ 			__kfree_skb(skb);
++		} else {
++			*last = skb;
  		}
- 	}
- }
-@@ -7341,7 +7343,7 @@ int tcp_conn_request(struct request_sock
- 			sock_put(fastopen_sk);
- 			goto drop_and_free;
- 		}
--		sk->sk_data_ready(sk);
-+		READ_ONCE(sk->sk_data_ready)(sk);
- 		bh_unlock_sock(fastopen_sk);
- 		sock_put(fastopen_sk);
- 	} else {
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -928,7 +928,7 @@ enum skb_drop_reason tcp_child_process(s
- 		reason = tcp_rcv_state_process(child, skb);
- 		/* Wakeup parent, send SIGIO */
- 		if (state == TCP_SYN_RECV && child->sk_state != state)
--			parent->sk_data_ready(parent);
-+			READ_ONCE(parent->sk_data_ready)(parent);
- 	} else {
- 		/* Alas, it is possible again, because we do lookup
- 		 * in main socket hash table and lock on listening
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -1622,7 +1622,8 @@ int __udp_enqueue_schedule_skb(struct so
- 	spin_unlock(&list->lock);
  
- 	if (!sock_flag(sk, SOCK_DEAD))
--		INDIRECT_CALL_1(sk->sk_data_ready, sock_def_readable, sk);
-+		INDIRECT_CALL_1(READ_ONCE(sk->sk_data_ready),
-+				sock_def_readable, sk);
+ 		if (copied >= len)
+@@ -2274,10 +2277,12 @@ static int mptcp_recvmsg(struct sock *sk
+ 		cmsg_flags = MPTCP_CMSG_INQ;
  
- 	busylock_release(busy);
- 	return 0;
---- a/net/ipv4/udp_bpf.c
-+++ b/net/ipv4/udp_bpf.c
-@@ -158,7 +158,7 @@ int udp_bpf_update_proto(struct sock *sk
- 	int family = sk->sk_family == AF_INET ? UDP_BPF_IPV4 : UDP_BPF_IPV6;
+ 	while (copied < len) {
++		struct sk_buff *last = NULL;
+ 		int err, bytes_read;
  
- 	if (restore) {
--		sk->sk_write_space = psock->saved_write_space;
-+		WRITE_ONCE(sk->sk_write_space, psock->saved_write_space);
- 		sock_replace_proto(sk, psock->sk_proto);
- 		return 0;
- 	}
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1707,7 +1707,7 @@ restart:
- 	__skb_queue_tail(&other->sk_receive_queue, skb);
- 	spin_unlock(&other->sk_receive_queue.lock);
- 	unix_state_unlock(other);
--	other->sk_data_ready(other);
-+	READ_ONCE(other->sk_data_ready)(other);
- 	sock_put(other);
- 	return 0;
+ 		bytes_read = __mptcp_recvmsg_mskq(msk, msg, len - copied, flags,
+-						  copied, &tss, &cmsg_flags);
++						  copied, &tss, &cmsg_flags,
++						  &last);
+ 		if (unlikely(bytes_read < 0)) {
+ 			if (!copied)
+ 				copied = bytes_read;
+@@ -2335,7 +2340,7 @@ static int mptcp_recvmsg(struct sock *sk
  
-@@ -2175,7 +2175,7 @@ restart_locked:
- 	scm_stat_add(other, skb);
- 	skb_queue_tail(&other->sk_receive_queue, skb);
- 	unix_state_unlock(other);
--	other->sk_data_ready(other);
-+	READ_ONCE(other->sk_data_ready)(other);
- 	sock_put(other);
- 	scm_destroy(&scm);
- 	return len;
-@@ -2243,7 +2243,7 @@ static int queue_oob(struct socket *sock
- 
- 	sk_send_sigurg(other);
- 	unix_state_unlock(other);
--	other->sk_data_ready(other);
-+	READ_ONCE(other->sk_data_ready)(other);
- 
- 	return err;
- }
-@@ -2354,7 +2354,7 @@ static int unix_stream_sendmsg(struct so
- 		scm_stat_add(other, skb);
- 		skb_queue_tail(&other->sk_receive_queue, skb);
- 		unix_state_unlock(other);
--		other->sk_data_ready(other);
-+		READ_ONCE(other->sk_data_ready)(other);
- 		sent += size;
- 	}
- 
+ 		pr_debug("block timeout %ld\n", timeo);
+ 		mptcp_cleanup_rbuf(msk, copied);
+-		err = sk_wait_data(sk, &timeo, NULL);
++		err = sk_wait_data(sk, &timeo, last);
+ 		if (err < 0) {
+ 			err = copied ? : err;
+ 			goto out_err;
 
 
