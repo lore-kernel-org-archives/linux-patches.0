@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BE531328E;
-	Mon, 13 Apr 2026 16:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A535623E342;
+	Mon, 13 Apr 2026 16:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098908; cv=none; b=shAZN62empRMh4QChuoQpmCIVAChKYxIWueHvjuaXpJERGqTus3bxa62o/UyNYT+78XIL2sQEKqZwtDf73n1Cy+6z5WDFdYIYBvnbKgH/Td905bkGOwflvijKF+G2QP9x4jvZUgknCRxlhkUvRXnuztEiCzHrqK+md+ZwCACC8U=
+	t=1776098910; cv=none; b=R3ZEN0+mxq+Cah8ClEu7vXYAX02KZvj8bUTiCJNQcFtCZ4zRWlopOTJMsQcDboeJq+PczyzhKAwxLcokzeNkzk69btRBpQWctSGuSRjztpoVC+JOcionHjivpn+3SD6H+cR2/zAR6tS0nbH63Zii12tX9xjv6176yB55EiYSwbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098908; c=relaxed/simple;
-	bh=23SQOBCrQB7j8U9IJED3fOmV0hGKwLxh9gpI9RkzFPs=;
+	s=arc-20240116; t=1776098910; c=relaxed/simple;
+	bh=PU8ceK/60vLFmA6J0HqFeeAxFP65VaSdvpTOF0F5jio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZL82k7GgAO3GeGijW5+EIuPi8vv4B2xqk0FxuRFXMQ9IJ/vvv24QungJRLnykXNNf1sc33ytvoz/BxiaktCcntMKY4bnNyDWvgBvTpublRTUiWRY3YAERRnCNjihXd/OrCGqvYw0aCKd+Buat7L+thiXQz5e3wm7qe0lygECqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzw9stdg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C/2BZLvFJSFTqouyZWs9M5C1F97sCaXRraVQsSkPFQ3k16hwT+dDng2dimYw5Dp9JwsdWNj37R0aGfpw2VWcuoGImKsfo4JktC/EMT5ng1F0NC04h7+w2Yo3WMo+CUd94F++2p2Uc5WYCkllRYoMR3XLV8rhC8X88y1kpTDxeDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBkgPHCg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzw9stdg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DA2C2BCAF;
-	Mon, 13 Apr 2026 16:48:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBkgPHCg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B353C2BCAF;
+	Mon, 13 Apr 2026 16:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098908;
-	bh=23SQOBCrQB7j8U9IJED3fOmV0hGKwLxh9gpI9RkzFPs=;
+	s=korg; t=1776098910;
+	bh=PU8ceK/60vLFmA6J0HqFeeAxFP65VaSdvpTOF0F5jio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nzw9stdgOG39a9OFWn95vflTfUV0Txu589L/P/J1QJTzm9aoMHZEg4YVIjZbNWgRW
-	 sniLSmeBEo4YKuVJ13NpXTmTNSY5XEvrunSy3jK5cIAVt6fSnvUU5NlH0j0QYvb8L/
-	 6hiLs3Oy+LvzwIKWpbCO6E4mNmcn7RIs1jFB6JPA=
+	b=cBkgPHCg0VbpDVUinoohO8cyp8cX+0EjLA+kRH4zB1zyD8njykhET5ZLwRC7F1zfF
+	 uUChTsn8indJOWUeu401Nby8NkB7MY3VuOWDTb3yoBhjRuqkX4qsfcfGlSkBiwAsHY
+	 z/iBw48W9mfObWYB5zp3RGvieN0CE1bsIE17gRSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 134/491] iio: imu: inv_icm42600: fix odr switch to the same value
-Date: Mon, 13 Apr 2026 17:56:19 +0200
-Message-ID: <20260413155824.057611929@linuxfoundation.org>
+	syzbot+c711ce17dd78e5d4fdcf@syzkaller.appspotmail.com,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 5.10 135/491] bpf: Forget ranges when refining tnum after JSET
+Date: Mon, 13 Apr 2026 17:56:20 +0200
+Message-ID: <20260413155824.094974602@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,49 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-commit c9f3a593137d862d424130343e77d4b5260a4f5a upstream.
+commit 6279846b9b2532e1b04559ef8bd0dec049f29383 upstream.
 
-ODR switch is done in 2 steps when FIFO is on : change the ODR register
-value and acknowledge change when reading the FIFO ODR change flag.
-When we are switching to the same odr value, we end up waiting for a
-FIFO ODR flag that is never happening.
+Syzbot reported a kernel warning due to a range invariant violation on
+the following BPF program.
 
-Fix the issue by doing nothing and exiting properly when we are
-switching to the same ODR value.
+  0: call bpf_get_netns_cookie
+  1: if r0 == 0 goto <exit>
+  2: if r0 & Oxffffffff goto <exit>
 
-Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+The issue is on the path where we fall through both jumps.
+
+That path is unreachable at runtime: after insn 1, we know r0 != 0, but
+with the sign extension on the jset, we would only fallthrough insn 2
+if r0 == 0. Unfortunately, is_branch_taken() isn't currently able to
+figure this out, so the verifier walks all branches. The verifier then
+refines the register bounds using the second condition and we end
+up with inconsistent bounds on this unreachable path:
+
+  1: if r0 == 0 goto <exit>
+    r0: u64=[0x1, 0xffffffffffffffff] var_off=(0, 0xffffffffffffffff)
+  2: if r0 & 0xffffffff goto <exit>
+    r0 before reg_bounds_sync: u64=[0x1, 0xffffffffffffffff] var_off=(0, 0)
+    r0 after reg_bounds_sync:  u64=[0x1, 0] var_off=(0, 0)
+
+Improving the range refinement for JSET to cover all cases is tricky. We
+also don't expect many users to rely on JSET given LLVM doesn't generate
+those instructions. So instead of improving the range refinement for
+JSETs, Eduard suggested we forget the ranges whenever we're narrowing
+tnums after a JSET. This patch implements that approach.
+
+Reported-by: syzbot+c711ce17dd78e5d4fdcf@syzkaller.appspotmail.com
+Suggested-by: Eduard Zingerman <eddyz87@gmail.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/9d4fd6432a095d281f815770608fdcd16028ce0b.1752171365.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[ shung-hsi.yu: no detection or kernel warning for invariant violation before
+  6.8, but the same umin=1,umax=0 state can occur when jset is preceed by r0 < 1.
+  Changes were made to adapt to older range refinement logic before commit
+  67420501e868 ("bpf: generalize reg_set_min_max() to handle non-const register
+  comparisons"). ]
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    2 ++
- drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    2 ++
- 2 files changed, 4 insertions(+)
+ kernel/bpf/verifier.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-@@ -322,6 +322,8 @@ static int inv_icm42600_accel_write_odr(
- 		return -EINVAL;
- 
- 	conf.odr = inv_icm42600_accel_odr_conv[idx / 2];
-+	if (conf.odr == st->conf.accel.odr)
-+		return 0;
- 
- 	pm_runtime_get_sync(dev);
- 	mutex_lock(&st->lock);
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-@@ -334,6 +334,8 @@ static int inv_icm42600_gyro_write_odr(s
- 		return -EINVAL;
- 
- 	conf.odr = inv_icm42600_gyro_odr_conv[idx / 2];
-+	if (conf.odr == st->conf.gyro.odr)
-+		return 0;
- 
- 	pm_runtime_get_sync(dev);
- 	mutex_lock(&st->lock);
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -7823,6 +7823,10 @@ static void reg_set_min_max(struct bpf_r
+ 		}
+ 		break;
+ 	case BPF_JSET:
++		/* Forget the ranges before narrowing tnums, to avoid invariant
++		 * violations if we're on a dead branch.
++		 */
++		__mark_reg_unbounded(false_reg);
+ 		if (is_jmp32) {
+ 			false_32off = tnum_and(false_32off, tnum_const(~val32));
+ 			if (is_power_of_2(val32))
 
 
