@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF3731714B;
-	Mon, 13 Apr 2026 16:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29D831619A;
+	Mon, 13 Apr 2026 16:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098998; cv=none; b=ufLHpHqU6OH/zbCXNkkfsHmaKSX3VLzm+BiaVsomwJROBNJYKsaXyLjv3DVVM0BFHNbs7cbrPn7CFJRjg5z+7468gXQukh1iZ5nNMxlCAtcY/yDwvlcDxTZWRh+fVkpekzJQSMQjsBRAqmhCVg+Sr/8Ip4clwCjQ5ga9PFl2ytU=
+	t=1776099001; cv=none; b=Uy6PzP1zxtPJw7ALC5A/0ENboY5RmqQ5vs1o17qwfTHDeS5J5O0qnIXN7xOTEeATsrlFTtNxy3xZDUZtbL7MbGR/F8pW2SMUNGGScZQuFmjFP1pE6ZL1kxSStIDun9HKbGLYOC1NcH/g+gNY34P9/v9izo4/uxlhr5eIJ5puigQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098998; c=relaxed/simple;
-	bh=HOUz5dxKfePz+oHtXWRExLSc+IMuU8GVg2XvqYAL4Hk=;
+	s=arc-20240116; t=1776099001; c=relaxed/simple;
+	bh=Xpj5zrrDyhJNf4llC5lLDhOWo3tG2mEyafibG6GTWV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJvANuFSUyCufeUANfeIrueQ6kieGQQ52gBNxaBr8DXay3/ACOuU2Wb3AoKkwnA+FXV3Y2v0D09Co3xZqhT/Gy9gg+KbXuY7VZSLTtiazNrHekCPkAXNuxoeJyCpr85rGjcvdEjb06JibCzJdoCVZ9bDcizZS3wk0QAj5olDFW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZkWeTp8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YJXtnWrh8Z194OolQWalnt+A4J7R+ejMRe5Npq8hFRxGhJLnrSR9Q2nU3WdK4Jqr8tR8GSxkPGjbh4tTUdpZee27/KsaSlhajFho8gr7lmo+CQc4VwHads77WRy6MQITeA7csd5DRZ+loF2Fk3oXKxgQhj4IGFnTI/LE0EJGcA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/p/dNJI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZkWeTp8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83B6C2BCAF;
-	Mon, 13 Apr 2026 16:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/p/dNJI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8877CC2BCAF;
+	Mon, 13 Apr 2026 16:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098998;
-	bh=HOUz5dxKfePz+oHtXWRExLSc+IMuU8GVg2XvqYAL4Hk=;
+	s=korg; t=1776099000;
+	bh=Xpj5zrrDyhJNf4llC5lLDhOWo3tG2mEyafibG6GTWV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FZkWeTp8CRej7F994CMapNQglI11ayQO89F8xSIPSsU8r0J5Rhko8UWNdLhO2vVZt
-	 M5bXr8iV1B0Wgx4GqIREiC5O+9ilCiYl6GDEUr0hsyP5VeB7DA0N/OC7VmzbyWDU72
-	 ismptm1MaOGUYPyxj+fpHS0UsYWI8BW349xk4NRo=
+	b=C/p/dNJIf2KLQeoLxBJgdH4GkA4W5Ubu5LycLNkjJzc1ppvbD2DQLFN2wokZG13aU
+	 ylpH/UmpEp3pMFIPy4SsXhzosKLLDcbutBEjuUSGP9GLBzUF3tAXaR/ECoyGiEdP+9
+	 oX+eMp7bmGZUZB+LRP7C6m23mdaNypPg1dV8C4Ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 5.10 169/491] s390/xor: Fix xor_xc_2() inline assembly constraints
-Date: Mon, 13 Apr 2026 17:56:54 +0200
-Message-ID: <20260413155825.370513060@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 170/491] iomap: reject delalloc mappings during writeback
+Date: Mon, 13 Apr 2026 17:56:55 +0200
+Message-ID: <20260413155825.409099796@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,39 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit f775276edc0c505dc0f782773796c189f31a1123 ]
+[ Upstream commit d320f160aa5ff36cdf83c645cca52b615e866e32 ]
 
-The inline assembly constraints for xor_xc_2() are incorrect. "bytes",
-"p1", and "p2" are input operands, while all three of them are modified
-within the inline assembly. Given that the function consists only of this
-inline assembly it seems unlikely that this may cause any problems, however
-fix this in any case.
+Filesystems should never provide a delayed allocation mapping to
+writeback; they're supposed to allocate the space before replying.
+This can lead to weird IO errors and crashes in the block layer if the
+filesystem is being malicious, or if it hadn't set iomap->dev because
+it's a delalloc mapping.
 
-Fixes: 2cfc5f9ce7f5 ("s390/xor: optimized xor routing using the XC instruction")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Link: https://lore.kernel.org/r/20260302133500.1560531-2-hca@linux.ibm.com
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fix this by failing writeback on delalloc mappings.  Currently no
+filesystems actually misbehave in this manner, but we ought to be
+stricter about things like that.
+
+Cc: stable@vger.kernel.org # v5.5
+Fixes: 598ecfbaa742ac ("iomap: lift the xfs writeback code to iomap")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://patch.msgid.link/20260302173002.GL13829@frogsfrogsfrogs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ Different error handling structure ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/lib/xor.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/iomap/buffered-io.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/s390/lib/xor.c
-+++ b/arch/s390/lib/xor.c
-@@ -28,8 +28,8 @@ static void xor_xc_2(unsigned long bytes
- 		"	j	3f\n"
- 		"2:	xc	0(1,%1),0(%2)\n"
- 		"3:\n"
--		: : "d" (bytes), "a" (p1), "a" (p2)
--		: "0", "1", "cc", "memory");
-+		: "+d" (bytes), "+a" (p1), "+a" (p2)
-+		: : "0", "1", "cc", "memory");
- }
- 
- static void xor_xc_3(unsigned long bytes, unsigned long *p1, unsigned long *p2,
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -1364,10 +1364,13 @@ iomap_writepage_map(struct iomap_writepa
+ 		error = wpc->ops->map_blocks(wpc, inode, file_offset);
+ 		if (error)
+ 			break;
+-		if (WARN_ON_ONCE(wpc->iomap.type == IOMAP_INLINE))
+-			continue;
+ 		if (wpc->iomap.type == IOMAP_HOLE)
+ 			continue;
++		if (WARN_ON_ONCE(wpc->iomap.type != IOMAP_UNWRITTEN &&
++				 wpc->iomap.type != IOMAP_MAPPED)) {
++			error = -EIO;
++			break;
++		}
+ 		iomap_add_to_ioend(inode, file_offset, page, iop, wpc, wbc,
+ 				 &submit_list);
+ 		count++;
 
 
