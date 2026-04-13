@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8869A26A1CF;
-	Mon, 13 Apr 2026 16:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A5327466A;
+	Mon, 13 Apr 2026 16:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096885; cv=none; b=AOgGsuykfN64LSyceKk45OUz/Rh76mKgwgCoUESpn+U0kZJ+vsPKvnv+DORpWyUU+i83Mnhal7Mnoj0yHYdLJ38f3sdQ5DZtHEzKJEPj/iZ6ehJCpR4+sRHl6RRu3VMNMscjJLV5ElKsLavakRAtpMoUcGegTap9OsuFRuWbAYw=
+	t=1776096888; cv=none; b=s3NAKdFFvF5chdvCg3C3UvEGLq8z4OrZ9Z9R+s4y758GqhxCcdI8uitUy16rRPtiLy+RUMn6MME8V2pJBG1b7yi4kUUf7g4UUYpM2fxUvy7nDphvjlVKiUjnchSnvup4iTM2KHwEZYNg6wGAdyQLlxBrREC/QtBBVWOZj0eFs+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096885; c=relaxed/simple;
-	bh=jIhH6/TsaK+lFXJdLhIp/cpjBCHLgjXZVK2srDH1pPI=;
+	s=arc-20240116; t=1776096888; c=relaxed/simple;
+	bh=1Q28rT/0nyAjLT74tDPlQ/XbZWr/ZuZcl33XmyQ3NYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JI7IBDWHUoaVvNFqbL0hxnwlLpSIH9zLVkIfPPmVl/a0ueJt/1gPixTURlyBbi5w6ze2NSqo/tyxnnohj2GGu1TirLKpkdPU9MmpLOop7IStApuw+e51zt4jo/JKFzWRB4IaLj72rQ6xR1U+C0jxZkMeRzktMHe8duHEHSCKiQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=da9cpmk3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hf75N30HtLD9JHkdTgKgUDQtVEcfGiamqz8EK5Ju5uZdNjyngRsF2DZVz8nuLwP/zisA9RZ5U9VQ5jQS4IzXSFVGFtb3CiKtkuYeCuk8vhPwKNYMkrxWnc10Tzagrd22k0R5b5ufaLFd3PaXb0KraaqD/JNixEGE6pcagegjuo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9v1NXhX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="da9cpmk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA077C2BCB4;
-	Mon, 13 Apr 2026 16:14:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9v1NXhX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C169C2BCAF;
+	Mon, 13 Apr 2026 16:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096885;
-	bh=jIhH6/TsaK+lFXJdLhIp/cpjBCHLgjXZVK2srDH1pPI=;
+	s=korg; t=1776096887;
+	bh=1Q28rT/0nyAjLT74tDPlQ/XbZWr/ZuZcl33XmyQ3NYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=da9cpmk3c5/Qa8mvSnt2jXseaTGuB2qvyGuIsGYnfio3GEYkyef3lSnAwvJ9V8aki
-	 oMShjg7Qn8VZOMoeSijPOF7iGhVqkyzfKroMDJWvVNiS8bH90BYBUK2iXTAmLpkcM8
-	 CEUvtB6Y95fMZQHpYDnpBlqZUhngSIwQ/INYJLUs=
+	b=v9v1NXhX06kwW2SQm9fqqnbnjrxv5dZSg7ob2YbqnirwVGlHieQOWM6f9Du51mxkB
+	 feNtA5ChJPgQ5jmo1PG8WwxcSWxRFaseSHR3KrHsRYMthFKe6s5ddQfTgnvFuFD0Pc
+	 YJRrvsRIv9dc54EWh7wMOiL/O0AkZvQLSdDsFCiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.6 29/50] batman-adv: reject oversized global TT response buffers
-Date: Mon, 13 Apr 2026 18:00:56 +0200
-Message-ID: <20260413155725.600200158@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>
+Subject: [PATCH 6.6 03/50] xfrm_user: fix info leak in build_report()
+Date: Mon, 13 Apr 2026 18:00:30 +0200
+Message-ID: <20260413155724.630375209@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -57,64 +56,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 3a359bf5c61d52e7f09754108309d637532164a6 upstream.
+commit d10119968d0e1f2b669604baf2a8b5fdb72fa6b4 upstream.
 
-batadv_tt_prepare_tvlv_global_data() builds the allocation length for a
-global TT response in 16-bit temporaries. When a remote originator
-advertises a large enough global TT, the TT payload length plus the VLAN
-header offset can exceed 65535 and wrap before kmalloc().
+struct xfrm_user_report is a __u8 proto field followed by a struct
+xfrm_selector which means there is three "empty" bytes of padding, but
+the padding is never zeroed before copying to userspace.  Fix that up by
+zeroing the structure before setting individual member variables.
 
-The full-table response path still uses the original TT payload length when
-it fills tt_change, so the wrapped allocation is too small and
-batadv_tt_prepare_tvlv_global_data() writes past the end of the heap object
-before the later packet-size check runs.
-
-Fix this by rejecting TT responses whose TVLV value length cannot fit in
-the 16-bit TVLV payload length field.
-
-Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
-Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Cc: stable <stable@kernel.org>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_user.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -844,8 +844,8 @@ batadv_tt_prepare_tvlv_global_data(struc
- {
- 	u16 num_vlan = 0;
- 	u16 num_entries = 0;
--	u16 change_offset;
--	u16 tvlv_len;
-+	u16 tvlv_len = 0;
-+	unsigned int change_offset;
- 	struct batadv_tvlv_tt_vlan_data *tt_vlan;
- 	struct batadv_orig_node_vlan *vlan;
- 	u8 *tt_change_ptr;
-@@ -863,6 +863,11 @@ batadv_tt_prepare_tvlv_global_data(struc
- 	if (*tt_len < 0)
- 		*tt_len = batadv_tt_len(num_entries);
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -3740,6 +3740,7 @@ static int build_report(struct sk_buff *
+ 		return -EMSGSIZE;
  
-+	if (change_offset > U16_MAX || *tt_len > U16_MAX - change_offset) {
-+		*tt_len = 0;
-+		goto out;
-+	}
-+
- 	tvlv_len = *tt_len;
- 	tvlv_len += change_offset;
+ 	ur = nlmsg_data(nlh);
++	memset(ur, 0, sizeof(*ur));
+ 	ur->proto = proto;
+ 	memcpy(&ur->sel, sel, sizeof(ur->sel));
  
 
 
