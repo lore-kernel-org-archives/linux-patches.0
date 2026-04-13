@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F6C2D8364;
-	Mon, 13 Apr 2026 16:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCC62D8364;
+	Mon, 13 Apr 2026 16:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098125; cv=none; b=PvTTwo427sZ8yZhDPrSHyejFFpQ2+8/YDq+r9+WUxSsoO4CdIk1GqVD9f6Ma+61UJWUid7MVgu2/+BetpYiQHsHbJE0zzBQFxehVLuqaOcL7MbJ2iK86jFkFlWMcZ5eCuu2xW7VJMi97jjJQInv12qHbZY325mrnVuqIq4lp3HY=
+	t=1776098128; cv=none; b=pc9mPDakzLbhVaOcMsnMBV4tVzYGTtx0nPV2boqV/V1TVdE5zwO6QzpfxktZBAdD9JZOGBRJd64XSs6dOLLcTpfuu6qBvb2zI3jbhNuiv8GWKtK8Palx73KXa+b2w4OYb8gVldr1Xc0Z7E891eJqq3sPPUM0zalS+JIAGExbnbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098125; c=relaxed/simple;
-	bh=x+Hr0nys4A4qGS2u4Tme/cLu0huml+cUhM9HMRmJoh0=;
+	s=arc-20240116; t=1776098128; c=relaxed/simple;
+	bh=TXUYGRa/BqeoT/WTk3WP7O650KK3i+zfMeolzucIQKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nLsV4Snnz1Jcwi/RVPEWhxDOdELBDZoggpe1WVZ1KBN3GY4j3kTVjoJOnzSglN8F9+hLpGmVmZTQTuFkE0MAkUca3MUcBWH6e0UqNivVE6iE6LndISo5l3K/RfH7acbZ7Wb6NZ9dS08/iVpkK6ic9U77RSx8Dh+t0PZ3EEdCV3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhkIwaDu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SghQjZa2woqTdKKSzWXbHqTU6XwoeMgHi76a1rQ4gOLFOlc7/wT3xaEws6mwOyYsJZ95xF5CY3wa4WI7bAoIey6025IAG3pDSIe47mq3a+xlt7wOdKcAptd+DrvJ+EzdE26PraC6LSsjQXrgwsiAoQe2siDdXU/h2hj1gJ6luJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLlYS7Gz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhkIwaDu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF786C2BCAF;
-	Mon, 13 Apr 2026 16:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLlYS7Gz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B0BC2BCAF;
+	Mon, 13 Apr 2026 16:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098125;
-	bh=x+Hr0nys4A4qGS2u4Tme/cLu0huml+cUhM9HMRmJoh0=;
+	s=korg; t=1776098127;
+	bh=TXUYGRa/BqeoT/WTk3WP7O650KK3i+zfMeolzucIQKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhkIwaDu8mYakTq5VyHvKXeODXsxFUsm9kYFsrOR+zNhBVqK69uVs8DifKRBwpQJ5
-	 GKcvrYx5Y3lRJcU/vDsaBZvKkNprS33v0DqAh0LLGU0TsUc6Xc3Bla093T5/RV6jLi
-	 ZdVKqw/n6gPMtOyXqZ0tuuorMnS/TpoGOuPkfsNk=
+	b=xLlYS7GzhZ6T0zStlbfomEPns/IbJowOVYF9JrVuBVtX8EKl+Bh/ERvP1PvJx8WJO
+	 yX6ttSQNBNQkRrd1eTTJgybZaJziWeydYwMuvuCodYJ7jVGVWRvcYyZ3aHSzx9Om5r
+	 ncKeHLCGRNtIdQpTxyJU0+75q+Xi0GB0MBi8xUbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 371/570] cpufreq: conservative: Reset requested_freq on limits change
-Date: Mon, 13 Apr 2026 17:58:22 +0200
-Message-ID: <20260413155844.376072677@linuxfoundation.org>
+	Yuchan Nam <entropy1110@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 5.15 372/570] media: mc, v4l2: serialize REINIT and REQBUFS with req_queue_mutex
+Date: Mon, 13 Apr 2026 17:58:23 +0200
+Message-ID: <20260413155844.415236228@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,95 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Yuchan Nam <entropy1110@gmail.com>
 
-commit 6a28fb8cb28b9eb39a392e531d938a889eacafc5 upstream.
+commit bef4f4a88b73e4cc550d25f665b8a9952af22773 upstream.
 
-A recently reported issue highlighted that the cached requested_freq
-is not guaranteed to stay in sync with policy->cur. If the platform
-changes the actual CPU frequency after the governor sets one (e.g.
-due to platform-specific frequency scaling) and a re-sync occurs
-later, policy->cur may diverge from requested_freq.
+MEDIA_REQUEST_IOC_REINIT can run concurrently with VIDIOC_REQBUFS(0)
+queue teardown paths. This can race request object cleanup against vb2
+queue cancellation and lead to use-after-free reports.
 
-This can lead to incorrect behavior in the conservative governor.
-For example, the governor may assume the CPU is already running at
-the maximum frequency and skip further increases even though there
-is still headroom.
+We already serialize request queueing against STREAMON/OFF with
+req_queue_mutex. Extend that serialization to REQBUFS, and also take
+the same mutex in media_request_ioctl_reinit() so REINIT is in the
+same exclusion domain.
 
-Avoid this by resetting the cached requested_freq to policy->cur on
-detecting a change in policy limits.
+This keeps request cleanup and queue cancellation from running in
+parallel for request-capable devices.
 
-Reported-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Tested-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://lore.kernel.org/all/20260210115458.3493646-1-zhenglifeng1@huawei.com/
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/d846a141a98ac0482f20560fcd7525c0f0ec2f30.1773999467.git.viresh.kumar@linaro.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 6093d3002eab ("media: vb2: keep a reference to the request until dqbuf")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuchan Nam <entropy1110@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq_conservative.c |   12 ++++++++++++
- drivers/cpufreq/cpufreq_governor.c     |    3 +++
- drivers/cpufreq/cpufreq_governor.h     |    1 +
- 3 files changed, 16 insertions(+)
+ drivers/media/mc/mc-request.c        |    5 +++++
+ drivers/media/v4l2-core/v4l2-ioctl.c |    5 +++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/cpufreq/cpufreq_conservative.c
-+++ b/drivers/cpufreq/cpufreq_conservative.c
-@@ -311,6 +311,17 @@ static void cs_start(struct cpufreq_poli
- 	dbs_info->requested_freq = policy->cur;
+--- a/drivers/media/mc/mc-request.c
++++ b/drivers/media/mc/mc-request.c
+@@ -190,6 +190,8 @@ static long media_request_ioctl_reinit(s
+ 	struct media_device *mdev = req->mdev;
+ 	unsigned long flags;
+ 
++	mutex_lock(&mdev->req_queue_mutex);
++
+ 	spin_lock_irqsave(&req->lock, flags);
+ 	if (req->state != MEDIA_REQUEST_STATE_IDLE &&
+ 	    req->state != MEDIA_REQUEST_STATE_COMPLETE) {
+@@ -197,6 +199,7 @@ static long media_request_ioctl_reinit(s
+ 			"request: %s not in idle or complete state, cannot reinit\n",
+ 			req->debug_str);
+ 		spin_unlock_irqrestore(&req->lock, flags);
++		mutex_unlock(&mdev->req_queue_mutex);
+ 		return -EBUSY;
+ 	}
+ 	if (req->access_count) {
+@@ -204,6 +207,7 @@ static long media_request_ioctl_reinit(s
+ 			"request: %s is being accessed, cannot reinit\n",
+ 			req->debug_str);
+ 		spin_unlock_irqrestore(&req->lock, flags);
++		mutex_unlock(&mdev->req_queue_mutex);
+ 		return -EBUSY;
+ 	}
+ 	req->state = MEDIA_REQUEST_STATE_CLEANING;
+@@ -214,6 +218,7 @@ static long media_request_ioctl_reinit(s
+ 	spin_lock_irqsave(&req->lock, flags);
+ 	req->state = MEDIA_REQUEST_STATE_IDLE;
+ 	spin_unlock_irqrestore(&req->lock, flags);
++	mutex_unlock(&mdev->req_queue_mutex);
+ 
+ 	return 0;
  }
+--- a/drivers/media/v4l2-core/v4l2-ioctl.c
++++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+@@ -2926,13 +2926,14 @@ static long __video_do_ioctl(struct file
+ 		vfh = file->private_data;
  
-+static void cs_limits(struct cpufreq_policy *policy)
-+{
-+	struct cs_policy_dbs_info *dbs_info = to_dbs_info(policy->governor_data);
-+
-+	/*
-+	 * The limits have changed, so may have the current frequency. Reset
-+	 * requested_freq to avoid any unintended outcomes due to the mismatch.
-+	 */
-+	dbs_info->requested_freq = policy->cur;
-+}
-+
- static struct dbs_governor cs_governor = {
- 	.gov = CPUFREQ_DBS_GOVERNOR_INITIALIZER("conservative"),
- 	.kobj_type = { .default_attrs = cs_attributes },
-@@ -320,6 +331,7 @@ static struct dbs_governor cs_governor =
- 	.init = cs_init,
- 	.exit = cs_exit,
- 	.start = cs_start,
-+	.limits = cs_limits,
- };
+ 	/*
+-	 * We need to serialize streamon/off with queueing new requests.
++	 * We need to serialize streamon/off/reqbufs with queueing new requests.
+ 	 * These ioctls may trigger the cancellation of a streaming
+ 	 * operation, and that should not be mixed with queueing a new
+ 	 * request at the same time.
+ 	 */
+ 	if (v4l2_device_supports_requests(vfd->v4l2_dev) &&
+-	    (cmd == VIDIOC_STREAMON || cmd == VIDIOC_STREAMOFF)) {
++	    (cmd == VIDIOC_STREAMON || cmd == VIDIOC_STREAMOFF ||
++	     cmd == VIDIOC_REQBUFS)) {
+ 		req_queue_lock = &vfd->v4l2_dev->mdev->req_queue_mutex;
  
- #define CPU_FREQ_GOV_CONSERVATIVE	(cs_governor.gov)
---- a/drivers/cpufreq/cpufreq_governor.c
-+++ b/drivers/cpufreq/cpufreq_governor.c
-@@ -561,6 +561,7 @@ EXPORT_SYMBOL_GPL(cpufreq_dbs_governor_s
- 
- void cpufreq_dbs_governor_limits(struct cpufreq_policy *policy)
- {
-+	struct dbs_governor *gov = dbs_governor_of(policy);
- 	struct policy_dbs_info *policy_dbs;
- 
- 	/* Protect gov->gdbs_data against cpufreq_dbs_governor_exit() */
-@@ -572,6 +573,8 @@ void cpufreq_dbs_governor_limits(struct
- 	mutex_lock(&policy_dbs->update_mutex);
- 	cpufreq_policy_apply_limits(policy);
- 	gov_update_sample_delay(policy_dbs, 0);
-+	if (gov->limits)
-+		gov->limits(policy);
- 	mutex_unlock(&policy_dbs->update_mutex);
- 
- out:
---- a/drivers/cpufreq/cpufreq_governor.h
-+++ b/drivers/cpufreq/cpufreq_governor.h
-@@ -140,6 +140,7 @@ struct dbs_governor {
- 	int (*init)(struct dbs_data *dbs_data);
- 	void (*exit)(struct dbs_data *dbs_data);
- 	void (*start)(struct cpufreq_policy *policy);
-+	void (*limits)(struct cpufreq_policy *policy);
- };
- 
- static inline struct dbs_governor *dbs_governor_of(struct cpufreq_policy *policy)
+ 		if (mutex_lock_interruptible(req_queue_lock))
 
 
