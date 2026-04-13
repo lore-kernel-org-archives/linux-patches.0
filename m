@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6917F32F765;
-	Mon, 13 Apr 2026 17:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B49A330B3A;
+	Mon, 13 Apr 2026 17:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099847; cv=none; b=oJv+gO2zJ5m52DBkzU0qEKr3PZ3PKozDJ6SfXc3aqNx0uy3F0XxisU0pyHaUCwhAfXXk2srnIaJ9wXYtEvRdguEIoJOf1KEs/DQ0+Uy7UiC7nxMNCY33BehjfV5oECneVLAVPyTwGcZ27QKzTL+PeDLYTQCsDcJv02BZoDSORik=
+	t=1776099850; cv=none; b=aBjCg441e79uFsRzqcIXCb63FybWeBJOusbgaFJzyrQewNwOzxCGgXMAdG30AIjL2qHhRs2RHctiDrttsptAMeTRRonoeDBOgB2+QEHwDyVg24QaG8+tb1a7Wo/m2YAFj/4SIrq4U01R2unlsKVSQsxn3yARk06JD+J0OGvqg/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099847; c=relaxed/simple;
-	bh=YCr5wqXnuMWxYvYalQFqcQUQ2vW6YcoabkhYlp/cjr4=;
+	s=arc-20240116; t=1776099850; c=relaxed/simple;
+	bh=kX03pxv2m60xjUkHokPy3/cEGsWJHflopk6+kcucqn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpPTDwr1Xugm98Gt7EnODyLvWP788+AF4HSwpg0za+hKeXR2+2Jkj9fJp8G1hET6jk2NbxsrSbcsPf5FOl3ycsMJqr+MbEK4591AYSs+Li748jZWoPk9qNZ0ooVBpNP198U5BzbX8A00hOqFSe6sOZqybkDsYKsH+Mm8g0ko57s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVTP/z7s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nca559gb2ujDwsNJWMRvn+CiGH3Fv7feh/ZKPd7+HWfiVRBsQ1NPDladR1JfeqmYzB+U8E2k7y2VDsODwQsm1HvsKg59tV21OjXqQgc2OA59qjBzcsa0NgBwyEDqg3XjtHLeDGiXpY7g1z9iIlA3iVX7S1HXuRVyYBEUqgah6us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCTRi1xX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVTP/z7s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC289C2BCAF;
-	Mon, 13 Apr 2026 17:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCTRi1xX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C95C2BCAF;
+	Mon, 13 Apr 2026 17:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099847;
-	bh=YCr5wqXnuMWxYvYalQFqcQUQ2vW6YcoabkhYlp/cjr4=;
+	s=korg; t=1776099849;
+	bh=kX03pxv2m60xjUkHokPy3/cEGsWJHflopk6+kcucqn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVTP/z7sVvudpT72xbB2CetocALjjfAEpO21k/rZicRkWy7BmcxQ3r6fPdiJr2yj6
-	 RiuOlZVvkSj1aZcrd9MmiUPEF4HopVeYckSzMTJPgrkSiVCYmzwiHnfNwXnfpXgFYb
-	 PFPAsn0E57JeLnyE94JQRp3HnHyR5lOMzk89VBng=
+	b=wCTRi1xXAOo0MM6tRNerKHIf/KTdg2JNoqy4+HAD3b/E5J8lFMDn58/9KqEP4Ka0t
+	 JsEHkQ3MscDMThK+IjaBlxogtai3tN6Lb1qhwasllRRNb8JamwcEYAB2S9NrDhEzpz
+	 ImVfAua2y+WijJadElTx1zg9SpUHyW0Mrig+HAzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Daniel Scally <djrscally@gmail.com>
-Subject: [PATCH 5.10 489/491] device property: fix of node refcount leak in fwnode_graph_get_next_endpoint()
-Date: Mon, 13 Apr 2026 18:02:14 +0200
-Message-ID: <20260413155837.362599157@linuxfoundation.org>
+	John Hancock <john@kernel.doghat.io>,
+	bjorn.forsman@gmail.com,
+	Linux kernel regressions list <regressions@lists.linux.dev>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: [PATCH 5.10 490/491] Revert "PCI: Enable ACS after configuring IOMMU for OF platforms"
+Date: Mon, 13 Apr 2026 18:02:15 +0200
+Message-ID: <20260413155837.400163719@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,69 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-commit 39af728649b05e88a2b40e714feeee6451c3f18e upstream.
+This reverts commit 573497f350b3cdb526c8c38955ddd287c5d4cc53 which is
+commit c41e2fb67e26b04d919257875fa954aa5f6e392e upstream.
 
-The 'parent' returned by fwnode_graph_get_port_parent()
-with refcount incremented when 'prev' is not NULL, it
-needs be put when finish using it.
+The original commit attempted to enable ACS in pci_dma_configure() prior
+to IOMMU group assignment in iommu_init_device() to fix the ACS enablement
+issue for OF platforms. But that assumption doesn't hold true for kernel
+versions prior to v6.15, because on these older kernels,
+pci_dma_configure() is called *after* iommu_init_device(). So the IOMMU
+groups are already created before the ACS gets enabled. This causes the
+devices that should have been split into separate groups by ACS, getting
+merged into one group, thereby breaking the IOMMU isolation as reported on
+the AMD machines.
 
-Because the parent is const, introduce a new variable to
-store the returned fwnode, then put it before returning
-from fwnode_graph_get_next_endpoint().
+So revert the offending commit to restore the IOMMU group assignment on
+those affected machines. It should be noted that ACS has never really
+worked on kernel versions prior to v6.15, so the revert doesn't make any
+difference for OF platforms.
 
-Fixes: b5b41ab6b0c1 ("device property: Check fwnode->secondary in fwnode_graph_get_next_endpoint()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-and-tested-by: Daniel Scally <djrscally@gmail.com>
-Link: https://lore.kernel.org/r/20221123022542.2999510-1-yangyingliang@huawei.com
+Reported-by: John Hancock <john@kernel.doghat.io>
+Reported-by: bjorn.forsman@gmail.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221234
+Fixes: b20b659c2c6a ("PCI: Enable ACS after configuring IOMMU for OF platforms")
+Cc: Linux kernel regressions list <regressions@lists.linux.dev>
+Link: https://lore.kernel.org/regressions/2c30f181-ffc6-4d63-a64e-763cf4528f48@leemhuis.info
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/property.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/pci/pci-driver.c |    8 --------
+ drivers/pci/pci.c        |   10 +++++++++-
+ drivers/pci/pci.h        |    1 -
+ 3 files changed, 9 insertions(+), 10 deletions(-)
 
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -1054,26 +1054,32 @@ struct fwnode_handle *
- fwnode_graph_get_next_endpoint(const struct fwnode_handle *fwnode,
- 			       struct fwnode_handle *prev)
- {
-+	struct fwnode_handle *ep, *port_parent = NULL;
- 	const struct fwnode_handle *parent;
--	struct fwnode_handle *ep;
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -1601,14 +1601,6 @@ static int pci_dma_configure(struct devi
+ 		ret = acpi_dma_configure(dev, acpi_get_dma_attr(adev));
+ 	}
  
- 	/*
- 	 * If this function is in a loop and the previous iteration returned
- 	 * an endpoint from fwnode->secondary, then we need to use the secondary
- 	 * as parent rather than @fwnode.
- 	 */
--	if (prev)
--		parent = fwnode_graph_get_port_parent(prev);
--	else
-+	if (prev) {
-+		port_parent = fwnode_graph_get_port_parent(prev);
-+		parent = port_parent;
-+	} else {
- 		parent = fwnode;
-+	}
- 	if (IS_ERR_OR_NULL(parent))
- 		return NULL;
- 
- 	ep = fwnode_call_ptr_op(parent, graph_get_next_endpoint, prev);
- 	if (ep)
--		return ep;
-+		goto out_put_port_parent;
- 
--	return fwnode_graph_get_next_endpoint(parent->secondary, NULL);
-+	ep = fwnode_graph_get_next_endpoint(parent->secondary, NULL);
-+
-+out_put_port_parent:
-+	fwnode_handle_put(port_parent);
-+	return ep;
+-	/*
+-	 * Attempt to enable ACS regardless of capability because some Root
+-	 * Ports (e.g. those quirked with *_intel_pch_acs_*) do not have
+-	 * the standard ACS capability but still support ACS via those
+-	 * quirks.
+-	 */
+-	pci_enable_acs(to_pci_dev(dev));
+-
+ 	pci_put_host_bridge_device(bridge);
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(fwnode_graph_get_next_endpoint);
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -894,7 +894,7 @@ static void pci_std_enable_acs(struct pc
+  * pci_enable_acs - enable ACS if hardware support it
+  * @dev: the PCI device
+  */
+-void pci_enable_acs(struct pci_dev *dev)
++static void pci_enable_acs(struct pci_dev *dev)
+ {
+ 	if (!pci_acs_enable)
+ 		goto disable_acs_redir;
+@@ -3548,6 +3548,14 @@ bool pci_acs_path_enabled(struct pci_dev
+ void pci_acs_init(struct pci_dev *dev)
+ {
+ 	dev->acs_cap = pci_find_ext_capability(dev, PCI_EXT_CAP_ID_ACS);
++
++	/*
++	 * Attempt to enable ACS regardless of capability because some Root
++	 * Ports (e.g. those quirked with *_intel_pch_acs_*) do not have
++	 * the standard ACS capability but still support ACS via those
++	 * quirks.
++	 */
++	pci_enable_acs(dev);
+ }
  
+ /**
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -547,7 +547,6 @@ static inline resource_size_t pci_resour
+ }
+ 
+ void pci_acs_init(struct pci_dev *dev);
+-void pci_enable_acs(struct pci_dev *dev);
+ #ifdef CONFIG_PCI_QUIRKS
+ int pci_dev_specific_acs_enabled(struct pci_dev *dev, u16 acs_flags);
+ int pci_dev_specific_enable_acs(struct pci_dev *dev);
 
 
