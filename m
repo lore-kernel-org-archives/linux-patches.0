@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF7F2FFFA4;
-	Mon, 13 Apr 2026 16:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8853090F5;
+	Mon, 13 Apr 2026 16:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097587; cv=none; b=cJ10bJ5fS4tXDrxqIkdEasf9BZCqiC7z9TNSXDoun6LLEroD4YYmdBwEGHTMtoONTUmhIFSQ3tx41v1DBao1UW2xmGvc1htMtFzo72wdaK6tGRGHFJefuFkKZmS7p5MIAeM6VY6/9WdvR0qmcRF/mkduumbySVLegnKxOLmOKcE=
+	t=1776097589; cv=none; b=rFkhQZ2slNkDSncbuBCANLhSQ5DtulgUnfQhLINF3Okr5D5TUDJm+c5J9BFjYyejMIa9Fcz1M0G9di6mf8DXzNauXgQ9Bc4sAhlPR/qpqsGxTkCPiGjj/DtS1Y61TcwQyGit6Bqm6QId8RsFFJBg7meqWKDHYsytW21v/uyQrr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097587; c=relaxed/simple;
-	bh=t81HDDCeR6iTZO3dVDFW8gcT89TLZewVlZdIfGC+HP8=;
+	s=arc-20240116; t=1776097589; c=relaxed/simple;
+	bh=8v0vVHbzspQbDoEyGG2zzNZA5uLGzXNWwgopEFTtMAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCBazp8PkV9s3zTuVdEf7DpTfASjgpu8slUfDU1x2ot/LfCR+VIh2CaGlXyzc7nmZanDVoGR+DuJ/V89hsNA+grX4y5GT0qx5OQ4ri8w2nRPI/99dk5hvRtqWRZAm57vKIJ14UuSgm/ny6bqPL89XaIHwaCip5v2vwjZ4CCAsLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGApuekX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mbh9Xb+AYlF4g3TFEnopur3m+Ba7TB6i1T1py5RogHO99ttdacsNKYjEzklBYRj6mlhuEruUpYxbVh7E+yKymKo/N/5X1jBxim1ynvI5eoGw7wnWmSYRJ0ESCERwkYWNCMoYXJeUPByFe/fkLxNw3NNQ7Mkp3thdODUqAGkoHnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVDnejV8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGApuekX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F23C2BCAF;
-	Mon, 13 Apr 2026 16:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVDnejV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E6FC2BCAF;
+	Mon, 13 Apr 2026 16:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097586;
-	bh=t81HDDCeR6iTZO3dVDFW8gcT89TLZewVlZdIfGC+HP8=;
+	s=korg; t=1776097589;
+	bh=8v0vVHbzspQbDoEyGG2zzNZA5uLGzXNWwgopEFTtMAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGApuekXnJSmEmqJR9sxJ7xnFJA9WUVYGsCviNbw6iblX+AZSIMhNS1eZG/kZRVux
-	 EemsVdrsh4gjdnJgERjYr3mTM1eP29A9kGwRLhH8qEDM3SJvZzvAbm+jokO/Q4rL0/
-	 5yUoC1RtNDYNS3xobjvSZeEghnCYnaXuoIf3BBDM=
+	b=XVDnejV8G+LkgekKPVos50XnTEwQWwzdBZPKmGZOFRr9lhwh8Qfwrx+COA/jsPoYs
+	 Y0SltM+Rn9bN7eTQErudz17a0ePC5pNfHpmGqo+ZTzoPt8AKByuN2AKtfty4rkonz3
+	 GKkoKOaZ/9L2uRjnf9dfnFVdC3ZD9mMUBVbnDR4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Navaneeth K <knavaneeth786@gmail.com>
-Subject: [PATCH 5.15 162/570] staging: rtl8723bs: properly validate the data in rtw_get_ie_ex()
-Date: Mon, 13 Apr 2026 17:54:53 +0200
-Message-ID: <20260413155836.519917723@linuxfoundation.org>
+	Ariel Silver <arielsilver77@gmail.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 5.15 163/570] media: dvb-net: fix OOB access in ULE extension header tables
+Date: Mon, 13 Apr 2026 17:54:54 +0200
+Message-ID: <20260413155836.556954078@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,57 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ariel Silver <arielsilver77@gmail.com>
 
-commit f0109b9d3e1e455429279d602f6276e34689750a upstream.
+commit 24d87712727a5017ad142d63940589a36cd25647 upstream.
 
-Just like in commit 154828bf9559 ("staging: rtl8723bs: fix out-of-bounds
-read in rtw_get_ie() parser"), we don't trust the data in the frame so
-we should check the length better before acting on it
+The ule_mandatory_ext_handlers[] and ule_optional_ext_handlers[] tables
+in handle_one_ule_extension() are declared with 255 elements (valid
+indices 0-254), but the index htype is derived from network-controlled
+data as (ule_sndu_type & 0x00FF), giving a range of 0-255. When
+htype equals 255, an out-of-bounds read occurs on the function pointer
+table, and the OOB value may be called as a function pointer.
 
-Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_2000
-Tested-by: Navaneeth K <knavaneeth786@gmail.com>
-Reviewed-by: Navaneeth K <knavaneeth786@gmail.com>
-Link: https://patch.msgid.link/2026022336-arrange-footwork-6e54@gregkh
+Add a bounds check on htype against the array size before either table
+is accessed. Out-of-range values now cause the SNDU to be discarded.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Ariel Silver <arielsilver77@gmail.com>
+Signed-off-by: Ariel Silver <arielsilver77@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/media/dvb-core/dvb_net.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -187,21 +187,25 @@ u8 *rtw_get_ie_ex(u8 *in_ie, uint in_len
+--- a/drivers/media/dvb-core/dvb_net.c
++++ b/drivers/media/dvb-core/dvb_net.c
+@@ -228,6 +228,9 @@ static int handle_one_ule_extension( str
+ 	unsigned char hlen = (p->ule_sndu_type & 0x0700) >> 8;
+ 	unsigned char htype = p->ule_sndu_type & 0x00FF;
  
- 	cnt = 0;
- 
--	while (cnt < in_len) {
-+	while (cnt + 2 <= in_len) {
-+		u8 ie_len = in_ie[cnt + 1];
++	if (htype >= ARRAY_SIZE(ule_mandatory_ext_handlers))
++		return -1;
 +
-+		if (cnt + 2 + ie_len > in_len)
-+			break;
-+
- 		if (eid == in_ie[cnt]
--			&& (!oui || !memcmp(&in_ie[cnt+2], oui, oui_len))) {
-+			&& (!oui || (ie_len >= oui_len && !memcmp(&in_ie[cnt + 2], oui, oui_len)))) {
- 			target_ie = &in_ie[cnt];
- 
- 			if (ie)
--				memcpy(ie, &in_ie[cnt], in_ie[cnt+1]+2);
-+				memcpy(ie, &in_ie[cnt], ie_len + 2);
- 
- 			if (ielen)
--				*ielen = in_ie[cnt+1]+2;
-+				*ielen = ie_len + 2;
- 
- 			break;
--		} else {
--			cnt += in_ie[cnt+1]+2; /* goto next */
- 		}
-+		cnt += ie_len + 2; /* goto next */
- 	}
- 
- 	return target_ie;
+ 	/* Discriminate mandatory and optional extension headers. */
+ 	if (hlen == 0) {
+ 		/* Mandatory extension header */
 
 
