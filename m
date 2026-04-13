@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069BF30ACE6;
-	Mon, 13 Apr 2026 16:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906042E11B9;
+	Mon, 13 Apr 2026 16:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097659; cv=none; b=kbHMECpDbX041gDggPFSoDCed5cfHInWiIWhfab8CsSz6JBq72shjPMNk6Cwqkbz2PmtLgDQL5SRFIceCJroFS1Osr0wLmhXXb5Kz4egoAF/TVRTmpWCV91a6lxKm6Z/mUPBeTd4oSIcHppbTCMOqwfQFVDTg5QzbUgG34Rm8vU=
+	t=1776097661; cv=none; b=pr/BiJeU5ddEbVK3REdticAXlHcNbf6TMF04K7WPqQN6eJKTI2zKPsuLOrK0Jgj23qsOUpbq36lvmsgW9jSvVs3gssIaWUex/TvhgYCY7wywvZatHuLLqjALHDtznwOd8oEZPE9gnVCUijj+1Hzr+uQ7UEpYgyKaHhuhOUSjYok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097659; c=relaxed/simple;
-	bh=8aiBn48K0gsr/42eoT6ZJBkI4HLh7Zb8FyDyZ7pu5+I=;
+	s=arc-20240116; t=1776097661; c=relaxed/simple;
+	bh=3ifonOA47QaQOrd3YBica6+dXfk+AGetyzYVHiWAXS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bo35PhSGNRBXgPXPg5g7sKAn0g6WHXP45hYUg0R3eDlx7n/z2Vce02W8/zTht09lx6cLuQkDVBcGPJlqTl62YmAdaKg+jydWN1K42fEtssyAnlkKdJGsFhCB3W7CRWUaLWIG/x+UQHxidLFh0B3pNGr0yGgDNPiZD3fy2jTlQPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGp2EIbf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JimxgwiW9EThczI7Xh7KAWrlLAKMeBZwK8nDjNAEwBS5VHhEbgfgrmEJlFZJfp066NDOfPQyVFmBzFMH4j4bSH7M83CQdqinD7mhtb2mjWqs5V1MBsERtoS5kl9tScDjKDa5z1SezE5HjGTfeewYBoF4//N4Z1Bz0wrCsnZedSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvYCbnjl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGp2EIbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909C9C2BCAF;
-	Mon, 13 Apr 2026 16:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvYCbnjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B1DC2BCAF;
+	Mon, 13 Apr 2026 16:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097658;
-	bh=8aiBn48K0gsr/42eoT6ZJBkI4HLh7Zb8FyDyZ7pu5+I=;
+	s=korg; t=1776097661;
+	bh=3ifonOA47QaQOrd3YBica6+dXfk+AGetyzYVHiWAXS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGp2EIbfZO0N5ZkKEkB31diJbmI/NXit5CuZZe+yzb95zhl2NQxjw+WmRRwkxwyx6
-	 Hhq6e03Cz2uP7owb7XNrRaxLV3qTtYF2z1/R3Y1iXptgBsXO02xlJnSlYb2jcbz3bj
-	 DxEYfKXA+LdXQbbPIT2xCA/4rc8yxq5GgyV1D5fA=
+	b=PvYCbnjlijunrG/uiJQaH2GnAzRgxG0TlDIQOJD0zOAXYsmp+Vg64mdsZP4Hr5pM3
+	 Ls7JI/NXKU0B+imjnAZwqrhpkiIGKDzZ3PztKC1FXLXIoISrenxR8t3mZuckHCyNRD
+	 W8b38I11VA/J2uhrQOjnpAHORqk76pd9QY3joscs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Francois Romieu <romieu@fr.zoreil.com>,
-	Breno Leitao <leitao@debian.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>
-Subject: [PATCH 5.15 221/570] net: Handle napi_schedule() calls from non-interrupt
-Date: Mon, 13 Apr 2026 17:55:52 +0200
-Message-ID: <20260413155838.735590948@linuxfoundation.org>
+	Ankit Garg <nktgrg@google.com>,
+	Jordan Rhee <jordanrhee@google.com>,
+	Joshua Washington <joshwash@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 222/570] gve: defer interrupt enabling until NAPI registration
+Date: Mon, 13 Apr 2026 17:55:53 +0200
+Message-ID: <20260413155838.772859831@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -55,105 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Ankit Garg <nktgrg@google.com>
 
-commit 77e45145e3039a0fb212556ab3f8c87f54771757 upstream.
+commit 3d970eda003441f66551a91fda16478ac0711617 upstream.
 
-napi_schedule() is expected to be called either:
+Currently, interrupts are automatically enabled immediately upon
+request. This allows interrupt to fire before the associated NAPI
+context is fully initialized and cause failures like below:
 
-* From an interrupt, where raised softirqs are handled on IRQ exit
+[    0.946369] Call Trace:
+[    0.946369]  <IRQ>
+[    0.946369]  __napi_poll+0x2a/0x1e0
+[    0.946369]  net_rx_action+0x2f9/0x3f0
+[    0.946369]  handle_softirqs+0xd6/0x2c0
+[    0.946369]  ? handle_edge_irq+0xc1/0x1b0
+[    0.946369]  __irq_exit_rcu+0xc3/0xe0
+[    0.946369]  common_interrupt+0x81/0xa0
+[    0.946369]  </IRQ>
+[    0.946369]  <TASK>
+[    0.946369]  asm_common_interrupt+0x22/0x40
+[    0.946369] RIP: 0010:pv_native_safe_halt+0xb/0x10
 
-* From a softirq disabled section, where raised softirqs are handled on
-  the next call to local_bh_enable().
+Use the `IRQF_NO_AUTOEN` flag when requesting interrupts to prevent auto
+enablement and explicitly enable the interrupt in NAPI initialization
+path (and disable it during NAPI teardown).
 
-* From a softirq handler, where raised softirqs are handled on the next
-  round in do_softirq(), or further deferred to a dedicated kthread.
+This ensures that interrupt lifecycle is strictly coupled with
+readiness of NAPI context.
 
-Other bare tasks context may end up ignoring the raised NET_RX vector
-until the next random softirq handling opportunity, which may not
-happen before a while if the CPU goes idle afterwards with the tick
-stopped.
-
-Such "misuses" have been detected on several places thanks to messages
-of the kind:
-
-	"NOHZ tick-stop error: local softirq work is pending, handler #08!!!"
-
-For example:
-
-       __raise_softirq_irqoff
-        __napi_schedule
-        rtl8152_runtime_resume.isra.0
-        rtl8152_resume
-        usb_resume_interface.isra.0
-        usb_resume_both
-        __rpm_callback
-        rpm_callback
-        rpm_resume
-        __pm_runtime_resume
-        usb_autoresume_device
-        usb_remote_wakeup
-        hub_event
-        process_one_work
-        worker_thread
-        kthread
-        ret_from_fork
-        ret_from_fork_asm
-
-And also:
-
-* drivers/net/usb/r8152.c::rtl_work_func_t
-* drivers/net/netdevsim/netdev.c::nsim_start_xmit
-
-There is a long history of issues of this kind:
-
-	019edd01d174 ("ath10k: sdio: Add missing BH locking around napi_schdule()")
-	330068589389 ("idpf: disable local BH when scheduling napi for marker packets")
-	e3d5d70cb483 ("net: lan78xx: fix "softirq work is pending" error")
-	e55c27ed9ccf ("mt76: mt7615: add missing bh-disable around rx napi schedule")
-	c0182aa98570 ("mt76: mt7915: add missing bh-disable around tx napi enable/schedule")
-	970be1dff26d ("mt76: disable BH around napi_schedule() calls")
-	019edd01d174 ("ath10k: sdio: Add missing BH locking around napi_schdule()")
-	30bfec4fec59 ("can: rx-offload: can_rx_offload_threaded_irq_finish(): add new  function to be called from threaded interrupt")
-	e63052a5dd3c ("mlx5e: add add missing BH locking around napi_schdule()")
-	83a0c6e58901 ("i40e: Invoke softirqs after napi_reschedule")
-	bd4ce941c8d5 ("mlx4: Invoke softirqs after napi_reschedule")
-	8cf699ec849f ("mlx4: do not call napi_schedule() without care")
-	ec13ee80145c ("virtio_net: invoke softirqs after __napi_schedule")
-
-This shows that relying on the caller to arrange a proper context for
-the softirqs to be handled while calling napi_schedule() is very fragile
-and error prone. Also fixing them can also prove challenging if the
-caller may be called from different kinds of contexts.
-
-Therefore fix this from napi_schedule() itself with waking up ksoftirqd
-when softirqs are raised from task contexts.
-
-Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Reported-by: Francois Romieu <romieu@fr.zoreil.com>
-Closes: https://lore.kernel.org/lkml/354a2690-9bbf-4ccb-8769-fa94707a9340@molgen.mpg.de/
-Cc: Breno Leitao <leitao@debian.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250223221708.27130-1-frederic@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: stable@vger.kernel.org
+Fixes: 1dfc2e46117e ("gve: Refactor napi add and remove functions")
+Signed-off-by: Ankit Garg <nktgrg@google.com>
+Reviewed-by: Jordan Rhee <jordanrhee@google.com>
+Reviewed-by: Joshua Washington <joshwash@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Link: https://patch.msgid.link/20251219102945.2193617-1-hramamurthy@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ modified to re-introduce the irq member to struct gve_notify_block,
+  which was introuduced in commit 9a5e0776d11f ("gve: Avoid rescheduling
+  napi if on wrong cpu"). ]
+Signed-off-by: Joshua Washington <joshwash@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve.h      |    1 +
+ drivers/net/ethernet/google/gve/gve_main.c |    5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -4439,7 +4439,7 @@ static inline void ____napi_schedule(str
- 	}
+--- a/drivers/net/ethernet/google/gve/gve.h
++++ b/drivers/net/ethernet/google/gve/gve.h
+@@ -441,6 +441,7 @@ struct gve_notify_block {
+ 	struct gve_priv *priv;
+ 	struct gve_tx_ring *tx; /* tx rings on this block */
+ 	struct gve_rx_ring *rx; /* rx rings on this block */
++	u32 irq;
+ } ____cacheline_aligned;
  
- 	list_add_tail(&napi->poll_list, &sd->poll_list);
--	__raise_softirq_irqoff(NET_RX_SOFTIRQ);
-+	raise_softirq_irqoff(NET_RX_SOFTIRQ);
+ /* Tracks allowed and current queue settings */
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -339,9 +339,10 @@ static int gve_alloc_notify_blocks(struc
+ 		snprintf(block->name, sizeof(block->name), "%s-ntfy-block.%d",
+ 			 name, i);
+ 		block->priv = priv;
++		block->irq = priv->msix_vectors[msix_idx].vector;
+ 		err = request_irq(priv->msix_vectors[msix_idx].vector,
+ 				  gve_is_gqi(priv) ? gve_intr : gve_intr_dqo,
+-				  0, block->name, block);
++				  IRQF_NO_AUTOEN, block->name, block);
+ 		if (err) {
+ 			dev_err(&priv->pdev->dev,
+ 				"Failed to receive msix vector %d\n", i);
+@@ -502,6 +503,7 @@ static void gve_add_napi(struct gve_priv
+ 
+ 	netif_napi_add(priv->dev, &block->napi, gve_poll,
+ 		       NAPI_POLL_WEIGHT);
++	enable_irq(block->irq);
  }
  
- #ifdef CONFIG_RPS
+ static void gve_remove_napi(struct gve_priv *priv, int ntfy_idx)
+@@ -509,6 +511,7 @@ static void gve_remove_napi(struct gve_p
+ 	struct gve_notify_block *block = &priv->ntfy_blocks[ntfy_idx];
+ 
+ 	netif_napi_del(&block->napi);
++	disable_irq(block->irq);
+ }
+ 
+ static int gve_register_qpls(struct gve_priv *priv)
 
 
