@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7823A31F9BC;
-	Mon, 13 Apr 2026 16:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFA83254A3;
+	Mon, 13 Apr 2026 16:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099553; cv=none; b=Zvoe/cv7OKj8JzYz7oak2rKIx4TXqkZR2pDg4OoeXZUEgNhaPH22uex+CmrQ/hnxpAcKV725Vs+5RsA3e+DIp1Uq0OtJrBwyribrhCMQDqZ+jlUlAIyaRVy3qyUqopDGgYl1frXynnpD3DgQtreGTwW6BBaWzYIWsiMnjXslnzA=
+	t=1776099556; cv=none; b=LuZgtnw9NN0FinzQSLFMeKSxwqszRQyTJj68mFtQHUf2X/GI5JciMdcMpJVwrVHKxio3dXPd/dEQ4zkioHauhrg9WulIieNX76i2oDYb2ouLQGuk6YqijDmdH5FAZm55EvEcXTgHBlv9IEwGyvbVgateCuMobgbsN1gs+flXY0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099553; c=relaxed/simple;
-	bh=JJGYQhMqwU8/ejRHk+hBkKSxD9ZjyIxQQbpSfghtby4=;
+	s=arc-20240116; t=1776099556; c=relaxed/simple;
+	bh=GBfA9Sk9QjIteEXfbnGlwgYPOr07E3ENuH9jLF9q+IE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fU+QAmR05esalTovw9ubEEPWbHLWvLFt4Nfn6mCI019sTZKAYHHU5La8lO/cIPIOWrWucvPoB3DVP5vfWpY8yWxmQazd6bNbUINyE/fKzacYR1qZAIpx17DRQQ18LDG27tYEdTpV55w2fzWRK2GRihXXYhZSVUY/Y14+W+WYzbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frKp1XRu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYOxtqnIn0tUBM0Y8gN1rKja3GzeOJsbz5irevNL88vgDQ5hFhxNjS7262WmfiVkiQyqMI/8cpSgUuhqYYojSh+SVDTNITGzIe5Ycit1LhLIoWUWHReZOu/99KO6y16RHMBP67evCD1awFFRMz/NHxSOm0P30Xbh3jbAW1HUFtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRsn08H+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frKp1XRu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC84C2BCAF;
-	Mon, 13 Apr 2026 16:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRsn08H+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D47C2BCAF;
+	Mon, 13 Apr 2026 16:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099553;
-	bh=JJGYQhMqwU8/ejRHk+hBkKSxD9ZjyIxQQbpSfghtby4=;
+	s=korg; t=1776099555;
+	bh=GBfA9Sk9QjIteEXfbnGlwgYPOr07E3ENuH9jLF9q+IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=frKp1XRuvJH1mFOwlXSUtKi/FgnF/GcqvpAu/btgcSYxXFflyMdu5aC0TTFFKRF1j
-	 DYhVzVZ1ozenMpKXwTY316H2nI5zWyIAyozxrCDEbCAKMb/4+MbdeDh2R5AJ/6P5D8
-	 nsOVJ2Wz06AvIHU1viY9Qy/HlHe3qohCuUMhC9Qk=
+	b=eRsn08H+RJ68lxA8k/U2xmYZGOe87hbffZrJBJdXQa6RYdnYTrINbXAn3kjBhS5pR
+	 HUYZaxJ+XPdw/yB85mqn/R1Ptwdb9/tU9NAGy7+U/rFSAleMibuhvE9VC3dYoNloVr
+	 f/R2XZ2XWmL6DhFusZ/BbOOP7J6JbGyQnQaj6CPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 352/491] net/sched: cls_flow: fix NULL pointer dereference on shared blocks
-Date: Mon, 13 Apr 2026 17:59:57 +0200
-Message-ID: <20260413155832.217643175@linuxfoundation.org>
+Subject: [PATCH 5.10 353/491] ipv6: avoid overflows in ip6_datagram_send_ctl()
+Date: Mon, 13 Apr 2026 17:59:58 +0200
+Message-ID: <20260413155832.255070938@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,60 +52,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1a280dd4bd1d616a01d6ffe0de284c907b555504 ]
+[ Upstream commit 4e453375561fc60820e6b9d8ebeb6b3ee177d42e ]
 
-flow_change() calls tcf_block_q() and dereferences q->handle to derive
-a default baseclass.  Shared blocks leave block->q NULL, causing a NULL
-deref when a flow filter without a fully qualified baseclass is created
-on a shared block.
+Yiming Qian reported :
+<quote>
+ I believe I found a locally triggerable kernel bug in the IPv6 sendmsg
+ ancillary-data path that can panic the kernel via `skb_under_panic()`
+ (local DoS).
 
-Check tcf_block_shared() before accessing block->q and return -EINVAL
-for shared blocks.  This avoids the null-deref shown below:
+ The core issue is a mismatch between:
 
-=======================================================================
-KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]
-RIP: 0010:flow_change (net/sched/cls_flow.c:508)
-Call Trace:
- tc_new_tfilter (net/sched/cls_api.c:2432)
- rtnetlink_rcv_msg (net/core/rtnetlink.c:6980)
- [...]
-=======================================================================
+ - a 16-bit length accumulator (`struct ipv6_txoptions::opt_flen`, type
+ `__u16`) and
+ - a pointer to the *last* provided destination-options header (`opt->dst1opt`)
 
-Fixes: 1abf272022cf ("net: sched: tcindex, fw, flow: use tcf_block_q helper to get struct Qdisc")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260331050217.504278-2-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+ when multiple `IPV6_DSTOPTS` control messages (cmsgs) are provided.
+
+ - `include/net/ipv6.h`:
+   - `struct ipv6_txoptions::opt_flen` is `__u16` (wrap possible).
+ (lines 291-307, especially 298)
+ - `net/ipv6/datagram.c:ip6_datagram_send_ctl()`:
+   - Accepts repeated `IPV6_DSTOPTS` and accumulates into `opt_flen`
+ without rejecting duplicates. (lines 909-933)
+ - `net/ipv6/ip6_output.c:__ip6_append_data()`:
+   - Uses `opt->opt_flen + opt->opt_nflen` to compute header
+ sizes/headroom decisions. (lines 1448-1466, especially 1463-1465)
+ - `net/ipv6/ip6_output.c:__ip6_make_skb()`:
+   - Calls `ipv6_push_frag_opts()` if `opt->opt_flen` is non-zero.
+ (lines 1930-1934)
+ - `net/ipv6/exthdrs.c:ipv6_push_frag_opts()` / `ipv6_push_exthdr()`:
+   - Push size comes from `ipv6_optlen(opt->dst1opt)` (based on the
+ pointed-to header). (lines 1179-1185 and 1206-1211)
+
+ 1. `opt_flen` is a 16-bit accumulator:
+
+ - `include/net/ipv6.h:298` defines `__u16 opt_flen; /* after fragment hdr */`.
+
+ 2. `ip6_datagram_send_ctl()` accepts *repeated* `IPV6_DSTOPTS` cmsgs
+ and increments `opt_flen` each time:
+
+ - In `net/ipv6/datagram.c:909-933`, for `IPV6_DSTOPTS`:
+   - It computes `len = ((hdr->hdrlen + 1) << 3);`
+   - It checks `CAP_NET_RAW` using `ns_capable(net->user_ns,
+ CAP_NET_RAW)`. (line 922)
+   - Then it does:
+     - `opt->opt_flen += len;` (line 927)
+     - `opt->dst1opt = hdr;` (line 928)
+
+ There is no duplicate rejection here (unlike the legacy
+ `IPV6_2292DSTOPTS` path which rejects duplicates at
+ `net/ipv6/datagram.c:901-904`).
+
+ If enough large `IPV6_DSTOPTS` cmsgs are provided, `opt_flen` wraps
+ while `dst1opt` still points to a large (2048-byte)
+ destination-options header.
+
+ In the attached PoC (`poc.c`):
+
+ - 32 cmsgs with `hdrlen=255` => `len = (255+1)*8 = 2048`
+ - 1 cmsg with `hdrlen=0` => `len = 8`
+ - Total increment: `32*2048 + 8 = 65544`, so `(__u16)opt_flen == 8`
+ - The last cmsg is 2048 bytes, so `dst1opt` points to a 2048-byte header.
+
+ 3. The transmit path sizes headers using the wrapped `opt_flen`:
+
+- In `net/ipv6/ip6_output.c:1463-1465`:
+  - `headersize = sizeof(struct ipv6hdr) + (opt ? opt->opt_flen +
+ opt->opt_nflen : 0) + ...;`
+
+ With wrapped `opt_flen`, `headersize`/headroom decisions underestimate
+ what will be pushed later.
+
+ 4. When building the final skb, the actual push length comes from
+ `dst1opt` and is not limited by wrapped `opt_flen`:
+
+ - In `net/ipv6/ip6_output.c:1930-1934`:
+   - `if (opt->opt_flen) proto = ipv6_push_frag_opts(skb, opt, proto);`
+ - In `net/ipv6/exthdrs.c:1206-1211`, `ipv6_push_frag_opts()` pushes
+ `dst1opt` via `ipv6_push_exthdr()`.
+ - In `net/ipv6/exthdrs.c:1179-1184`, `ipv6_push_exthdr()` does:
+   - `skb_push(skb, ipv6_optlen(opt));`
+   - `memcpy(h, opt, ipv6_optlen(opt));`
+
+ With insufficient headroom, `skb_push()` underflows and triggers
+ `skb_under_panic()` -> `BUG()`:
+
+ - `net/core/skbuff.c:2669-2675` (`skb_push()` calls `skb_under_panic()`)
+ - `net/core/skbuff.c:207-214` (`skb_panic()` ends in `BUG()`)
+
+ - The `IPV6_DSTOPTS` cmsg path requires `CAP_NET_RAW` in the target
+ netns user namespace (`ns_capable(net->user_ns, CAP_NET_RAW)`).
+ - Root (or any task with `CAP_NET_RAW`) can trigger this without user
+ namespaces.
+ - An unprivileged `uid=1000` user can trigger this if unprivileged
+ user namespaces are enabled and it can create a userns+netns to obtain
+ namespaced `CAP_NET_RAW` (the attached PoC does this).
+
+ - Local denial of service: kernel BUG/panic (system crash).
+ - Reproducible with a small userspace PoC.
+</quote>
+
+This patch does not reject duplicated options, as this might break
+some user applications.
+
+Instead, it makes sure to adjust opt_flen and opt_nflen to correctly
+reflect the size of the current option headers, preventing the overflows
+and the potential for panics.
+
+This applies to IPV6_DSTOPTS, IPV6_HOPOPTS, and IPV6_RTHDR.
+
+Specifically:
+
+When a new IPV6_DSTOPTS is processed, the length of the old opt->dst1opt
+is subtracted from opt->opt_flen before adding the new length.
+
+When a new IPV6_HOPOPTS is processed, the length of the old opt->dst0opt
+is subtracted from opt->opt_nflen.
+
+When a new Routing Header (IPV6_RTHDR or IPV6_2292RTHDR) is processed,
+the length of the old opt->srcrt is subtracted from opt->opt_nflen.
+
+In the special case within IPV6_2292RTHDR handling where dst1opt is moved
+to dst0opt, the length of the old opt->dst0opt is subtracted from
+opt->opt_nflen before the new one is added.
+
+Fixes: 333fad5364d6 ("[IPV6]: Support several new sockopt / ancillary data in Advanced API (RFC3542).")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAL_bE8JNzawgr5OX5m+3jnQDHry2XxhQT5=jThW1zDPtUikRYA@mail.gmail.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260401154721.3740056-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flow.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/ipv6/datagram.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/sched/cls_flow.c b/net/sched/cls_flow.c
-index 117c7b038591e..7918ecdcfe696 100644
---- a/net/sched/cls_flow.c
-+++ b/net/sched/cls_flow.c
-@@ -501,8 +501,16 @@ static int flow_change(struct net *net, struct sk_buff *in_skb,
- 		}
+diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
+index a30ff5d6808aa..d8af31805133f 100644
+--- a/net/ipv6/datagram.c
++++ b/net/ipv6/datagram.c
+@@ -756,6 +756,7 @@ int ip6_datagram_send_ctl(struct net *net, struct sock *sk,
+ {
+ 	struct in6_pktinfo *src_info;
+ 	struct cmsghdr *cmsg;
++	struct ipv6_rt_hdr *orthdr;
+ 	struct ipv6_rt_hdr *rthdr;
+ 	struct ipv6_opt_hdr *hdr;
+ 	struct ipv6_txoptions *opt = ipc6->opt;
+@@ -917,9 +918,13 @@ int ip6_datagram_send_ctl(struct net *net, struct sock *sk,
+ 				goto exit_f;
+ 			}
+ 			if (cmsg->cmsg_type == IPV6_DSTOPTS) {
++				if (opt->dst1opt)
++					opt->opt_flen -= ipv6_optlen(opt->dst1opt);
+ 				opt->opt_flen += len;
+ 				opt->dst1opt = hdr;
+ 			} else {
++				if (opt->dst0opt)
++					opt->opt_nflen -= ipv6_optlen(opt->dst0opt);
+ 				opt->opt_nflen += len;
+ 				opt->dst0opt = hdr;
+ 			}
+@@ -962,12 +967,17 @@ int ip6_datagram_send_ctl(struct net *net, struct sock *sk,
+ 				goto exit_f;
+ 			}
  
- 		if (TC_H_MAJ(baseclass) == 0) {
--			struct Qdisc *q = tcf_block_q(tp->chain->block);
-+			struct tcf_block *block = tp->chain->block;
-+			struct Qdisc *q;
++			orthdr = opt->srcrt;
++			if (orthdr)
++				opt->opt_nflen -= ((orthdr->hdrlen + 1) << 3);
+ 			opt->opt_nflen += len;
+ 			opt->srcrt = rthdr;
  
-+			if (tcf_block_shared(block)) {
-+				NL_SET_ERR_MSG(extack,
-+					       "Must specify baseclass when attaching flow filter to block");
-+				goto err2;
-+			}
-+
-+			q = tcf_block_q(block);
- 			baseclass = TC_H_MAKE(q->handle, baseclass);
- 		}
- 		if (TC_H_MIN(baseclass) == 0)
+ 			if (cmsg->cmsg_type == IPV6_2292RTHDR && opt->dst1opt) {
+ 				int dsthdrlen = ((opt->dst1opt->hdrlen+1)<<3);
+ 
++				if (opt->dst0opt)
++					opt->opt_nflen -= ipv6_optlen(opt->dst0opt);
+ 				opt->opt_nflen += dsthdrlen;
+ 				opt->dst0opt = opt->dst1opt;
+ 				opt->dst1opt = NULL;
 -- 
 2.53.0
 
