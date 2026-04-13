@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7400826CE32;
-	Mon, 13 Apr 2026 16:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053052F8BC3;
+	Mon, 13 Apr 2026 16:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097306; cv=none; b=eZ3sChVW9PPSQvItmAjC0q7pLx54a1q05MxK5GUSMpu5IfHLz0Glfg6i+SmHz5eXU1K1wRYK5AR3QsV2gBXmxEkABnct7Ng7a32Rpp+KeG8uMzE0i3OyrSQl0hcCEXDOejwvFTvGdMRLvUKaUhIdW+GH4RS2GMztnXmcE0uMiNI=
+	t=1776097309; cv=none; b=AzIG8Gec7LT59mzPoTSv8qdYe8ACg/KIfRsSzbVz0VV0e5sDuniB4KqNNTB7CxjFPXEaGZBRuVQYzgPqs/XO9yrT4So+LPRfm6IFrnsK+Hb7tVQEcJFxC1WBoX63R9Qfx/q8qwndYz2bHGHzag9a70ssjbB9HKjTDqUB+aY2yIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097306; c=relaxed/simple;
-	bh=oRmu83i1XT7e+25Al5YnjNlGCgC5y34zXvyYo2oTmcQ=;
+	s=arc-20240116; t=1776097309; c=relaxed/simple;
+	bh=R47UOziVHoNS1pbzy2wIlpXs92a6xi2YpIVd25S282c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9u4AgRUYS0R7kSNyKoINOr6jJdhTZ8dprLgn86edFwgCKu83WxjH6uJDYKWmfC1Sm3/JvW0OqW1j66JdeaB/jwvBKzNq4U1rWqrXNXk4aHMzv/gacP5xj3PP96Zp3kBd08RSkD4BZp1/w6FJ4coHIRLIJznJ9cyAINNdKsr6nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=li/TcmpT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BMZ32DK51P90rdN5OfCcZEA0nEdx1F+yMdnE+xfh5mHIyTFwnfeYVvhJ303souwd1QYJgbiu/fmxj4tFKWI+tiOpTxf7rUs4Y6a6t3mgB1umEGwn6Z7kqsS+1NYXfzSUX53DbSeRBwN5OXz7OSXVK/LbOBmmYMKhklv2UfEKaj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vc5575Za; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="li/TcmpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38ADC2BCAF;
-	Mon, 13 Apr 2026 16:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vc5575Za"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D530C2BCAF;
+	Mon, 13 Apr 2026 16:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097306;
-	bh=oRmu83i1XT7e+25Al5YnjNlGCgC5y34zXvyYo2oTmcQ=;
+	s=korg; t=1776097308;
+	bh=R47UOziVHoNS1pbzy2wIlpXs92a6xi2YpIVd25S282c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=li/TcmpTCP37BY4+BjepapPyWdnChKBhKSmFmNeKeN14XhTbBeXwT+OSpINZcmpCy
-	 Tvx0/qjTyGI4SWpRnl+u5qFfUMc6cE1fP04J5BiFQCuzFhvnPHXmOc/KSmda/WL2Zh
-	 4mxhy9t+QEoBnFsVjv/DMFQDuvAjb9dg/Sv3UIgg=
+	b=Vc5575ZaTGJrxq/D/R7dR/CajkwZnPAv2rN/6BeA49CvoYCNrFlgKkh195mUwtIvr
+	 65jAa6J0IgiY4QUANw491MX/EoAQ7op+MWzEZrlgzasLUvyK7CAxo95kEhwATCqTmC
+	 oZpGi8X+uZkNxUED+E3AXwkOXDG/14u6OUdK/o00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 084/570] nfc: rawsock: cancel tx_work before socket teardown
-Date: Mon, 13 Apr 2026 17:53:35 +0200
-Message-ID: <20260413155833.590323107@linuxfoundation.org>
+	Jun Seo <jun.seo.93@proton.me>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 054/570] ALSA: usb-audio: Use correct version for UAC3 header validation
+Date: Mon, 13 Apr 2026 17:53:05 +0200
+Message-ID: <20260413155832.466645576@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,55 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Jun Seo <jun.seo.93@proton.me>
 
-[ Upstream commit d793458c45df2aed498d7f74145eab7ee22d25aa ]
+commit 54f9d645a5453d0bfece0c465d34aaf072ea99fa upstream.
 
-In rawsock_release(), cancel any pending tx_work and purge the write
-queue before orphaning the socket.  rawsock_tx_work runs on the system
-workqueue and calls nfc_data_exchange which dereferences the NCI
-device.  Without synchronization, tx_work can race with socket and
-device teardown when a process is killed (e.g. by SIGKILL), leading
-to use-after-free or leaked references.
+The entry of the validators table for UAC3 AC header descriptor is
+defined with the wrong protocol version UAC_VERSION_2, while it should
+have been UAC_VERSION_3.  This results in the validator never matching
+for actual UAC3 devices (protocol == UAC_VERSION_3), causing their
+header descriptors to bypass validation entirely.  A malicious USB
+device presenting a truncated UAC3 header could exploit this to cause
+out-of-bounds reads when the driver later accesses unvalidated
+descriptor fields.
 
-Set SEND_SHUTDOWN first so that if tx_work is already running it will
-see the flag and skip transmitting, then use cancel_work_sync to wait
-for any in-progress execution to finish, and finally purge any
-remaining queued skbs.
+The bug was introduced in the same commit as the recently fixed UAC3
+feature unit sub-type typo, and appears to be from the same copy-paste
+error when the UAC3 section was created from the UAC2 section.
 
-Fixes: 23b7869c0fd0 ("NFC: add the NFC socket raw protocol")
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260303162346.2071888-6-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 57f8770620e9 ("ALSA: usb-audio: More validations of descriptor units")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jun Seo <jun.seo.93@proton.me>
+Link: https://patch.msgid.link/20260226010820.36529-1-jun.seo.93@proton.me
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/rawsock.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/usb/validate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/nfc/rawsock.c b/net/nfc/rawsock.c
-index 0ca214ab5aeff..23d52b8d6363e 100644
---- a/net/nfc/rawsock.c
-+++ b/net/nfc/rawsock.c
-@@ -66,6 +66,17 @@ static int rawsock_release(struct socket *sock)
- 	if (sock->type == SOCK_RAW)
- 		nfc_sock_unlink(&raw_sk_list, sk);
+--- a/sound/usb/validate.c
++++ b/sound/usb/validate.c
+@@ -281,7 +281,7 @@ static const struct usb_desc_validator a
+ 	/* UAC_VERSION_2, UAC2_SAMPLE_RATE_CONVERTER: not implemented yet */
  
-+	if (sk->sk_state == TCP_ESTABLISHED) {
-+		/* Prevent rawsock_tx_work from starting new transmits and
-+		 * wait for any in-progress work to finish.  This must happen
-+		 * before the socket is orphaned to avoid a race where
-+		 * rawsock_tx_work runs after the NCI device has been freed.
-+		 */
-+		sk->sk_shutdown |= SEND_SHUTDOWN;
-+		cancel_work_sync(&nfc_rawsock(sk)->tx_work);
-+		rawsock_write_queue_purge(sk);
-+	}
-+
- 	sock_orphan(sk);
- 	sock_put(sk);
- 
--- 
-2.51.0
-
+ 	/* UAC3 */
+-	FIXED(UAC_VERSION_2, UAC_HEADER, struct uac3_ac_header_descriptor),
++	FIXED(UAC_VERSION_3, UAC_HEADER, struct uac3_ac_header_descriptor),
+ 	FIXED(UAC_VERSION_3, UAC_INPUT_TERMINAL,
+ 	      struct uac3_input_terminal_descriptor),
+ 	FIXED(UAC_VERSION_3, UAC_OUTPUT_TERMINAL,
 
 
