@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BB12E11B9;
-	Mon, 13 Apr 2026 16:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979252EBB8C;
+	Mon, 13 Apr 2026 16:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097504; cv=none; b=s8O9A+43e8FK4QYCwvMTgdCaX5Qe99ZdntMHFlh+dZTY0e//uXy4L+iR1aF6DrdwRYhLjZByfmcyVtA8tiJ9WhQjtP6NEAIKUz/c51Mt6aLzfH+dRr+BrhkOfkBMmgk0C6c4dbZrMuwFDNb4CZW7Dgbyg6NhcINDSkMwkuqT4HM=
+	t=1776097507; cv=none; b=ZzeGLXU96Oi0tan8y9mZ+z7HWhzy4T/7Wee0GwgsT9TqH/MNQFvtZVxAEND+Q3JVK0DjQT+wwVWcHUsfY0+uos3wqrnjJvSYuFdnkGXELif2tX/K++HuOamdyyQ5oyhkWL7XiklaBHlMXuEIyetlTfcqX4mmVfepnQIW1DvBRcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097504; c=relaxed/simple;
-	bh=Aq2Qrwv09lhiDQKrF8boulP9cGppnxObaMBHXLS2rU0=;
+	s=arc-20240116; t=1776097507; c=relaxed/simple;
+	bh=9kTGN2aNO9KzuIr2Y8gt0HjYVT+a/2xJ3730F4HLdt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nh2bn1iQNdjj/K2oeLhS2oibOGX66M9bVPsNpGhhso9Bd6+s+EkRwBrexbHI3Q1fdglbK7psVw4G/eVnz26HwL4FL5najDw+kRdJZdqN3+uC5NHhUKqXl2GSAlUU3YRzvAOfE+mSfa3dSIHkd2C0O+89QGeXQydWkDQmp/qbIm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gr+VpElZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EbAG6clBWrubveznbVzAo+upN7b4eU6EyLVW0pNZNQvn43V0SRkWwZdVoDCEtboenIYkIWDcDib+iYwuVe7GDVjUnbLmjzwt+FZ6tYIsYQ2f4uvBUSpjQCwQnl19p3uD2M0AjP7H3u0kO1ABxpEi06hHPAPpWhTUo3itkSnmYPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxhlRiej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gr+VpElZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA14C2BCAF;
-	Mon, 13 Apr 2026 16:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxhlRiej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA2BC2BCB6;
+	Mon, 13 Apr 2026 16:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097504;
-	bh=Aq2Qrwv09lhiDQKrF8boulP9cGppnxObaMBHXLS2rU0=;
+	s=korg; t=1776097507;
+	bh=9kTGN2aNO9KzuIr2Y8gt0HjYVT+a/2xJ3730F4HLdt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gr+VpElZYGy1eOqYjXKNdVljy+zwFLpRzUCrx99yjUxZ5c3IcEaxoAvq1qc5XXNrD
-	 jbOOSLjGZEVkU+Lt8ISODHGe0QXWCow+uKws/aeR8La3GCCSECYiraB8TwOR/CEfDR
-	 LpFsoVQ3BJQYs2pdRCHxAB6AwSjGUGRtxDFqHFzA=
+	b=FxhlRiejkqXD8M1QxJ7nbM8MizB+jtk9QhNwvRTT2bHg1L20KSBnCVbcn7TKPC/gR
+	 IOCtKhzRSjiaMSbzepl/YcP3FeLso2B4tmYGAWZXdu1u6Smya3vZN78BYh8iYSztVW
+	 bYi901QkkJTctoNGhn7T8czpvtV/P7rvx/nVoZuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 129/570] octeontx2-af: devlink: fix NIX RAS reporter to use RAS interrupt status
-Date: Mon, 13 Apr 2026 17:54:20 +0200
-Message-ID: <20260413155835.275517107@linuxfoundation.org>
+Subject: [PATCH 5.15 120/570] sched: idle: Make skipping governor callbacks more consistent
+Date: Mon, 13 Apr 2026 17:54:11 +0200
+Message-ID: <20260413155834.938788023@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,42 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 87f7dff3ec75b91def0024ebaaf732457f47a63b ]
+[ Upstream commit d557640e4ce589a24dca5ca7ce3b9680f471325f ]
 
-The NIX RAS health report path uses nix_af_rvu_err when handling the
-NIX_AF_RVU_RAS case, so the report prints the ERR interrupt status rather
-than the RAS interrupt status.
+If the cpuidle governor .select() callback is skipped because there
+is only one idle state in the cpuidle driver, the .reflect() callback
+should be skipped as well, at least for consistency (if not for
+correctness), so do it.
 
-Use nix_af_rvu_ras for the NIX_AF_RVU_RAS report.
-
-Fixes: 5ed66306eab6 ("octeontx2-af: Add devlink health reporters for NIX")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20260310184824.1183651-2-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e5c9ffc6ae1b ("cpuidle: Skip governor when only one idle state is available")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://patch.msgid.link/12857700.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpuidle/cpuidle.c | 10 ----------
+ kernel/sched/idle.c       | 11 ++++++++++-
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-index 8a63277aab1af..4991fafd04bad 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-@@ -326,10 +326,10 @@ static int rvu_nix_report_show(struct devlink_fmsg *fmsg, void *ctx,
- 		rvu_report_pair_end(fmsg);
- 		break;
- 	case NIX_AF_RVU_RAS:
--		intr_val = nix_event_context->nix_af_rvu_err;
-+		intr_val = nix_event_context->nix_af_rvu_ras;
- 		rvu_report_pair_start(fmsg, "NIX_AF_RAS");
- 		devlink_fmsg_u64_pair_put(fmsg, "\tNIX RAS Interrupt Reg ",
--					  nix_event_context->nix_af_rvu_err);
-+					  nix_event_context->nix_af_rvu_ras);
- 		devlink_fmsg_string_put(fmsg, "\n\tPoison Data on:");
- 		if (intr_val & BIT_ULL(34))
- 			devlink_fmsg_string_put(fmsg, "\n\tNIX_AQ_INST_S");
+diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+index 20b9f77a8fb02..e371d6972f8d9 100644
+--- a/drivers/cpuidle/cpuidle.c
++++ b/drivers/cpuidle/cpuidle.c
+@@ -319,16 +319,6 @@ int cpuidle_enter_state(struct cpuidle_device *dev, struct cpuidle_driver *drv,
+ int cpuidle_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		   bool *stop_tick)
+ {
+-	/*
+-	 * If there is only a single idle state (or none), there is nothing
+-	 * meaningful for the governor to choose. Skip the governor and
+-	 * always use state 0 with the tick running.
+-	 */
+-	if (drv->state_count <= 1) {
+-		*stop_tick = false;
+-		return 0;
+-	}
+-
+ 	return cpuidle_curr_governor->select(drv, dev, stop_tick);
+ }
+ 
+diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
+index 499a3e286cd05..407835d23eacf 100644
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -223,7 +223,7 @@ static void cpuidle_idle_call(void)
+ 
+ 		next_state = cpuidle_find_deepest_state(drv, dev, max_latency_ns);
+ 		call_cpuidle(drv, dev, next_state);
+-	} else {
++	} else if (drv->state_count > 1) {
+ 		bool stop_tick = true;
+ 
+ 		/*
+@@ -241,6 +241,15 @@ static void cpuidle_idle_call(void)
+ 		 * Give the governor an opportunity to reflect on the outcome
+ 		 */
+ 		cpuidle_reflect(dev, entered_state);
++	} else {
++		tick_nohz_idle_retain_tick();
++
++		/*
++		 * If there is only a single idle state (or none), there is
++		 * nothing meaningful for the governor to choose.  Skip the
++		 * governor and always use state 0.
++		 */
++		call_cpuidle(drv, dev, 0);
+ 	}
+ 
+ exit_idle:
 -- 
 2.51.0
 
