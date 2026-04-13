@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F2726CE32;
-	Mon, 13 Apr 2026 16:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8952C30C371;
+	Mon, 13 Apr 2026 16:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097242; cv=none; b=OLRbpVjDmm4OVbUL41ItdQDl5V8RVmB3YmnGnnqoSZeiFhS/qcMTh+Sa8EM7mgidF210MJKa9v9Nx35kUPlU6+lR+SSSuogmd42aKeh5x2kmFsVHwpOlScopPOdgjBJYijKvfZRmx1jCebuWwvPruzHLmrH1t65lgrko1fTMMi0=
+	t=1776097244; cv=none; b=OTHujCaxtSMw4gQzcNeaIC6aMGtjYd82ugA5x10AgjWmbEyZzmDIs2Jhh5s1fA/4L+w8xR8sXjiXVhDhm7zryYGQORqtOqtw0BAQvGwuBHCnMXz+mgxzkVeAxwgKVA7HRqCafWDWrjzpS9dYV1V/Uw4Qe8WuX3urXpTFjZH5CxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097242; c=relaxed/simple;
-	bh=Y3DVZb+Q4sJMo3G1OOhegg/Gpg9FsXQWRgTSpcxIkmg=;
+	s=arc-20240116; t=1776097244; c=relaxed/simple;
+	bh=DW5pMAmbH0quVlMolp71dm13YAsxrimThEnKAivisjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UxnKr+CRtUOgTLyMGhgltwMm7Nu4CchCsqHBRxWPYXWfoP6taFbMD46kYlI/2lCi5ZMKFmEBCoJbFmrhNG1c75d0/6Ag9PAD+NtsIszBKI56NcVdBDOjcNaA0vBqsWyTdlXk5JrdQYmSQjIGeCQbGJ0fU0u54Jqm2sHBjJ2wI5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yp3B72OR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RS0g33RARJBZ5W8c/IYk3rQs99p0kAddNnaYtHPTjk2MjgHMgClX+LgDkr9bHtNgv0uiNEnMGnspkHbm4W2b7tyC/roQA+XmZKPTz1jAQPzGfXr9hpu69qhXfT0tW8WyE30oIP3A50ibxEopPLnu4hVpsUZjpEUjiruJyXffBBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnhZgCj0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yp3B72OR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8BEC2BCB7;
-	Mon, 13 Apr 2026 16:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnhZgCj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F02CC2BCAF;
+	Mon, 13 Apr 2026 16:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097241;
-	bh=Y3DVZb+Q4sJMo3G1OOhegg/Gpg9FsXQWRgTSpcxIkmg=;
+	s=korg; t=1776097244;
+	bh=DW5pMAmbH0quVlMolp71dm13YAsxrimThEnKAivisjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yp3B72ORvXlY90ozpHOo1/s9K2pw7+TLBsPBQJNuigQYXkQVdKO1NsERgMibjhIva
-	 ri+Wgr7WT1y2FnVXmSE0yBkBM0MN+4bgLmwK9YCb6FbwfqTroU7NeURoA4cP/8dC+n
-	 Um4j3dH4vSwdVUKpw7zW19drRUnenv691lg7tT/Y=
+	b=VnhZgCj0HUssS9HqqFO2Lj3oQQ2hKswPrmqahlBtrdhZrhtbblz7bwUDpaexj0YzR
+	 InopjFBnqDiuNNWqv9lll+INu2fjsI3W2OB+Fcrc6+Ngpq9LKCVZZRl21YSyS+wVt+
+	 WgwS3TEB2tPTvEI+fvILx08RL1aEDnBnmHlDwAVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 061/570] scsi: core: Fix refcount leak for tagset_refcnt
-Date: Mon, 13 Apr 2026 17:53:12 +0200
-Message-ID: <20260413155832.726735715@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 062/570] selftests: mptcp: more stable simult_flows tests
+Date: Mon, 13 Apr 2026 17:53:13 +0200
+Message-ID: <20260413155832.763897050@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,48 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Bi <junxiao.bi@oracle.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 1ac22c8eae81366101597d48360718dff9b9d980 upstream.
+commit 8c09412e584d9bcc0e71d758ec1008d1c8d1a326 upstream.
 
-This leak will cause a hang when tearing down the SCSI host. For example,
-iscsid hangs with the following call trace:
+By default, the netem qdisc can keep up to 1000 packets under its belly
+to deal with the configured rate and delay. The simult flows test-case
+simulates very low speed links, to avoid problems due to slow CPUs and
+the TCP stack tend to transmit at a slightly higher rate than the
+(virtual) link constraints.
 
-[130120.652718] scsi_alloc_sdev: Allocation failure during SCSI scanning, some SCSI devices might not be configured
+All the above causes a relatively large amount of packets being enqueued
+in the netem qdiscs - the longer the transfer, the longer the queue -
+producing increasingly high TCP RTT samples and consequently increasingly
+larger receive buffer size due to DRS.
 
-PID: 2528     TASK: ffff9d0408974e00  CPU: 3    COMMAND: "iscsid"
- #0 [ffffb5b9c134b9e0] __schedule at ffffffff860657d4
- #1 [ffffb5b9c134ba28] schedule at ffffffff86065c6f
- #2 [ffffb5b9c134ba40] schedule_timeout at ffffffff86069fb0
- #3 [ffffb5b9c134bab0] __wait_for_common at ffffffff8606674f
- #4 [ffffb5b9c134bb10] scsi_remove_host at ffffffff85bfe84b
- #5 [ffffb5b9c134bb30] iscsi_sw_tcp_session_destroy at ffffffffc03031c4 [iscsi_tcp]
- #6 [ffffb5b9c134bb48] iscsi_if_recv_msg at ffffffffc0292692 [scsi_transport_iscsi]
- #7 [ffffb5b9c134bb98] iscsi_if_rx at ffffffffc02929c2 [scsi_transport_iscsi]
- #8 [ffffb5b9c134bbf0] netlink_unicast at ffffffff85e551d6
- #9 [ffffb5b9c134bc38] netlink_sendmsg at ffffffff85e554ef
+When the receive buffer size becomes considerably larger than the needed
+size, the tests results can flake, i.e. because minimal inaccuracy in the
+pacing rate can lead to a single subflow usage towards the end of the
+connection for a considerable amount of data.
 
-Fixes: 8fe4ce5836e9 ("scsi: core: Fix a use-after-free")
+Address the issue explicitly setting netem limits suitable for the
+configured link speeds and unflake all the affected tests.
+
+Fixes: 1a418cb8e888 ("mptcp: simult flow self-tests")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260223232728.93350-1-junxiao.bi@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-1-4b5462b6f016@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_scan.c |    1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/net/mptcp/simult_flows.sh |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -340,6 +340,7 @@ static struct scsi_device *scsi_alloc_sd
- 	 * since we use this queue depth most of times.
- 	 */
- 	if (scsi_realloc_sdev_budget_map(sdev, depth)) {
-+		kref_put(&sdev->host->tagset_refcnt, scsi_mq_free_tags);
- 		put_device(&starget->dev);
- 		kfree(sdev);
- 		goto out;
+--- a/tools/testing/selftests/net/mptcp/simult_flows.sh
++++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
+@@ -234,10 +234,13 @@ run_test()
+ 	for dev in ns2eth1 ns2eth2; do
+ 		tc -n $ns2 qdisc del dev $dev root >/dev/null 2>&1
+ 	done
+-	tc -n $ns1 qdisc add dev ns1eth1 root netem rate ${rate1}mbit $delay1
+-	tc -n $ns1 qdisc add dev ns1eth2 root netem rate ${rate2}mbit $delay2
+-	tc -n $ns2 qdisc add dev ns2eth1 root netem rate ${rate1}mbit $delay1
+-	tc -n $ns2 qdisc add dev ns2eth2 root netem rate ${rate2}mbit $delay2
++
++	# keep the queued pkts number low, or the RTT estimator will see
++	# increasing latency over time.
++	tc -n $ns1 qdisc add dev ns1eth1 root netem rate ${rate1}mbit $delay1 limit 50
++	tc -n $ns1 qdisc add dev ns1eth2 root netem rate ${rate2}mbit $delay2 limit 50
++	tc -n $ns2 qdisc add dev ns2eth1 root netem rate ${rate1}mbit $delay1 limit 50
++	tc -n $ns2 qdisc add dev ns2eth2 root netem rate ${rate2}mbit $delay2 limit 50
+ 
+ 	# time is measured in ms, account for transfer size, aggregated link speed
+ 	# and header overhead (10%)
 
 
