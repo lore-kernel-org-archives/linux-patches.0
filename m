@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFB131E84D;
-	Mon, 13 Apr 2026 16:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09228318ED2;
+	Mon, 13 Apr 2026 16:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099388; cv=none; b=T63SBni4mTEtmYV4OGFwkbFFa2d/s60UDm1PD3vgwutarygdUKohR4M0FvCg3hxJDu3c7sp9Nbh8n1ZzCEU8x6uihJOIxkA4LHVrqZyqQg/UGvkYVK2fz6SzTBNvJxK+7Bc9qFCFToTiSQYYK081/dyrkamtl6ZEREkKt8C3mFE=
+	t=1776099391; cv=none; b=GgU6DbkaLLwuibyW4c/2ij1Qsj5f815KjsUh2wqsGLR1D7n++JwbEoCPSqnbs3WwVeO8dIF0TrbLMXg08E/prFGRy83wWEsjaeX9TCV3brWKh1SbOLj1vR+2h8QuOk3EVZEdyTdhJYj9hBEEECv3frgguTPSCHi43UKi7hBHbuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099388; c=relaxed/simple;
-	bh=l6whB6YRhUMci8KbULsQdaoJETQeIzDscEt89snSCu8=;
+	s=arc-20240116; t=1776099391; c=relaxed/simple;
+	bh=NkDFIzaysPuRQctZzn9af83RaIYa7qCmUdFlWLm0hg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b16BPr3+9B2KCp3mkEV2hB2hbLyncli2La0kgUDXPHidsd0dlRV4ucfQ9/eawn2mqsPlM+bA3SzUb4bgR/NV01vka1lB2ZjDjyKRcGsi3nLZxOGyFoL+d/bP7qB/QE0jea+EfEp5o9BVZaHZgXbt32J2br0muq/AJ498qS0+U7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCmRCjiP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HGuIHjZGzFUhiCyxR+bMpV2uvvnBivnLIGei9uG3hlu7XlKDlT+RdAyGi4/Sa0HC/oCzgDB1nYyTkaWKCNGShQLuMleXD2qaNM4aA0Kcvn3ihEOQQRHCul4vnUajC7WblYCq+ugN9+XZD031G4FCaKIQoK6kQSiggb/flQV31HA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sz4kdUYr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCmRCjiP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A49C2BCB3;
-	Mon, 13 Apr 2026 16:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sz4kdUYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A644C2BCAF;
+	Mon, 13 Apr 2026 16:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099388;
-	bh=l6whB6YRhUMci8KbULsQdaoJETQeIzDscEt89snSCu8=;
+	s=korg; t=1776099390;
+	bh=NkDFIzaysPuRQctZzn9af83RaIYa7qCmUdFlWLm0hg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCmRCjiP0DvUEVXwnUF8NkuMtCbXEOYHfNM7btxCVk9ZRsZG+/pmsEwh14LOH6wC3
-	 pYzGzC5bOsWrl+wLz8pWP+luAMyAKNTdCyVI5P8s6jwA8eoLjwmTbtIFa8oHcg90/N
-	 AYD28q0TlXB69dR4Ah2d4k7gSUe+mGHFG/KsAbNk=
+	b=sz4kdUYr9ubGQscOk4Q1DE6je7dRXpa3Xx6vPZOBnevxPq52hBqFqvARDL6f2zvYS
+	 Wibpg1pdU9eoDyDcpWzw/4gcdAKP6/1NEizlxt8Z/7tfN06M8kzYU08P+RR1a1es1A
+	 b9YC91GR/WhjQhLK3KxXmujI8wzTerLjJ6/veGOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 314/491] dmaengine: xilinx_dma: Program interrupt delay timeout
-Date: Mon, 13 Apr 2026 17:59:19 +0200
-Message-ID: <20260413155830.794864541@linuxfoundation.org>
+Subject: [PATCH 5.10 323/491] net: qrtr: Release distant nodes along the bridge node
+Date: Mon, 13 Apr 2026 17:59:28 +0200
+Message-ID: <20260413155831.135420350@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,95 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Loic Poulain <loic.poulain@linaro.org>
 
-[ Upstream commit 84b798fedf3fa8f0ab0c096593ba817abc454fe5 ]
+[ Upstream commit 90829f07baea7efe4ca77f79820f3849081186a8 ]
 
-Program IRQDelay for AXI DMA. The interrupt timeout mechanism causes
-the DMA engine to generate an interrupt after the delay time period
-has expired. It enables dmaengine to respond in real-time even though
-interrupt coalescing is configured. It also remove the placeholder
-for delay interrupt and merge it with frame completion interrupt.
-Since by default interrupt delay timeout is disabled this feature
-addition has no functional impact on VDMA, MCDMA and CDMA IP's.
+Distant QRTR nodes can be accessed via an other node that acts as
+a bridge. When the a QRTR endpoint associated to a bridge node is
+released, all the linked distant nodes should also be released.
 
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://lore.kernel.org/r/1691387509-2113129-8-git-send-email-radhey.shyam.pandey@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: a17ce4bc6f4f ("dmaengine: xilinx_dma: Fix reset related timeout with two-channel AXIDMA")
+This patch fixes endpoint release by:
+- Submitting QRTR BYE message locally on behalf of all the nodes
+accessible through the endpoint.
+- Removing all the routable node IDs from radix tree pointing to
+the released node endpoint.
+
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 2428083101f6 ("net: qrtr: replace qrtr_tx_flow radix_tree with xarray to fix memory leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ net/qrtr/af_qrtr.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index a89a150be3284..7b3c47e442c15 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -174,8 +174,10 @@
- #define XILINX_DMA_MAX_TRANS_LEN_MAX	23
- #define XILINX_DMA_V2_MAX_TRANS_LEN_MAX	26
- #define XILINX_DMA_CR_COALESCE_MAX	GENMASK(23, 16)
-+#define XILINX_DMA_CR_DELAY_MAX		GENMASK(31, 24)
- #define XILINX_DMA_CR_CYCLIC_BD_EN_MASK	BIT(4)
- #define XILINX_DMA_CR_COALESCE_SHIFT	16
-+#define XILINX_DMA_CR_DELAY_SHIFT	24
- #define XILINX_DMA_BD_SOP		BIT(27)
- #define XILINX_DMA_BD_EOP		BIT(26)
- #define XILINX_DMA_COALESCE_MAX		255
-@@ -411,6 +413,7 @@ struct xilinx_dma_tx_descriptor {
-  * @stop_transfer: Differentiate b/w DMA IP's quiesce
-  * @tdest: TDEST value for mcdma
-  * @has_vflip: S2MM vertical flip
-+ * @irq_delay: Interrupt delay timeout
-  */
- struct xilinx_dma_chan {
- 	struct xilinx_dma_device *xdev;
-@@ -449,6 +452,7 @@ struct xilinx_dma_chan {
- 	int (*stop_transfer)(struct xilinx_dma_chan *chan);
- 	u16 tdest;
- 	bool has_vflip;
-+	u8 irq_delay;
- };
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index 01d8cb93ad756..68b6124fc8a10 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -172,8 +172,13 @@ static void __qrtr_node_release(struct kref *kref)
+ 	void __rcu **slot;
  
- /**
-@@ -1560,6 +1564,9 @@ static void xilinx_dma_start_transfer(struct xilinx_dma_chan *chan)
- 	if (chan->has_sg)
- 		xilinx_write(chan, XILINX_DMA_REG_CURDESC,
- 			     head_desc->async_tx.phys);
-+	reg  &= ~XILINX_DMA_CR_DELAY_MAX;
-+	reg  |= chan->irq_delay << XILINX_DMA_CR_DELAY_SHIFT;
-+	dma_ctrl_write(chan, XILINX_DMA_REG_DMACR, reg);
+ 	spin_lock_irqsave(&qrtr_nodes_lock, flags);
+-	if (node->nid != QRTR_EP_NID_AUTO)
+-		radix_tree_delete(&qrtr_nodes, node->nid);
++	/* If the node is a bridge for other nodes, there are possibly
++	 * multiple entries pointing to our released node, delete them all.
++	 */
++	radix_tree_for_each_slot(slot, &qrtr_nodes, &iter, 0) {
++		if (*slot == node)
++			radix_tree_iter_delete(&qrtr_nodes, &iter, slot);
++	}
+ 	spin_unlock_irqrestore(&qrtr_nodes_lock, flags);
  
- 	xilinx_dma_start(chan);
+ 	list_del(&node->item);
+@@ -615,6 +620,7 @@ void qrtr_endpoint_unregister(struct qrtr_endpoint *ep)
+ 	struct qrtr_ctrl_pkt *pkt;
+ 	struct qrtr_tx_flow *flow;
+ 	struct sk_buff *skb;
++	unsigned long flags;
+ 	void __rcu **slot;
  
-@@ -1876,15 +1883,8 @@ static irqreturn_t xilinx_dma_irq_handler(int irq, void *data)
- 		}
+ 	mutex_lock(&node->ep_lock);
+@@ -622,11 +628,18 @@ void qrtr_endpoint_unregister(struct qrtr_endpoint *ep)
+ 	mutex_unlock(&node->ep_lock);
+ 
+ 	/* Notify the local controller about the event */
+-	skb = qrtr_alloc_ctrl_packet(&pkt, GFP_KERNEL);
+-	if (skb) {
+-		pkt->cmd = cpu_to_le32(QRTR_TYPE_BYE);
+-		qrtr_local_enqueue(NULL, skb, QRTR_TYPE_BYE, &src, &dst);
++	spin_lock_irqsave(&qrtr_nodes_lock, flags);
++	radix_tree_for_each_slot(slot, &qrtr_nodes, &iter, 0) {
++		if (*slot != node)
++			continue;
++		src.sq_node = iter.index;
++		skb = qrtr_alloc_ctrl_packet(&pkt, GFP_ATOMIC);
++		if (skb) {
++			pkt->cmd = cpu_to_le32(QRTR_TYPE_BYE);
++			qrtr_local_enqueue(NULL, skb, QRTR_TYPE_BYE, &src, &dst);
++		}
  	}
++	spin_unlock_irqrestore(&qrtr_nodes_lock, flags);
  
--	if (status & XILINX_DMA_DMASR_DLY_CNT_IRQ) {
--		/*
--		 * Device takes too long to do the transfer when user requires
--		 * responsiveness.
--		 */
--		dev_dbg(chan->dev, "Inter-packet latency too long\n");
--	}
--
--	if (status & XILINX_DMA_DMASR_FRM_CNT_IRQ) {
-+	if (status & (XILINX_DMA_DMASR_FRM_CNT_IRQ |
-+		      XILINX_DMA_DMASR_DLY_CNT_IRQ)) {
- 		spin_lock(&chan->lock);
- 		xilinx_dma_complete_descriptor(chan);
- 		chan->idle = true;
-@@ -2801,6 +2801,8 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
- 	/* Retrieve the channel properties from the device tree */
- 	has_dre = of_property_read_bool(node, "xlnx,include-dre");
- 
-+	of_property_read_u8(node, "xlnx,irq-delay", &chan->irq_delay);
-+
- 	chan->genlock = of_property_read_bool(node, "xlnx,genlock-mode");
- 
- 	err = of_property_read_u32(node, "xlnx,datawidth", &value);
+ 	/* Wake up any transmitters waiting for resume-tx from the node */
+ 	mutex_lock(&node->qrtr_tx_lock);
 -- 
 2.53.0
 
