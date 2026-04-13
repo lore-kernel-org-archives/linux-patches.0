@@ -1,171 +1,439 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535B724DCF6;
-	Mon, 13 Apr 2026 16:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9B827466A;
+	Mon, 13 Apr 2026 16:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096277; cv=none; b=I5UFxN0S6KR6Qq8FYowVjWjp+Dzu/mFagigzud22igaem75FVED1FRQhH0tZrEpWjIQY+lNincfKZd200vSv8OQd7DlBun2W0nY+ZHWmVig2tiIUopoQrAczqBJ3wkDrrEK5gOXx7OeklWutgvI9bMStS98P/oV656p++Y/NL9c=
+	t=1776096279; cv=none; b=Yn6TD1ZmhYv/xhNUV73zssOrQvZB8cjt3W2DPjhDocwOJfk6PLR5GD4i6xpNmMRhqECQ+10KTSDvatw2xBBaimhc/MX+gwMUyRrEbSiYid3TyDriCZOj9uXKeqpEOWSWmWGfAPGuD9/dP4MYpHm1wF6YCq+W+1WfXi9SZByzedc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096277; c=relaxed/simple;
-	bh=vkGmgRx9ZIctwGKk9vLJlSiwTrV/zVi+JVjukK63i3w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M1Dfr1okKQBU5T12GrBC/DCpE28XgUDeTid8eWt/2RtQXARiTMV+Ad2OMMhN2OfSZ1v+ZlC+Aj6j7XwnsxQunS5KENwhUbbzLZpTFJBUg6Lt5At3iNaqb7NFWkYhQ7aKGQ6EccsM5wy7c+5whOZ9bCkZEAYEIaPzBjNo17Tx83A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SP8JzWsl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776096279; c=relaxed/simple;
+	bh=EkL34OZcC/uOGO/R8vNacuXXxW66a6CoCNeolN8pxKw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jP0o68gjEP/6KvBObTalQksbU4rB2j4lJP2YYbGkeRv/0VGf6tGZT59LmlqlhgbafyX/nChBvmtEfiHg10ILl5onnGw/AiYyPHGf41kg464qCcuYC8CWaz5bOLl7tIhzBo8gVRXFFtjQBt58LRBwIC7Y+euUkK+G294wjsEcj5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfSOLjcu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SP8JzWsl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FF2C2BCAF;
-	Mon, 13 Apr 2026 16:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfSOLjcu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29256C2BCB4;
+	Mon, 13 Apr 2026 16:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096277;
-	bh=vkGmgRx9ZIctwGKk9vLJlSiwTrV/zVi+JVjukK63i3w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SP8JzWslMklITpo0SvHONF/IuQuzyjG7ETbx7nGGULKqbZY9k+GD+KZzMxK30Syzl
-	 YrU0W8A+O6U0JLRzwPXGlY+L4WA39mcBPyBMgVUNUIzX9+rl90qPHbU/ymo2BzhkFC
-	 5sPaM3nRxRLHKJXb9QjH+WCZDFtEBcQi85bZ4RwI=
+	s=korg; t=1776096279;
+	bh=EkL34OZcC/uOGO/R8vNacuXXxW66a6CoCNeolN8pxKw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=vfSOLjcuXQZ4SUp17rsdVArVf2FON4KiHHjv5bIF85z3ZOYcsWvWoHiGJ970oh0Ih
+	 6j9dAvFlbetSDCrR9OMy1izieUVASsyG5RYL9eF9JPX5yO+ucPjSzWq77kzuOtfe3K
+	 Jb9t6qY10+07m3vT4XnAIWioPZCl5u5QPWpJ39dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 09/86] seg6: separate dst_cache for input and output paths in seg6 lwtunnel
-Date: Mon, 13 Apr 2026 17:59:16 +0200
-Message-ID: <20260413155731.921610738@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 6.19 00/86] 6.19.13-rc1 review
+Date: Mon, 13 Apr 2026 17:59:07 +0200
+Message-ID: <20260413155731.568515178@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
-References: <20260413155731.568515178@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.19.13-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.19.13-rc1
+X-KernelTest-Deadline: 2026-04-15T15:57+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.19-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.19.13 release.
+There are 86 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
+Anything received after that time might be too late.
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.19.13-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.19.y
+and the diffstat can be found below.
 
-commit c3812651b522fe8437ebb7063b75ddb95b571643 upstream.
+thanks,
 
-The seg6 lwtunnel uses a single dst_cache per encap route, shared
-between seg6_input_core() and seg6_output_core(). These two paths
-can perform the post-encap SID lookup in different routing contexts
-(e.g., ip rules matching on the ingress interface, or VRF table
-separation). Whichever path runs first populates the cache, and the
-other reuses it blindly, bypassing its own lookup.
+greg k-h
 
-Fix this by splitting the cache into cache_input and cache_output,
-so each path maintains its own cached dst independently.
+-------------
+Pseudo-Shortlog of commits:
 
-Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
-Cc: stable@vger.kernel.org
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260404004405.4057-2-andrea.mayer@uniroma2.it
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/ipv6/seg6_iptunnel.c |   34 +++++++++++++++++++++++-----------
- 1 file changed, 23 insertions(+), 11 deletions(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.19.13-rc1
 
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -48,7 +48,8 @@ static size_t seg6_lwt_headroom(struct s
- }
- 
- struct seg6_lwt {
--	struct dst_cache cache;
-+	struct dst_cache cache_input;
-+	struct dst_cache cache_output;
- 	struct seg6_iptunnel_encap tuninfo[];
- };
- 
-@@ -488,7 +489,7 @@ static int seg6_input_core(struct net *n
- 	slwt = seg6_lwt_lwtunnel(lwtst);
- 
- 	local_bh_disable();
--	dst = dst_cache_get(&slwt->cache);
-+	dst = dst_cache_get(&slwt->cache_input);
- 	local_bh_enable();
- 
- 	err = seg6_do_srh(skb, dst);
-@@ -504,7 +505,7 @@ static int seg6_input_core(struct net *n
- 		/* cache only if we don't create a dst reference loop */
- 		if (!dst->error && lwtst != dst->lwtstate) {
- 			local_bh_disable();
--			dst_cache_set_ip6(&slwt->cache, dst,
-+			dst_cache_set_ip6(&slwt->cache_input, dst,
- 					  &ipv6_hdr(skb)->saddr);
- 			local_bh_enable();
- 		}
-@@ -564,7 +565,7 @@ static int seg6_output_core(struct net *
- 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
- 
- 	local_bh_disable();
--	dst = dst_cache_get(&slwt->cache);
-+	dst = dst_cache_get(&slwt->cache_output);
- 	local_bh_enable();
- 
- 	err = seg6_do_srh(skb, dst);
-@@ -591,7 +592,7 @@ static int seg6_output_core(struct net *
- 		/* cache only if we don't create a dst reference loop */
- 		if (orig_dst->lwtstate != dst->lwtstate) {
- 			local_bh_disable();
--			dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
-+			dst_cache_set_ip6(&slwt->cache_output, dst, &fl6.saddr);
- 			local_bh_enable();
- 		}
- 
-@@ -701,11 +702,13 @@ static int seg6_build_state(struct net *
- 
- 	slwt = seg6_lwt_lwtunnel(newts);
- 
--	err = dst_cache_init(&slwt->cache, GFP_ATOMIC);
--	if (err) {
--		kfree(newts);
--		return err;
--	}
-+	err = dst_cache_init(&slwt->cache_input, GFP_ATOMIC);
-+	if (err)
-+		goto err_free_newts;
-+
-+	err = dst_cache_init(&slwt->cache_output, GFP_ATOMIC);
-+	if (err)
-+		goto err_destroy_input;
- 
- 	memcpy(&slwt->tuninfo, tuninfo, tuninfo_len);
- 
-@@ -720,11 +723,20 @@ static int seg6_build_state(struct net *
- 	*ts = newts;
- 
- 	return 0;
-+
-+err_destroy_input:
-+	dst_cache_destroy(&slwt->cache_input);
-+err_free_newts:
-+	kfree(newts);
-+	return err;
- }
- 
- static void seg6_destroy_state(struct lwtunnel_state *lwt)
- {
--	dst_cache_destroy(&seg6_lwt_lwtunnel(lwt)->cache);
-+	struct seg6_lwt *slwt = seg6_lwt_lwtunnel(lwt);
-+
-+	dst_cache_destroy(&slwt->cache_input);
-+	dst_cache_destroy(&slwt->cache_output);
- }
- 
- static int seg6_fill_encap_info(struct sk_buff *skb,
+Jiayuan Chen <jiayuan.chen@linux.dev>
+    net: skb: fix cross-cache free of KFENCE-allocated skb head
+
+Pengpeng Hou <pengpeng@iscas.ac.cn>
+    rxrpc: proc: size address buffers for %pISpc output
+
+Wang Jie <jiewang2024@lzu.edu.cn>
+    rxrpc: only handle RESPONSE during service challenge
+
+David Howells <dhowells@redhat.com>
+    rxrpc: Fix buffer overread in rxgk_do_verify_authenticator()
+
+David Howells <dhowells@redhat.com>
+    rxrpc: Fix leak of rxgk context in rxgk_verify_response()
+
+David Howells <dhowells@redhat.com>
+    rxrpc: Fix integer overflow in rxgk_verify_response()
+
+David Howells <dhowells@redhat.com>
+    rxrpc: Fix missing error checks for rxkad encryption/decryption failure
+
+David Howells <dhowells@redhat.com>
+    rxrpc: Fix key/keyring checks in setsockopt(RXRPC_SECURITY_KEY/KEYRING)
+
+Luxiao Xu <rakukuip@gmail.com>
+    rxrpc: fix reference count leak in rxrpc_server_keyring()
+
+Keenan Dong <keenanat2000@gmail.com>
+    rxrpc: fix oversized RESPONSE authenticator length check
+
+Keenan Dong <keenanat2000@gmail.com>
+    rxrpc: fix RESPONSE authenticator parser OOB read
+
+Yuqi Xu <xuyuqiabc@gmail.com>
+    rxrpc: reject undecryptable rxkad response tickets
+
+Douya Le <ldy3087146292@gmail.com>
+    rxrpc: Only put the call ref if one was acquired
+
+Marc Dionne <marc.c.dionne@gmail.com>
+    rxrpc: Fix to request an ack if window is limited
+
+Anderson Nascimento <anderson@allelesecurity.com>
+    rxrpc: Fix key reference count leak from call->key
+
+Alok Tiwari <alok.a.tiwari@oracle.com>
+    rxrpc: Fix rack timer warning to report unexpected mode
+
+Alok Tiwari <alok.a.tiwari@oracle.com>
+    rxrpc: Fix use of wrong skb when comparing queued RESP challenge serial
+
+Oleh Konko <security@1seal.org>
+    rxrpc: Fix RxGK token loading to check bounds
+
+David Howells <dhowells@redhat.com>
+    rxrpc: Fix call removal to use RCU safe deletion
+
+David Howells <dhowells@redhat.com>
+    rxrpc: Fix anonymous key handling
+
+David Howells <dhowells@redhat.com>
+    rxrpc: Fix key parsing memleak
+
+David Howells <dhowells@redhat.com>
+    rxrpc: Fix key quota calculation for multitoken keys
+
+David Carlier <devnexen@gmail.com>
+    net: lan966x: fix use-after-free and leak in lan966x_fdma_reload()
+
+David Carlier <devnexen@gmail.com>
+    net: lan966x: fix page pool leak in error paths
+
+David Carlier <devnexen@gmail.com>
+    net: lan966x: fix page_pool error handling in lan966x_fdma_rx_alloc_page_pool()
+
+Emil Tantilov <emil.s.tantilov@intel.com>
+    idpf: set the payload size before calling the async handler
+
+Emil Tantilov <emil.s.tantilov@intel.com>
+    idpf: improve locking around idpf_vc_xn_push_free()
+
+Emil Tantilov <emil.s.tantilov@intel.com>
+    idpf: fix PREEMPT_RT raw/bh spinlock nesting for async VC handling
+
+Baolin Wang <baolin.wang@linux.alibaba.com>
+    mm: filemap: fix nr_pages calculation overflow in filemap_map_pages()
+
+Tyllis Xu <livelycarpet87@gmail.com>
+    net: stmmac: fix integer underflow in chain mode
+
+Pengpeng Hou <pengpeng@iscas.ac.cn>
+    net: qualcomm: qca_uart: report the consumed byte on RX skb allocation failure
+
+Johan Hovold <johan@kernel.org>
+    mmc: vub300: fix use-after-free on disconnect
+
+Johan Hovold <johan@kernel.org>
+    mmc: vub300: fix NULL-deref on disconnect
+
+SeongJae Park <sj@kernel.org>
+    mm/damon/stat: deallocate damon_call() failure leaking damon_ctx
+
+SeongJae Park <sj@kernel.org>
+    mm/damon/sysfs: dealloc repeat_call_control if damon_call() fails
+
+Hao Li <hao.li@linux.dev>
+    mm/memory_hotplug: maintain N_NORMAL_MEMORY during hotplug
+
+Sechang Lim <rhkrqnwk98@gmail.com>
+    mm/vma: fix memory leak in __mmap_region()
+
+Alex Dvoretsky <advoretsky@gmail.com>
+    igb: remove napi_synchronize() in igb_down()
+
+Jacky Bai <ping.bai@nxp.com>
+    pmdomain: imx8mp-blk-ctrl: Keep the NOC_HDCP clock enabled
+
+Michael Guralnik <michaelgur@nvidia.com>
+    net/mlx5: Update the list of the PCI supported devices
+
+Jouni Högander <jouni.hogander@intel.com>
+    drm/i915/psr: Do not use pipe_src as borders for SU area
+
+Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+    drm/i915/gt: fix refcount underflow in intel_engine_park_heartbeat
+
+Haoze Xie <royenheart@gmail.com>
+    batman-adv: hold claim backbone gateways by reference
+
+David Carlier <devnexen@gmail.com>
+    net: altera-tse: fix skb leak on DMA mapping error in tse_start_xmit()
+
+Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
+    net/tls: fix use-after-free in -EBUSY error path of tls_do_encryption
+
+Borislav Petkov (AMD) <bp@alien8.de>
+    EDAC/mc: Fix error path ordering in edac_mc_alloc()
+
+Lukas Wunner <lukas@wunner.de>
+    X.509: Fix out-of-bounds access when parsing extensions
+
+Ruide Cao <caoruide123@gmail.com>
+    batman-adv: reject oversized global TT response buffers
+
+Pengpeng Hou <pengpeng@iscas.ac.cn>
+    nfc: pn533: allocate rx skb before consuming bytes
+
+Leo Timmins <leotimmins1974@gmail.com>
+    liveupdate: propagate file deserialization failures
+
+Shawn Guo <shawnguo@kernel.org>
+    arm64: dts: hisilicon: hi3798cv200: Add missing dma-ranges
+
+Shawn Guo <shawnguo@kernel.org>
+    arm64: dts: hisilicon: poplar: Correct PCIe reset GPIO polarity
+
+Marek Vasut <marek.vasut+renesas@mailbox.org>
+    arm64: dts: renesas: sparrow-hawk: Reserve first 128 MiB of DRAM
+
+Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+    arm64: dts: imx8mq-librem5: Bump BUCK1 suspend voltage up to 0.85V
+
+Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+    Revert "arm64: dts: imx8mq-librem5: Set the DVS voltages lower"
+
+Heiko Stuebner <heiko@sntech.de>
+    Revert "arm64: dts: rockchip: Further describe the WiFi for the Pinebook Pro"
+
+Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+    platform/x86/intel-uncore-freq: Handle autonomous UFS status bit
+
+Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+    platform/x86: ISST: Reset core count to 0
+
+Yazen Ghannam <yazen.ghannam@amd.com>
+    x86/mce/amd: Filter bogus hardware errors on Zen3 clients
+
+Thomas Fourier <fourier.thomas@gmail.com>
+    wifi: brcmsmac: Fix dma_free_coherent() size
+
+Kai Vehmanen <kai.vehmanen@linux.intel.com>
+    ASoC: SOF: Intel: hda: modify period size constraints for ACE4
+
+Janne Grunau <j@jannau.net>
+    kbuild: modules-cpio-pkg: Respect INSTALL_MOD_PATH
+
+Oleh Konko <security@1seal.org>
+    tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG
+
+Qi Tang <tpluszz77@gmail.com>
+    xfrm: hold dev ref until after transport_finish NF_HOOK
+
+Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+    xfrm: clear trailing padding in build_polexpire()
+
+Nathan Chancellor <nathan@kernel.org>
+    modpost: Declare extra_warn with unused attribute
+
+Matthew Brost <matthew.brost@intel.com>
+    workqueue: Add pool_workqueue to pending_pwqs list when unplugging multiple inactive works
+
+Michal Wilczynski <m.wilczynski@samsung.com>
+    firmware: thead: Fix buffer overflow and use standard endian macros
+
+Tuan Do <tuan@calif.io>
+    netfilter: nft_ct: fix use-after-free in timeout object destroy
+
+Anthony Pighin <anthony.pighin@nokia.com>
+    i2c: imx: zero-initialize dma_slave_config for eDMA
+
+robbieko <robbieko@synology.com>
+    btrfs: fix incorrect return value after changing leaf in lookup_extent_data_ref()
+
+Filipe Manana <fdmanana@suse.com>
+    btrfs: remove pointless out labels from extent-tree.c
+
+Maciej W. Rozycki <macro@orcam.me.uk>
+    MIPS: mm: Rewrite TLB uniquification for the hidden bit feature
+
+Maciej W. Rozycki <macro@orcam.me.uk>
+    MIPS: mm: Suppress TLB uniquification on EHINV hardware
+
+Maciej W. Rozycki <macro@orcam.me.uk>
+    MIPS: Always record SEGBITS in cpu_data.vmbits
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: uinput - take event lock when submitting FF request "event"
+
+Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+    Input: uinput - fix circular locking dependency with ff-core
+
+Andrea Mayer <andrea.mayer@uniroma2.it>
+    seg6: separate dst_cache for input and output paths in seg6 lwtunnel
+
+Jiayuan Chen <jiayuan.chen@linux.dev>
+    mptcp: fix slab-use-after-free in __inet_lookup_established
+
+Matthieu Baerts (NGI0) <matttbe@kernel.org>
+    Revert "mptcp: add needs_id for netlink appending addr"
+
+Kai Vehmanen <kai.vehmanen@linux.intel.com>
+    ALSA: hda/intel: enforce stricter period-size alignment for Intel NVL
+
+Takashi Iwai <tiwai@suse.de>
+    Revert "ALSA: hda/realtek: Add quirk for Gigabyte Technology to fix headphone"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    net: rfkill: prevent unlimited numbers of rfkill events from being created
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    xfrm_user: fix info leak in build_report()
+
+Johan Hovold <johan@kernel.org>
+    wifi: rt2x00usb: fix devres lifetime
+
+Nathan Rebello <nathan.c.rebello@gmail.com>
+    usb: typec: ucsi: skip connector validation before init
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ .../arm64/boot/dts/freescale/imx8mq-librem5-r3.dts |   2 +-
+ arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi  |  24 +-
+ .../boot/dts/hisilicon/hi3798cv200-poplar.dts      |   2 +-
+ arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi     |   1 +
+ .../boot/dts/renesas/r8a779g3-sparrow-hawk.dts     |  11 +
+ .../boot/dts/rockchip/rk3399-pinebook-pro.dts      |  18 --
+ arch/mips/include/asm/cpu-features.h               |   1 -
+ arch/mips/include/asm/cpu-info.h                   |   2 -
+ arch/mips/include/asm/mipsregs.h                   |   2 +
+ arch/mips/kernel/cpu-probe.c                       |  13 +-
+ arch/mips/kernel/cpu-r3k-probe.c                   |   2 +
+ arch/mips/mm/tlb-r4k.c                             | 285 +++++++++++++++++----
+ arch/x86/kernel/cpu/mce/amd.c                      |   8 +
+ crypto/asymmetric_keys/x509_cert_parser.c          |   8 +-
+ drivers/edac/edac_mc.c                             |   6 +-
+ drivers/firmware/thead,th1520-aon.c                |   7 +-
+ drivers/gpu/drm/i915/display/intel_psr.c           |  30 ++-
+ drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c   |  26 +-
+ drivers/i2c/busses/i2c-imx.c                       |   2 +-
+ drivers/input/misc/uinput.c                        |  35 ++-
+ drivers/mmc/host/vub300.c                          |  19 +-
+ drivers/net/ethernet/altera/altera_tse_main.c      |   1 +
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c    |  20 +-
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.h    |   5 +-
+ drivers/net/ethernet/intel/igb/igb_main.c          |   3 +-
+ drivers/net/ethernet/mellanox/mlx5/core/main.c     |   1 +
+ .../net/ethernet/microchip/lan966x/lan966x_fdma.c  |  28 +-
+ drivers/net/ethernet/qualcomm/qca_uart.c           |   2 +-
+ drivers/net/ethernet/stmicro/stmmac/chain_mode.c   |  11 +-
+ .../net/wireless/broadcom/brcm80211/brcmsmac/dma.c |   2 +-
+ drivers/net/wireless/ralink/rt2x00/rt2x00usb.c     |   2 +-
+ drivers/nfc/pn533/uart.c                           |  11 +-
+ .../x86/intel/speed_select_if/isst_tpmi_core.c     |   2 +
+ .../intel/uncore-frequency/uncore-frequency-tpmi.c |   8 +-
+ drivers/pmdomain/imx/imx8mp-blk-ctrl.c             |   8 +-
+ drivers/usb/typec/ucsi/ucsi.c                      |   3 +-
+ fs/btrfs/extent-tree.c                             |  24 +-
+ include/linux/firmware/thead/thead,th1520-aon.h    |  74 ------
+ include/net/netfilter/nf_conntrack_timeout.h       |   1 +
+ include/trace/events/rxrpc.h                       |   4 +-
+ kernel/liveupdate/luo_session.c                    |   9 +-
+ kernel/workqueue.c                                 |  14 +-
+ mm/damon/stat.c                                    |   7 +
+ mm/damon/sysfs.c                                   |   3 +-
+ mm/filemap.c                                       |  11 +-
+ mm/memory_hotplug.c                                |  20 ++
+ mm/vma.c                                           |   7 +
+ net/batman-adv/bridge_loop_avoidance.c             |  27 +-
+ net/batman-adv/translation-table.c                 |   9 +-
+ net/core/skbuff.c                                  |   5 +-
+ net/ipv4/xfrm4_input.c                             |   5 +-
+ net/ipv6/seg6_iptunnel.c                           |  34 ++-
+ net/ipv6/xfrm6_input.c                             |   5 +-
+ net/mptcp/pm_kernel.c                              |  24 +-
+ net/mptcp/protocol.c                               |   2 +
+ net/mptcp/protocol.h                               |   1 +
+ net/mptcp/subflow.c                                |  15 +-
+ net/netfilter/nft_ct.c                             |   2 +-
+ net/rfkill/core.c                                  |  35 ++-
+ net/rxrpc/af_rxrpc.c                               |   6 -
+ net/rxrpc/ar-internal.h                            |   2 +-
+ net/rxrpc/call_object.c                            |  25 +-
+ net/rxrpc/conn_event.c                             |  19 +-
+ net/rxrpc/input_rack.c                             |   2 +-
+ net/rxrpc/io_thread.c                              |   3 +-
+ net/rxrpc/key.c                                    |  40 +--
+ net/rxrpc/output.c                                 |   2 +
+ net/rxrpc/proc.c                                   |  37 +--
+ net/rxrpc/rxgk.c                                   |  19 +-
+ net/rxrpc/rxkad.c                                  |  63 +++--
+ net/rxrpc/sendmsg.c                                |   2 +-
+ net/rxrpc/server_key.c                             |   3 +
+ net/tipc/group.c                                   |   6 +-
+ net/tls/tls_sw.c                                   |  10 +
+ net/xfrm/xfrm_input.c                              |  18 +-
+ net/xfrm/xfrm_user.c                               |   3 +
+ scripts/Makefile.package                           |   3 +-
+ scripts/mod/modpost.c                              |   2 +-
+ sound/hda/codecs/realtek/alc662.c                  |   9 -
+ sound/hda/controllers/intel.c                      |   7 +-
+ sound/soc/sof/intel/hda-pcm.c                      |  14 +-
+ 82 files changed, 795 insertions(+), 453 deletions(-)
 
 
