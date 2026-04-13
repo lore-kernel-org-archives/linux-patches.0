@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D74928B4FD;
-	Mon, 13 Apr 2026 16:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E4C233722;
+	Mon, 13 Apr 2026 16:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097904; cv=none; b=TuL9P7ly6s9qff2/APxWyZb26Oz1ERI+1BlD6w1cvY3S5x3/8BCV+/VodB5HpnEeN0CFvSknBoPV5AqVlbHJifEtJwry7AOM0tzr1b4o8Xh+tRkRynA0tvYZBlCuOFg9dY311cfNB1UIQ5FJTtlHObbBTdD6+zPCThd3bW2Z7eA=
+	t=1776097906; cv=none; b=qXX7znodSVb2SoCtO91OhnDBIYBrWkqZvOEMp8B8TyLcKD0YX04PeBWhb9O0WXDxQKl2Iyi5x6elQpD4KD7xEWt4w/TBPWG/CJdCkgsZqH8kvm4oGFulbH8EBmSX/tAQAkFGIp5aAB/8Ff/KR/F5VxzqbUQvLZFSd3uwc2UCbq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097904; c=relaxed/simple;
-	bh=gRtouCgv0KftyvxvCu4TA8mMbXflmtyh4oKsgm8EhiE=;
+	s=arc-20240116; t=1776097906; c=relaxed/simple;
+	bh=T8wDBAbdP6EBTjHoeUByjD2Lw1WaH0yk1K0KdxH/v6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWOxBIfzUSPOncNRH5u57iI6jLyGMJ8q7nKLjY//pajl5TOPo8t/7rF5nuxuJeuHP52gxt8HfWmYlvWuavBkoIJpCftNsq7aa2WQ7UqfMpAQIdyxnnNQMa/Kl4USypXbmLT/wJn5c1cpapwGpOpuzOgB3r/3eod/sJtPe4ZZZqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xspKuK6B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGEOE8sqbPeHAieDZxOkl7u3Qu32Ss59xr28kxx8GEz0+w23hJ1GohcDls31GxmBKsdznTC+/1z7O34FIttDlV02BqXLXWjgNkrwKv571V2FzsVCHmt1/yP7I7yFri1eA/B5PuW2au9oqoC9hMl1P8XtIUvSI+UpdGSADh6hIPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4aqtvyM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xspKuK6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ADEC2BCAF;
-	Mon, 13 Apr 2026 16:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4aqtvyM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EE4C2BCAF;
+	Mon, 13 Apr 2026 16:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097904;
-	bh=gRtouCgv0KftyvxvCu4TA8mMbXflmtyh4oKsgm8EhiE=;
+	s=korg; t=1776097906;
+	bh=T8wDBAbdP6EBTjHoeUByjD2Lw1WaH0yk1K0KdxH/v6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xspKuK6BADIWH1pGqY/x/cPG6ck6fOt9hquStiBTKhVWPm9dOJabCcMeoyMxMs5gv
-	 rgH2oZTVI+M3p7ni/f6f0z0ZkSeY801U2C42JOxza+6E0x9HM0wMir6TZ74chybjrE
-	 szZFdX7fqdgGpb1QDEXOPWweYzAx16Jt4oJZwTMY=
+	b=A4aqtvyMvVrtOQJg8hhhXP20GmoJO6MeB6f5Kd5Uj/9H1IIi15b/mS2fK+2MxyF9B
+	 cOGGkJgyGOnGgUqAflCCfVaDP9vFpZ+17rHhodx0s5CaWt+2VJ6s/6POr69+3MfKMi
+	 zllMDLjzfHNIT0fZs4IEP2qd5+XpMMgt0fzzswmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hyunwoo Kim <imv4bel@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 317/570] Bluetooth: L2CAP: Validate PDU length before reading SDU length in l2cap_ecred_data_rcv()
-Date: Mon, 13 Apr 2026 17:57:28 +0200
-Message-ID: <20260413155842.370745547@linuxfoundation.org>
+Subject: [PATCH 5.15 318/570] Bluetooth: SCO: Fix use-after-free in sco_recv_frame() due to missing sock_hold
+Date: Mon, 13 Apr 2026 17:57:29 +0200
+Message-ID: <20260413155842.408234920@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -53,41 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit c65bd945d1c08c3db756821b6bf9f1c4a77b29c6 ]
+[ Upstream commit 598dbba9919c5e36c54fe1709b557d64120cb94b ]
 
-l2cap_ecred_data_rcv() reads the SDU length field from skb->data using
-get_unaligned_le16() without first verifying that skb contains at least
-L2CAP_SDULEN_SIZE (2) bytes. When skb->len is less than 2, this reads
-past the valid data in the skb.
+sco_recv_frame() reads conn->sk under sco_conn_lock() but immediately
+releases the lock without holding a reference to the socket. A concurrent
+close() can free the socket between the lock release and the subsequent
+sk->sk_state access, resulting in a use-after-free.
 
-The ERTM reassembly path correctly calls pskb_may_pull() before reading
-the SDU length (l2cap_reassemble_sdu, L2CAP_SAR_START case). Apply the
-same validation to the Enhanced Credit Based Flow Control data path.
+Other functions in the same file (sco_sock_timeout(), sco_conn_del())
+correctly use sco_sock_hold() to safely hold a reference under the lock.
 
-Fixes: aac23bf63659 ("Bluetooth: Implement LE L2CAP reassembly")
+Fix by using sco_sock_hold() to take a reference before releasing the
+lock, and adding sock_put() on all exit paths.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/bluetooth/sco.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 5010c200b2c41..e69c6041437b0 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7650,6 +7650,11 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
- 	if (!chan->sdu) {
- 		u16 sdu_len;
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index d98648bcc1a85..d0ef74c45914c 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -311,7 +311,7 @@ static void sco_recv_frame(struct sco_conn *conn, struct sk_buff *skb)
+ 	struct sock *sk;
  
-+		if (!pskb_may_pull(skb, L2CAP_SDULEN_SIZE)) {
-+			err = -EINVAL;
-+			goto failed;
-+		}
-+
- 		sdu_len = get_unaligned_le16(skb->data);
- 		skb_pull(skb, L2CAP_SDULEN_SIZE);
+ 	sco_conn_lock(conn);
+-	sk = conn->sk;
++	sk = sco_sock_hold(conn);
+ 	sco_conn_unlock(conn);
  
+ 	if (!sk)
+@@ -320,11 +320,15 @@ static void sco_recv_frame(struct sco_conn *conn, struct sk_buff *skb)
+ 	BT_DBG("sk %p len %u", sk, skb->len);
+ 
+ 	if (sk->sk_state != BT_CONNECTED)
+-		goto drop;
++		goto drop_put;
+ 
+-	if (!sock_queue_rcv_skb(sk, skb))
++	if (!sock_queue_rcv_skb(sk, skb)) {
++		sock_put(sk);
+ 		return;
++	}
+ 
++drop_put:
++	sock_put(sk);
+ drop:
+ 	kfree_skb(skb);
+ }
 -- 
 2.51.0
 
