@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE11C313298;
-	Mon, 13 Apr 2026 16:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759B53161AB;
+	Mon, 13 Apr 2026 16:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099101; cv=none; b=tIM00VX6fhL9a1GgPNa+3XS6cAWGrAeiABzdeveBuCMM83cK6+M8cCDqsxMxKenx9haJtP8nDt9LzXDII9ZrHyE2x6e3JE6Cr/uLnOwqTKDVn+4tIyEz61IHBvS0Hl9KDNrDJGAl6seBE5MX0FiY07Aelp+Wl23W/6QEbWEMyfk=
+	t=1776099104; cv=none; b=PsxyugMnsdg+tFCYq3J+SUU+AaVle/0I5rtM2fMTTuEqjkpkRO1AQCZWBmfQ5W2s8huEGPwB2OtEjv9vJi6MrThRbTkuhr03iA9mr8jamgr74lWpjmKnlHahwhgCm2G50xhCpRii359s+aXCgRinp74MBTpaaCvcK5cNZfp6Kok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099101; c=relaxed/simple;
-	bh=X2oHp2ePKIMxne7IMsxfF9+jANnyWKgPSS+hXbO1Sr8=;
+	s=arc-20240116; t=1776099104; c=relaxed/simple;
+	bh=8DM0Xx67CiAZO/CnjX5BwvuGOTDI8pVg7WVGOqy08FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGUIRA+qFrbHUG7uhREYVOtfKqLH8ioujRHLCIhByzPrOxvigPqn8HdSrTuscB/9fioGDKCkc6eWe3jxI0oNL2jYQdVF+VSXM47X4LmKdGwnVzGsjkhdZW+uJcJ07nD2IwjvLEvuWHk49QtyTP876/fU5/BGxFsN8GIlut+N+64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdvimBQJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cZQ1jYTeQNP68RUejJMMssT13VE3SARSPY/QxdfQhdS1RxQ/KmESC2Ij9kG+DU/hgeci+MPNdmC4hmoqCewoMkiVMdP0U1uFbPCyeEC0x/yoBbaErpC4JoD9fLt+6oQIW/9fCcmZRPG8KK/T4iLHT0g0wC9PAfdniBIO8cWQJDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHqJoruK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdvimBQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE25C2BCAF;
-	Mon, 13 Apr 2026 16:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHqJoruK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7C3C2BCAF;
+	Mon, 13 Apr 2026 16:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099101;
-	bh=X2oHp2ePKIMxne7IMsxfF9+jANnyWKgPSS+hXbO1Sr8=;
+	s=korg; t=1776099104;
+	bh=8DM0Xx67CiAZO/CnjX5BwvuGOTDI8pVg7WVGOqy08FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bdvimBQJRSOOBRUFMKiAiq43nLD8icGpDae2SlvkZY5S8PnTVN8YXRhqbt/fr9/qT
-	 u4bh075ORAsb06zfjTAOKixqkm1NJF3GKEhiBFW0RMuf/YW2AsFC69MUjOW8ssOta9
-	 SedZ4Ysm8yTULcV67OkRQty2wPSQcFer7m4kBmmQ=
+	b=FHqJoruKTVd30VrgIPhmA24NRjmWGBCtTpNmidVggoV07aWDkMaxsyOL+jhOiJM2T
+	 i6YRuV3ouwwFQKfXJ6e5gdFpUh1sgh0qWCWqkx7EPRw+QOvBuvBGwtqSYITUWN7fW8
+	 uH0TNooczStuOncm5vEE5WxW4+8YSfdmcjLRqYiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 179/491] crypto: atmel-sha204a - Fix OOM ->tfm_count leak
-Date: Mon, 13 Apr 2026 17:57:04 +0200
-Message-ID: <20260413155825.756284054@linuxfoundation.org>
+Subject: [PATCH 5.10 180/491] drm/msm: Fix dma_free_attrs() buffer size
+Date: Mon, 13 Apr 2026 17:57:05 +0200
+Message-ID: <20260413155825.793766085@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit d240b079a37e90af03fd7dfec94930eb6c83936e ]
+[ Upstream commit e4eb6e4dd6348dd00e19c2275e3fbaed304ca3bd ]
 
-If memory allocation fails, decrement ->tfm_count to avoid blocking
-future reads.
+The gpummu->table buffer is alloc'd with size TABLE_SIZE + 32 in
+a2xx_gpummu_new() but freed with size TABLE_SIZE in
+a2xx_gpummu_destroy().
 
-Cc: stable@vger.kernel.org
-Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ adapted kmalloc_obj() macro to kmalloc(sizeof()) ]
+Change the free size to match the allocation.
+
+Fixes: c2052a4e5c99 ("drm/msm: implement a2xx mmu")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/707340/
+Message-ID: <20260226095714.12126-2-fourier.thomas@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-sha204a.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_gpummu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/atmel-sha204a.c
-+++ b/drivers/crypto/atmel-sha204a.c
-@@ -52,9 +52,10 @@ static int atmel_sha204a_rng_read_nonblo
- 		rng->priv = 0;
- 	} else {
- 		work_data = kmalloc(sizeof(*work_data), GFP_ATOMIC);
--		if (!work_data)
-+		if (!work_data) {
-+			atomic_dec(&i2c_priv->tfm_count);
- 			return -ENOMEM;
--
-+		}
- 		work_data->ctx = i2c_priv;
- 		work_data->client = i2c_priv->client;
+--- a/drivers/gpu/drm/msm/msm_gpummu.c
++++ b/drivers/gpu/drm/msm/msm_gpummu.c
+@@ -72,7 +72,7 @@ static void msm_gpummu_destroy(struct ms
+ {
+ 	struct msm_gpummu *gpummu = to_msm_gpummu(mmu);
  
+-	dma_free_attrs(mmu->dev, TABLE_SIZE, gpummu->table, gpummu->pt_base,
++	dma_free_attrs(mmu->dev, TABLE_SIZE + 32, gpummu->table, gpummu->pt_base,
+ 		DMA_ATTR_FORCE_CONTIGUOUS);
+ 
+ 	kfree(gpummu);
 
 
