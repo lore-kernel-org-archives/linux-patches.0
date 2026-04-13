@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7960931619A;
-	Mon, 13 Apr 2026 16:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C12831619A;
+	Mon, 13 Apr 2026 16:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099235; cv=none; b=MYnK68cKjbvR12GYrkSiOl//QuV3GXYb+MzVk7hfn39Qqu1j/1NjV36Awv2Z9l35j+Kq0gsmZkmIwaRmn2kvyS2cPSLq9kwRtIZQNAfAQdzvQ4ViMpVA8fS/PMAtL1lPJHKod9mNbYhO6wntenKqsAQ6TVrfOdhdJK5QsGqP9Tk=
+	t=1776099238; cv=none; b=lEi1o4MoZmk3WcE2ENZhlL/vNY4QDoLAKJdE42S7aP4PcvVhku4VEcp0mjrHdYWbDEZX5YPdKg00rmZnGc0t6m2/WwSsJSt/68qbt1INbOoCIeIj+/TvSU2BFwg9I5j40/7BBi/CkQFBme4Fst2WM+V18+52ODxFvy7oTNkPgJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099235; c=relaxed/simple;
-	bh=/MKjKj9Jwks9NMF/1sD4vyCWIhQH//22EEWwmKWoUi0=;
+	s=arc-20240116; t=1776099238; c=relaxed/simple;
+	bh=VnlOHg2YpjYunilpJuLksvPntoTMrmI2JWiPObun3x8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kVrg+NTNI8RC5KyYES1Za0reOMduMtdbdY++o6bh1gg68nZZkj7unkFrYBVWMWXcyGHc7ugFGjVTFCZlQIBYiHei8wBgO6sj4Ml+iGnkRSl29+EViAP4XOBGhmBYyknxgQX1Kq4/SXociZZTh+rmVmmdCBkdTgx8jUOEHSqoCuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgUjynHs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Px2D09TDJhSH5ULPPXCTQ/nTeTNQDqBjF3TyIVDNQFMvPwH2Au/E2QtQ0tMet/kvFeDojGjSYzw5S+MMl2WzNgNtn8w0bUlimuV75QkP8LcHI8BWN7z/mrsEXyuFk5uZq4m68oQdRLaoqAFME0XVOXFzwmzrWzoZsxH8mxuNtYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6kccsWx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgUjynHs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F038C2BCAF;
-	Mon, 13 Apr 2026 16:53:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6kccsWx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BACC2BCAF;
+	Mon, 13 Apr 2026 16:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099235;
-	bh=/MKjKj9Jwks9NMF/1sD4vyCWIhQH//22EEWwmKWoUi0=;
+	s=korg; t=1776099237;
+	bh=VnlOHg2YpjYunilpJuLksvPntoTMrmI2JWiPObun3x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgUjynHsQ4rNFib4SZXeIVX8vQxekKcgbMl70HwEJRgXKn7u7eD2HG+6ODA/fW4Pd
-	 Zrnt1thhyAIKPyZ9fgK38VXy9N8qTT7vI4zVBlyNkI4ZVcW+5x52p2hNuq0pxKuzMl
-	 QhM8I8KLM4E7g9D+Uy2Q1Q31Nl5dZwImAx2wPaI0=
+	b=T6kccsWx/NHjGqlxmHkF7Av72HTK6exG/Xz86jYlu746xGqczrUjQEJUH5dOXNJic
+	 1n1reuPEMSbXpwbYhUuz4Op3sDIcRBn/CrFlMls2Yc/fByXCEMnnP+K1mZR3/wUz8W
+	 EBvI2x1pNkk4Hb3g76S2XV9kKCu55Z2yAPns9O8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Uzair Mughal <contact@uzair.is-a.dev>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 263/491] net: enetc: fix the output issue of ethtool --show-ring
-Date: Mon, 13 Apr 2026 17:58:28 +0200
-Message-ID: <20260413155828.898628920@linuxfoundation.org>
+Subject: [PATCH 5.10 246/491] ALSA: hda/realtek: Add headset jack quirk for Thinkpad X390
+Date: Mon, 13 Apr 2026 17:58:11 +0200
+Message-ID: <20260413155828.265863973@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,44 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Uzair Mughal <contact@uzair.is-a.dev>
 
-[ Upstream commit 70b439bf06f6a12e491f827fa81a9887a11501f9 ]
+[ Upstream commit 542127f6528ca7cc3cf61e1651d6ccb58495f953 ]
 
-Currently, enetc_get_ringparam() only provides rx_pending and tx_pending,
-but 'ethtool --show-ring' no longer displays these fields. Because the
-ringparam retrieval path has moved to the new netlink interface, where
-rings_fill_reply() emits the *x_pending only if the *x_max_pending values
-are non-zero. So rx_max_pending and tx_max_pending to are added to
-enetc_get_ringparam() to fix the issue.
+The Lenovo ThinkPad X390 (ALC257 codec, subsystem ID 0x17aa2288)
+does not report headset button press events. Headphone insertion is
+detected (SW_HEADPHONE_INSERT), but pressing the inline microphone
+button on a headset produces no input events.
 
-Note that the maximum tx/rx ring size of hardware is 64K, but we haven't
-added set_ringparam() to make the ring size configurable. To avoid users
-mistakenly believing that the ring size can be increased, so set
-the *x_max_pending to priv->*x_bd_count.
+Add a SND_PCI_QUIRK entry that maps this subsystem ID to
+ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK, which enables
+headset jack button detection through alc_fixup_headset_jack()
+and ThinkPad ACPI integration. This is the same fixup used by
+similar ThinkPad models (P1 Gen 3, X1 Extreme Gen 3).
 
-Fixes: e4a1717b677c ("ethtool: provide ring sizes with RINGS_GET request")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20260320094222.706339-1-wei.fang@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Uzair Mughal <contact@uzair.is-a.dev>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260307012906.20093-1-contact@uzair.is-a.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_ethtool.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-index cf98a00296edf..c934cae9f0d41 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-@@ -549,6 +549,8 @@ static void enetc_get_ringparam(struct net_device *ndev,
- {
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
- 
-+	ring->rx_max_pending = priv->rx_bd_count;
-+	ring->tx_max_pending = priv->tx_bd_count;
- 	ring->rx_pending = priv->rx_bd_count;
- 	ring->tx_pending = priv->tx_bd_count;
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index b8c7f4c8593ba..7ea036f820f54 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9527,6 +9527,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x224c, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
+ 	SND_PCI_QUIRK(0x17aa, 0x224d, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
+ 	SND_PCI_QUIRK(0x17aa, 0x225d, "Thinkpad T480", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
++	SND_PCI_QUIRK(0x17aa, 0x2288, "Thinkpad X390", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
+ 	SND_PCI_QUIRK(0x17aa, 0x2292, "Thinkpad X1 Carbon 7th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
+ 	SND_PCI_QUIRK(0x17aa, 0x22be, "Thinkpad X1 Carbon 8th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
+ 	SND_PCI_QUIRK(0x17aa, 0x22c1, "Thinkpad P1 Gen 3", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
 -- 
 2.51.0
 
