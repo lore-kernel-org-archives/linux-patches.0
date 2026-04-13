@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717E930C361;
-	Mon, 13 Apr 2026 16:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072C1307AC7;
+	Mon, 13 Apr 2026 16:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098525; cv=none; b=Oq+Mfr8U964x7qUaH1PVDiqH+Pe3eDUOsyzRY6aY9S4kC1KL9wxFpZupUvCRnFcq+mkAwEVVvsO67serdnP+kYdxzCDwuGVn0vjGYidfHLBRzEmtY17REGZxY3VtXtIkm9+6EWuRrW2LiTP5MjTHHX8SizFpD3uCMcOvfKomo2E=
+	t=1776098528; cv=none; b=kQ2v7EY5wz/ytjVNmTHUKXK04me6TplzsoA50JSQ/YsYj5LBXhpsIJEOai9tdy7l8NvqgTCKhwumXYg07pdovI3ehE3viRhdWKNp9r146mE3HuIutpFL7//0pal9OhYL07UH8LrCtS2BID0Mgc8xaPQypGXiQpI90h2sekch/VI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098525; c=relaxed/simple;
-	bh=DN0HeXpQ2ZPcauQM/Yxb+K1dUkhQzdNIv/BwRKtT8Ag=;
+	s=arc-20240116; t=1776098528; c=relaxed/simple;
+	bh=fykuKx+Utz7rd7t7CZmQwqw2MnLMEQObMNXsR6jcyTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o89VLgUI1Mjojo8dAkLr3wEj4a+yt7gtv7AWyYamGHGYkIREZpba8BScaxF+iLQh83+l9KpRAhpcrSAGmvqMovrg8cZX0kK1zFl9c1zPqFeW4xGrwar6yAm/hNTgK4G57B9KAYQ/cGQcn+4TNQCtemuyPxeeWRcx8funYqrgWJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zT6KNd2i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AfDMuXBRYKzxgMWnaJym2E/L0/i1HB2b73A7alOnOkZU65e5VQqIbnBivIWh2+9dx0Ku3w7fXfjaLFVBQaWRSU9h4XZh52g9iRWx9xqP88rf2MCoPXNrb0N3FQL/NEMMWxYyHYmbUf0JZbTwF+3HvyKRcFTylUYAWR9iTaBOXQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTHJSYpM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zT6KNd2i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062F8C2BCAF;
-	Mon, 13 Apr 2026 16:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTHJSYpM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F679C2BCAF;
+	Mon, 13 Apr 2026 16:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098525;
-	bh=DN0HeXpQ2ZPcauQM/Yxb+K1dUkhQzdNIv/BwRKtT8Ag=;
+	s=korg; t=1776098527;
+	bh=fykuKx+Utz7rd7t7CZmQwqw2MnLMEQObMNXsR6jcyTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zT6KNd2i24fKB03I7X6gIDCMWnaG4fgUwWms6ilAA7ujDciyZtAfthEjiFQFKFzbp
-	 xGDwrl+JzG9yuQFjsOwxmH+CtWjhMwlMdpsWYRD+J80mLqgZ0U6fun7f/B6RgpEj89
-	 TqmzqDRJc8YzqMfN4PDHZTOj6eBr+699zmoSI2Uk=
+	b=vTHJSYpM6vI/7jxCOHJyuTcdSjsNBVOqejm+OUxBENAMiQ+5fFcIfF/vPuXDmCv4e
+	 8Fy+k5+E1iZGt07SjWIfOLXw3xM1NSHrw1vQJdpz+TqLTS5Kk6jY3y7I7Zl9fbZ0yv
+	 uOPkVQTqlW4KhB9dx4xhKCgJjY+BSYh6bAviQSbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	Nikunj A Dadhania <nikunj@amd.com>,
-	stable@kernel.org,
+	mathieu.desnoyers@efficios.com,
+	zhang.run@zte.com.cn,
+	yang.tao172@zte.com.cn,
+	ran.xiaokai@zte.com.cn,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Luo Haiyang <luo.haiyang@zte.com.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 559/570] x86/cpu: Enable FSGSBASE early in cpu_init_exception_handling()
-Date: Mon, 13 Apr 2026 18:01:30 +0200
-Message-ID: <20260413155851.410455122@linuxfoundation.org>
+Subject: [PATCH 5.15 560/570] tracing: Fix potential deadlock in cpu hotplug with osnoise
+Date: Mon, 13 Apr 2026 18:01:31 +0200
+Message-ID: <20260413155851.449717833@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -53,139 +56,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikunj A Dadhania <nikunj@amd.com>
+From: Luo Haiyang <luo.haiyang@zte.com.cn>
 
-[ Upstream commit 05243d490bb7852a8acca7b5b5658019c7797a52 ]
+[ Upstream commit 1f9885732248d22f788e4992c739a98c88ab8a55 ]
 
-Move FSGSBASE enablement from identify_cpu() to cpu_init_exception_handling()
-to ensure it is enabled before any exceptions can occur on both boot and
-secondary CPUs.
+The following sequence may leads deadlock in cpu hotplug:
 
-== Background ==
+    task1        task2        task3
+    -----        -----        -----
 
-Exception entry code (paranoid_entry()) uses ALTERNATIVE patching based on
-X86_FEATURE_FSGSBASE to decide whether to use RDGSBASE/WRGSBASE instructions
-or the slower RDMSR/SWAPGS sequence for saving/restoring GSBASE.
+ mutex_lock(&interface_lock)
 
-On boot CPU, ALTERNATIVE patching happens after enabling FSGSBASE in CR4.
-When the feature is available, the code is permanently patched to use
-RDGSBASE/WRGSBASE, which require CR4.FSGSBASE=1 to execute without triggering
+            [CPU GOING OFFLINE]
 
-== Boot Sequence ==
+            cpus_write_lock();
+            osnoise_cpu_die();
+              kthread_stop(task3);
+                wait_for_completion();
 
-Boot CPU (with CR pinning enabled):
-  trap_init()
-    cpu_init()                   <- Uses unpatched code (RDMSR/SWAPGS)
-      x2apic_setup()
-  ...
-  arch_cpu_finalize_init()
-    identify_boot_cpu()
-      identify_cpu()
-        cr4_set_bits(X86_CR4_FSGSBASE)  # Enables the feature
-	# This becomes part of cr4_pinned_bits
-    ...
-    alternative_instructions()   <- Patches code to use RDGSBASE/WRGSBASE
+                      osnoise_sleep();
+                        mutex_lock(&interface_lock);
 
-Secondary CPUs (with CR pinning enabled):
-  start_secondary()
-    cr4_init()                   <- Code already patched, CR4.FSGSBASE=1
-                                    set implicitly via cr4_pinned_bits
+ cpus_read_lock();
 
-    cpu_init()                   <- exceptions work because FSGSBASE is
-                                    already enabled
+ [DEAD LOCK]
 
-Secondary CPU (with CR pinning disabled):
-  start_secondary()
-    cr4_init()                   <- Code already patched, CR4.FSGSBASE=0
-    cpu_init()
-      x2apic_setup()
-        rdmsrq(MSR_IA32_APICBASE)  <- Triggers #VC in SNP guests
-          exc_vmm_communication()
-            paranoid_entry()       <- Uses RDGSBASE with CR4.FSGSBASE=0
-                                      (patched code)
-    ...
-    ap_starting()
-      identify_secondary_cpu()
-        identify_cpu()
-	  cr4_set_bits(X86_CR4_FSGSBASE)  <- Enables the feature, which is
-                                             too late
+Fix by swap the order of cpus_read_lock() and mutex_lock(&interface_lock).
 
-== CR Pinning ==
-
-Currently, for secondary CPUs, CR4.FSGSBASE is set implicitly through
-CR-pinning: the boot CPU sets it during identify_cpu(), it becomes part of
-cr4_pinned_bits, and cr4_init() applies those pinned bits to secondary CPUs.
-This works but creates an undocumented dependency between cr4_init() and the
-pinning mechanism.
-
-== Problem ==
-
-Secondary CPUs boot after alternatives have been applied globally. They
-execute already-patched paranoid_entry() code that uses RDGSBASE/WRGSBASE
-instructions, which require CR4.FSGSBASE=1. Upcoming changes to CR pinning
-behavior will break the implicit dependency, causing secondary CPUs to
-generate #UD.
-
-This issue manifests itself on AMD SEV-SNP guests, where the rdmsrq() in
-x2apic_setup() triggers a #VC exception early during cpu_init(). The #VC
-handler (exc_vmm_communication()) executes the patched paranoid_entry() path.
-Without CR4.FSGSBASE enabled, RDGSBASE instructions trigger #UD.
-
-== Fix ==
-
-Enable FSGSBASE explicitly in cpu_init_exception_handling() before loading
-exception handlers. This makes the dependency explicit and ensures both
-boot and secondary CPUs have FSGSBASE enabled before paranoid_entry()
-executes.
-
-Fixes: c82965f9e530 ("x86/entry/64: Handle FSGSBASE enabled paranoid entry/exit")
-Reported-by: Borislav Petkov <bp@alien8.de>
-Suggested-by: Sohil Mehta <sohil.mehta@intel.com>
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260318075654.1792916-2-nikunj@amd.com
-[ placed FSGSBASE enablement before load_current_idt() ]
+Cc: stable@vger.kernel.org
+Cc: <mathieu.desnoyers@efficios.com>
+Cc: <zhang.run@zte.com.cn>
+Cc: <yang.tao172@zte.com.cn>
+Cc: <ran.xiaokai@zte.com.cn>
+Fixes: bce29ac9ce0bb ("trace: Add osnoise tracer")
+Link: https://patch.msgid.link/20260326141953414bVSj33dAYktqp9Oiyizq8@zte.com.cn
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Luo Haiyang <luo.haiyang@zte.com.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[ adapted guard() macros to lock/unlock calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/common.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ kernel/trace/trace_osnoise.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1839,12 +1839,6 @@ static void identify_cpu(struct cpuinfo_
- 	setup_smap(c);
- 	setup_umip(c);
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -1620,8 +1620,8 @@ static void osnoise_hotplug_workfn(struc
+ 	if (!osnoise_busy)
+ 		goto out_unlock_trace;
  
--	/* Enable FSGSBASE instructions if available. */
--	if (cpu_has(c, X86_FEATURE_FSGSBASE)) {
--		cr4_set_bits(X86_CR4_FSGSBASE);
--		elf_hwcap2 |= HWCAP2_FSGSBASE;
--	}
--
- 	/*
- 	 * The vendor-specific functions might have changed features.
- 	 * Now we do "generic changes."
-@@ -2220,6 +2214,18 @@ void cpu_init_exception_handling(void)
+-	mutex_lock(&interface_lock);
+ 	cpus_read_lock();
++	mutex_lock(&interface_lock);
  
- 	load_TR_desc();
+ 	if (!cpu_online(cpu))
+ 		goto out_unlock;
+@@ -1634,8 +1634,8 @@ static void osnoise_hotplug_workfn(struc
+ 	start_kthread(cpu);
  
-+	/*
-+	 * On CPUs with FSGSBASE support, paranoid_entry() uses
-+	 * ALTERNATIVE-patched RDGSBASE/WRGSBASE instructions. Secondary CPUs
-+	 * boot after alternatives are patched globally, so early exceptions
-+	 * execute patched code that depends on FSGSBASE. Enable the feature
-+	 * before any exceptions occur.
-+	 */
-+	if (cpu_feature_enabled(X86_FEATURE_FSGSBASE)) {
-+		cr4_set_bits(X86_CR4_FSGSBASE);
-+		elf_hwcap2 |= HWCAP2_FSGSBASE;
-+	}
-+
- 	/* Finally load the IDT */
- 	load_current_idt();
+ out_unlock:
+-	cpus_read_unlock();
+ 	mutex_unlock(&interface_lock);
++	cpus_read_unlock();
+ out_unlock_trace:
+ 	mutex_unlock(&trace_types_lock);
  }
+@@ -1772,16 +1772,16 @@ osnoise_cpus_write(struct file *filp, co
+ 	if (running)
+ 		osnoise_tracer_stop(tr);
+ 
+-	mutex_lock(&interface_lock);
+ 	/*
+ 	 * osnoise_cpumask is read by CPU hotplug operations.
+ 	 */
+ 	cpus_read_lock();
++	mutex_lock(&interface_lock);
+ 
+ 	cpumask_copy(&osnoise_cpumask, osnoise_cpumask_new);
+ 
+-	cpus_read_unlock();
+ 	mutex_unlock(&interface_lock);
++	cpus_read_unlock();
+ 
+ 	if (running)
+ 		osnoise_tracer_start(tr);
 
 
