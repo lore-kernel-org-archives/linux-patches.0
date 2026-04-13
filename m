@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1856626CE32;
-	Mon, 13 Apr 2026 16:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A689429BD87;
+	Mon, 13 Apr 2026 16:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098187; cv=none; b=tFKWmXLvR+TnH87R8P+wAhCIlhDRhyv2M9yOnD6EIafozwdTCCLowe0lskkBLgCDZwSi8hozEDcAbapChjlQjOsfudWemouw7Hpd87dp7dGDDHBuw7RJBS/I5vt2/ux+QXRgBHD5fV+Ph4MzvgXEbZ82rUDyAsRlE8AtNCJCTcU=
+	t=1776098189; cv=none; b=LGCZ8G3aAn3vD4XxoWdq2u9pWRkZw8yQe5tsNLlg5a9knYOoJq+H5dbSvvmFUY4l9xrBkc//Q54QP76APr8AS3yrBwV94inc4iu9yylw2bqmpfUTIW7CB1s+IPfdhTVRaeiuZR1dthN+mMlTBig4WTCEuYULNjuQWRm/QdJGe+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098187; c=relaxed/simple;
-	bh=EQLWq0BK/XDHvpUQzASXMdw0Ij/FQe/guOOOE7ccsew=;
+	s=arc-20240116; t=1776098189; c=relaxed/simple;
+	bh=CZAxHWH1KrRQwjx0ZWzin+5Ez0QR2tCDeeJe8PFbbA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etBocVdcYN/f+VpDp0VAaZtLe+isOE5dwvtBvXp78Y0ngQLnw0o0HBv9w8E/fhy02E+dOykxH35Un36jBpiUGj5aT2kSNqmcN4NJDmvPd4l08MLfr5JRAxacgyeN3b/+GX1kXlHOeQVtUULqJSuATwrtTRqVc9sdZsENgNinmxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JTZyT66d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JJARYKgx1L4vU6NdQ2oS8urvb5YuwijYOrJQuIVRSP8CqAdsnGefkzv201SV+qFOdUcN8UBkDqkvzr4TUj2DQeYfvy2BPHOpzrLaTRWuiBaxgsHtHQyUO59u1erfUJxLwB4H6UhN4IOxWGX3zbbp273IxCdH55snxHuGqTNYlmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDYD/zma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JTZyT66d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29CAC2BCAF;
-	Mon, 13 Apr 2026 16:36:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDYD/zma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3E7C2BCB3;
+	Mon, 13 Apr 2026 16:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098187;
-	bh=EQLWq0BK/XDHvpUQzASXMdw0Ij/FQe/guOOOE7ccsew=;
+	s=korg; t=1776098189;
+	bh=CZAxHWH1KrRQwjx0ZWzin+5Ez0QR2tCDeeJe8PFbbA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JTZyT66d6pNrr0Og2KS3YlzbJinfyinOt6R3cpMzclKAPFqam9VSkXgRWb1CU63Ua
-	 p3koZIcKE84byj7tClUYfYUxBut38zPP95f6nN0UMYH1CaDElHn2UwUv9umLRa6E2l
-	 pCa9w1DzzmuuC2Za/QGkO+r21ujmnBc8iwsaFPX4=
+	b=QDYD/zma+mwHRxBVy5eTr77wNMmP+xZMFSRFANyyOlhktdQVl8a2T6WcJSgN86c+i
+	 j0uOXXA06ijCP8FNg4YynW1GVaHBBLDce/RUx34KlByxdaU/PlR3jtgpdlORDnWTWh
+	 wNfWNRV+TwAw8vd2+vZ1j/xQRLV8KNmAQ5+enBe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keenan Dong <keenanat2000@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 427/570] Bluetooth: MGMT: validate LTK enc_size on load
-Date: Mon, 13 Apr 2026 17:59:18 +0200
-Message-ID: <20260413155846.468089525@linuxfoundation.org>
+Subject: [PATCH 5.15 428/570] rds: ib: reject FRMR registration before IB connection is established
+Date: Mon, 13 Apr 2026 17:59:19 +0200
+Message-ID: <20260413155846.504614684@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,41 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keenan Dong <keenanat2000@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit b8dbe9648d69059cfe3a28917bfbf7e61efd7f15 ]
+[ Upstream commit a54ecccfae62c5c85259ae5ea5d9c20009519049 ]
 
-Load Long Term Keys stores the user-provided enc_size and later uses
-it to size fixed-size stack operations when replying to LE LTK
-requests. An enc_size larger than the 16-byte key buffer can therefore
-overflow the reply stack buffer.
+rds_ib_get_mr() extracts the rds_ib_connection from conn->c_transport_data
+and passes it to rds_ib_reg_frmr() for FRWR memory registration. On a
+fresh outgoing connection, ic is allocated in rds_ib_conn_alloc() with
+i_cm_id = NULL because the connection worker has not yet called
+rds_ib_conn_path_connect() to create the rdma_cm_id. When sendmsg() with
+RDS_CMSG_RDMA_MAP is called on such a connection, the sendmsg path parses
+the control message before any connection establishment, allowing
+rds_ib_post_reg_frmr() to dereference ic->i_cm_id->qp and crash the
+kernel.
 
-Reject oversized enc_size values while validating the management LTK
-record so invalid keys never reach the stored key state.
+The existing guard in rds_ib_reg_frmr() only checks for !ic (added in
+commit 9e630bcb7701), which does not catch this case since ic is allocated
+early and is always non-NULL once the connection object exists.
 
-Fixes: 346af67b8d11 ("Bluetooth: Add MGMT handlers for dealing with SMP LTK's")
-Reported-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+ KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+ RIP: 0010:rds_ib_post_reg_frmr+0x50e/0x920
+ Call Trace:
+  rds_ib_post_reg_frmr (net/rds/ib_frmr.c:167)
+  rds_ib_map_frmr (net/rds/ib_frmr.c:252)
+  rds_ib_reg_frmr (net/rds/ib_frmr.c:430)
+  rds_ib_get_mr (net/rds/ib_rdma.c:615)
+  __rds_rdma_map (net/rds/rdma.c:295)
+  rds_cmsg_rdma_map (net/rds/rdma.c:860)
+  rds_sendmsg (net/rds/send.c:1363)
+  ____sys_sendmsg
+  do_syscall_64
+
+Add a check in rds_ib_get_mr() that verifies ic, i_cm_id, and qp are all
+non-NULL before proceeding with FRMR registration, mirroring the guard
+already present in rds_ib_post_inv(). Return -ENODEV when the connection
+is not ready, which the existing error handling in rds_cmsg_send() converts
+to -EAGAIN for userspace retry and triggers rds_conn_connect_if_down() to
+start the connection worker.
+
+Fixes: 1659185fb4d0 ("RDS: IB: Support Fastreg MR (FRMR) memory registration mode")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260330163237.2752440-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/rds/ib_rdma.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 1d04fb42f13f2..09232c424446b 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -6214,6 +6214,9 @@ static bool ltk_is_valid(struct mgmt_ltk_info *key)
- 	if (key->initiator != 0x00 && key->initiator != 0x01)
- 		return false;
+diff --git a/net/rds/ib_rdma.c b/net/rds/ib_rdma.c
+index 8f070ee7e7426..30fca2169aa7a 100644
+--- a/net/rds/ib_rdma.c
++++ b/net/rds/ib_rdma.c
+@@ -608,8 +608,13 @@ void *rds_ib_get_mr(struct scatterlist *sg, unsigned long nents,
+ 		return ibmr;
+ 	}
  
-+	if (key->enc_size > sizeof(key->val))
-+		return false;
-+
- 	switch (key->addr.type) {
- 	case BDADDR_LE_PUBLIC:
- 		return true;
+-	if (conn)
++	if (conn) {
+ 		ic = conn->c_transport_data;
++		if (!ic || !ic->i_cm_id || !ic->i_cm_id->qp) {
++			ret = -ENODEV;
++			goto out;
++		}
++	}
+ 
+ 	if (!rds_ibdev->mr_8k_pool || !rds_ibdev->mr_1m_pool) {
+ 		ret = -ENODEV;
 -- 
 2.53.0
 
