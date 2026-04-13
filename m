@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BB51D5AD4;
-	Mon, 13 Apr 2026 16:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E061A680C;
+	Mon, 13 Apr 2026 16:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098647; cv=none; b=XgXv9q8NQ+usnXhtTtmIM8qfdeqPNHYqZs9F73lXZRClY8hBBAncaaky+HoSLllO31qw8WacswLhWnDStm6cdCrpOHrJpQHONG2/lBVbcYCgMz/ti2jLdXRVntgHMtNNmXysaClR2l152WUMQdV+xHEekR7TnnVwGaDnhYBMMnI=
+	t=1776098650; cv=none; b=MGCujsCV8kG9oU/X/nQwvjoRa9J7pIVA052caKsb8mMPYU2MaVYeLkovYto4/Qm65N/hcioMm29cD+0LnDtxXHJD6yMJzrVby77gVNhVgVU51NkdbzhFrJGfHCnWfP7E20IJimZlxPoHhTEkfChzYHRlYBHT6zfb+gep2oIXo7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098647; c=relaxed/simple;
-	bh=goFoMGnlK+eN25xD7s2NNnwU6CI9o06GajbEvzshRig=;
+	s=arc-20240116; t=1776098650; c=relaxed/simple;
+	bh=kOPw+MXt73mps9WTu/j2bP6eMV3wB1LcS10XwWiz3/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nd1zk0IoDJPYFoVg3oiVEzaK0QAsA54AJBY4puzxtk5fjFEzJgNU7uvGG3vvdRTA5WjYTRRn3Fm0VX+/8+FX17Y9ybbFDyYwc45r7KMIWif113MPOZIBsmLjy0Dr7vwwdbvobJ/jbxXPRXPsGtQCtXQBtXjCFAwALERbk1taWns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sB1voQuE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LVevkHnOch20WYTV5PYYiNB794FA3WAhzSLjwGzllJ9hvb7028OfJ68osxbUou6ysPmqWDUoC2VFLdHE/f8ynhMZE1uX9Wp8JV0PAxy77aAykYqwZnBGcAYuLa3vsicWdQi1joZrGZ4uWBUoQJM6x/jo1d2a6DRDHP3f8y1e4Nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJywiHhQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sB1voQuE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37948C2BCB6;
-	Mon, 13 Apr 2026 16:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJywiHhQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3894C2BCAF;
+	Mon, 13 Apr 2026 16:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098647;
-	bh=goFoMGnlK+eN25xD7s2NNnwU6CI9o06GajbEvzshRig=;
+	s=korg; t=1776098650;
+	bh=kOPw+MXt73mps9WTu/j2bP6eMV3wB1LcS10XwWiz3/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sB1voQuE6XKG62CF9TLkLJskcgDJfQBPKeFoD3dQYr2mVUVpkcBNrOp5lOqfVNyBa
-	 KtxZF9zxUiwdKhD55ctRUt1jMJSIgkluX4ORb1VXv8jWIeySPYesuyUf4t+5XIQz8A
-	 TmOVEpq297epX8zHcjT5jI+UxH39+Qk5br27dwBo=
+	b=pJywiHhQ9gVpboLS4vZ1x86xTtorlij7Rku8MM29f93I5cDs+xOnxLl4PhAyE8EOh
+	 4GR3tqTRMJgkoAJgHQU3pQaWyokU4a0Wt49Jlj9xe0cCHsFJvL+aThJzsEoX7bofpB
+	 9sxlcYNKvXwYuaF2PA0n7LVTWscj7znrnQVsUIlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars Ellenberg <lars.ellenberg@linbit.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 033/491] drbd: fix "LOGIC BUG" in drbd_al_begin_io_nonblock()
-Date: Mon, 13 Apr 2026 17:54:38 +0200
-Message-ID: <20260413155820.291686619@linuxfoundation.org>
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 004/491] scsi: ufs: core: Move link recovery for hibern8 exit failure to wl_resume
+Date: Mon, 13 Apr 2026 17:54:09 +0200
+Message-ID: <20260413155819.215507926@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -45,165 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lars Ellenberg <lars.ellenberg@linbit.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-commit ab140365fb62c0bdab22b2f516aff563b2559e3b upstream.
+[ Upstream commit 62c015373e1cdb1cdca824bd2dbce2dac0819467 ]
 
-Even though we check that we "should" be able to do lc_get_cumulative()
-while holding the device->al_lock spinlock, it may still fail,
-if some other code path decided to do lc_try_lock() with bad timing.
+Move the link recovery trigger from ufshcd_uic_pwr_ctrl() to
+__ufshcd_wl_resume(). Ensure link recovery is only attempted when hibern8
+exit fails during resume, not during hibern8 enter in suspend. Improve
+error handling and prevent unnecessary link recovery attempts.
 
-If that happened, we logged "LOGIC BUG for enr=...",
-but still did not return an error.
-
-The rest of the code now assumed that this request has references
-for the relevant activity log extents.
-
-The implcations are that during an active resync, mutual exclusivity of
-resync versus application IO is not guaranteed. And a potential crash
-at this point may not realizs that these extents could have been target
-of in-flight IO and would need to be resynced just in case.
-
-Also, once the request completes, it will give up activity log references it
-does not even hold, which will trigger a BUG_ON(refcnt == 0) in lc_put().
-
-Fix:
-
-Do not crash the kernel for a condition that is harmless during normal
-operation: also catch "e->refcnt == 0", not only "e == NULL"
-when being noisy about "al_complete_io() called on inactive extent %u\n".
-
-And do not try to be smart and "guess" whether something will work, then
-be surprised when it does not.
-Deal with the fact that it may or may not work.  If it does not, remember a
-possible "partially in activity log" state (only possible for requests that
-cross extent boundaries), and return an error code from
-drbd_al_begin_io_nonblock().
-
-A latter call for the same request will then resume from where we left off.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Lars Ellenberg <lars.ellenberg@linbit.com>
-Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 35dabf4503b9 ("scsi: ufs: core: Use link recovery when h8 exit fails during runtime resume")
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260223103906.2533654-1-peter.wang@mediatek.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_actlog.c   |   53 ++++++++++++++++---------------------
- drivers/block/drbd/drbd_interval.h |    5 ++-
- 2 files changed, 27 insertions(+), 31 deletions(-)
+ drivers/scsi/ufs/ufshcd.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/block/drbd/drbd_actlog.c
-+++ b/drivers/block/drbd/drbd_actlog.c
-@@ -483,38 +483,20 @@ void drbd_al_begin_io(struct drbd_device
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index c5f41023c71b8..c7bf0e6bc303d 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -3880,14 +3880,6 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
+ 	spin_unlock_irqrestore(hba->host->host_lock, flags);
+ 	mutex_unlock(&hba->uic_cmd_mutex);
  
- int drbd_al_begin_io_nonblock(struct drbd_device *device, struct drbd_interval *i)
- {
--	struct lru_cache *al = device->act_log;
- 	/* for bios crossing activity log extent boundaries,
- 	 * we may need to activate two extents in one go */
- 	unsigned first = i->sector >> (AL_EXTENT_SHIFT-9);
- 	unsigned last = i->size == 0 ? first : (i->sector + (i->size >> 9) - 1) >> (AL_EXTENT_SHIFT-9);
--	unsigned nr_al_extents;
--	unsigned available_update_slots;
- 	unsigned enr;
- 
--	D_ASSERT(device, first <= last);
+-	/*
+-	 * If the h8 exit fails during the runtime resume process, it becomes
+-	 * stuck and cannot be recovered through the error handler.  To fix
+-	 * this, use link recovery instead of the error handler.
+-	 */
+-	if (ret && hba->pm_op_in_progress)
+-		ret = ufshcd_link_recovery(hba);
 -
--	nr_al_extents = 1 + last - first; /* worst case: all touched extends are cold. */
--	available_update_slots = min(al->nr_elements - al->used,
--				al->max_pending_changes - al->pending_changes);
--
--	/* We want all necessary updates for a given request within the same transaction
--	 * We could first check how many updates are *actually* needed,
--	 * and use that instead of the worst-case nr_al_extents */
--	if (available_update_slots < nr_al_extents) {
--		/* Too many activity log extents are currently "hot".
--		 *
--		 * If we have accumulated pending changes already,
--		 * we made progress.
--		 *
--		 * If we cannot get even a single pending change through,
--		 * stop the fast path until we made some progress,
--		 * or requests to "cold" extents could be starved. */
--		if (!al->pending_changes)
--			__set_bit(__LC_STARVING, &device->act_log->flags);
--		return -ENOBUFS;
-+	if (i->partially_in_al_next_enr) {
-+		D_ASSERT(device, first < i->partially_in_al_next_enr);
-+		D_ASSERT(device, last >= i->partially_in_al_next_enr);
-+		first = i->partially_in_al_next_enr;
- 	}
- 
-+	D_ASSERT(device, first <= last);
-+
- 	/* Is resync active in this area? */
- 	for (enr = first; enr <= last; enr++) {
- 		struct lc_element *tmp;
-@@ -529,14 +511,21 @@ int drbd_al_begin_io_nonblock(struct drb
- 		}
- 	}
- 
--	/* Checkout the refcounts.
--	 * Given that we checked for available elements and update slots above,
--	 * this has to be successful. */
-+	/* Try to checkout the refcounts. */
- 	for (enr = first; enr <= last; enr++) {
- 		struct lc_element *al_ext;
- 		al_ext = lc_get_cumulative(device->act_log, enr);
--		if (!al_ext)
--			drbd_info(device, "LOGIC BUG for enr=%u\n", enr);
-+
-+		if (!al_ext) {
-+			/* Did not work. We may have exhausted the possible
-+			 * changes per transaction. Or raced with someone
-+			 * "locking" it against changes.
-+			 * Remember where to continue from.
-+			 */
-+			if (enr > first)
-+				i->partially_in_al_next_enr = enr;
-+			return -ENOBUFS;
-+		}
- 	}
- 	return 0;
+ 	return ret;
  }
-@@ -556,7 +545,11 @@ void drbd_al_complete_io(struct drbd_dev
  
- 	for (enr = first; enr <= last; enr++) {
- 		extent = lc_find(device->act_log, enr);
--		if (!extent) {
-+		/* Yes, this masks a bug elsewhere.  However, during normal
-+		 * operation this is harmless, so no need to crash the kernel
-+		 * by the BUG_ON(refcount == 0) in lc_put().
-+		 */
-+		if (!extent || extent->refcnt == 0) {
- 			drbd_err(device, "al_complete_io() called on inactive extent %u\n", enr);
- 			continue;
+@@ -8727,7 +8719,15 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 		} else {
+ 			dev_err(hba->dev, "%s: hibern8 exit failed %d\n",
+ 					__func__, ret);
+-			goto vendor_suspend;
++			/*
++			 * If the h8 exit fails during the runtime resume
++			 * process, it becomes stuck and cannot be recovered
++			 * through the error handler. To fix this, use link
++			 * recovery instead of the error handler.
++			 */
++			ret = ufshcd_link_recovery(hba);
++			if (ret)
++				goto vendor_suspend;
  		}
---- a/drivers/block/drbd/drbd_interval.h
-+++ b/drivers/block/drbd/drbd_interval.h
-@@ -8,12 +8,15 @@
- struct drbd_interval {
- 	struct rb_node rb;
- 	sector_t sector;		/* start sector of the interval */
--	unsigned int size;		/* size in bytes */
- 	sector_t end;			/* highest interval end in subtree */
-+	unsigned int size;		/* size in bytes */
- 	unsigned int local:1		/* local or remote request? */;
- 	unsigned int waiting:1;		/* someone is waiting for completion */
- 	unsigned int completed:1;	/* this has been completed already;
- 					 * ignore for conflict detection */
-+
-+	/* to resume a partially successful drbd_al_begin_io_nonblock(); */
-+	unsigned int partially_in_al_next_enr;
- };
- 
- static inline void drbd_clear_interval(struct drbd_interval *i)
+ 	} else if (ufshcd_is_link_off(hba)) {
+ 		/*
+-- 
+2.51.0
+
 
 
