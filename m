@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81099318ED2;
-	Mon, 13 Apr 2026 16:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB8C326D44;
+	Mon, 13 Apr 2026 16:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099429; cv=none; b=kET9jUiM1B4N8tZvHca23FBTv4g71QO+6sUKxND8NLwwaJoYCWA61fDN5d6ph//6RD07bH/xUyjLO1xzviZDwTe9HNCjbjObsVmfH3Sp9pcBaPSeJd+hg2nLwxNruX0Quny19Y5/hibE+zfv267J0SmwL5vKLDlkIieNdLtSB0g=
+	t=1776099432; cv=none; b=jmbnSQWccp88gAs5Kkff/B9XJtR2l5Yxuy9wF73ddJkWlhLm0e5CvgurF9kFAu1sexjX93eyoAlalq8S79rRqf0w0m5kLgyQh9ZxB3WHw4iY+GmOneVCkKec9IcmUH5+VhdZ6tKHOIaYWTmEcV/YCiPEDaMaWENN129xSk1CQy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099429; c=relaxed/simple;
-	bh=FSvG9Hsqk3zHJWHXWeC9bxdl7i0HNTlCwSwzhrH69vU=;
+	s=arc-20240116; t=1776099432; c=relaxed/simple;
+	bh=G+I72l8HsFzSH/NCi312oowCwmBPzsCHRd6llc9Wr+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fr12O7k/vPZ7NyiQ/xnwz0Iw2mpReuE4waoP8ZYA3kHkwxglJhaIZeMN3UfnwgTwkEuNV9Jq3Z6oWwDV62wejNL01G7/U4b0DgfjpGSALF2eZg679Gtpkt1g9AIxELWNSCl7/s+UkWjxFuA/npV4MEypXDl8j+4Sx/m6e97CSzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhtzN0IW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jYjfrzD3DpYq/KK8OvuTyg3QFN+xdULhxEc7uSui7Ju5MNrYuFH7CTHi7/uHGRgIRC1tsjt8OgSLIkyfZ/TWnTWTkyXvq+vQ7npL0ztQWOmsjTLKQwbzK68BBnZwseIAHJq7i7APUZQYqsDf0WB/i1WbN+J1RWQifq9DBRhgQXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVacpXZ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhtzN0IW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18ACDC2BCAF;
-	Mon, 13 Apr 2026 16:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVacpXZ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5141C2BCAF;
+	Mon, 13 Apr 2026 16:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099429;
-	bh=FSvG9Hsqk3zHJWHXWeC9bxdl7i0HNTlCwSwzhrH69vU=;
+	s=korg; t=1776099432;
+	bh=G+I72l8HsFzSH/NCi312oowCwmBPzsCHRd6llc9Wr+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vhtzN0IWkcXdxD4rBCX6a8cQ7VJO6GSemuZijfo9eIaKjUVMdBMS9su/L+wiOdI1V
-	 PVvF/znlFkscDuBYPRK3wvl3fDNFZsCJ8tJ+d+CMqw9xS6ohLQU664nOELj7QQTaMQ
-	 lbe9xHhEAPckp4SLa3aPRXE0omsimU55IBv3Ui7Y=
+	b=yVacpXZ7n8FBmvWqXMhfvkEpEhfgsDDNJM0yyDYqzrrum85rtn2bOsfad62DHaVUg
+	 gXYPzb7xyxuIAEzQ69io//XTSpNyWoS0WgSopV1xPwyy5RP4rvn7rDMwZhtvq/5wDe
+	 XId8DN3Bo6T4oqANRKsj7Ir8qxyKw0lNcosxHel8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 336/491] net: ipv6: flowlabel: defer exclusive option free until RCU teardown
-Date: Mon, 13 Apr 2026 17:59:41 +0200
-Message-ID: <20260413155831.619591028@linuxfoundation.org>
+Subject: [PATCH 5.10 337/491] netfilter: nfnetlink_log: account for netlink header size
+Date: Mon, 13 Apr 2026 17:59:42 +0200
+Message-ID: <20260413155831.656907152@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -58,61 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 9ca562bb8e66978b53028fa32b1a190708e6a091 ]
+[ Upstream commit 6d52a4a0520a6696bdde51caa11f2d6821cd0c01 ]
 
-`ip6fl_seq_show()` walks the global flowlabel hash under the seq-file
-RCU read-side lock and prints `fl->opt->opt_nflen` when an option block
-is present.
+This is a followup to an old bug fix: NLMSG_DONE needs to account
+for the netlink header size, not just the attribute size.
 
-Exclusive flowlabels currently free `fl->opt` as soon as `fl->users`
-drops to zero in `fl_release()`. However, the surrounding
-`struct ip6_flowlabel` remains visible in the global hash table until
-later garbage collection removes it and `fl_free_rcu()` finally tears it
-down.
+This can result in a WARN splat + drop of the netlink message,
+but other than this there are no ill effects.
 
-A concurrent `/proc/net/ip6_flowlabel` reader can therefore race that
-early `kfree()` and dereference freed option state, triggering a crash
-in `ip6fl_seq_show()`.
-
-Fix this by keeping `fl->opt` alive until `fl_free_rcu()`. That matches
-the lifetime already required for the enclosing flowlabel while readers
-can still reach it under RCU.
-
-Fixes: d3aedd5ebd4b ("ipv6 flowlabel: Convert hash list to RCU.")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/07351f0ec47bcee289576f39f9354f4a64add6e4.1774855883.git.zcliangcn@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9dfa1dfe4d5e ("netfilter: nf_log: account for size of NLMSG_DONE attribute")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_flowlabel.c | 5 -----
- 1 file changed, 5 deletions(-)
+ net/netfilter/nfnetlink_log.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_flowlabel.c b/net/ipv6/ip6_flowlabel.c
-index ceb85c67ce395..bb528d0ddb73a 100644
---- a/net/ipv6/ip6_flowlabel.c
-+++ b/net/ipv6/ip6_flowlabel.c
-@@ -133,11 +133,6 @@ static void fl_release(struct ip6_flowlabel *fl)
- 		if (time_after(ttd, fl->expires))
- 			fl->expires = ttd;
- 		ttd = fl->expires;
--		if (fl->opt && fl->share == IPV6_FL_S_EXCL) {
--			struct ipv6_txoptions *opt = fl->opt;
--			fl->opt = NULL;
--			kfree(opt);
--		}
- 		if (!timer_pending(&ip6_fl_gc_timer) ||
- 		    time_after(ip6_fl_gc_timer.expires, ttd))
- 			mod_timer(&ip6_fl_gc_timer, ttd);
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index 3a71ba47224c4..d41560d4812d0 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -711,7 +711,7 @@ nfulnl_log_packet(struct net *net,
+ 		+ nla_total_size(plen)			/* prefix */
+ 		+ nla_total_size(sizeof(struct nfulnl_msg_packet_hw))
+ 		+ nla_total_size(sizeof(struct nfulnl_msg_packet_timestamp))
+-		+ nla_total_size(sizeof(struct nfgenmsg));	/* NLMSG_DONE */
++		+ nlmsg_total_size(sizeof(struct nfgenmsg));	/* NLMSG_DONE */
+ 
+ 	if (in && skb_mac_header_was_set(skb)) {
+ 		size += nla_total_size(skb->dev->hard_header_len)
 -- 
 2.53.0
 
