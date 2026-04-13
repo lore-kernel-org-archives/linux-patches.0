@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BDA31F9BC;
-	Mon, 13 Apr 2026 16:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201A33203B6;
+	Mon, 13 Apr 2026 16:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099576; cv=none; b=ihfkdCLSqKa/pvE2YnjAVrFJwgmkX+BdkqgjVN+SP0Qo1GqlKj51PDMtVlSPN/EgA92ufG/0qG2stjJ6gHs/2E7o+qNxoa+X5nr5SikkKoDAqIwTXwYkzSiqzCOf2FFOlhTw8FQOr/v+uBg6nQxbnct3m0dGPjbGqnydBAiVk/o=
+	t=1776099579; cv=none; b=tTYldllRn9m5wqoOvMLnA2hlPN0t6YGwxm3kGyGo3YdxXV1HpCMycZ8UrutY5an0freiQrcux7ytRURyjdlpCqFn5zxfdD+psJguQcdL6vYJl8Pbt0DPZL0CWmumRAv5yOHmFan9EfccIOxaxoRWmhjjrGXLAAiEKMEH232CKrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099576; c=relaxed/simple;
-	bh=ZnIRNTrhp+lKHBIdGvIQHA3JYajQBaBNkSXqdBiOSKM=;
+	s=arc-20240116; t=1776099579; c=relaxed/simple;
+	bh=ItitwoIgaiMGD3BRn3Lk0zSdAWuOObPNKcetXBamqX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4KSxfUVGnXx+ig+664s1gSpnnwwG3G4Fz18R69LqFcZ/Er5xw+10NlKLX91VK4pL8h5Wd+gHAQyyNaaJ0KKkal+bOUsUjl8lZMIk77MDgZNUauYXAby4cct2yEBQCBSG4SaX/1rNHSVHUWZ8BIWQ8v5ZakztdJ/hpi2z3dlTFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDvxh5LV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XFrMvO9lSYGedSlUg76R1HFboAm6kWYVz4jVAAq7chTh+taDTOxNfgoL3Wr0Zg3s2XhkMofVTrzXiIS7+wfSw6nPE6YZR429PgvOClKjc5l3/Gm80I7VnnLWTGdK2zsNuIXQTY5otKMDI8HOw/Z8kJr+ooygbYfOQj6Zltu8vpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRdhQ25A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDvxh5LV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27DDC2BCAF;
-	Mon, 13 Apr 2026 16:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRdhQ25A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9AFC2BCAF;
+	Mon, 13 Apr 2026 16:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099576;
-	bh=ZnIRNTrhp+lKHBIdGvIQHA3JYajQBaBNkSXqdBiOSKM=;
+	s=korg; t=1776099578;
+	bh=ItitwoIgaiMGD3BRn3Lk0zSdAWuOObPNKcetXBamqX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FDvxh5LVdTVaSI/j3j+9I5TPmYCwo9Ox385wX5EwCYg5ZoEpoLhtMWiCseLDRQIjp
-	 h6Ua6uDo6XLiJ/p9gxibtSmJoiPGLyHlUSXDLYVNqS1h1A/7amDuVbwXbwN1J7T2Ab
-	 dEKnWFZl/48cxaEjUbbr9py6OEMWuHQMyVj6B96E=
+	b=tRdhQ25An7RIMlt8ABqVV/P7IL9FY//+GApKIHMZ48Bq0g0MYgklP5NG6GvdjQwY8
+	 umPpMGq6pvdzHQPAA2WQsYAqoXto0hcz36caC8fk286F8qzufncw0GJ8Mfx+gRfM1h
+	 EeKceh+mP1Q/1kmYLVxjEDyf6GIWnKUWmSBgiN/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 394/491] phy: renesas: rcar-gen3-usb2: Assert PLL reset on PHY power off
-Date: Mon, 13 Apr 2026 18:00:39 +0200
-Message-ID: <20260413155833.784846993@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 395/491] bridge: br_nd_send: validate ND option lengths
+Date: Mon, 13 Apr 2026 18:00:40 +0200
+Message-ID: <20260413155833.822420855@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,53 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-commit 9ce71e85b29eb63e48e294479742e670513f03a0 upstream.
+commit 850837965af15707fd3142c1cf3c5bfaf022299b upstream.
 
-Assert PLL reset on PHY power off. This saves power.
+br_nd_send() walks ND options according to option-provided lengths.
+A malformed option can make the parser advance beyond the computed
+option span or use a too-short source LLADDR option payload.
 
-[claudiu.beznea: fixed conflict in rcar_gen3_phy_usb2_power_off() by
- using spin_lock_irqsave()/spin_unlock_irqrestore() instead of
- scoped_guard()]
+Validate option lengths against the remaining NS option area before
+advancing, and only read source LLADDR when the option is large enough
+for an Ethernet address.
 
-Fixes: f3b5a8d9b50d ("phy: rcar-gen3-usb2: Add R-Car Gen3 USB2 PHY driver")
+Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
 Cc: stable@vger.kernel.org
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250507125032.565017-5-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
+Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260326034441.2037420-3-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/renesas/phy-rcar-gen3-usb2.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/bridge/br_arp_nd_proxy.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-index 558c07512c05b..9fcbde094699d 100644
---- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-+++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-@@ -516,8 +516,15 @@ static int rcar_gen3_phy_usb2_power_off(struct phy *p)
- 
- 	spin_lock_irqsave(&channel->lock, flags);
- 	rphy->powered = false;
--	spin_unlock_irqrestore(&channel->lock, flags);
- 
-+	if (rcar_gen3_are_all_rphys_power_off(channel)) {
-+		u32 val = readl(channel->base + USB2_USBCTR);
-+
-+		val |= USB2_USBCTR_PLL_RST;
-+		writel(val, channel->base + USB2_USBCTR);
-+	}
-+	spin_unlock_irqrestore(&channel->lock, flags);
-+
- 	if (channel->vbus)
- 		ret = regulator_disable(channel->vbus);
- 
--- 
-2.53.0
-
+--- a/net/bridge/br_arp_nd_proxy.c
++++ b/net/bridge/br_arp_nd_proxy.c
+@@ -285,12 +285,14 @@ static void br_nd_send(struct net_bridge
+ 	ns_olen = request->len - (skb_network_offset(request) +
+ 				  sizeof(struct ipv6hdr)) - sizeof(*ns);
+ 	for (i = 0; i < ns_olen - 1; i += (ns->opt[i + 1] << 3)) {
+-		if (!ns->opt[i + 1]) {
++		if (!ns->opt[i + 1] || i + (ns->opt[i + 1] << 3) > ns_olen) {
+ 			kfree_skb(reply);
+ 			return;
+ 		}
+ 		if (ns->opt[i] == ND_OPT_SOURCE_LL_ADDR) {
+-			daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
++			if ((ns->opt[i + 1] << 3) >=
++			    sizeof(struct nd_opt_hdr) + ETH_ALEN)
++				daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
+ 			break;
+ 		}
+ 	}
 
 
