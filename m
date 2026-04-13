@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4812FFFA4;
-	Mon, 13 Apr 2026 16:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075FD30B53F;
+	Mon, 13 Apr 2026 16:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097182; cv=none; b=L1pN5wjKrtVgX6mhkmuqEgyXKetyS6FAV6+gotMA0bOhngHrjYpJelgHL3E2/L652oFbxFfzRauEzLphf99qhEQqEVZ0AcocTOBD5Q+3FPp0YIHrSmx9G7AbbNy9l8WvwsPeG8DWHNalrCZdwV9d1t9bz0+uyynG8RXXBhJtCvA=
+	t=1776097185; cv=none; b=T/AcS75ZPhEk4Wk/adOmN9r8FRuyCknvtVwvbSyK0/JaLDg1a0QK+6gnjFeQEPfZuT31feHuobgNZB6Ton3343yw0DQFUUy9yGaJzw1MAk6Re5yEW3RFb/zK7rSygGRwnsDR3edroCtqOxZLA8dCJ1mqNIE26qYH/IdE0bjLg0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097182; c=relaxed/simple;
-	bh=VzJUJAJwVTj1RDS4SywQZ0ULZL9ijkO7XUDhOLsDkgA=;
+	s=arc-20240116; t=1776097185; c=relaxed/simple;
+	bh=yUDHluQa83fTCOKpsDnPpefv6fFwI8VrNvCmyjTWeDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQ+oZihVu+KvDsFs9os0jxfYTz4IrfU+InxvRep/zBogansTs4HiB5kLdAxsWUX9Y+kLbRZXA7koSMz/znjXIxRJX1B83U0QAyVshs+nxRMPmnTPt395i0fuGlxu3HzOAZEpv4ZbHcr1WQapMj1qgVQWt99vzKYy5AeiriSfPrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQ5wb27g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hs9Dz81QMYPp9lG7Xl6A42CMvfgCLCGi0LhR/kb8FQj2Tm1DT6B3Cvlz8729x4XdpsiVKUQctGuTtske4xDpS4iUrLnXjdMXQcJXRMHrxcZC3NIbKVRxU/7kCowKLnkRvUIGK6Fjopabv5801KFbJKPaXqRTxc31z7PlynhYhGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhZa4D2G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQ5wb27g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01327C2BCB0;
-	Mon, 13 Apr 2026 16:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhZa4D2G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91844C2BCAF;
+	Mon, 13 Apr 2026 16:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097182;
-	bh=VzJUJAJwVTj1RDS4SywQZ0ULZL9ijkO7XUDhOLsDkgA=;
+	s=korg; t=1776097184;
+	bh=yUDHluQa83fTCOKpsDnPpefv6fFwI8VrNvCmyjTWeDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQ5wb27gwF/mAOafUaM8EG949JtGgjKeCUlqW/OfuzZZGnGdHW56j3EgMOQ0wO7o9
-	 CovfnbSXPf5v45J5+ea2HSKQlCw53aoC05iRSHYTx0+aGQWLBxK/AmSjt5FFoO9Vyi
-	 iJ+DCgH0PA7xa2IDOb+QbHxVLuxzA0DA0DdGAfWc=
+	b=DhZa4D2GFPMEPATeQn1bh9WnLzwrHC9cXlmtn5nM5AeqvC/P3Maoseo8L3HwI/hwz
+	 scy8Ay5+9AO7acjS9UGMdBikv4TSvbRkj9r05Lptg/UE+wwtn5Z0c2DoF6Pzwy4Fzv
+	 eGyi8FmhorGc1wROjF2SQZ5DsMPBuo92OM+K24nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	kernel test robot <lkp@intel.com>,
-	Daniel Vetter <daniel.vetter@intel.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Claudio Suarez <cssk@net-c.es>,
-	Du Cheng <ducheng2@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sam Ravnborg <sam@ravnborg.org>
-Subject: [PATCH 5.15 037/570] fbcon: move more common code into fb_open()
-Date: Mon, 13 Apr 2026 17:52:48 +0200
-Message-ID: <20260413155831.814084846@linuxfoundation.org>
+	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Helge Deller <deller@gmx.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 038/570] fbcon: check return value of con2fb_acquire_newinfo()
+Date: Mon, 13 Apr 2026 17:52:49 +0200
+Message-ID: <20260413155831.855179664@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -57,173 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vetter <daniel.vetter@ffwll.ch>
+From: Andrey Vatoropin <a.vatoropin@crpt.ru>
 
-[ Upstream commit d443d93864726ad68c0a741d1e7b03934a9af143 ]
+[ Upstream commit 011a0502801c8536f64141a2b61362c14f456544 ]
 
-No idea why con2fb_acquire_newinfo() initializes much less than
-fbcon_startup(), but so be it. From a quick look most of the
-un-initialized stuff should be fairly harmless, but who knows.
+If fbcon_open() fails when called from con2fb_acquire_newinfo() then
+info->fbcon_par pointer remains NULL which is later dereferenced.
 
-Note that the error handling for the con2fb_acquire_newinfo() failure
-case was very strange: Callers updated con2fb_map to the new value
-before calling this function, but upon error con2fb_acquire_newinfo
-reset it to the old value. Since I removed the call to fbcon_release
-anyway that strange error path was sticking out like a sore thumb,
-hence I removed it. Which also allows us to remove the oldidx
-parameter from that function.
+Add check for return value of the function con2fb_acquire_newinfo() to
+avoid it.
 
-v2: Explain what's going on with oldidx and error paths (Sam)
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-v3: Drop unused variable (0day)
-
-v4: Rebased over bisect fix in previous patch, unchagend end result.
-
-Acked-by: Sam Ravnborg <sam@ravnborg.org> (v2)
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: kernel test robot <lkp@intel.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Claudio Suarez <cssk@net-c.es>
-Cc: Du Cheng <ducheng2@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220405210335.3434130-12-daniel.vetter@ffwll.ch
-Stable-dep-of: 011a0502801c ("fbcon: check return value of con2fb_acquire_newinfo()")
+Fixes: d1baa4ffa677 ("fbcon: set_con2fb_map fixes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c | 75 +++++++++++++-------------------
- 1 file changed, 30 insertions(+), 45 deletions(-)
+ drivers/video/fbdev/core/fbcon.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 7131af71a01ca..0039441f3769b 100644
+index 0039441f3769b..f4584681fa43d 100644
 --- a/drivers/video/fbdev/core/fbcon.c
 +++ b/drivers/video/fbdev/core/fbcon.c
-@@ -676,8 +676,18 @@ static int fbcon_invalid_charcount(struct fb_info *info, unsigned charcount)
- 
- #endif /* CONFIG_MISC_TILEBLITTING */
- 
-+static void fbcon_release(struct fb_info *info)
-+{
-+	if (info->fbops->fb_release)
-+		info->fbops->fb_release(info, 0);
-+
-+	module_put(info->fbops->owner);
-+}
-+
- static int fbcon_open(struct fb_info *info)
- {
-+	struct fbcon_ops *ops;
-+
- 	if (!try_module_get(info->fbops->owner))
- 		return -ENODEV;
- 
-@@ -687,48 +697,31 @@ static int fbcon_open(struct fb_info *info)
- 		return -ENODEV;
- 	}
- 
--	return 0;
--}
-+	ops = kzalloc(sizeof(struct fbcon_ops), GFP_KERNEL);
-+	if (!ops) {
-+		fbcon_release(info);
-+		return -ENOMEM;
-+	}
- 
--static void fbcon_release(struct fb_info *info)
--{
--	if (info->fbops->fb_release)
--		info->fbops->fb_release(info, 0);
-+	INIT_DELAYED_WORK(&ops->cursor_work, fb_flashcursor);
-+	ops->info = info;
-+	info->fbcon_par = ops;
-+	ops->cur_blink_jiffies = HZ / 5;
- 
--	module_put(info->fbops->owner);
-+	return 0;
- }
- 
- static int con2fb_acquire_newinfo(struct vc_data *vc, struct fb_info *info,
--				  int unit, int oldidx)
-+				  int unit)
- {
--	struct fbcon_ops *ops = NULL;
- 	int err;
- 
- 	err = fbcon_open(info);
- 	if (err)
- 		return err;
- 
--	if (!err) {
--		ops = kzalloc(sizeof(struct fbcon_ops), GFP_KERNEL);
--		if (!ops)
--			err = -ENOMEM;
--	}
--
--	if (!err) {
--		INIT_DELAYED_WORK(&ops->cursor_work, fb_flashcursor);
--
--		ops->cur_blink_jiffies = HZ / 5;
--		ops->info = info;
--		info->fbcon_par = ops;
--
--		if (vc)
--			set_blitting_type(vc, info);
--	}
--
--	if (err) {
--		con2fb_map[unit] = oldidx;
--		fbcon_release(info);
--	}
-+	if (vc)
-+		set_blitting_type(vc, info);
- 
- 	return err;
- }
-@@ -840,9 +833,11 @@ static int set_con2fb_map(int unit, int newidx, int user)
- 
- 	found = search_fb_in_map(newidx);
- 
--	con2fb_map[unit] = newidx;
--	if (!err && !found)
--		err = con2fb_acquire_newinfo(vc, info, unit, oldidx);
-+	if (!err && !found) {
-+		err = con2fb_acquire_newinfo(vc, info, unit);
-+		if (!err)
-+			con2fb_map[unit] = newidx;
-+	}
- 
- 	/*
- 	 * If old fb is not mapped to any of the consoles,
-@@ -942,20 +937,10 @@ static const char *fbcon_startup(void)
- 	if (fbcon_open(info))
- 		return NULL;
- 
--	ops = kzalloc(sizeof(struct fbcon_ops), GFP_KERNEL);
--	if (!ops) {
--		fbcon_release(info);
--		return NULL;
--	}
--
--	INIT_DELAYED_WORK(&ops->cursor_work, fb_flashcursor);
--
-+	ops = info->fbcon_par;
- 	ops->currcon = -1;
- 	ops->graphics = 1;
- 	ops->cur_rotate = -1;
--	ops->cur_blink_jiffies = HZ / 5;
--	ops->info = info;
--	info->fbcon_par = ops;
- 
- 	p->con_rotate = initial_rotation;
- 	if (p->con_rotate == -1)
-@@ -1023,7 +1008,7 @@ static void fbcon_init(struct vc_data *vc, bool init)
+@@ -1008,7 +1008,8 @@ static void fbcon_init(struct vc_data *vc, bool init)
  		return;
  
  	if (!info->fbcon_par)
--		con2fb_acquire_newinfo(vc, info, vc->vc_num, -1);
-+		con2fb_acquire_newinfo(vc, info, vc->vc_num);
+-		con2fb_acquire_newinfo(vc, info, vc->vc_num);
++		if (con2fb_acquire_newinfo(vc, info, vc->vc_num))
++			return;
  
  	/* If we are not the first console on this
  	   fb, copy the font from that console */
