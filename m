@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7C6238D27;
-	Mon, 13 Apr 2026 16:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD46238D27;
+	Mon, 13 Apr 2026 16:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097955; cv=none; b=egrHLX2sIJRCaH2KqocE8cak7WObWG+zSn/2uty+Ao/MiOXKZOqkZD5tqiVRW64oqt47gam2qxzxfrRgGwY4iFJBZYmZM5rBOx+yKK5u89YpYoPWt8diSaURH0yDnLRu7JxyZTvVhC9eoIJFN0oexghz52cAMWD7a41alPlw6+E=
+	t=1776097958; cv=none; b=uvcfK2NrRDoL18uot8TrUoP/GHLNYuwjjaKk1aAodoiZxq06kXVe6CPFF/E2rPCczQg88gu7/tf5uDoNln4Ph53uxuRKQmzA8+lEg6lhK0HQBJHkjRBdWorrpL5AnPdnmWFm7pzZSaySiTj4dwdgLDk7uD7OnlYbAYFwnXYR1hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097955; c=relaxed/simple;
-	bh=JK/L6VeTfgIFi+IDg7ohbiln+b4Pm3P8eiAs8KxFMPA=;
+	s=arc-20240116; t=1776097958; c=relaxed/simple;
+	bh=jz88/7hqtxUJQzlWyLTf09NYoLn7LZ3uvV2D5TTANYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqaijwNwWRFnweyfCT0u4lbpG/aPzoALtruEljzI0jWX+6/EktQFjl5nUPF4RA7komKPliQyUg9A4o5VXjoIXhuT+qnEocgBlR+11OJFLnusUJClHsnvUdmlHiLN0XgdnreXEJzUf0oE8f4G/sotanf9Jek8r78zs90it0BO6yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zj9WJZ0J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHEoWwTQXJp2WUdnw0jvTLEE/r3BGSLQI/cTVFCa3g8foyFr2YQD3ORGTLa5OI+Gbqg5UGJSJg2YzWfd717Fzkg/sglXfiPrvn5LZWoaxtXqkeskW2u+AoIxNsF+I4GoojEtap4k7Q8GFpZVZ8tzfuPfJiQhugzqfjNMaKPhCxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ueDD/uTz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zj9WJZ0J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B0AC2BCAF;
-	Mon, 13 Apr 2026 16:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ueDD/uTz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7D5C2BCAF;
+	Mon, 13 Apr 2026 16:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097955;
-	bh=JK/L6VeTfgIFi+IDg7ohbiln+b4Pm3P8eiAs8KxFMPA=;
+	s=korg; t=1776097958;
+	bh=jz88/7hqtxUJQzlWyLTf09NYoLn7LZ3uvV2D5TTANYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zj9WJZ0J/8dc6C7++amysNTNVDOL8ahZv981KpJJpCzbQIlwzMPKD6LcB19CZNjW5
-	 XgUfpa1RBB6c8ARYcj4T3sDs3Hn9YJHOcyDs4z2KCzdt61Wvs+7G+N2AV7K5RItbuX
-	 b9JLBDVnOae4sXxTZi7cAe83PMa0m/dLd+wY0jzM=
+	b=ueDD/uTz9x+eZPWBwrUW+PPyZs80jTmFz/ea0+9Z6P+re1jZEf++hgN8NRlTwc1w4
+	 gw6AcYOVYQc/WN0uSapBJaZ1T2aim4/sSwRyAug8yfDJmfCYvYCH0Am1jBDm895/Ir
+	 TwfuatiQmF/ZSBLyxfh5/FR73Oj4N8RBXqV6tWxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Gregory Bell <grbell@redhat.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 296/570] bpf: Release module BTF IDR before module unload
-Date: Mon, 13 Apr 2026 17:57:07 +0200
-Message-ID: <20260413155841.589889120@linuxfoundation.org>
+Subject: [PATCH 5.15 331/570] dma-mapping: add missing `inline` for `dma_free_attrs`
+Date: Mon, 13 Apr 2026 17:57:42 +0200
+Message-ID: <20260413155842.893847599@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,126 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 146bd2a87a65aa407bb17fac70d8d583d19aba06 ]
+[ Upstream commit 2cdaff22ed26f1e619aa2b43f27bb84f2c6ef8f8 ]
 
-Gregory reported in [0] that the global_map_resize test when run in
-repeatedly ends up failing during program load. This stems from the fact
-that BTF reference has not dropped to zero after the previous run's
-module is unloaded, and the older module's BTF is still discoverable and
-visible. Later, in libbpf, load_module_btfs() will find the ID for this
-stale BTF, open its fd, and then it will be used during program load
-where later steps taking module reference using btf_try_get_module()
-fail since the underlying module for the BTF is gone.
+Under an UML build for an upcoming series [1], I got `-Wstatic-in-inline`
+for `dma_free_attrs`:
 
-Logically, once a module is unloaded, it's associated BTF artifacts
-should become hidden. The BTF object inside the kernel may still remain
-alive as long its reference counts are alive, but it should no longer be
-discoverable.
+      BINDGEN rust/bindings/bindings_generated.rs - due to target missing
+    In file included from rust/helpers/helpers.c:59:
+    rust/helpers/dma.c:17:2: warning: static function 'dma_free_attrs' is used in an inline function with external linkage [-Wstatic-in-inline]
+       17 |         dma_free_attrs(dev, size, cpu_addr, dma_handle, attrs);
+          |         ^
+    rust/helpers/dma.c:12:1: note: use 'static' to give inline function 'rust_helper_dma_free_attrs' internal linkage
+       12 | __rust_helper void rust_helper_dma_free_attrs(struct device *dev, size_t size,
+          | ^
+          | static
 
-To fix this, let us call btf_free_id() from the MODULE_STATE_GOING case
-for the module unload to free the BTF associated IDR entry, and disable
-its discovery once module unload returns to user space. If a race
-happens during unload, the outcome is non-deterministic anyway. However,
-user space should be able to rely on the guarantee that once it has
-synchronously established a successful module unload, no more stale
-artifacts associated with this module can be obtained subsequently.
+The issue is that `dma_free_attrs` was not marked `inline` when it was
+introduced alongside the rest of the stubs.
 
-Note that we must be careful to not invoke btf_free_id() in btf_put()
-when btf_is_module() is true now. There could be a window where the
-module unload drops a non-terminal reference, frees the IDR, but the
-same ID gets reused and the second unconditional btf_free_id() ends up
-releasing an unrelated entry.
+Thus mark it.
 
-To avoid a special case for btf_is_module() case, set btf->id to zero to
-make btf_free_id() idempotent, such that we can unconditionally invoke it
-from btf_put(), and also from the MODULE_STATE_GOING case. Since zero is
-an invalid IDR, the idr_remove() should be a noop.
-
-Note that we can be sure that by the time we reach final btf_put() for
-btf_is_module() case, the btf_free_id() is already done, since the
-module itself holds the BTF reference, and it will call this function
-for the BTF before dropping its own reference.
-
-  [0]: https://lore.kernel.org/bpf/cover.1773170190.git.grbell@redhat.com
-
-Fixes: 36e68442d1af ("bpf: Load and verify kernel module BTFs")
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Suggested-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reported-by: Gregory Bell <grbell@redhat.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20260312205307.1346991-1-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: ed6ccf10f24b ("dma-mapping: properly stub out the DMA API for !CONFIG_HAS_DMA")
+Closes: https://lore.kernel.org/rust-for-linux/20260322194616.89847-1-ojeda@kernel.org/ [1]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260325015548.70912-1-ojeda@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ include/linux/dma-mapping.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index d3eb75bfd9718..5d87df80c4bd7 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -1501,7 +1501,16 @@ static void btf_free_id(struct btf *btf)
- 	 * of the _bh() version.
- 	 */
- 	spin_lock_irqsave(&btf_idr_lock, flags);
--	idr_remove(&btf_idr, btf->id);
-+	if (btf->id) {
-+		idr_remove(&btf_idr, btf->id);
-+		/*
-+		 * Clear the id here to make this function idempotent, since it will get
-+		 * called a couple of times for module BTFs: on module unload, and then
-+		 * the final btf_put(). btf_alloc_id() starts IDs with 1, so we can use
-+		 * 0 as sentinel value.
-+		 */
-+		WRITE_ONCE(btf->id, 0);
-+	}
- 	spin_unlock_irqrestore(&btf_idr_lock, flags);
- }
- 
-@@ -5890,7 +5899,7 @@ static void bpf_btf_show_fdinfo(struct seq_file *m, struct file *filp)
+diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
+index d7b91f82b0dce..96f4d63390aea 100644
+--- a/include/linux/dma-mapping.h
++++ b/include/linux/dma-mapping.h
+@@ -218,8 +218,8 @@ static inline void *dma_alloc_attrs(struct device *dev, size_t size,
  {
- 	const struct btf *btf = filp->private_data;
- 
--	seq_printf(m, "btf_id:\t%u\n", btf->id);
-+	seq_printf(m, "btf_id:\t%u\n", READ_ONCE(btf->id));
+ 	return NULL;
  }
- #endif
- 
-@@ -5985,7 +5994,7 @@ int btf_get_info_by_fd(const struct btf *btf,
- 	if (copy_from_user(&info, uinfo, info_copy))
- 		return -EFAULT;
- 
--	info.id = btf->id;
-+	info.id = READ_ONCE(btf->id);
- 	ubtf = u64_to_user_ptr(info.btf);
- 	btf_copy = min_t(u32, btf->data_size, info.btf_size);
- 	if (copy_to_user(ubtf, btf->data, btf_copy))
-@@ -6048,7 +6057,7 @@ int btf_get_fd_by_id(u32 id)
- 
- u32 btf_obj_id(const struct btf *btf)
+-static void dma_free_attrs(struct device *dev, size_t size, void *cpu_addr,
+-		dma_addr_t dma_handle, unsigned long attrs)
++static inline void dma_free_attrs(struct device *dev, size_t size,
++		void *cpu_addr, dma_addr_t dma_handle, unsigned long attrs)
  {
--	return btf->id;
-+	return READ_ONCE(btf->id);
  }
- 
- bool btf_is_kernel(const struct btf *btf)
-@@ -6185,6 +6194,13 @@ static int btf_module_notify(struct notifier_block *nb, unsigned long op,
- 			if (btf_mod->module != module)
- 				continue;
- 
-+			/*
-+			 * For modules, we do the freeing of BTF IDR as soon as
-+			 * module goes away to disable BTF discovery, since the
-+			 * btf_try_get_module() on such BTFs will fail. This may
-+			 * be called again on btf_put(), but it's ok to do so.
-+			 */
-+			btf_free_id(btf_mod->btf);
- 			list_del(&btf_mod->list);
- 			if (btf_mod->sysfs_attr)
- 				sysfs_remove_bin_file(btf_kobj, btf_mod->sysfs_attr);
+ static inline void *dmam_alloc_attrs(struct device *dev, size_t size,
 -- 
 2.51.0
 
