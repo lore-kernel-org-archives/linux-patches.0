@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BA5280CFB;
-	Mon, 13 Apr 2026 16:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22112EBB8C;
+	Mon, 13 Apr 2026 16:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098084; cv=none; b=c7lEIoqw4rf52h+am/WJ44lGrkrBDKDZLZg9aLoM2+IfH+i36kTK/e1cb8GxVWMDn4hGM4MT6SUQjCyL5qLvgkPWp7TVW+8ap9IFqdyx+PuCXnWF9OPKtvwRUOfNDMXtBYYNUQyhONETjlu/QKq451ol3nBsRs9GqkOMQvWWh2A=
+	t=1776098086; cv=none; b=IEpUUogqpfeLsBIG1sA+uqEmggaUkv6FP6xaba9aH/p+xDO3ha1RVTEUgfIPrnsG1i/fGeJn6a1sVzVu2ZANHt/bg58xXkpTmnoZ4jf3YPmn3Wbkf41hnVpN5vsTMLf3/n8NrhzAGAUb4AaMsQxPW4oNEXTiNEQq8RIR4FPFI/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098084; c=relaxed/simple;
-	bh=Y9ie98FYiHacl2VCSErzM7/QvVmXQeZlFeelpA53P+w=;
+	s=arc-20240116; t=1776098086; c=relaxed/simple;
+	bh=aZNLZUdHZhpAmclKe9YOAO4mIgBeYJKygf57By6KpbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNsAgKmPi92G6Xjp4q5XPIR9c6o4ztlIgOxhMDpElqgaCd9Xjm1r6fKOrJEkLu8MJpF4u9ZqA4kwOO1a/SbFDI9Bit/smbrzSH98xsgUhGkmvCqxIoWsaZOB/KApQD955adH8gbtHXralZSstUwWNrX0/r+zeUaOvJNF6J0z0+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfDIyN0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hb2hmt2hFRjsaCru7H+Cq5epXuf+ajW2Zo9SkzRBkj7G1tCYwaETE4IS70hDv7Br4CsK3hrJfNdh43GTUrH0ZGlGpVXxVEJ154JNPM/7w+KYLqrvDLcm/Bw57qURuEzUPtjTyKjLWt6YgwmpW2JE6P1YByUCj6NNygssGghni/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClA9KWPR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfDIyN0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E64C2BCAF;
-	Mon, 13 Apr 2026 16:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClA9KWPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B25C2BCAF;
+	Mon, 13 Apr 2026 16:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098084;
-	bh=Y9ie98FYiHacl2VCSErzM7/QvVmXQeZlFeelpA53P+w=;
+	s=korg; t=1776098086;
+	bh=aZNLZUdHZhpAmclKe9YOAO4mIgBeYJKygf57By6KpbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KfDIyN0IcZI/Qo4ShBls+CUhyMlUKoSatn+evE0R/IsCgvNBUwp+jCm9GCwAmA160
-	 waP1LvaQeMpPRCu5/7KYXb31mJzHWKoIa9+D23+JZJeYCzHahNkLKb986ID3/7N/oe
-	 DTt67B/zQpq6TQsqBC+0ab5TeUjkIP58G4lEzm9Q=
+	b=ClA9KWPRt0N/KpvgqTEvn0xmHgp6JOC58r1qI8yGOt1dF/fyxPjm84EyJGiDxajdy
+	 xYHchIcmboSuI9hXm6UuKgfW6jdAdZSxFg2lNn0uYf+umZ6pNq0hsSeWdWdZSJj0yf
+	 nSGkNtXWIn0bThxqpaoiyZGD116zMXrm6N/S9a2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Felix Gu <ustc.gu@gmail.com>,
+	Marek Vasut <marex@nabladev.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 387/570] phy: ti: j721e-wiz: Fix device node reference leak in wiz_get_lane_phy_types()
-Date: Mon, 13 Apr 2026 17:58:38 +0200
-Message-ID: <20260413155844.973864654@linuxfoundation.org>
+Subject: [PATCH 5.15 388/570] dmaengine: xilinx: xilinx_dma: Fix dma_device directions
+Date: Mon, 13 Apr 2026 17:58:39 +0200
+Message-ID: <20260413155845.010073875@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,48 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit 584b457f4166293bdfa50f930228e9fb91a38392 ]
+[ Upstream commit e9cc95397bb7da13fe8a5b53a2f23cfaf9018ade ]
 
-The serdes device_node is obtained using of_get_child_by_name(),
-which increments the reference count. However, it is never put,
-leading to a reference leak.
+Unlike chan->direction , struct dma_device .directions field is a
+bitfield. Turn chan->direction into a bitfield to make it compatible
+with struct dma_device .directions .
 
-Add the missing of_node_put() calls to ensure the reference count is
-properly balanced.
-
-Fixes: 7ae14cf581f2 ("phy: ti: j721e-wiz: Implement DisplayPort mode to the wiz driver")
-Suggested-by: Vladimir Oltean <olteanv@gmail.com>
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20260212-wiz-v2-1-6e8bd4cc7a4a@gmail.com
+Fixes: 7e01511443c3 ("dmaengine: xilinx_dma: Set dma_device directions")
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://patch.msgid.link/20260316221728.160139-1-marex@nabladev.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/ti/phy-j721e-wiz.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/xilinx/xilinx_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/ti/phy-j721e-wiz.c b/drivers/phy/ti/phy-j721e-wiz.c
-index 8963fbf7aa73b..a3908a579115c 100644
---- a/drivers/phy/ti/phy-j721e-wiz.c
-+++ b/drivers/phy/ti/phy-j721e-wiz.c
-@@ -1116,6 +1116,7 @@ static int wiz_get_lane_phy_types(struct device *dev, struct wiz *wiz)
- 			dev_err(dev,
- 				"%s: Reading \"reg\" from \"%s\" failed: %d\n",
- 				__func__, subnode->name, ret);
-+			of_node_put(serdes);
- 			return ret;
- 		}
- 		of_property_read_u32(subnode, "cdns,num-lanes", &num_lanes);
-@@ -1128,6 +1129,7 @@ static int wiz_get_lane_phy_types(struct device *dev, struct wiz *wiz)
- 			wiz->lane_phy_type[i] = phy_type;
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index ba5850ca39ddd..e2adc33631ca3 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -2862,7 +2862,7 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
+ 		return -EINVAL;
  	}
  
-+	of_node_put(serdes);
- 	return 0;
- }
+-	xdev->common.directions |= chan->direction;
++	xdev->common.directions |= BIT(chan->direction);
  
+ 	/* Request the interrupt */
+ 	chan->irq = irq_of_parse_and_map(node, chan->tdest);
 -- 
 2.53.0
 
