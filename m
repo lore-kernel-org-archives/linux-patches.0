@@ -1,435 +1,328 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FD727280A;
-	Mon, 13 Apr 2026 16:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6082727280A;
+	Mon, 13 Apr 2026 16:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096995; cv=none; b=jAundK4Xj6J2axbUSE8b2fcWvDBujulp5S7smh5RqKuLrGESD/dZ7oZyhPi9yXkokG22sJq9Gp+cGQZSqhKBQ/n7UrFuVes+86rcL+NTRnCNQBnUceawYBbGib9ogjq4C0cFfVY80vlhBj+a8wiWRl3Ap27ez8ERPauFs9BJmJ8=
+	t=1776096998; cv=none; b=gK+7rBLxkeYU7Ng6cfeO0mMDZt2To19lv1RN/oGIxQmR1q0KUbC6SRTUymVZ9rxrSC3ToeZW5VRR1DeG4n/l17V0XMLs9J60Ajd1xdM2eT6HjaEdpbVaYKKy8vYhC5qtf9bkhkJuJnbSAvXlTYIqVT3nwbxqLYhcU5a7YIRpbNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096995; c=relaxed/simple;
-	bh=sgDUkDw70GVOg/SkPnUj+FgteMfZX5Y4vzn378b4wIw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kO1iEW1XzBesmhujQDruwmcCteYCNcQRxxh/XxLceqC70Zqx8XyZIrvZWojQFYXan/2Ny5EiRO8G9BgU1EfnTEvle+23JnpH7b1eB7woHDxZAykMSy5u01kROgclg9xefSjNznO4xaKpOU8Y0gnSIobIwS9B4+l2AyAZdY3jnR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjeJ9dGe; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776096998; c=relaxed/simple;
+	bh=+3aKiJPHT2LnvWyQbK9bZCPcN/49zOWu8/PGcMlhe1g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sCu6GVcv+PY/AV3q+uB+JbIfC3zk6H+auvIrEXGMAlPJ94+7tsI34HXCndU13DKmaxUNMjQquQ0YpfhuSFIDRCXHoNi+45B6gIRFDkC/PIX+WfkAog+vAg8g23brHS6IbwKZQeAsAyA1aHGmMh0ZveULlpopkJMFQwpAWn1QPeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Yws9Bzc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjeJ9dGe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A350C2BCAF;
-	Mon, 13 Apr 2026 16:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Yws9Bzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C175FC2BCAF;
+	Mon, 13 Apr 2026 16:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096995;
-	bh=sgDUkDw70GVOg/SkPnUj+FgteMfZX5Y4vzn378b4wIw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PjeJ9dGeW27eBYK2VK0jyQsC9x93vB+lDvazbfPxvQDNWMFfROidJnPFe+48mStq+
-	 0sy6IPf9MvFNv7MyHtwIaV8Ov55H0q2bqdtPR9664gIVUCCdxiG4qeS8Dds3UuW4s/
-	 PAVzhKqTo6rS+nLDxwbFFmAmJ/lcpMAKe6PNbvHs=
+	s=korg; t=1776096998;
+	bh=+3aKiJPHT2LnvWyQbK9bZCPcN/49zOWu8/PGcMlhe1g=;
+	h=From:To:Cc:Subject:Date:From;
+	b=2Yws9BzcyRAtxC9qMJi9eSk40SpcwQutTEcBv/wm5QbyCMADS6PWawappmvJEmpYH
+	 qB6wNjnnOyIhETgmu8Uj2bmfZ8wNzsr2SXlwtkB2Oge6q+fcbypl/r4jJ7Pw8UDbIE
+	 ICQdduohKxWhGcN24MScw/vD7czmeT5pClgdlAAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 09/55] MIPS: mm: Rewrite TLB uniquification for the hidden bit feature
-Date: Mon, 13 Apr 2026 18:00:43 +0200
-Message-ID: <20260413155725.173614363@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 6.1 00/55] 6.1.169-rc1 review
+Date: Mon, 13 Apr 2026 18:00:34 +0200
+Message-ID: <20260413155724.820472494@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
-References: <20260413155724.820472494@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.169-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.1.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.1.169-rc1
+X-KernelTest-Deadline: 2026-04-15T15:57+00:00
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.1.169 release.
+There are 55 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
+Anything received after that time might be too late.
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.169-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+and the diffstat can be found below.
 
-commit 540760b77b8fc49d39d1b2b76196e5ec57711a32 upstream.
+thanks,
 
-Before the introduction of the EHINV feature, which lets software mark
-TLB entries invalid, certain older implementations of the MIPS ISA were
-equipped with an analogous bit, as a vendor extension, which however is
-hidden from software and only ever set at reset, and then any software
-write clears it, making the intended TLB entry valid.
+greg k-h
 
-This feature makes it unsafe to read a TLB entry with TLBR, modify the
-page mask, and write the entry back with TLBWI, because this operation
-will implicitly clear the hidden bit and this may create a duplicate
-entry, as with the presence of the hidden bit there is no guarantee all
-the entries across the TLB are unique each.
+-------------
+Pseudo-Shortlog of commits:
 
-Usually the firmware has already uniquified TLB entries before handing
-control over, in which case we only need to guarantee at bootstrap no
-clash will happen with the VPN2 values chosen in local_flush_tlb_all().
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.1.169-rc1
 
-However with systems such as Mikrotik RB532 we get handed the TLB as at
-reset, with the hidden bit set across the entries and possibly duplicate
-entries present.  This then causes a machine check exception when page
-sizes are reset in r4k_tlb_uniquify() and prevents the system from
-booting.
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+    Revert "PCI: Enable ACS after configuring IOMMU for OF platforms"
 
-Rewrite the algorithm used in r4k_tlb_uniquify() then such as to avoid
-the reuse of ASID/VPN values across the TLB.  Get rid of global entries
-first as they may be blocking the entire address space, e.g. 16 256MiB
-pages will exhaust the whole address space of a 32-bit CPU and a single
-big page can exhaust the 32-bit compatibility space on a 64-bit CPU.
+David Howells <dhowells@redhat.com>
+    rxrpc: Fix key/keyring checks in setsockopt(RXRPC_SECURITY_KEY/KEYRING)
 
-Details of the algorithm chosen are given across the code itself.
+Luxiao Xu <rakukuip@gmail.com>
+    rxrpc: fix reference count leak in rxrpc_server_keyring()
 
-Fixes: 9f048fa48740 ("MIPS: mm: Prevent a TLB shutdown on initial uniquification")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v6.18+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/mips/mm/tlb-r4k.c | 282 +++++++++++++++++++++++++++++++++--------
- 1 file changed, 228 insertions(+), 54 deletions(-)
+Tyllis Xu <livelycarpet87@gmail.com>
+    net: stmmac: fix integer underflow in chain mode
 
-diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
-index 3669895a85bf2..8d111f0a5296e 100644
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -13,6 +13,7 @@
- #include <linux/sched.h>
- #include <linux/smp.h>
- #include <linux/memblock.h>
-+#include <linux/minmax.h>
- #include <linux/mm.h>
- #include <linux/hugetlb.h>
- #include <linux/export.h>
-@@ -24,6 +25,7 @@
- #include <asm/hazards.h>
- #include <asm/mmu_context.h>
- #include <asm/tlb.h>
-+#include <asm/tlbdebug.h>
- #include <asm/tlbmisc.h>
- 
- extern void build_tlb_refill_handler(void);
-@@ -501,87 +503,259 @@ static int __init set_ntlb(char *str)
- __setup("ntlb=", set_ntlb);
- 
- 
--/* Comparison function for EntryHi VPN fields.  */
--static int r4k_vpn_cmp(const void *a, const void *b)
-+/* The start bit position of VPN2 and Mask in EntryHi/PageMask registers.  */
-+#define VPN2_SHIFT 13
-+
-+/* Read full EntryHi even with CONFIG_32BIT.  */
-+static inline unsigned long long read_c0_entryhi_native(void)
-+{
-+	return cpu_has_64bits ? read_c0_entryhi_64() : read_c0_entryhi();
-+}
-+
-+/* Write full EntryHi even with CONFIG_32BIT.  */
-+static inline void write_c0_entryhi_native(unsigned long long v)
- {
--	long v = *(unsigned long *)a - *(unsigned long *)b;
--	int s = sizeof(long) > sizeof(int) ? sizeof(long) * 8 - 1: 0;
--	return s ? (v != 0) | v >> s : v;
-+	if (cpu_has_64bits)
-+		write_c0_entryhi_64(v);
-+	else
-+		write_c0_entryhi(v);
- }
- 
-+/* TLB entry state for uniquification.  */
-+struct tlbent {
-+	unsigned long long wired:1;
-+	unsigned long long global:1;
-+	unsigned long long asid:10;
-+	unsigned long long vpn:51;
-+	unsigned long long pagesz:5;
-+	unsigned long long index:14;
-+};
-+
- /*
-- * Initialise all TLB entries with unique values that do not clash with
-- * what we have been handed over and what we'll be using ourselves.
-+ * Comparison function for TLB entry sorting.  Place wired entries first,
-+ * then global entries, then order by the increasing VPN/ASID and the
-+ * decreasing page size.  This lets us avoid clashes with wired entries
-+ * easily and get entries for larger pages out of the way first.
-+ *
-+ * We could group bits so as to reduce the number of comparisons, but this
-+ * is seldom executed and not performance-critical, so prefer legibility.
-  */
--static void __ref r4k_tlb_uniquify(void)
-+static int r4k_entry_cmp(const void *a, const void *b)
- {
--	int tlbsize = current_cpu_data.tlbsize;
--	bool use_slab = slab_is_available();
--	int start = num_wired_entries();
--	phys_addr_t tlb_vpn_size;
--	unsigned long *tlb_vpns;
--	unsigned long vpn_mask;
--	int cnt, ent, idx, i;
--
--	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
--	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
-+	struct tlbent ea = *(struct tlbent *)a, eb = *(struct tlbent *)b;
-+
-+	if (ea.wired > eb.wired)
-+		return -1;
-+	else if (ea.wired < eb.wired)
-+		return 1;
-+	else if (ea.global > eb.global)
-+		return -1;
-+	else if (ea.global < eb.global)
-+		return 1;
-+	else if (ea.vpn < eb.vpn)
-+		return -1;
-+	else if (ea.vpn > eb.vpn)
-+		return 1;
-+	else if (ea.asid < eb.asid)
-+		return -1;
-+	else if (ea.asid > eb.asid)
-+		return 1;
-+	else if (ea.pagesz > eb.pagesz)
-+		return -1;
-+	else if (ea.pagesz < eb.pagesz)
-+		return 1;
-+	else
-+		return 0;
-+}
- 
--	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
--	tlb_vpns = (use_slab ?
--		    kmalloc(tlb_vpn_size, GFP_ATOMIC) :
--		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
--	if (WARN_ON(!tlb_vpns))
--		return; /* Pray local_flush_tlb_all() is good enough. */
-+/*
-+ * Fetch all the TLB entries.  Mask individual VPN values retrieved with
-+ * the corresponding page mask and ignoring any 1KiB extension as we'll
-+ * be using 4KiB pages for uniquification.
-+ */
-+static void __ref r4k_tlb_uniquify_read(struct tlbent *tlb_vpns, int tlbsize)
-+{
-+	int start = num_wired_entries();
-+	unsigned long long vpn_mask;
-+	bool global;
-+	int i;
- 
--	htw_stop();
-+	vpn_mask = GENMASK(current_cpu_data.vmbits - 1, VPN2_SHIFT);
-+	vpn_mask |= cpu_has_64bits ? 3ULL << 62 : 1 << 31;
- 
--	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
--		unsigned long vpn;
-+	for (i = 0; i < tlbsize; i++) {
-+		unsigned long long entryhi, vpn, mask, asid;
-+		unsigned int pagesz;
- 
- 		write_c0_index(i);
- 		mtc0_tlbr_hazard();
- 		tlb_read();
- 		tlb_read_hazard();
--		vpn = read_c0_entryhi();
--		vpn &= vpn_mask & PAGE_MASK;
--		tlb_vpns[cnt] = vpn;
- 
--		/* Prevent any large pages from overlapping regular ones.  */
--		write_c0_pagemask(read_c0_pagemask() & PM_DEFAULT_MASK);
--		mtc0_tlbw_hazard();
--		tlb_write_indexed();
--		tlbw_use_hazard();
-+		global = !!(read_c0_entrylo0() & ENTRYLO_G);
-+		entryhi = read_c0_entryhi_native();
-+		mask = read_c0_pagemask();
-+
-+		asid = entryhi & cpu_asid_mask(&current_cpu_data);
-+		vpn = (entryhi & vpn_mask & ~mask) >> VPN2_SHIFT;
-+		pagesz = ilog2((mask >> VPN2_SHIFT) + 1);
-+
-+		tlb_vpns[i].global = global;
-+		tlb_vpns[i].asid = global ? 0 : asid;
-+		tlb_vpns[i].vpn = vpn;
-+		tlb_vpns[i].pagesz = pagesz;
-+		tlb_vpns[i].wired = i < start;
-+		tlb_vpns[i].index = i;
- 	}
-+}
- 
--	sort(tlb_vpns, cnt, sizeof(tlb_vpns[0]), r4k_vpn_cmp, NULL);
-+/*
-+ * Write unique values to all but the wired TLB entries each, using
-+ * the 4KiB page size.  This size might not be supported with R6, but
-+ * EHINV is mandatory for R6, so we won't ever be called in that case.
-+ *
-+ * A sorted table is supplied with any wired entries at the beginning,
-+ * followed by any global entries, and then finally regular entries.
-+ * We start at the VPN and ASID values of zero and only assign user
-+ * addresses, therefore guaranteeing no clash with addresses produced
-+ * by UNIQUE_ENTRYHI.  We avoid any VPN values used by wired or global
-+ * entries, by increasing the VPN value beyond the span of such entry.
-+ *
-+ * When a VPN/ASID clash is found with a regular entry we increment the
-+ * ASID instead until no VPN/ASID clash has been found or the ASID space
-+ * has been exhausted, in which case we increase the VPN value beyond
-+ * the span of the largest clashing entry.
-+ *
-+ * We do not need to be concerned about FTLB or MMID configurations as
-+ * those are required to implement the EHINV feature.
-+ */
-+static void __ref r4k_tlb_uniquify_write(struct tlbent *tlb_vpns, int tlbsize)
-+{
-+	unsigned long long asid, vpn, vpn_size, pagesz;
-+	int widx, gidx, idx, sidx, lidx, i;
- 
--	write_c0_pagemask(PM_DEFAULT_MASK);
-+	vpn_size = 1ULL << (current_cpu_data.vmbits - VPN2_SHIFT);
-+	pagesz = ilog2((PM_4K >> VPN2_SHIFT) + 1);
-+
-+	write_c0_pagemask(PM_4K);
- 	write_c0_entrylo0(0);
- 	write_c0_entrylo1(0);
- 
--	idx = 0;
--	ent = tlbsize;
--	for (i = start; i < tlbsize; i++)
--		while (1) {
--			unsigned long entryhi, vpn;
-+	asid = 0;
-+	vpn = 0;
-+	widx = 0;
-+	gidx = 0;
-+	for (sidx = 0; sidx < tlbsize && tlb_vpns[sidx].wired; sidx++)
-+		;
-+	for (lidx = sidx; lidx < tlbsize && tlb_vpns[lidx].global; lidx++)
-+		;
-+	idx = gidx = sidx + 1;
-+	for (i = sidx; i < tlbsize; i++) {
-+		unsigned long long entryhi, vpn_pagesz = 0;
- 
--			entryhi = UNIQUE_ENTRYHI(ent);
--			vpn = entryhi & vpn_mask & PAGE_MASK;
-+		while (1) {
-+			if (WARN_ON(vpn >= vpn_size)) {
-+				dump_tlb_all();
-+				/* Pray local_flush_tlb_all() will cope.  */
-+				return;
-+			}
- 
--			if (idx >= cnt || vpn < tlb_vpns[idx]) {
--				write_c0_entryhi(entryhi);
--				write_c0_index(i);
--				mtc0_tlbw_hazard();
--				tlb_write_indexed();
--				ent++;
--				break;
--			} else if (vpn == tlb_vpns[idx]) {
--				ent++;
--			} else {
-+			/* VPN must be below the next wired entry.  */
-+			if (widx < sidx && vpn >= tlb_vpns[widx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[widx].vpn +
-+					   (1ULL << tlb_vpns[widx].pagesz)));
-+				asid = 0;
-+				widx++;
-+				continue;
-+			}
-+			/* VPN must be below the next global entry.  */
-+			if (gidx < lidx && vpn >= tlb_vpns[gidx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[gidx].vpn +
-+					   (1ULL << tlb_vpns[gidx].pagesz)));
-+				asid = 0;
-+				gidx++;
-+				continue;
-+			}
-+			/* Try to find a free ASID so as to conserve VPNs.  */
-+			if (idx < tlbsize && vpn == tlb_vpns[idx].vpn &&
-+			    asid == tlb_vpns[idx].asid) {
-+				unsigned long long idx_pagesz;
-+
-+				idx_pagesz = tlb_vpns[idx].pagesz;
-+				vpn_pagesz = max(vpn_pagesz, idx_pagesz);
-+				do
-+					idx++;
-+				while (idx < tlbsize &&
-+				       vpn == tlb_vpns[idx].vpn &&
-+				       asid == tlb_vpns[idx].asid);
-+				asid++;
-+				if (asid > cpu_asid_mask(&current_cpu_data)) {
-+					vpn += vpn_pagesz;
-+					asid = 0;
-+					vpn_pagesz = 0;
-+				}
-+				continue;
-+			}
-+			/* VPN mustn't be above the next regular entry.  */
-+			if (idx < tlbsize && vpn > tlb_vpns[idx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[idx].vpn +
-+					   (1ULL << tlb_vpns[idx].pagesz)));
-+				asid = 0;
- 				idx++;
-+				continue;
- 			}
-+			break;
- 		}
- 
-+		entryhi = (vpn << VPN2_SHIFT) | asid;
-+		write_c0_entryhi_native(entryhi);
-+		write_c0_index(tlb_vpns[i].index);
-+		mtc0_tlbw_hazard();
-+		tlb_write_indexed();
-+
-+		tlb_vpns[i].asid = asid;
-+		tlb_vpns[i].vpn = vpn;
-+		tlb_vpns[i].pagesz = pagesz;
-+
-+		asid++;
-+		if (asid > cpu_asid_mask(&current_cpu_data)) {
-+			vpn += 1ULL << pagesz;
-+			asid = 0;
-+		}
-+	}
-+}
-+
-+/*
-+ * Initialise all TLB entries with unique values that do not clash with
-+ * what we have been handed over and what we'll be using ourselves.
-+ */
-+static void __ref r4k_tlb_uniquify(void)
-+{
-+	int tlbsize = current_cpu_data.tlbsize;
-+	bool use_slab = slab_is_available();
-+	phys_addr_t tlb_vpn_size;
-+	struct tlbent *tlb_vpns;
-+
-+	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
-+	tlb_vpns = (use_slab ?
-+		    kmalloc(tlb_vpn_size, GFP_ATOMIC) :
-+		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
-+	if (WARN_ON(!tlb_vpns))
-+		return; /* Pray local_flush_tlb_all() is good enough. */
-+
-+	htw_stop();
-+
-+	r4k_tlb_uniquify_read(tlb_vpns, tlbsize);
-+
-+	sort(tlb_vpns, tlbsize, sizeof(*tlb_vpns), r4k_entry_cmp, NULL);
-+
-+	r4k_tlb_uniquify_write(tlb_vpns, tlbsize);
-+
-+	write_c0_pagemask(PM_DEFAULT_MASK);
-+
- 	tlbw_use_hazard();
- 	htw_start();
- 	flush_micro_tlb();
--- 
-2.53.0
+Pengpeng Hou <pengpeng@iscas.ac.cn>
+    net: qualcomm: qca_uart: report the consumed byte on RX skb allocation failure
 
+Johan Hovold <johan@kernel.org>
+    mmc: vub300: fix NULL-deref on disconnect
+
+Michael Guralnik <michaelgur@nvidia.com>
+    net/mlx5: Update the list of the PCI supported devices
+
+Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+    drm/i915/gt: fix refcount underflow in intel_engine_park_heartbeat
+
+Haoze Xie <royenheart@gmail.com>
+    batman-adv: hold claim backbone gateways by reference
+
+David Carlier <devnexen@gmail.com>
+    net: altera-tse: fix skb leak on DMA mapping error in tse_start_xmit()
+
+Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
+    net/tls: fix use-after-free in -EBUSY error path of tls_do_encryption
+
+Borislav Petkov (AMD) <bp@alien8.de>
+    EDAC/mc: Fix error path ordering in edac_mc_alloc()
+
+Ruide Cao <caoruide123@gmail.com>
+    batman-adv: reject oversized global TT response buffers
+
+Pengpeng Hou <pengpeng@iscas.ac.cn>
+    nfc: pn533: allocate rx skb before consuming bytes
+
+Shawn Guo <shawnguo@kernel.org>
+    arm64: dts: hisilicon: hi3798cv200: Add missing dma-ranges
+
+Shawn Guo <shawnguo@kernel.org>
+    arm64: dts: hisilicon: poplar: Correct PCIe reset GPIO polarity
+
+Thomas Fourier <fourier.thomas@gmail.com>
+    wifi: brcmsmac: Fix dma_free_coherent() size
+
+Oleh Konko <security@1seal.org>
+    tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG
+
+Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+    xfrm: clear trailing padding in build_polexpire()
+
+Tuan Do <tuan@calif.io>
+    netfilter: nft_ct: fix use-after-free in timeout object destroy
+
+Florian Westphal <fw@strlen.de>
+    netfilter: nft_set_pipapo: do not rely on ZERO_SIZE_PTR
+
+Lin.Cao <lincao12@amd.com>
+    drm/scheduler: signal scheduled fence when kill job
+
+Matthieu Baerts (NGI0) <matttbe@kernel.org>
+    Revert "mptcp: add needs_id for netlink appending addr"
+
+Andrea Mayer <andrea.mayer@uniroma2.it>
+    seg6: separate dst_cache for input and output paths in seg6 lwtunnel
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    net: rfkill: prevent unlimited numbers of rfkill events from being created
+
+Johannes Berg <johannes.berg@intel.com>
+    net: rfkill: reduce data->mtx scope in rfkill_fop_open
+
+Johannes Berg <johannes.berg@intel.com>
+    rfkill: sync before userspace visibility/changes
+
+Bo Liu <liubo03@inspur.com>
+    rfkill: Use sysfs_emit() to instead of sprintf()
+
+Michael Zimmermann <sigmaepsilon92@gmail.com>
+    usb: gadget: f_hid: move list and spinlock inits from bind to alloc
+
+Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+    ACPI: EC: Evaluate _REG outside the EC scope more carefully
+
+Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+    ACPICA: Add a depth argument to acpi_execute_reg_methods()
+
+Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+    Revert "ACPI: EC: Evaluate orphan _REG under EC device"
+
+Kuen-Han Tsai <khtsai@google.com>
+    usb: gadget: u_ether: Fix race between gether_disconnect and eth_stop
+
+John Johansen <john.johansen@canonical.com>
+    apparmor: fix race between freeing data and fs accessing it
+
+John Johansen <john.johansen@canonical.com>
+    apparmor: fix race on rawdata dereference
+
+John Johansen <john.johansen@canonical.com>
+    apparmor: fix differential encoding verification
+
+John Johansen <john.johansen@canonical.com>
+    apparmor: fix unprivileged local user can do privileged policy management
+
+John Johansen <john.johansen@canonical.com>
+    apparmor: Fix double free of ns_name in aa_replace_profiles()
+
+Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+    apparmor: fix missing bounds check on DEFAULT table in verify_dfa()
+
+Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+    apparmor: fix side-effect bug in match_char() macro usage
+
+John Johansen <john.johansen@canonical.com>
+    apparmor: fix: limit the number of levels of policy namespaces
+
+Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+    apparmor: replace recursive profile removal with iterative approach
+
+Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+    apparmor: fix memory leak in verify_header
+
+Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+    apparmor: validate DFA start states are in bounds in unpack_pdb
+
+Ricardo Ribalda <ribalda@chromium.org>
+    media: uvcvideo: Use heuristic to find stream entity
+
+Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+    media: uvcvideo: Mark invalid entities with id UVC_INVALID_ENTITY_ID
+
+Maciej W. Rozycki <macro@orcam.me.uk>
+    MIPS: mm: Rewrite TLB uniquification for the hidden bit feature
+
+Maciej W. Rozycki <macro@orcam.me.uk>
+    MIPS: mm: Suppress TLB uniquification on EHINV hardware
+
+Maciej W. Rozycki <macro@orcam.me.uk>
+    MIPS: Always record SEGBITS in cpu_data.vmbits
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: uinput - take event lock when submitting FF request "event"
+
+Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+    Input: uinput - fix circular locking dependency with ff-core
+
+Jiayuan Chen <jiayuan.chen@linux.dev>
+    mptcp: fix slab-use-after-free in __inet_lookup_established
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    xfrm_user: fix info leak in build_report()
+
+Johan Hovold <johan@kernel.org>
+    wifi: rt2x00usb: fix devres lifetime
+
+Eric Biggers <ebiggers@kernel.org>
+    lib/crypto: chacha: Zeroize permuted_state before it leaves scope
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ .../boot/dts/hisilicon/hi3798cv200-poplar.dts      |   2 +-
+ arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi     |   1 +
+ arch/mips/include/asm/cpu-features.h               |   1 -
+ arch/mips/include/asm/cpu-info.h                   |   2 -
+ arch/mips/include/asm/mipsregs.h                   |   2 +
+ arch/mips/kernel/cpu-probe.c                       |  13 +-
+ arch/mips/kernel/cpu-r3k-probe.c                   |   2 +
+ arch/mips/mm/tlb-r4k.c                             | 285 +++++++++++++++++----
+ drivers/acpi/acpica/acevents.h                     |   6 +-
+ drivers/acpi/acpica/evregion.c                     |  12 +-
+ drivers/acpi/acpica/evxfregn.c                     |  64 +----
+ drivers/acpi/ec.c                                  |  14 +-
+ drivers/acpi/internal.h                            |   1 +
+ drivers/acpi/scan.c                                |   2 +
+ drivers/edac/edac_mc.c                             |   6 +-
+ drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c   |  26 +-
+ drivers/gpu/drm/scheduler/sched_entity.c           |   1 +
+ drivers/input/misc/uinput.c                        |  35 ++-
+ drivers/media/usb/uvc/uvc_driver.c                 |  88 +++++--
+ drivers/media/usb/uvc/uvcvideo.h                   |   2 +
+ drivers/mmc/host/vub300.c                          |   2 +-
+ drivers/net/ethernet/altera/altera_tse_main.c      |   1 +
+ drivers/net/ethernet/mellanox/mlx5/core/main.c     |   1 +
+ drivers/net/ethernet/qualcomm/qca_uart.c           |   2 +-
+ drivers/net/ethernet/stmicro/stmmac/chain_mode.c   |  11 +-
+ .../net/wireless/broadcom/brcm80211/brcmsmac/dma.c |   2 +-
+ drivers/net/wireless/ralink/rt2x00/rt2x00usb.c     |   2 +-
+ drivers/nfc/pn533/uart.c                           |  11 +-
+ drivers/pci/pci-driver.c                           |   8 -
+ drivers/pci/pci.c                                  |  10 +-
+ drivers/pci/pci.h                                  |   1 -
+ drivers/usb/gadget/function/f_hid.c                |  11 +-
+ drivers/usb/gadget/function/u_ether.c              |   8 +-
+ include/acpi/acpixf.h                              |   5 +-
+ include/net/netfilter/nf_conntrack_timeout.h       |   1 +
+ lib/crypto/chacha.c                                |   4 +
+ net/batman-adv/bridge_loop_avoidance.c             |  27 +-
+ net/batman-adv/translation-table.c                 |   9 +-
+ net/ipv6/seg6_iptunnel.c                           |  41 ++-
+ net/mptcp/pm_netlink.c                             |  24 +-
+ net/mptcp/protocol.c                               |   2 +
+ net/mptcp/protocol.h                               |   1 +
+ net/mptcp/subflow.c                                |  15 +-
+ net/netfilter/nft_ct.c                             |   2 +-
+ net/netfilter/nft_set_pipapo.c                     |  20 +-
+ net/rfkill/core.c                                  |  84 ++++--
+ net/rxrpc/af_rxrpc.c                               |   6 -
+ net/rxrpc/key.c                                    |   2 +-
+ net/rxrpc/server_key.c                             |   3 +
+ net/tipc/group.c                                   |   6 +-
+ net/tls/tls_sw.c                                   |  10 +
+ net/xfrm/xfrm_user.c                               |   3 +
+ security/apparmor/apparmorfs.c                     | 228 ++++++++++-------
+ security/apparmor/include/label.h                  |  16 +-
+ security/apparmor/include/lib.h                    |  12 +
+ security/apparmor/include/match.h                  |   1 +
+ security/apparmor/include/policy.h                 |  13 +-
+ security/apparmor/include/policy_ns.h              |   2 +
+ security/apparmor/include/policy_unpack.h          |  83 +++---
+ security/apparmor/label.c                          |  12 +-
+ security/apparmor/match.c                          |  58 +++--
+ security/apparmor/policy.c                         |  82 +++++-
+ security/apparmor/policy_ns.c                      |   2 +
+ security/apparmor/policy_unpack.c                  |  74 ++++--
+ 65 files changed, 989 insertions(+), 498 deletions(-)
 
 
