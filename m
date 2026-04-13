@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AB323E342;
-	Mon, 13 Apr 2026 16:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F5B314A8E;
+	Mon, 13 Apr 2026 16:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098789; cv=none; b=OnPZRDscG3LJ53InRJdrHey6Suysn8p6k42uUuIkPS/7tYqUT0JMxwZ2QXDo6+0zmc+E5FsCahQcNNbGA/Rzvyx528Y4Fu6sWrCj4//DRkJnfo+wfpar0Y/6I4+JRb2YJRm7VtIQ0vK7z0vPQ/ku+xt3gGisPEELQmuV2w3Dq1s=
+	t=1776098792; cv=none; b=CXz9qu8U/avj0uwV3bVBs42mMheylMOFY0MSV4fvAw04G3prYTtI/U/obEjivtoFO/ukRtWbQA3PlYkqYxribPNFsIpE0v9FmktteeISxy+8PdTlEIeOQN+dh3fcStB7PRMaB6jvq0UEdjUYAHZg7MtzJlcLxuZN54yCOZa23kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098789; c=relaxed/simple;
-	bh=areeWVfemIUJ1/1QQlukiTpTAiLDsiX8KyPuFmLI054=;
+	s=arc-20240116; t=1776098792; c=relaxed/simple;
+	bh=s2OT6gbtK2p2c4QSm1lWKiDIIGLgpMGu9luzSal9MNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ufVZt+7RdsBU0VMWa53eiEjQbggx5P+vJ+DR1oQAC6WkE/3rvt5jTSQ+hSeVgzhYlqKJCBoRSuoKe03/MDq2fkXZx/zA7TVqxKBgUup2AynN1HL7w7CYc4wITdHpTWsryRfVq/dTDXIWSjAmYgyNLVmCvOB8cOPqGxZpsY9gfAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJ8JLryR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MpvHv20fDN2lbj5hyB4AlnqMNx8xq7hMpLEmLdUk9DKOvVlG2tYnCxX/5K46joSeRg50MNil4dlnIeeSW33rEVeK70UV1PCtYlGfaNHoOCdVGj2Ibj0vGBqRxwU12QMU6h6sdvtPNaKO7Kztw/MSpDphg4kJmV+iyiI9W8j/oNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEeYrS2e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJ8JLryR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAA4C2BCB0;
-	Mon, 13 Apr 2026 16:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEeYrS2e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41A6C2BCAF;
+	Mon, 13 Apr 2026 16:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098789;
-	bh=areeWVfemIUJ1/1QQlukiTpTAiLDsiX8KyPuFmLI054=;
+	s=korg; t=1776098792;
+	bh=s2OT6gbtK2p2c4QSm1lWKiDIIGLgpMGu9luzSal9MNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QJ8JLryRahrN6VHY+6hndviSmPE7ReoqQwMyDGwvdlz8lb2YKSxqxdOoXvErtWRXd
-	 dfzBe6HJGeY8Glz7WV8sKtjBwx3korbU/z82V6O/ZmhNcdbyw33bN9ein0Vt4ltKeM
-	 Ha/7RfW2Ordfx2aWpEYeJK3ohLFdUy156cNbaB4E=
+	b=hEeYrS2eiZnfSzBgU3BmPOW4WEOtWLMRZmrkeG4BTrxpKOSDQYAcli38tC3jmthEy
+	 /KRwGC1tfd67Qti4xEjPh2MYQ4lbK267Z/FeqqPUnm5hCSqgOpZWctvV/e7iDqkmdj
+	 a/+WLj8IUnPwoAfKhBl4n4xFJGmpVWA0G1hNKtZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingye Zhao <zhaoqingye@honor.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 5.10 089/491] cgroup: fix race between task migration and iteration
-Date: Mon, 13 Apr 2026 17:55:34 +0200
-Message-ID: <20260413155822.377838845@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 090/491] net: usb: lan78xx: fix silent drop of packets with checksum errors
+Date: Mon, 13 Apr 2026 17:55:35 +0200
+Message-ID: <20260413155822.416268981@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -45,88 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qingye Zhao <zhaoqingye@honor.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 5ee01f1a7343d6a3547b6802ca2d4cdce0edacb1 upstream.
+commit e4f774a0cc955ce762aec91c66915a6e15087ab7 upstream.
 
-When a task is migrated out of a css_set, cgroup_migrate_add_task()
-first moves it from cset->tasks to cset->mg_tasks via:
+Do not drop packets with checksum errors at the USB driver level;
+pass them to the network stack.
 
-    list_move_tail(&task->cg_list, &cset->mg_tasks);
+Previously, the driver dropped all packets where the 'Receive Error
+Detected' (RED) bit was set, regardless of the specific error type. This
+caused packets with only IP or TCP/UDP checksum errors to be dropped
+before reaching the kernel, preventing the network stack from accounting
+for them or performing software fallback.
 
-If a css_task_iter currently has it->task_pos pointing to this task,
-css_set_move_task() calls css_task_iter_skip() to keep the iterator
-valid. However, since the task has already been moved to ->mg_tasks,
-the iterator is advanced relative to the mg_tasks list instead of the
-original tasks list. As a result, remaining tasks on cset->tasks, as
-well as tasks queued on cset->mg_tasks, can be skipped by iteration.
+Add a mask for hard hardware errors to safely drop genuinely corrupt
+frames, while allowing checksum-errored frames to pass with their
+ip_summed field explicitly set to CHECKSUM_NONE.
 
-Fix this by calling css_set_skip_task_iters() before unlinking
-task->cg_list from cset->tasks. This advances all active iterators to
-the next task on cset->tasks, so iteration continues correctly even
-when a task is concurrently being migrated.
-
-This race is hard to hit in practice without instrumentation, but it
-can be reproduced by artificially slowing down cgroup_procs_show().
-For example, on an Android device a temporary
-/sys/kernel/cgroup/cgroup_test knob can be added to inject a delay
-into cgroup_procs_show(), and then:
-
-  1) Spawn three long-running tasks (PIDs 101, 102, 103).
-  2) Create a test cgroup and move the tasks into it.
-  3) Enable a large delay via /sys/kernel/cgroup/cgroup_test.
-  4) In one shell, read cgroup.procs from the test cgroup.
-  5) Within the delay window, in another shell migrate PID 102 by
-     writing it to a different cgroup.procs file.
-
-Under this setup, cgroup.procs can intermittently show only PID 101
-while skipping PID 103. Once the migration completes, reading the
-file again shows all tasks as expected.
-
-Note that this change does not allow removing the existing
-css_set_skip_task_iters() call in css_set_move_task(). The new call
-in cgroup_migrate_add_task() only handles iterators that are racing
-with migration while the task is still on cset->tasks. Iterators may
-also start after the task has been moved to cset->mg_tasks. If we
-dropped css_set_skip_task_iters() from css_set_move_task(), such
-iterators could keep task_pos pointing to a migrating task, causing
-css_task_iter_advance() to malfunction on the destination css_set,
-up to and including crashes or infinite loops.
-
-The race window between migration and iteration is very small, and
-css_task_iter is not on a hot path. In the worst case, when an
-iterator is positioned on the first thread of the migrating process,
-cgroup_migrate_add_task() may have to skip multiple tasks via
-css_set_skip_task_iters(). However, this only happens when migration
-and iteration actually race, so the performance impact is negligible
-compared to the correctness fix provided here.
-
-Fixes: b636fd38dc40 ("cgroup: Implement css_task_iter_skip()")
-Cc: stable@vger.kernel.org # v5.2+
-Signed-off-by: Qingye Zhao <zhaoqingye@honor.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20260305143429.530909-2-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cgroup.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/usb/lan78xx.c |    4 +++-
+ drivers/net/usb/lan78xx.h |    3 +++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -2413,6 +2413,7 @@ static void cgroup_migrate_add_task(stru
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -3279,6 +3279,7 @@ static void lan78xx_rx_csum_offload(stru
+ 	 */
+ 	if (!(dev->net->features & NETIF_F_RXCSUM) ||
+ 	    unlikely(rx_cmd_a & RX_CMD_A_ICSM_) ||
++	    unlikely(rx_cmd_a & RX_CMD_A_CSE_MASK_) ||
+ 	    ((rx_cmd_a & RX_CMD_A_FVTG_) &&
+ 	     !(dev->net->features & NETIF_F_HW_VLAN_CTAG_RX))) {
+ 		skb->ip_summed = CHECKSUM_NONE;
+@@ -3346,7 +3347,8 @@ static int lan78xx_rx(struct lan78xx_net
+ 		size = (rx_cmd_a & RX_CMD_A_LEN_MASK_);
+ 		align_count = (4 - ((size + RXW_PADDING) % 4)) % 4;
  
- 	mgctx->tset.nr_tasks++;
+-		if (unlikely(rx_cmd_a & RX_CMD_A_RED_)) {
++		if (unlikely(rx_cmd_a & RX_CMD_A_RED_) &&
++		    (rx_cmd_a & RX_CMD_A_RX_HARD_ERRS_MASK_)) {
+ 			netif_dbg(dev, rx_err, dev->net,
+ 				  "Error rx_cmd_a=0x%08x", rx_cmd_a);
+ 		} else {
+--- a/drivers/net/usb/lan78xx.h
++++ b/drivers/net/usb/lan78xx.h
+@@ -74,6 +74,9 @@
+ #define RX_CMD_A_ICSM_			(0x00004000)
+ #define RX_CMD_A_LEN_MASK_		(0x00003FFF)
  
-+	css_set_skip_task_iters(cset, task);
- 	list_move_tail(&task->cg_list, &cset->mg_tasks);
- 	if (list_empty(&cset->mg_node))
- 		list_add_tail(&cset->mg_node,
++#define RX_CMD_A_RX_HARD_ERRS_MASK_ \
++	(RX_CMD_A_RX_ERRS_MASK_ & ~RX_CMD_A_CSE_MASK_)
++
+ /* Rx Command B */
+ #define RX_CMD_B_CSUM_SHIFT_		(16)
+ #define RX_CMD_B_CSUM_MASK_		(0xFFFF0000)
 
 
