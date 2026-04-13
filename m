@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C0430EF6B;
-	Mon, 13 Apr 2026 16:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F552311C2F;
+	Mon, 13 Apr 2026 16:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098141; cv=none; b=aZItf5gaF/YLdR1EbDScxbFl4D6G+a+B8Ud92aS35+OnD1DXgn5pOIBWiBEf1/+FrPtUJFysXKbyjDlfD8uPe4BCCtBxvuXdmtxIeTx14GS/V/aqFRX/LdMNumKP8W6Z7u0gf27zH91nrV19yKmtKO3x+2QNEGs/5g5/RsikVbQ=
+	t=1776098143; cv=none; b=ljvSwp/0eLq4R2vP9jELZ6RMr4/La9hSASBJZTh248a9Y3TtcxwByMj4q5rRfmE2Uwec4WN3oV3mPBJ+Q7ow6IVKYj/1Ya4Y8/vooyaw88vQwCXOjzQYu2eazHKa8sVPZFd96Hkdxk/vUQC5xdu3m4xt+xqBrPxGrTJURasNjqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098141; c=relaxed/simple;
-	bh=AgA9ctiQpqUdRdz16LAKaDStF8aNeNVcr6K2xIN3My0=;
+	s=arc-20240116; t=1776098143; c=relaxed/simple;
+	bh=GitkFxv5Vzq0Fjvv5yp4kn1LMNK+iC3FR6iI+PQSfL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhH9sNYbAeKNSsfSWp0P5BNtn8vf01r3BnE02WL9QY7eYZEcK1KKm5frjUVIPoKHf/se36ILY9LNup9zBVQKA8N1S+GxaKP4PsyQI8uDCSiL2zBqo2khrjOBDT6KfoWylRbFGwPA8OQC6x42sPDeM8adCnMRFLCh7BFw5eMd+QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnCeGMei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=otwdx9YpzzgeG7xShOi+UGFsZmP6KjpXkyicHRHWaJxt4gzaraIRHfhNw4LmjbmgaSBPsy4q00p3hAoAGSqXtXBuQVdsXW1dNyarId1pMlKjoyBCpgaMd31VJHsNUS0GciCfainRObMsF4aPbmbUMrh9kzsV6v4ITAFKo8diJWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVXw5ofH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnCeGMei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51683C2BCAF;
-	Mon, 13 Apr 2026 16:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVXw5ofH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFA4C2BCAF;
+	Mon, 13 Apr 2026 16:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098140;
-	bh=AgA9ctiQpqUdRdz16LAKaDStF8aNeNVcr6K2xIN3My0=;
+	s=korg; t=1776098143;
+	bh=GitkFxv5Vzq0Fjvv5yp4kn1LMNK+iC3FR6iI+PQSfL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnCeGMei4eWTRFneaoAvDkuqjLGm4Rcg5OoFf2XpXSTE12HD1LX9Hc2YcyLt6oZu2
-	 Xk4lZ9mtJlq/WQtnJU0UxIdRyXGJIgkDr1cizjdnX1ogcAZWyBh4txJC1nxqk5PnM1
-	 0J7bCXOpS1mYlzdYGtdq+B89G10JdwYQ7hzk/PV8=
+	b=iVXw5ofHVOccv4hZjcdRYvw2S8/ihptKEqmB+nDN9fc2gSP5n8ZNRKqukXldkrpMe
+	 Do8LXE8MqzAK+cZu+b4pD8ykxDIQr1HeI8S4g2lTWzuews94eBmtQdFAi7bwTAQrGQ
+	 TXgrfZB4ZpT6FpDgJ6qe7lSLjuvqeq6C9UpE3liU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 402/570] HID: multitouch: Check to ensure report responses match the request
-Date: Mon, 13 Apr 2026 17:58:53 +0200
-Message-ID: <20260413155845.528734014@linuxfoundation.org>
+Subject: [PATCH 5.15 411/570] bridge: br_nd_send: linearize skb before parsing ND options
+Date: Mon, 13 Apr 2026 17:59:02 +0200
+Message-ID: <20260413155845.864106207@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,49 +57,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-[ Upstream commit e716edafedad4952fe3a4a273d2e039a84e8681a ]
+[ Upstream commit a01aee7cafc575bb82f5529e8734e7052f9b16ea ]
 
-It is possible for a malicious (or clumsy) device to respond to a
-specific report's feature request using a completely different report
-ID.  This can cause confusion in the HID core resulting in nasty
-side-effects such as OOB writes.
+br_nd_send() parses neighbour discovery options from ns->opt[] and
+assumes that these options are in the linear part of request.
 
-Add a check to ensure that the report ID in the response, matches the
-one that was requested.  If it doesn't, omit reporting the raw event and
-return early.
+Its callers only guarantee that the ICMPv6 header and target address
+are available, so the option area can still be non-linear. Parsing
+ns->opt[] in that case can access data past the linear buffer.
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Linearize request before option parsing and derive ns from the linear
+network header.
+
+Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
+Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260326034441.2037420-2-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bridge/br_arp_nd_proxy.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 30769b37aabe7..7a092a2a1bf00 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -472,12 +472,19 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
- 		dev_warn(&hdev->dev, "failed to fetch feature %d\n",
- 			 report->id);
- 	} else {
-+		/* The report ID in the request and the response should match */
-+		if (report->id != buf[0]) {
-+			hid_err(hdev, "Returned feature report did not match the request\n");
-+			goto free;
-+		}
-+
- 		ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, buf,
- 					   size, 0);
- 		if (ret)
- 			dev_warn(&hdev->dev, "failed to report feature\n");
- 	}
+diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
+index 3db1def4437b3..a44d14b94865e 100644
+--- a/net/bridge/br_arp_nd_proxy.c
++++ b/net/bridge/br_arp_nd_proxy.c
+@@ -248,12 +248,12 @@ struct nd_msg *br_is_nd_neigh_msg(struct sk_buff *skb, struct nd_msg *msg)
  
-+free:
- 	kfree(buf);
- }
+ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
+ 		       struct sk_buff *request, struct neighbour *n,
+-		       __be16 vlan_proto, u16 vlan_tci, struct nd_msg *ns)
++		       __be16 vlan_proto, u16 vlan_tci)
+ {
+ 	struct net_device *dev = request->dev;
+ 	struct net_bridge_vlan_group *vg;
++	struct nd_msg *na, *ns;
+ 	struct sk_buff *reply;
+-	struct nd_msg *na;
+ 	struct ipv6hdr *pip6;
+ 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
+ 	int ns_olen;
+@@ -261,7 +261,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
+ 	u8 *daddr;
+ 	u16 pvid;
+ 
+-	if (!dev)
++	if (!dev || skb_linearize(request))
+ 		return;
+ 
+ 	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
+@@ -278,6 +278,8 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
+ 	skb_set_mac_header(reply, 0);
+ 
+ 	daddr = eth_hdr(request)->h_source;
++	ns = (struct nd_msg *)(skb_network_header(request) +
++			       sizeof(struct ipv6hdr));
+ 
+ 	/* Do we need option processing ? */
+ 	ns_olen = request->len - (skb_network_offset(request) +
+@@ -465,9 +467,9 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
+ 				if (vid != 0)
+ 					br_nd_send(br, p, skb, n,
+ 						   skb->vlan_proto,
+-						   skb_vlan_tag_get(skb), msg);
++						   skb_vlan_tag_get(skb));
+ 				else
+-					br_nd_send(br, p, skb, n, 0, 0, msg);
++					br_nd_send(br, p, skb, n, 0, 0);
+ 				replied = true;
+ 			}
  
 -- 
 2.53.0
