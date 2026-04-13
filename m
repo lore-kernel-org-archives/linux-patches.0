@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6FE27466A;
-	Mon, 13 Apr 2026 16:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A24A2EB5BA;
+	Mon, 13 Apr 2026 16:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096748; cv=none; b=h1Fn6JV84LRMa1Yi3imGM5jrCqBZWZDbx5z2ji5XxS7LNj/z/ov1TIaK9qsb7LSZZtgf0QfPNeOERhZruDyrQJY/CRxbdhcZPNtqHQJXz09b+NRhTuNeVYwvYYN010dnVYtkI95iq+jVxry0fhc4+5KV4orOFSkEA9+75JMB+vw=
+	t=1776096751; cv=none; b=p7irF0+XpWKZqGvkn4DYqlKWjW1+tbUNXaZ4ZHHE+MKq5eK0tXbpXHzHVa4AldaD03xpqhzQV1yFi55clD9cLlNIlq7zO/iZWZIVG5dbY3FphYTyEawT/7ZmXr2YmKskUuObqT1ZLaJmwBTBY1DsNHNWkJhWSYoAY05rf9X1xas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096748; c=relaxed/simple;
-	bh=Hx5vWiUXALgzAO3mnPYy41ph4Zy9F2dJrfQ1uvKXJVw=;
+	s=arc-20240116; t=1776096751; c=relaxed/simple;
+	bh=sCVpTKUxYSPMgPJKQq2LwyySuxr0K/mbhvfej3OySOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/FvgeX0yaAXBkKJ1A3r0pebtnZdlBZRQBD7xujqnwW80YPTsws4AaP/1WutiHes2OUG5nf2D/ZcA7gTUVnwN5F9td9e39luNlZE1eGCQ/VnGJToWczGtisk3QDwOAYRoGQXFoNUH98gLRDZeA/YsGNpuSnFjF/42U8ZtjW2c+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrpRK2+S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMTtLoWv9klR80huu5N7v7YA7e/R2r99EwHHCwL3dJOUKGTPkCWGr69HEM1NxOmDK/6qBN1JVy3LZN8tMojFmdcm7YxYfcB/5KIHfak2ZVnVnsuqODoKPeco8P3xX3e17vm0tqmTGH2mY1Ayuuat7q4pWRubi+mdqg+XH8IUANM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NdeYLVt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrpRK2+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73ECDC2BCB4;
-	Mon, 13 Apr 2026 16:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NdeYLVt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087A4C2BCB0;
+	Mon, 13 Apr 2026 16:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096748;
-	bh=Hx5vWiUXALgzAO3mnPYy41ph4Zy9F2dJrfQ1uvKXJVw=;
+	s=korg; t=1776096751;
+	bh=sCVpTKUxYSPMgPJKQq2LwyySuxr0K/mbhvfej3OySOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qrpRK2+S6E1Lvh7lpg7256WACVxzwfkfU9oPiCiwdCkPvkA33jTwdWT/e3qZpzeTe
-	 c9lZZw98Ic6IzSyXHSV775cX9lliFJaYNXNR/b9lC+AilQcrHMdzfSyp42H/VHIV4h
-	 zcoZkN3//3/cCLtn43KRGoQXBSGkErJmoWG6IsQc=
+	b=2NdeYLVtsUaNnXf9LH2Eo9gw2OgbheKxfs1Jxueob/d/nA1RT2n1zHuIRMjwOPKC+
+	 SgH6z9x9Wnrn7Dmyq8n7KkmgsqnVm2pqiFLYx/vHO6A0Dw7fD5vNZfSoez69dedDUJ
+	 gEulh95Y+ixAIfrLxQ3VwdiQ/+HqUzCIq+siXG3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 46/70] net: altera-tse: fix skb leak on DMA mapping error in tse_start_xmit()
-Date: Mon, 13 Apr 2026 18:00:41 +0200
-Message-ID: <20260413155729.904145155@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Haoze Xie <royenheart@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 6.12 47/70] batman-adv: hold claim backbone gateways by reference
+Date: Mon, 13 Apr 2026 18:00:42 +0200
+Message-ID: <20260413155729.942540732@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -50,36 +56,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Haoze Xie <royenheart@gmail.com>
 
-commit 6dede3967619b5944003227a5d09fdc21ed57d10 upstream.
+commit 82d8701b2c930d0e96b0dbc9115a218d791cb0d2 upstream.
 
-When dma_map_single() fails in tse_start_xmit(), the function returns
-NETDEV_TX_OK without freeing the skb. Since NETDEV_TX_OK tells the
-stack the packet was consumed, the skb is never freed, leaking memory
-on every DMA mapping failure.
+batadv_bla_add_claim() can replace claim->backbone_gw and drop the old
+gateway's last reference while readers still follow the pointer.
 
-Add dev_kfree_skb_any() before returning to properly free the skb.
+The netlink claim dump path dereferences claim->backbone_gw->orig and
+takes claim->backbone_gw->crc_lock without pinning the underlying
+backbone gateway. batadv_bla_check_claim() still has the same naked
+pointer access pattern.
 
-Fixes: bbd2190ce96d ("Altera TSE: Add main and header file for Altera Ethernet Driver")
+Reuse batadv_bla_claim_get_backbone_gw() in both readers so they operate
+on a stable gateway reference until the read-side work is complete.
+This keeps the dump and claim-check paths aligned with the lifetime
+rules introduced for the other BLA claim readers.
+
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+Fixes: 04f3f5bf1883 ("batman-adv: add B.A.T.M.A.N. Dump BLA claims via netlink")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Link: https://patch.msgid.link/20260401211218.279185-1-devnexen@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Haoze Xie <royenheart@gmail.com>
+Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/altera/altera_tse_main.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/batman-adv/bridge_loop_avoidance.c |   27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
---- a/drivers/net/ethernet/altera/altera_tse_main.c
-+++ b/drivers/net/ethernet/altera/altera_tse_main.c
-@@ -572,6 +572,7 @@ static netdev_tx_t tse_start_xmit(struct
- 				  DMA_TO_DEVICE);
- 	if (dma_mapping_error(priv->device, dma_addr)) {
- 		netdev_err(priv->dev, "%s: DMA mapping error\n", __func__);
-+		dev_kfree_skb_any(skb);
- 		ret = NETDEV_TX_OK;
- 		goto out;
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -2132,6 +2132,7 @@ batadv_bla_claim_dump_entry(struct sk_bu
+ 			    struct batadv_bla_claim *claim)
+ {
+ 	const u8 *primary_addr = primary_if->net_dev->dev_addr;
++	struct batadv_bla_backbone_gw *backbone_gw;
+ 	u16 backbone_crc;
+ 	bool is_own;
+ 	void *hdr;
+@@ -2147,32 +2148,35 @@ batadv_bla_claim_dump_entry(struct sk_bu
+ 
+ 	genl_dump_check_consistent(cb, hdr);
+ 
+-	is_own = batadv_compare_eth(claim->backbone_gw->orig,
+-				    primary_addr);
++	backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
++
++	is_own = batadv_compare_eth(backbone_gw->orig, primary_addr);
+ 
+-	spin_lock_bh(&claim->backbone_gw->crc_lock);
+-	backbone_crc = claim->backbone_gw->crc;
+-	spin_unlock_bh(&claim->backbone_gw->crc_lock);
++	spin_lock_bh(&backbone_gw->crc_lock);
++	backbone_crc = backbone_gw->crc;
++	spin_unlock_bh(&backbone_gw->crc_lock);
+ 
+ 	if (is_own)
+ 		if (nla_put_flag(msg, BATADV_ATTR_BLA_OWN)) {
+ 			genlmsg_cancel(msg, hdr);
+-			goto out;
++			goto put_backbone_gw;
+ 		}
+ 
+ 	if (nla_put(msg, BATADV_ATTR_BLA_ADDRESS, ETH_ALEN, claim->addr) ||
+ 	    nla_put_u16(msg, BATADV_ATTR_BLA_VID, claim->vid) ||
+ 	    nla_put(msg, BATADV_ATTR_BLA_BACKBONE, ETH_ALEN,
+-		    claim->backbone_gw->orig) ||
++		    backbone_gw->orig) ||
+ 	    nla_put_u16(msg, BATADV_ATTR_BLA_CRC,
+ 			backbone_crc)) {
+ 		genlmsg_cancel(msg, hdr);
+-		goto out;
++		goto put_backbone_gw;
  	}
+ 
+ 	genlmsg_end(msg, hdr);
+ 	ret = 0;
+ 
++put_backbone_gw:
++	batadv_backbone_gw_put(backbone_gw);
+ out:
+ 	return ret;
+ }
+@@ -2468,6 +2472,7 @@ out:
+ bool batadv_bla_check_claim(struct batadv_priv *bat_priv,
+ 			    u8 *addr, unsigned short vid)
+ {
++	struct batadv_bla_backbone_gw *backbone_gw;
+ 	struct batadv_bla_claim search_claim;
+ 	struct batadv_bla_claim *claim = NULL;
+ 	struct batadv_hard_iface *primary_if = NULL;
+@@ -2490,9 +2495,13 @@ bool batadv_bla_check_claim(struct batad
+ 	 * return false.
+ 	 */
+ 	if (claim) {
+-		if (!batadv_compare_eth(claim->backbone_gw->orig,
++		backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
++
++		if (!batadv_compare_eth(backbone_gw->orig,
+ 					primary_if->net_dev->dev_addr))
+ 			ret = false;
++
++		batadv_backbone_gw_put(backbone_gw);
+ 		batadv_claim_put(claim);
+ 	}
+ 
 
 
