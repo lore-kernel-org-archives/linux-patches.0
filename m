@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5661D280CFB;
-	Mon, 13 Apr 2026 16:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1AC1D5AD4;
+	Mon, 13 Apr 2026 16:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098401; cv=none; b=CRFsbAWWlXQSFA325XowjQpTyp7tU4zOdMhcE7L3JJ1sZvy/aEqwseXJ/Q3vMCm43A87yrGsHH8fbT/+vlqWv/cLICUAqiJYPurCpy25asI+D3fboUhXlYWlFoelNQsbUQ77gwnlxetPChfd529UTzcUSLTJ36+FA0a8XjgrSXA=
+	t=1776098403; cv=none; b=K9mFAfWgRSVhJiEsglNnJyOc28QMtjY9ba0lnRynZj5MQophhtsFGWPiVkHwyTmNJN2afBtYlVyBqThTleSfzAmLTckFZpixZ8Mw8iTl3Wh/0LEhu9XdwJ3l57IwbeBtaKL/OhZFYElJ1jXojEUikql1zGqIEozhnaNyeEIOmsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098401; c=relaxed/simple;
-	bh=K93ZGlO0rUn7OaOFel7iC0Nc63Ag+s25HuOv2YRsViE=;
+	s=arc-20240116; t=1776098403; c=relaxed/simple;
+	bh=ngOFs/hB+ci0+ngNjrw3tieQCfUNxlvXp3xoVoub54g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mejZlbehMUsEPdiAe95/l1IAqCCpD8OL9yHtONhhx6i3ZYU/fcdVSn1oKXviHSzj6terzhSQIN9UQws8MJOvvt2tTBN8wxJEAnH9ZSVotKZRAiSn5ytcqkD2450k/JVgCD2U29BcyszChNNOmKmDDs+mXoIDDApgMeCz3vTNXz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypOU2hof; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DcOiSoYgwMekYiyYrPn8TruLQ0vxC3/08DoqEWCd+ZIR++oxgqHaLqY8nJKF5bfQLOTsBAsUyRLE3km5kPAiQMlB90/VLt40yghfxjDWxLDQVHHOSu49ltdU6VKQVbDecLi/Df8uPpSrOq8iFA/+HeX3HxPYEZPPKo/HXZwmxmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqIC8E6n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypOU2hof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FD1C2BCAF;
-	Mon, 13 Apr 2026 16:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqIC8E6n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74434C2BCAF;
+	Mon, 13 Apr 2026 16:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098401;
-	bh=K93ZGlO0rUn7OaOFel7iC0Nc63Ag+s25HuOv2YRsViE=;
+	s=korg; t=1776098403;
+	bh=ngOFs/hB+ci0+ngNjrw3tieQCfUNxlvXp3xoVoub54g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ypOU2hofNqFgimrh7nqrIsdCx+lmpsn+h1JY1IlEakvLNU/TskJu0c4dWtQiWXkqe
-	 PkS0kYyXhuc1VKDuuG1yAYzg6Kh0MR90BER/5LGTcUbp51Au3WPZLruL9BzYpjnQ+1
-	 FBiV3Iqhr2yDwL+30yVTMUZhKSYwzbKMEodT+CW8=
+	b=mqIC8E6nkdH8qS4tD98xVHnIjmMJfQg0NuKLwTIcy46gT0QPBzYKN5/Hc5jVs/6GD
+	 XN3nWICDCDA7vvupMucEAcx97Fv66Y7WdmiewSYSfSd7j/V9i7UCRL8sEDNUsquCJV
+	 bcL2dgTTdPNoVJylJhc3c4BiPV1uogP7nH2gSgLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 478/570] bridge: br_nd_send: validate ND option lengths
-Date: Mon, 13 Apr 2026 18:00:09 +0200
-Message-ID: <20260413155848.367971664@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 479/570] cdc-acm: new quirk for EPSON HMD
+Date: Mon, 13 Apr 2026 18:00:10 +0200
+Message-ID: <20260413155848.404883099@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -56,54 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 850837965af15707fd3142c1cf3c5bfaf022299b upstream.
+commit f97e96c303d689708f7f713d8f3afcc31f1237e9 upstream.
 
-br_nd_send() walks ND options according to option-provided lengths.
-A malformed option can make the parser advance beyond the computed
-option span or use a too-short source LLADDR option payload.
+This device has a union descriptor that is just garbage
+and needs a custom descriptor.
+In principle this could be done with a (conditionally
+activated) heuristic. That would match more devices
+without a need for defining a new quirk. However,
+this always carries the risk that the heuristics
+does the wrong thing and leads to more breakage.
+Defining the quirk and telling it exactly what to do
+is the safe and conservative approach.
 
-Validate option lengths against the remaining NS option area before
-advancing, and only read source LLADDR when the option is large enough
-for an Ethernet address.
-
-Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
-Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
-Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260326034441.2037420-3-n05ec@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260317084139.1461008-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_arp_nd_proxy.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/class/cdc-acm.c |    9 +++++++++
+ drivers/usb/class/cdc-acm.h |    1 +
+ 2 files changed, 10 insertions(+)
 
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -285,12 +285,14 @@ static void br_nd_send(struct net_bridge
- 	ns_olen = request->len - (skb_network_offset(request) +
- 				  sizeof(struct ipv6hdr)) - sizeof(*ns);
- 	for (i = 0; i < ns_olen - 1; i += (ns->opt[i + 1] << 3)) {
--		if (!ns->opt[i + 1]) {
-+		if (!ns->opt[i + 1] || i + (ns->opt[i + 1] << 3) > ns_olen) {
- 			kfree_skb(reply);
- 			return;
- 		}
- 		if (ns->opt[i] == ND_OPT_SOURCE_LL_ADDR) {
--			daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
-+			if ((ns->opt[i + 1] << 3) >=
-+			    sizeof(struct nd_opt_hdr) + ETH_ALEN)
-+				daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
- 			break;
- 		}
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1205,6 +1205,12 @@ static int acm_probe(struct usb_interfac
+ 		if (!data_interface || !control_interface)
+ 			return -ENODEV;
+ 		goto skip_normal_probe;
++	} else if (quirks == NO_UNION_12) {
++		data_interface = usb_ifnum_to_if(usb_dev, 2);
++		control_interface = usb_ifnum_to_if(usb_dev, 1);
++		if (!data_interface || !control_interface)
++			 return -ENODEV;
++		goto skip_normal_probe;
  	}
+ 
+ 	/* normal probing*/
+@@ -1733,6 +1739,9 @@ static const struct usb_device_id acm_id
+ 	{ USB_DEVICE(0x045b, 0x024D),	/* Renesas R-Car E3 USB Download mode */
+ 	.driver_info = DISABLE_ECHO,	/* Don't echo banner */
+ 	},
++	{ USB_DEVICE(0x04b8, 0x0d12),	/* EPSON HMD Com&Sens */
++	.driver_info = NO_UNION_12,	/* union descriptor is garbage */
++	},
+ 	{ USB_DEVICE(0x0e8d, 0x0003), /* FIREFLY, MediaTek Inc; andrey.arapov@gmail.com */
+ 	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
+ 	},
+--- a/drivers/usb/class/cdc-acm.h
++++ b/drivers/usb/class/cdc-acm.h
+@@ -142,3 +142,4 @@ struct acm {
+ #define SEND_ZERO_PACKET		BIT(6)
+ #define DISABLE_ECHO			BIT(7)
+ #define MISSING_CAP_BRK			BIT(8)
++#define NO_UNION_12			BIT(9)
 
 
