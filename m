@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CFA24DCF6;
-	Mon, 13 Apr 2026 16:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0252E2E11B9;
+	Mon, 13 Apr 2026 16:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097538; cv=none; b=kN4i9w+GbMr6n6F5nI/+2Ckhv6Up6YR3t6fel98uo5Tm9FTeN2sXi0OAOswv1lWT3jJlrDw7zdSbTf2A4eL1pt9tbllemCowQJOGuNpx5ypTZ6fkWwGrZpbscmfpPuAMjcIXFuHJGBMqgYJVyoZVdXmCCx2HjqV+z4PfxfZ7GG4=
+	t=1776097541; cv=none; b=Dl1eDQPCLJeb/qh5XryOm2CL8PyHLQr0YghoFbJZOjLNFOvbGg4OhNaZ9ODCK0+2Pi6f73tg2BG0ahplPnoHQKuDxeN+ufQFJIRu6u5NGuxyr4pBf2Bgm3BRRk8G8PZva/3Galg0uiMNzXTsNg7KjOxcEF4rxRfzMi/vzXV4CWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097538; c=relaxed/simple;
-	bh=QpR0Q3kibLprz9XlSjVkh4aLV0W1IJYRxhAnTKKkjpo=;
+	s=arc-20240116; t=1776097541; c=relaxed/simple;
+	bh=KpEf4MZR/3yvNHDNguCDoSwQXN35290e7jg9rdzSFOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XxlK8E43O2dVJPgULEv0boF3XNuo7ctgFGA3Vh6y02GWLnXhbVQ5Fm59sY7gbqRUOHFXI0aimLVx7UHc3hgxjF1dN+5yZ1C5bYl2QAglrUhCmCpKyI+v+74SspKA/rhuQaFE9cL3pWhigRx8QF2dBcoDRNue7ogC1IgCjKXfvds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgCi33pt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ESFQ9lf1usYQH/ZqSXulyRCpI1X54H13amqYx4kJN5hcLTs1hU3m4hmbfpfb3oFmOSjt2kWZd3FvjzS3hfBlAz1w/mNJ6Aj6mRCHlnrN/LSEmayKBUy2uNl00NsLwMRYxWa+CgQw5ubLFZrbaBINOuNfWg2G6+pwpBVmkd/u9uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxadQttD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgCi33pt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C035BC2BCB3;
-	Mon, 13 Apr 2026 16:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxadQttD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52603C2BCB0;
+	Mon, 13 Apr 2026 16:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097538;
-	bh=QpR0Q3kibLprz9XlSjVkh4aLV0W1IJYRxhAnTKKkjpo=;
+	s=korg; t=1776097540;
+	bh=KpEf4MZR/3yvNHDNguCDoSwQXN35290e7jg9rdzSFOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgCi33pthZQtZJc6Aq2CNimLGf6L1v3YrBM3Zlqq4WXCmQxHLUbygEumgJ5o3ooEZ
-	 2/hWhbkfH/Q72ZMn36pA3lsZAywNhcvXGAeo+H2c6F1CDMqjneffjLOkhCBV+0QsoC
-	 XdE1qW+PG0ZPaOP2s//adPuHAmTE44NgJ/I7W/dg=
+	b=gxadQttD/i/eWwNkovWMprxonWOOCzk8V21cQosnA48J/QxesWNmef2VeH3sJE0qt
+	 k8KgyVJRB+a99SI5xT2Qiq73iv6c/USWKFtjuvmn2K4GPO7TtWrevueBPkzFOec1XB
+	 xsYlDxuqP2YhgVFwGLIwbiZxgGyuQrsk1uGtWUMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Josh Law <objecting@objecting.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 158/570] time/jiffies: Mark jiffies_64_to_clock_t() notrace
-Date: Mon, 13 Apr 2026 17:54:49 +0200
-Message-ID: <20260413155836.370935549@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 176/570] lib/bootconfig: fix off-by-one in xbc_verify_tree() unclosed brace error
+Date: Mon, 13 Apr 2026 17:55:07 +0200
+Message-ID: <20260413155837.050067189@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,39 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Josh Law <objecting@objecting.org>
 
-[ Upstream commit 755a648e78f12574482d4698d877375793867fa1 ]
+commit 39ebc8d7f561e1b64eca87353ef9b18e2825e591 upstream.
 
-The trace_clock_jiffies() function that handles the "uptime" clock for
-tracing calls jiffies_64_to_clock_t(). This causes the function tracer to
-constantly recurse when the tracing clock is set to "uptime". Mark it
-notrace to prevent unnecessary recursion when using the "uptime" clock.
+__xbc_open_brace() pushes entries with post-increment
+(open_brace[brace_index++]), so brace_index always points one past
+the last valid entry.  xbc_verify_tree() reads open_brace[brace_index]
+to report which brace is unclosed, but this is one past the last
+pushed entry and contains stale/zero data, causing the error message
+to reference the wrong node.
 
-Fixes: 58d4e21e50ff3 ("tracing: Fix wraparound problems in "uptime" trace clock")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260306212403.72270bb2@robin
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Use open_brace[brace_index - 1] to correctly identify the unclosed
+brace.  brace_index is known to be > 0 here since we are inside the
+if (brace_index) guard.
+
+Link: https://lore.kernel.org/all/20260312191143.28719-2-objecting@objecting.org/
+
+Fixes: ead1e19ad905 ("lib/bootconfig: Fix a bug of breaking existing tree nodes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Josh Law <objecting@objecting.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/time.c | 2 +-
+ lib/bootconfig.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/time.c b/kernel/time/time.c
-index 50390158e9d97..df582f24f0d7b 100644
---- a/kernel/time/time.c
-+++ b/kernel/time/time.c
-@@ -702,7 +702,7 @@ EXPORT_SYMBOL(clock_t_to_jiffies);
-  *
-  * Return: jiffies_64 value converted to 64-bit "clock_t" (CLOCKS_PER_SEC)
-  */
--u64 jiffies_64_to_clock_t(u64 x)
-+notrace u64 jiffies_64_to_clock_t(u64 x)
- {
- #if (TICK_NSEC % (NSEC_PER_SEC / USER_HZ)) == 0
- # if HZ < USER_HZ
--- 
-2.51.0
-
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -725,7 +725,7 @@ static int __init xbc_verify_tree(void)
+ 
+ 	/* Brace closing */
+ 	if (brace_index) {
+-		n = &xbc_nodes[open_brace[brace_index]];
++		n = &xbc_nodes[open_brace[brace_index - 1]];
+ 		return xbc_parse_error("Brace is not closed",
+ 					xbc_node_get_data(n));
+ 	}
 
 
