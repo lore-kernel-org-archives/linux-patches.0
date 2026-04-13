@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119723164BB;
-	Mon, 13 Apr 2026 16:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F73314D0D;
+	Mon, 13 Apr 2026 16:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098939; cv=none; b=eBZZo07m3lXVM131HXLYkGK1yKCS2Y4aaFnmaSM3pPaHZVGtX27f1C1axmllxhjhvsRgnQkA/qmP8AqUVzc5wmDXzxSM4CXHvYTUB7/bRvo0j5tgGShOf51unXMVYFNyfPy4dtbfJQgdSiNgvcFo+031/WdqPM2IqxNylQ55DVc=
+	t=1776098941; cv=none; b=SSFmfuwcqs9qrUYASwFDTROqpwMNiOpS32aBIQU4DU6Exp3Un+7dPzYUCdu2Ryij3BQ5y0jCzi6yCf22DxGct753dNWs9fcalVqBY79z9f07MktjlOi/dDqXCukQ1A/dZNNd1aNFFb1/9PBmZjw5dnXBDjF9lbPkAvHhyZy81Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098939; c=relaxed/simple;
-	bh=qa27mWJRGBgCKTxaRqKncRLXCeitxf1QUjldlvVOnww=;
+	s=arc-20240116; t=1776098941; c=relaxed/simple;
+	bh=Gcd/LCzIkpi5XZEtRXhdFUBVp6M0TBjUvo+1sXc9T1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mB9fKvpc43GD8T4xZ6yKNrX46eBdLzBclj6lnjYT3yByDe+Ti6iRbUcP+AZ+kDUcnA9UhUauCmMA03+H0DvfOQG6tA2PtN7EVy20DKR5t1gINrBv88YixtjPxsMj7l0zhmzRfvpLa8nPgAjrppvLNnbeo0zaQP8HSk2BeVkbmKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fX3g70G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l4xv0l9+xuodaBUvkXqmLHaRiKTMjLgwFdfQx5HUXAtpWYFJN+159xZ5OuEm5u+IcDT+EV8g2psgOEcWNN8YhN0pycgOjsoZFcjngXqV9ybyPMRmotgEeH7+PAWxHpQddb0DKBNXv2kvCCcNf+C+ueAAp5kMXBLpGlifb93eKIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2s7ZaFGM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fX3g70G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DA5C2BCAF;
-	Mon, 13 Apr 2026 16:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2s7ZaFGM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39FB8C2BCAF;
+	Mon, 13 Apr 2026 16:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098938;
-	bh=qa27mWJRGBgCKTxaRqKncRLXCeitxf1QUjldlvVOnww=;
+	s=korg; t=1776098941;
+	bh=Gcd/LCzIkpi5XZEtRXhdFUBVp6M0TBjUvo+1sXc9T1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2fX3g70G8Qtgjg6zazOZtOO0dXAQtlqXKk49KHFgXI2VNNPNrE/eRrzDfi5wHuGP5
-	 BJ1uAhuceTq5+1e6HJ+B27EAmeglgt1WZxkZS7gmbKwsaYmmXMNk/N2Y2ShioI2dCP
-	 WbF/SMFI++yIvV51GXrp7WPRk5X5/YOrDV/lQXro=
+	b=2s7ZaFGMNePpu33Hf9at60Wvvp5Qp2U5RDMBpy59PzjN4gVDQWxHE9/p6Pbs0qmvQ
+	 E03WHa69HuzR36Blwzg273z2YVxdZ+bxgOuXBAEPWwr6jUOw70nTMDYCHRkKl6WAah
+	 vUp6nT8VTBtk1KrRzHOGynFe/hvRwtx5z9RABgMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Ray <ian.ray@gehealthcare.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 140/491] NFC: nxp-nci: allow GPIOs to sleep
-Date: Mon, 13 Apr 2026 17:56:25 +0200
-Message-ID: <20260413155824.280258517@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Raul E Rangel <rrangel@google.com>
+Subject: [PATCH 5.10 149/491] serial: 8250: Fix TX deadlock when using DMA
+Date: Mon, 13 Apr 2026 17:56:34 +0200
+Message-ID: <20260413155824.611612155@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,41 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Ray <ian.ray@gehealthcare.com>
+From: Raul E Rangel <rrangel@chromium.org>
 
-commit 55dc632ab2ac2889b15995a9eef56c753d48ebc7 upstream.
+commit a424a34b8faddf97b5af41689087e7a230f79ba7 upstream.
 
-Allow the firmware and enable GPIOs to sleep.
+`dmaengine_terminate_async` does not guarantee that the
+`__dma_tx_complete` callback will run. The callback is currently the
+only place where `dma->tx_running` gets cleared. If the transaction is
+canceled and the callback never runs, then `dma->tx_running` will never
+get cleared and we will never schedule new TX DMA transactions again.
 
-This fixes a `WARN_ON' and allows the driver to operate GPIOs which are
-connected to I2C GPIO expanders.
+This change makes it so we clear `dma->tx_running` after we terminate
+the DMA transaction. This is "safe" because `serial8250_tx_dma_flush`
+is holding the UART port lock. The first thing the callback does is also
+grab the UART port lock, so access to `dma->tx_running` is serialized.
 
--- >8 --
-kernel: WARNING: CPU: 3 PID: 2636 at drivers/gpio/gpiolib.c:3880 gpiod_set_value+0x88/0x98
--- >8 --
-
-Fixes: 43201767b44c ("NFC: nxp-nci: Convert to use GPIO descriptor")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
-Link: https://patch.msgid.link/20260317085337.146545-1-ian.ray@gehealthcare.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9e512eaaf8f4 ("serial: 8250: Fix fifo underflow on flush")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Raul E Rangel <rrangel@google.com>
+Link: https://patch.msgid.link/20260209135815.1.I16366ecb0f62f3c96fe3dd5763fcf6f3c2b4d8cd@changeid
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/nxp-nci/i2c.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_dma.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/nfc/nxp-nci/i2c.c
-+++ b/drivers/nfc/nxp-nci/i2c.c
-@@ -47,8 +47,8 @@ static int nxp_nci_i2c_set_mode(void *ph
- {
- 	struct nxp_nci_i2c_phy *phy = (struct nxp_nci_i2c_phy *) phy_id;
+--- a/drivers/tty/serial/8250/8250_dma.c
++++ b/drivers/tty/serial/8250/8250_dma.c
+@@ -148,7 +148,22 @@ void serial8250_tx_dma_flush(struct uart
+ 	 */
+ 	dma->tx_size = 0;
  
--	gpiod_set_value(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
--	gpiod_set_value(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
-+	gpiod_set_value_cansleep(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
-+	gpiod_set_value_cansleep(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
- 	usleep_range(10000, 15000);
++	/*
++	 * We can't use `dmaengine_terminate_sync` because `uart_flush_buffer` is
++	 * holding the uart port spinlock.
++	 */
+ 	dmaengine_terminate_async(dma->txchan);
++
++	/*
++	 * The callback might or might not run. If it doesn't run, we need to ensure
++	 * that `tx_running` is cleared so that we can schedule new transactions.
++	 * If it does run, then the zombie callback will clear `tx_running` again
++	 * and perform a no-op since `tx_size` was cleared above.
++	 *
++	 * In either case, we ASSUME the DMA transaction will terminate before we
++	 * issue a new `serial8250_tx_dma`.
++	 */
++	dma->tx_running = 0;
+ }
  
- 	if (mode == NXP_NCI_MODE_COLD)
+ int serial8250_rx_dma(struct uart_8250_port *p)
 
 
