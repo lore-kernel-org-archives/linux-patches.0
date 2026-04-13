@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A70730F52B;
-	Mon, 13 Apr 2026 16:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3EA2BEC3F;
+	Mon, 13 Apr 2026 16:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098676; cv=none; b=pfVJVaLu1+bJog0o0i4AXixhd2rjKFPGWqBG8hXwFa1YVD3RQIZAkgcCvr+C4JfDgsZaVkdE9gMDVFJfe5zcZ/ANhuHbjGZ1P4iZdZL/n40D79wqQPPR97R1WV6GFjHijWDm/ljHJQehhQ8pHqAIWUJ1aruX+4Bpo2IeIs2ujZ4=
+	t=1776098679; cv=none; b=NCCVZR1rSmetks8MdG4tOA2ucZcV3Dk9ANuQc+Snm9F+9FeWsopqFEcI1hl2o7k2dLR4GjWGh8IHN+Sd1DauGETCHbJz0SdQemYUWCcN45z1xeF0k2fp3cSfql5BmjBx7fmnMCBIEGlVpvachPOWca8tZ8cXVv+W/EHn1uedBHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098676; c=relaxed/simple;
-	bh=RYuiDmMg3E6lbfrLZPdQt0AgnbVGcXvolmrjL+A/MIs=;
+	s=arc-20240116; t=1776098679; c=relaxed/simple;
+	bh=9IPG6/EeMsdkXFZOxD7NV2VV4IzELnKflTzYI0Wa2zM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RP0iierHAAjFJGl30APPkx4ssz109JrDtnJurltYfH+znUj5ujaGkDsei9HKCIYMD+HqRwEAX3qLwOoUNtxpPYFxWRfFdy6ybIr0MQM215N6ObeLYEW1GA5/KWjJX+3bckaF2ZCRB/N6SCNzTCtQxP1L4shp0eqIXneKaanG138=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/aFSwAY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BuyYAPtR9M2qlrZcvYWQhKKCYJkQVqpBlKNG/fO30UJGePDlwIPnqluvpzlVI/TlVTgBGLIlQDdIwrqFWXgWSrKEXPek88mw/7EUV4oSy5POYsiRwtEy/0M/1HIlcuvEY6nnYEcwkzt5ypF6+iytlyxow2oW1Xbf2y5PK+I7Wl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiV68lHx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/aFSwAY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB517C2BCB3;
-	Mon, 13 Apr 2026 16:44:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiV68lHx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BE2C2BCAF;
+	Mon, 13 Apr 2026 16:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098676;
-	bh=RYuiDmMg3E6lbfrLZPdQt0AgnbVGcXvolmrjL+A/MIs=;
+	s=korg; t=1776098678;
+	bh=9IPG6/EeMsdkXFZOxD7NV2VV4IzELnKflTzYI0Wa2zM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/aFSwAY8bxetTW7U7c5mBNriIm9ySQo4HuYdEv/sLmAGYDZ50RpIaYkyiumLOz1x
-	 MeiLcwPHyli1gffvmIDNVsN1lhRXOBVeZHDDl3xE4cJWt6s2c5BYa3cGJ3EhsDbf8N
-	 F+u9/cpvDTuPz9Hbg4kGUwWMXAo2Won+xalER4Ew=
+	b=KiV68lHxADqRy2WAMh9EabWU1EsI1G66EWq5ko27egIIIDPmifzssvT+pqYVjLQ4Y
+	 cOBqreCk2FWibVW8NhRgz+SSZSSbuIBu1/JA57djdun1ZLaTPwWfSey2gpGejXbExm
+	 I8Bh8C11JGOFR1xnk2b6D+SL418Nu2BGY1qn9Cbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Ray <ian.ray@gehealthcare.com>,
+	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/491] net: nfc: nci: Fix zero-length proprietary notifications
-Date: Mon, 13 Apr 2026 17:54:51 +0200
-Message-ID: <20260413155820.777159230@linuxfoundation.org>
+Subject: [PATCH 5.10 047/491] nfc: nci: free skb on nci_transceive early error paths
+Date: Mon, 13 Apr 2026 17:54:52 +0200
+Message-ID: <20260413155820.813817016@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,73 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Ray <ian.ray@gehealthcare.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f7d92f11bd33a6eb49c7c812255ef4ab13681f0f ]
+[ Upstream commit 7bd4b0c4779f978a6528c9b7937d2ca18e936e2c ]
 
-NCI NFC controllers may have proprietary OIDs with zero-length payload.
-One example is: drivers/nfc/nxp-nci/core.c, NXP_NCI_RF_TXLDO_ERROR_NTF.
+nci_transceive() takes ownership of the skb passed by the caller,
+but the -EPROTO, -EINVAL, and -EBUSY error paths return without
+freeing it.
 
-Allow a zero length payload in proprietary notifications *only*.
+Due to issues clearing NCI_DATA_EXCHANGE fixed by subsequent changes
+the nci/nci_dev selftest hits the error path occasionally in NIPA,
+and kmemleak detects leaks:
 
-Before:
+unreferenced object 0xff11000015ce6a40 (size 640):
+  comm "nci_dev", pid 3954, jiffies 4295441246
+  hex dump (first 32 bytes):
+    6b 6b 6b 6b 00 a4 00 0c 02 e1 03 6b 6b 6b 6b 6b  kkkk.......kkkkk
+    6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+  backtrace (crc 7c40cc2a):
+    kmem_cache_alloc_node_noprof+0x492/0x630
+    __alloc_skb+0x11e/0x5f0
+    alloc_skb_with_frags+0xc6/0x8f0
+    sock_alloc_send_pskb+0x326/0x3f0
+    nfc_alloc_send_skb+0x94/0x1d0
+    rawsock_sendmsg+0x162/0x4c0
+    do_syscall_64+0x117/0xfc0
 
--- >8 --
-kernel: nci: nci_recv_frame: len 3
--- >8 --
-
-After:
-
--- >8 --
-kernel: nci: nci_recv_frame: len 3
-kernel: nci: nci_ntf_packet: NCI RX: MT=ntf, PBF=0, GID=0x1, OID=0x23, plen=0
-kernel: nci: nci_ntf_packet: unknown ntf opcode 0x123
-kernel: nfc nfc0: NFC: RF transmitter couldn't start. Bad power and/or configuration?
--- >8 --
-
-After fixing the hardware:
-
--- >8 --
-kernel: nci: nci_recv_frame: len 27
-kernel: nci: nci_ntf_packet: NCI RX: MT=ntf, PBF=0, GID=0x1, OID=0x5, plen=24
-kernel: nci: nci_rf_intf_activated_ntf_packet: rf_discovery_id 1
--- >8 --
-
-Fixes: d24b03535e5e ("nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet")
-Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
-Link: https://patch.msgid.link/20260302163238.140576-1-ian.ray@gehealthcare.com
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260303162346.2071888-2-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/nfc/nci/core.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index 3514686eb53f9..188677c322f4c 100644
+index 188677c322f4c..873c9073e4111 100644
 --- a/net/nfc/nci/core.c
 +++ b/net/nfc/nci/core.c
-@@ -1460,10 +1460,20 @@ static bool nci_valid_size(struct sk_buff *skb)
- 	BUILD_BUG_ON(NCI_CTRL_HDR_SIZE != NCI_DATA_HDR_SIZE);
+@@ -1014,18 +1014,23 @@ static int nci_transceive(struct nfc_dev *nfc_dev, struct nfc_target *target,
+ 	struct nci_conn_info    *conn_info;
  
- 	if (skb->len < hdr_size ||
--	    !nci_plen(skb->data) ||
- 	    skb->len < hdr_size + nci_plen(skb->data)) {
- 		return false;
- 	}
-+
-+	if (!nci_plen(skb->data)) {
-+		/* Allow zero length in proprietary notifications (0x20 - 0x3F). */
-+		if (nci_opcode_oid(nci_opcode(skb->data)) >= 0x20 &&
-+		    nci_mt(skb->data) == NCI_MT_NTF_PKT)
-+			return true;
-+
-+		/* Disallow zero length otherwise. */
-+		return false;
+ 	conn_info = ndev->rf_conn_info;
+-	if (!conn_info)
++	if (!conn_info) {
++		kfree_skb(skb);
+ 		return -EPROTO;
 +	}
-+
- 	return true;
- }
  
+ 	pr_debug("target_idx %d, len %d\n", target->idx, skb->len);
+ 
+ 	if (!ndev->target_active_prot) {
+ 		pr_err("unable to exchange data, no active target\n");
++		kfree_skb(skb);
+ 		return -EINVAL;
+ 	}
+ 
+-	if (test_and_set_bit(NCI_DATA_EXCHANGE, &ndev->flags))
++	if (test_and_set_bit(NCI_DATA_EXCHANGE, &ndev->flags)) {
++		kfree_skb(skb);
+ 		return -EBUSY;
++	}
+ 
+ 	/* store cb and context to be used on receiving data */
+ 	conn_info->data_exchange_cb = cb;
 -- 
 2.51.0
 
