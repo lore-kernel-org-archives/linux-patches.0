@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B150F2E11B9;
-	Mon, 13 Apr 2026 16:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A7222A7F0;
+	Mon, 13 Apr 2026 16:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097720; cv=none; b=qYBK4pqgydaeVGIkNyoezCLVX+QaLiuUtU4R0RgQLC93RaF99jbGrO/Yjwyym5PEfY8OgO9KycUSWFLlagV/dY0gHXv3w7UjeDwOZ4nyUFJ72T3+rGBSArjWvR4jTe69pHUddk8OqhLPFG+pGNEUX62ipOOopQODol1bfYXTrBM=
+	t=1776097723; cv=none; b=NcQDk+w5GVdvvyJ8T/0nIGEN7CuncP3clTN0yCWMRyKJGg6iknzu8YmvOABdc/QRkQF75sSf1vUo/N30MrBKBicizxitJDIPH2dEWyF+ypXXU7D9gVPgAKXCl/KyXWzhcMyY0ufNJso8mM83zHZhsoKNOv9rp03m3Kv7fQV6Wr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097720; c=relaxed/simple;
-	bh=zduDM88y5xX8A82YnK603bBFSeZuLoAYEWh/qWZi29A=;
+	s=arc-20240116; t=1776097723; c=relaxed/simple;
+	bh=zj8EAiJJ0ToPMxVtMinIz0hpvSCw00I6R/qSzFUwiAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PccFJo+45kG0AIr3gH1gG2HBLHwPgQXT3SIKoSLVF2by650lxPqMVrs0rIW8keprT1SysGYnj75wbWRF/jnJMQigxpEQY4dkNFeUrY2FZdXU605ooAj0OHIr7UCwHm4LXlT4jwPnqjcOkVsc93HiXklmZ4vqmnwqBEcLXpBAQpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbn1FgAJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CjpKBQB6n6N/SS3wWIB8bgeIrIwo5F8y11q6b713taaykgDqGYmjENPd1Q51z0YOLLdBiWXK5gcCzcMuCTHaGVT41YAKCzU9lr1s1xonc13E7gQXqCIMNxf98jqJ0H5DkrPNjcrI1GBq9cFnk165sXbtMTSLWlhU9kGC5UUWQco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPCIV6z6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbn1FgAJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485E1C2BCAF;
-	Mon, 13 Apr 2026 16:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPCIV6z6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA6AC2BCAF;
+	Mon, 13 Apr 2026 16:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097720;
-	bh=zduDM88y5xX8A82YnK603bBFSeZuLoAYEWh/qWZi29A=;
+	s=korg; t=1776097723;
+	bh=zj8EAiJJ0ToPMxVtMinIz0hpvSCw00I6R/qSzFUwiAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vbn1FgAJrT4pY6Q75WyPtU0Pt7oYRPAGdDfSQAV5OQcVMF63FAW73lTN4aZDbBAvd
-	 XGLI/oWrnOgaIDBYXv/Oua6W5oB4LbaC6GW6CWQ8i/qkPAoidVameyBMDt5zvObFO+
-	 BA6cpDTR4Gm0ljjJyAsjdma+otici+kqbobIS68E=
+	b=vPCIV6z6PwyEGbzIdvplPKJzM3ZQp27pi8x/J8V3PzxxCps9OEu0KkYOBAbpgBeWR
+	 atIQkqwojYgEZPXg5uEN3VB2YbEFc7Tic4TNyVLvAEoTqZN16WPvBHKjnDSvI0hSM+
+	 rI7KQyiUaEFW3bT/f6+XeYdjSE9wRhYKVkJYB5J4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Rob Herring <robh@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 246/570] of: Add cleanup.h based auto release via __free(device_node) markings
-Date: Mon, 13 Apr 2026 17:56:17 +0200
-Message-ID: <20260413155839.683333155@linuxfoundation.org>
+Subject: [PATCH 5.15 247/570] firmware: arm_scpi: Fix device_node reference leak in probe path
+Date: Mon, 13 Apr 2026 17:56:18 +0200
+Message-ID: <20260413155839.720400571@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,70 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 9448e55d032d99af8e23487f51a542d51b2f1a48 ]
+[ Upstream commit 879c001afbac3df94160334fe5117c0c83b2cf48 ]
 
-The recent addition of scope based cleanup support to the kernel
-provides a convenient tool to reduce the chances of leaking reference
-counts where of_node_put() should have been called in an error path.
+A device_node reference obtained from the device tree is not released
+on all error paths in the arm_scpi probe path. Specifically, a node
+returned by of_parse_phandle() could be leaked when the probe failed
+after the node was acquired. The probe function returns early and
+the shmem reference is not released.
 
-This enables
-	struct device_node *child __free(device_node) = NULL;
+Use __free(device_node) scope-based cleanup to automatically release
+the reference when the variable goes out of scope.
 
-	for_each_child_of_node(np, child) {
-		if (test)
-			return test;
-	}
-
-with no need for a manual call of of_node_put().
-A following patch will reduce the scope of the child variable to the
-for loop, to avoid an issues with ordering of autocleanup, and make it
-obvious when this assigned a non NULL value.
-
-In this simple example the gains are small but there are some very
-complex error handling cases buried in these loops that will be
-greatly simplified by enabling early returns with out the need
-for this manual of_node_put() call.
-
-Note that there are coccinelle checks in
-scripts/coccinelle/iterators/for_each_child.cocci to detect a failure
-to call of_node_put(). This new approach does not cause false positives.
-Longer term we may want to add scripting to check this new approach is
-done correctly with no double of_node_put() calls being introduced due
-to the auto cleanup. It may also be useful to script finding places
-this new approach is useful.
-
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20240225142714.286440-2-jic23@kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
-Stable-dep-of: 879c001afbac ("firmware: arm_scpi: Fix device_node reference leak in probe path")
+Fixes: ed7ecb883901 ("firmware: arm_scpi: Add compatibility checks for shmem node")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Message-Id: <20260121-arm_scpi_2-v2-1-702d7fa84acb@gmail.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/of.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firmware/arm_scpi.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/of.h b/include/linux/of.h
-index 29f657101f4f8..3c840c4879956 100644
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -13,6 +13,7 @@
-  */
- #include <linux/types.h>
- #include <linux/bitops.h>
-+#include <linux/cleanup.h>
- #include <linux/errno.h>
- #include <linux/kobject.h>
- #include <linux/mod_devicetable.h>
-@@ -128,6 +129,7 @@ static inline struct device_node *of_node_get(struct device_node *node)
- }
- static inline void of_node_put(struct device_node *node) { }
- #endif /* !CONFIG_OF_DYNAMIC */
-+DEFINE_FREE(device_node, struct device_node *, if (_T) of_node_put(_T))
+diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
+index 3de25e9d18ef8..2d85e783ae267 100644
+--- a/drivers/firmware/arm_scpi.c
++++ b/drivers/firmware/arm_scpi.c
+@@ -18,6 +18,7 @@
  
- /* Pointer for first entry in chain of all nodes. */
- extern struct device_node *of_root;
+ #include <linux/bitmap.h>
+ #include <linux/bitfield.h>
++#include <linux/cleanup.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/export.h>
+@@ -945,13 +946,13 @@ static int scpi_probe(struct platform_device *pdev)
+ 		int idx = scpi_drvinfo->num_chans;
+ 		struct scpi_chan *pchan = scpi_drvinfo->channels + idx;
+ 		struct mbox_client *cl = &pchan->cl;
+-		struct device_node *shmem = of_parse_phandle(np, "shmem", idx);
++		struct device_node *shmem __free(device_node) =
++			of_parse_phandle(np, "shmem", idx);
+ 
+ 		if (!of_match_node(shmem_of_match, shmem))
+ 			return -ENXIO;
+ 
+ 		ret = of_address_to_resource(shmem, 0, &res);
+-		of_node_put(shmem);
+ 		if (ret) {
+ 			dev_err(dev, "failed to get SCPI payload mem resource\n");
+ 			return ret;
 -- 
 2.51.0
 
