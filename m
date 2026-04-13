@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C21F2BEC5E;
-	Mon, 13 Apr 2026 16:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC0024DCF6;
+	Mon, 13 Apr 2026 16:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096447; cv=none; b=klxx/M7Sy3mFf01v7rKbUGc01ISO/6WKln4A6XRE0MSfy6mlAP2Ww03hXW6Jc/Dx0M4d2BuiMCMay0BSMvpLqr0PaFMuG2WU5cc9DglwPCogYcZii3hIc0vi7pmiAJyf5PnWkX969WwfWqdWCXFIi3OqSa2vwPhju0LBviPTQyA=
+	t=1776096449; cv=none; b=Yof8Xd2mVolhCpY+uHQRI2mfjtt8V0f9gkwrtiDamBfMdZLJ2vaBr6KX355QDCW5e3MJxkx2aMVVCNNZbl2rBUHoAMsU8xR0FWl+bmtYR3F2aXRkz7lKzXYXG79krTaYWN5snvVhMoP+uXgfbVPX5bPHaxAoMCVvzSJxys0Rk6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096447; c=relaxed/simple;
-	bh=g2i81jZysxNwjtJ3A2WW5Z98i3A4MqYCivlU0kAnBng=;
+	s=arc-20240116; t=1776096449; c=relaxed/simple;
+	bh=6KsTMiviaFP+KxAth7HqMogLHhCuCM4OCafPsEa/ldo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NMqcjkD5qIA/9nqo1qtvYs4x+/kQXybndXajHZoL3TjZYIfkHSkbascDDJ1EkiRoja1jao7GRXPh8ybUGUUx8vzd7I7Z+d+8VRmj7s/EdLUOttgd7nZI2cSe/BcYqAZz74Yah1KFy+RND+sgAk8uNurgi7PF3WHfYXgt1C9RIDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4gQYQqI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a032LYrxBoAmOgXvBaMeWkavZv37IKCUHVLrF30bG+rc+qyIj5OAJKkddlSYdXR7lAD9dN3NKriSh6GuKpTZoQDij0MLF34vjND6L2EnL+p75t4o1dIPqAsDlzt8Ew5hnA6IHLXdoHHl2QlQzTdoPdWBUUp5rx0G2hcJe1M2txM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqSAJOEN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4gQYQqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B601CC2BCB0;
-	Mon, 13 Apr 2026 16:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqSAJOEN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F9FC2BCAF;
+	Mon, 13 Apr 2026 16:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096447;
-	bh=g2i81jZysxNwjtJ3A2WW5Z98i3A4MqYCivlU0kAnBng=;
+	s=korg; t=1776096449;
+	bh=6KsTMiviaFP+KxAth7HqMogLHhCuCM4OCafPsEa/ldo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d4gQYQqIwobHKKIom+TOyYGkUjB2pNkO7micHKekjmBw49cqpbUWjUtoqEwUmjM/l
-	 1Mll7KMYddRacCP4T2dv75/UeL5iI+avOzHkabLTSbjXhOfv8o0vo2ekJn3ZlQtdun
-	 9aP3MwaEmnXcdaYG25mfqgbptDDGI0DCiTrLWGMw=
+	b=vqSAJOEN7DUjyi5hP+YlPgAL2W0CnKgAgo3eHln1VBwgVmdGigOO1vo5EtKNiNB8g
+	 8COXU9h3It3kwPYgPEYg+elrLtxSWAkA2fzJ/x+k2DjtONtxJIib38OcrFvfpGpqKc
+	 R4H/i78I156cZ8uq7lDf52QwdqXDkZ5M8DRt4RkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 07/83] mptcp: fix slab-use-after-free in __inet_lookup_established
-Date: Mon, 13 Apr 2026 17:59:35 +0200
-Message-ID: <20260413155731.304371373@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 16/83] af_unix: Count cyclic SCC.
+Date: Mon, 13 Apr 2026 17:59:44 +0200
+Message-ID: <20260413155731.633233517@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -51,101 +51,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 9b55b253907e7431210483519c5ad711a37dafa1 upstream.
+[ Upstream commit 58b47c713711b8afbf68e3158d4d5acdead00e9b ]
 
-The ehash table lookups are lockless and rely on
-SLAB_TYPESAFE_BY_RCU to guarantee socket memory stability
-during RCU read-side critical sections. Both tcp_prot and
-tcpv6_prot have their slab caches created with this flag
-via proto_register().
+__unix_walk_scc() and unix_walk_scc_fast() call unix_scc_cyclic()
+for each SCC to check if it forms a cyclic reference, so that we
+can skip GC at the following invocations in case all SCCs do not
+have any cycles.
 
-However, MPTCP's mptcp_subflow_init() copies tcpv6_prot into
-tcpv6_prot_override during inet_init() (fs_initcall, level 5),
-before inet6_init() (module_init/device_initcall, level 6) has
-called proto_register(&tcpv6_prot). At that point,
-tcpv6_prot.slab is still NULL, so tcpv6_prot_override.slab
-remains NULL permanently.
+If we count the number of cyclic SCCs in __unix_walk_scc(), we can
+simplify unix_walk_scc_fast() because the number of cyclic SCCs
+only changes when it garbage-collects a SCC.
 
-This causes MPTCP v6 subflow child sockets to be allocated via
-kmalloc (falling into kmalloc-4k) instead of the TCPv6 slab
-cache. The kmalloc-4k cache lacks SLAB_TYPESAFE_BY_RCU, so
-when these sockets are freed without SOCK_RCU_FREE (which is
-cleared for child sockets by design), the memory can be
-immediately reused. Concurrent ehash lookups under
-rcu_read_lock can then access freed memory, triggering a
-slab-use-after-free in __inet_lookup_established.
+So, let's count cyclic SCC in __unix_walk_scc() and decrement it
+in unix_walk_scc_fast() when performing garbage collection.
 
-Fix this by splitting the IPv6-specific initialization out of
-mptcp_subflow_init() into a new mptcp_subflow_v6_init(), called
-from mptcp_proto_v6_init() before protocol registration. This
-ensures tcpv6_prot_override.slab correctly inherits the
-SLAB_TYPESAFE_BY_RCU slab cache.
+Note that we will use this counter in a later patch to check if a
+cycle existed in the previous GC run.
 
-Fixes: b19bc2945b40 ("mptcp: implement delegated actions")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260406031512.189159-1-jiayuan.chen@linux.dev
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20251115020935.2643121-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e5b31d988a41 ("af_unix: Give up GC if MSG_PEEK intervened.")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c |    2 ++
- net/mptcp/protocol.h |    1 +
- net/mptcp/subflow.c  |   15 +++++++++------
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ net/unix/garbage.c | 31 +++++++++++++++++++++----------
+ 1 file changed, 21 insertions(+), 10 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -4271,6 +4271,8 @@ int __init mptcp_proto_v6_init(void)
+diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+index 65396a4e1b07e..9f62d50979735 100644
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -404,9 +404,11 @@ static bool unix_scc_cyclic(struct list_head *scc)
+ static LIST_HEAD(unix_visited_vertices);
+ static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
+ 
+-static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_index,
+-			    struct sk_buff_head *hitlist)
++static unsigned long __unix_walk_scc(struct unix_vertex *vertex,
++				     unsigned long *last_index,
++				     struct sk_buff_head *hitlist)
  {
- 	int err;
++	unsigned long cyclic_sccs = 0;
+ 	LIST_HEAD(vertex_stack);
+ 	struct unix_edge *edge;
+ 	LIST_HEAD(edge_stack);
+@@ -497,8 +499,8 @@ static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_inde
+ 			if (unix_vertex_max_scc_index < vertex->scc_index)
+ 				unix_vertex_max_scc_index = vertex->scc_index;
  
-+	mptcp_subflow_v6_init();
-+
- 	mptcp_v6_prot = mptcp_prot;
- 	strscpy(mptcp_v6_prot.name, "MPTCPv6", sizeof(mptcp_v6_prot.name));
- 	mptcp_v6_prot.slab = NULL;
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -830,6 +830,7 @@ static inline void mptcp_subflow_tcp_fal
- void __init mptcp_proto_init(void);
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
- int __init mptcp_proto_v6_init(void);
-+void __init mptcp_subflow_v6_init(void);
- #endif
+-			if (!unix_graph_maybe_cyclic)
+-				unix_graph_maybe_cyclic = unix_scc_cyclic(&scc);
++			if (unix_scc_cyclic(&scc))
++				cyclic_sccs++;
+ 		}
  
- struct sock *mptcp_sk_clone_init(const struct sock *sk,
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -2145,7 +2145,15 @@ void __init mptcp_subflow_init(void)
- 	tcp_prot_override.psock_update_sk_prot = NULL;
- #endif
- 
-+	mptcp_diag_subflow_init(&subflow_ulp_ops);
+ 		list_del(&scc);
+@@ -507,13 +509,17 @@ static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_inde
+ 	/* Need backtracking ? */
+ 	if (!list_empty(&edge_stack))
+ 		goto prev_vertex;
 +
-+	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
-+		panic("MPTCP: failed to register subflows to ULP\n");
-+}
-+
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
-+void __init mptcp_subflow_v6_init(void)
-+{
- 	/* In struct mptcp_subflow_request_sock, we assume the TCP request sock
- 	 * structures for v4 and v6 have the same size. It should not changed in
- 	 * the future but better to make sure to be warned if it is no longer
-@@ -2184,10 +2192,5 @@ void __init mptcp_subflow_init(void)
- 	/* Disable sockmap processing for subflows */
- 	tcpv6_prot_override.psock_update_sk_prot = NULL;
- #endif
--#endif
--
--	mptcp_diag_subflow_init(&subflow_ulp_ops);
--
--	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
--		panic("MPTCP: failed to register subflows to ULP\n");
++	return cyclic_sccs;
  }
-+#endif
+ 
++static unsigned long unix_graph_cyclic_sccs;
++
+ static void unix_walk_scc(struct sk_buff_head *hitlist)
+ {
+ 	unsigned long last_index = UNIX_VERTEX_INDEX_START;
++	unsigned long cyclic_sccs = 0;
+ 
+-	unix_graph_maybe_cyclic = false;
+ 	unix_vertex_max_scc_index = UNIX_VERTEX_INDEX_START;
+ 
+ 	/* Visit every vertex exactly once.
+@@ -523,18 +529,20 @@ static void unix_walk_scc(struct sk_buff_head *hitlist)
+ 		struct unix_vertex *vertex;
+ 
+ 		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
+-		__unix_walk_scc(vertex, &last_index, hitlist);
++		cyclic_sccs += __unix_walk_scc(vertex, &last_index, hitlist);
+ 	}
+ 
+ 	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
+ 	swap(unix_vertex_unvisited_index, unix_vertex_grouped_index);
+ 
++	unix_graph_cyclic_sccs = cyclic_sccs;
++	unix_graph_maybe_cyclic = !!unix_graph_cyclic_sccs;
+ 	unix_graph_grouped = true;
+ }
+ 
+ static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
+ {
+-	unix_graph_maybe_cyclic = false;
++	unsigned long cyclic_sccs = unix_graph_cyclic_sccs;
+ 
+ 	while (!list_empty(&unix_unvisited_vertices)) {
+ 		struct unix_vertex *vertex;
+@@ -551,15 +559,18 @@ static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
+ 				scc_dead = unix_vertex_dead(vertex);
+ 		}
+ 
+-		if (scc_dead)
++		if (scc_dead) {
++			cyclic_sccs--;
+ 			unix_collect_skb(&scc, hitlist);
+-		else if (!unix_graph_maybe_cyclic)
+-			unix_graph_maybe_cyclic = unix_scc_cyclic(&scc);
++		}
+ 
+ 		list_del(&scc);
+ 	}
+ 
+ 	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
++
++	unix_graph_cyclic_sccs = cyclic_sccs;
++	unix_graph_maybe_cyclic = !!unix_graph_cyclic_sccs;
+ }
+ 
+ static bool gc_in_progress;
+-- 
+2.53.0
+
 
 
