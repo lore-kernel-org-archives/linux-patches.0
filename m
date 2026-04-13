@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1021E317141;
-	Mon, 13 Apr 2026 16:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D195D318EC1;
+	Mon, 13 Apr 2026 16:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099277; cv=none; b=JAOrqcI1XRqNs2XygdCx7+ngYz2amhAR8XB8N9iw473nsr/lr4sQMXakVGqTQojVTv13R2fqyv6lISDXX7B8ltWkMdQudgVTtIs44h6lkJEahL0dGFdVe2CmehUa/xtQnLNUvrUS19OW+GUQius7eSHJj8Cy06CUidKAPBIYjQw=
+	t=1776099279; cv=none; b=ZEuWW3BGgi/7Oxf/CYpe/WcA9+n5QBPBX63DRwH8373at9fISmD11mx5w9eB3Wm1+B04+Ly2ouXkJ1PSqRkbYvwPcFUymTgwMmkLNyr/WOBz0aX3wLN1XjH7OwlE7Fx1IeaNdPzW9rjWlFgyOl19Cj97mTmPL0Rr/m2F5kUVD30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099277; c=relaxed/simple;
-	bh=AFOjurQDnK1coCWkHIGdglJOSL8iUXcMYLBMIVjNnRk=;
+	s=arc-20240116; t=1776099279; c=relaxed/simple;
+	bh=yY1D32tuwV0JAUUZzHSRivkdzuvv+k1zewZ910VX0dM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRKcXSGeFnQr5RFnYADh20de5aFUxVEKaAnef3w/YZ02f4+U0uMpg5OWx7LZMJygn8Q696MtpQZj5MTwBUCXaqyiQNyd30i5QpVzmRfp5T7nqsowxFwqQCFMqOjpPxYZc137vK0KXnFstDDX4lF/hbW9EC3hE6CoauhECobJtBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BO/x4/oJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IV4pS1TvxJ0M0/JIabDLYCrHXINTh5Nf3a4WP6FWBa90Y9z3ikUfUdcMH1CnkHsSo7OH+76oOkv0t6xZfC4S4I6OHlDZ3uKlSccdsTc0Dwwp1uz5KTDfitUeOgbmBX5yR1IcnqPQ416llWMJhtJyg7urUwZ5tgkeezBKLztzwIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mI/0KIgF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BO/x4/oJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8B9C2BCAF;
-	Mon, 13 Apr 2026 16:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mI/0KIgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4E8C2BCAF;
+	Mon, 13 Apr 2026 16:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099276;
-	bh=AFOjurQDnK1coCWkHIGdglJOSL8iUXcMYLBMIVjNnRk=;
+	s=korg; t=1776099279;
+	bh=yY1D32tuwV0JAUUZzHSRivkdzuvv+k1zewZ910VX0dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BO/x4/oJYYz6wWrQygnzPilrMsNilj/ytKydD3YNFuZeVwj1mlVDsgVVpgo5bJSF6
-	 ZrqT6x2Mlv6wLSFCUozCzGj02YyID3lI7Sx5JZsBBRdxjhcbxEm56JB4p5grhJFppZ
-	 GE9diXRwWbn5bueoCV3QUbDg7pL3m3XAbymFskBw=
+	b=mI/0KIgFX11ad1yLIWGnkcz+VYuwDA3ZNWXyMZCJjkwLZYiKbL3WqTzMbzaL0WA5m
+	 6E5FhJXQeVE05mTEx9nC2POWv2CsAc/A83vSzmbjttfEzRx8Qf/2yep3D2MV7xpltc
+	 uxotZPw1PN7tIEcRoCZu4gINtU48GCkYxtaTjAiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Valerio <pvalerio@redhat.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 277/491] net: macb: use the current queue number for stats
-Date: Mon, 13 Apr 2026 17:58:42 +0200
-Message-ID: <20260413155829.417338589@linuxfoundation.org>
+Subject: [PATCH 5.10 248/491] xfrm: Fix the usage of skb->sk
+Date: Mon, 13 Apr 2026 17:58:13 +0200
+Message-ID: <20260413155828.340273722@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,93 +51,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Valerio <pvalerio@redhat.com>
+From: Steffen Klassert <steffen.klassert@secunet.com>
 
-[ Upstream commit 72d96e4e24bbefdcfbc68bdb9341a05d8f5cb6e5 ]
+[ Upstream commit 1620c88887b16940e00dbe57dd38c74eda9bad9e ]
 
-There's a potential mismatch between the memory reserved for statistics
-and the amount of memory written.
+xfrm assumed to always have a full socket at skb->sk.
+This is not always true, so fix it by converting to a
+full socket before it is used.
 
-gem_get_sset_count() correctly computes the number of stats based on the
-active queues, whereas gem_get_ethtool_stats() indiscriminately copies
-data using the maximum number of queues, and in the case the number of
-active queues is less than MACB_MAX_QUEUES, this results in a OOB write
-as observed in the KASAN splat.
-
-==================================================================
-BUG: KASAN: vmalloc-out-of-bounds in gem_get_ethtool_stats+0x54/0x78
-  [macb]
-Write of size 760 at addr ffff80008080b000 by task ethtool/1027
-
-CPU: [...]
-Tainted: [E]=UNSIGNED_MODULE
-Hardware name: raspberrypi rpi/rpi, BIOS 2025.10 10/01/2025
-Call trace:
- show_stack+0x20/0x38 (C)
- dump_stack_lvl+0x80/0xf8
- print_report+0x384/0x5e0
- kasan_report+0xa0/0xf0
- kasan_check_range+0xe8/0x190
- __asan_memcpy+0x54/0x98
- gem_get_ethtool_stats+0x54/0x78 [macb
-   926c13f3af83b0c6fe64badb21ec87d5e93fcf65]
- dev_ethtool+0x1220/0x38c0
- dev_ioctl+0x4ac/0xca8
- sock_do_ioctl+0x170/0x1d8
- sock_ioctl+0x484/0x5d8
- __arm64_sys_ioctl+0x12c/0x1b8
- invoke_syscall+0xd4/0x258
- el0_svc_common.constprop.0+0xb4/0x240
- do_el0_svc+0x48/0x68
- el0_svc+0x40/0xf8
- el0t_64_sync_handler+0xa0/0xe8
- el0t_64_sync+0x1b0/0x1b8
-
-The buggy address belongs to a 1-page vmalloc region starting at
-  0xffff80008080b000 allocated at dev_ethtool+0x11f0/0x38c0
-The buggy address belongs to the physical page:
-page: refcount:1 mapcount:0 mapping:0000000000000000
-  index:0xffff00000a333000 pfn:0xa333
-flags: 0x7fffc000000000(node=0|zone=0|lastcpupid=0x1ffff)
-raw: 007fffc000000000 0000000000000000 dead000000000122 0000000000000000
-raw: ffff00000a333000 0000000000000000 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff80008080b080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- ffff80008080b100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->ffff80008080b180: 00 00 00 00 00 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-                                  ^
- ffff80008080b200: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
- ffff80008080b280: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-==================================================================
-
-Fix it by making sure the copied size only considers the active number of
-queues.
-
-Fixes: 512286bbd4b7 ("net: macb: Added some queue statistics")
-Signed-off-by: Paolo Valerio <pvalerio@redhat.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260323191634.2185840-1-pvalerio@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Stable-dep-of: 0c0eef8ccd24 ("esp: fix skb leak with espintcp and async crypto")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/esp4.c                | 2 +-
+ net/ipv6/esp6.c                | 2 +-
+ net/ipv6/xfrm6_output.c        | 4 ++--
+ net/xfrm/xfrm_interface_core.c | 2 +-
+ net/xfrm/xfrm_output.c         | 7 ++++---
+ net/xfrm/xfrm_policy.c         | 2 +-
+ 6 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index f49e4e0494db3..bdbb05a95519b 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -2786,7 +2786,7 @@ static void gem_get_ethtool_stats(struct net_device *dev,
- 	spin_lock_irq(&bp->stats_lock);
- 	gem_update_stats(bp);
- 	memcpy(data, &bp->ethtool_stats, sizeof(u64)
--			* (GEM_STATS_LEN + QUEUE_STATS_LEN * MACB_MAX_QUEUES));
-+			* (GEM_STATS_LEN + QUEUE_STATS_LEN * bp->num_queues));
- 	spin_unlock_irq(&bp->stats_lock);
+diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
+index adfefcd88bbcc..295bc1799002a 100644
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -278,7 +278,7 @@ static void esp_output_done(struct crypto_async_request *base, int err)
+ 		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
+ 			esp_output_tail_tcp(x, skb);
+ 		else
+-			xfrm_output_resume(skb->sk, skb, err);
++			xfrm_output_resume(skb_to_full_sk(skb), skb, err);
+ 	}
  }
  
+diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
+index 39154531d4559..9df910dfc348a 100644
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -313,7 +313,7 @@ static void esp_output_done(struct crypto_async_request *base, int err)
+ 		    x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
+ 			esp_output_tail_tcp(x, skb);
+ 		else
+-			xfrm_output_resume(skb->sk, skb, err);
++			xfrm_output_resume(skb_to_full_sk(skb), skb, err);
+ 	}
+ }
+ 
+diff --git a/net/ipv6/xfrm6_output.c b/net/ipv6/xfrm6_output.c
+index ee349c2438782..a8fc778ce465c 100644
+--- a/net/ipv6/xfrm6_output.c
++++ b/net/ipv6/xfrm6_output.c
+@@ -89,14 +89,14 @@ static int __xfrm6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 
+ 	toobig = skb->len > mtu && !skb_is_gso(skb);
+ 
+-	if (toobig && xfrm6_local_dontfrag(skb->sk)) {
++	if (toobig && xfrm6_local_dontfrag(sk)) {
+ 		xfrm6_local_rxpmtu(skb, mtu);
+ 		kfree_skb(skb);
+ 		return -EMSGSIZE;
+ 	} else if (toobig && xfrm6_noneed_fragment(skb)) {
+ 		skb->ignore_df = 1;
+ 		goto skip_frag;
+-	} else if (!skb->ignore_df && toobig && skb->sk) {
++	} else if (!skb->ignore_df && toobig && sk) {
+ 		xfrm_local_error(skb, mtu);
+ 		kfree_skb(skb);
+ 		return -EMSGSIZE;
+diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
+index 9eaf0174d9981..fc5967ccaddca 100644
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -368,7 +368,7 @@ xfrmi_xmit2(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
+ 	skb_dst_set(skb, dst);
+ 	skb->dev = tdev;
+ 
+-	err = dst_output(xi->net, skb->sk, skb);
++	err = dst_output(xi->net, skb_to_full_sk(skb), skb);
+ 	if (net_xmit_eval(err) == 0) {
+ 		struct pcpu_sw_netstats *tstats = this_cpu_ptr(dev->tstats);
+ 
+diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
+index 40f7a98abdd1c..7c588973cfa1b 100644
+--- a/net/xfrm/xfrm_output.c
++++ b/net/xfrm/xfrm_output.c
+@@ -645,7 +645,7 @@ static int xfrm4_tunnel_check_size(struct sk_buff *skb)
+ 	     !skb_gso_validate_network_len(skb, ip_skb_dst_mtu(skb->sk, skb)))) {
+ 		skb->protocol = htons(ETH_P_IP);
+ 
+-		if (skb->sk)
++		if (skb->sk && sk_fullsock(skb->sk))
+ 			xfrm_local_error(skb, mtu);
+ 		else
+ 			icmp_send(skb, ICMP_DEST_UNREACH,
+@@ -681,6 +681,7 @@ static int xfrm6_tunnel_check_size(struct sk_buff *skb)
+ {
+ 	int mtu, ret = 0;
+ 	struct dst_entry *dst = skb_dst(skb);
++	struct sock *sk = skb_to_full_sk(skb);
+ 
+ 	if (skb->ignore_df)
+ 		goto out;
+@@ -695,9 +696,9 @@ static int xfrm6_tunnel_check_size(struct sk_buff *skb)
+ 		skb->dev = dst->dev;
+ 		skb->protocol = htons(ETH_P_IPV6);
+ 
+-		if (xfrm6_local_dontfrag(skb->sk))
++		if (xfrm6_local_dontfrag(sk))
+ 			ipv6_stub->xfrm6_local_rxpmtu(skb, mtu);
+-		else if (skb->sk)
++		else if (sk)
+ 			xfrm_local_error(skb, mtu);
+ 		else
+ 			icmpv6_send(skb, ICMPV6_PKT_TOOBIG, 0, mtu);
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 64b971bb1d36a..c4ebfaa0b2ed0 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -2858,7 +2858,7 @@ static void xfrm_policy_queue_process(struct timer_list *t)
+ 		skb_dst_drop(skb);
+ 		skb_dst_set(skb, dst);
+ 
+-		dst_output(net, skb->sk, skb);
++		dst_output(net, skb_to_full_sk(skb), skb);
+ 	}
+ 
+ out:
 -- 
 2.51.0
 
