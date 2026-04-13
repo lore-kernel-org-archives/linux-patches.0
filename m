@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E0E2BE630;
-	Mon, 13 Apr 2026 16:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6A927280A;
+	Mon, 13 Apr 2026 16:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096532; cv=none; b=mtpQ9cQqMmoiJlFGLvPsZx+DKy6OvoII2SOVokyLUU2XbOzR/beXaPx8nsQ8sQLLQlFZ/MVUUovmSgYAogmtWA3lXPHSH7wphNgcJvLNiILaanjV1/ZSO8c73a1Ct2P0FCq/jyqQAXjiZROq7UOaG6sM4DF56CmEb5D0255qlAA=
+	t=1776096534; cv=none; b=cNPIBKI9cV5ykYsgah9jA5oapR0tl8cCntpgcp05IDB5ujDbjQKqeNrUAI1jYotid5a8JMKTzYYuTqmdnlzOD1xNXmt//K3rH3LQGM8axivL9hFtt/jZ3rycOHsihQRSfyCgkXriXwugJPRXMwrKhNoN8RGSKWA/SBXor4DGp7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096532; c=relaxed/simple;
-	bh=KCLPmYW/6dIdl75gg2JJLSZWiN5kKk+fNCmmDyxCFOI=;
+	s=arc-20240116; t=1776096534; c=relaxed/simple;
+	bh=7GtH9mze3mxrqJKAfhhmz9H/4+w+FXVrDtXHseNkeLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLobW3y5EupLf/stcoBP0jJuonbFRTJ5tqKde/5R5kp5PzG4Kb8KNQDE5m9qrXZgpPL86Iv/mHLTrXOqXBIT50wrahiTpZpvzMRztXMb/Cu77wo6gLrOUPqHbbuWt1dHk6tVIJgerbxsLnC5bnmmXIUQte1/SaTAF0XdN1XSahM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3v/KmAu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wsy8Z41NuSwX2eMe6W6SleFJrkAh0dlDt5YCmc0hJD6QnHDm8RNdYrDVa+tQRIk3lB1zUuRpMvDa1zkOfobnTfG1HhLAqK5Zi2SNcwS1u2/EXF9xlKy1Lp+Y43y1AyqQJs2ZPCfQfwo9lnJ++3V0Xen+iHBFkToKBsOrhdhopmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVCnhFC5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3v/KmAu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BD8C2BCB0;
-	Mon, 13 Apr 2026 16:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVCnhFC5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F548C4AF12;
+	Mon, 13 Apr 2026 16:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096532;
-	bh=KCLPmYW/6dIdl75gg2JJLSZWiN5kKk+fNCmmDyxCFOI=;
+	s=korg; t=1776096534;
+	bh=7GtH9mze3mxrqJKAfhhmz9H/4+w+FXVrDtXHseNkeLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c3v/KmAuWE6VdgDxmuYquJR3/21497+4Ss0Wan/NWVgPNXCK9uHG236pZ/CnKrEF/
-	 rp+5f6sTTwjruxQshLeegrj9zYNdGdZUsqyUx77KKvjSH7bvfTYh2HhFROfnT9gbC6
-	 8Igr4l6vViA43ddu2fyajxHSCCtVOtzx3zkaqqAI=
+	b=JVCnhFC5LzYN3aMyDCrNDiUERAsC1DfmXyXWa1ZucJG03yRj1qkdRH9M0qyXH9kCT
+	 G59GbpKkfq5aLNVCmsiukVkm7dFT7gN7v5NfypuLxRLSi0KfAG1s/S01FlEJeHF4xo
+	 gvtEr7DN9kt/byWNzcbr6snyTwt42ysUL7VkySKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	robbieko <robbieko@synology.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 15/83] btrfs: fix incorrect return value after changing leaf in lookup_extent_data_ref()
-Date: Mon, 13 Apr 2026 17:59:43 +0200
-Message-ID: <20260413155731.595739295@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 06/83] Revert "mptcp: add needs_id for netlink appending addr"
+Date: Mon, 13 Apr 2026 17:59:34 +0200
+Message-ID: <20260413155731.267921565@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -52,49 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: robbieko <robbieko@synology.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 316fb1b3169efb081d2db910cbbfef445afa03b9 ]
+commit 8e2760eaab778494fc1fa257031e0e1799647f46 upstream.
 
-After commit 1618aa3c2e01 ("btrfs: simplify return variables in
-lookup_extent_data_ref()"), the err and ret variables were merged into
-a single ret variable. However, when btrfs_next_leaf() returns 0
-(success), ret is overwritten from -ENOENT to 0. If the first key in
-the next leaf does not match (different objectid or type), the function
-returns 0 instead of -ENOENT, making the caller believe the lookup
-succeeded when it did not. This can lead to operations on the wrong
-extent tree item, potentially causing extent tree corruption.
+This commit was originally adding the ability to add MPTCP endpoints
+with ID 0 by accident. The in-kernel PM, handling MPTCP endpoints at the
+net namespace level, is not supposed to handle endpoints with such ID,
+because this ID 0 is reserved to the initial subflow, as mentioned in
+the MPTCPv1 protocol [1], a per-connection setting.
 
-Fix this by returning -ENOENT directly when the key does not match,
-instead of relying on the ret variable.
+Note that 'ip mptcp endpoint add id 0' stops early with an error, but
+other tools might still request the in-kernel PM to create MPTCP
+endpoints with this restricted ID 0.
 
-Fixes: 1618aa3c2e01 ("btrfs: simplify return variables in lookup_extent_data_ref()")
-CC: stable@vger.kernel.org # 6.12+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: robbieko <robbieko@synology.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In other words, it was wrong to call the mptcp_pm_has_addr_attr_id
+helper to check whether the address ID attribute is set: if it was set
+to 0, a new MPTCP endpoint would be created with ID 0, which is not
+expected, and might cause various issues later.
+
+Fixes: 584f38942626 ("mptcp: add needs_id for netlink appending addr")
+Cc: stable@vger.kernel.org
+Link: https://datatracker.ietf.org/doc/html/rfc8684#section-3.2-9 [1]
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260407-net-mptcp-revert-pm-needs-id-v2-1-7a25cbc324f8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/pm_kernel.c |   24 +++++-------------------
+ 1 file changed, 5 insertions(+), 19 deletions(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index fa83a3d8286ca..863b45092a190 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -476,7 +476,7 @@ static noinline int lookup_extent_data_ref(struct btrfs_trans_handle *trans,
- 		btrfs_item_key_to_cpu(leaf, &key, path->slots[0]);
- 		if (key.objectid != bytenr ||
- 		    key.type != BTRFS_EXTENT_DATA_REF_KEY)
--			return ret;
-+			return -ENOENT;
+--- a/net/mptcp/pm_kernel.c
++++ b/net/mptcp/pm_kernel.c
+@@ -710,7 +710,7 @@ static void __mptcp_pm_release_addr_entr
  
- 		ref = btrfs_item_ptr(leaf, path->slots[0],
- 				     struct btrfs_extent_data_ref);
--- 
-2.53.0
-
+ static int mptcp_pm_nl_append_new_local_addr(struct pm_nl_pernet *pernet,
+ 					     struct mptcp_pm_addr_entry *entry,
+-					     bool needs_id, bool replace)
++					     bool replace)
+ {
+ 	struct mptcp_pm_addr_entry *cur, *del_entry = NULL;
+ 	int ret = -EINVAL;
+@@ -769,7 +769,7 @@ static int mptcp_pm_nl_append_new_local_
+ 		}
+ 	}
+ 
+-	if (!entry->addr.id && needs_id) {
++	if (!entry->addr.id) {
+ find_next:
+ 		entry->addr.id = find_next_zero_bit(pernet->id_bitmap,
+ 						    MPTCP_PM_MAX_ADDR_ID + 1,
+@@ -780,7 +780,7 @@ find_next:
+ 		}
+ 	}
+ 
+-	if (!entry->addr.id && needs_id)
++	if (!entry->addr.id)
+ 		goto out;
+ 
+ 	__set_bit(entry->addr.id, pernet->id_bitmap);
+@@ -909,7 +909,7 @@ int mptcp_pm_nl_get_local_id(struct mptc
+ 		return -ENOMEM;
+ 
+ 	entry->addr.port = 0;
+-	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, true, false);
++	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, false);
+ 	if (ret < 0)
+ 		kfree(entry);
+ 
+@@ -963,18 +963,6 @@ next:
+ 	return 0;
+ }
+ 
+-static bool mptcp_pm_has_addr_attr_id(const struct nlattr *attr,
+-				      struct genl_info *info)
+-{
+-	struct nlattr *tb[MPTCP_PM_ADDR_ATTR_MAX + 1];
+-
+-	if (!nla_parse_nested_deprecated(tb, MPTCP_PM_ADDR_ATTR_MAX, attr,
+-					 mptcp_pm_address_nl_policy, info->extack) &&
+-	    tb[MPTCP_PM_ADDR_ATTR_ID])
+-		return true;
+-	return false;
+-}
+-
+ /* Add an MPTCP endpoint */
+ int mptcp_pm_nl_add_addr_doit(struct sk_buff *skb, struct genl_info *info)
+ {
+@@ -1023,9 +1011,7 @@ int mptcp_pm_nl_add_addr_doit(struct sk_
+ 			goto out_free;
+ 		}
+ 	}
+-	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry,
+-						!mptcp_pm_has_addr_attr_id(attr, info),
+-						true);
++	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, true);
+ 	if (ret < 0) {
+ 		GENL_SET_ERR_MSG_FMT(info, "too many addresses or duplicate one: %d", ret);
+ 		goto out_free;
 
 
