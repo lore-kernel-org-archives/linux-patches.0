@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45E923E342;
-	Mon, 13 Apr 2026 16:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C7B314A6B;
+	Mon, 13 Apr 2026 16:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098848; cv=none; b=mDTHF+BYacZg15APr3d+2pSFTBGierKOE5LtYgOzURjWGNtflSnc692Vx5098oBKKDEzKEcT251fuQOxjfkprbiFZ62gQev/iowj2/UKGlNog3JO6XGbWkzS23Ul1u7kciPPHW8MyLsDe3+CyQ0uLGX112ZLM4/kSJoDgaj9wTc=
+	t=1776098851; cv=none; b=bnvNv4MyRujbcJb7mvPo/qaC8+tuSQgKiNYl+Nv2sA+vz4nVwktcxpo8Hm8d4dJr+8C2KxAo8aYoQGFYM8H7B6KlQHJGHTREgt8HyZ66QE9nfhHCEx1lVwLJoceN3fAG6hdkTR7TKUFBv4HQO2JTWfYiKkD4uD9Nnm6XbOLy5zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098848; c=relaxed/simple;
-	bh=Xno/wMUjhiUSGFYR8WuYxgHVkX5XjDv9Y+XZKnmcAk8=;
+	s=arc-20240116; t=1776098851; c=relaxed/simple;
+	bh=mDJ28eWkxk6XNIr1wIp/+3ywI8xqMTYTGYGh7mIehj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTHtwnTh/veilW+n8SHQXCyOQ++czXWT4hjk15yd4EM00+PFu3kCQn4nzKM4M3silBFbOYvO+u6MHIkgi0M1UUvbuAx1xApO/TCAoAu6RrKff8P8grerpuwKraqMsWCwpZpOX+NeQrnE2eoJRgR58Yt7xDmNfeQ5XRlN27BkUUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zHVHRVp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dqf8m7DoPS3e80aIh6eETI+PksveFGbm6pWSKZ/XhM14TRzBNCRPY+Wzre9raxawVz9efLmyR+zUioAMnUQ0YluUJkOUj9LE8SUGLdRSbyrgqLoRZ5pilXxAvHGTP7OHsrsTcixYxnsZDiQJ15hd6kMj/gSFEudGVB7NvzlsFew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szYsTsAv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zHVHRVp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247CBC2BCAF;
-	Mon, 13 Apr 2026 16:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szYsTsAv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2CCC2BCAF;
+	Mon, 13 Apr 2026 16:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098848;
-	bh=Xno/wMUjhiUSGFYR8WuYxgHVkX5XjDv9Y+XZKnmcAk8=;
+	s=korg; t=1776098851;
+	bh=mDJ28eWkxk6XNIr1wIp/+3ywI8xqMTYTGYGh7mIehj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1zHVHRVpC7qBZaNeMA5NynZzzZHA8hxrwzNWDeaHx43l9GgbGVwslX4du1ymgkCHK
-	 4PfU97C/sJaFyGGIKKl+UAqAY4ingLdB/gXg/m78OGE60mnrTXoUQmn5mXdK51Tvdc
-	 8ljkCP5qfwhNcREtStbG0K6NsQRc9eNlOloyjeTA=
+	b=szYsTsAvrXKwRbmUqXJ1dm7WqEMIw7BPu+6Vsza54bGJgbSvAM1kEloHN8aXbx17y
+	 esdysbR5599xYKhTRb3C1dkfpxvQ6QDRlIwngCOroChFRcplbiw9QheMFjJ4OM/eEQ
+	 V1m8Bj3JGm0iQSVSVyW0ZZNh8A8HV6HG3m7Gl2aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh Singh <kaleshsingh@google.com>,
-	Zi Yan <ziy@nvidia.com>,
-	SeongJae Park <sj@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 105/491] mm/tracing: rss_stat: ensure curr is false from kthread context
-Date: Mon, 13 Apr 2026 17:55:50 +0200
-Message-ID: <20260413155822.973972453@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Navaneeth K <knavaneeth786@gmail.com>
+Subject: [PATCH 5.10 114/491] staging: rtl8723bs: properly validate the data in rtw_get_ie_ex()
+Date: Mon, 13 Apr 2026 17:55:59 +0200
+Message-ID: <20260413155823.309508145@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -59,79 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh Singh <kaleshsingh@google.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 079c24d5690262e83ee476e2a548e416f3237511 upstream.
+commit f0109b9d3e1e455429279d602f6276e34689750a upstream.
 
-The rss_stat trace event allows userspace tools, like Perfetto [1], to
-inspect per-process RSS metric changes over time.
+Just like in commit 154828bf9559 ("staging: rtl8723bs: fix out-of-bounds
+read in rtw_get_ie() parser"), we don't trust the data in the frame so
+we should check the length better before acting on it
 
-The curr field was introduced to rss_stat in commit e4dcad204d3a
-("rss_stat: add support to detect RSS updates of external mm").  Its
-intent is to indicate whether the RSS update is for the mm_struct of the
-current execution context; and is set to false when operating on a remote
-mm_struct (e.g., via kswapd or a direct reclaimer).
-
-However, an issue arises when a kernel thread temporarily adopts a user
-process's mm_struct.  Kernel threads do not have their own mm_struct and
-normally have current->mm set to NULL.  To operate on user memory, they
-can "borrow" a memory context using kthread_use_mm(), which sets
-current->mm to the user process's mm.
-
-This can be observed, for example, in the USB Function Filesystem (FFS)
-driver.  The ffs_user_copy_worker() handles AIO completions and uses
-kthread_use_mm() to copy data to a user-space buffer.  If a page fault
-occurs during this copy, the fault handler executes in the kthread's
-context.
-
-At this point, current is the kthread, but current->mm points to the user
-process's mm.  Since the rss_stat event (from the page fault) is for that
-same mm, the condition current->mm == mm becomes true, causing curr to be
-incorrectly set to true when the trace event is emitted.
-
-This is misleading because it suggests the mm belongs to the kthread,
-confusing userspace tools that track per-process RSS changes and
-corrupting their mm_id-to-process association.
-
-Fix this by ensuring curr is always false when the trace event is emitted
-from a kthread context by checking for the PF_KTHREAD flag.
-
-Link: https://lkml.kernel.org/r/20260219233708.1971199-1-kaleshsingh@google.com
-Link: https://perfetto.dev/ [1]
-Fixes: e4dcad204d3a ("rss_stat: add support to detect RSS updates of external mm")
-Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Acked-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Cc: "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: <stable@vger.kernel.org>	[5.10+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable <stable@kernel.org>
+Assisted-by: gkh_clanker_2000
+Tested-by: Navaneeth K <knavaneeth786@gmail.com>
+Reviewed-by: Navaneeth K <knavaneeth786@gmail.com>
+Link: https://patch.msgid.link/2026022336-arrange-footwork-6e54@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/kmem.h |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/include/trace/events/kmem.h
-+++ b/include/trace/events/kmem.h
-@@ -352,7 +352,13 @@ TRACE_EVENT(rss_stat,
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -194,21 +194,25 @@ u8 *rtw_get_ie_ex(u8 *in_ie, uint in_len
  
- 	TP_fast_assign(
- 		__entry->mm_id = mm_ptr_to_hash(mm);
--		__entry->curr = !!(current->mm == mm);
-+		/*
-+		 * curr is true if the mm matches the current task's mm_struct.
-+		 * Since kthreads (PF_KTHREAD) have no mm_struct of their own
-+		 * but can borrow one via kthread_use_mm(), we must filter them
-+		 * out to avoid incorrectly attributing the RSS update to them.
-+		 */
-+		__entry->curr = current->mm == mm && !(current->flags & PF_KTHREAD);
- 		__entry->member = member;
- 		__entry->size = (count << PAGE_SHIFT);
- 	),
+ 	cnt = 0;
+ 
+-	while (cnt < in_len) {
++	while (cnt + 2 <= in_len) {
++		u8 ie_len = in_ie[cnt + 1];
++
++		if (cnt + 2 + ie_len > in_len)
++			break;
++
+ 		if (eid == in_ie[cnt]
+-			&& (!oui || !memcmp(&in_ie[cnt+2], oui, oui_len))) {
++			&& (!oui || (ie_len >= oui_len && !memcmp(&in_ie[cnt + 2], oui, oui_len)))) {
+ 			target_ie = &in_ie[cnt];
+ 
+ 			if (ie)
+-				memcpy(ie, &in_ie[cnt], in_ie[cnt+1]+2);
++				memcpy(ie, &in_ie[cnt], ie_len + 2);
+ 
+ 			if (ielen)
+-				*ielen = in_ie[cnt+1]+2;
++				*ielen = ie_len + 2;
+ 
+ 			break;
+-		} else {
+-			cnt += in_ie[cnt+1]+2; /* goto next */
+ 		}
++		cnt += ie_len + 2; /* goto next */
+ 	}
+ 
+ 	return target_ie;
 
 
