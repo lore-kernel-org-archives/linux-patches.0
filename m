@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2306225A38;
-	Mon, 13 Apr 2026 16:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C179225A38;
+	Mon, 13 Apr 2026 16:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097870; cv=none; b=QXcch1qVrD+zGirFqjTkvDNALwWxuTMLvmRNEMoTS57KhfCL4vHFH7QvCyniLPHGpSemkVCviam3U7rJF0xUbj7dMiOKPxBHi99eftc98yVo0YvOONgI/KBBQPFn7x4Dc6etkL143YJwfkbeI0FH9hg6G2PDQiq1vExNXLUkI30=
+	t=1776097875; cv=none; b=BBXQUOROkRbTrcDZsCkeMq0+BSLA9+VQvzieWn6rq8W5ZcAb6NQNOS8JwhjllRvkFXQtj6kWFaO4JsRqVBZnqrEAb4BVOkZikPGHee5+xd/fnLh60PczKJ165mLphh3Ps7eVrfvw500a8eXYeAdijFRFXuJXb9qbX6cCeTcYxvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097870; c=relaxed/simple;
-	bh=Q+k8rwogVwiWM0zylv7mdTIs+VJ3iQEMqyPX8pvTJzI=;
+	s=arc-20240116; t=1776097875; c=relaxed/simple;
+	bh=eiOKB3nP1nysu9cAcPHFEJ4AOc+iMq/Kvj4fv6faSTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uus/aRdx3nTb2k4QfmbTU4SwZ2aj11kHhwitWgND+RkYpCaMZPR2SrtsFG0wLATfGV6wCIXQ2+JKzVIlx3k+lL64e2DsfLQMkl2EeOPuJ6Zm8sbqX9+bvUDarlEaq3hL+KGkrB423Q/6dfblPgsFou0sG7srbZH15TMo0SDhZ1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gP/jLSxC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SyMqvqqLHealSryNKp2WSZ8XigoYPivsh2ICjbc++Tf1hmnA6lUB1EKPH0D4RxoiUdEjrccwM4xIJHraweabdKSvWr+4LqdQqsABE3eOLmKtykd1SVU5Y5wkrt5mPzG55j7tInWaW2kxQw46h8YFzfX6llyxLqUdmuT/itRbKi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dd33uFe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gP/jLSxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C25C2BCAF;
-	Mon, 13 Apr 2026 16:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dd33uFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE9CC2BCAF;
+	Mon, 13 Apr 2026 16:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097870;
-	bh=Q+k8rwogVwiWM0zylv7mdTIs+VJ3iQEMqyPX8pvTJzI=;
+	s=korg; t=1776097873;
+	bh=eiOKB3nP1nysu9cAcPHFEJ4AOc+iMq/Kvj4fv6faSTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gP/jLSxCcuuDd/r0syS4e88KfCUZALuPK+6xTQ0mNd4mGaTJWyGBjv/eHzqKlUavH
-	 ckaxyBiLxPXWFs46XhuyoZygnklf5rKxz0z82stlSi8HvMru2ai1hl9gtb1plTdftR
-	 SRXwtVcU6FcxcLgVaLqfvOcTqBf4Vp+HxV247V9w=
+	b=2dd33uFe1S+7mtFuZGoWre7WllWr3xmLaBtZE1l1ESXck8sVj+FgaNOFfszScFwnh
+	 sa/NG86zzCXsC6FpT69KgeB148sCsTFjI0DZGcswKov/yY0/z3aH29RL32AK3s41Wq
+	 T0M1OK6SOOyoV6BjZ/U/L+asRngMwNpGP8aH8KyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Romain Sioen <romain.sioen@microchip.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 297/570] HID: asus: avoid memory leak in asus_report_fixup()
-Date: Mon, 13 Apr 2026 17:57:08 +0200
-Message-ID: <20260413155841.628310657@linuxfoundation.org>
+Subject: [PATCH 5.15 306/570] HID: mcp2221: cancel last I2C command on read error
+Date: Mon, 13 Apr 2026 17:57:17 +0200
+Message-ID: <20260413155841.962116440@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -45,67 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Günther Noack <gnoack@google.com>
+From: Romain Sioen <romain.sioen@microchip.com>
 
-[ Upstream commit 2bad24c17742fc88973d6aea526ce1353f5334a3 ]
+[ Upstream commit e31b556c0ba21f20c298aa61181b96541140b7b9 ]
 
-The asus_report_fixup() function was returning a newly allocated
-kmemdup()-allocated buffer, but never freeing it.  Switch to
-devm_kzalloc() to ensure the memory is managed and freed automatically
-when the device is removed.
+When an I2C SMBus read operation fails, the MCP2221 internal state machine
+may not reset correctly, causing subsequent transactions to fail.
 
-The caller of report_fixup() does not take ownership of the returned
-pointer, but it is permitted to return a pointer whose lifetime is at
-least that of the input buffer.
+By adding a short delay and explicitly cancelling the last command,
+we ensure the device is ready for the next operation.
 
-Also fix a harmless out-of-bounds read by copying only the original
-descriptor size.
+Fix an issue where i2cdetect was not able to detect all devices correctly
+on the bus.
 
-Assisted-by: Gemini-CLI:Google Gemini 3
-Signed-off-by: Günther Noack <gnoack@google.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Romain Sioen <romain.sioen@microchip.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/hid/hid-mcp2221.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index feec0724328ff..3be17a8b7a293 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -1224,14 +1224,21 @@ static __u8 *asus_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 		 */
- 		if (*rsize == rsize_orig &&
- 			rdesc[offs] == 0x09 && rdesc[offs + 1] == 0x76) {
--			*rsize = rsize_orig + 1;
--			rdesc = kmemdup(rdesc, *rsize, GFP_KERNEL);
--			if (!rdesc)
--				return NULL;
-+			__u8 *new_rdesc;
-+
-+			new_rdesc = devm_kzalloc(&hdev->dev, rsize_orig + 1,
-+						 GFP_KERNEL);
-+			if (!new_rdesc)
-+				return rdesc;
- 
- 			hid_info(hdev, "Fixing up %s keyb report descriptor\n",
- 				drvdata->quirks & QUIRK_T100CHI ?
- 				"T100CHI" : "T90CHI");
-+
-+			memcpy(new_rdesc, rdesc, rsize_orig);
-+			*rsize = rsize_orig + 1;
-+			rdesc = new_rdesc;
-+
- 			memmove(rdesc + offs + 4, rdesc + offs + 2, 12);
- 			rdesc[offs] = 0x19;
- 			rdesc[offs + 1] = 0x00;
+diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
+index 589f13ff0b606..9fb98c8e1ffb7 100644
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -319,6 +319,8 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
+ 				usleep_range(90, 100);
+ 				retries++;
+ 			} else {
++				usleep_range(980, 1000);
++				mcp_cancel_last_cmd(mcp);
+ 				return ret;
+ 			}
+ 		} else {
 -- 
 2.51.0
 
