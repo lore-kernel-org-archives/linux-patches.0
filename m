@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7533325A2C9;
-	Mon, 13 Apr 2026 16:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E39724E4AF;
+	Mon, 13 Apr 2026 16:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096849; cv=none; b=Yv4zG6Z+H0vG5FHd+zN/ICXUYCpWjWs4XNo5LyVwxVoM6z+mFQDuk34d88tpMWN97IbLnUwtJYJTlD4uwGqpDiHrddhAFYlIGJBR3Z6IJMV9Po4Hq1BSjZ3QEIaG+TurYqssTK0hupulljbEpVIbjOkUnCOvH7zCVMXkJZveuKQ=
+	t=1776096852; cv=none; b=CvwbJyuHuKlqqPIEQvYoDv+lp8+emUnb1sAoy9OBfeTfyDpUMm15A+Fp/vpoaAuCkxN8oS6w0rRjT0RInQgZG7jUohTGpVGj/YB7khGN7g6OJ7mr8xDm+c0saTbcDdxIF/KqR+oNRq92B+Smb0MVLJmRB4ToQa03QIF7jFxtytw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096849; c=relaxed/simple;
-	bh=ZupzfOC9geJ4hDlKdkOxpXw4bQEMPg4TMPAltIBCvhM=;
+	s=arc-20240116; t=1776096852; c=relaxed/simple;
+	bh=o0g42PRDQ9U6gakr5BybxeDX66TzXW9DcIcHKcGqfKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3aR53BN4+/f3jLGNNwu72yAUGzU1ngi1o7Ci0b1Ny17ifQyMHvaeykuGkby3te/iffpaCcQjE3KWrAwa8wK6SR72Ho0ZXMfzVJu7/W25rpSLM8Oj2exdIhzXRvzu21XX2zJHhKgu7iA/9ihIoQ4DCg3Y2Jv4DfUqK/tim0L568=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUFDOGXV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s9IWUwXgAX5igGKBBd674dL3tHmNgleJaOIt8fFvc+vQDCffoCfRChWmopgiiJkhWptMZz6J0kZik5srhVecjeu4mO1bxvrwZsRlS9x9g309AqetVpDm1+IfczO0ZSygyEdqcfx925hd9yofyhE6q9X8e4yLsDynSoFrmsLTeUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUpe8lWO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUFDOGXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBD3C2BCAF;
-	Mon, 13 Apr 2026 16:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUpe8lWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D7CC2BCAF;
+	Mon, 13 Apr 2026 16:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096849;
-	bh=ZupzfOC9geJ4hDlKdkOxpXw4bQEMPg4TMPAltIBCvhM=;
+	s=korg; t=1776096851;
+	bh=o0g42PRDQ9U6gakr5BybxeDX66TzXW9DcIcHKcGqfKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUFDOGXVgeSHMnR1zjYXoqqmofPbABEzoreupXwF/FE+UV3dsNJDYq+plDiEiFCjk
-	 TAIQuNQBM8rqrMegUHyg+jjCRucHPzw2+lfFPyfg5YpuCeN0uMSQKHj/S9gimZALqn
-	 ZRQ2bb9y6G/S9b1KZE1eTpXUTbo7cemNsSviEp9s=
+	b=pUpe8lWOoAIkqChwGyNmd8fJMM8Jij2MHcj9zyhmqncOgeBuA1X6UxoHJzhX/Dos1
+	 6+UuHBuef0awfZAq8d+2Emv49Oq9tdEq8YnOf6N1XD+92+Q/JqYQ/EgS8pBRLxtc6C
+	 cfJ21QqbUCgMrdubuQxqzsUM5uhueq1tXnCo+C+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Justin Iurman <justin.iurman@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 16/50] Revert "mptcp: add needs_id for netlink appending addr"
-Date: Mon, 13 Apr 2026 18:00:43 +0200
-Message-ID: <20260413155725.117835298@linuxfoundation.org>
+Subject: [PATCH 6.6 17/50] seg6: separate dst_cache for input and output paths in seg6 lwtunnel
+Date: Mon, 13 Apr 2026 18:00:44 +0200
+Message-ID: <20260413155725.155281661@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -52,106 +53,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-[ Upstream commit 8e2760eaab778494fc1fa257031e0e1799647f46 ]
+[ Upstream commit c3812651b522fe8437ebb7063b75ddb95b571643 ]
 
-This commit was originally adding the ability to add MPTCP endpoints
-with ID 0 by accident. The in-kernel PM, handling MPTCP endpoints at the
-net namespace level, is not supposed to handle endpoints with such ID,
-because this ID 0 is reserved to the initial subflow, as mentioned in
-the MPTCPv1 protocol [1], a per-connection setting.
+The seg6 lwtunnel uses a single dst_cache per encap route, shared
+between seg6_input_core() and seg6_output_core(). These two paths
+can perform the post-encap SID lookup in different routing contexts
+(e.g., ip rules matching on the ingress interface, or VRF table
+separation). Whichever path runs first populates the cache, and the
+other reuses it blindly, bypassing its own lookup.
 
-Note that 'ip mptcp endpoint add id 0' stops early with an error, but
-other tools might still request the in-kernel PM to create MPTCP
-endpoints with this restricted ID 0.
+Fix this by splitting the cache into cache_input and cache_output,
+so each path maintains its own cached dst independently.
 
-In other words, it was wrong to call the mptcp_pm_has_addr_attr_id
-helper to check whether the address ID attribute is set: if it was set
-to 0, a new MPTCP endpoint would be created with ID 0, which is not
-expected, and might cause various issues later.
-
-Fixes: 584f38942626 ("mptcp: add needs_id for netlink appending addr")
+Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
 Cc: stable@vger.kernel.org
-Link: https://datatracker.ietf.org/doc/html/rfc8684#section-3.2-9 [1]
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260407-net-mptcp-revert-pm-needs-id-v2-1-7a25cbc324f8@kernel.org
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260404004405.4057-2-andrea.mayer@uniroma2.it
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ applied changes to net/mptcp/pm_netlink.c instead of renamed net/mptcp/pm_kernel.c ]
+[ added missing dst reference loop guard in seg6_output_core() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   24 +++++-------------------
- 1 file changed, 5 insertions(+), 19 deletions(-)
+ net/ipv6/seg6_iptunnel.c |   41 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 13 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1079,7 +1079,7 @@ static void __mptcp_pm_release_addr_entr
- 
- static int mptcp_pm_nl_append_new_local_addr(struct pm_nl_pernet *pernet,
- 					     struct mptcp_pm_addr_entry *entry,
--					     bool needs_id, bool replace)
-+					     bool replace)
- {
- 	struct mptcp_pm_addr_entry *cur, *del_entry = NULL;
- 	unsigned int addr_max;
-@@ -1138,7 +1138,7 @@ static int mptcp_pm_nl_append_new_local_
- 		}
- 	}
- 
--	if (!entry->addr.id && needs_id) {
-+	if (!entry->addr.id) {
- find_next:
- 		entry->addr.id = find_next_zero_bit(pernet->id_bitmap,
- 						    MPTCP_PM_MAX_ADDR_ID + 1,
-@@ -1149,7 +1149,7 @@ find_next:
- 		}
- 	}
- 
--	if (!entry->addr.id && needs_id)
-+	if (!entry->addr.id)
- 		goto out;
- 
- 	__set_bit(entry->addr.id, pernet->id_bitmap);
-@@ -1282,7 +1282,7 @@ int mptcp_pm_nl_get_local_id(struct mptc
- 	entry->ifindex = 0;
- 	entry->flags = MPTCP_PM_ADDR_FLAG_IMPLICIT;
- 	entry->lsk = NULL;
--	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, true, false);
-+	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, false);
- 	if (ret < 0)
- 		kfree(entry);
- 
-@@ -1524,18 +1524,6 @@ next:
- 	return 0;
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -48,7 +48,8 @@ static size_t seg6_lwt_headroom(struct s
  }
  
--static bool mptcp_pm_has_addr_attr_id(const struct nlattr *attr,
--				      struct genl_info *info)
--{
--	struct nlattr *tb[MPTCP_PM_ADDR_ATTR_MAX + 1];
--
--	if (!nla_parse_nested_deprecated(tb, MPTCP_PM_ADDR_ATTR_MAX, attr,
--					 mptcp_pm_addr_policy, info->extack) &&
--	    tb[MPTCP_PM_ADDR_ATTR_ID])
--		return true;
--	return false;
--}
--
- static int mptcp_nl_cmd_add_addr(struct sk_buff *skb, struct genl_info *info)
- {
- 	struct nlattr *attr = info->attrs[MPTCP_PM_ATTR_ADDR];
-@@ -1577,9 +1565,7 @@ static int mptcp_nl_cmd_add_addr(struct
- 			goto out_free;
+ struct seg6_lwt {
+-	struct dst_cache cache;
++	struct dst_cache cache_input;
++	struct dst_cache cache_output;
+ 	struct seg6_iptunnel_encap tuninfo[];
+ };
+ 
+@@ -486,7 +487,7 @@ static int seg6_input_core(struct net *n
+ 	slwt = seg6_lwt_lwtunnel(lwtst);
+ 
+ 	local_bh_disable();
+-	dst = dst_cache_get(&slwt->cache);
++	dst = dst_cache_get(&slwt->cache_input);
+ 	local_bh_enable();
+ 
+ 	err = seg6_do_srh(skb, dst);
+@@ -500,7 +501,7 @@ static int seg6_input_core(struct net *n
+ 		/* cache only if we don't create a dst reference loop */
+ 		if (!dst->error && lwtst != dst->lwtstate) {
+ 			local_bh_disable();
+-			dst_cache_set_ip6(&slwt->cache, dst,
++			dst_cache_set_ip6(&slwt->cache_input, dst,
+ 					  &ipv6_hdr(skb)->saddr);
+ 			local_bh_enable();
  		}
- 	}
--	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry,
--						!mptcp_pm_has_addr_attr_id(attr, info),
--						true);
-+	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, true);
- 	if (ret < 0) {
- 		GENL_SET_ERR_MSG_FMT(info, "too many addresses or duplicate one: %d", ret);
- 		goto out_free;
+@@ -560,7 +561,7 @@ static int seg6_output_core(struct net *
+ 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
+ 
+ 	local_bh_disable();
+-	dst = dst_cache_get(&slwt->cache);
++	dst = dst_cache_get(&slwt->cache_output);
+ 	local_bh_enable();
+ 
+ 	err = seg6_do_srh(skb, dst);
+@@ -585,9 +586,12 @@ static int seg6_output_core(struct net *
+ 			goto drop;
+ 		}
+ 
+-		local_bh_disable();
+-		dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
+-		local_bh_enable();
++		/* cache only if we don't create a dst reference loop */
++		if (orig_dst->lwtstate != dst->lwtstate) {
++			local_bh_disable();
++			dst_cache_set_ip6(&slwt->cache_output, dst, &fl6.saddr);
++			local_bh_enable();
++		}
+ 
+ 		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
+ 		if (unlikely(err))
+@@ -694,11 +698,13 @@ static int seg6_build_state(struct net *
+ 
+ 	slwt = seg6_lwt_lwtunnel(newts);
+ 
+-	err = dst_cache_init(&slwt->cache, GFP_ATOMIC);
+-	if (err) {
+-		kfree(newts);
+-		return err;
+-	}
++	err = dst_cache_init(&slwt->cache_input, GFP_ATOMIC);
++	if (err)
++		goto err_free_newts;
++
++	err = dst_cache_init(&slwt->cache_output, GFP_ATOMIC);
++	if (err)
++		goto err_destroy_input;
+ 
+ 	memcpy(&slwt->tuninfo, tuninfo, tuninfo_len);
+ 
+@@ -713,11 +719,20 @@ static int seg6_build_state(struct net *
+ 	*ts = newts;
+ 
+ 	return 0;
++
++err_destroy_input:
++	dst_cache_destroy(&slwt->cache_input);
++err_free_newts:
++	kfree(newts);
++	return err;
+ }
+ 
+ static void seg6_destroy_state(struct lwtunnel_state *lwt)
+ {
+-	dst_cache_destroy(&seg6_lwt_lwtunnel(lwt)->cache);
++	struct seg6_lwt *slwt = seg6_lwt_lwtunnel(lwt);
++
++	dst_cache_destroy(&slwt->cache_input);
++	dst_cache_destroy(&slwt->cache_output);
+ }
+ 
+ static int seg6_fill_encap_info(struct sk_buff *skb,
 
 
