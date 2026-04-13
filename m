@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49A61DDC37;
-	Mon, 13 Apr 2026 16:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416761DDC37;
+	Mon, 13 Apr 2026 16:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096944; cv=none; b=AujyIwPK858mwTpJiGc1D/dFGGiiyZU9sK0lR5iPzSZNW9MzIS+JPbsKJ83AGEPWNnq2PgKPj2g0RrZ8bHliJReRLwSvnMNgN4v+z3C9Evqtg9YeLCw8Dd+yQMtLLVWMw18rOnODQZIDLYnrFbAnWjiJsmK5mgQxbqhyFRCh5qs=
+	t=1776096947; cv=none; b=nFyMlWsRUKceY0yHMZmBDGCrnyUiqsgdH5epMFawYEDz1Kp71Dpgtc25NX+/sTpDj+AkdsuMXrjqkvm+g6AUWaxRxRg7b+GvIEE/ju37v/XaBssrLfAaO8XfFoODKOWlZxbcTivfb+rOPxI6ff3qcnf0EOII50/a+fR+q2oDkT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096944; c=relaxed/simple;
-	bh=iG1bjfPbfLjaF55pluYezIyGR08n+RevCYdLlSx7IbY=;
+	s=arc-20240116; t=1776096947; c=relaxed/simple;
+	bh=1TSvwZuhbhh1owLYSNkQVwSAaNkz3o1MDDi83GzOqho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sgrqvoWoGwBWVN79QBi/ZhXzFGZl+OuF5qEyVGL4xqfY9Ahs+7Civ+PP4PXwp1iR0Jv3A2fjL0QYiVy6vnx1ZWdet7ka7aWN2aitTV9ue1mipL9eLaosN60n66H82dZxLC3fQtkbt4M5oJw+AFHaceB8Oa4Z1OSpqXomsdDB8+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rutIGblt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=myFnp3V77pVxfibbCMlWGc92png5cpYTkb4C0KcLo1cuiANmrNseGClvZlqpbFLk0Wn7GpwF+eYZaW4BeyAabRXKQu0mSBlz8d35ZjjMiH1Xbwjy5mIXUksSqcfCpbLBqQ/Usbph7JHGS9Vr5eHJ2o1tA6pFR7NbwsSw3W6UgKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yesutup+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rutIGblt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D21C2BCAF;
-	Mon, 13 Apr 2026 16:15:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yesutup+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F636C2BCAF;
+	Mon, 13 Apr 2026 16:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096944;
-	bh=iG1bjfPbfLjaF55pluYezIyGR08n+RevCYdLlSx7IbY=;
+	s=korg; t=1776096946;
+	bh=1TSvwZuhbhh1owLYSNkQVwSAaNkz3o1MDDi83GzOqho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rutIGbltVtq6ZbRHyc5wenhZvE9CzHMGvdTA+fX91c0l1z1951jV/5DowRGVZa8h2
-	 O/TPI/dFf7BZX3jurl3W5kk42F5utFl+VnaiCjeGG44YroEOqBu9wlw0XeGT8cvUb5
-	 AUfNVCl67uoy7Kpu2v5RZkSCDURkj/sjylEH2uZY=
+	b=yesutup+KFcPe+mjBrdZbE37EoEVKsDySqPsEeRpAHszm9Crdr1Xd1lDvXAXzeO+V
+	 s94gCcC9shOYtU9idGp3z9mQlyflA5cx4fxa3X4YGPt2xp8QQpBMQ9tdEgA+MzDpZL
+	 d72CigktXXnJLtDbVusF1iPuIeTe9ctc6YlFGF/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Haoze Xie <royenheart@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.6 34/50] batman-adv: hold claim backbone gateways by reference
-Date: Mon, 13 Apr 2026 18:01:01 +0200
-Message-ID: <20260413155725.786861714@linuxfoundation.org>
+	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.6 35/50] drm/i915/gt: fix refcount underflow in intel_engine_park_heartbeat
+Date: Mon, 13 Apr 2026 18:01:02 +0200
+Message-ID: <20260413155725.822880926@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -56,116 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoze Xie <royenheart@gmail.com>
+From: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
 
-commit 82d8701b2c930d0e96b0dbc9115a218d791cb0d2 upstream.
+commit 4c71fd099513bfa8acab529b626e1f0097b76061 upstream.
 
-batadv_bla_add_claim() can replace claim->backbone_gw and drop the old
-gateway's last reference while readers still follow the pointer.
+A use-after-free / refcount underflow is possible when the heartbeat
+worker and intel_engine_park_heartbeat() race to release the same
+engine->heartbeat.systole request.
 
-The netlink claim dump path dereferences claim->backbone_gw->orig and
-takes claim->backbone_gw->crc_lock without pinning the underlying
-backbone gateway. batadv_bla_check_claim() still has the same naked
-pointer access pattern.
+The heartbeat worker reads engine->heartbeat.systole and calls
+i915_request_put() on it when the request is complete, but clears
+the pointer in a separate, non-atomic step. Concurrently, a request
+retirement on another CPU can drop the engine wakeref to zero, triggering
+__engine_park() -> intel_engine_park_heartbeat(). If the heartbeat
+timer is pending at that point, cancel_delayed_work() returns true and
+intel_engine_park_heartbeat() reads the stale non-NULL systole pointer
+and calls i915_request_put() on it again, causing a refcount underflow:
 
-Reuse batadv_bla_claim_get_backbone_gw() in both readers so they operate
-on a stable gateway reference until the read-side work is complete.
-This keeps the dump and claim-check paths aligned with the lifetime
-rules introduced for the other BLA claim readers.
+```
+<4> [487.221889] Workqueue: i915-unordered engine_retire [i915]
+<4> [487.222640] RIP: 0010:refcount_warn_saturate+0x68/0xb0
+...
+<4> [487.222707] Call Trace:
+<4> [487.222711]  <TASK>
+<4> [487.222716]  intel_engine_park_heartbeat.part.0+0x6f/0x80 [i915]
+<4> [487.223115]  intel_engine_park_heartbeat+0x25/0x40 [i915]
+<4> [487.223566]  __engine_park+0xb9/0x650 [i915]
+<4> [487.223973]  ____intel_wakeref_put_last+0x2e/0xb0 [i915]
+<4> [487.224408]  __intel_wakeref_put_last+0x72/0x90 [i915]
+<4> [487.224797]  intel_context_exit_engine+0x7c/0x80 [i915]
+<4> [487.225238]  intel_context_exit+0xf1/0x1b0 [i915]
+<4> [487.225695]  i915_request_retire.part.0+0x1b9/0x530 [i915]
+<4> [487.226178]  i915_request_retire+0x1c/0x40 [i915]
+<4> [487.226625]  engine_retire+0x122/0x180 [i915]
+<4> [487.227037]  process_one_work+0x239/0x760
+<4> [487.227060]  worker_thread+0x200/0x3f0
+<4> [487.227068]  ? __pfx_worker_thread+0x10/0x10
+<4> [487.227075]  kthread+0x10d/0x150
+<4> [487.227083]  ? __pfx_kthread+0x10/0x10
+<4> [487.227092]  ret_from_fork+0x3d4/0x480
+<4> [487.227099]  ? __pfx_kthread+0x10/0x10
+<4> [487.227107]  ret_from_fork_asm+0x1a/0x30
+<4> [487.227141]  </TASK>
+```
 
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-Fixes: 04f3f5bf1883 ("batman-adv: add B.A.T.M.A.N. Dump BLA claims via netlink")
-Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Haoze Xie <royenheart@gmail.com>
-Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Fix this by replacing the non-atomic pointer read + separate clear with
+xchg() in both racing paths. xchg() is a single indivisible hardware
+instruction that atomically reads the old pointer and writes NULL. This
+guarantees only one of the two concurrent callers obtains the non-NULL
+pointer and performs the put, the other gets NULL and skips it.
+
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15880
+Fixes: 058179e72e09 ("drm/i915/gt: Replace hangcheck by heartbeats")
+Cc: <stable@vger.kernel.org> # v5.5+
+Signed-off-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+Reviewed-by: Krzysztof Karas <krzysztof.karas@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://lore.kernel.org/r/d4c1c14255688dd07cc8044973c4f032a8d1559e.1775038106.git.sebastian.brzezinka@intel.com
+(cherry picked from commit 13238dc0ee4f9ab8dafa2cca7295736191ae2f42)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c |   27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c |   26 +++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -2132,6 +2132,7 @@ batadv_bla_claim_dump_entry(struct sk_bu
- 			    struct batadv_bla_claim *claim)
- {
- 	const u8 *primary_addr = primary_if->net_dev->dev_addr;
-+	struct batadv_bla_backbone_gw *backbone_gw;
- 	u16 backbone_crc;
- 	bool is_own;
- 	void *hdr;
-@@ -2147,32 +2148,35 @@ batadv_bla_claim_dump_entry(struct sk_bu
+--- a/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
+@@ -144,10 +144,12 @@ static void heartbeat(struct work_struct
+ 	/* Just in case everything has gone horribly wrong, give it a kick */
+ 	intel_engine_flush_submission(engine);
  
- 	genl_dump_check_consistent(cb, hdr);
- 
--	is_own = batadv_compare_eth(claim->backbone_gw->orig,
--				    primary_addr);
-+	backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
-+
-+	is_own = batadv_compare_eth(backbone_gw->orig, primary_addr);
- 
--	spin_lock_bh(&claim->backbone_gw->crc_lock);
--	backbone_crc = claim->backbone_gw->crc;
--	spin_unlock_bh(&claim->backbone_gw->crc_lock);
-+	spin_lock_bh(&backbone_gw->crc_lock);
-+	backbone_crc = backbone_gw->crc;
-+	spin_unlock_bh(&backbone_gw->crc_lock);
- 
- 	if (is_own)
- 		if (nla_put_flag(msg, BATADV_ATTR_BLA_OWN)) {
- 			genlmsg_cancel(msg, hdr);
--			goto out;
-+			goto put_backbone_gw;
- 		}
- 
- 	if (nla_put(msg, BATADV_ATTR_BLA_ADDRESS, ETH_ALEN, claim->addr) ||
- 	    nla_put_u16(msg, BATADV_ATTR_BLA_VID, claim->vid) ||
- 	    nla_put(msg, BATADV_ATTR_BLA_BACKBONE, ETH_ALEN,
--		    claim->backbone_gw->orig) ||
-+		    backbone_gw->orig) ||
- 	    nla_put_u16(msg, BATADV_ATTR_BLA_CRC,
- 			backbone_crc)) {
- 		genlmsg_cancel(msg, hdr);
--		goto out;
-+		goto put_backbone_gw;
+-	rq = engine->heartbeat.systole;
+-	if (rq && i915_request_completed(rq)) {
+-		i915_request_put(rq);
+-		engine->heartbeat.systole = NULL;
++	rq = xchg(&engine->heartbeat.systole, NULL);
++	if (rq) {
++		if (i915_request_completed(rq))
++			i915_request_put(rq);
++		else
++			engine->heartbeat.systole = rq;
  	}
  
- 	genlmsg_end(msg, hdr);
- 	ret = 0;
- 
-+put_backbone_gw:
-+	batadv_backbone_gw_put(backbone_gw);
+ 	if (!intel_engine_pm_get_if_awake(engine))
+@@ -228,8 +230,11 @@ static void heartbeat(struct work_struct
+ unlock:
+ 	mutex_unlock(&ce->timeline->mutex);
  out:
- 	return ret;
+-	if (!engine->i915->params.enable_hangcheck || !next_heartbeat(engine))
+-		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
++	if (!engine->i915->params.enable_hangcheck || !next_heartbeat(engine)) {
++		rq = xchg(&engine->heartbeat.systole, NULL);
++		if (rq)
++			i915_request_put(rq);
++	}
+ 	intel_engine_pm_put(engine);
  }
-@@ -2468,6 +2472,7 @@ out:
- bool batadv_bla_check_claim(struct batadv_priv *bat_priv,
- 			    u8 *addr, unsigned short vid)
- {
-+	struct batadv_bla_backbone_gw *backbone_gw;
- 	struct batadv_bla_claim search_claim;
- 	struct batadv_bla_claim *claim = NULL;
- 	struct batadv_hard_iface *primary_if = NULL;
-@@ -2490,9 +2495,13 @@ bool batadv_bla_check_claim(struct batad
- 	 * return false.
- 	 */
- 	if (claim) {
--		if (!batadv_compare_eth(claim->backbone_gw->orig,
-+		backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
-+
-+		if (!batadv_compare_eth(backbone_gw->orig,
- 					primary_if->net_dev->dev_addr))
- 			ret = false;
-+
-+		batadv_backbone_gw_put(backbone_gw);
- 		batadv_claim_put(claim);
- 	}
  
+@@ -243,8 +248,13 @@ void intel_engine_unpark_heartbeat(struc
+ 
+ void intel_engine_park_heartbeat(struct intel_engine_cs *engine)
+ {
+-	if (cancel_delayed_work(&engine->heartbeat.work))
+-		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
++	if (cancel_delayed_work(&engine->heartbeat.work)) {
++		struct i915_request *rq;
++
++		rq = xchg(&engine->heartbeat.systole, NULL);
++		if (rq)
++			i915_request_put(rq);
++	}
+ }
+ 
+ void intel_gt_unpark_heartbeats(struct intel_gt *gt)
 
 
