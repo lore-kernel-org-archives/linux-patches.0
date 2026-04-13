@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C543A3264CE;
-	Mon, 13 Apr 2026 16:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557CB31E84D;
+	Mon, 13 Apr 2026 16:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099344; cv=none; b=HWHprfYEHgyOG2u48+WMVRpeVi9YhCH7qgkE/06Pca9Adc0OTSMQx8SSyKJfQv7XBa8TIyFDeF6LR4aZB2iZYEOoeiSlfBQ+Os9rvsvyTTwgcpD+DEz7H4u5AzOwe+XPwAvr2sIv4oyM8BeGZFPdYb0UMJt7v5Lwfb0+dfLcFYo=
+	t=1776099347; cv=none; b=JN38UBsaQYyGrS2p4PvuHuAsoPg/hpOzH9iwMJGg0858k7o7gbN3nJ7rDmmmgV/pCr96Ueom2H2Uq9nH+e+rocRtsL3QX62QgE6WrlqMAlHJYU7/N4rQP5XRv5j+IfzU92LmvNyahA8Zj7OpuPQ2h7BT5BNzOrqApwqKsIVA3gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099344; c=relaxed/simple;
-	bh=u9GZjRiJO51KvmMEFFUxkNTFWgsGFrId3+1K3T71fD0=;
+	s=arc-20240116; t=1776099347; c=relaxed/simple;
+	bh=CU/dqCCYYWTtE6oOn73EU2K3Y4wrn1tOQq6iSD3ysJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZPKoj5ptqNL0Ua3VlvG2r28pfXm3pxNDLL5UVp6npHiqVydnqNL/4bvmetJ1BteDX0iN4DI+9pSvEHSsuOnnU6MU0RSvo5EDRbl1XFEWPNkYMjJNwJSMWSvHqFyqa+Eta1jUHC44kVeFIpqh5JR/xwLaFcQ1GvPOb9FbBn2ASi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzCGP1pS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uP1TmgWDFuLqQfLDtdMneN8IbTUrNHaEQH9axA5ZYyg1oAOXJWvtNV5BHd8lz79ZQsiae9zuPgsIxZHc9JR+4+ey3+AqG/00NGOdiVzxbB2Jt5Z1oaG/1yvMLuQtufGVuyOc9CC1eF+YDsosFnL9BtJFqco6tS54oCtRUGaUDh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtQ6JTvU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzCGP1pS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C348C2BCAF;
-	Mon, 13 Apr 2026 16:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtQ6JTvU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E056DC2BCAF;
+	Mon, 13 Apr 2026 16:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099344;
-	bh=u9GZjRiJO51KvmMEFFUxkNTFWgsGFrId3+1K3T71fD0=;
+	s=korg; t=1776099347;
+	bh=CU/dqCCYYWTtE6oOn73EU2K3Y4wrn1tOQq6iSD3ysJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uzCGP1pS1kTRLiim5HgUwHnK6XG6lcSE+hixBouk8fPSqK7iFO8obJmd+7P6IwIxa
-	 XRW9jCZ0OsgZr5JqIsn1APDzq2+fQH8OU584gRitGRc6WQhmiWVit7S2NYCRRqQli7
-	 rr2MoHeoEdm2rpClXHicl2CUvSI9IX7/9M4C0364=
+	b=WtQ6JTvUaLmM8WFPACZcm2aZPhGthnJPSasI+an4StNEKhtPKd2FIWHsLo6cPlix4
+	 lRT3XtPAOe3iQHARF8Oe8SD2FveZMarVVDxYoldGiNvqEtJgMu0MX4hKj2AmYkr8Py
+	 Dk9nkThnM5ZXSw6Lu/43bOZScqNClfDB2nZ1gQJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <Kartikey406@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 5.10 304/491] ext4: convert inline data to extents when truncate exceeds inline size
-Date: Mon, 13 Apr 2026 17:59:09 +0200
-Message-ID: <20260413155830.422654961@linuxfoundation.org>
+Subject: [PATCH 5.10 305/491] ext4: make recently_deleted() properly work with lazy itable initialization
+Date: Mon, 13 Apr 2026 17:59:10 +0200
+Message-ID: <20260413155830.459739616@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,67 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-commit ed9356a30e59c7cc3198e7fc46cfedf3767b9b17 upstream.
+commit bd060afa7cc3e0ad30afa9ecc544a78638498555 upstream.
 
-Add a check in ext4_setattr() to convert files from inline data storage
-to extent-based storage when truncate() grows the file size beyond the
-inline capacity. This prevents the filesystem from entering an
-inconsistent state where the inline data flag is set but the file size
-exceeds what can be stored inline.
+recently_deleted() checks whether inode has been used in the near past.
+However this can give false positive result when inode table is not
+initialized yet and we are in fact comparing to random garbage (or stale
+itable block of a filesystem before mkfs). Ultimately this results in
+uninitialized inodes being skipped during inode allocation and possibly
+they are never initialized and thus e2fsck complains.  Verify if the
+inode has been initialized before checking for dtime.
 
-Without this fix, the following sequence causes a kernel BUG_ON():
-
-1. Mount filesystem with inode that has inline flag set and small size
-2. truncate(file, 50MB) - grows size but inline flag remains set
-3. sendfile() attempts to write data
-4. ext4_write_inline_data() hits BUG_ON(write_size > inline_capacity)
-
-The crash occurs because ext4_write_inline_data() expects inline storage
-to accommodate the write, but the actual inline capacity (~60 bytes for
-i_block + ~96 bytes for xattrs) is far smaller than the file size and
-write request.
-
-The fix checks if the new size from setattr exceeds the inode's actual
-inline capacity (EXT4_I(inode)->i_inline_size) and converts the file to
-extent-based storage before proceeding with the size change.
-
-This addresses the root cause by ensuring the inline data flag and file
-size remain consistent during truncate operations.
-
-Reported-by: syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7de5fe447862fc37576f
-Tested-by: syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com
-Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260207043607.1175976-1-kartikey406@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20260216164848.3074-3-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/ext4/ialloc.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -5576,6 +5576,18 @@ int ext4_setattr(struct dentry *dentry,
- 		if (IS_I_VERSION(inode) && attr->ia_size != inode->i_size)
- 			inode_inc_iversion(inode);
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -686,6 +686,12 @@ static int recently_deleted(struct super
+ 	if (unlikely(!gdp))
+ 		return 0;
  
-+		/*
-+		 * If file has inline data but new size exceeds inline capacity,
-+		 * convert to extent-based storage first to prevent inconsistent
-+		 * state (inline flag set but size exceeds inline capacity).
-+		 */
-+		if (ext4_has_inline_data(inode) &&
-+		    attr->ia_size > EXT4_I(inode)->i_inline_size) {
-+			error = ext4_convert_inline_data(inode);
-+			if (error)
-+				goto err_out;
-+		}
++	/* Inode was never used in this filesystem? */
++	if (ext4_has_group_desc_csum(sb) &&
++	    (gdp->bg_flags & cpu_to_le16(EXT4_BG_INODE_UNINIT) ||
++	     ino >= EXT4_INODES_PER_GROUP(sb) - ext4_itable_unused_count(sb, gdp)))
++		return 0;
 +
- 		if (shrink) {
- 			if (ext4_should_order_data(inode)) {
- 				error = ext4_begin_ordered_truncate(inode,
+ 	bh = sb_find_get_block(sb, ext4_inode_table(sb, gdp) +
+ 		       (ino / inodes_per_block));
+ 	if (!bh || !buffer_uptodate(bh))
 
 
