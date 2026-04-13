@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21842D5A19;
-	Mon, 13 Apr 2026 16:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5636130DD3C;
+	Mon, 13 Apr 2026 16:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098305; cv=none; b=JjJ6Td7yo9GB7S1WPWVRwoW8LfPrx060itE5bUxyg7Sr/tIzQWaaSVnuoHcMeQh/uOKsaJ+Ga5dXutHOrofdZNOq9FkLOi8Rb65q/2hXGAFKZY3PIHgwYH7GQPOO3RBe0zExzE5x1KNtDvNrVqs3D+pC7JHvyx0xqE+9N1lHhM8=
+	t=1776098308; cv=none; b=dVo5Ffc85mxYltfc9yuismf8BR9OkUk+WPTzwqCBuhK1+tD3m5BsvwWHfQiczIhlaO69NNYIRAH5oLBG7RLua5yhS+Qau0KnjtfVAMVcr+AKOCCSdrzy05cL7aJOrnhdrzxAwGXxphpgT76xpqZi5u+vv92lWrdAD0a+TV8JQ6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098305; c=relaxed/simple;
-	bh=ZF2kl/hPqpcwWv7IhXLTpNFDCEwdc2B9xz+khF3mgHY=;
+	s=arc-20240116; t=1776098308; c=relaxed/simple;
+	bh=ZNHsIWthQiohQTfaOUGis4HxlEE2kXNqM3JGxbs+GpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eb0MwAkWX9Rgmof80F33tt+2OJiFSEwEky3HyxwXpG8oiwztAAqatVUOCgFNhe14dhOc6jaDtW8SPXy5q9ACTkMqg3MkCFyH3n4Njptyp828ndjrvPxafR18mhMH9UQOUgw/i/numpBWrC3+HnrQg+PBOeusXL9JJFbLfTqLF3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzM6y+z2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U1NrzC26G5FOBlh8uA+02y8o35kd2LmX9iYTkqpbX0jvSGMvVvv62JxCmPfl8aqFaZG3NUR8sv5iec3+yf6zKct1EFHIutE7tWsDGiVTLTjr8sGf16NMjSaogEoo7d8kf4e/6LAMlSRXxZ9yMT6M5ycK0WPH79jIgTt1Q2p4Rqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqT+Y3aT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzM6y+z2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5953DC2BCAF;
-	Mon, 13 Apr 2026 16:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqT+Y3aT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12E0C2BCAF;
+	Mon, 13 Apr 2026 16:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098305;
-	bh=ZF2kl/hPqpcwWv7IhXLTpNFDCEwdc2B9xz+khF3mgHY=;
+	s=korg; t=1776098308;
+	bh=ZNHsIWthQiohQTfaOUGis4HxlEE2kXNqM3JGxbs+GpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzM6y+z2DOIvQMvpp5O/T+Q1vMibUC3ecTn1LS4OPDSH/BoIybOlzCxZfRdmqpmzo
-	 6LJ0nAc8nkH1YKemiMANi4FNPbux4uB6b9Q1ovzqBml9GbBqWFHOrxS1SG5M0j1zwj
-	 CrFD8/6Pt3JI1gjRi/Cg80o0MRHbvXDXWyGoS6Wc=
+	b=gqT+Y3aTXSDfOsspXAY3HUyzUaFaCQKmDaWoDWIuwlHmG8SQ9HcLB3boLW5VWR/w7
+	 YzTrHO9ZvS29ivWx4qpmAEtIGjPxTvjU4FyQ6g+YwoT70Vby5l+oVJhHyMFFUU3uD3
+	 /oPvaQbssUE+MEpuKAjI5Mq1LZcZf3zS8LAiSuY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Vincent Chen <vincent.chen@sifive.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 441/570] hwmon: (occ) Fix missing newline in occ_show_extended()
-Date: Mon, 13 Apr 2026 17:59:32 +0200
-Message-ID: <20260413155846.992702717@linuxfoundation.org>
+Subject: [PATCH 5.15 442/570] riscv: kgdb: fix several debug register assignment bugs
+Date: Mon, 13 Apr 2026 17:59:33 +0200
+Message-ID: <20260413155847.029605333@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,40 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Paul Walmsley <pjw@kernel.org>
 
-[ Upstream commit 09773978879ecf71a7990fe9a28ce4eb92bce645 ]
+[ Upstream commit 834911eb8eef2501485d819b4eabebadc25c3497 ]
 
-In occ_show_extended() case 0, when the EXTN_FLAG_SENSOR_ID flag
-is set, the sysfs_emit format string "%u" is missing the trailing
-newline that the sysfs ABI expects. The else branch correctly uses
-"%4phN\n", and all other show functions in this file include the
-trailing newline.
+Fix several bugs in the RISC-V kgdb implementation:
 
-Add the missing "\n" for consistency and correct sysfs output.
+- The element of dbg_reg_def[] that is supposed to pertain to the S1
+  register embeds instead the struct pt_regs offset of the A1
+  register.  Fix this to use the S1 register offset in struct pt_regs.
 
-Fixes: c10e753d43eb ("hwmon (occ): Add sensor types and versions")
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260326224510.294619-3-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+- The sleeping_thread_to_gdb_regs() function copies the value of the
+  S10 register into the gdb_regs[] array element meant for the S9
+  register, and copies the value of the S11 register into the array
+  element meant for the S10 register.  It also neglects to copy the
+  value of the S11 register.  Fix all of these issues.
+
+Fixes: fe89bd2be8667 ("riscv: Add KGDB support")
+Cc: Vincent Chen <vincent.chen@sifive.com>
+Link: https://patch.msgid.link/fde376f8-bcfd-bfe4-e467-07d8f7608d05@kernel.org
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/occ/common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/kgdb.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
-index 44007858c23fc..f178cb16b28cb 100644
---- a/drivers/hwmon/occ/common.c
-+++ b/drivers/hwmon/occ/common.c
-@@ -724,7 +724,7 @@ static ssize_t occ_show_extended(struct device *dev,
- 	switch (sattr->nr) {
- 	case 0:
- 		if (extn->flags & EXTN_FLAG_SENSOR_ID) {
--			rc = sysfs_emit(buf, "%u",
-+			rc = sysfs_emit(buf, "%u\n",
- 					get_unaligned_be32(&extn->sensor_id));
- 		} else {
- 			rc = sysfs_emit(buf, "%02x%02x%02x%02x\n",
+diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
+index 1d83b36967212..eb737c7a563b9 100644
+--- a/arch/riscv/kernel/kgdb.c
++++ b/arch/riscv/kernel/kgdb.c
+@@ -194,7 +194,7 @@ struct dbg_reg_def_t dbg_reg_def[DBG_MAX_REG_NUM] = {
+ 	{DBG_REG_T1, GDB_SIZEOF_REG, offsetof(struct pt_regs, t1)},
+ 	{DBG_REG_T2, GDB_SIZEOF_REG, offsetof(struct pt_regs, t2)},
+ 	{DBG_REG_FP, GDB_SIZEOF_REG, offsetof(struct pt_regs, s0)},
+-	{DBG_REG_S1, GDB_SIZEOF_REG, offsetof(struct pt_regs, a1)},
++	{DBG_REG_S1, GDB_SIZEOF_REG, offsetof(struct pt_regs, s1)},
+ 	{DBG_REG_A0, GDB_SIZEOF_REG, offsetof(struct pt_regs, a0)},
+ 	{DBG_REG_A1, GDB_SIZEOF_REG, offsetof(struct pt_regs, a1)},
+ 	{DBG_REG_A2, GDB_SIZEOF_REG, offsetof(struct pt_regs, a2)},
+@@ -263,8 +263,9 @@ sleeping_thread_to_gdb_regs(unsigned long *gdb_regs, struct task_struct *task)
+ 	gdb_regs[DBG_REG_S6_OFF] = task->thread.s[6];
+ 	gdb_regs[DBG_REG_S7_OFF] = task->thread.s[7];
+ 	gdb_regs[DBG_REG_S8_OFF] = task->thread.s[8];
+-	gdb_regs[DBG_REG_S9_OFF] = task->thread.s[10];
+-	gdb_regs[DBG_REG_S10_OFF] = task->thread.s[11];
++	gdb_regs[DBG_REG_S9_OFF] = task->thread.s[9];
++	gdb_regs[DBG_REG_S10_OFF] = task->thread.s[10];
++	gdb_regs[DBG_REG_S11_OFF] = task->thread.s[11];
+ 	gdb_regs[DBG_REG_EPC_OFF] = task->thread.ra;
+ }
+ 
 -- 
 2.53.0
 
