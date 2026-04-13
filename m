@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2DF30BBAE;
-	Mon, 13 Apr 2026 16:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A999307AC7;
+	Mon, 13 Apr 2026 16:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098316; cv=none; b=jnPvrobwLwMvs154NTWEKzfjPUwgyScVSzTRvRY7piBdCPIZaAEnQ1N6pozjo6HDKdXHHNKT+cbEdCx8m6q/2TiifyPyY4hkC3IUYX/ELqr7KJGz2mb3nj9e2IqZceLgek8oqkFulTvBm7/G12U5k2iz7VZEviWDUbVtbnV+T0E=
+	t=1776098318; cv=none; b=iq4hkYEQ/0e1TEfd0ai1rn4LC5Gu4ocfIGbY/nKlbjxNfg1qFQ1T2OuhkqEG33zPfUUC9jQHk/sO5OPMaz+ibmZrR+8/gZYOkujGpO0NXe3jWmuMlqgcX2WsDaka95auyhvfZ+OFO5E135GHS19tWoVo57t7Zi/iAGiP/S/esT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098316; c=relaxed/simple;
-	bh=fyYWsym16oBOkzQtN2QOmHkwTV4BxmhfH2hdhJGUCZA=;
+	s=arc-20240116; t=1776098318; c=relaxed/simple;
+	bh=hV8UVu5Fwwk44YWHCj1ayAp3TApY8APT3MS+0n7Ez04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQVGisouGTisUyjA3CQHMnNS0Rrs7tfWdFZAltaszkZ1TPuV3XY3Q3fNBAnl3xda+UkIQGPdpBbnJDqQJ0QXuXVbgYaRNeQcsvh0K4jn8kVAmp56psesVp3uKDEF2Ai5V1Db+uPqhUFSDhfsyyCUVEAzLWPwqPnYh/CZvE4oQDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDYo2TwM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tT3MdmTXC4QpPLlMPYML7LmDHJsKBeaYNYfsJ0s9kXcp40xnrFl4KEgVV1YbjGlr8u/dab9N5KxqID14DE0m7I2IhKeVWJ5nv4ATH0GYvmOGAbJdYxFu29vLdHX+t8DhGxWMIS9R6JlfxymASoAWxbsV83AxD9Gv17BFbp2lHs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMG0QzUY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDYo2TwM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962D0C2BCAF;
-	Mon, 13 Apr 2026 16:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMG0QzUY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E28BC2BCAF;
+	Mon, 13 Apr 2026 16:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098315;
-	bh=fyYWsym16oBOkzQtN2QOmHkwTV4BxmhfH2hdhJGUCZA=;
+	s=korg; t=1776098318;
+	bh=hV8UVu5Fwwk44YWHCj1ayAp3TApY8APT3MS+0n7Ez04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDYo2TwMlhc91/u+tI20X5LA74gDa767d8xFN1dXsW/qwLjEj3hdtXPvM20U/E2Oe
-	 AtUhSGvun6hy+pWCrxoc+UZkMLFABDXCidRYdf8FtW92nxgln+rWb8ZlpsVM6nbzN3
-	 1P8mfcKGlq/NP5x99qyaT76HBp+e51livfP078pU=
+	b=yMG0QzUYWnoqOWpdfDmr0BAd0piL5XgcbdOIRD4H2lLxGKfBvYLAqV3pbHAfq1BMk
+	 QHp8nVFqPOyZkjH9JCW5Lg2CscnkGiySDWrLIlEf7e3iqKV63F5QgvPfWWjY2wHRV6
+	 FMeoxW0UI1PopG6dMWp9ukIrBOtbjhQPe2GqhABI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ernestas Kulik <ernestas.k@iconn-networks.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 445/570] USB: serial: option: add MeiG Smart SRM825WN
-Date: Mon, 13 Apr 2026 17:59:36 +0200
-Message-ID: <20260413155847.139278618@linuxfoundation.org>
+	Luka Gejak <luka.gejak@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 436/570] net: hsr: fix VLAN add unwind on slave errors
+Date: Mon, 13 Apr 2026 17:59:27 +0200
+Message-ID: <20260413155846.808326507@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,67 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ernestas Kulik <ernestas.k@iconn-networks.com>
+From: Luka Gejak <luka.gejak@linux.dev>
 
-commit e8d0ed37bd51da52da6225d278e330c2f18a6198 upstream.
+[ Upstream commit 2e3514e63bfb0e972b1f19668547a455d0129e88 ]
 
-Add support for the SDX62-based MeiG Smart SRM825WN module.
+When vlan_vid_add() fails for a secondary slave, the error path calls
+vlan_vid_del() on the failing port instead of the peer slave that had
+already succeeded. This results in asymmetric VLAN state across the HSR
+pair.
 
-If#= 0: RNDIS
-If#= 1: RNDIS
-If#= 2: Diag
-If#= 3: AT
-If#= 4: AT
-If#= 5: NMEA
+Fix this by switching to a centralized unwind path that removes the VID
+from any slave device that was already programmed.
 
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#= 19 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2dee ProdID=4d38 Rev= 5.04
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=da47a175
-C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E:  Ad=81(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Ernestas Kulik <ernestas.k@iconn-networks.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1a8a63a5305e ("net: hsr: Add VLAN CTAG filter support")
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
+Link: https://patch.msgid.link/20260401092243.52121-3-luka.gejak@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/hsr/hsr_device.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2441,6 +2441,9 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM825WN (Diag) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825WN (AT) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825WN (NMEA) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 85537b245aaeb..0d7550f7498e1 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -476,8 +476,8 @@ static void hsr_change_rx_flags(struct net_device *dev, int change)
+ static int hsr_ndo_vlan_rx_add_vid(struct net_device *dev,
+ 				   __be16 proto, u16 vid)
+ {
+-	bool is_slave_a_added = false;
+-	bool is_slave_b_added = false;
++	struct net_device *slave_a_dev = NULL;
++	struct net_device *slave_b_dev = NULL;
+ 	struct hsr_port *port;
+ 	struct hsr_priv *hsr;
+ 	int ret = 0;
+@@ -493,33 +493,35 @@ static int hsr_ndo_vlan_rx_add_vid(struct net_device *dev,
+ 		switch (port->type) {
+ 		case HSR_PT_SLAVE_A:
+ 			if (ret) {
+-				/* clean up Slave-B */
+ 				netdev_err(dev, "add vid failed for Slave-A\n");
+-				if (is_slave_b_added)
+-					vlan_vid_del(port->dev, proto, vid);
+-				return ret;
++				goto unwind;
+ 			}
+-
+-			is_slave_a_added = true;
++			slave_a_dev = port->dev;
+ 			break;
+-
+ 		case HSR_PT_SLAVE_B:
+ 			if (ret) {
+-				/* clean up Slave-A */
+ 				netdev_err(dev, "add vid failed for Slave-B\n");
+-				if (is_slave_a_added)
+-					vlan_vid_del(port->dev, proto, vid);
+-				return ret;
++				goto unwind;
+ 			}
+-
+-			is_slave_b_added = true;
++			slave_b_dev = port->dev;
+ 			break;
+ 		default:
++			if (ret)
++				goto unwind;
+ 			break;
+ 		}
+ 	}
+ 
+ 	return 0;
++
++unwind:
++	if (slave_a_dev)
++		vlan_vid_del(slave_a_dev, proto, vid);
++
++	if (slave_b_dev)
++		vlan_vid_del(slave_b_dev, proto, vid);
++
++	return ret;
+ }
+ 
+ static int hsr_ndo_vlan_rx_kill_vid(struct net_device *dev,
+-- 
+2.53.0
+
 
 
