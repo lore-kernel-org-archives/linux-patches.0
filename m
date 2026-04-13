@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C012E274FE3;
-	Mon, 13 Apr 2026 16:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5290826E6F8;
+	Mon, 13 Apr 2026 16:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096841; cv=none; b=on78DQhidKeIIbMU2wJkEdShIrqlvdngoRlxWu1OArcklYNTN2JwnQsOVaMynaMyak1O9Z9c4zGKnxQakmuk0WRddvNfLSttDGxO8O1N5wY9QxRRm2iq+h2LSXQ86GtoAFvdPaR047biMoVNtW/ZYLXToUjUAtB8HvWUwjtwklM=
+	t=1776096844; cv=none; b=g1DzxkNJNGrufyf5k5mm0FmSDFtUWT3fAkAMVOK2uEZ1nxwdabAbXAp8GVWwuGjZUomr3VwZ/9EGmUWNsrzK/xCcPWDTxYfUedqCxgdtoaWhyXp2Dpwerbg0yQkoo6WGVxiud1arfq66aI1wJRcLUMxf4fFtitPKTX3OJpzezNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096841; c=relaxed/simple;
-	bh=pZiwilJF1rWmkxZKIHnUHyXoOGg9HHk2+NZ44eQc69k=;
+	s=arc-20240116; t=1776096844; c=relaxed/simple;
+	bh=l72kAaygBvKjrg4L0g+bhUecASpFhDaKdQMmFOU6diQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NA57Pl+ZZveXTRJU/1Fzogk/xj0QLNjE2CNciR8IEupCuHAn8Dwqz5S6bp/0eYBHLvYPQqNgR/gu1b8KZeiBslWj7rsyRYSVk4uGyYM5XjDwVHMevdsUQUJ9SmJ1MkcmB2DXRbnfXDK1qOp5RKnE6PjxvRVrqNUCpmF59vcKNso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yy+dmXeM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SVbDjIHsMmx7ZBxY+gqBqJLGMOrRxHr+RhcaA1gNT9HLlccmAg4Km/T0XoMIImndp07m+Ly7pq2TqprP8rUmD3CHBaHIKcGqNvK13HpZpriCls4EgQn79hHVHEGO+hzUGY/cXUB71LH1xVjmg0WhCfGiueu/FsGfPsxAO469hPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xkyop+IH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yy+dmXeM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541F6C2BCB6;
-	Mon, 13 Apr 2026 16:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xkyop+IH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1C6C2BCAF;
+	Mon, 13 Apr 2026 16:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096841;
-	bh=pZiwilJF1rWmkxZKIHnUHyXoOGg9HHk2+NZ44eQc69k=;
+	s=korg; t=1776096844;
+	bh=l72kAaygBvKjrg4L0g+bhUecASpFhDaKdQMmFOU6diQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yy+dmXeM1OWfwY03kEIHzt6kOsrE5Ti464zX/7Yq5Fc6CU/9lYgRh6gUQd2Y+dAsb
-	 1A/xbo9bQJwff+RPtlx3l4R7CxkUafd7dzPb0FLAzaRB6GfAw77EarK3W3N7piTaO7
-	 22MzWdZCMkq2GcfZRjvW0o6gLslE/TDufVX2yWhE=
+	b=Xkyop+IH731bLF/60Me4tNcFll/YaJ5j3x1iyFAgl6K/gn6v0LWuML6lCu7kxUgJZ
+	 hPxTUHFfB4VhX2zUT7ey6Wku9o981Na+RqGmiweJthbr7ZSUpuoqstqGStZf0zpJPi
+	 DYCEQIU9DNAGu7JnaWADnVdeU9lcx+GDSELiTOuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srujana Challa <schalla@marvell.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 13/50] virtio_net: clamp rss_max_key_size to NETDEV_RSS_KEY_LEN
-Date: Mon, 13 Apr 2026 18:00:40 +0200
-Message-ID: <20260413155725.004505927@linuxfoundation.org>
+	Li Xiasong <lixiasong1@huawei.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 14/50] mptcp: fix soft lockup in mptcp_recvmsg()
+Date: Mon, 13 Apr 2026 18:00:41 +0200
+Message-ID: <20260413155725.042518976@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -52,66 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srujana Challa <schalla@marvell.com>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-[ Upstream commit b4e5f04c58a29c499faa85d12952ca9a4faf1cb9 ]
+commit 5dd8025a49c268ab6b94d978532af3ad341132a7 upstream.
 
-rss_max_key_size in the virtio spec is the maximum key size supported by
-the device, not a mandatory size the driver must use. Also the value 40
-is a spec minimum, not a spec maximum.
+syzbot reported a soft lockup in mptcp_recvmsg() [0].
 
-The current code rejects RSS and can fail probe when the device reports a
-larger rss_max_key_size than the driver buffer limit. Instead, clamp the
-effective key length to min(device rss_max_key_size, NETDEV_RSS_KEY_LEN)
-and keep RSS enabled.
+When receiving data with MSG_PEEK | MSG_WAITALL flags, the skb is not
+removed from the sk_receive_queue. This causes sk_wait_data() to always
+find available data and never perform actual waiting, leading to a soft
+lockup.
 
-This keeps probe working on devices that advertise larger maximum key sizes
-while respecting the netdev RSS key buffer size limit.
+Fix this by adding a 'last' parameter to track the last peeked skb.
+This allows sk_wait_data() to make informed waiting decisions and prevent
+infinite loops when MSG_PEEK is used.
 
-Fixes: 3f7d9c1964fc ("virtio_net: Add hash_key_length check")
-Cc: stable@vger.kernel.org
-Signed-off-by: Srujana Challa <schalla@marvell.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260326142344.1171317-1-schalla@marvell.com
+[0]:
+watchdog: BUG: soft lockup - CPU#2 stuck for 156s! [server:1963]
+Modules linked in:
+CPU: 2 UID: 0 PID: 1963 Comm: server Not tainted 6.19.0-rc8 #61 PREEMPT(none)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:sk_wait_data+0x15/0x190
+Code: 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 41 56 41 55 41 54 49 89 f4 55 48 89 d5 53 48 89 fb <48> 83 ec 30 65 48 8b 05 17 a4 6b 01 48 89 44 24 28 31 c0 65 48 8b
+RSP: 0018:ffffc90000603ca0 EFLAGS: 00000246
+RAX: 0000000000000000 RBX: ffff888102bf0800 RCX: 0000000000000001
+RDX: 0000000000000000 RSI: ffffc90000603d18 RDI: ffff888102bf0800
+RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000101
+R10: 0000000000000000 R11: 0000000000000075 R12: ffffc90000603d18
+R13: ffff888102bf0800 R14: ffff888102bf0800 R15: 0000000000000000
+FS:  00007f6e38b8c4c0(0000) GS:ffff8881b877e000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000055aa7bff1680 CR3: 0000000105cbe000 CR4: 00000000000006f0
+Call Trace:
+ <TASK>
+ mptcp_recvmsg+0x547/0x8c0 net/mptcp/protocol.c:2329
+ inet_recvmsg+0x11f/0x130 net/ipv4/af_inet.c:891
+ sock_recvmsg+0x94/0xc0 net/socket.c:1100
+ __sys_recvfrom+0xb2/0x130 net/socket.c:2256
+ __x64_sys_recvfrom+0x1f/0x30 net/socket.c:2267
+ do_syscall_64+0x59/0x2d0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:131
+RIP: 0033:0x7f6e386a4a1d
+Code: 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 8d 05 f1 de 2c 00 41 89 ca 8b 00 85 c0 75 20 45 31 c9 45 31 c0 b8 2d 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 6b f3 c3 66 0f 1f 84 00 00 00 00 00 41 56 41
+RSP: 002b:00007ffc3c4bb078 EFLAGS: 00000246 ORIG_RAX: 000000000000002d
+RAX: ffffffffffffffda RBX: 000000000000861e RCX: 00007f6e386a4a1d
+RDX: 00000000000003ff RSI: 00007ffc3c4bb150 RDI: 0000000000000004
+RBP: 00007ffc3c4bb570 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000103 R11: 0000000000000246 R12: 00005605dbc00be0
+R13: 00007ffc3c4bb650 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
+
+Fixes: 8e04ce45a8db ("mptcp: fix MSG_PEEK stream corruption")
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260330120335.659027-1-lixiasong1@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ changed clamp target from NETDEV_RSS_KEY_LEN to VIRTIO_NET_RSS_MAX_KEY_SIZE ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ Conflicts in protocol.c, because commit bc68b0efa1bf ("mptcp: move the
+  whole rx path under msk socket lock protection") and commit
+  d88b2127b242 ("mptcp: add eat_recv_skb helper") (with some
+  dependences) are not in this version. These conflicts were in the
+  context, and not related to this fix. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/mptcp/protocol.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -4465,6 +4465,7 @@ static int virtnet_probe(struct virtio_d
- 	struct virtnet_info *vi;
- 	u16 max_queue_pairs;
- 	int mtu = 0;
-+	u16 key_sz;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1960,7 +1960,7 @@ static int __mptcp_recvmsg_mskq(struct m
+ 				struct msghdr *msg,
+ 				size_t len, int flags, int copied_total,
+ 				struct scm_timestamping_internal *tss,
+-				int *cmsg_flags)
++				int *cmsg_flags, struct sk_buff **last)
+ {
+ 	struct sk_buff *skb, *tmp;
+ 	int total_data_len = 0;
+@@ -1976,6 +1976,7 @@ static int __mptcp_recvmsg_mskq(struct m
+ 			/* skip already peeked skbs */
+ 			if (total_data_len + data_len <= copied_total) {
+ 				total_data_len += data_len;
++				*last = skb;
+ 				continue;
+ 			}
  
- 	/* Find if host supports multiqueue/rss virtio_net device */
- 	max_queue_pairs = 1;
-@@ -4589,14 +4590,13 @@ static int virtnet_probe(struct virtio_d
- 	}
+@@ -2016,6 +2017,8 @@ static int __mptcp_recvmsg_mskq(struct m
+ 			WRITE_ONCE(msk->rmem_released, msk->rmem_released + skb->truesize);
+ 			__skb_unlink(skb, &msk->receive_queue);
+ 			__kfree_skb(skb);
++		} else {
++			*last = skb;
+ 		}
  
- 	if (vi->has_rss || vi->has_rss_hash_report) {
--		vi->rss_key_size =
--			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
--		if (vi->rss_key_size > VIRTIO_NET_RSS_MAX_KEY_SIZE) {
--			dev_err(&vdev->dev, "rss_max_key_size=%u exceeds the limit %u.\n",
--				vi->rss_key_size, VIRTIO_NET_RSS_MAX_KEY_SIZE);
--			err = -EINVAL;
--			goto free;
--		}
-+		key_sz = virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
-+
-+		vi->rss_key_size = min_t(u16, key_sz, VIRTIO_NET_RSS_MAX_KEY_SIZE);
-+		if (key_sz > vi->rss_key_size)
-+			dev_warn(&vdev->dev,
-+				 "rss_max_key_size=%u exceeds driver limit %u, clamping\n",
-+				 key_sz, vi->rss_key_size);
+ 		if (copied >= len)
+@@ -2237,10 +2240,12 @@ static int mptcp_recvmsg(struct sock *sk
+ 		cmsg_flags = MPTCP_CMSG_INQ;
  
- 		vi->rss_hash_types_supported =
- 		    virtio_cread32(vdev, offsetof(struct virtio_net_config, supported_hash_types));
+ 	while (copied < len) {
++		struct sk_buff *last = NULL;
+ 		int err, bytes_read;
+ 
+ 		bytes_read = __mptcp_recvmsg_mskq(msk, msg, len - copied, flags,
+-						  copied, &tss, &cmsg_flags);
++						  copied, &tss, &cmsg_flags,
++						  &last);
+ 		if (unlikely(bytes_read < 0)) {
+ 			if (!copied)
+ 				copied = bytes_read;
+@@ -2298,7 +2303,7 @@ static int mptcp_recvmsg(struct sock *sk
+ 
+ 		pr_debug("block timeout %ld\n", timeo);
+ 		mptcp_cleanup_rbuf(msk, copied);
+-		err = sk_wait_data(sk, &timeo, NULL);
++		err = sk_wait_data(sk, &timeo, last);
+ 		if (err < 0) {
+ 			err = copied ? : err;
+ 			goto out_err;
 
 
