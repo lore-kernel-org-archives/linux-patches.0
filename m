@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832423090F5;
-	Mon, 13 Apr 2026 16:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169162D5A19;
+	Mon, 13 Apr 2026 16:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098432; cv=none; b=RIUvMg+3Su1nCbsugtlo5ZF0Vdr4lYf/iOITm5WAtMriHhI/DEM31Wztv4wT8H4CQ8bwXKKqccwUxeKUEDqjiUG6H5YfNWiPxYJDrOZUR5kSSScoSsvZzUBUdeDiKVBhlsWzkS0PmbXA/SqZ3e2qJC0657yAKSAZYFZOrhZb/z0=
+	t=1776098435; cv=none; b=gkJYtT8lGWRE0mGqhCMsovUhRE/fWVwPExvn5NP2Njbebvo4AMi+bSdujte+oH7nRZHumUeAcB/LftnoOGM/OgFA2bve6I6AvJWsk4dlj/JPb2RuERtyFw+BEhlK+wxOOTDONu5otURGGJFDmXUJZ2NJUV5ykrnVi1i+x+/r3dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098432; c=relaxed/simple;
-	bh=sK/+/sYuJGfdlcasZykDLjM0dftFvOz6hTCFsOKPiCc=;
+	s=arc-20240116; t=1776098435; c=relaxed/simple;
+	bh=TFaYp+LmtjjFT8/jUFEqRaExPez0Wjhi9I1GRKyGZB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+UViGYuw62k/mZzKxLG5n2HidtgAeeMgVe5Y0nvBm3//u+iI5pJ7goFs3wsQ1md+AmLBMgWR6MvTZ/IIPDWcidTuFjsUeoa3RfEeQl7idNt5TiXfKvpwo44LCXOfSRaEqA065PL9Q9QvklXaJWc/lQd1wQoBwl3+oSaOhocLvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikgl1LOr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IbeS4d9BaW+hUsZSGDKf0sLacrjHuhkqaACwevNp1ZNpZRn/BZtVMtcyPN44qLWYm+YvYIvedQKy4kv8aSdCnVrSHl7IBjK52P6dH3zxPS9Fr4qljzUrOhtczxo5+YFdLql26NituO1Inf4gi/jL/QlBYzv5Pm4xX2QKe5N38oQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMfh4Nws; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikgl1LOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12182C2BCAF;
-	Mon, 13 Apr 2026 16:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMfh4Nws"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11E9C2BCB0;
+	Mon, 13 Apr 2026 16:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098432;
-	bh=sK/+/sYuJGfdlcasZykDLjM0dftFvOz6hTCFsOKPiCc=;
+	s=korg; t=1776098435;
+	bh=TFaYp+LmtjjFT8/jUFEqRaExPez0Wjhi9I1GRKyGZB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikgl1LOra7KO3tVhRFYkwlZiRADnRnW46e3/+ombTcpPWzZKU+5MgXgLcL0XQvsJk
-	 f+/60GB1Vakaj3/Ltb5QNfgz7na0oh2/DFtw0NP18uFTyQDAM91T7Y6ADphbVoPful
-	 uwemxCRwnU+fTsGhwbRx2bRwZdmy7hCyIooxt6Fk=
+	b=TMfh4NwsL1nybvJwReeOva7Y4533vHo72tPiy8YcjaVOp3jWQoZ5FIJHL5fgiOuT8
+	 f95SSC3ldjqoQit9Mj+ww3WR/JoeXQR4sMmj9bwZ9PkRuzMTJpqfl1vpFXxPUvTAB9
+	 fK4ujUNiDn6w5u5y8g6imYl6iCcYt6LYx7RjMPVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Qualys Security Advisory <qsa@qualys.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
 	Georgia Garcia <georgia.garcia@canonical.com>,
+	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
 	Cengiz Can <cengiz.can@canonical.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
 	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 5.15 523/570] apparmor: fix differential encoding verification
-Date: Mon, 13 Apr 2026 18:00:54 +0200
-Message-ID: <20260413155850.039970976@linuxfoundation.org>
+Subject: [PATCH 5.15 524/570] apparmor: fix race on rawdata dereference
+Date: Mon, 13 Apr 2026 18:00:55 +0200
+Message-ID: <20260413155850.077159651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -47,6 +48,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -55,88 +57,438 @@ Content-Transfer-Encoding: 8bit
 
 From: John Johansen <john.johansen@canonical.com>
 
-commit 39440b137546a3aa383cfdabc605fb73811b6093 upstream.
+commit a0b7091c4de45a7325c8780e6934a894f92ac86b upstream.
 
-Differential encoding allows loops to be created if it is abused. To
-prevent this the unpack should verify that a diff-encode chain
-terminates.
+Backport for conflicts introdued by
+    d61c57fde819 ("apparmor: make export of raw binary profile to userspace optional")
+    which nests the conflicting code inside an if condition
 
-Unfortunately the differential encode verification had two bugs.
+There is a race condition that leads to a use-after-free situation:
+because the rawdata inodes are not refcounted, an attacker can start
+open()ing one of the rawdata files, and at the same time remove the
+last reference to this rawdata (by removing the corresponding profile,
+for example), which frees its struct aa_loaddata; as a result, when
+seq_rawdata_open() is reached, i_private is a dangling pointer and
+freed memory is accessed.
 
-1. it conflated states that had gone through check and already been
-   marked, with states that were currently being checked and marked.
-   This means that loops in the current chain being verified are treated
-   as a chain that has already been verified.
+The rawdata inodes weren't refcounted to avoid a circular refcount and
+were supposed to be held by the profile rawdata reference.  However
+during profile removal there is a window where the vfs and profile
+destruction race, resulting in the use after free.
 
-2. the order bailout on already checked states compared current chain
-   check iterators j,k instead of using the outer loop iterator i.
-   Meaning a step backwards in states in the current chain verification
-   was being mistaken for moving to an already verified state.
+Fix this by moving to a double refcount scheme. Where the profile
+refcount on rawdata is used to break the circular dependency. Allowing
+for freeing of the rawdata once all inode references to the rawdata
+are put.
 
-Move to a double mark scheme where already verified states get a
-different mark, than the current chain being kept. This enables us
-to also drop the backwards verification check that was the cause of
-the second error as any already verified state is already marked.
-
-Fixes: 031dcc8f4e84 ("apparmor: dfa add support for state differential encoding")
+Fixes: 5d5182cae401 ("apparmor: move to per loaddata files, instead of replicating in profiles")
 Reported-by: Qualys Security Advisory <qsa@qualys.com>
-Tested-by: Salvatore Bonaccorso <carnil@debian.org>
 Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Reviewed-by: Maxime Bélair <maxime.belair@canonical.com>
 Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+Tested-by: Salvatore Bonaccorso <carnil@debian.org>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/include/match.h |    1 +
- security/apparmor/match.c         |   23 +++++++++++++++++++----
- 2 files changed, 20 insertions(+), 4 deletions(-)
+ security/apparmor/apparmorfs.c            |   36 +++++++++------
+ security/apparmor/include/policy_unpack.h |   71 ++++++++++++++++++------------
+ security/apparmor/policy.c                |   12 ++---
+ security/apparmor/policy_unpack.c         |   32 +++++++++----
+ 4 files changed, 94 insertions(+), 57 deletions(-)
 
---- a/security/apparmor/include/match.h
-+++ b/security/apparmor/include/match.h
-@@ -190,6 +190,7 @@ static inline void aa_put_dfa(struct aa_
- #define MATCH_FLAG_DIFF_ENCODE 0x80000000
- #define MARK_DIFF_ENCODE 0x40000000
- #define MATCH_FLAG_OOB_TRANSITION 0x20000000
-+#define MARK_DIFF_ENCODE_VERIFIED 0x10000000
- #define MATCH_FLAGS_MASK 0xff000000
- #define MATCH_FLAGS_VALID (MATCH_FLAG_DIFF_ENCODE | MATCH_FLAG_OOB_TRANSITION)
- #define MATCH_FLAGS_INVALID (MATCH_FLAGS_MASK & ~MATCH_FLAGS_VALID)
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -246,16 +246,31 @@ static int verify_dfa(struct aa_dfa *dfa
- 		size_t j, k;
+--- a/security/apparmor/apparmorfs.c
++++ b/security/apparmor/apparmorfs.c
+@@ -77,7 +77,7 @@ static void rawdata_f_data_free(struct r
+ 	if (!private)
+ 		return;
  
- 		for (j = i;
--		     (BASE_TABLE(dfa)[j] & MATCH_FLAG_DIFF_ENCODE) &&
--		     !(BASE_TABLE(dfa)[j] & MARK_DIFF_ENCODE);
-+		     ((BASE_TABLE(dfa)[j] & MATCH_FLAG_DIFF_ENCODE) &&
-+		      !(BASE_TABLE(dfa)[j] & MARK_DIFF_ENCODE_VERIFIED));
- 		     j = k) {
-+			if (BASE_TABLE(dfa)[j] & MARK_DIFF_ENCODE)
-+				/* loop in current chain */
-+				goto out;
- 			k = DEFAULT_TABLE(dfa)[j];
- 			if (j == k)
-+				/* self loop */
- 				goto out;
--			if (k < j)
--				break;		/* already verified */
- 			BASE_TABLE(dfa)[j] |= MARK_DIFF_ENCODE;
- 		}
-+		/* move mark to verified */
-+		for (j = i;
-+		     (BASE_TABLE(dfa)[j] & MATCH_FLAG_DIFF_ENCODE);
-+		     j = k) {
-+			k = DEFAULT_TABLE(dfa)[j];
-+			if (j < i)
-+				/* jumps to state/chain that has been
-+				 * verified
-+				 */
-+				break;
-+			BASE_TABLE(dfa)[j] &= ~MARK_DIFF_ENCODE;
-+			BASE_TABLE(dfa)[j] |= MARK_DIFF_ENCODE_VERIFIED;
-+		}
+-	aa_put_loaddata(private->loaddata);
++	aa_put_i_loaddata(private->loaddata);
+ 	kvfree(private);
+ }
+ 
+@@ -401,7 +401,9 @@ static struct aa_loaddata *aa_simple_wri
+ 
+ 	data->size = copy_size;
+ 	if (copy_from_user(data->data, userbuf, copy_size)) {
+-		aa_put_loaddata(data);
++		/* trigger free - don't need to put pcount */
++		aa_put_i_loaddata(data);
++
+ 		return ERR_PTR(-EFAULT);
  	}
- 	error = 0;
  
+@@ -429,7 +431,10 @@ static ssize_t policy_update(u32 mask, c
+ 	error = PTR_ERR(data);
+ 	if (!IS_ERR(data)) {
+ 		error = aa_replace_profiles(ns, label, mask, data);
+-		aa_put_loaddata(data);
++		/* put pcount, which will put count and free if no
++		 * profiles referencing it.
++		 */
++		aa_put_profile_loaddata(data);
+ 	}
+ end_section:
+ 	end_current_label_crit_section(label);
+@@ -500,7 +505,7 @@ static ssize_t profile_remove(struct fil
+ 	if (!IS_ERR(data)) {
+ 		data->data[size] = 0;
+ 		error = aa_remove_profiles(ns, label, data->data, size);
+-		aa_put_loaddata(data);
++		aa_put_profile_loaddata(data);
+ 	}
+  out:
+ 	end_current_label_crit_section(label);
+@@ -1225,18 +1230,17 @@ static const struct file_operations seq_
+ static int seq_rawdata_open(struct inode *inode, struct file *file,
+ 			    int (*show)(struct seq_file *, void *))
+ {
+-	struct aa_loaddata *data = __aa_get_loaddata(inode->i_private);
++	struct aa_loaddata *data = aa_get_i_loaddata(inode->i_private);
+ 	int error;
+ 
+ 	if (!data)
+-		/* lost race this ent is being reaped */
+ 		return -ENOENT;
+ 
+ 	error = single_open(file, show, data);
+ 	if (error) {
+ 		AA_BUG(file->private_data &&
+ 		       ((struct seq_file *)file->private_data)->private);
+-		aa_put_loaddata(data);
++		aa_put_i_loaddata(data);
+ 	}
+ 
+ 	return error;
+@@ -1247,7 +1251,7 @@ static int seq_rawdata_release(struct in
+ 	struct seq_file *seq = (struct seq_file *) file->private_data;
+ 
+ 	if (seq)
+-		aa_put_loaddata(seq->private);
++		aa_put_i_loaddata(seq->private);
+ 
+ 	return single_release(inode, file);
+ }
+@@ -1366,9 +1370,8 @@ static int rawdata_open(struct inode *in
+ 	if (!policy_view_capable(NULL))
+ 		return -EACCES;
+ 
+-	loaddata = __aa_get_loaddata(inode->i_private);
++	loaddata = aa_get_i_loaddata(inode->i_private);
+ 	if (!loaddata)
+-		/* lost race: this entry is being reaped */
+ 		return -ENOENT;
+ 
+ 	private = rawdata_f_data_alloc(loaddata->size);
+@@ -1393,7 +1396,7 @@ fail_decompress:
+ 	return error;
+ 
+ fail_private_alloc:
+-	aa_put_loaddata(loaddata);
++	aa_put_i_loaddata(loaddata);
+ 	return error;
+ }
+ 
+@@ -1410,9 +1413,9 @@ static void remove_rawdata_dents(struct
+ 
+ 	for (i = 0; i < AAFS_LOADDATA_NDENTS; i++) {
+ 		if (!IS_ERR_OR_NULL(rawdata->dents[i])) {
+-			/* no refcounts on i_private */
+ 			aafs_remove(rawdata->dents[i]);
+ 			rawdata->dents[i] = NULL;
++			aa_put_i_loaddata(rawdata);
+ 		}
+ 	}
+ }
+@@ -1451,18 +1454,21 @@ int __aa_fs_create_rawdata(struct aa_ns
+ 	if (IS_ERR(dir))
+ 		/* ->name freed when rawdata freed */
+ 		return PTR_ERR(dir);
++	aa_get_i_loaddata(rawdata);
+ 	rawdata->dents[AAFS_LOADDATA_DIR] = dir;
+ 
+ 	dent = aafs_create_file("abi", S_IFREG | 0444, dir, rawdata,
+ 				      &seq_rawdata_abi_fops);
+ 	if (IS_ERR(dent))
+ 		goto fail;
++	aa_get_i_loaddata(rawdata);
+ 	rawdata->dents[AAFS_LOADDATA_ABI] = dent;
+ 
+ 	dent = aafs_create_file("revision", S_IFREG | 0444, dir, rawdata,
+ 				      &seq_rawdata_revision_fops);
+ 	if (IS_ERR(dent))
+ 		goto fail;
++	aa_get_i_loaddata(rawdata);
+ 	rawdata->dents[AAFS_LOADDATA_REVISION] = dent;
+ 
+ 	if (aa_g_hash_policy) {
+@@ -1470,6 +1476,7 @@ int __aa_fs_create_rawdata(struct aa_ns
+ 					      rawdata, &seq_rawdata_hash_fops);
+ 		if (IS_ERR(dent))
+ 			goto fail;
++		aa_get_i_loaddata(rawdata);
+ 		rawdata->dents[AAFS_LOADDATA_HASH] = dent;
+ 	}
+ 
+@@ -1478,24 +1485,25 @@ int __aa_fs_create_rawdata(struct aa_ns
+ 				&seq_rawdata_compressed_size_fops);
+ 	if (IS_ERR(dent))
+ 		goto fail;
++	aa_get_i_loaddata(rawdata);
+ 	rawdata->dents[AAFS_LOADDATA_COMPRESSED_SIZE] = dent;
+ 
+ 	dent = aafs_create_file("raw_data", S_IFREG | 0444,
+ 				      dir, rawdata, &rawdata_fops);
+ 	if (IS_ERR(dent))
+ 		goto fail;
++	aa_get_i_loaddata(rawdata);
+ 	rawdata->dents[AAFS_LOADDATA_DATA] = dent;
+ 	d_inode(dent)->i_size = rawdata->size;
+ 
+ 	rawdata->ns = aa_get_ns(ns);
+ 	list_add(&rawdata->list, &ns->rawdata_list);
+-	/* no refcount on inode rawdata */
+ 
+ 	return 0;
+ 
+ fail:
+ 	remove_rawdata_dents(rawdata);
+-
++	aa_put_i_loaddata(rawdata);
+ 	return PTR_ERR(dent);
+ }
+ 
+--- a/security/apparmor/include/policy_unpack.h
++++ b/security/apparmor/include/policy_unpack.h
+@@ -46,17 +46,29 @@ enum {
+ 	AAFS_LOADDATA_NDENTS		/* count of entries */
+ };
+ 
+-/*
+- * struct aa_loaddata - buffer of policy raw_data set
++/* struct aa_loaddata - buffer of policy raw_data set
++ * @count: inode/filesystem refcount - use aa_get_i_loaddata()
++ * @pcount: profile refcount - use aa_get_profile_loaddata()
++ * @list: list the loaddata is on
++ * @work: used to do a delayed cleanup
++ * @dents: refs to dents created in aafs
++ * @ns: the namespace this loaddata was loaded into
++ * @name:
++ * @size: the size of the data that was loaded
++ * @compressed_size: the size of the data when it is compressed
++ * @revision: unique revision count that this data was loaded as
++ * @abi: the abi number the loaddata uses
++ * @hash: a hash of the loaddata, used to help dedup data
+  *
+- * there is no loaddata ref for being on ns list, nor a ref from
+- * d_inode(@dentry) when grab a ref from these, @ns->lock must be held
+- * && __aa_get_loaddata() needs to be used, and the return value
+- * checked, if NULL the loaddata is already being reaped and should be
+- * considered dead.
++ * There is no loaddata ref for being on ns->rawdata_list, so
++ * @ns->lock must be held when walking the list. Dentries and
++ * inode opens hold refs on @count; profiles hold refs on @pcount.
++ * When the last @pcount drops, do_ploaddata_rmfs() removes the
++ * fs entries and drops the associated @count ref.
+  */
+ struct aa_loaddata {
+ 	struct kref count;
++	struct kref pcount;
+ 	struct list_head list;
+ 	struct work_struct work;
+ 	struct dentry *dents[AAFS_LOADDATA_NDENTS];
+@@ -78,50 +90,53 @@ struct aa_loaddata {
+ int aa_unpack(struct aa_loaddata *udata, struct list_head *lh, const char **ns);
+ 
+ /**
+- * __aa_get_loaddata - get a reference count to uncounted data reference
++ * aa_get_loaddata - get a reference count from a counted data reference
+  * @data: reference to get a count on
+  *
+- * Returns: pointer to reference OR NULL if race is lost and reference is
+- *          being repeated.
+- * Requires: @data->ns->lock held, and the return code MUST be checked
+- *
+- * Use only from inode->i_private and @data->list found references
++ * Returns: pointer to reference
++ * Requires: @data to have a valid reference count on it. It is a bug
++ *           if the race to reap can be encountered when it is used.
+  */
+ static inline struct aa_loaddata *
+-__aa_get_loaddata(struct aa_loaddata *data)
++aa_get_i_loaddata(struct aa_loaddata *data)
+ {
+-	if (data && kref_get_unless_zero(&(data->count)))
+-		return data;
+ 
+-	return NULL;
++	if (data)
++		kref_get(&(data->count));
++	return data;
+ }
+ 
++
+ /**
+- * aa_get_loaddata - get a reference count from a counted data reference
++ * aa_get_profile_loaddata - get a profile reference count on loaddata
+  * @data: reference to get a count on
+  *
+- * Returns: point to reference
+- * Requires: @data to have a valid reference count on it. It is a bug
+- *           if the race to reap can be encountered when it is used.
++ * Returns: pointer to reference
++ * Requires: @data to have a valid reference count on it.
+  */
+ static inline struct aa_loaddata *
+-aa_get_loaddata(struct aa_loaddata *data)
++aa_get_profile_loaddata(struct aa_loaddata *data)
+ {
+-	struct aa_loaddata *tmp = __aa_get_loaddata(data);
+-
+-	AA_BUG(data && !tmp);
+-
+-	return tmp;
++	if (data)
++		kref_get(&(data->pcount));
++	return data;
+ }
+ 
+ void __aa_loaddata_update(struct aa_loaddata *data, long revision);
+ bool aa_rawdata_eq(struct aa_loaddata *l, struct aa_loaddata *r);
+ void aa_loaddata_kref(struct kref *kref);
++void aa_ploaddata_kref(struct kref *kref);
+ struct aa_loaddata *aa_loaddata_alloc(size_t size);
+-static inline void aa_put_loaddata(struct aa_loaddata *data)
++static inline void aa_put_i_loaddata(struct aa_loaddata *data)
+ {
+ 	if (data)
+ 		kref_put(&data->count, aa_loaddata_kref);
+ }
+ 
++static inline void aa_put_profile_loaddata(struct aa_loaddata *data)
++{
++	if (data)
++		kref_put(&data->pcount, aa_ploaddata_kref);
++}
++
+ #endif /* __POLICY_INTERFACE_H */
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -265,7 +265,7 @@ void aa_free_profile(struct aa_profile *
+ 	}
+ 
+ 	kfree_sensitive(profile->hash);
+-	aa_put_loaddata(profile->rawdata);
++	aa_put_profile_loaddata(profile->rawdata);
+ 	aa_label_destroy(&profile->label);
+ 
+ 	kfree_sensitive(profile);
+@@ -925,7 +925,7 @@ ssize_t aa_replace_profiles(struct aa_ns
+ 	LIST_HEAD(lh);
+ 
+ 	op = mask & AA_MAY_REPLACE_POLICY ? OP_PROF_REPL : OP_PROF_LOAD;
+-	aa_get_loaddata(udata);
++	aa_get_profile_loaddata(udata);
+ 	/* released below */
+ 	error = aa_unpack(udata, &lh, &ns_name);
+ 	if (error)
+@@ -976,10 +976,10 @@ ssize_t aa_replace_profiles(struct aa_ns
+ 		if (aa_rawdata_eq(rawdata_ent, udata)) {
+ 			struct aa_loaddata *tmp;
+ 
+-			tmp = __aa_get_loaddata(rawdata_ent);
++			tmp = aa_get_profile_loaddata(rawdata_ent);
+ 			/* check we didn't fail the race */
+ 			if (tmp) {
+-				aa_put_loaddata(udata);
++				aa_put_profile_loaddata(udata);
+ 				udata = tmp;
+ 				break;
+ 			}
+@@ -989,7 +989,7 @@ ssize_t aa_replace_profiles(struct aa_ns
+ 	list_for_each_entry(ent, &lh, list) {
+ 		struct aa_policy *policy;
+ 
+-		ent->new->rawdata = aa_get_loaddata(udata);
++		ent->new->rawdata = aa_get_profile_loaddata(udata);
+ 		error = __lookup_replace(ns, ent->new->base.hname,
+ 					 !(mask & AA_MAY_REPLACE_POLICY),
+ 					 &ent->old, &info);
+@@ -1103,7 +1103,7 @@ ssize_t aa_replace_profiles(struct aa_ns
+ 
+ out:
+ 	aa_put_ns(ns);
+-	aa_put_loaddata(udata);
++	aa_put_profile_loaddata(udata);
+ 	kfree(ns_name);
+ 
+ 	if (error)
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -147,34 +147,47 @@ bool aa_rawdata_eq(struct aa_loaddata *l
+ 	return memcmp(l->data, r->data, r->compressed_size ?: r->size) == 0;
+ }
+ 
++static void do_loaddata_free(struct aa_loaddata *d)
++{
++	kfree_sensitive(d->hash);
++	kfree_sensitive(d->name);
++	kvfree(d->data);
++	kfree_sensitive(d);
++}
++
++void aa_loaddata_kref(struct kref *kref)
++{
++	struct aa_loaddata *d = container_of(kref, struct aa_loaddata, count);
++
++	do_loaddata_free(d);
++}
++
+ /*
+  * need to take the ns mutex lock which is NOT safe most places that
+  * put_loaddata is called, so we have to delay freeing it
+  */
+-static void do_loaddata_free(struct work_struct *work)
++static void do_ploaddata_rmfs(struct work_struct *work)
+ {
+ 	struct aa_loaddata *d = container_of(work, struct aa_loaddata, work);
+ 	struct aa_ns *ns = aa_get_ns(d->ns);
+ 
+ 	if (ns) {
+ 		mutex_lock_nested(&ns->lock, ns->level);
++		/* remove fs ref to loaddata */
+ 		__aa_fs_remove_rawdata(d);
+ 		mutex_unlock(&ns->lock);
+ 		aa_put_ns(ns);
+ 	}
+-
+-	kfree_sensitive(d->hash);
+-	kfree_sensitive(d->name);
+-	kvfree(d->data);
+-	kfree_sensitive(d);
++	/* called by dropping last pcount, so drop its associated icount */
++	aa_put_i_loaddata(d);
+ }
+ 
+-void aa_loaddata_kref(struct kref *kref)
++void aa_ploaddata_kref(struct kref *kref)
+ {
+-	struct aa_loaddata *d = container_of(kref, struct aa_loaddata, count);
++	struct aa_loaddata *d = container_of(kref, struct aa_loaddata, pcount);
+ 
+ 	if (d) {
+-		INIT_WORK(&d->work, do_loaddata_free);
++		INIT_WORK(&d->work, do_ploaddata_rmfs);
+ 		schedule_work(&d->work);
+ 	}
+ }
+@@ -192,6 +205,7 @@ struct aa_loaddata *aa_loaddata_alloc(si
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 	kref_init(&d->count);
++	kref_init(&d->pcount);
+ 	INIT_LIST_HEAD(&d->list);
+ 
+ 	return d;
 
 
