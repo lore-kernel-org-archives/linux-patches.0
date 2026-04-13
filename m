@@ -1,49 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4646A299929;
-	Mon, 13 Apr 2026 17:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFC9299929;
+	Mon, 13 Apr 2026 17:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099762; cv=none; b=NtkNqBUrAUWkA6a/Tu00BiaamVdG+IaI6JtfD73rltC8G3OCTzO0hTVlti0jqBf1AvR47w7Xt1RnnBy75iAvVvV3AD/a4L85LKYTqaxe4xJRusnMFv3YSX1FZWN1Sh4/BK1GHDpTvXb70yEoyCS0wWWsM/FwhgSQdl+RbuHRXVY=
+	t=1776099764; cv=none; b=rwzlMqok5ehB0VWFwyWnXWLYlYIYnIWpYp/ig+g5m8sQS8EXSCOVHVqngvJ4xAUMIroE8mPMI7u6Q7xWRsHtKzHAbd18spxpch0SEgxced1RXm6S45gKV67p1vQNM7HJXnq06N9GPrbm4jYZe2WgcGUEHzf7pFJibnYLt+pr7dE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099762; c=relaxed/simple;
-	bh=kpnN2u4tMFI9O/iUtqhPsug/N2XVihE9OLp7blXEot4=;
+	s=arc-20240116; t=1776099764; c=relaxed/simple;
+	bh=4ubvggihsjnhMKj165SwPLjwsphEQPwpNPrAu98dmj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phhBtGTlF4uC0Cdr6Eo0JQ2SqtIeur6Bxc2fofr4QwzVCEAWzbpMBesIRB8wEs+nmQ0n86Y7bNfRlq9bzN9BXnf5pqalgAlplDs4taaI8DnIIQ32bK+kjoB40ZfFdh3Mpqf5PRR5j1KF9PViPdbz2Ye77RnVV8T4heDRyipNCo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNtXE+kG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U3tIuXnehzlVCg6VK1CNpjaTMLomSlF7TjEoBF/5NdsIhDgZSkTJ4rEh+p+U1F7ZsUGthseuOWWXHwN6OJxdmGbwm/qaJjX5mlO0L9TMT71fEcF3sDfDlAhxkz5EjCF5f34s7I66GXSM8ykZ3NOBRSEF/g27w/hE4pgNgEvxzK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRgD8XP3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNtXE+kG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A676AC2BCAF;
-	Mon, 13 Apr 2026 17:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRgD8XP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6754EC2BCAF;
+	Mon, 13 Apr 2026 17:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099762;
-	bh=kpnN2u4tMFI9O/iUtqhPsug/N2XVihE9OLp7blXEot4=;
+	s=korg; t=1776099764;
+	bh=4ubvggihsjnhMKj165SwPLjwsphEQPwpNPrAu98dmj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sNtXE+kGyFrHtByfaMnghog8Chr23o0PTC0xQLPdUEriaoch36iV8dnMuaJVMfB+K
-	 g27jrHwQlACrtWnieZlmkBvv2fZ3htR0FZuKEWVK5V+o6b71aoPKI4DuN/MRJGGkJf
-	 muHiBPZK9Xc/JvlfQxJLNboeQN3SADlyy7TF/z/0=
+	b=CRgD8XP3QqBV/dLZ2CmX+Q6U73UqsCrbnapeN0/YTuxXhJIyN8yeJ1ilhLvtUzbQg
+	 e9Y4pbqR/By8Itb0IFF8RpyIKjNzt6WpaN28+kGQz4mH8/Ve0ewyOCqrrHJNyGXJCp
+	 VNYZUZToixwvn7mYUSOBKydMPqyL+e+yebERAEKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 465/491] mm/huge_memory: fix folio isnt locked in softleaf_to_folio()
-Date: Mon, 13 Apr 2026 18:01:50 +0200
-Message-ID: <20260413155836.447533312@linuxfoundation.org>
+Subject: [PATCH 5.10 466/491] ext4: fix the might_sleep() warnings in kvfree()
+Date: Mon, 13 Apr 2026 18:01:51 +0200
+Message-ID: <20260413155836.486121737@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -62,84 +53,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Zqiang <qiang.zhang@linux.dev>
 
-[ Upstream commit 4c5e7f0fcd592801c9cc18f29f80fbee84eb8669 ]
+[ Upstream commit 496bb99b7e66f48b178126626f47e9ba79e2d0fa ]
 
-On arm64 server, we found folio that get from migration entry isn't locked
-in softleaf_to_folio().  This issue triggers when mTHP splitting and
-zap_nonpresent_ptes() races, and the root cause is lack of memory barrier
-in softleaf_to_folio().  The race is as follows:
+Use the kvfree() in the RCU read critical section can trigger
+the following warnings:
 
-	CPU0                                             CPU1
+EXT4-fs (vdb): unmounting filesystem cd983e5b-3c83-4f5a-a136-17b00eb9d018.
 
-deferred_split_scan()                              zap_nonpresent_ptes()
-  lock folio
-  split_folio()
-    unmap_folio()
-      change ptes to migration entries
-    __split_folio_to_order()                         softleaf_to_folio()
-      set flags(including PG_locked) for tail pages    folio = pfn_folio(softleaf_to_pfn(entry))
-      smp_wmb()                                        VM_WARN_ON_ONCE(!folio_test_locked(folio))
-      prep_compound_page() for tail pages
+WARNING: suspicious RCU usage
 
-In __split_folio_to_order(), smp_wmb() guarantees page flags of tail pages
-are visible before the tail page becomes non-compound.  smp_wmb() should
-be paired with smp_rmb() in softleaf_to_folio(), which is missed.  As a
-result, if zap_nonpresent_ptes() accesses migration entry that stores tail
-pfn, softleaf_to_folio() may see the updated compound_head of tail page
-before page->flags.
+./include/linux/rcupdate.h:409 Illegal context switch in RCU read-side critical section!
 
-This issue will trigger VM_WARN_ON_ONCE() in pfn_swap_entry_folio()
-because of the race between folio split and zap_nonpresent_ptes()
-leading to a folio incorrectly undergoing modification without a folio
-lock being held.
+other info that might help us debug this:
 
-This is a BUG_ON() before commit 93976a20345b ("mm: eliminate further
-swapops predicates"), which in merged in v6.19-rc1.
+rcu_scheduler_active = 2, debug_locks = 1
 
-To fix it, add missing smp_rmb() if the softleaf entry is migration entry
-in softleaf_to_folio() and softleaf_to_page().
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xbb/0xd0
+ dump_stack+0x14/0x20
+ lockdep_rcu_suspicious+0x15a/0x1b0
+ __might_resched+0x375/0x4d0
+ ? put_object.part.0+0x2c/0x50
+ __might_sleep+0x108/0x160
+ vfree+0x58/0x910
+ ? ext4_group_desc_free+0x27/0x270
+ kvfree+0x23/0x40
+ ext4_group_desc_free+0x111/0x270
+ ext4_put_super+0x3c8/0xd40
+ generic_shutdown_super+0x14c/0x4a0
+ ? __pfx_shrinker_free+0x10/0x10
+ kill_block_super+0x40/0x90
+ ext4_kill_sb+0x6d/0xb0
+ deactivate_locked_super+0xb4/0x180
+ deactivate_super+0x7e/0xa0
+ cleanup_mnt+0x296/0x3e0
+ __cleanup_mnt+0x16/0x20
+ task_work_run+0x157/0x250
+ ? __pfx_task_work_run+0x10/0x10
+ ? exit_to_user_mode_loop+0x6a/0x550
+ exit_to_user_mode_loop+0x102/0x550
+ do_syscall_64+0x44a/0x500
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-[tujinjiang@huawei.com: update function name and comments]
-  Link: https://lkml.kernel.org/r/20260321075214.3305564-1-tujinjiang@huawei.com
-Link: https://lkml.kernel.org/r/20260319012541.4158561-1-tujinjiang@huawei.com
-Fixes: e9b61f19858a ("thp: reintroduce split_huge_page()")
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ adapted upstream leafops.h changes to swapops.h ]
+BUG: sleeping function called from invalid context at mm/vmalloc.c:3441
+in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 556, name: umount
+preempt_count: 1, expected: 0
+CPU: 3 UID: 0 PID: 556 Comm: umount
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xbb/0xd0
+ dump_stack+0x14/0x20
+ __might_resched+0x275/0x4d0
+ ? put_object.part.0+0x2c/0x50
+ __might_sleep+0x108/0x160
+ vfree+0x58/0x910
+ ? ext4_group_desc_free+0x27/0x270
+ kvfree+0x23/0x40
+ ext4_group_desc_free+0x111/0x270
+ ext4_put_super+0x3c8/0xd40
+ generic_shutdown_super+0x14c/0x4a0
+ ? __pfx_shrinker_free+0x10/0x10
+ kill_block_super+0x40/0x90
+ ext4_kill_sb+0x6d/0xb0
+ deactivate_locked_super+0xb4/0x180
+ deactivate_super+0x7e/0xa0
+ cleanup_mnt+0x296/0x3e0
+ __cleanup_mnt+0x16/0x20
+ task_work_run+0x157/0x250
+ ? __pfx_task_work_run+0x10/0x10
+ ? exit_to_user_mode_loop+0x6a/0x550
+ exit_to_user_mode_loop+0x102/0x550
+ do_syscall_64+0x44a/0x500
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+The above scenarios occur in initialization failures and teardown
+paths, there are no parallel operations on the resources released
+by kvfree(), this commit therefore remove rcu_read_lock/unlock() and
+use rcu_access_pointer() instead of rcu_dereference() operations.
+
+Fixes: 7c990728b99e ("ext4: fix potential race between s_flex_groups online resizing and access")
+Fixes: df3da4ea5a0f ("ext4: fix potential race between s_group_info online resizing and access")
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20260319094545.19291-1-qiang.zhang@linux.dev
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ adapted inline rcu_read_lock/rcu_dereference/rcu_read_unlock removal ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/swapops.h |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ext4/mballoc.c |   10 +++-------
+ fs/ext4/super.c   |    6 ++----
+ 2 files changed, 5 insertions(+), 11 deletions(-)
 
---- a/include/linux/swapops.h
-+++ b/include/linux/swapops.h
-@@ -198,6 +198,12 @@ static inline struct page *migration_ent
- {
- 	struct page *p = pfn_to_page(swp_offset(entry));
- 	/*
-+	 * Ensure we do not race with split, which might alter tail pages
-+	 * into new folios and thus result in observing an unlocked page.
-+	 * This matches the write barrier in __split_huge_page_tail().
-+	 */
-+	smp_rmb();
-+	/*
- 	 * Any use of migration entries may only occur while the
- 	 * corresponding page is locked
- 	 */
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -2894,9 +2894,7 @@ err_freebuddy:
+ 	rcu_read_unlock();
+ 	iput(sbi->s_buddy_cache);
+ err_freesgi:
+-	rcu_read_lock();
+-	kvfree(rcu_dereference(sbi->s_group_info));
+-	rcu_read_unlock();
++	kvfree(rcu_access_pointer(sbi->s_group_info));
+ 	return -ENOMEM;
+ }
+ 
+@@ -3088,7 +3086,8 @@ int ext4_mb_release(struct super_block *
+ 	struct kmem_cache *cachep = get_groupinfo_cache(sb->s_blocksize_bits);
+ 	int count;
+ 
+-	if (sbi->s_group_info) {
++	group_info = rcu_access_pointer(sbi->s_group_info);
++	if (group_info) {
+ 		for (i = 0; i < ngroups; i++) {
+ 			cond_resched();
+ 			grinfo = ext4_get_group_info(sb, i);
+@@ -3106,12 +3105,9 @@ int ext4_mb_release(struct super_block *
+ 		num_meta_group_infos = (ngroups +
+ 				EXT4_DESC_PER_BLOCK(sb) - 1) >>
+ 			EXT4_DESC_PER_BLOCK_BITS(sb);
+-		rcu_read_lock();
+-		group_info = rcu_dereference(sbi->s_group_info);
+ 		for (i = 0; i < num_meta_group_infos; i++)
+ 			kfree(group_info[i]);
+ 		kvfree(group_info);
+-		rcu_read_unlock();
+ 	}
+ 	kfree(sbi->s_mb_offsets);
+ 	kfree(sbi->s_mb_maxs);
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -1207,18 +1207,16 @@ static void ext4_put_super(struct super_
+ 	if (!sb_rdonly(sb))
+ 		ext4_commit_super(sb, 1);
+ 
+-	rcu_read_lock();
+-	group_desc = rcu_dereference(sbi->s_group_desc);
++	group_desc = rcu_access_pointer(sbi->s_group_desc);
+ 	for (i = 0; i < sbi->s_gdb_count; i++)
+ 		brelse(group_desc[i]);
+ 	kvfree(group_desc);
+-	flex_groups = rcu_dereference(sbi->s_flex_groups);
++	flex_groups = rcu_access_pointer(sbi->s_flex_groups);
+ 	if (flex_groups) {
+ 		for (i = 0; i < sbi->s_flex_groups_allocated; i++)
+ 			kvfree(flex_groups[i]);
+ 		kvfree(flex_groups);
+ 	}
+-	rcu_read_unlock();
+ 	percpu_counter_destroy(&sbi->s_freeclusters_counter);
+ 	percpu_counter_destroy(&sbi->s_freeinodes_counter);
+ 	percpu_counter_destroy(&sbi->s_dirs_counter);
 
 
