@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B866D2FFFBE;
-	Mon, 13 Apr 2026 16:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C9B2DF12F;
+	Mon, 13 Apr 2026 16:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097419; cv=none; b=Hw3Sg9nAhVj75Asrb5R3E7YpBz5zxBrSmwlSYgVhz2UIkoUoPdpT6xuvSjKzcV14T8cLEVfVMBkhElBnnWgv7JdBI7d86gzfiG8qRZ8XLke+0xSlSkFquxsE6W++7t6CRV47DJGjHbnPXBs60UbnMIcRck6qrfGrg82vg4holgY=
+	t=1776097422; cv=none; b=d6UQ9J6LB1OrmCXR9iK1a2MU4J63i6id9/qFqcLvmn7GUjn+xgF7CowLZYjV2SBk927ltgSdVAhY2wqZHv99rKWqDRxIw8Y4Uar2xOmnYFTtQxmTkVRrSb59hTXJKzS/4MZ5WFwcTXAVfvF4gcB39sGQ1ph/MX2ywFX17mrUNmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097419; c=relaxed/simple;
-	bh=yvoAt6MnxIp/14OkgNvLXe02U7dxd7sfgM81Ijj1EGk=;
+	s=arc-20240116; t=1776097422; c=relaxed/simple;
+	bh=frejrtFgII3462+1R8nz+B4sJZLaa0YQfU/3krJ46tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X244nDz+LadU5qKxZAKuLKZDk+lJ9tgk3gDF1T4hqq1WQA6S4oj0FKy/syloXUDzL2BhflwpKmEuevsdTeAd6LKVYagujPsiXamMDxjmPvLAeH720ECJmob5XmoVOsPEZjf5qYXTD0TTi8gwwSf4qjy9/Lv9gZftlEk3pklaFfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbkLrxMQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dk+sRTHcS25bipW//Uq8oWOsEiAu4uZIeZQd8pUnj/JFAmJz2EVyFHwpjv5pnxlTSUt3XncueOfOYGYFco/O5mhEYuMyv1PnHvhUmZAe+IiuRp5ZZTMsBVRMoYQE0NSvbfC7pZl3xIMRtXGvFyIprgkWUeFoLejT7uWYIPZhDzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ioJBrZq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbkLrxMQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED60C2BCB0;
-	Mon, 13 Apr 2026 16:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ioJBrZq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1069C2BCAF;
+	Mon, 13 Apr 2026 16:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097419;
-	bh=yvoAt6MnxIp/14OkgNvLXe02U7dxd7sfgM81Ijj1EGk=;
+	s=korg; t=1776097422;
+	bh=frejrtFgII3462+1R8nz+B4sJZLaa0YQfU/3krJ46tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbkLrxMQQJ71SNEczOkFvkqYcFfbCW7VCuSEmad4nbnPGGHlRURq007veCvdQ7QQh
-	 L2h53pj1Hpr7i3ZeWVBurKKcep290PuuXBCxflObNEgkVRW+VTf8GKNUahd3RUQyQg
-	 1lp65f8JJN+pCLs+7+hZ+8WoiqnLTuYKeKd9cr7c=
+	b=2ioJBrZqkPAA+ulUwNW03wH+gHuBJ3jF8+Odq31oybCOp6txGDZs71Jf8W1gxhnM5
+	 uTQnkjaMz6+FbQegat2u8nlJa8xHSYLh67S1vlSWLSSaubBfu5bVZ9QdXXrF5YQepC
+	 xH26dIaTOvtSwivTq0xZusloTZ/wBHJ3wr9nnQA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Mattiolo <marco.mattiolo@hotmail.it>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/570] Revert "arm64: dts: qcom: sdm845-oneplus: Mark l14a regulator as boot-on"
-Date: Mon, 13 Apr 2026 17:54:21 +0200
-Message-ID: <20260413155835.313048578@linuxfoundation.org>
+	Qingye Zhao <zhaoqingye@honor.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 5.15 131/570] cgroup: fix race between task migration and iteration
+Date: Mon, 13 Apr 2026 17:54:22 +0200
+Message-ID: <20260413155835.350674340@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -44,37 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-This reverts commit 018e8512fed90cb3f67851dcd3e4fb0891544871.
+From: Qingye Zhao <zhaoqingye@honor.com>
 
-The backport applied regulator-boot-on to vreg_l12a_1p8 (ldo12) instead
-of vreg_l14a_1p88 (ldo14) due to identical surrounding context lines.
+commit 5ee01f1a7343d6a3547b6802ca2d4cdce0edacb1 upstream.
 
-Reported-by: Marco Mattiolo <marco.mattiolo@hotmail.it>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When a task is migrated out of a css_set, cgroup_migrate_add_task()
+first moves it from cset->tasks to cset->mg_tasks via:
+
+    list_move_tail(&task->cg_list, &cset->mg_tasks);
+
+If a css_task_iter currently has it->task_pos pointing to this task,
+css_set_move_task() calls css_task_iter_skip() to keep the iterator
+valid. However, since the task has already been moved to ->mg_tasks,
+the iterator is advanced relative to the mg_tasks list instead of the
+original tasks list. As a result, remaining tasks on cset->tasks, as
+well as tasks queued on cset->mg_tasks, can be skipped by iteration.
+
+Fix this by calling css_set_skip_task_iters() before unlinking
+task->cg_list from cset->tasks. This advances all active iterators to
+the next task on cset->tasks, so iteration continues correctly even
+when a task is concurrently being migrated.
+
+This race is hard to hit in practice without instrumentation, but it
+can be reproduced by artificially slowing down cgroup_procs_show().
+For example, on an Android device a temporary
+/sys/kernel/cgroup/cgroup_test knob can be added to inject a delay
+into cgroup_procs_show(), and then:
+
+  1) Spawn three long-running tasks (PIDs 101, 102, 103).
+  2) Create a test cgroup and move the tasks into it.
+  3) Enable a large delay via /sys/kernel/cgroup/cgroup_test.
+  4) In one shell, read cgroup.procs from the test cgroup.
+  5) Within the delay window, in another shell migrate PID 102 by
+     writing it to a different cgroup.procs file.
+
+Under this setup, cgroup.procs can intermittently show only PID 101
+while skipping PID 103. Once the migration completes, reading the
+file again shows all tasks as expected.
+
+Note that this change does not allow removing the existing
+css_set_skip_task_iters() call in css_set_move_task(). The new call
+in cgroup_migrate_add_task() only handles iterators that are racing
+with migration while the task is still on cset->tasks. Iterators may
+also start after the task has been moved to cset->mg_tasks. If we
+dropped css_set_skip_task_iters() from css_set_move_task(), such
+iterators could keep task_pos pointing to a migrating task, causing
+css_task_iter_advance() to malfunction on the destination css_set,
+up to and including crashes or infinite loops.
+
+The race window between migration and iteration is very small, and
+css_task_iter is not on a hot path. In the worst case, when an
+iterator is positioned on the first thread of the migrating process,
+cgroup_migrate_add_task() may have to skip multiple tasks via
+css_set_skip_task_iters(). However, this only happens when migration
+and iteration actually race, so the performance impact is negligible
+compared to the correctness fix provided here.
+
+Fixes: b636fd38dc40 ("cgroup: Implement css_task_iter_skip()")
+Cc: stable@vger.kernel.org # v5.2+
+Signed-off-by: Qingye Zhao <zhaoqingye@honor.com>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ kernel/cgroup/cgroup.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 948ec59418017..66b86dd292c8a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -226,7 +226,6 @@ vreg_l12a_1p8: ldo12 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--			regulator-boot-on;
- 		};
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -2454,6 +2454,7 @@ static void cgroup_migrate_add_task(stru
  
- 		vreg_l14a_1p88: ldo14 {
--- 
-2.51.0
-
+ 	mgctx->tset.nr_tasks++;
+ 
++	css_set_skip_task_iters(cset, task);
+ 	list_move_tail(&task->cg_list, &cset->mg_tasks);
+ 	if (list_empty(&cset->mg_node))
+ 		list_add_tail(&cset->mg_node,
 
 
