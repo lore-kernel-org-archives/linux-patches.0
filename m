@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEE21D6DB5;
-	Mon, 13 Apr 2026 16:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73EF624DCF6;
+	Mon, 13 Apr 2026 16:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096248; cv=none; b=OTdBpk7y+1f1ylRROrEgmk9BRKdFFep/SwT3UNKvHxsGNS3k0znrs7VAHXjEDitwTYm6n4BQ4FLwT7EmlYKomKgidEieOj5uh0MHxyTu1qpACb4uxPTZUHKqLqYny4PeNCNxC0wUUrl+lXHkGQx2l7yHEOvWGNiErL9XzspChBk=
+	t=1776096251; cv=none; b=QVgl3Otl9Lrav65snAoBaluDf1XRMLkDkj712/FaiRKVsO/V6jBb4SSGRX6kk73fCcI4CyY+12s+NwHFyBJLfRBli4Ouqn7QyhrrBQmtzmcM3WPlx17in1Uw+zuEOhnZfEdITIbcUDz6NX/kiPk2LV7TM19wYk+PIXenX80ZvjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096248; c=relaxed/simple;
-	bh=bzomDZLcl/Cx4t9lCnFp5XvCuJqKDxonuJN75hK/XgQ=;
+	s=arc-20240116; t=1776096251; c=relaxed/simple;
+	bh=ll0qtaeJotfv9NP9LTqdNCkhbwYS/06MTCSbx9pNq1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sXEmBMqFryS4J+wMcP+sCv2WyQn7PuDkSj81uvvcNNne+5YTSv3GOXKrpEj5S3jXHHcPel0JC0uvxRNzz9GAd6wobj56+POrbPYAggi0Xw6oIeLrnOkxUtLkzx7yQk54LF2AyyHON5AW+J0EeGpRZg5zGiRzAsSmdx2Xgk8FbLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULWJrUaO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o7WGqZYeEh0hgVWYx2mbDDqjkjN/tHNm1PdGkY+0XUnX8AMTf9d9GzeyJeL/uGcQxpOEbf6RN3dPnPvUJQ3PRjRh8emoeabwheBBZbqT+9tdsmCKDpdYfsIO/vdwQRUgRqGA6pXroNcHyi4Qk0y5SIn+rJlSgykU95rMUpBClWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXV9kRpM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULWJrUaO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FF6C2BCAF;
-	Mon, 13 Apr 2026 16:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXV9kRpM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A05AC2BCAF;
+	Mon, 13 Apr 2026 16:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096248;
-	bh=bzomDZLcl/Cx4t9lCnFp5XvCuJqKDxonuJN75hK/XgQ=;
+	s=korg; t=1776096251;
+	bh=ll0qtaeJotfv9NP9LTqdNCkhbwYS/06MTCSbx9pNq1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULWJrUaO3QldvuMkAa4ViKNVxOB06L5kTuufW+5V6FPsXSPiybAK7/y2uQcHXIn8V
-	 ZjFCx4iqobBcCjLrXCoh4T0s5gBaNiUwQKfIwrFuUgGikETd87vyZRstbWmVoBwqJb
-	 Au1YguVVPRZtoSSMXMbpmzPAsMQHW9/EFh7My8yI=
+	b=JXV9kRpMJ3nHOY+YId7hzt1OGCbpp7wP+bpHTcHgagZeR3AdHA9qLcvrENPVuYdMO
+	 nC2Mv5dGTABd6cVJVeosZH77tVGQ6sRBABsXMsoHdyQ8FubPXuf51VLMSrkuqfh2WO
+	 oft8Qj//+VGB9LRMLRp31Zwuxnau8S7CX4SRQhRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleh Konko <security@1seal.org>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 24/86] tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG
-Date: Mon, 13 Apr 2026 17:59:31 +0200
-Message-ID: <20260413155732.477257434@linuxfoundation.org>
+	Simon Glass <sjg@chromium.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Janne Grunau <j@jannau.net>,
+	Nicolas Schier <nsc@kernel.org>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>
+Subject: [PATCH 6.19 25/86] kbuild: modules-cpio-pkg: Respect INSTALL_MOD_PATH
+Date: Mon, 13 Apr 2026 17:59:32 +0200
+Message-ID: <20260413155732.512946666@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -46,63 +48,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleh Konko <security@1seal.org>
+From: Janne Grunau <j@jannau.net>
 
-commit 48a5fe38772b6f039522469ee6131a67838221a8 upstream.
+commit 742de64b62b690a368dbeb846499eb8ac8ceedb9 upstream.
 
-The GRP_ACK_MSG handler in tipc_group_proto_rcv() currently decrements
-bc_ackers on every inbound group ACK, even when the same member has
-already acknowledged the current broadcast round.
+The modules-cpio-pkg target added in commit 2a9c8c0b59d3 ("kbuild: add
+target to build a cpio containing modules") is incompatible with
+initramfs with merged /lib and /usr/lib directories [1]. "/lib" cannot
+be a link and directory at the same time.
+Respect a non-empty INSTALL_MOD_PATH in the modules-cpio-pkg target so
+that `make INSTALL_MOD_PATH=/usr modules-cpio-pkg` results in the same
+module install location as `make INSTALL_MOD_PATH=/usr modules_install`.
 
-Because bc_ackers is a u16, a duplicate ACK received after the last
-legitimate ACK wraps the counter to 65535. Once wrapped,
-tipc_group_bc_cong() keeps reporting congestion and later group
-broadcasts on the affected socket stay blocked until the group is
-recreated.
+Tested with Fedora distribution initramfs produced by dracut.
 
-Fix this by ignoring duplicate or stale ACKs before touching bc_acked or
-bc_ackers. This makes repeated GRP_ACK_MSG handling idempotent and
-prevents the underflow path.
-
-Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
+Link: https://systemd.io/THE_CASE_FOR_THE_USR_MERGE/ [1]
+Fixes: 2a9c8c0b59d3 ("kbuild: add target to build a cpio containing modules")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleh Konko <security@1seal.org>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/41a4833f368641218e444fdcff822039.security@1seal.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Glass <sjg@chromium.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Tested-by: Nicolas Schier <nsc@kernel.org>
+Reviewed-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Link: https://patch.msgid.link/20260327-kbuild-modules-cpio-pkg-usr-merge-v3-1-ef507dfa006c@jannau.net
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/group.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ scripts/Makefile.package |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/tipc/group.c
-+++ b/net/tipc/group.c
-@@ -746,6 +746,7 @@ void tipc_group_proto_rcv(struct tipc_gr
- 	u32 port = msg_origport(hdr);
- 	struct tipc_member *m, *pm;
- 	u16 remitted, in_flight;
-+	u16 acked;
+--- a/scripts/Makefile.package
++++ b/scripts/Makefile.package
+@@ -195,7 +195,7 @@ tar%-pkg: linux-$(KERNELRELEASE)-$(ARCH)
+ .tmp_modules_cpio: FORCE
+ 	$(Q)$(MAKE) -f $(srctree)/Makefile
+ 	$(Q)rm -rf $@
+-	$(Q)$(MAKE) -f $(srctree)/Makefile INSTALL_MOD_PATH=$@ modules_install
++	$(Q)$(MAKE) -f $(srctree)/Makefile INSTALL_MOD_PATH=$@/$(INSTALL_MOD_PATH) modules_install
  
- 	if (!grp)
- 		return;
-@@ -798,7 +799,10 @@ void tipc_group_proto_rcv(struct tipc_gr
- 	case GRP_ACK_MSG:
- 		if (!m)
- 			return;
--		m->bc_acked = msg_grp_bc_acked(hdr);
-+		acked = msg_grp_bc_acked(hdr);
-+		if (less_eq(acked, m->bc_acked))
-+			return;
-+		m->bc_acked = acked;
- 		if (--grp->bc_ackers)
- 			return;
- 		list_del_init(&m->small_win);
+ quiet_cmd_cpio = CPIO    $@
+       cmd_cpio = $(CONFIG_SHELL) $(srctree)/usr/gen_initramfs.sh -o $@ $<
+@@ -265,6 +265,7 @@ help:
+ 	@echo '  tarxz-pkg           - Build the kernel as a xz compressed tarball'
+ 	@echo '  tarzst-pkg          - Build the kernel as a zstd compressed tarball'
+ 	@echo '  modules-cpio-pkg    - Build the kernel modules as cpio archive'
++	@echo '                        (uses INSTALL_MOD_PATH inside the archive)'
+ 	@echo '  perf-tar-src-pkg    - Build the perf source tarball with no compression'
+ 	@echo '  perf-targz-src-pkg  - Build the perf source tarball with gzip compression'
+ 	@echo '  perf-tarbz2-src-pkg - Build the perf source tarball with bz2 compression'
 
 
