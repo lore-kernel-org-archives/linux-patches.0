@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33F526B971;
-	Mon, 13 Apr 2026 16:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF9326B971;
+	Mon, 13 Apr 2026 16:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098176; cv=none; b=qQ8d0rgRHZhFBZ3HN92zEws4lW/biJEqmqzFzl7UURT2En4ojwZUhQjpRRgeYzW0nKSZ4vv0+9yDmNKGV/dNqBKm1H6XkfDB1tfEWYt9Zjiwk03trd+xhvnFTgmfaU4GcKt+FHeDetl7iZxydKYcV7OIQFdCv8kGimE+CaAgaKg=
+	t=1776098179; cv=none; b=mxu6Y9bvSKGNtFfqCiRashjAdB+7lkEnsTfbwhU968YAt2t1CkvoGOcFWJu40lCaGQpxG8drzZD6aKeZUrFFna6hEeniAZA7akak/yoVnT3Vj8+vHgfj0gM6FML4U3CoG3qE2BlXsVoiqhvR2PTsd8hU4IfShiftzk05iDeklCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098176; c=relaxed/simple;
-	bh=SvwiTfKKVaRFxhvOf6i7gLhmHIn3r/c4iBPopjVLSRs=;
+	s=arc-20240116; t=1776098179; c=relaxed/simple;
+	bh=hPgImQ2GX9D8QxnrxH4LCdRLMs/rI0mx+YA6tbDNsbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNmqSfGbB/wZ4+bvHD0hXY7yHA82lCTElwxpgPkg0SUrcCFMpqJx0tEZVA7K9mGHE/gquXFUWVsJY3DLsKh233p9TEz8NVvvtIFb8ao+NoZzs7Bmwiug8hHTuu/lRx3coCp1U9Sylcj70yV6T4KksQI9R9IC/qlprMumi7d4Q80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycPr2vB8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uTzR2gfNMJDJJ94xW2XdcmPfswVE88Ds8Ni0XKaTfUp92/WVZCrgqYFBMzDYx3DgYYMh9Sni0XmCr/tdOg1TtPHyvMIySurLaftRd3unkouWsDj3vOJ5RK8TWLRa8mU0RE03v76qskkK5uxKfvv9E1dB6EMMP9bLe3x4Ii7g24E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Qu5nMjI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycPr2vB8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA6FC2BCAF;
-	Mon, 13 Apr 2026 16:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Qu5nMjI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5EB1C2BCAF;
+	Mon, 13 Apr 2026 16:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098176;
-	bh=SvwiTfKKVaRFxhvOf6i7gLhmHIn3r/c4iBPopjVLSRs=;
+	s=korg; t=1776098179;
+	bh=hPgImQ2GX9D8QxnrxH4LCdRLMs/rI0mx+YA6tbDNsbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ycPr2vB8K6/CEbmP8+tFChssPRwG3kSSjmSHpKwDP0EmCI7dYcGkmke9xUnLRc1t0
-	 aaZQnsb1to1jgzwUyOQScuSr/fYCGJQoXg1hrmVfW5iY8K8YmenkZPF09NsEB6hLeq
-	 2l8TSw9pQYF1BhqCT+a/XPIMDHTzDKyox8+1kbOg=
+	b=0Qu5nMjIEwhWcvzXc2SvMZJpF8Ql9j8mx9hwxyr2W/0ahddxnjnR3DCxHwpKSF0Rs
+	 j8cIiFRZ90+obeChxBL8NNdJ4ZbjhDzQobnLA9HzWR2zJc/URMdGKduvnqXHB4xOtE
+	 SMHLn1mYX6pl7heL4d1wOnhw+6GB2VT8Bq34qsac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Qi Tang <tpluszz77@gmail.com>,
-	Phil Sutter <phil@nwl.cc>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 423/570] netfilter: nf_conntrack_helper: pass helper to expect cleanup
-Date: Mon, 13 Apr 2026 17:59:14 +0200
-Message-ID: <20260413155846.317911019@linuxfoundation.org>
+Subject: [PATCH 5.15 424/570] netfilter: ctnetlink: zero expect NAT fields when CTA_EXPECT_NAT absent
+Date: Mon, 13 Apr 2026 17:59:15 +0200
+Message-ID: <20260413155846.354760264@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,59 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Qi Tang <tpluszz77@gmail.com>
 
-[ Upstream commit a242a9ae58aa46ff7dae51ce64150a93957abe65 ]
+[ Upstream commit 35177c6877134a21315f37d57a5577846225623e ]
 
-nf_conntrack_helper_unregister() calls nf_ct_expect_iterate_destroy()
-to remove expectations belonging to the helper being unregistered.
-However, it passes NULL instead of the helper pointer as the data
-argument, so expect_iter_me() never matches any expectation and all
-of them survive the cleanup.
+ctnetlink_alloc_expect() allocates expectations from a non-zeroing
+slab cache via nf_ct_expect_alloc().  When CTA_EXPECT_NAT is not
+present in the netlink message, saved_addr and saved_proto are
+never initialized.  Stale data from a previous slab occupant can
+then be dumped to userspace by ctnetlink_exp_dump_expect(), which
+checks these fields to decide whether to emit CTA_EXPECT_NAT.
 
-After unregister returns, nfnl_cthelper_del() frees the helper
-object immediately.  Subsequent expectation dumps or packet-driven
-init_conntrack() calls then dereference the freed exp->helper,
-causing a use-after-free.
+The safe sibling nf_ct_expect_init(), used by the packet path,
+explicitly zeroes these fields.
 
-Pass the actual helper pointer so expectations referencing it are
-properly destroyed before the helper object is freed.
+Zero saved_addr, saved_proto and dir in the else branch, guarded
+by IS_ENABLED(CONFIG_NF_NAT) since these fields only exist when
+NAT is enabled.
 
-  BUG: KASAN: slab-use-after-free in string+0x38f/0x430
-  Read of size 1 at addr ffff888003b14d20 by task poc/103
-  Call Trace:
-   string+0x38f/0x430
-   vsnprintf+0x3cc/0x1170
-   seq_printf+0x17a/0x240
-   exp_seq_show+0x2e5/0x560
-   seq_read_iter+0x419/0x1280
-   proc_reg_read+0x1ac/0x270
-   vfs_read+0x179/0x930
-   ksys_read+0xef/0x1c0
-  Freed by task 103:
-  The buggy address is located 32 bytes inside of
-   freed 192-byte region [ffff888003b14d00, ffff888003b14dc0)
+Confirmed by priming the expect slab with NAT-bearing expectations,
+freeing them, creating a new expectation without CTA_EXPECT_NAT,
+and observing that the ctnetlink dump emits a spurious
+CTA_EXPECT_NAT containing stale data from the prior allocation.
 
-Fixes: ac7b84839003 ("netfilter: expect: add and use nf_ct_expect_iterate helpers")
+Fixes: 076a0ca02644 ("netfilter: ctnetlink: add NAT support for expectations")
+Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Qi Tang <tpluszz77@gmail.com>
-Reviewed-by: Phil Sutter <phil@nwl.cc>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_netlink.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
-index de5ac9f431031..b5f4bfc60f897 100644
---- a/net/netfilter/nf_conntrack_helper.c
-+++ b/net/netfilter/nf_conntrack_helper.c
-@@ -469,7 +469,7 @@ void nf_conntrack_helper_unregister(struct nf_conntrack_helper *me)
- 	 */
- 	synchronize_rcu();
- 
--	nf_ct_expect_iterate_destroy(expect_iter_me, NULL);
-+	nf_ct_expect_iterate_destroy(expect_iter_me, me);
- 	nf_ct_iterate_destroy(unhelp, me);
- 
- 	/* Maybe someone has gotten the helper already when unhelp above.
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 5087ab9b137f2..def356f828cd8 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3580,6 +3580,12 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 						 exp, nf_ct_l3num(ct));
+ 		if (err < 0)
+ 			goto err_out;
++#if IS_ENABLED(CONFIG_NF_NAT)
++	} else {
++		memset(&exp->saved_addr, 0, sizeof(exp->saved_addr));
++		memset(&exp->saved_proto, 0, sizeof(exp->saved_proto));
++		exp->dir = 0;
++#endif
+ 	}
+ 	return exp;
+ err_out:
 -- 
 2.53.0
 
