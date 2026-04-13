@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DC7280035;
-	Mon, 13 Apr 2026 16:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536F13093B2;
+	Mon, 13 Apr 2026 16:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096521; cv=none; b=JzLhlPZaTH6peRt+Or1akf0xoZQ8QTVmDbV3oTHnekVOK6SybyVZStRGrjtyNK1ewBbjIKaQZws6PWWZl1faV77SksBIdEIfdqKBFaUFrANAArhyeChQDFLcK9+ZGGpHkKp1Q+dmGNE3jeXfH6ERBTL9r4Bd4wCU/gf+xQxLugY=
+	t=1776096524; cv=none; b=q0Ry4kwM+KiE+QEH2jQvSaAut8kCDFCJtqmZ2/7mRoaIbgSz5Rj/Hmox9AvfLeA4nAYavmbx/rxFpB5QhtUcFSirLXhCKcz7c1WaME99oGMyE4NqaKK6MAWu8MQLNQvG9EO2hUqE0nLmxn+HmMup/GBDIdtvHx6HimJz65RSsLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096521; c=relaxed/simple;
-	bh=1yJCZIT+3k6zp8KqKSbRdwv4jXDSgW859NtNkWdo4tc=;
+	s=arc-20240116; t=1776096524; c=relaxed/simple;
+	bh=mCYB0SgRgJuiQtMMYJiaSqXyKD4HG1cqrVWX77CJGks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQtJlRLLZAdiUf6iIZhHced69mJ8rhOitPASQtokCpDQjHuyBP0IsxjGDOndQwtx9RY+tkq8fl9oBfv5lEsMdgz5AMDmYj2BYw3FEaXdJbOXIHk1pQiDnB8NEKm/5rqa/hRPrGQcOajbY1vicTw18n211cyffape1ppEnzxg52o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBQQAhb/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I1Inqi8bpnGAxUwO23oH5FfyIlqjkdfS7+YR4IsOMoJ3Gtkj6I6Xzlwpy534dT+X3q/Cu5Su4VgT/Pjck+Hj9bKpHsuZQBuhKtZqGXvxsSp8y1hWtHzQfTkOCqMtwO30XkRkKvwB/1XNGQucRko3bQWk7ML8Lau0kmCXIqlsnkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2G5Zr6f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBQQAhb/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B30CC2BCB0;
-	Mon, 13 Apr 2026 16:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2G5Zr6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDAE9C2BCB6;
+	Mon, 13 Apr 2026 16:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096521;
-	bh=1yJCZIT+3k6zp8KqKSbRdwv4jXDSgW859NtNkWdo4tc=;
+	s=korg; t=1776096524;
+	bh=mCYB0SgRgJuiQtMMYJiaSqXyKD4HG1cqrVWX77CJGks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bBQQAhb/f7UkznS/8UEXeRbp9pqanaIdAXw4MSZxn6nMDtir0W7dIcalzlbjtMzeT
-	 j8OxTAWkZxCC2I0X0CRKkOC62QiitYthT/D42Qmo7jBb9BJEXbu2S2Rc9dUpou4TBK
-	 6o9N2qr5Y2p9/+rJ1ifN/2V2jRWrhGkKWpR9j+Q4=
+	b=i2G5Zr6fNKpUa67lCFe554/MCHE+We3gV00V8saYbDByLipQII7hxPEGZJqJqxB96
+	 DGSLo0102Krt7ANyAGJIfYmA27KSe7kL26JOBDRpLG3K8j34vcnU5QdlVKvAm0ZKzb
+	 ZcY2sRP/nt2XfBgNp3o2sXdZB1PU78ILKGGxWKek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Maciej W. Rozycki" <macro@orcam.me.uk>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 11/83] MIPS: Always record SEGBITS in cpu_data.vmbits
-Date: Mon, 13 Apr 2026 17:59:39 +0200
-Message-ID: <20260413155731.449274704@linuxfoundation.org>
+Subject: [PATCH 6.18 12/83] MIPS: mm: Suppress TLB uniquification on EHINV hardware
+Date: Mon, 13 Apr 2026 17:59:40 +0200
+Message-ID: <20260413155731.485569604@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -53,106 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 8374c2cb83b95b3c92f129fd56527225c20a058c upstream.
+commit 74283cfe216392c7b776ebf6045b5b15ed9dffcd upstream.
 
-With a 32-bit kernel running on 64-bit MIPS hardware the hardcoded value
-of `cpu_vmbits' only records the size of compatibility useg and does not
-reflect the size of native xuseg or the complete range of values allowed
-in the VPN2 field of TLB entries.
+Hardware that supports the EHINV feature, mandatory for R6 ISA and FTLB
+implementation, lets software mark TLB entries invalid, which eliminates
+the need to ensure no duplicate matching entries are ever created.  This
+feature is already used by local_flush_tlb_all(), via the UNIQUE_ENTRYHI
+macro, making the preceding call to r4k_tlb_uniquify() superfluous.
 
-An upcoming change will need the actual VPN2 value range permitted even
-in 32-bit kernel configurations, so always include the `vmbits' member
-in `struct cpuinfo_mips' and probe for SEGBITS when running on 64-bit
-hardware and resorting to the currently hardcoded value of 31 on 32-bit
-processors.  No functional change for users of `cpu_vmbits'.
+The next change will also modify uniquification code such that it'll
+become incompatible with the FTLB and MMID features, as well as MIPSr6
+CPUs that do not implement 4KiB pages.
+
+Therefore prevent r4k_tlb_uniquify() from being used on EHINV hardware,
+as denoted by `cpu_has_tlbinv'.
 
 Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/cpu-features.h |  1 -
- arch/mips/include/asm/cpu-info.h     |  2 --
- arch/mips/include/asm/mipsregs.h     |  2 ++
- arch/mips/kernel/cpu-probe.c         | 13 ++++++++-----
- arch/mips/kernel/cpu-r3k-probe.c     |  2 ++
- 5 files changed, 12 insertions(+), 8 deletions(-)
+ arch/mips/mm/tlb-r4k.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/include/asm/cpu-features.h b/arch/mips/include/asm/cpu-features.h
-index 404390bb87eaf..3f11e5218e6c6 100644
---- a/arch/mips/include/asm/cpu-features.h
-+++ b/arch/mips/include/asm/cpu-features.h
-@@ -484,7 +484,6 @@
- # endif
- # ifndef cpu_vmbits
- # define cpu_vmbits cpu_data[0].vmbits
--# define __NEED_VMBITS_PROBE
- # endif
- #endif
+diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
+index 645f77e09d5b8..65f0357958fc7 100644
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -640,7 +640,8 @@ static void r4k_tlb_configure(void)
+ 	temp_tlb_entry = current_cpu_data.tlbsize - 1;
  
-diff --git a/arch/mips/include/asm/cpu-info.h b/arch/mips/include/asm/cpu-info.h
-index fd60837ce50bc..211b578af6aa0 100644
---- a/arch/mips/include/asm/cpu-info.h
-+++ b/arch/mips/include/asm/cpu-info.h
-@@ -80,9 +80,7 @@ struct cpuinfo_mips {
- 	int			srsets; /* Shadow register sets */
- 	int			package;/* physical package number */
- 	unsigned int		globalnumber;
--#ifdef CONFIG_64BIT
- 	int			vmbits; /* Virtual memory size in bits */
--#endif
- 	void			*data;	/* Additional data */
- 	unsigned int		watch_reg_count;   /* Number that exist */
- 	unsigned int		watch_reg_use_cnt; /* Usable by ptrace */
-diff --git a/arch/mips/include/asm/mipsregs.h b/arch/mips/include/asm/mipsregs.h
-index f799c0d723dac..12a095dbf9e2a 100644
---- a/arch/mips/include/asm/mipsregs.h
-+++ b/arch/mips/include/asm/mipsregs.h
-@@ -1871,6 +1871,8 @@ do {									\
+ 	/* From this point on the ARC firmware is dead.	 */
+-	r4k_tlb_uniquify();
++	if (!cpu_has_tlbinv)
++		r4k_tlb_uniquify();
+ 	local_flush_tlb_all();
  
- #define read_c0_entryhi()	__read_ulong_c0_register($10, 0)
- #define write_c0_entryhi(val)	__write_ulong_c0_register($10, 0, val)
-+#define read_c0_entryhi_64()	__read_64bit_c0_register($10, 0)
-+#define write_c0_entryhi_64(val) __write_64bit_c0_register($10, 0, val)
- 
- #define read_c0_guestctl1()	__read_32bit_c0_register($10, 4)
- #define write_c0_guestctl1(val)	__write_32bit_c0_register($10, 4, val)
-diff --git a/arch/mips/kernel/cpu-probe.c b/arch/mips/kernel/cpu-probe.c
-index 1e49e05ac8b1c..489612ed9d498 100644
---- a/arch/mips/kernel/cpu-probe.c
-+++ b/arch/mips/kernel/cpu-probe.c
-@@ -210,11 +210,14 @@ static inline void set_elf_base_platform(const char *plat)
- 
- static inline void cpu_probe_vmbits(struct cpuinfo_mips *c)
- {
--#ifdef __NEED_VMBITS_PROBE
--	write_c0_entryhi(0x3fffffffffffe000ULL);
--	back_to_back_c0_hazard();
--	c->vmbits = fls64(read_c0_entryhi() & 0x3fffffffffffe000ULL);
--#endif
-+	int vmbits = 31;
-+
-+	if (cpu_has_64bits) {
-+		write_c0_entryhi_64(0x3fffffffffffe000ULL);
-+		back_to_back_c0_hazard();
-+		vmbits = fls64(read_c0_entryhi_64() & 0x3fffffffffffe000ULL);
-+	}
-+	c->vmbits = vmbits;
- }
- 
- static void set_isa(struct cpuinfo_mips *c, unsigned int isa)
-diff --git a/arch/mips/kernel/cpu-r3k-probe.c b/arch/mips/kernel/cpu-r3k-probe.c
-index 0c826f729f752..edcf04de0a6fb 100644
---- a/arch/mips/kernel/cpu-r3k-probe.c
-+++ b/arch/mips/kernel/cpu-r3k-probe.c
-@@ -137,6 +137,8 @@ void cpu_probe(void)
- 	else
- 		cpu_set_nofpu_opts(c);
- 
-+	c->vmbits = 31;
-+
- 	reserve_exception_space(0, 0x400);
- }
- 
+ 	/* Did I tell you that ARC SUCKS?  */
 -- 
 2.53.0
 
