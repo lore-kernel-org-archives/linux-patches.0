@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B3A31DD97;
-	Mon, 13 Apr 2026 16:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21682317148;
+	Mon, 13 Apr 2026 16:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099119; cv=none; b=ip1HaBii7tCuSgrfjGbx80f6xY8vhzzrZF+CdT8Ll0N9Rphqd4xQdaOIAeveJLlij3gl90yuOeByYzSiR6OIa31HO/dOZDCgg+ADWPPrVqSSxjfeaIX1JrSWmjY8wZNy26DCiModCQke0gCixG6UUa9kEQkOQu3HcEkgl/49omY=
+	t=1776099122; cv=none; b=GkNDelwH+ZMU9aBz48hpL39ttLR2Lpfv7EwH/rYKb4ehIfaCKpbZk7D3C7wVFEHruk9AWRmU7A5SYOLDv1Y1ap6/JhjAVbLMdQCQOJC6pinMM0KcmjR0orPE0VtJ9z6urJsn+093fRZ4wTpDcZjL/ONmrpE4BG+OyYDBpKZa2NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099119; c=relaxed/simple;
-	bh=5eGSW9KUHvwFhuPlTMj1EhBOOeElYv80co4VZC3cj3Q=;
+	s=arc-20240116; t=1776099122; c=relaxed/simple;
+	bh=m5S3jlD3HdMtTFFy8TtWUgJtx8T0zRCQQoagw/gK6TM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGoD4z/QE3/f4U+JHY2T+lPjlTTuoDsen/oDZTzGWH6YFum4IpEHM8aA83xc2koT6aMJ2s2QyCmnRDtngFjYw+Ev8XbvwCx/ndKPC6BHeByHB/u5W/CyYqWvndHFevSKmh//hFBvQPcj8kocshKg1KOO/OIjr8EKBsaxYRHpz/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RX86SfBT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c9C2fqsrsESfZaTWdfDxPvX6lrNNAiephciEoPzo+bJOG0GLSekr4ogPch23uh5dtYei9YDjtQHX+mz+vx1JdvRaWaT1ggmJnuvO92pW82dh6GDjiHSik1alZ3n+afqovLGVxQRK+l+j11gQUYB01LXFp70ozOzxiaLtB4INJw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqWIQWzi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RX86SfBT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20035C2BCB0;
-	Mon, 13 Apr 2026 16:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqWIQWzi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD48EC2BCAF;
+	Mon, 13 Apr 2026 16:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099119;
-	bh=5eGSW9KUHvwFhuPlTMj1EhBOOeElYv80co4VZC3cj3Q=;
+	s=korg; t=1776099122;
+	bh=m5S3jlD3HdMtTFFy8TtWUgJtx8T0zRCQQoagw/gK6TM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RX86SfBTLQIfMo6akAk2N+HUcZ/SyY9b3bp7A1ZONm2P6/s+e102f16Pe8D/d/4Pi
-	 LnNGxjXwXQHEf9KOpG72ESt+nFGi5Duuf2TV5o5mP7PedP264PBkLQJRienw2aU+08
-	 ysTYa3wL856DtrC1w6cvi0oxtPXB8vy7Xo3fbrXw=
+	b=oqWIQWzi8iYgkTYfeVIk+vvPKG3+g2rWSZXL1AoPa90wFK3ERAEjEtRfBZyqNJNk3
+	 5yNJHq5daf7725HgmPsvvuu94MSSofTq6XfgIrodlZtPHgB4yRdv479eq0MFM9hzZd
+	 og7qwrcYR3PbEtaqNLXa4tjGMRP4WHDNvv3fKo+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Simon Horman <horms@kernel.org>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 218/491] igc: fix missing update of skb->tail in igc_xmit_frame()
-Date: Mon, 13 Apr 2026 17:57:43 +0200
-Message-ID: <20260413155827.226775105@linuxfoundation.org>
+Subject: [PATCH 5.10 219/491] wifi: mac80211: fix NULL deref in mesh_matches_local()
+Date: Mon, 13 Apr 2026 17:57:44 +0200
+Message-ID: <20260413155827.263822431@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -54,43 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 0ffba246652faf4a36aedc66059c2f94e4c83ea5 ]
+[ Upstream commit c73bb9a2d33bf81f6eecaa0f474b6c6dbe9855bd ]
 
-igc_xmit_frame() misses updating skb->tail when the packet size is
-shorter than the minimum one.
-Use skb_put_padto() in alignment with other Intel Ethernet drivers.
+mesh_matches_local() unconditionally dereferences ie->mesh_config to
+compare mesh configuration parameters. When called from
+mesh_rx_csa_frame(), the parsed action-frame elements may not contain a
+Mesh Configuration IE, leaving ie->mesh_config NULL and triggering a
+kernel NULL pointer dereference.
 
-Fixes: 0507ef8a0372 ("igc: Add transmit and receive fastpath and interrupt handlers")
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+The other two callers are already safe:
+  - ieee80211_mesh_rx_bcn_presp() checks !elems->mesh_config before
+    calling mesh_matches_local()
+  - mesh_plink_get_event() is only reached through
+    mesh_process_plink_frame(), which checks !elems->mesh_config, too
+
+mesh_rx_csa_frame() is the only caller that passes raw parsed elements
+to mesh_matches_local() without guarding mesh_config. An adjacent
+attacker can exploit this by sending a crafted CSA action frame that
+includes a valid Mesh ID IE but omits the Mesh Configuration IE,
+crashing the kernel.
+
+The captured crash log:
+
+Oops: general protection fault, probably for non-canonical address ...
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+Workqueue: events_unbound cfg80211_wiphy_work
+[...]
+Call Trace:
+ <TASK>
+ ? __pfx_mesh_matches_local (net/mac80211/mesh.c:65)
+ ieee80211_mesh_rx_queued_mgmt (net/mac80211/mesh.c:1686)
+ [...]
+ ieee80211_iface_work (net/mac80211/iface.c:1754 net/mac80211/iface.c:1802)
+ [...]
+ cfg80211_wiphy_work (net/wireless/core.c:426)
+ process_one_work (net/kernel/workqueue.c:3280)
+ ? assign_work (net/kernel/workqueue.c:1219)
+ worker_thread (net/kernel/workqueue.c:3352)
+ ? __pfx_worker_thread (net/kernel/workqueue.c:3385)
+ kthread (net/kernel/kthread.c:436)
+ [...]
+ ret_from_fork_asm (net/arch/x86/entry/entry_64.S:255)
+ </TASK>
+
+This patch adds a NULL check for ie->mesh_config at the top of
+mesh_matches_local() to return false early when the Mesh Configuration
+IE is absent.
+
+Fixes: 2e3c8736820b ("mac80211: support functions for mesh")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260318034244.2595020-1-xmei5@asu.edu
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/mac80211/mesh.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 7593e8b7469c5..e59de43704b51 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -1522,11 +1522,8 @@ static netdev_tx_t igc_xmit_frame(struct sk_buff *skb,
- 	/* The minimum packet size with TCTL.PSP set is 17 so pad the skb
- 	 * in order to meet this minimum size requirement.
+diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
+index 20b8ff83e3dbd..4b09cd19c4e04 100644
+--- a/net/mac80211/mesh.c
++++ b/net/mac80211/mesh.c
+@@ -75,6 +75,9 @@ bool mesh_matches_local(struct ieee80211_sub_if_data *sdata,
+ 	 *   - MDA enabled
+ 	 * - Power management control on fc
  	 */
--	if (skb->len < 17) {
--		if (skb_padto(skb, 17))
--			return NETDEV_TX_OK;
--		skb->len = 17;
--	}
-+	if (skb_put_padto(skb, 17))
-+		return NETDEV_TX_OK;
- 
- 	return igc_xmit_frame_ring(skb, igc_tx_queue_mapping(adapter, skb));
- }
++	if (!ie->mesh_config)
++		return false;
++
+ 	if (!(ifmsh->mesh_id_len == ie->mesh_id_len &&
+ 	     memcmp(ifmsh->mesh_id, ie->mesh_id, ie->mesh_id_len) == 0 &&
+ 	     (ifmsh->mesh_pp_id == ie->mesh_config->meshconf_psel) &&
 -- 
 2.51.0
 
