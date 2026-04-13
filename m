@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A24A2EB5BA;
-	Mon, 13 Apr 2026 16:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFB32765FF;
+	Mon, 13 Apr 2026 16:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096751; cv=none; b=p7irF0+XpWKZqGvkn4DYqlKWjW1+tbUNXaZ4ZHHE+MKq5eK0tXbpXHzHVa4AldaD03xpqhzQV1yFi55clD9cLlNIlq7zO/iZWZIVG5dbY3FphYTyEawT/7ZmXr2YmKskUuObqT1ZLaJmwBTBY1DsNHNWkJhWSYoAY05rf9X1xas=
+	t=1776096754; cv=none; b=EB4b15Am0d9aQDDZThWBuIeTK7Djbu8abmy59F0uBMoSoEFC69grKzzJmD+zBeDvNE0JZsul4NCqLjRYEITSnNdCGYxAtK6dGsrOpFKvFefoYQ+u8Ius71ARclkoM4u9fhA/EUfZVLRgLHCRT0jJvjpXlfjBG6lFaJz41iwaoY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096751; c=relaxed/simple;
-	bh=sCVpTKUxYSPMgPJKQq2LwyySuxr0K/mbhvfej3OySOc=;
+	s=arc-20240116; t=1776096754; c=relaxed/simple;
+	bh=FCS3r5MiBOQ5NQOYtULG18z4vH+Nhnl4uEIof6zt9Uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMTtLoWv9klR80huu5N7v7YA7e/R2r99EwHHCwL3dJOUKGTPkCWGr69HEM1NxOmDK/6qBN1JVy3LZN8tMojFmdcm7YxYfcB/5KIHfak2ZVnVnsuqODoKPeco8P3xX3e17vm0tqmTGH2mY1Ayuuat7q4pWRubi+mdqg+XH8IUANM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NdeYLVt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r83rMiSv7l3ofyakZiVoSpfLEZlVNnDmGl/WLQ+RqL+aMvCo2RE85RH/F/yct3GpoTfZWZ77bMWF5noV1xlWe3jt/xjSb9M5iWcx7yrxH5KkMb2XlAORj/BffmVgD63OXm12t5WJATmvWOemfrVG3gxSLl13cuw4ULLMGcmZAOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jh6Spzxb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NdeYLVt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087A4C2BCB0;
-	Mon, 13 Apr 2026 16:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jh6Spzxb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D64C2BCAF;
+	Mon, 13 Apr 2026 16:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096751;
-	bh=sCVpTKUxYSPMgPJKQq2LwyySuxr0K/mbhvfej3OySOc=;
+	s=korg; t=1776096753;
+	bh=FCS3r5MiBOQ5NQOYtULG18z4vH+Nhnl4uEIof6zt9Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2NdeYLVtsUaNnXf9LH2Eo9gw2OgbheKxfs1Jxueob/d/nA1RT2n1zHuIRMjwOPKC+
-	 SgH6z9x9Wnrn7Dmyq8n7KkmgsqnVm2pqiFLYx/vHO6A0Dw7fD5vNZfSoez69dedDUJ
-	 gEulh95Y+ixAIfrLxQ3VwdiQ/+HqUzCIq+siXG3g=
+	b=jh6SpzxbsEuFPnRTf4RiUj3/D2d8TKRDC6txtGaEi+uYGWS0bhw+cotGzdq+sciJv
+	 PCAbbyVzh9v0Ta+mb2SJflUyzaMlrt6CB7Db3ZwfONXIFJEDtZ9oLmZBcXJUc7gBWQ
+	 HLdKLjF0bozT6ZSpnlefRhp2V4YsV1SWjLGVv5jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Haoze Xie <royenheart@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.12 47/70] batman-adv: hold claim backbone gateways by reference
-Date: Mon, 13 Apr 2026 18:00:42 +0200
-Message-ID: <20260413155729.942540732@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Daniel Vacek <neelx@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 17/70] btrfs: remove unused flag EXTENT_BUFFER_READAHEAD
+Date: Mon, 13 Apr 2026 18:00:12 +0200
+Message-ID: <20260413155728.830660975@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -56,116 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoze Xie <royenheart@gmail.com>
+From: Daniel Vacek <neelx@suse.com>
 
-commit 82d8701b2c930d0e96b0dbc9115a218d791cb0d2 upstream.
+[ Upstream commit 350362e95fbbe86008c240093697756d52049686 ]
 
-batadv_bla_add_claim() can replace claim->backbone_gw and drop the old
-gateway's last reference while readers still follow the pointer.
+This flag is no longer being used.  It was added by commit ab0fff03055d
+("btrfs: add READAHEAD extent buffer flag") and used in commits:
 
-The netlink claim dump path dereferences claim->backbone_gw->orig and
-takes claim->backbone_gw->crc_lock without pinning the underlying
-backbone gateway. batadv_bla_check_claim() still has the same naked
-pointer access pattern.
+79fb65a1f6d9 ("Btrfs: don't call readahead hook until we have read the entire eb")
+78e62c02abb9 ("btrfs: Remove extent_io_ops::readpage_io_failed_hook")
+371cdc0700c7 ("btrfs: introduce subpage metadata validation check")
 
-Reuse batadv_bla_claim_get_backbone_gw() in both readers so they operate
-on a stable gateway reference until the read-side work is complete.
-This keeps the dump and claim-check paths aligned with the lifetime
-rules introduced for the other BLA claim readers.
+Finally all the code using it was removed by commit f26c92386028 ("btrfs: remove
+reada infrastructure").
 
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-Fixes: 04f3f5bf1883 ("batman-adv: add B.A.T.M.A.N. Dump BLA claims via netlink")
-Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Haoze Xie <royenheart@gmail.com>
-Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Daniel Vacek <neelx@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 316fb1b3169e ("btrfs: fix incorrect return value after changing leaf in lookup_extent_data_ref()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c |   27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ fs/btrfs/extent_io.h | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -2132,6 +2132,7 @@ batadv_bla_claim_dump_entry(struct sk_bu
- 			    struct batadv_bla_claim *claim)
- {
- 	const u8 *primary_addr = primary_if->net_dev->dev_addr;
-+	struct batadv_bla_backbone_gw *backbone_gw;
- 	u16 backbone_crc;
- 	bool is_own;
- 	void *hdr;
-@@ -2147,32 +2148,35 @@ batadv_bla_claim_dump_entry(struct sk_bu
- 
- 	genl_dump_check_consistent(cb, hdr);
- 
--	is_own = batadv_compare_eth(claim->backbone_gw->orig,
--				    primary_addr);
-+	backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
-+
-+	is_own = batadv_compare_eth(backbone_gw->orig, primary_addr);
- 
--	spin_lock_bh(&claim->backbone_gw->crc_lock);
--	backbone_crc = claim->backbone_gw->crc;
--	spin_unlock_bh(&claim->backbone_gw->crc_lock);
-+	spin_lock_bh(&backbone_gw->crc_lock);
-+	backbone_crc = backbone_gw->crc;
-+	spin_unlock_bh(&backbone_gw->crc_lock);
- 
- 	if (is_own)
- 		if (nla_put_flag(msg, BATADV_ATTR_BLA_OWN)) {
- 			genlmsg_cancel(msg, hdr);
--			goto out;
-+			goto put_backbone_gw;
- 		}
- 
- 	if (nla_put(msg, BATADV_ATTR_BLA_ADDRESS, ETH_ALEN, claim->addr) ||
- 	    nla_put_u16(msg, BATADV_ATTR_BLA_VID, claim->vid) ||
- 	    nla_put(msg, BATADV_ATTR_BLA_BACKBONE, ETH_ALEN,
--		    claim->backbone_gw->orig) ||
-+		    backbone_gw->orig) ||
- 	    nla_put_u16(msg, BATADV_ATTR_BLA_CRC,
- 			backbone_crc)) {
- 		genlmsg_cancel(msg, hdr);
--		goto out;
-+		goto put_backbone_gw;
- 	}
- 
- 	genlmsg_end(msg, hdr);
- 	ret = 0;
- 
-+put_backbone_gw:
-+	batadv_backbone_gw_put(backbone_gw);
- out:
- 	return ret;
- }
-@@ -2468,6 +2472,7 @@ out:
- bool batadv_bla_check_claim(struct batadv_priv *bat_priv,
- 			    u8 *addr, unsigned short vid)
- {
-+	struct batadv_bla_backbone_gw *backbone_gw;
- 	struct batadv_bla_claim search_claim;
- 	struct batadv_bla_claim *claim = NULL;
- 	struct batadv_hard_iface *primary_if = NULL;
-@@ -2490,9 +2495,13 @@ bool batadv_bla_check_claim(struct batad
- 	 * return false.
- 	 */
- 	if (claim) {
--		if (!batadv_compare_eth(claim->backbone_gw->orig,
-+		backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
-+
-+		if (!batadv_compare_eth(backbone_gw->orig,
- 					primary_if->net_dev->dev_addr))
- 			ret = false;
-+
-+		batadv_backbone_gw_put(backbone_gw);
- 		batadv_claim_put(claim);
- 	}
- 
+diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
+index f21fd8b50abc8..4126fe7f3f10e 100644
+--- a/fs/btrfs/extent_io.h
++++ b/fs/btrfs/extent_io.h
+@@ -39,8 +39,6 @@ enum {
+ 	EXTENT_BUFFER_UPTODATE,
+ 	EXTENT_BUFFER_DIRTY,
+ 	EXTENT_BUFFER_CORRUPT,
+-	/* this got triggered by readahead */
+-	EXTENT_BUFFER_READAHEAD,
+ 	EXTENT_BUFFER_TREE_REF,
+ 	EXTENT_BUFFER_STALE,
+ 	EXTENT_BUFFER_WRITEBACK,
+-- 
+2.53.0
+
 
 
