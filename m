@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DFD2D8364;
-	Mon, 13 Apr 2026 16:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C2E2D8364;
+	Mon, 13 Apr 2026 16:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098079; cv=none; b=B2bDUq4q/uYcV7FNp5aAF1u47PZ4juuJWs9SdiZ5FbzvhsA5r3u9BiA8QZgOc+AeemZh16gO/5BahNydvLEI+96WjvK6/inge9XcvIA7DHEH8hXk0iWJx4B4E81qzSnqFBLpKJGw3MrYhzyoqYgeG6TvoVKpryQEZUOZawB1f4U=
+	t=1776098081; cv=none; b=ScRA/CNuBWWKoZRVmNALdqvY9bMc9dUD8kilhltU6hjD7AJkblq/xfvaqyGaG5WA+J0dIwQZ0ulTdaZx5re/GQexqFVzF2d6z1vZov5NowHjA5fUtZDbemqewPnUij5uQiZ8CfJOXIu/vc5hdZ117aBeUaaGb/Eeqrc3Z0c9348=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098079; c=relaxed/simple;
-	bh=U7c8GqFHG0LmeyeTYJNLyab8arGPSVOpVL1tfkSHbu0=;
+	s=arc-20240116; t=1776098081; c=relaxed/simple;
+	bh=v6PQ0af9/QMQMsEq6ckC14MX2updPPAWWFRF99ykDCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sb7Vr7vaxHQcdhJEwW5AmoNYUm7ITCbGwMvcBXnlvwWRVyK7IDsOfbb5fflFMffBHvSwutks7FVIWtZQPek+5ogtGX06DABP+E4IeZCzh2HMw/fbFwWcuMGq70FrwgATmkR4veF7VDEf0arobf666NjzueuGm4UCtSGF6D9VKio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AItejgzX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AzyxUESjzqc7ydDYSbqBug2oS3fAqQurEwhY2msDMjcyoiGBny5cabgz3SmvvJsaCHt93JCmRfX8TIUvxM14biN7nPpwnzSKMIytkB0ioiChqNeFrlnzOh5CLrF8zsRNMMg+5RJjKs0IkkEWYr+62LDBvmJmg/4+Vvm6R2uqla8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkH+mRjo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AItejgzX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3EFFC2BCAF;
-	Mon, 13 Apr 2026 16:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkH+mRjo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F459C2BCAF;
+	Mon, 13 Apr 2026 16:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098079;
-	bh=U7c8GqFHG0LmeyeTYJNLyab8arGPSVOpVL1tfkSHbu0=;
+	s=korg; t=1776098081;
+	bh=v6PQ0af9/QMQMsEq6ckC14MX2updPPAWWFRF99ykDCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AItejgzXaNKSR6K5V7PZskqVdsQ4Vr9UlLwmc9ZQoYzbX2MQgW/oEj9Qi0gNJ5UNo
-	 rBmsYUAWVXEuMpDekWJ/Xkw5SXidhH5nXQGUfHah8qf1vB8/yruW4dUBQCUy8UteTp
-	 fswovk+s3f/Bdgw7qx/i3DWCZTe81dyR3KiQhY1U=
+	b=ZkH+mRjo8V+vszFHvEVhHtd+EfQc2trd8OLTQdmeVMwVFiNGAm29Z2lhSqWhPiHnn
+	 epA25OY72MJjQg1AuMPJnTQTI5dQocBAN/0dpqeYWI+OUCqaa7CdwR3XjM4q3OtK0r
+	 wqkGhkAoGc4wKNHTPXdV6vnWZK/phYWwLV25Locc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	stable@kernel.org
-Subject: [PATCH 5.15 368/570] s390/syscalls: Add spectre boundary for syscall dispatch table
-Date: Mon, 13 Apr 2026 17:58:19 +0200
-Message-ID: <20260413155844.265862356@linuxfoundation.org>
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 386/570] dmaengine: idxd: Fix not releasing workqueue on .release()
+Date: Mon, 13 Apr 2026 17:58:37 +0200
+Message-ID: <20260413155844.937196566@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -55,49 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-commit 48b8814e25d073dd84daf990a879a820bad2bcbd upstream.
+[ Upstream commit 3d33de353b1ff9023d5ec73b9becf80ea87af695 ]
 
-The s390 syscall number is directly controlled by userspace, but does
-not have an array_index_nospec() boundary to prevent access past the
-syscall function pointer tables.
+The workqueue associated with an DSA/IAA device is not released when
+the object is freed.
 
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Fixes: 56e62a737028 ("s390: convert to generic entry")
-Cc: stable@kernel.org
-Assisted-by: gkh_clanker_2000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Link: https://lore.kernel.org/r/2026032404-sterling-swoosh-43e6@gregkh
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 47c16ac27d4c ("dmaengine: idxd: fix idxd conf_dev 'struct device' lifetime")
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-7-7ed70658a9d1@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/syscall.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/idxd/sysfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/s390/kernel/syscall.c
-+++ b/arch/s390/kernel/syscall.c
-@@ -13,6 +13,7 @@
-  */
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 489a9d8850764..ee208dfdd0cb5 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -1271,6 +1271,7 @@ static void idxd_conf_device_release(struct device *dev)
+ {
+ 	struct idxd_device *idxd = confdev_to_idxd(dev);
  
- #include <linux/errno.h>
-+#include <linux/nospec.h>
- #include <linux/sched.h>
- #include <linux/mm.h>
- #include <linux/fs.h>
-@@ -141,6 +142,7 @@ static void do_syscall(struct pt_regs *r
- 	if (likely(nr >= NR_syscalls))
- 		goto out;
- 	do {
-+		nr = array_index_nospec(nr, NR_syscalls);
- 		regs->gprs[2] = current->thread.sys_call_table[nr](regs);
- 	} while (test_and_clear_pt_regs_flag(regs, PIF_EXECVE_PGSTE_RESTART));
- out:
++	destroy_workqueue(idxd->wq);
+ 	kfree(idxd->groups);
+ 	kfree(idxd->wqs);
+ 	kfree(idxd->engines);
+-- 
+2.53.0
+
 
 
