@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F921A680C;
-	Mon, 13 Apr 2026 16:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CFB3115BC;
+	Mon, 13 Apr 2026 16:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098571; cv=none; b=jW9nIWG2RlzcYqYcVRagp0+zle7wHi4HFaDJHt32WWhPhv6VU3sEc/6MqGpO9UYw6YJaT2bV0kN3IVOuhnCQNsxUkUXUY/rt3cVVZP2qNdXJ9UQhUnvz7BJYApatYoAuI9esD8tavWtpxuLpKbeiFQrOr+wJwE6GLXK1gm5AP+Q=
+	t=1776098574; cv=none; b=b/XcQUdef1RcF1GrfYrrFEY7HsbpnR/Wg7V6j8s+pbHaFV3PHVV12L3XSZCZfEYViDx7wjbd2ARtE8Gfw6hnsLNJAUFIbL6WkMTiMruovbDD6QJ77netQBpoRejZXyeOcjenso+gO5p33EZ5FtnIaLZK9GaPNalkvSyU5tQ8pY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098571; c=relaxed/simple;
-	bh=ychZE3KjyXyh+V65GRzW41+spu6k8prJtRaCQ6L4Heo=;
+	s=arc-20240116; t=1776098574; c=relaxed/simple;
+	bh=RexIsVnr5duHdIuxpflegpS+uKXb5gdFc2zxJuwV6Uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btBXyNFPEmyVOcfRiEXRpCcpd05XjGmoSa/cR3JHnORQF+OioUw6lGyIv18Zr0TUwneUnbAPsaozuo/EhBlz3mbjedpQ4XflTP5gHI2l4V5nrvQAbJ9696sJd225iMT4Le3ncoMPbd8ILuZO0LK99fhXVnEf89HRuoEuKrFtxbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hN2hBfhR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hV3hiX9j4cMG6QbA8HM2mvXypKnnfo0K7abyWztg+FTiUffalDvG2iIcji6LeoepG8U6VpfrLWTrKj8HciHVh9m2ztOH3GlxEDF1UiDEMdQJGW9SokhpNO36Tvn6XeQTcDVVPtZgCy7kEydFsqTHsqvw3NOd0Vk931Ld0SMGBzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDl15AJ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hN2hBfhR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA2BC2BCAF;
-	Mon, 13 Apr 2026 16:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDl15AJ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75A1C2BCAF;
+	Mon, 13 Apr 2026 16:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098571;
-	bh=ychZE3KjyXyh+V65GRzW41+spu6k8prJtRaCQ6L4Heo=;
+	s=korg; t=1776098574;
+	bh=RexIsVnr5duHdIuxpflegpS+uKXb5gdFc2zxJuwV6Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hN2hBfhRL6EcboVQxF9IantfL7cdzBx9X037svTZc0Ab0RJsX7gK8ztjaEs+DYzXs
-	 mpJegDthhAoowGJRY8t5nZ5368zzF08/FEAviGo9S31na+OW2aVky2v5s/pgZUyczd
-	 D6iYnIs8oQnpUfSbs5sgO/2qcoVJ3kQ7bU8gzD0s=
+	b=PDl15AJ19LrVSAZvBZqYdBxA/lEQc7WgE2LyaDoJmvMJosMzcYQMI9YMZoeVtZP7j
+	 NN9C0LZ8noZFhLqYPQvONUsJFCUNqTTcI8AgoFaCXLYpEylX2OG8b0ad8sps8phx27
+	 Jfa+SjmfGmrGEIY/s0uvJ4nvTtmrCZ1mr5KsFmik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	Jan Kara <jack@suse.cz>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Baokun Li <libaokun@linux.alibaba.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 549/570] ext4: publish jinode after initialization
-Date: Mon, 13 Apr 2026 18:01:20 +0200
-Message-ID: <20260413155851.021296161@linuxfoundation.org>
+Subject: [PATCH 5.15 550/570] ext4: fix the might_sleep() warnings in kvfree()
+Date: Mon, 13 Apr 2026 18:01:21 +0200
+Message-ID: <20260413155851.060471403@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -53,149 +53,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Zqiang <qiang.zhang@linux.dev>
 
-[ Upstream commit 1aec30021edd410b986c156f195f3d23959a9d11 ]
+[ Upstream commit 496bb99b7e66f48b178126626f47e9ba79e2d0fa ]
 
-ext4_inode_attach_jinode() publishes ei->jinode to concurrent users.
-It used to set ei->jinode before jbd2_journal_init_jbd_inode(),
-allowing a reader to observe a non-NULL jinode with i_vfs_inode
-still unset.
+Use the kvfree() in the RCU read critical section can trigger
+the following warnings:
 
-The fast commit flush path can then pass this jinode to
-jbd2_wait_inode_data(), which dereferences i_vfs_inode->i_mapping and
-may crash.
+EXT4-fs (vdb): unmounting filesystem cd983e5b-3c83-4f5a-a136-17b00eb9d018.
 
-Below is the crash I observe:
-```
-BUG: unable to handle page fault for address: 000000010beb47f4
-PGD 110e51067 P4D 110e51067 PUD 0
-Oops: Oops: 0000 [#1] SMP NOPTI
-CPU: 1 UID: 0 PID: 4850 Comm: fc_fsync_bench_ Not tainted 6.18.0-00764-g795a690c06a5 #1 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.17.0-2-2 04/01/2014
-RIP: 0010:xas_find_marked+0x3d/0x2e0
-Code: e0 03 48 83 f8 02 0f 84 f0 01 00 00 48 8b 47 08 48 89 c3 48 39 c6 0f 82 fd 01 00 00 48 85 c9 74 3d 48 83 f9 03 77 63 4c 8b 0f <49> 8b 71 08 48 c7 47 18 00 00 00 00 48 89 f1 83 e1 03 48 83 f9 02
-RSP: 0018:ffffbbee806e7bf0 EFLAGS: 00010246
-RAX: 000000000010beb4 RBX: 000000000010beb4 RCX: 0000000000000003
-RDX: 0000000000000001 RSI: 0000002000300000 RDI: ffffbbee806e7c10
-RBP: 0000000000000001 R08: 0000002000300000 R09: 000000010beb47ec
-R10: ffff9ea494590090 R11: 0000000000000000 R12: 0000002000300000
-R13: ffffbbee806e7c90 R14: ffff9ea494513788 R15: ffffbbee806e7c88
-FS: 00007fc2f9e3e6c0(0000) GS:ffff9ea6b1444000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000010beb47f4 CR3: 0000000119ac5000 CR4: 0000000000750ef0
-PKRU: 55555554
+WARNING: suspicious RCU usage
+
+./include/linux/rcupdate.h:409 Illegal context switch in RCU read-side critical section!
+
+other info that might help us debug this:
+
+rcu_scheduler_active = 2, debug_locks = 1
+
 Call Trace:
-<TASK>
-filemap_get_folios_tag+0x87/0x2a0
-__filemap_fdatawait_range+0x5f/0xd0
-? srso_alias_return_thunk+0x5/0xfbef5
-? __schedule+0x3e7/0x10c0
-? srso_alias_return_thunk+0x5/0xfbef5
-? srso_alias_return_thunk+0x5/0xfbef5
-? srso_alias_return_thunk+0x5/0xfbef5
-? preempt_count_sub+0x5f/0x80
-? srso_alias_return_thunk+0x5/0xfbef5
-? cap_safe_nice+0x37/0x70
-? srso_alias_return_thunk+0x5/0xfbef5
-? preempt_count_sub+0x5f/0x80
-? srso_alias_return_thunk+0x5/0xfbef5
-filemap_fdatawait_range_keep_errors+0x12/0x40
-ext4_fc_commit+0x697/0x8b0
-? ext4_file_write_iter+0x64b/0x950
-? srso_alias_return_thunk+0x5/0xfbef5
-? preempt_count_sub+0x5f/0x80
-? srso_alias_return_thunk+0x5/0xfbef5
-? vfs_write+0x356/0x480
-? srso_alias_return_thunk+0x5/0xfbef5
-? preempt_count_sub+0x5f/0x80
-ext4_sync_file+0xf7/0x370
-do_fsync+0x3b/0x80
-? syscall_trace_enter+0x108/0x1d0
-__x64_sys_fdatasync+0x16/0x20
-do_syscall_64+0x62/0x2c0
-entry_SYSCALL_64_after_hwframe+0x76/0x7e
-...
-```
+ <TASK>
+ dump_stack_lvl+0xbb/0xd0
+ dump_stack+0x14/0x20
+ lockdep_rcu_suspicious+0x15a/0x1b0
+ __might_resched+0x375/0x4d0
+ ? put_object.part.0+0x2c/0x50
+ __might_sleep+0x108/0x160
+ vfree+0x58/0x910
+ ? ext4_group_desc_free+0x27/0x270
+ kvfree+0x23/0x40
+ ext4_group_desc_free+0x111/0x270
+ ext4_put_super+0x3c8/0xd40
+ generic_shutdown_super+0x14c/0x4a0
+ ? __pfx_shrinker_free+0x10/0x10
+ kill_block_super+0x40/0x90
+ ext4_kill_sb+0x6d/0xb0
+ deactivate_locked_super+0xb4/0x180
+ deactivate_super+0x7e/0xa0
+ cleanup_mnt+0x296/0x3e0
+ __cleanup_mnt+0x16/0x20
+ task_work_run+0x157/0x250
+ ? __pfx_task_work_run+0x10/0x10
+ ? exit_to_user_mode_loop+0x6a/0x550
+ exit_to_user_mode_loop+0x102/0x550
+ do_syscall_64+0x44a/0x500
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-Fix this by initializing the jbd2_inode first.
-Use smp_wmb() and WRITE_ONCE() to publish ei->jinode after
-initialization. Readers use READ_ONCE() to fetch the pointer.
+BUG: sleeping function called from invalid context at mm/vmalloc.c:3441
+in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 556, name: umount
+preempt_count: 1, expected: 0
+CPU: 3 UID: 0 PID: 556 Comm: umount
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xbb/0xd0
+ dump_stack+0x14/0x20
+ __might_resched+0x275/0x4d0
+ ? put_object.part.0+0x2c/0x50
+ __might_sleep+0x108/0x160
+ vfree+0x58/0x910
+ ? ext4_group_desc_free+0x27/0x270
+ kvfree+0x23/0x40
+ ext4_group_desc_free+0x111/0x270
+ ext4_put_super+0x3c8/0xd40
+ generic_shutdown_super+0x14c/0x4a0
+ ? __pfx_shrinker_free+0x10/0x10
+ kill_block_super+0x40/0x90
+ ext4_kill_sb+0x6d/0xb0
+ deactivate_locked_super+0xb4/0x180
+ deactivate_super+0x7e/0xa0
+ cleanup_mnt+0x296/0x3e0
+ __cleanup_mnt+0x16/0x20
+ task_work_run+0x157/0x250
+ ? __pfx_task_work_run+0x10/0x10
+ ? exit_to_user_mode_loop+0x6a/0x550
+ exit_to_user_mode_loop+0x102/0x550
+ do_syscall_64+0x44a/0x500
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: a361293f5fede ("jbd2: Fix oops in jbd2_journal_file_inode()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Chen <me@linux.beauty>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260225082617.147957-1-me@linux.beauty
+The above scenarios occur in initialization failures and teardown
+paths, there are no parallel operations on the resources released
+by kvfree(), this commit therefore remove rcu_read_lock/unlock() and
+use rcu_access_pointer() instead of rcu_dereference() operations.
+
+Fixes: 7c990728b99e ("ext4: fix potential race between s_flex_groups online resizing and access")
+Fixes: df3da4ea5a0f ("ext4: fix potential race between s_group_info online resizing and access")
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20260319094545.19291-1-qiang.zhang@linux.dev
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
-[ adapted READ_ONCE(jinode) wrapping to split ext4_fc_submit_inode_data_all() and ext4_fc_wait_inode_data_all() ]
+[ adapted fix to inlined teardown code ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |    4 ++--
- fs/ext4/inode.c       |   15 +++++++++++----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ fs/ext4/mballoc.c |   10 +++-------
+ fs/ext4/super.c   |   14 ++++----------
+ 2 files changed, 7 insertions(+), 17 deletions(-)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -979,7 +979,7 @@ static int ext4_fc_submit_inode_data_all
- 			finish_wait(&ei->i_fc_wait, &wait);
- 		}
- 		spin_unlock(&sbi->s_fc_lock);
--		ret = jbd2_submit_inode_data(ei->jinode);
-+		ret = jbd2_submit_inode_data(READ_ONCE(ei->jinode));
- 		if (ret)
- 			return ret;
- 		spin_lock(&sbi->s_fc_lock);
-@@ -1004,7 +1004,7 @@ static int ext4_fc_wait_inode_data_all(j
- 			continue;
- 		spin_unlock(&sbi->s_fc_lock);
- 
--		ret = jbd2_wait_inode_data(journal, pos->jinode);
-+		ret = jbd2_wait_inode_data(journal, READ_ONCE(pos->jinode));
- 		if (ret)
- 			return ret;
- 		spin_lock(&sbi->s_fc_lock);
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -122,6 +122,8 @@ void ext4_inode_csum_set(struct inode *i
- static inline int ext4_begin_ordered_truncate(struct inode *inode,
- 					      loff_t new_size)
- {
-+	struct jbd2_inode *jinode = READ_ONCE(EXT4_I(inode)->jinode);
-+
- 	trace_ext4_begin_ordered_truncate(inode, new_size);
- 	/*
- 	 * If jinode is zero, then we never opened the file for
-@@ -129,10 +131,10 @@ static inline int ext4_begin_ordered_tru
- 	 * jbd2_journal_begin_ordered_truncate() since there's no
- 	 * outstanding writes we need to flush.
- 	 */
--	if (!EXT4_I(inode)->jinode)
-+	if (!jinode)
- 		return 0;
- 	return jbd2_journal_begin_ordered_truncate(EXT4_JOURNAL(inode),
--						   EXT4_I(inode)->jinode,
-+						   jinode,
- 						   new_size);
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3353,9 +3353,7 @@ err_freebuddy:
+ 	rcu_read_unlock();
+ 	iput(sbi->s_buddy_cache);
+ err_freesgi:
+-	rcu_read_lock();
+-	kvfree(rcu_dereference(sbi->s_group_info));
+-	rcu_read_unlock();
++	kvfree(rcu_access_pointer(sbi->s_group_info));
+ 	return -ENOMEM;
  }
  
-@@ -4145,8 +4147,13 @@ int ext4_inode_attach_jinode(struct inod
- 			spin_unlock(&inode->i_lock);
- 			return -ENOMEM;
- 		}
--		ei->jinode = jinode;
--		jbd2_journal_init_jbd_inode(ei->jinode, inode);
-+		jbd2_journal_init_jbd_inode(jinode, inode);
-+		/*
-+		 * Publish ->jinode only after it is fully initialized so that
-+		 * readers never observe a partially initialized jbd2_inode.
-+		 */
-+		smp_wmb();
-+		WRITE_ONCE(ei->jinode, jinode);
- 		jinode = NULL;
+@@ -3634,7 +3632,8 @@ int ext4_mb_release(struct super_block *
+ 	flush_work(&sbi->s_discard_work);
+ 	WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
+ 
+-	if (sbi->s_group_info) {
++	group_info = rcu_access_pointer(sbi->s_group_info);
++	if (group_info) {
+ 		for (i = 0; i < ngroups; i++) {
+ 			cond_resched();
+ 			grinfo = ext4_get_group_info(sb, i);
+@@ -3652,12 +3651,9 @@ int ext4_mb_release(struct super_block *
+ 		num_meta_group_infos = (ngroups +
+ 				EXT4_DESC_PER_BLOCK(sb) - 1) >>
+ 			EXT4_DESC_PER_BLOCK_BITS(sb);
+-		rcu_read_lock();
+-		group_info = rcu_dereference(sbi->s_group_info);
+ 		for (i = 0; i < num_meta_group_infos; i++)
+ 			kfree(group_info[i]);
+ 		kvfree(group_info);
+-		rcu_read_unlock();
  	}
- 	spin_unlock(&inode->i_lock);
+ 	kfree(sbi->s_mb_largest_free_orders);
+ 	kfree(sbi->s_mb_largest_free_orders_locks);
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -1220,18 +1220,16 @@ static void ext4_put_super(struct super_
+ 	if (!sb_rdonly(sb))
+ 		ext4_commit_super(sb);
+ 
+-	rcu_read_lock();
+-	group_desc = rcu_dereference(sbi->s_group_desc);
++	group_desc = rcu_access_pointer(sbi->s_group_desc);
+ 	for (i = 0; i < sbi->s_gdb_count; i++)
+ 		brelse(group_desc[i]);
+ 	kvfree(group_desc);
+-	flex_groups = rcu_dereference(sbi->s_flex_groups);
++	flex_groups = rcu_access_pointer(sbi->s_flex_groups);
+ 	if (flex_groups) {
+ 		for (i = 0; i < sbi->s_flex_groups_allocated; i++)
+ 			kvfree(flex_groups[i]);
+ 		kvfree(flex_groups);
+ 	}
+-	rcu_read_unlock();
+ 	percpu_counter_destroy(&sbi->s_freeclusters_counter);
+ 	percpu_counter_destroy(&sbi->s_freeinodes_counter);
+ 	percpu_counter_destroy(&sbi->s_dirs_counter);
+@@ -5075,14 +5073,12 @@ failed_mount7:
+ 	ext4_unregister_li_request(sb);
+ failed_mount6:
+ 	ext4_mb_release(sb);
+-	rcu_read_lock();
+-	flex_groups = rcu_dereference(sbi->s_flex_groups);
++	flex_groups = rcu_access_pointer(sbi->s_flex_groups);
+ 	if (flex_groups) {
+ 		for (i = 0; i < sbi->s_flex_groups_allocated; i++)
+ 			kvfree(flex_groups[i]);
+ 		kvfree(flex_groups);
+ 	}
+-	rcu_read_unlock();
+ 	percpu_counter_destroy(&sbi->s_freeclusters_counter);
+ 	percpu_counter_destroy(&sbi->s_freeinodes_counter);
+ 	percpu_counter_destroy(&sbi->s_dirs_counter);
+@@ -5120,12 +5116,10 @@ failed_mount3:
+ 	ext4_stop_mmpd(sbi);
+ 	del_timer_sync(&sbi->s_err_report);
+ failed_mount2:
+-	rcu_read_lock();
+-	group_desc = rcu_dereference(sbi->s_group_desc);
++	group_desc = rcu_access_pointer(sbi->s_group_desc);
+ 	for (i = 0; i < db_count; i++)
+ 		brelse(group_desc[i]);
+ 	kvfree(group_desc);
+-	rcu_read_unlock();
+ failed_mount:
+ 	if (sbi->s_chksum_driver)
+ 		crypto_free_shash(sbi->s_chksum_driver);
 
 
