@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66CA30FC0F;
-	Mon, 13 Apr 2026 16:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DBF28C874;
+	Mon, 13 Apr 2026 16:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098559; cv=none; b=sdXKxNfIqMJ34pzCRf9GFywH2yX5Vw+bLGBSbPBJ9QcJAq9vzkdMSWbjDoWHxn3lFxMMoabpMkbps7bC5ZlYk7zAqzRomI5qp4vQ8NF4rDGea0b5yiGS+z5XHFG/Q+3hdsssWSXh81aFJ+GfnhdU68v2MJYE8OxAwHeroCV65ds=
+	t=1776098561; cv=none; b=Q1jYO7KlP7y8PMIAmxnKUJEIei6gG0ecD1hBO2Xdbs3BpQwikbA3xw4jaN8LXTOybH1rPWi7sWRJ4sPE336Y4JtYdG+rXz+H6xM2KzWlyl/b7bmBa1ZS2dZ0zEr/f3oCNzq8g8301FcBL2cRLYh/GYKxC9GS/5HuNlizkmYNtmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098559; c=relaxed/simple;
-	bh=Qc8Xrocmp0dKexzxnV7WACj82HORHp8eba/f6XyDLuo=;
+	s=arc-20240116; t=1776098561; c=relaxed/simple;
+	bh=HKS3kuiSEGuc/cfmpwXG1M1fUgzshIQbMHUbbSQj830=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OodYT94S7SDDY8Iy/giJi58hlVlDqZoDt+vr7PO4bad0T3WlWThnpDudiZWDKL6zSnhVJOVGLyOO5yPKSqhWs8DKkzBKQgQWikUBSJxaYgFustFmXLot5y058LE8aJQhbvjHCXW7501wV/k5Ek34PhjRi7KvqmL6cESLmq07O3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUH38WAF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ga5vMbTcEurtvBgb0siQaUK0fNpP6zf29WT2RtKoXFgHgYwyJnP5KfirqaTA1U5EG5Pd4s2EoK+Paj5ElTKOChSkaclI/KHXi935w9fB4l52/vgcrncJx7Q71fvi13cu3SqVJTuFuQ4K60OPqVvfi3ispn8el5wf/kFq3OD/4vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlwsXAhU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUH38WAF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EC1C2BCAF;
-	Mon, 13 Apr 2026 16:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlwsXAhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12753C2BCB0;
+	Mon, 13 Apr 2026 16:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098558;
-	bh=Qc8Xrocmp0dKexzxnV7WACj82HORHp8eba/f6XyDLuo=;
+	s=korg; t=1776098561;
+	bh=HKS3kuiSEGuc/cfmpwXG1M1fUgzshIQbMHUbbSQj830=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PUH38WAFV3Fy9KWQAq7oMcC0l0SBUqILiMlhvUeGt3ahcJLAJNRRqoLcnTiMTwKlj
-	 IvMLYWAtXx/JnTnT5Leu6hlA2v78w0iF5fZNALPKnkYh7nOcF/63IpMIjPB3p+BZua
-	 agbdYmoHf4SOJ5Vbf5RxqSQkxQC00gVAcmOINqKE=
+	b=dlwsXAhUkC1Ezhjx886L/GKzm5oizkje/fKcPFzwIlKI9ClV6RJSz9TtXP33Vahpr
+	 yXsIlrOpPLDNE76B0Fk6tz3GGKcPY6LzgB2EWgNQBRwEidwcF7XOw4dZK+s9URi1BF
+	 8Pk5p4FtRl+/r2AiC76zwoFcnh0QUhXOgLJ6Mzzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	stable <stable@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 544/570] seg6: separate dst_cache for input and output paths in seg6 lwtunnel
-Date: Mon, 13 Apr 2026 18:01:15 +0200
-Message-ID: <20260413155850.824243601@linuxfoundation.org>
+Subject: [PATCH 5.15 545/570] net: rfkill: prevent unlimited numbers of rfkill events from being created
+Date: Mon, 13 Apr 2026 18:01:16 +0200
+Message-ID: <20260413155850.863116135@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -53,129 +56,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit c3812651b522fe8437ebb7063b75ddb95b571643 ]
+[ Upstream commit ea245d78dec594372e27d8c79616baf49e98a4a1 ]
 
-The seg6 lwtunnel uses a single dst_cache per encap route, shared
-between seg6_input_core() and seg6_output_core(). These two paths
-can perform the post-encap SID lookup in different routing contexts
-(e.g., ip rules matching on the ingress interface, or VRF table
-separation). Whichever path runs first populates the cache, and the
-other reuses it blindly, bypassing its own lookup.
+Userspace can create an unlimited number of rfkill events if the system
+is so configured, while not consuming them from the rfkill file
+descriptor, causing a potential out of memory situation.  Prevent this
+from bounding the number of pending rfkill events at a "large" number
+(i.e. 1000) to prevent abuses like this.
 
-Fix this by splitting the cache into cache_input and cache_output,
-so each path maintains its own cached dst independently.
-
-Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
-Cc: stable@vger.kernel.org
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260404004405.4057-2-andrea.mayer@uniroma2.it
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ added missing dst reference loop guard in seg6_output_core() ]
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026033013-disfigure-scroll-e25e@gregkh
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ replaced `scoped_guard()` with explicit `mutex_lock()`/`mutex_unlock()` calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_iptunnel.c |   41 ++++++++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 13 deletions(-)
+ net/rfkill/core.c |   37 +++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -48,7 +48,8 @@ static size_t seg6_lwt_headroom(struct s
- }
- 
- struct seg6_lwt {
--	struct dst_cache cache;
-+	struct dst_cache cache_input;
-+	struct dst_cache cache_output;
- 	struct seg6_iptunnel_encap tuninfo[];
+--- a/net/rfkill/core.c
++++ b/net/rfkill/core.c
+@@ -72,11 +72,14 @@ struct rfkill_int_event {
+ 	struct rfkill_event_ext	ev;
  };
  
-@@ -486,7 +487,7 @@ static int seg6_input_core(struct net *n
- 	slwt = seg6_lwt_lwtunnel(lwtst);
- 
- 	local_bh_disable();
--	dst = dst_cache_get(&slwt->cache);
-+	dst = dst_cache_get(&slwt->cache_input);
- 	local_bh_enable();
- 
- 	err = seg6_do_srh(skb, dst);
-@@ -504,7 +505,7 @@ static int seg6_input_core(struct net *n
- 		/* cache only if we don't create a dst reference loop */
- 		if (!dst->error && lwtst != dst->lwtstate) {
- 			local_bh_disable();
--			dst_cache_set_ip6(&slwt->cache, dst,
-+			dst_cache_set_ip6(&slwt->cache_input, dst,
- 					  &ipv6_hdr(skb)->saddr);
- 			local_bh_enable();
- 		}
-@@ -563,7 +564,7 @@ static int seg6_output_core(struct net *
- 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
- 
- 	local_bh_disable();
--	dst = dst_cache_get(&slwt->cache);
-+	dst = dst_cache_get(&slwt->cache_output);
- 	local_bh_enable();
- 
- 	err = seg6_do_srh(skb, dst);
-@@ -587,9 +588,12 @@ static int seg6_output_core(struct net *
- 			goto drop;
- 		}
- 
--		local_bh_disable();
--		dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
--		local_bh_enable();
-+		/* cache only if we don't create a dst reference loop */
-+		if (orig_dst->lwtstate != dst->lwtstate) {
-+			local_bh_disable();
-+			dst_cache_set_ip6(&slwt->cache_output, dst, &fl6.saddr);
-+			local_bh_enable();
-+		}
- 
- 		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
- 		if (unlikely(err))
-@@ -697,11 +701,13 @@ static int seg6_build_state(struct net *
- 
- 	slwt = seg6_lwt_lwtunnel(newts);
- 
--	err = dst_cache_init(&slwt->cache, GFP_ATOMIC);
--	if (err) {
--		kfree(newts);
--		return err;
--	}
-+	err = dst_cache_init(&slwt->cache_input, GFP_ATOMIC);
-+	if (err)
-+		goto err_free_newts;
-+
-+	err = dst_cache_init(&slwt->cache_output, GFP_ATOMIC);
-+	if (err)
-+		goto err_destroy_input;
- 
- 	memcpy(&slwt->tuninfo, tuninfo, tuninfo_len);
- 
-@@ -716,11 +722,20 @@ static int seg6_build_state(struct net *
- 	*ts = newts;
- 
- 	return 0;
-+
-+err_destroy_input:
-+	dst_cache_destroy(&slwt->cache_input);
-+err_free_newts:
-+	kfree(newts);
-+	return err;
++/* Max rfkill events that can be "in-flight" for one data source */
++#define MAX_RFKILL_EVENT	1000
+ struct rfkill_data {
+ 	struct list_head	list;
+ 	struct list_head	events;
+ 	struct mutex		mtx;
+ 	wait_queue_head_t	read_wait;
++	u32			event_count;
+ 	bool			input_handler;
+ 	u8			max_size;
+ };
+@@ -254,10 +257,12 @@ static void rfkill_global_led_trigger_un
  }
+ #endif /* CONFIG_RFKILL_LEDS */
  
- static void seg6_destroy_state(struct lwtunnel_state *lwt)
+-static void rfkill_fill_event(struct rfkill_event_ext *ev,
+-			      struct rfkill *rfkill,
+-			      enum rfkill_operation op)
++static int rfkill_fill_event(struct rfkill_int_event *int_ev,
++			     struct rfkill *rfkill,
++			     struct rfkill_data *data,
++			     enum rfkill_operation op)
  {
--	dst_cache_destroy(&seg6_lwt_lwtunnel(lwt)->cache);
-+	struct seg6_lwt *slwt = seg6_lwt_lwtunnel(lwt);
++	struct rfkill_event_ext *ev = &int_ev->ev;
+ 	unsigned long flags;
+ 
+ 	ev->idx = rfkill->idx;
+@@ -270,6 +275,16 @@ static void rfkill_fill_event(struct rfk
+ 					RFKILL_BLOCK_SW_PREV));
+ 	ev->hard_block_reasons = rfkill->hard_block_reasons;
+ 	spin_unlock_irqrestore(&rfkill->lock, flags);
 +
-+	dst_cache_destroy(&slwt->cache_input);
-+	dst_cache_destroy(&slwt->cache_output);
++	mutex_lock(&data->mtx);
++	if (data->event_count++ > MAX_RFKILL_EVENT) {
++		data->event_count--;
++		mutex_unlock(&data->mtx);
++		return -ENOSPC;
++	}
++	list_add_tail(&int_ev->list, &data->events);
++	mutex_unlock(&data->mtx);
++	return 0;
  }
  
- static int seg6_fill_encap_info(struct sk_buff *skb,
+ static void rfkill_send_events(struct rfkill *rfkill, enum rfkill_operation op)
+@@ -281,10 +296,10 @@ static void rfkill_send_events(struct rf
+ 		ev = kzalloc(sizeof(*ev), GFP_KERNEL);
+ 		if (!ev)
+ 			continue;
+-		rfkill_fill_event(&ev->ev, rfkill, op);
+-		mutex_lock(&data->mtx);
+-		list_add_tail(&ev->list, &data->events);
+-		mutex_unlock(&data->mtx);
++		if (rfkill_fill_event(ev, rfkill, data, op)) {
++			kfree(ev);
++			continue;
++		}
+ 		wake_up_interruptible(&data->read_wait);
+ 	}
+ }
+@@ -1149,7 +1164,6 @@ static int rfkill_fop_open(struct inode
+ 	init_waitqueue_head(&data->read_wait);
+ 
+ 	mutex_lock(&rfkill_global_mutex);
+-	mutex_lock(&data->mtx);
+ 	/*
+ 	 * start getting events from elsewhere but hold mtx to get
+ 	 * startup events added first
+@@ -1159,11 +1173,10 @@ static int rfkill_fop_open(struct inode
+ 		ev = kzalloc(sizeof(*ev), GFP_KERNEL);
+ 		if (!ev)
+ 			goto free;
+-		rfkill_fill_event(&ev->ev, rfkill, RFKILL_OP_ADD);
+-		list_add_tail(&ev->list, &data->events);
++		if (rfkill_fill_event(ev, rfkill, data, RFKILL_OP_ADD))
++			kfree(ev);
+ 	}
+ 	list_add(&data->list, &rfkill_fds);
+-	mutex_unlock(&data->mtx);
+ 	mutex_unlock(&rfkill_global_mutex);
+ 
+ 	file->private_data = data;
+@@ -1171,7 +1184,6 @@ static int rfkill_fop_open(struct inode
+ 	return stream_open(inode, file);
+ 
+  free:
+-	mutex_unlock(&data->mtx);
+ 	mutex_unlock(&rfkill_global_mutex);
+ 	mutex_destroy(&data->mtx);
+ 	list_for_each_entry_safe(ev, tmp, &data->events, list)
+@@ -1232,6 +1244,7 @@ static ssize_t rfkill_fop_read(struct fi
+ 		ret = -EFAULT;
+ 
+ 	list_del(&ev->list);
++	data->event_count--;
+ 	kfree(ev);
+  out:
+ 	mutex_unlock(&data->mtx);
 
 
