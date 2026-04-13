@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F5B314A8E;
-	Mon, 13 Apr 2026 16:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B247923E342;
+	Mon, 13 Apr 2026 16:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098792; cv=none; b=CXz9qu8U/avj0uwV3bVBs42mMheylMOFY0MSV4fvAw04G3prYTtI/U/obEjivtoFO/ukRtWbQA3PlYkqYxribPNFsIpE0v9FmktteeISxy+8PdTlEIeOQN+dh3fcStB7PRMaB6jvq0UEdjUYAHZg7MtzJlcLxuZN54yCOZa23kk=
+	t=1776098794; cv=none; b=Cx4Nwh/OFRQIFilpoJfwptaKINSaLQQNq5T63oih7m+qSwRcRLsRbw1uk7Eh4Uk4DhsIkFLgnorX2o/CF27UUSfZ3+w6IglEik8IH7kiGefl13VO1EuSt0I08xcvUibxwHTxXbYvnnZBSDzPrwE6bFBAymIkud5gunWq+FCYU4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098792; c=relaxed/simple;
-	bh=s2OT6gbtK2p2c4QSm1lWKiDIIGLgpMGu9luzSal9MNM=;
+	s=arc-20240116; t=1776098794; c=relaxed/simple;
+	bh=JOAPHUmvGGj+awlfBJtGXFGaeAUSou3x+kDHuYYWXKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MpvHv20fDN2lbj5hyB4AlnqMNx8xq7hMpLEmLdUk9DKOvVlG2tYnCxX/5K46joSeRg50MNil4dlnIeeSW33rEVeK70UV1PCtYlGfaNHoOCdVGj2Ibj0vGBqRxwU12QMU6h6sdvtPNaKO7Kztw/MSpDphg4kJmV+iyiI9W8j/oNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEeYrS2e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0iq+TNpkjxShNWiYch2TsMho7NOnd9MwKA/ZG/9pMhc1NPFwFzH7wE1TuaPnffDCr7lu9yupYh2wyuNeBp76kNSvVeLw1ihPw4teVsMktnHFPPuzrYOawg1ROgpBkss95Y9tuSCoxasweswqRQ71qJX08p25a8fxDRwzoti2o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAc6F7/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEeYrS2e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41A6C2BCAF;
-	Mon, 13 Apr 2026 16:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAc6F7/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD16C2BCAF;
+	Mon, 13 Apr 2026 16:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098792;
-	bh=s2OT6gbtK2p2c4QSm1lWKiDIIGLgpMGu9luzSal9MNM=;
+	s=korg; t=1776098794;
+	bh=JOAPHUmvGGj+awlfBJtGXFGaeAUSou3x+kDHuYYWXKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hEeYrS2eiZnfSzBgU3BmPOW4WEOtWLMRZmrkeG4BTrxpKOSDQYAcli38tC3jmthEy
-	 /KRwGC1tfd67Qti4xEjPh2MYQ4lbK267Z/FeqqPUnm5hCSqgOpZWctvV/e7iDqkmdj
-	 a/+WLj8IUnPwoAfKhBl4n4xFJGmpVWA0G1hNKtZw=
+	b=YAc6F7/7Kz9CtourCEHk+UDxtnEviatQOEpqAwXO5GUOHGRfTMjkqB5WTm/6CrylU
+	 DymkaJ9En6tn8me0nmcPFdAXbS8psBUWObT8dMyiuNZq/uWQWBoM1oZxuCi/Txjg20
+	 PRtWGtEKtCq5aYHHd/rhhER/cyEIr5VQXtQh7OHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 090/491] net: usb: lan78xx: fix silent drop of packets with checksum errors
-Date: Mon, 13 Apr 2026 17:55:35 +0200
-Message-ID: <20260413155822.416268981@linuxfoundation.org>
+Subject: [PATCH 5.10 091/491] net: usb: lan78xx: skip LTM configuration for LAN7850
+Date: Mon, 13 Apr 2026 17:55:36 +0200
+Message-ID: <20260413155822.453438615@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,63 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit e4f774a0cc955ce762aec91c66915a6e15087ab7 upstream.
+commit d9cc0e440f0664f6f3e2c26e39ab9dd5f3badba7 upstream.
 
-Do not drop packets with checksum errors at the USB driver level;
-pass them to the network stack.
+Do not configure Latency Tolerance Messaging (LTM) on USB 2.0 hardware.
 
-Previously, the driver dropped all packets where the 'Receive Error
-Detected' (RED) bit was set, regardless of the specific error type. This
-caused packets with only IP or TCP/UDP checksum errors to be dropped
-before reaching the kernel, preventing the network stack from accounting
-for them or performing software fallback.
+The LAN7850 is a High-Speed (USB 2.0) only device and does not support
+SuperSpeed features like LTM. Currently, the driver unconditionally
+attempts to configure LTM registers during initialization. On the
+LAN7850, these registers do not exist, resulting in writes to invalid
+or undocumented memory space.
 
-Add a mask for hard hardware errors to safely drop genuinely corrupt
-frames, while allowing checksum-errored frames to pass with their
-ip_summed field explicitly set to CHECKSUM_NONE.
+This issue was identified during a port to the regmap API with strict
+register validation enabled. While no functional issues or crashes have
+been observed from these invalid writes, bypassing LTM initialization
+on the LAN7850 ensures the driver strictly adheres to the hardware's
+valid register map.
 
 Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260305143429.530909-2-o.rempel@pengutronix.de
+Link: https://patch.msgid.link/20260305143429.530909-4-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |    4 +++-
- drivers/net/usb/lan78xx.h |    3 +++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/usb/lan78xx.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/net/usb/lan78xx.c
 +++ b/drivers/net/usb/lan78xx.c
-@@ -3279,6 +3279,7 @@ static void lan78xx_rx_csum_offload(stru
- 	 */
- 	if (!(dev->net->features & NETIF_F_RXCSUM) ||
- 	    unlikely(rx_cmd_a & RX_CMD_A_ICSM_) ||
-+	    unlikely(rx_cmd_a & RX_CMD_A_CSE_MASK_) ||
- 	    ((rx_cmd_a & RX_CMD_A_FVTG_) &&
- 	     !(dev->net->features & NETIF_F_HW_VLAN_CTAG_RX))) {
- 		skb->ip_summed = CHECKSUM_NONE;
-@@ -3346,7 +3347,8 @@ static int lan78xx_rx(struct lan78xx_net
- 		size = (rx_cmd_a & RX_CMD_A_LEN_MASK_);
- 		align_count = (4 - ((size + RXW_PADDING) % 4)) % 4;
+@@ -2463,6 +2463,10 @@ static void lan78xx_init_ltm(struct lan7
+ 	u32 buf;
+ 	u32 regs[6] = { 0 };
  
--		if (unlikely(rx_cmd_a & RX_CMD_A_RED_)) {
-+		if (unlikely(rx_cmd_a & RX_CMD_A_RED_) &&
-+		    (rx_cmd_a & RX_CMD_A_RX_HARD_ERRS_MASK_)) {
- 			netif_dbg(dev, rx_err, dev->net,
- 				  "Error rx_cmd_a=0x%08x", rx_cmd_a);
- 		} else {
---- a/drivers/net/usb/lan78xx.h
-+++ b/drivers/net/usb/lan78xx.h
-@@ -74,6 +74,9 @@
- #define RX_CMD_A_ICSM_			(0x00004000)
- #define RX_CMD_A_LEN_MASK_		(0x00003FFF)
- 
-+#define RX_CMD_A_RX_HARD_ERRS_MASK_ \
-+	(RX_CMD_A_RX_ERRS_MASK_ & ~RX_CMD_A_CSE_MASK_)
++	/* LAN7850 is USB 2.0 and does not support LTM */
++	if (dev->chipid == ID_REV_CHIP_ID_7850_)
++		return;
 +
- /* Rx Command B */
- #define RX_CMD_B_CSUM_SHIFT_		(16)
- #define RX_CMD_B_CSUM_MASK_		(0xFFFF0000)
+ 	ret = lan78xx_read_reg(dev, USB_CFG1, &buf);
+ 	if (buf & USB_CFG1_LTM_ENABLE_) {
+ 		u8 temp[2];
 
 
