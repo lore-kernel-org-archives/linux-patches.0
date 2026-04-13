@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6A927280A;
-	Mon, 13 Apr 2026 16:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459B330BBAE;
+	Mon, 13 Apr 2026 16:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096534; cv=none; b=cNPIBKI9cV5ykYsgah9jA5oapR0tl8cCntpgcp05IDB5ujDbjQKqeNrUAI1jYotid5a8JMKTzYYuTqmdnlzOD1xNXmt//K3rH3LQGM8axivL9hFtt/jZ3rycOHsihQRSfyCgkXriXwugJPRXMwrKhNoN8RGSKWA/SBXor4DGp7w=
+	t=1776096537; cv=none; b=VrFTIQLXXodM79CWzYvi8JrmiBlb0mqeh8lxOxGKaYhXAv1cSdwGOQSCJpnqfyIg5Cz8P1E7WQV6azkPBMMGZDiyo8pyTv/CPUGcpjnl9LNKPyPF0RNfeGw9wAnIl9nzu6SNlsyhhPf8KyHEtui8roCuzKBlTx6vhhInTo9tIuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096534; c=relaxed/simple;
-	bh=7GtH9mze3mxrqJKAfhhmz9H/4+w+FXVrDtXHseNkeLQ=;
+	s=arc-20240116; t=1776096537; c=relaxed/simple;
+	bh=iIUDga2XL2/hQDOunA7/XoLCo9c+ZtBQDdQT/s2aLeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wsy8Z41NuSwX2eMe6W6SleFJrkAh0dlDt5YCmc0hJD6QnHDm8RNdYrDVa+tQRIk3lB1zUuRpMvDa1zkOfobnTfG1HhLAqK5Zi2SNcwS1u2/EXF9xlKy1Lp+Y43y1AyqQJs2ZPCfQfwo9lnJ++3V0Xen+iHBFkToKBsOrhdhopmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVCnhFC5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EQc+Ls05OcC7BhOTm6iWfaUj/Sp38eveWXUJOSwbSbO0/rxe+OlKOfVrBnEmUMvocZyP+Z+zQfi2DjehJRoK8w1BMDycz5payIz5288EN9NG4nrHJEOD6JPSWFC1IkG8DSyohP7aogSoFsxzbhXx+PLY/foNfu1EFK5JioM6FhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iiW9Z/E9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVCnhFC5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F548C4AF12;
-	Mon, 13 Apr 2026 16:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiW9Z/E9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFAB8C2BCB4;
+	Mon, 13 Apr 2026 16:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096534;
-	bh=7GtH9mze3mxrqJKAfhhmz9H/4+w+FXVrDtXHseNkeLQ=;
+	s=korg; t=1776096537;
+	bh=iIUDga2XL2/hQDOunA7/XoLCo9c+ZtBQDdQT/s2aLeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JVCnhFC5LzYN3aMyDCrNDiUERAsC1DfmXyXWa1ZucJG03yRj1qkdRH9M0qyXH9kCT
-	 G59GbpKkfq5aLNVCmsiukVkm7dFT7gN7v5NfypuLxRLSi0KfAG1s/S01FlEJeHF4xo
-	 gvtEr7DN9kt/byWNzcbr6snyTwt42ysUL7VkySKo=
+	b=iiW9Z/E9Ew28saNvlQEFvRwzthv2/2mwGtyzvtJVXIC65tcXnxLwn4iDcbXO1xe7E
+	 Fwrba551L8fNNG0uZmWm4PSeFjsYwFsrT9PeHtyWMs3vrX/jopNx8xbZPlijBEI0Ff
+	 URYVNwej6ijuqfZNGpDt44trzmpijRzVSF9+QzBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 06/83] Revert "mptcp: add needs_id for netlink appending addr"
-Date: Mon, 13 Apr 2026 17:59:34 +0200
-Message-ID: <20260413155731.267921565@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Haoze Xie <royenheart@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 6.18 42/83] batman-adv: hold claim backbone gateways by reference
+Date: Mon, 13 Apr 2026 18:00:10 +0200
+Message-ID: <20260413155732.590484445@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -51,104 +56,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Haoze Xie <royenheart@gmail.com>
 
-commit 8e2760eaab778494fc1fa257031e0e1799647f46 upstream.
+commit 82d8701b2c930d0e96b0dbc9115a218d791cb0d2 upstream.
 
-This commit was originally adding the ability to add MPTCP endpoints
-with ID 0 by accident. The in-kernel PM, handling MPTCP endpoints at the
-net namespace level, is not supposed to handle endpoints with such ID,
-because this ID 0 is reserved to the initial subflow, as mentioned in
-the MPTCPv1 protocol [1], a per-connection setting.
+batadv_bla_add_claim() can replace claim->backbone_gw and drop the old
+gateway's last reference while readers still follow the pointer.
 
-Note that 'ip mptcp endpoint add id 0' stops early with an error, but
-other tools might still request the in-kernel PM to create MPTCP
-endpoints with this restricted ID 0.
+The netlink claim dump path dereferences claim->backbone_gw->orig and
+takes claim->backbone_gw->crc_lock without pinning the underlying
+backbone gateway. batadv_bla_check_claim() still has the same naked
+pointer access pattern.
 
-In other words, it was wrong to call the mptcp_pm_has_addr_attr_id
-helper to check whether the address ID attribute is set: if it was set
-to 0, a new MPTCP endpoint would be created with ID 0, which is not
-expected, and might cause various issues later.
+Reuse batadv_bla_claim_get_backbone_gw() in both readers so they operate
+on a stable gateway reference until the read-side work is complete.
+This keeps the dump and claim-check paths aligned with the lifetime
+rules introduced for the other BLA claim readers.
 
-Fixes: 584f38942626 ("mptcp: add needs_id for netlink appending addr")
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+Fixes: 04f3f5bf1883 ("batman-adv: add B.A.T.M.A.N. Dump BLA claims via netlink")
 Cc: stable@vger.kernel.org
-Link: https://datatracker.ietf.org/doc/html/rfc8684#section-3.2-9 [1]
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260407-net-mptcp-revert-pm-needs-id-v2-1-7a25cbc324f8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Haoze Xie <royenheart@gmail.com>
+Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_kernel.c |   24 +++++-------------------
- 1 file changed, 5 insertions(+), 19 deletions(-)
+ net/batman-adv/bridge_loop_avoidance.c |   27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
---- a/net/mptcp/pm_kernel.c
-+++ b/net/mptcp/pm_kernel.c
-@@ -710,7 +710,7 @@ static void __mptcp_pm_release_addr_entr
- 
- static int mptcp_pm_nl_append_new_local_addr(struct pm_nl_pernet *pernet,
- 					     struct mptcp_pm_addr_entry *entry,
--					     bool needs_id, bool replace)
-+					     bool replace)
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -2165,6 +2165,7 @@ batadv_bla_claim_dump_entry(struct sk_bu
+ 			    struct batadv_bla_claim *claim)
  {
- 	struct mptcp_pm_addr_entry *cur, *del_entry = NULL;
- 	int ret = -EINVAL;
-@@ -769,7 +769,7 @@ static int mptcp_pm_nl_append_new_local_
+ 	const u8 *primary_addr = primary_if->net_dev->dev_addr;
++	struct batadv_bla_backbone_gw *backbone_gw;
+ 	u16 backbone_crc;
+ 	bool is_own;
+ 	void *hdr;
+@@ -2180,32 +2181,35 @@ batadv_bla_claim_dump_entry(struct sk_bu
+ 
+ 	genl_dump_check_consistent(cb, hdr);
+ 
+-	is_own = batadv_compare_eth(claim->backbone_gw->orig,
+-				    primary_addr);
++	backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
++
++	is_own = batadv_compare_eth(backbone_gw->orig, primary_addr);
+ 
+-	spin_lock_bh(&claim->backbone_gw->crc_lock);
+-	backbone_crc = claim->backbone_gw->crc;
+-	spin_unlock_bh(&claim->backbone_gw->crc_lock);
++	spin_lock_bh(&backbone_gw->crc_lock);
++	backbone_crc = backbone_gw->crc;
++	spin_unlock_bh(&backbone_gw->crc_lock);
+ 
+ 	if (is_own)
+ 		if (nla_put_flag(msg, BATADV_ATTR_BLA_OWN)) {
+ 			genlmsg_cancel(msg, hdr);
+-			goto out;
++			goto put_backbone_gw;
  		}
+ 
+ 	if (nla_put(msg, BATADV_ATTR_BLA_ADDRESS, ETH_ALEN, claim->addr) ||
+ 	    nla_put_u16(msg, BATADV_ATTR_BLA_VID, claim->vid) ||
+ 	    nla_put(msg, BATADV_ATTR_BLA_BACKBONE, ETH_ALEN,
+-		    claim->backbone_gw->orig) ||
++		    backbone_gw->orig) ||
+ 	    nla_put_u16(msg, BATADV_ATTR_BLA_CRC,
+ 			backbone_crc)) {
+ 		genlmsg_cancel(msg, hdr);
+-		goto out;
++		goto put_backbone_gw;
  	}
  
--	if (!entry->addr.id && needs_id) {
-+	if (!entry->addr.id) {
- find_next:
- 		entry->addr.id = find_next_zero_bit(pernet->id_bitmap,
- 						    MPTCP_PM_MAX_ADDR_ID + 1,
-@@ -780,7 +780,7 @@ find_next:
- 		}
- 	}
+ 	genlmsg_end(msg, hdr);
+ 	ret = 0;
  
--	if (!entry->addr.id && needs_id)
-+	if (!entry->addr.id)
- 		goto out;
- 
- 	__set_bit(entry->addr.id, pernet->id_bitmap);
-@@ -909,7 +909,7 @@ int mptcp_pm_nl_get_local_id(struct mptc
- 		return -ENOMEM;
- 
- 	entry->addr.port = 0;
--	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, true, false);
-+	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, false);
- 	if (ret < 0)
- 		kfree(entry);
- 
-@@ -963,18 +963,6 @@ next:
- 	return 0;
++put_backbone_gw:
++	batadv_backbone_gw_put(backbone_gw);
+ out:
+ 	return ret;
  }
- 
--static bool mptcp_pm_has_addr_attr_id(const struct nlattr *attr,
--				      struct genl_info *info)
--{
--	struct nlattr *tb[MPTCP_PM_ADDR_ATTR_MAX + 1];
--
--	if (!nla_parse_nested_deprecated(tb, MPTCP_PM_ADDR_ATTR_MAX, attr,
--					 mptcp_pm_address_nl_policy, info->extack) &&
--	    tb[MPTCP_PM_ADDR_ATTR_ID])
--		return true;
--	return false;
--}
--
- /* Add an MPTCP endpoint */
- int mptcp_pm_nl_add_addr_doit(struct sk_buff *skb, struct genl_info *info)
+@@ -2483,6 +2487,7 @@ out:
+ bool batadv_bla_check_claim(struct batadv_priv *bat_priv,
+ 			    u8 *addr, unsigned short vid)
  {
-@@ -1023,9 +1011,7 @@ int mptcp_pm_nl_add_addr_doit(struct sk_
- 			goto out_free;
- 		}
++	struct batadv_bla_backbone_gw *backbone_gw;
+ 	struct batadv_bla_claim search_claim;
+ 	struct batadv_bla_claim *claim = NULL;
+ 	struct batadv_hard_iface *primary_if = NULL;
+@@ -2505,9 +2510,13 @@ bool batadv_bla_check_claim(struct batad
+ 	 * return false.
+ 	 */
+ 	if (claim) {
+-		if (!batadv_compare_eth(claim->backbone_gw->orig,
++		backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
++
++		if (!batadv_compare_eth(backbone_gw->orig,
+ 					primary_if->net_dev->dev_addr))
+ 			ret = false;
++
++		batadv_backbone_gw_put(backbone_gw);
+ 		batadv_claim_put(claim);
  	}
--	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry,
--						!mptcp_pm_has_addr_attr_id(attr, info),
--						true);
-+	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, true);
- 	if (ret < 0) {
- 		GENL_SET_ERR_MSG_FMT(info, "too many addresses or duplicate one: %d", ret);
- 		goto out_free;
+ 
 
 
