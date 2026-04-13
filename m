@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F5F280CFB;
-	Mon, 13 Apr 2026 16:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EE63115BC;
+	Mon, 13 Apr 2026 16:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098505; cv=none; b=ZHJa9SCprXtbdabzFUqRLk+7MaYkUHKtj9GkqkcEtifhRQLDq3NN3tzRMMcHFZ89C3HvyrQ5mUcueAvW3Ery3QzFYcR3TO+MmLnAyC+eDsZ+1MM9vNHKjVCPJcPHdRf3Zl2wig8B/ba6W7QsTJagrpaS3169x3p3ebBBFQqAoUU=
+	t=1776098507; cv=none; b=dsYjRMkDmgIyVv13X+0x7ybHI9X+dyrQBFvGmNpUHmrDk/ji7gX3VL/8iC+rc3uFB2Mg4Pc2rkyjrinOD7nXUsJoymQQfm1nIqRdpyIOMYWxpR410pS6l8mDnS/z04G/LrpKkHu+3cbUPcKL9yN/8rgtvm3nFdjdz9M/fnvXKPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098505; c=relaxed/simple;
-	bh=VKK1accAiU77+o8nxzNsrifZMOZwlocswvgVlUsVE04=;
+	s=arc-20240116; t=1776098507; c=relaxed/simple;
+	bh=tdafQdRPnwAQUlk6UB+WCnkeLELmp8BPISq0RBp31b8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H38uqvwStfaeYR9yweIShPC3llbgQ5+/teEQDl/Q06EuLf9zLdeWahBI5IpFv0Ov+NptN24s89JVaSytzqMTiJulY6jM99zZdIp0CRry9BOz3n863JjVJL7jT/G0Vlh/W2M2Ho31/H3WLR6PJ6qY5PiR/ZT89Sgz+pW6VOf2GWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nj+5rkZu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TB5dJB2yzZRVhJoNNatn2nlobrFvhp5ppDOjANEPUq7PP+T7qDEZJ/sEmkvoDd6UkMAsXUDRyycOOJoLc2aITCj77DT+fm85Djq/S6BvCsjFnJhCIEg48MXCpf6iRzQ1SN3YD4DMMm8nUC4G8zHpjT5eY+dz4MERqoMN4E3z4p8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUPXZ6CR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nj+5rkZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61636C2BCB3;
-	Mon, 13 Apr 2026 16:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUPXZ6CR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E894FC2BCB0;
+	Mon, 13 Apr 2026 16:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098504;
-	bh=VKK1accAiU77+o8nxzNsrifZMOZwlocswvgVlUsVE04=;
+	s=korg; t=1776098507;
+	bh=tdafQdRPnwAQUlk6UB+WCnkeLELmp8BPISq0RBp31b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nj+5rkZuMOfE9iG9gBTuW98rFYF//dVC6tZwnN0U7ov0DGuTP5lj1Znj7aVNFmGZI
-	 qI1OSOdKEalMvPqFWFSSxo5V3fnFLeG1ONomfV1OvrRTlblPYrq8CTIolrlSYGFC/I
-	 89HOEEWUnn9zZj1RCaswL8VBNo2T0bciT49BPl1U=
+	b=PUPXZ6CRd7AtVfFz8r2nrUcCE6FXCzdD8gPZxQPJvXb0L49aAM45Gd1ZZhhtH2pkp
+	 AdJ2wjV7yDhVOribtVg1/taL6YkC4nQlLXGszp5KRdnpVxc9hqxoBPIf6PtMtmvNcm
+	 Tp5qkTk0ZQGO+UZrkE1+GdClI9KmEm0Dk7ZUSqR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jan Kara <jack@suse.cz>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
+	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	Yuto Ohnuki <ytohnuki@amazon.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 551/570] ext4: fix use-after-free in update_super_work when racing with umount
-Date: Mon, 13 Apr 2026 18:01:22 +0200
-Message-ID: <20260413155851.099100817@linuxfoundation.org>
+Subject: [PATCH 5.15 552/570] xfs: save ailp before dropping the AIL lock in push callbacks
+Date: Mon, 13 Apr 2026 18:01:23 +0200
+Message-ID: <20260413155851.137650243@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -55,115 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-[ Upstream commit d15e4b0a418537aafa56b2cb80d44add83e83697 ]
+[ Upstream commit 394d70b86fae9fe865e7e6d9540b7696f73aa9b6 ]
 
-Commit b98535d09179 ("ext4: fix bug_on in start_this_handle during umount
-filesystem") moved ext4_unregister_sysfs() before flushing s_sb_upd_work
-to prevent new error work from being queued via /proc/fs/ext4/xx/mb_groups
-reads during unmount. However, this introduced a use-after-free because
-update_super_work calls ext4_notify_error_sysfs() -> sysfs_notify() which
-accesses the kobject's kernfs_node after it has been freed by kobject_del()
-in ext4_unregister_sysfs():
+In xfs_inode_item_push() and xfs_qm_dquot_logitem_push(), the AIL lock
+is dropped to perform buffer IO. Once the cluster buffer no longer
+protects the log item from reclaim, the log item may be freed by
+background reclaim or the dquot shrinker. The subsequent spin_lock()
+call dereferences lip->li_ailp, which is a use-after-free.
 
-  update_super_work                ext4_put_super
-  -----------------                --------------
-                                   ext4_unregister_sysfs(sb)
-                                     kobject_del(&sbi->s_kobj)
-                                       __kobject_del()
-                                         sysfs_remove_dir()
-                                           kobj->sd = NULL
-                                         sysfs_put(sd)
-                                           kernfs_put()  // RCU free
-  ext4_notify_error_sysfs(sbi)
-    sysfs_notify(&sbi->s_kobj)
-      kn = kobj->sd              // stale pointer
-      kernfs_get(kn)             // UAF on freed kernfs_node
-                                   ext4_journal_destroy()
-                                     flush_work(&sbi->s_sb_upd_work)
+Fix this by saving the ailp pointer in a local variable while the AIL
+lock is held and the log item is guaranteed to be valid.
 
-Instead of reordering the teardown sequence, fix this by making
-ext4_notify_error_sysfs() detect that sysfs has already been torn down
-by checking s_kobj.state_in_sysfs, and skipping the sysfs_notify() call
-in that case. A dedicated mutex (s_error_notify_mutex) serializes
-ext4_notify_error_sysfs() against kobject_del() in ext4_unregister_sysfs()
-to prevent TOCTOU races where the kobject could be deleted between the
-state_in_sysfs check and the sysfs_notify() call.
-
-Fixes: b98535d09179 ("ext4: fix bug_on in start_this_handle during umount filesystem")
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260319120336.157873-1-jiayuan.chen@linux.dev
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ adapted mutex_init placement ]
+Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
+Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
+Cc: stable@vger.kernel.org # v5.9
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h  |    1 +
- fs/ext4/super.c |    1 +
- fs/ext4/sysfs.c |   10 +++++++++-
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_dquot_item.c |    9 +++++++--
+ fs/xfs/xfs_inode_item.c |    9 +++++++--
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1540,6 +1540,7 @@ struct ext4_sb_info {
- 	struct proc_dir_entry *s_proc;
- 	struct kobject s_kobj;
- 	struct completion s_kobj_unregister;
-+	struct mutex s_error_notify_mutex; /* protects sysfs_notify vs kobject_del */
- 	struct super_block *s_sb;
- 	struct buffer_head *s_mmp_bh;
- 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -4626,6 +4626,7 @@ static int ext4_fill_super(struct super_
- 
- 	timer_setup(&sbi->s_err_report, print_daily_error_info, 0);
- 	spin_lock_init(&sbi->s_error_lock);
-+	mutex_init(&sbi->s_error_notify_mutex);
- 	INIT_WORK(&sbi->s_error_work, flush_stashed_error_work);
- 
- 	/* Register extent status tree shrinker */
---- a/fs/ext4/sysfs.c
-+++ b/fs/ext4/sysfs.c
-@@ -513,7 +513,10 @@ static struct kobj_type ext4_feat_ktype
- 
- void ext4_notify_error_sysfs(struct ext4_sb_info *sbi)
+--- a/fs/xfs/xfs_dquot_item.c
++++ b/fs/xfs/xfs_dquot_item.c
+@@ -124,6 +124,7 @@ xfs_qm_dquot_logitem_push(
  {
--	sysfs_notify(&sbi->s_kobj, NULL, "errors_count");
-+	mutex_lock(&sbi->s_error_notify_mutex);
-+	if (sbi->s_kobj.state_in_sysfs)
-+		sysfs_notify(&sbi->s_kobj, NULL, "errors_count");
-+	mutex_unlock(&sbi->s_error_notify_mutex);
+ 	struct xfs_dquot	*dqp = DQUOT_ITEM(lip)->qli_dquot;
+ 	struct xfs_buf		*bp = lip->li_buf;
++	struct xfs_ail		*ailp = lip->li_ailp;
+ 	uint			rval = XFS_ITEM_SUCCESS;
+ 	int			error;
+ 
+@@ -152,7 +153,7 @@ xfs_qm_dquot_logitem_push(
+ 		goto out_unlock;
+ 	}
+ 
+-	spin_unlock(&lip->li_ailp->ail_lock);
++	spin_unlock(&ailp->ail_lock);
+ 
+ 	error = xfs_qm_dqflush(dqp, &bp);
+ 	if (!error) {
+@@ -162,7 +163,11 @@ xfs_qm_dquot_logitem_push(
+ 	} else if (error == -EAGAIN)
+ 		rval = XFS_ITEM_LOCKED;
+ 
+-	spin_lock(&lip->li_ailp->ail_lock);
++	/*
++	 * The buffer no longer protects the log item from reclaim, so
++	 * do not reference lip after this point.
++	 */
++	spin_lock(&ailp->ail_lock);
+ out_unlock:
+ 	xfs_dqunlock(dqp);
+ 	return rval;
+--- a/fs/xfs/xfs_inode_item.c
++++ b/fs/xfs/xfs_inode_item.c
+@@ -540,6 +540,7 @@ xfs_inode_item_push(
+ 	struct xfs_inode_log_item *iip = INODE_ITEM(lip);
+ 	struct xfs_inode	*ip = iip->ili_inode;
+ 	struct xfs_buf		*bp = lip->li_buf;
++	struct xfs_ail		*ailp = lip->li_ailp;
+ 	uint			rval = XFS_ITEM_SUCCESS;
+ 	int			error;
+ 
+@@ -555,7 +556,7 @@ xfs_inode_item_push(
+ 	if (!xfs_buf_trylock(bp))
+ 		return XFS_ITEM_LOCKED;
+ 
+-	spin_unlock(&lip->li_ailp->ail_lock);
++	spin_unlock(&ailp->ail_lock);
+ 
+ 	/*
+ 	 * We need to hold a reference for flushing the cluster buffer as it may
+@@ -579,7 +580,11 @@ xfs_inode_item_push(
+ 		rval = XFS_ITEM_LOCKED;
+ 	}
+ 
+-	spin_lock(&lip->li_ailp->ail_lock);
++	/*
++	 * The buffer no longer protects the log item from reclaim, so
++	 * do not reference lip after this point.
++	 */
++	spin_lock(&ailp->ail_lock);
+ 	return rval;
  }
  
- static struct kobject *ext4_root;
-@@ -526,8 +529,10 @@ int ext4_register_sysfs(struct super_blo
- 	int err;
- 
- 	init_completion(&sbi->s_kobj_unregister);
-+	mutex_lock(&sbi->s_error_notify_mutex);
- 	err = kobject_init_and_add(&sbi->s_kobj, &ext4_sb_ktype, ext4_root,
- 				   "%s", sb->s_id);
-+	mutex_unlock(&sbi->s_error_notify_mutex);
- 	if (err) {
- 		kobject_put(&sbi->s_kobj);
- 		wait_for_completion(&sbi->s_kobj_unregister);
-@@ -560,7 +565,10 @@ void ext4_unregister_sysfs(struct super_
- 
- 	if (sbi->s_proc)
- 		remove_proc_subtree(sb->s_id, ext4_proc_root);
-+
-+	mutex_lock(&sbi->s_error_notify_mutex);
- 	kobject_del(&sbi->s_kobj);
-+	mutex_unlock(&sbi->s_error_notify_mutex);
- }
- 
- int __init ext4_init_sysfs(void)
 
 
