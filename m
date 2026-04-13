@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C24931F994;
-	Mon, 13 Apr 2026 16:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0F7327C1D;
+	Mon, 13 Apr 2026 16:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099316; cv=none; b=VaL2QSeZKalhxefAGFRTgmwQDZzAmOF+NebzMy0+pEV7WYZ9plTOYcR5s0Ba5i61O3MucXlqKUjwKIKWazk6q9t7z9sSi/Xacmd5iUxS6K3Pvihryj4kL46opTtX/BkRtqae4t+YI8+QmLQpbWNgqKfeGu5eeLEqPk5i97+WHgk=
+	t=1776099319; cv=none; b=DCD4nSlDanwTZcwvp/NK6/DV0nLXKtB6bozpmY5bqgFdpxraldEdJH79YjppYdQU0F8zXprJ8H4hW1tn0xO7YOwsONRiULJfpgkdQMg08O5EkM/boeU4oZ1yuw7GN+TnBe6D75Dm0tLXmCF0UsMvLNSlUKGW/qttGA8pN71FZLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099316; c=relaxed/simple;
-	bh=EaNCCGuPYNP4ri+jW+yTBvXWSYniK8uTCyq6MmjMpKA=;
+	s=arc-20240116; t=1776099319; c=relaxed/simple;
+	bh=EIpapzGe7G3BaZxIYLLGCCpnHItrlhadzNsEWASwLHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l6ljH42s4EUjJWlgKUlJWkQ4nLcGU52J4AMdS2AFpduqCIYkmuM5yRw8rHosgPCMY6pfXwrUjJoenVZ4AG3TSpkAsjKGyaaKYlmRzRTj1bLUAS647QfREpskO8nFzv3yMOy+YXb85y4OXDvnfkCf5OvrAxO2VyZIVHkIkduc40M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LuYNhwfO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kcq5V+NLaI/ou3+4O4EysxVHrBB23ZzgXKg79DjVh2b3G4CtJc9ipzfmWEBDce4hMy/QOb9Eak6WPFYoTLJWnKwW4mlsyiBw4w9WrzzFW813Khc0G7vUVMo1K/lZg/YZSvNDh1JBS9k1Q9mhNdqMv+z/m3E7xHyZjTOyv2h+dBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGiaHxEd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LuYNhwfO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FA8C2BCAF;
-	Mon, 13 Apr 2026 16:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGiaHxEd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890B1C2BCB8;
+	Mon, 13 Apr 2026 16:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099316;
-	bh=EaNCCGuPYNP4ri+jW+yTBvXWSYniK8uTCyq6MmjMpKA=;
+	s=korg; t=1776099318;
+	bh=EIpapzGe7G3BaZxIYLLGCCpnHItrlhadzNsEWASwLHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LuYNhwfO58IM2GNIXBEE/n+qkcd530BAoXkVpRrEvqr58zZ8hEaqhagXodksO0GPu
-	 V/F2JAnAehgJVhCpCw26viBMTvYth6lOxP4mUoSaAk2qmhSAyatt2IlofhiGGBkkLV
-	 6F73HkKSBoMmSC7Cvxi79wVVpvYYgTQBHZjx35r0=
+	b=AGiaHxEd3EWOR21sHzKnmRuATTsJGdELHgepSFRUTpn629J5W5DvqBlf3lB9flaXJ
+	 k3axrQcRLEAGoGfXMzvUEMnFcPsAyJ/5T4ZQ5S8S9u+EGlKzeo+p35iMwH9dyiNMS/
+	 Qs38v2cPmp1/Va6J05Gq3UbqliOlyCEP0lN/nyDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 294/491] spi: spi-fsl-lpspi: fix teardown order issue (UAF)
-Date: Mon, 13 Apr 2026 17:58:59 +0200
-Message-ID: <20260413155830.051734675@linuxfoundation.org>
+	stable@kernel.org,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 5.10 295/491] s390/barrier: Make array_index_mask_nospec() __always_inline
+Date: Mon, 13 Apr 2026 17:59:00 +0200
+Message-ID: <20260413155830.088738391@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,64 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit b341c1176f2e001b3adf0b47154fc31589f7410e ]
+commit c5c0a268b38adffbb2e70e6957017537ff54c157 upstream.
 
-There is a teardown order issue in the driver. The SPI controller is
-registered using devm_spi_register_controller(), which delays
-unregistration of the SPI controller until after the fsl_lpspi_remove()
-function returns.
+Mark array_index_mask_nospec() as __always_inline to guarantee the
+mitigation is emitted inline regardless of compiler inlining decisions.
 
-As the fsl_lpspi_remove() function synchronously tears down the DMA
-channels, a running SPI transfer triggers the following NULL pointer
-dereference due to use after free:
-
-| fsl_lpspi 42550000.spi: I/O Error in DMA RX
-| Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[...]
-| Call trace:
-|  fsl_lpspi_dma_transfer+0x260/0x340 [spi_fsl_lpspi]
-|  fsl_lpspi_transfer_one+0x198/0x448 [spi_fsl_lpspi]
-|  spi_transfer_one_message+0x49c/0x7c8
-|  __spi_pump_transfer_message+0x120/0x420
-|  __spi_sync+0x2c4/0x520
-|  spi_sync+0x34/0x60
-|  spidev_message+0x20c/0x378 [spidev]
-|  spidev_ioctl+0x398/0x750 [spidev]
-[...]
-
-Switch from devm_spi_register_controller() to spi_register_controller() in
-fsl_lpspi_probe() and add the corresponding spi_unregister_controller() in
-fsl_lpspi_remove().
-
-Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://patch.msgid.link/20260319-spi-fsl-lpspi-fixes-v1-1-b433e435b2d8@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e2dd833389cc ("s390: add optimized array_index_mask_nospec")
+Cc: stable@kernel.org
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-lpspi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/include/asm/barrier.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -914,7 +914,7 @@ static int fsl_lpspi_probe(struct platfo
- 		enable_irq(irq);
- 	}
+--- a/arch/s390/include/asm/barrier.h
++++ b/arch/s390/include/asm/barrier.h
+@@ -56,8 +56,8 @@ do {									\
+  * @size: number of elements in array
+  */
+ #define array_index_mask_nospec array_index_mask_nospec
+-static inline unsigned long array_index_mask_nospec(unsigned long index,
+-						    unsigned long size)
++static __always_inline unsigned long array_index_mask_nospec(unsigned long index,
++							     unsigned long size)
+ {
+ 	unsigned long mask;
  
--	ret = devm_spi_register_controller(&pdev->dev, controller);
-+	ret = spi_register_controller(controller);
- 	if (ret < 0) {
- 		dev_err_probe(&pdev->dev, ret, "spi_register_controller error\n");
- 		goto free_dma;
-@@ -943,6 +943,7 @@ static int fsl_lpspi_remove(struct platf
- 	struct fsl_lpspi_data *fsl_lpspi =
- 				spi_controller_get_devdata(controller);
- 
-+	spi_unregister_controller(controller);
- 	fsl_lpspi_dma_exit(controller);
- 
- 	pm_runtime_dont_use_autosuspend(fsl_lpspi->dev);
 
 
