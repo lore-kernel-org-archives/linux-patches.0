@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E63A49620;
-	Mon, 13 Apr 2026 16:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07E928505E;
+	Mon, 13 Apr 2026 16:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097484; cv=none; b=LQyTv8V8leXHSNT0cEmr9gqm1s3UjNW3hpTE7nl7wJW3//4E364CJaktHbEXLZwIQldA0yDgZLuHBKKQowBPCNGEdBNwj0jG0Omd8StLNbUyEdF1xBQ3A/k25E8RCvxzHbkE1tpAwe3Ak+94VqXl25Jy6Cg5CoKb4yQ5IlFqw3A=
+	t=1776097486; cv=none; b=Hz+e9mB+twy2R+mYdexDTSUCGdM4+LJGAj9HvqVg8/Zp4dpjZHt8+X2CNZjX/Zm1G3XLvBVOPsJY6nnRpPeZROXsIYcQlAJnIxPcT3iNeioAsHuJw/56j4CSlmLfDOCHgGqiD495wtJ5azL88q45LKBJqjs8V4RcM/c1Nq8rUF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097484; c=relaxed/simple;
-	bh=sWw79GL55Qdd/9OTxpLKP55tf7AOWQENE1oRdpivx0s=;
+	s=arc-20240116; t=1776097486; c=relaxed/simple;
+	bh=VG/gma+BFp7hRzA92f4i+Yqndd6eyPp9+EeoYIRbU14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gsKTflzWIq5WHjP6LHe2kZ9MtewC8npmqUkw0lh3tC9vRfJy/z4UJnzdld7aqX1j0objm0jN7zqaS80gKZvoXcSQyDldge4Db0BisbvvRvJLtlJ18G58DJAe72WgYoPegZ+FHgHKg/B9Cst1+HuNb+WTKIhmuVeYWclGVhsY2E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p42IA5Ki; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SNDapcBO+TB77CocGGomt5x1ctyePGQg4zC2yIHTgyivT8oIs8NEDB7CCTl8DcbZ8k6uvxaw28rXQe/BdrZ/qUp0J7FVOBkJiQc8GlMTjbuCb/jDquzNycxEXG3yPL/nEXLqDi8JUi8PqJ6DUJ3XlyohjeXgpF7ZNM8tF/hqYq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+khfm9u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p42IA5Ki"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1BE4C2BCAF;
-	Mon, 13 Apr 2026 16:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+khfm9u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671A0C2BCAF;
+	Mon, 13 Apr 2026 16:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097484;
-	bh=sWw79GL55Qdd/9OTxpLKP55tf7AOWQENE1oRdpivx0s=;
+	s=korg; t=1776097486;
+	bh=VG/gma+BFp7hRzA92f4i+Yqndd6eyPp9+EeoYIRbU14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p42IA5Kinu2dkEQOEDYcwwjq2/vq9s3ljx89YA6UjbIWQPq2S8hPJXwTE8NT9g64t
-	 6EwEyzC74Ccn6HVbVguPvIQeo0t6ntlyGUXg+XEQvnvVYad8/Dz9nOHpWUj3nVUyHD
-	 dhrbUFZMg7pQvioNCQlWdFzTYFPUF2ABKp92RlRw=
+	b=f+khfm9uJO692lFG7fKmOkjbjKQyk5/ZfXW48hosxwLcFFV7RXCxdPn5gVz2EuuSn
+	 VtD/nO/MShr6GJH81cgeX0vGjQEcwLlX1QX2pRo7YFVt8qnUE9QzEvvhq2lWD43xol
+	 dkDMrhPqsaZn55zpys63g0oDTzE3s+BWEvxTe2/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Subject: [PATCH 5.15 153/570] libceph: prevent potential out-of-bounds reads in process_message_header()
-Date: Mon, 13 Apr 2026 17:54:44 +0200
-Message-ID: <20260413155836.182143535@linuxfoundation.org>
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.15 154/570] libceph: Use u32 for non-negative values in ceph_monmap_decode()
+Date: Mon, 13 Apr 2026 17:54:45 +0200
+Message-ID: <20260413155836.220353163@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,56 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 69fb5d91bba44ecf7eb80530b85fa4fb028921d5 upstream.
+commit 770444611f047dbfd4517ec0bc1b179d40c2f346 upstream.
 
-If the message frame is (maliciously) corrupted in a way that the
-length of the control segment ends up being less than the size of the
-message header or a different frame is made to look like a message
-frame, out-of-bounds reads may ensue in process_message_header().
-
-Perform an explicit bounds check before decoding the message header.
+This patch fixes unnecessary implicit conversions that change signedness
+of blob_len and num_mon in ceph_monmap_decode().
+Currently blob_len and num_mon are (signed) int variables. They are used
+to hold values that are always non-negative and get assigned in
+ceph_decode_32_safe(), which is meant to assign u32 values. Both
+variables are subsequently used as unsigned values, and the value of
+num_mon is further assigned to monmap->num_mon, which is of type u32.
+Therefore, both variables should be of type u32. This is especially
+relevant for num_mon. If the value read from the incoming message is
+very large, it is interpreted as a negative value, and the check for
+num_mon > CEPH_MAX_MON does not catch it. This leads to the attempt to
+allocate a very large chunk of memory for monmap, which will most likely
+fail. In this case, an unnecessary attempt to allocate memory is
+performed, and -ENOMEM is returned instead of -EINVAL.
 
 Cc: stable@vger.kernel.org
-Reported-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/messenger_v2.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/ceph/mon_client.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/ceph/messenger_v2.c
-+++ b/net/ceph/messenger_v2.c
-@@ -2527,12 +2527,15 @@ static int process_message_header(struct
- 				  void *p, void *end)
- {
- 	struct ceph_frame_desc *desc = &con->v2.in_desc;
--	struct ceph_msg_header2 *hdr2 = p;
-+	struct ceph_msg_header2 *hdr2;
- 	struct ceph_msg_header hdr;
- 	int skip;
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -72,8 +72,8 @@ static struct ceph_monmap *ceph_monmap_d
+ 	struct ceph_monmap *monmap = NULL;
+ 	struct ceph_fsid fsid;
+ 	u32 struct_len;
+-	int blob_len;
+-	int num_mon;
++	u32 blob_len;
++	u32 num_mon;
+ 	u8 struct_v;
+ 	u32 epoch;
  	int ret;
- 	u64 seq;
+@@ -112,7 +112,7 @@ static struct ceph_monmap *ceph_monmap_d
+ 	}
+ 	ceph_decode_32_safe(p, end, num_mon, e_inval);
  
-+	ceph_decode_need(&p, end, sizeof(*hdr2), bad);
-+	hdr2 = p;
-+
- 	/* verify seq# */
- 	seq = le64_to_cpu(hdr2->seq);
- 	if ((s64)seq - (s64)con->in_seq < 1) {
-@@ -2563,6 +2566,10 @@ static int process_message_header(struct
- 	WARN_ON(!con->in_msg);
- 	WARN_ON(con->in_msg->con != con);
- 	return 1;
-+
-+bad:
-+	pr_err("failed to decode message header\n");
-+	return -EINVAL;
- }
- 
- static int process_message(struct ceph_connection *con)
+-	dout("%s fsid %pU epoch %u num_mon %d\n", __func__, &fsid, epoch,
++	dout("%s fsid %pU epoch %u num_mon %u\n", __func__, &fsid, epoch,
+ 	     num_mon);
+ 	if (num_mon > CEPH_MAX_MON)
+ 		goto e_inval;
 
 
