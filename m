@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F5B277035;
-	Mon, 13 Apr 2026 16:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3048A277026;
+	Mon, 13 Apr 2026 16:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096408; cv=none; b=ZTS5KzDBLSmwvkdHcMIfBVrw8X4miIFQwjvbNlmBRqMmN/mhj77GwBtavMXCuF3rk4vVmb9iTIkcAqnqtp5+22WbnF6gR8/iR8V8dWA6mfymlNyCUhYAN+nr6zRwyBYulYLHgWW1+uWwYE9GGuD/C5dLAsq+UWW8mQWpM8pvmts=
+	t=1776096411; cv=none; b=eKzkU6mkeCUlfsXvW2yWatiyQ8pmHtsaVEzFmEYe6XSReGInYKU19MfuwbJAvBwA4z2KbOWiJ42zOMikw8CWR/FENjUdyDLXl/8AT3MWzHr5RENwJKFRt1niZizGVvky3TtXFFWPoWHgBgnNrqCRwd9XHrVtAZ/E/hda0bLjXuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096408; c=relaxed/simple;
-	bh=1BQU5acfmCdx6jX1UBndlvVBehp9MYIag2F0B7KRcxk=;
+	s=arc-20240116; t=1776096411; c=relaxed/simple;
+	bh=T8Ob2xH1iaJbooCf8AsTI1JIHLzA8oXiPS4K4XO7cso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZHamUBGihS06e0HrTK5j1rZWRduT4MVoCcwLonoqwxwy3PZNnLzllq20z3X3tpDca4EYf+jC6Z3Fv2piLCaNVKmkfsDJan9p4otUKzxw5iKHHOlJxPb6XLkVcowtf7E6PhU3pZH8bcz3MsuNbZUHDztftJoiSgi79KpN8zXWdT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3bwH7/S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TCY/Xji2mcF4R713v+S0Vn2LWvOuXebgQMsyDD2vbkIn3d5Sw3yFHSdwOdUrrnOhGUrSTEJpcedBvO+EKv9iWJ5QlH6Ur+vNNXalg+SWvraD9LZfsbPTMwHv+F1Xk9nVvI5uUCxMJ8qxNZObozLyEDuqszWiXHfjgqhBPXCQ2Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDSeOrGo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3bwH7/S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5FAC2BCAF;
-	Mon, 13 Apr 2026 16:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDSeOrGo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CA2C2BCAF;
+	Mon, 13 Apr 2026 16:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096408;
-	bh=1BQU5acfmCdx6jX1UBndlvVBehp9MYIag2F0B7KRcxk=;
+	s=korg; t=1776096411;
+	bh=T8Ob2xH1iaJbooCf8AsTI1JIHLzA8oXiPS4K4XO7cso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L3bwH7/Sc5OhokGANLi/ARECTDCabtXWfsMvMVFQblJ9JJYcvTS/2Z7vU7FdTSBKC
-	 cgqAUSQ1Fd0UY3tB9vEK2LPprSCrLuVyBXFRiXUWmjWvs50kUvbRcBUiLieX3GRoP1
-	 GjJqeDD+2UUlcJ2WUXVFAkvX/xuYaY1KCXTqOmrI=
+	b=jDSeOrGo0mdlrGn4+duTmwWIrgB6F3vUT1p5hJsh0AXawPH2UBKN4Na7mxxOX/EAB
+	 5QfK9qPcMxQweVIQ9eqefA4C9jTQsP8v770DISmdBSw54yd2bZLvg1G3ugrVCvVJnq
+	 vYch7JkgUG1yCg1ftvxuNGdV12L79/HrT+Th34uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonius <antonius@bluedragonsec.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 86/86] net: skb: fix cross-cache free of KFENCE-allocated skb head
-Date: Mon, 13 Apr 2026 18:00:33 +0200
-Message-ID: <20260413155734.752821008@linuxfoundation.org>
+Subject: [PATCH 6.19 67/86] rxrpc: Fix anonymous key handling
+Date: Mon, 13 Apr 2026 18:00:14 +0200
+Message-ID: <20260413155734.054103070@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -52,58 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: David Howells <dhowells@redhat.com>
 
-commit 0f42e3f4fe2a58394e37241d02d9ca6ab7b7d516 upstream.
+commit 6a59d84b4fc2f27f7b40e348506cc686712e260b upstream.
 
-SKB_SMALL_HEAD_CACHE_SIZE is intentionally set to a non-power-of-2
-value (e.g. 704 on x86_64) to avoid collisions with generic kmalloc
-bucket sizes. This ensures that skb_kfree_head() can reliably use
-skb_end_offset to distinguish skb heads allocated from
-skb_small_head_cache vs. generic kmalloc caches.
+In rxrpc_new_client_call_for_sendmsg(), a key with no payload is meant to
+be substituted for a NULL key pointer, but the variable this is done with
+is subsequently not used.
 
-However, when KFENCE is enabled, kfence_ksize() returns the exact
-requested allocation size instead of the slab bucket size. If a caller
-(e.g. bpf_test_init) allocates skb head data via kzalloc() and the
-requested size happens to equal SKB_SMALL_HEAD_CACHE_SIZE, then
-slab_build_skb() -> ksize() returns that exact value. After subtracting
-skb_shared_info overhead, skb_end_offset ends up matching
-SKB_SMALL_HEAD_HEADROOM, causing skb_kfree_head() to incorrectly free
-the object to skb_small_head_cache instead of back to the original
-kmalloc cache, resulting in a slab cross-cache free:
+Fix this by using "key" rather than "rx->key" when filling in the
+connection parameters.
 
-  kmem_cache_free(skbuff_small_head): Wrong slab cache. Expected
-  skbuff_small_head but got kmalloc-1k
+Note that this only affects direct use of AF_RXRPC; the kAFS filesystem
+doesn't use sendmsg() directly and so bypasses the issue.  Further,
+AF_RXRPC passes a NULL key in if no key is set, so using an anonymous key
+in that manner works.  Since this hasn't been noticed to this point, it
+might be better just to remove the "key" variable and the code that sets it
+- and, arguably, rxrpc_init_client_call_security() would be a better place
+to handle it.
 
-Fix this by always calling kfree(head) in skb_kfree_head(). This keeps
-the free path generic and avoids allocator-specific misclassification
-for KFENCE objects.
-
-Fixes: bf9f1baa279f ("net: add dedicated kmem_cache for typical/small skb->head")
-Reported-by: Antonius <antonius@bluedragonsec.com>
-Closes: https://lore.kernel.org/netdev/CAK8a0jxC5L5N7hq-DT2_NhUyjBxrPocoiDazzsBk4TGgT1r4-A@mail.gmail.com/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260403014517.142550-1-jiayuan.chen@linux.dev
+Fixes: 19ffa01c9c45 ("rxrpc: Use structs to hold connection params and protocol info")
+Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-4-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/rxrpc/sendmsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1062,10 +1062,7 @@ static int skb_pp_frag_ref(struct sk_buf
- 
- static void skb_kfree_head(void *head, unsigned int end_offset)
- {
--	if (end_offset == SKB_SMALL_HEAD_HEADROOM)
--		kmem_cache_free(net_hotdata.skb_small_head_cache, head);
--	else
--		kfree(head);
-+	kfree(head);
- }
- 
- static void skb_free_head(struct sk_buff *skb)
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -637,7 +637,7 @@ rxrpc_new_client_call_for_sendmsg(struct
+ 	memset(&cp, 0, sizeof(cp));
+ 	cp.local		= rx->local;
+ 	cp.peer			= peer;
+-	cp.key			= rx->key;
++	cp.key			= key;
+ 	cp.security_level	= rx->min_sec_level;
+ 	cp.exclusive		= rx->exclusive | p->exclusive;
+ 	cp.upgrade		= p->upgrade;
 
 
