@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4A4313298;
-	Mon, 13 Apr 2026 16:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8926313535;
+	Mon, 13 Apr 2026 16:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098720; cv=none; b=k3CVeo2BCIbSGbOtbJb5UJhrl3uTocdbwfi+9Dbe5sl4kR0Y33/CVqcAnPkcHBk4D6vp4J9vX1ANJlMzkWtBFg1sAnkRJsRSF+Sd2tJnY6FYKxssyv6Pn/nW0KUpTvJQ88pJ0xzoLf/5m3o30qansaGkULYbxV+QW85rFK8KcfM=
+	t=1776098722; cv=none; b=oZoNXYry//uPoQYGn3Ucz6OsHrXh2nRokmfaIcrzQoYm+luG+GGN49ZozQzj10qLVlx0gs50kNTZAxDATs2cNGHdPRHhMrbus2MDgPRkG6y8E7PAlX4ly5yCexDg0v+9ZP0tKyzgS95YUx/NKqmWz4ozLoYjqsVs1o8I9PnK9Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098720; c=relaxed/simple;
-	bh=c340HEZl+Ex4+drztkhxBeafVaYlq2k2jiJWLtL9N+4=;
+	s=arc-20240116; t=1776098722; c=relaxed/simple;
+	bh=05/JKXehflWoOKHu2N2fOfItz9YZsU4C3u3h/sHMVwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZIzd5CmxSgioNfxWbxHxR0JuD3SDofasxPd916cbHFJeT4tzoH9Yi4VYcTovweeS8VA2/lsbqUbUZOEaE/WDA+xFoJKoi5pr4eYEkFki8yv3rtK2yLewluYw9a8ApUCgj3VN22Q/R0PTkOZmVxDs87OFEi7PFwYbl+0D72qd/14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DL3t62mA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JjDe/P4ETmitiBOZz6SF7gFvi9vDCMLf/B/0shKvQezNe77pA5wrw+0s4TaqXE7+GeJh/ahEj4DNXymlWz2W7UiuJHXTJKJ7tGTm+WJMe0LSzweFWyHMWtbItLmx2DRtQgrSink7aR+JR0lqeEEohr6QmyKvgygNQCb4ym0DiyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moBr1wgY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DL3t62mA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A1BC2BCAF;
-	Mon, 13 Apr 2026 16:45:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moBr1wgY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F03FC2BCAF;
+	Mon, 13 Apr 2026 16:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098720;
-	bh=c340HEZl+Ex4+drztkhxBeafVaYlq2k2jiJWLtL9N+4=;
+	s=korg; t=1776098722;
+	bh=05/JKXehflWoOKHu2N2fOfItz9YZsU4C3u3h/sHMVwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DL3t62mANqHjTYh3wGX1TxdrWlvDW09cWj+2mJjJXwBjsU6vwjFS0gABa0c7mm5Jn
-	 Q9UnecleR/oSO9wu3wL65lqBxnJ3A6D29TVz5yBAszBwRdLUDesJ4b/AhYWc9LAHpx
-	 sQk6rceZS4mfq6lRvfiqayHI9jm0a5fFYfXQn/TI=
+	b=moBr1wgYsmmV86NR1MAZlpDT6+XvqWsJl3PVyYi54v+0w1VBBudQd6FaxVM6VM9zl
+	 E6YQgYdMn6LmUqAcKOVFrI4VCL9pdsiKQ+2Yxn764Mpu4iD4G18vEjwTfKFvEfacCy
+	 ZW6rxbwc9GVOcO6PU6fnAYLsvPnWzNCp2oujK8kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/491] net/mlx5e: Fix DMA FIFO desync on error CQE SQ recovery
-Date: Mon, 13 Apr 2026 17:55:07 +0200
-Message-ID: <20260413155821.369629181@linuxfoundation.org>
+Subject: [PATCH 5.10 063/491] net/sched: teql: fix NULL pointer dereference in iptunnel_xmit on TEQL slave xmit
+Date: Mon, 13 Apr 2026 17:55:08 +0200
+Message-ID: <20260413155821.407310022@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,80 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 1633111d69053512d099658d4a05fc736fab36b0 ]
+[ Upstream commit 0cc0c2e661af418bbf7074179ea5cfffc0a5c466 ]
 
-In case of a TX error CQE, a recovery flow is triggered,
-mlx5e_reset_txqsq_cc_pc() resets dma_fifo_cc to 0 but not dma_fifo_pc,
-desyncing the DMA FIFO producer and consumer.
+teql_master_xmit() calls netdev_start_xmit(skb, slave) to transmit
+through slave devices, but does not update skb->dev to the slave device
+beforehand.
 
-After recovery, the producer pushes new DMA entries at the old
-dma_fifo_pc, while the consumer reads from position 0.
-This causes us to unmap stale DMA addresses from before the recovery.
+When a gretap tunnel is a TEQL slave, the transmit path reaches
+iptunnel_xmit() which saves dev = skb->dev (still pointing to teql0
+master) and later calls iptunnel_xmit_stats(dev, pkt_len). This
+function does:
 
-The DMA FIFO is a purely software construct with no HW counterpart.
-At the point of reset, all WQEs have been flushed so dma_fifo_cc is
-already equal to dma_fifo_pc. There is no need to reset either counter,
-similar to how skb_fifo pc/cc are untouched.
+    get_cpu_ptr(dev->tstats)
 
-Remove the 'dma_fifo_cc = 0' reset.
+Since teql_master_setup() does not set dev->pcpu_stat_type to
+NETDEV_PCPU_STAT_TSTATS, the core network stack never allocates tstats
+for teql0, so dev->tstats is NULL. get_cpu_ptr(NULL) computes
+NULL + __per_cpu_offset[cpu], resulting in a page fault.
 
-This fixes the following WARNING:
-    WARNING: CPU: 0 PID: 0 at drivers/iommu/dma-iommu.c:1240 iommu_dma_unmap_page+0x79/0x90
-    Modules linked in: mlx5_vdpa vringh vdpa bonding mlx5_ib mlx5_vfio_pci ipip mlx5_fwctl tunnel4 mlx5_core ib_ipoib geneve ip6_gre ip_gre gre nf_tables ip6_tunnel rdma_ucm ib_uverbs ib_umad vfio_pci vfio_pci_core act_mirred act_skbedit act_vlan vhost_net vhost tap ip6table_mangle ip6table_nat ip6table_filter ip6_tables iptable_mangle cls_matchall nfnetlink_cttimeout act_gact cls_flower sch_ingress vhost_iotlb iptable_raw tunnel6 vfio_iommu_type1 vfio openvswitch nsh rpcsec_gss_krb5 auth_rpcgss oid_registry xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat nf_nat xt_addrtype br_netfilter overlay zram zsmalloc rpcrdma ib_iser libiscsi scsi_transport_iscsi rdma_cm iw_cm ib_cm ib_core fuse [last unloaded: nf_tables]
-    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.13.0-rc5_for_upstream_min_debug_2024_12_30_21_33 #1
-    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-    RIP: 0010:iommu_dma_unmap_page+0x79/0x90
-    Code: 2b 4d 3b 21 72 26 4d 3b 61 08 73 20 49 89 d8 44 89 f9 5b 4c 89 f2 4c 89 e6 48 89 ef 5d 41 5c 41 5d 41 5e 41 5f e9 c7 ae 9e ff <0f> 0b 5b 5d 41 5c 41 5d 41 5e 41 5f c3 66 2e 0f 1f 84 00 00 00 00
-    Call Trace:
-     <IRQ>
-     ? __warn+0x7d/0x110
-     ? iommu_dma_unmap_page+0x79/0x90
-     ? report_bug+0x16d/0x180
-     ? handle_bug+0x4f/0x90
-     ? exc_invalid_op+0x14/0x70
-     ? asm_exc_invalid_op+0x16/0x20
-     ? iommu_dma_unmap_page+0x79/0x90
-     ? iommu_dma_unmap_page+0x2e/0x90
-     dma_unmap_page_attrs+0x10d/0x1b0
-     mlx5e_tx_wi_dma_unmap+0xbe/0x120 [mlx5_core]
-     mlx5e_poll_tx_cq+0x16d/0x690 [mlx5_core]
-     mlx5e_napi_poll+0x8b/0xac0 [mlx5_core]
-     __napi_poll+0x24/0x190
-     net_rx_action+0x32a/0x3b0
-     ? mlx5_eq_comp_int+0x7e/0x270 [mlx5_core]
-     ? notifier_call_chain+0x35/0xa0
-     handle_softirqs+0xc9/0x270
-     irq_exit_rcu+0x71/0xd0
-     common_interrupt+0x7f/0xa0
-     </IRQ>
-     <TASK>
-     asm_common_interrupt+0x22/0x40
+ BUG: unable to handle page fault for address: ffff8880e6659018
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 68bc067 P4D 68bc067 PUD 0
+ Oops: Oops: 0002 [#1] SMP KASAN PTI
+ RIP: 0010:iptunnel_xmit (./include/net/ip_tunnels.h:664 net/ipv4/ip_tunnel_core.c:89)
+ Call Trace:
+  <TASK>
+  ip_tunnel_xmit (net/ipv4/ip_tunnel.c:847)
+  __gre_xmit (net/ipv4/ip_gre.c:478)
+  gre_tap_xmit (net/ipv4/ip_gre.c:779)
+  teql_master_xmit (net/sched/sch_teql.c:319)
+  dev_hard_start_xmit (net/core/dev.c:3887)
+  sch_direct_xmit (net/sched/sch_generic.c:347)
+  __dev_queue_xmit (net/core/dev.c:4802)
+  neigh_direct_output (net/core/neighbour.c:1660)
+  ip_finish_output2 (net/ipv4/ip_output.c:237)
+  __ip_finish_output.part.0 (net/ipv4/ip_output.c:315)
+  ip_mc_output (net/ipv4/ip_output.c:369)
+  ip_send_skb (net/ipv4/ip_output.c:1508)
+  udp_send_skb (net/ipv4/udp.c:1195)
+  udp_sendmsg (net/ipv4/udp.c:1485)
+  inet_sendmsg (net/ipv4/af_inet.c:859)
+  __sys_sendto (net/socket.c:2206)
 
-Fixes: db75373c91b0 ("net/mlx5e: Recover Send Queue (SQ) from error state")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260305142634.1813208-4-tariqt@nvidia.com
+Fix this by setting skb->dev = slave before calling
+netdev_start_xmit(), so that tunnel xmit functions see the correct
+slave device with properly allocated tstats.
+
+Fixes: 039f50629b7f ("ip_tunnel: Move stats update to iptunnel_xmit()")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260304044216.3517851-3-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/sched/sch_teql.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-index 13dd34c571b9f..ce533e7d679a8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-@@ -28,7 +28,6 @@ static void mlx5e_reset_txqsq_cc_pc(struct mlx5e_txqsq *sq)
- 		  "SQ 0x%x: cc (0x%x) != pc (0x%x)\n",
- 		  sq->sqn, sq->cc, sq->pc);
- 	sq->cc = 0;
--	sq->dma_fifo_cc = 0;
- 	sq->pc = 0;
- }
+diff --git a/net/sched/sch_teql.c b/net/sched/sch_teql.c
+index e9dfa140799c3..4c65b4ed5ccd3 100644
+--- a/net/sched/sch_teql.c
++++ b/net/sched/sch_teql.c
+@@ -315,6 +315,7 @@ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			if (__netif_tx_trylock(slave_txq)) {
+ 				unsigned int length = qdisc_pkt_len(skb);
  
++				skb->dev = slave;
+ 				if (!netif_xmit_frozen_or_stopped(slave_txq) &&
+ 				    netdev_start_xmit(skb, slave, slave_txq, false) ==
+ 				    NETDEV_TX_OK) {
 -- 
 2.51.0
 
