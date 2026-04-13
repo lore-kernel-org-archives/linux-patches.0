@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D48310784;
-	Mon, 13 Apr 2026 16:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D39630EF80;
+	Mon, 13 Apr 2026 16:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098287; cv=none; b=fmstV3ncQf1+TP9nMH+gnvYF7ox1LbRLEhCsUtEyaDOHvUdXUdZd/16gUqbuOWObC4FX9yN1EJPbHnxq5E+SwR4F8Ga/QZh9sPzXbejwk+jt5DZrPSPBeZRXCWPo0/PurMrpu91IAYXux9SWo7MB1KyZ5JpfZqCPKFdHy4tJztg=
+	t=1776098290; cv=none; b=ZSM7kg42CilBkk/q32ftwpVTWpMwsmgRR1S5F91bmVp7UpdzaKsnjGrq8NVH1XzgA5ynVnIjDSb8fUkdlqYzR+E4pzqRynHXSiyXlUIv32jxewlZcpDMjdfcRjJQWRTECy1v3fWGnhq5aDenxTlnoK5rPAiIw+/UMZlNeFM7a9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098287; c=relaxed/simple;
-	bh=zfv5m68tim9Y4gGCR1b40Dbg4hx1N41lX8lEJs2OVfE=;
+	s=arc-20240116; t=1776098290; c=relaxed/simple;
+	bh=gWKazkinvkI848GVQOXdtypg9S4AWeZFrL2RFID2s8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KT7F399f/7JfRM3GsrDUbYrwelXm7itsgopvcMbC2AIZOM4WV2vtKyQjdzBsziAGcueZ8YFHt1wQjD3Nx+/pSAh93PBGvUbXJZ1Jr/bM/TxJz5oayceIf9kUnm9zyJW0M6753aSCxy8kNAoUjDZIhoMaKQaIsnY3wTXHbWSVHLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRsemX5B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tQAyEO7J/4y2Bw6N/EctR9Uiu/YzQVoMYtp2bJjCzxZrNtT54ETU6RXDpITOKK0UAGROPojJItN5Db6BSdVHm7dQRUR7YUsOKWUJaJfooZJb0JonI/gMgpAVOzxfqAJ85kExipMhO4H4qBZqjLLgiP6r9PNB0ZtHIg+PqytmJUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHaNueAo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRsemX5B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39105C2BCB3;
-	Mon, 13 Apr 2026 16:38:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHaNueAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7374C2BCAF;
+	Mon, 13 Apr 2026 16:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098287;
-	bh=zfv5m68tim9Y4gGCR1b40Dbg4hx1N41lX8lEJs2OVfE=;
+	s=korg; t=1776098290;
+	bh=gWKazkinvkI848GVQOXdtypg9S4AWeZFrL2RFID2s8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRsemX5B1IdzVLVbOwK7OHvWr87h9uNvkC2thZVOWf+hIUGDWxklDqn48Sv/W+Dkz
-	 /hf7H9UqH3OKJpEKtGJ0BVQWQRZrlS1/bkeS0Tq4LiVeQI4m3bkRjttd053CruTiwu
-	 C7eyiiU8Wuvn4prWMdFblFuW6w0lVs7ayA8ZOVZY=
+	b=tHaNueAofSuyoGhz4xyXtebYSzwKWFsjtSBvfSKhVNBZE95K+/SaeUcq4+C4Ofzbe
+	 lFWFz6457D1vPbgoMn7C82P0eFpin7Tq4YittrDVAuroK3edhaC1QQFrSAWfvsdDWy
+	 kFbBHosWMDMzkiVrottGJ1jSNFu+ovaptON89JnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 439/570] hwmon: (pxe1610) Check return value of page-select write in probe
-Date: Mon, 13 Apr 2026 17:59:30 +0200
-Message-ID: <20260413155846.919887579@linuxfoundation.org>
+	Miao Li <limiao@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 466/570] usb: quirks: add DELAY_INIT quirk for another Silicon Motion flash drive
+Date: Mon, 13 Apr 2026 17:59:57 +0200
+Message-ID: <20260413155847.923517513@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,45 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Miao Li <limiao@kylinos.cn>
 
-[ Upstream commit ccf70c41e562b29d1c05d1bbf53391785e09c6fb ]
+commit dd36014ec6042f424ef51b923e607772f7502ee7 upstream.
 
-pxe1610_probe() writes PMBUS_PAGE to select page 0 but does not check
-the return value. If the write fails, subsequent register reads operate
-on an indeterminate page, leading to silent misconfiguration.
+Another Silicon Motion flash drive also randomly work incorrectly
+(lsusb does not list the device) on Huawei hisi platforms during
+500 reboot cycles, and the DELAY_INIT quirk fixes this issue.
 
-Check the return value and propagate the error using dev_err_probe(),
-which also handles -EPROBE_DEFER correctly without log spam.
-
-Fixes: 344757bac526 ("hwmon: (pmbus) Add Infineon PXE1610 VR driver")
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260329170925.34581-4-sanman.pradhan@hpe.com
-[groeck: Fix "Fixes" SHA]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Miao Li <limiao@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260319053927.264840-1-limiao870622@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/pxe1610.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/core/quirks.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/pmbus/pxe1610.c b/drivers/hwmon/pmbus/pxe1610.c
-index 52bee5de29883..12d5d7297b5c9 100644
---- a/drivers/hwmon/pmbus/pxe1610.c
-+++ b/drivers/hwmon/pmbus/pxe1610.c
-@@ -104,7 +104,10 @@ static int pxe1610_probe(struct i2c_client *client)
- 	 * By default this device doesn't boot to page 0, so set page 0
- 	 * to access all pmbus registers.
- 	 */
--	i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
-+	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
-+	if (ret < 0)
-+		return dev_err_probe(&client->dev, ret,
-+				     "Failed to set page 0\n");
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -394,6 +394,7 @@ static const struct usb_device_id usb_qu
  
- 	/* Read Manufacturer id */
- 	ret = i2c_smbus_read_block_data(client, PMBUS_MFR_ID, buf);
--- 
-2.53.0
-
+ 	/* Silicon Motion Flash Drive */
+ 	{ USB_DEVICE(0x090c, 0x1000), .driver_info = USB_QUIRK_DELAY_INIT },
++	{ USB_DEVICE(0x090c, 0x2000), .driver_info = USB_QUIRK_DELAY_INIT },
+ 
+ 	/* Sound Devices USBPre2 */
+ 	{ USB_DEVICE(0x0926, 0x0202), .driver_info =
 
 
