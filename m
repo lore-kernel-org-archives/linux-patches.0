@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D3F2D8364;
-	Mon, 13 Apr 2026 16:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DFD2D8364;
+	Mon, 13 Apr 2026 16:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098076; cv=none; b=kK7oz2IWxDPb3qkNKoxGrx/SoUofcMzhg+Mrr28FDWp5NugWUWq0VDtoKzYpKT1dcnFvHu7PUf5IdyIVh6NsiZM77DotnMChuEqgNuWRvYaE0qrm1QGqO46KML12WrQ7J1r2M0zCvcLAUkbwKqBhYpitfXUjvPRPgPvYIwT+p9w=
+	t=1776098079; cv=none; b=B2bDUq4q/uYcV7FNp5aAF1u47PZ4juuJWs9SdiZ5FbzvhsA5r3u9BiA8QZgOc+AeemZh16gO/5BahNydvLEI+96WjvK6/inge9XcvIA7DHEH8hXk0iWJx4B4E81qzSnqFBLpKJGw3MrYhzyoqYgeG6TvoVKpryQEZUOZawB1f4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098076; c=relaxed/simple;
-	bh=LsDb5T4FiLuCYJgMvld9LFHZhNktBM73O5Djx4MBmEM=;
+	s=arc-20240116; t=1776098079; c=relaxed/simple;
+	bh=U7c8GqFHG0LmeyeTYJNLyab8arGPSVOpVL1tfkSHbu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9oZwxa9KTImhf+DnxDf6rFPS3u4d3rhEdsd617foa4xJ8vH9jYGmhfT2WqB3aL6EcYLc6UGehOmZvjhSAj7Fag+dB/fzpgVnJccMx8HpUqhnZAlEQZKd7Q8/lltcAllqKlSZ9l4C65M/AVGPDeuG4B/9OpMhwH1DxfKstN8vBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+kaoh1f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sb7Vr7vaxHQcdhJEwW5AmoNYUm7ITCbGwMvcBXnlvwWRVyK7IDsOfbb5fflFMffBHvSwutks7FVIWtZQPek+5ogtGX06DABP+E4IeZCzh2HMw/fbFwWcuMGq70FrwgATmkR4veF7VDEf0arobf666NjzueuGm4UCtSGF6D9VKio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AItejgzX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+kaoh1f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182EBC2BCAF;
-	Mon, 13 Apr 2026 16:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AItejgzX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3EFFC2BCAF;
+	Mon, 13 Apr 2026 16:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098076;
-	bh=LsDb5T4FiLuCYJgMvld9LFHZhNktBM73O5Djx4MBmEM=;
+	s=korg; t=1776098079;
+	bh=U7c8GqFHG0LmeyeTYJNLyab8arGPSVOpVL1tfkSHbu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+kaoh1fVJK0/wyEWLIgcv4hexqIQI4v4Q3lsML1wrtMCicE5FMomyrXq2cMXVrN4
-	 asm4VQMEQN7un5jMLVhXzryvTiLaMcSuBtUrx8kUtUrYHNsSJ6bgshnVNLUXegtJpI
-	 +mGVyudBJvD91POYGrxlQMydl1rjJIyVwTsyCaqE=
+	b=AItejgzXaNKSR6K5V7PZskqVdsQ4Vr9UlLwmc9ZQoYzbX2MQgW/oEj9Qi0gNJ5UNo
+	 rBmsYUAWVXEuMpDekWJ/Xkw5SXidhH5nXQGUfHah8qf1vB8/yruW4dUBQCUy8UteTp
+	 fswovk+s3f/Bdgw7qx/i3DWCZTe81dyR3KiQhY1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theodore Tso <tytso@mit.edu>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	stable@kernel.org
-Subject: [PATCH 5.15 385/570] ext4: always drain queued discard work in ext4_mb_release()
-Date: Mon, 13 Apr 2026 17:58:36 +0200
-Message-ID: <20260413155844.900657959@linuxfoundation.org>
+Subject: [PATCH 5.15 368/570] s390/syscalls: Add spectre boundary for syscall dispatch table
+Date: Mon, 13 Apr 2026 17:58:19 +0200
+Message-ID: <20260413155844.265862356@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,65 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 9ee29d20aab228adfb02ca93f87fb53c56c2f3af upstream.
+commit 48b8814e25d073dd84daf990a879a820bad2bcbd upstream.
 
-While reviewing recent ext4 patch[1], Sashiko raised the following
-concern[2]:
+The s390 syscall number is directly controlled by userspace, but does
+not have an array_index_nospec() boundary to prevent access past the
+syscall function pointer tables.
 
-> If the filesystem is initially mounted with the discard option,
-> deleting files will populate sbi->s_discard_list and queue
-> s_discard_work. If it is then remounted with nodiscard, the
-> EXT4_MOUNT_DISCARD flag is cleared, but the pending s_discard_work is
-> neither cancelled nor flushed.
-
-[1] https://lore.kernel.org/r/20260319094545.19291-1-qiang.zhang@linux.dev/
-[2] https://sashiko.dev/#/patchset/20260319094545.19291-1-qiang.zhang%40linux.dev
-
-The concern was valid, but it had nothing to do with the patch[1].
-One of the problems with Sashiko in its current (early) form is that
-it will detect pre-existing issues and report it as a problem with the
-patch that it is reviewing.
-
-In practice, it would be hard to hit deliberately (unless you are a
-malicious syzkaller fuzzer), since it would involve mounting the file
-system with -o discard, and then deleting a large number of files,
-remounting the file system with -o nodiscard, and then immediately
-unmounting the file system before the queued discard work has a change
-to drain on its own.
-
-Fix it because it's a real bug, and to avoid Sashiko from raising this
-concern when analyzing future patches to mballoc.c.
-
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Fixes: 55cdd0af2bc5 ("ext4: get discard out of jbd2 commit kthread contex")
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Fixes: 56e62a737028 ("s390: convert to generic entry")
 Cc: stable@kernel.org
+Assisted-by: gkh_clanker_2000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://lore.kernel.org/r/2026032404-sterling-swoosh-43e6@gregkh
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ arch/s390/kernel/syscall.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3628,13 +3628,11 @@ int ext4_mb_release(struct super_block *
- 	struct kmem_cache *cachep = get_groupinfo_cache(sb->s_blocksize_bits);
- 	int count;
+--- a/arch/s390/kernel/syscall.c
++++ b/arch/s390/kernel/syscall.c
+@@ -13,6 +13,7 @@
+  */
  
--	if (test_opt(sb, DISCARD)) {
--		/*
--		 * wait the discard work to drain all of ext4_free_data
--		 */
--		flush_work(&sbi->s_discard_work);
--		WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
--	}
-+	/*
-+	 * wait the discard work to drain all of ext4_free_data
-+	 */
-+	flush_work(&sbi->s_discard_work);
-+	WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
- 
- 	if (sbi->s_group_info) {
- 		for (i = 0; i < ngroups; i++) {
+ #include <linux/errno.h>
++#include <linux/nospec.h>
+ #include <linux/sched.h>
+ #include <linux/mm.h>
+ #include <linux/fs.h>
+@@ -141,6 +142,7 @@ static void do_syscall(struct pt_regs *r
+ 	if (likely(nr >= NR_syscalls))
+ 		goto out;
+ 	do {
++		nr = array_index_nospec(nr, NR_syscalls);
+ 		regs->gprs[2] = current->thread.sys_call_table[nr](regs);
+ 	} while (test_and_clear_pt_regs_flag(regs, PIF_EXECVE_PGSTE_RESTART));
+ out:
 
 
