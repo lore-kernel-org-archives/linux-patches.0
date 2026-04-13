@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61947225A38;
-	Mon, 13 Apr 2026 16:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D51238166;
+	Mon, 13 Apr 2026 16:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097837; cv=none; b=iRLxeHB+3pDLiiTfveyOJuGR1T0p0sEsFfkmsYmkyus1Qn/uZUGG7wxqJrZIFsCj/ud+A9PC4Y4F7jAVLFpSlaUAKXslFzxpp5POL/+lEFJ1nVkYwWvpbK07Og3jS0/8LnW4SsZ27Od93ILv1dCia4/o0JEAQp3If250TC1hMig=
+	t=1776097839; cv=none; b=hn4sSYb0kZI52UV791mqOE4wGIeP8kXj4c4nIXeOQUxqAjkigb0pEgc37YTFESq8T+iTmWWp1W9AwVpZza0mU4C9eY3I8pAD8O3qActr2+q5VLDsS7KRogxEa2SoOAR7hrEADTUobD3+N4k2dT6nIaZrPqjNaMd/JouD05jMzTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097837; c=relaxed/simple;
-	bh=pzdGXXbJPp5/UHYeU6gopXz0GAKfe/TCR8zox8O8khU=;
+	s=arc-20240116; t=1776097839; c=relaxed/simple;
+	bh=duXzct/KRe9J1YFinvscEzKhR5qO9MwBe181NlehH1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SzbraGOiIqKV2/BJerJM7vdlUxAB7H9QOvQpV5Mmzth6//aZwVaQQpJvPP/HD67SzCOLcxBsBPIFIcmHR1vmv7V0T2IBHrrkKW8hrk655Z+o81PuNOGp+aHphmXeqIIAiEz45XSz/iQ7afI/kQtnmlQmQpd/72/sMMl9VZa77+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCzckTGP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shly8oO5m6rj6pJgaGTsaNuRuQ3h8IV68CWvPIad3bUqb2/Btx1Aq1n4ffwMotwPbSEHl4JlQ5mMj0z90LSt3hGatA0MDxaaOux4vZjB1ncaKvf5KEODMq+EozYxzg73QTDWamT7RiBGP44iz43MnRHjGGSMUjcno44lTjVd3Ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xb1rUySu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCzckTGP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5F8C2BCAF;
-	Mon, 13 Apr 2026 16:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xb1rUySu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4CFC2BCAF;
+	Mon, 13 Apr 2026 16:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097837;
-	bh=pzdGXXbJPp5/UHYeU6gopXz0GAKfe/TCR8zox8O8khU=;
+	s=korg; t=1776097839;
+	bh=duXzct/KRe9J1YFinvscEzKhR5qO9MwBe181NlehH1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCzckTGPFoi1KJN4LkjzsXF24cLYFlWdtV8rd+iCadBSWBWXGjgMmdhNKh7cf9S26
-	 DzfOS2acwgNJbJDtKonxtQhSzdTzwvj+/CMDKipzp3OG6pqkPNfpdf4katsVyP6IWa
-	 V+Kvl2LrVhGjGeb0Wh4gVMSJPhnjzmrUZkvACfNk=
+	b=Xb1rUySukyptCLywf/cy6mcGkeyOq1T5a/KQXFw6sQID4ooqDLmAhhBWslasR58dD
+	 JdDUojwcaB5yaENTtW2IvEyCWDUxkuZNgihm14zcCnk7R5+DpUKGrYlF3tzNGpX0qk
+	 ippbmf922NB7rmxGlXp6k6k1dUgTZjSnqhe7pagw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dexuan Cui <decui@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 264/570] net: mana: Improve the HWC error handling
-Date: Mon, 13 Apr 2026 17:56:35 +0200
-Message-ID: <20260413155840.371679769@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 5.15 291/570] netfilter: nf_tables: de-constify set commit ops function argument
+Date: Mon, 13 Apr 2026 17:57:02 +0200
+Message-ID: <20260413155841.402591509@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,218 +49,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 62ea8b77ed3b7086561765df0226ebc7bb442020 ]
+commit 256001672153af5786c6ca148114693d7d76d836 upstream.
 
-Currently when the HWC creation fails, the error handling is flawed,
-e.g. if mana_hwc_create_channel() -> mana_hwc_establish_channel() fails,
-the resources acquired in mana_hwc_init_queues() is not released.
+The set backend using this already has to work around this via ugly
+cast, don't spread this pattern.
 
-Enhance mana_hwc_destroy_channel() to do the proper cleanup work and
-call it accordingly.
-
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: fa103fc8f569 ("net: mana: fix use-after-free in mana_hwc_destroy_channel() by reordering teardown")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/microsoft/mana/gdma_main.c   |  4 --
- .../net/ethernet/microsoft/mana/hw_channel.c  | 71 ++++++++-----------
- 2 files changed, 31 insertions(+), 44 deletions(-)
+ include/net/netfilter/nf_tables.h |    2 +-
+ net/netfilter/nft_set_pipapo.c    |    7 +++----
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-index 7864611f55a77..f3e90313a4487 100644
---- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
-+++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-@@ -1336,8 +1336,6 @@ static int mana_gd_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -455,7 +455,7 @@ struct nft_set_ops {
+ 					       const struct nft_set *set,
+ 					       const struct nft_set_elem *elem,
+ 					       unsigned int flags);
+-	void				(*commit)(const struct nft_set *set);
++	void				(*commit)(struct nft_set *set);
+ 	void				(*abort)(const struct nft_set *set);
+ 	u64				(*privsize)(const struct nlattr * const nla[],
+ 						    const struct nft_set_desc *desc);
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1587,12 +1587,11 @@ static void nft_pipapo_gc_deactivate(str
  
- clean_up_gdma:
- 	mana_hwc_destroy_channel(gc);
--	vfree(gc->cq_table);
--	gc->cq_table = NULL;
- remove_irq:
- 	mana_gd_remove_irqs(pdev);
- unmap_bar:
-@@ -1360,8 +1358,6 @@ static void mana_gd_remove(struct pci_dev *pdev)
- 	mana_remove(&gc->mana);
- 
- 	mana_hwc_destroy_channel(gc);
--	vfree(gc->cq_table);
--	gc->cq_table = NULL;
- 
- 	mana_gd_remove_irqs(pdev);
- 
-diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-index 508f83c29f325..8b027bf6ede90 100644
---- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
-+++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-@@ -315,9 +315,6 @@ static void mana_hwc_comp_event(void *ctx, struct gdma_queue *q_self)
- 
- static void mana_hwc_destroy_cq(struct gdma_context *gc, struct hwc_cq *hwc_cq)
+ /**
+  * pipapo_gc() - Drop expired entries from set, destroy start and end elements
+- * @_set:	nftables API set representation
++ * @set:	nftables API set representation
+  * @m:		Matching data
+  */
+-static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
++static void pipapo_gc(struct nft_set *set, struct nft_pipapo_match *m)
  {
--	if (!hwc_cq)
--		return;
--
- 	kfree(hwc_cq->comp_buf);
- 
- 	if (hwc_cq->gdma_cq)
-@@ -452,9 +449,6 @@ static void mana_hwc_dealloc_dma_buf(struct hw_channel_context *hwc,
- static void mana_hwc_destroy_wq(struct hw_channel_context *hwc,
- 				struct hwc_wq *hwc_wq)
+-	struct nft_set *set = (struct nft_set *) _set;
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct net *net = read_pnet(&set->net);
+ 	u64 tstamp = nft_net_tstamp(net);
+@@ -1707,7 +1706,7 @@ static void pipapo_reclaim_match(struct
+  * We also need to create a new working copy for subsequent insertions and
+  * deletions.
+  */
+-static void nft_pipapo_commit(const struct nft_set *set)
++static void nft_pipapo_commit(struct nft_set *set)
  {
--	if (!hwc_wq)
--		return;
--
- 	mana_hwc_dealloc_dma_buf(hwc, hwc_wq->msg_buf);
- 
- 	if (hwc_wq->gdma_wq)
-@@ -627,6 +621,7 @@ static int mana_hwc_establish_channel(struct gdma_context *gc, u16 *q_depth,
- 	*max_req_msg_size = hwc->hwc_init_max_req_msg_size;
- 	*max_resp_msg_size = hwc->hwc_init_max_resp_msg_size;
- 
-+	/* Both were set in mana_hwc_init_event_handler(). */
- 	if (WARN_ON(cq->id >= gc->max_num_cqs))
- 		return -EPROTO;
- 
-@@ -642,9 +637,6 @@ static int mana_hwc_establish_channel(struct gdma_context *gc, u16 *q_depth,
- static int mana_hwc_init_queues(struct hw_channel_context *hwc, u16 q_depth,
- 				u32 max_req_msg_size, u32 max_resp_msg_size)
- {
--	struct hwc_wq *hwc_rxq = NULL;
--	struct hwc_wq *hwc_txq = NULL;
--	struct hwc_cq *hwc_cq = NULL;
- 	int err;
- 
- 	err = mana_hwc_init_inflight_msg(hwc, q_depth);
-@@ -657,44 +649,32 @@ static int mana_hwc_init_queues(struct hw_channel_context *hwc, u16 q_depth,
- 	err = mana_hwc_create_cq(hwc, q_depth * 2,
- 				 mana_hwc_init_event_handler, hwc,
- 				 mana_hwc_rx_event_handler, hwc,
--				 mana_hwc_tx_event_handler, hwc, &hwc_cq);
-+				 mana_hwc_tx_event_handler, hwc, &hwc->cq);
- 	if (err) {
- 		dev_err(hwc->dev, "Failed to create HWC CQ: %d\n", err);
- 		goto out;
- 	}
--	hwc->cq = hwc_cq;
- 
- 	err = mana_hwc_create_wq(hwc, GDMA_RQ, q_depth, max_req_msg_size,
--				 hwc_cq, &hwc_rxq);
-+				 hwc->cq, &hwc->rxq);
- 	if (err) {
- 		dev_err(hwc->dev, "Failed to create HWC RQ: %d\n", err);
- 		goto out;
- 	}
--	hwc->rxq = hwc_rxq;
- 
- 	err = mana_hwc_create_wq(hwc, GDMA_SQ, q_depth, max_resp_msg_size,
--				 hwc_cq, &hwc_txq);
-+				 hwc->cq, &hwc->txq);
- 	if (err) {
- 		dev_err(hwc->dev, "Failed to create HWC SQ: %d\n", err);
- 		goto out;
- 	}
--	hwc->txq = hwc_txq;
- 
- 	hwc->num_inflight_msg = q_depth;
- 	hwc->max_req_msg_size = max_req_msg_size;
- 
- 	return 0;
- out:
--	if (hwc_txq)
--		mana_hwc_destroy_wq(hwc, hwc_txq);
--
--	if (hwc_rxq)
--		mana_hwc_destroy_wq(hwc, hwc_rxq);
--
--	if (hwc_cq)
--		mana_hwc_destroy_cq(hwc->gdma_dev->gdma_context, hwc_cq);
--
--	mana_gd_free_res_map(&hwc->inflight_msg_res);
-+	/* mana_hwc_create_channel() will do the cleanup.*/
- 	return err;
- }
- 
-@@ -722,6 +702,9 @@ int mana_hwc_create_channel(struct gdma_context *gc)
- 	gd->pdid = INVALID_PDID;
- 	gd->doorbell = INVALID_DOORBELL;
- 
-+	/* mana_hwc_init_queues() only creates the required data structures,
-+	 * and doesn't touch the HWC device.
-+	 */
- 	err = mana_hwc_init_queues(hwc, HW_CHANNEL_VF_BOOTSTRAP_QUEUE_DEPTH,
- 				   HW_CHANNEL_MAX_REQUEST_SIZE,
- 				   HW_CHANNEL_MAX_RESPONSE_SIZE);
-@@ -747,42 +730,50 @@ int mana_hwc_create_channel(struct gdma_context *gc)
- 
- 	return 0;
- out:
--	kfree(hwc);
-+	mana_hwc_destroy_channel(gc);
- 	return err;
- }
- 
- void mana_hwc_destroy_channel(struct gdma_context *gc)
- {
- 	struct hw_channel_context *hwc = gc->hwc.driver_data;
--	struct hwc_caller_ctx *ctx;
- 
--	mana_smc_teardown_hwc(&gc->shm_channel, false);
-+	if (!hwc)
-+		return;
-+
-+	/* gc->max_num_cqs is set in mana_hwc_init_event_handler(). If it's
-+	 * non-zero, the HWC worked and we should tear down the HWC here.
-+	 */
-+	if (gc->max_num_cqs > 0) {
-+		mana_smc_teardown_hwc(&gc->shm_channel, false);
-+		gc->max_num_cqs = 0;
-+	}
- 
--	ctx = hwc->caller_ctx;
--	kfree(ctx);
-+	kfree(hwc->caller_ctx);
- 	hwc->caller_ctx = NULL;
- 
--	mana_hwc_destroy_wq(hwc, hwc->txq);
--	hwc->txq = NULL;
-+	if (hwc->txq)
-+		mana_hwc_destroy_wq(hwc, hwc->txq);
- 
--	mana_hwc_destroy_wq(hwc, hwc->rxq);
--	hwc->rxq = NULL;
-+	if (hwc->rxq)
-+		mana_hwc_destroy_wq(hwc, hwc->rxq);
- 
--	mana_hwc_destroy_cq(hwc->gdma_dev->gdma_context, hwc->cq);
--	hwc->cq = NULL;
-+	if (hwc->cq)
-+		mana_hwc_destroy_cq(hwc->gdma_dev->gdma_context, hwc->cq);
- 
- 	mana_gd_free_res_map(&hwc->inflight_msg_res);
- 
- 	hwc->num_inflight_msg = 0;
- 
--	if (hwc->gdma_dev->pdid != INVALID_PDID) {
--		hwc->gdma_dev->doorbell = INVALID_DOORBELL;
--		hwc->gdma_dev->pdid = INVALID_PDID;
--	}
-+	hwc->gdma_dev->doorbell = INVALID_DOORBELL;
-+	hwc->gdma_dev->pdid = INVALID_PDID;
- 
- 	kfree(hwc);
- 	gc->hwc.driver_data = NULL;
- 	gc->hwc.gdma_context = NULL;
-+
-+	vfree(gc->cq_table);
-+	gc->cq_table = NULL;
- }
- 
- int mana_hwc_send_request(struct hw_channel_context *hwc, u32 req_len,
--- 
-2.51.0
-
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct nft_pipapo_match *new_clone, *old;
 
 
