@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5772E11B9;
-	Mon, 13 Apr 2026 16:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9548649620;
+	Mon, 13 Apr 2026 16:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097713; cv=none; b=UmlpKwLWXKrZlPMuSCe+1jsHzrusjUn/PK76CmGw1gQWq9RbO5X2RRbtTS5SrBYZ8rKue8DWyD6Dt8I6bHAb+PL9PQ487RoBBPezeyjOtiXUfr1Eaz1mBM4Lkc467I6cibgtM+YEang0bAcGKq/4RgUbPwu50W1dPZo3qzcyUjU=
+	t=1776097715; cv=none; b=r/E/8uEP78U1CiQA0mTLNQkkF+LdEvGwtRNKacusqoZ3KFsllf0E/lS+S8dOO+2zVtb0RO4yeLCwHm70f169/Rp8lEmW6eUzmMegV1e2LDCp4J601DAGWAiXJchrFb1nSx2Gq642vUHeQzU1BTKx3i4dclDxOhAFCwKw0cCnE28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097713; c=relaxed/simple;
-	bh=hzkMwpIpzk6iUNOyw4oqesDWlVczYhUFl652S1XaBP8=;
+	s=arc-20240116; t=1776097715; c=relaxed/simple;
+	bh=rD82cV8IyQOa2AUnn/T3havtlqgFUMo/R9lLfPJ4Dug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tc51eE61zBnaU556DziCssjCFZ7rqNwiltfcLd6IHxjIE6VhlG4ixplbsPJj9GhWgH93tnAfZ2lzw4XA1qf58r0/+m8k/IBzuD/pnL7tfeX/adgM7gH+m9OwnBZB7skluRBsTTlu4FfbWHzf/ESgRt5iTDrvl8KcBG3aSM4vaVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJRhVWiq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DWKQPbpv7P/k3CiZ5ybQ5gtYep07w3N8zkheqHgQVb5zPUwVmFjLwl7FHe5aNj3JMOjfYyZdmi7P/IJF8QvQzMz709JIJ566AI+uoBJSCLc/RmdfLTYJTDPtBINvthuDxbF/OaDVFsk/S3gGrharx916BUaM00YnLo+Xz89GqK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ue8CLawy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJRhVWiq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3E8C2BCAF;
-	Mon, 13 Apr 2026 16:28:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ue8CLawy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27CFAC2BCAF;
+	Mon, 13 Apr 2026 16:28:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097712;
-	bh=hzkMwpIpzk6iUNOyw4oqesDWlVczYhUFl652S1XaBP8=;
+	s=korg; t=1776097715;
+	bh=rD82cV8IyQOa2AUnn/T3havtlqgFUMo/R9lLfPJ4Dug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yJRhVWiqPsLbGwLLRSAkRLAQ+jrQ8aD+cUZOPBKZd+CsNwIA9s0wzl4mZ6OoLrwne
-	 Xaa/79CzCGrZ2FO+ZXvu97rzhPbOClHX2jJOFGbkg/tTtjymDYDNNXjaVhoUdKGoP6
-	 0hnBxVAyFLvUkCVwi8DT6tDi5XvMVhczB6gh/c84=
+	b=Ue8CLawyhidX3pDX+eRXLPbTgv2c1RLndXp6ZRP0tuDtR9ckq2z4FKL74LbdthdYP
+	 eBndn458k/xWERGH+Dx3VmdU4BH9Klue/Luu1ss+oUN3WIFz5vSjdd8rBPu7klRhEN
+	 OKYSHC2aAGcwcXggjNdFN6hJNvE2sJJqlqvZLzcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+feb9ce36a95341bb47a4@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 244/570] wifi: mac80211: Fix static_branch_dec() underflow for aql_disable.
-Date: Mon, 13 Apr 2026 17:56:15 +0200
-Message-ID: <20260413155839.610310759@linuxfoundation.org>
+Subject: [PATCH 5.15 245/570] wifi: cfg80211: cancel pmsr_free_wk in cfg80211_pmsr_wdev_down
+Date: Mon, 13 Apr 2026 17:56:16 +0200
+Message-ID: <20260413155839.646448299@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,110 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
 
-[ Upstream commit b94ae8e0d5fe1bdbbfdc3854ff6ce98f6876a828 ]
+[ Upstream commit 6dccbc9f3e1d38565dff7730d2b7d1e8b16c9b09 ]
 
-syzbot reported static_branch_dec() underflow in aql_enable_write(). [0]
+When the nl80211 socket that originated a PMSR request is
+closed, cfg80211_release_pmsr() sets the request's nl_portid
+to zero and schedules pmsr_free_wk to process the abort
+asynchronously. If the interface is concurrently torn down
+before that work runs, cfg80211_pmsr_wdev_down() calls
+cfg80211_pmsr_process_abort() directly. However, the already-
+scheduled pmsr_free_wk work item remains pending and may run
+after the interface has been removed from the driver. This
+could cause the driver's abort_pmsr callback to operate on a
+torn-down interface, leading to undefined behavior and
+potential crashes.
 
-The problem is that aql_enable_write() does not serialise concurrent
-write()s to the debugfs.
+Cancel pmsr_free_wk synchronously in cfg80211_pmsr_wdev_down()
+before calling cfg80211_pmsr_process_abort(). This ensures any
+pending or in-progress work is drained before interface teardown
+proceeds, preventing the work from invoking the driver abort
+callback after the interface is gone.
 
-aql_enable_write() checks static_key_false(&aql_disable.key) and
-later calls static_branch_inc() or static_branch_dec(), but the
-state may change between the two calls.
-
-aql_disable does not need to track inc/dec.
-
-Let's use static_branch_enable() and static_branch_disable().
-
-[0]:
-val == 0
-WARNING: kernel/jump_label.c:311 at __static_key_slow_dec_cpuslocked.part.0+0x107/0x120 kernel/jump_label.c:311, CPU#0: syz.1.3155/20288
-Modules linked in:
-CPU: 0 UID: 0 PID: 20288 Comm: syz.1.3155 Tainted: G     U       L      syzkaller #0 PREEMPT(full)
-Tainted: [U]=USER, [L]=SOFTLOCKUP
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/24/2026
-RIP: 0010:__static_key_slow_dec_cpuslocked.part.0+0x107/0x120 kernel/jump_label.c:311
-Code: f2 c9 ff 5b 5d c3 cc cc cc cc e8 54 f2 c9 ff 48 89 df e8 ac f9 ff ff eb ad e8 45 f2 c9 ff 90 0f 0b 90 eb a2 e8 3a f2 c9 ff 90 <0f> 0b 90 eb 97 48 89 df e8 5c 4b 33 00 e9 36 ff ff ff 0f 1f 80 00
-RSP: 0018:ffffc9000b9f7c10 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffffffff9b3e5d40 RCX: ffffffff823c57b4
-RDX: ffff8880285a0000 RSI: ffffffff823c5846 RDI: ffff8880285a0000
-RBP: 0000000000000000 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: 000000000000000a
-R13: 1ffff9200173ef88 R14: 0000000000000001 R15: ffffc9000b9f7e98
-FS:  00007f530dd726c0(0000) GS:ffff8881245e3000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000200000001140 CR3: 000000007cc4a000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- __static_key_slow_dec_cpuslocked kernel/jump_label.c:297 [inline]
- __static_key_slow_dec kernel/jump_label.c:321 [inline]
- static_key_slow_dec+0x7c/0xc0 kernel/jump_label.c:336
- aql_enable_write+0x2b2/0x310 net/mac80211/debugfs.c:343
- short_proxy_write+0x133/0x1a0 fs/debugfs/file.c:383
- vfs_write+0x2aa/0x1070 fs/read_write.c:684
- ksys_pwrite64 fs/read_write.c:793 [inline]
- __do_sys_pwrite64 fs/read_write.c:801 [inline]
- __se_sys_pwrite64 fs/read_write.c:798 [inline]
- __x64_sys_pwrite64+0x1eb/0x250 fs/read_write.c:798
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xc9/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f530cf9aeb9
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f530dd72028 EFLAGS: 00000246 ORIG_RAX: 0000000000000012
-RAX: ffffffffffffffda RBX: 00007f530d215fa0 RCX: 00007f530cf9aeb9
-RDX: 0000000000000003 RSI: 0000000000000000 RDI: 0000000000000010
-RBP: 00007f530d008c1f R08: 0000000000000000 R09: 0000000000000000
-R10: 4200000000000005 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f530d216038 R14: 00007f530d215fa0 R15: 00007ffde89fb978
- </TASK>
-
-Fixes: e908435e402a ("mac80211: introduce aql_enable node in debugfs")
-Reported-by: syzbot+feb9ce36a95341bb47a4@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69a8979e.a70a0220.b118c.0025.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260306072405.3649474-1-kuniyu@google.com
+Fixes: 9bb7e0f24e7e ("cfg80211: add peer measurement with FTM initiator API")
+Signed-off-by: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260305160712.1263829-3-peddolla.reddy@oss.qualcomm.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/debugfs.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ net/wireless/pmsr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/debugfs.c b/net/mac80211/debugfs.c
-index 8dbfe325ee66f..4bf59033c516b 100644
---- a/net/mac80211/debugfs.c
-+++ b/net/mac80211/debugfs.c
-@@ -296,7 +296,6 @@ static ssize_t aql_enable_read(struct file *file, char __user *user_buf,
- static ssize_t aql_enable_write(struct file *file, const char __user *user_buf,
- 				size_t count, loff_t *ppos)
- {
--	bool aql_disabled = static_key_false(&aql_disable.key);
- 	char buf[3];
- 	size_t len;
+diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
+index 65fa39275f73f..92c62d36e9525 100644
+--- a/net/wireless/pmsr.c
++++ b/net/wireless/pmsr.c
+@@ -642,6 +642,7 @@ void cfg80211_pmsr_wdev_down(struct wireless_dev *wdev)
+ 	}
+ 	spin_unlock_bh(&wdev->pmsr_lock);
  
-@@ -311,15 +310,12 @@ static ssize_t aql_enable_write(struct file *file, const char __user *user_buf,
- 	if (len > 0 && buf[len - 1] == '\n')
- 		buf[len - 1] = 0;
++	cancel_work_sync(&wdev->pmsr_free_wk);
+ 	if (found)
+ 		cfg80211_pmsr_process_abort(wdev);
  
--	if (buf[0] == '0' && buf[1] == '\0') {
--		if (!aql_disabled)
--			static_branch_inc(&aql_disable);
--	} else if (buf[0] == '1' && buf[1] == '\0') {
--		if (aql_disabled)
--			static_branch_dec(&aql_disable);
--	} else {
-+	if (buf[0] == '0' && buf[1] == '\0')
-+		static_branch_enable(&aql_disable);
-+	else if (buf[0] == '1' && buf[1] == '\0')
-+		static_branch_disable(&aql_disable);
-+	else
- 		return -EINVAL;
--	}
- 
- 	return count;
- }
 -- 
 2.51.0
 
