@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E39731F9BC;
-	Mon, 13 Apr 2026 16:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D703290A1;
+	Mon, 13 Apr 2026 16:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099481; cv=none; b=sjIomjn1E0RZiHh3njRaBlqVjNiT28Rcm+6kQChspjkdBXopPazDCQXMhs+2J72YvGLIkKt47y2ULjoESu9v6XAVlQwZeaWTbAxwbF6AmUpALUKiD0yu7TgDMuB+yfJ5QUSU6b4yyp8k+Sx68WWwp/O+LRr3MeVofB0R4ECWrmE=
+	t=1776099483; cv=none; b=U4BPYe9ZUK7JSssILK4KzfmR5Uv2zJJas8+JQpdHv9OD3B1eZ6JiHdeZEJmU2H8z0fhR+TaUxR19mromrdxjjS94KE34yXGF+CGFDxkuRERpgGYG+A353HUpvyciEabOapv5IN+yn0BcmyO+NrxvccjO8bvG3hUZmlc7502mZRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099481; c=relaxed/simple;
-	bh=5M6otVdkCbXr5q/P6PfhQZPtOaFtcoDYIf8vrMYYwSM=;
+	s=arc-20240116; t=1776099483; c=relaxed/simple;
+	bh=gYaGR39Vw+/2ELSXM6FRNTHcL8M1I7w2jms+79OlIyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O+IdjbCwodzF0ZhZJ+cWwPfUmzsFUGzVL1frHEG3d5W+wI1HsAHaNkSuA9ERD991cJgugLcqk0VVA88yXxIriJItXnO5zRyv7i5JZvsHuTeBPt/UweFkWGb0esmu1NYosbumATnebXE3sgPfVoDu99bEQ09T7GDv3NbZt09Dzsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezr9iapB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ieiXcjZLHOikdqJJNYo/DSZj+zDyp7q+DaYO+bicMI80yhwXhimMWVg0Yj/RiNmGsLLKNXTYKVTTdjO2cPI903JHfBG0knMiXRinlEgC0zAfILt4ktsBgVRMf3FH0MYjsN+NBJ025FmLCJN3jEI3QZsxkSsoemtCRYUXBr0np2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfGMWMRv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezr9iapB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C8BC2BCAF;
-	Mon, 13 Apr 2026 16:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfGMWMRv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1B9C2BCAF;
+	Mon, 13 Apr 2026 16:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099480;
-	bh=5M6otVdkCbXr5q/P6PfhQZPtOaFtcoDYIf8vrMYYwSM=;
+	s=korg; t=1776099483;
+	bh=gYaGR39Vw+/2ELSXM6FRNTHcL8M1I7w2jms+79OlIyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezr9iapBTjgTp9PcxZdhT8rDuoLvVEha+clfd9sgIZiNCVIp/reHm1TPgzyVtEo2M
-	 g2OEvfSOrDf6xlrVUIvBQZtAG5/cZSN0Hbzpt0pIn1GqIYmUwEw/Gz1PwNyMbkWIMi
-	 Ln+bv2VUIwn3GCcMJ8KJFbcIZqnqPSMxwWSlKHMg=
+	b=sfGMWMRvNZJ56igKUxgfhRDqxDWIYQ7o5BUIzsfOxjmgCyK7a333uR+4vMCaLjElF
+	 +UIwPMyClOInM1lcQMYHztm9K+fen9kSr/b577+enHd+OAFU30L+kWOOSKzvUHKuSl
+	 2nzDFdfdWxVtErEiQ8pKN4BVnKn4ZXSFYnhn+hlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Schiller <ms@dev.tdt.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	David Jeffery <djeffery@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 349/491] net/x25: Fix potential double free of skb
-Date: Mon, 13 Apr 2026 17:59:54 +0200
-Message-ID: <20260413155832.104697512@linuxfoundation.org>
+Subject: [PATCH 5.10 358/491] scsi: core: Wake up the error handler when final completions race against each other
+Date: Mon, 13 Apr 2026 18:00:03 +0200
+Message-ID: <20260413155832.439449178@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,63 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Schiller <ms@dev.tdt.de>
+From: David Jeffery <djeffery@redhat.com>
 
-[ Upstream commit d10a26aa4d072320530e6968ef945c8c575edf61 ]
+[ Upstream commit fe2f8ad6f0999db3b318359a01ee0108c703a8c3 ]
 
-When alloc_skb fails in x25_queue_rx_frame it calls kfree_skb(skb) at
-line 48 and returns 1 (error).
-This error propagates back through the call chain:
+The fragile ordering between marking commands completed or failed so
+that the error handler only wakes when the last running command
+completes or times out has race conditions. These race conditions can
+cause the SCSI layer to fail to wake the error handler, leaving I/O
+through the SCSI host stuck as the error state cannot advance.
 
-x25_queue_rx_frame returns 1
-    |
-    v
-x25_state3_machine receives the return value 1 and takes the else
-branch at line 278, setting queued=0 and returning 0
-    |
-    v
-x25_process_rx_frame returns queued=0
-    |
-    v
-x25_backlog_rcv at line 452 sees queued=0 and calls kfree_skb(skb)
-again
+First, there is an memory ordering issue within scsi_dec_host_busy().
+The write which clears SCMD_STATE_INFLIGHT may be reordered with reads
+counting in scsi_host_busy(). While the local CPU will see its own
+write, reordering can allow other CPUs in scsi_dec_host_busy() or
+scsi_eh_inc_host_failed() to see a raised busy count, causing no CPU to
+see a host busy equal to the host_failed count.
 
-This would free the same skb twice. Looking at x25_backlog_rcv:
+This race condition can be prevented with a memory barrier on the error
+path to force the write to be visible before counting host busy
+commands.
 
-net/x25/x25_in.c:x25_backlog_rcv() {
-    ...
-    queued = x25_process_rx_frame(sk, skb);
-    ...
-    if (!queued)
-        kfree_skb(skb);
-}
+Second, there is a general ordering issue with scsi_eh_inc_host_failed(). By
+counting busy commands before incrementing host_failed, it can race with a
+final command in scsi_dec_host_busy(), such that scsi_dec_host_busy() does
+not see host_failed incremented but scsi_eh_inc_host_failed() counts busy
+commands before SCMD_STATE_INFLIGHT is cleared by scsi_dec_host_busy(),
+resulting in neither waking the error handler task.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
-Link: https://patch.msgid.link/20260331-x25_fraglen-v4-1-3e69f18464b4@dev.tdt.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This needs the call to scsi_host_busy() to be moved after host_failed is
+incremented to close the race condition.
+
+Fixes: 6eb045e092ef ("scsi: core: avoid host-wide host_busy counter for scsi_mq")
+Signed-off-by: David Jeffery <djeffery@redhat.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260113161036.6730-1-djeffery@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/x25/x25_in.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/scsi/scsi_error.c | 11 ++++++++++-
+ drivers/scsi/scsi_lib.c   | 11 ++++++++++-
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/net/x25/x25_in.c b/net/x25/x25_in.c
-index e1c4197af468e..77ad186507f64 100644
---- a/net/x25/x25_in.c
-+++ b/net/x25/x25_in.c
-@@ -44,10 +44,9 @@ static int x25_queue_rx_frame(struct sock *sk, struct sk_buff *skb, int more)
- 	if (!more && x25->fraglen > 0) {	/* End of fragment */
- 		int len = x25->fraglen + skb->len;
+diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
+index ffc6f3031e82b..4e9114f069832 100644
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -241,11 +241,20 @@ static void scsi_eh_inc_host_failed(struct rcu_head *head)
+ {
+ 	struct scsi_cmnd *scmd = container_of(head, typeof(*scmd), rcu);
+ 	struct Scsi_Host *shost = scmd->device->host;
+-	unsigned int busy = scsi_host_busy(shost);
++	unsigned int busy;
+ 	unsigned long flags;
  
--		if ((skbn = alloc_skb(len, GFP_ATOMIC)) == NULL){
--			kfree_skb(skb);
-+		skbn = alloc_skb(len, GFP_ATOMIC);
-+		if (!skbn)
- 			return 1;
--		}
+ 	spin_lock_irqsave(shost->host_lock, flags);
+ 	shost->host_failed++;
++	spin_unlock_irqrestore(shost->host_lock, flags);
++	/*
++	 * The counting of busy requests needs to occur after adding to
++	 * host_failed or after the lock acquire for adding to host_failed
++	 * to prevent a race with host unbusy and missing an eh wakeup.
++	 */
++	busy = scsi_host_busy(shost);
++
++	spin_lock_irqsave(shost->host_lock, flags);
+ 	scsi_eh_wakeup(shost, busy);
+ 	spin_unlock_irqrestore(shost->host_lock, flags);
+ }
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index fb48d47e9183e..e69d1c0ea4507 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -310,7 +310,16 @@ static void scsi_dec_host_busy(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
+ 	rcu_read_lock();
+ 	__clear_bit(SCMD_STATE_INFLIGHT, &cmd->state);
+ 	if (unlikely(scsi_host_in_recovery(shost))) {
+-		unsigned int busy = scsi_host_busy(shost);
++		unsigned int busy;
++		/*
++		 * Ensure the clear of SCMD_STATE_INFLIGHT is visible to
++		 * other CPUs before counting busy requests. Otherwise,
++		 * reordering can cause CPUs to race and miss an eh wakeup
++		 * when no CPU sees all busy requests as done or timed out.
++		 */
++		smp_mb();
++
++		busy = scsi_host_busy(shost);
  
- 		skb_queue_tail(&x25->fragment_queue, skb);
- 
+ 		spin_lock_irqsave(shost->host_lock, flags);
+ 		if (shost->host_failed || shost->host_eh_scheduled)
 -- 
 2.53.0
 
