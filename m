@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A13280CFB;
-	Mon, 13 Apr 2026 16:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64114280CFB;
+	Mon, 13 Apr 2026 16:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098606; cv=none; b=spfg3MGiYYdB8ME7oAcaS564GEtFGzB5OCWrmb2ghkiSPV7AbPwuKc7Pa92Yw2ZfH6rQP4WpEsNkfcXPsud5dRDRBRt7oUNhnNgRXsAbGuKk74lkuOxK3baS07Y+QkaOtPg7ebCkVMNM7P+G6X5kfBMQbFu2zvZ9JYHU/FLDcLI=
+	t=1776098609; cv=none; b=QGUXbtiXduUdMan03A5+LIwXZU1KHrU7ny//yuiaDelpMs12SI/9aZ4Z5lUwsu9SYyHTevPbfQ8yEWwL+c79BIPsrRf3oxfp0KVzMfiAtG08UL2ayNvkXWU/QwNYUrGy2vX7wuqG6YoAdoXPerVRk/+8N0jfltGiWNcSUBbHVfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098606; c=relaxed/simple;
-	bh=oQNeWZQPaxjR9lmCPByzCR5AWCDK+ZbhNeDz8hGa+08=;
+	s=arc-20240116; t=1776098609; c=relaxed/simple;
+	bh=suMYbWd0nfbr/qlcHdb3j2W4U2BZQmJmYv0YoOOygiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ucjxmF1XMclsa6dvEbaV1Da+N8zcuGq5huDeO0+2eZ0WBpvMydii/QWtPiPFeGcqYmSHlUlKa7JtKISdil3tjZObsoQU9r3ZshZqzhvZMww7xmJKyAPmAgwHLSfc6SOKIw8nJQdYdsY4n0wsq3vXvOfOhx519BwtcdO5vkIheys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iz85atJL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s1GqHg7cjWDJkwQeMveCnl0G6R7hW394O+EE2BWr21odrS4aU4Wabr88aoxnuhZLUGV2Y+/uNWT50bOdLYPo28Kna69VI+OcRjJEeIlWxjNjQ21gdF6Zl6P4O8LOIyfXbNEtTP+LHV78NmD16e0HpH0GxUabcPeXcQdeGiabcgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwVpS/y5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iz85atJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2832CC2BCAF;
-	Mon, 13 Apr 2026 16:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwVpS/y5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E10C2BCAF;
+	Mon, 13 Apr 2026 16:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098606;
-	bh=oQNeWZQPaxjR9lmCPByzCR5AWCDK+ZbhNeDz8hGa+08=;
+	s=korg; t=1776098609;
+	bh=suMYbWd0nfbr/qlcHdb3j2W4U2BZQmJmYv0YoOOygiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iz85atJLKUT5YHKAF1wlm9AVkp4UGyfk5WsJ8UFPQ80XwehGUQOopTFGz1Mtj7dEJ
-	 4xzViKuP24UyG84X5uJuocuIrc1bA92fXq8HNa5Hg3Q0jpOF7kVC4ytFPArNvYQQrQ
-	 rEhGNNKs1juq0urMvR2m3maOGE2H8h89KmJis1KE=
+	b=UwVpS/y5oIo7gqMM9+rGN7vFwcUmm7Nw4Btnecr7VpCzXWLzEadT1PyQfc73saUzT
+	 1QfN6gUj68OgbN4r/Wn8+dYOe2GOmB1eZlj/TAld0W79XXea4AvoglWQn46aao7SLF
+	 SHc1ngvupTqfNKyqZ7+URiG28t7VWFFxtLPvuyCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ab12f0c08dd7ab8d057c@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 019/491] media: dvb-core: fix wrong reinitialization of ringbuffer on reopen
-Date: Mon, 13 Apr 2026 17:54:24 +0200
-Message-ID: <20260413155819.773734345@linuxfoundation.org>
+	Ben Hutchings <benh@debian.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 002/491] ip6_tunnel: Fix usage of skb_vlan_inet_prepare()
+Date: Mon, 13 Apr 2026 17:54:07 +0200
+Message-ID: <20260413155819.141850594@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,52 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Ben Hutchings <ben@decadent.org.uk>
 
-commit bfbc0b5b32a8f28ce284add619bf226716a59bc0 upstream.
+Backports of commit 81c734dae203 "ip6_tunnel: use
+skb_vlan_inet_prepare() in __ip6_tnl_rcv()" broke IPv6 tunnelling in
+stable branches 5.10-6.12 inclusive.  This is because the return value
+of skb_vlan_inet_prepare() had the opposite sense (0 for error rather
+than for success) before commit 9990ddf47d416 "net: tunnel: make
+skb_vlan_inet_prepare() return drop reasons".
 
-dvb_dvr_open() calls dvb_ringbuffer_init() when a new reader opens the
-DVR device.  dvb_ringbuffer_init() calls init_waitqueue_head(), which
-reinitializes the waitqueue list head to empty.
+For branches including commit c504e5c2f964 "net: skb: introduce
+kfree_skb_reason()" etc. (i.e. 6.1 and newer) it was simple to
+backport commit 9990ddf47d416, but for 5.10 and 5.15 that doesn't seem
+to be practical.
 
-Since dmxdev->dvr_buffer.queue is a shared waitqueue (all opens of the
-same DVR device share it), this orphans any existing waitqueue entries
-from io_uring poll or epoll, leaving them with stale prev/next pointers
-while the list head is reset to {self, self}.
+So just reverse the sense of the return value test here.
 
-The waitqueue and spinlock in dvr_buffer are already properly
-initialized once in dvb_dmxdev_init().  The open path only needs to
-reset the buffer data pointer, size, and read/write positions.
-
-Replace the dvb_ringbuffer_init() call in dvb_dvr_open() with direct
-assignment of data/size and a call to dvb_ringbuffer_reset(), which
-properly resets pread, pwrite, and error with correct memory ordering
-without touching the waitqueue or spinlock.
-
-Cc: stable@vger.kernel.org
-Fixes: 34731df288a5f ("V4L/DVB (3501): Dmxdev: use dvb_ringbuffer")
-Reported-by: syzbot+ab12f0c08dd7ab8d057c@syzkaller.appspotmail.com
-Tested-by: syzbot+ab12f0c08dd7ab8d057c@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/698a26d3.050a0220.3b3015.007d.GAE@google.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f9c5c5b791d3 ("ip6_tunnel: use skb_vlan_inet_prepare() in __ip6_tnl_rcv()")
+Fixes: 64c71d60a21a ("ip6_tunnel: use skb_vlan_inet_prepare() in __ip6_tnl_rcv()")
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dmxdev.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv6/ip6_tunnel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/dvb-core/dmxdev.c
-+++ b/drivers/media/dvb-core/dmxdev.c
-@@ -178,7 +178,9 @@ static int dvb_dvr_open(struct inode *in
- 			mutex_unlock(&dmxdev->mutex);
- 			return -ENOMEM;
- 		}
--		dvb_ringbuffer_init(&dmxdev->dvr_buffer, mem, DVR_BUFFER_SIZE);
-+		dmxdev->dvr_buffer.data = mem;
-+		dmxdev->dvr_buffer.size = DVR_BUFFER_SIZE;
-+		dvb_ringbuffer_reset(&dmxdev->dvr_buffer);
- 		if (dmxdev->may_do_mmap)
- 			dvb_vb2_init(&dmxdev->dvr_vb2_ctx, "dvr",
- 				     file->f_flags & O_NONBLOCK);
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 855622a6a304f..e8c4e02e75d43 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -876,7 +876,7 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
+ 
+ 	skb_reset_network_header(skb);
+ 
+-	if (skb_vlan_inet_prepare(skb, true)) {
++	if (!skb_vlan_inet_prepare(skb, true)) {
+ 		DEV_STATS_INC(tunnel->dev, rx_length_errors);
+ 		DEV_STATS_INC(tunnel->dev, rx_errors);
+ 		goto drop;
+-- 
+2.51.0
+
 
 
