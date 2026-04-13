@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C6A24DCF6;
-	Mon, 13 Apr 2026 16:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6C424DCF6;
+	Mon, 13 Apr 2026 16:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097112; cv=none; b=Sae+XzOVfLtIHRqxWs2d9P+4R18wxA83pRbOfSj7ujehHIrkzFQ8roO/54kSwO2+AjyY96oqon/LwA/mNcecI+OkMfL0Z9jnmz2Jvd2ES+QEmLdF6Jcz5phUzMovf2Hy2IhF1WVX3NzoPMEpxOhWeGcko/yOg5s7t+0VbN0AvQc=
+	t=1776097115; cv=none; b=CFA8BvxcZ0XYYy73sgNRrhdr0qrLuetzKQ/pyMMeANgKsV7v9lHoB2eC3m7SVqXW0zB2utYd3raqNZxrawN1SoSmhESZMDJcFktXtCpr3dXN/TkQaTgFOZtKkrRpQLBCKmNnzKBuSUyqiF7WtxsQAuOWoIqXDFYiE68EAv9hC5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097112; c=relaxed/simple;
-	bh=1RewIVi6LEZhDjpxJG0DqonfMly3/U/AEHEYDjOQklc=;
+	s=arc-20240116; t=1776097115; c=relaxed/simple;
+	bh=Uq5dJ1ABAHEEk4K9eswGp34KNGBlsjEYuzBCLrBHeMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g+PXyjTMzEBs+6Wb37ndU4/pQrar6HCOX1l6+Iyi35nOezvndk9W4NKuntqUeURSVeN6yYCFJqVAFBkI67lzi3MZsn0nbEYonDzEos6m7BzyNp4E7+zC8CL7SyR/wad2DJ1o//Gdq1C7YFRmbpCHSfjo4hkYyXdv+Woa0ywv1Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9QX4T02; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BoYmVj0lLrQ/L7dRx/UB/leyfHEpJd+d33TbEFofqVFp38krSYKi7xPp5UOWRDg1ohe4t9A9bllRddvQMzsEicbe0ktSYurOYBjNLZPtxqXz6ssZPSPnAhcYnXTSNsn0nIcG/nhOSiyPxp7RlI1gQItFnZIemUCOW8osWohFc0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLN9ytUV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9QX4T02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2952DC2BCAF;
-	Mon, 13 Apr 2026 16:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLN9ytUV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71DCC2BCAF;
+	Mon, 13 Apr 2026 16:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097112;
-	bh=1RewIVi6LEZhDjpxJG0DqonfMly3/U/AEHEYDjOQklc=;
+	s=korg; t=1776097115;
+	bh=Uq5dJ1ABAHEEk4K9eswGp34KNGBlsjEYuzBCLrBHeMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V9QX4T02jE1M63hXQonT08Bt5PeUmg836IL0eaM3T363zlwExc8bglIcCKtFPrtsY
-	 SOPcYnRh0omlr0cbkguyESs+oRdRbBfJjBmaX27LPAJDYAMoYl+iHz9gJlJQFzEGPr
-	 yMJcNnFovPwti9mkLgLbJPutEkPGsFAt1YyVgR8M=
+	b=lLN9ytUV5dSu64GgqSWSDQznYXp70Svf7GePD3WLO7BJawj/44lvbglwr45zBPgtN
+	 CIVZRo12XvXbiULy8ni07+9tsvDZBL+bvCw7pLdLK157cgPOHkfkAvZysMNmNccn0h
+	 f2TpOODuH3+R8jYR7tAnQGfr0Jq0t//zG2wmMSVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+10cc7f13760b31bd2e61@syzkaller.appspotmail.com,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Kohei Enju <kohei@enjuk.jp>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/570] bpf: Fix stack-out-of-bounds write in devmap
-Date: Mon, 13 Apr 2026 17:52:22 +0200
-Message-ID: <20260413155830.822433706@linuxfoundation.org>
+Subject: [PATCH 5.15 012/570] memory: mtk-smi: Convert to platform remove callback returning void
+Date: Mon, 13 Apr 2026 17:52:23 +0200
+Message-ID: <20260413155830.859998297@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,95 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit b7bf516c3ecd9a2aae2dc2635178ab87b734fef1 ]
+[ Upstream commit 08c1aeaa45ce0fd18912e92c6705586c8aa5240f ]
 
-get_upper_ifindexes() iterates over all upper devices and writes their
-indices into an array without checking bounds.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-Also the callers assume that the max number of upper devices is
-MAX_NEST_DEV and allocate excluded_devices[1+MAX_NEST_DEV] on the stack,
-but that assumption is not correct and the number of upper devices could
-be larger than MAX_NEST_DEV (e.g., many macvlans), causing a
-stack-out-of-bounds write.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Add a max parameter to get_upper_ifindexes() to avoid the issue.
-When there are too many upper devices, return -EOVERFLOW and abort the
-redirect.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-To reproduce, create more than MAX_NEST_DEV(8) macvlans on a device with
-an XDP program attached using BPF_F_BROADCAST | BPF_F_EXCLUDE_INGRESS.
-Then send a packet to the device to trigger the XDP redirect path.
-
-Reported-by: syzbot+10cc7f13760b31bd2e61@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/698c4ce3.050a0220.340abe.000b.GAE@google.com/T/
-Fixes: aeea1b86f936 ("bpf, devmap: Exclude XDP broadcast to master device")
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Link: https://lore.kernel.org/r/20260225053506.4738-1-kohei@enjuk.jp
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/5c35a33cfdc359842e034ddd2e9358f10e91fa1f.1702822744.git.u.kleine-koenig@pengutronix.de
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Stable-dep-of: 9dae65913b32 ("memory: mtk-smi: fix device leak on larb probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/memory/mtk-smi.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index 5e2e1c3284a39..2bfdca506a4de 100644
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -570,18 +570,22 @@ static inline bool is_ifindex_excluded(int *excluded, int num_excluded, int ifin
+diff --git a/drivers/memory/mtk-smi.c b/drivers/memory/mtk-smi.c
+index c5fb51f73b341..c317bcf49ebcd 100644
+--- a/drivers/memory/mtk-smi.c
++++ b/drivers/memory/mtk-smi.c
+@@ -375,14 +375,13 @@ static int mtk_smi_larb_probe(struct platform_device *pdev)
+ 	return component_add(dev, &mtk_smi_larb_component_ops);
  }
  
- /* Get ifindex of each upper device. 'indexes' must be able to hold at
-- * least MAX_NEST_DEV elements.
-- * Returns the number of ifindexes added.
-+ * least 'max' elements.
-+ * Returns the number of ifindexes added, or -EOVERFLOW if there are too
-+ * many upper devices.
-  */
--static int get_upper_ifindexes(struct net_device *dev, int *indexes)
-+static int get_upper_ifindexes(struct net_device *dev, int *indexes, int max)
+-static int mtk_smi_larb_remove(struct platform_device *pdev)
++static void mtk_smi_larb_remove(struct platform_device *pdev)
  {
- 	struct net_device *upper;
- 	struct list_head *iter;
- 	int n = 0;
+ 	struct mtk_smi_larb *larb = platform_get_drvdata(pdev);
  
- 	netdev_for_each_upper_dev_rcu(dev, upper, iter) {
-+		if (n >= max)
-+			return -EOVERFLOW;
- 		indexes[n++] = upper->ifindex;
- 	}
-+
- 	return n;
+ 	device_link_remove(&pdev->dev, larb->smi_common_dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	component_del(&pdev->dev, &mtk_smi_larb_component_ops);
+-	return 0;
  }
  
-@@ -597,7 +601,11 @@ int dev_map_enqueue_multi(struct xdp_frame *xdpf, struct net_device *dev_rx,
- 	int err;
+ static int __maybe_unused mtk_smi_larb_resume(struct device *dev)
+@@ -419,7 +418,7 @@ static const struct dev_pm_ops smi_larb_pm_ops = {
  
- 	if (exclude_ingress) {
--		num_excluded = get_upper_ifindexes(dev_rx, excluded_devices);
-+		num_excluded = get_upper_ifindexes(dev_rx, excluded_devices,
-+						   ARRAY_SIZE(excluded_devices) - 1);
-+		if (num_excluded < 0)
-+			return num_excluded;
-+
- 		excluded_devices[num_excluded++] = dev_rx->ifindex;
- 	}
+ static struct platform_driver mtk_smi_larb_driver = {
+ 	.probe	= mtk_smi_larb_probe,
+-	.remove	= mtk_smi_larb_remove,
++	.remove_new = mtk_smi_larb_remove,
+ 	.driver	= {
+ 		.name = "mtk-smi-larb",
+ 		.of_match_table = mtk_smi_larb_of_ids,
+@@ -549,10 +548,9 @@ static int mtk_smi_common_probe(struct platform_device *pdev)
+ 	return 0;
+ }
  
-@@ -715,7 +723,11 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
- 	int err;
+-static int mtk_smi_common_remove(struct platform_device *pdev)
++static void mtk_smi_common_remove(struct platform_device *pdev)
+ {
+ 	pm_runtime_disable(&pdev->dev);
+-	return 0;
+ }
  
- 	if (exclude_ingress) {
--		num_excluded = get_upper_ifindexes(dev, excluded_devices);
-+		num_excluded = get_upper_ifindexes(dev, excluded_devices,
-+						   ARRAY_SIZE(excluded_devices) - 1);
-+		if (num_excluded < 0)
-+			return num_excluded;
-+
- 		excluded_devices[num_excluded++] = dev->ifindex;
- 	}
+ static int __maybe_unused mtk_smi_common_resume(struct device *dev)
+@@ -588,7 +586,7 @@ static const struct dev_pm_ops smi_common_pm_ops = {
  
+ static struct platform_driver mtk_smi_common_driver = {
+ 	.probe	= mtk_smi_common_probe,
+-	.remove = mtk_smi_common_remove,
++	.remove_new = mtk_smi_common_remove,
+ 	.driver	= {
+ 		.name = "mtk-smi-common",
+ 		.of_match_table = mtk_smi_common_of_ids,
 -- 
 2.51.0
 
