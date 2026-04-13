@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364E9317141;
-	Mon, 13 Apr 2026 16:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AE5313298;
+	Mon, 13 Apr 2026 16:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099225; cv=none; b=IdYidghz56uRAQobWFGq/tuzM9DmrU18DrDouTZV/9UFPrG138h3qIA/7uZp1XX7brREIiZA9vIqJc/RsnA5SCcyVPRfVZlV8N2c6FnfZqv+HIJJH7jQUGw4DNCjuy32vaKlABoPYqLVHo5eLym3LT7JLL521dc/j1kBUqlAlkY=
+	t=1776099227; cv=none; b=Jbw8YWprrJK7DHb88Mgjz9Lze8uLvJcTN5RXRh3ykoJyVoad6Si6PJ+fN1mxzwWNdrql3Spgz6RCGXSX+OdhVfy5MYp8uuCc5krO31XCm/WM5GkJuZVchoeGOziEbqxFa86SQgMXW8rv7xirTvXl+QHEMrvLSDZByjDHUAmJSZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099225; c=relaxed/simple;
-	bh=t2D+uIKJSKdbw/ioZIYfHP+/sNpTDMM3ar7w7tYCrLI=;
+	s=arc-20240116; t=1776099227; c=relaxed/simple;
+	bh=f0jajwAYmPCaQdvXsZzhbOqqTMG/SSLUmTobGCPsXuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pe4t1m3/ApZvxD3D5dgS6ff609qR3Ga1mY+2sgZRs1ImBGVVPci9E7Kzolge1pEgvH9DhbZS9JYgANq7eYloOiWTvVy2AMwJilhbIOcsHIjnhD6NgTh8DTA6T0sj0zIqHj3JfS4VbZsC476OG+vV7VO+tpTMSRRZljoCm1n0LnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPWCH+FD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dY4sJo+sSOyuPe13JjvKN2nAYRzmO0HOQvo0mug6y9S1qPYEGtoHY9hQc1AvN1UjXRHauApWqE0LrqhO/u+0ip2dmHC2SNlqR7RzKhd0PEspuCtBtLQddf2F08mg5KfWx5Chk/sHQQWt/P/AdJIaGfj35DeNwLlIvkktfUBQdWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFvE7idV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPWCH+FD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3A5C2BCAF;
-	Mon, 13 Apr 2026 16:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFvE7idV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57778C2BCB3;
+	Mon, 13 Apr 2026 16:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099225;
-	bh=t2D+uIKJSKdbw/ioZIYfHP+/sNpTDMM3ar7w7tYCrLI=;
+	s=korg; t=1776099227;
+	bh=f0jajwAYmPCaQdvXsZzhbOqqTMG/SSLUmTobGCPsXuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HPWCH+FDdVY002FhdpIepKJXAjNRTxnBOyyfOEeVqBX8L6b+LNDlr75vkeUOuTFPC
-	 BL4Y0eBtpZhdjdkdiGpXF5+33PzNlLTNoEncdHpWE/tB875r8dheIO/oRRQyQbDlY9
-	 J49sVI/rrUUpRzVkYXuBaPo8Z8JD0V9WgzMdk0JM=
+	b=AFvE7idVPUXy20ss1j9IbLm9vSqs6PYwSIoRXaN2XY+dmfsGG0q3r293y41XI8SBc
+	 defsVbfTwIn2qv9/nHD09YJjVfH1LzFo8fGWB8zRhFJ/tUrZTdQjhtkwnywjawnKG4
+	 26L2h2yAZoF31Xk+GGSQm4j568GgezB1yFiD9ZAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Tang <tpluszz77@gmail.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 259/491] net/smc: fix double-free of smc_spd_priv when tee() duplicates splice pipe buffer
-Date: Mon, 13 Apr 2026 17:58:24 +0200
-Message-ID: <20260413155828.749036419@linuxfoundation.org>
+Subject: [PATCH 5.10 260/491] rtnetlink: count IFLA_INFO_SLAVE_KIND in if_nlmsg_size
+Date: Mon, 13 Apr 2026 17:58:25 +0200
+Message-ID: <20260413155828.785987585@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,98 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Tang <tpluszz77@gmail.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 24dd586bb4cbba1889a50abe74143817a095c1c9 ]
+[ Upstream commit ee00a12593ffb69db4dd1a1c00ecb0253376874a ]
 
-smc_rx_splice() allocates one smc_spd_priv per pipe_buffer and stores
-the pointer in pipe_buffer.private.  The pipe_buf_operations for these
-buffers used .get = generic_pipe_buf_get, which only increments the page
-reference count when tee(2) duplicates a pipe buffer.  The smc_spd_priv
-pointer itself was not handled, so after tee() both the original and the
-cloned pipe_buffer share the same smc_spd_priv *.
+rtnl_link_get_slave_info_data_size counts IFLA_INFO_SLAVE_DATA, but
+rtnl_link_slave_info_fill adds both IFLA_INFO_SLAVE_DATA and
+IFLA_INFO_SLAVE_KIND.
 
-When both pipes are subsequently released, smc_rx_pipe_buf_release() is
-called twice against the same object:
-
-  1st call: kfree(priv)  sock_put(sk)  smc_rx_update_cons()  [correct]
-  2nd call: kfree(priv)  sock_put(sk)  smc_rx_update_cons()  [UAF]
-
-KASAN reports a slab-use-after-free in smc_rx_pipe_buf_release(), which
-then escalates to a NULL-pointer dereference and kernel panic via
-smc_rx_update_consumer() when it chases the freed priv->smc pointer:
-
-  BUG: KASAN: slab-use-after-free in smc_rx_pipe_buf_release+0x78/0x2a0
-  Read of size 8 at addr ffff888004a45740 by task smc_splice_tee_/74
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x53/0x70
-   print_report+0xce/0x650
-   kasan_report+0xc6/0x100
-   smc_rx_pipe_buf_release+0x78/0x2a0
-   free_pipe_info+0xd4/0x130
-   pipe_release+0x142/0x160
-   __fput+0x1c6/0x490
-   __x64_sys_close+0x4f/0x90
-   do_syscall_64+0xa6/0x1a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000020
-  RIP: 0010:smc_rx_update_consumer+0x8d/0x350
-  Call Trace:
-   <TASK>
-   smc_rx_pipe_buf_release+0x121/0x2a0
-   free_pipe_info+0xd4/0x130
-   pipe_release+0x142/0x160
-   __fput+0x1c6/0x490
-   __x64_sys_close+0x4f/0x90
-   do_syscall_64+0xa6/0x1a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Kernel panic - not syncing: Fatal exception
-
-Beyond the memory-safety problem, duplicating an SMC splice buffer is
-semantically questionable: smc_rx_update_cons() would advance the
-consumer cursor twice for the same data, corrupting receive-window
-accounting.  A refcount on smc_spd_priv could fix the double-free, but
-the cursor-accounting issue would still need to be addressed separately.
-
-The .get callback is invoked by both tee(2) and splice_pipe_to_pipe()
-for partial transfers; both will now return -EFAULT.  Users who need
-to duplicate SMC socket data must use a copy-based read path.
-
-Fixes: 9014db202cb7 ("smc: add support for splice()")
-Signed-off-by: Qi Tang <tpluszz77@gmail.com>
-Link: https://patch.msgid.link/20260318064847.23341-1-tpluszz77@gmail.com
+Fixes: ba7d49b1f0f8 ("rtnetlink: provide api for getting and setting slave info")
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/049843b532e23cde7ddba263c0bbe35ba6f0d26d.1773919462.git.sd@queasysnail.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_rx.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/core/rtnetlink.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
-index 5f20538cbf990..0845905520f8c 100644
---- a/net/smc/smc_rx.c
-+++ b/net/smc/smc_rx.c
-@@ -129,9 +129,16 @@ static void smc_rx_pipe_buf_release(struct pipe_inode_info *pipe,
- 	sock_put(sk);
- }
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 99337557408b5..c58510d7ea0d8 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -501,11 +501,14 @@ static size_t rtnl_link_get_slave_info_data_size(const struct net_device *dev)
+ 		goto out;
  
-+static bool smc_rx_pipe_buf_get(struct pipe_inode_info *pipe,
-+				struct pipe_buffer *buf)
-+{
-+	/* smc_spd_priv in buf->private is not shareable; disallow cloning. */
-+	return false;
-+}
-+
- static const struct pipe_buf_operations smc_pipe_ops = {
- 	.release = smc_rx_pipe_buf_release,
--	.get = generic_pipe_buf_get
-+	.get	 = smc_rx_pipe_buf_get,
- };
+ 	ops = master_dev->rtnl_link_ops;
+-	if (!ops || !ops->get_slave_size)
++	if (!ops)
++		goto out;
++	size += nla_total_size(strlen(ops->kind) + 1);  /* IFLA_INFO_SLAVE_KIND */
++	if (!ops->get_slave_size)
+ 		goto out;
+ 	/* IFLA_INFO_SLAVE_DATA + nested data */
+-	size = nla_total_size(sizeof(struct nlattr)) +
+-	       ops->get_slave_size(master_dev, dev);
++	size += nla_total_size(sizeof(struct nlattr)) +
++		ops->get_slave_size(master_dev, dev);
  
- static void smc_rx_spd_release(struct splice_pipe_desc *spd,
+ out:
+ 	rcu_read_unlock();
 -- 
 2.51.0
 
