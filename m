@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208C52E11B9;
-	Mon, 13 Apr 2026 16:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B122C29D27A;
+	Mon, 13 Apr 2026 16:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097736; cv=none; b=VLjoxnWBnk27E4IAgnZZnWaJk9ZfDFgALPrq+bpPtUwIhwFOA8m8HDPBhi34x8v7SK85Xzr2hU8OHsMTpZAKLVHQ10UG06YHKW4AtWGJSdgmjNMdr7afJ+5SONHai2lTEmIVbUb8jHiXWdjnwM2Tm5oRJ/hG3geLsR9/mG+Zacc=
+	t=1776097738; cv=none; b=tsIjTHGi3e8b4n+jlNlqGjQwR34Vpys885mWrSmAyPuO7u9oxZk6oXEFKlQp5OPy4EO//HbBM2iFWw4WZjTHBVuVd2EBJMdgkLvLdI1aOPW1WpDIQ6OICDXkr5mHTokoM0qWtzvOWzACGg41NasNOpSaY9Y1Q8NiudH4rWyhB3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097736; c=relaxed/simple;
-	bh=9Z3Zc/8NdgtfQQvvTGYiEEX0QyHo6fqFmX6CoPWmFug=;
+	s=arc-20240116; t=1776097738; c=relaxed/simple;
+	bh=AIb3bK47fgl0ePukb+sMUXobAEeD6BfJB89u+nAnHQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Myj5iesIrIuHpuMu0rj8zr9BpYyY+/EqfxqyR7m8YBKa5425K0nBSTBSMSUfLQULapE0lkGSsxIzehH9f4ifJGoCm/Z1CZ4wWXibc6UwvKOO181KtcEa77YotHr1N7jwUlK3idH0ZJqCxXq284DC60O0LVyfMGh90dajH3fAjac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFXLXNBC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hAYbDajwrn33wuFw665SHTOTEf6gVB9hUqdlLkYvn2vfWoaZ7Uc8nNiectdvPJ54MEMoTawSTBLnoZQv+vrTGQkKA5cnvVAzvCJRrWYj7P2nxmDvOaj/EYJI7kuBGEHAzkQ1SPksbQm6ZsuISk4+SA8Jeb4pSyNQoIEqUj5DprE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04wOMS3x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFXLXNBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4C1C2BCAF;
-	Mon, 13 Apr 2026 16:28:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04wOMS3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478EFC2BCAF;
+	Mon, 13 Apr 2026 16:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097736;
-	bh=9Z3Zc/8NdgtfQQvvTGYiEEX0QyHo6fqFmX6CoPWmFug=;
+	s=korg; t=1776097738;
+	bh=AIb3bK47fgl0ePukb+sMUXobAEeD6BfJB89u+nAnHQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PFXLXNBCtFen0FP+E6lgfjfPJp25czLojqSZOOqjypsqq86tQ4+03EA4uZOUulOL9
-	 dUFedbbu4usKEA9EKSOvBJotHMjRoYpkGnBaloJsdXgcUHOeIsjzIUeEHI9jKNFBRb
-	 Z9RZUWWdKlOU2QG2Vqqf0nbZEgWKtNWF/X+PFGTo=
+	b=04wOMS3xdisDV0pr0YmcPEmM9X7DExVf7B6GIcimj4QlGeWXaLc/2+5mEkyMuK0td
+	 E/qvaqCIki551UuVeTy8zNB/RnO87iOHk4yFjIWN1u2u0LbwBAsLbDsh4E/giO9L5U
+	 ZREbkervSXh8zbJEj0P7qaT4qFL2f+cBGqDhijHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 252/570] Bluetooth: qca: fix ROM version reading on WCN3998 chips
-Date: Mon, 13 Apr 2026 17:56:23 +0200
-Message-ID: <20260413155839.906399351@linuxfoundation.org>
+Subject: [PATCH 5.15 253/570] net/rose: fix NULL pointer dereference in rose_transmit_link on reconnect
+Date: Mon, 13 Apr 2026 17:56:24 +0200
+Message-ID: <20260413155839.943405726@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,43 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 99b2c531e0e797119ae1b9195a8764ee98b00e65 ]
+[ Upstream commit e1f0a18c9564cdb16523c802e2c6fe5874e3d944 ]
 
-WCN3998 uses a bit different format for rom version:
+syzkaller reported a bug [1], and the reproducer is available at [2].
 
-[    5.479978] Bluetooth: hci0: setting up wcn399x
-[    5.633763] Bluetooth: hci0: QCA Product ID   :0x0000000a
-[    5.645350] Bluetooth: hci0: QCA SOC Version  :0x40010224
-[    5.650906] Bluetooth: hci0: QCA ROM Version  :0x00001001
-[    5.665173] Bluetooth: hci0: QCA Patch Version:0x00006699
-[    5.679356] Bluetooth: hci0: QCA controller version 0x02241001
-[    5.691109] Bluetooth: hci0: QCA Downloading qca/crbtfw21.tlv
-[    6.680102] Bluetooth: hci0: QCA Downloading qca/crnv21.bin
-[    6.842948] Bluetooth: hci0: QCA setup on UART is completed
+ROSE sockets use four sk->sk_state values: TCP_CLOSE, TCP_LISTEN,
+TCP_SYN_SENT, and TCP_ESTABLISHED. rose_connect() already rejects
+calls for TCP_ESTABLISHED (-EISCONN) and TCP_CLOSE with SS_CONNECTING
+(-ECONNREFUSED), but lacks a check for TCP_SYN_SENT.
 
-Fixes: 523760b7ff88 ("Bluetooth: hci_qca: Added support for WCN3998")
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+When rose_connect() is called a second time while the first connection
+attempt is still in progress (TCP_SYN_SENT), it overwrites
+rose->neighbour via rose_get_neigh(). If that returns NULL, the socket
+is left with rose->state == ROSE_STATE_1 but rose->neighbour == NULL.
+When the socket is subsequently closed, rose_release() sees
+ROSE_STATE_1 and calls rose_write_internal() ->
+rose_transmit_link(skb, NULL), causing a NULL pointer dereference.
+
+Per connect(2), a second connect() while a connection is already in
+progress should return -EALREADY. Add this missing check for
+TCP_SYN_SENT to complete the state validation in rose_connect().
+
+[1] https://syzkaller.appspot.com/bug?extid=d00f90e0af54102fb271
+[2] https://gist.github.com/mrpre/9e6779e0d13e2c66779b1653fef80516
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0027.GAE@google.com/T/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260311070611.76913-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/rose/af_rose.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 78244d53dbe0f..25e98ce4a5af9 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -677,6 +677,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	 */
- 	if (soc_type == QCA_WCN3988)
- 		rom_ver = ((soc_ver & 0x00000f00) >> 0x05) | (soc_ver & 0x0000000f);
-+	else if (soc_type == QCA_WCN3998)
-+		rom_ver = ((soc_ver & 0x0000f000) >> 0x07) | (soc_ver & 0x0000000f);
- 	else
- 		rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 04173c85d92b5..0130c13f73552 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -808,6 +808,11 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 		goto out_release;
+ 	}
+ 
++	if (sk->sk_state == TCP_SYN_SENT) {
++		err = -EALREADY;
++		goto out_release;
++	}
++
+ 	sk->sk_state   = TCP_CLOSE;
+ 	sock->state = SS_UNCONNECTED;
  
 -- 
 2.51.0
