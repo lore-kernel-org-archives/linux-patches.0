@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A278331715D;
-	Mon, 13 Apr 2026 16:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA7E317153;
+	Mon, 13 Apr 2026 16:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099060; cv=none; b=hERJr9SBL1SGYIg6qgROW0B0z+H8CA4TNL4KUA1MrABWTPORlMNJAwRYaawLMmIpJr8dsgMxVc5snvZljyTqyGk6sIsfuF+8tZ52CZMUT1HyImfW+h7JreV0oMadgC02XZcGeku/JCZY2lOmJIP86aJsl6pyta7cEHPybUvnQ88=
+	t=1776099063; cv=none; b=kMKFnorbwV725gsZlp1Y1m9V1zj1CzDf/PsBmxHmdhhL6qJlcDHWE8Kp/l7Fh///BwxwPP9n/WY6ZycaSxOnwXG+LL6kfFIcH0ANdUU20ENDG4waanwNVuo4mx+Sq/2tNBfvwwj7AbvBSLiJ/XkYyIB91LbeJnqGiVWEJnBnPXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099060; c=relaxed/simple;
-	bh=JRfnjjEcqum7sO8a/I9g7Ugt/TI3rLEQkiXK+j0RhOU=;
+	s=arc-20240116; t=1776099063; c=relaxed/simple;
+	bh=DpBD27Qc041yW227T1bhhjWvUGt2enVPd6LO00676gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k21QejfevVC2XFh4BUtVAYoy3FnZpYEEuk1YgGXOB2iHoOGZrXiTLoOdf+4iAcSw5KUtPcLOB7m9lVPOp4e9BFblvryNX9O9blkKc+0Y9B20+MJO1mVMgazm9DAO8XwEIW8hfteaM0297tJocRtlhzs9yEwUc0+25+A0sqbvxxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGay5HSX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHT8FkvpOm/DETU3RYVDcip4LU0olWn5ykDQ3D0X710KbumBVvPpecDL0I35X+v/sW2IVl2ZNkGYQ84TupxSTF18CKfVo3JUplOJ3yGxPFVQ/bYxRjLG4BuiTy4mg1Gm2QBuWvPM65B/ge66DLEMMsRzTbre57aewW5aFr3Tj38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIyCIK1l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGay5HSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB3AC2BCAF;
-	Mon, 13 Apr 2026 16:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIyCIK1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8169AC2BCAF;
+	Mon, 13 Apr 2026 16:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099060;
-	bh=JRfnjjEcqum7sO8a/I9g7Ugt/TI3rLEQkiXK+j0RhOU=;
+	s=korg; t=1776099062;
+	bh=DpBD27Qc041yW227T1bhhjWvUGt2enVPd6LO00676gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iGay5HSXr6e5uMq50q4mxdZsadC2keRJb0zC1wgexfpjsP06PP5hPfVbtDAHazzOa
-	 tpD0FH0hBcrs4sE5a8IhIISAT3hquMjCrjvvFDHN575sTnxkbc1SvfPAAFxXnZqmEz
-	 G8YBFLbzg4jxVyX9T21n+GWySAZ1JPG5+2RGFlsw=
+	b=FIyCIK1la/ShBFCcYJjKLFUJ2ZdtGjqGXA4tp/28ZzS7ylHdhKkPEVhScsBLtktLV
+	 kAP7uX/AGOFTcIf1icLSPnniT2aYNRijdusWlB206ca8g4WWCAFv7R+XCSSZJ3JQV0
+	 nEZEJDcVn4GTeqFTf14V97g5usbXav8wReipOYHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehul Rao <mehulrao@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 194/491] ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain()
-Date: Mon, 13 Apr 2026 17:57:19 +0200
-Message-ID: <20260413155826.333316133@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.10 195/491] smb: client: Compare MACs in constant time
+Date: Mon, 13 Apr 2026 17:57:20 +0200
+Message-ID: <20260413155826.371693100@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -45,86 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mehul Rao <mehulrao@gmail.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 9b1dbd69ba6f8f8c69bc7b77c2ce3b9c6ed05ba6 ]
+commit 26bc83b88bbbf054f0980a4a42047a8d1e210e4c upstream.
 
-In the drain loop, the local variable 'runtime' is reassigned to a
-linked stream's runtime (runtime = s->runtime at line 2157).  After
-releasing the stream lock at line 2169, the code accesses
-runtime->no_period_wakeup, runtime->rate, and runtime->buffer_size
-(lines 2170-2178) — all referencing the linked stream's runtime without
-any lock or refcount protecting its lifetime.
+To prevent timing attacks, MAC comparisons need to be constant-time.
+Replace the memcmp() with the correct function, crypto_memneq().
 
-A concurrent close() on the linked stream's fd triggers
-snd_pcm_release_substream() → snd_pcm_drop() → pcm_release_private()
-→ snd_pcm_unlink() → snd_pcm_detach_substream() → kfree(runtime).
-No synchronization prevents kfree(runtime) from completing while the
-drain path dereferences the stale pointer.
-
-Fix by caching the needed runtime fields (no_period_wakeup, rate,
-buffer_size) into local variables while still holding the stream lock,
-and using the cached values after the lock is released.
-
-Fixes: f2b3614cefb6 ("ALSA: PCM - Don't check DMA time-out too shortly")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mehul Rao <mehulrao@gmail.com>
-Link: https://patch.msgid.link/20260305193508.311096-1-mehulrao@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm_native.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ fs/cifs/cifsencrypt.c   |    3 ++-
+ fs/cifs/smb2transport.c |    4 +++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2129,6 +2129,10 @@ static int snd_pcm_drain(struct snd_pcm_
- 	for (;;) {
- 		long tout;
- 		struct snd_pcm_runtime *to_check;
-+		unsigned int drain_rate;
-+		snd_pcm_uframes_t drain_bufsz;
-+		bool drain_no_period_wakeup;
-+
- 		if (signal_pending(current)) {
- 			result = -ERESTARTSYS;
- 			break;
-@@ -2148,16 +2152,25 @@ static int snd_pcm_drain(struct snd_pcm_
- 		snd_pcm_group_unref(group, substream);
- 		if (!to_check)
- 			break; /* all drained */
-+		/*
-+		 * Cache the runtime fields needed after unlock.
-+		 * A concurrent close() on the linked stream may free
-+		 * its runtime via snd_pcm_detach_substream() once we
-+		 * release the stream lock below.
-+		 */
-+		drain_no_period_wakeup = to_check->no_period_wakeup;
-+		drain_rate = to_check->rate;
-+		drain_bufsz = to_check->buffer_size;
- 		init_waitqueue_entry(&wait, current);
- 		set_current_state(TASK_INTERRUPTIBLE);
- 		add_wait_queue(&to_check->sleep, &wait);
- 		snd_pcm_stream_unlock_irq(substream);
--		if (runtime->no_period_wakeup)
-+		if (drain_no_period_wakeup)
- 			tout = MAX_SCHEDULE_TIMEOUT;
- 		else {
- 			tout = 100;
--			if (runtime->rate) {
--				long t = runtime->buffer_size * 1100 / runtime->rate;
-+			if (drain_rate) {
-+				long t = drain_bufsz * 1100 / drain_rate;
- 				tout = max(t, tout);
- 			}
- 			tout = msecs_to_jiffies(tout);
+--- a/fs/cifs/cifsencrypt.c
++++ b/fs/cifs/cifsencrypt.c
+@@ -36,6 +36,7 @@
+ #include <linux/fips.h>
+ #include <crypto/arc4.h>
+ #include <crypto/aead.h>
++#include <crypto/algapi.h>
+ 
+ int __cifs_calc_signature(struct smb_rqst *rqst,
+ 			struct TCP_Server_Info *server, char *signature,
+@@ -255,7 +256,7 @@ int cifs_verify_signature(struct smb_rqs
+ /*	cifs_dump_mem("what we think it should be: ",
+ 		      what_we_think_sig_should_be, 16); */
+ 
+-	if (memcmp(server_response_sig, what_we_think_sig_should_be, 8))
++	if (crypto_memneq(server_response_sig, what_we_think_sig_should_be, 8))
+ 		return -EACCES;
+ 	else
+ 		return 0;
+--- a/fs/cifs/smb2transport.c
++++ b/fs/cifs/smb2transport.c
+@@ -31,6 +31,7 @@
+ #include <asm/processor.h>
+ #include <linux/mempool.h>
+ #include <linux/highmem.h>
++#include <crypto/algapi.h>
+ #include <crypto/aead.h>
+ #include "smb2pdu.h"
+ #include "cifsglob.h"
+@@ -687,7 +688,8 @@ smb2_verify_signature(struct smb_rqst *r
+ 	if (rc)
+ 		return rc;
+ 
+-	if (memcmp(server_response_sig, shdr->Signature, SMB2_SIGNATURE_SIZE)) {
++	if (crypto_memneq(server_response_sig, shdr->Signature,
++			  SMB2_SIGNATURE_SIZE)) {
+ 		cifs_dbg(VFS, "sign fail cmd 0x%x message id 0x%llx\n",
+ 			shdr->Command, shdr->MessageId);
+ 		return -EACCES;
 
 
