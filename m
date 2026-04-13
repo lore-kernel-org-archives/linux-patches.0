@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790BF307AC7;
-	Mon, 13 Apr 2026 16:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2DF30BBAE;
+	Mon, 13 Apr 2026 16:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098313; cv=none; b=vDp+319H9qgrztBoutK/Em9WlU2CRimfB1RbRuTxQCdZrYLZT5nX57q515dfKhqLvCvBrH+npPoBxmsq6k0GpjFggJQF0fHvMk9eV7/D8kfN+IlSev8v/ZjQGTigowB5Aa7ejr+LSrDD1SdWJ2EnrgQmYkiHxDxDExK/S6MwYrA=
+	t=1776098316; cv=none; b=jnPvrobwLwMvs154NTWEKzfjPUwgyScVSzTRvRY7piBdCPIZaAEnQ1N6pozjo6HDKdXHHNKT+cbEdCx8m6q/2TiifyPyY4hkC3IUYX/ELqr7KJGz2mb3nj9e2IqZceLgek8oqkFulTvBm7/G12U5k2iz7VZEviWDUbVtbnV+T0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098313; c=relaxed/simple;
-	bh=qj5mFLj1SGDlSHCGilhA4ddopw3VnQqAPjs1Es5WTLA=;
+	s=arc-20240116; t=1776098316; c=relaxed/simple;
+	bh=fyYWsym16oBOkzQtN2QOmHkwTV4BxmhfH2hdhJGUCZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJB9nMzwJjkRy+VhAbs0ez/xe2tcwYTSdpyFgGujZ5cgLiU/Mmj9vIZbjUEnumhdEui6pDZZ7/U3zOLQuT4xSsDB3s7WDk6XZ4lIrzzrIY/E4/e+01BS7tMtKtchizO1F7pizue4rKeB2XVM8RkqXH7EV5YSqbfV5AR17ic3vf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUqlUROd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQVGisouGTisUyjA3CQHMnNS0Rrs7tfWdFZAltaszkZ1TPuV3XY3Q3fNBAnl3xda+UkIQGPdpBbnJDqQJ0QXuXVbgYaRNeQcsvh0K4jn8kVAmp56psesVp3uKDEF2Ai5V1Db+uPqhUFSDhfsyyCUVEAzLWPwqPnYh/CZvE4oQDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDYo2TwM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUqlUROd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F6DCC2BCAF;
-	Mon, 13 Apr 2026 16:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDYo2TwM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962D0C2BCAF;
+	Mon, 13 Apr 2026 16:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098313;
-	bh=qj5mFLj1SGDlSHCGilhA4ddopw3VnQqAPjs1Es5WTLA=;
+	s=korg; t=1776098315;
+	bh=fyYWsym16oBOkzQtN2QOmHkwTV4BxmhfH2hdhJGUCZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TUqlUROd7aQ/qbCDq+AEfwUeW9JqIgAM1G9jfIiLr3M+RCbOSjztb/UA85sKHj0nr
-	 3wcQfNsi+esIH57WcU2buAopo0YiLRXgvZghg5uzlm0fObrpEDHwXV0TXazuxwWXwg
-	 d/qMmMLUHnzIXCzSTEaxjUZMj6X2kqC6jq29aIXM=
+	b=cDYo2TwMlhc91/u+tI20X5LA74gDa767d8xFN1dXsW/qwLjEj3hdtXPvM20U/E2Oe
+	 AtUhSGvun6hy+pWCrxoc+UZkMLFABDXCidRYdf8FtW92nxgln+rWb8ZlpsVM6nbzN3
+	 1P8mfcKGlq/NP5x99qyaT76HBp+e51livfP078pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yasuaki Torimaru <yasuakitorimaru@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 444/570] wifi: wilc1000: fix u8 overflow in SSID scan buffer size calculation
-Date: Mon, 13 Apr 2026 17:59:35 +0200
-Message-ID: <20260413155847.102709959@linuxfoundation.org>
+	Ernestas Kulik <ernestas.k@iconn-networks.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 445/570] USB: serial: option: add MeiG Smart SRM825WN
+Date: Mon, 13 Apr 2026 17:59:36 +0200
+Message-ID: <20260413155847.139278618@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,42 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+From: Ernestas Kulik <ernestas.k@iconn-networks.com>
 
-commit d049e56b1739101d1c4d81deedb269c52a8dbba0 upstream.
+commit e8d0ed37bd51da52da6225d278e330c2f18a6198 upstream.
 
-The variable valuesize is declared as u8 but accumulates the total
-length of all SSIDs to scan. Each SSID contributes up to 33 bytes
-(IEEE80211_MAX_SSID_LEN + 1), and with WILC_MAX_NUM_PROBED_SSID (10)
-SSIDs the total can reach 330, which wraps around to 74 when stored
-in a u8.
+Add support for the SDX62-based MeiG Smart SRM825WN module.
 
-This causes kmalloc to allocate only 75 bytes while the subsequent
-memcpy writes up to 331 bytes into the buffer, resulting in a 256-byte
-heap buffer overflow.
+If#= 0: RNDIS
+If#= 1: RNDIS
+If#= 2: Diag
+If#= 3: AT
+If#= 4: AT
+If#= 5: NMEA
 
-Widen valuesize from u8 to u32 to accommodate the full range.
+T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#= 19 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2dee ProdID=4d38 Rev= 5.04
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=da47a175
+C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
+E:  Ad=81(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fixes: c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11 driver")
+Signed-off-by: Ernestas Kulik <ernestas.k@iconn-networks.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
-Link: https://patch.msgid.link/20260324100624.983458-1-yasuakitorimaru@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/microchip/wilc1000/hif.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/wireless/microchip/wilc1000/hif.c
-+++ b/drivers/net/wireless/microchip/wilc1000/hif.c
-@@ -157,7 +157,7 @@ int wilc_scan(struct wilc_vif *vif, u8 s
- 	u32 index = 0;
- 	u32 i, scan_timeout;
- 	u8 *buffer;
--	u8 valuesize = 0;
-+	u32 valuesize = 0;
- 	u8 *search_ssid_vals = NULL;
- 	struct host_if_drv *hif_drv = vif->hif_drv;
- 
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2441,6 +2441,9 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM825WN (Diag) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825WN (AT) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825WN (NMEA) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
 
 
