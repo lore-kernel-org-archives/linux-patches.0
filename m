@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25542283FEF;
-	Mon, 13 Apr 2026 16:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C05277035;
+	Mon, 13 Apr 2026 16:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096514; cv=none; b=NezzPx42WgJCryKb2LIH3iIKKUdtSQaEgqmwwzAqELZjSKfTFrRTj+n21IUCCtEGn2GJDGfU+NUbpK6RbLA21yT8yG/eZ/Vkx63N/ROOvqpMY2LNuge9kv3O+ctTqJqMRFF7k/DH242/xIg2IBn+UBRhqwDxEy/R293l7qRd2I0=
+	t=1776096516; cv=none; b=EpYvGLY/0JjrONAG6DIIZ6gHApWmJeRF+7FIUIwCP6W5yxQ9T8o0cxqlas5Nc8PTTA4Ysh4YVnUec1raNpeFaTIrkOgKiLabpd7eRo53kLlo729Ql2I7G+seghp6UK1zWgc6/8TifVUZs7JivNkzNZb3e7jq3eh2fZgUcSbntlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096514; c=relaxed/simple;
-	bh=5DP4SCV8POB8lQnsyKpZ6CP/nb6gEVAQggftfi8sFS4=;
+	s=arc-20240116; t=1776096516; c=relaxed/simple;
+	bh=zX+OVbNPlq7diIetqRExaBmq1AUc18/p8bwQwBxtJV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A656EmJ1Uny/3XUB2UbFAIaCM99DP28WipidUsnbh0jPczUOjpocQqKJPsdPdSSYtKpy3jgTpw+5yBK/s+PMPEu92iTZ/dSnC+K+oU8+Hw4xwpRvKhkm+cAAgXnXpk337fGlCETR303hWz++pbVmtAzkcUFj42K7XH9kcCxii7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07SxybLp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BOx6YA93NP+nD7apkzUt7yvqvuw6kFrz9qb/ZgunA+5uKj5BVYQeRg0gpi2ZGYT2qcZoN2iOLtWA6npOnaPFnwmPeMeFQWcA4fmpS1L/0Zy6M+Rr9gXNoqFDEg06dKjgQdYDnXA5uDGYYOFnYuIOpPGjZO8R6BonT7To+DtWgbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9NN3odo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07SxybLp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7FAC2BCAF;
-	Mon, 13 Apr 2026 16:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9NN3odo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F87C2BCB0;
+	Mon, 13 Apr 2026 16:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096513;
-	bh=5DP4SCV8POB8lQnsyKpZ6CP/nb6gEVAQggftfi8sFS4=;
+	s=korg; t=1776096516;
+	bh=zX+OVbNPlq7diIetqRExaBmq1AUc18/p8bwQwBxtJV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=07SxybLp3/wOFvSBO/UmGHTsDfDecff5v412WBaS56+y3WDjqqwtZ2UTrjx4zu306
-	 hfvw+oEG2X4iGjZK3hH37H2RaKZLxLpQM0YDtgnONRUvK0M3ARm9bIZRqUBfZI4Z4B
-	 ybMb7491owCBZHvKId76utfM5VUPDpDf8jJJpBGc=
+	b=k9NN3odojK281HklC1yHBwyzZefQiFvbKmgLZgqIJqJdLYOpACK6lWc+xgqO/MJ7Z
+	 HqCkz1PHf/J78yCbTv12WuK+kxMu7EllrtXn/2BdRs/UQ8EpI/SGSiLdlitOUaoaRI
+	 3aRsSQJ1fNFasN0q8/bb4xw5TFV0h70jNm40m9aI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.18 39/83] EDAC/mc: Fix error path ordering in edac_mc_alloc()
-Date: Mon, 13 Apr 2026 18:00:07 +0200
-Message-ID: <20260413155732.475013028@linuxfoundation.org>
+	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 40/83] net/tls: fix use-after-free in -EBUSY error path of tls_do_encryption
+Date: Mon, 13 Apr 2026 18:00:08 +0200
+Message-ID: <20260413155732.512133281@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -51,66 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
 
-commit 51520e03e70d6c73e33ee7cbe0319767d05764fe upstream.
+commit a9b8b18364fffce4c451e6f6fd218fa4ab646705 upstream.
 
-When the mci->pvt_info allocation in edac_mc_alloc() fails, the error path
-will call put_device() which will end up calling the device's release
-function.
+The -EBUSY handling in tls_do_encryption(), introduced by commit
+859054147318 ("net: tls: handle backlogging of crypto requests"), has
+a use-after-free due to double cleanup of encrypt_pending and the
+scatterlist entry.
 
-However, the init ordering is wrong such that device_initialize() happens
-*after* the failed allocation and thus the device itself and the release
-function pointer are not initialized yet when they're called:
+When crypto_aead_encrypt() returns -EBUSY, the request is enqueued to
+the cryptd backlog and the async callback tls_encrypt_done() will be
+invoked upon completion. That callback unconditionally restores the
+scatterlist entry (sge->offset, sge->length) and decrements
+ctx->encrypt_pending. However, if tls_encrypt_async_wait() returns an
+error, the synchronous error path in tls_do_encryption() performs the
+same cleanup again, double-decrementing encrypt_pending and
+double-restoring the scatterlist.
 
-  MCE: In-kernel MCE decoding enabled.
-  ------------[ cut here ]------------
-  kobject: '(null)': is not initialized, yet kobject_put() is being called.
-  WARNING: lib/kobject.c:734 at kobject_put, CPU#22: systemd-udevd
-  CPU: 22 UID: 0 PID: 538 Comm: systemd-udevd Not tainted 7.0.0-rc1+ #2 PREEMPT(full)
-  RIP: 0010:kobject_put
-  Call Trace:
-   <TASK>
-   edac_mc_alloc+0xbe/0xe0 [edac_core]
-   amd64_edac_init+0x7a4/0xff0 [amd64_edac]
-   ? __pfx_amd64_edac_init+0x10/0x10 [amd64_edac]
-   do_one_initcall
-   ...
+The double-decrement corrupts the encrypt_pending sentinel (initialized
+to 1), making tls_encrypt_async_wait() permanently skip the wait for
+pending async callbacks. A subsequent sendmsg can then free the
+tls_rec via bpf_exec_tx_verdict() while a cryptd callback is still
+pending, resulting in a use-after-free when the callback fires on the
+freed record.
 
-Reorder the calling sequence so that the device is initialized and thus the
-release function pointer is properly set before it can be used.
+Fix this by skipping the synchronous cleanup when the -EBUSY async
+wait returns an error, since the callback has already handled
+encrypt_pending and sge restoration.
 
-This was found by Claude while reviewing another EDAC patch.
-
-Fixes: 0bbb265f7089 ("EDAC/mc: Get rid of silly one-shot struct allocation in edac_mc_alloc()")
-Reported-by: Claude Code:claude-opus-4.5
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Cc: stable@kernel.org
-Link: https://patch.msgid.link/20260331121623.4871-1-bp@kernel.org
+Fixes: 859054147318 ("net: tls: handle backlogging of crypto requests")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260403013617.2838875-1-ramdhan@starlabs.sg
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/edac_mc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/tls/tls_sw.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/edac/edac_mc.c
-+++ b/drivers/edac/edac_mc.c
-@@ -370,13 +370,13 @@ struct mem_ctl_info *edac_mc_alloc(unsig
- 	if (!mci->layers)
- 		goto error;
- 
-+	mci->dev.release = mci_release;
-+	device_initialize(&mci->dev);
-+
- 	mci->pvt_info = kzalloc(sz_pvt, GFP_KERNEL);
- 	if (!mci->pvt_info)
- 		goto error;
- 
--	mci->dev.release = mci_release;
--	device_initialize(&mci->dev);
--
- 	/* setup index and various internal pointers */
- 	mci->mc_idx = mc_num;
- 	mci->tot_dimms = tot_dimms;
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -584,6 +584,16 @@ static int tls_do_encryption(struct sock
+ 	if (rc == -EBUSY) {
+ 		rc = tls_encrypt_async_wait(ctx);
+ 		rc = rc ?: -EINPROGRESS;
++		/*
++		 * The async callback tls_encrypt_done() has already
++		 * decremented encrypt_pending and restored the sge on
++		 * both success and error. Skip the synchronous cleanup
++		 * below on error, just remove the record and return.
++		 */
++		if (rc != -EINPROGRESS) {
++			list_del(&rec->list);
++			return rc;
++		}
+ 	}
+ 	if (!rc || rc != -EINPROGRESS) {
+ 		atomic_dec(&ctx->encrypt_pending);
 
 
