@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A370430BB9B;
-	Mon, 13 Apr 2026 16:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FF124DCF6;
+	Mon, 13 Apr 2026 16:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097383; cv=none; b=COF1yzsEfja2qcvudZ3fhDYTunLZ10nWuepYUd5wcjIg3r9L4msFRvO6hTo32WgC3URneDaR3umriW5zcIKja9umBEAm5YTYJ6SKExKipPzHzzwi6CVnxiNTWSgxZMmrNjTRL8KLrTBkFQgyZH/HZgaT4/sJkhny2ifimolVY8s=
+	t=1776097386; cv=none; b=IVVfCoT4JHL/RT4AoFcIQfgv/Ad19hBBVpvLrLdENhmjOeyKVvawZCK5JVgVnVxGx1RAQFRlkFj/MOgCW1FSjSLWSznFFxhmvHyzr7bepK4XtYzIitZ4DIl3iJ0s/Jcbx5ZNRsZLAfjups7j/o8uY+AHWP729bUoy3FRie5rj1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097383; c=relaxed/simple;
-	bh=i7BVF51RpMxrl5ifK7h6gDLeLsCpPAK0QZe8MYggs7c=;
+	s=arc-20240116; t=1776097386; c=relaxed/simple;
+	bh=NHTpzRwzAlrmLz1N1fuTUp+MUsOfZNxxe4UI8px6R3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=InA7sN/naYj37NoiwQrtye7Suctz8wJQ4mPEHjr4+OHYwgFsPMDnvSYHaXWXFsVDARLitpEXvxYbkrICIm5bGB6mWVqfhbplcu7StnFTenUKwfzG/Clydtj8n8lthwKp7b8WY5TCQHGqBsdUioJV2helm0jxTgiT0k8mm3nTiHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEtBmYa5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qYM/eUNu7WoDIYbPBZEtEcXbYIY8mfr2F8R0bq5r6vIE5txfjI0OyysC/eLltgMs+RvmDYw5x1NG+Kwmdtko6E9B05ndpJhV4V9S5aHC6je3Sgx+YRkMsSGibWFpCR2OLdaXLq4aX3soYXa+DO2m4cdQ2hxwY8kn/KyIumnTQ5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPAiqxlx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEtBmYa5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39289C2BCAF;
-	Mon, 13 Apr 2026 16:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPAiqxlx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC04C2BCAF;
+	Mon, 13 Apr 2026 16:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097383;
-	bh=i7BVF51RpMxrl5ifK7h6gDLeLsCpPAK0QZe8MYggs7c=;
+	s=korg; t=1776097386;
+	bh=NHTpzRwzAlrmLz1N1fuTUp+MUsOfZNxxe4UI8px6R3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEtBmYa58I0jqrPo8GEI/Ie8o5ZaSv2uv03mLp79p1NNsHhMEf+5qgu8K4laHV6Q7
-	 GV056bQzpXeTyoX0kN00XlvRt0v7/AynIHXG/pD8nE4crK1gI2xkYzYL4bBDs3+FpO
-	 us194Qsq6r4FmMWi76+Z8nouYmVgUsljgQ4pLIAc=
+	b=dPAiqxlxy7kouJXuNWgSwWjL2q/RyXF7myoTDDRGN/w7IvLmTyESdD1HqZ3cGCFr1
+	 kMzxlFzA2/+25pyYE3lkjsqwfV7kU4QIdOaINGMDNo76i4TnIfOgBkHlliPRMaP6l1
+	 vaRzwd9GIFMH4KTkCC9CnU1ZEe3qaXDGoH2bPCMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	syzbot+334190e097a98a1b81bb@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Dull <monderasdor@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/570] net: ipv6: fix panic when IPv4 route references loopback IPv6 nexthop
-Date: Mon, 13 Apr 2026 17:53:39 +0200
-Message-ID: <20260413155833.741165571@linuxfoundation.org>
+Subject: [PATCH 5.15 115/570] netfilter: nfnetlink_queue: fix entry leak in bridge verdict error path
+Date: Mon, 13 Apr 2026 17:54:06 +0200
+Message-ID: <20260413155834.751474752@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,81 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 21ec92774d1536f71bdc90b0e3d052eff99cf093 ]
+[ Upstream commit f1ba83755d81c6fc66ac7acd723d238f974091e9 ]
 
-When a standalone IPv6 nexthop object is created with a loopback device
-(e.g., "ip -6 nexthop add id 100 dev lo"), fib6_nh_init() misclassifies
-it as a reject route. This is because nexthop objects have no destination
-prefix (fc_dst=::), causing fib6_is_reject() to match any loopback
-nexthop. The reject path skips fib_nh_common_init(), leaving
-nhc_pcpu_rth_output unallocated. If an IPv4 route later references this
-nexthop, __mkroute_output() dereferences NULL nhc_pcpu_rth_output and
-panics.
+nfqnl_recv_verdict() calls find_dequeue_entry() to remove the queue
+entry from the queue data structures, taking ownership of the entry.
+For PF_BRIDGE packets, it then calls nfqa_parse_bridge() to parse VLAN
+attributes.  If nfqa_parse_bridge() returns an error (e.g. NFQA_VLAN
+present but NFQA_VLAN_TCI missing), the function returns immediately
+without freeing the dequeued entry or its sk_buff.
 
-Simplify the check in fib6_nh_init() to only match explicit reject
-routes (RTF_REJECT) instead of using fib6_is_reject(). The loopback
-promotion heuristic in fib6_is_reject() is handled separately by
-ip6_route_info_create_nh(). After this change, the three cases behave
-as follows:
+This leaks the nf_queue_entry, its associated sk_buff, and all held
+references (net_device refcounts, struct net refcount).  Repeated
+triggering exhausts kernel memory.
 
-1. Explicit reject route ("ip -6 route add unreachable 2001:db8::/64"):
-   RTF_REJECT is set, enters reject path, skips fib_nh_common_init().
-   No behavior change.
+Fix this by dropping the entry via nfqnl_reinject() with NF_DROP verdict
+on the error path, consistent with other error handling in this file.
 
-2. Implicit loopback reject route ("ip -6 route add 2001:db8::/32 dev lo"):
-   RTF_REJECT is not set, takes normal path, fib_nh_common_init() is
-   called. ip6_route_info_create_nh() still promotes it to reject
-   afterward. nhc_pcpu_rth_output is allocated but unused, which is
-   harmless.
-
-3. Standalone nexthop object ("ip -6 nexthop add id 100 dev lo"):
-   RTF_REJECT is not set, takes normal path, fib_nh_common_init() is
-   called. nhc_pcpu_rth_output is properly allocated, fixing the crash
-   when IPv4 routes reference this nexthop.
-
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Fixes: 493ced1ac47c ("ipv4: Allow routes to use nexthop objects")
-Reported-by: syzbot+334190e097a98a1b81bb@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/698f8482.a70a0220.2c38d7.00ca.GAE@google.com/T/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260304113817.294966-2-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8d45ff22f1b4 ("netfilter: bridge: nf queue verdict to use NFQA_VLAN and NFQA_L2HDR")
+Reviewed-by: David Dull <monderasdor@gmail.com>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ net/netfilter/nfnetlink_queue.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 05e2ea8b269df..52e8e77df69a1 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3519,7 +3519,6 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
- {
- 	struct net_device *dev = NULL;
- 	struct inet6_dev *idev = NULL;
--	int addr_type;
- 	int err;
+diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
+index d5f5b93a99a08..3925fcb7a222c 100644
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -1250,8 +1250,10 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
  
- 	fib6_nh->fib_nh_family = AF_INET6;
-@@ -3560,11 +3559,10 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
+ 	if (entry->state.pf == PF_BRIDGE) {
+ 		err = nfqa_parse_bridge(entry, nfqa);
+-		if (err < 0)
++		if (err < 0) {
++			nfqnl_reinject(entry, NF_DROP);
+ 			return err;
++		}
+ 	}
  
- 	fib6_nh->fib_nh_weight = 1;
- 
--	/* We cannot add true routes via loopback here,
--	 * they would result in kernel looping; promote them to reject routes
-+	/* Reset the nexthop device to the loopback device in case of reject
-+	 * routes.
- 	 */
--	addr_type = ipv6_addr_type(&cfg->fc_dst);
--	if (fib6_is_reject(cfg->fc_flags, dev, addr_type)) {
-+	if (cfg->fc_flags & RTF_REJECT) {
- 		/* hold loopback dev/idev if we haven't done so. */
- 		if (dev != net->loopback_dev) {
- 			if (dev) {
+ 	if (nfqa[NFQA_PAYLOAD]) {
 -- 
 2.51.0
 
