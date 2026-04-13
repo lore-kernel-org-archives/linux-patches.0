@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4705E27F4F5;
-	Mon, 13 Apr 2026 16:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151B92D3220;
+	Mon, 13 Apr 2026 16:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098030; cv=none; b=bTGnW8OaAAZupXVCnI8RcZ2kyRgD21PbMM1YrpO/wMG+gYLGnJUCuZbRwooyddtYkHvG96jNe5SD/2OhWmN7iAcwplJJ5D6d0OjVjlM3RW5mxRFM52dBP/q4UbehS9gf/C5I6FdDFut4EFmR5H6dr+ksKg++1i/8tQG3f85cM+E=
+	t=1776098033; cv=none; b=GcD9DdvqooRuU2t2EvNToABqCts57gzizaUU3oTJNwsJDhO9cF9GLzxE+6AnwxktC2Mg6gLXyudU0wHqBb2OT1L4TRn3ZDQGz9BT52sZQo+B09EW4rLWGTVSjUVR9pCaPfxj90sjdEDjbLga0bbkuZTWhbMWSGXy4XlCs2Kz0FY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098030; c=relaxed/simple;
-	bh=CBIJCAh0i+sFo2e2niUP6D+hoVC5aBUA/UDnPbEARYs=;
+	s=arc-20240116; t=1776098033; c=relaxed/simple;
+	bh=DhRZ2UY8qvmWtuX1ZFzxqPYhyblQ+zrh30HixV7e2CE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CAAohZwiPFVwSSyky2crKygSKiEb0HOnY89IGp3iYqwkOdDun0svoYDuLydQGidrNpNstNtaCt4yMy07aNzIxWwJDIurBuTDhL9JliW3QS65jT4bZGH4oA+LPxxzV0sR3Pa1UXbP75+liL07AYCBPaIl9OQqqTgAOK42aJbJvuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEDjBY3l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q5GmX/VwqUDAs2g0MiYRXmogHXPdoU9uFAJSDpf1n7QMuvbJzH+hi/usxrJ5513NW9bcCJSOqmCtrTfvOqyBKoXWkaex5Z/PwWeonDWrcUKZl9rIfnzaTePWuJWzzvJOb8xhipxWeN0xF6eYaTvfoQ2g13WWxS2Eg+Th9az2yOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljNGQ2qN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEDjBY3l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DE3C2BCAF;
-	Mon, 13 Apr 2026 16:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljNGQ2qN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DBDC2BCAF;
+	Mon, 13 Apr 2026 16:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098030;
-	bh=CBIJCAh0i+sFo2e2niUP6D+hoVC5aBUA/UDnPbEARYs=;
+	s=korg; t=1776098032;
+	bh=DhRZ2UY8qvmWtuX1ZFzxqPYhyblQ+zrh30HixV7e2CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wEDjBY3lT31QBgIxzpJTAXYWVAOFyb7bbU5FGcRBbStwdecwEXmmOgkQ2MbiNFhQ4
-	 b20adL4HgybaM2SOXbAs1EygPfx2vrIhOwcMK8eT19LMpCCMCP8oO/Acwst2W3Z2ou
-	 I67bjqjXvXGtnFPW4z+o3vgR8PZRyBDSCo7ogHoY=
+	b=ljNGQ2qNeO6+gykZ0YPO2ZBajgfuR5zjgdNoGfnHwYav1W9kmSa5BQcausb7Lcx+u
+	 CIoA6RPgl2r6+ItP7u0/axMqB+0OE9jnJZ/pXGZ5sO8UbTXg5AQT/BkyFtZrOZeL0g
+	 3mlfXMW0SUG63oyVGjz7ppT5Sedqm2eUekNzqmeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 365/570] ASoC: adau1372: Fix unchecked clk_prepare_enable() return value
-Date: Mon, 13 Apr 2026 17:58:16 +0200
-Message-ID: <20260413155844.154523652@linuxfoundation.org>
+Subject: [PATCH 5.15 334/570] netfilter: nfnetlink_log: fix uninitialized padding leak in NFULA_PAYLOAD
+Date: Mon, 13 Apr 2026 17:57:45 +0200
+Message-ID: <20260413155843.006364685@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -46,86 +47,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 326fe8104a4020d30080d37ac8b6b43893cdebca ]
+[ Upstream commit 52025ebaa29f4eb4ed8bf92ce83a68f24ab7fdf7 ]
 
-adau1372_set_power() calls clk_prepare_enable() but discards the return
-value. If the clock enable fails, the driver proceeds to access registers
-on unpowered hardware, potentially causing silent corruption.
+__build_packet_message() manually constructs the NFULA_PAYLOAD netlink
+attribute using skb_put() and skb_copy_bits(), bypassing the standard
+nla_reserve()/nla_put() helpers. While nla_total_size(data_len) bytes
+are allocated (including NLA alignment padding), only data_len bytes
+of actual packet data are copied. The trailing nla_padlen(data_len)
+bytes (1-3 when data_len is not 4-byte aligned) are never initialized,
+leaking stale heap contents to userspace via the NFLOG netlink socket.
 
-Make adau1372_set_power() return int and propagate the error from
-clk_prepare_enable(). Update adau1372_set_bias_level() to return the
-error directly for the STANDBY and OFF cases.
+Replace the manual attribute construction with nla_reserve(), which
+handles the tailroom check, header setup, and padding zeroing via
+__nla_reserve(). The subsequent skb_copy_bits() fills in the payload
+data on top of the properly initialized attribute.
 
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
-Fixes: 6cd4c6459e47 ("ASoC: Add ADAU1372 audio CODEC support")
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20260325210704.76847-2-jihed.chaibi.dev@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: df6fb868d611 ("[NETFILTER]: nfnetlink: convert to generic netlink attribute functions")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau1372.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ net/netfilter/nfnetlink_log.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
-index 6811a8b3866dd..0997d5f3e4039 100644
---- a/sound/soc/codecs/adau1372.c
-+++ b/sound/soc/codecs/adau1372.c
-@@ -781,15 +781,18 @@ static void adau1372_enable_pll(struct adau1372 *adau1372)
- 		dev_err(adau1372->dev, "Failed to lock PLL\n");
- }
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index 09fe6cf358ec7..6484d08223dbc 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -636,15 +636,11 @@ __build_packet_message(struct nfnl_log_net *log,
  
--static void adau1372_set_power(struct adau1372 *adau1372, bool enable)
-+static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- {
- 	if (adau1372->enabled == enable)
--		return;
-+		return 0;
+ 	if (data_len) {
+ 		struct nlattr *nla;
+-		int size = nla_attr_size(data_len);
  
- 	if (enable) {
- 		unsigned int clk_ctrl = ADAU1372_CLK_CTRL_MCLK_EN;
-+		int ret;
+-		if (skb_tailroom(inst->skb) < nla_total_size(data_len))
++		nla = nla_reserve(inst->skb, NFULA_PAYLOAD, data_len);
++		if (!nla)
+ 			goto nla_put_failure;
  
--		clk_prepare_enable(adau1372->mclk);
-+		ret = clk_prepare_enable(adau1372->mclk);
-+		if (ret)
-+			return ret;
- 		if (adau1372->pd_gpio)
- 			gpiod_set_value(adau1372->pd_gpio, 0);
- 
-@@ -828,6 +831,8 @@ static void adau1372_set_power(struct adau1372 *adau1372, bool enable)
+-		nla = skb_put(inst->skb, nla_total_size(data_len));
+-		nla->nla_type = NFULA_PAYLOAD;
+-		nla->nla_len = size;
+-
+ 		if (skb_copy_bits(skb, 0, nla_data(nla), data_len))
+ 			BUG();
  	}
- 
- 	adau1372->enabled = enable;
-+
-+	return 0;
- }
- 
- static int adau1372_set_bias_level(struct snd_soc_component *component,
-@@ -841,11 +846,9 @@ static int adau1372_set_bias_level(struct snd_soc_component *component,
- 	case SND_SOC_BIAS_PREPARE:
- 		break;
- 	case SND_SOC_BIAS_STANDBY:
--		adau1372_set_power(adau1372, true);
--		break;
-+		return adau1372_set_power(adau1372, true);
- 	case SND_SOC_BIAS_OFF:
--		adau1372_set_power(adau1372, false);
--		break;
-+		return adau1372_set_power(adau1372, false);
- 	}
- 
- 	return 0;
 -- 
-2.53.0
+2.51.0
 
 
 
