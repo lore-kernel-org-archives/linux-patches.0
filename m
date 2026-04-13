@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783221A275;
-	Mon, 13 Apr 2026 16:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFD227466A;
+	Mon, 13 Apr 2026 16:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098012; cv=none; b=ZvGi9e60jF5tOceW/9qP31oRAYyxf9KocJ7g2ic2AGYd9/inLoGctOv0bgZN/VBI+CtHOsiemdDmP2o+Ls3b5ztKR46CgPk4gQofccEwi9CZVRltfd4xZwet8vHGPsuWUxXXO//pDixQYWzbzWIRApVc359SPkznqknjbCjfDII=
+	t=1776098014; cv=none; b=DnsB/znEiHv7zGqujhBgVeZr0VNl1KyYKg369BULadpZHq/C6i9szLP5K6f28So2T7p9LRmSnvCvwro5IyiOp7N2N47PZX8YDfJyDv519Osxu04YEomaOEDbVmHBPeLcdTDlfX3n3Lxt6RbHQnnuMDY7ZkUdgxRSx65HcTBEkNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098012; c=relaxed/simple;
-	bh=JOA3sEKpXlQsZG3Zq5M62TBX8XfQJc/r4FP9PBprpOc=;
+	s=arc-20240116; t=1776098014; c=relaxed/simple;
+	bh=UHtXWqbAep0UFM+I13OdIYllL8Mo7Dd9DKOc29i51GY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alPnKb62CZAkh9vzg/QKmNAYTnjvVuW5GoB5QPerZyGXzW7ZB2RpCURGmW8SoinzW6BwcnDFTEUo3v29QuKv1mclc4DXWK2vmvckwrJSkpnYdLpOgc6CUKJDl0LwLNzN9IZuSxAxpfTVSFBKpN/lqDABUH2ZHRTOfHAhQAp6WZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFLJn0DS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZIyW71NOBOek+DAikAf7eCsrg/4uluOKGoKfiwu38yquZn+IrbgB1MPEveHwHT/UuWVLqLDqbMU89PHOLBvygXihuNJUoqKdtDJ4BAUUPlGd4i9zSiiiqWtcyAh8YcyOLZSSYfVzmMich9Pbmchs+zYEuQdd48f2pUqxj9Z6IGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssn1DhO+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFLJn0DS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE801C2BCAF;
-	Mon, 13 Apr 2026 16:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssn1DhO+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64AEEC2BCB3;
+	Mon, 13 Apr 2026 16:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098012;
-	bh=JOA3sEKpXlQsZG3Zq5M62TBX8XfQJc/r4FP9PBprpOc=;
+	s=korg; t=1776098014;
+	bh=UHtXWqbAep0UFM+I13OdIYllL8Mo7Dd9DKOc29i51GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kFLJn0DS01fpUP7U8wLe9WGOzKnDnnSI5a5+vgK/mBnr4X7a9KTJFwAKwX84DBXJB
-	 Le1Bi3X7wyXTL88yP5YvlunQXWKumdJvsFgZHCQ74UeIxvsOYfTukWTWK4giAPJFDY
-	 sgEMDUsxHoas0ZPsOkySIwnpBcWNBUvI5o2vfBss=
+	b=ssn1DhO+9pIy2rfrNeAuGwOH0HAW+5zNfcSuBaHl3fV7hvUtv5n9+E63gixXq4Chj
+	 gTi7boQPbSSoZgKoLwsJo3ER848UrUADTIcg6SHs9EM4MUmtieQbDaDsnu/S7I9TYz
+	 Jt4Vmq4eozeacPi3WeKUXp31+5oH4ih/QSXQsJcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 359/570] ACPI: EC: Fix EC address space handler unregistration
-Date: Mon, 13 Apr 2026 17:58:10 +0200
-Message-ID: <20260413155843.930897141@linuxfoundation.org>
+Subject: [PATCH 5.15 333/570] Bluetooth: btusb: clamp SCO altsetting table indices
+Date: Mon, 13 Apr 2026 17:57:44 +0200
+Message-ID: <20260413155842.969063943@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,64 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit a5072078dbfaa9d70130805766dfa34bbb7bf2a7 ]
+[ Upstream commit 129fa608b6ad08b8ab7178eeb2ec272c993aaccc ]
 
-When an ECDT table is present the EC address space handler gets registered
-on the root node. So to unregister it properly the unregister call also
-must be done on the root node.
+btusb_work() maps the number of active SCO links to USB alternate
+settings through a three-entry lookup table when CVSD traffic uses
+transparent voice settings. The lookup currently indexes alts[] with
+data->sco_num - 1 without first constraining sco_num to the number of
+available table entries.
 
-Store the ACPI handle used for the acpi_install_address_space_handler()
-call and use te same handle for the acpi_remove_address_space_handler()
-call.
+While the table only defines alternate settings for up to three SCO
+links, data->sco_num comes from hci_conn_num() and is used directly.
+Cap the lookup to the last table entry before indexing it so the
+driver keeps selecting the highest supported alternate setting without
+reading past alts[].
 
-Reported-by: Rafael J. Wysocki <rafael@kernel.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: f6484cadbcaf ("ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()")
+Fixes: baac6276c0a9 ("Bluetooth: btusb: handle mSBC audio over USB Endpoints")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/ec.c       | 4 +++-
- drivers/acpi/internal.h | 1 +
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
-index ddc5b3a3d9b38..4d38a00dbf50a 100644
---- a/drivers/acpi/ec.c
-+++ b/drivers/acpi/ec.c
-@@ -1513,6 +1513,7 @@ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device)
- 			return -ENODEV;
- 		}
- 		set_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags);
-+		ec->address_space_handler_holder = ec->handle;
- 	}
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a79fd106fad7a..12bcc07e2e502 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -1845,8 +1845,11 @@ static void btusb_work(struct work_struct *work)
+ 		if (data->air_mode == HCI_NOTIFY_ENABLE_SCO_CVSD) {
+ 			if (hdev->voice_setting & 0x0020) {
+ 				static const int alts[3] = { 2, 4, 5 };
++				unsigned int sco_idx;
  
- 	if (!device)
-@@ -1564,7 +1565,8 @@ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device)
- static void ec_remove_handlers(struct acpi_ec *ec)
- {
- 	if (test_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags)) {
--		if (ACPI_FAILURE(acpi_remove_address_space_handler(ec->handle,
-+		if (ACPI_FAILURE(acpi_remove_address_space_handler(
-+					ec->address_space_handler_holder,
- 					ACPI_ADR_SPACE_EC, &acpi_ec_space_handler)))
- 			pr_err("failed to remove space handler\n");
- 		clear_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags);
-diff --git a/drivers/acpi/internal.h b/drivers/acpi/internal.h
-index 54b2be94d23dc..33cf3f38f8530 100644
---- a/drivers/acpi/internal.h
-+++ b/drivers/acpi/internal.h
-@@ -168,6 +168,7 @@ static inline void acpi_early_processor_osc(void) {}
-    -------------------------------------------------------------------------- */
- struct acpi_ec {
- 	acpi_handle handle;
-+	acpi_handle address_space_handler_holder;
- 	int gpe;
- 	int irq;
- 	unsigned long command_addr;
+-				new_alts = alts[data->sco_num - 1];
++				sco_idx = min_t(unsigned int, data->sco_num - 1,
++						ARRAY_SIZE(alts) - 1);
++				new_alts = alts[sco_idx];
+ 			} else {
+ 				new_alts = data->sco_num;
+ 			}
 -- 
-2.53.0
+2.51.0
 
 
 
