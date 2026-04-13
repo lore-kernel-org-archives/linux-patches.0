@@ -1,50 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681E42741A0;
-	Mon, 13 Apr 2026 16:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0678323EA94;
+	Mon, 13 Apr 2026 16:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096336; cv=none; b=Zl80gfMaNCFIfFtyGfl4JJbMvkjIe0qpIZ9OKUB4teJDqFs74Q1uef/3JwAr8rRzVRTQVQR8EPI7/ItBfrVfPJD4h8ogUsthsUe5oTMt19di+1oQQndXee7CaGEu4HPBNfS7PpmZA+HbQxT1lNLRMvXupz1WUX9Qz71ya87TwGo=
+	t=1776096339; cv=none; b=Dmm0AoWOKBFWQis4lEnVAqFZ+EenVRvDeLNFCeLJcgd0qjV/Vp/LGmz8vbjmuYXrYO+qH00RQJkCZaORybrb6xm9l4JbYJzuKiuDLX7wr/9aRQmMe3sZWVtf1vmEG8dxwre6MbHthkKKs9kOOqdnhaOxjXIfrudjUPM14bU6Vl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096336; c=relaxed/simple;
-	bh=pGlWZDBwxMnBKNHQBG99Y7DTMUlcdkbYLrIUyWZIqRQ=;
+	s=arc-20240116; t=1776096339; c=relaxed/simple;
+	bh=A2hy1uuajh0vsPeO4unk7+E1aBgjuG0eRjxbMiLK1gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hJrCJTyvS5bgNjdqK10wDv1u2OvUTwIJ2UMyb6c7D7Y8u2iT/Bz2MNCAmeyuy5RTFnnmmW85ZFAjL3E/vatm2aPaEvcg3FIjtVa5zQI55hE4p99u6XtfWsJbrLmNh7p7ft3KYsXppkOSOFYYREEzpahUbLvGZA6HKQOT1Ha9Gvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hdAFz60; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o7cRgvAicJTMH97W60PSfWcpwyXdffpSoEDoVjbZoIe/57foKfbR3NMI11mGEXX6jN8+zF4brC9TXOlhN3D3qk6LArPbH1OcORrdjSbtQ0UmmhzIZdSOZA7QYRVTUh0kZCaQezVHM7r89CAJdymju5uqLXnvtFhtlm9pZ7svjso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpGXrXd1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hdAFz60"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C911BC2BCAF;
-	Mon, 13 Apr 2026 16:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpGXrXd1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8884CC2BCAF;
+	Mon, 13 Apr 2026 16:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096336;
-	bh=pGlWZDBwxMnBKNHQBG99Y7DTMUlcdkbYLrIUyWZIqRQ=;
+	s=korg; t=1776096338;
+	bh=A2hy1uuajh0vsPeO4unk7+E1aBgjuG0eRjxbMiLK1gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hdAFz60ZYpjABwHArzUoZOb1pLoztlw7Xm+GkGuiDabJGOdw8JjmgBzXS866qtzx
-	 q7H4z/S71UAEUHSw2e6wwjyLXgcVmd/pRXlieBeunLdF+q2+h4McybaGPh/M5GsJ4a
-	 7VD7k7wXp2s+lAeifTISEDp9VSJzzU6oslQiTd6c=
+	b=EpGXrXd1XDpsn9tsb4BpQ7I9AQSYpr9IEwofItXnVTJAL4ja0tPLMlJOeVRrTKNZZ
+	 RftmF0I6qELFFx2+Hwb3JXJP+cN2BhWAQiTlzMZYhc3tFEcYvB3805zNhcaZVaBv4k
+	 FQwF3wFujmWeFiL3hUVKrH6CZtWvgjlcfueZcjOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Yuanhe Shu <xiangzao@linux.alibaba.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Luis Chamberalin <mcgrof@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 58/86] mm: filemap: fix nr_pages calculation overflow in filemap_map_pages()
-Date: Mon, 13 Apr 2026 18:00:05 +0200
-Message-ID: <20260413155733.729172071@linuxfoundation.org>
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.19 32/86] Revert "arm64: dts: imx8mq-librem5: Set the DVS voltages lower"
+Date: Mon, 13 Apr 2026 17:59:39 +0200
+Message-ID: <20260413155732.771576876@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -57,146 +44,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-commit f58df566524ebcdfa394329c64f47e3c9257516e upstream.
+commit 4cd46ea0eb4504f7f4fea92cb4601c5c9a3e545e upstream.
 
-When running stress-ng on my Arm64 machine with v7.0-rc3 kernel, I
-encountered some very strange crash issues showing up as "Bad page state":
+This reverts commit c24a9b698fb02cd0723fa8375abab07f94b97b10.
 
-"
-[  734.496287] BUG: Bad page state in process stress-ng-env  pfn:415735fb
-[  734.496427] page: refcount:0 mapcount:1 mapping:0000000000000000 index:0x4cf316 pfn:0x415735fb
-[  734.496434] flags: 0x57fffe000000800(owner_2|node=1|zone=2|lastcpupid=0x3ffff)
-[  734.496439] raw: 057fffe000000800 0000000000000000 dead000000000122 0000000000000000
-[  734.496440] raw: 00000000004cf316 0000000000000000 0000000000000000 0000000000000000
-[  734.496442] page dumped because: nonzero mapcount
-"
+It's been found that there's a significant per-unit variance in accepted
+supply voltages and the current set still makes some units unstable.
 
-After analyzing this page’s state, it is hard to understand why the
-mapcount is not 0 while the refcount is 0, since this page is not where
-the issue first occurred.  By enabling the CONFIG_DEBUG_VM config, I can
-reproduce the crash as well and captured the first warning where the issue
-appears:
+Revert back to nominal values.
 
-"
-[  734.469226] page: refcount:33 mapcount:0 mapping:00000000bef2d187 index:0x81a0 pfn:0x415735c0
-[  734.469304] head: order:5 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[  734.469315] memcg:ffff000807a8ec00
-[  734.469320] aops:ext4_da_aops ino:100b6f dentry name(?):"stress-ng-mmaptorture-9397-0-2736200540"
-[  734.469335] flags: 0x57fffe400000069(locked|uptodate|lru|head|node=1|zone=2|lastcpupid=0x3ffff)
-......
-[  734.469364] page dumped because: VM_WARN_ON_FOLIO((_Generic((page + nr_pages - 1),
-const struct page *: (const struct folio *)_compound_head(page + nr_pages - 1), struct page *:
-(struct folio *)_compound_head(page + nr_pages - 1))) != folio)
-[  734.469390] ------------[ cut here ]------------
-[  734.469393] WARNING: ./include/linux/rmap.h:351 at folio_add_file_rmap_ptes+0x3b8/0x468,
-CPU#90: stress-ng-mlock/9430
-[  734.469551]  folio_add_file_rmap_ptes+0x3b8/0x468 (P)
-[  734.469555]  set_pte_range+0xd8/0x2f8
-[  734.469566]  filemap_map_folio_range+0x190/0x400
-[  734.469579]  filemap_map_pages+0x348/0x638
-[  734.469583]  do_fault_around+0x140/0x198
-......
-[  734.469640]  el0t_64_sync+0x184/0x188
-"
-
-The code that triggers the warning is: "VM_WARN_ON_FOLIO(page_folio(page +
-nr_pages - 1) != folio, folio)", which indicates that set_pte_range()
-tried to map beyond the large folio’s size.
-
-By adding more debug information, I found that 'nr_pages' had overflowed
-in filemap_map_pages(), causing set_pte_range() to establish mappings for
-a range exceeding the folio size, potentially corrupting fields of pages
-that do not belong to this folio (e.g., page->_mapcount).
-
-After above analysis, I think the possible race is as follows:
-
-CPU 0                                                  CPU 1
-filemap_map_pages()                                   ext4_setattr()
-   //get and lock folio with old inode->i_size
-   next_uptodate_folio()
-
-                                                          .......
-                                                          //shrink the inode->i_size
-                                                          i_size_write(inode, attr->ia_size);
-
-   //calculate the end_pgoff with the new inode->i_size
-   file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
-   end_pgoff = min(end_pgoff, file_end);
-
-   ......
-   //nr_pages can be overflowed, cause xas.xa_index > end_pgoff
-   end = folio_next_index(folio) - 1;
-   nr_pages = min(end, end_pgoff) - xas.xa_index + 1;
-
-   ......
-   //map large folio
-   filemap_map_folio_range()
-                                                          ......
-                                                          //truncate folios
-                                                          truncate_pagecache(inode, inode->i_size);
-
-To fix this issue, move the 'end_pgoff' calculation before
-next_uptodate_folio(), so the retrieved folio stays consistent with the
-file end to avoid 'nr_pages' calculation overflow.  After this patch, the
-crash issue is gone.
-
-Link: https://lkml.kernel.org/r/1cf1ac59018fc647a87b0dad605d4056a71c14e4.1773739704.git.baolin.wang@linux.alibaba.com
-Fixes: 743a2753a02e ("filemap: cap PTE range to be created to allowed zero fill in folio_map_range()")
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reported-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
-Tested-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Daniel Gomez <da.gomez@samsung.com>
-Cc: "Darrick J. Wong" <djwong@kernel.org>
-Cc: Dave Chinner <dchinner@redhat.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Luis Chamberalin <mcgrof@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Pankaj Raghav <p.raghav@samsung.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: c24a9b698fb0 ("arm64: dts: imx8mq-librem5: Set the DVS voltages lower")
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts |    2 -
+ arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi   |   22 +++++---------------
+ 2 files changed, 7 insertions(+), 17 deletions(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -3883,14 +3883,19 @@ vm_fault_t filemap_map_pages(struct vm_f
- 	unsigned int nr_pages = 0, folio_type;
- 	unsigned short mmap_miss = 0, mmap_miss_saved;
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
+@@ -7,7 +7,7 @@
  
-+	/*
-+	 * Recalculate end_pgoff based on file_end before calling
-+	 * next_uptodate_folio() to avoid races with concurrent
-+	 * truncation.
-+	 */
-+	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
-+	end_pgoff = min(end_pgoff, file_end);
-+
- 	rcu_read_lock();
- 	folio = next_uptodate_folio(&xas, mapping, end_pgoff);
- 	if (!folio)
- 		goto out;
+ &a53_opp_table {
+ 	opp-1000000000 {
+-		opp-microvolt = <950000>;
++		opp-microvolt = <1000000>;
+ 	};
+ };
  
--	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
--	end_pgoff = min(end_pgoff, file_end);
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+@@ -844,8 +844,8 @@
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+ 				regulator-ramp-delay = <1250>;
+-				rohm,dvs-run-voltage = <880000>;
+-				rohm,dvs-idle-voltage = <820000>;
++				rohm,dvs-run-voltage = <900000>;
++				rohm,dvs-idle-voltage = <850000>;
+ 				rohm,dvs-suspend-voltage = <810000>;
+ 				regulator-always-on;
+ 			};
+@@ -856,8 +856,8 @@
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+ 				regulator-ramp-delay = <1250>;
+-				rohm,dvs-run-voltage = <950000>;
+-				rohm,dvs-idle-voltage = <850000>;
++				rohm,dvs-run-voltage = <1000000>;
++				rohm,dvs-idle-voltage = <900000>;
+ 				regulator-always-on;
+ 			};
+ 
+@@ -866,14 +866,14 @@
+ 				regulator-min-microvolt = <700000>;
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+-				rohm,dvs-run-voltage = <850000>;
++				rohm,dvs-run-voltage = <900000>;
+ 			};
+ 
+ 			buck4_reg: BUCK4 {
+ 				regulator-name = "buck4";
+ 				regulator-min-microvolt = <700000>;
+ 				regulator-max-microvolt = <1300000>;
+-				rohm,dvs-run-voltage = <930000>;
++				rohm,dvs-run-voltage = <1000000>;
+ 			};
+ 
+ 			buck5_reg: BUCK5 {
+@@ -1407,13 +1407,3 @@
+ 	fsl,ext-reset-output;
+ 	status = "okay";
+ };
 -
- 	/*
- 	 * Do not allow to map with PMD across i_size to preserve
- 	 * SIGBUS semantics.
+-&a53_opp_table {
+-	opp-1000000000 {
+-		opp-microvolt = <850000>;
+-	};
+-
+-	opp-1500000000 {
+-		opp-microvolt = <950000>;
+-	};
+-};
 
 
