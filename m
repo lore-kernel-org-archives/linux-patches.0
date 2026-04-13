@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E4C233722;
-	Mon, 13 Apr 2026 16:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477DF2874F8;
+	Mon, 13 Apr 2026 16:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097906; cv=none; b=qXX7znodSVb2SoCtO91OhnDBIYBrWkqZvOEMp8B8TyLcKD0YX04PeBWhb9O0WXDxQKl2Iyi5x6elQpD4KD7xEWt4w/TBPWG/CJdCkgsZqH8kvm4oGFulbH8EBmSX/tAQAkFGIp5aAB/8Ff/KR/F5VxzqbUQvLZFSd3uwc2UCbq8=
+	t=1776097909; cv=none; b=YUlCwMkh4FAM0kQesofQlcdfXna2R02PIokbW7l9Id4DmPl2jYbLgl9RiMjaGnJXbwVjnY9b5VZGdFbok8b3/g7ODdeQofQKwdy9VcU2njSSybJJ9wNOhnyDEM2Jj2CeYDnyl7rN97QFM1x6JrEumaFhkb+Z0pOpW8fCGfK1evE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097906; c=relaxed/simple;
-	bh=T8wDBAbdP6EBTjHoeUByjD2Lw1WaH0yk1K0KdxH/v6w=;
+	s=arc-20240116; t=1776097909; c=relaxed/simple;
+	bh=V2dLuNB4sNBypTGoQ/AflzjLAhYWzCx4n4FYAlAx2BY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGEOE8sqbPeHAieDZxOkl7u3Qu32Ss59xr28kxx8GEz0+w23hJ1GohcDls31GxmBKsdznTC+/1z7O34FIttDlV02BqXLXWjgNkrwKv571V2FzsVCHmt1/yP7I7yFri1eA/B5PuW2au9oqoC9hMl1P8XtIUvSI+UpdGSADh6hIPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4aqtvyM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W7txIHQUyvWmlbbhkB2Da3O6GxTMnKCOmDQck+FGqW21soqvj1NLPDyeqvLDM8jFCtalm1fHBSZMwy+rWTUpoDLDuY/DuWLbn3pH+dbRs6afhJyeprRpXwHz7Oy9tnPtDN0F7Bq/sq6zRg2ybhKn3FgHBf6Vv0cw+3zqfJUDNF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnBMfNPr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4aqtvyM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EE4C2BCAF;
-	Mon, 13 Apr 2026 16:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnBMfNPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FF7C2BCAF;
+	Mon, 13 Apr 2026 16:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097906;
-	bh=T8wDBAbdP6EBTjHoeUByjD2Lw1WaH0yk1K0KdxH/v6w=;
+	s=korg; t=1776097909;
+	bh=V2dLuNB4sNBypTGoQ/AflzjLAhYWzCx4n4FYAlAx2BY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4aqtvyMvVrtOQJg8hhhXP20GmoJO6MeB6f5Kd5Uj/9H1IIi15b/mS2fK+2MxyF9B
-	 cOGGkJgyGOnGgUqAflCCfVaDP9vFpZ+17rHhodx0s5CaWt+2VJ6s/6POr69+3MfKMi
-	 zllMDLjzfHNIT0fZs4IEP2qd5+XpMMgt0fzzswmo=
+	b=PnBMfNPrtfznLYO0vDEgtGslcHwqIRT9UltPTmxwsuNTYTOMbJna2qXU2AiAF3wS8
+	 JsQZM8nuKWP7A2B4YvL8bTEsyi23lgF+1z6/sro7eUOci0M6t4Jj1c+7MUN11WO+Op
+	 SN69Zo9y3HBVb1hHnYs8vSBlMeaxrWfzLk6zVzC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Anas Iqbal <mohd.abd.6602@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 318/570] Bluetooth: SCO: Fix use-after-free in sco_recv_frame() due to missing sock_hold
-Date: Mon, 13 Apr 2026 17:57:29 +0200
-Message-ID: <20260413155842.408234920@linuxfoundation.org>
+Subject: [PATCH 5.15 319/570] Bluetooth: hci_ll: Fix firmware leak on error path
+Date: Mon, 13 Apr 2026 17:57:30 +0200
+Message-ID: <20260413155842.444721378@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,60 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Anas Iqbal <mohd.abd.6602@gmail.com>
 
-[ Upstream commit 598dbba9919c5e36c54fe1709b557d64120cb94b ]
+[ Upstream commit 31148a7be723aa9f2e8fbd62424825ab8d577973 ]
 
-sco_recv_frame() reads conn->sk under sco_conn_lock() but immediately
-releases the lock without holding a reference to the socket. A concurrent
-close() can free the socket between the lock release and the subsequent
-sk->sk_state access, resulting in a use-after-free.
+Smatch reports:
 
-Other functions in the same file (sco_sock_timeout(), sco_conn_del())
-correctly use sco_sock_hold() to safely hold a reference under the lock.
+drivers/bluetooth/hci_ll.c:587 download_firmware() warn:
+'fw' from request_firmware() not released on lines: 544.
 
-Fix by using sco_sock_hold() to take a reference before releasing the
-lock, and adding sock_put() on all exit paths.
+In download_firmware(), if request_firmware() succeeds but the returned
+firmware content is invalid (no data or zero size), the function returns
+without releasing the firmware, resulting in a resource leak.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Fix this by calling release_firmware() before returning when
+request_firmware() succeeded but the firmware content is invalid.
+
+Fixes: 371805522f87 ("bluetooth: hci_uart: add LL protocol serdev driver support")
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Anas Iqbal <mohd.abd.6602@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/sco.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_ll.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index d98648bcc1a85..d0ef74c45914c 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -311,7 +311,7 @@ static void sco_recv_frame(struct sco_conn *conn, struct sk_buff *skb)
- 	struct sock *sk;
- 
- 	sco_conn_lock(conn);
--	sk = conn->sk;
-+	sk = sco_sock_hold(conn);
- 	sco_conn_unlock(conn);
- 
- 	if (!sk)
-@@ -320,11 +320,15 @@ static void sco_recv_frame(struct sco_conn *conn, struct sk_buff *skb)
- 	BT_DBG("sk %p len %u", sk, skb->len);
- 
- 	if (sk->sk_state != BT_CONNECTED)
--		goto drop;
-+		goto drop_put;
- 
--	if (!sock_queue_rcv_skb(sk, skb))
-+	if (!sock_queue_rcv_skb(sk, skb)) {
-+		sock_put(sk);
- 		return;
-+	}
- 
-+drop_put:
-+	sock_put(sk);
- drop:
- 	kfree_skb(skb);
- }
+diff --git a/drivers/bluetooth/hci_ll.c b/drivers/bluetooth/hci_ll.c
+index e4e5b26e2c33b..02c2122b452a8 100644
+--- a/drivers/bluetooth/hci_ll.c
++++ b/drivers/bluetooth/hci_ll.c
+@@ -541,6 +541,8 @@ static int download_firmware(struct ll_device *lldev)
+ 	if (err || !fw->data || !fw->size) {
+ 		bt_dev_err(lldev->hu.hdev, "request_firmware failed(errno %d) for %s",
+ 			   err, bts_scr_name);
++		if (!err)
++			release_firmware(fw);
+ 		return -EINVAL;
+ 	}
+ 	ptr = (void *)fw->data;
 -- 
 2.51.0
 
