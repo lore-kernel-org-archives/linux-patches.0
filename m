@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6437924E4A1;
-	Mon, 13 Apr 2026 16:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF34280CFB;
+	Mon, 13 Apr 2026 16:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098349; cv=none; b=HzsS0O8BPivx5rPgCLl5ZVRJmEamA/R1NiD0AAW0/UYF/5FObmIpftnmcHEGsQzrUw+Qu4t7UteCNcpAxOPAyNElxnIZr5KyDIJjBs/tYaT/B14BWMBuDDmU3qslYWh+TlJBU9UgOoyYl/8kYmSviktYhCT3CIOK3ADYD7kzQc8=
+	t=1776098352; cv=none; b=KgHcSUFdC9dn8tiXl0SmEkDuBWAYNyOWUpGY4yHhajhWwg0XbwalPcccE+pU4K2083ko8k/LxwtFir9A+98PjHZUwB6a3QIuvf6B6LOscq6eXvggi1n7HWgcwxXTnuKtdarrsNqdYSRBW0e4vu3wYQ8d7gDu/JfBZADqA/LwUz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098349; c=relaxed/simple;
-	bh=k+QVXL1KjFCvARB3kwk0lP3ZZBQK0sQHKATkqTwQXmg=;
+	s=arc-20240116; t=1776098352; c=relaxed/simple;
+	bh=ZnPm3MgtwYMqhm/DJKYeCxFEg2DP9IcFgArQesjMJnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFGzh0WCVo90l6293b0u0sbPm2X7LP7GhZIg6Vr1IcF2YuE2uj8yh3m4YMOxMz/PriwWFB8tAOJFbPknzFQhoBIsX/jee/h7/TuhqDT04xwbdIUgrgC3xDVbaDYEKRae6pxLubCsoeg9qVxOlOH6Z7xLwAYuuT4cAt96aMTc9Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AllDHoV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RV7YyS4ZEMvPj3NIFfyeqSVX200BkK4cR6LToOHTzz9Aiz++pEHXjaEUZb8Al3BBeVq50OJKxaRvzBjtu1V7MfcHz/mQLeBxKG9eT/pCaUvy2WPNzulqDuOPpZFfbHiGm2YOunofd8mk18flUZXOLNHh5IRtr3udRVqlJEe8LAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRY2sCHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AllDHoV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE83BC2BCAF;
-	Mon, 13 Apr 2026 16:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRY2sCHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86499C2BCAF;
+	Mon, 13 Apr 2026 16:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098349;
-	bh=k+QVXL1KjFCvARB3kwk0lP3ZZBQK0sQHKATkqTwQXmg=;
+	s=korg; t=1776098351;
+	bh=ZnPm3MgtwYMqhm/DJKYeCxFEg2DP9IcFgArQesjMJnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AllDHoV2edm779Afn0MMc5swZDQ+i1x4yw4iQzwjHsHQA7iFJLWAhzILfdr0qIXDw
-	 23VU5NKsCgDqaxTq5zHWlb3rTHW3JBUhmgEXO6ChnANwSCvTEin7s+2u3wbNwe0VGz
-	 azgbEVAMhQjYY/NO63ZeA3VMe+46qhk6kHQvDY/E=
+	b=rRY2sCHPX1t/JXEv2LmeOH+OgMHN9ntdQQN1NUDZSreWimHnYj8jw/Rv9MsIigCvm
+	 COOOoCzANaYhAp/rqY7yZk3ob+uRPNm0DQOUMUT5szoX52W85jFi0r5Q/hBZJIVM/W
+	 IYv1yXGPPjjjGFeQyKQl13umIbgfYk57na19dWdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YunJe Shin <ioerts@kookmin.ac.kr>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
-	linux-nvme@lists.infradead.org,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 473/570] nvmet-tcp: fix use-before-check of sg in bounds validation
-Date: Mon, 13 Apr 2026 18:00:04 +0200
-Message-ID: <20260413155848.182068742@linuxfoundation.org>
+	Sebastian Urban <surban@surban.net>,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.15 491/570] usb: gadget: dummy_hcd: fix premature URB completion when ZLP follows partial transfer
+Date: Mon, 13 Apr 2026 18:00:22 +0200
+Message-ID: <20260413155848.852160701@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,75 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cengiz Can <cengiz.can@canonical.com>
+From: Sebastian Urban <surban@surban.net>
 
-The stable backport of commit 52a0a9854934 ("nvmet-tcp: add bounds
-checks in nvmet_tcp_build_pdu_iovec") placed the bounds checks after
-the iov_len calculation:
+commit f50200dd44125e445a6164e88c217472fa79cdbc upstream.
 
-    while (length) {
-        u32 iov_len = min_t(u32, length, sg->length - sg_offset);
+When a gadget request is only partially transferred in transfer()
+because the per-frame bandwidth budget is exhausted, the loop advances
+to the next queued request. If that next request is a zero-length
+packet (ZLP), len evaluates to zero and the code takes the
+unlikely(len == 0) path, which sets is_short = 1. This bypasses the
+bandwidth guard ("limit < ep->ep.maxpacket && limit < len") that
+lives in the else branch and would otherwise break out of the loop for
+non-zero requests. The is_short path then completes the URB before all
+data from the first request has been transferred.
 
-        if (!sg_remaining) {    /* too late: sg already dereferenced */
+Reproducer (bulk IN, high speed):
 
-In mainline, the checks come first because C99 allows mid-block variable
-declarations. The stable backport moved the declaration to the top of the
-loop to satisfy C89 declaration rules, but this ended up placing the
-sg->length dereference before the sg_remaining and sg->length guards.
+  Device side (FunctionFS with Linux AIO):
+    1. Queue a 65024-byte write via io_submit (127 * 512, i.e. a
+       multiple of the HS bulk max packet size).
+    2. Immediately queue a zero-length write (ZLP) via io_submit.
 
-If sg_next() returns NULL at the end of the scatterlist, the next
-iteration dereferences a NULL pointer in the iov_len calculation before
-the sg_remaining check can prevent it.
+  Host side:
+    3. Submit a 65536-byte bulk IN URB.
 
-Fix this by moving the iov_len declaration to function scope and
-keeping the assignment after the bounds checks, matching the ordering
-in mainline.
+  Expected: URB completes with actual_length = 65024.
+  Actual:   URB completes with actual_length = 53248, losing 11776
+            bytes that leak into subsequent URBs.
 
-Fixes: 42afe8ed8ad2 ("nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec")
-Cc: stable@vger.kernel.org
-Cc: YunJe Shin <ioerts@kookmin.ac.kr>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Keith Busch <kbusch@kernel.org>
-Cc: linux-nvme@lists.infradead.org
-Signed-off-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+At high speed the per-frame budget is 53248 bytes (512 * 13 * 8).
+The 65024-byte request exhausts this budget after 53248 bytes, leaving
+the request incomplete (req->req.actual < req->req.length). Neither
+the request nor the URB is finished, and rescan is 0, so the loop
+advances to the ZLP. For the ZLP, dev_len = 0, so len = min(12288, 0)
+= 0, taking the unlikely(len == 0) path and setting is_short = 1.
+The is_short handler then sets *status = 0, completing the URB with
+only 53248 of the expected 65024 bytes.
+
+Fix this by breaking out of the loop when the current request has
+remaining data (req->req.actual < req->req.length). The request
+resumes on the next timer tick, preserving correct data ordering.
+
+Signed-off-by: Sebastian Urban <surban@surban.net>
+Cc: stable <stable@kernel.org>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260315151045.1155850-1-surban@surban.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 8f7984c53f3f2..c6cc1dfef92cf 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -312,7 +312,7 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- {
- 	struct bio_vec *iov = cmd->iov;
- 	struct scatterlist *sg;
--	u32 length, offset, sg_offset;
-+	u32 length, offset, sg_offset, iov_len;
- 	unsigned int sg_remaining;
- 	int nr_pages;
- 
-@@ -329,8 +329,6 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- 	sg_remaining = cmd->req.sg_cnt - cmd->sg_idx;
- 
- 	while (length) {
--		u32 iov_len = min_t(u32, length, sg->length - sg_offset);
--
- 		if (!sg_remaining) {
- 			nvmet_tcp_fatal_error(cmd->queue);
- 			return;
-@@ -340,6 +338,8 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- 			return;
- 		}
- 
-+		iov_len = min_t(u32, length, sg->length - sg_offset);
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -1531,6 +1531,12 @@ top:
+ 		/* rescan to continue with any other queued i/o */
+ 		if (rescan)
+ 			goto top;
 +
- 		iov->bv_page = sg_page(sg);
- 		iov->bv_len = iov_len;
- 		iov->bv_offset = sg->offset + sg_offset;
--- 
-2.53.0
-
++		/* request not fully transferred; stop iterating to
++		 * preserve data ordering across queued requests.
++		 */
++		if (req->req.actual < req->req.length)
++			break;
+ 	}
+ 	return sent;
+ }
 
 
