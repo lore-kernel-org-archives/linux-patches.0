@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5290826E6F8;
-	Mon, 13 Apr 2026 16:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E644D26A1CF;
+	Mon, 13 Apr 2026 16:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096844; cv=none; b=g1DzxkNJNGrufyf5k5mm0FmSDFtUWT3fAkAMVOK2uEZ1nxwdabAbXAp8GVWwuGjZUomr3VwZ/9EGmUWNsrzK/xCcPWDTxYfUedqCxgdtoaWhyXp2Dpwerbg0yQkoo6WGVxiud1arfq66aI1wJRcLUMxf4fFtitPKTX3OJpzezNE=
+	t=1776096847; cv=none; b=FccpPSB5I6zDUdoETLMAb7KPox4R3TEnS2FHqrkRrHYlgzc88A+ZCy/+WK5BNcfcms/FsT/YdK7fyd4qFu8+ISmJ+LJ6MFlImPb7B4FAnnVSIH1MZpW/i4T4OLbleDWJIvSb1vyJuIDwMCKG0lQ+JvzanmOO1JYqrhCPlIMfAVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096844; c=relaxed/simple;
-	bh=l72kAaygBvKjrg4L0g+bhUecASpFhDaKdQMmFOU6diQ=;
+	s=arc-20240116; t=1776096847; c=relaxed/simple;
+	bh=1wvlKMfs0Mtm8n5AoktiFJFTgv62L150FVGxvhhT3pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVbDjIHsMmx7ZBxY+gqBqJLGMOrRxHr+RhcaA1gNT9HLlccmAg4Km/T0XoMIImndp07m+Ly7pq2TqprP8rUmD3CHBaHIKcGqNvK13HpZpriCls4EgQn79hHVHEGO+hzUGY/cXUB71LH1xVjmg0WhCfGiueu/FsGfPsxAO469hPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xkyop+IH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j48iTnI1FNouFMsK1Ps+yG9t2WevP2fMEyCVsqE5CZ5jJvwlJcLsyTKcm3nUAaFRgCuq7NAc7eVx7ghlhlGVJ7KFU92+qwvoE7xzDc8GeY0X9CYPSZRh8X16uqlzLj08Et/awRdc3cVULvHhWuaNF1nGOe90H8b3joe3qSlWiiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyZs+CJx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xkyop+IH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1C6C2BCAF;
-	Mon, 13 Apr 2026 16:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyZs+CJx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771A5C2BCB0;
+	Mon, 13 Apr 2026 16:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096844;
-	bh=l72kAaygBvKjrg4L0g+bhUecASpFhDaKdQMmFOU6diQ=;
+	s=korg; t=1776096846;
+	bh=1wvlKMfs0Mtm8n5AoktiFJFTgv62L150FVGxvhhT3pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xkyop+IH731bLF/60Me4tNcFll/YaJ5j3x1iyFAgl6K/gn6v0LWuML6lCu7kxUgJZ
-	 hPxTUHFfB4VhX2zUT7ey6Wku9o981Na+RqGmiweJthbr7ZSUpuoqstqGStZf0zpJPi
-	 DYCEQIU9DNAGu7JnaWADnVdeU9lcx+GDSELiTOuc=
+	b=kyZs+CJxuteGkyH91UlumRk+6JtvUIDoTXMhG7FLJk02wQMd9tj2juunZVY+YzXcU
+	 Zib84y5RE8Otgdch+neCZrNczmJfGOcJcYPv4GYtnxu0/ZN7D06oTGcbD4krw8DtVa
+	 Yc5lMc5DhujaotxIkmFRODGsvG90cFiWN4imYfWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 14/50] mptcp: fix soft lockup in mptcp_recvmsg()
-Date: Mon, 13 Apr 2026 18:00:41 +0200
-Message-ID: <20260413155725.042518976@linuxfoundation.org>
+	Michael Zimmermann <sigmaepsilon92@gmail.com>,
+	stable <stable@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 15/50] usb: gadget: f_hid: move list and spinlock inits from bind to alloc
+Date: Mon, 13 Apr 2026 18:00:42 +0200
+Message-ID: <20260413155725.080678853@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -51,122 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Michael Zimmermann <sigmaepsilon92@gmail.com>
 
-commit 5dd8025a49c268ab6b94d978532af3ad341132a7 upstream.
+[ Upstream commit 4e0a88254ad59f6c53a34bf5fa241884ec09e8b2 ]
 
-syzbot reported a soft lockup in mptcp_recvmsg() [0].
+There was an issue when you did the following:
+- setup and bind an hid gadget
+- open /dev/hidg0
+- use the resulting fd in EPOLL_CTL_ADD
+- unbind the UDC
+- bind the UDC
+- use the fd in EPOLL_CTL_DEL
 
-When receiving data with MSG_PEEK | MSG_WAITALL flags, the skb is not
-removed from the sk_receive_queue. This causes sk_wait_data() to always
-find available data and never perform actual waiting, leading to a soft
-lockup.
+When CONFIG_DEBUG_LIST was enabled, a list_del corruption was reported
+within remove_wait_queue (via ep_remove_wait_queue). After some
+debugging I found out that the queues, which f_hid registers via
+poll_wait were the problem. These were initialized using
+init_waitqueue_head inside hidg_bind. So effectively, the bind function
+re-initialized the queues while there were still items in them.
 
-Fix this by adding a 'last' parameter to track the last peeked skb.
-This allows sk_wait_data() to make informed waiting decisions and prevent
-infinite loops when MSG_PEEK is used.
+The solution is to move the initialization from hidg_bind to hidg_alloc
+to extend their lifetimes to the lifetime of the function instance.
 
-[0]:
-watchdog: BUG: soft lockup - CPU#2 stuck for 156s! [server:1963]
-Modules linked in:
-CPU: 2 UID: 0 PID: 1963 Comm: server Not tainted 6.19.0-rc8 #61 PREEMPT(none)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:sk_wait_data+0x15/0x190
-Code: 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 41 56 41 55 41 54 49 89 f4 55 48 89 d5 53 48 89 fb <48> 83 ec 30 65 48 8b 05 17 a4 6b 01 48 89 44 24 28 31 c0 65 48 8b
-RSP: 0018:ffffc90000603ca0 EFLAGS: 00000246
-RAX: 0000000000000000 RBX: ffff888102bf0800 RCX: 0000000000000001
-RDX: 0000000000000000 RSI: ffffc90000603d18 RDI: ffff888102bf0800
-RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000101
-R10: 0000000000000000 R11: 0000000000000075 R12: ffffc90000603d18
-R13: ffff888102bf0800 R14: ffff888102bf0800 R15: 0000000000000000
-FS:  00007f6e38b8c4c0(0000) GS:ffff8881b877e000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055aa7bff1680 CR3: 0000000105cbe000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- mptcp_recvmsg+0x547/0x8c0 net/mptcp/protocol.c:2329
- inet_recvmsg+0x11f/0x130 net/ipv4/af_inet.c:891
- sock_recvmsg+0x94/0xc0 net/socket.c:1100
- __sys_recvfrom+0xb2/0x130 net/socket.c:2256
- __x64_sys_recvfrom+0x1f/0x30 net/socket.c:2267
- do_syscall_64+0x59/0x2d0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:131
-RIP: 0033:0x7f6e386a4a1d
-Code: 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 8d 05 f1 de 2c 00 41 89 ca 8b 00 85 c0 75 20 45 31 c9 45 31 c0 b8 2d 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 6b f3 c3 66 0f 1f 84 00 00 00 00 00 41 56 41
-RSP: 002b:00007ffc3c4bb078 EFLAGS: 00000246 ORIG_RAX: 000000000000002d
-RAX: ffffffffffffffda RBX: 000000000000861e RCX: 00007f6e386a4a1d
-RDX: 00000000000003ff RSI: 00007ffc3c4bb150 RDI: 0000000000000004
-RBP: 00007ffc3c4bb570 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000103 R11: 0000000000000246 R12: 00005605dbc00be0
-R13: 00007ffc3c4bb650 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
+Additionally, I found many other possibly problematic init calls in the
+bind function, which I moved as well.
 
-Fixes: 8e04ce45a8db ("mptcp: fix MSG_PEEK stream corruption")
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260330120335.659027-1-lixiasong1@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in protocol.c, because commit bc68b0efa1bf ("mptcp: move the
-  whole rx path under msk socket lock protection") and commit
-  d88b2127b242 ("mptcp: add eat_recv_skb helper") (with some
-  dependences) are not in this version. These conflicts were in the
-  context, and not related to this fix. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Michael Zimmermann <sigmaepsilon92@gmail.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260331184844.2388761-1-sigmaepsilon92@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/f_hid.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1960,7 +1960,7 @@ static int __mptcp_recvmsg_mskq(struct m
- 				struct msghdr *msg,
- 				size_t len, int flags, int copied_total,
- 				struct scm_timestamping_internal *tss,
--				int *cmsg_flags)
-+				int *cmsg_flags, struct sk_buff **last)
- {
- 	struct sk_buff *skb, *tmp;
- 	int total_data_len = 0;
-@@ -1976,6 +1976,7 @@ static int __mptcp_recvmsg_mskq(struct m
- 			/* skip already peeked skbs */
- 			if (total_data_len + data_len <= copied_total) {
- 				total_data_len += data_len;
-+				*last = skb;
- 				continue;
- 			}
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -1000,13 +1000,8 @@ static int hidg_bind(struct usb_configur
+ 	if (status)
+ 		goto fail;
  
-@@ -2016,6 +2017,8 @@ static int __mptcp_recvmsg_mskq(struct m
- 			WRITE_ONCE(msk->rmem_released, msk->rmem_released + skb->truesize);
- 			__skb_unlink(skb, &msk->receive_queue);
- 			__kfree_skb(skb);
-+		} else {
-+			*last = skb;
- 		}
+-	spin_lock_init(&hidg->write_spinlock);
+ 	hidg->write_pending = 1;
+ 	hidg->req = NULL;
+-	spin_lock_init(&hidg->read_spinlock);
+-	init_waitqueue_head(&hidg->write_queue);
+-	init_waitqueue_head(&hidg->read_queue);
+-	INIT_LIST_HEAD(&hidg->completed_out_req);
  
- 		if (copied >= len)
-@@ -2237,10 +2240,12 @@ static int mptcp_recvmsg(struct sock *sk
- 		cmsg_flags = MPTCP_CMSG_INQ;
+ 	/* create char device */
+ 	cdev_init(&hidg->cdev, &f_hidg_fops);
+@@ -1275,6 +1270,12 @@ static struct usb_function *hidg_alloc(s
  
- 	while (copied < len) {
-+		struct sk_buff *last = NULL;
- 		int err, bytes_read;
+ 	mutex_lock(&opts->lock);
  
- 		bytes_read = __mptcp_recvmsg_mskq(msk, msg, len - copied, flags,
--						  copied, &tss, &cmsg_flags);
-+						  copied, &tss, &cmsg_flags,
-+						  &last);
- 		if (unlikely(bytes_read < 0)) {
- 			if (!copied)
- 				copied = bytes_read;
-@@ -2298,7 +2303,7 @@ static int mptcp_recvmsg(struct sock *sk
- 
- 		pr_debug("block timeout %ld\n", timeo);
- 		mptcp_cleanup_rbuf(msk, copied);
--		err = sk_wait_data(sk, &timeo, NULL);
-+		err = sk_wait_data(sk, &timeo, last);
- 		if (err < 0) {
- 			err = copied ? : err;
- 			goto out_err;
++	spin_lock_init(&hidg->write_spinlock);
++	spin_lock_init(&hidg->read_spinlock);
++	init_waitqueue_head(&hidg->write_queue);
++	init_waitqueue_head(&hidg->read_queue);
++	INIT_LIST_HEAD(&hidg->completed_out_req);
++
+ 	device_initialize(&hidg->dev);
+ 	hidg->dev.release = hidg_release;
+ 	hidg->dev.class = &hidg_class;
 
 
