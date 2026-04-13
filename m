@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E4F2D0C7E;
-	Mon, 13 Apr 2026 16:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC082D0C7E;
+	Mon, 13 Apr 2026 16:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098112; cv=none; b=t4X5rfdNDRbJOnC4Drr+WSUPER5AxnitoMEkrZu4KxkuzuIdo1Wj74oexFowFUKxI9XSFCPsK7bWS7iw3V12ojusHRj7GEaFHuTFNlC3ckmHLYX3aIlbDGtTPF0wF+Mk+W8/UssIRr12Egf0bzm2VFp8l3EWRDtdjwFyXgQO2bs=
+	t=1776098115; cv=none; b=IxV3SmwduL4tiCsgp2Q85XnBL58ZyqiJu/3CvbtPEW/PM/XHYF/SBhuxQS1ZTfZVcXOX+I/MBoCGFgi3+oLDQRBG6LHxim6HxlztWCSI0AyHvE8Keyi61c3UX+YuoF3YX2w2uD7xVEXC6Re+6vxHn70LYXxd/p2WRvzu94mjENk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098112; c=relaxed/simple;
-	bh=sQg0C5L+W8d8kUDYpbl2FEvzzYHnVRPdbRFgaw2dTT8=;
+	s=arc-20240116; t=1776098115; c=relaxed/simple;
+	bh=kIHF5fB7/L9qljiVITm1u0pLczfT4MBNRy08SM1YARg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jl/mJYdaQwg2cSiB5o5q+FzI6Wjohrtj3lRhOMRawtu2MAvXtyH8f5anPFmA2oJC2F2mMCSsTJS+oGcwUDmVBmN5LgDXzlPsRfA+LaAWO5VOK8MZJVjCWwOR32yT9GNXxgiiS7I89r8g3gxCfNl8CogSPK+5cdNNk7v0tYG6IxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxB3kqOF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NpvvvsBbBxGNfBCe79wn7r4hEY4JOMa1AIdoO/ecjXYODShxYKLSKzlXv2+sQ7ZnBwgLAnqRVmV+l9XcKmsDna0j4iDEaE1hZsdG9e9UwtpR2iLIUUqmkcO+Tn2Cu3bAVCAGFSp9pYjD6O/1PZ5ZoEEL4PlBe8sMJAtZzzRASdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DVgtU2j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxB3kqOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7ABC2BCAF;
-	Mon, 13 Apr 2026 16:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DVgtU2j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD9CC2BCAF;
+	Mon, 13 Apr 2026 16:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098112;
-	bh=sQg0C5L+W8d8kUDYpbl2FEvzzYHnVRPdbRFgaw2dTT8=;
+	s=korg; t=1776098115;
+	bh=kIHF5fB7/L9qljiVITm1u0pLczfT4MBNRy08SM1YARg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kxB3kqOFL79UrqDLWrKZ5hht/2HvIvLaVbwj3maw3MMD3SPYfqPM83a31/nEyFvf0
-	 Oa0ApG2tKlwt3A69aHTnWN99Rgc+GVaMQxKI3XvRhaJQ5r0Y4YAaHLBQ8R2H+uhvX4
-	 5Wkof6PKm/nWQmV7Gzi5aHIZzrT4iIjn2/kY1KP0=
+	b=2DVgtU2jcHBQtfYoGaRK6asFcvBNeLomMSP2nF5loIuPVuQPqWp5dctP/hfXrdnow
+	 eoM77YOoUYDMdhnLY+x2twKRbVbBKS/FVI00B9ebSlr/LbkrkjfRjhx2G5NGMEQtfG
+	 1lqvKk17qHaX8f9KOvHcEcqAZxU+wUGTyQxnaUEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 5.15 397/570] futex: Clear stale exiting pointer in futex_lock_pi() retry path
-Date: Mon, 13 Apr 2026 17:58:48 +0200
-Message-ID: <20260413155845.344311615@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 398/570] HID: wacom: fix out-of-bounds read in wacom_intuos_bt_irq
+Date: Mon, 13 Apr 2026 17:58:49 +0200
+Message-ID: <20260413155845.380987541@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -44,84 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Benoît Sevens <bsevens@google.com>
 
-commit 210d36d892de5195e6766c45519dfb1e65f3eb83 upstream.
+[ Upstream commit 2f1763f62909ccb6386ac50350fa0abbf5bb16a9 ]
 
-Fuzzying/stressing futexes triggered:
+The wacom_intuos_bt_irq() function processes Bluetooth HID reports
+without sufficient bounds checking. A maliciously crafted short report
+can trigger an out-of-bounds read when copying data into the wacom
+structure.
 
-    WARNING: kernel/futex/core.c:825 at wait_for_owner_exiting+0x7a/0x80, CPU#11: futex_lock_pi_s/524
+Specifically, report 0x03 requires at least 22 bytes to safely read
+the processed data and battery status, while report 0x04 (which
+falls through to 0x03) requires 32 bytes.
 
-When futex_lock_pi_atomic() sees the owner is exiting, it returns -EBUSY
-and stores a refcounted task pointer in 'exiting'.
+Add explicit length checks for these report IDs and log a warning if
+a short report is received.
 
-After wait_for_owner_exiting() consumes that reference, the local pointer
-is never reset to nil. Upon a retry, if futex_lock_pi_atomic() returns a
-different error, the bogus pointer is passed to wait_for_owner_exiting().
-
-  CPU0			     CPU1		       CPU2
-  futex_lock_pi(uaddr)
-  // acquires the PI futex
-  exit()
-    futex_cleanup_begin()
-      futex_state = EXITING;
-			     futex_lock_pi(uaddr)
-			       futex_lock_pi_atomic()
-				 attach_to_pi_owner()
-				   // observes EXITING
-				   *exiting = owner;  // takes ref
-				   return -EBUSY
-			       wait_for_owner_exiting(-EBUSY, owner)
-				 put_task_struct();   // drops ref
-			       // exiting still points to owner
-			       goto retry;
-			       futex_lock_pi_atomic()
-				 lock_pi_update_atomic()
-				   cmpxchg(uaddr)
-					*uaddr ^= WAITERS // whatever
-				   // value changed
-				 return -EAGAIN;
-			       wait_for_owner_exiting(-EAGAIN, exiting) // stale
-				 WARN_ON_ONCE(exiting)
-
-Fix this by resetting upon retry, essentially aligning it with requeue_pi.
-
-Fixes: 3ef240eaff36 ("futex: Prevent exit livelock")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260326001759.4129680-1-dave@stgolabs.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/wacom_wac.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -3029,9 +3029,9 @@ static int futex_lock_pi(u32 __user *uad
- 			 ktime_t *time, int trylock)
- {
- 	struct hrtimer_sleeper timeout, *to;
--	struct task_struct *exiting = NULL;
- 	struct rt_mutex_waiter rt_waiter;
- 	struct futex_hash_bucket *hb;
-+	struct task_struct *exiting;
- 	struct futex_q q = futex_q_init;
- 	int res, ret;
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index 0ab473f372ad0..0cc979d99b3d8 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1258,10 +1258,20 @@ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
  
-@@ -3044,6 +3044,7 @@ static int futex_lock_pi(u32 __user *uad
- 	to = futex_setup_timer(time, &timeout, flags, 0);
- 
- retry:
-+	exiting = NULL;
- 	ret = get_futex_key(uaddr, flags & FLAGS_SHARED, &q.key, FUTEX_WRITE);
- 	if (unlikely(ret != 0))
- 		goto out;
+ 	switch (data[0]) {
+ 	case 0x04:
++		if (len < 32) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x04 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		fallthrough;
+ 	case 0x03:
++		if (i == 1 && len < 22) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x03 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+-- 
+2.53.0
+
 
 
