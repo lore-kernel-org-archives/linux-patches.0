@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DCB3203B6;
-	Mon, 13 Apr 2026 16:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0525E31F9BC;
+	Mon, 13 Apr 2026 16:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099509; cv=none; b=PSJoahIk0Mt+HySq+NlNncMighCfeyU6IpP2/Dr9B/GuQaCNSJyigBJCM/DiLW8vTrAB/q7CET/5ET+Viav91BAkte8efOzcspvoX19dkG/XCoB8L2vjo8SpX8M6gPWw2aIFPJ6f1kxO2LeJLz6L6n2dOMLGnmvNicqtSDLZevU=
+	t=1776099512; cv=none; b=GIFo3zU3MMRYld5zNXRDnxcyuAZTmp3ER3tiuRB/643A8KisTlUvTMuhaZNHpvMwHb0V8Nt4ABe8zNLjzCO4ynZ0Abi7TUm1FFTRIlk1ecI2eNmj2LSKt8+Xp24BSHyry4ZtTm4UKtQqD798wnWHVucbiN+ih9gJdqvzvBMuTP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099509; c=relaxed/simple;
-	bh=rGSHVZDHV9Wbrzwg8eSoWKIT2Nkbl9OFO6jWmtF8mM0=;
+	s=arc-20240116; t=1776099512; c=relaxed/simple;
+	bh=KmDOoKklymDAZpCX6zomQ3eEthJhZlxnhUGJGPsN+CE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZsoOQJA+gzd6tef/8Pqz1/QcxyiE0/OChFKitW3h0D6C/md5u5SRFSoXpBXmIjDHtYBQm9APAlxKUs3H6wJ16zVJjzJS/Slpq+A1EleVGSqCMrJq/JN2fGig2s2T/Jn5Pm66MNihbB4dEZeHnJLoFy8wIin2jt3wcnntlp9hMpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2BmKD39; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fW2atVfSyR9mJPtC5F5kzWnnBP/kHMZb2Ru4EsWxr32MbhZ4gt3g1L2yypeHerGx0Dt+Di0qaKEsevSpWxajzb14Ue1ZCrITSHkO4ab5ioRPQDZK4sU755bgEdnSBD8Lq/gaph/tu6RMG2U34V1nn7jsQOvhKJV9f6qh+fxlTLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihO7oHrN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2BmKD39"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F405CC2BCAF;
-	Mon, 13 Apr 2026 16:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihO7oHrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7F1C2BCB3;
+	Mon, 13 Apr 2026 16:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099509;
-	bh=rGSHVZDHV9Wbrzwg8eSoWKIT2Nkbl9OFO6jWmtF8mM0=;
+	s=korg; t=1776099511;
+	bh=KmDOoKklymDAZpCX6zomQ3eEthJhZlxnhUGJGPsN+CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2BmKD39ZHCmbbGc0Vj8trsjnIeRu4hpNyBA6yj9u9Tl7zptnfbogrUgD0nSrFPlc
-	 UYNnQduTFTQoQ1XKKibEFp+xzjlYXL5toOPlu6AKrj5nkYyLoCejqzIipkKkiTLc0D
-	 SexuoHO1k99QVzj5eRTtVUxi3TnwPgt0+3N5wH9s=
+	b=ihO7oHrNTyZhoYD3OWITDsglexnHXs8Uuc1e/HTp/mJ5WsadIeZ9QBFtt+6GQ9uMJ
+	 33j4IL7zvEaJnW6CXBgqW+7yWJBAf8cudR7OUwGEWr2MRXhLkatIDv04u97j/0STU5
+	 5gtgCurQrUgb4KepmiNaRzmJtRYiIc61gFbSr588=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Martin Schiller <ms@dev.tdt.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 350/491] net/x25: Fix overflow when accumulating packets
-Date: Mon, 13 Apr 2026 17:59:55 +0200
-Message-ID: <20260413155832.142573212@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Karsten Hohmeier <linux@hohmatik.de>
+Subject: [PATCH 5.10 368/491] ALSA: ctxfi: Fix missing SPDIFI1 index handling
+Date: Mon, 13 Apr 2026 18:00:13 +0200
+Message-ID: <20260413155832.811242619@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,55 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Schiller <ms@dev.tdt.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a1822cb524e89b4cd2cf0b82e484a2335496a6d9 ]
+commit b045ab3dff97edae6d538eeff900a34c098761f8 upstream.
 
-Add a check to ensure that `x25_sock.fraglen` does not overflow.
+SPDIF1 DAIO type isn't properly handled in daio_device_index() for
+hw20k2, and it returned -EINVAL, which ended up with the out-of-bounds
+array access.  Follow the hw20k1 pattern and return the proper index
+for this type, too.
 
-The `fraglen` also needs to be resetted when purging `fragment_queue` in
-`x25_clear_queues()`.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Suggested-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
-Link: https://patch.msgid.link/20260331-x25_fraglen-v4-2-3e69f18464b4@dev.tdt.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-and-tested-by: Karsten Hohmeier <linux@hohmatik.de>
+Closes: https://lore.kernel.org/20260315155004.15633-1-linux@hohmatik.de
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260329091240.420194-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/x25/x25_in.c   | 4 ++++
- net/x25/x25_subr.c | 1 +
- 2 files changed, 5 insertions(+)
+ sound/pci/ctxfi/ctdaio.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/x25/x25_in.c b/net/x25/x25_in.c
-index 77ad186507f64..956e056803079 100644
---- a/net/x25/x25_in.c
-+++ b/net/x25/x25_in.c
-@@ -34,6 +34,10 @@ static int x25_queue_rx_frame(struct sock *sk, struct sk_buff *skb, int more)
- 	struct sk_buff *skbo, *skbn = skb;
- 	struct x25_sock *x25 = x25_sk(sk);
- 
-+	/* make sure we don't overflow */
-+	if (x25->fraglen + skb->len > USHRT_MAX)
-+		return 1;
-+
- 	if (more) {
- 		x25->fraglen += skb->len;
- 		skb_queue_tail(&x25->fragment_queue, skb);
-diff --git a/net/x25/x25_subr.c b/net/x25/x25_subr.c
-index 0285aaa1e93c1..159708d9ad20c 100644
---- a/net/x25/x25_subr.c
-+++ b/net/x25/x25_subr.c
-@@ -40,6 +40,7 @@ void x25_clear_queues(struct sock *sk)
- 	skb_queue_purge(&x25->interrupt_in_queue);
- 	skb_queue_purge(&x25->interrupt_out_queue);
- 	skb_queue_purge(&x25->fragment_queue);
-+	x25->fraglen = 0;
- }
- 
- 
--- 
-2.53.0
-
+--- a/sound/pci/ctxfi/ctdaio.c
++++ b/sound/pci/ctxfi/ctdaio.c
+@@ -119,6 +119,7 @@ static unsigned int daio_device_index(en
+ 		switch (type) {
+ 		case SPDIFOO:	return 0;
+ 		case SPDIFIO:	return 0;
++		case SPDIFI1:	return 1;
+ 		case LINEO1:	return 4;
+ 		case LINEO2:	return 7;
+ 		case LINEO3:	return 5;
 
 
