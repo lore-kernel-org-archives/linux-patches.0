@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14BE24DCF6;
-	Mon, 13 Apr 2026 16:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584AC25DB12;
+	Mon, 13 Apr 2026 16:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096823; cv=none; b=BGPjjSQlfkNHsZknLab0NKjcvBy7NSyLgN9mX7zw6VF/IASPBQFgh7/qN+aQRWoyWHUshCz6VGn6Mqy1pumXjHqJAtdxB+A1fcaHT3s4gFiR2+sSFEgFKWnKpLpBM62mRlrRM+TVMUSdNvbHiG7fTYQFgYD4zUewwuLMKIXilvI=
+	t=1776096826; cv=none; b=YOcWsk7/JtXlH5+2eKAulB5eKioG60jOsmkF77ZYgKO6KeKQPyTL0QvY9IkVXBan9MUPWdAGRyqlcFGm8KRByAMbYZOZwplmptQm8rHPOX6YDdtE9tm8RmHtxsm3J2J8WPnWN/+N47yHZjP+Lgzic4xt1PX4bVfc/iCsd3SLC2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096823; c=relaxed/simple;
-	bh=WO1OivKVqpiLsYI4zspRVJPUBqg0Qn9oQlbXS5AnV2E=;
+	s=arc-20240116; t=1776096826; c=relaxed/simple;
+	bh=c6VGH40ZvsQMh1P3d0ogdaBu0cQvHt4Dd1T7KkShAAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3ANsuT5DpiBw2LlU7XSrGLIp1hoS2PPKtJdb1f977yeENydjOMjcrWMMZ7YxrRcvMlM7U3CV8srhOKcmaBr1Znt9AXUSV8lNGhONaO7wg8u1wyT73ldCAT7DKCY4B1o8oEIUTQi+wEGmUeaqFr/e+DBM3P3cmMFGFADy2tCPis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HirwbYQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MR5hUvVPv/DCXwDbPc9xmCQHTudWPdlGt2KV1ToLxNl/9YxgnrKrR9NyNddbojA0wfi52A/GYDYMzVuOY4XHnn30DK4+F/HzVihtHJlXKZFjjaFp2R77xB2QxP92yi+K8DuUah6pU1nGdlbQj3wXyt41V5819Bko7aywMPcfcPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GPVIKoTe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HirwbYQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568AAC2BCAF;
-	Mon, 13 Apr 2026 16:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GPVIKoTe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E305DC2BCAF;
+	Mon, 13 Apr 2026 16:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096823;
-	bh=WO1OivKVqpiLsYI4zspRVJPUBqg0Qn9oQlbXS5AnV2E=;
+	s=korg; t=1776096826;
+	bh=c6VGH40ZvsQMh1P3d0ogdaBu0cQvHt4Dd1T7KkShAAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HirwbYQmTEEL4Cmyx6Ncsfoi8tB3v1yTOciYYJHT0ixN01Ul5imEKJJH/SWhLvsgg
-	 c8z0o4Bi7c3z1tEQopMNs1rK7ylb1ZJn8rTwSIlGM6N7Gvt0cCtryVCm+tb8h718w8
-	 aihj5f216kbMVWGhEN0qW8V2LcIsd+zPambi0LXY=
+	b=GPVIKoTeLDCqWzSPoGE/3wiwi5/P6OgVvvkXoUekQzpPylP17fJz7oiM4DK3p0Ker
+	 xpBJNlQ9h2yrZSCQN8q/QU4jnI0Nq7HmUiDcxgPV6MSoy8j/tUuPtow8VomF7Stjiw
+	 30lgtOAuyIYf9hTknHzkhqhIduQwEYDJRTJMmcJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ray Zhang <sgzhang@google.com>,
 	Emil Tantilov <emil.s.tantilov@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Li Li <boolli@google.com>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Samuel Salin <Samuel.salin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.12 56/70] idpf: improve locking around idpf_vc_xn_push_free()
-Date: Mon, 13 Apr 2026 18:00:51 +0200
-Message-ID: <20260413155730.276824852@linuxfoundation.org>
+Subject: [PATCH 6.12 57/70] idpf: set the payload size before calling the async handler
+Date: Mon, 13 Apr 2026 18:00:52 +0200
+Message-ID: <20260413155730.313761607@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -56,36 +56,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-commit d086fae65006368618104ba4c57779440eab2217 upstream.
+commit 8e2a2420e267a515f6db56a6e9570b5cacd92919 upstream.
 
-Protect the set_bit() operation for the free_xn bitmask in
-idpf_vc_xn_push_free(), to make the locking consistent with rest of the
-code and avoid potential races in that logic.
+Set the payload size before forwarding the reply to the async handler.
+Without this, xn->reply_sz will be 0 and idpf_mac_filter_async_handler()
+will never get past the size check.
 
 Fixes: 34c21fa894a1 ("idpf: implement virtchnl transaction manager")
 Cc: stable@vger.kernel.org
-Reported-by: Ray Zhang <sgzhang@google.com>
 Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Li Li <boolli@google.com>
 Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Tested-by: Samuel Salin <Samuel.salin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_virtchnl.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
 +++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-@@ -431,7 +431,9 @@ static void idpf_vc_xn_push_free(struct
- 				 struct idpf_vc_xn *xn)
- {
- 	idpf_vc_xn_release_bufs(xn);
-+	spin_lock_bh(&vcxn_mngr->xn_bm_lock);
- 	set_bit(xn->idx, vcxn_mngr->free_xn_bm);
-+	spin_unlock_bh(&vcxn_mngr->xn_bm_lock);
- }
- 
- /**
+@@ -641,6 +641,10 @@ idpf_vc_xn_forward_reply(struct idpf_ada
+ 		err = -ENXIO;
+ 		goto out_unlock;
+ 	case IDPF_VC_XN_ASYNC:
++		/* Set reply_sz from the actual payload so that async_handler
++		 * can evaluate the response.
++		 */
++		xn->reply_sz = ctlq_msg->data_len;
+ 		err = idpf_vc_xn_forward_async(adapter, xn, ctlq_msg);
+ 		idpf_vc_xn_unlock(xn);
+ 		return err;
 
 
