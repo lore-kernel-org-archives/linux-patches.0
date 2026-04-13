@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3740299929;
-	Mon, 13 Apr 2026 17:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B7F299929;
+	Mon, 13 Apr 2026 17:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099746; cv=none; b=ifH5EzHhadI4XNuDebVRgFuI81o/JbMaCVgCjamd1x5m+btZssfcg8zHvoO+NEpZZvf9j/PAa7vK1jncrGSStvomNINty09M5LGEpSuH8uJgsv2kow3+6am/gcFrPTQcbzh8uvm6WWdh3v4ObH7kZH+RgQfWUxp5XPGP+MP9CZc=
+	t=1776099749; cv=none; b=Z5Ts59bd0n79ocJsOPTmN0uOwtLoV7h5rbIgN6HvcYTQ1VocO9DtZsEjE/jWbc41dFLLJFrYEEIHjZ+TqDLXVBoeUKpng99hyPTIH2BM7fbHuhbU4KuCfKcCDC6uBJceMqZBk/3GAMGiN3i4j8I9OaQwbdycxo8FdTQJFCt7Nlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099746; c=relaxed/simple;
-	bh=1TvWQW+tcW/6bD1riYR7kzOJzmqiCoGmnrgN87rYGxc=;
+	s=arc-20240116; t=1776099749; c=relaxed/simple;
+	bh=0lA+f8dxfz80vcJJh/nklFHyPC8/ltmyGEgFvu4RgsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fstnEnMqpvrN1jcubyY7eV974FwAfBZT6smsHNiJo2nSwhVN5papLI37cnhQzng7gwEudBVRuLVpELRLaiF3zTECMwCqN45LXeEKRQ4ux8mjZaUa2PvGo9ItTzKbbQuU4xt3aW3dn+LM3H13HQaZvby+ncnLWkonG76sx2+24yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAyPp2J7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E6EW7koPXXyfAbea/TfwJGdyn+u/O+RBvMwgOPqOIjyjqyx1EkVZSQAyhdc1w/ik3W3nuKHTn855wjILT1T0u6xsPNNX0lvFtPQd7SFAqAdY9yH8xAkDGhhfxBXhluRUML9byLPp42E08NkBOXcRM00HNhKwb7Humqp6GxTUFdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hztzm8+I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAyPp2J7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF65C2BCAF;
-	Mon, 13 Apr 2026 17:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hztzm8+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CFEC2BCAF;
+	Mon, 13 Apr 2026 17:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099746;
-	bh=1TvWQW+tcW/6bD1riYR7kzOJzmqiCoGmnrgN87rYGxc=;
+	s=korg; t=1776099749;
+	bh=0lA+f8dxfz80vcJJh/nklFHyPC8/ltmyGEgFvu4RgsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mAyPp2J7CHiGxpi2inM5kAg4yDgeb1CljX2LJ9YGc/rPv2tVQzn3XtUWOPs7qUvYH
-	 aIu3YUlpjjT9BwrhIb3exrDkeeiBZkVcUjWxYIZU8U2KfuVl1AZ1ZrrdsHoHSyP6O4
-	 RTe6EMfq+cQJ1fKssaWYvURqjjDxa8B7uBaZ6q50=
+	b=Hztzm8+IDTeW1iQJvg5a1BylCorIsE+hbg0qbiEkDK28Fznmu9zkSjM89pPCdSxZ0
+	 Qpt0mx/s1Bumd02ZnEcNPktGqCoQEQkVbP3dgWCAlRICqYoCfbo9S9qXgURJyWuXut
+	 O8GQQo6Gf4jShC0MOC+Qm4FN8J1LPocWsQn998Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 426/491] media: uvcvideo: Allow extra entities
-Date: Mon, 13 Apr 2026 18:01:11 +0200
-Message-ID: <20260413155834.976642542@linuxfoundation.org>
+Subject: [PATCH 5.10 427/491] media: uvcvideo: Implement UVC_EXT_GPIO_UNIT
+Date: Mon, 13 Apr 2026 18:01:12 +0200
+Message-ID: <20260413155835.015055819@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -54,14 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit cae79e50d1222010fde8c522410c315f74d35c40 ]
+[ Upstream commit 2886477ff98740cc3333cf785e4de0b1ff3d7a28 ]
 
-Increase the size of the id, to avoid collisions with entities
-implemented by the driver that are not part of the UVC device.
+Some devices can implement a physical switch to disable the input of the
+camera on demand. Think of it like an elegant privacy sticker.
 
-Entities exposed by the UVC device use IDs 0-255, extra entities
-implemented by the driver (such as the GPIO entity) use IDs 256 and
-up.
+The system can read the status of the privacy switch via a GPIO.
+
+It is important to know the status of the switch, e.g. to notify the
+user when the camera will produce black frames and a videochat
+application is used.
+
+In some systems, the GPIO is connected to the main SoC instead of the
+camera controller, with the connection reported by the system firmware
+(ACPI or DT). In that case, the UVC device isn't aware of the GPIO. We
+need to implement a virtual entity to handle the GPIO fully on the
+driver side.
+
+For example, for ACPI-based systems, the GPIO is reported in the USB
+device object:
+
+  Scope (\_SB.PCI0.XHCI.RHUB.HS07)
+  {
+
+	  /.../
+
+    Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+    {
+        GpioIo (Exclusive, PullDefault, 0x0000, 0x0000, IoRestrictionOutputOnly,
+            "\\_SB.PCI0.GPIO", 0x00, ResourceConsumer, ,
+            )
+            {   // Pin list
+                0x0064
+            }
+    })
+    Name (_DSD, Package (0x02)  // _DSD: Device-Specific Data
+    {
+        ToUUID ("daffd814-6eba-4d8c-8a91-bc9bbf4aa301") /* Device Properties for _DSD */,
+        Package (0x01)
+        {
+            Package (0x02)
+            {
+                "privacy-gpio",
+                Package (0x04)
+                {
+                    \_SB.PCI0.XHCI.RHUB.HS07,
+                    Zero,
+                    Zero,
+                    One
+                }
+            }
+        }
+    })
+  }
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
@@ -69,41 +114,280 @@ Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Stable-dep-of: 0e2ee70291e6 ("media: uvcvideo: Mark invalid entities with id UVC_INVALID_ENTITY_ID")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 2 +-
- drivers/media/usb/uvc/uvcvideo.h   | 7 ++++++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c   |   3 +
+ drivers/media/usb/uvc/uvc_driver.c | 127 +++++++++++++++++++++++++++++
+ drivers/media/usb/uvc/uvc_entity.c |   1 +
+ drivers/media/usb/uvc/uvcvideo.h   |  16 ++++
+ 4 files changed, 147 insertions(+)
 
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index 698bf5bb896ec..fc23e53c0d38b 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -2378,6 +2378,9 @@ int uvc_ctrl_init_device(struct uvc_device *dev)
+ 		} else if (UVC_ENTITY_TYPE(entity) == UVC_ITT_CAMERA) {
+ 			bmControls = entity->camera.bmControls;
+ 			bControlSize = entity->camera.bControlSize;
++		} else if (UVC_ENTITY_TYPE(entity) == UVC_EXT_GPIO_UNIT) {
++			bmControls = entity->gpio.bmControls;
++			bControlSize = entity->gpio.bControlSize;
+ 		}
+ 
+ 		/* Remove bogus/blacklisted controls */
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 15202269194ad..e1d3e753e80ed 100644
+index e1d3e753e80ed..b86e46fa7c0af 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -1037,7 +1037,7 @@ static const u8 uvc_media_transport_input_guid[16] =
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include <linux/atomic.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
+@@ -1033,6 +1034,7 @@ static int uvc_parse_streaming(struct uvc_device *dev,
+ }
+ 
+ static const u8 uvc_camera_guid[16] = UVC_GUID_UVC_CAMERA;
++static const u8 uvc_gpio_guid[16] = UVC_GUID_EXT_GPIO_CONTROLLER;
+ static const u8 uvc_media_transport_input_guid[16] =
  	UVC_GUID_UVC_MEDIA_TRANSPORT_INPUT;
  static const u8 uvc_processing_guid[16] = UVC_GUID_UVC_PROCESSING;
+@@ -1064,6 +1066,9 @@ static struct uvc_entity *uvc_alloc_entity(u16 type, u16 id,
+ 	 * is initialized by the caller.
+ 	 */
+ 	switch (type) {
++	case UVC_EXT_GPIO_UNIT:
++		memcpy(entity->guid, uvc_gpio_guid, 16);
++		break;
+ 	case UVC_ITT_CAMERA:
+ 		memcpy(entity->guid, uvc_camera_guid, 16);
+ 		break;
+@@ -1467,6 +1472,108 @@ static int uvc_parse_control(struct uvc_device *dev)
+ 	return 0;
+ }
  
--static struct uvc_entity *uvc_alloc_entity(u16 type, u8 id,
-+static struct uvc_entity *uvc_alloc_entity(u16 type, u16 id,
- 		unsigned int num_pads, unsigned int extra_size)
- {
- 	struct uvc_entity *entity;
++/* -----------------------------------------------------------------------------
++ * Privacy GPIO
++ */
++
++static void uvc_gpio_event(struct uvc_device *dev)
++{
++	struct uvc_entity *unit = dev->gpio_unit;
++	struct uvc_video_chain *chain;
++	u8 new_val;
++
++	if (!unit)
++		return;
++
++	new_val = gpiod_get_value_cansleep(unit->gpio.gpio_privacy);
++
++	/* GPIO entities are always on the first chain. */
++	chain = list_first_entry(&dev->chains, struct uvc_video_chain, list);
++	uvc_ctrl_status_event(chain, unit->controls, &new_val);
++}
++
++static int uvc_gpio_get_cur(struct uvc_device *dev, struct uvc_entity *entity,
++			    u8 cs, void *data, u16 size)
++{
++	if (cs != UVC_CT_PRIVACY_CONTROL || size < 1)
++		return -EINVAL;
++
++	*(u8 *)data = gpiod_get_value_cansleep(entity->gpio.gpio_privacy);
++
++	return 0;
++}
++
++static int uvc_gpio_get_info(struct uvc_device *dev, struct uvc_entity *entity,
++			     u8 cs, u8 *caps)
++{
++	if (cs != UVC_CT_PRIVACY_CONTROL)
++		return -EINVAL;
++
++	*caps = UVC_CONTROL_CAP_GET | UVC_CONTROL_CAP_AUTOUPDATE;
++	return 0;
++}
++
++static irqreturn_t uvc_gpio_irq(int irq, void *data)
++{
++	struct uvc_device *dev = data;
++
++	uvc_gpio_event(dev);
++	return IRQ_HANDLED;
++}
++
++static int uvc_gpio_parse(struct uvc_device *dev)
++{
++	struct uvc_entity *unit;
++	struct gpio_desc *gpio_privacy;
++	int irq;
++
++	gpio_privacy = devm_gpiod_get_optional(&dev->udev->dev, "privacy",
++					       GPIOD_IN);
++	if (IS_ERR_OR_NULL(gpio_privacy))
++		return PTR_ERR_OR_ZERO(gpio_privacy);
++
++	unit = uvc_alloc_entity(UVC_EXT_GPIO_UNIT, UVC_EXT_GPIO_UNIT_ID, 0, 1);
++	if (!unit)
++		return -ENOMEM;
++
++	irq = gpiod_to_irq(gpio_privacy);
++	if (irq < 0) {
++		if (irq != EPROBE_DEFER)
++			dev_err(&dev->udev->dev,
++				"No IRQ for privacy GPIO (%d)\n", irq);
++		return irq;
++	}
++
++	unit->gpio.gpio_privacy = gpio_privacy;
++	unit->gpio.irq = irq;
++	unit->gpio.bControlSize = 1;
++	unit->gpio.bmControls = (u8 *)unit + sizeof(*unit);
++	unit->gpio.bmControls[0] = 1;
++	unit->get_cur = uvc_gpio_get_cur;
++	unit->get_info = uvc_gpio_get_info;
++	strncpy(unit->name, "GPIO", sizeof(unit->name) - 1);
++
++	list_add_tail(&unit->list, &dev->entities);
++
++	dev->gpio_unit = unit;
++
++	return 0;
++}
++
++static int uvc_gpio_init_irq(struct uvc_device *dev)
++{
++	struct uvc_entity *unit = dev->gpio_unit;
++
++	if (!unit || unit->gpio.irq < 0)
++		return 0;
++
++	return devm_request_threaded_irq(&dev->udev->dev, unit->gpio.irq, NULL,
++					 uvc_gpio_irq,
++					 IRQF_ONESHOT | IRQF_TRIGGER_FALLING |
++					 IRQF_TRIGGER_RISING,
++					 "uvc_privacy_gpio", dev);
++}
++
+ /* ------------------------------------------------------------------------
+  * UVC device scan
+  */
+@@ -1988,6 +2095,13 @@ static int uvc_scan_device(struct uvc_device *dev)
+ 		return -1;
+ 	}
+ 
++	/* Add GPIO entity to the first chain. */
++	if (dev->gpio_unit) {
++		chain = list_first_entry(&dev->chains,
++					 struct uvc_video_chain, list);
++		list_add_tail(&dev->gpio_unit->chain, &chain->entities);
++	}
++
+ 	return 0;
+ }
+ 
+@@ -2350,6 +2464,12 @@ static int uvc_probe(struct usb_interface *intf,
+ 		goto error;
+ 	}
+ 
++	/* Parse the associated GPIOs. */
++	if (uvc_gpio_parse(dev) < 0) {
++		uvc_trace(UVC_TRACE_PROBE, "Unable to parse UVC GPIOs\n");
++		goto error;
++	}
++
+ 	uvc_printk(KERN_INFO, "Found UVC %u.%02x device %s (%04x:%04x)\n",
+ 		dev->uvc_version >> 8, dev->uvc_version & 0xff,
+ 		udev->product ? udev->product : "<unnamed>",
+@@ -2394,6 +2514,13 @@ static int uvc_probe(struct usb_interface *intf,
+ 			"supported.\n", ret);
+ 	}
+ 
++	ret = uvc_gpio_init_irq(dev);
++	if (ret < 0) {
++		dev_err(&dev->udev->dev,
++			"Unable to request privacy GPIO IRQ (%d)\n", ret);
++		goto error;
++	}
++
+ 	uvc_trace(UVC_TRACE_PROBE, "UVC device initialized.\n");
+ 	usb_enable_autosuspend(udev);
+ 	return 0;
+diff --git a/drivers/media/usb/uvc/uvc_entity.c b/drivers/media/usb/uvc/uvc_entity.c
+index 7c9895377118c..96e965a16d061 100644
+--- a/drivers/media/usb/uvc/uvc_entity.c
++++ b/drivers/media/usb/uvc/uvc_entity.c
+@@ -105,6 +105,7 @@ static int uvc_mc_init_entity(struct uvc_video_chain *chain,
+ 		case UVC_OTT_DISPLAY:
+ 		case UVC_OTT_MEDIA_TRANSPORT_OUTPUT:
+ 		case UVC_EXTERNAL_VENDOR_SPECIFIC:
++		case UVC_EXT_GPIO_UNIT:
+ 		default:
+ 			function = MEDIA_ENT_F_V4L2_SUBDEV_UNKNOWN;
+ 			break;
 diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index 656ab4d9356c2..0e4209dbf307f 100644
+index 0e4209dbf307f..e9eef2170d866 100644
 --- a/drivers/media/usb/uvc/uvcvideo.h
 +++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -302,7 +302,12 @@ struct uvc_entity {
- 					 * chain. */
- 	unsigned int flags;
+@@ -6,6 +6,7 @@
+ #error "The uvcvideo.h header is deprecated, use linux/uvcvideo.h instead."
+ #endif /* __KERNEL__ */
  
--	u8 id;
-+	/*
-+	 * Entities exposed by the UVC device use IDs 0-255, extra entities
-+	 * implemented by the driver (such as the GPIO entity) use IDs 256 and
-+	 * up.
-+	 */
-+	u16 id;
- 	u16 type;
- 	char name[64];
- 	u8 guid[16];
++#include <linux/atomic.h>
+ #include <linux/kernel.h>
+ #include <linux/poll.h>
+ #include <linux/usb.h>
+@@ -37,6 +38,8 @@
+ 	(UVC_ENTITY_IS_TERM(entity) && \
+ 	((entity)->type & 0x8000) == UVC_TERM_OUTPUT)
+ 
++#define UVC_EXT_GPIO_UNIT		0x7ffe
++#define UVC_EXT_GPIO_UNIT_ID		0x100
+ 
+ /* ------------------------------------------------------------------------
+  * GUIDs
+@@ -56,6 +59,9 @@
+ #define UVC_GUID_UVC_SELECTOR \
+ 	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \
+ 	 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02}
++#define UVC_GUID_EXT_GPIO_CONTROLLER \
++	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \
++	 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03}
+ 
+ #define UVC_GUID_FORMAT_MJPEG \
+ 	{ 'M',  'J',  'P',  'G', 0x00, 0x00, 0x10, 0x00, \
+@@ -213,6 +219,7 @@
+  * Structures.
+  */
+ 
++struct gpio_desc;
+ struct uvc_device;
+ 
+ /* TODO: Put the most frequently accessed fields at the beginning of
+@@ -354,6 +361,13 @@ struct uvc_entity {
+ 			u8  *bmControls;
+ 			u8  *bmControlsType;
+ 		} extension;
++
++		struct {
++			u8  bControlSize;
++			u8  *bmControls;
++			struct gpio_desc *gpio_privacy;
++			int irq;
++		} gpio;
+ 	};
+ 
+ 	u8 bNrInPins;
+@@ -696,6 +710,8 @@ struct uvc_device {
+ 		struct uvc_control *ctrl;
+ 		const void *data;
+ 	} async_ctrl;
++
++	struct uvc_entity *gpio_unit;
+ };
+ 
+ enum uvc_handle_state {
 -- 
 2.53.0
 
