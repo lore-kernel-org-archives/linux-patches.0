@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D634A24E4AF;
-	Mon, 13 Apr 2026 16:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685A124DCF6;
+	Mon, 13 Apr 2026 16:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096864; cv=none; b=Fh4H1JOrEOok3IJee2bv0hKwzVJRvqUTwl9r7m6yR71oVPqFbvJ+SaRzqFi5DhYsVsRC42dj1Sl94C85nrWgEYXKWKmC2hdTxx+ab8lJq5aSoKKkkF/Sraq/KnIMInspxBYA5Ogy237h4Li5e5a60TiVzu7nldDAp0TqABZLcS0=
+	t=1776096867; cv=none; b=DHK6VB1d6Fw/1x98xVtz1hMfJ826HN4QftNSauXspno1Q26GqcLZN6/8wfZJR00vTD5iikO8AOTUCCNosNeMf/wThoiuabDbusXnFBssdvQphlriK5xAuC9WEhS0ddRXk8r8R27Xh6ced/l8Rp1/84yds5sUTo+srkvHM++Jqto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096864; c=relaxed/simple;
-	bh=hvWOM+ei0W60wPjjKqd+FNn/7v5dZinvrZ3PU8tIVmY=;
+	s=arc-20240116; t=1776096867; c=relaxed/simple;
+	bh=s6lSJ2hpUb/LAVRcLDhbQTOeUMFeKroxmje3palhyck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kuWLm9Vv8dHFWxZJA31Ex/km5Rbwus8ZFZZU1RP30KT0v5OkG3TA9JkAPGcoZi1unYvPixTo4wwkfQAMVgfbBF6QXnxxmrvgIrGW9FXEkb6Et4ktYNQq8eo369gHCvdrGUvA3xNGm4U67jEufqX0hx11cs98W7JFm9qU3rGodtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIeG7ont; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZAA+kU2XBNceq5dIXuilPY0f5lii/lCJTgHXXbrEyAUGq6zVJk5rVKe6m0q8+yn9W3Yxx4B2RZy9OgkLKDoGiCiteFb+q+MQ6R1uI4YYV190hrHxPnnBcg9voaZYSGQ8cma1oA1VGDY4Wa45ps4gxTzw582kqcAAo7NZZhr/ni4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mg5qUmHz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIeG7ont"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C74DC2BCAF;
-	Mon, 13 Apr 2026 16:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mg5qUmHz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007A1C2BCAF;
+	Mon, 13 Apr 2026 16:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096864;
-	bh=hvWOM+ei0W60wPjjKqd+FNn/7v5dZinvrZ3PU8tIVmY=;
+	s=korg; t=1776096867;
+	bh=s6lSJ2hpUb/LAVRcLDhbQTOeUMFeKroxmje3palhyck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nIeG7ontY05NW3jXuQOJh+li5SgotA7kZScMQJb2qRJyslqDnxjobmMegtAS2O8Sc
-	 5UiriIvumKapIp7tWdZaKH9c1P8soi+18M21BuyISanYj+/vA1CFLns5oX+Xf4VXsx
-	 QRJLrm1tFpAS2POFCDReq/472bNyus5Tjq4PP3a0=
+	b=Mg5qUmHz+iWUtn45aECAckskHsSQMrhungHhVHXtwh4ZGg6zSNCE5ZR3on/as4dI8
+	 1Wgw2w04OqK6kEkceIP23jbgOeIY2n0qePn7WVNrEiug4uM3HMeGrmjqyASdte/QDN
+	 FjDb8N1d837ZHPy676Ui+itmcCgP4SMKUfnQB80U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yasuaki Torimaru <yasuakitorimaru@gmail.com>,
+	Oleh Konko <security@1seal.org>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Simon Horman <horms@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.6 21/50] xfrm: clear trailing padding in build_polexpire()
-Date: Mon, 13 Apr 2026 18:00:48 +0200
-Message-ID: <20260413155725.304611882@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 22/50] tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG
+Date: Mon, 13 Apr 2026 18:00:49 +0200
+Message-ID: <20260413155725.342174745@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -52,43 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+From: Oleh Konko <security@1seal.org>
 
-commit 71a98248c63c535eaa4d4c22f099b68d902006d0 upstream.
+commit 48a5fe38772b6f039522469ee6131a67838221a8 upstream.
 
-build_expire() clears the trailing padding bytes of struct
-xfrm_user_expire after setting the hard field via memset_after(),
-but the analogous function build_polexpire() does not do this for
-struct xfrm_user_polexpire.
+The GRP_ACK_MSG handler in tipc_group_proto_rcv() currently decrements
+bc_ackers on every inbound group ACK, even when the same member has
+already acknowledged the current broadcast round.
 
-The padding bytes after the __u8 hard field are left
-uninitialized from the heap allocation, and are then sent to
-userspace via netlink multicast to XFRMNLGRP_EXPIRE listeners,
-leaking kernel heap memory contents.
+Because bc_ackers is a u16, a duplicate ACK received after the last
+legitimate ACK wraps the counter to 65535. Once wrapped,
+tipc_group_bc_cong() keeps reporting congestion and later group
+broadcasts on the affected socket stay blocked until the group is
+recreated.
 
-Add the missing memset_after() call, matching build_expire().
+Fix this by ignoring duplicate or stale ACKs before touching bc_acked or
+bc_ackers. This makes repeated GRP_ACK_MSG handling idempotent and
+prevents the underflow path.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+Signed-off-by: Oleh Konko <security@1seal.org>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Link: https://patch.msgid.link/41a4833f368641218e444fdcff822039.security@1seal.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/tipc/group.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -3583,6 +3583,8 @@ static int build_polexpire(struct sk_buf
- 		return err;
- 	}
- 	upe->hard = !!hard;
-+	/* clear the padding bytes */
-+	memset_after(upe, 0, hard);
+--- a/net/tipc/group.c
++++ b/net/tipc/group.c
+@@ -746,6 +746,7 @@ void tipc_group_proto_rcv(struct tipc_gr
+ 	u32 port = msg_origport(hdr);
+ 	struct tipc_member *m, *pm;
+ 	u16 remitted, in_flight;
++	u16 acked;
  
- 	nlmsg_end(skb, nlh);
- 	return 0;
+ 	if (!grp)
+ 		return;
+@@ -798,7 +799,10 @@ void tipc_group_proto_rcv(struct tipc_gr
+ 	case GRP_ACK_MSG:
+ 		if (!m)
+ 			return;
+-		m->bc_acked = msg_grp_bc_acked(hdr);
++		acked = msg_grp_bc_acked(hdr);
++		if (less_eq(acked, m->bc_acked))
++			return;
++		m->bc_acked = acked;
+ 		if (--grp->bc_ackers)
+ 			return;
+ 		list_del_init(&m->small_win);
 
 
