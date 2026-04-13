@@ -1,50 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49144277035;
-	Mon, 13 Apr 2026 16:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9604225788;
+	Mon, 13 Apr 2026 16:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096550; cv=none; b=Rjdt82nljCTnSEa3m1BDKzptF86KMO/q91G2jQ2AknJrBQOHJJsAn+w2JtZMIFAQnpGgOe4QXdu0fxOk+hhTvKHheROlcP81X3XAceUgB1zs5KKKACK/RTJEEPpR3pFBJFUyop2Vuwqq7X1WhYJWcpy58sQvsn+vJXKfSGK9U40=
+	t=1776096552; cv=none; b=Vlc36nZrp221sAA9eRpTY0tTJ5BGNuplSTz0h+YCN8cyAZlWQ9wBVjnFGA/Fdz1rK1eg3MJf+x9qWv4kNH6F71rfL6uT97eXA92YoSVpA1nqceyUSJCu6Nj892inf5oy88Oc7wV28hIpPQwBFKBHGx30o35VpbnxOvJGBr1qQmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096550; c=relaxed/simple;
-	bh=yF2j2R3+f0cwMrECt3XrByVARfcK4kzrXXhPP5776uk=;
+	s=arc-20240116; t=1776096552; c=relaxed/simple;
+	bh=KbIURFkiDfyrD6JCIGNTzqCt6N5ShVcUJANT6D5jvgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CeoQmHv/xgJ1kfEc6BU4F9qP/YMQTkRRq5Dl6pr4Os5F0aGIq/Zm8FLho01CcCw+Ix62oWj2Au3UJD9hD3DMaW2WCLOqpoD0SYZjgxmftppEE4jvvlxVfZNJuisXPsKYpswU1LxhcDy+6zX1g/D2sriZGqaKDpvkhwM+NGVQnA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GuY56dPM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BJ+on4twrlsbtERI9hm2onpjz58D9uyaoO1KECS8fN0s1Fr/og0urOBSF7X1c5X3BiyHIrLOHsGpSlTD2pv9KtZP6SjjTpf+ZDZO4NOVZfhcRp1ab8fIW5HCco4K9v3xI0kiIrPb6p/R+C8WLnCunqjCuPX2DKup4/D91d+xg/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1n17Ord; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GuY56dPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81654C2BCAF;
-	Mon, 13 Apr 2026 16:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1n17Ord"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E79C2BCB0;
+	Mon, 13 Apr 2026 16:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096550;
-	bh=yF2j2R3+f0cwMrECt3XrByVARfcK4kzrXXhPP5776uk=;
+	s=korg; t=1776096552;
+	bh=KbIURFkiDfyrD6JCIGNTzqCt6N5ShVcUJANT6D5jvgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GuY56dPMgp2fxc+NwwLAE8b6uFtKOVjLW9bYM6m8Bvf8eKQ7Qv3aPAXc+sK7Kk+ll
-	 efFv4Vaxyso/3A0ZL+MgptLVz67LxGW1oUukuB+5FNiQiNGdeCNmZrC3iz57dohzxr
-	 tfGBtTG/vPXG5WFw20v9cb8f+5h+r5e4anA0ytpU=
+	b=d1n17OrdibHB7aKTj9heLuvxn459CzJtrL/7VTfQssRfPkx0KzHfNCl7fCz3Po9MO
+	 hWVCYVJcDFb96TVgSsEAtMNobuWNNJbtwqUMof9LhxxJS5w+/A5rj054sEP8lPhbIo
+	 nDmf3hTDS/wyaEi6GHc+qH7Ff0wokyt0CN4cUAn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Yuanhe Shu <xiangzao@linux.alibaba.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Luis Chamberalin <mcgrof@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 55/83] mm: filemap: fix nr_pages calculation overflow in filemap_map_pages()
-Date: Mon, 13 Apr 2026 18:00:23 +0200
-Message-ID: <20260413155733.070383680@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Ray Zhang <sgzhang@google.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.18 56/83] idpf: fix PREEMPT_RT raw/bh spinlock nesting for async VC handling
+Date: Mon, 13 Apr 2026 18:00:24 +0200
+Message-ID: <20260413155733.106702960@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -57,146 +48,135 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-commit f58df566524ebcdfa394329c64f47e3c9257516e upstream.
+commit 591478118293c1bd628de330a99eb1eb2ef8d76b upstream.
 
-When running stress-ng on my Arm64 machine with v7.0-rc3 kernel, I
-encountered some very strange crash issues showing up as "Bad page state":
+Switch from using the completion's raw spinlock to a local lock in the
+idpf_vc_xn struct. The conversion is safe because complete/_all() are
+called outside the lock and there is no reason to share the completion
+lock in the current logic. This avoids invalid wait context reported by
+the kernel due to the async handler taking BH spinlock:
 
-"
-[  734.496287] BUG: Bad page state in process stress-ng-env  pfn:415735fb
-[  734.496427] page: refcount:0 mapcount:1 mapping:0000000000000000 index:0x4cf316 pfn:0x415735fb
-[  734.496434] flags: 0x57fffe000000800(owner_2|node=1|zone=2|lastcpupid=0x3ffff)
-[  734.496439] raw: 057fffe000000800 0000000000000000 dead000000000122 0000000000000000
-[  734.496440] raw: 00000000004cf316 0000000000000000 0000000000000000 0000000000000000
-[  734.496442] page dumped because: nonzero mapcount
-"
+[  805.726977] =============================
+[  805.726991] [ BUG: Invalid wait context ]
+[  805.727006] 7.0.0-rc2-net-devq-031026+ #28 Tainted: G S         OE
+[  805.727026] -----------------------------
+[  805.727038] kworker/u261:0/572 is trying to lock:
+[  805.727051] ff190da6a8dbb6a0 (&vport_config->mac_filter_list_lock){+...}-{3:3}, at: idpf_mac_filter_async_handler+0xe9/0x260 [idpf]
+[  805.727099] other info that might help us debug this:
+[  805.727111] context-{5:5}
+[  805.727119] 3 locks held by kworker/u261:0/572:
+[  805.727132]  #0: ff190da6db3e6148 ((wq_completion)idpf-0000:83:00.0-mbx){+.+.}-{0:0}, at: process_one_work+0x4b5/0x730
+[  805.727163]  #1: ff3c6f0a6131fe50 ((work_completion)(&(&adapter->mbx_task)->work)){+.+.}-{0:0}, at: process_one_work+0x1e5/0x730
+[  805.727191]  #2: ff190da765190020 (&x->wait#34){+.+.}-{2:2}, at: idpf_recv_mb_msg+0xc8/0x710 [idpf]
+[  805.727218] stack backtrace:
+...
+[  805.727238] Workqueue: idpf-0000:83:00.0-mbx idpf_mbx_task [idpf]
+[  805.727247] Call Trace:
+[  805.727249]  <TASK>
+[  805.727251]  dump_stack_lvl+0x77/0xb0
+[  805.727259]  __lock_acquire+0xb3b/0x2290
+[  805.727268]  ? __irq_work_queue_local+0x59/0x130
+[  805.727275]  lock_acquire+0xc6/0x2f0
+[  805.727277]  ? idpf_mac_filter_async_handler+0xe9/0x260 [idpf]
+[  805.727284]  ? _printk+0x5b/0x80
+[  805.727290]  _raw_spin_lock_bh+0x38/0x50
+[  805.727298]  ? idpf_mac_filter_async_handler+0xe9/0x260 [idpf]
+[  805.727303]  idpf_mac_filter_async_handler+0xe9/0x260 [idpf]
+[  805.727310]  idpf_recv_mb_msg+0x1c8/0x710 [idpf]
+[  805.727317]  process_one_work+0x226/0x730
+[  805.727322]  worker_thread+0x19e/0x340
+[  805.727325]  ? __pfx_worker_thread+0x10/0x10
+[  805.727328]  kthread+0xf4/0x130
+[  805.727333]  ? __pfx_kthread+0x10/0x10
+[  805.727336]  ret_from_fork+0x32c/0x410
+[  805.727345]  ? __pfx_kthread+0x10/0x10
+[  805.727347]  ret_from_fork_asm+0x1a/0x30
+[  805.727354]  </TASK>
 
-After analyzing this page’s state, it is hard to understand why the
-mapcount is not 0 while the refcount is 0, since this page is not where
-the issue first occurred.  By enabling the CONFIG_DEBUG_VM config, I can
-reproduce the crash as well and captured the first warning where the issue
-appears:
-
-"
-[  734.469226] page: refcount:33 mapcount:0 mapping:00000000bef2d187 index:0x81a0 pfn:0x415735c0
-[  734.469304] head: order:5 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[  734.469315] memcg:ffff000807a8ec00
-[  734.469320] aops:ext4_da_aops ino:100b6f dentry name(?):"stress-ng-mmaptorture-9397-0-2736200540"
-[  734.469335] flags: 0x57fffe400000069(locked|uptodate|lru|head|node=1|zone=2|lastcpupid=0x3ffff)
-......
-[  734.469364] page dumped because: VM_WARN_ON_FOLIO((_Generic((page + nr_pages - 1),
-const struct page *: (const struct folio *)_compound_head(page + nr_pages - 1), struct page *:
-(struct folio *)_compound_head(page + nr_pages - 1))) != folio)
-[  734.469390] ------------[ cut here ]------------
-[  734.469393] WARNING: ./include/linux/rmap.h:351 at folio_add_file_rmap_ptes+0x3b8/0x468,
-CPU#90: stress-ng-mlock/9430
-[  734.469551]  folio_add_file_rmap_ptes+0x3b8/0x468 (P)
-[  734.469555]  set_pte_range+0xd8/0x2f8
-[  734.469566]  filemap_map_folio_range+0x190/0x400
-[  734.469579]  filemap_map_pages+0x348/0x638
-[  734.469583]  do_fault_around+0x140/0x198
-......
-[  734.469640]  el0t_64_sync+0x184/0x188
-"
-
-The code that triggers the warning is: "VM_WARN_ON_FOLIO(page_folio(page +
-nr_pages - 1) != folio, folio)", which indicates that set_pte_range()
-tried to map beyond the large folio’s size.
-
-By adding more debug information, I found that 'nr_pages' had overflowed
-in filemap_map_pages(), causing set_pte_range() to establish mappings for
-a range exceeding the folio size, potentially corrupting fields of pages
-that do not belong to this folio (e.g., page->_mapcount).
-
-After above analysis, I think the possible race is as follows:
-
-CPU 0                                                  CPU 1
-filemap_map_pages()                                   ext4_setattr()
-   //get and lock folio with old inode->i_size
-   next_uptodate_folio()
-
-                                                          .......
-                                                          //shrink the inode->i_size
-                                                          i_size_write(inode, attr->ia_size);
-
-   //calculate the end_pgoff with the new inode->i_size
-   file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
-   end_pgoff = min(end_pgoff, file_end);
-
-   ......
-   //nr_pages can be overflowed, cause xas.xa_index > end_pgoff
-   end = folio_next_index(folio) - 1;
-   nr_pages = min(end, end_pgoff) - xas.xa_index + 1;
-
-   ......
-   //map large folio
-   filemap_map_folio_range()
-                                                          ......
-                                                          //truncate folios
-                                                          truncate_pagecache(inode, inode->i_size);
-
-To fix this issue, move the 'end_pgoff' calculation before
-next_uptodate_folio(), so the retrieved folio stays consistent with the
-file end to avoid 'nr_pages' calculation overflow.  After this patch, the
-crash issue is gone.
-
-Link: https://lkml.kernel.org/r/1cf1ac59018fc647a87b0dad605d4056a71c14e4.1773739704.git.baolin.wang@linux.alibaba.com
-Fixes: 743a2753a02e ("filemap: cap PTE range to be created to allowed zero fill in folio_map_range()")
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reported-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
-Tested-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Daniel Gomez <da.gomez@samsung.com>
-Cc: "Darrick J. Wong" <djwong@kernel.org>
-Cc: Dave Chinner <dchinner@redhat.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Luis Chamberalin <mcgrof@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Pankaj Raghav <p.raghav@samsung.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 34c21fa894a1 ("idpf: implement virtchnl transaction manager")
+Cc: stable@vger.kernel.org
+Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reported-by: Ray Zhang <sgzhang@google.com>
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c |   14 +++++---------
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.h |    5 +++--
+ 2 files changed, 8 insertions(+), 11 deletions(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -3823,14 +3823,19 @@ vm_fault_t filemap_map_pages(struct vm_f
- 	unsigned int nr_pages = 0, folio_type;
- 	unsigned short mmap_miss = 0, mmap_miss_saved;
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+@@ -284,26 +284,21 @@ dma_mem_error:
+ 	return err;
+ }
  
-+	/*
-+	 * Recalculate end_pgoff based on file_end before calling
-+	 * next_uptodate_folio() to avoid races with concurrent
-+	 * truncation.
-+	 */
-+	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
-+	end_pgoff = min(end_pgoff, file_end);
+-/* API for virtchnl "transaction" support ("xn" for short).
+- *
+- * We are reusing the completion lock to serialize the accesses to the
+- * transaction state for simplicity, but it could be its own separate synchro
+- * as well. For now, this API is only used from within a workqueue context;
+- * raw_spin_lock() is enough.
+- */
++/* API for virtchnl "transaction" support ("xn" for short). */
 +
- 	rcu_read_lock();
- 	folio = next_uptodate_folio(&xas, mapping, end_pgoff);
- 	if (!folio)
- 		goto out;
+ /**
+  * idpf_vc_xn_lock - Request exclusive access to vc transaction
+  * @xn: struct idpf_vc_xn* to access
+  */
+ #define idpf_vc_xn_lock(xn)			\
+-	raw_spin_lock(&(xn)->completed.wait.lock)
++	spin_lock(&(xn)->lock)
  
--	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
--	end_pgoff = min(end_pgoff, file_end);
--
- 	/*
- 	 * Do not allow to map with PMD across i_size to preserve
- 	 * SIGBUS semantics.
+ /**
+  * idpf_vc_xn_unlock - Release exclusive access to vc transaction
+  * @xn: struct idpf_vc_xn* to access
+  */
+ #define idpf_vc_xn_unlock(xn)		\
+-	raw_spin_unlock(&(xn)->completed.wait.lock)
++	spin_unlock(&(xn)->lock)
+ 
+ /**
+  * idpf_vc_xn_release_bufs - Release reference to reply buffer(s) and
+@@ -335,6 +330,7 @@ static void idpf_vc_xn_init(struct idpf_
+ 		xn->state = IDPF_VC_XN_IDLE;
+ 		xn->idx = i;
+ 		idpf_vc_xn_release_bufs(xn);
++		spin_lock_init(&xn->lock);
+ 		init_completion(&xn->completed);
+ 	}
+ 
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
+@@ -42,8 +42,8 @@ typedef int (*async_vc_cb) (struct idpf_
+  * struct idpf_vc_xn - Data structure representing virtchnl transactions
+  * @completed: virtchnl event loop uses that to signal when a reply is
+  *	       available, uses kernel completion API
+- * @state: virtchnl event loop stores the data below, protected by the
+- *	   completion's lock.
++ * @lock: protects the transaction state fields below
++ * @state: virtchnl event loop stores the data below, protected by @lock
+  * @reply_sz: Original size of reply, may be > reply_buf.iov_len; it will be
+  *	      truncated on its way to the receiver thread according to
+  *	      reply_buf.iov_len.
+@@ -58,6 +58,7 @@ typedef int (*async_vc_cb) (struct idpf_
+  */
+ struct idpf_vc_xn {
+ 	struct completion completed;
++	spinlock_t lock;
+ 	enum idpf_vc_xn_state state;
+ 	size_t reply_sz;
+ 	struct kvec reply;
 
 
