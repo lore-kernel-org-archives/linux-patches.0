@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9CB3368B5;
-	Mon, 13 Apr 2026 17:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B32330B3A;
+	Mon, 13 Apr 2026 17:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099798; cv=none; b=qQjsy3X6WaIQy9tscr/Na5pe4RBkz1od6jKipyNB9EXhkTGWyd/l240ZStjBbBmBAUSWyTPPKUnnrQ2TiboO915ZXS6aFzeQmruzavb3dBIMYaulR9TfziA6RGgTktv5AAAojNwe8adQFvCnIciIGtdj+XxcprQ8Hj/t9eED7xI=
+	t=1776099801; cv=none; b=ktG7xys13GiBLcKQaaHuU9cLTW81GUbiWq27CqxLvYLimRRrMowKEFJO99i/52EKMsX8dHCiiL8N4yhBeehH5e4f3NVI1rPVLyVXiq8Sbpk7VRtNA76XbnQsFFnqSqlvsEiBZ8TMDDUaqdJtI1yio9cjD9FLc/UaB7Zas47OVIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099798; c=relaxed/simple;
-	bh=EDkUjarRFQhCGh6J5QvYG87SfR2evIiUxtOXKWPd+fE=;
+	s=arc-20240116; t=1776099801; c=relaxed/simple;
+	bh=0c/5GwnUpUttApvRM88SqACHsIp8kcPYDVQ1vBBKlME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=itpLPRfS7ECn/HNLzu2JulcB9oN+1+ajAcpLgHmUyLBl9o3LC2/rFacpWMKe9wnb2ovsIanmT+6VW1uGtPt6c7Ik2cQRjf9iVlMk3PiSE0Nc+axMRHOhOg5U9PXmcPsAdZA3Zm/ySjzOt6zdIq8OGH4TN9d2Z5Jzvnem3h3QWFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPcd8qKL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I3fRx9WwEjg4eRpF+yvBJnhtm9mfFb4PwVCW0VTlbjO+h0ZYnos1UDS2drH1k9bqz5KQx3B49uFGGlTypLXDKSLYLIeFsCQaSwsyvg+KsvM4YzP+2LznThWP09OHhBUInjERetumT51MeipKmMQuIo7e29Mt8jt/CLE+3mZP4Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8kngO3D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPcd8qKL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FABCC2BCAF;
-	Mon, 13 Apr 2026 17:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8kngO3D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C4CC2BCAF;
+	Mon, 13 Apr 2026 17:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099798;
-	bh=EDkUjarRFQhCGh6J5QvYG87SfR2evIiUxtOXKWPd+fE=;
+	s=korg; t=1776099801;
+	bh=0c/5GwnUpUttApvRM88SqACHsIp8kcPYDVQ1vBBKlME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yPcd8qKLnXGXz1/z1YAJQGDuyyX7m+qMOv8o6btdwyS5SXvLi2HYEqmoQeCrzhAyI
-	 7fpPVxvIBr3kLRAa+1vYWVtt+6/dt0bkAfU/ZxlzJ3WT+EX+t1v8oYf5bbsKL+FWgD
-	 zcTpS44OKj4xg0AdTQS4LgeA3BIJcVfAb/yBKPu4=
+	b=Y8kngO3DTLrjMMu7bnzshxgPnhhpxxe0/YiK+6/wn32p1Die4xWQQ8O4sq6HHOqgs
+	 nIO4Y07XcJcYWR2LlGCeLqNKDY1ImLpolEFbv8p6jULcoPSOUzed1hNbBHY+7ca47h
+	 mptDzLtoMB50N87moI9CcA0DhMp05dWjjIy7GNxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Patalano <mpatalan@redhat.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Jaskaran Singh <jsingh@cloudlinux.com>
-Subject: [PATCH 5.10 478/491] nvme: nvme-fc: Ensure ->ioerr_work is cancelled in nvme_fc_delete_ctrl()
-Date: Mon, 13 Apr 2026 18:02:03 +0200
-Message-ID: <20260413155836.947836368@linuxfoundation.org>
+	Saravana Kannan <saravanak@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 479/491] device property: Add fwnode_is_ancestor_of() and fwnode_get_next_parent_dev()
+Date: Mon, 13 Apr 2026 18:02:04 +0200
+Message-ID: <20260413155836.985950427@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,91 +50,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaskaran Singh <jsingh@cloudlinux.com>
+From: Saravana Kannan <saravanak@google.com>
 
-commit 0a2c5495b6d1ecb0fa18ef6631450f391a888256 upstream.
+[ Upstream commit b5d3e2fbcb10957521af14c4256cd0e5f68b9234 ]
 
-nvme_fc_delete_assocation() waits for pending I/O to complete before
-returning, and an error can cause ->ioerr_work to be queued after
-cancel_work_sync() had been called.  Move the call to cancel_work_sync() to
-be after nvme_fc_delete_association() to ensure ->ioerr_work is not running
-when the nvme_fc_ctrl object is freed.  Otherwise the following can occur:
+Add fwnode_is_ancestor_of() helper function to check if a fwnode is an
+ancestor of another fwnode.
 
-[ 1135.911754] list_del corruption, ff2d24c8093f31f8->next is NULL
-[ 1135.917705] ------------[ cut here ]------------
-[ 1135.922336] kernel BUG at lib/list_debug.c:52!
-[ 1135.926784] Oops: invalid opcode: 0000 [#1] SMP NOPTI
-[ 1135.931851] CPU: 48 UID: 0 PID: 726 Comm: kworker/u449:23 Kdump: loaded Not tainted 6.12.0 #1 PREEMPT(voluntary)
-[ 1135.943490] Hardware name: Dell Inc. PowerEdge R660/0HGTK9, BIOS 2.5.4 01/16/2025
-[ 1135.950969] Workqueue:  0x0 (nvme-wq)
-[ 1135.954673] RIP: 0010:__list_del_entry_valid_or_report.cold+0xf/0x6f
-[ 1135.961041] Code: c7 c7 98 68 72 94 e8 26 45 fe ff 0f 0b 48 c7 c7 70 68 72 94 e8 18 45 fe ff 0f 0b 48 89 fe 48 c7 c7 80 69 72 94 e8 07 45 fe ff <0f> 0b 48 89 d1 48 c7 c7 a0 6a 72 94 48 89 c2 e8 f3 44 fe ff 0f 0b
-[ 1135.979788] RSP: 0018:ff579b19482d3e50 EFLAGS: 00010046
-[ 1135.985015] RAX: 0000000000000033 RBX: ff2d24c8093f31f0 RCX: 0000000000000000
-[ 1135.992148] RDX: 0000000000000000 RSI: ff2d24d6bfa1d0c0 RDI: ff2d24d6bfa1d0c0
-[ 1135.999278] RBP: ff2d24c8093f31f8 R08: 0000000000000000 R09: ffffffff951e2b08
-[ 1136.006413] R10: ffffffff95122ac8 R11: 0000000000000003 R12: ff2d24c78697c100
-[ 1136.013546] R13: fffffffffffffff8 R14: 0000000000000000 R15: ff2d24c78697c0c0
-[ 1136.020677] FS:  0000000000000000(0000) GS:ff2d24d6bfa00000(0000) knlGS:0000000000000000
-[ 1136.028765] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 1136.034510] CR2: 00007fd207f90b80 CR3: 000000163ea22003 CR4: 0000000000f73ef0
-[ 1136.041641] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[ 1136.048776] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-[ 1136.055910] PKRU: 55555554
-[ 1136.058623] Call Trace:
-[ 1136.061074]  <TASK>
-[ 1136.063179]  ? show_trace_log_lvl+0x1b0/0x2f0
-[ 1136.067540]  ? show_trace_log_lvl+0x1b0/0x2f0
-[ 1136.071898]  ? move_linked_works+0x4a/0xa0
-[ 1136.075998]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
-[ 1136.081744]  ? __die_body.cold+0x8/0x12
-[ 1136.085584]  ? die+0x2e/0x50
-[ 1136.088469]  ? do_trap+0xca/0x110
-[ 1136.091789]  ? do_error_trap+0x65/0x80
-[ 1136.095543]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
-[ 1136.101289]  ? exc_invalid_op+0x50/0x70
-[ 1136.105127]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
-[ 1136.110874]  ? asm_exc_invalid_op+0x1a/0x20
-[ 1136.115059]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
-[ 1136.120806]  move_linked_works+0x4a/0xa0
-[ 1136.124733]  worker_thread+0x216/0x3a0
-[ 1136.128485]  ? __pfx_worker_thread+0x10/0x10
-[ 1136.132758]  kthread+0xfa/0x240
-[ 1136.135904]  ? __pfx_kthread+0x10/0x10
-[ 1136.139657]  ret_from_fork+0x31/0x50
-[ 1136.143236]  ? __pfx_kthread+0x10/0x10
-[ 1136.146988]  ret_from_fork_asm+0x1a/0x30
-[ 1136.150915]  </TASK>
+Add fwnode_get_next_parent_dev() helper function that take as input a
+fwnode and finds the closest ancestor fwnode that has a corresponding
+struct device and returns that struct device.
 
-Fixes: 19fce0470f05 ("nvme-fc: avoid calling _nvme_fc_abort_outstanding_ios from interrupt context")
-Cc: stable@vger.kernel.org
-Tested-by: Marco Patalano <mpatalan@redhat.com>
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Link: https://lore.kernel.org/r/20201121020232.908850-11-saravanak@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Jaskaran Singh <jsingh@cloudlinux.com>
+Stable-dep-of: 2692c614f8f0 ("device property: Allow secondary lookup in fwnode_get_next_child_node()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/fc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/property.c  |   52 +++++++++++++++++++++++++++++++++++++++++++++++
+ include/linux/property.h |    3 ++
+ 2 files changed, 55 insertions(+)
 
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -3259,13 +3259,13 @@ nvme_fc_delete_ctrl(struct nvme_ctrl *nc
- {
- 	struct nvme_fc_ctrl *ctrl = to_fc_ctrl(nctrl);
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -615,6 +615,31 @@ struct fwnode_handle *fwnode_get_next_pa
+ EXPORT_SYMBOL_GPL(fwnode_get_next_parent);
  
--	cancel_work_sync(&ctrl->ioerr_work);
- 	cancel_delayed_work_sync(&ctrl->connect_work);
- 	/*
- 	 * kill the association on the link side.  this will block
- 	 * waiting for io to terminate
- 	 */
- 	nvme_fc_delete_association(ctrl);
-+	cancel_work_sync(&ctrl->ioerr_work);
- }
+ /**
++ * fwnode_get_next_parent_dev - Find device of closest ancestor fwnode
++ * @fwnode: firmware node
++ *
++ * Given a firmware node (@fwnode), this function finds its closest ancestor
++ * firmware node that has a corresponding struct device and returns that struct
++ * device.
++ *
++ * The caller of this function is expected to call put_device() on the returned
++ * device when they are done.
++ */
++struct device *fwnode_get_next_parent_dev(struct fwnode_handle *fwnode)
++{
++	struct device *dev = NULL;
++
++	fwnode_handle_get(fwnode);
++	do {
++		fwnode = fwnode_get_next_parent(fwnode);
++		if (fwnode)
++			dev = get_dev_from_fwnode(fwnode);
++	} while (fwnode && !dev);
++	fwnode_handle_put(fwnode);
++	return dev;
++}
++
++/**
+  * fwnode_count_parents - Return the number of parents a node has
+  * @fwnode: The node the parents of which are to be counted
+  *
+@@ -661,6 +686,33 @@ struct fwnode_handle *fwnode_get_nth_par
+ EXPORT_SYMBOL_GPL(fwnode_get_nth_parent);
  
- static void
+ /**
++ * fwnode_is_ancestor_of - Test if @test_ancestor is ancestor of @test_child
++ * @test_ancestor: Firmware which is tested for being an ancestor
++ * @test_child: Firmware which is tested for being the child
++ *
++ * A node is considered an ancestor of itself too.
++ *
++ * Returns true if @test_ancestor is an ancestor of @test_child.
++ * Otherwise, returns false.
++ */
++bool fwnode_is_ancestor_of(struct fwnode_handle *test_ancestor,
++				  struct fwnode_handle *test_child)
++{
++	if (!test_ancestor)
++		return false;
++
++	fwnode_handle_get(test_child);
++	while (test_child) {
++		if (test_child == test_ancestor) {
++			fwnode_handle_put(test_child);
++			return true;
++		}
++		test_child = fwnode_get_next_parent(test_child);
++	}
++	return false;
++}
++
++/**
+  * fwnode_get_next_child_node - Return the next child node handle for a node
+  * @fwnode: Firmware node to find the next child node for.
+  * @child: Handle to one of the node's child nodes or a %NULL handle.
+--- a/include/linux/property.h
++++ b/include/linux/property.h
+@@ -85,9 +85,12 @@ const char *fwnode_get_name_prefix(const
+ struct fwnode_handle *fwnode_get_parent(const struct fwnode_handle *fwnode);
+ struct fwnode_handle *fwnode_get_next_parent(
+ 	struct fwnode_handle *fwnode);
++struct device *fwnode_get_next_parent_dev(struct fwnode_handle *fwnode);
+ unsigned int fwnode_count_parents(const struct fwnode_handle *fwn);
+ struct fwnode_handle *fwnode_get_nth_parent(struct fwnode_handle *fwn,
+ 					    unsigned int depth);
++bool fwnode_is_ancestor_of(struct fwnode_handle *test_ancestor,
++				  struct fwnode_handle *test_child);
+ struct fwnode_handle *fwnode_get_next_child_node(
+ 	const struct fwnode_handle *fwnode, struct fwnode_handle *child);
+ struct fwnode_handle *fwnode_get_next_available_child_node(
 
 
