@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7EF2F6931;
-	Mon, 13 Apr 2026 16:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0257C3016EE;
+	Mon, 13 Apr 2026 16:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097270; cv=none; b=cvp1oP/R67LE+6UH3j3zn6xZzxJTccWH8CNHb8FlAYYE0M27QoKm3NEbUa4Ny7sTBoFTw7t02D36v1GUYU6JN2RHdANI6iFR5uuGdCpynzLPWoW8cgtv5Dy47ju7CT1P7YyM1NPuAdsYue+zM/RXZoKIWhu994+uXas7e9cyVGo=
+	t=1776097273; cv=none; b=RFAGfYCAGqnniYz5Iqepkb+X7v2IoP5yZDhLTDZoN8pjanq9gYc48a8cmCMLYguU4rPGL81pWhROrWikV8fm9nskfTXUaR3OawNvnk7Z33wWA8c5RF4AZiOjNGtf1JdX13AjiFJWouT2qwqfoC0k+8oUR/G1B5KZl/mABR4AsSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097270; c=relaxed/simple;
-	bh=IXIKgDprKvK7D9r54RDUKU2JOYWHC5Hbz/JXa0dHNFw=;
+	s=arc-20240116; t=1776097273; c=relaxed/simple;
+	bh=VG6BtYzakPBS4cjf/crF5zkNrOUQn3fcelZ27j1fCxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pfcg86EW5ZxdA68zwMMi/ka2w6AsOKv1IqcXoPvG7MtbXzBNy+OUbssRGqD6fSFIclcfrbwEEOb29j3iZUfavNju/3B3XXP5zx/Ywcr/C/bQNs1tYZKpNAyhhgQvcn+k8u8pNJJy0XOG3p8GYC7zs2l6w3CwxSai21sxJ9iK16I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUEpZ/9b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kc6aJcnKHZXIzzwCG93T9RfbCFxypwWqK64MX0lh4V3EGu39dKpiyTJm0TlBb49FVwMvjvl+53PACvDcjK9IPV0GJVdx4ysKY9U/JK72Cl9ywsHYf2iWEWFC5lPWGaMtOyutg1bCApDV0+w0JvUxnf4ldcD7db/h3z2FPFpvR8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avfGTrgD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUEpZ/9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0513EC2BCAF;
-	Mon, 13 Apr 2026 16:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avfGTrgD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C816C2BCAF;
+	Mon, 13 Apr 2026 16:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097270;
-	bh=IXIKgDprKvK7D9r54RDUKU2JOYWHC5Hbz/JXa0dHNFw=;
+	s=korg; t=1776097272;
+	bh=VG6BtYzakPBS4cjf/crF5zkNrOUQn3fcelZ27j1fCxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vUEpZ/9bWLWSvl8+Mt/HBezIv3YOBe4+QPNaojp5y3b1H75Xrqa/VBV+ajvuXBkS0
-	 vvHABG3E1VsCyQY0UvuYKERi9/m093YmXxOAT/z29Rh2eljzBOc+BzVAeumTsz+al0
-	 n15B9k1gutVwVRNFooQJK7TscI6Hwgl/zwqnwCps=
+	b=avfGTrgD4i49lKyYSafb5xJqmk7NgPB9UpTWfmf/BeXSckXyh2ZfCU0siWNq1LKIh
+	 dPvdjt7P/BFwCIc2tDAiynUFXTJPK2IQbLEIkNVlpedoKsTA6KVDC5iVxDyvN5VAzJ
+	 lNunLXt3bQ81X2qbyUrf0H2UNmdf6bumSZ3Ceigk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72e3ea390c305de0e259@syzkaller.appspotmail.com,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+5b11eccc403dd1cea9f8@syzkaller.appspotmail.com,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/570] atm: lec: fix null-ptr-deref in lec_arp_clear_vccs
-Date: Mon, 13 Apr 2026 17:53:22 +0200
-Message-ID: <20260413155833.103229058@linuxfoundation.org>
+Subject: [PATCH 5.15 072/570] can: bcm: fix locking for bcm_op runtime updates
+Date: Mon, 13 Apr 2026 17:53:23 +0200
+Message-ID: <20260413155833.139881134@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -48,108 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 101bacb303e89dc2e0640ae6a5e0fb97c4eb45bb ]
+[ Upstream commit c35636e91e392e1540949bbc67932167cb48bc3a ]
 
-syzkaller reported a null-ptr-deref in lec_arp_clear_vccs().
-This issue can be easily reproduced using the syzkaller reproducer.
+Commit c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
+added a locking for some variables that can be modified at runtime when
+updating the sending bcm_op with a new TX_SETUP command in bcm_tx_setup().
 
-In the ATM LANE (LAN Emulation) module, the same atm_vcc can be shared by
-multiple lec_arp_table entries (e.g., via entry->vcc or entry->recv_vcc).
-When the underlying VCC is closed, lec_vcc_close() iterates over all
-ARP entries and calls lec_arp_clear_vccs() for each matched entry.
+Usually the RX_SETUP only handles and filters incoming traffic with one
+exception: When the RX_RTR_FRAME flag is set a predefined CAN frame is
+sent when a specific RTR frame is received. Therefore the rx bcm_op uses
+bcm_can_tx() which uses the bcm_tx_lock that was only initialized in
+bcm_tx_setup(). Add the missing spin_lock_init() when allocating the
+bcm_op in bcm_rx_setup() to handle the RTR case properly.
 
-For example, when lec_vcc_close() iterates through the hlists in
-priv->lec_arp_empty_ones or other ARP tables:
-
-1. In the first iteration, for the first matched ARP entry sharing the VCC,
-lec_arp_clear_vccs() frees the associated vpriv (which is vcc->user_back)
-and sets vcc->user_back to NULL.
-2. In the second iteration, for the next matched ARP entry sharing the same
-VCC, lec_arp_clear_vccs() is called again. It obtains a NULL vpriv from
-vcc->user_back (via LEC_VCC_PRIV(vcc)) and then attempts to dereference it
-via `vcc->pop = vpriv->old_pop`, leading to a null-ptr-deref crash.
-
-Fix this by adding a null check for vpriv before dereferencing
-it. If vpriv is already NULL, it means the VCC has been cleared
-by a previous call, so we can safely skip the cleanup and just
-clear the entry's vcc/recv_vcc pointers.
-
-The entire cleanup block (including vcc_release_async()) is placed inside
-the vpriv guard because a NULL vpriv indicates the VCC has already been
-fully released by a prior iteration — repeating the teardown would
-redundantly set flags and trigger callbacks on an already-closing socket.
-
-The Fixes tag points to the initial commit because the entry->vcc path has
-been vulnerable since the original code. The entry->recv_vcc path was later
-added by commit 8d9f73c0ad2f ("atm: fix a memory leak of vcc->user_back")
-with the same pattern, and both paths are fixed here.
-
-Reported-by: syzbot+72e3ea390c305de0e259@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68c95a83.050a0220.3c6139.0e5c.GAE@google.com/T/
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://patch.msgid.link/20260225123250.189289-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
+Reported-by: syzbot+5b11eccc403dd1cea9f8@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-can/699466e4.a70a0220.2c38d7.00ff.GAE@google.com/
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260218-bcm_spin_lock_init-v1-1-592634c8a5b5@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/lec.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ net/can/bcm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/atm/lec.c b/net/atm/lec.c
-index 73078306504c0..768df9d7cd676 100644
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -1262,24 +1262,28 @@ static void lec_arp_clear_vccs(struct lec_arp_table *entry)
- 		struct lec_vcc_priv *vpriv = LEC_VCC_PRIV(vcc);
- 		struct net_device *dev = (struct net_device *)vcc->proto_data;
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index e2325f5ba7e54..c77d8bafde653 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -1123,6 +1123,7 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		if (!op)
+ 			return -ENOMEM;
  
--		vcc->pop = vpriv->old_pop;
--		if (vpriv->xoff)
--			netif_wake_queue(dev);
--		kfree(vpriv);
--		vcc->user_back = NULL;
--		vcc->push = entry->old_push;
--		vcc_release_async(vcc, -EPIPE);
-+		if (vpriv) {
-+			vcc->pop = vpriv->old_pop;
-+			if (vpriv->xoff)
-+				netif_wake_queue(dev);
-+			kfree(vpriv);
-+			vcc->user_back = NULL;
-+			vcc->push = entry->old_push;
-+			vcc_release_async(vcc, -EPIPE);
-+		}
- 		entry->vcc = NULL;
- 	}
- 	if (entry->recv_vcc) {
- 		struct atm_vcc *vcc = entry->recv_vcc;
- 		struct lec_vcc_priv *vpriv = LEC_VCC_PRIV(vcc);
- 
--		kfree(vpriv);
--		vcc->user_back = NULL;
-+		if (vpriv) {
-+			kfree(vpriv);
-+			vcc->user_back = NULL;
- 
--		entry->recv_vcc->push = entry->old_recv_push;
--		vcc_release_async(entry->recv_vcc, -EPIPE);
-+			entry->recv_vcc->push = entry->old_recv_push;
-+			vcc_release_async(entry->recv_vcc, -EPIPE);
-+		}
- 		entry->recv_vcc = NULL;
- 	}
- }
++		spin_lock_init(&op->bcm_tx_lock);
+ 		op->can_id = msg_head->can_id;
+ 		op->nframes = msg_head->nframes;
+ 		op->cfsiz = CFSIZ(msg_head->flags);
 -- 
 2.51.0
 
