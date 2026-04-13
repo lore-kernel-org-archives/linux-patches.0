@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22375317148;
-	Mon, 13 Apr 2026 16:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7653161AB;
+	Mon, 13 Apr 2026 16:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099086; cv=none; b=oRjtpZuiFjRNMxGFn4uUgasfel4TfY3r+zq3NAFlWLeoCOdIizU5BaS8ft1uMRjEi9/Yai3X/TilLf/9P2F09iRbifvRYX/Mf2iwC+p/nde3kf3RpGTffNW/l2IGpXA090ourYQCrz4PXPUXP1W86H7MgVHVbjakSyEXb6SdLzE=
+	t=1776099088; cv=none; b=aI1ZjK9jrgcPULBXWNGQynUqU/W+pB1dYJIaQ2tO6CYXhHrItrx9wO9tQ5FjmStYmqwXt5gtu0XsW9ZbQA1i4iAYD0/bZq3zXfSZcQn9HjkiKfj9yqqF6Xbu5lYmPvlmRP41cHoqY/uLcmZYtRoN2KKjOSckOxhuZwkM2Ymdc1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099086; c=relaxed/simple;
-	bh=kyT1hcDMBSpfOKP9p0H09gVAAeEmTCjZgL8cBkq1IiA=;
+	s=arc-20240116; t=1776099088; c=relaxed/simple;
+	bh=57lth9+3eOL0u90MIGPJWWVaok0cCufFRvWK+LLkMTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Su8UXnWju92WuXDgnIhC/H1itE3cLgc2u7oQ26vme9b84XGAgsZDEAi4byiiMblUq4zMsPESBuL6nfMWhEc/uytGf4bwjmEkpArDode1YvXWWyw6hOcFnnrLoo/J4nuhY1tKIpvuGDXqsPV0tsHNX65WOnnhFq9L9rncMzv+hK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFZqSwOL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hh8hl35vkK3N1reNIEqy+I4PtPXl6bjheFpp12jeZs1WsmY08V7dlvaUDMpJECkDyWDkqxtGFb4YuI2tfsaAs1xMS+C18AaUCSNZt8bF4EJcQ9nS5B2fZ53N7+IXKYUu2lqE5uuJDUq1436kevL9eQSgb3GLoHMevW5PJav+hEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnCPsBuu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFZqSwOL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4B9C2BCAF;
-	Mon, 13 Apr 2026 16:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnCPsBuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43455C2BCAF;
+	Mon, 13 Apr 2026 16:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099086;
-	bh=kyT1hcDMBSpfOKP9p0H09gVAAeEmTCjZgL8cBkq1IiA=;
+	s=korg; t=1776099088;
+	bh=57lth9+3eOL0u90MIGPJWWVaok0cCufFRvWK+LLkMTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFZqSwOLOqc928AelCTa2/Vcv8FRxyiM0nuzwDAibroy0HeqKdb3vniGO4h85WJHb
-	 JHHO5Yca0Rl0A8lLlUpaeTwE53uZavXIW1cRTUnG+V8SmXdlVgDkMa9YMs105ditnb
-	 Rd6y5BwNZfUrhUvcBQcIyIN/8oTiMm/UwKjoLBd0=
+	b=qnCPsBuuz3Lf9V28QsJHV8gsQqBi4cXnL78jluRlwtaKxBrvOR/I/zZwgtFYspHTK
+	 Zsy/8FP3oTtmC7+PfHvTOawnJLqvVsiCimEk4gHqaHQHp1/qpreMWCO5eCFahrmIjh
+	 QBSePxdL+i/OudUE2Yf5hqtSD14Fwe4pP/i5yQcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 177/491] xfs: ensure dquot item is deleted from AIL only after log shutdown
-Date: Mon, 13 Apr 2026 17:57:02 +0200
-Message-ID: <20260413155825.679155892@linuxfoundation.org>
+Subject: [PATCH 5.10 204/491] net/rose: fix NULL pointer dereference in rose_transmit_link on reconnect
+Date: Mon, 13 Apr 2026 17:57:29 +0200
+Message-ID: <20260413155826.708508653@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,67 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 186ac39b8a7d3ec7ce9c5dd45e5c2730177f375c ]
+[ Upstream commit e1f0a18c9564cdb16523c802e2c6fe5874e3d944 ]
 
-In xfs_qm_dqflush(), when a dquot flush fails due to corruption
-(the out_abort error path), the original code removed the dquot log
-item from the AIL before calling xfs_force_shutdown(). This ordering
-introduces a subtle race condition that can lead to data loss after
-a crash.
+syzkaller reported a bug [1], and the reproducer is available at [2].
 
-The AIL tracks the oldest dirty metadata in the journal. The position
-of the tail item in the AIL determines the log tail LSN, which is the
-oldest LSN that must be preserved for crash recovery. When an item is
-removed from the AIL, the log tail can advance past the LSN of that item.
+ROSE sockets use four sk->sk_state values: TCP_CLOSE, TCP_LISTEN,
+TCP_SYN_SENT, and TCP_ESTABLISHED. rose_connect() already rejects
+calls for TCP_ESTABLISHED (-EISCONN) and TCP_CLOSE with SS_CONNECTING
+(-ECONNREFUSED), but lacks a check for TCP_SYN_SENT.
 
-The race window is as follows: if the dquot item happens to be at
-the tail of the log, removing it from the AIL allows the log tail
-to advance. If a concurrent log write is sampling the tail LSN at
-the same time and subsequently writes a complete checkpoint (i.e.,
-one containing a commit record) to disk before the shutdown takes
-effect, the journal will no longer protect the dquot's last
-modification. On the next mount, log recovery will not replay the
-dquot changes, even though they were never written back to disk,
-resulting in silent data loss.
+When rose_connect() is called a second time while the first connection
+attempt is still in progress (TCP_SYN_SENT), it overwrites
+rose->neighbour via rose_get_neigh(). If that returns NULL, the socket
+is left with rose->state == ROSE_STATE_1 but rose->neighbour == NULL.
+When the socket is subsequently closed, rose_release() sees
+ROSE_STATE_1 and calls rose_write_internal() ->
+rose_transmit_link(skb, NULL), causing a NULL pointer dereference.
 
-Fix this by calling xfs_force_shutdown() before xfs_trans_ail_delete()
-in the out_abort path. Once the log is shut down, no new log writes
-can complete with an updated tail LSN, making it safe to remove the
-dquot item from the AIL.
+Per connect(2), a second connect() while a connection is already in
+progress should return -EALREADY. Add this missing check for
+TCP_SYN_SENT to complete the state validation in rose_connect().
 
-Cc: stable@vger.kernel.org
-Fixes: b707fffda6a3 ("xfs: abort consistently on dquot flush failure")
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ adapted error path to preserve existing out_unlock label between xfs_trans_ail_delete and xfs_dqfunlock ]
+[1] https://syzkaller.appspot.com/bug?extid=d00f90e0af54102fb271
+[2] https://gist.github.com/mrpre/9e6779e0d13e2c66779b1653fef80516
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0027.GAE@google.com/T/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260311070611.76913-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/rose/af_rose.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -1324,9 +1324,15 @@ xfs_qm_dqflush(
- 	return 0;
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 04173c85d92b5..0130c13f73552 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -808,6 +808,11 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 		goto out_release;
+ 	}
  
- out_abort:
-+	/*
-+	 * Shut down the log before removing the dquot item from the AIL.
-+	 * Otherwise, the log tail may advance past this item's LSN while
-+	 * log writes are still in progress, making these unflushed changes
-+	 * unrecoverable on the next mount.
-+	 */
-+	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
- 	dqp->q_flags &= ~XFS_DQFLAG_DIRTY;
- 	xfs_trans_ail_delete(lip, 0);
--	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
- out_unlock:
- 	xfs_dqfunlock(dqp);
- 	return error;
++	if (sk->sk_state == TCP_SYN_SENT) {
++		err = -EALREADY;
++		goto out_release;
++	}
++
+ 	sk->sk_state   = TCP_CLOSE;
+ 	sock->state = SS_UNCONNECTED;
+ 
+-- 
+2.51.0
+
 
 
