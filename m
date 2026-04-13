@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02282D8364;
-	Mon, 13 Apr 2026 16:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A8C26B971;
+	Mon, 13 Apr 2026 16:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098244; cv=none; b=Q51iji3IRWxYuA0HoboG8h239f1pIVkcKQafmrOzihMk3MxfDH3DcmcMvMMOAa6ZdwbBobS3RPwRmVUESXzoSi4ABrUrAePH23oSeua6EGKMOalQ2xTxMeODwDfTpCvk71TAXR4RTILxGuUNXgI+auv9TSUaUg3OzYpAEY8jh7s=
+	t=1776098246; cv=none; b=BcjfUU08JdziR8fxbiwJ8FOTvf/cxsxjRDTbBpD+0gaRCb4KE33w0MH9/DvFEY6bV8zPr9S7JBTBJlaziQQeVCgjYpMV0vDU9K/ZjPkaki0xB7RX8JpwhnYEfANZpe7HimUxskEeC6e4j4b401h3ts5W3KIsB8GGHVqtejWXspw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098244; c=relaxed/simple;
-	bh=vZoQtJGcbEV/IPRkn7oSP5o+/kvX1UpN4WLMF2ZvgLY=;
+	s=arc-20240116; t=1776098246; c=relaxed/simple;
+	bh=7UB2G96G3infGkR6F0x/G227MituZvtO8SeVLnjSbOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ahRH+q7roxBzPlALmrvUiYnW5VD/b1YoIuVcP+yENykvkpENhVbxUPeOOFMgIBwSrVm/ivJgj97vSa7q0WA7hw+T+0qQIsmHZ8kK8ZfwANi1M6V7NV0AoUWY51TQ2HsVKlU+TrmQNkkVvmLGahb3QFC8R3Wa4c+1FlabxD6jIAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGH9FYy+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sr2DwGL8AB37iv+oCVEUafMwMuli+pJF+O/GWSphJPRrNjo0OtEDamN+Yj4c1uDbxr2SE8Igvc3+mApckxNJNdQAO8MVmJnVQrV1G5HWVRFwsKDqOzXpoqVVT4mgpIrLMez8S7pHxR+vaicH5QGTUCh45Rwop07AI9YUZrcX3j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsDTBYQ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGH9FYy+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA86C2BCAF;
-	Mon, 13 Apr 2026 16:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsDTBYQ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00872C2BCAF;
+	Mon, 13 Apr 2026 16:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098243;
-	bh=vZoQtJGcbEV/IPRkn7oSP5o+/kvX1UpN4WLMF2ZvgLY=;
+	s=korg; t=1776098246;
+	bh=7UB2G96G3infGkR6F0x/G227MituZvtO8SeVLnjSbOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BGH9FYy+tOTBIfPiaueYNSZ8ljKg+dX9Sng8NTEXfwMgu5cgl84fyU1XpLAN+E3nT
-	 0abEH+gSnK4sgs96/kuDlv944ClkIf710EIQpaMnp4BVA9lVZwbT7G07jcpd9FYU50
-	 w4h5/F0mzbTNdQ3nIeFq8NY+P6eVHoYDpGrgazk0=
+	b=RsDTBYQ+AL6ObPosn6bK8aARP8Awc8l1n2QSIBqT1M+CYVN2liwGYZU7A0Entym46
+	 3gqeaKi/xV4P+1MG7qJzhXlZ0G/taQpFxlC+De21gNnhJVsGmGUAK164VOq07YjV2R
+	 wN+4rHyZP0Ts5cDt0a9jKrBiaNmOfMsvcq/8VS2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.15 450/570] MIPS: Fix the GCC version check for `__multi3 workaround
-Date: Mon, 13 Apr 2026 17:59:41 +0200
-Message-ID: <20260413155847.325273517@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 451/570] hwmon: (occ) Fix division by zero in occ_show_power_1()
+Date: Mon, 13 Apr 2026 17:59:42 +0200
+Message-ID: <20260413155847.363507935@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,57 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit ec8bf18814915460d9c617b556bf024efef26613 upstream.
+commit 39e2a5bf970402a8530a319cf06122e216ba57b8 upstream.
 
-It was only GCC 10 that fixed a MIPS64r6 code generation issue with a
-`__multi3' libcall inefficiently produced to perform 64-bit widening
-multiplication while suitable machine instructions exist to do such a
-calculation.  The fix went in with GCC commit 48b2123f6336 ("re PR
-target/82981 (unnecessary __multi3 call for mips64r6 linux kernel)").
+In occ_show_power_1() case 1, the accumulator is divided by
+update_tag without checking for zero. If no samples have been
+collected yet (e.g. during early boot when the sensor block is
+included but hasn't been updated), update_tag is zero, causing
+a kernel divide-by-zero crash.
 
-Adjust our code accordingly, removing build failures such as:
+The 2019 fix in commit 211186cae14d ("hwmon: (occ) Fix division by
+zero issue") only addressed occ_get_powr_avg() used by
+occ_show_power_2() and occ_show_power_a0(). This separate code
+path in occ_show_power_1() was missed.
 
-mips64-linux-ld: lib/math/div64.o: in function `mul_u64_add_u64_div_u64':
-div64.c:(.text+0x84): undefined reference to `__multi3'
+Fix this by reusing the existing occ_get_powr_avg() helper, which
+already handles the zero-sample case and uses mul_u64_u32_div()
+to multiply before dividing for better precision. Move the helper
+above occ_show_power_1() so it is visible at the call site.
 
-with the GCC versions affected.
-
-Fixes: ebabcf17bcd7 ("MIPS: Implement __multi3 for GCC7 MIPS64r6 builds")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202601140146.hMLODc6v-lkp@intel.com/
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v4.15+
-Reviewed-by: David Laight <david.laight.linux@gmail.com.
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: c10e753d43eb ("hwmon (occ): Add sensor types and versions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260326224510.294619-2-sanman.pradhan@hpe.com
+[groeck: Fix alignment problems reported by checkpatch]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/lib/multi3.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hwmon/occ/common.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/arch/mips/lib/multi3.c
-+++ b/arch/mips/lib/multi3.c
-@@ -4,12 +4,12 @@
- #include "libgcc.h"
- 
- /*
-- * GCC 7 & older can suboptimally generate __multi3 calls for mips64r6, so for
-+ * GCC 9 & older can suboptimally generate __multi3 calls for mips64r6, so for
-  * that specific case only we implement that intrinsic here.
-  *
-  * See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82981
-  */
--#if defined(CONFIG_64BIT) && defined(CONFIG_CPU_MIPSR6) && (__GNUC__ < 8)
-+#if defined(CONFIG_64BIT) && defined(CONFIG_CPU_MIPSR6) && (__GNUC__ < 10)
- 
- /* multiply 64-bit values, low 64-bits returned */
- static inline long long notrace dmulu(long long a, long long b)
-@@ -51,4 +51,4 @@ ti_type notrace __multi3(ti_type a, ti_t
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -419,6 +419,12 @@ static ssize_t occ_show_freq_2(struct de
+ 	return sysfs_emit(buf, "%u\n", val);
  }
- EXPORT_SYMBOL(__multi3);
  
--#endif /* 64BIT && CPU_MIPSR6 && GCC7 */
-+#endif /* 64BIT && CPU_MIPSR6 && GCC9 */
++static u64 occ_get_powr_avg(u64 accum, u32 samples)
++{
++	return (samples == 0) ? 0 :
++		mul_u64_u32_div(accum, 1000000UL, samples);
++}
++
+ static ssize_t occ_show_power_1(struct device *dev,
+ 				struct device_attribute *attr, char *buf)
+ {
+@@ -440,9 +446,8 @@ static ssize_t occ_show_power_1(struct d
+ 		val = get_unaligned_be16(&power->sensor_id);
+ 		break;
+ 	case 1:
+-		val = get_unaligned_be32(&power->accumulator) /
+-			get_unaligned_be32(&power->update_tag);
+-		val *= 1000000ULL;
++		val = occ_get_powr_avg(get_unaligned_be32(&power->accumulator),
++				       get_unaligned_be32(&power->update_tag));
+ 		break;
+ 	case 2:
+ 		val = (u64)get_unaligned_be32(&power->update_tag) *
+@@ -458,12 +463,6 @@ static ssize_t occ_show_power_1(struct d
+ 	return sysfs_emit(buf, "%llu\n", val);
+ }
+ 
+-static u64 occ_get_powr_avg(u64 accum, u32 samples)
+-{
+-	return (samples == 0) ? 0 :
+-		mul_u64_u32_div(accum, 1000000UL, samples);
+-}
+-
+ static ssize_t occ_show_power_2(struct device *dev,
+ 				struct device_attribute *attr, char *buf)
+ {
 
 
