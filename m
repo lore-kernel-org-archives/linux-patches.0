@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4279D30F545;
-	Mon, 13 Apr 2026 16:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2ACF2E8DFC;
+	Mon, 13 Apr 2026 16:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096331; cv=none; b=SXwjWVrma+5ampQt815e70td+QgLJ0JqT5rjEftUzTnVu9iroXaSFl7oRZKv1blhH1VLqTjY0FDFOiPY0KZNDiD59KYrCFFsUSsmIFcIh43/4mP/ir/AOqFBWqCn8qS62bSzzQqA/V/nP9YIhndAqAFAn4zRcp+UzfqvPrCBeR8=
+	t=1776096333; cv=none; b=PcbiNiJoS6O54u03wfAS3iw45/YedyV7T+zaZYREVqA44gZ2jY4c5Bh7rEZcd1xkrg22eUTYnlWRR9a1VTsWvqK+B07OF6FJ2Yn9vpxILBJGVCzMw2kwxxcrk/IBrp0qhUMCCAWxkwEGVRyALUTEdYfgb4Al4JFBNEEVAv7Bffc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096331; c=relaxed/simple;
-	bh=ST4cE3HsiuZ0GRv13d33Gisc0XHDXN+xSaPK9gUbBdw=;
+	s=arc-20240116; t=1776096333; c=relaxed/simple;
+	bh=M7MlIHqhEEJdskENC79d7wpkdkkqYQkOyitMNfnrWxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2/I/HiUcUZ0cueZKIRCsoTWEqZM0HEZPMcAl+7wT8Aq8Zw1+p7NSLezRSdiBzoVx5Ma2uWTfc2SUyaFBK/GgnzUrYMPoBHSShyXiMw4Qs1l9ND4u1ePZSGeYUlRgRWciKXpt9QUqgUZgNOmPhzk4uGI9Xb+oGsfpYdaOvwolog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLlI/5g1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K8bRAFdEF2Dom8SQM63z4os5ZaN2Udb6Tayl5x+0tEQI3dcD76mg6JgTcLpTg05DDR5MMSWkpWtisIWZvywoKaARYhOsCkGz3zNKtLCJLqzuhLRBr4+KI3WJbVyBtDAZYqrhINWphYJDkMbIzzJ1tqmnlgrn8TM5SmjM4yCQkD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5kLVmC4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLlI/5g1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6BEC2BCB6;
-	Mon, 13 Apr 2026 16:05:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5kLVmC4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C8DC2BCAF;
+	Mon, 13 Apr 2026 16:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096331;
-	bh=ST4cE3HsiuZ0GRv13d33Gisc0XHDXN+xSaPK9gUbBdw=;
+	s=korg; t=1776096333;
+	bh=M7MlIHqhEEJdskENC79d7wpkdkkqYQkOyitMNfnrWxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLlI/5g1mhp9+dZDgVYRSxRHRFutWKWL9R2aGAgUnfw12WSd+S3yxLJs9WP1rH8ju
-	 yVGUQlkF/81C4KrJ3tR0UBbW71owUML9ZGhP8IzhpKyPOFKYbhdTCr0Kx2Wy1DSs1M
-	 1ginRdW0qGEWSl3l2ImEPpcv8JI8EXoVEb8r+EA4=
+	b=n5kLVmC4uiuP+fxqRLhLqul13Q/omT+Jv1Y71vnk/V0okVwfeOC603xaESG13Z1tZ
+	 o9mMnfJgLBto3G+6f5FvCCYwuDunONUfD6CSgDBuFz6mS0j3c8RQcWF+XeEFw5CHER
+	 yMRZeu/OYAJEL7Mgsz/s4hYA7jhU7k/onU2k01GM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Simon Horman <horms@kernel.org>,
+	Tyllis Xu <LivelyCarpet87@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 56/86] net: qualcomm: qca_uart: report the consumed byte on RX skb allocation failure
-Date: Mon, 13 Apr 2026 18:00:03 +0200
-Message-ID: <20260413155733.656343584@linuxfoundation.org>
+Subject: [PATCH 6.19 57/86] net: stmmac: fix integer underflow in chain mode
+Date: Mon, 13 Apr 2026 18:00:04 +0200
+Message-ID: <20260413155733.692202335@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -52,46 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Tyllis Xu <livelycarpet87@gmail.com>
 
-commit b76254c55dc8f23edc089027dd3f8792554c69fb upstream.
+commit 51f4e090b9f87b40c21b6daadb5c06e6c0a07b67 upstream.
 
-qca_tty_receive() consumes each input byte before checking whether a
-completed frame needs a fresh receive skb. When the current byte completes
-a frame, the driver delivers that frame and then allocates a new skb for
-the next one.
+The jumbo_frm() chain-mode implementation unconditionally computes
 
-If that allocation fails, the current code returns i even though data[i]
-has already been consumed and may already have completed the delivered
-frame. Since serdev interprets the return value as the number of accepted
-bytes, this under-reports progress by one byte and can replay the final
-byte of the completed frame into a fresh parser state on the next call.
+    len = nopaged_len - bmax;
 
-Return i + 1 in that failure path so the accepted-byte count matches the
-actual receive-state progress.
+where nopaged_len = skb_headlen(skb) (linear bytes only) and bmax is
+BUF_SIZE_8KiB or BUF_SIZE_2KiB.  However, the caller stmmac_xmit()
+decides to invoke jumbo_frm() based on skb->len (total length including
+page fragments):
 
-Fixes: dfc768fbe618 ("net: qualcomm: add QCA7000 UART driver")
+    is_jumbo = stmmac_is_jumbo_frm(priv, skb->len, enh_desc);
+
+When a packet has a small linear portion (nopaged_len <= bmax) but a
+large total length due to page fragments (skb->len > bmax), the
+subtraction wraps as an unsigned integer, producing a huge len value
+(~0xFFFFxxxx).  This causes the while (len != 0) loop to execute
+hundreds of thousands of iterations, passing skb->data + bmax * i
+pointers far beyond the skb buffer to dma_map_single().  On IOMMU-less
+SoCs (the typical deployment for stmmac), this maps arbitrary kernel
+memory to the DMA engine, constituting a kernel memory disclosure and
+potential memory corruption from hardware.
+
+Fix this by introducing a buf_len local variable clamped to
+min(nopaged_len, bmax).  Computing len = nopaged_len - buf_len is then
+always safe: it is zero when the linear portion fits within a single
+descriptor, causing the while (len != 0) loop to be skipped naturally,
+and the fragment loop in stmmac_xmit() handles page fragments afterward.
+
+Fixes: 286a83721720 ("stmmac: add CHAINED descriptor mode support (V4)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260402071207.4036-1-pengpeng@iscas.ac.cn
+Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
+Link: https://patch.msgid.link/20260401044708.1386919-1-LivelyCarpet87@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qualcomm/qca_uart.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/chain_mode.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/qualcomm/qca_uart.c
-+++ b/drivers/net/ethernet/qualcomm/qca_uart.c
-@@ -100,7 +100,7 @@ qca_tty_receive(struct serdev_device *se
- 			if (!qca->rx_skb) {
- 				netdev_dbg(netdev, "recv: out of RX resources\n");
- 				n_stats->rx_errors++;
--				return i;
-+				return i + 1;
- 			}
- 		}
- 	}
+--- a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
++++ b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
+@@ -20,7 +20,7 @@ static int jumbo_frm(struct stmmac_tx_qu
+ 	unsigned int nopaged_len = skb_headlen(skb);
+ 	struct stmmac_priv *priv = tx_q->priv_data;
+ 	unsigned int entry = tx_q->cur_tx;
+-	unsigned int bmax, des2;
++	unsigned int bmax, buf_len, des2;
+ 	unsigned int i = 1, len;
+ 	struct dma_desc *desc;
+ 
+@@ -31,17 +31,18 @@ static int jumbo_frm(struct stmmac_tx_qu
+ 	else
+ 		bmax = BUF_SIZE_2KiB;
+ 
+-	len = nopaged_len - bmax;
++	buf_len = min_t(unsigned int, nopaged_len, bmax);
++	len = nopaged_len - buf_len;
+ 
+ 	des2 = dma_map_single(priv->device, skb->data,
+-			      bmax, DMA_TO_DEVICE);
++			      buf_len, DMA_TO_DEVICE);
+ 	desc->des2 = cpu_to_le32(des2);
+ 	if (dma_mapping_error(priv->device, des2))
+ 		return -1;
+ 	tx_q->tx_skbuff_dma[entry].buf = des2;
+-	tx_q->tx_skbuff_dma[entry].len = bmax;
++	tx_q->tx_skbuff_dma[entry].len = buf_len;
+ 	/* do not close the descriptor and do not set own bit */
+-	stmmac_prepare_tx_desc(priv, desc, 1, bmax, csum, STMMAC_CHAIN_MODE,
++	stmmac_prepare_tx_desc(priv, desc, 1, buf_len, csum, STMMAC_CHAIN_MODE,
+ 			0, false, skb->len);
+ 
+ 	while (len != 0) {
 
 
