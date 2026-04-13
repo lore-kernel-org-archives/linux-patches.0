@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37C024DCF6;
-	Mon, 13 Apr 2026 16:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901F025A2C9;
+	Mon, 13 Apr 2026 16:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096870; cv=none; b=fPdmGQTHFBzHZo/2uX3A/GuLOrpokrgxI5ofl2Ek4mrM995q0ebzrFyQP6UkzCyZpFjKSpl5rIJKJKzxjbVw2ii/SKvWgHu/E6Rg/emQhlVxiBdmsHGf+D+XrQ5RtWsbUDSXS9Nw72gO2wI/w789sL5DzHDXKe+iWR30nwxT0ws=
+	t=1776096872; cv=none; b=M/O9zQ4b5VHZ9t85H37qX24kxUyDkmxU/Ny6W5WgAc/gRxJj/UzbOXxfoKihm7fJ+NJKQgOXCaoIAqLwQdvUHVwqRHBvyQWXKsbAKSnipnq6XD34mA7JXMuYEiBJkfOb6qRyC+57GqHbtDEferyJjz2tMZ4dDJa56S54F4UJqZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096870; c=relaxed/simple;
-	bh=irZxlP7wcfehresR7eU8gm2VylHBIHlY+cmmAWK+4ho=;
+	s=arc-20240116; t=1776096872; c=relaxed/simple;
+	bh=3tWRSJGGxJsE6UO5NJNjHMiyZOITIoNZSinPxDC8J5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZH2FsLmv9KXQFOYDN8oA2XQPwuzvKP4tK+17v2WlgGtGZCYamv7tDFbumX9sXlR59IkXzbi+lGW29F1bG/tvkua15QSfD5EaI9Fc2rFrquxVatRKqMMzGfj3mUZQ0NITiJVtCpmdH2nzlGacOWEnjU3rmgDQMrMSlnpp37CqEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlN8BhEr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u1tVhmSoICwkAnh6W29sIeHk7hIN+4q0uuQ/8LyYlF+4/fXDDH1M8pqEksLxBNeoR09XOGFsFm/ETiT9GRgdfMLGe0pExlVSpVlMLMvYQ0C3CzphRZjcxEi1BvSTMh2XkYGUMfeRgqjvPDqkrMWQ/T8NyxnI8FOVfymt7au69Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvpfK6yl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlN8BhEr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BADFC2BCAF;
-	Mon, 13 Apr 2026 16:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvpfK6yl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D79AC2BCAF;
+	Mon, 13 Apr 2026 16:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096869;
-	bh=irZxlP7wcfehresR7eU8gm2VylHBIHlY+cmmAWK+4ho=;
+	s=korg; t=1776096872;
+	bh=3tWRSJGGxJsE6UO5NJNjHMiyZOITIoNZSinPxDC8J5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LlN8BhEruRiV+Un1y8E/0xtwOl//rxWpfh+ApvdanKKhdKkX4aVXAJaEQp4/ekywB
-	 SE2MICn9jfWLe5yhFb5GfOTkh0kQ5TQQ9EATNUiIcvyP7HehI4T1J0EI4qh5Om7OeF
-	 HNFXJDYE3XOZBB8tcy2DrBsrsWEsX5FvFnJIK+a8=
+	b=cvpfK6ylWvazTqaUqn/UXn6Zw3vxk/Gw2ughSC74cri7VMb4dTR4PZnYPmtp9UKDV
+	 fMAaSiK9mcuB80M1XRcnp8rfQfL3Bmos0wSwXRnlDN1B5zFp4cfUrc1doTMgev7y8s
+	 zLrAvQ1hGIOcXiZlp15CIRpu+uzYXR/PIrhkdqao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 23/50] wifi: brcmsmac: Fix dma_free_coherent() size
-Date: Mon, 13 Apr 2026 18:00:50 +0200
-Message-ID: <20260413155725.379747047@linuxfoundation.org>
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.6 24/50] Revert "arm64: dts: imx8mq-librem5: Set the DVS voltages lower"
+Date: Mon, 13 Apr 2026 18:00:51 +0200
+Message-ID: <20260413155725.415624578@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -51,36 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-commit 12cd7632757a54ce586e36040210b1a738a0fc53 upstream.
+commit 4cd46ea0eb4504f7f4fea92cb4601c5c9a3e545e upstream.
 
-dma_alloc_consistent() may change the size to align it. The new size is
-saved in alloced.
+This reverts commit c24a9b698fb02cd0723fa8375abab07f94b97b10.
 
-Change the free size to match the allocation size.
+It's been found that there's a significant per-unit variance in accepted
+supply voltages and the current set still makes some units unstable.
 
-Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260218130741.46566-3-fourier.thomas@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Revert back to nominal values.
+
+Cc: stable@vger.kernel.org
+Fixes: c24a9b698fb0 ("arm64: dts: imx8mq-librem5: Set the DVS voltages lower")
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts |    2 -
+ arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi   |   22 +++++---------------
+ 2 files changed, 7 insertions(+), 17 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
-@@ -483,7 +483,7 @@ static void *dma_ringalloc(struct dma_in
- 	if (((desc_strtaddr + size - 1) & boundary) != (desc_strtaddr
- 							& boundary)) {
- 		*alignbits = dma_align_sizetobits(size);
--		dma_free_coherent(di->dmadev, size, va, *descpa);
-+		dma_free_coherent(di->dmadev, *alloced, va, *descpa);
- 		va = dma_alloc_consistent(di, size, *alignbits,
- 			alloced, descpa);
- 	}
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
+@@ -7,7 +7,7 @@
+ 
+ &a53_opp_table {
+ 	opp-1000000000 {
+-		opp-microvolt = <950000>;
++		opp-microvolt = <1000000>;
+ 	};
+ };
+ 
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+@@ -847,8 +847,8 @@
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+ 				regulator-ramp-delay = <1250>;
+-				rohm,dvs-run-voltage = <880000>;
+-				rohm,dvs-idle-voltage = <820000>;
++				rohm,dvs-run-voltage = <900000>;
++				rohm,dvs-idle-voltage = <850000>;
+ 				rohm,dvs-suspend-voltage = <810000>;
+ 				regulator-always-on;
+ 			};
+@@ -859,8 +859,8 @@
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+ 				regulator-ramp-delay = <1250>;
+-				rohm,dvs-run-voltage = <950000>;
+-				rohm,dvs-idle-voltage = <850000>;
++				rohm,dvs-run-voltage = <1000000>;
++				rohm,dvs-idle-voltage = <900000>;
+ 				regulator-always-on;
+ 			};
+ 
+@@ -869,14 +869,14 @@
+ 				regulator-min-microvolt = <700000>;
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+-				rohm,dvs-run-voltage = <850000>;
++				rohm,dvs-run-voltage = <900000>;
+ 			};
+ 
+ 			buck4_reg: BUCK4 {
+ 				regulator-name = "buck4";
+ 				regulator-min-microvolt = <700000>;
+ 				regulator-max-microvolt = <1300000>;
+-				rohm,dvs-run-voltage = <930000>;
++				rohm,dvs-run-voltage = <1000000>;
+ 			};
+ 
+ 			buck5_reg: BUCK5 {
+@@ -1410,13 +1410,3 @@
+ 	fsl,ext-reset-output;
+ 	status = "okay";
+ };
+-
+-&a53_opp_table {
+-	opp-1000000000 {
+-		opp-microvolt = <850000>;
+-	};
+-
+-	opp-1500000000 {
+-		opp-microvolt = <950000>;
+-	};
+-};
 
 
