@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F332E11B9;
-	Mon, 13 Apr 2026 16:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749472E11B9;
+	Mon, 13 Apr 2026 16:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097545; cv=none; b=NkK7sAuoD9Cs7vkip4bgmBCe32fNiga2t2ZXW8pxEGkVTn7CE6ODBMdai2Ow0Q1xCk7Wit/Wpm5N7LHoYkPWJsbO2cbX5k1qplXzn6dr9GusowOU4JDPl7RB5q3hhggto8I0w4zXBvrHpBg2vZTC4P8449eXnj8V8ZAa3ShlAr8=
+	t=1776097548; cv=none; b=VPdW4Bo183HVwCqfTGikmmxRwc8oWW/aZ73XPt61eiqvaIXDfnRSjDmpWmRHy6T63WK0F9U/sD9ug6SXA6tTy0SICJVaGWMmxUyrswtwW1ctVh+/wFi96eux6bBqB+gmmO8x2MvRuDekNfK4p33yzCHzkBfwdNJyZpU8YxEQ3Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097545; c=relaxed/simple;
-	bh=K/GU9mEWgR0clouEsa4+jF/HxePxHIZPbYYX+4V+rUA=;
+	s=arc-20240116; t=1776097548; c=relaxed/simple;
+	bh=mbwFRQWgIwqG2VU86OladrMKdLJ/UL16oaST9ztwHI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/gtw15NafcSQp3tVGOi351gQ+UnS+U/8cRn0B2/Lp5Xc/7584BE5mbfXbSY5OvNYtVlFNefS90Dre+JaNa3qWUa0wULXznKhyN/CTp7JMFZAo2o+XVDDMkkkpkiG0Z3WtW9SrA1ULkbeipha1eiI3+qIzGmxo/g1uoAKqaNr1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/8QjPs6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EKPfuVB6a9iU7JeOtMutNp5oiYA2qhZUYwqMm+CP7TbChMc2HIRPG26dpi65kqvktDBQeR7UUjDaGfCxq4zJwTNXYv1P9j2nprFgyUIe93BlLFlMzuPnOBuRHmHYnwdlrTfiu7jx0NzoafhhI+jnMUPMAGIAjdEe6MRvYoM7uRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4JRv05Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/8QjPs6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E75DC2BCAF;
-	Mon, 13 Apr 2026 16:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4JRv05Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0207CC2BCAF;
+	Mon, 13 Apr 2026 16:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097545;
-	bh=K/GU9mEWgR0clouEsa4+jF/HxePxHIZPbYYX+4V+rUA=;
+	s=korg; t=1776097548;
+	bh=mbwFRQWgIwqG2VU86OladrMKdLJ/UL16oaST9ztwHI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/8QjPs6cMAO3hsDojNrnFAprfrr4qEnxbYPiLDP05309D7OerSmwKLIisocVmEP/
-	 Qy3kYgPwc06OscfEJHep/ArepwouGceXln+I/OikVFdAjD4XIgZVx3CDZb9gbC8CMi
-	 u1O3UYGXokOFetmvVMg8XYEAKL8ZLet8fkaws3mE=
+	b=g4JRv05Y7Luk6l7fEJG8NZ+hN8B+UotE8gvNtNe73PQrVUSkNUho5SLmHhtHkg/24
+	 HI0Q4ulqy6KwpxbLv7NS0tysZfeAaPTxxZrpcG/g5AtcAopN7lVJtSl/739b3Lwau+
+	 iNc9213f7jhm9Khu6F/xTZ7W+VRXzJY7K9s12fTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Bukte <rahul.bukte@sony.com>,
-	Shashank Balaji <shashank.mahadasyam@sony.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sohil Mehta <sohil.mehta@intel.com>
-Subject: [PATCH 5.15 178/570] x86/apic: Disable x2apic on resume if the kernel expects so
-Date: Mon, 13 Apr 2026 17:55:09 +0200
-Message-ID: <20260413155837.124789016@linuxfoundation.org>
+	Josh Law <objecting@objecting.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 179/570] lib/bootconfig: fix snprintf truncation check in xbc_node_compose_key_after()
+Date: Mon, 13 Apr 2026 17:55:10 +0200
+Message-ID: <20260413155837.162071869@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -53,86 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shashank Balaji <shashank.mahadasyam@sony.com>
+From: Josh Law <objecting@objecting.org>
 
-commit 8cc7dd77a1466f0ec58c03478b2e735a5b289b96 upstream.
+commit 1120a36bb1e9b9e22de75ecb4ef0b998f73a97f1 upstream.
 
-When resuming from s2ram, firmware may re-enable x2apic mode, which may have
-been disabled by the kernel during boot either because it doesn't support IRQ
-remapping or for other reasons. This causes the kernel to continue using the
-xapic interface, while the hardware is in x2apic mode, which causes hangs.
-This happens on defconfig + bare metal + s2ram.
+snprintf() returns the number of characters that would have been
+written excluding the NUL terminator.  Output is truncated when the
+return value is >= the buffer size, not just > the buffer size.
 
-Fix this in lapic_resume() by disabling x2apic if the kernel expects it to be
-disabled, i.e. when x2apic_mode = 0.
+When ret == size, the current code takes the non-truncated path,
+advancing buf by ret and reducing size to 0.  This is wrong because
+the output was actually truncated (the last character was replaced by
+NUL).  Fix by using >= so the truncation path is taken correctly.
 
-The ACPI v6.6 spec, Section 16.3 [1] says firmware restores either the
-pre-sleep configuration or initial boot configuration for each CPU, including
-MSR state:
+Link: https://lore.kernel.org/all/20260312191143.28719-4-objecting@objecting.org/
 
-  When executing from the power-on reset vector as a result of waking from an
-  S2 or S3 sleep state, the platform firmware performs only the hardware
-  initialization required to restore the system to either the state the
-  platform was in prior to the initial operating system boot, or to the
-  pre-sleep configuration state. In multiprocessor systems, non-boot
-  processors should be placed in the same state as prior to the initial
-  operating system boot.
-
-  (further ahead)
-
-  If this is an S2 or S3 wake, then the platform runtime firmware restores
-  minimum context of the system before jumping to the waking vector. This
-  includes:
-
-	CPU configuration. Platform runtime firmware restores the pre-sleep
-	configuration or initial boot configuration of each CPU (MSR, MTRR,
-	firmware update, SMBase, and so on). Interrupts must be disabled (for
-	IA-32 processors, disabled by CLI instruction).
-
-	(and other things)
-
-So at least as per the spec, re-enablement of x2apic by the firmware is
-allowed if "x2apic on" is a part of the initial boot configuration.
-
-  [1] https://uefi.org/specs/ACPI/6.6/16_Waking_and_Sleeping.html#initialization
-
-  [ bp: Massage. ]
-
-Fixes: 6e1cb38a2aef ("x64, x2apic/intr-remap: add x2apic support, including enabling interrupt-remapping")
-Co-developed-by: Rahul Bukte <rahul.bukte@sony.com>
-Signed-off-by: Rahul Bukte <rahul.bukte@sony.com>
-Signed-off-by: Shashank Balaji <shashank.mahadasyam@sony.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260306-x2apic-fix-v2-1-bee99c12efa3@sony.com
+Signed-off-by: Josh Law <objecting@objecting.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/apic.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ lib/bootconfig.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -1916,6 +1916,7 @@ early_initcall(validate_x2apic);
- 
- static inline void try_to_enable_x2apic(int remap_mode) { }
- static inline void __x2apic_enable(void) { }
-+static inline void __x2apic_disable(void) { }
- #endif /* !CONFIG_X86_X2APIC */
- 
- void __init enable_IR_x2apic(void)
-@@ -2726,6 +2727,11 @@ static void lapic_resume(void)
- 	if (x2apic_mode) {
- 		__x2apic_enable();
- 	} else {
-+		if (x2apic_enabled()) {
-+			pr_warn_once("x2apic: re-enabled by firmware during resume. Disabling\n");
-+			__x2apic_disable();
-+		}
-+
- 		/*
- 		 * Make sure the APICBASE points to the right address
- 		 *
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -250,7 +250,7 @@ int __init xbc_node_compose_key_after(st
+ 			       depth ? "." : "");
+ 		if (ret < 0)
+ 			return ret;
+-		if (ret > size) {
++		if (ret >= size) {
+ 			size = 0;
+ 		} else {
+ 			size -= ret;
 
 
