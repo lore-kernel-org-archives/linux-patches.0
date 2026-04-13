@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A929B333429;
-	Mon, 13 Apr 2026 17:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318D6330B3A;
+	Mon, 13 Apr 2026 17:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099852; cv=none; b=ObAXqEeVdO9BzATUszDQ/wRASdKbELLRYijcImyBcqsfuUCM3ULU675+0veoVI2pBMvArD2vG0JjTHH+mOSgD+ndz+era1Szv4AoDSdJRLfebazuy5/YHAMDwiQP3Tz/UJtKDoBwCee+Q0WYazvVZZlX5SHaYcMt8qZZyIIOB2c=
+	t=1776099855; cv=none; b=sFWGgyhnNkyALYUz2AXgDFFGsRwOhmwLQZc+1zLA9Dxdtm1T7Pq5whb+Vg/ivH9/sIUojewQGlzyDcBTGdC5FPdTl4tvx27JClOj3xlMjTXWBLUTWfrER14sqEhaejT2vCOUvVffgpcSNQxMLugbKNhp94eaEZJ4m8RicirgG6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099852; c=relaxed/simple;
-	bh=BIRhHfCzeUOQvPswg5nABstbmXbXWyUFvMBtMQpxBGk=;
+	s=arc-20240116; t=1776099855; c=relaxed/simple;
+	bh=S1S7iqtOHpAi+ou1WirmlxxLs7n++qNL1h45+vlCiAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcoLjgLdcD4GY1T4OZLJfiMnM92zLVuW41HZ7h4RT4BeijzomoyP9dWfIKzHEIqmIoxmvFUJkTWFZOLUVT9w+LdFj7otUN3Bm44oFIDVPJpMIjadECnW/j7dfMvFDaskfHZSruf+CSRzWxv+h+9aDrd9eu68sH/tEAoHDEgi5ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2x3q/op; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ce9luaZO551wRQSwQk480C3Unb0bLyrIWPNO6q96l0/kn318wo3ekbHuV2Bv+b4DEI7RgrWZG+2+nm2Zuo1ut8uq/EUZAy/va9V/OK1k1IGG4oVgkYc5C4KLtOMJOzL4VM9QPHNBoCNwd2o8IcbJfdojg6E0urfbtvhLM+V+Vu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfvotz6D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2x3q/op"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA639C2BCAF;
-	Mon, 13 Apr 2026 17:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfvotz6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FA2C2BCAF;
+	Mon, 13 Apr 2026 17:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099852;
-	bh=BIRhHfCzeUOQvPswg5nABstbmXbXWyUFvMBtMQpxBGk=;
+	s=korg; t=1776099854;
+	bh=S1S7iqtOHpAi+ou1WirmlxxLs7n++qNL1h45+vlCiAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D2x3q/op3tHwbopkoFoJGZ1MfYaZQs7iJOISWKBPaUS3GrHcgG1dKyUdXAnbbt4fX
-	 Jxf1XAY+6I1z7HWUvEhmZPgNGAYdUk4OZ6eaJjm2MwNnprmBjZ/WOwfue00iXT60w7
-	 I3gg/YWpixccFLg4wjUgq0GrvsaOapKFNeTdYVkg=
+	b=qfvotz6D2Pdp5QEOQitanhyp+smfYaSkqg5GKRhyHT9TEqcrgdkI4h1hZq4if76Pp
+	 mU1ivTnxFfEPtG6zwhrdm+4OFcXHRd4xmwhORnA3hakJdCYUaOhoHxjCGNV0x48dK8
+	 hDlxNLIq4oZfK5wG+9qIplMJPo/KreymjBplqBq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 491/491] io_uring/poll: correctly handle io_poll_add() return value on update
-Date: Mon, 13 Apr 2026 18:02:16 +0200
-Message-ID: <20260413155837.438151458@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 5.10 487/491] batman-adv: avoid OGM aggregation when skb tailroom is insufficient
+Date: Mon, 13 Apr 2026 18:02:12 +0200
+Message-ID: <20260413155837.287603613@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,96 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-Commit 84230ad2d2afbf0c44c32967e525c0ad92e26b4e upstream.
+commit 0d4aef630be9d5f9c1227d07669c26c4383b5ad0 upstream.
 
-When the core of io_uring was updated to handle completions
-consistently and with fixed return codes, the POLL_REMOVE opcode
-with updates got slightly broken. If a POLL_ADD is pending and
-then POLL_REMOVE is used to update the events of that request, if that
-update causes the POLL_ADD to now trigger, then that completion is lost
-and a CQE is never posted.
+When OGM aggregation state is toggled at runtime, an existing forwarded
+packet may have been allocated with only packet_len bytes, while a later
+packet can still be selected for aggregation. Appending in this case can
+hit skb_put overflow conditions.
 
-Additionally, ensure that if an update does cause an existing POLL_ADD
-to complete, that the completion value isn't always overwritten with
--ECANCELED. For that case, whatever io_poll_add() set the value to
-should just be retained.
+Reject aggregation when the target skb tailroom cannot accommodate the new
+packet. The caller then falls back to creating a new forward packet
+instead of appending.
 
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
 Cc: stable@vger.kernel.org
-Fixes: 97b388d70b53 ("io_uring: handle completions in the core")
-Reported-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
-Tested-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+[ Adjust context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ net/batman-adv/bat_iv_ogm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -5980,7 +5980,7 @@ static int io_poll_add_prep(struct io_ki
- 	return 0;
- }
+--- a/net/batman-adv/bat_iv_ogm.c
++++ b/net/batman-adv/bat_iv_ogm.c
+@@ -466,6 +466,9 @@ batadv_iv_ogm_can_aggregate(const struct
+ 	    !time_after_eq(aggregation_end_time, forw_packet->send_time))
+ 		return false;
  
--static int io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
-+static int __io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
- {
- 	struct io_poll_iocb *poll = &req->poll;
- 	struct io_poll_table ipt;
-@@ -5992,11 +5992,21 @@ static int io_poll_add(struct io_kiocb *
- 	if (!ret && ipt.error)
- 		req_set_fail(req);
- 	ret = ret ?: ipt.error;
--	if (ret)
-+	if (ret > 0) {
- 		__io_req_complete(req, issue_flags, ret, 0);
-+		return ret;
-+	}
- 	return 0;
- }
- 
-+static int io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
-+{
-+	int ret;
++	if (skb_tailroom(forw_packet->skb) < packet_len)
++		return false;
 +
-+	ret = __io_poll_add(req, issue_flags);
-+	return ret < 0 ? ret : 0;
-+}
-+
- static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags)
- {
- 	struct io_ring_ctx *ctx = req->ctx;
-@@ -6012,6 +6022,7 @@ static int io_poll_update(struct io_kioc
- 		ret = preq ? -EALREADY : -ENOENT;
- 		goto out;
- 	}
-+	preq->result = -ECANCELED;
- 	spin_unlock(&ctx->completion_lock);
+ 	if (aggregated_bytes > BATADV_MAX_AGGREGATION_BYTES)
+ 		return false;
  
- 	if (req->poll_update.update_events || req->poll_update.update_user_data) {
-@@ -6024,16 +6035,17 @@ static int io_poll_update(struct io_kioc
- 		if (req->poll_update.update_user_data)
- 			preq->user_data = req->poll_update.new_user_data;
- 
--		ret2 = io_poll_add(preq, issue_flags);
-+		ret2 = __io_poll_add(preq, issue_flags);
- 		/* successfully updated, don't complete poll request */
- 		if (!ret2)
- 			goto out;
-+		preq->result = ret2;
-+
- 	}
--	req_set_fail(preq);
--	io_req_complete(preq, -ECANCELED);
-+	if (preq->result < 0)
-+		req_set_fail(preq);
-+	io_req_complete(preq, preq->result);
- out:
--	if (ret < 0)
--		req_set_fail(req);
- 	/* complete update request, we're done with it */
- 	io_req_complete(req, ret);
- 	io_ring_submit_unlock(ctx, !(issue_flags & IO_URING_F_NONBLOCK));
 
 
