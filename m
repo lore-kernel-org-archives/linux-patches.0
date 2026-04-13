@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1AC1D5AD4;
-	Mon, 13 Apr 2026 16:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9244D1A680C;
+	Mon, 13 Apr 2026 16:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098403; cv=none; b=K9mFAfWgRSVhJiEsglNnJyOc28QMtjY9ba0lnRynZj5MQophhtsFGWPiVkHwyTmNJN2afBtYlVyBqThTleSfzAmLTckFZpixZ8Mw8iTl3Wh/0LEhu9XdwJ3l57IwbeBtaKL/OhZFYElJ1jXojEUikql1zGqIEozhnaNyeEIOmsQ=
+	t=1776098406; cv=none; b=q+d91ID98iqYXsC2TSe9HSC2yBtetyLvmogdh7oVi/UID89apEtkBfC8autYQGus5oazQNvawxjXndDfLzywrdSEHRYuFvDMpcott35LuAmEde5vptpNjHNp2sTljEzOwyTRnk91TpAahw30lju9CHTyFQjNXbeLtYkTfv0MVGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098403; c=relaxed/simple;
-	bh=ngOFs/hB+ci0+ngNjrw3tieQCfUNxlvXp3xoVoub54g=;
+	s=arc-20240116; t=1776098406; c=relaxed/simple;
+	bh=ROcgtNs/VxHbJZQ/V5L7nAd8+Bb7WkTpOmueW7T3LsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DcOiSoYgwMekYiyYrPn8TruLQ0vxC3/08DoqEWCd+ZIR++oxgqHaLqY8nJKF5bfQLOTsBAsUyRLE3km5kPAiQMlB90/VLt40yghfxjDWxLDQVHHOSu49ltdU6VKQVbDecLi/Df8uPpSrOq8iFA/+HeX3HxPYEZPPKo/HXZwmxmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqIC8E6n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fn5hGCncdGSypWuvRRqrB8JCcqBcW/+aoZzZBYO4MStTK1sNDfBeW2uA8kqpdUv6LNn1XmgZPIt6RZYWa7AyHMY18dx5S+IOSyq5iMuUF05M7NxnKpm6mZ/pD2BSsmkjvKmO+l+wPIhQ5kREn/haARTlEelyg7PLVOcWyiNK7bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eojAnZj5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqIC8E6n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74434C2BCAF;
-	Mon, 13 Apr 2026 16:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eojAnZj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27335C2BCAF;
+	Mon, 13 Apr 2026 16:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098403;
-	bh=ngOFs/hB+ci0+ngNjrw3tieQCfUNxlvXp3xoVoub54g=;
+	s=korg; t=1776098406;
+	bh=ROcgtNs/VxHbJZQ/V5L7nAd8+Bb7WkTpOmueW7T3LsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mqIC8E6nkdH8qS4tD98xVHnIjmMJfQg0NuKLwTIcy46gT0QPBzYKN5/Hc5jVs/6GD
-	 XN3nWICDCDA7vvupMucEAcx97Fv66Y7WdmiewSYSfSd7j/V9i7UCRL8sEDNUsquCJV
-	 bcL2dgTTdPNoVJylJhc3c4BiPV1uogP7nH2gSgLo=
+	b=eojAnZj5BHK+jfxKym5yDaz83A5R7q/TZ2hst6uq9TTVYVxf62pypTorzLAt3LAso
+	 XYvRnw9FfTME9XNkc/EqjobvZIHFRx1JP9Fy/FjObtnowLAFMCHwoxfCaUbGkbfKG/
+	 QRhtkdrnbP9MUfPRJzWvrkatMDz/Ds274CTixSWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 479/570] cdc-acm: new quirk for EPSON HMD
-Date: Mon, 13 Apr 2026 18:00:10 +0200
-Message-ID: <20260413155848.404883099@linuxfoundation.org>
+	syzbot+72f94b474d6e50b71ffc@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>,
+	Deepanshu Kartikey <kartikey406@gmail.com>
+Subject: [PATCH 5.15 480/570] comedi: dt2815: add hardware detection to prevent crash
+Date: Mon, 13 Apr 2026 18:00:11 +0200
+Message-ID: <20260413155848.441960324@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,60 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit f97e96c303d689708f7f713d8f3afcc31f1237e9 upstream.
+commit 93853512f565e625df2397f0d8050d6aafd7c3ad upstream.
 
-This device has a union descriptor that is just garbage
-and needs a custom descriptor.
-In principle this could be done with a (conditionally
-activated) heuristic. That would match more devices
-without a need for defining a new quirk. However,
-this always carries the risk that the heuristics
-does the wrong thing and leads to more breakage.
-Defining the quirk and telling it exactly what to do
-is the safe and conservative approach.
+The dt2815 driver crashes when attached to I/O ports without actual
+hardware present. This occurs because syzkaller or users can attach
+the driver to arbitrary I/O addresses via COMEDI_DEVCONFIG ioctl.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
+When no hardware exists at the specified port, inb() operations return
+0xff (floating bus), but outb() operations can trigger page faults due
+to undefined behavior, especially under race conditions:
+
+  BUG: unable to handle page fault for address: 000000007fffff90
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  RIP: 0010:dt2815_attach+0x6e0/0x1110
+
+Add hardware detection by reading the status register before attempting
+any write operations. If the read returns 0xff, assume no hardware is
+present and fail the attach with -ENODEV. This prevents crashes from
+outb() operations on non-existent hardware.
+
+Reported-by: syzbot+72f94b474d6e50b71ffc@syzkaller.appspotmail.com
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260317084139.1461008-1-oneukum@suse.com
+Closes: https://syzkaller.appspot.com/bug?extid=72f94b474d6e50b71ffc
+Tested-by: syzbot+72f94b474d6e50b71ffc@syzkaller.appspotmail.com
+Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: [https://lore.kernel.org/all/20260126070458.10974-1-kartikey406@gmail.com/T/]
+Link: [https://lore.kernel.org/all/20260126070458.10974-1-kartikey406@gmail.com/T/
+Link: https://patch.msgid.link/20260309104859.503529-1-kartikey406@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |    9 +++++++++
- drivers/usb/class/cdc-acm.h |    1 +
- 2 files changed, 10 insertions(+)
+ drivers/comedi/drivers/dt2815.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -1205,6 +1205,12 @@ static int acm_probe(struct usb_interfac
- 		if (!data_interface || !control_interface)
- 			return -ENODEV;
- 		goto skip_normal_probe;
-+	} else if (quirks == NO_UNION_12) {
-+		data_interface = usb_ifnum_to_if(usb_dev, 2);
-+		control_interface = usb_ifnum_to_if(usb_dev, 1);
-+		if (!data_interface || !control_interface)
-+			 return -ENODEV;
-+		goto skip_normal_probe;
+--- a/drivers/comedi/drivers/dt2815.c
++++ b/drivers/comedi/drivers/dt2815.c
+@@ -176,6 +176,18 @@ static int dt2815_attach(struct comedi_d
+ 		    ? current_range_type : voltage_range_type;
  	}
  
- 	/* normal probing*/
-@@ -1733,6 +1739,9 @@ static const struct usb_device_id acm_id
- 	{ USB_DEVICE(0x045b, 0x024D),	/* Renesas R-Car E3 USB Download mode */
- 	.driver_info = DISABLE_ECHO,	/* Don't echo banner */
- 	},
-+	{ USB_DEVICE(0x04b8, 0x0d12),	/* EPSON HMD Com&Sens */
-+	.driver_info = NO_UNION_12,	/* union descriptor is garbage */
-+	},
- 	{ USB_DEVICE(0x0e8d, 0x0003), /* FIREFLY, MediaTek Inc; andrey.arapov@gmail.com */
- 	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
- 	},
---- a/drivers/usb/class/cdc-acm.h
-+++ b/drivers/usb/class/cdc-acm.h
-@@ -142,3 +142,4 @@ struct acm {
- #define SEND_ZERO_PACKET		BIT(6)
- #define DISABLE_ECHO			BIT(7)
- #define MISSING_CAP_BRK			BIT(8)
-+#define NO_UNION_12			BIT(9)
++	/*
++	 * Check if hardware is present before attempting any I/O operations.
++	 * Reading 0xff from status register typically indicates no hardware
++	 * on the bus (floating bus reads as all 1s).
++	 */
++	if (inb(dev->iobase + DT2815_STATUS) == 0xff) {
++		dev_err(dev->class_dev,
++			"No hardware detected at I/O base 0x%lx\n",
++			dev->iobase);
++		return -ENODEV;
++	}
++
+ 	/* Init the 2815 */
+ 	outb(0x00, dev->iobase + DT2815_STATUS);
+ 	for (i = 0; i < 100; i++) {
 
 
