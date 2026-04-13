@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8702E11B9;
-	Mon, 13 Apr 2026 16:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E02628505E;
+	Mon, 13 Apr 2026 16:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097553; cv=none; b=tQTywl3Es54V7UtwUBeHmEImy/cotb4YBLY64cFhuHht2Y72E6/GMjlbutBNgtk6cZPW0kC96e10+/hW/dfKALm4H0gAbK+KskB6qIVgI5j27G3z6Wxr6OEIvQ7Zlyz7A0BM2c59Ts80RgiTXqPdmkCpNgaEd/zNKsZ2IE9rGdc=
+	t=1776097556; cv=none; b=LQPnoqi1ZTNhEN26Zb5x4g91RYdQSBe83xXross8sELPN6a6MJjSqarxjdQ7OPAfB5lo7MifAoUURM/iAbk2MGSqMifgHkhLk5q9cPqPCRR/sn5cpKgD7BizvycsWkhyWQeIS//IYmV9yC24UlG0f2m5cbTrnRXGR3cb+vPSab4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097553; c=relaxed/simple;
-	bh=HSiWHBHhvQN+sLuLdVVRZG2SXZtlqxb33y+/FKS3EWM=;
+	s=arc-20240116; t=1776097556; c=relaxed/simple;
+	bh=OV1WwmUMUvtvtNDag4HT7Qo6nSGDm8J3EoUz9ktHJvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SwHMnndyoge8n7mM8AJccmKvBytoaTLlZmI7OZ2JA6jcB7bwQvhCUoFdtjOSSWPXk1CowgfEgeJQ/H5XpsiMvdZSj46xvv4hyxj9dE6ZUy3oT1El4KZoHr8FGdtlZbgq+1CmiKZoBenfCb4GQ+KSJ5UdpDiertQciho/yH5Pya0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjmcUBET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P9/I7rhG92bq0qUr0WCx7fsjs2WP4VXupgNcRswTqx/HRyKlIaF83gZk08HCvQYaT5oz/ANIEgg55BgqABbDRf8+zlSAae27NosDpB9Nt/NO6fGrbuCNQ3kKv5/73nt9kPtNMScThLyG8GKe6/QmH3il2b4AwuVGwsFKE+C+Iyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Naq26md0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjmcUBET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D83C2BCB0;
-	Mon, 13 Apr 2026 16:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Naq26md0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F86C2BCB6;
+	Mon, 13 Apr 2026 16:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097553;
-	bh=HSiWHBHhvQN+sLuLdVVRZG2SXZtlqxb33y+/FKS3EWM=;
+	s=korg; t=1776097556;
+	bh=OV1WwmUMUvtvtNDag4HT7Qo6nSGDm8J3EoUz9ktHJvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yjmcUBETiUtuwlfU4YalGPVwhOLoKOg/VJwoTHRh7aH+HMxrV9UY/0/Ueyibpeo2c
-	 cipW0pfH6gW8xrrlQ3diRpJAuLysZoMp+tUIKCr0D4uFPmwj+tY2mp28qFqORUmhE+
-	 cFva+tSlmM7WP6dqGI566kml6SfvboNHiMDoZ7uE=
+	b=Naq26md0aJNdAEt6UNI0sihZeS6jcYKAxnMuKwBYRxxvx5nyyr11ED9N1wYWcnxQt
+	 Ulf5dKQX9NO9vH4oyW14kGB3/ofhVUtC/ZHCoj79cNkRajHgLCVS3EqLZz4pT1gcUU
+	 x7DpwYCbRptOYnInsb9iyt8RkZotBFzktEnC5o6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <asj@kernel.org>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 181/570] btrfs: abort transaction on failure to update root in the received subvol ioctl
-Date: Mon, 13 Apr 2026 17:55:12 +0200
-Message-ID: <20260413155837.236397479@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 182/570] iio: dac: ds4424: reject -128 RAW value
+Date: Mon, 13 Apr 2026 17:55:13 +0200
+Message-ID: <20260413155837.274727464@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,36 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 0f475ee0ebce5c9492b260027cd95270191675fa upstream.
+commit 5187e03b817c26c1c3bcb2645a612ea935c4be89 upstream.
 
-If we failed to update the root we don't abort the transaction, which is
-wrong since we already used the transaction to remove an item from the
-uuid tree.
+The DS442x DAC uses sign-magnitude encoding, so -128 cannot be represented
+in hardware (7-bit magnitude).
 
-Fixes: dd5f9615fc5c ("Btrfs: maintain subvolume items in the UUID tree")
-CC: stable@vger.kernel.org # 3.12+
-Reviewed-by: Anand Jain <asj@kernel.org>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Previously, passing -128 resulted in a truncated value that programmed
+0mA (magnitude 0) instead of the expected maximum negative current,
+effectively failing silently.
+
+Reject -128 to avoid producing the wrong current.
+
+Fixes: d632a2bd8ffc ("iio: dac: ds4422/ds4424 dac driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/dac/ds4424.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -4545,7 +4545,8 @@ static long _btrfs_ioctl_set_received_su
+--- a/drivers/iio/dac/ds4424.c
++++ b/drivers/iio/dac/ds4424.c
+@@ -141,7 +141,7 @@ static int ds4424_write_raw(struct iio_d
  
- 	ret = btrfs_update_root(trans, fs_info->tree_root,
- 				&root->root_key, &root->root_item);
--	if (ret < 0) {
-+	if (unlikely(ret < 0)) {
-+		btrfs_abort_transaction(trans, ret);
- 		btrfs_end_transaction(trans);
- 		goto out;
- 	}
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW:
+-		if (val < S8_MIN || val > S8_MAX)
++		if (val <= S8_MIN || val > S8_MAX)
+ 			return -EINVAL;
+ 
+ 		if (val > 0) {
 
 
