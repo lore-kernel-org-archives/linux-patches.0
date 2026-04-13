@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34783090F5;
-	Mon, 13 Apr 2026 16:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66C426CE32;
+	Mon, 13 Apr 2026 16:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097600; cv=none; b=JGTOF+PIkztrh+RkvjhnGyOZfRXmfpo/K6oYQGZv7dkBr5XNw1aBcsmhHWq0s6r/4guVr9lWSeNQeDrYnU1iDklHcUNXr5jLLw3Jg8uYCmHh3GZSc56YhkvPew6GMU4dxXb0qDjgNxXZazy5xrQGEAyxyX+RmxkGB2z3vVImXGk=
+	t=1776097602; cv=none; b=VIFtEonHsRmhhias8EN8kfqMFKWK3e3RgmApQDmAENocyWJEdSokF/K1W79yqhZEcoeSBIukTaGkcyI/tDOfOg1YT/rQxCs0QxVc3qsmzGiL0qH4ToDTmXnxuWk4LsjirLKI9DY0J641+4MwTVYmhIp9Dkp3a4b3NVfCd/u+2TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097600; c=relaxed/simple;
-	bh=PKeBtB4fhEmyUeD2vl9DV55uSycDKk1W8+7H/XbzSgQ=;
+	s=arc-20240116; t=1776097602; c=relaxed/simple;
+	bh=B2Zzqkzrhi7SWiVW8VcvXd25UOQ1OHxHMFjqGZSsXXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hRSkobgp7P1AxwLUTdDIxbTCJS2WZl7BFFif8ov6e4ZexwYAP6+ZLzuKTNlNkzoClHhIx8+K69USNNvmQ0klCmQK/Yqv3hBfUrqfnkl+FRchMKNaxT9evu/WIuQDh1bjmfxqETmyHROYcQ7PfUL/Ng3bOlcqCUtdhYkfu3Jo8Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvZk9E/i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E8AIqlAUBf+5/5t1Y0ES3f+cI6xZt/ZXyw6qft1huT52ESvOep7Ba1ikmwOWwg7gdQUm0GBqgXF5vQ9dGd/SHae8UnZM5w+z3dw7wZwJDKidhCrmMY2GctBazsyqthYgYVWygHlqB/toi21Zg0J+FC+Sp+05SnWemMcu2zJV4yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pJR3ccV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvZk9E/i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798A6C2BCAF;
-	Mon, 13 Apr 2026 16:26:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pJR3ccV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B95EC2BCAF;
+	Mon, 13 Apr 2026 16:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097599;
-	bh=PKeBtB4fhEmyUeD2vl9DV55uSycDKk1W8+7H/XbzSgQ=;
+	s=korg; t=1776097602;
+	bh=B2Zzqkzrhi7SWiVW8VcvXd25UOQ1OHxHMFjqGZSsXXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvZk9E/iTq5wYSD+5IOJRU+E8+UorPKarGj6lUjAV7mWST+gNdj40lR34f76FL37a
-	 5FlT9C0Aoo252Va/NW0hz0r15qZeLkCcDnQ+AszypRjYVENDBI6E6LhoDPpPnvH3bW
-	 +6jX4qnqIuGuhYWkpxlss8ZiVt3LnK+PYRxX7F/8=
+	b=2pJR3ccV1lGpnJz7jCwUrPO9Y0B8bgqm0tfCm8c485yP+URnVntKBZHCS53anqE7l
+	 vZfoQiA2VbNadfzZc+vFoyc1Rn6cThUx0jUsn5f3FfvoT45vOH8qmd4YUmtW30Diae
+	 i1jwbHfFiipHnH5mWyzCclMsLcywEK14sOAhnabs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.15 192/570] i3c: mipi-i3c-hci: Add missing TID field to no-op command descriptor
-Date: Mon, 13 Apr 2026 17:55:23 +0200
-Message-ID: <20260413155837.651548935@linuxfoundation.org>
+	=?UTF-8?q?Lukas=20Johannes=20M=C3=B6ller?= <research@johannes-moeller.dev>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 201/570] Bluetooth: L2CAP: Fix type confusion in l2cap_ecred_reconf_rsp()
+Date: Mon, 13 Apr 2026 17:55:32 +0200
+Message-ID: <20260413155837.987857141@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -45,60 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Lukas Johannes Möller <research@johannes-moeller.dev>
 
-commit ec3cfd835f7c4bbd23bc9ad909d2fdc772a578bb upstream.
+commit 15145675690cab2de1056e7ed68e59cbd0452529 upstream.
 
-The internal control command descriptor used for no-op commands includes a
-Transaction ID (TID) field, but the no-op command constructed in
-hci_dma_dequeue_xfer() omitted it.  As a result, the hardware receives a
-no-op descriptor without the expected TID.
+l2cap_ecred_reconf_rsp() casts the incoming data to struct
+l2cap_ecred_conn_rsp (the ECRED *connection* response, 8 bytes with
+result at offset 6) instead of struct l2cap_ecred_reconf_rsp (2 bytes
+with result at offset 0).
 
-This bug has gone unnoticed because the TID is currently not validated in
-the no-op completion path, but the descriptor format requires it to be
-present.
+This causes two problems:
 
-Add the missing TID field when generating a no-op descriptor so that its
-layout matches the defined command structure.
+ - The sizeof(*rsp) length check requires 8 bytes instead of the
+   correct 2, so valid L2CAP_ECRED_RECONF_RSP packets are rejected
+   with -EPROTO.
 
-Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
+ - rsp->result reads from offset 6 instead of offset 0, returning
+   wrong data when the packet is large enough to pass the check.
+
+Fix by using the correct type.  Also pass the already byte-swapped
+result variable to BT_DBG instead of the raw __le16 field.
+
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-10-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Lukas Johannes Möller <research@johannes-moeller.dev>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/cmd.h |    1 +
- drivers/i3c/master/mipi-i3c-hci/dma.c |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/i3c/master/mipi-i3c-hci/cmd.h
-+++ b/drivers/i3c/master/mipi-i3c-hci/cmd.h
-@@ -17,6 +17,7 @@
- #define CMD_0_TOC			W0_BIT_(31)
- #define CMD_0_ROC			W0_BIT_(30)
- #define CMD_0_ATTR			W0_MASK(2, 0)
-+#define CMD_0_TID			W0_MASK(6, 3)
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6397,7 +6397,7 @@ static inline int l2cap_ecred_reconf_rsp
+ 					 u8 *data)
+ {
+ 	struct l2cap_chan *chan, *tmp;
+-	struct l2cap_ecred_conn_rsp *rsp = (void *) data;
++	struct l2cap_ecred_reconf_rsp *rsp = (void *)data;
+ 	u16 result;
  
- /*
-  * Response Descriptor Structure
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -473,7 +473,7 @@ static bool hci_dma_dequeue_xfer(struct
- 			u32 *ring_data = rh->xfer + rh->xfer_struct_sz * idx;
+ 	if (cmd_len < sizeof(*rsp))
+@@ -6405,7 +6405,7 @@ static inline int l2cap_ecred_reconf_rsp
  
- 			/* store no-op cmd descriptor */
--			*ring_data++ = FIELD_PREP(CMD_0_ATTR, 0x7);
-+			*ring_data++ = FIELD_PREP(CMD_0_ATTR, 0x7) | FIELD_PREP(CMD_0_TID, xfer->cmd_tid);
- 			*ring_data++ = 0;
- 			if (hci->cmd == &mipi_i3c_hci_cmd_v2) {
- 				*ring_data++ = 0;
+ 	result = __le16_to_cpu(rsp->result);
+ 
+-	BT_DBG("result 0x%4.4x", rsp->result);
++	BT_DBG("result 0x%4.4x", result);
+ 
+ 	if (!result)
+ 		return 0;
 
 
