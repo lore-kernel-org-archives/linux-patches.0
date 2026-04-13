@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85ECB1A680C;
-	Mon, 13 Apr 2026 16:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1411C30BF68;
+	Mon, 13 Apr 2026 16:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098499; cv=none; b=XozBW0/Jk9/zKqv11pGpgbtejg4h2rw22FeluPBr9tFsg3LX5ynwnSM7CMdnzTfsFuF2kb+rm0IWb8+BxRSfASXk4NFozkH2nTMfvkmSAyyvB4BjqeWCcn3oxzA5YBQeq3qKCYd/pUCxM6fhFsEmDFJInEpTyXugHlEUH1tZitw=
+	t=1776098502; cv=none; b=Wj3mxwm6O8DddEL5whJuyFEI2K1Aw6q5r3EexYMLxO4tGgVFIdT4jf3M/oHVPih2zcBk+rBedaz8JlWibhEUwLqZfxm/FCR0K+SdGn+aNIfsv1ZF+iH+bLoXmuI4NNJLUwbVwFIkoqjWMgAder0gICHL1v06zcfGXkwwEWLKARY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098499; c=relaxed/simple;
-	bh=zBbF8Xq4b6KwQlT2Xqo6AA4MJC32aPqdPIkCFfM2fDY=;
+	s=arc-20240116; t=1776098502; c=relaxed/simple;
+	bh=gutzhQ7G3iiAfJoxRZN9IlE4JWwbT+OB05duyavQTq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZG8j1khOmFSgaLpssBDlOauQFF8AD1EsRhviyrfW5i3BtJKqcFrb48n9noKNaiUct5jUS9TVsNPHnnG/CKRGaI6YhuCLt9t2k5mHIyyUC/NypoFJlUCQx7U9wUlswnHE6oSmVXHGwjVScRgIuwwn+oRTUK8xhsCNsf6k7IKHGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/mslR4w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CGYTM0zHStB2L1WBYppEdlHvrQsUSw8Xjqp0UNFhjYfrCY8ujjDlOBacmkjgZY0pvc6m/tOvOFReJ6bfGbJVniflJGDRZoxVfIzrN9NRo3PwETCOhlRyzr3GnBfr/YOlsD497LaDpNNEY6yCc8Pg96KVwt/O+vE8n7TJSDDTsvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yFH4TFzc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/mslR4w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C11FC2BCB6;
-	Mon, 13 Apr 2026 16:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yFH4TFzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E526C2BCAF;
+	Mon, 13 Apr 2026 16:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098499;
-	bh=zBbF8Xq4b6KwQlT2Xqo6AA4MJC32aPqdPIkCFfM2fDY=;
+	s=korg; t=1776098502;
+	bh=gutzhQ7G3iiAfJoxRZN9IlE4JWwbT+OB05duyavQTq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/mslR4wcBFTNgePBEYgXYe8+HJVl+eSEplpa8AQibs1wuQ0KZSRyY0yQWh18IefJ
-	 adEigZoq6Vti+YfCKOUhlfA5xb+usvdXBf0Jhn3BIfAfczhSEfGmNRJp+84oyvP3kq
-	 SHsRPrUWVQBhWiJ0PuzL74o+bocsLiRoi77lIXiM=
+	b=yFH4TFzc7esbzi5z9R6N9ih71Aenn05qOsdJzF3Dz9SfFE8rwrqTQpCOwdNkXeSUh
+	 glVq1NfjbaIJ5ush4SEuvY+HheOMmVXY8FvGYkbXI9TpdYFs06zDguc57mxB1aB8Z6
+	 WRq2kkAy5nOc/qP9o2eu4TUSnTWDn4TGw2ldYQ3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Thanki <vishalthanki@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 506/570] wifi: rt2x00usb: fix devres lifetime
-Date: Mon, 13 Apr 2026 18:00:37 +0200
-Message-ID: <20260413155849.406892323@linuxfoundation.org>
+	GuoHan Zhao <zhaoguohan@kylinos.cn>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 5.15 542/570] xen/privcmd: unregister xenstore notifier on module exit
+Date: Mon, 13 Apr 2026 18:01:13 +0200
+Message-ID: <20260413155850.749689425@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,41 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-commit 25369b22223d1c56e42a0cd4ac9137349d5a898e upstream.
+commit cd7e1fef5a1ca1c4fcd232211962ac2395601636 upstream.
 
-USB drivers bind to USB interfaces and any device managed resources
-should have their lifetime tied to the interface rather than parent USB
-device. This avoids issues like memory leaks when drivers are unbound
-without their devices being physically disconnected (e.g. on probe
-deferral or configuration changes).
+Commit 453b8fb68f36 ("xen/privcmd: restrict usage in
+unprivileged domU") added a xenstore notifier to defer setting the
+restriction target until Xenstore is ready.
 
-Fix the USB anchor lifetime so that it is released on driver unbind.
+XEN_PRIVCMD can be built as a module, but privcmd_exit() leaves that
+notifier behind. Balance the notifier lifecycle by unregistering it on
+module exit.
 
-Fixes: 8b4c0009313f ("rt2x00usb: Use usb anchor to manage URB")
-Cc: stable@vger.kernel.org	# 4.7
-Cc: Vishal Thanki <vishalthanki@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260327113219.1313748-1-johan@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This is harmless even if xenstore was already ready at registration
+time and the notifier was never queued on the chain.
+
+Fixes: 453b8fb68f3641fe ("xen/privcmd: restrict usage in unprivileged domU")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260325120246.252899-1-zhaoguohan@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ralink/rt2x00/rt2x00usb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/privcmd.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/wireless/ralink/rt2x00/rt2x00usb.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2x00usb.c
-@@ -830,7 +830,7 @@ int rt2x00usb_probe(struct usb_interface
- 	if (retval)
- 		goto exit_free_device;
+--- a/drivers/xen/privcmd.c
++++ b/drivers/xen/privcmd.c
+@@ -1068,6 +1068,9 @@ static int __init privcmd_init(void)
  
--	rt2x00dev->anchor = devm_kmalloc(&usb_dev->dev,
-+	rt2x00dev->anchor = devm_kmalloc(&usb_intf->dev,
- 					sizeof(struct usb_anchor),
- 					GFP_KERNEL);
- 	if (!rt2x00dev->anchor) {
+ static void __exit privcmd_exit(void)
+ {
++	if (!xen_initial_domain())
++		unregister_xenstore_notifier(&xenstore_notifier);
++
+ 	misc_deregister(&privcmd_dev);
+ 	misc_deregister(&xen_privcmdbuf_dev);
+ }
 
 
