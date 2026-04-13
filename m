@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E953231F9BC;
-	Mon, 13 Apr 2026 17:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845ED3382FA;
+	Mon, 13 Apr 2026 17:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099623; cv=none; b=Dadi9v81LeKYEinaz4DrODjECDGVCgT7rWKPzIVoNHSM1zcLm3V5dDpgkufJ4J7/c9A3A22/YjzGon/DA862LYm4rznDCdWrmRzAfxbxouPP3NlFEtd1Zj1NzrUVApocVrb2LJflIp0uJlTjO9H2WgYZ71CX4bgGoQnTSAro9xQ=
+	t=1776099625; cv=none; b=h4XECizhjcW7vG1hPmulj2+xLYH4IRjrpSdFbyuwATEmAeq86tehTwt8VrD2FIh6dSBp5r0Kjr6hni0ydpkqQ23VqheNyWpbgPrBR5qCDxpSvNpAExBbPm46ZQaL4AHCq6jEqC5syJhVDizKenGNVn+sGO7+sXxoa2Pxr4OqHw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099623; c=relaxed/simple;
-	bh=/kspHvZtvylmXJC7ieHAQt90p38GyAgZwPJkESiWZ5U=;
+	s=arc-20240116; t=1776099625; c=relaxed/simple;
+	bh=1taNT22CiamjziOB4a1Po72QXWOU6A4ZwrLQB0hS3bM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y0FA8Lu48HEX49BTMEFafG/zZB+GG5bSmZuJOzLLH+nZJfrwb5nwuKJXYY8GZowHtHcxv0h0JpPHaMj8xhkvjI9/2EjzZ7pgJ3317m0litEJb0tTRZmNu6XSGt3/rn3QHR1Y4UWspQp51AraRtC/doH2zXEiSoeRmsBKwY5l5Ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNvFb+EN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlMSny/TcAskrMZp9lpx2H0JbQE2Zkh7GlZ4ZzCdChudg8zKRA7mcsg20pPihmdrxgs5N0k9FdvGdtyHyN1AUmdKcN5lusETLygI1Ehf+DmNAHHr1DpiDjpEKy3SusoXy5V23N5lvUi33hYg9bXIwHLhzqaap+KrMcPbUCgS+Hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+AYIeH7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNvFb+EN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8091CC2BCAF;
-	Mon, 13 Apr 2026 17:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+AYIeH7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A392C2BCAF;
+	Mon, 13 Apr 2026 17:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099622;
-	bh=/kspHvZtvylmXJC7ieHAQt90p38GyAgZwPJkESiWZ5U=;
+	s=korg; t=1776099625;
+	bh=1taNT22CiamjziOB4a1Po72QXWOU6A4ZwrLQB0hS3bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNvFb+ENoMdNkqBZU/k2Cws0UkZ1aE4fSTPAbA18ogogt4jlKkEDqQnW4OoX6TR/w
-	 zvdj+oKEZ5JLfqjDMzjwETMAgyQDE+ptoJj28W9mJOHu5xCTRa2LZk57eVYAdLfdzC
-	 WngLYpWk4g7EmCnGLPRQoalTAj4gIW70s8enHDOs=
+	b=u+AYIeH7//qxUKCIkxqREjbT+M/xsSPFGvKsPxdAVtd3yjC96i3aenTsP8QIfiCQa
+	 +gYG+00bCj2+nMsxoTEFosoC7kcOhFf9fXEupFyfqWzAnI2KT8Ggvxf6NQkSmLeFh9
+	 F6Ik9o4EPihEJ8N/Th4qgp0ve4YPTIquC9NTQLwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taegu Ha <hataegu0826@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 411/491] usb: gadget: f_uac1_legacy: validate control request size
-Date: Mon, 13 Apr 2026 18:00:56 +0200
-Message-ID: <20260413155834.416971444@linuxfoundation.org>
+	syzbot+cc36d44ec9f368e443d3@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
+	Robert Garcia <rob_garcia@163.com>
+Subject: [PATCH 5.10 412/491] io_uring/tctx: work around xa_store() allocation error issue
+Date: Mon, 13 Apr 2026 18:00:57 +0200
+Message-ID: <20260413155834.453704310@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,92 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taegu Ha <hataegu0826@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 6e0e34d85cd46ceb37d16054e97a373a32770f6c upstream.
+commit 7eb75ce7527129d7f1fee6951566af409a37a1c4 upstream.
 
-f_audio_complete() copies req->length bytes into a 4-byte stack
-variable:
+syzbot triggered the following WARN_ON:
 
-  u32 data = 0;
-  memcpy(&data, req->buf, req->length);
+WARNING: CPU: 0 PID: 16 at io_uring/tctx.c:51 __io_uring_free+0xfa/0x140 io_uring/tctx.c:51
 
-req->length is derived from the host-controlled USB request path,
-which can lead to a stack out-of-bounds write.
+which is the
 
-Validate req->actual against the expected payload size for the
-supported control selectors and decode only the expected amount
-of data.
+WARN_ON_ONCE(!xa_empty(&tctx->xa));
 
-This avoids copying a host-influenced length into a fixed-size
-stack object.
+sanity check in __io_uring_free() when a io_uring_task is going through
+its final put. The syzbot test case includes injecting memory allocation
+failures, and it very much looks like xa_store() can fail one of its
+memory allocations and end up with ->head being non-NULL even though no
+entries exist in the xarray.
 
-Signed-off-by: Taegu Ha <hataegu0826@gmail.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260401191311.3604898-1-hataegu0826@gmail.com
+Until this issue gets sorted out, work around it by attempting to
+iterate entries in our xarray, and WARN_ON_ONCE() if one is found.
+
+Reported-by: syzbot+cc36d44ec9f368e443d3@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/io-uring/673c1643.050a0220.87769.0066.GAE@google.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ Modify the function in io_uring.c because it's located here in v5.15. ]
+Signed-off-by: Robert Garcia <rob_garcia@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uac1_legacy.c |   47 ++++++++++++++++++++++------
- 1 file changed, 37 insertions(+), 10 deletions(-)
+ io_uring/io_uring.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_uac1_legacy.c
-+++ b/drivers/usb/gadget/function/f_uac1_legacy.c
-@@ -360,19 +360,46 @@ static int f_audio_out_ep_complete(struc
- static void f_audio_complete(struct usb_ep *ep, struct usb_request *req)
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -8524,8 +8524,19 @@ static int io_uring_alloc_task_context(s
+ void __io_uring_free(struct task_struct *tsk)
  {
- 	struct f_audio *audio = req->context;
--	int status = req->status;
--	u32 data = 0;
- 	struct usb_ep *out_ep = audio->out_ep;
+ 	struct io_uring_task *tctx = tsk->io_uring;
++	struct io_tctx_node *node;
++	unsigned long index;
  
--	switch (status) {
--
--	case 0:				/* normal completion? */
--		if (ep == out_ep)
-+	switch (req->status) {
-+	case 0:
-+		if (ep == out_ep) {
- 			f_audio_out_ep_complete(ep, req);
--		else if (audio->set_con) {
--			memcpy(&data, req->buf, req->length);
--			audio->set_con->set(audio->set_con, audio->set_cmd,
--					le16_to_cpu(data));
-+		} else if (audio->set_con) {
-+			struct usb_audio_control *con = audio->set_con;
-+			u8 type = con->type;
-+			u32 data;
-+			bool valid_request = false;
-+
-+			switch (type) {
-+			case UAC_FU_MUTE: {
-+				u8 value;
-+
-+				if (req->actual == sizeof(value)) {
-+					memcpy(&value, req->buf, sizeof(value));
-+					data = value;
-+					valid_request = true;
-+				}
-+				break;
-+			}
-+			case UAC_FU_VOLUME: {
-+				__le16 value;
-+
-+				if (req->actual == sizeof(value)) {
-+					memcpy(&value, req->buf, sizeof(value));
-+					data = le16_to_cpu(value);
-+					valid_request = true;
-+				}
-+				break;
-+			}
-+			}
-+
-+			if (valid_request)
-+				con->set(con, audio->set_cmd, data);
-+			else
-+				usb_ep_set_halt(ep);
-+
- 			audio->set_con = NULL;
- 		}
- 		break;
+-	WARN_ON_ONCE(!xa_empty(&tctx->xa));
++	/*
++	 * Fault injection forcing allocation errors in the xa_store() path
++	 * can lead to xa_empty() returning false, even though no actual
++	 * node is stored in the xarray. Until that gets sorted out, attempt
++	 * an iteration here and warn if any entries are found.
++	 */
++	xa_for_each(&tctx->xa, index, node) {
++		WARN_ON_ONCE(1);
++		break;
++	}
+ 	WARN_ON_ONCE(tctx->io_wq);
+ 	WARN_ON_ONCE(tctx->cached_refs);
+ 
 
 
