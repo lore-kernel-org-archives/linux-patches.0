@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCD5225A38;
-	Mon, 13 Apr 2026 16:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC00225A38;
+	Mon, 13 Apr 2026 16:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097881; cv=none; b=trMpBQgogvTeGdyWj/6fhW7HHa1SFMI2a3I1KBfHx8EpifeuAlmni37V0hLMJ2kvlP2kdeBYIsZyLtIKl7WzNupI+BijHu0nR8Qx0Y4uLwLD9++a0FJWNZ25DXhZnRAG/QoJffUFrTCFgKYBhhhQ4kr79xcwsWLF2bmHs3TKx2I=
+	t=1776097883; cv=none; b=mfRjllqBH9d9k2kSsRV9Dro0dcDU3yZFUMBNIhE23f8OT7UXkVOHp0hRa1OrkIf/pY0tLTUfL1w03V953diucBiLw9iR4yHkKgHqgJgxedQXUFgxcPiovnUxrmjVeG1gHt3ztvNy3co4EdE4WkWOl/hzF28zRqu2K+mFFpUOIt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097881; c=relaxed/simple;
-	bh=BUIGF4i//ZngV6lgmUYGA27+fvjFROgmOkUV+o0V2ac=;
+	s=arc-20240116; t=1776097883; c=relaxed/simple;
+	bh=5BWAwPIIUub5oYzuxeVNSYmEEIYAlZAlNX3XAkEIImA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=diU6s204SckjeNALURdrNCbikZ/W4w2dfotZT2CMfl+tIBIGZCNE0OAp0WnJ4A473we73nUQKCSBZbA9r8wVrGowGNExT9UzO5OARnMEqrqtkfZBGu6oyvxe6esO3LIZYF1PAWJl7fWbQ3d1W2HyOqq56Bz00BBCyZFfWireDnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRTE+PnG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uFC6LgZfKN7/c1MRn8UabbZBjaqi/iIACqS1MN+QbzJsDoDDxqCvirtx7hD7XacTSLesVeJ4bpIvXkgm0HKnSQcTwZnDpsx9KiBlgiX6ZbSqOfoFQikTsLW8eVLWyuye6PTKJjn6FKx5Yzf3YkOO4f0DI/FxVUzhvl87pA+t70o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZQg0N5a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRTE+PnG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8573BC2BCAF;
-	Mon, 13 Apr 2026 16:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZQg0N5a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21697C2BCAF;
+	Mon, 13 Apr 2026 16:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097880;
-	bh=BUIGF4i//ZngV6lgmUYGA27+fvjFROgmOkUV+o0V2ac=;
+	s=korg; t=1776097883;
+	bh=5BWAwPIIUub5oYzuxeVNSYmEEIYAlZAlNX3XAkEIImA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tRTE+PnGZEnutajDP778TKRONbhEI8AhyMxEiXGgkxzCRroaSJzi2h5k0vwtN6WHf
-	 8VtkBP5azuqfcBj9ff/PDRtpIjxr3viLQBaSkhcuablJTu6IY9DGvnSUvyfFovWwRA
-	 zPYGIFC5ndJ3z4XuD7UgSKZQBaaUEmfkaGQLJpUc=
+	b=2ZQg0N5a7TswMJU47Hogb2eDNNaL0YB8OHemdb7bp6EF101XMGSOKKDUl76c1V4EL
+	 hyryUJ6mza5hugbq7hHDjqFCBOEvfkOX32D8KIY9NBksl7qklGwmRXLcGeqVT3gEhq
+	 DoxlhDeK/eYi+nqGjP5Bt0v+KDz+e11A43UjUNeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 309/570] ASoC: fsl_easrc: Fix event generation in fsl_easrc_iec958_put_bits()
-Date: Mon, 13 Apr 2026 17:57:20 +0200
-Message-ID: <20260413155842.073268995@linuxfoundation.org>
+Subject: [PATCH 5.15 310/570] dma-buf: Include ioctl.h in UAPI header
+Date: Mon, 13 Apr 2026 17:57:21 +0200
+Message-ID: <20260413155842.110078152@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -44,53 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-[ Upstream commit 54a86cf48eaa6d1ab5130d756b718775e81e1748 ]
+[ Upstream commit a116bac87118903925108e57781bbfc7a7eea27b ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_easrc_iec958_put_bits() unconditionally returns
-0, causing ALSA to not generate any change events. This is detected by
-mixer-test with large numbers of messages in the form:
+include/uapi/linux/dma-buf.h uses several macros from ioctl.h to define
+its ioctl commands. However, it does not include ioctl.h itself. So,
+if userspace source code tries to include the dma-buf.h file without
+including ioctl.h, it can result in build failures.
 
-    No event generated for Context 3 IEC958 CS5
-    Context 3 IEC958 CS5.0 orig 5224 read 5225, is_volatile 0
+Therefore, include ioctl.h in the dma-buf UAPI header.
 
-Add a suitable check.
-
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20260205-asoc-fsl-easrc-fix-events-v1-1-39d4c766918b@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Reviewed-by: T.J. Mercier <tjmercier@google.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20260303002309.1401849-1-isaacmanjarres@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_easrc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/uapi/linux/dma-buf.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index 95ad4eeec4863..84ef6758cc003 100644
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -52,10 +52,13 @@ static int fsl_easrc_iec958_put_bits(struct snd_kcontrol *kcontrol,
- 	struct soc_mreg_control *mc =
- 		(struct soc_mreg_control *)kcontrol->private_value;
- 	unsigned int regval = ucontrol->value.integer.value[0];
-+	int ret;
-+
-+	ret = (easrc_priv->bps_iec958[mc->regbase] != regval);
+diff --git a/include/uapi/linux/dma-buf.h b/include/uapi/linux/dma-buf.h
+index b1523cb8ab307..5e2b1949ffd49 100644
+--- a/include/uapi/linux/dma-buf.h
++++ b/include/uapi/linux/dma-buf.h
+@@ -20,6 +20,7 @@
+ #ifndef _DMA_BUF_UAPI_H_
+ #define _DMA_BUF_UAPI_H_
  
- 	easrc_priv->bps_iec958[mc->regbase] = regval;
++#include <linux/ioctl.h>
+ #include <linux/types.h>
  
--	return 0;
-+	return ret;
- }
- 
- static int fsl_easrc_iec958_get_bits(struct snd_kcontrol *kcontrol,
+ /**
 -- 
 2.51.0
 
