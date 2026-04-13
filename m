@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1804724E4A1;
-	Mon, 13 Apr 2026 16:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49551D5AD4;
+	Mon, 13 Apr 2026 16:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098370; cv=none; b=gHqKoTYhf6z4QC4ewx/nuwo3bJ4wxpoaNe+GFAevaWSlZEEqozKAkl1oZPIWqvXF5/WDpy3z9tAdTwPKott83XWon/3beFl2keP142ni8pjNwTGMxOWNKyN00UUw1oyhrrvfKcnntrhqGvySQB8gtLB+sddEkdUCD2v8V1B1lCQ=
+	t=1776098372; cv=none; b=CABl+ZIc/rvUF7flZiiC6Fk5wEI4Gu5JVcgJzqL8y5LLi08beH7ef1SbIWDgqDjtsWJHXgBdvOhfN+6uYTPVxysTZqQ2EaQtseYRToBN8qtGpy+y+po4HYwZVTUaF74GMmWXwhrvDooS0aaYZsmw4hGc5mlIT0LdKMfTLypakvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098370; c=relaxed/simple;
-	bh=vqSABUnmZpBrJ5KENaDpwHszqTSN1hCnFCTRON2MAmg=;
+	s=arc-20240116; t=1776098372; c=relaxed/simple;
+	bh=HhXfXQ1TMPeaCP7wifvnK7WAnq/57LXuKwgUMQGk9og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CYnddNripL6SvDQbS+8QIlhLqY2B6JQWjm9K0vckPJAj+elAv4+QQvT0xUdt8Sn9k/ANbGLDwf1CvRA3GWnygZ0vc0+1Ozx6Y/GTk1bAr4HnBdVvNpTvief3tRr3PilU7l9jmeN1Rka06WgV3Wu9FpEUWnwK/dnWX7grI1FfLjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOvLpeyF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oHZgLKmB6QogVw1Gacnzk2YI6jwsopMmu3h61TbvN0lFsp3xRLfjp6dKwHJW/SBk7HVocbHf7eQXDEOuWot4oCNOVt5LYahyu+4VAI8RZJsB8OH/D/S6Szcf1H+aY6GKmaBzYvVK+2ywDTVNCSwdLqxbhsZiZE0R/9mKEjQ5nRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SDstiDdM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOvLpeyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F87EC2BCAF;
-	Mon, 13 Apr 2026 16:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SDstiDdM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B246C2BCAF;
+	Mon, 13 Apr 2026 16:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098370;
-	bh=vqSABUnmZpBrJ5KENaDpwHszqTSN1hCnFCTRON2MAmg=;
+	s=korg; t=1776098372;
+	bh=HhXfXQ1TMPeaCP7wifvnK7WAnq/57LXuKwgUMQGk9og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOvLpeyFQJfpaet0NKRQ9doeVYfFjarcUhWJj88+DR11Ji/X58PT6w9S/RgVmp4At
-	 xyePBfARKyFx1EFc7uFov/rj8qvp5i7BB805lcupLgCd2ZzSNC8dBBv6Fgt6DDEpKw
-	 cNjwd+oYDl8ECRfsQqUZt5iC3DZCmifatkAnBKEM=
+	b=SDstiDdMfvl7A5fJGN2xy/HAzHhE4nP9ZDb1LQkKNCla2VNmkAYRZY2gvimxOeuuF
+	 Dmha+E59ZMN2O8a0kcM+c5XkvvFmge+/FaF+0/bE0v7hXV4knRj8BKAZ0JgnRm6zF4
+	 0a5E+Skj95AJ7h3mb4QQwEpNrP3sx9Zs7IIzbO/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Navaneeth K <knavaneeth786@gmail.com>,
-	stable <stable@kernel.org>,
-	Johnny Hao <johnny_haocn@sina.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 498/570] staging: rtl8723bs: fix out-of-bounds read in rtw_get_ie() parser
-Date: Mon, 13 Apr 2026 18:00:29 +0200
-Message-ID: <20260413155849.111618916@linuxfoundation.org>
+	Kuen-Han Tsai <khtsai@google.com>
+Subject: [PATCH 5.15 499/570] usb: gadget: f_subset: Fix unbalanced refcnt in geth_free
+Date: Mon, 13 Apr 2026 18:00:30 +0200
+Message-ID: <20260413155849.148471721@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,73 +49,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Navaneeth K <knavaneeth786@gmail.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit 154828bf9559b9c8421fc2f0d7f7f76b3683aaed ]
+commit caa27923aacd8a5869207842f2ab1657c6c0c7bc upstream.
 
-The Information Element (IE) parser rtw_get_ie() trusted the length
-byte of each IE without validating that the IE body (len bytes after
-the 2-byte header) fits inside the remaining frame buffer. A malformed
-frame can advertise an IE length larger than the available data, causing
-the parser to increment its pointer beyond the buffer end. This results
-in out-of-bounds reads or, depending on the pattern, an infinite loop.
+geth_alloc() increments the reference count, but geth_free() fails to
+decrement it. This prevents the configuration of attributes via configfs
+after unlinking the function.
 
-Fix by validating that (offset + 2 + len) does not exceed the limit
-before accepting the IE or advancing to the next element.
+Decrement the reference count in geth_free() to ensure proper cleanup.
 
-This prevents OOB reads and ensures the parser terminates safely on
-malformed frames.
-
-[ The context change is due to the commit 4610e57a7d2e
-("staging: rtl8723bs: Remove redundant else branches.") in v5.19
-which is irrelevant to the logic of this patch. ]
-
-Signed-off-by: Navaneeth K <knavaneeth786@gmail.com>
-Cc: stable <stable@kernel.org>
+Fixes: 02832e56f88a ("usb: gadget: f_subset: add configfs support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20260320-usb-net-lifecycle-v1-1-4886b578161b@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johnny Hao <johnny_haocn@sina.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/usb/gadget/function/f_subset.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-index c01f7da9d025c..666ce2f9c5270 100644
---- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -141,23 +141,24 @@ u8 *rtw_get_ie(u8 *pbuf, signed int index, signed int *len, signed int limit)
- 	signed int tmp, i;
- 	u8 *p;
+--- a/drivers/usb/gadget/function/f_subset.c
++++ b/drivers/usb/gadget/function/f_subset.c
+@@ -6,6 +6,7 @@
+  * Copyright (C) 2008 Nokia Corporation
+  */
  
--	if (limit < 1)
-+	if (limit < 2)
- 		return NULL;
- 
- 	p = pbuf;
- 	i = 0;
- 	*len = 0;
--	while (1) {
-+	while (i + 2 <= limit) {
-+		tmp = *(p + 1);
-+		if (i + 2 + tmp > limit)
-+			break;
++#include <linux/cleanup.h>
+ #include <linux/slab.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+@@ -451,8 +452,14 @@ static struct usb_function_instance *get
+ static void geth_free(struct usb_function *f)
+ {
+ 	struct f_gether *eth;
++	struct f_gether_opts *opts;
 +
- 		if (*p == index) {
--			*len = *(p + 1);
-+			*len = tmp;
- 			return p;
- 		} else {
--			tmp = *(p + 1);
- 			p += (tmp + 2);
- 			i += (tmp + 2);
- 		}
--		if (i >= limit)
--			break;
- 	}
- 	return NULL;
++	opts = container_of(f->fi, struct f_gether_opts, func_inst);
+ 
+ 	eth = func_to_geth(f);
++	mutex_lock(&opts->lock);
++	opts->refcnt--;
++	mutex_unlock(&opts->lock);
+ 	kfree(eth);
  }
--- 
-2.53.0
-
+ 
 
 
