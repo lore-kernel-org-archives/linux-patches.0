@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A1B30EF68;
-	Mon, 13 Apr 2026 16:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD6F2E2850;
+	Mon, 13 Apr 2026 16:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098658; cv=none; b=cnOrZZDTKEmeeXT2AZ0QRht/fBCDIrBHhGavI9+BvtHWPFOGVUtnzYOLGxpB9jwQ2bioR1B2Wl11P5q60gfrnzikbu9jvbzhn84dhIihCJq/sdW7mRyxkpd/QlIqdE/ZDFhXZl0JQ3FNoW6E/0ctRTHxMTk8ai2wy6Ce/SxjvPQ=
+	t=1776098660; cv=none; b=E8eu8CtvlgOAy1ESdK0GEnXaOkWeshcZfwPy0H88SHCIeUxrIobFK/E7oxtzoRO+C+ePuUx9igP82rWfLGHPY/UfWqbhudDyawJ7hg85i4DIoZre5eYLyY7Wws/OiM4y0UK6ejW8MJRwNRP90TViRjGD5d1tFCW0cBvmTjp2Tvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098658; c=relaxed/simple;
-	bh=0vohfmxsfEgV7u3x2dGa8OHRGEeFgH3SNWbDzwJ58HQ=;
+	s=arc-20240116; t=1776098660; c=relaxed/simple;
+	bh=6z9LKQk6nHaEIjgTX/XpFD/r+XCSCjCH66LTdlHd9cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jc3o3W4n4mpYK1oZW67cWTMLT6WTZv3iJeteKvUW1QHcur6V/+OmIl/5lmjutzFx29HFiWp5doY9jmrL8Cw32Do6SHk19d2ecHM05OxL0X/0TgspLMh8FHT9V7QNUXNKjQMyEj9DXKR3NRlgERN+VoBw87Cxn0cPkFsEzgVtqGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VTOEu/4y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OgUzyfiZKtYJ3jGHGQhOaO4joQO/MuRhe9HjENy1EmjgEqOT8Nu37Cu6HFMd4wE5o+KZ8eC/wN4TnBxS0plv3MPj8R2VaZk6Oac/k86kU2cNQDCdZJrZxW/rRLLduT1ng+4695TDmhjh53OBtvUJ8k87F6WNh5mo/g+yQxu85Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jxk1bHjt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTOEu/4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79413C2BCAF;
-	Mon, 13 Apr 2026 16:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jxk1bHjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11119C2BCAF;
+	Mon, 13 Apr 2026 16:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098657;
-	bh=0vohfmxsfEgV7u3x2dGa8OHRGEeFgH3SNWbDzwJ58HQ=;
+	s=korg; t=1776098660;
+	bh=6z9LKQk6nHaEIjgTX/XpFD/r+XCSCjCH66LTdlHd9cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VTOEu/4yMUX0mLKNDWgVT0rpNFxBwVmyWWZY42+2C8gWWp9fbFZDxPAA5Ijt7R8Va
-	 zdtXp/e1wQ/DTb1NyoB2+rY5YH0vowZhm0zYt0Zugk7aCttK1x1lo/vkcd6Bhotjk6
-	 p+py74rSRIWf8f6PRDCC9xU2IgmcNO3pknFfbTcg=
+	b=Jxk1bHjtXl7bT6wPmdj305UtjqpFNqZyYZp+l8YYKrZRQg4dfoYSVYukCDiBY2Lsc
+	 oeyAuINy2zF+FN9Jg57w0AZnljhyuin3x6LLXe8f4FCSafHRGhLHIt6UWf/aamgUEO
+	 YFGfKdQWgpgZ4dVLLWK4bAztY+rkmMqHK1oUtqdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Qing <wangqing@vivo.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/491] ARM: OMAP2+: add missing of_node_put before break and return
-Date: Mon, 13 Apr 2026 17:54:12 +0200
-Message-ID: <20260413155819.326022555@linuxfoundation.org>
+Subject: [PATCH 5.10 008/491] ARM: omap2: Fix reference count leaks in omap_control_init()
+Date: Mon, 13 Apr 2026 17:54:13 +0200
+Message-ID: <20260413155819.363255989@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,142 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Qing <wangqing@vivo.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 883f464c1d23663047eda4f2bcf622365e2d0dd0 ]
+[ Upstream commit 93a04ab480c8bbcb7d9004be139c538c8a0c1bc8 ]
 
-Fix following coccicheck warning:
-WARNING: Function "for_each_matching_node_and_match"
-should have of_node_put() before return.
+The of_get_child_by_name() function increments the reference count
+of child nodes, causing multiple reference leaks in omap_control_init():
 
-Early exits from for_each_matching_node_and_match should decrement the
-node reference counter.
+1. scm_conf node never released in normal/error paths
+2. clocks node leak when checking existence
+3. Missing scm_conf release before np in error paths
 
-Signed-off-by: Wang Qing <wangqing@vivo.com>
-Message-Id: <1639388545-63615-1-git-send-email-wangqing@vivo.com>
-[tony@atomide.com: updated for omap_hwmod.c that was already patched]
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Stable-dep-of: 93a04ab480c8 ("ARM: omap2: Fix reference count leaks in omap_control_init()")
+Fix these leaks by adding proper of_node_put() calls and separate error
+handling.
+
+Fixes: e5b635742e98 ("ARM: OMAP2+: control: add syscon support for register accesses")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20251217142122.1861292-1-vulab@iscas.ac.cn
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/cm_common.c  |  8 ++++++--
- arch/arm/mach-omap2/control.c    | 19 ++++++++++++++-----
- arch/arm/mach-omap2/prm_common.c |  8 ++++++--
- 3 files changed, 26 insertions(+), 9 deletions(-)
+ arch/arm/mach-omap2/control.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/mach-omap2/cm_common.c b/arch/arm/mach-omap2/cm_common.c
-index b7ea609386d52..d86a36120738d 100644
---- a/arch/arm/mach-omap2/cm_common.c
-+++ b/arch/arm/mach-omap2/cm_common.c
-@@ -333,8 +333,10 @@ int __init omap2_cm_base_init(void)
- 		data = (struct omap_prcm_init_data *)match->data;
- 
- 		ret = of_address_to_resource(np, 0, &res);
--		if (ret)
-+		if (ret) {
-+			of_node_put(np);
- 			return ret;
-+		}
- 
- 		if (data->index == TI_CLKM_CM)
- 			mem = &cm_base;
-@@ -380,8 +382,10 @@ int __init omap_cm_init(void)
- 			continue;
- 
- 		ret = omap2_clk_provider_init(np, data->index, NULL, data->mem);
--		if (ret)
-+		if (ret) {
-+			of_node_put(np);
- 			return ret;
-+		}
- 	}
- 
- 	return 0;
 diff --git a/arch/arm/mach-omap2/control.c b/arch/arm/mach-omap2/control.c
-index 73338cf80d76c..9bc69caf338f1 100644
+index 9bc69caf338f1..a1288d438071b 100644
 --- a/arch/arm/mach-omap2/control.c
 +++ b/arch/arm/mach-omap2/control.c
-@@ -774,8 +774,10 @@ int __init omap2_control_base_init(void)
- 		data = (struct control_init_data *)match->data;
+@@ -798,7 +798,7 @@ int __init omap2_control_base_init(void)
+  */
+ int __init omap_control_init(void)
+ {
+-	struct device_node *np, *scm_conf;
++	struct device_node *np, *scm_conf, *clocks_node;
+ 	const struct of_device_id *match;
+ 	const struct omap_prcm_init_data *data;
+ 	int ret;
+@@ -819,16 +819,19 @@ int __init omap_control_init(void)
  
- 		mem = of_iomap(np, 0);
--		if (!mem)
-+		if (!mem) {
-+			of_node_put(np);
- 			return -ENOMEM;
-+		}
+ 			if (IS_ERR(syscon)) {
+ 				ret = PTR_ERR(syscon);
+-				goto of_node_put;
++				goto err_put_scm_conf;
+ 			}
  
- 		if (data->index == TI_CLKM_CTRL) {
- 			omap2_ctrl_base = mem;
-@@ -815,22 +817,24 @@ int __init omap_control_init(void)
- 		if (scm_conf) {
- 			syscon = syscon_node_to_regmap(scm_conf);
- 
--			if (IS_ERR(syscon))
--				return PTR_ERR(syscon);
-+			if (IS_ERR(syscon)) {
-+				ret = PTR_ERR(syscon);
-+				goto of_node_put;
-+			}
- 
- 			if (of_get_child_by_name(scm_conf, "clocks")) {
+-			if (of_get_child_by_name(scm_conf, "clocks")) {
++			clocks_node = of_get_child_by_name(scm_conf, "clocks");
++			if (clocks_node) {
++				of_node_put(clocks_node);
  				ret = omap2_clk_provider_init(scm_conf,
  							      data->index,
  							      syscon, NULL);
  				if (ret)
--					return ret;
-+					goto of_node_put;
+-					goto of_node_put;
++					goto err_put_scm_conf;
  			}
++			of_node_put(scm_conf);
  		} else {
  			/* No scm_conf found, direct access */
  			ret = omap2_clk_provider_init(np, data->index, NULL,
- 						      data->mem);
- 			if (ret)
--				return ret;
-+				goto of_node_put;
- 		}
- 	}
- 
-@@ -841,6 +845,11 @@ int __init omap_control_init(void)
- 	}
+@@ -846,6 +849,9 @@ int __init omap_control_init(void)
  
  	return 0;
-+
-+of_node_put:
-+	of_node_put(np);
-+	return ret;
-+
- }
  
- /**
-diff --git a/arch/arm/mach-omap2/prm_common.c b/arch/arm/mach-omap2/prm_common.c
-index 65b2d82efa27b..fb2d48cfe756b 100644
---- a/arch/arm/mach-omap2/prm_common.c
-+++ b/arch/arm/mach-omap2/prm_common.c
-@@ -752,8 +752,10 @@ int __init omap2_prm_base_init(void)
- 		data = (struct omap_prcm_init_data *)match->data;
- 
- 		ret = of_address_to_resource(np, 0, &res);
--		if (ret)
-+		if (ret) {
-+			of_node_put(np);
- 			return ret;
-+		}
- 
- 		data->mem = ioremap(res.start, resource_size(&res));
- 
-@@ -799,8 +801,10 @@ int __init omap_prcm_init(void)
- 		data = match->data;
- 
- 		ret = omap2_clk_provider_init(np, data->index, NULL, data->mem);
--		if (ret)
-+		if (ret) {
-+			of_node_put(np);
- 			return ret;
-+		}
- 	}
- 
- 	omap_cm_init();
++err_put_scm_conf:
++	if (scm_conf)
++		of_node_put(scm_conf);
+ of_node_put:
+ 	of_node_put(np);
+ 	return ret;
 -- 
 2.51.0
 
