@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3781313298;
-	Mon, 13 Apr 2026 16:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1260D31619A;
+	Mon, 13 Apr 2026 16:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098967; cv=none; b=oU6k9kr9N+SYY++Wj3g/vyK8pK15pRdjKjCabuDctgftr4QuGtfE5jcSUYiGH+QDwV+M6hv5E1aPXjfIU72sV+bD9FJ3QkO2dQJnmosos6Nk5HE5xyQ57xtGd3WGdKHF3m5yKLQGwbxWoWOFnjYCUNaj8BAEZFPVIdy/5T8qMVk=
+	t=1776098970; cv=none; b=AV0FwkWbTt9zVT+FXVnzUBMfLQBtcDpz3KYa9Vlj+6uEdOEW8nYyW8bz5Pj/cQXvmEpfPMPaH1fnhpkwjRzSYXB1zlnYFVuqMC/bj/YRVPEFnzbE4BHz8tv065Yv/FrE3XV7fhVKyEsZn0MvZvcDWohtHDT+SuN2q4etbt5235w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098967; c=relaxed/simple;
-	bh=QtjnUDTXBJPpv+vBARloiR83iDPDTP9s5T4jLhm1joE=;
+	s=arc-20240116; t=1776098970; c=relaxed/simple;
+	bh=46ucQ0LGhECUOyjQ1ilZHkjZbxQGG0w7w38hhEMoeko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZxvnlW/duYyQTqZwhofXT3if81Y43vivEoBvNi0GM1OaHwDI2q3TjD7GxAzSDFqfiiqUUzMTPEtD9z/9uMx3Ita5ynviC+awqgQJplrsHFIypgW5CKE9CpGt51BqXc5K097OX45/IdXIxe4LI5SLO7B6vpI0VTr17vZEDeeavw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksSj2PJh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m4rtVk0VNoU4hoAJORjqWhp8bdpQMJIRWA8H9fVz/1DuTYGK+8LjYJ/+Jw0yPCp5FjHiQLmQb5ZYKeTQsBdU9+50sajthNEpAdCfGKmWoKK1r2d3sEe66r8Vphl7ZbbEFvVJUlLEQlZrUctZt8Yjvx2R9jh+ZS4CEyYRU+XG1WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gh6Efttm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksSj2PJh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E77C2BCAF;
-	Mon, 13 Apr 2026 16:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gh6Efttm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA91C2BCAF;
+	Mon, 13 Apr 2026 16:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098967;
-	bh=QtjnUDTXBJPpv+vBARloiR83iDPDTP9s5T4jLhm1joE=;
+	s=korg; t=1776098970;
+	bh=46ucQ0LGhECUOyjQ1ilZHkjZbxQGG0w7w38hhEMoeko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksSj2PJhV9U66aE3dcDXg3skkpw9tUbE/bM+eRsQeVxviHHOR7U/HeFN+XWqAe7sw
-	 DsXamzSfMnWUcB3ct1FF50VGHsy7j/uJWoI/wH8WS4E1J4uoO1gBoZVXg2I9MjpKNV
-	 UQ4dEBzigqxsIpwBSq7htmby5kVxs+dtru78x5Zw=
+	b=Gh6EfttmkcXsIv7mGhde5JO8kyawIHzukvOOh9ggMLLgybeVlq4rtReV0Lw7XcIWc
+	 xCVw63R/4CNAKbNOiXB/pPgCZLm83rtVBPizFRI/9mguIhVJ3KJ5kmIXPuLw/0LTsN
+	 JkwEQOjmRWXmD4pRSyTmhcEOr0LPgsVSwVdF6T44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 141/491] net: macb: fix use-after-free access to PTP clock
-Date: Mon, 13 Apr 2026 17:56:26 +0200
-Message-ID: <20260413155824.316993034@linuxfoundation.org>
+	Brian Foster <bfoster@redhat.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 159/491] ext4: fix dirtyclusters double decrement on fs shutdown
+Date: Mon, 13 Apr 2026 17:56:44 +0200
+Message-ID: <20260413155824.987095883@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,128 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Brian Foster <bfoster@redhat.com>
 
-commit 8da13e6d63c1a97f7302d342c89c4a56a55c7015 upstream.
+[ Upstream commit 94a8cea54cd935c54fa2fba70354757c0fc245e3 ]
 
-PTP clock is registered on every opening of the interface and destroyed on
-every closing.  However it may be accessed via get_ts_info ethtool call
-which is possible while the interface is just present in the kernel.
+fstests test generic/388 occasionally reproduces a warning in
+ext4_put_super() associated with the dirty clusters count:
 
-BUG: KASAN: use-after-free in ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
-Read of size 4 at addr ffff8880194345cc by task syz.0.6/948
+  WARNING: CPU: 7 PID: 76064 at fs/ext4/super.c:1324 ext4_put_super+0x48c/0x590 [ext4]
 
-CPU: 1 PID: 948 Comm: syz.0.6 Not tainted 6.1.164+ #109
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x8d/0xba lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:316 [inline]
- print_report+0x17f/0x496 mm/kasan/report.c:420
- kasan_report+0xd9/0x180 mm/kasan/report.c:524
- ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
- gem_get_ts_info+0x138/0x1e0 drivers/net/ethernet/cadence/macb_main.c:3349
- macb_get_ts_info+0x68/0xb0 drivers/net/ethernet/cadence/macb_main.c:3371
- __ethtool_get_ts_info+0x17c/0x260 net/ethtool/common.c:558
- ethtool_get_ts_info net/ethtool/ioctl.c:2367 [inline]
- __dev_ethtool net/ethtool/ioctl.c:3017 [inline]
- dev_ethtool+0x2b05/0x6290 net/ethtool/ioctl.c:3095
- dev_ioctl+0x637/0x1070 net/core/dev_ioctl.c:510
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
- </TASK>
+Tracing the failure shows that the warning fires due to an
+s_dirtyclusters_counter value of -1. IOW, this appears to be a
+spurious decrement as opposed to some sort of leak. Further tracing
+of the dirty cluster count deltas and an LLM scan of the resulting
+output identified the cause as a double decrement in the error path
+between ext4_mb_mark_diskspace_used() and the caller
+ext4_mb_new_blocks().
 
-Allocated by task 457:
- kmalloc include/linux/slab.h:563 [inline]
- kzalloc include/linux/slab.h:699 [inline]
- ptp_clock_register+0x144/0x10e0 drivers/ptp/ptp_clock.c:235
- gem_ptp_init+0x46f/0x930 drivers/net/ethernet/cadence/macb_ptp.c:375
- macb_open+0x901/0xd10 drivers/net/ethernet/cadence/macb_main.c:2920
- __dev_open+0x2ce/0x500 net/core/dev.c:1501
- __dev_change_flags+0x56a/0x740 net/core/dev.c:8651
- dev_change_flags+0x92/0x170 net/core/dev.c:8722
- do_setlink+0xaf8/0x3a80 net/core/rtnetlink.c:2833
- __rtnl_newlink+0xbf4/0x1940 net/core/rtnetlink.c:3608
- rtnl_newlink+0x63/0xa0 net/core/rtnetlink.c:3655
- rtnetlink_rcv_msg+0x3c6/0xed0 net/core/rtnetlink.c:6150
- netlink_rcv_skb+0x15d/0x430 net/netlink/af_netlink.c:2511
- netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
- netlink_unicast+0x6d7/0xa30 net/netlink/af_netlink.c:1344
- netlink_sendmsg+0x97e/0xeb0 net/netlink/af_netlink.c:1872
- sock_sendmsg_nosec net/socket.c:718 [inline]
- __sock_sendmsg+0x14b/0x180 net/socket.c:730
- __sys_sendto+0x320/0x3b0 net/socket.c:2152
- __do_sys_sendto net/socket.c:2164 [inline]
- __se_sys_sendto net/socket.c:2160 [inline]
- __x64_sys_sendto+0xdc/0x1b0 net/socket.c:2160
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+First, note that generic/388 is a shutdown vs. fsstress test and so
+produces a random set of operations and shutdown injections. In the
+problematic case, the shutdown triggers an error return from the
+ext4_handle_dirty_metadata() call(s) made from
+ext4_mb_mark_context(). The changed value is non-zero at this point,
+so ext4_mb_mark_diskspace_used() does not exit after the error
+bubbles up from ext4_mb_mark_context(). Instead, the former
+decrements both cluster counters and returns the error up to
+ext4_mb_new_blocks(). The latter falls into the !ar->len out path
+which decrements the dirty clusters counter a second time, creating
+the inconsistency.
 
-Freed by task 938:
- kasan_slab_free include/linux/kasan.h:177 [inline]
- slab_free_hook mm/slub.c:1729 [inline]
- slab_free_freelist_hook mm/slub.c:1755 [inline]
- slab_free mm/slub.c:3687 [inline]
- __kmem_cache_free+0xbc/0x320 mm/slub.c:3700
- device_release+0xa0/0x240 drivers/base/core.c:2507
- kobject_cleanup lib/kobject.c:681 [inline]
- kobject_release lib/kobject.c:712 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x1cd/0x350 lib/kobject.c:729
- put_device+0x1b/0x30 drivers/base/core.c:3805
- ptp_clock_unregister+0x171/0x270 drivers/ptp/ptp_clock.c:391
- gem_ptp_remove+0x4e/0x1f0 drivers/net/ethernet/cadence/macb_ptp.c:404
- macb_close+0x1c8/0x270 drivers/net/ethernet/cadence/macb_main.c:2966
- __dev_close_many+0x1b9/0x310 net/core/dev.c:1585
- __dev_close net/core/dev.c:1597 [inline]
- __dev_change_flags+0x2bb/0x740 net/core/dev.c:8649
- dev_change_flags+0x92/0x170 net/core/dev.c:8722
- dev_ifsioc+0x151/0xe00 net/core/dev_ioctl.c:326
- dev_ioctl+0x33e/0x1070 net/core/dev_ioctl.c:572
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+To avoid this problem and simplify ownership of the cluster
+reservation in this codepath, lift the counter reduction to a single
+place in the caller. This makes it more clear that
+ext4_mb_new_blocks() is responsible for acquiring cluster
+reservation (via ext4_claim_free_clusters()) in the !delalloc case
+as well as releasing it, regardless of whether it ends up consumed
+or returned due to failure.
 
-Set the PTP clock pointer to NULL after unregistering.
-
-Fixes: c2594d804d5c ("macb: Common code to enable ptp support for MACB/GEM")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260316103826.74506-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0087d9fb3f29 ("ext4: Fix s_dirty_blocks_counter if block allocation failed with nodelalloc")
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Link: https://patch.msgid.link/20260113171905.118284-1-bfoster@redhat.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ Drop mballoc-test changes ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_ptp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ext4/mballoc.c |   21 +++++----------------
+ 1 file changed, 5 insertions(+), 16 deletions(-)
 
---- a/drivers/net/ethernet/cadence/macb_ptp.c
-+++ b/drivers/net/ethernet/cadence/macb_ptp.c
-@@ -395,8 +395,10 @@ void gem_ptp_remove(struct net_device *n
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3308,8 +3308,7 @@ void ext4_exit_mballoc(void)
+  * Returns 0 if success or error code
+  */
+ static noinline_for_stack int
+-ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
+-				handle_t *handle, unsigned int reserv_clstrs)
++ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac, handle_t *handle)
  {
- 	struct macb *bp = netdev_priv(ndev);
+ 	struct buffer_head *bitmap_bh = NULL;
+ 	struct ext4_group_desc *gdp;
+@@ -3396,13 +3395,6 @@ ext4_mb_mark_diskspace_used(struct ext4_
  
--	if (bp->ptp_clock)
-+	if (bp->ptp_clock) {
- 		ptp_clock_unregister(bp->ptp_clock);
-+		bp->ptp_clock = NULL;
-+	}
+ 	ext4_unlock_group(sb, ac->ac_b_ex.fe_group);
+ 	percpu_counter_sub(&sbi->s_freeclusters_counter, ac->ac_b_ex.fe_len);
+-	/*
+-	 * Now reduce the dirty block count also. Should not go negative
+-	 */
+-	if (!(ac->ac_flags & EXT4_MB_DELALLOC_RESERVED))
+-		/* release all the reserved blocks if non delalloc */
+-		percpu_counter_sub(&sbi->s_dirtyclusters_counter,
+-				   reserv_clstrs);
  
- 	gem_ptp_clear_timer(bp);
+ 	if (sbi->s_log_groups_per_flex) {
+ 		ext4_group_t flex_group = ext4_flex_group(sbi,
+@@ -5271,7 +5263,7 @@ repeat:
+ 			ext4_mb_pa_free(ac);
+ 	}
+ 	if (likely(ac->ac_status == AC_STATUS_FOUND)) {
+-		*errp = ext4_mb_mark_diskspace_used(ac, handle, reserv_clstrs);
++		*errp = ext4_mb_mark_diskspace_used(ac, handle);
+ 		if (*errp) {
+ 			ext4_discard_allocated_blocks(ac);
+ 			goto errout;
+@@ -5303,12 +5295,9 @@ out:
+ 		kmem_cache_free(ext4_ac_cachep, ac);
+ 	if (inquota && ar->len < inquota)
+ 		dquot_free_block(ar->inode, EXT4_C2B(sbi, inquota - ar->len));
+-	if (!ar->len) {
+-		if ((ar->flags & EXT4_MB_DELALLOC_RESERVED) == 0)
+-			/* release all the reserved blocks if non delalloc */
+-			percpu_counter_sub(&sbi->s_dirtyclusters_counter,
+-						reserv_clstrs);
+-	}
++	/* release any reserved blocks */
++	if (reserv_clstrs)
++		percpu_counter_sub(&sbi->s_dirtyclusters_counter, reserv_clstrs);
+ 
+ 	trace_ext4_allocate_blocks(ar, (unsigned long long)block);
  
 
 
