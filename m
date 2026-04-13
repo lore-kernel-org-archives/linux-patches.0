@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C39E31717C;
-	Mon, 13 Apr 2026 16:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2D8317153;
+	Mon, 13 Apr 2026 16:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099264; cv=none; b=UL+C6aMVuEWQRZtQEoDeBTki/U9HUOfsqaGWV7Om0BNEZfypoej5myTPWIvBjQWzIYjydBXF9lJRzVHbrYDmLqK0XGNCwdMRfH2+rRk2TxnrA9Fw31hz24Mf4aaRv/ze6mp+GsmFh/TP57R+o1iTbvSDA8+rcNvVJlqxjNLIc3E=
+	t=1776099266; cv=none; b=PHt+zu2jcjBnHiTVI5Ntdk0w3495A3BGtGA+0hmVdcEgSW702oJmNIfceWDLcdAG1rGyJWdoGquacvIBO9NWeIMnXvLuT5BPSpzoz+oWyDqHNNXJtkoh2pE6zIrLjcINpiU1XCyi0CTFdWAc9mBSK73HfxooatBfEumE/jG1vOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099264; c=relaxed/simple;
-	bh=Mwhn/X44jHCGjDpE2hFbs8DovvZZd3L3L0E9eHKFMrk=;
+	s=arc-20240116; t=1776099266; c=relaxed/simple;
+	bh=owfix4YtppS5voyG3xLmU4wuXaWYkyoR4B071hbc85k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U76a1b4ouJRVZpCZw0rP2JwAjLe15m8fKhDvak3dz4FolOglZJYozanVBhwvVlOIHPoxEYDN3cESivjtvrMtYNVKYnBlYkQecGBnX1bMDX1dnWcC+4U+5E360EUlSM5XKeDfssLZIAY5pomXAxNwOKE1DBTvuiI1pJFWnDS2v78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnhDjcOA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HPT/ukUonrsM0WW37m2VaAe4+hnA88PXrwTIts224paRNTpOuEINsrOMM8gfco9sEd3gw3/0R+8abKT653cEOgNgn7SyGpkC+CLq/uk79UXfk7/PE9U3ZdITfvDxNOZzT1h6UNt3d9SUlYbo2H7djbFeb22JRyiOhJ5bPeFXnMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNPDmELY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnhDjcOA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691ACC2BCAF;
-	Mon, 13 Apr 2026 16:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNPDmELY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006BEC2BCAF;
+	Mon, 13 Apr 2026 16:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099263;
-	bh=Mwhn/X44jHCGjDpE2hFbs8DovvZZd3L3L0E9eHKFMrk=;
+	s=korg; t=1776099266;
+	bh=owfix4YtppS5voyG3xLmU4wuXaWYkyoR4B071hbc85k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hnhDjcOAxjZt6SlSjsKODXkku4IukVuwsqr/BBdCWpRLaBlO99W2Unp7rNlPtSw65
-	 75CAo/PwJmOc0e+xmdmu2eSpCLQ8NzM9A/pFLpTUKduahn4onQ+VT4W+eTU1NPhwdP
-	 v/8kheabCG3AEzcTSSKskw7uBSv9ox8zXyloXKWI=
+	b=lNPDmELY8ZmUpyTYrKRu3F0em0KRk1oPpc2ijYQkcr6jrT+8UtMJ663B6kihNlMLu
+	 WzUPKJaDwUIQiccO6M+YK8DZQKTQC3valatLpWYRVRjCyrlipdy7hHNUgVIN1kHWrX
+	 2YPjCVQfv81tD/p8sxXsi73dxM63bxK6mWIIY/jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 273/491] netlink: hide validation union fields from kdoc
-Date: Mon, 13 Apr 2026 17:58:38 +0200
-Message-ID: <20260413155829.269147659@linuxfoundation.org>
+Subject: [PATCH 5.10 247/491] xfrm: call xdo_dev_state_delete during state update
+Date: Mon, 13 Apr 2026 17:58:12 +0200
+Message-ID: <20260413155828.303455025@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,74 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 7354c9024f2835f6122ed9612e21ab379df050f9 ]
+[ Upstream commit 7d2fc41f91bc69acb6e01b0fa23cd7d0109a6a23 ]
 
-Mark the validation fields as private, users shouldn't set
-them directly and they are too complicated to explain in
-a more succinct way (there's already a long explanation
-in the comment above).
+When we update an SA, we construct a new state and call
+xdo_dev_state_add, but never insert it. The existing state is updated,
+then we immediately destroy the new state. Since we haven't added it,
+we don't go through the standard state delete code, and we're skipping
+removing it from the device (but xdo_dev_state_free will get called
+when we destroy the temporary state).
 
-The strict_start_type field is set directly and has a dedicated
-comment so move that above the "private" section.
+This is similar to commit c5d4d7d83165 ("xfrm: Fix deletion of
+offloaded SAs on failure.").
 
-Link: https://lore.kernel.org/r/20221027212107.2639255-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8f15b5071b45 ("netfilter: ctnetlink: use netlink policy range checks")
+Fixes: d77e38e612a0 ("xfrm: Add an IPsec hardware offloading API")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netlink.h | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ net/xfrm/xfrm_state.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/netlink.h b/include/net/netlink.h
-index 45370f84d6442..9d5d6aa690c56 100644
---- a/include/net/netlink.h
-+++ b/include/net/netlink.h
-@@ -317,19 +317,10 @@ struct nla_policy {
- 	u8		validation_type;
- 	u16		len;
- 	union {
--		const u32 bitfield32_valid;
--		const u32 mask;
--		const char *reject_message;
--		const struct nla_policy *nested_policy;
--		struct netlink_range_validation *range;
--		struct netlink_range_validation_signed *range_signed;
--		struct {
--			s16 min, max;
--			u8 network_byte_order:1;
--		};
--		int (*validate)(const struct nlattr *attr,
--				struct netlink_ext_ack *extack);
--		/* This entry is special, and used for the attribute at index 0
-+		/**
-+		 * @strict_start_type: first attribute to validate strictly
-+		 *
-+		 * This entry is special, and used for the attribute at index 0
- 		 * only, and specifies special data about the policy, namely it
- 		 * specifies the "boundary type" where strict length validation
- 		 * starts for any attribute types >= this value, also, strict
-@@ -348,6 +339,20 @@ struct nla_policy {
- 		 * was added to enforce strict validation from thereon.
- 		 */
- 		u16 strict_start_type;
-+
-+		/* private: use NLA_POLICY_*() to set */
-+		const u32 bitfield32_valid;
-+		const u32 mask;
-+		const char *reject_message;
-+		const struct nla_policy *nested_policy;
-+		struct netlink_range_validation *range;
-+		struct netlink_range_validation_signed *range_signed;
-+		struct {
-+			s16 min, max;
-+			u8 network_byte_order:1;
-+		};
-+		int (*validate)(const struct nlattr *attr,
-+				struct netlink_ext_ack *extack);
- 	};
- };
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index b1243edf7f3a0..02d1d8d1fdea4 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -1736,6 +1736,7 @@ int xfrm_state_update(struct xfrm_state *x)
+ 
+ 		err = 0;
+ 		x->km.state = XFRM_STATE_DEAD;
++		xfrm_dev_state_delete(x);
+ 		__xfrm_state_put(x);
+ 	}
  
 -- 
 2.51.0
