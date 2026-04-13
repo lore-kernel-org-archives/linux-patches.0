@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB6924E4A1;
-	Mon, 13 Apr 2026 16:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF6B2D8364;
+	Mon, 13 Apr 2026 16:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098466; cv=none; b=sb7g0NoFb3/egg6F4Jo71/eIK6HHOuFfb6mZimZlrGgc0i3jAA/MA/lzBGhz1YgFmeqeKXDUChzW1ox06sKphhFOvjCByM4NsrAC1+HlLjODkf/d+3/c5myNEuNjMPxUzdeHcQAOWfnxE2IL0opasC1hmbex8HyhSiyjMYp9oT4=
+	t=1776098468; cv=none; b=sW672d4dIVY3K0iyu0nwrbAqcaVC+fUwerI0FNPfhVFO9YCNYmp5/U2XGi4WB9mSMq2opdopgOqgdeJmXz7MQybWIuVBOpuMLO65df0TLpew6WgyEYtQPNiLhY/SrgxB1n/VXiDbCe1r9mvMKZfrEv1P6r6OttcCaKZXEreQVrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098466; c=relaxed/simple;
-	bh=nYoDCRw0do2HR4J/Sl3zEgV/eyxQnz/0cemQo/3ZDTo=;
+	s=arc-20240116; t=1776098468; c=relaxed/simple;
+	bh=3jgVc+2Uc4Qpg6JvdiNooSHfE8ouVipG7Uf1/t/BnvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WSSWrDoP2gyqTnRosNUQXYtSvZfpX0azR3j92YMvxeji19Nuosfy0GMWBcadyqQOzk91Enxybyhb8ki/6H31+Ug+HhUWHG6mtDtysYGLUrOpSgT/6Zx66b5qdVbGCQqeohMN10SIeUtyzbCSm96kvLLRvmpt7WwJo5lwKkP0OVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYVmZJJy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UR6kWakExFw5anXvC64BZXnWLyzxgH1cniI7sGS7VD5ahE8LOzMV8cD306KOg8onc3VhD9duZBTFRGSk6Ua4b8XldLYF4pwkLBJBmsSBRaiHba18FlqkJAREDpmZQAb6qWTv6SS+WH7ZErVUDF+k5SwIBaHPbY8c0R3Kne2BeCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+jOvKOi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYVmZJJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94ABC2BCAF;
-	Mon, 13 Apr 2026 16:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+jOvKOi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5251DC2BCAF;
+	Mon, 13 Apr 2026 16:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098466;
-	bh=nYoDCRw0do2HR4J/Sl3zEgV/eyxQnz/0cemQo/3ZDTo=;
+	s=korg; t=1776098468;
+	bh=3jgVc+2Uc4Qpg6JvdiNooSHfE8ouVipG7Uf1/t/BnvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WYVmZJJyGQcOgdw44OCJ3pWLNv4UzskrWeNXSkgKNz8t3laY7yyxVt4/qcyT5dxPI
-	 KgFXO/vz7vefCYLF92sKG5W6pzZks2Vt2rTd9vOdmyE+msqUEw22aPgJmVQ3kikoPL
-	 oyKKyRCS7pMU5Z6UgTVrpCJN9QRvBkKkMICzeAcg=
+	b=U+jOvKOiF240cgBUN5L0SQkrIrqC4jiqGXfVPg4YLSfBP2+NfH6tGvQxQezH2v+sd
+	 sU2lS8OWXbTvvcgtnmx+x+ukKlQ0nMxCB2+KqjzTm0MA6AdcLFhLJQTx3Q7quLk30n
+	 d3vaHcEUfmV8bZdr5vokp4egu51ABVvBGt7K79JI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 5.15 535/570] drm/i915/gt: fix refcount underflow in intel_engine_park_heartbeat
-Date: Mon, 13 Apr 2026 18:01:06 +0200
-Message-ID: <20260413155850.486193566@linuxfoundation.org>
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.15 509/570] Input: uinput - fix circular locking dependency with ff-core
+Date: Mon, 13 Apr 2026 18:00:40 +0200
+Message-ID: <20260413155849.518647674@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,119 +50,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit 4c71fd099513bfa8acab529b626e1f0097b76061 upstream.
+commit 4cda78d6f8bf2b700529f2fbccb994c3e826d7c2 upstream.
 
-A use-after-free / refcount underflow is possible when the heartbeat
-worker and intel_engine_park_heartbeat() race to release the same
-engine->heartbeat.systole request.
+A lockdep circular locking dependency warning can be triggered
+reproducibly when using a force-feedback gamepad with uinput (for
+example, playing ELDEN RING under Wine with a Flydigi Vader 5
+controller):
 
-The heartbeat worker reads engine->heartbeat.systole and calls
-i915_request_put() on it when the request is complete, but clears
-the pointer in a separate, non-atomic step. Concurrently, a request
-retirement on another CPU can drop the engine wakeref to zero, triggering
-__engine_park() -> intel_engine_park_heartbeat(). If the heartbeat
-timer is pending at that point, cancel_delayed_work() returns true and
-intel_engine_park_heartbeat() reads the stale non-NULL systole pointer
-and calls i915_request_put() on it again, causing a refcount underflow:
+  ff->mutex -> udev->mutex -> input_mutex -> dev->mutex -> ff->mutex
 
-```
-<4> [487.221889] Workqueue: i915-unordered engine_retire [i915]
-<4> [487.222640] RIP: 0010:refcount_warn_saturate+0x68/0xb0
-...
-<4> [487.222707] Call Trace:
-<4> [487.222711]  <TASK>
-<4> [487.222716]  intel_engine_park_heartbeat.part.0+0x6f/0x80 [i915]
-<4> [487.223115]  intel_engine_park_heartbeat+0x25/0x40 [i915]
-<4> [487.223566]  __engine_park+0xb9/0x650 [i915]
-<4> [487.223973]  ____intel_wakeref_put_last+0x2e/0xb0 [i915]
-<4> [487.224408]  __intel_wakeref_put_last+0x72/0x90 [i915]
-<4> [487.224797]  intel_context_exit_engine+0x7c/0x80 [i915]
-<4> [487.225238]  intel_context_exit+0xf1/0x1b0 [i915]
-<4> [487.225695]  i915_request_retire.part.0+0x1b9/0x530 [i915]
-<4> [487.226178]  i915_request_retire+0x1c/0x40 [i915]
-<4> [487.226625]  engine_retire+0x122/0x180 [i915]
-<4> [487.227037]  process_one_work+0x239/0x760
-<4> [487.227060]  worker_thread+0x200/0x3f0
-<4> [487.227068]  ? __pfx_worker_thread+0x10/0x10
-<4> [487.227075]  kthread+0x10d/0x150
-<4> [487.227083]  ? __pfx_kthread+0x10/0x10
-<4> [487.227092]  ret_from_fork+0x3d4/0x480
-<4> [487.227099]  ? __pfx_kthread+0x10/0x10
-<4> [487.227107]  ret_from_fork_asm+0x1a/0x30
-<4> [487.227141]  </TASK>
-```
+The cycle is caused by four lock acquisition paths:
 
-Fix this by replacing the non-atomic pointer read + separate clear with
-xchg() in both racing paths. xchg() is a single indivisible hardware
-instruction that atomically reads the old pointer and writes NULL. This
-guarantees only one of the two concurrent callers obtains the non-NULL
-pointer and performs the put, the other gets NULL and skips it.
+1. ff upload: input_ff_upload() holds ff->mutex and calls
+   uinput_dev_upload_effect() -> uinput_request_submit() ->
+   uinput_request_send(), which acquires udev->mutex.
 
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15880
-Fixes: 058179e72e09 ("drm/i915/gt: Replace hangcheck by heartbeats")
-Cc: <stable@vger.kernel.org> # v5.5+
-Signed-off-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-Reviewed-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/d4c1c14255688dd07cc8044973c4f032a8d1559e.1775038106.git.sebastian.brzezinka@intel.com
-(cherry picked from commit 13238dc0ee4f9ab8dafa2cca7295736191ae2f42)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+2. device create: uinput_ioctl_handler() holds udev->mutex and calls
+   uinput_create_device() -> input_register_device(), which acquires
+   input_mutex.
+
+3. device register: input_register_device() holds input_mutex and
+   calls kbd_connect() -> input_register_handle(), which acquires
+   dev->mutex.
+
+4. evdev release: evdev_release() calls input_flush_device() under
+   dev->mutex, which calls input_ff_flush() acquiring ff->mutex.
+
+Fix this by introducing a new state_lock spinlock to protect
+udev->state and udev->dev access in uinput_request_send() instead of
+acquiring udev->mutex.  The function only needs to atomically check
+device state and queue an input event into the ring buffer via
+uinput_dev_event() -- both operations are safe under a spinlock
+(ktime_get_ts64() and wake_up_interruptible() do not sleep).  This
+breaks the ff->mutex -> udev->mutex link since a spinlock is a leaf in
+the lock ordering and cannot form cycles with mutexes.
+
+To keep state transitions visible to uinput_request_send(), protect
+writes to udev->state in uinput_create_device() and
+uinput_destroy_device() with the same state_lock spinlock.
+
+Additionally, move init_completion(&request->done) from
+uinput_request_send() to uinput_request_submit() before
+uinput_request_reserve_slot().  Once the slot is allocated,
+uinput_flush_requests() may call complete() on it at any time from
+the destroy path, so the completion must be initialised before the
+request becomes visible.
+
+Lock ordering after the fix:
+
+  ff->mutex -> state_lock (spinlock, leaf)
+  udev->mutex -> state_lock (spinlock, leaf)
+  udev->mutex -> input_mutex -> dev->mutex -> ff->mutex (no back-edge)
+
+Fixes: ff462551235d ("Input: uinput - switch to the new FF interface")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/CABXGCsMoxag+kEwHhb7KqhuyxfmGGd0P=tHZyb1uKE0pLr8Hkg@mail.gmail.com/
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Link: https://patch.msgid.link/20260407075031.38351-1-mikhail.v.gavrilov@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c |   26 +++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ drivers/input/misc/uinput.c |   28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
-@@ -116,10 +116,12 @@ static void heartbeat(struct work_struct
- 	/* Just in case everything has gone horribly wrong, give it a kick */
- 	intel_engine_flush_submission(engine);
+--- a/drivers/input/misc/uinput.c
++++ b/drivers/input/misc/uinput.c
+@@ -56,6 +56,7 @@ struct uinput_device {
+ 	struct input_dev	*dev;
+ 	struct mutex		mutex;
+ 	enum uinput_state	state;
++	spinlock_t		state_lock;
+ 	wait_queue_head_t	waitq;
+ 	unsigned char		ready;
+ 	unsigned char		head;
+@@ -145,19 +146,15 @@ static void uinput_request_release_slot(
+ static int uinput_request_send(struct uinput_device *udev,
+ 			       struct uinput_request *request)
+ {
+-	int retval;
++	int retval = 0;
  
--	rq = engine->heartbeat.systole;
--	if (rq && i915_request_completed(rq)) {
--		i915_request_put(rq);
--		engine->heartbeat.systole = NULL;
-+	rq = xchg(&engine->heartbeat.systole, NULL);
-+	if (rq) {
-+		if (i915_request_completed(rq))
-+			i915_request_put(rq);
-+		else
-+			engine->heartbeat.systole = rq;
+-	retval = mutex_lock_interruptible(&udev->mutex);
+-	if (retval)
+-		return retval;
++	spin_lock(&udev->state_lock);
+ 
+ 	if (udev->state != UIST_CREATED) {
+ 		retval = -ENODEV;
+ 		goto out;
  	}
  
- 	if (!intel_engine_pm_get_if_awake(engine))
-@@ -200,8 +202,11 @@ static void heartbeat(struct work_struct
- unlock:
- 	mutex_unlock(&ce->timeline->mutex);
- out:
--	if (!engine->i915->params.enable_hangcheck || !next_heartbeat(engine))
--		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
-+	if (!engine->i915->params.enable_hangcheck || !next_heartbeat(engine)) {
-+		rq = xchg(&engine->heartbeat.systole, NULL);
-+		if (rq)
-+			i915_request_put(rq);
-+	}
- 	intel_engine_pm_put(engine);
+-	init_completion(&request->done);
+-
+ 	/*
+ 	 * Tell our userspace application about this new request
+ 	 * by queueing an input event.
+@@ -165,7 +162,7 @@ static int uinput_request_send(struct ui
+ 	uinput_dev_event(udev->dev, EV_UINPUT, request->code, request->id);
+ 
+  out:
+-	mutex_unlock(&udev->mutex);
++	spin_unlock(&udev->state_lock);
+ 	return retval;
  }
  
-@@ -215,8 +220,13 @@ void intel_engine_unpark_heartbeat(struc
- 
- void intel_engine_park_heartbeat(struct intel_engine_cs *engine)
+@@ -174,6 +171,13 @@ static int uinput_request_submit(struct
  {
--	if (cancel_delayed_work(&engine->heartbeat.work))
--		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
-+	if (cancel_delayed_work(&engine->heartbeat.work)) {
-+		struct i915_request *rq;
-+
-+		rq = xchg(&engine->heartbeat.systole, NULL);
-+		if (rq)
-+			i915_request_put(rq);
-+	}
- }
+ 	int retval;
  
- void intel_gt_unpark_heartbeats(struct intel_gt *gt)
++	/*
++	 * Initialize completion before allocating the request slot.
++	 * Once the slot is allocated, uinput_flush_requests() may
++	 * complete it at any time, so it must be initialized first.
++	 */
++	init_completion(&request->done);
++
+ 	retval = uinput_request_reserve_slot(udev, request);
+ 	if (retval)
+ 		return retval;
+@@ -288,7 +292,14 @@ static void uinput_destroy_device(struct
+ 	struct input_dev *dev = udev->dev;
+ 	enum uinput_state old_state = udev->state;
+ 
++	/*
++	 * Update state under state_lock so that concurrent
++	 * uinput_request_send() sees the state change before we
++	 * flush pending requests and tear down the device.
++	 */
++	spin_lock(&udev->state_lock);
+ 	udev->state = UIST_NEW_DEVICE;
++	spin_unlock(&udev->state_lock);
+ 
+ 	if (dev) {
+ 		name = dev->name;
+@@ -365,7 +376,9 @@ static int uinput_create_device(struct u
+ 	if (error)
+ 		goto fail2;
+ 
++	spin_lock(&udev->state_lock);
+ 	udev->state = UIST_CREATED;
++	spin_unlock(&udev->state_lock);
+ 
+ 	return 0;
+ 
+@@ -383,6 +396,7 @@ static int uinput_open(struct inode *ino
+ 		return -ENOMEM;
+ 
+ 	mutex_init(&newdev->mutex);
++	spin_lock_init(&newdev->state_lock);
+ 	spin_lock_init(&newdev->requests_lock);
+ 	init_waitqueue_head(&newdev->requests_waitq);
+ 	init_waitqueue_head(&newdev->waitq);
 
 
