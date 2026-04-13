@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73EF624DCF6;
-	Mon, 13 Apr 2026 16:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2851D6DB5;
+	Mon, 13 Apr 2026 16:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096251; cv=none; b=QVgl3Otl9Lrav65snAoBaluDf1XRMLkDkj712/FaiRKVsO/V6jBb4SSGRX6kk73fCcI4CyY+12s+NwHFyBJLfRBli4Ouqn7QyhrrBQmtzmcM3WPlx17in1Uw+zuEOhnZfEdITIbcUDz6NX/kiPk2LV7TM19wYk+PIXenX80ZvjU=
+	t=1776096254; cv=none; b=MPkQwhN7yPupBgUqWmtdbATHJoIONpv4jTSToVskQdDiaRl+ejleAQTFB83RiORAKl2HiWTZCr10lpEFf3SQCoZ5SG8xa8/p1cRzmUmsPnGiN17r3G42U7eh+DueMOvc7sN7Q2kVfewrv7kqw4Z5OAoxA/9U5/7lkAjeC8mzFZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096251; c=relaxed/simple;
-	bh=ll0qtaeJotfv9NP9LTqdNCkhbwYS/06MTCSbx9pNq1o=;
+	s=arc-20240116; t=1776096254; c=relaxed/simple;
+	bh=+xTny0+pFFlgtaMY46yVNH9pOGvfTC20FB5jVagUZjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o7WGqZYeEh0hgVWYx2mbDDqjkjN/tHNm1PdGkY+0XUnX8AMTf9d9GzeyJeL/uGcQxpOEbf6RN3dPnPvUJQ3PRjRh8emoeabwheBBZbqT+9tdsmCKDpdYfsIO/vdwQRUgRqGA6pXroNcHyi4Qk0y5SIn+rJlSgykU95rMUpBClWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXV9kRpM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y8sNBGD4fKBC2lJLYKn6R8GwjaPxoVLE5RXCTePxInlPCc7XMz/Rh0RaAvxXf9hT05KF51CRP5zx9VXmsiJGgoHRKCDrsZmvF27z3I3e5dfr2L6FSOEQV4/Rb0HuYxdQ43S6FIpjSjmx6GO/b1XxuPbuw9P7QMVSXtR17mjt0aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/xEPft7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXV9kRpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A05AC2BCAF;
-	Mon, 13 Apr 2026 16:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/xEPft7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D87C2BCAF;
+	Mon, 13 Apr 2026 16:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096251;
-	bh=ll0qtaeJotfv9NP9LTqdNCkhbwYS/06MTCSbx9pNq1o=;
+	s=korg; t=1776096253;
+	bh=+xTny0+pFFlgtaMY46yVNH9pOGvfTC20FB5jVagUZjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXV9kRpMJ3nHOY+YId7hzt1OGCbpp7wP+bpHTcHgagZeR3AdHA9qLcvrENPVuYdMO
-	 nC2Mv5dGTABd6cVJVeosZH77tVGQ6sRBABsXMsoHdyQ8FubPXuf51VLMSrkuqfh2WO
-	 oft8Qj//+VGB9LRMLRp31Zwuxnau8S7CX4SRQhRE=
+	b=W/xEPft7o2yzm0J+J+zqMTju/wy+RbDM9725JPuFo/ITw0MeI1cOnD6rZxBqELkGZ
+	 ZJN65yEs+yfkH6ZVLWVtfOm+Jm2+BsS8lVDm/HPZm6ybxkIz7CzsE9QhL+GU+gWNNk
+	 /fHBut0kOTr3347boh/LXNdcojU25OhV37/SpvI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Glass <sjg@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Janne Grunau <j@jannau.net>,
-	Nicolas Schier <nsc@kernel.org>,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>
-Subject: [PATCH 6.19 25/86] kbuild: modules-cpio-pkg: Respect INSTALL_MOD_PATH
-Date: Mon, 13 Apr 2026 17:59:32 +0200
-Message-ID: <20260413155732.512946666@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.19 26/86] ASoC: SOF: Intel: hda: modify period size constraints for ACE4
+Date: Mon, 13 Apr 2026 17:59:33 +0200
+Message-ID: <20260413155732.550118111@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -55,55 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-commit 742de64b62b690a368dbeb846499eb8ac8ceedb9 upstream.
+commit 0f71866057262d669ed6a21246eaac0ad6d04d4e upstream.
 
-The modules-cpio-pkg target added in commit 2a9c8c0b59d3 ("kbuild: add
-target to build a cpio containing modules") is incompatible with
-initramfs with merged /lib and /usr/lib directories [1]. "/lib" cannot
-be a link and directory at the same time.
-Respect a non-empty INSTALL_MOD_PATH in the modules-cpio-pkg target so
-that `make INSTALL_MOD_PATH=/usr modules-cpio-pkg` results in the same
-module install location as `make INSTALL_MOD_PATH=/usr modules_install`.
+Intel ACE4 based products set more strict constraints on HDA BDLE start
+address and length alignment. Add a constraint to align period size to
+128 bytes.
 
-Tested with Fedora distribution initramfs produced by dracut.
+The commit removes the "minimum as per HDA spec" comment. This comment
+was misleading as spec actually does allow a 2 byte BDLE length, and
+more importantly, period size also directly impacts how the BDLE start
+addresses are aligned, so it is not sufficient just to consider allowed
+buffer length.
 
-Link: https://systemd.io/THE_CASE_FOR_THE_USR_MERGE/ [1]
-Fixes: 2a9c8c0b59d3 ("kbuild: add target to build a cpio containing modules")
+Fixes: d3df422f66e8 ("ASoC: SOF: Intel: add initial support for NVL-S")
 Cc: stable@vger.kernel.org
-Reviewed-by: Simon Glass <sjg@chromium.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Tested-by: Nicolas Schier <nsc@kernel.org>
-Reviewed-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://patch.msgid.link/20260327-kbuild-modules-cpio-pkg-usr-merge-v3-1-ef507dfa006c@jannau.net
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Link: https://patch.msgid.link/20260408084514.24325-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/Makefile.package |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/sof/intel/hda-pcm.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/scripts/Makefile.package
-+++ b/scripts/Makefile.package
-@@ -195,7 +195,7 @@ tar%-pkg: linux-$(KERNELRELEASE)-$(ARCH)
- .tmp_modules_cpio: FORCE
- 	$(Q)$(MAKE) -f $(srctree)/Makefile
- 	$(Q)rm -rf $@
--	$(Q)$(MAKE) -f $(srctree)/Makefile INSTALL_MOD_PATH=$@ modules_install
-+	$(Q)$(MAKE) -f $(srctree)/Makefile INSTALL_MOD_PATH=$@/$(INSTALL_MOD_PATH) modules_install
+diff --git a/sound/soc/sof/intel/hda-pcm.c b/sound/soc/sof/intel/hda-pcm.c
+index da6c1e7263cd..16a364072821 100644
+--- a/sound/soc/sof/intel/hda-pcm.c
++++ b/sound/soc/sof/intel/hda-pcm.c
+@@ -219,6 +219,7 @@ EXPORT_SYMBOL_NS(hda_dsp_pcm_pointer, "SND_SOC_SOF_INTEL_HDA_COMMON");
+ int hda_dsp_pcm_open(struct snd_sof_dev *sdev,
+ 		     struct snd_pcm_substream *substream)
+ {
++	const struct sof_intel_dsp_desc *chip_info = get_chip_info(sdev->pdata);
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	struct snd_soc_component *scomp = sdev->component;
+@@ -268,8 +269,17 @@ int hda_dsp_pcm_open(struct snd_sof_dev *sdev,
+ 		return -ENODEV;
+ 	}
  
- quiet_cmd_cpio = CPIO    $@
-       cmd_cpio = $(CONFIG_SHELL) $(srctree)/usr/gen_initramfs.sh -o $@ $<
-@@ -265,6 +265,7 @@ help:
- 	@echo '  tarxz-pkg           - Build the kernel as a xz compressed tarball'
- 	@echo '  tarzst-pkg          - Build the kernel as a zstd compressed tarball'
- 	@echo '  modules-cpio-pkg    - Build the kernel modules as cpio archive'
-+	@echo '                        (uses INSTALL_MOD_PATH inside the archive)'
- 	@echo '  perf-tar-src-pkg    - Build the perf source tarball with no compression'
- 	@echo '  perf-targz-src-pkg  - Build the perf source tarball with gzip compression'
- 	@echo '  perf-tarbz2-src-pkg - Build the perf source tarball with bz2 compression'
+-	/* minimum as per HDA spec */
+-	snd_pcm_hw_constraint_step(substream->runtime, 0, SNDRV_PCM_HW_PARAM_PERIOD_BYTES, 4);
++	/*
++	 * Set period size constraint to ensure BDLE buffer length and
++	 * start address alignment requirements are met. Align to 128
++	 * bytes for newer Intel platforms, with older ones using 4 byte alignment.
++	 */
++	if (chip_info->hw_ip_version >= SOF_INTEL_ACE_4_0)
++		snd_pcm_hw_constraint_step(substream->runtime, 0,
++					   SNDRV_PCM_HW_PARAM_PERIOD_BYTES, 128);
++	else
++		snd_pcm_hw_constraint_step(substream->runtime, 0,
++					   SNDRV_PCM_HW_PARAM_PERIOD_BYTES, 4);
+ 
+ 	/* avoid circular buffer wrap in middle of period */
+ 	snd_pcm_hw_constraint_integer(substream->runtime,
+-- 
+2.53.0
+
 
 
