@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0C13161BF;
-	Mon, 13 Apr 2026 16:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A278331715D;
+	Mon, 13 Apr 2026 16:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099057; cv=none; b=TYpfX0560VVdrm/O9RoDyvlBxlZ83I00flSdb9DjrxZJvpyRw4OYSTWa+eEuqBWRYAvlzmmGXaQypaHxJ9Gj0X35D1WW7YaAz3xL83y+bHcfSApNK4xYqpRHYEZ5Fs7h2bJRrHDaZrNNHkpfG/OQMFc3s1iF218NI41bhOzJw2M=
+	t=1776099060; cv=none; b=hERJr9SBL1SGYIg6qgROW0B0z+H8CA4TNL4KUA1MrABWTPORlMNJAwRYaawLMmIpJr8dsgMxVc5snvZljyTqyGk6sIsfuF+8tZ52CZMUT1HyImfW+h7JreV0oMadgC02XZcGeku/JCZY2lOmJIP86aJsl6pyta7cEHPybUvnQ88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099057; c=relaxed/simple;
-	bh=5YuaxZ3YSUIf3CfZ2alfKWm0HPANTglKnYt4Bv9swY8=;
+	s=arc-20240116; t=1776099060; c=relaxed/simple;
+	bh=JRfnjjEcqum7sO8a/I9g7Ugt/TI3rLEQkiXK+j0RhOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ED/U0W+W0EjiQkycO46gj6h+07hSg2qBrDmV95AWhBCbnLOF/NW9x3JB9zUWZashmdr8YsgbQlEsXegCwDYucoRzLlQOi5nn+i6YEQkOyXwdZFHrPsCwfygyiSCMmXwkXO8766nJgYIsz1BWCd/yxzH/+tGMaYgiXLFLKAZToGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVxdYRtJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k21QejfevVC2XFh4BUtVAYoy3FnZpYEEuk1YgGXOB2iHoOGZrXiTLoOdf+4iAcSw5KUtPcLOB7m9lVPOp4e9BFblvryNX9O9blkKc+0Y9B20+MJO1mVMgazm9DAO8XwEIW8hfteaM0297tJocRtlhzs9yEwUc0+25+A0sqbvxxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGay5HSX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVxdYRtJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F37C2BCAF;
-	Mon, 13 Apr 2026 16:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGay5HSX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB3AC2BCAF;
+	Mon, 13 Apr 2026 16:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099057;
-	bh=5YuaxZ3YSUIf3CfZ2alfKWm0HPANTglKnYt4Bv9swY8=;
+	s=korg; t=1776099060;
+	bh=JRfnjjEcqum7sO8a/I9g7Ugt/TI3rLEQkiXK+j0RhOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UVxdYRtJ7PwPNSizQhngSE9W18aCITGgu9UbqMQXdRVCEtXk45xZaZctCdV59EXVC
-	 VQDKVVigCtD1Eulx+MSwZMYm59zmLicP0W6A7EMFGc6KQf2pNiaN9EG3FvqmwC+TlH
-	 HvbXZXPMfzsTevJG3PolwSg3+tdHFGueMnBEoMUw=
+	b=iGay5HSXr6e5uMq50q4mxdZsadC2keRJb0zC1wgexfpjsP06PP5hPfVbtDAHazzOa
+	 tpD0FH0hBcrs4sE5a8IhIISAT3hquMjCrjvvFDHN575sTnxkbc1SvfPAAFxXnZqmEz
+	 G8YBFLbzg4jxVyX9T21n+GWySAZ1JPG5+2RGFlsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Mehul Rao <mehulrao@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 176/491] s390/zcrypt: Enable AUTOSEL_DOM for CCA serialnr sysfs attribute
-Date: Mon, 13 Apr 2026 17:57:01 +0200
-Message-ID: <20260413155825.641331613@linuxfoundation.org>
+Subject: [PATCH 5.10 194/491] ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain()
+Date: Mon, 13 Apr 2026 17:57:19 +0200
+Message-ID: <20260413155826.333316133@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -46,76 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Mehul Rao <mehulrao@gmail.com>
 
-[ Upstream commit 598bbefa8032cc58b564a81d1ad68bd815c8dc0f ]
+[ Upstream commit 9b1dbd69ba6f8f8c69bc7b77c2ce3b9c6ed05ba6 ]
 
-The serialnr sysfs attribute for CCA cards when queried always
-used the default domain for sending the request down to the card.
-If for any reason exactly this default domain is disabled then
-the attribute code fails to retrieve the CCA info and the sysfs
-entry shows an empty string. Works as designed but the serial
-number is a card attribute and thus it does not matter which
-domain is used for the query. So if there are other domains on
-this card available, these could be used.
+In the drain loop, the local variable 'runtime' is reassigned to a
+linked stream's runtime (runtime = s->runtime at line 2157).  After
+releasing the stream lock at line 2169, the code accesses
+runtime->no_period_wakeup, runtime->rate, and runtime->buffer_size
+(lines 2170-2178) — all referencing the linked stream's runtime without
+any lock or refcount protecting its lifetime.
 
-So extend the code to use AUTOSEL_DOM for the domain value to
-address any online domain within the card for querying the cca
-info and thus show the serialnr as long as there is one domain
-usable regardless of the default domain setting.
+A concurrent close() on the linked stream's fd triggers
+snd_pcm_release_substream() → snd_pcm_drop() → pcm_release_private()
+→ snd_pcm_unlink() → snd_pcm_detach_substream() → kfree(runtime).
+No synchronization prevents kfree(runtime) from completing while the
+drain path dereferences the stale pointer.
 
-Fixes: 8f291ebf3270 ("s390/zcrypt: enable card/domain autoselect on ep11 cprbs")
-Suggested-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Fix by caching the needed runtime fields (no_period_wakeup, rate,
+buffer_size) into local variables while still holding the stream lock,
+and using the cached values after the lock is released.
+
+Fixes: f2b3614cefb6 ("ALSA: PCM - Don't check DMA time-out too shortly")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-[ preserved zc->online as the fourth argument to cca_get_info() ]
+Signed-off-by: Mehul Rao <mehulrao@gmail.com>
+Link: https://patch.msgid.link/20260305193508.311096-1-mehulrao@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_ccamisc.c |   12 +++++++-----
- drivers/s390/crypto/zcrypt_cex4.c    |    3 +--
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ sound/core/pcm_native.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/s390/crypto/zcrypt_ccamisc.c
-+++ b/drivers/s390/crypto/zcrypt_ccamisc.c
-@@ -1680,11 +1680,13 @@ static int fetch_cca_info(u16 cardnr, u1
- 
- 	memset(ci, 0, sizeof(*ci));
- 
--	/* get first info from zcrypt device driver about this apqn */
--	rc = zcrypt_device_status_ext(cardnr, domain, &devstat);
--	if (rc)
--		return rc;
--	ci->hwtype = devstat.hwtype;
-+	/* if specific domain given, fetch status and hw info for this apqn */
-+	if (domain != AUTOSEL_DOM) {
-+		rc = zcrypt_device_status_ext(cardnr, domain, &devstat);
-+		if (rc)
-+			return rc;
-+		ci->hwtype = devstat.hwtype;
-+	}
- 
- 	/* prep page for rule array and var array use */
- 	pg = (u8 *) __get_free_page(GFP_KERNEL);
---- a/drivers/s390/crypto/zcrypt_cex4.c
-+++ b/drivers/s390/crypto/zcrypt_cex4.c
-@@ -84,8 +84,7 @@ static ssize_t cca_serialnr_show(struct
- 
- 	memset(&ci, 0, sizeof(ci));
- 
--	if (ap_domain_index >= 0)
--		cca_get_info(ac->id, ap_domain_index, &ci, zc->online);
-+	cca_get_info(ac->id, AUTOSEL_DOM, &ci, zc->online);
- 
- 	return scnprintf(buf, PAGE_SIZE, "%s\n", ci.serial);
- }
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2129,6 +2129,10 @@ static int snd_pcm_drain(struct snd_pcm_
+ 	for (;;) {
+ 		long tout;
+ 		struct snd_pcm_runtime *to_check;
++		unsigned int drain_rate;
++		snd_pcm_uframes_t drain_bufsz;
++		bool drain_no_period_wakeup;
++
+ 		if (signal_pending(current)) {
+ 			result = -ERESTARTSYS;
+ 			break;
+@@ -2148,16 +2152,25 @@ static int snd_pcm_drain(struct snd_pcm_
+ 		snd_pcm_group_unref(group, substream);
+ 		if (!to_check)
+ 			break; /* all drained */
++		/*
++		 * Cache the runtime fields needed after unlock.
++		 * A concurrent close() on the linked stream may free
++		 * its runtime via snd_pcm_detach_substream() once we
++		 * release the stream lock below.
++		 */
++		drain_no_period_wakeup = to_check->no_period_wakeup;
++		drain_rate = to_check->rate;
++		drain_bufsz = to_check->buffer_size;
+ 		init_waitqueue_entry(&wait, current);
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		add_wait_queue(&to_check->sleep, &wait);
+ 		snd_pcm_stream_unlock_irq(substream);
+-		if (runtime->no_period_wakeup)
++		if (drain_no_period_wakeup)
+ 			tout = MAX_SCHEDULE_TIMEOUT;
+ 		else {
+ 			tout = 100;
+-			if (runtime->rate) {
+-				long t = runtime->buffer_size * 1100 / runtime->rate;
++			if (drain_rate) {
++				long t = drain_bufsz * 1100 / drain_rate;
+ 				tout = max(t, tout);
+ 			}
+ 			tout = msecs_to_jiffies(tout);
 
 
