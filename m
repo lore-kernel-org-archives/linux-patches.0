@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E368231619A;
-	Mon, 13 Apr 2026 16:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B69317152;
+	Mon, 13 Apr 2026 16:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099174; cv=none; b=LyZvaFNH6nlBM+/AAHOL2wxVe6kMDHunJ+ZIwP19QuxDkeWdFARECq1M0RC41wcWGRkzOUJwV9KqPLHelcKUl8TEtUS8o/Q0SjlomuKxUC65vlJj7w6p7JijhYSYG4p3M9jW2fQLwIHBbAPZDo9o3T0zBc72zgv07zQHZWkuh9I=
+	t=1776099176; cv=none; b=KA8Ge+m33gUWxszaro/xcjuJWPKx8L1cEeDhrqZc+vjiC4rRZBQlOTHN1ZdSyggMi6L2ZZZQkxS7TeBW2+FDMe7gndo6mJdpI1nt5HjNhPVGYEbP41il2y9yhv6E+mcGPTHV9rFXklYF08tdJUFG7D4rYKoBEmSLeftdD8TmiKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099174; c=relaxed/simple;
-	bh=KkBL1umFUqO8JVKlUkfD5m4o7JtDK0JzgqKD3tIu++M=;
+	s=arc-20240116; t=1776099176; c=relaxed/simple;
+	bh=jEZkPXThmJDMW3nFjghRza/E576oUWCsHzXIF54YZCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tbaKQ4Gh2DS8XbX4PiyE5gs6ym6v8oOZBB8/IeUyv8fzL34dtaTs+a1649w1GEKRLyzzVy+R9TK7VRrJhnHQW3aKZfEzhSb1+uvSqZM2/yKwqziONNMLZ6d9z3acm72c49FGkU4tJWoXcB8N9exuQlqGboGh1+1cWncOCLFxV+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zaj/j3lH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DApP+U4kpIdgeGhbMqC5Pj2W85HEACjEbDeFFFD5eN/33Bgzw+BzdTomaupK9QMltF7pT9RU7gqAYUBoWyNAGvxKCrcn1pG605BqPWR57Tmampordeu/jhjSFurYsuVz3BJDM4G/MBL2pR9Yq12KUJ3b8egg2IBFPDb9ssy939U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MZg1jNf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zaj/j3lH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D22C2BCAF;
-	Mon, 13 Apr 2026 16:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MZg1jNf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDE6C2BCB7;
+	Mon, 13 Apr 2026 16:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099173;
-	bh=KkBL1umFUqO8JVKlUkfD5m4o7JtDK0JzgqKD3tIu++M=;
+	s=korg; t=1776099176;
+	bh=jEZkPXThmJDMW3nFjghRza/E576oUWCsHzXIF54YZCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zaj/j3lHp9Wqf5em/8ioM6s0FTBuY9FS4NPUBqhiBiucs/APg0q0ATXo1uIddSKcT
-	 qe9+5KnfAjfg7uKtsbGuWeWvpvftfqOBA0zPxSQCBE11HkGMCBs1GrBnx8YxnyLsxz
-	 Qbr+BlR5O9SwkJceULVL2Q+fW6UChiTFnL/ffftY=
+	b=2MZg1jNfHnOqNxLr9yCE7uVIQEKX74/VEb2H6rZ7uWvbCh9UZLwUJVSlT2BgOnxJR
+	 z9cY0onTdMRf/vf3WUI4UTk5w7V67k9PSomPIxOkp2hPmpN+MCFpQKmdhGxy7JVKPK
+	 z2KRTEOh6sXfDQnI4nOzjPj5S2RBG8CCiuuYgdb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 211/491] netfilter: xt_CT: drop pending enqueued packets on template removal
-Date: Mon, 13 Apr 2026 17:57:36 +0200
-Message-ID: <20260413155826.967212071@linuxfoundation.org>
+Subject: [PATCH 5.10 238/491] HID: asus: avoid memory leak in asus_report_fixup()
+Date: Mon, 13 Apr 2026 17:58:03 +0200
+Message-ID: <20260413155827.967917253@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -46,58 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit f62a218a946b19bb59abdd5361da85fa4606b96b ]
+[ Upstream commit 2bad24c17742fc88973d6aea526ce1353f5334a3 ]
 
-Templates refer to objects that can go away while packets are sitting in
-nfqueue refer to:
+The asus_report_fixup() function was returning a newly allocated
+kmemdup()-allocated buffer, but never freeing it.  Switch to
+devm_kzalloc() to ensure the memory is managed and freed automatically
+when the device is removed.
 
-- helper, this can be an issue on module removal.
-- timeout policy, nfnetlink_cttimeout might remove it.
+The caller of report_fixup() does not take ownership of the returned
+pointer, but it is permitted to return a pointer whose lifetime is at
+least that of the input buffer.
 
-The use of templates with zone and event cache filter are safe, since
-this just copies values.
+Also fix a harmless out-of-bounds read by copying only the original
+descriptor size.
 
-Flush these enqueued packets in case the template rule gets removed.
-
-Fixes: 24de58f46516 ("netfilter: xt_CT: allow to attach timeout policy + glue code")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_CT.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hid/hid-asus.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/xt_CT.c b/net/netfilter/xt_CT.c
-index ffff1e1f79b91..6ad76f3a956cc 100644
---- a/net/netfilter/xt_CT.c
-+++ b/net/netfilter/xt_CT.c
-@@ -16,6 +16,7 @@
- #include <net/netfilter/nf_conntrack_ecache.h>
- #include <net/netfilter/nf_conntrack_timeout.h>
- #include <net/netfilter/nf_conntrack_zones.h>
-+#include "nf_internals.h"
- 
- static inline int xt_ct_target(struct sk_buff *skb, struct nf_conn *ct)
- {
-@@ -270,6 +271,9 @@ static void xt_ct_tg_destroy(const struct xt_tgdtor_param *par,
- 	struct nf_conn_help *help;
- 
- 	if (ct) {
-+		if (info->helper[0] || info->timeout[0])
-+			nf_queue_nf_hook_drop(par->net);
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index 2f82946fb36a2..9d425f81d6224 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -1116,14 +1116,21 @@ static __u8 *asus_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 		 */
+ 		if (*rsize == rsize_orig &&
+ 			rdesc[offs] == 0x09 && rdesc[offs + 1] == 0x76) {
+-			*rsize = rsize_orig + 1;
+-			rdesc = kmemdup(rdesc, *rsize, GFP_KERNEL);
+-			if (!rdesc)
+-				return NULL;
++			__u8 *new_rdesc;
 +
- 		help = nfct_help(ct);
- 		if (help)
- 			nf_conntrack_helper_put(help->helper);
++			new_rdesc = devm_kzalloc(&hdev->dev, rsize_orig + 1,
++						 GFP_KERNEL);
++			if (!new_rdesc)
++				return rdesc;
+ 
+ 			hid_info(hdev, "Fixing up %s keyb report descriptor\n",
+ 				drvdata->quirks & QUIRK_T100CHI ?
+ 				"T100CHI" : "T90CHI");
++
++			memcpy(new_rdesc, rdesc, rsize_orig);
++			*rsize = rsize_orig + 1;
++			rdesc = new_rdesc;
++
+ 			memmove(rdesc + offs + 4, rdesc + offs + 2, 12);
+ 			rdesc[offs] = 0x19;
+ 			rdesc[offs + 1] = 0x00;
 -- 
 2.51.0
 
