@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A5D29D27A;
-	Mon, 13 Apr 2026 16:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3184029ACD7;
+	Mon, 13 Apr 2026 16:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096707; cv=none; b=pdw64vsO0dydp9eeLgAIUC8Cn54ETa5HyUof3wAZJ3tr9R4PaDpurdfpaEZh7gN7hAN5gJjj9/RpG9MtfO3/Ji/zbVD4I/zxk+HdSfL24hf+GfHDhMAIsiNwQxDPaMDMVyYPxthLMH/ZwjUNWducRbiIvIDZJFpeg+yAhFdjFSY=
+	t=1776096710; cv=none; b=Hp53mIoPi7dVe0ihlPAKl2K6pzKyhlFgJnrC8Gqt8k8bzAAEb/Lbu81tQGxMNSPFUH6qymaIbVEGJxbXST6xLMm1CJZ+YNs9sq9+fmqTXA9ANwd+zCeQCUiRjSn7tHpLe3Ncnhci2urdaBGSyRSGEor+znmqIJDd+Svs/mEqaek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096707; c=relaxed/simple;
-	bh=u2/xWPP8NjKY8T+JaMdfPo+DP2Fio/EQnUIn7kaAxP8=;
+	s=arc-20240116; t=1776096710; c=relaxed/simple;
+	bh=03Dtu5lWmCQrI9jC00Q6z4V9tYUGXXxIkAkhTW/YTx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X3RKuLFDx5btbnDa3tSFDjqu4xBvE4q5yyHQ4j3PYixsh69SkX/wAdm0NUdHv02yjMKZhNAL3dDGyq/shdBe7sers0EboTT1rtii94bdWbbxNCUOezxJXUsSNZJjl/BF4mJBDAfIlBjh5YO8XU55MFepCI7DAQzOMKB0yj7bvDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wapt5vL5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FKtD/ZTObIBl70nGD1QLfo1RVa8Jft9COitWdVY8/VQZJry53SXUsKKvF7WRXC8TTELmusPBKszwLqjui/K4aQZ3qojjSTKn8Ss8RW8QPf3nmAjLDRUrD357koMPWFYoK27hL2uxPy0o4OJAlUkBYgK+Kpae8BNV3lzh8phyVoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0nEwHBW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wapt5vL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6A9C2BCB0;
-	Mon, 13 Apr 2026 16:11:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0nEwHBW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3EEC2BCAF;
+	Mon, 13 Apr 2026 16:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096707;
-	bh=u2/xWPP8NjKY8T+JaMdfPo+DP2Fio/EQnUIn7kaAxP8=;
+	s=korg; t=1776096710;
+	bh=03Dtu5lWmCQrI9jC00Q6z4V9tYUGXXxIkAkhTW/YTx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wapt5vL5nykdj+5V4X/aizLy4a5KKn6skAoR4ZxrkCpk9c8JM4TCBvAwoMTLIy00M
-	 q29vi1J12YeDzUwaKcmOU8yuFGvwIkV4Us0xt4S7T7b+5kcWxMruYFV6Pm2Gr5hHkX
-	 0/8KetrJieU8adF/+/UCUV1h1FrvzNVsf3LyLHzU=
+	b=r0nEwHBWmFgveKOwIVdvfHkjVO0BzdvEJtYTDTb5KVoSBXJOlQE2KVElj+Lzeh9YE
+	 79WAWAGcDYHaGLzYigeFoqyZb69E1CLe1+r93CMnyh370U1PVSpAbLZ/waREKO0awc
+	 Brcx3HCGRn9W5+PzNDlNdHMhJXI+QuHeMt+izCnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Santa <carlos.santa@intel.com>,
-	Ryan Neph <ryanneph@google.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Waiman Long <longman@redhat.com>,
-	linux-kernel@vger.kernel.org,
-	Matthew Brost <matthew.brost@intel.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.12 32/70] workqueue: Add pool_workqueue to pending_pwqs list when unplugging multiple inactive works
-Date: Mon, 13 Apr 2026 18:00:27 +0200
-Message-ID: <20260413155729.385647125@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 15/70] btrfs: remove unused define WAIT_PAGE_LOCK for extent io
+Date: Mon, 13 Apr 2026 18:00:10 +0200
+Message-ID: <20260413155728.756421987@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -49,65 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: David Sterba <dsterba@suse.com>
 
-commit 703ccb63ae9f7444d6ff876d024e17f628103c69 upstream.
+[ Upstream commit db9eef2ea8633714ccdcb224f13ca3f3b5ed62cc ]
 
-In unplug_oldest_pwq(), the first inactive work item on the
-pool_workqueue is activated correctly. However, if multiple inactive
-works exist on the same pool_workqueue, subsequent works fail to
-activate because wq_node_nr_active.pending_pwqs is empty — the list
-insertion is skipped when the pool_workqueue is plugged.
+Last use was in the readahead code that got removed by f26c9238602856
+("btrfs: remove reada infrastructure").
 
-Fix this by checking for additional inactive works in
-unplug_oldest_pwq() and updating wq_node_nr_active.pending_pwqs
-accordingly.
-
-Fixes: 4c065dbce1e8 ("workqueue: Enable unbound cpumask update on ordered workqueues")
-Cc: stable@vger.kernel.org
-Cc: Carlos Santa <carlos.santa@intel.com>
-Cc: Ryan Neph <ryanneph@google.com>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-Cc: Waiman Long <longman@redhat.com>
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 316fb1b3169e ("btrfs: fix incorrect return value after changing leaf in lookup_extent_data_ref()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ fs/btrfs/extent_io.h | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -1856,8 +1856,20 @@ static void unplug_oldest_pwq(struct wor
- 	raw_spin_lock_irq(&pwq->pool->lock);
- 	if (pwq->plugged) {
- 		pwq->plugged = false;
--		if (pwq_activate_first_inactive(pwq, true))
-+		if (pwq_activate_first_inactive(pwq, true)) {
-+			/*
-+			 * While plugged, queueing skips activation which
-+			 * includes bumping the nr_active count and adding the
-+			 * pwq to nna->pending_pwqs if the count can't be
-+			 * obtained. We need to restore both for the pwq being
-+			 * unplugged. The first call activates the first
-+			 * inactive work item and the second, if there are more
-+			 * inactive, puts the pwq on pending_pwqs.
-+			 */
-+			pwq_activate_first_inactive(pwq, false);
-+
- 			kick_pool(pwq->pool);
-+		}
- 	}
- 	raw_spin_unlock_irq(&pwq->pool->lock);
- }
+diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
+index e22c4abefb9b4..efface292a595 100644
+--- a/fs/btrfs/extent_io.h
++++ b/fs/btrfs/extent_io.h
+@@ -263,7 +263,6 @@ void free_extent_buffer(struct extent_buffer *eb);
+ void free_extent_buffer_stale(struct extent_buffer *eb);
+ #define WAIT_NONE	0
+ #define WAIT_COMPLETE	1
+-#define WAIT_PAGE_LOCK	2
+ int read_extent_buffer_pages(struct extent_buffer *eb, int wait, int mirror_num,
+ 			     const struct btrfs_tree_parent_check *parent_check);
+ static inline void wait_on_extent_buffer_writeback(struct extent_buffer *eb)
+-- 
+2.53.0
+
 
 
