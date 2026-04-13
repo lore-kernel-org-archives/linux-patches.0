@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439FD23C8C7;
-	Mon, 13 Apr 2026 17:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1E733B6F8;
+	Mon, 13 Apr 2026 17:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099736; cv=none; b=NotSxZtkPyWmjGrgyl1Un6jU7qkIP/vxK1YBTnJ2EA0UmtcyTBpbcWET25wYXHrstHTHEHVjN8yWZp9ZJo/JVIAIgJJMdZgbfcK7X1iLMzJpwid04mORbIJVbbpWlvkvP50Fly5wA3lOR1I/FnETZrlHAOkRdgjPIW7tteAYvp0=
+	t=1776099738; cv=none; b=T5DEys8FOE9hOEFS64Bubj/XwtjIGcLNVFnWWnRKBO7OknnD0o+Aic0/vNPGmnj3vnwiGN052IEvEFKZLJGLpRfNjlnolI1W1A9h4Gooxe0MAz+C/77nufR0yUuhjVbNncyd8LPXQLXfO+6uz4a8ymeW0M0rXOBsYx2HlljlekU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099736; c=relaxed/simple;
-	bh=FRTqWM0bE09i3RJVzL6vaqAO2DxljnwwAOPI4C3wAPo=;
+	s=arc-20240116; t=1776099738; c=relaxed/simple;
+	bh=ki7VfXK+iosex8cJuIMyiSmEAK0Z1MLwQQ6kdfFTAqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gAIYcpH2P0HxSCj36pSZZWxoztPZuoH3aRsl8DoC4aTnNUpu4xA22x6Aep+gZgKYS8cy/RnvVr8u3rsUvcDTdMqdAGcXWfG4aQTh1BAQbOLfy8H/0bqa0fE/7Lbupz2n5knONlUwVRpXrVlk2TZ4CGGQhB1+wxgZUGu9xbL61O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=my3huhR8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l2oUP5ZkqWF4DgizGA3Xb7ZhgVdsl3ANbBasr3kjWgS65EqLBjBEm1LiZYZAoXKytSv4i49xT7RYpcpNtDn66d41siuyVPfy7ktW5/EEeM9IYdid7TY2vs8cIcitzCBS8O2f321hRJK+ln+LdtpD9I5+5uD8q0nBt2NdF0jGmuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYbXlgJl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="my3huhR8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5719C2BCAF;
-	Mon, 13 Apr 2026 17:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYbXlgJl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44406C2BCAF;
+	Mon, 13 Apr 2026 17:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099736;
-	bh=FRTqWM0bE09i3RJVzL6vaqAO2DxljnwwAOPI4C3wAPo=;
+	s=korg; t=1776099738;
+	bh=ki7VfXK+iosex8cJuIMyiSmEAK0Z1MLwQQ6kdfFTAqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=my3huhR8m8o3dERik/Lojd2lWBwqKyWjemoDKZFlqLLqWNUGBSa1JkWZa9z9QcA12
-	 jUJI9NkRFRnfG7s61HIuvt7V6Y83WOkn6z5hf8ejmq9ElLqeknLg3nQXEtM7+IMgax
-	 4dXXaa8ohtOzCEgIUGnS5Qf/gCRD2vOcO5lRsHKE=
+	b=pYbXlgJlHS8bZygvSWq/9M/BmZxavyA1JTzz6tItM8rpQCrCUMpc2hK+n9dF1tSUe
+	 DJJS9ZLNIgi/qv1FGZRaS+gV9PPnIF7saY6vXd9WaI2l9tSg7vsQpoYd0k8+arrESI
+	 iE3uM5Oio8ODJkCfImolAQalC5UwE8rM4izdjf+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,15 +32,15 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Laurence Oberman <loberman@redhat.com>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	Oscar Salvador <osalvador@suse.de>,
-	Harry Yoo <harry.yoo@oracle.com>,
 	Liu Shixin <liushixin2@huawei.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
 	Lance Yang <lance.yang@linux.dev>,
 	"Uschakow, Stanislav" <suschako@amazon.de>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 422/491] mm/hugetlb: fix two comments related to huge_pmd_unshare()
-Date: Mon, 13 Apr 2026 18:01:07 +0200
-Message-ID: <20260413155834.824938636@linuxfoundation.org>
+Subject: [PATCH 5.10 423/491] mm/rmap: fix two comments related to huge_pmd_unshare()
+Date: Mon, 13 Apr 2026 18:01:08 +0200
+Message-ID: <20260413155834.862582376@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -61,87 +61,58 @@ Content-Transfer-Encoding: 8bit
 
 From: David Hildenbrand (Red Hat) <david@kernel.org>
 
-Ever since we stopped using the page count to detect shared PMD page
-tables, these comments are outdated.
+PMD page table unsharing no longer touches the refcount of a PMD page
+table.  Also, it is not about dropping the refcount of a "PMD page" but
+the "PMD page table".
 
-The only reason we have to flush the TLB early is because once we drop the
-i_mmap_rwsem, the previously shared page table could get freed (to then
-get reallocated and used for other purpose).  So we really have to flush
-the TLB before that could happen.
+Let's just simplify by saying that the PMD page table was unmapped,
+consequently also unmapping the folio that was mapped into this page.
 
-So let's simplify the comments a bit.
+This code should be deduplicated in the future.
 
-The "If we unshared PMDs, the TLB flush was not recorded in mmu_gather."
-part introduced as in commit a4a118f2eead ("hugetlbfs: flush TLBs
-correctly after huge_pmd_unshare") was confusing: sure it is recorded in
-the mmu_gather, otherwise tlb_flush_mmu_tlbonly() wouldn't do anything.
-So let's drop that comment while at it as well.
-
-We'll centralize these comments in a single helper as we rework the code
-next.
-
-Link: https://lkml.kernel.org/r/20251223214037.580860-3-david@kernel.org
+Link: https://lkml.kernel.org/r/20251223214037.580860-4-david@kernel.org
 Fixes: 59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count")
 Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
 Reviewed-by: Rik van Riel <riel@surriel.com>
 Tested-by: Laurence Oberman <loberman@redhat.com>
 Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Acked-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
 Cc: Liu Shixin <liushixin2@huawei.com>
+Cc: Harry Yoo <harry.yoo@oracle.com>
 Cc: Lance Yang <lance.yang@linux.dev>
 Cc: "Uschakow, Stanislav" <suschako@amazon.de>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 3937027caecb4f8251e82dd857ba1d749bb5a428)
+(cherry picked from commit a8682d500f691b6dfaa16ae1502d990aeb86e8be)
+[ David: We don't have 40549ba8f8e0 ("hugetlb: use new vma_lock
+  for pmd sharing synchronization") and a98a2f0c8ce1 ("mm/rmap: split
+  migration into its own so changes in mm/rmap.c looks quite different. ]
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+ mm/rmap.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 8fa34032bc173..33302279ab5ff 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -4027,17 +4027,10 @@ void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 	tlb_end_vma(tlb, vma);
+diff --git a/mm/rmap.c b/mm/rmap.c
+index e6f840be18906..315d7ceb573ae 100644
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -1490,13 +1490,8 @@ static bool try_to_unmap_one(struct page *page, struct vm_area_struct *vma,
+ 							      range.end);
  
- 	/*
--	 * If we unshared PMDs, the TLB flush was not recorded in mmu_gather. We
--	 * could defer the flush until now, since by holding i_mmap_rwsem we
--	 * guaranteed that the last refernece would not be dropped. But we must
--	 * do the flushing before we return, as otherwise i_mmap_rwsem will be
--	 * dropped and the last reference to the shared PMDs page might be
--	 * dropped as well.
--	 *
--	 * In theory we could defer the freeing of the PMD pages as well, but
--	 * huge_pmd_unshare() relies on the exact page_count for the PMD page to
--	 * detect sharing, so we cannot defer the release of the page either.
--	 * Instead, do flush now.
-+	 * There is nothing protecting a previously-shared page table that we
-+	 * unshared through huge_pmd_unshare() from getting freed after we
-+	 * release i_mmap_rwsem, so flush the TLB now. If huge_pmd_unshare()
-+	 * succeeded, flush the range corresponding to the pud.
- 	 */
- 	if (force_flush)
- 		tlb_flush_mmu_tlbonly(tlb);
-@@ -5113,11 +5106,10 @@ unsigned long hugetlb_change_protection(struct vm_area_struct *vma,
- 		cond_resched();
- 	}
- 	/*
--	 * Must flush TLB before releasing i_mmap_rwsem: x86's huge_pmd_unshare
--	 * may have cleared our pud entry and done put_page on the page table:
--	 * once we release i_mmap_rwsem, another task can do the final put_page
--	 * and that page table be reused and filled with junk.  If we actually
--	 * did unshare a page of pmds, flush the range corresponding to the pud.
-+	 * There is nothing protecting a previously-shared page table that we
-+	 * unshared through huge_pmd_unshare() from getting freed after we
-+	 * release i_mmap_rwsem, so flush the TLB now. If huge_pmd_unshare()
-+	 * succeeded, flush the range corresponding to the pud.
- 	 */
- 	if (shared_pmd)
- 		flush_hugetlb_tlb_range(vma, range.start, range.end);
+ 				/*
+-				 * The ref count of the PMD page was dropped
+-				 * which is part of the way map counting
+-				 * is done for shared PMDs.  Return 'true'
+-				 * here.  When there is no other sharing,
+-				 * huge_pmd_unshare returns false and we will
+-				 * unmap the actual page and drop map count
+-				 * to zero.
++				 * The PMD table was unmapped,
++				 * consequently unmapping the folio.
+ 				 */
+ 				page_vma_mapped_walk_done(&pvmw);
+ 				break;
 -- 
 2.53.0
 
