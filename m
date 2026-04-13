@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE761D6DB5;
-	Mon, 13 Apr 2026 16:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FD81D6DB5;
+	Mon, 13 Apr 2026 16:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096233; cv=none; b=u+kOj9RE+3eh6EdJgJC7ZxQlU5CmRPa0i2SRY+2vr9KA1TUaXnrI0xp445f2QkEeqmQD/tXbeReX3JkKx8gEhvs0e0h+/Zw+DPm3fhJfDzTt0h9FivGJKZHp2HMGyPJ/Rvpzp7iC2pzIvSyGRiH35QMP2VaBStiVy61iKcj9VWs=
+	t=1776096236; cv=none; b=QIE0BKqhyYtnZfXMtNRinVR1eLOzwNthh+D1sUr3JaxV3+kEp2dC7K1O9gzRcuVndDk6T2JYY+7NaxMpIu8wBNT06opeHv3gF9Ry1/PvXSWg58UGDDtQ5etPg1MTkGyldKrhBaf8O4gVp2z3VVnlI322Ek8ilINpxdcU6s3tTOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096233; c=relaxed/simple;
-	bh=WBnIb/bfWAH3cb0NpcjPa8NJs00y5//B0BlhYr0mhMI=;
+	s=arc-20240116; t=1776096236; c=relaxed/simple;
+	bh=GYOSkwfu5yLVNmMeTUmm+TdpwvY6tK0sTg8Amz9XneA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbuEZCiTRr1GYtnCUSKj5Hsl3VHSYru2VobeloRcHmcFSttu5BcCGstkFf2udnly0KWFj8y4plu1yAoZxejLcRms7JGMYp8ikfkIwi+CHLgGvvVuklnxaStN8oOrzHF5QB+RAZrJeRI9gqiYiFLRJjTc8KkNaYuCHPoMi0ovAZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhRwxUgO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iWHzLSxidqGwNS+DpnwKIXqEaSeI8IuW+bQVEEALA4SET19CipPVAlg1cSSetacdz9EZyS4VFJrjKY5VvtD4K5ICQ5+CO0t0dU/1N0/TO6XlTKc1QyaL7ktqKSgSkDFWm0z2anqjTGoZRWFAqD+fr1R+w5LyKWRKC37uPT6HfDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPWp/gUf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhRwxUgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79BBC2BCAF;
-	Mon, 13 Apr 2026 16:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPWp/gUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C0EC2BCB4;
+	Mon, 13 Apr 2026 16:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096233;
-	bh=WBnIb/bfWAH3cb0NpcjPa8NJs00y5//B0BlhYr0mhMI=;
+	s=korg; t=1776096235;
+	bh=GYOSkwfu5yLVNmMeTUmm+TdpwvY6tK0sTg8Amz9XneA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhRwxUgOO6f8K2plrbhlS+9f2Byl1maLw2GPCqsGd735gxkI2Dx9uMb5TF97bD4md
-	 I+K2p/2zLlr4dxZAMRtm4sRXjcyjPHSChkRmnDIntsmS+K6gWRIZQgM9780FNRdOI1
-	 gO05dnBi7mWC4afrxf+unOkwQnfpi3yQq28p4Poc=
+	b=ZPWp/gUfabnMSHwHgs1GGy0nc9Z6jpwFAYaS9ifrIcj4osQgNoSP1xGlUE8l4XBYG
+	 /iC+oeUBKvJvLZu60MNzDFI79caVM4H0ouclnD94h3+fJKEPmgPkv7nwpp8dW5hjiD
+	 uIf5SBq9qBel4NWhU3IxGjpH2h9yvuK+nvUDywP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Michal Wilczynski <m.wilczynski@samsung.com>,
-	Drew Fustini <fustini@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.19 19/86] firmware: thead: Fix buffer overflow and use standard endian macros
-Date: Mon, 13 Apr 2026 17:59:26 +0200
-Message-ID: <20260413155732.296843277@linuxfoundation.org>
+	Vishal Thanki <vishalthanki@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.19 02/86] wifi: rt2x00usb: fix devres lifetime
+Date: Mon, 13 Apr 2026 17:59:09 +0200
+Message-ID: <20260413155731.663169547@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -52,144 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Wilczynski <m.wilczynski@samsung.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 88c4bd90725557796c15878b7cb70066e9e6b5ab upstream.
+commit 25369b22223d1c56e42a0cd4ac9137349d5a898e upstream.
 
-Addresses two issues in the TH1520 AON firmware protocol driver:
+USB drivers bind to USB interfaces and any device managed resources
+should have their lifetime tied to the interface rather than parent USB
+device. This avoids issues like memory leaks when drivers are unbound
+without their devices being physically disconnected (e.g. on probe
+deferral or configuration changes).
 
-1. Fix a potential buffer overflow where the code used unsafe pointer
-   arithmetic to access the 'mode' field through the 'resource' pointer
-   with an offset. This was flagged by Smatch static checker as:
-   "buffer overflow 'data' 2 <= 3"
+Fix the USB anchor lifetime so that it is released on driver unbind.
 
-2. Replace custom RPC_SET_BE* and RPC_GET_BE* macros with standard
-   kernel endianness conversion macros (cpu_to_be16, etc.) for better
-   portability and maintainability.
-
-The functionality was re-tested with the GPU power-up sequence,
-confirming the GPU powers up correctly and the driver probes
-successfully.
-
-[   12.702370] powervr ffef400000.gpu: [drm] loaded firmware
-powervr/rogue_36.52.104.182_v1.fw
-[   12.711043] powervr ffef400000.gpu: [drm] FW version v1.0 (build
-6645434 OS)
-[   12.719787] [drm] Initialized powervr 1.0.0 for ffef400000.gpu on
-minor 0
-
-Fixes: e4b3cbd840e5 ("firmware: thead: Add AON firmware protocol driver")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/17a0ccce-060b-4b9d-a3c4-8d5d5823b1c9@stanley.mountain/
-Signed-off-by: Michal Wilczynski <m.wilczynski@samsung.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Drew Fustini <fustini@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 8b4c0009313f ("rt2x00usb: Use usb anchor to manage URB")
+Cc: stable@vger.kernel.org	# 4.7
+Cc: Vishal Thanki <vishalthanki@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260327113219.1313748-1-johan@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/thead,th1520-aon.c             |    7 --
- include/linux/firmware/thead/thead,th1520-aon.h |   74 ------------------------
- 2 files changed, 3 insertions(+), 78 deletions(-)
+ drivers/net/wireless/ralink/rt2x00/rt2x00usb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/thead,th1520-aon.c
-+++ b/drivers/firmware/thead,th1520-aon.c
-@@ -170,10 +170,9 @@ int th1520_aon_power_update(struct th152
- 	hdr->func = TH1520_AON_PM_FUNC_SET_RESOURCE_POWER_MODE;
- 	hdr->size = TH1520_AON_RPC_MSG_NUM;
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00usb.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00usb.c
+@@ -828,7 +828,7 @@ int rt2x00usb_probe(struct usb_interface
+ 	if (retval)
+ 		goto exit_free_device;
  
--	RPC_SET_BE16(&msg.resource, 0, rsrc);
--	RPC_SET_BE16(&msg.resource, 2,
--		     (power_on ? TH1520_AON_PM_PW_MODE_ON :
--				 TH1520_AON_PM_PW_MODE_OFF));
-+	msg.resource = cpu_to_be16(rsrc);
-+	msg.mode = cpu_to_be16(power_on ? TH1520_AON_PM_PW_MODE_ON :
-+					  TH1520_AON_PM_PW_MODE_OFF);
- 
- 	ret = th1520_aon_call_rpc(aon_chan, &msg);
- 	if (ret)
---- a/include/linux/firmware/thead/thead,th1520-aon.h
-+++ b/include/linux/firmware/thead/thead,th1520-aon.h
-@@ -97,80 +97,6 @@ struct th1520_aon_rpc_ack_common {
- #define RPC_GET_SVC_FLAG_ACK_TYPE(MESG) (((MESG)->svc & 0x40) >> 6)
- #define RPC_SET_SVC_FLAG_ACK_TYPE(MESG, ACK) ((MESG)->svc |= (ACK) << 6)
- 
--#define RPC_SET_BE64(MESG, OFFSET, SET_DATA)                                \
--	do {                                                                \
--		u8 *data = (u8 *)(MESG);                                    \
--		u64 _offset = (OFFSET);                                     \
--		u64 _set_data = (SET_DATA);                                 \
--		data[_offset + 7] = _set_data & 0xFF;                       \
--		data[_offset + 6] = (_set_data & 0xFF00) >> 8;              \
--		data[_offset + 5] = (_set_data & 0xFF0000) >> 16;           \
--		data[_offset + 4] = (_set_data & 0xFF000000) >> 24;         \
--		data[_offset + 3] = (_set_data & 0xFF00000000) >> 32;       \
--		data[_offset + 2] = (_set_data & 0xFF0000000000) >> 40;     \
--		data[_offset + 1] = (_set_data & 0xFF000000000000) >> 48;   \
--		data[_offset + 0] = (_set_data & 0xFF00000000000000) >> 56; \
--	} while (0)
--
--#define RPC_SET_BE32(MESG, OFFSET, SET_DATA)			    \
--	do {							    \
--		u8 *data = (u8 *)(MESG);			    \
--		u64 _offset = (OFFSET);				    \
--		u64 _set_data = (SET_DATA);			    \
--		data[_offset + 3] = (_set_data) & 0xFF;		    \
--		data[_offset + 2] = (_set_data & 0xFF00) >> 8;	    \
--		data[_offset + 1] = (_set_data & 0xFF0000) >> 16;   \
--		data[_offset + 0] = (_set_data & 0xFF000000) >> 24; \
--	} while (0)
--
--#define RPC_SET_BE16(MESG, OFFSET, SET_DATA)		       \
--	do {						       \
--		u8 *data = (u8 *)(MESG);		       \
--		u64 _offset = (OFFSET);			       \
--		u64 _set_data = (SET_DATA);		       \
--		data[_offset + 1] = (_set_data) & 0xFF;	       \
--		data[_offset + 0] = (_set_data & 0xFF00) >> 8; \
--	} while (0)
--
--#define RPC_SET_U8(MESG, OFFSET, SET_DATA)	  \
--	do {					  \
--		u8 *data = (u8 *)(MESG);	  \
--		data[OFFSET] = (SET_DATA) & 0xFF; \
--	} while (0)
--
--#define RPC_GET_BE64(MESG, OFFSET, PTR)                                      \
--	do {                                                                 \
--		u8 *data = (u8 *)(MESG);                                     \
--		u64 _offset = (OFFSET);                                      \
--		*(u32 *)(PTR) =                                              \
--			(data[_offset + 7] | data[_offset + 6] << 8 |        \
--			 data[_offset + 5] << 16 | data[_offset + 4] << 24 | \
--			 data[_offset + 3] << 32 | data[_offset + 2] << 40 | \
--			 data[_offset + 1] << 48 | data[_offset + 0] << 56); \
--	} while (0)
--
--#define RPC_GET_BE32(MESG, OFFSET, PTR)                                      \
--	do {                                                                 \
--		u8 *data = (u8 *)(MESG);                                     \
--		u64 _offset = (OFFSET);                                      \
--		*(u32 *)(PTR) =                                              \
--			(data[_offset + 3] | data[_offset + 2] << 8 |        \
--			 data[_offset + 1] << 16 | data[_offset + 0] << 24); \
--	} while (0)
--
--#define RPC_GET_BE16(MESG, OFFSET, PTR)                                       \
--	do {                                                                  \
--		u8 *data = (u8 *)(MESG);                                      \
--		u64 _offset = (OFFSET);                                       \
--		*(u16 *)(PTR) = (data[_offset + 1] | data[_offset + 0] << 8); \
--	} while (0)
--
--#define RPC_GET_U8(MESG, OFFSET, PTR)          \
--	do {                                   \
--		u8 *data = (u8 *)(MESG);       \
--		*(u8 *)(PTR) = (data[OFFSET]); \
--	} while (0)
--
- /*
-  * Defines for SC PM Power Mode
-  */
+-	rt2x00dev->anchor = devm_kmalloc(&usb_dev->dev,
++	rt2x00dev->anchor = devm_kmalloc(&usb_intf->dev,
+ 					sizeof(struct usb_anchor),
+ 					GFP_KERNEL);
+ 	if (!rt2x00dev->anchor) {
 
 
