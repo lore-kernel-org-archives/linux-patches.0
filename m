@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946FA31F9BC;
-	Mon, 13 Apr 2026 16:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0BD3203B6;
+	Mon, 13 Apr 2026 16:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099514; cv=none; b=ug+Ofbi9rtZcYmTD3gRJ9btXK09SWH/v0GpptGVPWea02J9P5sWkZV5lIEZW0PPZ3QsvWN3ZUeajNHONVtEPR7qeFaQhI9afbq8s0a0vJFe+gjOA7akT8jmyiSGDIhui8JP8HG6d1jpxPnT1ZWFB88uSGJ+I/DrNmqEBQlsWlmw=
+	t=1776099517; cv=none; b=CVxzvy+qwGRLmg13tczu3XSHhfUjsEPHHqu2fYv2Yq4Qopfv45KrhhfGyhYbQBkj7LfnC17tTQ3tJ4L4Sw9ke/zQFALVrWH0+9qPNp6ndoDbkiLgfkHL1KkGeIKMrrourZVKq4z8CBEoY43FzyGJm2Z7FCTNnWmczFDwKg/7E7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099514; c=relaxed/simple;
-	bh=ChoRTLUYteOC1Lv8sxh3xBN5HTOR5FL5BVNB48Z5QFI=;
+	s=arc-20240116; t=1776099517; c=relaxed/simple;
+	bh=Tz/vq7bP0R9nFccLtcBqJyPlDfJk+2WxkpNQ1YoP2J4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQQjooWMhVV+sUSmX/wtXgKv0rgNdkRaUj9236XqOJPSUWd4Z8b7BcrMtaxytTN9rZwH7qvp86VPecsl4k3/U2w7ECNT/t3mXNVXl9dtf4P0CMu8IM9K6ipPXPQRtHp/MltqeUyH/WoWbk4HTBbHAsYbECTllvg7jcG7ReJ1WGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTYuPxWJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CgQICIVnnG+kHEnO99jEo/PZm6pcHofrj7/yh+aSHOOrXAvyE89ShPOTJnv6KGPzPnw3FmX9Q6lzzTcy3/y0m+XoCRI6ooLvGcKuwcYUznr5WjpV85fcweRPIaEaADhom4tzKHb5+dYvBzFqp24HBQxyiHaIWH4yW335SbZ//0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRaeqB92; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTYuPxWJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291EBC2BCAF;
-	Mon, 13 Apr 2026 16:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRaeqB92"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFFAC2BCAF;
+	Mon, 13 Apr 2026 16:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099514;
-	bh=ChoRTLUYteOC1Lv8sxh3xBN5HTOR5FL5BVNB48Z5QFI=;
+	s=korg; t=1776099517;
+	bh=Tz/vq7bP0R9nFccLtcBqJyPlDfJk+2WxkpNQ1YoP2J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTYuPxWJX0QqkBgwEr69wWeA/A9ybfTQquLeSCbNnpE8sv/T/tJerGeorxV15wcXy
-	 hBfQI7mn7k7WJroz4Qm+8rJq8xN2+xPWg2j43GcA0b3tTRuFAvwYtZV2OdrDWVPHAh
-	 nIGwbGQCisHa0uX5nJMrk1iE3V5EZQk96Izle0sU=
+	b=RRaeqB92wtFtaQbnHOohRfnkKG4UIFfnh1MqKlxDog5Ah3psZXm3xuuwxNM/TRFYX
+	 hZKXMFjstfkHdeFV/hpEXUBVpa9n7RG031fCbFo2egx8G8VqCk4dnFGmWdMSJvCjtd
+	 sPWKQn1h4Z27fEaluIAyevVB41f3ZtMf42U5arBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
 	Oleh Konko <security@1seal.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 369/491] Bluetooth: SMP: derive legacy responder STK authentication from MITM state
-Date: Mon, 13 Apr 2026 18:00:14 +0200
-Message-ID: <20260413155832.848280354@linuxfoundation.org>
+Subject: [PATCH 5.10 370/491] Bluetooth: SMP: force responder MITM requirements before building the pairing response
+Date: Mon, 13 Apr 2026 18:00:15 +0200
+Message-ID: <20260413155832.885827407@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,43 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Oleh Konko <security@1seal.org>
 
-commit 20756fec2f0108cb88e815941f1ffff88dc286fe upstream.
+commit d05111bfe37bfd8bd4d2dfe6675d6bdeef43f7c7 upstream.
 
-The legacy responder path in smp_random() currently labels the stored
-STK as authenticated whenever pending_sec_level is BT_SECURITY_HIGH.
-That reflects what the local service requested, not what the pairing
-flow actually achieved.
+smp_cmd_pairing_req() currently builds the pairing response from the
+initiator auth_req before enforcing the local BT_SECURITY_HIGH
+requirement. If the initiator omits SMP_AUTH_MITM, the response can
+also omit it even though the local side still requires MITM.
 
-For Just Works/Confirm legacy pairing, SMP_FLAG_MITM_AUTH stays clear
-and the resulting STK should remain unauthenticated even if the local
-side requested HIGH security. Use the established MITM state when
-storing the responder STK so the key metadata matches the pairing result.
+tk_request() then sees an auth value without SMP_AUTH_MITM and may
+select JUST_CFM, making method selection inconsistent with the pairing
+policy the responder already enforces.
 
-This also keeps the legacy path aligned with the Secure Connections code,
-which already treats JUST_WORKS/JUST_CFM as unauthenticated.
+When the local side requires HIGH security, first verify that MITM can
+be achieved from the IO capabilities and then force SMP_AUTH_MITM in the
+response in both rsp.auth_req and auth. This keeps the responder auth bits
+and later method selection aligned.
 
-Fixes: fff3490f4781 ("Bluetooth: Fix setting correct authentication information for SMP STK")
+Fixes: 2b64d153a0cc ("Bluetooth: Add MITM mechanism to LE-SMP")
 Cc: stable@vger.kernel.org
+Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Signed-off-by: Oleh Konko <security@1seal.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/smp.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/bluetooth/smp.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/net/bluetooth/smp.c
 +++ b/net/bluetooth/smp.c
-@@ -1018,10 +1018,7 @@ static u8 smp_random(struct smp_chan *sm
+@@ -1818,7 +1818,7 @@ static u8 smp_cmd_pairing_req(struct l2c
+ 	if (sec_level > conn->hcon->pending_sec_level)
+ 		conn->hcon->pending_sec_level = sec_level;
  
- 		smp_s1(smp->tk, smp->prnd, smp->rrnd, stk);
+-	/* If we need MITM check that it can be achieved */
++	/* If we need MITM check that it can be achieved. */
+ 	if (conn->hcon->pending_sec_level >= BT_SECURITY_HIGH) {
+ 		u8 method;
  
--		if (hcon->pending_sec_level == BT_SECURITY_HIGH)
--			auth = 1;
--		else
--			auth = 0;
-+		auth = test_bit(SMP_FLAG_MITM_AUTH, &smp->flags) ? 1 : 0;
+@@ -1826,6 +1826,10 @@ static u8 smp_cmd_pairing_req(struct l2c
+ 					 req->io_capability);
+ 		if (method == JUST_WORKS || method == JUST_CFM)
+ 			return SMP_AUTH_REQUIREMENTS;
++
++		/* Force MITM bit if it isn't set by the initiator. */
++		auth |= SMP_AUTH_MITM;
++		rsp.auth_req |= SMP_AUTH_MITM;
+ 	}
  
- 		/* Even though there's no _RESPONDER suffix this is the
- 		 * responder STK we're adding for later lookup (the initiator
+ 	key_size = min(req->max_key_size, rsp.max_key_size);
 
 
