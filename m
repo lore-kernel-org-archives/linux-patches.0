@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC9D2F8BC3;
-	Mon, 13 Apr 2026 16:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D2B2F8BC3;
+	Mon, 13 Apr 2026 16:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097231; cv=none; b=I/siK9O+/TArAHsmOQJhc3SmgroYjLaTxlF7UrCAyOSCuFxwS1OmqS3PCH+2AvcUIkdXVG6zAgp9RijX3hlEoQ6ACiAHUiOk0rS2jiIUrBJmMUQlqIIPbrZQ/iaL4RXZQY2gv8Ov5qjlXpL64Ir4ItlvwcuxTnwq3vVysh/PuOs=
+	t=1776097234; cv=none; b=qjQj+tVQeIJy5FZ0dKOUQGR7cPv4tGM1TY+3xtEn8WPF5NR8wZgq2BMQNCpTu/e+0y2seKKd+nVHIXFK8AfOFftZZdpgJ6VS4XIMPABZX5WDGVmNpvaD5IPx/eEF3Z6NUheFLzxCnerR11JByr39qXkN/VIVowbwoyYnF2QgWjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097231; c=relaxed/simple;
-	bh=2spqMbnKeMqFLUm64bkoO8PFa6rtFe0njrt3+oBvUzk=;
+	s=arc-20240116; t=1776097234; c=relaxed/simple;
+	bh=hyiK9Emd3xtPkYTH8sPqGNEKEvOQWbWcAUo53RbQmZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dUdeUOodEg04JquUTP8yfuql9hAk9wR3Fl5xcvpXFQOwL+osZFDl2vnm/6fIKXBCd7tDp05zrzASwz3jqIxeOs/wMirtmgBqBjKVdC/OOngq//Ct1aTIfD3E1mq8rs5QKKIa/hrm4lYDoPJT7SWe+UyEJyJGATO88B/00ZK3ZEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBLlc1Pl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NykhOetA3iErhdDrwAhr/ePp5LP4wMDgk+7eSt5m4lnlD9xbsllKkIoMsh6+CXz6NUOYccQGQF1c4GNWRMPUvWLC2vd0D4kIW4pHwCr1pVGyFgrvVmLpheC5AwE6yA4wBxKS9KC5TNyiKbLlj16YvxhGhzKqN5NQmkGeOFlaOXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbwTJZMc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBLlc1Pl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A38C2BCAF;
-	Mon, 13 Apr 2026 16:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbwTJZMc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A2CC2BCAF;
+	Mon, 13 Apr 2026 16:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097231;
-	bh=2spqMbnKeMqFLUm64bkoO8PFa6rtFe0njrt3+oBvUzk=;
+	s=korg; t=1776097234;
+	bh=hyiK9Emd3xtPkYTH8sPqGNEKEvOQWbWcAUo53RbQmZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBLlc1Pl6KcO8k2bNYljKU1aw0S2MVDoTQFGbEcJi5Syyn5smLxTjOlkBPpV0oJJe
-	 /g9oWEmV/In8F42muQgN0t6UDR0759Jyuhy/N9mp0Gci7GJAYCm5JXzus1qFZh+2ie
-	 2F7PErqK8JeoYNJgP8Cp2AEtEh1IgApfuopKB5w4=
+	b=YbwTJZMcUhKxnQtCkp7hWFs++kdW5lUCEw7fTXeRxDpJcltPk5lA6HsvPLvcnFxDR
+	 p8h/NeE5fzS80qe3Xv30xEhW1c/o4iVlvZ8B1Ga4AX/TWJeDY9m28ecCks8rs5AAju
+	 3UxLpGeg8/FSLN+mQaI/hsqKAMoRXAA5eqWcTGK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Lee Jones <lee@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/570] mfd: qcom-pm8xxx: Convert to platform remove callback returning void
-Date: Mon, 13 Apr 2026 17:52:35 +0200
-Message-ID: <20260413155831.327061914@linuxfoundation.org>
+Subject: [PATCH 5.15 015/570] ARM: omap2: Fix reference count leaks in omap_control_init()
+Date: Mon, 13 Apr 2026 17:52:26 +0200
+Message-ID: <20260413155830.985978948@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -46,66 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 19ea1d3953017518d85db35b69b5aea9bc64d630 ]
+[ Upstream commit 93a04ab480c8bbcb7d9004be139c538c8a0c1bc8 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+The of_get_child_by_name() function increments the reference count
+of child nodes, causing multiple reference leaks in omap_control_init():
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+1. scm_conf node never released in normal/error paths
+2. clocks node leak when checking existence
+3. Missing scm_conf release before np in error paths
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Fix these leaks by adding proper of_node_put() calls and separate error
+handling.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20231123165627.492259-14-u.kleine-koenig@pengutronix.de
-Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 27a8acea47a9 ("mfd: qcom-pm8xxx: Fix OF populate on driver rebind")
+Fixes: e5b635742e98 ("ARM: OMAP2+: control: add syscon support for register accesses")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20251217142122.1861292-1-vulab@iscas.ac.cn
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/qcom-pm8xxx.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/arm/mach-omap2/control.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-index 2f2734ba5273e..8831448371290 100644
---- a/drivers/mfd/qcom-pm8xxx.c
-+++ b/drivers/mfd/qcom-pm8xxx.c
-@@ -587,19 +587,17 @@ static int pm8xxx_remove_child(struct device *dev, void *unused)
- 	return 0;
- }
- 
--static int pm8xxx_remove(struct platform_device *pdev)
-+static void pm8xxx_remove(struct platform_device *pdev)
+diff --git a/arch/arm/mach-omap2/control.c b/arch/arm/mach-omap2/control.c
+index c514a96022699..9042bbfaeb072 100644
+--- a/arch/arm/mach-omap2/control.c
++++ b/arch/arm/mach-omap2/control.c
+@@ -793,7 +793,7 @@ int __init omap2_control_base_init(void)
+  */
+ int __init omap_control_init(void)
  {
- 	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
+-	struct device_node *np, *scm_conf;
++	struct device_node *np, *scm_conf, *clocks_node;
+ 	const struct of_device_id *match;
+ 	const struct omap_prcm_init_data *data;
+ 	int ret;
+@@ -814,16 +814,19 @@ int __init omap_control_init(void)
  
- 	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
- 	irq_domain_remove(chip->irqdomain);
--
--	return 0;
- }
+ 			if (IS_ERR(syscon)) {
+ 				ret = PTR_ERR(syscon);
+-				goto of_node_put;
++				goto err_put_scm_conf;
+ 			}
  
- static struct platform_driver pm8xxx_driver = {
- 	.probe		= pm8xxx_probe,
--	.remove		= pm8xxx_remove,
-+	.remove_new	= pm8xxx_remove,
- 	.driver		= {
- 		.name	= "pm8xxx-core",
- 		.of_match_table = pm8xxx_id_table,
+-			if (of_get_child_by_name(scm_conf, "clocks")) {
++			clocks_node = of_get_child_by_name(scm_conf, "clocks");
++			if (clocks_node) {
++				of_node_put(clocks_node);
+ 				ret = omap2_clk_provider_init(scm_conf,
+ 							      data->index,
+ 							      syscon, NULL);
+ 				if (ret)
+-					goto of_node_put;
++					goto err_put_scm_conf;
+ 			}
++			of_node_put(scm_conf);
+ 		} else {
+ 			/* No scm_conf found, direct access */
+ 			ret = omap2_clk_provider_init(np, data->index, NULL,
+@@ -841,6 +844,9 @@ int __init omap_control_init(void)
+ 
+ 	return 0;
+ 
++err_put_scm_conf:
++	if (scm_conf)
++		of_node_put(scm_conf);
+ of_node_put:
+ 	of_node_put(np);
+ 	return ret;
 -- 
 2.51.0
 
