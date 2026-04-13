@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE29D1A680C;
-	Mon, 13 Apr 2026 16:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A6E307AC7;
+	Mon, 13 Apr 2026 16:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098455; cv=none; b=G6xlEP6IpuM5V8iE35GEQpImiTaUcvi5r6PI82p1dxQwl4xALZ7wp8JkLNRvGWJrOxLXGUy9eHVexW05yoLvQ/O5aI2TduQMScEk5muDzB12SDSRrXrHsL1eKR8H1orzZG2NrxVZO3+pju2qvR3bJI4eulDIN9pZosXF/FlEba0=
+	t=1776098458; cv=none; b=Fe0K8RMu86JlXoHPiX18vfhFOCfDtsH69i8Cb5KTokU5By5YC96lwu4GvJ/B8mabcrGaS19F2RjIIHM6T6WvkD450XU8DXWwAYsCeSXkWpJ6Zx2Jv373Jdz2LK/ccaHNli8VKWDanKf+QBHdvZAC4NRfHn9BhkP8ICMIsjgVJ6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098455; c=relaxed/simple;
-	bh=R2Irb4jzGuoWfXBVu204JTSdSu0hYMG2F2StW1BGh9w=;
+	s=arc-20240116; t=1776098458; c=relaxed/simple;
+	bh=g0BgrQdiyOk3Tan01fZDhb/tw0/ohiUFgMXkN4syd+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+/3AVyymlIIRvENHDqg7Wv3q1CZ1fCSDzI09kFbmL8bY4YzsFazPM1lm9oLTanHF5TYE/8LKHzCLH6+zC0cTrt079lIGUInL3b7vzyE9e3lHbOhk5ZiEz55BO1WobSmq1q/AknlyRevmb79rlXx781LVn3sSJa+I2nXo4Ms780=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpxQP5+h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pinXkonbKANw/oD4wU3efUn19+CpErMRix3UGk41ur7QeRmF222Z3vJ2hK2w816Hnn3M6KPv+mij1RdOxlt7eVnzBoVcqg8j0r8lZXc6+maRFYIquBsvNCo3fGkWDfKC1yh2HQqhsFW1wJxhxBtezYPD2YrJl8kp+ZlYg1yYTUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEtnd/Ol; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpxQP5+h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545A6C2BCAF;
-	Mon, 13 Apr 2026 16:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEtnd/Ol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE480C2BCAF;
+	Mon, 13 Apr 2026 16:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098455;
-	bh=R2Irb4jzGuoWfXBVu204JTSdSu0hYMG2F2StW1BGh9w=;
+	s=korg; t=1776098458;
+	bh=g0BgrQdiyOk3Tan01fZDhb/tw0/ohiUFgMXkN4syd+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SpxQP5+hHUFSb55rIU4smIJn6vZf/VpsfxKuY07SOE1NkjU9RiLvfn6Jc6rCINb6t
-	 9i3p08+G+DVHoLQxr6fx4H+Cnn6ED292fsQz1+3xbm/7Cqa4pgAj3zZoPjTkApZTmQ
-	 DY3mKZi8z2zCXnXeWJeVgztXpBXkBTsr1EHu3Pbg=
+	b=MEtnd/Olp7YBEceLCuPyVvl5St3syiUDIiJa/RKrjAs4Qb2x7550+jH/8qbPVGN+U
+	 8WdpPocWKXjH17e0eFMFfiL5duNK0yY/0xf8B7as3ztlEtFv3zbzxA9r88uQS5zbdF
+	 bxHM4SgMe95ZoBE0wpLDIZFoRZSnDw/3HKPqRRlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 531/570] nfc: pn533: allocate rx skb before consuming bytes
-Date: Mon, 13 Apr 2026 18:01:02 +0200
-Message-ID: <20260413155850.338652971@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Ruide Cao <caoruide123@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 5.15 532/570] batman-adv: reject oversized global TT response buffers
+Date: Mon, 13 Apr 2026 18:01:03 +0200
+Message-ID: <20260413155850.375288579@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,59 +57,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ruide Cao <caoruide123@gmail.com>
 
-commit c71ba669b570c7b3f86ec875be222ea11dacb352 upstream.
+commit 3a359bf5c61d52e7f09754108309d637532164a6 upstream.
 
-pn532_receive_buf() reports the number of accepted bytes to the serdev
-core. The current code consumes bytes into recv_skb and may already hand
-a complete frame to pn533_recv_frame() before allocating a fresh receive
-buffer.
+batadv_tt_prepare_tvlv_global_data() builds the allocation length for a
+global TT response in 16-bit temporaries. When a remote originator
+advertises a large enough global TT, the TT payload length plus the VLAN
+header offset can exceed 65535 and wrap before kmalloc().
 
-If that alloc_skb() fails, the callback returns 0 even though it has
-already consumed bytes, and it leaves recv_skb as NULL for the next
-receive callback. That breaks the receive_buf() accounting contract and
-can also lead to a NULL dereference on the next skb_put_u8().
+The full-table response path still uses the original TT payload length when
+it fills tt_change, so the wrapped allocation is too small and
+batadv_tt_prepare_tvlv_global_data() writes past the end of the heap object
+before the later packet-size check runs.
 
-Allocate the receive skb lazily before consuming the next byte instead.
-If allocation fails, return the number of bytes already accepted.
+Fix this by rejecting TT responses whose TVLV value length cannot fit in
+the 16-bit TVLV payload length field.
 
-Fixes: c656aa4c27b1 ("nfc: pn533: add UART phy driver")
+Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260405094003.3-pn533-v2-pengpeng@iscas.ac.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Ruide Cao <caoruide123@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/pn533/uart.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/batman-adv/translation-table.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/nfc/pn533/uart.c
-+++ b/drivers/nfc/pn533/uart.c
-@@ -211,6 +211,13 @@ static int pn532_receive_buf(struct serd
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -844,8 +844,8 @@ batadv_tt_prepare_tvlv_global_data(struc
+ {
+ 	u16 num_vlan = 0;
+ 	u16 num_entries = 0;
+-	u16 change_offset;
+-	u16 tvlv_len;
++	u16 tvlv_len = 0;
++	unsigned int change_offset;
+ 	struct batadv_tvlv_tt_vlan_data *tt_vlan;
+ 	struct batadv_orig_node_vlan *vlan;
+ 	u8 *tt_change_ptr;
+@@ -863,6 +863,11 @@ batadv_tt_prepare_tvlv_global_data(struc
+ 	if (*tt_len < 0)
+ 		*tt_len = batadv_tt_len(num_entries);
  
- 	del_timer(&dev->cmd_timeout);
- 	for (i = 0; i < count; i++) {
-+		if (!dev->recv_skb) {
-+			dev->recv_skb = alloc_skb(PN532_UART_SKB_BUFF_LEN,
-+						  GFP_KERNEL);
-+			if (!dev->recv_skb)
-+				return i;
-+		}
++	if (change_offset > U16_MAX || *tt_len > U16_MAX - change_offset) {
++		*tt_len = 0;
++		goto out;
++	}
 +
- 		if (unlikely(!skb_tailroom(dev->recv_skb)))
- 			skb_trim(dev->recv_skb, 0);
+ 	tvlv_len = *tt_len;
+ 	tvlv_len += change_offset;
  
-@@ -219,9 +226,7 @@ static int pn532_receive_buf(struct serd
- 			continue;
- 
- 		pn533_recv_frame(dev->priv, dev->recv_skb, 0);
--		dev->recv_skb = alloc_skb(PN532_UART_SKB_BUFF_LEN, GFP_KERNEL);
--		if (!dev->recv_skb)
--			return 0;
-+		dev->recv_skb = NULL;
- 	}
- 
- 	return i;
 
 
