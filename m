@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515C626CE32;
-	Mon, 13 Apr 2026 16:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE8826A1CF;
+	Mon, 13 Apr 2026 16:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096697; cv=none; b=J7giglk7DRroat5kCkz3EdUbyCX7AWSb/kKb2SSFSLHeF8KhQoD3UwVLKCL5Kxrc7yBGE+mweQ1MwF7uDH3lzSVhBP1KwCC7xcGabN32KY0OVWvHeGv5MHR7HegRxIXrrDqlBWuqJFD+AgUJ4VGPSmWKojPlVCRCyq9mA0l+M/U=
+	t=1776096699; cv=none; b=FTUIKTDF3mHFs6+q056zk5/1mb5Y1O5K/dZ32dres50iZi0H1V8MymraUidoJP2CFqeJjJISPGmUp0LOPiPhc9WX0iuPilTYh/j45HXIYWqsbP80w4wfHLuAvuPa+An/IqpXekDuvR+5FmStK0rMv9P7CP9+UgV5xM/ptlhhhjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096697; c=relaxed/simple;
-	bh=ssNk2we/VRow1CJ72jjh+MosBIgSG9X4p8ODEmxIrGc=;
+	s=arc-20240116; t=1776096699; c=relaxed/simple;
+	bh=wtDjfMGyriUotsi4clz6g7/DXIR4vbXa+7ZtvSNAjRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HAE1w27EZXGPh32Bi7hbAXHPhX/K73oYUhzRrT9NOo0I5lNKQL3gdwQ/S0PsyZJrg3uO7+ONG81zZs+ww56uiuTnAMerAj91+ya0QHhHbl4MCblnoXTUEn3IHCPlsjhBQtAuWnh49/rOPKW7bZulXI6VPcZ3NyAZG8xWj1IvCnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxDE0NkE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g4vozB0VA9rlzJidWJXdVulJ4GjElIjnvRUGvBvI7fIZRIV9oZeEEAHzuFn691Ci1ck4XlhZE6CIUVjY99/zta5vncgISHABjxfYXv5aI2Hu6i2F7K87ICEUKJ3ZP7UmaPw1D/U8e0Kksxl1IT4yzWW+AxBgwSV3Wcn4q2pn2TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adSQ0T1V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxDE0NkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD757C2BCAF;
-	Mon, 13 Apr 2026 16:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adSQ0T1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7304CC2BCAF;
+	Mon, 13 Apr 2026 16:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096697;
-	bh=ssNk2we/VRow1CJ72jjh+MosBIgSG9X4p8ODEmxIrGc=;
+	s=korg; t=1776096699;
+	bh=wtDjfMGyriUotsi4clz6g7/DXIR4vbXa+7ZtvSNAjRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NxDE0NkEMns0J+kx6pMZcb5cCsT1VUV+kGPMlPqeKaZxLxtN5Gf5QvnrzH1JBLJ0m
-	 b3Tc/xkSxjIjP2qyHz/x6nonBbSenslT/qRPdFVq5IE9CNUcEfFnwmk86v8WDQSheV
-	 qSeO9fCUOv61iSNs9AH5sgBgSah10Wl3qpnxTWOM=
+	b=adSQ0T1VCRh4DGh3MT31LsOryPAelTgpfp2LmN1Am3INmItV7GgJAywBKALEwhMq1
+	 GLuD/a/0oRSy4fgTxDer6TDmpVdeHfPk7wTUXgZEYPH0baWWV+ZVMEu98VxhNcbKk4
+	 /N/8j3pZqFgUVF91D2Y2znybkPYgSIKQjps9exq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 28/70] mptcp: fix soft lockup in mptcp_recvmsg()
-Date: Mon, 13 Apr 2026 18:00:23 +0200
-Message-ID: <20260413155729.239617101@linuxfoundation.org>
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 29/70] LoongArch: Remove unnecessary checks for ORC unwinder
+Date: Mon, 13 Apr 2026 18:00:24 +0200
+Message-ID: <20260413155729.276259569@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -51,122 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 5dd8025a49c268ab6b94d978532af3ad341132a7 upstream.
+[ Upstream commit 4cd641a79e69270a062777f64a0dd330abb9044a ]
 
-syzbot reported a soft lockup in mptcp_recvmsg() [0].
+According to the following function definitions, __kernel_text_address()
+already checks __module_text_address(), so it should remove the check of
+__module_text_address() in bt_address() at least.
 
-When receiving data with MSG_PEEK | MSG_WAITALL flags, the skb is not
-removed from the sk_receive_queue. This causes sk_wait_data() to always
-find available data and never perform actual waiting, leading to a soft
-lockup.
+int __kernel_text_address(unsigned long addr)
+{
+	if (kernel_text_address(addr))
+		return 1;
+	...
+	return 0;
+}
 
-Fix this by adding a 'last' parameter to track the last peeked skb.
-This allows sk_wait_data() to make informed waiting decisions and prevent
-infinite loops when MSG_PEEK is used.
+int kernel_text_address(unsigned long addr)
+{
+	bool no_rcu;
+	int ret = 1;
+	...
+	if (is_module_text_address(addr))
+		goto out;
+	...
+	return ret;
+}
 
-[0]:
-watchdog: BUG: soft lockup - CPU#2 stuck for 156s! [server:1963]
-Modules linked in:
-CPU: 2 UID: 0 PID: 1963 Comm: server Not tainted 6.19.0-rc8 #61 PREEMPT(none)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:sk_wait_data+0x15/0x190
-Code: 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 41 56 41 55 41 54 49 89 f4 55 48 89 d5 53 48 89 fb <48> 83 ec 30 65 48 8b 05 17 a4 6b 01 48 89 44 24 28 31 c0 65 48 8b
-RSP: 0018:ffffc90000603ca0 EFLAGS: 00000246
-RAX: 0000000000000000 RBX: ffff888102bf0800 RCX: 0000000000000001
-RDX: 0000000000000000 RSI: ffffc90000603d18 RDI: ffff888102bf0800
-RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000101
-R10: 0000000000000000 R11: 0000000000000075 R12: ffffc90000603d18
-R13: ffff888102bf0800 R14: ffff888102bf0800 R15: 0000000000000000
-FS:  00007f6e38b8c4c0(0000) GS:ffff8881b877e000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055aa7bff1680 CR3: 0000000105cbe000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- mptcp_recvmsg+0x547/0x8c0 net/mptcp/protocol.c:2329
- inet_recvmsg+0x11f/0x130 net/ipv4/af_inet.c:891
- sock_recvmsg+0x94/0xc0 net/socket.c:1100
- __sys_recvfrom+0xb2/0x130 net/socket.c:2256
- __x64_sys_recvfrom+0x1f/0x30 net/socket.c:2267
- do_syscall_64+0x59/0x2d0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:131
-RIP: 0033:0x7f6e386a4a1d
-Code: 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 8d 05 f1 de 2c 00 41 89 ca 8b 00 85 c0 75 20 45 31 c9 45 31 c0 b8 2d 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 6b f3 c3 66 0f 1f 84 00 00 00 00 00 41 56 41
-RSP: 002b:00007ffc3c4bb078 EFLAGS: 00000246 ORIG_RAX: 000000000000002d
-RAX: ffffffffffffffda RBX: 000000000000861e RCX: 00007f6e386a4a1d
-RDX: 00000000000003ff RSI: 00007ffc3c4bb150 RDI: 0000000000000004
-RBP: 00007ffc3c4bb570 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000103 R11: 0000000000000246 R12: 00005605dbc00be0
-R13: 00007ffc3c4bb650 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
+bool is_module_text_address(unsigned long addr)
+{
+	guard(rcu)();
+	return __module_text_address(addr) != NULL;
+}
 
-Fixes: 8e04ce45a8db ("mptcp: fix MSG_PEEK stream corruption")
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260330120335.659027-1-lixiasong1@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in protocol.c, because commit bc68b0efa1bf ("mptcp: move the
-  whole rx path under msk socket lock protection") and commit
-  d88b2127b242 ("mptcp: add eat_recv_skb helper") (with some
-  dependences) are not in this version. These conflicts were in the
-  context, and not related to this fix. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Furthermore, there are two checks of __kernel_text_address(), one is in
+bt_address() and the other is after calling bt_address(), it looks like
+redundant.
+
+Handle the exception address first and then use __kernel_text_address()
+to validate the calculated address for exception or the normal address
+in bt_address(), then it can remove the check of __kernel_text_address()
+after calling bt_address().
+
+Just remove unnecessary checks, no functional changes intended.
+
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+V2: Add upstream commit ID.
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1997,7 +1997,7 @@ static int __mptcp_recvmsg_mskq(struct m
- 				struct msghdr *msg,
- 				size_t len, int flags, int copied_total,
- 				struct scm_timestamping_internal *tss,
--				int *cmsg_flags)
-+				int *cmsg_flags, struct sk_buff **last)
+ arch/loongarch/kernel/unwind_orc.c |   16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
+
+--- a/arch/loongarch/kernel/unwind_orc.c
++++ b/arch/loongarch/kernel/unwind_orc.c
+@@ -359,12 +359,6 @@ static inline unsigned long bt_address(u
  {
- 	struct sk_buff *skb, *tmp;
- 	int total_data_len = 0;
-@@ -2013,6 +2013,7 @@ static int __mptcp_recvmsg_mskq(struct m
- 			/* skip already peeked skbs */
- 			if (total_data_len + data_len <= copied_total) {
- 				total_data_len += data_len;
-+				*last = skb;
- 				continue;
- 			}
+ 	extern unsigned long eentry;
  
-@@ -2053,6 +2054,8 @@ static int __mptcp_recvmsg_mskq(struct m
- 			WRITE_ONCE(msk->rmem_released, msk->rmem_released + skb->truesize);
- 			__skb_unlink(skb, &msk->receive_queue);
- 			__kfree_skb(skb);
-+		} else {
-+			*last = skb;
+-	if (__kernel_text_address(ra))
+-		return ra;
+-
+-	if (__module_text_address(ra))
+-		return ra;
+-
+ 	if (ra >= eentry && ra < eentry +  EXCCODE_INT_END * VECSIZE) {
+ 		unsigned long func;
+ 		unsigned long type = (ra - eentry) / VECSIZE;
+@@ -382,10 +376,13 @@ static inline unsigned long bt_address(u
+ 			break;
  		}
  
- 		if (copied >= len)
-@@ -2274,10 +2277,12 @@ static int mptcp_recvmsg(struct sock *sk
- 		cmsg_flags = MPTCP_CMSG_INQ;
+-		return func + offset;
++		ra = func + offset;
+ 	}
  
- 	while (copied < len) {
-+		struct sk_buff *last = NULL;
- 		int err, bytes_read;
+-	return ra;
++	if (__kernel_text_address(ra))
++		return ra;
++
++	return 0;
+ }
  
- 		bytes_read = __mptcp_recvmsg_mskq(msk, msg, len - copied, flags,
--						  copied, &tss, &cmsg_flags);
-+						  copied, &tss, &cmsg_flags,
-+						  &last);
- 		if (unlikely(bytes_read < 0)) {
- 			if (!copied)
- 				copied = bytes_read;
-@@ -2335,7 +2340,7 @@ static int mptcp_recvmsg(struct sock *sk
+ bool unwind_next_frame(struct unwind_state *state)
+@@ -511,9 +508,6 @@ bool unwind_next_frame(struct unwind_sta
+ 		goto err;
+ 	}
  
- 		pr_debug("block timeout %ld\n", timeo);
- 		mptcp_cleanup_rbuf(msk, copied);
--		err = sk_wait_data(sk, &timeo, NULL);
-+		err = sk_wait_data(sk, &timeo, last);
- 		if (err < 0) {
- 			err = copied ? : err;
- 			goto out_err;
+-	if (!__kernel_text_address(state->pc))
+-		goto err;
+-
+ 	preempt_enable();
+ 	return true;
+ 
 
 
