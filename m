@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21E7306B0A;
-	Mon, 13 Apr 2026 16:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E22124DCF6;
+	Mon, 13 Apr 2026 16:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097528; cv=none; b=CnRenASm45Oq/uTMsaXQyN13BEsWtxCGZ4WnHPlBQQS3U6XYHBoH8AKNVIHDa4cmgC9+WrByYUGAeltcE4TTTrrcUaTxhlWoG9NWyzTdUW+L4ED2neLyYbLA+dtZ0UwVfVNgtRadbOwf5lxMgLePaDEPfgP5jPgTyzBy51ehr0k=
+	t=1776097530; cv=none; b=nUHw6yuyFCzP9+c2k2E2gJfIrqXC7DMN3jGt7n/ZmeCPKPWmVBMhNLR82S4UMe568jAKqT9K/wdr/eUTD1V9IDIt95W1rJhI/CjTbl0IyFBXv+2YuNBoH3k4oNxaE93zvtTF2Xt7INjDPlVNhtEmwT+Z274J1rAZY2fSiIj0QRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097528; c=relaxed/simple;
-	bh=n+nigzL3F98FBrizZdEw4RlfeSAZPoL2G4lb5u8oSIs=;
+	s=arc-20240116; t=1776097530; c=relaxed/simple;
+	bh=Nl43DGo1ZVtpUHDIjBmRNjk5IxEyoT2prxHfPkEhcss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTyXSjdY81pxKhqtHFlIiJwezQ/qG5Y6eL4mbYs0D728LnpnfmqPSwcmSp8uC501SeXrG7nBpxpA70HTTuW4jnWDAO4Nzb/4eqO4D7DobY7xqk/3pbMxafaJ6s+53STxY1VwF0T7MKBWRpFOADqecZkb8juFA9sEf9+s0olrInU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovK6BpoF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=enZ0AHzThIIe/XcWNUT+8MibmoQAYVGNUkqmQqZUSwiOnSoA1VCIU0U/vmz2SxdJZZHYg5aFaSKTA3G1es2Mp4VTzks/pTct4Mkp9XgSrITj/v1DH3QLoMAZhbXln7f5GcDnWb3mOV8REUF/ucFa/OmunPR5NxvSzFg6mGpzZIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STwzWS+6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovK6BpoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789A5C2BCB0;
-	Mon, 13 Apr 2026 16:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STwzWS+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15776C2BCAF;
+	Mon, 13 Apr 2026 16:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097527;
-	bh=n+nigzL3F98FBrizZdEw4RlfeSAZPoL2G4lb5u8oSIs=;
+	s=korg; t=1776097530;
+	bh=Nl43DGo1ZVtpUHDIjBmRNjk5IxEyoT2prxHfPkEhcss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ovK6BpoFl/WoEEbKHI3ljQbmo7o2Jc6yaw86Pq8F8Payw5CfMyaZlANBoSgRjQ5PA
-	 SGtzQde3yFHvnxEaz3Z5fXpaJf4ho+ovbCd3wK3UWZdWNftgv4P0bFOMvO3OMEWUtV
-	 x7oj3dCGY4o7Hcnnl1ZLE/Er5LMFg0j+fQgIdKsU=
+	b=STwzWS+68Kk/NHk3RJnQ4vnPtF1dkeD9rmXnezOmUlB1/a6vQtU+u+WXSwtoofPYj
+	 EpBJyULm0zh650xzCsjKjnKcRMTQB2DPxQel8kJkfxrFMoriEYS+i4B9SdGmvgn5ca
+	 KlezmI6sdmDMqGLgbfOxmw5pwo5IxFQOzQYeojh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 172/570] net: ethernet: arc: emac: quiesce interrupts before requesting IRQ
-Date: Mon, 13 Apr 2026 17:55:03 +0200
-Message-ID: <20260413155836.897979675@linuxfoundation.org>
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alysa Liu <Alysa.Liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 173/570] drm/amdgpu: Fix use-after-free race in VM acquire
+Date: Mon, 13 Apr 2026 17:55:04 +0200
+Message-ID: <20260413155836.934727791@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,53 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Alysa Liu <Alysa.Liu@amd.com>
 
-commit 2503d08f8a2de618e5c3a8183b250ff4a2e2d52c upstream.
+commit 2c1030f2e84885cc58bffef6af67d5b9d2e7098f upstream.
 
-Normal RX/TX interrupts are enabled later, in arc_emac_open(), so probe
-should not see interrupt delivery in the usual case. However, hardware may
-still present stale or latched interrupt status left by firmware or the
-bootloader.
+Replace non-atomic vm->process_info assignment with cmpxchg()
+to prevent race when parent/child processes sharing a drm_file
+both try to acquire the same VM after fork().
 
-If probe later unwinds after devm_request_irq() has installed the handler,
-such a stale interrupt can still reach arc_emac_intr() during teardown and
-race with release of the associated net_device.
-
-Avoid that window by putting the device into a known quiescent state before
-requesting the IRQ: disable all EMAC interrupt sources and clear any
-pending EMAC interrupt status bits. This keeps the change hardware-focused
-and minimal, while preventing spurious IRQ delivery from leftover state.
-
-Fixes: e4f2379db6c6 ("ethernet/arc/arc_emac - Add new driver")
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alysa Liu <Alysa.Liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c7c573275ec20db05be769288a3e3bb2250ec618)
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260309132409.584966-1-fanwu01@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/arc/emac_main.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/arc/emac_main.c
-+++ b/drivers/net/ethernet/arc/emac_main.c
-@@ -934,6 +934,17 @@ int arc_emac_probe(struct net_device *nd
- 	/* Set poll rate so that it polls every 1 ms */
- 	arc_reg_set(priv, R_POLLRATE, clock_frequency / 1000000);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1218,7 +1218,10 @@ static int init_kfd_vm(struct amdgpu_vm
+ 		*ef = dma_fence_get(&info->eviction_fence->base);
+ 	}
  
-+	/*
-+	 * Put the device into a known quiescent state before requesting
-+	 * the IRQ. Clear only EMAC interrupt status bits here; leave the
-+	 * MDIO completion bit alone and avoid writing TXPL_MASK, which is
-+	 * used to force TX polling rather than acknowledge interrupts.
-+	 */
-+	arc_reg_set(priv, R_ENABLE, 0);
-+	arc_reg_set(priv, R_STATUS, RXINT_MASK | TXINT_MASK | ERR_MASK |
-+		    TXCH_MASK | MSER_MASK | RXCR_MASK |
-+		    RXFR_MASK | RXFL_MASK);
-+
- 	ndev->irq = irq;
- 	dev_info(dev, "IRQ is %d\n", ndev->irq);
+-	vm->process_info = *process_info;
++	if (cmpxchg(&vm->process_info, NULL, *process_info) != NULL) {
++		ret = -EINVAL;
++		goto already_acquired;
++	}
  
+ 	/* Validate page directory and attach eviction fence */
+ 	ret = amdgpu_bo_reserve(vm->root.bo, true);
+@@ -1255,6 +1258,7 @@ validate_pd_fail:
+ 	amdgpu_bo_unreserve(vm->root.bo);
+ reserve_pd_fail:
+ 	vm->process_info = NULL;
++already_acquired:
+ 	if (info) {
+ 		/* Two fence references: one in info and one in *ef */
+ 		dma_fence_put(&info->eviction_fence->base);
 
 
