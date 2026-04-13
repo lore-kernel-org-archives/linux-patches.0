@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906042E11B9;
-	Mon, 13 Apr 2026 16:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231FA49620;
+	Mon, 13 Apr 2026 16:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097661; cv=none; b=pr/BiJeU5ddEbVK3REdticAXlHcNbf6TMF04K7WPqQN6eJKTI2zKPsuLOrK0Jgj23qsOUpbq36lvmsgW9jSvVs3gssIaWUex/TvhgYCY7wywvZatHuLLqjALHDtznwOd8oEZPE9gnVCUijj+1Hzr+uQ7UEpYgyKaHhuhOUSjYok=
+	t=1776097664; cv=none; b=r202UqxHkwn044glXLFCy+8ciwqH9OdKb1baofxLRCZ0Rw3tun4/MlyU2xhPspm7KEDoaMSYVWlJkIbHqaTCcPnBfWaBIQpBiarZeiKAYwr11UGOp2QaujoKld0/qtThxrggO3jFqtBKyHcsWHhmPSG9q8Hv3H0mmvpGnA+07to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097661; c=relaxed/simple;
-	bh=3ifonOA47QaQOrd3YBica6+dXfk+AGetyzYVHiWAXS0=;
+	s=arc-20240116; t=1776097664; c=relaxed/simple;
+	bh=/JMZTWjHqq9sn24P3H5+4rPuZogqRcellGXx3R4jwcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JimxgwiW9EThczI7Xh7KAWrlLAKMeBZwK8nDjNAEwBS5VHhEbgfgrmEJlFZJfp066NDOfPQyVFmBzFMH4j4bSH7M83CQdqinD7mhtb2mjWqs5V1MBsERtoS5kl9tScDjKDa5z1SezE5HjGTfeewYBoF4//N4Z1Bz0wrCsnZedSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvYCbnjl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KncTDSE5wiNx2Jj4UzXismBdVUAAhMfy8QmPR6m/k4xnlHg3ZHy8JyOOg6FBy8lSCrIoHZYvFJO54ZFIh0pW7EUL+1FG0kwqgdGnQioF8a/L8j8APC84O4I6HQ8mFv3ZT1Z0NIo2jtIZN0e2ohgCxb4ovuXiwTeaSKc360/8aCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLjK/06V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvYCbnjl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B1DC2BCAF;
-	Mon, 13 Apr 2026 16:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLjK/06V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9DBC2BCAF;
+	Mon, 13 Apr 2026 16:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097661;
-	bh=3ifonOA47QaQOrd3YBica6+dXfk+AGetyzYVHiWAXS0=;
+	s=korg; t=1776097664;
+	bh=/JMZTWjHqq9sn24P3H5+4rPuZogqRcellGXx3R4jwcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PvYCbnjlijunrG/uiJQaH2GnAzRgxG0TlDIQOJD0zOAXYsmp+Vg64mdsZP4Hr5pM3
-	 Ls7JI/NXKU0B+imjnAZwqrhpkiIGKDzZ3PztKC1FXLXIoISrenxR8t3mZuckHCyNRD
-	 W8b38I11VA/J2uhrQOjnpAHORqk76pd9QY3joscs=
+	b=cLjK/06VPJmaTezKH8gd0X4I2ZGjQjCPIuby6vsEitsQVhrdLHmvyeniR0juTRqV/
+	 6zLCmwXxb0XV3Ewh+M2ruJqrB8sPj69BtikPuJh3fDoVSeDeG2Kb3IOZcMgPD0MxcZ
+	 t31mHyCgnnhalrjJiA9ZbDiPF30nNIs6/x2F3S10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Garg <nktgrg@google.com>,
-	Jordan Rhee <jordanrhee@google.com>,
-	Joshua Washington <joshwash@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 222/570] gve: defer interrupt enabling until NAPI registration
-Date: Mon, 13 Apr 2026 17:55:53 +0200
-Message-ID: <20260413155838.772859831@linuxfoundation.org>
+	Jeongjun Park <aha310510@gmail.com>,
+	Inki Dae <inki.dae@samsung.com>
+Subject: [PATCH 5.15 223/570] drm/exynos: vidi: use priv->vidi_dev for ctx lookup in vidi_connection_ioctl()
+Date: Mon, 13 Apr 2026 17:55:54 +0200
+Message-ID: <20260413155838.809387099@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -53,91 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ankit Garg <nktgrg@google.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 3d970eda003441f66551a91fda16478ac0711617 upstream.
+commit d3968a0d85b211e197f2f4f06268a7031079e0d0 upstream.
 
-Currently, interrupts are automatically enabled immediately upon
-request. This allows interrupt to fire before the associated NAPI
-context is fully initialized and cause failures like below:
+vidi_connection_ioctl() retrieves the driver_data from drm_dev->dev to
+obtain a struct vidi_context pointer. However, drm_dev->dev is the
+exynos-drm master device, and the driver_data contained therein is not
+the vidi component device, but a completely different device.
 
-[    0.946369] Call Trace:
-[    0.946369]  <IRQ>
-[    0.946369]  __napi_poll+0x2a/0x1e0
-[    0.946369]  net_rx_action+0x2f9/0x3f0
-[    0.946369]  handle_softirqs+0xd6/0x2c0
-[    0.946369]  ? handle_edge_irq+0xc1/0x1b0
-[    0.946369]  __irq_exit_rcu+0xc3/0xe0
-[    0.946369]  common_interrupt+0x81/0xa0
-[    0.946369]  </IRQ>
-[    0.946369]  <TASK>
-[    0.946369]  asm_common_interrupt+0x22/0x40
-[    0.946369] RIP: 0010:pv_native_safe_halt+0xb/0x10
+This can lead to various bugs, ranging from null pointer dereferences and
+garbage value accesses to, in unlucky cases, out-of-bounds errors,
+use-after-free errors, and more.
 
-Use the `IRQF_NO_AUTOEN` flag when requesting interrupts to prevent auto
-enablement and explicitly enable the interrupt in NAPI initialization
-path (and disable it during NAPI teardown).
+To resolve this issue, we need to store/delete the vidi device pointer in
+exynos_drm_private->vidi_dev during bind/unbind, and then read this
+exynos_drm_private->vidi_dev within ioctl() to obtain the correct
+struct vidi_context pointer.
 
-This ensures that interrupt lifecycle is strictly coupled with
-readiness of NAPI context.
-
-Cc: stable@vger.kernel.org
-Fixes: 1dfc2e46117e ("gve: Refactor napi add and remove functions")
-Signed-off-by: Ankit Garg <nktgrg@google.com>
-Reviewed-by: Jordan Rhee <jordanrhee@google.com>
-Reviewed-by: Joshua Washington <joshwash@google.com>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Link: https://patch.msgid.link/20251219102945.2193617-1-hramamurthy@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ modified to re-introduce the irq member to struct gve_notify_block,
-  which was introuduced in commit 9a5e0776d11f ("gve: Avoid rescheduling
-  napi if on wrong cpu"). ]
-Signed-off-by: Joshua Washington <joshwash@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve.h      |    1 +
- drivers/net/ethernet/google/gve/gve_main.c |    5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/exynos/exynos_drm_drv.h  |    1 +
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c |   14 +++++++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/google/gve/gve.h
-+++ b/drivers/net/ethernet/google/gve/gve.h
-@@ -441,6 +441,7 @@ struct gve_notify_block {
- 	struct gve_priv *priv;
- 	struct gve_tx_ring *tx; /* tx rings on this block */
- 	struct gve_rx_ring *rx; /* rx rings on this block */
-+	u32 irq;
- } ____cacheline_aligned;
+--- a/drivers/gpu/drm/exynos/exynos_drm_drv.h
++++ b/drivers/gpu/drm/exynos/exynos_drm_drv.h
+@@ -201,6 +201,7 @@ struct exynos_drm_private {
  
- /* Tracks allowed and current queue settings */
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -339,9 +339,10 @@ static int gve_alloc_notify_blocks(struc
- 		snprintf(block->name, sizeof(block->name), "%s-ntfy-block.%d",
- 			 name, i);
- 		block->priv = priv;
-+		block->irq = priv->msix_vectors[msix_idx].vector;
- 		err = request_irq(priv->msix_vectors[msix_idx].vector,
- 				  gve_is_gqi(priv) ? gve_intr : gve_intr_dqo,
--				  0, block->name, block);
-+				  IRQF_NO_AUTOEN, block->name, block);
- 		if (err) {
- 			dev_err(&priv->pdev->dev,
- 				"Failed to receive msix vector %d\n", i);
-@@ -502,6 +503,7 @@ static void gve_add_napi(struct gve_priv
+ 	struct device *g2d_dev;
+ 	struct device *dma_dev;
++	struct device *vidi_dev;
+ 	void *mapping;
  
- 	netif_napi_add(priv->dev, &block->napi, gve_poll,
- 		       NAPI_POLL_WEIGHT);
-+	enable_irq(block->irq);
+ 	/* for atomic commit */
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -223,9 +223,14 @@ ATTRIBUTE_GROUPS(vidi);
+ int vidi_connection_ioctl(struct drm_device *drm_dev, void *data,
+ 				struct drm_file *file_priv)
+ {
+-	struct vidi_context *ctx = dev_get_drvdata(drm_dev->dev);
++	struct exynos_drm_private *priv = drm_dev->dev_private;
++	struct device *dev = priv ? priv->vidi_dev : NULL;
++	struct vidi_context *ctx = dev ? dev_get_drvdata(dev) : NULL;
+ 	struct drm_exynos_vidi_connection *vidi = data;
+ 
++	if (!ctx)
++		return -ENODEV;
++
+ 	if (!vidi) {
+ 		DRM_DEV_DEBUG_KMS(ctx->dev,
+ 				  "user data for vidi is null.\n");
+@@ -385,6 +390,7 @@ static int vidi_bind(struct device *dev,
+ {
+ 	struct vidi_context *ctx = dev_get_drvdata(dev);
+ 	struct drm_device *drm_dev = data;
++	struct exynos_drm_private *priv = drm_dev->dev_private;
+ 	struct drm_encoder *encoder = &ctx->encoder;
+ 	struct exynos_drm_plane *exynos_plane;
+ 	struct exynos_drm_plane_config plane_config = { 0 };
+@@ -392,6 +398,8 @@ static int vidi_bind(struct device *dev,
+ 	int ret;
+ 
+ 	ctx->drm_dev = drm_dev;
++	if (priv)
++		priv->vidi_dev = dev;
+ 
+ 	plane_config.pixel_formats = formats;
+ 	plane_config.num_pixel_formats = ARRAY_SIZE(formats);
+@@ -437,8 +445,12 @@ static int vidi_bind(struct device *dev,
+ static void vidi_unbind(struct device *dev, struct device *master, void *data)
+ {
+ 	struct vidi_context *ctx = dev_get_drvdata(dev);
++	struct drm_device *drm_dev = data;
++	struct exynos_drm_private *priv = drm_dev->dev_private;
+ 
+ 	del_timer_sync(&ctx->timer);
++	if (priv)
++		priv->vidi_dev = NULL;
  }
  
- static void gve_remove_napi(struct gve_priv *priv, int ntfy_idx)
-@@ -509,6 +511,7 @@ static void gve_remove_napi(struct gve_p
- 	struct gve_notify_block *block = &priv->ntfy_blocks[ntfy_idx];
- 
- 	netif_napi_del(&block->napi);
-+	disable_irq(block->irq);
- }
- 
- static int gve_register_qpls(struct gve_priv *priv)
+ static const struct component_ops vidi_component_ops = {
 
 
