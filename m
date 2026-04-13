@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C32D23E342;
-	Mon, 13 Apr 2026 16:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE74723E342;
+	Mon, 13 Apr 2026 16:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098756; cv=none; b=kUed8oBEemKWVEqsVEREkOmAW8ytzmr+lm4lRc+IW7Qc19ckTuGSO/VnmfXxhtrXdsuzWrF/BEMfd2Oq5DCR3ErldxmxTzMr77O46K7CERno+w2Oq07wxQOKQEPQIBsiMQjS4hMlQG8OQzXizrm63fKxeXCf6IEIoJw31y/afv0=
+	t=1776098758; cv=none; b=gzXwdLTCBrJsobcfJgajyzrUab2FmXUgCV71krhNMN1Kc8RpfWHLYZ1pHnMTHNxQrIFFwEpgoNBoo0/hxCYDMbIeYsuO6QiqdCa0shcR9hijEkCDBn5KtiqT7iXbgMHu3hyUzb7RIi1O19RW9OoZ47BrCRiP1f7PhF8iGh1N+d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098756; c=relaxed/simple;
-	bh=UcOGiVqdufTBtzR7CF/JGHwN8sonSY+PSHiY0moDcPc=;
+	s=arc-20240116; t=1776098758; c=relaxed/simple;
+	bh=ZjpmGiE8F/gNrYDUJwxHBO6TN8DYotPH26c9L4gxpow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RODABQB5hiK0w9sg9woXvsZUKpGPWeZsjHQ1mUw1iwe8IGNlGJV0XMBiYW7SGGLuXYdrizSwrEzoP5jolpnwKO4p0tCS5XAl4FxQsFyzDNH8KMTSuzfz6Bk1V03cZXHzT42gASJG6bOq84nZ31xQ402zlJy1a59lBG/GAcPSejM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJ4WnxOr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FrEVcyrzu4eOWjVwEHyN6pzBX6CeSgH8P+viW9kO9Dt4ZKYn5h+3umjHhrkuhxaaQJL5G0ewSmwV0wTsZMlzs9Gsg6fBdxFniu+F20X/PMvZscJIjhUxEdge5T8GsQLtGrbqQhj8iP4LELQlScEir8ggP6xH0q6pUgDT0FghavA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcZjQWku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJ4WnxOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE96CC2BCAF;
-	Mon, 13 Apr 2026 16:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcZjQWku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52189C2BCAF;
+	Mon, 13 Apr 2026 16:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098756;
-	bh=UcOGiVqdufTBtzR7CF/JGHwN8sonSY+PSHiY0moDcPc=;
+	s=korg; t=1776098758;
+	bh=ZjpmGiE8F/gNrYDUJwxHBO6TN8DYotPH26c9L4gxpow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJ4WnxOrve79HLHmBm8O5GrCCX+8yZjdcXY+Hv3dw0r0X+B/4U/i8Idt2uIRxSPvg
-	 fnZxGKCH/W7eGBJBGrigz/DnSsZZVSGs2U4NTjSrhKC4wMEda5hxtBWlJvbCINBFEJ
-	 sp8uw0oZSqwkRoxYX1+8yYnjFg9q/LZUqXV64hys=
+	b=FcZjQWkuuGDFUacQXxacIjvMXKfLOavtRrHl1GJRDFM7uPP0KadhbuDztNwzF/MM6
+	 T+4u8qs2lHgm+wCUFBtp3h2o5b5MjOnK0pXr1wckUsRrtymHfId2u8id23USzsujQw
+	 JpdibZgpItPsm/MvlEo3xjOXyDTF8pt5FR5F2Sas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 034/491] selftests: mptcp: more stable simult_flows tests
-Date: Mon, 13 Apr 2026 17:54:39 +0200
-Message-ID: <20260413155820.329703568@linuxfoundation.org>
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 070/491] ASoC: core: Exit all links before removing their components
+Date: Mon, 13 Apr 2026 17:55:15 +0200
+Message-ID: <20260413155821.667271642@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -45,66 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-commit 8c09412e584d9bcc0e71d758ec1008d1c8d1a326 upstream.
+[ Upstream commit c7eb967d70446971413061effca3226578cb4dab ]
 
-By default, the netem qdisc can keep up to 1000 packets under its belly
-to deal with the configured rate and delay. The simult flows test-case
-simulates very low speed links, to avoid problems due to slow CPUs and
-the TCP stack tend to transmit at a slightly higher rate than the
-(virtual) link constraints.
+Flows leading to link->init() and link->exit() are not symmetric.
+Currently the relevant part of card probe sequence goes as:
 
-All the above causes a relatively large amount of packets being enqueued
-in the netem qdiscs - the longer the transfer, the longer the queue -
-producing increasingly high TCP RTT samples and consequently increasingly
-larger receive buffer size due to DRS.
+	for_each_card_rtds(card, rtd)
+		for_each_rtd_components(rtd, i, component)
+			component->probe()
+	for_each_card_rtds(card, rtd)
+		for_each_rtd_dais(rtd, i, dai)
+			dai->probe()
+	for_each_card_rtds(card, rtd)
+		rtd->init()
 
-When the receive buffer size becomes considerably larger than the needed
-size, the tests results can flake, i.e. because minimal inaccuracy in the
-pacing rate can lead to a single subflow usage towards the end of the
-connection for a considerable amount of data.
+On the other side, equivalent remove sequence goes as:
 
-Address the issue explicitly setting netem limits suitable for the
-configured link speeds and unflake all the affected tests.
+	for_each_card_rtds(card, rtd)
+		for_each_rtd_dais(rtd, i, dai)
+			dai->remove()
+	for_each_card_rtds(card, rtd)
+		for_each_rtd_components(rtd, i, component)
+			component->remove()
+	for_each_card_rtds(card, rtd)
+		rtd->exit()
 
-Fixes: 1a418cb8e888 ("mptcp: simult flow self-tests")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-1-4b5462b6f016@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+what can lead to errors as link->exit() may still operate on resources
+owned by its components despite the probability of them being freed
+during the component->remove().
+
+This change modifies the remove sequence to:
+
+	for_each_card_rtds(card, rtd)
+		rtd->exit()
+	for_each_card_rtds(card, rtd)
+		for_each_rtd_dais(rtd, i, dai)
+			dai->remove()
+	for_each_card_rtds(card, rtd)
+		for_each_rtd_components(rtd, i, component)
+			component->remove()
+
+so code found in link->exit() is safe to touch any component stuff as
+component->remove() has not been called yet.
+
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20221027085840.1562698-1-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 95bc5c225513 ("ASoC: soc-core: flush delayed work before removing DAIs and widgets")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/simult_flows.sh |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ sound/soc/soc-core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/simult_flows.sh
-+++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
-@@ -235,10 +235,13 @@ run_test()
- 	for dev in ns2eth1 ns2eth2; do
- 		tc -n $ns2 qdisc del dev $dev root >/dev/null 2>&1
- 	done
--	tc -n $ns1 qdisc add dev ns1eth1 root netem rate ${rate1}mbit $delay1
--	tc -n $ns1 qdisc add dev ns1eth2 root netem rate ${rate2}mbit $delay2
--	tc -n $ns2 qdisc add dev ns2eth1 root netem rate ${rate1}mbit $delay1
--	tc -n $ns2 qdisc add dev ns2eth2 root netem rate ${rate2}mbit $delay2
-+
-+	# keep the queued pkts number low, or the RTT estimator will see
-+	# increasing latency over time.
-+	tc -n $ns1 qdisc add dev ns1eth1 root netem rate ${rate1}mbit $delay1 limit 50
-+	tc -n $ns1 qdisc add dev ns1eth2 root netem rate ${rate2}mbit $delay2 limit 50
-+	tc -n $ns2 qdisc add dev ns2eth1 root netem rate ${rate1}mbit $delay1 limit 50
-+	tc -n $ns2 qdisc add dev ns2eth2 root netem rate ${rate2}mbit $delay2 limit 50
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index 4294206dff362..562fbc0fb3475 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -962,9 +962,6 @@ void snd_soc_remove_pcm_runtime(struct snd_soc_card *card,
  
- 	# time is measure in ms
- 	local time=$((size * 8 * 1000 / (( $rate1 + $rate2) * 1024 *1024) ))
+ 	lockdep_assert_held(&client_mutex);
+ 
+-	/* release machine specific resources */
+-	snd_soc_link_exit(rtd);
+-
+ 	/*
+ 	 * Notify the machine driver for extra destruction
+ 	 */
+@@ -1928,6 +1925,9 @@ static void soc_cleanup_card_resources(struct snd_soc_card *card)
+ 
+ 	snd_soc_dapm_shutdown(card);
+ 
++	/* release machine specific resources */
++	for_each_card_rtds(card, rtd)
++		snd_soc_link_exit(rtd);
+ 	/* remove and free each DAI */
+ 	soc_remove_link_dais(card);
+ 	soc_remove_link_components(card);
+-- 
+2.51.0
+
 
 
