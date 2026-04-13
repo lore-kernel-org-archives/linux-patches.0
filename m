@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1831B24E4AF;
-	Mon, 13 Apr 2026 16:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1AC2727E2;
+	Mon, 13 Apr 2026 16:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096731; cv=none; b=RS7ToyqnSnU27qXqkA0UuKtgeN+eOMB7/EhUBFJCASEtzGdG8k5+kY409aIc1t2i5cvLJtPOHQTFUdLJwzz89hmN60fsfWN7W290ZiukL4S2AZLMHyKCiAitvAOo8VquL/Fg1g7hiYnMLYv6AGnigvlggY+opPPUQK53QFzsv5M=
+	t=1776096733; cv=none; b=pTTOKlYVhh6k7TMhPr3DB/V14UaEeAw/j1/XAyUKmionJgfTzKbWobf6CoRAUi/6zCJZvgH2uSe2NzXT5Dds0/jEoPT+cRhxgZ+cxRidSprkJEzyi75I+ZNojg8z+CWiTQmi9dxUQrkusENxj3FUI1r4CCvJG/CAkS/R5w1UCW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096731; c=relaxed/simple;
-	bh=A6L2uBe7DcWg/NziCIN7B7R7afWvSL4cwYtLwnhLqMs=;
+	s=arc-20240116; t=1776096733; c=relaxed/simple;
+	bh=m4HPKKHlkyv5qBCJQq9iLl6edooG6YUJOlu7DZ2mEPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m6w4qP3rBq+h77w4+hZnClowuuOtCQbroErB2wdx3pHCPNd8sitwnOFbLlYqzQOt7chsZJNPzvbq6q9i5E/r76Cz4pQNGVEeRoz7+2+b8ZPlFD3JZi1qcpCDbgBusYjgKKSktWh9h0CeDE9g8ciY+9npAb7oUhM7ns4d3om6I2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6pY9Aqh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WzI51k42BQWpRTEbvHGFf2kqxJQU4/YS6lPso5gumAtlQrmAihndkegim9vSGACrbAR3uU6UtsFcN4fB7n6Bt3yYRVAl6i5DEz2FaOLADZVGuurOGVfjZ6iOnkzP42WliTmhow+P7u7FDIm40t4EO5CN8WxO6clI1wPaBaaJBe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IW1V69B3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6pY9Aqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65126C2BCAF;
-	Mon, 13 Apr 2026 16:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IW1V69B3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CC2C2BCAF;
+	Mon, 13 Apr 2026 16:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096730;
-	bh=A6L2uBe7DcWg/NziCIN7B7R7afWvSL4cwYtLwnhLqMs=;
+	s=korg; t=1776096733;
+	bh=m4HPKKHlkyv5qBCJQq9iLl6edooG6YUJOlu7DZ2mEPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p6pY9Aqhj2Kz0nG7eE9YWtwQDS9qk9eWYw5K2Y+zD7LEXX8h6Lnv3Do9vKQVI9024
-	 FpTfZoYkVR5h25rUawJ98ij7OQuhqq2h1iWKQQw1tOvS+Qm4ZYuoDka4UKgKd8erIN
-	 ZX8SH7byG6O4Rk3KEg4j9ZTJtN0W5W9gojKXhCi4=
+	b=IW1V69B33vJO4JtBB0aCs3gD78NFj0E0iczEmRqI1GpqYlCMp7Poegibt48rN9qgs
+	 AaJTxk4u99ECbm7eP9gO9+9PP+vznl1s2LSEkr3pwwRsg+EuUnAo8DxEKzKzjgeEBW
+	 frOamzazCgxXPjhKQ82lZdx5CaaGPLdrA93DO9CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shawnguo@kernel.org>,
-	Wei Xu <xuwei5@hisilicon.com>
-Subject: [PATCH 6.12 40/70] arm64: dts: hisilicon: hi3798cv200: Add missing dma-ranges
-Date: Mon, 13 Apr 2026 18:00:35 +0200
-Message-ID: <20260413155729.676559359@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 41/70] nfc: pn533: allocate rx skb before consuming bytes
+Date: Mon, 13 Apr 2026 18:00:36 +0200
+Message-ID: <20260413155729.713055558@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -50,35 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Guo <shawnguo@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 1af997cad473d505248df6d9577183bb91f69670 upstream.
+commit c71ba669b570c7b3f86ec875be222ea11dacb352 upstream.
 
-Reboot starts failing on Poplar since commit 8424ecdde7df ("arm64: mm:
-Set ZONE_DMA size based on devicetree's dma-ranges"), which effectively
-changes zone_dma_bits from 30 to 32 for arm64 platforms that do not
-properly define dma-ranges in device tree.  It's unclear how Poplar reboot
-gets broken by this change exactly, but a dma-ranges limiting zone_dma to
-the first 1 GB fixes the regression.
+pn532_receive_buf() reports the number of accepted bytes to the serdev
+core. The current code consumes bytes into recv_skb and may already hand
+a complete frame to pn533_recv_frame() before allocating a fresh receive
+buffer.
 
-Fixes: 2f20182ed670 ("arm64: dts: hisilicon: add dts files for hi3798cv200-poplar board")
+If that alloc_skb() fails, the callback returns 0 even though it has
+already consumed bytes, and it leaves recv_skb as NULL for the next
+receive callback. That breaks the receive_buf() accounting contract and
+can also lead to a NULL dereference on the next skb_put_u8().
+
+Allocate the receive skb lazily before consuming the next byte instead.
+If allocation fails, return the number of bytes already accepted.
+
+Fixes: c656aa4c27b1 ("nfc: pn533: add UART phy driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Wei Xu <xuwei5@hisilicon.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260405094003.3-pn533-v2-pengpeng@iscas.ac.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nfc/pn533/uart.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
-+++ b/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
-@@ -122,6 +122,7 @@
- 		#address-cells = <1>;
- 		#size-cells = <1>;
- 		ranges = <0x0 0x0 0xf0000000 0x10000000>;
-+		dma-ranges = <0x0 0x0 0x0 0x40000000>;
+--- a/drivers/nfc/pn533/uart.c
++++ b/drivers/nfc/pn533/uart.c
+@@ -211,6 +211,13 @@ static size_t pn532_receive_buf(struct s
  
- 		crg: clock-reset-controller@8a22000 {
- 			compatible = "hisilicon,hi3798cv200-crg", "syscon", "simple-mfd";
+ 	del_timer(&dev->cmd_timeout);
+ 	for (i = 0; i < count; i++) {
++		if (!dev->recv_skb) {
++			dev->recv_skb = alloc_skb(PN532_UART_SKB_BUFF_LEN,
++						  GFP_KERNEL);
++			if (!dev->recv_skb)
++				return i;
++		}
++
+ 		if (unlikely(!skb_tailroom(dev->recv_skb)))
+ 			skb_trim(dev->recv_skb, 0);
+ 
+@@ -219,9 +226,7 @@ static size_t pn532_receive_buf(struct s
+ 			continue;
+ 
+ 		pn533_recv_frame(dev->priv, dev->recv_skb, 0);
+-		dev->recv_skb = alloc_skb(PN532_UART_SKB_BUFF_LEN, GFP_KERNEL);
+-		if (!dev->recv_skb)
+-			return 0;
++		dev->recv_skb = NULL;
+ 	}
+ 
+ 	return i;
 
 
