@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C742D5A19;
-	Mon, 13 Apr 2026 16:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572E724E4A1;
+	Mon, 13 Apr 2026 16:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098359; cv=none; b=sLvFgql4AK/x3wXXNafH5/pTTtE5EwQnRTLV1L88Nv/TE9GfELv6RxvQUVtswE+95Pkk0sQO6/R690QaKX8xoovi7N82Iuf1hN5BQHySx0DRdkRVNl5PUuVhWKiEUXW71ga5rpJ7z+NKxRarsk7RRB7MCjIcykNEyElBXHpi8cA=
+	t=1776098362; cv=none; b=qzAqMN/E68xgTQ5SDCdD3Xc8mHHoDfquC6lpn81Op1FSjj4CoZakm3cSPTbEdYrTXhN+k4cC7AdVAqQAp6g77qMJ/Ej63vExkIgExkt0v/wKEv3IwrxUWzerhXAzLwRHMKmmWWUOYkCZwokH4optVhykdy3UWXjJmwi1ECqDzY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098359; c=relaxed/simple;
-	bh=OayfgcM9SB62XSIQVHk5ZSs9ix652Jbu8XhoCbOVdZ0=;
+	s=arc-20240116; t=1776098362; c=relaxed/simple;
+	bh=g/Qhh8lpvoOzakLzoZ36koauOmsnUvvE9+wHazlVYjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PsVCnhBheMfogdoK5ZSqN72MVKZwNxq9edDt6nZ9U43UQnuN046m/nnSSaWaTg3/REKLPHusAL05onTyrbYYzxCPz06RJg3oU73iy7NJciCIBwphRjdf3XsFkasVro6DKDy6Uc+txWd71gj2rCXgctPXF/xXSKIhQV80iWUSwxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0SHWXCD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z4sJYqcyARodYoK4ATx/PsS29WjSJ05rR/TJcB15dsn8zKcLtoB+/GZQyNfzwpXGEXj3awYyVn5wIinNGy5jLo6fBOZSksu1633NVwH8erwOSfQCTbGqyYKU60KsB96NYKDJT3ov6C/1+fdLKJUxsrJ+Yr9SP1dBYUzx2edFLdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEOaAO4+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0SHWXCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E99C2BCAF;
-	Mon, 13 Apr 2026 16:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEOaAO4+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11FEC2BCAF;
+	Mon, 13 Apr 2026 16:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098359;
-	bh=OayfgcM9SB62XSIQVHk5ZSs9ix652Jbu8XhoCbOVdZ0=;
+	s=korg; t=1776098362;
+	bh=g/Qhh8lpvoOzakLzoZ36koauOmsnUvvE9+wHazlVYjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D0SHWXCDnu/tZPRwT7BuaqsWpeJq+X6DX0LwSi5xiEiBXE+QO6938F3JOjilIOoPF
-	 54ebpFYo2Np2Kv5wJBA3qXaLn/vQIdOk5zDkXA5duBTG5RqwENnEDgkyu/UClwiCWA
-	 AHcurqXLYRnaJ5ro7fOjPj4Ghye3fD+Mjqjp3zD0=
+	b=oEOaAO4+Jac5e/ghre77kMVDzK8r7AgRUoE4mc5NcCN+Wt0f2J6HpFqIaQKpts7UK
+	 ADiXHJXpDnkLuLNWlmdy19wemBPzYi6zgCoQkbh2MXnbQaI+FFZUKUfrrqMeEoOJeY
+	 s3ukEIKb/ZJjAsRIz3vTqRFQrThxedcOPzBPDtFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Ruohan Lan <ruohanlan@aliyun.com>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
+	Johnny Hao <johnny_haocn@sina.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 494/570] can: gs_usb: gs_usb_receive_bulk_callback(): fix error message
-Date: Mon, 13 Apr 2026 18:00:25 +0200
-Message-ID: <20260413155848.963539455@linuxfoundation.org>
+Subject: [PATCH 5.15 495/570] fbcon: Set fb_display[i]->mode to NULL when the mode is released
+Date: Mon, 13 Apr 2026 18:00:26 +0200
+Message-ID: <20260413155849.000667410@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,51 +53,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Quanmin Yan <yanquanmin1@huawei.com>
 
-[ Upstream commit 494fc029f662c331e06b7c2031deff3c64200eed ]
+[ Upstream commit a1f3058930745d2b938b6b4f5bd9630dc74b26b7 ]
 
-Sinc commit 79a6d1bfe114 ("can: gs_usb: gs_usb_receive_bulk_callback():
-unanchor URL on usb_submit_urb() error") a failing resubmit URB will print
-an info message.
+Recently, we discovered the following issue through syzkaller:
 
-In the case of a short read where netdev has not yet been assigned,
-initialize as NULL to avoid dereferencing an undefined value. Also report
-the error value of the failed resubmit.
+BUG: KASAN: slab-use-after-free in fb_mode_is_equal+0x285/0x2f0
+Read of size 4 at addr ff11000001b3c69c by task syz.xxx
+...
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xab/0xe0
+ print_address_description.constprop.0+0x2c/0x390
+ print_report+0xb9/0x280
+ kasan_report+0xb8/0xf0
+ fb_mode_is_equal+0x285/0x2f0
+ fbcon_mode_deleted+0x129/0x180
+ fb_set_var+0xe7f/0x11d0
+ do_fb_ioctl+0x6a0/0x750
+ fb_ioctl+0xe0/0x140
+ __x64_sys_ioctl+0x193/0x210
+ do_syscall_64+0x5f/0x9c0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 79a6d1bfe114 ("can: gs_usb: gs_usb_receive_bulk_callback(): unanchor URL on usb_submit_urb() error")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/all/20260119181904.1209979-1-kuba@kernel.org/
-Link: https://patch.msgid.link/20260120-gs_usb-fix-error-message-v1-1-6be04de572bc@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Ruohan Lan <ruohanlan@aliyun.com>
+Based on experimentation and analysis, during framebuffer unregistration,
+only the memory of fb_info->modelist is freed, without setting the
+corresponding fb_display[i]->mode to NULL for the freed modes. This leads
+to UAF issues during subsequent accesses. Here's an example of reproduction
+steps:
+1. With /dev/fb0 already registered in the system, load a kernel module
+   to register a new device /dev/fb1;
+2. Set fb1's mode to the global fb_display[] array (via FBIOPUT_CON2FBMAP);
+3. Switch console from fb to VGA (to allow normal rmmod of the ko);
+4. Unload the kernel module, at this point fb1's modelist is freed, leaving
+   a wild pointer in fb_display[];
+5. Trigger the bug via system calls through fb0 attempting to delete a mode
+   from fb0.
+
+Add a check in do_unregister_framebuffer(): if the mode to be freed exists
+in fb_display[], set the corresponding mode pointer to NULL.
+
+[ The context change is due to the commit 2c0c19b681d5
+("fbdev: fbmem: Fix double free of 'fb_info->pixmap.addr'") in v5.16
+which is irrelevant to the logic of this patch. ]
+
+Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johnny Hao <johnny_haocn@sina.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/core/fbcon.c | 20 ++++++++++++++++++++
+ drivers/video/fbdev/core/fbmem.c |  2 ++
+ include/linux/fbcon.h            |  2 ++
+ 3 files changed, 24 insertions(+)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index 134f830508d9f..fd9a06850c950 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -297,7 +297,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- {
- 	struct gs_usb *usbcan = urb->context;
- 	struct gs_can *dev;
--	struct net_device *netdev;
-+	struct net_device *netdev = NULL;
- 	int rc;
- 	struct net_device_stats *stats;
- 	struct gs_host_frame *hf = urb->transfer_buffer;
-@@ -419,7 +419,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 		}
- 	} else if (rc != -ESHUTDOWN && net_ratelimit()) {
- 		netdev_info(netdev, "failed to re-submit IN URB: %pe\n",
--			    ERR_PTR(urb->status));
-+			    ERR_PTR(rc));
- 	}
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index f4584681fa43d..7dce023c2fb34 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2797,6 +2797,26 @@ int fbcon_mode_deleted(struct fb_info *info,
+ 	return found;
  }
  
++static void fbcon_delete_mode(struct fb_videomode *m)
++{
++	struct fbcon_display *p;
++	int i;
++
++	for (i = first_fb_vc; i <= last_fb_vc; i++) {
++		p = &fb_display[i];
++		if (p->mode == m)
++			p->mode = NULL;
++	}
++}
++
++void fbcon_delete_modelist(struct list_head *head)
++{
++	struct fb_modelist *modelist;
++
++	list_for_each_entry(modelist, head, list)
++		fbcon_delete_mode(&modelist->mode);
++}
++
+ #ifdef CONFIG_VT_HW_CONSOLE_BINDING
+ static void fbcon_unbind(void)
+ {
+diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
+index 3b52ddfe03506..03a7a7e2a670e 100644
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -1750,6 +1750,8 @@ static void do_unregister_framebuffer(struct fb_info *fb_info)
+ 	if (fb_info->pixmap.addr &&
+ 	    (fb_info->pixmap.flags & FB_PIXMAP_DEFAULT))
+ 		kfree(fb_info->pixmap.addr);
++
++	fbcon_delete_modelist(&fb_info->modelist);
+ 	fb_destroy_modelist(&fb_info->modelist);
+ 	registered_fb[fb_info->node] = NULL;
+ 	num_registered_fb--;
+diff --git a/include/linux/fbcon.h b/include/linux/fbcon.h
+index 2382dec6d6ab8..fb0fc2736b801 100644
+--- a/include/linux/fbcon.h
++++ b/include/linux/fbcon.h
+@@ -11,6 +11,7 @@ void fbcon_suspended(struct fb_info *info);
+ void fbcon_resumed(struct fb_info *info);
+ int fbcon_mode_deleted(struct fb_info *info,
+ 		       struct fb_videomode *mode);
++void fbcon_delete_modelist(struct list_head *head);
+ void fbcon_new_modelist(struct fb_info *info);
+ void fbcon_get_requirement(struct fb_info *info,
+ 			   struct fb_blit_caps *caps);
+@@ -31,6 +32,7 @@ static inline void fbcon_suspended(struct fb_info *info) {}
+ static inline void fbcon_resumed(struct fb_info *info) {}
+ static inline int fbcon_mode_deleted(struct fb_info *info,
+ 				     struct fb_videomode *mode) { return 0; }
++static inline void fbcon_delete_modelist(struct list_head *head) {}
+ static inline void fbcon_new_modelist(struct fb_info *info) {}
+ static inline void fbcon_get_requirement(struct fb_info *info,
+ 					 struct fb_blit_caps *caps) {}
 -- 
 2.53.0
 
