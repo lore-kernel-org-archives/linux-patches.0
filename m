@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832132727E2;
-	Mon, 13 Apr 2026 16:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6C426A1CF;
+	Mon, 13 Apr 2026 16:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096805; cv=none; b=LjS7J/yhbEw/kYwGZp8tMlZzwhNeC70QUsMuiql2b1cjGFCviLCf95KG9N77s6LgIKnWG3E8wGwJyNdzYgRvrlXcBUTwdNidzfcwk0goi2b31xSzYr+k649p0bq8H0gNmITlKe5GL7tgx7qW3SOiEXV7cm54dvUDn1eXXhUrDvs=
+	t=1776096808; cv=none; b=I+AvRUDkPEjTq49TOjMOtQ+WC3qvds6ocxDZHvlirrkBHy+qIb1sPtCteO5CA61RLFzY3F6ourT+60XlwHfKEl5JuNzHhScuVyq+3DCmwWm9V7QQzBApQXuEaPKCeef7upJDVuyyW7d1UPdQoKauGqkftMPehwmmpZ+V6K/i0g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096805; c=relaxed/simple;
-	bh=HR4WGOHO4h78dKoLwnAlfbPQUzkoLu/7Iewlq67UjHo=;
+	s=arc-20240116; t=1776096808; c=relaxed/simple;
+	bh=wxUsXBK/v6RMyPdexYtcRMOMCjzbiFcpcaElTWeY4TI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cQKzwRo3wmX68lvEpsEcD/O1Ac5pz0fdR9BiEvmz+xQHOvFa69ig0ZEoRZ3lpiheJVCxcc1YLJ4iAzxJ5TC948Jn/norxPxKJQtYMJZr8ErsDlowNcofeRbW+HUyC2gmK4n11BfjurtjLhE+QOCkQPkv/Z1rcIRHVfYj3KTNRdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLj8SEgE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L6zZew8VXLd21mSpqvgATYwobV9/wTr0vZz2iNsQQIcI8ha2JER0ogN2aef23CFbpUg8U4xKs6U2Wkuw58rIE/L0VG9LbZ4KOzQ0U/aPqC+tyRcYkXtKnqvDBdOsTHeFoPnx3NUPGzC/lD18azZOnDvLxWqCWWNOkvyTS+sZ0aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOCnTkGU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLj8SEgE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19ADCC2BCAF;
-	Mon, 13 Apr 2026 16:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOCnTkGU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FC6C2BCAF;
+	Mon, 13 Apr 2026 16:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096805;
-	bh=HR4WGOHO4h78dKoLwnAlfbPQUzkoLu/7Iewlq67UjHo=;
+	s=korg; t=1776096808;
+	bh=wxUsXBK/v6RMyPdexYtcRMOMCjzbiFcpcaElTWeY4TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CLj8SEgEC1lYKBgNHQ6eJhnmhQtDO1eclN6n6X3Hfriayq2XWfuTcvk8RX+dA9AJg
-	 FxxIgDrRkJgFgbCM5YDRp/k18yhVtK72G+zcS6HAzkJsRyRyLbtwt9FlRCWURd0A48
-	 E4wGQdcvbkDEn2CghFiwjel89Bn+GhPo27vyIiGg=
+	b=VOCnTkGUv8ozG6ZJ6QYO7+T6kurYXuKc50wCrsrlCVpHas30SWfGkFQWJZYdcvIwZ
+	 7N4CSmDs60PXYHUqCN0lwUTfeZ+clB1ZFHkgBKSrfpAxZaeyge0mPAgqSHDxb1mYNY
+	 TzqKK4V5XgM/cIxK/OG2liOuvyOAbOH8kVIhdU5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonius <antonius@bluedragonsec.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 69/70] net: skb: fix cross-cache free of KFENCE-allocated skb head
-Date: Mon, 13 Apr 2026 18:01:04 +0200
-Message-ID: <20260413155730.752968421@linuxfoundation.org>
+	Aaron Erhardt <aer@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 70/70] ALSA: hda/hdmi: Add quirk for TUXEDO IBS14G6
+Date: Mon, 13 Apr 2026 18:01:05 +0200
+Message-ID: <20260413155730.789275541@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -52,58 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Aaron Erhardt <aer@tuxedocomputers.com>
 
-commit 0f42e3f4fe2a58394e37241d02d9ca6ab7b7d516 upstream.
+commit d649c58bcad8fb9b749e3837136a201632fa109d upstream.
 
-SKB_SMALL_HEAD_CACHE_SIZE is intentionally set to a non-power-of-2
-value (e.g. 704 on x86_64) to avoid collisions with generic kmalloc
-bucket sizes. This ensures that skb_kfree_head() can reliably use
-skb_end_offset to distinguish skb heads allocated from
-skb_small_head_cache vs. generic kmalloc caches.
+Depending on the timing during boot, the BIOS might report wrong pin
+capabilities, which can lead to HDMI audio being disabled. Therefore,
+force HDMI audio connection on TUXEDO InfinityBook S 14 Gen6.
 
-However, when KFENCE is enabled, kfence_ksize() returns the exact
-requested allocation size instead of the slab bucket size. If a caller
-(e.g. bpf_test_init) allocates skb head data via kzalloc() and the
-requested size happens to equal SKB_SMALL_HEAD_CACHE_SIZE, then
-slab_build_skb() -> ksize() returns that exact value. After subtracting
-skb_shared_info overhead, skb_end_offset ends up matching
-SKB_SMALL_HEAD_HEADROOM, causing skb_kfree_head() to incorrectly free
-the object to skb_small_head_cache instead of back to the original
-kmalloc cache, resulting in a slab cross-cache free:
-
-  kmem_cache_free(skbuff_small_head): Wrong slab cache. Expected
-  skbuff_small_head but got kmalloc-1k
-
-Fix this by always calling kfree(head) in skb_kfree_head(). This keeps
-the free path generic and avoids allocator-specific misclassification
-for KFENCE objects.
-
-Fixes: bf9f1baa279f ("net: add dedicated kmem_cache for typical/small skb->head")
-Reported-by: Antonius <antonius@bluedragonsec.com>
-Closes: https://lore.kernel.org/netdev/CAK8a0jxC5L5N7hq-DT2_NhUyjBxrPocoiDazzsBk4TGgT1r4-A@mail.gmail.com/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260403014517.142550-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Aaron Erhardt <aer@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20260218213234.429686-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ sound/pci/hda/patch_hdmi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1072,10 +1072,7 @@ static int skb_pp_frag_ref(struct sk_buf
- 
- static void skb_kfree_head(void *head, unsigned int end_offset)
- {
--	if (end_offset == SKB_SMALL_HEAD_HEADROOM)
--		kmem_cache_free(net_hotdata.skb_small_head_cache, head);
--	else
--		kfree(head);
-+	kfree(head);
- }
- 
- static void skb_free_head(struct sk_buff *skb)
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -1999,6 +1999,7 @@ static const struct snd_pci_quirk force_
+ 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
+ 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
+ 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
++	SND_PCI_QUIRK(0x1558, 0x14a1, "TUXEDO InfinityBook S 14 Gen6", 1),
+ 	SND_PCI_QUIRK(0x8086, 0x2060, "Intel NUC5CPYB", 1),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
+ 	{}
 
 
