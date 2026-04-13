@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192D524DCF6;
-	Mon, 13 Apr 2026 16:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59DB30BB80;
+	Mon, 13 Apr 2026 16:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097399; cv=none; b=hql9dMBs7XvDw+scAaCJDnWPyyClm+Muh5WxF8sU+/QBzWsHtXDFT7FKp1SKf/MZB2NuI0a27q+aGmhXp8Z5msyHA1fPIUgGvFqjH+IpbYFmtkJDsX6u8oypZoDvCSDT+cpUzg1dGsYa6eMpX8nA1Sxgf16ocdUq7jbBkl7b7Lg=
+	t=1776097401; cv=none; b=fCyNBt4iKygPPTgaQKJPiQNFLQpVdiN4MiusYE+G2t/ukmG93Y1cwe9BpLrEuQwab881qSnkIVd8V80VimtPjSwekNid4rRzfyRQ/IPKSLUjN6hvd/Y1g3w6bGoIzAMoc2KKM/0vmTXzaO9brO5OKEEOW+XEdXBbmP09nG8kDyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097399; c=relaxed/simple;
-	bh=wTVCtFqaaRbiZB05naW6WEjXb7dzC3Uve0P40B73YTg=;
+	s=arc-20240116; t=1776097401; c=relaxed/simple;
+	bh=8n80Na6dNvzxDr2BGiO5I659rSpeQDVC2CRYy/g1/os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edLIblvMxNM1ocix3UiLCWWhxT2h5FtoYAjzZOFBHb0eZ/QaVYLvMbIyQdjVaavjWdbip8vQiRVSedqKohIdMeCL/4K7B1N8xk9v3IboODzQbbSqt88pFdbYaSk/GlHjqdLNygIg05gfahPKC7vwW0G6BAchtUaGuxPKGFBHa2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZNKBEYB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q9yIX3Y4mz0CENSsdW/JgbmbPL2v3gGx6zgfUx7420zKidbSAVmwXY2R/G176cHSmUE2vEuRWsQtBSmQ/yaDHeJd5dS0UsWNwtNO1cWygrfaG0U2pMxzmbLv4lCBHjCdBXQ8FHl3jjpG1By3/eLza9UVrsqNc7nzvyO+aH2cyXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZshCYq/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZNKBEYB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A227BC2BCAF;
-	Mon, 13 Apr 2026 16:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZshCYq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9EAC2BCAF;
+	Mon, 13 Apr 2026 16:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097399;
-	bh=wTVCtFqaaRbiZB05naW6WEjXb7dzC3Uve0P40B73YTg=;
+	s=korg; t=1776097401;
+	bh=8n80Na6dNvzxDr2BGiO5I659rSpeQDVC2CRYy/g1/os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZNKBEYBsgpapHvUepR3WOskHH9YtpTTTeYYjDhyMezlAfHDPmw5Ndg6gxDSfig51
-	 kkmBIGzRHjNEJ+odJP3Mg0epoI441oCCt5KquG/h1cLcVBvtqpM4FFsTDwrbwEqjB0
-	 PAF+Jql8tdReHBeohytBpARA8DPuet6q5y5c0O3c=
+	b=2ZshCYq/m7QA9RwcFK3m/nnE6B+cGUVhoPPZxdb71c8sy6zKQ1CBvgfUGMBJF7ebQ
+	 e4Q+sI3BVlzvRDgcGgJrnMSEeJdTT6tk1RJAgcPVz7COSwEfW0xtah31qMdMZUUT0c
+	 rm1WWWpi2hqU4MnR1U/cqmc3CLLNse9esgLDbzfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GangMin Kim <km.kim1503@gmail.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 089/570] net/sched: Only allow act_ct to bind to clsact/ingress qdiscs and shared blocks
-Date: Mon, 13 Apr 2026 17:53:40 +0200
-Message-ID: <20260413155833.778382194@linuxfoundation.org>
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Florian Bezdeka <florian.bezdeka@siemens.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 090/570] scsi: storvsc: Fix scheduling while atomic on PREEMPT_RT
+Date: Mon, 13 Apr 2026 17:53:41 +0200
+Message-ID: <20260413155833.815711147@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,89 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-commit 11cb63b0d1a0685e0831ae3c77223e002ef18189 upstream.
+[ Upstream commit 57297736c08233987e5d29ce6584c6ca2a831b12 ]
 
-As Paolo said earlier [1]:
+This resolves the follow splat and lock-up when running with PREEMPT_RT
+enabled on Hyper-V:
 
-"Since the blamed commit below, classify can return TC_ACT_CONSUMED while
-the current skb being held by the defragmentation engine. As reported by
-GangMin Kim, if such packet is that may cause a UaF when the defrag engine
-later on tries to tuch again such packet."
+[  415.140818] BUG: scheduling while atomic: stress-ng-iomix/1048/0x00000002
+[  415.140822] INFO: lockdep is turned off.
+[  415.140823] Modules linked in: intel_rapl_msr intel_rapl_common intel_uncore_frequency_common intel_pmc_core pmt_telemetry pmt_discovery pmt_class intel_pmc_ssram_telemetry intel_vsec ghash_clmulni_intel aesni_intel rapl binfmt_misc nls_ascii nls_cp437 vfat fat snd_pcm hyperv_drm snd_timer drm_client_lib drm_shmem_helper snd sg soundcore drm_kms_helper pcspkr hv_balloon hv_utils evdev joydev drm configfs efi_pstore nfnetlink vsock_loopback vmw_vsock_virtio_transport_common hv_sock vmw_vsock_vmci_transport vsock vmw_vmci efivarfs autofs4 ext4 crc16 mbcache jbd2 sr_mod sd_mod cdrom hv_storvsc serio_raw hid_generic scsi_transport_fc hid_hyperv scsi_mod hid hv_netvsc hyperv_keyboard scsi_common
+[  415.140846] Preemption disabled at:
+[  415.140847] [<ffffffffc0656171>] storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
+[  415.140854] CPU: 8 UID: 0 PID: 1048 Comm: stress-ng-iomix Not tainted 6.19.0-rc7 #30 PREEMPT_{RT,(full)}
+[  415.140856] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 09/04/2024
+[  415.140857] Call Trace:
+[  415.140861]  <TASK>
+[  415.140861]  ? storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
+[  415.140863]  dump_stack_lvl+0x91/0xb0
+[  415.140870]  __schedule_bug+0x9c/0xc0
+[  415.140875]  __schedule+0xdf6/0x1300
+[  415.140877]  ? rtlock_slowlock_locked+0x56c/0x1980
+[  415.140879]  ? rcu_is_watching+0x12/0x60
+[  415.140883]  schedule_rtlock+0x21/0x40
+[  415.140885]  rtlock_slowlock_locked+0x502/0x1980
+[  415.140891]  rt_spin_lock+0x89/0x1e0
+[  415.140893]  hv_ringbuffer_write+0x87/0x2a0
+[  415.140899]  vmbus_sendpacket_mpb_desc+0xb6/0xe0
+[  415.140900]  ? rcu_is_watching+0x12/0x60
+[  415.140902]  storvsc_queuecommand+0x669/0xbe0 [hv_storvsc]
+[  415.140904]  ? HARDIRQ_verbose+0x10/0x10
+[  415.140908]  ? __rq_qos_issue+0x28/0x40
+[  415.140911]  scsi_queue_rq+0x760/0xd80 [scsi_mod]
+[  415.140926]  __blk_mq_issue_directly+0x4a/0xc0
+[  415.140928]  blk_mq_issue_direct+0x87/0x2b0
+[  415.140931]  blk_mq_dispatch_queue_requests+0x120/0x440
+[  415.140933]  blk_mq_flush_plug_list+0x7a/0x1a0
+[  415.140935]  __blk_flush_plug+0xf4/0x150
+[  415.140940]  __submit_bio+0x2b2/0x5c0
+[  415.140944]  ? submit_bio_noacct_nocheck+0x272/0x360
+[  415.140946]  submit_bio_noacct_nocheck+0x272/0x360
+[  415.140951]  ext4_read_bh_lock+0x3e/0x60 [ext4]
+[  415.140995]  ext4_block_write_begin+0x396/0x650 [ext4]
+[  415.141018]  ? __pfx_ext4_da_get_block_prep+0x10/0x10 [ext4]
+[  415.141038]  ext4_da_write_begin+0x1c4/0x350 [ext4]
+[  415.141060]  generic_perform_write+0x14e/0x2c0
+[  415.141065]  ext4_buffered_write_iter+0x6b/0x120 [ext4]
+[  415.141083]  vfs_write+0x2ca/0x570
+[  415.141087]  ksys_write+0x76/0xf0
+[  415.141089]  do_syscall_64+0x99/0x1490
+[  415.141093]  ? rcu_is_watching+0x12/0x60
+[  415.141095]  ? finish_task_switch.isra.0+0xdf/0x3d0
+[  415.141097]  ? rcu_is_watching+0x12/0x60
+[  415.141098]  ? lock_release+0x1f0/0x2a0
+[  415.141100]  ? rcu_is_watching+0x12/0x60
+[  415.141101]  ? finish_task_switch.isra.0+0xe4/0x3d0
+[  415.141103]  ? rcu_is_watching+0x12/0x60
+[  415.141104]  ? __schedule+0xb34/0x1300
+[  415.141106]  ? hrtimer_try_to_cancel+0x1d/0x170
+[  415.141109]  ? do_nanosleep+0x8b/0x160
+[  415.141111]  ? hrtimer_nanosleep+0x89/0x100
+[  415.141114]  ? __pfx_hrtimer_wakeup+0x10/0x10
+[  415.141116]  ? xfd_validate_state+0x26/0x90
+[  415.141118]  ? rcu_is_watching+0x12/0x60
+[  415.141120]  ? do_syscall_64+0x1e0/0x1490
+[  415.141121]  ? do_syscall_64+0x1e0/0x1490
+[  415.141123]  ? rcu_is_watching+0x12/0x60
+[  415.141124]  ? do_syscall_64+0x1e0/0x1490
+[  415.141125]  ? do_syscall_64+0x1e0/0x1490
+[  415.141127]  ? irqentry_exit+0x140/0x7e0
+[  415.141129]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-act_ct was never meant to be used in the egress path, however some users
-are attaching it to egress today [2]. Attempting to reach a middle
-ground, we noticed that, while most qdiscs are not handling
-TC_ACT_CONSUMED, clsact/ingress qdiscs are. With that in mind, we
-address the issue by only allowing act_ct to bind to clsact/ingress
-qdiscs and shared blocks. That way it's still possible to attach act_ct to
-egress (albeit only with clsact).
+get_cpu() disables preemption while the spinlock hv_ringbuffer_write is
+using is converted to an rt-mutex under PREEMPT_RT.
 
-[1] https://lore.kernel.org/netdev/674b8cbfc385c6f37fb29a1de08d8fe5c2b0fbee.1771321118.git.pabeni@redhat.com/
-[2] https://lore.kernel.org/netdev/cc6bfb4a-4a2b-42d8-b9ce-7ef6644fb22b@ovn.org/
-
-Reported-by: GangMin Kim <km.kim1503@gmail.com>
-Fixes: 3f14b377d01d ("net/sched: act_ct: fix skb leak and crash on ooo frags")
-CC: stable@vger.kernel.org
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260225134349.1287037-1-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Tested-by: Florian Bezdeka <florian.bezdeka@siemens.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://patch.msgid.link/0c7fb5cd-fb21-4760-8593-e04bade84744@siemens.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/act_api.h |    1 +
- net/sched/act_ct.c    |    6 ++++++
- net/sched/cls_api.c   |    7 +++++++
- 3 files changed, 14 insertions(+)
+ drivers/scsi/storvsc_drv.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/include/net/act_api.h
-+++ b/include/net/act_api.h
-@@ -65,6 +65,7 @@ struct tc_action {
- #define TCA_ACT_FLAGS_BIND	(1U << (TCA_ACT_FLAGS_USER_BITS + 1))
- #define TCA_ACT_FLAGS_REPLACE	(1U << (TCA_ACT_FLAGS_USER_BITS + 2))
- #define TCA_ACT_FLAGS_NO_RTNL	(1U << (TCA_ACT_FLAGS_USER_BITS + 3))
-+#define TCA_ACT_FLAGS_AT_INGRESS_OR_CLSACT	(1U << (TCA_ACT_FLAGS_USER_BITS + 5))
+diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
+index a5e1b6a73fa8a..775afea4b2e89 100644
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1910,8 +1910,9 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
+ 	cmd_request->payload_sz = payload_sz;
  
- /* Update lastuse only if needed, to avoid dirtying a cache line.
-  * We use a temp variable to avoid fetching jiffies twice.
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -1273,6 +1273,12 @@ static int tcf_ct_init(struct net *net,
- 		return -EINVAL;
- 	}
+ 	/* Invokes the vsc to start an IO */
+-	ret = storvsc_do_io(dev, cmd_request, get_cpu());
+-	put_cpu();
++	migrate_disable();
++	ret = storvsc_do_io(dev, cmd_request, smp_processor_id());
++	migrate_enable();
  
-+	if (bind && !(flags & TCA_ACT_FLAGS_AT_INGRESS_OR_CLSACT)) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Attaching ct to a non ingress/clsact qdisc is unsupported");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	err = nla_parse_nested(tb, TCA_CT_MAX, nla, ct_policy, extack);
- 	if (err < 0)
- 		return err;
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -1934,6 +1934,11 @@ static void tfilter_put(struct tcf_proto
- 		tp->ops->put(tp, fh);
- }
- 
-+static bool is_ingress_or_clsact(struct tcf_block *block, struct Qdisc *q)
-+{
-+	return tcf_block_shared(block) || (q && !!(q->flags & TCQ_F_INGRESS));
-+}
-+
- static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
- 			  struct netlink_ext_ack *extack)
- {
-@@ -2128,6 +2133,8 @@ replay:
- 		flags |= TCA_ACT_FLAGS_REPLACE;
- 	if (!rtnl_held)
- 		flags |= TCA_ACT_FLAGS_NO_RTNL;
-+	if (is_ingress_or_clsact(block, q))
-+		flags |= TCA_ACT_FLAGS_AT_INGRESS_OR_CLSACT;
- 	err = tp->ops->change(net, skb, tp, cl, t->tcm_handle, tca, &fh,
- 			      flags, extack);
- 	if (err == 0) {
+ 	if (ret == -EAGAIN) {
+ 		if (payload_sz > sizeof(cmd_request->mpb))
+-- 
+2.51.0
+
 
 
