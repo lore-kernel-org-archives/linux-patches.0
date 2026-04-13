@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8672472A2;
-	Mon, 13 Apr 2026 16:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4699E26ED41;
+	Mon, 13 Apr 2026 16:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096890; cv=none; b=dMivhLZxu70QasrfRQfpa4KsFO1cDF9qWxXeUgeyVXg1rtjb2VYI3UJsXtFtzPYdy9Qq5FpiMGZrEyKYot9O+4B2qFiLLHf1fUh+okiyChVOfX+1RXfMJMPbQC+lNweoascMPweOnWvORpNsuYyKGiL4mOBO8zhGQrEO/gOgRjc=
+	t=1776096893; cv=none; b=XML/fiY5AbK9HVETHs7Ew0sZn6aXS+79xzAB61lD9Rf7E+j0ROtwmWoOGibulszB4O6vNxb1+5+3NGLcTrvQO6sPCEsvILNC7iu3NViNdEulSgGa8rQb/br4hsltUPDyAUwOsOojXWjtYT9COVNjsivh2iPryxBRoZlrrzdmwJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096890; c=relaxed/simple;
-	bh=2WCJ1T+tzJmNiZXtKbELsUcYrRiO9IGIe7qEUXwhC9Y=;
+	s=arc-20240116; t=1776096893; c=relaxed/simple;
+	bh=uMqKyN6AH9cctWv/YuFVnMrRJgCzYwz2uXDjWrEcrUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izYRU/MmdZGV+K7bGR1ILv7Y5iE5cOfVe8OJLOOsmyzirrK1gg8pCiZrnqB71WfZ+0lUnHbuUecAYUQ1UpvMmzVXCFYEpCcuyetumlQ91VuqbQvRtJDwVOwIf/poVo0FnlhFQP8CGroZXTfWKjqfObRVB3M34skiivDHrCeyK9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHLM73wM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SDCmIE2paOVyZfDh30SpC73jkl3WZsGcEabpx9LIlmoXEk8qsImU72uqUZjR88VbghuiH9qqJjs0a6FXHhIMC7ESEmIy86lQHfGqKPzB0sLm+doNrZfyP/5ERjFCuFMziR6gwXE0lCiSZZUiBmjgvl23Ua4ZFqog4aK8nYJglNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEi4q+ir; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHLM73wM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3FE6C2BCAF;
-	Mon, 13 Apr 2026 16:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEi4q+ir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E2AC2BCAF;
+	Mon, 13 Apr 2026 16:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096890;
-	bh=2WCJ1T+tzJmNiZXtKbELsUcYrRiO9IGIe7qEUXwhC9Y=;
+	s=korg; t=1776096892;
+	bh=uMqKyN6AH9cctWv/YuFVnMrRJgCzYwz2uXDjWrEcrUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHLM73wMdm/8JC3fwRav4mDRFMHbyTTkWfd880poQ4+jr3h9OhDN/dVvbyuXT/MKd
-	 /Yz8aovndv1cjFQcnl7soAadcQCdJXkNzlYa7cn4QV0+0/iZSxdTukfHB4pqFnZGh5
-	 y7WE3BtoIcx4gMcAKI8gN4qd1SfeMSl0QtnoI/Dk=
+	b=LEi4q+irvSsaChEmQDCe35Tcb94SYoV2uzMDcjFGWdMdizQ/YtjhKs8+teF21lYkp
+	 lMa0/DlHhPi/6pRoA0GGrc3cScNENwiA7Dny6AjHfxELizoipVeN31HV9zdCl+leev
+	 KvqhMjX2LGJe5IMNsrHHYZUuCU0JuFqyfcARH1UE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	stable <stable@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 04/50] net: rfkill: prevent unlimited numbers of rfkill events from being created
-Date: Mon, 13 Apr 2026 18:00:31 +0200
-Message-ID: <20260413155724.668778166@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 05/50] mptcp: fix slab-use-after-free in __inet_lookup_established
+Date: Mon, 13 Apr 2026 18:00:32 +0200
+Message-ID: <20260413155724.707213903@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -55,114 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit ea245d78dec594372e27d8c79616baf49e98a4a1 upstream.
+commit 9b55b253907e7431210483519c5ad711a37dafa1 upstream.
 
-Userspace can create an unlimited number of rfkill events if the system
-is so configured, while not consuming them from the rfkill file
-descriptor, causing a potential out of memory situation.  Prevent this
-from bounding the number of pending rfkill events at a "large" number
-(i.e. 1000) to prevent abuses like this.
+The ehash table lookups are lockless and rely on
+SLAB_TYPESAFE_BY_RCU to guarantee socket memory stability
+during RCU read-side critical sections. Both tcp_prot and
+tcpv6_prot have their slab caches created with this flag
+via proto_register().
 
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026033013-disfigure-scroll-e25e@gregkh
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+However, MPTCP's mptcp_subflow_init() copies tcpv6_prot into
+tcpv6_prot_override during inet_init() (fs_initcall, level 5),
+before inet6_init() (module_init/device_initcall, level 6) has
+called proto_register(&tcpv6_prot). At that point,
+tcpv6_prot.slab is still NULL, so tcpv6_prot_override.slab
+remains NULL permanently.
+
+This causes MPTCP v6 subflow child sockets to be allocated via
+kmalloc (falling into kmalloc-4k) instead of the TCPv6 slab
+cache. The kmalloc-4k cache lacks SLAB_TYPESAFE_BY_RCU, so
+when these sockets are freed without SOCK_RCU_FREE (which is
+cleared for child sockets by design), the memory can be
+immediately reused. Concurrent ehash lookups under
+rcu_read_lock can then access freed memory, triggering a
+slab-use-after-free in __inet_lookup_established.
+
+Fix this by splitting the IPv6-specific initialization out of
+mptcp_subflow_init() into a new mptcp_subflow_v6_init(), called
+from mptcp_proto_v6_init() before protocol registration. This
+ensures tcpv6_prot_override.slab correctly inherits the
+SLAB_TYPESAFE_BY_RCU slab cache.
+
+Fixes: b19bc2945b40 ("mptcp: implement delegated actions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260406031512.189159-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rfkill/core.c |   35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ net/mptcp/protocol.c |    2 ++
+ net/mptcp/protocol.h |    1 +
+ net/mptcp/subflow.c  |   15 +++++++++------
+ 3 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/net/rfkill/core.c
-+++ b/net/rfkill/core.c
-@@ -73,11 +73,14 @@ struct rfkill_int_event {
- 	struct rfkill_event_ext	ev;
- };
- 
-+/* Max rfkill events that can be "in-flight" for one data source */
-+#define MAX_RFKILL_EVENT	1000
- struct rfkill_data {
- 	struct list_head	list;
- 	struct list_head	events;
- 	struct mutex		mtx;
- 	wait_queue_head_t	read_wait;
-+	u32			event_count;
- 	bool			input_handler;
- 	u8			max_size;
- };
-@@ -255,10 +258,12 @@ static void rfkill_global_led_trigger_un
- }
- #endif /* CONFIG_RFKILL_LEDS */
- 
--static void rfkill_fill_event(struct rfkill_event_ext *ev,
--			      struct rfkill *rfkill,
--			      enum rfkill_operation op)
-+static int rfkill_fill_event(struct rfkill_int_event *int_ev,
-+			     struct rfkill *rfkill,
-+			     struct rfkill_data *data,
-+			     enum rfkill_operation op)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -4301,6 +4301,8 @@ int __init mptcp_proto_v6_init(void)
  {
-+	struct rfkill_event_ext *ev = &int_ev->ev;
- 	unsigned long flags;
+ 	int err;
  
- 	ev->idx = rfkill->idx;
-@@ -271,6 +276,15 @@ static void rfkill_fill_event(struct rfk
- 					RFKILL_BLOCK_SW_PREV));
- 	ev->hard_block_reasons = rfkill->hard_block_reasons;
- 	spin_unlock_irqrestore(&rfkill->lock, flags);
++	mptcp_subflow_v6_init();
 +
-+	scoped_guard(mutex, &data->mtx) {
-+		if (data->event_count++ > MAX_RFKILL_EVENT) {
-+			data->event_count--;
-+			return -ENOSPC;
-+		}
-+		list_add_tail(&int_ev->list, &data->events);
-+	}
-+	return 0;
- }
+ 	mptcp_v6_prot = mptcp_prot;
+ 	strcpy(mptcp_v6_prot.name, "MPTCPv6");
+ 	mptcp_v6_prot.slab = NULL;
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -746,6 +746,7 @@ static inline void mptcp_subflow_tcp_fal
+ void __init mptcp_proto_init(void);
+ #if IS_ENABLED(CONFIG_MPTCP_IPV6)
+ int __init mptcp_proto_v6_init(void);
++void __init mptcp_subflow_v6_init(void);
+ #endif
  
- static void rfkill_send_events(struct rfkill *rfkill, enum rfkill_operation op)
-@@ -282,10 +296,10 @@ static void rfkill_send_events(struct rf
- 		ev = kzalloc(sizeof(*ev), GFP_KERNEL);
- 		if (!ev)
- 			continue;
--		rfkill_fill_event(&ev->ev, rfkill, op);
--		mutex_lock(&data->mtx);
--		list_add_tail(&ev->list, &data->events);
--		mutex_unlock(&data->mtx);
-+		if (rfkill_fill_event(ev, rfkill, data, op)) {
-+			kfree(ev);
-+			continue;
-+		}
- 		wake_up_interruptible(&data->read_wait);
- 	}
- }
-@@ -1190,10 +1204,8 @@ static int rfkill_fop_open(struct inode
- 		if (!ev)
- 			goto free;
- 		rfkill_sync(rfkill);
--		rfkill_fill_event(&ev->ev, rfkill, RFKILL_OP_ADD);
--		mutex_lock(&data->mtx);
--		list_add_tail(&ev->list, &data->events);
--		mutex_unlock(&data->mtx);
-+		if (rfkill_fill_event(ev, rfkill, data, RFKILL_OP_ADD))
-+			kfree(ev);
- 	}
- 	list_add(&data->list, &rfkill_fds);
- 	mutex_unlock(&rfkill_global_mutex);
-@@ -1263,6 +1275,7 @@ static ssize_t rfkill_fop_read(struct fi
- 		ret = -EFAULT;
+ struct sock *mptcp_sk_clone_init(const struct sock *sk,
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -2092,7 +2092,15 @@ void __init mptcp_subflow_init(void)
+ 	tcp_prot_override.psock_update_sk_prot = NULL;
+ #endif
  
- 	list_del(&ev->list);
-+	data->event_count--;
- 	kfree(ev);
-  out:
- 	mutex_unlock(&data->mtx);
++	mptcp_diag_subflow_init(&subflow_ulp_ops);
++
++	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
++		panic("MPTCP: failed to register subflows to ULP\n");
++}
++
+ #if IS_ENABLED(CONFIG_MPTCP_IPV6)
++void __init mptcp_subflow_v6_init(void)
++{
+ 	/* In struct mptcp_subflow_request_sock, we assume the TCP request sock
+ 	 * structures for v4 and v6 have the same size. It should not changed in
+ 	 * the future but better to make sure to be warned if it is no longer
+@@ -2132,10 +2140,5 @@ void __init mptcp_subflow_init(void)
+ 	/* Disable sockmap processing for subflows */
+ 	tcpv6_prot_override.psock_update_sk_prot = NULL;
+ #endif
+-#endif
+-
+-	mptcp_diag_subflow_init(&subflow_ulp_ops);
+-
+-	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
+-		panic("MPTCP: failed to register subflows to ULP\n");
+ }
++#endif
 
 
