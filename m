@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330512E11B9;
-	Mon, 13 Apr 2026 16:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34783090F5;
+	Mon, 13 Apr 2026 16:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097597; cv=none; b=sJcTUQ+6vZ5euogLTHaD7lgjqI8vdRSTN0oCj1TIBQuSppFcg1psbd3EYxLEeMb3+ExbouGa8/hcH7jxL3tHyF860WK7aidqKiUh83sbciO6H6Typxv+p1oIEQOZPgcV1si99p57GNuTStsfaMS8wZ7OKZBVG0DzwOcHkBABmkw=
+	t=1776097600; cv=none; b=JGTOF+PIkztrh+RkvjhnGyOZfRXmfpo/K6oYQGZv7dkBr5XNw1aBcsmhHWq0s6r/4guVr9lWSeNQeDrYnU1iDklHcUNXr5jLLw3Jg8uYCmHh3GZSc56YhkvPew6GMU4dxXb0qDjgNxXZazy5xrQGEAyxyX+RmxkGB2z3vVImXGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097597; c=relaxed/simple;
-	bh=yXnO+fBfe1WQ3NFhpDeUAeG1l2t2ymDzwtCcBdx8NoM=;
+	s=arc-20240116; t=1776097600; c=relaxed/simple;
+	bh=PKeBtB4fhEmyUeD2vl9DV55uSycDKk1W8+7H/XbzSgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0/rw5KnbN3g5vZrkpAdaWoaA5Hn5FBRUnMSRFbHsoR384cyvWO/nim3Yf0h6FPOMw9fgyAD7DQbr961rBsMmA4Kgl4Uy1Le52Epba3q4gL15h4/lYhGP5I45ir0oQCyzMPmNS5cX+XlMpzdI6POOsn/JDPSycb1K8HxPkJssZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEMpvX/F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hRSkobgp7P1AxwLUTdDIxbTCJS2WZl7BFFif8ov6e4ZexwYAP6+ZLzuKTNlNkzoClHhIx8+K69USNNvmQ0klCmQK/Yqv3hBfUrqfnkl+FRchMKNaxT9evu/WIuQDh1bjmfxqETmyHROYcQ7PfUL/Ng3bOlcqCUtdhYkfu3Jo8Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvZk9E/i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEMpvX/F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD724C2BCAF;
-	Mon, 13 Apr 2026 16:26:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvZk9E/i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798A6C2BCAF;
+	Mon, 13 Apr 2026 16:26:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097597;
-	bh=yXnO+fBfe1WQ3NFhpDeUAeG1l2t2ymDzwtCcBdx8NoM=;
+	s=korg; t=1776097599;
+	bh=PKeBtB4fhEmyUeD2vl9DV55uSycDKk1W8+7H/XbzSgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEMpvX/Fs0TsodQACTUkq0UguhiwKt6fZsA81N9YjHF3Ck6nFJUViOYyl0WbJJG3R
-	 fz4EkbYXjoQfNYzGye8ljRg6AOVdbRLfGjjaLQ7W3tCJF9sVcPxumpPSiQlUQDQ7kS
-	 WTCvI440Ld06GkUFQEwGsitS9eHkjS+qyjq7Zq6U=
+	b=TvZk9E/iTq5wYSD+5IOJRU+E8+UorPKarGj6lUjAV7mWST+gNdj40lR34f76FL37a
+	 5FlT9C0Aoo252Va/NW0hz0r15qZeLkCcDnQ+AszypRjYVENDBI6E6LhoDPpPnvH3bW
+	 +6jX4qnqIuGuhYWkpxlss8ZiVt3LnK+PYRxX7F/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 156/570] ceph: fix i_nlink underrun during async unlink
-Date: Mon, 13 Apr 2026 17:54:47 +0200
-Message-ID: <20260413155836.294449413@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.15 192/570] i3c: mipi-i3c-hci: Add missing TID field to no-op command descriptor
+Date: Mon, 13 Apr 2026 17:55:23 +0200
+Message-ID: <20260413155837.651548935@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,121 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit ce0123cbb4a40a2f1bbb815f292b26e96088639f upstream.
+commit ec3cfd835f7c4bbd23bc9ad909d2fdc772a578bb upstream.
 
-During async unlink, we drop the `i_nlink` counter before we receive
-the completion (that will eventually update the `i_nlink`) because "we
-assume that the unlink will succeed".  That is not a bad idea, but it
-races against deletions by other clients (or against the completion of
-our own unlink) and can lead to an underrun which emits a WARNING like
-this one:
+The internal control command descriptor used for no-op commands includes a
+Transaction ID (TID) field, but the no-op command constructed in
+hci_dma_dequeue_xfer() omitted it.  As a result, the hardware receives a
+no-op descriptor without the expected TID.
 
- WARNING: CPU: 85 PID: 25093 at fs/inode.c:407 drop_nlink+0x50/0x68
- Modules linked in:
- CPU: 85 UID: 3221252029 PID: 25093 Comm: php-cgi8.1 Not tainted 6.14.11-cm4all1-ampere #655
- Hardware name: Supermicro ARS-110M-NR/R12SPD-A, BIOS 1.1b 10/17/2023
- pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : drop_nlink+0x50/0x68
- lr : ceph_unlink+0x6c4/0x720
- sp : ffff80012173bc90
- x29: ffff80012173bc90 x28: ffff086d0a45aaf8 x27: ffff0871d0eb5680
- x26: ffff087f2a64a718 x25: 0000020000000180 x24: 0000000061c88647
- x23: 0000000000000002 x22: ffff07ff9236d800 x21: 0000000000001203
- x20: ffff07ff9237b000 x19: ffff088b8296afc0 x18: 00000000f3c93365
- x17: 0000000000070000 x16: ffff08faffcbdfe8 x15: ffff08faffcbdfec
- x14: 0000000000000000 x13: 45445f65645f3037 x12: 34385f6369706f74
- x11: 0000a2653104bb20 x10: ffffd85f26d73290 x9 : ffffd85f25664f94
- x8 : 00000000000000c0 x7 : 0000000000000000 x6 : 0000000000000002
- x5 : 0000000000000081 x4 : 0000000000000481 x3 : 0000000000000000
- x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff08727d3f91e8
- Call trace:
-  drop_nlink+0x50/0x68 (P)
-  vfs_unlink+0xb0/0x2e8
-  do_unlinkat+0x204/0x288
-  __arm64_sys_unlinkat+0x3c/0x80
-  invoke_syscall.constprop.0+0x54/0xe8
-  do_el0_svc+0xa4/0xc8
-  el0_svc+0x18/0x58
-  el0t_64_sync_handler+0x104/0x130
-  el0t_64_sync+0x154/0x158
+This bug has gone unnoticed because the TID is currently not validated in
+the no-op completion path, but the descriptor format requires it to be
+present.
 
-In ceph_unlink(), a call to ceph_mdsc_submit_request() submits the
-CEPH_MDS_OP_UNLINK to the MDS, but does not wait for completion.
+Add the missing TID field when generating a no-op descriptor so that its
+layout matches the defined command structure.
 
-Meanwhile, between this call and the following drop_nlink() call, a
-worker thread may process a CEPH_CAP_OP_IMPORT, CEPH_CAP_OP_GRANT or
-just a CEPH_MSG_CLIENT_REPLY (the latter of which could be our own
-completion).  These will lead to a set_nlink() call, updating the
-`i_nlink` counter to the value received from the MDS.  If that new
-`i_nlink` value happens to be zero, it is illegal to decrement it
-further.  But that is exactly what ceph_unlink() will do then.
-
-The WARNING can be reproduced this way:
-
-1. Force async unlink; only the async code path is affected.  Having
-   no real clue about Ceph internals, I was unable to find out why the
-   MDS wouldn't give me the "Fxr" capabilities, so I patched
-   get_caps_for_async_unlink() to always succeed.
-
-   (Note that the WARNING dump above was found on an unpatched kernel,
-   without this kludge - this is not a theoretical bug.)
-
-2. Add a sleep call after ceph_mdsc_submit_request() so the unlink
-   completion gets handled by a worker thread before drop_nlink() is
-   called.  This guarantees that the `i_nlink` is already zero before
-   drop_nlink() runs.
-
-The solution is to skip the counter decrement when it is already zero,
-but doing so without a lock is still racy (TOCTOU).  Since
-ceph_fill_inode() and handle_cap_grant() both hold the
-`ceph_inode_info.i_ceph_lock` spinlock while set_nlink() runs, this
-seems like the proper lock to protect the `i_nlink` updates.
-
-I found prior art in NFS and SMB (using `inode.i_lock`) and AFS (using
-`afs_vnode.cb_lock`).  All three have the zero check as well.
-
+Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
 Cc: stable@vger.kernel.org
-Fixes: 2ccb45462aea ("ceph: perform asynchronous unlink if we have sufficient caps")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260306072451.11131-10-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/dir.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/i3c/master/mipi-i3c-hci/cmd.h |    1 +
+ drivers/i3c/master/mipi-i3c-hci/dma.c |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -1148,6 +1148,7 @@ static int ceph_unlink(struct inode *dir
- 	struct ceph_fs_client *fsc = ceph_sb_to_client(dir->i_sb);
- 	struct ceph_mds_client *mdsc = fsc->mdsc;
- 	struct inode *inode = d_inode(dentry);
-+	struct ceph_inode_info *ci = ceph_inode(inode);
- 	struct ceph_mds_request *req;
- 	bool try_async = ceph_test_mount_opt(fsc, ASYNC_DIROPS);
- 	int err = -EROFS;
-@@ -1193,7 +1194,19 @@ retry:
- 			 * We have enough caps, so we assume that the unlink
- 			 * will succeed. Fix up the target inode and dcache.
- 			 */
--			drop_nlink(inode);
-+
-+			/*
-+			 * Protect the i_nlink update with i_ceph_lock
-+			 * to precent racing against ceph_fill_inode()
-+			 * handling our completion on a worker thread
-+			 * and don't decrement if i_nlink has already
-+			 * been updated to zero by this completion.
-+			 */
-+			spin_lock(&ci->i_ceph_lock);
-+			if (inode->i_nlink > 0)
-+				drop_nlink(inode);
-+			spin_unlock(&ci->i_ceph_lock);
-+
- 			d_delete(dentry);
- 		} else if (err == -EJUKEBOX) {
- 			try_async = false;
+--- a/drivers/i3c/master/mipi-i3c-hci/cmd.h
++++ b/drivers/i3c/master/mipi-i3c-hci/cmd.h
+@@ -17,6 +17,7 @@
+ #define CMD_0_TOC			W0_BIT_(31)
+ #define CMD_0_ROC			W0_BIT_(30)
+ #define CMD_0_ATTR			W0_MASK(2, 0)
++#define CMD_0_TID			W0_MASK(6, 3)
+ 
+ /*
+  * Response Descriptor Structure
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -473,7 +473,7 @@ static bool hci_dma_dequeue_xfer(struct
+ 			u32 *ring_data = rh->xfer + rh->xfer_struct_sz * idx;
+ 
+ 			/* store no-op cmd descriptor */
+-			*ring_data++ = FIELD_PREP(CMD_0_ATTR, 0x7);
++			*ring_data++ = FIELD_PREP(CMD_0_ATTR, 0x7) | FIELD_PREP(CMD_0_TID, xfer->cmd_tid);
+ 			*ring_data++ = 0;
+ 			if (hci->cmd == &mipi_i3c_hci_cmd_v2) {
+ 				*ring_data++ = 0;
 
 
