@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAB23161AB;
-	Mon, 13 Apr 2026 16:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BDA3168EE;
+	Mon, 13 Apr 2026 16:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099096; cv=none; b=QDL+YZw38GW05WWH63LPy2Lu04SLx9d1W/qs7AGKl5yv/4oVUzWLXbV/eVRZLxjYgZZZKQWOsaPm82NwaX4eJMOd/E/a+GtAFrH18lV11aSnn3EQQr7+4mYnB1egaBMGlcD4At9OTKyI1GAjYnklT2nX3wUoSgB+5yyMnZLYLtE=
+	t=1776099099; cv=none; b=D9DKKts4SwKPzXLn3sai81H+ELKITLGPjV56GsKGJSiOFGDr36KmtrQJ+qxOH70WYsWXX9eNINx5qhSQvjKL8HMrm8y3nr9FCKURD1MmGwfSCHdZav/LuAMISuS/Qh22pYi9H5HoWLjU0S+guh2Lzpz51GhDJsIlqCO/RMI47uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099096; c=relaxed/simple;
-	bh=XJT6xTMO9+YqgCUynZ7SdHz5hZmInbwOqWOMN+iJqno=;
+	s=arc-20240116; t=1776099099; c=relaxed/simple;
+	bh=4gMYLysjEiXu/RjfpHsLIvpZahnC/W96qDSNk0kBboE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I1vlE1Ssu/Efl8Cl5fubNvNWmseLZWBUfuMN7HPavmeUa8IsnByQCrh0AQxdDZIOl0jX/uobru8YP3nkVL93wpBfrzugdM1tvj8MlDvDF+RQStRaPDg+VOoAd+kXua/kxfomh6ri79FsFd9Md7xNpUL8Wv017uchH+WZbcVx7SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H869WTz7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JSGQxx9Iru2GaQEhx1tkxlL6ZNDX9OACD567WNK74CyPSb0hCFVG80RJT50cXORzhzPr/YEfBquR56BQHAV1t7TC2GoyVl8vk/OrDS8rSBa8fr+ZemnspyV4/QlbFPGZMbSSV4/dQNGGGhhO+3jPtiJDt1Omuq314qkhXVZ1/tM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVG1+gai; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H869WTz7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD05C2BCAF;
-	Mon, 13 Apr 2026 16:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVG1+gai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87539C2BCAF;
+	Mon, 13 Apr 2026 16:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099096;
-	bh=XJT6xTMO9+YqgCUynZ7SdHz5hZmInbwOqWOMN+iJqno=;
+	s=korg; t=1776099098;
+	bh=4gMYLysjEiXu/RjfpHsLIvpZahnC/W96qDSNk0kBboE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H869WTz7F0lv2FM2mAPi+QYy+Db/wnkpnr59m/kCjKSI0T/buFvk3DQ1OiNauOhXe
-	 VZUKljTM8bMKchbKbziQzgkI+prOduLCx9DK9G5RJ556+qldvEFURSS3T2aDkTIAF1
-	 nYQxbHY1WwVDJCCiYByKpwGp2FcldkY+qwM9C6hA=
+	b=wVG1+gai06OmZvJ0r1U+ZoF4potYLg9qJKXQQMFeMaMRBA41K58Bkxw4M2dKulVgF
+	 IkgLWHogH6aL1GgYunWaadULdeVJEvRrIj2GQmRpbv17X4OX6Kk4aHRO052pD3eJw0
+	 K9PpqvtR9Fs2tP9kG5PuumJJd2vRMghCCwdXcOCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lukas=20Johannes=20M=C3=B6ller?= <research@johannes-moeller.dev>,
-	Florian Westphal <fw@strlen.de>,
+	Long Li <leo.lilong@huawei.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 207/491] netfilter: nf_conntrack_sip: fix Content-Length u32 truncation in sip_help_tcp()
-Date: Mon, 13 Apr 2026 17:57:32 +0200
-Message-ID: <20260413155826.819623718@linuxfoundation.org>
+Subject: [PATCH 5.10 178/491] xfs: fix integer overflow in bmap intent sort comparator
+Date: Mon, 13 Apr 2026 17:57:03 +0200
+Message-ID: <20260413155825.717679418@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -45,69 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Johannes Möller <research@johannes-moeller.dev>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit fbce58e719a17aa215c724473fd5baaa4a8dc57c ]
+[ Upstream commit 362c490980867930a098b99f421268fbd7ca05fd ]
 
-sip_help_tcp() parses the SIP Content-Length header with
-simple_strtoul(), which returns unsigned long, but stores the result in
-unsigned int clen.  On 64-bit systems, values exceeding UINT_MAX are
-silently truncated before computing the SIP message boundary.
+xfs_bmap_update_diff_items() sorts bmap intents by inode number using
+a subtraction of two xfs_ino_t (uint64_t) values, with the result
+truncated to int. This is incorrect when two inode numbers differ by
+more than INT_MAX (2^31 - 1), which is entirely possible on large XFS
+filesystems.
 
-For example, Content-Length 4294967328 (2^32 + 32) is truncated to 32,
-causing the parser to miscalculate where the current message ends.  The
-loop then treats trailing data in the TCP segment as a second SIP
-message and processes it through the SDP parser.
+Fix this by replacing the subtraction with cmp_int().
 
-Fix this by changing clen to unsigned long to match the return type of
-simple_strtoul(), and reject Content-Length values that exceed the
-remaining TCP payload length.
-
-Fixes: f5b321bd37fb ("netfilter: nf_conntrack_sip: add TCP support")
-Signed-off-by: Lukas Johannes Möller <research@johannes-moeller.dev>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Cc: <stable@vger.kernel.org> # v4.9
+Fixes: 9f3afb57d5f1 ("xfs: implement deferred bmbt map/unmap operations")
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ replaced `bi_entry()` macro with `container_of()` and inlined `cmp_int()` as a manual three-way comparison expression ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_sip.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_bmap_item.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
-index 751df19fe0f8a..5db17768ec2ad 100644
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -1529,11 +1529,12 @@ static int sip_help_tcp(struct sk_buff *skb, unsigned int protoff,
- {
- 	struct tcphdr *th, _tcph;
- 	unsigned int dataoff, datalen;
--	unsigned int matchoff, matchlen, clen;
-+	unsigned int matchoff, matchlen;
- 	unsigned int msglen, origlen;
- 	const char *dptr, *end;
- 	s16 diff, tdiff = 0;
- 	int ret = NF_ACCEPT;
-+	unsigned long clen;
- 	bool term;
+--- a/fs/xfs/xfs_bmap_item.c
++++ b/fs/xfs/xfs_bmap_item.c
+@@ -273,7 +273,8 @@ xfs_bmap_update_diff_items(
  
- 	if (ctinfo != IP_CT_ESTABLISHED &&
-@@ -1568,6 +1569,9 @@ static int sip_help_tcp(struct sk_buff *skb, unsigned int protoff,
- 		if (dptr + matchoff == end)
- 			break;
+ 	ba = container_of(a, struct xfs_bmap_intent, bi_list);
+ 	bb = container_of(b, struct xfs_bmap_intent, bi_list);
+-	return ba->bi_owner->i_ino - bb->bi_owner->i_ino;
++	return (ba->bi_owner->i_ino > bb->bi_owner->i_ino) -
++		(ba->bi_owner->i_ino < bb->bi_owner->i_ino);
+ }
  
-+		if (clen > datalen)
-+			break;
-+
- 		term = false;
- 		for (; end + strlen("\r\n\r\n") <= dptr + datalen; end++) {
- 			if (end[0] == '\r' && end[1] == '\n' &&
--- 
-2.51.0
-
+ /* Set the map extent flags for this mapping. */
 
 
