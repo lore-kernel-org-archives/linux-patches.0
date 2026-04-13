@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0FA3203B6;
-	Mon, 13 Apr 2026 16:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA4A329371;
+	Mon, 13 Apr 2026 16:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099532; cv=none; b=fW9zNLCNQ6U6JFJY/W+Sm6ySG2P2yNB3RvVx3K+/Y87mdc25AuYrLWWDOkkjgX0puehTvRtQKm8F/jhhbCMyA9BDJMHYGKxXTKBRxFJLQ6t0VNszB4rPmSaooHPMbZJG4+Sf1Y6FlQEa9wM0wPngaFLVUUPxpkHU48iy1TtsBBU=
+	t=1776099535; cv=none; b=HsuV3jVuttIz0cZTiROoL2psTszgkqpR3eiPqx42dFWHCYSJqBWGmqRsech5KghTzmJ7iyNMDB4zUMWxiLXWnSMtxowIwWRmYeOjYg8gzDDxnE48qvwlltoEvdPVeT1m2sn5V8RLxDp/po/xkCtlE1FrsjLpsIdrvajK9lZFe5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099532; c=relaxed/simple;
-	bh=lttZ+xFxrJQZgX6NTMyi0zd0yqhwkpknY0PyCSr4E6o=;
+	s=arc-20240116; t=1776099535; c=relaxed/simple;
+	bh=UrAO0GGIP2OqdyudOHEFCCYr6DXKvB+0ol3NdEc0U4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hYkbybrNeTJMP5DJfUp9gYsCmA+qPtX+zjq+nXqAriZ4fKvC5rO/ZqZ4fcGxBOz09ANglkhICPgXX4RRgaB6g9zNYE0K/SX2jc2RlJmP40zUmHMMSszLdTBdvQWeleE7Poip4oxnjxsobjWqmvaQat99AYWa/t+xg33AjkE9UhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7WhtXb1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c+Dj+b0rxtIgyUkJrMQnmU46OUKRnFYM+e7BqS2m7L0xPoaiiTa0mYnusRL9pFFFJwsQ4FF9YmkjQdqHlHorRWSFE3kMHQrGba/digTw7KUAskx03uM7IRVE2K8iFNJrfm4upKyxEK4NOZ/HoxZzUGOXzISccvI2mLIdkyJejS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jIIhRlgh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7WhtXb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34208C2BCAF;
-	Mon, 13 Apr 2026 16:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jIIhRlgh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF275C2BCAF;
+	Mon, 13 Apr 2026 16:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099532;
-	bh=lttZ+xFxrJQZgX6NTMyi0zd0yqhwkpknY0PyCSr4E6o=;
+	s=korg; t=1776099535;
+	bh=UrAO0GGIP2OqdyudOHEFCCYr6DXKvB+0ol3NdEc0U4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h7WhtXb1H4hg2gOmpVlGCkwlLxwFXrCV1kESyDFLiS5HyHTHTwWH6dq+YDTsYG2C3
-	 6xGkjM5occc9YcnUhEc+H4u2HQRCeYGpJNE4xgxuFlaQXpEhU0I3kyi9O236z8EzFZ
-	 Jf+elG9VWi8IDng5xH6MFHOHK98g/8m5xvAVTkY0=
+	b=jIIhRlghtFxd4hmuMFFFznLK/rTFpdMn8u+HLQfCGIpGWhyADbjgRtR0t097gH2nm
+	 e3yuiza/A8Ak2Ev6R3lb2M1cOAqfzPPybTzV/Ex0++jtzL+YPqNWtRAKevVwVqGVDa
+	 DKcQlbj7Ur8agfyikIAf5Qo1GKqnXlwKetgdZ07c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	JP Hein <jp@jphein.com>
-Subject: [PATCH 5.10 376/491] USB: core: add NO_LPM quirk for Razer Kiyo Pro webcam
-Date: Mon, 13 Apr 2026 18:00:21 +0200
-Message-ID: <20260413155833.111560445@linuxfoundation.org>
+	Bart Van Assche <bvanassche@acm.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 377/491] Input: synaptics-rmi4 - fix a locking bug in an error path
+Date: Mon, 13 Apr 2026 18:00:22 +0200
+Message-ID: <20260413155833.148334001@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,50 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: JP Hein <jp@jphein.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 8b7a42ecdcdeb55580d9345412f7f8fc5aca3f6c upstream.
+commit 7adaaee5edd35a423ae199c41b86bd1ed60ed483 upstream.
 
-The Razer Kiyo Pro (1532:0e05) is a USB 3.0 UVC webcam whose firmware
-does not handle USB Link Power Management transitions reliably. When LPM
-is active, the device can enter a state where it fails to respond to
-control transfers, producing EPIPE (-32) errors on UVC probe control
-SET_CUR requests. In the worst case, the stalled endpoint triggers an
-xHCI stop-endpoint command that times out, causing the host controller
-to be declared dead and every USB device on the bus to be disconnected.
+Lock f54->data_mutex when entering the function statement since jumping
+to the 'error' label when checking report_size fails causes that mutex
+to be unlocked.
 
-This has been reported as Ubuntu Launchpad Bug #2061177. The failure
-mode is:
+This bug has been detected by the Clang thread-safety checker.
 
-  1. UVC probe control SET_CUR returns -32 (EPIPE)
-  2. xHCI host not responding to stop endpoint command
-  3. xHCI host controller not responding, assume dead
-  4. All USB devices on the affected xHCI controller disconnect
-
-Disabling LPM prevents the firmware from entering the problematic low-
-power states that precede the stall. This is the same approach used for
-other webcams with similar firmware issues (e.g., Logitech HD Webcam C270).
-
-Cc: stable <stable@kernel.org>
-Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2061177
-Signed-off-by: JP Hein <jp@jphein.com>
-Link: https://patch.msgid.link/20260331003806.212565-2-jp@jphein.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260223215118.2154194-16-bvanassche@acm.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/rmi4/rmi_f54.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -477,6 +477,8 @@ static const struct usb_device_id usb_qu
- 	/* Razer - Razer Blade Keyboard */
- 	{ USB_DEVICE(0x1532, 0x0116), .driver_info =
- 			USB_QUIRK_LINEAR_UFRAME_INTR_BINTERVAL },
-+	/* Razer - Razer Kiyo Pro Webcam */
-+	{ USB_DEVICE(0x1532, 0x0e05), .driver_info = USB_QUIRK_NO_LPM },
+--- a/drivers/input/rmi4/rmi_f54.c
++++ b/drivers/input/rmi4/rmi_f54.c
+@@ -534,6 +534,8 @@ static void rmi_f54_work(struct work_str
+ 	int error;
+ 	int i;
  
- 	/* Lenovo ThinkPad OneLink+ Dock twin hub controllers (VIA Labs VL812) */
- 	{ USB_DEVICE(0x17ef, 0x1018), .driver_info = USB_QUIRK_RESET_RESUME },
++	mutex_lock(&f54->data_mutex);
++
+ 	report_size = rmi_f54_get_report_size(f54);
+ 	if (report_size == 0) {
+ 		dev_err(&fn->dev, "Bad report size, report type=%d\n",
+@@ -542,8 +544,6 @@ static void rmi_f54_work(struct work_str
+ 		goto error;     /* retry won't help */
+ 	}
+ 
+-	mutex_lock(&f54->data_mutex);
+-
+ 	/*
+ 	 * Need to check if command has completed.
+ 	 * If not try again later.
 
 
