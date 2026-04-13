@@ -1,100 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail115-69.sinamail.sina.com.cn (mail115-69.sinamail.sina.com.cn [218.30.115.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8E533030F;
-	Sat, 11 Apr 2026 09:49:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB991DE8AE
+	for <patches@lists.linux.dev>; Mon, 13 Apr 2026 01:33:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.69
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775900947; cv=none; b=pM2cRmwyp19ez4YcyqvgVrfp82FeCf2OyCnbGODyHXOAvRU1CgnNq9jUgTJnW5k4m9ZV6dAbokHW/eKxPzjH5FEQ+A89SljwlSazVD1kFgQUgOxx012+CFMxe4T30Naoduomg0GIRK1YJd3QS4nF3dkdzNJndf7c+V1TW9+IbU4=
+	t=1776044022; cv=none; b=gXic6wg/+UMUMfDzFa24b0mrQ1LSKYKZZ5i1ulffIpunE1h2LzmPsLBAfi9+QBK6tpehnD+kqMrkyUikMWfzaG9KcBoVi7GdD2txHHQtj8n4ABoBWkEantkbYI2z8mbS3vdvnfWqJ2fuF+qpN3+vH/1Eww144wovaK9/d8TPRlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775900947; c=relaxed/simple;
-	bh=8tb5B89ZJnX50rlWAJvkXtWTKTyNnROQsAJGmIcWveY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EezYgS0Aft/y9DnOMZITSBPf2BT9muk6JcTUWnH2CyZMPKk4mvtJavhPbbTkw/FLCrWcuCnAKVuID7xRxZlzhv8p8UggPKRU9dItj2T8NYN8/ivBqDIyoBepEwsSjetM3pBCtp+55FLLBCJowoBXWTjyritse6fm4beL6F7M+p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuS/CZkp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776044022; c=relaxed/simple;
+	bh=fg8f6Jjir04dYy1MUu5cm/qWNdaGJEtBqGRWLfrK//U=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FAc4fN5WBQOV8zF+p9iV7yA6jHr+ZylWdpPqNFFO24cgrNayLKXRqXsYdeoea1SsvwSLXOsPh13JxmT79tWO714qz4Y5IHPWe0cCOKsCg/YjIi+TRNzjnJxL4CP527vApBIcZBurwVDRF++uQEB/OY29bp23aha8eDuj9aDobPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=y0dPstk4; arc=none smtp.client-ip=218.30.115.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuS/CZkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DBDC4CEF7;
-	Sat, 11 Apr 2026 09:49:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1775900947;
-	bh=8tb5B89ZJnX50rlWAJvkXtWTKTyNnROQsAJGmIcWveY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vuS/CZkpkQ3tdhWH9vxV+iQ83O73hVV4bUSV61YOFV2B9k98j0b2VYhHwREqO2Cbu
-	 rt7EnzgZRDWqhW48C/8YbxWMulXN0eXaOsibuLmiRckWXVG59zb2dmEB45noO6nCEg
-	 d2wtJRnOho7fB8kdjfURTzfmSfzO10FooZsLHX7g=
-Date: Sat, 11 Apr 2026 11:49:04 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Rosen Penev <rosenp@gmail.com>
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Timur =?iso-8859-1?Q?Krist=F3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Vegard Nossum <vegard.nossum@oracle.com>
-Subject: Re: [PATCH 6.12 230/242] drm/amd/display: Reject modes with too high
- pixel clock on DCE6-10
-Message-ID: <2026041152-slogan-chariot-c87b@gregkh>
-References: <20260408175927.064985309@linuxfoundation.org>
- <20260408175935.705507105@linuxfoundation.org>
- <eee63d31-f7a2-4737-b33b-cfea7f04e960@oracle.com>
- <CAKxU2N-WvGmbG=Zge=C1F6a+pR3kNW6J7uExUGTOxudBDT8YqQ@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="y0dPstk4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1776044020;
+	bh=5AiOv3OmSV1vAgdRKipxBvh8ToeMYXa8wksWt6WBwek=;
+	h=From:Subject:Date:Message-Id;
+	b=y0dPstk4pFWiOO/3fS5Q2wu+b9BWmUU9a+ZhvWo6IvQY5sG2293Zy1WvOLjHv2CIp
+	 aWmbKmKZ9zbxV/QXiZw1t9I540Z7UO9w6KqZoxYwaUszAWpoPw2zktG/lLG6EUDwMc
+	 naLyfdUGMqR38z1YwA1LwOHF5pebF8DNw+jM8u+g=
+X-SMAIL-HELO: NTT-kernel-dev
+Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
+	by sina.cn (10.185.250.22) with ESMTP
+	id 69DC47E900000EAA; Mon, 13 Apr 2026 09:33:31 +0800 (CST)
+X-Sender: jianqkang@sina.cn
+X-Auth-ID: jianqkang@sina.cn
+Authentication-Results: sina.cn;
+	 spf=none smtp.mailfrom=jianqkang@sina.cn;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=jianqkang@sina.cn
+X-SMAIL-MID: 2821247602310
+X-SMAIL-UIID: EF915E9DFECA41D78B31B4BD59713C7D-20260413-093331-1
+From: Jianqiang kang <jianqkang@sina.cn>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	ira.weiny@intel.com
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	dan.j.williams@intel.com,
+	vishal.l.verma@intel.com,
+	dave.jiang@intel.com,
+	alexander.h.duyck@linux.intel.com,
+	linux-nvdimm@lists.01.org,
+	dingiso.kernel@gmail.com
+Subject: [PATCH 5.10.y] nvdimm/bus: Fix potential use after free in asynchronous initialization
+Date: Mon, 13 Apr 2026 09:33:29 +0800
+Message-Id: <20260413013329.837358-1-jianqkang@sina.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKxU2N-WvGmbG=Zge=C1F6a+pR3kNW6J7uExUGTOxudBDT8YqQ@mail.gmail.com>
 
-On Fri, Apr 10, 2026 at 02:20:42PM -0700, Rosen Penev wrote:
-> On Fri, Apr 10, 2026 at 12:08 PM Harshit Mogalapalli
-> <harshit.m.mogalapalli@oracle.com> wrote:
-> >
-> > Hi,
-> >
-> > On 08/04/26 23:34, Greg Kroah-Hartman wrote:
-> > >   #include "resource.h"
-> > > +#include "clk_mgr.h"
-> > >   #include "include/irq_service_interface.h"
-> > >   #include "virtual/virtual_stream_encoder.h"
-> > >   #include "dce110/dce110_resource.h"
-> > > @@ -843,10 +844,17 @@ static bool dce100_validate_bandwidth(
-> > >   {
-> > >       int i;
-> > >       bool at_least_one_pipe = false;
-> > > +     struct dc_stream_state *stream = NULL;
-> > > +     const uint32_t max_pix_clk_khz = max(dc->clk_mgr->clks.max_supported_dispclk_khz, 400000);
-> > >
-> > >       for (i = 0; i < dc->res_pool->pipe_count; i++) {
-> > > -             if (context->res_ctx.pipe_ctx[i].stream)
-> > > +             stream = context->res_ctx.pipe_ctx[i].stream;
-> > > +             if (stream) {
-> > >                       at_least_one_pipe = true;
-> > > +
-> > > +                     if (stream->timing.pix_clk_100hz >= max_pix_clk_khz * 10)
-> > > +                             return DC_FAIL_BANDWIDTH_VALIDATE;
-> > > +             }
-> > >       }
-> >
-> > This is a backport of commit: 118800b0797a ("drm/amd/display: Reject
-> > modes with too high pixel clock on DCE6-10").
-> >
-> > The backport adds return DC_FAIL_BANDWIDTH_VALIDATE, in
-> > validate_bandwidth functions that return bool;
-> >
-> > drivers/gpu/drm/amd/display/dc/inc/core_status.h:
-> > DC_FAIL_BANDWIDTH_VALIDATE = 13, /* BW and Watermark validation */
-> >
-> > In this branch DC_FAIL_BANDWIDTH_VALIDATE is integer 13, which converts
-> > to true, so the reject path is inverted into success.
-> >
-> > So I think we need to fix this. Thoughts ?
-> Best to drop.
+From: Ira Weiny <ira.weiny@intel.com>
 
-I'll drop this commit now, thanks!
+[ Upstream commit a8aec14230322ed8f1e8042b6d656c1631d41163 ]
 
-greg k-h
+Dingisoul with KASAN reports a use after free if device_add() fails in
+nd_async_device_register().
+
+Commit b6eae0f61db2 ("libnvdimm: Hold reference on parent while
+scheduling async init") correctly added a reference on the parent device
+to be held until asynchronous initialization was complete.  However, if
+device_add() results in an allocation failure the ref count of the
+device drops to 0 prior to the parent pointer being accessed.  Thus
+resulting in use after free.
+
+The bug bot AI correctly identified the fix.  Save a reference to the
+parent pointer to be used to drop the parent reference regardless of the
+outcome of device_add().
+
+Reported-by: Dingisoul <dingiso.kernel@gmail.com>
+Closes: http://lore.kernel.org/8855544b-be9e-4153-aa55-0bc328b13733@gmail.com
+Fixes: b6eae0f61db2 ("libnvdimm: Hold reference on parent while scheduling async init")
+Cc: stable@vger.kernel.org
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260306-fix-uaf-async-init-v1-1-a28fd7526723@intel.com
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+---
+ drivers/nvdimm/bus.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/nvdimm/bus.c b/drivers/nvdimm/bus.c
+index 9ec59960f216..1aacc40ad09f 100644
+--- a/drivers/nvdimm/bus.c
++++ b/drivers/nvdimm/bus.c
+@@ -502,14 +502,15 @@ EXPORT_SYMBOL_GPL(nd_synchronize);
+ static void nd_async_device_register(void *d, async_cookie_t cookie)
+ {
+ 	struct device *dev = d;
++	struct device *parent = dev->parent;
+ 
+ 	if (device_add(dev) != 0) {
+ 		dev_err(dev, "%s: failed\n", __func__);
+ 		put_device(dev);
+ 	}
+ 	put_device(dev);
+-	if (dev->parent)
+-		put_device(dev->parent);
++	if (parent)
++		put_device(parent);
+ }
+ 
+ static void nd_async_device_unregister(void *d, async_cookie_t cookie)
+-- 
+2.34.1
+
