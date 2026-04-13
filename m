@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A999307AC7;
-	Mon, 13 Apr 2026 16:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAAE280CFB;
+	Mon, 13 Apr 2026 16:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098318; cv=none; b=iq4hkYEQ/0e1TEfd0ai1rn4LC5Gu4ocfIGbY/nKlbjxNfg1qFQ1T2OuhkqEG33zPfUUC9jQHk/sO5OPMaz+ibmZrR+8/gZYOkujGpO0NXe3jWmuMlqgcX2WsDaka95auyhvfZ+OFO5E135GHS19tWoVo57t7Zi/iAGiP/S/esT0=
+	t=1776098321; cv=none; b=g+ei4uhNQJ4qM2LRfv36LM8mku1YjomuLeg9us5X4sxUPR8xJU5l7MFvAZ59AVTL+yIkV/9pyAu+80tpZ+ZRxTPg/iJHSmigy5gUCGdu1w4P3WpqWSQjv/62r8MffrF6fxjlsyNS22KxijcQz5WYqX+3qx/TSSztiGTIm7Bpm+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098318; c=relaxed/simple;
-	bh=hV8UVu5Fwwk44YWHCj1ayAp3TApY8APT3MS+0n7Ez04=;
+	s=arc-20240116; t=1776098321; c=relaxed/simple;
+	bh=xoujxEvXACQkQ+ieiCjuXiMf+FUuKOSycdvi2+PI+xI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tT3MdmTXC4QpPLlMPYML7LmDHJsKBeaYNYfsJ0s9kXcp40xnrFl4KEgVV1YbjGlr8u/dab9N5KxqID14DE0m7I2IhKeVWJ5nv4ATH0GYvmOGAbJdYxFu29vLdHX+t8DhGxWMIS9R6JlfxymASoAWxbsV83AxD9Gv17BFbp2lHs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMG0QzUY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gsacu7OY87DgdlUkCM5oBGyxu5aBy3eAPtKl/oropyQXdi9Y7uf6EJariNrzTr+2YgmBntQhEKGQZnGwm4UQttfTzfI6+ozwYghfFo3BZ2/GgB6EHxCSr8fkZeQlvP9cXnzr5fLocWgGD46r85n8RpuSGVd8WtUqKD9hfRnoe28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZq62qdA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMG0QzUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E28BC2BCAF;
-	Mon, 13 Apr 2026 16:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZq62qdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA048C2BCAF;
+	Mon, 13 Apr 2026 16:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098318;
-	bh=hV8UVu5Fwwk44YWHCj1ayAp3TApY8APT3MS+0n7Ez04=;
+	s=korg; t=1776098321;
+	bh=xoujxEvXACQkQ+ieiCjuXiMf+FUuKOSycdvi2+PI+xI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMG0QzUYWnoqOWpdfDmr0BAd0piL5XgcbdOIRD4H2lLxGKfBvYLAqV3pbHAfq1BMk
-	 QHp8nVFqPOyZkjH9JCW5Lg2CscnkGiySDWrLIlEf7e3iqKV63F5QgvPfWWjY2wHRV6
-	 FMeoxW0UI1PopG6dMWp9ukIrBOtbjhQPe2GqhABI=
+	b=wZq62qdA/ec36aeRcVheSnGcf+ISAFG0Gr8O/I2CFEB3qdpjjAqcFEMRiyvaDuuQG
+	 AuStUxLYU58IqL3fa50tvyQ/9udD1ywuYUSQb075EPVWa6ocenK+8ijltyuFiBCxr6
+	 G+Zs7yN4QMtmxisVIPmKVRJvi/U8ZXOtkNV/ngLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 436/570] net: hsr: fix VLAN add unwind on slave errors
-Date: Mon, 13 Apr 2026 17:59:27 +0200
-Message-ID: <20260413155846.808326507@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yongchao Wu <yongchao.wu@autochips.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 5.15 472/570] usb: cdns3: gadget: fix state inconsistency on gadget init failure
+Date: Mon, 13 Apr 2026 18:00:03 +0200
+Message-ID: <20260413155848.145250946@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,93 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luka Gejak <luka.gejak@linux.dev>
+From: Yongchao Wu <yongchao.wu@autochips.com>
 
-[ Upstream commit 2e3514e63bfb0e972b1f19668547a455d0129e88 ]
+commit c32f8748d70c8fc77676ad92ed76cede17bf2c48 upstream.
 
-When vlan_vid_add() fails for a secondary slave, the error path calls
-vlan_vid_del() on the failing port instead of the peer slave that had
-already succeeded. This results in asymmetric VLAN state across the HSR
-pair.
+When cdns3_gadget_start() fails, the DRD hardware is left in gadget mode
+while software state remains INACTIVE, creating hardware/software state
+inconsistency.
 
-Fix this by switching to a centralized unwind path that removes the VID
-from any slave device that was already programmed.
+When switching to host mode via sysfs:
+  echo host > /sys/class/usb_role/13180000.usb-role-switch/role
 
-Fixes: 1a8a63a5305e ("net: hsr: Add VLAN CTAG filter support")
-Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
-Link: https://patch.msgid.link/20260401092243.52121-3-luka.gejak@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The role state is not set to CDNS_ROLE_STATE_ACTIVE due to the error,
+so cdns_role_stop() skips cleanup because state is still INACTIVE.
+This violates the DRD controller design specification (Figure22),
+which requires returning to idle state before switching roles.
+
+This leads to a synchronous external abort in xhci_gen_setup() when
+setting up the host controller:
+
+[  516.440698] configfs-gadget 13180000.usb: failed to start g1: -19
+[  516.442035] cdns-usb3 13180000.usb: Failed to add gadget
+[  516.443278] cdns-usb3 13180000.usb: set role 2 has failed
+...
+[ 1301.375722] xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
+[ 1301.377716] Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
+[ 1301.382485] pc : xhci_gen_setup+0xa4/0x408
+[ 1301.393391] backtrace:
+    ...
+    xhci_gen_setup+0xa4/0x408    <-- CRASH
+    xhci_plat_setup+0x44/0x58
+    usb_add_hcd+0x284/0x678
+    ...
+    cdns_role_set+0x9c/0xbc        <-- Role switch
+
+Fix by calling cdns_drd_gadget_off() in the error path to properly
+clean up the DRD gadget state.
+
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Yongchao Wu <yongchao.wu@autochips.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260401001000.5761-1-yongchao.wu@autochips.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/hsr/hsr_device.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ drivers/usb/cdns3/cdns3-gadget.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index 85537b245aaeb..0d7550f7498e1 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -476,8 +476,8 @@ static void hsr_change_rx_flags(struct net_device *dev, int change)
- static int hsr_ndo_vlan_rx_add_vid(struct net_device *dev,
- 				   __be16 proto, u16 vid)
- {
--	bool is_slave_a_added = false;
--	bool is_slave_b_added = false;
-+	struct net_device *slave_a_dev = NULL;
-+	struct net_device *slave_b_dev = NULL;
- 	struct hsr_port *port;
- 	struct hsr_priv *hsr;
- 	int ret = 0;
-@@ -493,33 +493,35 @@ static int hsr_ndo_vlan_rx_add_vid(struct net_device *dev,
- 		switch (port->type) {
- 		case HSR_PT_SLAVE_A:
- 			if (ret) {
--				/* clean up Slave-B */
- 				netdev_err(dev, "add vid failed for Slave-A\n");
--				if (is_slave_b_added)
--					vlan_vid_del(port->dev, proto, vid);
--				return ret;
-+				goto unwind;
- 			}
--
--			is_slave_a_added = true;
-+			slave_a_dev = port->dev;
- 			break;
--
- 		case HSR_PT_SLAVE_B:
- 			if (ret) {
--				/* clean up Slave-A */
- 				netdev_err(dev, "add vid failed for Slave-B\n");
--				if (is_slave_a_added)
--					vlan_vid_del(port->dev, proto, vid);
--				return ret;
-+				goto unwind;
- 			}
--
--			is_slave_b_added = true;
-+			slave_b_dev = port->dev;
- 			break;
- 		default:
-+			if (ret)
-+				goto unwind;
- 			break;
- 		}
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -3427,6 +3427,7 @@ static int __cdns3_gadget_init(struct cd
+ 	ret = cdns3_gadget_start(cdns);
+ 	if (ret) {
+ 		pm_runtime_put_sync(cdns->dev);
++		cdns_drd_gadget_off(cdns);
+ 		return ret;
  	}
  
- 	return 0;
-+
-+unwind:
-+	if (slave_a_dev)
-+		vlan_vid_del(slave_a_dev, proto, vid);
-+
-+	if (slave_b_dev)
-+		vlan_vid_del(slave_b_dev, proto, vid);
-+
-+	return ret;
- }
- 
- static int hsr_ndo_vlan_rx_kill_vid(struct net_device *dev,
--- 
-2.53.0
-
 
 
