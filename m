@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539FC223DCE;
-	Mon, 13 Apr 2026 16:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101E831619C;
+	Mon, 13 Apr 2026 16:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098931; cv=none; b=mh8hD/7AeDqerWPXwUnWH/JeJVJ20k7Rf2H1XyBMCZTxb3qx1B3g85rjpnlAIv5uP6d5VGnOjqrQbXpb4+2tlsycf6FDIY4zS105KyAnN5kSR7mQi5Tmt0RFJ+MGgVZQoFOb5iQFMNraLTY+5wdhgtmgs8cF6L77dYDs29ynaQg=
+	t=1776098934; cv=none; b=LQtncfBbRRTzftQ+CLexSBfYyT9N8uKPKxhkGLgZF6Jv7KyjlbkdSftAhULADtZ+4/SymGK9HichK5WGsFm6jjHR7fXgdoCAmfMLBBBAoeIBZF4daXfqLVt4l98t3HADOsVTeJco+l+Y1+CkBzfg9xuhTQQcfWx5VQ7zTil7jhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098931; c=relaxed/simple;
-	bh=EiqXuay+0OzcjgDTmzIqe9tdcDqLJOb7hSXZdxtAiM0=;
+	s=arc-20240116; t=1776098934; c=relaxed/simple;
+	bh=okgJn4OG3dacNlxFP3epKd6KyKWMNUbn0w9Pprxspzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hAA3tThvEYpUS2alH6hDqKuSkLX42figablX/xGIDJfr3qMsMu5TELKEUd22WNZofLOjVad3WdwKH2qvyhzvr/gBSDPZ/7QPGMbbrY77rbzlaKF1yaEXblhuxtiRZs8BMEJ9UGbAzLdHH0GuMlTTG7KnypPNBfI/yx0DOCHlhq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQnyl7Sj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MFXnmltB9IQ1T6uO6eFycgGsc0aPr4SdKNayHkcpiz8z/0jGGMcx5Ww3Uc9DJo8T/m8ISzDuPqkJiOamBi+t4GhMnOEXzq2J/HxqQGMxET6jEZuUX7kw5XEvF773gfBQq95IkgcF/Fv+HujBfyFy6JpoaDS0TsqsY9vibTbMUzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkNVJsOE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQnyl7Sj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7279C2BCAF;
-	Mon, 13 Apr 2026 16:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkNVJsOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5F2C2BCAF;
+	Mon, 13 Apr 2026 16:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098931;
-	bh=EiqXuay+0OzcjgDTmzIqe9tdcDqLJOb7hSXZdxtAiM0=;
+	s=korg; t=1776098933;
+	bh=okgJn4OG3dacNlxFP3epKd6KyKWMNUbn0w9Pprxspzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jQnyl7SjaS0guMY8SZYsqhKytrK/gbAoVRI/V3GG0bEoeClQzlLNUXg1D3txv8YnN
-	 U4f+LAaUB5LbZh8PFh9JCGMS7yos0yD/QtgMNOWCXX95nGG4zFIbSNQSChc3hU2440
-	 zqGxD+U2NMd3kqONZP/4iO1b4fJj2uVCyBjSdHFg=
+	b=VkNVJsOE8O3Cyl8IgMpa4713X5F3BpePPo8qSP5eImia3U3ZatVbnrNsFh5iWu7+D
+	 JGtcMonn7WfetX0jbIp7l31kJp8KkF3mMfmyyWl2GYShHMhLrLZaL0ISbzzU9mqb4t
+	 2FVaFAMmLjOT3jqQ1PbbmqXS7233ImyUjFEFjBv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Zenghui Yu <zenghui.yu@linux.dev>
-Subject: [PATCH 5.10 112/491] irqchip/gic-v3-its: Limit number of per-device MSIs to the range the ITS supports
-Date: Mon, 13 Apr 2026 17:55:57 +0200
-Message-ID: <20260413155823.234708240@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 5.10 113/491] staging: rtl8723bs: fix potential out-of-bounds read in rtw_restruct_wmm_ie
+Date: Mon, 13 Apr 2026 17:55:58 +0200
+Message-ID: <20260413155823.271356597@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,62 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Luka Gejak <luka.gejak@linux.dev>
 
-commit ce9e40a9a5e5cff0b1b0d2fa582b3d71a8ce68e8 upstream.
+commit a75281626fc8fa6dc6c9cc314ee423e8bc45203b upstream.
 
-The ITS driver blindly assumes that EventIDs are in abundant supply, to the
-point where it never checks how many the hardware actually supports.
+The current code checks 'i + 5 < in_len' at the end of the if statement.
+However, it accesses 'in_ie[i + 5]' before that check, which can lead
+to an out-of-bounds read. Move the length check to the beginning of the
+conditional to ensure the index is within bounds before accessing the
+array.
 
-It turns out that some pretty esoteric integrations make it so that only a
-few bits are available, all the way down to a single bit.
-
-Enforce the advertised limitation at the point of allocating the device
-structure, and hope that the endpoint driver can deal with such limitation.
-
-Fixes: 84a6a2e7fc18d ("irqchip: GICv3: ITS: device allocation and configuration")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260206154816.3582887-1-maz@kernel.org
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20260224132647.11642-2-luka.gejak@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c   |    4 ++++
- include/linux/irqchip/arm-gic-v3.h |    1 +
- 2 files changed, 5 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_mlme.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3382,6 +3382,7 @@ static struct its_device *its_create_dev
- 	int lpi_base;
- 	int nr_lpis;
- 	int nr_ites;
-+	int id_bits;
- 	int sz;
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+@@ -2257,7 +2257,10 @@ int rtw_restruct_wmm_ie(struct adapter *
+ 	while (i < in_len) {
+ 		ielength = initial_out_len;
  
- 	if (!its_alloc_device_table(its, dev_id))
-@@ -3394,7 +3395,10 @@ static struct its_device *its_create_dev
- 	/*
- 	 * Even if the device wants a single LPI, the ITT must be
- 	 * sized as a power of two (and you need at least one bit...).
-+	 * Also honor the ITS's own EID limit.
- 	 */
-+	id_bits = FIELD_GET(GITS_TYPER_IDBITS, its->typer) + 1;
-+	nvecs = min_t(unsigned int, nvecs, BIT(id_bits));
- 	nr_ites = max(2, nvecs);
- 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
- 	sz = max(sz, ITS_ITT_ALIGN) + ITS_ITT_ALIGN - 1;
---- a/include/linux/irqchip/arm-gic-v3.h
-+++ b/include/linux/irqchip/arm-gic-v3.h
-@@ -392,6 +392,7 @@
- #define GITS_TYPER_VLPIS		(1UL << 1)
- #define GITS_TYPER_ITT_ENTRY_SIZE_SHIFT	4
- #define GITS_TYPER_ITT_ENTRY_SIZE	GENMASK_ULL(7, 4)
-+#define GITS_TYPER_IDBITS		GENMASK_ULL(12, 8)
- #define GITS_TYPER_IDBITS_SHIFT		8
- #define GITS_TYPER_DEVBITS_SHIFT	13
- #define GITS_TYPER_DEVBITS		GENMASK_ULL(17, 13)
+-		if (in_ie[i] == 0xDD && in_ie[i+2] == 0x00 && in_ie[i+3] == 0x50  && in_ie[i+4] == 0xF2 && in_ie[i+5] == 0x02 && i+5 < in_len) { /* WMM element ID and OUI */
++		if (i + 5 < in_len &&
++		    in_ie[i] == 0xDD && in_ie[i + 2] == 0x00 &&
++		    in_ie[i + 3] == 0x50 && in_ie[i + 4] == 0xF2 &&
++		    in_ie[i + 5] == 0x02) {
+ 			for (j = i; j < i + 9; j++) {
+ 					out_ie[ielength] = in_ie[j];
+ 					ielength++;
 
 
