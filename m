@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C7231619A;
-	Mon, 13 Apr 2026 16:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6B031619A;
+	Mon, 13 Apr 2026 16:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099109; cv=none; b=p+fM3v8yCR0TZSd4eACZOMbp6u6Yt4DFgmZAJL+PccEgpu2CypaVL8lBQ49KzIe9veXNFjg3Iik4mSzpghuWSNHkWETOqCmubnNsZRF010YRv868Sj4RZo8v4jdeyW0jFXi5Yxk+WfV6/a6sNnaZK1+wpLXVrTP9CI16H5iXwuI=
+	t=1776099112; cv=none; b=j+yUaDGWzYpQxkB+XNUrTAuPkXBB5P7S2gYzeWOD9hIfSqdflivuEDt7PtRS1xurjO9b3HLnAxh58iwB2qkUVO3iODDfYMZ9FdSt7pW050+KfoaEcfnCWGlTHbes2eXILRf3DmtMQ6/9dGmuyxwlTUOp8PvdIo7YWT0faPQZw1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099109; c=relaxed/simple;
-	bh=bn12ZlvFZmjOunW7PxY/KH8EOJObFxTfS2JuA2On6pc=;
+	s=arc-20240116; t=1776099112; c=relaxed/simple;
+	bh=yCUW5IzQmnM9KhKsY5N7cFQldOsB/VBYxHruPDkhv0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n+2WgGG/ikTs9OWWcbUe9giWtVZH3TyHXYBdrfC9D3Qcnp3QGqAry0Yapbsy2PyWMuSO/beVuQl0ZstVqxUNu9/xWd+xfB3YK1AiPTNYU5oS05vL/pCwyj0p26yD7cXY09U5M4XNrZWjO0YL9ntq7nhBc5Hm3LU0GRhILpdiTNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7VLe3Dj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8nvbFr0Vb6ePms2SAEXQbHvxYsZiAXvyoSfgKIMt3wIk8u76rSs3cv6RZ442+tYZ3HBMeDCYophrgosXJfBIisxgLua5mO2Pnx/S2PtMT64KMFKU5boPswF90VtzoFcaHTCOJEVRZXaCGUhPJq0SMYC95VdDiB580rJGLsOXbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0RN2zzz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7VLe3Dj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE005C2BCAF;
-	Mon, 13 Apr 2026 16:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0RN2zzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE0BC2BCAF;
+	Mon, 13 Apr 2026 16:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099109;
-	bh=bn12ZlvFZmjOunW7PxY/KH8EOJObFxTfS2JuA2On6pc=;
+	s=korg; t=1776099111;
+	bh=yCUW5IzQmnM9KhKsY5N7cFQldOsB/VBYxHruPDkhv0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7VLe3DjwRazTyJsd3MMQIUoDbOiCsx6u+hz+zf2zp6hMlCTAaWKGTKHPaAV7Os6y
-	 LZ1j4TsfqO/GA5sDm4oifNyC48vf3N/KOKXkEAnsgij315YphM1tNGfIj/Xa2JCEAC
-	 SQtq0lJ2AEKc2+Z9ue6LKQO8/K02/zyShiOYIT04=
+	b=H0RN2zzzcGupySOaV5uvebf0ycSnJdQEgd2ea6P0mhZ4u6Y6KrnhYwUOTE6jdFLLv
+	 GirKFIwp26Di+lGzHordbTCYpN8p2sHj0cnLNlSHUYRU6mMCVDYpCi13Faw9FVGI4a
+	 z9QbWACK8vu60WBAPHQ5x1WLYEyPoZeR2qOmtGIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rix <trix@redhat.com>,
+	Misbah Anjum N <misanjum@linux.ibm.com>,
 	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Olga Kornievskaia <okorniev@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 182/491] nfsd: define exports_proc_ops with CONFIG_PROC_FS
-Date: Mon, 13 Apr 2026 17:57:07 +0200
-Message-ID: <20260413155825.874894020@linuxfoundation.org>
+Subject: [PATCH 5.10 183/491] NFSD: Hold net reference for the lifetime of /proc/fs/nfs/exports fd
+Date: Mon, 13 Apr 2026 17:57:08 +0200
+Message-ID: <20260413155825.913298947@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -46,76 +48,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tom Rix <trix@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 340086da9a87820b40601141a0e9e87c954ac006 ]
+[ Upstream commit e7fcf179b82d3a3730fd8615da01b087cc654d0b ]
 
-gcc with W=1 and ! CONFIG_PROC_FS
-fs/nfsd/nfsctl.c:161:30: error: ‘exports_proc_ops’
-  defined but not used [-Werror=unused-const-variable=]
-  161 | static const struct proc_ops exports_proc_ops = {
-      |                              ^~~~~~~~~~~~~~~~
+The /proc/fs/nfs/exports proc entry is created at module init
+and persists for the module's lifetime. exports_proc_open()
+captures the caller's current network namespace and stores
+its svc_export_cache in seq->private, but takes no reference
+on the namespace. If the namespace is subsequently torn down
+(e.g. container destruction after the opener does setns() to a
+different namespace), nfsd_net_exit() calls nfsd_export_shutdown()
+which frees the cache. Subsequent reads on the still-open fd
+dereference the freed cache_detail, walking a freed hash table.
 
-The only use of exports_proc_ops is when CONFIG_PROC_FS
-is defined, so its definition should be likewise conditional.
+Hold a reference on the struct net for the lifetime of the open
+file descriptor. This prevents nfsd_net_exit() from running --
+and thus prevents nfsd_export_shutdown() from freeing the cache
+-- while any exports fd is open. cache_detail already stores
+its net pointer (cd->net, set by cache_create_net()), so
+exports_release() can retrieve it without additional per-file
+storage.
 
-Signed-off-by: Tom Rix <trix@redhat.com>
+Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+Closes: https://lore.kernel.org/linux-nfs/dcd371d3a95815a84ba7de52cef447b8@linux.ibm.com/
+Fixes: 96d851c4d28d ("nfsd: use proper net while reading "exports" file")
+Cc: stable@vger.kernel.org
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Tested-by: Olga Kornievskaia <okorniev@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: e7fcf179b82d ("NFSD: Hold net reference for the lifetime of /proc/fs/nfs/exports fd")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ fs/nfsd/nfsctl.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
 --- a/fs/nfsd/nfsctl.c
 +++ b/fs/nfsd/nfsctl.c
-@@ -155,18 +155,6 @@ static int exports_net_open(struct net *
+@@ -152,9 +152,19 @@ static int exports_net_open(struct net *
+ 
+ 	seq = file->private_data;
+ 	seq->private = nn->svc_export_cache;
++	get_net(net);
  	return 0;
  }
  
--static int exports_proc_open(struct inode *inode, struct file *file)
--{
--	return exports_net_open(current->nsproxy->net_ns, file);
--}
--
--static const struct proc_ops exports_proc_ops = {
--	.proc_open	= exports_proc_open,
--	.proc_read	= seq_read,
--	.proc_lseek	= seq_lseek,
--	.proc_release	= seq_release,
--};
--
++static int exports_release(struct inode *inode, struct file *file)
++{
++	struct seq_file *seq = file->private_data;
++	struct cache_detail *cd = seq->private;
++
++	put_net(cd->net);
++	return seq_release(inode, file);
++}
++
  static int exports_nfsd_open(struct inode *inode, struct file *file)
  {
  	return exports_net_open(inode->i_sb->s_fs_info, file);
-@@ -1423,6 +1411,19 @@ static struct file_system_type nfsd_fs_t
- MODULE_ALIAS_FS("nfsd");
+@@ -164,7 +174,7 @@ static const struct file_operations expo
+ 	.open		= exports_nfsd_open,
+ 	.read		= seq_read,
+ 	.llseek		= seq_lseek,
+-	.release	= seq_release,
++	.release	= exports_release,
+ };
  
- #ifdef CONFIG_PROC_FS
-+
-+static int exports_proc_open(struct inode *inode, struct file *file)
-+{
-+	return exports_net_open(current->nsproxy->net_ns, file);
-+}
-+
-+static const struct proc_ops exports_proc_ops = {
-+	.proc_open	= exports_proc_open,
-+	.proc_read	= seq_read,
-+	.proc_lseek	= seq_lseek,
-+	.proc_release	= seq_release,
-+};
-+
+ static int export_features_show(struct seq_file *m, void *v)
+@@ -1421,7 +1431,7 @@ static const struct proc_ops exports_pro
+ 	.proc_open	= exports_proc_open,
+ 	.proc_read	= seq_read,
+ 	.proc_lseek	= seq_lseek,
+-	.proc_release	= seq_release,
++	.proc_release	= exports_release,
+ };
+ 
  static int create_proc_exports_entry(void)
- {
- 	struct proc_dir_entry *entry;
 
 
