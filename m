@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8AC28CF4A;
-	Mon, 13 Apr 2026 16:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E3725A2C9;
+	Mon, 13 Apr 2026 16:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096772; cv=none; b=pP1hhMHsIHClCBiS5b4wF8c8Ryh9TYWsCgbsjrb1y1yn27jWTMq2YoHGIRCP4qS21vOi7mGjGYn+nC7Mh5+IeeSiw06vbOzKe1zkQGl8rgTE/nPCODilaxryArVD8ywmYee99YCeiFMyShJebXzaMiMIHi7ml3srcSHevFUpr4c=
+	t=1776096774; cv=none; b=Ml7P5JRX/NfjlTAYh00nTpHLBuFExfhKh3we4PRaDLBaqzOcUB80MFSVuELHheA+VIFq7fwHhJsMG+osz/6JtP49YaZzSaiffsM8IM+t57BbmVqzb/9pStz1Bg74iGAD7tFjupGNm5uaocxnY1bvRZ1nnX8DA0tF5wW9GJufzv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096772; c=relaxed/simple;
-	bh=Gc86U/kZ2SEXUtgwACtDj8FU0W6e+L4RN5ArKNJi9LE=;
+	s=arc-20240116; t=1776096774; c=relaxed/simple;
+	bh=i3k9XUAEssKLt59AcbjI9rRPuHUOy7SJUfjP8g86cQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M8KjDBKKFJqQmzwGVbrARbPvaWdI80UP2H0kG0S83nlMGxotQS6lCLo1A7qNjDqOK8FBEUXCV7MLQKGxr+gfwCZgPF7vAyiYkVUzJJP0OR0su7PMnIm9+9vjd3Ve7K9W7W0Y7sFsres+2xUmStpYsAEuNGI42sSYg62UjgejLoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFymEOua; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oCHXB6E1sFeXfvKJHNQt4IRAg2lkpDgPpUInlYFWwDEEHqXFBDPYRUUJcbukhWeTwrhPG9ZshYZdUpY7M5v0jY5s+Gm387VM/1an1ANCji4vtOO48yiJayUFZSmZFTWAtHbNgQkH5Y6YQOQxBo9Eq+9DiRbOR67iivnJEyxcMX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yI4boHLY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFymEOua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8351C2BCAF;
-	Mon, 13 Apr 2026 16:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yI4boHLY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AAFBC2BCAF;
+	Mon, 13 Apr 2026 16:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096772;
-	bh=Gc86U/kZ2SEXUtgwACtDj8FU0W6e+L4RN5ArKNJi9LE=;
+	s=korg; t=1776096774;
+	bh=i3k9XUAEssKLt59AcbjI9rRPuHUOy7SJUfjP8g86cQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFymEOuaEQpcVe3Z2cKeT6d2PDQrFavN1LeSLlmoF7u2BVmbLfCjRppIJ/tQnbMT9
-	 +OTbQxqCU8R+iMnEckDGFKKlTz5qbbedKiJ+XfKJ2enbl59xqkpc0zBE8xxFUBfHcj
-	 k14VVrsaum13vYgU9rKneZX6BnjrPJqhROjRmXZg=
+	b=yI4boHLYkOIFYSj5OSxdgABC1UFDGqfCDeJ/zuUE+lZMYG7gwybZ9DduwYoCUEjr+
+	 J2W68wnLAHtJuqwuwiveM1BSy8J2Rl02Y2yPyTyLLMMeKkS4XM2yQmWkTA2m3w/VwS
+	 HISOu4pijKCfMZO1lI8qFKpBicAPG0idDKdIE9bI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.12 49/70] drm/i915/psr: Do not use pipe_src as borders for SU area
-Date: Mon, 13 Apr 2026 18:00:44 +0200
-Message-ID: <20260413155730.016357094@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 58/70] net: lan966x: fix page_pool error handling in lan966x_fdma_rx_alloc_page_pool()
+Date: Mon, 13 Apr 2026 18:00:53 +0200
+Message-ID: <20260413155730.350368565@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -45,161 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 75519f5df2a9b23f7bf305e12dc9a6e3e65c24b7 upstream.
+commit 3fd0da4fd8851a7e62d009b7db6c4a05b092bc19 upstream.
 
-This far using crtc_state->pipe_src as borders for Selective Update area
-haven't caused visible problems as drm_rect_width(crtc_state->pipe_src) ==
-crtc_state->hw.adjusted_mode.crtc_hdisplay and
-drm_rect_height(crtc_state->pipe_src) ==
-crtc_state->hw.adjusted_mode.crtc_vdisplay when pipe scaling is not
-used. On the other hand using pipe scaling is forcing full frame updates and all the
-Selective Update area calculations are skipped. Now this improper usage of
-crtc_state->pipe_src is causing following warnings:
+page_pool_create() can return an ERR_PTR on failure. The return value
+is used unconditionally in the loop that follows, passing the error
+pointer through xdp_rxq_info_reg_mem_model() into page_pool_use_xdp_mem(),
+which dereferences it, causing a kernel oops.
 
-<4> [7771.978166] xe 0000:00:02.0: [drm] drm_WARN_ON_ONCE(su_lines % vdsc_cfg->slice_height)
+Add an IS_ERR check after page_pool_create() to return early on failure.
 
-after WARN_ON_ONCE was added by commit:
-
-"drm/i915/dsc: Add helper for writing DSC Selective Update ET parameters"
-
-These warnings are seen when DSC and pipe scaling are enabled
-simultaneously. This is because on full frame update SU area is improperly
-set as pipe_src which is not aligned with DSC slice height.
-
-Fix these by creating local rectangle using
-crtc_state->hw.adjusted_mode.crtc_hdisplay and
-crtc_state->hw.adjusted_mode.crtc_vdisplay. Use this local rectangle as
-borders for SU area.
-
-Fixes: d6774b8c3c58 ("drm/i915: Ensure damage clip area is within pipe area")
-Cc: <stable@vger.kernel.org> # v6.0+
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patch.msgid.link/20260327114553.195285-1-jouni.hogander@intel.com
-(cherry picked from commit da0cdc1c329dd2ff09c41fbbe9fbd9c92c5d2c6e)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 11871aba1974 ("net: lan96x: Use page_pool API")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Link: https://patch.msgid.link/20260405055241.35767-2-devnexen@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c |   30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -2375,9 +2375,9 @@ static u32 psr2_pipe_srcsz_early_tpt_cal
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+@@ -91,6 +91,8 @@ static int lan966x_fdma_rx_alloc_page_po
+ 		pp_params.dma_dir = DMA_BIDIRECTIONAL;
  
- static void clip_area_update(struct drm_rect *overlap_damage_area,
- 			     struct drm_rect *damage_area,
--			     struct drm_rect *pipe_src)
-+			     struct drm_rect *display_area)
- {
--	if (!drm_rect_intersect(damage_area, pipe_src))
-+	if (!drm_rect_intersect(damage_area, display_area))
- 		return;
+ 	rx->page_pool = page_pool_create(&pp_params);
++	if (unlikely(IS_ERR(rx->page_pool)))
++		return PTR_ERR(rx->page_pool);
  
- 	if (overlap_damage_area->y1 == -1) {
-@@ -2429,6 +2429,7 @@ static bool intel_psr2_sel_fetch_pipe_al
- static void
- intel_psr2_sel_fetch_et_alignment(struct intel_atomic_state *state,
- 				  struct intel_crtc *crtc,
-+				  struct drm_rect *display_area,
- 				  bool *cursor_in_su_area)
- {
- 	struct intel_crtc_state *crtc_state = intel_atomic_get_new_crtc_state(state, crtc);
-@@ -2456,7 +2457,7 @@ intel_psr2_sel_fetch_et_alignment(struct
- 			continue;
- 
- 		clip_area_update(&crtc_state->psr2_su_area, &new_plane_state->uapi.dst,
--				 &crtc_state->pipe_src);
-+				 display_area);
- 		*cursor_in_su_area = true;
- 	}
- }
-@@ -2504,6 +2505,12 @@ int intel_psr2_sel_fetch_update(struct i
- 	struct intel_crtc_state *crtc_state = intel_atomic_get_new_crtc_state(state, crtc);
- 	struct intel_plane_state *new_plane_state, *old_plane_state;
- 	struct intel_plane *plane;
-+	struct drm_rect display_area = {
-+		.x1 = 0,
-+		.y1 = 0,
-+		.x2 = crtc_state->hw.adjusted_mode.crtc_hdisplay,
-+		.y2 = crtc_state->hw.adjusted_mode.crtc_vdisplay,
-+	};
- 	bool full_update = false, su_area_changed;
- 	int i, ret;
- 
-@@ -2517,7 +2524,7 @@ int intel_psr2_sel_fetch_update(struct i
- 
- 	crtc_state->psr2_su_area.x1 = 0;
- 	crtc_state->psr2_su_area.y1 = -1;
--	crtc_state->psr2_su_area.x2 = drm_rect_width(&crtc_state->pipe_src);
-+	crtc_state->psr2_su_area.x2 = drm_rect_width(&display_area);
- 	crtc_state->psr2_su_area.y2 = -1;
- 
- 	/*
-@@ -2555,14 +2562,14 @@ int intel_psr2_sel_fetch_update(struct i
- 				damaged_area.y1 = old_plane_state->uapi.dst.y1;
- 				damaged_area.y2 = old_plane_state->uapi.dst.y2;
- 				clip_area_update(&crtc_state->psr2_su_area, &damaged_area,
--						 &crtc_state->pipe_src);
-+						 &display_area);
- 			}
- 
- 			if (new_plane_state->uapi.visible) {
- 				damaged_area.y1 = new_plane_state->uapi.dst.y1;
- 				damaged_area.y2 = new_plane_state->uapi.dst.y2;
- 				clip_area_update(&crtc_state->psr2_su_area, &damaged_area,
--						 &crtc_state->pipe_src);
-+						 &display_area);
- 			}
- 			continue;
- 		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha) {
-@@ -2570,7 +2577,7 @@ int intel_psr2_sel_fetch_update(struct i
- 			damaged_area.y1 = new_plane_state->uapi.dst.y1;
- 			damaged_area.y2 = new_plane_state->uapi.dst.y2;
- 			clip_area_update(&crtc_state->psr2_su_area, &damaged_area,
--					 &crtc_state->pipe_src);
-+					 &display_area);
- 			continue;
- 		}
- 
-@@ -2586,7 +2593,7 @@ int intel_psr2_sel_fetch_update(struct i
- 		damaged_area.x1 += new_plane_state->uapi.dst.x1 - src.x1;
- 		damaged_area.x2 += new_plane_state->uapi.dst.x1 - src.x1;
- 
--		clip_area_update(&crtc_state->psr2_su_area, &damaged_area, &crtc_state->pipe_src);
-+		clip_area_update(&crtc_state->psr2_su_area, &damaged_area, &display_area);
- 	}
- 
- 	/*
-@@ -2626,7 +2633,8 @@ int intel_psr2_sel_fetch_update(struct i
- 		 * cursor is added into affected planes even when
- 		 * cursor is not updated by itself.
- 		 */
--		intel_psr2_sel_fetch_et_alignment(state, crtc, &cursor_in_su_area);
-+		intel_psr2_sel_fetch_et_alignment(state, crtc, &display_area,
-+						  &cursor_in_su_area);
- 
- 		su_area_changed = intel_psr2_sel_fetch_pipe_alignment(crtc_state);
- 
-@@ -2702,8 +2710,8 @@ int intel_psr2_sel_fetch_update(struct i
- 
- skip_sel_fetch_set_loop:
- 	if (full_update)
--		clip_area_update(&crtc_state->psr2_su_area, &crtc_state->pipe_src,
--				 &crtc_state->pipe_src);
-+		clip_area_update(&crtc_state->psr2_su_area, &display_area,
-+				 &display_area);
- 
- 	psr2_man_trk_ctl_calc(crtc_state, full_update);
- 	crtc_state->pipe_srcsz_early_tpt =
+ 	for (int i = 0; i < lan966x->num_phys_ports; ++i) {
+ 		struct lan966x_port *port;
 
 
