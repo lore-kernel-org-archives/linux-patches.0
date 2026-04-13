@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867B230ACE6;
-	Mon, 13 Apr 2026 16:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1CA26CE32;
+	Mon, 13 Apr 2026 16:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097679; cv=none; b=rxveL9Fg92nQtdYIjtQct07/NftCUrEV9/Fwonsr6WexywGSb4amR3UKUZMQr51hanwLMFsg9z66/OMLHADNDfxKXsNOXhVXTwru36Ly8AcoL85X9wUZZVAD3Lr9InXUX7sSIAhSgDPAgw35urWYj/omW1s79BakFyalDSIwsko=
+	t=1776097682; cv=none; b=nStbEnT2mMwAF/ciyfCHGDvRraUnb7WtZJ+E7+iNlpf/MKJms2J2FtR5QiiYgG/N2NgT71sYVeaew8kQOGixL3XC1lauwimJZIBdb1WgRNJMUeLbV5Eqv+5/Udm0UwYqkAaJxs7CuB3HojJzKIN+gFLpc8brW6EMKXSjfIbuhdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097679; c=relaxed/simple;
-	bh=8txmi2MCyvqx4Evu5bDVHEbSxR5oFI0jznIf586Yqn4=;
+	s=arc-20240116; t=1776097682; c=relaxed/simple;
+	bh=NloKGyW5w1RcqXerE1A2v2PgSYEs5r5QTOE+7XzRe6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJzEfFbSFVB9ScwYvuqnydzK7N0ink77eMdnomkZQKIwvtzLqn4EuYLFI66UFJm9NAfEVVSsPxFdU6pAyC9DAkp1CBzBXdld9aKVIgxP8xYiZMQK50ZeZwIn0kzK4j3bOLhbZ76tDpU1oLB7r2RRLHD0xCpVRfBuDt2+ieoyXek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDoWuand; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K5T0sXz7Hkltg88DKa29PoP7h4owGDOtnDFd3DH1zTZu9vYRmsCnCtjjSg6N7ObXh8J5g9zXUtsCJei/iz3G4V0QAJPi3a7HdikzYdM+lgrYMh0JuPKBrxE+zD/4OFsQ8HTVbYv/AIwLuTvNr+1oY1IgtHWB5Bz8bC7GLS0gUeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPieGnqL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDoWuand"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA32C2BCAF;
-	Mon, 13 Apr 2026 16:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPieGnqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A520FC2BCAF;
+	Mon, 13 Apr 2026 16:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097679;
-	bh=8txmi2MCyvqx4Evu5bDVHEbSxR5oFI0jznIf586Yqn4=;
+	s=korg; t=1776097682;
+	bh=NloKGyW5w1RcqXerE1A2v2PgSYEs5r5QTOE+7XzRe6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDoWuandJ4vZfm/yMHehmH4Nswiv4ANmvB00lzZaygsy5ldf3cLhLzliTlPRc09rk
-	 5DRnhzu/h7f66/Wlo4RoHYJ65WEEmh5Kx5l4/N+DhgQc++L2O7dFdA7KG7UxIJsc3t
-	 yqs9Mv+jaOBHdQhxwwm7GCIwACSesg8FiD81B/fA=
+	b=MPieGnqLB4tb4Kj9uIr4NzKErGHIFRCJLqi2SWsFZnGFyYKY8E2MBwhHLPKgCB7XX
+	 LzBzdtO3ajWWsAq2oS+M4qdduqQ/mPLFosCbgXJcJVTX2f4MUD2+1nnoZchxYYOShp
+	 YOWcfS9htwBsUaS+lfGcsdPzs9grF53JLQTXpimE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dingisoul <dingiso.kernel@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>
-Subject: [PATCH 5.15 198/570] nvdimm/bus: Fix potential use after free in asynchronous initialization
-Date: Mon, 13 Apr 2026 17:55:29 +0200
-Message-ID: <20260413155837.875795642@linuxfoundation.org>
+	Ian Ray <ian.ray@gehealthcare.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 199/570] NFC: nxp-nci: allow GPIOs to sleep
+Date: Mon, 13 Apr 2026 17:55:30 +0200
+Message-ID: <20260413155837.913004965@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,55 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ira Weiny <ira.weiny@intel.com>
+From: Ian Ray <ian.ray@gehealthcare.com>
 
-commit a8aec14230322ed8f1e8042b6d656c1631d41163 upstream.
+commit 55dc632ab2ac2889b15995a9eef56c753d48ebc7 upstream.
 
-Dingisoul with KASAN reports a use after free if device_add() fails in
-nd_async_device_register().
+Allow the firmware and enable GPIOs to sleep.
 
-Commit b6eae0f61db2 ("libnvdimm: Hold reference on parent while
-scheduling async init") correctly added a reference on the parent device
-to be held until asynchronous initialization was complete.  However, if
-device_add() results in an allocation failure the ref count of the
-device drops to 0 prior to the parent pointer being accessed.  Thus
-resulting in use after free.
+This fixes a `WARN_ON' and allows the driver to operate GPIOs which are
+connected to I2C GPIO expanders.
 
-The bug bot AI correctly identified the fix.  Save a reference to the
-parent pointer to be used to drop the parent reference regardless of the
-outcome of device_add().
+-- >8 --
+kernel: WARNING: CPU: 3 PID: 2636 at drivers/gpio/gpiolib.c:3880 gpiod_set_value+0x88/0x98
+-- >8 --
 
-Reported-by: Dingisoul <dingiso.kernel@gmail.com>
-Closes: http://lore.kernel.org/8855544b-be9e-4153-aa55-0bc328b13733@gmail.com
-Fixes: b6eae0f61db2 ("libnvdimm: Hold reference on parent while scheduling async init")
+Fixes: 43201767b44c ("NFC: nxp-nci: Convert to use GPIO descriptor")
 Cc: stable@vger.kernel.org
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260306-fix-uaf-async-init-v1-1-a28fd7526723@intel.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Link: https://patch.msgid.link/20260317085337.146545-1-ian.ray@gehealthcare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/bus.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nfc/nxp-nci/i2c.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/nvdimm/bus.c
-+++ b/drivers/nvdimm/bus.c
-@@ -492,14 +492,15 @@ EXPORT_SYMBOL_GPL(nd_synchronize);
- static void nd_async_device_register(void *d, async_cookie_t cookie)
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -47,8 +47,8 @@ static int nxp_nci_i2c_set_mode(void *ph
  {
- 	struct device *dev = d;
-+	struct device *parent = dev->parent;
+ 	struct nxp_nci_i2c_phy *phy = (struct nxp_nci_i2c_phy *) phy_id;
  
- 	if (device_add(dev) != 0) {
- 		dev_err(dev, "%s: failed\n", __func__);
- 		put_device(dev);
- 	}
- 	put_device(dev);
--	if (dev->parent)
--		put_device(dev->parent);
-+	if (parent)
-+		put_device(parent);
- }
+-	gpiod_set_value(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
+-	gpiod_set_value(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
++	gpiod_set_value_cansleep(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
++	gpiod_set_value_cansleep(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
+ 	usleep_range(10000, 15000);
  
- static void nd_async_device_unregister(void *d, async_cookie_t cookie)
+ 	if (mode == NXP_NCI_MODE_COLD)
 
 
