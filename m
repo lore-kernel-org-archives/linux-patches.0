@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EE63115BC;
-	Mon, 13 Apr 2026 16:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9CD30BF68;
+	Mon, 13 Apr 2026 16:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098507; cv=none; b=dsYjRMkDmgIyVv13X+0x7ybHI9X+dyrQBFvGmNpUHmrDk/ji7gX3VL/8iC+rc3uFB2Mg4Pc2rkyjrinOD7nXUsJoymQQfm1nIqRdpyIOMYWxpR410pS6l8mDnS/z04G/LrpKkHu+3cbUPcKL9yN/8rgtvm3nFdjdz9M/fnvXKPk=
+	t=1776098510; cv=none; b=tRigx10m+9Q9WBKgUIa160slo+3NwkDjGuUEhxXwqY/xIp00jg+4bKo8Rz8tLtybot6cHpjzVGFnQFVQG5fPZgbjThowSZHVOmVNUdCu1Qf5oGVKQMz2S3oCVhGw0NESaTP+++MWndg+8Yg5ptlyUo1KVntZ1eRqbTM85y9D2tA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098507; c=relaxed/simple;
-	bh=tdafQdRPnwAQUlk6UB+WCnkeLELmp8BPISq0RBp31b8=;
+	s=arc-20240116; t=1776098510; c=relaxed/simple;
+	bh=/1af8cy+fkvmv44hnUn5SOAOOYgflDZssBfznSvgAsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TB5dJB2yzZRVhJoNNatn2nlobrFvhp5ppDOjANEPUq7PP+T7qDEZJ/sEmkvoDd6UkMAsXUDRyycOOJoLc2aITCj77DT+fm85Djq/S6BvCsjFnJhCIEg48MXCpf6iRzQ1SN3YD4DMMm8nUC4G8zHpjT5eY+dz4MERqoMN4E3z4p8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUPXZ6CR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5Ws+CzgX/TWrwEDhzaTw7FS8h44SF65xQGNC+A+Fy4PNIjBPxDhhynlXFlT24VuZYqp0+zUSpVeObBMPwvl3myim2hMdFcspis4/3fbzhOP7voR2NL4THXjEFQxOSWtDdOUJUmoTM5vbYSW+hdA9vkYtq1ngv8SFVMM8DqYA5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eI8Tp9zO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUPXZ6CR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E894FC2BCB0;
-	Mon, 13 Apr 2026 16:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eI8Tp9zO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3DDC2BCAF;
+	Mon, 13 Apr 2026 16:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098507;
-	bh=tdafQdRPnwAQUlk6UB+WCnkeLELmp8BPISq0RBp31b8=;
+	s=korg; t=1776098509;
+	bh=/1af8cy+fkvmv44hnUn5SOAOOYgflDZssBfznSvgAsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PUPXZ6CRd7AtVfFz8r2nrUcCE6FXCzdD8gPZxQPJvXb0L49aAM45Gd1ZZhhtH2pkp
-	 AdJ2wjV7yDhVOribtVg1/taL6YkC4nQlLXGszp5KRdnpVxc9hqxoBPIf6PtMtmvNcm
-	 Tp5qkTk0ZQGO+UZrkE1+GdClI9KmEm0Dk7ZUSqR0=
+	b=eI8Tp9zOyT+6vuwy7hXTATsUpP3MkAIQDA1SZVgtgt5DSDEigjJfcxN2UB0/n4z3x
+	 LOnzAHmOUQOwoP/lv1FXFuJPocy66Wbd/snaOCKm0+J6W+tQ1UZ3VX6P65YTaz84z5
+	 KxqzypE2ZAlY7n1DcpljoF5K91loHmAO5qoYHCyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
-	Yuto Ohnuki <ytohnuki@amazon.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 552/570] xfs: save ailp before dropping the AIL lock in push callbacks
-Date: Mon, 13 Apr 2026 18:01:23 +0200
-Message-ID: <20260413155851.137650243@linuxfoundation.org>
+Subject: [PATCH 5.15 553/570] dmaengine: sh: rz-dmac: Move CHCTRL updates under spinlock
+Date: Mon, 13 Apr 2026 18:01:24 +0200
+Message-ID: <20260413155851.176648116@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,97 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuto Ohnuki <ytohnuki@amazon.com>
+From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 
-[ Upstream commit 394d70b86fae9fe865e7e6d9540b7696f73aa9b6 ]
+[ Upstream commit 89a8567d84bde88cb7cdbbac2ab2299c4f991490 ]
 
-In xfs_inode_item_push() and xfs_qm_dquot_logitem_push(), the AIL lock
-is dropped to perform buffer IO. Once the cluster buffer no longer
-protects the log item from reclaim, the log item may be freed by
-background reclaim or the dquot shrinker. The subsequent spin_lock()
-call dereferences lip->li_ailp, which is a use-after-free.
+Both rz_dmac_disable_hw() and rz_dmac_irq_handle_channel() update the
+CHCTRL register. To avoid concurrency issues when configuring
+functionalities exposed by this registers, take the virtual channel lock.
+All other CHCTRL updates were already protected by the same lock.
 
-Fix this by saving the ailp pointer in a local variable while the AIL
-lock is held and the log item is guaranteed to be valid.
+Previously, rz_dmac_disable_hw() disabled and re-enabled local IRQs, before
+accessing CHCTRL registers but this does not ensure race-free access.
+Remove the local IRQ disable/enable code as well.
 
-Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
-Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
-Cc: stable@vger.kernel.org # v5.9
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
+Cc: stable@vger.kernel.org
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20260316133252.240348-3-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[ replaced scoped_guard(spinlock_irqsave, ...) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot_item.c |    9 +++++++--
- fs/xfs/xfs_inode_item.c |    9 +++++++--
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/dma/sh/rz-dmac.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/xfs/xfs_dquot_item.c
-+++ b/fs/xfs/xfs_dquot_item.c
-@@ -124,6 +124,7 @@ xfs_qm_dquot_logitem_push(
+--- a/drivers/dma/sh/rz-dmac.c
++++ b/drivers/dma/sh/rz-dmac.c
+@@ -283,13 +283,10 @@ static void rz_dmac_disable_hw(struct rz
  {
- 	struct xfs_dquot	*dqp = DQUOT_ITEM(lip)->qli_dquot;
- 	struct xfs_buf		*bp = lip->li_buf;
-+	struct xfs_ail		*ailp = lip->li_ailp;
- 	uint			rval = XFS_ITEM_SUCCESS;
- 	int			error;
+ 	struct dma_chan *chan = &channel->vc.chan;
+ 	struct rz_dmac *dmac = to_rz_dmac(chan->device);
+-	unsigned long flags;
  
-@@ -152,7 +153,7 @@ xfs_qm_dquot_logitem_push(
- 		goto out_unlock;
- 	}
+ 	dev_dbg(dmac->dev, "%s channel %d\n", __func__, channel->index);
  
--	spin_unlock(&lip->li_ailp->ail_lock);
-+	spin_unlock(&ailp->ail_lock);
- 
- 	error = xfs_qm_dqflush(dqp, &bp);
- 	if (!error) {
-@@ -162,7 +163,11 @@ xfs_qm_dquot_logitem_push(
- 	} else if (error == -EAGAIN)
- 		rval = XFS_ITEM_LOCKED;
- 
--	spin_lock(&lip->li_ailp->ail_lock);
-+	/*
-+	 * The buffer no longer protects the log item from reclaim, so
-+	 * do not reference lip after this point.
-+	 */
-+	spin_lock(&ailp->ail_lock);
- out_unlock:
- 	xfs_dqunlock(dqp);
- 	return rval;
---- a/fs/xfs/xfs_inode_item.c
-+++ b/fs/xfs/xfs_inode_item.c
-@@ -540,6 +540,7 @@ xfs_inode_item_push(
- 	struct xfs_inode_log_item *iip = INODE_ITEM(lip);
- 	struct xfs_inode	*ip = iip->ili_inode;
- 	struct xfs_buf		*bp = lip->li_buf;
-+	struct xfs_ail		*ailp = lip->li_ailp;
- 	uint			rval = XFS_ITEM_SUCCESS;
- 	int			error;
- 
-@@ -555,7 +556,7 @@ xfs_inode_item_push(
- 	if (!xfs_buf_trylock(bp))
- 		return XFS_ITEM_LOCKED;
- 
--	spin_unlock(&lip->li_ailp->ail_lock);
-+	spin_unlock(&ailp->ail_lock);
- 
- 	/*
- 	 * We need to hold a reference for flushing the cluster buffer as it may
-@@ -579,7 +580,11 @@ xfs_inode_item_push(
- 		rval = XFS_ITEM_LOCKED;
- 	}
- 
--	spin_lock(&lip->li_ailp->ail_lock);
-+	/*
-+	 * The buffer no longer protects the log item from reclaim, so
-+	 * do not reference lip after this point.
-+	 */
-+	spin_lock(&ailp->ail_lock);
- 	return rval;
+-	local_irq_save(flags);
+ 	rz_dmac_ch_writel(channel, CHCTRL_DEFAULT, CHCTRL, 1);
+-	local_irq_restore(flags);
  }
+ 
+ static void rz_dmac_set_dmars_register(struct rz_dmac *dmac, int nr, u32 dmars)
+@@ -536,8 +533,8 @@ static int rz_dmac_terminate_all(struct
+ 	unsigned int i;
+ 	LIST_HEAD(head);
+ 
+-	rz_dmac_disable_hw(channel);
+ 	spin_lock_irqsave(&channel->vc.lock, flags);
++	rz_dmac_disable_hw(channel);
+ 	for (i = 0; i < DMAC_NR_LMDESC; i++)
+ 		lmdesc[i].header = 0;
+ 
+@@ -646,13 +643,17 @@ static void rz_dmac_irq_handle_channel(s
+ {
+ 	struct dma_chan *chan = &channel->vc.chan;
+ 	struct rz_dmac *dmac = to_rz_dmac(chan->device);
++	unsigned long flags;
+ 	u32 chstat, chctrl;
+ 
+ 	chstat = rz_dmac_ch_readl(channel, CHSTAT, 1);
+ 	if (chstat & CHSTAT_ER) {
+ 		dev_err(dmac->dev, "DMAC err CHSTAT_%d = %08X\n",
+ 			channel->index, chstat);
++
++		spin_lock_irqsave(&channel->vc.lock, flags);
+ 		rz_dmac_ch_writel(channel, CHCTRL_DEFAULT, CHCTRL, 1);
++		spin_unlock_irqrestore(&channel->vc.lock, flags);
+ 		goto done;
+ 	}
  
 
 
