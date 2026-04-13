@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02AF2D8364;
-	Mon, 13 Apr 2026 16:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA9F1D5AD4;
+	Mon, 13 Apr 2026 16:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098616; cv=none; b=mJvjEvJYDoCMSvaLp2KG5g7LnvacW3WZ0/z/rWM6voTWBXRSWEBVDsqwSY4o4SIhCZl8yKeJd3OUbfXUsh/g72qfDTK1b1RhsQVk6DtFF75SSqqY48a4kVr6CZKljUXNauJpmO/gAicP1P6mvCsxkhPm/RfPrOUKMmFmXAwhego=
+	t=1776098619; cv=none; b=YC8n7rjC1pYB2sTgTSVvv9xDMzi2DN6lG240xVr2HsOcFLNGuxCZIzeW+xEVZRMFQGUK5idvPUutBTR7ZQPnGJX+wno6n1Z1VROiXF9l0H+VDUN781sQ+ZIeZPEJMxXC8WfCW4cJLG+HSqPWwUCZMp4SnCFFTS595yIqQ5c9rzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098616; c=relaxed/simple;
-	bh=zwAykZRv3PnTkeveVaEFKNXcObHGuu0qu7RqWNDg2Jo=;
+	s=arc-20240116; t=1776098619; c=relaxed/simple;
+	bh=nvH3nCrRVfAgUFFz3KQJZ0dNMRS6OYYXwTqroS3HIH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYY5QVzHcnpHstawzXFPDIxlV/7Rk5epLz02H3in39qdLHdF/yvKy019tmNzzdK77n20hUQ3ba+/wuerevMfPv7T0OyIjWz3sMyosGBy9deKDG2AL8x1bVGo9wHaKC7kVma8pMY6RFyUgG7QNy5SEaABPVg8NRg9BeT1//C0XXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fx2bun/p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fjecch+lqBk/t3AyxZ52BXxyYkUjGEUqTnpD7k5qmwKagX4AFYtSXZXpq6IwHZ8sXEmKxog//uls3dNxV095IWYWHVJkFxNxuWm+9F99TekbE3OV7Mecl4GSpnc9gCWDjuQAxglnCLXuF+/P1axsB5WloU9HJb95hXXYKY2NqIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WGfyQJ2R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fx2bun/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76502C2BCAF;
-	Mon, 13 Apr 2026 16:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGfyQJ2R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0381CC2BCAF;
+	Mon, 13 Apr 2026 16:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098616;
-	bh=zwAykZRv3PnTkeveVaEFKNXcObHGuu0qu7RqWNDg2Jo=;
+	s=korg; t=1776098619;
+	bh=nvH3nCrRVfAgUFFz3KQJZ0dNMRS6OYYXwTqroS3HIH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fx2bun/p/AsCI7AXde+I5Ckr+jA9BRGUmOHXnSFckBrvfFufvudJ/r0JRtbFlRCtk
-	 gxfWJjlcwc0Pn6x4JJNWzDIJWmKrzz4oYRtD5Rd3o7mMuJqCxVzcP3y8EumRv9ygxL
-	 CQ33WEwgmt0L1/JqikO8hej97pQ/pWOyJrBCDXwo=
+	b=WGfyQJ2RPodLgQ6n2MUKBharpxhdE9D+PLy3bN0TxTuc/9z2FwGO+iM1xrzcLX0ys
+	 5LMmKnTRYfXKGJNidXwqE75z72sp2GX341q2gBCgNJbEMzovIIdsRYpCZ4ZWSOdhhW
+	 tI4O7xUCN5FCAf7xAjx1hGrugFwP7c+qylxMgyQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Petko Manolov <petkan@nucleusys.com>,
 	stable <stable@kernel.org>,
-	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 022/491] net: usb: kalmia: validate USB endpoints
-Date: Mon, 13 Apr 2026 17:54:27 +0200
-Message-ID: <20260413155819.884406533@linuxfoundation.org>
+Subject: [PATCH 5.10 023/491] net: usb: pegasus: validate USB endpoints
+Date: Mon, 13 Apr 2026 17:54:28 +0200
+Message-ID: <20260413155819.921181009@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,44 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit c58b6c29a4c9b8125e8ad3bca0637e00b71e2693 upstream.
+commit 11de1d3ae5565ed22ef1f89d73d8f2d00322c699 upstream.
 
-The kalmia driver should validate that the device it is probing has the
+The pegasus driver should validate that the device it is probing has the
 proper number and types of USB endpoints it is expecting before it binds
 to it.  If a malicious device were to not have the same urbs the driver
 will crash later on when it blindly accesses these endpoints.
 
+Cc: Petko Manolov <petkan@nucleusys.com>
 Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
-Link: https://patch.msgid.link/2026022326-shack-headstone-ef6f@gregkh
+Link: https://patch.msgid.link/2026022347-legibly-attest-cc5c@gregkh
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/kalmia.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/usb/pegasus.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/kalmia.c
-+++ b/drivers/net/usb/kalmia.c
-@@ -132,11 +132,18 @@ kalmia_bind(struct usbnet *dev, struct u
+--- a/drivers/net/usb/pegasus.c
++++ b/drivers/net/usb/pegasus.c
+@@ -841,8 +841,19 @@ static void unlink_all_urbs(pegasus_t *p
+ 
+ static int alloc_urbs(pegasus_t *pegasus)
  {
- 	int status;
- 	u8 ethernet_addr[ETH_ALEN];
-+	static const u8 ep_addr[] = {
++	static const u8 bulk_ep_addr[] = {
 +		1 | USB_DIR_IN,
 +		2 | USB_DIR_OUT,
 +		0};
++	static const u8 int_ep_addr[] = {
++		3 | USB_DIR_IN,
++		0};
+ 	int res = -ENOMEM;
  
- 	/* Don't bind to AT command interface */
- 	if (intf->cur_altsetting->desc.bInterfaceClass != USB_CLASS_VENDOR_SPEC)
- 		return -EINVAL;
- 
-+	if (!usb_check_bulk_endpoints(intf, ep_addr))
++	if (!usb_check_bulk_endpoints(pegasus->intf, bulk_ep_addr) ||
++	    !usb_check_int_endpoints(pegasus->intf, int_ep_addr))
 +		return -ENODEV;
 +
- 	dev->in = usb_rcvbulkpipe(dev->udev, 0x81 & USB_ENDPOINT_NUMBER_MASK);
- 	dev->out = usb_sndbulkpipe(dev->udev, 0x02 & USB_ENDPOINT_NUMBER_MASK);
- 	dev->status = NULL;
+ 	pegasus->rx_urb = usb_alloc_urb(0, GFP_KERNEL);
+ 	if (!pegasus->rx_urb) {
+ 		return res;
+@@ -1197,6 +1208,7 @@ static int pegasus_probe(struct usb_inte
+ 
+ 	pegasus = netdev_priv(net);
+ 	pegasus->dev_index = dev_index;
++	pegasus->intf = intf;
+ 
+ 	res = alloc_urbs(pegasus);
+ 	if (res < 0) {
+@@ -1208,7 +1220,6 @@ static int pegasus_probe(struct usb_inte
+ 
+ 	INIT_DELAYED_WORK(&pegasus->carrier_check, check_carrier);
+ 
+-	pegasus->intf = intf;
+ 	pegasus->usb = dev;
+ 	pegasus->net = net;
+ 
 
 
