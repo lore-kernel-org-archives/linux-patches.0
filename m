@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C69831F9BC;
-	Mon, 13 Apr 2026 16:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA1331E846;
+	Mon, 13 Apr 2026 16:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099292; cv=none; b=pxwZF2sg/CCSiNt10CWXMPGtF96jMj6S6m7c2IwLrSo/tRdHNJp64gRCBoz4ndoEHV/9Q0aDZK4bdG9gbE71Q21a3y6Q0+5MLywpUX/JVPpMNaaEOW/jSsZQNowL0c1CvJWs/j/SlGyluJRTtzLRi/tXeHOn+OfXJXpgTqptv6o=
+	t=1776099295; cv=none; b=Pezfr7lqrfQ98Wfx9dTFbdw26qfvDJoMnlxnZvJ4jVk5Gfiv3kpLZIJm0FN81qqENEV5Q8nWEwMFjOHbPSmrpnu5NEGZDzRNTPD2HzZy+nqBkGP2sxJakQ6jjZfyI5ZDP3tCRAYI60fuPhW7OxMPaQxo7WjxvlA2z5kAOd5TKaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099292; c=relaxed/simple;
-	bh=u+J+3ylq2pVVQqoz42+Uw6zzSnCdqoOTQfhXAAqHnqE=;
+	s=arc-20240116; t=1776099295; c=relaxed/simple;
+	bh=i75o3YCfjVk4LagfWNiCaZq6Hr+oYkBTUQ4BgxnQfaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tj1JUDmaS7F/AXqX1mnT7ARjz69P/ssaf3Bj3Hy0rghDxmhkeKp8GSl/ws77hu9eLErI4ssbCDnIcADG3nmA7svDZ1MjTJm1hbVSYDxvYVR53UQVTMGM0CNBCUwPqKRwSzkE+hhE6QPoB30yrnLkAO7rbDJbG/UQHtuRB4vl6og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkFEBHO5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eHU/1EiCgRrO3ZB5grMSLxL1yhjgMmUVXwan6SUUukKLm0UNql+VT0kxaVkxI0X7HZHyaqfgg2eE7/u9h0/BK2wjobRkBxhLn9KbwDKJzs7LdfJDYFNim+uCJIPqYfkzsbhmFau65Q9u46N5k6Qda3iWm99FISsHiNztPg6huX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpPNeXrM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkFEBHO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1573BC2BCB0;
-	Mon, 13 Apr 2026 16:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpPNeXrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5984C2BCB0;
+	Mon, 13 Apr 2026 16:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099292;
-	bh=u+J+3ylq2pVVQqoz42+Uw6zzSnCdqoOTQfhXAAqHnqE=;
+	s=korg; t=1776099295;
+	bh=i75o3YCfjVk4LagfWNiCaZq6Hr+oYkBTUQ4BgxnQfaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XkFEBHO53nc3zc2r+KQNQ9qvKiwoC7ii5qGXbcDOklVy7TuUucD+rbuELYxpKKO5c
-	 9miXKjKOccXMEGA6fecNW+JzN1SDDy1FGMSZlY7BXjxYiD73CscTWhyZEBIS0z3kTL
-	 qWKfAVrn1mtfzbaYmxlWcrdWLexQPMQQdaQjJ6rk=
+	b=bpPNeXrM1PysBw/3HtqaDg07kb3A7Lo3eaGM7nbrefplhtEVx79Aa+xJTG+IjOguS
+	 jhhEeVyAIqy9OSuuiOiKMpyeh4g/ra4VZecte8VelmfnmWqCom7svqymwZQCE7EUa+
+	 RjXczN5ekCQJvJJavdeCbazKekJfNf34siZTXY+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Anas Iqbal <mohd.abd.6602@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 253/491] Bluetooth: hci_ll: Fix firmware leak on error path
-Date: Mon, 13 Apr 2026 17:58:18 +0200
-Message-ID: <20260413155828.525720905@linuxfoundation.org>
+Subject: [PATCH 5.10 244/491] ASoC: fsl_easrc: Fix event generation in fsl_easrc_iec958_put_bits()
+Date: Mon, 13 Apr 2026 17:58:09 +0200
+Message-ID: <20260413155828.191955962@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,44 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anas Iqbal <mohd.abd.6602@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 31148a7be723aa9f2e8fbd62424825ab8d577973 ]
+[ Upstream commit 54a86cf48eaa6d1ab5130d756b718775e81e1748 ]
 
-Smatch reports:
+ALSA controls should return 1 if the value in the control changed but the
+control put operation fsl_easrc_iec958_put_bits() unconditionally returns
+0, causing ALSA to not generate any change events. This is detected by
+mixer-test with large numbers of messages in the form:
 
-drivers/bluetooth/hci_ll.c:587 download_firmware() warn:
-'fw' from request_firmware() not released on lines: 544.
+    No event generated for Context 3 IEC958 CS5
+    Context 3 IEC958 CS5.0 orig 5224 read 5225, is_volatile 0
 
-In download_firmware(), if request_firmware() succeeds but the returned
-firmware content is invalid (no data or zero size), the function returns
-without releasing the firmware, resulting in a resource leak.
+Add a suitable check.
 
-Fix this by calling release_firmware() before returning when
-request_firmware() succeeded but the firmware content is invalid.
-
-Fixes: 371805522f87 ("bluetooth: hci_uart: add LL protocol serdev driver support")
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Anas Iqbal <mohd.abd.6602@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260205-asoc-fsl-easrc-fix-events-v1-1-39d4c766918b@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_ll.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/fsl/fsl_easrc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_ll.c b/drivers/bluetooth/hci_ll.c
-index 7495ca34c9e7e..ee107360e3bc2 100644
---- a/drivers/bluetooth/hci_ll.c
-+++ b/drivers/bluetooth/hci_ll.c
-@@ -541,6 +541,8 @@ static int download_firmware(struct ll_device *lldev)
- 	if (err || !fw->data || !fw->size) {
- 		bt_dev_err(lldev->hu.hdev, "request_firmware failed(errno %d) for %s",
- 			   err, bts_scr_name);
-+		if (!err)
-+			release_firmware(fw);
- 		return -EINVAL;
- 	}
- 	ptr = (void *)fw->data;
+diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
+index 52b3f2d44f681..6af5c1735e2ed 100644
+--- a/sound/soc/fsl/fsl_easrc.c
++++ b/sound/soc/fsl/fsl_easrc.c
+@@ -52,10 +52,13 @@ static int fsl_easrc_iec958_put_bits(struct snd_kcontrol *kcontrol,
+ 	struct soc_mreg_control *mc =
+ 		(struct soc_mreg_control *)kcontrol->private_value;
+ 	unsigned int regval = ucontrol->value.integer.value[0];
++	int ret;
++
++	ret = (easrc_priv->bps_iec958[mc->regbase] != regval);
+ 
+ 	easrc_priv->bps_iec958[mc->regbase] = regval;
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int fsl_easrc_iec958_get_bits(struct snd_kcontrol *kcontrol,
 -- 
 2.51.0
 
