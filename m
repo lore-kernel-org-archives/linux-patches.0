@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4A3302146;
-	Mon, 13 Apr 2026 16:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B866D2FFFBE;
+	Mon, 13 Apr 2026 16:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097417; cv=none; b=Dh6gUjG8rMrbjGTKQrLV+t1HcVbwCN44h842Kp7eus4HA0WBrjlZuULp/F3X0ZfcVyX2lPL0Orv9EHv+0EzfXF1N8vUztKoHOSKfrUsIEV+x0WZ06s1RMK0f96jtL/ThvFx5S9ToxYZz37vkyfB+e2BYIOEhoz80KLm5bVyF5VQ=
+	t=1776097419; cv=none; b=Hw3Sg9nAhVj75Asrb5R3E7YpBz5zxBrSmwlSYgVhz2UIkoUoPdpT6xuvSjKzcV14T8cLEVfVMBkhElBnnWgv7JdBI7d86gzfiG8qRZ8XLke+0xSlSkFquxsE6W++7t6CRV47DJGjHbnPXBs60UbnMIcRck6qrfGrg82vg4holgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097417; c=relaxed/simple;
-	bh=bRv7uQzSZLd6lg8nwJYX4/gbtRj0RRSXDFcrl7xa0mE=;
+	s=arc-20240116; t=1776097419; c=relaxed/simple;
+	bh=yvoAt6MnxIp/14OkgNvLXe02U7dxd7sfgM81Ijj1EGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FtMYq5y6d433e9liyiMY/0+8PvJn99Rr77y66GEzJSh78aCRawSCnPntnujRCfNaHeIBhqS10xKja4tjhNRGa7esa1UhJ5eiKT95rHpFrshJuwhEHCdL73bC8g1veejawVZnWLn3aPK4DDrl483Y6N9DS29o1P4j9z29idM4srY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsm/7eAO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X244nDz+LadU5qKxZAKuLKZDk+lJ9tgk3gDF1T4hqq1WQA6S4oj0FKy/syloXUDzL2BhflwpKmEuevsdTeAd6LKVYagujPsiXamMDxjmPvLAeH720ECJmob5XmoVOsPEZjf5qYXTD0TTi8gwwSf4qjy9/Lv9gZftlEk3pklaFfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbkLrxMQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsm/7eAO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5212C2BCB0;
-	Mon, 13 Apr 2026 16:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbkLrxMQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED60C2BCB0;
+	Mon, 13 Apr 2026 16:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097417;
-	bh=bRv7uQzSZLd6lg8nwJYX4/gbtRj0RRSXDFcrl7xa0mE=;
+	s=korg; t=1776097419;
+	bh=yvoAt6MnxIp/14OkgNvLXe02U7dxd7sfgM81Ijj1EGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsm/7eAO5RFJdGtdZ03kq1JlOO97ezR9iO8ZvWpF5BZWnykRpcjZ2xFuEBYU9KLRy
-	 2fxgXwp2Fq/lV3HlcgM6QNVtEyXooSebvlfeQ5Suwjoqr8VHi5HBBfxIK/PlPlSTtC
-	 Ij8//6kbuIYolgHijVJ40S8nJONdCXHybKanhRD0=
+	b=PbkLrxMQQJ71SNEczOkFvkqYcFfbCW7VCuSEmad4nbnPGGHlRURq007veCvdQ7QQh
+	 L2h53pj1Hpr7i3ZeWVBurKKcep290PuuXBCxflObNEgkVRW+VTf8GKNUahd3RUQyQg
+	 1lp65f8JJN+pCLs+7+hZ+8WoiqnLTuYKeKd9cr7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Shi <cshi008@fiu.edu>,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Dave Tian <daveti@purdue.edu>,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Keith Busch <kbusch@kernel.org>,
+	Marco Mattiolo <marco.mattiolo@hotmail.it>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 121/570] nvme-pci: Fix slab-out-of-bounds in nvme_dbbuf_set
-Date: Mon, 13 Apr 2026 17:54:12 +0200
-Message-ID: <20260413155834.976293585@linuxfoundation.org>
+Subject: [PATCH 5.15 130/570] Revert "arm64: dts: qcom: sdm845-oneplus: Mark l14a regulator as boot-on"
+Date: Mon, 13 Apr 2026 17:54:21 +0200
+Message-ID: <20260413155835.313048578@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -48,132 +44,35 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+This reverts commit 018e8512fed90cb3f67851dcd3e4fb0891544871.
 
-[ Upstream commit b4e78f1427c7d6859229ae9616df54e1fc05a516 ]
+The backport applied regulator-boot-on to vreg_l12a_1p8 (ldo12) instead
+of vreg_l14a_1p88 (ldo14) due to identical surrounding context lines.
 
-dev->online_queues is a count incremented in nvme_init_queue. Thus,
-valid indices are 0 through dev->online_queues − 1.
-
-This patch fixes the loop condition to ensure the index stays within the
-valid range. Index 0 is excluded because it is the admin queue.
-
-KASAN splat:
-
-==================================================================
-BUG: KASAN: slab-out-of-bounds in nvme_dbbuf_free drivers/nvme/host/pci.c:377 [inline]
-BUG: KASAN: slab-out-of-bounds in nvme_dbbuf_set+0x39c/0x400 drivers/nvme/host/pci.c:404
-Read of size 2 at addr ffff88800592a574 by task kworker/u8:5/74
-
-CPU: 0 UID: 0 PID: 74 Comm: kworker/u8:5 Not tainted 6.19.0-dirty #10 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-Workqueue: nvme-reset-wq nvme_reset_work
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xea/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xce/0x5d0 mm/kasan/report.c:482
- kasan_report+0xdc/0x110 mm/kasan/report.c:595
- __asan_report_load2_noabort+0x18/0x20 mm/kasan/report_generic.c:379
- nvme_dbbuf_free drivers/nvme/host/pci.c:377 [inline]
- nvme_dbbuf_set+0x39c/0x400 drivers/nvme/host/pci.c:404
- nvme_reset_work+0x36b/0x8c0 drivers/nvme/host/pci.c:3252
- process_one_work+0x956/0x1aa0 kernel/workqueue.c:3257
- process_scheduled_works kernel/workqueue.c:3340 [inline]
- worker_thread+0x65c/0xe60 kernel/workqueue.c:3421
- kthread+0x41a/0x930 kernel/kthread.c:463
- ret_from_fork+0x6f8/0x8c0 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
- </TASK>
-
-Allocated by task 34 on cpu 1 at 4.241550s:
- kasan_save_stack+0x2c/0x60 mm/kasan/common.c:57
- kasan_save_track+0x1c/0x70 mm/kasan/common.c:78
- kasan_save_alloc_info+0x3c/0x50 mm/kasan/generic.c:570
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0xb5/0xc0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __do_kmalloc_node mm/slub.c:5657 [inline]
- __kmalloc_node_noprof+0x2bf/0x8d0 mm/slub.c:5663
- kmalloc_array_node_noprof include/linux/slab.h:1075 [inline]
- nvme_pci_alloc_dev drivers/nvme/host/pci.c:3479 [inline]
- nvme_probe+0x2f1/0x1820 drivers/nvme/host/pci.c:3534
- local_pci_probe+0xef/0x1c0 drivers/pci/pci-driver.c:324
- pci_call_probe drivers/pci/pci-driver.c:392 [inline]
- __pci_device_probe drivers/pci/pci-driver.c:417 [inline]
- pci_device_probe+0x743/0x920 drivers/pci/pci-driver.c:451
- call_driver_probe drivers/base/dd.c:583 [inline]
- really_probe+0x29b/0xb70 drivers/base/dd.c:661
- __driver_probe_device+0x3b0/0x4a0 drivers/base/dd.c:803
- driver_probe_device+0x56/0x1f0 drivers/base/dd.c:833
- __driver_attach_async_helper+0x155/0x340 drivers/base/dd.c:1159
- async_run_entry_fn+0xa6/0x4b0 kernel/async.c:129
- process_one_work+0x956/0x1aa0 kernel/workqueue.c:3257
- process_scheduled_works kernel/workqueue.c:3340 [inline]
- worker_thread+0x65c/0xe60 kernel/workqueue.c:3421
- kthread+0x41a/0x930 kernel/kthread.c:463
- ret_from_fork+0x6f8/0x8c0 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
-
-The buggy address belongs to the object at ffff88800592a000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 244 bytes to the right of
- allocated 1152-byte region [ffff88800592a000, ffff88800592a480)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x5928
-head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-anon flags: 0xfffffc0000040(head|node=0|zone=1|lastcpupid=0x1fffff)
-page_type: f5(slab)
-raw: 000fffffc0000040 ffff888001042000 0000000000000000 dead000000000001
-raw: 0000000000000000 0000000000080008 00000000f5000000 0000000000000000
-head: 000fffffc0000040 ffff888001042000 0000000000000000 dead000000000001
-head: 0000000000000000 0000000000080008 00000000f5000000 0000000000000000
-head: 000fffffc0000003 ffffea0000164a01 00000000ffffffff 00000000ffffffff
-head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000008
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff88800592a400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- ffff88800592a480: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
->ffff88800592a500: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-                                                             ^
- ffff88800592a580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88800592a600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-==================================================================
-
-Fixes: 0f0d2c876c96 (nvme: free sq/cq dbbuf pointers when dbbuf set fails)
-Acked-by: Chao Shi <cshi008@fiu.edu>
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Acked-by: Dave Tian <daveti@purdue.edu>
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reported-by: Marco Mattiolo <marco.mattiolo@hotmail.it>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 0a2207a1be6a6..04cccbb05372a 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -321,7 +321,7 @@ static void nvme_dbbuf_set(struct nvme_dev *dev)
- 		/* Free memory and continue on */
- 		nvme_dbbuf_dma_free(dev);
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index 948ec59418017..66b86dd292c8a 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -226,7 +226,6 @@ vreg_l12a_1p8: ldo12 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-boot-on;
+ 		};
  
--		for (i = 1; i <= dev->online_queues; i++)
-+		for (i = 1; i < dev->online_queues; i++)
- 			nvme_dbbuf_free(&dev->queues[i]);
- 	}
- }
+ 		vreg_l14a_1p88: ldo14 {
 -- 
 2.51.0
 
