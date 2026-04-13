@@ -1,16 +1,16 @@
 Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371A41D7E5C;
-	Mon, 13 Apr 2026 20:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9403C1BBBE5;
+	Mon, 13 Apr 2026 20:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776112612; cv=none; b=UiXvzNVgXByD3t/h3do37Q0oc5Gu1Sw6WT8G3z81sBuZ83ay1To5cj4TK0F6zcFeKsf6a+qtvq1pJQtKPF9eExXsWaWRNHVmlPd4OeUgkvwYH/iKBbUUGbdU03tQGyOtAIEDDFH6z7u7E9NFTUZqhvsGCvYQk+m55TEvEN5QQT8=
+	t=1776112679; cv=none; b=iWMiY6Qa1FB68NrXli0FezjqrYoE/kJcTFM+F9YmT7Pu4KvuHfTj9NVQyBd1lAGC/p7Dy3TnanRtsgZ1JzM9crhIUg/Aior7XAel2vWWGpYYJ4Lg6jw3sVag1V2iIr8P7KJb5XVpqhn/jgaMfBg4oxYajF39B5rvWjZD2jmFL2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776112612; c=relaxed/simple;
-	bh=7igEk5LlGaHvAIFJjUzN60iNrULKtkSkCfkWpZvv9Fk=;
+	s=arc-20240116; t=1776112679; c=relaxed/simple;
+	bh=3wUS8NAjFIBA9OMbfU/MSZWkJIP930o8FpE7jwMWBDc=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dF2bpwLMvd5NV417pt5lwmxql+9cmUwNptvHDrVyoeIQf0hv3SUf4MQzhJXD6LAbvs5jIV6Ut1VvlNeJYLjAwF8MzEFBbtp5CuuA2hveM9+jxuxKDGxePXxO8SDuStEdj6wym5qiCpmxgqlh8JolcM2KCXOFOTu7txEgXGOZhzU=
+	 Content-Type:MIME-Version; b=mm9xkz0oxMnYzZNZea8UuG9ltLArJl2n4CyJZ/YQIgCkMlDB/dp4poAgIm5CrcRb+T4h+luKsi44tU1wlkiPezovil4pNgPhJVznOq7Nx1+JZZ/F6h2hquR/2DtPOlVvwG0Iv5TSPyiqjdXKoGoN7tJkDR3u2eTZ8zoZDiJPQiE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
@@ -18,28 +18,29 @@ Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
 	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <ben@decadent.org.uk>)
-	id 1wCO1Y-004mwT-2j;
-	Mon, 13 Apr 2026 20:36:47 +0000
+	id 1wCO2d-004mx4-2I;
+	Mon, 13 Apr 2026 20:37:54 +0000
 Received: from ben by deadeye with local (Exim 4.99.1)
 	(envelope-from <ben@decadent.org.uk>)
-	id 1wCO1W-00000002fvn-0t0F;
-	Mon, 13 Apr 2026 22:36:46 +0200
-Message-ID: <d23195793d7f1cec4c8ea1b1a5e29fb6051211ef.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 419/491] mm/hugetlb: make detecting shared pte more
- reliable
+	id 1wCO2b-00000002gyZ-3hPH;
+	Mon, 13 Apr 2026 22:37:53 +0200
+Message-ID: <d71f28ba9093b1cc66ebdea548a5698cb325d583.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 420/491] mm/hugetlb: fix copy_hugetlb_page_range()
+ to use ->pt_share_count
 From: Ben Hutchings <ben@decadent.org.uk>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Miaohe Lin <linmiaohe@huawei.com>, Lukas
- Bulwahn	 <lukas.bulwahn@gmail.com>, Mike Kravetz <mike.kravetz@oracle.com>,
- Muchun Song	 <songmuchun@bytedance.com>, Andrew Morton
- <akpm@linux-foundation.org>,  "David Hildenbrand (Arm)"	
- <david@kernel.org>, Sasha Levin <sashal@kernel.org>
-Date: Mon, 13 Apr 2026 22:36:40 +0200
-In-Reply-To: <20260413155834.712660018@linuxfoundation.org>
+Cc: patches@lists.linux.dev, Jane Chu <jane.chu@oracle.com>, Harry Yoo	
+ <harry.yoo@oracle.com>, Oscar Salvador <osalvador@suse.de>, David
+ Hildenbrand	 <david@redhat.com>, Jann Horn <jannh@google.com>, Liu Shixin	
+ <liushixin2@huawei.com>, Muchun Song <muchun.song@linux.dev>, Andrew Morton
+	 <akpm@linux-foundation.org>, "David Hildenbrand (Arm)" <david@kernel.org>,
+  Sasha Levin <sashal@kernel.org>
+Date: Mon, 13 Apr 2026 22:37:53 +0200
+In-Reply-To: <20260413155834.749968232@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
-	 <20260413155834.712660018@linuxfoundation.org>
+	 <20260413155834.749968232@linuxfoundation.org>
 Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-kVxSadBaUdsS41IkQu67"
+	protocol="application/pgp-signature"; boundary="=-d0D9LrALplPqKbRdASb7"
 User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -52,7 +53,7 @@ X-SA-Exim-Mail-From: ben@decadent.org.uk
 X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
 
---=-kVxSadBaUdsS41IkQu67
+--=-d0D9LrALplPqKbRdASb7
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -62,114 +63,122 @@ ow.
 >=20
 > ------------------
 >=20
-> From: Miaohe Lin <linmiaohe@huawei.com>
+> From: Jane Chu <jane.chu@oracle.com>
 
-Missing "commit 3aa4ed8040e1535d95c03cef8b52cf11bf0d8546 upstream."
+This one was commit 14967a9c7d247841b0312c48dcf8cd29e55a4cc8 upstream.
 
 Ben.
 
-> If the pagetables are shared, we shouldn't copy or take references.  Sinc=
-e
-> src could have unshared and dst shares with another vma, huge_pte_none()
-> is thus used to determine whether dst_pte is shared.  But this check isn'=
-t
-> reliable.  A shared pte could have pte none in pagetable in fact.  The
-> page count of ptep page should be checked here in order to reliably
-> determine whether pte is shared.
+> commit 59d9094df3d79 ("mm: hugetlb: independent PMD page table shared
+> count") introduced ->pt_share_count dedicated to hugetlb PMD share count
+> tracking, but omitted fixing copy_hugetlb_page_range(), leaving the
+> function relying on page_count() for tracking that no longer works.
 >=20
-> [lukas.bulwahn@gmail.com: remove unused local variable dst_entry in copy_=
-hugetlb_page_range()]
->   Link: https://lkml.kernel.org/r/20220822082525.26071-1-lukas.bulwahn@gm=
-ail.com
-> Link: https://lkml.kernel.org/r/20220816130553.31406-7-linmiaohe@huawei.c=
-om
-> Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-> Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-> Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-> Cc: Muchun Song <songmuchun@bytedance.com>
+> When lazy page table copy for hugetlb is disabled, that is, revert commit
+> bcd51a3c679d ("hugetlb: lazy page table copies in fork()") fork()'ing wit=
+h
+> hugetlb PMD sharing quickly lockup -
+>=20
+> [  239.446559] watchdog: BUG: soft lockup - CPU#75 stuck for 27s!
+> [  239.446611] RIP: 0010:native_queued_spin_lock_slowpath+0x7e/0x2e0
+> [  239.446631] Call Trace:
+> [  239.446633]  <TASK>
+> [  239.446636]  _raw_spin_lock+0x3f/0x60
+> [  239.446639]  copy_hugetlb_page_range+0x258/0xb50
+> [  239.446645]  copy_page_range+0x22b/0x2c0
+> [  239.446651]  dup_mmap+0x3e2/0x770
+> [  239.446654]  dup_mm.constprop.0+0x5e/0x230
+> [  239.446657]  copy_process+0xd17/0x1760
+> [  239.446660]  kernel_clone+0xc0/0x3e0
+> [  239.446661]  __do_sys_clone+0x65/0xa0
+> [  239.446664]  do_syscall_64+0x82/0x930
+> [  239.446668]  ? count_memcg_events+0xd2/0x190
+> [  239.446671]  ? syscall_trace_enter+0x14e/0x1f0
+> [  239.446676]  ? syscall_exit_work+0x118/0x150
+> [  239.446677]  ? arch_exit_to_user_mode_prepare.constprop.0+0x9/0xb0
+> [  239.446681]  ? clear_bhb_loop+0x30/0x80
+> [  239.446684]  ? clear_bhb_loop+0x30/0x80
+> [  239.446686]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+>=20
+> There are two options to resolve the potential latent issue:
+>   1. warn against PMD sharing in copy_hugetlb_page_range(),
+>   2. fix it.
+> This patch opts for the second option.
+> While at it, simplify the comment, the details are not actually relevant
+> anymore.
+>=20
+> Link: https://lkml.kernel.org/r/20250916004520.1604530-1-jane.chu@oracle.=
+com
+> Fixes: 59d9094df3d7 ("mm: hugetlb: independent PMD page table shared coun=
+t")
+> Signed-off-by: Jane Chu <jane.chu@oracle.com>
+> Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+> Acked-by: Oscar Salvador <osalvador@suse.de>
+> Acked-by: David Hildenbrand <david@redhat.com>
+> Cc: Jann Horn <jannh@google.com>
+> Cc: Liu Shixin <liushixin2@huawei.com>
+> Cc: Muchun Song <muchun.song@linux.dev>
 > Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> (cherry picked from commit 3aa4ed8040e1535d95c03cef8b52cf11bf0d8546)
-> [ David: We don't have 4eae4efa2c29 ("hugetlb: do early cow when page
->   pinned on src mm", so there are some contextual conflicts. ]
+> (cherry picked from commit 14967a9c7d247841b0312c48dcf8cd29e55a4cc8)
+> [ David: We don't have ptdesc and the wrappers, so work directly on the
+>   page->pt_share_count. CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING is still
+>   called CONFIG_ARCH_WANT_HUGE_PMD_SHARE. ]
 > Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > ---
->  mm/hugetlb.c | 19 +++++++------------
->  1 file changed, 7 insertions(+), 12 deletions(-)
+>  mm/hugetlb.c | 13 ++++---------
+>  1 file changed, 4 insertions(+), 9 deletions(-)
 >=20
 > diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-> index 99a71943c1f69..a2cab8f2190f8 100644
+> index a2cab8f2190f8..8fa34032bc173 100644
 > --- a/mm/hugetlb.c
 > +++ b/mm/hugetlb.c
-> @@ -3827,7 +3827,7 @@ static bool is_hugetlb_entry_hwpoisoned(pte_t pte)
->  int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src=
-,
->  			    struct vm_area_struct *vma)
->  {
-> -	pte_t *src_pte, *dst_pte, entry, dst_entry;
-> +	pte_t *src_pte, *dst_pte, entry;
->  	struct page *ptepage;
->  	unsigned long addr;
->  	int cow;
-> @@ -3867,27 +3867,22 @@ int copy_hugetlb_page_range(struct mm_struct *dst=
+> @@ -3865,16 +3865,11 @@ int copy_hugetlb_page_range(struct mm_struct *dst=
 , struct mm_struct *src,
+>  			break;
+>  		}
 > =20
->  		/*
->  		 * If the pagetables are shared don't copy or take references.
+> -		/*
+> -		 * If the pagetables are shared don't copy or take references.
+> -		 *
 > -		 * dst_pte =3D=3D src_pte is the common case of src/dest sharing.
->  		 *
-> +		 * dst_pte =3D=3D src_pte is the common case of src/dest sharing.
->  		 * However, src could have 'unshared' and dst shares with
-> -		 * another vma.  If dst_pte !none, this implies sharing.
-> -		 * Check here before taking page table lock, and once again
-> -		 * after taking the lock below.
-> +		 * another vma. So page_count of ptep page is checked instead
-> +		 * to reliably determine whether pte is shared.
->  		 */
-> -		dst_entry =3D huge_ptep_get(dst_pte);
-> -		if ((dst_pte =3D=3D src_pte) || !huge_pte_none(dst_entry))
-> +		if (page_count(virt_to_page(dst_pte)) > 1)
+> -		 * However, src could have 'unshared' and dst shares with
+> -		 * another vma. So page_count of ptep page is checked instead
+> -		 * to reliably determine whether pte is shared.
+> -		 */
+> -		if (page_count(virt_to_page(dst_pte)) > 1)
+> +#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
+> +		/* If the pagetables are shared, there is nothing to do */
+> +		if (atomic_read(&virt_to_page(dst_pte)->pt_share_count))
 >  			continue;
+> +#endif
 > =20
 >  		dst_ptl =3D huge_pte_lock(h, dst, dst_pte);
 >  		src_ptl =3D huge_pte_lockptr(h, src, src_pte);
->  		spin_lock_nested(src_ptl, SINGLE_DEPTH_NESTING);
->  		entry =3D huge_ptep_get(src_pte);
-> -		dst_entry =3D huge_ptep_get(dst_pte);
-> -		if (huge_pte_none(entry) || !huge_pte_none(dst_entry)) {
-> +		if (huge_pte_none(entry)) {
->  			/*
-> -			 * Skip if src entry none.  Also, skip in the
-> -			 * unlikely case dst entry !none as this implies
-> -			 * sharing with another vma.
-> +			 * Skip if src entry none.
->  			 */
->  			;
->  		} else if (unlikely(is_hugetlb_entry_migration(entry) ||
 
 --=20
 Ben Hutchings
 When in doubt, use brute force. - Ken Thompson
 
---=-kVxSadBaUdsS41IkQu67
+--=-d0D9LrALplPqKbRdASb7
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmndU9gACgkQ57/I7JWG
-EQlogw//b7pJ4gSJapYq5tv/C7l//byOD0CtEBJsy5B0NmMnfwhiiIXXX2ULeB0C
-xWuJCLnWpvDJL4zRHB/3l6HxYfeuzQ2S/hrtrvxKL1jLSABcKBnZ52q8SVhcYKmZ
-Mdjg/MduBWo3G4in/8rw2SktuhCkoyWvBq5gVsGDgbPPu8k1u4jTL2gzJ8CjFf0D
-LLpggR2z348DhNbi1JUEESAhutQLLjMp64viZAkkvNZTQimg/7dMmRVrPGK5peKQ
-/xlU71zEOxzliIh5hRsyVnpRusu7iuWnjvUmA+ALUP8AuotLbanPxsI0j8wPruBw
-qURfvo9PC2fMHhWc3TXTFJ5Yd3supuefxXuipE6WYmAkLxWiIQPm3qUTaqb0SOjc
-Q9IP5hg5uyqZnOWOSHX8mvtXV16R2fIKPWtQ6/XxkBdJYm6oGiKvq7o1v92eW0cm
-0qFJ7XExts4vPnUcKRw3S6MKtiO1ze4kkfBJjtf0p/1u5t3i2qt0FsYpBQyc+wJ6
-PSxbXIn4cSvjHIc7yGWXHYodXlt91c0oML73bA/Kebn5fGzCpQZy3bMdRYqrewwd
-XBh+7UxXg4ysIiPpqz47EAlmVS8VwHiYtKTmPhU8Pesaix9dk7/YFbu18IP2EzPz
-ONxfKaek5he5Cep8Ubnr1/IC24J8H4KMqefW0wdnjbGEeSYscHo=
-=KQ13
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmndVCEACgkQ57/I7JWG
+EQnEbg/+OrlC6tYMf/pZXeEZSkzUqXelCuPxBtugLx/C/2Ea7d4f6U0IJju91zeE
+YZWoGckWH8SxqwjKY0MKpuCIREv08jC1IDn1DGnh3iCeJFnbmvsznITJf5cdHzCZ
+l+YQ5QfrVcco3Kg0uf5CMaP6UTqOLgncHxkamxLGa8Y5jDlmBgQbjUeAWwxuUGMd
+g5vNEb3wIg74dck/MDesibsb3mFR8vtDPArtZ4sqTQzNxGV0ijX5LKMOWb7j1o0d
+1jJOY7MJ6zTaXJNE5OTFQ676rCkH+LILbnCPyZx8cx4VKbJZOafWYKy5wdRb6og2
+9eUbohjpHJOVHOd5ObBgk7bRp36CkbNSezcCndDx3pFNFCYzGNLveHhJQ+d1zRdb
+hjY7aqA4VcxGwGcESnJ9mF7js1sScIUbbrOuXrn8PX2g1Ya5EuJ+A5s+KQ/KL2ZT
+Fx1ZErs6qkYQstbCDoyt4h8ofLdC+iWw60QkG5R8ZCozu+J0arfEdL2srw4uAy6T
+Wx0CKj1AxxOP0kesqlZRdui7Dsvf53cAyhClfrD+sf1DHUCCeTl8zopsWgUKDEQx
+WfIXfyggMKrhnS18TstXv9cgw5WacDtwWKq8ynnPk6latQrkto5lKdEa+QBrF8mC
+E8MrDDu7Oz08iCU4lLwk8jobkepELQV/A+w2kQud6RGXsbpTtYo=
+=u7oz
 -----END PGP SIGNATURE-----
 
---=-kVxSadBaUdsS41IkQu67--
+--=-d0D9LrALplPqKbRdASb7--
