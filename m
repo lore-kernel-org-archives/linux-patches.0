@@ -1,38 +1,38 @@
-Received: from mail115-69.sinamail.sina.com.cn (mail115-69.sinamail.sina.com.cn [218.30.115.69])
+Received: from mail115-95.sinamail.sina.com.cn (mail115-95.sinamail.sina.com.cn [218.30.115.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB991DE8AE
-	for <patches@lists.linux.dev>; Mon, 13 Apr 2026 01:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26FF1DE8AE
+	for <patches@lists.linux.dev>; Mon, 13 Apr 2026 01:35:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776044022; cv=none; b=gXic6wg/+UMUMfDzFa24b0mrQ1LSKYKZZ5i1ulffIpunE1h2LzmPsLBAfi9+QBK6tpehnD+kqMrkyUikMWfzaG9KcBoVi7GdD2txHHQtj8n4ABoBWkEantkbYI2z8mbS3vdvnfWqJ2fuF+qpN3+vH/1Eww144wovaK9/d8TPRlk=
+	t=1776044119; cv=none; b=HNz+Jlxdj1csoYEu2vmmTcXALQbH6NcyEKHfAcOT785kiBW13CxNJE3G+j5m/Zrhgf8Vw2t/zHgj2HgufjlOa2scoPpxk2OX6AKGtRgpeb+MgJLcy+g82hG3YkIk4UUcXMsZ/ri8qPIKW4autDB2dGK4f7P90QegkcwSrCQuiMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776044022; c=relaxed/simple;
-	bh=fg8f6Jjir04dYy1MUu5cm/qWNdaGJEtBqGRWLfrK//U=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FAc4fN5WBQOV8zF+p9iV7yA6jHr+ZylWdpPqNFFO24cgrNayLKXRqXsYdeoea1SsvwSLXOsPh13JxmT79tWO714qz4Y5IHPWe0cCOKsCg/YjIi+TRNzjnJxL4CP527vApBIcZBurwVDRF++uQEB/OY29bp23aha8eDuj9aDobPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=y0dPstk4; arc=none smtp.client-ip=218.30.115.69
+	s=arc-20240116; t=1776044119; c=relaxed/simple;
+	bh=QahBc1mPe2ZsYDuTT3SH67YCUSQ8H3KUkvoUGntnbuM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=kddS0bLb2IR92lNGL/SJlcJEY2HnOPUOgfq1rmr69v8dpKRBGE6t0cVHJlyiKORWxOyORptVju8kTgPeaYag4XpvOM9M1G6B4L80p1efouxwFvVkDE471oBEJm++V7OgZlBoWH8YhzqQSHWL0q2MvK0CrgAChk5g70pZH/9uWbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=qcjEmfE5; arc=none smtp.client-ip=218.30.115.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="y0dPstk4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1776044020;
-	bh=5AiOv3OmSV1vAgdRKipxBvh8ToeMYXa8wksWt6WBwek=;
+	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="qcjEmfE5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1776044116;
+	bh=CKWJ8adBqHEK0S8UEdWGJBcrStEi5oVNXbP7Bhu43sg=;
 	h=From:Subject:Date:Message-Id;
-	b=y0dPstk4pFWiOO/3fS5Q2wu+b9BWmUU9a+ZhvWo6IvQY5sG2293Zy1WvOLjHv2CIp
-	 aWmbKmKZ9zbxV/QXiZw1t9I540Z7UO9w6KqZoxYwaUszAWpoPw2zktG/lLG6EUDwMc
-	 naLyfdUGMqR38z1YwA1LwOHF5pebF8DNw+jM8u+g=
+	b=qcjEmfE5Jh+0P2KoGIzXQ3PSRBvteAl7uJYa0ci3mxl0GFIdPIEusX7QSxJZHBXCI
+	 1vyuFqLPj/StbPRo3V/2fTir8PaxU36yzNVeUHHaeO7ulqjXBluUGc3CHd0twz9iXL
+	 0HrZTATQ2e5pzOfKFqvOxUfYor5UHKOEgbTAbZZQ=
 X-SMAIL-HELO: NTT-kernel-dev
 Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
-	by sina.cn (10.185.250.22) with ESMTP
-	id 69DC47E900000EAA; Mon, 13 Apr 2026 09:33:31 +0800 (CST)
+	by sina.cn (10.185.250.23) with ESMTP
+	id 69DC47BE0000292A; Mon, 13 Apr 2026 09:32:48 +0800 (CST)
 X-Sender: jianqkang@sina.cn
 X-Auth-ID: jianqkang@sina.cn
 Authentication-Results: sina.cn;
 	 spf=none smtp.mailfrom=jianqkang@sina.cn;
 	 dkim=none header.i=none;
 	 dmarc=none action=none header.from=jianqkang@sina.cn
-X-SMAIL-MID: 2821247602310
-X-SMAIL-UIID: EF915E9DFECA41D78B31B4BD59713C7D-20260413-093331-1
+X-SMAIL-MID: 8605948913356
+X-SMAIL-UIID: C7865F5684A949E0B922B949EB68AADE-20260413-093248-1
 From: Jianqiang kang <jianqkang@sina.cn>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -45,9 +45,9 @@ Cc: patches@lists.linux.dev,
 	alexander.h.duyck@linux.intel.com,
 	linux-nvdimm@lists.01.org,
 	dingiso.kernel@gmail.com
-Subject: [PATCH 5.10.y] nvdimm/bus: Fix potential use after free in asynchronous initialization
-Date: Mon, 13 Apr 2026 09:33:29 +0800
-Message-Id: <20260413013329.837358-1-jianqkang@sina.cn>
+Subject: [PATCH 5.15.y] nvdimm/bus: Fix potential use after free in asynchronous initialization
+Date: Mon, 13 Apr 2026 09:32:46 +0800
+Message-Id: <20260413013246.836999-1-jianqkang@sina.cn>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -88,10 +88,10 @@ Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/nvdimm/bus.c b/drivers/nvdimm/bus.c
-index 9ec59960f216..1aacc40ad09f 100644
+index 84d197cc09f8..47d13ef9e07f 100644
 --- a/drivers/nvdimm/bus.c
 +++ b/drivers/nvdimm/bus.c
-@@ -502,14 +502,15 @@ EXPORT_SYMBOL_GPL(nd_synchronize);
+@@ -492,14 +492,15 @@ EXPORT_SYMBOL_GPL(nd_synchronize);
  static void nd_async_device_register(void *d, async_cookie_t cookie)
  {
  	struct device *dev = d;
