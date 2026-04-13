@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF1629DB64;
-	Mon, 13 Apr 2026 16:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F5128505E;
+	Mon, 13 Apr 2026 16:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096975; cv=none; b=dxfXt+a2U+tOJJDyRpbJUFZxUf07h6UvoMMXnET5Ag4XRt14ofdVdSWCwZWG0fbDx/EbrnyQ9iq6nAIjY87c4yp3kahcdKDAbSMdX3yTlpF1GRgZMmyX1LcuAmtiFGqT7d2SJcavG7mOVsf98VNtQPMnlhhh0pC7qhoG1RDdBs8=
+	t=1776096978; cv=none; b=T2N8p1HKpcU1v9uNy00BdXLArzeNV2uw/SY5t8aLGu/zGkVe0Z5CFLCju6LMIt6J8ZvUlc7Es4xj88s19fDwHkoI0r9Pj22sSQajqrksyebbeQ6r6yLUrpiRobJBufM/tndi+mSg+VjTpCPrq4z6TtP0VCOH+A7FQRFoSR8E3ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096975; c=relaxed/simple;
-	bh=YhHg+XkfH7ahW71HYkrvfWP2JoSthXmxofN8P/ZK59s=;
+	s=arc-20240116; t=1776096978; c=relaxed/simple;
+	bh=f1CIRpe5dKiQ1G4RmG6XWIE3wDgaiaPQpv68Jjhu6q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JEItmrGXsae6MI4/8DpGDGJSHKC41DiaLhjdOPfV41HfD/doSqp6K0SfueBPF1CWeVQx+SWj/VpYoJNuJ4KxuVNn6Xh87egkgKXY7pBP7PIUIszRYuau5al+/+H/yd8T3YlFNygH8/6kTK3+WeygpGivyStRBxwQKrAKiNXmlcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orE/tEi7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PBKpIg0ik9NDAv0fxFyvso4hzgmJ9rcetlq5bj3+W829ZTxFQK/MFvy3N7KRZYjWanehEHVkwcOtSagwfaKsf9YrNNlpBRtWjZZdsnC9iUlfDJp0xdjKu5Y1FH/S61b/356DqiHI1vhzpwruoen95pV1mj5Mb65wr3ic/T00GwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KE2W9Gwe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orE/tEi7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6681C2BCB0;
-	Mon, 13 Apr 2026 16:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KE2W9Gwe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64185C2BCB0;
+	Mon, 13 Apr 2026 16:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096975;
-	bh=YhHg+XkfH7ahW71HYkrvfWP2JoSthXmxofN8P/ZK59s=;
+	s=korg; t=1776096977;
+	bh=f1CIRpe5dKiQ1G4RmG6XWIE3wDgaiaPQpv68Jjhu6q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=orE/tEi7omHUKKOHacvGtElVQh9WYwj+9QlFHm5DfS6eKNkxKyCBPF5G5EFXw8Ado
-	 +OTI/Auwoi6zI9z8Gsu31M60e5451gHjBno5OHbLH23GWMH69C7V2GeXJd7zUBlk78
-	 kSrDc5WWt6Us0lREwqlZzc24Od68KNzleSErf25Q=
+	b=KE2W9GwetmXFD7RfmWKvs9YC/fafSEuWGfNHYg9og/nPDMqj5YdPv4xOn2feyvIA/
+	 pvV8Tar3So0CCw/eoCnpAEFk6LGvwtAnYAnzQRWHJqNixtxrrFF8KpISAucD5anaMl
+	 aCNMLt93Too6RpDh5X1YXWQUO0bEy6NnKdhKpi0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qualys Security Advisory <qsa@qualys.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.1 14/55] apparmor: replace recursive profile removal with iterative approach
-Date: Mon, 13 Apr 2026 18:00:48 +0200
-Message-ID: <20260413155725.360097531@linuxfoundation.org>
+	Vishal Thanki <vishalthanki@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 02/55] wifi: rt2x00usb: fix devres lifetime
+Date: Mon, 13 Apr 2026 18:00:36 +0200
+Message-ID: <20260413155724.915939779@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 References: <20260413155724.820472494@linuxfoundation.org>
@@ -54,85 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit ab09264660f9de5d05d1ef4e225aa447c63a8747 upstream.
+commit 25369b22223d1c56e42a0cd4ac9137349d5a898e upstream.
 
-The profile removal code uses recursion when removing nested profiles,
-which can lead to kernel stack exhaustion and system crashes.
+USB drivers bind to USB interfaces and any device managed resources
+should have their lifetime tied to the interface rather than parent USB
+device. This avoids issues like memory leaks when drivers are unbound
+without their devices being physically disconnected (e.g. on probe
+deferral or configuration changes).
 
-Reproducer:
-  $ pf='a'; for ((i=0; i<1024; i++)); do
-      echo -e "profile $pf { \n }" | apparmor_parser -K -a;
-      pf="$pf//x";
-  done
-  $ echo -n a > /sys/kernel/security/apparmor/.remove
+Fix the USB anchor lifetime so that it is released on driver unbind.
 
-Replace the recursive __aa_profile_list_release() approach with an
-iterative approach in __remove_profile(). The function repeatedly
-finds and removes leaf profiles until the entire subtree is removed,
-maintaining the same removal semantic without recursion.
-
-Fixes: c88d4c7b049e ("AppArmor: core policy routines")
-Reported-by: Qualys Security Advisory <qsa@qualys.com>
-Tested-by: Salvatore Bonaccorso <carnil@debian.org>
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: 8b4c0009313f ("rt2x00usb: Use usb anchor to manage URB")
+Cc: stable@vger.kernel.org	# 4.7
+Cc: Vishal Thanki <vishalthanki@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260327113219.1313748-1-johan@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/policy.c |   30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ralink/rt2x00/rt2x00usb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -146,19 +146,43 @@ static void __list_remove_profile(struct
- }
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00usb.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00usb.c
+@@ -830,7 +830,7 @@ int rt2x00usb_probe(struct usb_interface
+ 	if (retval)
+ 		goto exit_free_device;
  
- /**
-- * __remove_profile - remove old profile, and children
-- * @profile: profile to be replaced  (NOT NULL)
-+ * __remove_profile - remove profile, and children
-+ * @profile: profile to be removed  (NOT NULL)
-  *
-  * Requires: namespace list lock be held, or list not be shared
-  */
- static void __remove_profile(struct aa_profile *profile)
- {
-+	struct aa_profile *curr, *to_remove;
-+
- 	AA_BUG(!profile);
- 	AA_BUG(!profile->ns);
- 	AA_BUG(!mutex_is_locked(&profile->ns->lock));
- 
- 	/* release any children lists first */
--	__aa_profile_list_release(&profile->base.profiles);
-+	if (!list_empty(&profile->base.profiles)) {
-+		curr = list_first_entry(&profile->base.profiles, struct aa_profile, base.list);
-+
-+		while (curr != profile) {
-+
-+			while (!list_empty(&curr->base.profiles))
-+				curr = list_first_entry(&curr->base.profiles,
-+							struct aa_profile, base.list);
-+
-+			to_remove = curr;
-+			if (!list_is_last(&to_remove->base.list,
-+					  &aa_deref_parent(curr)->base.profiles))
-+				curr = list_next_entry(to_remove, base.list);
-+			else
-+				curr = aa_deref_parent(curr);
-+
-+			/* released by free_profile */
-+			aa_label_remove(&to_remove->label);
-+			__aafs_profile_rmdir(to_remove);
-+			__list_remove_profile(to_remove);
-+		}
-+	}
-+
- 	/* released by free_profile */
- 	aa_label_remove(&profile->label);
- 	__aafs_profile_rmdir(profile);
+-	rt2x00dev->anchor = devm_kmalloc(&usb_dev->dev,
++	rt2x00dev->anchor = devm_kmalloc(&usb_intf->dev,
+ 					sizeof(struct usb_anchor),
+ 					GFP_KERNEL);
+ 	if (!rt2x00dev->anchor) {
 
 
