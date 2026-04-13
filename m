@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BDA3168EE;
-	Mon, 13 Apr 2026 16:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE11C313298;
+	Mon, 13 Apr 2026 16:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099099; cv=none; b=D9DKKts4SwKPzXLn3sai81H+ELKITLGPjV56GsKGJSiOFGDr36KmtrQJ+qxOH70WYsWXX9eNINx5qhSQvjKL8HMrm8y3nr9FCKURD1MmGwfSCHdZav/LuAMISuS/Qh22pYi9H5HoWLjU0S+guh2Lzpz51GhDJsIlqCO/RMI47uA=
+	t=1776099101; cv=none; b=tIM00VX6fhL9a1GgPNa+3XS6cAWGrAeiABzdeveBuCMM83cK6+M8cCDqsxMxKenx9haJtP8nDt9LzXDII9ZrHyE2x6e3JE6Cr/uLnOwqTKDVn+4tIyEz61IHBvS0Hl9KDNrDJGAl6seBE5MX0FiY07Aelp+Wl23W/6QEbWEMyfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099099; c=relaxed/simple;
-	bh=4gMYLysjEiXu/RjfpHsLIvpZahnC/W96qDSNk0kBboE=;
+	s=arc-20240116; t=1776099101; c=relaxed/simple;
+	bh=X2oHp2ePKIMxne7IMsxfF9+jANnyWKgPSS+hXbO1Sr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JSGQxx9Iru2GaQEhx1tkxlL6ZNDX9OACD567WNK74CyPSb0hCFVG80RJT50cXORzhzPr/YEfBquR56BQHAV1t7TC2GoyVl8vk/OrDS8rSBa8fr+ZemnspyV4/QlbFPGZMbSSV4/dQNGGGhhO+3jPtiJDt1Omuq314qkhXVZ1/tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVG1+gai; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gGUIRA+qFrbHUG7uhREYVOtfKqLH8ioujRHLCIhByzPrOxvigPqn8HdSrTuscB/9fioGDKCkc6eWe3jxI0oNL2jYQdVF+VSXM47X4LmKdGwnVzGsjkhdZW+uJcJ07nD2IwjvLEvuWHk49QtyTP876/fU5/BGxFsN8GIlut+N+64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdvimBQJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVG1+gai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87539C2BCAF;
-	Mon, 13 Apr 2026 16:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdvimBQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE25C2BCAF;
+	Mon, 13 Apr 2026 16:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099098;
-	bh=4gMYLysjEiXu/RjfpHsLIvpZahnC/W96qDSNk0kBboE=;
+	s=korg; t=1776099101;
+	bh=X2oHp2ePKIMxne7IMsxfF9+jANnyWKgPSS+hXbO1Sr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wVG1+gai06OmZvJ0r1U+ZoF4potYLg9qJKXQQMFeMaMRBA41K58Bkxw4M2dKulVgF
-	 IkgLWHogH6aL1GgYunWaadULdeVJEvRrIj2GQmRpbv17X4OX6Kk4aHRO052pD3eJw0
-	 K9PpqvtR9Fs2tP9kG5PuumJJd2vRMghCCwdXcOCo=
+	b=bdvimBQJRSOOBRUFMKiAiq43nLD8icGpDae2SlvkZY5S8PnTVN8YXRhqbt/fr9/qT
+	 u4bh075ORAsb06zfjTAOKixqkm1NJF3GKEhiBFW0RMuf/YW2AsFC69MUjOW8ssOta9
+	 SedZ4Ysm8yTULcV67OkRQty2wPSQcFer7m4kBmmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 178/491] xfs: fix integer overflow in bmap intent sort comparator
-Date: Mon, 13 Apr 2026 17:57:03 +0200
-Message-ID: <20260413155825.717679418@linuxfoundation.org>
+Subject: [PATCH 5.10 179/491] crypto: atmel-sha204a - Fix OOM ->tfm_count leak
+Date: Mon, 13 Apr 2026 17:57:04 +0200
+Message-ID: <20260413155825.756284054@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,41 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 362c490980867930a098b99f421268fbd7ca05fd ]
+[ Upstream commit d240b079a37e90af03fd7dfec94930eb6c83936e ]
 
-xfs_bmap_update_diff_items() sorts bmap intents by inode number using
-a subtraction of two xfs_ino_t (uint64_t) values, with the result
-truncated to int. This is incorrect when two inode numbers differ by
-more than INT_MAX (2^31 - 1), which is entirely possible on large XFS
-filesystems.
+If memory allocation fails, decrement ->tfm_count to avoid blocking
+future reads.
 
-Fix this by replacing the subtraction with cmp_int().
-
-Cc: <stable@vger.kernel.org> # v4.9
-Fixes: 9f3afb57d5f1 ("xfs: implement deferred bmbt map/unmap operations")
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ replaced `bi_entry()` macro with `container_of()` and inlined `cmp_int()` as a manual three-way comparison expression ]
+Cc: stable@vger.kernel.org
+Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ adapted kmalloc_obj() macro to kmalloc(sizeof()) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_bmap_item.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/atmel-sha204a.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/xfs_bmap_item.c
-+++ b/fs/xfs/xfs_bmap_item.c
-@@ -273,7 +273,8 @@ xfs_bmap_update_diff_items(
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -52,9 +52,10 @@ static int atmel_sha204a_rng_read_nonblo
+ 		rng->priv = 0;
+ 	} else {
+ 		work_data = kmalloc(sizeof(*work_data), GFP_ATOMIC);
+-		if (!work_data)
++		if (!work_data) {
++			atomic_dec(&i2c_priv->tfm_count);
+ 			return -ENOMEM;
+-
++		}
+ 		work_data->ctx = i2c_priv;
+ 		work_data->client = i2c_priv->client;
  
- 	ba = container_of(a, struct xfs_bmap_intent, bi_list);
- 	bb = container_of(b, struct xfs_bmap_intent, bi_list);
--	return ba->bi_owner->i_ino - bb->bi_owner->i_ino;
-+	return (ba->bi_owner->i_ino > bb->bi_owner->i_ino) -
-+		(ba->bi_owner->i_ino < bb->bi_owner->i_ino);
- }
- 
- /* Set the map extent flags for this mapping. */
 
 
