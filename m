@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A82D3161BF;
-	Mon, 13 Apr 2026 16:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55633161BF;
+	Mon, 13 Apr 2026 16:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099032; cv=none; b=CL+9+Tj/nW9Kv+mceXAMk12W5xw4BRVaM8MXuNtfaUwghW5V1BpA58aJEu5Xqf6vdmgxRLBQMQ87gKkWbsK5PNWuE035sup/4vxA90swNBnQLOL00VkoQil+dnCzwmS2a3azprxWEgecOkt1FCuSoDj4ZOXr5fl+5PrJ8L8r7lk=
+	t=1776099034; cv=none; b=Op7gWX9l/Zf+5fNZyvSeTuem6jE+oNtfQVvkLrveSpQJ2ad+XD5jRXvrAzFuvBCGbyLA856PxLe9X4d7XAR9U4aFDTY0FpZJ4uhLSGATwcoaAmZ9++RMYFJCalf5Hg0OjLtzCHn+UodJboqh4jhubQ5HhhIHYI+zJVLJKTtzuPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099032; c=relaxed/simple;
-	bh=juPsD51gu8aLjZx8Kvy/T11tSEtX1k5vncYxnMnX2mk=;
+	s=arc-20240116; t=1776099034; c=relaxed/simple;
+	bh=BTB2l3NXFp0AjC1GXaHE+ZUFu9TAhkpMCzO4bx5JoFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rNirZIgTbLBtRPq89kd0WERa2YzS45+pkO7GoUkI8vXPtzqoYxCnn3Kwmh34+64fAh4m5uFWc8Sh/RFKZu3n/HlrYPJLXKBiqaD9FxA7olSuzU3F4AuqhtaKvazDiKG2TfTRE/qKIVHdLAY5+ZL6uXonWfypXb2NHdLOQYboTeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4r8JW1i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c2BCUP3e4FmezWzVkWD2/3fh1Ck+Iwcwh+nDgmVBSRG/S1Rj71WSFxUYlmgV9EUk3MQaHzlhkP27LE95cLyDhjbKnzlidkdS5f2s42dOSni0I0QPzwv5AnSGBEYsNstCi4vlAR+jsz8S6Vn4ID939feF/T2YBQsLc3Gba/siPWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhyoO4Mn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4r8JW1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914B1C2BCAF;
-	Mon, 13 Apr 2026 16:50:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhyoO4Mn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFAEC2BCAF;
+	Mon, 13 Apr 2026 16:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099031;
-	bh=juPsD51gu8aLjZx8Kvy/T11tSEtX1k5vncYxnMnX2mk=;
+	s=korg; t=1776099034;
+	bh=BTB2l3NXFp0AjC1GXaHE+ZUFu9TAhkpMCzO4bx5JoFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4r8JW1iUQV4Tk+8JVk3NpxLYlE7O7VdeY1BKrB+WZwpKQtKMR94hwc4CUsATMOjt
-	 YbPOwLw5holG3bRo22pEgNqxqKOxquftz6yOHanWq9RQBjDTGgPBfco10ygyTzAYmr
-	 82YWpA4ejtHuXSeFNlZir7tK+/I7Ob3e2oHb4C/Y=
+	b=lhyoO4MnX7e7/58fci+pvEpvw1sj3wFIw8QPNtdb/tK9gde8eJa24X8XalVcUvaBu
+	 9Zy48G4bkBzHpd7I6W0B5T6FsR156TsNbRDpdtl+jF1xj5xKDcxtRBGxGIetdocPSl
+	 H3dRvjrSI3byQjm0EwkZ1itk1QbAEchR5mvNjj8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Nicholas Carlini <npc@anthropic.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 184/491] nfsd: fix heap overflow in NFSv4.0 LOCK replay cache
-Date: Mon, 13 Apr 2026 17:57:09 +0200
-Message-ID: <20260413155825.951641665@linuxfoundation.org>
+Subject: [PATCH 5.10 185/491] mtd: partitions: redboot: fix style issues
+Date: Mon, 13 Apr 2026 17:57:10 +0200
+Message-ID: <20260413155825.990247919@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,94 +52,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit 5133b61aaf437e5f25b1b396b14242a6bb0508e2 ]
+[ Upstream commit eb1765c40530ccc8690b9dad88cec6aaa6bfb498 ]
 
-The NFSv4.0 replay cache uses a fixed 112-byte inline buffer
-(rp_ibuf[NFSD4_REPLAY_ISIZE]) to store encoded operation responses.
-This size was calculated based on OPEN responses and does not account
-for LOCK denied responses, which include the conflicting lock owner as
-a variable-length field up to 1024 bytes (NFS4_OPAQUE_LIMIT).
+This patch fixes easy checkpatch issues.
 
-When a LOCK operation is denied due to a conflict with an existing lock
-that has a large owner, nfsd4_encode_operation() copies the full encoded
-response into the undersized replay buffer via read_bytes_from_xdr_buf()
-with no bounds check. This results in a slab-out-of-bounds write of up
-to 944 bytes past the end of the buffer, corrupting adjacent heap memory.
-
-This can be triggered remotely by an unauthenticated attacker with two
-cooperating NFSv4.0 clients: one sets a lock with a large owner string,
-then the other requests a conflicting lock to provoke the denial.
-
-We could fix this by increasing NFSD4_REPLAY_ISIZE to allow for a full
-opaque, but that would increase the size of every stateowner, when most
-lockowners are not that large.
-
-Instead, fix this by checking the encoded response length against
-NFSD4_REPLAY_ISIZE before copying into the replay buffer. If the
-response is too large, set rp_buflen to 0 to skip caching the replay
-payload. The status is still cached, and the client already received the
-correct response on the original request.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@kernel.org
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Tested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ replaced `op_status_offset + XDR_UNIT` with existing `post_err_offset` variable ]
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20210520114851.1274609-2-clabbe@baylibre.com
+Stable-dep-of: 8e2f8020270a ("mtd: Avoid boot crash in RedBoot partition table parser")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    9 +++++++--
- fs/nfsd/state.h   |   17 ++++++++++++-----
- 2 files changed, 19 insertions(+), 7 deletions(-)
+ drivers/mtd/parsers/redboot.c |   69 ++++++++++++++++++++----------------------
+ 1 file changed, 34 insertions(+), 35 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -5438,9 +5438,14 @@ nfsd4_encode_operation(struct nfsd4_comp
- 		int len = xdr->buf->len - post_err_offset;
+--- a/drivers/mtd/parsers/redboot.c
++++ b/drivers/mtd/parsers/redboot.c
+@@ -17,15 +17,15 @@
+ #include <linux/module.h>
  
- 		so->so_replay.rp_status = op->status;
--		so->so_replay.rp_buflen = len;
--		read_bytes_from_xdr_buf(xdr->buf, post_err_offset,
-+		if (len <= NFSD4_REPLAY_ISIZE) {
-+			so->so_replay.rp_buflen = len;
-+			read_bytes_from_xdr_buf(xdr->buf,
-+						post_err_offset,
- 						so->so_replay.rp_buf, len);
-+		} else {
-+			so->so_replay.rp_buflen = 0;
-+		}
- 	}
- status:
- 	*p = op->status;
---- a/fs/nfsd/state.h
-+++ b/fs/nfsd/state.h
-@@ -430,11 +430,18 @@ struct nfs4_client_reclaim {
- 	struct xdr_netobj	cr_princhash;
+ struct fis_image_desc {
+-    unsigned char name[16];      // Null terminated name
+-    uint32_t	  flash_base;    // Address within FLASH of image
+-    uint32_t	  mem_base;      // Address in memory where it executes
+-    uint32_t	  size;          // Length of image
+-    uint32_t	  entry_point;   // Execution entry point
+-    uint32_t	  data_length;   // Length of actual data
+-    unsigned char _pad[256-(16+7*sizeof(uint32_t))];
+-    uint32_t	  desc_cksum;    // Checksum over image descriptor
+-    uint32_t	  file_cksum;    // Checksum over image data
++	unsigned char name[16];      // Null terminated name
++	u32	  flash_base;    // Address within FLASH of image
++	u32	  mem_base;      // Address in memory where it executes
++	u32	  size;          // Length of image
++	u32	  entry_point;   // Execution entry point
++	u32	  data_length;   // Length of actual data
++	unsigned char _pad[256 - (16 + 7 * sizeof(u32))];
++	u32	  desc_cksum;    // Checksum over image descriptor
++	u32	  file_cksum;    // Checksum over image data
  };
  
--/* A reasonable value for REPLAY_ISIZE was estimated as follows:  
-- * The OPEN response, typically the largest, requires 
-- *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +  8(verifier) + 
-- *   4(deleg. type) + 8(deleg. stateid) + 4(deleg. recall flag) + 
-- *   20(deleg. space limit) + ~32(deleg. ace) = 112 bytes 
-+/*
-+ * REPLAY_ISIZE is sized for an OPEN response with delegation:
-+ *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +
-+ *   8(verifier) + 4(deleg. type) + 8(deleg. stateid) +
-+ *   4(deleg. recall flag) + 20(deleg. space limit) +
-+ *   ~32(deleg. ace) = 112 bytes
-+ *
-+ * Some responses can exceed this. A LOCK denial includes the conflicting
-+ * lock owner, which can be up to 1024 bytes (NFS4_OPAQUE_LIMIT). Responses
-+ * larger than REPLAY_ISIZE are not cached in rp_ibuf; only rp_status is
-+ * saved. Enlarging this constant increases the size of every
-+ * nfs4_stateowner.
-  */
+ struct fis_list {
+@@ -91,12 +91,12 @@ static int parse_redboot_partitions(stru
  
- #define NFSD4_REPLAY_ISIZE       112 
+ 	parse_redboot_of(master);
+ 
+-	if ( directory < 0 ) {
++	if (directory < 0) {
+ 		offset = master->size + directory * master->erasesize;
+ 		while (mtd_block_isbad(master, offset)) {
+ 			if (!offset) {
+-			nogood:
+-				printk(KERN_NOTICE "Failed to find a non-bad block to check for RedBoot partition table\n");
++nogood:
++				pr_notice("Failed to find a non-bad block to check for RedBoot partition table\n");
+ 				return -EIO;
+ 			}
+ 			offset -= master->erasesize;
+@@ -114,8 +114,8 @@ static int parse_redboot_partitions(stru
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	printk(KERN_NOTICE "Searching for RedBoot partition table in %s at offset 0x%lx\n",
+-	       master->name, offset);
++	pr_notice("Searching for RedBoot partition table in %s at offset 0x%lx\n",
++		  master->name, offset);
+ 
+ 	ret = mtd_read(master, offset, master->erasesize, &retlen,
+ 		       (void *)buf);
+@@ -151,14 +151,13 @@ static int parse_redboot_partitions(stru
+ 			     && swab32(buf[i].size) < master->erasesize)) {
+ 				int j;
+ 				/* Update numslots based on actual FIS directory size */
+-				numslots = swab32(buf[i].size) / sizeof (struct fis_image_desc);
++				numslots = swab32(buf[i].size) / sizeof(struct fis_image_desc);
+ 				for (j = 0; j < numslots; ++j) {
+-
+ 					/* A single 0xff denotes a deleted entry.
+ 					 * Two of them in a row is the end of the table.
+ 					 */
+ 					if (buf[j].name[0] == 0xff) {
+-				  		if (buf[j].name[1] == 0xff) {
++						if (buf[j].name[1] == 0xff) {
+ 							break;
+ 						} else {
+ 							continue;
+@@ -185,8 +184,8 @@ static int parse_redboot_partitions(stru
+ 	}
+ 	if (i == numslots) {
+ 		/* Didn't find it */
+-		printk(KERN_NOTICE "No RedBoot partition table detected in %s\n",
+-		       master->name);
++		pr_notice("No RedBoot partition table detected in %s\n",
++			  master->name);
+ 		ret = 0;
+ 		goto out;
+ 	}
+@@ -205,7 +204,7 @@ static int parse_redboot_partitions(stru
+ 			break;
+ 
+ 		new_fl = kmalloc(sizeof(struct fis_list), GFP_KERNEL);
+-		namelen += strlen(buf[i].name)+1;
++		namelen += strlen(buf[i].name) + 1;
+ 		if (!new_fl) {
+ 			ret = -ENOMEM;
+ 			goto out;
+@@ -214,13 +213,13 @@ static int parse_redboot_partitions(stru
+ 		if (data && data->origin)
+ 			buf[i].flash_base -= data->origin;
+ 		else
+-			buf[i].flash_base &= master->size-1;
++			buf[i].flash_base &= master->size - 1;
+ 
+ 		/* I'm sure the JFFS2 code has done me permanent damage.
+ 		 * I now think the following is _normal_
+ 		 */
+ 		prev = &fl;
+-		while(*prev && (*prev)->img->flash_base < new_fl->img->flash_base)
++		while (*prev && (*prev)->img->flash_base < new_fl->img->flash_base)
+ 			prev = &(*prev)->next;
+ 		new_fl->next = *prev;
+ 		*prev = new_fl;
+@@ -240,7 +239,7 @@ static int parse_redboot_partitions(stru
+ 		}
+ 	}
+ #endif
+-	parts = kzalloc(sizeof(*parts)*nrparts + nulllen + namelen, GFP_KERNEL);
++	parts = kzalloc(sizeof(*parts) * nrparts + nulllen + namelen, GFP_KERNEL);
+ 
+ 	if (!parts) {
+ 		ret = -ENOMEM;
+@@ -249,23 +248,22 @@ static int parse_redboot_partitions(stru
+ 
+ 	nullname = (char *)&parts[nrparts];
+ #ifdef CONFIG_MTD_REDBOOT_PARTS_UNALLOCATED
+-	if (nulllen > 0) {
++	if (nulllen > 0)
+ 		strcpy(nullname, nullstring);
+-	}
+ #endif
+ 	names = nullname + nulllen;
+ 
+-	i=0;
++	i = 0;
+ 
+ #ifdef CONFIG_MTD_REDBOOT_PARTS_UNALLOCATED
+ 	if (fl->img->flash_base) {
+-	       parts[0].name = nullname;
+-	       parts[0].size = fl->img->flash_base;
+-	       parts[0].offset = 0;
++		parts[0].name = nullname;
++		parts[0].size = fl->img->flash_base;
++		parts[0].offset = 0;
+ 		i++;
+ 	}
+ #endif
+-	for ( ; i<nrparts; i++) {
++	for ( ; i < nrparts; i++) {
+ 		parts[i].size = fl->img->size;
+ 		parts[i].offset = fl->img->flash_base;
+ 		parts[i].name = names;
+@@ -273,17 +271,17 @@ static int parse_redboot_partitions(stru
+ 		strcpy(names, fl->img->name);
+ #ifdef CONFIG_MTD_REDBOOT_PARTS_READONLY
+ 		if (!memcmp(names, "RedBoot", 8) ||
+-				!memcmp(names, "RedBoot config", 15) ||
+-				!memcmp(names, "FIS directory", 14)) {
++		    !memcmp(names, "RedBoot config", 15) ||
++		    !memcmp(names, "FIS directory", 14)) {
+ 			parts[i].mask_flags = MTD_WRITEABLE;
+ 		}
+ #endif
+-		names += strlen(names)+1;
++		names += strlen(names) + 1;
+ 
+ #ifdef CONFIG_MTD_REDBOOT_PARTS_UNALLOCATED
+-		if(fl->next && fl->img->flash_base + fl->img->size + master->erasesize <= fl->next->img->flash_base) {
++		if (fl->next && fl->img->flash_base + fl->img->size + master->erasesize <= fl->next->img->flash_base) {
+ 			i++;
+-			parts[i].offset = parts[i-1].size + parts[i-1].offset;
++			parts[i].offset = parts[i - 1].size + parts[i - 1].offset;
+ 			parts[i].size = fl->next->img->flash_base - parts[i].offset;
+ 			parts[i].name = nullname;
+ 		}
+@@ -297,6 +295,7 @@ static int parse_redboot_partitions(stru
+  out:
+ 	while (fl) {
+ 		struct fis_list *old = fl;
++
+ 		fl = fl->next;
+ 		kfree(old);
+ 	}
 
 
