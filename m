@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457232FDC27;
-	Mon, 13 Apr 2026 16:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBD72D949C;
+	Mon, 13 Apr 2026 16:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096648; cv=none; b=EgwVuH4NI+9lcvYZa/EYCm3Rhem4mRaY1AcHFuakVBY+evq7gFogM6fiRq/MMrhIr2N+codDp9iTTahHKHO7pc6WGAuCNrDEUhpR09hkffTSg/6+Q+hkRutdH/htAsteCzznmRYf7PXi4ncPYNA9juDQXVASTdXFFG1jDYseP4c=
+	t=1776096651; cv=none; b=CjJs3D0wp0EvupIfWCZ8yW8itSO/oQ9vgb7/TyBCusvCQDCVu1ZyiutL/P4Td0lw1U3qePWSnX1SwwQAr9pCYlOUi0KYtuxvleab3ZqBP1P9Zyr4UUbjHrQf9s5RmeI/18EcGLFMBkXb4bm7YwF3y7YMGhsv2Yfcw9tuwQEQHgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096648; c=relaxed/simple;
-	bh=Z92jHjVXC9CiqcWagkLZw0B2DhtLZ31Wyr89T9BRxF4=;
+	s=arc-20240116; t=1776096651; c=relaxed/simple;
+	bh=BJ/J9O2+/26eycMmYVKd4e9UfTYEgARlHM6ZgZYoh1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hl8Y+sNqtzYWrhKX6gjqygPHcoGBpllBEgjuZ7g0/ITkb/r/lyFkX8ndP788i0hUDthdj8Bd1VFwa7R4nxudnFW7qvXECELqyLWgLR3IDkxeTCnul8xYRwzmEWMTvBCQV7ie/aZ5xzwdz5JR8istpevgjtk0JT6JCysr5aXW4VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbfxoZV8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f4rmiiFUy977aUr9PdWJkCQP+1ysAj3M2mD1h29lcb1lbbuX/SArI8rg9i5IPWN2e/qS/qzkE2/hzORlyJUFcP7fN/3DLqAPAlzyjMt/FrBf+K6Y3S3AIYIoJF+gY8HhytHCaftUfYanCddymqlRKnPpTfQmTNeq7JEu13mPRx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGaJ/1Mq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbfxoZV8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9C7C2BCAF;
-	Mon, 13 Apr 2026 16:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGaJ/1Mq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B590C2BCAF;
+	Mon, 13 Apr 2026 16:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096648;
-	bh=Z92jHjVXC9CiqcWagkLZw0B2DhtLZ31Wyr89T9BRxF4=;
+	s=korg; t=1776096650;
+	bh=BJ/J9O2+/26eycMmYVKd4e9UfTYEgARlHM6ZgZYoh1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hbfxoZV8vUrBI7rCEGWDbkl70pRujABLwAZf/SLn0w63OV4z/XkMQZq17ptOrdNWJ
-	 PSQ3NIs63/ndSc+EkqsrtMkKnCB2KuM4wbsYo3soDN8dvko7IcDj7qrchh7F0d+r1h
-	 kjvv8oE5I8Sey+hDixYLcRVhxYiidiODyVh5H1To=
+	b=sGaJ/1MqrVKYeiXl3SviJ26l7bLt3yy1Vqeg9+9rId059+cDGy4co0HbL4NXSqErP
+	 zc1afKcnjyMaoJoPx5VUJPURoz50jmJHy/nChJRgjbYisCfLptLzmzco+h4daDs2ZC
+	 fZxtji8ImLcaQgMN54S3yeEa/Zl688OYzxAJHHLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.12 01/70] lib/crypto: chacha: Zeroize permuted_state before it leaves scope
-Date: Mon, 13 Apr 2026 17:59:56 +0200
-Message-ID: <20260413155728.238602820@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 10/70] MIPS: Always record SEGBITS in cpu_data.vmbits
+Date: Mon, 13 Apr 2026 18:00:05 +0200
+Message-ID: <20260413155728.570965462@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -50,49 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit e5046823f8fa3677341b541a25af2fcb99a5b1e0 upstream.
+commit 8374c2cb83b95b3c92f129fd56527225c20a058c upstream.
 
-Since the ChaCha permutation is invertible, the local variable
-'permuted_state' is sufficient to compute the original 'state', and thus
-the key, even after the permutation has been done.
+With a 32-bit kernel running on 64-bit MIPS hardware the hardcoded value
+of `cpu_vmbits' only records the size of compatibility useg and does not
+reflect the size of native xuseg or the complete range of values allowed
+in the VPN2 field of TLB entries.
 
-While the kernel is quite inconsistent about zeroizing secrets on the
-stack (and some prominent userspace crypto libraries don't bother at all
-since it's not guaranteed to work anyway), the kernel does try to do it
-as a best practice, especially in cases involving the RNG.
+An upcoming change will need the actual VPN2 value range permitted even
+in 32-bit kernel configurations, so always include the `vmbits' member
+in `struct cpuinfo_mips' and probe for SEGBITS when running on 64-bit
+hardware and resorting to the currently hardcoded value of 31 on 32-bit
+processors.  No functional change for users of `cpu_vmbits'.
 
-Thus, explicitly zeroize 'permuted_state' before it goes out of scope.
-
-Fixes: c08d0e647305 ("crypto: chacha20 - Add a generic ChaCha20 stream cipher implementation")
-Cc: stable@vger.kernel.org
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20260326032920.39408-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/crypto/chacha.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/mips/include/asm/cpu-features.h |  1 -
+ arch/mips/include/asm/cpu-info.h     |  2 --
+ arch/mips/include/asm/mipsregs.h     |  2 ++
+ arch/mips/kernel/cpu-probe.c         | 13 ++++++++-----
+ arch/mips/kernel/cpu-r3k-probe.c     |  2 ++
+ 5 files changed, 12 insertions(+), 8 deletions(-)
 
---- a/lib/crypto/chacha.c
-+++ b/lib/crypto/chacha.c
-@@ -86,6 +86,8 @@ void chacha_block_generic(u32 *state, u8
- 		put_unaligned_le32(x[i] + state[i], &stream[i * sizeof(u32)]);
+diff --git a/arch/mips/include/asm/cpu-features.h b/arch/mips/include/asm/cpu-features.h
+index 404390bb87eaf..3f11e5218e6c6 100644
+--- a/arch/mips/include/asm/cpu-features.h
++++ b/arch/mips/include/asm/cpu-features.h
+@@ -484,7 +484,6 @@
+ # endif
+ # ifndef cpu_vmbits
+ # define cpu_vmbits cpu_data[0].vmbits
+-# define __NEED_VMBITS_PROBE
+ # endif
+ #endif
  
- 	state[12]++;
+diff --git a/arch/mips/include/asm/cpu-info.h b/arch/mips/include/asm/cpu-info.h
+index a600670d00e97..1aee44124f118 100644
+--- a/arch/mips/include/asm/cpu-info.h
++++ b/arch/mips/include/asm/cpu-info.h
+@@ -80,9 +80,7 @@ struct cpuinfo_mips {
+ 	int			srsets; /* Shadow register sets */
+ 	int			package;/* physical package number */
+ 	unsigned int		globalnumber;
+-#ifdef CONFIG_64BIT
+ 	int			vmbits; /* Virtual memory size in bits */
+-#endif
+ 	void			*data;	/* Additional data */
+ 	unsigned int		watch_reg_count;   /* Number that exist */
+ 	unsigned int		watch_reg_use_cnt; /* Usable by ptrace */
+diff --git a/arch/mips/include/asm/mipsregs.h b/arch/mips/include/asm/mipsregs.h
+index 3c6ddc0c2c7ac..db8e02493eb89 100644
+--- a/arch/mips/include/asm/mipsregs.h
++++ b/arch/mips/include/asm/mipsregs.h
+@@ -1871,6 +1871,8 @@ do {									\
+ 
+ #define read_c0_entryhi()	__read_ulong_c0_register($10, 0)
+ #define write_c0_entryhi(val)	__write_ulong_c0_register($10, 0, val)
++#define read_c0_entryhi_64()	__read_64bit_c0_register($10, 0)
++#define write_c0_entryhi_64(val) __write_64bit_c0_register($10, 0, val)
+ 
+ #define read_c0_guestctl1()	__read_32bit_c0_register($10, 4)
+ #define write_c0_guestctl1(val)	__write_32bit_c0_register($10, 4, val)
+diff --git a/arch/mips/kernel/cpu-probe.c b/arch/mips/kernel/cpu-probe.c
+index af7412549e6ea..3220e68bd12e8 100644
+--- a/arch/mips/kernel/cpu-probe.c
++++ b/arch/mips/kernel/cpu-probe.c
+@@ -207,11 +207,14 @@ static inline void set_elf_base_platform(const char *plat)
+ 
+ static inline void cpu_probe_vmbits(struct cpuinfo_mips *c)
+ {
+-#ifdef __NEED_VMBITS_PROBE
+-	write_c0_entryhi(0x3fffffffffffe000ULL);
+-	back_to_back_c0_hazard();
+-	c->vmbits = fls64(read_c0_entryhi() & 0x3fffffffffffe000ULL);
+-#endif
++	int vmbits = 31;
 +
-+	memzero_explicit(x, sizeof(x));
++	if (cpu_has_64bits) {
++		write_c0_entryhi_64(0x3fffffffffffe000ULL);
++		back_to_back_c0_hazard();
++		vmbits = fls64(read_c0_entryhi_64() & 0x3fffffffffffe000ULL);
++	}
++	c->vmbits = vmbits;
  }
- EXPORT_SYMBOL(chacha_block_generic);
  
-@@ -110,5 +112,7 @@ void hchacha_block_generic(const u32 *st
+ static void set_isa(struct cpuinfo_mips *c, unsigned int isa)
+diff --git a/arch/mips/kernel/cpu-r3k-probe.c b/arch/mips/kernel/cpu-r3k-probe.c
+index 0c826f729f752..edcf04de0a6fb 100644
+--- a/arch/mips/kernel/cpu-r3k-probe.c
++++ b/arch/mips/kernel/cpu-r3k-probe.c
+@@ -137,6 +137,8 @@ void cpu_probe(void)
+ 	else
+ 		cpu_set_nofpu_opts(c);
  
- 	memcpy(&stream[0], &x[0], 16);
- 	memcpy(&stream[4], &x[12], 16);
++	c->vmbits = 31;
 +
-+	memzero_explicit(x, sizeof(x));
+ 	reserve_exception_space(0, 0x400);
  }
- EXPORT_SYMBOL(hchacha_block_generic);
+ 
+-- 
+2.53.0
+
 
 
