@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEE2279334;
-	Mon, 13 Apr 2026 16:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB6026E718;
+	Mon, 13 Apr 2026 16:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096591; cv=none; b=J1QPGwbksZQVXZ97QWlB8cYWUqgI2osDxgoWXuLPvoizAKO23hnc65Va8xlVswZaBi+z5sYzszpD73QkNP3LYP3Qc4OZA/5qC6Z3fbi1CnASP3R1707ia/Bb41ycJbLaKjJi5hEx0yaA10XZ+s/e8NkPigp21tYwbg/2NSinf5M=
+	t=1776096594; cv=none; b=eH+E0eilKiHt32NRYaEY8W0TGAfFarncgkoYTsyd8P5GZt4UubzheS1LGBCz5jVlM0vjG2ccnfB5mAuLyDkhW/Wk9C+I3nwn+PmIQlkv+Oohv4ovf/kskd4ihANd1UWhQ7aLMaBLl486T+qaSjIBQE84e2JI1essXKYIqqtkc8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096591; c=relaxed/simple;
-	bh=vwt5e78N9D8oOyujM3am7PBIt+zBlBlJaNvgO3JNPnM=;
+	s=arc-20240116; t=1776096594; c=relaxed/simple;
+	bh=4x2YYtYUMSAKT428Pp++dCy/Yt2Br2F4t2t8d4roIwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=koALYaNdMkxEfuqlWnjDN+IrBPbucnhI9dZkRT5A2FNKKdaOcQ3r+vUDRpFgSAM4F9YBxJwzHwzFcBe5dDx9ZqWlpJxVJBzj40+5nXJqQ53zpvCtIzzuc8vTJjaIdZRS5HpDcbOId40L92jxzETQZJ2Zi01iqvs6YjgPrRku5zU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJjL0o3h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IOlDjnH0ruiwRW9gKEpjXd8aZ1LragiIMf9DXU8I4Pj/rYq6Wu0rRvyRCLlVF+1AeHHfSjnzO954Kp+IdAB7jVFukoMGr6Awj27GGFKuqkVwvh4DBYXMWz0/kAoFhor5A1hjdjxZHM9jvXFdHbqmeDvUkAdNzK41iYB1ENOz7pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQck2ETV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJjL0o3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06611C2BCAF;
-	Mon, 13 Apr 2026 16:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQck2ETV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949ACC2BCAF;
+	Mon, 13 Apr 2026 16:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096591;
-	bh=vwt5e78N9D8oOyujM3am7PBIt+zBlBlJaNvgO3JNPnM=;
+	s=korg; t=1776096593;
+	bh=4x2YYtYUMSAKT428Pp++dCy/Yt2Br2F4t2t8d4roIwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GJjL0o3hQA6dwkK6Vz2kHXAru/vn/JHuyFUb9NLUGaJgolRyp/iMxzawp+LOtyeeC
-	 OoFjnmSQnR0smkniGB82tgHx1RFZYz3TlMxDUqpkXjx14X1WI/4xZO2GXFxadYqBYx
-	 ZzTERkQY4bkMlw9jiqfIRUe4QThalAMyvSfgobPo=
+	b=SQck2ETVg5gMHzrNg2Uo6MCvOhBohF5zpzMFeo4YeVSiuHNpqu2FBNNLA0yaL3OuN
+	 0nOnLxJrT4Hlhb0VSYu/903NvY08gCVqAEMQynv34KB5+lN3hSm6EoDBYlhkyy6Ii5
+	 9xUVeNU5zeeeC8/18jnH5AvkrTaikQ0SNm+NqveI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 70/83] rxrpc: Fix to request an ack if window is limited
-Date: Mon, 13 Apr 2026 18:00:38 +0200
-Message-ID: <20260413155733.617195622@linuxfoundation.org>
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Mika Kahola <mika.kahola@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.18 44/83] drm/i915/psr: Do not use pipe_src as borders for SU area
+Date: Mon, 13 Apr 2026 18:00:12 +0200
+Message-ID: <20260413155732.665310170@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -49,90 +45,161 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Dionne <marc.c.dionne@gmail.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-commit 0cd3e3f3f2ec1a45aa559e2c0f3d57fac5eb3c25 upstream.
+commit 75519f5df2a9b23f7bf305e12dc9a6e3e65c24b7 upstream.
 
-Peers may only send immediate acks for every 2 UDP packets received.
-When sending a jumbogram, it is important to check that there is
-sufficient window space to send another same sized jumbogram following
-the current one, and request an ack if there isn't.  Failure to do so may
-cause the call to stall waiting for an ack until the resend timer fires.
+This far using crtc_state->pipe_src as borders for Selective Update area
+haven't caused visible problems as drm_rect_width(crtc_state->pipe_src) ==
+crtc_state->hw.adjusted_mode.crtc_hdisplay and
+drm_rect_height(crtc_state->pipe_src) ==
+crtc_state->hw.adjusted_mode.crtc_vdisplay when pipe scaling is not
+used. On the other hand using pipe scaling is forcing full frame updates and all the
+Selective Update area calculations are skipped. Now this improper usage of
+crtc_state->pipe_src is causing following warnings:
 
-Where jumbograms are in use this causes a very significant drop in
-performance.
+<4> [7771.978166] xe 0000:00:02.0: [drm] drm_WARN_ON_ONCE(su_lines % vdsc_cfg->slice_height)
 
-Fixes: fe24a5494390 ("rxrpc: Send jumbo DATA packets")
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-10-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+after WARN_ON_ONCE was added by commit:
+
+"drm/i915/dsc: Add helper for writing DSC Selective Update ET parameters"
+
+These warnings are seen when DSC and pipe scaling are enabled
+simultaneously. This is because on full frame update SU area is improperly
+set as pipe_src which is not aligned with DSC slice height.
+
+Fix these by creating local rectangle using
+crtc_state->hw.adjusted_mode.crtc_hdisplay and
+crtc_state->hw.adjusted_mode.crtc_vdisplay. Use this local rectangle as
+borders for SU area.
+
+Fixes: d6774b8c3c58 ("drm/i915: Ensure damage clip area is within pipe area")
+Cc: <stable@vger.kernel.org> # v6.0+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+Link: https://patch.msgid.link/20260327114553.195285-1-jouni.hogander@intel.com
+(cherry picked from commit da0cdc1c329dd2ff09c41fbbe9fbd9c92c5d2c6e)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |    1 +
- net/rxrpc/ar-internal.h      |    2 +-
- net/rxrpc/output.c           |    2 ++
- net/rxrpc/proc.c             |    5 +++--
- 4 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c |   30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -521,6 +521,7 @@
- #define rxrpc_req_ack_traces \
- 	EM(rxrpc_reqack_ack_lost,		"ACK-LOST  ")	\
- 	EM(rxrpc_reqack_app_stall,		"APP-STALL ")	\
-+	EM(rxrpc_reqack_jumbo_win,		"JUMBO-WIN ")	\
- 	EM(rxrpc_reqack_more_rtt,		"MORE-RTT  ")	\
- 	EM(rxrpc_reqack_no_srv_last,		"NO-SRVLAST")	\
- 	EM(rxrpc_reqack_old_rtt,		"OLD-RTT   ")	\
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -117,7 +117,7 @@ struct rxrpc_net {
- 	atomic_t		stat_tx_jumbo[10];
- 	atomic_t		stat_rx_jumbo[10];
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2549,9 +2549,9 @@ static u32 psr2_pipe_srcsz_early_tpt_cal
  
--	atomic_t		stat_why_req_ack[8];
-+	atomic_t		stat_why_req_ack[9];
+ static void clip_area_update(struct drm_rect *overlap_damage_area,
+ 			     struct drm_rect *damage_area,
+-			     struct drm_rect *pipe_src)
++			     struct drm_rect *display_area)
+ {
+-	if (!drm_rect_intersect(damage_area, pipe_src))
++	if (!drm_rect_intersect(damage_area, display_area))
+ 		return;
  
- 	atomic_t		stat_io_loop;
- };
---- a/net/rxrpc/output.c
-+++ b/net/rxrpc/output.c
-@@ -479,6 +479,8 @@ static size_t rxrpc_prepare_data_subpack
- 		why = rxrpc_reqack_old_rtt;
- 	else if (!last && !after(READ_ONCE(call->send_top), txb->seq))
- 		why = rxrpc_reqack_app_stall;
-+	else if (call->tx_winsize <= (2 * req->n) || call->cong_cwnd <= (2 * req->n))
-+		why = rxrpc_reqack_jumbo_win;
- 	else
- 		goto dont_set_request_ack;
+ 	if (overlap_damage_area->y1 == -1) {
+@@ -2602,6 +2602,7 @@ static bool intel_psr2_sel_fetch_pipe_al
+ static void
+ intel_psr2_sel_fetch_et_alignment(struct intel_atomic_state *state,
+ 				  struct intel_crtc *crtc,
++				  struct drm_rect *display_area,
+ 				  bool *cursor_in_su_area)
+ {
+ 	struct intel_crtc_state *crtc_state = intel_atomic_get_new_crtc_state(state, crtc);
+@@ -2629,7 +2630,7 @@ intel_psr2_sel_fetch_et_alignment(struct
+ 			continue;
  
---- a/net/rxrpc/proc.c
-+++ b/net/rxrpc/proc.c
-@@ -518,11 +518,12 @@ int rxrpc_stats_show(struct seq_file *se
- 		   atomic_read(&rxnet->stat_rx_acks[RXRPC_ACK_IDLE]),
- 		   atomic_read(&rxnet->stat_rx_acks[0]));
- 	seq_printf(seq,
--		   "Why-Req-A: acklost=%u mrtt=%u ortt=%u stall=%u\n",
-+		   "Why-Req-A: acklost=%u mrtt=%u ortt=%u stall=%u jwin=%u\n",
- 		   atomic_read(&rxnet->stat_why_req_ack[rxrpc_reqack_ack_lost]),
- 		   atomic_read(&rxnet->stat_why_req_ack[rxrpc_reqack_more_rtt]),
- 		   atomic_read(&rxnet->stat_why_req_ack[rxrpc_reqack_old_rtt]),
--		   atomic_read(&rxnet->stat_why_req_ack[rxrpc_reqack_app_stall]));
-+		   atomic_read(&rxnet->stat_why_req_ack[rxrpc_reqack_app_stall]),
-+		   atomic_read(&rxnet->stat_why_req_ack[rxrpc_reqack_jumbo_win]));
- 	seq_printf(seq,
- 		   "Why-Req-A: nolast=%u retx=%u slows=%u smtxw=%u\n",
- 		   atomic_read(&rxnet->stat_why_req_ack[rxrpc_reqack_no_srv_last]),
+ 		clip_area_update(&crtc_state->psr2_su_area, &new_plane_state->uapi.dst,
+-				 &crtc_state->pipe_src);
++				 display_area);
+ 		*cursor_in_su_area = true;
+ 	}
+ }
+@@ -2725,6 +2726,12 @@ int intel_psr2_sel_fetch_update(struct i
+ 	struct intel_crtc_state *crtc_state = intel_atomic_get_new_crtc_state(state, crtc);
+ 	struct intel_plane_state *new_plane_state, *old_plane_state;
+ 	struct intel_plane *plane;
++	struct drm_rect display_area = {
++		.x1 = 0,
++		.y1 = 0,
++		.x2 = crtc_state->hw.adjusted_mode.crtc_hdisplay,
++		.y2 = crtc_state->hw.adjusted_mode.crtc_vdisplay,
++	};
+ 	bool full_update = false, su_area_changed;
+ 	int i, ret;
+ 
+@@ -2738,7 +2745,7 @@ int intel_psr2_sel_fetch_update(struct i
+ 
+ 	crtc_state->psr2_su_area.x1 = 0;
+ 	crtc_state->psr2_su_area.y1 = -1;
+-	crtc_state->psr2_su_area.x2 = drm_rect_width(&crtc_state->pipe_src);
++	crtc_state->psr2_su_area.x2 = drm_rect_width(&display_area);
+ 	crtc_state->psr2_su_area.y2 = -1;
+ 
+ 	/*
+@@ -2776,14 +2783,14 @@ int intel_psr2_sel_fetch_update(struct i
+ 				damaged_area.y1 = old_plane_state->uapi.dst.y1;
+ 				damaged_area.y2 = old_plane_state->uapi.dst.y2;
+ 				clip_area_update(&crtc_state->psr2_su_area, &damaged_area,
+-						 &crtc_state->pipe_src);
++						 &display_area);
+ 			}
+ 
+ 			if (new_plane_state->uapi.visible) {
+ 				damaged_area.y1 = new_plane_state->uapi.dst.y1;
+ 				damaged_area.y2 = new_plane_state->uapi.dst.y2;
+ 				clip_area_update(&crtc_state->psr2_su_area, &damaged_area,
+-						 &crtc_state->pipe_src);
++						 &display_area);
+ 			}
+ 			continue;
+ 		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha) {
+@@ -2791,7 +2798,7 @@ int intel_psr2_sel_fetch_update(struct i
+ 			damaged_area.y1 = new_plane_state->uapi.dst.y1;
+ 			damaged_area.y2 = new_plane_state->uapi.dst.y2;
+ 			clip_area_update(&crtc_state->psr2_su_area, &damaged_area,
+-					 &crtc_state->pipe_src);
++					 &display_area);
+ 			continue;
+ 		}
+ 
+@@ -2807,7 +2814,7 @@ int intel_psr2_sel_fetch_update(struct i
+ 		damaged_area.x1 += new_plane_state->uapi.dst.x1 - src.x1;
+ 		damaged_area.x2 += new_plane_state->uapi.dst.x1 - src.x1;
+ 
+-		clip_area_update(&crtc_state->psr2_su_area, &damaged_area, &crtc_state->pipe_src);
++		clip_area_update(&crtc_state->psr2_su_area, &damaged_area, &display_area);
+ 	}
+ 
+ 	/*
+@@ -2842,7 +2849,8 @@ int intel_psr2_sel_fetch_update(struct i
+ 		 * cursor is added into affected planes even when
+ 		 * cursor is not updated by itself.
+ 		 */
+-		intel_psr2_sel_fetch_et_alignment(state, crtc, &cursor_in_su_area);
++		intel_psr2_sel_fetch_et_alignment(state, crtc, &display_area,
++						  &cursor_in_su_area);
+ 
+ 		su_area_changed = intel_psr2_sel_fetch_pipe_alignment(crtc_state);
+ 
+@@ -2918,8 +2926,8 @@ int intel_psr2_sel_fetch_update(struct i
+ 
+ skip_sel_fetch_set_loop:
+ 	if (full_update)
+-		clip_area_update(&crtc_state->psr2_su_area, &crtc_state->pipe_src,
+-				 &crtc_state->pipe_src);
++		clip_area_update(&crtc_state->psr2_su_area, &display_area,
++				 &display_area);
+ 
+ 	psr2_man_trk_ctl_calc(crtc_state, full_update);
+ 	crtc_state->pipe_srcsz_early_tpt =
 
 
