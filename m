@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2752F8BC3;
-	Mon, 13 Apr 2026 16:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E9C2FFFA4;
+	Mon, 13 Apr 2026 16:21:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097275; cv=none; b=SWOKKqDmCxkXmqUJ63g5zsyFZDzXlBpemJmxx1zhaLDkB1yk8LBO0XSqo23cfPAeDZppj5Hav7jg/ZnSAeClTAnVHdP1BhPHqdOV+bTCpr7F9s/iiap+/3Vz1aC1uV6oZFn7FM8Cq5KIFE5Q4a7EgJGRUlyYELELAjzJquKi4tw=
+	t=1776097278; cv=none; b=k99++rqL53yOlydZz6gyQKht56nBN1opuWBcKvMooVt3WtbUHclXe8lEGrt1nkHAIt2iH+GPAJwiaZ99V/JsEB0OLrqfGP1MdSBYGzN+3gSmGsDCGtE3zrfFAFxaRXSqQ2rlyRQTFrsdWGQ4OI5UgmONVOMGk3SEZj7ol0wUmKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097275; c=relaxed/simple;
-	bh=PBo392yP+dROg9RRdKPoOq4B80BjBYJtwlOcpjmggd0=;
+	s=arc-20240116; t=1776097278; c=relaxed/simple;
+	bh=V7YukYScbt2G40/D6qp3r9huNwJ1MpeSE3zKnJ5dziE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vC7zXtnODu+/02YgyYE2SxywW0QRj3lcVxlzsSQNzv3TJ5cAGBK8DXbtSVwXGKdJOFDhY7Md47NYsGz+XuqZmIQFyH1soDl7yNG5/7CpAVaiPAmocTtusz9FizO9xYOG/W+avJNSzkZUcEMt2Nth/5UTbrX7gNFoLU9EQWX70Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNpjsK0l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AJZ0jfEwNqxQ9+j9OpoWDngH10M9Q6qaiGfRAOaseqtt2MAzBZGoNw8qmluruD8lPddJR8q96L5rjbMl9RGDcuYFsktD9ro4M35Z8Wehh2NfBkB+hSwpmSpx1C8ZT/uvHvdbIdc64HHcGOOhV1ozOVWmDMBJOwNt5BiDazKwqgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rg0gZpqa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNpjsK0l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E87C2BCAF;
-	Mon, 13 Apr 2026 16:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rg0gZpqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC5DC2BCB0;
+	Mon, 13 Apr 2026 16:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097275;
-	bh=PBo392yP+dROg9RRdKPoOq4B80BjBYJtwlOcpjmggd0=;
+	s=korg; t=1776097278;
+	bh=V7YukYScbt2G40/D6qp3r9huNwJ1MpeSE3zKnJ5dziE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oNpjsK0lPHiusXzf61Hc9DdHBxRuTY/2VSB4po841KmmLZBkrizSZjGsUz9rfSs06
-	 NEkoU+QasSHbiVAnEIVov0OXP9cB3fPQoZ1jLp+4fcAUEmX7qdtGxYHceFXxiq3t61
-	 X+GpSfyp4GfrTV7n5okVOA6Kxc0EG9om5qexPVr4=
+	b=Rg0gZpqaBZ5ybSiKM4q/6V7eXgqD3aelP7pmmg2qli8rCOTX1a5hLvZ0svY48ETbJ
+	 +1USAyyp4oAJiH4Ed1TeChS0fx9aBopnZ6P+oDsCuSF1DpRfFLrxgQjpMmy3pnsfWG
+	 70xgVUFhRU1YuMxdRB44l5Mjsvdf9prGaswx3JY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alban Bedel <alban.bedel@lht.dlh.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 073/570] can: mcp251x: fix deadlock in error path of mcp251x_open
-Date: Mon, 13 Apr 2026 17:53:24 +0200
-Message-ID: <20260413155833.176784271@linuxfoundation.org>
+Subject: [PATCH 5.15 074/570] wifi: cw1200: Fix locking in error paths
+Date: Mon, 13 Apr 2026 17:53:25 +0200
+Message-ID: <20260413155833.213864346@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,69 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alban Bedel <alban.bedel@lht.dlh.de>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit ab3f894de216f4a62adc3b57e9191888cbf26885 ]
+[ Upstream commit d98c24617a831e92e7224a07dcaed2dd0b02af96 ]
 
-The mcp251x_open() function call free_irq() in its error path with the
-mpc_lock mutex held. But if an interrupt already occurred the
-interrupt handler will be waiting for the mpc_lock and free_irq() will
-deadlock waiting for the handler to finish.
+cw1200_wow_suspend() must only return with priv->conf_mutex locked if it
+returns zero. This mutex must be unlocked if an error is returned. Add
+mutex_unlock() calls to the error paths from which that call is missing.
+This has been detected by the Clang thread-safety analyzer.
 
-This issue is similar to the one fixed in commit 7dd9c26bd6cf ("can:
-mcp251x: fix deadlock if an interrupt occurs during mcp251x_open") but
-for the error path.
-
-To solve this issue move the call to free_irq() after the lock is
-released. Setting `priv->force_quit = 1` beforehand ensure that the IRQ
-handler will exit right away once it acquired the lock.
-
-Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
-Link: https://patch.msgid.link/20260209144706.2261954-1-alban.bedel@lht.dlh.de
-Fixes: bf66f3736a94 ("can: mcp251x: Move to threaded interrupts instead of workqueues.")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260223220102.2158611-25-bart.vanassche@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/mcp251x.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/net/wireless/st/cw1200/pm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
-index 653566c570df8..e71edca7afbb2 100644
---- a/drivers/net/can/spi/mcp251x.c
-+++ b/drivers/net/can/spi/mcp251x.c
-@@ -1207,6 +1207,7 @@ static int mcp251x_open(struct net_device *net)
- {
- 	struct mcp251x_priv *priv = netdev_priv(net);
- 	struct spi_device *spi = priv->spi;
-+	bool release_irq = false;
- 	unsigned long flags = 0;
- 	int ret;
+diff --git a/drivers/net/wireless/st/cw1200/pm.c b/drivers/net/wireless/st/cw1200/pm.c
+index a20ab577a3644..212b6f2af8de4 100644
+--- a/drivers/net/wireless/st/cw1200/pm.c
++++ b/drivers/net/wireless/st/cw1200/pm.c
+@@ -264,12 +264,14 @@ int cw1200_wow_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
+ 		wiphy_err(priv->hw->wiphy,
+ 			  "PM request failed: %d. WoW is disabled.\n", ret);
+ 		cw1200_wow_resume(hw);
++		mutex_unlock(&priv->conf_mutex);
+ 		return -EBUSY;
+ 	}
  
-@@ -1252,12 +1253,24 @@ static int mcp251x_open(struct net_device *net)
- 	return 0;
- 
- out_free_irq:
--	free_irq(spi->irq, priv);
-+	/* The IRQ handler might be running, and if so it will be waiting
-+	 * for the lock. But free_irq() must wait for the handler to finish
-+	 * so calling it here would deadlock.
-+	 *
-+	 * Setting priv->force_quit will let the handler exit right away
-+	 * without any access to the hardware. This make it safe to call
-+	 * free_irq() after the lock is released.
-+	 */
-+	priv->force_quit = 1;
-+	release_irq = true;
-+
- 	mcp251x_hw_sleep(spi);
- out_close:
- 	mcp251x_power_enable(priv->transceiver, 0);
- 	close_candev(net);
- 	mutex_unlock(&priv->mcp_lock);
-+	if (release_irq)
-+		free_irq(spi->irq, priv);
- 	return ret;
- }
+ 	/* Force resume if event is coming from the device. */
+ 	if (atomic_read(&priv->bh_rx)) {
+ 		cw1200_wow_resume(hw);
++		mutex_unlock(&priv->conf_mutex);
+ 		return -EAGAIN;
+ 	}
  
 -- 
 2.51.0
