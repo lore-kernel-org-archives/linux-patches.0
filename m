@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B69317152;
-	Mon, 13 Apr 2026 16:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F05317152;
+	Mon, 13 Apr 2026 16:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099176; cv=none; b=KA8Ge+m33gUWxszaro/xcjuJWPKx8L1cEeDhrqZc+vjiC4rRZBQlOTHN1ZdSyggMi6L2ZZZQkxS7TeBW2+FDMe7gndo6mJdpI1nt5HjNhPVGYEbP41il2y9yhv6E+mcGPTHV9rFXklYF08tdJUFG7D4rYKoBEmSLeftdD8TmiKw=
+	t=1776099178; cv=none; b=b0DmYKfuS4E5yBasMuz1CxPg5cvycKev2IKJ9d2CS0Jp0aJFXfWg4aOxyVgRaVE/Tz0SpPclpc4+U/rAwU+xfnvROIv3VdSLPjDWDq1DL3bBbkg80vM0Ndpxb95v9gCgaImRGqUn5X/wwWhvs7iQzlgcLOR0pjgaGX1NKklNEDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099176; c=relaxed/simple;
-	bh=jEZkPXThmJDMW3nFjghRza/E576oUWCsHzXIF54YZCs=;
+	s=arc-20240116; t=1776099178; c=relaxed/simple;
+	bh=CjTnLIkfSlh+raT4XDx3l34sFCqqvnPpQuP2fh01rEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DApP+U4kpIdgeGhbMqC5Pj2W85HEACjEbDeFFFD5eN/33Bgzw+BzdTomaupK9QMltF7pT9RU7gqAYUBoWyNAGvxKCrcn1pG605BqPWR57Tmampordeu/jhjSFurYsuVz3BJDM4G/MBL2pR9Yq12KUJ3b8egg2IBFPDb9ssy939U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MZg1jNf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RBFpsStlgTIUiUTW5NKvucWnX7KQHFJ4VszLrBDheJrf/QUdrDNiofvyuiFo/a2/80qWE2l3dxYWNnegncJXwv1OCUMoAYFDGo9/imXIZx/o2HzRe30vqDE4tGrI380QfDUxQdL9GQAZuMWabJb2o6621RXhzzuzxUn15uX+bwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtSz0x6j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MZg1jNf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDE6C2BCB7;
-	Mon, 13 Apr 2026 16:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtSz0x6j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67282C2BCB7;
+	Mon, 13 Apr 2026 16:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099176;
-	bh=jEZkPXThmJDMW3nFjghRza/E576oUWCsHzXIF54YZCs=;
+	s=korg; t=1776099178;
+	bh=CjTnLIkfSlh+raT4XDx3l34sFCqqvnPpQuP2fh01rEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2MZg1jNfHnOqNxLr9yCE7uVIQEKX74/VEb2H6rZ7uWvbCh9UZLwUJVSlT2BgOnxJR
-	 z9cY0onTdMRf/vf3WUI4UTk5w7V67k9PSomPIxOkp2hPmpN+MCFpQKmdhGxy7JVKPK
-	 z2KRTEOh6sXfDQnI4nOzjPj5S2RBG8CCiuuYgdb0=
+	b=gtSz0x6jSuC43R/l8jIVcwsAdK6senDX5scF7ISYvZd7G+x7WkixXJNx/m9lxIcIm
+	 liYDI5KDSi5eoM0RGcdr2cIBPpAGzoFI9X6e0GgcB8gjCf6bpchrCvH/HpoIuzjXkX
+	 PvWmCzj1fE/4nhGREtRbZrH+IC0nTadnbFz+0dGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Leif Skunberg <diamondback@cohunt.app>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 238/491] HID: asus: avoid memory leak in asus_report_fixup()
-Date: Mon, 13 Apr 2026 17:58:03 +0200
-Message-ID: <20260413155827.967917253@linuxfoundation.org>
+Subject: [PATCH 5.10 239/491] platform/x86: intel-hid: Enable 5-button array on ThinkPad X1 Fold 16 Gen 1
+Date: Mon, 13 Apr 2026 17:58:04 +0200
+Message-ID: <20260413155828.004805910@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,60 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Günther Noack <gnoack@google.com>
+From: Leif Skunberg <diamondback@cohunt.app>
 
-[ Upstream commit 2bad24c17742fc88973d6aea526ce1353f5334a3 ]
+[ Upstream commit b38d478dad79e61e8a65931021bdfd7a71741212 ]
 
-The asus_report_fixup() function was returning a newly allocated
-kmemdup()-allocated buffer, but never freeing it.  Switch to
-devm_kzalloc() to ensure the memory is managed and freed automatically
-when the device is removed.
+The Lenovo ThinkPad X1 Fold 16 Gen 1 has physical volume up/down
+buttons that are handled through the intel-hid 5-button array
+interface. The firmware does not advertise 5-button array support via
+HEBC, so the driver relies on a DMI allowlist to enable it.
 
-The caller of report_fixup() does not take ownership of the returned
-pointer, but it is permitted to return a pointer whose lifetime is at
-least that of the input buffer.
+Add the ThinkPad X1 Fold 16 Gen 1 to the button_array_table so the
+volume buttons work out of the box.
 
-Also fix a harmless out-of-bounds read by copying only the original
-descriptor size.
-
-Assisted-by: Gemini-CLI:Google Gemini 3
-Signed-off-by: Günther Noack <gnoack@google.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Leif Skunberg <diamondback@cohunt.app>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260210085625.34380-1-diamondback@cohunt.app
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/platform/x86/intel-hid.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index 2f82946fb36a2..9d425f81d6224 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -1116,14 +1116,21 @@ static __u8 *asus_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 		 */
- 		if (*rsize == rsize_orig &&
- 			rdesc[offs] == 0x09 && rdesc[offs + 1] == 0x76) {
--			*rsize = rsize_orig + 1;
--			rdesc = kmemdup(rdesc, *rsize, GFP_KERNEL);
--			if (!rdesc)
--				return NULL;
-+			__u8 *new_rdesc;
-+
-+			new_rdesc = devm_kzalloc(&hdev->dev, rsize_orig + 1,
-+						 GFP_KERNEL);
-+			if (!new_rdesc)
-+				return rdesc;
- 
- 			hid_info(hdev, "Fixing up %s keyb report descriptor\n",
- 				drvdata->quirks & QUIRK_T100CHI ?
- 				"T100CHI" : "T90CHI");
-+
-+			memcpy(new_rdesc, rdesc, rsize_orig);
-+			*rsize = rsize_orig + 1;
-+			rdesc = new_rdesc;
-+
- 			memmove(rdesc + offs + 4, rdesc + offs + 2, 12);
- 			rdesc[offs] = 0x19;
- 			rdesc[offs + 1] = 0x00;
+diff --git a/drivers/platform/x86/intel-hid.c b/drivers/platform/x86/intel-hid.c
+index 9bc2652b15e71..12d695adf3f74 100644
+--- a/drivers/platform/x86/intel-hid.c
++++ b/drivers/platform/x86/intel-hid.c
+@@ -93,6 +93,13 @@ static const struct dmi_system_id button_array_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_FAMILY, "ThinkPad X1 Tablet Gen 2"),
+ 		},
+ 	},
++	{
++		.ident = "Lenovo ThinkPad X1 Fold 16 Gen 1",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_FAMILY, "ThinkPad X1 Fold 16 Gen 1"),
++		},
++	},
+ 	{
+ 		.ident = "Microsoft Surface Go 3",
+ 		.matches = {
 -- 
 2.51.0
 
