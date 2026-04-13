@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443A0306B0A;
-	Mon, 13 Apr 2026 16:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA3230EF6B;
+	Mon, 13 Apr 2026 16:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097759; cv=none; b=jEw9nEhUYfTmyWxlquPdztnGJu3Nd1a/e9gckHUgy6+Xnf32C30xDkHwQPeU7Gmkk9778v+XZNe/z+GCZwpsdwINtm+QvC5QBjm0+MHS+oFgZDWV2mipXrW20/MAo4UzMKb+pDpsf9ucsbXSKcPAlIfswsacSgkpUGI3I1dzqoI=
+	t=1776097761; cv=none; b=H0M0JYvtBr+UqKx0s44yFJwNWGdC7zG+DwHrIg3N6tWS2tMePZ8IYNRQe8AvD3/44Y1AlVndzNV5EgbmzXUYb0eFXVhwi02C0dth6up1Vmu1OeaJECO4rEb3WbcII27oaFUeOpzygLw5jdbqTMJ8yO7Ik8j0swje8oRpRqvXNEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097759; c=relaxed/simple;
-	bh=jPu781NXK+M+rsVW+ALTVZLHPohaw5gSIHd2YsyfOVo=;
+	s=arc-20240116; t=1776097761; c=relaxed/simple;
+	bh=EmOk8IUZwq+uFiFA+Pyabf5UL/3hcUYhHRox9M2pMjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gx12TfZqnKG3dF+fzzSdSOxs020pTYqZ0sHuIgjDHxZhnGZmS94wed41fxhWQGu39O02sLU3qPq4MeRe5cukElFwpQHPmfdaT6eAZj0rQYkS+kZ4oVc8EJMIzcmntJsRACUitzM5loQ6eH5K93h4C0pnuI6OZhhx0HjZsVjx69Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1D23hUWx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5L8L4+FDUewbSC6stdVaSo4s36ptZFqE63pHU+Q7a34U2hcwqQF2q8lUH8kUs/l0bsj0ZN6Oer4iJzYZX6DUGb8H+pr48cfozvTBwaL8ViwaZsw1kj/MqQfjFVO6R1tD2bcfFUnmqw/7dFtM+/H7+F7N0jEiDBZZZ6N0lbiiyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Fhfu0jl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1D23hUWx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF539C2BCAF;
-	Mon, 13 Apr 2026 16:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Fhfu0jl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E2AC2BCAF;
+	Mon, 13 Apr 2026 16:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097759;
-	bh=jPu781NXK+M+rsVW+ALTVZLHPohaw5gSIHd2YsyfOVo=;
+	s=korg; t=1776097761;
+	bh=EmOk8IUZwq+uFiFA+Pyabf5UL/3hcUYhHRox9M2pMjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1D23hUWx5FA1v0rtEhjI2aHDj25fL7UIL7fY7ArQOPBg6sdqa0YhaCSBliwyA2vCQ
-	 ammrm000TRYBjiGbtFcSTjedE8uVS76VYhT40K0hKvTmhEl9KOjA81nGqLJNtV347b
-	 CFpyxBDA5LafF1o1LB6uGs3F59ogSrpBYI9go0BA=
+	b=0Fhfu0jlMYU01ZCCyzV90FrNTRMkZqFBdBurPsVHUZWGlX3k8YRTXQJfgqge9Arx6
+	 FVSDqSKL0G6dnEK/3h21bh4SNlwaR2k+UXogeduXQdnykuRBB8U2Tlli0r5U+hP6N0
+	 q2fZ7aKPcDcEsgZ00OA9IU5vfRgQQQ+T9/qtNyGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 260/570] netfilter: xt_CT: drop pending enqueued packets on template removal
-Date: Mon, 13 Apr 2026 17:56:31 +0200
-Message-ID: <20260413155840.217308568@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Alva Lan <alvalan9@foxmail.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 5.15 230/570] ksmbd: fix null pointer dereference error in generate_encryptionkey
+Date: Mon, 13 Apr 2026 17:56:01 +0200
+Message-ID: <20260413155839.075987989@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,54 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit f62a218a946b19bb59abdd5361da85fa4606b96b ]
+[ Upstream commit 9b493ab6f35178afd8d619800df9071992f715de ]
 
-Templates refer to objects that can go away while packets are sitting in
-nfqueue refer to:
+If client send two session setups with krb5 authenticate to ksmbd,
+null pointer dereference error in generate_encryptionkey could happen.
+sess->Preauth_HashValue is set to NULL if session is valid.
+So this patch skip generate encryption key if session is valid.
 
-- helper, this can be an issue on module removal.
-- timeout policy, nfnetlink_cttimeout might remove it.
-
-The use of templates with zone and event cache filter are safe, since
-this just copies values.
-
-Flush these enqueued packets in case the template rule gets removed.
-
-Fixes: 24de58f46516 ("netfilter: xt_CT: allow to attach timeout policy + glue code")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-27654
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/xt_CT.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ksmbd/smb2pdu.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/xt_CT.c b/net/netfilter/xt_CT.c
-index 5d19cb059b197..3dd02482b437b 100644
---- a/net/netfilter/xt_CT.c
-+++ b/net/netfilter/xt_CT.c
-@@ -16,6 +16,7 @@
- #include <net/netfilter/nf_conntrack_ecache.h>
- #include <net/netfilter/nf_conntrack_timeout.h>
- #include <net/netfilter/nf_conntrack_zones.h>
-+#include "nf_internals.h"
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -1628,11 +1628,24 @@ static int krb5_authenticate(struct ksmb
+ 	}
+ 	rsp->SecurityBufferLength = cpu_to_le16(out_len);
  
- static inline int xt_ct_target(struct sk_buff *skb, struct nf_conn *ct)
- {
-@@ -269,6 +270,9 @@ static void xt_ct_tg_destroy(const struct xt_tgdtor_param *par,
- 	struct nf_conn_help *help;
- 
- 	if (ct) {
-+		if (info->helper[0] || info->timeout[0])
-+			nf_queue_nf_hook_drop(par->net);
+-	if ((conn->sign || server_conf.enforced_signing) ||
++	/*
++	 * If session state is SMB2_SESSION_VALID, We can assume
++	 * that it is reauthentication. And the user/password
++	 * has been verified, so return it here.
++	 */
++	if (sess->state == SMB2_SESSION_VALID) {
++		if (conn->binding)
++			goto binding_session;
++		return 0;
++	}
 +
- 		help = nfct_help(ct);
- 		if (help)
- 			nf_conntrack_helper_put(help->helper);
--- 
-2.51.0
-
++	if ((rsp->SessionFlags != SMB2_SESSION_FLAG_IS_GUEST_LE &&
++	    (conn->sign || server_conf.enforced_signing)) ||
+ 	    (req->SecurityMode & SMB2_NEGOTIATE_SIGNING_REQUIRED))
+ 		sess->sign = true;
+ 
+-	if (smb3_encryption_negotiated(conn)) {
++	if (smb3_encryption_negotiated(conn) &&
++	    !(req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
+ 		retval = conn->ops->generate_encryptionkey(conn, sess);
+ 		if (retval) {
+ 			ksmbd_debug(SMB,
+@@ -1645,6 +1658,7 @@ static int krb5_authenticate(struct ksmb
+ 		sess->sign = false;
+ 	}
+ 
++binding_session:
+ 	if (conn->dialect >= SMB30_PROT_ID) {
+ 		chann = lookup_chann_list(sess, conn);
+ 		if (!chann) {
 
 
