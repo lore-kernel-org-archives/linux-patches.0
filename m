@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CB12459D1;
-	Mon, 13 Apr 2026 16:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAAF2EBB8C;
+	Mon, 13 Apr 2026 16:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097120; cv=none; b=LV/KUNip7S4IMzmwujTayRNXWce0XHynwO9tnI3sPYbqqlTsgj/jhnvbwcLMlxJG2XMdFH0/TF8B/UuWTAeGyys3cm/0OgetGeReLJNJCotjpgY2wuM9VpIRdMOGW82Qcun1SI4b28zw/Y67FQEB0VDeCyfqsxeO0RQlpcmYvIw=
+	t=1776097122; cv=none; b=tYA5zKwJDHDipjTiGDvlFg4jKOBT8I/pl6OyFjqNOAhR+Pj2oUEk5u8j0bPIZD+atiKUNiXCKj3eYwEJ677v+WjRdxGtLU0iGgcNPNcbeOmAE87veiTUWNml+impQq0pkq9tFVwgKZOpzciXJEQVjJ8XVmvTgi9T6tZY6m59R+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097120; c=relaxed/simple;
-	bh=3aC3utC5CDRGCPaTmhlq/xz+CRO+0mQ03QsMTIREQRQ=;
+	s=arc-20240116; t=1776097122; c=relaxed/simple;
+	bh=6miaLofPnDD1qTEq355a15aHcbZXjmJZwag8e75OzAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=StBXt4oe43iQVOn0kTETNkAr0n7GNoDvTcCK1Ktdsu3Ckaf6bY7YZpbzY4Iokh2nffysVRKZN+3g9i5NTwgVsutU5dKp/mWpy++3yCDDkqwvd2hlShOqNuYWFyUTBo3dMVHBjA6/qyPQwER7TvfHK3kwTw57ejnfsJ53xcj4JJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VofMNFGh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Va94GNHyyA0YQhtIsmxLm4UHwodHLHab+icqp3HN8pkqa9EXme6vuBK4KUiaup4DAHtDcQ07KrGwYhTEWBLr391vTQpNTz8OI4Mw5BRzgYRYkMGke9kmCb/RFv1LI97+ieeWIWSfuF2RMMkVxOOcQ8k4FQP6NvcVlM6gdroCRbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBEaVGBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VofMNFGh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3452C2BCAF;
-	Mon, 13 Apr 2026 16:18:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBEaVGBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7492FC2BCAF;
+	Mon, 13 Apr 2026 16:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097120;
-	bh=3aC3utC5CDRGCPaTmhlq/xz+CRO+0mQ03QsMTIREQRQ=;
+	s=korg; t=1776097122;
+	bh=6miaLofPnDD1qTEq355a15aHcbZXjmJZwag8e75OzAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VofMNFGhDs8tubi1FncEb24p7Brmzr7fXzF6VlNQSQV+bQTh86Vemn7jo54Xf1CkO
-	 UbG42qvdI7VX/PeiXzEG3BGL9L414k5aAqGKdFxEb+16pFDrBOUytCnzuC19v/DgHq
-	 qO+zKLrm2KdGlOF+zeMGNFDun4SisQ/n10v0x1QY=
+	b=dBEaVGBRm+IOoR28kYRTX0SNufVaQzJI49u/kQyzGbkJnqunixZm0lRdCS9A9n3vn
+	 DoufqoX50oGahlHMAYIQGsh0PG6pZHFbIwnOID9sN254iAB1UIq2k/+bKxG8/btCuY
+	 qDttyVoSI/DRBrXEtUqk9LxIAsIlE0l/qKaeaKNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Qing <wangqing@vivo.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Ben Hutchings <benh@debian.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 014/570] ARM: OMAP2+: add missing of_node_put before break and return
-Date: Mon, 13 Apr 2026 17:52:25 +0200
-Message-ID: <20260413155830.948895594@linuxfoundation.org>
+Subject: [PATCH 5.15 002/570] ip6_tunnel: Fix usage of skb_vlan_inet_prepare()
+Date: Mon, 13 Apr 2026 17:52:13 +0200
+Message-ID: <20260413155830.485087556@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,142 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Qing <wangqing@vivo.com>
+From: Ben Hutchings <ben@decadent.org.uk>
 
-[ Upstream commit 883f464c1d23663047eda4f2bcf622365e2d0dd0 ]
+Backports of commit 81c734dae203 "ip6_tunnel: use
+skb_vlan_inet_prepare() in __ip6_tnl_rcv()" broke IPv6 tunnelling in
+stable branches 5.10-6.12 inclusive.  This is because the return value
+of skb_vlan_inet_prepare() had the opposite sense (0 for error rather
+than for success) before commit 9990ddf47d416 "net: tunnel: make
+skb_vlan_inet_prepare() return drop reasons".
 
-Fix following coccicheck warning:
-WARNING: Function "for_each_matching_node_and_match"
-should have of_node_put() before return.
+For branches including commit c504e5c2f964 "net: skb: introduce
+kfree_skb_reason()" etc. (i.e. 6.1 and newer) it was simple to
+backport commit 9990ddf47d416, but for 5.10 and 5.15 that doesn't seem
+to be practical.
 
-Early exits from for_each_matching_node_and_match should decrement the
-node reference counter.
+So just reverse the sense of the return value test here.
 
-Signed-off-by: Wang Qing <wangqing@vivo.com>
-Message-Id: <1639388545-63615-1-git-send-email-wangqing@vivo.com>
-[tony@atomide.com: updated for omap_hwmod.c that was already patched]
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Stable-dep-of: 93a04ab480c8 ("ARM: omap2: Fix reference count leaks in omap_control_init()")
+Fixes: f9c5c5b791d3 ("ip6_tunnel: use skb_vlan_inet_prepare() in __ip6_tnl_rcv()")
+Fixes: 64c71d60a21a ("ip6_tunnel: use skb_vlan_inet_prepare() in __ip6_tnl_rcv()")
+Signed-off-by: Ben Hutchings <benh@debian.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/cm_common.c  |  8 ++++++--
- arch/arm/mach-omap2/control.c    | 19 ++++++++++++++-----
- arch/arm/mach-omap2/prm_common.c |  8 ++++++--
- 3 files changed, 26 insertions(+), 9 deletions(-)
+ net/ipv6/ip6_tunnel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-omap2/cm_common.c b/arch/arm/mach-omap2/cm_common.c
-index e2d069fe67f18..87f2c2d2d7544 100644
---- a/arch/arm/mach-omap2/cm_common.c
-+++ b/arch/arm/mach-omap2/cm_common.c
-@@ -320,8 +320,10 @@ int __init omap2_cm_base_init(void)
- 		data = (struct omap_prcm_init_data *)match->data;
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 553851e3aca14..7c1b5d01f8203 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -846,7 +846,7 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
  
- 		ret = of_address_to_resource(np, 0, &res);
--		if (ret)
-+		if (ret) {
-+			of_node_put(np);
- 			return ret;
-+		}
+ 	skb_reset_network_header(skb);
  
- 		if (data->index == TI_CLKM_CM)
- 			mem = &cm_base;
-@@ -367,8 +369,10 @@ int __init omap_cm_init(void)
- 			continue;
- 
- 		ret = omap2_clk_provider_init(np, data->index, NULL, data->mem);
--		if (ret)
-+		if (ret) {
-+			of_node_put(np);
- 			return ret;
-+		}
- 	}
- 
- 	return 0;
-diff --git a/arch/arm/mach-omap2/control.c b/arch/arm/mach-omap2/control.c
-index 062d431fc33a8..c514a96022699 100644
---- a/arch/arm/mach-omap2/control.c
-+++ b/arch/arm/mach-omap2/control.c
-@@ -769,8 +769,10 @@ int __init omap2_control_base_init(void)
- 		data = (struct control_init_data *)match->data;
- 
- 		mem = of_iomap(np, 0);
--		if (!mem)
-+		if (!mem) {
-+			of_node_put(np);
- 			return -ENOMEM;
-+		}
- 
- 		if (data->index == TI_CLKM_CTRL) {
- 			omap2_ctrl_base = mem;
-@@ -810,22 +812,24 @@ int __init omap_control_init(void)
- 		if (scm_conf) {
- 			syscon = syscon_node_to_regmap(scm_conf);
- 
--			if (IS_ERR(syscon))
--				return PTR_ERR(syscon);
-+			if (IS_ERR(syscon)) {
-+				ret = PTR_ERR(syscon);
-+				goto of_node_put;
-+			}
- 
- 			if (of_get_child_by_name(scm_conf, "clocks")) {
- 				ret = omap2_clk_provider_init(scm_conf,
- 							      data->index,
- 							      syscon, NULL);
- 				if (ret)
--					return ret;
-+					goto of_node_put;
- 			}
- 		} else {
- 			/* No scm_conf found, direct access */
- 			ret = omap2_clk_provider_init(np, data->index, NULL,
- 						      data->mem);
- 			if (ret)
--				return ret;
-+				goto of_node_put;
- 		}
- 	}
- 
-@@ -836,6 +840,11 @@ int __init omap_control_init(void)
- 	}
- 
- 	return 0;
-+
-+of_node_put:
-+	of_node_put(np);
-+	return ret;
-+
- }
- 
- /**
-diff --git a/arch/arm/mach-omap2/prm_common.c b/arch/arm/mach-omap2/prm_common.c
-index 65b2d82efa27b..fb2d48cfe756b 100644
---- a/arch/arm/mach-omap2/prm_common.c
-+++ b/arch/arm/mach-omap2/prm_common.c
-@@ -752,8 +752,10 @@ int __init omap2_prm_base_init(void)
- 		data = (struct omap_prcm_init_data *)match->data;
- 
- 		ret = of_address_to_resource(np, 0, &res);
--		if (ret)
-+		if (ret) {
-+			of_node_put(np);
- 			return ret;
-+		}
- 
- 		data->mem = ioremap(res.start, resource_size(&res));
- 
-@@ -799,8 +801,10 @@ int __init omap_prcm_init(void)
- 		data = match->data;
- 
- 		ret = omap2_clk_provider_init(np, data->index, NULL, data->mem);
--		if (ret)
-+		if (ret) {
-+			of_node_put(np);
- 			return ret;
-+		}
- 	}
- 
- 	omap_cm_init();
+-	if (skb_vlan_inet_prepare(skb, true)) {
++	if (!skb_vlan_inet_prepare(skb, true)) {
+ 		DEV_STATS_INC(tunnel->dev, rx_length_errors);
+ 		DEV_STATS_INC(tunnel->dev, rx_errors);
+ 		goto drop;
 -- 
 2.51.0
 
