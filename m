@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C0231619A;
-	Mon, 13 Apr 2026 16:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A166A314D0D;
+	Mon, 13 Apr 2026 16:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098959; cv=none; b=QF9buowcdj/T/PNFC07ENjPp5Ovc/LOI2aoCdxVtz4NAqii53QkPHllPxPUxVeovn0t478OOytRfyuRIDh5ysRDtdzH8n5xUpHSz35u+WTylaW9pfFMbQScfkh8h9YMO2A50NBsR5xXNv5SqOiLSz/hmQibZdepmyZs3Ec10fRA=
+	t=1776098962; cv=none; b=teyNeo8XGMRj4CB2t0QWVnVka2AsXHEWarq1jCTOwzj+bgQ6p7f/5N0YIsmhAXllaeqR9+jstXNGYSHx5AoGQBmMLgvgmKm2IN3VkLewr+W59puXCAF3STTErURDpBGwQN2honLVeSw6sxJUQQbKsrbU8R/Ovt6CFysFfNnAtdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098959; c=relaxed/simple;
-	bh=lvLKGUi8O4e0fZqnSuE1gXxM5jEO88NO/eFPAayclH4=;
+	s=arc-20240116; t=1776098962; c=relaxed/simple;
+	bh=XlujQD2xouDRaYo5OOtqTXvzKojDzPt+APt8Ye2xFvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAVuXOYpvLS9AWTlVKR98PngtWt3RAl7zD9/e3NxZit10cDF+5u4NJG+ewtiS5kmVCMHU9ozbAiq+9lqrI5YtD2blNmHimQJt17rX0Ophc4dpQCq8XsqS0P5QN577kCMfvLE+46kbSOB2mTeN5Ot+ak+16bbI1htAWZ9JtE0QB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4rkw9/M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oVmvSMgkzpB+tUeAmNIiYFQhmwsTNp+K5NOncznzSh1zHaNEw+vFVuxNMMBj/YER6aTHoGYe2+/efr2FE2K2byA5KOt9l+QpkbcZXHXjGOkDTBEucT06XT/XxxTKtShjfeKvr6s09XLRRwEghbuvkfManAq0nUeI7sZn+ULqSUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebyqyEnG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4rkw9/M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E438C2BCAF;
-	Mon, 13 Apr 2026 16:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebyqyEnG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E2DC2BCAF;
+	Mon, 13 Apr 2026 16:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098959;
-	bh=lvLKGUi8O4e0fZqnSuE1gXxM5jEO88NO/eFPAayclH4=;
+	s=korg; t=1776098962;
+	bh=XlujQD2xouDRaYo5OOtqTXvzKojDzPt+APt8Ye2xFvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E4rkw9/MFGeNdmmdpgfg57narxUCMtC8/eJFEZO3QxP4fL9trfr7s57em5fra+4Ke
-	 iAO/jE+PTrut46/KzYXb4VzADHqIEtXeD+puDxVvGKNs7x/Dn61QSzqEl63FAC+B7q
-	 rax9L1CC7yexhBVNal7CvziF1rDuYa1N8iQ7jSPU=
+	b=ebyqyEnGhJrPDihdwbca6xme+B/DiVBWa4e6DeV3dSstZZM7b9omfulmCXCzFF9FS
+	 I7XKuIyqV2YnwOsJAppv7n0mQQaNLWgukbvj02Q0W7R7OkikfuJQwwap68g3Y/XPKW
+	 mLdw3wvka/xO18r2HfXx3gQp4Ro+ro2lGjWZYpC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Inki Dae <inki.dae@samsung.com>
-Subject: [PATCH 5.10 156/491] drm/exynos: vidi: use ctx->lock to protect struct vidi_context member variables related to memory alloc/free
-Date: Mon, 13 Apr 2026 17:56:41 +0200
-Message-ID: <20260413155824.872446091@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 157/491] ext4: dont set EXT4_GET_BLOCKS_CONVERT when splitting before submitting I/O
+Date: Mon, 13 Apr 2026 17:56:42 +0200
+Message-ID: <20260413155824.910326529@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,200 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 52b330799e2d6f825ae2bb74662ec1b10eb954bb upstream.
+[ Upstream commit feaf2a80e78f89ee8a3464126077ba8683b62791 ]
 
-Exynos Virtual Display driver performs memory alloc/free operations
-without lock protection, which easily causes concurrency problem.
+When allocating blocks during within-EOF DIO and writeback with
+dioread_nolock enabled, EXT4_GET_BLOCKS_PRE_IO was set to split an
+existing large unwritten extent. However, EXT4_GET_BLOCKS_CONVERT was
+set when calling ext4_split_convert_extents(), which may potentially
+result in stale data issues.
 
-For example, use-after-free can occur in race scenario like this:
-```
-	CPU0				CPU1				CPU2
-	----				----				----
-  vidi_connection_ioctl()
-    if (vidi->connection) // true
-      drm_edid = drm_edid_alloc(); // alloc drm_edid
-      ...
-      ctx->raw_edid = drm_edid;
-      ...
-								drm_mode_getconnector()
-								  drm_helper_probe_single_connector_modes()
-								    vidi_get_modes()
-								      if (ctx->raw_edid) // true
-								        drm_edid_dup(ctx->raw_edid);
-								          if (!drm_edid) // false
-								          ...
-				vidi_connection_ioctl()
-				  if (vidi->connection) // false
-				    drm_edid_free(ctx->raw_edid); // free drm_edid
-				    ...
-								          drm_edid_alloc(drm_edid->edid)
-								            kmemdup(edid); // UAF!!
-								            ...
-```
+Assume we have an unwritten extent, and then DIO writes the second half.
 
-To prevent these vulns, at least in vidi_context, member variables related
-to memory alloc/free should be protected with ctx->lock.
+   [UUUUUUUUUUUUUUUU] on-disk extent        U: unwritten extent
+   [UUUUUUUUUUUUUUUU] extent status tree
+            |<-   ->| ----> dio write this range
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+First, ext4_iomap_alloc() call ext4_map_blocks() with
+EXT4_GET_BLOCKS_PRE_IO, EXT4_GET_BLOCKS_UNWRIT_EXT and
+EXT4_GET_BLOCKS_CREATE flags set. ext4_map_blocks() find this extent and
+call ext4_split_convert_extents() with EXT4_GET_BLOCKS_CONVERT and the
+above flags set.
+
+Then, ext4_split_convert_extents() calls ext4_split_extent() with
+EXT4_EXT_MAY_ZEROOUT, EXT4_EXT_MARK_UNWRIT2 and EXT4_EXT_DATA_VALID2
+flags set, and it calls ext4_split_extent_at() to split the second half
+with EXT4_EXT_DATA_VALID2, EXT4_EXT_MARK_UNWRIT1, EXT4_EXT_MAY_ZEROOUT
+and EXT4_EXT_MARK_UNWRIT2 flags set. However, ext4_split_extent_at()
+failed to insert extent since a temporary lack -ENOSPC. It zeroes out
+the first half but convert the entire on-disk extent to written since
+the EXT4_EXT_DATA_VALID2 flag set, but left the second half as unwritten
+in the extent status tree.
+
+   [0000000000SSSSSS]  data                S: stale data, 0: zeroed
+   [WWWWWWWWWWWWWWWW]  on-disk extent      W: written extent
+   [WWWWWWWWWWUUUUUU]  extent status tree
+
+Finally, if the DIO failed to write data to the disk, the stale data in
+the second half will be exposed once the cached extent entry is gone.
+
+Fix this issue by not passing EXT4_GET_BLOCKS_CONVERT when splitting
+an unwritten extent before submitting I/O, and make
+ext4_split_convert_extents() to zero out the entire extent range
+to zero for this case, and also mark the extent in the extent status
+tree for consistency.
+
+Fixes: b8a8684502a0 ("ext4: Introduce FALLOC_FL_ZERO_RANGE flag for fallocate")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Cc: stable@kernel.org
+Message-ID: <20251129103247.686136-4-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+[ different function signatures ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_vidi.c |   43 +++++++++++++++++++++++++------
- 1 file changed, 35 insertions(+), 8 deletions(-)
+ fs/ext4/extents.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -185,15 +185,17 @@ static ssize_t vidi_store_connection(str
- 				const char *buf, size_t len)
- {
- 	struct vidi_context *ctx = dev_get_drvdata(dev);
--	int ret;
-+	int ret, new_connected;
- 
--	ret = kstrtoint(buf, 0, &ctx->connected);
-+	ret = kstrtoint(buf, 0, &new_connected);
- 	if (ret)
- 		return ret;
- 
--	if (ctx->connected > 1)
-+	if (new_connected > 1)
- 		return -EINVAL;
- 
-+	mutex_lock(&ctx->lock);
-+
- 	/* use fake edid data for test. */
- 	if (!ctx->raw_edid)
- 		ctx->raw_edid = (struct edid *)fake_edid_info;
-@@ -201,14 +203,21 @@ static ssize_t vidi_store_connection(str
- 	/* if raw_edid isn't same as fake data then it can't be tested. */
- 	if (ctx->raw_edid != (struct edid *)fake_edid_info) {
- 		DRM_DEV_DEBUG_KMS(dev, "edid data is not fake data.\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto fail;
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -3705,11 +3705,15 @@ static int ext4_split_convert_extents(ha
+ 	/* Convert to unwritten */
+ 	if (flags & EXT4_GET_BLOCKS_CONVERT_UNWRITTEN) {
+ 		split_flag |= EXT4_EXT_DATA_VALID1;
+-	/* Convert to initialized */
+-	} else if (flags & EXT4_GET_BLOCKS_CONVERT) {
++	/* Split the existing unwritten extent */
++	} else if (flags & (EXT4_GET_BLOCKS_UNWRIT_EXT |
++			    EXT4_GET_BLOCKS_CONVERT)) {
+ 		split_flag |= ee_block + ee_len <= eof_block ?
+ 			      EXT4_EXT_MAY_ZEROOUT : 0;
+-		split_flag |= (EXT4_EXT_MARK_UNWRIT2 | EXT4_EXT_DATA_VALID2);
++		split_flag |= EXT4_EXT_MARK_UNWRIT2;
++		/* Convert to initialized */
++		if (flags & EXT4_GET_BLOCKS_CONVERT)
++			split_flag |= EXT4_EXT_DATA_VALID2;
  	}
- 
-+	ctx->connected = new_connected;
-+	mutex_unlock(&ctx->lock);
-+
- 	DRM_DEV_DEBUG_KMS(dev, "requested connection.\n");
- 
- 	drm_helper_hpd_irq_event(ctx->drm_dev);
- 
- 	return len;
-+fail:
-+	mutex_unlock(&ctx->lock);
-+	return ret;
- }
- 
- static DEVICE_ATTR(connection, 0644, vidi_show_connection,
-@@ -243,11 +252,14 @@ int vidi_connection_ioctl(struct drm_dev
- 		return -EINVAL;
- 	}
- 
-+	mutex_lock(&ctx->lock);
- 	if (ctx->connected == vidi->connection) {
-+		mutex_unlock(&ctx->lock);
- 		DRM_DEV_DEBUG_KMS(ctx->dev,
- 				  "same connection request.\n");
- 		return -EINVAL;
- 	}
-+	mutex_unlock(&ctx->lock);
- 
- 	if (vidi->connection) {
- 		struct edid *raw_edid;
-@@ -270,20 +282,27 @@ int vidi_connection_ioctl(struct drm_dev
- 					  "failed to allocate raw_edid.\n");
- 			return -ENOMEM;
- 		}
-+		mutex_lock(&ctx->lock);
- 		ctx->raw_edid = raw_edid;
-+		mutex_unlock(&ctx->lock);
- 	} else {
- 		/*
- 		 * with connection = 0, free raw_edid
- 		 * only if raw edid data isn't same as fake data.
- 		 */
-+		mutex_lock(&ctx->lock);
- 		if (ctx->raw_edid && ctx->raw_edid !=
- 				(struct edid *)fake_edid_info) {
- 			kfree(ctx->raw_edid);
- 			ctx->raw_edid = NULL;
- 		}
-+		mutex_unlock(&ctx->lock);
- 	}
- 
-+	mutex_lock(&ctx->lock);
- 	ctx->connected = vidi->connection;
-+	mutex_unlock(&ctx->lock);
-+
- 	drm_helper_hpd_irq_event(ctx->drm_dev);
- 
- 	return 0;
-@@ -298,7 +317,7 @@ static enum drm_connector_status vidi_de
- 	 * connection request would come from user side
- 	 * to do hotplug through specific ioctl.
- 	 */
--	return ctx->connected ? connector_status_connected :
-+	return READ_ONCE(ctx->connected) ? connector_status_connected :
- 			connector_status_disconnected;
- }
- 
-@@ -320,22 +339,24 @@ static int vidi_get_modes(struct drm_con
- 	struct vidi_context *ctx = ctx_from_connector(connector);
- 	struct edid *edid;
- 	int edid_len;
--	int count;
-+	int count = 0;
- 
- 	/*
- 	 * the edid data comes from user side and it would be set
- 	 * to ctx->raw_edid through specific ioctl.
- 	 */
-+
-+	mutex_lock(&ctx->lock);
- 	if (!ctx->raw_edid) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev, "raw_edid is null.\n");
--		return 0;
-+		goto fail;
- 	}
- 
- 	edid_len = (1 + ctx->raw_edid->extensions) * EDID_LENGTH;
- 	edid = kmemdup(ctx->raw_edid, edid_len, GFP_KERNEL);
- 	if (!edid) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev, "failed to allocate edid\n");
--		return 0;
-+		goto fail;
- 	}
- 
- 	drm_connector_update_edid_property(connector, edid);
-@@ -344,6 +365,8 @@ static int vidi_get_modes(struct drm_con
- 
- 	kfree(edid);
- 
-+fail:
-+	mutex_unlock(&ctx->lock);
- 	return count;
- }
- 
-@@ -489,11 +512,15 @@ static int vidi_remove(struct platform_d
- {
- 	struct vidi_context *ctx = platform_get_drvdata(pdev);
- 
-+	mutex_lock(&ctx->lock);
-+
- 	if (ctx->raw_edid != (struct edid *)fake_edid_info) {
- 		kfree(ctx->raw_edid);
- 		ctx->raw_edid = NULL;
- 	}
- 
-+	mutex_unlock(&ctx->lock);
-+
- 	component_del(&pdev->dev, &vidi_component_ops);
- 
- 	return 0;
+ 	flags |= EXT4_GET_BLOCKS_PRE_IO;
+ 	return ext4_split_extent(handle, inode, ppath, map, split_flag, flags);
+@@ -3874,7 +3878,7 @@ ext4_ext_handle_unwritten_extents(handle
+ 	/* get_block() before submitting IO, split the extent */
+ 	if (flags & EXT4_GET_BLOCKS_PRE_IO) {
+ 		ret = ext4_split_convert_extents(handle, inode, map, ppath,
+-					 flags | EXT4_GET_BLOCKS_CONVERT);
++					 flags);
+ 		if (ret < 0) {
+ 			err = ret;
+ 			goto out2;
 
 
