@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508DC24DCF6;
-	Mon, 13 Apr 2026 16:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11A82FE598;
+	Mon, 13 Apr 2026 16:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096643; cv=none; b=gxLLXcADEeSOqB+jAhAq1Z/70/EkqtPcVi0UhfslmIZsSBBPr9UtK+H9ElOqiYuVFM6ci3UHdqmT3cES4anQ1EY8BwfKne0G5+QDSePiIHwNSWa6cjzu/AfGj0k7t9Zr9BWXfkIu7AGAG4rEPzMNmiMc5NCMuHlF13cLTrR4jjo=
+	t=1776096645; cv=none; b=EH1HyEKD6UirFOU2IQuYNb2SHxlrLYqDtBAu72fU9KSK+keUMckjeGTSvhMkhsnkpHwHHl8HZQ0hGPMqs9huGHWOObT9dzP6t9haBpFAV5GHfMdK3TXDtjukI2O3GWfqL+lI9H/TFBkW/NNUNi8MS+Kmeit626aoLXPndIaLKKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096643; c=relaxed/simple;
-	bh=tu6opv2WOhV6rWZv6WnOlg2CgXmhp5xNoL2rBI2K5Jo=;
+	s=arc-20240116; t=1776096645; c=relaxed/simple;
+	bh=U15RlfzELsh5o+DGbICD/VqtbXo2yE0MgZW1U4r8nJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0d59eY10IlPdKOSVZfq86kEA3pFXSBUMEwX5UPvjBbd8rwWlm88Y1g5LOsnSWYq8k3JtRXTZMkfgUbszSeYm5QTypKimuavrH/wosXIUXRpv/jvJUWerhqV7H4wcZBlAaw7PgsBkCN8jsG6/kIVNlF2hMGyS/ia3yT18LXULYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pP+3ujVB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hGqQwbQ6+WLZ3v/E5mLHatY+pXzrHyyaIKKE6FjSD05TL1vwGb4G1ZDClXQn9/gCQ/Nc8A7tl1+rUJvP3+D6U2mHkbIhQZlM2D8UC47hU92ccQ0QrXJK4vRd+2jOodd6hq3p11VwMsrZJkV5CWomzk5i/7QrvMiZNBJg6JReeR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1ppiHL8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pP+3ujVB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7BEC2BCB0;
-	Mon, 13 Apr 2026 16:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1ppiHL8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47331C2BCB4;
+	Mon, 13 Apr 2026 16:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096643;
-	bh=tu6opv2WOhV6rWZv6WnOlg2CgXmhp5xNoL2rBI2K5Jo=;
+	s=korg; t=1776096645;
+	bh=U15RlfzELsh5o+DGbICD/VqtbXo2yE0MgZW1U4r8nJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pP+3ujVBM6Z4iFsdEO5jwdpi9iIWGvgBJp7kIE/22TUeNxRFzyXfjyazWdFdw5xkX
-	 yLpTh1jHMp6Rr5iPrHbPvw9kNX8rTDWRpbehx658eEbfRoaKKsG9L0iCaTPURAliu/
-	 XRR/7qVGLOzWFCn+jh7dPZMsH5VBANrrPSKO5q5Q=
+	b=n1ppiHL8at14nTDYqVcTh3veEA9NuxXoybbh4hmL5w1Z8J16amV2k6FFMNjRZsv6H
+	 Qsf1N6NY4A9zIF4OHY3JYA4Vpszaof0cr1E0u75rBysK01ortp70mYDd1px5o7pZUM
+	 IJox33ekRnuJG+BTPLvObnTLinGZXhB3OzAp0Jj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonius <antonius@bluedragonsec.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Anderson Nascimento <anderson@allelesecurity.com>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 83/83] net: skb: fix cross-cache free of KFENCE-allocated skb head
-Date: Mon, 13 Apr 2026 18:00:51 +0200
-Message-ID: <20260413155734.087006692@linuxfoundation.org>
+Subject: [PATCH 6.18 76/83] rxrpc: Fix key/keyring checks in setsockopt(RXRPC_SECURITY_KEY/KEYRING)
+Date: Mon, 13 Apr 2026 18:00:44 +0200
+Message-ID: <20260413155733.833143162@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -52,58 +57,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: David Howells <dhowells@redhat.com>
 
-commit 0f42e3f4fe2a58394e37241d02d9ca6ab7b7d516 upstream.
+commit 2afd86ccbb2082a3c4258aea8c07e5bb6267bc2f upstream.
 
-SKB_SMALL_HEAD_CACHE_SIZE is intentionally set to a non-power-of-2
-value (e.g. 704 on x86_64) to avoid collisions with generic kmalloc
-bucket sizes. This ensures that skb_kfree_head() can reliably use
-skb_end_offset to distinguish skb heads allocated from
-skb_small_head_cache vs. generic kmalloc caches.
+An AF_RXRPC socket can be both client and server at the same time.  When
+sending new calls (ie. it's acting as a client), it uses rx->key to set the
+security, and when accepting incoming calls (ie. it's acting as a server),
+it uses rx->securities.
 
-However, when KFENCE is enabled, kfence_ksize() returns the exact
-requested allocation size instead of the slab bucket size. If a caller
-(e.g. bpf_test_init) allocates skb head data via kzalloc() and the
-requested size happens to equal SKB_SMALL_HEAD_CACHE_SIZE, then
-slab_build_skb() -> ksize() returns that exact value. After subtracting
-skb_shared_info overhead, skb_end_offset ends up matching
-SKB_SMALL_HEAD_HEADROOM, causing skb_kfree_head() to incorrectly free
-the object to skb_small_head_cache instead of back to the original
-kmalloc cache, resulting in a slab cross-cache free:
+setsockopt(RXRPC_SECURITY_KEY) sets rx->key to point to an rxrpc-type key
+and setsockopt(RXRPC_SECURITY_KEYRING) sets rx->securities to point to a
+keyring of rxrpc_s-type keys.
 
-  kmem_cache_free(skbuff_small_head): Wrong slab cache. Expected
-  skbuff_small_head but got kmalloc-1k
+Now, it should be possible to use both rx->key and rx->securities on the
+same socket - but for userspace AF_RXRPC sockets rxrpc_setsockopt()
+prevents that.
 
-Fix this by always calling kfree(head) in skb_kfree_head(). This keeps
-the free path generic and avoids allocator-specific misclassification
-for KFENCE objects.
+Fix this by:
 
-Fixes: bf9f1baa279f ("net: add dedicated kmem_cache for typical/small skb->head")
-Reported-by: Antonius <antonius@bluedragonsec.com>
-Closes: https://lore.kernel.org/netdev/CAK8a0jxC5L5N7hq-DT2_NhUyjBxrPocoiDazzsBk4TGgT1r4-A@mail.gmail.com/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260403014517.142550-1-jiayuan.chen@linux.dev
+ (1) Remove the incorrect check rxrpc_setsockopt(RXRPC_SECURITY_KEYRING)
+     makes on rx->key.
+
+ (2) Move the check that rxrpc_setsockopt(RXRPC_SECURITY_KEY) makes on
+     rx->key down into rxrpc_request_key().
+
+ (3) Remove rxrpc_request_key()'s check on rx->securities.
+
+This (in combination with a previous patch) pushes the checks down into the
+functions that set those pointers and removes the cross-checks that prevent
+both key and keyring being set.
+
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Closes: https://sashiko.dev/#/patchset/20260401105614.1696001-10-dhowells@redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Anderson Nascimento <anderson@allelesecurity.com>
+cc: Luxiao Xu <rakukuip@gmail.com>
+cc: Yuan Tan <yuantan098@gmail.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-16-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/rxrpc/af_rxrpc.c |    6 ------
+ net/rxrpc/key.c      |    2 +-
+ 2 files changed, 1 insertion(+), 7 deletions(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1042,10 +1042,7 @@ static int skb_pp_frag_ref(struct sk_buf
+--- a/net/rxrpc/af_rxrpc.c
++++ b/net/rxrpc/af_rxrpc.c
+@@ -654,9 +654,6 @@ static int rxrpc_setsockopt(struct socke
+ 			goto success;
  
- static void skb_kfree_head(void *head, unsigned int end_offset)
- {
--	if (end_offset == SKB_SMALL_HEAD_HEADROOM)
--		kmem_cache_free(net_hotdata.skb_small_head_cache, head);
--	else
--		kfree(head);
-+	kfree(head);
- }
+ 		case RXRPC_SECURITY_KEY:
+-			ret = -EINVAL;
+-			if (rx->key)
+-				goto error;
+ 			ret = -EISCONN;
+ 			if (rx->sk.sk_state != RXRPC_UNBOUND)
+ 				goto error;
+@@ -664,9 +661,6 @@ static int rxrpc_setsockopt(struct socke
+ 			goto error;
  
- static void skb_free_head(struct sk_buff *skb)
+ 		case RXRPC_SECURITY_KEYRING:
+-			ret = -EINVAL;
+-			if (rx->key)
+-				goto error;
+ 			ret = -EISCONN;
+ 			if (rx->sk.sk_state != RXRPC_UNBOUND)
+ 				goto error;
+--- a/net/rxrpc/key.c
++++ b/net/rxrpc/key.c
+@@ -622,7 +622,7 @@ int rxrpc_request_key(struct rxrpc_sock
+ 
+ 	_enter("");
+ 
+-	if (optlen <= 0 || optlen > PAGE_SIZE - 1 || rx->securities)
++	if (optlen <= 0 || optlen > PAGE_SIZE - 1 || rx->key)
+ 		return -EINVAL;
+ 
+ 	description = memdup_sockptr_nul(optval, optlen);
 
 
