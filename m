@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAAE306B0A;
-	Mon, 13 Apr 2026 16:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564CA2FE056;
+	Mon, 13 Apr 2026 16:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097494; cv=none; b=Z+joELbiZSxQU9RyhhOHpXWaCPBldRrutskjznT0VI77jezunmh6o4ig4AMolYEz6+HWeeDskjmvgGUe4XADyMphVw+XiOK0RmX5zje2C+99G26xVM7Wes4+sdSSR9eyWlPMHvn1H9FI7llP1HkchdpmAU4vyvNdlrtmAuxSjOI=
+	t=1776097497; cv=none; b=Q0o4fo7h4pbmoujYlTqgITTO2GHJ9izoP8tXklcn1596VKvuMGwCSn9AeWqPSsnk5u8i3vRA0dKHqo4HbsvudNtXhosH4uOPbsziTohLV8apJlmC5sry2V3XNJpEssLrzTJhDGqeygqJP3BfHnIwW8/bz3j4GmDqMmQGWOvBDqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097494; c=relaxed/simple;
-	bh=DxmSehe1Lfe5252h0F+E30v1vp2kmr5f2HXDwIcbUE4=;
+	s=arc-20240116; t=1776097497; c=relaxed/simple;
+	bh=byshTumN3VAZty13dbfoa9Skz8S/JIz40EFjizIhz1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+f8ojQ+TtnjNeLMBNGm//Q6snuavl83rnH9hTJpUFtIyLPD9vWEvKVteRKdaVGiHUJkcGmMiWQm/tB0cRDgcxGDMbbYag7GaTcWsde4BW4NvcaF7Dly835Bf2Os4TJQrrMVBiPhBdxLVbrZNk5BNoMJ1niK1lbZgHfUH2eEpuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBGRn+1v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mdwx7tNarAientOPlq4iALGECQ++GZcCsrRsbW0A8+l50CGze1u3yJMn3lGUxMyCvBH1MmovQ0xLY0y1dBJxAPxJLxkrbnjLviBAl0mHP0xP5pb7/AijmIHY8j0+d5l+vN9/X6T0ctlMCAM/UGJ5texRM24ovskJjatakq0UHiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgckuaFy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBGRn+1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AD8C2BCB3;
-	Mon, 13 Apr 2026 16:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgckuaFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DDEC2BCAF;
+	Mon, 13 Apr 2026 16:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097494;
-	bh=DxmSehe1Lfe5252h0F+E30v1vp2kmr5f2HXDwIcbUE4=;
+	s=korg; t=1776097497;
+	bh=byshTumN3VAZty13dbfoa9Skz8S/JIz40EFjizIhz1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBGRn+1vdi5HBK/fOQsoPSZLgQoeL8bzS8xZtRB6n1N0195nU7GjCQNsP6JRpUtf0
-	 PcLO1xwpQdaV8RkP1Ap3qgNXa8UChq96GvRVANuUa44RrWu1q4+RaqDrgCSWWmr5HM
-	 W5B4oGQ4ro6OWAIsMHKWAg6vKK2NVChdnXfSLGjQ=
+	b=XgckuaFyZykfa7FrvYjCcdQudgt+idgZfbtt4ef3tSsjCncAPiMWFrIiwCGAeIZ3e
+	 bwZMQXk1610jb9/HBEQZ4atKsYeN4Ldcf3My6Y7FtP7LOPy4alfPqv0q3Pni/fqR7k
+	 O4gJRREN6AXr+XqqC9Fodq7GymaPxX0wTJDdyVNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
+	Casey Connolly <casey.connolly@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 125/570] ASoC: amd: acp3x-rt5682-max9836: Add missing error check for clock acquisition
-Date: Mon, 13 Apr 2026 17:54:16 +0200
-Message-ID: <20260413155835.125478029@linuxfoundation.org>
+Subject: [PATCH 5.15 126/570] ASoC: detect empty DMI strings
+Date: Mon, 13 Apr 2026 17:54:17 +0200
+Message-ID: <20260413155835.163178470@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,47 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Casey Connolly <casey.connolly@linaro.org>
 
-[ Upstream commit 53f3a900e9a383d47af7253076e19f510c5708d0 ]
+[ Upstream commit a9683730e8b1d632674f81844ed03ddfbe4821c0 ]
 
-The acp3x_5682_init() function did not check the return value of
-clk_get(), which could lead to dereferencing error pointers in
-rt5682_clk_enable().
+Some bootloaders like recent versions of U-Boot may install some DMI
+properties with empty values rather than not populate them. This manages
+to make its way through the validator and cleanup resulting in a rogue
+hyphen being appended to the card longname.
 
-Fix this by:
-1. Changing clk_get() to the device-managed devm_clk_get().
-2. Adding proper IS_ERR() checks for both clock acquisitions.
-
-Fixes: 6b8e4e7db3cd ("ASoC: amd: Add machine driver for Raven based platform")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://patch.msgid.link/20260310024246.2153827-1-nichen@iscas.ac.cn
+Fixes: 4e01e5dbba96 ("ASoC: improve the DMI long card code in asoc-core")
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Link: https://patch.msgid.link/20260306174707.283071-2-casey.connolly@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp3x-rt5682-max9836.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/soc/soc-core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/acp3x-rt5682-max9836.c b/sound/soc/amd/acp3x-rt5682-max9836.c
-index e561464f7d603..f8f268090d8a8 100644
---- a/sound/soc/amd/acp3x-rt5682-max9836.c
-+++ b/sound/soc/amd/acp3x-rt5682-max9836.c
-@@ -83,8 +83,13 @@ static int acp3x_5682_init(struct snd_soc_pcm_runtime *rtd)
- 		return ret;
- 	}
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index e406c896a511a..af8554e96035f 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -1665,12 +1665,15 @@ static void cleanup_dmi_name(char *name)
  
--	rt5682_dai_wclk = clk_get(component->dev, "rt5682-dai-wclk");
--	rt5682_dai_bclk = clk_get(component->dev, "rt5682-dai-bclk");
-+	rt5682_dai_wclk = devm_clk_get(component->dev, "rt5682-dai-wclk");
-+	if (IS_ERR(rt5682_dai_wclk))
-+		return PTR_ERR(rt5682_dai_wclk);
+ /*
+  * Check if a DMI field is valid, i.e. not containing any string
+- * in the black list.
++ * in the black list and not the empty string.
+  */
+ static int is_dmi_valid(const char *field)
+ {
+ 	int i = 0;
+ 
++	if (!field[0])
++		return 0;
 +
-+	rt5682_dai_bclk = devm_clk_get(component->dev, "rt5682-dai-bclk");
-+	if (IS_ERR(rt5682_dai_bclk))
-+		return PTR_ERR(rt5682_dai_bclk);
- 
- 	ret = snd_soc_card_jack_new(card, "Headset Jack",
- 				SND_JACK_HEADSET | SND_JACK_LINEOUT |
+ 	while (dmi_blacklist[i]) {
+ 		if (strstr(field, dmi_blacklist[i]))
+ 			return 0;
 -- 
 2.51.0
 
