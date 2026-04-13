@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F24F3168EE;
-	Mon, 13 Apr 2026 16:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0035F31619A;
+	Mon, 13 Apr 2026 16:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099114; cv=none; b=macTzG/7N9PI8gGsD0h6KdHwltJekJU57qVEEz7IwlFa+99zcU4lS0fWTcFeiqXe7Rlcx4GYUHnqICt5vFpbYWfx8tAKqsYv397OjNTcJ579cG6BCpxafhxQUE8FwzU66CPyR/lRjc199fJo4/pV5Ept+hGkTdialh6nRfFrlWk=
+	t=1776099117; cv=none; b=Hct446GFWllAWhRnCh5BUgNe/G5BqnZbnjbV1bJ+pBiD6675zkPhPSmLB2msz8eVleW0thGcrz0KFNbthENnEuT/cuH/wdY+ljhDXTOcw1Kn2eWd0AsdRGX0qw1km0oS4H9Iy+Q4vsx3N6YA4uLvHXxfGdO9v3vaCWjUbTP4Ksc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099114; c=relaxed/simple;
-	bh=Frjx+S5VS6WH/wvR9USOxQ/yN2Do7Rkh1eX7STKNwKE=;
+	s=arc-20240116; t=1776099117; c=relaxed/simple;
+	bh=4NqUI6nGGq97Z83989m5pHbqF7DcHKVmPQaElxTPUcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=crOS2yPbQUfo/+G5L6R/c6MnB+pUNdvZgDXtqGDSexi0gmL9Zni16C5ik/OTSTRdQKBa0SUGiRcoju5wzVX498rI6Mq9WsBJLgaKPf/12h/oC9j/+G9c9Ccq+LttuYmUldYaGiAM5BYiPvChtFSINPcrBuGGZr5mGTALTpniOLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WscW2u3m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xu5urSd26BARfbvFGxhy896K3V3+SaZ0JXrlQL6jz6rawU5nkQtA/g2DrjYb2ywypt8/ikxZXAGMVugO1CvyFfFXlBqfyHVAE5jwLytq1fCgdvQTAq0J9ePIAoJnzr/BvVdlJ6ADC9CSF/oGstFyEgLV3JgiD5LBfpKnw03smPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0o8c/zG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WscW2u3m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055E5C2BCAF;
-	Mon, 13 Apr 2026 16:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0o8c/zG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9EBC2BCB0;
+	Mon, 13 Apr 2026 16:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099114;
-	bh=Frjx+S5VS6WH/wvR9USOxQ/yN2Do7Rkh1eX7STKNwKE=;
+	s=korg; t=1776099116;
+	bh=4NqUI6nGGq97Z83989m5pHbqF7DcHKVmPQaElxTPUcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WscW2u3mFOu8xDWybQXOWdhFpOhCCnMP5Er23OxvcKOvIECRE5Vs8oznPiU0FnZg8
-	 IGMGe+UUZyWrI3+Dh79Sq0EHkMXK4Cg0TjAlrn56vCutfzjWnBDCyBV89+JSmxkhh+
-	 y8r0mIIfJHvVD4YxVioe9kK955oe3b3UrDwi3KUA=
+	b=e0o8c/zGnsSM6PjXUZvsPSjX1Mg/VHCXB/A7jMdtiJ3eJSW/oR6I7DE5DL6jhjXpI
+	 6tAWTIokC3sUk0/UnrHZJJZsVJ2JgMtJMKABn7iHFXTXyb+R08XwJwLEtbeZLdDr+B
+	 QeQBrltZh44+x3d1DxwVfubZ6lLrJ7EqSx2uGn3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Andrii Melnychenko <a.melnychenko@vyos.io>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 174/491] smb: client: fix atomic open with O_DIRECT & O_SYNC
-Date: Mon, 13 Apr 2026 17:56:59 +0200
-Message-ID: <20260413155825.564298981@linuxfoundation.org>
+Subject: [PATCH 5.10 209/491] netfilter: nft_ct: add seqadj extension for natted connections
+Date: Mon, 13 Apr 2026 17:57:34 +0200
+Message-ID: <20260413155826.893711488@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -55,108 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Andrii Melnychenko <a.melnychenko@vyos.io>
 
-[ Upstream commit 4a7d2729dc99437dbb880a64c47828c0d191b308 ]
+[ Upstream commit 90918e3b6404c2a37837b8f11692471b4c512de2 ]
 
-When user application requests O_DIRECT|O_SYNC along with O_CREAT on
-open(2), CREATE_NO_BUFFER and CREATE_WRITE_THROUGH bits were missed in
-CREATE request when performing an atomic open, thus leading to
-potentially data integrity issues.
+Sequence adjustment may be required for FTP traffic with PASV/EPSV modes.
+due to need to re-write packet payload (IP, port) on the ftp control
+connection. This can require changes to the TCP length and expected
+seq / ack_seq.
 
-Fix this by setting those missing bits in CREATE request when
-O_DIRECT|O_SYNC has been specified in cifs_do_create().
+The easiest way to reproduce this issue is with PASV mode.
+Example ruleset:
+table inet ftp_nat {
+        ct helper ftp_helper {
+                type "ftp" protocol tcp
+                l3proto inet
+        }
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Acked-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ adapted file paths from fs/smb/client/ to fs/cifs/ ]
+        chain prerouting {
+                type filter hook prerouting priority 0; policy accept;
+                tcp dport 21 ct state new ct helper set "ftp_helper"
+        }
+}
+table ip nat {
+        chain prerouting {
+                type nat hook prerouting priority -100; policy accept;
+                tcp dport 21 dnat ip prefix to ip daddr map {
+			192.168.100.1 : 192.168.13.2/32 }
+        }
+
+        chain postrouting {
+                type nat hook postrouting priority 100 ; policy accept;
+                tcp sport 21 snat ip prefix to ip saddr map {
+			192.168.13.2 : 192.168.100.1/32 }
+        }
+}
+
+Note that the ftp helper gets assigned *after* the dnat setup.
+
+The inverse (nat after helper assign) is handled by an existing
+check in nf_nat_setup_info() and will not show the problem.
+
+Topoloy:
+
+ +-------------------+     +----------------------------------+
+ | FTP: 192.168.13.2 | <-> | NAT: 192.168.13.3, 192.168.100.1 |
+ +-------------------+     +----------------------------------+
+                                      |
+                         +-----------------------+
+                         | Client: 192.168.100.2 |
+                         +-----------------------+
+
+ftp nat changes do not work as expected in this case:
+Connected to 192.168.100.1.
+[..]
+ftp> epsv
+EPSV/EPRT on IPv4 off.
+ftp> ls
+227 Entering passive mode (192,168,100,1,209,129).
+421 Service not available, remote server has closed connection.
+
+Kernel logs:
+Missing nfct_seqadj_ext_add() setup call
+WARNING: CPU: 1 PID: 0 at net/netfilter/nf_conntrack_seqadj.c:41
+[..]
+ __nf_nat_mangle_tcp_packet+0x100/0x160 [nf_nat]
+ nf_nat_ftp+0x142/0x280 [nf_nat_ftp]
+ help+0x4d1/0x880 [nf_conntrack_ftp]
+ nf_confirm+0x122/0x2e0 [nf_conntrack]
+ nf_hook_slow+0x3c/0xb0
+ ..
+
+Fix this by adding the required extension when a conntrack helper is assigned
+to a connection that has a nat binding.
+
+Fixes: 1a64edf54f55 ("netfilter: nft_ct: add helper set support")
+Signed-off-by: Andrii Melnychenko <a.melnychenko@vyos.io>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 36eae0956f65 ("netfilter: nft_ct: drop pending enqueued packets on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsglob.h |   11 +++++++++++
- fs/cifs/dir.c      |    1 +
- fs/cifs/file.c     |   17 +++--------------
- 3 files changed, 15 insertions(+), 14 deletions(-)
+ net/netfilter/nft_ct.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/cifs/cifsglob.h
-+++ b/fs/cifs/cifsglob.h
-@@ -26,6 +26,7 @@
- #include <linux/mm.h>
- #include <linux/mempool.h>
- #include <linux/workqueue.h>
-+#include <linux/fcntl.h>
- #include "cifs_fs_sb.h"
- #include "cifsacl.h"
- #include <crypto/internal/hash.h>
-@@ -2124,4 +2125,14 @@ static inline bool cifs_ses_exiting(stru
- 	return ret;
+diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
+index f95f1dbc48dea..0b194628818a5 100644
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -22,6 +22,7 @@
+ #include <net/netfilter/nf_conntrack_timeout.h>
+ #include <net/netfilter/nf_conntrack_l4proto.h>
+ #include <net/netfilter/nf_conntrack_expect.h>
++#include <net/netfilter/nf_conntrack_seqadj.h>
+ 
+ struct nft_ct {
+ 	enum nft_ct_keys	key:8;
+@@ -1106,6 +1107,10 @@ static void nft_ct_helper_obj_eval(struct nft_object *obj,
+ 	if (help) {
+ 		rcu_assign_pointer(help->helper, to_assign);
+ 		set_bit(IPS_HELPER_BIT, &ct->status);
++
++		if ((ct->status & IPS_NAT_MASK) && !nfct_seqadj(ct))
++			if (!nfct_seqadj_ext_add(ct))
++				regs->verdict.code = NF_DROP;
+ 	}
  }
  
-+static inline int cifs_open_create_options(unsigned int oflags, int opts)
-+{
-+	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
-+	if (oflags & O_SYNC)
-+		opts |= CREATE_WRITE_THROUGH;
-+	if (oflags & O_DIRECT)
-+		opts |= CREATE_NO_BUFFER;
-+	return opts;
-+}
-+
- #endif	/* _CIFS_GLOB_H */
---- a/fs/cifs/dir.c
-+++ b/fs/cifs/dir.c
-@@ -348,6 +348,7 @@ cifs_do_create(struct inode *inode, stru
- 		goto out;
- 	}
- 
-+	create_options |= cifs_open_create_options(oflags, create_options);
- 	/*
- 	 * if we're not using unix extensions, see if we need to set
- 	 * ATTR_READONLY on the create call
---- a/fs/cifs/file.c
-+++ b/fs/cifs/file.c
-@@ -216,19 +216,13 @@ cifs_nt_open(char *full_path, struct ino
-  *********************************************************************/
- 
- 	disposition = cifs_get_disposition(f_flags);
--
- 	/* BB pass O_SYNC flag through on file attributes .. BB */
- 
- 	buf = kmalloc(sizeof(FILE_ALL_INFO), GFP_KERNEL);
- 	if (!buf)
- 		return -ENOMEM;
- 
--	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
--	if (f_flags & O_SYNC)
--		create_options |= CREATE_WRITE_THROUGH;
--
--	if (f_flags & O_DIRECT)
--		create_options |= CREATE_NO_BUFFER;
-+	create_options |= cifs_open_create_options(f_flags, create_options);
- 
- 	oparms.tcon = tcon;
- 	oparms.cifs_sb = cifs_sb;
-@@ -750,13 +744,8 @@ cifs_reopen_file(struct cifsFileInfo *cf
- 	}
- 
- 	desired_access = cifs_convert_flags(cfile->f_flags);
--
--	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
--	if (cfile->f_flags & O_SYNC)
--		create_options |= CREATE_WRITE_THROUGH;
--
--	if (cfile->f_flags & O_DIRECT)
--		create_options |= CREATE_NO_BUFFER;
-+	create_options |= cifs_open_create_options(cfile->f_flags,
-+						   create_options);
- 
- 	if (server->ops->get_lease_key)
- 		server->ops->get_lease_key(inode, &cfile->fid);
+-- 
+2.51.0
+
 
 
