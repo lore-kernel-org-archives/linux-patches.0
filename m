@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE1C26B971;
-	Mon, 13 Apr 2026 16:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFEE2D8364;
+	Mon, 13 Apr 2026 16:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098223; cv=none; b=B4CnAxie9Uv1Kb2jA1+YNTcQWF06Ytz2Tak44rJwNnFyb7MOzBCl5ROug8P8hbFnd0ehomMbq+X1OB04GmldnaGqiBTLD3A6z8RK2s/Jb1MN5Xl8DMOhlEaqAJOZpOKah/BddCyLEAI18jmwzZcVDVCHJ+6uhqHE1+FDxgNrRiA=
+	t=1776098225; cv=none; b=Y8z3UdI10/+uZNtIi7Szq+vkQDRUUMAMzvNFAbQYcyNf9KZwyDrm7wMuGxxz4N/Bi9t7qGQvbV0CAIM8fqHuYMWtKvT0BluU2MY2F8y6d/E60cy/dinl7NuTcFnZx5/xNvYdWHCgBbwcKBSoUmJKto4uNHqjxe5PVa+XRqVf2yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098223; c=relaxed/simple;
-	bh=mM6B2GUbaKDXtFs12YyZ/Cu/LkU6nIFwEM/vpUBNBi4=;
+	s=arc-20240116; t=1776098225; c=relaxed/simple;
+	bh=cPJJLlOvduWChpF9prrap1Zb5JmjxMsn/pW5UbPvxFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kJGQ9jt0NSe4dMfGG4/aOsP5fXU1zYI6vpmstf24K2F7dDGFTd7htd/l761ivQmazN26lkJ0FPH1fNK9DRkMrLqv/HCMxMpqScAymcEfomvfIrO6Tz/xM9xq/IzAJ2VipaTDq1ByyQ+KhUqaZdUZaMN8ooywqqQuQu7TX0R5HMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InYuCtf+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NwReo3nCzF5TteHYQZ62uzRiLFycYXjRqosspKTYAp86WU+ufSu6/tvOMIUi02rIK6NgH/77QcRi1PdLjolJoJEXgTSw0y4RGn1xTJ+SXCPnQ6pfSLzMnXp276VAFgJeMEvNKg92sHGe9Z2cOXjceGhIZR7zWvDGRaLb6gUVpoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zgv2h6zb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InYuCtf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E0AC2BCAF;
-	Mon, 13 Apr 2026 16:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zgv2h6zb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61263C2BCAF;
+	Mon, 13 Apr 2026 16:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098223;
-	bh=mM6B2GUbaKDXtFs12YyZ/Cu/LkU6nIFwEM/vpUBNBi4=;
+	s=korg; t=1776098225;
+	bh=cPJJLlOvduWChpF9prrap1Zb5JmjxMsn/pW5UbPvxFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InYuCtf+KS8e9Iz+BpfwV1JDLE6z+75WbWfjone8Wpx482upFI1XyGjxoSWAhF7DI
-	 asKjFoLEnWmd9j+s4WcJ2sSbyRT+V+A5DHbZdexqx6+7nP9RUjgnSIM80bDfqjNHdT
-	 UEbJjv7nppJ+rlfbUB5bIPG8ffJNOBXWXmCkzwWA=
+	b=zgv2h6zbI3tJisrZOSbajFsYZUXRQzPBazeFJZl/srxdQBSjLTNDHCXHKnhFpMjV7
+	 m4GbWkNUBoQA+cpcYoYtrvBENaoe4J1hUePrH/hYdFAMzRpXldh+e76tCyP2zbkgSh
+	 D3HpYZeNhBfZOXx3js/3wvclJVDzDElnR9v4/Kek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
 	Oskar Kjos <oskar.kjos@hotmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 409/570] ipv6: icmp: clear skb2->cb[] in ip6_err_gen_icmpv6_unreach()
-Date: Mon, 13 Apr 2026 17:59:00 +0200
-Message-ID: <20260413155845.789293751@linuxfoundation.org>
+Subject: [PATCH 5.15 410/570] ip6_tunnel: clear skb2->cb[] in ip4ip6_err()
+Date: Mon, 13 Apr 2026 17:59:01 +0200
+Message-ID: <20260413155845.825998868@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -55,64 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 86ab3e55673a7a49a841838776f1ab18d23a67b5 ]
+[ Upstream commit 2edfa31769a4add828a7e604b21cb82aaaa05925 ]
 
-Sashiko AI-review observed:
+Oskar Kjos reported the following problem.
 
-  In ip6_err_gen_icmpv6_unreach(), the skb is an outer IPv4 ICMP error packet
-  where its cb contains an IPv4 inet_skb_parm. When skb is cloned into skb2
-  and passed to icmp6_send(), it uses IP6CB(skb2).
+ip4ip6_err() calls icmp_send() on a cloned skb whose cb[] was written
+by the IPv6 receive path as struct inet6_skb_parm. icmp_send() passes
+IPCB(skb2) to __ip_options_echo(), which interprets that cb[] region
+as struct inet_skb_parm (IPv4). The layouts differ: inet6_skb_parm.nhoff
+at offset 14 overlaps inet_skb_parm.opt.rr, producing a non-zero rr
+value. __ip_options_echo() then reads optlen from attacker-controlled
+packet data at sptr[rr+1] and copies that many bytes into dopt->__data,
+a fixed 40-byte stack buffer (IP_OPTIONS_DATA_FIXED_SIZE).
 
-  IP6CB interprets the IPv4 inet_skb_parm as an inet6_skb_parm. The cipso
-  offset in inet_skb_parm.opt directly overlaps with dsthao in inet6_skb_parm
-  at offset 18.
+To fix this we clear skb2->cb[], as suggested by Oskar Kjos.
 
-  If an attacker sends a forged ICMPv4 error with a CIPSO IP option, dsthao
-  would be a non-zero offset. Inside icmp6_send(), mip6_addr_swap() is called
-  and uses ipv6_find_tlv(skb, opt->dsthao, IPV6_TLV_HAO).
+Also add minimal IPv4 header validation (version == 4, ihl >= 5).
 
-  This would scan the inner, attacker-controlled IPv6 packet starting at that
-  offset, potentially returning a fake TLV without checking if the remaining
-  packet length can hold the full 18-byte struct ipv6_destopt_hao.
-
-  Could mip6_addr_swap() then perform a 16-byte swap that extends past the end
-  of the packet data into skb_shared_info?
-
-  Should the cb array also be cleared in ip6_err_gen_icmpv6_unreach() and
-  ip6ip6_err() to prevent this?
-
-This patch implements the first suggestion.
-
-I am not sure if ip6ip6_err() needs to be changed.
-A separate patch would be better anyway.
-
-Fixes: ca15a078bd90 ("sit: generate icmpv6 error when receiving icmpv4 error")
-Reported-by: Ido Schimmel <idosch@nvidia.com>
-Closes: https://sashiko.dev/#/patchset/20260326155138.2429480-1-edumazet%40google.com
+Fixes: c4d3efafcc93 ("[IPV6] IP6TUNNEL: Add support to IPv4 over IPv6 tunnel.")
+Reported-by: Oskar Kjos <oskar.kjos@hotmail.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Oskar Kjos <oskar.kjos@hotmail.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260326202608.2976021-1-edumazet@google.com
+Link: https://patch.msgid.link/20260326155138.2429480-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/icmp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv6/ip6_tunnel.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index 8601c76f3cc93..6f053874de741 100644
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -674,6 +674,9 @@ int ip6_err_gen_icmpv6_unreach(struct sk_buff *skb, int nhs, int type,
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 7c1b5d01f8203..53930c28b6946 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -603,11 +603,16 @@ ip4ip6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
  	if (!skb2)
- 		return 1;
+ 		return 0;
  
-+	/* Remove debris left by IPv4 stack. */
-+	memset(IP6CB(skb2), 0, sizeof(*IP6CB(skb2)));
++	/* Remove debris left by IPv6 stack. */
++	memset(IPCB(skb2), 0, sizeof(*IPCB(skb2)));
 +
  	skb_dst_drop(skb2);
- 	skb_pull(skb2, nhs);
+ 
+ 	skb_pull(skb2, offset);
  	skb_reset_network_header(skb2);
+ 	eiph = ip_hdr(skb2);
++	if (eiph->version != 4 || eiph->ihl < 5)
++		goto out;
+ 
+ 	/* Try to guess incoming interface */
+ 	rt = ip_route_output_ports(dev_net(skb->dev), &fl4, NULL, eiph->saddr,
 -- 
 2.53.0
 
