@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F73314D0D;
-	Mon, 13 Apr 2026 16:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8713161BF;
+	Mon, 13 Apr 2026 16:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098941; cv=none; b=SSFmfuwcqs9qrUYASwFDTROqpwMNiOpS32aBIQU4DU6Exp3Un+7dPzYUCdu2Ryij3BQ5y0jCzi6yCf22DxGct753dNWs9fcalVqBY79z9f07MktjlOi/dDqXCukQ1A/dZNNd1aNFFb1/9PBmZjw5dnXBDjF9lbPkAvHhyZy81Hk=
+	t=1776098944; cv=none; b=ameUEQ6AFfiHG9l532CblQ59xdVGVp78eHjMsNzsua6is4wcOQPgCMSJywTToKhWJ4BSCUv/DQ8k1+d56MUszPtDUKlDjSDGe9fltXrFYXJeg92DEh2VALM5Z1+aPtPUyO2OBdp8kNsNJOqIt8XN2ThKm0Zf1w+FLxpTpYNAZ3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098941; c=relaxed/simple;
-	bh=Gcd/LCzIkpi5XZEtRXhdFUBVp6M0TBjUvo+1sXc9T1c=;
+	s=arc-20240116; t=1776098944; c=relaxed/simple;
+	bh=bHfKr70erzd/Z2pB+NQ9/Jc4UlRqhbtdH0qYSjh1+eQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4xv0l9+xuodaBUvkXqmLHaRiKTMjLgwFdfQx5HUXAtpWYFJN+159xZ5OuEm5u+IcDT+EV8g2psgOEcWNN8YhN0pycgOjsoZFcjngXqV9ybyPMRmotgEeH7+PAWxHpQddb0DKBNXv2kvCCcNf+C+ueAAp5kMXBLpGlifb93eKIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2s7ZaFGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iFPPSBH2ZP5CaxkjMLZNAP1SWGhYDjLfdeh/cJrLVX3x7LuAcD+M0tt4XGdFgC4wiC2dMcrEObiw1QGBlsEDVFYL/XpEm+WKeCqe3bIM4FQDkUsgy3z9QbscBtbvt4uSohSKQVTCz6AuV5ugwIin8QmJL4h9foyuCz4n0fJwIao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0HUAdKb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2s7ZaFGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39FB8C2BCAF;
-	Mon, 13 Apr 2026 16:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0HUAdKb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C912EC2BCAF;
+	Mon, 13 Apr 2026 16:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098941;
-	bh=Gcd/LCzIkpi5XZEtRXhdFUBVp6M0TBjUvo+1sXc9T1c=;
+	s=korg; t=1776098944;
+	bh=bHfKr70erzd/Z2pB+NQ9/Jc4UlRqhbtdH0qYSjh1+eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2s7ZaFGMNePpu33Hf9at60Wvvp5Qp2U5RDMBpy59PzjN4gVDQWxHE9/p6Pbs0qmvQ
-	 E03WHa69HuzR36Blwzg273z2YVxdZ+bxgOuXBAEPWwr6jUOw70nTMDYCHRkKl6WAah
-	 vUp6nT8VTBtk1KrRzHOGynFe/hvRwtx5z9RABgMg=
+	b=X0HUAdKb1nbRKFMHwrV9IvdSR4HTgeDiG+SGyFRCrHX9aiCBzvCjZ6QqdJreXWAlM
+	 6SS7pUDxgdOiYHbW1WtrwlvlcwKxtL+qU00cabtRUrgwvJ/bng0nCuF3wyaB+ZwhKu
+	 DfLhwd6iXdps4fSCWkNZ22HW89z3TkFa//klGBQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Raul E Rangel <rrangel@google.com>
-Subject: [PATCH 5.10 149/491] serial: 8250: Fix TX deadlock when using DMA
-Date: Mon, 13 Apr 2026 17:56:34 +0200
-Message-ID: <20260413155824.611612155@linuxfoundation.org>
+	"Bandal, Shankar" <shankar.bandal@intel.com>,
+	"Murthy, Shanth" <shanth.murthy@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 5.10 150/491] serial: 8250: Add late synchronize_irq() to shutdown to handle DW UART BUSY
+Date: Mon, 13 Apr 2026 17:56:35 +0200
+Message-ID: <20260413155824.648462911@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -44,60 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raul E Rangel <rrangel@chromium.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit a424a34b8faddf97b5af41689087e7a230f79ba7 upstream.
+commit e0a368ae79531ff92105a2692f10d83052055856 upstream.
 
-`dmaengine_terminate_async` does not guarantee that the
-`__dma_tx_complete` callback will run. The callback is currently the
-only place where `dma->tx_running` gets cleared. If the transaction is
-canceled and the callback never runs, then `dma->tx_running` will never
-get cleared and we will never schedule new TX DMA transactions again.
+When DW UART is !uart_16550_compatible, it can indicate BUSY at any
+point (when under constant Rx pressure) unless a complex sequence of
+steps is performed. Any LCR write can run a foul with the condition
+that prevents writing LCR while the UART is BUSY, which triggers
+BUSY_DETECT interrupt that seems unmaskable using IER bits.
 
-This change makes it so we clear `dma->tx_running` after we terminate
-the DMA transaction. This is "safe" because `serial8250_tx_dma_flush`
-is holding the UART port lock. The first thing the callback does is also
-grab the UART port lock, so access to `dma->tx_running` is serialized.
+Normal flow is that dw8250_handle_irq() handles BUSY_DETECT condition
+by reading USR register. This BUSY feature, however, breaks the
+assumptions made in serial8250_do_shutdown(), which runs
+synchronize_irq() after clearing IER and assumes no interrupts can
+occur after that point but then proceeds to update LCR, which on DW
+UART can trigger an interrupt.
 
-Fixes: 9e512eaaf8f4 ("serial: 8250: Fix fifo underflow on flush")
+If serial8250_do_shutdown() releases the interrupt handler before the
+handler has run and processed the BUSY_DETECT condition by read the USR
+register, the IRQ is not deasserted resulting in interrupt storm that
+triggers "irq x: nobody cared" warning leading to disabling the IRQ.
+
+Add late synchronize_irq() into serial8250_do_shutdown() to ensure
+BUSY_DETECT from DW UART is handled before port's interrupt handler is
+released. Alternative would be to add DW UART specific shutdown
+function but it would mostly duplicate the generic code and the extra
+synchronize_irq() seems pretty harmless in serial8250_do_shutdown().
+
+Fixes: 7d4008ebb1c9 ("tty: add a DesignWare 8250 driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Raul E Rangel <rrangel@google.com>
-Link: https://patch.msgid.link/20260209135815.1.I16366ecb0f62f3c96fe3dd5763fcf6f3c2b4d8cd@changeid
+Reported-by: Bandal, Shankar <shankar.bandal@intel.com>
+Tested-by: Bandal, Shankar <shankar.bandal@intel.com>
+Tested-by: Murthy, Shanth <shanth.murthy@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20260203171049.4353-7-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dma.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/tty/serial/8250/8250_port.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_dma.c
-+++ b/drivers/tty/serial/8250/8250_dma.c
-@@ -148,7 +148,22 @@ void serial8250_tx_dma_flush(struct uart
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -2485,6 +2485,12 @@ void serial8250_do_shutdown(struct uart_
+ 	 * the IRQ chain.
  	 */
- 	dma->tx_size = 0;
- 
+ 	serial_port_in(port, UART_RX);
 +	/*
-+	 * We can't use `dmaengine_terminate_sync` because `uart_flush_buffer` is
-+	 * holding the uart port spinlock.
++	 * LCR writes on DW UART can trigger late (unmaskable) IRQs.
++	 * Handle them before releasing the handler.
 +	 */
- 	dmaengine_terminate_async(dma->txchan);
++	synchronize_irq(port->irq);
 +
-+	/*
-+	 * The callback might or might not run. If it doesn't run, we need to ensure
-+	 * that `tx_running` is cleared so that we can schedule new transactions.
-+	 * If it does run, then the zombie callback will clear `tx_running` again
-+	 * and perform a no-op since `tx_size` was cleared above.
-+	 *
-+	 * In either case, we ASSUME the DMA transaction will terminate before we
-+	 * issue a new `serial8250_tx_dma`.
-+	 */
-+	dma->tx_running = 0;
- }
+ 	serial8250_rpm_put(up);
  
- int serial8250_rx_dma(struct uart_8250_port *p)
+ 	up->ops->release_irq(up);
 
 
