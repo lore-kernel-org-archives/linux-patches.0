@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BF331F9BC;
-	Mon, 13 Apr 2026 16:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B91330D23;
+	Mon, 13 Apr 2026 16:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099594; cv=none; b=qNjFiqufCuzXi1vh3cH0zY7TZoHSanoANKuOh9U86hVbWzAeXx7OPUPji0BxGwKWfC+dvr2CrC5cGPqzX5twt9tsUWu3unaqL8kyb+lGdEXHDzKMOU1OvmHbRG5BvMy6o4AK3bh2Tg38lDxEO5IBXzDtmNDKD5Z7En6iTdunC84=
+	t=1776099597; cv=none; b=pdm+aqCm21u76R0j3Oy6oZXnO5rX0hP8LTwxQoLhyr5GGQ8dlnpG68qZgFUOqrSL0QfTEyJHOmaCupn4G4xrRHPiJ3zHvSN3D6NUQOJ+63FyQiXvgJo+seMBqwm9y+149+GyIzlq/xMGpa89220vSsKjRTQjd4WjRUOz1Aj9JdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099594; c=relaxed/simple;
-	bh=pH3DiRAWrTN3XV9VIZmfMxjyFSkKoTkfl9PINllhIvg=;
+	s=arc-20240116; t=1776099597; c=relaxed/simple;
+	bh=d+RkbDvqWXElF9b3fHBb2FcvsdFLjA/W0jcnlBXvWRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhzQ303nWqVQdaN60rjoDARVTzr00i5wJZF2Z3sRNdtc/6UJD87Yfe6wZcLu4F+IyjD1caXaz2krFhH5VjHRLZRwij+C8hyBJdaWVLecdxzQGRWvyzZQ24Z7aQEsF+XTJgQ1MGTpgEMbHpJSp0u/OwkhMg0QkY766n5mgIu0wvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AeiYl8kl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GgUMkJpe6VbdOH9YwdzEmvRL3jQJmagZu4HQ8uKye23JjvBJH6O51Qp0I4yxs3fE2lPD8EGHbN+sEMw+cRX+thVYvAFXMvTnQY57uz3tEPhtefhYWaAC3gF1t3p8m7Nn0TGeARoD7cIclPa9laf4IF6unA9BwU7Qtn5cejt4lMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wq+EcfpY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AeiYl8kl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13E5C2BCAF;
-	Mon, 13 Apr 2026 16:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wq+EcfpY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740A6C2BCAF;
+	Mon, 13 Apr 2026 16:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099594;
-	bh=pH3DiRAWrTN3XV9VIZmfMxjyFSkKoTkfl9PINllhIvg=;
+	s=korg; t=1776099596;
+	bh=d+RkbDvqWXElF9b3fHBb2FcvsdFLjA/W0jcnlBXvWRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AeiYl8klWSs8py6UKln5MFBo8dCTcAuclT01XEYWFfACIfQi5R6qYgO4gcioK33NN
-	 pq4dpo0RzyGigqsUQKR0evTgig2Cf2Y4g3HsDhCgsaYbcZNcdpqKL6dKcg65U9CtFa
-	 ZYaRK866G7S0FfZYeTp733b1NeyhN1+XykI9H5Lo=
+	b=Wq+EcfpYIfhcDqzry8JvqqN8CYrm9AG/QWpovk7U5JqIvap25T4kujrTS3ffGTkcy
+	 nkII5T+PhCevU500qXDEQnkNeO3mA1BLq1qOCZSiTMS7b9HYXHUBkOL76i+U3yMNq9
+	 rU99xmacypwuH7bve3ztF1apVR5Y8YO1w1n0S7Lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.10 401/491] comedi: me4000: Fix potential overrun of firmware buffer
-Date: Mon, 13 Apr 2026 18:00:46 +0200
-Message-ID: <20260413155834.044620735@linuxfoundation.org>
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <dstsmallbird@foxmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 402/491] netfilter: ipset: drop logically empty buckets in mtype_del
+Date: Mon, 13 Apr 2026 18:00:47 +0200
+Message-ID: <20260413155834.081793120@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,65 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Yifan Wu <yifanwucs@gmail.com>
 
-commit 3fb43a7a5b44713f892c58ead2e5f3a1bc9f4ee7 upstream.
+commit 9862ef9ab0a116c6dca98842aab7de13a252ae02 upstream.
 
-`me4000_xilinx_download()` loads the firmware that was requested by
-`request_firmware()`.  It is possible for it to overrun the source
-buffer because it blindly trusts the file format.  It reads a data
-stream length from the first 4 bytes into variable `file_length` and
-reads the data stream contents of length `file_length` from offset 16
-onwards.
+mtype_del() counts empty slots below n->pos in k, but it only drops the
+bucket when both n->pos and k are zero. This misses buckets whose live
+entries have all been removed while n->pos still points past deleted slots.
 
-Add a test to ensure that the supplied firmware is long enough to
-contain the header and the data stream.  On failure, log an error and
-return `-EINVAL`.
+Treat a bucket as empty when all positions below n->pos are unused and
+release it directly instead of shrinking it further.
 
-Note: The firmware loading was totally broken before commit ac584af59945
-("staging: comedi: me4000: fix firmware downloading"), but that is the
-most sensible target for this fix.
-
-Fixes: ac584af59945 ("staging: comedi: me4000: fix firmware downloading")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260205133949.71722-1-abbotti@mev.co.uk
+Fixes: 8af1c6fbd923 ("netfilter: ipset: Fix forceadd evaluation path")
+Cc: stable@vger.kernel.org
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <dstsmallbird@foxmail.com>
+Signed-off-by: Yifan Wu <yifanwucs@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Reviewed-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/comedi/drivers/me4000.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ net/netfilter/ipset/ip_set_hash_gen.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/comedi/drivers/me4000.c
-+++ b/drivers/staging/comedi/drivers/me4000.c
-@@ -316,6 +316,18 @@ static int me4000_xilinx_download(struct
- 	unsigned int val;
- 	unsigned int i;
- 
-+	/* Get data stream length from header. */
-+	if (size >= 4) {
-+		file_length = (((unsigned int)data[0] & 0xff) << 24) +
-+			      (((unsigned int)data[1] & 0xff) << 16) +
-+			      (((unsigned int)data[2] & 0xff) << 8) +
-+			      ((unsigned int)data[3] & 0xff);
-+	}
-+	if (size < 16 || file_length > size - 16) {
-+		dev_err(dev->class_dev, "Firmware length inconsistency\n");
-+		return -EINVAL;
-+	}
-+
- 	if (!xilinx_iobase)
- 		return -ENODEV;
- 
-@@ -347,10 +359,6 @@ static int me4000_xilinx_download(struct
- 	outl(val, devpriv->plx_regbase + PLX9052_CNTRL);
- 
- 	/* Download Xilinx firmware */
--	file_length = (((unsigned int)data[0] & 0xff) << 24) +
--		      (((unsigned int)data[1] & 0xff) << 16) +
--		      (((unsigned int)data[2] & 0xff) << 8) +
--		      ((unsigned int)data[3] & 0xff);
- 	usleep_range(10, 1000);
- 
- 	for (i = 0; i < file_length; i++) {
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -1108,7 +1108,7 @@ mtype_del(struct ip_set *set, void *valu
+ 			if (!test_bit(i, n->used))
+ 				k++;
+ 		}
+-		if (n->pos == 0 && k == 0) {
++		if (k == n->pos) {
+ 			t->hregion[r].ext_size -= ext_size(n->size, dsize);
+ 			rcu_assign_pointer(hbucket(t, key), NULL);
+ 			kfree_rcu(n, rcu);
 
 
