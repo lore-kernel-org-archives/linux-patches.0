@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2338433A6EB;
-	Mon, 13 Apr 2026 17:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEACD33F5AA;
+	Mon, 13 Apr 2026 17:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099610; cv=none; b=VRSSKazXno9LAz3sjTE+hkS986vu72jmKw/4TpN0IjTqJ+A7lgt28irNzy8R4hCsLfKPAsuVMlbCAbKRpPb4QzkxYeNt+YSEMPy1kNaADhg5EL6Ff7VDvnEm2vyL6naE4LLEOHOEFeGIeWTZxqbrKvJvMzeq6I4YeXRcIFWMeoY=
+	t=1776099612; cv=none; b=SXEs6GV0Im18fbkziRPu9DH7VlPZkLkcCzjhOZiuv+hZGhWDQht4y+biMVv7lWjLNm2KVrDDSdmfQwlaWCRmOLyYuguJOH/Q0y4ITbc18be0DHea4yaHG1CZivCmSeXg3+ZPg4HW0gLmFT3eAOb+dI27DwIoBYAaQmY3Qhrs28Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099610; c=relaxed/simple;
-	bh=Bs/09FM7SkvTAUj1gV3t55VhbMvM6awt5KgvebchH2s=;
+	s=arc-20240116; t=1776099612; c=relaxed/simple;
+	bh=guu2Dtw0bKLwu8hoI6oRxqT2fSrLCIPSekJ7DHDt8uE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OXvIYB3bXKmp7BHmwIIvzI8pc0eaJU6NvLYedTFgyVQje7Sv3ugg7HehhTtyAhKfU9xYerqwEcj+KxyA01oHKebflhTK4DJ6VzFTJyN/t+fRFVoHCXQzt1aw6kTKg7OSP2+lxGxKVkw9LfRIfg23Py1HB3coXXr/Gm5sAl6Qn24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bYg9Zxjn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=My5+LYXDLKS1YoMnflQj1ywvdJPCSxP+lVGJJTsMFgHXqAZM5EI4/iORufZQdTBNklnGeevn+w3Sj4g9Z+IuyDKoyLfAgbnza1KwuIi0Igv5wFgwxv3F2LCIkj7lHsB1GdzCruu7dSwVj3gjrupFYL31q7UJr5QUDKGYDsF1ARA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWNmM8Jp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bYg9Zxjn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBF3C2BCB0;
-	Mon, 13 Apr 2026 17:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWNmM8Jp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B82C2BCAF;
+	Mon, 13 Apr 2026 17:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099610;
-	bh=Bs/09FM7SkvTAUj1gV3t55VhbMvM6awt5KgvebchH2s=;
+	s=korg; t=1776099612;
+	bh=guu2Dtw0bKLwu8hoI6oRxqT2fSrLCIPSekJ7DHDt8uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bYg9ZxjnLvc2+NXrok7mZ2GkqRbDF1Hi8xJkP8rUEc8er+OP78uWmWuTc2tIo/aoH
-	 /4i/YopxcZQsPbbaqa+7QsxZYoBoK1RbRN3nACDkI9N93sDkP/yRB2o6F5g9KdhrlL
-	 lTcTXOuHKqgMh1zk38Iwbu0fY1Ez4qBKxR5t5hoM=
+	b=HWNmM8Jp0UDRRmTvN6NHArbfRDdEMHZc55og9GfsNx5jjpCmCU7KPEKehv+jNTzMa
+	 smaagOOtGT48JWBZFrO1c+mjgbNe2yar6XVNwkGAFadz4HrMDgG9D+hjJd1vXKcViO
+	 HC8sKspSvJb7FkizTZ9h6EHJ7w8OPjzi9WTBUfU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+19bed92c97bee999e5db@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 406/491] USB: dummy-hcd: Fix locking/synchronization error
-Date: Mon, 13 Apr 2026 18:00:51 +0200
-Message-ID: <20260413155834.232191395@linuxfoundation.org>
+	Sebastian Urban <surban@surban.net>,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.10 407/491] usb: gadget: dummy_hcd: fix premature URB completion when ZLP follows partial transfer
+Date: Mon, 13 Apr 2026 18:00:52 +0200
+Message-ID: <20260413155834.269280840@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,70 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Sebastian Urban <surban@surban.net>
 
-commit 616a63ff495df12863692ab3f9f7b84e3fa7a66d upstream.
+commit f50200dd44125e445a6164e88c217472fa79cdbc upstream.
 
-Syzbot testing was able to provoke an addressing exception and crash
-in the usb_gadget_udc_reset() routine in
-drivers/usb/gadgets/udc/core.c, resulting from the fact that the
-routine was called with a second ("driver") argument of NULL.  The bad
-caller was set_link_state() in dummy_hcd.c, and the problem arose
-because of a race between a USB reset and driver unbind.
+When a gadget request is only partially transferred in transfer()
+because the per-frame bandwidth budget is exhausted, the loop advances
+to the next queued request. If that next request is a zero-length
+packet (ZLP), len evaluates to zero and the code takes the
+unlikely(len == 0) path, which sets is_short = 1. This bypasses the
+bandwidth guard ("limit < ep->ep.maxpacket && limit < len") that
+lives in the else branch and would otherwise break out of the loop for
+non-zero requests. The is_short path then completes the URB before all
+data from the first request has been transferred.
 
-These sorts of races were not supposed to be possible; commit
-7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous synchronization change"),
-along with a few followup commits, was written specifically to prevent
-them.  As it turns out, there are (at least) two errors remaining in
-the code.  Another patch will address the second error; this one is
-concerned with the first.
+Reproducer (bulk IN, high speed):
 
-The error responsible for the syzbot crash occurred because the
-stop_activity() routine will sometimes drop and then re-acquire the
-dum->lock spinlock.  A call to stop_activity() occurs in
-set_link_state() when handling an emulated USB reset, after the test
-of dum->ints_enabled and before the increment of dum->callback_usage.
-This allowed another thread (doing a driver unbind) to sneak in and
-grab the spinlock, and then clear dum->ints_enabled and dum->driver.
-Normally this other thread would have to wait for dum->callback_usage
-to go down to 0 before it would clear dum->driver, but in this case it
-didn't have to wait since dum->callback_usage had not yet been
-incremented.
+  Device side (FunctionFS with Linux AIO):
+    1. Queue a 65024-byte write via io_submit (127 * 512, i.e. a
+       multiple of the HS bulk max packet size).
+    2. Immediately queue a zero-length write (ZLP) via io_submit.
 
-The fix is to increment dum->callback_usage _before_ calling
-stop_activity() instead of after.  Then the thread doing the unbind
-will not clear dum->driver until after the call to
-usb_gadget_udc_reset() safely returns and dum->callback_usage has been
-decremented again.
+  Host side:
+    3. Submit a 65536-byte bulk IN URB.
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Reported-by: syzbot+19bed92c97bee999e5db@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/68fc7c9c.050a0220.346f24.023c.GAE@google.com/
-Tested-by: syzbot+19bed92c97bee999e5db@syzkaller.appspotmail.com
-Fixes: 7dbd8f4cabd9 ("USB: dummy-hcd: Fix erroneous synchronization change")
+  Expected: URB completes with actual_length = 65024.
+  Actual:   URB completes with actual_length = 53248, losing 11776
+            bytes that leak into subsequent URBs.
+
+At high speed the per-frame budget is 53248 bytes (512 * 13 * 8).
+The 65024-byte request exhausts this budget after 53248 bytes, leaving
+the request incomplete (req->req.actual < req->req.length). Neither
+the request nor the URB is finished, and rescan is 0, so the loop
+advances to the ZLP. For the ZLP, dev_len = 0, so len = min(12288, 0)
+= 0, taking the unlikely(len == 0) path and setting is_short = 1.
+The is_short handler then sets *status = 0, completing the URB with
+only 53248 of the expected 65024 bytes.
+
+Fix this by breaking out of the loop when the current request has
+remaining data (req->req.actual < req->req.length). The request
+resumes on the next timer tick, preserving correct data ordering.
+
+Signed-off-by: Sebastian Urban <surban@surban.net>
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/46135f42-fdbe-46b5-aac0-6ca70492af15@rowland.harvard.edu
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260315151045.1155850-1-surban@surban.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/usb/gadget/udc/dummy_hcd.c
 +++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -458,8 +458,13 @@ static void set_link_state(struct dummy_
- 
- 		/* Report reset and disconnect events to the driver */
- 		if (dum->ints_enabled && (disconnect || reset)) {
--			stop_activity(dum);
- 			++dum->callback_usage;
-+			/*
-+			 * stop_activity() can drop dum->lock, so it must
-+			 * not come between the dum->ints_enabled test
-+			 * and the ++dum->callback_usage.
-+			 */
-+			stop_activity(dum);
- 			spin_unlock(&dum->lock);
- 			if (reset)
- 				usb_gadget_udc_reset(&dum->gadget, dum->driver);
+@@ -1521,6 +1521,12 @@ top:
+ 		/* rescan to continue with any other queued i/o */
+ 		if (rescan)
+ 			goto top;
++
++		/* request not fully transferred; stop iterating to
++		 * preserve data ordering across queued requests.
++		 */
++		if (req->req.actual < req->req.length)
++			break;
+ 	}
+ 	return sent;
+ }
 
 
