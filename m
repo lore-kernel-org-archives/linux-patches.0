@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97376280CFB;
-	Mon, 13 Apr 2026 16:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C9730C359;
+	Mon, 13 Apr 2026 16:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098300; cv=none; b=mpsvb6cBZDf0O3tP0RSA8wCUSGL1TCgpnK7lEzQkcluQ6BIPNujcr9Ru4lsZFc4H+qJMuw018kxYGnnhoBKX5EOyJuaNPfnkb45oD2YctPNbaOuCc81fMoKDVsnA5hasL5SyegHVyH2Tsc2zSUOqDOVK8y2gh+nZwp8rFH0MD4s=
+	t=1776098303; cv=none; b=GCWfnhT4bvRMAH7XrjCd3/pqIv+E5hkcrpBZ/5z4hQ8XtluLH9YFQC9KDcFmpP8pvsIkbCeKr+B+iMZMHYMt1uZ0CBVCSkfQPSgA5AWl7iM46XA6shMkiPfO8ghClY0Omh99dT4VrP/zF4oSuSFGo3mZkeywH3M8XuVRt7bchZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098300; c=relaxed/simple;
-	bh=Iu1NwpXC8RtxxdV3WR0Jis31ERl6xcqfqg8l8/OpkYY=;
+	s=arc-20240116; t=1776098303; c=relaxed/simple;
+	bh=SVCAQDi8Qc+3wYu333QbWnb51/ztUnc64rBHNBzwCHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLjn3ZjNkazV/F/f88w+S9yELKyqLmL0SEipMTH3Lc0w7195+c8i3w4rxpc8UZHLUls7TJf+X3FSYvzv379LDhJFvPYfdhHr9p19KHXsxUB8YyFhrsV2loiQgZcmt8lOny49aVMF1/VLUYmQNFt9X6/qtXLA5PmeyrQuFDsfUF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahnEB7r2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R459t0sgqaPZhRQZsSu/jM06LeMkVAoZAXMxjCBnVnWy+5qccO9HNsUWHY0M8yGIFnedSFu/Ya1BEwb9qd1pQCoJMELHHM+lWK+r/KPkBTlzWrhb9s8BRfUKpMBQk6maEbslqO6jFUEJ9naUTvwb5KuRkg8hRCYDui1quBeBlNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVNG6egW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahnEB7r2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E497C2BCAF;
-	Mon, 13 Apr 2026 16:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVNG6egW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD670C2BCAF;
+	Mon, 13 Apr 2026 16:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098300;
-	bh=Iu1NwpXC8RtxxdV3WR0Jis31ERl6xcqfqg8l8/OpkYY=;
+	s=korg; t=1776098303;
+	bh=SVCAQDi8Qc+3wYu333QbWnb51/ztUnc64rBHNBzwCHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ahnEB7r2Az3PhyjFYnLe4zMlqGo7WKY1L5EewKfa4SEZn1ppDXp16TARDTpD29d23
-	 kS3KdKO6ZEgBvhz0kbgh5sLfMGAvOi1/dHpfWaep3SmAVId4P/a1Pey0zUeOF8hfpD
-	 k+y5bGOfhgnYb+p7cJr2ZA+4TGXhkVL+NCl9fDjY=
+	b=hVNG6egWk0n9ziyVxWjlgWBKqRc7zD4RJQZjBUw5rotxnPtAu0Cw8pmpwvhELXE15
+	 U82DLMgiAL8lFaiMXv/10/AlyOe5Fm2zbNu88UrKZCBBvfWCwn1ku3J6KvqgMK+L7U
+	 OmJMpaESXc65WDJh6cFa4+4F9F103B5UBIeZ/tOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Juno Choi <juno.choi@lge.com>
-Subject: [PATCH 5.15 470/570] usb: dwc2: gadget: Fix spin_lock/unlock mismatch in dwc2_hsotg_udc_stop()
-Date: Mon, 13 Apr 2026 18:00:01 +0200
-Message-ID: <20260413155848.071581383@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 440/570] hwmon: (tps53679) Fix device ID comparison and printing in tps53676_identify()
+Date: Mon, 13 Apr 2026 17:59:31 +0200
+Message-ID: <20260413155846.956451408@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,45 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juno Choi <juno.choi@lge.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit 9bb4b5ed7f8c4f95cc556bdf042b0ba2fa13557a upstream.
+[ Upstream commit ca34ee6d0307a0b4e52c870dfc1bb8a3c3eb956e ]
 
-dwc2_gadget_exit_clock_gating() internally calls call_gadget() macro,
-which expects hsotg->lock to be held since it does spin_unlock/spin_lock
-around the gadget driver callback invocation.
+tps53676_identify() uses strncmp() to compare the device ID buffer
+against a byte sequence containing embedded non-printable bytes
+(\x53\x67\x60). strncmp() is semantically wrong for binary data
+comparison; use memcmp() instead.
 
-However, dwc2_hsotg_udc_stop() calls dwc2_gadget_exit_clock_gating()
-without holding the lock. This leads to:
- - spin_unlock on a lock that is not held (undefined behavior)
- - The lock remaining held after dwc2_gadget_exit_clock_gating() returns,
-   causing a deadlock when spin_lock_irqsave() is called later in the
-   same function.
+Additionally, the buffer from i2c_smbus_read_block_data() is not
+NUL-terminated, so printing it with "%s" in the error path is
+undefined behavior and may read past the buffer. Use "%*ph" to
+hex-dump the actual bytes returned.
 
-Fix this by acquiring hsotg->lock before calling
-dwc2_gadget_exit_clock_gating() and releasing it afterwards, which
-satisfies the locking requirement of the call_gadget() macro.
+Per the datasheet, the expected device ID is the 6-byte sequence
+54 49 53 67 60 00 ("TI\x53\x67\x60\x00"), so compare all 6 bytes
+including the trailing NUL.
 
-Fixes: af076a41f8a2 ("usb: dwc2: also exit clock_gating when stopping udc while suspended")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Juno Choi <juno.choi@lge.com>
-Link: https://patch.msgid.link/20260324014910.2798425-1-juno.choi@lge.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cb3d37b59012 ("hwmon: (pmbus/tps53679) Add support for TI TPS53676")
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260330155618.77403-1-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/gadget.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/pmbus/tps53679.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -4605,7 +4605,9 @@ static int dwc2_hsotg_udc_stop(struct us
- 	/* Exit clock gating when driver is stopped. */
- 	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
- 	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
-+		spin_lock_irqsave(&hsotg->lock, flags);
- 		dwc2_gadget_exit_clock_gating(hsotg, 0);
-+		spin_unlock_irqrestore(&hsotg->lock, flags);
+diff --git a/drivers/hwmon/pmbus/tps53679.c b/drivers/hwmon/pmbus/tps53679.c
+index 81b9d813655ad..de91996886dbb 100644
+--- a/drivers/hwmon/pmbus/tps53679.c
++++ b/drivers/hwmon/pmbus/tps53679.c
+@@ -156,8 +156,8 @@ static int tps53676_identify(struct i2c_client *client,
+ 	ret = i2c_smbus_read_block_data(client, PMBUS_IC_DEVICE_ID, buf);
+ 	if (ret < 0)
+ 		return ret;
+-	if (strncmp("TI\x53\x67\x60", buf, 5)) {
+-		dev_err(&client->dev, "Unexpected device ID: %s\n", buf);
++	if (ret != 6 || memcmp(buf, "TI\x53\x67\x60\x00", 6)) {
++		dev_err(&client->dev, "Unexpected device ID: %*ph\n", ret, buf);
+ 		return -ENODEV;
  	}
  
- 	/* all endpoints should be shutdown */
+-- 
+2.53.0
+
 
 
