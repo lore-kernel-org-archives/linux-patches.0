@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E306B30DEB5;
-	Mon, 13 Apr 2026 16:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790BF307AC7;
+	Mon, 13 Apr 2026 16:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098311; cv=none; b=S16M4lf34tfUc1e6SNADq3/ArBqL4viFmQ41MaLPRNwiMh0BrcRBeXJ8YLPis89/gkLIgkV0i9+T336nEd6de/0ECb0APCRapzLvHO6hARAK4c6dox/tSbG87Z0EWIBi6WAOuv4C7n4RnrSPL3yrBChdfm1u35XB51bcpLp8sEs=
+	t=1776098313; cv=none; b=vDp+319H9qgrztBoutK/Em9WlU2CRimfB1RbRuTxQCdZrYLZT5nX57q515dfKhqLvCvBrH+npPoBxmsq6k0GpjFggJQF0fHvMk9eV7/D8kfN+IlSev8v/ZjQGTigowB5Aa7ejr+LSrDD1SdWJ2EnrgQmYkiHxDxDExK/S6MwYrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098311; c=relaxed/simple;
-	bh=4NZ9K7BeQhUTNEoiCj8nojtg7gsHLBbS/Q0+NiujwQ0=;
+	s=arc-20240116; t=1776098313; c=relaxed/simple;
+	bh=qj5mFLj1SGDlSHCGilhA4ddopw3VnQqAPjs1Es5WTLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOuQWroZrNEAB78S0TTRTW+yJy259oMIz8kD/t63iYoazKG/Dwh7fFKxF3oXZFc+m+efhUS+jPGL0HADiNszeXQNAc1faRoMDz8ZEoKtXADJBq0ffHmy6EE3go+wy4Kb5AQAPmrYxAU5aiQHbkKiAfKZfHt7+VxBg6dSLACkC2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbzqdpeL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RJB9nMzwJjkRy+VhAbs0ez/xe2tcwYTSdpyFgGujZ5cgLiU/Mmj9vIZbjUEnumhdEui6pDZZ7/U3zOLQuT4xSsDB3s7WDk6XZ4lIrzzrIY/E4/e+01BS7tMtKtchizO1F7pizue4rKeB2XVM8RkqXH7EV5YSqbfV5AR17ic3vf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUqlUROd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbzqdpeL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA02C2BCAF;
-	Mon, 13 Apr 2026 16:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUqlUROd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F6DCC2BCAF;
+	Mon, 13 Apr 2026 16:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098310;
-	bh=4NZ9K7BeQhUTNEoiCj8nojtg7gsHLBbS/Q0+NiujwQ0=;
+	s=korg; t=1776098313;
+	bh=qj5mFLj1SGDlSHCGilhA4ddopw3VnQqAPjs1Es5WTLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DbzqdpeLlB4VoowRd1DFR0OPOb9iSmeC2WmwWAOm7URGJFFFiNZHYqQ+4sYwMgMuq
-	 Y74dH1k8WQDnmv2OUrNbMaf0k+sRJnmZrIYQ8OYAd4AxxIxBf2UF6HYAsjlu8gH5qR
-	 kZbhiyum7Wl1z4lIgLZ9O3LGc6gFbmS0xWBpAQA8=
+	b=TUqlUROd7aQ/qbCDq+AEfwUeW9JqIgAM1G9jfIiLr3M+RCbOSjztb/UA85sKHj0nr
+	 3wcQfNsi+esIH57WcU2buAopo0YiLRXgvZghg5uzlm0fObrpEDHwXV0TXazuxwWXwg
+	 d/qMmMLUHnzIXCzSTEaxjUZMj6X2kqC6jq29aIXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 443/570] drm/ioc32: stop speculation on the drm_compat_ioctl path
-Date: Mon, 13 Apr 2026 17:59:34 +0200
-Message-ID: <20260413155847.066119422@linuxfoundation.org>
+	Yasuaki Torimaru <yasuakitorimaru@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 444/570] wifi: wilc1000: fix u8 overflow in SSID scan buffer size calculation
+Date: Mon, 13 Apr 2026 17:59:35 +0200
+Message-ID: <20260413155847.102709959@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,51 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
 
-commit f8995c2df519f382525ca4bc90553ad2ec611067 upstream.
+commit d049e56b1739101d1c4d81deedb269c52a8dbba0 upstream.
 
-The drm compat ioctl path takes a user controlled pointer, and then
-dereferences it into a table of function pointers, the signature method
-of spectre problems.  Fix this up by calling array_index_nospec() on the
-index to the function pointer list.
+The variable valuesize is declared as u8 but accumulates the total
+length of all SSIDs to scan. Each SSID contributes up to 33 bytes
+(IEEE80211_MAX_SSID_LEN + 1), and with WILC_MAX_NUM_PROBED_SSID (10)
+SSIDs the total can reach 330, which wraps around to 74 when stored
+in a u8.
 
-Fixes: 505b5240329b ("drm/ioctl: Fix Spectre v1 vulnerabilities")
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_2000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Simona Vetter <simona@ffwll.ch>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/2026032451-playing-rummage-8fa2@gregkh
+This causes kmalloc to allocate only 75 bytes while the subsequent
+memcpy writes up to 331 bytes into the buffer, resulting in a 256-byte
+heap buffer overflow.
+
+Widen valuesize from u8 to u32 to accommodate the full range.
+
+Fixes: c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11 driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+Link: https://patch.msgid.link/20260324100624.983458-1-yasuakitorimaru@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_ioc32.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/microchip/wilc1000/hif.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_ioc32.c
-+++ b/drivers/gpu/drm/drm_ioc32.c
-@@ -28,6 +28,7 @@
-  * IN THE SOFTWARE.
-  */
- #include <linux/compat.h>
-+#include <linux/nospec.h>
- #include <linux/ratelimit.h>
- #include <linux/export.h>
+--- a/drivers/net/wireless/microchip/wilc1000/hif.c
++++ b/drivers/net/wireless/microchip/wilc1000/hif.c
+@@ -157,7 +157,7 @@ int wilc_scan(struct wilc_vif *vif, u8 s
+ 	u32 index = 0;
+ 	u32 i, scan_timeout;
+ 	u8 *buffer;
+-	u8 valuesize = 0;
++	u32 valuesize = 0;
+ 	u8 *search_ssid_vals = NULL;
+ 	struct host_if_drv *hif_drv = vif->hif_drv;
  
-@@ -982,6 +983,7 @@ long drm_compat_ioctl(struct file *filp,
- 	if (nr >= ARRAY_SIZE(drm_compat_ioctls))
- 		return drm_ioctl(filp, cmd, arg);
- 
-+	nr = array_index_nospec(nr, ARRAY_SIZE(drm_compat_ioctls));
- 	fn = drm_compat_ioctls[nr].fn;
- 	if (!fn)
- 		return drm_ioctl(filp, cmd, arg);
 
 
