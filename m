@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DAF311C15;
-	Mon, 13 Apr 2026 16:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434D530FF08;
+	Mon, 13 Apr 2026 16:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098156; cv=none; b=Rt8cF3uEpprb2nf9e8DEEMPDEe0eMQtKHR67caIjupZ3Epag0yNy2fLkwUZVDb5Xow/NrTJLwFJxADjj3fE6zjQCydmLWqecia7f2WBVoV8TxDGwuDZinU898Ix2No8mshL1QqOzWyzXMjZPsgmF2Z4iPqU2KPBkE3FSoGosX6I=
+	t=1776098159; cv=none; b=dumPa5WFEVu8XeAOv+5nwnjXacOL1LFD1QoauuN3Uq48f7BGsNqRuhV5qTx+cBFJEVjIsz1wBoNRpz7Rvi9mCVDP+ZBQobAkaRybRDBKmWlLGbwT0Q7O9ktGKN0cW3eInI29yjoMJTIx7jnnkSnJGMTPw6xG5KG+MPaK1wDj5hU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098156; c=relaxed/simple;
-	bh=6AMNPIg4d5OQmcYs+G6TaHaB4+W/pUfuB52DRfhtWME=;
+	s=arc-20240116; t=1776098159; c=relaxed/simple;
+	bh=9gcqSvZajY9Ellc3zS3W1W8ywBzF9Y7B3Pak/nqBHW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E2AEBDp+PcXfSwGFz/vJlTWjRxIo/wnX+mOIFABzL+5pdjP5NgOrgjZnqoafUe8+w1jTXmvPkTGFN7qIKrk2Yp/eWco0x8wZs4J2duYnVGMjOlNLCPaE3aX4+2hYv6Fp2o1Nqrh0cjIDAQnt0FcIrdAfboWu83MtIrgsZ6iPwSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qODbZrfp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RT2Dj9ZE8ufzNP0To9OWS9ZR+7ztQC+TR4Y5z7O6hifPNYq8e7Nx9jNrq0KgI2ib5+GHtqSALVnJy0vrSbqe0z7d1DQlnNPcMOZW5LzUSqgUToigkAlbvjxChlNpWVmx0CP37r45lR7G/y28Qbto3JuQ3HfVszhP9tu1ne1UhR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4N2bJcX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qODbZrfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2BD0C2BCB3;
-	Mon, 13 Apr 2026 16:35:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4N2bJcX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2D6C2BCB3;
+	Mon, 13 Apr 2026 16:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098156;
-	bh=6AMNPIg4d5OQmcYs+G6TaHaB4+W/pUfuB52DRfhtWME=;
+	s=korg; t=1776098158;
+	bh=9gcqSvZajY9Ellc3zS3W1W8ywBzF9Y7B3Pak/nqBHW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qODbZrfpbzPbmMGT7iG5mc+lLiQTwApcMzCzb6dXBPcLV5TSNy+R9xU38AMK0D3Ui
-	 g9u3ZdOi4kaySwQfSzi2Ix1zqyHKmYXBk0lxYvUoYc/Hiai0KgA45k9e27DCEGimdZ
-	 xRxkOKPWfqIsUakozJTMk94CP2Wpwknv9YEzklgc=
+	b=d4N2bJcXRShihkEpSpxaJ0egJLjWNgL7kV0c1bNxvE1E/ptEOtHq7FUxczsyF/97s
+	 zgW1zHM/etkgOudzUgjSDnKxONESTTcoAvFzBVmeWH7CICqmTKQhNwedTyHRbpROlk
+	 nwqXu3aBxZTuGLKvRcpJOz9AXJGbZeKHEnUvm2Dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Amery Hung <ameryhung@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 416/570] net: xilinx: axienet: Correct BD length masks to match AXIDMA IP spec
-Date: Mon, 13 Apr 2026 17:59:07 +0200
-Message-ID: <20260413155846.055884880@linuxfoundation.org>
+Subject: [PATCH 5.15 417/570] bpf: Fix regsafe() for pointers to packet
+Date: Mon, 13 Apr 2026 17:59:08 +0200
+Message-ID: <20260413155846.092969315@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,51 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 393e0b4f178ec7fce1141dacc3304e3607a92ee9 ]
+[ Upstream commit a8502a79e832b861e99218cbd2d8f4312d62e225 ]
 
-The XAXIDMA_BD_CTRL_LENGTH_MASK and XAXIDMA_BD_STS_ACTUAL_LEN_MASK
-macros were defined as 0x007FFFFF (23 bits), but the AXI DMA IP
-product guide (PG021) specifies the buffer length field as bits 25:0
-(26 bits). Update both masks to match the IP documentation.
+In case rold->reg->range == BEYOND_PKT_END && rcur->reg->range == N
+regsafe() may return true which may lead to current state with
+valid packet range not being explored. Fix the bug.
 
-In practice this had no functional impact, since Ethernet frames are
-far smaller than 2^23 bytes and the extra bits were always zero, but
-the masks should still reflect the hardware specification.
-
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20260327073238.134948-2-suraj.gupta2@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6d94e741a8ff ("bpf: Support for pointers beyond pkt_end.")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20260331204228.26726-1-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet.h b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-index 54087ce1c07cd..3b04867a1fcad 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet.h
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet.h
-@@ -103,7 +103,7 @@
- #define XAXIDMA_BD_HAS_DRE_MASK		0xF00 /* Whether has DRE mask */
- #define XAXIDMA_BD_WORDLEN_MASK		0xFF /* Whether has DRE mask */
- 
--#define XAXIDMA_BD_CTRL_LENGTH_MASK	0x007FFFFF /* Requested len */
-+#define XAXIDMA_BD_CTRL_LENGTH_MASK	GENMASK(25, 0) /* Requested len */
- #define XAXIDMA_BD_CTRL_TXSOF_MASK	0x08000000 /* First tx packet */
- #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
- #define XAXIDMA_BD_CTRL_ALL_MASK	0x0C000000 /* All control bits */
-@@ -129,7 +129,7 @@
- #define XAXIDMA_BD_CTRL_TXEOF_MASK	0x04000000 /* Last tx packet */
- #define XAXIDMA_BD_CTRL_ALL_MASK	0x0C000000 /* All control bits */
- 
--#define XAXIDMA_BD_STS_ACTUAL_LEN_MASK	0x007FFFFF /* Actual len */
-+#define XAXIDMA_BD_STS_ACTUAL_LEN_MASK	GENMASK(25, 0) /* Actual len */
- #define XAXIDMA_BD_STS_COMPLETE_MASK	0x80000000 /* Completed */
- #define XAXIDMA_BD_STS_DEC_ERR_MASK	0x40000000 /* Decode error */
- #define XAXIDMA_BD_STS_SLV_ERR_MASK	0x20000000 /* Slave error */
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 78daffc474899..13eede4c43d48 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -10599,8 +10599,13 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
+ 		 * since someone could have accessed through (ptr - k), or
+ 		 * even done ptr -= k in a register, to get a safe access.
+ 		 */
+-		if (rold->range > rcur->range)
++		if (rold->range < 0 || rcur->range < 0) {
++			/* special case for [BEYOND|AT]_PKT_END */
++			if (rold->range != rcur->range)
++				return false;
++		} else if (rold->range > rcur->range) {
+ 			return false;
++		}
+ 		/* If the offsets don't match, we can't trust our alignment;
+ 		 * nor can we be sure that we won't fall out of range.
+ 		 */
 -- 
 2.53.0
 
