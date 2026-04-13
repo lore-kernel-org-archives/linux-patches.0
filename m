@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891613093DB;
-	Mon, 13 Apr 2026 16:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AB82C0F69;
+	Mon, 13 Apr 2026 16:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096310; cv=none; b=KoNZn5P2napr3wdL/uZa6DxiPvFnOQFe+s+sEVp6uEY8ADsri9R4oPZCWfZ/zpwomkRCToUAQRGygZmwfAY+HWL/4/vB9KLf2LDaQioYCEAD2ZzRXsoS2ifsGe90RZQ31you3SH7sfbLhzqbiA9Qdd8534VES8u6U0rTfRxUV2E=
+	t=1776096313; cv=none; b=NGLYZ5dWkvVMIt6gzyh8+xzfFA1WI8eMS9Z533q/zGIJ0/49H1kaS62FyL1DZrZ0uBAU0hKqcfMImRltJ16YH6xu5QVmjHhoFkbUhKV26rgkpH1beILYJgj1R73qVlmHqmASBHfWe2c1dlTADeoZrtjFZjXQmgzj4zIICKa92zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096310; c=relaxed/simple;
-	bh=LBBrDN8l84vTa66b/ajXvXP1t9qYO6XuHkYbHK1kUqU=;
+	s=arc-20240116; t=1776096313; c=relaxed/simple;
+	bh=FRCGuzEAd0UC/VErfaL0WlhrR+wvDJVYkMO07yHTDh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHa+f64PVSvNJ1UnynAC866HJYg/K22G5uqQ00GJWwLbqgi1sbMikaDowmdocQzva+AaZEfusm3tnyl3CLf/G4zgoMa2kzIWBYMlWgkST9p5arINgsxOgrFYoUYRitOv59M3mqVMe8FNBxuhFDCNZcFtQ0Q0gx9bwxXK6isZ+1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBbZWM31; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tJoFhpc6fk+YPdanaQzHgJkgcMfgkVi/YXdNDTHsO499HYYhqRkIGjQ86wB6SAk/ZCPlQhb8vY/DRVaeU1sMo0WG3r0LZOGcPv93NwWNR9TC13nzpGyfZvoT6nV2QyYKibfmft8QMIrEXup0VPepgr9DFW5dw4eirnE3q/l1K5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SW0BuKe1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBbZWM31"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20148C2BCC9;
-	Mon, 13 Apr 2026 16:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SW0BuKe1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE959C2BCAF;
+	Mon, 13 Apr 2026 16:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096310;
-	bh=LBBrDN8l84vTa66b/ajXvXP1t9qYO6XuHkYbHK1kUqU=;
+	s=korg; t=1776096313;
+	bh=FRCGuzEAd0UC/VErfaL0WlhrR+wvDJVYkMO07yHTDh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBbZWM31VM6grnZrNbGAJUMhLSd0AQGRItzTup+o8dypS0EKjNiIsvnmv2SPeEkD3
-	 JZWVuOjUK6ALU1Q7woE9uNmnyjSGR4bCQhqfOOzg+n+fT+r7374U3VEIEFWA6atR7w
-	 uJEGFef/OUWC7D6cXjYZd0ErVOFHARsIJS7SWfFA=
+	b=SW0BuKe1sUlDHL9xBOaGdaVKFCViQEPySeTsBVB4DMV6FevKzy+qY2J8VCrDR2QeT
+	 Z8SFRhn+78KkUR4aDtA7rwv6Qh8byRj6ql0Cpw3BxUcQKZAtYx1iVgdTbnr9PP0CY9
+	 RJQZPu7sJDN6zBrIVye+2DoDiQJJkx7lsgRdZBig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Palus <jpalus@fastmail.com>,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.19 31/86] Revert "arm64: dts: rockchip: Further describe the WiFi for the Pinebook Pro"
-Date: Mon, 13 Apr 2026 17:59:38 +0200
-Message-ID: <20260413155732.735269666@linuxfoundation.org>
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Alex Dvoretsky <advoretsky@gmail.com>,
+	Patryk Holda <patryk.holda@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.19 49/86] igb: remove napi_synchronize() in igb_down()
+Date: Mon, 13 Apr 2026 17:59:56 +0200
+Message-ID: <20260413155733.399466843@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -53,70 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Alex Dvoretsky <advoretsky@gmail.com>
 
-commit 29d1f56c4f3001b7f547123e0a307c009ac717f8 upstream.
+commit b1e067240379f950a0022208e0685f3465c211cb upstream.
 
-This reverts commit 6d54d935062e2d4a7d3f779ceb9eeff108d0535d.
+When an AF_XDP zero-copy application terminates abruptly (e.g., kill -9),
+the XSK buffer pool is destroyed but NAPI polling continues.
+igb_clean_rx_irq_zc() repeatedly returns the full budget, preventing
+napi_complete_done() from clearing NAPI_STATE_SCHED.
 
-It seems there are different variants of the Wifi chipset in use on the
-Pinebook Pro. And according to the reported regression - see Closes
-below, the reverted change causes issues with one Wifi chipset.
+igb_down() calls napi_synchronize() before napi_disable() for each queue
+vector. napi_synchronize() spins waiting for NAPI_STATE_SCHED to clear,
+which never happens. igb_down() blocks indefinitely, the TX watchdog
+fires, and the TX queue remains permanently stalled.
 
-The original commit message indicates a "further description" only and
-does not indicate this would fix an actual problem, so a revert should
-not cause further problems.
+napi_disable() already handles this correctly: it sets NAPI_STATE_DISABLE.
+After a full-budget poll, __napi_poll() checks napi_disable_pending(). If
+set, it forces completion and clears NAPI_STATE_SCHED, breaking the loop
+that napi_synchronize() cannot.
 
-Fixes: 6d54d935062e ("arm64: dts: rockchip: Further describe the WiFi for the Pinebook Pro")
-Cc: Jan Palus <jpalus@fastmail.com>
-Cc: Peter Robinson <pbrobinson@gmail.com>
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+napi_synchronize() was added in commit 41f149a285da ("igb: Fix possible
+panic caused by Rx traffic arrival while interface is down").
+napi_disable() provides stronger guarantees: it prevents further
+scheduling and waits for any active poll to exit.
+Other Intel drivers (ixgbe, ice, i40e) use napi_disable() without a
+preceding napi_synchronize() in their down paths.
+
+Remove redundant napi_synchronize() call and reorder napi_disable()
+before igb_set_queue_napi() so the queue-to-NAPI mapping is only
+cleared after polling has fully stopped.
+
+Fixes: 2c6196013f84 ("igb: Add AF_XDP zero-copy Rx support")
 Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/r/aUKOlj-RvTYlrpiS@rock.grzadka/
-Tested-by: Jan Palus <jpalus@fastmail.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260210120142.698512-1-heiko@sntech.de
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Suggested-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Alex Dvoretsky <advoretsky@gmail.com>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Tested-by: Patryk Holda <patryk.holda@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts |   18 ------------------
- 1 file changed, 18 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_main.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-@@ -879,12 +879,6 @@
- 		};
- 	};
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -2203,9 +2203,8 @@ void igb_down(struct igb_adapter *adapte
  
--	wifi {
--		wifi_host_wake_l: wifi-host-wake-l {
--			rockchip,pins = <0 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
--		};
--	};
--
- 	wireless-bluetooth {
- 		bt_wake_pin: bt-wake-pin {
- 			rockchip,pins = <2 RK_PD3 RK_FUNC_GPIO &pcfg_pull_none>;
-@@ -942,19 +936,7 @@
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&sdio0_bus4 &sdio0_cmd &sdio0_clk>;
- 	sd-uhs-sdr104;
--	#address-cells = <1>;
--	#size-cells = <0>;
- 	status = "okay";
--
--	brcmf: wifi@1 {
--		compatible = "brcm,bcm4329-fmac";
--		reg = <1>;
--		interrupt-parent = <&gpio0>;
--		interrupts = <RK_PA3 IRQ_TYPE_LEVEL_HIGH>;
--		interrupt-names = "host-wake";
--		pinctrl-names = "default";
--		pinctrl-0 = <&wifi_host_wake_l>;
--	};
- };
+ 	for (i = 0; i < adapter->num_q_vectors; i++) {
+ 		if (adapter->q_vector[i]) {
+-			napi_synchronize(&adapter->q_vector[i]->napi);
+-			igb_set_queue_napi(adapter, i, NULL);
+ 			napi_disable(&adapter->q_vector[i]->napi);
++			igb_set_queue_napi(adapter, i, NULL);
+ 		}
+ 	}
  
- &sdhci {
 
 
