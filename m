@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1764C2727E2;
-	Mon, 13 Apr 2026 16:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A310E27BF6C;
+	Mon, 13 Apr 2026 16:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096460; cv=none; b=TOOj4f49azIgN599Ex+Yl/lj+bWloMVUV8viSoJe7hQ4bm0nPq4gPLP60/p8FMEQv+Jd6aQfzgoimQzak66L97Gfhd1NzANVq4ij24XK0Mw9LfwaRMRd+0zYcDyux8Y8kMKvKW/yEFylBKdq0uP4cgXdqh0xdM+rx8Fzm/2I3/g=
+	t=1776096462; cv=none; b=ffY3yCK8w0bu8Pn7BkaYlNVAYymLAH95rvJ4STbc07GkwPFyCz+9TTXi2mVWbOky4NCzMjEp8qZxI3mjJItvGgeR2AIR2ADjNE3eWKEuBxCxC17Ny3mtsL+MePSGc/DCi3OoeJLJkykZhToUOM/EySBTNmWTHf1qfw85O+bvZhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096460; c=relaxed/simple;
-	bh=Xs7vFqRcXaXefp6Lr4Se0rfRq768QxWjnRnbdVqYHDE=;
+	s=arc-20240116; t=1776096462; c=relaxed/simple;
+	bh=qeeM9TvMdxIWGmRxto4zHXXiGHVqHaf3qBr9XGVY3ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JVYRtDANPuqLFZcOojrXl10WijjK934rg7urda6NiKBRmwj/fEK1LQWlp2GiZSmj7f0LMCka1SKXTSaE8mTbt9cQURo5Y4kqh2OLFHvgjSTDzN3KdTVtJ5TiI9Z8a2NxqGCxfLSEAE75qffcTrTPlo7I5SY23jpqTIPPgk7KNv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQXYNe7P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vErvRfBn+VxnXvpLO0Oa2m4uwbZczsyX5xOOhTQT1sG03+rrZGZZXENQkN8fveQB5ffV2l9SY0/OxvhVqg6/7d77KjSAO6dTwNV9vNVZVlQ2aaFSwyt6agAv+klfgBAbMtPe1XUeuwIIKc7bjHZFlrTGtddtrVpxMG8uFOTuO4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVnEw5+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQXYNe7P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3531C2BCB4;
-	Mon, 13 Apr 2026 16:07:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVnEw5+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385FAC2BCAF;
+	Mon, 13 Apr 2026 16:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096460;
-	bh=Xs7vFqRcXaXefp6Lr4Se0rfRq768QxWjnRnbdVqYHDE=;
+	s=korg; t=1776096462;
+	bh=qeeM9TvMdxIWGmRxto4zHXXiGHVqHaf3qBr9XGVY3ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQXYNe7PjdvefSTsh4/i0s/ZtFYhvL1Tk42AZ8GRip82bQwfedAPd3ciaKJv0zIrH
-	 pQ4bZOBGYxXs6l4SyrRqIFr1F2TdO8ifATFjyaf0B27ZpuLfFaMiROZ+GxsBeXn3MQ
-	 5pnhWxOT+60aCIdkxukMlhRgBqFOPkx6I0lHnmxo=
+	b=vVnEw5+D0qCfaItoEo0MEqs1yz3S0Pkpd/Y7wf6aj7KSXWhbQ8GmsKgmmfHpsqP5o
+	 epcRe2pzIfLdtLVB1DRyMMCA7k193pv9pcbR4V1DGn+wcTV7NXnvOaHbjPtklVOgnM
+	 uWcllX1aZFj3wDK+OfOqDNDHv8RGl/QgGx0N7GJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tuan Do <tuan@calif.io>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.18 20/83] netfilter: nft_ct: fix use-after-free in timeout object destroy
-Date: Mon, 13 Apr 2026 17:59:48 +0200
-Message-ID: <20260413155731.779438510@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Michal Wilczynski <m.wilczynski@samsung.com>,
+	Drew Fustini <fustini@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.18 21/83] firmware: thead: Fix buffer overflow and use standard endian macros
+Date: Mon, 13 Apr 2026 17:59:49 +0200
+Message-ID: <20260413155731.815286683@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -50,73 +52,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tuan Do <tuan@calif.io>
+From: Michal Wilczynski <m.wilczynski@samsung.com>
 
-commit f8dca15a1b190787bbd03285304b569631160eda upstream.
+commit 88c4bd90725557796c15878b7cb70066e9e6b5ab upstream.
 
-nft_ct_timeout_obj_destroy() frees the timeout object with kfree()
-immediately after nf_ct_untimeout(), without waiting for an RCU grace
-period. Concurrent packet processing on other CPUs may still hold
-RCU-protected references to the timeout object obtained via
-rcu_dereference() in nf_ct_timeout_data().
+Addresses two issues in the TH1520 AON firmware protocol driver:
 
-Add an rcu_head to struct nf_ct_timeout and use kfree_rcu() to defer
-freeing until after an RCU grace period, matching the approach already
-used in nfnetlink_cttimeout.c.
+1. Fix a potential buffer overflow where the code used unsafe pointer
+   arithmetic to access the 'mode' field through the 'resource' pointer
+   with an offset. This was flagged by Smatch static checker as:
+   "buffer overflow 'data' 2 <= 3"
 
-KASAN report:
- BUG: KASAN: slab-use-after-free in nf_conntrack_tcp_packet+0x1381/0x29d0
- Read of size 4 at addr ffff8881035fe19c by task exploit/80
+2. Replace custom RPC_SET_BE* and RPC_GET_BE* macros with standard
+   kernel endianness conversion macros (cpu_to_be16, etc.) for better
+   portability and maintainability.
 
- Call Trace:
-  nf_conntrack_tcp_packet+0x1381/0x29d0
-  nf_conntrack_in+0x612/0x8b0
-  nf_hook_slow+0x70/0x100
-  __ip_local_out+0x1b2/0x210
-  tcp_sendmsg_locked+0x722/0x1580
-  __sys_sendto+0x2d8/0x320
+The functionality was re-tested with the GPU power-up sequence,
+confirming the GPU powers up correctly and the driver probes
+successfully.
 
- Allocated by task 75:
-  nft_ct_timeout_obj_init+0xf6/0x290
-  nft_obj_init+0x107/0x1b0
-  nf_tables_newobj+0x680/0x9c0
-  nfnetlink_rcv_batch+0xc29/0xe00
+[   12.702370] powervr ffef400000.gpu: [drm] loaded firmware
+powervr/rogue_36.52.104.182_v1.fw
+[   12.711043] powervr ffef400000.gpu: [drm] FW version v1.0 (build
+6645434 OS)
+[   12.719787] [drm] Initialized powervr 1.0.0 for ffef400000.gpu on
+minor 0
 
- Freed by task 26:
-  nft_obj_destroy+0x3f/0xa0
-  nf_tables_trans_destroy_work+0x51c/0x5c0
-  process_one_work+0x2c4/0x5a0
-
-Fixes: 7e0b2b57f01d ("netfilter: nft_ct: add ct timeout support")
+Fixes: e4b3cbd840e5 ("firmware: thead: Add AON firmware protocol driver")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/17a0ccce-060b-4b9d-a3c4-8d5d5823b1c9@stanley.mountain/
+Signed-off-by: Michal Wilczynski <m.wilczynski@samsung.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Drew Fustini <fustini@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Tuan Do <tuan@calif.io>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_conntrack_timeout.h |    1 +
- net/netfilter/nft_ct.c                       |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/thead,th1520-aon.c             |    7 --
+ include/linux/firmware/thead/thead,th1520-aon.h |   74 ------------------------
+ 2 files changed, 3 insertions(+), 78 deletions(-)
 
---- a/include/net/netfilter/nf_conntrack_timeout.h
-+++ b/include/net/netfilter/nf_conntrack_timeout.h
-@@ -14,6 +14,7 @@
- struct nf_ct_timeout {
- 	__u16			l3num;
- 	const struct nf_conntrack_l4proto *l4proto;
-+	struct rcu_head		rcu;
- 	char			data[];
- };
+--- a/drivers/firmware/thead,th1520-aon.c
++++ b/drivers/firmware/thead,th1520-aon.c
+@@ -170,10 +170,9 @@ int th1520_aon_power_update(struct th152
+ 	hdr->func = TH1520_AON_PM_FUNC_SET_RESOURCE_POWER_MODE;
+ 	hdr->size = TH1520_AON_RPC_MSG_NUM;
  
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -1021,7 +1021,7 @@ static void nft_ct_timeout_obj_destroy(c
- 	nf_queue_nf_hook_drop(ctx->net);
- 	nf_ct_untimeout(ctx->net, timeout);
- 	nf_ct_netns_put(ctx->net, ctx->family);
--	kfree(priv->timeout);
-+	kfree_rcu(priv->timeout, rcu);
- }
+-	RPC_SET_BE16(&msg.resource, 0, rsrc);
+-	RPC_SET_BE16(&msg.resource, 2,
+-		     (power_on ? TH1520_AON_PM_PW_MODE_ON :
+-				 TH1520_AON_PM_PW_MODE_OFF));
++	msg.resource = cpu_to_be16(rsrc);
++	msg.mode = cpu_to_be16(power_on ? TH1520_AON_PM_PW_MODE_ON :
++					  TH1520_AON_PM_PW_MODE_OFF);
  
- static int nft_ct_timeout_obj_dump(struct sk_buff *skb,
+ 	ret = th1520_aon_call_rpc(aon_chan, &msg);
+ 	if (ret)
+--- a/include/linux/firmware/thead/thead,th1520-aon.h
++++ b/include/linux/firmware/thead/thead,th1520-aon.h
+@@ -97,80 +97,6 @@ struct th1520_aon_rpc_ack_common {
+ #define RPC_GET_SVC_FLAG_ACK_TYPE(MESG) (((MESG)->svc & 0x40) >> 6)
+ #define RPC_SET_SVC_FLAG_ACK_TYPE(MESG, ACK) ((MESG)->svc |= (ACK) << 6)
+ 
+-#define RPC_SET_BE64(MESG, OFFSET, SET_DATA)                                \
+-	do {                                                                \
+-		u8 *data = (u8 *)(MESG);                                    \
+-		u64 _offset = (OFFSET);                                     \
+-		u64 _set_data = (SET_DATA);                                 \
+-		data[_offset + 7] = _set_data & 0xFF;                       \
+-		data[_offset + 6] = (_set_data & 0xFF00) >> 8;              \
+-		data[_offset + 5] = (_set_data & 0xFF0000) >> 16;           \
+-		data[_offset + 4] = (_set_data & 0xFF000000) >> 24;         \
+-		data[_offset + 3] = (_set_data & 0xFF00000000) >> 32;       \
+-		data[_offset + 2] = (_set_data & 0xFF0000000000) >> 40;     \
+-		data[_offset + 1] = (_set_data & 0xFF000000000000) >> 48;   \
+-		data[_offset + 0] = (_set_data & 0xFF00000000000000) >> 56; \
+-	} while (0)
+-
+-#define RPC_SET_BE32(MESG, OFFSET, SET_DATA)			    \
+-	do {							    \
+-		u8 *data = (u8 *)(MESG);			    \
+-		u64 _offset = (OFFSET);				    \
+-		u64 _set_data = (SET_DATA);			    \
+-		data[_offset + 3] = (_set_data) & 0xFF;		    \
+-		data[_offset + 2] = (_set_data & 0xFF00) >> 8;	    \
+-		data[_offset + 1] = (_set_data & 0xFF0000) >> 16;   \
+-		data[_offset + 0] = (_set_data & 0xFF000000) >> 24; \
+-	} while (0)
+-
+-#define RPC_SET_BE16(MESG, OFFSET, SET_DATA)		       \
+-	do {						       \
+-		u8 *data = (u8 *)(MESG);		       \
+-		u64 _offset = (OFFSET);			       \
+-		u64 _set_data = (SET_DATA);		       \
+-		data[_offset + 1] = (_set_data) & 0xFF;	       \
+-		data[_offset + 0] = (_set_data & 0xFF00) >> 8; \
+-	} while (0)
+-
+-#define RPC_SET_U8(MESG, OFFSET, SET_DATA)	  \
+-	do {					  \
+-		u8 *data = (u8 *)(MESG);	  \
+-		data[OFFSET] = (SET_DATA) & 0xFF; \
+-	} while (0)
+-
+-#define RPC_GET_BE64(MESG, OFFSET, PTR)                                      \
+-	do {                                                                 \
+-		u8 *data = (u8 *)(MESG);                                     \
+-		u64 _offset = (OFFSET);                                      \
+-		*(u32 *)(PTR) =                                              \
+-			(data[_offset + 7] | data[_offset + 6] << 8 |        \
+-			 data[_offset + 5] << 16 | data[_offset + 4] << 24 | \
+-			 data[_offset + 3] << 32 | data[_offset + 2] << 40 | \
+-			 data[_offset + 1] << 48 | data[_offset + 0] << 56); \
+-	} while (0)
+-
+-#define RPC_GET_BE32(MESG, OFFSET, PTR)                                      \
+-	do {                                                                 \
+-		u8 *data = (u8 *)(MESG);                                     \
+-		u64 _offset = (OFFSET);                                      \
+-		*(u32 *)(PTR) =                                              \
+-			(data[_offset + 3] | data[_offset + 2] << 8 |        \
+-			 data[_offset + 1] << 16 | data[_offset + 0] << 24); \
+-	} while (0)
+-
+-#define RPC_GET_BE16(MESG, OFFSET, PTR)                                       \
+-	do {                                                                  \
+-		u8 *data = (u8 *)(MESG);                                      \
+-		u64 _offset = (OFFSET);                                       \
+-		*(u16 *)(PTR) = (data[_offset + 1] | data[_offset + 0] << 8); \
+-	} while (0)
+-
+-#define RPC_GET_U8(MESG, OFFSET, PTR)          \
+-	do {                                   \
+-		u8 *data = (u8 *)(MESG);       \
+-		*(u8 *)(PTR) = (data[OFFSET]); \
+-	} while (0)
+-
+ /*
+  * Defines for SC PM Power Mode
+  */
 
 
