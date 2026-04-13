@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2D8317173;
-	Mon, 13 Apr 2026 16:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951E4318EC1;
+	Mon, 13 Apr 2026 16:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099124; cv=none; b=IRc6COFG7B/LtCNr+eh/7xOpt4YluZBcftOjV7RbncTezq5JiJOMYwxrL8UxbguaHIF1f8jtcaeQUK9kXS+DZZmqUxdhAsPMgKG6hrepZyzKM8OxXdKu1D/wNXlwx/GGcJ5sZIuocEca1tiXDQPi18o5B3Up5A+rTunXw+gDjY4=
+	t=1776099127; cv=none; b=CqF13kExnN1glD1LcMzuQLxyiESjKQQ3LhVtHm4yc9ErB9ymLPlLRmLlpA+v7PUpeBkSJ7YV55KypN5Y44NpHrHvjvsTpl9tbVkbUs4IGV8rUH5D/kqTnEwcYQ1d3jZbH0siL4nF7SWTdbC4FCjVH4npo5u62AegItfdJ8g7KZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099124; c=relaxed/simple;
-	bh=uafwpXwazqcMjtQfZ0rXfZCblUThewDYN4YuPfM1zrI=;
+	s=arc-20240116; t=1776099127; c=relaxed/simple;
+	bh=/BBGXEredEBYsprOWLO+NsXEoXSJlT0XK2zY6J6gY3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f056R1Siok0N5qLGmHgOF5vWjpCdfqoCMgVpp2G/YKhHx7cEBabEUf9WZ3jTG0YRozqrmYGENEz1NsjV8Q48/9fkaMYV+QopLzTjS1x6rWoGhxv41BhGI7UfI93+wGzXwy3dFeKd5EfBLcpDkOZBYKeE1OfDAthWmXnOeM6zTAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sh6iBWI3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q30EjBYGFyYSEyOfTYqDJejCFjSaHfFzW8nHAoMStxGbT/X7jsluBelUTMRQwulrF9j3qz1Im4hgq+taqoqtIrEUvgUiZQ0ckw2xTGjvxLZ8v1urtQtyGb33fj1iMwxrSi232nERTRCJ3gxF95dpRUf4W1RdcGpGZGu0/nNZ9fA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHco4hAP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sh6iBWI3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB4CC2BCB3;
-	Mon, 13 Apr 2026 16:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHco4hAP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44BBC2BCAF;
+	Mon, 13 Apr 2026 16:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099124;
-	bh=uafwpXwazqcMjtQfZ0rXfZCblUThewDYN4YuPfM1zrI=;
+	s=korg; t=1776099127;
+	bh=/BBGXEredEBYsprOWLO+NsXEoXSJlT0XK2zY6J6gY3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sh6iBWI3vpnayKjpJL4JtiSPDTEXyimOahn82N+gvjptrWRHm6ANNLlIrq5G+P6jw
-	 OkBdMzn81qAhd0csn7qEjqu+BaHNcV1cbOL4U60HWGYB1V1aBByQDlLiIEMnJ5q8KD
-	 JEQr0EtvRPbv3ZCHG4Atlib4XsRhgA0dAzUH0qcc=
+	b=xHco4hAPBCvkXMnH5FgvmGr26c9HwiSn77GNFD3LuMQq560G9LvGLiFbwS5zkM6YY
+	 vdfjZlcugnar21jbrJDahJfUgVDnAFfDr7LwpGRUAbpbUW7ZYe1DuPWZqGK+jV5eqn
+	 BtRE5dQC+GHIeK8vbm0syl1vlS1Gq1cMuei4+5ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Astrand <astrand@lysator.liu.se>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 220/491] wifi: wlcore: Return -ENOMEM instead of -EAGAIN if there is not enough headroom
-Date: Mon, 13 Apr 2026 17:57:45 +0200
-Message-ID: <20260413155827.300664346@linuxfoundation.org>
+Subject: [PATCH 5.10 221/491] net: macb: fix uninitialized rx_fs_lock
+Date: Mon, 13 Apr 2026 17:57:46 +0200
+Message-ID: <20260413155827.337872571@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,51 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit deb353d9bb009638b7762cae2d0b6e8fdbb41a69 ]
+[ Upstream commit 34b11cc56e4369bc08b1f4c4a04222d75ed596ce ]
 
-Since upstream commit e75665dd0968 ("wifi: wlcore: ensure skb headroom
-before skb_push"), wl1271_tx_allocate() and with it
-wl1271_prepare_tx_frame() returns -EAGAIN if pskb_expand_head() fails.
-However, in wlcore_tx_work_locked(), a return value of -EAGAIN from
-wl1271_prepare_tx_frame() is interpreted as the aggregation buffer being
-full. This causes the code to flush the buffer, put the skb back at the
-head of the queue, and immediately retry the same skb in a tight while
-loop.
+If hardware doesn't support RX Flow Filters, rx_fs_lock spinlock is not
+initialized leading to the following assertion splat triggerable via
+set_rxnfc callback.
 
-Because wlcore_tx_work_locked() holds wl->mutex, and the retry happens
-immediately with GFP_ATOMIC, this will result in an infinite loop and a
-CPU soft lockup. Return -ENOMEM instead so the packet is dropped and
-the loop terminates.
+INFO: trying to register non-static key.
+The code is fine but needs lockdep annotation, or maybe
+you didn't initialize this object before use?
+turning off the locking correctness validator.
+CPU: 1 PID: 949 Comm: syz.0.6 Not tainted 6.1.164+ #113
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x8d/0xba lib/dump_stack.c:106
+ assign_lock_key kernel/locking/lockdep.c:974 [inline]
+ register_lock_class+0x141b/0x17f0 kernel/locking/lockdep.c:1287
+ __lock_acquire+0x74f/0x6c40 kernel/locking/lockdep.c:4928
+ lock_acquire kernel/locking/lockdep.c:5662 [inline]
+ lock_acquire+0x190/0x4b0 kernel/locking/lockdep.c:5627
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+ _raw_spin_lock_irqsave+0x33/0x50 kernel/locking/spinlock.c:162
+ gem_del_flow_filter drivers/net/ethernet/cadence/macb_main.c:3562 [inline]
+ gem_set_rxnfc+0x533/0xac0 drivers/net/ethernet/cadence/macb_main.c:3667
+ ethtool_set_rxnfc+0x18c/0x280 net/ethtool/ioctl.c:961
+ __dev_ethtool net/ethtool/ioctl.c:2956 [inline]
+ dev_ethtool+0x229c/0x6290 net/ethtool/ioctl.c:3095
+ dev_ioctl+0x637/0x1070 net/core/dev_ioctl.c:510
+ sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
+ sock_ioctl+0x577/0x6d0 net/socket.c:1320
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
+ do_syscall_x64 arch/x86/entry/common.c:46 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-The problem was found by an experimental code review agent based on
-gemini-3.1-pro while reviewing backports into v6.18.y.
+A more straightforward solution would be to always initialize rx_fs_lock,
+just like rx_fs_list.  However, in this case the driver set_rxnfc callback
+would return with a rather confusing error code, e.g. -EINVAL.  So deny
+set_rxnfc attempts directly if the RX filtering feature is not supported
+by hardware.
 
-Assisted-by: Gemini:gemini-3.1-pro
-Fixes: e75665dd0968 ("wifi: wlcore: ensure skb headroom before skb_push")
-Cc: Peter Astrand <astrand@lysator.liu.se>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://patch.msgid.link/20260318064636.3065925-1-linux@roeck-us.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: ae8223de3df5 ("net: macb: Added support for RX filtering")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20260316103826.74506-2-pchelkin@ispras.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ti/wlcore/tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/cadence/macb_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/ti/wlcore/tx.c b/drivers/net/wireless/ti/wlcore/tx.c
-index e86cc3425e997..ac1411db8e5a8 100644
---- a/drivers/net/wireless/ti/wlcore/tx.c
-+++ b/drivers/net/wireless/ti/wlcore/tx.c
-@@ -213,7 +213,7 @@ static int wl1271_tx_allocate(struct wl1271 *wl, struct wl12xx_vif *wlvif,
- 		if (skb_headroom(skb) < (total_len - skb->len) &&
- 		    pskb_expand_head(skb, (total_len - skb->len), 0, GFP_ATOMIC)) {
- 			wl1271_free_tx_id(wl, id);
--			return -EAGAIN;
-+			return -ENOMEM;
- 		}
- 		desc = skb_push(skb, total_len - skb->len);
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index c407e8d0eb618..f49e4e0494db3 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -3381,6 +3381,9 @@ static int gem_set_rxnfc(struct net_device *netdev, struct ethtool_rxnfc *cmd)
+ 	struct macb *bp = netdev_priv(netdev);
+ 	int ret;
  
++	if (!(netdev->hw_features & NETIF_F_NTUPLE))
++		return -EOPNOTSUPP;
++
+ 	switch (cmd->cmd) {
+ 	case ETHTOOL_SRXCLSRLINS:
+ 		if ((cmd->fs.location >= bp->max_tuples)
 -- 
 2.51.0
 
