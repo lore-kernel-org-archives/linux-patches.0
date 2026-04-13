@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88E629BD87;
-	Mon, 13 Apr 2026 16:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E4F2D0C7E;
+	Mon, 13 Apr 2026 16:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098110; cv=none; b=FBjyebxvQHWpk8R1X5sr/3rZeGAeTkMZDhMucm+qegGseT0Ig1SDfLfkp+fnFgiMBUJgg6m0wQMav3S8zbxTAfgD01y7ruNQk2RblJCWAKbZ1VTLG18SIloUvu7WHU88XWlxrjRuS+lIg6iRT/YyM5fppOTOYsU+PEB4Avp3X2k=
+	t=1776098112; cv=none; b=t4X5rfdNDRbJOnC4Drr+WSUPER5AxnitoMEkrZu4KxkuzuIdo1Wj74oexFowFUKxI9XSFCPsK7bWS7iw3V12ojusHRj7GEaFHuTFNlC3ckmHLYX3aIlbDGtTPF0wF+Mk+W8/UssIRr12Egf0bzm2VFp8l3EWRDtdjwFyXgQO2bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098110; c=relaxed/simple;
-	bh=0MvQwENG2zDHnvol2j/hRsny6q4GQpiDJSdrq9DZ14o=;
+	s=arc-20240116; t=1776098112; c=relaxed/simple;
+	bh=sQg0C5L+W8d8kUDYpbl2FEvzzYHnVRPdbRFgaw2dTT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nfu0fxY5XKKz+iDJ5Mtn18MiFaaLNBU09iMfkme9U/pA/n6SGD0nF0OEFOuYbrC1ueKnYRSDnRJE/yzy2GyeNCUQyQm4nZy6L8sJ5DMs9q2LvA6aKYoZJj4B8DpQ0hbeAatJoTa/Zf0Ofr+YHCvVFEKS8IrA+NwVIIfQ7NuCeuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjKrSRbU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jl/mJYdaQwg2cSiB5o5q+FzI6Wjohrtj3lRhOMRawtu2MAvXtyH8f5anPFmA2oJC2F2mMCSsTJS+oGcwUDmVBmN5LgDXzlPsRfA+LaAWO5VOK8MZJVjCWwOR32yT9GNXxgiiS7I89r8g3gxCfNl8CogSPK+5cdNNk7v0tYG6IxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxB3kqOF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjKrSRbU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDB2C2BCB3;
-	Mon, 13 Apr 2026 16:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxB3kqOF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7ABC2BCAF;
+	Mon, 13 Apr 2026 16:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098109;
-	bh=0MvQwENG2zDHnvol2j/hRsny6q4GQpiDJSdrq9DZ14o=;
+	s=korg; t=1776098112;
+	bh=sQg0C5L+W8d8kUDYpbl2FEvzzYHnVRPdbRFgaw2dTT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjKrSRbUZTQVgWOaRpjwY7onYfrif38wDz4YIJuKRcZSsQXcc1cKBMiRBaXRxugtJ
-	 83XuzJ5IgXj9rI+bR7a4EEGUIvZa6TlO69AYBVXYOfWKo27xcs6zjSgBkc3IaXNTcF
-	 CBlzzpG8dGn5wFEBuAUnI7snp4U6VRskFC062aPM=
+	b=kxB3kqOFL79UrqDLWrKZ5hht/2HvIvLaVbwj3maw3MMD3SPYfqPM83a31/nEyFvf0
+	 Oa0ApG2tKlwt3A69aHTnWN99Rgc+GVaMQxKI3XvRhaJQ5r0Y4YAaHLBQ8R2H+uhvX4
+	 5Wkof6PKm/nWQmV7Gzi5aHIZzrT4iIjn2/kY1KP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 396/570] dmaengine: xilinx_dma: Fix reset related timeout with two-channel AXIDMA
-Date: Mon, 13 Apr 2026 17:58:47 +0200
-Message-ID: <20260413155845.307228069@linuxfoundation.org>
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 5.15 397/570] futex: Clear stale exiting pointer in futex_lock_pi() retry path
+Date: Mon, 13 Apr 2026 17:58:48 +0200
+Message-ID: <20260413155845.344311615@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,97 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit a17ce4bc6f4f9acf77ba416c36791a15602e53aa ]
+commit 210d36d892de5195e6766c45519dfb1e65f3eb83 upstream.
 
-A single AXIDMA controller can have one or two channels. When it has two
-channels, the reset for both are tied together: resetting one channel
-resets the other as well. This creates a problem where resetting one
-channel will reset the registers for both channels, including clearing
-interrupt enable bits for the other channel, which can then lead  to
-timeouts as the driver is waiting for an interrupt which never comes.
+Fuzzying/stressing futexes triggered:
 
-The driver currently has a probe-time work around for this: when a
-channel is created, the driver also resets and enables the
-interrupts. With two channels the reset for the second channel will
-clear the interrupt enables for the first one. The work around in the
-driver is just to manually enable the interrupts again in
-xilinx_dma_alloc_chan_resources().
+    WARNING: kernel/futex/core.c:825 at wait_for_owner_exiting+0x7a/0x80, CPU#11: futex_lock_pi_s/524
 
-This workaround only addresses the probe-time issue. When channels are
-reset at runtime (e.g., in xilinx_dma_terminate_all() or during error
-recovery), there's no corresponding mechanism to restore the other
-channel's interrupt enables. This leads to one channel having its
-interrupts disabled while the driver expects them to work, causing
-timeouts and DMA failures.
+When futex_lock_pi_atomic() sees the owner is exiting, it returns -EBUSY
+and stores a refcounted task pointer in 'exiting'.
 
-A proper fix is a complicated matter, as we should not reset the other
-channel when it's operating normally. So, perhaps, there should be some
-kind of synchronization for a common reset, which is not trivial to
-implement. To add to the complexity, the driver also supports other DMA
-types, like VDMA, CDMA and MCDMA, which don't have a shared reset.
+After wait_for_owner_exiting() consumes that reference, the local pointer
+is never reset to nil. Upon a retry, if futex_lock_pi_atomic() returns a
+different error, the bogus pointer is passed to wait_for_owner_exiting().
 
-However, when the two-channel AXIDMA is used in the (assumably) normal
-use case, providing DMA for a single memory-to-memory device, the common
-reset is a bit smaller issue: when something bad happens on one channel,
-or when one channel is terminated, the assumption is that we also want
-to terminate the other channel. And thus resetting both at the same time
-is "ok".
+  CPU0			     CPU1		       CPU2
+  futex_lock_pi(uaddr)
+  // acquires the PI futex
+  exit()
+    futex_cleanup_begin()
+      futex_state = EXITING;
+			     futex_lock_pi(uaddr)
+			       futex_lock_pi_atomic()
+				 attach_to_pi_owner()
+				   // observes EXITING
+				   *exiting = owner;  // takes ref
+				   return -EBUSY
+			       wait_for_owner_exiting(-EBUSY, owner)
+				 put_task_struct();   // drops ref
+			       // exiting still points to owner
+			       goto retry;
+			       futex_lock_pi_atomic()
+				 lock_pi_update_atomic()
+				   cmpxchg(uaddr)
+					*uaddr ^= WAITERS // whatever
+				   // value changed
+				 return -EAGAIN;
+			       wait_for_owner_exiting(-EAGAIN, exiting) // stale
+				 WARN_ON_ONCE(exiting)
 
-With that line of thinking we can implement a bit better work around
-than just the current probe time work around: let's enable the
-AXIDMA interrupts at xilinx_dma_start_transfer() instead.
-This ensures interrupts are enabled whenever a transfer starts,
-regardless of any prior resets that may have cleared them.
+Fix this by resetting upon retry, essentially aligning it with requeue_pi.
 
-This approach is also more logical: enable interrupts only when needed
-for a transfer, rather than at resource allocation time, and, I think,
-all the other DMA types should also use this model, but I'm reluctant to
-do such changes as I cannot test them.
-
-The reset function still enables interrupts even though it's not needed
-for AXIDMA anymore, but it's common code for all DMA types (VDMA, CDMA,
-MCDMA), so leave it unchanged to avoid affecting other variants.
-
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Fixes: c0bba3a99f07 ("dmaengine: vdma: Add Support for Xilinx AXI Direct Memory Access Engine")
-Link: https://patch.msgid.link/20260311-xilinx-dma-fix-v2-1-a725abb66e3c@ideasonboard.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3ef240eaff36 ("futex: Prevent exit livelock")
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260326001759.4129680-1-dave@stgolabs.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ kernel/futex/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index f1162f7c9a52c..7a596eaba4660 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -1190,14 +1190,6 @@ static int xilinx_dma_alloc_chan_resources(struct dma_chan *dchan)
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -3029,9 +3029,9 @@ static int futex_lock_pi(u32 __user *uad
+ 			 ktime_t *time, int trylock)
+ {
+ 	struct hrtimer_sleeper timeout, *to;
+-	struct task_struct *exiting = NULL;
+ 	struct rt_mutex_waiter rt_waiter;
+ 	struct futex_hash_bucket *hb;
++	struct task_struct *exiting;
+ 	struct futex_q q = futex_q_init;
+ 	int res, ret;
  
- 	dma_cookie_init(dchan);
+@@ -3044,6 +3044,7 @@ static int futex_lock_pi(u32 __user *uad
+ 	to = futex_setup_timer(time, &timeout, flags, 0);
  
--	if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIDMA) {
--		/* For AXI DMA resetting once channel will reset the
--		 * other channel as well so enable the interrupts here.
--		 */
--		dma_ctrl_set(chan, XILINX_DMA_REG_DMACR,
--			      XILINX_DMA_DMAXR_ALL_IRQ_MASK);
--	}
--
- 	if ((chan->xdev->dma_config->dmatype == XDMA_TYPE_CDMA) && chan->has_sg)
- 		dma_ctrl_set(chan, XILINX_DMA_REG_DMACR,
- 			     XILINX_CDMA_CR_SGMODE);
-@@ -1565,6 +1557,7 @@ static void xilinx_dma_start_transfer(struct xilinx_dma_chan *chan)
- 			     head_desc->async_tx.phys);
- 	reg  &= ~XILINX_DMA_CR_DELAY_MAX;
- 	reg  |= chan->irq_delay << XILINX_DMA_CR_DELAY_SHIFT;
-+	reg |= XILINX_DMA_DMAXR_ALL_IRQ_MASK;
- 	dma_ctrl_write(chan, XILINX_DMA_REG_DMACR, reg);
- 
- 	xilinx_dma_start(chan);
--- 
-2.53.0
-
+ retry:
++	exiting = NULL;
+ 	ret = get_futex_key(uaddr, flags & FLAGS_SHARED, &q.key, FUTEX_WRITE);
+ 	if (unlikely(ret != 0))
+ 		goto out;
 
 
