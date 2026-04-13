@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AD73346A5;
-	Mon, 13 Apr 2026 17:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1F423C8C7;
+	Mon, 13 Apr 2026 17:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099638; cv=none; b=MCsNmRqT0TaHTTPHS+mYu6mbvju8fDIaQBKaVa012gtaKDiXrZIU/bi28/8/9dc/3TIIbKVkUCYxMU8RKmfTT7/P6C9V7c+bEJ3oJCoRV4iMlOaOh98hk2/xDgGLHoJwAIXLflbrKZu5Ss3HVCC9AnOMjAsBhlvsE5gTdmMvf/k=
+	t=1776099640; cv=none; b=keVZm0PCFVrXPqKdp++Ay7PoN5a2LBZtSbJi9uRNKDO6PdCR/8hrJpPoLbyUbGLq44s+r/YQ8rz3TzlNBcDALw9DAkAUHGkY3UaNezseNAkeysz0jfxH0JEzDOJGQ9GTV3HznlHW2GZbx7SHTcm4Pr/Z+yUiK9y5Xgkumbc0j/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099638; c=relaxed/simple;
-	bh=eMbi51dIYYh4DVZBhDRN6UacBdwR8l5ggQ0VB6e1L2A=;
+	s=arc-20240116; t=1776099640; c=relaxed/simple;
+	bh=MBX4Pl3UWVuVOJ7jbUk+rFBjlDZdAjFbPwrbtpjbBSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uu2t5OgxAa72yi9uHnx8EdV2pDdE1RJ/qApYEof88LiqxQaYmVa4S+TdveXJjJAC1D/OVHVqz9pJ3XsN4SIxDl7MESb6EImzk8ggvCwA6hXjuKKZ3XmdytLXVAf7uAlgvrJAlwWQYkBHZuxVWm6fe8bGAUNioogQ9gh7cYJvnMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA4uac+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MG0UsDnA+NjwrkRmXrA9767ilVaKHWBIDzjovOjQjZDj5bbX3KdA7zOlvOQzZ2AZjP3L/X7ANplUcH3FUTPRtOuIG2VHxPvAKNlGbQ+UoMXVYBO69bl/VwG1d6w9gXlhpyqDNayeBu8btu2sQzAceYNztd3I149a7rsiAjshUXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8SohRZr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA4uac+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AD2C2BCAF;
-	Mon, 13 Apr 2026 17:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8SohRZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257D8C2BCAF;
+	Mon, 13 Apr 2026 17:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099637;
-	bh=eMbi51dIYYh4DVZBhDRN6UacBdwR8l5ggQ0VB6e1L2A=;
+	s=korg; t=1776099640;
+	bh=MBX4Pl3UWVuVOJ7jbUk+rFBjlDZdAjFbPwrbtpjbBSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BA4uac+o2wkyL4YGcdAEeZtX+SD9VLwuJXGHAndXS4t2jMA/Mz+XkQxzp34Sq1+RM
-	 phcWkPiT0fCF2y1MhgadvK7QIGognW1rosLOnYAhOIxFhOnHdGtFpMwaUWe+cgQX1V
-	 Oog1HcAZVIenWBSLJ9LxUYP6SEM4QpCcqzulL7eM=
+	b=F8SohRZrjCopRDWqxsVg5oQKmNRKBOWySiluDbuMviIKdotgR8E92Y5K21W3YYsbH
+	 Jmw7FWzFHiK13XGbXSjeL/oU5Ez/FXzC71WyfB3z0jfGAX+Efgq9+AaBDTmdgMWxEk
+	 iB2n9kW3adfIPh612Cku4TILOyg/MxGbIdj5Imgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>
-Subject: [PATCH 5.10 415/491] xfrm_user: fix info leak in build_report()
-Date: Mon, 13 Apr 2026 18:01:00 +0200
-Message-ID: <20260413155834.565058734@linuxfoundation.org>
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 416/491] Input: uinput - fix circular locking dependency with ff-core
+Date: Mon, 13 Apr 2026 18:01:01 +0200
+Message-ID: <20260413155834.602208628@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -56,40 +50,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit d10119968d0e1f2b669604baf2a8b5fdb72fa6b4 upstream.
+commit 4cda78d6f8bf2b700529f2fbccb994c3e826d7c2 upstream.
 
-struct xfrm_user_report is a __u8 proto field followed by a struct
-xfrm_selector which means there is three "empty" bytes of padding, but
-the padding is never zeroed before copying to userspace.  Fix that up by
-zeroing the structure before setting individual member variables.
+A lockdep circular locking dependency warning can be triggered
+reproducibly when using a force-feedback gamepad with uinput (for
+example, playing ELDEN RING under Wine with a Flydigi Vader 5
+controller):
 
-Cc: stable <stable@kernel.org>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+  ff->mutex -> udev->mutex -> input_mutex -> dev->mutex -> ff->mutex
+
+The cycle is caused by four lock acquisition paths:
+
+1. ff upload: input_ff_upload() holds ff->mutex and calls
+   uinput_dev_upload_effect() -> uinput_request_submit() ->
+   uinput_request_send(), which acquires udev->mutex.
+
+2. device create: uinput_ioctl_handler() holds udev->mutex and calls
+   uinput_create_device() -> input_register_device(), which acquires
+   input_mutex.
+
+3. device register: input_register_device() holds input_mutex and
+   calls kbd_connect() -> input_register_handle(), which acquires
+   dev->mutex.
+
+4. evdev release: evdev_release() calls input_flush_device() under
+   dev->mutex, which calls input_ff_flush() acquiring ff->mutex.
+
+Fix this by introducing a new state_lock spinlock to protect
+udev->state and udev->dev access in uinput_request_send() instead of
+acquiring udev->mutex.  The function only needs to atomically check
+device state and queue an input event into the ring buffer via
+uinput_dev_event() -- both operations are safe under a spinlock
+(ktime_get_ts64() and wake_up_interruptible() do not sleep).  This
+breaks the ff->mutex -> udev->mutex link since a spinlock is a leaf in
+the lock ordering and cannot form cycles with mutexes.
+
+To keep state transitions visible to uinput_request_send(), protect
+writes to udev->state in uinput_create_device() and
+uinput_destroy_device() with the same state_lock spinlock.
+
+Additionally, move init_completion(&request->done) from
+uinput_request_send() to uinput_request_submit() before
+uinput_request_reserve_slot().  Once the slot is allocated,
+uinput_flush_requests() may call complete() on it at any time from
+the destroy path, so the completion must be initialised before the
+request becomes visible.
+
+Lock ordering after the fix:
+
+  ff->mutex -> state_lock (spinlock, leaf)
+  udev->mutex -> state_lock (spinlock, leaf)
+  udev->mutex -> input_mutex -> dev->mutex -> ff->mutex (no back-edge)
+
+Fixes: ff462551235d ("Input: uinput - switch to the new FF interface")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/CABXGCsMoxag+kEwHhb7KqhuyxfmGGd0P=tHZyb1uKE0pLr8Hkg@mail.gmail.com/
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Link: https://patch.msgid.link/20260407075031.38351-1-mikhail.v.gavrilov@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/misc/uinput.c |   28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -3445,6 +3445,7 @@ static int build_report(struct sk_buff *
- 		return -EMSGSIZE;
+--- a/drivers/input/misc/uinput.c
++++ b/drivers/input/misc/uinput.c
+@@ -56,6 +56,7 @@ struct uinput_device {
+ 	struct input_dev	*dev;
+ 	struct mutex		mutex;
+ 	enum uinput_state	state;
++	spinlock_t		state_lock;
+ 	wait_queue_head_t	waitq;
+ 	unsigned char		ready;
+ 	unsigned char		head;
+@@ -145,19 +146,15 @@ static void uinput_request_release_slot(
+ static int uinput_request_send(struct uinput_device *udev,
+ 			       struct uinput_request *request)
+ {
+-	int retval;
++	int retval = 0;
  
- 	ur = nlmsg_data(nlh);
-+	memset(ur, 0, sizeof(*ur));
- 	ur->proto = proto;
- 	memcpy(&ur->sel, sel, sizeof(ur->sel));
+-	retval = mutex_lock_interruptible(&udev->mutex);
+-	if (retval)
+-		return retval;
++	spin_lock(&udev->state_lock);
  
+ 	if (udev->state != UIST_CREATED) {
+ 		retval = -ENODEV;
+ 		goto out;
+ 	}
+ 
+-	init_completion(&request->done);
+-
+ 	/*
+ 	 * Tell our userspace application about this new request
+ 	 * by queueing an input event.
+@@ -165,7 +162,7 @@ static int uinput_request_send(struct ui
+ 	uinput_dev_event(udev->dev, EV_UINPUT, request->code, request->id);
+ 
+  out:
+-	mutex_unlock(&udev->mutex);
++	spin_unlock(&udev->state_lock);
+ 	return retval;
+ }
+ 
+@@ -174,6 +171,13 @@ static int uinput_request_submit(struct
+ {
+ 	int retval;
+ 
++	/*
++	 * Initialize completion before allocating the request slot.
++	 * Once the slot is allocated, uinput_flush_requests() may
++	 * complete it at any time, so it must be initialized first.
++	 */
++	init_completion(&request->done);
++
+ 	retval = uinput_request_reserve_slot(udev, request);
+ 	if (retval)
+ 		return retval;
+@@ -288,7 +292,14 @@ static void uinput_destroy_device(struct
+ 	struct input_dev *dev = udev->dev;
+ 	enum uinput_state old_state = udev->state;
+ 
++	/*
++	 * Update state under state_lock so that concurrent
++	 * uinput_request_send() sees the state change before we
++	 * flush pending requests and tear down the device.
++	 */
++	spin_lock(&udev->state_lock);
+ 	udev->state = UIST_NEW_DEVICE;
++	spin_unlock(&udev->state_lock);
+ 
+ 	if (dev) {
+ 		name = dev->name;
+@@ -365,7 +376,9 @@ static int uinput_create_device(struct u
+ 	if (error)
+ 		goto fail2;
+ 
++	spin_lock(&udev->state_lock);
+ 	udev->state = UIST_CREATED;
++	spin_unlock(&udev->state_lock);
+ 
+ 	return 0;
+ 
+@@ -383,6 +396,7 @@ static int uinput_open(struct inode *ino
+ 		return -ENOMEM;
+ 
+ 	mutex_init(&newdev->mutex);
++	spin_lock_init(&newdev->state_lock);
+ 	spin_lock_init(&newdev->requests_lock);
+ 	init_waitqueue_head(&newdev->requests_waitq);
+ 	init_waitqueue_head(&newdev->waitq);
 
 
