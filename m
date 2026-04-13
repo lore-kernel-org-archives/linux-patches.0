@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C6049620;
-	Mon, 13 Apr 2026 16:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10BB309F09;
+	Mon, 13 Apr 2026 16:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097692; cv=none; b=jGYDjiH6yir9LjCjEc0ScgGANaKCr+0gLkZJXGFLpwiOHqDIStMUGq7vflx5AptG8Mp77l+i0La4vKK3sI/jhuxZhW29CEgVa8errgC91uTDqleDnQ80VbOllS6VQ7qPd998cyygETMt5mEecjZM/kmv0amG4L+JbEXcm2wz3F0=
+	t=1776097694; cv=none; b=VqrQYdtwY1t9RlbbqYFdLNxr2snMwRm946aJ8EIN6vI9LAPOPK3nkVY5s76bGQhPAVH3krxLsClKV5hdAnb5s+mziT5pVwd7vdtKF+w6bVve1h/1zQIqu5MLxrrO+xToDFD9va57I/Ijg3amercdgxQYfAmbsAsu58lDW4znEb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097692; c=relaxed/simple;
-	bh=J33gXQPORFGTIUsW0ZdrSFDjXZ41ZK309FpEFm7fmjs=;
+	s=arc-20240116; t=1776097694; c=relaxed/simple;
+	bh=3k918NCkzh8u3fz9aUtlKhlhEIhDvZtXBkIcCcF0XB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4pPxsASwZAstk9AStg5mzv+W9BZl7rFx0SzvT75cLw4ksVS0leAHBeSmko6LebiooRd/4tWTNMaQ+Sm58rM3C2zNttAD3kdtKhqWk0jqDrAI3YfXUdvR4T4WYUFIIUOkcI9pnGUYwrqF6ZFk3ItP1iGTSXiHc/awATAVph2giw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGeI6ygI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fYS9vx2rszT2/HfYDmXnm/6i8sjs8mO90O2LoxQtAMrLB7NlAAyySXYP7moubrJu4ZvIG6jK50UEqU/VYrW9n2j+mhF+K1sBYWrAQKQZDIBS+2qa8OATGqPazuyp3RjAzoEYl3EB+OM05YTyYPfSwjRjG+dARGZsC28F/eZ9CVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cz4xCrea; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGeI6ygI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF858C2BCB0;
-	Mon, 13 Apr 2026 16:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cz4xCrea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67136C2BCAF;
+	Mon, 13 Apr 2026 16:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097692;
-	bh=J33gXQPORFGTIUsW0ZdrSFDjXZ41ZK309FpEFm7fmjs=;
+	s=korg; t=1776097694;
+	bh=3k918NCkzh8u3fz9aUtlKhlhEIhDvZtXBkIcCcF0XB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGeI6ygIQ7hl0fGWo6KG41q1+LUgu1chONHquSY3g/EyxQt6zW/97l8GCjVDhRkeI
-	 5AOW8sjgX9uM1dLfkc2GeXb5sKyLkwEw9ErxhUuE7CdSqz9AefHymP0fJW6tGpm9Q3
-	 oW54RRJr1pPgER+4iLts5GLjOz0cFFY9cijFBNVQ=
+	b=cz4xCrea/BVrgsOiup/gRherIdam5lKqyjNJGqjjU3SEFRFtFGa9mdegzKqV/2MNy
+	 D7my3sEx41xbWIeUfSoRusZzO5pWxKmKw3mUFIhQutwFkra9bygZWGgYc6oREKS+le
+	 tlO3CVk9IBHfoo875jSUBkA5yU5DoXQV1DKyMKlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Steve French <stfrench@microsoft.com>,
+	Shiji Yang <yangshiji66@outlook.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 236/570] smb: client: Dont log plaintext credentials in cifs_set_cifscreds
-Date: Mon, 13 Apr 2026 17:56:07 +0200
-Message-ID: <20260413155839.306375666@linuxfoundation.org>
+Subject: [PATCH 5.15 237/570] net: phy: register phy led_triggers during probe to avoid AB-BA deadlock
+Date: Mon, 13 Apr 2026 17:56:08 +0200
+Message-ID: <20260413155839.344337826@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,34 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Andrew Lunn <andrew@lunn.ch>
 
-[ Upstream commit 2f37dc436d4e61ff7ae0b0353cf91b8c10396e4d ]
+[ Upstream commit c8dbdc6e380e7e96a51706db3e4b7870d8a9402d ]
 
-When debug logging is enabled, cifs_set_cifscreds() logs the key
-payload and exposes the plaintext username and password. Remove the
-debug log to avoid exposing credentials.
+There is an AB-BA deadlock when both LEDS_TRIGGER_NETDEV and
+LED_TRIGGER_PHY are enabled:
 
-Fixes: 8a8798a5ff90 ("cifs: fetch credentials out of keyring for non-krb5 auth multiuser mounts")
+[ 1362.049207] [<8054e4b8>] led_trigger_register+0x5c/0x1fc             <-- Trying to get lock "triggers_list_lock" via down_write(&triggers_list_lock);
+[ 1362.054536] [<80662830>] phy_led_triggers_register+0xd0/0x234
+[ 1362.060329] [<8065e200>] phy_attach_direct+0x33c/0x40c
+[ 1362.065489] [<80651fc4>] phylink_fwnode_phy_connect+0x15c/0x23c
+[ 1362.071480] [<8066ee18>] mtk_open+0x7c/0xba0
+[ 1362.075849] [<806d714c>] __dev_open+0x280/0x2b0
+[ 1362.080384] [<806d7668>] __dev_change_flags+0x244/0x24c
+[ 1362.085598] [<806d7698>] dev_change_flags+0x28/0x78
+[ 1362.090528] [<807150e4>] dev_ioctl+0x4c0/0x654                       <-- Hold lock "rtnl_mutex" by calling rtnl_lock();
+[ 1362.094985] [<80694360>] sock_ioctl+0x2f4/0x4e0
+[ 1362.099567] [<802e9c4c>] sys_ioctl+0x32c/0xd8c
+[ 1362.104022] [<80014504>] syscall_common+0x34/0x58
+
+Here LED_TRIGGER_PHY is registering LED triggers during phy_attach
+while holding RTNL and then taking triggers_list_lock.
+
+[ 1362.191101] [<806c2640>] register_netdevice_notifier+0x60/0x168      <-- Trying to get lock "rtnl_mutex" via rtnl_lock();
+[ 1362.197073] [<805504ac>] netdev_trig_activate+0x194/0x1e4
+[ 1362.202490] [<8054e28c>] led_trigger_set+0x1d4/0x360                 <-- Hold lock "triggers_list_lock" by down_read(&triggers_list_lock);
+[ 1362.207511] [<8054eb38>] led_trigger_write+0xd8/0x14c
+[ 1362.212566] [<80381d98>] sysfs_kf_bin_write+0x80/0xbc
+[ 1362.217688] [<8037fcd8>] kernfs_fop_write_iter+0x17c/0x28c
+[ 1362.223174] [<802cbd70>] vfs_write+0x21c/0x3c4
+[ 1362.227712] [<802cc0c4>] ksys_write+0x78/0x12c
+[ 1362.232164] [<80014504>] syscall_common+0x34/0x58
+
+Here LEDS_TRIGGER_NETDEV is being enabled on an LED. It first takes
+triggers_list_lock and then RTNL. A classical AB-BA deadlock.
+
+phy_led_triggers_registers() does not require the RTNL, it does not
+make any calls into the network stack which require protection. There
+is also no requirement the PHY has been attached to a MAC, the
+triggers only make use of phydev state. This allows the call to
+phy_led_triggers_registers() to be placed elsewhere. PHY probe() and
+release() don't hold RTNL, so solving the AB-BA deadlock.
+
+Reported-by: Shiji Yang <yangshiji66@outlook.com>
+Closes: https://lore.kernel.org/all/OS7PR01MB13602B128BA1AD3FA38B6D1FFBC69A@OS7PR01MB13602.jpnprd01.prod.outlook.com/
+Fixes: 06f502f57d0d ("leds: trigger: Introduce a NETDEV trigger")
 Cc: stable@vger.kernel.org
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Tested-by: Shiji Yang <yangshiji66@outlook.com>
+Link: https://patch.msgid.link/20260222152601.1978655-1-andrew@lunn.ch
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ dropped `is_on_sfp_module` guards and `CONFIG_PHYLIB_LEDS`/`of_phy_leds` logic ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/connect.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/phy/phy_device.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -1874,7 +1874,6 @@ cifs_set_cifscreds(struct smb3_fs_contex
- 	/* find first : in payload */
- 	payload = upayload->data;
- 	delim = strnchr(payload, upayload->datalen, ':');
--	cifs_dbg(FYI, "payload=%s\n", payload);
- 	if (!delim) {
- 		cifs_dbg(FYI, "Unable to find ':' in payload (datalen=%d)\n",
- 			 upayload->datalen);
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -1508,7 +1508,6 @@ int phy_attach_direct(struct net_device
+ 		return err;
+ 
+ 	phy_resume(phydev);
+-	phy_led_triggers_register(phydev);
+ 
+ 	return err;
+ 
+@@ -1765,8 +1764,6 @@ void phy_detach(struct phy_device *phyde
+ 	}
+ 	phydev->phylink = NULL;
+ 
+-	phy_led_triggers_unregister(phydev);
+-
+ 	if (phydev->mdio.dev.driver)
+ 		module_put(phydev->mdio.dev.driver->owner);
+ 
+@@ -3120,10 +3117,14 @@ static int phy_probe(struct device *dev)
+ 	/* Set the state to READY by default */
+ 	phydev->state = PHY_READY;
+ 
++	/* Register the PHY LED triggers */
++	phy_led_triggers_register(phydev);
++
++	return 0;
++
+ out:
+ 	/* Re-assert the reset signal on error */
+-	if (err)
+-		phy_device_reset(phydev, 1);
++	phy_device_reset(phydev, 1);
+ 
+ 	return err;
+ }
+@@ -3134,6 +3135,8 @@ static int phy_remove(struct device *dev
+ 
+ 	cancel_delayed_work_sync(&phydev->state_queue);
+ 
++	phy_led_triggers_unregister(phydev);
++
+ 	phydev->state = PHY_DOWN;
+ 
+ 	sfp_bus_del_upstream(phydev->sfp_bus);
 
 
