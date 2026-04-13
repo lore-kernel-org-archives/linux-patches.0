@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D25826F293;
-	Mon, 13 Apr 2026 16:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319AD26CE32;
+	Mon, 13 Apr 2026 16:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096756; cv=none; b=IfRtk1JoVQxHD+BRNQ3loXudxDgAR95BEHXpCuE+F63sJiyl7Y4Lb1RJS9U6kiI60fyggXDVEH12nGmKNT6Kj+sWXJ8bjFaDfdreuXifBS75r9TUZmw5ASuf0bF0ezqkZcXjfKN9WsSAQN5qMakcHV6A68FnOz1idj333p8EhtE=
+	t=1776096759; cv=none; b=pR0bhd0yi/z5A2yWUDwQRhkZgGoHvkjZ77+nWZz0fBY4EOOwYYp1BRx6k43kfVfMMDvU4gRSDxG6a5kKQ8VTfQ7yVke3XLJETXAObEEKMR1LaN0bAA4x3yaPV7Ki4dWSayrS7OC2oO6/KlbYNwA/sXLQ1oNqt3gFWTNzleZDy80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096756; c=relaxed/simple;
-	bh=EkRlO0bex6DW/78ravCFS1t+Cf95Tw3aALPoH9RlMPQ=;
+	s=arc-20240116; t=1776096759; c=relaxed/simple;
+	bh=uQi6nsIEyRnurXtGrXRpDI382b3zvhFf6adiD7weiS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xr2ZVO2KA/+WcWBndMAXkdVzRrPym5iRz1Mf8c4j3xkFbWio1npVjYKWDPGOvkujLbrWsP5Wvjf0iH7fWZvBCGxQ0nfr9Q+20beRE/czqQERh1DLbmgduAqtQd8N40nxbkxq6N4lxxiR46kn1r06u3gAC7sFu9qsTH8pRrHSF/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSsjN99H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vCaBuvLcqVXlY1FfSaP6Xxo3RgLXK0LjhGYNSAH6anD9EtE57jHCZvdf3QSMSksaQhS6KecHJ8t/I6JY2XIIEao0NXT13vrxWxvK8gX+3BHq7nCN8ICHoCtF208bIt257DD1/m/ZIv4eDsnySbzHHpshqjWrtRF6rELskXPkqZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/KiYcim; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSsjN99H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33FBAC2BCAF;
-	Mon, 13 Apr 2026 16:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/KiYcim"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC87EC2BCAF;
+	Mon, 13 Apr 2026 16:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096756;
-	bh=EkRlO0bex6DW/78ravCFS1t+Cf95Tw3aALPoH9RlMPQ=;
+	s=korg; t=1776096759;
+	bh=uQi6nsIEyRnurXtGrXRpDI382b3zvhFf6adiD7weiS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSsjN99HqCeTA815ritC5naXTpIuXlVQTpKdf3U37rQoDJhR1WxpP1R9EIgb7oGOo
-	 9LAQbpVGVf0PlzYV3Iw9m/RzaYhkgjPgLkmurLDqYtsBOBCLti0CHA72W6KkCic1ek
-	 P4cEDo/v9gyDycA7ooDy1WbxYMNxc4An3XLpSV2A=
+	b=q/KiYcimo5SCB3QmZD9T0eMrcQ28a6aIfUnZGIoUZY+kjxnqi5YIR/lPU3G/ItA7T
+	 M3MhQsJonFliWFjjBs5ToPJgR9+ayQqcPLoQYxhfR8HGEt+CHZ9AbAeTy5Quza4Vu2
+	 7Jy2vrS9tGUII+bEwbPWJhUfMEAXvXxZSpkryxJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Daniel Vacek <neelx@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 18/70] btrfs: remove unused flag EXTENT_BUFFER_CORRUPT
-Date: Mon, 13 Apr 2026 18:00:13 +0200
-Message-ID: <20260413155728.866573478@linuxfoundation.org>
+Subject: [PATCH 6.12 19/70] btrfs: remove pointless out labels from extent-tree.c
+Date: Mon, 13 Apr 2026 18:00:14 +0200
+Message-ID: <20260413155728.903287164@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -52,86 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vacek <neelx@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit c61660ec341e65650e58c92d0af71184aa216ff0 ]
+[ Upstream commit ea8f9210050136bdd14f5e32b04cd01c8bd5c0ca ]
 
-This flag is no longer being used.  It was added by commit a826d6dcb32d
-("Btrfs: check items for correctness as we search") but it's no longer
-being used after commit f26c92386028 ("btrfs: remove reada
-infrastructure").
+Some functions (lookup_extent_data_ref(), __btrfs_mod_ref() and
+btrfs_free_tree_block()) have an 'out' label that does nothing but
+return, making it pointless. Simplify this by removing the label and
+returning instead of gotos plus setting the 'ret' variable.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Daniel Vacek <neelx@suse.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: 316fb1b3169e ("btrfs: fix incorrect return value after changing leaf in lookup_extent_data_ref()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c     | 11 ++---------
- fs/btrfs/extent-tree.c |  6 ------
- fs/btrfs/extent_io.h   |  1 -
- 3 files changed, 2 insertions(+), 16 deletions(-)
+ fs/btrfs/extent-tree.c | 24 ++++++++++--------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 5de12f3a679df..2dab2ce94cc40 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -225,7 +225,6 @@ int btrfs_read_extent_buffer(struct extent_buffer *eb,
- 	ASSERT(check);
- 
- 	while (1) {
--		clear_bit(EXTENT_BUFFER_CORRUPT, &eb->bflags);
- 		ret = read_extent_buffer_pages(eb, mirror_num, check);
- 		if (!ret)
- 			break;
-@@ -454,15 +453,9 @@ int btrfs_validate_extent_buffer(struct extent_buffer *eb,
- 			goto out;
- 	}
- 
--	/*
--	 * If this is a leaf block and it is corrupt, set the corrupt bit so
--	 * that we don't try and read the other copies of this block, just
--	 * return -EIO.
--	 */
--	if (found_level == 0 && btrfs_check_leaf(eb)) {
--		set_bit(EXTENT_BUFFER_CORRUPT, &eb->bflags);
-+	/* If this is a leaf block and it is corrupt, just return -EIO. */
-+	if (found_level == 0 && btrfs_check_leaf(eb))
- 		ret = -EIO;
--	}
- 
- 	if (found_level > 0 && btrfs_check_node(eb))
- 		ret = -EIO;
 diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index c052c8df05fb4..568fe9f702b74 100644
+index 568fe9f702b74..28da7a7b42296 100644
 --- a/fs/btrfs/extent-tree.c
 +++ b/fs/btrfs/extent-tree.c
-@@ -3517,12 +3517,6 @@ int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+@@ -479,7 +479,7 @@ static noinline int lookup_extent_data_ref(struct btrfs_trans_handle *trans,
+ 		btrfs_item_key_to_cpu(leaf, &key, path->slots[0]);
+ 		if (key.objectid != bytenr ||
+ 		    key.type != BTRFS_EXTENT_DATA_REF_KEY)
+-			goto fail;
++			return ret;
+ 
+ 		ref = btrfs_item_ptr(leaf, path->slots[0],
+ 				     struct btrfs_extent_data_ref);
+@@ -490,12 +490,11 @@ static noinline int lookup_extent_data_ref(struct btrfs_trans_handle *trans,
+ 				btrfs_release_path(path);
+ 				goto again;
+ 			}
+-			ret = 0;
+-			break;
++			return 0;
+ 		}
+ 		path->slots[0]++;
+ 	}
+-fail:
++
+ 	return ret;
+ }
+ 
+@@ -2470,7 +2469,7 @@ static int __btrfs_mod_ref(struct btrfs_trans_handle *trans,
+ 	int i;
+ 	int action;
+ 	int level;
+-	int ret = 0;
++	int ret;
+ 
+ 	if (btrfs_is_testing(fs_info))
+ 		return 0;
+@@ -2522,7 +2521,7 @@ static int __btrfs_mod_ref(struct btrfs_trans_handle *trans,
+ 			else
+ 				ret = btrfs_free_extent(trans, &ref);
+ 			if (ret)
+-				goto fail;
++				return ret;
+ 		} else {
+ 			/* We don't know the owning_root, leave as 0. */
+ 			ref.bytenr = btrfs_node_blockptr(buf, i);
+@@ -2535,12 +2534,10 @@ static int __btrfs_mod_ref(struct btrfs_trans_handle *trans,
+ 			else
+ 				ret = btrfs_free_extent(trans, &ref);
+ 			if (ret)
+-				goto fail;
++				return ret;
+ 		}
+ 	}
+ 	return 0;
+-fail:
+-	return ret;
+ }
+ 
+ int btrfs_inc_ref(struct btrfs_trans_handle *trans, struct btrfs_root *root,
+@@ -3469,12 +3466,12 @@ int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+ 		return 0;
+ 
+ 	if (btrfs_header_generation(buf) != trans->transid)
+-		goto out;
++		return 0;
+ 
+ 	if (root_id != BTRFS_TREE_LOG_OBJECTID) {
+ 		ret = check_ref_cleanup(trans, buf->start);
+ 		if (!ret)
+-			goto out;
++			return 0;
+ 	}
+ 
+ 	bg = btrfs_lookup_block_group(fs_info, buf->start);
+@@ -3482,7 +3479,7 @@ int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+ 	if (btrfs_header_flag(buf, BTRFS_HEADER_FLAG_WRITTEN)) {
+ 		pin_down_extent(trans, bg, buf->start, buf->len, 1);
+ 		btrfs_put_block_group(bg);
+-		goto out;
++		return 0;
+ 	}
+ 
+ 	/*
+@@ -3506,7 +3503,7 @@ int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+ 		     || btrfs_is_zoned(fs_info)) {
+ 		pin_down_extent(trans, bg, buf->start, buf->len, 1);
+ 		btrfs_put_block_group(bg);
+-		goto out;
++		return 0;
+ 	}
+ 
+ 	WARN_ON(test_bit(EXTENT_BUFFER_DIRTY, &buf->bflags));
+@@ -3516,7 +3513,6 @@ int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+ 	btrfs_put_block_group(bg);
  	trace_btrfs_reserved_extent_free(fs_info, buf->start, buf->len);
  
- out:
--
--	/*
--	 * Deleting the buffer, clear the corrupt flag since it doesn't
--	 * matter anymore.
--	 */
--	clear_bit(EXTENT_BUFFER_CORRUPT, &buf->bflags);
+-out:
  	return 0;
  }
  
-diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
-index 4126fe7f3f10e..0eedfd7c4b6ec 100644
---- a/fs/btrfs/extent_io.h
-+++ b/fs/btrfs/extent_io.h
-@@ -38,7 +38,6 @@ struct btrfs_tree_parent_check;
- enum {
- 	EXTENT_BUFFER_UPTODATE,
- 	EXTENT_BUFFER_DIRTY,
--	EXTENT_BUFFER_CORRUPT,
- 	EXTENT_BUFFER_TREE_REF,
- 	EXTENT_BUFFER_STALE,
- 	EXTENT_BUFFER_WRITEBACK,
 -- 
 2.53.0
 
