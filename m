@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB6026E718;
-	Mon, 13 Apr 2026 16:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F7B2C08AC;
+	Mon, 13 Apr 2026 16:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096594; cv=none; b=eH+E0eilKiHt32NRYaEY8W0TGAfFarncgkoYTsyd8P5GZt4UubzheS1LGBCz5jVlM0vjG2ccnfB5mAuLyDkhW/Wk9C+I3nwn+PmIQlkv+Oohv4ovf/kskd4ihANd1UWhQ7aLMaBLl486T+qaSjIBQE84e2JI1essXKYIqqtkc8o=
+	t=1776096596; cv=none; b=npQ+o7kfZRxN/TdZzHW+8dYWso8uFrVHb50/KHCWtTnUiVrY5zlboH6zoZZPQaXlTF4zMIioZeiYIvLLsPYqim7EfxmJ7T75tEgsWDFAa2iGeR1WRucev31OmM1q6m5IseTGKTvpRBbmxW8+SfJunQDS/CkIEDNTMF6alrtR1us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096594; c=relaxed/simple;
-	bh=4x2YYtYUMSAKT428Pp++dCy/Yt2Br2F4t2t8d4roIwI=;
+	s=arc-20240116; t=1776096596; c=relaxed/simple;
+	bh=NFzRyR9OlPdSfUyy+WPMFd2PllmoTAOuEo1RKS/UepM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IOlDjnH0ruiwRW9gKEpjXd8aZ1LragiIMf9DXU8I4Pj/rYq6Wu0rRvyRCLlVF+1AeHHfSjnzO954Kp+IdAB7jVFukoMGr6Awj27GGFKuqkVwvh4DBYXMWz0/kAoFhor5A1hjdjxZHM9jvXFdHbqmeDvUkAdNzK41iYB1ENOz7pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQck2ETV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t3trm8lgdFgD67LrWYxqyKP9qc2MtiCGhMBlMuA3/23d4m/ajILXC7mAP1d+xO+DdpKZvTD2GgU1fBMeTm/mZQXAwayubsgT+eq6mm6cAcJeQsSem2nMTLTeGGQjEDjw5tRydTbq3qkJ04E06UIKFhsClSQhuF9wvRp8Xg70zlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3aFNJG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQck2ETV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949ACC2BCAF;
-	Mon, 13 Apr 2026 16:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3aFNJG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080AEC2BCAF;
+	Mon, 13 Apr 2026 16:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096593;
-	bh=4x2YYtYUMSAKT428Pp++dCy/Yt2Br2F4t2t8d4roIwI=;
+	s=korg; t=1776096596;
+	bh=NFzRyR9OlPdSfUyy+WPMFd2PllmoTAOuEo1RKS/UepM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SQck2ETVg5gMHzrNg2Uo6MCvOhBohF5zpzMFeo4YeVSiuHNpqu2FBNNLA0yaL3OuN
-	 0nOnLxJrT4Hlhb0VSYu/903NvY08gCVqAEMQynv34KB5+lN3hSm6EoDBYlhkyy6Ii5
-	 9xUVeNU5zeeeC8/18jnH5AvkrTaikQ0SNm+NqveI=
+	b=A3aFNJG36IbAOTuWd4Omd1oWHchmJr1W6kDuwtiDXHjejUxMXLK5uTx1Lnvw6zJEX
+	 9DQtLFImIpgIF7nXEjLc82+RjTUFzBAGZOahrgiWPrfnvE8EoG+hru9vft3dh6s5sZ
+	 NNg4RILAH/H6oPQPkmsm+f7Q0iqBuEEHPXZZ9zC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.18 44/83] drm/i915/psr: Do not use pipe_src as borders for SU area
-Date: Mon, 13 Apr 2026 18:00:12 +0200
-Message-ID: <20260413155732.665310170@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Douya Le <ldy3087146292@gmail.com>,
+	Yuan Tan <tanyuan98@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 71/83] rxrpc: Only put the call ref if one was acquired
+Date: Mon, 13 Apr 2026 18:00:39 +0200
+Message-ID: <20260413155733.653271623@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -45,161 +54,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Douya Le <ldy3087146292@gmail.com>
 
-commit 75519f5df2a9b23f7bf305e12dc9a6e3e65c24b7 upstream.
+commit 6331f1b24a3e85465f6454e003a3e6c22005a5c5 upstream.
 
-This far using crtc_state->pipe_src as borders for Selective Update area
-haven't caused visible problems as drm_rect_width(crtc_state->pipe_src) ==
-crtc_state->hw.adjusted_mode.crtc_hdisplay and
-drm_rect_height(crtc_state->pipe_src) ==
-crtc_state->hw.adjusted_mode.crtc_vdisplay when pipe scaling is not
-used. On the other hand using pipe scaling is forcing full frame updates and all the
-Selective Update area calculations are skipped. Now this improper usage of
-crtc_state->pipe_src is causing following warnings:
+rxrpc_input_packet_on_conn() can process a to-client packet after the
+current client call on the channel has already been torn down.  In that
+case chan->call is NULL, rxrpc_try_get_call() returns NULL and there is
+no reference to drop.
 
-<4> [7771.978166] xe 0000:00:02.0: [drm] drm_WARN_ON_ONCE(su_lines % vdsc_cfg->slice_height)
+The client-side implicit-end error path does not account for that and
+unconditionally calls rxrpc_put_call().  This turns a protocol error
+path into a kernel crash instead of rejecting the packet.
 
-after WARN_ON_ONCE was added by commit:
+Only drop the call reference if one was actually acquired.  Keep the
+existing protocol error handling unchanged.
 
-"drm/i915/dsc: Add helper for writing DSC Selective Update ET parameters"
-
-These warnings are seen when DSC and pipe scaling are enabled
-simultaneously. This is because on full frame update SU area is improperly
-set as pipe_src which is not aligned with DSC slice height.
-
-Fix these by creating local rectangle using
-crtc_state->hw.adjusted_mode.crtc_hdisplay and
-crtc_state->hw.adjusted_mode.crtc_vdisplay. Use this local rectangle as
-borders for SU area.
-
-Fixes: d6774b8c3c58 ("drm/i915: Ensure damage clip area is within pipe area")
-Cc: <stable@vger.kernel.org> # v6.0+
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patch.msgid.link/20260327114553.195285-1-jouni.hogander@intel.com
-(cherry picked from commit da0cdc1c329dd2ff09c41fbbe9fbd9c92c5d2c6e)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 5e6ef4f1017c ("rxrpc: Make the I/O thread take over the call and local processor work")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Signed-off-by: Douya Le <ldy3087146292@gmail.com>
+Co-developed-by: Yuan Tan <tanyuan98@gmail.com>
+Signed-off-by: Yuan Tan <tanyuan98@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-11-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c |   30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ net/rxrpc/io_thread.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -2549,9 +2549,9 @@ static u32 psr2_pipe_srcsz_early_tpt_cal
+--- a/net/rxrpc/io_thread.c
++++ b/net/rxrpc/io_thread.c
+@@ -419,7 +419,8 @@ static int rxrpc_input_packet_on_conn(st
  
- static void clip_area_update(struct drm_rect *overlap_damage_area,
- 			     struct drm_rect *damage_area,
--			     struct drm_rect *pipe_src)
-+			     struct drm_rect *display_area)
- {
--	if (!drm_rect_intersect(damage_area, pipe_src))
-+	if (!drm_rect_intersect(damage_area, display_area))
- 		return;
- 
- 	if (overlap_damage_area->y1 == -1) {
-@@ -2602,6 +2602,7 @@ static bool intel_psr2_sel_fetch_pipe_al
- static void
- intel_psr2_sel_fetch_et_alignment(struct intel_atomic_state *state,
- 				  struct intel_crtc *crtc,
-+				  struct drm_rect *display_area,
- 				  bool *cursor_in_su_area)
- {
- 	struct intel_crtc_state *crtc_state = intel_atomic_get_new_crtc_state(state, crtc);
-@@ -2629,7 +2630,7 @@ intel_psr2_sel_fetch_et_alignment(struct
- 			continue;
- 
- 		clip_area_update(&crtc_state->psr2_su_area, &new_plane_state->uapi.dst,
--				 &crtc_state->pipe_src);
-+				 display_area);
- 		*cursor_in_su_area = true;
- 	}
- }
-@@ -2725,6 +2726,12 @@ int intel_psr2_sel_fetch_update(struct i
- 	struct intel_crtc_state *crtc_state = intel_atomic_get_new_crtc_state(state, crtc);
- 	struct intel_plane_state *new_plane_state, *old_plane_state;
- 	struct intel_plane *plane;
-+	struct drm_rect display_area = {
-+		.x1 = 0,
-+		.y1 = 0,
-+		.x2 = crtc_state->hw.adjusted_mode.crtc_hdisplay,
-+		.y2 = crtc_state->hw.adjusted_mode.crtc_vdisplay,
-+	};
- 	bool full_update = false, su_area_changed;
- 	int i, ret;
- 
-@@ -2738,7 +2745,7 @@ int intel_psr2_sel_fetch_update(struct i
- 
- 	crtc_state->psr2_su_area.x1 = 0;
- 	crtc_state->psr2_su_area.y1 = -1;
--	crtc_state->psr2_su_area.x2 = drm_rect_width(&crtc_state->pipe_src);
-+	crtc_state->psr2_su_area.x2 = drm_rect_width(&display_area);
- 	crtc_state->psr2_su_area.y2 = -1;
- 
- 	/*
-@@ -2776,14 +2783,14 @@ int intel_psr2_sel_fetch_update(struct i
- 				damaged_area.y1 = old_plane_state->uapi.dst.y1;
- 				damaged_area.y2 = old_plane_state->uapi.dst.y2;
- 				clip_area_update(&crtc_state->psr2_su_area, &damaged_area,
--						 &crtc_state->pipe_src);
-+						 &display_area);
- 			}
- 
- 			if (new_plane_state->uapi.visible) {
- 				damaged_area.y1 = new_plane_state->uapi.dst.y1;
- 				damaged_area.y2 = new_plane_state->uapi.dst.y2;
- 				clip_area_update(&crtc_state->psr2_su_area, &damaged_area,
--						 &crtc_state->pipe_src);
-+						 &display_area);
- 			}
- 			continue;
- 		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha) {
-@@ -2791,7 +2798,7 @@ int intel_psr2_sel_fetch_update(struct i
- 			damaged_area.y1 = new_plane_state->uapi.dst.y1;
- 			damaged_area.y2 = new_plane_state->uapi.dst.y2;
- 			clip_area_update(&crtc_state->psr2_su_area, &damaged_area,
--					 &crtc_state->pipe_src);
-+					 &display_area);
- 			continue;
+ 	if (sp->hdr.callNumber > chan->call_id) {
+ 		if (rxrpc_to_client(sp)) {
+-			rxrpc_put_call(call, rxrpc_call_put_input);
++			if (call)
++				rxrpc_put_call(call, rxrpc_call_put_input);
+ 			return rxrpc_protocol_error(skb,
+ 						    rxrpc_eproto_unexpected_implicit_end);
  		}
- 
-@@ -2807,7 +2814,7 @@ int intel_psr2_sel_fetch_update(struct i
- 		damaged_area.x1 += new_plane_state->uapi.dst.x1 - src.x1;
- 		damaged_area.x2 += new_plane_state->uapi.dst.x1 - src.x1;
- 
--		clip_area_update(&crtc_state->psr2_su_area, &damaged_area, &crtc_state->pipe_src);
-+		clip_area_update(&crtc_state->psr2_su_area, &damaged_area, &display_area);
- 	}
- 
- 	/*
-@@ -2842,7 +2849,8 @@ int intel_psr2_sel_fetch_update(struct i
- 		 * cursor is added into affected planes even when
- 		 * cursor is not updated by itself.
- 		 */
--		intel_psr2_sel_fetch_et_alignment(state, crtc, &cursor_in_su_area);
-+		intel_psr2_sel_fetch_et_alignment(state, crtc, &display_area,
-+						  &cursor_in_su_area);
- 
- 		su_area_changed = intel_psr2_sel_fetch_pipe_alignment(crtc_state);
- 
-@@ -2918,8 +2926,8 @@ int intel_psr2_sel_fetch_update(struct i
- 
- skip_sel_fetch_set_loop:
- 	if (full_update)
--		clip_area_update(&crtc_state->psr2_su_area, &crtc_state->pipe_src,
--				 &crtc_state->pipe_src);
-+		clip_area_update(&crtc_state->psr2_su_area, &display_area,
-+				 &display_area);
- 
- 	psr2_man_trk_ctl_calc(crtc_state, full_update);
- 	crtc_state->pipe_srcsz_early_tpt =
 
 
