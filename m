@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D728628C2DD;
-	Mon, 13 Apr 2026 16:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA4428C2DD;
+	Mon, 13 Apr 2026 16:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096637; cv=none; b=PaFrqN1TlKTpSeILtQLNomNSP53LHawcYeB4Q5TLUPWhMAiBP1pEMUE/Hx50yoE2721M69gh4eyk3AmSc9/16kOQ0hmrtUdDd/544XCsm58pRGLtm52iFZewaACbfQL10X+OaKQi/bn1g1fO9Iadx4DCUmHQhiloK/9DCTPrUAE=
+	t=1776096640; cv=none; b=H5yqAgZ8HOE/TGzjPENhUkRtOzP+1PwuY3+sv0yiHmkgfW4cDNDU67+TnFvHFSOU9IleoTnHqe5Mxv9s2qDxLfjA4fv1RhTeVdg58kLRKlV3J2tACsZV7oF53TzVycnNhZyHb7O5A3ZlTlmL2WGpwyHna7BWZDEp5bgfFUf5WZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096637; c=relaxed/simple;
-	bh=EF0fuT8uJuk+6SVSiCIa8p2r09glF9vsSHQnRuORiZQ=;
+	s=arc-20240116; t=1776096640; c=relaxed/simple;
+	bh=PK4BtdYHe41+hnBjswLrdCgExZVGNQT3FC8nugEBfmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=acuC96DUA2fyd1BjVjuO0CgeOvL3lyX8eN5mzH2uRB3uiVYwfbrwIieRGWuEoyLO61wLkzRxeaq3w7C91iLeO7AHDnfrQMAuAdd8BBJaa7cJeJLQyBiTYRMopqbffkRakPDbPPnf3hRcozpYNYLRH8kB8pmiGvjyCh3tLKklx2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=035F8/kF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mnki3nexr3G0SDF36AJqnCEj89nSE34C8EXo0aNhxKzjSgxpG4zQj3pW/8+f8pFeVZkLC+LsNVl0n3F/UW44ui3JaRWjOV70mxNceGZIosgubTRvpTfOwTH8sH92N3TJ+/HzfFfv0B36zQE4mPpX1l+T1PXVnWIBBmDgl19vSGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B15JeouP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="035F8/kF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D22C2BCAF;
-	Mon, 13 Apr 2026 16:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B15JeouP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AD1C2BCAF;
+	Mon, 13 Apr 2026 16:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096637;
-	bh=EF0fuT8uJuk+6SVSiCIa8p2r09glF9vsSHQnRuORiZQ=;
+	s=korg; t=1776096640;
+	bh=PK4BtdYHe41+hnBjswLrdCgExZVGNQT3FC8nugEBfmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=035F8/kFlS5qJADvyHtVjy2I/bGOWHY2QTuktT9G0b/p+LJFk8DWL8a8SSEGorNq9
-	 81JgeWAkbChiBZ9T3S/jdAVy+zrK88vT2YNX0MB/GnqkgV6FE6W73etxoVBqUxw9U5
-	 Q2gl6SSEEFQBSqUR8CY8/Dnex72RH2LynrWRPRvw=
+	b=B15JeouPGG7CpDWJxMamWGLKy5u6tPGRBYFCzd8/r7X6WKAqzamHKH6xKe05cMayh
+	 5hz7dvIgC/tEIadFU7vujXHzzm/+anDSwgczjVpLzLO2OTHxviBxCwgvgvi+uZ6d29
+	 i8O0uhnWq82iuemC1+TAnpJYLqLoqxVa7Gha2mkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Jie Wang <jiewang2024@lzu.edu.cn>,
-	Yang Yang <n05ec@lzu.edu.cn>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
+	Anderson Nascimento <anderson@allelesecurity.com>,
 	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 81/83] rxrpc: only handle RESPONSE during service challenge
-Date: Mon, 13 Apr 2026 18:00:49 +0200
-Message-ID: <20260413155734.014725600@linuxfoundation.org>
+Subject: [PATCH 6.18 82/83] rxrpc: proc: size address buffers for %pISpc output
+Date: Mon, 13 Apr 2026 18:00:50 +0200
+Message-ID: <20260413155734.051563396@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -61,78 +56,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Jie <jiewang2024@lzu.edu.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit c43ffdcfdbb5567b1f143556df8a04b4eeea041c upstream.
+commit a44ce6aa2efb61fe44f2cfab72bb01544bbca272 upstream.
 
-Only process RESPONSE packets while the service connection is still in
-RXRPC_CONN_SERVICE_CHALLENGING. Check that state under state_lock before
-running response verification and security initialization, then use a local
-secured flag to decide whether to queue the secured-connection work after
-the state transition. This keeps duplicate or late RESPONSE packets from
-re-running the setup path and removes the unlocked post-transition state
-test.
+The AF_RXRPC procfs helpers format local and remote socket addresses into
+fixed 50-byte stack buffers with "%pISpc".
 
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Jie Wang <jiewang2024@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+That is too small for the longest current-tree IPv6-with-port form the
+formatter can produce. In lib/vsprintf.c, the compressed IPv6 path uses a
+dotted-quad tail not only for v4mapped addresses, but also for ISATAP
+addresses via ipv6_addr_is_isatap().
+
+As a result, a case such as
+
+  [ffff:ffff:ffff:ffff:0:5efe:255.255.255.255]:65535
+
+is possible with the current formatter. That is 50 visible characters, so
+51 bytes including the trailing NUL, which does not fit in the existing
+char[50] buffers used by net/rxrpc/proc.c.
+
+Size the buffers from the formatter's maximum textual form and switch the
+call sites to scnprintf().
+
+Changes since v1:
+- correct the changelog to cite the actual maximum current-tree case
+  explicitly
+- frame the proof around the ISATAP formatting path instead of the earlier
+  mapped-v4 example
+
+Fixes: 75b54cb57ca3 ("rxrpc: Add IPv6 support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Anderson Nascimento <anderson@allelesecurity.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-21-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-22-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/conn_event.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/rxrpc/proc.c |   32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -247,6 +247,7 @@ static int rxrpc_process_event(struct rx
- 			       struct sk_buff *skb)
- {
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
-+	bool secured = false;
- 	int ret;
+--- a/net/rxrpc/proc.c
++++ b/net/rxrpc/proc.c
+@@ -10,6 +10,10 @@
+ #include <net/af_rxrpc.h>
+ #include "ar-internal.h"
  
- 	if (conn->state == RXRPC_CONN_ABORTED)
-@@ -262,6 +263,13 @@ static int rxrpc_process_event(struct rx
- 		return ret;
- 
- 	case RXRPC_PACKET_TYPE_RESPONSE:
-+		spin_lock_irq(&conn->state_lock);
-+		if (conn->state != RXRPC_CONN_SERVICE_CHALLENGING) {
-+			spin_unlock_irq(&conn->state_lock);
-+			return 0;
-+		}
-+		spin_unlock_irq(&conn->state_lock);
++#define RXRPC_PROC_ADDRBUF_SIZE \
++	(sizeof("[xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:255.255.255.255]") + \
++	 sizeof(":12345"))
 +
- 		ret = conn->security->verify_response(conn, skb);
- 		if (ret < 0)
- 			return ret;
-@@ -272,11 +280,13 @@ static int rxrpc_process_event(struct rx
- 			return ret;
+ static const char *const rxrpc_conn_states[RXRPC_CONN__NR_STATES] = {
+ 	[RXRPC_CONN_UNUSED]			= "Unused  ",
+ 	[RXRPC_CONN_CLIENT_UNSECURED]		= "ClUnsec ",
+@@ -53,7 +57,7 @@ static int rxrpc_call_seq_show(struct se
+ 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
+ 	enum rxrpc_call_state state;
+ 	rxrpc_seq_t tx_bottom;
+-	char lbuff[50], rbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 	long timeout = 0;
  
- 		spin_lock_irq(&conn->state_lock);
--		if (conn->state == RXRPC_CONN_SERVICE_CHALLENGING)
-+		if (conn->state == RXRPC_CONN_SERVICE_CHALLENGING) {
- 			conn->state = RXRPC_CONN_SERVICE;
-+			secured = true;
-+		}
- 		spin_unlock_irq(&conn->state_lock);
+ 	if (v == &rxnet->calls) {
+@@ -69,11 +73,11 @@ static int rxrpc_call_seq_show(struct se
  
--		if (conn->state == RXRPC_CONN_SERVICE) {
-+		if (secured) {
- 			/* Offload call state flipping to the I/O thread.  As
- 			 * we've already received the packet, put it on the
- 			 * front of the queue.
+ 	local = call->local;
+ 	if (local)
+-		sprintf(lbuff, "%pISpc", &local->srx.transport);
++		scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
+ 	else
+ 		strcpy(lbuff, "no_local");
+ 
+-	sprintf(rbuff, "%pISpc", &call->dest_srx.transport);
++	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &call->dest_srx.transport);
+ 
+ 	state = rxrpc_call_state(call);
+ 	if (state != RXRPC_CALL_SERVER_PREALLOC)
+@@ -142,7 +146,7 @@ static int rxrpc_connection_seq_show(str
+ 	struct rxrpc_connection *conn;
+ 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
+ 	const char *state;
+-	char lbuff[50], rbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 
+ 	if (v == &rxnet->conn_proc_list) {
+ 		seq_puts(seq,
+@@ -161,8 +165,8 @@ static int rxrpc_connection_seq_show(str
+ 		goto print;
+ 	}
+ 
+-	sprintf(lbuff, "%pISpc", &conn->local->srx.transport);
+-	sprintf(rbuff, "%pISpc", &conn->peer->srx.transport);
++	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &conn->local->srx.transport);
++	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &conn->peer->srx.transport);
+ print:
+ 	state = rxrpc_is_conn_aborted(conn) ?
+ 		rxrpc_call_completions[conn->completion] :
+@@ -228,7 +232,7 @@ static int rxrpc_bundle_seq_show(struct
+ {
+ 	struct rxrpc_bundle *bundle;
+ 	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
+-	char lbuff[50], rbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 
+ 	if (v == &rxnet->bundle_proc_list) {
+ 		seq_puts(seq,
+@@ -242,8 +246,8 @@ static int rxrpc_bundle_seq_show(struct
+ 
+ 	bundle = list_entry(v, struct rxrpc_bundle, proc_link);
+ 
+-	sprintf(lbuff, "%pISpc", &bundle->local->srx.transport);
+-	sprintf(rbuff, "%pISpc", &bundle->peer->srx.transport);
++	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &bundle->local->srx.transport);
++	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &bundle->peer->srx.transport);
+ 	seq_printf(seq,
+ 		   "UDP   %-47.47s %-47.47s %4x %3u %3d"
+ 		   " %c%c%c %08x | %08x %08x %08x %08x %08x\n",
+@@ -279,7 +283,7 @@ static int rxrpc_peer_seq_show(struct se
+ {
+ 	struct rxrpc_peer *peer;
+ 	time64_t now;
+-	char lbuff[50], rbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE], rbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 
+ 	if (v == SEQ_START_TOKEN) {
+ 		seq_puts(seq,
+@@ -290,9 +294,9 @@ static int rxrpc_peer_seq_show(struct se
+ 
+ 	peer = list_entry(v, struct rxrpc_peer, hash_link);
+ 
+-	sprintf(lbuff, "%pISpc", &peer->local->srx.transport);
++	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &peer->local->srx.transport);
+ 
+-	sprintf(rbuff, "%pISpc", &peer->srx.transport);
++	scnprintf(rbuff, sizeof(rbuff), "%pISpc", &peer->srx.transport);
+ 
+ 	now = ktime_get_seconds();
+ 	seq_printf(seq,
+@@ -401,7 +405,7 @@ const struct seq_operations rxrpc_peer_s
+ static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
+ {
+ 	struct rxrpc_local *local;
+-	char lbuff[50];
++	char lbuff[RXRPC_PROC_ADDRBUF_SIZE];
+ 
+ 	if (v == SEQ_START_TOKEN) {
+ 		seq_puts(seq,
+@@ -412,7 +416,7 @@ static int rxrpc_local_seq_show(struct s
+ 
+ 	local = hlist_entry(v, struct rxrpc_local, link);
+ 
+-	sprintf(lbuff, "%pISpc", &local->srx.transport);
++	scnprintf(lbuff, sizeof(lbuff), "%pISpc", &local->srx.transport);
+ 
+ 	seq_printf(seq,
+ 		   "UDP   %-47.47s %3u %3u %3u\n",
 
 
