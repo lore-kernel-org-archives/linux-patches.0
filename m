@@ -1,37 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3514427280A;
-	Mon, 13 Apr 2026 16:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E72224DCF6;
+	Mon, 13 Apr 2026 16:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097093; cv=none; b=JlKMfmm13FO6tuLEIJZtjjHUSwUgfwH+GVGqavZ4whhyAwh1TQmy6O7PYvGO0qLMKye/oRkdNEAiPMroblrHX7msAy57vzn6pbz2dZSpwUBSCQCWsFPTSjbMbxcWGSTqVQOzAICkBW9l6PFhF4fXIdTiWPWvqhXnFokTr/ybvtU=
+	t=1776097096; cv=none; b=A1hP40STTtvgYI1sRIfq8qDKwpaIzfWxgxzEOkeE6q/3CDuHL5CX68Qaql+BBWQCKnDpW73+QNMngnw25N/8aAaNtGPQatECsMjPaIUZyzRO0kJ5aRq7VZp575c+zXfebMYR3rLImmfbE/GQQ2WaFGTbAR2Iw5v4XGmX0ot5DkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097093; c=relaxed/simple;
-	bh=OWz8n3+Xw2D1KkhkvU/NoldDscgYMpx9nIXQYMIPVcw=;
+	s=arc-20240116; t=1776097096; c=relaxed/simple;
+	bh=CX4H1sldVK2LJpwa7P6mgXUXQf4tXyYxu3JLIlzwTB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sa00dKu8t0sPc04h4gRN+5B/WIh5NBK0+JVFcaYjUO/3gEyG7f0ZtPxkoOInuPUUqt1FYMNq0df0fkrXBMU9r1Kio8Au6RwU6TzSxeaPTFMQ2AcjpbSQQ+Owiyg7EcCo2W2jtr9RvTKG/+mgtoQgUtH/6OpTdPjn+ue8R6yHYFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Byw4wgOt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ai3dVf+xEo0j9fp4/VAWnMgx9kQ67jOqmgsmIwsVclHGaW9qLFgwgmTiA6PWFB4DO90sxqKqDZySlEUblvH/CuLXpohDmZJltgxgzfs5VElXr7wq0RKDuYQsQqmbUhG9wMfR5pB3tftiw/7y7zaHh/HMX1g6uc8P3O2p5z8l1XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrEcQfkU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Byw4wgOt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA0DC2BCAF;
-	Mon, 13 Apr 2026 16:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrEcQfkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D5EC2BCAF;
+	Mon, 13 Apr 2026 16:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097093;
-	bh=OWz8n3+Xw2D1KkhkvU/NoldDscgYMpx9nIXQYMIPVcw=;
+	s=korg; t=1776097095;
+	bh=CX4H1sldVK2LJpwa7P6mgXUXQf4tXyYxu3JLIlzwTB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Byw4wgOt8S/o3rjQtzqD15X+5ebrsMNbMGmC6KGT6UJX2qlexkzW05Bx0a3Yl10st
-	 Hq8yhzXdPJgwY/8kdOjmNa2zlU5WbqRKpO6vh0n/pMN7KJ2GeDametzpwPbXRgGW3N
-	 10Ne8y9te36vq3/Lk6sB6ipnjNuhajozMKPSi6a4=
+	b=DrEcQfkUbJzEfvfPEBZMhQQs0vTaCZp1mPNxC7arKDErSIgZW8YgdVCexUWTfft8U
+	 evkoHWvg1hPuOKuzuffhDTbIssfaLd3bHqtCrZjXFA692uXyDjobgE2lEUATe7WwCE
+	 DawsJPngwRY3PEO6lLVMfEAieBp/+LWysLDHgrak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyllis Xu <LivelyCarpet87@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 52/55] net: stmmac: fix integer underflow in chain mode
-Date: Mon, 13 Apr 2026 18:01:26 +0200
-Message-ID: <20260413155726.774211191@linuxfoundation.org>
+Subject: [PATCH 6.1 53/55] rxrpc: fix reference count leak in rxrpc_server_keyring()
+Date: Mon, 13 Apr 2026 18:01:27 +0200
+Message-ID: <20260413155726.810367980@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 References: <20260413155724.820472494@linuxfoundation.org>
@@ -50,80 +61,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyllis Xu <livelycarpet87@gmail.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit 51f4e090b9f87b40c21b6daadb5c06e6c0a07b67 upstream.
+commit f125846ee79fcae537a964ce66494e96fa54a6de upstream.
 
-The jumbo_frm() chain-mode implementation unconditionally computes
+This patch fixes a reference count leak in rxrpc_server_keyring()
+by checking if rx->securities is already set.
 
-    len = nopaged_len - bmax;
-
-where nopaged_len = skb_headlen(skb) (linear bytes only) and bmax is
-BUF_SIZE_8KiB or BUF_SIZE_2KiB.  However, the caller stmmac_xmit()
-decides to invoke jumbo_frm() based on skb->len (total length including
-page fragments):
-
-    is_jumbo = stmmac_is_jumbo_frm(priv, skb->len, enh_desc);
-
-When a packet has a small linear portion (nopaged_len <= bmax) but a
-large total length due to page fragments (skb->len > bmax), the
-subtraction wraps as an unsigned integer, producing a huge len value
-(~0xFFFFxxxx).  This causes the while (len != 0) loop to execute
-hundreds of thousands of iterations, passing skb->data + bmax * i
-pointers far beyond the skb buffer to dma_map_single().  On IOMMU-less
-SoCs (the typical deployment for stmmac), this maps arbitrary kernel
-memory to the DMA engine, constituting a kernel memory disclosure and
-potential memory corruption from hardware.
-
-Fix this by introducing a buf_len local variable clamped to
-min(nopaged_len, bmax).  Computing len = nopaged_len - buf_len is then
-always safe: it is zero when the linear portion fits within a single
-descriptor, causing the while (len != 0) loop to be skipped naturally,
-and the fragment loop in stmmac_xmit() handles page fragments afterward.
-
-Fixes: 286a83721720 ("stmmac: add CHAINED descriptor mode support (V4)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
-Link: https://patch.msgid.link/20260401044708.1386919-1-LivelyCarpet87@gmail.com
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-15-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/chain_mode.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/rxrpc/server_key.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
-@@ -20,7 +20,7 @@ static int jumbo_frm(struct stmmac_tx_qu
- 	unsigned int nopaged_len = skb_headlen(skb);
- 	struct stmmac_priv *priv = tx_q->priv_data;
- 	unsigned int entry = tx_q->cur_tx;
--	unsigned int bmax, des2;
-+	unsigned int bmax, buf_len, des2;
- 	unsigned int i = 1, len;
- 	struct dma_desc *desc;
+--- a/net/rxrpc/server_key.c
++++ b/net/rxrpc/server_key.c
+@@ -125,6 +125,9 @@ int rxrpc_server_keyring(struct rxrpc_so
  
-@@ -31,17 +31,18 @@ static int jumbo_frm(struct stmmac_tx_qu
- 	else
- 		bmax = BUF_SIZE_2KiB;
+ 	_enter("");
  
--	len = nopaged_len - bmax;
-+	buf_len = min_t(unsigned int, nopaged_len, bmax);
-+	len = nopaged_len - buf_len;
++	if (rx->securities)
++		return -EINVAL;
++
+ 	if (optlen <= 0 || optlen > PAGE_SIZE - 1)
+ 		return -EINVAL;
  
- 	des2 = dma_map_single(priv->device, skb->data,
--			      bmax, DMA_TO_DEVICE);
-+			      buf_len, DMA_TO_DEVICE);
- 	desc->des2 = cpu_to_le32(des2);
- 	if (dma_mapping_error(priv->device, des2))
- 		return -1;
- 	tx_q->tx_skbuff_dma[entry].buf = des2;
--	tx_q->tx_skbuff_dma[entry].len = bmax;
-+	tx_q->tx_skbuff_dma[entry].len = buf_len;
- 	/* do not close the descriptor and do not set own bit */
--	stmmac_prepare_tx_desc(priv, desc, 1, bmax, csum, STMMAC_CHAIN_MODE,
-+	stmmac_prepare_tx_desc(priv, desc, 1, buf_len, csum, STMMAC_CHAIN_MODE,
- 			0, false, skb->len);
- 
- 	while (len != 0) {
 
 
