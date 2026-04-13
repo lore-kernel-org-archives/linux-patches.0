@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DE933A6E2;
-	Mon, 13 Apr 2026 16:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124AB32D43C;
+	Mon, 13 Apr 2026 16:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099411; cv=none; b=WZ/zaL26U4+DKJq6wScXR27GbBdlWqf1RN63UNJ4OAr1PlE4eEA4z1UZz4WlzzZDi66c0G4GBxLdK1rkk8n7oafyWhx7QAtKEuQqt98Nt00TYh68jWN1ZSGjzScEeS48mMrV+JpeSa7staENBbB6TJlf9Dd/sczTb4PlAVNJ5QM=
+	t=1776099414; cv=none; b=KQPuyOkucKTClXCcSs1MowGKYG8sunQmjjUok3C6l4TT6ez3R0Qoq1vEAS1//aB3Ln5NcCdD7sNyzjncKdWQsQCU3B/VkdmUavz4FXAmsV96qK6MYg1m/qBAz2U3OmxWSttCzUwjuTbjIEaJvfxlcerBMn854wiG/1grHe0CTlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099411; c=relaxed/simple;
-	bh=mlCngU1p4fI1eN5yXHp9U+sb1eJNoaoYJ4u5HGs00V8=;
+	s=arc-20240116; t=1776099414; c=relaxed/simple;
+	bh=lOjitpMLpprUy3S17tI22wAWo2OgEkF1RiVJO5eD26Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jTRDoty8h/6N+bGDIJpkSB/394sMOKIYzTA7s5xIlqgc61xdeRhUf/+Mec89SVFuf6NaL1u6BQp9AL2Qb1DCaTHnwKqnAtpvyqM2lnNvZv7Ezqd1VRxbcwNexNjSyw64aSGbux988PN+FvLdkUrM53BUbLvk7vIZCbgT3lKYc+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/5on+So; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QCwp7FEJE6f/2gig5GKgPnw3offntLU1nkY2wRfjgQfeqxKWiN+x/OvKIRE5wF7M1c32Dz2aYCc6f3Mvw/4/kkmp2Z8GhOBa3YPnw5fx1scr0mcLguNfb7nNTBoOfpFnYZi0CPI2IQow3VJVRjBkuaG81YJAfavyCLvspQiHPlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ml8zQBJU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/5on+So"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC45C2BCB0;
-	Mon, 13 Apr 2026 16:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ml8zQBJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830DEC2BCAF;
+	Mon, 13 Apr 2026 16:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099411;
-	bh=mlCngU1p4fI1eN5yXHp9U+sb1eJNoaoYJ4u5HGs00V8=;
+	s=korg; t=1776099413;
+	bh=lOjitpMLpprUy3S17tI22wAWo2OgEkF1RiVJO5eD26Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/5on+SoJ0q56VV/zXRQOh0yfjtILEEEhqs7BKS59cfyLe8JhGuM4kOiIL9et9ZMV
-	 by9Ym7pWD2Du3gUNqKBQ/B5L8yzpOUilQtTKCWM8kojcOUuK8cdIyvpaBn7wbnw93S
-	 U2Sf91tBjklCTZzPa9SlN+cZ2z0TTgRa6ND0ESik=
+	b=Ml8zQBJUTrnhYCFCcSRaOxunzrbM5dWGMIk92hLMROOG1W37z996cxaJ7JqhYqbIJ
+	 SUtUBORDSq13EcgiAwQ6H/mJ468cLCYA67hqK+oFIIdX7uhCWebUqWe8IITLMciM77
+	 IFFLUPxh8eorO/njSJk1WPKv3wzGULWOJkuoC45k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 330/491] net/sched: sch_hfsc: fix divide-by-zero in rtsc_min()
-Date: Mon, 13 Apr 2026 17:59:35 +0200
-Message-ID: <20260413155831.396661494@linuxfoundation.org>
+Subject: [PATCH 5.10 331/491] ipv6: prevent possible UaF in addrconf_permanent_addr()
+Date: Mon, 13 Apr 2026 17:59:36 +0200
+Message-ID: <20260413155831.433400910@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,60 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 4576100b8cd03118267513cafacde164b498b322 ]
+[ Upstream commit fd63f185979b047fb22a0dfc6bd94d0cab6a6a70 ]
 
-m2sm() converts a u32 slope to a u64 scaled value.  For large inputs
-(e.g. m1=4000000000), the result can reach 2^32.  rtsc_min() stores
-the difference of two such u64 values in a u32 variable `dsm` and
-uses it as a divisor.  When the difference is exactly 2^32 the
-truncation yields zero, causing a divide-by-zero oops in the
-concave-curve intersection path:
+The mentioned helper try to warn the user about an exceptional
+condition, but the message is delivered too late, accessing the ipv6
+after its possible deletion.
 
-  Oops: divide error: 0000
-  RIP: 0010:rtsc_min (net/sched/sch_hfsc.c:601)
-  Call Trace:
-   init_ed (net/sched/sch_hfsc.c:629)
-   hfsc_enqueue (net/sched/sch_hfsc.c:1569)
-   [...]
+Reorder the statement to avoid the possible UaF; while at it, place the
+warning outside the idev->lock as it needs no protection.
 
-Widen `dsm` to u64 and replace do_div() with div64_u64() so the full
-difference is preserved.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260326204310.1549327-1-xmei5@asu.edu
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://sashiko.dev/#/patchset/8c8bfe2e1a324e501f0e15fef404a77443fd8caf.1774365668.git.pabeni%40redhat.com
+Fixes: f1705ec197e7 ("net: ipv6: Make address flushing on ifdown optional")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/ef973c3a8cb4f8f1787ed469f3e5391b9fe95aa0.1774601542.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/addrconf.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index 25360061ad288..3a271ad16443b 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -556,7 +556,7 @@ static void
- rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
- {
- 	u64 y1, y2, dx, dy;
--	u32 dsm;
-+	u64 dsm;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index ced20abf4ef8e..758cea239e618 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -3509,12 +3509,12 @@ static void addrconf_permanent_addr(struct net *net, struct net_device *dev)
+ 		if ((ifp->flags & IFA_F_PERMANENT) &&
+ 		    fixup_permanent_addr(net, idev, ifp) < 0) {
+ 			write_unlock_bh(&idev->lock);
+-			in6_ifa_hold(ifp);
+-			ipv6_del_addr(ifp);
+-			write_lock_bh(&idev->lock);
  
- 	if (isc->sm1 <= isc->sm2) {
- 		/* service curve is convex */
-@@ -599,7 +599,7 @@ rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
- 	 */
- 	dx = (y1 - y) << SM_SHIFT;
- 	dsm = isc->sm1 - isc->sm2;
--	do_div(dx, dsm);
-+	dx = div64_u64(dx, dsm);
- 	/*
- 	 * check if (x, y1) belongs to the 1st segment of rtsc.
- 	 * if so, add the offset.
+ 			net_info_ratelimited("%s: Failed to add prefix route for address %pI6c; dropping\n",
+ 					     idev->dev->name, &ifp->addr);
++			in6_ifa_hold(ifp);
++			ipv6_del_addr(ifp);
++			write_lock_bh(&idev->lock);
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
