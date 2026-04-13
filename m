@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95882F8BC3;
-	Mon, 13 Apr 2026 16:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E823093CF;
+	Mon, 13 Apr 2026 16:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097054; cv=none; b=Sawyx8/d6AY5/x95PMtSh3Y3O1Uan7Gl4Ir5mPSJMHAfhB2+bSs1Bk4QXoqWaOem/Lz2NPCuKKwBToDePo+9IWu8xrowaG4k3WmgYLYlACYlqyIhrzFIk4+OrC2VbxY4Oln/uCN9sx+AVewG2OyL5/Mz+0Ph0hxQ5zeqi3Mq3dA=
+	t=1776097057; cv=none; b=HZH6j3TN9c9GkiLBizC6ZdL+6SMcpvuNhGw/74hB4yl3vkPiSksw+fo5PkDzPmntsi2gyQ7SqhbrEbWBNMEHJWUZs3wKScN3K1fYTDcin3EavKq8oQDoi4XOQPYrcGniPYFrqFyg5ciNru0nzBB/fJ2E4xSvrDTJk6BATaL2cBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097054; c=relaxed/simple;
-	bh=U006km7u3X1SLgUdMwrprAhC0JjUeHlsH2kIqzxMf3c=;
+	s=arc-20240116; t=1776097057; c=relaxed/simple;
+	bh=WC8MpXjO/Esh4FjgoPOfuy7C7zTn2WEo8j38J4683zA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SHowd+iU60Fme8wUdW2VJQmCvaVeSfuokEFH43sBRqR3oMubJzXsSm+WPxLRoVXWza/UouY1Wpx8YuGUQu2glfBmsWIBBeq9SU/mfqGVUtALEPsm/FAQzTva6I6S7hupAHQ6YlqwWGHG06MeRzemlw0NgKsTvmgfoyFVQMTquEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXMMmIkX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cdUnNlg9WoJ5mz70MIBxciYGhBwjxgsxfP+/Wj3dSnKXiZi7SrNe04wtDE3990/KelN7v7KSU8nue37oD0oHjNUl3cR+GWYkvXns37o7JXk6eL+OEtznjZ4HbI0vebAyzBbtyj3B3HU9V+lmh5jTSV3gFB2LhzvIYsVUftVIBzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgNKA7yg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXMMmIkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E20C2BCAF;
-	Mon, 13 Apr 2026 16:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgNKA7yg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD001C2BCAF;
+	Mon, 13 Apr 2026 16:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097054;
-	bh=U006km7u3X1SLgUdMwrprAhC0JjUeHlsH2kIqzxMf3c=;
+	s=korg; t=1776097057;
+	bh=WC8MpXjO/Esh4FjgoPOfuy7C7zTn2WEo8j38J4683zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XXMMmIkXuRw193aVscCNrrvfzdU5BAOiuHU7Uj5tclBnBfaSlZJP3K1i0vxOL19hI
-	 mUfsXQc5LHmBO9zdWHkE3aNbFE2++7oKg8ZwJLSgCavbz2Sv/lga2goiavnKv7oAit
-	 hG1XRhY6iGNelZJlWhrhlw3Tj5Q69zMW1D13TsXo=
+	b=pgNKA7yg08iApNvge5zy8BKy4iP8OS4F9mhfW8KAfVZdS881eMjXJ+01AsqFWL3yJ
+	 ZDIb/IJZ4uq9IQ1DN/XXF1ybFXNTS/+875e476Vc88OUBFwUwGlQHFI/TlDTVu91Rx
+	 XlHmTNqQzZ/oFw48y29yXsLf+nI1bNZNEvr+CcG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.1 44/55] EDAC/mc: Fix error path ordering in edac_mc_alloc()
-Date: Mon, 13 Apr 2026 18:01:18 +0200
-Message-ID: <20260413155726.476645559@linuxfoundation.org>
+	Qualys Security Advisory <qsa@qualys.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	Cengiz Can <cengiz.can@canonical.com>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 6.1 18/55] apparmor: Fix double free of ns_name in aa_replace_profiles()
+Date: Mon, 13 Apr 2026 18:00:52 +0200
+Message-ID: <20260413155725.508565738@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 References: <20260413155724.820472494@linuxfoundation.org>
@@ -51,66 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: John Johansen <john.johansen@canonical.com>
 
-commit 51520e03e70d6c73e33ee7cbe0319767d05764fe upstream.
+commit 5df0c44e8f5f619d3beb871207aded7c78414502 upstream.
 
-When the mci->pvt_info allocation in edac_mc_alloc() fails, the error path
-will call put_device() which will end up calling the device's release
-function.
+if ns_name is NULL after
+1071         error = aa_unpack(udata, &lh, &ns_name);
 
-However, the init ordering is wrong such that device_initialize() happens
-*after* the failed allocation and thus the device itself and the release
-function pointer are not initialized yet when they're called:
+and if ent->ns_name contains an ns_name in
+1089                 } else if (ent->ns_name) {
 
-  MCE: In-kernel MCE decoding enabled.
-  ------------[ cut here ]------------
-  kobject: '(null)': is not initialized, yet kobject_put() is being called.
-  WARNING: lib/kobject.c:734 at kobject_put, CPU#22: systemd-udevd
-  CPU: 22 UID: 0 PID: 538 Comm: systemd-udevd Not tainted 7.0.0-rc1+ #2 PREEMPT(full)
-  RIP: 0010:kobject_put
-  Call Trace:
-   <TASK>
-   edac_mc_alloc+0xbe/0xe0 [edac_core]
-   amd64_edac_init+0x7a4/0xff0 [amd64_edac]
-   ? __pfx_amd64_edac_init+0x10/0x10 [amd64_edac]
-   do_one_initcall
-   ...
+then ns_name is assigned the ent->ns_name
+1095                         ns_name = ent->ns_name;
 
-Reorder the calling sequence so that the device is initialized and thus the
-release function pointer is properly set before it can be used.
+however ent->ns_name is freed at
+1262                 aa_load_ent_free(ent);
 
-This was found by Claude while reviewing another EDAC patch.
+and then again when freeing ns_name at
+1270         kfree(ns_name);
 
-Fixes: 0bbb265f7089 ("EDAC/mc: Get rid of silly one-shot struct allocation in edac_mc_alloc()")
-Reported-by: Claude Code:claude-opus-4.5
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Cc: stable@kernel.org
-Link: https://patch.msgid.link/20260331121623.4871-1-bp@kernel.org
+Fix this by NULLing out ent->ns_name after it is transferred to ns_name
+
+Fixes: 145a0ef21c8e9 ("apparmor: fix blob compression when ns is forced on a policy load
+")
+Reported-by: Qualys Security Advisory <qsa@qualys.com>
+Tested-by: Salvatore Bonaccorso <carnil@debian.org>
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/edac_mc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ security/apparmor/policy.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/edac/edac_mc.c
-+++ b/drivers/edac/edac_mc.c
-@@ -369,13 +369,13 @@ struct mem_ctl_info *edac_mc_alloc(unsig
- 	if (!mci->layers)
- 		goto error;
- 
-+	mci->dev.release = mci_release;
-+	device_initialize(&mci->dev);
-+
- 	mci->pvt_info = kzalloc(sz_pvt, GFP_KERNEL);
- 	if (!mci->pvt_info)
- 		goto error;
- 
--	mci->dev.release = mci_release;
--	device_initialize(&mci->dev);
--
- 	/* setup index and various internal pointers */
- 	mci->mc_idx = mc_num;
- 	mci->tot_dimms = tot_dimms;
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -958,6 +958,7 @@ ssize_t aa_replace_profiles(struct aa_ns
+ 				goto fail;
+ 			}
+ 			ns_name = ent->ns_name;
++			ent->ns_name = NULL;
+ 		} else
+ 			count++;
+ 	}
 
 
