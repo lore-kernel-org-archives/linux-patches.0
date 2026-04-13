@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685A124DCF6;
-	Mon, 13 Apr 2026 16:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37C024DCF6;
+	Mon, 13 Apr 2026 16:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096867; cv=none; b=DHK6VB1d6Fw/1x98xVtz1hMfJ826HN4QftNSauXspno1Q26GqcLZN6/8wfZJR00vTD5iikO8AOTUCCNosNeMf/wThoiuabDbusXnFBssdvQphlriK5xAuC9WEhS0ddRXk8r8R27Xh6ced/l8Rp1/84yds5sUTo+srkvHM++Jqto=
+	t=1776096870; cv=none; b=fPdmGQTHFBzHZo/2uX3A/GuLOrpokrgxI5ofl2Ek4mrM995q0ebzrFyQP6UkzCyZpFjKSpl5rIJKJKzxjbVw2ii/SKvWgHu/E6Rg/emQhlVxiBdmsHGf+D+XrQ5RtWsbUDSXS9Nw72gO2wI/w789sL5DzHDXKe+iWR30nwxT0ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096867; c=relaxed/simple;
-	bh=s6lSJ2hpUb/LAVRcLDhbQTOeUMFeKroxmje3palhyck=;
+	s=arc-20240116; t=1776096870; c=relaxed/simple;
+	bh=irZxlP7wcfehresR7eU8gm2VylHBIHlY+cmmAWK+4ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZAA+kU2XBNceq5dIXuilPY0f5lii/lCJTgHXXbrEyAUGq6zVJk5rVKe6m0q8+yn9W3Yxx4B2RZy9OgkLKDoGiCiteFb+q+MQ6R1uI4YYV190hrHxPnnBcg9voaZYSGQ8cma1oA1VGDY4Wa45ps4gxTzw582kqcAAo7NZZhr/ni4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mg5qUmHz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZH2FsLmv9KXQFOYDN8oA2XQPwuzvKP4tK+17v2WlgGtGZCYamv7tDFbumX9sXlR59IkXzbi+lGW29F1bG/tvkua15QSfD5EaI9Fc2rFrquxVatRKqMMzGfj3mUZQ0NITiJVtCpmdH2nzlGacOWEnjU3rmgDQMrMSlnpp37CqEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlN8BhEr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mg5qUmHz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007A1C2BCAF;
-	Mon, 13 Apr 2026 16:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlN8BhEr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BADFC2BCAF;
+	Mon, 13 Apr 2026 16:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096867;
-	bh=s6lSJ2hpUb/LAVRcLDhbQTOeUMFeKroxmje3palhyck=;
+	s=korg; t=1776096869;
+	bh=irZxlP7wcfehresR7eU8gm2VylHBIHlY+cmmAWK+4ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mg5qUmHz+iWUtn45aECAckskHsSQMrhungHhVHXtwh4ZGg6zSNCE5ZR3on/as4dI8
-	 1Wgw2w04OqK6kEkceIP23jbgOeIY2n0qePn7WVNrEiug4uM3HMeGrmjqyASdte/QDN
-	 FjDb8N1d837ZHPy676Ui+itmcCgP4SMKUfnQB80U=
+	b=LlN8BhEruRiV+Un1y8E/0xtwOl//rxWpfh+ApvdanKKhdKkX4aVXAJaEQp4/ekywB
+	 SE2MICn9jfWLe5yhFb5GfOTkh0kQ5TQQ9EATNUiIcvyP7HehI4T1J0EI4qh5Om7OeF
+	 HNFXJDYE3XOZBB8tcy2DrBsrsWEsX5FvFnJIK+a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleh Konko <security@1seal.org>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 22/50] tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG
-Date: Mon, 13 Apr 2026 18:00:49 +0200
-Message-ID: <20260413155725.342174745@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 23/50] wifi: brcmsmac: Fix dma_free_coherent() size
+Date: Mon, 13 Apr 2026 18:00:50 +0200
+Message-ID: <20260413155725.379747047@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -52,57 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleh Konko <security@1seal.org>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 48a5fe38772b6f039522469ee6131a67838221a8 upstream.
+commit 12cd7632757a54ce586e36040210b1a738a0fc53 upstream.
 
-The GRP_ACK_MSG handler in tipc_group_proto_rcv() currently decrements
-bc_ackers on every inbound group ACK, even when the same member has
-already acknowledged the current broadcast round.
+dma_alloc_consistent() may change the size to align it. The new size is
+saved in alloced.
 
-Because bc_ackers is a u16, a duplicate ACK received after the last
-legitimate ACK wraps the counter to 65535. Once wrapped,
-tipc_group_bc_cong() keeps reporting congestion and later group
-broadcasts on the affected socket stay blocked until the group is
-recreated.
+Change the free size to match the allocation size.
 
-Fix this by ignoring duplicate or stale ACKs before touching bc_acked or
-bc_ackers. This makes repeated GRP_ACK_MSG handling idempotent and
-prevents the underflow path.
-
-Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oleh Konko <security@1seal.org>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/41a4833f368641218e444fdcff822039.security@1seal.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260218130741.46566-3-fourier.thomas@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/group.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/tipc/group.c
-+++ b/net/tipc/group.c
-@@ -746,6 +746,7 @@ void tipc_group_proto_rcv(struct tipc_gr
- 	u32 port = msg_origport(hdr);
- 	struct tipc_member *m, *pm;
- 	u16 remitted, in_flight;
-+	u16 acked;
- 
- 	if (!grp)
- 		return;
-@@ -798,7 +799,10 @@ void tipc_group_proto_rcv(struct tipc_gr
- 	case GRP_ACK_MSG:
- 		if (!m)
- 			return;
--		m->bc_acked = msg_grp_bc_acked(hdr);
-+		acked = msg_grp_bc_acked(hdr);
-+		if (less_eq(acked, m->bc_acked))
-+			return;
-+		m->bc_acked = acked;
- 		if (--grp->bc_ackers)
- 			return;
- 		list_del_init(&m->small_win);
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
+@@ -483,7 +483,7 @@ static void *dma_ringalloc(struct dma_in
+ 	if (((desc_strtaddr + size - 1) & boundary) != (desc_strtaddr
+ 							& boundary)) {
+ 		*alignbits = dma_align_sizetobits(size);
+-		dma_free_coherent(di->dmadev, size, va, *descpa);
++		dma_free_coherent(di->dmadev, *alloced, va, *descpa);
+ 		va = dma_alloc_consistent(di, size, *alignbits,
+ 			alloced, descpa);
+ 	}
 
 
