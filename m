@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEDB317141;
-	Mon, 13 Apr 2026 16:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D683161BF;
+	Mon, 13 Apr 2026 16:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099052; cv=none; b=b/kQUwoNZqfQwRFwQlW95+wTQukn3Xav/6TzYPD5a1FgBPcT3Vhphr7X+yTtTtgwRZFDOayFBLolwOl6uQ78ZUpgeKa9ydGm5hSP6+YGqUJ90wfcs7P0jcnRql9kkfWMQsce0uyCCqJYQm5TSK/3P1bArVwB+xdQKDKbhrG+ZdM=
+	t=1776099055; cv=none; b=oZr9K+xwcGzyuJaRdxZKBV42gE1IQ9oYBIXe0a9+r1ziUDKcJz3UK2UGilSqG9oA/rfNyZnxTZLwvTy7dOHUbgw4s6upPNUiJhIcOLJAmEcMCeKwoj1cjFZdbfIsaEaAA7dg3Dz6o6Cx/3ZSeVXK/YZi1nAR3Cxfmd5alfqCo/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099052; c=relaxed/simple;
-	bh=WSj+ymx5OkN2/MPxcfBWk1DbSpWm/gVAbVcBC/S320g=;
+	s=arc-20240116; t=1776099055; c=relaxed/simple;
+	bh=X8b0uLa9YbDJrQ/+1jawC2CQJD55BU2ERI9TapxLQRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZ67K8eyd7okKtArZb7NlHqrGcsE60BLC46djE6TVQ3H0lDGHAAOrz2JlQgDf0JddxJMC0geXb3uSau30qwfEnMusyBRZjDuzTVZcfqnml1aC4wQUco00AU6xFGg/hY6PgB+iGanzELP94PIbHZuV9ex2EzPsd6U1gyyGUicSAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXWsOGyM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u6FuKytW3wTGFQOgokjxRYrAfC8sfDUlnze2L6r/epAPmkRTQJD819cplcDE7aUi8rQKY63PjpEs6ZlgfXN0mS006yT0M0/PnxtWLa5WJi/Md22Z+X5WjGA22UbGrpWAScxinv1pXxlwT7KGK4OGkg44WgJwGZzPlfnlJitYPkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRHzB9Ke; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXWsOGyM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F15C2BCAF;
-	Mon, 13 Apr 2026 16:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRHzB9Ke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED3DC2BCAF;
+	Mon, 13 Apr 2026 16:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099052;
-	bh=WSj+ymx5OkN2/MPxcfBWk1DbSpWm/gVAbVcBC/S320g=;
+	s=korg; t=1776099055;
+	bh=X8b0uLa9YbDJrQ/+1jawC2CQJD55BU2ERI9TapxLQRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jXWsOGyMuDvCbJdNtsMq1ZmV5zPFPJ3A47/dzVEBMl1he/Su1TexNYRkrocRqxmst
-	 6FDWMSFvfBpjpp0I+nUcvlyLCGmaEFXIFPu26D2Aarj0xZo+68H042tjlGMFpc9wv5
-	 /VeRxA24CfceAHMUiZDT9M8iNwY27c0gFJT8yVYk=
+	b=XRHzB9KeMQKozZaZrBbj/BQI++oA7J+/vZo5MN3FWkZfkmHxE+BCvxTjJrCb8OHVX
+	 cBaWJBzqVa+220G7gdJ5FfBhdY9d4Brwsdli1HMlM9/4tePCNzsNpuxOkyLxiYuyqM
+	 h9L+wHTfTOQNsoHMs2Dk805HPYtTzpJJld9cRcvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 192/491] KVM: SVM: Initialize AVIC VMCB fields if AVIC is enabled with in-kernel APIC
-Date: Mon, 13 Apr 2026 17:57:17 +0200
-Message-ID: <20260413155826.257190686@linuxfoundation.org>
+Subject: [PATCH 5.10 193/491] ALSA: pcm: fix wait_time calculations
+Date: Mon, 13 Apr 2026 17:57:18 +0200
+Message-ID: <20260413155826.295516873@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,63 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-[ Upstream commit 3989a6d036c8ec82c0de3614bed23a1dacd45de5 ]
+[ Upstream commit 3ed2b549b39f57239aad50a255ece353997183fd ]
 
-Initialize all per-vCPU AVIC control fields in the VMCB if AVIC is enabled
-in KVM and the VM has an in-kernel local APIC, i.e. if it's _possible_ the
-vCPU could activate AVIC at any point in its lifecycle.  Configuring the
-VMCB if and only if AVIC is active "works" purely because of optimizations
-in kvm_create_lapic() to speculatively set apicv_active if AVIC is enabled
-*and* to defer updates until the first KVM_RUN.  In quotes because KVM
-likely won't do the right thing if kvm_apicv_activated() is false, i.e. if
-a vCPU is created while APICv is inhibited at the VM level for whatever
-reason.  E.g. if the inhibit is *removed* before KVM_REQ_APICV_UPDATE is
-handled in KVM_RUN, then __kvm_vcpu_update_apicv() will elide calls to
-vendor code due to seeing "apicv_active == activate".
+... in wait_for_avail() and snd_pcm_drain().
 
-Cleaning up the initialization code will also allow fixing a bug where KVM
-incorrectly leaves CR8 interception enabled when AVIC is activated without
-creating a mess with respect to whether AVIC is activated or not.
+t was calculated in seconds, so it would be pretty much always zero, to
+be subsequently de-facto ignored due to being max(t, 10)'d. And then it
+(i.e., 10) would be treated as secs, which doesn't seem right.
 
-Cc: stable@vger.kernel.org
-Fixes: 67034bb9dd5e ("KVM: SVM: Add irqchip_split() checks before enabling AVIC")
-Fixes: 6c3e4422dd20 ("svm: Add support for dynamic APICv")
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://patch.msgid.link/20260203190711.458413-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[ Context ]
+However, fixing it to properly calculate msecs would potentially cause
+timeouts when using twice the period size for the default timeout (which
+seems reasonable to me), so instead use the buffer size plus 10 percent
+to be on the safe side ... but that still seems insufficient, presumably
+because the hardware typically needs a moment to fire up. To compensate
+for this, we up the minimal timeout to 100ms, which is still two orders
+of magnitude less than the bogus minimum.
+
+substream->wait_time was also misinterpreted as jiffies, despite being
+documented as being in msecs. Only the soc/sof driver sets it - to 500,
+which looks very much like msecs were intended.
+
+Speaking of which, shouldn't snd_pcm_drain() also use substream->
+wait_time?
+
+As a drive-by, make the debug messages on timeout less confusing.
+
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Link: https://lore.kernel.org/r/20230405201219.2197774-1-oswald.buddenhagen@gmx.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 9b1dbd69ba6f ("ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    2 +-
- arch/x86/kvm/svm/svm.c  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/core/pcm_lib.c    |   11 +++++------
+ sound/core/pcm_native.c |    8 ++++----
+ 2 files changed, 9 insertions(+), 10 deletions(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -203,7 +203,7 @@ void avic_init_vmcb(struct vcpu_svm *svm
- 	vmcb->control.avic_logical_id = lpa & AVIC_HPA_MASK;
- 	vmcb->control.avic_physical_id = ppa & AVIC_HPA_MASK;
- 	vmcb->control.avic_physical_id |= AVIC_MAX_PHYSICAL_ID_COUNT;
--	if (kvm_apicv_activated(svm->vcpu.kvm))
-+	if (kvm_vcpu_apicv_active(&svm->vcpu))
- 		vmcb->control.int_ctl |= AVIC_ENABLE_MASK;
- 	else
- 		vmcb->control.int_ctl &= ~AVIC_ENABLE_MASK;
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1230,7 +1230,7 @@ static void init_vmcb(struct vcpu_svm *s
+--- a/sound/core/pcm_lib.c
++++ b/sound/core/pcm_lib.c
+@@ -1843,15 +1843,14 @@ static int wait_for_avail(struct snd_pcm
+ 		if (substream->wait_time) {
+ 			wait_time = substream->wait_time;
+ 		} else {
+-			wait_time = 10;
++			wait_time = 100;
  
- 	svm_check_invpcid(svm);
+ 			if (runtime->rate) {
+-				long t = runtime->period_size * 2 /
+-					 runtime->rate;
++				long t = runtime->buffer_size * 1100 / runtime->rate;
+ 				wait_time = max(t, wait_time);
+ 			}
+-			wait_time = msecs_to_jiffies(wait_time * 1000);
+ 		}
++		wait_time = msecs_to_jiffies(wait_time);
+ 	}
  
--	if (kvm_vcpu_apicv_active(&svm->vcpu))
-+	if (avic && irqchip_in_kernel(svm->vcpu.kvm))
- 		avic_init_vmcb(svm);
+ 	for (;;) {
+@@ -1899,8 +1898,8 @@ static int wait_for_avail(struct snd_pcm
+ 		}
+ 		if (!tout) {
+ 			pcm_dbg(substream->pcm,
+-				"%s write error (DMA or IRQ trouble?)\n",
+-				is_playback ? "playback" : "capture");
++				"%s timeout (DMA or IRQ trouble?)\n",
++				is_playback ? "playback write" : "capture read");
+ 			err = -EIO;
+ 			break;
+ 		}
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2155,12 +2155,12 @@ static int snd_pcm_drain(struct snd_pcm_
+ 		if (runtime->no_period_wakeup)
+ 			tout = MAX_SCHEDULE_TIMEOUT;
+ 		else {
+-			tout = 10;
++			tout = 100;
+ 			if (runtime->rate) {
+-				long t = runtime->period_size * 2 / runtime->rate;
++				long t = runtime->buffer_size * 1100 / runtime->rate;
+ 				tout = max(t, tout);
+ 			}
+-			tout = msecs_to_jiffies(tout * 1000);
++			tout = msecs_to_jiffies(tout);
+ 		}
+ 		tout = schedule_timeout(tout);
  
- 	/*
+@@ -2183,7 +2183,7 @@ static int snd_pcm_drain(struct snd_pcm_
+ 				result = -ESTRPIPE;
+ 			else {
+ 				dev_dbg(substream->pcm->card->dev,
+-					"playback drain error (DMA or IRQ trouble?)\n");
++					"playback drain timeout (DMA or IRQ trouble?)\n");
+ 				snd_pcm_stop(substream, SNDRV_PCM_STATE_SETUP);
+ 				result = -EIO;
+ 			}
 
 
