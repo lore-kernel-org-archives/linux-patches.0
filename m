@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1201C2E11B9;
-	Mon, 13 Apr 2026 16:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990A4309F09;
+	Mon, 13 Apr 2026 16:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097592; cv=none; b=gS3AvQOVMWi7qtuKqVQaTH8unWqg19Ez4/56pm76qSYYUvuz2SWuhxKJDl1l2kMeGXPyxfpK8jQnfH3zvLekLywQkvTxuJx9QlqbAiZpHu58QPeZBozp+T0SM6k0eNps1AHRASpn3mT0mSFA7KHBviz2VUbP5b6uFlh5FSnff8A=
+	t=1776097594; cv=none; b=O6hO01xCsJRHb6OaBd3I922ImS/9rOKsBEpri8OAhOa8H3NjE9Drq4/LOel428iPEWFqAyYo8kdiBt4vKf69THus0au8z2VIZjUAzYAXE3vr5RfAWsfDZab8WKgPHsGaylhc86zXnTnc3gopNvxChOTWxOw9xp5w3lNrX7Qrs1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097592; c=relaxed/simple;
-	bh=Na0XhSMZzUdwlhxDpnLvWa3H0DwUaMn/4OeY6rmPRUA=;
+	s=arc-20240116; t=1776097594; c=relaxed/simple;
+	bh=xnzfTL80TRUqFPjxVq3Dn9IiAtuw0sR81puR07w5dok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBWZxEyJLqzkKJ/WH5PVc2fEDALg6ZKvUprYUttuMnO6QS3YFiVwXoDe+SZsb+WWVDpcJ49tddZONcPvtR2uDKFm1SKfUXNIHtLo65rRbWq4uxk532ghOjJAHKesvyCOwT5KR99LK76R06BETLiQ4NtghyQNpUy1Ogrz2myZggA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPKkkDcB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f/BeimSM6wESeVHf4itrtTn5xz+dUCficAZ3t/Lk4k58dMx4ECAPLYS51Vja3OpnmWJxxiXcLVcoLVooto/R6bULaQpdwbs1S6seAiFst0NMYWnf4iM7cjclLvNYLWwj6YkxBfXrXHU1OCU32fbyWbDV3bVhC7lVtA3haGur8Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIDi0pc+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPKkkDcB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B65AC2BCAF;
-	Mon, 13 Apr 2026 16:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIDi0pc+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E946C2BCB0;
+	Mon, 13 Apr 2026 16:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097592;
-	bh=Na0XhSMZzUdwlhxDpnLvWa3H0DwUaMn/4OeY6rmPRUA=;
+	s=korg; t=1776097594;
+	bh=xnzfTL80TRUqFPjxVq3Dn9IiAtuw0sR81puR07w5dok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPKkkDcBuEmAcvG66n4vNO0OSr1uFUbFq0WCz5ItGyDKaE3YXJxjysZRSqtNTHvII
-	 VPPeQZ1AcL9TX29/7bgch5spZLztLcfyJlCsh7eLL+iwJ4WaqYL5vbbly3Si8+hluT
-	 QBWGKMxmbWwBeHZfc5BHTeF22wbcZidJp5tTBYa4=
+	b=pIDi0pc+SjEyjIDZPGQaTRGLqcrIW5OOYLth/6uJQ4v5tXyD1DjpjCQbRf0VZuSoT
+	 9wxBV/XGAcS3Zirh9J2amGI3ZT8TvmVM+b8OFqddrEnK4mvc+zhPi6CvGBsabE7lFb
+	 hQsubqz5iyTkxS+P14tDS0nwy3bT/PZiFdVoDs94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 164/570] net: mana: Ring doorbell at 4 CQ wraparounds
-Date: Mon, 13 Apr 2026 17:54:55 +0200
-Message-ID: <20260413155836.593906334@linuxfoundation.org>
+	Jakub Staniszewski <jakub.staniszewski@linux.intel.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 5.15 165/570] ice: fix retry for AQ command 0x06EE
+Date: Mon, 13 Apr 2026 17:54:56 +0200
+Message-ID: <20260413155836.631786343@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,88 +55,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
 
-commit dabffd08545ffa1d7183bc45e387860984025291 upstream.
+commit fb4903b3354aed4a2301180cf991226f896c87ed upstream.
 
-MANA hardware requires at least one doorbell ring every 8 wraparounds
-of the CQ. The driver rings the doorbell as a form of flow control to
-inform hardware that CQEs have been consumed.
+Executing ethtool -m can fail reporting a netlink I/O error while firmware
+link management holds the i2c bus used to communicate with the module.
 
-The NAPI poll functions mana_poll_tx_cq() and mana_poll_rx_cq() can
-poll up to CQE_POLLING_BUFFER (512) completions per call. If the CQ
-has fewer than 512 entries, a single poll call can process more than
-4 wraparounds without ringing the doorbell. The doorbell threshold
-check also uses ">" instead of ">=", delaying the ring by one extra
-CQE beyond 4 wraparounds. Combined, these issues can cause the driver
-to exceed the 8-wraparound hardware limit, leading to missed
-completions and stalled queues.
+According to Intel(R) Ethernet Controller E810 Datasheet Rev 2.8 [1]
+Section 3.3.10.4 Read/Write SFF EEPROM (0x06EE)
+request should to be retried upon receiving EBUSY from firmware.
 
-Fix this by capping the number of CQEs polled per call to 4 wraparounds
-of the CQ in both TX and RX paths. Also change the doorbell threshold
-from ">" to ">=" so the doorbell is rung as soon as 4 wraparounds are
-reached.
+Commit e9c9692c8a81 ("ice: Reimplement module reads used by ethtool")
+implemented it only for part of ice_get_module_eeprom(), leaving all other
+calls to ice_aq_sff_eeprom() vulnerable to returning early on getting
+EBUSY without retrying.
+
+Remove the retry loop from ice_get_module_eeprom() and add Admin Queue
+(AQ) command with opcode 0x06EE to the list of commands that should be
+retried on receiving EBUSY from firmware.
 
 Cc: stable@vger.kernel.org
-Fixes: 58a63729c957 ("net: mana: Fix doorbell out of order violation and avoid unnecessary doorbell rings")
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260226192833.1050807-1-longli@microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e9c9692c8a81 ("ice: Reimplement module reads used by ethtool")
+Signed-off-by: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
+Co-developed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://www.intel.com/content/www/us/en/content-details/613875/intel-ethernet-controller-e810-datasheet.html [1]
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_common.c  |    1 
+ drivers/net/ethernet/intel/ice/ice_ethtool.c |   35 ++++++++++-----------------
+ 2 files changed, 15 insertions(+), 21 deletions(-)
 
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -798,8 +798,14 @@ static void mana_poll_tx_cq(struct mana_
- 	ndev = txq->ndev;
- 	apc = netdev_priv(ndev);
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -1386,6 +1386,7 @@ static bool ice_should_retry_sq_send_cmd
+ 	case ice_aqc_opc_lldp_stop:
+ 	case ice_aqc_opc_lldp_start:
+ 	case ice_aqc_opc_lldp_filter_ctrl:
++	case ice_aqc_opc_sff_eeprom:
+ 		return true;
+ 	}
  
-+	/* Limit CQEs polled to 4 wraparounds of the CQ to ensure the
-+	 * doorbell can be rung in time for the hardware's requirement
-+	 * of at least one doorbell ring every 8 wraparounds.
-+	 */
- 	comp_read = mana_gd_poll_cq(cq->gdma_cq, completions,
--				    CQE_POLLING_BUFFER);
-+				    min((cq->gdma_cq->queue_size /
-+					  COMP_ENTRY_SIZE) * 4,
-+					 CQE_POLLING_BUFFER));
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -3944,7 +3944,7 @@ ice_get_module_eeprom(struct net_device
+ 	struct ice_hw *hw = &pf->hw;
+ 	enum ice_status status;
+ 	bool is_sfp = false;
+-	unsigned int i, j;
++	unsigned int i;
+ 	u16 offset = 0;
+ 	u8 page = 0;
  
- 	if (comp_read < 1)
- 		return;
-@@ -1056,7 +1062,14 @@ static void mana_poll_rx_cq(struct mana_
- 	struct gdma_comp *comp = cq->gdma_comp_buf;
- 	int comp_read, i;
+@@ -3985,26 +3985,19 @@ ice_get_module_eeprom(struct net_device
+ 		if (page == 0 || !(data[0x2] & 0x4)) {
+ 			u32 copy_len;
  
--	comp_read = mana_gd_poll_cq(cq->gdma_cq, comp, CQE_POLLING_BUFFER);
-+	/* Limit CQEs polled to 4 wraparounds of the CQ to ensure the
-+	 * doorbell can be rung in time for the hardware's requirement
-+	 * of at least one doorbell ring every 8 wraparounds.
-+	 */
-+	comp_read = mana_gd_poll_cq(cq->gdma_cq, comp,
-+				    min((cq->gdma_cq->queue_size /
-+					  COMP_ENTRY_SIZE) * 4,
-+					 CQE_POLLING_BUFFER));
- 	WARN_ON_ONCE(comp_read > CQE_POLLING_BUFFER);
+-			/* If i2c bus is busy due to slow page change or
+-			 * link management access, call can fail. This is normal.
+-			 * So we retry this a few times.
+-			 */
+-			for (j = 0; j < 4; j++) {
+-				status = ice_aq_sff_eeprom(hw, 0, addr, offset, page,
+-							   !is_sfp, value,
+-							   SFF_READ_BLOCK_SIZE,
+-							   0, NULL);
+-				netdev_dbg(netdev, "SFF %02X %02X %02X %X = %02X%02X%02X%02X.%02X%02X%02X%02X (%X)\n",
+-					   addr, offset, page, is_sfp,
+-					   value[0], value[1], value[2], value[3],
+-					   value[4], value[5], value[6], value[7],
+-					   status);
+-				if (status) {
+-					usleep_range(1500, 2500);
+-					memset(value, 0, SFF_READ_BLOCK_SIZE);
+-					continue;
+-				}
+-				break;
++			status = ice_aq_sff_eeprom(hw, 0, addr, offset, page,
++						   !is_sfp, value,
++						   SFF_READ_BLOCK_SIZE,
++						   0, NULL);
++			netdev_dbg(netdev, "SFF %02X %02X %02X %X = %02X%02X%02X%02X.%02X%02X%02X%02X (%pe)\n",
++				   addr, offset, page, is_sfp,
++				   value[0], value[1], value[2], value[3],
++				   value[4], value[5], value[6], value[7],
++				   ERR_PTR(status));
++			if (status) {
++				netdev_err(netdev, "%s: error reading module EEPROM: status %pe\n",
++					   __func__, ERR_PTR(status));
++				return status;
+ 			}
  
- 	for (i = 0; i < comp_read; i++) {
-@@ -1090,11 +1103,11 @@ static int mana_cq_handler(void *context
- 		mana_gd_ring_cq(gdma_queue, SET_ARM_BIT);
- 		cq->work_done_since_doorbell = 0;
- 		napi_complete_done(&cq->napi, w);
--	} else if (cq->work_done_since_doorbell >
--		   cq->gdma_cq->queue_size / COMP_ENTRY_SIZE * 4) {
-+	} else if (cq->work_done_since_doorbell >=
-+		   (cq->gdma_cq->queue_size / COMP_ENTRY_SIZE) * 4) {
- 		/* MANA hardware requires at least one doorbell ring every 8
- 		 * wraparounds of CQ even if there is no need to arm the CQ.
--		 * This driver rings the doorbell as soon as we have exceeded
-+		 * This driver rings the doorbell as soon as it has processed
- 		 * 4 wraparounds.
- 		 */
- 		mana_gd_ring_cq(gdma_queue, 0);
+ 			/* Make sure we have enough room for the new block */
 
 
