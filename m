@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAC949620;
-	Mon, 13 Apr 2026 16:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6676026CE32;
+	Mon, 13 Apr 2026 16:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097707; cv=none; b=cygxZhOADjqzyrHdrS5itaoD7D+2bYXdsTtsVWCwlmIbLQFY9w/81sxUJHmvNsSsb+j6JakPcWly1OefjkU0IcrHuxor7rXJOMUPBvtc5OubCc4lpi7gi4PylW9GlUmj7yLQvXJL/QAKA1E7vRoXE2L1ZrzwY4W9oWZwO6JsMKQ=
+	t=1776097710; cv=none; b=UIjTwfgySKO2gDh024Shk7hTfqZzpaOqsT2zTzr4ranQ+Xc7v7gCu15gRtkc3DHTiGbwE5tsJY+bzO5W+I11B+9gr07c4d1HZH0bsn8eUJaaPUHHAxkURzNUgkeQgrnvtusha5p1YX1oIAUuuaqwChlqclzhkDfkJiN21T5IRsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097707; c=relaxed/simple;
-	bh=aQayMgE1tWOXEQMtFUeXapPaD9htN3yh7uskRF8+i/g=;
+	s=arc-20240116; t=1776097710; c=relaxed/simple;
+	bh=CIMJcY5T+xJVVHG2kp46AYPrxEiGmK3r5uyxQTTvUUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYh9VVF/b1Yp5oA0GStKpFD/s6ztfFYalBbFqHqSxEjFOiz+z1mz1Huw9CuBrhwiacMB6RZxONeiGyXNgVxA833zEzGHKjW3CxP2hn1PCRRIxhteY2tWtkRMHg8pLfn8bNlKvDGTfJ9UK4fO4n4xzAYUUgXqzMyxnbhvvBwAqh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKJZO64P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fPEAXWloPStsE9GXetpFoI8NYprM+gqG0GZiLHvgY8gkWXBliKb+lyY1XcjsPG+tP43ZGcuNFxVWGN6eHNU7tOuXZPlYJf0JJR8nfoAvkSiITJNRpFRN5QbmDgTfFAUZ2HxAXexf+lkR7GHWbI5hjpxiPAuIeZdwxlv+H6br87I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Co4dcD96; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKJZO64P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A919C2BCAF;
-	Mon, 13 Apr 2026 16:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Co4dcD96"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C27C2BCAF;
+	Mon, 13 Apr 2026 16:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097707;
-	bh=aQayMgE1tWOXEQMtFUeXapPaD9htN3yh7uskRF8+i/g=;
+	s=korg; t=1776097710;
+	bh=CIMJcY5T+xJVVHG2kp46AYPrxEiGmK3r5uyxQTTvUUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKJZO64POH46rvy3opd2468+qfyv+shDEcohE9XnibqVbfSPgwgi7OYbE3LRw6ZS9
-	 bGIK5OQ2kdbmMP415H72oJ4B7rpp1abziEhaikvILY4nuJ+5PZJaMFALmU74zwRg4g
-	 aZvkmV2XTN7nYSGiT8X4S7QiW2CVTgeYx/PlhwAg=
+	b=Co4dcD96SJFfImRK1YMROZxQ95hvb1ojtznl2yR+6RTuLlXWETKtW2Ik8d4exiz/X
+	 xAniHIwRcxeAviqrF94qsHg33wU00NC68lm3Y35M9tLD/gwupzmJ0Z0bf7w3e/9jvA
+	 hzvaf1xDo+kBBRzYzkZt5Gj4OPCX07N3mQ4j5Zjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	ZhengYuan Huang <gality369@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Richard Genoud <richard.genoud@bootlin.com>,
+	CHAMPSEIX Thomas <thomas.champseix@alstomgroup.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 242/570] btrfs: tree-checker: fix misleading root drop_level error message
-Date: Mon, 13 Apr 2026 17:56:13 +0200
-Message-ID: <20260413155839.535526403@linuxfoundation.org>
+Subject: [PATCH 5.15 243/570] soc: fsl: qbman: fix race condition in qman_destroy_fq
+Date: Mon, 13 Apr 2026 17:56:14 +0200
+Message-ID: <20260413155839.572525788@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,36 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Richard Genoud <richard.genoud@bootlin.com>
 
-[ Upstream commit fc1cd1f18c34f91e78362f9629ab9fd43b9dcab9 ]
+[ Upstream commit 014077044e874e270ec480515edbc1cadb976cf2 ]
 
-Fix tree-checker error message to report "invalid root drop_level"
-instead of the misleading "invalid root level".
+When QMAN_FQ_FLAG_DYNAMIC_FQID is set, there's a race condition between
+fq_table[fq->idx] state and freeing/allocating from the pool and
+WARN_ON(fq_table[fq->idx]) in qman_create_fq() gets triggered.
 
-Fixes: 259ee7754b67 ("btrfs: tree-checker: Add ROOT_ITEM check")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Indeed, we can have:
+         Thread A                             Thread B
+    qman_destroy_fq()                    qman_create_fq()
+      qman_release_fqid()
+        qman_shutdown_fq()
+        gen_pool_free()
+           -- At this point, the fqid is available again --
+                                           qman_alloc_fqid()
+           -- so, we can get the just-freed fqid in thread B --
+                                           fq->fqid = fqid;
+                                           fq->idx = fqid * 2;
+                                           WARN_ON(fq_table[fq->idx]);
+                                           fq_table[fq->idx] = fq;
+     fq_table[fq->idx] = NULL;
+
+And adding some logs between qman_release_fqid() and
+fq_table[fq->idx] = NULL makes the WARN_ON() trigger a lot more.
+
+To prevent that, ensure that fq_table[fq->idx] is set to NULL before
+gen_pool_free() is called by using smp_wmb().
+
+Fixes: c535e923bb97 ("soc/fsl: Introduce DPAA 1.x QMan device driver")
+Signed-off-by: Richard Genoud <richard.genoud@bootlin.com>
+Tested-by: CHAMPSEIX Thomas <thomas.champseix@alstomgroup.com>
+Link: https://lore.kernel.org/r/20251223072549.397625-1-richard.genoud@bootlin.com
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-checker.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/fsl/qbman/qman.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index 86042c1f89f0b..b0afa47032104 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1183,7 +1183,7 @@ static int check_root_item(struct extent_buffer *leaf, struct btrfs_key *key,
- 	}
- 	if (unlikely(btrfs_root_drop_level(&ri) >= BTRFS_MAX_LEVEL)) {
- 		generic_err(leaf, slot,
--			    "invalid root level, have %u expect [0, %u]",
-+			    "invalid root drop_level, have %u expect [0, %u]",
- 			    btrfs_root_drop_level(&ri), BTRFS_MAX_LEVEL - 1);
- 		return -EUCLEAN;
- 	}
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index 7e9074519ad22..bcbf6bf2e8f45 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -1827,6 +1827,8 @@ EXPORT_SYMBOL(qman_create_fq);
+ 
+ void qman_destroy_fq(struct qman_fq *fq)
+ {
++	int leaked;
++
+ 	/*
+ 	 * We don't need to lock the FQ as it is a pre-condition that the FQ be
+ 	 * quiesced. Instead, run some checks.
+@@ -1834,11 +1836,29 @@ void qman_destroy_fq(struct qman_fq *fq)
+ 	switch (fq->state) {
+ 	case qman_fq_state_parked:
+ 	case qman_fq_state_oos:
+-		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID))
+-			qman_release_fqid(fq->fqid);
++		/*
++		 * There's a race condition here on releasing the fqid,
++		 * setting the fq_table to NULL, and freeing the fqid.
++		 * To prevent it, this order should be respected:
++		 */
++		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID)) {
++			leaked = qman_shutdown_fq(fq->fqid);
++			if (leaked)
++				pr_debug("FQID %d leaked\n", fq->fqid);
++		}
+ 
+ 		DPAA_ASSERT(fq_table[fq->idx]);
+ 		fq_table[fq->idx] = NULL;
++
++		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID) && !leaked) {
++			/*
++			 * fq_table[fq->idx] should be set to null before
++			 * freeing fq->fqid otherwise it could by allocated by
++			 * qman_alloc_fqid() while still being !NULL
++			 */
++			smp_wmb();
++			gen_pool_free(qm_fqalloc, fq->fqid | DPAA_GENALLOC_OFF, 1);
++		}
+ 		return;
+ 	default:
+ 		break;
 -- 
 2.51.0
 
