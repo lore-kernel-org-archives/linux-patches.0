@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1E630B50F;
-	Mon, 13 Apr 2026 16:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BBB30BF4E;
+	Mon, 13 Apr 2026 16:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097576; cv=none; b=iqRziEe0L7GcaC/8sH0V+c/k2+wAH98rmoxtN5dUQovnIMkNx5bqyWuqiIrcIVtJFvVCGX3N6tEVzTZ10e28LN9EUVfd1PwjCXhxOQQqzY40QarZd6///infCTutPGha4j9x/upbNd+OOmj8YpHIdLrRvqjntvTlakj9L3ddE1U=
+	t=1776097579; cv=none; b=QEpdbherIAGXjZ85aLJbT7Cj9brPCzGF8/Fh7MMkgsHxPrNJ9rWv9JcZPQjOT93TmS1d6Y+YTSy6Oh2Ufv0xwWiayRoONW6TP+fy4zrYpx6y3n4OU8Avy9+chBBGELeZhx7EzmC2B1f1lCl1eeJ4dQj1XCUk02BaD+GsvxwtQ2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097576; c=relaxed/simple;
-	bh=LvwynEWwVDJF9zM4SUtxayaoqm9qTRurCJBRy1XdB4Y=;
+	s=arc-20240116; t=1776097579; c=relaxed/simple;
+	bh=67B6ja7e+tpixUXCXcjzAXVTF6YEwnjRA2nde6sNntk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fj75Tzl6seqvlgbcezZdt7uBns3hs65wVXwyK4xa5giZwpLIpw/UVMFrC6KsUjveZ+HAgSGKW7VLI1ItAg74kwCRv23u+Uo8HEfbiNSigZ9LlFN/xSwt/gBZLXVL25RcvHgHBWtPLp4My2a/UX18ryxxAYsOjjwt+gnXJEQlsgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bfx4MYJG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQxrKi1fGOtQ+IUz9Uzrp5AoDWp40iskgKFus7GIIMQCwCcdetGOdR77jPURxjfnOZnN33qVXMm4PXS5ekdLgXtggGz1vSu/PtSV2Rc1BYrqI/aX5XK0vhn1FqALx61IfIO2BUVk99j7i7k/D3ZXs9Pnq6vqKgdMZBFe8GX7Tpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAlFuFWe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bfx4MYJG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34050C2BCB3;
-	Mon, 13 Apr 2026 16:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAlFuFWe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C646CC2BCAF;
+	Mon, 13 Apr 2026 16:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097576;
-	bh=LvwynEWwVDJF9zM4SUtxayaoqm9qTRurCJBRy1XdB4Y=;
+	s=korg; t=1776097579;
+	bh=67B6ja7e+tpixUXCXcjzAXVTF6YEwnjRA2nde6sNntk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bfx4MYJGqwPe4e9pDZJqJW+HNy4o662Z0Ia/0BLaA4fj0MAvF5Tj6s7v6MRX1Qe5E
-	 HYHswXSjxcW4ktwzumbYc8oroFsR/uXogqfE8+cLMcnaiW1FWThy5jWiCjUYNNrT4u
-	 0ATeU3QzKOOc+LPac6U3tLNWCkNvKIBXKRR1KDP0=
+	b=NAlFuFWeHJ7VSUG3nQdbVTYNirYLF0eqlWC0UiSL6zsLb80H2nww4tJuOd3fG5r8I
+	 45vg8uu6S+lQmsmFvi7VGl9Ov+s6xKL91eb+p+TOHa6hRGWPfSjIS6s03f8URRidNV
+	 a5s0RDJHaDCkQPvoX0NE8f4Cvhg0TJ4o0NsMYzuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 189/570] iio: imu: inv_icm42600: fix odr switch to the same value
-Date: Mon, 13 Apr 2026 17:55:20 +0200
-Message-ID: <20260413155837.539015639@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.15 190/570] i3c: mipi-i3c-hci: Use ETIMEDOUT instead of ETIME for timeout errors
+Date: Mon, 13 Apr 2026 17:55:21 +0200
+Message-ID: <20260413155837.576103902@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,49 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit c9f3a593137d862d424130343e77d4b5260a4f5a upstream.
+commit 4167b8914463132654e01e16259847d097f8a7f7 upstream.
 
-ODR switch is done in 2 steps when FIFO is on : change the ODR register
-value and acknowledge change when reading the FIFO ODR change flag.
-When we are switching to the same odr value, we end up waiting for a
-FIFO ODR flag that is never happening.
+The MIPI I3C HCI driver currently returns -ETIME for various timeout
+conditions, while other I3C master drivers consistently use -ETIMEDOUT
+for the same class of errors.  Align the HCI driver with the rest of the
+subsystem by replacing all uses of -ETIME with -ETIMEDOUT.
 
-Fix the issue by doing nothing and exiting properly when we are
-switching to the same ODR value.
-
-Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260306072451.11131-2-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    2 ++
- drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    2 ++
- 2 files changed, 4 insertions(+)
+ drivers/i3c/master/mipi-i3c-hci/cmd_v1.c |    2 +-
+ drivers/i3c/master/mipi-i3c-hci/cmd_v2.c |    2 +-
+ drivers/i3c/master/mipi-i3c-hci/core.c   |    6 +++---
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-@@ -322,6 +322,8 @@ static int inv_icm42600_accel_write_odr(
- 		return -EINVAL;
- 
- 	conf.odr = inv_icm42600_accel_odr_conv[idx / 2];
-+	if (conf.odr == st->conf.accel.odr)
-+		return 0;
- 
- 	pm_runtime_get_sync(dev);
- 	mutex_lock(&st->lock);
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-@@ -334,6 +334,8 @@ static int inv_icm42600_gyro_write_odr(s
- 		return -EINVAL;
- 
- 	conf.odr = inv_icm42600_gyro_odr_conv[idx / 2];
-+	if (conf.odr == st->conf.gyro.odr)
-+		return 0;
- 
- 	pm_runtime_get_sync(dev);
- 	mutex_lock(&st->lock);
+--- a/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
++++ b/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
+@@ -335,7 +335,7 @@ static int hci_cmd_v1_daa(struct i3c_hci
+ 		hci->io->queue_xfer(hci, xfer, 1);
+ 		if (!wait_for_completion_timeout(&done, HZ) &&
+ 		    hci->io->dequeue_xfer(hci, xfer, 1)) {
+-			ret = -ETIME;
++			ret = -ETIMEDOUT;
+ 			break;
+ 		}
+ 		if (RESP_STATUS(xfer[0].response) == RESP_ERR_NACK &&
+--- a/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
++++ b/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
+@@ -277,7 +277,7 @@ static int hci_cmd_v2_daa(struct i3c_hci
+ 		hci->io->queue_xfer(hci, xfer, 2);
+ 		if (!wait_for_completion_timeout(&done, HZ) &&
+ 		    hci->io->dequeue_xfer(hci, xfer, 2)) {
+-			ret = -ETIME;
++			ret = -ETIMEDOUT;
+ 			break;
+ 		}
+ 		if (RESP_STATUS(xfer[0].response) != RESP_SUCCESS) {
+--- a/drivers/i3c/master/mipi-i3c-hci/core.c
++++ b/drivers/i3c/master/mipi-i3c-hci/core.c
+@@ -237,7 +237,7 @@ static int i3c_hci_send_ccc_cmd(struct i
+ 		goto out;
+ 	if (!wait_for_completion_timeout(&done, HZ) &&
+ 	    hci->io->dequeue_xfer(hci, xfer, nxfers)) {
+-		ret = -ETIME;
++		ret = -ETIMEDOUT;
+ 		goto out;
+ 	}
+ 	for (i = prefixed; i < nxfers; i++) {
+@@ -311,7 +311,7 @@ static int i3c_hci_priv_xfers(struct i3c
+ 		goto out;
+ 	if (!wait_for_completion_timeout(&done, HZ) &&
+ 	    hci->io->dequeue_xfer(hci, xfer, nxfers)) {
+-		ret = -ETIME;
++		ret = -ETIMEDOUT;
+ 		goto out;
+ 	}
+ 	for (i = 0; i < nxfers; i++) {
+@@ -359,7 +359,7 @@ static int i3c_hci_i2c_xfers(struct i2c_
+ 		goto out;
+ 	if (!wait_for_completion_timeout(&done, HZ) &&
+ 	    hci->io->dequeue_xfer(hci, xfer, nxfers)) {
+-		ret = -ETIME;
++		ret = -ETIMEDOUT;
+ 		goto out;
+ 	}
+ 	for (i = 0; i < nxfers; i++) {
 
 
