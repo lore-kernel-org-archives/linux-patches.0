@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5158632F765;
-	Mon, 13 Apr 2026 16:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99ECC327BEC;
+	Mon, 13 Apr 2026 16:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099548; cv=none; b=P63+UcUySkJx4nrE4VQXTQyJ1l337l0fluUb2yhML/nYCgwfIMi3yMEPlPl/I2NKpq2UpPCkf0q2MQp5/Rum/6uJVOl+pEaTPiU0HKuiWd6u1LZBz5CAVZ8rZD7xan6ApGMhDsVFKiBlCV2pSa6LA4BY01GECdxu4y4JaK1E38U=
+	t=1776099550; cv=none; b=YH4BFPSer3QnWEjzfCCS1lnKF0HcWMpOw0Jt+o7rJZ/yz0y8RApfP8sz+gJ4RUV7e2PLtHSAp3cvdxY3bA2Vk5wZPULC9TOEv5zaXQ+nw8OrM0BAGplfb1q/J9mzDSoB34/fhew9zgodpo4vmME+N9W2D2DNT3xtHB8pMv80QTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099548; c=relaxed/simple;
-	bh=mi4ZtdEgAxGfxxokyFMxnTrcSCkYIxK80pQenFS/uBU=;
+	s=arc-20240116; t=1776099550; c=relaxed/simple;
+	bh=JU1F+aGs7c0Jk4YRyHx8sGY77Z3G2Kjb6lK87OeLulI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4BuXJPmAxUn7+EJPEFE9ELTmiUyaKIDoc3xpXwK24KCg5AvFQn4L4opmxcX8YupNO8Ele9Oo9/6xtiXE4g8UxxmxjXX8+tIFG7mPe4bF5Ma0I9wd+P9sDGGo+gFQB8sDpgPbJAp/3/pMn7Ab9fM8tQpMXEyR6f1+c5+k7gby0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmqpEBbH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KrHCYtp3c+cBmlHNjrBgoaI1tM3UIfqunVhj9KLoBEr0V98V45kIxiDfOUVvtD73gR2Hfl7+0j4GfHaWY5aEehUBGHow9o5I9z2ciHc9MfNT+EEZc6jtX+C4uF20d0AdYuiHAFy0oZFAC5qo6xNedcM6lF1tsyX+UkIrVsaQcnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh/GWA5b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmqpEBbH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7004C2BCAF;
-	Mon, 13 Apr 2026 16:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh/GWA5b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30968C2BCAF;
+	Mon, 13 Apr 2026 16:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099548;
-	bh=mi4ZtdEgAxGfxxokyFMxnTrcSCkYIxK80pQenFS/uBU=;
+	s=korg; t=1776099550;
+	bh=JU1F+aGs7c0Jk4YRyHx8sGY77Z3G2Kjb6lK87OeLulI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmqpEBbHhFXiw6krw9QtdqTUF2zJu+V/vDI/5b05s4+1e73Rzc/NAY6ZIujh+i0NC
-	 b04lKYMwNAkL3EgNwy7+xmjxOZG8ZJR47LBFaRdDjxtkqC2Mlwg97OI4DXTe0KikDS
-	 uoxpBBPwoT+GenAvsuMksMo8g0m8eg12J7rys6PA=
+	b=Fh/GWA5brPzzmVyHH/AlGNOHiX+YJz4yvrcgZcDVYKS7m9DfthPHlv725e9aNkKnf
+	 pFc184gEvESvyN1L6rnKgJuhGRZQz6JvD/tonL7kv56cXJDRjFjNcVeXUG+lwQ5CFO
+	 vtyPC2iP+WD6H0xKQvMXz5WQigF5VNBUc1KalYnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
+	Francesco Lavra <flavra@baylibre.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 381/491] iio: light: vcnl4035: fix scan buffer on big-endian
-Date: Mon, 13 Apr 2026 18:00:26 +0200
-Message-ID: <20260413155833.296524451@linuxfoundation.org>
+Subject: [PATCH 5.10 382/491] iio: imu: st_lsm6dsx: Set FIFO ODR for accelerometer and gyroscope only
+Date: Mon, 13 Apr 2026 18:00:27 +0200
+Message-ID: <20260413155833.334604050@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,81 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Francesco Lavra <flavra@baylibre.com>
 
-commit fdc7aa54a5d44c05880a4aad7cfb41aacfd16d7b upstream.
+commit 630748afa7030b272b7bee5df857e7bcf132ed51 upstream.
 
-Rework vcnl4035_trigger_consumer_handler() so that we are not passing
-what should be a u16 value as an int * to regmap_read(). This won't
-work on bit endian systems.
+The st_lsm6dsx_set_fifo_odr() function, which is called when enabling and
+disabling the hardware FIFO, checks the contents of the hw->settings->batch
+array at index sensor->id, and then sets the current ODR value in sensor
+registers that depend on whether the register address is set in the above
+array element. This logic is valid for internal sensors only, i.e. the
+accelerometer and gyroscope; however, since commit c91c1c844ebd ("iio: imu:
+st_lsm6dsx: add i2c embedded controller support"), this function is called
+also when configuring the hardware FIFO for external sensors (i.e. sensors
+accessed through the sensor hub functionality), which can result in
+unrelated device registers being written.
 
-Instead, add a new unsigned int variable to pass to regmap_read(). Then
-copy that value into the buffer struct.
+Add a check to the beginning of st_lsm6dsx_set_fifo_odr() so that it does
+not touch any registers unless it is called for internal sensors.
 
-The buffer array is replaced with a struct since there is only one value
-being read. This allows us to use the correct u16 data type and has a
-side-effect of simplifying the alignment specification.
-
-Also fix the endianness of the scan format from little-endian to CPU
-endianness. Since we are using regmap to read the value, it will be
-CPU-endian.
-
-Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
+Fixes: c91c1c844ebd ("iio: imu: st_lsm6dsx: add i2c embedded controller support")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/vcnl4035.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iio/light/vcnl4035.c
-+++ b/drivers/iio/light/vcnl4035.c
-@@ -105,17 +105,23 @@ static irqreturn_t vcnl4035_trigger_cons
- 	struct iio_dev *indio_dev = pf->indio_dev;
- 	struct vcnl4035_data *data = iio_priv(indio_dev);
- 	/* Ensure naturally aligned timestamp */
--	u8 buffer[ALIGN(sizeof(u16), sizeof(s64)) + sizeof(s64)]  __aligned(8) = { };
-+	struct {
-+		u16 als_data;
-+		aligned_s64 timestamp;
-+	} buffer = { };
-+	unsigned int val;
- 	int ret;
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
+@@ -201,6 +201,10 @@ static int st_lsm6dsx_set_fifo_odr(struc
+ 	const struct st_lsm6dsx_reg *batch_reg;
+ 	u8 data;
  
--	ret = regmap_read(data->regmap, VCNL4035_ALS_DATA, (int *)buffer);
-+	ret = regmap_read(data->regmap, VCNL4035_ALS_DATA, &val);
- 	if (ret < 0) {
- 		dev_err(&data->client->dev,
- 			"Trigger consumer can't read from sensor.\n");
- 		goto fail_read;
- 	}
--	iio_push_to_buffers_with_timestamp(indio_dev, buffer,
--					iio_get_time_ns(indio_dev));
++	/* Only internal sensors have a FIFO ODR configuration register. */
++	if (sensor->id >= ARRAY_SIZE(hw->settings->batch))
++		return 0;
 +
-+	buffer.als_data = val;
-+	iio_push_to_buffers_with_timestamp(indio_dev, &buffer,
-+					   iio_get_time_ns(indio_dev));
- 
- fail_read:
- 	iio_trigger_notify_done(indio_dev->trig);
-@@ -380,7 +386,7 @@ static const struct iio_chan_spec vcnl40
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_LE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- 	{
-@@ -394,7 +400,7 @@ static const struct iio_chan_spec vcnl40
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_LE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- };
+ 	batch_reg = &hw->settings->batch[sensor->id];
+ 	if (batch_reg->addr) {
+ 		int val;
 
 
