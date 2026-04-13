@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8873626E6F8;
-	Mon, 13 Apr 2026 16:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8A3271464;
+	Mon, 13 Apr 2026 16:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096398; cv=none; b=HO37mbnrIU89u05UeJPt7N9swyLNzIiLzP0klKb+RlocWyqklgX0LzNgaLrFIiXTmjZIBa5oHrhGeEbiYTPXjKiYv7ujy6mSkT1xNEM4jzg9teY3SMPD2TWKsuKZvB3yTEXgtfpgTpswjh7fDA44bjsA31JG1vBJubLQ93Z7DW8=
+	t=1776096400; cv=none; b=NiylVuGSXN9pKBeudMucEIeqm8UcxmV13X9gUA5PPaKyRUiu/ZZ9Sr5X1FQ7kMESZ85TOH0Thu4er86DXJUGiuyN55qEx4NanFruTyooFIvV+a1iUEvP1cvyPb0f8r3XE4zyrpY8/Pcg7yNOog8s0AO92v6u9fdBtIWn34H/kvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096398; c=relaxed/simple;
-	bh=hRrIj5q9saMqCgV11scxZdcDaAckJ/qF9ieaHgaL0Pg=;
+	s=arc-20240116; t=1776096400; c=relaxed/simple;
+	bh=V2yHaPuww0XSJnCIky4r9UtouZSje0RTz6/ZkrKjC3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SU8KI+KS1teqAKqXhI55pOUDXDAYFokvII8++fYVCXQy/Me8N8IoKin1F1sP+WL3kFGaY8reCAIuqBQYk2C9Y7D6xfAKq8sZ9tlTeQUQkvzoHlBYbFbnDurhoAPdh0whFahqdQuksQPJm+1zwDHnITViO0R2BWkH99ozbK9NHjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vv46Rjsu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s1h5JW+krRfdYdxc2BBSuR5GqG2tOVOMWXWnf2440AsBYd9RWSX+teMpKVv6m3uGJOfFt59Jo+tpkyL984xxX61karO0XNSnMoz3+BOMpW05qqGz1e19QmJOJorgu3cVoQladvJ16ZPJBOFI7LgY3UKCiprIq7RVugLhr6zgrjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGdfgIPk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vv46Rjsu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95FEC2BCAF;
-	Mon, 13 Apr 2026 16:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGdfgIPk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725DFC2BCB0;
+	Mon, 13 Apr 2026 16:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096398;
-	bh=hRrIj5q9saMqCgV11scxZdcDaAckJ/qF9ieaHgaL0Pg=;
+	s=korg; t=1776096400;
+	bh=V2yHaPuww0XSJnCIky4r9UtouZSje0RTz6/ZkrKjC3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vv46Rjsuwv8lwaHtV/vxbrGm8Y/ildldbyOikkcj2hhYgv86yRqh9dzM/RGp9RKJX
-	 f7BhI9ACjcpJrh1UOWSs0hWfchaovIwyJyZQMoZS2mvBdnZNAYUmxRRc9GqpLqxo3T
-	 3vTXyLZ4s3ClxxY/JaSVPb8R8UrtyN2dTyTWYmdo=
+	b=jGdfgIPkueOhHBPGbjdaxi5OyYZxGG6n30WrHinXQMRaUY2I6IYYw/Jsx3Heqts5g
+	 /8JUZYh0LaH4EQe1jXorX0p6U2cqbvtYBp6FF4nxdk/+WwyFHBfaQUufeaE0Jan84H
+	 qbZ7OzjaP3B61/FqO6UeInJzPcx3vFxVqz0wEJbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 83/86] rxrpc: Fix buffer overread in rxgk_do_verify_authenticator()
-Date: Mon, 13 Apr 2026 18:00:30 +0200
-Message-ID: <20260413155734.641701403@linuxfoundation.org>
+Subject: [PATCH 6.19 66/86] rxrpc: Fix key parsing memleak
+Date: Mon, 13 Apr 2026 18:00:13 +0200
+Message-ID: <20260413155734.017046395@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -57,46 +57,37 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-commit f564af387c8c28238f8ebc13314c589d7ba8475d upstream.
+commit b555912b9b21075e8298015f888ffe3ff60b1a97 upstream.
 
-Fix rxgk_do_verify_authenticator() to check the buffer size before checking
-the nonce.
+In rxrpc_preparse_xdr_yfs_rxgk(), the memory attached to token->rxgk can be
+leaked in a few error paths after it's allocated.
 
-Fixes: 9d1d2b59341f ("rxrpc: rxgk: Implement the yfs-rxgk security class (GSSAPI)")
-Closes: https://sashiko.dev/#/patchset/20260401105614.1696001-10-dhowells@redhat.com
+Fix this by freeing it in the "reject_token:" case.
+
+Fixes: 0ca100ff4df6 ("rxrpc: Add YFS RxGK (GSSAPI) security class")
+Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: Jeffrey Altman <jaltman@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-20-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-3-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/rxgk.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/rxrpc/key.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/rxrpc/rxgk.c
-+++ b/net/rxrpc/rxgk.c
-@@ -1085,6 +1085,9 @@ static int rxgk_do_verify_authenticator(
- 
- 	_enter("");
- 
-+	if ((end - p) * sizeof(__be32) < 24)
-+		return rxrpc_abort_conn(conn, skb, RXGK_NOTAUTH, -EPROTO,
-+					rxgk_abort_resp_short_auth);
- 	if (memcmp(p, conn->rxgk.nonce, 20) != 0)
- 		return rxrpc_abort_conn(conn, skb, RXGK_NOTAUTH, -EPROTO,
- 					rxgk_abort_resp_bad_nonce);
-@@ -1098,7 +1101,7 @@ static int rxgk_do_verify_authenticator(
- 	p += xdr_round_up(app_len) / sizeof(__be32);
- 	if (end - p < 4)
- 		return rxrpc_abort_conn(conn, skb, RXGK_NOTAUTH, -EPROTO,
--					rxgk_abort_resp_short_applen);
-+					rxgk_abort_resp_short_auth);
- 
- 	level	= ntohl(*p++);
- 	epoch	= ntohl(*p++);
+--- a/net/rxrpc/key.c
++++ b/net/rxrpc/key.c
+@@ -274,6 +274,7 @@ nomem_token:
+ nomem:
+ 	return -ENOMEM;
+ reject_token:
++	kfree(token->rxgk);
+ 	kfree(token);
+ reject:
+ 	return -EKEYREJECTED;
 
 
