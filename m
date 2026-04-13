@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BCB314D0D;
-	Mon, 13 Apr 2026 16:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC3A30C361;
+	Mon, 13 Apr 2026 16:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098440; cv=none; b=YmXuprdaS/JBIUTfDJWHLdnDopso3L772QFlhsQya2hWBYbarIMOX+L0Lq3d5K6vZUlozIQkuSDSIzbs9txcFoPP5Synk6nf8KYkX5WjrGS517QLVD4ZAzxeqKNb2AKmuLbiBh67E7giz/mNIXW+Ez7SD2dF8r6GWuOo4zkKJp8=
+	t=1776098442; cv=none; b=CpCPCy9iyUawB2YR9xlNweVJKdDCj+5bqoMw5RTZKFyq50LO1vsixrGNksyHx+etlxpwTKfNzjpuMXHdc1CyoYXBOj7eX1HaZk5C9txQ4sh1Fd0o4oPDfByDQvMKqkMGIWdGwE1OnCE8Xa/ar4/W5LS1a7jpT971Dj9Mgu8LvGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098440; c=relaxed/simple;
-	bh=uNOrSaUQ/2VUGQ3L3iQFAIGsxPp2oKgPqQ4NvXO9eYE=;
+	s=arc-20240116; t=1776098442; c=relaxed/simple;
+	bh=ixil2JnuMNJN5l8aE9uMAyA85yu6rVuOG+0Ad8BXWmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEn/iVpB5Hi2Z6JXuD1D358DkHJATVTwNyo1LuZPOJias9YmeynY0Vz9OESrV/rvr2X2iyU21iQt20rUwMD9cQKdHRFtiErW8Q345x7vRAgRv/zFbkPynVn/kv1F+JwFI4Tk9EM/zczgx+BLIKY3M+NmY1qQ/NZdLJFt6371bi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+xrp0dV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JKX3YWpKTORW2GIQKIn5LASK6d+JUJQdxcKTESrwvAtqtHh+Kye3sZj78eC2AD3oL8LTh4zs44NnepqzjQClqByqYPuweWqKohkDyyONrxWkWK3uRM5F++bDVCxeKLKzw2bdWljyNN1X2DZLUG+eN2UK9ugopfdIbZpqWyznSBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubnsMSvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+xrp0dV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C215DC2BCAF;
-	Mon, 13 Apr 2026 16:40:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubnsMSvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542F7C2BCAF;
+	Mon, 13 Apr 2026 16:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098440;
-	bh=uNOrSaUQ/2VUGQ3L3iQFAIGsxPp2oKgPqQ4NvXO9eYE=;
+	s=korg; t=1776098442;
+	bh=ixil2JnuMNJN5l8aE9uMAyA85yu6rVuOG+0Ad8BXWmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I+xrp0dVa/zrLdIGGU2RlWf0GRMNsJKED/gZStv4xRG3rd6mEFV66w//1w0aRYEHz
-	 8foDMoN/YCSpGhgRDUa116n4CRTzhMdZR5bLVvGpQLJVjFkLbjarts0x600x+bSC9k
-	 WH4mFTViAzqIlP2A1Dtj7DzBuCewCxh0XRc2ny1M=
+	b=ubnsMSvq0ZqzUeHDy0WHigCTfFB0WhH7hQTAF72Cr64xk17TwhInUpRA0cJYQXeKm
+	 7XjXZqubier8rL+1yWsZb9on9yUCrDpjDhXOFrAec7L5F1IjyxmJPtgv3jJs8zABl0
+	 pYlhxehR/PoLvESukG24lJlcV6T5x/iRQBPo2aeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 508/570] mptcp: fix slab-use-after-free in __inet_lookup_established
-Date: Mon, 13 Apr 2026 18:00:39 +0200
-Message-ID: <20260413155849.482414843@linuxfoundation.org>
+	Tuan Do <tuan@calif.io>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 5.15 526/570] netfilter: nft_ct: fix use-after-free in timeout object destroy
+Date: Mon, 13 Apr 2026 18:00:57 +0200
+Message-ID: <20260413155850.153569376@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,101 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Tuan Do <tuan@calif.io>
 
-commit 9b55b253907e7431210483519c5ad711a37dafa1 upstream.
+commit f8dca15a1b190787bbd03285304b569631160eda upstream.
 
-The ehash table lookups are lockless and rely on
-SLAB_TYPESAFE_BY_RCU to guarantee socket memory stability
-during RCU read-side critical sections. Both tcp_prot and
-tcpv6_prot have their slab caches created with this flag
-via proto_register().
+nft_ct_timeout_obj_destroy() frees the timeout object with kfree()
+immediately after nf_ct_untimeout(), without waiting for an RCU grace
+period. Concurrent packet processing on other CPUs may still hold
+RCU-protected references to the timeout object obtained via
+rcu_dereference() in nf_ct_timeout_data().
 
-However, MPTCP's mptcp_subflow_init() copies tcpv6_prot into
-tcpv6_prot_override during inet_init() (fs_initcall, level 5),
-before inet6_init() (module_init/device_initcall, level 6) has
-called proto_register(&tcpv6_prot). At that point,
-tcpv6_prot.slab is still NULL, so tcpv6_prot_override.slab
-remains NULL permanently.
+Add an rcu_head to struct nf_ct_timeout and use kfree_rcu() to defer
+freeing until after an RCU grace period, matching the approach already
+used in nfnetlink_cttimeout.c.
 
-This causes MPTCP v6 subflow child sockets to be allocated via
-kmalloc (falling into kmalloc-4k) instead of the TCPv6 slab
-cache. The kmalloc-4k cache lacks SLAB_TYPESAFE_BY_RCU, so
-when these sockets are freed without SOCK_RCU_FREE (which is
-cleared for child sockets by design), the memory can be
-immediately reused. Concurrent ehash lookups under
-rcu_read_lock can then access freed memory, triggering a
-slab-use-after-free in __inet_lookup_established.
+KASAN report:
+ BUG: KASAN: slab-use-after-free in nf_conntrack_tcp_packet+0x1381/0x29d0
+ Read of size 4 at addr ffff8881035fe19c by task exploit/80
 
-Fix this by splitting the IPv6-specific initialization out of
-mptcp_subflow_init() into a new mptcp_subflow_v6_init(), called
-from mptcp_proto_v6_init() before protocol registration. This
-ensures tcpv6_prot_override.slab correctly inherits the
-SLAB_TYPESAFE_BY_RCU slab cache.
+ Call Trace:
+  nf_conntrack_tcp_packet+0x1381/0x29d0
+  nf_conntrack_in+0x612/0x8b0
+  nf_hook_slow+0x70/0x100
+  __ip_local_out+0x1b2/0x210
+  tcp_sendmsg_locked+0x722/0x1580
+  __sys_sendto+0x2d8/0x320
 
-Fixes: b19bc2945b40 ("mptcp: implement delegated actions")
+ Allocated by task 75:
+  nft_ct_timeout_obj_init+0xf6/0x290
+  nft_obj_init+0x107/0x1b0
+  nf_tables_newobj+0x680/0x9c0
+  nfnetlink_rcv_batch+0xc29/0xe00
+
+ Freed by task 26:
+  nft_obj_destroy+0x3f/0xa0
+  nf_tables_trans_destroy_work+0x51c/0x5c0
+  process_one_work+0x2c4/0x5a0
+
+Fixes: 7e0b2b57f01d ("netfilter: nft_ct: add ct timeout support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260406031512.189159-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tuan Do <tuan@calif.io>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    2 ++
- net/mptcp/protocol.h |    1 +
- net/mptcp/subflow.c  |   15 +++++++++------
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ include/net/netfilter/nf_conntrack_timeout.h |    1 +
+ net/netfilter/nft_ct.c                       |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3790,6 +3790,8 @@ int __init mptcp_proto_v6_init(void)
- {
- 	int err;
+--- a/include/net/netfilter/nf_conntrack_timeout.h
++++ b/include/net/netfilter/nf_conntrack_timeout.h
+@@ -14,6 +14,7 @@
+ struct nf_ct_timeout {
+ 	__u16			l3num;
+ 	const struct nf_conntrack_l4proto *l4proto;
++	struct rcu_head		rcu;
+ 	char			data[];
+ };
  
-+	mptcp_subflow_v6_init();
-+
- 	mptcp_v6_prot = mptcp_prot;
- 	strcpy(mptcp_v6_prot.name, "MPTCPv6");
- 	mptcp_v6_prot.slab = NULL;
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -646,6 +646,7 @@ static inline bool mptcp_has_another_sub
- void __init mptcp_proto_init(void);
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
- int __init mptcp_proto_v6_init(void);
-+void __init mptcp_subflow_v6_init(void);
- #endif
- 
- struct sock *mptcp_sk_clone(const struct sock *sk,
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1859,7 +1859,15 @@ void __init mptcp_subflow_init(void)
- 	tcp_prot_override.psock_update_sk_prot = NULL;
- #endif
- 
-+	mptcp_diag_subflow_init(&subflow_ulp_ops);
-+
-+	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
-+		panic("MPTCP: failed to register subflows to ULP\n");
-+}
-+
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
-+void __init mptcp_subflow_v6_init(void)
-+{
- 	/* In struct mptcp_subflow_request_sock, we assume the TCP request sock
- 	 * structures for v4 and v6 have the same size. It should not changed in
- 	 * the future but better to make sure to be warned if it is no longer
-@@ -1895,10 +1903,5 @@ void __init mptcp_subflow_init(void)
- 	/* Disable sockmap processing for subflows */
- 	tcpv6_prot_override.psock_update_sk_prot = NULL;
- #endif
--#endif
--
--	mptcp_diag_subflow_init(&subflow_ulp_ops);
--
--	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
--		panic("MPTCP: failed to register subflows to ULP\n");
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -935,7 +935,7 @@ static void nft_ct_timeout_obj_destroy(c
+ 	nf_queue_nf_hook_drop(ctx->net);
+ 	nf_ct_untimeout(ctx->net, timeout);
+ 	nf_ct_netns_put(ctx->net, ctx->family);
+-	kfree(priv->timeout);
++	kfree_rcu(priv->timeout, rcu);
  }
-+#endif
+ 
+ static int nft_ct_timeout_obj_dump(struct sk_buff *skb,
 
 
