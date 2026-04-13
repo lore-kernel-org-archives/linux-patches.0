@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EBB279DC2;
-	Mon, 13 Apr 2026 16:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6732D661C;
+	Mon, 13 Apr 2026 16:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096315; cv=none; b=FGmj/wtOtSY9kCl4Xo+f0Gri3PRBHgZS3axSu/f1WdwQ6M72vaBuxA9QsTeZHulCuDSXdaoLxiQeiUizFDeWhbaa/3CatpeOJRbIYkOfZ303JHxSs14xrffVBodFC6E5/KjjAOyKQR3E7+ymvaeMDg/+j6tJ0dvAOcaQm/w0sHY=
+	t=1776096318; cv=none; b=OuAWIt9n64dBDuZD2ICV3zGYpZPC3lehC6W6K1cfR5G5EmTH6yN2hPtKrwUJRtC256FOYhZVUEJThQ5iHFswcE8TKQYHGF/PhjVYCU9eS1Lmbi6Hs4CAy80qlbvatV/b6wFqWHogg3spEkVkNUQIUN2vd6h9op99L4CKlei8ssY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096315; c=relaxed/simple;
-	bh=XK5T++VibeKtS6u6KdXhFtEqfaaIeC/An95g6MJMs80=;
+	s=arc-20240116; t=1776096318; c=relaxed/simple;
+	bh=plaky8ey9HhrhCD3mLcsl7MMqMyiRTUFH0lQzD7ruok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hwF/PsN86x5mzfJBBGxsxIKVZLpq/vriksrqToQfeOZNgM1uF1G6ZYtS19UC/7RHBcSybRH7Jx3AwH2+B5sjhErWg8w1cmByQqOIzc/+OJyORn/DDVDw5wqgh7Lko+XTV8ici/Htji5px51Eil8qdwqSsra3PQZoZ1gA8UWwk4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eltdBKhD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m62jmNiop5UwWIig3iy7xiDPqSttEnJJdQDO9P1Zh0EX34z0GFM8QH5hEPlEVle0jafzttCZGNbKHSqsFWM2v5k+Vcg/nf6iBpXM9/BkoQCRaVVFjAnNAF3xG+txqgA8rTLbg8C+r3R8Xm19A6cFBwKNr4qxulwE4wYl8EIxtJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMB+x11b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eltdBKhD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF6CC2BCAF;
-	Mon, 13 Apr 2026 16:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMB+x11b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15E7C2BCB0;
+	Mon, 13 Apr 2026 16:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096315;
-	bh=XK5T++VibeKtS6u6KdXhFtEqfaaIeC/An95g6MJMs80=;
+	s=korg; t=1776096318;
+	bh=plaky8ey9HhrhCD3mLcsl7MMqMyiRTUFH0lQzD7ruok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eltdBKhDryJNm6G+4r91Cj/F3qrXr/4nk455TMH0XB6cyQiYj1P+NX8ZvAuH+BaR/
-	 0SX1CU3+uWaOIfjIqi2kW2HZhHb7loOC1Plr+PW3aaa1iLrgFQJPe+yGv5ZDOprDjz
-	 012LB3++qqgvv0tQxyFJNrbGJ2xLll88D2OgXh9Q=
+	b=xMB+x11beYVRJ3s8oPSacRLW4lbEDegtQa4p+VAupYlZhLA7k97bUt8LtqzlVLuRY
+	 Jc6VBpJf8NqcBu61rLFoIiKOJBtwUHD/BtrIQM++eMoqqbMsb7HWzVjuC14HFhkkdw
+	 u02UmU3c9kNqc0b0/lEgudcQ578suKv95KTlpArg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Hao Li <hao.li@linux.dev>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
 	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Pedro Falcato <pfalcato@suse.de>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 50/86] mm/vma: fix memory leak in __mmap_region()
-Date: Mon, 13 Apr 2026 17:59:57 +0200
-Message-ID: <20260413155733.436077701@linuxfoundation.org>
+Subject: [PATCH 6.19 51/86] mm/memory_hotplug: maintain N_NORMAL_MEMORY during hotplug
+Date: Mon, 13 Apr 2026 17:59:58 +0200
+Message-ID: <20260413155733.470910109@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -55,101 +56,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sechang Lim <rhkrqnwk98@gmail.com>
+From: Hao Li <hao.li@linux.dev>
 
-commit 894f99eb535edc4514f756818f3c4f688ba53a59 upstream.
+commit 2ecbe06abf9bfb2261cd6464a6bc3a3615625402 upstream.
 
-commit 605f6586ecf7 ("mm/vma: do not leak memory when .mmap_prepare
-swaps the file") handled the success path by skipping get_file() via
-file_doesnt_need_get, but missed the error path.
+N_NORMAL_MEMORY is initialized from zone population at boot, but memory
+hotplug currently only updates N_MEMORY.  As a result, a node that gains
+normal memory via hotplug can remain invisible to users iterating over
+N_NORMAL_MEMORY, while a node that loses its last normal memory can stay
+incorrectly marked as such.
 
-When /dev/zero is mmap'd with MAP_SHARED, mmap_zero_prepare() calls
-shmem_zero_setup_desc() which allocates a new shmem file to back the
-mapping. If __mmap_new_vma() subsequently fails, this replacement
-file is never fput()'d - the original is released by
-ksys_mmap_pgoff(), but nobody releases the new one.
+The most visible effect is that
+/sys/devices/system/node/has_normal_memory does not report a node even
+after that node has gained normal memory via hotplug.
 
-Add fput() for the swapped file in the error path.
+Also, list_lru-based shrinkers can undercount objects on such a node
+and may skip reclaim on that node entirely, which can lead to a higher
+memory footprint than expected.
 
-Reproducible with fault injection.
+Restore N_NORMAL_MEMORY maintenance directly in online_pages() and
+offline_pages().  Set the bit when a node that currently lacks normal
+memory onlines pages into a zone <= ZONE_NORMAL, and clear it when
+offlining removes the last present pages from zones <= ZONE_NORMAL.
 
-FAULT_INJECTION: forcing a failure.
-name failslab, interval 1, probability 0, space 0, times 1
-CPU: 2 UID: 0 PID: 366 Comm: syz.7.14 Not tainted 7.0.0-rc6 #2 PREEMPT(full)
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x164/0x1f0
- should_fail_ex+0x525/0x650
- should_failslab+0xdf/0x140
- kmem_cache_alloc_noprof+0x78/0x630
- vm_area_alloc+0x24/0x160
- __mmap_region+0xf6b/0x2660
- mmap_region+0x2eb/0x3a0
- do_mmap+0xc79/0x1240
- vm_mmap_pgoff+0x252/0x4c0
- ksys_mmap_pgoff+0xf8/0x120
- __x64_sys_mmap+0x12a/0x190
- do_syscall_64+0xa9/0x580
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
- </TASK>
+This restores the intended semantics without bringing back the old
+status_change_nid_normal notifier plumbing which was removed in
+8d2882a8edb8.
 
-kmemleak: 1 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
-BUG: memory leak
-unreferenced object 0xffff8881118aca80 (size 360):
-  comm "syz.7.14", pid 366, jiffies 4294913255
-  hex dump (first 32 bytes):
-    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
-    ff ff ff ff ff ff ff ff c0 28 4d ae ff ff ff ff  .........(M.....
-  backtrace (crc db0f53bc):
-    kmem_cache_alloc_noprof+0x3ab/0x630
-    alloc_empty_file+0x5a/0x1e0
-    alloc_file_pseudo+0x135/0x220
-    __shmem_file_setup+0x274/0x420
-    shmem_zero_setup_desc+0x9c/0x170
-    mmap_zero_prepare+0x123/0x140
-    __mmap_region+0xdda/0x2660
-    mmap_region+0x2eb/0x3a0
-    do_mmap+0xc79/0x1240
-    vm_mmap_pgoff+0x252/0x4c0
-    ksys_mmap_pgoff+0xf8/0x120
-    __x64_sys_mmap+0x12a/0x190
-    do_syscall_64+0xa9/0x580
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Current users that benefit include list_lru, zswap, nfsd filecache,
+hugetlb_cgroup, and has_normal_memory sysfs reporting.
 
-Found by syzkaller.
-
-Link: https://lkml.kernel.org/r/20260331180811.1333348-1-rhkrqnwk98@gmail.com
-Fixes: 605f6586ecf7 ("mm/vma: do not leak memory when .mmap_prepare swaps the file")
-Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Link: https://lkml.kernel.org/r/20260330035941.518186-1-hao.li@linux.dev
+Fixes: 8d2882a8edb8 ("mm,memory_hotplug: remove status_change_nid_normal and update documentation")
+Signed-off-by: Hao Li <hao.li@linux.dev>
+Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
 Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vma.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ mm/memory_hotplug.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -2774,6 +2774,13 @@ unacct_error:
- 	if (map.charged)
- 		vm_unacct_memory(map.charged);
- abort_munmap:
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1209,6 +1209,13 @@ int online_pages(unsigned long pfn, unsi
+ 
+ 	if (node_arg.nid >= 0)
+ 		node_set_state(nid, N_MEMORY);
 +	/*
-+	 * This indicates that .mmap_prepare has set a new file, differing from
-+	 * desc->vm_file. But since we're aborting the operation, only the
-+	 * original file will be cleaned up. Ensure we clean up both.
++	 * Check whether we are adding normal memory to the node for the first
++	 * time.
 +	 */
-+	if (map.file_doesnt_need_get)
-+		fput(map.file);
- 	vms_abort_munmap_vmas(&map.vms, &map.mas_detach);
- 	return error;
- }
++	if (!node_state(nid, N_NORMAL_MEMORY) && zone_idx(zone) <= ZONE_NORMAL)
++		node_set_state(nid, N_NORMAL_MEMORY);
++
+ 	if (need_zonelists_rebuild)
+ 		build_all_zonelists(NULL);
+ 
+@@ -1908,6 +1915,8 @@ int offline_pages(unsigned long start_pf
+ 	unsigned long flags;
+ 	char *reason;
+ 	int ret;
++	unsigned long normal_pages = 0;
++	enum zone_type zt;
+ 
+ 	/*
+ 	 * {on,off}lining is constrained to full memory sections (or more
+@@ -2056,6 +2065,17 @@ int offline_pages(unsigned long start_pf
+ 	init_per_zone_wmark_min();
+ 
+ 	/*
++	 * Check whether this operation removes the last normal memory from
++	 * the node. We do this before clearing N_MEMORY to avoid the possible
++	 * transient "!N_MEMORY && N_NORMAL_MEMORY" state.
++	 */
++	if (zone_idx(zone) <= ZONE_NORMAL) {
++		for (zt = 0; zt <= ZONE_NORMAL; zt++)
++			normal_pages += pgdat->node_zones[zt].present_pages;
++		if (!normal_pages)
++			node_clear_state(node, N_NORMAL_MEMORY);
++	}
++	/*
+ 	 * Make sure to mark the node as memory-less before rebuilding the zone
+ 	 * list. Otherwise this node would still appear in the fallback lists.
+ 	 */
 
 
