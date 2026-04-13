@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8830428C874;
-	Mon, 13 Apr 2026 16:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2D62E2850;
+	Mon, 13 Apr 2026 16:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098694; cv=none; b=VVpyoGCYzHb8irS6Dn9NyAGHpS0O+1LFc+LXh2q+I2bGq2y1Si9c61LafB7DGtTa39TbRhR21IBAsCMoME1eLJpiP3WB4jDeEJDO/GaYguZT+yy6Vl2XQViLT9RQhugyVMDO5bExhIWWj2vKSEw1vZ0MsaRKn2WLkmrCVTjDqSY=
+	t=1776098696; cv=none; b=e1RhXOIZ9omYaoiAPo8n57RXFGNJRsRsXUMZfIkgBk8Kn9/p9K0o+iObXlVrEBzLlO9zYX3cWDedZOWU/Wpoeb+scDNaXfhQrkCzRfKA5abKBGQBzMQ5Lff/VHI5HPbNIMWOGmDj7GbvpnOw3Qbs1HyoUvEd6cVchdFiCf7a4nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098694; c=relaxed/simple;
-	bh=OKQ38aPNQN9WeV44oizr50/bjkkffVgp7o9lTBFYrcc=;
+	s=arc-20240116; t=1776098696; c=relaxed/simple;
+	bh=UbWa89KLVpLdu3bnuwmEgM+Pb/JCsojmUpQkCfoqeTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sfECk+BCXNEqygUj5LnKvJowL9CbtaNoNY/YeXnkOUrFMCGcEwkpXN8kt/sI5LowYULOhx+eGL6JuojJcef72/r2LwQOiVmPeVPDB15SQe/EBs1vhd/Feaq022BjaAlIodYXSFT+O6Z+texVozgvVfnVAjoCkxTiR+IBrheB8d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXmzFTXh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tdPnDIlFIiXohsdeiXYDtt9ytpGnTyl2uywHySvw8V9T7DnA3wVyiY6ZxSLhgGVG2tBRQVoPXWee+WriECZNFTbIHo5OU2f793KfoQqkLETLqFM3vlpduUhiWHmEN4k6mCmOroaO5aYWUWp4SwYX1spYB3+g8DPq9Uex8jsJCuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AugTNrid; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXmzFTXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9BF0C2BCAF;
-	Mon, 13 Apr 2026 16:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AugTNrid"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705A3C2BCAF;
+	Mon, 13 Apr 2026 16:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098694;
-	bh=OKQ38aPNQN9WeV44oizr50/bjkkffVgp7o9lTBFYrcc=;
+	s=korg; t=1776098696;
+	bh=UbWa89KLVpLdu3bnuwmEgM+Pb/JCsojmUpQkCfoqeTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eXmzFTXhijmtT6eHoSBtEK1r2qmYfRk/gADTvCCeyKcN/HS03CHukmU12YPpQrlGK
-	 tq65YE1YE5WW+DBULsxo4/oEjVWYx5+FXs1VX4yhnkVfr/ewoGgRNnDBYZY3HJMvB6
-	 p5Sy6pzOkLogzh7vAW2SSIACwo4FFbA4uw1YhnWI=
+	b=AugTNridrnPem65Qoku8Od0A/qoL3+t9ncI1+4n3o/9OpkLwL7EJDG+0OTmm7uR2U
+	 Qjub+C9tcJhHtV0X6bjaPOkU/6SDlVOKzBUXrXI4X7/aDzCl9x0Sya3GNBWiFJQG2a
+	 XYpxEzNZL5WuJIN2yqDjIrJKlQ7j/7/Rkwc1s2pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Florian Bezdeka <florian.bezdeka@siemens.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chintan Vankar <c-vankar@ti.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 053/491] scsi: storvsc: Fix scheduling while atomic on PREEMPT_RT
-Date: Mon, 13 Apr 2026 17:54:58 +0200
-Message-ID: <20260413155821.036883221@linuxfoundation.org>
+Subject: [PATCH 5.10 036/491] net: ethernet: ti: am65-cpsw-nuss/cpsw-ale: Fix multicast entry handling in ALE table
+Date: Mon, 13 Apr 2026 17:54:41 +0200
+Message-ID: <20260413155820.405069530@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,107 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+From: Chintan Vankar <c-vankar@ti.com>
 
-[ Upstream commit 57297736c08233987e5d29ce6584c6ca2a831b12 ]
+[ Upstream commit be11a537224d72b906db6b98510619770298c8a4 ]
 
-This resolves the follow splat and lock-up when running with PREEMPT_RT
-enabled on Hyper-V:
+In the current implementation, flushing multicast entries in MAC mode
+incorrectly deletes entries for all ports instead of only the target port,
+disrupting multicast traffic on other ports. The cause is adding multicast
+entries by setting only host port bit, and not setting the MAC port bits.
 
-[  415.140818] BUG: scheduling while atomic: stress-ng-iomix/1048/0x00000002
-[  415.140822] INFO: lockdep is turned off.
-[  415.140823] Modules linked in: intel_rapl_msr intel_rapl_common intel_uncore_frequency_common intel_pmc_core pmt_telemetry pmt_discovery pmt_class intel_pmc_ssram_telemetry intel_vsec ghash_clmulni_intel aesni_intel rapl binfmt_misc nls_ascii nls_cp437 vfat fat snd_pcm hyperv_drm snd_timer drm_client_lib drm_shmem_helper snd sg soundcore drm_kms_helper pcspkr hv_balloon hv_utils evdev joydev drm configfs efi_pstore nfnetlink vsock_loopback vmw_vsock_virtio_transport_common hv_sock vmw_vsock_vmci_transport vsock vmw_vmci efivarfs autofs4 ext4 crc16 mbcache jbd2 sr_mod sd_mod cdrom hv_storvsc serio_raw hid_generic scsi_transport_fc hid_hyperv scsi_mod hid hv_netvsc hyperv_keyboard scsi_common
-[  415.140846] Preemption disabled at:
-[  415.140847] [<ffffffffc0656171>] storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
-[  415.140854] CPU: 8 UID: 0 PID: 1048 Comm: stress-ng-iomix Not tainted 6.19.0-rc7 #30 PREEMPT_{RT,(full)}
-[  415.140856] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 09/04/2024
-[  415.140857] Call Trace:
-[  415.140861]  <TASK>
-[  415.140861]  ? storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
-[  415.140863]  dump_stack_lvl+0x91/0xb0
-[  415.140870]  __schedule_bug+0x9c/0xc0
-[  415.140875]  __schedule+0xdf6/0x1300
-[  415.140877]  ? rtlock_slowlock_locked+0x56c/0x1980
-[  415.140879]  ? rcu_is_watching+0x12/0x60
-[  415.140883]  schedule_rtlock+0x21/0x40
-[  415.140885]  rtlock_slowlock_locked+0x502/0x1980
-[  415.140891]  rt_spin_lock+0x89/0x1e0
-[  415.140893]  hv_ringbuffer_write+0x87/0x2a0
-[  415.140899]  vmbus_sendpacket_mpb_desc+0xb6/0xe0
-[  415.140900]  ? rcu_is_watching+0x12/0x60
-[  415.140902]  storvsc_queuecommand+0x669/0xbe0 [hv_storvsc]
-[  415.140904]  ? HARDIRQ_verbose+0x10/0x10
-[  415.140908]  ? __rq_qos_issue+0x28/0x40
-[  415.140911]  scsi_queue_rq+0x760/0xd80 [scsi_mod]
-[  415.140926]  __blk_mq_issue_directly+0x4a/0xc0
-[  415.140928]  blk_mq_issue_direct+0x87/0x2b0
-[  415.140931]  blk_mq_dispatch_queue_requests+0x120/0x440
-[  415.140933]  blk_mq_flush_plug_list+0x7a/0x1a0
-[  415.140935]  __blk_flush_plug+0xf4/0x150
-[  415.140940]  __submit_bio+0x2b2/0x5c0
-[  415.140944]  ? submit_bio_noacct_nocheck+0x272/0x360
-[  415.140946]  submit_bio_noacct_nocheck+0x272/0x360
-[  415.140951]  ext4_read_bh_lock+0x3e/0x60 [ext4]
-[  415.140995]  ext4_block_write_begin+0x396/0x650 [ext4]
-[  415.141018]  ? __pfx_ext4_da_get_block_prep+0x10/0x10 [ext4]
-[  415.141038]  ext4_da_write_begin+0x1c4/0x350 [ext4]
-[  415.141060]  generic_perform_write+0x14e/0x2c0
-[  415.141065]  ext4_buffered_write_iter+0x6b/0x120 [ext4]
-[  415.141083]  vfs_write+0x2ca/0x570
-[  415.141087]  ksys_write+0x76/0xf0
-[  415.141089]  do_syscall_64+0x99/0x1490
-[  415.141093]  ? rcu_is_watching+0x12/0x60
-[  415.141095]  ? finish_task_switch.isra.0+0xdf/0x3d0
-[  415.141097]  ? rcu_is_watching+0x12/0x60
-[  415.141098]  ? lock_release+0x1f0/0x2a0
-[  415.141100]  ? rcu_is_watching+0x12/0x60
-[  415.141101]  ? finish_task_switch.isra.0+0xe4/0x3d0
-[  415.141103]  ? rcu_is_watching+0x12/0x60
-[  415.141104]  ? __schedule+0xb34/0x1300
-[  415.141106]  ? hrtimer_try_to_cancel+0x1d/0x170
-[  415.141109]  ? do_nanosleep+0x8b/0x160
-[  415.141111]  ? hrtimer_nanosleep+0x89/0x100
-[  415.141114]  ? __pfx_hrtimer_wakeup+0x10/0x10
-[  415.141116]  ? xfd_validate_state+0x26/0x90
-[  415.141118]  ? rcu_is_watching+0x12/0x60
-[  415.141120]  ? do_syscall_64+0x1e0/0x1490
-[  415.141121]  ? do_syscall_64+0x1e0/0x1490
-[  415.141123]  ? rcu_is_watching+0x12/0x60
-[  415.141124]  ? do_syscall_64+0x1e0/0x1490
-[  415.141125]  ? do_syscall_64+0x1e0/0x1490
-[  415.141127]  ? irqentry_exit+0x140/0x7e0
-[  415.141129]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Fix this by setting the MAC port's bit in the port mask while adding the
+multicast entry. Also fix the flush logic to preserve the host port bit
+during removal of MAC port and free ALE entries when mask contains only
+host port.
 
-get_cpu() disables preemption while the spinlock hv_ringbuffer_write is
-using is converted to an rt-mutex under PREEMPT_RT.
-
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-Tested-by: Florian Bezdeka <florian.bezdeka@siemens.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/0c7fb5cd-fb21-4760-8593-e04bade84744@siemens.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 5c50a856d550 ("drivers: net: ethernet: cpsw: add multicast address to ALE table")
+Signed-off-by: Chintan Vankar <c-vankar@ti.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260224181359.2055322-1-c-vankar@ti.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/storvsc_drv.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
+ drivers/net/ethernet/ti/cpsw_ale.c       | 9 ++++-----
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index 917ba169d418b..d91e022a0154c 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1832,8 +1832,9 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
- 	cmd_request->payload_sz = payload_sz;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 07510e068742e..2dc3e5be1d717 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -305,7 +305,7 @@ static void am65_cpsw_nuss_ndo_slave_set_rx_mode(struct net_device *ndev)
+ 	cpsw_ale_set_allmulti(common->ale,
+ 			      ndev->flags & IFF_ALLMULTI, port->port_id);
  
- 	/* Invokes the vsc to start an IO */
--	ret = storvsc_do_io(dev, cmd_request, get_cpu());
--	put_cpu();
-+	migrate_disable();
-+	ret = storvsc_do_io(dev, cmd_request, smp_processor_id());
-+	migrate_enable();
+-	port_mask = ALE_PORT_HOST;
++	port_mask = BIT(port->port_id) | ALE_PORT_HOST;
+ 	/* Clear all mcast from ALE */
+ 	cpsw_ale_flush_multicast(common->ale, port_mask, -1);
  
- 	if (ret == -EAGAIN) {
- 		if (payload_sz > sizeof(cmd_request->mpb))
+diff --git a/drivers/net/ethernet/ti/cpsw_ale.c b/drivers/net/ethernet/ti/cpsw_ale.c
+index bec6a68a973c4..eb4262017d235 100644
+--- a/drivers/net/ethernet/ti/cpsw_ale.c
++++ b/drivers/net/ethernet/ti/cpsw_ale.c
+@@ -420,14 +420,13 @@ static void cpsw_ale_flush_mcast(struct cpsw_ale *ale, u32 *ale_entry,
+ 				      ale->port_mask_bits);
+ 	if ((mask & port_mask) == 0)
+ 		return; /* ports dont intersect, not interested */
+-	mask &= ~port_mask;
++	mask &= (~port_mask | ALE_PORT_HOST);
+ 
+-	/* free if only remaining port is host port */
+-	if (mask)
++	if (mask == 0x0 || mask == ALE_PORT_HOST)
++		cpsw_ale_set_entry_type(ale_entry, ALE_TYPE_FREE);
++	else
+ 		cpsw_ale_set_port_mask(ale_entry, mask,
+ 				       ale->port_mask_bits);
+-	else
+-		cpsw_ale_set_entry_type(ale_entry, ALE_TYPE_FREE);
+ }
+ 
+ int cpsw_ale_flush_multicast(struct cpsw_ale *ale, int port_mask, int vid)
 -- 
 2.51.0
 
