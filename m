@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095992737E0;
-	Mon, 13 Apr 2026 16:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F5A2472A2;
+	Mon, 13 Apr 2026 16:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096669; cv=none; b=mZePNp2NEyB3NZTcMhrHHSc+uexXJsvjkXTLtl0E4IN3XKtUwjyK3J8q8P42zJ+qWR0R4KssYgQR68GIEUu1Z0+106BXX93o4RFqQcMXNFXwpks6P01EO+UJvFxV6kkcEx7oIZ+R6LDffCDwM9TItZyrB5q0lfbSts12iznqwvM=
+	t=1776096671; cv=none; b=q6Sb1BWYkT40mxeZCUsRKfnUEsm2fgprofmXZ5d9PiTnr+nrNQil0M7wFpR+jREAjOXRZ2x8rFgsU9Tn5iG3qpApJeR8g1mkFnncQ3fdttIKtSQ3/XiAfDStVudGV4KI4AuLuD6OU4shF2Ul8/9bLJCUxF/6JNsS70/u72RdWAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096669; c=relaxed/simple;
-	bh=vYIIdchzg0sFgSgiyeTXhnt2FiJ9aLnrUrrTi/9kNSM=;
+	s=arc-20240116; t=1776096671; c=relaxed/simple;
+	bh=2N0Fup779BgEb/LQZSgoyTis44BxAZh96t40NTmsuJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aKyalFaDm6oAsPQcRuSiwJRTPQi8VD7PZUoGBmVZgSyjqVATkE14IudtdE9my7Pu67/Yxa0p8nvBF+po6UCU+7SaaDniYvuE6GDhye9zdnKwCZsgG5jUmP5tghCXIHu1C9ChOw7+zRpkG1CWHoE32w05rTFA3U3Gk8m/QTAdRqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v222XXri; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OgNXvWQnAEsXxSAfExmHpIU8qV1JKdMfPRgpsX9Ghyv5ryKQc12cMiNlcThLqZSWaS26rJL6j/+DiOMx01RctBYdhbpkJPNw2uXV8/tn7vOJks4ySrBaqGZLiTBFycGbUnM62T8Pk6WNB+xoJDnNZBnh2ZCmtHc5p+RA7pDpGTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJJLJWs/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v222XXri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5D5C2BCAF;
-	Mon, 13 Apr 2026 16:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJJLJWs/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7E1C2BCAF;
+	Mon, 13 Apr 2026 16:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096668;
-	bh=vYIIdchzg0sFgSgiyeTXhnt2FiJ9aLnrUrrTi/9kNSM=;
+	s=korg; t=1776096671;
+	bh=2N0Fup779BgEb/LQZSgoyTis44BxAZh96t40NTmsuJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v222XXriitm/jZkFzAvLlFwS+dTrYQZ+EbGKTN87QBWYln8IjVYdNxrW9LBBLbm71
-	 PxmW5DAceC+AeIDTBv15W7mbyTv3vuEFjR1AaM0XTkzC2RJP2ppfVXNNhnrTxpBkCw
-	 EZGsCK/JlQwjy+1B7gu0b4/cFlZjj8UtARLrSr1k=
+	b=LJJLJWs/2n8EN9JFPcFFZsGBqHiHEfOvzYwwexFK2KImEqdeEkYDU6wFRmnUnESzj
+	 hJ/g9S1yfROE/GbszE42KhimU6MGYKvZ9dXr++opzsCOGUNLJW6TM8QgzDR2UcziP3
+	 uCmlhxpVarlTuix0GO12aSMEdA+NCBy6AENAG5Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Justin Iurman <justin.iurman@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 06/70] mptcp: fix slab-use-after-free in __inet_lookup_established
-Date: Mon, 13 Apr 2026 18:00:01 +0200
-Message-ID: <20260413155728.423533288@linuxfoundation.org>
+Subject: [PATCH 6.12 07/70] seg6: separate dst_cache for input and output paths in seg6 lwtunnel
+Date: Mon, 13 Apr 2026 18:00:02 +0200
+Message-ID: <20260413155728.460152405@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -51,101 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-commit 9b55b253907e7431210483519c5ad711a37dafa1 upstream.
+commit c3812651b522fe8437ebb7063b75ddb95b571643 upstream.
 
-The ehash table lookups are lockless and rely on
-SLAB_TYPESAFE_BY_RCU to guarantee socket memory stability
-during RCU read-side critical sections. Both tcp_prot and
-tcpv6_prot have their slab caches created with this flag
-via proto_register().
+The seg6 lwtunnel uses a single dst_cache per encap route, shared
+between seg6_input_core() and seg6_output_core(). These two paths
+can perform the post-encap SID lookup in different routing contexts
+(e.g., ip rules matching on the ingress interface, or VRF table
+separation). Whichever path runs first populates the cache, and the
+other reuses it blindly, bypassing its own lookup.
 
-However, MPTCP's mptcp_subflow_init() copies tcpv6_prot into
-tcpv6_prot_override during inet_init() (fs_initcall, level 5),
-before inet6_init() (module_init/device_initcall, level 6) has
-called proto_register(&tcpv6_prot). At that point,
-tcpv6_prot.slab is still NULL, so tcpv6_prot_override.slab
-remains NULL permanently.
+Fix this by splitting the cache into cache_input and cache_output,
+so each path maintains its own cached dst independently.
 
-This causes MPTCP v6 subflow child sockets to be allocated via
-kmalloc (falling into kmalloc-4k) instead of the TCPv6 slab
-cache. The kmalloc-4k cache lacks SLAB_TYPESAFE_BY_RCU, so
-when these sockets are freed without SOCK_RCU_FREE (which is
-cleared for child sockets by design), the memory can be
-immediately reused. Concurrent ehash lookups under
-rcu_read_lock can then access freed memory, triggering a
-slab-use-after-free in __inet_lookup_established.
-
-Fix this by splitting the IPv6-specific initialization out of
-mptcp_subflow_init() into a new mptcp_subflow_v6_init(), called
-from mptcp_proto_v6_init() before protocol registration. This
-ensures tcpv6_prot_override.slab correctly inherits the
-SLAB_TYPESAFE_BY_RCU slab cache.
-
-Fixes: b19bc2945b40 ("mptcp: implement delegated actions")
+Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260406031512.189159-1-jiayuan.chen@linux.dev
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260404004405.4057-2-andrea.mayer@uniroma2.it
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    2 ++
- net/mptcp/protocol.h |    1 +
- net/mptcp/subflow.c  |   15 +++++++++------
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ net/ipv6/seg6_iptunnel.c |   34 +++++++++++++++++++++++-----------
+ 1 file changed, 23 insertions(+), 11 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -4338,6 +4338,8 @@ int __init mptcp_proto_v6_init(void)
- {
- 	int err;
- 
-+	mptcp_subflow_v6_init();
-+
- 	mptcp_v6_prot = mptcp_prot;
- 	strscpy(mptcp_v6_prot.name, "MPTCPv6", sizeof(mptcp_v6_prot.name));
- 	mptcp_v6_prot.slab = NULL;
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -821,6 +821,7 @@ static inline void mptcp_subflow_tcp_fal
- void __init mptcp_proto_init(void);
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
- int __init mptcp_proto_v6_init(void);
-+void __init mptcp_subflow_v6_init(void);
- #endif
- 
- struct sock *mptcp_sk_clone_init(const struct sock *sk,
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -2147,7 +2147,15 @@ void __init mptcp_subflow_init(void)
- 	tcp_prot_override.psock_update_sk_prot = NULL;
- #endif
- 
-+	mptcp_diag_subflow_init(&subflow_ulp_ops);
-+
-+	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
-+		panic("MPTCP: failed to register subflows to ULP\n");
-+}
-+
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
-+void __init mptcp_subflow_v6_init(void)
-+{
- 	/* In struct mptcp_subflow_request_sock, we assume the TCP request sock
- 	 * structures for v4 and v6 have the same size. It should not changed in
- 	 * the future but better to make sure to be warned if it is no longer
-@@ -2186,10 +2194,5 @@ void __init mptcp_subflow_init(void)
- 	/* Disable sockmap processing for subflows */
- 	tcpv6_prot_override.psock_update_sk_prot = NULL;
- #endif
--#endif
--
--	mptcp_diag_subflow_init(&subflow_ulp_ops);
--
--	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
--		panic("MPTCP: failed to register subflows to ULP\n");
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -48,7 +48,8 @@ static size_t seg6_lwt_headroom(struct s
  }
-+#endif
+ 
+ struct seg6_lwt {
+-	struct dst_cache cache;
++	struct dst_cache cache_input;
++	struct dst_cache cache_output;
+ 	struct seg6_iptunnel_encap tuninfo[];
+ };
+ 
+@@ -488,7 +489,7 @@ static int seg6_input_core(struct net *n
+ 	slwt = seg6_lwt_lwtunnel(lwtst);
+ 
+ 	local_bh_disable();
+-	dst = dst_cache_get(&slwt->cache);
++	dst = dst_cache_get(&slwt->cache_input);
+ 	local_bh_enable();
+ 
+ 	err = seg6_do_srh(skb, dst);
+@@ -504,7 +505,7 @@ static int seg6_input_core(struct net *n
+ 		/* cache only if we don't create a dst reference loop */
+ 		if (!dst->error && lwtst != dst->lwtstate) {
+ 			local_bh_disable();
+-			dst_cache_set_ip6(&slwt->cache, dst,
++			dst_cache_set_ip6(&slwt->cache_input, dst,
+ 					  &ipv6_hdr(skb)->saddr);
+ 			local_bh_enable();
+ 		}
+@@ -564,7 +565,7 @@ static int seg6_output_core(struct net *
+ 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
+ 
+ 	local_bh_disable();
+-	dst = dst_cache_get(&slwt->cache);
++	dst = dst_cache_get(&slwt->cache_output);
+ 	local_bh_enable();
+ 
+ 	err = seg6_do_srh(skb, dst);
+@@ -591,7 +592,7 @@ static int seg6_output_core(struct net *
+ 		/* cache only if we don't create a dst reference loop */
+ 		if (orig_dst->lwtstate != dst->lwtstate) {
+ 			local_bh_disable();
+-			dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
++			dst_cache_set_ip6(&slwt->cache_output, dst, &fl6.saddr);
+ 			local_bh_enable();
+ 		}
+ 
+@@ -701,11 +702,13 @@ static int seg6_build_state(struct net *
+ 
+ 	slwt = seg6_lwt_lwtunnel(newts);
+ 
+-	err = dst_cache_init(&slwt->cache, GFP_ATOMIC);
+-	if (err) {
+-		kfree(newts);
+-		return err;
+-	}
++	err = dst_cache_init(&slwt->cache_input, GFP_ATOMIC);
++	if (err)
++		goto err_free_newts;
++
++	err = dst_cache_init(&slwt->cache_output, GFP_ATOMIC);
++	if (err)
++		goto err_destroy_input;
+ 
+ 	memcpy(&slwt->tuninfo, tuninfo, tuninfo_len);
+ 
+@@ -720,11 +723,20 @@ static int seg6_build_state(struct net *
+ 	*ts = newts;
+ 
+ 	return 0;
++
++err_destroy_input:
++	dst_cache_destroy(&slwt->cache_input);
++err_free_newts:
++	kfree(newts);
++	return err;
+ }
+ 
+ static void seg6_destroy_state(struct lwtunnel_state *lwt)
+ {
+-	dst_cache_destroy(&seg6_lwt_lwtunnel(lwt)->cache);
++	struct seg6_lwt *slwt = seg6_lwt_lwtunnel(lwt);
++
++	dst_cache_destroy(&slwt->cache_input);
++	dst_cache_destroy(&slwt->cache_output);
+ }
+ 
+ static int seg6_fill_encap_info(struct sk_buff *skb,
 
 
