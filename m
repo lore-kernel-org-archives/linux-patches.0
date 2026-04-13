@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C21C3161BF;
-	Mon, 13 Apr 2026 16:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06941317153;
+	Mon, 13 Apr 2026 16:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099011; cv=none; b=b05NDOauSJT8mqd7twvW6nAps8G++tYE+Kl7xUbnfz+Er/ek1r38QqLVSTKTgORpS4Eeq1kWP4x7t5zhqGlE54NlhBqW/XdgIO9UA1oUurK3estqe+skb72OtNH3eSQlH3tH6fNOiohkswFPUDOsDPD84McpV6SV6WiXXKDHduU=
+	t=1776099014; cv=none; b=rE3epjLiMG02nkPSVq5ffjsmLEvz2PU+tFOb93ql/xfUikMcQ/z9VlkBoOZvs3wOeZnbGFYVAvqseS2873zNdekoPcJAUmM9Oph8MIxyzrcNQkLqBqPB2bds5vmDpjJLqR9MGgSKyFTyqdDxCqlGsbsLmnYbz3yoJEWNEJ5WfIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099011; c=relaxed/simple;
-	bh=6+Sh5D8u7AU0aRA2/sIKfOxytLuOM4pQ2q0qY8DgQTA=;
+	s=arc-20240116; t=1776099014; c=relaxed/simple;
+	bh=c93b13QBnClcUVaWirsojCEgX+KpqGSgrK4mehzEuaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f7dS6rLvGCoLaI12EIKFTrWru8vIiz+rH4Lag5phAJ/75K2/Xd7BH4TmSmH1cs/6/MJ3TnD7uTAjsiQ74Um90056wF6wxD5CC1yBlzBm+cQsn/KohpOC4Dds4h29viAA/dObwhKy4cUO042wRSfk4IbIfB5inugO8Yipsas0HLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxu3bn46; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EdyHOEODvWcDXQPuZU11bdqDjpHgwhk/LwBQrYuVrvV3APwE/sxqWTN02eQd9Nea0+tEgrnbIHI3OAuGNm1lHIORo4WMir4TCNfN+3jb0WjXe1XHIoWAvGdxiu4W9k3b4wFokkPMxWUqOS0JoVsY/Ho6xav5fR/XNMovTI+r1aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YM3Jv5Kv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxu3bn46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01437C2BCAF;
-	Mon, 13 Apr 2026 16:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YM3Jv5Kv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A44C2BCB0;
+	Mon, 13 Apr 2026 16:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099011;
-	bh=6+Sh5D8u7AU0aRA2/sIKfOxytLuOM4pQ2q0qY8DgQTA=;
+	s=korg; t=1776099013;
+	bh=c93b13QBnClcUVaWirsojCEgX+KpqGSgrK4mehzEuaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fxu3bn461102MBwVMcizQBfW3+aaaxINL7myhB+Ta27E3rvaH7q+FsvMhGR6TRior
-	 Ys7VzCkwknxGg/2U09RNn5ra/2WTeN6oIAe4Urxp3O4SG2kkYDz/WVs8hijLt+sTbn
-	 gn1AH8rL9mjm17+TrH1Baw1P5xJP+dRt3zKNJd44=
+	b=YM3Jv5KvIlB1kWIpqJZ41OQWgDkVrP52VTrfSbCff4TJ3/7g4RMjk4l65OM6+T7V7
+	 yeFLQ9WM0bRmRcHxkh4d4YdeTY0hOXh2Q3R2FQ59z6aGMcQlC635qi1fZvn1quYGQ2
+	 QA093M1xbPsz/AOyBQuOCsr42p87j/DLn1nK233I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lukas=20Johannes=20M=C3=B6ller?= <research@johannes-moeller.dev>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 143/491] Bluetooth: L2CAP: Validate L2CAP_INFO_RSP payload length before access
-Date: Mon, 13 Apr 2026 17:56:28 +0200
-Message-ID: <20260413155824.389952861@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	Ben Chuang <ben.chuang@genesyslogic.com.tw>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 144/491] mmc: sdhci-pci-gli: fix GL9750 DMA write corruption
+Date: Mon, 13 Apr 2026 17:56:29 +0200
+Message-ID: <20260413155824.427379164@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -44,66 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Johannes Möller <research@johannes-moeller.dev>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-commit dd815e6e3918dc75a49aaabac36e4f024d675101 upstream.
+commit 2b76e0cc7803e5ab561c875edaba7f6bbd87fbb0 upstream.
 
-l2cap_information_rsp() checks that cmd_len covers the fixed
-l2cap_info_rsp header (type + result, 4 bytes) but then reads
-rsp->data without verifying that the payload is present:
+The GL9750 SD host controller has intermittent data corruption during
+DMA write operations. The GM_BURST register's R_OSRC_Lmt field
+(bits 17:16), which limits outstanding DMA read requests from system
+memory, is not being cleared during initialization. The Windows driver
+sets R_OSRC_Lmt to zero, limiting requests to the smallest unit.
 
- - L2CAP_IT_FEAT_MASK calls get_unaligned_le32(rsp->data), which reads
-   4 bytes past the header (needs cmd_len >= 8).
+Clear R_OSRC_Lmt to match the Windows driver behavior. This eliminates
+write corruption verified with f3write/f3read tests while maintaining
+DMA performance.
 
- - L2CAP_IT_FIXED_CHAN reads rsp->data[0], 1 byte past the header
-   (needs cmd_len >= 5).
-
-A truncated L2CAP_INFO_RSP with result == L2CAP_IR_SUCCESS triggers an
-out-of-bounds read of adjacent skb data.
-
-Guard each data access with the required payload length check.  If the
-payload is too short, skip the read and let the state machine complete
-with safe defaults (feat_mask and remote_fixed_chan remain zero from
-kzalloc), so the info timer cleanup and l2cap_conn_start() still run
-and the connection is not stalled.
-
-Fixes: 4e8402a3f884 ("[Bluetooth] Retrieve L2CAP features mask on connection setup")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lukas Johannes Möller <research@johannes-moeller.dev>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: e51df6ce668a ("mmc: host: sdhci-pci: Add Genesys Logic GL975x support")
+Closes: https://lore.kernel.org/linux-mmc/33d12807-5c72-41ce-8679-57aa11831fad@linux.dev/
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Reviewed-by: Ben Chuang <ben.chuang@genesyslogic.com.tw>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-pci-gli.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4847,7 +4847,8 @@ static inline int l2cap_information_rsp(
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -59,6 +59,9 @@
+ #define   GLI_9750_MISC_RX_INV_VALUE     GLI_9750_MISC_RX_INV_OFF
+ #define   GLI_9750_MISC_TX1_DLY_VALUE    0x5
  
- 	switch (type) {
- 	case L2CAP_IT_FEAT_MASK:
--		conn->feat_mask = get_unaligned_le32(rsp->data);
-+		if (cmd_len >= sizeof(*rsp) + sizeof(u32))
-+			conn->feat_mask = get_unaligned_le32(rsp->data);
++#define SDHCI_GLI_9750_GM_BURST_SIZE		  0x510
++#define   SDHCI_GLI_9750_GM_BURST_SIZE_R_OSRC_LMT  GENMASK(17, 16)
++
+ #define SDHCI_GLI_9750_TUNING_CONTROL	          0x540
+ #define   SDHCI_GLI_9750_TUNING_CONTROL_EN          BIT(4)
+ #define   GLI_9750_TUNING_CONTROL_EN_ON             0x1
+@@ -152,10 +155,16 @@ static void gli_set_9750(struct sdhci_ho
+ 	u32 misc_value;
+ 	u32 parameter_value;
+ 	u32 control_value;
++	u32 burst_value;
+ 	u16 ctrl2;
  
- 		if (conn->feat_mask & L2CAP_FEAT_FIXED_CHAN) {
- 			struct l2cap_info_req req;
-@@ -4866,7 +4867,8 @@ static inline int l2cap_information_rsp(
- 		break;
+ 	gl9750_wt_on(host);
  
- 	case L2CAP_IT_FIXED_CHAN:
--		conn->remote_fixed_chan = rsp->data[0];
-+		if (cmd_len >= sizeof(*rsp) + sizeof(rsp->data[0]))
-+			conn->remote_fixed_chan = rsp->data[0];
- 		conn->info_state |= L2CAP_INFO_FEAT_MASK_REQ_DONE;
- 		conn->info_ident = 0;
- 
++	/* clear R_OSRC_Lmt to avoid DMA write corruption */
++	burst_value = sdhci_readl(host, SDHCI_GLI_9750_GM_BURST_SIZE);
++	burst_value &= ~SDHCI_GLI_9750_GM_BURST_SIZE_R_OSRC_LMT;
++	sdhci_writel(host, burst_value, SDHCI_GLI_9750_GM_BURST_SIZE);
++
+ 	driving_value = sdhci_readl(host, SDHCI_GLI_9750_DRIVING);
+ 	pll_value = sdhci_readl(host, SDHCI_GLI_9750_PLL);
+ 	sw_ctrl_value = sdhci_readl(host, SDHCI_GLI_9750_SW_CTRL);
 
 
