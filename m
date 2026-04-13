@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD6F2E2850;
-	Mon, 13 Apr 2026 16:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DA83090F5;
+	Mon, 13 Apr 2026 16:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098660; cv=none; b=E8eu8CtvlgOAy1ESdK0GEnXaOkWeshcZfwPy0H88SHCIeUxrIobFK/E7oxtzoRO+C+ePuUx9igP82rWfLGHPY/UfWqbhudDyawJ7hg85i4DIoZre5eYLyY7Wws/OiM4y0UK6ejW8MJRwNRP90TViRjGD5d1tFCW0cBvmTjp2Tvs=
+	t=1776098663; cv=none; b=UFT4wrXsHRNFIIyvI46VALgyGaKrb+E+NCVEkU5/btY5YmARejCHclKv+CHn2RSiRFC9z5qxPkhPTpFLBCK6SWV8kcbkfLRp0VRy7bAnauU4tD+GtSbXlg8CRiq84JwxbnoquMUrQP984IIfpEADdfInV2nbsVmTv1Dku4M9TcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098660; c=relaxed/simple;
-	bh=6z9LKQk6nHaEIjgTX/XpFD/r+XCSCjCH66LTdlHd9cs=;
+	s=arc-20240116; t=1776098663; c=relaxed/simple;
+	bh=sd2T3OddFVQSo+xVtBnZue+Kv8I/+rNrkhxDpgVr+78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OgUzyfiZKtYJ3jGHGQhOaO4joQO/MuRhe9HjENy1EmjgEqOT8Nu37Cu6HFMd4wE5o+KZ8eC/wN4TnBxS0plv3MPj8R2VaZk6Oac/k86kU2cNQDCdZJrZxW/rRLLduT1ng+4695TDmhjh53OBtvUJ8k87F6WNh5mo/g+yQxu85Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jxk1bHjt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOrt8YJiY4zS2ORnHQGYleCN+CmLGNZ5TYQWJzSDuiYj7D9mjkiSov/puVey+fmvcXs2yCzLEqjvyE/isWw81FI+eRdhbtfraIC+gbtZrSyJvQvAkXb47/NuHeR6ogED8mVDgQxzjwUGuOBHORchL3N0N75r+BZn580NIQSEnJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G1Wu4nB+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jxk1bHjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11119C2BCAF;
-	Mon, 13 Apr 2026 16:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1Wu4nB+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9972BC2BCB0;
+	Mon, 13 Apr 2026 16:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098660;
-	bh=6z9LKQk6nHaEIjgTX/XpFD/r+XCSCjCH66LTdlHd9cs=;
+	s=korg; t=1776098663;
+	bh=sd2T3OddFVQSo+xVtBnZue+Kv8I/+rNrkhxDpgVr+78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jxk1bHjtXl7bT6wPmdj305UtjqpFNqZyYZp+l8YYKrZRQg4dfoYSVYukCDiBY2Lsc
-	 oeyAuINy2zF+FN9Jg57w0AZnljhyuin3x6LLXe8f4FCSafHRGhLHIt6UWf/aamgUEO
-	 YFGfKdQWgpgZ4dVLLWK4bAztY+rkmMqHK1oUtqdA=
+	b=G1Wu4nB+eFBiogxiurziAKug9yPZCmk1g3H7LeR56SjR5tNaUk+fljLl4Tl69yaU+
+	 aqcKd60IgBeRmbDyq8kTBIBdhUwuoVXKCccJJC1ZarE2X9qiB4ijceNZQJsa4a2qga
+	 I/uWXlNDV+j93NEdgpKU+cUvbc43iLzq7Bqi7EUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Chelsy Ratnawat <chelsyratnawat2001@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/491] ARM: omap2: Fix reference count leaks in omap_control_init()
-Date: Mon, 13 Apr 2026 17:54:13 +0200
-Message-ID: <20260413155819.363255989@linuxfoundation.org>
+Subject: [PATCH 5.10 009/491] bus: fsl-mc: Replace snprintf and sprintf with sysfs_emit in sysfs show functions
+Date: Mon, 13 Apr 2026 17:54:14 +0200
+Message-ID: <20260413155819.399990875@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,77 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
 
-[ Upstream commit 93a04ab480c8bbcb7d9004be139c538c8a0c1bc8 ]
+[ Upstream commit a50522c805a6c575c80f41b04706e084d814e116 ]
 
-The of_get_child_by_name() function increments the reference count
-of child nodes, causing multiple reference leaks in omap_control_init():
+Use sysfs_emit() instead of snprintf()/sprintf()  when writing
+to sysfs buffers, as recommended by the kernel documentation.
 
-1. scm_conf node never released in normal/error paths
-2. clocks node leak when checking existence
-3. Missing scm_conf release before np in error paths
-
-Fix these leaks by adding proper of_node_put() calls and separate error
-handling.
-
-Fixes: e5b635742e98 ("ARM: OMAP2+: control: add syscon support for register accesses")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20251217142122.1861292-1-vulab@iscas.ac.cn
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+Signed-off-by: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
+Acked-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20250822124339.1739290-1-chelsyratnawat2001@gmail.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Stable-dep-of: 148891e95014 ("bus: fsl-mc: fix use-after-free in driver_override_show()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/control.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/mach-omap2/control.c b/arch/arm/mach-omap2/control.c
-index 9bc69caf338f1..a1288d438071b 100644
---- a/arch/arm/mach-omap2/control.c
-+++ b/arch/arm/mach-omap2/control.c
-@@ -798,7 +798,7 @@ int __init omap2_control_base_init(void)
-  */
- int __init omap_control_init(void)
+diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
+index 4471cd1606424..8f7448da9258d 100644
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -151,8 +151,8 @@ static ssize_t modalias_show(struct device *dev, struct device_attribute *attr,
  {
--	struct device_node *np, *scm_conf;
-+	struct device_node *np, *scm_conf, *clocks_node;
- 	const struct of_device_id *match;
- 	const struct omap_prcm_init_data *data;
- 	int ret;
-@@ -819,16 +819,19 @@ int __init omap_control_init(void)
+ 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
  
- 			if (IS_ERR(syscon)) {
- 				ret = PTR_ERR(syscon);
--				goto of_node_put;
-+				goto err_put_scm_conf;
- 			}
+-	return sprintf(buf, "fsl-mc:v%08Xd%s\n", mc_dev->obj_desc.vendor,
+-		       mc_dev->obj_desc.type);
++	return sysfs_emit(buf, "fsl-mc:v%08Xd%s\n", mc_dev->obj_desc.vendor,
++			mc_dev->obj_desc.type);
+ }
+ static DEVICE_ATTR_RO(modalias);
  
--			if (of_get_child_by_name(scm_conf, "clocks")) {
-+			clocks_node = of_get_child_by_name(scm_conf, "clocks");
-+			if (clocks_node) {
-+				of_node_put(clocks_node);
- 				ret = omap2_clk_provider_init(scm_conf,
- 							      data->index,
- 							      syscon, NULL);
- 				if (ret)
--					goto of_node_put;
-+					goto err_put_scm_conf;
- 			}
-+			of_node_put(scm_conf);
- 		} else {
- 			/* No scm_conf found, direct access */
- 			ret = omap2_clk_provider_init(np, data->index, NULL,
-@@ -846,6 +849,9 @@ int __init omap_control_init(void)
+@@ -195,7 +195,7 @@ static ssize_t driver_override_show(struct device *dev,
+ {
+ 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
  
- 	return 0;
+-	return snprintf(buf, PAGE_SIZE, "%s\n", mc_dev->driver_override);
++	return sysfs_emit(buf, "%s\n", mc_dev->driver_override);
+ }
+ static DEVICE_ATTR_RW(driver_override);
  
-+err_put_scm_conf:
-+	if (scm_conf)
-+		of_node_put(scm_conf);
- of_node_put:
- 	of_node_put(np);
- 	return ret;
 -- 
 2.51.0
 
