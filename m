@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997D73148A3;
-	Mon, 13 Apr 2026 16:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A218314A8E;
+	Mon, 13 Apr 2026 16:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098802; cv=none; b=mcmh+T7XkUAIvBqOiYrsTFLXqxCJWFoWvAgboYkq0IqsCcQrvSDACrJndnRMUi+ENQsS2nVNRzcZJIS+Gp7uNasWQbHq7gxQrbR248ueKEnXPmEoYnni0eKkbK6cC4YkeTC+Q2bubX90P85qIwxYDUUCQBgm59Hl+xDwqipreag=
+	t=1776098805; cv=none; b=tQmbd1D4Yti/jxes9d5zCMp2kyP0JhfnSdgx5r8m7ePFHOfPjWcu6t9akfrgWjPtIoRMRmVRJh1rL8KJjbcbcTqMYB3bMvf4yucecAv4PBQP4n82PJlc4q5AKH0dIUJCKxQ00Qkd6riqZoIWtYMR1Av3RfjSCFq0ea4c3Vi1rco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098802; c=relaxed/simple;
-	bh=PPjw+QqalDK7SpmS1Glm1ou0iWOLswEZUPmy+zEXZ+U=;
+	s=arc-20240116; t=1776098805; c=relaxed/simple;
+	bh=bJlR6GewDZONBV+hrgTx8W6xwIS/SyTmDUFUYYmzLZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M6QR3Jn1GFkDtSTVLt7f6MsCEi3gDotsbEX0MwxNKuhm7q/LRJO86lu9dkg+hADGHVK2QzNam3JkXAgebMqZJqRt+E2qdseGgnJHTSnPzjdKHwDdY60UxcY4Nhg/a+xvh51Idro/hx9z0Pougnr9ePhaKRU2UYmLDlnYPY+uMwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkZngz5Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gdht8clH1vRvAXgaQ6GSiWVVTQX2WdW6pyTipmEl6Zi7Vg1IajrsnW05NVW2Lmlbq0dUpxS7IHtkqGBQYUl1K7bX0CuJDJVg33kzGgszQnj8VecTcMkCtPuW0LPzvBKRUCagnSU5z18Z5S7djN1oEcEoSSzFKu7om/C2C+uQM20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOxO6ANj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkZngz5Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D25C2BCAF;
-	Mon, 13 Apr 2026 16:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOxO6ANj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844E8C2BCAF;
+	Mon, 13 Apr 2026 16:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098802;
-	bh=PPjw+QqalDK7SpmS1Glm1ou0iWOLswEZUPmy+zEXZ+U=;
+	s=korg; t=1776098804;
+	bh=bJlR6GewDZONBV+hrgTx8W6xwIS/SyTmDUFUYYmzLZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkZngz5ZzyfQQ6dbGCsq8sc8SiOXniW3UEZs05gpKvxhefeZSVYrDbDN52oNC1n3q
-	 nlOisqwFt5BB3bJtM8GB6x40rABarCRcBGjtGzI0zvUc9i5oVWDiOFQLiHBW3PtmiT
-	 qp//A6y4q4PvNEez9RjpTrUdDKPkjIzbmsrFNRKI=
+	b=bOxO6ANjKevKg8dnY65aaxsLv/RiXNTRaMMsh2+3S/UXZzFAyu9AqtdaRqZQBgihn
+	 lVrsDc9r4xXLDJR3L4NpZdUIM1buHfmLaFM7NlmavHtR9I5pNRMpibiKzuDys079om
+	 dAta9qRbZJTaJgNXuMxOVrSXzrQuqEY4uYjtSdZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 5.10 094/491] usb: yurex: fix race in probe
-Date: Mon, 13 Apr 2026 17:55:39 +0200
-Message-ID: <20260413155822.564600070@linuxfoundation.org>
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 095/491] usb: misc: uss720: properly clean up reference in uss720_probe()
+Date: Mon, 13 Apr 2026 17:55:40 +0200
+Message-ID: <20260413155822.601539766@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,41 +49,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 7a875c09899ba0404844abfd8f0d54cdc481c151 upstream.
+commit 45dba8011efac11a2f360383221b541f5ea53ce5 upstream.
 
-The bbu member of the descriptor must be set to the value
-standing for uninitialized values before the URB whose
-completion handler sets bbu is submitted. Otherwise there is
-a window during which probing can overwrite already retrieved
-data.
+If get_1284_register() fails, the usb device reference count is
+incorrect and needs to be properly dropped before returning.  That will
+happen when the kref is dropped in the call to destroy_priv(), so jump
+to that error path instead of returning directly.
 
 Cc: stable <stable@kernel.org>
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260209143720.1507500-1-oneukum@suse.com
+Assisted-by: gkh_clanker_2000
+Link: https://patch.msgid.link/2026022342-smokiness-stove-d792@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/yurex.c |    2 +-
+ drivers/usb/misc/uss720.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/misc/yurex.c
-+++ b/drivers/usb/misc/yurex.c
-@@ -271,6 +271,7 @@ static int yurex_probe(struct usb_interf
- 			 dev->int_buffer, YUREX_BUF_SIZE, yurex_interrupt,
- 			 dev, 1);
- 	dev->urb->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
-+	dev->bbu = -1;
- 	if (usb_submit_urb(dev->urb, GFP_KERNEL)) {
- 		retval = -EIO;
- 		dev_err(&interface->dev, "Could not submitting URB\n");
-@@ -279,7 +280,6 @@ static int yurex_probe(struct usb_interf
+--- a/drivers/usb/misc/uss720.c
++++ b/drivers/usb/misc/uss720.c
+@@ -733,7 +733,7 @@ static int uss720_probe(struct usb_inter
+ 	ret = get_1284_register(pp, 0, &reg, GFP_KERNEL);
+ 	dev_dbg(&intf->dev, "reg: %7ph\n", priv->reg);
+ 	if (ret < 0)
+-		return ret;
++		goto probe_abort;
  
- 	/* save our data pointer in this interface device */
- 	usb_set_intfdata(interface, dev);
--	dev->bbu = -1;
- 
- 	/* we can register the device now, as it is ready */
- 	retval = usb_register_dev(interface, &yurex_class);
+ 	ret = usb_find_last_int_in_endpoint(interface, &epd);
+ 	if (!ret) {
 
 
