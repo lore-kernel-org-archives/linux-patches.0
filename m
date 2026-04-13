@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278873203B6;
-	Mon, 13 Apr 2026 16:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D9E32ABC0;
+	Mon, 13 Apr 2026 16:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099525; cv=none; b=FHWyZi68IV40cLBsN290dYnoWwzeZ34a8wgfOGGdOtk7jEi20A2rzqb+jIJ49EzgkPekcSNLeuis3jZu/rQPOldQA1ItDhwn27b+XRvXLqfANEmKGaax9Mm0skGlu1XbyH/2YSfAPpy4Rptr5w2nPA+6czXCtjguMLOrnIdFlng=
+	t=1776099527; cv=none; b=pBX6mQ4SVnoYrmb/iMxiZAkB6wN3bPLhBqONikbPoqvBbvPfbSysRxVKHmgIj4bvRHbzTScrgUkyozmdWqRfLqJ37b6krI4k14bFFgSD64LFfTPv0NL/1UjDsTalpJZ4MYh8NE9AXca5XIuvqYxkMOF/6Q0X0nt3qA4J0D+MbLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099525; c=relaxed/simple;
-	bh=7tKTTs05w0DGw8hKfaE9N2gMwJKBRh/osiIVTij5SNw=;
+	s=arc-20240116; t=1776099527; c=relaxed/simple;
+	bh=+W6Sp36lJcWuHczdGqicwpB/23IoLhRDBbmm1CGZS60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=anBbCMy9cmP6Lp3mNliRFUK8iFTXZNiMAmgqr+b9nhGMDHG3PermeLjn/grSmn8d1W2fRjQeten7XhR0s+JP+XxBjn1cWJAVCMKfS5mpbUHsTbCEzUi9trHyVuUQGQa9r90YnD2D0EtV06x2NRe0lwTSAj3KMAcdfFiAl6r3D+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxc83Su5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K913ogIsB5D/muCPCbySdQqEQXZUKC02XII2gWWK9yHZmW9MjH/Xc9m01nv3AlPHdE+Sf8C3f7HW4zhGVNCIiogSOl/Jgacix1TOutmhY1hhyBW3IVtRtLNYNiPaP1DeBkAzlIbJzXc8mL9pjk1BD/yaQqplPjFE3njRuCfzWrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmXNe3A/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxc83Su5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D12CC2BCAF;
-	Mon, 13 Apr 2026 16:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmXNe3A/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1900AC2BCAF;
+	Mon, 13 Apr 2026 16:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099524;
-	bh=7tKTTs05w0DGw8hKfaE9N2gMwJKBRh/osiIVTij5SNw=;
+	s=korg; t=1776099527;
+	bh=+W6Sp36lJcWuHczdGqicwpB/23IoLhRDBbmm1CGZS60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxc83Su5qds2Wv6U2USjmMowBMBp/JFSi7D+6Lci23yBlxTRCp9rB3PXthz9/qY+O
-	 L+2P/pYybSVkyXgUYUuZ/AiI0cA2XOWWuA901BkIDQxMenInAO3ugsUH9qU7M60dFR
-	 PatYWkPPw7nJmYrd+qbJOD8pxjFDNLfTxFEX8DcU=
+	b=GmXNe3A/x9FkmI8OoBhYkYlrJNamQfY8XyjX0Hy1itAHd93zMVSZHjnDQOFBUQy3P
+	 bbeTGrpqw/vCdiA58ERWJwlomhYLk9OXG7ExmhhyvmRovDu917B4K55iPZMk1NUZMK
+	 jg1eYHOQoY60XocOyz5FQRzf9DVQTCSqjP6c5PTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 5.10 373/491] drm/ast: dp501: Fix initialization of SCU2C
-Date: Mon, 13 Apr 2026 18:00:18 +0200
-Message-ID: <20260413155832.998865330@linuxfoundation.org>
+	Frej Drejhammar <frej@stacken.kth.se>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 374/491] USB: serial: io_edgeport: add support for Blackbox IC135A
+Date: Mon, 13 Apr 2026 18:00:19 +0200
+Message-ID: <20260413155833.037033927@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,41 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Frej Drejhammar <frej@stacken.kth.se>
 
-commit 2f42c1a6161646cbd29b443459fd635d29eda634 upstream.
+commit 0e01c3416eb863ee7f156a9d7e7421ec0a9f68a0 upstream.
 
-Ast's DP501 initialization reads the register SCU2C at offset 0x1202c
-and tries to set it to source data from VGA. But writes the update to
-offset 0x0, with unknown results. Write the result to SCU instead.
+The Blackbox 724-746-5500 USB Director USB-RS-232 HUB, part number
+IC135A, is a rebadged Edgeport/4 with its own USB device id.
 
-The bug only happens in ast_init_analog(). There's similar code in
-ast_init_dvo(), which works correctly.
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 83c6620bae3f ("drm/ast: initial DP501 support (v0.2)")
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v3.16+
-Link: https://patch.msgid.link/20260327133532.79696-2-tzimmermann@suse.de
+Signed-off-by: Frej Drejhammar <frej@stacken.kth.se>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ast/ast_dp501.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/io_edgeport.c |    3 +++
+ drivers/usb/serial/io_usbvend.h  |    1 +
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/ast/ast_dp501.c
-+++ b/drivers/gpu/drm/ast/ast_dp501.c
-@@ -484,7 +484,7 @@ static void ast_init_analog(struct drm_d
- 	/* Finally, clear bits [17:16] of SCU2c */
- 	data = ast_read32(ast, 0x1202c);
- 	data &= 0xfffcffff;
--	ast_write32(ast, 0, data);
-+	ast_write32(ast, 0x1202c, data);
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -73,6 +73,7 @@ static const struct usb_device_id edgepo
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_22I) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_412_4) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_COMPATIBLE) },
++	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_BLACKBOX_IC135A) },
+ 	{ }
+ };
  
- 	/* Disable DVO */
- 	ast_set_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xa3, 0xcf, 0x00);
+@@ -121,6 +122,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_8R) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_8RR) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_412_8) },
++	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_BLACKBOX_IC135A) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0202) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0203) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0310) },
+@@ -546,6 +548,7 @@ static void get_product_info(struct edge
+ 	case ION_DEVICE_ID_EDGEPORT_2_DIN:
+ 	case ION_DEVICE_ID_EDGEPORT_4_DIN:
+ 	case ION_DEVICE_ID_EDGEPORT_16_DUAL_CPU:
++	case ION_DEVICE_ID_BLACKBOX_IC135A:
+ 		product_info->IsRS232 = 1;
+ 		break;
+ 
+--- a/drivers/usb/serial/io_usbvend.h
++++ b/drivers/usb/serial/io_usbvend.h
+@@ -211,6 +211,7 @@
+ 
+ //
+ // Definitions for other product IDs
++#define ION_DEVICE_ID_BLACKBOX_IC135A		0x0801	// OEM device (rebranded Edgeport/4)
+ #define ION_DEVICE_ID_MT4X56USB			0x1403	// OEM device
+ #define ION_DEVICE_ID_E5805A			0x1A01  // OEM device (rebranded Edgeport/4)
+ 
 
 
