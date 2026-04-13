@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B1F330B01;
-	Mon, 13 Apr 2026 16:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC4514F9FB;
+	Mon, 13 Apr 2026 17:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099599; cv=none; b=opGJ4wOXgQPl3L2InyEXcU0Yr3D4CjKawXBbTj40fe8vs/XLexBOaGvvSKVuOpwPrRcNPr5nYI/GmBeSKHLa+KwIGv9ybf5Xo6ZyiK5GNFK+oNYrUHvn2UZmxqpBw+WgheLBHF43bZ0H/wR0QgYw7qGqjZqNpzDh5dKNkx00NDk=
+	t=1776099602; cv=none; b=eHOvwSL2UPQvU+euzXiMgOMgyCfNYUQEjLVxwcsJuFZ6hiAEZ/DBtsp5byf2eZ3c39xc764PXyHesQhqktF+FXxNg5DiCRGyEHrN/EHFYTfA0J7H9DTzB7r1dU1PlI/eX/b1bZi3TAXvSYZ9y8wKcrQoQk6XgZrXLwB5D5J+cOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099599; c=relaxed/simple;
-	bh=7dhFDNb866NW0IqUmXCPi0VDlO0QoZIqJfJujCxYe6w=;
+	s=arc-20240116; t=1776099602; c=relaxed/simple;
+	bh=In+pjPq36xU3hNtdcRjChLki03VPjcCU6jtY6wSbIr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NApg1RsgKDHjNdJniboJlu8rBK1LIku2nAK5jtFri3hVhsnwRyfN5ekCNauj4soos74fAqYBgQtQyx2SluQYQsvRY7gqk4COm5tG8kOJYayjshO34lg5Awvavt/zJTmvsXr6j3xoU6mPaRtc2askX+afDlYR/Xal7vey6mO0sG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAIlwsGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QP1lmav+KUhAERF3RRSaX6FJz7t6QdK+Bz6wkgqWbQXXDV5PO3ZmJxiHDQsryfsy9ONCLvLLDgRmlRFZyGRfkX9GpyrAR5KdKwxuo0kftB33q4Mc4OUs9r33NUfb9KUtbdqx1Osb6baOlfnfneK95CnZMQo39DHXViTQCf6swxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ivxNczE7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAIlwsGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05148C2BCB3;
-	Mon, 13 Apr 2026 16:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivxNczE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FFEC2BCAF;
+	Mon, 13 Apr 2026 17:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099599;
-	bh=7dhFDNb866NW0IqUmXCPi0VDlO0QoZIqJfJujCxYe6w=;
+	s=korg; t=1776099602;
+	bh=In+pjPq36xU3hNtdcRjChLki03VPjcCU6jtY6wSbIr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MAIlwsGMwoDUZOzeI85vcU3xq2pymLypVcJGsS5h9mk/jU4derWhSpi8OVVMQQ1Xf
-	 ZlmuLdtNjXrkdZlIuaWdq58egL0fd8QZCnPqURu3KBCw1dTKr/7uPiMzhUgIXgf+k9
-	 mULqjgv415yeQ/PZUjRctrgkgDSq8iZgZAws2tcQ=
+	b=ivxNczE7iidyy35vmb0+/AqSrFXxmMzNmT55ydXoKayMpX0cuUreBNxnzlEizCMsA
+	 vk9dGfYIjPL+C7wepG5aPzyj/6IslJ7Umxk/LWSM+A8qtqx2WQXoP36QCwV1gH5Zk1
+	 +DUcU0UJnSykSpRWahL5Jp77Ub96WcG7KZznp5SM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 385/491] iio: gyro: mpu3050: Move iio_device_register() to correct location
-Date: Mon, 13 Apr 2026 18:00:30 +0200
-Message-ID: <20260413155833.446738709@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 403/491] vxlan: validate ND option lengths in vxlan_na_create
+Date: Mon, 13 Apr 2026 18:00:48 +0200
+Message-ID: <20260413155834.119482110@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -54,79 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-commit 4c05799449108fb0e0a6bd30e65fffc71e60db4d upstream.
+commit afa9a05e6c4971bd5586f1b304e14d61fb3d9385 upstream.
 
-iio_device_register() should be at the end of the probe function to
-prevent race conditions.
+vxlan_na_create() walks ND options according to option-provided
+lengths. A malformed option can make the parser advance beyond the
+computed option span or use a too-short source LLADDR option payload.
 
-Place iio_device_register() at the end of the probe function and place
-iio_device_unregister() accordingly.
+Validate option lengths against the remaining NS option area before
+advancing, and only read source LLADDR when the option is large enough
+for an Ethernet address.
 
-Fixes: 3904b28efb2c7 ("iio: gyro: Add driver for the MPU-3050 gyroscope")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 4b29dba9c085 ("vxlan: fix nonfunctional neigh_reduce()")
+Cc: stable@vger.kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
+Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260326034441.2037420-4-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/mpu3050-core.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/net/vxlan/vxlan_core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/gyro/mpu3050-core.c
-+++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -1234,12 +1234,6 @@ int mpu3050_common_probe(struct device *
- 		goto err_power_down;
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2098,12 +2098,14 @@ static struct sk_buff *vxlan_na_create(s
+ 	ns_olen = request->len - skb_network_offset(request) -
+ 		sizeof(struct ipv6hdr) - sizeof(*ns);
+ 	for (i = 0; i < ns_olen-1; i += (ns->opt[i+1]<<3)) {
+-		if (!ns->opt[i + 1]) {
++		if (!ns->opt[i + 1] || i + (ns->opt[i + 1] << 3) > ns_olen) {
+ 			kfree_skb(reply);
+ 			return NULL;
+ 		}
+ 		if (ns->opt[i] == ND_OPT_SOURCE_LL_ADDR) {
+-			daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
++			if ((ns->opt[i + 1] << 3) >=
++			    sizeof(struct nd_opt_hdr) + ETH_ALEN)
++				daddr = ns->opt + i + sizeof(struct nd_opt_hdr);
+ 			break;
+ 		}
  	}
- 
--	ret = iio_device_register(indio_dev);
--	if (ret) {
--		dev_err(dev, "device register failed\n");
--		goto err_cleanup_buffer;
--	}
--
- 	dev_set_drvdata(dev, indio_dev);
- 
- 	/* Check if we have an assigned IRQ to use as trigger */
-@@ -1262,9 +1256,20 @@ int mpu3050_common_probe(struct device *
- 	pm_runtime_use_autosuspend(dev);
- 	pm_runtime_put(dev);
- 
-+	ret = iio_device_register(indio_dev);
-+	if (ret) {
-+		dev_err(dev, "device register failed\n");
-+		goto err_iio_device_register;
-+	}
-+
- 	return 0;
- 
--err_cleanup_buffer:
-+err_iio_device_register:
-+	pm_runtime_get_sync(dev);
-+	pm_runtime_put_noidle(dev);
-+	pm_runtime_disable(dev);
-+	if (irq)
-+		free_irq(mpu3050->irq, mpu3050->trig);
- 	iio_triggered_buffer_cleanup(indio_dev);
- err_power_down:
- 	mpu3050_power_down(mpu3050);
-@@ -1278,13 +1283,13 @@ int mpu3050_common_remove(struct device
- 	struct iio_dev *indio_dev = dev_get_drvdata(dev);
- 	struct mpu3050 *mpu3050 = iio_priv(indio_dev);
- 
-+	iio_device_unregister(indio_dev);
- 	pm_runtime_get_sync(dev);
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
- 	iio_triggered_buffer_cleanup(indio_dev);
- 	if (mpu3050->irq)
- 		free_irq(mpu3050->irq, mpu3050->trig);
--	iio_device_unregister(indio_dev);
- 	mpu3050_power_down(mpu3050);
- 
- 	return 0;
 
 
