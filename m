@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EECC27280A;
-	Mon, 13 Apr 2026 16:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1704C24DCF6;
+	Mon, 13 Apr 2026 16:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097003; cv=none; b=pEYqRHNJNPanwEYh+TfvHXVnv4W/pOXQlCx0kXW2AytKTbJzflmUTKVHTGCDtg8uXab6xAJsb6jBuCAjUFWDfUijncm388yClw1qHPWIGkG9laDhf7Z1F8apyCE7VCg8bz8PsGbBPCroer05hOG5/FoPFnvqeG8Rc2zB2TxirUc=
+	t=1776097006; cv=none; b=cjdoSu227z9rlEtCWXURU7/O5fUuufuPK2fEqSUNVRRaU5A4cAIiFaqNPOQY26JRT2hv5tTwWsCGHmtQZIkll1sziGyBllMReouofGZqP9Q4FrUrkzfwd1qPSnJgBfM/rEFDZ0P+4lqAgZKUSKuuvvoRVEMF9wscvebTbUlTXNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097003; c=relaxed/simple;
-	bh=emCCImVyosW8Mm+qOCcCSzkMrziAvVw4JRBZiS1subQ=;
+	s=arc-20240116; t=1776097006; c=relaxed/simple;
+	bh=qDq/xGUiZXBfunN82ZRS5JkQZKtRyUQwSUJFsqd132w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjIW82dakeNMSnA2Rj+3m2eCJcLpiJEw1plBaIbDI021EOEqOSgEhqIeYuNeF8wZqQt9QyKZIWYoqYmSn3ZX9Bfo0iWRp5C42uwKKOuI25VrBeNSRHgiQ+1eS8F8fho1GBbcQplzNJhSL8QFelTy504izq7Xkpr8JsMbB2/Mvb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIHWsYfx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IoWNx/mB+l+M1ieizbjOUXBH9tdiMLy5Cm/oWp7KR671ecXRirfZtzwuRfxeJQYeH5UV/yXS3vM7KmilZ85fpC6QY3HznxRox1njx/G7SafjjSFmzFebGliAQAJtVNckqKSTc5iWYkT6QlIROY+Kyk8BWRZIi8L3F5UVMf4Rk/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUGTrATp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIHWsYfx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163FAC2BCAF;
-	Mon, 13 Apr 2026 16:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUGTrATp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CAEC2BCAF;
+	Mon, 13 Apr 2026 16:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097003;
-	bh=emCCImVyosW8Mm+qOCcCSzkMrziAvVw4JRBZiS1subQ=;
+	s=korg; t=1776097006;
+	bh=qDq/xGUiZXBfunN82ZRS5JkQZKtRyUQwSUJFsqd132w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIHWsYfxoar8czmvVwrPjXH1G6a+VzTWcf3Odb77kVIAeLXEzsZqxnvHsEnhyhiKG
-	 N36Lpow4N6yqL4wRX3/c6fIQclsEAsqusY/55IW0JPswUAlqlNY6VOT9ko9kEXHZEr
-	 Usne+++k9qeJnLRURg+mO5B314lxEqDap8F64akA=
+	b=pUGTrATp3rLCTiCXgkbmYtTJXVzEbzY2RYNRq1N5abuAmdG4i2IlDVoi0oBC3jnX7
+	 65L7PndhMs3Xl11wrDSGec9xAveBAl/2b4959Hk1ruNkZ2R+JZdQJe9zuLsZkPaerK
+	 o9o4tQu8qY6Xtlcw32l9wUt2wI+DkfVIuAOI8gc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 25/55] ACPICA: Add a depth argument to acpi_execute_reg_methods()
-Date: Mon, 13 Apr 2026 18:00:59 +0200
-Message-ID: <20260413155725.769602533@linuxfoundation.org>
+Subject: [PATCH 6.1 26/55] ACPI: EC: Evaluate _REG outside the EC scope more carefully
+Date: Mon, 13 Apr 2026 18:01:00 +0200
+Message-ID: <20260413155725.807194765@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 References: <20260413155724.820472494@linuxfoundation.org>
@@ -53,135 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit cdf65d73e001fde600b18d7e45afadf559425ce5 ]
+[ Upstream commit 71bf41b8e913ec9fc91f0d39ab8fb320229ec604 ]
 
-A subsequent change will need to pass a depth argument to
-acpi_execute_reg_methods(), so prepare that function for it.
+Commit 60fa6ae6e6d0 ("ACPI: EC: Install address space handler at the
+namespace root") caused _REG methods for EC operation regions outside
+the EC device scope to be evaluated which on some systems leads to the
+evaluation of _REG methods in the scopes of device objects representing
+devices that are not present and not functional according to the _STA
+return values. Some of those device objects represent EC "alternatives"
+and if _REG is evaluated for their operation regions, the platform
+firmware may be confused and the platform may start to behave
+incorrectly.
 
-No intentional functional changes.
+To avoid this problem, only evaluate _REG for EC operation regions
+located in the scopes of device objects representing known-to-be-present
+devices.
 
+For this purpose, partially revert commit 60fa6ae6e6d0 and trigger the
+evaluation of _REG for EC operation regions from acpi_bus_attach() for
+the known-valid devices.
+
+Fixes: 60fa6ae6e6d0 ("ACPI: EC: Install address space handler at the namespace root")
+Link: https://lore.kernel.org/linux-acpi/1f76b7e2-1928-4598-8037-28a1785c2d13@redhat.com
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2298938
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2302253
+Reported-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/8451567.NyiUUSuA9g@rjwysocki.net
-Stable-dep-of: 71bf41b8e913 ("ACPI: EC: Evaluate _REG outside the EC scope more carefully")
+Link: https://patch.msgid.link/23612351.6Emhk5qWAg@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/acevents.h |    2 +-
- drivers/acpi/acpica/evregion.c |    6 ++++--
- drivers/acpi/acpica/evxfregn.c |   10 +++++++---
- drivers/acpi/ec.c              |    2 +-
- include/acpi/acpixf.h          |    1 +
- 5 files changed, 14 insertions(+), 7 deletions(-)
+ drivers/acpi/ec.c       |   11 +++++++++--
+ drivers/acpi/internal.h |    1 +
+ drivers/acpi/scan.c     |    2 ++
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/acpica/acevents.h
-+++ b/drivers/acpi/acpica/acevents.h
-@@ -188,7 +188,7 @@ acpi_ev_detach_region(union acpi_operand
- 		      u8 acpi_ns_is_locked);
- 
- void
--acpi_ev_execute_reg_methods(struct acpi_namespace_node *node,
-+acpi_ev_execute_reg_methods(struct acpi_namespace_node *node, u32 max_depth,
- 			    acpi_adr_space_type space_id, u32 function);
- 
- acpi_status
---- a/drivers/acpi/acpica/evregion.c
-+++ b/drivers/acpi/acpica/evregion.c
-@@ -65,6 +65,7 @@ acpi_status acpi_ev_initialize_op_region
- 						acpi_gbl_default_address_spaces
- 						[i])) {
- 			acpi_ev_execute_reg_methods(acpi_gbl_root_node,
-+						    ACPI_UINT32_MAX,
- 						    acpi_gbl_default_address_spaces
- 						    [i], ACPI_REG_CONNECT);
- 		}
-@@ -665,6 +666,7 @@ cleanup1:
-  * FUNCTION:    acpi_ev_execute_reg_methods
-  *
-  * PARAMETERS:  node            - Namespace node for the device
-+ *              max_depth       - Depth to which search for _REG
-  *              space_id        - The address space ID
-  *              function        - Passed to _REG: On (1) or Off (0)
-  *
-@@ -676,7 +678,7 @@ cleanup1:
-  ******************************************************************************/
- 
- void
--acpi_ev_execute_reg_methods(struct acpi_namespace_node *node,
-+acpi_ev_execute_reg_methods(struct acpi_namespace_node *node, u32 max_depth,
- 			    acpi_adr_space_type space_id, u32 function)
- {
- 	struct acpi_reg_walk_info info;
-@@ -710,7 +712,7 @@ acpi_ev_execute_reg_methods(struct acpi_
- 	 * regions and _REG methods. (i.e. handlers must be installed for all
- 	 * regions of this Space ID before we can run any _REG methods)
- 	 */
--	(void)acpi_ns_walk_namespace(ACPI_TYPE_ANY, node, ACPI_UINT32_MAX,
-+	(void)acpi_ns_walk_namespace(ACPI_TYPE_ANY, node, max_depth,
- 				     ACPI_NS_WALK_UNLOCK, acpi_ev_reg_run, NULL,
- 				     &info, NULL);
- 
---- a/drivers/acpi/acpica/evxfregn.c
-+++ b/drivers/acpi/acpica/evxfregn.c
-@@ -85,7 +85,8 @@ acpi_install_address_space_handler_inter
- 	/* Run all _REG methods for this address space */
- 
- 	if (run_reg) {
--		acpi_ev_execute_reg_methods(node, space_id, ACPI_REG_CONNECT);
-+		acpi_ev_execute_reg_methods(node, ACPI_UINT32_MAX, space_id,
-+					    ACPI_REG_CONNECT);
- 	}
- 
- unlock_and_exit:
-@@ -261,6 +262,7 @@ ACPI_EXPORT_SYMBOL(acpi_remove_address_s
-  * FUNCTION:    acpi_execute_reg_methods
-  *
-  * PARAMETERS:  device          - Handle for the device
-+ *              max_depth       - Depth to which search for _REG
-  *              space_id        - The address space ID
-  *
-  * RETURN:      Status
-@@ -269,7 +271,8 @@ ACPI_EXPORT_SYMBOL(acpi_remove_address_s
-  *
-  ******************************************************************************/
- acpi_status
--acpi_execute_reg_methods(acpi_handle device, acpi_adr_space_type space_id)
-+acpi_execute_reg_methods(acpi_handle device, u32 max_depth,
-+			 acpi_adr_space_type space_id)
- {
- 	struct acpi_namespace_node *node;
- 	acpi_status status;
-@@ -294,7 +297,8 @@ acpi_execute_reg_methods(acpi_handle dev
- 
- 		/* Run all _REG methods for this address space */
- 
--		acpi_ev_execute_reg_methods(node, space_id, ACPI_REG_CONNECT);
-+		acpi_ev_execute_reg_methods(node, max_depth, space_id,
-+					    ACPI_REG_CONNECT);
- 	} else {
- 		status = AE_BAD_PARAMETER;
- 	}
 --- a/drivers/acpi/ec.c
 +++ b/drivers/acpi/ec.c
-@@ -1531,7 +1531,7 @@ static int ec_install_handlers(struct ac
+@@ -1512,12 +1512,13 @@ static bool install_gpio_irq_event_handl
+ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device,
+ 			       bool call_reg)
+ {
+-	acpi_handle scope_handle = ec == first_ec ? ACPI_ROOT_OBJECT : ec->handle;
+ 	acpi_status status;
+ 
+ 	acpi_ec_start(ec, false);
+ 
+ 	if (!test_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags)) {
++		acpi_handle scope_handle = ec == first_ec ? ACPI_ROOT_OBJECT : ec->handle;
++
+ 		acpi_ec_enter_noirq(ec);
+ 		status = acpi_install_address_space_handler_no_reg(scope_handle,
+ 								   ACPI_ADR_SPACE_EC,
+@@ -1531,7 +1532,7 @@ static int ec_install_handlers(struct ac
  	}
  
  	if (call_reg && !test_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags)) {
--		acpi_execute_reg_methods(scope_handle, ACPI_ADR_SPACE_EC);
-+		acpi_execute_reg_methods(scope_handle, ACPI_UINT32_MAX, ACPI_ADR_SPACE_EC);
+-		acpi_execute_reg_methods(scope_handle, ACPI_UINT32_MAX, ACPI_ADR_SPACE_EC);
++		acpi_execute_reg_methods(ec->handle, ACPI_UINT32_MAX, ACPI_ADR_SPACE_EC);
  		set_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags);
  	}
  
---- a/include/acpi/acpixf.h
-+++ b/include/acpi/acpixf.h
-@@ -666,6 +666,7 @@ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
- 			     void *context))
- ACPI_EXTERNAL_RETURN_STATUS(acpi_status
- 			    acpi_execute_reg_methods(acpi_handle device,
-+						     u32 nax_depth,
- 						     acpi_adr_space_type
- 						     space_id))
- ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+@@ -1749,6 +1750,12 @@ static int acpi_ec_remove(struct acpi_de
+ 	return 0;
+ }
+ 
++void acpi_ec_register_opregions(struct acpi_device *adev)
++{
++	if (first_ec && first_ec->handle != adev->handle)
++		acpi_execute_reg_methods(adev->handle, 1, ACPI_ADR_SPACE_EC);
++}
++
+ static acpi_status
+ ec_parse_io_ports(struct acpi_resource *resource, void *context)
+ {
+--- a/drivers/acpi/internal.h
++++ b/drivers/acpi/internal.h
+@@ -210,6 +210,7 @@ int acpi_ec_add_query_handler(struct acp
+ 			      acpi_handle handle, acpi_ec_query_func func,
+ 			      void *data);
+ void acpi_ec_remove_query_handler(struct acpi_ec *ec, u8 query_bit);
++void acpi_ec_register_opregions(struct acpi_device *adev);
+ 
+ #ifdef CONFIG_PM_SLEEP
+ void acpi_ec_flush_work(void);
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -2198,6 +2198,8 @@ static int acpi_bus_attach(struct acpi_d
+ 	if (device->handler)
+ 		goto ok;
+ 
++	acpi_ec_register_opregions(device);
++
+ 	if (!device->flags.initialized) {
+ 		device->flags.power_manageable =
+ 			device->power.states[ACPI_STATE_D0].flags.valid;
 
 
