@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B852D9ECD;
-	Mon, 13 Apr 2026 16:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C543A3264CE;
+	Mon, 13 Apr 2026 16:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099342; cv=none; b=Z+CzFteI/gCKfjSk0kkiQDdbI9ueSnxaEjL61cbFXBz4DGSFj6SMegKC+2kf1FX7daZxPR86gZ72L5DLzV+8YO9f2fQOTPYBEAfoYg69v6woRvwbNyP9BheX9l6XFda1I8ZYPupuXOWPczfe+9uIi3tL4lk23zbn3gSOXqmaoUk=
+	t=1776099344; cv=none; b=HWHprfYEHgyOG2u48+WMVRpeVi9YhCH7qgkE/06Pca9Adc0OTSMQx8SSyKJfQv7XBa8TIyFDeF6LR4aZB2iZYEOoeiSlfBQ+Os9rvsvyTTwgcpD+DEz7H4u5AzOwe+XPwAvr2sIv4oyM8BeGZFPdYb0UMJt7v5Lwfb0+dfLcFYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099342; c=relaxed/simple;
-	bh=Mkq6UOU5DOGg6eQXAGFYWji/VxHDfigJEVwg6ubRtaA=;
+	s=arc-20240116; t=1776099344; c=relaxed/simple;
+	bh=u9GZjRiJO51KvmMEFFUxkNTFWgsGFrId3+1K3T71fD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RG7q/i/W+90cqCta5jrfpPzyG2uTE0hNF8HGIHuuuxpfDh4eqGCDtjXfNGK3P+0+EcWvH6GYlNeDP2J+12n9JUlDf9g0jZGvJ5C5Wl+5nphagB9qU7rQMdm/6okxhF1MDhIyoQqCgDWAnOZyAAtZztQekKnOA8qruCu5FGrLGJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuvkTzaX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZPKoj5ptqNL0Ua3VlvG2r28pfXm3pxNDLL5UVp6npHiqVydnqNL/4bvmetJ1BteDX0iN4DI+9pSvEHSsuOnnU6MU0RSvo5EDRbl1XFEWPNkYMjJNwJSMWSvHqFyqa+Eta1jUHC44kVeFIpqh5JR/xwLaFcQ1GvPOb9FbBn2ASi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzCGP1pS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuvkTzaX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFE6C2BCAF;
-	Mon, 13 Apr 2026 16:55:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzCGP1pS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C348C2BCAF;
+	Mon, 13 Apr 2026 16:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099342;
-	bh=Mkq6UOU5DOGg6eQXAGFYWji/VxHDfigJEVwg6ubRtaA=;
+	s=korg; t=1776099344;
+	bh=u9GZjRiJO51KvmMEFFUxkNTFWgsGFrId3+1K3T71fD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZuvkTzaXrv86IyynXOQlMOWXMjMzPt4IylriUFlFf6CrdH08nsFYBNiWkej5McKN5
-	 qEoktM36uduslH/izJDXtDT2aYb7QZxSkJTMAbWkOl2Bem9U/tEYIncvVIYKCuw5Ih
-	 VDoBZB7m4grJWjPdUZfcyBKH2CxQFZgBI7ZW6Vzk=
+	b=uzCGP1pS1kTRLiim5HgUwHnK6XG6lcSE+hixBouk8fPSqK7iFO8obJmd+7P6IwIxa
+	 XRW9jCZ0OsgZr5JqIsn1APDzq2+fQH8OU584gRitGRc6WQhmiWVit7S2NYCRRqQli7
+	 rr2MoHeoEdm2rpClXHicl2CUvSI9IX7/9M4C0364=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Milos Nikic <nikic.milos@gmail.com>,
-	Andreas Dilger <adilger@dilger.ca>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
+	syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <Kartikey406@gmail.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 5.10 303/491] jbd2: gracefully abort on checkpointing state corruptions
-Date: Mon, 13 Apr 2026 17:59:08 +0200
-Message-ID: <20260413155830.385886345@linuxfoundation.org>
+Subject: [PATCH 5.10 304/491] ext4: convert inline data to extents when truncate exceeds inline size
+Date: Mon, 13 Apr 2026 17:59:09 +0200
+Message-ID: <20260413155830.422654961@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -55,66 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milos Nikic <nikic.milos@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit bac3190a8e79beff6ed221975e0c9b1b5f2a21da upstream.
+commit ed9356a30e59c7cc3198e7fc46cfedf3767b9b17 upstream.
 
-This patch targets two internal state machine invariants in checkpoint.c
-residing inside functions that natively return integer error codes.
+Add a check in ext4_setattr() to convert files from inline data storage
+to extent-based storage when truncate() grows the file size beyond the
+inline capacity. This prevents the filesystem from entering an
+inconsistent state where the inline data flag is set but the file size
+exceeds what can be stored inline.
 
-- In jbd2_cleanup_journal_tail(): A blocknr of 0 indicates a severely
-corrupted journal superblock. Replaced the J_ASSERT with a WARN_ON_ONCE
-and a graceful journal abort, returning -EFSCORRUPTED.
+Without this fix, the following sequence causes a kernel BUG_ON():
 
-- In jbd2_log_do_checkpoint(): Replaced the J_ASSERT_BH checking for
-an unexpected buffer_jwrite state. If the warning triggers, we
-explicitly drop the just-taken get_bh() reference and call __flush_batch()
-to safely clean up any previously queued buffers in the j_chkpt_bhs array,
-preventing a memory leak before returning -EFSCORRUPTED.
+1. Mount filesystem with inode that has inline flag set and small size
+2. truncate(file, 50MB) - grows size but inline flag remains set
+3. sendfile() attempts to write data
+4. ext4_write_inline_data() hits BUG_ON(write_size > inline_capacity)
 
-Signed-off-by: Milos Nikic <nikic.milos@gmail.com>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260311041548.159424-1-nikic.milos@gmail.com
+The crash occurs because ext4_write_inline_data() expects inline storage
+to accommodate the write, but the actual inline capacity (~60 bytes for
+i_block + ~96 bytes for xattrs) is far smaller than the file size and
+write request.
+
+The fix checks if the new size from setattr exceeds the inode's actual
+inline capacity (EXT4_I(inode)->i_inline_size) and converts the file to
+extent-based storage before proceeding with the size change.
+
+This addresses the root cause by ensuring the inline data flag and file
+size remain consistent during truncate operations.
+
+Reported-by: syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7de5fe447862fc37576f
+Tested-by: syzbot+7de5fe447862fc37576f@syzkaller.appspotmail.com
+Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260207043607.1175976-1-kartikey406@gmail.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/checkpoint.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ fs/ext4/inode.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -303,7 +303,15 @@ restart:
- 			 */
- 			BUFFER_TRACE(bh, "queue");
- 			get_bh(bh);
--			J_ASSERT_BH(bh, !buffer_jwrite(bh));
-+			if (WARN_ON_ONCE(buffer_jwrite(bh))) {
-+				put_bh(bh); /* drop the ref we just took */
-+				spin_unlock(&journal->j_list_lock);
-+				/* Clean up any previously batched buffers */
-+				if (batch_count)
-+					__flush_batch(journal, &batch_count);
-+				jbd2_journal_abort(journal, -EFSCORRUPTED);
-+				return -EFSCORRUPTED;
-+			}
- 			journal->j_chkpt_bhs[batch_count++] = bh;
- 			transaction->t_chp_stats.cs_written++;
- 			transaction->t_checkpoint_list = jh->b_cpnext;
-@@ -361,7 +369,10 @@ int jbd2_cleanup_journal_tail(journal_t
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5576,6 +5576,18 @@ int ext4_setattr(struct dentry *dentry,
+ 		if (IS_I_VERSION(inode) && attr->ia_size != inode->i_size)
+ 			inode_inc_iversion(inode);
  
- 	if (!jbd2_journal_get_log_tail(journal, &first_tid, &blocknr))
- 		return 1;
--	J_ASSERT(blocknr != 0);
-+	if (WARN_ON_ONCE(blocknr == 0)) {
-+		jbd2_journal_abort(journal, -EFSCORRUPTED);
-+		return -EFSCORRUPTED;
-+	}
- 
- 	/*
- 	 * We need to make sure that any blocks that were recently written out
++		/*
++		 * If file has inline data but new size exceeds inline capacity,
++		 * convert to extent-based storage first to prevent inconsistent
++		 * state (inline flag set but size exceeds inline capacity).
++		 */
++		if (ext4_has_inline_data(inode) &&
++		    attr->ia_size > EXT4_I(inode)->i_inline_size) {
++			error = ext4_convert_inline_data(inode);
++			if (error)
++				goto err_out;
++		}
++
+ 		if (shrink) {
+ 			if (ext4_should_order_data(inode)) {
+ 				error = ext4_begin_ordered_truncate(inode,
 
 
