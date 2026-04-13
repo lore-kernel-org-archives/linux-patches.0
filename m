@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C77625A2C9;
-	Mon, 13 Apr 2026 16:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB15274B5F;
+	Mon, 13 Apr 2026 16:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096622; cv=none; b=gDBlOCPgS430oMQ7y8oZNrKyj8JYIVhUOtsbB4ogZOqGjZYbIr89Ut8DhcZIwrZKFJ2Ij/9jnlQD9Qubw39SvrW7DDL4LPj2CepqOZ247b7nEgWsgRk0I4t87v9xd+j4DGP/qRX1wJrHbmkZJpt/vVbKG5chblMPL9+Ys902ErM=
+	t=1776096625; cv=none; b=GSZ1SPfozyu38AJp82T6oOrQrUDOKPrakfzPPWCBXnJ7GsavgvSfVywFzbVhiBrgKbQXRZAmr8nJtfewxJD/3KjLFpOtrrk4z2XxrlSUKb00H1iPQ6lG5K86bcqX4Rau2Hkq4hQbO3PLiTylbZUiLl3RBKYuZm3Uclh2rz2S4NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096622; c=relaxed/simple;
-	bh=4BkyEbSdmnLpecjWwRwwNrWku3HetXmvA9sQIyW3WWo=;
+	s=arc-20240116; t=1776096625; c=relaxed/simple;
+	bh=CqPM4IoUTI2cNKIURc26ZzQ03BMmrQuf07VWCdXbhy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NDdQGFKmYgvO4tG28krxuVAMpVTOgSSIi+bAaTTbz5Ezb3ZPCULjTWhjeKdHzAjTsVYWD95dWlRzV13moETcJdaz7nluujlcr5K3vTjzo7w2htnheustMBpphqHXPEFRwlyaTJYmi/FbraKJKlIWeR4h5AUs6gYBqxgRfZxijf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cetmSlML; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o/vl2f+APKD4YVJMwdsmhoz9WQzCuxU5TpQcfhj2lrDLHz4Yjo3j+FnwO8G3q9qT2EPre7Vc3Tay/0PJz1kYQphQTsn11NfdmBIsmOFeFm58jGxjQEhAxeEfeuLtd27QGucQKU4sAAKegY+ltxxwGf4kG6xU+igaVZFPTpO8GrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrKFo5Gz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cetmSlML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021BFC2BCAF;
-	Mon, 13 Apr 2026 16:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrKFo5Gz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8502CC2BCAF;
+	Mon, 13 Apr 2026 16:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096622;
-	bh=4BkyEbSdmnLpecjWwRwwNrWku3HetXmvA9sQIyW3WWo=;
+	s=korg; t=1776096624;
+	bh=CqPM4IoUTI2cNKIURc26ZzQ03BMmrQuf07VWCdXbhy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cetmSlMLYxqtccNdZYW3if1CR6C1PM+Ks726H0yj188vt6NwXpN+GDm5iKJzmMQeH
-	 S6yGh87803yBxoTTMqwP9r0AEWUi3E01CamJRJIBZ8p3d86f7Muvst4+I/iVWjY6xJ
-	 dQRUC2WLvBlGzCjDbHfX/qCcqBzfwvo/bdQOOZes=
+	b=hrKFo5Gzv/21FdjY1NmaEO83Fdd45NgF9/X3Rin5LI9wOJK5IwaqpZBq8lVzrqC7h
+	 uNcUcIt+oFLZPyld+LeHF4k2Q0E1xlr/V6jQ5eA1wXgoSNfyeWjDvA+94IhTZJHUjC
+	 3ZOz6D2inOVem/wUoxup6lqe9bduuQ5q7c90RGhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 50/83] mm/damon/stat: deallocate damon_call() failure leaking damon_ctx
-Date: Mon, 13 Apr 2026 18:00:18 +0200
-Message-ID: <20260413155732.883669575@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 41/83] net: altera-tse: fix skb leak on DMA mapping error in tse_start_xmit()
+Date: Mon, 13 Apr 2026 18:00:09 +0200
+Message-ID: <20260413155732.548569831@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -44,71 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: David Carlier <devnexen@gmail.com>
 
-commit 4c04c6b47c361612b1d70cec8f7a60b1482d1400 upstream.
+commit 6dede3967619b5944003227a5d09fdc21ed57d10 upstream.
 
-damon_stat_start() always allocates the module's damon_ctx object
-(damon_stat_context).  Meanwhile, if damon_call() in the function fails,
-the damon_ctx object is not deallocated.  Hence, if the damon_call() is
-failed, and the user writes Y to “enabled” again, the previously
-allocated damon_ctx object is leaked.
+When dma_map_single() fails in tse_start_xmit(), the function returns
+NETDEV_TX_OK without freeing the skb. Since NETDEV_TX_OK tells the
+stack the packet was consumed, the skb is never freed, leaking memory
+on every DMA mapping failure.
 
-This cannot simply be fixed by deallocating the damon_ctx object when
-damon_call() fails.  That's because damon_call() failure doesn't guarantee
-the kdamond main function, which accesses the damon_ctx object, is
-completely finished.  In other words, if damon_stat_start() deallocates
-the damon_ctx object after damon_call() failure, the not-yet-terminated
-kdamond could access the freed memory (use-after-free).
+Add dev_kfree_skb_any() before returning to properly free the skb.
 
-Fix the leak while avoiding the use-after-free by keeping returning
-damon_stat_start() without deallocating the damon_ctx object after
-damon_call() failure, but deallocating it when the function is invoked
-again and the kdamond is completely terminated.  If the kdamond is not yet
-terminated, simply return -EAGAIN, as the kdamond will soon be terminated.
-
-The issue was discovered [1] by sashiko.
-
-Link: https://lkml.kernel.org/r/20260402134418.74121-1-sj@kernel.org
-Link: https://lore.kernel.org/20260401012428.86694-1-sj@kernel.org [1]
-Fixes: 405f61996d9d ("mm/damon/stat: use damon_call() repeat mode instead of damon_callback")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.17.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: bbd2190ce96d ("Altera TSE: Add main and header file for Altera Ethernet Driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Link: https://patch.msgid.link/20260401211218.279185-1-devnexen@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/stat.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/altera/altera_tse_main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/damon/stat.c
-+++ b/mm/damon/stat.c
-@@ -237,6 +237,12 @@ static int damon_stat_start(void)
- {
- 	int err;
- 
-+	if (damon_stat_context) {
-+		if (damon_is_running(damon_stat_context))
-+			return -EAGAIN;
-+		damon_destroy_ctx(damon_stat_context);
-+	}
-+
- 	damon_stat_context = damon_stat_build_ctx();
- 	if (!damon_stat_context)
- 		return -ENOMEM;
-@@ -253,6 +259,7 @@ static void damon_stat_stop(void)
- {
- 	damon_stop(&damon_stat_context, 1);
- 	damon_destroy_ctx(damon_stat_context);
-+	damon_stat_context = NULL;
- }
- 
- static int damon_stat_enabled_store(
+--- a/drivers/net/ethernet/altera/altera_tse_main.c
++++ b/drivers/net/ethernet/altera/altera_tse_main.c
+@@ -572,6 +572,7 @@ static netdev_tx_t tse_start_xmit(struct
+ 				  DMA_TO_DEVICE);
+ 	if (dma_mapping_error(priv->device, dma_addr)) {
+ 		netdev_err(priv->dev, "%s: DMA mapping error\n", __func__);
++		dev_kfree_skb_any(skb);
+ 		ret = NETDEV_TX_OK;
+ 		goto out;
+ 	}
 
 
