@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A43248880;
-	Mon, 13 Apr 2026 16:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C35271A94;
+	Mon, 13 Apr 2026 16:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096220; cv=none; b=ooHCHrnkLGmtw1XtQ1Dc9q4TJUoZQdIEFaMmu3jCg8ZWH9Xw28fx9LaiHQKXurLnkl0HyIpkCdoqe0HWZKLzKbe2QAzvJPrSKx7EQCnrb9HZyJaDg1edoMaDb3reqIVb/mHVe+3SCFosZCf9okC39OiWeVryMHMACAzscplj4qw=
+	t=1776096223; cv=none; b=EvFlU+FH9AusqSq6J1+skL/aqdZuA94MtzyhqrwZ1R4jedccl2AnCUoDneS0p3YMZQqqsGvLTLY2IwsutskbAPst3xwQ6Rr7kNwtqtlFGN2TNPvVnN7DycJuOvomZOfBpaJqMg7PuU04ZjtjltB4EVI/koX9rhzCyHQofUeS1MA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096220; c=relaxed/simple;
-	bh=xABxqRVuOtkFFxBOgx3yv8WP3cuNm6CA3nbJg2SZ3ko=;
+	s=arc-20240116; t=1776096223; c=relaxed/simple;
+	bh=9XlocKg4MdcCsMbGzTTrbjzYJvCusPeAPeVBfbgAYbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IWECnXY0X6u1Pyc+PKNGmGKrCcB3wnWmx/7McbUBWFeg7NeA67MvlHJ0+KgBmUP8rWx8w1Brt0tSge/v6PksBq8+cjqbI8p2wNy7Ff53ghDtrBb/hzi1s4bBS0p7tjuAcu3j5KJINnzHXiAvJiC9RpRL0kuSspf0gITuLqotwMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MM96lgTX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eFgEE3DwGUgRQ/D69MHOG1+mQ8jtwYq2qtqwgL0BE3ok08owIE6aTWfXpXQ+HyKXcdMV+mpZHBcNNYdyd8AB62Hn7juMf6F971nSMd/L9pSWXOvB+1KLf5f/HZ06BpQOvd0iVdSO98nebefLzwYDHj2ACl5Cs0hG0MRz7YBnw38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xfnt9atO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MM96lgTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4261C2BCAF;
-	Mon, 13 Apr 2026 16:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xfnt9atO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0ADC2BCB4;
+	Mon, 13 Apr 2026 16:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096220;
-	bh=xABxqRVuOtkFFxBOgx3yv8WP3cuNm6CA3nbJg2SZ3ko=;
+	s=korg; t=1776096222;
+	bh=9XlocKg4MdcCsMbGzTTrbjzYJvCusPeAPeVBfbgAYbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MM96lgTXgWGEVXkkWOGvkFfh/qqirOmL6/vCbvhUQhP9r+Y2GS0TqJ6YiTebuo8To
-	 1/ncxTq/PC8nhAliu1KtxLiM/c2ODmco7iR24HFe0lQ6BY4rZUY2I878spzyQrznBd
-	 Zqp0cK3Pf4MSBf3FYxbu6BMUjJvhxzH2foW3YZAQ=
+	b=Xfnt9atOaObqZ/JfBkUt6ZwNIZgFX43lGWXUX03FDWebPLWPE5hfCxlSF2rEj2LjG
+	 03xnjY1gQ0FenStEJYZ2Y9C3dok5btFiZcncqQTQWkO83RFh1By9TF2BpRpKTAvizp
+	 58mfxyeBKfjNwwV+8dG4irhIfJmjJiAj/56R5HW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 14/86] MIPS: mm: Rewrite TLB uniquification for the hidden bit feature
-Date: Mon, 13 Apr 2026 17:59:21 +0200
-Message-ID: <20260413155732.105459892@linuxfoundation.org>
+Subject: [PATCH 6.19 15/86] btrfs: remove pointless out labels from extent-tree.c
+Date: Mon, 13 Apr 2026 17:59:22 +0200
+Message-ID: <20260413155732.143600390@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -51,383 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 540760b77b8fc49d39d1b2b76196e5ec57711a32 upstream.
+[ Upstream commit ea8f9210050136bdd14f5e32b04cd01c8bd5c0ca ]
 
-Before the introduction of the EHINV feature, which lets software mark
-TLB entries invalid, certain older implementations of the MIPS ISA were
-equipped with an analogous bit, as a vendor extension, which however is
-hidden from software and only ever set at reset, and then any software
-write clears it, making the intended TLB entry valid.
+Some functions (lookup_extent_data_ref(), __btrfs_mod_ref() and
+btrfs_free_tree_block()) have an 'out' label that does nothing but
+return, making it pointless. Simplify this by removing the label and
+returning instead of gotos plus setting the 'ret' variable.
 
-This feature makes it unsafe to read a TLB entry with TLBR, modify the
-page mask, and write the entry back with TLBWI, because this operation
-will implicitly clear the hidden bit and this may create a duplicate
-entry, as with the presence of the hidden bit there is no guarantee all
-the entries across the TLB are unique each.
-
-Usually the firmware has already uniquified TLB entries before handing
-control over, in which case we only need to guarantee at bootstrap no
-clash will happen with the VPN2 values chosen in local_flush_tlb_all().
-
-However with systems such as Mikrotik RB532 we get handed the TLB as at
-reset, with the hidden bit set across the entries and possibly duplicate
-entries present.  This then causes a machine check exception when page
-sizes are reset in r4k_tlb_uniquify() and prevents the system from
-booting.
-
-Rewrite the algorithm used in r4k_tlb_uniquify() then such as to avoid
-the reuse of ASID/VPN values across the TLB.  Get rid of global entries
-first as they may be blocking the entire address space, e.g. 16 256MiB
-pages will exhaust the whole address space of a 32-bit CPU and a single
-big page can exhaust the 32-bit compatibility space on a 64-bit CPU.
-
-Details of the algorithm chosen are given across the code itself.
-
-Fixes: 9f048fa48740 ("MIPS: mm: Prevent a TLB shutdown on initial uniquification")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v6.18+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 316fb1b3169e ("btrfs: fix incorrect return value after changing leaf in lookup_extent_data_ref()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/tlb-r4k.c | 282 +++++++++++++++++++++++++++++++++--------
- 1 file changed, 228 insertions(+), 54 deletions(-)
+ fs/btrfs/extent-tree.c | 24 ++++++++++--------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
-index 65f0357958fc7..24fe85fa169d1 100644
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -13,6 +13,7 @@
- #include <linux/sched.h>
- #include <linux/smp.h>
- #include <linux/memblock.h>
-+#include <linux/minmax.h>
- #include <linux/mm.h>
- #include <linux/hugetlb.h>
- #include <linux/export.h>
-@@ -24,6 +25,7 @@
- #include <asm/hazards.h>
- #include <asm/mmu_context.h>
- #include <asm/tlb.h>
-+#include <asm/tlbdebug.h>
- #include <asm/tlbex.h>
- #include <asm/tlbmisc.h>
- #include <asm/setup.h>
-@@ -511,87 +513,259 @@ static int __init set_ntlb(char *str)
- __setup("ntlb=", set_ntlb);
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index bc0db6593f329..f2b1bc2107539 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -476,7 +476,7 @@ static noinline int lookup_extent_data_ref(struct btrfs_trans_handle *trans,
+ 		btrfs_item_key_to_cpu(leaf, &key, path->slots[0]);
+ 		if (key.objectid != bytenr ||
+ 		    key.type != BTRFS_EXTENT_DATA_REF_KEY)
+-			goto fail;
++			return ret;
  
- 
--/* Comparison function for EntryHi VPN fields.  */
--static int r4k_vpn_cmp(const void *a, const void *b)
-+/* The start bit position of VPN2 and Mask in EntryHi/PageMask registers.  */
-+#define VPN2_SHIFT 13
+ 		ref = btrfs_item_ptr(leaf, path->slots[0],
+ 				     struct btrfs_extent_data_ref);
+@@ -487,12 +487,11 @@ static noinline int lookup_extent_data_ref(struct btrfs_trans_handle *trans,
+ 				btrfs_release_path(path);
+ 				goto again;
+ 			}
+-			ret = 0;
+-			break;
++			return 0;
+ 		}
+ 		path->slots[0]++;
+ 	}
+-fail:
 +
-+/* Read full EntryHi even with CONFIG_32BIT.  */
-+static inline unsigned long long read_c0_entryhi_native(void)
-+{
-+	return cpu_has_64bits ? read_c0_entryhi_64() : read_c0_entryhi();
-+}
-+
-+/* Write full EntryHi even with CONFIG_32BIT.  */
-+static inline void write_c0_entryhi_native(unsigned long long v)
- {
--	long v = *(unsigned long *)a - *(unsigned long *)b;
--	int s = sizeof(long) > sizeof(int) ? sizeof(long) * 8 - 1: 0;
--	return s ? (v != 0) | v >> s : v;
-+	if (cpu_has_64bits)
-+		write_c0_entryhi_64(v);
-+	else
-+		write_c0_entryhi(v);
+ 	return ret;
  }
  
-+/* TLB entry state for uniquification.  */
-+struct tlbent {
-+	unsigned long long wired:1;
-+	unsigned long long global:1;
-+	unsigned long long asid:10;
-+	unsigned long long vpn:51;
-+	unsigned long long pagesz:5;
-+	unsigned long long index:14;
-+};
-+
- /*
-- * Initialise all TLB entries with unique values that do not clash with
-- * what we have been handed over and what we'll be using ourselves.
-+ * Comparison function for TLB entry sorting.  Place wired entries first,
-+ * then global entries, then order by the increasing VPN/ASID and the
-+ * decreasing page size.  This lets us avoid clashes with wired entries
-+ * easily and get entries for larger pages out of the way first.
-+ *
-+ * We could group bits so as to reduce the number of comparisons, but this
-+ * is seldom executed and not performance-critical, so prefer legibility.
-  */
--static void __ref r4k_tlb_uniquify(void)
-+static int r4k_entry_cmp(const void *a, const void *b)
- {
--	int tlbsize = current_cpu_data.tlbsize;
--	bool use_slab = slab_is_available();
--	int start = num_wired_entries();
--	phys_addr_t tlb_vpn_size;
--	unsigned long *tlb_vpns;
--	unsigned long vpn_mask;
--	int cnt, ent, idx, i;
--
--	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
--	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
-+	struct tlbent ea = *(struct tlbent *)a, eb = *(struct tlbent *)b;
-+
-+	if (ea.wired > eb.wired)
-+		return -1;
-+	else if (ea.wired < eb.wired)
-+		return 1;
-+	else if (ea.global > eb.global)
-+		return -1;
-+	else if (ea.global < eb.global)
-+		return 1;
-+	else if (ea.vpn < eb.vpn)
-+		return -1;
-+	else if (ea.vpn > eb.vpn)
-+		return 1;
-+	else if (ea.asid < eb.asid)
-+		return -1;
-+	else if (ea.asid > eb.asid)
-+		return 1;
-+	else if (ea.pagesz > eb.pagesz)
-+		return -1;
-+	else if (ea.pagesz < eb.pagesz)
-+		return 1;
-+	else
-+		return 0;
-+}
+@@ -2474,7 +2473,7 @@ static int __btrfs_mod_ref(struct btrfs_trans_handle *trans,
+ 	int i;
+ 	int action;
+ 	int level;
+-	int ret = 0;
++	int ret;
  
--	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
--	tlb_vpns = (use_slab ?
--		    kmalloc(tlb_vpn_size, GFP_ATOMIC) :
--		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
--	if (WARN_ON(!tlb_vpns))
--		return; /* Pray local_flush_tlb_all() is good enough. */
-+/*
-+ * Fetch all the TLB entries.  Mask individual VPN values retrieved with
-+ * the corresponding page mask and ignoring any 1KiB extension as we'll
-+ * be using 4KiB pages for uniquification.
-+ */
-+static void __ref r4k_tlb_uniquify_read(struct tlbent *tlb_vpns, int tlbsize)
-+{
-+	int start = num_wired_entries();
-+	unsigned long long vpn_mask;
-+	bool global;
-+	int i;
- 
--	htw_stop();
-+	vpn_mask = GENMASK(current_cpu_data.vmbits - 1, VPN2_SHIFT);
-+	vpn_mask |= cpu_has_64bits ? 3ULL << 62 : 1 << 31;
- 
--	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
--		unsigned long vpn;
-+	for (i = 0; i < tlbsize; i++) {
-+		unsigned long long entryhi, vpn, mask, asid;
-+		unsigned int pagesz;
- 
- 		write_c0_index(i);
- 		mtc0_tlbr_hazard();
- 		tlb_read();
- 		tlb_read_hazard();
--		vpn = read_c0_entryhi();
--		vpn &= vpn_mask & PAGE_MASK;
--		tlb_vpns[cnt] = vpn;
- 
--		/* Prevent any large pages from overlapping regular ones.  */
--		write_c0_pagemask(read_c0_pagemask() & PM_DEFAULT_MASK);
--		mtc0_tlbw_hazard();
--		tlb_write_indexed();
--		tlbw_use_hazard();
-+		global = !!(read_c0_entrylo0() & ENTRYLO_G);
-+		entryhi = read_c0_entryhi_native();
-+		mask = read_c0_pagemask();
-+
-+		asid = entryhi & cpu_asid_mask(&current_cpu_data);
-+		vpn = (entryhi & vpn_mask & ~mask) >> VPN2_SHIFT;
-+		pagesz = ilog2((mask >> VPN2_SHIFT) + 1);
-+
-+		tlb_vpns[i].global = global;
-+		tlb_vpns[i].asid = global ? 0 : asid;
-+		tlb_vpns[i].vpn = vpn;
-+		tlb_vpns[i].pagesz = pagesz;
-+		tlb_vpns[i].wired = i < start;
-+		tlb_vpns[i].index = i;
- 	}
-+}
- 
--	sort(tlb_vpns, cnt, sizeof(tlb_vpns[0]), r4k_vpn_cmp, NULL);
-+/*
-+ * Write unique values to all but the wired TLB entries each, using
-+ * the 4KiB page size.  This size might not be supported with R6, but
-+ * EHINV is mandatory for R6, so we won't ever be called in that case.
-+ *
-+ * A sorted table is supplied with any wired entries at the beginning,
-+ * followed by any global entries, and then finally regular entries.
-+ * We start at the VPN and ASID values of zero and only assign user
-+ * addresses, therefore guaranteeing no clash with addresses produced
-+ * by UNIQUE_ENTRYHI.  We avoid any VPN values used by wired or global
-+ * entries, by increasing the VPN value beyond the span of such entry.
-+ *
-+ * When a VPN/ASID clash is found with a regular entry we increment the
-+ * ASID instead until no VPN/ASID clash has been found or the ASID space
-+ * has been exhausted, in which case we increase the VPN value beyond
-+ * the span of the largest clashing entry.
-+ *
-+ * We do not need to be concerned about FTLB or MMID configurations as
-+ * those are required to implement the EHINV feature.
-+ */
-+static void __ref r4k_tlb_uniquify_write(struct tlbent *tlb_vpns, int tlbsize)
-+{
-+	unsigned long long asid, vpn, vpn_size, pagesz;
-+	int widx, gidx, idx, sidx, lidx, i;
- 
--	write_c0_pagemask(PM_DEFAULT_MASK);
-+	vpn_size = 1ULL << (current_cpu_data.vmbits - VPN2_SHIFT);
-+	pagesz = ilog2((PM_4K >> VPN2_SHIFT) + 1);
-+
-+	write_c0_pagemask(PM_4K);
- 	write_c0_entrylo0(0);
- 	write_c0_entrylo1(0);
- 
--	idx = 0;
--	ent = tlbsize;
--	for (i = start; i < tlbsize; i++)
--		while (1) {
--			unsigned long entryhi, vpn;
-+	asid = 0;
-+	vpn = 0;
-+	widx = 0;
-+	gidx = 0;
-+	for (sidx = 0; sidx < tlbsize && tlb_vpns[sidx].wired; sidx++)
-+		;
-+	for (lidx = sidx; lidx < tlbsize && tlb_vpns[lidx].global; lidx++)
-+		;
-+	idx = gidx = sidx + 1;
-+	for (i = sidx; i < tlbsize; i++) {
-+		unsigned long long entryhi, vpn_pagesz = 0;
- 
--			entryhi = UNIQUE_ENTRYHI(ent);
--			vpn = entryhi & vpn_mask & PAGE_MASK;
-+		while (1) {
-+			if (WARN_ON(vpn >= vpn_size)) {
-+				dump_tlb_all();
-+				/* Pray local_flush_tlb_all() will cope.  */
-+				return;
-+			}
- 
--			if (idx >= cnt || vpn < tlb_vpns[idx]) {
--				write_c0_entryhi(entryhi);
--				write_c0_index(i);
--				mtc0_tlbw_hazard();
--				tlb_write_indexed();
--				ent++;
--				break;
--			} else if (vpn == tlb_vpns[idx]) {
--				ent++;
--			} else {
-+			/* VPN must be below the next wired entry.  */
-+			if (widx < sidx && vpn >= tlb_vpns[widx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[widx].vpn +
-+					   (1ULL << tlb_vpns[widx].pagesz)));
-+				asid = 0;
-+				widx++;
-+				continue;
-+			}
-+			/* VPN must be below the next global entry.  */
-+			if (gidx < lidx && vpn >= tlb_vpns[gidx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[gidx].vpn +
-+					   (1ULL << tlb_vpns[gidx].pagesz)));
-+				asid = 0;
-+				gidx++;
-+				continue;
-+			}
-+			/* Try to find a free ASID so as to conserve VPNs.  */
-+			if (idx < tlbsize && vpn == tlb_vpns[idx].vpn &&
-+			    asid == tlb_vpns[idx].asid) {
-+				unsigned long long idx_pagesz;
-+
-+				idx_pagesz = tlb_vpns[idx].pagesz;
-+				vpn_pagesz = max(vpn_pagesz, idx_pagesz);
-+				do
-+					idx++;
-+				while (idx < tlbsize &&
-+				       vpn == tlb_vpns[idx].vpn &&
-+				       asid == tlb_vpns[idx].asid);
-+				asid++;
-+				if (asid > cpu_asid_mask(&current_cpu_data)) {
-+					vpn += vpn_pagesz;
-+					asid = 0;
-+					vpn_pagesz = 0;
-+				}
-+				continue;
-+			}
-+			/* VPN mustn't be above the next regular entry.  */
-+			if (idx < tlbsize && vpn > tlb_vpns[idx].vpn) {
-+				vpn = max(vpn,
-+					  (tlb_vpns[idx].vpn +
-+					   (1ULL << tlb_vpns[idx].pagesz)));
-+				asid = 0;
- 				idx++;
-+				continue;
- 			}
-+			break;
+ 	if (btrfs_is_testing(fs_info))
+ 		return 0;
+@@ -2526,7 +2525,7 @@ static int __btrfs_mod_ref(struct btrfs_trans_handle *trans,
+ 			else
+ 				ret = btrfs_free_extent(trans, &ref);
+ 			if (ret)
+-				goto fail;
++				return ret;
+ 		} else {
+ 			/* We don't know the owning_root, leave as 0. */
+ 			ref.bytenr = btrfs_node_blockptr(buf, i);
+@@ -2539,12 +2538,10 @@ static int __btrfs_mod_ref(struct btrfs_trans_handle *trans,
+ 			else
+ 				ret = btrfs_free_extent(trans, &ref);
+ 			if (ret)
+-				goto fail;
++				return ret;
  		}
+ 	}
+ 	return 0;
+-fail:
+-	return ret;
+ }
  
-+		entryhi = (vpn << VPN2_SHIFT) | asid;
-+		write_c0_entryhi_native(entryhi);
-+		write_c0_index(tlb_vpns[i].index);
-+		mtc0_tlbw_hazard();
-+		tlb_write_indexed();
-+
-+		tlb_vpns[i].asid = asid;
-+		tlb_vpns[i].vpn = vpn;
-+		tlb_vpns[i].pagesz = pagesz;
-+
-+		asid++;
-+		if (asid > cpu_asid_mask(&current_cpu_data)) {
-+			vpn += 1ULL << pagesz;
-+			asid = 0;
-+		}
-+	}
-+}
-+
-+/*
-+ * Initialise all TLB entries with unique values that do not clash with
-+ * what we have been handed over and what we'll be using ourselves.
-+ */
-+static void __ref r4k_tlb_uniquify(void)
-+{
-+	int tlbsize = current_cpu_data.tlbsize;
-+	bool use_slab = slab_is_available();
-+	phys_addr_t tlb_vpn_size;
-+	struct tlbent *tlb_vpns;
-+
-+	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
-+	tlb_vpns = (use_slab ?
-+		    kmalloc(tlb_vpn_size, GFP_ATOMIC) :
-+		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
-+	if (WARN_ON(!tlb_vpns))
-+		return; /* Pray local_flush_tlb_all() is good enough. */
-+
-+	htw_stop();
-+
-+	r4k_tlb_uniquify_read(tlb_vpns, tlbsize);
-+
-+	sort(tlb_vpns, tlbsize, sizeof(*tlb_vpns), r4k_entry_cmp, NULL);
-+
-+	r4k_tlb_uniquify_write(tlb_vpns, tlbsize);
-+
-+	write_c0_pagemask(PM_DEFAULT_MASK);
-+
- 	tlbw_use_hazard();
- 	htw_start();
- 	flush_micro_tlb();
+ int btrfs_inc_ref(struct btrfs_trans_handle *trans, struct btrfs_root *root,
+@@ -3466,12 +3463,12 @@ int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+ 		return 0;
+ 
+ 	if (btrfs_header_generation(buf) != trans->transid)
+-		goto out;
++		return 0;
+ 
+ 	if (root_id != BTRFS_TREE_LOG_OBJECTID) {
+ 		ret = check_ref_cleanup(trans, buf->start);
+ 		if (!ret)
+-			goto out;
++			return 0;
+ 	}
+ 
+ 	bg = btrfs_lookup_block_group(fs_info, buf->start);
+@@ -3479,7 +3476,7 @@ int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+ 	if (btrfs_header_flag(buf, BTRFS_HEADER_FLAG_WRITTEN)) {
+ 		pin_down_extent(trans, bg, buf->start, buf->len, true);
+ 		btrfs_put_block_group(bg);
+-		goto out;
++		return 0;
+ 	}
+ 
+ 	/*
+@@ -3503,7 +3500,7 @@ int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+ 		     || btrfs_is_zoned(fs_info)) {
+ 		pin_down_extent(trans, bg, buf->start, buf->len, true);
+ 		btrfs_put_block_group(bg);
+-		goto out;
++		return 0;
+ 	}
+ 
+ 	WARN_ON(test_bit(EXTENT_BUFFER_DIRTY, &buf->bflags));
+@@ -3513,7 +3510,6 @@ int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+ 	btrfs_put_block_group(bg);
+ 	trace_btrfs_reserved_extent_free(fs_info, buf->start, buf->len);
+ 
+-out:
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
