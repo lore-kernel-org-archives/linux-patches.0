@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFC9299929;
-	Mon, 13 Apr 2026 17:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84869299929;
+	Mon, 13 Apr 2026 17:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099764; cv=none; b=rwzlMqok5ehB0VWFwyWnXWLYlYIYnIWpYp/ig+g5m8sQS8EXSCOVHVqngvJ4xAUMIroE8mPMI7u6Q7xWRsHtKzHAbd18spxpch0SEgxced1RXm6S45gKV67p1vQNM7HJXnq06N9GPrbm4jYZe2WgcGUEHzf7pFJibnYLt+pr7dE=
+	t=1776099767; cv=none; b=Yzb1IMw22uGciV38BtOoLuIlmk9ZYx24nxAMVAXirQtemtxqJcWrhYlpg0u3sU4KrjizdMAmNRZA3iVTwks5iK39qIFrDNAWUyqe/Q4028GvyAbGT0J7hf4yuoRqV19AFiDiyrK86G0+pGeKaLtiTyDmTb3pTpZMjG0Kx64erVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099764; c=relaxed/simple;
-	bh=4ubvggihsjnhMKj165SwPLjwsphEQPwpNPrAu98dmj0=;
+	s=arc-20240116; t=1776099767; c=relaxed/simple;
+	bh=Jq9clcAVBZ2G/qjFakzhdTdReFr/xN1uPfivJsig+n8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3tIuXnehzlVCg6VK1CNpjaTMLomSlF7TjEoBF/5NdsIhDgZSkTJ4rEh+p+U1F7ZsUGthseuOWWXHwN6OJxdmGbwm/qaJjX5mlO0L9TMT71fEcF3sDfDlAhxkz5EjCF5f34s7I66GXSM8ykZ3NOBRSEF/g27w/hE4pgNgEvxzK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRgD8XP3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F7TqlDiH1TZPHNKdBjVSTw1oIO6HU2r+iLoC6AYzDGzQAYd7eZK2+Y4buCy5HdaxBQ56wC02dYJ5g+He/fMG8K8iYfTj/aelde0vgnQ1skAyUYybMhh0b5t1upFOSrROFWFLWj8pEJLCWCtZauSGu/bzt+t5zHGuUzrnS78DMIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3MALOmk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRgD8XP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6754EC2BCAF;
-	Mon, 13 Apr 2026 17:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3MALOmk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E84C2BCAF;
+	Mon, 13 Apr 2026 17:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099764;
-	bh=4ubvggihsjnhMKj165SwPLjwsphEQPwpNPrAu98dmj0=;
+	s=korg; t=1776099767;
+	bh=Jq9clcAVBZ2G/qjFakzhdTdReFr/xN1uPfivJsig+n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CRgD8XP3QqBV/dLZ2CmX+Q6U73UqsCrbnapeN0/YTuxXhJIyN8yeJ1ilhLvtUzbQg
-	 e9Y4pbqR/By8Itb0IFF8RpyIKjNzt6WpaN28+kGQz4mH8/Ve0ewyOCqrrHJNyGXJCp
-	 VNYZUZToixwvn7mYUSOBKydMPqyL+e+yebERAEKc=
+	b=E3MALOmk3HMKM4T2jXbSGyFFS0I6Fs6N+K/YtEqQrUbY8HcYDwbYqWSzj1wYzhtLm
+	 0HfQyGitravxsX1juwTeOJJnCTaBsxnM/HcVKBqJbJhjIvjbiIjz1x0ZFTKU05rIJw
+	 lYNZ0nBM7Q7JDzrnwDfokdP5LoBDzmnRjy3fBRVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang@linux.dev>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
+	syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	Yuto Ohnuki <ytohnuki@amazon.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 466/491] ext4: fix the might_sleep() warnings in kvfree()
-Date: Mon, 13 Apr 2026 18:01:51 +0200
-Message-ID: <20260413155836.486121737@linuxfoundation.org>
+Subject: [PATCH 5.10 467/491] xfs: save ailp before dropping the AIL lock in push callbacks
+Date: Mon, 13 Apr 2026 18:01:52 +0200
+Message-ID: <20260413155836.524464184@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,161 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Yuto Ohnuki <ytohnuki@amazon.com>
 
-[ Upstream commit 496bb99b7e66f48b178126626f47e9ba79e2d0fa ]
+[ Upstream commit 394d70b86fae9fe865e7e6d9540b7696f73aa9b6 ]
 
-Use the kvfree() in the RCU read critical section can trigger
-the following warnings:
+In xfs_inode_item_push() and xfs_qm_dquot_logitem_push(), the AIL lock
+is dropped to perform buffer IO. Once the cluster buffer no longer
+protects the log item from reclaim, the log item may be freed by
+background reclaim or the dquot shrinker. The subsequent spin_lock()
+call dereferences lip->li_ailp, which is a use-after-free.
 
-EXT4-fs (vdb): unmounting filesystem cd983e5b-3c83-4f5a-a136-17b00eb9d018.
+Fix this by saving the ailp pointer in a local variable while the AIL
+lock is held and the log item is guaranteed to be valid.
 
-WARNING: suspicious RCU usage
-
-./include/linux/rcupdate.h:409 Illegal context switch in RCU read-side critical section!
-
-other info that might help us debug this:
-
-rcu_scheduler_active = 2, debug_locks = 1
-
-Call Trace:
- <TASK>
- dump_stack_lvl+0xbb/0xd0
- dump_stack+0x14/0x20
- lockdep_rcu_suspicious+0x15a/0x1b0
- __might_resched+0x375/0x4d0
- ? put_object.part.0+0x2c/0x50
- __might_sleep+0x108/0x160
- vfree+0x58/0x910
- ? ext4_group_desc_free+0x27/0x270
- kvfree+0x23/0x40
- ext4_group_desc_free+0x111/0x270
- ext4_put_super+0x3c8/0xd40
- generic_shutdown_super+0x14c/0x4a0
- ? __pfx_shrinker_free+0x10/0x10
- kill_block_super+0x40/0x90
- ext4_kill_sb+0x6d/0xb0
- deactivate_locked_super+0xb4/0x180
- deactivate_super+0x7e/0xa0
- cleanup_mnt+0x296/0x3e0
- __cleanup_mnt+0x16/0x20
- task_work_run+0x157/0x250
- ? __pfx_task_work_run+0x10/0x10
- ? exit_to_user_mode_loop+0x6a/0x550
- exit_to_user_mode_loop+0x102/0x550
- do_syscall_64+0x44a/0x500
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-BUG: sleeping function called from invalid context at mm/vmalloc.c:3441
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 556, name: umount
-preempt_count: 1, expected: 0
-CPU: 3 UID: 0 PID: 556 Comm: umount
-Call Trace:
- <TASK>
- dump_stack_lvl+0xbb/0xd0
- dump_stack+0x14/0x20
- __might_resched+0x275/0x4d0
- ? put_object.part.0+0x2c/0x50
- __might_sleep+0x108/0x160
- vfree+0x58/0x910
- ? ext4_group_desc_free+0x27/0x270
- kvfree+0x23/0x40
- ext4_group_desc_free+0x111/0x270
- ext4_put_super+0x3c8/0xd40
- generic_shutdown_super+0x14c/0x4a0
- ? __pfx_shrinker_free+0x10/0x10
- kill_block_super+0x40/0x90
- ext4_kill_sb+0x6d/0xb0
- deactivate_locked_super+0xb4/0x180
- deactivate_super+0x7e/0xa0
- cleanup_mnt+0x296/0x3e0
- __cleanup_mnt+0x16/0x20
- task_work_run+0x157/0x250
- ? __pfx_task_work_run+0x10/0x10
- ? exit_to_user_mode_loop+0x6a/0x550
- exit_to_user_mode_loop+0x102/0x550
- do_syscall_64+0x44a/0x500
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-The above scenarios occur in initialization failures and teardown
-paths, there are no parallel operations on the resources released
-by kvfree(), this commit therefore remove rcu_read_lock/unlock() and
-use rcu_access_pointer() instead of rcu_dereference() operations.
-
-Fixes: 7c990728b99e ("ext4: fix potential race between s_flex_groups online resizing and access")
-Fixes: df3da4ea5a0f ("ext4: fix potential race between s_group_info online resizing and access")
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260319094545.19291-1-qiang.zhang@linux.dev
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ adapted inline rcu_read_lock/rcu_dereference/rcu_read_unlock removal ]
+Reported-by: syzbot+652af2b3c5569c4ab63c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=652af2b3c5569c4ab63c
+Fixes: 90c60e164012 ("xfs: xfs_iflush() is no longer necessary")
+Cc: stable@vger.kernel.org # v5.9
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   10 +++-------
- fs/ext4/super.c   |    6 ++----
- 2 files changed, 5 insertions(+), 11 deletions(-)
+ fs/xfs/xfs_dquot_item.c |    9 +++++++--
+ fs/xfs/xfs_inode_item.c |    9 +++++++--
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -2894,9 +2894,7 @@ err_freebuddy:
- 	rcu_read_unlock();
- 	iput(sbi->s_buddy_cache);
- err_freesgi:
--	rcu_read_lock();
--	kvfree(rcu_dereference(sbi->s_group_info));
--	rcu_read_unlock();
-+	kvfree(rcu_access_pointer(sbi->s_group_info));
- 	return -ENOMEM;
+--- a/fs/xfs/xfs_dquot_item.c
++++ b/fs/xfs/xfs_dquot_item.c
+@@ -124,6 +124,7 @@ xfs_qm_dquot_logitem_push(
+ {
+ 	struct xfs_dquot	*dqp = DQUOT_ITEM(lip)->qli_dquot;
+ 	struct xfs_buf		*bp = lip->li_buf;
++	struct xfs_ail		*ailp = lip->li_ailp;
+ 	uint			rval = XFS_ITEM_SUCCESS;
+ 	int			error;
+ 
+@@ -152,7 +153,7 @@ xfs_qm_dquot_logitem_push(
+ 		goto out_unlock;
+ 	}
+ 
+-	spin_unlock(&lip->li_ailp->ail_lock);
++	spin_unlock(&ailp->ail_lock);
+ 
+ 	error = xfs_qm_dqflush(dqp, &bp);
+ 	if (!error) {
+@@ -162,7 +163,11 @@ xfs_qm_dquot_logitem_push(
+ 	} else if (error == -EAGAIN)
+ 		rval = XFS_ITEM_LOCKED;
+ 
+-	spin_lock(&lip->li_ailp->ail_lock);
++	/*
++	 * The buffer no longer protects the log item from reclaim, so
++	 * do not reference lip after this point.
++	 */
++	spin_lock(&ailp->ail_lock);
+ out_unlock:
+ 	xfs_dqunlock(dqp);
+ 	return rval;
+--- a/fs/xfs/xfs_inode_item.c
++++ b/fs/xfs/xfs_inode_item.c
+@@ -514,6 +514,7 @@ xfs_inode_item_push(
+ 	struct xfs_inode_log_item *iip = INODE_ITEM(lip);
+ 	struct xfs_inode	*ip = iip->ili_inode;
+ 	struct xfs_buf		*bp = lip->li_buf;
++	struct xfs_ail		*ailp = lip->li_ailp;
+ 	uint			rval = XFS_ITEM_SUCCESS;
+ 	int			error;
+ 
+@@ -529,7 +530,7 @@ xfs_inode_item_push(
+ 	if (!xfs_buf_trylock(bp))
+ 		return XFS_ITEM_LOCKED;
+ 
+-	spin_unlock(&lip->li_ailp->ail_lock);
++	spin_unlock(&ailp->ail_lock);
+ 
+ 	/*
+ 	 * We need to hold a reference for flushing the cluster buffer as it may
+@@ -553,7 +554,11 @@ xfs_inode_item_push(
+ 		rval = XFS_ITEM_LOCKED;
+ 	}
+ 
+-	spin_lock(&lip->li_ailp->ail_lock);
++	/*
++	 * The buffer no longer protects the log item from reclaim, so
++	 * do not reference lip after this point.
++	 */
++	spin_lock(&ailp->ail_lock);
+ 	return rval;
  }
  
-@@ -3088,7 +3086,8 @@ int ext4_mb_release(struct super_block *
- 	struct kmem_cache *cachep = get_groupinfo_cache(sb->s_blocksize_bits);
- 	int count;
- 
--	if (sbi->s_group_info) {
-+	group_info = rcu_access_pointer(sbi->s_group_info);
-+	if (group_info) {
- 		for (i = 0; i < ngroups; i++) {
- 			cond_resched();
- 			grinfo = ext4_get_group_info(sb, i);
-@@ -3106,12 +3105,9 @@ int ext4_mb_release(struct super_block *
- 		num_meta_group_infos = (ngroups +
- 				EXT4_DESC_PER_BLOCK(sb) - 1) >>
- 			EXT4_DESC_PER_BLOCK_BITS(sb);
--		rcu_read_lock();
--		group_info = rcu_dereference(sbi->s_group_info);
- 		for (i = 0; i < num_meta_group_infos; i++)
- 			kfree(group_info[i]);
- 		kvfree(group_info);
--		rcu_read_unlock();
- 	}
- 	kfree(sbi->s_mb_offsets);
- 	kfree(sbi->s_mb_maxs);
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1207,18 +1207,16 @@ static void ext4_put_super(struct super_
- 	if (!sb_rdonly(sb))
- 		ext4_commit_super(sb, 1);
- 
--	rcu_read_lock();
--	group_desc = rcu_dereference(sbi->s_group_desc);
-+	group_desc = rcu_access_pointer(sbi->s_group_desc);
- 	for (i = 0; i < sbi->s_gdb_count; i++)
- 		brelse(group_desc[i]);
- 	kvfree(group_desc);
--	flex_groups = rcu_dereference(sbi->s_flex_groups);
-+	flex_groups = rcu_access_pointer(sbi->s_flex_groups);
- 	if (flex_groups) {
- 		for (i = 0; i < sbi->s_flex_groups_allocated; i++)
- 			kvfree(flex_groups[i]);
- 		kvfree(flex_groups);
- 	}
--	rcu_read_unlock();
- 	percpu_counter_destroy(&sbi->s_freeclusters_counter);
- 	percpu_counter_destroy(&sbi->s_freeinodes_counter);
- 	percpu_counter_destroy(&sbi->s_dirs_counter);
 
 
