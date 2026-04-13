@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547E224DCF6;
-	Mon, 13 Apr 2026 16:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACC12EBB8C;
+	Mon, 13 Apr 2026 16:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097098; cv=none; b=Fs/DSB4CWIfQHYdwvQJE4zuFyKASTAMc6jmcqu/uA6JvgV1iiWA/g9+D6yJTTKtSGg6KhWPzF4JC4hXQorh9Vvv/zht6GJ6Qq+RE69qqhGwAV7YiqTSVtzdob2nTR1WcmQTckRNdKN03Aus3eHdyuhw8oXukHfaAmcHYlOPfpL4=
+	t=1776097100; cv=none; b=YpChYke9TlxbvaUTpq910cMr06pMbg4TJPgH8j5ElWTkSlT30tpT2bl6zxkF4PFM0upJudQdJoWpDi3ojZwRAY+SExlPRueJxpvbxsPMc5nKI9qzmJXaJjuIoCFiMmzZbIIvwu6HlrBwUYjMYlru4gRrTZBDWIYzezdGyFdsbuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097098; c=relaxed/simple;
-	bh=jASsFZjtrpIAkY6PpCzbMXhWN3my2D4iBNbQJqYKrfk=;
+	s=arc-20240116; t=1776097100; c=relaxed/simple;
+	bh=iZiZTWguWpIhP6O74iW4SP/58ORmlvHNlGQ+5lQCbsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rVVD5k5aUlv4biTfpmIlOFQsN1vMRn1Ul3KKBwcnrcQg5o97g7NiAjhOP5ImBBdugeNa+1hH4YhYIIqg2ayJiEr3S6PItnGqV0GJGctBuIyn6bcFujPx3Im9c7Pl2hJLKUjyGQFV8Y1JZLERn6OtSaH1X/6IpZPmwZG8ZMZb+Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afVe+Htw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqANDV7lpSj/1q+LQ7+HLvK+4Pf8zDNgwoeh9lbFlIT5z/hFFF2/YCyF30DDLq/7aQ6sO8OSVa5GvlP+FnDQcAOizFUgW0VZA6qw8CoJi6wT8mpj34kU4IOOz3H5kSw3/jHp2LuBdX5vOhhJ70cTENJ2jrRyC+wcPdpfpMgMwEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcZccmc9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afVe+Htw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB8BC2BCAF;
-	Mon, 13 Apr 2026 16:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcZccmc9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723D1C2BCAF;
+	Mon, 13 Apr 2026 16:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097098;
-	bh=jASsFZjtrpIAkY6PpCzbMXhWN3my2D4iBNbQJqYKrfk=;
+	s=korg; t=1776097100;
+	bh=iZiZTWguWpIhP6O74iW4SP/58ORmlvHNlGQ+5lQCbsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afVe+Htw7GWF4p7f4kzuR2MEqMLIZtXGU5yOOTXv5Ffyl76KsXbtA7uJqKwBmQcyp
-	 I/4O0iA0W2NtDDaYJC2qcgC2P1AD8CjYWG1cOgVEet9jnCTIcbvzd0OeUbSgIpG89O
-	 ZBsVQYAIgU6ua74GyZZKsdSHfxctHb4cLAFmoa9M=
+	b=pcZccmc981eHTTAu6topCy1T6tyXSWbdGP1EwMVUpMIm8P3oj5J1XXGTAT/J5r5jR
+	 iRyxqU4NhUs9/1c6EEbGb/NMiq/McRJdiohs2yfU12k/bGxJUe0I3qHgi9I372woV7
+	 BN9Ac7b2Wv8yyDhIsP/5fe+llsrtYqYXEbvylo4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 54/55] rxrpc: Fix key/keyring checks in setsockopt(RXRPC_SECURITY_KEY/KEYRING)
-Date: Mon, 13 Apr 2026 18:01:28 +0200
-Message-ID: <20260413155726.848189961@linuxfoundation.org>
+	John Hancock <john@kernel.doghat.io>,
+	bjorn.forsman@gmail.com,
+	Linux kernel regressions list <regressions@lists.linux.dev>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: [PATCH 6.1 55/55] Revert "PCI: Enable ACS after configuring IOMMU for OF platforms"
+Date: Mon, 13 Apr 2026 18:01:29 +0200
+Message-ID: <20260413155726.884698810@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 References: <20260413155724.820472494@linuxfoundation.org>
@@ -57,87 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-commit 2afd86ccbb2082a3c4258aea8c07e5bb6267bc2f upstream.
+This reverts commit 5d57164c0ab0ac5c99eca49c577994bfbca70a2a which is
+commit c41e2fb67e26b04d919257875fa954aa5f6e392e upstream.
 
-An AF_RXRPC socket can be both client and server at the same time.  When
-sending new calls (ie. it's acting as a client), it uses rx->key to set the
-security, and when accepting incoming calls (ie. it's acting as a server),
-it uses rx->securities.
+The original commit attempted to enable ACS in pci_dma_configure() prior
+to IOMMU group assignment in iommu_init_device() to fix the ACS enablement
+issue for OF platforms. But that assumption doesn't hold true for kernel
+versions prior to v6.15, because on these older kernels,
+pci_dma_configure() is called *after* iommu_init_device(). So the IOMMU
+groups are already created before the ACS gets enabled. This causes the
+devices that should have been split into separate groups by ACS, getting
+merged into one group, thereby breaking the IOMMU isolation as reported on
+the AMD machines.
 
-setsockopt(RXRPC_SECURITY_KEY) sets rx->key to point to an rxrpc-type key
-and setsockopt(RXRPC_SECURITY_KEYRING) sets rx->securities to point to a
-keyring of rxrpc_s-type keys.
+So revert the offending commit to restore the IOMMU group assignment on
+those affected machines. It should be noted that ACS has never really
+worked on kernel versions prior to v6.15, so the revert doesn't make any
+difference for OF platforms.
 
-Now, it should be possible to use both rx->key and rx->securities on the
-same socket - but for userspace AF_RXRPC sockets rxrpc_setsockopt()
-prevents that.
-
-Fix this by:
-
- (1) Remove the incorrect check rxrpc_setsockopt(RXRPC_SECURITY_KEYRING)
-     makes on rx->key.
-
- (2) Move the check that rxrpc_setsockopt(RXRPC_SECURITY_KEY) makes on
-     rx->key down into rxrpc_request_key().
-
- (3) Remove rxrpc_request_key()'s check on rx->securities.
-
-This (in combination with a previous patch) pushes the checks down into the
-functions that set those pointers and removes the cross-checks that prevent
-both key and keyring being set.
-
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Closes: https://sashiko.dev/#/patchset/20260401105614.1696001-10-dhowells@redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Anderson Nascimento <anderson@allelesecurity.com>
-cc: Luxiao Xu <rakukuip@gmail.com>
-cc: Yuan Tan <yuantan098@gmail.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-16-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: John Hancock <john@kernel.doghat.io>
+Reported-by: bjorn.forsman@gmail.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221234
+Fixes: b20b659c2c6a ("PCI: Enable ACS after configuring IOMMU for OF platforms")
+Cc: Linux kernel regressions list <regressions@lists.linux.dev>
+Link: https://lore.kernel.org/regressions/2c30f181-ffc6-4d63-a64e-763cf4528f48@leemhuis.info
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/af_rxrpc.c |    6 ------
- net/rxrpc/key.c      |    2 +-
- 2 files changed, 1 insertion(+), 7 deletions(-)
+ drivers/pci/pci-driver.c |    8 --------
+ drivers/pci/pci.c        |   10 +++++++++-
+ drivers/pci/pci.h        |    1 -
+ 3 files changed, 9 insertions(+), 10 deletions(-)
 
---- a/net/rxrpc/af_rxrpc.c
-+++ b/net/rxrpc/af_rxrpc.c
-@@ -615,9 +615,6 @@ static int rxrpc_setsockopt(struct socke
- 			goto success;
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -1667,14 +1667,6 @@ static int pci_dma_configure(struct devi
+ 		ret = acpi_dma_configure(dev, acpi_get_dma_attr(adev));
+ 	}
  
- 		case RXRPC_SECURITY_KEY:
--			ret = -EINVAL;
--			if (rx->key)
--				goto error;
- 			ret = -EISCONN;
- 			if (rx->sk.sk_state != RXRPC_UNBOUND)
- 				goto error;
-@@ -625,9 +622,6 @@ static int rxrpc_setsockopt(struct socke
- 			goto error;
+-	/*
+-	 * Attempt to enable ACS regardless of capability because some Root
+-	 * Ports (e.g. those quirked with *_intel_pch_acs_*) do not have
+-	 * the standard ACS capability but still support ACS via those
+-	 * quirks.
+-	 */
+-	pci_enable_acs(to_pci_dev(dev));
+-
+ 	pci_put_host_bridge_device(bridge);
  
- 		case RXRPC_SECURITY_KEYRING:
--			ret = -EINVAL;
--			if (rx->key)
--				goto error;
- 			ret = -EISCONN;
- 			if (rx->sk.sk_state != RXRPC_UNBOUND)
- 				goto error;
---- a/net/rxrpc/key.c
-+++ b/net/rxrpc/key.c
-@@ -452,7 +452,7 @@ int rxrpc_request_key(struct rxrpc_sock
+ 	if (!ret && !driver->driver_managed_dma) {
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -1040,7 +1040,7 @@ static void pci_std_enable_acs(struct pc
+  * pci_enable_acs - enable ACS if hardware support it
+  * @dev: the PCI device
+  */
+-void pci_enable_acs(struct pci_dev *dev)
++static void pci_enable_acs(struct pci_dev *dev)
+ {
+ 	if (!pci_acs_enable)
+ 		goto disable_acs_redir;
+@@ -3777,6 +3777,14 @@ bool pci_acs_path_enabled(struct pci_dev
+ void pci_acs_init(struct pci_dev *dev)
+ {
+ 	dev->acs_cap = pci_find_ext_capability(dev, PCI_EXT_CAP_ID_ACS);
++
++	/*
++	 * Attempt to enable ACS regardless of capability because some Root
++	 * Ports (e.g. those quirked with *_intel_pch_acs_*) do not have
++	 * the standard ACS capability but still support ACS via those
++	 * quirks.
++	 */
++	pci_enable_acs(dev);
+ }
  
- 	_enter("");
+ /**
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -526,7 +526,6 @@ static inline resource_size_t pci_resour
+ }
  
--	if (optlen <= 0 || optlen > PAGE_SIZE - 1 || rx->securities)
-+	if (optlen <= 0 || optlen > PAGE_SIZE - 1 || rx->key)
- 		return -EINVAL;
- 
- 	description = memdup_sockptr_nul(optval, optlen);
+ void pci_acs_init(struct pci_dev *dev);
+-void pci_enable_acs(struct pci_dev *dev);
+ #ifdef CONFIG_PCI_QUIRKS
+ int pci_dev_specific_acs_enabled(struct pci_dev *dev, u16 acs_flags);
+ int pci_dev_specific_enable_acs(struct pci_dev *dev);
 
 
