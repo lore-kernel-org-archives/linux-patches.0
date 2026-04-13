@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367723161AB;
-	Mon, 13 Apr 2026 16:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9845313298;
+	Mon, 13 Apr 2026 16:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098975; cv=none; b=RvkGCWT7HScSjsbKr4mCGQlJq91QPRTIe93P2pjoBhsBUxvFkpcgShGiZrCAFCbM6wGmgLwahrWzwYiQ0QGv/t7+Je7+Cv8YE65YQGmlqC3rDFJOhJrXgNGUItSQxDXC/dIDD65TBvOihQpCmNQcpgso+gpnYSLSoH/K1PkcveE=
+	t=1776098977; cv=none; b=vGo3mf2rvbYSbqHYFFdJOR0gCX8y0KiDzbT7BfTz+nGb9pHpmSI4FBnxcPXSDmIGCNuxgPxrexb8SCrgWXN9mVQunAe3m3VHNRjd1SW2XUuzoRArjBYZOxkRJ7KJHpoDi6/pZgml1AlLyiFcQeyknx7sCZ2Kui2tPxa8ZMl+aHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098975; c=relaxed/simple;
-	bh=PyeYQtwAZJaTc/BQrsHgtlW7XdSWVSKD25J8zILHCo4=;
+	s=arc-20240116; t=1776098977; c=relaxed/simple;
+	bh=h0iQOVaSIW7tAuvolL0kGO4RiR/HFLFpvDZuNciQUgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TbA6Zy5PCPx5m8lx9ACxyqS/iaQWibtfJ0Nnd+/opWDkE0HfyHiY9zJ7EkWgtA+7SAznev9JmLtZbZkDZz+qMCaICahF76v+q/5JPIC3C9ZMPv90FYqxzuajqyma4Vx7QzJu27R3ztCX2I9yHWIe+5BrIi6ISWPGIxaoCcLEXWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUkqixk3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ubbyXwfEQjMqFTxoE5tOfw0Hb7T2IsQqAnWzJakfixZnOHP4DCPojnUHtaCZ6vuC+FzkMSD8L0EBnz2gPkhhtVpxbvxN74AyyER3Yy6Rex20/vUqQjAGExBt7CBDZukKD9FUzAXfVACUe+vdZ4BNu6lgueM+kHdE+fTB2AtXrVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOG2B7Kb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUkqixk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC397C2BCAF;
-	Mon, 13 Apr 2026 16:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOG2B7Kb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7AFC2BCAF;
+	Mon, 13 Apr 2026 16:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098975;
-	bh=PyeYQtwAZJaTc/BQrsHgtlW7XdSWVSKD25J8zILHCo4=;
+	s=korg; t=1776098977;
+	bh=h0iQOVaSIW7tAuvolL0kGO4RiR/HFLFpvDZuNciQUgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUkqixk3gN3dLA8iGeAQ/IdRxfBx0q4cS+wIgUwSmVUVvE3thzguoFrfhi52oy6qn
-	 /CHujnEGDwUoeraO6z1HPrB7gn5SwQEh4Vz040qAaRH+JSfSBkROXYxohdEN2pq8vU
-	 24hVLXTxXyfkmw8mjCcThg9v//9ddUmu6je7I2TA=
+	b=gOG2B7KbRr5+P35kJRfuvFi14VlCv44/QwVXzo1L70gk/ouqhZ18t+gdzsUzMILfY
+	 q5em6vMYn8bwQ+4QNkjVTMSmSr1yzpShYrEN76xymz8/osE6x0443nq2xIoD50+cEL
+	 mD07if8ILP+YCj4NaeOIfNIxV4peYAbdFnRJP9+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Igor Pylypiv <ipylypiv@google.com>,
+	Daniel Hodges <git@danielhodges.dev>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 161/491] ata: libata-scsi: refactor ata_scsi_translate()
-Date: Mon, 13 Apr 2026 17:56:46 +0200
-Message-ID: <20260413155825.063751787@linuxfoundation.org>
+Subject: [PATCH 5.10 162/491] wifi: libertas: fix use-after-free in lbs_free_adapter()
+Date: Mon, 13 Apr 2026 17:56:47 +0200
+Message-ID: <20260413155825.102187063@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -54,160 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Daniel Hodges <git@danielhodges.dev>
 
-[ Upstream commit bb3a8154b1a1dc2c86d037482c0a2cf9186829ed ]
+[ Upstream commit 03cc8f90d0537fcd4985c3319b4fafbf2e3fb1f0 ]
 
-Factor out of ata_scsi_translate() the code handling queued command
-deferral using the port qc_defer callback and issuing the queued
-command with ata_qc_issue() into the new function ata_scsi_qc_issue(),
-and simplify the goto used in ata_scsi_translate().
-While at it, also add a lockdep annotation to check that the port lock
-is held when ata_scsi_translate() is called.
+The lbs_free_adapter() function uses timer_delete() (non-synchronous)
+for both command_timer and tx_lockup_timer before the structure is
+freed. This is incorrect because timer_delete() does not wait for
+any running timer callback to complete.
 
-No functional changes.
+If a timer callback is executing when lbs_free_adapter() is called,
+the callback will access freed memory since lbs_cfg_free() frees the
+containing structure immediately after lbs_free_adapter() returns.
 
+Both timer callbacks (lbs_cmd_timeout_handler and lbs_tx_lockup_handler)
+access priv->driver_lock, priv->cur_cmd, priv->dev, and other fields,
+which would all be use-after-free violations.
+
+Use timer_delete_sync() instead to ensure any running timer callback
+has completed before returning.
+
+This bug was introduced in commit 8f641d93c38a ("libertas: detect TX
+lockups and reset hardware") where del_timer() was used instead of
+del_timer_sync() in the cleanup path. The command_timer has had the
+same issue since the driver was first written.
+
+Fixes: 8f641d93c38a ("libertas: detect TX lockups and reset hardware")
+Fixes: 954ee164f4f4 ("[PATCH] libertas: reorganize and simplify init sequence")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
-[ scsi_done(cmd) => cmd->scsi_done(cmd) + DPRINTK ]
+Signed-off-by: Daniel Hodges <git@danielhodges.dev>
+Link: https://patch.msgid.link/20260206195356.15647-1-git@danielhodges.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ del_timer() => timer_delete_sync() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |   83 +++++++++++++++++++++++++++-------------------
- 1 file changed, 50 insertions(+), 33 deletions(-)
+ drivers/net/wireless/marvell/libertas/main.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1668,6 +1668,42 @@ static void ata_scsi_qc_complete(struct
- 	ata_qc_done(qc);
- }
- 
-+static int ata_scsi_qc_issue(struct ata_port *ap, struct ata_queued_cmd *qc)
-+{
-+	int ret;
-+
-+	if (!ap->ops->qc_defer)
-+		goto issue;
-+
-+	/* Check if the command needs to be deferred. */
-+	ret = ap->ops->qc_defer(qc);
-+	switch (ret) {
-+	case 0:
-+		break;
-+	case ATA_DEFER_LINK:
-+		ret = SCSI_MLQUEUE_DEVICE_BUSY;
-+		break;
-+	case ATA_DEFER_PORT:
-+		ret = SCSI_MLQUEUE_HOST_BUSY;
-+		break;
-+	default:
-+		WARN_ON_ONCE(1);
-+		ret = SCSI_MLQUEUE_HOST_BUSY;
-+		break;
-+	}
-+
-+	if (ret) {
-+		/* Force a requeue of the command to defer its execution. */
-+		ata_qc_free(qc);
-+		return ret;
-+	}
-+
-+issue:
-+	ata_qc_issue(qc);
-+
-+	return 0;
-+}
-+
- /**
-  *	ata_scsi_translate - Translate then issue SCSI command to ATA device
-  *	@dev: ATA device to which the command is addressed
-@@ -1691,69 +1727,50 @@ static void ata_scsi_qc_complete(struct
-  *	spin_lock_irqsave(host lock)
-  *
-  *	RETURNS:
-- *	0 on success, SCSI_ML_QUEUE_DEVICE_BUSY if the command
-- *	needs to be deferred.
-+ *	0 on success, SCSI_ML_QUEUE_DEVICE_BUSY or SCSI_MLQUEUE_HOST_BUSY if the
-+ *	command needs to be deferred.
-  */
- static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- 			      ata_xlat_func_t xlat_func)
+--- a/drivers/net/wireless/marvell/libertas/main.c
++++ b/drivers/net/wireless/marvell/libertas/main.c
+@@ -882,8 +882,8 @@ static void lbs_free_adapter(struct lbs_
  {
- 	struct ata_port *ap = dev->link->ap;
- 	struct ata_queued_cmd *qc;
--	int rc;
- 
-+	lockdep_assert_held(ap->lock);
-+
-+	/*
-+	 * ata_scsi_qc_new() calls scsi_done(cmd) in case of failure. So we
-+	 * have nothing further to do when allocating a qc fails.
-+	 */
- 	qc = ata_scsi_qc_new(dev, cmd);
- 	if (!qc)
--		goto err_mem;
-+		return 0;
- 
- 	/* data is present; dma-map it */
- 	if (cmd->sc_data_direction == DMA_FROM_DEVICE ||
- 	    cmd->sc_data_direction == DMA_TO_DEVICE) {
- 		if (unlikely(scsi_bufflen(cmd) < 1)) {
- 			ata_dev_warn(dev, "WARNING: zero len r/w req\n");
--			goto err_did;
-+			cmd->result = (DID_ERROR << 16);
-+			goto done;
- 		}
- 
- 		ata_sg_init(qc, scsi_sglist(cmd), scsi_sg_count(cmd));
--
- 		qc->dma_dir = cmd->sc_data_direction;
- 	}
- 
- 	qc->complete_fn = ata_scsi_qc_complete;
- 
- 	if (xlat_func(qc))
--		goto early_finish;
--
--	if (ap->ops->qc_defer) {
--		if ((rc = ap->ops->qc_defer(qc)))
--			goto defer;
--	}
-+		goto done;
- 
--	/* select device, send command to hardware */
--	ata_qc_issue(qc);
--
--	return 0;
-+	return ata_scsi_qc_issue(ap, qc);
- 
--early_finish:
-+done:
- 	ata_qc_free(qc);
- 	cmd->scsi_done(cmd);
- 	DPRINTK("EXIT - early finish (good or error)\n");
- 	return 0;
--
--err_did:
--	ata_qc_free(qc);
--	cmd->result = (DID_ERROR << 16);
--	cmd->scsi_done(cmd);
--err_mem:
--	DPRINTK("EXIT - internal\n");
--	return 0;
--
--defer:
--	ata_qc_free(qc);
--	DPRINTK("EXIT - defer\n");
--	if (rc == ATA_DEFER_LINK)
--		return SCSI_MLQUEUE_DEVICE_BUSY;
--	else
--		return SCSI_MLQUEUE_HOST_BUSY;
+ 	lbs_free_cmd_buffer(priv);
+ 	kfifo_free(&priv->event_fifo);
+-	del_timer(&priv->command_timer);
+-	del_timer(&priv->tx_lockup_timer);
++	timer_delete_sync(&priv->command_timer);
++	timer_delete_sync(&priv->tx_lockup_timer);
+ 	del_timer(&priv->auto_deepsleep_timer);
  }
  
- struct ata_scsi_args {
 
 
