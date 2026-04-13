@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB6C3161BF;
-	Mon, 13 Apr 2026 16:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEDB317141;
+	Mon, 13 Apr 2026 16:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099050; cv=none; b=TS2VQs9w6isT+4Iec3akkEr3bSMJVjEfcIbuQPLKglCgyNmKs2qy4WFdq2v2FL9VKdHz18VZdyqFO9XqMIDzZfoMQiH2V0iowurSmNPFdLcGFp46R5dubQpBQPvgKEaoHY/1CMmciIJjeQWxqgvsxV0Aa0iq7OScYRr1/crBZHY=
+	t=1776099052; cv=none; b=b/kQUwoNZqfQwRFwQlW95+wTQukn3Xav/6TzYPD5a1FgBPcT3Vhphr7X+yTtTtgwRZFDOayFBLolwOl6uQ78ZUpgeKa9ydGm5hSP6+YGqUJ90wfcs7P0jcnRql9kkfWMQsce0uyCCqJYQm5TSK/3P1bArVwB+xdQKDKbhrG+ZdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099050; c=relaxed/simple;
-	bh=wvlmGNcqnuPBLi7Zu7n7HtTfo/LUrx+Vz9DKtkpRt0I=;
+	s=arc-20240116; t=1776099052; c=relaxed/simple;
+	bh=WSj+ymx5OkN2/MPxcfBWk1DbSpWm/gVAbVcBC/S320g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RzpjcOzrgmv8fwYxI71K2obCFCVrAVEqmONbMEFWdliI+7K0v5b62TdFNlVctVqDHqnQWjxl9PDb8tu1X6X27vcfr7eoX8Cp0spYT0X2l+H1vlecUrlLNbPaMk9Nohl308d/MgeIf66Tgw5JalxMPtdMRqRKYFBin9W9s+6uj2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+LiJDSV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FZ67K8eyd7okKtArZb7NlHqrGcsE60BLC46djE6TVQ3H0lDGHAAOrz2JlQgDf0JddxJMC0geXb3uSau30qwfEnMusyBRZjDuzTVZcfqnml1aC4wQUco00AU6xFGg/hY6PgB+iGanzELP94PIbHZuV9ex2EzPsd6U1gyyGUicSAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXWsOGyM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+LiJDSV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B27C2BCAF;
-	Mon, 13 Apr 2026 16:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXWsOGyM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F15C2BCAF;
+	Mon, 13 Apr 2026 16:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099049;
-	bh=wvlmGNcqnuPBLi7Zu7n7HtTfo/LUrx+Vz9DKtkpRt0I=;
+	s=korg; t=1776099052;
+	bh=WSj+ymx5OkN2/MPxcfBWk1DbSpWm/gVAbVcBC/S320g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q+LiJDSVdh7rdwx28ZBCzkD3yrOa9PF4ttRf8/aKwVA01yg7l/UVDTDUESe3Dg9eE
-	 sIRBgj+ycVdar3YaGU+BbVVHEJEqt7GgtZsM6cjJxLua2m9gsDPR/upMNwu2ogehQj
-	 Q+ZT6xQ6UJJgsONkIytxOV0sbC0CVemumhcOvaEQ=
+	b=jXWsOGyMuDvCbJdNtsMq1ZmV5zPFPJ3A47/dzVEBMl1he/Su1TexNYRkrocRqxmst
+	 6FDWMSFvfBpjpp0I+nUcvlyLCGmaEFXIFPu26D2Aarj0xZo+68H042tjlGMFpc9wv5
+	 /VeRxA24CfceAHMUiZDT9M8iNwY27c0gFJT8yVYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 191/491] can: gs_usb: gs_can_open(): always configure bitrates before starting device
-Date: Mon, 13 Apr 2026 17:57:16 +0200
-Message-ID: <20260413155826.219285216@linuxfoundation.org>
+Subject: [PATCH 5.10 192/491] KVM: SVM: Initialize AVIC VMCB fields if AVIC is enabled with in-kernel APIC
+Date: Mon, 13 Apr 2026 17:57:17 +0200
+Message-ID: <20260413155826.257190686@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,81 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 2df6162785f31f1bbb598cfc3b08e4efc88f80b6 ]
+[ Upstream commit 3989a6d036c8ec82c0de3614bed23a1dacd45de5 ]
 
-So far the driver populated the struct can_priv::do_set_bittiming() and
-struct can_priv::fd::do_set_data_bittiming() callbacks.
+Initialize all per-vCPU AVIC control fields in the VMCB if AVIC is enabled
+in KVM and the VM has an in-kernel local APIC, i.e. if it's _possible_ the
+vCPU could activate AVIC at any point in its lifecycle.  Configuring the
+VMCB if and only if AVIC is active "works" purely because of optimizations
+in kvm_create_lapic() to speculatively set apicv_active if AVIC is enabled
+*and* to defer updates until the first KVM_RUN.  In quotes because KVM
+likely won't do the right thing if kvm_apicv_activated() is false, i.e. if
+a vCPU is created while APICv is inhibited at the VM level for whatever
+reason.  E.g. if the inhibit is *removed* before KVM_REQ_APICV_UPDATE is
+handled in KVM_RUN, then __kvm_vcpu_update_apicv() will elide calls to
+vendor code due to seeing "apicv_active == activate".
 
-Before bringing up the interface, user space has to configure the bitrates.
-With these callbacks the configuration is directly forwarded into the CAN
-hardware. Then the interface can be brought up.
-
-An ifdown-ifup cycle (without changing the bit rates) doesn't re-configure
-the bitrates in the CAN hardware. This leads to a problem with the
-CANable-2.5 [1] firmware, which resets the configured bit rates during
-ifdown.
-
-To fix the problem remove both bit timing callbacks and always configure
-the bitrates in the struct net_device_ops::ndo_open() callback.
-
-[1] https://github.com/Elmue/CANable-2.5-firmware-Slcan-and-Candlelight
+Cleaning up the initialization code will also allow fixing a bug where KVM
+incorrectly leaves CR8 interception enabled when AVIC is activated without
+creating a mess with respect to whether AVIC is activated or not.
 
 Cc: stable@vger.kernel.org
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://patch.msgid.link/20260219-gs_usb-always-configure-bitrates-v2-1-671f8ba5b0a5@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-[ No CAN-FD ]
+Fixes: 67034bb9dd5e ("KVM: SVM: Add irqchip_split() checks before enabling AVIC")
+Fixes: 6c3e4422dd20 ("svm: Add support for dynamic APICv")
+Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Link: https://patch.msgid.link/20260203190711.458413-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ Context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/x86/kvm/svm/avic.c |    2 +-
+ arch/x86/kvm/svm/svm.c  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -413,9 +413,8 @@ static void gs_usb_receive_bulk_callback
- 	}
- }
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -203,7 +203,7 @@ void avic_init_vmcb(struct vcpu_svm *svm
+ 	vmcb->control.avic_logical_id = lpa & AVIC_HPA_MASK;
+ 	vmcb->control.avic_physical_id = ppa & AVIC_HPA_MASK;
+ 	vmcb->control.avic_physical_id |= AVIC_MAX_PHYSICAL_ID_COUNT;
+-	if (kvm_apicv_activated(svm->vcpu.kvm))
++	if (kvm_vcpu_apicv_active(&svm->vcpu))
+ 		vmcb->control.int_ctl |= AVIC_ENABLE_MASK;
+ 	else
+ 		vmcb->control.int_ctl &= ~AVIC_ENABLE_MASK;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -1230,7 +1230,7 @@ static void init_vmcb(struct vcpu_svm *s
  
--static int gs_usb_set_bittiming(struct net_device *netdev)
-+static int gs_usb_set_bittiming(struct gs_can *dev)
- {
--	struct gs_can *dev = netdev_priv(netdev);
- 	struct can_bittiming *bt = &dev->can.bittiming;
- 	struct usb_interface *intf = dev->iface;
- 	int rc;
-@@ -445,7 +444,7 @@ static int gs_usb_set_bittiming(struct n
- 	kfree(dbt);
+ 	svm_check_invpcid(svm);
  
- 	if (rc < 0)
--		dev_err(netdev->dev.parent, "Couldn't set bittimings (err=%d)",
-+		dev_err(dev->netdev->dev.parent, "Couldn't set bittimings (err=%d)",
- 			rc);
+-	if (kvm_vcpu_apicv_active(&svm->vcpu))
++	if (avic && irqchip_in_kernel(svm->vcpu.kvm))
+ 		avic_init_vmcb(svm);
  
- 	return (rc > 0) ? 0 : rc;
-@@ -675,6 +674,13 @@ static int gs_can_open(struct net_device
- 	if (ctrlmode & CAN_CTRLMODE_3_SAMPLES)
- 		flags |= GS_CAN_MODE_TRIPLE_SAMPLE;
- 
-+	rc = gs_usb_set_bittiming(dev);
-+	if (rc) {
-+		netdev_err(netdev, "failed to set bittiming: %pe\n", ERR_PTR(rc));
-+		kfree(dm);
-+		return rc;
-+	}
-+
- 	/* finally start device */
- 	dev->can.state = CAN_STATE_ERROR_ACTIVE;
- 	dm->mode = cpu_to_le32(GS_CAN_MODE_START);
-@@ -888,7 +894,6 @@ static struct gs_can *gs_make_candev(uns
- 	dev->can.state = CAN_STATE_STOPPED;
- 	dev->can.clock.freq = le32_to_cpu(bt_const->fclk_can);
- 	dev->can.bittiming_const = &dev->bt_const;
--	dev->can.do_set_bittiming = gs_usb_set_bittiming;
- 
- 	dev->can.ctrlmode_supported = 0;
- 
+ 	/*
 
 
