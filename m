@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D82E30BF68;
-	Mon, 13 Apr 2026 16:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0753016F5;
+	Mon, 13 Apr 2026 16:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096565; cv=none; b=U7tt1PvTxXJOtBC1MVTRPwTiwulDNjq/pJ47NqyZL9DVDPdetAS0WfybR1i4zxAQ+W8BzQZZzejQYuCi1hURnKaQrUiuX8jPKoZ3suClJFtL6fFY5P7doQBh8JfahTr8BgwNz8TFudQwdmCf3jO6mmuw/ns75iD+Tq1Zc39LG6k=
+	t=1776096568; cv=none; b=GjnLhzb8KbF4XYKydJ3c6xn+QqllbYk83nYhm0BTFKvPE1CKhWxhBhBlH0YPAzYhVYqUv+pcb2ZkTJ8TZxWiU7ttO2LZt9vhQ2iULGbqW2gIBLn3LYwkWUZ1I1U55jqlTcK/9T8SsWRcYB23C4Rn+cWs+y6wFtIBpUCMyDnrgoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096565; c=relaxed/simple;
-	bh=nzVdaZxHTLwLCYqMumj4STW1KnrTB4QuhcB6T9w8PDs=;
+	s=arc-20240116; t=1776096568; c=relaxed/simple;
+	bh=TAN6qjPmGkFIbhvhjNOPWpRZKKV193LP6CRFIpMLtt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qT5oGhtszD267HmvWnZaVDY2vrO88361qBF3b8HrqbLwXljPmrVICBdREjy+pCTF0Ldn7cdSiv1+zv0I6Hk9H1W+fmpKSIU5UrLOclb4XeVIgrc/q9bAvqlJl0M5WapTggN7RvklLP08MGM9KDc3CrS6rvBhxRsFqi4OuYBYfFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGIgv+6C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rs/MqoDJo8PLZHWELH/2HsKSyYL6xGZMvrkouBUfg2b4Xzl7G1OY9DVdJVgRtNjYR3maceQFpMOd6xj8NlcYWD9cRMEw3ONIz6HZW3RMw2iSMpMOYGyftbS1wZTGqrWP6mPd7k3/iGhKQ6WAScgX5ETK2Hl10kx9Tu3WneqodL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wryHEMaB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGIgv+6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A5AC2BCB4;
-	Mon, 13 Apr 2026 16:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wryHEMaB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3CBC2BCAF;
+	Mon, 13 Apr 2026 16:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096565;
-	bh=nzVdaZxHTLwLCYqMumj4STW1KnrTB4QuhcB6T9w8PDs=;
+	s=korg; t=1776096568;
+	bh=TAN6qjPmGkFIbhvhjNOPWpRZKKV193LP6CRFIpMLtt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pGIgv+6CsiRvs52CFUYIjQGfDREsXROFeI2uF1MXflBGZmFgH/MvxNJgk6UiaaG6F
-	 vSr8VfGa2Qc2kQyo0h9Joa5oBbeqPrTwl7UhMAtY9HLkOyzyTMyM/sPh9P1lGVqDz0
-	 uDcdV6Qde4C6ijq8WeYuj7SFOWHJ2lIEehMAgpoM=
+	b=wryHEMaBs4Kx3EInwyssMvK0syAGG23l3piA+jzoe/4s3VatwrlM8CoM3YnMXO2bV
+	 uvf2PBUoVwAiKzkSvmV9x8sGLz3U2Hvdv1loUMYFDQDI2vkmsI2j2vOGL2Kf8s4cqF
+	 2bwS9ynC3gIf3EfLa4I6ow0wJEGp6DWUqLzqRpVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.18 43/83] drm/i915/gt: fix refcount underflow in intel_engine_park_heartbeat
-Date: Mon, 13 Apr 2026 18:00:11 +0200
-Message-ID: <20260413155732.626588465@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 61/83] net: lan966x: fix use-after-free and leak in lan966x_fdma_reload()
+Date: Mon, 13 Apr 2026 18:00:29 +0200
+Message-ID: <20260413155733.288161489@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -52,119 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 4c71fd099513bfa8acab529b626e1f0097b76061 upstream.
+commit 59c3d55a946cacdb4181600723c20ac4f4c20c84 upstream.
 
-A use-after-free / refcount underflow is possible when the heartbeat
-worker and intel_engine_park_heartbeat() race to release the same
-engine->heartbeat.systole request.
+When lan966x_fdma_reload() fails to allocate new RX buffers, the restore
+path restarts DMA using old descriptors whose pages were already freed
+via lan966x_fdma_rx_free_pages(). Since page_pool_put_full_page() can
+release pages back to the buddy allocator, the hardware may DMA into
+memory now owned by other kernel subsystems.
 
-The heartbeat worker reads engine->heartbeat.systole and calls
-i915_request_put() on it when the request is complete, but clears
-the pointer in a separate, non-atomic step. Concurrently, a request
-retirement on another CPU can drop the engine wakeref to zero, triggering
-__engine_park() -> intel_engine_park_heartbeat(). If the heartbeat
-timer is pending at that point, cancel_delayed_work() returns true and
-intel_engine_park_heartbeat() reads the stale non-NULL systole pointer
-and calls i915_request_put() on it again, causing a refcount underflow:
+Additionally, on the restore path, the newly created page pool (if
+allocation partially succeeded) is overwritten without being destroyed,
+leaking it.
 
-```
-<4> [487.221889] Workqueue: i915-unordered engine_retire [i915]
-<4> [487.222640] RIP: 0010:refcount_warn_saturate+0x68/0xb0
-...
-<4> [487.222707] Call Trace:
-<4> [487.222711]  <TASK>
-<4> [487.222716]  intel_engine_park_heartbeat.part.0+0x6f/0x80 [i915]
-<4> [487.223115]  intel_engine_park_heartbeat+0x25/0x40 [i915]
-<4> [487.223566]  __engine_park+0xb9/0x650 [i915]
-<4> [487.223973]  ____intel_wakeref_put_last+0x2e/0xb0 [i915]
-<4> [487.224408]  __intel_wakeref_put_last+0x72/0x90 [i915]
-<4> [487.224797]  intel_context_exit_engine+0x7c/0x80 [i915]
-<4> [487.225238]  intel_context_exit+0xf1/0x1b0 [i915]
-<4> [487.225695]  i915_request_retire.part.0+0x1b9/0x530 [i915]
-<4> [487.226178]  i915_request_retire+0x1c/0x40 [i915]
-<4> [487.226625]  engine_retire+0x122/0x180 [i915]
-<4> [487.227037]  process_one_work+0x239/0x760
-<4> [487.227060]  worker_thread+0x200/0x3f0
-<4> [487.227068]  ? __pfx_worker_thread+0x10/0x10
-<4> [487.227075]  kthread+0x10d/0x150
-<4> [487.227083]  ? __pfx_kthread+0x10/0x10
-<4> [487.227092]  ret_from_fork+0x3d4/0x480
-<4> [487.227099]  ? __pfx_kthread+0x10/0x10
-<4> [487.227107]  ret_from_fork_asm+0x1a/0x30
-<4> [487.227141]  </TASK>
-```
+Fix both issues by deferring the release of old pages until after the
+new allocation succeeds. Save the old page array before the allocation
+so old pages can be freed on the success path. On the failure path, the
+old descriptors, pages and page pool are all still valid, making the
+restore safe. Also ensure the restore path re-enables NAPI and wakes
+the netdev, matching the success path.
 
-Fix this by replacing the non-atomic pointer read + separate clear with
-xchg() in both racing paths. xchg() is a single indivisible hardware
-instruction that atomically reads the old pointer and writes NULL. This
-guarantees only one of the two concurrent callers obtains the non-NULL
-pointer and performs the put, the other gets NULL and skips it.
-
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15880
-Fixes: 058179e72e09 ("drm/i915/gt: Replace hangcheck by heartbeats")
-Cc: <stable@vger.kernel.org> # v5.5+
-Signed-off-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-Reviewed-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/d4c1c14255688dd07cc8044973c4f032a8d1559e.1775038106.git.sebastian.brzezinka@intel.com
-(cherry picked from commit 13238dc0ee4f9ab8dafa2cca7295736191ae2f42)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 89ba464fcf54 ("net: lan966x: refactor buffer reload function")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Link: https://patch.msgid.link/20260405055241.35767-4-devnexen@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c |   26 +++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c |   21 +++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
-@@ -145,10 +145,12 @@ static void heartbeat(struct work_struct
- 	/* Just in case everything has gone horribly wrong, give it a kick */
- 	intel_engine_flush_submission(engine);
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+@@ -813,9 +813,15 @@ static int lan966x_qsys_sw_status(struct
  
--	rq = engine->heartbeat.systole;
--	if (rq && i915_request_completed(rq)) {
--		i915_request_put(rq);
--		engine->heartbeat.systole = NULL;
-+	rq = xchg(&engine->heartbeat.systole, NULL);
-+	if (rq) {
-+		if (i915_request_completed(rq))
-+			i915_request_put(rq);
-+		else
-+			engine->heartbeat.systole = rq;
- 	}
- 
- 	if (!intel_engine_pm_get_if_awake(engine))
-@@ -229,8 +231,11 @@ static void heartbeat(struct work_struct
- unlock:
- 	mutex_unlock(&ce->timeline->mutex);
- out:
--	if (!engine->i915->params.enable_hangcheck || !next_heartbeat(engine))
--		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
-+	if (!engine->i915->params.enable_hangcheck || !next_heartbeat(engine)) {
-+		rq = xchg(&engine->heartbeat.systole, NULL);
-+		if (rq)
-+			i915_request_put(rq);
-+	}
- 	intel_engine_pm_put(engine);
- }
- 
-@@ -244,8 +249,13 @@ void intel_engine_unpark_heartbeat(struc
- 
- void intel_engine_park_heartbeat(struct intel_engine_cs *engine)
+ static int lan966x_fdma_reload(struct lan966x *lan966x, int new_mtu)
  {
--	if (cancel_delayed_work(&engine->heartbeat.work))
--		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
-+	if (cancel_delayed_work(&engine->heartbeat.work)) {
-+		struct i915_request *rq;
++	struct page *(*old_pages)[FDMA_RX_DCB_MAX_DBS];
+ 	struct page_pool *page_pool;
+ 	struct fdma fdma_rx_old;
+-	int err;
++	int err, i, j;
 +
-+		rq = xchg(&engine->heartbeat.systole, NULL);
-+		if (rq)
-+			i915_request_put(rq);
-+	}
++	old_pages = kmemdup(lan966x->rx.page, sizeof(lan966x->rx.page),
++			   GFP_KERNEL);
++	if (!old_pages)
++		return -ENOMEM;
+ 
+ 	/* Store these for later to free them */
+ 	memcpy(&fdma_rx_old, &lan966x->rx.fdma, sizeof(struct fdma));
+@@ -826,7 +832,6 @@ static int lan966x_fdma_reload(struct la
+ 	lan966x_fdma_stop_netdev(lan966x);
+ 
+ 	lan966x_fdma_rx_disable(&lan966x->rx);
+-	lan966x_fdma_rx_free_pages(&lan966x->rx);
+ 	lan966x->rx.page_order = round_up(new_mtu, PAGE_SIZE) / PAGE_SIZE - 1;
+ 	lan966x->rx.max_mtu = new_mtu;
+ 	err = lan966x_fdma_rx_alloc(&lan966x->rx);
+@@ -834,6 +839,11 @@ static int lan966x_fdma_reload(struct la
+ 		goto restore;
+ 	lan966x_fdma_rx_start(&lan966x->rx);
+ 
++	for (i = 0; i < fdma_rx_old.n_dcbs; ++i)
++		for (j = 0; j < fdma_rx_old.n_dbs; ++j)
++			page_pool_put_full_page(page_pool,
++						old_pages[i][j], false);
++
+ 	fdma_free_coherent(lan966x->dev, &fdma_rx_old);
+ 
+ 	page_pool_destroy(page_pool);
+@@ -841,12 +851,17 @@ static int lan966x_fdma_reload(struct la
+ 	lan966x_fdma_wakeup_netdev(lan966x);
+ 	napi_enable(&lan966x->napi);
+ 
+-	return err;
++	kfree(old_pages);
++	return 0;
+ restore:
+ 	lan966x->rx.page_pool = page_pool;
+ 	memcpy(&lan966x->rx.fdma, &fdma_rx_old, sizeof(struct fdma));
+ 	lan966x_fdma_rx_start(&lan966x->rx);
+ 
++	lan966x_fdma_wakeup_netdev(lan966x);
++	napi_enable(&lan966x->napi);
++
++	kfree(old_pages);
+ 	return err;
  }
  
- void intel_gt_unpark_heartbeats(struct intel_gt *gt)
 
 
