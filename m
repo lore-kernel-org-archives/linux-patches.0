@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29D831619A;
-	Mon, 13 Apr 2026 16:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB949313298;
+	Mon, 13 Apr 2026 16:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099001; cv=none; b=Uy6PzP1zxtPJw7ALC5A/0ENboY5RmqQ5vs1o17qwfTHDeS5J5O0qnIXN7xOTEeATsrlFTtNxy3xZDUZtbL7MbGR/F8pW2SMUNGGScZQuFmjFP1pE6ZL1kxSStIDun9HKbGLYOC1NcH/g+gNY34P9/v9izo4/uxlhr5eIJ5puigQ=
+	t=1776099003; cv=none; b=eRAJ5VOcZz+sZdrTuNw9qnHtmfQsJHOge1VIeXla+8edOdweUQL7ruckfnD/egJbff0IxwZjv6bAiu++Ae1mcDh29OPhsHci0wcGwDq4j/l9etia874FcgmrI67D+LBu1m7O4zd4KA5A67RV5tMiV+gTa2LN7brp+iO+fgqDbt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099001; c=relaxed/simple;
-	bh=Xpj5zrrDyhJNf4llC5lLDhOWo3tG2mEyafibG6GTWV8=;
+	s=arc-20240116; t=1776099003; c=relaxed/simple;
+	bh=E+Hk+5wt9nFQrDCZrgXlFGVN38Gu3bPn8h01jLouemU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YJXtnWrh8Z194OolQWalnt+A4J7R+ejMRe5Npq8hFRxGhJLnrSR9Q2nU3WdK4Jqr8tR8GSxkPGjbh4tTUdpZee27/KsaSlhajFho8gr7lmo+CQc4VwHads77WRy6MQITeA7csd5DRZ+loF2Fk3oXKxgQhj4IGFnTI/LE0EJGcA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/p/dNJI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f9ZBn0jF26TFIGYBCkV6PTrtZIFMbkxczmzIZetq7Ls7kxi/7GX1s6NkzbaQjQ5RbR+m+2HPVDQbkldVUKwO9gwEewkapv041VW2UIg0RvV1N+Q98vpXwgesnIV9Wb+JkQONBj1uhojHh0J+MUFCG8oPpBdZd6XMC3maZGuMWBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTPj3FQb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/p/dNJI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8877CC2BCAF;
-	Mon, 13 Apr 2026 16:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTPj3FQb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F342C2BCAF;
+	Mon, 13 Apr 2026 16:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099000;
-	bh=Xpj5zrrDyhJNf4llC5lLDhOWo3tG2mEyafibG6GTWV8=;
+	s=korg; t=1776099003;
+	bh=E+Hk+5wt9nFQrDCZrgXlFGVN38Gu3bPn8h01jLouemU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/p/dNJIf2KLQeoLxBJgdH4GkA4W5Ubu5LycLNkjJzc1ppvbD2DQLFN2wokZG13aU
-	 ylpH/UmpEp3pMFIPy4SsXhzosKLLDcbutBEjuUSGP9GLBzUF3tAXaR/ECoyGiEdP+9
-	 oX+eMp7bmGZUZB+LRP7C6m23mdaNypPg1dV8C4Ao=
+	b=NTPj3FQbOtdgEm8yKFqANFojLgfJ1AfuhQspKL6YW02wuQw+PttHrfWjn1KFY/KuL
+	 YdXbdty9PQfJje9lwSZikdMWyVOfRuUH2Zsu+PXrUlgtHTkVxZcpITkN6ouPp2PZbP
+	 u0/uEzMYZFoqaSm01RVxEJZcYP46qWo4clV5bpxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 170/491] iomap: reject delalloc mappings during writeback
-Date: Mon, 13 Apr 2026 17:56:55 +0200
-Message-ID: <20260413155825.409099796@linuxfoundation.org>
+Subject: [PATCH 5.10 171/491] tracing: Fix syscall events activation by ensuring refcount hits zero
+Date: Mon, 13 Apr 2026 17:56:56 +0200
+Message-ID: <20260413155825.448090388@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,51 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit d320f160aa5ff36cdf83c645cca52b615e866e32 ]
+[ Upstream commit 0a663b764dbdf135a126284f454c9f01f95a87d4 ]
 
-Filesystems should never provide a delayed allocation mapping to
-writeback; they're supposed to allocate the space before replying.
-This can lead to weird IO errors and crashes in the block layer if the
-filesystem is being malicious, or if it hadn't set iomap->dev because
-it's a delalloc mapping.
+When multiple syscall events are specified in the kernel command line
+(e.g., trace_event=syscalls:sys_enter_openat,syscalls:sys_enter_close),
+they are often not captured after boot, even though they appear enabled
+in the tracing/set_event file.
 
-Fix this by failing writeback on delalloc mappings.  Currently no
-filesystems actually misbehave in this manner, but we ought to be
-stricter about things like that.
+The issue stems from how syscall events are initialized. Syscall
+tracepoints require the global reference count (sys_tracepoint_refcount)
+to transition from 0 to 1 to trigger the registration of the syscall
+work (TIF_SYSCALL_TRACEPOINT) for tasks, including the init process (pid 1).
 
-Cc: stable@vger.kernel.org # v5.5
-Fixes: 598ecfbaa742ac ("iomap: lift the xfs writeback code to iomap")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://patch.msgid.link/20260302173002.GL13829@frogsfrogsfrogs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[ Different error handling structure ]
+The current implementation of early_enable_events() with disable_first=true
+used an interleaved sequence of "Disable A -> Enable A -> Disable B -> Enable B".
+If multiple syscalls are enabled, the refcount never drops to zero,
+preventing the 0->1 transition that triggers actual registration.
+
+Fix this by splitting early_enable_events() into two distinct phases:
+1. Disable all events specified in the buffer.
+2. Enable all events specified in the buffer.
+
+This ensures the refcount hits zero before re-enabling, allowing syscall
+events to be properly activated during early boot.
+
+The code is also refactored to use a helper function to avoid logic
+duplication between the disable and enable phases.
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20260224023544.1250787-1-hehuiwen@kylinos.cn
+Fixes: ce1039bd3a89 ("tracing: Fix enabling of syscall events on the command line")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/iomap/buffered-io.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events.c |   51 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 36 insertions(+), 15 deletions(-)
 
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -1364,10 +1364,13 @@ iomap_writepage_map(struct iomap_writepa
- 		error = wpc->ops->map_blocks(wpc, inode, file_offset);
- 		if (error)
- 			break;
--		if (WARN_ON_ONCE(wpc->iomap.type == IOMAP_INLINE))
--			continue;
- 		if (wpc->iomap.type == IOMAP_HOLE)
- 			continue;
-+		if (WARN_ON_ONCE(wpc->iomap.type != IOMAP_UNWRITTEN &&
-+				 wpc->iomap.type != IOMAP_MAPPED)) {
-+			error = -EIO;
-+			break;
-+		}
- 		iomap_add_to_ioend(inode, file_offset, page, iop, wpc, wbc,
- 				 &submit_list);
- 		count++;
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -3393,27 +3393,23 @@ static __init int event_trace_memsetup(v
+ 	return 0;
+ }
+ 
+-static __init void
+-early_enable_events(struct trace_array *tr, bool disable_first)
++/*
++ * Helper function to enable or disable a comma-separated list of events
++ * from the bootup buffer.
++ */
++static __init void __early_set_events(struct trace_array *tr, bool enable)
+ {
+ 	char *buf = bootup_event_buf;
+ 	char *token;
+-	int ret;
+-
+-	while (true) {
+-		token = strsep(&buf, ",");
+-
+-		if (!token)
+-			break;
+ 
++	while ((token = strsep(&buf, ","))) {
+ 		if (*token) {
+-			/* Restarting syscalls requires that we stop them first */
+-			if (disable_first)
++			if (enable) {
++				if (ftrace_set_clr_event(tr, token, 1))
++					pr_warn("Failed to enable trace event: %s\n", token);
++			} else {
+ 				ftrace_set_clr_event(tr, token, 0);
+-
+-			ret = ftrace_set_clr_event(tr, token, 1);
+-			if (ret)
+-				pr_warn("Failed to enable trace event: %s\n", token);
++			}
+ 		}
+ 
+ 		/* Put back the comma to allow this to be called again */
+@@ -3422,6 +3418,31 @@ early_enable_events(struct trace_array *
+ 	}
+ }
+ 
++/**
++ * early_enable_events - enable events from the bootup buffer
++ * @tr: The trace array to enable the events in
++ * @disable_first: If true, disable all events before enabling them
++ *
++ * This function enables events from the bootup buffer. If @disable_first
++ * is true, it will first disable all events in the buffer before enabling
++ * them.
++ *
++ * For syscall events, which rely on a global refcount to register the
++ * SYSCALL_WORK_SYSCALL_TRACEPOINT flag (especially for pid 1), we must
++ * ensure the refcount hits zero before re-enabling them. A simple
++ * "disable then enable" per-event is not enough if multiple syscalls are
++ * used, as the refcount will stay above zero. Thus, we need a two-phase
++ * approach: disable all, then enable all.
++ */
++static __init void
++early_enable_events(struct trace_array *tr, bool disable_first)
++{
++	if (disable_first)
++		__early_set_events(tr, false);
++
++	__early_set_events(tr, true);
++}
++
+ static __init int event_trace_enable(void)
+ {
+ 	struct trace_array *tr = top_trace_array();
 
 
