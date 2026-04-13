@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C07926CE32;
-	Mon, 13 Apr 2026 16:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEF3280CFB;
+	Mon, 13 Apr 2026 16:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098251; cv=none; b=g66ed0xOPG1gwHimXV9UGpwwie7RtlPi1Xgk/oJAj47E0oW3SQM+Rj5XRcYF3epgayaC7mKj1GvnQ08i/MmFxkxo/HDCQdwTYF/j3ldfSdjNGpZat8mwc5YDilS8xnSXfZmojcy8OmPPXVlEPUKRkciyHDRvFenWRhHujzwWpBc=
+	t=1776098254; cv=none; b=o6ktNOr7HUjMaoj7G+f0KpUdKXqPLVaz69Ho6e2HJ3yf0EXTY/hVno9b2UKdZmSuqs/fALXDkH7r9I4ml4uI8VVjhmX4r7b0hTvS/8TupReoHFlxmmEHZkHaZipPNUDXb+QzLHue0Te/+oGIC5X45evsxd/HWfPDyvWs1PUa+RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098251; c=relaxed/simple;
-	bh=DKG3dYpfi+j6lDWIC5AL0T8u7/ytLvyjBH/GNGdfhO8=;
+	s=arc-20240116; t=1776098254; c=relaxed/simple;
+	bh=IZbe/3fNrW5c+iBHdZ22irkX9sYX4lRgmjDJQSDnbs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLdZ4u+pxBOvJ48Nj0swEB/kPcooPG2apung7th5IPW6GtONfF/5SpUv2z2+/yUqujAlYtM0iVeN+kcCBexmuV3nVdx+tkvQWsizYkAmbiXIbPptZCIHbi7ewOak8rNwk62ds6pKYOHClloYlL0xGr7HO7eh2mp8rcs+UDnCyrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3UerQJu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FhRDrwy/MSjLrP1+TvVd7g6HHawU1WCOMrVLPsK+hS2tWsvaBJctbzx/cbpF7mkqKXE+ReoVcB6eJUAoPs5g9tiT11Nr4L6+3U8mxsmpLpYx45g3Yx2iINZX8vxCBgVwL83gMDLynT9X64MqmOhoXE2LvWbo5aNZVr5qK7aQJCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ad51F4bC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3UerQJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3A9C2BCB0;
-	Mon, 13 Apr 2026 16:37:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ad51F4bC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B982FC2BCB0;
+	Mon, 13 Apr 2026 16:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098251;
-	bh=DKG3dYpfi+j6lDWIC5AL0T8u7/ytLvyjBH/GNGdfhO8=;
+	s=korg; t=1776098254;
+	bh=IZbe/3fNrW5c+iBHdZ22irkX9sYX4lRgmjDJQSDnbs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h3UerQJu+OTTVx/G9IxyJZ4ZPZTXGQ/YPYh4KH2o4Qy0bMB42mnOOTdBMWBlfSX3u
-	 tlJuWagsOVk6KWhH2IUsbpdw+Nf7ZnR9QO4S8iYUnxZ44N/p6VNvO71FdKII1nFxKo
-	 xGaO97plZDXn8SEJO/bFlZW8Mwv3OvjpHeMd0kck=
+	b=ad51F4bCKKrujEw7nPoGzhTuy1sYL02Zu9+2o22ho0cG+a5sBSRm0NQNbjw/ybb2h
+	 /aAAiZxHZlpv7XdRMbz5oBZzZVzE6IVf8Claa1IhbmztSnXsY4eFne33/wULvVgYKC
+	 zX7XRFPk0NRPMRsfOZuNPRb/bAUsKk6/JtsYNbqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frej Drejhammar <frej@stacken.kth.se>,
+	Wanquan Zhong <wanquan.zhong@fibocom.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 453/570] USB: serial: io_edgeport: add support for Blackbox IC135A
-Date: Mon, 13 Apr 2026 17:59:44 +0200
-Message-ID: <20260413155847.438594688@linuxfoundation.org>
+Subject: [PATCH 5.15 454/570] USB: serial: option: add support for Rolling Wireless RW135R-GL
+Date: Mon, 13 Apr 2026 17:59:45 +0200
+Message-ID: <20260413155847.475789133@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,57 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frej Drejhammar <frej@stacken.kth.se>
+From: Wanquan Zhong <wanquan.zhong@fibocom.com>
 
-commit 0e01c3416eb863ee7f156a9d7e7421ec0a9f68a0 upstream.
+commit 01e8d0f742222f1e68f48180d5480097adf7ae9f upstream.
 
-The Blackbox 724-746-5500 USB Director USB-RS-232 HUB, part number
-IC135A, is a rebadged Edgeport/4 with its own USB device id.
+Add VID/PID 33f8:1003 for the Rolling Wireless RW135R-GL M.2 module,
+which is used in laptop debug cards with MBIM interface for
+Linux/Chrome OS. The device supports mbim, pipe functionalities.
 
-Signed-off-by: Frej Drejhammar <frej@stacken.kth.se>
+Here are the outputs of usb-devices:
+T:  Bus=04 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=33f8 ProdID=1003 Rev=05.15
+S:  Manufacturer=Rolling Wireless S.a.r.l.
+S:  Product=Rolling RW135R-GL Module
+S:  SerialNumber=12345678
+C:  #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+
+Signed-off-by: Wanquan Zhong <wanquan.zhong@fibocom.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/io_edgeport.c |    3 +++
- drivers/usb/serial/io_usbvend.h  |    1 +
- 2 files changed, 4 insertions(+)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/serial/io_edgeport.c
-+++ b/drivers/usb/serial/io_edgeport.c
-@@ -73,6 +73,7 @@ static const struct usb_device_id edgepo
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_22I) },
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_412_4) },
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_COMPATIBLE) },
-+	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_BLACKBOX_IC135A) },
- 	{ }
- };
- 
-@@ -121,6 +122,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_8R) },
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_8RR) },
- 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_EDGEPORT_412_8) },
-+	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_BLACKBOX_IC135A) },
- 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0202) },
- 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0203) },
- 	{ USB_DEVICE(USB_VENDOR_ID_NCR, NCR_DEVICE_ID_EPIC_0310) },
-@@ -470,6 +472,7 @@ static void get_product_info(struct edge
- 	case ION_DEVICE_ID_EDGEPORT_2_DIN:
- 	case ION_DEVICE_ID_EDGEPORT_4_DIN:
- 	case ION_DEVICE_ID_EDGEPORT_16_DUAL_CPU:
-+	case ION_DEVICE_ID_BLACKBOX_IC135A:
- 		product_info->IsRS232 = 1;
- 		break;
- 
---- a/drivers/usb/serial/io_usbvend.h
-+++ b/drivers/usb/serial/io_usbvend.h
-@@ -211,6 +211,7 @@
- 
- //
- // Definitions for other product IDs
-+#define ION_DEVICE_ID_BLACKBOX_IC135A		0x0801	// OEM device (rebranded Edgeport/4)
- #define ION_DEVICE_ID_MT4X56USB			0x1403	// OEM device
- #define ION_DEVICE_ID_E5805A			0x1A01  // OEM device (rebranded Edgeport/4)
- 
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2464,6 +2464,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0302, 0xff) },			/* Rolling RW101R-GL (laptop MBIM) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0802, 0xff),			/* Rolling RW350-GL (laptop MBIM) */
+ 	  .driver_info = RSVD(5) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff) },			/* Rolling RW135R-GL (laptop MBIM) */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x40) },
 
 
