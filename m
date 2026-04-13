@@ -1,85 +1,61 @@
-Received: from m.b4.vu (m.b4.vu [203.16.231.148])
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713C236E477
-	for <patches@lists.linux.dev>; Mon, 13 Apr 2026 17:36:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.16.231.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C415371D1E;
+	Mon, 13 Apr 2026 17:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776101803; cv=none; b=arjAHQhWrj0UgcgtQa7+l38RYfoI9oC4OsAlKpvpDsOcBuXP0DDJsrk2oPPQj+Z9MbCs4gP3F55zBGra4JreIxsIax7iaJpAJR5zw9ZKSQgz0Y6mHIWOTReFubjH7Get6oF4UOfeidjI2BSNRLn9OKM1/d7Ez5T8km4FzFjkH6k=
+	t=1776102189; cv=none; b=TNZ3xP3EaIUeo3VsaAKtm2K5/zYABqEhjyEZ94PyYcQli4PIZx5Njr9RuPcrr8phb2K+IAV/3HiOJ0KEpHT6sW1qcXA3KF5x2yQCbMRjpw/uAPso96IwkjDUJREtJujopRrFRD7hw2VyWXpUd7sNnYc/EWckiH5qisvQ3Psx+wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776101803; c=relaxed/simple;
-	bh=XlgeJl5wBVfw9nuMUnPkUGmt9Ox2hxBnPakvkJZP5pU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZmsGQhxHEmzpoREKeNKmWOt/8Jtycwv5VByWXaOoBysrQW44VnhWjvT7P/kkWP6zN5TInvOzc740J4ZwtO9JpTl8za/bLgAAcDuQ1BAV7rYXkG3Ontb6bXr1S2MHAoeXYZggmURmVS8D32yD2+7OKJdIfR1kQWaBA66a1fww/7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu; spf=pass smtp.mailfrom=b4.vu; dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b=DIIiiSME; arc=none smtp.client-ip=203.16.231.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=b4.vu
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b="DIIiiSME"
-Received: by m.b4.vu (Postfix, from userid 1000)
-	id 1D5E8672E00C; Tue, 14 Apr 2026 03:06:40 +0930 (ACST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 m.b4.vu 1D5E8672E00C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=b4.vu; s=m1;
-	t=1776101800; bh=rEJ6c/zAc+h50OhGRwWlQ4KB4pLhTZQS9ChfN+bgxvs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DIIiiSMEOhBL9EA7xNoSDn456kUIWMQgSI5c2x0NvvJMAScDRHpqoQPEJK56whTFj
-	 a9i3X9QKyWBVAzQRZK8jbLK9va0AS28zUtfdpSAdDbGvrtUPGPCO3RDpIv+ueUsdf7
-	 sJPL1N8ie0U2atslqtKqK6R+JGD15vtEanr7FfHlKa5EgrDdlDnYK8Nqqrto5E86uz
-	 Aks5OfF9C92b0XEOiK5TSN6B0M3ytkdlFrihBl8+uDOVhHH0BEiJL8NRtXFAZR6hHx
-	 GC7VhX+ljYTp9L+HhZHtmW9Wg3WKgyfNmCgN1Hhxbfvb2Ao8I4K45Sf3bVM6vKRP5o
-	 7zWJX+nOsURSg==
-Date: Tue, 14 Apr 2026 03:06:40 +0930
-From: "Geoffrey D. Bennett" <g@b4.vu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 005/570] ALSA: usb-audio: Remove VALIDATE_RATES
- quirk for Focusrite devices
-Message-ID: <ad0pqOwdPW1s3t4U@m.b4.vu>
-References: <20260413155830.386096114@linuxfoundation.org>
- <20260413155830.596728908@linuxfoundation.org>
+	s=arc-20240116; t=1776102189; c=relaxed/simple;
+	bh=ZdVJikIX8fMB6UFq4ux+C+IDDl4yDFtKV2Qd1UQZ3ts=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AFJFmMsqQW05zV3N9LZWQRHSHcMCTnxjsepWIqwlY7EfQZ1gkf40cjlKhjEJRXArU5gBt/oda3J0Vk1vyYkQYrjzbkFIIYgoWBjtLOCH9KBTGnAHZAYhZhmXwLi58XRPcxHums45zzgUJlolDzmvd4tQETMOBA4KJStt/I+FpMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 6.12 00/70] 6.12.82-rc1 review
+Date: Mon, 13 Apr 2026 17:42:58 +0000
+Message-ID: <20260413174300.20404-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
+References: <20260413155728.181580293@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260413155830.596728908@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Apr 13, 2026 at 05:52:16PM +0200, Greg Kroah-Hartman wrote:
-> 5.15-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Geoffrey D. Bennett <g@b4.vu>
-> 
-> [ Upstream commit a8cc55bf81a45772cad44c83ea7bb0e98431094a ]
-> 
-> Remove QUIRK_FLAG_VALIDATE_RATES for Focusrite. With the previous
-> commit, focusrite_valid_sample_rate() produces correct rate tables
-> without USB probing.
+# Librecast Test Results
 
-Hi Greg,
+020/020 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-This commit depends on its predecessor 24d2d3c5f940 ("ALSA: usb-audio:
-Improve Focusrite sample rate filtering") which was not picked up for
-stable because it didn't have a Fixes tag. It has been added to 6.19
-and 6.18 but not 6.12, 6.6, 6.1, 5.15.
+CPU/kernel: Linux auntie 6.12.82-rc1-gf4ef43b0a8c4 #1 SMP PREEMPT_DYNAMIC Mon Apr 13 17:19:28 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-Without the rate filtering patch, the Focusrite Scarlett 18i8 3rd Gen
-gets all sample rates advertised on every altsetting instead of the
-correct per-altsetting subset.
-
-There are also subsequent fixes:
-
-a0dafdbd1049 ALSA: usb-audio: Exclude Scarlett 2i2 1st Gen (8016) from SKIP_IFACE_SETUP
-f025ac8c698a ALSA: usb-audio: Exclude Scarlett Solo 1st Gen from SKIP_IFACE_SETUP
-990a8b0732cf ALSA: usb-audio: Exclude Scarlett 2i4 1st Gen from SKIP_IFACE_SETUP
-8780f561f671 ALSA: usb-audio: Exclude Scarlett 2i2 1st Gen from SKIP_IFACE_SETUP
-
-and a just-submitted fix for the Scarlett 18i20 1st Gen.
-
-Regards,
-Geoffrey.
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
