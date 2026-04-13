@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEFA317141;
-	Mon, 13 Apr 2026 16:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9008D317148;
+	Mon, 13 Apr 2026 16:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099240; cv=none; b=KObPFoRzFSLbIsNMrCWtP5ydSSrWlfijV8vkTZVjEFI8rLwy3OINkn5+9pR4uIb0i7pXfce31x08F+nhxT/jGRoQ3sIsDSiRe9NGS1LgiTxPORg+WPZ7f7qtl9CY+oXO2pVefYbhgGxxJrTGVpWRdPsaubWlaMojH2MbrtaUNow=
+	t=1776099243; cv=none; b=TKVNLce+Pto3YWXQmFDCqyd3z81ea2eSS1VaCje9tx+VoJvd6n0RKywN3Lm55D97NPQbJqVlyrmVOlly75Jm9eijrLhTqglGPbW/Xr3+VBriVBL9H73u5tMLaewbQikSu2KwhNQBYvqx3I0jXSWKpnoxOJGP1UsjmHOgxrHA/BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099240; c=relaxed/simple;
-	bh=RGIohWyXK4dLFWFBE9J7aKQB1EMhApzi6F5hqR79syA=;
+	s=arc-20240116; t=1776099243; c=relaxed/simple;
+	bh=GsvBPmIO0USDuPlg0Cs1VgoXIqAk6jdJLRub9c9P684=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kCNomMp7bWT4Lj38+0OBwz5TEkbCoQiyax6GNiPSBA6KbqLwheT1NuPk6TOfR58itXl9A2iddIuEXuzENRn8JAuNT/9CLBR/kleEplQufm2fYfm3xa5KcfRNZ3y0SOtDANoIRsAsVWQYyIzxFb8mXO/8LVy1zEjMMxvGSSVCY8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6w0z+Cr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BTmTV5VW68Exsuou9k5DTv1dt+pw2gVt4Ckr/hXLVranuJl0U+iUwaOhi9fd6ewlNRR6qPGRpoT1s3u1Y0dDKrlBPne6ct3Gf4TF1QlXgp5gU6xZL1y7fexuLWHjktnX0SHRsBxuFsoMCmR0ySZzrVo9JO3pot+YBcH0o+rjkH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxxowyRQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6w0z+Cr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B14CC2BCB0;
-	Mon, 13 Apr 2026 16:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxxowyRQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0E5C2BCC7;
+	Mon, 13 Apr 2026 16:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099240;
-	bh=RGIohWyXK4dLFWFBE9J7aKQB1EMhApzi6F5hqR79syA=;
+	s=korg; t=1776099243;
+	bh=GsvBPmIO0USDuPlg0Cs1VgoXIqAk6jdJLRub9c9P684=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6w0z+CrBDDjTXbKGSpy0hQte6gwEoVR3kpnZJipq2b2hl4ZjasxAuCJ0skyy3BIR
-	 WeXVyQ11xKMvP8jEubBLwffHSkvVEdAoDer4ruFCjJQm6EZ63XLCbeoVbHyk8NVX35
-	 EoKvLIuWSxs2pBmUKMsFJUOE7TUq5hLTpC92TFaU=
+	b=VxxowyRQiXv8QNa0yBIoIPXPSVt+/X8MbEIOZ6KXHTK7SGqsS7WQ2UqYSwZpPCr+e
+	 6b9bdaTCqjLIRWGyusxLZcit500vnRpxfslZ2cql8gidnXqaH21D6h7HEAqIAQ+8E3
+	 BIlRghPbvZ5G6/7aN8cznxK+Y3QB4G+hsDpb8VqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 264/491] dma-mapping: add missing `inline` for `dma_free_attrs`
-Date: Mon, 13 Apr 2026 17:58:29 +0200
-Message-ID: <20260413155828.935472516@linuxfoundation.org>
+Subject: [PATCH 5.10 265/491] Bluetooth: L2CAP: Fix ERTM re-init and zero pdu_len infinite loop
+Date: Mon, 13 Apr 2026 17:58:30 +0200
+Message-ID: <20260413155828.972738070@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,53 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 2cdaff22ed26f1e619aa2b43f27bb84f2c6ef8f8 ]
+[ Upstream commit 25f420a0d4cfd61d3d23ec4b9c56d9f443d91377 ]
 
-Under an UML build for an upcoming series [1], I got `-Wstatic-in-inline`
-for `dma_free_attrs`:
+l2cap_config_req() processes CONFIG_REQ for channels in BT_CONNECTED
+state to support L2CAP reconfiguration (e.g. MTU changes). However,
+since both CONF_INPUT_DONE and CONF_OUTPUT_DONE are already set from
+the initial configuration, the reconfiguration path falls through to
+l2cap_ertm_init(), which re-initializes tx_q, srej_q, srej_list, and
+retrans_list without freeing the previous allocations and sets
+chan->sdu to NULL without freeing the existing skb. This leaks all
+previously allocated ERTM resources.
 
-      BINDGEN rust/bindings/bindings_generated.rs - due to target missing
-    In file included from rust/helpers/helpers.c:59:
-    rust/helpers/dma.c:17:2: warning: static function 'dma_free_attrs' is used in an inline function with external linkage [-Wstatic-in-inline]
-       17 |         dma_free_attrs(dev, size, cpu_addr, dma_handle, attrs);
-          |         ^
-    rust/helpers/dma.c:12:1: note: use 'static' to give inline function 'rust_helper_dma_free_attrs' internal linkage
-       12 | __rust_helper void rust_helper_dma_free_attrs(struct device *dev, size_t size,
-          | ^
-          | static
+Additionally, l2cap_parse_conf_req() does not validate the minimum
+value of remote_mps derived from the RFC max_pdu_size option. A zero
+value propagates to l2cap_segment_sdu() where pdu_len becomes zero,
+causing the while loop to never terminate since len is never
+decremented, exhausting all available memory.
 
-The issue is that `dma_free_attrs` was not marked `inline` when it was
-introduced alongside the rest of the stubs.
+Fix the double-init by skipping l2cap_ertm_init() and
+l2cap_chan_ready() when the channel is already in BT_CONNECTED state,
+while still allowing the reconfiguration parameters to be updated
+through l2cap_parse_conf_req(). Also add a pdu_len zero check in
+l2cap_segment_sdu() as a safeguard.
 
-Thus mark it.
-
-Fixes: ed6ccf10f24b ("dma-mapping: properly stub out the DMA API for !CONFIG_HAS_DMA")
-Closes: https://lore.kernel.org/rust-for-linux/20260322194616.89847-1-ojeda@kernel.org/ [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260325015548.70912-1-ojeda@kernel.org
+Fixes: 96298f640104 ("Bluetooth: L2CAP: handle l2cap config request during open state")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dma-mapping.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_core.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
-index fb48f8ba5dcc8..d79acecd50dfe 100644
---- a/include/linux/dma-mapping.h
-+++ b/include/linux/dma-mapping.h
-@@ -200,8 +200,8 @@ static inline void *dma_alloc_attrs(struct device *dev, size_t size,
- {
- 	return NULL;
- }
--static void dma_free_attrs(struct device *dev, size_t size, void *cpu_addr,
--		dma_addr_t dma_handle, unsigned long attrs)
-+static inline void dma_free_attrs(struct device *dev, size_t size,
-+		void *cpu_addr, dma_addr_t dma_handle, unsigned long attrs)
- {
- }
- static inline void *dmam_alloc_attrs(struct device *dev, size_t size,
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index bca96302e59e5..e7af7faf558e8 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -2543,6 +2543,9 @@ static int l2cap_segment_sdu(struct l2cap_chan *chan,
+ 	/* Remote device may have requested smaller PDUs */
+ 	pdu_len = min_t(size_t, pdu_len, chan->remote_mps);
+ 
++	if (!pdu_len)
++		return -EINVAL;
++
+ 	if (len <= pdu_len) {
+ 		sar = L2CAP_SAR_UNSEGMENTED;
+ 		sdu_len = 0;
+@@ -4526,14 +4529,16 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
+ 	if (test_bit(CONF_INPUT_DONE, &chan->conf_state)) {
+ 		set_default_fcs(chan);
+ 
+-		if (chan->mode == L2CAP_MODE_ERTM ||
+-		    chan->mode == L2CAP_MODE_STREAMING)
+-			err = l2cap_ertm_init(chan);
++		if (chan->state != BT_CONNECTED) {
++			if (chan->mode == L2CAP_MODE_ERTM ||
++			    chan->mode == L2CAP_MODE_STREAMING)
++				err = l2cap_ertm_init(chan);
+ 
+-		if (err < 0)
+-			l2cap_send_disconn_req(chan, -err);
+-		else
+-			l2cap_chan_ready(chan);
++			if (err < 0)
++				l2cap_send_disconn_req(chan, -err);
++			else
++				l2cap_chan_ready(chan);
++		}
+ 
+ 		goto unlock;
+ 	}
 -- 
 2.51.0
 
