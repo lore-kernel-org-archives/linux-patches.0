@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845ED3382FA;
-	Mon, 13 Apr 2026 17:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157A331F9BC;
+	Mon, 13 Apr 2026 17:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099625; cv=none; b=h4XECizhjcW7vG1hPmulj2+xLYH4IRjrpSdFbyuwATEmAeq86tehTwt8VrD2FIh6dSBp5r0Kjr6hni0ydpkqQ23VqheNyWpbgPrBR5qCDxpSvNpAExBbPm46ZQaL4AHCq6jEqC5syJhVDizKenGNVn+sGO7+sXxoa2Pxr4OqHw8=
+	t=1776099628; cv=none; b=jmmHv1wn+SFjebaslwFVF4zdlpXWibWaWG/CAhKackP2WgEx0gwO/nfqIkRmBLajciaN5kXqMAcW1mCm+7YuVfgadIekdxwaciVlLBHDqa0w9tLlR+oZmeom84WUZ2JI/CI61BJDTQ+IhtuKAa+FjUx9Aj4ZlgeQ2Fw4ocj7a2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099625; c=relaxed/simple;
-	bh=1taNT22CiamjziOB4a1Po72QXWOU6A4ZwrLQB0hS3bM=;
+	s=arc-20240116; t=1776099628; c=relaxed/simple;
+	bh=zfsrvGoNZ71KM8U8BLrDRkQB7TH+4fCR/CH5JwiTezc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlMSny/TcAskrMZp9lpx2H0JbQE2Zkh7GlZ4ZzCdChudg8zKRA7mcsg20pPihmdrxgs5N0k9FdvGdtyHyN1AUmdKcN5lusETLygI1Ehf+DmNAHHr1DpiDjpEKy3SusoXy5V23N5lvUi33hYg9bXIwHLhzqaap+KrMcPbUCgS+Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+AYIeH7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=orjfJZokvDRgeDXQLFYuP41JP1JO1LS7UuXQVRSrPHx94jJjJ7+1Thjx8A7WdCp4k/EuPrsSf6dPS+gDwlZh8Sn7/YaiY3z0m56ULEtojd8ku7BoH9/UBQzTbVFFat3CL3vXxuKmfgDSZ5sChvBYAO2AQbZ7f3hBopQxo9+tqn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iM+vWDtB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+AYIeH7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A392C2BCAF;
-	Mon, 13 Apr 2026 17:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iM+vWDtB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A235CC2BCAF;
+	Mon, 13 Apr 2026 17:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099625;
-	bh=1taNT22CiamjziOB4a1Po72QXWOU6A4ZwrLQB0hS3bM=;
+	s=korg; t=1776099628;
+	bh=zfsrvGoNZ71KM8U8BLrDRkQB7TH+4fCR/CH5JwiTezc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+AYIeH7//qxUKCIkxqREjbT+M/xsSPFGvKsPxdAVtd3yjC96i3aenTsP8QIfiCQa
-	 +gYG+00bCj2+nMsxoTEFosoC7kcOhFf9fXEupFyfqWzAnI2KT8Ggvxf6NQkSmLeFh9
-	 F6Ik9o4EPihEJ8N/Th4qgp0ve4YPTIquC9NTQLwM=
+	b=iM+vWDtBOLv2qtPtMQNsAVp+1ck2Go9OjKF7x2uaHSnSMeWaPICxkCO7wdcRrOiDT
+	 oa29NePoNbi0hLysVzQlVQgf1jCLoRXNSjuc/QRdI3Lgpdqk0yC/jUqmF1OSc5QuRM
+	 KK9P/GIhgpDuPRfXL8ghLgDqES6ct4Z7ZnEqJjIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cc36d44ec9f368e443d3@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
-	Robert Garcia <rob_garcia@163.com>
-Subject: [PATCH 5.10 412/491] io_uring/tctx: work around xa_store() allocation error issue
-Date: Mon, 13 Apr 2026 18:00:57 +0200
-Message-ID: <20260413155834.453704310@linuxfoundation.org>
+	Jonathan Cameron <jic23@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 386/491] iio: gyro: mpu3050: Fix out-of-sequence free_irq()
+Date: Mon, 13 Apr 2026 18:00:31 +0200
+Message-ID: <20260413155833.484238670@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,59 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-commit 7eb75ce7527129d7f1fee6951566af409a37a1c4 upstream.
+commit d14116f6529fa085b1a1b1f224dc9604e4d2a29c upstream.
 
-syzbot triggered the following WARN_ON:
+The triggered buffer is initialized before the IRQ is requested. The
+removal path currently calls iio_triggered_buffer_cleanup() before
+free_irq(). This violates the expected LIFO.
 
-WARNING: CPU: 0 PID: 16 at io_uring/tctx.c:51 __io_uring_free+0xfa/0x140 io_uring/tctx.c:51
+Place free_irq() in the correct location relative to
+iio_triggered_buffer_cleanup().
 
-which is the
-
-WARN_ON_ONCE(!xa_empty(&tctx->xa));
-
-sanity check in __io_uring_free() when a io_uring_task is going through
-its final put. The syzbot test case includes injecting memory allocation
-failures, and it very much looks like xa_store() can fail one of its
-memory allocations and end up with ->head being non-NULL even though no
-entries exist in the xarray.
-
-Until this issue gets sorted out, work around it by attempting to
-iterate entries in our xarray, and WARN_ON_ONCE() if one is found.
-
-Reported-by: syzbot+cc36d44ec9f368e443d3@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/io-uring/673c1643.050a0220.87769.0066.GAE@google.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ Modify the function in io_uring.c because it's located here in v5.15. ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+Fixes: 3904b28efb2c7 ("iio: gyro: Add driver for the MPU-3050 gyroscope")
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/iio/gyro/mpu3050-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -8524,8 +8524,19 @@ static int io_uring_alloc_task_context(s
- void __io_uring_free(struct task_struct *tsk)
- {
- 	struct io_uring_task *tctx = tsk->io_uring;
-+	struct io_tctx_node *node;
-+	unsigned long index;
+--- a/drivers/iio/gyro/mpu3050-core.c
++++ b/drivers/iio/gyro/mpu3050-core.c
+@@ -1287,9 +1287,9 @@ int mpu3050_common_remove(struct device
+ 	pm_runtime_get_sync(dev);
+ 	pm_runtime_put_noidle(dev);
+ 	pm_runtime_disable(dev);
+-	iio_triggered_buffer_cleanup(indio_dev);
+ 	if (mpu3050->irq)
+ 		free_irq(mpu3050->irq, mpu3050->trig);
++	iio_triggered_buffer_cleanup(indio_dev);
+ 	mpu3050_power_down(mpu3050);
  
--	WARN_ON_ONCE(!xa_empty(&tctx->xa));
-+	/*
-+	 * Fault injection forcing allocation errors in the xa_store() path
-+	 * can lead to xa_empty() returning false, even though no actual
-+	 * node is stored in the xarray. Until that gets sorted out, attempt
-+	 * an iteration here and warn if any entries are found.
-+	 */
-+	xa_for_each(&tctx->xa, index, node) {
-+		WARN_ON_ONCE(1);
-+		break;
-+	}
- 	WARN_ON_ONCE(tctx->io_wq);
- 	WARN_ON_ONCE(tctx->cached_refs);
- 
+ 	return 0;
 
 
