@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177152DF12F;
-	Mon, 13 Apr 2026 16:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE892FE056;
+	Mon, 13 Apr 2026 16:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097443; cv=none; b=SJW2fjdnKRF1uxIlCuejTI2KQceF1FMVxwsBDJe6F8/QRLtw9xS0k1FEWmWXfBSlr9219wHUcAkgn4MYIWLK05zHMeeuo/meT2JYwhEZfVErxJtEgrnfFwv7P8qo8OAaybgX7M+7ODXzdqviv7O29mqF6faKExtus0GLGcY/G/0=
+	t=1776097445; cv=none; b=FqpaS7EUyaDJO2ynnMcIwBm6Sw5tMjdUVGf2hi/rpw/0hcrMt2G/4uND0IN6BTj44AD22sR7TVSd4XOcb4HwuJh8xMCmE/QmhKQrKfqkYkFHtkLb56A2NpvS2XILStexMdFHtYFZO0l+UoPOVgKv/nV0qjELHb5uSe0SXLCWkK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097443; c=relaxed/simple;
-	bh=jnwBdGAnwoiPNEA7ZYzyWtt6sapQgc8XNZtFaayJXlc=;
+	s=arc-20240116; t=1776097445; c=relaxed/simple;
+	bh=5Okewgd4NiqWD4ZG5ZBFt4Sdud1WX61xyeJpcvAfRKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBIC+9AhqLe4pU66bZJhRw7iIx4OMqWF1OrgRHeEY/Y2aQWYGPIHfZ3GBTq9V4LJUrBKcElX2gUD7dcWsPTCF3Hnl6rc/BEHhKFEKztXvmUZOcPOvU3FlrDtFN5cMkqC307ubXAPvUApUOOLPgO90/n/0r+fbb4fs+tHjudIs7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVN9PcF2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qpQUH+bCx2KoP6pkN9PX/ZE4fMYgOqz2b09tPPMNTuT0zrxO1AumryUEprs/sYHJ5H0C7uQQUHUDhzGIhCCJkXjVzAFZU5wGZwWRAQmqug30I7kBQHLSocWogybqekFZpM8M4m4ekxoW6foZXq7ZkNofqjiBQe3waP5uvcC2NIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+tMrQZ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVN9PcF2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3120C2BCAF;
-	Mon, 13 Apr 2026 16:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+tMrQZ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3860FC2BCAF;
+	Mon, 13 Apr 2026 16:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097443;
-	bh=jnwBdGAnwoiPNEA7ZYzyWtt6sapQgc8XNZtFaayJXlc=;
+	s=korg; t=1776097445;
+	bh=5Okewgd4NiqWD4ZG5ZBFt4Sdud1WX61xyeJpcvAfRKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVN9PcF2FvgIE7n31uLf9E15kn1DxpEvwMcsa+rPGHWTyye25GKuTE6jsC01CnDa5
-	 tObLGjcuisCWvu8dXGtckz7t6CAuZEzONQc4IN6cmsWmB6TFYABWtMUVf60k4WrSn2
-	 AKTp9R5+MI3l+aOmN1KFXt5a1hWwbB3Jo/SVZYtg=
+	b=k+tMrQZ6qcGugGKWnPdnBxAK45YNlSwOXNRwMFHaJbe0YeMJ1gNbQL5saZuJtn9VN
+	 NSaArRMK01F6ZtePUqm0dpKkbd1PCKvQra1hce7x0Cw9tUTSC9J8j99ccyXZMjgJXE
+	 ybSAUCxkHh29jf51afKt19LqPDg5N2IRkFnk5Bbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 5.15 139/570] usb: cdc-acm: Restore CAP_BRK functionnality to CH343
-Date: Mon, 13 Apr 2026 17:54:30 +0200
-Message-ID: <20260413155835.649781312@linuxfoundation.org>
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 122/570] i40e: fix src IP mask checks and memcpy argument names in cloud filter
+Date: Mon, 13 Apr 2026 17:54:13 +0200
+Message-ID: <20260413155835.013901056@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,62 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-commit 14ae24cba291bddfdc296bbcbfd00cd09d0498ef upstream.
+[ Upstream commit e809085f492842ce7a519c9ef72d40f4bca89c13 ]
 
-The CH343 USB/serial adapter is as buggy as it is popular (very).
-One of its quirks is that despite being capable of signalling a
-BREAK condition, it doesn't advertise it.
+Fix following issues in the IPv4 and IPv6 cloud filter handling logic in
+both the add and delete paths:
 
-This used to work nonetheless until 66aad7d8d3ec5 ("usb: cdc-acm:
-return correct error code on unsupported break") applied some
-reasonable restrictions, preventing breaks from being emitted on
-devices that do not advertise CAP_BRK.
+- The source-IP mask check incorrectly compares mask.src_ip[0] against
+  tcf.dst_ip[0]. Update it to compare against tcf.src_ip[0]. This likely
+  goes unnoticed because the check is in an "else if" path that only
+  executes when dst_ip is not set, most cloud filter use cases focus on
+  destination-IP matching, and the buggy condition can accidentally
+  evaluate true in some cases.
 
-Add a quirk for this particular device, so that breaks can still
-be produced on some of my machines attached to my console server.
+- memcpy() for the IPv4 source address incorrectly uses
+  ARRAY_SIZE(tcf.dst_ip) instead of ARRAY_SIZE(tcf.src_ip), although
+  both arrays are the same size.
 
-Fixes: 66aad7d8d3ec5 ("usb: cdc-acm: return correct error code on unsupported break")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable <stable@kernel.org>
-Cc: Oliver Neukum <oneukum@suse.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260301124440.1192752-1-maz@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+- The IPv4 memcpy operations used ARRAY_SIZE(tcf.dst_ip) and ARRAY_SIZE
+  (tcf.src_ip), Update these to use sizeof(cfilter->ip.v4.dst_ip) and
+  sizeof(cfilter->ip.v4.src_ip) to ensure correct and explicit copy size.
+
+- In the IPv6 delete path, memcmp() uses sizeof(src_ip6) when comparing
+  dst_ip6 fields. Replace this with sizeof(dst_ip6) to make the intent
+  explicit, even though both fields are struct in6_addr.
+
+Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/cdc-acm.c |    5 +++++
- drivers/usb/class/cdc-acm.h |    1 +
- 2 files changed, 6 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -1359,6 +1359,8 @@ made_compressed_probe:
- 		acm->ctrl_caps = h.usb_cdc_acm_descriptor->bmCapabilities;
- 	if (quirks & NO_CAP_LINE)
- 		acm->ctrl_caps &= ~USB_CDC_CAP_LINE;
-+	if (quirks & MISSING_CAP_BRK)
-+		acm->ctrl_caps |= USB_CDC_CAP_BRK;
- 	acm->ctrlsize = ctrlsize;
- 	acm->readsize = readsize;
- 	acm->rx_buflimit = num_rx_buf;
-@@ -1988,6 +1990,9 @@ static const struct usb_device_id acm_id
- 	.driver_info = IGNORE_DEVICE,
- 	},
- 
-+	/* CH343 supports CAP_BRK, but doesn't advertise it */
-+	{ USB_DEVICE(0x1a86, 0x55d3), .driver_info = MISSING_CAP_BRK, },
-+
- 	/* control interfaces without any protocol set */
- 	{ USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_ACM,
- 		USB_CDC_PROTO_NONE) },
---- a/drivers/usb/class/cdc-acm.h
-+++ b/drivers/usb/class/cdc-acm.h
-@@ -141,3 +141,4 @@ struct acm {
- #define CLEAR_HALT_CONDITIONS		BIT(5)
- #define SEND_ZERO_PACKET		BIT(6)
- #define DISABLE_ECHO			BIT(7)
-+#define MISSING_CAP_BRK			BIT(8)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 907727604c702..2d5d30702067e 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -3715,10 +3715,10 @@ static int i40e_vc_del_cloud_filter(struct i40e_vf *vf, u8 *msg)
+ 		cfilter.n_proto = ETH_P_IP;
+ 		if (mask.dst_ip[0] & tcf.dst_ip[0])
+ 			memcpy(&cfilter.ip.v4.dst_ip, tcf.dst_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
+-		else if (mask.src_ip[0] & tcf.dst_ip[0])
++			       sizeof(cfilter.ip.v4.dst_ip));
++		else if (mask.src_ip[0] & tcf.src_ip[0])
+ 			memcpy(&cfilter.ip.v4.src_ip, tcf.src_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
++			       sizeof(cfilter.ip.v4.src_ip));
+ 		break;
+ 	case VIRTCHNL_TCP_V6_FLOW:
+ 		cfilter.n_proto = ETH_P_IPV6;
+@@ -3773,7 +3773,7 @@ static int i40e_vc_del_cloud_filter(struct i40e_vf *vf, u8 *msg)
+ 		/* for ipv6, mask is set for all sixteen bytes (4 words) */
+ 		if (cfilter.n_proto == ETH_P_IPV6 && mask.dst_ip[3])
+ 			if (memcmp(&cfilter.ip.v6.dst_ip6, &cf->ip.v6.dst_ip6,
+-				   sizeof(cfilter.ip.v6.src_ip6)))
++				   sizeof(cfilter.ip.v6.dst_ip6)))
+ 				continue;
+ 		if (mask.vlan_id)
+ 			if (cfilter.vlan_id != cf->vlan_id)
+@@ -3859,10 +3859,10 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
+ 		cfilter->n_proto = ETH_P_IP;
+ 		if (mask.dst_ip[0] & tcf.dst_ip[0])
+ 			memcpy(&cfilter->ip.v4.dst_ip, tcf.dst_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
+-		else if (mask.src_ip[0] & tcf.dst_ip[0])
++			       sizeof(cfilter->ip.v4.dst_ip));
++		else if (mask.src_ip[0] & tcf.src_ip[0])
+ 			memcpy(&cfilter->ip.v4.src_ip, tcf.src_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
++			       sizeof(cfilter->ip.v4.src_ip));
+ 		break;
+ 	case VIRTCHNL_TCP_V6_FLOW:
+ 		cfilter->n_proto = ETH_P_IPV6;
+-- 
+2.51.0
+
 
 
