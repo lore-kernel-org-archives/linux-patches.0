@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ED4313550;
-	Mon, 13 Apr 2026 16:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66CA30FC0F;
+	Mon, 13 Apr 2026 16:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098556; cv=none; b=boPYs0AY+vD/OjXEya/P/86ymipUt3OIearQ3Ciyr0LoZ9Gmsx0b+ylUY85s0KDL3eS8XooLB4qGD3U5OGndH6qoKQQLOgqYE1RTPDHI4250QD7ked4B+7u2XVEwIr3aew3FuspzQzTyahf6tlSHcKdedpa8yDj56DYgcLKAcyE=
+	t=1776098559; cv=none; b=sdXKxNfIqMJ34pzCRf9GFywH2yX5Vw+bLGBSbPBJ9QcJAq9vzkdMSWbjDoWHxn3lFxMMoabpMkbps7bC5ZlYk7zAqzRomI5qp4vQ8NF4rDGea0b5yiGS+z5XHFG/Q+3hdsssWSXh81aFJ+GfnhdU68v2MJYE8OxAwHeroCV65ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098556; c=relaxed/simple;
-	bh=YDmgKjvJoEOs9zuRrPei2HvIK/L7xlAadDY987LCfL0=;
+	s=arc-20240116; t=1776098559; c=relaxed/simple;
+	bh=Qc8Xrocmp0dKexzxnV7WACj82HORHp8eba/f6XyDLuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EtA5jTS2fh6xvTRnNw+1NLT9bm/sPoJhAYhN7ApwiErD/xHNG6anZ/CqSTILq5jvBee7tc7f+L6CUr5D8IvsMOETQqfe/B1QYnDPsI/iGvorB+ZXudFD9Xbk2/T8yuG40y2iv+rJbZwspR9l51Uk2w0IZuL5TybGTx9dnazGfUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJz62Dzp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OodYT94S7SDDY8Iy/giJi58hlVlDqZoDt+vr7PO4bad0T3WlWThnpDudiZWDKL6zSnhVJOVGLyOO5yPKSqhWs8DKkzBKQgQWikUBSJxaYgFustFmXLot5y058LE8aJQhbvjHCXW7501wV/k5Ek34PhjRi7KvqmL6cESLmq07O3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUH38WAF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJz62Dzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC375C2BCB0;
-	Mon, 13 Apr 2026 16:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUH38WAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EC1C2BCAF;
+	Mon, 13 Apr 2026 16:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098556;
-	bh=YDmgKjvJoEOs9zuRrPei2HvIK/L7xlAadDY987LCfL0=;
+	s=korg; t=1776098558;
+	bh=Qc8Xrocmp0dKexzxnV7WACj82HORHp8eba/f6XyDLuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yJz62DzpDIVWyBBNPlHB6NHi3FnsRzoCtv4DIrBlTRG1n/rveYsUfWOJFQVs6zEZT
-	 sfyGYyDXtpIWJtRDZ02KOY30emgopYEmzYGBaSXXFPDMsu/dJcRMCC+SGNNYuq34AO
-	 6dD4WAphNDZEk8hbCuSwXUUtSlJP9WB1Kg1oI86Q=
+	b=PUH38WAFV3Fy9KWQAq7oMcC0l0SBUqILiMlhvUeGt3ahcJLAJNRRqoLcnTiMTwKlj
+	 IvMLYWAtXx/JnTnT5Leu6hlA2v78w0iF5fZNALPKnkYh7nOcF/63IpMIjPB3p+BZua
+	 agbdYmoHf4SOJ5Vbf5RxqSQkxQC00gVAcmOINqKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 570/570] io_uring/poll: correctly handle io_poll_add() return value on update
-Date: Mon, 13 Apr 2026 18:01:41 +0200
-Message-ID: <20260413155851.831023445@linuxfoundation.org>
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 544/570] seg6: separate dst_cache for input and output paths in seg6 lwtunnel
+Date: Mon, 13 Apr 2026 18:01:15 +0200
+Message-ID: <20260413155850.824243601@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,96 +53,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-Commit 84230ad2d2afbf0c44c32967e525c0ad92e26b4e upstream.
+[ Upstream commit c3812651b522fe8437ebb7063b75ddb95b571643 ]
 
-When the core of io_uring was updated to handle completions
-consistently and with fixed return codes, the POLL_REMOVE opcode
-with updates got slightly broken. If a POLL_ADD is pending and
-then POLL_REMOVE is used to update the events of that request, if that
-update causes the POLL_ADD to now trigger, then that completion is lost
-and a CQE is never posted.
+The seg6 lwtunnel uses a single dst_cache per encap route, shared
+between seg6_input_core() and seg6_output_core(). These two paths
+can perform the post-encap SID lookup in different routing contexts
+(e.g., ip rules matching on the ingress interface, or VRF table
+separation). Whichever path runs first populates the cache, and the
+other reuses it blindly, bypassing its own lookup.
 
-Additionally, ensure that if an update does cause an existing POLL_ADD
-to complete, that the completion value isn't always overwritten with
--ECANCELED. For that case, whatever io_poll_add() set the value to
-should just be retained.
+Fix this by splitting the cache into cache_input and cache_output,
+so each path maintains its own cached dst independently.
 
+Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
 Cc: stable@vger.kernel.org
-Fixes: 97b388d70b53 ("io_uring: handle completions in the core")
-Reported-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
-Tested-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260404004405.4057-2-andrea.mayer@uniroma2.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ added missing dst reference loop guard in seg6_output_core() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ net/ipv6/seg6_iptunnel.c |   41 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 13 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -6127,7 +6127,7 @@ static int io_poll_add_prep(struct io_ki
- 	return 0;
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -48,7 +48,8 @@ static size_t seg6_lwt_headroom(struct s
  }
  
--static int io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
-+static int __io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
- {
- 	struct io_poll_iocb *poll = &req->poll;
- 	struct io_poll_table ipt;
-@@ -6139,11 +6139,21 @@ static int io_poll_add(struct io_kiocb *
- 	if (!ret && ipt.error)
- 		req_set_fail(req);
- 	ret = ret ?: ipt.error;
--	if (ret)
-+	if (ret > 0) {
- 		__io_req_complete(req, issue_flags, ret, 0);
-+		return ret;
-+	}
+ struct seg6_lwt {
+-	struct dst_cache cache;
++	struct dst_cache cache_input;
++	struct dst_cache cache_output;
+ 	struct seg6_iptunnel_encap tuninfo[];
+ };
+ 
+@@ -486,7 +487,7 @@ static int seg6_input_core(struct net *n
+ 	slwt = seg6_lwt_lwtunnel(lwtst);
+ 
+ 	local_bh_disable();
+-	dst = dst_cache_get(&slwt->cache);
++	dst = dst_cache_get(&slwt->cache_input);
+ 	local_bh_enable();
+ 
+ 	err = seg6_do_srh(skb, dst);
+@@ -504,7 +505,7 @@ static int seg6_input_core(struct net *n
+ 		/* cache only if we don't create a dst reference loop */
+ 		if (!dst->error && lwtst != dst->lwtstate) {
+ 			local_bh_disable();
+-			dst_cache_set_ip6(&slwt->cache, dst,
++			dst_cache_set_ip6(&slwt->cache_input, dst,
+ 					  &ipv6_hdr(skb)->saddr);
+ 			local_bh_enable();
+ 		}
+@@ -563,7 +564,7 @@ static int seg6_output_core(struct net *
+ 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
+ 
+ 	local_bh_disable();
+-	dst = dst_cache_get(&slwt->cache);
++	dst = dst_cache_get(&slwt->cache_output);
+ 	local_bh_enable();
+ 
+ 	err = seg6_do_srh(skb, dst);
+@@ -587,9 +588,12 @@ static int seg6_output_core(struct net *
+ 			goto drop;
+ 		}
+ 
+-		local_bh_disable();
+-		dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
+-		local_bh_enable();
++		/* cache only if we don't create a dst reference loop */
++		if (orig_dst->lwtstate != dst->lwtstate) {
++			local_bh_disable();
++			dst_cache_set_ip6(&slwt->cache_output, dst, &fl6.saddr);
++			local_bh_enable();
++		}
+ 
+ 		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
+ 		if (unlikely(err))
+@@ -697,11 +701,13 @@ static int seg6_build_state(struct net *
+ 
+ 	slwt = seg6_lwt_lwtunnel(newts);
+ 
+-	err = dst_cache_init(&slwt->cache, GFP_ATOMIC);
+-	if (err) {
+-		kfree(newts);
+-		return err;
+-	}
++	err = dst_cache_init(&slwt->cache_input, GFP_ATOMIC);
++	if (err)
++		goto err_free_newts;
++
++	err = dst_cache_init(&slwt->cache_output, GFP_ATOMIC);
++	if (err)
++		goto err_destroy_input;
+ 
+ 	memcpy(&slwt->tuninfo, tuninfo, tuninfo_len);
+ 
+@@ -716,11 +722,20 @@ static int seg6_build_state(struct net *
+ 	*ts = newts;
+ 
  	return 0;
++
++err_destroy_input:
++	dst_cache_destroy(&slwt->cache_input);
++err_free_newts:
++	kfree(newts);
++	return err;
  }
  
-+static int io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
-+{
-+	int ret;
-+
-+	ret = __io_poll_add(req, issue_flags);
-+	return ret < 0 ? ret : 0;
-+}
-+
- static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags)
+ static void seg6_destroy_state(struct lwtunnel_state *lwt)
  {
- 	struct io_ring_ctx *ctx = req->ctx;
-@@ -6159,6 +6169,7 @@ static int io_poll_update(struct io_kioc
- 		ret = preq ? -EALREADY : -ENOENT;
- 		goto out;
- 	}
-+	preq->result = -ECANCELED;
- 	spin_unlock(&ctx->completion_lock);
- 
- 	if (req->poll_update.update_events || req->poll_update.update_user_data) {
-@@ -6171,16 +6182,17 @@ static int io_poll_update(struct io_kioc
- 		if (req->poll_update.update_user_data)
- 			preq->user_data = req->poll_update.new_user_data;
- 
--		ret2 = io_poll_add(preq, issue_flags);
-+		ret2 = __io_poll_add(preq, issue_flags);
- 		/* successfully updated, don't complete poll request */
- 		if (!ret2)
- 			goto out;
-+		preq->result = ret2;
+-	dst_cache_destroy(&seg6_lwt_lwtunnel(lwt)->cache);
++	struct seg6_lwt *slwt = seg6_lwt_lwtunnel(lwt);
 +
- 	}
--	req_set_fail(preq);
--	io_req_complete(preq, -ECANCELED);
-+	if (preq->result < 0)
-+		req_set_fail(preq);
-+	io_req_complete(preq, preq->result);
- out:
--	if (ret < 0)
--		req_set_fail(req);
- 	/* complete update request, we're done with it */
- 	io_req_complete(req, ret);
- 	io_ring_submit_unlock(ctx, !(issue_flags & IO_URING_F_NONBLOCK));
++	dst_cache_destroy(&slwt->cache_input);
++	dst_cache_destroy(&slwt->cache_output);
+ }
+ 
+ static int seg6_fill_encap_info(struct sk_buff *skb,
 
 
