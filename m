@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A6A223DCE;
-	Mon, 13 Apr 2026 16:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DC123E342;
+	Mon, 13 Apr 2026 16:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098861; cv=none; b=b4Pjf2KeUUjLQs42OmpFTHZ1rF6mampgJMW1Q29IVjcA+emUiVqcRwXe2mmz+cBwT5yhpv43gRqmCP0fYkxV3K8bE3kvcUznxef/qk/Vq/7OjY/ImyNN8krCj1VRqHvZx5fWn0fEdusTUAqmGq7nPLwmXuk77oBNk2UELjOStmc=
+	t=1776098864; cv=none; b=SZCqMgo96VATcug1NSRAThdsKVlFjpSRmAENvH1cFoYFFC3PupX5kWzSWkHdt3mR/1pQ9CgLLe0H3yHHoBWWnc5c/grESHkN6vGgLH/E8+3ALR/bxAGUHnrcBnnhtjFZZxXViA2dSeBNTMYeo8EfDICWWxxLKeDIn96HM3bqrAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098861; c=relaxed/simple;
-	bh=Lh2+5xvXMXkAsXTIlJYPnk7XdPsbqh+1ijConrvHC54=;
+	s=arc-20240116; t=1776098864; c=relaxed/simple;
+	bh=8PrrE83LOEEf+Qo8C2klwqfu+ExX0f1vdMGUF8HjaYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l17WTXZQx0ZJ58gKdAbPuyd7qdNWk9wuvWESjayHiUvwH85iZEmTe13U+xyo9HeP/oSBcbIJhsHyGGEtCf/shmM0akJJzL1O6vjNqaoEwGUOWCV+3E7H76Sgc8KCcoBLsp6Z2ohklxiQ4rKUWaK25r5IhImyPKc0zKOFyqeErqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbOZDxmk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KhQM8FXAR5PAeoKZHbcjEDybO0AA6K1Ot95ZOHX1UPmBGn5dxOswScqJw1qwGbQxIjnY2JOd/iRAUcNK8wNpckIzkWyxKCIFaF/9OE7tddiuHNba7a/sMVuikyuOuQ2oBa7tNjYrT5lcsn9hAQw8eg8XY4cDOydBLRwQlhjSsrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8oVIFtE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbOZDxmk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDDCC2BCAF;
-	Mon, 13 Apr 2026 16:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8oVIFtE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD61BC2BCB0;
+	Mon, 13 Apr 2026 16:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098861;
-	bh=Lh2+5xvXMXkAsXTIlJYPnk7XdPsbqh+1ijConrvHC54=;
+	s=korg; t=1776098864;
+	bh=8PrrE83LOEEf+Qo8C2klwqfu+ExX0f1vdMGUF8HjaYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DbOZDxmkkjem2PAyYyzBsZO4DuBhabJcww4J63LqXJVE3nG7YvKABZ0nXQEiQHhPo
-	 LKYMHdBTs2baSAhKH/Vf5OhGjwJXbgxIjf41QTa8dyr0vjLyiYKDIXkFqjNMl+kh09
-	 qjHZHwuZ7mrCU2U/n/1wFkkd7wKuNMKtulktpiEs=
+	b=w8oVIFtEiBWlHcIbDQYS9xaqYz3BDvPZxuBmn4mquLGD16tElvXuP0SVVojrZM5Oh
+	 ghbU0xD2Fg9g8E3LygrOn+GnP9YYMGl6+HY+d1qF7r/oCKiDPWAyLO3KbZk8eEBT9A
+	 Cvp/al14z995eEFCNKWvpdOv7FeQpPuTlm9epKO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 5.10 118/491] nouveau/dpcd: return EBUSY for aux xfer if the device is asleep
-Date: Mon, 13 Apr 2026 17:56:03 +0200
-Message-ID: <20260413155823.459331765@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 119/491] parisc: Fix initial page table creation for boot
+Date: Mon, 13 Apr 2026 17:56:04 +0200
+Message-ID: <20260413155823.496441058@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,45 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 8f3c6f08ababad2e3bdd239728cf66a9949446b4 upstream.
+commit 8475d8fe21ec9c7eb2faca555fbc5b68cf0d2597 upstream.
 
-If we have runtime suspended, and userspace wants to use /dev/drm_dp_*
-then just tell it the device is busy instead of crashing in the GSP
-code.
+The KERNEL_INITIAL_ORDER value defines the initial size (usually 32 or
+64 MB) of the page table during bootup. Up until now the whole area was
+initialized with PTE entries, but there was no check if we filled too
+many entries.  Change the code to fill up with so many entries that the
+"_end" symbol can be reached by the kernel, but not more entries than
+actually fit into the initial PTE tables.
 
-WARNING: CPU: 2 PID: 565741 at drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c:164 r535_gsp_msgq_wait+0x9a/0xb0 [nouveau]
-CPU: 2 UID: 0 PID: 565741 Comm: fwupd Not tainted 6.18.10-200.fc43.x86_64 #1 PREEMPT(lazy)
-Hardware name: LENOVO 20QTS0PQ00/20QTS0PQ00, BIOS N2OET65W (1.52 ) 08/05/2024
-RIP: 0010:r535_gsp_msgq_wait+0x9a/0xb0 [nouveau]
-
-This is a simple fix to get backported. We should probably engineer a
-proper power domain solution to wake up devices and keep them awake
-while fw updates are happening.
-
-Cc: stable@vger.kernel.org
-Fixes: 8894f4919bc4 ("drm/nouveau: register a drm_dp_aux channel for each dp connector")
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260224031750.791621-1-airlied@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org> # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/parisc/kernel/head.S |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -1176,6 +1176,9 @@ nouveau_connector_aux_xfer(struct drm_dp
- 	u8 size = msg->size;
- 	int ret;
+--- a/arch/parisc/kernel/head.S
++++ b/arch/parisc/kernel/head.S
+@@ -55,6 +55,7 @@ ENTRY(parisc_kernel_start)
  
-+	if (pm_runtime_suspended(nv_connector->base.dev->dev))
-+		return -EBUSY;
-+
- 	nv_encoder = find_encoder(&nv_connector->base, DCB_OUTPUT_DP);
- 	if (!nv_encoder || !(aux = nv_encoder->aux))
- 		return -ENODEV;
+ 	.import __bss_start,data
+ 	.import __bss_stop,data
++	.import __end,data
+ 
+ 	load32		PA(__bss_start),%r3
+ 	load32		PA(__bss_stop),%r4
+@@ -148,7 +149,11 @@ $cpu_ok:
+ 	 * everything ... it will get remapped correctly later */
+ 	ldo		0+_PAGE_KERNEL_RWX(%r0),%r3 /* Hardwired 0 phys addr start */
+ 	load32		(1<<(KERNEL_INITIAL_ORDER-PAGE_SHIFT)),%r11 /* PFN count */
+-	load32		PA(pg0),%r1
++	load32		PA(_end),%r1
++	SHRREG		%r1,PAGE_SHIFT,%r1  /* %r1 is PFN count for _end symbol */
++	cmpb,<<,n	%r11,%r1,1f
++	copy		%r1,%r11	/* %r1 PFN count smaller than %r11 */
++1:	load32		PA(pg0),%r1
+ 
+ $pgt_fill_loop:
+ 	STREGM          %r3,ASM_PTE_ENTRY_SIZE(%r1)
 
 
