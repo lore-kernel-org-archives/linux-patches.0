@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1E2271464;
-	Mon, 13 Apr 2026 16:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B838271464;
+	Mon, 13 Apr 2026 16:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096418; cv=none; b=CVMFY7URh/mX2LFfn/OezJc1iq5is+7OTIhadqZWZNtG+3EnlT27CoxKW/O6ClhCmToFQ4iM1HChznfVefrntaT4dZUYNfpPmytC8ra10NFc/OYDYuB5S45IY5KpHCNbL3fw1BzcROrhvU1/zIbb4AYvLJod7MeC8o6PizjXDv8=
+	t=1776096421; cv=none; b=sq0fK6q3Kj3A4Ufa8rBttnrJOxu2eJ/Q6712g9tRYHumfXpo3KPxDvvdoWOaoaw2PgfivktVo5xmLv1iNri/x1cYUqjrjjeMXdKjlxC0WbiIlaGgL/PDp/K1pZtZHD60XBXOwkXbouNX0fZ6DWm0pWR7tIaEtSO7a595DWBUYIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096418; c=relaxed/simple;
-	bh=+DvuA6KADTByjohAtLvJ7Z92gznVNLSjvvOKC0dT2Rk=;
+	s=arc-20240116; t=1776096421; c=relaxed/simple;
+	bh=RWdqWhgFTTBXhfWx9IyTen+UuFX0R6/7m8XYWZH/HCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Krfm3NVc1pbarlDyUlYWPFOUgijylMYbSM1oI0Lcer3L1e01LAwqo/qMvS1wnZ2mIA0jODmu/T4SMoHAAVkLSo1vS+OcevGclPykqz3NQDJ2rtnKCjkIneVyosqdLopy6PZ73lZ7yDwhwxDwX+CGCoCOgc0zTHJGoAxOgfNX3GA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHJ1R/Rr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dVIAin87ib+TP6gS7dw5YUZMLfr1nI93YTQ2HrrD8+PdfUTKKDDnkersA0s4HXCJ3PGGq0keYeQygOZgRw9Kmb8LciUWnDfOPfvDIRPCRBtLXy6uEr6aaeQIFl326r8QBouGbYXZ/dKBM9O+WF2z73ohEr5P0bluYUMjyddc6F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VXwiysT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHJ1R/Rr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BF2C2BCAF;
-	Mon, 13 Apr 2026 16:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VXwiysT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB85C2BCAF;
+	Mon, 13 Apr 2026 16:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096418;
-	bh=+DvuA6KADTByjohAtLvJ7Z92gznVNLSjvvOKC0dT2Rk=;
+	s=korg; t=1776096421;
+	bh=RWdqWhgFTTBXhfWx9IyTen+UuFX0R6/7m8XYWZH/HCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHJ1R/Rrxkgk5LiihPTZiJCjPQeI9c4/R/yU59ZadziMuVymbFbhldslyXKoBf5mM
-	 uMrEtilLWQnMRhpiv+taU/dSAuxtSQgkIKyGd/ythexs5QgqukX9xhzEWRhsszX2Jo
-	 qp60L7Acuq/YPfxHzifkXQhE626NNgJzWbpiExZI=
+	b=0VXwiysTtbUZBqrW2NKZl3d4qojuLVjFo84yDhFvnTnVyZ31S5fZYTkMRR6VZCtfs
+	 F+Kn6OfYA/97LA2qLxQYGCIBShPDJmugG1RDgcFCQRrcfcsYmtPExWbM0PBoTO15bV
+	 ZiU1CL0CFCYHNsMOmDB78YolGsgHWrfNvCqu6LZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alok Tiwari <alok.a.tiwari@oracle.com>,
 	David Howells <dhowells@redhat.com>,
+	Simon Horman <horms@kernel.org>,
 	Jeffrey Altman <jaltman@auristor.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 70/86] rxrpc: Fix use of wrong skb when comparing queued RESP challenge serial
-Date: Mon, 13 Apr 2026 18:00:17 +0200
-Message-ID: <20260413155734.161401729@linuxfoundation.org>
+Subject: [PATCH 6.19 71/86] rxrpc: Fix rack timer warning to report unexpected mode
+Date: Mon, 13 Apr 2026 18:00:18 +0200
+Message-ID: <20260413155734.199029881@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -58,66 +58,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-commit b33f5741bb187db8ff32e8f5b96def77cc94dfca upstream.
+commit 65b3ffe0972ed023acc3981a0f7e1ae5d0208bd3 upstream.
 
-In rxrpc_post_response(), the code should be comparing the challenge serial
-number from the cached response before deciding to switch to a newer
-response, but looks at the newer packet private data instead, rendering the
-comparison always false.
+rxrpc_rack_timer_expired() clears call->rack_timer_mode to OFF before
+the switch. The default case warning therefore always prints OFF and
+doesn't identify the unexpected timer mode.
 
-Fix this by switching to look at the older packet.
+Log the saved mode value instead so the warning reports the actual
+unexpected rack timer mode.
 
-Fix further[1] to substitute the new packet in place of the old one if
-newer and also to release whichever we don't use.
-
-Fixes: 5800b1cf3fd8 ("rxrpc: Allow CHALLENGEs to the passed to the app for a RESPONSE")
+Fixes: 7c482665931b ("rxrpc: Implement RACK/TLP to deal with transmission stalls [RFC8985]")
 Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com [1]
-Link: https://patch.msgid.link/20260408121252.2249051-7-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-8-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |    1 +
- net/rxrpc/conn_event.c       |    5 +++--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/rxrpc/input_rack.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -185,6 +185,7 @@
- 	EM(rxrpc_skb_put_input,			"PUT input    ") \
- 	EM(rxrpc_skb_put_jumbo_subpacket,	"PUT jumbo-sub") \
- 	EM(rxrpc_skb_put_oob,			"PUT oob      ") \
-+	EM(rxrpc_skb_put_old_response,		"PUT old-resp ") \
- 	EM(rxrpc_skb_put_purge,			"PUT purge    ") \
- 	EM(rxrpc_skb_put_purge_oob,		"PUT purge-oob") \
- 	EM(rxrpc_skb_put_response,		"PUT response ") \
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -557,11 +557,11 @@ void rxrpc_post_response(struct rxrpc_co
- 	spin_lock_irq(&local->lock);
- 	old = conn->tx_response;
- 	if (old) {
--		struct rxrpc_skb_priv *osp = rxrpc_skb(skb);
-+		struct rxrpc_skb_priv *osp = rxrpc_skb(old);
- 
- 		/* Always go with the response to the most recent challenge. */
- 		if (after(sp->resp.challenge_serial, osp->resp.challenge_serial))
--			conn->tx_response = old;
-+			conn->tx_response = skb;
- 		else
- 			old = skb;
- 	} else {
-@@ -569,4 +569,5 @@ void rxrpc_post_response(struct rxrpc_co
+--- a/net/rxrpc/input_rack.c
++++ b/net/rxrpc/input_rack.c
+@@ -413,6 +413,6 @@ void rxrpc_rack_timer_expired(struct rxr
+ 		break;
+ 	//case RXRPC_CALL_RACKTIMER_ZEROWIN:
+ 	default:
+-		pr_warn("Unexpected rack timer %u", call->rack_timer_mode);
++		pr_warn("Unexpected rack timer %u", mode);
  	}
- 	spin_unlock_irq(&local->lock);
- 	rxrpc_poke_conn(conn, rxrpc_conn_get_poke_response);
-+	rxrpc_free_skb(old, rxrpc_skb_put_old_response);
  }
 
 
