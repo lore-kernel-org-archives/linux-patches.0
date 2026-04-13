@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D15A2F8BC3;
-	Mon, 13 Apr 2026 16:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BF52BE65F;
+	Mon, 13 Apr 2026 16:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096720; cv=none; b=D9qUhO/qgUcjZFJhmT895akD/gvA4Z56GplageK4Nnf17eiQADD2o//rzRVG/Vd4kDCyQlrmKdC8jH3us/p+ECvvdLAj/Sf6mdi5DhBG+1VHLXa7vHaF7xBj20pqpsR5C/7rcZrxCVvBce1r8kq1LvxXpKREPoiJmYALjBF42B0=
+	t=1776096723; cv=none; b=Gu2hcD/Y3048rbzwO7/uL3hIQrufXnVG4ElBSwCK0YmtPB1SWn/DWqtJ8sSy8zU1TUXwoE6WWExRMwXzQgp29Ld3n4ZIkJH6zYMuOk8abn+1MfwpJmIAEnFHkP1fBVTOb3xto+922zH+Sr9+Zi1tb9FI6UR0FBToK+gT6Q+GPVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096720; c=relaxed/simple;
-	bh=tU6gp+ORps1R6z9yUsItfuZ0x3Ql2/Cp5scYWBl0+GA=;
+	s=arc-20240116; t=1776096723; c=relaxed/simple;
+	bh=apuaxXaHF4LSkV8dSLGxDWhND6Dvl1e1DoLmFZG1hkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kslwZmiaIrqojL/cm9vTszXH67OHIkfziKkHVQrJsfqn0lEX+jTNyC9cWTaPSPBJ5X2rkT/P2vybG67hKfbA6T41xaPvQlCPX7lbXq07djDgVWna3QgZI1TVn5LFWpZT7OTjBK2JyJWwzEDDwgMCclpoXh4Rxmy4GyjPYH3cJn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9L9yneo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KB2ylscB2VOgCvbnZnZ91ArCLpaxKeoWiuvoecBHbRe1kk2/2c5Avbnu2QcqY9UWtJ5tTFG1zyyxx0HwteMstGChYGSh3G/UNzTcB6/PERziMjioipX26/AArT3zawOJ0kmg8KNNyfRTHYJpTRwb0e/IXX4WvNjBspVmdcwnpfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxHwY6JE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9L9yneo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0252FC2BCAF;
-	Mon, 13 Apr 2026 16:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxHwY6JE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC47C2BCAF;
+	Mon, 13 Apr 2026 16:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096720;
-	bh=tU6gp+ORps1R6z9yUsItfuZ0x3Ql2/Cp5scYWBl0+GA=;
+	s=korg; t=1776096722;
+	bh=apuaxXaHF4LSkV8dSLGxDWhND6Dvl1e1DoLmFZG1hkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9L9yneoyXcDdS1vrq+T+kFuK7SHiWIKFrNehSNtxhzAZLcZIoPm9Rm0Sh0YSnsKR
-	 Nu7fICA4bt5IOQABxrbuJUMZEZYI8GP3NHNNYTWCXeCiEJJGJrfzfMWz3GOOU/T5L4
-	 N1fcZnZvEMJIZ9Ed4BgyX9ACIheB5f6kEpCM4q0o=
+	b=qxHwY6JEU2fGw6oMyld/To0WIz2X5tcZgc1GnKCSpO7IxiidLb1tPXUfD4m1L8yPO
+	 Ua/yqR0qSa0dbh/WuCTYNp6b9UfjMEZbvKuaoIPlQfG6MbzPx9jNEssZI5UNFHdQk/
+	 uW/hnzz3dyriVbSn0ZTqTYheCQ4LRuVl4Ph1nwjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 36/70] platform/x86/intel-uncore-freq: Handle autonomous UFS status bit
-Date: Mon, 13 Apr 2026 18:00:31 +0200
-Message-ID: <20260413155729.530855464@linuxfoundation.org>
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.12 37/70] Revert "arm64: dts: imx8mq-librem5: Set the DVS voltages lower"
+Date: Mon, 13 Apr 2026 18:00:32 +0200
+Message-ID: <20260413155729.566970254@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -44,69 +44,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-commit 4ab604b3f3aa8dcccc7505f5d310016682a99d5f upstream.
+commit 4cd46ea0eb4504f7f4fea92cb4601c5c9a3e545e upstream.
 
-When the AUTONOMOUS_UFS_DISABLED bit is set in the header, the ELC
-(Efficiency Latency Control) feature is non-functional. Hence, return
-error for read or write to ELC attributes.
+This reverts commit c24a9b698fb02cd0723fa8375abab07f94b97b10.
 
-Fixes: bb516dc79c4a ("platform/x86/intel-uncore-freq: Add support for efficiency latency control")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+It's been found that there's a significant per-unit variance in accepted
+supply voltages and the current set still makes some units unstable.
+
+Revert back to nominal values.
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260325192909.3417322-1-srinivas.pandruvada@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: c24a9b698fb0 ("arm64: dts: imx8mq-librem5: Set the DVS voltages lower")
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts |    2 -
+ arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi   |   22 +++++---------------
+ 2 files changed, 7 insertions(+), 17 deletions(-)
 
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
-@@ -421,6 +421,7 @@ static void remove_cluster_entries(struc
- #define UNCORE_VERSION_MASK			GENMASK_ULL(7, 0)
- #define UNCORE_LOCAL_FABRIC_CLUSTER_ID_MASK	GENMASK_ULL(15, 8)
- #define UNCORE_CLUSTER_OFF_MASK			GENMASK_ULL(7, 0)
-+#define UNCORE_AUTONOMOUS_UFS_DISABLED		BIT(32)
- #define UNCORE_MAX_CLUSTER_PER_DOMAIN		8
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
+@@ -7,7 +7,7 @@
  
- static int uncore_probe(struct auxiliary_device *auxdev, const struct auxiliary_device_id *id)
-@@ -482,6 +483,7 @@ static int uncore_probe(struct auxiliary
+ &a53_opp_table {
+ 	opp-1000000000 {
+-		opp-microvolt = <950000>;
++		opp-microvolt = <1000000>;
+ 	};
+ };
  
- 	for (i = 0; i < num_resources; ++i) {
- 		struct tpmi_uncore_power_domain_info *pd_info;
-+		bool auto_ufs_enabled;
- 		struct resource *res;
- 		u64 cluster_offset;
- 		u8 cluster_mask;
-@@ -531,6 +533,8 @@ static int uncore_probe(struct auxiliary
- 			continue;
- 		}
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+@@ -845,8 +845,8 @@
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+ 				regulator-ramp-delay = <1250>;
+-				rohm,dvs-run-voltage = <880000>;
+-				rohm,dvs-idle-voltage = <820000>;
++				rohm,dvs-run-voltage = <900000>;
++				rohm,dvs-idle-voltage = <850000>;
+ 				rohm,dvs-suspend-voltage = <810000>;
+ 				regulator-always-on;
+ 			};
+@@ -857,8 +857,8 @@
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+ 				regulator-ramp-delay = <1250>;
+-				rohm,dvs-run-voltage = <950000>;
+-				rohm,dvs-idle-voltage = <850000>;
++				rohm,dvs-run-voltage = <1000000>;
++				rohm,dvs-idle-voltage = <900000>;
+ 				regulator-always-on;
+ 			};
  
-+		auto_ufs_enabled = !(header & UNCORE_AUTONOMOUS_UFS_DISABLED);
-+
- 		/* Find out number of clusters in this resource */
- 		pd_info->cluster_count = hweight8(cluster_mask);
+@@ -867,14 +867,14 @@
+ 				regulator-min-microvolt = <700000>;
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+-				rohm,dvs-run-voltage = <850000>;
++				rohm,dvs-run-voltage = <900000>;
+ 			};
  
-@@ -568,7 +572,9 @@ static int uncore_probe(struct auxiliary
+ 			buck4_reg: BUCK4 {
+ 				regulator-name = "buck4";
+ 				regulator-min-microvolt = <700000>;
+ 				regulator-max-microvolt = <1300000>;
+-				rohm,dvs-run-voltage = <930000>;
++				rohm,dvs-run-voltage = <1000000>;
+ 			};
  
- 			cluster_info->uncore_root = tpmi_uncore;
- 
--			if (TPMI_MINOR_VERSION(pd_info->ufs_header_ver) >= UNCORE_ELC_SUPPORTED_VERSION)
-+			if ((TPMI_MINOR_VERSION(pd_info->ufs_header_ver) >=
-+			     UNCORE_ELC_SUPPORTED_VERSION) &&
-+			    auto_ufs_enabled)
- 				cluster_info->elc_supported = true;
- 
- 			ret = uncore_freq_add_entry(&cluster_info->uncore_data, 0);
+ 			buck5_reg: BUCK5 {
+@@ -1405,13 +1405,3 @@
+ 	fsl,ext-reset-output;
+ 	status = "okay";
+ };
+-
+-&a53_opp_table {
+-	opp-1000000000 {
+-		opp-microvolt = <850000>;
+-	};
+-
+-	opp-1500000000 {
+-		opp-microvolt = <950000>;
+-	};
+-};
 
 
