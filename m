@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AD127FB2E;
-	Mon, 13 Apr 2026 16:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB562727E2;
+	Mon, 13 Apr 2026 16:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096367; cv=none; b=cSIDcg3GB7whN9bPXD2sG1nv+xDpxQUCt4+SInc0o+KET/hbHhDimN0hM159hGi6NW1P4Elu3SIjD/slsPHzrHXYwwiVsOnJMafhPQ6NYNMT57Asl+dr8Wpl6XaUYLnn5nL3+l4BSZ0uIcniOVcHlyV0Sqg/ik1s06hsYLoug80=
+	t=1776096369; cv=none; b=R/a6Ch5cvQrhN+BVU/1vO8pKLssFwuPXlvlwigMdpPZZbyyCCCy/sDBL0aCt/yo/cdjfJYDG5MV9MZ80hB0reuoyB2XSz20cTznHKMfKwlV7TH++ZyNnpaoUQSFHcjM5g/at1IpxOWNoDNpQVtT5OeXzDsgCcAsxsqS42pYeQBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096367; c=relaxed/simple;
-	bh=TFPpvnxej/Yy+VJeJfJafF1AV4t2k4/rqBf2+uYQztc=;
+	s=arc-20240116; t=1776096369; c=relaxed/simple;
+	bh=qAuciR8uxlH+Huqrm0IQYHrFTLS14hv54AB/QUjmPV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+hH36RKqQL8OgkL+UfrAir1PQsFu265+xq9mUaNq+G+1yAYjSMfv44DxK4AnPa/Nz8ZnlCdZHf6Nnm1wDhgxziuNTS4FjjDr7rYc3RKamXEFU7zJbI/ZYxReYDSBMXrmYWNGMTycTIkoj2l9jXOLkh1Yun/FSc9ePPtN8fO+UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/htytE7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bNcSs5uIV3mjiS06+jJmHiwuSNq7CZ0P/CWoUvpVSAbnTB9bCxR6XEtrC6kphxJmj2cXdatKvS3TXELxpyB13AtxHj9i6YBi3wJJ1kfNPMdXXIAzYdsN0VJCHvbTOXq/xwYAvlk/Ah7mlmlPtBWqA0Wp0fFE8FOyZO2XFR+FsIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfd+cvzu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/htytE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17BBC2BCAF;
-	Mon, 13 Apr 2026 16:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfd+cvzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76111C2BCAF;
+	Mon, 13 Apr 2026 16:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096367;
-	bh=TFPpvnxej/Yy+VJeJfJafF1AV4t2k4/rqBf2+uYQztc=;
+	s=korg; t=1776096369;
+	bh=qAuciR8uxlH+Huqrm0IQYHrFTLS14hv54AB/QUjmPV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/htytE7Id5enaTmZDcwU3yUNnjsariAMZsKAIGzbGInz6lcFwafm4CP4WwRlZLqB
-	 s5lBpoBru2sSZ9NiScxZy1KrQxwIzfiAvL6VVUXI9hGCGRGvUufHAgrFcPnGKM3kML
-	 Qn5XDywRE+n0lWHDQk1L2dPLUXcXvqgFDFz+oZY4=
+	b=rfd+cvzu6DyY/p83FSignUGMH3xSdTJJVsFsADhFBIP3hVqvw7wB5ipXUwGEY1cOf
+	 o/LJC5kN4hXwdbDlFNdNGBudCKZlUVr02ipQW0e38Bo1dnhi6y7ROuhaly/Rzqxr1n
+	 i+6l8aTdAtYRKGiIzHTvQujhdnFH6oTIeRPJXLCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.19 38/86] nfc: pn533: allocate rx skb before consuming bytes
-Date: Mon, 13 Apr 2026 17:59:45 +0200
-Message-ID: <20260413155732.990535157@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.19 29/86] platform/x86: ISST: Reset core count to 0
+Date: Mon, 13 Apr 2026 17:59:36 +0200
+Message-ID: <20260413155732.663358193@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -44,65 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit c71ba669b570c7b3f86ec875be222ea11dacb352 upstream.
+commit e1415b9418eb22b4a7a1ef4b4aec9dd0a49e3fa7 upstream.
 
-pn532_receive_buf() reports the number of accepted bytes to the serdev
-core. The current code consumes bytes into recv_skb and may already hand
-a complete frame to pn533_recv_frame() before allocating a fresh receive
-buffer.
+Based on feature revision, number of buckets can be less than the
+TRL_MAX_BUCKETS. In that case core counts in the remaining buckets
+can be set to some invalid values.
 
-If that alloc_skb() fails, the callback returns 0 even though it has
-already consumed bytes, and it leaves recv_skb as NULL for the next
-receive callback. That breaks the receive_buf() accounting contract and
-can also lead to a NULL dereference on the next skb_put_u8().
+Hence reset core count to 0 for all buckets before assigning correct
+values.
 
-Allocate the receive skb lazily before consuming the next byte instead.
-If allocation fails, return the number of bytes already accepted.
-
-Fixes: c656aa4c27b1 ("nfc: pn533: add UART phy driver")
+Fixes: 885d1c2a30b7 ("platform/x86: ISST: Support SST-TF revision 2")
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260405094003.3-pn533-v2-pengpeng@iscas.ac.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20260325192638.3417281-1-srinivas.pandruvada@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/pn533/uart.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/nfc/pn533/uart.c
-+++ b/drivers/nfc/pn533/uart.c
-@@ -211,6 +211,13 @@ static size_t pn532_receive_buf(struct s
- 
- 	timer_delete(&dev->cmd_timeout);
- 	for (i = 0; i < count; i++) {
-+		if (!dev->recv_skb) {
-+			dev->recv_skb = alloc_skb(PN532_UART_SKB_BUFF_LEN,
-+						  GFP_KERNEL);
-+			if (!dev->recv_skb)
-+				return i;
-+		}
-+
- 		if (unlikely(!skb_tailroom(dev->recv_skb)))
- 			skb_trim(dev->recv_skb, 0);
- 
-@@ -219,9 +226,7 @@ static size_t pn532_receive_buf(struct s
- 			continue;
- 
- 		pn533_recv_frame(dev->priv, dev->recv_skb, 0);
--		dev->recv_skb = alloc_skb(PN532_UART_SKB_BUFF_LEN, GFP_KERNEL);
--		if (!dev->recv_skb)
--			return 0;
-+		dev->recv_skb = NULL;
+--- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
++++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
+@@ -1460,6 +1460,8 @@ static int isst_if_get_turbo_freq_info(v
+ 					    SST_MUL_FACTOR_FREQ)
  	}
  
- 	return i;
++	memset(turbo_freq.bucket_core_counts, 0, sizeof(turbo_freq.bucket_core_counts));
++
+ 	if (feature_rev >= 2) {
+ 		bool has_tf_info_8 = false;
+ 
 
 
