@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035422E11B9;
-	Mon, 13 Apr 2026 16:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B11949620;
+	Mon, 13 Apr 2026 16:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097672; cv=none; b=qquTXJm0VtVkaI9FQpsVC5TK4uGCV+X7Z5pC2ZrPJv3FNAWVWnGGMdr2b8UiJA9/0/xJZCqTFAm+WW9zYVcyh+GbpMjzIDG42SeXPTyW4EHmHCXzkvnLD+Iy4t8wyk+nYIPtbn7wICwIxfRe+s2r4sZaj7cUUOBPDiHyfzqlTxE=
+	t=1776097674; cv=none; b=DlChiQKQE5/LpYLY67b81pnuggwOt/zr5FUFTT57Sbvtl5IYc1fhGFOCsXkZeycDmNb1QcruSogfym9dS6Nr8It4BoAoY8ukgH2IUa0LjjpHEhrwamSdouO8B28QukBibkUYM4jkKcKRoICyUzV/3YHXuxv7SmRH/BRTt7ixjYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097672; c=relaxed/simple;
-	bh=/viRJrbp2xZeRS7zy+bjqI9Y+jYgSkMO8yIzakZIwx8=;
+	s=arc-20240116; t=1776097674; c=relaxed/simple;
+	bh=v6/txUr8jcv/xBaFz8jr0IxIQZMQzOtSIlC9cP52uPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a37h/+oZb2CGZtPhFTRiMIFWkMCHkdBZKWHnYYCDnA/6Wwg+ppdpD3AeBWvKKjBlgBuRNu8cDSK4R86PGha4dx1+c8BoE4v9tkpmqvuY8zEK1Glvo7LAHqqsHzKoAofl9Zz9/4Kmhuysy9hY8NxkhoxTnvynSOktS7vpntxPbuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aITo01vz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r4FCG5QrF6ErBqmsveVTdCLNa3Q1L3e3k5FtORGn5JYL6UNbvfA9NDsR+5Od2ZEZQbEf7EyrsUsxt9d749kkxvLOzgABHN85UW6gTTLCoNZs+23lGu+9U8MqZ2pBMKi4PAYthqetfOXdOf88uNMFnu0cC7hQszXSaMJBmMceSIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcV3i4eU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aITo01vz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63038C2BCAF;
-	Mon, 13 Apr 2026 16:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcV3i4eU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8A6C2BCAF;
+	Mon, 13 Apr 2026 16:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097671;
-	bh=/viRJrbp2xZeRS7zy+bjqI9Y+jYgSkMO8yIzakZIwx8=;
+	s=korg; t=1776097674;
+	bh=v6/txUr8jcv/xBaFz8jr0IxIQZMQzOtSIlC9cP52uPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aITo01vz+fE1DjEcxcy5+5n5Y5dLdWx5Khl4eVRs06Bh/lXwoDAMt9A4jDU1f8e55
-	 BhjRhHsA/pf3Uk3wFocfEhfKEsB+yK3pWmQFSwS7Wu3jsvipHk2BevyTcwNKh4m+DW
-	 kKeZ80/bvTZfzTVn6rbKv8Vl/llaSObaEcJOTtxY=
+	b=UcV3i4eUUBe5qmAuQurpR9/t3FHpMFkkhCsc72gd3AF/5vfA/X9YtSf5PQ8M07o2X
+	 TKGhAutLmSyHHFEGCdCV3nShzMPMYzFI7O1qgEmYnT6Qu4hFKANWWI0FSqiCjWyGEO
+	 CemmxSlHqDuWOJgPoFd0nEH0IGTm7XINP9C3nGlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4eb282331cab6d5b6588@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
-	Jianqiang kang <jianqkang@sina.cn>
-Subject: [PATCH 5.15 195/570] io_uring/io-wq: check IO_WQ_BIT_EXIT inside work run loop
-Date: Mon, 13 Apr 2026 17:55:26 +0200
-Message-ID: <20260413155837.764363549@linuxfoundation.org>
+	Nuno Sa <nuno.sa@analog.com>,
+	Julien Stephan <jstephan@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Charles Xu <charles_xu@189.cn>
+Subject: [PATCH 5.15 196/570] driver: iio: add missing checks on iio_infos callback access
+Date: Mon, 13 Apr 2026 17:55:27 +0200
+Message-ID: <20260413155837.801593842@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,91 +52,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Julien Stephan <jstephan@baylibre.com>
 
-commit 10dc959398175736e495f71c771f8641e1ca1907 upstream.
+commit c4ec8dedca961db056ec85cb7ca8c9f7e2e92252 upstream.
 
-Currently this is checked before running the pending work. Normally this
-is quite fine, as work items either end up blocking (which will create a
-new worker for other items), or they complete fairly quickly. But syzbot
-reports an issue where io-wq takes seemingly forever to exit, and with a
-bit of debugging, this turns out to be because it queues a bunch of big
-(2GB - 4096b) reads with a /dev/msr* file. Since this file type doesn't
-support ->read_iter(), loop_rw_iter() ends up handling them. Each read
-returns 16MB of data read, which takes 20 (!!) seconds. With a bunch of
-these pending, processing the whole chain can take a long time. Easily
-longer than the syzbot uninterruptible sleep timeout of 140 seconds.
-This then triggers a complaint off the io-wq exit path:
+Some callbacks from iio_info structure are accessed without any check, so
+if a driver doesn't implement them trying to access the corresponding
+sysfs entries produce a kernel oops such as:
 
-INFO: task syz.4.135:6326 blocked for more than 143 seconds.
-      Not tainted syzkaller #0
-      Blocked by coredump.
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:syz.4.135       state:D stack:26824 pid:6326  tgid:6324  ppid:5957   task_flags:0x400548 flags:0x00080000
-Call Trace:
- <TASK>
- context_switch kernel/sched/core.c:5256 [inline]
- __schedule+0x1139/0x6150 kernel/sched/core.c:6863
- __schedule_loop kernel/sched/core.c:6945 [inline]
- schedule+0xe7/0x3a0 kernel/sched/core.c:6960
- schedule_timeout+0x257/0x290 kernel/time/sleep_timeout.c:75
- do_wait_for_common kernel/sched/completion.c:100 [inline]
- __wait_for_common+0x2fc/0x4e0 kernel/sched/completion.c:121
- io_wq_exit_workers io_uring/io-wq.c:1328 [inline]
- io_wq_put_and_exit+0x271/0x8a0 io_uring/io-wq.c:1356
- io_uring_clean_tctx+0x10d/0x190 io_uring/tctx.c:203
- io_uring_cancel_generic+0x69c/0x9a0 io_uring/cancel.c:651
- io_uring_files_cancel include/linux/io_uring.h:19 [inline]
- do_exit+0x2ce/0x2bd0 kernel/exit.c:911
- do_group_exit+0xd3/0x2a0 kernel/exit.c:1112
- get_signal+0x2671/0x26d0 kernel/signal.c:3034
- arch_do_signal_or_restart+0x8f/0x7e0 arch/x86/kernel/signal.c:337
- __exit_to_user_mode_loop kernel/entry/common.c:41 [inline]
- exit_to_user_mode_loop+0x8c/0x540 kernel/entry/common.c:75
- __exit_to_user_mode_prepare include/linux/irq-entry-common.h:226 [inline]
- syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:256 [inline]
- syscall_exit_to_user_mode_work include/linux/entry-common.h:159 [inline]
- syscall_exit_to_user_mode include/linux/entry-common.h:194 [inline]
- do_syscall_64+0x4ee/0xf80 arch/x86/entry/syscall_64.c:100
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fa02738f749
-RSP: 002b:00007fa0281ae0e8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
-RAX: fffffffffffffe00 RBX: 00007fa0275e6098 RCX: 00007fa02738f749
-RDX: 0000000000000000 RSI: 0000000000000080 RDI: 00007fa0275e6098
-RBP: 00007fa0275e6090 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fa0275e6128 R14: 00007fff14e4fcb0 R15: 00007fff14e4fd98
+[ 2203.527791] Unable to handle kernel NULL pointer dereference at virtual address 00000000 when execute
+[...]
+[ 2203.783416] Call trace:
+[ 2203.783429]  iio_read_channel_info_avail from dev_attr_show+0x18/0x48
+[ 2203.789807]  dev_attr_show from sysfs_kf_seq_show+0x90/0x120
+[ 2203.794181]  sysfs_kf_seq_show from seq_read_iter+0xd0/0x4e4
+[ 2203.798555]  seq_read_iter from vfs_read+0x238/0x2a0
+[ 2203.802236]  vfs_read from ksys_read+0xa4/0xd4
+[ 2203.805385]  ksys_read from ret_fast_syscall+0x0/0x54
+[ 2203.809135] Exception stack(0xe0badfa8 to 0xe0badff0)
+[ 2203.812880] dfa0:                   00000003 b6f10f80 00000003 b6eab000 00020000 00000000
+[ 2203.819746] dfc0: 00000003 b6f10f80 7ff00000 00000003 00000003 00000000 00020000 00000000
+[ 2203.826619] dfe0: b6e1bc88 bed80958 b6e1bc94 b6e1bcb0
+[ 2203.830363] Code: bad PC value
+[ 2203.832695] ---[ end trace 0000000000000000 ]---
 
-There's really nothing wrong here, outside of processing these reads
-will take a LONG time. However, we can speed up the exit by checking the
-IO_WQ_BIT_EXIT inside the io_worker_handle_work() loop, as syzbot will
-exit the ring after queueing up all of these reads. Then once the first
-item is processed, io-wq will simply cancel the rest. That should avoid
-syzbot running into this complaint again.
-
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/68a2decc.050a0220.e29e5.0099.GAE@google.com/
-Reported-by: syzbot+4eb282331cab6d5b6588@syzkaller.appspotmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ Minor conflict resolved. ]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Signed-off-by: Julien Stephan <jstephan@baylibre.com>
+Link: https://lore.kernel.org/r/20240530-iio-core-fix-segfault-v3-1-8b7cd2a03773@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Charles Xu <charles_xu@189.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/industrialio-core.c  |    7 ++++++-
+ drivers/iio/industrialio-event.c |    9 +++++++++
+ drivers/iio/inkern.c             |   35 ++++++++++++++++++++++++-----------
+ 3 files changed, 39 insertions(+), 12 deletions(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -554,9 +554,9 @@ static void io_worker_handle_work(struct
- 	struct io_wqe_acct *acct = io_wqe_get_acct(worker);
- 	struct io_wqe *wqe = worker->wqe;
- 	struct io_wq *wq = wqe->wq;
--	bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
+--- a/drivers/iio/industrialio-core.c
++++ b/drivers/iio/industrialio-core.c
+@@ -776,9 +776,11 @@ static ssize_t iio_read_channel_info(str
+ 							INDIO_MAX_RAW_ELEMENTS,
+ 							vals, &val_len,
+ 							this_attr->address);
+-	else
++	else if (indio_dev->info->read_raw)
+ 		ret = indio_dev->info->read_raw(indio_dev, this_attr->c,
+ 				    &vals[0], &vals[1], this_attr->address);
++	else
++		return -EINVAL;
  
- 	do {
-+		bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
- 		struct io_wq_work *work;
- get_next:
- 		/*
+ 	if (ret < 0)
+ 		return ret;
+@@ -860,6 +862,9 @@ static ssize_t iio_read_channel_info_ava
+ 	int length;
+ 	int type;
+ 
++	if (!indio_dev->info->read_avail)
++		return -EINVAL;
++
+ 	ret = indio_dev->info->read_avail(indio_dev, this_attr->c,
+ 					  &vals, &type, &length,
+ 					  this_attr->address);
+--- a/drivers/iio/industrialio-event.c
++++ b/drivers/iio/industrialio-event.c
+@@ -277,6 +277,9 @@ static ssize_t iio_ev_state_store(struct
+ 	if (ret < 0)
+ 		return ret;
+ 
++	if (!indio_dev->info->write_event_config)
++		return -EINVAL;
++
+ 	ret = indio_dev->info->write_event_config(indio_dev,
+ 		this_attr->c, iio_ev_attr_type(this_attr),
+ 		iio_ev_attr_dir(this_attr), val);
+@@ -292,6 +295,9 @@ static ssize_t iio_ev_state_show(struct
+ 	struct iio_dev_attr *this_attr = to_iio_dev_attr(attr);
+ 	int val;
+ 
++	if (!indio_dev->info->read_event_config)
++		return -EINVAL;
++
+ 	val = indio_dev->info->read_event_config(indio_dev,
+ 		this_attr->c, iio_ev_attr_type(this_attr),
+ 		iio_ev_attr_dir(this_attr));
+@@ -310,6 +316,9 @@ static ssize_t iio_ev_value_show(struct
+ 	int val, val2, val_arr[2];
+ 	int ret;
+ 
++	if (!indio_dev->info->read_event_value)
++		return -EINVAL;
++
+ 	ret = indio_dev->info->read_event_value(indio_dev,
+ 		this_attr->c, iio_ev_attr_type(this_attr),
+ 		iio_ev_attr_dir(this_attr), iio_ev_attr_info(this_attr),
+--- a/drivers/iio/inkern.c
++++ b/drivers/iio/inkern.c
+@@ -517,6 +517,7 @@ EXPORT_SYMBOL_GPL(devm_iio_channel_get_a
+ static int iio_channel_read(struct iio_channel *chan, int *val, int *val2,
+ 	enum iio_chan_info_enum info)
+ {
++	const struct iio_info *iio_info = chan->indio_dev->info;
+ 	int unused;
+ 	int vals[INDIO_MAX_RAW_ELEMENTS];
+ 	int ret;
+@@ -528,15 +529,19 @@ static int iio_channel_read(struct iio_c
+ 	if (!iio_channel_has_info(chan->channel, info))
+ 		return -EINVAL;
+ 
+-	if (chan->indio_dev->info->read_raw_multi) {
+-		ret = chan->indio_dev->info->read_raw_multi(chan->indio_dev,
+-					chan->channel, INDIO_MAX_RAW_ELEMENTS,
+-					vals, &val_len, info);
++	if (iio_info->read_raw_multi) {
++		ret = iio_info->read_raw_multi(chan->indio_dev,
++					       chan->channel,
++					       INDIO_MAX_RAW_ELEMENTS,
++					       vals, &val_len, info);
+ 		*val = vals[0];
+ 		*val2 = vals[1];
+-	} else
+-		ret = chan->indio_dev->info->read_raw(chan->indio_dev,
+-					chan->channel, val, val2, info);
++	} else if (iio_info->read_raw) {
++		ret = iio_info->read_raw(chan->indio_dev,
++					 chan->channel, val, val2, info);
++	} else {
++		return -EINVAL;
++	}
+ 
+ 	return ret;
+ }
+@@ -754,11 +759,15 @@ static int iio_channel_read_avail(struct
+ 				  const int **vals, int *type, int *length,
+ 				  enum iio_chan_info_enum info)
+ {
++	const struct iio_info *iio_info = chan->indio_dev->info;
++
+ 	if (!iio_channel_has_available(chan->channel, info))
+ 		return -EINVAL;
+ 
+-	return chan->indio_dev->info->read_avail(chan->indio_dev, chan->channel,
+-						 vals, type, length, info);
++	if (iio_info->read_avail)
++		return iio_info->read_avail(chan->indio_dev, chan->channel,
++					    vals, type, length, info);
++	return -EINVAL;
+ }
+ 
+ int iio_read_avail_channel_attribute(struct iio_channel *chan,
+@@ -889,8 +898,12 @@ EXPORT_SYMBOL_GPL(iio_get_channel_type);
+ static int iio_channel_write(struct iio_channel *chan, int val, int val2,
+ 			     enum iio_chan_info_enum info)
+ {
+-	return chan->indio_dev->info->write_raw(chan->indio_dev,
+-						chan->channel, val, val2, info);
++	const struct iio_info *iio_info = chan->indio_dev->info;
++
++	if (iio_info->write_raw)
++		return iio_info->write_raw(chan->indio_dev,
++					   chan->channel, val, val2, info);
++	return -EINVAL;
+ }
+ 
+ int iio_write_channel_attribute(struct iio_channel *chan, int val, int val2,
 
 
