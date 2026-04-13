@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54FF24DCF6;
-	Mon, 13 Apr 2026 16:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFA824DCF6;
+	Mon, 13 Apr 2026 16:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096829; cv=none; b=RgB0L0ZOGvtJxIYF+BDp4mTefcS2z2bWT0wuqAH8g85RtTAQMsbqR/4SnCHxcuHfERSkQ7b0A1IxBdmi3PNVQm0dbyZQkm8xqK98n4n4LGz86wLemliRj2LIR3gd1GV7prTCWWJSsYRQ3O25cA+4AV6GNhIfC2U0YoaABBuQKaY=
+	t=1776096831; cv=none; b=VpYsrCLDZVOWBA7zQ3wVfx5NKazuAc3KJy0NZaRruDqvmB3680311HYWePPoECrAFG6za1NGPccycRThpCjx4mHDxYwQtDx1bX1Jm0SegZu5Pb50g3o1a24Vo5JHfXdx1dwjg5bzsxBVuat0dnfPSUqb3mATYPxZID/pvDoPj98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096829; c=relaxed/simple;
-	bh=aFZJY5mqTlZnB4Jf5ApsvtfJqC69tKNo7CgncmwCIjc=;
+	s=arc-20240116; t=1776096831; c=relaxed/simple;
+	bh=bMmMH8MjwIhpBOra8PQJ52cYsRspTja1SiagqxUYiRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGrQ70LtsDlUDMVJ56hmqUmyihs0E7imDmePPj5hGf2TbxzqFs6ObIeJsEUkqVAO3YJQTLc29lCmQWSfmc+4V3cGv3usHrlWDs9P8N25lWIL9KzLwN8KfLA2dKOclj54M+WQhXZNQlREsNmCBKmQbCoTb3xr1kmoj3tvAKm1Tq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mH6zIfpG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fWLOU07+lTeJHFOaHYXNpSa3MHg1w/GKWiwSKVSFYRvrORuRi5CDfFmpP2ZveW/uw0tMDZthxfUCAZ/z9WykyY75wy9drBZevCMxjVntH5GAbZTh2J8Vsq/LC8tuh5PPCtghHK/CEZIOoI6FXnqJGbKOHeK9G31fhgnImB0EDa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4kYnR5G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mH6zIfpG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B47EC2BCAF;
-	Mon, 13 Apr 2026 16:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4kYnR5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D2EC2BCAF;
+	Mon, 13 Apr 2026 16:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096828;
-	bh=aFZJY5mqTlZnB4Jf5ApsvtfJqC69tKNo7CgncmwCIjc=;
+	s=korg; t=1776096831;
+	bh=bMmMH8MjwIhpBOra8PQJ52cYsRspTja1SiagqxUYiRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mH6zIfpGsPE3S/PjW9CFjDplApf9nLjsCwWlxLXFiUcbHKkZsoCoRIPz7yk8erheo
-	 CpINTsWU6EOC7KGfnBiQJHF1GYyjQ3Ks9FJg2GXkOwIPJLIBr0q7Boz8x9vBKFO6B/
-	 MmSAZs9tJoLNoK5u505UFE50XWi4CDfrKCy2al34=
+	b=m4kYnR5GR5FFGjWqSuDL0ANus4jSRb/Psf+EPYoM/B/G1UlbCwQDAn9sIle8R6eyv
+	 QTu950cHx9leUuJpvZfs1mRklR65JdmxfOm3GhAI2X8KpYPITPpGbQcS/q43XgDZNh
+	 behOSy/abf0EA8gx3HcRQLvuCsmf3QBvltzc3cyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.12 48/70] drm/i915/gt: fix refcount underflow in intel_engine_park_heartbeat
-Date: Mon, 13 Apr 2026 18:00:43 +0200
-Message-ID: <20260413155729.978183145@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.6 01/50] lib/crypto: chacha: Zeroize permuted_state before it leaves scope
+Date: Mon, 13 Apr 2026 18:00:28 +0200
+Message-ID: <20260413155724.553161089@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
-References: <20260413155728.181580293@linuxfoundation.org>
+In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
+References: <20260413155724.497323914@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,123 +46,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 4c71fd099513bfa8acab529b626e1f0097b76061 upstream.
+commit e5046823f8fa3677341b541a25af2fcb99a5b1e0 upstream.
 
-A use-after-free / refcount underflow is possible when the heartbeat
-worker and intel_engine_park_heartbeat() race to release the same
-engine->heartbeat.systole request.
+Since the ChaCha permutation is invertible, the local variable
+'permuted_state' is sufficient to compute the original 'state', and thus
+the key, even after the permutation has been done.
 
-The heartbeat worker reads engine->heartbeat.systole and calls
-i915_request_put() on it when the request is complete, but clears
-the pointer in a separate, non-atomic step. Concurrently, a request
-retirement on another CPU can drop the engine wakeref to zero, triggering
-__engine_park() -> intel_engine_park_heartbeat(). If the heartbeat
-timer is pending at that point, cancel_delayed_work() returns true and
-intel_engine_park_heartbeat() reads the stale non-NULL systole pointer
-and calls i915_request_put() on it again, causing a refcount underflow:
+While the kernel is quite inconsistent about zeroizing secrets on the
+stack (and some prominent userspace crypto libraries don't bother at all
+since it's not guaranteed to work anyway), the kernel does try to do it
+as a best practice, especially in cases involving the RNG.
 
-```
-<4> [487.221889] Workqueue: i915-unordered engine_retire [i915]
-<4> [487.222640] RIP: 0010:refcount_warn_saturate+0x68/0xb0
-...
-<4> [487.222707] Call Trace:
-<4> [487.222711]  <TASK>
-<4> [487.222716]  intel_engine_park_heartbeat.part.0+0x6f/0x80 [i915]
-<4> [487.223115]  intel_engine_park_heartbeat+0x25/0x40 [i915]
-<4> [487.223566]  __engine_park+0xb9/0x650 [i915]
-<4> [487.223973]  ____intel_wakeref_put_last+0x2e/0xb0 [i915]
-<4> [487.224408]  __intel_wakeref_put_last+0x72/0x90 [i915]
-<4> [487.224797]  intel_context_exit_engine+0x7c/0x80 [i915]
-<4> [487.225238]  intel_context_exit+0xf1/0x1b0 [i915]
-<4> [487.225695]  i915_request_retire.part.0+0x1b9/0x530 [i915]
-<4> [487.226178]  i915_request_retire+0x1c/0x40 [i915]
-<4> [487.226625]  engine_retire+0x122/0x180 [i915]
-<4> [487.227037]  process_one_work+0x239/0x760
-<4> [487.227060]  worker_thread+0x200/0x3f0
-<4> [487.227068]  ? __pfx_worker_thread+0x10/0x10
-<4> [487.227075]  kthread+0x10d/0x150
-<4> [487.227083]  ? __pfx_kthread+0x10/0x10
-<4> [487.227092]  ret_from_fork+0x3d4/0x480
-<4> [487.227099]  ? __pfx_kthread+0x10/0x10
-<4> [487.227107]  ret_from_fork_asm+0x1a/0x30
-<4> [487.227141]  </TASK>
-```
+Thus, explicitly zeroize 'permuted_state' before it goes out of scope.
 
-Fix this by replacing the non-atomic pointer read + separate clear with
-xchg() in both racing paths. xchg() is a single indivisible hardware
-instruction that atomically reads the old pointer and writes NULL. This
-guarantees only one of the two concurrent callers obtains the non-NULL
-pointer and performs the put, the other gets NULL and skips it.
-
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15880
-Fixes: 058179e72e09 ("drm/i915/gt: Replace hangcheck by heartbeats")
-Cc: <stable@vger.kernel.org> # v5.5+
-Signed-off-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-Reviewed-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/d4c1c14255688dd07cc8044973c4f032a8d1559e.1775038106.git.sebastian.brzezinka@intel.com
-(cherry picked from commit 13238dc0ee4f9ab8dafa2cca7295736191ae2f42)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: c08d0e647305 ("crypto: chacha20 - Add a generic ChaCha20 stream cipher implementation")
+Cc: stable@vger.kernel.org
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20260326032920.39408-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c |   26 +++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ lib/crypto/chacha.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
-@@ -145,10 +145,12 @@ static void heartbeat(struct work_struct
- 	/* Just in case everything has gone horribly wrong, give it a kick */
- 	intel_engine_flush_submission(engine);
+--- a/lib/crypto/chacha.c
++++ b/lib/crypto/chacha.c
+@@ -86,6 +86,8 @@ void chacha_block_generic(u32 *state, u8
+ 		put_unaligned_le32(x[i] + state[i], &stream[i * sizeof(u32)]);
  
--	rq = engine->heartbeat.systole;
--	if (rq && i915_request_completed(rq)) {
--		i915_request_put(rq);
--		engine->heartbeat.systole = NULL;
-+	rq = xchg(&engine->heartbeat.systole, NULL);
-+	if (rq) {
-+		if (i915_request_completed(rq))
-+			i915_request_put(rq);
-+		else
-+			engine->heartbeat.systole = rq;
- 	}
- 
- 	if (!intel_engine_pm_get_if_awake(engine))
-@@ -229,8 +231,11 @@ static void heartbeat(struct work_struct
- unlock:
- 	mutex_unlock(&ce->timeline->mutex);
- out:
--	if (!engine->i915->params.enable_hangcheck || !next_heartbeat(engine))
--		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
-+	if (!engine->i915->params.enable_hangcheck || !next_heartbeat(engine)) {
-+		rq = xchg(&engine->heartbeat.systole, NULL);
-+		if (rq)
-+			i915_request_put(rq);
-+	}
- 	intel_engine_pm_put(engine);
- }
- 
-@@ -244,8 +249,13 @@ void intel_engine_unpark_heartbeat(struc
- 
- void intel_engine_park_heartbeat(struct intel_engine_cs *engine)
- {
--	if (cancel_delayed_work(&engine->heartbeat.work))
--		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
-+	if (cancel_delayed_work(&engine->heartbeat.work)) {
-+		struct i915_request *rq;
+ 	state[12]++;
 +
-+		rq = xchg(&engine->heartbeat.systole, NULL);
-+		if (rq)
-+			i915_request_put(rq);
-+	}
++	memzero_explicit(x, sizeof(x));
  }
+ EXPORT_SYMBOL(chacha_block_generic);
  
- void intel_gt_unpark_heartbeats(struct intel_gt *gt)
+@@ -110,5 +112,7 @@ void hchacha_block_generic(const u32 *st
+ 
+ 	memcpy(&stream[0], &x[0], 16);
+ 	memcpy(&stream[4], &x[12], 16);
++
++	memzero_explicit(x, sizeof(x));
+ }
+ EXPORT_SYMBOL(hchacha_block_generic);
 
 
