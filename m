@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D40309F1C;
-	Mon, 13 Apr 2026 16:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B792309DB5;
+	Mon, 13 Apr 2026 16:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097471; cv=none; b=n17yAhuSg+Ui1//xfnWya6NtirfWq4IrHjDIEPU/O3BXutdJy0qaj11NL3M0X/7TLcmn2FKXc1uG4o1ma1qQZ1Jg60ntdC0zwNqambFwHrPexOzugKqymIaDkmiEOzIziFktlwRI7BKn25QbJlce/HJkQeYH26mCVn0ROCjcjfM=
+	t=1776097474; cv=none; b=l8qkRZqE/TqeSujv77zgBzVHpfWDoxhlxbCQelKySXOW6jpGqU5XQ5EFeCwiCC+cGWmYtjL6Ih9Enqz+1vaRQEBWULNKoARuZULHQsX3MqR+GAv9FRmeqsFH1E/+b7OVeXTWrC8KXO1fkG4YG/rJJwPAI8Zt45nT7DkcIpLPiP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097471; c=relaxed/simple;
-	bh=m2IOVs2cMLw4UP4GM6ybtRy0tjMrZW7fIoiVzf+vqYw=;
+	s=arc-20240116; t=1776097474; c=relaxed/simple;
+	bh=mpscWdPHfzhzI1M/mQhbejocfgQq9dxG05v+LWs/Ll8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ui3A6+cg3bzbATgVgvTM9CvEkl/RJZoiyivJ+VNfxtV7txatoFqc+mEJgxZySJpQDofFXZdr8sa3y7GFC2riveCilK5ryWrmpT1bdR0uCYKZt3ogL2+bdzFVK90BnYBJ+3x4X/2adScNO8pYMyT5b66nKCWvW8XhYrX+V4Za9fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRvDapsm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YDh6XCyKq+yAWrLnpQ7AaXMxIpXF/aoy8p5Iwp74LSxFMuSxUe2wnlspy/7/ZL/SGGQOS97Zd0gtMl6xNmtXF7kLK9PVzTCUmxF8Byy8puM+IlPcdGsfhvbjGGL99ukwKpqzX7Ni4HQpodF8W4lqFWbdBWdnmP3oUibF9NKdL84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARWKyaoc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRvDapsm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA14C2BCB0;
-	Mon, 13 Apr 2026 16:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARWKyaoc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962F6C2BCAF;
+	Mon, 13 Apr 2026 16:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097471;
-	bh=m2IOVs2cMLw4UP4GM6ybtRy0tjMrZW7fIoiVzf+vqYw=;
+	s=korg; t=1776097473;
+	bh=mpscWdPHfzhzI1M/mQhbejocfgQq9dxG05v+LWs/Ll8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iRvDapsm9sAvaaDKfpZzeOkwn0rz6OyQWQUK63RKKQ8714bMRERov2+qDEJJ6Fgjy
-	 zNWXZtS/zG+JWJZz8mVZ0vB8+5BJMxPK/+azsDHPrirr5iaVlH95NJ0WbugB85cfU6
-	 sSy+HVAG7xGSsfo0Q2k4sarxHEAozF5aGSdtcs/U=
+	b=ARWKyaocdEcjgjvDFvwqzzOhO7ICYEXIoiPxKP1v4WXA53OP3P7lX/U0F5WfT0xL7
+	 3+XxqjKC7dihC6LHfGtjcihQc+MfjznLJZu3tUddmzZQTeX/cvo1JZYeVXFK6VdVgA
+	 1G3YGbCaNZiTHmFYquNz2JLUks7WuCIa3+FToxIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Penghe Geng <pgeng@nvidia.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 149/570] mmc: core: Avoid bitfield RMW for claim/retune flags
-Date: Mon, 13 Apr 2026 17:54:40 +0200
-Message-ID: <20260413155836.032130628@linuxfoundation.org>
+	Matt Vollrath <tactii@gmail.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 123/570] e1000/e1000e: Fix leak in DMA error cleanup
+Date: Mon, 13 Apr 2026 17:54:14 +0200
+Message-ID: <20260413155835.050791043@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,59 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Penghe Geng <pgeng@nvidia.com>
+From: Matt Vollrath <tactii@gmail.com>
 
-commit 901084c51a0a8fb42a3f37d2e9c62083c495f824 upstream.
+[ Upstream commit e94eaef11142b01f77bf8ba4d0b59720b7858109 ]
 
-Move claimed and retune control flags out of the bitfield word to
-avoid unrelated RMW side effects in asynchronous contexts.
+If an error is encountered while mapping TX buffers, the driver should
+unmap any buffers already mapped for that skb.
 
-The host->claimed bit shared a word with retune flags. Writes to claimed
-in __mmc_claim_host() or retune_now in mmc_mq_queue_rq() can overwrite
-other bits when concurrent updates happen in other contexts, triggering
-spurious WARN_ON(!host->claimed). Convert claimed, can_retune,
-retune_now and retune_paused to bool to remove shared-word coupling.
+Because count is incremented after a successful mapping, it will always
+match the correct number of unmappings needed when dma_error is reached.
+Decrementing count before the while loop in dma_error causes an
+off-by-one error. If any mapping was successful before an unsuccessful
+mapping, exactly one DMA mapping would leak.
 
-Fixes: 6c0cedd1ef952 ("mmc: core: Introduce host claiming by context")
-Fixes: 1e8e55b67030c ("mmc: block: Add CQE support")
-Cc: stable@vger.kernel.org
-Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Penghe Geng <pgeng@nvidia.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In these commits, a faulty while condition caused an infinite loop in
+dma_error:
+Commit 03b1320dfcee ("e1000e: remove use of skb_dma_map from e1000e
+driver")
+Commit 602c0554d7b0 ("e1000: remove use of skb_dma_map from e1000 driver")
+
+Commit c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of
+unsigned in *_tx_map()") fixed the infinite loop, but introduced the
+off-by-one error.
+
+This issue may still exist in the igbvf driver, but I did not address it
+in this patch.
+
+Fixes: c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of unsigned in *_tx_map()")
+Assisted-by: Claude:claude-4.6-opus
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mmc/host.h |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/e1000/e1000_main.c | 2 --
+ drivers/net/ethernet/intel/e1000e/netdev.c    | 2 --
+ 2 files changed, 4 deletions(-)
 
---- a/include/linux/mmc/host.h
-+++ b/include/linux/mmc/host.h
-@@ -418,14 +418,12 @@ struct mmc_host {
+diff --git a/drivers/net/ethernet/intel/e1000/e1000_main.c b/drivers/net/ethernet/intel/e1000/e1000_main.c
+index b252373ec9fa6..e7e7b6255ddfe 100644
+--- a/drivers/net/ethernet/intel/e1000/e1000_main.c
++++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
+@@ -2950,8 +2950,6 @@ static int e1000_tx_map(struct e1000_adapter *adapter,
+ dma_error:
+ 	dev_err(&pdev->dev, "TX DMA map failed\n");
+ 	buffer_info->dma = 0;
+-	if (count)
+-		count--;
  
- 	struct mmc_ios		ios;		/* current io bus settings */
+ 	while (count--) {
+ 		if (i == 0)
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index c153f44a6ab85..3216089642648 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -5637,8 +5637,6 @@ static int e1000_tx_map(struct e1000_ring *tx_ring, struct sk_buff *skb,
+ dma_error:
+ 	dev_err(&pdev->dev, "Tx DMA map failed\n");
+ 	buffer_info->dma = 0;
+-	if (count)
+-		count--;
  
-+	bool			claimed;	/* host exclusively claimed */
-+
- 	/* group bitfields together to minimize padding */
- 	unsigned int		use_spi_crc:1;
--	unsigned int		claimed:1;	/* host exclusively claimed */
- 	unsigned int		doing_init_tune:1; /* initial tuning in progress */
--	unsigned int		can_retune:1;	/* re-tuning can be used */
- 	unsigned int		doing_retune:1;	/* re-tuning in progress */
--	unsigned int		retune_now:1;	/* do re-tuning at next req */
--	unsigned int		retune_paused:1; /* re-tuning is temporarily disabled */
- 	unsigned int		retune_crc_disable:1; /* don't trigger retune upon crc */
- 	unsigned int		can_dma_map_merge:1; /* merging can be used */
- 	unsigned int		vqmmc_enabled:1; /* vqmmc regulator is enabled */
-@@ -433,6 +431,9 @@ struct mmc_host {
- 	int			rescan_disable;	/* disable card detection */
- 	int			rescan_entered;	/* used with nonremovable devices */
- 
-+	bool			can_retune;	/* re-tuning can be used */
-+	bool			retune_now;	/* do re-tuning at next req */
-+	bool			retune_paused;	/* re-tuning is temporarily disabled */
- 	int			need_retune;	/* re-tuning is needed */
- 	int			hold_retune;	/* hold off re-tuning */
- 	unsigned int		retune_period;	/* re-tuning period in secs */
+ 	while (count--) {
+ 		if (i == 0)
+-- 
+2.51.0
+
 
 
