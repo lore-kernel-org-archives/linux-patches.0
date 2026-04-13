@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D73317167;
-	Mon, 13 Apr 2026 16:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1021E317141;
+	Mon, 13 Apr 2026 16:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099274; cv=none; b=dLYpMqZAnrtdR3Hs+9Qk1Ne3IpWt6QijlYtXf2/UtvNLhrc4w/YFYsoG18wYx/DNFUEUo13NDUuJJCGrG4b+UFBqMcNyiZFAkufFcbzNWFEw3mNBQIrkiub7263oiq7DAoS9v2mkvjWAgS58U7WkiRMtf1jdww/gqN5jUOJu83o=
+	t=1776099277; cv=none; b=JAOrqcI1XRqNs2XygdCx7+ngYz2amhAR8XB8N9iw473nsr/lr4sQMXakVGqTQojVTv13R2fqyv6lISDXX7B8ltWkMdQudgVTtIs44h6lkJEahL0dGFdVe2CmehUa/xtQnLNUvrUS19OW+GUQius7eSHJj8Cy06CUidKAPBIYjQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099274; c=relaxed/simple;
-	bh=Qgg72yB/LYdwftSpqMw2KTjxt3LeoCa9W9fTfFEA7/8=;
+	s=arc-20240116; t=1776099277; c=relaxed/simple;
+	bh=AFOjurQDnK1coCWkHIGdglJOSL8iUXcMYLBMIVjNnRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=glvXbrHiRJ5RkMHvYIG4wgoJKLl9E/QwKmbLdTddjDuKGH0gvbKITPZhWFTN7MR0J2RujtYciE+SFpzIfTiPDILkRa2CQzx5zfWU+mFbTHgwSEZfw0OXdjofIjcHZWW/9vNka6ni8K+jUvuj9nCbbWcWtBt/4/D/XKfsMzvjD6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbP2LKMc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRKcXSGeFnQr5RFnYADh20de5aFUxVEKaAnef3w/YZ02f4+U0uMpg5OWx7LZMJygn8Q696MtpQZj5MTwBUCXaqyiQNyd30i5QpVzmRfp5T7nqsowxFwqQCFMqOjpPxYZc137vK0KXnFstDDX4lF/hbW9EC3hE6CoauhECobJtBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BO/x4/oJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbP2LKMc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103BEC2BCAF;
-	Mon, 13 Apr 2026 16:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BO/x4/oJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8B9C2BCAF;
+	Mon, 13 Apr 2026 16:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099274;
-	bh=Qgg72yB/LYdwftSpqMw2KTjxt3LeoCa9W9fTfFEA7/8=;
+	s=korg; t=1776099276;
+	bh=AFOjurQDnK1coCWkHIGdglJOSL8iUXcMYLBMIVjNnRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vbP2LKMcZNUTaaA1NDJzajnLdgWs+ks83bjQMnRzo3ezGaVJHsPEeff7cfL5uOMpr
-	 el//+J84TawHwqSXSsh8oh4Kno1sUApYc0dQC1Gkb2eGdrKHOP1SfBP1B+zRfI5KPh
-	 wV+8MKcnrB+5IckhGxy6Bairz489RspPa89a4uL0=
+	b=BO/x4/oJYYz6wWrQygnzPilrMsNilj/ytKydD3YNFuZeVwj1mlVDsgVVpgo5bJSF6
+	 ZrqT6x2Mlv6wLSFCUozCzGj02YyID3lI7Sx5JZsBBRdxjhcbxEm56JB4p5grhJFppZ
+	 GE9diXRwWbn5bueoCV3QUbDg7pL3m3XAbymFskBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.10 276/491] netfilter: ctnetlink: use netlink policy range checks
-Date: Mon, 13 Apr 2026 17:58:41 +0200
-Message-ID: <20260413155829.380313884@linuxfoundation.org>
+	Paolo Valerio <pvalerio@redhat.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 277/491] net: macb: use the current queue number for stats
+Date: Mon, 13 Apr 2026 17:58:42 +0200
+Message-ID: <20260413155829.417338589@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,125 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Paolo Valerio <pvalerio@redhat.com>
 
-[ Upstream commit 8f15b5071b4548b0aafc03b366eb45c9c6566704 ]
+[ Upstream commit 72d96e4e24bbefdcfbc68bdb9341a05d8f5cb6e5 ]
 
-Replace manual range and mask validations with netlink policy
-annotations in ctnetlink code paths, so that the netlink core rejects
-invalid values early and can generate extack errors.
+There's a potential mismatch between the memory reserved for statistics
+and the amount of memory written.
 
-- CTA_PROTOINFO_TCP_STATE: reject values > TCP_CONNTRACK_SYN_SENT2 at
-  policy level, removing the manual >= TCP_CONNTRACK_MAX check.
-- CTA_PROTOINFO_TCP_WSCALE_ORIGINAL/REPLY: reject values > TCP_MAX_WSCALE
-  (14). The normal TCP option parsing path already clamps to this value,
-  but the ctnetlink path accepted 0-255, causing undefined behavior when
-  used as a u32 shift count.
-- CTA_FILTER_ORIG_FLAGS/REPLY_FLAGS: use NLA_POLICY_MASK with
-  CTA_FILTER_F_ALL, removing the manual mask checks.
-- CTA_EXPECT_FLAGS: use NLA_POLICY_MASK with NF_CT_EXPECT_MASK, adding
-  a new mask define grouping all valid expect flags.
+gem_get_sset_count() correctly computes the number of stats based on the
+active queues, whereas gem_get_ethtool_stats() indiscriminately copies
+data using the maximum number of queues, and in the case the number of
+active queues is less than MACB_MAX_QUEUES, this results in a OOB write
+as observed in the KASAN splat.
 
-Extracted from a broader nf-next patch by Florian Westphal, scoped to
-ctnetlink for the fixes tree.
+==================================================================
+BUG: KASAN: vmalloc-out-of-bounds in gem_get_ethtool_stats+0x54/0x78
+  [macb]
+Write of size 760 at addr ffff80008080b000 by task ethtool/1027
 
-Fixes: c8e2078cfe41 ("[NETFILTER]: ctnetlink: add support for internal tcp connection tracking flags handling")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Co-developed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+CPU: [...]
+Tainted: [E]=UNSIGNED_MODULE
+Hardware name: raspberrypi rpi/rpi, BIOS 2025.10 10/01/2025
+Call trace:
+ show_stack+0x20/0x38 (C)
+ dump_stack_lvl+0x80/0xf8
+ print_report+0x384/0x5e0
+ kasan_report+0xa0/0xf0
+ kasan_check_range+0xe8/0x190
+ __asan_memcpy+0x54/0x98
+ gem_get_ethtool_stats+0x54/0x78 [macb
+   926c13f3af83b0c6fe64badb21ec87d5e93fcf65]
+ dev_ethtool+0x1220/0x38c0
+ dev_ioctl+0x4ac/0xca8
+ sock_do_ioctl+0x170/0x1d8
+ sock_ioctl+0x484/0x5d8
+ __arm64_sys_ioctl+0x12c/0x1b8
+ invoke_syscall+0xd4/0x258
+ el0_svc_common.constprop.0+0xb4/0x240
+ do_el0_svc+0x48/0x68
+ el0_svc+0x40/0xf8
+ el0t_64_sync_handler+0xa0/0xe8
+ el0t_64_sync+0x1b0/0x1b8
+
+The buggy address belongs to a 1-page vmalloc region starting at
+  0xffff80008080b000 allocated at dev_ethtool+0x11f0/0x38c0
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000
+  index:0xffff00000a333000 pfn:0xa333
+flags: 0x7fffc000000000(node=0|zone=0|lastcpupid=0x1ffff)
+raw: 007fffc000000000 0000000000000000 dead000000000122 0000000000000000
+raw: ffff00000a333000 0000000000000000 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff80008080b080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff80008080b100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff80008080b180: 00 00 00 00 00 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+                                  ^
+ ffff80008080b200: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+ ffff80008080b280: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+==================================================================
+
+Fix it by making sure the copied size only considers the active number of
+queues.
+
+Fixes: 512286bbd4b7 ("net: macb: Added some queue statistics")
+Signed-off-by: Paolo Valerio <pvalerio@redhat.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260323191634.2185840-1-pvalerio@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../uapi/linux/netfilter/nf_conntrack_common.h   |  4 ++++
- net/netfilter/nf_conntrack_netlink.c             | 16 +++++-----------
- net/netfilter/nf_conntrack_proto_tcp.c           | 10 +++-------
- 3 files changed, 12 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/netfilter/nf_conntrack_common.h b/include/uapi/linux/netfilter/nf_conntrack_common.h
-index 26071021e986f..56b6b60a814f5 100644
---- a/include/uapi/linux/netfilter/nf_conntrack_common.h
-+++ b/include/uapi/linux/netfilter/nf_conntrack_common.h
-@@ -159,5 +159,9 @@ enum ip_conntrack_expect_events {
- #define NF_CT_EXPECT_INACTIVE		0x2
- #define NF_CT_EXPECT_USERSPACE		0x4
- 
-+#ifdef __KERNEL__
-+#define NF_CT_EXPECT_MASK	(NF_CT_EXPECT_PERMANENT | NF_CT_EXPECT_INACTIVE | \
-+				 NF_CT_EXPECT_USERSPACE)
-+#endif
- 
- #endif /* _UAPI_NF_CONNTRACK_COMMON_H */
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 9fe2c5b3523c5..8d35e17a0f7e7 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -860,8 +860,8 @@ struct ctnetlink_filter {
- };
- 
- static const struct nla_policy cta_filter_nla_policy[CTA_FILTER_MAX + 1] = {
--	[CTA_FILTER_ORIG_FLAGS]		= { .type = NLA_U32 },
--	[CTA_FILTER_REPLY_FLAGS]	= { .type = NLA_U32 },
-+	[CTA_FILTER_ORIG_FLAGS]		= NLA_POLICY_MASK(NLA_U32, CTA_FILTER_F_ALL),
-+	[CTA_FILTER_REPLY_FLAGS]	= NLA_POLICY_MASK(NLA_U32, CTA_FILTER_F_ALL),
- };
- 
- static int ctnetlink_parse_filter(const struct nlattr *attr,
-@@ -875,17 +875,11 @@ static int ctnetlink_parse_filter(const struct nlattr *attr,
- 	if (ret)
- 		return ret;
- 
--	if (tb[CTA_FILTER_ORIG_FLAGS]) {
-+	if (tb[CTA_FILTER_ORIG_FLAGS])
- 		filter->orig_flags = nla_get_u32(tb[CTA_FILTER_ORIG_FLAGS]);
--		if (filter->orig_flags & ~CTA_FILTER_F_ALL)
--			return -EOPNOTSUPP;
--	}
- 
--	if (tb[CTA_FILTER_REPLY_FLAGS]) {
-+	if (tb[CTA_FILTER_REPLY_FLAGS])
- 		filter->reply_flags = nla_get_u32(tb[CTA_FILTER_REPLY_FLAGS]);
--		if (filter->reply_flags & ~CTA_FILTER_F_ALL)
--			return -EOPNOTSUPP;
--	}
- 
- 	return 0;
- }
-@@ -2618,7 +2612,7 @@ static const struct nla_policy exp_nla_policy[CTA_EXPECT_MAX+1] = {
- 	[CTA_EXPECT_HELP_NAME]	= { .type = NLA_NUL_STRING,
- 				    .len = NF_CT_HELPER_NAME_LEN - 1 },
- 	[CTA_EXPECT_ZONE]	= { .type = NLA_U16 },
--	[CTA_EXPECT_FLAGS]	= { .type = NLA_U32 },
-+	[CTA_EXPECT_FLAGS]	= NLA_POLICY_MASK(NLA_BE32, NF_CT_EXPECT_MASK),
- 	[CTA_EXPECT_CLASS]	= { .type = NLA_U32 },
- 	[CTA_EXPECT_NAT]	= { .type = NLA_NESTED },
- 	[CTA_EXPECT_FN]		= { .type = NLA_NUL_STRING },
-diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
-index c1d02c0b4f005..c43d9819df067 100644
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -1249,9 +1249,9 @@ static int tcp_to_nlattr(struct sk_buff *skb, struct nlattr *nla,
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index f49e4e0494db3..bdbb05a95519b 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -2786,7 +2786,7 @@ static void gem_get_ethtool_stats(struct net_device *dev,
+ 	spin_lock_irq(&bp->stats_lock);
+ 	gem_update_stats(bp);
+ 	memcpy(data, &bp->ethtool_stats, sizeof(u64)
+-			* (GEM_STATS_LEN + QUEUE_STATS_LEN * MACB_MAX_QUEUES));
++			* (GEM_STATS_LEN + QUEUE_STATS_LEN * bp->num_queues));
+ 	spin_unlock_irq(&bp->stats_lock);
  }
  
- static const struct nla_policy tcp_nla_policy[CTA_PROTOINFO_TCP_MAX+1] = {
--	[CTA_PROTOINFO_TCP_STATE]	    = { .type = NLA_U8 },
--	[CTA_PROTOINFO_TCP_WSCALE_ORIGINAL] = { .type = NLA_U8 },
--	[CTA_PROTOINFO_TCP_WSCALE_REPLY]    = { .type = NLA_U8 },
-+	[CTA_PROTOINFO_TCP_STATE]	    = NLA_POLICY_MAX(NLA_U8, TCP_CONNTRACK_SYN_SENT2),
-+	[CTA_PROTOINFO_TCP_WSCALE_ORIGINAL] = NLA_POLICY_MAX(NLA_U8, TCP_MAX_WSCALE),
-+	[CTA_PROTOINFO_TCP_WSCALE_REPLY]    = NLA_POLICY_MAX(NLA_U8, TCP_MAX_WSCALE),
- 	[CTA_PROTOINFO_TCP_FLAGS_ORIGINAL]  = { .len = sizeof(struct nf_ct_tcp_flags) },
- 	[CTA_PROTOINFO_TCP_FLAGS_REPLY]	    = { .len = sizeof(struct nf_ct_tcp_flags) },
- };
-@@ -1278,10 +1278,6 @@ static int nlattr_to_tcp(struct nlattr *cda[], struct nf_conn *ct)
- 	if (err < 0)
- 		return err;
- 
--	if (tb[CTA_PROTOINFO_TCP_STATE] &&
--	    nla_get_u8(tb[CTA_PROTOINFO_TCP_STATE]) >= TCP_CONNTRACK_MAX)
--		return -EINVAL;
--
- 	spin_lock_bh(&ct->lock);
- 	if (tb[CTA_PROTOINFO_TCP_STATE])
- 		ct->proto.tcp.state = nla_get_u8(tb[CTA_PROTOINFO_TCP_STATE]);
 -- 
 2.51.0
 
