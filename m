@@ -1,47 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A1327280A;
-	Mon, 13 Apr 2026 16:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6837E5C9E;
+	Mon, 13 Apr 2026 16:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096923; cv=none; b=FvhkePdnRAGITMT9VIngClpLQCSlNzK4t72IRmXfH/mTmhgdYgUBZz1jJ/A7zpGajRPwp8dRPQDav5jDEbxL64CBS12co8E9pK+VMdLglLawdENfpeIsUhCUAelmHZbGQP+Cv3tYc1CKWBbSkdDPL+7f+S5nGXGPdMUq08zzPUU=
+	t=1776096926; cv=none; b=FXgR9jLpjmDjslAk1yJCOoH7YLFxWmiLRCBGw6YwuOMCLcmmxmBNWQlQdo9txRXNRgPxdGJg9nOQJT9AhZDqYGCcShJVMy6m2WvWoM19keO0X+07hKf7c2kD+M5MV+W92HkAD4AOU/qtZviF6ib5nVwxxN9iFJIacpVNppAPTVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096923; c=relaxed/simple;
-	bh=TuoigOs+0z2n5917aZI5JZqh3NcQqDQMAgnEcLXp3j8=;
+	s=arc-20240116; t=1776096926; c=relaxed/simple;
+	bh=x+UfLIG90eQ96GMonTLYwqjjsBStnF8pBum73OxHWBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l/J02q++In9JK+7ThHi1MTnYrRP3mJXkEDWB5ayZSGx52hH997i6WlrIQQjqrmbd0eNQ3vSaGJCQY5HdHMMO63tUwEr2YwzP2LNJziZkZy60ABeICWV6MsjMM6GNDoBl/S73XikX1sCDD9l4qugCJttX2pJGkYeOdTiFmbVyFXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QY6+iQx6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZMf5NIWQxi+GM3t32JBQh4GVpS8OZ+Y6LQyIUQJNADyuI4IG9f3e2joWypKdxzGe8/DGwvmb0nnMBbQenUrW0mcHol25JL/muPspdxNpbo6IIUd18nQ8QISLJr2Oqd2bjhwrMOeZGxeRw7gFFvvOcWvQmLbrahVIWMsb5H/epvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lb1T22QJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QY6+iQx6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A25C2BCAF;
-	Mon, 13 Apr 2026 16:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lb1T22QJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9DBC2BCAF;
+	Mon, 13 Apr 2026 16:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096923;
-	bh=TuoigOs+0z2n5917aZI5JZqh3NcQqDQMAgnEcLXp3j8=;
+	s=korg; t=1776096926;
+	bh=x+UfLIG90eQ96GMonTLYwqjjsBStnF8pBum73OxHWBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QY6+iQx6uP78DKEHHrBOVybDdyHe1VbwkVjwDCjzsU6Jw3SqhFVdtDYd6rHwBqGhX
-	 vMM/YTaeSp+t89rVR6GqJgq4rzN3KkQQuxQQskUNfSXBGWtDOdSx5zEVrS5DeJ+51D
-	 0877QJaCJl5NL+M/I3XQ1Yqc9TDPsa9ts0PQxwqE=
+	b=lb1T22QJ2xUgw9J05jFDkBMYn54FJlXan11pMW1r2oYSeCBqKtE160hRKkg4ce/IC
+	 b0w4gSZcu5AMoicsBooHW0RtIDCxcJxTZDdHk+m2WcwSZ5YF6ZH0iE73aBU43DRHWw
+	 1+W3/iFfTVLMTq5CMwVu1AK33Lp02p4HVk1qrMIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yifan Wu <yifanwucs@gmail.com>,
 	Juefei Pu <tomapufckgml@gmail.com>,
-	Douya Le <ldy3087146292@gmail.com>,
-	Yuan Tan <tanyuan98@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 45/50] rxrpc: Only put the call ref if one was acquired
-Date: Mon, 13 Apr 2026 18:01:12 +0200
-Message-ID: <20260413155726.192289562@linuxfoundation.org>
+Subject: [PATCH 6.6 46/50] rxrpc: reject undecryptable rxkad response tickets
+Date: Mon, 13 Apr 2026 18:01:13 +0200
+Message-ID: <20260413155726.230656139@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -60,53 +61,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douya Le <ldy3087146292@gmail.com>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-commit 6331f1b24a3e85465f6454e003a3e6c22005a5c5 upstream.
+commit fe4447cd95623b1cfacc15f280aab73a6d7340b2 upstream.
 
-rxrpc_input_packet_on_conn() can process a to-client packet after the
-current client call on the channel has already been torn down.  In that
-case chan->call is NULL, rxrpc_try_get_call() returns NULL and there is
-no reference to drop.
+rxkad_decrypt_ticket() decrypts the RXKAD response ticket and then
+parses the buffer as plaintext without checking whether
+crypto_skcipher_decrypt() succeeded.
 
-The client-side implicit-end error path does not account for that and
-unconditionally calls rxrpc_put_call().  This turns a protocol error
-path into a kernel crash instead of rejecting the packet.
+A malformed RESPONSE can therefore use a non-block-aligned ticket
+length, make the decrypt operation fail, and still drive the ticket
+parser with attacker-controlled bytes.
 
-Only drop the call reference if one was actually acquired.  Keep the
-existing protocol error handling unchanged.
+Check the decrypt result and abort the connection with RXKADBADTICKET
+when ticket decryption fails.
 
-Fixes: 5e6ef4f1017c ("rxrpc: Make the I/O thread take over the call and local processor work")
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Signed-off-by: Douya Le <ldy3087146292@gmail.com>
-Co-developed-by: Yuan Tan <tanyuan98@gmail.com>
-Signed-off-by: Yuan Tan <tanyuan98@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
 Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-11-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-12-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/io_thread.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/rxrpc/rxkad.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/rxrpc/io_thread.c
-+++ b/net/rxrpc/io_thread.c
-@@ -389,7 +389,8 @@ static int rxrpc_input_packet_on_conn(st
+--- a/net/rxrpc/rxkad.c
++++ b/net/rxrpc/rxkad.c
+@@ -869,6 +869,7 @@ static int rxkad_decrypt_ticket(struct r
+ 	struct in_addr addr;
+ 	unsigned int life;
+ 	time64_t issue, now;
++	int ret;
+ 	bool little_endian;
+ 	u8 *p, *q, *name, *end;
  
- 	if (sp->hdr.callNumber > chan->call_id) {
- 		if (rxrpc_to_client(sp)) {
--			rxrpc_put_call(call, rxrpc_call_put_input);
-+			if (call)
-+				rxrpc_put_call(call, rxrpc_call_put_input);
- 			return rxrpc_protocol_error(skb,
- 						    rxrpc_eproto_unexpected_implicit_end);
- 		}
+@@ -888,8 +889,11 @@ static int rxkad_decrypt_ticket(struct r
+ 	sg_init_one(&sg[0], ticket, ticket_len);
+ 	skcipher_request_set_callback(req, 0, NULL, NULL);
+ 	skcipher_request_set_crypt(req, sg, sg, ticket_len, iv.x);
+-	crypto_skcipher_decrypt(req);
++	ret = crypto_skcipher_decrypt(req);
+ 	skcipher_request_free(req);
++	if (ret < 0)
++		return rxrpc_abort_conn(conn, skb, RXKADBADTICKET, -EPROTO,
++					rxkad_abort_resp_tkt_short);
+ 
+ 	p = ticket;
+ 	end = p + ticket_len;
 
 
