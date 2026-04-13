@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C442327C1D;
-	Mon, 13 Apr 2026 16:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738C6325490;
+	Mon, 13 Apr 2026 16:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099375; cv=none; b=bt+6+2ph0qpHDjULTWSpONJDVqQKkXNxwenAo1ihSj6BdVirUCpbf8NcOu6nmeG+5Ac9SLo7cbB9tJeHpgZi9z0HCdzL2C03eRTN/frtsW6vyT7ZeRqYElvo4SH966/BuJ0p92CjjNnrQmV5RvqMMXlkmAuENX+Osa/qFvHOZto=
+	t=1776099378; cv=none; b=LSGF14rfDedgU0NXhL4FHX1w+ozU1lSTQcqUT/XRvNqy/LWQdW89Y9CmaBaeK0e+hI9U0c5zEV8ZAGlsMnJ0GUDu2WAGGT9fLz1Ds9Gm/nT+Gsh1sHP1gZN4f0cHAgBTZVwH6o/s6QJbtOcMamRsQsPu8dhAqwMvHXR1z30VRPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099375; c=relaxed/simple;
-	bh=D8RuW6rtjzqALZRRoni9AOh/Pt76dDHNqn/IHQsiMsg=;
+	s=arc-20240116; t=1776099378; c=relaxed/simple;
+	bh=5vVsgnxo87IuJvSlgP6OpDuGVHBRdBv74GVngPrB9EM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AtKv5z7x5Q+g21F4g/ViMjizpnTeaATeGMbp76/2hnP1HjiAFBd+UtjraBmYNw9iKZQyC+jwXGK37u8eZ7//JbSIHin8gGvwrZ3L+ZvZUzR/NoeW7YRrPUdVVBMDKYa+DmmxI+RuRQCh1gzk4oDNyAYcYZ5yd9qYH5lomLybVTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbbDb3z7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LzTbAlN+HV1P7XnKOdUhIWA0KLlDkAaMHkxNYCRX+WCFURPRytiu4lcqoWF2X6sNC47wULcLyBEow6pxqTLiQav7h7vmH5I2EK7vbaN4ROEBlfeKQbhVEO1fNFXEU9YrmIxIQUWZl+TtvM1yGc5Ee7JmOXhPbM/Ir7LLpHNqdSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dP30lIKB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbbDb3z7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAB1C2BCAF;
-	Mon, 13 Apr 2026 16:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dP30lIKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C62C2BCAF;
+	Mon, 13 Apr 2026 16:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099375;
-	bh=D8RuW6rtjzqALZRRoni9AOh/Pt76dDHNqn/IHQsiMsg=;
+	s=korg; t=1776099378;
+	bh=5vVsgnxo87IuJvSlgP6OpDuGVHBRdBv74GVngPrB9EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sbbDb3z7iIE2Lt7vzWEJXybM8DtSngJzZgpGzsLdhrdR98ZBrvfyZ/hRiriXTyKA5
-	 dPhfY/E/7L6AB4OQF0ZDIlIgrdS1VdK5KnawrTGmzs6qJv6W3eTdIuFl3PJYYII5DN
-	 /7z4HyoJUlfvxoh9xn0riF1ldAUXw3ELmC38xfOg=
+	b=dP30lIKB2YBJe2JguWCeoIzwkPwelXRXe5M6A0OBAE0CQ3rPeDXl3kft55H7fCOeN
+	 pvm7OlrwKRPES0733igp0C65pIrEhZYNiEwGX+aiY7GupeRotP7SAqReRYDjz0ibE5
+	 oWKif3ZWOBkhdu019Umnf9+ZWHo/dWPpxSdFReyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 284/491] drm/i915/gmbus: fix spurious timeout on 512-byte burst reads
-Date: Mon, 13 Apr 2026 17:58:49 +0200
-Message-ID: <20260413155829.677788186@linuxfoundation.org>
+Subject: [PATCH 5.10 285/491] ASoC: Intel: catpt: Fix the device initialization
+Date: Mon, 13 Apr 2026 17:58:50 +0200
+Message-ID: <20260413155829.714600433@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,44 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 08441f10f4dc09fdeb64529953ac308abc79dd38 ]
+[ Upstream commit 5a184f1cb43a8e035251c635f5c47da5dc3e3049 ]
 
-When reading exactly 512 bytes with burst read enabled, the
-extra_byte_added path breaks out of the inner do-while without
-decrementing len. The outer while(len) then re-enters and gmbus_wait()
-times out since all data has been delivered. Decrement len before the
-break so the outer loop terminates correctly.
+The DMA mask shall be coerced before any buffer allocations for the
+device are done.  At the same time explain why DMA mask of 31 bits is
+used in the first place.
 
-Fixes: d5dc0f43f268 ("drm/i915/gmbus: Enable burst read")
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patch.msgid.link/20260316231920.135438-2-samasth.norway.ananda@oracle.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 4ab0f09ee73fc853d00466682635f67c531f909c)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: 7a10b66a5df9 ("ASoC: Intel: catpt: Device driver lifecycle")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260320101217.1243688-1-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_gmbus.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/intel/catpt/device.c | 10 +++++++++-
+ sound/soc/intel/catpt/dsp.c    |  3 ---
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_gmbus.c b/drivers/gpu/drm/i915/display/intel_gmbus.c
-index e6b8d6dfb598e..831e99c56ecb0 100644
---- a/drivers/gpu/drm/i915/display/intel_gmbus.c
-+++ b/drivers/gpu/drm/i915/display/intel_gmbus.c
-@@ -420,8 +420,10 @@ gmbus_xfer_read_chunk(struct drm_i915_private *dev_priv,
+diff --git a/sound/soc/intel/catpt/device.c b/sound/soc/intel/catpt/device.c
+index a701799597956..db67509f051ad 100644
+--- a/sound/soc/intel/catpt/device.c
++++ b/sound/soc/intel/catpt/device.c
+@@ -263,7 +263,15 @@ static int catpt_acpi_probe(struct platform_device *pdev)
+ 	if (IS_ERR(cdev->pci_ba))
+ 		return PTR_ERR(cdev->pci_ba);
  
- 		val = intel_de_read_fw(dev_priv, GMBUS3);
- 		do {
--			if (extra_byte_added && len == 1)
-+			if (extra_byte_added && len == 1) {
-+				len--;
- 				break;
-+			}
+-	/* alloc buffer for storing DRAM context during dx transitions */
++	/*
++	 * As per design HOST is responsible for preserving firmware's runtime
++	 * context during D0 -> D3 -> D0 transitions.  Addresses used for DMA
++	 * to/from HOST memory shall be outside the reserved range of 0xFFFxxxxx.
++	 */
++	ret = dma_coerce_mask_and_coherent(cdev->dev, DMA_BIT_MASK(31));
++	if (ret)
++		return ret;
++
+ 	cdev->dxbuf_vaddr = dmam_alloc_coherent(dev, catpt_dram_size(cdev),
+ 						&cdev->dxbuf_paddr, GFP_KERNEL);
+ 	if (!cdev->dxbuf_vaddr)
+diff --git a/sound/soc/intel/catpt/dsp.c b/sound/soc/intel/catpt/dsp.c
+index 38a92bbc1ed56..2c67d2d35cdae 100644
+--- a/sound/soc/intel/catpt/dsp.c
++++ b/sound/soc/intel/catpt/dsp.c
+@@ -125,9 +125,6 @@ int catpt_dmac_probe(struct catpt_dev *cdev)
+ 	dmac->dev = cdev->dev;
+ 	dmac->irq = cdev->irq;
  
- 			*buf++ = val & 0xff;
- 			val >>= 8;
+-	ret = dma_coerce_mask_and_coherent(cdev->dev, DMA_BIT_MASK(31));
+-	if (ret)
+-		return ret;
+ 	/*
+ 	 * Caller is responsible for putting device in D0 to allow
+ 	 * for I/O and memory access before probing DW.
 -- 
 2.53.0
 
