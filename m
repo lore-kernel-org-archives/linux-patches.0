@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901F025A2C9;
-	Mon, 13 Apr 2026 16:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2002B26CE32;
+	Mon, 13 Apr 2026 16:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096872; cv=none; b=M/O9zQ4b5VHZ9t85H37qX24kxUyDkmxU/Ny6W5WgAc/gRxJj/UzbOXxfoKihm7fJ+NJKQgOXCaoIAqLwQdvUHVwqRHBvyQWXKsbAKSnipnq6XD34mA7JXMuYEiBJkfOb6qRyC+57GqHbtDEferyJjz2tMZ4dDJa56S54F4UJqZM=
+	t=1776096875; cv=none; b=AyYX5CSTyMg9S1a6JegLrZuS6GgwwByZZBrWaPrRYPvQYcoZte1T0wVCR+NRDAtxcvlLOpai6zbGem3u981l1eGUz4eqNYV+GdqKjWknDX2nOZ/suTDvKgAPoP5KDua7TfogvVJW+byoHPYwcX9WjxU3bEDU1Yg96y9KOWy7F00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096872; c=relaxed/simple;
-	bh=3tWRSJGGxJsE6UO5NJNjHMiyZOITIoNZSinPxDC8J5g=;
+	s=arc-20240116; t=1776096875; c=relaxed/simple;
+	bh=YBIJhLcV8ztcSR8xbulhg4w5HY3kwhYra/UyWGPsnvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u1tVhmSoICwkAnh6W29sIeHk7hIN+4q0uuQ/8LyYlF+4/fXDDH1M8pqEksLxBNeoR09XOGFsFm/ETiT9GRgdfMLGe0pExlVSpVlMLMvYQ0C3CzphRZjcxEi1BvSTMh2XkYGUMfeRgqjvPDqkrMWQ/T8NyxnI8FOVfymt7au69Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvpfK6yl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dO0Qn2SuOy81wkTB9GQy7l2swohz6iqtenIJCeoH4z850u3EJoACXIWYeFrXp+ahZiVM4mMv71nLSxMoUmanPkoDjCYcXUiDEk1n/VjBjp9XFvc1JXwUOj0fhe+zVzYak95O10u6dhiWDIENOyyZtWbZV/8ZjzG4t9RThkd8pFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+6gjqxZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvpfK6yl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D79AC2BCAF;
-	Mon, 13 Apr 2026 16:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+6gjqxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A367EC2BCAF;
+	Mon, 13 Apr 2026 16:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096872;
-	bh=3tWRSJGGxJsE6UO5NJNjHMiyZOITIoNZSinPxDC8J5g=;
+	s=korg; t=1776096875;
+	bh=YBIJhLcV8ztcSR8xbulhg4w5HY3kwhYra/UyWGPsnvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvpfK6ylWvazTqaUqn/UXn6Zw3vxk/Gw2ughSC74cri7VMb4dTR4PZnYPmtp9UKDV
-	 fMAaSiK9mcuB80M1XRcnp8rfQfL3Bmos0wSwXRnlDN1B5zFp4cfUrc1doTMgev7y8s
-	 zLrAvQ1hGIOcXiZlp15CIRpu+uzYXR/PIrhkdqao=
+	b=f+6gjqxZYbB9iZVsDdbbwTJraCAygk4Q3zW2Drup7+kMkIkpMqJ44yz5BCqPSGP4P
+	 NoHCgeHEesmiiXXGLP3zFM6WDwEvwOIjG8f79yECzIqGjv3zwvB0CbrT3CthnEWi0Z
+	 VVHdSnnfFy6DLOLr4jUntkSrQ3cQLxOE9eh6cr30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
 	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.6 24/50] Revert "arm64: dts: imx8mq-librem5: Set the DVS voltages lower"
-Date: Mon, 13 Apr 2026 18:00:51 +0200
-Message-ID: <20260413155725.415624578@linuxfoundation.org>
+Subject: [PATCH 6.6 25/50] arm64: dts: imx8mq-librem5: Bump BUCK1 suspend voltage up to 0.85V
+Date: Mon, 13 Apr 2026 18:00:52 +0200
+Message-ID: <20260413155725.453378229@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -44,6 +44,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -52,90 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-commit 4cd46ea0eb4504f7f4fea92cb4601c5c9a3e545e upstream.
+commit 511f76bf1dce5acf8907b65a7d1bc8f7e7c0d637 upstream.
 
-This reverts commit c24a9b698fb02cd0723fa8375abab07f94b97b10.
+The minimal voltage of VDD_SOC sourced from BUCK1 is 0.81V, which
+is the currently set value. However, BD71837 only guarantees accuracy
+of ±0.01V, and this still doesn't factor other reasons for actual
+voltage to slightly drop in, resulting in the possibility of running
+out of the operational range.
 
-It's been found that there's a significant per-unit variance in accepted
-supply voltages and the current set still makes some units unstable.
-
-Revert back to nominal values.
+Bump the voltage up to 0.85V, which should give enough headroom.
 
 Cc: stable@vger.kernel.org
-Fixes: c24a9b698fb0 ("arm64: dts: imx8mq-librem5: Set the DVS voltages lower")
+Fixes: 8f0216b006e5 ("arm64: dts: Add a device tree for the Librem 5 phone")
 Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts |    2 -
- arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi   |   22 +++++---------------
- 2 files changed, 7 insertions(+), 17 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
-@@ -7,7 +7,7 @@
- 
- &a53_opp_table {
- 	opp-1000000000 {
--		opp-microvolt = <950000>;
-+		opp-microvolt = <1000000>;
- 	};
- };
- 
 --- a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
 +++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
-@@ -847,8 +847,8 @@
- 				regulator-max-microvolt = <1300000>;
- 				regulator-boot-on;
+@@ -849,7 +849,7 @@
  				regulator-ramp-delay = <1250>;
--				rohm,dvs-run-voltage = <880000>;
--				rohm,dvs-idle-voltage = <820000>;
-+				rohm,dvs-run-voltage = <900000>;
-+				rohm,dvs-idle-voltage = <850000>;
- 				rohm,dvs-suspend-voltage = <810000>;
- 				regulator-always-on;
- 			};
-@@ -859,8 +859,8 @@
- 				regulator-max-microvolt = <1300000>;
- 				regulator-boot-on;
- 				regulator-ramp-delay = <1250>;
--				rohm,dvs-run-voltage = <950000>;
--				rohm,dvs-idle-voltage = <850000>;
-+				rohm,dvs-run-voltage = <1000000>;
-+				rohm,dvs-idle-voltage = <900000>;
+ 				rohm,dvs-run-voltage = <900000>;
+ 				rohm,dvs-idle-voltage = <850000>;
+-				rohm,dvs-suspend-voltage = <810000>;
++				rohm,dvs-suspend-voltage = <850000>;
  				regulator-always-on;
  			};
  
-@@ -869,14 +869,14 @@
- 				regulator-min-microvolt = <700000>;
- 				regulator-max-microvolt = <1300000>;
- 				regulator-boot-on;
--				rohm,dvs-run-voltage = <850000>;
-+				rohm,dvs-run-voltage = <900000>;
- 			};
- 
- 			buck4_reg: BUCK4 {
- 				regulator-name = "buck4";
- 				regulator-min-microvolt = <700000>;
- 				regulator-max-microvolt = <1300000>;
--				rohm,dvs-run-voltage = <930000>;
-+				rohm,dvs-run-voltage = <1000000>;
- 			};
- 
- 			buck5_reg: BUCK5 {
-@@ -1410,13 +1410,3 @@
- 	fsl,ext-reset-output;
- 	status = "okay";
- };
--
--&a53_opp_table {
--	opp-1000000000 {
--		opp-microvolt = <850000>;
--	};
--
--	opp-1500000000 {
--		opp-microvolt = <950000>;
--	};
--};
 
 
