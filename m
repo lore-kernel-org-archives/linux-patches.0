@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3593A27280A;
-	Mon, 13 Apr 2026 16:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADA924E4AF;
+	Mon, 13 Apr 2026 16:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096599; cv=none; b=QrgyliW3n6nmXQBc6QnZKAdthQ+Ue79M7YtmtC/VJfhcE7eUvzJFvXPa0rhTDraoRQEZd6Fc1FAJdWSPedmVTPCGqLBWWQ5AVj9TuhihDtEz4yJGQpCJ5rDq4VTjt6hPQ7SyHoavj2q9Ut+qSeO9pIgvfQ29dmo0/symCMylz40=
+	t=1776096601; cv=none; b=H9Y3Y5RMMyH86lxs1dO5SNDTSiT1cqyOe3PSk952FM7siq73oZgtUZaek5JrslihOi9GhQ9zp0PWrFeJFMEgRMU2p0//yvk81Vo9W72jwUJ97zD9fxhEITo4Gu2xH/N/Vb+VlClThhlVY6RMY7HIeeQqSlfkuwAycJNn+IpxubQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096599; c=relaxed/simple;
-	bh=Ncm7RXGJr926kKdgkoZWmEbppj1OiPiMk9+MifgplII=;
+	s=arc-20240116; t=1776096601; c=relaxed/simple;
+	bh=1mdy6Z3rVhTCheufu0LIYwP+FKIFq0mAsHHJOvZqdSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHM0WOr7kfPG5gHb3391w3ZRY5ZtDoytRznbKWzD1af7fWbiEKkMyr9uDEBbk5bMgr4Y4BLs3N9CxMcbKpWYTWjiU4+BluDbRCifv0npUIyzAa8cQEtGNvv4imEt+uLaYbB9cp4QvmhTU8KxJz3Ei3VOMTWGhqo7SrTtYQ3BMGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPkBbcMh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bTNyEYc5m/B2Z440eRqCUWTgiB91iWejaL7aG53pAQ0f1a/RSfvjINacLRfOlf5KjL10hfKas0KPaKMhnD72IaaGVF1p8eKEj0Nl1Du5bJreqKCZxu4vyGp6+EZbOqG9jHjgA8OSVP/VFsD/aX66TYmDoagG47E0IlSYohvWuuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMaTpbrN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPkBbcMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9150AC2BCAF;
-	Mon, 13 Apr 2026 16:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMaTpbrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F100C2BCAF;
+	Mon, 13 Apr 2026 16:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096599;
-	bh=Ncm7RXGJr926kKdgkoZWmEbppj1OiPiMk9+MifgplII=;
+	s=korg; t=1776096601;
+	bh=1mdy6Z3rVhTCheufu0LIYwP+FKIFq0mAsHHJOvZqdSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPkBbcMhXLF+EZfO4nyoTtC895qTGlYiIhprRj2zFRjHsu+0HjhKXJhvCEXEOfsVZ
-	 dJ5NE8MwAtDOlsX3z7TFeHPBYw0r4C31nJaAF8sVFLg7Lr/SfS3d/wWoYupYmYekE2
-	 Oc++7FVOUNJpEzeoN17FPiR1h9G5BakIAFNhDVUw=
+	b=FMaTpbrNTta0z5uG3pSRi8UeQRV0NllDyk8XZa66tR/E4LCfqGv8BXhrBOLBmq241
+	 +J2QVazDKH047wG6czqvEAo6rHse4ytattXczvvzdsYCrIdzU6n13LWugInsJ9TQqB
+	 w+wr3QGuDRGSiUbT3jJ6mBBbwVzH0ZVlL6K1m3go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Keenan Dong <keenanat2000@gmail.com>,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	Simon Horman <horms@kernel.org>,
+	Willy Tarreau <w@1wt.eu>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 72/83] rxrpc: reject undecryptable rxkad response tickets
-Date: Mon, 13 Apr 2026 18:00:40 +0200
-Message-ID: <20260413155733.689090525@linuxfoundation.org>
+Subject: [PATCH 6.18 73/83] rxrpc: fix RESPONSE authenticator parser OOB read
+Date: Mon, 13 Apr 2026 18:00:41 +0200
+Message-ID: <20260413155733.725409275@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -61,64 +56,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Keenan Dong <keenanat2000@gmail.com>
 
-commit fe4447cd95623b1cfacc15f280aab73a6d7340b2 upstream.
+commit 3e3138007887504ee9206d0bfb5acb062c600025 upstream.
 
-rxkad_decrypt_ticket() decrypts the RXKAD response ticket and then
-parses the buffer as plaintext without checking whether
-crypto_skcipher_decrypt() succeeded.
+rxgk_verify_authenticator() copies auth_len bytes into a temporary
+buffer and then passes p + auth_len as the parser limit to
+rxgk_do_verify_authenticator(). Since p is a __be32 *, that inflates the
+parser end pointer by a factor of four and lets malformed RESPONSE
+authenticators read past the kmalloc() buffer.
 
-A malformed RESPONSE can therefore use a non-block-aligned ticket
-length, make the decrypt operation fail, and still drive the ticket
-parser with attacker-controlled bytes.
+Decoded from the original latest-net reproduction logs with
+scripts/decode_stacktrace.sh:
 
-Check the decrypt result and abort the connection with RXKADBADTICKET
-when ticket decryption fails.
+BUG: KASAN: slab-out-of-bounds in rxgk_verify_response()
+Call Trace:
+ dump_stack_lvl() [lib/dump_stack.c:123]
+ print_report() [mm/kasan/report.c:379 mm/kasan/report.c:482]
+ kasan_report() [mm/kasan/report.c:597]
+ rxgk_verify_response()
+   [net/rxrpc/rxgk.c:1103 net/rxrpc/rxgk.c:1167
+    net/rxrpc/rxgk.c:1274]
+ rxrpc_process_connection()
+   [net/rxrpc/conn_event.c:266 net/rxrpc/conn_event.c:364
+    net/rxrpc/conn_event.c:386]
+ process_one_work() [kernel/workqueue.c:3281]
+ worker_thread()
+   [kernel/workqueue.c:3353 kernel/workqueue.c:3440]
+ kthread() [kernel/kthread.c:436]
+ ret_from_fork() [arch/x86/kernel/process.c:164]
 
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Allocated by task 54:
+ rxgk_verify_response()
+   [include/linux/slab.h:954 net/rxrpc/rxgk.c:1155
+    net/rxrpc/rxgk.c:1274]
+ rxrpc_process_connection()
+   [net/rxrpc/conn_event.c:266 net/rxrpc/conn_event.c:364
+    net/rxrpc/conn_event.c:386]
+
+Convert the byte count to __be32 units before constructing the parser
+limit.
+
+Fixes: 9d1d2b59341f ("rxrpc: rxgk: Implement the yfs-rxgk security class (GSSAPI)")
+Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: Simon Horman <horms@kernel.org>
+cc: Willy Tarreau <w@1wt.eu>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-12-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-13-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/rxkad.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/rxrpc/rxgk.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/rxrpc/rxkad.c
-+++ b/net/rxrpc/rxkad.c
-@@ -958,6 +958,7 @@ static int rxkad_decrypt_ticket(struct r
- 	struct in_addr addr;
- 	unsigned int life;
- 	time64_t issue, now;
-+	int ret;
- 	bool little_endian;
- 	u8 *p, *q, *name, *end;
+--- a/net/rxrpc/rxgk.c
++++ b/net/rxrpc/rxgk.c
+@@ -1164,7 +1164,8 @@ static int rxgk_verify_authenticator(str
+ 	}
  
-@@ -977,8 +978,11 @@ static int rxkad_decrypt_ticket(struct r
- 	sg_init_one(&sg[0], ticket, ticket_len);
- 	skcipher_request_set_callback(req, 0, NULL, NULL);
- 	skcipher_request_set_crypt(req, sg, sg, ticket_len, iv.x);
--	crypto_skcipher_decrypt(req);
-+	ret = crypto_skcipher_decrypt(req);
- 	skcipher_request_free(req);
-+	if (ret < 0)
-+		return rxrpc_abort_conn(conn, skb, RXKADBADTICKET, -EPROTO,
-+					rxkad_abort_resp_tkt_short);
- 
- 	p = ticket;
- 	end = p + ticket_len;
+ 	p = auth;
+-	ret = rxgk_do_verify_authenticator(conn, krb5, skb, p, p + auth_len);
++	ret = rxgk_do_verify_authenticator(conn, krb5, skb, p,
++					   p + auth_len / sizeof(*p));
+ error:
+ 	kfree(auth);
+ 	return ret;
 
 
