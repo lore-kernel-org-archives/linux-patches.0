@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7602130C361;
-	Mon, 13 Apr 2026 16:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102D33090F5;
+	Mon, 13 Apr 2026 16:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098295; cv=none; b=GCsPTePGyuYNowmztkMZrsFazg7NLu9B46+FuVBdkeZOq/PKF8Ha1OzJpEh+KBFfNoA8bkLVSnfbaeD+eAlJQsBnKBHwq2xA7cf6oeXfeDr0Uy5r6G7sH/VO9mMcvfKF0UlTOITRdQmE7eareR3fY6f6wBGqNRhBUK5WNvpnduo=
+	t=1776098298; cv=none; b=vEG3ttYPwrf0lUsSBR8XhHzcz3XTlW9eYrYSF5Ijss4AK2n/ciu6D6nqUQ2t7jFSV2eXAvCVAD7W4pE7BfmT6zELsa3LzI+ba1yTUfjagb3cc0ofa9vTE2r2eABfbPiKnBEBeldK2MhuFGAPx3dHaEKQKXDhqvO+nC/cVc2sVHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098295; c=relaxed/simple;
-	bh=dsV8zlMkXYFjvuelF6YZ+fwZCityvFvRthsnX9qq2PY=;
+	s=arc-20240116; t=1776098298; c=relaxed/simple;
+	bh=xdM9s3AmofWFmiTHfTtNdJdZaqFR8R86zqupzd5Uboo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5xpWF0FvEpSaoy6XjuoabkdoeTN+3BlL0Ii10esJRonSpcqBR+sEZ/Fq9cgKSGTLhN6nxReD/8j/7UD0taHfubKxlJVQgImwy+4UAykcVWDYUkfUcQIL4mK8rOLq7BZEAvGVCW0hfCpCGBNi8zk33ZPMUVLcoJIeIr8Uj2CIuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9cXSRQl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeNYtYdc/ZXud8vZgmAMk3fKHm0oU1wLHT4RfiUtZ9j8iu5DOxX+I4Frti3bd8z+hO8fH3aMBEeR0azEvGU/w/gQvkZ2zngOmviISFtcO0//rW/BXM6W0sxaIPD5BbjWokQv5anwxdUe6o2BZS0oepgE0bZBysmn9zViUOuqSP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8yVZADG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9cXSRQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D739C2BCAF;
-	Mon, 13 Apr 2026 16:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8yVZADG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5FEC2BCB3;
+	Mon, 13 Apr 2026 16:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098295;
-	bh=dsV8zlMkXYFjvuelF6YZ+fwZCityvFvRthsnX9qq2PY=;
+	s=korg; t=1776098297;
+	bh=xdM9s3AmofWFmiTHfTtNdJdZaqFR8R86zqupzd5Uboo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9cXSRQlDuCJ+GCU5QkRi9mFbp0MgQxyEQzxGIDNyFzi0vuqsrrQzbcHl+rmIzuyG
-	 cSngEiBKT90eqFUKx85RK4cRokBao+rX7VHxM8fPBGXHU/TMTSyTSNHf2QbPiLJzr6
-	 Hwt3IUmqt5k2aB0YlG/N4SWPcz23HhHQVd8S25vI=
+	b=t8yVZADGh4F8hRDRA6IcLIYyHD8xivMoLdMUyekRerAlyeUOgFDb+wVj9CjpfV0fe
+	 gCKh3XPkXn9jYHkgRLkZZCxSHpGL3/tsmmymL8iPTza2XFEJmS9zIbeq9P/gzAuDsR
+	 lyRtUigyQQj3vA9iEe+TYTv1BDzTr9umyEfT0xic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9a3c54f52bd1edbd975f@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Heitor Alves de Siqueira <halves@igalia.com>
-Subject: [PATCH 5.15 468/570] usb: usbtmc: Flush anchored URBs in usbtmc_release
-Date: Mon, 13 Apr 2026 17:59:59 +0200
-Message-ID: <20260413155847.996782228@linuxfoundation.org>
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 5.15 469/570] usb: ehci-brcm: fix sleep during atomic
+Date: Mon, 13 Apr 2026 18:00:00 +0200
+Message-ID: <20260413155848.034156121@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,37 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heitor Alves de Siqueira <halves@igalia.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-commit 8a768552f7a8276fb9e01d49773d2094ace7c8f1 upstream.
+commit 679b771ea05ad0f8eeae83e14a91b8f4f39510c4 upstream.
 
-When calling usbtmc_release, pending anchored URBs must be flushed or
-killed to prevent use-after-free errors (e.g. in the HCD giveback
-path). Call usbtmc_draw_down() to allow anchored URBs to be completed.
+echi_brcm_wait_for_sof() gets called after disabling interrupts
+in ehci_brcm_hub_control(). Use the atomic version of poll_timeout
+to fix the warning.
 
-Fixes: 4f3c8d6eddc2 ("usb: usbtmc: Support Read Status Byte with SRQ per file")
-Reported-by: syzbot+9a3c54f52bd1edbd975f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9a3c54f52bd1edbd975f
+Fixes: 9df231511bd6 ("usb: ehci: Add new EHCI driver for Broadcom STB SoC's")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
-Link: https://patch.msgid.link/20260312-usbtmc-flush-release-v1-1-5755e9f4336f@igalia.com
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260318185707.2588431-1-justin.chen@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usbtmc.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/host/ehci-brcm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -254,6 +254,9 @@ static int usbtmc_release(struct inode *
- 	list_del(&file_data->file_elem);
+--- a/drivers/usb/host/ehci-brcm.c
++++ b/drivers/usb/host/ehci-brcm.c
+@@ -31,8 +31,8 @@ static inline void ehci_brcm_wait_for_so
+ 	int res;
  
- 	spin_unlock_irq(&file_data->data->dev_lock);
-+
-+	/* flush anchored URBs */
-+	usbtmc_draw_down(file_data);
- 	mutex_unlock(&file_data->data->io_mutex);
- 
- 	kref_put(&file_data->data->kref, usbtmc_delete);
+ 	/* Wait for next microframe (every 125 usecs) */
+-	res = readl_relaxed_poll_timeout(&ehci->regs->frame_index, val,
+-					 val != frame_idx, 1, 130);
++	res = readl_relaxed_poll_timeout_atomic(&ehci->regs->frame_index,
++						val, val != frame_idx, 1, 130);
+ 	if (res)
+ 		ehci_err(ehci, "Error waiting for SOF\n");
+ 	udelay(delay);
 
 
