@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907E4223DCE;
-	Mon, 13 Apr 2026 16:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1727233722;
+	Mon, 13 Apr 2026 16:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098725; cv=none; b=VNoY5l0dPPblZcZrGmKMlr5+4AW3AQRiDw9sMwZ71PxXgPjhhg2KC7U6VePiKAm4GBLzYPhK5MOztFd+0TbIoZmYECwQLp0M7f9iOwQ55SjoAU4/AxpJM4+fuALt7lRkl9zrRH20Q6rFRtW5/ovaMKOWSCnu2aeIzEApXz6hO9Y=
+	t=1776098727; cv=none; b=DjEq+MI3ZVTfACELQwyiMOV1DaQf9K9TJPpN6QQCr30l0F4eZ8sy6hsZodam+i8SqWb8CU3IKiLvHbPmoqcNlU5OYb4e0iUEXihdkFqo5LeeEqBDeixT7mol4+iBISDckvbxT+d/JdO3WRKjoLtxNeFwXQqcUsWOfU3iDMpPfJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098725; c=relaxed/simple;
-	bh=F2zkFt+SYWxuFodGds9Bdp0PWvAy+8sdH5R5QMnYrYg=;
+	s=arc-20240116; t=1776098727; c=relaxed/simple;
+	bh=p6ymIA8/dMDYjHXcLrKWtdsfkFq7+Ud4NiC8XJPS7BU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X+u+wKtJmAmQibs39I7RUPwOJ84mfb8OLrtwlLgb32WKyVOXmwbrvJcH/LPleS2lwmiJm0gxXhFNqJOOvX6Qgt5IBxUag34Ml0aXLR44rYWn8RWI1T+75AA1R6GiVnJbfLSwivpxSVcNqr2BBNtGq/v1b5BHbRZdjrdUonykRMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npaE9rHE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UB9yfWggVi9Ol9NCQY3lqRO+DZ2mLHRrxwVbXfqaIAA1vFxOp4WmEwkXohhOhSCekf7aM66zVo497hHgKel/n3goRWuVNK/cNZjAf7PBceH5XwhSiunYnF/4CsNTDEdKFeWU0gs/OhrYLcqpQYBeYvf1ghvSi6S+5ttoyoqXIZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJ2aYBtj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npaE9rHE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9314C2BCAF;
-	Mon, 13 Apr 2026 16:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJ2aYBtj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588DAC2BCAF;
+	Mon, 13 Apr 2026 16:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098725;
-	bh=F2zkFt+SYWxuFodGds9Bdp0PWvAy+8sdH5R5QMnYrYg=;
+	s=korg; t=1776098727;
+	bh=p6ymIA8/dMDYjHXcLrKWtdsfkFq7+Ud4NiC8XJPS7BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npaE9rHENrfIWArlicISqjOAmO1er/+b+D/HTbX3HL+yrYBTff6nlr+SjTuOEJmQt
-	 jp8FkwXZeRLdBOHcbx3z4PSa0Nlp4EWW3xiAO0tI2vjV9M4Xd4c6N0In36iORu1ybU
-	 v9wqykBa47nA/mVzlQkyOHC75LKhPkudSeILSYvg=
+	b=YJ2aYBtjodqLkfKToMpXF7NdRzWsqrWhj4f/cWWOkDP3Pi4QUUT5CdRj//AlU7aHg
+	 6H55o4eEeDuoDPY9YakYztCJUDQ0SdCgTxc+7EEfJEjXdgpF4YTk+9cW1r0PS/fg3N
+	 ub+VbZufR9PObbsD3U4dtQgJdur3iv2AINu4GqmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72e3ea390c305de0e259@syzkaller.appspotmail.com,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matteo Cotifava <cotifavamatteo@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/491] atm: lec: fix null-ptr-deref in lec_arp_clear_vccs
-Date: Mon, 13 Apr 2026 17:54:42 +0200
-Message-ID: <20260413155820.442409213@linuxfoundation.org>
+Subject: [PATCH 5.10 064/491] ASoC: soc-core: drop delayed_work_pending() check before flush
+Date: Mon, 13 Apr 2026 17:55:09 +0200
+Message-ID: <20260413155821.444493435@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -48,108 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: matteo.cotifava <cotifavamatteo@gmail.com>
 
-[ Upstream commit 101bacb303e89dc2e0640ae6a5e0fb97c4eb45bb ]
+[ Upstream commit 3c99c9f0ed60582c1c9852b685d78d5d3a50de63 ]
 
-syzkaller reported a null-ptr-deref in lec_arp_clear_vccs().
-This issue can be easily reproduced using the syzkaller reproducer.
+The delayed_work_pending() check before flush_delayed_work() in
+soc_free_pcm_runtime() is unnecessary and racy. flush_delayed_work()
+is safe to call unconditionally - it is a no-op when no work is
+pending. Remove the check.
 
-In the ATM LANE (LAN Emulation) module, the same atm_vcc can be shared by
-multiple lec_arp_table entries (e.g., via entry->vcc or entry->recv_vcc).
-When the underlying VCC is closed, lec_vcc_close() iterates over all
-ARP entries and calls lec_arp_clear_vccs() for each matched entry.
+The original check was added by commit 9c9b65203492 ("ASoC: core:
+only flush inited work during free") but delayed_work_pending()
+followed by flush_delayed_work() has a time-of-check/time-of-use
+window where work can become pending between the two calls.
 
-For example, when lec_vcc_close() iterates through the hlists in
-priv->lec_arp_empty_ones or other ARP tables:
-
-1. In the first iteration, for the first matched ARP entry sharing the VCC,
-lec_arp_clear_vccs() frees the associated vpriv (which is vcc->user_back)
-and sets vcc->user_back to NULL.
-2. In the second iteration, for the next matched ARP entry sharing the same
-VCC, lec_arp_clear_vccs() is called again. It obtains a NULL vpriv from
-vcc->user_back (via LEC_VCC_PRIV(vcc)) and then attempts to dereference it
-via `vcc->pop = vpriv->old_pop`, leading to a null-ptr-deref crash.
-
-Fix this by adding a null check for vpriv before dereferencing
-it. If vpriv is already NULL, it means the VCC has been cleared
-by a previous call, so we can safely skip the cleanup and just
-clear the entry's vcc/recv_vcc pointers.
-
-The entire cleanup block (including vcc_release_async()) is placed inside
-the vpriv guard because a NULL vpriv indicates the VCC has already been
-fully released by a prior iteration — repeating the teardown would
-redundantly set flags and trigger callbacks on an already-closing socket.
-
-The Fixes tag points to the initial commit because the entry->vcc path has
-been vulnerable since the original code. The entry->recv_vcc path was later
-added by commit 8d9f73c0ad2f ("atm: fix a memory leak of vcc->user_back")
-with the same pattern, and both paths are fixed here.
-
-Reported-by: syzbot+72e3ea390c305de0e259@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68c95a83.050a0220.3c6139.0e5c.GAE@google.com/T/
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://patch.msgid.link/20260225123250.189289-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9c9b65203492 ("ASoC: core: only flush inited work during free")
+Signed-off-by: Matteo Cotifava <cotifavamatteo@gmail.com>
+Link: https://patch.msgid.link/20260309215412.545628-2-cotifavamatteo@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/lec.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ sound/soc/soc-core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/atm/lec.c b/net/atm/lec.c
-index 73078306504c0..768df9d7cd676 100644
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -1262,24 +1262,28 @@ static void lec_arp_clear_vccs(struct lec_arp_table *entry)
- 		struct lec_vcc_priv *vpriv = LEC_VCC_PRIV(vcc);
- 		struct net_device *dev = (struct net_device *)vcc->proto_data;
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index 1120d669fe2e3..77f8d458406b0 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -401,8 +401,7 @@ static void soc_free_pcm_runtime(struct snd_soc_pcm_runtime *rtd)
  
--		vcc->pop = vpriv->old_pop;
--		if (vpriv->xoff)
--			netif_wake_queue(dev);
--		kfree(vpriv);
--		vcc->user_back = NULL;
--		vcc->push = entry->old_push;
--		vcc_release_async(vcc, -EPIPE);
-+		if (vpriv) {
-+			vcc->pop = vpriv->old_pop;
-+			if (vpriv->xoff)
-+				netif_wake_queue(dev);
-+			kfree(vpriv);
-+			vcc->user_back = NULL;
-+			vcc->push = entry->old_push;
-+			vcc_release_async(vcc, -EPIPE);
-+		}
- 		entry->vcc = NULL;
- 	}
- 	if (entry->recv_vcc) {
- 		struct atm_vcc *vcc = entry->recv_vcc;
- 		struct lec_vcc_priv *vpriv = LEC_VCC_PRIV(vcc);
+ 	list_del(&rtd->list);
  
--		kfree(vpriv);
--		vcc->user_back = NULL;
-+		if (vpriv) {
-+			kfree(vpriv);
-+			vcc->user_back = NULL;
+-	if (delayed_work_pending(&rtd->delayed_work))
+-		flush_delayed_work(&rtd->delayed_work);
++	flush_delayed_work(&rtd->delayed_work);
+ 	snd_soc_pcm_component_free(rtd);
  
--		entry->recv_vcc->push = entry->old_recv_push;
--		vcc_release_async(entry->recv_vcc, -EPIPE);
-+			entry->recv_vcc->push = entry->old_recv_push;
-+			vcc_release_async(entry->recv_vcc, -EPIPE);
-+		}
- 		entry->recv_vcc = NULL;
- 	}
- }
+ 	/*
 -- 
 2.51.0
 
