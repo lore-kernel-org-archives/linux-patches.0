@@ -1,309 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B97A2820A9;
-	Mon, 13 Apr 2026 16:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B162D73B5;
+	Mon, 13 Apr 2026 16:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096906; cv=none; b=uNPFVMy9pybIBVUWf5QoQjcylp8hADaKKAyL1QtDVULSR3TvroDByV7J2odCPy3/jrce0M356vAvCwWIBb9SqowCHaCDEZuPePfaf1iAU6MTk/f5tZH0tUyFycMKNsqhAJtYv/G3Vj2wbsaJgBu1OH+RTxtPtNFiGa7TJknrBAE=
+	t=1776096908; cv=none; b=tdwqvVfomXStgLbIQI0t/n6CvrsY2FFMlkC9t/BE79JPiP5ayNWTaJxnGeFfXvh4XxShOQ2sy2+dCrhgRvuTcvElHS3+DMYJ/vqWQCdnSF/Ac28S2xYGE3yXg3lT3kY512kqJ77gOT807+cLvsigpp6rp+TfBSEeEVZBKpgK2WY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096906; c=relaxed/simple;
-	bh=1p1WFVcVXjIL0iCXQ4rNU+KqLT3YyxKb/zJIpkN7aR0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UwNbwEfgmzMSnS3LomFsrA2VCz8USxBowz5Ad4XnTz6Egmh2q/2puAum3AyOK+YJ+5zwNDfaMthoUVBE6G/k8Tu5mVr3h3clMoMG6fnSInrielVyPEhlfZZCKWvyIae9nVtCKxc+5EvwR3rFVVx21iTkluhb2X3RiXNPiFTQ8o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6VbItXT; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776096908; c=relaxed/simple;
+	bh=SzwiXfBmdRAxaV4rPYvbTD8d9EzWv9ICrpomKh0dKmc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=aCP1YnQOWg3p/4CEZZb8fmC6Wk5DF3aQBgvkwMgtqc+xDpz57HJ2XxLzpj9rOhNr3c7x1bKhdWtwuy4Tj18b8FOrnB+WAbuu9qOTI2fe0Fv+l3jHbjNhC2yr6JvwBJ6T9I7s/UitTiNdy9DpyF9zGoXdykUyhfVQ2Yf14Cb1kxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HgPU7BA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6VbItXT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5263BC2BCAF;
-	Mon, 13 Apr 2026 16:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HgPU7BA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAFBC2BCB3;
+	Mon, 13 Apr 2026 16:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096905;
-	bh=1p1WFVcVXjIL0iCXQ4rNU+KqLT3YyxKb/zJIpkN7aR0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Z6VbItXT0ngGvIn1kCH6f48BN4biyX2cQ5vJ9kE1fwuSQXdmuWJVB3yu04zhCiM3e
-	 o4izaUtt/LQ7HqSPhYSfdsy3KzHajlVntqrKB8hWuqc2YvvARicAqf5AW32zeFNg4V
-	 B2Kv/dNImlPU4LY6KvhNkoNYCxBR5q69zxPBNGN0=
+	s=korg; t=1776096908;
+	bh=SzwiXfBmdRAxaV4rPYvbTD8d9EzWv9ICrpomKh0dKmc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=1HgPU7BATGJcNGr0H/FGKSMD6ZE/LNVp2Hrphx37rwdhXv9f9QoHTuPLaMMxcMv6/
+	 HK/K40WylW17P2jMsIEvrAJZO0UPG/dF9xDyWlqsP+3skZo5jwseKRdifZCE0BtTNc
+	 nfDd7gx6KgUC202ScKXF26iLzuC2PmbEPhfz39a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: [PATCH 6.6 00/50] 6.6.135-rc1 review
-Date: Mon, 13 Apr 2026 18:00:27 +0200
-Message-ID: <20260413155724.497323914@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	stable@kernel.org
+Subject: [PATCH 6.6 31/50] EDAC/mc: Fix error path ordering in edac_mc_alloc()
+Date: Mon, 13 Apr 2026 18:00:58 +0200
+Message-ID: <20260413155725.676120506@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
+References: <20260413155724.497323914@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.135-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.6.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.6.135-rc1
-X-KernelTest-Deadline: 2026-04-15T15:57+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.6.135 release.
-There are 50 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.135-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-and the diffstat can be found below.
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-thanks,
+commit 51520e03e70d6c73e33ee7cbe0319767d05764fe upstream.
 
-greg k-h
+When the mci->pvt_info allocation in edac_mc_alloc() fails, the error path
+will call put_device() which will end up calling the device's release
+function.
 
--------------
-Pseudo-Shortlog of commits:
+However, the init ordering is wrong such that device_initialize() happens
+*after* the failed allocation and thus the device itself and the release
+function pointer are not initialized yet when they're called:
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.6.135-rc1
+  MCE: In-kernel MCE decoding enabled.
+  ------------[ cut here ]------------
+  kobject: '(null)': is not initialized, yet kobject_put() is being called.
+  WARNING: lib/kobject.c:734 at kobject_put, CPU#22: systemd-udevd
+  CPU: 22 UID: 0 PID: 538 Comm: systemd-udevd Not tainted 7.0.0-rc1+ #2 PREEMPT(full)
+  RIP: 0010:kobject_put
+  Call Trace:
+   <TASK>
+   edac_mc_alloc+0xbe/0xe0 [edac_core]
+   amd64_edac_init+0x7a4/0xff0 [amd64_edac]
+   ? __pfx_amd64_edac_init+0x10/0x10 [amd64_edac]
+   do_one_initcall
+   ...
 
-Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-    Revert "PCI: Enable ACS after configuring IOMMU for OF platforms"
+Reorder the calling sequence so that the device is initialized and thus the
+release function pointer is properly set before it can be used.
 
-David Howells <dhowells@redhat.com>
-    rxrpc: Fix missing error checks for rxkad encryption/decryption failure
+This was found by Claude while reviewing another EDAC patch.
 
-David Howells <dhowells@redhat.com>
-    rxrpc: Fix key/keyring checks in setsockopt(RXRPC_SECURITY_KEY/KEYRING)
+Fixes: 0bbb265f7089 ("EDAC/mc: Get rid of silly one-shot struct allocation in edac_mc_alloc()")
+Reported-by: Claude Code:claude-opus-4.5
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20260331121623.4871-1-bp@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/edac/edac_mc.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Luxiao Xu <rakukuip@gmail.com>
-    rxrpc: fix reference count leak in rxrpc_server_keyring()
-
-Yuqi Xu <xuyuqiabc@gmail.com>
-    rxrpc: reject undecryptable rxkad response tickets
-
-Douya Le <ldy3087146292@gmail.com>
-    rxrpc: Only put the call ref if one was acquired
-
-Anderson Nascimento <anderson@allelesecurity.com>
-    rxrpc: Fix key reference count leak from call->key
-
-David Howells <dhowells@redhat.com>
-    rxrpc: Fix call removal to use RCU safe deletion
-
-David Carlier <devnexen@gmail.com>
-    net: lan966x: fix page_pool error handling in lan966x_fdma_rx_alloc_page_pool()
-
-Baolin Wang <baolin.wang@linux.alibaba.com>
-    mm: filemap: fix nr_pages calculation overflow in filemap_map_pages()
-
-Tyllis Xu <livelycarpet87@gmail.com>
-    net: stmmac: fix integer underflow in chain mode
-
-Pengpeng Hou <pengpeng@iscas.ac.cn>
-    net: qualcomm: qca_uart: report the consumed byte on RX skb allocation failure
-
-Johan Hovold <johan@kernel.org>
-    mmc: vub300: fix NULL-deref on disconnect
-
-Jacky Bai <ping.bai@nxp.com>
-    pmdomain: imx8mp-blk-ctrl: Keep the NOC_HDCP clock enabled
-
-Michael Guralnik <michaelgur@nvidia.com>
-    net/mlx5: Update the list of the PCI supported devices
-
-Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-    drm/i915/gt: fix refcount underflow in intel_engine_park_heartbeat
-
-Haoze Xie <royenheart@gmail.com>
-    batman-adv: hold claim backbone gateways by reference
-
-David Carlier <devnexen@gmail.com>
-    net: altera-tse: fix skb leak on DMA mapping error in tse_start_xmit()
-
-Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
-    net/tls: fix use-after-free in -EBUSY error path of tls_do_encryption
-
-Borislav Petkov (AMD) <bp@alien8.de>
-    EDAC/mc: Fix error path ordering in edac_mc_alloc()
-
-Lukas Wunner <lukas@wunner.de>
-    X.509: Fix out-of-bounds access when parsing extensions
-
-Ruide Cao <caoruide123@gmail.com>
-    batman-adv: reject oversized global TT response buffers
-
-Pengpeng Hou <pengpeng@iscas.ac.cn>
-    nfc: pn533: allocate rx skb before consuming bytes
-
-Shawn Guo <shawnguo@kernel.org>
-    arm64: dts: hisilicon: hi3798cv200: Add missing dma-ranges
-
-Shawn Guo <shawnguo@kernel.org>
-    arm64: dts: hisilicon: poplar: Correct PCIe reset GPIO polarity
-
-Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
-    arm64: dts: imx8mq-librem5: Bump BUCK1 suspend voltage up to 0.85V
-
-Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
-    Revert "arm64: dts: imx8mq-librem5: Set the DVS voltages lower"
-
-Thomas Fourier <fourier.thomas@gmail.com>
-    wifi: brcmsmac: Fix dma_free_coherent() size
-
-Oleh Konko <security@1seal.org>
-    tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG
-
-Yasuaki Torimaru <yasuakitorimaru@gmail.com>
-    xfrm: clear trailing padding in build_polexpire()
-
-Tuan Do <tuan@calif.io>
-    netfilter: nft_ct: fix use-after-free in timeout object destroy
-
-Maarten Lankhorst <dev@lankhorst.se>
-    Revert "drm: Fix use-after-free on framebuffers and property blobs when calling drm_dev_unplug"
-
-Florian Westphal <fw@strlen.de>
-    netfilter: nft_set_pipapo: do not rely on ZERO_SIZE_PTR
-
-Andrea Mayer <andrea.mayer@uniroma2.it>
-    seg6: separate dst_cache for input and output paths in seg6 lwtunnel
-
-Matthieu Baerts (NGI0) <matttbe@kernel.org>
-    Revert "mptcp: add needs_id for netlink appending addr"
-
-Michael Zimmermann <sigmaepsilon92@gmail.com>
-    usb: gadget: f_hid: move list and spinlock inits from bind to alloc
-
-Li Xiasong <lixiasong1@huawei.com>
-    mptcp: fix soft lockup in mptcp_recvmsg()
-
-Srujana Challa <schalla@marvell.com>
-    virtio_net: clamp rss_max_key_size to NETDEV_RSS_KEY_LEN
-
-André Draszik <andre.draszik@linaro.org>
-    scsi: ufs: core: Fix use-after free in init error and remove paths
-
-Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-    ASoC: simple-card-utils: Don't use __free(device_node) at graph_util_parse_dai()
-
-Maciej W. Rozycki <macro@orcam.me.uk>
-    MIPS: mm: Rewrite TLB uniquification for the hidden bit feature
-
-Maciej W. Rozycki <macro@orcam.me.uk>
-    MIPS: mm: Suppress TLB uniquification on EHINV hardware
-
-Maciej W. Rozycki <macro@orcam.me.uk>
-    MIPS: Always record SEGBITS in cpu_data.vmbits
-
-Dmitry Torokhov <dmitry.torokhov@gmail.com>
-    Input: uinput - take event lock when submitting FF request "event"
-
-Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-    Input: uinput - fix circular locking dependency with ff-core
-
-Jiayuan Chen <jiayuan.chen@linux.dev>
-    mptcp: fix slab-use-after-free in __inet_lookup_established
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    net: rfkill: prevent unlimited numbers of rfkill events from being created
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    xfrm_user: fix info leak in build_report()
-
-Johan Hovold <johan@kernel.org>
-    wifi: rt2x00usb: fix devres lifetime
-
-Eric Biggers <ebiggers@kernel.org>
-    lib/crypto: chacha: Zeroize permuted_state before it leaves scope
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- .../arm64/boot/dts/freescale/imx8mq-librem5-r3.dts |   2 +-
- arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi  |  24 +-
- .../boot/dts/hisilicon/hi3798cv200-poplar.dts      |   2 +-
- arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi     |   1 +
- arch/mips/include/asm/cpu-features.h               |   1 -
- arch/mips/include/asm/cpu-info.h                   |   2 -
- arch/mips/include/asm/mipsregs.h                   |   2 +
- arch/mips/kernel/cpu-probe.c                       |  13 +-
- arch/mips/kernel/cpu-r3k-probe.c                   |   2 +
- arch/mips/mm/tlb-r4k.c                             | 285 +++++++++++++++++----
- crypto/asymmetric_keys/x509_cert_parser.c          |   8 +-
- drivers/edac/edac_mc.c                             |   6 +-
- drivers/gpu/drm/drm_file.c                         |   5 +-
- drivers/gpu/drm/drm_mode_config.c                  |   9 +-
- drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c   |  26 +-
- drivers/input/misc/uinput.c                        |  35 ++-
- drivers/mmc/host/vub300.c                          |   2 +-
- drivers/net/ethernet/altera/altera_tse_main.c      |   1 +
- drivers/net/ethernet/mellanox/mlx5/core/main.c     |   1 +
- .../net/ethernet/microchip/lan966x/lan966x_fdma.c  |   2 +
- drivers/net/ethernet/qualcomm/qca_uart.c           |   2 +-
- drivers/net/ethernet/stmicro/stmmac/chain_mode.c   |  11 +-
- drivers/net/virtio_net.c                           |  16 +-
- .../net/wireless/broadcom/brcm80211/brcmsmac/dma.c |   2 +-
- drivers/net/wireless/ralink/rt2x00/rt2x00usb.c     |   2 +-
- drivers/nfc/pn533/uart.c                           |  11 +-
- drivers/pci/pci-driver.c                           |   8 -
- drivers/pci/pci.c                                  |  10 +-
- drivers/pci/pci.h                                  |   1 -
- drivers/pmdomain/imx/imx8mp-blk-ctrl.c             |   8 +-
- drivers/ufs/core/ufshcd.c                          |  31 ++-
- drivers/ufs/host/ufshcd-pci.c                      |   2 -
- drivers/ufs/host/ufshcd-pltfrm.c                   |  25 +-
- drivers/usb/gadget/function/f_hid.c                |  11 +-
- include/net/netfilter/nf_conntrack_timeout.h       |   1 +
- include/trace/events/rxrpc.h                       |   2 +-
- include/ufs/ufshcd.h                               |   1 -
- lib/crypto/chacha.c                                |   4 +
- mm/filemap.c                                       |  11 +-
- net/batman-adv/bridge_loop_avoidance.c             |  27 +-
- net/batman-adv/translation-table.c                 |   9 +-
- net/ipv6/seg6_iptunnel.c                           |  41 ++-
- net/mptcp/pm_netlink.c                             |  24 +-
- net/mptcp/protocol.c                               |  13 +-
- net/mptcp/protocol.h                               |   1 +
- net/mptcp/subflow.c                                |  15 +-
- net/netfilter/nft_ct.c                             |   2 +-
- net/netfilter/nft_set_pipapo.c                     |  20 +-
- net/rfkill/core.c                                  |  35 ++-
- net/rxrpc/af_rxrpc.c                               |   6 -
- net/rxrpc/call_object.c                            |  25 +-
- net/rxrpc/io_thread.c                              |   3 +-
- net/rxrpc/key.c                                    |   2 +-
- net/rxrpc/rxkad.c                                  |  63 +++--
- net/rxrpc/server_key.c                             |   3 +
- net/tipc/group.c                                   |   6 +-
- net/tls/tls_sw.c                                   |  10 +
- net/xfrm/xfrm_user.c                               |   3 +
- sound/soc/generic/simple-card-utils.c              |   7 +-
- 60 files changed, 599 insertions(+), 308 deletions(-)
+--- a/drivers/edac/edac_mc.c
++++ b/drivers/edac/edac_mc.c
+@@ -369,13 +369,13 @@ struct mem_ctl_info *edac_mc_alloc(unsig
+ 	if (!mci->layers)
+ 		goto error;
+ 
++	mci->dev.release = mci_release;
++	device_initialize(&mci->dev);
++
+ 	mci->pvt_info = kzalloc(sz_pvt, GFP_KERNEL);
+ 	if (!mci->pvt_info)
+ 		goto error;
+ 
+-	mci->dev.release = mci_release;
+-	device_initialize(&mci->dev);
+-
+ 	/* setup index and various internal pointers */
+ 	mci->mc_idx = mc_num;
+ 	mci->tot_dimms = tot_dimms;
 
 
