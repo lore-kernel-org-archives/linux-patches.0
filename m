@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D7F3203B6;
-	Mon, 13 Apr 2026 16:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA67328255;
+	Mon, 13 Apr 2026 16:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099370; cv=none; b=u4xt2Pb0D1mF9CLTb76WZks4kUlDsVvU/9ec+OKhpVMwE3CFWn1XjsuKGicK27bt/rl2aybZdVpx1HdRbiJG+oWP+rjQshQTR5tvYO8jachsGI7e4T0fUZoRm2OiVIiQj+nvM7b+Dljt5/RLuMIohZVmi4NGXetj2ebR134xQ9Y=
+	t=1776099373; cv=none; b=uZgXuTqsW7ypkyTeGEAHJPSofMGfAvkaudanJXFUQK8PP2fbrkFhpU5d7K3Y1X/b2+ouTW1ulGAJk3tbcRHE5jXqZx+32I0TdKqF3/V7XnMdOK3ZqvJ6ooG7aaNYBNqUynhChmbO8nz0NaEW0eEknZzyrZyFhJ4+aSX5kIlV6DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099370; c=relaxed/simple;
-	bh=j0Y4V/iLMhYPSyBs3HrK8W02yt3GJoiN4Qnubz5OVi4=;
+	s=arc-20240116; t=1776099373; c=relaxed/simple;
+	bh=/JlQH7SJp2XJ7pADkqx5KoevZBFZyqPOAjWRE8xNRyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F2wAl1AMd3s2Fbc/e6dmBOA+RBRuru73kIQQhZP4yoxYRH6og6ZtWxGm50dQkMMb/yEXGyX5gipHBw5Sldo3iZxGc0ObrzWOfVXhQIVr6Rxs6bFRNG2ZLKZt/dWCQKzcw7pTIo/tSFa+xYu+VG9IsmDP9VH2GR2qeDvJWRKCL3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxoUtqCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q09t3dnDG6BtjO5y/TGyllVDcT++xic7qfRZWuZ7/ZnsE+pdBETx3uzlQxb2dPoPpp7LTv8MMyIsuZXCuhC2mfC70dUDe/pCl54WPAt/ckHq1VLTSuSifb53mM0AYr97BpMHTyWQyV1NMHWDWTvQVjsazzvPFMSKW75cAgGYsks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXgu2iSm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxoUtqCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F742C2BCAF;
-	Mon, 13 Apr 2026 16:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXgu2iSm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98053C2BCAF;
+	Mon, 13 Apr 2026 16:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099370;
-	bh=j0Y4V/iLMhYPSyBs3HrK8W02yt3GJoiN4Qnubz5OVi4=;
+	s=korg; t=1776099372;
+	bh=/JlQH7SJp2XJ7pADkqx5KoevZBFZyqPOAjWRE8xNRyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxoUtqCk1zaWic/3o5AYBR51RE3lGRclzzTYsZ4CM6f1wxJfA3b0mQT0xQuqqszzR
-	 vYSUV3/vwiz7fSNzoz4zpqFQMDZ26h1xqms0uDbg2YWDvOE+2ufyK5cmCNcAISy1WH
-	 m600Ihx78tdKnK541mk080vrMuSXBgCuy3fmReVs=
+	b=UXgu2iSmGDsyhER+7rxRp05U2C0072vRJ9toU+yokLslng8p7ZYYWKrHyPNyUr08Z
+	 EF6HseZsxcRgYi4lPr4Yiv9NhrHDTbd6NiIOoVIuO99TQnXAZvvFc2Azd45Ycd2XPm
+	 0333asfm5y5i3KdXaXjommFQHOAyWUnztUinhCLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Lutomirski <luto@kernel.org>,
-	Borislav Petkov <bp@suse.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 282/491] x86/fault: Improve kernel-executing-user-memory handling
-Date: Mon, 13 Apr 2026 17:58:47 +0200
-Message-ID: <20260413155829.603695727@linuxfoundation.org>
+Subject: [PATCH 5.10 283/491] x86/efi: efi_unmap_boot_services: fix calculation of ranges_to_free size
+Date: Mon, 13 Apr 2026 17:58:48 +0200
+Message-ID: <20260413155829.640615643@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,77 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Lutomirski <luto@kernel.org>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 03c81ea3331658f613bb2913d33764a4e0410cbd ]
+[ Upstream commit 217c0a5c177a3d4f7c8497950cbf5c36756e8bbb ]
 
-Right now, the case of the kernel trying to execute from user memory
-is treated more or less just like the kernel getting a page fault on a
-user access. In the failure path, it checks for erratum #93, tries to
-otherwise fix up the error, and then oopses.
+ranges_to_free array should have enough room to store the entire EFI
+memmap plus an extra element for NULL entry.
+The calculation of this array size wrongly adds 1 to the overall size
+instead of adding 1 to the number of elements.
 
-If it manages to jump to the user address space, with or without SMEP,
-it should not try to resolve the page fault. This is an error, pure and
-simple. Rearrange the code so that this case is caught early, check for
-erratum #93, and bail out.
+Add parentheses to properly size the array.
 
- [ bp: Massage commit message. ]
-
-Signed-off-by: Andy Lutomirski <luto@kernel.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lkml.kernel.org/r/ab8719c7afb8bd501c4eee0e36493150fbbe5f6a.1612924255.git.luto@kernel.org
-Stable-dep-of: 217c0a5c177a ("x86/efi: efi_unmap_boot_services: fix calculation of ranges_to_free size")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: a4b0bf6a40f3 ("x86/efi: defer freeing of boot services memory")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/fault.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ arch/x86/platform/efi/quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
-index 07983b6208f52..e06182127e1c8 100644
---- a/arch/x86/mm/fault.c
-+++ b/arch/x86/mm/fault.c
-@@ -433,6 +433,9 @@ static int is_errata93(struct pt_regs *regs, unsigned long address)
- 	    || boot_cpu_data.x86 != 0xf)
- 		return 0;
- 
-+	if (user_mode(regs))
-+		return 0;
-+
- 	if (address != regs->ip)
- 		return 0;
- 
-@@ -697,9 +700,6 @@ no_context(struct pt_regs *regs, unsigned long error_code,
- 	if (is_prefetch(regs, error_code, address))
+diff --git a/arch/x86/platform/efi/quirks.c b/arch/x86/platform/efi/quirks.c
+index a152d57624004..99b282d6c1302 100644
+--- a/arch/x86/platform/efi/quirks.c
++++ b/arch/x86/platform/efi/quirks.c
+@@ -416,7 +416,7 @@ void __init efi_unmap_boot_services(void)
+ 	if (efi_enabled(EFI_DBG))
  		return;
  
--	if (is_errata93(regs, address))
--		return;
--
- 	/*
- 	 * Buggy firmware could access regions which might page fault, try to
- 	 * recover from such faults.
-@@ -1162,6 +1162,21 @@ void do_user_addr_fault(struct pt_regs *regs,
- 	tsk = current;
- 	mm = tsk->mm;
- 
-+	if (unlikely((error_code & (X86_PF_USER | X86_PF_INSTR)) == X86_PF_INSTR)) {
-+		/*
-+		 * Whoops, this is kernel mode code trying to execute from
-+		 * user memory.  Unless this is AMD erratum #93, which
-+		 * corrupts RIP such that it looks like a user address,
-+		 * this is unrecoverable.  Don't even try to look up the
-+		 * VMA.
-+		 */
-+		if (is_errata93(regs, address))
-+			return;
-+
-+		bad_area_nosemaphore(regs, error_code, address);
-+		return;
-+	}
-+
- 	/* kprobes don't want to hook the spurious faults: */
- 	if (unlikely(kprobe_page_fault(regs, X86_TRAP_PF)))
- 		return;
+-	sz = sizeof(*ranges_to_free) * efi.memmap.nr_map + 1;
++	sz = sizeof(*ranges_to_free) * (efi.memmap.nr_map + 1);
+ 	ranges_to_free = kzalloc(sz, GFP_KERNEL);
+ 	if (!ranges_to_free) {
+ 		pr_err("Failed to allocate storage for freeable EFI regions\n");
 -- 
 2.53.0
 
