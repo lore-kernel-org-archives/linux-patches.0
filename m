@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DE230C359;
-	Mon, 13 Apr 2026 16:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA8C2D8364;
+	Mon, 13 Apr 2026 16:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098051; cv=none; b=gtQfDxMmfJZXwml2HM3v9t7AXRY5g4Mgeuipi54Zmn0l7YcEtCZuvKc/XrQOje4dw6URfr6VNKZQ8wvs+FChHW3RZbioo5vbK+n1IA+Sc+SvQgPRzRRW+QXIc/Nx8VquI8KJbiI8Y36ZLttBoYA4ItghNfXt0LSn5D7TZV3ERRw=
+	t=1776098053; cv=none; b=l7LJWQbTB6q1DINDkPEgfviFS04126AvH1AhvzPXsmk+d6Us5CPADlCVrpTXvpRjvjg8N5PzZAvu+BO/ULe5p26Ewb4CJeI6ZoyVK7nSwecUQ9BkJP7MCbdLeBP1r+elgBfs0Bp5ijiyPglXv9c/HhfOBsYK2vLq6E8sUUePFjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098051; c=relaxed/simple;
-	bh=2hN8h1QVEakHNc+ndKXXB6Idw6Pq7TSJoNU5adqSzBs=;
+	s=arc-20240116; t=1776098053; c=relaxed/simple;
+	bh=OdFd8dclx3AkTCowvqn0TG20v3AEug6SnuY4BH4J5fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UwNZAGSxtI7hYQHUpI3gyPu+owGToiWew0t9suPw7g4Ef+B/0813h7RQ4wjuTr2zEoH2v/QGhEDKhRPy0bNe0tC0kg97IyWO4fKSBJkrfNhY5TffjTtugSt5jWFb53fu9CaE3aMpVCyDl3pEh9er8aYRBa9r/YRXhStZksLPsig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kheJy+CL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dIL5PxpYWZnmFTuEAN5+LM1XkpTXtt47dXc0JmIc6A8cyOummo4KvtulYmPTLpIiCTPEAnW2+CDmirdakoS2Y/UvTCrXp8B9oeYu+mbooQo/4Jga9HszaT1z3WvzzMSfnqJ3uP+aqfpKwUMzA5E45FueQKmrRI2PMppOJAK4UzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeV5QI7y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kheJy+CL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839CDC2BCB0;
-	Mon, 13 Apr 2026 16:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeV5QI7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1575AC2BCAF;
+	Mon, 13 Apr 2026 16:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098050;
-	bh=2hN8h1QVEakHNc+ndKXXB6Idw6Pq7TSJoNU5adqSzBs=;
+	s=korg; t=1776098053;
+	bh=OdFd8dclx3AkTCowvqn0TG20v3AEug6SnuY4BH4J5fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kheJy+CL7c357xh8qwBDec1MuoFy9NWq3gUhdGU6+mZwU3gSqi/1dIv80FbxG4KKA
-	 snQgcDTfeCoFLCYmPOL/VJsHqS01nc1yjP7mX9gMWyNs6SnQ8hlKEPwCSffaT2pxJ7
-	 1sSk8zLkXgL/70d1fJsy4v2TMrji77UrIfEePnFA=
+	b=jeV5QI7yd4Nr87VaAepDjZ5bPZAtSDqg2GlhizfGvPVDXSIl9SyvBDbP/HAp/8Ni7
+	 bPdPZ/jhhG9/4lgEn1eI+zjyxIhxRRQppBZDKp81d9JmXYoqot+0jpmjK1+C7HIxqd
+	 YsrOyO4fuxGrj5K+ioSP5lT0DcssglYThpFvzygw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 367/570] spi: spi-fsl-lpspi: fix teardown order issue (UAF)
-Date: Mon, 13 Apr 2026 17:58:18 +0200
-Message-ID: <20260413155844.228766351@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Tyllis Xu <LivelyCarpet87@gmail.com>,
+	Dave Marquardt <davemarq@linux.ibm.com>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 376/570] scsi: ibmvfc: Fix OOB access in ibmvfc_discover_targets_done()
+Date: Mon, 13 Apr 2026 17:58:27 +0200
+Message-ID: <20260413155844.563885135@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,69 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Tyllis Xu <livelycarpet87@gmail.com>
 
-[ Upstream commit b341c1176f2e001b3adf0b47154fc31589f7410e ]
+commit 61d099ac4a7a8fb11ebdb6e2ec8d77f38e77362f upstream.
 
-There is a teardown order issue in the driver. The SPI controller is
-registered using devm_spi_register_controller(), which delays
-unregistration of the SPI controller until after the fsl_lpspi_remove()
-function returns.
+A malicious or compromised VIO server can return a num_written value in the
+discover targets MAD response that exceeds max_targets. This value is
+stored directly in vhost->num_targets without validation, and is then used
+as the loop bound in ibmvfc_alloc_targets() to index into disc_buf[], which
+is only allocated for max_targets entries. Indices at or beyond max_targets
+access kernel memory outside the DMA-coherent allocation.  The
+out-of-bounds data is subsequently embedded in Implicit Logout and PLOGI
+MADs that are sent back to the VIO server, leaking kernel memory.
 
-As the fsl_lpspi_remove() function synchronously tears down the DMA
-channels, a running SPI transfer triggers the following NULL pointer
-dereference due to use after free:
+Fix by clamping num_written to max_targets before storing it.
 
-| fsl_lpspi 42550000.spi: I/O Error in DMA RX
-| Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[...]
-| Call trace:
-|  fsl_lpspi_dma_transfer+0x260/0x340 [spi_fsl_lpspi]
-|  fsl_lpspi_transfer_one+0x198/0x448 [spi_fsl_lpspi]
-|  spi_transfer_one_message+0x49c/0x7c8
-|  __spi_pump_transfer_message+0x120/0x420
-|  __spi_sync+0x2c4/0x520
-|  spi_sync+0x34/0x60
-|  spidev_message+0x20c/0x378 [spidev]
-|  spidev_ioctl+0x398/0x750 [spidev]
-[...]
-
-Switch from devm_spi_register_controller() to spi_register_controller() in
-fsl_lpspi_probe() and add the corresponding spi_unregister_controller() in
-fsl_lpspi_remove().
-
-Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://patch.msgid.link/20260319-spi-fsl-lpspi-fixes-v1-1-b433e435b2d8@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 072b91f9c651 ("[SCSI] ibmvfc: IBM Power Virtual Fibre Channel Adapter Client Driver")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
+Reviewed-by: Dave Marquardt <davemarq@linux.ibm.com>
+Acked-by: Tyrel Datwyler <tyreld@linux.ibm.com>
+Link: https://patch.msgid.link/20260314170151.548614-1-LivelyCarpet87@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 3 ++-
+ drivers/scsi/ibmvscsi/ibmvfc.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 319cd96bd201b..540815ae49e78 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -914,7 +914,7 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 		enable_irq(irq);
- 	}
- 
--	ret = devm_spi_register_controller(&pdev->dev, controller);
-+	ret = spi_register_controller(controller);
- 	if (ret < 0) {
- 		dev_err_probe(&pdev->dev, ret, "spi_register_controller error\n");
- 		goto free_dma;
-@@ -943,6 +943,7 @@ static int fsl_lpspi_remove(struct platform_device *pdev)
- 	struct fsl_lpspi_data *fsl_lpspi =
- 				spi_controller_get_devdata(controller);
- 
-+	spi_unregister_controller(controller);
- 	fsl_lpspi_dma_exit(controller);
- 
- 	pm_runtime_dont_use_autosuspend(fsl_lpspi->dev);
--- 
-2.53.0
-
+--- a/drivers/scsi/ibmvscsi/ibmvfc.c
++++ b/drivers/scsi/ibmvscsi/ibmvfc.c
+@@ -4926,7 +4926,8 @@ static void ibmvfc_discover_targets_done
+ 	switch (mad_status) {
+ 	case IBMVFC_MAD_SUCCESS:
+ 		ibmvfc_dbg(vhost, "Discover Targets succeeded\n");
+-		vhost->num_targets = be32_to_cpu(rsp->num_written);
++		vhost->num_targets = min_t(u32, be32_to_cpu(rsp->num_written),
++					   max_targets);
+ 		ibmvfc_set_host_action(vhost, IBMVFC_HOST_ACTION_ALLOC_TGTS);
+ 		break;
+ 	case IBMVFC_MAD_FAILED:
 
 
