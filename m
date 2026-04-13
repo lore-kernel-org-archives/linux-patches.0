@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FCA2741A0;
-	Mon, 13 Apr 2026 16:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EF926F293;
+	Mon, 13 Apr 2026 16:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096766; cv=none; b=SXGGWa4SvO7sfYvd4SY4yvGuHQrFDK1J1q7OaTgrXXkoKJSvLo78z/wRR8A5T9RWHhhNDY3ShKK2z+tkyRB/bae+7zbu+Hb0mFB4zYD4zt6tLzDedw8FVWkf8z6a8wcPxODRCpr1wIJj+PBoqun/ZqcjeGr3p2rj2n0K9LrjNyA=
+	t=1776096769; cv=none; b=pTl4vCSvNtC1zl1JWSQtq/Qc3LCOGuVbH4bGqmzo5mdWzXC7xHv7jNzdKYncIVD46Qfx1MZxbCB1cVTgI7+/w/JSZUVILGjF36QbehgJMdzqt1oF19q62pUNnT9OoVuP2NbYN4CukXxlsBEcdz9RkqpJhwtjr2zfFU5ojIDe97A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096766; c=relaxed/simple;
-	bh=IH0SA4B6twXh3I+KiDsP7auNbAglpjIET3fKXJPb0AQ=;
+	s=arc-20240116; t=1776096769; c=relaxed/simple;
+	bh=OdoPB7ocx2r/KtkrutdvFmhCYkSEHspfl8ccs/dypNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZGxdB2z1VVgmV3f6sW1G1+RfY56CpgBsIuKQ8oIPTlVA/TStamrcFHWazetLQMXMMyCE6QSn3TMpMDHNIAkfVEiMHBCrp2Z3S+rm/fUsfoJ/GY7RVBanfX917QaROMlEyxkBRJYU+1cj4JAwedDr1i+VYBKzr1NQxb9xjh6E+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fWMwaK0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JudLEndmhcfP3Y97hHhE//wlr98KfBvDHPp1F/+tya85V6RwDXOTFGVK80EJOyN/1WEB8c0k0qUZzd3Uj4f8NVdPTlUQKEtZ+72YDIpwWoV0Es37iskuRQa6Q5fZMRtng9oBM3VfOdVzA9DnH95Nz4kRwaJ42bOwr9/fje0SUek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=koPpUHok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fWMwaK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBD3C2BCAF;
-	Mon, 13 Apr 2026 16:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="koPpUHok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08010C2BCAF;
+	Mon, 13 Apr 2026 16:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096766;
-	bh=IH0SA4B6twXh3I+KiDsP7auNbAglpjIET3fKXJPb0AQ=;
+	s=korg; t=1776096769;
+	bh=OdoPB7ocx2r/KtkrutdvFmhCYkSEHspfl8ccs/dypNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2fWMwaK0jh7lycBYn+nR3JayyiAtCtZ0i0WuA2CYtVd+IhDMsKvMu1f+Y5+B1FEXn
-	 WI5C3LFJk//HgqcoHd3Oq6ImSTf81GNy0q55Rq3W5OhGd8e41AyRrFQ7h5arXH3rhW
-	 UA0FnEWDfcc0xBUasR3Wnxk8R3rRxTVltIj5xp40=
+	b=koPpUHokvEpVLZRMya686GDPbiMKED1k4l1+qKTx6cpEVsnbFV/7KRQ8SfAtsKy1t
+	 g3msEfLjzhE2jICFG75uwUCEdXyOsT6iy73S/VeBiCkxzsBcDgjiL/k4xfCZ8ULxh8
+	 0wOaqPN/+JUJvmIZ4GzhD3LMYWD7RNjtgx9voBGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rajani Kantha <681739313@139.com>,
+	Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alva Lan <alvalan9@foxmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 22/70] nfc: nci: complete pending data exchange on device close
-Date: Mon, 13 Apr 2026 18:00:17 +0200
-Message-ID: <20260413155729.015619342@linuxfoundation.org>
+Subject: [PATCH 6.12 13/70] ASoC: simple-card-utils: Dont use __free(device_node) at graph_util_parse_dai()
+Date: Mon, 13 Apr 2026 18:00:08 +0200
+Message-ID: <20260413155728.683096181@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -52,70 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 66083581945bd5b8e99fe49b5aeb83d03f62d053 ]
+[ Upstream commit de74ec718e0788e1998eb7289ad07970e27cae27 ]
 
-In nci_close_device(), complete any pending data exchange before
-closing. The data exchange callback (e.g.
-rawsock_data_exchange_complete) holds a socket reference.
+commit 419d1918105e ("ASoC: simple-card-utils: use __free(device_node) for
+device node") uses __free(device_node) for dlc->of_node, but we need to
+keep it while driver is in use.
 
-NIPA occasionally hits this leak:
+Don't use __free(device_node) in graph_util_parse_dai().
 
-unreferenced object 0xff1100000f435000 (size 2048):
-  comm "nci_dev", pid 3954, jiffies 4295441245
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    27 00 01 40 00 00 00 00 00 00 00 00 00 00 00 00  '..@............
-  backtrace (crc ec2b3c5):
-    __kmalloc_noprof+0x4db/0x730
-    sk_prot_alloc.isra.0+0xe4/0x1d0
-    sk_alloc+0x36/0x760
-    rawsock_create+0xd1/0x540
-    nfc_sock_create+0x11f/0x280
-    __sock_create+0x22d/0x630
-    __sys_socket+0x115/0x1d0
-    __x64_sys_socket+0x72/0xd0
-    do_syscall_64+0x117/0xfc0
-    entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-Fixes: 38f04c6b1b68 ("NFC: protect nci_data_exchange transactions")
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260303162346.2071888-4-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Rajani Kantha <681739313@139.com>
+Fixes: 419d1918105e ("ASoC: simple-card-utils: use __free(device_node) for device node")
+Reported-by: Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>
+Reported-by: Detlev Casanova <detlev.casanova@collabora.com>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Tested-by: Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>
+Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
+Link: https://patch.msgid.link/87eczisyhh.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/generic/simple-card-utils.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index d10e2c81131ad..058d4eb530fbd 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -567,6 +567,10 @@ static int nci_close_device(struct nci_dev *ndev)
- 		flush_workqueue(ndev->cmd_wq);
- 		del_timer_sync(&ndev->cmd_timer);
- 		del_timer_sync(&ndev->data_timer);
-+		if (test_bit(NCI_DATA_EXCHANGE, &ndev->flags))
-+			nci_data_exchange_complete(ndev, NULL,
-+						   ndev->cur_conn_id,
-+						   -ENODEV);
- 		mutex_unlock(&ndev->req_lock);
+diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
+index c9f92d445f4c9..0e3ae89d880e5 100644
+--- a/sound/soc/generic/simple-card-utils.c
++++ b/sound/soc/generic/simple-card-utils.c
+@@ -1072,6 +1072,7 @@ static int graph_get_dai_id(struct device_node *ep)
+ int graph_util_parse_dai(struct device *dev, struct device_node *ep,
+ 			 struct snd_soc_dai_link_component *dlc, int *is_single_link)
+ {
++	struct device_node *node;
+ 	struct of_phandle_args args = {};
+ 	struct snd_soc_dai *dai;
+ 	int ret;
+@@ -1079,7 +1080,7 @@ int graph_util_parse_dai(struct device *dev, struct device_node *ep,
+ 	if (!ep)
  		return 0;
- 	}
-@@ -597,6 +601,11 @@ static int nci_close_device(struct nci_dev *ndev)
- 	flush_workqueue(ndev->cmd_wq);
  
- 	del_timer_sync(&ndev->cmd_timer);
-+	del_timer_sync(&ndev->data_timer);
-+
-+	if (test_bit(NCI_DATA_EXCHANGE, &ndev->flags))
-+		nci_data_exchange_complete(ndev, NULL, ndev->cur_conn_id,
-+					   -ENODEV);
+-	struct device_node *node __free(device_node) = of_graph_get_port_parent(ep);
++	node = of_graph_get_port_parent(ep);
  
- 	/* Clear flags except NCI_UNREG */
- 	ndev->flags &= BIT(NCI_UNREG);
+ 	/*
+ 	 * Try to find from DAI node
+@@ -1121,8 +1122,10 @@ int graph_util_parse_dai(struct device *dev, struct device_node *ep,
+ 	 *    if he unbinded CPU or Codec.
+ 	 */
+ 	ret = snd_soc_get_dlc(&args, dlc);
+-	if (ret < 0)
++	if (ret < 0) {
++		of_node_put(node);
+ 		return ret;
++	}
+ 
+ parse_dai_end:
+ 	if (is_single_link)
 -- 
 2.53.0
 
