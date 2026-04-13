@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA9F1D5AD4;
-	Mon, 13 Apr 2026 16:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCA82D8364;
+	Mon, 13 Apr 2026 16:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098619; cv=none; b=YC8n7rjC1pYB2sTgTSVvv9xDMzi2DN6lG240xVr2HsOcFLNGuxCZIzeW+xEVZRMFQGUK5idvPUutBTR7ZQPnGJX+wno6n1Z1VROiXF9l0H+VDUN781sQ+ZIeZPEJMxXC8WfCW4cJLG+HSqPWwUCZMp4SnCFFTS595yIqQ5c9rzI=
+	t=1776098622; cv=none; b=n2nP9hDF7xY1a1hcpDsIqoqRnAifM3kz1p+OWIMINU3xIdAhj+sMI0k3xvRNiKs/JNnoKSNSkivuM2/u8LH/ThWyJl35FPWjax1EZn3M/b/ZNTtjZYKwG6lb6uOFvTRUSIDQuUGAsYY4fDl2CY80O8SNc6J0uVyrdfkMMWtvTXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098619; c=relaxed/simple;
-	bh=nvH3nCrRVfAgUFFz3KQJZ0dNMRS6OYYXwTqroS3HIH8=;
+	s=arc-20240116; t=1776098622; c=relaxed/simple;
+	bh=gGLenJcSukN/DEDiawBVr7xmehRkT60mJRmVofTEWSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjecch+lqBk/t3AyxZ52BXxyYkUjGEUqTnpD7k5qmwKagX4AFYtSXZXpq6IwHZ8sXEmKxog//uls3dNxV095IWYWHVJkFxNxuWm+9F99TekbE3OV7Mecl4GSpnc9gCWDjuQAxglnCLXuF+/P1axsB5WloU9HJb95hXXYKY2NqIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WGfyQJ2R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lLWxNEtKF0IeCMr/28dmtyC4uuoPuxAKZ0vLY5Q21xd4sOL8Ve1FtMo5Tfc/QHmuwZCEYrAk61tsoTJMQDHS8YXHMbo8fd/9Xk0JOaiIqFzZx6iRY4t6y8cvVBQgd+7jCDWvTybO4OGHwinxq5dITjcrIPdiWXuFHTFqHc+pNSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2t9b2Ti; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGfyQJ2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0381CC2BCAF;
-	Mon, 13 Apr 2026 16:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2t9b2Ti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908ABC2BCAF;
+	Mon, 13 Apr 2026 16:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098619;
-	bh=nvH3nCrRVfAgUFFz3KQJZ0dNMRS6OYYXwTqroS3HIH8=;
+	s=korg; t=1776098621;
+	bh=gGLenJcSukN/DEDiawBVr7xmehRkT60mJRmVofTEWSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WGfyQJ2RPodLgQ6n2MUKBharpxhdE9D+PLy3bN0TxTuc/9z2FwGO+iM1xrzcLX0ys
-	 5LMmKnTRYfXKGJNidXwqE75z72sp2GX341q2gBCgNJbEMzovIIdsRYpCZ4ZWSOdhhW
-	 tI4O7xUCN5FCAf7xAjx1hGrugFwP7c+qylxMgyQM=
+	b=e2t9b2TibJAhDk7mNNVm8mwuk2EdFgjxr9x8psWIIo7yiuu50sIQp0MrHnfCim3iD
+	 2mDKzpDB/bGZTJjuZx2yFJGBXF3luZqyd6fMpQ3JW6nzrH0DsKn+NmxlcPIDPmDu68
+	 gcU5N0jve/tWEgaFtp+9NRrvn6hL/SprHNLV8aAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petko Manolov <petkan@nucleusys.com>,
-	stable <stable@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 023/491] net: usb: pegasus: validate USB endpoints
-Date: Mon, 13 Apr 2026 17:54:28 +0200
-Message-ID: <20260413155819.921181009@linuxfoundation.org>
+	Vincent Mailhol <mailhol@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	stable@kernel.org
+Subject: [PATCH 5.10 024/491] can: ems_usb: ems_usb_read_bulk_callback(): check the proper length of a message
+Date: Mon, 13 Apr 2026 17:54:29 +0200
+Message-ID: <20260413155819.958170934@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,60 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 11de1d3ae5565ed22ef1f89d73d8f2d00322c699 upstream.
+commit 38a01c9700b0dcafe97dfa9dc7531bf4a245deff upstream.
 
-The pegasus driver should validate that the device it is probing has the
-proper number and types of USB endpoints it is expecting before it binds
-to it.  If a malicious device were to not have the same urbs the driver
-will crash later on when it blindly accesses these endpoints.
+When looking at the data in a USB urb, the actual_length is the size of
+the buffer passed to the driver, not the transfer_buffer_length which is
+set by the driver as the max size of the buffer.
 
-Cc: Petko Manolov <petkan@nucleusys.com>
-Cc: stable <stable@kernel.org>
+When parsing the messages in ems_usb_read_bulk_callback() properly check
+the size both at the beginning of parsing the message to make sure it is
+big enough for the expected structure, and at the end of the message to
+make sure we don't overflow past the end of the buffer for the next
+message.
+
+Cc: Vincent Mailhol <mailhol@kernel.org>
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: stable@kernel.org
+Assisted-by: gkh_clanker_2000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026022347-legibly-attest-cc5c@gregkh
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/2026022316-answering-strainer-a5db@gregkh
+Fixes: 702171adeed3 ("ems_usb: Added support for EMS CPC-USB/ARM7 CAN/USB interface")
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/pegasus.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/ems_usb.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/pegasus.c
-+++ b/drivers/net/usb/pegasus.c
-@@ -841,8 +841,19 @@ static void unlink_all_urbs(pegasus_t *p
+--- a/drivers/net/can/usb/ems_usb.c
++++ b/drivers/net/can/usb/ems_usb.c
+@@ -438,6 +438,11 @@ static void ems_usb_read_bulk_callback(s
+ 		start = CPC_HEADER_SIZE;
  
- static int alloc_urbs(pegasus_t *pegasus)
- {
-+	static const u8 bulk_ep_addr[] = {
-+		1 | USB_DIR_IN,
-+		2 | USB_DIR_OUT,
-+		0};
-+	static const u8 int_ep_addr[] = {
-+		3 | USB_DIR_IN,
-+		0};
- 	int res = -ENOMEM;
- 
-+	if (!usb_check_bulk_endpoints(pegasus->intf, bulk_ep_addr) ||
-+	    !usb_check_int_endpoints(pegasus->intf, int_ep_addr))
-+		return -ENODEV;
+ 		while (msg_count) {
++			if (start + CPC_MSG_HEADER_LEN > urb->actual_length) {
++				netdev_err(netdev, "format error\n");
++				break;
++			}
 +
- 	pegasus->rx_urb = usb_alloc_urb(0, GFP_KERNEL);
- 	if (!pegasus->rx_urb) {
- 		return res;
-@@ -1197,6 +1208,7 @@ static int pegasus_probe(struct usb_inte
+ 			msg = (struct ems_cpc_msg *)&ibuf[start];
  
- 	pegasus = netdev_priv(net);
- 	pegasus->dev_index = dev_index;
-+	pegasus->intf = intf;
+ 			switch (msg->type) {
+@@ -467,7 +472,7 @@ static void ems_usb_read_bulk_callback(s
+ 			start += CPC_MSG_HEADER_LEN + msg->length;
+ 			msg_count--;
  
- 	res = alloc_urbs(pegasus);
- 	if (res < 0) {
-@@ -1208,7 +1220,6 @@ static int pegasus_probe(struct usb_inte
- 
- 	INIT_DELAYED_WORK(&pegasus->carrier_check, check_carrier);
- 
--	pegasus->intf = intf;
- 	pegasus->usb = dev;
- 	pegasus->net = net;
- 
+-			if (start > urb->transfer_buffer_length) {
++			if (start > urb->actual_length) {
+ 				netdev_err(netdev, "format error\n");
+ 				break;
+ 			}
 
 
