@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010C12FFFBE;
-	Mon, 13 Apr 2026 16:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0842EBB8C;
+	Mon, 13 Apr 2026 16:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096983; cv=none; b=bpB9mcjaRfzRMBFzETyl+aDcrpetWgouy2qRqJ8jYLriKC/6uJDIJIR7afDEDAPBNM/GhA3w7yYOliPxqLJ0ob2Zj0fKc4LvwRdSoTs17iEfgbPG2A0xnaxMSkIhsrrYSvQDyQ/S8OiVkuK9ge3yFiZ4WUKfHD/pj79v1169kh8=
+	t=1776096985; cv=none; b=ho9E1V6rtOKVOX9XgXYVmS98rU0quu+taoCstH2mS7pzh/PgutFPEDIiXBUIR+fVqlV/zKa++nU7wqA2qzTY4WVc2qVIeEyvXr6t5QOiW5ub/anvN8IaOPBI4jBtdGFkTxoW1jiC/1ALxVzMEc+dAbCqoH+rAUFzyf5KetSIJ7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096983; c=relaxed/simple;
-	bh=jexA9D5srWhjvKMhONGHDsBzmMDid8pjZvIIKKa0Ojk=;
+	s=arc-20240116; t=1776096985; c=relaxed/simple;
+	bh=BHHdONAJRa4ftbg1+Yqlfg8dqYjDy6J3A4P9BQ+7D+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B+e/BJIg8s5BGY3U11unqo5AUKupjbaPLSeJ6h2C6ZS7nYYVP6IjJH142emJzhZOk00zXSOSJTkBFBdmYG9gKTb9EfPzhVLrI+3urHVvQ+qL6H42kymLLofxJ0tD/gFYN/jazj+14GNhn+99T87v7gM7x5mqpRQkRe748zYyILk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7OMdAef; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EAxPpbwQxQzwa7AwB3aUeshJVaQMzIxxK6mo5qI0BchlaF7F+Z8Rx7MENc2MnCFf67/7a6wama7XUqeH9j6NDutsSVVjEeJv8si/36BZTRj1SWTzIaIPfqtWuZWt8DHETpg6vTKkxWjOpZqrnMrcU+8PVsTIL798l9o2v0wykLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZiD0B2E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7OMdAef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812F5C2BCB6;
-	Mon, 13 Apr 2026 16:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZiD0B2E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DCFC2BCB8;
+	Mon, 13 Apr 2026 16:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096982;
-	bh=jexA9D5srWhjvKMhONGHDsBzmMDid8pjZvIIKKa0Ojk=;
+	s=korg; t=1776096985;
+	bh=BHHdONAJRa4ftbg1+Yqlfg8dqYjDy6J3A4P9BQ+7D+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M7OMdAefWBocdj9mV70asMKVuICl01jvqls2Li5IPbi1Pp5/xr06ISv1RFxsnR6oe
-	 3J16X9sgFU2/AZCUrwp8RDWAwo/QpE1oHKOZz8BK573vPL147SZi7R0+6fwG1L7zsU
-	 VjmBHVTdhd+1DA6mufClT2j7AyiCMV+EceA/xkPc=
+	b=2ZiD0B2E/jxdkOQbOgpeKtydW88JDBpgr9gzePU7/lpuySWx2RzJoD0+EAGmckM2o
+	 M7N3uOQ1vXfnJzROVKomE2iGnoQQoZqabNjUE+Tx6QxACYOvhtvAMJDFehGLe3y6p7
+	 syzgUjsQpIGM20UzZ+UXhUOrkWlId52uxLCkxMMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 04/55] mptcp: fix slab-use-after-free in __inet_lookup_established
-Date: Mon, 13 Apr 2026 18:00:38 +0200
-Message-ID: <20260413155724.990918103@linuxfoundation.org>
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 05/55] Input: uinput - fix circular locking dependency with ff-core
+Date: Mon, 13 Apr 2026 18:00:39 +0200
+Message-ID: <20260413155725.027691280@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 References: <20260413155724.820472494@linuxfoundation.org>
@@ -51,101 +50,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit 9b55b253907e7431210483519c5ad711a37dafa1 upstream.
+commit 4cda78d6f8bf2b700529f2fbccb994c3e826d7c2 upstream.
 
-The ehash table lookups are lockless and rely on
-SLAB_TYPESAFE_BY_RCU to guarantee socket memory stability
-during RCU read-side critical sections. Both tcp_prot and
-tcpv6_prot have their slab caches created with this flag
-via proto_register().
+A lockdep circular locking dependency warning can be triggered
+reproducibly when using a force-feedback gamepad with uinput (for
+example, playing ELDEN RING under Wine with a Flydigi Vader 5
+controller):
 
-However, MPTCP's mptcp_subflow_init() copies tcpv6_prot into
-tcpv6_prot_override during inet_init() (fs_initcall, level 5),
-before inet6_init() (module_init/device_initcall, level 6) has
-called proto_register(&tcpv6_prot). At that point,
-tcpv6_prot.slab is still NULL, so tcpv6_prot_override.slab
-remains NULL permanently.
+  ff->mutex -> udev->mutex -> input_mutex -> dev->mutex -> ff->mutex
 
-This causes MPTCP v6 subflow child sockets to be allocated via
-kmalloc (falling into kmalloc-4k) instead of the TCPv6 slab
-cache. The kmalloc-4k cache lacks SLAB_TYPESAFE_BY_RCU, so
-when these sockets are freed without SOCK_RCU_FREE (which is
-cleared for child sockets by design), the memory can be
-immediately reused. Concurrent ehash lookups under
-rcu_read_lock can then access freed memory, triggering a
-slab-use-after-free in __inet_lookup_established.
+The cycle is caused by four lock acquisition paths:
 
-Fix this by splitting the IPv6-specific initialization out of
-mptcp_subflow_init() into a new mptcp_subflow_v6_init(), called
-from mptcp_proto_v6_init() before protocol registration. This
-ensures tcpv6_prot_override.slab correctly inherits the
-SLAB_TYPESAFE_BY_RCU slab cache.
+1. ff upload: input_ff_upload() holds ff->mutex and calls
+   uinput_dev_upload_effect() -> uinput_request_submit() ->
+   uinput_request_send(), which acquires udev->mutex.
 
-Fixes: b19bc2945b40 ("mptcp: implement delegated actions")
+2. device create: uinput_ioctl_handler() holds udev->mutex and calls
+   uinput_create_device() -> input_register_device(), which acquires
+   input_mutex.
+
+3. device register: input_register_device() holds input_mutex and
+   calls kbd_connect() -> input_register_handle(), which acquires
+   dev->mutex.
+
+4. evdev release: evdev_release() calls input_flush_device() under
+   dev->mutex, which calls input_ff_flush() acquiring ff->mutex.
+
+Fix this by introducing a new state_lock spinlock to protect
+udev->state and udev->dev access in uinput_request_send() instead of
+acquiring udev->mutex.  The function only needs to atomically check
+device state and queue an input event into the ring buffer via
+uinput_dev_event() -- both operations are safe under a spinlock
+(ktime_get_ts64() and wake_up_interruptible() do not sleep).  This
+breaks the ff->mutex -> udev->mutex link since a spinlock is a leaf in
+the lock ordering and cannot form cycles with mutexes.
+
+To keep state transitions visible to uinput_request_send(), protect
+writes to udev->state in uinput_create_device() and
+uinput_destroy_device() with the same state_lock spinlock.
+
+Additionally, move init_completion(&request->done) from
+uinput_request_send() to uinput_request_submit() before
+uinput_request_reserve_slot().  Once the slot is allocated,
+uinput_flush_requests() may call complete() on it at any time from
+the destroy path, so the completion must be initialised before the
+request becomes visible.
+
+Lock ordering after the fix:
+
+  ff->mutex -> state_lock (spinlock, leaf)
+  udev->mutex -> state_lock (spinlock, leaf)
+  udev->mutex -> input_mutex -> dev->mutex -> ff->mutex (no back-edge)
+
+Fixes: ff462551235d ("Input: uinput - switch to the new FF interface")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260406031512.189159-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/all/CABXGCsMoxag+kEwHhb7KqhuyxfmGGd0P=tHZyb1uKE0pLr8Hkg@mail.gmail.com/
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Link: https://patch.msgid.link/20260407075031.38351-1-mikhail.v.gavrilov@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    2 ++
- net/mptcp/protocol.h |    1 +
- net/mptcp/subflow.c  |   15 +++++++++------
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ drivers/input/misc/uinput.c |   28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -4264,6 +4264,8 @@ int __init mptcp_proto_v6_init(void)
+--- a/drivers/input/misc/uinput.c
++++ b/drivers/input/misc/uinput.c
+@@ -56,6 +56,7 @@ struct uinput_device {
+ 	struct input_dev	*dev;
+ 	struct mutex		mutex;
+ 	enum uinput_state	state;
++	spinlock_t		state_lock;
+ 	wait_queue_head_t	waitq;
+ 	unsigned char		ready;
+ 	unsigned char		head;
+@@ -145,19 +146,15 @@ static void uinput_request_release_slot(
+ static int uinput_request_send(struct uinput_device *udev,
+ 			       struct uinput_request *request)
  {
- 	int err;
+-	int retval;
++	int retval = 0;
  
-+	mptcp_subflow_v6_init();
-+
- 	mptcp_v6_prot = mptcp_prot;
- 	strcpy(mptcp_v6_prot.name, "MPTCPv6");
- 	mptcp_v6_prot.slab = NULL;
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -677,6 +677,7 @@ static inline void mptcp_subflow_tcp_fal
- void __init mptcp_proto_init(void);
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
- int __init mptcp_proto_v6_init(void);
-+void __init mptcp_subflow_v6_init(void);
- #endif
+-	retval = mutex_lock_interruptible(&udev->mutex);
+-	if (retval)
+-		return retval;
++	spin_lock(&udev->state_lock);
  
- struct sock *mptcp_sk_clone_init(const struct sock *sk,
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1993,7 +1993,15 @@ void __init mptcp_subflow_init(void)
- 	tcp_prot_override.psock_update_sk_prot = NULL;
- #endif
+ 	if (udev->state != UIST_CREATED) {
+ 		retval = -ENODEV;
+ 		goto out;
+ 	}
  
-+	mptcp_diag_subflow_init(&subflow_ulp_ops);
-+
-+	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
-+		panic("MPTCP: failed to register subflows to ULP\n");
-+}
-+
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
-+void __init mptcp_subflow_v6_init(void)
-+{
- 	/* In struct mptcp_subflow_request_sock, we assume the TCP request sock
- 	 * structures for v4 and v6 have the same size. It should not changed in
- 	 * the future but better to make sure to be warned if it is no longer
-@@ -2032,10 +2040,5 @@ void __init mptcp_subflow_init(void)
- 	/* Disable sockmap processing for subflows */
- 	tcpv6_prot_override.psock_update_sk_prot = NULL;
- #endif
--#endif
+-	init_completion(&request->done);
 -
--	mptcp_diag_subflow_init(&subflow_ulp_ops);
--
--	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
--		panic("MPTCP: failed to register subflows to ULP\n");
+ 	/*
+ 	 * Tell our userspace application about this new request
+ 	 * by queueing an input event.
+@@ -165,7 +162,7 @@ static int uinput_request_send(struct ui
+ 	uinput_dev_event(udev->dev, EV_UINPUT, request->code, request->id);
+ 
+  out:
+-	mutex_unlock(&udev->mutex);
++	spin_unlock(&udev->state_lock);
+ 	return retval;
  }
-+#endif
+ 
+@@ -174,6 +171,13 @@ static int uinput_request_submit(struct
+ {
+ 	int retval;
+ 
++	/*
++	 * Initialize completion before allocating the request slot.
++	 * Once the slot is allocated, uinput_flush_requests() may
++	 * complete it at any time, so it must be initialized first.
++	 */
++	init_completion(&request->done);
++
+ 	retval = uinput_request_reserve_slot(udev, request);
+ 	if (retval)
+ 		return retval;
+@@ -288,7 +292,14 @@ static void uinput_destroy_device(struct
+ 	struct input_dev *dev = udev->dev;
+ 	enum uinput_state old_state = udev->state;
+ 
++	/*
++	 * Update state under state_lock so that concurrent
++	 * uinput_request_send() sees the state change before we
++	 * flush pending requests and tear down the device.
++	 */
++	spin_lock(&udev->state_lock);
+ 	udev->state = UIST_NEW_DEVICE;
++	spin_unlock(&udev->state_lock);
+ 
+ 	if (dev) {
+ 		name = dev->name;
+@@ -365,7 +376,9 @@ static int uinput_create_device(struct u
+ 	if (error)
+ 		goto fail2;
+ 
++	spin_lock(&udev->state_lock);
+ 	udev->state = UIST_CREATED;
++	spin_unlock(&udev->state_lock);
+ 
+ 	return 0;
+ 
+@@ -383,6 +396,7 @@ static int uinput_open(struct inode *ino
+ 		return -ENOMEM;
+ 
+ 	mutex_init(&newdev->mutex);
++	spin_lock_init(&newdev->state_lock);
+ 	spin_lock_init(&newdev->requests_lock);
+ 	init_waitqueue_head(&newdev->requests_waitq);
+ 	init_waitqueue_head(&newdev->waitq);
 
 
