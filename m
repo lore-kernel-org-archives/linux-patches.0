@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8170329C6B;
-	Mon, 13 Apr 2026 16:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DE933A6E2;
+	Mon, 13 Apr 2026 16:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099408; cv=none; b=JZBZdQ6yGXRKN7AC/XRTbdQNosYfSY9DCAI0UEQlcmJqLb/XMCsFBg5U4eqiSxR2cGeeHXK4RdDdQvmN4+n/MTcnhWdO0m5tNLgjqPlMmz7NYIpW1Zf3fi/srz2eOMU7tWVw6cGpjyXsMldiGRPTdF3EPzVBjp1hBIubkO9c5Kc=
+	t=1776099411; cv=none; b=WZ/zaL26U4+DKJq6wScXR27GbBdlWqf1RN63UNJ4OAr1PlE4eEA4z1UZz4WlzzZDi66c0G4GBxLdK1rkk8n7oafyWhx7QAtKEuQqt98Nt00TYh68jWN1ZSGjzScEeS48mMrV+JpeSa7staENBbB6TJlf9Dd/sczTb4PlAVNJ5QM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099408; c=relaxed/simple;
-	bh=kwEet1VGK4pdYL7cMin4h5ZPco3nCFVxnKxGDiROB6Y=;
+	s=arc-20240116; t=1776099411; c=relaxed/simple;
+	bh=mlCngU1p4fI1eN5yXHp9U+sb1eJNoaoYJ4u5HGs00V8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JIFVWOSdKVnM7FUO3Dd5DdnnCy4JuEDtFPbPtou/27iu1ZbB7Wd47Kdcy3q1vnvpt6CmTOKXCW5Qgt+9MBzYF/iF8GHkHAAd9CRyLxrxGHMlrH17abWQOIbZRyPdzjkp2Bt38gC1aJZ5Aqj2hnv5ZOIBAre4PKHq+uI7gdOFFnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGDjZp5V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTRDoty8h/6N+bGDIJpkSB/394sMOKIYzTA7s5xIlqgc61xdeRhUf/+Mec89SVFuf6NaL1u6BQp9AL2Qb1DCaTHnwKqnAtpvyqM2lnNvZv7Ezqd1VRxbcwNexNjSyw64aSGbux988PN+FvLdkUrM53BUbLvk7vIZCbgT3lKYc+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/5on+So; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGDjZp5V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57584C2BCB3;
-	Mon, 13 Apr 2026 16:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/5on+So"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC45C2BCB0;
+	Mon, 13 Apr 2026 16:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099408;
-	bh=kwEet1VGK4pdYL7cMin4h5ZPco3nCFVxnKxGDiROB6Y=;
+	s=korg; t=1776099411;
+	bh=mlCngU1p4fI1eN5yXHp9U+sb1eJNoaoYJ4u5HGs00V8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGDjZp5VEqeGAGx0HnsOwH6skmIEihj/vQ7vPhQd+yQNkGu9ofXYKIdKIP75zc9b0
-	 2Phld19uhgdzhlk4TraLpWTcMsTBZHmVNYcOQ6OarLsI+F/QpUE3OSMW4X1uLwaMZe
-	 gXi/Svr2/Tuvsy35FbvRzxxdGULyUiLbHjbAIBNU=
+	b=v/5on+SoJ0q56VV/zXRQOh0yfjtILEEEhqs7BKS59cfyLe8JhGuM4kOiIL9et9ZMV
+	 by9Ym7pWD2Du3gUNqKBQ/B5L8yzpOUilQtTKCWM8kojcOUuK8cdIyvpaBn7wbnw93S
+	 U2Sf91tBjklCTZzPa9SlN+cZ2z0TTgRa6ND0ESik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 329/491] bridge: br_nd_send: linearize skb before parsing ND options
-Date: Mon, 13 Apr 2026 17:59:34 +0200
-Message-ID: <20260413155831.359568259@linuxfoundation.org>
+Subject: [PATCH 5.10 330/491] net/sched: sch_hfsc: fix divide-by-zero in rtsc_min()
+Date: Mon, 13 Apr 2026 17:59:35 +0200
+Message-ID: <20260413155831.396661494@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -57,86 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit a01aee7cafc575bb82f5529e8734e7052f9b16ea ]
+[ Upstream commit 4576100b8cd03118267513cafacde164b498b322 ]
 
-br_nd_send() parses neighbour discovery options from ns->opt[] and
-assumes that these options are in the linear part of request.
+m2sm() converts a u32 slope to a u64 scaled value.  For large inputs
+(e.g. m1=4000000000), the result can reach 2^32.  rtsc_min() stores
+the difference of two such u64 values in a u32 variable `dsm` and
+uses it as a divisor.  When the difference is exactly 2^32 the
+truncation yields zero, causing a divide-by-zero oops in the
+concave-curve intersection path:
 
-Its callers only guarantee that the ICMPv6 header and target address
-are available, so the option area can still be non-linear. Parsing
-ns->opt[] in that case can access data past the linear buffer.
+  Oops: divide error: 0000
+  RIP: 0010:rtsc_min (net/sched/sch_hfsc.c:601)
+  Call Trace:
+   init_ed (net/sched/sch_hfsc.c:629)
+   hfsc_enqueue (net/sched/sch_hfsc.c:1569)
+   [...]
 
-Linearize request before option parsing and derive ns from the linear
-network header.
+Widen `dsm` to u64 and replace do_div() with div64_u64() so the full
+difference is preserved.
 
-Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Tested-by: Ao Zhou <n05ec@lzu.edu.cn>
-Co-developed-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260326034441.2037420-2-n05ec@lzu.edu.cn
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260326204310.1549327-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_arp_nd_proxy.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/sched/sch_hfsc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
-index 3db1def4437b3..a44d14b94865e 100644
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -248,12 +248,12 @@ struct nd_msg *br_is_nd_neigh_msg(struct sk_buff *skb, struct nd_msg *msg)
- 
- static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 		       struct sk_buff *request, struct neighbour *n,
--		       __be16 vlan_proto, u16 vlan_tci, struct nd_msg *ns)
-+		       __be16 vlan_proto, u16 vlan_tci)
+diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
+index 25360061ad288..3a271ad16443b 100644
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -556,7 +556,7 @@ static void
+ rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
  {
- 	struct net_device *dev = request->dev;
- 	struct net_bridge_vlan_group *vg;
-+	struct nd_msg *na, *ns;
- 	struct sk_buff *reply;
--	struct nd_msg *na;
- 	struct ipv6hdr *pip6;
- 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
- 	int ns_olen;
-@@ -261,7 +261,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	u8 *daddr;
- 	u16 pvid;
+ 	u64 y1, y2, dx, dy;
+-	u32 dsm;
++	u64 dsm;
  
--	if (!dev)
-+	if (!dev || skb_linearize(request))
- 		return;
- 
- 	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
-@@ -278,6 +278,8 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	skb_set_mac_header(reply, 0);
- 
- 	daddr = eth_hdr(request)->h_source;
-+	ns = (struct nd_msg *)(skb_network_header(request) +
-+			       sizeof(struct ipv6hdr));
- 
- 	/* Do we need option processing ? */
- 	ns_olen = request->len - (skb_network_offset(request) +
-@@ -465,9 +467,9 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
- 				if (vid != 0)
- 					br_nd_send(br, p, skb, n,
- 						   skb->vlan_proto,
--						   skb_vlan_tag_get(skb), msg);
-+						   skb_vlan_tag_get(skb));
- 				else
--					br_nd_send(br, p, skb, n, 0, 0, msg);
-+					br_nd_send(br, p, skb, n, 0, 0);
- 				replied = true;
- 			}
- 
+ 	if (isc->sm1 <= isc->sm2) {
+ 		/* service curve is convex */
+@@ -599,7 +599,7 @@ rtsc_min(struct runtime_sc *rtsc, struct internal_sc *isc, u64 x, u64 y)
+ 	 */
+ 	dx = (y1 - y) << SM_SHIFT;
+ 	dsm = isc->sm1 - isc->sm2;
+-	do_div(dx, dsm);
++	dx = div64_u64(dx, dsm);
+ 	/*
+ 	 * check if (x, y1) belongs to the 1st segment of rtsc.
+ 	 * if so, add the offset.
 -- 
 2.53.0
 
