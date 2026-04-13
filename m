@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF282F8BC3;
-	Mon, 13 Apr 2026 16:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5049C2F8BC3;
+	Mon, 13 Apr 2026 16:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097432; cv=none; b=c8y1ggIFWv7CThMzI+zXdAQmifu8z4zsLoe0PcjMhKOEd0FtftbmsITe+LyMKNaFkW8wpoLNmMfqOYKYAa8tRg3+rUvPLOyBUDKtwGcDaEHnK2+oKiflaFXiMSBv/ngwIy2zIAhWsiyu9lxDlmzZJAV2zxI3h2Kyq3S9xjeKRsk=
+	t=1776097435; cv=none; b=c4UR9ghMeq4EoNButKysPOIG+ihv4h7sia697KMNc1LbCmHuX7wnSAs8zQ+JFu5uuzoIFb00ggnystiKdJHGNk8cIK0orSpxduK6Y19C1fsCqluaDAC2/0tgYSKCFTGvv/KXFfhAjkCXAytfEcuWTmZv3B0E7cOuN+nysGzDqko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097432; c=relaxed/simple;
-	bh=SeKjABHmDc8GiAAVr430ZQRv/qeUIz+CHcddLj9C8As=;
+	s=arc-20240116; t=1776097435; c=relaxed/simple;
+	bh=7C+eggGTjp9V6gpvG0IrwF1fifvDzsbWzRQ0pLeo7Rk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlGAorN3VUR3yeCncs/xcl+/CmOWJwC292gtJFa05RGPQKMlqg3rEqsn/abZvyScZPyNNwP2hxvdlRAUQtT/H9nA82KfNM2e5heItudXr3/EmcjGuPjQi+1PFZGVP/2Jcg3jdVXUbxt49S4AkJZV1hVdQQvhWl3Ylk8EQXrWRXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gLSij1f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KGOCD/dsPCppTWEFekm2x0f8CHECGIllor7xP2cLebzUwIMYVTVHoiuGjavQljqEKNMKaEc15mF7tYKEB6SUB4fY6tlzFZMJQuP6yYi0f0ickS1u7Cc7S5Dd+ZxsZQLZspt6bNpLeYozIM+vYgQw1hvYgHnQDtlhpXrsO42Mr88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vL8L/aNB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gLSij1f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A620C2BCB0;
-	Mon, 13 Apr 2026 16:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vL8L/aNB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA328C2BCB0;
+	Mon, 13 Apr 2026 16:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097432;
-	bh=SeKjABHmDc8GiAAVr430ZQRv/qeUIz+CHcddLj9C8As=;
+	s=korg; t=1776097435;
+	bh=7C+eggGTjp9V6gpvG0IrwF1fifvDzsbWzRQ0pLeo7Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0gLSij1fbYFUu8d7c3sWBN4FRQpumR6mGHBKRjZsn+cydDV2XbCETzw2tt/+vEwH/
-	 0PalYBme1F73RzjDdS3I8B7tlUUSIgti2MteBzzoQ4h7FPVqw77dfRdfc/md1sgO8W
-	 PO2vdASl+8dVgMzUfpqP8fjvTTjP+MwfoJMP8Fng=
+	b=vL8L/aNBFKknBMa88ibBk9UHMKXV+mNr+DEyGOoKT5tu4mVjrQ5qbl01XPMaEeuIr
+	 2olFWJr+4eS48pCrf3+5KDhguVT3tx13+Cp0Vzsm9/pvO08rsIAAL23Nw0zYR9EQxa
+	 55XWl9ZZb56xEcKze29un4JZydJM+i7oxoY+x35Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 135/570] usb: xhci: Fix memory leak in xhci_disable_slot()
-Date: Mon, 13 Apr 2026 17:54:26 +0200
-Message-ID: <20260413155835.500536660@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 5.15 136/570] usb: yurex: fix race in probe
+Date: Mon, 13 Apr 2026 17:54:27 +0200
+Message-ID: <20260413155835.537523715@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,66 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit c1c8550e70401159184130a1afc6261db01fc0ce upstream.
+commit 7a875c09899ba0404844abfd8f0d54cdc481c151 upstream.
 
-xhci_alloc_command() allocates a command structure and, when the
-second argument is true, also allocates a completion structure.
-Currently, the error handling path in xhci_disable_slot() only frees
-the command structure using kfree(), causing the completion structure
-to leak.
+The bbu member of the descriptor must be set to the value
+standing for uninitialized values before the URB whose
+completion handler sets bbu is submitted. Otherwise there is
+a window during which probing can overwrite already retrieved
+data.
 
-Use xhci_free_command() instead of kfree(). xhci_free_command() correctly
-frees both the command structure and the associated completion structure.
-Since the command structure is allocated with zero-initialization,
-command->in_ctx is NULL and will not be erroneously freed by
-xhci_free_command().
-
-This bug was found using an experimental static analysis tool we are
-developing. The tool is based on the LLVM framework and is specifically
-designed to detect memory management issues. It is currently under
-active development and not yet publicly available, but we plan to
-open-source it after our research is published.
-
-The bug was originally detected on v6.13-rc1 using our static analysis
-tool, and we have verified that the issue persists in the latest mainline
-kernel.
-
-We performed build testing on x86_64 with allyesconfig using GCC=11.4.0.
-Since triggering these error paths in xhci_disable_slot() requires specific
-hardware conditions or abnormal state, we were unable to construct a test
-case to reliably trigger these specific error paths at runtime.
-
-Fixes: 7faac1953ed1 ("xhci: avoid race between disable slot command and host runtime suspend")
-CC: stable@vger.kernel.org
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260304223639.3882398-2-mathias.nyman@linux.intel.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260209143720.1507500-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/misc/yurex.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -4056,7 +4056,7 @@ int xhci_disable_slot(struct xhci_hcd *x
- 	if (state == 0xffffffff || (xhci->xhc_state & XHCI_STATE_DYING) ||
- 			(xhci->xhc_state & XHCI_STATE_HALTED)) {
- 		spin_unlock_irqrestore(&xhci->lock, flags);
--		kfree(command);
-+		xhci_free_command(xhci, command);
- 		return -ENODEV;
- 	}
+--- a/drivers/usb/misc/yurex.c
++++ b/drivers/usb/misc/yurex.c
+@@ -272,6 +272,7 @@ static int yurex_probe(struct usb_interf
+ 			 dev->int_buffer, YUREX_BUF_SIZE, yurex_interrupt,
+ 			 dev, 1);
+ 	dev->urb->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
++	dev->bbu = -1;
+ 	if (usb_submit_urb(dev->urb, GFP_KERNEL)) {
+ 		retval = -EIO;
+ 		dev_err(&interface->dev, "Could not submitting URB\n");
+@@ -280,7 +281,6 @@ static int yurex_probe(struct usb_interf
  
-@@ -4064,7 +4064,7 @@ int xhci_disable_slot(struct xhci_hcd *x
- 				slot_id);
- 	if (ret) {
- 		spin_unlock_irqrestore(&xhci->lock, flags);
--		kfree(command);
-+		xhci_free_command(xhci, command);
- 		return ret;
- 	}
- 	xhci_ring_cmd_db(xhci);
+ 	/* save our data pointer in this interface device */
+ 	usb_set_intfdata(interface, dev);
+-	dev->bbu = -1;
+ 
+ 	/* we can register the device now, as it is ready */
+ 	retval = usb_register_dev(interface, &yurex_class);
 
 
