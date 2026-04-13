@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89B3310651;
-	Mon, 13 Apr 2026 16:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE55280CFB;
+	Mon, 13 Apr 2026 16:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098634; cv=none; b=d4H9Invphin1NQs9AIne4QvsgJJKwI77JTrAr3SuCjb1JQk5iu4DOE5o+eTqtW8gGQTMl1zgop4HLi3aAqoWlSxRejUXB8AtMqFwSfdr2zpTlayh468EHmM5qprxmoqgo2W2H5w3cIYV8TLYAIdElL7hwsX4FetQ1tm2AxyqJys=
+	t=1776098637; cv=none; b=k2lljycFh2IaWepSuEWtKp1+3dPcSXdJTym2da3S/OecHuYFqon26rLFkxeemscjE/9YubdtqMhTfbUJAd+zNa3qIaCjHGTYT2aFJS1AtxJKR6yXSIehputM62mQ7+9dJHnHdv4Dq4FfeWIDsubt+XG25PI1sKrmVU77W2SMNYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098634; c=relaxed/simple;
-	bh=9feddS6LnZJmW1jyl62WpKH6+fCXtN4w7P8oUwDYUGU=;
+	s=arc-20240116; t=1776098637; c=relaxed/simple;
+	bh=qZ3ecsqEuZDzXXZO7fHk9zUKeA00NmVbkUwYxh1w3LQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tVsaTwA6VQcXMeqn3uT3WraDA9rzX4UT89ns5LROgh53bVzyqnrRgGbxNa6+O4r3Dbx1gwP4W422re55/ZUGlr68NYA/CbyDTJ1WSG4mhoRKra/inxvqwnsxF4KW5/glEvdTeK0lrUq3eW5KAWf2HSGX/ByC+r5Za+o9zle4UBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjo0opTp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HfTPeOBRa2aHrksDHT5g7fdMXXweXVkWsIvtUpYEDrHTTsZbQGXSqAo6A6N/EGWiLgcMPHRbGd/kjsNieyK0Z54XS+S5/fBYoD0VoNh3nupJMeSkIyQcy11BZ5fGQWsbAefgRelTS7iVdyErs2AhgIIzpkqCLnm16Gx9LrqQUhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npEWPHCP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjo0opTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FECBC2BCAF;
-	Mon, 13 Apr 2026 16:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npEWPHCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9946C2BCAF;
+	Mon, 13 Apr 2026 16:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098634;
-	bh=9feddS6LnZJmW1jyl62WpKH6+fCXtN4w7P8oUwDYUGU=;
+	s=korg; t=1776098637;
+	bh=qZ3ecsqEuZDzXXZO7fHk9zUKeA00NmVbkUwYxh1w3LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hjo0opTpvH7xZ71wOx6bbVsrUw976cjf0fgpwYVJW7V3hMi1vnISu7pxjGPiBvVjh
-	 gF9DndORTwSMIPjyQDb5j86NKj42uZz6kHF6JZKh5M+P48Nb2wAsOVNPw+eyFSx8Tr
-	 ifsI7Z7EInFLq0hrsTmLUVgJ/GxmQNI4Lz90pqzc=
+	b=npEWPHCPfIukywMUj/D1kDfPqFt8cOMOQoyUvF6CmnIaTXFCqXVC7FZvJZjEpOxU7
+	 Rqyvp0kks4wN1fe6MdrgUF1n94yeKL+ckRjT97DbXvOgbXXszKDyyMQR64C+D4SQAD
+	 XRe4Z1pbYmGZ1l6ojyGqLFV343BifLnRWKLdXUjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b09c1af8764c0097bb19@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 029/491] wifi: radiotap: reject radiotap with unknown bits
-Date: Mon, 13 Apr 2026 17:54:34 +0200
-Message-ID: <20260413155820.143524958@linuxfoundation.org>
+	Mathias Krause <minipli@grsecurity.net>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 003/491] scsi: lpfc: Properly set WC for DPP mapping
+Date: Mon, 13 Apr 2026 17:54:08 +0200
+Message-ID: <20260413155819.178874738@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,51 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Mathias Krause <minipli@grsecurity.net>
 
-commit c854758abe0b8d86f9c43dc060ff56a0ee5b31e0 upstream.
+[ Upstream commit bffda93a51b40afd67c11bf558dc5aae83ca0943 ]
 
-The radiotap parser is currently only used with the radiotap
-namespace (not with vendor namespaces), but if the undefined
-field 18 is used, the alignment/size is unknown as well. In
-this case, iterator->_next_ns_data isn't initialized (it's
-only set for skipping vendor namespaces), and syzbot points
-out that we later compare against this uninitialized value.
+Using set_memory_wc() to enable write-combining for the DPP portion of
+the MMIO mapping is wrong as set_memory_*() is meant to operate on RAM
+only, not MMIO mappings. In fact, as used currently triggers a BUG_ON()
+with enabled CONFIG_DEBUG_VIRTUAL.
 
-Fix this by moving the rejection of unknown radiotap fields
-down to after the in-namespace lookup, so it will really use
-iterator->_next_ns_data only for vendor namespaces, even in
-case undefined fields are present.
+Simply map the DPP region separately and in addition to the already
+existing mappings, avoiding any possible negative side effects for
+these.
 
-Cc: stable@vger.kernel.org
-Fixes: 33e5a2f776e3 ("wireless: update radiotap parser")
-Reported-by: syzbot+b09c1af8764c0097bb19@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/69944a91.a70a0220.2c38d7.00fc.GAE@google.com
-Link: https://patch.msgid.link/20260217120526.162647-2-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1351e69fc6db ("scsi: lpfc: Add push-to-adapter support to sli4")
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Reviewed-by: Mathias Krause <minipli@grsecurity.net>
+Link: https://patch.msgid.link/20260212192327.141104-1-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/radiotap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/lpfc/lpfc_init.c |  2 ++
+ drivers/scsi/lpfc/lpfc_sli.c  | 36 +++++++++++++++++++++++++++++------
+ drivers/scsi/lpfc/lpfc_sli4.h |  3 +++
+ 3 files changed, 35 insertions(+), 6 deletions(-)
 
---- a/net/wireless/radiotap.c
-+++ b/net/wireless/radiotap.c
-@@ -240,14 +240,14 @@ int ieee80211_radiotap_iterator_next(
- 		default:
- 			if (!iterator->current_namespace ||
- 			    iterator->_arg_index >= iterator->current_namespace->n_bits) {
--				if (iterator->current_namespace == &radiotap_ns)
--					return -ENOENT;
- 				align = 0;
- 			} else {
- 				align = iterator->current_namespace->align_size[iterator->_arg_index].align;
- 				size = iterator->current_namespace->align_size[iterator->_arg_index].size;
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 5f2009327a593..0f144fbf2a6cb 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -10558,6 +10558,8 @@ lpfc_sli4_pci_mem_unset(struct lpfc_hba *phba)
+ 		iounmap(phba->sli4_hba.conf_regs_memmap_p);
+ 		if (phba->sli4_hba.dpp_regs_memmap_p)
+ 			iounmap(phba->sli4_hba.dpp_regs_memmap_p);
++		if (phba->sli4_hba.dpp_regs_memmap_wc_p)
++			iounmap(phba->sli4_hba.dpp_regs_memmap_wc_p);
+ 		break;
+ 	case LPFC_SLI_INTF_IF_TYPE_1:
+ 	default:
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index 49931577da38b..0b3242b058b99 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -14966,6 +14966,32 @@ lpfc_dual_chute_pci_bar_map(struct lpfc_hba *phba, uint16_t pci_barset)
+ 	return NULL;
+ }
+ 
++static __maybe_unused void __iomem *
++lpfc_dpp_wc_map(struct lpfc_hba *phba, uint8_t dpp_barset)
++{
++
++	/* DPP region is supposed to cover 64-bit BAR2 */
++	if (dpp_barset != WQ_PCI_BAR_4_AND_5) {
++		lpfc_log_msg(phba, KERN_WARNING, LOG_INIT,
++			     "3273 dpp_barset x%x != WQ_PCI_BAR_4_AND_5\n",
++			     dpp_barset);
++		return NULL;
++	}
++
++	if (!phba->sli4_hba.dpp_regs_memmap_wc_p) {
++		void __iomem *dpp_map;
++
++		dpp_map = ioremap_wc(phba->pci_bar2_map,
++				     pci_resource_len(phba->pcidev,
++						      PCI_64BIT_BAR4));
++
++		if (dpp_map)
++			phba->sli4_hba.dpp_regs_memmap_wc_p = dpp_map;
++	}
++
++	return phba->sli4_hba.dpp_regs_memmap_wc_p;
++}
++
+ /**
+  * lpfc_modify_hba_eq_delay - Modify Delay Multiplier on EQs
+  * @phba: HBA structure that EQs are on.
+@@ -15876,9 +15902,6 @@ lpfc_wq_create(struct lpfc_hba *phba, struct lpfc_queue *wq,
+ 	uint8_t dpp_barset;
+ 	uint32_t dpp_offset;
+ 	uint8_t wq_create_version;
+-#ifdef CONFIG_X86
+-	unsigned long pg_addr;
+-#endif
+ 
+ 	/* sanity check on queue memory */
+ 	if (!wq || !cq)
+@@ -16070,14 +16093,15 @@ lpfc_wq_create(struct lpfc_hba *phba, struct lpfc_queue *wq,
+ 
+ #ifdef CONFIG_X86
+ 			/* Enable combined writes for DPP aperture */
+-			pg_addr = (unsigned long)(wq->dpp_regaddr) & PAGE_MASK;
+-			rc = set_memory_wc(pg_addr, 1);
+-			if (rc) {
++			bar_memmap_p = lpfc_dpp_wc_map(phba, dpp_barset);
++			if (!bar_memmap_p) {
+ 				lpfc_printf_log(phba, KERN_ERR, LOG_INIT,
+ 					"3272 Cannot setup Combined "
+ 					"Write on WQ[%d] - disable DPP\n",
+ 					wq->queue_id);
+ 				phba->cfg_enable_dpp = 0;
++			} else {
++				wq->dpp_regaddr = bar_memmap_p + dpp_offset;
  			}
- 			if (!align) {
-+				if (iterator->current_namespace == &radiotap_ns)
-+					return -ENOENT;
- 				/* skip all subsequent data */
- 				iterator->_arg = iterator->_next_ns_data;
- 				/* give up on this namespace */
+ #else
+ 			phba->cfg_enable_dpp = 0;
+diff --git a/drivers/scsi/lpfc/lpfc_sli4.h b/drivers/scsi/lpfc/lpfc_sli4.h
+index 100cb1a94811b..80c168b2a2ddd 100644
+--- a/drivers/scsi/lpfc/lpfc_sli4.h
++++ b/drivers/scsi/lpfc/lpfc_sli4.h
+@@ -772,6 +772,9 @@ struct lpfc_sli4_hba {
+ 	void __iomem *dpp_regs_memmap_p;  /* Kernel memory mapped address for
+ 					   * dpp registers
+ 					   */
++	void __iomem *dpp_regs_memmap_wc_p;/* Kernel memory mapped address for
++					    * dpp registers with write combining
++					    */
+ 	union {
+ 		struct {
+ 			/* IF Type 0, BAR 0 PCI cfg space reg mem map */
+-- 
+2.51.0
+
 
 
