@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63BD311C2F;
-	Mon, 13 Apr 2026 16:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA51B30AACB;
+	Mon, 13 Apr 2026 16:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097321; cv=none; b=FkH011e0W2qTciPckXJHru+9OoBXaBWL7xvO+POuIdBERrW7YnRrRTx6uF6s6JvGFrO2v7lfFN2eAhooSThg9UfErlI8uyMLQT2F7upqoFIhE+h8VRbfTNfL1o//71EoZdOdEvdpiV2euZCBQXUqFpxK8NzEXHD+gB2z0HmMVbM=
+	t=1776097324; cv=none; b=lZlprDs5CMMc/EREVpjts8fkNLZXaMFIBqUBctwdNuWC37+jJox2aYSxFXrX3pA9IPheWZ9ek4lTgeYunCr/fIKeXdna157W4WmsV4aYYqfP2HomaRSCWRm5AmYfziB/rwe19goJppYO9Le/V6Tba2asN9IIhjQgqxB2J2G3Gzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097321; c=relaxed/simple;
-	bh=T4BvUH5Gi84tiqDCtjs5z/54i+NCdgXhgyk40H9waKY=;
+	s=arc-20240116; t=1776097324; c=relaxed/simple;
+	bh=ZHuf12WZYizrx3QHSG3Hs69gilKzKhp/7uYaGeXK78I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gx7HBLHrajyV/W+wlhceGiVdFoEfP+AhMzADMBeksVmxW7PEkBw+eZKhFLCXwFRuI48xEY0w7vw4sW3vUx9n8vdipwwodgXJhOBDpxfWQjfEKZB97FL9mUWnm3/OUouWri4e6VrM90FA60wnY8kVDGIK8lCNYuwXpkYIub4KEak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SDJuBXRu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gZYmoTNkR61GBi4NgOCLhKSP7AlnZknR1FW2GQ637a4mNbuvff/Vuv5hfp4vtg5iM3EstcfZOSLp76Nqd9b0CK4qGr+/0ZNb3LXZgAp/9b0qyq0iMkAz5pqAxdL1tU/4s8HkR2C8rxbXjxAsy1tEnE/Walpu4hYVBxspcsNaD0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6A6Hv1S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SDJuBXRu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAA2C2BCAF;
-	Mon, 13 Apr 2026 16:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6A6Hv1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0557FC2BCAF;
+	Mon, 13 Apr 2026 16:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097321;
-	bh=T4BvUH5Gi84tiqDCtjs5z/54i+NCdgXhgyk40H9waKY=;
+	s=korg; t=1776097324;
+	bh=ZHuf12WZYizrx3QHSG3Hs69gilKzKhp/7uYaGeXK78I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SDJuBXRuneM1Cjm/aYTw+To3a42MBxE/nzeWmAYuSUuU9Ng4gf6ira+hIRxve9E9R
-	 IA+7HNxrtb0e8qG1uh/xW9nPVLV9viYNlZinshmKIdwzAfA7OjipREpUXG96CgTL/o
-	 zBq3kuqTAZS0bVcVsagh6BP05GKnZM52l/cl5bf4=
+	b=K6A6Hv1S8fIkyJe9MmCPk7OA+I2o83xiEuUtL6nTPShLkh3U1iYUjmjxFRDxaXnA0
+	 /lPD7ZpH81shiuEfuIvupU0Rk6l70XEWMDuo+DoGPSRzueCLtv4mOd8atPlT52aueG
+	 q8yxLfACjtlD5XofB2rUBZPLv8UTa46GOo0Arj4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a9747fe1c35a5b115d3f@syzkaller.appspotmail.com,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 059/570] Squashfs: check metadata block offset is within range
-Date: Mon, 13 Apr 2026 17:53:10 +0200
-Message-ID: <20260413155832.652624386@linuxfoundation.org>
+	Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Bastien Nocera <hadess@hadess.net>,
+	linux-input@vger.kernel.org,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 050/570] HID: Add HID_CLAIMED_INPUT guards in raw_event callbacks missing them
+Date: Mon, 13 Apr 2026 17:53:01 +0200
+Message-ID: <20260413155832.314658870@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,46 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit fdb24a820a5832ec4532273282cbd4f22c291a0d upstream.
+commit ecfa6f34492c493a9a1dc2900f3edeb01c79946b upstream.
 
-Syzkaller reports a "general protection fault in squashfs_copy_data"
+In commit 2ff5baa9b527 ("HID: appleir: Fix potential NULL dereference at
+raw event handle"), we handle the fact that raw event callbacks
+can happen even for a HID device that has not been "claimed" causing a
+crash if a broken device were attempted to be connected to the system.
 
-This is ultimately caused by a corrupted index look-up table, which
-produces a negative metadata block offset.
+Fix up the remaining in-tree HID drivers that forgot to add this same
+check to resolve the same issue.
 
-This is subsequently passed to squashfs_copy_data (via
-squashfs_read_metadata) where the negative offset causes an out of bounds
-access.
-
-The fix is to check that the offset is within range in
-squashfs_read_metadata.  This will trap this and other cases.
-
-Link: https://lkml.kernel.org/r/20260217050955.138351-1-phillip@squashfs.org.uk
-Fixes: f400e12656ab ("Squashfs: cache operations")
-Reported-by: syzbot+a9747fe1c35a5b115d3f@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/699234e2.a70a0220.2c38d7.00e2.GAE@google.com/
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Jiri Kosina <jikos@kernel.org>
+Cc: Benjamin Tissoires <bentiss@kernel.org>
+Cc: Bastien Nocera <hadess@hadess.net>
+Cc: linux-input@vger.kernel.org
+Cc: stable <stable@kernel.org>
+Assisted-by: gkh_clanker_2000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/squashfs/cache.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/hid-cmedia.c          |    2 +-
+ drivers/hid/hid-creative-sb0540.c |    2 +-
+ drivers/hid/hid-zydacron.c        |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/squashfs/cache.c
-+++ b/fs/squashfs/cache.c
-@@ -340,6 +340,9 @@ int squashfs_read_metadata(struct super_
- 	if (unlikely(length < 0))
- 		return -EIO;
+--- a/drivers/hid/hid-cmedia.c
++++ b/drivers/hid/hid-cmedia.c
+@@ -99,7 +99,7 @@ static int cmhid_raw_event(struct hid_de
+ {
+ 	struct cmhid *cm = hid_get_drvdata(hid);
  
-+	if (unlikely(*offset < 0 || *offset >= SQUASHFS_METADATA_SIZE))
-+		return -EIO;
-+
- 	while (length) {
- 		entry = squashfs_cache_get(sb, msblk->block_cache, *block, 0);
- 		if (entry->error) {
+-	if (len != CM6533_JD_RAWEV_LEN)
++	if (len != CM6533_JD_RAWEV_LEN || !(hid->claimed & HID_CLAIMED_INPUT))
+ 		goto out;
+ 	if (memcmp(data+CM6533_JD_SFX_OFFSET, ji_sfx, sizeof(ji_sfx)))
+ 		goto out;
+--- a/drivers/hid/hid-creative-sb0540.c
++++ b/drivers/hid/hid-creative-sb0540.c
+@@ -153,7 +153,7 @@ static int creative_sb0540_raw_event(str
+ 	u64 code, main_code;
+ 	int key;
+ 
+-	if (len != 6)
++	if (len != 6 || !(hid->claimed & HID_CLAIMED_INPUT))
+ 		return 0;
+ 
+ 	/* From daemons/hw_hiddev.c sb0540_rec() in lirc */
+--- a/drivers/hid/hid-zydacron.c
++++ b/drivers/hid/hid-zydacron.c
+@@ -114,7 +114,7 @@ static int zc_raw_event(struct hid_devic
+ 	unsigned key;
+ 	unsigned short index;
+ 
+-	if (report->id == data[0]) {
++	if (report->id == data[0] && (hdev->claimed & HID_CLAIMED_INPUT)) {
+ 
+ 		/* break keys */
+ 		for (index = 0; index < 4; index++) {
 
 
