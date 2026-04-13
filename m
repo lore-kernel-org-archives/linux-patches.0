@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4970F317141;
-	Mon, 13 Apr 2026 16:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30FA313298;
+	Mon, 13 Apr 2026 16:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099145; cv=none; b=VsTYbEzkhjxUQIiMarT6s7oBf932vRU2VIxQLz6xk/k/5YHNC3SYb7EoQ8zkSJQ15tygbeCSdjoQ3oQvrqwus6jeU//jlgIXIePRKGCRTobrGnVqv/bl0rYuMYqGaKcl3hFfxQJlcO8F3DZyxEScFg/fKUEyBDbJKYlQOpGMgf4=
+	t=1776099147; cv=none; b=lOy8xQ82QzDIG1a3Sc59La4i6IHHHIWStnowuHpjZRxpLsBlae4pMeIagJonA3RJQgk3Y65tuVgp+yW/XFwpWHNFmH2uz73/l0l9ltpgHkOIrcuy/zxZ+qLokWULbgQ39+PMnb/sS8esVQ2aCVAOcXNnVZ8lQ7ygfS43Ybw+ouU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099145; c=relaxed/simple;
-	bh=J9OTCl8RJQpWl3WuIYDNEwUFLHSC3FKZCcu/DzvSNw8=;
+	s=arc-20240116; t=1776099147; c=relaxed/simple;
+	bh=Z3Vy6gFSMKY+7A+Qtrp92BGUw1qPkeujA9Jq/mTe1CA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UklN64KD+zhaY/Ha3zDpu6dE/8tMtUbpH1Rkinridzj3iqluOuF/hvJrVwKXmnufAC42GBCXvFQMVF+AwHaKyoeT4L8hA89qfkB2wy1z91wuyiXNQNqZaexg7hXFzuOMlhiVJ+qO8dn4bClW2vQNam4Dcpy8IfJROQyyhXdgve0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHaxOS4b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oiBu98iUIYKAKkVHi2QOpE0BCpZYTpHRx5gE7Lqh+TQvQMopF3T2Wfoxz2NEG+wE/23VoInZn38dAKuVeDv1BEmhgG0qgSN34JwdXtdVHHcU/9QPNlLc3QUNHF6AKi+KOm5tr7pXB/XIAGMdq3Jq4N45E7XMIwbA4ITAukDcabs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NROb1+bA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHaxOS4b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C9FC2BCB3;
-	Mon, 13 Apr 2026 16:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NROb1+bA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693A9C2BCAF;
+	Mon, 13 Apr 2026 16:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099145;
-	bh=J9OTCl8RJQpWl3WuIYDNEwUFLHSC3FKZCcu/DzvSNw8=;
+	s=korg; t=1776099147;
+	bh=Z3Vy6gFSMKY+7A+Qtrp92BGUw1qPkeujA9Jq/mTe1CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lHaxOS4bspAhtJ+6AMF5EFu1Su5V4wx1zJU4OIblzj5YmOwy8YoFEHdXYMSOIjt3R
-	 VnUbd1QYXiRiM4vHhyw+5cgjvBaiWr2cV0IpJytEiI0froLf13LeqYSMaHrbtMGFtD
-	 9qpG0NQOijc9rQONLs5h38ctvjnxu4hLbs+893jI=
+	b=NROb1+bAPzwuBEQNxI1lonCAkon4g0RnKgICBU1X6AoduNRfQXFgEU645rByQsI49
+	 66C2eDxhHE0QC6pGurg/vZvj1vQdb6nIJVOzkkqhda7jNRU1fXGXaU7m56EN2Hxrkb
+	 Pclr0x+i9KX7oyDYz/hBh+qCjOCqRBWVcecDeYJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 210/491] netfilter: nft_ct: drop pending enqueued packets on removal
-Date: Mon, 13 Apr 2026 17:57:35 +0200
-Message-ID: <20260413155826.930500875@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.10 228/491] i2c: fsi: Fix a potential leak in fsi_i2c_probe()
+Date: Mon, 13 Apr 2026 17:57:53 +0200
+Message-ID: <20260413155827.595550676@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,70 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 36eae0956f659e48d5366d9b083d9417f3263ddc ]
+commit be627abcc0d5dbd5882873bd85fbc18aa3d189ed upstream.
 
-Packets sitting in nfqueue might hold a reference to:
+In the commit in Fixes:, when the code has been updated to use an explicit
+for loop, instead of for_each_available_child_of_node(), the assumption
+that a reference to a device_node structure would be released at each
+iteration has been broken.
 
-- templates that specify the conntrack zone, because a percpu area is
-  used and module removal is possible.
-- conntrack timeout policies and helper, where object removal leave
-  a stale reference.
+Now, an explicit of_node_put() is needed to release the reference.
 
-Since these objects can just go away, drop enqueued packets to avoid
-stale reference to them.
-
-If there is a need for finer grain removal, this logic can be revisited
-to make selective packet drop upon dependencies.
-
-Fixes: 7e0b2b57f01d ("netfilter: nft_ct: add ct timeout support")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 095561f476ab ("i2c: fsi: Create busses for all ports")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: <stable@vger.kernel.org> # v5.3+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/fd805c39f8de51edf303856103d782138a1633c8.1772382022.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_ct.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i2c/busses/i2c-fsi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index 0b194628818a5..e788d5d9e7aeb 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -23,6 +23,7 @@
- #include <net/netfilter/nf_conntrack_l4proto.h>
- #include <net/netfilter/nf_conntrack_expect.h>
- #include <net/netfilter/nf_conntrack_seqadj.h>
-+#include "nf_internals.h"
- 
- struct nft_ct {
- 	enum nft_ct_keys	key:8;
-@@ -533,6 +534,7 @@ static void __nft_ct_set_destroy(const struct nft_ctx *ctx, struct nft_ct *priv)
- #endif
- #ifdef CONFIG_NF_CONNTRACK_ZONES
- 	case NFT_CT_ZONE:
-+		nf_queue_nf_hook_drop(ctx->net);
- 		mutex_lock(&nft_ct_pcpu_mutex);
- 		if (--nft_ct_pcpu_template_refcnt == 0)
- 			nft_ct_tmpl_put_pcpu();
-@@ -930,6 +932,7 @@ static void nft_ct_timeout_obj_destroy(const struct nft_ctx *ctx,
- 	struct nft_ct_timeout_obj *priv = nft_obj_data(obj);
- 	struct nf_ct_timeout *timeout = priv->timeout;
- 
-+	nf_queue_nf_hook_drop(ctx->net);
- 	nf_ct_untimeout(ctx->net, timeout);
- 	nf_ct_netns_put(ctx->net, ctx->family);
- 	kfree(priv->timeout);
-@@ -1062,6 +1065,7 @@ static void nft_ct_helper_obj_destroy(const struct nft_ctx *ctx,
- {
- 	struct nft_ct_helper_obj *priv = nft_obj_data(obj);
- 
-+	nf_queue_nf_hook_drop(ctx->net);
- 	if (priv->helper4)
- 		nf_conntrack_helper_put(priv->helper4);
- 	if (priv->helper6)
--- 
-2.51.0
-
+--- a/drivers/i2c/busses/i2c-fsi.c
++++ b/drivers/i2c/busses/i2c-fsi.c
+@@ -728,6 +728,7 @@ static int fsi_i2c_probe(struct device *
+ 		rc = i2c_add_adapter(&port->adapter);
+ 		if (rc < 0) {
+ 			dev_err(dev, "Failed to register adapter: %d\n", rc);
++			of_node_put(np);
+ 			kfree(port);
+ 			continue;
+ 		}
 
 
