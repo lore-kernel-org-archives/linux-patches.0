@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C2E2D8364;
-	Mon, 13 Apr 2026 16:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BA5280CFB;
+	Mon, 13 Apr 2026 16:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098081; cv=none; b=ScRA/CNuBWWKoZRVmNALdqvY9bMc9dUD8kilhltU6hjD7AJkblq/xfvaqyGaG5WA+J0dIwQZ0ulTdaZx5re/GQexqFVzF2d6z1vZov5NowHjA5fUtZDbemqewPnUij5uQiZ8CfJOXIu/vc5hdZ117aBeUaaGb/Eeqrc3Z0c9348=
+	t=1776098084; cv=none; b=c7lEIoqw4rf52h+am/WJ44lGrkrBDKDZLZg9aLoM2+IfH+i36kTK/e1cb8GxVWMDn4hGM4MT6SUQjCyL5qLvgkPWp7TVW+8ap9IFqdyx+PuCXnWF9OPKtvwRUOfNDMXtBYYNUQyhONETjlu/QKq451ol3nBsRs9GqkOMQvWWh2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098081; c=relaxed/simple;
-	bh=v6PQ0af9/QMQMsEq6ckC14MX2updPPAWWFRF99ykDCA=;
+	s=arc-20240116; t=1776098084; c=relaxed/simple;
+	bh=Y9ie98FYiHacl2VCSErzM7/QvVmXQeZlFeelpA53P+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AzyxUESjzqc7ydDYSbqBug2oS3fAqQurEwhY2msDMjcyoiGBny5cabgz3SmvvJsaCHt93JCmRfX8TIUvxM14biN7nPpwnzSKMIytkB0ioiChqNeFrlnzOh5CLrF8zsRNMMg+5RJjKs0IkkEWYr+62LDBvmJmg/4+Vvm6R2uqla8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkH+mRjo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XNsAgKmPi92G6Xjp4q5XPIR9c6o4ztlIgOxhMDpElqgaCd9Xjm1r6fKOrJEkLu8MJpF4u9ZqA4kwOO1a/SbFDI9Bit/smbrzSH98xsgUhGkmvCqxIoWsaZOB/KApQD955adH8gbtHXralZSstUwWNrX0/r+zeUaOvJNF6J0z0+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfDIyN0I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkH+mRjo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F459C2BCAF;
-	Mon, 13 Apr 2026 16:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfDIyN0I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E64C2BCAF;
+	Mon, 13 Apr 2026 16:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098081;
-	bh=v6PQ0af9/QMQMsEq6ckC14MX2updPPAWWFRF99ykDCA=;
+	s=korg; t=1776098084;
+	bh=Y9ie98FYiHacl2VCSErzM7/QvVmXQeZlFeelpA53P+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZkH+mRjo8V+vszFHvEVhHtd+EfQc2trd8OLTQdmeVMwVFiNGAm29Z2lhSqWhPiHnn
-	 epA25OY72MJjQg1AuMPJnTQTI5dQocBAN/0dpqeYWI+OUCqaa7CdwR3XjM4q3OtK0r
-	 wqkGhkAoGc4wKNHTPXdV6vnWZK/phYWwLV25Locc=
+	b=KfDIyN0IcZI/Qo4ShBls+CUhyMlUKoSatn+evE0R/IsCgvNBUwp+jCm9GCwAmA160
+	 waP1LvaQeMpPRCu5/7KYXb31mJzHWKoIa9+D23+JZJeYCzHahNkLKb986ID3/7N/oe
+	 DTt67B/zQpq6TQsqBC+0ab5TeUjkIP58G4lEzm9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 386/570] dmaengine: idxd: Fix not releasing workqueue on .release()
-Date: Mon, 13 Apr 2026 17:58:37 +0200
-Message-ID: <20260413155844.937196566@linuxfoundation.org>
+Subject: [PATCH 5.15 387/570] phy: ti: j721e-wiz: Fix device node reference leak in wiz_get_lane_phy_types()
+Date: Mon, 13 Apr 2026 17:58:38 +0200
+Message-ID: <20260413155844.973864654@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,35 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 3d33de353b1ff9023d5ec73b9becf80ea87af695 ]
+[ Upstream commit 584b457f4166293bdfa50f930228e9fb91a38392 ]
 
-The workqueue associated with an DSA/IAA device is not released when
-the object is freed.
+The serdes device_node is obtained using of_get_child_by_name(),
+which increments the reference count. However, it is never put,
+leading to a reference leak.
 
-Fixes: 47c16ac27d4c ("dmaengine: idxd: fix idxd conf_dev 'struct device' lifetime")
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-7-7ed70658a9d1@intel.com
+Add the missing of_node_put() calls to ensure the reference count is
+properly balanced.
+
+Fixes: 7ae14cf581f2 ("phy: ti: j721e-wiz: Implement DisplayPort mode to the wiz driver")
+Suggested-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20260212-wiz-v2-1-6e8bd4cc7a4a@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/sysfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/phy/ti/phy-j721e-wiz.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 489a9d8850764..ee208dfdd0cb5 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1271,6 +1271,7 @@ static void idxd_conf_device_release(struct device *dev)
- {
- 	struct idxd_device *idxd = confdev_to_idxd(dev);
+diff --git a/drivers/phy/ti/phy-j721e-wiz.c b/drivers/phy/ti/phy-j721e-wiz.c
+index 8963fbf7aa73b..a3908a579115c 100644
+--- a/drivers/phy/ti/phy-j721e-wiz.c
++++ b/drivers/phy/ti/phy-j721e-wiz.c
+@@ -1116,6 +1116,7 @@ static int wiz_get_lane_phy_types(struct device *dev, struct wiz *wiz)
+ 			dev_err(dev,
+ 				"%s: Reading \"reg\" from \"%s\" failed: %d\n",
+ 				__func__, subnode->name, ret);
++			of_node_put(serdes);
+ 			return ret;
+ 		}
+ 		of_property_read_u32(subnode, "cdns,num-lanes", &num_lanes);
+@@ -1128,6 +1129,7 @@ static int wiz_get_lane_phy_types(struct device *dev, struct wiz *wiz)
+ 			wiz->lane_phy_type[i] = phy_type;
+ 	}
  
-+	destroy_workqueue(idxd->wq);
- 	kfree(idxd->groups);
- 	kfree(idxd->wqs);
- 	kfree(idxd->engines);
++	of_node_put(serdes);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
