@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45E52459D1;
-	Mon, 13 Apr 2026 16:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC232EBB8C;
+	Mon, 13 Apr 2026 16:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097174; cv=none; b=Frb2ia9CYAqlcGXHVNxaTc4JjrR2gmVkSrMiCmlXYJhl8fsXPvVv3BZQKTWlU1E7xy/OQ8zgBTUPUyGczbT01AoSiMia4k13Ffycn7Ys/usLVAuNsaa2309g8+BS0O3cIe/zwCWYBfOImPvL85ml/42nMdSZnoEllhCrzLx0YPk=
+	t=1776097177; cv=none; b=Jutup6mRQDCX44Xxm/5GQUXjRRm6dHmiIzKV21pd7ZXN/m5GoBolplVj/gdZVOhCwyQzAqWj7tQKG48zpEsSTs68+5Qg+CfnliTOTPOsRlsc2KerOqHPfd0QaePOnVIuHEUJttx84HuyOGyQCp6m5/i24dSxTTvMCYVZdYdx5bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097174; c=relaxed/simple;
-	bh=+DQsllYrQ/2Tl7NAUofSJvk13Xm/Z+A1CG+mJ6bcIXE=;
+	s=arc-20240116; t=1776097177; c=relaxed/simple;
+	bh=R7uyiYlQYHIssgzk5/LwZ55YWXzO60sgNS0gmAKQcZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SNQqdsG1nRQh3roso9zMr0kUuXyit3gauEEDaoMIV9WUdh6D3tnGoz12dYyfUksraJpLneAwsfmmYNZkIuGy6/c5fFVmsxJJor6PxHhCGST8wQVs070lbBBC/SsiZ3IYvg06lCdKd4M4Nhlvt0P5uhmQBaieit+omJkhO1yVKkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sHdx61lI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ptjikfXvDY8ktNkg612d48I26Ahk7eNA9+YI5PCaPEh4JUBFIjVzaItn4PUTqpva1DdFVRvzTZJz/tAJYEncaafavWzqmJ17FgY5JrKjETrYz/2wNnMcTFO3CEKT24PIa/kUDtCg/Fiej4q1DbPmQYEGbWkM0t9GWHrhMOTHTpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12myvS6e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHdx61lI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2F3C2BCAF;
-	Mon, 13 Apr 2026 16:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12myvS6e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8738C2BCAF;
+	Mon, 13 Apr 2026 16:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097174;
-	bh=+DQsllYrQ/2Tl7NAUofSJvk13Xm/Z+A1CG+mJ6bcIXE=;
+	s=korg; t=1776097177;
+	bh=R7uyiYlQYHIssgzk5/LwZ55YWXzO60sgNS0gmAKQcZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sHdx61lIE+s9tsFzIUGOkUpYliDGc5rVsWkKdfVj/ESSwWjVxpomVgVh4+O7vkQuZ
-	 4bIeV8Jdcewms0InLq3eouLAEF7a9IS2+nhaOBmJQ2NzjGXM2mSueMk9yCuTnydxJU
-	 FDql1RNy8JK30RfWSzhnbL2iUh8NjcJ4S37z/IKI=
+	b=12myvS6eMDu4sM9l1wG6eDJH8HduLrAN4vSGO8+q+Y1kOJkrFTkLGJJXypd4zg205
+	 3wfIJmgT/+r7AfW+xipxemm1r5Zgkot7w72LVEp50qJYCcsL9fjWqA4qJnowtw8trn
+	 FZ9krSFzU7Vs11nkjAz2Xx6PoFU68HlwYCg9lUo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Daniel Vetter <daniel.vetter@intel.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Claudio Suarez <cssk@net-c.es>,
+	Du Cheng <ducheng2@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/570] ata: libata-scsi: drop DPRINTK calls for cdb translation
-Date: Mon, 13 Apr 2026 17:52:28 +0200
-Message-ID: <20260413155831.062052236@linuxfoundation.org>
+Subject: [PATCH 5.15 035/570] fbcon: Use delayed work for cursor
+Date: Mon, 13 Apr 2026 17:52:46 +0200
+Message-ID: <20260413155831.738349215@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,121 +56,300 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@suse.de>
+From: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-[ Upstream commit 1fe9fb71b2ffcedd794daacf4db2056a6cb5199e ]
+[ Upstream commit 3b0fb6ab25dda03f6077bf8fce9407bb0d4db6ea ]
 
-Drop DPRINTK calls for cdb translation as they are already covered
-by other traces, and also drop the DPRINTK calls in ata_scsi_hotplug().
+Allows us to delete a bunch of hand-rolled stuff using a timer plus a
+separate work). Also to simplify the code we initialize the
+cursor_work completely when we allocate the fbcon_ops structure,
+instead of trying to cope with console re-initialization.
 
-Signed-off-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Stable-dep-of: bb3a8154b1a1 ("ata: libata-scsi: refactor ata_scsi_translate()")
+The motiviation here is that fbcon code stops using the fb_info.queue,
+which helps with locking issues around cleanup and all that in a later
+patch.
+
+Also note that this allows us to ditch the hand-rolled work cleanup in
+fbcon_exit - we already call fbcon_del_cursor_timer, which takes care
+of everything. Plus this was racy anyway.
+
+v2:
+- Only INIT_DELAYED_WORK when kzalloc succeeded (Tetsuo)
+- Explain that we replace both the timer and a work with the combined
+  delayed_work (Javier)
+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Claudio Suarez <cssk@net-c.es>
+Cc: Du Cheng <ducheng2@gmail.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220405210335.3434130-7-daniel.vetter@ffwll.ch
+Stable-dep-of: 011a0502801c ("fbcon: check return value of con2fb_acquire_newinfo()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 20 +-------------------
- 1 file changed, 1 insertion(+), 19 deletions(-)
+ drivers/video/fbdev/core/fbcon.c | 85 +++++++++++++-------------------
+ drivers/video/fbdev/core/fbcon.h |  4 +-
+ 2 files changed, 35 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index b57027206ae1e..22c45bc64a95e 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1472,9 +1472,6 @@ static unsigned int ata_scsi_verify_xlat(struct ata_queued_cmd *qc)
- 		head  = track % dev->heads;
- 		sect  = (u32)block % dev->sectors + 1;
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index 8922595cc491d..4ad8618968715 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -342,8 +342,8 @@ static int get_color(struct vc_data *vc, struct fb_info *info,
  
--		DPRINTK("block %u track %u cyl %u head %u sect %u\n",
--			(u32)block, track, cyl, head, sect);
--
- 		/* Check whether the converted CHS can fit.
- 		   Cylinder: 0-65535
- 		   Head: 0-15
-@@ -1597,7 +1594,6 @@ static unsigned int ata_scsi_rw_xlat(struct ata_queued_cmd *qc)
- 			goto invalid_fld;
- 		break;
- 	default:
--		DPRINTK("no-byte command\n");
- 		fp = 0;
- 		goto invalid_fld;
- 	}
-@@ -1751,7 +1747,6 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- early_finish:
- 	ata_qc_free(qc);
- 	scsi_done(cmd);
--	DPRINTK("EXIT - early finish (good or error)\n");
- 	return 0;
- 
- err_did:
-@@ -1759,12 +1754,10 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- 	cmd->result = (DID_ERROR << 16);
- 	scsi_done(cmd);
- err_mem:
--	DPRINTK("EXIT - internal\n");
- 	return 0;
- 
- defer:
- 	ata_qc_free(qc);
--	DPRINTK("EXIT - defer\n");
- 	if (rc == ATA_DEFER_LINK)
- 		return SCSI_MLQUEUE_DEVICE_BUSY;
- 	else
-@@ -2491,8 +2484,6 @@ static void atapi_request_sense(struct ata_queued_cmd *qc)
- 	struct ata_port *ap = qc->ap;
- 	struct scsi_cmnd *cmd = qc->scsicmd;
- 
--	DPRINTK("ATAPI request sense\n");
--
- 	memset(cmd->sense_buffer, 0, SCSI_SENSE_BUFFERSIZE);
- 
- #ifdef CONFIG_ATA_SFF
-@@ -2531,8 +2522,6 @@ static void atapi_request_sense(struct ata_queued_cmd *qc)
- 	qc->complete_fn = atapi_sense_complete;
- 
- 	ata_qc_issue(qc);
--
--	DPRINTK("EXIT\n");
- }
- 
- /*
-@@ -2642,7 +2631,6 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
- 	qc->tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
- 	if (scmd->sc_data_direction == DMA_TO_DEVICE) {
- 		qc->tf.flags |= ATA_TFLAG_WRITE;
--		DPRINTK("direction: write\n");
- 	}
- 
- 	qc->tf.command = ATA_CMD_PACKET;
-@@ -4065,8 +4053,6 @@ int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev)
- 	return 0;
- 
-  bad_cdb_len:
--	DPRINTK("bad CDB len=%u, scsi_op=0x%02x, max=%u\n",
--		scmd->cmd_len, scsi_op, dev->cdb_len);
- 	scmd->result = DID_ERROR << 16;
- 	scsi_done(scmd);
- 	return 0;
-@@ -4532,12 +4518,9 @@ void ata_scsi_hotplug(struct work_struct *work)
- 		container_of(work, struct ata_port, hotplug_task.work);
- 	int i;
- 
--	if (ap->pflags & ATA_PFLAG_UNLOADING) {
--		DPRINTK("ENTER/EXIT - unloading\n");
-+	if (ap->pflags & ATA_PFLAG_UNLOADING)
+ static void fb_flashcursor(struct work_struct *work)
+ {
+-	struct fb_info *info = container_of(work, struct fb_info, queue);
+-	struct fbcon_ops *ops = info->fbcon_par;
++	struct fbcon_ops *ops = container_of(work, struct fbcon_ops, cursor_work.work);
++	struct fb_info *info;
+ 	struct vc_data *vc = NULL;
+ 	int c;
+ 	int mode;
+@@ -356,7 +356,10 @@ static void fb_flashcursor(struct work_struct *work)
+ 	if (ret == 0)
  		return;
--	}
  
--	DPRINTK("ENTER\n");
- 	mutex_lock(&ap->scsi_scan_mutex);
+-	if (ops && ops->currcon != -1)
++	/* protected by console_lock */
++	info = ops->info;
++
++	if (ops->currcon != -1)
+ 		vc = vc_cons[ops->currcon].d;
  
- 	/* Unplug detached devices.  We cannot use link iterator here
-@@ -4553,7 +4536,6 @@ void ata_scsi_hotplug(struct work_struct *work)
- 	ata_scsi_scan_host(ap, 0);
+ 	if (!vc || !con_is_visible(vc) ||
+@@ -372,42 +375,25 @@ static void fb_flashcursor(struct work_struct *work)
+ 	ops->cursor(vc, info, mode, get_color(vc, info, c, 1),
+ 		    get_color(vc, info, c, 0));
+ 	console_unlock();
+-}
  
- 	mutex_unlock(&ap->scsi_scan_mutex);
--	DPRINTK("EXIT\n");
+-static void cursor_timer_handler(struct timer_list *t)
+-{
+-	struct fbcon_ops *ops = from_timer(ops, t, cursor_timer);
+-	struct fb_info *info = ops->info;
+-
+-	queue_work(system_power_efficient_wq, &info->queue);
+-	mod_timer(&ops->cursor_timer, jiffies + ops->cur_blink_jiffies);
++	queue_delayed_work(system_power_efficient_wq, &ops->cursor_work,
++			   ops->cur_blink_jiffies);
  }
  
- /**
+-static void fbcon_add_cursor_timer(struct fb_info *info)
++static void fbcon_add_cursor_work(struct fb_info *info)
+ {
+ 	struct fbcon_ops *ops = info->fbcon_par;
+ 
+-	if ((!info->queue.func || info->queue.func == fb_flashcursor) &&
+-	    !(ops->flags & FBCON_FLAGS_CURSOR_TIMER) &&
+-	    !fbcon_cursor_noblink) {
+-		if (!info->queue.func)
+-			INIT_WORK(&info->queue, fb_flashcursor);
+-
+-		timer_setup(&ops->cursor_timer, cursor_timer_handler, 0);
+-		mod_timer(&ops->cursor_timer, jiffies + ops->cur_blink_jiffies);
+-		ops->flags |= FBCON_FLAGS_CURSOR_TIMER;
+-	}
++	if (!fbcon_cursor_noblink)
++		queue_delayed_work(system_power_efficient_wq, &ops->cursor_work,
++				   ops->cur_blink_jiffies);
+ }
+ 
+-static void fbcon_del_cursor_timer(struct fb_info *info)
++static void fbcon_del_cursor_work(struct fb_info *info)
+ {
+ 	struct fbcon_ops *ops = info->fbcon_par;
+ 
+-	if (info->queue.func == fb_flashcursor &&
+-	    ops->flags & FBCON_FLAGS_CURSOR_TIMER) {
+-		del_timer_sync(&ops->cursor_timer);
+-		ops->flags &= ~FBCON_FLAGS_CURSOR_TIMER;
+-	}
++	cancel_delayed_work_sync(&ops->cursor_work);
+ }
+ 
+ #ifndef MODULE
+@@ -711,6 +697,8 @@ static int con2fb_acquire_newinfo(struct vc_data *vc, struct fb_info *info,
+ 	}
+ 
+ 	if (!err) {
++		INIT_DELAYED_WORK(&ops->cursor_work, fb_flashcursor);
++
+ 		ops->cur_blink_jiffies = HZ / 5;
+ 		ops->info = info;
+ 		info->fbcon_par = ops;
+@@ -745,7 +733,7 @@ static int con2fb_release_oldinfo(struct vc_data *vc, struct fb_info *oldinfo,
+ 	}
+ 
+ 	if (!err) {
+-		fbcon_del_cursor_timer(oldinfo);
++		fbcon_del_cursor_work(oldinfo);
+ 		kfree(ops->cursor_state.mask);
+ 		kfree(ops->cursor_data);
+ 		kfree(ops->cursor_src);
+@@ -862,7 +850,7 @@ static int set_con2fb_map(int unit, int newidx, int user)
+ 				 logo_shown != FBCON_LOGO_DONTSHOW);
+ 
+ 		if (!found)
+-			fbcon_add_cursor_timer(info);
++			fbcon_add_cursor_work(info);
+ 		con2fb_map_boot[unit] = newidx;
+ 		con2fb_init_display(vc, info, unit, show_logo);
+ 	}
+@@ -959,6 +947,8 @@ static const char *fbcon_startup(void)
+ 		return NULL;
+ 	}
+ 
++	INIT_DELAYED_WORK(&ops->cursor_work, fb_flashcursor);
++
+ 	ops->currcon = -1;
+ 	ops->graphics = 1;
+ 	ops->cur_rotate = -1;
+@@ -999,7 +989,7 @@ static const char *fbcon_startup(void)
+ 		 info->var.yres,
+ 		 info->var.bits_per_pixel);
+ 
+-	fbcon_add_cursor_timer(info);
++	fbcon_add_cursor_work(info);
+ 	return display_desc;
+ }
+ 
+@@ -1185,7 +1175,7 @@ static void fbcon_deinit(struct vc_data *vc)
+ 		goto finished;
+ 
+ 	if (con_is_visible(vc))
+-		fbcon_del_cursor_timer(info);
++		fbcon_del_cursor_work(info);
+ 
+ 	ops->flags &= ~FBCON_FLAGS_INIT;
+ finished:
+@@ -1318,9 +1308,9 @@ static void fbcon_cursor(struct vc_data *vc, int mode)
+ 		return;
+ 
+ 	if (vc->vc_cursor_type & CUR_SW)
+-		fbcon_del_cursor_timer(info);
++		fbcon_del_cursor_work(info);
+ 	else
+-		fbcon_add_cursor_timer(info);
++		fbcon_add_cursor_work(info);
+ 
+ 	ops->cursor_flash = (mode == CM_ERASE) ? 0 : 1;
+ 
+@@ -2126,14 +2116,14 @@ static bool fbcon_switch(struct vc_data *vc)
+ 		}
+ 
+ 		if (old_info != info)
+-			fbcon_del_cursor_timer(old_info);
++			fbcon_del_cursor_work(old_info);
+ 	}
+ 
+ 	if (fbcon_is_inactive(vc, info) ||
+ 	    ops->blank_state != FB_BLANK_UNBLANK)
+-		fbcon_del_cursor_timer(info);
++		fbcon_del_cursor_work(info);
+ 	else
+-		fbcon_add_cursor_timer(info);
++		fbcon_add_cursor_work(info);
+ 
+ 	set_blitting_type(vc, info);
+ 	ops->cursor_reset = 1;
+@@ -2241,9 +2231,9 @@ static int fbcon_blank(struct vc_data *vc, int blank, int mode_switch)
+ 
+ 	if (mode_switch || fbcon_is_inactive(vc, info) ||
+ 	    ops->blank_state != FB_BLANK_UNBLANK)
+-		fbcon_del_cursor_timer(info);
++		fbcon_del_cursor_work(info);
+ 	else
+-		fbcon_add_cursor_timer(info);
++		fbcon_add_cursor_work(info);
+ 
+ 	return 0;
+ }
+@@ -3240,7 +3230,7 @@ static ssize_t show_cursor_blink(struct device *device,
+ 	if (!ops)
+ 		goto err;
+ 
+-	blink = (ops->flags & FBCON_FLAGS_CURSOR_TIMER) ? 1 : 0;
++	blink = delayed_work_pending(&ops->cursor_work);
+ err:
+ 	console_unlock();
+ 	return snprintf(buf, PAGE_SIZE, "%d\n", blink);
+@@ -3269,10 +3259,10 @@ static ssize_t store_cursor_blink(struct device *device,
+ 
+ 	if (blink) {
+ 		fbcon_cursor_noblink = 0;
+-		fbcon_add_cursor_timer(info);
++		fbcon_add_cursor_work(info);
+ 	} else {
+ 		fbcon_cursor_noblink = 1;
+-		fbcon_del_cursor_timer(info);
++		fbcon_del_cursor_work(info);
+ 	}
+ 
+ err:
+@@ -3385,15 +3375,9 @@ static void fbcon_exit(void)
+ #endif
+ 
+ 	for_each_registered_fb(i) {
+-		int pending = 0;
+-
+ 		mapped = 0;
+ 		info = registered_fb[i];
+ 
+-		if (info->queue.func)
+-			pending = cancel_work_sync(&info->queue);
+-		pr_debug("fbcon: %s pending work\n", (pending ? "canceled" : "no"));
+-
+ 		for (j = first_fb_vc; j <= last_fb_vc; j++) {
+ 			if (con2fb_map[j] == i) {
+ 				mapped = 1;
+@@ -3409,15 +3393,12 @@ static void fbcon_exit(void)
+ 			if (info->fbcon_par) {
+ 				struct fbcon_ops *ops = info->fbcon_par;
+ 
+-				fbcon_del_cursor_timer(info);
++				fbcon_del_cursor_work(info);
+ 				kfree(ops->cursor_src);
+ 				kfree(ops->cursor_state.mask);
+ 				kfree(info->fbcon_par);
+ 				info->fbcon_par = NULL;
+ 			}
+-
+-			if (info->queue.func == fb_flashcursor)
+-				info->queue.func = NULL;
+ 		}
+ 	}
+ }
+diff --git a/drivers/video/fbdev/core/fbcon.h b/drivers/video/fbdev/core/fbcon.h
+index 3e1ec454b8aa3..a709e5796ef7e 100644
+--- a/drivers/video/fbdev/core/fbcon.h
++++ b/drivers/video/fbdev/core/fbcon.h
+@@ -14,11 +14,11 @@
+ #include <linux/types.h>
+ #include <linux/vt_buffer.h>
+ #include <linux/vt_kern.h>
++#include <linux/workqueue.h>
+ 
+ #include <asm/io.h>
+ 
+ #define FBCON_FLAGS_INIT         1
+-#define FBCON_FLAGS_CURSOR_TIMER 2
+ 
+    /*
+     *    This is the interface between the low-level console driver and the
+@@ -68,7 +68,7 @@ struct fbcon_ops {
+ 	int  (*update_start)(struct fb_info *info);
+ 	int  (*rotate_font)(struct fb_info *info, struct vc_data *vc);
+ 	struct fb_var_screeninfo var;  /* copy of the current fb_var_screeninfo */
+-	struct timer_list cursor_timer; /* Cursor timer */
++	struct delayed_work cursor_work; /* Cursor timer */
+ 	struct fb_cursor cursor_state;
+ 	struct fbcon_display *p;
+ 	struct fb_info *info;
 -- 
 2.51.0
 
