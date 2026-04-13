@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B1A2EB5BA;
-	Mon, 13 Apr 2026 16:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325542F6931;
+	Mon, 13 Apr 2026 16:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097031; cv=none; b=AA6kwLQ2HVwEQpLD40/g9X9w0J4xD6i2fRSmA23aj2ReaTpmjqGiyLL7xpzv65LOJoRYUfqvoGt0OSYbF6EMiHduFcLVAAhOOW1fgOrhDTyyKP3arWvQcn43LrtLJNfpN7IAD/DKWeTVhAeTW8/bFuiutOyCrYHrGaV2B7o+oBo=
+	t=1776097034; cv=none; b=WpwKEL6qa/tMYjOubY1FhO+fntgIXAz7rpRTNe58/xwegDDbKHWFGf4ZBFgjwUSnbGBVMx12EMq9eWSaQYZmEKw/dFw5/9zKSfvNw8GEo7+HgJQH7icidfupdv39IhsUEaefe6T96EyT8UfZqabLsPeMU2yPsEp6Fw671O7su58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097031; c=relaxed/simple;
-	bh=i7PbZsW1T53AGc/b4dQa/hpS276aoNkl1X1mUmqNU50=;
+	s=arc-20240116; t=1776097034; c=relaxed/simple;
+	bh=3R4K998UXToe316wpLCuGgFikZdtGLAP6N83xv3lx4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MwSDFAkxMBDPGcJ9v2O31vM1vtxYKXQjhNcfhWq4E0Boo19Im7NfmkVOm+PrWQVk4xYPhIPCgHbjBcuTk55l6cBrw+KChXfVDWG2Ow51rnWXzSSCTl7B43YMBMRs6ObWVRQVw0S6cPy1aFTrzchYg6jQS3C2BGnoFKK4OzhH20g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJvTAdSj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DVYg9q9+k3MGjOi19OymsZHbVAdgv+/NGweZZLsfpRe3o4dGUNn9ZHPEJkkfu7AOsqGENldlMzuYlS52BKHV4U/h2IP+dKEflPuj54Wea/oZUt7cEmDUFecAyqfW0wTMkFGLf8qZHHdOunyhXA75DPo+yEaZd2wvYYfecUyVJRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLQQ08N9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJvTAdSj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8E3C2BCB0;
-	Mon, 13 Apr 2026 16:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLQQ08N9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC118C2BCAF;
+	Mon, 13 Apr 2026 16:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097031;
-	bh=i7PbZsW1T53AGc/b4dQa/hpS276aoNkl1X1mUmqNU50=;
+	s=korg; t=1776097034;
+	bh=3R4K998UXToe316wpLCuGgFikZdtGLAP6N83xv3lx4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJvTAdSjO/QcA0flVqKfJRwoz/8zrERHNi14EZ+869xxuhAeB/C88CVTX+6f/pcoT
-	 tgQAheaznt5Fc/fYvNlf2H5VHzKJz+Rc2QSJ0iSpOJCt0NP8DaNudVwt80Pw3Nv1I6
-	 U9jDMSXyaLlcLTC6Z0XCDbO+nIM4cezk40wJmiqI=
+	b=XLQQ08N9iTRizkMKBtQUSzQIcaQrY/vLVkUEyvADkqexKIcirBXW9kPdqmL5u7Rip
+	 C8S7uRftLiOpcICrgluUxgnta2BMj23V/H1SVJUG7fel1pluT0E9G+t6B3vtnZbu5R
+	 rG3ErHD7UymAffAqx9dc+qHiOcJxmw8quxW/vyPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Mukul Sikka <mukul.sikka@broadcom.com>,
-	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>,
-	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
-Subject: [PATCH 6.1 35/55] netfilter: nft_set_pipapo: do not rely on ZERO_SIZE_PTR
-Date: Mon, 13 Apr 2026 18:01:09 +0200
-Message-ID: <20260413155726.148097573@linuxfoundation.org>
+	Tuan Do <tuan@calif.io>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.1 36/55] netfilter: nft_ct: fix use-after-free in timeout object destroy
+Date: Mon, 13 Apr 2026 18:01:10 +0200
+Message-ID: <20260413155726.185835282@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 References: <20260413155724.820472494@linuxfoundation.org>
@@ -53,69 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Tuan Do <tuan@calif.io>
 
-commit 07ace0bbe03b3d8e85869af1dec5e4087b1d57b8 upstream
+commit f8dca15a1b190787bbd03285304b569631160eda upstream.
 
-pipapo relies on kmalloc(0) returning ZERO_SIZE_PTR (i.e., not NULL
-but pointer is invalid).
+nft_ct_timeout_obj_destroy() frees the timeout object with kfree()
+immediately after nf_ct_untimeout(), without waiting for an RCU grace
+period. Concurrent packet processing on other CPUs may still hold
+RCU-protected references to the timeout object obtained via
+rcu_dereference() in nf_ct_timeout_data().
 
-Rework this to not call slab allocator when we'd request a 0-byte
-allocation.
+Add an rcu_head to struct nf_ct_timeout and use kfree_rcu() to defer
+freeing until after an RCU grace period, matching the approach already
+used in nfnetlink_cttimeout.c.
 
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+KASAN report:
+ BUG: KASAN: slab-use-after-free in nf_conntrack_tcp_packet+0x1381/0x29d0
+ Read of size 4 at addr ffff8881035fe19c by task exploit/80
+
+ Call Trace:
+  nf_conntrack_tcp_packet+0x1381/0x29d0
+  nf_conntrack_in+0x612/0x8b0
+  nf_hook_slow+0x70/0x100
+  __ip_local_out+0x1b2/0x210
+  tcp_sendmsg_locked+0x722/0x1580
+  __sys_sendto+0x2d8/0x320
+
+ Allocated by task 75:
+  nft_ct_timeout_obj_init+0xf6/0x290
+  nft_obj_init+0x107/0x1b0
+  nf_tables_newobj+0x680/0x9c0
+  nfnetlink_rcv_batch+0xc29/0xe00
+
+ Freed by task 26:
+  nft_obj_destroy+0x3f/0xa0
+  nf_tables_trans_destroy_work+0x51c/0x5c0
+  process_one_work+0x2c4/0x5a0
+
+Fixes: 7e0b2b57f01d ("netfilter: nft_ct: add ct timeout support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tuan Do <tuan@calif.io>
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Mukul Sikka <mukul.sikka@broadcom.com>
-Signed-off-by: Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
-[Keerthana: In older stable branches (v6.6 and earlier), the allocation logic in
-pipapo_clone() still relies on `src->rules` rather than `src->rules_alloc`
-(introduced in v6.9 via 9f439bd6ef4f). Consequently, the previously
-backported INT_MAX clamping check uses `src->rules`. This patch correctly
-moves that `src->rules > (INT_MAX / ...)` check inside the new
-`if (src->rules > 0)` block]
-Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_pipapo.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ include/net/netfilter/nf_conntrack_timeout.h |    1 +
+ net/netfilter/nft_ct.c                       |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -525,6 +525,8 @@ static struct nft_pipapo_elem *pipapo_ge
- 	int i;
+--- a/include/net/netfilter/nf_conntrack_timeout.h
++++ b/include/net/netfilter/nf_conntrack_timeout.h
+@@ -14,6 +14,7 @@
+ struct nf_ct_timeout {
+ 	__u16			l3num;
+ 	const struct nf_conntrack_l4proto *l4proto;
++	struct rcu_head		rcu;
+ 	char			data[];
+ };
  
- 	m = priv->clone;
-+	if (m->bsize_max == 0)
-+		return ret;
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -985,7 +985,7 @@ static void nft_ct_timeout_obj_destroy(c
+ 	nf_queue_nf_hook_drop(ctx->net);
+ 	nf_ct_untimeout(ctx->net, timeout);
+ 	nf_ct_netns_put(ctx->net, ctx->family);
+-	kfree(priv->timeout);
++	kfree_rcu(priv->timeout, rcu);
+ }
  
- 	res_map = kmalloc_array(m->bsize_max, sizeof(*res_map), GFP_ATOMIC);
- 	if (!res_map) {
-@@ -1395,14 +1397,20 @@ static struct nft_pipapo_match *pipapo_c
- 		       src->bsize * sizeof(*dst->lt) *
- 		       src->groups * NFT_PIPAPO_BUCKETS(src->bb));
- 
--		if (src->rules > (INT_MAX / sizeof(*src->mt)))
--			goto out_mt;
-+		if (src->rules > 0) {
-+			if (src->rules > (INT_MAX / sizeof(*src->mt)))
-+				goto out_mt;
-+
-+			dst->mt = kvmalloc_array(src->rules, sizeof(*src->mt),
-+						 GFP_KERNEL);
-+			if (!dst->mt)
-+				goto out_mt;
- 
--		dst->mt = kvmalloc(src->rules * sizeof(*src->mt), GFP_KERNEL_ACCOUNT);
--		if (!dst->mt)
--			goto out_mt;
-+			memcpy(dst->mt, src->mt, src->rules * sizeof(*src->mt));
-+		} else {
-+			dst->mt = NULL;
-+		}
- 
--		memcpy(dst->mt, src->mt, src->rules * sizeof(*src->mt));
- 		src++;
- 		dst++;
- 	}
+ static int nft_ct_timeout_obj_dump(struct sk_buff *skb,
 
 
