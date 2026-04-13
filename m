@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8730C30DED5;
-	Mon, 13 Apr 2026 16:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C655429BD87;
+	Mon, 13 Apr 2026 16:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098130; cv=none; b=U+nK+LEaUTKAspHboFqGO12t0/HC8BNvA1rwerPHCX+Uk4WNEJ9TEL8KO3Pd8uI58Wk2io/rmtZ4w5+T2T54GxqGOr/7qGdUGqybQvMuRyUhXl3wBEnipdqRKD3+ZtlXw+JIoLn0pC4/6Caf40KwyKo9RiV1JAEX9F95uRY27PE=
+	t=1776098133; cv=none; b=RAgiOhl6yLj0tcj6oX/m6m1dYKKadwJp1bCRhMWYTygXXud/ENSQtT1piQDJo4zBbpfXn8xfC7jqOBdsojM529g5AAj3WutGEiqzWkGIXQfgAQn22nqLBXU5fPKCIf7vECkqQ77zy3SJQC2dnCyr579xr6n19nhzFjwPXeB/cNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098130; c=relaxed/simple;
-	bh=XYj96bOIIGkGrkK4/NQMGH0RvaIdLNKAgdgdBODiIIM=;
+	s=arc-20240116; t=1776098133; c=relaxed/simple;
+	bh=iKWG7Jvykyu2rakjYjuI90DmJ3QyPoBrs9oQFsWUhWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V33wSiSHbfPOPwzN/1VQgEVhyHQIH6DyQxJYe9Ecq2smmNvwnFFdJKjJ/mf/mj40kXXXDDyAt40kslztP32lTyXgkmDuGnjZg1vns6/jDOo7pKxAY81KYfKpXPVHyA6iaMxhiwN5fo1uWbrKyY5D8ylC9iijKfsAYftrPpUB0oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kodq2p6B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ee1TSGafEZ7kQnafK+SS2hu5gt88/46VYqBHMqUw93WD0C87QXOCi4FR1A2IfhjAr7PNFYjD1shle4c8x8IkFSApl3H4nraAnyoNBJ9zV5xOdlPkGfAO+GNgjAH+/teRXfU81WoitTDWEKFVCgHjfRIwLgzpVOa5SxaaySQVWyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0VDGBig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kodq2p6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C64C2BCAF;
-	Mon, 13 Apr 2026 16:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0VDGBig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C2AFC2BCAF;
+	Mon, 13 Apr 2026 16:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098130;
-	bh=XYj96bOIIGkGrkK4/NQMGH0RvaIdLNKAgdgdBODiIIM=;
+	s=korg; t=1776098133;
+	bh=iKWG7Jvykyu2rakjYjuI90DmJ3QyPoBrs9oQFsWUhWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kodq2p6B5rYxRtT+TYdj9K7TxLeuQzbQbheRfZAgGzsJ2YLShXIPxTJTyedqhxcuP
-	 kmBD9SmnTkiBqUeBiVw6m8/uVrup0fUz0t/LXvCkVUAYVGWEIphQFcAtjbV7q7EUsR
-	 aa8sYOgm5+y1rn4fr9YkYNlBc0vL0HvMTVB8fIk4=
+	b=K0VDGBigzlNTaLUA+Booy/63qqeiektYucMEFuaaMg439Ji1EmLnunJ9phXA7uT3/
+	 gLizHzhm6OXeszc9AGfNRBrnmhZPjvGv9gAVSuBpGHPMea2erKo/dXWKaMikj0a9FG
+	 ZivbSwVaj7yaE1mp+bn4Vr9k3urhqibrH+qb7W94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xietangxin <xietangxin@yeah.net>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 373/570] virtio_net: Fix UAF on dst_ops when IFF_XMIT_DST_RELEASE is cleared and napi_tx is false
-Date: Mon, 13 Apr 2026 17:58:24 +0200
-Message-ID: <20260413155844.453060108@linuxfoundation.org>
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Jiucheng Xu <jiucheng.xu@amlogic.com>,
+	Chao Yu <chao@kernel.org>
+Subject: [PATCH 5.15 374/570] erofs: add GFP_NOIO in the bio completion if needed
+Date: Mon, 13 Apr 2026 17:58:25 +0200
+Message-ID: <20260413155844.489668506@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,90 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xietangxin <xietangxin@yeah.net>
+From: Jiucheng Xu <jiucheng.xu@amlogic.com>
 
-commit ba8bda9a0896746053aa97ac6c3e08168729172c upstream.
+commit c23df30915f83e7257c8625b690a1cece94142a0 upstream.
 
-A UAF issue occurs when the virtio_net driver is configured with napi_tx=N
-and the device's IFF_XMIT_DST_RELEASE flag is cleared
-(e.g., during the configuration of tc route filter rules).
+The bio completion path in the process context (e.g. dm-verity)
+will directly call into decompression rather than trigger another
+workqueue context for minimal scheduling latencies, which can
+then call vm_map_ram() with GFP_KERNEL.
 
-When IFF_XMIT_DST_RELEASE is removed from the net_device, the network stack
-expects the driver to hold the reference to skb->dst until the packet
-is fully transmitted and freed. In virtio_net with napi_tx=N,
-skbs may remain in the virtio transmit ring for an extended period.
+Due to insufficient memory, vm_map_ram() may generate memory
+swapping I/O, which can cause submit_bio_wait to deadlock
+in some scenarios.
 
-If the network namespace is destroyed while these skbs are still pending,
-the corresponding dst_ops structure has freed. When a subsequent packet
-is transmitted, free_old_xmit() is triggered to clean up old skbs.
-It then calls dst_release() on the skb associated with the stale dst_entry.
-Since the dst_ops (referenced by the dst_entry) has already been freed,
-a UAF kernel paging request occurs.
+Trimmed down the call stack, as follows:
 
-fix it by adds skb_dst_drop(skb) in start_xmit to explicitly release
-the dst reference before the skb is queued in virtio_net.
+f2fs_submit_read_io
+  submit_bio                      //bio_list is initialized.
+    mmc_blk_mq_recovery
+      z_erofs_endio
+        vm_map_ram
+          __pte_alloc_kernel
+            __alloc_pages_direct_reclaim
+              shrink_folio_list
+                __swap_writepage
+                  submit_bio_wait  //bio_list is non-NULL, hang!!!
 
-Call Trace:
- Unable to handle kernel paging request at virtual address ffff80007e150000
- CPU: 2 UID: 0 PID: 6236 Comm: ping Kdump: loaded Not tainted 7.0.0-rc1+ #6 PREEMPT
-  ...
-  percpu_counter_add_batch+0x3c/0x158 lib/percpu_counter.c:98 (P)
-  dst_release+0xe0/0x110  net/core/dst.c:177
-  skb_release_head_state+0xe8/0x108 net/core/skbuff.c:1177
-  sk_skb_reason_drop+0x54/0x2d8 net/core/skbuff.c:1255
-  dev_kfree_skb_any_reason+0x64/0x78 net/core/dev.c:3469
-  napi_consume_skb+0x1c4/0x3a0 net/core/skbuff.c:1527
-  __free_old_xmit+0x164/0x230  drivers/net/virtio_net.c:611 [virtio_net]
-  free_old_xmit drivers/net/virtio_net.c:1081 [virtio_net]
-  start_xmit+0x7c/0x530 drivers/net/virtio_net.c:3329 [virtio_net]
-  ...
+Use memalloc_noio_{save,restore}() to wrap up this path.
 
-Reproduction Steps:
-NETDEV="enp3s0"
-
-config_qdisc_route_filter() {
-    tc qdisc del dev $NETDEV root
-    tc qdisc add dev $NETDEV root handle 1: prio
-    tc filter add dev $NETDEV parent 1:0 \
-	protocol ip prio 100 route to 100 flowid 1:1
-    ip route add 192.168.1.100/32 dev $NETDEV realm 100
-}
-
-test_ns() {
-    ip netns add testns
-    ip link set $NETDEV netns testns
-    ip netns exec testns ifconfig $NETDEV  10.0.32.46/24
-    ip netns exec testns ping -c 1 10.0.32.1
-    ip netns del testns
-}
-
-config_qdisc_route_filter
-
-test_ns
-sleep 2
-test_ns
-
-Fixes: f2fc6a54585a ("[NETNS][IPV6] route6 - move ip6_dst_ops inside the network namespace")
-Cc: stable@vger.kernel.org
-Signed-off-by: xietangxin <xietangxin@yeah.net>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Fixes: 0287587884b1 ("net: better IFF_XMIT_DST_RELEASE support")
-Link: https://patch.msgid.link/20260312025406.15641-1-xietangxin@yeah.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/erofs/zdata.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -1831,6 +1831,7 @@ static netdev_tx_t start_xmit(struct sk_
- 	/* Don't wait up for transmitted skbs to be freed. */
- 	if (!use_napi) {
- 		skb_orphan(skb);
-+		skb_dst_drop(skb);
- 		nf_reset_ct(skb);
- 	}
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -782,6 +782,7 @@ static void z_erofs_decompress_kickoff(s
+ 				       bool sync, int bios)
+ {
+ 	struct erofs_sb_info *const sbi = EROFS_SB(io->sb);
++	int gfp_flag;
  
+ 	/* wake up the caller thread for sync decompression */
+ 	if (sync) {
+@@ -802,7 +803,9 @@ static void z_erofs_decompress_kickoff(s
+ 		sbi->opt.readahead_sync_decompress = true;
+ 		return;
+ 	}
++	gfp_flag = memalloc_noio_save();
+ 	z_erofs_decompressqueue_work(&io->u.work);
++	memalloc_noio_restore(gfp_flag);
+ }
+ 
+ static bool z_erofs_page_is_invalidated(struct page *page)
 
 
