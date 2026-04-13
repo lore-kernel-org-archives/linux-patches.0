@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B48730BF4E;
-	Mon, 13 Apr 2026 16:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB6924E4A1;
+	Mon, 13 Apr 2026 16:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098463; cv=none; b=sYc3+pDNiyqLgVOaDLEgfz08QmBMwvXv/p59MRSmKQ6239yTFoeDaUljfV3qSsb4NpgkIP6FoMuDNhsWHvP/sfaHs0DapxPpT0fDWYU0LTmVrUksAcPS5YBXIygKBcgxtl+EI12xJM6lL3VzxY4aU5e1gKpoSELz4vc7ZvfK+po=
+	t=1776098466; cv=none; b=sb7g0NoFb3/egg6F4Jo71/eIK6HHOuFfb6mZimZlrGgc0i3jAA/MA/lzBGhz1YgFmeqeKXDUChzW1ox06sKphhFOvjCByM4NsrAC1+HlLjODkf/d+3/c5myNEuNjMPxUzdeHcQAOWfnxE2IL0opasC1hmbex8HyhSiyjMYp9oT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098463; c=relaxed/simple;
-	bh=PCzaGoBSwZmce3I20+yakCJ3d82LkGBPQ0qL+PDyypA=;
+	s=arc-20240116; t=1776098466; c=relaxed/simple;
+	bh=nYoDCRw0do2HR4J/Sl3zEgV/eyxQnz/0cemQo/3ZDTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCoqwKvavCErH6Wz/9/eky+IFb1vVcBOKt7rgWhI5athiBwAQ6bnMydlEXDqnyMyqAsccz6dUUBW1Qe+NGPDjoYIoka4sm6okDlACIiItBmMNxyBA2fe6Fl3h92GpWqcEOSydjCUg6ZhFrajR6N1aDovPmKuRI6kHADdjjclLlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CK2Fegq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WSSWrDoP2gyqTnRosNUQXYtSvZfpX0azR3j92YMvxeji19Nuosfy0GMWBcadyqQOzk91Enxybyhb8ki/6H31+Ug+HhUWHG6mtDtysYGLUrOpSgT/6Zx66b5qdVbGCQqeohMN10SIeUtyzbCSm96kvLLRvmpt7WwJo5lwKkP0OVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYVmZJJy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CK2Fegq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E200C2BCAF;
-	Mon, 13 Apr 2026 16:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYVmZJJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94ABC2BCAF;
+	Mon, 13 Apr 2026 16:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098463;
-	bh=PCzaGoBSwZmce3I20+yakCJ3d82LkGBPQ0qL+PDyypA=;
+	s=korg; t=1776098466;
+	bh=nYoDCRw0do2HR4J/Sl3zEgV/eyxQnz/0cemQo/3ZDTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1CK2Fegq6APOPui3Yb7a6Pwts9CpIsowcRosW6JjKTa/JpJcYjyTsL14ytBf8LvYg
-	 bDs5/xFkgS2SzaI6U6DTCqVuiTJk4e9rHTGQLZZlOC1bwVXib5lz7gcTEe1AYEkq63
-	 QfG3nHQIGBu0FZPHeG4R0zji9su1J7sp2fGL+SBI=
+	b=WYVmZJJyGQcOgdw44OCJ3pWLNv4UzskrWeNXSkgKNz8t3laY7yyxVt4/qcyT5dxPI
+	 KgFXO/vz7vefCYLF92sKG5W6pzZks2Vt2rTd9vOdmyE+msqUEw22aPgJmVQ3kikoPL
+	 oyKKyRCS7pMU5Z6UgTVrpCJN9QRvBkKkMICzeAcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 534/570] net: altera-tse: fix skb leak on DMA mapping error in tse_start_xmit()
-Date: Mon, 13 Apr 2026 18:01:05 +0200
-Message-ID: <20260413155850.448968331@linuxfoundation.org>
+	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 5.15 535/570] drm/i915/gt: fix refcount underflow in intel_engine_park_heartbeat
+Date: Mon, 13 Apr 2026 18:01:06 +0200
+Message-ID: <20260413155850.486193566@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,36 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
 
-commit 6dede3967619b5944003227a5d09fdc21ed57d10 upstream.
+commit 4c71fd099513bfa8acab529b626e1f0097b76061 upstream.
 
-When dma_map_single() fails in tse_start_xmit(), the function returns
-NETDEV_TX_OK without freeing the skb. Since NETDEV_TX_OK tells the
-stack the packet was consumed, the skb is never freed, leaking memory
-on every DMA mapping failure.
+A use-after-free / refcount underflow is possible when the heartbeat
+worker and intel_engine_park_heartbeat() race to release the same
+engine->heartbeat.systole request.
 
-Add dev_kfree_skb_any() before returning to properly free the skb.
+The heartbeat worker reads engine->heartbeat.systole and calls
+i915_request_put() on it when the request is complete, but clears
+the pointer in a separate, non-atomic step. Concurrently, a request
+retirement on another CPU can drop the engine wakeref to zero, triggering
+__engine_park() -> intel_engine_park_heartbeat(). If the heartbeat
+timer is pending at that point, cancel_delayed_work() returns true and
+intel_engine_park_heartbeat() reads the stale non-NULL systole pointer
+and calls i915_request_put() on it again, causing a refcount underflow:
 
-Fixes: bbd2190ce96d ("Altera TSE: Add main and header file for Altera Ethernet Driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Link: https://patch.msgid.link/20260401211218.279185-1-devnexen@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+```
+<4> [487.221889] Workqueue: i915-unordered engine_retire [i915]
+<4> [487.222640] RIP: 0010:refcount_warn_saturate+0x68/0xb0
+...
+<4> [487.222707] Call Trace:
+<4> [487.222711]  <TASK>
+<4> [487.222716]  intel_engine_park_heartbeat.part.0+0x6f/0x80 [i915]
+<4> [487.223115]  intel_engine_park_heartbeat+0x25/0x40 [i915]
+<4> [487.223566]  __engine_park+0xb9/0x650 [i915]
+<4> [487.223973]  ____intel_wakeref_put_last+0x2e/0xb0 [i915]
+<4> [487.224408]  __intel_wakeref_put_last+0x72/0x90 [i915]
+<4> [487.224797]  intel_context_exit_engine+0x7c/0x80 [i915]
+<4> [487.225238]  intel_context_exit+0xf1/0x1b0 [i915]
+<4> [487.225695]  i915_request_retire.part.0+0x1b9/0x530 [i915]
+<4> [487.226178]  i915_request_retire+0x1c/0x40 [i915]
+<4> [487.226625]  engine_retire+0x122/0x180 [i915]
+<4> [487.227037]  process_one_work+0x239/0x760
+<4> [487.227060]  worker_thread+0x200/0x3f0
+<4> [487.227068]  ? __pfx_worker_thread+0x10/0x10
+<4> [487.227075]  kthread+0x10d/0x150
+<4> [487.227083]  ? __pfx_kthread+0x10/0x10
+<4> [487.227092]  ret_from_fork+0x3d4/0x480
+<4> [487.227099]  ? __pfx_kthread+0x10/0x10
+<4> [487.227107]  ret_from_fork_asm+0x1a/0x30
+<4> [487.227141]  </TASK>
+```
+
+Fix this by replacing the non-atomic pointer read + separate clear with
+xchg() in both racing paths. xchg() is a single indivisible hardware
+instruction that atomically reads the old pointer and writes NULL. This
+guarantees only one of the two concurrent callers obtains the non-NULL
+pointer and performs the put, the other gets NULL and skips it.
+
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15880
+Fixes: 058179e72e09 ("drm/i915/gt: Replace hangcheck by heartbeats")
+Cc: <stable@vger.kernel.org> # v5.5+
+Signed-off-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+Reviewed-by: Krzysztof Karas <krzysztof.karas@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://lore.kernel.org/r/d4c1c14255688dd07cc8044973c4f032a8d1559e.1775038106.git.sebastian.brzezinka@intel.com
+(cherry picked from commit 13238dc0ee4f9ab8dafa2cca7295736191ae2f42)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/altera/altera_tse_main.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c |   26 +++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/altera/altera_tse_main.c
-+++ b/drivers/net/ethernet/altera/altera_tse_main.c
-@@ -591,6 +591,7 @@ static netdev_tx_t tse_start_xmit(struct
- 				  DMA_TO_DEVICE);
- 	if (dma_mapping_error(priv->device, dma_addr)) {
- 		netdev_err(priv->dev, "%s: DMA mapping error\n", __func__);
-+		dev_kfree_skb_any(skb);
- 		ret = NETDEV_TX_OK;
- 		goto out;
+--- a/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_heartbeat.c
+@@ -116,10 +116,12 @@ static void heartbeat(struct work_struct
+ 	/* Just in case everything has gone horribly wrong, give it a kick */
+ 	intel_engine_flush_submission(engine);
+ 
+-	rq = engine->heartbeat.systole;
+-	if (rq && i915_request_completed(rq)) {
+-		i915_request_put(rq);
+-		engine->heartbeat.systole = NULL;
++	rq = xchg(&engine->heartbeat.systole, NULL);
++	if (rq) {
++		if (i915_request_completed(rq))
++			i915_request_put(rq);
++		else
++			engine->heartbeat.systole = rq;
  	}
+ 
+ 	if (!intel_engine_pm_get_if_awake(engine))
+@@ -200,8 +202,11 @@ static void heartbeat(struct work_struct
+ unlock:
+ 	mutex_unlock(&ce->timeline->mutex);
+ out:
+-	if (!engine->i915->params.enable_hangcheck || !next_heartbeat(engine))
+-		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
++	if (!engine->i915->params.enable_hangcheck || !next_heartbeat(engine)) {
++		rq = xchg(&engine->heartbeat.systole, NULL);
++		if (rq)
++			i915_request_put(rq);
++	}
+ 	intel_engine_pm_put(engine);
+ }
+ 
+@@ -215,8 +220,13 @@ void intel_engine_unpark_heartbeat(struc
+ 
+ void intel_engine_park_heartbeat(struct intel_engine_cs *engine)
+ {
+-	if (cancel_delayed_work(&engine->heartbeat.work))
+-		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
++	if (cancel_delayed_work(&engine->heartbeat.work)) {
++		struct i915_request *rq;
++
++		rq = xchg(&engine->heartbeat.systole, NULL);
++		if (rq)
++			i915_request_put(rq);
++	}
+ }
+ 
+ void intel_gt_unpark_heartbeats(struct intel_gt *gt)
 
 
