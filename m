@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2037C30C360;
-	Mon, 13 Apr 2026 16:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D48310784;
+	Mon, 13 Apr 2026 16:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098285; cv=none; b=VtPF3hBS8wfURyDsL45Uv5nrOWN7EX4GsbyyNypseGzEeknfmU/LCDbUG01vyFT7Qkd55eyunvUt6VEvylWcwanSzPKgOT3TljMwom5hYiIx0lzTXe/Fvj1EGlQBfNfGBe1RV+gkXlzIPBUtfukI3S9pZRULgpjvLXc9sEK5wuU=
+	t=1776098287; cv=none; b=fmstV3ncQf1+TP9nMH+gnvYF7ox1LbRLEhCsUtEyaDOHvUdXUdZd/16gUqbuOWObC4FX9yN1EJPbHnxq5E+SwR4F8Ga/QZh9sPzXbejwk+jt5DZrPSPBeZRXCWPo0/PurMrpu91IAYXux9SWo7MB1KyZ5JpfZqCPKFdHy4tJztg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098285; c=relaxed/simple;
-	bh=LzXzT/LOKbq0unDqU6aWVD09lLpWINI8CoD2wlkaN0s=;
+	s=arc-20240116; t=1776098287; c=relaxed/simple;
+	bh=zfv5m68tim9Y4gGCR1b40Dbg4hx1N41lX8lEJs2OVfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SB+vNWLWNML8SYxKTeA8JccqUlLRVecPa5ff2NbwxDnDQTGKejzywxYu2/4RQR3h357ZYP+is6q+Q2xyB0AAZJkrZGRS5lS7KHVOxEKN2AUmp2VKweFV95P4CoZ6MJ/53laF23d9DvEvzFwOcPMmaia8IojbfS48hbNfTI8YyWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuW7ANeD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KT7F399f/7JfRM3GsrDUbYrwelXm7itsgopvcMbC2AIZOM4WV2vtKyQjdzBsziAGcueZ8YFHt1wQjD3Nx+/pSAh93PBGvUbXJZ1Jr/bM/TxJz5oayceIf9kUnm9zyJW0M6753aSCxy8kNAoUjDZIhoMaKQaIsnY3wTXHbWSVHLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRsemX5B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuW7ANeD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA80EC2BCAF;
-	Mon, 13 Apr 2026 16:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRsemX5B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39105C2BCB3;
+	Mon, 13 Apr 2026 16:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098285;
-	bh=LzXzT/LOKbq0unDqU6aWVD09lLpWINI8CoD2wlkaN0s=;
+	s=korg; t=1776098287;
+	bh=zfv5m68tim9Y4gGCR1b40Dbg4hx1N41lX8lEJs2OVfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vuW7ANeDTdqFip2L5gd5z4J1wwYLjZ3K/dU6pDHcH7hsbeIieoJc18usCBhCpsLtO
-	 3a19gMhz4eXBzV5BZGkNgLw7pIBx4wpR5fqr7FiO08PCkk6YNRRv56pnnXQg2uLjgg
-	 Dl9hpFPGvrs4yMMZxGGLcoMQHLvX+CR9p4ISai5o=
+	b=SRsemX5B1IdzVLVbOwK7OHvWr87h9uNvkC2thZVOWf+hIUGDWxklDqn48Sv/W+Dkz
+	 /hf7H9UqH3OKJpEKtGJ0BVQWQRZrlS1/bkeS0Tq4LiVeQI4m3bkRjttd053CruTiwu
+	 C7eyiiU8Wuvn4prWMdFblFuW6w0lVs7ayA8ZOVZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 465/570] iio: gyro: mpu3050: Fix out-of-sequence free_irq()
-Date: Mon, 13 Apr 2026 17:59:56 +0200
-Message-ID: <20260413155847.887065054@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 439/570] hwmon: (pxe1610) Check return value of page-select write in probe
+Date: Mon, 13 Apr 2026 17:59:30 +0200
+Message-ID: <20260413155846.919887579@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,41 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit d14116f6529fa085b1a1b1f224dc9604e4d2a29c upstream.
+[ Upstream commit ccf70c41e562b29d1c05d1bbf53391785e09c6fb ]
 
-The triggered buffer is initialized before the IRQ is requested. The
-removal path currently calls iio_triggered_buffer_cleanup() before
-free_irq(). This violates the expected LIFO.
+pxe1610_probe() writes PMBUS_PAGE to select page 0 but does not check
+the return value. If the write fails, subsequent register reads operate
+on an indeterminate page, leading to silent misconfiguration.
 
-Place free_irq() in the correct location relative to
-iio_triggered_buffer_cleanup().
+Check the return value and propagate the error using dev_err_probe(),
+which also handles -EPROBE_DEFER correctly without log spam.
 
-Fixes: 3904b28efb2c7 ("iio: gyro: Add driver for the MPU-3050 gyroscope")
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 344757bac526 ("hwmon: (pmbus) Add Infineon PXE1610 VR driver")
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260329170925.34581-4-sanman.pradhan@hpe.com
+[groeck: Fix "Fixes" SHA]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/gyro/mpu3050-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/pmbus/pxe1610.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/gyro/mpu3050-core.c
-+++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -1291,9 +1291,9 @@ int mpu3050_common_remove(struct device
- 	pm_runtime_get_sync(dev);
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
--	iio_triggered_buffer_cleanup(indio_dev);
- 	if (mpu3050->irq)
- 		free_irq(mpu3050->irq, mpu3050->trig);
-+	iio_triggered_buffer_cleanup(indio_dev);
- 	mpu3050_power_down(mpu3050);
+diff --git a/drivers/hwmon/pmbus/pxe1610.c b/drivers/hwmon/pmbus/pxe1610.c
+index 52bee5de29883..12d5d7297b5c9 100644
+--- a/drivers/hwmon/pmbus/pxe1610.c
++++ b/drivers/hwmon/pmbus/pxe1610.c
+@@ -104,7 +104,10 @@ static int pxe1610_probe(struct i2c_client *client)
+ 	 * By default this device doesn't boot to page 0, so set page 0
+ 	 * to access all pmbus registers.
+ 	 */
+-	i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
++	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
++	if (ret < 0)
++		return dev_err_probe(&client->dev, ret,
++				     "Failed to set page 0\n");
  
- 	return 0;
+ 	/* Read Manufacturer id */
+ 	ret = i2c_smbus_read_block_data(client, PMBUS_MFR_ID, buf);
+-- 
+2.53.0
+
 
 
