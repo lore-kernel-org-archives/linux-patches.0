@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EFE3168EE;
-	Mon, 13 Apr 2026 16:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A82D3161BF;
+	Mon, 13 Apr 2026 16:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099029; cv=none; b=Kze/CNKV7IWe8bTiG8RT+f8iSAirKEvXq/wCblaJdCOO3UWU1afOdgWLmtnM3tm2g8ukRLzX5jGOaHv7RclKdv97tItad5IAIq+5Tpb+vJsn6MsBYkjWpsGMm22OfGZel/9UVHRkmXRMTMjwRozO+evyNLT2VGb6mtbyg1aXXFY=
+	t=1776099032; cv=none; b=CL+9+Tj/nW9Kv+mceXAMk12W5xw4BRVaM8MXuNtfaUwghW5V1BpA58aJEu5Xqf6vdmgxRLBQMQ87gKkWbsK5PNWuE035sup/4vxA90swNBnQLOL00VkoQil+dnCzwmS2a3azprxWEgecOkt1FCuSoDj4ZOXr5fl+5PrJ8L8r7lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099029; c=relaxed/simple;
-	bh=xg49LSYJXCYjF/vf/hlBeMy+VQmawpW9gAZZm4ZkpiA=;
+	s=arc-20240116; t=1776099032; c=relaxed/simple;
+	bh=juPsD51gu8aLjZx8Kvy/T11tSEtX1k5vncYxnMnX2mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GO2ws1voxS4AuP7SBgw9KO/19vh5LPLvScMyAECGNfyYdjob9CRIOs0MXv3zoJ94DcXo3D1ViCR8xGHhoBYjKTVzA4ru2dNSGqqoXLiLvwdPAfR5J2v+CdVHoLSuoyQlVPZcrcFxg2pRIMEDSY6+AYoz8rNAqsnI1H6VL8LPtYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bno53rIg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rNirZIgTbLBtRPq89kd0WERa2YzS45+pkO7GoUkI8vXPtzqoYxCnn3Kwmh34+64fAh4m5uFWc8Sh/RFKZu3n/HlrYPJLXKBiqaD9FxA7olSuzU3F4AuqhtaKvazDiKG2TfTRE/qKIVHdLAY5+ZL6uXonWfypXb2NHdLOQYboTeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4r8JW1i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bno53rIg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D54DC2BCAF;
-	Mon, 13 Apr 2026 16:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4r8JW1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914B1C2BCAF;
+	Mon, 13 Apr 2026 16:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099029;
-	bh=xg49LSYJXCYjF/vf/hlBeMy+VQmawpW9gAZZm4ZkpiA=;
+	s=korg; t=1776099031;
+	bh=juPsD51gu8aLjZx8Kvy/T11tSEtX1k5vncYxnMnX2mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bno53rIgAN106lSQN+L/y9JbfrE2Tvqp+fph+DaQqe3e+O0lp43XyaSKRWU/iSZot
-	 j2XktNqyahFrf51T1NQNhbHkpgbFVk4iL7oWld23htu0dGeL0HKMzQ/6y28S0ZrBNR
-	 p2dnDYDu2ZCCC2ybsHxoElkeYjPeKRepjoLHhp4Y=
+	b=W4r8JW1iUQV4Tk+8JVk3NpxLYlE7O7VdeY1BKrB+WZwpKQtKMR94hwc4CUsATMOjt
+	 YbPOwLw5holG3bRo22pEgNqxqKOxquftz6yOHanWq9RQBjDTGgPBfco10ygyTzAYmr
+	 82YWpA4ejtHuXSeFNlZir7tK+/I7Ob3e2oHb4C/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Steve French <stfrench@microsoft.com>,
+	stable@kernel.org,
+	Nicholas Carlini <npc@anthropic.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 175/491] smb: client: fix iface port assignment in parse_server_interfaces
-Date: Mon, 13 Apr 2026 17:57:00 +0200
-Message-ID: <20260413155825.603333384@linuxfoundation.org>
+Subject: [PATCH 5.10 184/491] nfsd: fix heap overflow in NFSv4.0 LOCK replay cache
+Date: Mon, 13 Apr 2026 17:57:09 +0200
+Message-ID: <20260413155825.951641665@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,94 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit d4c7210d2f3ea481a6481f03040a64d9077a6172 ]
+[ Upstream commit 5133b61aaf437e5f25b1b396b14242a6bb0508e2 ]
 
-parse_server_interfaces() initializes interface socket addresses with
-CIFS_PORT. When the mount uses a non-default port this overwrites the
-configured destination port.
+The NFSv4.0 replay cache uses a fixed 112-byte inline buffer
+(rp_ibuf[NFSD4_REPLAY_ISIZE]) to store encoded operation responses.
+This size was calculated based on OPEN responses and does not account
+for LOCK denied responses, which include the conflicting lock owner as
+a variable-length field up to 1024 bytes (NFS4_OPAQUE_LIMIT).
 
-Later, cifs_chan_update_iface() copies this sockaddr into server->dstaddr,
-causing reconnect attempts to use the wrong port after server interface
-updates.
+When a LOCK operation is denied due to a conflict with an existing lock
+that has a large owner, nfsd4_encode_operation() copies the full encoded
+response into the undersized replay buffer via read_bytes_from_xdr_buf()
+with no bounds check. This results in a slab-out-of-bounds write of up
+to 944 bytes past the end of the buffer, corrupting adjacent heap memory.
 
-Use the existing port from server->dstaddr instead.
+This can be triggered remotely by an unauthenticated attacker with two
+cooperating NFSv4.0 clients: one sets a lock with a large owner string,
+then the other requests a conflicting lock to provoke the denial.
 
-Cc: stable@vger.kernel.org
-Fixes: fe856be475f7 ("CIFS: parse and store info on iface queries")
-Tested-by: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
-Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ adapted struct types, function signature, lock name, and file path ]
+We could fix this by increasing NFSD4_REPLAY_ISIZE to allow for a full
+opaque, but that would increase the size of every stateowner, when most
+lockowners are not that large.
+
+Instead, fix this by checking the encoded response length against
+NFSD4_REPLAY_ISIZE before copying into the replay buffer. If the
+response is too large, set rp_buflen to 0 to skip caching the replay
+payload. The status is still cached, and the client already received the
+correct response on the original request.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Tested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ replaced `op_status_offset + XDR_UNIT` with existing `post_err_offset` variable ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4xdr.c |    9 +++++++--
+ fs/nfsd/state.h   |   17 ++++++++++++-----
+ 2 files changed, 19 insertions(+), 7 deletions(-)
 
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -437,7 +437,7 @@ smb3_negotiate_rsize(struct cifs_tcon *t
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -5438,9 +5438,14 @@ nfsd4_encode_operation(struct nfsd4_comp
+ 		int len = xdr->buf->len - post_err_offset;
  
- static int
- parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
--			size_t buf_len,
-+			size_t buf_len, struct cifs_ses *ses,
- 			struct cifs_server_iface **iface_list,
- 			size_t *iface_count)
- {
-@@ -447,6 +447,7 @@ parse_server_interfaces(struct network_i
- 	struct iface_info_ipv4 *p4;
- 	struct iface_info_ipv6 *p6;
- 	struct cifs_server_iface *info;
-+	__be16 port;
- 	ssize_t bytes_left;
- 	size_t next = 0;
- 	int nb_iface = 0;
-@@ -493,6 +494,15 @@ parse_server_interfaces(struct network_i
- 		goto out;
+ 		so->so_replay.rp_status = op->status;
+-		so->so_replay.rp_buflen = len;
+-		read_bytes_from_xdr_buf(xdr->buf, post_err_offset,
++		if (len <= NFSD4_REPLAY_ISIZE) {
++			so->so_replay.rp_buflen = len;
++			read_bytes_from_xdr_buf(xdr->buf,
++						post_err_offset,
+ 						so->so_replay.rp_buf, len);
++		} else {
++			so->so_replay.rp_buflen = 0;
++		}
  	}
+ status:
+ 	*p = op->status;
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -430,11 +430,18 @@ struct nfs4_client_reclaim {
+ 	struct xdr_netobj	cr_princhash;
+ };
  
-+	spin_lock(&cifs_tcp_ses_lock);
-+	if (ses->server->dstaddr.ss_family == AF_INET)
-+		port = ((struct sockaddr_in *)&ses->server->dstaddr)->sin_port;
-+	else if (ses->server->dstaddr.ss_family == AF_INET6)
-+		port = ((struct sockaddr_in6 *)&ses->server->dstaddr)->sin6_port;
-+	else
-+		port = cpu_to_be16(CIFS_PORT);
-+	spin_unlock(&cifs_tcp_ses_lock);
-+
- 	info = *iface_list;
- 	bytes_left = buf_len;
- 	p = buf;
-@@ -519,7 +529,7 @@ parse_server_interfaces(struct network_i
- 			memcpy(&addr4->sin_addr, &p4->IPv4Address, 4);
+-/* A reasonable value for REPLAY_ISIZE was estimated as follows:  
+- * The OPEN response, typically the largest, requires 
+- *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +  8(verifier) + 
+- *   4(deleg. type) + 8(deleg. stateid) + 4(deleg. recall flag) + 
+- *   20(deleg. space limit) + ~32(deleg. ace) = 112 bytes 
++/*
++ * REPLAY_ISIZE is sized for an OPEN response with delegation:
++ *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +
++ *   8(verifier) + 4(deleg. type) + 8(deleg. stateid) +
++ *   4(deleg. recall flag) + 20(deleg. space limit) +
++ *   ~32(deleg. ace) = 112 bytes
++ *
++ * Some responses can exceed this. A LOCK denial includes the conflicting
++ * lock owner, which can be up to 1024 bytes (NFS4_OPAQUE_LIMIT). Responses
++ * larger than REPLAY_ISIZE are not cached in rp_ibuf; only rp_status is
++ * saved. Enlarging this constant increases the size of every
++ * nfs4_stateowner.
+  */
  
- 			/* [MS-SMB2] 2.2.32.5.1.1 Clients MUST ignore these */
--			addr4->sin_port = cpu_to_be16(CIFS_PORT);
-+			addr4->sin_port = port;
- 
- 			cifs_dbg(FYI, "%s: ipv4 %pI4\n", __func__,
- 				 &addr4->sin_addr);
-@@ -533,7 +543,7 @@ parse_server_interfaces(struct network_i
- 			/* [MS-SMB2] 2.2.32.5.1.2 Clients MUST ignore these */
- 			addr6->sin6_flowinfo = 0;
- 			addr6->sin6_scope_id = 0;
--			addr6->sin6_port = cpu_to_be16(CIFS_PORT);
-+			addr6->sin6_port = port;
- 
- 			cifs_dbg(FYI, "%s: ipv6 %pI6\n", __func__,
- 				 &addr6->sin6_addr);
-@@ -600,7 +610,7 @@ SMB3_request_interfaces(const unsigned i
- 		goto out;
- 	}
- 
--	rc = parse_server_interfaces(out_buf, ret_data_len,
-+	rc = parse_server_interfaces(out_buf, ret_data_len, ses,
- 				     &iface_list, &iface_count);
- 	if (rc)
- 		goto out;
+ #define NFSD4_REPLAY_ISIZE       112 
 
 
