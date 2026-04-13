@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4778024E4AF;
-	Mon, 13 Apr 2026 16:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1831B24E4AF;
+	Mon, 13 Apr 2026 16:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096728; cv=none; b=m++bIget4HMITFVAirKkucXB8Ur2Aaqb/1oKTGlPcb+wJWqX0nKt7uD2IUE6q1UC5W3TsM4S9hHq8019YGmLDffJAagVLvwhZGGzKyRMuZQiiSRDMyaH/P/dOxstQgCb+FKP4yjy/sd0mH7El780gTjyY4YCUExNoIFf7J//Uig=
+	t=1776096731; cv=none; b=RS7ToyqnSnU27qXqkA0UuKtgeN+eOMB7/EhUBFJCASEtzGdG8k5+kY409aIc1t2i5cvLJtPOHQTFUdLJwzz89hmN60fsfWN7W290ZiukL4S2AZLMHyKCiAitvAOo8VquL/Fg1g7hiYnMLYv6AGnigvlggY+opPPUQK53QFzsv5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096728; c=relaxed/simple;
-	bh=Wkt39H278s1q/7UTX1FyW4bYlYegBjQKEQG8GnsYCOU=;
+	s=arc-20240116; t=1776096731; c=relaxed/simple;
+	bh=A6L2uBe7DcWg/NziCIN7B7R7afWvSL4cwYtLwnhLqMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PKfiswzz28DguH7EKcTcVeiER4Q2mDPVGjk8REXrpVhfHHEYLFsxZWyvGV8YfSO32rf+ZRl44I8bPV2lWsa+Bookk33zXe93TGAOga3asVNeTAAFS4ZCHGJJVoRwq85tXgvfrc/BFERwWqY1H92u4w09M296HHgRuGVNMj4fUo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTVu4KTc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m6w4qP3rBq+h77w4+hZnClowuuOtCQbroErB2wdx3pHCPNd8sitwnOFbLlYqzQOt7chsZJNPzvbq6q9i5E/r76Cz4pQNGVEeRoz7+2+b8ZPlFD3JZi1qcpCDbgBusYjgKKSktWh9h0CeDE9g8ciY+9npAb7oUhM7ns4d3om6I2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6pY9Aqh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTVu4KTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1717C2BCAF;
-	Mon, 13 Apr 2026 16:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6pY9Aqh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65126C2BCAF;
+	Mon, 13 Apr 2026 16:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096728;
-	bh=Wkt39H278s1q/7UTX1FyW4bYlYegBjQKEQG8GnsYCOU=;
+	s=korg; t=1776096730;
+	bh=A6L2uBe7DcWg/NziCIN7B7R7afWvSL4cwYtLwnhLqMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTVu4KTc+ZNNrEN9WaMwGLIpkmHrqion/WLFm3mQChk6KXym6a2QB9bfmsnNf2od3
-	 +wa4q+M8Y/d8PlixGzZAYmkY+1rmdh6zRH9vZDXi6f7NojgsMER5H7Fzua/jOwYNGM
-	 wCKl0CsUiOxKVe5C7qU6htksbV4M4LvuZnDm8eYk=
+	b=p6pY9Aqhj2Kz0nG7eE9YWtwQDS9qk9eWYw5K2Y+zD7LEXX8h6Lnv3Do9vKQVI9024
+	 FpTfZoYkVR5h25rUawJ98ij7OQuhqq2h1iWKQQw1tOvS+Qm4ZYuoDka4UKgKd8erIN
+	 ZX8SH7byG6O4Rk3KEg4j9ZTJtN0W5W9gojKXhCi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shawn Guo <shawnguo@kernel.org>,
 	Wei Xu <xuwei5@hisilicon.com>
-Subject: [PATCH 6.12 39/70] arm64: dts: hisilicon: poplar: Correct PCIe reset GPIO polarity
-Date: Mon, 13 Apr 2026 18:00:34 +0200
-Message-ID: <20260413155729.639364686@linuxfoundation.org>
+Subject: [PATCH 6.12 40/70] arm64: dts: hisilicon: hi3798cv200: Add missing dma-ranges
+Date: Mon, 13 Apr 2026 18:00:35 +0200
+Message-ID: <20260413155729.676559359@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -52,34 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Shawn Guo <shawnguo@kernel.org>
 
-commit c1f2b0f2b5e37b2c27540a175aea2755a3799433 upstream.
+commit 1af997cad473d505248df6d9577183bb91f69670 upstream.
 
-The PCIe reset GPIO on Poplar is actually active low.  The active high
-worked before because kernel driver didn't respect the setting from DT.
-This is changed since commit 1d26a55fbeb9 ("PCI: histb: Switch to using
-gpiod API"), and thus PCIe on Poplar got brken since then.
+Reboot starts failing on Poplar since commit 8424ecdde7df ("arm64: mm:
+Set ZONE_DMA size based on devicetree's dma-ranges"), which effectively
+changes zone_dma_bits from 30 to 32 for arm64 platforms that do not
+properly define dma-ranges in device tree.  It's unclear how Poplar reboot
+gets broken by this change exactly, but a dma-ranges limiting zone_dma to
+the first 1 GB fixes the regression.
 
-Fix the problem by correcting the polarity.
-
-Fixes: 32fa01761bd9 ("arm64: dts: hi3798cv200: enable PCIe support for poplar board")
+Fixes: 2f20182ed670 ("arm64: dts: hisilicon: add dts files for hi3798cv200-poplar board")
 Cc: stable@vger.kernel.org
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Wei Xu <xuwei5@hisilicon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/hisilicon/hi3798cv200-poplar.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/boot/dts/hisilicon/hi3798cv200-poplar.dts
-+++ b/arch/arm64/boot/dts/hisilicon/hi3798cv200-poplar.dts
-@@ -179,7 +179,7 @@
- };
+--- a/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
++++ b/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
+@@ -122,6 +122,7 @@
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+ 		ranges = <0x0 0x0 0xf0000000 0x10000000>;
++		dma-ranges = <0x0 0x0 0x0 0x40000000>;
  
- &pcie {
--	reset-gpios = <&gpio4 4 GPIO_ACTIVE_HIGH>;
-+	reset-gpios = <&gpio4 4 GPIO_ACTIVE_LOW>;
- 	vpcie-supply = <&reg_pcie>;
- 	status = "okay";
- };
+ 		crg: clock-reset-controller@8a22000 {
+ 			compatible = "hisilicon,hi3798cv200-crg", "syscon", "simple-mfd";
 
 
