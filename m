@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AA71A275;
-	Mon, 13 Apr 2026 16:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01201A275;
+	Mon, 13 Apr 2026 16:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097999; cv=none; b=f2tMbmgXIlLyOPp+m9kp0gjuRNUofDLWURKOsdsNZY+6iBH5GK2pgs7LE0ZNT/v8oHOrReOaECh6U5U+GJh982GjKWTiIMRzD3zv8dwLiX5KWbsVA68R894ovR7EiAz1p+HfAyV84WpU11JmnPXwfJxLzCKG2DLoqSckW+l/e1k=
+	t=1776098002; cv=none; b=Dk2SUPGjvuj2tDT6nWv6NU0bs2HiG4TrrdLoHEpM6SZ5aI0Ygx0T2aiKSBSLI1DPm55HEuNjfMAK2dqXsvGDwQDejADuZevnjQFSenwRUhh7hKyXi3LwhErpY+oeiP6fgudFqr4KPas118V3sTmFT22DG95CqzP4BUNa2YcwEkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097999; c=relaxed/simple;
-	bh=6Cp4EvXGtgeILz/9p+6QqNAxQdrCcna4R6mdzkM7/NQ=;
+	s=arc-20240116; t=1776098002; c=relaxed/simple;
+	bh=sQ3urzEf4szXSgupCeM8qX46TZx3JVtNxJOhOhDJyZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKAue4c1dytW73LM2SrFYnyGTxTk3z1F+pwf9tw8OGpf40c6n4kkZXNvQYz7UhMcL1kybrJi8fXpGTTPloMnxZNSKFkznBgtAS6s94fuD7lJmoIztvewt/g6YtF/f/bSvH0vk7MYqWZbVBHe+7yKHIVgiGKyCnu7Hp0LOnUiPvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZ/CraOU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jl3lB+uRNYJyCFpZ5rOk9OpIK0ftVhsUKd6P3YXBPOrQB9O7xhzL101anAcK+ZQzFRoHN3c7Z8sGc46DGhqwG87pwKY1zog0uuLyb5Y+4HXRqFUeaOVDqpG3j00V7T5oX609g6RGN2zgP7+hFJ9fcC9N0FUvOcFslzfqReMnWNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyPK9jAe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZ/CraOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C5DC2BCAF;
-	Mon, 13 Apr 2026 16:33:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyPK9jAe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8564FC2BCAF;
+	Mon, 13 Apr 2026 16:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097999;
-	bh=6Cp4EvXGtgeILz/9p+6QqNAxQdrCcna4R6mdzkM7/NQ=;
+	s=korg; t=1776098001;
+	bh=sQ3urzEf4szXSgupCeM8qX46TZx3JVtNxJOhOhDJyZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZ/CraOUMw3LSPuPs1WMISefWUu2H7rh1Id0ISgPp7/thKD6CrfsVC3QOywXPHf0+
-	 wt4q3tgywJe19uuqNCa14FNGVAY0QR4yOxesvsnkhPJkNfLMyAWGHnYI9Rc0j8+MRa
-	 Ca3UVeVVpb1Rnpf19Hp3VVNHzoP/p5eKck6gHMi8=
+	b=IyPK9jAe2La3JZeR6hSBEm8zieBnGda2oJUcugwRAswx3k8gPNZe12RX6TpHoBWbX
+	 OMAYqNDD1F4YmRzwYsgzHjRuxAOj5xzhH+sk1qjy8IPc+W+UOzhXkw005WMVjQ6XQg
+	 WC2rNv2FEz6sXS2pxjtbzsTR4v1BG9oefqfcih5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 354/570] x86/efi: efi_unmap_boot_services: fix calculation of ranges_to_free size
-Date: Mon, 13 Apr 2026 17:58:05 +0200
-Message-ID: <20260413155843.746693588@linuxfoundation.org>
+Subject: [PATCH 5.15 355/570] drm/i915/gmbus: fix spurious timeout on 512-byte burst reads
+Date: Mon, 13 Apr 2026 17:58:06 +0200
+Message-ID: <20260413155843.783709594@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,39 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
 
-[ Upstream commit 217c0a5c177a3d4f7c8497950cbf5c36756e8bbb ]
+[ Upstream commit 08441f10f4dc09fdeb64529953ac308abc79dd38 ]
 
-ranges_to_free array should have enough room to store the entire EFI
-memmap plus an extra element for NULL entry.
-The calculation of this array size wrongly adds 1 to the overall size
-instead of adding 1 to the number of elements.
+When reading exactly 512 bytes with burst read enabled, the
+extra_byte_added path breaks out of the inner do-while without
+decrementing len. The outer while(len) then re-enters and gmbus_wait()
+times out since all data has been delivered. Decrement len before the
+break so the outer loop terminates correctly.
 
-Add parentheses to properly size the array.
-
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: a4b0bf6a40f3 ("x86/efi: defer freeing of boot services memory")
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: d5dc0f43f268 ("drm/i915/gmbus: Enable burst read")
+Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patch.msgid.link/20260316231920.135438-2-samasth.norway.ananda@oracle.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 4ab0f09ee73fc853d00466682635f67c531f909c)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/efi/quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_gmbus.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/platform/efi/quirks.c b/arch/x86/platform/efi/quirks.c
-index e3b00f05a2532..b0d0376940ba8 100644
---- a/arch/x86/platform/efi/quirks.c
-+++ b/arch/x86/platform/efi/quirks.c
-@@ -416,7 +416,7 @@ void __init efi_unmap_boot_services(void)
- 	if (efi_enabled(EFI_DBG))
- 		return;
+diff --git a/drivers/gpu/drm/i915/display/intel_gmbus.c b/drivers/gpu/drm/i915/display/intel_gmbus.c
+index ceb1bf8a8c3c2..01b046578cd15 100644
+--- a/drivers/gpu/drm/i915/display/intel_gmbus.c
++++ b/drivers/gpu/drm/i915/display/intel_gmbus.c
+@@ -432,8 +432,10 @@ gmbus_xfer_read_chunk(struct drm_i915_private *dev_priv,
  
--	sz = sizeof(*ranges_to_free) * efi.memmap.nr_map + 1;
-+	sz = sizeof(*ranges_to_free) * (efi.memmap.nr_map + 1);
- 	ranges_to_free = kzalloc(sz, GFP_KERNEL);
- 	if (!ranges_to_free) {
- 		pr_err("Failed to allocate storage for freeable EFI regions\n");
+ 		val = intel_de_read_fw(dev_priv, GMBUS3);
+ 		do {
+-			if (extra_byte_added && len == 1)
++			if (extra_byte_added && len == 1) {
++				len--;
+ 				break;
++			}
+ 
+ 			*buf++ = val & 0xff;
+ 			val >>= 8;
 -- 
 2.53.0
 
