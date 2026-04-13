@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77523161AB;
-	Mon, 13 Apr 2026 17:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893DD3016EE;
+	Mon, 13 Apr 2026 17:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099809; cv=none; b=dAf+ENJzW6QJ2pP6chwDoh9OgBA9PZc41tFYRfzFHO0eMpjlfF2fmbgrC6pJcmAH+YctmNhhs8z65IBgqNTNJdqgjKbUEA+1iAd38KITp6htFGY0aR+A5zkKa+YGjf/BbC//BGP8bu4bAS04yLhEyRna74QlryUq+/HCdZUga0Y=
+	t=1776099811; cv=none; b=UzVoezYWjxyT0cpgKGKUUqGjtn7aKsQsZva/Rk274VLNlPcyhHQh5zk1Z81w6VELJa5Y3xd0P804K2pguiZ5qFtPtre/LWgvLpd7yFAgbCZR/10/ZdzW1ktep2HsHuQzWhl85WEq9CsllqtzokLmfdeBKe+YnWKZi1+Wv0Po0Z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099809; c=relaxed/simple;
-	bh=OZldNB+5GPuMv0qPawko7KRhCW1Kpgfm7CPl/jXjWsY=;
+	s=arc-20240116; t=1776099811; c=relaxed/simple;
+	bh=TuLnoJRk9khNWy0MQi0/zB/tfK9CjaPVafKzRODo+Aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ef3wSxffpwBhXP1yvG/ij/FV/OlixGBt4EwVhyirwqpH+R86BUF2gQ3yw4jt9SJfoVdtKVhREQSX44GKXOa+IKpodV2ZvIodKWwABg89pGDn7OAb3h0k8evqr4Xu5F7b6tWijsEha+NjmLnaOOgjkl3AAuR4B3AhiSaCnmC7eY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yv+blHOz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oDMbWWhkA35V+1444elVBOaZ8r2qLQvLDnHXuCvdspWkFI15Jz4PLirqpA4HSfQfZWlntBzMO443ke2AGbAIg27P+pSsEmGe3Yh4MJ6Zni8L6NwMbLzNGSOHTJZ0e1TC/tTwa9ppeNRp16Pay03MC0i1oTsdZoyLVJJVp3HE9Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y64C7Ers; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yv+blHOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2FAC2BCAF;
-	Mon, 13 Apr 2026 17:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y64C7Ers"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D98C2BCAF;
+	Mon, 13 Apr 2026 17:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099808;
-	bh=OZldNB+5GPuMv0qPawko7KRhCW1Kpgfm7CPl/jXjWsY=;
+	s=korg; t=1776099811;
+	bh=TuLnoJRk9khNWy0MQi0/zB/tfK9CjaPVafKzRODo+Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yv+blHOzzT7RfuYe9n3W8xKZ9mKBlD/Y5YWqN2LsGEemifBqUmGaLnRwdKO9vTLek
-	 sVjPgRBeZBy7ftziMpGNMXJOL99e1YhRZCFgbN6XlhwZ35MOH+vdZMmuj/ZY5MYG17
-	 3dfANADIFAKt1rvCWqcxK2JShAEqW9bSV+nO5rwY=
+	b=Y64C7ErsoRBqT30WfpViFWnsHQHX6AfBSIncSI5GgwvG52Grh/VlhWfZXPTkxgm50
+	 JPoeHQwbOwfoEWmfXUTmFeNKNTrTB4UfTVoTkvAT5hPX/WQzV+DqZezc9j9ZS8UWkH
+	 8lTxN0XlNPnjFXmcB/9vguYhWxWSw9MagMcVewmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 482/491] device property: Unify access to of_node
-Date: Mon, 13 Apr 2026 18:02:07 +0200
-Message-ID: <20260413155837.097914187@linuxfoundation.org>
+	syzbot+3f497b07aa3baf2fb4d0@syzkaller.appspotmail.com,
+	xingwei lee <xrivendell7@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 456/491] netlink: add nla be16/32 types to minlen array
+Date: Mon, 13 Apr 2026 18:01:41 +0200
+Message-ID: <20260413155836.107008522@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,108 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit fb38f314fbd173e2e9f9f0f2e720a5f4889562da ]
+commit 9a0d18853c280f6a0ee99f91619f2442a17a323a upstream.
 
-Historically we have a few variants how we access dev->fwnode
-and dev->of_node. Some of the functions during development
-gained different versions of the getters. Unify access to of_node
-and as a side change slightly refactor ACPI specific branches.
+BUG: KMSAN: uninit-value in nla_validate_range_unsigned lib/nlattr.c:222 [inline]
+BUG: KMSAN: uninit-value in nla_validate_int_range lib/nlattr.c:336 [inline]
+BUG: KMSAN: uninit-value in validate_nla lib/nlattr.c:575 [inline]
+BUG: KMSAN: uninit-value in __nla_validate_parse+0x2e20/0x45c0 lib/nlattr.c:631
+ nla_validate_range_unsigned lib/nlattr.c:222 [inline]
+ nla_validate_int_range lib/nlattr.c:336 [inline]
+ validate_nla lib/nlattr.c:575 [inline]
+...
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 2692c614f8f0 ("device property: Allow secondary lookup in fwnode_get_next_child_node()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The message in question matches this policy:
+
+ [NFTA_TARGET_REV]       = NLA_POLICY_MAX(NLA_BE32, 255),
+
+but because NLA_BE32 size in minlen array is 0, the validation
+code will read past the malformed (too small) attribute.
+
+Note: Other attributes, e.g. BITFIELD32, SINT, UINT.. are also missing:
+those likely should be added too.
+
+Reported-by: syzbot+3f497b07aa3baf2fb4d0@syzkaller.appspotmail.com
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Closes: https://lore.kernel.org/all/CABOYnLzFYHSnvTyS6zGa-udNX55+izqkOt2sB9WDqUcEGW6n8w@mail.gmail.com/raw
+Fixes: ecaf75ffd5f5 ("netlink: introduce bigendian integer types")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Link: https://lore.kernel.org/r/20240221172740.5092-1-fw@strlen.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/property.c  |   29 +++++++++++++----------------
- include/linux/property.h |    2 +-
- 2 files changed, 14 insertions(+), 17 deletions(-)
+ lib/nlattr.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -759,13 +759,8 @@ EXPORT_SYMBOL_GPL(fwnode_get_next_availa
- struct fwnode_handle *device_get_next_child_node(struct device *dev,
- 						 struct fwnode_handle *child)
- {
--	struct acpi_device *adev = ACPI_COMPANION(dev);
--	struct fwnode_handle *fwnode = NULL, *next;
--
--	if (dev->of_node)
--		fwnode = of_fwnode_handle(dev->of_node);
--	else if (adev)
--		fwnode = acpi_fwnode_handle(adev);
-+	const struct fwnode_handle *fwnode = dev_fwnode(dev);
-+	struct fwnode_handle *next;
+--- a/lib/nlattr.c
++++ b/lib/nlattr.c
+@@ -30,6 +30,8 @@ static const u8 nla_attr_len[NLA_TYPE_MA
+ 	[NLA_S16]	= sizeof(s16),
+ 	[NLA_S32]	= sizeof(s32),
+ 	[NLA_S64]	= sizeof(s64),
++	[NLA_BE16]	= sizeof(__be16),
++	[NLA_BE32]	= sizeof(__be32),
+ };
  
- 	/* Try to find a child in primary fwnode */
- 	next = fwnode_get_next_child_node(fwnode, child);
-@@ -868,28 +863,31 @@ EXPORT_SYMBOL_GPL(device_get_child_node_
+ static const u8 nla_attr_minlen[NLA_TYPE_MAX+1] = {
+@@ -43,6 +45,8 @@ static const u8 nla_attr_minlen[NLA_TYPE
+ 	[NLA_S16]	= sizeof(s16),
+ 	[NLA_S32]	= sizeof(s32),
+ 	[NLA_S64]	= sizeof(s64),
++	[NLA_BE16]	= sizeof(__be16),
++	[NLA_BE32]	= sizeof(__be32),
+ };
  
- bool device_dma_supported(struct device *dev)
- {
-+	const struct fwnode_handle *fwnode = dev_fwnode(dev);
-+
- 	/* For DT, this is always supported.
- 	 * For ACPI, this depends on CCA, which
- 	 * is determined by the acpi_dma_supported().
- 	 */
--	if (IS_ENABLED(CONFIG_OF) && dev->of_node)
-+	if (is_of_node(fwnode))
- 		return true;
- 
--	return acpi_dma_supported(ACPI_COMPANION(dev));
-+	return acpi_dma_supported(to_acpi_device_node(fwnode));
- }
- EXPORT_SYMBOL_GPL(device_dma_supported);
- 
- enum dev_dma_attr device_get_dma_attr(struct device *dev)
- {
-+	const struct fwnode_handle *fwnode = dev_fwnode(dev);
- 	enum dev_dma_attr attr = DEV_DMA_NOT_SUPPORTED;
- 
--	if (IS_ENABLED(CONFIG_OF) && dev->of_node) {
--		if (of_dma_is_coherent(dev->of_node))
-+	if (is_of_node(fwnode)) {
-+		if (of_dma_is_coherent(to_of_node(fwnode)))
- 			attr = DEV_DMA_COHERENT;
- 		else
- 			attr = DEV_DMA_NON_COHERENT;
- 	} else
--		attr = acpi_get_dma_attr(ACPI_COMPANION(dev));
-+		attr = acpi_get_dma_attr(to_acpi_device_node(fwnode));
- 
- 	return attr;
- }
-@@ -1007,14 +1005,13 @@ EXPORT_SYMBOL(device_get_mac_address);
-  * Returns Linux IRQ number on success. Other values are determined
-  * accordingly to acpi_/of_ irq_get() operation.
-  */
--int fwnode_irq_get(struct fwnode_handle *fwnode, unsigned int index)
-+int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index)
- {
--	struct device_node *of_node = to_of_node(fwnode);
- 	struct resource res;
- 	int ret;
- 
--	if (IS_ENABLED(CONFIG_OF) && of_node)
--		return of_irq_get(of_node, index);
-+	if (is_of_node(fwnode))
-+		return of_irq_get(to_of_node(fwnode), index);
- 
- 	ret = acpi_irq_get(ACPI_HANDLE_FWNODE(fwnode), index, &res);
- 	if (ret)
---- a/include/linux/property.h
-+++ b/include/linux/property.h
-@@ -119,7 +119,7 @@ struct fwnode_handle *device_get_named_c
- struct fwnode_handle *fwnode_handle_get(struct fwnode_handle *fwnode);
- void fwnode_handle_put(struct fwnode_handle *fwnode);
- 
--int fwnode_irq_get(struct fwnode_handle *fwnode, unsigned int index);
-+int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index);
- 
- unsigned int device_get_child_node_count(struct device *dev);
- 
+ /*
 
 
