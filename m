@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4683A2D3225;
-	Mon, 13 Apr 2026 16:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A3E2DA757;
+	Mon, 13 Apr 2026 16:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096483; cv=none; b=QBseas0sFUTPTNXrwJubLB8vpBM6qDeqH84NZEMEYgSxCc1Ix6O8Da/eFab2ELgYdgRlm9VYrbec4Fa5ZzOjtgU72PVa8t6vj+I8lSbz81DqOQHgBEy9x5bALJ1WAaHtG6mJajdy0RooaKxORYET8gvgJNDlr6R8iLU0VTN4E70=
+	t=1776096486; cv=none; b=cg72Iod5ElPBVunhg/pJaIAUy5Rs3SmIchGSd8rV6oU8tcHl4NjLDdnJHIdG2rMXMJLYlQRO3kMhTMce77/hvRF5CxUW3k/tq4MysNrrYR+4Q6+C3U4vO3vZ2q/LUQRvugX7YelRAsLZtEXuw0UqgiOLUusHFqhoGrTyFhv32l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096483; c=relaxed/simple;
-	bh=JLFA/QnYpVQ3ahjbh2WcYu4wcC7jMh+ibA7tgTco214=;
+	s=arc-20240116; t=1776096486; c=relaxed/simple;
+	bh=8QH9zOQpIkEnnZiMNRiY0A5SAPnVwy2dLPhOaoq7cLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gEmYNGDPuMaM+teXg0AiqFeBYNMfFSYPE7mhnlQobrXtQ9qfmTLNk1lEfFsFT3ccd/A0cAUOcT9NHYmT8c/HJxjR/6/v6StbZJEt+wjCzPjJl4ohrcUULha4Vyjr3v8SWzR57TshnbmcIU2cAEbM37lf7YwRKZP5RkwHH5dU+GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bm06LCq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BbdqILjefYmwZbiuP4hAiJhj8HT0muNFrwZLoVehWBqerOjRHVzjUiEDv9vM2gZB2r8IouyBy52YyoUk3sNvFrsGwyufkSgqOFmZexsw5tjp0db1/V4NjbLddWxxQy1g4FeUDCU6/FWNv+3Eg2rPc/cC//STox3ylnIsdxmI7Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUuEwIc5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bm06LCq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5444C2BCB4;
-	Mon, 13 Apr 2026 16:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUuEwIc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47958C2BCAF;
+	Mon, 13 Apr 2026 16:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096483;
-	bh=JLFA/QnYpVQ3ahjbh2WcYu4wcC7jMh+ibA7tgTco214=;
+	s=korg; t=1776096485;
+	bh=8QH9zOQpIkEnnZiMNRiY0A5SAPnVwy2dLPhOaoq7cLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bm06LCq0d/rCXZyh3/w5Njo+MCoAIMZCbYENp6JHTmTwUqdiyXEZl18opa7QYtDAS
-	 3Lrhkk9AHf/8ngWsFGo3jvFS0m3F30jWPVw14R6mlaBZyjavuhpiBqoJqQevp7Cv9j
-	 oBimxx2NReJjefbVBZvfcXNxw09b5sn31VXJlK58=
+	b=DUuEwIc5W5dIE6M8EvXx95ufTf3bmUpVtWtziMjXRr4N7PiCkvwMcDJayKhyWIe+e
+	 RqK0ZPp7XNr15M+Cg7v5sP23gcIvoFrTYTWyVhM+5Dh74yedS3wnOdd4QbHfj1BMFf
+	 4dBtwbVDjq8hzjaUNQC6XMgT9zYKZxzfww68u6gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 28/83] platform/x86: ISST: Reset core count to 0
-Date: Mon, 13 Apr 2026 17:59:56 +0200
-Message-ID: <20260413155732.070209685@linuxfoundation.org>
+Subject: [PATCH 6.18 29/83] platform/x86/intel-uncore-freq: Handle autonomous UFS status bit
+Date: Mon, 13 Apr 2026 17:59:57 +0200
+Message-ID: <20260413155732.105911789@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -53,36 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit e1415b9418eb22b4a7a1ef4b4aec9dd0a49e3fa7 upstream.
+commit 4ab604b3f3aa8dcccc7505f5d310016682a99d5f upstream.
 
-Based on feature revision, number of buckets can be less than the
-TRL_MAX_BUCKETS. In that case core counts in the remaining buckets
-can be set to some invalid values.
+When the AUTONOMOUS_UFS_DISABLED bit is set in the header, the ELC
+(Efficiency Latency Control) feature is non-functional. Hence, return
+error for read or write to ELC attributes.
 
-Hence reset core count to 0 for all buckets before assigning correct
-values.
-
-Fixes: 885d1c2a30b7 ("platform/x86: ISST: Support SST-TF revision 2")
+Fixes: bb516dc79c4a ("platform/x86/intel-uncore-freq: Add support for efficiency latency control")
 Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260325192638.3417281-1-srinivas.pandruvada@linux.intel.com
+Link: https://patch.msgid.link/20260325192909.3417322-1-srinivas.pandruvada@linux.intel.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-+++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-@@ -1460,6 +1460,8 @@ static int isst_if_get_turbo_freq_info(v
- 					    SST_MUL_FACTOR_FREQ)
- 	}
+--- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
++++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
+@@ -537,6 +537,7 @@ static void set_cdie_id(int domain_id, s
+ #define UNCORE_VERSION_MASK			GENMASK_ULL(7, 0)
+ #define UNCORE_LOCAL_FABRIC_CLUSTER_ID_MASK	GENMASK_ULL(15, 8)
+ #define UNCORE_CLUSTER_OFF_MASK			GENMASK_ULL(7, 0)
++#define UNCORE_AUTONOMOUS_UFS_DISABLED		BIT(32)
+ #define UNCORE_MAX_CLUSTER_PER_DOMAIN		8
  
-+	memset(turbo_freq.bucket_core_counts, 0, sizeof(turbo_freq.bucket_core_counts));
+ static int uncore_probe(struct auxiliary_device *auxdev, const struct auxiliary_device_id *id)
+@@ -598,6 +599,7 @@ static int uncore_probe(struct auxiliary
+ 
+ 	for (i = 0; i < num_resources; ++i) {
+ 		struct tpmi_uncore_power_domain_info *pd_info;
++		bool auto_ufs_enabled;
+ 		struct resource *res;
+ 		u64 cluster_offset;
+ 		u8 cluster_mask;
+@@ -647,6 +649,8 @@ static int uncore_probe(struct auxiliary
+ 			continue;
+ 		}
+ 
++		auto_ufs_enabled = !(header & UNCORE_AUTONOMOUS_UFS_DISABLED);
 +
- 	if (feature_rev >= 2) {
- 		bool has_tf_info_8 = false;
+ 		/* Find out number of clusters in this resource */
+ 		pd_info->cluster_count = hweight8(cluster_mask);
  
+@@ -689,7 +693,9 @@ static int uncore_probe(struct auxiliary
+ 
+ 			cluster_info->uncore_root = tpmi_uncore;
+ 
+-			if (TPMI_MINOR_VERSION(pd_info->ufs_header_ver) >= UNCORE_ELC_SUPPORTED_VERSION)
++			if ((TPMI_MINOR_VERSION(pd_info->ufs_header_ver) >=
++			     UNCORE_ELC_SUPPORTED_VERSION) &&
++			    auto_ufs_enabled)
+ 				cluster_info->elc_supported = true;
+ 
+ 			ret = uncore_freq_add_entry(&cluster_info->uncore_data, 0);
 
 
