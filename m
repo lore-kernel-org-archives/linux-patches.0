@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B838271464;
-	Mon, 13 Apr 2026 16:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1090F271464;
+	Mon, 13 Apr 2026 16:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096421; cv=none; b=sq0fK6q3Kj3A4Ufa8rBttnrJOxu2eJ/Q6712g9tRYHumfXpo3KPxDvvdoWOaoaw2PgfivktVo5xmLv1iNri/x1cYUqjrjjeMXdKjlxC0WbiIlaGgL/PDp/K1pZtZHD60XBXOwkXbouNX0fZ6DWm0pWR7tIaEtSO7a595DWBUYIs=
+	t=1776096424; cv=none; b=iXeWrbPh2pr735bOLqVrcMFf9QgphEez6uQAla11DBXo1SzqewyZscOmWJtDigA8eWzAFXPl300gXQtvAZRdIuUVOMnmlfzaaaQm7B5mMZO+0BvIoEDqJ4phi1kcdOzl5Zu4X2s+DwO6LnVZS+TL/N0xqiUaNfSi8+ieaPVYLcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096421; c=relaxed/simple;
-	bh=RWdqWhgFTTBXhfWx9IyTen+UuFX0R6/7m8XYWZH/HCo=;
+	s=arc-20240116; t=1776096424; c=relaxed/simple;
+	bh=pntr6K4PbNhWfzsw1hOLfngkYa/i1hk5RXXvvTQS284=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dVIAin87ib+TP6gS7dw5YUZMLfr1nI93YTQ2HrrD8+PdfUTKKDDnkersA0s4HXCJ3PGGq0keYeQygOZgRw9Kmb8LciUWnDfOPfvDIRPCRBtLXy6uEr6aaeQIFl326r8QBouGbYXZ/dKBM9O+WF2z73ohEr5P0bluYUMjyddc6F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VXwiysT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YaKctthRfTWp2RM1XC3JtvmEIidfqJksW15vVv41jZq9vV/xBXtjNLuWp9hIhvsh+qloI/W+/dfjukCLjtJV+b9ee8ZcNlzU1xgEYOUNuGlASC2Fm6kKGxOewUx/77jPyrP2OCqXNCiwJFFyFSJvZ/nwzi2bs+Lxs7LJEeBL7pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yC33yI1p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VXwiysT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB85C2BCAF;
-	Mon, 13 Apr 2026 16:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yC33yI1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE18C2BCAF;
+	Mon, 13 Apr 2026 16:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096421;
-	bh=RWdqWhgFTTBXhfWx9IyTen+UuFX0R6/7m8XYWZH/HCo=;
+	s=korg; t=1776096423;
+	bh=pntr6K4PbNhWfzsw1hOLfngkYa/i1hk5RXXvvTQS284=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0VXwiysTtbUZBqrW2NKZl3d4qojuLVjFo84yDhFvnTnVyZ31S5fZYTkMRR6VZCtfs
-	 F+Kn6OfYA/97LA2qLxQYGCIBShPDJmugG1RDgcFCQRrcfcsYmtPExWbM0PBoTO15bV
-	 ZiU1CL0CFCYHNsMOmDB78YolGsgHWrfNvCqu6LZk=
+	b=yC33yI1pqeM5+R3n4c09hON9zXjegRRCWD5AY/kt0uYsuEETQCuL4k9koNjpKenBo
+	 R2tlen9JKqnHUWCAWKRnQ0F+CLxQWe7aJS5LqPV9ZeC3taXtfMEJ0fG3cwyn1a5Ty4
+	 CMU9VWccHbrjTPq4U7kdfwKzzOUM0cgVj2rK1oD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Anderson Nascimento <anderson@allelesecurity.com>,
 	David Howells <dhowells@redhat.com>,
-	Simon Horman <horms@kernel.org>,
 	Jeffrey Altman <jaltman@auristor.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 71/86] rxrpc: Fix rack timer warning to report unexpected mode
-Date: Mon, 13 Apr 2026 18:00:18 +0200
-Message-ID: <20260413155734.199029881@linuxfoundation.org>
+Subject: [PATCH 6.19 72/86] rxrpc: Fix key reference count leak from call->key
+Date: Mon, 13 Apr 2026 18:00:19 +0200
+Message-ID: <20260413155734.234656245@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -56,41 +56,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Anderson Nascimento <anderson@allelesecurity.com>
 
-commit 65b3ffe0972ed023acc3981a0f7e1ae5d0208bd3 upstream.
+commit d666540d217e8d420544ebdfbadeedd623562733 upstream.
 
-rxrpc_rack_timer_expired() clears call->rack_timer_mode to OFF before
-the switch. The default case warning therefore always prints OFF and
-doesn't identify the unexpected timer mode.
+When creating a client call in rxrpc_alloc_client_call(), the code obtains
+a reference to the key.  This is never cleaned up and gets leaked when the
+call is destroyed.
 
-Log the saved mode value instead so the warning reports the actual
-unexpected rack timer mode.
+Fix this by freeing call->key in rxrpc_destroy_call().
 
-Fixes: 7c482665931b ("rxrpc: Implement RACK/TLP to deal with transmission stalls [RFC8985]")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Before the patch, it shows the key reference counter elevated:
+
+$ cat /proc/keys | grep afs@54321
+1bffe9cd I--Q--i 8053480 4169w 3b010000  1000  1000 rxrpc     afs@54321: ka
+$
+
+After the patch, the invalidated key is removed when the code exits:
+
+$ cat /proc/keys | grep afs@54321
+$
+
+Fixes: f3441d4125fc ("rxrpc: Copy client call parameters into rxrpc_call earlier")
+Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
+Co-developed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
 Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-8-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-9-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/input_rack.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rxrpc/call_object.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/rxrpc/input_rack.c
-+++ b/net/rxrpc/input_rack.c
-@@ -413,6 +413,6 @@ void rxrpc_rack_timer_expired(struct rxr
- 		break;
- 	//case RXRPC_CALL_RACKTIMER_ZEROWIN:
- 	default:
--		pr_warn("Unexpected rack timer %u", call->rack_timer_mode);
-+		pr_warn("Unexpected rack timer %u", mode);
- 	}
+--- a/net/rxrpc/call_object.c
++++ b/net/rxrpc/call_object.c
+@@ -692,6 +692,7 @@ static void rxrpc_destroy_call(struct wo
+ 	rxrpc_put_bundle(call->bundle, rxrpc_bundle_put_call);
+ 	rxrpc_put_peer(call->peer, rxrpc_peer_put_call);
+ 	rxrpc_put_local(call->local, rxrpc_local_put_call);
++	key_put(call->key);
+ 	call_rcu(&call->rcu, rxrpc_rcu_free_call);
  }
+ 
 
 
