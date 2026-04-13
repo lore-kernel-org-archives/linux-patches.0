@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9301E26CE32;
-	Mon, 13 Apr 2026 16:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E6426CE32;
+	Mon, 13 Apr 2026 16:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097293; cv=none; b=TpaSrB8bmIwR9xR2s01Pxa4//EICqyfUx1dhcq+Ix0c6tUqj1v1vGipvPO/6RjKVGBfdmUCC37iM+4SG64n5AZdm1h+Y0kgGZYy3K4EaZSUOJOOmaQWULmiqs/1qB3Z629RIynRm4l96FDnGD4YOtc1am5S2iSLFTwsHlNmjj74=
+	t=1776097296; cv=none; b=tsUJvyhMT7gaCwy1oWeJQBwbUgpvVokCDrBop0bamExO1fIPVjcEj8VVzhddyDITddbvwq6KuRLDZECbap7FlPGqB41iGgltpFVaE9GSAz/kSHXxXgUbPgBzG+ybmoh+2r7WwObv6oRdkE2xTjL27Y+E7Alc3YV4TeuTAoK3Iu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097293; c=relaxed/simple;
-	bh=TubOCuLEOP3BaYvS5v6m39ZpFpU93hgIABIbB9RMNfk=;
+	s=arc-20240116; t=1776097296; c=relaxed/simple;
+	bh=yHYM6cYqrgvQXDLPHmyPh3Vf3mNKxJYZnrGOjIfQRjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gZaqmqwGS2oVC3hn3h15LypDCLv9iem4BFTyH5NiAJevHkRc3dcDZgQ7ixnkGFj4fMjMHhU6Bn4RA19d7X6KWfQNnGmV039+U8/7sBLgs0cTaSWOcHuQtzvqkJp2CqbAtN5qRjoUzdW3J4jVeQV41Xac1SivL5ibG/8wO5jIB3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZFt8tqL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GxX8JF/HbJGvxjlrVyAF960Y2/2NhoYVW+mzgBQXWxvnxRnwY+ryCjrTUg0xwqzFKn7bqrGPfF5uS5vFUrt4cxSbw+br4wq8+29mGlZzgVzecRJpkAWiOotRKbPQgVMnC+2lSD5ly5JBHbY0hk7yu6aAgJy4L91eGsTXH2X4sSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQv8NM43; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZFt8tqL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29478C2BCAF;
-	Mon, 13 Apr 2026 16:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQv8NM43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA6AC2BCAF;
+	Mon, 13 Apr 2026 16:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097293;
-	bh=TubOCuLEOP3BaYvS5v6m39ZpFpU93hgIABIbB9RMNfk=;
+	s=korg; t=1776097296;
+	bh=yHYM6cYqrgvQXDLPHmyPh3Vf3mNKxJYZnrGOjIfQRjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZFt8tqLWAd3D7RXjZRVwOdMpjQQ2rmnyyYQpMh/0zwEGY0Omjs2Lq9aALiWR40U8
-	 OSke6cBOi6FXB3sliaHwk/P3s+xnQ2dFDXoNZRMw0GS93VBHltbw2zysOziCQZRn/e
-	 xchD//RyavWGDLClrquOZ49IJqT/ljM5tAa5YA08=
+	b=lQv8NM43R4hWEkLBwzx5wHVJpbsFQYv6miz9TMpjviRnrAlfD2OqsuEcWQuKXVheO
+	 oG1V/Tvc6NOygwXzGy0xkkWVn51EuCVePheuUNUpPKvRj+JCWe1Yzs3HXQYophnTao
+	 L+dfnLH2PoOzCtALW5jyaPEh9Lj2KYGn1V2MK7aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olexa Bilaniuk <obilaniu@gmail.com>,
-	Kurt Borja <kuurtb@gmail.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 5.15 053/570] platform/x86: dell-wmi: Add audio/mic mute key codes
-Date: Mon, 13 Apr 2026 17:53:04 +0200
-Message-ID: <20260413155832.428540487@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 080/570] net: sched: avoid qdisc_reset_all_tx_gt() vs dequeue race for lockless qdiscs
+Date: Mon, 13 Apr 2026 17:53:31 +0200
+Message-ID: <20260413155833.438344312@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -46,46 +45,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kurt Borja <kuurtb@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 26a7601471f62b95d56a81c3a8ccb551b5a6630f upstream.
+[ Upstream commit 7f083faf59d14c04e01ec05a7507f036c965acf8 ]
 
-Add audio/mic mute key codes found in Alienware m18 r1 AMD.
+When shrinking the number of real tx queues,
+netif_set_real_num_tx_queues() calls qdisc_reset_all_tx_gt() to flush
+qdiscs for queues which will no longer be used.
 
-Cc: stable@vger.kernel.org
-Tested-by: Olexa Bilaniuk <obilaniu@gmail.com>
-Suggested-by: Olexa Bilaniuk <obilaniu@gmail.com>
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Acked-by: Pali Rohár <pali@kernel.org>
-Link: https://patch.msgid.link/20260207-mute-keys-v2-1-c55e5471c9c1@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+qdisc_reset_all_tx_gt() currently serializes qdisc_reset() with
+qdisc_lock(). However, for lockless qdiscs, the dequeue path is
+serialized by qdisc_run_begin/end() using qdisc->seqlock instead, so
+qdisc_reset() can run concurrently with __qdisc_run() and free skbs
+while they are still being dequeued, leading to UAF.
+
+This can easily be reproduced on e.g. virtio-net by imposing heavy
+traffic while frequently changing the number of queue pairs:
+
+  iperf3 -ub0 -c $peer -t 0 &
+  while :; do
+    ethtool -L eth0 combined 1
+    ethtool -L eth0 combined 2
+  done
+
+With KASAN enabled, this leads to reports like:
+
+  BUG: KASAN: slab-use-after-free in __qdisc_run+0x133f/0x1760
+  ...
+  Call Trace:
+   <TASK>
+   ...
+   __qdisc_run+0x133f/0x1760
+   __dev_queue_xmit+0x248f/0x3550
+   ip_finish_output2+0xa42/0x2110
+   ip_output+0x1a7/0x410
+   ip_send_skb+0x2e6/0x480
+   udp_send_skb+0xb0a/0x1590
+   udp_sendmsg+0x13c9/0x1fc0
+   ...
+   </TASK>
+
+  Allocated by task 1270 on cpu 5 at 44.558414s:
+   ...
+   alloc_skb_with_frags+0x84/0x7c0
+   sock_alloc_send_pskb+0x69a/0x830
+   __ip_append_data+0x1b86/0x48c0
+   ip_make_skb+0x1e8/0x2b0
+   udp_sendmsg+0x13a6/0x1fc0
+   ...
+
+  Freed by task 1306 on cpu 3 at 44.558445s:
+   ...
+   kmem_cache_free+0x117/0x5e0
+   pfifo_fast_reset+0x14d/0x580
+   qdisc_reset+0x9e/0x5f0
+   netif_set_real_num_tx_queues+0x303/0x840
+   virtnet_set_channels+0x1bf/0x260 [virtio_net]
+   ethnl_set_channels+0x684/0xae0
+   ethnl_default_set_doit+0x31a/0x890
+   ...
+
+Serialize qdisc_reset_all_tx_gt() against the lockless dequeue path by
+taking qdisc->seqlock for TCQ_F_NOLOCK qdiscs, matching the
+serialization model already used by dev_reset_queue().
+
+Additionally clear QDISC_STATE_NON_EMPTY after reset so the qdisc state
+reflects an empty queue, avoiding needless re-scheduling.
+
+Fixes: 6b3ba9146fe6 ("net: sched: allow qdiscs to handle locking")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260228145307.3955532-1-den@valinux.co.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-base.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ include/net/sch_generic.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/platform/x86/dell/dell-wmi-base.c
-+++ b/drivers/platform/x86/dell/dell-wmi-base.c
-@@ -79,6 +79,12 @@ static const struct dmi_system_id dell_w
- static const struct key_entry dell_wmi_keymap_type_0000[] = {
- 	{ KE_IGNORE, 0x003a, { KEY_CAPSLOCK } },
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 55127305478df..dd6203f3f0a5e 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -742,13 +742,23 @@ static inline bool skb_skip_tc_classify(struct sk_buff *skb)
+ static inline void qdisc_reset_all_tx_gt(struct net_device *dev, unsigned int i)
+ {
+ 	struct Qdisc *qdisc;
++	bool nolock;
  
-+	/* Audio mute toggle */
-+	{ KE_KEY,    0x0109, { KEY_MUTE } },
+ 	for (; i < dev->num_tx_queues; i++) {
+ 		qdisc = rtnl_dereference(netdev_get_tx_queue(dev, i)->qdisc);
+ 		if (qdisc) {
++			nolock = qdisc->flags & TCQ_F_NOLOCK;
 +
-+	/* Mic mute toggle */
-+	{ KE_KEY,    0x0150, { KEY_MICMUTE } },
-+
- 	/* Meta key lock */
- 	{ KE_IGNORE, 0xe000, { KEY_RIGHTMETA } },
- 
++			if (nolock)
++				spin_lock_bh(&qdisc->seqlock);
+ 			spin_lock_bh(qdisc_lock(qdisc));
+ 			qdisc_reset(qdisc);
+ 			spin_unlock_bh(qdisc_lock(qdisc));
++			if (nolock) {
++				clear_bit(__QDISC_STATE_MISSED, &qdisc->state);
++				clear_bit(__QDISC_STATE_DRAINING, &qdisc->state);
++				spin_unlock_bh(&qdisc->seqlock);
++			}
+ 		}
+ 	}
+ }
+-- 
+2.51.0
+
 
 
