@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E39724E4AF;
-	Mon, 13 Apr 2026 16:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9369524E4AF;
+	Mon, 13 Apr 2026 16:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096852; cv=none; b=CvwbJyuHuKlqqPIEQvYoDv+lp8+emUnb1sAoy9OBfeTfyDpUMm15A+Fp/vpoaAuCkxN8oS6w0rRjT0RInQgZG7jUohTGpVGj/YB7khGN7g6OJ7mr8xDm+c0saTbcDdxIF/KqR+oNRq92B+Smb0MVLJmRB4ToQa03QIF7jFxtytw=
+	t=1776096854; cv=none; b=Spm1EoLO7B//Vu8SXZn+7Jo77GJH0r9uBbRHaYxAtuRN8SWZo4FoAUaLL661Oegh5jnEmgNTJVX7GVqX99Q7qCl0kZfXiKi3jBZHrC4AMbmcIEGnowgw7gjFWGiGhCCoi/LbNRc29g64ke8pyVd67RKfiinJYfrBOOk5zmSAFf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096852; c=relaxed/simple;
-	bh=o0g42PRDQ9U6gakr5BybxeDX66TzXW9DcIcHKcGqfKs=;
+	s=arc-20240116; t=1776096854; c=relaxed/simple;
+	bh=JzXzjkEado495Cohowa0XtaNZCAb8cwCol92yZCCeEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s9IWUwXgAX5igGKBBd674dL3tHmNgleJaOIt8fFvc+vQDCffoCfRChWmopgiiJkhWptMZz6J0kZik5srhVecjeu4mO1bxvrwZsRlS9x9g309AqetVpDm1+IfczO0ZSygyEdqcfx925hd9yofyhE6q9X8e4yLsDynSoFrmsLTeUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUpe8lWO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ks2qY5KzowHAdognYiqBNoSuhrCHT+Cggf3BrHXDeDlRrZd1NOHjnZxtKx7GMkhhDihfsb0t2ylTzDuy7vgqNlq85RizYd8RaUP4DZqk1jqoDagDjz4i5AuHyjkXj73N3n5kr0t2u+S2awHMI3dXemeH5Svqczxn7PVRJcoTQP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWwcKIjT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUpe8lWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D7CC2BCAF;
-	Mon, 13 Apr 2026 16:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWwcKIjT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AD2C2BCAF;
+	Mon, 13 Apr 2026 16:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096851;
-	bh=o0g42PRDQ9U6gakr5BybxeDX66TzXW9DcIcHKcGqfKs=;
+	s=korg; t=1776096854;
+	bh=JzXzjkEado495Cohowa0XtaNZCAb8cwCol92yZCCeEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUpe8lWOoAIkqChwGyNmd8fJMM8Jij2MHcj9zyhmqncOgeBuA1X6UxoHJzhX/Dos1
-	 6+UuHBuef0awfZAq8d+2Emv49Oq9tdEq8YnOf6N1XD+92+Q/JqYQ/EgS8pBRLxtc6C
-	 cfJ21QqbUCgMrdubuQxqzsUM5uhueq1tXnCo+C+Y=
+	b=ZWwcKIjT9V+5H7NqnhXIqMP24acLZigapXR2r+jiPVbARScUyopMZBXftYtqUEC3+
+	 ahq3t3hXcLMDU1UU+Mk/5DdjahjMM69Qxbty3XF92Sm15yuaYNRyDHK6xNz+x47Myt
+	 QWZok+2m4BkBz2vOcjeNrul1sKvLjp5Gn6DAZt7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 17/50] seg6: separate dst_cache for input and output paths in seg6 lwtunnel
-Date: Mon, 13 Apr 2026 18:00:44 +0200
-Message-ID: <20260413155725.155281661@linuxfoundation.org>
+	Stefano Brivio <sbrivio@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Mukul Sikka <mukul.sikka@broadcom.com>,
+	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>,
+	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Subject: [PATCH 6.6 18/50] netfilter: nft_set_pipapo: do not rely on ZERO_SIZE_PTR
+Date: Mon, 13 Apr 2026 18:00:45 +0200
+Message-ID: <20260413155725.193597037@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
 References: <20260413155724.497323914@linuxfoundation.org>
@@ -53,129 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit c3812651b522fe8437ebb7063b75ddb95b571643 ]
+commit 07ace0bbe03b3d8e85869af1dec5e4087b1d57b8 upstream
 
-The seg6 lwtunnel uses a single dst_cache per encap route, shared
-between seg6_input_core() and seg6_output_core(). These two paths
-can perform the post-encap SID lookup in different routing contexts
-(e.g., ip rules matching on the ingress interface, or VRF table
-separation). Whichever path runs first populates the cache, and the
-other reuses it blindly, bypassing its own lookup.
+pipapo relies on kmalloc(0) returning ZERO_SIZE_PTR (i.e., not NULL
+but pointer is invalid).
 
-Fix this by splitting the cache into cache_input and cache_output,
-so each path maintains its own cached dst independently.
+Rework this to not call slab allocator when we'd request a 0-byte
+allocation.
 
-Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
-Cc: stable@vger.kernel.org
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260404004405.4057-2-andrea.mayer@uniroma2.it
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ added missing dst reference loop guard in seg6_output_core() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Mukul Sikka <mukul.sikka@broadcom.com>
+Signed-off-by: Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
+[Keerthana: In older stable branches (v6.6 and earlier), the allocation logic in
+pipapo_clone() still relies on `src->rules` rather than `src->rules_alloc`
+(introduced in v6.9 via 9f439bd6ef4f). Consequently, the previously
+backported INT_MAX clamping check uses `src->rules`. This patch correctly
+moves that `src->rules > (INT_MAX / ...)` check inside the new
+`if (src->rules > 0)` block]
+Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_iptunnel.c |   41 ++++++++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 13 deletions(-)
+ net/netfilter/nft_set_pipapo.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -48,7 +48,8 @@ static size_t seg6_lwt_headroom(struct s
- }
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -525,6 +525,8 @@ static struct nft_pipapo_elem *pipapo_ge
+ 	int i;
  
- struct seg6_lwt {
--	struct dst_cache cache;
-+	struct dst_cache cache_input;
-+	struct dst_cache cache_output;
- 	struct seg6_iptunnel_encap tuninfo[];
- };
+ 	m = priv->clone;
++	if (m->bsize_max == 0)
++		return ret;
  
-@@ -486,7 +487,7 @@ static int seg6_input_core(struct net *n
- 	slwt = seg6_lwt_lwtunnel(lwtst);
+ 	res_map = kmalloc_array(m->bsize_max, sizeof(*res_map), GFP_ATOMIC);
+ 	if (!res_map) {
+@@ -1394,14 +1396,20 @@ static struct nft_pipapo_match *pipapo_c
+ 		       src->bsize * sizeof(*dst->lt) *
+ 		       src->groups * NFT_PIPAPO_BUCKETS(src->bb));
  
- 	local_bh_disable();
--	dst = dst_cache_get(&slwt->cache);
-+	dst = dst_cache_get(&slwt->cache_input);
- 	local_bh_enable();
+-		if (src->rules > (INT_MAX / sizeof(*src->mt)))
+-			goto out_mt;
++		if (src->rules > 0) {
++			if (src->rules > (INT_MAX / sizeof(*src->mt)))
++				goto out_mt;
++
++			dst->mt = kvmalloc_array(src->rules, sizeof(*src->mt),
++						 GFP_KERNEL);
++			if (!dst->mt)
++				goto out_mt;
  
- 	err = seg6_do_srh(skb, dst);
-@@ -500,7 +501,7 @@ static int seg6_input_core(struct net *n
- 		/* cache only if we don't create a dst reference loop */
- 		if (!dst->error && lwtst != dst->lwtstate) {
- 			local_bh_disable();
--			dst_cache_set_ip6(&slwt->cache, dst,
-+			dst_cache_set_ip6(&slwt->cache_input, dst,
- 					  &ipv6_hdr(skb)->saddr);
- 			local_bh_enable();
- 		}
-@@ -560,7 +561,7 @@ static int seg6_output_core(struct net *
- 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
- 
- 	local_bh_disable();
--	dst = dst_cache_get(&slwt->cache);
-+	dst = dst_cache_get(&slwt->cache_output);
- 	local_bh_enable();
- 
- 	err = seg6_do_srh(skb, dst);
-@@ -585,9 +586,12 @@ static int seg6_output_core(struct net *
- 			goto drop;
- 		}
- 
--		local_bh_disable();
--		dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
--		local_bh_enable();
-+		/* cache only if we don't create a dst reference loop */
-+		if (orig_dst->lwtstate != dst->lwtstate) {
-+			local_bh_disable();
-+			dst_cache_set_ip6(&slwt->cache_output, dst, &fl6.saddr);
-+			local_bh_enable();
+-		dst->mt = kvmalloc(src->rules * sizeof(*src->mt), GFP_KERNEL_ACCOUNT);
+-		if (!dst->mt)
+-			goto out_mt;
++			memcpy(dst->mt, src->mt, src->rules * sizeof(*src->mt));
++		} else {
++			dst->mt = NULL;
 +		}
  
- 		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
- 		if (unlikely(err))
-@@ -694,11 +698,13 @@ static int seg6_build_state(struct net *
- 
- 	slwt = seg6_lwt_lwtunnel(newts);
- 
--	err = dst_cache_init(&slwt->cache, GFP_ATOMIC);
--	if (err) {
--		kfree(newts);
--		return err;
--	}
-+	err = dst_cache_init(&slwt->cache_input, GFP_ATOMIC);
-+	if (err)
-+		goto err_free_newts;
-+
-+	err = dst_cache_init(&slwt->cache_output, GFP_ATOMIC);
-+	if (err)
-+		goto err_destroy_input;
- 
- 	memcpy(&slwt->tuninfo, tuninfo, tuninfo_len);
- 
-@@ -713,11 +719,20 @@ static int seg6_build_state(struct net *
- 	*ts = newts;
- 
- 	return 0;
-+
-+err_destroy_input:
-+	dst_cache_destroy(&slwt->cache_input);
-+err_free_newts:
-+	kfree(newts);
-+	return err;
- }
- 
- static void seg6_destroy_state(struct lwtunnel_state *lwt)
- {
--	dst_cache_destroy(&seg6_lwt_lwtunnel(lwt)->cache);
-+	struct seg6_lwt *slwt = seg6_lwt_lwtunnel(lwt);
-+
-+	dst_cache_destroy(&slwt->cache_input);
-+	dst_cache_destroy(&slwt->cache_output);
- }
- 
- static int seg6_fill_encap_info(struct sk_buff *skb,
+-		memcpy(dst->mt, src->mt, src->rules * sizeof(*src->mt));
+ 		src++;
+ 		dst++;
+ 	}
 
 
