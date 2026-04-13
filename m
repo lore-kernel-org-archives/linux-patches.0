@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234DA3246ED;
-	Mon, 13 Apr 2026 16:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BD83290A1;
+	Mon, 13 Apr 2026 16:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099306; cv=none; b=CFJtDkNKPHsOgj07Z6C+kcETbdiLFapGLGII7dfRGFzuPh5xkQVwiM6e+O2EAhJDogl9M8a6c8Ig0R5JyZRUo8Cr+XP4kIHKX7/zsbcWRosaz/694yEpEL6FbOd1fpNnspT4CmQuUI7HmdLT+BlRPMoEG9f0QjifQ40xFOO7WcA=
+	t=1776099309; cv=none; b=nGZvdJ85SMIZrMmsP6OPSnhm98RWLVKm14qGfPagrn82V/Wgen3dq5SE7SsHG7VNKohE3H0vrICAGhRBymrQsryw3I+5a+jYsHMPNeFktnOfoi3a4Rm04BKaZpUpn/3sxttmQBaCSZD634i4d6IJy3/ubrEyCfpS6UbKgBQ7wAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099306; c=relaxed/simple;
-	bh=xYt0oe+18KmCxxOkgX32qz03by+figpHknCSRMuch6Y=;
+	s=arc-20240116; t=1776099309; c=relaxed/simple;
+	bh=FoSOcDAxmxQHBJh79W1RM3yMWOMvfLvIg0QvsE3vaoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJrGEL0nXOvyiH3Gd25hz+jNecv37GYcbgT3/6CEaU+Y1jZtPZ1rJPC3dEjHklJrzJxY7CZmMiSeWovDj6wrM3syy7OsStsy6mbSctlAACMasaF6enqkDY4uuD2cEXYyyN+HNb6G+Y2Wv71ehCwXcc7tetPbo3g8W5bEsGuAf5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADqkj5lg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TNkJ8SA3KWXGAINMmMHLgLToCXqQm9jH6R+uBLzL2Sft1GbMsMZtmOn9Dr7ejgpVj0Va7W5QcKCq0am2IMPmfjpJY0EoBEFszKe1nYaLZZnst+XrevgbXUeoeYELWH82pwWRRZzMSsuYnAA4Gmd5m2p1iyFbZifjUh7NMSq2GE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nH8Y/qQ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADqkj5lg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB956C2BCB3;
-	Mon, 13 Apr 2026 16:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nH8Y/qQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417EFC2BCAF;
+	Mon, 13 Apr 2026 16:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099306;
-	bh=xYt0oe+18KmCxxOkgX32qz03by+figpHknCSRMuch6Y=;
+	s=korg; t=1776099308;
+	bh=FoSOcDAxmxQHBJh79W1RM3yMWOMvfLvIg0QvsE3vaoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ADqkj5lgHaLc8EBbHkmGy6HVvVVtwnBh+BVsoZZwjxvykYA7eQfwM5UK8j671lH85
-	 T1q87Uke4liNkK4A9lq6yrFpwujFaE2aNu2aAB2gzkooZCchXS8xeoAa0lIE5zkRg/
-	 krvAnfOv6+sq0Uy27OHw97fNtujffJZgE13yN7hs=
+	b=nH8Y/qQ9O0XY1Kx+3BFYiLtZjgBvb4u/Qwyw4CBfKg8ifJ+xOm8rjMJyMRmv4VATn
+	 ZMBcXIo7/t6y8CP4OxsSw2Nf7MkiJqbOQ1FcAGdv/4WqlJdBLotYQ30LCGOK+wwKg2
+	 SXJoY2n9cKKzIdb3PWcvN6aAL7O5cK7cLOP+1D3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	webcaptcha <webcapcha@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 290/491] ACPI: EC: Install address space handler at the namespace root
-Date: Mon, 13 Apr 2026 17:58:55 +0200
-Message-ID: <20260413155829.901289649@linuxfoundation.org>
+Subject: [PATCH 5.10 291/491] ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()
+Date: Mon, 13 Apr 2026 17:58:56 +0200
+Message-ID: <20260413155829.938827721@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -55,130 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 60fa6ae6e6d09e377fce6f8d9b6f6a4d88769f63 ]
+[ Upstream commit f6484cadbcaf26b5844b51bd7307a663dda48ef6 ]
 
-It is reported that _DSM evaluation fails in ucsi_acpi_dsm() on Lenovo
-IdeaPad Pro 5 due to a missing address space handler for the EC address
-space:
+When ec_install_handlers() returns -EPROBE_DEFER on reduced-hardware
+platforms, it has already started the EC and installed the address
+space handler with the struct acpi_ec pointer as handler context.
+However, acpi_ec_setup() propagates the error without any cleanup.
 
- ACPI Error: No handler for Region [ECSI] (000000007b8176ee) [EmbeddedControl] (20230628/evregion-130)
+The caller acpi_ec_add() then frees the struct acpi_ec for non-boot
+instances, leaving a dangling handler context in ACPICA.
 
-This happens because if there is no ECDT, the EC driver only registers
-the EC address space handler for operation regions defined in the EC
-device scope of the ACPI namespace while the operation region being
-accessed by the _DSM in question is located beyond that scope.
+Any subsequent AML evaluation that accesses an EC OpRegion field
+dispatches into acpi_ec_space_handler() with the freed pointer,
+causing a use-after-free:
 
-To address this, modify the ACPI EC driver to install the EC address
-space handler at the root of the ACPI namespace for the first EC that
-can be found regardless of whether or not an ECDT is present.
+ BUG: KASAN: slab-use-after-free in mutex_lock (kernel/locking/mutex.c:289)
+ Write of size 8 at addr ffff88800721de38 by task init/1
+ Call Trace:
+  <TASK>
+  mutex_lock (kernel/locking/mutex.c:289)
+  acpi_ec_space_handler (drivers/acpi/ec.c:1362)
+  acpi_ev_address_space_dispatch (drivers/acpi/acpica/evregion.c:293)
+  acpi_ex_access_region (drivers/acpi/acpica/exfldio.c:246)
+  acpi_ex_field_datum_io (drivers/acpi/acpica/exfldio.c:509)
+  acpi_ex_extract_from_field (drivers/acpi/acpica/exfldio.c:700)
+  acpi_ex_read_data_from_field (drivers/acpi/acpica/exfield.c:327)
+  acpi_ex_resolve_node_to_value (drivers/acpi/acpica/exresolv.c:392)
+  </TASK>
 
-Note that this change is consistent with some examples in the ACPI
-specification in which EC operation regions located outside the EC
-device scope are used (for example, see Section 9.17.15 in ACPI 6.5),
-so the current behavior of the EC driver is arguably questionable.
+ Allocated by task 1:
+  acpi_ec_alloc (drivers/acpi/ec.c:1424)
+  acpi_ec_add (drivers/acpi/ec.c:1692)
 
-Reported-by: webcaptcha <webcapcha@gmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218789
-Link: https://uefi.org/specs/ACPI/6.5/09_ACPI_Defined_Devices_and_Device_Specific_Objects.html#example-asl-code
-Link: https://lore.kernel.org/linux-acpi/Zi+0whTvDbAdveHq@kuha.fi.intel.com
-Suggested-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+ Freed by task 1:
+  kfree (mm/slub.c:6876)
+  acpi_ec_add (drivers/acpi/ec.c:1751)
+
+The bug triggers on reduced-hardware EC platforms (ec->gpe < 0)
+when the GPIO IRQ provider defers probing. Once the stale handler
+exists, any unprivileged sysfs read that causes AML to touch an
+EC OpRegion (battery, thermal, backlight) exercises the dangling
+pointer.
+
+Fix this by calling ec_remove_handlers() in the error path of
+acpi_ec_setup() before clearing first_ec. ec_remove_handlers()
+checks each EC_FLAGS_* bit before acting, so it is safe to call
+regardless of how far ec_install_handlers() progressed:
+
+  -ENODEV  (handler not installed): only calls acpi_ec_stop()
+  -EPROBE_DEFER (handler installed): removes handler, stops EC
+
+Fixes: 03e9a0e05739 ("ACPI: EC: Consolidate event handler installation code")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260324165458.1337233-2-bestswngs@gmail.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Stable-dep-of: f6484cadbcaf ("ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/ec.c       | 25 ++++++++++++++++---------
- drivers/acpi/internal.h |  1 -
- 2 files changed, 16 insertions(+), 10 deletions(-)
+ drivers/acpi/ec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
-index 10f7e3ef58791..1d7e7e47ea0e4 100644
+index 1d7e7e47ea0e4..aaf0add0dc081 100644
 --- a/drivers/acpi/ec.c
 +++ b/drivers/acpi/ec.c
-@@ -1514,13 +1514,14 @@ static bool install_gpio_irq_event_handler(struct acpi_ec *ec)
- static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device,
- 			       bool call_reg)
- {
-+	acpi_handle scope_handle = ec == first_ec ? ACPI_ROOT_OBJECT : ec->handle;
- 	acpi_status status;
+@@ -1636,6 +1636,8 @@ static int acpi_ec_setup(struct acpi_ec *ec, struct acpi_device *device, bool ca
  
- 	acpi_ec_start(ec, false);
- 
- 	if (!test_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags)) {
- 		acpi_ec_enter_noirq(ec);
--		status = acpi_install_address_space_handler_no_reg(ec->handle,
-+		status = acpi_install_address_space_handler_no_reg(scope_handle,
- 								   ACPI_ADR_SPACE_EC,
- 								   &acpi_ec_space_handler,
- 								   NULL, ec);
-@@ -1529,11 +1530,10 @@ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device,
- 			return -ENODEV;
- 		}
- 		set_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags);
--		ec->address_space_handler_holder = ec->handle;
- 	}
- 
- 	if (call_reg && !test_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags)) {
--		acpi_execute_reg_methods(ec->handle, ACPI_ADR_SPACE_EC);
-+		acpi_execute_reg_methods(scope_handle, ACPI_ADR_SPACE_EC);
- 		set_bit(EC_FLAGS_EC_REG_CALLED, &ec->flags);
- 	}
- 
-@@ -1585,10 +1585,13 @@ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device,
- 
- static void ec_remove_handlers(struct acpi_ec *ec)
- {
-+	acpi_handle scope_handle = ec == first_ec ? ACPI_ROOT_OBJECT : ec->handle;
+ 	ret = ec_install_handlers(ec, device, call_reg);
+ 	if (ret) {
++		ec_remove_handlers(ec);
 +
- 	if (test_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags)) {
- 		if (ACPI_FAILURE(acpi_remove_address_space_handler(
--					ec->address_space_handler_holder,
--					ACPI_ADR_SPACE_EC, &acpi_ec_space_handler)))
-+						scope_handle,
-+						ACPI_ADR_SPACE_EC,
-+						&acpi_ec_space_handler)))
- 			pr_err("failed to remove space handler\n");
- 		clear_bit(EC_FLAGS_EC_HANDLER_INSTALLED, &ec->flags);
- 	}
-@@ -1627,14 +1630,18 @@ static int acpi_ec_setup(struct acpi_ec *ec, struct acpi_device *device, bool ca
- {
- 	int ret;
+ 		if (ec == first_ec)
+ 			first_ec = NULL;
  
--	ret = ec_install_handlers(ec, device, call_reg);
--	if (ret)
--		return ret;
--
- 	/* First EC capable of handling transactions */
- 	if (!first_ec)
- 		first_ec = ec;
- 
-+	ret = ec_install_handlers(ec, device, call_reg);
-+	if (ret) {
-+		if (ec == first_ec)
-+			first_ec = NULL;
-+
-+		return ret;
-+	}
-+
- 	pr_info("EC_CMD/EC_SC=0x%lx, EC_DATA=0x%lx\n", ec->command_addr,
- 		ec->data_addr);
- 
-diff --git a/drivers/acpi/internal.h b/drivers/acpi/internal.h
-index 4edf591f8a3a5..f6c929787c9e6 100644
---- a/drivers/acpi/internal.h
-+++ b/drivers/acpi/internal.h
-@@ -169,7 +169,6 @@ static inline void acpi_early_processor_osc(void) {}
-    -------------------------------------------------------------------------- */
- struct acpi_ec {
- 	acpi_handle handle;
--	acpi_handle address_space_handler_holder;
- 	int gpe;
- 	int irq;
- 	unsigned long command_addr;
 -- 
 2.53.0
 
