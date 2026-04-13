@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C61449620;
-	Mon, 13 Apr 2026 16:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D803309F09;
+	Mon, 13 Apr 2026 16:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097684; cv=none; b=TnkJNWmoz9fxXR60OlkFasBtsZlPfmqAG2NkTr/4s6lqmgk09OqIASCh+DMlqrME69RlNgB1kTjOuo3a6qOotRblMvKUPRgLDqfQOp8grdo201EdLyRKbUZKEd8T0DYL4n5OHZ22bctmmyh5GcKvArmKSqVTFWh/YAcZGTx1Ij0=
+	t=1776097687; cv=none; b=corw7w6CRPLcwuB9e8ybEX3vCxvVS8rr6Gsr39sllbaGfwv5Q4fzS2aplSBmXEZSCourGjifQVmV+qjh9lXRGUJwholPBp6qaGgNM/kkvwc+yJFuQf/ipaY/WMsN+wrxA4RGLD6PMo+7MCdNYjCA3e3xcqy5zmWtHpxj4HgccyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097684; c=relaxed/simple;
-	bh=BQFL2QQ7bZzkcoDsfQ15/xX7FUY/iZ3T0GmxiuLQMKY=;
+	s=arc-20240116; t=1776097687; c=relaxed/simple;
+	bh=7M+DyC4uaE3E/yq6DUkbuIrkaumDHBVphZUwmfXuT2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAQh4rglmQg3jZHv9+qKXQWWSEEAXsmu6j8fzwVdf+gHjvN/X8laEH16jM5j9QXxqK11niq40K4+44JpbamCTyr8FRftaqdJyv2HWJq1Gvk2XBtXGmpnYJZm12Dexj058YTD93jclo7/kR8lSx8ok1t5jy3K1U+u531qF+ayvxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpeKL57y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOxlD7rPhGeGiX+ZC6m0mAOvXTP2/jBK+o7w+aZGbSjinZ0DV4ngH5ux7oRtaOH61OfBApsiRGwagUaI94yhyldNvja8I8Wh6MZaOWMw+9aHExkoVeg/nhuIIwDHPQgKjZN1VjwdZQcBlL3a+KAKgd3fVQsum7uTk59SzAvrNCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4BZrt0y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpeKL57y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322D9C2BCAF;
-	Mon, 13 Apr 2026 16:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4BZrt0y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7663C2BCAF;
+	Mon, 13 Apr 2026 16:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097684;
-	bh=BQFL2QQ7bZzkcoDsfQ15/xX7FUY/iZ3T0GmxiuLQMKY=;
+	s=korg; t=1776097687;
+	bh=7M+DyC4uaE3E/yq6DUkbuIrkaumDHBVphZUwmfXuT2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KpeKL57yt0jVeodI+T8IOS8FulCAgPAB9yl6Z7PKFzPPvX9uGodl8M/BbIUCfDKHG
-	 mGE6yZLtFBY6J15x7U8g8E6e7unZXXe9RMdxnkZLMH6XibUhC71CqCCl05Ay2WAxOt
-	 9QL4QNa9jxsCjLMfJJFqEuU4HlHC6wXAOz+7/Ewg=
+	b=h4BZrt0yt+g8/3Z8KVW+ba3MS0u/zvIjvlkAwFsdXVS9yJRRfAkx3U/4loEXsuQNg
+	 FKmHnf0ErU/uIZzVVNQISS59k3lcdLugNT5jHraAMEU2PNt7czBbU396zXR0pC49wL
+	 51Y6ZUzZ29xi5shw6qZ7m20UYbv6YTqXLjIIJafY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 200/570] net: macb: fix use-after-free access to PTP clock
-Date: Mon, 13 Apr 2026 17:55:31 +0200
-Message-ID: <20260413155837.950694627@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.15 191/570] i3c: mipi-i3c-hci: Restart DMA ring correctly after dequeue abort
+Date: Mon, 13 Apr 2026 17:55:22 +0200
+Message-ID: <20260413155837.614639368@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -50,128 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 8da13e6d63c1a97f7302d342c89c4a56a55c7015 upstream.
+commit b6d586431ae20d5157ee468d0ef62ad26798ef13 upstream.
 
-PTP clock is registered on every opening of the interface and destroyed on
-every closing.  However it may be accessed via get_ts_info ethtool call
-which is possible while the interface is just present in the kernel.
+The DMA dequeue path attempts to restart the ring after aborting an
+in-flight transfer, but the current sequence is incomplete. The controller
+must be brought out of the aborted state and the ring control registers
+must be programmed in the correct order: first clearing ABORT, then
+re-enabling the ring and asserting RUN_STOP to resume operation.
 
-BUG: KASAN: use-after-free in ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
-Read of size 4 at addr ffff8880194345cc by task syz.0.6/948
+Add the missing controller resume step and update the ring control writes
+so that the ring is restarted using the proper sequence.
 
-CPU: 1 PID: 948 Comm: syz.0.6 Not tainted 6.1.164+ #109
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x8d/0xba lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:316 [inline]
- print_report+0x17f/0x496 mm/kasan/report.c:420
- kasan_report+0xd9/0x180 mm/kasan/report.c:524
- ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
- gem_get_ts_info+0x138/0x1e0 drivers/net/ethernet/cadence/macb_main.c:3349
- macb_get_ts_info+0x68/0xb0 drivers/net/ethernet/cadence/macb_main.c:3371
- __ethtool_get_ts_info+0x17c/0x260 net/ethtool/common.c:558
- ethtool_get_ts_info net/ethtool/ioctl.c:2367 [inline]
- __dev_ethtool net/ethtool/ioctl.c:3017 [inline]
- dev_ethtool+0x2b05/0x6290 net/ethtool/ioctl.c:3095
- dev_ioctl+0x637/0x1070 net/core/dev_ioctl.c:510
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
- </TASK>
-
-Allocated by task 457:
- kmalloc include/linux/slab.h:563 [inline]
- kzalloc include/linux/slab.h:699 [inline]
- ptp_clock_register+0x144/0x10e0 drivers/ptp/ptp_clock.c:235
- gem_ptp_init+0x46f/0x930 drivers/net/ethernet/cadence/macb_ptp.c:375
- macb_open+0x901/0xd10 drivers/net/ethernet/cadence/macb_main.c:2920
- __dev_open+0x2ce/0x500 net/core/dev.c:1501
- __dev_change_flags+0x56a/0x740 net/core/dev.c:8651
- dev_change_flags+0x92/0x170 net/core/dev.c:8722
- do_setlink+0xaf8/0x3a80 net/core/rtnetlink.c:2833
- __rtnl_newlink+0xbf4/0x1940 net/core/rtnetlink.c:3608
- rtnl_newlink+0x63/0xa0 net/core/rtnetlink.c:3655
- rtnetlink_rcv_msg+0x3c6/0xed0 net/core/rtnetlink.c:6150
- netlink_rcv_skb+0x15d/0x430 net/netlink/af_netlink.c:2511
- netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
- netlink_unicast+0x6d7/0xa30 net/netlink/af_netlink.c:1344
- netlink_sendmsg+0x97e/0xeb0 net/netlink/af_netlink.c:1872
- sock_sendmsg_nosec net/socket.c:718 [inline]
- __sock_sendmsg+0x14b/0x180 net/socket.c:730
- __sys_sendto+0x320/0x3b0 net/socket.c:2152
- __do_sys_sendto net/socket.c:2164 [inline]
- __se_sys_sendto net/socket.c:2160 [inline]
- __x64_sys_sendto+0xdc/0x1b0 net/socket.c:2160
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Freed by task 938:
- kasan_slab_free include/linux/kasan.h:177 [inline]
- slab_free_hook mm/slub.c:1729 [inline]
- slab_free_freelist_hook mm/slub.c:1755 [inline]
- slab_free mm/slub.c:3687 [inline]
- __kmem_cache_free+0xbc/0x320 mm/slub.c:3700
- device_release+0xa0/0x240 drivers/base/core.c:2507
- kobject_cleanup lib/kobject.c:681 [inline]
- kobject_release lib/kobject.c:712 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x1cd/0x350 lib/kobject.c:729
- put_device+0x1b/0x30 drivers/base/core.c:3805
- ptp_clock_unregister+0x171/0x270 drivers/ptp/ptp_clock.c:391
- gem_ptp_remove+0x4e/0x1f0 drivers/net/ethernet/cadence/macb_ptp.c:404
- macb_close+0x1c8/0x270 drivers/net/ethernet/cadence/macb_main.c:2966
- __dev_close_many+0x1b9/0x310 net/core/dev.c:1585
- __dev_close net/core/dev.c:1597 [inline]
- __dev_change_flags+0x2bb/0x740 net/core/dev.c:8649
- dev_change_flags+0x92/0x170 net/core/dev.c:8722
- dev_ifsioc+0x151/0xe00 net/core/dev_ioctl.c:326
- dev_ioctl+0x33e/0x1070 net/core/dev_ioctl.c:572
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Set the PTP clock pointer to NULL after unregistering.
-
-Fixes: c2594d804d5c ("macb: Common code to enable ptp support for MACB/GEM")
+Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260316103826.74506-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260306072451.11131-11-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_ptp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/cadence/macb_ptp.c
-+++ b/drivers/net/ethernet/cadence/macb_ptp.c
-@@ -395,8 +395,10 @@ void gem_ptp_remove(struct net_device *n
- {
- 	struct macb *bp = netdev_priv(ndev);
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -491,7 +491,9 @@ static bool hci_dma_dequeue_xfer(struct
+ 	}
  
--	if (bp->ptp_clock)
-+	if (bp->ptp_clock) {
- 		ptp_clock_unregister(bp->ptp_clock);
-+		bp->ptp_clock = NULL;
-+	}
+ 	/* restart the ring */
++	mipi_i3c_hci_resume(hci);
+ 	rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE);
++	rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_RUN_STOP);
  
- 	gem_ptp_clear_timer(bp);
- 
+ 	return did_unqueue;
+ }
 
 
