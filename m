@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B60B24EA90;
-	Mon, 13 Apr 2026 16:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215BB24EA90;
+	Mon, 13 Apr 2026 16:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096787; cv=none; b=Rr/eaGOzLqc0BbfbFemBcvg1NtJJxdAvoHjy2FM0qWwLpL/hcJXtwH99w67I58adBh+i25lhfk6z5aVi7EaLqvXYm6PA2+5lmTUueNpusTZHEE8i88YW6PYcLX7rBgkItTmaeOefqSPr60xnsUxwrrnlvurHbspVr4/gpEjb6zM=
+	t=1776096790; cv=none; b=A8JnXxHh3QSaxjeZuBoiId02ccWFBRfJso7qALawexnT+fhKjbPwCboWpfsGZzF4lqv51uQHXWv9r1VtnbU9fODP1UtN2O22nChf7kz9KUEs+hNyefeW6u/STuXTw4+vTP9YI7Cn8SS/03g+01xUsTEmsekuVHoDmoh2Xzqtr9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096787; c=relaxed/simple;
-	bh=desH7iDoSVZ1lptHdtuyIXfLnfbEprumoWawnJ9hc1w=;
+	s=arc-20240116; t=1776096790; c=relaxed/simple;
+	bh=IncVa67EiUFF2Kx3AW+w0XxNXFgqNBjMp1tHk/FniXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kQ8flvp8upXYugL/DfEDr5XM+S1PpSAr1IrlyFXEzg4ryKfvKq6PwZut9Fdsu3RAXGPkaBcZ6zZ5bkyudvMZuZ0h/Ub1SUiW6+Pp2iZ47JIgjtyKrvNe3wtkLN8Xt5Re1do0SENGdAaHhU8Lyiaci/Pq2h9L1kSsHPYowHWbrTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssvntpm7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sikSh7ZzEuPhVHpFZdp4ohU8hJ+dvde4bHQD1oo0BmV4KtD/cl2jxefyxVgW3MyGnQE/8vV25cfI9b+6Le0ygt0dd/694sCxW9bzWTXuo7Lrxwms0q+bdWAoIB4WU/d1cwWikoBylXydWB2aIb/0G6Sb2SXaQ3XGsOaZTkGYeFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+6sBxiP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssvntpm7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22019C2BCAF;
-	Mon, 13 Apr 2026 16:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+6sBxiP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840E9C2BCAF;
+	Mon, 13 Apr 2026 16:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096787;
-	bh=desH7iDoSVZ1lptHdtuyIXfLnfbEprumoWawnJ9hc1w=;
+	s=korg; t=1776096790;
+	bh=IncVa67EiUFF2Kx3AW+w0XxNXFgqNBjMp1tHk/FniXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ssvntpm7hfWTdtUH8vMvnqmY6a5HCup/znSQsrdAqHazI/7jOeJiMQ9V0D+pHDo2R
-	 OHKkGEJIY5HuP/CnchqjAVD2IpVVxbfqkUQ/RBSNIxLELCnXe73oixdK8yshwMEKu1
-	 TIT4HkeFgvTykqKMznAGb30cXJnfBdp311Fjm5Zc=
+	b=Q+6sBxiP7SPpqNc4O37QPw3eX6d8a7bkr3LZzKt8KqFgcRKjfpXSMN0esogJs6/r1
+	 PzsEZnLRvSf4N7QvoRAHG5xoYZwaYOpAOLQj88nveJLA5vBlqjXrtG0tu2wx6xaMbe
+	 nlwnJmyqdxDGHnhIb+Q7htkz0HyM5LMkeMhn5tgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Douya Le <ldy3087146292@gmail.com>,
+	Yuan Tan <tanyuan98@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
 	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 63/70] rxrpc: Fix key reference count leak from call->key
-Date: Mon, 13 Apr 2026 18:00:58 +0200
-Message-ID: <20260413155730.531205097@linuxfoundation.org>
+Subject: [PATCH 6.12 64/70] rxrpc: Only put the call ref if one was acquired
+Date: Mon, 13 Apr 2026 18:00:59 +0200
+Message-ID: <20260413155730.567437748@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
 References: <20260413155728.181580293@linuxfoundation.org>
@@ -56,52 +60,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anderson Nascimento <anderson@allelesecurity.com>
+From: Douya Le <ldy3087146292@gmail.com>
 
-commit d666540d217e8d420544ebdfbadeedd623562733 upstream.
+commit 6331f1b24a3e85465f6454e003a3e6c22005a5c5 upstream.
 
-When creating a client call in rxrpc_alloc_client_call(), the code obtains
-a reference to the key.  This is never cleaned up and gets leaked when the
-call is destroyed.
+rxrpc_input_packet_on_conn() can process a to-client packet after the
+current client call on the channel has already been torn down.  In that
+case chan->call is NULL, rxrpc_try_get_call() returns NULL and there is
+no reference to drop.
 
-Fix this by freeing call->key in rxrpc_destroy_call().
+The client-side implicit-end error path does not account for that and
+unconditionally calls rxrpc_put_call().  This turns a protocol error
+path into a kernel crash instead of rejecting the packet.
 
-Before the patch, it shows the key reference counter elevated:
+Only drop the call reference if one was actually acquired.  Keep the
+existing protocol error handling unchanged.
 
-$ cat /proc/keys | grep afs@54321
-1bffe9cd I--Q--i 8053480 4169w 3b010000  1000  1000 rxrpc     afs@54321: ka
-$
-
-After the patch, the invalidated key is removed when the code exits:
-
-$ cat /proc/keys | grep afs@54321
-$
-
-Fixes: f3441d4125fc ("rxrpc: Copy client call parameters into rxrpc_call earlier")
-Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
-Co-developed-by: David Howells <dhowells@redhat.com>
+Fixes: 5e6ef4f1017c ("rxrpc: Make the I/O thread take over the call and local processor work")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Signed-off-by: Douya Le <ldy3087146292@gmail.com>
+Co-developed-by: Yuan Tan <tanyuan98@gmail.com>
+Signed-off-by: Yuan Tan <tanyuan98@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
 Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-9-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-11-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/call_object.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/rxrpc/io_thread.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/rxrpc/call_object.c
-+++ b/net/rxrpc/call_object.c
-@@ -690,6 +690,7 @@ static void rxrpc_destroy_call(struct wo
- 	rxrpc_put_bundle(call->bundle, rxrpc_bundle_put_call);
- 	rxrpc_put_peer(call->peer, rxrpc_peer_put_call);
- 	rxrpc_put_local(call->local, rxrpc_local_put_call);
-+	key_put(call->key);
- 	call_rcu(&call->rcu, rxrpc_rcu_free_call);
- }
+--- a/net/rxrpc/io_thread.c
++++ b/net/rxrpc/io_thread.c
+@@ -400,7 +400,8 @@ static int rxrpc_input_packet_on_conn(st
  
+ 	if (sp->hdr.callNumber > chan->call_id) {
+ 		if (rxrpc_to_client(sp)) {
+-			rxrpc_put_call(call, rxrpc_call_put_input);
++			if (call)
++				rxrpc_put_call(call, rxrpc_call_put_input);
+ 			return rxrpc_protocol_error(skb,
+ 						    rxrpc_eproto_unexpected_implicit_end);
+ 		}
 
 
