@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D5B31E84D;
-	Mon, 13 Apr 2026 16:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C943161BF;
+	Mon, 13 Apr 2026 16:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099331; cv=none; b=N+owGdxA1oOhHtOyeLeLFaPQBm2e1niaWHCAdUvJyYK5YBG7Ccnq7ZD94WzcJE1jJzOycHX0KpvKj5dHxik3SkXv4WKbRMgxZxWJwIcbQh7Ef9x5mJX+hCQwQJiUlmbzKM7JQ/1RibV+qenRyutqdN95D/4GCNn9ztax9/XPSqQ=
+	t=1776099334; cv=none; b=jWoRuFIzLlPB0b2vAv8NFhf7zXBXccPxsV66vVkf0lw/x3UaFTszchn7bmpLvyzb1Wlz03fnMcCtOmmPdmg3T1A9F2cmxTusxU2mZuHiKjPWkczJRFIDhxe5fkvwrW7rdV/pP1U3FzlHUxpE080qiUXzCT+bdzUyQE0Dvf/cDqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099331; c=relaxed/simple;
-	bh=7fCWoOyxxiOLh7UdD9wVreEOkJfipJ/cREHmsTwSZo8=;
+	s=arc-20240116; t=1776099334; c=relaxed/simple;
+	bh=v0OTXzyGY1WYRf5XoJ9poW1vjEzEm1cbkF4gozrSqzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/reay7TdyKPdej0zct3Sk7r2aB8nAI2tdr5N6dv1K+KNhuvqP5iwsQ8o24LfD7H/YQ2qNl21JM5b111kRfPvFzGNWGaALysaiLdcd+cXMG9DLHeFn29i98HVKNHDsU7nlpNSYsF2l1EMTU9huYjU0oVOugco59E2RJ0weJZuMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=de5teJwE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f147ZFZjl8EjUthgcpba0HHDkIEvEXl55DRxU+Z+45W9/3rfCxVcRvvodzkeB0VeM1sEpmRkyQRactcVo3KtL6mTGU2gPKoGvlcLj84UHbKfg4sVHhDWDvQOE+Jbq00Q3BJC97ehTRZy9qDUfRd8xO+AzCmcb97uXcmvaRxamyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdmpLVVH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="de5teJwE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FD7C2BCAF;
-	Mon, 13 Apr 2026 16:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdmpLVVH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F80C2BCB3;
+	Mon, 13 Apr 2026 16:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099331;
-	bh=7fCWoOyxxiOLh7UdD9wVreEOkJfipJ/cREHmsTwSZo8=;
+	s=korg; t=1776099334;
+	bh=v0OTXzyGY1WYRf5XoJ9poW1vjEzEm1cbkF4gozrSqzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=de5teJwETHVP/G8TowniCEWFNebXJUKw3y/ShVC63k7LGOUuDRM0nIiuZjYlQhiql
-	 VhaC3FrK9fCXp1d9YFMPMzd9t4QSDQkTfFrfCweQ/8dhcsuCA5IhKCg4YaA7cKWPCv
-	 RgM5WH8xG2LEMkptWgGK3wws4UzrM+TgapMOUz9g=
+	b=VdmpLVVHhA2yNVT1/bfR/fadwYAEy0CbHLD23myfF/Tku4EvsMuiarVbLwzjGlswj
+	 LF59fdqng8EnLBScghHy7iM4PCUyg6TsfC/ABLYrhN0T4JlRxuG7UOYKqrxer/+D/D
+	 InVYRZIdZ5k0pR8Z+RNmIslWdAQ/A7SAtaT8fHcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xietangxin <xietangxin@yeah.net>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 299/491] virtio_net: Fix UAF on dst_ops when IFF_XMIT_DST_RELEASE is cleared and napi_tx is false
-Date: Mon, 13 Apr 2026 17:59:04 +0200
-Message-ID: <20260413155830.237800544@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 5.10 300/491] alarmtimer: Fix argument order in alarm_timer_forward()
+Date: Mon, 13 Apr 2026 17:59:05 +0200
+Message-ID: <20260413155830.274942839@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,90 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xietangxin <xietangxin@yeah.net>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit ba8bda9a0896746053aa97ac6c3e08168729172c upstream.
+commit 5d16467ae56343b9205caedf85e3a131e0914ad8 upstream.
 
-A UAF issue occurs when the virtio_net driver is configured with napi_tx=N
-and the device's IFF_XMIT_DST_RELEASE flag is cleared
-(e.g., during the configuration of tc route filter rules).
+alarm_timer_forward() passes arguments to alarm_forward() in the wrong
+order:
 
-When IFF_XMIT_DST_RELEASE is removed from the net_device, the network stack
-expects the driver to hold the reference to skb->dst until the packet
-is fully transmitted and freed. In virtio_net with napi_tx=N,
-skbs may remain in the virtio transmit ring for an extended period.
+  alarm_forward(alarm, timr->it_interval, now);
 
-If the network namespace is destroyed while these skbs are still pending,
-the corresponding dst_ops structure has freed. When a subsequent packet
-is transmitted, free_old_xmit() is triggered to clean up old skbs.
-It then calls dst_release() on the skb associated with the stale dst_entry.
-Since the dst_ops (referenced by the dst_entry) has already been freed,
-a UAF kernel paging request occurs.
+However, alarm_forward() is defined as:
 
-fix it by adds skb_dst_drop(skb) in start_xmit to explicitly release
-the dst reference before the skb is queued in virtio_net.
+  u64 alarm_forward(struct alarm *alarm, ktime_t now, ktime_t interval);
 
-Call Trace:
- Unable to handle kernel paging request at virtual address ffff80007e150000
- CPU: 2 UID: 0 PID: 6236 Comm: ping Kdump: loaded Not tainted 7.0.0-rc1+ #6 PREEMPT
-  ...
-  percpu_counter_add_batch+0x3c/0x158 lib/percpu_counter.c:98 (P)
-  dst_release+0xe0/0x110  net/core/dst.c:177
-  skb_release_head_state+0xe8/0x108 net/core/skbuff.c:1177
-  sk_skb_reason_drop+0x54/0x2d8 net/core/skbuff.c:1255
-  dev_kfree_skb_any_reason+0x64/0x78 net/core/dev.c:3469
-  napi_consume_skb+0x1c4/0x3a0 net/core/skbuff.c:1527
-  __free_old_xmit+0x164/0x230  drivers/net/virtio_net.c:611 [virtio_net]
-  free_old_xmit drivers/net/virtio_net.c:1081 [virtio_net]
-  start_xmit+0x7c/0x530 drivers/net/virtio_net.c:3329 [virtio_net]
-  ...
+and uses the second argument as the current time:
 
-Reproduction Steps:
-NETDEV="enp3s0"
+  delta = ktime_sub(now, alarm->node.expires);
 
-config_qdisc_route_filter() {
-    tc qdisc del dev $NETDEV root
-    tc qdisc add dev $NETDEV root handle 1: prio
-    tc filter add dev $NETDEV parent 1:0 \
-	protocol ip prio 100 route to 100 flowid 1:1
-    ip route add 192.168.1.100/32 dev $NETDEV realm 100
-}
+Passing the interval as "now" results in incorrect delta computation,
+which can lead to missed expirations or incorrect overrun accounting.
 
-test_ns() {
-    ip netns add testns
-    ip link set $NETDEV netns testns
-    ip netns exec testns ifconfig $NETDEV  10.0.32.46/24
-    ip netns exec testns ping -c 1 10.0.32.1
-    ip netns del testns
-}
+This issue has been present since the introduction of
+alarm_timer_forward().
 
-config_qdisc_route_filter
+Fix this by swapping the arguments.
 
-test_ns
-sleep 2
-test_ns
-
-Fixes: f2fc6a54585a ("[NETNS][IPV6] route6 - move ip6_dst_ops inside the network namespace")
+Fixes: e7561f1633ac ("alarmtimer: Implement forward callback")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: xietangxin <xietangxin@yeah.net>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Fixes: 0287587884b1 ("net: better IFF_XMIT_DST_RELEASE support")
-Link: https://patch.msgid.link/20260312025406.15641-1-xietangxin@yeah.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260323061130.29991-1-zhanxusheng@xiaomi.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/time/alarmtimer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -1740,6 +1740,7 @@ static netdev_tx_t start_xmit(struct sk_
- 	/* Don't wait up for transmitted skbs to be freed. */
- 	if (!use_napi) {
- 		skb_orphan(skb);
-+		skb_dst_drop(skb);
- 		nf_reset_ct(skb);
- 	}
+--- a/kernel/time/alarmtimer.c
++++ b/kernel/time/alarmtimer.c
+@@ -606,7 +606,7 @@ static s64 alarm_timer_forward(struct k_
+ {
+ 	struct alarm *alarm = &timr->it.alarm.alarmtimer;
  
+-	return alarm_forward(alarm, timr->it_interval, now);
++	return alarm_forward(alarm, now, timr->it_interval);
+ }
+ 
+ /**
 
 
