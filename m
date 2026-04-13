@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED9E223DCE;
-	Mon, 13 Apr 2026 16:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63A2223DCE;
+	Mon, 13 Apr 2026 16:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098887; cv=none; b=L4rokCCkUM/BtdG3ARqHZXem71FTeB3rXLHtHq+U/NTNAzHCjRf5Jsz/ANJ6gRvn9f1B5OOx3VYx8O7Ooo7bSN5qir1omsXCuyTVPia+HcFtnS/5PJVGptm/U7XP/+Jmvb/NR0ACVOeiT/r1o/Ixt1QUFtAg63w+T/WyDgZ3mHY=
+	t=1776098889; cv=none; b=SDIQl89HX/Ak9PnlUQHVAMh+moF8OEMthfuiKLy1M15ZSchItNa3AK6+08mDS0hJyU8sOmSO10KCqlyywc/v5FNP+i7EtaRTPknwWj2E6Bw9yHHv3p1zeALA4jxuNqmo1WW0QlylwB4YEU7WgEibjM6RRwQe6XJlwK4NT3jwlY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098887; c=relaxed/simple;
-	bh=laTk7RDqdzyeV8quHG9sZKyFtQi+U4gb65rrGYMsnWM=;
+	s=arc-20240116; t=1776098889; c=relaxed/simple;
+	bh=uIcJokF7lnLajI/suzw/C9maCReUQwwBlOB6GzE7SSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AzFq3EoXV+kmUt643aTjng15FQ1JBGo4yzmIdAPkHqyoAKqflZ+yvQyI7AufQ0XbQfH1EW3hSUAHRM8TAVp5b+Rb8YJ/igYO8Xi/E5/tEaWpV7544eXtcJrdA0Y2pOKclcWmwcTDea6a4J/efP2cFBhSeF+zc53Edt5J8LZPKlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSWKL6uL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=clCDBBNkvLI4ehnkmb6MPy5iOrdsTGZSIm0MALCAKpsr0x5RQJuiV1ZMa7bEpfkIyaEaAVciTmLQLfiaDeKVcwKyW3VoJjX6FjkVyoroR1Bxl9MSR0XB6BKqJ9ThW9yVgKcmLcYysU2cExOXsMlfNTNGuPvbgvGNP0jNyaDsaPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVd7mnSk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSWKL6uL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA854C2BCAF;
-	Mon, 13 Apr 2026 16:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVd7mnSk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E017C2BCAF;
+	Mon, 13 Apr 2026 16:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098887;
-	bh=laTk7RDqdzyeV8quHG9sZKyFtQi+U4gb65rrGYMsnWM=;
+	s=korg; t=1776098889;
+	bh=uIcJokF7lnLajI/suzw/C9maCReUQwwBlOB6GzE7SSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OSWKL6uLRumFDzIbXl7t5Q/b4ohbPGFiAe6PmHDOaqwYtXqsDH2uluAQtsLGyH5Nu
-	 PEuoHMZijq7Hm2GtQtjk12TD+NAm7Kap/rXTxoYfsDh7m+3XYPBH2M7EdS0GfyJ2Eu
-	 VjRDLYaLUEPsPxDRSkxRpu+MNkzxQ9SeHZYZCaOM=
+	b=zVd7mnSknhvRaxhtnQUbLEKptdvLWqJA8sR9568qKsNoma96Yu2n0pu0Ziox0W68a
+	 Aszb3+L2C7+UYdnkA8WUZgCnLNMjy6iWqWG0SQJ2u8amZamlsfctP6XYGrF81LvULX
+	 dLZREDrwvuZWTboJ7G/Lj6Bwux9V61hL3vYoiw1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Law <objecting@objecting.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.10 127/491] lib/bootconfig: check bounds before writing in __xbc_open_brace()
-Date: Mon, 13 Apr 2026 17:56:12 +0200
-Message-ID: <20260413155823.796415287@linuxfoundation.org>
+	Anand Jain <asj@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.10 128/491] btrfs: abort transaction on failure to update root in the received subvol ioctl
+Date: Mon, 13 Apr 2026 17:56:13 +0200
+Message-ID: <20260413155823.832990024@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,42 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Law <objecting@objecting.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 560f763baa0f2c9a44da4294c06af071405ac46f upstream.
+commit 0f475ee0ebce5c9492b260027cd95270191675fa upstream.
 
-The bounds check for brace_index happens after the array write.
-While the current call pattern prevents an actual out-of-bounds
-access (the previous call would have returned an error), the
-write-before-check pattern is fragile and would become a real
-out-of-bounds write if the error return were ever not propagated.
+If we failed to update the root we don't abort the transaction, which is
+wrong since we already used the transaction to remove an item from the
+uuid tree.
 
-Move the bounds check before the array write so the function is
-self-contained and safe regardless of caller behavior.
-
-Link: https://lore.kernel.org/all/20260312191143.28719-3-objecting@objecting.org/
-
-Fixes: ead1e19ad905 ("lib/bootconfig: Fix a bug of breaking existing tree nodes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Josh Law <objecting@objecting.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: dd5f9615fc5c ("Btrfs: maintain subvolume items in the UUID tree")
+CC: stable@vger.kernel.org # 3.12+
+Reviewed-by: Anand Jain <asj@kernel.org>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bootconfig.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/ioctl.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -436,9 +436,9 @@ static char *skip_spaces_until_newline(c
- static int __init __xbc_open_brace(char *p)
- {
- 	/* Push the last key as open brace */
--	open_brace[brace_index++] = xbc_node_index(last_parent);
- 	if (brace_index >= XBC_DEPTH_MAX)
- 		return xbc_parse_error("Exceed max depth of braces", p);
-+	open_brace[brace_index++] = xbc_node_index(last_parent);
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -4524,7 +4524,8 @@ static long _btrfs_ioctl_set_received_su
  
- 	return 0;
- }
+ 	ret = btrfs_update_root(trans, fs_info->tree_root,
+ 				&root->root_key, &root->root_item);
+-	if (ret < 0) {
++	if (unlikely(ret < 0)) {
++		btrfs_abort_transaction(trans, ret);
+ 		btrfs_end_transaction(trans);
+ 		goto out;
+ 	}
 
 
