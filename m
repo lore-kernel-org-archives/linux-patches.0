@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1851C30EF6B;
-	Mon, 13 Apr 2026 16:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BB51D5AD4;
+	Mon, 13 Apr 2026 16:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098645; cv=none; b=E3mRAbkr7WIGDR0Q2mpBx6kwl7aKM6Q6n9GIpOjyEPz8XzdqbvuhQEI3akyaz8PqTbMrs8pWFUrXVq3ICIRoBuAJilB4GQ1cHSXWpmTP3c187iqLJYjWQGn0mSvGakoK6ltBqk9WN5jMbWsJ1vzlWblmhTOS+n905vpo8c7/iMA=
+	t=1776098647; cv=none; b=XgXv9q8NQ+usnXhtTtmIM8qfdeqPNHYqZs9F73lXZRClY8hBBAncaaky+HoSLllO31qw8WacswLhWnDStm6cdCrpOHrJpQHONG2/lBVbcYCgMz/ti2jLdXRVntgHMtNNmXysaClR2l152WUMQdV+xHEekR7TnnVwGaDnhYBMMnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098645; c=relaxed/simple;
-	bh=f6uEraDNzdZMnxA25w8R2HjOrtY/n2O5iBINyg+wwPc=;
+	s=arc-20240116; t=1776098647; c=relaxed/simple;
+	bh=goFoMGnlK+eN25xD7s2NNnwU6CI9o06GajbEvzshRig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WckTqwRmT34loxBB+hNpJjsAqXexsny8m244eiE8CFx09BuGIigF9u4putYIo4KqBGeLva4oz6MRbkQmUXKiDPKkxPnWgEhBi97BaOGbuxwJBze8L7zNMI0Vr+JDazjzzQb7lW/BURa6nYaYyIR5ipSaMxyozoB7GxculuIue7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzeZIEYr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nd1zk0IoDJPYFoVg3oiVEzaK0QAsA54AJBY4puzxtk5fjFEzJgNU7uvGG3vvdRTA5WjYTRRn3Fm0VX+/8+FX17Y9ybbFDyYwc45r7KMIWif113MPOZIBsmLjy0Dr7vwwdbvobJ/jbxXPRXPsGtQCtXQBtXjCFAwALERbk1taWns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sB1voQuE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzeZIEYr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4339C4AF09;
-	Mon, 13 Apr 2026 16:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sB1voQuE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37948C2BCB6;
+	Mon, 13 Apr 2026 16:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098645;
-	bh=f6uEraDNzdZMnxA25w8R2HjOrtY/n2O5iBINyg+wwPc=;
+	s=korg; t=1776098647;
+	bh=goFoMGnlK+eN25xD7s2NNnwU6CI9o06GajbEvzshRig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzeZIEYrdhw5fVhHVYIgYaAZFwlRgHhn0fAsSgkCnKJ96cqhcXu4ez59xzcgOKQgq
-	 7ab2l7I/HsKviiB+htpCPepxkbppPtArUeUdK7LRorTHCradMGF2fcgDBCbyztXw2r
-	 tL9RRgYoUpw2rHLCVDwQ09drWa/xfICcgVHtbNCA=
+	b=sB1voQuE6XKG62CF9TLkLJskcgDJfQBPKeFoD3dQYr2mVUVpkcBNrOp5lOqfVNyBa
+	 KtxZF9zxUiwdKhD55ctRUt1jMJSIgkluX4ORb1VXv8jWIeySPYesuyUf4t+5XIQz8A
+	 TmOVEpq297epX8zHcjT5jI+UxH39+Qk5br27dwBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a9747fe1c35a5b115d3f@syzkaller.appspotmail.com,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 032/491] Squashfs: check metadata block offset is within range
-Date: Mon, 13 Apr 2026 17:54:37 +0200
-Message-ID: <20260413155820.254666263@linuxfoundation.org>
+	Lars Ellenberg <lars.ellenberg@linbit.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 033/491] drbd: fix "LOGIC BUG" in drbd_al_begin_io_nonblock()
+Date: Mon, 13 Apr 2026 17:54:38 +0200
+Message-ID: <20260413155820.291686619@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -46,52 +45,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Lars Ellenberg <lars.ellenberg@linbit.com>
 
-commit fdb24a820a5832ec4532273282cbd4f22c291a0d upstream.
+commit ab140365fb62c0bdab22b2f516aff563b2559e3b upstream.
 
-Syzkaller reports a "general protection fault in squashfs_copy_data"
+Even though we check that we "should" be able to do lc_get_cumulative()
+while holding the device->al_lock spinlock, it may still fail,
+if some other code path decided to do lc_try_lock() with bad timing.
 
-This is ultimately caused by a corrupted index look-up table, which
-produces a negative metadata block offset.
+If that happened, we logged "LOGIC BUG for enr=...",
+but still did not return an error.
 
-This is subsequently passed to squashfs_copy_data (via
-squashfs_read_metadata) where the negative offset causes an out of bounds
-access.
+The rest of the code now assumed that this request has references
+for the relevant activity log extents.
 
-The fix is to check that the offset is within range in
-squashfs_read_metadata.  This will trap this and other cases.
+The implcations are that during an active resync, mutual exclusivity of
+resync versus application IO is not guaranteed. And a potential crash
+at this point may not realizs that these extents could have been target
+of in-flight IO and would need to be resynced just in case.
 
-Link: https://lkml.kernel.org/r/20260217050955.138351-1-phillip@squashfs.org.uk
-Fixes: f400e12656ab ("Squashfs: cache operations")
-Reported-by: syzbot+a9747fe1c35a5b115d3f@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/699234e2.a70a0220.2c38d7.00e2.GAE@google.com/
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Also, once the request completes, it will give up activity log references it
+does not even hold, which will trigger a BUG_ON(refcnt == 0) in lc_put().
+
+Fix:
+
+Do not crash the kernel for a condition that is harmless during normal
+operation: also catch "e->refcnt == 0", not only "e == NULL"
+when being noisy about "al_complete_io() called on inactive extent %u\n".
+
+And do not try to be smart and "guess" whether something will work, then
+be surprised when it does not.
+Deal with the fact that it may or may not work.  If it does not, remember a
+possible "partially in activity log" state (only possible for requests that
+cross extent boundaries), and return an error code from
+drbd_al_begin_io_nonblock().
+
+A latter call for the same request will then resume from where we left off.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Lars Ellenberg <lars.ellenberg@linbit.com>
+Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/squashfs/cache.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/block/drbd/drbd_actlog.c   |   53 ++++++++++++++++---------------------
+ drivers/block/drbd/drbd_interval.h |    5 ++-
+ 2 files changed, 27 insertions(+), 31 deletions(-)
 
---- a/fs/squashfs/cache.c
-+++ b/fs/squashfs/cache.c
-@@ -340,6 +340,9 @@ int squashfs_read_metadata(struct super_
- 	if (unlikely(length < 0))
- 		return -EIO;
+--- a/drivers/block/drbd/drbd_actlog.c
++++ b/drivers/block/drbd/drbd_actlog.c
+@@ -483,38 +483,20 @@ void drbd_al_begin_io(struct drbd_device
  
-+	if (unlikely(*offset < 0 || *offset >= SQUASHFS_METADATA_SIZE))
-+		return -EIO;
+ int drbd_al_begin_io_nonblock(struct drbd_device *device, struct drbd_interval *i)
+ {
+-	struct lru_cache *al = device->act_log;
+ 	/* for bios crossing activity log extent boundaries,
+ 	 * we may need to activate two extents in one go */
+ 	unsigned first = i->sector >> (AL_EXTENT_SHIFT-9);
+ 	unsigned last = i->size == 0 ? first : (i->sector + (i->size >> 9) - 1) >> (AL_EXTENT_SHIFT-9);
+-	unsigned nr_al_extents;
+-	unsigned available_update_slots;
+ 	unsigned enr;
+ 
+-	D_ASSERT(device, first <= last);
+-
+-	nr_al_extents = 1 + last - first; /* worst case: all touched extends are cold. */
+-	available_update_slots = min(al->nr_elements - al->used,
+-				al->max_pending_changes - al->pending_changes);
+-
+-	/* We want all necessary updates for a given request within the same transaction
+-	 * We could first check how many updates are *actually* needed,
+-	 * and use that instead of the worst-case nr_al_extents */
+-	if (available_update_slots < nr_al_extents) {
+-		/* Too many activity log extents are currently "hot".
+-		 *
+-		 * If we have accumulated pending changes already,
+-		 * we made progress.
+-		 *
+-		 * If we cannot get even a single pending change through,
+-		 * stop the fast path until we made some progress,
+-		 * or requests to "cold" extents could be starved. */
+-		if (!al->pending_changes)
+-			__set_bit(__LC_STARVING, &device->act_log->flags);
+-		return -ENOBUFS;
++	if (i->partially_in_al_next_enr) {
++		D_ASSERT(device, first < i->partially_in_al_next_enr);
++		D_ASSERT(device, last >= i->partially_in_al_next_enr);
++		first = i->partially_in_al_next_enr;
+ 	}
+ 
++	D_ASSERT(device, first <= last);
 +
- 	while (length) {
- 		entry = squashfs_cache_get(sb, msblk->block_cache, *block, 0);
- 		if (entry->error) {
+ 	/* Is resync active in this area? */
+ 	for (enr = first; enr <= last; enr++) {
+ 		struct lc_element *tmp;
+@@ -529,14 +511,21 @@ int drbd_al_begin_io_nonblock(struct drb
+ 		}
+ 	}
+ 
+-	/* Checkout the refcounts.
+-	 * Given that we checked for available elements and update slots above,
+-	 * this has to be successful. */
++	/* Try to checkout the refcounts. */
+ 	for (enr = first; enr <= last; enr++) {
+ 		struct lc_element *al_ext;
+ 		al_ext = lc_get_cumulative(device->act_log, enr);
+-		if (!al_ext)
+-			drbd_info(device, "LOGIC BUG for enr=%u\n", enr);
++
++		if (!al_ext) {
++			/* Did not work. We may have exhausted the possible
++			 * changes per transaction. Or raced with someone
++			 * "locking" it against changes.
++			 * Remember where to continue from.
++			 */
++			if (enr > first)
++				i->partially_in_al_next_enr = enr;
++			return -ENOBUFS;
++		}
+ 	}
+ 	return 0;
+ }
+@@ -556,7 +545,11 @@ void drbd_al_complete_io(struct drbd_dev
+ 
+ 	for (enr = first; enr <= last; enr++) {
+ 		extent = lc_find(device->act_log, enr);
+-		if (!extent) {
++		/* Yes, this masks a bug elsewhere.  However, during normal
++		 * operation this is harmless, so no need to crash the kernel
++		 * by the BUG_ON(refcount == 0) in lc_put().
++		 */
++		if (!extent || extent->refcnt == 0) {
+ 			drbd_err(device, "al_complete_io() called on inactive extent %u\n", enr);
+ 			continue;
+ 		}
+--- a/drivers/block/drbd/drbd_interval.h
++++ b/drivers/block/drbd/drbd_interval.h
+@@ -8,12 +8,15 @@
+ struct drbd_interval {
+ 	struct rb_node rb;
+ 	sector_t sector;		/* start sector of the interval */
+-	unsigned int size;		/* size in bytes */
+ 	sector_t end;			/* highest interval end in subtree */
++	unsigned int size;		/* size in bytes */
+ 	unsigned int local:1		/* local or remote request? */;
+ 	unsigned int waiting:1;		/* someone is waiting for completion */
+ 	unsigned int completed:1;	/* this has been completed already;
+ 					 * ignore for conflict detection */
++
++	/* to resume a partially successful drbd_al_begin_io_nonblock(); */
++	unsigned int partially_in_al_next_enr;
+ };
+ 
+ static inline void drbd_clear_interval(struct drbd_interval *i)
 
 
