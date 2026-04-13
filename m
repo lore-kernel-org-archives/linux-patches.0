@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8754330649;
-	Mon, 13 Apr 2026 17:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F6731354F;
+	Mon, 13 Apr 2026 17:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099839; cv=none; b=imcDxl0nxPltqEoFfbIiV49NjB7PZQI+hZT47M7zgw3szqkw/nyV0HRG47PeaojBAqonkpWZYCaHJ/6faBSFvAAJQ6UztqDwgnj2TNrX2wpggN4OnZOAqWxbFfV1p3d/LbTnIYWP7I1ga5zDkkphPytY1h2wINIFTLaoBvhuSZM=
+	t=1776099842; cv=none; b=KtVGx41Zt+6HJCaJoNI9d3TeCztVZE9LuTJlYLti3MFLdyfCkkmUVwgdDb6ujF3Iss7PAhAQrtqsDuTyQbLU71lcfVfuK/LVZL5nkTb/jD00MpDY2Qfe/Z9paHg99jiJPbPML7oiou3WQGGptgwGjZVwiyGVc+5zf7Y/AaZxK+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099839; c=relaxed/simple;
-	bh=Gr5jJ5pnmchs25gxcd+3TTDIcE+ni/ZpslwZrt/2FVk=;
+	s=arc-20240116; t=1776099842; c=relaxed/simple;
+	bh=s3iO4BnXBdq21pt9BCuizcdZqR/DgYLsAMWOewM7x8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHrla71nOtQvh/5f4UlKcbGGq78Fq54pjFjxlPOndJj1JymFaSJytZpxpSZnm1Wczh2aI+7vOZFzq/u3RAK8ibIwdPtLnKiZ3Gq94fHCIqXv5VeP4oOB0meDhsvhXudTVP8uNegoQrYoeqwNvfd8kVkjsRYsfP3aRRmj5CNHJHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLN/ZF+T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0Jt2lh0///2MjuaSiEXxhtHAC2cVd8QQmpbIq78ER0Q2Vnyekol01E0RBswQ780o3KBBJnPvTSwaJfHmX/YZIsehy5Pe1lNUlYCCoz3dkp4QDGfDEOl9VHWVzqza0S4xIh+Iratooc8Ujlt89nYOPgMKhFnDP2vd5kuGgNumQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5K2TmgW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLN/ZF+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7F8C2BCAF;
-	Mon, 13 Apr 2026 17:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5K2TmgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEABC2BCAF;
+	Mon, 13 Apr 2026 17:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099839;
-	bh=Gr5jJ5pnmchs25gxcd+3TTDIcE+ni/ZpslwZrt/2FVk=;
+	s=korg; t=1776099842;
+	bh=s3iO4BnXBdq21pt9BCuizcdZqR/DgYLsAMWOewM7x8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLN/ZF+TqSkcNJzMs1r56qWZPJ04UKeCJiBJqZiBVbEfEw/EO3giAx6TLLLgscEIh
-	 7hVPahSpqtyzl06JzsSrlqyhh075cLkt844bOkA4CDmT5JoW6qrAmCQVKrbXRcpoX4
-	 CZSNyfKgwAjW39cEcE0t3k3ONEWdvfO9g6/gVMVM=
+	b=z5K2TmgWHHI14uid425C90asSHCxsJ+MdqOTN+0lh7DbjqURkzrzf9Yof7eITZJqJ
+	 qlBcn+jqApwEDBm5ZNRM/sW2BQrpyKyQwM3Vt79n3H1APscZTS+kx4VvdLHh5COeWV
+	 2T/ReHr6722QMwaFmFF8jPfuJG1JaWn0Hx72Qrsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Kuen-Han Tsai <khtsai@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 462/491] usb: gadget: u_ether: Fix race between gether_disconnect and eth_stop
-Date: Mon, 13 Apr 2026 18:01:47 +0200
-Message-ID: <20260413155836.334742408@linuxfoundation.org>
+	GuoHan Zhao <zhaoguohan@kylinos.cn>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 5.10 453/491] xen/privcmd: unregister xenstore notifier on module exit
+Date: Mon, 13 Apr 2026 18:01:38 +0200
+Message-ID: <20260413155835.995440150@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,77 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-[ Upstream commit e1eabb072c75681f78312c484ccfffb7430f206e ]
+commit cd7e1fef5a1ca1c4fcd232211962ac2395601636 upstream.
 
-A race condition between gether_disconnect() and eth_stop() leads to a
-NULL pointer dereference. Specifically, if eth_stop() is triggered
-concurrently while gether_disconnect() is tearing down the endpoints,
-eth_stop() attempts to access the cleared endpoint descriptor, causing
-the following NPE:
+Commit 453b8fb68f36 ("xen/privcmd: restrict usage in
+unprivileged domU") added a xenstore notifier to defer setting the
+restriction target until Xenstore is ready.
 
-  Unable to handle kernel NULL pointer dereference
-  Call trace:
-   __dwc3_gadget_ep_enable+0x60/0x788
-   dwc3_gadget_ep_enable+0x70/0xe4
-   usb_ep_enable+0x60/0x15c
-   eth_stop+0xb8/0x108
+XEN_PRIVCMD can be built as a module, but privcmd_exit() leaves that
+notifier behind. Balance the notifier lifecycle by unregistering it on
+module exit.
 
-Because eth_stop() crashes while holding the dev->lock, the thread
-running gether_disconnect() fails to acquire the same lock and spins
-forever, resulting in a hardlockup:
+This is harmless even if xenstore was already ready at registration
+time and the notifier was never queued on the chain.
 
-  Core - Debugging Information for Hardlockup core(7)
-  Call trace:
-   queued_spin_lock_slowpath+0x94/0x488
-   _raw_spin_lock+0x64/0x6c
-   gether_disconnect+0x19c/0x1e8
-   ncm_set_alt+0x68/0x1a0
-   composite_setup+0x6a0/0xc50
-
-The root cause is that the clearing of dev->port_usb in
-gether_disconnect() is delayed until the end of the function.
-
-Move the clearing of dev->port_usb to the very beginning of
-gether_disconnect() while holding dev->lock. This cuts off the link
-immediately, ensuring eth_stop() will see dev->port_usb as NULL and
-safely bail out.
-
-Fixes: 2b3d942c4878 ("usb ethernet gadget: split out network core")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260311-gether-disconnect-npe-v1-1-454966adf7c7@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 453b8fb68f3641fe ("xen/privcmd: restrict usage in unprivileged domU")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260325120246.252899-1-zhaoguohan@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_ether.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/xen/privcmd.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/gadget/function/u_ether.c
-+++ b/drivers/usb/gadget/function/u_ether.c
-@@ -1141,6 +1141,10 @@ void gether_disconnect(struct gether *li
+--- a/drivers/xen/privcmd.c
++++ b/drivers/xen/privcmd.c
+@@ -1069,6 +1069,9 @@ static int __init privcmd_init(void)
  
- 	DBG(dev, "%s\n", __func__);
- 
-+	spin_lock(&dev->lock);
-+	dev->port_usb = NULL;
-+	spin_unlock(&dev->lock);
+ static void __exit privcmd_exit(void)
+ {
++	if (!xen_initial_domain())
++		unregister_xenstore_notifier(&xenstore_notifier);
 +
- 	netif_stop_queue(dev->net);
- 	netif_carrier_off(dev->net);
- 
-@@ -1178,10 +1182,6 @@ void gether_disconnect(struct gether *li
- 	dev->header_len = 0;
- 	dev->unwrap = NULL;
- 	dev->wrap = NULL;
--
--	spin_lock(&dev->lock);
--	dev->port_usb = NULL;
--	spin_unlock(&dev->lock);
+ 	misc_deregister(&privcmd_dev);
+ 	misc_deregister(&xen_privcmdbuf_dev);
  }
- EXPORT_SYMBOL_GPL(gether_disconnect);
- 
 
 
