@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329DF2EBB8C;
-	Mon, 13 Apr 2026 16:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC9D2F8BC3;
+	Mon, 13 Apr 2026 16:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097229; cv=none; b=HOJt/cdgUj9J3q+N9y8Wa7bCE78a3/KfhkRBd3wIzX6uzbVDo+TMwFV0HaXyWhGxAzjeZ/yvm/mYkcjbx/uU2VC3bLKchupqvb/x3ZCXBSRxhnsOFxNPw6wAuJfGqPD7IQOgboThFJVkLVgMFZa7IKJWQx+WGr1cvACqmnZ9ccQ=
+	t=1776097231; cv=none; b=I/siK9O+/TArAHsmOQJhc3SmgroYjLaTxlF7UrCAyOSCuFxwS1OmqS3PCH+2AvcUIkdXVG6zAgp9RijX3hlEoQ6ACiAHUiOk0rS2jiIUrBJmMUQlqIIPbrZQ/iaL4RXZQY2gv8Ov5qjlXpL64Ir4ItlvwcuxTnwq3vVysh/PuOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097229; c=relaxed/simple;
-	bh=gT/1yayX+gna35aL+AH8NYTptnbJdSYSgtG7yZIUJqY=;
+	s=arc-20240116; t=1776097231; c=relaxed/simple;
+	bh=2spqMbnKeMqFLUm64bkoO8PFa6rtFe0njrt3+oBvUzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+2tuO05UZvEnX+tpWA9WbvSnCSWR2yHUyGLRjBshGap2mUVJ97D5HzMgbHoh/DAVxIlNtJHEbAvAs+moTmsYMxPsIixWwSLMlhp2zD4GW/xDwqI4R1w6f9N930TFFX5VD88irlXEKXQbbfZIYvlcNPW6fClS67AO0JCd0KprSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rd+7BQkP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dUdeUOodEg04JquUTP8yfuql9hAk9wR3Fl5xcvpXFQOwL+osZFDl2vnm/6fIKXBCd7tDp05zrzASwz3jqIxeOs/wMirtmgBqBjKVdC/OOngq//Ct1aTIfD3E1mq8rs5QKKIa/hrm4lYDoPJT7SWe+UyEJyJGATO88B/00ZK3ZEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBLlc1Pl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rd+7BQkP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDCCC2BCAF;
-	Mon, 13 Apr 2026 16:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBLlc1Pl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A38C2BCAF;
+	Mon, 13 Apr 2026 16:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097229;
-	bh=gT/1yayX+gna35aL+AH8NYTptnbJdSYSgtG7yZIUJqY=;
+	s=korg; t=1776097231;
+	bh=2spqMbnKeMqFLUm64bkoO8PFa6rtFe0njrt3+oBvUzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rd+7BQkP6dVV2Du1zW7rbIia2EYdGqsR9k27221ib7JmRPTpjDJOBstekaDCNb9ZT
-	 l2pXw97qG8iVVyu68gtED9Ca444RShZpoBV1NCgcmStVve598hS1/bLsPQRntmtPYG
-	 ANeOJAGNox/Ku1XhnYSAxYjgSClQlrfSVNgx/pEk=
+	b=ZBLlc1Pl6KcO8k2bNYljKU1aw0S2MVDoTQFGbEcJi5Syyn5smLxTjOlkBPpV0oJJe
+	 /g9oWEmV/In8F42muQgN0t6UDR0759Jyuhy/N9mp0Gci7GJAYCm5JXzus1qFZh+2ie
+	 2F7PErqK8JeoYNJgP8Cp2AEtEh1IgApfuopKB5w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Lee Jones <lee.jones@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 5.15 023/570] mfd: qcom-pm8xxx: switch away from using chained IRQ handlers
-Date: Mon, 13 Apr 2026 17:52:34 +0200
-Message-ID: <20260413155831.288381850@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 024/570] mfd: qcom-pm8xxx: Convert to platform remove callback returning void
+Date: Mon, 13 Apr 2026 17:52:35 +0200
+Message-ID: <20260413155831.327061914@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -48,257 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit d3546ccdce4bc07fcf0648bfe865dbcd6d961afc ]
+[ Upstream commit 19ea1d3953017518d85db35b69b5aea9bc64d630 ]
 
-PM8xxx PMIC family uses GPIO as parent IRQ. Using it together with the
-irq_set_chained_handler_and_data() results in warnings from the GPIOLIB
-(see 461c1a7d4733 ("gpiolib: override irq_enable/disable"))
-as in this path the IRQ resources are not allocated (and thus the
-corresponding GPIO is not marked as used for the IRQ. Use request_irq so
-that the IRQ resources are proprely setup.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-[ 0.803271] ------------[ cut here ]------------
-[ 0.803338] WARNING: CPU: 3 PID: 1 at drivers/gpio/gpiolib.c:3207 gpiochip_enable_irq+0xa4/0xa8
-[ 0.803470] Modules linked in:
-[ 0.803542] CPU: 3 PID: 1 Comm: swapper/0 Not tainted 5.14.0-rc6-next-20210820-postmarketos-qcom-apq8064+ #1
-[ 0.803645] Hardware name: Generic DT based system
-[ 0.803710] Backtrace:
-[ 0.803777] [<c0e3493c>] (dump_backtrace) from [<c0e34d00>] (show_stack+0x20/0x24)
-[ 0.803911] r7:00000c87 r6:c07062dc r5:60000093 r4:c11d0f54
-[ 0.803980] [<c0e34ce0>] (show_stack) from [<c0e38314>] (dump_stack_lvl+0x48/0x54)
-[ 0.804097] [<c0e382cc>] (dump_stack_lvl) from [<c0e38338>] (dump_stack+0x18/0x1c)
-[ 0.804217] r5:00000009 r4:c11fe208
-[ 0.804274] [<c0e38320>] (dump_stack) from [<c03219c8>] (__warn+0xfc/0x114)
-[ 0.804387] [<c03218cc>] (__warn) from [<c0e35334>] (warn_slowpath_fmt+0x74/0xd0)
-[ 0.804509] r7:c07062dc r6:00000c87 r5:c11fe208 r4:00000000
-[ 0.804577] [<c0e352c4>] (warn_slowpath_fmt) from [<c07062dc>] (gpiochip_enable_irq+0xa4/0xa8)
-[ 0.804716] r8:c27b6200 r7:c27aec00 r6:c27aec18 r5:cf77a448 r4:c02225f0
-[ 0.804789] [<c0706238>] (gpiochip_enable_irq) from [<c0706348>] (gpiochip_irq_enable+0x28/0x38)
-[ 0.804921] r5:cf77a448 r4:c27aec18
-[ 0.804977] [<c0706320>] (gpiochip_irq_enable) from [<c03897a0>] (irq_enable+0x48/0x78)
-[ 0.805111] r5:00000000 r4:c27aec00
-[ 0.805167] [<c0389758>] (irq_enable) from [<c0389850>] (__irq_startup+0x80/0xbc)
-[ 0.805286] r5:00000000 r4:c27aec00
-[ 0.805343] [<c03897d0>] (__irq_startup) from [<c038996c>] (irq_startup+0xe0/0x18c)
-[ 0.805468] r7:c27aec00 r6:00000001 r5:00000000 r4:c27aec00
-[ 0.805535] [<c038988c>] (irq_startup) from [<c0389a54>] (irq_activate_and_startup+0x3c/0x74)
-[ 0.805669] r7:c27aec00 r6:00000001 r5:c27aec00 r4:00000000
-[ 0.805736] [<c0389a18>] (irq_activate_and_startup) from [<c0389b58>] (__irq_do_set_handler+0xcc/0x1c0)
-[ 0.805875] r7:c27aec00 r6:c0383710 r5:c08a16b0 r4:00000001
-[ 0.805943] [<c0389a8c>] (__irq_do_set_handler) from [<c0389d80>] (irq_set_chained_handler_and_data+0x60/0x98)
-[ 0.806087] r7:c27b5c10 r6:c27aed40 r5:c08a16b0 r4:c27aec00
-[ 0.806154] [<c0389d20>] (irq_set_chained_handler_and_data) from [<c08a1660>] (pm8xxx_probe+0x1fc/0x24c)
-[ 0.806298] r6:0000003a r5:0000003a r4:c27b5c00
-[ 0.806359] [<c08a1464>] (pm8xxx_probe) from [<c0871420>] (platform_probe+0x6c/0xc8)
-[ 0.806495] r10:c2507080 r9:e8bea2cc r8:c165e0e0 r7:c165e0e0 r6:c15f08f8 r5:c27b5c10
-[ 0.806582] r4:00000000
-[ 0.806632] [<c08713b4>] (platform_probe) from [<c086e280>] (really_probe+0xe8/0x460)
-[ 0.806769] r7:c165e0e0 r6:c15f08f8 r5:00000000 r4:c27b5c10
-[ 0.806837] [<c086e198>] (really_probe) from [<c086e6a8>] (__driver_probe_device+0xb0/0x22c)
-[ 0.806975] r7:c27b5c10 r6:cf70fba4 r5:c15f08f8 r4:c27b5c10
-[ 0.807042] [<c086e5f8>] (__driver_probe_device) from [<c086e868>] (driver_probe_device+0x44/0xe0)
-[ 0.807188] r9:e8bea2cc r8:00000000 r7:c27b5c10 r6:cf70fba4 r5:c16ae4b4 r4:c16ae4b0
-[ 0.807271] [<c086e824>] (driver_probe_device) from [<c086ecd8>] (__device_attach_driver+0xb4/0x12c)
-[ 0.807421] r9:e8bea2cc r8:c15eec08 r7:c27b5c10 r6:cf70fba4 r5:c15f08f8 r4:00000001
-[ 0.807506] [<c086ec24>] (__device_attach_driver) from [<c086c06c>] (bus_for_each_drv+0x94/0xe4)
-[ 0.807651] r7:c16ae484 r6:c086ec24 r5:cf70fba4 r4:00000000
-[ 0.807718] [<c086bfd8>] (bus_for_each_drv) from [<c086e0e0>] (__device_attach+0x104/0x19c)
-[ 0.807852] r6:00000001 r5:c27b5c54 r4:c27b5c10
-[ 0.807913] [<c086dfdc>] (__device_attach) from [<c086eef4>] (device_initial_probe+0x1c/0x20)
-[ 0.808050] r6:c27b5c10 r5:c15ef1b0 r4:c27b5c10
-[ 0.808111] [<c086eed8>] (device_initial_probe) from [<c086d00c>] (bus_probe_device+0x94/0x9c)
-[ 0.808240] [<c086cf78>] (bus_probe_device) from [<c086a60c>] (device_add+0x404/0x8f4)
-[ 0.808370] r7:c16ae484 r6:c251ba10 r5:00000000 r4:c27b5c10
-[ 0.808439] [<c086a208>] (device_add) from [<c0a82f50>] (of_device_add+0x44/0x4c)
-[ 0.808581] r10:c144c854 r9:00000001 r8:e8bea314 r7:c251ba10 r6:00000000 r5:00000000
-[ 0.808669] r4:c27b5c00
-[ 0.808718] [<c0a82f0c>] (of_device_add) from [<c0a836cc>] (of_platform_device_create_pdata+0xa0/0xc8)
-[ 0.808850] [<c0a8362c>] (of_platform_device_create_pdata) from [<c0a83908>] (of_platform_bus_create+0x1f0/0x514)
-[ 0.809005] r9:00000001 r8:c251ba10 r7:00000000 r6:00000000 r5:00000000 r4:e8bea2b0
-[ 0.809086] [<c0a83718>] (of_platform_bus_create) from [<c0a83e04>] (of_platform_populate+0x98/0x128)
-[ 0.809233] r10:c144c854 r9:00000001 r8:c251ba10 r7:00000000 r6:00000000 r5:e8bea170
-[ 0.809321] r4:e8bea2b0
-[ 0.809371] [<c0a83d6c>] (of_platform_populate) from [<c0a83f20>] (devm_of_platform_populate+0x60/0xa8)
-[ 0.809521] r9:0000011d r8:c165e0e0 r7:e8bea170 r6:c2c34f40 r5:c2cac140 r4:c251ba10
-[ 0.809604] [<c0a83ec0>] (devm_of_platform_populate) from [<c08a212c>] (ssbi_probe+0x138/0x16c)
-[ 0.809738] r6:c2c34f40 r5:c251ba10 r4:ff822700
-[ 0.809800] [<c08a1ff4>] (ssbi_probe) from [<c0871420>] (platform_probe+0x6c/0xc8)
-[ 0.809923] r7:c165e0e0 r6:c15f0a80 r5:c251ba10 r4:00000000
-[ 0.809989] [<c08713b4>] (platform_probe) from [<c086e280>] (really_probe+0xe8/0x460)
-[ 0.810120] r7:c165e0e0 r6:c15f0a80 r5:00000000 r4:c251ba10
-[ 0.810187] [<c086e198>] (really_probe) from [<c086e6a8>] (__driver_probe_device+0xb0/0x22c)
-[ 0.810325] r7:c251ba10 r6:c15f0a80 r5:c15f0a80 r4:c251ba10
-[ 0.810393] [<c086e5f8>] (__driver_probe_device) from [<c086e868>] (driver_probe_device+0x44/0xe0)
-[ 0.810539] r9:0000011d r8:00000000 r7:c251ba10 r6:c15f0a80 r5:c16ae4b4 r4:c16ae4b0
-[ 0.810623] [<c086e824>] (driver_probe_device) from [<c086ee2c>] (__driver_attach+0xdc/0x188)
-[ 0.810766] r9:0000011d r8:c144c834 r7:00000000 r6:c15f0a80 r5:c251ba10 r4:00000000
-[ 0.810849] [<c086ed50>] (__driver_attach) from [<c086bf60>] (bus_for_each_dev+0x88/0xd4)
-[ 0.810985] r7:00000000 r6:c086ed50 r5:c15f0a80 r4:00000000
-[ 0.811052] [<c086bed8>] (bus_for_each_dev) from [<c086dad4>] (driver_attach+0x2c/0x30)
-[ 0.811182] r6:c15ef1b0 r5:c2c34e80 r4:c15f0a80
-[ 0.811243] [<c086daa8>] (driver_attach) from [<c086d2dc>] (bus_add_driver+0x180/0x21c)
-[ 0.811364] [<c086d15c>] (bus_add_driver) from [<c086fa6c>] (driver_register+0x84/0x118)
-[ 0.811492] r7:00000000 r6:ffffe000 r5:c1428210 r4:c15f0a80
-[ 0.811558] [<c086f9e8>] (driver_register) from [<c0871174>] (__platform_driver_register+0x2c/0x34)
-[ 0.811683] r5:c1428210 r4:c16524a0
-[ 0.811739] [<c0871148>] (__platform_driver_register) from [<c1428234>] (ssbi_driver_init+0x24/0x28)
-[ 0.811868] [<c1428210>] (ssbi_driver_init) from [<c0302394>] (do_one_initcall+0x68/0x2c8)
-[ 0.811990] [<c030232c>] (do_one_initcall) from [<c140147c>] (kernel_init_freeable+0x1dc/0x23c)
-[ 0.812135] r7:cf7b0400 r6:c130339c r5:00000007 r4:c147f6a0
-[ 0.812204] [<c14012a0>] (kernel_init_freeable) from [<c0e40e60>] (kernel_init+0x20/0x138)
-[ 0.812345] r10:00000000 r9:00000000 r8:00000000 r7:00000000 r6:00000000 r5:c0e40e40
-[ 0.812433] r4:00000000
-[ 0.812483] [<c0e40e40>] (kernel_init) from [<c0300150>] (ret_from_fork+0x14/0x24)
-[ 0.812596] Exception stack(0xcf70ffb0 to 0xcf70fff8)
-[ 0.812684] ffa0: 00000000 00000000 00000000 00000000
-[ 0.812809] ffc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
-[ 0.812923] ffe0: 00000000 00000000 00000000 00000000 00000013 00000000
-[ 0.813008] r5:c0e40e40 r4:00000000
-[ 0.813075] ---[ end trace ad2443eee078d094 ]---
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Tested-by: David Heidelberg <david@ixit.cz> # on Nexus 7 (deb)
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Link: https://lore.kernel.org/r/20210925234333.2430755-1-dmitry.baryshkov@linaro.org
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231123165627.492259-14-u.kleine-koenig@pengutronix.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Stable-dep-of: 27a8acea47a9 ("mfd: qcom-pm8xxx: Fix OF populate on driver rebind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/qcom-pm8xxx.c | 39 ++++++++++++++++-----------------------
- 1 file changed, 16 insertions(+), 23 deletions(-)
+ drivers/mfd/qcom-pm8xxx.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-index ec18a04de3555..2f2734ba5273e 100644
+index 2f2734ba5273e..8831448371290 100644
 --- a/drivers/mfd/qcom-pm8xxx.c
 +++ b/drivers/mfd/qcom-pm8xxx.c
-@@ -65,7 +65,7 @@
- struct pm_irq_data {
- 	int num_irqs;
- 	struct irq_chip *irq_chip;
--	void (*irq_handler)(struct irq_desc *desc);
-+	irq_handler_t irq_handler;
- };
- 
- struct pm_irq_chip {
-@@ -169,19 +169,16 @@ static int pm8xxx_irq_master_handler(struct pm_irq_chip *chip, int master)
- 	return ret;
+@@ -587,19 +587,17 @@ static int pm8xxx_remove_child(struct device *dev, void *unused)
+ 	return 0;
  }
  
--static void pm8xxx_irq_handler(struct irq_desc *desc)
-+static irqreturn_t pm8xxx_irq_handler(int irq, void *data)
+-static int pm8xxx_remove(struct platform_device *pdev)
++static void pm8xxx_remove(struct platform_device *pdev)
  {
--	struct pm_irq_chip *chip = irq_desc_get_handler_data(desc);
--	struct irq_chip *irq_chip = irq_desc_get_chip(desc);
-+	struct pm_irq_chip *chip = data;
- 	unsigned int root;
- 	int	i, ret, masters = 0;
- 
--	chained_irq_enter(irq_chip, desc);
--
- 	ret = regmap_read(chip->regmap, SSBI_REG_ADDR_IRQ_ROOT, &root);
- 	if (ret) {
- 		pr_err("Can't read root status ret=%d\n", ret);
--		return;
-+		return IRQ_NONE;
- 	}
- 
- 	/* on pm8xxx series masters start from bit 1 of the root */
-@@ -192,7 +189,7 @@ static void pm8xxx_irq_handler(struct irq_desc *desc)
- 		if (masters & (1 << i))
- 			pm8xxx_irq_master_handler(chip, i);
- 
--	chained_irq_exit(irq_chip, desc);
-+	return IRQ_HANDLED;
- }
- 
- static void pm8821_irq_block_handler(struct pm_irq_chip *chip,
-@@ -230,19 +227,17 @@ static inline void pm8821_irq_master_handler(struct pm_irq_chip *chip,
- 			pm8821_irq_block_handler(chip, master, block);
- }
- 
--static void pm8821_irq_handler(struct irq_desc *desc)
-+static irqreturn_t pm8821_irq_handler(int irq, void *data)
- {
--	struct pm_irq_chip *chip = irq_desc_get_handler_data(desc);
--	struct irq_chip *irq_chip = irq_desc_get_chip(desc);
-+	struct pm_irq_chip *chip = data;
- 	unsigned int master;
- 	int ret;
- 
--	chained_irq_enter(irq_chip, desc);
- 	ret = regmap_read(chip->regmap,
- 			  PM8821_SSBI_REG_ADDR_IRQ_MASTER0, &master);
- 	if (ret) {
- 		pr_err("Failed to read master 0 ret=%d\n", ret);
--		goto done;
-+		return IRQ_NONE;
- 	}
- 
- 	/* bits 1 through 7 marks the first 7 blocks in master 0 */
-@@ -251,19 +246,18 @@ static void pm8821_irq_handler(struct irq_desc *desc)
- 
- 	/* bit 0 marks if master 1 contains any bits */
- 	if (!(master & BIT(0)))
--		goto done;
-+		return IRQ_NONE;
- 
- 	ret = regmap_read(chip->regmap,
- 			  PM8821_SSBI_REG_ADDR_IRQ_MASTER1, &master);
- 	if (ret) {
- 		pr_err("Failed to read master 1 ret=%d\n", ret);
--		goto done;
-+		return IRQ_NONE;
- 	}
- 
- 	pm8821_irq_master_handler(chip, 1, master);
- 
--done:
--	chained_irq_exit(irq_chip, desc);
-+	return IRQ_HANDLED;
- }
- 
- static void pm8xxx_irq_mask_ack(struct irq_data *d)
-@@ -574,14 +568,15 @@ static int pm8xxx_probe(struct platform_device *pdev)
- 	if (!chip->irqdomain)
- 		return -ENODEV;
- 
--	irq_set_chained_handler_and_data(irq, data->irq_handler, chip);
-+	rc = devm_request_irq(&pdev->dev, irq, data->irq_handler, 0, dev_name(&pdev->dev), chip);
-+	if (rc)
-+		return rc;
-+
- 	irq_set_irq_wake(irq, 1);
- 
- 	rc = of_platform_populate(pdev->dev.of_node, NULL, NULL, &pdev->dev);
--	if (rc) {
--		irq_set_chained_handler_and_data(irq, NULL, NULL);
-+	if (rc)
- 		irq_domain_remove(chip->irqdomain);
--	}
- 
- 	return rc;
- }
-@@ -594,11 +589,9 @@ static int pm8xxx_remove_child(struct device *dev, void *unused)
- 
- static int pm8xxx_remove(struct platform_device *pdev)
- {
--	int irq = platform_get_irq(pdev, 0);
  	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
  
  	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
--	irq_set_chained_handler_and_data(irq, NULL, NULL);
  	irq_domain_remove(chip->irqdomain);
+-
+-	return 0;
+ }
  
- 	return 0;
+ static struct platform_driver pm8xxx_driver = {
+ 	.probe		= pm8xxx_probe,
+-	.remove		= pm8xxx_remove,
++	.remove_new	= pm8xxx_remove,
+ 	.driver		= {
+ 		.name	= "pm8xxx-core",
+ 		.of_match_table = pm8xxx_id_table,
 -- 
 2.51.0
 
