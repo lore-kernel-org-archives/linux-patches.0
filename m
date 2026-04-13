@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B11949620;
-	Mon, 13 Apr 2026 16:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F298D26CE32;
+	Mon, 13 Apr 2026 16:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097674; cv=none; b=DlChiQKQE5/LpYLY67b81pnuggwOt/zr5FUFTT57Sbvtl5IYc1fhGFOCsXkZeycDmNb1QcruSogfym9dS6Nr8It4BoAoY8ukgH2IUa0LjjpHEhrwamSdouO8B28QukBibkUYM4jkKcKRoICyUzV/3YHXuxv7SmRH/BRTt7ixjYc=
+	t=1776097677; cv=none; b=F+oyfRvRfVrpGlWh2uvsrNqSdUXh91t387Y9wGS60fa/UfQwVxqG61AcMwVm6W8z5/Pjt4WWI7eCGyUDIq/K2wJZZ/tTckmSHMjK3yM5qWTEVike6ZHqkfMpmAVf4VQOyK3gAssFBWLQWF2E8hJiX8qGV9NH/TbmBL4E31I0XFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097674; c=relaxed/simple;
-	bh=v6/txUr8jcv/xBaFz8jr0IxIQZMQzOtSIlC9cP52uPk=;
+	s=arc-20240116; t=1776097677; c=relaxed/simple;
+	bh=9dIfCQWN2gCOLwkcI2bu+kRQ/lq5htpmStmMWbgblY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r4FCG5QrF6ErBqmsveVTdCLNa3Q1L3e3k5FtORGn5JYL6UNbvfA9NDsR+5Od2ZEZQbEf7EyrsUsxt9d749kkxvLOzgABHN85UW6gTTLCoNZs+23lGu+9U8MqZ2pBMKi4PAYthqetfOXdOf88uNMFnu0cC7hQszXSaMJBmMceSIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcV3i4eU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rLkUgOAiz4qfyZ1rRSZws1EqfQcNygg7silMsnzB1cw/wGVEVkYzOm5ncISUjbi7VU7RnQm0qe8UIlT1F4EvOCsTZ6Gu7WYq90NOK7br/XKemH/IBwrKA8XJ24aLldZ9YUIT1/rsspPt+Kv4raxAGi7NXPs0HVGo6rTeayn8eTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SczQVrCb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcV3i4eU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8A6C2BCAF;
-	Mon, 13 Apr 2026 16:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SczQVrCb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87827C2BCAF;
+	Mon, 13 Apr 2026 16:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097674;
-	bh=v6/txUr8jcv/xBaFz8jr0IxIQZMQzOtSIlC9cP52uPk=;
+	s=korg; t=1776097676;
+	bh=9dIfCQWN2gCOLwkcI2bu+kRQ/lq5htpmStmMWbgblY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UcV3i4eUUBe5qmAuQurpR9/t3FHpMFkkhCsc72gd3AF/5vfA/X9YtSf5PQ8M07o2X
-	 TKGhAutLmSyHHFEGCdCV3nShzMPMYzFI7O1qgEmYnT6Qu4hFKANWWI0FSqiCjWyGEO
-	 CemmxSlHqDuWOJgPoFd0nEH0IGTm7XINP9C3nGlY=
+	b=SczQVrCb7DG6vNDL57yseenGtMhbKCv97JrRr4xwVt6Dl4edqCNiAtEA9epVv4MZ9
+	 jpJPIanPznWtnGcai8z3/+ueT/vhuTaxIoWWYP3ToacGVuSxrLfjKxtZ1UOPEJBf2S
+	 yOwwiYX58msNMvSe8cIqOjh98HyEgnSmKliMaWeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Julien Stephan <jstephan@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Charles Xu <charles_xu@189.cn>
-Subject: [PATCH 5.15 196/570] driver: iio: add missing checks on iio_infos callback access
-Date: Mon, 13 Apr 2026 17:55:27 +0200
-Message-ID: <20260413155837.801593842@linuxfoundation.org>
+	NeilBrown <neilb@ownmail.net>,
+	stable@kernel.org,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 197/570] sunrpc: fix cache_request leak in cache_release
+Date: Mon, 13 Apr 2026 17:55:28 +0200
+Message-ID: <20260413155837.838847646@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -52,168 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julien Stephan <jstephan@baylibre.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit c4ec8dedca961db056ec85cb7ca8c9f7e2e92252 upstream.
+commit 17ad31b3a43b72aec3a3d83605891e1397d0d065 upstream.
 
-Some callbacks from iio_info structure are accessed without any check, so
-if a driver doesn't implement them trying to access the corresponding
-sysfs entries produce a kernel oops such as:
+When a reader's file descriptor is closed while in the middle of reading
+a cache_request (rp->offset != 0), cache_release() decrements the
+request's readers count but never checks whether it should free the
+request.
 
-[ 2203.527791] Unable to handle kernel NULL pointer dereference at virtual address 00000000 when execute
-[...]
-[ 2203.783416] Call trace:
-[ 2203.783429]  iio_read_channel_info_avail from dev_attr_show+0x18/0x48
-[ 2203.789807]  dev_attr_show from sysfs_kf_seq_show+0x90/0x120
-[ 2203.794181]  sysfs_kf_seq_show from seq_read_iter+0xd0/0x4e4
-[ 2203.798555]  seq_read_iter from vfs_read+0x238/0x2a0
-[ 2203.802236]  vfs_read from ksys_read+0xa4/0xd4
-[ 2203.805385]  ksys_read from ret_fast_syscall+0x0/0x54
-[ 2203.809135] Exception stack(0xe0badfa8 to 0xe0badff0)
-[ 2203.812880] dfa0:                   00000003 b6f10f80 00000003 b6eab000 00020000 00000000
-[ 2203.819746] dfc0: 00000003 b6f10f80 7ff00000 00000003 00000003 00000000 00020000 00000000
-[ 2203.826619] dfe0: b6e1bc88 bed80958 b6e1bc94 b6e1bcb0
-[ 2203.830363] Code: bad PC value
-[ 2203.832695] ---[ end trace 0000000000000000 ]---
+In cache_read(), when readers drops to 0 and CACHE_PENDING is clear, the
+cache_request is removed from the queue and freed along with its buffer
+and cache_head reference. cache_release() lacks this cleanup.
 
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Signed-off-by: Julien Stephan <jstephan@baylibre.com>
-Link: https://lore.kernel.org/r/20240530-iio-core-fix-segfault-v3-1-8b7cd2a03773@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Charles Xu <charles_xu@189.cn>
+The only other path that frees requests with readers == 0 is
+cache_dequeue(), but it runs only when CACHE_PENDING transitions from
+set to clear. If that transition already happened while readers was
+still non-zero, cache_dequeue() will have skipped the request, and no
+subsequent call will clean it up.
+
+Add the same cleanup logic from cache_read() to cache_release(): after
+decrementing readers, check if it reached 0 with CACHE_PENDING clear,
+and if so, dequeue and free the cache_request.
+
+Reported-by: NeilBrown <neilb@ownmail.net>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-core.c  |    7 ++++++-
- drivers/iio/industrialio-event.c |    9 +++++++++
- drivers/iio/inkern.c             |   35 ++++++++++++++++++++++++-----------
- 3 files changed, 39 insertions(+), 12 deletions(-)
+ net/sunrpc/cache.c |   26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/industrialio-core.c
-+++ b/drivers/iio/industrialio-core.c
-@@ -776,9 +776,11 @@ static ssize_t iio_read_channel_info(str
- 							INDIO_MAX_RAW_ELEMENTS,
- 							vals, &val_len,
- 							this_attr->address);
--	else
-+	else if (indio_dev->info->read_raw)
- 		ret = indio_dev->info->read_raw(indio_dev, this_attr->c,
- 				    &vals[0], &vals[1], this_attr->address);
-+	else
-+		return -EINVAL;
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -1037,14 +1037,25 @@ static int cache_release(struct inode *i
+ 	struct cache_reader *rp = filp->private_data;
  
- 	if (ret < 0)
- 		return ret;
-@@ -860,6 +862,9 @@ static ssize_t iio_read_channel_info_ava
- 	int length;
- 	int type;
- 
-+	if (!indio_dev->info->read_avail)
-+		return -EINVAL;
+ 	if (rp) {
++		struct cache_request *rq = NULL;
 +
- 	ret = indio_dev->info->read_avail(indio_dev, this_attr->c,
- 					  &vals, &type, &length,
- 					  this_attr->address);
---- a/drivers/iio/industrialio-event.c
-+++ b/drivers/iio/industrialio-event.c
-@@ -277,6 +277,9 @@ static ssize_t iio_ev_state_store(struct
- 	if (ret < 0)
- 		return ret;
+ 		spin_lock(&queue_lock);
+ 		if (rp->offset) {
+ 			struct cache_queue *cq;
+-			for (cq= &rp->q; &cq->list != &cd->queue;
+-			     cq = list_entry(cq->list.next, struct cache_queue, list))
++			for (cq = &rp->q; &cq->list != &cd->queue;
++			     cq = list_entry(cq->list.next,
++					     struct cache_queue, list))
+ 				if (!cq->reader) {
+-					container_of(cq, struct cache_request, q)
+-						->readers--;
++					struct cache_request *cr =
++						container_of(cq,
++						struct cache_request, q);
++					cr->readers--;
++					if (cr->readers == 0 &&
++					    !test_bit(CACHE_PENDING,
++						      &cr->item->flags)) {
++						list_del(&cr->q.list);
++						rq = cr;
++					}
+ 					break;
+ 				}
+ 			rp->offset = 0;
+@@ -1052,9 +1063,14 @@ static int cache_release(struct inode *i
+ 		list_del(&rp->q.list);
+ 		spin_unlock(&queue_lock);
  
-+	if (!indio_dev->info->write_event_config)
-+		return -EINVAL;
++		if (rq) {
++			cache_put(rq->item, cd);
++			kfree(rq->buf);
++			kfree(rq);
++		}
 +
- 	ret = indio_dev->info->write_event_config(indio_dev,
- 		this_attr->c, iio_ev_attr_type(this_attr),
- 		iio_ev_attr_dir(this_attr), val);
-@@ -292,6 +295,9 @@ static ssize_t iio_ev_state_show(struct
- 	struct iio_dev_attr *this_attr = to_iio_dev_attr(attr);
- 	int val;
- 
-+	if (!indio_dev->info->read_event_config)
-+		return -EINVAL;
-+
- 	val = indio_dev->info->read_event_config(indio_dev,
- 		this_attr->c, iio_ev_attr_type(this_attr),
- 		iio_ev_attr_dir(this_attr));
-@@ -310,6 +316,9 @@ static ssize_t iio_ev_value_show(struct
- 	int val, val2, val_arr[2];
- 	int ret;
- 
-+	if (!indio_dev->info->read_event_value)
-+		return -EINVAL;
-+
- 	ret = indio_dev->info->read_event_value(indio_dev,
- 		this_attr->c, iio_ev_attr_type(this_attr),
- 		iio_ev_attr_dir(this_attr), iio_ev_attr_info(this_attr),
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -517,6 +517,7 @@ EXPORT_SYMBOL_GPL(devm_iio_channel_get_a
- static int iio_channel_read(struct iio_channel *chan, int *val, int *val2,
- 	enum iio_chan_info_enum info)
- {
-+	const struct iio_info *iio_info = chan->indio_dev->info;
- 	int unused;
- 	int vals[INDIO_MAX_RAW_ELEMENTS];
- 	int ret;
-@@ -528,15 +529,19 @@ static int iio_channel_read(struct iio_c
- 	if (!iio_channel_has_info(chan->channel, info))
- 		return -EINVAL;
- 
--	if (chan->indio_dev->info->read_raw_multi) {
--		ret = chan->indio_dev->info->read_raw_multi(chan->indio_dev,
--					chan->channel, INDIO_MAX_RAW_ELEMENTS,
--					vals, &val_len, info);
-+	if (iio_info->read_raw_multi) {
-+		ret = iio_info->read_raw_multi(chan->indio_dev,
-+					       chan->channel,
-+					       INDIO_MAX_RAW_ELEMENTS,
-+					       vals, &val_len, info);
- 		*val = vals[0];
- 		*val2 = vals[1];
--	} else
--		ret = chan->indio_dev->info->read_raw(chan->indio_dev,
--					chan->channel, val, val2, info);
-+	} else if (iio_info->read_raw) {
-+		ret = iio_info->read_raw(chan->indio_dev,
-+					 chan->channel, val, val2, info);
-+	} else {
-+		return -EINVAL;
-+	}
- 
- 	return ret;
- }
-@@ -754,11 +759,15 @@ static int iio_channel_read_avail(struct
- 				  const int **vals, int *type, int *length,
- 				  enum iio_chan_info_enum info)
- {
-+	const struct iio_info *iio_info = chan->indio_dev->info;
-+
- 	if (!iio_channel_has_available(chan->channel, info))
- 		return -EINVAL;
- 
--	return chan->indio_dev->info->read_avail(chan->indio_dev, chan->channel,
--						 vals, type, length, info);
-+	if (iio_info->read_avail)
-+		return iio_info->read_avail(chan->indio_dev, chan->channel,
-+					    vals, type, length, info);
-+	return -EINVAL;
- }
- 
- int iio_read_avail_channel_attribute(struct iio_channel *chan,
-@@ -889,8 +898,12 @@ EXPORT_SYMBOL_GPL(iio_get_channel_type);
- static int iio_channel_write(struct iio_channel *chan, int val, int val2,
- 			     enum iio_chan_info_enum info)
- {
--	return chan->indio_dev->info->write_raw(chan->indio_dev,
--						chan->channel, val, val2, info);
-+	const struct iio_info *iio_info = chan->indio_dev->info;
-+
-+	if (iio_info->write_raw)
-+		return iio_info->write_raw(chan->indio_dev,
-+					   chan->channel, val, val2, info);
-+	return -EINVAL;
- }
- 
- int iio_write_channel_attribute(struct iio_channel *chan, int val, int val2,
+ 		filp->private_data = NULL;
+ 		kfree(rp);
+-
+ 	}
+ 	if (filp->f_mode & FMODE_WRITE) {
+ 		atomic_dec(&cd->writers);
 
 
