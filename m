@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EA73090F5;
-	Mon, 13 Apr 2026 16:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6F929BD87;
+	Mon, 13 Apr 2026 16:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098182; cv=none; b=ayOSnuxQ8E8xbXpt4illRgE6MS/DnSYuPaHl9wpCoZfcwhQ/75FLs7V8xCMjjob7AjMcS+4Ly+lj5ugoyvrG/BlJeHx9s9fWxUv2zwELVu4uyyIUyefKi4uQIkgsiGmIloL21y3dllYsNNg3aDjlCwf6PGrYLvYYaJkbr0W4Z7c=
+	t=1776098184; cv=none; b=H1WFIGBr2EUQ377wlfDgFK8yrzY34QuG6q6rohyNF/M6+BN2P5XgeP+JpgqzhY7NTzs1Qhc3tAuOA3H88qyIxBHHpYwzyJ3lpY1axX8tNT5ongbT0SJ+daaxvRKYO6czZP1Baoo2cSQKqtNtFRZvv/V846usvLxbSdAI/TKgObg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098182; c=relaxed/simple;
-	bh=6K4icBzoiVlBRJS48RdoulQQm1V0MP4Juz8PdNkmEQU=;
+	s=arc-20240116; t=1776098184; c=relaxed/simple;
+	bh=UkC3Q6YY3lIgGy5cPLik3YR5iaKl7lYdJSQrJ5rvRUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hVUy8TaRfEcLLoNvt+kLJL4pbZZgXk8h46TSS+CYUxqcm52/0XiHiBySn0TysWugtV2UFpoz8TP1WPoZv70bK7cDAQdPRMV2w7n8kJacLAS4blqyb15hsRijBzi8rx7F/5vl0K+zecipEtuA+sDJIxGhxr1iZZt3v/Er5ymOGyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCsnA0fN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H+FlQjydhKacqOO+EWUdZxJxc78te6dO3MJkxYxl3EWsBY9DdHb9fFEpzSTEBVebbEgDaPbMKKRfTBZMSixkfV7R721JGvWM8ow7cqyW20LvBoWBS1xe+UBrg2cOTyr6h7dk5TO+ppJXWdLfxmRKYwsgCTCw+8nFuDaVpFYrIa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w24iMlaW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCsnA0fN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A43DC2BCAF;
-	Mon, 13 Apr 2026 16:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w24iMlaW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1390EC2BCAF;
+	Mon, 13 Apr 2026 16:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098181;
-	bh=6K4icBzoiVlBRJS48RdoulQQm1V0MP4Juz8PdNkmEQU=;
+	s=korg; t=1776098184;
+	bh=UkC3Q6YY3lIgGy5cPLik3YR5iaKl7lYdJSQrJ5rvRUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sCsnA0fNLMpyo/Nxsm1OtCDQ0xtdr3d7vZ1f8lUxI1QKCghHc1tbEAKD04Y0Vw+jf
-	 LRMvxEObQ+tuMK5kd01cCcmFI7Wq6WXb7PhGiqqD+Mj44K1ANuCtXU7Nnxlt4cwg1n
-	 WZ0sAhq7fFv/gvkhEl43rXOc58QOA+nSl1SNAXE0=
+	b=w24iMlaW+9ZkIQjTY7t7pMiLmkEc+Vv6FJkb7yw2S/Dg+/ITTLJlhzdDAU7TvE1OM
+	 TbgaZC11R5yleWnUnoh5iAzcgp/htl8mKWfQ1/Oo89uzhVmZppTePR8nBrUGgZOz1/
+	 qyAJHZdOiH+Jp2JeLfiHwy7k/tyHjqP0eHNgEAwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 425/570] netfilter: x_tables: restrict xt_check_match/xt_check_target extensions for NFPROTO_ARP
-Date: Mon, 13 Apr 2026 17:59:16 +0200
-Message-ID: <20260413155846.392076088@linuxfoundation.org>
+Subject: [PATCH 5.15 426/570] netfilter: nf_tables: reject immediate NF_QUEUE verdict
+Date: Mon, 13 Apr 2026 17:59:17 +0200
+Message-ID: <20260413155846.429179243@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,96 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 3d5d488f11776738deab9da336038add95d342d1 ]
+[ Upstream commit da107398cbd4bbdb6bffecb2ce86d5c9384f4cec ]
 
-Weiming Shi says:
+nft_queue is always used from userspace nftables to deliver the NF_QUEUE
+verdict. Immediately emitting an NF_QUEUE verdict is never used by the
+userspace nft tools, so reject immediate NF_QUEUE verdicts.
 
-xt_match and xt_target structs registered with NFPROTO_UNSPEC can be
-loaded by any protocol family through nft_compat. When such a
-match/target sets .hooks to restrict which hooks it may run on, the
-bitmask uses NF_INET_* constants. This is only correct for families
-whose hook layout matches NF_INET_*: IPv4, IPv6, INET, and bridge
-all share the same five hooks (PRE_ROUTING ... POST_ROUTING).
+The arp family does not provide queue support, but such an immediate
+verdict is still reachable. Globally reject NF_QUEUE immediate verdicts
+to address this issue.
 
-ARP only has three hooks (IN=0, OUT=1, FORWARD=2) with different
-semantics. Because NF_ARP_OUT == 1 == NF_INET_LOCAL_IN, the .hooks
-validation silently passes for the wrong reasons, allowing matches to
-run on ARP chains where the hook assumptions (e.g. state->in being
-set on input hooks) do not hold. This leads to NULL pointer
-dereferences; xt_devgroup is one concrete example:
-
- Oops: general protection fault, probably for non-canonical address 0xdffffc0000000044: 0000 [#1] SMP KASAN NOPTI
- KASAN: null-ptr-deref in range [0x0000000000000220-0x0000000000000227]
- RIP: 0010:devgroup_mt+0xff/0x350
- Call Trace:
-  <TASK>
-  nft_match_eval (net/netfilter/nft_compat.c:407)
-  nft_do_chain (net/netfilter/nf_tables_core.c:285)
-  nft_do_chain_arp (net/netfilter/nft_chain_filter.c:61)
-  nf_hook_slow (net/netfilter/core.c:623)
-  arp_xmit (net/ipv4/arp.c:666)
-  </TASK>
- Kernel panic - not syncing: Fatal exception in interrupt
-
-Fix it by restricting arptables to NFPROTO_ARP extensions only.
-Note that arptables-legacy only supports:
-
-- arpt_CLASSIFY
-- arpt_mangle
-- arpt_MARK
-
-that provide explicit NFPROTO_ARP match/target declarations.
-
-Fixes: 9291747f118d ("netfilter: xtables: add device group match")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: f342de4e2f33 ("netfilter: nf_tables: reject QUEUE/DROP verdict parameters")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/x_tables.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ net/netfilter/nf_tables_api.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
-index 6303ba7a62a2f..9c0ec0bbb5699 100644
---- a/net/netfilter/x_tables.c
-+++ b/net/netfilter/x_tables.c
-@@ -501,6 +501,17 @@ int xt_check_match(struct xt_mtchk_param *par,
- 				    par->match->table, par->table);
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 3c845d6a340fb..53d7dd39a95bc 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -10232,8 +10232,6 @@ static int nft_verdict_init(const struct nft_ctx *ctx, struct nft_data *data,
+ 	switch (data->verdict.code) {
+ 	case NF_ACCEPT:
+ 	case NF_DROP:
+-	case NF_QUEUE:
+-		break;
+ 	case NFT_CONTINUE:
+ 	case NFT_BREAK:
+ 	case NFT_RETURN:
+@@ -10268,6 +10266,11 @@ static int nft_verdict_init(const struct nft_ctx *ctx, struct nft_data *data,
+ 
+ 		data->verdict.chain = chain;
+ 		break;
++	case NF_QUEUE:
++		/* The nft_queue expression is used for this purpose, an
++		 * immediate NF_QUEUE verdict should not ever be seen here.
++		 */
++		fallthrough;
+ 	default:
  		return -EINVAL;
  	}
-+
-+	/* NFPROTO_UNSPEC implies NF_INET_* hooks which do not overlap with
-+	 * NF_ARP_IN,OUT,FORWARD, allow explicit extensions with NFPROTO_ARP
-+	 * support.
-+	 */
-+	if (par->family == NFPROTO_ARP &&
-+	    par->match->family != NFPROTO_ARP) {
-+		pr_info_ratelimited("%s_tables: %s match: not valid for this family\n",
-+				    xt_prefix[par->family], par->match->name);
-+		return -EINVAL;
-+	}
- 	if (par->match->hooks && (par->hook_mask & ~par->match->hooks) != 0) {
- 		char used[64], allow[64];
- 
-@@ -1016,6 +1027,18 @@ int xt_check_target(struct xt_tgchk_param *par,
- 				    par->target->table, par->table);
- 		return -EINVAL;
- 	}
-+
-+	/* NFPROTO_UNSPEC implies NF_INET_* hooks which do not overlap with
-+	 * NF_ARP_IN,OUT,FORWARD, allow explicit extensions with NFPROTO_ARP
-+	 * support.
-+	 */
-+	if (par->family == NFPROTO_ARP &&
-+	    par->target->family != NFPROTO_ARP) {
-+		pr_info_ratelimited("%s_tables: %s target: not valid for this family\n",
-+				    xt_prefix[par->family], par->target->name);
-+		return -EINVAL;
-+	}
-+
- 	if (par->target->hooks && (par->hook_mask & ~par->target->hooks) != 0) {
- 		char used[64], allow[64];
- 
 -- 
 2.53.0
 
