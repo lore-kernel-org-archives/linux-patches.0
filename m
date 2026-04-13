@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC082D0C7E;
-	Mon, 13 Apr 2026 16:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A425A280CFB;
+	Mon, 13 Apr 2026 16:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098115; cv=none; b=IxV3SmwduL4tiCsgp2Q85XnBL58ZyqiJu/3CvbtPEW/PM/XHYF/SBhuxQS1ZTfZVcXOX+I/MBoCGFgi3+oLDQRBG6LHxim6HxlztWCSI0AyHvE8Keyi61c3UX+YuoF3YX2w2uD7xVEXC6Re+6vxHn70LYXxd/p2WRvzu94mjENk=
+	t=1776098117; cv=none; b=TXAH6B8MpRhsxWEIIeWG+Zm+VV19RNwncNCstWSg66zQlc5AUEswZqeX1rP5uhQssgJIhVv0rjoa7pnRvne1GP8A+xtQRVWFe4/jw+00Zby1rb82/mscZNqDTd3FSmWbnfZbDBA8Zw3Cys0PgYLRPd0mEyaIz2ermT7thPtCUJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098115; c=relaxed/simple;
-	bh=kIHF5fB7/L9qljiVITm1u0pLczfT4MBNRy08SM1YARg=;
+	s=arc-20240116; t=1776098117; c=relaxed/simple;
+	bh=R2qN32Vaf6TbWbXIhSrCoZWsPVbNihKaWvUNLSUGOqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NpvvvsBbBxGNfBCe79wn7r4hEY4JOMa1AIdoO/ecjXYODShxYKLSKzlXv2+sQ7ZnBwgLAnqRVmV+l9XcKmsDna0j4iDEaE1hZsdG9e9UwtpR2iLIUUqmkcO+Tn2Cu3bAVCAGFSp9pYjD6O/1PZ5ZoEEL4PlBe8sMJAtZzzRASdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DVgtU2j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vt71EpiR9VlQRmPawOIdkKRTP1YPS4teGZLQ7YAxcrssNs2tT9fm7YR1aYEzCYrkgINTv3XehJT/Uu7LSG9+fIzHIPdGurIPE1og1RKnSpyorTMRfKAwjxmBmSUdbgxkvcwnoSLpCfqhF5BYV7Kb9f7cww+XaHkZXQC5kouysCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmDfi6ou; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DVgtU2j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD9CC2BCAF;
-	Mon, 13 Apr 2026 16:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmDfi6ou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE71C2BCAF;
+	Mon, 13 Apr 2026 16:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098115;
-	bh=kIHF5fB7/L9qljiVITm1u0pLczfT4MBNRy08SM1YARg=;
+	s=korg; t=1776098117;
+	bh=R2qN32Vaf6TbWbXIhSrCoZWsPVbNihKaWvUNLSUGOqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2DVgtU2jcHBQtfYoGaRK6asFcvBNeLomMSP2nF5loIuPVuQPqWp5dctP/hfXrdnow
-	 eoM77YOoUYDMdhnLY+x2twKRbVbBKS/FVI00B9ebSlr/LbkrkjfRjhx2G5NGMEQtfG
-	 1lqvKk17qHaX8f9KOvHcEcqAZxU+wUGTyQxnaUEw=
+	b=HmDfi6ouHYucNrY8bW39BniWTbHdD34pngL4+M5xQYaUkSwGJwUK5QfGoRznUkuo+
+	 eLA3scUnJ5VyrZHpWUeH5bEWKLjfgKR9jGbCQ0yVCsTs9PcQreerx5KO2vIGNpq6uI
+	 arQfE5jM9udYD+k1aIFv9qlHgDJLkXsXwrAgoYcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	syzbot+f50072212ab792c86925@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 398/570] HID: wacom: fix out-of-bounds read in wacom_intuos_bt_irq
-Date: Mon, 13 Apr 2026 17:58:49 +0200
-Message-ID: <20260413155845.380987541@linuxfoundation.org>
+Subject: [PATCH 5.15 399/570] atm: lec: fix use-after-free in sock_def_readable()
+Date: Mon, 13 Apr 2026 17:58:50 +0200
+Message-ID: <20260413155845.417377541@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -46,64 +47,250 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Sevens <bsevens@google.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 2f1763f62909ccb6386ac50350fa0abbf5bb16a9 ]
+[ Upstream commit 922814879542c2e397b0e9641fd36b8202a8e555 ]
 
-The wacom_intuos_bt_irq() function processes Bluetooth HID reports
-without sufficient bounds checking. A maliciously crafted short report
-can trigger an out-of-bounds read when copying data into the wacom
-structure.
+A race condition exists between lec_atm_close() setting priv->lecd
+to NULL and concurrent access to priv->lecd in send_to_lecd(),
+lec_handle_bridge(), and lec_atm_send(). When the socket is freed
+via RCU while another thread is still using it, a use-after-free
+occurs in sock_def_readable() when accessing the socket's wait queue.
 
-Specifically, report 0x03 requires at least 22 bytes to safely read
-the processed data and battery status, while report 0x04 (which
-falls through to 0x03) requires 32 bytes.
+The root cause is that lec_atm_close() clears priv->lecd without
+any synchronization, while callers dereference priv->lecd without
+any protection against concurrent teardown.
 
-Add explicit length checks for these report IDs and log a warning if
-a short report is received.
+Fix this by converting priv->lecd to an RCU-protected pointer:
+- Mark priv->lecd as __rcu in lec.h
+- Use rcu_assign_pointer() in lec_atm_close() and lecd_attach()
+  for safe pointer assignment
+- Use rcu_access_pointer() for NULL checks that do not dereference
+  the pointer in lec_start_xmit(), lec_push(), send_to_lecd() and
+  lecd_attach()
+- Use rcu_read_lock/rcu_dereference/rcu_read_unlock in send_to_lecd(),
+  lec_handle_bridge() and lec_atm_send() to safely access lecd
+- Use rcu_assign_pointer() followed by synchronize_rcu() in
+  lec_atm_close() to ensure all readers have completed before
+  proceeding. This is safe since lec_atm_close() is called from
+  vcc_release() which holds lock_sock(), a sleeping lock.
+- Remove the manual sk_receive_queue drain from lec_atm_close()
+  since vcc_destroy_socket() already drains it after lec_atm_close()
+  returns.
 
-Signed-off-by: Benoît Sevens <bsevens@google.com>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+v2: Switch from spinlock + sock_hold/put approach to RCU to properly
+    fix the race. The v1 spinlock approach had two issues pointed out
+    by Eric Dumazet:
+    1. priv->lecd was still accessed directly after releasing the
+       lock instead of using a local copy.
+    2. The spinlock did not prevent packets being queued after
+       lec_atm_close() drains sk_receive_queue since timer and
+       workqueue paths bypass netif_stop_queue().
+
+Note: Syzbot patch testing was attempted but the test VM terminated
+    unexpectedly with "Connection to localhost closed by remote host",
+    likely due to a QEMU AHCI emulation issue unrelated to this fix.
+    Compile testing with "make W=1 net/atm/lec.o" passes cleanly.
+
+Reported-by: syzbot+f50072212ab792c86925@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f50072212ab792c86925
+Link: https://lore.kernel.org/all/20260309093614.502094-1-kartikey406@gmail.com/T/ [v1]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260309155908.508768-1-kartikey406@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/wacom_wac.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/atm/lec.c |   72 +++++++++++++++++++++++++++++++++++++---------------------
+ net/atm/lec.h |    2 -
+ 2 files changed, 48 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
-index 0ab473f372ad0..0cc979d99b3d8 100644
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1258,10 +1258,20 @@ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
+--- a/net/atm/lec.c
++++ b/net/atm/lec.c
+@@ -142,6 +142,7 @@ static void lec_handle_bridge(struct sk_
+ 		struct sock *sk;
+ 		struct sk_buff *skb2;
+ 		struct atmlec_msg *mesg;
++		struct atm_vcc *vcc;
  
- 	switch (data[0]) {
- 	case 0x04:
-+		if (len < 32) {
-+			dev_warn(wacom->pen_input->dev.parent,
-+				 "Report 0x04 too short: %zu bytes\n", len);
-+			break;
+ 		skb2 = alloc_skb(sizeof(struct atmlec_msg), GFP_ATOMIC);
+ 		if (skb2 == NULL)
+@@ -154,10 +155,18 @@ static void lec_handle_bridge(struct sk_
+ 					/* 0x01 is topology change */
+ 
+ 		priv = netdev_priv(dev);
+-		atm_force_charge(priv->lecd, skb2->truesize);
+-		sk = sk_atm(priv->lecd);
+-		skb_queue_tail(&sk->sk_receive_queue, skb2);
+-		sk->sk_data_ready(sk);
++
++		rcu_read_lock();
++		vcc = rcu_dereference(priv->lecd);
++		if (vcc) {
++			atm_force_charge(vcc, skb2->truesize);
++			sk = sk_atm(vcc);
++			skb_queue_tail(&sk->sk_receive_queue, skb2);
++			sk->sk_data_ready(sk);
++		} else {
++			dev_kfree_skb(skb2);
 +		}
- 		wacom_intuos_bt_process_data(wacom, data + i);
- 		i += 10;
- 		fallthrough;
- 	case 0x03:
-+		if (i == 1 && len < 22) {
-+			dev_warn(wacom->pen_input->dev.parent,
-+				 "Report 0x03 too short: %zu bytes\n", len);
-+			break;
-+		}
- 		wacom_intuos_bt_process_data(wacom, data + i);
- 		i += 10;
- 		wacom_intuos_bt_process_data(wacom, data + i);
--- 
-2.53.0
-
++		rcu_read_unlock();
+ 	}
+ }
+ #endif /* IS_ENABLED(CONFIG_BRIDGE) */
+@@ -216,7 +225,7 @@ static netdev_tx_t lec_start_xmit(struct
+ 	int is_rdesc;
+ 
+ 	pr_debug("called\n");
+-	if (!priv->lecd) {
++	if (!rcu_access_pointer(priv->lecd)) {
+ 		pr_info("%s:No lecd attached\n", dev->name);
+ 		dev->stats.tx_errors++;
+ 		netif_stop_queue(dev);
+@@ -443,6 +452,7 @@ static int lec_atm_send(struct atm_vcc *
+ 			/* hit from bridge table, send LE_ARP_RESPONSE */
+ 			struct sk_buff *skb2;
+ 			struct sock *sk;
++			struct atm_vcc *vcc;
+ 
+ 			pr_debug("%s: entry found, responding to zeppelin\n",
+ 				 dev->name);
+@@ -451,10 +461,18 @@ static int lec_atm_send(struct atm_vcc *
+ 				break;
+ 			skb2->len = sizeof(struct atmlec_msg);
+ 			skb_copy_to_linear_data(skb2, mesg, sizeof(*mesg));
+-			atm_force_charge(priv->lecd, skb2->truesize);
+-			sk = sk_atm(priv->lecd);
+-			skb_queue_tail(&sk->sk_receive_queue, skb2);
+-			sk->sk_data_ready(sk);
++
++			rcu_read_lock();
++			vcc = rcu_dereference(priv->lecd);
++			if (vcc) {
++				atm_force_charge(vcc, skb2->truesize);
++				sk = sk_atm(vcc);
++				skb_queue_tail(&sk->sk_receive_queue, skb2);
++				sk->sk_data_ready(sk);
++			} else {
++				dev_kfree_skb(skb2);
++			}
++			rcu_read_unlock();
+ 		}
+ 	}
+ #endif /* IS_ENABLED(CONFIG_BRIDGE) */
+@@ -470,23 +488,16 @@ static int lec_atm_send(struct atm_vcc *
+ 
+ static void lec_atm_close(struct atm_vcc *vcc)
+ {
+-	struct sk_buff *skb;
+ 	struct net_device *dev = (struct net_device *)vcc->proto_data;
+ 	struct lec_priv *priv = netdev_priv(dev);
+ 
+-	priv->lecd = NULL;
++	rcu_assign_pointer(priv->lecd, NULL);
++	synchronize_rcu();
+ 	/* Do something needful? */
+ 
+ 	netif_stop_queue(dev);
+ 	lec_arp_destroy(priv);
+ 
+-	if (skb_peek(&sk_atm(vcc)->sk_receive_queue))
+-		pr_info("%s closing with messages pending\n", dev->name);
+-	while ((skb = skb_dequeue(&sk_atm(vcc)->sk_receive_queue))) {
+-		atm_return(vcc, skb->truesize);
+-		dev_kfree_skb(skb);
+-	}
+-
+ 	pr_info("%s: Shut down!\n", dev->name);
+ 	module_put(THIS_MODULE);
+ }
+@@ -512,12 +523,14 @@ send_to_lecd(struct lec_priv *priv, atml
+ 	     const unsigned char *mac_addr, const unsigned char *atm_addr,
+ 	     struct sk_buff *data)
+ {
++	struct atm_vcc *vcc;
+ 	struct sock *sk;
+ 	struct sk_buff *skb;
+ 	struct atmlec_msg *mesg;
+ 
+-	if (!priv || !priv->lecd)
++	if (!priv || !rcu_access_pointer(priv->lecd))
+ 		return -1;
++
+ 	skb = alloc_skb(sizeof(struct atmlec_msg), GFP_ATOMIC);
+ 	if (!skb)
+ 		return -1;
+@@ -534,18 +547,27 @@ send_to_lecd(struct lec_priv *priv, atml
+ 	if (atm_addr)
+ 		memcpy(&mesg->content.normal.atm_addr, atm_addr, ATM_ESA_LEN);
+ 
+-	atm_force_charge(priv->lecd, skb->truesize);
+-	sk = sk_atm(priv->lecd);
++	rcu_read_lock();
++	vcc = rcu_dereference(priv->lecd);
++	if (!vcc) {
++		rcu_read_unlock();
++		kfree_skb(skb);
++		return -1;
++	}
++
++	atm_force_charge(vcc, skb->truesize);
++	sk = sk_atm(vcc);
+ 	skb_queue_tail(&sk->sk_receive_queue, skb);
+ 	sk->sk_data_ready(sk);
+ 
+ 	if (data != NULL) {
+ 		pr_debug("about to send %d bytes of data\n", data->len);
+-		atm_force_charge(priv->lecd, data->truesize);
++		atm_force_charge(vcc, data->truesize);
+ 		skb_queue_tail(&sk->sk_receive_queue, data);
+ 		sk->sk_data_ready(sk);
+ 	}
+ 
++	rcu_read_unlock();
+ 	return 0;
+ }
+ 
+@@ -620,7 +642,7 @@ static void lec_push(struct atm_vcc *vcc
+ 
+ 		atm_return(vcc, skb->truesize);
+ 		if (*(__be16 *) skb->data == htons(priv->lecid) ||
+-		    !priv->lecd || !(dev->flags & IFF_UP)) {
++		    !rcu_access_pointer(priv->lecd) || !(dev->flags & IFF_UP)) {
+ 			/*
+ 			 * Probably looping back, or if lecd is missing,
+ 			 * lecd has gone down
+@@ -755,12 +777,12 @@ static int lecd_attach(struct atm_vcc *v
+ 		priv = netdev_priv(dev_lec[i]);
+ 	} else {
+ 		priv = netdev_priv(dev_lec[i]);
+-		if (priv->lecd)
++		if (rcu_access_pointer(priv->lecd))
+ 			return -EADDRINUSE;
+ 	}
+ 	lec_arp_init(priv);
+ 	priv->itfnum = i;	/* LANE2 addition */
+-	priv->lecd = vcc;
++	rcu_assign_pointer(priv->lecd, vcc);
+ 	vcc->dev = &lecatm_dev;
+ 	vcc_insert_socket(sk_atm(vcc));
+ 
+--- a/net/atm/lec.h
++++ b/net/atm/lec.h
+@@ -91,7 +91,7 @@ struct lec_priv {
+ 						 */
+ 	spinlock_t lec_arp_lock;
+ 	struct atm_vcc *mcast_vcc;		/* Default Multicast Send VCC */
+-	struct atm_vcc *lecd;
++	struct atm_vcc __rcu *lecd;
+ 	struct delayed_work lec_arp_work;	/* C10 */
+ 	unsigned int maximum_unknown_frame_count;
+ 						/*
 
 
