@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896D02C0F69;
-	Mon, 13 Apr 2026 16:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20052D877D;
+	Mon, 13 Apr 2026 16:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096488; cv=none; b=ODue3/yV8Trum/58pgX9rSCiyb6Kw0NtPAUur+rf314j3pdbsuotT47UAs8C/tdMhFjpbLDVviwICRNSO//ipjsQJBmQG4Haj9Vk97vsUJI7Mh8lk2JhDgr3FN3NJHYWtzmCt39KGh9Zv/Gh2wG6HeIFdAXXDxl/pv4kEo9J+Ao=
+	t=1776096491; cv=none; b=cNGEJZga1V1K9bQ+vheTptEIx0zlBAPfKZht5HtuXbJtsk6rEcE4fqnB4BCBSmCIGPIW8UOLYxL2wPtmYSoMz9NI/eFvdXILqQd2urH9J/08PwAmB/9vHG9jsR2r91vwaFTjDhG66IgVAO5GvsKhi1l56SJl1gjQoDn9UuLihfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096488; c=relaxed/simple;
-	bh=4HA+vEzmykvIe+HA5EXVBvpUPrnO8Nm36AshjL3UetM=;
+	s=arc-20240116; t=1776096491; c=relaxed/simple;
+	bh=RuBQXvgJeMlDttSRGmOuP+UI0Lqorklal6TD6J3M58k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ix0wvFqrsysT9go8Ix5HZpla1dKXV/uGqtBphmUHgRoDao/UnRdm4kUrN3WQgsIvP+J3Ye4zq0bxbwTA0JdsgMMIRaKglN6EPrieXKojleYoMu+EfqVO/uSFWoICfehhfqgBAZ7JjargsL1y0F0xSCLEdMTpSPp/RBOvUPTP3PI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQvvmQx8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GOVSBX8S17WJJUO1pplz6lKlNFjcKwM+l7q+RJwL8kyeYcfF6pglHhwqfQkaywqwAOXsQLxx8XdJeJTAR4xfBCZwvRyLZ/2lfTa59yYCIB1X7UgsEEzW8kJ5MH5Fzfem6vtFkVBhyX4TKYIGUKtIJgeFnGnedUpy7CbihlhUpL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dz/4lNj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQvvmQx8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA3EC2BCAF;
-	Mon, 13 Apr 2026 16:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dz/4lNj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C1BC2BCAF;
+	Mon, 13 Apr 2026 16:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096488;
-	bh=4HA+vEzmykvIe+HA5EXVBvpUPrnO8Nm36AshjL3UetM=;
+	s=korg; t=1776096490;
+	bh=RuBQXvgJeMlDttSRGmOuP+UI0Lqorklal6TD6J3M58k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQvvmQx804+ygEerP5bZg3WBKbSi9FCthAW+tE1rMhDAztEcnCF6TCAbSOLbY+8Rz
-	 MIvwpN6aOBEo4pjCkU5wfq3jVUz0SA0CEQ654uCcLjTI65TmAnWyYZ7KkXuLFDFNW8
-	 Xv+Zc4gsesCWngzVe4Mdv5tWPkZTmsUnt9I3Fq8s=
+	b=dz/4lNj9itqfAuYNw+yw+0W396iOpH4B72XQIyC9nTFtcBAh72cqcyV9zYBJcuEee
+	 VJ7vqrsM2rsNYRzCZBYYy8mCKMAaTAx6UgI3du42Zv6YhI/9bATcbd1f4Y9Srxv4eA
+	 XkY5r6DIGoxBs0/17o2xuPmbdo9dm2hDWXuFgLVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Palus <jpalus@fastmail.com>,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.18 30/83] Revert "arm64: dts: rockchip: Further describe the WiFi for the Pinebook Pro"
-Date: Mon, 13 Apr 2026 17:59:58 +0200
-Message-ID: <20260413155732.144775653@linuxfoundation.org>
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.18 31/83] Revert "arm64: dts: imx8mq-librem5: Set the DVS voltages lower"
+Date: Mon, 13 Apr 2026 17:59:59 +0200
+Message-ID: <20260413155732.184504110@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -53,75 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-commit 29d1f56c4f3001b7f547123e0a307c009ac717f8 upstream.
+commit 4cd46ea0eb4504f7f4fea92cb4601c5c9a3e545e upstream.
 
-This reverts commit 6d54d935062e2d4a7d3f779ceb9eeff108d0535d.
+This reverts commit c24a9b698fb02cd0723fa8375abab07f94b97b10.
 
-It seems there are different variants of the Wifi chipset in use on the
-Pinebook Pro. And according to the reported regression - see Closes
-below, the reverted change causes issues with one Wifi chipset.
+It's been found that there's a significant per-unit variance in accepted
+supply voltages and the current set still makes some units unstable.
 
-The original commit message indicates a "further description" only and
-does not indicate this would fix an actual problem, so a revert should
-not cause further problems.
+Revert back to nominal values.
 
-Fixes: 6d54d935062e ("arm64: dts: rockchip: Further describe the WiFi for the Pinebook Pro")
-Cc: Jan Palus <jpalus@fastmail.com>
-Cc: Peter Robinson <pbrobinson@gmail.com>
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
 Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/r/aUKOlj-RvTYlrpiS@rock.grzadka/
-Tested-by: Jan Palus <jpalus@fastmail.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260210120142.698512-1-heiko@sntech.de
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: c24a9b698fb0 ("arm64: dts: imx8mq-librem5: Set the DVS voltages lower")
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../boot/dts/rockchip/rk3399-pinebook-pro.dts  | 18 ------------------
- 1 file changed, 18 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts |    2 -
+ arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi   |   22 +++++---------------
+ 2 files changed, 7 insertions(+), 17 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-index 753d51344954..ae937a3afa11 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-@@ -879,12 +879,6 @@ vcc5v0_host_en_pin: vcc5v0-host-en-pin {
- 		};
- 	};
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5-r3.dts
+@@ -7,7 +7,7 @@
  
--	wifi {
--		wifi_host_wake_l: wifi-host-wake-l {
--			rockchip,pins = <0 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
--		};
--	};
--
- 	wireless-bluetooth {
- 		bt_wake_pin: bt-wake-pin {
- 			rockchip,pins = <2 RK_PD3 RK_FUNC_GPIO &pcfg_pull_none>;
-@@ -942,19 +936,7 @@ &sdio0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&sdio0_bus4 &sdio0_cmd &sdio0_clk>;
- 	sd-uhs-sdr104;
--	#address-cells = <1>;
--	#size-cells = <0>;
- 	status = "okay";
--
--	brcmf: wifi@1 {
--		compatible = "brcm,bcm4329-fmac";
--		reg = <1>;
--		interrupt-parent = <&gpio0>;
--		interrupts = <RK_PA3 IRQ_TYPE_LEVEL_HIGH>;
--		interrupt-names = "host-wake";
--		pinctrl-names = "default";
--		pinctrl-0 = <&wifi_host_wake_l>;
--	};
+ &a53_opp_table {
+ 	opp-1000000000 {
+-		opp-microvolt = <950000>;
++		opp-microvolt = <1000000>;
+ 	};
  };
  
- &sdhci {
--- 
-2.53.0
-
+--- a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+@@ -844,8 +844,8 @@
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+ 				regulator-ramp-delay = <1250>;
+-				rohm,dvs-run-voltage = <880000>;
+-				rohm,dvs-idle-voltage = <820000>;
++				rohm,dvs-run-voltage = <900000>;
++				rohm,dvs-idle-voltage = <850000>;
+ 				rohm,dvs-suspend-voltage = <810000>;
+ 				regulator-always-on;
+ 			};
+@@ -856,8 +856,8 @@
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+ 				regulator-ramp-delay = <1250>;
+-				rohm,dvs-run-voltage = <950000>;
+-				rohm,dvs-idle-voltage = <850000>;
++				rohm,dvs-run-voltage = <1000000>;
++				rohm,dvs-idle-voltage = <900000>;
+ 				regulator-always-on;
+ 			};
+ 
+@@ -866,14 +866,14 @@
+ 				regulator-min-microvolt = <700000>;
+ 				regulator-max-microvolt = <1300000>;
+ 				regulator-boot-on;
+-				rohm,dvs-run-voltage = <850000>;
++				rohm,dvs-run-voltage = <900000>;
+ 			};
+ 
+ 			buck4_reg: BUCK4 {
+ 				regulator-name = "buck4";
+ 				regulator-min-microvolt = <700000>;
+ 				regulator-max-microvolt = <1300000>;
+-				rohm,dvs-run-voltage = <930000>;
++				rohm,dvs-run-voltage = <1000000>;
+ 			};
+ 
+ 			buck5_reg: BUCK5 {
+@@ -1407,13 +1407,3 @@
+ 	fsl,ext-reset-output;
+ 	status = "okay";
+ };
+-
+-&a53_opp_table {
+-	opp-1000000000 {
+-		opp-microvolt = <850000>;
+-	};
+-
+-	opp-1500000000 {
+-		opp-microvolt = <950000>;
+-	};
+-};
 
 
