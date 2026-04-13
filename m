@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2851D6DB5;
-	Mon, 13 Apr 2026 16:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6D61D6DB5;
+	Mon, 13 Apr 2026 16:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096254; cv=none; b=MPkQwhN7yPupBgUqWmtdbATHJoIONpv4jTSToVskQdDiaRl+ejleAQTFB83RiORAKl2HiWTZCr10lpEFf3SQCoZ5SG8xa8/p1cRzmUmsPnGiN17r3G42U7eh+DueMOvc7sN7Q2kVfewrv7kqw4Z5OAoxA/9U5/7lkAjeC8mzFZA=
+	t=1776096256; cv=none; b=HU7yOeRSBmhgAlh2s/JfpEkqdu9em2S/Wg8wj3pQADipgH+2dKfb15asgnUDF4coU2rv+yfwA7bVkTOAoVvPiP9yW4gFHP2b2PpxL8KYbxU33Py7+VHysRawRT55wZmiLR8E9kP313tQ0CNXLx27Xlz8Y7C/yv7w6/7o9K9TARY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096254; c=relaxed/simple;
-	bh=+xTny0+pFFlgtaMY46yVNH9pOGvfTC20FB5jVagUZjw=;
+	s=arc-20240116; t=1776096256; c=relaxed/simple;
+	bh=wzpSCBfuywZmk+mjNTdGyO34hS/dzf5vRdSMiXEmFIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y8sNBGD4fKBC2lJLYKn6R8GwjaPxoVLE5RXCTePxInlPCc7XMz/Rh0RaAvxXf9hT05KF51CRP5zx9VXmsiJGgoHRKCDrsZmvF27z3I3e5dfr2L6FSOEQV4/Rb0HuYxdQ43S6FIpjSjmx6GO/b1XxuPbuw9P7QMVSXtR17mjt0aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/xEPft7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ViE8A4ESlRJPCcTIgOAQ9pjE4WHyH4YyDVss0HglTZ7rVeGBqdd7jYwLFDN3v8iqXRPGfFkvJ1Q+XQmcdfzt8o5JBXuEu05+rPe+0G+snriY1gnmwSDd/e7yOhixPLBJVSfNCFqMYzbHfJWHLDV9pVDJI1HBOuqTPMheE6fDo5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAv4kNUF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/xEPft7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D87C2BCAF;
-	Mon, 13 Apr 2026 16:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAv4kNUF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E504C2BCAF;
+	Mon, 13 Apr 2026 16:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096253;
-	bh=+xTny0+pFFlgtaMY46yVNH9pOGvfTC20FB5jVagUZjw=;
+	s=korg; t=1776096256;
+	bh=wzpSCBfuywZmk+mjNTdGyO34hS/dzf5vRdSMiXEmFIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/xEPft7o2yzm0J+J+zqMTju/wy+RbDM9725JPuFo/ITw0MeI1cOnD6rZxBqELkGZ
-	 ZJN65yEs+yfkH6ZVLWVtfOm+Jm2+BsS8lVDm/HPZm6ybxkIz7CzsE9QhL+GU+gWNNk
-	 /fHBut0kOTr3347boh/LXNdcojU25OhV37/SpvI0=
+	b=fAv4kNUFCshqrOyjdooNHQGTcmMMMss1km4381iM2hMI3bDcl0OmCJZyPce+rbHIb
+	 R2rFcUysmpZiRosdB9EH8Xdj/xklpdJrNYcU1Da0q6eFpRPnH+bH5zOE9d87QVOqAk
+	 b5KYaHYF9tUGA8IfPxQgp3WjHbHVaDkB8frQaCFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.19 26/86] ASoC: SOF: Intel: hda: modify period size constraints for ACE4
-Date: Mon, 13 Apr 2026 17:59:33 +0200
-Message-ID: <20260413155732.550118111@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.19 27/86] wifi: brcmsmac: Fix dma_free_coherent() size
+Date: Mon, 13 Apr 2026 17:59:34 +0200
+Message-ID: <20260413155732.590372756@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
 References: <20260413155731.568515178@linuxfoundation.org>
@@ -46,74 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 0f71866057262d669ed6a21246eaac0ad6d04d4e upstream.
+commit 12cd7632757a54ce586e36040210b1a738a0fc53 upstream.
 
-Intel ACE4 based products set more strict constraints on HDA BDLE start
-address and length alignment. Add a constraint to align period size to
-128 bytes.
+dma_alloc_consistent() may change the size to align it. The new size is
+saved in alloced.
 
-The commit removes the "minimum as per HDA spec" comment. This comment
-was misleading as spec actually does allow a 2 byte BDLE length, and
-more importantly, period size also directly impacts how the BDLE start
-addresses are aligned, so it is not sufficient just to consider allowed
-buffer length.
+Change the free size to match the allocation size.
 
-Fixes: d3df422f66e8 ("ASoC: SOF: Intel: add initial support for NVL-S")
-Cc: stable@vger.kernel.org
-Reported-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Link: https://patch.msgid.link/20260408084514.24325-3-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260218130741.46566-3-fourier.thomas@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/intel/hda-pcm.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/intel/hda-pcm.c b/sound/soc/sof/intel/hda-pcm.c
-index da6c1e7263cd..16a364072821 100644
---- a/sound/soc/sof/intel/hda-pcm.c
-+++ b/sound/soc/sof/intel/hda-pcm.c
-@@ -219,6 +219,7 @@ EXPORT_SYMBOL_NS(hda_dsp_pcm_pointer, "SND_SOC_SOF_INTEL_HDA_COMMON");
- int hda_dsp_pcm_open(struct snd_sof_dev *sdev,
- 		     struct snd_pcm_substream *substream)
- {
-+	const struct sof_intel_dsp_desc *chip_info = get_chip_info(sdev->pdata);
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct snd_soc_component *scomp = sdev->component;
-@@ -268,8 +269,17 @@ int hda_dsp_pcm_open(struct snd_sof_dev *sdev,
- 		return -ENODEV;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
+@@ -483,7 +483,7 @@ static void *dma_ringalloc(struct dma_in
+ 	if (((desc_strtaddr + size - 1) & boundary) != (desc_strtaddr
+ 							& boundary)) {
+ 		*alignbits = dma_align_sizetobits(size);
+-		dma_free_coherent(di->dmadev, size, va, *descpa);
++		dma_free_coherent(di->dmadev, *alloced, va, *descpa);
+ 		va = dma_alloc_consistent(di, size, *alignbits,
+ 			alloced, descpa);
  	}
- 
--	/* minimum as per HDA spec */
--	snd_pcm_hw_constraint_step(substream->runtime, 0, SNDRV_PCM_HW_PARAM_PERIOD_BYTES, 4);
-+	/*
-+	 * Set period size constraint to ensure BDLE buffer length and
-+	 * start address alignment requirements are met. Align to 128
-+	 * bytes for newer Intel platforms, with older ones using 4 byte alignment.
-+	 */
-+	if (chip_info->hw_ip_version >= SOF_INTEL_ACE_4_0)
-+		snd_pcm_hw_constraint_step(substream->runtime, 0,
-+					   SNDRV_PCM_HW_PARAM_PERIOD_BYTES, 128);
-+	else
-+		snd_pcm_hw_constraint_step(substream->runtime, 0,
-+					   SNDRV_PCM_HW_PARAM_PERIOD_BYTES, 4);
- 
- 	/* avoid circular buffer wrap in middle of period */
- 	snd_pcm_hw_constraint_integer(substream->runtime,
--- 
-2.53.0
-
 
 
