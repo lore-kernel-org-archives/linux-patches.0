@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33831313298;
-	Mon, 13 Apr 2026 16:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FB331619A;
+	Mon, 13 Apr 2026 16:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099153; cv=none; b=csyK3n1LM07NA/boM0x9pPeeKTGSDpd9/qvK12joSoyqWiSAWhnLCpVd3+HdPsBVhVlXsrnz82rdi3gzldwqAHyAx0CRnBQzhMwfqowNf1OvYmjWqr0V/EvzrPr/6A6zrRZg6p0bM7oLSXEzmNwl25qoF8wfGbYDvxcLW311UXs=
+	t=1776099155; cv=none; b=K74CMwM99/OD1Z8JrH+ue4co6xWvbYRYE2psmut0WaoMwzb55TddfUwyOl5yvA4OqV28esHo7XwilV9koQ1anP2gcWYxU/R0oQXCAv/lMfT0sARNmgaf0v1u2MzT4gfPiSwmc/6vp/AVs1xOBiBMltzLEOm0WFl82nHyluN2Hsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099153; c=relaxed/simple;
-	bh=A3amAmm3RjVlKoQrrLPf6jeBy3CulXm0hKKG2ygq38Q=;
+	s=arc-20240116; t=1776099155; c=relaxed/simple;
+	bh=5PsR/0TisOBiu6wevd/BUprl1FXmOzeaqzm8Dqkvdw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRJ2gpd8xm3Hnie0NVtLELC2dbE2MOh5/2L3LbVJODXrnm+Zn79hnAMitUtRS+p1LR+p1NT3yVKSsejTfZ7g1PmrC64IOS2/84EFGlFJ4B3v0UPnDsqhi/hkmvwJsLRSD9h05jArSruUO98qz9HHH2QRdNZ2dkuvJCTWVdyFEt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d99knWpf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mtnIeSFwGBPQQ/Jd/jrAonlQzmr0jVbcCfkbKos8o64wj10E1IFChRuEXzwObWA0Rz45hjsCzcvvHqPkF/GdGPZpxf5rvURAcsdGjQ+p83tg0ckv7nCwqkyUx8LEY1WvbJOXHGukeTnBNxXiYBlhUDxCLvSvz+zGxNyd/sgFsVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGDV83Vz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d99knWpf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50C4C2BCAF;
-	Mon, 13 Apr 2026 16:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGDV83Vz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474DAC2BCAF;
+	Mon, 13 Apr 2026 16:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099153;
-	bh=A3amAmm3RjVlKoQrrLPf6jeBy3CulXm0hKKG2ygq38Q=;
+	s=korg; t=1776099155;
+	bh=5PsR/0TisOBiu6wevd/BUprl1FXmOzeaqzm8Dqkvdw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d99knWpfhg5bSpMwHey7F44Lprn98cVzIBSYXYgYL8c5TbGz6jbJgck+MBZBafVjT
-	 A0CayE3wQvasqWDqcAxAPOBFajX/DdsIy0H3g51Rd6GIDCm127kkDFUITrM2yTL/i4
-	 0xGErdgaO7m/os4eiru7DA7Vj+a03ZAJ24GpRvAM=
+	b=vGDV83VzmUwRVfqPlRb+Xl8LVYjvDmDKyIdNBXTbRZVBZ0GCfjnn3JdhfbME4EJFZ
+	 BMdcOos7f1bL5IklyzTpFmxkk0CLW29I293y/tByvkmzdd5mqHBBkeOnmdtNpG0mJj
+	 KRo4XZJ0MmeaBxWIWRnjIzMSuQOlb5khLe+3IFF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kamal Dasu <kdasu.kdev@gmail.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 230/491] mtd: rawnand: brcmnand: read/write oob during EDU transfer
-Date: Mon, 13 Apr 2026 17:57:55 +0200
-Message-ID: <20260413155827.670342452@linuxfoundation.org>
+Subject: [PATCH 5.10 231/491] mtd: rawnand: brcmnand: move to polling in pio mode on oops write
+Date: Mon, 13 Apr 2026 17:57:56 +0200
+Message-ID: <20260413155827.708138982@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,161 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Kamal Dasu <kdasu.kdev@gmail.com>
 
-[ Upstream commit a071912636cc3420f54e2a6312c1625ac763cf03 ]
+[ Upstream commit 22ca05b82d3e3abc2b116a11ee41b6b692b95530 ]
 
-Added support to read/write oob during EDU transfers.
+This change makes sure that Broadcom NAND driver moves to interrupt
+polling on the first brcmnand_write() call.
 
 Signed-off-by: Kamal Dasu <kdasu.kdev@gmail.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20210311170909.9031-1-kdasu.kdev@gmail.com
+Link: https://lore.kernel.org/linux-mtd/20210311170909.9031-2-kdasu.kdev@gmail.com
 Stable-dep-of: da9ba4dcc01e ("mtd: rawnand: brcmnand: skip DMA during panic write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c | 59 +++++++++++++++++++++---
- 1 file changed, 52 insertions(+), 7 deletions(-)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/mtd/nand/raw/brcmnand/brcmnand.c b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-index cb35090510470..a101df3b19f70 100644
+index a101df3b19f70..669c332d37ee8 100644
 --- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
 +++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -245,6 +245,9 @@ struct brcmnand_controller {
- 	u32                     edu_ext_addr;
- 	u32                     edu_cmd;
- 	u32                     edu_config;
-+	int			sas; /* spare area size, per flash cache */
-+	int			sector_size_1k;
-+	u8			*oob;
- 
- 	/* flash_dma reg */
- 	const u16		*flash_dma_offsets;
-@@ -252,7 +255,7 @@ struct brcmnand_controller {
- 	dma_addr_t		dma_pa;
- 
- 	int (*dma_trans)(struct brcmnand_host *host, u64 addr, u32 *buf,
--			 u32 len, u8 dma_cmd);
-+			 u8 *oob, u32 len, u8 dma_cmd);
- 
- 	/* in-memory cache of the FLASH_CACHE, used only for some commands */
- 	u8			flash_cache[FC_BYTES];
-@@ -1527,6 +1530,23 @@ static irqreturn_t brcmnand_edu_irq(int irq, void *data)
- 		edu_writel(ctrl, EDU_EXT_ADDR, ctrl->edu_ext_addr);
- 		edu_readl(ctrl, EDU_EXT_ADDR);
- 
-+		if (ctrl->oob) {
-+			if (ctrl->edu_cmd == EDU_CMD_READ) {
-+				ctrl->oob += read_oob_from_regs(ctrl,
-+							ctrl->edu_count + 1,
-+							ctrl->oob, ctrl->sas,
-+							ctrl->sector_size_1k);
-+			} else {
-+				brcmnand_write_reg(ctrl, BRCMNAND_CMD_ADDRESS,
-+						   ctrl->edu_ext_addr);
-+				brcmnand_read_reg(ctrl, BRCMNAND_CMD_ADDRESS);
-+				ctrl->oob += write_oob_to_regs(ctrl,
-+							       ctrl->edu_count,
-+							       ctrl->oob, ctrl->sas,
-+							       ctrl->sector_size_1k);
-+			}
-+		}
-+
- 		mb(); /* flush previous writes */
- 		edu_writel(ctrl, EDU_CMD, ctrl->edu_cmd);
- 		edu_readl(ctrl, EDU_CMD);
-@@ -1908,9 +1928,10 @@ static void brcmnand_write_buf(struct nand_chip *chip, const uint8_t *buf,
-  *  Kick EDU engine
-  */
- static int brcmnand_edu_trans(struct brcmnand_host *host, u64 addr, u32 *buf,
--			      u32 len, u8 cmd)
-+			      u8 *oob, u32 len, u8 cmd)
- {
- 	struct brcmnand_controller *ctrl = host->ctrl;
-+	struct brcmnand_cfg *cfg = &host->hwcfg;
- 	unsigned long timeo = msecs_to_jiffies(200);
- 	int ret = 0;
- 	int dir = (cmd == CMD_PAGE_READ ? DMA_FROM_DEVICE : DMA_TO_DEVICE);
-@@ -1918,6 +1939,9 @@ static int brcmnand_edu_trans(struct brcmnand_host *host, u64 addr, u32 *buf,
- 	unsigned int trans = len >> FC_SHIFT;
- 	dma_addr_t pa;
- 
-+	dev_dbg(ctrl->dev, "EDU %s %p:%p\n", ((edu_cmd == EDU_CMD_READ) ?
-+					      "read" : "write"), buf, oob);
-+
- 	pa = dma_map_single(ctrl->dev, buf, len, dir);
- 	if (dma_mapping_error(ctrl->dev, pa)) {
- 		dev_err(ctrl->dev, "unable to map buffer for EDU DMA\n");
-@@ -1929,6 +1953,8 @@ static int brcmnand_edu_trans(struct brcmnand_host *host, u64 addr, u32 *buf,
- 	ctrl->edu_ext_addr = addr;
- 	ctrl->edu_cmd = edu_cmd;
- 	ctrl->edu_count = trans;
-+	ctrl->sas = cfg->spare_area_size;
-+	ctrl->oob = oob;
- 
- 	edu_writel(ctrl, EDU_DRAM_ADDR, (u32)ctrl->edu_dram_addr);
- 	edu_readl(ctrl,  EDU_DRAM_ADDR);
-@@ -1937,6 +1963,16 @@ static int brcmnand_edu_trans(struct brcmnand_host *host, u64 addr, u32 *buf,
- 	edu_writel(ctrl, EDU_LENGTH, FC_BYTES);
- 	edu_readl(ctrl, EDU_LENGTH);
- 
-+	if (ctrl->oob && (ctrl->edu_cmd == EDU_CMD_WRITE)) {
-+		brcmnand_write_reg(ctrl, BRCMNAND_CMD_ADDRESS,
-+				   ctrl->edu_ext_addr);
-+		brcmnand_read_reg(ctrl, BRCMNAND_CMD_ADDRESS);
-+		ctrl->oob += write_oob_to_regs(ctrl,
-+					       1,
-+					       ctrl->oob, ctrl->sas,
-+					       ctrl->sector_size_1k);
-+	}
-+
- 	/* Start edu engine */
- 	mb(); /* flush previous writes */
- 	edu_writel(ctrl, EDU_CMD, ctrl->edu_cmd);
-@@ -1951,6 +1987,14 @@ static int brcmnand_edu_trans(struct brcmnand_host *host, u64 addr, u32 *buf,
- 
- 	dma_unmap_single(ctrl->dev, pa, len, dir);
- 
-+	/* read last subpage oob */
-+	if (ctrl->oob && (ctrl->edu_cmd == EDU_CMD_READ)) {
-+		ctrl->oob += read_oob_from_regs(ctrl,
-+						1,
-+						ctrl->oob, ctrl->sas,
-+						ctrl->sector_size_1k);
-+	}
-+
- 	/* for program page check NAND status */
- 	if (((brcmnand_read_reg(ctrl, BRCMNAND_INTFC_STATUS) &
- 	      INTFC_FLASH_STATUS) & NAND_STATUS_FAIL) &&
-@@ -2060,7 +2104,7 @@ static void brcmnand_dma_run(struct brcmnand_host *host, dma_addr_t desc)
- }
- 
- static int brcmnand_dma_trans(struct brcmnand_host *host, u64 addr, u32 *buf,
--			      u32 len, u8 dma_cmd)
-+			      u8 *oob, u32 len, u8 dma_cmd)
- {
- 	struct brcmnand_controller *ctrl = host->ctrl;
- 	dma_addr_t buf_pa;
-@@ -2205,8 +2249,9 @@ static int brcmnand_read(struct mtd_info *mtd, struct nand_chip *chip,
- try_dmaread:
- 	brcmnand_clear_ecc_addr(ctrl);
- 
--	if (ctrl->dma_trans && !oob && flash_dma_buf_ok(buf)) {
--		err = ctrl->dma_trans(host, addr, buf,
-+	if (ctrl->dma_trans && (has_edu(ctrl) || !oob) &&
-+	    flash_dma_buf_ok(buf)) {
-+		err = ctrl->dma_trans(host, addr, buf, oob,
- 				      trans * FC_BYTES,
- 				      CMD_PAGE_READ);
- 
-@@ -2354,8 +2399,8 @@ static int brcmnand_write(struct mtd_info *mtd, struct nand_chip *chip,
+@@ -2399,6 +2399,10 @@ static int brcmnand_write(struct mtd_info *mtd, struct nand_chip *chip,
  	for (i = 0; i < ctrl->max_oob; i += 4)
  		oob_reg_write(ctrl, i, 0xffffffff);
  
--	if (use_dma(ctrl) && !oob && flash_dma_buf_ok(buf)) {
--		if (ctrl->dma_trans(host, addr, (u32 *)buf, mtd->writesize,
-+	if (use_dma(ctrl) && (has_edu(ctrl) || !oob) && flash_dma_buf_ok(buf)) {
-+		if (ctrl->dma_trans(host, addr, (u32 *)buf, oob, mtd->writesize,
++	if (mtd->oops_panic_write)
++		/* switch to interrupt polling and PIO mode */
++		disable_ctrl_irqs(ctrl);
++
+ 	if (use_dma(ctrl) && (has_edu(ctrl) || !oob) && flash_dma_buf_ok(buf)) {
+ 		if (ctrl->dma_trans(host, addr, (u32 *)buf, oob, mtd->writesize,
  				    CMD_PROGRAM_PAGE))
- 
- 			ret = -EIO;
 -- 
 2.51.0
 
