@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C943161BF;
-	Mon, 13 Apr 2026 16:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0442A320393;
+	Mon, 13 Apr 2026 16:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099334; cv=none; b=jWoRuFIzLlPB0b2vAv8NFhf7zXBXccPxsV66vVkf0lw/x3UaFTszchn7bmpLvyzb1Wlz03fnMcCtOmmPdmg3T1A9F2cmxTusxU2mZuHiKjPWkczJRFIDhxe5fkvwrW7rdV/pP1U3FzlHUxpE080qiUXzCT+bdzUyQE0Dvf/cDqE=
+	t=1776099337; cv=none; b=PEuiuNsY1D82hFlp6Ta4GcsTeS5S8nX9FLgnrKZDiWpEdPXa+x9SvisMj/XgKb95Df5jxF51u16j+T/u/iSuA5fgXmvIWQru5BlY5Bs5nBVWC7pyteTV0ix+haCVEyzbNe0wz6drJV2NhMzeR+rDeRXtA4UvtJxT5oFGqu/zutg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099334; c=relaxed/simple;
-	bh=v0OTXzyGY1WYRf5XoJ9poW1vjEzEm1cbkF4gozrSqzU=;
+	s=arc-20240116; t=1776099337; c=relaxed/simple;
+	bh=F6zyd4hlOgnQjn460UoLd5jyUDtzHWk/a/ALK5RthQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f147ZFZjl8EjUthgcpba0HHDkIEvEXl55DRxU+Z+45W9/3rfCxVcRvvodzkeB0VeM1sEpmRkyQRactcVo3KtL6mTGU2gPKoGvlcLj84UHbKfg4sVHhDWDvQOE+Jbq00Q3BJC97ehTRZy9qDUfRd8xO+AzCmcb97uXcmvaRxamyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdmpLVVH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KNdJMTV53xW45XXni0ONRCh0aWEqIEzFFEtySuBavxMulsw5ovCnYbZdZdkl8Un53p3CNwxYaKKtcI8pSn95mvqJpwz47UuoeHVbCBtBtegzDQ1xYlR61FhV/sYsRGrxJBckC5egnlQiXSAXMsRLgz754xfNTKQxTXBz1GOcj5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XcOsjwZh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdmpLVVH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F80C2BCB3;
-	Mon, 13 Apr 2026 16:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XcOsjwZh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9C4C2BCAF;
+	Mon, 13 Apr 2026 16:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099334;
-	bh=v0OTXzyGY1WYRf5XoJ9poW1vjEzEm1cbkF4gozrSqzU=;
+	s=korg; t=1776099336;
+	bh=F6zyd4hlOgnQjn460UoLd5jyUDtzHWk/a/ALK5RthQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VdmpLVVHhA2yNVT1/bfR/fadwYAEy0CbHLD23myfF/Tku4EvsMuiarVbLwzjGlswj
-	 LF59fdqng8EnLBScghHy7iM4PCUyg6TsfC/ABLYrhN0T4JlRxuG7UOYKqrxer/+D/D
-	 InVYRZIdZ5k0pR8Z+RNmIslWdAQ/A7SAtaT8fHcA=
+	b=XcOsjwZh21VkK5nPNyyMopNkmwAmSoK4gp3MBtrYf08rZNZVPgZ5NRMWWSa8XSxOD
+	 DgVY1p25g6oTZSRG6cw+/9RmI0oKeg6pdEqLDUSur1JRgu7GpqpXNXbIeISTkKoJX8
+	 awCLNv5RnzpDG5QTsRTYCb2EBTXcvK2Lp3wS7XlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 5.10 300/491] alarmtimer: Fix argument order in alarm_timer_forward()
-Date: Mon, 13 Apr 2026 17:59:05 +0200
-Message-ID: <20260413155830.274942839@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Tyllis Xu <LivelyCarpet87@gmail.com>,
+	Dave Marquardt <davemarq@linux.ibm.com>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 301/491] scsi: ibmvfc: Fix OOB access in ibmvfc_discover_targets_done()
+Date: Mon, 13 Apr 2026 17:59:06 +0200
+Message-ID: <20260413155830.311740386@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -50,51 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Tyllis Xu <livelycarpet87@gmail.com>
 
-commit 5d16467ae56343b9205caedf85e3a131e0914ad8 upstream.
+commit 61d099ac4a7a8fb11ebdb6e2ec8d77f38e77362f upstream.
 
-alarm_timer_forward() passes arguments to alarm_forward() in the wrong
-order:
+A malicious or compromised VIO server can return a num_written value in the
+discover targets MAD response that exceeds max_targets. This value is
+stored directly in vhost->num_targets without validation, and is then used
+as the loop bound in ibmvfc_alloc_targets() to index into disc_buf[], which
+is only allocated for max_targets entries. Indices at or beyond max_targets
+access kernel memory outside the DMA-coherent allocation.  The
+out-of-bounds data is subsequently embedded in Implicit Logout and PLOGI
+MADs that are sent back to the VIO server, leaking kernel memory.
 
-  alarm_forward(alarm, timr->it_interval, now);
+Fix by clamping num_written to max_targets before storing it.
 
-However, alarm_forward() is defined as:
-
-  u64 alarm_forward(struct alarm *alarm, ktime_t now, ktime_t interval);
-
-and uses the second argument as the current time:
-
-  delta = ktime_sub(now, alarm->node.expires);
-
-Passing the interval as "now" results in incorrect delta computation,
-which can lead to missed expirations or incorrect overrun accounting.
-
-This issue has been present since the introduction of
-alarm_timer_forward().
-
-Fix this by swapping the arguments.
-
-Fixes: e7561f1633ac ("alarmtimer: Implement forward callback")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: 072b91f9c651 ("[SCSI] ibmvfc: IBM Power Virtual Fibre Channel Adapter Client Driver")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260323061130.29991-1-zhanxusheng@xiaomi.com
+Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
+Reviewed-by: Dave Marquardt <davemarq@linux.ibm.com>
+Acked-by: Tyrel Datwyler <tyreld@linux.ibm.com>
+Link: https://patch.msgid.link/20260314170151.548614-1-LivelyCarpet87@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/alarmtimer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/ibmvscsi/ibmvfc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/time/alarmtimer.c
-+++ b/kernel/time/alarmtimer.c
-@@ -606,7 +606,7 @@ static s64 alarm_timer_forward(struct k_
- {
- 	struct alarm *alarm = &timr->it.alarm.alarmtimer;
- 
--	return alarm_forward(alarm, timr->it_interval, now);
-+	return alarm_forward(alarm, now, timr->it_interval);
- }
- 
- /**
+--- a/drivers/scsi/ibmvscsi/ibmvfc.c
++++ b/drivers/scsi/ibmvscsi/ibmvfc.c
+@@ -4238,7 +4238,8 @@ static void ibmvfc_discover_targets_done
+ 	switch (mad_status) {
+ 	case IBMVFC_MAD_SUCCESS:
+ 		ibmvfc_dbg(vhost, "Discover Targets succeeded\n");
+-		vhost->num_targets = be32_to_cpu(rsp->num_written);
++		vhost->num_targets = min_t(u32, be32_to_cpu(rsp->num_written),
++					   max_targets);
+ 		ibmvfc_set_host_action(vhost, IBMVFC_HOST_ACTION_ALLOC_TGTS);
+ 		break;
+ 	case IBMVFC_MAD_FAILED:
 
 
