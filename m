@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B743A23E342;
-	Mon, 13 Apr 2026 16:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549EC317141;
+	Mon, 13 Apr 2026 16:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098830; cv=none; b=gycUM8Izyo3Xbg+0urpFooev4YGhd/Q7AT9P4ZZqCDQoxsbqV2vGoE74k1d8GeA+0YSn1go3AS7/1wUsVc9NE4iSTuyympNKXCVA9fsuIto8QyCg95kGpm/fkN/HTqym6Y+TkciNPXI/9DUS13qjm2TfxRR2KqcFu/naz2Xa4y4=
+	t=1776098833; cv=none; b=BlktUA8o/X9k8Qp2+wVgcGgR0/bzZuOxANOhcKAbRquTCNMySeOAsTknDd9KpPDnGO/Z42fRXs5UjjPTl+rdA/31EhQ4yCAgHMa6Ov4GqNPbnCjeYrLiYDR3dKSLaH5au52uHPYvi8oWObQw2muxM5oJ/hD9nejSNNZyBBNILDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098830; c=relaxed/simple;
-	bh=tpcrtmCq64kgPu6QW5SyVSbUQptbHEzmTh+oUTIFtJM=;
+	s=arc-20240116; t=1776098833; c=relaxed/simple;
+	bh=hgWyUU342wGYeph9Qi//7k7jSLnLZFOdK5ue30BclrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpgeucOYYAiSEyb0UoGjiDvxVXD+r4cT8Rjxg/cUWNfnws5v+08cHBRXRIdCPhI/KbzW1hM4Ch2hUG6Ta+HEwXjpbwMZ1J1ogyw8IzhhzlDncHco5AeFN8fZsH72JTgONnwGbeXnXqK7UIOrFPCvXcnefpCLht4itTavUwHmmdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=irrBp3ba; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QBUXpoiDohpzvcaEtPNpPyjoRoSDFK1Gv1hlGOQRmRwZE0NnuwDwoqhU+N2WRNrIno+XLnkmCOFfSy/V0pJPJcTemPCejPRRkNbSFIgi8Y4uj4BgX6YihMUfO08JNbdkSoUFyQi667NAFvvj1T3DC++fvsK+dQidMt9xqD1B1rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SN99xEDY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="irrBp3ba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E43CC2BCAF;
-	Mon, 13 Apr 2026 16:47:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SN99xEDY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AB8C2BCB6;
+	Mon, 13 Apr 2026 16:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098830;
-	bh=tpcrtmCq64kgPu6QW5SyVSbUQptbHEzmTh+oUTIFtJM=;
+	s=korg; t=1776098833;
+	bh=hgWyUU342wGYeph9Qi//7k7jSLnLZFOdK5ue30BclrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=irrBp3ba2zqPVY3TAeJq6K6eaqaD7l7HFzA4A8OLII0FHvcrP4X98JdLjmhoe7Vlt
-	 +KJh3uWOOkoCF/RPiErxBwlD4ozbgNzdq7aP7+Mnju6E94plre+tGBdRQHL1m0XiDl
-	 V+54IOLlW1mKoJ6c4N6EgzX+qaDMB4Ae2X9T9wZQ=
+	b=SN99xEDYHHtbz55mP0oE7lYv0Br+7w/J6HNlu+Hko747g+fTBB1oHFsiLLWo+pk3P
+	 8H9NW40s0hiblv5eT8gYKwFUb6LnvPzMZe94D7SlnEaTY6OPnCW78dc+msT8G+QSpe
+	 IVJNQrIHpOw5opP+sR+eAEBZmaxnvQDwIFFV/x60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wenyuan Li <2063309626@qq.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/491] serial: caif: hold tty->link reference in ldisc_open and ser_release
-Date: Mon, 13 Apr 2026 17:55:18 +0200
-Message-ID: <20260413155821.779274012@linuxfoundation.org>
+Subject: [PATCH 5.10 074/491] can: hi311x: hi3110_open(): add check for hi3110_power_enable() return value
+Date: Mon, 13 Apr 2026 17:55:19 +0200
+Message-ID: <20260413155821.817811528@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,61 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Wenyuan Li <2063309626@qq.com>
 
-[ Upstream commit 288598d80a068a0e9281de35bcb4ce495f189e2a ]
+[ Upstream commit 47bba09b14fa21712398febf36cb14fd4fc3bded ]
 
-A reproducer triggers a KASAN slab-use-after-free in pty_write_room()
-when caif_serial's TX path calls tty_write_room(). The faulting access
-is on tty->link->port.
+In hi3110_open(), the return value of hi3110_power_enable() is not checked.
+If power enable fails, the device may not function correctly, while the
+driver still returns success.
 
-Hold an extra kref on tty->link for the lifetime of the caif_serial line
-discipline: get it in ldisc_open() and drop it in ser_release(), and
-also drop it on the ldisc_open() error path.
+Add a check for the return value and propagate the error accordingly.
 
-With this change applied, the reproducer no longer triggers the UAF in
-my testing.
-
-Link: https://gist.github.com/shuangpengbai/c898debad6bdf170a84be7e6b3d8707f
-Link: https://lore.kernel.org/netdev/20260301220525.1546355-1-shuangpeng.kernel@gmail.com
-Fixes: e31d5a05948e ("caif: tty's are kref objects so take a reference")
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260306034006.3395740-1-shuangpeng.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wenyuan Li <2063309626@qq.com>
+Link: https://patch.msgid.link/tencent_B5E2E7528BB28AA8A2A56E16C49BD58B8B07@qq.com
+Fixes: 57e83fb9b746 ("can: hi311x: Add Holt HI-311x CAN driver")
+[mkl: adjust subject, commit message and jump label]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/caif/caif_serial.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/can/spi/hi311x.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/caif/caif_serial.c b/drivers/net/caif/caif_serial.c
-index 1b6a696182f72..02aea5a4b8ca8 100644
---- a/drivers/net/caif/caif_serial.c
-+++ b/drivers/net/caif/caif_serial.c
-@@ -312,6 +312,7 @@ static void ser_release(struct work_struct *work)
- 			dev_close(ser->dev);
- 			unregister_netdevice(ser->dev);
- 			debugfs_deinit(ser);
-+			tty_kref_put(tty->link);
- 			tty_kref_put(tty);
- 		}
- 		rtnl_unlock();
-@@ -346,6 +347,7 @@ static int ldisc_open(struct tty_struct *tty)
+diff --git a/drivers/net/can/spi/hi311x.c b/drivers/net/can/spi/hi311x.c
+index a7d594a5ad36f..f651a8ba7d53e 100644
+--- a/drivers/net/can/spi/hi311x.c
++++ b/drivers/net/can/spi/hi311x.c
+@@ -751,7 +751,9 @@ static int hi3110_open(struct net_device *net)
+ 		return ret;
  
- 	ser = netdev_priv(dev);
- 	ser->tty = tty_kref_get(tty);
-+	tty_kref_get(tty->link);
- 	ser->dev = dev;
- 	debugfs_init(ser, tty);
- 	tty->receive_room = N_TTY_BUF_SIZE;
-@@ -354,6 +356,7 @@ static int ldisc_open(struct tty_struct *tty)
- 	rtnl_lock();
- 	result = register_netdevice(dev);
- 	if (result) {
-+		tty_kref_put(tty->link);
- 		tty_kref_put(tty);
- 		rtnl_unlock();
- 		free_netdev(dev);
+ 	mutex_lock(&priv->hi3110_lock);
+-	hi3110_power_enable(priv->transceiver, 1);
++	ret = hi3110_power_enable(priv->transceiver, 1);
++	if (ret)
++		goto out_close_candev;
+ 
+ 	priv->force_quit = 0;
+ 	priv->tx_skb = NULL;
+@@ -798,6 +800,7 @@ static int hi3110_open(struct net_device *net)
+ 	hi3110_hw_sleep(spi);
+  out_close:
+ 	hi3110_power_enable(priv->transceiver, 0);
++ out_close_candev:
+ 	close_candev(net);
+ 	mutex_unlock(&priv->hi3110_lock);
+ 	return ret;
 -- 
 2.51.0
 
