@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE4C2FFFBE;
-	Mon, 13 Apr 2026 16:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9690830B53F;
+	Mon, 13 Apr 2026 16:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097375; cv=none; b=KFUGpaP77I1hBniFwx3WBzkQe4FLfEKPQ+Y2BVtBY89f2+cYKEEQVTdfk7IjrXryHYdKRe9jTSNdWUcAa6obw9FGY6ks0+X1vDibj+d6QAbdBDg4BMbKEmKwAvomKsN19TEPMHYcXztdLU6FnGsEoY5sCdrVocBRYpdzdrtYnLU=
+	t=1776097378; cv=none; b=uxjiJtRrBNNPiLYTctIS/p/B8cb46h5elygzMPmVbm506QNMeApYJ5sHOpL/LKAPNZYgj4XjYKL4uOFjx1wd2Gin1rfwfVtS4e8NnhuZ/CQYmwKfJcekMsOVMy02zUOMQVW4pJ0L6eTXOONmChU+lJbHtuIqkclZhNRm109s7xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097375; c=relaxed/simple;
-	bh=fvE28QhMzH4ZNafZQtqAKY6tXx6rNnYhZV+JKVErheI=;
+	s=arc-20240116; t=1776097378; c=relaxed/simple;
+	bh=TkVLe5r6SuowAg02BicD7kso4henzRTPwR7ZArBEO78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhvN0sxt2UmZ6ZyAqyBFCCO1qWHpRmn2q5cDckTz7CRvnZKRReCZikhvKMMT+I2Rot0kmBEsUmAA7qHMcWbqy8+vggwAItsfFjyXI58qACvUgQ1J0N4XlOS1mR9ywfQ4ZoOYnp9y9/pHpcZ8V17SLz6QRLMQnc31r+9YvF2gQFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k2mmly6r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T4eyR1VXev2nMz50hND+dx6FodcQTFkn+9o3k01C83zTcYJ+BoGWG90bS1ggiokglxcEmRBTUnsON3jZV4sYY7CV7Q/cIBGnqDs8EsqsRb3MdXgktsuUOOmjPVR+FYv1exqgC/3UDNnwtb5JCX7+HceDBLySUHPLBVUgu+nllPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRPpntCV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2mmly6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60276C2BCAF;
-	Mon, 13 Apr 2026 16:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRPpntCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D48C2BCAF;
+	Mon, 13 Apr 2026 16:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097375;
-	bh=fvE28QhMzH4ZNafZQtqAKY6tXx6rNnYhZV+JKVErheI=;
+	s=korg; t=1776097378;
+	bh=TkVLe5r6SuowAg02BicD7kso4henzRTPwR7ZArBEO78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2mmly6r+JZ3Q4y94c/PRpDQISw4ki6UH2hDHZylezKZazJPDS3AeQZzuKjAdtQ6a
-	 EKZ6w0kC/ayDCEM67LYNacTcO8cHSrdIR9re7+60bRO4fwvxT5JP2ka5j0lTungGn3
-	 9F6CocVr7Gs3bgxLcMNYqA30mlY5nQyElnprgMCM=
+	b=sRPpntCVKMQ890pXXrMX6uA8MOLcA59KdttpbThIBHOl8dzyP+hVyd642qeSST8gp
+	 Wqn660AuqpRKdyaq8Qa+g2oqS1C86/XUlbJPoAXVU7eUuuTcrib0CsvJMiRWU19Sa2
+	 NLKHuGOhuYq96X0nVRl6RtDyDgS+5nOLrvgHMr1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenyuan Li <2063309626@qq.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Jenny Guanni Qu <qguanni@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 112/570] can: hi311x: hi3110_open(): add check for hi3110_power_enable() return value
-Date: Mon, 13 Apr 2026 17:54:03 +0200
-Message-ID: <20260413155834.639218564@linuxfoundation.org>
+Subject: [PATCH 5.15 113/570] netfilter: nft_set_pipapo: fix stack out-of-bounds read in pipapo_drop()
+Date: Mon, 13 Apr 2026 17:54:04 +0200
+Message-ID: <20260413155834.677070143@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,49 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenyuan Li <2063309626@qq.com>
+From: Jenny Guanni Qu <qguanni@gmail.com>
 
-[ Upstream commit 47bba09b14fa21712398febf36cb14fd4fc3bded ]
+[ Upstream commit d6d8cd2db236a9dd13dbc2d05843b3445cc964b5 ]
 
-In hi3110_open(), the return value of hi3110_power_enable() is not checked.
-If power enable fails, the device may not function correctly, while the
-driver still returns success.
+pipapo_drop() passes rulemap[i + 1].n to pipapo_unmap() as the
+to_offset argument on every iteration, including the last one where
+i == m->field_count - 1. This reads one element past the end of the
+stack-allocated rulemap array (declared as rulemap[NFT_PIPAPO_MAX_FIELDS]
+with NFT_PIPAPO_MAX_FIELDS == 16).
 
-Add a check for the return value and propagate the error accordingly.
+Although pipapo_unmap() returns early when is_last is true without
+using the to_offset value, the argument is evaluated at the call site
+before the function body executes, making this a genuine out-of-bounds
+stack read confirmed by KASAN:
 
-Signed-off-by: Wenyuan Li <2063309626@qq.com>
-Link: https://patch.msgid.link/tencent_B5E2E7528BB28AA8A2A56E16C49BD58B8B07@qq.com
-Fixes: 57e83fb9b746 ("can: hi311x: Add Holt HI-311x CAN driver")
-[mkl: adjust subject, commit message and jump label]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+  BUG: KASAN: stack-out-of-bounds in pipapo_drop+0x50c/0x57c [nf_tables]
+  Read of size 4 at addr ffff8000810e71a4
+
+  This frame has 1 object:
+   [32, 160) 'rulemap'
+
+  The buggy address is at offset 164 -- exactly 4 bytes past the end
+  of the rulemap array.
+
+Pass 0 instead of rulemap[i + 1].n on the last iteration to avoid
+the out-of-bounds read.
+
+Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/hi311x.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/netfilter/nft_set_pipapo.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/spi/hi311x.c b/drivers/net/can/spi/hi311x.c
-index 6df2e6fae2687..cc7e20a0e8691 100644
---- a/drivers/net/can/spi/hi311x.c
-+++ b/drivers/net/can/spi/hi311x.c
-@@ -751,7 +751,9 @@ static int hi3110_open(struct net_device *net)
- 		return ret;
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 863162c823306..c8a5618742381 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1541,6 +1541,7 @@ static void pipapo_drop(struct nft_pipapo_match *m,
+ 	int i;
  
- 	mutex_lock(&priv->hi3110_lock);
--	hi3110_power_enable(priv->transceiver, 1);
-+	ret = hi3110_power_enable(priv->transceiver, 1);
-+	if (ret)
-+		goto out_close_candev;
+ 	nft_pipapo_for_each_field(f, i, m) {
++		bool last = i == m->field_count - 1;
+ 		int g;
  
- 	priv->force_quit = 0;
- 	priv->tx_skb = NULL;
-@@ -798,6 +800,7 @@ static int hi3110_open(struct net_device *net)
- 	hi3110_hw_sleep(spi);
-  out_close:
- 	hi3110_power_enable(priv->transceiver, 0);
-+ out_close_candev:
- 	close_candev(net);
- 	mutex_unlock(&priv->hi3110_lock);
- 	return ret;
+ 		for (g = 0; g < f->groups; g++) {
+@@ -1560,7 +1561,7 @@ static void pipapo_drop(struct nft_pipapo_match *m,
+ 		}
+ 
+ 		pipapo_unmap(f->mt, f->rules, rulemap[i].to, rulemap[i].n,
+-			     rulemap[i + 1].n, i == m->field_count - 1);
++			     last ? 0 : rulemap[i + 1].n, last);
+ 		if (pipapo_resize(f, f->rules, f->rules - rulemap[i].n)) {
+ 			/* We can ignore this, a failure to shrink tables down
+ 			 * doesn't make tables invalid.
 -- 
 2.51.0
 
