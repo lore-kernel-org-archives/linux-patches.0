@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A2E33C536;
-	Mon, 13 Apr 2026 17:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DC733C536;
+	Mon, 13 Apr 2026 17:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099676; cv=none; b=Vh0HpoXKAKxmgVnB2Q5tPeoQVfZ0FaLXkEqqeB3LBAy+P9GE1IUGPlflh7Em5WEZt/WH04r2YDBY/F4fGzA7uFVmR4QxgIVK8r/Z2xMHksMPGJQ/WuIwB+VfqjcTtB3k5/IqErC0ziOeUMNH0u+OUviDIG+CsPFmEZXsIg8LSPc=
+	t=1776099679; cv=none; b=oDhQe08YNkAGCdzcJc6ZY4Ii1JjSpBKxHO8fFzVB3KpMeeA7MyhPYXVB64CHLyksBRO+O1nOBanP46IMQbhwUM/53TFqmtdBkFzZ6PeddQ0pSXNL3rMjwLFYyYjVQPJOZYLCTOT16UhB4FnSt4SZXF96JijybD+EMGHedwU7Qqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099676; c=relaxed/simple;
-	bh=fpn/GW668OgqBtuowBzu+x23ykD/FZtaTrnP4EaBJ1w=;
+	s=arc-20240116; t=1776099679; c=relaxed/simple;
+	bh=G0SdyRhGxKPfV9hIt9y7c9TX471Of8masXoY3zNSwHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAIY+QbQZPnebFTORzIHt4Iw26BOyJRVlN/UfI8lLF+23ZF8u1KBGEfKX544JzGMotlJVY1fC41vbGem8z5PUDVkkbmBL5JRTIdP46HIo+pQW8Pn2Lbi2iVBeD94g0nfM5ZwZMPGJW3EHJ8U5DMVblV29tkHV++fkcCpO+rWr20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=potycCkV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hN34CKeV969k2ooQHJbaGSARG1I4cIZRX6JJvt6h9C0UQEuKBcEAe685WKityX7RXLjZSANDoJe39I/bGPV5VnQdDiuA9F+U3A5qsxpx2eIwy/w37xw4dOfoyE7HDrU3RyWW8LRCTRGT9RacXS7HdQm1FYP1zzXnBjmZCaW2tqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eamiW5ib; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="potycCkV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B325C2BCAF;
-	Mon, 13 Apr 2026 17:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eamiW5ib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CDAC2BCB0;
+	Mon, 13 Apr 2026 17:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099676;
-	bh=fpn/GW668OgqBtuowBzu+x23ykD/FZtaTrnP4EaBJ1w=;
+	s=korg; t=1776099679;
+	bh=G0SdyRhGxKPfV9hIt9y7c9TX471Of8masXoY3zNSwHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=potycCkVeDPa96q3XAeCVXESDEV6TeZYqRX7IFsxfx+DEu6xVNVRRYglW9qBtY1uc
-	 1sp3bmfq0WtiLkn6ZEVUa/388xZbxS3rIahw8pC/MRBkPTOY9kiv4ltyvoJLq5pcuV
-	 D/TP8f6gQh7MrLiVjrpvBPEf8dMr/o+1Opy06A/E=
+	b=eamiW5ib8VeGtJjoE60ddkgG/bJubP8TVy1lYo9JcRnss4tXpBtpAnBpbrlwNKcNO
+	 6wwb2Nsv1a0jTOiA56ITPTs271G6P7fNxmi5Xi+6xp8/xxHxJ0uMJefmdUV9yTCijY
+	 3pVXZkYbi41c5D6uCR8IIj9/mIlEyGMYi8Y+CvGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Qualys Security Advisory <qsa@qualys.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Georgia Garcia <georgia.garcia@canonical.com>,
+	Ryan Lee <ryan.lee@canonical.com>,
 	Cengiz Can <cengiz.can@canonical.com>,
-	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
 	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 5.10 432/491] apparmor: replace recursive profile removal with iterative approach
-Date: Mon, 13 Apr 2026 18:01:17 +0200
-Message-ID: <20260413155835.202098862@linuxfoundation.org>
+Subject: [PATCH 5.10 433/491] apparmor: fix: limit the number of levels of policy namespaces
+Date: Mon, 13 Apr 2026 18:01:18 +0200
+Message-ID: <20260413155835.239306457@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -54,85 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+From: John Johansen <john.johansen@canonical.com>
 
-commit ab09264660f9de5d05d1ef4e225aa447c63a8747 upstream.
+commit 306039414932c80f8420695a24d4fe10c84ccfb2 upstream.
 
-The profile removal code uses recursion when removing nested profiles,
-which can lead to kernel stack exhaustion and system crashes.
+Currently the number of policy namespaces is not bounded relying on
+the user namespace limit. However policy namespaces aren't strictly
+tied to user namespaces and it is possible to create them and nest
+them arbitrarily deep which can be used to exhaust system resource.
 
-Reproducer:
-  $ pf='a'; for ((i=0; i<1024; i++)); do
-      echo -e "profile $pf { \n }" | apparmor_parser -K -a;
-      pf="$pf//x";
-  done
-  $ echo -n a > /sys/kernel/security/apparmor/.remove
+Hard cap policy namespaces to the same depth as user namespaces.
 
-Replace the recursive __aa_profile_list_release() approach with an
-iterative approach in __remove_profile(). The function repeatedly
-finds and removes leaf profiles until the entire subtree is removed,
-maintaining the same removal semantic without recursion.
-
-Fixes: c88d4c7b049e ("AppArmor: core policy routines")
+Fixes: c88d4c7b049e8 ("AppArmor: core policy routines")
 Reported-by: Qualys Security Advisory <qsa@qualys.com>
-Tested-by: Salvatore Bonaccorso <carnil@debian.org>
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Reviewed-by: Ryan Lee <ryan.lee@canonical.com>
 Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/policy.c |   30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ security/apparmor/include/policy_ns.h |    2 ++
+ security/apparmor/policy_ns.c         |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -146,19 +146,43 @@ static void __list_remove_profile(struct
- }
+--- a/security/apparmor/include/policy_ns.h
++++ b/security/apparmor/include/policy_ns.h
+@@ -18,6 +18,8 @@
+ #include "label.h"
+ #include "policy.h"
  
- /**
-- * __remove_profile - remove old profile, and children
-- * @profile: profile to be replaced  (NOT NULL)
-+ * __remove_profile - remove profile, and children
-+ * @profile: profile to be removed  (NOT NULL)
-  *
-  * Requires: namespace list lock be held, or list not be shared
-  */
- static void __remove_profile(struct aa_profile *profile)
- {
-+	struct aa_profile *curr, *to_remove;
-+
- 	AA_BUG(!profile);
- 	AA_BUG(!profile->ns);
- 	AA_BUG(!mutex_is_locked(&profile->ns->lock));
++/* Match max depth of user namespaces */
++#define MAX_NS_DEPTH 32
  
- 	/* release any children lists first */
--	__aa_profile_list_release(&profile->base.profiles);
-+	if (!list_empty(&profile->base.profiles)) {
-+		curr = list_first_entry(&profile->base.profiles, struct aa_profile, base.list);
-+
-+		while (curr != profile) {
-+
-+			while (!list_empty(&curr->base.profiles))
-+				curr = list_first_entry(&curr->base.profiles,
-+							struct aa_profile, base.list);
-+
-+			to_remove = curr;
-+			if (!list_is_last(&to_remove->base.list,
-+					  &aa_deref_parent(curr)->base.profiles))
-+				curr = list_next_entry(to_remove, base.list);
-+			else
-+				curr = aa_deref_parent(curr);
-+
-+			/* released by free_profile */
-+			aa_label_remove(&to_remove->label);
-+			__aafs_profile_rmdir(to_remove);
-+			__list_remove_profile(to_remove);
-+		}
-+	}
-+
- 	/* released by free_profile */
- 	aa_label_remove(&profile->label);
- 	__aafs_profile_rmdir(profile);
+ /* struct aa_ns_acct - accounting of profiles in namespace
+  * @max_size: maximum space allowed for all profiles in namespace
+--- a/security/apparmor/policy_ns.c
++++ b/security/apparmor/policy_ns.c
+@@ -249,6 +249,8 @@ static struct aa_ns *__aa_create_ns(stru
+ 	AA_BUG(!name);
+ 	AA_BUG(!mutex_is_locked(&parent->lock));
+ 
++	if (parent->level > MAX_NS_DEPTH)
++		return ERR_PTR(-ENOSPC);
+ 	ns = alloc_ns(parent->base.hname, name);
+ 	if (!ns)
+ 		return ERR_PTR(-ENOMEM);
 
 
