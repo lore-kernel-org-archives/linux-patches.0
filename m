@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD46238D27;
-	Mon, 13 Apr 2026 16:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E8E27BF6C;
+	Mon, 13 Apr 2026 16:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097958; cv=none; b=uvcfK2NrRDoL18uot8TrUoP/GHLNYuwjjaKk1aAodoiZxq06kXVe6CPFF/E2rPCczQg88gu7/tf5uDoNln4Ph53uxuRKQmzA8+lEg6lhK0HQBJHkjRBdWorrpL5AnPdnmWFm7pzZSaySiTj4dwdgLDk7uD7OnlYbAYFwnXYR1hM=
+	t=1776097961; cv=none; b=bevvJD6i00yNN1NONnH/SJgrmf4N3RGLiF9Wo+1MmtGi8QqQPYLJQP6AmgafbvseorQrf7Z1spqJoEtbSlCoAuPe6mUSY6Wk4iN4IRx8JTBKnDbOKmZMCRpbBOZ7QNhheOVt36mGhS5aHfG9Id880zqX2avQAA7qvvCMiiWOinQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097958; c=relaxed/simple;
-	bh=jz88/7hqtxUJQzlWyLTf09NYoLn7LZ3uvV2D5TTANYU=;
+	s=arc-20240116; t=1776097961; c=relaxed/simple;
+	bh=wkngRYyQtuIo2Dtt4dpU3n01bXi6SPSE7Y18dNJ5t28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHEoWwTQXJp2WUdnw0jvTLEE/r3BGSLQI/cTVFCa3g8foyFr2YQD3ORGTLa5OI+Gbqg5UGJSJg2YzWfd717Fzkg/sglXfiPrvn5LZWoaxtXqkeskW2u+AoIxNsF+I4GoojEtap4k7Q8GFpZVZ8tzfuPfJiQhugzqfjNMaKPhCxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ueDD/uTz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qQdIZrUI/q0aIFJ+9NXtvV5r5nhGBUE5BMk029wVaSNot6sPeBNQxy89TekcWaUHbJhIgil/chRzwHF+Iw7J6JvieSbwKaFdMbkdPYMATuu8Ehxa1QpRyGydDl0CHjoYjxsDBg5P1grteUiOVgtFUT5YNYyEu/ZUsfkCNvPAve8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSVs9o7P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ueDD/uTz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7D5C2BCAF;
-	Mon, 13 Apr 2026 16:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSVs9o7P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79674C2BCAF;
+	Mon, 13 Apr 2026 16:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097958;
-	bh=jz88/7hqtxUJQzlWyLTf09NYoLn7LZ3uvV2D5TTANYU=;
+	s=korg; t=1776097960;
+	bh=wkngRYyQtuIo2Dtt4dpU3n01bXi6SPSE7Y18dNJ5t28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ueDD/uTz9x+eZPWBwrUW+PPyZs80jTmFz/ea0+9Z6P+re1jZEf++hgN8NRlTwc1w4
-	 gw6AcYOVYQc/WN0uSapBJaZ1T2aim4/sSwRyAug8yfDJmfCYvYCH0Am1jBDm895/Ir
-	 TwfuatiQmF/ZSBLyxfh5/FR73Oj4N8RBXqV6tWxc=
+	b=VSVs9o7PvFAMBHccd8klVb3cFt4eFyMjsJW0DVwtwmNjO0jVA3rKjeZffDJxe7fdh
+	 Sz2dTGqiXWtPwutovzGXjWfA8PKIlM5a4KUxAuL/xuETEYqUTwlFudLXTdcEjE03ju
+	 6E1h/Ag9hVwgFWOQo5U4Dmr6I77Z98qWPmiSidHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 331/570] dma-mapping: add missing `inline` for `dma_free_attrs`
-Date: Mon, 13 Apr 2026 17:57:42 +0200
-Message-ID: <20260413155842.893847599@linuxfoundation.org>
+Subject: [PATCH 5.15 340/570] netlink: hide validation union fields from kdoc
+Date: Mon, 13 Apr 2026 17:57:51 +0200
+Message-ID: <20260413155843.228800284@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,53 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 2cdaff22ed26f1e619aa2b43f27bb84f2c6ef8f8 ]
+[ Upstream commit 7354c9024f2835f6122ed9612e21ab379df050f9 ]
 
-Under an UML build for an upcoming series [1], I got `-Wstatic-in-inline`
-for `dma_free_attrs`:
+Mark the validation fields as private, users shouldn't set
+them directly and they are too complicated to explain in
+a more succinct way (there's already a long explanation
+in the comment above).
 
-      BINDGEN rust/bindings/bindings_generated.rs - due to target missing
-    In file included from rust/helpers/helpers.c:59:
-    rust/helpers/dma.c:17:2: warning: static function 'dma_free_attrs' is used in an inline function with external linkage [-Wstatic-in-inline]
-       17 |         dma_free_attrs(dev, size, cpu_addr, dma_handle, attrs);
-          |         ^
-    rust/helpers/dma.c:12:1: note: use 'static' to give inline function 'rust_helper_dma_free_attrs' internal linkage
-       12 | __rust_helper void rust_helper_dma_free_attrs(struct device *dev, size_t size,
-          | ^
-          | static
+The strict_start_type field is set directly and has a dedicated
+comment so move that above the "private" section.
 
-The issue is that `dma_free_attrs` was not marked `inline` when it was
-introduced alongside the rest of the stubs.
-
-Thus mark it.
-
-Fixes: ed6ccf10f24b ("dma-mapping: properly stub out the DMA API for !CONFIG_HAS_DMA")
-Closes: https://lore.kernel.org/rust-for-linux/20260322194616.89847-1-ojeda@kernel.org/ [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260325015548.70912-1-ojeda@kernel.org
+Link: https://lore.kernel.org/r/20221027212107.2639255-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8f15b5071b45 ("netfilter: ctnetlink: use netlink policy range checks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dma-mapping.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/netlink.h | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
-index d7b91f82b0dce..96f4d63390aea 100644
---- a/include/linux/dma-mapping.h
-+++ b/include/linux/dma-mapping.h
-@@ -218,8 +218,8 @@ static inline void *dma_alloc_attrs(struct device *dev, size_t size,
- {
- 	return NULL;
- }
--static void dma_free_attrs(struct device *dev, size_t size, void *cpu_addr,
--		dma_addr_t dma_handle, unsigned long attrs)
-+static inline void dma_free_attrs(struct device *dev, size_t size,
-+		void *cpu_addr, dma_addr_t dma_handle, unsigned long attrs)
- {
- }
- static inline void *dmam_alloc_attrs(struct device *dev, size_t size,
+diff --git a/include/net/netlink.h b/include/net/netlink.h
+index 6eb4593983319..8c67db47556e2 100644
+--- a/include/net/netlink.h
++++ b/include/net/netlink.h
+@@ -317,19 +317,10 @@ struct nla_policy {
+ 	u8		validation_type;
+ 	u16		len;
+ 	union {
+-		const u32 bitfield32_valid;
+-		const u32 mask;
+-		const char *reject_message;
+-		const struct nla_policy *nested_policy;
+-		struct netlink_range_validation *range;
+-		struct netlink_range_validation_signed *range_signed;
+-		struct {
+-			s16 min, max;
+-			u8 network_byte_order:1;
+-		};
+-		int (*validate)(const struct nlattr *attr,
+-				struct netlink_ext_ack *extack);
+-		/* This entry is special, and used for the attribute at index 0
++		/**
++		 * @strict_start_type: first attribute to validate strictly
++		 *
++		 * This entry is special, and used for the attribute at index 0
+ 		 * only, and specifies special data about the policy, namely it
+ 		 * specifies the "boundary type" where strict length validation
+ 		 * starts for any attribute types >= this value, also, strict
+@@ -348,6 +339,20 @@ struct nla_policy {
+ 		 * was added to enforce strict validation from thereon.
+ 		 */
+ 		u16 strict_start_type;
++
++		/* private: use NLA_POLICY_*() to set */
++		const u32 bitfield32_valid;
++		const u32 mask;
++		const char *reject_message;
++		const struct nla_policy *nested_policy;
++		struct netlink_range_validation *range;
++		struct netlink_range_validation_signed *range_signed;
++		struct {
++			s16 min, max;
++			u8 network_byte_order:1;
++		};
++		int (*validate)(const struct nlattr *attr,
++				struct netlink_ext_ack *extack);
+ 	};
+ };
+ 
 -- 
 2.51.0
 
