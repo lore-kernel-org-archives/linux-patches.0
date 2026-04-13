@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572E724E4A1;
-	Mon, 13 Apr 2026 16:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53F624E4A1;
+	Mon, 13 Apr 2026 16:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098362; cv=none; b=qzAqMN/E68xgTQ5SDCdD3Xc8mHHoDfquC6lpn81Op1FSjj4CoZakm3cSPTbEdYrTXhN+k4cC7AdVAqQAp6g77qMJ/Ej63vExkIgExkt0v/wKEv3IwrxUWzerhXAzLwRHMKmmWWUOYkCZwokH4optVhykdy3UWXjJmwi1ECqDzY8=
+	t=1776098365; cv=none; b=jntdd9TN2JzFiLVtHxkYiK/NILhE2fJu41uRyfISnS0Tw36Qq81NJpAoFFo645WZvvScE/af+C/e34xpkeOBkCurZQop6RA60xiYre0lMfMDkavSmq3GFDDPbgGscJ06bXm3lXS82asivuSpt/D/YU67QX5kKef9RhdlqTSmapg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098362; c=relaxed/simple;
-	bh=g/Qhh8lpvoOzakLzoZ36koauOmsnUvvE9+wHazlVYjc=;
+	s=arc-20240116; t=1776098365; c=relaxed/simple;
+	bh=U71P5GufQDHv47s+sunhcmd30uFEazj4kOx8GHndY0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z4sJYqcyARodYoK4ATx/PsS29WjSJ05rR/TJcB15dsn8zKcLtoB+/GZQyNfzwpXGEXj3awYyVn5wIinNGy5jLo6fBOZSksu1633NVwH8erwOSfQCTbGqyYKU60KsB96NYKDJT3ov6C/1+fdLKJUxsrJ+Yr9SP1dBYUzx2edFLdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEOaAO4+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pJK17bFyC0GaeZyfqRfwwGtKcHaUM/L8BUEMXsrqKX6BRSlD27clljYN6Omqg2OoId8vZ+TGgRkloOkcI1NnChFTPUddqZh9GbvG5VCnQMWw1o0GkK36GM3PxmzdeEjFFYRcMLilZMzfv3AgOf8RUZjI/I/RrS2G4E3mz4wiIjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UN5wjk3l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEOaAO4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11FEC2BCAF;
-	Mon, 13 Apr 2026 16:39:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UN5wjk3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78532C2BCAF;
+	Mon, 13 Apr 2026 16:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098362;
-	bh=g/Qhh8lpvoOzakLzoZ36koauOmsnUvvE9+wHazlVYjc=;
+	s=korg; t=1776098364;
+	bh=U71P5GufQDHv47s+sunhcmd30uFEazj4kOx8GHndY0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEOaAO4+Jac5e/ghre77kMVDzK8r7AgRUoE4mc5NcCN+Wt0f2J6HpFqIaQKpts7UK
-	 ADiXHJXpDnkLuLNWlmdy19wemBPzYi6zgCoQkbh2MXnbQaI+FFZUKUfrrqMeEoOJeY
-	 s3ukEIKb/ZJjAsRIz3vTqRFQrThxedcOPzBPDtFo=
+	b=UN5wjk3lwOhWjRzQFgxGmFpOxtKd3kolV7b3m5I4ZqzultTI/FnyuqcyK4w0hWRz+
+	 Wwp6Mq+vVdDXdkhKJNQm1RXujMJk3NK8HxMZP+L5Eo+glZBylWj9BSZpQ1W6UMQeKX
+	 l48W9cbPPWsc1rbZpKS+oJco2yM43g2+y/lpQDWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
+	syzbot+e76d52dadc089b9d197f@syzkaller.appspotmail.com,
+	syzbot+1065a199625a388fce60@syzkaller.appspotmail.com,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Johnny Hao <johnny_haocn@sina.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 495/570] fbcon: Set fb_display[i]->mode to NULL when the mode is released
-Date: Mon, 13 Apr 2026 18:00:26 +0200
-Message-ID: <20260413155849.000667410@linuxfoundation.org>
+Subject: [PATCH 5.15 496/570] net: mctp: Dont access ifa_index when missing
+Date: Mon, 13 Apr 2026 18:00:27 +0200
+Message-ID: <20260413155849.037731314@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -53,127 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanmin Yan <yanquanmin1@huawei.com>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit a1f3058930745d2b938b6b4f5bd9630dc74b26b7 ]
+[ Upstream commit f11cf946c0a92c560a890d68e4775723353599e1 ]
 
-Recently, we discovered the following issue through syzkaller:
+In mctp_dump_addrinfo, ifa_index can be used to filter interfaces, but
+only when the struct ifaddrmsg is provided. Otherwise it will be
+comparing to uninitialised memory - reproducible in the syzkaller case from
+dhcpd, or busybox "ip addr show".
 
-BUG: KASAN: slab-use-after-free in fb_mode_is_equal+0x285/0x2f0
-Read of size 4 at addr ff11000001b3c69c by task syz.xxx
-...
-Call Trace:
- <TASK>
- dump_stack_lvl+0xab/0xe0
- print_address_description.constprop.0+0x2c/0x390
- print_report+0xb9/0x280
- kasan_report+0xb8/0xf0
- fb_mode_is_equal+0x285/0x2f0
- fbcon_mode_deleted+0x129/0x180
- fb_set_var+0xe7f/0x11d0
- do_fb_ioctl+0x6a0/0x750
- fb_ioctl+0xe0/0x140
- __x64_sys_ioctl+0x193/0x210
- do_syscall_64+0x5f/0x9c0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+The kernel MCTP implementation has always filtered by ifa_index, so
+existing userspace programs expecting to dump MCTP addresses must
+already be passing a valid ifa_index value (either 0 or a real index).
 
-Based on experimentation and analysis, during framebuffer unregistration,
-only the memory of fb_info->modelist is freed, without setting the
-corresponding fb_display[i]->mode to NULL for the freed modes. This leads
-to UAF issues during subsequent accesses. Here's an example of reproduction
-steps:
-1. With /dev/fb0 already registered in the system, load a kernel module
-   to register a new device /dev/fb1;
-2. Set fb1's mode to the global fb_display[] array (via FBIOPUT_CON2FBMAP);
-3. Switch console from fb to VGA (to allow normal rmmod of the ko);
-4. Unload the kernel module, at this point fb1's modelist is freed, leaving
-   a wild pointer in fb_display[];
-5. Trigger the bug via system calls through fb0 attempting to delete a mode
-   from fb0.
+BUG: KMSAN: uninit-value in mctp_dump_addrinfo+0x208/0xac0 net/mctp/device.c:128
+ mctp_dump_addrinfo+0x208/0xac0 net/mctp/device.c:128
+ rtnl_dump_all+0x3ec/0x5b0 net/core/rtnetlink.c:4380
+ rtnl_dumpit+0xd5/0x2f0 net/core/rtnetlink.c:6824
+ netlink_dump+0x97b/0x1690 net/netlink/af_netlink.c:2309
 
-Add a check in do_unregister_framebuffer(): if the mode to be freed exists
-in fb_display[], set the corresponding mode pointer to NULL.
-
-[ The context change is due to the commit 2c0c19b681d5
-("fbdev: fbmem: Fix double free of 'fb_info->pixmap.addr'") in v5.16
+[ The context change is due to the commit 2d45eeb7d5d7
+("mctp: no longer rely on net->dev_index_head[]") in v6.14
 which is irrelevant to the logic of this patch. ]
 
-Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
+Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
+Reported-by: syzbot+e76d52dadc089b9d197f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68135815.050a0220.3a872c.000e.GAE@google.com/
+Reported-by: syzbot+1065a199625a388fce60@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/681357d6.050a0220.14dd7d.000d.GAE@google.com/
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Link: https://patch.msgid.link/20250508-mctp-addr-dump-v2-1-c8a53fd2dd66@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Johnny Hao <johnny_haocn@sina.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c | 20 ++++++++++++++++++++
- drivers/video/fbdev/core/fbmem.c |  2 ++
- include/linux/fbcon.h            |  2 ++
- 3 files changed, 24 insertions(+)
+ net/mctp/device.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index f4584681fa43d..7dce023c2fb34 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2797,6 +2797,26 @@ int fbcon_mode_deleted(struct fb_info *info,
- 	return found;
- }
- 
-+static void fbcon_delete_mode(struct fb_videomode *m)
-+{
-+	struct fbcon_display *p;
-+	int i;
+diff --git a/net/mctp/device.c b/net/mctp/device.c
+index c00a2550e2e0e..aec7ffad2666a 100644
+--- a/net/mctp/device.c
++++ b/net/mctp/device.c
+@@ -99,12 +99,19 @@ static int mctp_dump_addrinfo(struct sk_buff *skb, struct netlink_callback *cb)
+ 	struct net_device *dev;
+ 	struct ifaddrmsg *hdr;
+ 	struct mctp_dev *mdev;
+-	int ifindex;
+-	int idx, rc;
+-
+-	hdr = nlmsg_data(cb->nlh);
+-	// filter by ifindex if requested
+-	ifindex = hdr->ifa_index;
++	int idx;
++	int ifindex = 0, rc;
 +
-+	for (i = first_fb_vc; i <= last_fb_vc; i++) {
-+		p = &fb_display[i];
-+		if (p->mode == m)
-+			p->mode = NULL;
++	/* Filter by ifindex if a header is provided */
++	if (cb->nlh->nlmsg_len >= nlmsg_msg_size(sizeof(*hdr))) {
++		hdr = nlmsg_data(cb->nlh);
++		ifindex = hdr->ifa_index;
++	} else {
++		if (cb->strict_check) {
++			NL_SET_ERR_MSG(cb->extack, "mctp: Invalid header for addr dump request");
++			return -EINVAL;
++		}
 +	}
-+}
-+
-+void fbcon_delete_modelist(struct list_head *head)
-+{
-+	struct fb_modelist *modelist;
-+
-+	list_for_each_entry(modelist, head, list)
-+		fbcon_delete_mode(&modelist->mode);
-+}
-+
- #ifdef CONFIG_VT_HW_CONSOLE_BINDING
- static void fbcon_unbind(void)
- {
-diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
-index 3b52ddfe03506..03a7a7e2a670e 100644
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -1750,6 +1750,8 @@ static void do_unregister_framebuffer(struct fb_info *fb_info)
- 	if (fb_info->pixmap.addr &&
- 	    (fb_info->pixmap.flags & FB_PIXMAP_DEFAULT))
- 		kfree(fb_info->pixmap.addr);
-+
-+	fbcon_delete_modelist(&fb_info->modelist);
- 	fb_destroy_modelist(&fb_info->modelist);
- 	registered_fb[fb_info->node] = NULL;
- 	num_registered_fb--;
-diff --git a/include/linux/fbcon.h b/include/linux/fbcon.h
-index 2382dec6d6ab8..fb0fc2736b801 100644
---- a/include/linux/fbcon.h
-+++ b/include/linux/fbcon.h
-@@ -11,6 +11,7 @@ void fbcon_suspended(struct fb_info *info);
- void fbcon_resumed(struct fb_info *info);
- int fbcon_mode_deleted(struct fb_info *info,
- 		       struct fb_videomode *mode);
-+void fbcon_delete_modelist(struct list_head *head);
- void fbcon_new_modelist(struct fb_info *info);
- void fbcon_get_requirement(struct fb_info *info,
- 			   struct fb_blit_caps *caps);
-@@ -31,6 +32,7 @@ static inline void fbcon_suspended(struct fb_info *info) {}
- static inline void fbcon_resumed(struct fb_info *info) {}
- static inline int fbcon_mode_deleted(struct fb_info *info,
- 				     struct fb_videomode *mode) { return 0; }
-+static inline void fbcon_delete_modelist(struct list_head *head) {}
- static inline void fbcon_new_modelist(struct fb_info *info) {}
- static inline void fbcon_get_requirement(struct fb_info *info,
- 					 struct fb_blit_caps *caps) {}
+ 
+ 	rcu_read_lock();
+ 	for (; mcb->h < NETDEV_HASHENTRIES; mcb->h++, mcb->idx = 0) {
 -- 
 2.53.0
 
