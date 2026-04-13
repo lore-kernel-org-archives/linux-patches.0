@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CC331F9BC;
-	Mon, 13 Apr 2026 16:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BFE3203B6;
+	Mon, 13 Apr 2026 16:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099563; cv=none; b=PHzb1RTL9P+ZgYFINJdk54BdsCSvAdxhJ5jM4gpYPkMwhZrQckojzFKxM5tLVPZtxwq24UncK4mX95VgvXFZAB0H1wmVZSD/HYIhLRGoHg5w+nHy+J1tbe04AzzUACMxi2WPai16fJbHyS2A020vOHYzvHaNI+DhIBP2WQTfR1Y=
+	t=1776099568; cv=none; b=Q6pWAKC5JWRRhptWKZvDvnE4Gz2a8TM1504nfdI0HWfR/ptuCTJIULxI4Y6iQkXtt3U9tcWdaQtfnhkVfcOlHLPge1TTjPna2zZtIQlq+OTKfV49L548eOnHAVZtgRWhdO+YZANZ2o56uQqFp4Umus2bhAsKpjEoPkZdqANlC0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099563; c=relaxed/simple;
-	bh=5yxucoSJjyZyDLdSkOjP1nhi38mz8E+J1qH4lLO8D4s=;
+	s=arc-20240116; t=1776099568; c=relaxed/simple;
+	bh=+S+qCoUBjQGErdO6QVEWqbM3nYgo5VvshJiyDKF65fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RAfW7BK0mxB98q8ulBEwnsAv2zCtXV4RTzy5/o9P5K2aubpXUe06LJ9PhLbZqJMVS2JNiYdaFyeg4U4BwTzQdYkKDKFJBdEbam/yRv07EVG68K5DyAfw+ylbeNGXJSoWqRYz2LtQelwz2af7LjVTgYOrjGSCqpKHkBEaWpjLONs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbgdIx0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NuPRO8IxEttd5sHFyT632t1jnhxqY9MRByoCsvwmCPpDDSktdYPDUvbW58DOL+P/GTVpM88FLNS06Gn1Xti4Tua4JJn8UTkjW8POxRiY4N3D1fBqBHPwy2ovrliRGD2OHZiWd38QmEN7V9MfRVbi+Y5fKm+VjB1L+qofZqwxmqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yoxq7NoF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbgdIx0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B93C2BCAF;
-	Mon, 13 Apr 2026 16:59:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoxq7NoF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7DDC2BCAF;
+	Mon, 13 Apr 2026 16:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099563;
-	bh=5yxucoSJjyZyDLdSkOjP1nhi38mz8E+J1qH4lLO8D4s=;
+	s=korg; t=1776099565;
+	bh=+S+qCoUBjQGErdO6QVEWqbM3nYgo5VvshJiyDKF65fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbgdIx0IN6aQ8ux6CbrZqjYJ5vHTJ9pFWAdCKkDqZCT+vby2v7KNHZ1cpcN/qcEXy
-	 cg8Q8PWcLeomViMJQ3+bt6Ry0tqjL0q/+8/cXxD8CDaJZCafUlyH9x1FKomofpTO+1
-	 8UrrZKj53DijbxxFl9ZFRpkRUtn2sirQLcRJXn+o=
+	b=yoxq7NoFqg3ARB8Vbh3DsY+CVQj3CMYchcrXlKxlxWFL4lytiuckFab6uImGDnTJP
+	 Wlpdjr1zfRZqp0OKANU2/X+5L/iQ/6Yza5aPM42HoLQh63Uc5hZyOGLF0ydjAta8HM
+	 ED7aDEzkr8i8sj7VvVH7COOql5ZMGxIbDHvMpmIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 356/491] drm/vmwgfx: Add seqno waiter for sync_files
-Date: Mon, 13 Apr 2026 18:00:01 +0200
-Message-ID: <20260413155832.365848176@linuxfoundation.org>
+Subject: [PATCH 5.10 357/491] Revert "scsi: core: Wake up the error handler when final completions race against each other"
+Date: Mon, 13 Apr 2026 18:00:02 +0200
+Message-ID: <20260413155832.402764140@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,89 +49,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+This reverts commit cc872e35c0df80062abc71268d690a2f749e542e.
 
-[ Upstream commit 0039a3b35b10d9c15d3d26320532ab56cc566750 ]
-
-Because sync_files are passive waiters they do not participate in
-the processing of fences like the traditional vmw_fence_wait IOCTL.
-If userspace exclusively uses sync_files for synchronization then
-nothing in the kernel actually processes fence updates as interrupts
-for fences are masked and ignored if the kernel does not indicate to the
-SVGA device that there are active waiters.
-
-This oversight results in a bug where the entire GUI can freeze waiting
-on a sync_file that will never be signalled as we've masked the interrupts
-to signal its completion. This bug is incredibly racy as any process which
-interacts with the fencing code via the 3D stack can process the stuck
-fences on behalf of the stuck process causing it to run again. Even a
-simple app like eglinfo is enough to resume the stuck process. Usually
-this bug is seen at a login screen like GDM because there are no other
-3D apps running.
-
-By adding a seqno waiter we re-enable interrupt based processing of the
-dma_fences associated with the sync_file which is signalled as part of a
-dma_fence_callback.
-
-This has likely been broken since it was initially added to the kernel in
-2017 but has gone unnoticed until mutter recently started using sync_files
-heavily over the course of 2024 as part of their explicit sync support.
-
-Fixes: c906965dee22 ("drm/vmwgfx: Add export fence to file descriptor support")
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250228200633.642417-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 26 +++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/scsi/scsi_error.c | 11 +----------
+ drivers/scsi/scsi_lib.c   |  8 --------
+ 2 files changed, 1 insertion(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index daea547704ddc..9bec26fda14cb 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -4039,6 +4039,23 @@ static int vmw_execbuf_tie_context(struct vmw_private *dev_priv,
- 	return 0;
+diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
+index 4e9114f069832..ffc6f3031e82b 100644
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -241,20 +241,11 @@ static void scsi_eh_inc_host_failed(struct rcu_head *head)
+ {
+ 	struct scsi_cmnd *scmd = container_of(head, typeof(*scmd), rcu);
+ 	struct Scsi_Host *shost = scmd->device->host;
+-	unsigned int busy;
++	unsigned int busy = scsi_host_busy(shost);
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(shost->host_lock, flags);
+ 	shost->host_failed++;
+-	spin_unlock_irqrestore(shost->host_lock, flags);
+-	/*
+-	 * The counting of busy requests needs to occur after adding to
+-	 * host_failed or after the lock acquire for adding to host_failed
+-	 * to prevent a race with host unbusy and missing an eh wakeup.
+-	 */
+-	busy = scsi_host_busy(shost);
+-
+-	spin_lock_irqsave(shost->host_lock, flags);
+ 	scsi_eh_wakeup(shost, busy);
+ 	spin_unlock_irqrestore(shost->host_lock, flags);
  }
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index 8d570632982f3..fb48d47e9183e 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -310,14 +310,6 @@ static void scsi_dec_host_busy(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
+ 	rcu_read_lock();
+ 	__clear_bit(SCMD_STATE_INFLIGHT, &cmd->state);
+ 	if (unlikely(scsi_host_in_recovery(shost))) {
+-		/*
+-		 * Ensure the clear of SCMD_STATE_INFLIGHT is visible to
+-		 * other CPUs before counting busy requests. Otherwise,
+-		 * reordering can cause CPUs to race and miss an eh wakeup
+-		 * when no CPU sees all busy requests as done or timed out.
+-		 */
+-		smp_mb();
+-
+ 		unsigned int busy = scsi_host_busy(shost);
  
-+/*
-+ * DMA fence callback to remove a seqno_waiter
-+ */
-+struct seqno_waiter_rm_context {
-+	struct dma_fence_cb base;
-+	struct vmw_private *dev_priv;
-+};
-+
-+static void seqno_waiter_rm_cb(struct dma_fence *f, struct dma_fence_cb *cb)
-+{
-+	struct seqno_waiter_rm_context *ctx =
-+		container_of(cb, struct seqno_waiter_rm_context, base);
-+
-+	vmw_seqno_waiter_remove(ctx->dev_priv);
-+	kfree(ctx);
-+}
-+
- int vmw_execbuf_process(struct drm_file *file_priv,
- 			struct vmw_private *dev_priv,
- 			void __user *user_commands, void *kernel_commands,
-@@ -4230,8 +4247,17 @@ int vmw_execbuf_process(struct drm_file *file_priv,
- 			fput(sync_file->file);
- 			put_unused_fd(out_fence_fd);
- 		} else {
-+			struct seqno_waiter_rm_context *ctx;
- 			/* Link the fence with the FD created earlier */
- 			fd_install(out_fence_fd, sync_file->file);
-+			ctx = kmalloc(sizeof(*ctx), GFP_KERNEL);
-+			ctx->dev_priv = dev_priv;
-+			vmw_seqno_waiter_add(dev_priv);
-+			if (dma_fence_add_callback(&fence->base, &ctx->base,
-+						   seqno_waiter_rm_cb) < 0) {
-+				vmw_seqno_waiter_remove(dev_priv);
-+				kfree(ctx);
-+			}
- 		}
- 	}
- 
+ 		spin_lock_irqsave(shost->host_lock, flags);
 -- 
 2.53.0
 
