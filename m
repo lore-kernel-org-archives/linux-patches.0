@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1260D31619A;
-	Mon, 13 Apr 2026 16:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5E231619A;
+	Mon, 13 Apr 2026 16:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098970; cv=none; b=AV0FwkWbTt9zVT+FXVnzUBMfLQBtcDpz3KYa9Vlj+6uEdOEW8nYyW8bz5Pj/cQXvmEpfPMPaH1fnhpkwjRzSYXB1zlnYFVuqMC/bj/YRVPEFnzbE4BHz8tv065Yv/FrE3XV7fhVKyEsZn0MvZvcDWohtHDT+SuN2q4etbt5235w=
+	t=1776098972; cv=none; b=BwYDGUfwXMIPdSPE54PnaK2kd5oTQLROuQsZ0pFNFYb6TR0AqBEaANBpAwF4g0cMo8+qHCdmiPEi9EejlsVMmiIGQuTm6Skl5IBYq8+yOlsHu5tjEOnY8XI2Z0jJhlfKxwMTqRzRbZ57L3Qes/cv969JgmvyMEUq0tp0yMAF5c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098970; c=relaxed/simple;
-	bh=46ucQ0LGhECUOyjQ1ilZHkjZbxQGG0w7w38hhEMoeko=;
+	s=arc-20240116; t=1776098972; c=relaxed/simple;
+	bh=RZkIlkckFuQkvz3Qiiq6AY0YuGopz66SWpqXonrCurw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4rtVk0VNoU4hoAJORjqWhp8bdpQMJIRWA8H9fVz/1DuTYGK+8LjYJ/+Jw0yPCp5FjHiQLmQb5ZYKeTQsBdU9+50sajthNEpAdCfGKmWoKK1r2d3sEe66r8Vphl7ZbbEFvVJUlLEQlZrUctZt8Yjvx2R9jh+ZS4CEyYRU+XG1WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gh6Efttm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V0QUpDqHMh0BBFbuQH7Pe5sMRQr5XrHv5WiN6OK+9SFnU4qYvGQIUiAHSUB6U5UTHanb/QBksGAtjv4iASwR1ejNpaKyNzunwcrPdVYMwhQgRdvW4lh4H0wO4igQ5vyQizTRcT6YeEFhwlTBwwSvGwFaIsuN1tUFaIMowSN64Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEjHEY3/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gh6Efttm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA91C2BCAF;
-	Mon, 13 Apr 2026 16:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEjHEY3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40ACFC2BCAF;
+	Mon, 13 Apr 2026 16:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098970;
-	bh=46ucQ0LGhECUOyjQ1ilZHkjZbxQGG0w7w38hhEMoeko=;
+	s=korg; t=1776098972;
+	bh=RZkIlkckFuQkvz3Qiiq6AY0YuGopz66SWpqXonrCurw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gh6EfttmkcXsIv7mGhde5JO8kyawIHzukvOOh9ggMLLgybeVlq4rtReV0Lw7XcIWc
-	 xCVw63R/4CNAKbNOiXB/pPgCZLm83rtVBPizFRI/9mguIhVJ3KJ5kmIXPuLw/0LTsN
-	 JkwEQOjmRWXmD4pRSyTmhcEOr0LPgsVSwVdF6T44=
+	b=cEjHEY3/uuGCkfjgKPWCa+c+TN0VEp55iuA3HfhaCmJaQ6OaMybx3MWtgzZDmdBjL
+	 KNRUtNxbrvwlGO+NumorfbLF3YmoiMOUJ8oUewVV3xZLCTOt16VB+NX/F+oASsObfL
+	 AolEgOyT+LDmJuOb5Iv5bJSoXJ98L42i3syolbPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
+	Hannes Reinecke <hare@suse.de>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 159/491] ext4: fix dirtyclusters double decrement on fs shutdown
-Date: Mon, 13 Apr 2026 17:56:44 +0200
-Message-ID: <20260413155824.987095883@linuxfoundation.org>
+Subject: [PATCH 5.10 160/491] ata: libata: remove pointless VPRINTK() calls
+Date: Mon, 13 Apr 2026 17:56:45 +0200
+Message-ID: <20260413155825.025011352@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -53,106 +51,229 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Foster <bfoster@redhat.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit 94a8cea54cd935c54fa2fba70354757c0fc245e3 ]
+[ Upstream commit e1553351d747cbcd62db01d579dff916edcc782c ]
 
-fstests test generic/388 occasionally reproduces a warning in
-ext4_put_super() associated with the dirty clusters count:
+Most of the information is already covered by tracepoints
+(if not downright pointless), so remove the VPRINTK() calls.
+And while we're at it, remove ata_scsi_dump_cdb(), too,
+as this information can be retrieved from scsi tracing.
 
-  WARNING: CPU: 7 PID: 76064 at fs/ext4/super.c:1324 ext4_put_super+0x48c/0x590 [ext4]
-
-Tracing the failure shows that the warning fires due to an
-s_dirtyclusters_counter value of -1. IOW, this appears to be a
-spurious decrement as opposed to some sort of leak. Further tracing
-of the dirty cluster count deltas and an LLM scan of the resulting
-output identified the cause as a double decrement in the error path
-between ext4_mb_mark_diskspace_used() and the caller
-ext4_mb_new_blocks().
-
-First, note that generic/388 is a shutdown vs. fsstress test and so
-produces a random set of operations and shutdown injections. In the
-problematic case, the shutdown triggers an error return from the
-ext4_handle_dirty_metadata() call(s) made from
-ext4_mb_mark_context(). The changed value is non-zero at this point,
-so ext4_mb_mark_diskspace_used() does not exit after the error
-bubbles up from ext4_mb_mark_context(). Instead, the former
-decrements both cluster counters and returns the error up to
-ext4_mb_new_blocks(). The latter falls into the !ar->len out path
-which decrements the dirty clusters counter a second time, creating
-the inconsistency.
-
-To avoid this problem and simplify ownership of the cluster
-reservation in this codepath, lift the counter reduction to a single
-place in the caller. This makes it more clear that
-ext4_mb_new_blocks() is responsible for acquiring cluster
-reservation (via ext4_claim_free_clusters()) in the !delalloc case
-as well as releasing it, regardless of whether it ends up consumed
-or returned due to failure.
-
-Fixes: 0087d9fb3f29 ("ext4: Fix s_dirty_blocks_counter if block allocation failed with nodelalloc")
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Link: https://patch.msgid.link/20260113171905.118284-1-bfoster@redhat.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ Drop mballoc-test changes ]
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Stable-dep-of: bb3a8154b1a1 ("ata: libata-scsi: refactor ata_scsi_translate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   21 +++++----------------
- 1 file changed, 5 insertions(+), 16 deletions(-)
+ drivers/ata/libata-core.c |    3 ---
+ drivers/ata/libata-sata.c |    2 --
+ drivers/ata/libata-scsi.c |   42 ------------------------------------------
+ drivers/ata/libata-sff.c  |    4 ----
+ drivers/ata/libata.h      |    1 -
+ 5 files changed, 52 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3308,8 +3308,7 @@ void ext4_exit_mballoc(void)
-  * Returns 0 if success or error code
-  */
- static noinline_for_stack int
--ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
--				handle_t *handle, unsigned int reserv_clstrs)
-+ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac, handle_t *handle)
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -4461,8 +4461,6 @@ static void ata_sg_clean(struct ata_queu
+ 
+ 	WARN_ON_ONCE(sg == NULL);
+ 
+-	VPRINTK("unmapping %u sg elements\n", qc->n_elem);
+-
+ 	if (qc->n_elem)
+ 		dma_unmap_sg(ap->dev, sg, qc->orig_n_elem, dir);
+ 
+@@ -4494,7 +4492,6 @@ static int ata_sg_setup(struct ata_queue
+ 	if (n_elem < 1)
+ 		return -1;
+ 
+-	VPRINTK("%d sg elements mapped\n", n_elem);
+ 	qc->orig_n_elem = qc->n_elem;
+ 	qc->n_elem = n_elem;
+ 	qc->flags |= ATA_QCFLAG_DMAMAP;
+--- a/drivers/ata/libata-sata.c
++++ b/drivers/ata/libata-sata.c
+@@ -1258,8 +1258,6 @@ int ata_sas_queuecmd(struct scsi_cmnd *c
  {
- 	struct buffer_head *bitmap_bh = NULL;
- 	struct ext4_group_desc *gdp;
-@@ -3396,13 +3395,6 @@ ext4_mb_mark_diskspace_used(struct ext4_
+ 	int rc = 0;
  
- 	ext4_unlock_group(sb, ac->ac_b_ex.fe_group);
- 	percpu_counter_sub(&sbi->s_freeclusters_counter, ac->ac_b_ex.fe_len);
--	/*
--	 * Now reduce the dirty block count also. Should not go negative
--	 */
--	if (!(ac->ac_flags & EXT4_MB_DELALLOC_RESERVED))
--		/* release all the reserved blocks if non delalloc */
--		percpu_counter_sub(&sbi->s_dirtyclusters_counter,
--				   reserv_clstrs);
+-	ata_scsi_dump_cdb(ap, cmd);
+-
+ 	if (likely(ata_dev_enabled(ap->link.device)))
+ 		rc = __ata_scsi_queuecmd(cmd, ap->link.device);
+ 	else {
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1296,8 +1296,6 @@ static void scsi_6_lba_len(const u8 *cdb
+ 	u64 lba = 0;
+ 	u32 len;
  
- 	if (sbi->s_log_groups_per_flex) {
- 		ext4_group_t flex_group = ext4_flex_group(sbi,
-@@ -5271,7 +5263,7 @@ repeat:
- 			ext4_mb_pa_free(ac);
- 	}
- 	if (likely(ac->ac_status == AC_STATUS_FOUND)) {
--		*errp = ext4_mb_mark_diskspace_used(ac, handle, reserv_clstrs);
-+		*errp = ext4_mb_mark_diskspace_used(ac, handle);
- 		if (*errp) {
- 			ext4_discard_allocated_blocks(ac);
- 			goto errout;
-@@ -5303,12 +5295,9 @@ out:
- 		kmem_cache_free(ext4_ac_cachep, ac);
- 	if (inquota && ar->len < inquota)
- 		dquot_free_block(ar->inode, EXT4_C2B(sbi, inquota - ar->len));
--	if (!ar->len) {
--		if ((ar->flags & EXT4_MB_DELALLOC_RESERVED) == 0)
--			/* release all the reserved blocks if non delalloc */
--			percpu_counter_sub(&sbi->s_dirtyclusters_counter,
--						reserv_clstrs);
--	}
-+	/* release any reserved blocks */
-+	if (reserv_clstrs)
-+		percpu_counter_sub(&sbi->s_dirtyclusters_counter, reserv_clstrs);
+-	VPRINTK("six-byte command\n");
+-
+ 	lba |= ((u64)(cdb[1] & 0x1f)) << 16;
+ 	lba |= ((u64)cdb[2]) << 8;
+ 	lba |= ((u64)cdb[3]);
+@@ -1323,8 +1321,6 @@ static void scsi_10_lba_len(const u8 *cd
+ 	u64 lba = 0;
+ 	u32 len = 0;
  
- 	trace_ext4_allocate_blocks(ar, (unsigned long long)block);
+-	VPRINTK("ten-byte command\n");
+-
+ 	lba |= ((u64)cdb[2]) << 24;
+ 	lba |= ((u64)cdb[3]) << 16;
+ 	lba |= ((u64)cdb[4]) << 8;
+@@ -1352,8 +1348,6 @@ static void scsi_16_lba_len(const u8 *cd
+ 	u64 lba = 0;
+ 	u32 len = 0;
  
+-	VPRINTK("sixteen-byte command\n");
+-
+ 	lba |= ((u64)cdb[2]) << 56;
+ 	lba |= ((u64)cdb[3]) << 48;
+ 	lba |= ((u64)cdb[4]) << 40;
+@@ -1707,8 +1701,6 @@ static int ata_scsi_translate(struct ata
+ 	struct ata_queued_cmd *qc;
+ 	int rc;
+ 
+-	VPRINTK("ENTER\n");
+-
+ 	qc = ata_scsi_qc_new(dev, cmd);
+ 	if (!qc)
+ 		goto err_mem;
+@@ -1739,7 +1731,6 @@ static int ata_scsi_translate(struct ata
+ 	/* select device, send command to hardware */
+ 	ata_qc_issue(qc);
+ 
+-	VPRINTK("EXIT\n");
+ 	return 0;
+ 
+ early_finish:
+@@ -1897,8 +1888,6 @@ static unsigned int ata_scsiop_inq_std(s
+ 		2
+ 	};
+ 
+-	VPRINTK("ENTER\n");
+-
+ 	/* set scsi removable (RMB) bit per ata bit, or if the
+ 	 * AHCI port says it's external (Hotplug-capable, eSATA).
+ 	 */
+@@ -2309,8 +2298,6 @@ static unsigned int ata_scsiop_mode_sens
+ 	u8 dpofua, bp = 0xff;
+ 	u16 fp;
+ 
+-	VPRINTK("ENTER\n");
+-
+ 	six_byte = (scsicmd[0] == MODE_SENSE);
+ 	ebd = !(scsicmd[1] & 0x8);      /* dbd bit inverted == edb */
+ 	/*
+@@ -2428,8 +2415,6 @@ static unsigned int ata_scsiop_read_cap(
+ 	log2_per_phys = ata_id_log2_per_physical_sector(dev->id);
+ 	lowest_aligned = ata_id_logical_sector_offset(dev->id, log2_per_phys);
+ 
+-	VPRINTK("ENTER\n");
+-
+ 	if (args->cmd->cmnd[0] == READ_CAPACITY) {
+ 		if (last_lba >= 0xffffffffULL)
+ 			last_lba = 0xffffffff;
+@@ -2496,7 +2481,6 @@ static unsigned int ata_scsiop_read_cap(
+  */
+ static unsigned int ata_scsiop_report_luns(struct ata_scsi_args *args, u8 *rbuf)
+ {
+-	VPRINTK("ENTER\n");
+ 	rbuf[3] = 8;	/* just one lun, LUN 0, size 8 bytes */
+ 
+ 	return 0;
+@@ -2596,8 +2580,6 @@ static void atapi_qc_complete(struct ata
+ 	struct scsi_cmnd *cmd = qc->scsicmd;
+ 	unsigned int err_mask = qc->err_mask;
+ 
+-	VPRINTK("ENTER, err_mask 0x%X\n", err_mask);
+-
+ 	/* handle completion from new EH */
+ 	if (unlikely(qc->ap->ops->error_handler &&
+ 		     (err_mask || qc->flags & ATA_QCFLAG_SENSE_VALID))) {
+@@ -3732,8 +3714,6 @@ static unsigned int ata_scsi_mode_select
+ 	u8 buffer[64];
+ 	const u8 *p = buffer;
+ 
+-	VPRINTK("ENTER\n");
+-
+ 	six_byte = (cdb[0] == MODE_SELECT);
+ 	if (six_byte) {
+ 		if (scmd->cmd_len < 5) {
+@@ -4032,26 +4012,6 @@ static inline ata_xlat_func_t ata_get_xl
+ 	return NULL;
+ }
+ 
+-/**
+- *	ata_scsi_dump_cdb - dump SCSI command contents to dmesg
+- *	@ap: ATA port to which the command was being sent
+- *	@cmd: SCSI command to dump
+- *
+- *	Prints the contents of a SCSI command via printk().
+- */
+-
+-void ata_scsi_dump_cdb(struct ata_port *ap, struct scsi_cmnd *cmd)
+-{
+-#ifdef ATA_VERBOSE_DEBUG
+-	struct scsi_device *scsidev = cmd->device;
+-
+-	VPRINTK("CDB (%u:%d,%d,%lld) %9ph\n",
+-		ap->print_id,
+-		scsidev->channel, scsidev->id, scsidev->lun,
+-		cmd->cmnd);
+-#endif
+-}
+-
+ int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev)
+ {
+ 	struct ata_port *ap = dev->link->ap;
+@@ -4139,8 +4099,6 @@ int ata_scsi_queuecmd(struct Scsi_Host *
+ 
+ 	spin_lock_irqsave(ap->lock, irq_flags);
+ 
+-	ata_scsi_dump_cdb(ap, cmd);
+-
+ 	dev = ata_scsi_find_dev(ap, scsidev);
+ 	if (likely(dev))
+ 		rc = __ata_scsi_queuecmd(cmd, dev);
+--- a/drivers/ata/libata-sff.c
++++ b/drivers/ata/libata-sff.c
+@@ -888,8 +888,6 @@ static void atapi_pio_bytes(struct ata_q
+ 	if (unlikely(!bytes))
+ 		goto atapi_check;
+ 
+-	VPRINTK("ata%u: xfering %d bytes\n", ap->print_id, bytes);
+-
+ 	if (unlikely(__atapi_pio_bytes(qc, bytes)))
+ 		goto err_out;
+ 	ata_sff_sync(ap); /* flush */
+@@ -2614,7 +2612,6 @@ static void ata_bmdma_fill_sg(struct ata
+ 
+ 			prd[pi].addr = cpu_to_le32(addr);
+ 			prd[pi].flags_len = cpu_to_le32(len & 0xffff);
+-			VPRINTK("PRD[%u] = (0x%X, 0x%X)\n", pi, addr, len);
+ 
+ 			pi++;
+ 			sg_len -= len;
+@@ -2674,7 +2671,6 @@ static void ata_bmdma_fill_sg_dumb(struc
+ 				prd[++pi].addr = cpu_to_le32(addr + 0x8000);
+ 			}
+ 			prd[pi].flags_len = cpu_to_le32(blen);
+-			VPRINTK("PRD[%u] = (0x%X, 0x%X)\n", pi, addr, len);
+ 
+ 			pi++;
+ 			sg_len -= len;
+--- a/drivers/ata/libata.h
++++ b/drivers/ata/libata.h
+@@ -150,7 +150,6 @@ extern int ata_scsi_user_scan(struct Scs
+ 			      unsigned int id, u64 lun);
+ void ata_scsi_sdev_config(struct scsi_device *sdev);
+ int ata_scsi_dev_config(struct scsi_device *sdev, struct ata_device *dev);
+-void ata_scsi_dump_cdb(struct ata_port *ap, struct scsi_cmnd *cmd);
+ int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev);
+ 
+ /* libata-eh.c */
 
 
