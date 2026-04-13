@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557CB31E84D;
-	Mon, 13 Apr 2026 16:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DD03264F2;
+	Mon, 13 Apr 2026 16:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099347; cv=none; b=JN38UBsaQYyGrS2p4PvuHuAsoPg/hpOzH9iwMJGg0858k7o7gbN3nJ7rDmmmgV/pCr96Ueom2H2Uq9nH+e+rocRtsL3QX62QgE6WrlqMAlHJYU7/N4rQP5XRv5j+IfzU92LmvNyahA8Zj7OpuPQ2h7BT5BNzOrqApwqKsIVA3gA=
+	t=1776099349; cv=none; b=HTkPN353KRBF7D9Ib/vq64y4etf+SfF8KcmMnY0k+qHlzRXTmyKa+l3tEHjY/vhShh96uR4LVoY6of3oqxB6YVnlW9eoSzaRkD6kwyFXLQiDE/gWPw3+jAdLreLGbVOb37VDZc5Xg+ck51h++/rsZmiJaOokj3TXKq//uIGh37M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099347; c=relaxed/simple;
-	bh=CU/dqCCYYWTtE6oOn73EU2K3Y4wrn1tOQq6iSD3ysJY=;
+	s=arc-20240116; t=1776099349; c=relaxed/simple;
+	bh=LtJd5CcpA0dBg/rKDJ9WVSfS00VAKbu41iVvUgyNgAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uP1TmgWDFuLqQfLDtdMneN8IbTUrNHaEQH9axA5ZYyg1oAOXJWvtNV5BHd8lz79ZQsiae9zuPgsIxZHc9JR+4+ey3+AqG/00NGOdiVzxbB2Jt5Z1oaG/1yvMLuQtufGVuyOc9CC1eF+YDsosFnL9BtJFqco6tS54oCtRUGaUDh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtQ6JTvU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=niuUS5DN9/LHGxvCSG8W+dqIEGGU2GVbK1plm788AZe+C22E7ehuV0wkmchZNMBzEDvDY90zq4J39bIWYBeegY3hLc3h1k7b7ZZv+OkulyybteUfNn1GmVMzGdCye4Eb/L9Uari1KkRktO/QOKvBasMPmGi4nJVIhFCl825fsTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=010siBDk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtQ6JTvU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E056DC2BCAF;
-	Mon, 13 Apr 2026 16:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="010siBDk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70778C2BCAF;
+	Mon, 13 Apr 2026 16:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099347;
-	bh=CU/dqCCYYWTtE6oOn73EU2K3Y4wrn1tOQq6iSD3ysJY=;
+	s=korg; t=1776099349;
+	bh=LtJd5CcpA0dBg/rKDJ9WVSfS00VAKbu41iVvUgyNgAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WtQ6JTvUaLmM8WFPACZcm2aZPhGthnJPSasI+an4StNEKhtPKd2FIWHsLo6cPlix4
-	 lRT3XtPAOe3iQHARF8Oe8SD2FveZMarVVDxYoldGiNvqEtJgMu0MX4hKj2AmYkr8Py
-	 Dk9nkThnM5ZXSw6Lu/43bOZScqNClfDB2nZ1gQJ0=
+	b=010siBDkr9D/CcwR3CprY6WmPKb6Lypfm6W7HN1iOlb1Ik/1EiIEZc15Cf0XCnp/q
+	 vsek1v7igEIQoPkRcmquvqXK5Hn2jgS8/LDk+ZtrTetAIo2ljKNJF9m9Fpn5UtfuUt
+	 2OlJRAojPYHATcO2r6ilh06L86N1Mu5GHSpyJa70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Ye Bin <yebin10@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Zhang Yi <yi.zhang@huawei.com>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 5.10 305/491] ext4: make recently_deleted() properly work with lazy itable initialization
-Date: Mon, 13 Apr 2026 17:59:10 +0200
-Message-ID: <20260413155830.459739616@linuxfoundation.org>
+Subject: [PATCH 5.10 306/491] ext4: avoid allocate block from corrupted group in ext4_mb_find_by_goal()
+Date: Mon, 13 Apr 2026 17:59:11 +0200
+Message-ID: <20260413155830.496958091@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -52,42 +55,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Ye Bin <yebin10@huawei.com>
 
-commit bd060afa7cc3e0ad30afa9ecc544a78638498555 upstream.
+commit 46066e3a06647c5b186cc6334409722622d05c44 upstream.
 
-recently_deleted() checks whether inode has been used in the near past.
-However this can give false positive result when inode table is not
-initialized yet and we are in fact comparing to random garbage (or stale
-itable block of a filesystem before mkfs). Ultimately this results in
-uninitialized inodes being skipped during inode allocation and possibly
-they are never initialized and thus e2fsck complains.  Verify if the
-inode has been initialized before checking for dtime.
+There's issue as follows:
+...
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 206 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
 
-Signed-off-by: Jan Kara <jack@suse.cz>
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 206 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
+
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 206 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
+
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 206 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
+
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 2243 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
+
+EXT4-fs (mmcblk0p1): Delayed block allocation failed for inode 2239 at logical offset 0 with max blocks 1 with error 117
+EXT4-fs (mmcblk0p1): This should not happen!! Data will be lost
+
+EXT4-fs (mmcblk0p1): error count since last fsck: 1
+EXT4-fs (mmcblk0p1): initial error at time 1765597433: ext4_mb_generate_buddy:760
+EXT4-fs (mmcblk0p1): last error at time 1765597433: ext4_mb_generate_buddy:760
+...
+
+According to the log analysis, blocks are always requested from the
+corrupted block group. This may happen as follows:
+ext4_mb_find_by_goal
+  ext4_mb_load_buddy
+   ext4_mb_load_buddy_gfp
+     ext4_mb_init_cache
+      ext4_read_block_bitmap_nowait
+      ext4_wait_block_bitmap
+       ext4_validate_block_bitmap
+        if (!grp || EXT4_MB_GRP_BBITMAP_CORRUPT(grp))
+         return -EFSCORRUPTED; // There's no logs.
+ if (err)
+  return err;  // Will return error
+ext4_lock_group(ac->ac_sb, group);
+  if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info))) // Unreachable
+   goto out;
+
+After commit 9008a58e5dce ("ext4: make the bitmap read routines return
+real error codes") merged, Commit 163a203ddb36 ("ext4: mark block group
+as corrupt on block bitmap error") is no real solution for allocating
+blocks from corrupted block groups. This is because if
+'EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info)' is true, then
+'ext4_mb_load_buddy()' may return an error. This means that the block
+allocation will fail.
+Therefore, check block group if corrupted when ext4_mb_load_buddy()
+returns error.
+
+Fixes: 163a203ddb36 ("ext4: mark block group as corrupt on block bitmap error")
+Fixes: 9008a58e5dce ("ext4: make the bitmap read routines return real error codes")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260216164848.3074-3-jack@suse.cz
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260302134619.3145520-1-yebin@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ialloc.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ext4/mballoc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -686,6 +686,12 @@ static int recently_deleted(struct super
- 	if (unlikely(!gdp))
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -1929,8 +1929,12 @@ int ext4_mb_find_by_goal(struct ext4_all
  		return 0;
  
-+	/* Inode was never used in this filesystem? */
-+	if (ext4_has_group_desc_csum(sb) &&
-+	    (gdp->bg_flags & cpu_to_le16(EXT4_BG_INODE_UNINIT) ||
-+	     ino >= EXT4_INODES_PER_GROUP(sb) - ext4_itable_unused_count(sb, gdp)))
-+		return 0;
-+
- 	bh = sb_find_get_block(sb, ext4_inode_table(sb, gdp) +
- 		       (ino / inodes_per_block));
- 	if (!bh || !buffer_uptodate(bh))
+ 	err = ext4_mb_load_buddy(ac->ac_sb, group, e4b);
+-	if (err)
++	if (err) {
++		if (EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info) &&
++		    !(ac->ac_flags & EXT4_MB_HINT_GOAL_ONLY))
++			return 0;
+ 		return err;
++	}
+ 
+ 	ext4_lock_group(ac->ac_sb, group);
+ 	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info)))
 
 
