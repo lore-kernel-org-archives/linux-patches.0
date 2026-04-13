@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B042226D18;
-	Mon, 13 Apr 2026 16:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA29C233722;
+	Mon, 13 Apr 2026 16:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097886; cv=none; b=RKYsRiw/XcnuYTTbtm4zJZkxN04BZ2d73MjK+0lZaxjyoWQ/XGr4iDyB+CXgWenZF3eusi7TNN6SBDTv5Zf56x/MI/10Exw3cufMwoccBsEbS4I1tudfZc+uJOEE6buprYNarB7FqPs6TlclvXRCh3J613NUW4EzPdh8qpyok3Y=
+	t=1776097888; cv=none; b=EhCGwc2clPXkJxUv+cvH6DOBq5Q1H3FoRSpHkLDdFh3tL4RzxDvFjL/9NTL3yLyNDUNZkOVpYXFjf1JdfJS0kkQpkTp/xUHnngIpkbsio6xMkKaK5bgGRSYM7aNMO8ohfnCSJEQWGxwUw8gjskzZdQ+pLg8PyzJc8lb3jSLvbsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097886; c=relaxed/simple;
-	bh=q1dObH+j+B0YmMFZMgYl+luDsHaRR02IXcsbFit5f/8=;
+	s=arc-20240116; t=1776097888; c=relaxed/simple;
+	bh=I19+Kkfky01kxUhCMfJm1pVN+sO16dmKGslztdkfE38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/T0DpafCYnAn6rKwVUw14adItE1yFXaOEa3bhBarA+RASMtTs96w7x/SlTbm1OM6inZE5toHwiR6WJneksVL8zjKRhIQwYGgDFcAWgdidprLtu4yT8AVROTFeuYIalso+MPKfCPn8bp3L1S2B2bEEMCu7GSpI4sE2w8s6Y0kig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hog77H2r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cz1gyAo4aNvnSi7elPvCIC6YpBEWDSTxNe9Boqgy3otbrCGNXgBpAEKAy5UXFYM1JYvN2xP+o9LOXvXSsn3l/esTR6jra7fVQ18QjgxG0lxxXxJ65/AgttqbdL1EgSqrb1ioE9H9MXItvdv7a3v1QW5s++dBI56iwLyCWJ2FkVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qws6nfZi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hog77H2r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56DAC2BCAF;
-	Mon, 13 Apr 2026 16:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qws6nfZi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404EEC2BCB0;
+	Mon, 13 Apr 2026 16:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097886;
-	bh=q1dObH+j+B0YmMFZMgYl+luDsHaRR02IXcsbFit5f/8=;
+	s=korg; t=1776097888;
+	bh=I19+Kkfky01kxUhCMfJm1pVN+sO16dmKGslztdkfE38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hog77H2r3SKsze1pQQcbdmcSY3hRdzaQL15Hal4nTjR7ApRcfZInyrI2JMxGUcxvw
-	 tIrXpmenItdKZiudDSu0s0yXOf7aTC6AZ5JiR3NsY1BZnEzJ0dNB6aHm+QkGznbo4T
-	 jnuuiE1S0QW74U7AwiJLXAPlPalstp7BLk0yDQRc=
+	b=qws6nfZi/4ke6UqEcFltUEKjP3oKI6lSPKKkIXlgU6GQV8itNsUP68CQEhivJH3r+
+	 3F9Zq4mkrZcTTX5yhjjUEQfNu4tBctioqy45/is5/ODrOFb4nQhsSQ38DPvyEKkGgp
+	 19LyBtAndloaWHtnE6QMiY+WlMmHs2P7icRchi6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uzair Mughal <contact@uzair.is-a.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 311/570] ALSA: hda/realtek: Add headset jack quirk for Thinkpad X390
-Date: Mon, 13 Apr 2026 17:57:22 +0200
-Message-ID: <20260413155842.146810648@linuxfoundation.org>
+Subject: [PATCH 5.15 312/570] xfrm: call xdo_dev_state_delete during state update
+Date: Mon, 13 Apr 2026 17:57:23 +0200
+Message-ID: <20260413155842.183825093@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,41 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uzair Mughal <contact@uzair.is-a.dev>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 542127f6528ca7cc3cf61e1651d6ccb58495f953 ]
+[ Upstream commit 7d2fc41f91bc69acb6e01b0fa23cd7d0109a6a23 ]
 
-The Lenovo ThinkPad X390 (ALC257 codec, subsystem ID 0x17aa2288)
-does not report headset button press events. Headphone insertion is
-detected (SW_HEADPHONE_INSERT), but pressing the inline microphone
-button on a headset produces no input events.
+When we update an SA, we construct a new state and call
+xdo_dev_state_add, but never insert it. The existing state is updated,
+then we immediately destroy the new state. Since we haven't added it,
+we don't go through the standard state delete code, and we're skipping
+removing it from the device (but xdo_dev_state_free will get called
+when we destroy the temporary state).
 
-Add a SND_PCI_QUIRK entry that maps this subsystem ID to
-ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK, which enables
-headset jack button detection through alc_fixup_headset_jack()
-and ThinkPad ACPI integration. This is the same fixup used by
-similar ThinkPad models (P1 Gen 3, X1 Extreme Gen 3).
+This is similar to commit c5d4d7d83165 ("xfrm: Fix deletion of
+offloaded SAs on failure.").
 
-Signed-off-by: Uzair Mughal <contact@uzair.is-a.dev>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260307012906.20093-1-contact@uzair.is-a.dev
+Fixes: d77e38e612a0 ("xfrm: Add an IPsec hardware offloading API")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
+ net/xfrm/xfrm_state.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 72d9ea5171bbd..38fda5dbd75ba 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9608,6 +9608,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x224c, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
- 	SND_PCI_QUIRK(0x17aa, 0x224d, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
- 	SND_PCI_QUIRK(0x17aa, 0x225d, "Thinkpad T480", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
-+	SND_PCI_QUIRK(0x17aa, 0x2288, "Thinkpad X390", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x2292, "Thinkpad X1 Carbon 7th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x22be, "Thinkpad X1 Carbon 8th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x22c1, "Thinkpad P1 Gen 3", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 54ae99f69f25f..f7f568bfb93a8 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -1770,6 +1770,7 @@ int xfrm_state_update(struct xfrm_state *x)
+ 
+ 		err = 0;
+ 		x->km.state = XFRM_STATE_DEAD;
++		xfrm_dev_state_delete(x);
+ 		__xfrm_state_put(x);
+ 	}
+ 
 -- 
 2.51.0
 
