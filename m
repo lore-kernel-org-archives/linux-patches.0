@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE64225788;
-	Mon, 13 Apr 2026 16:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453E524DCF6;
+	Mon, 13 Apr 2026 16:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096632; cv=none; b=jOYJTZtjs33Mh2GZ5CP3EhRfAnL4svZK2HNUAjRVrIxaDeAtPeuJ3L7D8Mh7bbNPeFGR9+N6bf8S21xksuLTR5Q6ELFYGxPfJWi8Dc9bCmkHGZIri/YtRP3kjqHggsB2C7ugwsy/ntWGBRJxcg3fuU19MPbQQpi9UkZVD68noNU=
+	t=1776096635; cv=none; b=Et6RCpFA2HbANaQHIS4Rn5jK/sXdQaDuzQlWYerVKTTr0uKCyfNDtCCC10ZMAWmAogcp4C4TGNzJB6jfUn9Z3UDKn5KcsyPoSe/0ufiVesnq3neiI/TC9zRDpmEKzvBTgMk83KgRhh0QCEfydWdTg5EWScjpR8ABXifZ3TRlPr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096632; c=relaxed/simple;
-	bh=5S86sVjNH2zlS9XM4Svv5TbmF/a3ZA040X/9D85LDBw=;
+	s=arc-20240116; t=1776096635; c=relaxed/simple;
+	bh=/AuKbfnlcbIFeRZoJ0oGf24eLbnRV81TKQ0al8qzFEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZTy4GJ0UjuFiUj6bPPH9q2T8dqQh3TNUOCgzs+oYlSnihvXj4M9648ng4zbk0iSOeADKzP+yWQu2StSpjbkKX7YPe78nBG717NIR2mmmBjVXd402zlknmMCdOAGFfY9lctjMRcZBZW3kLTGedOlNF1tqHiJTcpKz7G47olL6eYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJYU+3Qu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cSc2JFaDiWlJ8jnMC2I4u0dYnhGCQopNc8zilV4zvVFpUCNFK7gFbnXaswgkMLH8NTIFSslZpOAqCkx92as8MB8s/aJ+EyqySLcAQO3WrCRFnDjwhCLdSxz1sw7KJbdfXhWFQlCiwP7Jap26WhsNnJ9cNKgRgDXmqpsfkMFhFXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVTCuC5S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJYU+3Qu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B6EC2BCAF;
-	Mon, 13 Apr 2026 16:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVTCuC5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BD7C2BCAF;
+	Mon, 13 Apr 2026 16:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776096632;
-	bh=5S86sVjNH2zlS9XM4Svv5TbmF/a3ZA040X/9D85LDBw=;
+	s=korg; t=1776096635;
+	bh=/AuKbfnlcbIFeRZoJ0oGf24eLbnRV81TKQ0al8qzFEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QJYU+3QunXUaSQyKn9rc0vfPsjjKsfdwkipa81bCJBi/xelYNDHmhEHqYy8eLQOXl
-	 rF/h1S49QATKKCCm2OkS2vI7De6nJrocJamWGhqA9MfsZq6RGydb6lCg0P/ckHcH8B
-	 oSSbiPkcYCS4tD56sUjgSp5pFrTP+3Bkx1wER7L4=
+	b=fVTCuC5STUti3Ob17QGFOBrFBE3m4xI7bCh8Z7f02+zRq5AAXDEdWBmAmp+R0Fi9Q
+	 HybMTPDqQesyRbnj0NLLOqIZ4HKOc5cbcvD1u8UTw16UVBVt91ZMrP7Qekv48wApY0
+	 uiMv/BCKX64bDm6pbnTwP3Dy7b7B048GrK7dvZuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 79/83] rxrpc: Fix leak of rxgk context in rxgk_verify_response()
-Date: Mon, 13 Apr 2026 18:00:47 +0200
-Message-ID: <20260413155733.942890266@linuxfoundation.org>
+Subject: [PATCH 6.18 80/83] rxrpc: Fix buffer overread in rxgk_do_verify_authenticator()
+Date: Mon, 13 Apr 2026 18:00:48 +0200
+Message-ID: <20260413155733.978757968@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
 References: <20260413155731.019638460@linuxfoundation.org>
@@ -57,9 +57,10 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-commit 7e1876caa8363056f58a21d3b31b82c2daf7e608 upstream.
+commit f564af387c8c28238f8ebc13314c589d7ba8475d upstream.
 
-Fix rxgk_verify_response() to clean up the rxgk context it creates.
+Fix rxgk_do_verify_authenticator() to check the buffer size before checking
+the nonce.
 
 Fixes: 9d1d2b59341f ("rxrpc: rxgk: Implement the yfs-rxgk security class (GSSAPI)")
 Closes: https://sashiko.dev/#/patchset/20260401105614.1696001-10-dhowells@redhat.com
@@ -69,35 +70,33 @@ cc: Jeffrey Altman <jaltman@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-19-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-20-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/rxgk.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/rxrpc/rxgk.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/net/rxrpc/rxgk.c
 +++ b/net/rxrpc/rxgk.c
-@@ -1270,16 +1270,18 @@ static int rxgk_verify_response(struct r
- 	if (ret < 0) {
- 		rxrpc_abort_conn(conn, skb, RXGK_SEALEDINCON, ret,
- 				 rxgk_abort_resp_auth_dec);
--		goto out;
-+		goto out_gk;
- 	}
+@@ -1085,6 +1085,9 @@ static int rxgk_do_verify_authenticator(
  
- 	ret = rxgk_verify_authenticator(conn, krb5, skb, auth_offset, auth_len);
- 	if (ret < 0)
--		goto out;
-+		goto out_gk;
+ 	_enter("");
  
- 	conn->key = key;
- 	key = NULL;
- 	ret = 0;
-+out_gk:
-+	rxgk_put(gk);
- out:
- 	key_put(key);
- 	_leave(" = %d", ret);
++	if ((end - p) * sizeof(__be32) < 24)
++		return rxrpc_abort_conn(conn, skb, RXGK_NOTAUTH, -EPROTO,
++					rxgk_abort_resp_short_auth);
+ 	if (memcmp(p, conn->rxgk.nonce, 20) != 0)
+ 		return rxrpc_abort_conn(conn, skb, RXGK_NOTAUTH, -EPROTO,
+ 					rxgk_abort_resp_bad_nonce);
+@@ -1098,7 +1101,7 @@ static int rxgk_do_verify_authenticator(
+ 	p += xdr_round_up(app_len) / sizeof(__be32);
+ 	if (end - p < 4)
+ 		return rxrpc_abort_conn(conn, skb, RXGK_NOTAUTH, -EPROTO,
+-					rxgk_abort_resp_short_applen);
++					rxgk_abort_resp_short_auth);
+ 
+ 	level	= ntohl(*p++);
+ 	epoch	= ntohl(*p++);
 
 
