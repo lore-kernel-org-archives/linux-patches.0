@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A425A280CFB;
-	Mon, 13 Apr 2026 16:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F60F29BD87;
+	Mon, 13 Apr 2026 16:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098117; cv=none; b=TXAH6B8MpRhsxWEIIeWG+Zm+VV19RNwncNCstWSg66zQlc5AUEswZqeX1rP5uhQssgJIhVv0rjoa7pnRvne1GP8A+xtQRVWFe4/jw+00Zby1rb82/mscZNqDTd3FSmWbnfZbDBA8Zw3Cys0PgYLRPd0mEyaIz2ermT7thPtCUJE=
+	t=1776098120; cv=none; b=GEhu+/xqGGwPUaSSAsynX1TfyElzTLhUv5TJ0mrXhiL/AVv41OuymfLa9xgAIHZg32Xudg8JQcDp3hys8eO7aOMUkp3UJAu6GFK6VznrNua4QfZQlTwywNTj2IX6TGDz8Te/lZovpj/L2DaxUgGbBSvUG3WvLoDuNINKGoodxfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098117; c=relaxed/simple;
-	bh=R2qN32Vaf6TbWbXIhSrCoZWsPVbNihKaWvUNLSUGOqc=;
+	s=arc-20240116; t=1776098120; c=relaxed/simple;
+	bh=DDib8WaRsWhj4tMEKU5b65sCVz8xAd+40fT4ngUeWG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vt71EpiR9VlQRmPawOIdkKRTP1YPS4teGZLQ7YAxcrssNs2tT9fm7YR1aYEzCYrkgINTv3XehJT/Uu7LSG9+fIzHIPdGurIPE1og1RKnSpyorTMRfKAwjxmBmSUdbgxkvcwnoSLpCfqhF5BYV7Kb9f7cww+XaHkZXQC5kouysCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmDfi6ou; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=srLaJpjXz5s+zTRFe0IvKnO6EmgGf13gIj/tu5/B48xMDaCH8miF37qzew4aGXhuyFAvf/eQOG9eCPjIHCVXR+sgZJbbfZKvYAvPL7hSQOCi2KIL0AwRQeb71K+s8s9n/51vdbrvh2v858Hnp/K9il4H0T+nLmvGukeUaPvn06o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSegjYMo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmDfi6ou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE71C2BCAF;
-	Mon, 13 Apr 2026 16:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSegjYMo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D034DC2BCAF;
+	Mon, 13 Apr 2026 16:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098117;
-	bh=R2qN32Vaf6TbWbXIhSrCoZWsPVbNihKaWvUNLSUGOqc=;
+	s=korg; t=1776098120;
+	bh=DDib8WaRsWhj4tMEKU5b65sCVz8xAd+40fT4ngUeWG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HmDfi6ouHYucNrY8bW39BniWTbHdD34pngL4+M5xQYaUkSwGJwUK5QfGoRznUkuo+
-	 eLA3scUnJ5VyrZHpWUeH5bEWKLjfgKR9jGbCQ0yVCsTs9PcQreerx5KO2vIGNpq6uI
-	 arQfE5jM9udYD+k1aIFv9qlHgDJLkXsXwrAgoYcI=
+	b=bSegjYMo0Ufj5tylGRK861KdmLiLLbOiJE39PI2vS4odOBhS2ue2tmhcQ2QyZb1PK
+	 Cvu+6zxbtJprVfQLv9ohIOFdyiY7xCseDDHFcdXu2VujwZq+Sf7RGUMY1C9b00lYrf
+	 IVWeqdJLeeRElRMTnzqvcQFzkg7e1pCe/iJrdkrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f50072212ab792c86925@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 399/570] atm: lec: fix use-after-free in sock_def_readable()
-Date: Mon, 13 Apr 2026 17:58:50 +0200
-Message-ID: <20260413155845.417377541@linuxfoundation.org>
+Subject: [PATCH 5.15 400/570] btrfs: dont take device_list_mutex when querying zone info
+Date: Mon, 13 Apr 2026 17:58:51 +0200
+Message-ID: <20260413155845.454687245@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -53,244 +53,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 922814879542c2e397b0e9641fd36b8202a8e555 ]
+[ Upstream commit 77603ab10429fe713a03345553ca8dbbfb1d91c6 ]
 
-A race condition exists between lec_atm_close() setting priv->lecd
-to NULL and concurrent access to priv->lecd in send_to_lecd(),
-lec_handle_bridge(), and lec_atm_send(). When the socket is freed
-via RCU while another thread is still using it, a use-after-free
-occurs in sock_def_readable() when accessing the socket's wait queue.
+Shin'ichiro reported sporadic hangs when running generic/013 in our CI
+system. When enabling lockdep, there is a lockdep splat when calling
+btrfs_get_dev_zone_info_all_devices() in the mount path that can be
+triggered by i.e. generic/013:
 
-The root cause is that lec_atm_close() clears priv->lecd without
-any synchronization, while callers dereference priv->lecd without
-any protection against concurrent teardown.
+  ======================================================
+  WARNING: possible circular locking dependency detected
+  7.0.0-rc1+ #355 Not tainted
+  ------------------------------------------------------
+  mount/1043 is trying to acquire lock:
+  ffff8881020b5470 (&vblk->vdev_mutex){+.+.}-{4:4}, at: virtblk_report_zones+0xda/0x430
 
-Fix this by converting priv->lecd to an RCU-protected pointer:
-- Mark priv->lecd as __rcu in lec.h
-- Use rcu_assign_pointer() in lec_atm_close() and lecd_attach()
-  for safe pointer assignment
-- Use rcu_access_pointer() for NULL checks that do not dereference
-  the pointer in lec_start_xmit(), lec_push(), send_to_lecd() and
-  lecd_attach()
-- Use rcu_read_lock/rcu_dereference/rcu_read_unlock in send_to_lecd(),
-  lec_handle_bridge() and lec_atm_send() to safely access lecd
-- Use rcu_assign_pointer() followed by synchronize_rcu() in
-  lec_atm_close() to ensure all readers have completed before
-  proceeding. This is safe since lec_atm_close() is called from
-  vcc_release() which holds lock_sock(), a sleeping lock.
-- Remove the manual sk_receive_queue drain from lec_atm_close()
-  since vcc_destroy_socket() already drains it after lec_atm_close()
-  returns.
+  but task is already holding lock:
+  ffff888102a738e0 (&fs_devs->device_list_mutex){+.+.}-{4:4}, at: btrfs_get_dev_zone_info_all_devices+0x45/0x90
 
-v2: Switch from spinlock + sock_hold/put approach to RCU to properly
-    fix the race. The v1 spinlock approach had two issues pointed out
-    by Eric Dumazet:
-    1. priv->lecd was still accessed directly after releasing the
-       lock instead of using a local copy.
-    2. The spinlock did not prevent packets being queued after
-       lec_atm_close() drains sk_receive_queue since timer and
-       workqueue paths bypass netif_stop_queue().
+  which lock already depends on the new lock.
 
-Note: Syzbot patch testing was attempted but the test VM terminated
-    unexpectedly with "Connection to localhost closed by remote host",
-    likely due to a QEMU AHCI emulation issue unrelated to this fix.
-    Compile testing with "make W=1 net/atm/lec.o" passes cleanly.
+  the existing dependency chain (in reverse order) is:
 
-Reported-by: syzbot+f50072212ab792c86925@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f50072212ab792c86925
-Link: https://lore.kernel.org/all/20260309093614.502094-1-kartikey406@gmail.com/T/ [v1]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260309155908.508768-1-kartikey406@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  -> #4 (&fs_devs->device_list_mutex){+.+.}-{4:4}:
+	 __mutex_lock+0xa3/0x1360
+	 btrfs_create_pending_block_groups+0x1f4/0x9d0
+	 __btrfs_end_transaction+0x3e/0x2e0
+	 btrfs_zoned_reserve_data_reloc_bg+0x2f8/0x390
+	 open_ctree+0x1934/0x23db
+	 btrfs_get_tree.cold+0x105/0x26c
+	 vfs_get_tree+0x28/0xb0
+	 __do_sys_fsconfig+0x324/0x680
+	 do_syscall_64+0x92/0x4f0
+	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  -> #3 (btrfs_trans_num_extwriters){++++}-{0:0}:
+	 join_transaction+0xc2/0x5c0
+	 start_transaction+0x17c/0xbc0
+	 btrfs_zoned_reserve_data_reloc_bg+0x2b4/0x390
+	 open_ctree+0x1934/0x23db
+	 btrfs_get_tree.cold+0x105/0x26c
+	 vfs_get_tree+0x28/0xb0
+	 __do_sys_fsconfig+0x324/0x680
+	 do_syscall_64+0x92/0x4f0
+	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  -> #2 (btrfs_trans_num_writers){++++}-{0:0}:
+	 lock_release+0x163/0x4b0
+	 __btrfs_end_transaction+0x1c7/0x2e0
+	 btrfs_dirty_inode+0x6f/0xd0
+	 touch_atime+0xe5/0x2c0
+	 btrfs_file_mmap_prepare+0x65/0x90
+	 __mmap_region+0x4b9/0xf00
+	 mmap_region+0xf7/0x120
+	 do_mmap+0x43d/0x610
+	 vm_mmap_pgoff+0xd6/0x190
+	 ksys_mmap_pgoff+0x7e/0xc0
+	 do_syscall_64+0x92/0x4f0
+	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  -> #1 (&mm->mmap_lock){++++}-{4:4}:
+	 __might_fault+0x68/0xa0
+	 _copy_to_user+0x22/0x70
+	 blkdev_copy_zone_to_user+0x22/0x40
+	 virtblk_report_zones+0x282/0x430
+	 blkdev_report_zones_ioctl+0xfd/0x130
+	 blkdev_ioctl+0x20f/0x2c0
+	 __x64_sys_ioctl+0x86/0xd0
+	 do_syscall_64+0x92/0x4f0
+	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  -> #0 (&vblk->vdev_mutex){+.+.}-{4:4}:
+	 __lock_acquire+0x1522/0x2680
+	 lock_acquire+0xd5/0x2f0
+	 __mutex_lock+0xa3/0x1360
+	 virtblk_report_zones+0xda/0x430
+	 blkdev_report_zones_cached+0x162/0x190
+	 btrfs_get_dev_zones+0xdc/0x2e0
+	 btrfs_get_dev_zone_info+0x219/0xe80
+	 btrfs_get_dev_zone_info_all_devices+0x62/0x90
+	 open_ctree+0x1200/0x23db
+	 btrfs_get_tree.cold+0x105/0x26c
+	 vfs_get_tree+0x28/0xb0
+	 __do_sys_fsconfig+0x324/0x680
+	 do_syscall_64+0x92/0x4f0
+	 entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  other info that might help us debug this:
+
+  Chain exists of:
+    &vblk->vdev_mutex --> btrfs_trans_num_extwriters --> &fs_devs->device_list_mutex
+
+   Possible unsafe locking scenario:
+
+	 CPU0                    CPU1
+	 ----                    ----
+    lock(&fs_devs->device_list_mutex);
+				 lock(btrfs_trans_num_extwriters);
+				 lock(&fs_devs->device_list_mutex);
+    lock(&vblk->vdev_mutex);
+
+   *** DEADLOCK ***
+
+  3 locks held by mount/1043:
+   #0: ffff88811063e878 (&fc->uapi_mutex){+.+.}-{4:4}, at: __do_sys_fsconfig+0x2ae/0x680
+   #1: ffff88810cb9f0e8 (&type->s_umount_key#31/1){+.+.}-{4:4}, at: alloc_super+0xc0/0x3e0
+   #2: ffff888102a738e0 (&fs_devs->device_list_mutex){+.+.}-{4:4}, at: btrfs_get_dev_zone_info_all_devices+0x45/0x90
+
+  stack backtrace:
+  CPU: 2 UID: 0 PID: 1043 Comm: mount Not tainted 7.0.0-rc1+ #355 PREEMPT(full)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-9.fc43 06/10/2025
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5b/0x80
+   print_circular_bug.cold+0x18d/0x1d8
+   check_noncircular+0x10d/0x130
+   __lock_acquire+0x1522/0x2680
+   ? vmap_small_pages_range_noflush+0x3ef/0x820
+   lock_acquire+0xd5/0x2f0
+   ? virtblk_report_zones+0xda/0x430
+   ? lock_is_held_type+0xcd/0x130
+   __mutex_lock+0xa3/0x1360
+   ? virtblk_report_zones+0xda/0x430
+   ? virtblk_report_zones+0xda/0x430
+   ? __pfx_copy_zone_info_cb+0x10/0x10
+   ? virtblk_report_zones+0xda/0x430
+   virtblk_report_zones+0xda/0x430
+   ? __pfx_copy_zone_info_cb+0x10/0x10
+   blkdev_report_zones_cached+0x162/0x190
+   ? __pfx_copy_zone_info_cb+0x10/0x10
+   btrfs_get_dev_zones+0xdc/0x2e0
+   btrfs_get_dev_zone_info+0x219/0xe80
+   btrfs_get_dev_zone_info_all_devices+0x62/0x90
+   open_ctree+0x1200/0x23db
+   btrfs_get_tree.cold+0x105/0x26c
+   ? rcu_is_watching+0x18/0x50
+   vfs_get_tree+0x28/0xb0
+   __do_sys_fsconfig+0x324/0x680
+   do_syscall_64+0x92/0x4f0
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x7f615e27a40e
+  RSP: 002b:00007fff11b18fb8 EFLAGS: 00000246 ORIG_RAX: 00000000000001af
+  RAX: ffffffffffffffda RBX: 000055572e92ab10 RCX: 00007f615e27a40e
+  RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
+  RBP: 00007fff11b19100 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 000055572e92bc40 R14: 00007f615e3faa60 R15: 000055572e92bd08
+   </TASK>
+
+Don't hold the device_list_mutex while calling into
+btrfs_get_dev_zone_info() in btrfs_get_dev_zone_info_all_devices() to
+mitigate the issue. This is safe, as no other thread can touch the device
+list at the moment of execution.
+
+Reported-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/lec.c |   72 +++++++++++++++++++++++++++++++++++++---------------------
- net/atm/lec.h |    2 -
- 2 files changed, 48 insertions(+), 26 deletions(-)
+ fs/btrfs/zoned.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -142,6 +142,7 @@ static void lec_handle_bridge(struct sk_
- 		struct sock *sk;
- 		struct sk_buff *skb2;
- 		struct atmlec_msg *mesg;
-+		struct atm_vcc *vcc;
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 8c858f31bdbc0..bff56f87b426a 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -313,7 +313,10 @@ int btrfs_get_dev_zone_info_all_devices(struct btrfs_fs_info *fs_info)
+ 	if (!btrfs_fs_incompat(fs_info, ZONED))
+ 		return 0;
  
- 		skb2 = alloc_skb(sizeof(struct atmlec_msg), GFP_ATOMIC);
- 		if (skb2 == NULL)
-@@ -154,10 +155,18 @@ static void lec_handle_bridge(struct sk_
- 					/* 0x01 is topology change */
- 
- 		priv = netdev_priv(dev);
--		atm_force_charge(priv->lecd, skb2->truesize);
--		sk = sk_atm(priv->lecd);
--		skb_queue_tail(&sk->sk_receive_queue, skb2);
--		sk->sk_data_ready(sk);
-+
-+		rcu_read_lock();
-+		vcc = rcu_dereference(priv->lecd);
-+		if (vcc) {
-+			atm_force_charge(vcc, skb2->truesize);
-+			sk = sk_atm(vcc);
-+			skb_queue_tail(&sk->sk_receive_queue, skb2);
-+			sk->sk_data_ready(sk);
-+		} else {
-+			dev_kfree_skb(skb2);
-+		}
-+		rcu_read_unlock();
+-	mutex_lock(&fs_devices->device_list_mutex);
++	/*
++	 * No need to take the device_list mutex here, we're still in the mount
++	 * path and devices cannot be added to or removed from the list yet.
++	 */
+ 	list_for_each_entry(device, &fs_devices->devices, dev_list) {
+ 		/* We can skip reading of zone info for missing devices */
+ 		if (!device->bdev)
+@@ -323,7 +326,6 @@ int btrfs_get_dev_zone_info_all_devices(struct btrfs_fs_info *fs_info)
+ 		if (ret)
+ 			break;
  	}
+-	mutex_unlock(&fs_devices->device_list_mutex);
+ 
+ 	return ret;
  }
- #endif /* IS_ENABLED(CONFIG_BRIDGE) */
-@@ -216,7 +225,7 @@ static netdev_tx_t lec_start_xmit(struct
- 	int is_rdesc;
- 
- 	pr_debug("called\n");
--	if (!priv->lecd) {
-+	if (!rcu_access_pointer(priv->lecd)) {
- 		pr_info("%s:No lecd attached\n", dev->name);
- 		dev->stats.tx_errors++;
- 		netif_stop_queue(dev);
-@@ -443,6 +452,7 @@ static int lec_atm_send(struct atm_vcc *
- 			/* hit from bridge table, send LE_ARP_RESPONSE */
- 			struct sk_buff *skb2;
- 			struct sock *sk;
-+			struct atm_vcc *vcc;
- 
- 			pr_debug("%s: entry found, responding to zeppelin\n",
- 				 dev->name);
-@@ -451,10 +461,18 @@ static int lec_atm_send(struct atm_vcc *
- 				break;
- 			skb2->len = sizeof(struct atmlec_msg);
- 			skb_copy_to_linear_data(skb2, mesg, sizeof(*mesg));
--			atm_force_charge(priv->lecd, skb2->truesize);
--			sk = sk_atm(priv->lecd);
--			skb_queue_tail(&sk->sk_receive_queue, skb2);
--			sk->sk_data_ready(sk);
-+
-+			rcu_read_lock();
-+			vcc = rcu_dereference(priv->lecd);
-+			if (vcc) {
-+				atm_force_charge(vcc, skb2->truesize);
-+				sk = sk_atm(vcc);
-+				skb_queue_tail(&sk->sk_receive_queue, skb2);
-+				sk->sk_data_ready(sk);
-+			} else {
-+				dev_kfree_skb(skb2);
-+			}
-+			rcu_read_unlock();
- 		}
- 	}
- #endif /* IS_ENABLED(CONFIG_BRIDGE) */
-@@ -470,23 +488,16 @@ static int lec_atm_send(struct atm_vcc *
- 
- static void lec_atm_close(struct atm_vcc *vcc)
- {
--	struct sk_buff *skb;
- 	struct net_device *dev = (struct net_device *)vcc->proto_data;
- 	struct lec_priv *priv = netdev_priv(dev);
- 
--	priv->lecd = NULL;
-+	rcu_assign_pointer(priv->lecd, NULL);
-+	synchronize_rcu();
- 	/* Do something needful? */
- 
- 	netif_stop_queue(dev);
- 	lec_arp_destroy(priv);
- 
--	if (skb_peek(&sk_atm(vcc)->sk_receive_queue))
--		pr_info("%s closing with messages pending\n", dev->name);
--	while ((skb = skb_dequeue(&sk_atm(vcc)->sk_receive_queue))) {
--		atm_return(vcc, skb->truesize);
--		dev_kfree_skb(skb);
--	}
--
- 	pr_info("%s: Shut down!\n", dev->name);
- 	module_put(THIS_MODULE);
- }
-@@ -512,12 +523,14 @@ send_to_lecd(struct lec_priv *priv, atml
- 	     const unsigned char *mac_addr, const unsigned char *atm_addr,
- 	     struct sk_buff *data)
- {
-+	struct atm_vcc *vcc;
- 	struct sock *sk;
- 	struct sk_buff *skb;
- 	struct atmlec_msg *mesg;
- 
--	if (!priv || !priv->lecd)
-+	if (!priv || !rcu_access_pointer(priv->lecd))
- 		return -1;
-+
- 	skb = alloc_skb(sizeof(struct atmlec_msg), GFP_ATOMIC);
- 	if (!skb)
- 		return -1;
-@@ -534,18 +547,27 @@ send_to_lecd(struct lec_priv *priv, atml
- 	if (atm_addr)
- 		memcpy(&mesg->content.normal.atm_addr, atm_addr, ATM_ESA_LEN);
- 
--	atm_force_charge(priv->lecd, skb->truesize);
--	sk = sk_atm(priv->lecd);
-+	rcu_read_lock();
-+	vcc = rcu_dereference(priv->lecd);
-+	if (!vcc) {
-+		rcu_read_unlock();
-+		kfree_skb(skb);
-+		return -1;
-+	}
-+
-+	atm_force_charge(vcc, skb->truesize);
-+	sk = sk_atm(vcc);
- 	skb_queue_tail(&sk->sk_receive_queue, skb);
- 	sk->sk_data_ready(sk);
- 
- 	if (data != NULL) {
- 		pr_debug("about to send %d bytes of data\n", data->len);
--		atm_force_charge(priv->lecd, data->truesize);
-+		atm_force_charge(vcc, data->truesize);
- 		skb_queue_tail(&sk->sk_receive_queue, data);
- 		sk->sk_data_ready(sk);
- 	}
- 
-+	rcu_read_unlock();
- 	return 0;
- }
- 
-@@ -620,7 +642,7 @@ static void lec_push(struct atm_vcc *vcc
- 
- 		atm_return(vcc, skb->truesize);
- 		if (*(__be16 *) skb->data == htons(priv->lecid) ||
--		    !priv->lecd || !(dev->flags & IFF_UP)) {
-+		    !rcu_access_pointer(priv->lecd) || !(dev->flags & IFF_UP)) {
- 			/*
- 			 * Probably looping back, or if lecd is missing,
- 			 * lecd has gone down
-@@ -755,12 +777,12 @@ static int lecd_attach(struct atm_vcc *v
- 		priv = netdev_priv(dev_lec[i]);
- 	} else {
- 		priv = netdev_priv(dev_lec[i]);
--		if (priv->lecd)
-+		if (rcu_access_pointer(priv->lecd))
- 			return -EADDRINUSE;
- 	}
- 	lec_arp_init(priv);
- 	priv->itfnum = i;	/* LANE2 addition */
--	priv->lecd = vcc;
-+	rcu_assign_pointer(priv->lecd, vcc);
- 	vcc->dev = &lecatm_dev;
- 	vcc_insert_socket(sk_atm(vcc));
- 
---- a/net/atm/lec.h
-+++ b/net/atm/lec.h
-@@ -91,7 +91,7 @@ struct lec_priv {
- 						 */
- 	spinlock_t lec_arp_lock;
- 	struct atm_vcc *mcast_vcc;		/* Default Multicast Send VCC */
--	struct atm_vcc *lecd;
-+	struct atm_vcc __rcu *lecd;
- 	struct delayed_work lec_arp_work;	/* C10 */
- 	unsigned int maximum_unknown_frame_count;
- 						/*
+-- 
+2.53.0
+
 
 
