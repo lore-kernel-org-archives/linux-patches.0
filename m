@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAAE280CFB;
-	Mon, 13 Apr 2026 16:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE051307AC7;
+	Mon, 13 Apr 2026 16:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776098321; cv=none; b=g+ei4uhNQJ4qM2LRfv36LM8mku1YjomuLeg9us5X4sxUPR8xJU5l7MFvAZ59AVTL+yIkV/9pyAu+80tpZ+ZRxTPg/iJHSmigy5gUCGdu1w4P3WpqWSQjv/62r8MffrF6fxjlsyNS22KxijcQz5WYqX+3qx/TSSztiGTIm7Bpm+E=
+	t=1776098323; cv=none; b=RyTwElJOZgJA3/59zS8QMudhS2TW/kBhs8f50l63HyJ8VYxKPdCsDfyjgsZaX+i3/3+1LR29shHRec7F+7oiHvO2562drKCTiQ4FAs3KmYfgFSagAj3E8jJPf5wWK5mLihcsDiihh6Uu4wwcwVHTRgOe2IpWcozlq7qwaxX77ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776098321; c=relaxed/simple;
-	bh=xoujxEvXACQkQ+ieiCjuXiMf+FUuKOSycdvi2+PI+xI=;
+	s=arc-20240116; t=1776098323; c=relaxed/simple;
+	bh=i3qGnVI38FANtCGHqAmeE5HPak2kzSbvjMwcdHXjPt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gsacu7OY87DgdlUkCM5oBGyxu5aBy3eAPtKl/oropyQXdi9Y7uf6EJariNrzTr+2YgmBntQhEKGQZnGwm4UQttfTzfI6+ozwYghfFo3BZ2/GgB6EHxCSr8fkZeQlvP9cXnzr5fLocWgGD46r85n8RpuSGVd8WtUqKD9hfRnoe28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZq62qdA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeSSvnJ+zk7QGDDXe2sZnLG7WIfgjJ1DaIVrqKceChyafFl+iLl18qRXk9rDZyOOeSTGDmFKMcSj6gb/AXGc95fXECwtDNZvsCnNYzFuIrsBaNyPD8uMxd86j9y26B1DXg2KSVOdsdn4wGoTgNtRpAuW98645Hacx2BsSuYEwuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mINuTxMY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZq62qdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA048C2BCAF;
-	Mon, 13 Apr 2026 16:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mINuTxMY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A71C2BCAF;
+	Mon, 13 Apr 2026 16:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776098321;
-	bh=xoujxEvXACQkQ+ieiCjuXiMf+FUuKOSycdvi2+PI+xI=;
+	s=korg; t=1776098323;
+	bh=i3qGnVI38FANtCGHqAmeE5HPak2kzSbvjMwcdHXjPt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZq62qdA/ec36aeRcVheSnGcf+ISAFG0Gr8O/I2CFEB3qdpjjAqcFEMRiyvaDuuQG
-	 AuStUxLYU58IqL3fa50tvyQ/9udD1ywuYUSQb075EPVWa6ocenK+8ijltyuFiBCxr6
-	 G+Zs7yN4QMtmxisVIPmKVRJvi/U8ZXOtkNV/ngLA=
+	b=mINuTxMY0Lq7by2XM+4xE8knPI+cr63zZx34EInCd3y0VsOeaUDgNRce/PSV4NCF0
+	 kEDAIa5xuxEZSqsmdBAMldKxAveZtAdinRtoMH0IaPUMt4VpO4lT9ewlmnFETyFeD7
+	 85TWuP49PMl0cshFrZw4SEnMIQMu1q3qkw/L8O00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+cc9f7f4a7df09f53c4a4@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Yongchao Wu <yongchao.wu@autochips.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 5.15 472/570] usb: cdns3: gadget: fix state inconsistency on gadget init failure
-Date: Mon, 13 Apr 2026 18:00:03 +0200
-Message-ID: <20260413155848.145250946@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.15 481/570] comedi: Reinit dev->spinlock between attachments to low-level drivers
+Date: Mon, 13 Apr 2026 18:00:12 +0200
+Message-ID: <20260413155848.478567972@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -51,62 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongchao Wu <yongchao.wu@autochips.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit c32f8748d70c8fc77676ad92ed76cede17bf2c48 upstream.
+commit 4b9a9a6d71e3e252032f959fb3895a33acb5865c upstream.
 
-When cdns3_gadget_start() fails, the DRD hardware is left in gadget mode
-while software state remains INACTIVE, creating hardware/software state
-inconsistency.
+`struct comedi_device` is the main controlling structure for a COMEDI
+device created by the COMEDI subsystem.  It contains a member `spinlock`
+containing a spin-lock that is initialized by the COMEDI subsystem, but
+is reserved for use by a low-level driver attached to the COMEDI device
+(at least since commit 25436dc9d84f ("Staging: comedi: remove RT
+code")).
 
-When switching to host mode via sysfs:
-  echo host > /sys/class/usb_role/13180000.usb-role-switch/role
+Some COMEDI devices (those created on initialization of the COMEDI
+subsystem when the "comedi.comedi_num_legacy_minors" parameter is
+non-zero) can be attached to different low-level drivers over their
+lifetime using the `COMEDI_DEVCONFIG` ioctl command.  This can result in
+inconsistent lock states being reported when there is a mismatch in the
+spin-lock locking levels used by each low-level driver to which the
+COMEDI device has been attached.  Fix it by reinitializing
+`dev->spinlock` before calling the low-level driver's `attach` function
+pointer if `CONFIG_LOCKDEP` is enabled.
 
-The role state is not set to CDNS_ROLE_STATE_ACTIVE due to the error,
-so cdns_role_stop() skips cleanup because state is still INACTIVE.
-This violates the DRD controller design specification (Figure22),
-which requires returning to idle state before switching roles.
-
-This leads to a synchronous external abort in xhci_gen_setup() when
-setting up the host controller:
-
-[  516.440698] configfs-gadget 13180000.usb: failed to start g1: -19
-[  516.442035] cdns-usb3 13180000.usb: Failed to add gadget
-[  516.443278] cdns-usb3 13180000.usb: set role 2 has failed
-...
-[ 1301.375722] xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
-[ 1301.377716] Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
-[ 1301.382485] pc : xhci_gen_setup+0xa4/0x408
-[ 1301.393391] backtrace:
-    ...
-    xhci_gen_setup+0xa4/0x408    <-- CRASH
-    xhci_plat_setup+0x44/0x58
-    usb_add_hcd+0x284/0x678
-    ...
-    cdns_role_set+0x9c/0xbc        <-- Role switch
-
-Fix by calling cdns_drd_gadget_off() in the error path to properly
-clean up the DRD gadget state.
-
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Reported-by: syzbot+cc9f7f4a7df09f53c4a4@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cc9f7f4a7df09f53c4a4
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Yongchao Wu <yongchao.wu@autochips.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260401001000.5761-1-yongchao.wu@autochips.com
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260225132427.86578-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-gadget.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/comedi/drivers.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/usb/cdns3/cdns3-gadget.c
-+++ b/drivers/usb/cdns3/cdns3-gadget.c
-@@ -3427,6 +3427,7 @@ static int __cdns3_gadget_init(struct cd
- 	ret = cdns3_gadget_start(cdns);
- 	if (ret) {
- 		pm_runtime_put_sync(cdns->dev);
-+		cdns_drd_gadget_off(cdns);
- 		return ret;
+--- a/drivers/comedi/drivers.c
++++ b/drivers/comedi/drivers.c
+@@ -1001,6 +1001,14 @@ int comedi_device_attach(struct comedi_d
+ 		ret = -EIO;
+ 		goto out;
  	}
- 
++	if (IS_ENABLED(CONFIG_LOCKDEP)) {
++		/*
++		 * dev->spinlock is for private use by the attached low-level
++		 * driver.  Reinitialize it to stop lock-dependency tracking
++		 * between attachments to different low-level drivers.
++		 */
++		spin_lock_init(&dev->spinlock);
++	}
+ 	dev->driver = driv;
+ 	dev->board_name = dev->board_ptr ? *(const char **)dev->board_ptr
+ 					 : dev->driver->driver_name;
 
 
