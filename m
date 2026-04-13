@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F85225A38;
-	Mon, 13 Apr 2026 16:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2306225A38;
+	Mon, 13 Apr 2026 16:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776097868; cv=none; b=L8jJMzfCKRTeo434fsguN314Qb0/by/36DfDpaddsVDrzsJvDdRkeXgLH/uBQRVvFHgQQJBfEsp3soxbhW8hd8RYsAI6G4WgnbdoAM16vINCpxRqACe3JUIRYxiw21dm2kQMtbTzG2bcYQF0q/exsmhCHLhI+Y8Rn/fPu2lRVLk=
+	t=1776097870; cv=none; b=QXcch1qVrD+zGirFqjTkvDNALwWxuTMLvmRNEMoTS57KhfCL4vHFH7QvCyniLPHGpSemkVCviam3U7rJF0xUbj7dMiOKPxBHi99eftc98yVo0YvOONgI/KBBQPFn7x4Dc6etkL143YJwfkbeI0FH9hg6G2PDQiq1vExNXLUkI30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776097868; c=relaxed/simple;
-	bh=nEzLk/dgi/SWYncJjQGbrq9Y97K6w0BIy9LposXl2rI=;
+	s=arc-20240116; t=1776097870; c=relaxed/simple;
+	bh=Q+k8rwogVwiWM0zylv7mdTIs+VJ3iQEMqyPX8pvTJzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s+j0g2rI/GscaefbXWDUFRVTs5kMUw3Ez4Px3y4Jm0tV7k7kSmCvLzT1rekslZi3yrih7g3qg/3snWP+aQ189/8pc5WeSZwrv0kDioK2JTZpcxtwSiVOdw4V72Wa/IPrgqehp7z+lBs6Jx7oaKWWjrXtKyL8RehsNop0BjCJ2Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2d4oXFf4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uus/aRdx3nTb2k4QfmbTU4SwZ2aj11kHhwitWgND+RkYpCaMZPR2SrtsFG0wLATfGV6wCIXQ2+JKzVIlx3k+lL64e2DsfLQMkl2EeOPuJ6Zm8sbqX9+bvUDarlEaq3hL+KGkrB423Q/6dfblPgsFou0sG7srbZH15TMo0SDhZ1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gP/jLSxC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2d4oXFf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF02C2BCAF;
-	Mon, 13 Apr 2026 16:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gP/jLSxC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C25C2BCAF;
+	Mon, 13 Apr 2026 16:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776097868;
-	bh=nEzLk/dgi/SWYncJjQGbrq9Y97K6w0BIy9LposXl2rI=;
+	s=korg; t=1776097870;
+	bh=Q+k8rwogVwiWM0zylv7mdTIs+VJ3iQEMqyPX8pvTJzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2d4oXFf4QJAUlvyeVovLBTYPcANNkGdXaK2PciZRraM9S++wDEBuXDW+gXY2XKdOo
-	 BCIk5MApyLGUcMCT9uL3p+zfoMSggko2U7J3Jjf3Xq5got51fvASfc33Nc0Yxscxr7
-	 DtzGSM+YYHPs6jkZO/Ct/feoSun/aqR/1/dRqy6w=
+	b=gP/jLSxCcuuDd/r0syS4e88KfCUZALuPK+6xTQ0mNd4mGaTJWyGBjv/eHzqKlUavH
+	 ckaxyBiLxPXWFs46XhuyoZygnklf5rKxz0z82stlSi8HvMru2ai1hl9gtb1plTdftR
+	 SRXwtVcU6FcxcLgVaLqfvOcTqBf4Vp+HxV247V9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaudia Kloc <klaudia@vidocsecurity.com>,
-	=?UTF-8?q?Dawid=20Moczad=C5=82o?= <dawid@vidocsecurity.com>,
-	Jenny Guanni Qu <qguanni@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 261/570] netfilter: xt_time: use unsigned int for monthday bit shift
-Date: Mon, 13 Apr 2026 17:56:32 +0200
-Message-ID: <20260413155840.257590103@linuxfoundation.org>
+Subject: [PATCH 5.15 297/570] HID: asus: avoid memory leak in asus_report_fixup()
+Date: Mon, 13 Apr 2026 17:57:08 +0200
+Message-ID: <20260413155841.628310657@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155830.386096114@linuxfoundation.org>
 References: <20260413155830.386096114@linuxfoundation.org>
@@ -54,48 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jenny Guanni Qu <qguanni@gmail.com>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit 00050ec08cecfda447e1209b388086d76addda3a ]
+[ Upstream commit 2bad24c17742fc88973d6aea526ce1353f5334a3 ]
 
-The monthday field can be up to 31, and shifting a signed integer 1
-by 31 positions (1 << 31) is undefined behavior in C, as the result
-overflows a 32-bit signed int. Use 1U to ensure well-defined behavior
-for all valid monthday values.
+The asus_report_fixup() function was returning a newly allocated
+kmemdup()-allocated buffer, but never freeing it.  Switch to
+devm_kzalloc() to ensure the memory is managed and freed automatically
+when the device is removed.
 
-Change the weekday shift to 1U as well for consistency.
+The caller of report_fixup() does not take ownership of the returned
+pointer, but it is permitted to return a pointer whose lifetime is at
+least that of the input buffer.
 
-Fixes: ee4411a1b1e0 ("[NETFILTER]: x_tables: add xt_time match")
-Reported-by: Klaudia Kloc <klaudia@vidocsecurity.com>
-Reported-by: Dawid Moczadło <dawid@vidocsecurity.com>
-Tested-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Also fix a harmless out-of-bounds read by copying only the original
+descriptor size.
+
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_time.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-asus.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/xt_time.c b/net/netfilter/xt_time.c
-index 6aa12d0f54e23..61de85e02a40f 100644
---- a/net/netfilter/xt_time.c
-+++ b/net/netfilter/xt_time.c
-@@ -227,13 +227,13 @@ time_mt(const struct sk_buff *skb, struct xt_action_param *par)
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index feec0724328ff..3be17a8b7a293 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -1224,14 +1224,21 @@ static __u8 *asus_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 		 */
+ 		if (*rsize == rsize_orig &&
+ 			rdesc[offs] == 0x09 && rdesc[offs + 1] == 0x76) {
+-			*rsize = rsize_orig + 1;
+-			rdesc = kmemdup(rdesc, *rsize, GFP_KERNEL);
+-			if (!rdesc)
+-				return NULL;
++			__u8 *new_rdesc;
++
++			new_rdesc = devm_kzalloc(&hdev->dev, rsize_orig + 1,
++						 GFP_KERNEL);
++			if (!new_rdesc)
++				return rdesc;
  
- 	localtime_2(&current_time, stamp);
- 
--	if (!(info->weekdays_match & (1 << current_time.weekday)))
-+	if (!(info->weekdays_match & (1U << current_time.weekday)))
- 		return false;
- 
- 	/* Do not spend time computing monthday if all days match anyway */
- 	if (info->monthdays_match != XT_TIME_ALL_MONTHDAYS) {
- 		localtime_3(&current_time, stamp);
--		if (!(info->monthdays_match & (1 << current_time.monthday)))
-+		if (!(info->monthdays_match & (1U << current_time.monthday)))
- 			return false;
- 	}
- 
+ 			hid_info(hdev, "Fixing up %s keyb report descriptor\n",
+ 				drvdata->quirks & QUIRK_T100CHI ?
+ 				"T100CHI" : "T90CHI");
++
++			memcpy(new_rdesc, rdesc, rsize_orig);
++			*rsize = rsize_orig + 1;
++			rdesc = new_rdesc;
++
+ 			memmove(rdesc + offs + 4, rdesc + offs + 2, 12);
+ 			rdesc[offs] = 0x19;
+ 			rdesc[offs + 1] = 0x00;
 -- 
 2.51.0
 
