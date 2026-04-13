@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F33330D4C;
-	Mon, 13 Apr 2026 16:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E39731F9BC;
+	Mon, 13 Apr 2026 16:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776099478; cv=none; b=JCwiGiI/JQWE4YnZdp71NcqtR6wFFujdSo6BU8QDZwS+Z4cld7u2RNr/bVMMLw+pCqcfkagReSZMgydSkSbyQImVIN4K146Pjb6t5DAHrJ7ZRSb07+vkj78pwkmq+xbB3jGd+LQ4W31hYlb4esuwnuBS2rha14Nyeg8zRsdxOZ8=
+	t=1776099481; cv=none; b=sjIomjn1E0RZiHh3njRaBlqVjNiT28Rcm+6kQChspjkdBXopPazDCQXMhs+2J72YvGLIkKt47y2ULjoESu9v6XAVlQwZeaWTbAxwbF6AmUpALUKiD0yu7TgDMuB+yfJ5QUSU6b4yyp8k+Sx68WWwp/O+LRr3MeVofB0R4ECWrmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776099478; c=relaxed/simple;
-	bh=VqZvVzQz/7OvGjXg420arLP9ocE4tTjox06+3Fi49Gw=;
+	s=arc-20240116; t=1776099481; c=relaxed/simple;
+	bh=5M6otVdkCbXr5q/P6PfhQZPtOaFtcoDYIf8vrMYYwSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DRvn0sW4OCEAULdcwJLJ4tHnX6BtKr3h6p1sm57v9Ly0YH7dg9jYP5kuhFlbPhqhnp3SKJgAxnyVzdOavPVHdztq3OEbJpVvKnPsTNsYUQqIUPJmpw7fFnBh9UHgfehgm62a/Z/bXkOHEW+ZVAi5oJTeGbvFDx70Pyb4laoYnNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKDNkprj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O+IdjbCwodzF0ZhZJ+cWwPfUmzsFUGzVL1frHEG3d5W+wI1HsAHaNkSuA9ERD991cJgugLcqk0VVA88yXxIriJItXnO5zRyv7i5JZvsHuTeBPt/UweFkWGb0esmu1NYosbumATnebXE3sgPfVoDu99bEQ09T7GDv3NbZt09Dzsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezr9iapB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKDNkprj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26A0C2BCAF;
-	Mon, 13 Apr 2026 16:57:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezr9iapB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C8BC2BCAF;
+	Mon, 13 Apr 2026 16:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776099478;
-	bh=VqZvVzQz/7OvGjXg420arLP9ocE4tTjox06+3Fi49Gw=;
+	s=korg; t=1776099480;
+	bh=5M6otVdkCbXr5q/P6PfhQZPtOaFtcoDYIf8vrMYYwSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UKDNkprjGiuy+fmmPBqtkM54xWSn09MXxNV63nENU6BwaacOylTxnje2YVxIDlZUE
-	 E7AwVVDw6KV4eorM8zY/gHeZ7JByiUn0YIr10BujjocGjcgYYia2qqLTlUJfhJpcrH
-	 P8HULsAwiv4S+7u+I3ULZtAyLTY+ts/vqtjmcHxI=
+	b=ezr9iapBTjgTp9PcxZdhT8rDuoLvVEha+clfd9sgIZiNCVIp/reHm1TPgzyVtEo2M
+	 g2OEvfSOrDf6xlrVUIvBQZtAG5/cZSN0Hbzpt0pIn1GqIYmUwEw/Gz1PwNyMbkWIMi
+	 Ln+bv2VUIwn3GCcMJ8KJFbcIZqnqPSMxwWSlKHMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Martin Schiller <ms@dev.tdt.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 313/491] btrfs: fix lost error when running device stats on multiple devices fs
-Date: Mon, 13 Apr 2026 17:59:18 +0200
-Message-ID: <20260413155830.757978214@linuxfoundation.org>
+Subject: [PATCH 5.10 349/491] net/x25: Fix potential double free of skb
+Date: Mon, 13 Apr 2026 17:59:54 +0200
+Message-ID: <20260413155832.104697512@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260413155819.042779211@linuxfoundation.org>
 References: <20260413155819.042779211@linuxfoundation.org>
@@ -51,44 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Martin Schiller <ms@dev.tdt.de>
 
-[ Upstream commit 1c37d896b12dfd0d4c96e310b0033c6676933917 ]
+[ Upstream commit d10a26aa4d072320530e6968ef945c8c575edf61 ]
 
-Whenever we get an error updating the device stats item for a device in
-btrfs_run_dev_stats() we allow the loop to go to the next device, and if
-updating the stats item for the next device succeeds, we end up losing
-the error we had from the previous device.
+When alloc_skb fails in x25_queue_rx_frame it calls kfree_skb(skb) at
+line 48 and returns 1 (error).
+This error propagates back through the call chain:
 
-Fix this by breaking out of the loop once we get an error and make sure
-it's returned to the caller. Since we are in the transaction commit path
-(and in the critical section actually), returning the error will result
-in a transaction abort.
+x25_queue_rx_frame returns 1
+    |
+    v
+x25_state3_machine receives the return value 1 and takes the else
+branch at line 278, setting queued=0 and returning 0
+    |
+    v
+x25_process_rx_frame returns queued=0
+    |
+    v
+x25_backlog_rcv at line 452 sees queued=0 and calls kfree_skb(skb)
+again
 
-Fixes: 733f4fbbc108 ("Btrfs: read device stats on mount, write modified ones during commit")
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+This would free the same skb twice. Looking at x25_backlog_rcv:
+
+net/x25/x25_in.c:x25_backlog_rcv() {
+    ...
+    queued = x25_process_rx_frame(sk, skb);
+    ...
+    if (!queued)
+        kfree_skb(skb);
+}
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Martin Schiller <ms@dev.tdt.de>
+Link: https://patch.msgid.link/20260331-x25_fraglen-v4-1-3e69f18464b4@dev.tdt.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/x25/x25_in.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 2bba6e8d43740..da77493f4c17d 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -7553,8 +7553,9 @@ int btrfs_run_dev_stats(struct btrfs_trans_handle *trans)
- 		smp_rmb();
+diff --git a/net/x25/x25_in.c b/net/x25/x25_in.c
+index e1c4197af468e..77ad186507f64 100644
+--- a/net/x25/x25_in.c
++++ b/net/x25/x25_in.c
+@@ -44,10 +44,9 @@ static int x25_queue_rx_frame(struct sock *sk, struct sk_buff *skb, int more)
+ 	if (!more && x25->fraglen > 0) {	/* End of fragment */
+ 		int len = x25->fraglen + skb->len;
  
- 		ret = update_dev_stat_item(trans, device);
--		if (!ret)
--			atomic_sub(stats_cnt, &device->dev_stats_ccnt);
-+		if (ret)
-+			break;
-+		atomic_sub(stats_cnt, &device->dev_stats_ccnt);
- 	}
- 	mutex_unlock(&fs_devices->device_list_mutex);
+-		if ((skbn = alloc_skb(len, GFP_ATOMIC)) == NULL){
+-			kfree_skb(skb);
++		skbn = alloc_skb(len, GFP_ATOMIC);
++		if (!skbn)
+ 			return 1;
+-		}
+ 
+ 		skb_queue_tail(&x25->fragment_queue, skb);
  
 -- 
 2.53.0
