@@ -1,85 +1,148 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBE1318EC1;
-	Tue, 14 Apr 2026 18:22:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A74214812;
+	Tue, 14 Apr 2026 19:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776190929; cv=none; b=WE3mVsLgzBHOiIRYxnbKao6Ewaf19/Q66VNmt1UklURblj5muETDdpEmwlJJUX3Q0WBVdKJDAWlAJVacPJZZ4SHz4sgzvYPOnwpIGII6TD3DZ5hWJm81NkUePGdewLMF2ymvPF1w20xPwkFG6GEXCB785cZBr9hLfea709Mw6K0=
+	t=1776195361; cv=none; b=i6xAE+gKQV/f6y5fyLoiRZ1A0ALuS7jf9ejHgF+ARYhHuUP2Vmagpj9xWGA/0SJieVWhb52mQmzxag8U/ZyQGr+LY8v/8qlI1Dem/CtuNThuzgFH/RXd5xcHxKNLtcGsfKTw69ArTBDHjS1B22CjU1cWIdRww73KF4L5vcUiCG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776190929; c=relaxed/simple;
-	bh=jC4NIa88RJlvlo8beAEl5OfLPrBbh4PRrRGdH13t0GQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YYJHV026AJIQoQuQZZ5DPi9y1E5cOwtaBEiASdJlzfFZEdFQ0ANIBp4s4DHrZd+mcx2zkuiuNLr03Gp2ftNFecPNuYiFY+sHFbYXGTyFmAfqQSd8FTSuZgaDpP7eCv31CKY/EgJE8tAnumAHzgcf6y2ITQI/EVzij94jtja7u8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n4uOKkBG; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n4uOKkBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9771CC19425;
-	Tue, 14 Apr 2026 18:22:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776190929;
-	bh=jC4NIa88RJlvlo8beAEl5OfLPrBbh4PRrRGdH13t0GQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4uOKkBGMrViO7q8QIl2lWIG967Qllz/FqVRMG+Jefx7J+qdV23coe+iRdmG2LOwg
-	 bnigNZ3ZuPkDqhQ38gtKSn7smIRMdxy1DZmj9gjvhxgNz5PNMIyVF2lBeDoZ5zdlbp
-	 BS7TDaBZ9RnRwMm9F5kPRs1w3AFzk4G80T1rzCVrztMZmBcGuCid1Yl22Om5b7lxxw
-	 6Lvw0Bgjh8wNBYvcldD0XO4r1/jPLGAHVhlo0WQQhH5euoIKHj8MJAAnWl7+9wo0pj
-	 wJVmsQyy3olaGHrm2WfP+FHn0aRB9EG1yY8DRaB4R49cAybUCzExdd/7vGQGE2U75o
-	 CdocJrJYoSZxw==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.19 00/86] 6.19.13-rc1 review
-Date: Tue, 14 Apr 2026 20:21:58 +0200
-Message-ID: <20260414182158.271797-1-ojeda@kernel.org>
-In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
-References: <20260413155731.568515178@linuxfoundation.org>
+	s=arc-20240116; t=1776195361; c=relaxed/simple;
+	bh=/DEajXtpJCB3hOLSeweENEo1/sf1r0lzizWCu1QCoqQ=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ghiHGOGoslWWq4Nlp5liu2IPeyUqfgwbWilqxULfbbRJGK5MgxakA1f+geTWI0WT8zKXlaNKd6LCmq4yAqgKuiab/bp1Im6IfkFfbtnmqNNyk9PBW1VaWyvYoQRpKkmkz3VE1g+jGk29rF7gGngTAvDjmYSKhKdQDZt0cjPPPHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wCjYE-004t9a-2I;
+	Tue, 14 Apr 2026 19:35:57 +0000
+Received: from ben by deadeye with local (Exim 4.99.1)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wCjYC-000000038s3-1fmc;
+	Tue, 14 Apr 2026 21:35:56 +0200
+Message-ID: <7c68cd425998a64761b95585f84d3a09b929a372.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 012/491] bus: omap-ocp2scp: Convert to platform
+ remove callback returning void
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=
+	 <u.kleine-koenig@pengutronix.de>, Sasha Levin <sashal@kernel.org>
+Date: Tue, 14 Apr 2026 21:35:51 +0200
+In-Reply-To: <20260413155819.511284969@linuxfoundation.org>
+References: <20260413155819.042779211@linuxfoundation.org>
+	 <20260413155819.511284969@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-cXEFg2QdTvJwlQI/StV6"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
-On Mon, 13 Apr 2026 17:59:07 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.19.13 release.
-> There are 86 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
-> Anything received after that time might be too late.
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64:
+--=-cXEFg2QdTvJwlQI/StV6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+On Mon, 2026-04-13 at 17:54 +0200, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+>=20
+> [ Upstream commit 854f89a5b56354ba4135e0e1f0e57ab2caee59ee ]
+>=20
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is ignored (apart
+> from emitting a warning) and this typically results in resource leaks.
+>=20
+> To improve here there is a quest to make the remove callback return
+> void. In the first step of this quest all drivers are converted to
+> .remove_new(), which already returns void. Eventually after all drivers
+> are converted, .remove_new() will be renamed to .remove().
 
-(arm 32-bit seems to build-test fine as well. Same for UML x86_64 on
-a non-debug configuration.)
+But platform_driver::remove_new doesn't exist in 5.10 so this breaks the
+build.
 
-Thanks!
+Ben.
 
-Cheers,
-Miguel
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
+>=20
+> Link: https://lore.kernel.org/r/20231109202830.4124591-3-u.kleine-koenig@=
+pengutronix.de
+> Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+> Stable-dep-of: 5eb63e9bb65d ("bus: omap-ocp2scp: fix OF populate on drive=
+r rebind")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/bus/omap-ocp2scp.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/drivers/bus/omap-ocp2scp.c b/drivers/bus/omap-ocp2scp.c
+> index e02d0656242b8..7d7479ba0a759 100644
+> --- a/drivers/bus/omap-ocp2scp.c
+> +++ b/drivers/bus/omap-ocp2scp.c
+> @@ -84,12 +84,10 @@ static int omap_ocp2scp_probe(struct platform_device =
+*pdev)
+>  	return ret;
+>  }
+> =20
+> -static int omap_ocp2scp_remove(struct platform_device *pdev)
+> +static void omap_ocp2scp_remove(struct platform_device *pdev)
+>  {
+>  	pm_runtime_disable(&pdev->dev);
+>  	device_for_each_child(&pdev->dev, NULL, ocp2scp_remove_devices);
+> -
+> -	return 0;
+>  }
+> =20
+>  #ifdef CONFIG_OF
+> @@ -103,7 +101,7 @@ MODULE_DEVICE_TABLE(of, omap_ocp2scp_id_table);
+> =20
+>  static struct platform_driver omap_ocp2scp_driver =3D {
+>  	.probe		=3D omap_ocp2scp_probe,
+> -	.remove		=3D omap_ocp2scp_remove,
+> +	.remove_new	=3D omap_ocp2scp_remove,
+>  	.driver		=3D {
+>  		.name	=3D "omap-ocp2scp",
+>  		.of_match_table =3D of_match_ptr(omap_ocp2scp_id_table),
+
+--=20
+Ben Hutchings
+73.46% of all statistics are made up.
+
+--=-cXEFg2QdTvJwlQI/StV6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnelxcACgkQ57/I7JWG
+EQmw0xAArSYPJ+O8BofzOrtVIlgZ5dSagMP8N97Q1CwZscF9vaVgADaRk3QrHA9Z
+h62IhxfJjftvuRX1fu809xk7WyOC9FqyESOM8532vHlQ0XsfuJqBbiaef0EaGevv
+Xpd+wvvwRHRKaRngVuWj3RUCQ8uKAXY52R8Z7fsMHvuRa54JDmpYSYhbpFn50AN3
+eiLzMuY9FoUvjCe4xG3nbOj0gd94xu+XcFwYw7OD48Oy9DSmdUqIKWrJfEdocw4K
+9H9S1mpli+hUQ4ud7HRUGbhbYNAmzTY5dDjf4oU7k305t3c8wEd4SQZpvzBx0WRt
+NQepVvoew+U568UVJ4woGVtX1UvUvwj9ayKvXZsqwFqZ+3j1YMWyGflPjXG2GukO
+9GzwnZQRduARIEM1vQQAbnxSHD6gO5TukAf7uAwZ4EJq3chDjX/q6ZASNE/M635A
+XRuRcFqFRi3Z37DuD9fX2tvoiFyZAWQIMm2DAL1pSt1qfWeqvo5abn59Vk5CBE3v
+G1B1LimCT7ELZSD7ZAtDEpPFnsyhQazDwBzoVDiYIlKvods6jPT78wudBvbSgWXo
+r6EjuTsed5hq79nz4wspcl1ugcqPNtULj4qsZhJzr698m8NJqGACLNWKmPkhfBgY
+KN8WSiiO4JkKH9t+P4FyChGY2GA28PtdouaY1jnwvKg53TTGojI=
+=FsSj
+-----END PGP SIGNATURE-----
+
+--=-cXEFg2QdTvJwlQI/StV6--
