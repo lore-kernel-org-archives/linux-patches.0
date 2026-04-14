@@ -1,28 +1,28 @@
-Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
+Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45AE3D6CC4
-	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 11:43:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A9C3939D3
+	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 11:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.35
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776167026; cv=none; b=af+gaoWVKAmW+3k6OO298kdG4woAn0lDya6KsMfLUBmN6hofbO3SBGff9nQtEoddKxBWw1dwGq/QClgIek3/AZkr+UiiP3ErJVvASGGzCJ+XkiKX+hcVQWFtRB2JQPj4b+P9jALakTgQD7pwOY2OONXnbyy4fVGEhEKJYvSsG8Q=
+	t=1776167361; cv=none; b=PX77YhJfbY/92EFYrmcSChUBDGlL3I8JMUugxRxMNXH8liu/9Lf9d+gawbu/oU0uge7fKlDReZvQeesNuD/MESsG0rnJ07P3rCxXCJRPlMHh8Q3R1rS5xeaN35gRVnWRiU8pXILOLksXkZG80RCFeg/wOFB7pOjeBc2yOl8adbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776167026; c=relaxed/simple;
-	bh=nTKtqvUNEul8hJzZJ4Y3g1eMff9Shxe3ornyJILZPJk=;
+	s=arc-20240116; t=1776167361; c=relaxed/simple;
+	bh=delSIIv2LXMuzU0y4BSnjK8jV2/iRKoNDVaAKcFiia4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=buvOmvDvLwtdn+WCvzjdEaoaQetkH1HXr9agVS/MT3Z+wm8RuxiP11POPxwk30i/1W8FHTAmrhVdlRQizbegXCp4gUHComNjlbq2hJwgXdzb+P+nRkRQtl6zMNv51ba9U+jFGmLFY4Jau5TDcTmfCnXEUNETpqbBhxnFthh+PFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Db0Wynh5; arc=none smtp.client-ip=35.89.44.37
+	 In-Reply-To:Content-Type; b=uIBsVT8ECJEVnD85qcYrle6OBvmKC3iZCc+egCqgiqy7Gym883sV2NjKHwX3tBPbDBbX+6Ypdl5J2HQK3QqdFUbPCVFszBq9vdVbmVXlmrR1HAu1uvlj7YM3MvfW564oPQJ7Ey4GyhzoOYIgkqXoWp0sm18wefCISBEdqRe6HKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Z0rb9OEW; arc=none smtp.client-ip=35.89.44.35
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Db0Wynh5"
-Received: from eig-obgw-5003b.ext.cloudfilter.net ([10.0.29.155])
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Z0rb9OEW"
+Received: from eig-obgw-6002b.ext.cloudfilter.net ([10.0.30.203])
 	by cmsmtp with ESMTPS
-	id CbSjwwPJijw8YCcBEw1qOB; Tue, 14 Apr 2026 11:43:44 +0000
+	id CYCZwvnJGnwj2CcGewLQn8; Tue, 14 Apr 2026 11:49:20 +0000
 Received: from box5620.bluehost.com ([162.241.219.59])
 	by cmsmtp with ESMTPS
-	id CcBDwcfqhOPYdCcBEwjNZ0; Tue, 14 Apr 2026 11:43:44 +0000
-X-Authority-Analysis: v=2.4 cv=QbNmvtbv c=1 sm=1 tr=0 ts=69de2870
+	id CcGdw3C0zwWe6CcGdwuXLa; Tue, 14 Apr 2026 11:49:19 +0000
+X-Authority-Analysis: v=2.4 cv=RfSQC0tv c=1 sm=1 tr=0 ts=69de29c0
  a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
  a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
@@ -33,20 +33,20 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
 	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
 	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
 	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=8p7eT+86shx04tUovBObXOgcEkFH/exgzqRcWg3w6D4=; b=Db0Wynh5zm9txY32Zgy2b0VgGv
-	ejBLCmNwLq8optfEQMIFEiHVNKEc+4vA02eUar8PmBc1k+GUyzntg2CCUJbWKldtICXraHYWcpsIo
-	1qLOd+nhBeul0odzmXH4HOZW+LrhxRINuT1Agj/azpEnKSkYz2KA1GbKVBuF0GSoEVum58PslW4yg
-	e5HJW7mRKUkyG8aN0TK3dPmojiOy+95NMhfSvcNYAisTza7L857nrsIzfenr4dScGpNrJRMQsQV9+
-	VLQQpCKMyeSRaPo6VAo1b98j/kYQN0igWkNUM6rQ8zCxZI6lNv0G8lIH67RMymOso5EZ04kA37FLj
-	e8VZMUFg==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:59456 helo=[10.0.1.180])
+	bh=wTSOS8ADXbxipXR1RSbIPgpwLNZb94otAdTU+dlNjpA=; b=Z0rb9OEWlt1fzHbIxyTjJocT39
+	8bA3T7aDqmWMzePcSwt+Zs66lRTw4MkWsnGBOcyHBIx7iQpnKeqPrlI2uUzeonkMYx+1C6z8D9DHM
+	YnUhiCGXnG3GESBGa3vYdzOHO3XXG8TTzFVzJf9FEzGOPr6uw5qrtn0GrljoUwcU9wVZzHyRqbbIL
+	BU9m5indvnhUtGwcxeIZEACaRoBd8dzSpFjoL9ZErESdQoWrWWIFaD6IROYzw869la3Z2nmOqVreg
+	mHfrTXBHTHDw5BzJQZ3tlsXbHoNb1+plKPocG42W9RxUVnjReQztfUsbZHm6Kh0hsUAaDuBDj2E2R
+	EZCvsbEw==;
+Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:58892 helo=[10.0.1.180])
 	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
 	(Exim 4.98.2)
 	(envelope-from <re@w6rz.net>)
-	id 1wCcBD-00000002k0w-0ZFF;
-	Tue, 14 Apr 2026 05:43:43 -0600
-Message-ID: <7702bf5f-9343-4aa8-ab00-6056292a290f@w6rz.net>
-Date: Tue, 14 Apr 2026 04:43:41 -0700
+	id 1wCcGd-00000002mVQ-02O7;
+	Tue, 14 Apr 2026 05:49:19 -0600
+Message-ID: <29dfc2bc-d940-4afc-8a3b-7046da4d2ac5@w6rz.net>
+Date: Tue, 14 Apr 2026 04:49:17 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,7 +54,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 00/50] 6.6.135-rc1 review
+Subject: Re: [PATCH 6.1 00/55] 6.1.169-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -63,10 +63,10 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, sr@sladewatkins.com
-References: <20260413155724.497323914@linuxfoundation.org>
+References: <20260413155724.820472494@linuxfoundation.org>
 Content-Language: en-US
 From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
+In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -77,22 +77,22 @@ X-AntiAbuse: Sender Address Domain - w6rz.net
 X-BWhitelist: no
 X-Source-IP: 73.162.206.103
 X-Source-L: No
-X-Exim-ID: 1wCcBD-00000002k0w-0ZFF
+X-Exim-ID: 1wCcGd-00000002mVQ-02O7
 X-Source: 
 X-Source-Args: 
 X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:59456
+X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:58892
 X-Source-Auth: re@w6rz.net
-X-Email-Count: 78
+X-Email-Count: 98
 X-Org: HG=bhshared;ORG=bluehost;
 X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
 X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfF/bkwnHx0ERqRiuC/HhkzIj8inkD1pzA53xQ5OF99AptrzKApIWenxjoGSAG6aKNLtWo1jX1gtbmzCSGBZVqZs0ZfJ/4iOVjEZHKwGP/v9LwOFPdnnX
- KFKWRVPSn9CohVZgoFLnIlVJZ1VqwPbo9uD4+pXxUzSJ3F+tgv5O4iumynNUu4Qruv9rsFYegmSlQQ==
+X-CMAE-Envelope: MS4xfEhxwvuJ2w5SiEmBjFG0nxoOdx5hSG/ntLJAEnjp+91fhQlVDyMITN0B2t3jD8zoR1zJFwaSExoqxkTP448pIDRN40jOovJeaAqfXXVaYaQONgh71ZNu
+ gg+4knVxnfghJKUF+LvUdXo/o47CEERjpTN+P51GjPnKqbhOagNgEaKSOzV0vvqKV7N9D6TfXSKk5A==
 
 On 4/13/26 09:00, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.135 release.
-> There are 50 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.169 release.
+> There are 55 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -100,9 +100,9 @@ On 4/13/26 09:00, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.135-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.169-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
 >
 > thanks,
