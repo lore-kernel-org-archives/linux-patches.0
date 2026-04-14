@@ -1,148 +1,109 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A74214812;
-	Tue, 14 Apr 2026 19:35:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9B61E834B
+	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 19:37:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776195361; cv=none; b=i6xAE+gKQV/f6y5fyLoiRZ1A0ALuS7jf9ejHgF+ARYhHuUP2Vmagpj9xWGA/0SJieVWhb52mQmzxag8U/ZyQGr+LY8v/8qlI1Dem/CtuNThuzgFH/RXd5xcHxKNLtcGsfKTw69ArTBDHjS1B22CjU1cWIdRww73KF4L5vcUiCG0=
+	t=1776195435; cv=none; b=LXrW0E6Bmjx6/xabg3D+J3xrpDi1iGPe96as7jHe9WR9gD6jSsO0DehPJvuvFxp+5ezmumb/35BQWsTID4m1c8R1oNZmVuxnrgFyLIFMyK8nIJcWzzzC9gkeWA956SsnXsd5tHEF00mDl87+dy9zd6efmiaB01x2Yigy3YL3pAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776195361; c=relaxed/simple;
-	bh=/DEajXtpJCB3hOLSeweENEo1/sf1r0lzizWCu1QCoqQ=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ghiHGOGoslWWq4Nlp5liu2IPeyUqfgwbWilqxULfbbRJGK5MgxakA1f+geTWI0WT8zKXlaNKd6LCmq4yAqgKuiab/bp1Im6IfkFfbtnmqNNyk9PBW1VaWyvYoQRpKkmkz3VE1g+jGk29rF7gGngTAvDjmYSKhKdQDZt0cjPPPHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wCjYE-004t9a-2I;
-	Tue, 14 Apr 2026 19:35:57 +0000
-Received: from ben by deadeye with local (Exim 4.99.1)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wCjYC-000000038s3-1fmc;
-	Tue, 14 Apr 2026 21:35:56 +0200
-Message-ID: <7c68cd425998a64761b95585f84d3a09b929a372.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 012/491] bus: omap-ocp2scp: Convert to platform
- remove callback returning void
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=
-	 <u.kleine-koenig@pengutronix.de>, Sasha Levin <sashal@kernel.org>
-Date: Tue, 14 Apr 2026 21:35:51 +0200
-In-Reply-To: <20260413155819.511284969@linuxfoundation.org>
-References: <20260413155819.042779211@linuxfoundation.org>
-	 <20260413155819.511284969@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-cXEFg2QdTvJwlQI/StV6"
-User-Agent: Evolution 3.56.2-9 
+	s=arc-20240116; t=1776195435; c=relaxed/simple;
+	bh=zGSNTWJTYjbMiGssao9p1xIyMc+rhrZek7a0GPsDJ6g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=M+BG0JOV9I/T9DS2UbuiGbz5VHeasSvnVVvu1V+DIinWn5eSKRU3+Akxjm4KhSs9cAf85OpQVjxfp7mrigufwEc4r9EhaAxF6p4hle1BCX6+F/tJFuZKy0MawRsk399HEWzaYrmSF9G/UKnG9Pjl95BLxxNePi8pc3u9GcwXXDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=bCTKTGap; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="bCTKTGap"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-488af96f6b2so79043415e9.0
+        for <patches@lists.linux.dev>; Tue, 14 Apr 2026 12:37:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20251104; t=1776195433; x=1776800233; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wDeSAiwIMC4uRwXkLzxrSw2LWZMPVa4L0Md9dCJm6PA=;
+        b=bCTKTGapBc0jMk9St90QdkcQjDtri2wDNJzuleqZqRYKoNpdgRyAdvPSwrt76LE5LG
+         b9fWOoRZWHWveu1IqdHP0vQawftVJlzziDzoSLEDQCHDxUS+v5TkwXNEtFAVbp3mpAej
+         BJRa9phu6dMMLx+GrLdwHgVQuMPndSamsttrSQ2kR24a78QO98eQRdXkLu0aJIWGNsfY
+         Kc3tNI1+tAYxQftWtnDRHyTXyo5VHHylSJzJgMXEqTBCGSdHAHXCLnNHBNfza7w8LdVi
+         XhwgsyJ/BTcTE6dxtDb3NnfgUwPTCFswyZM+VJ1pflZk4HYYyk5ogF4kiDUE5zLCggc6
+         B+jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776195433; x=1776800233;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wDeSAiwIMC4uRwXkLzxrSw2LWZMPVa4L0Md9dCJm6PA=;
+        b=LR+7N965rCAYIGsPLoAz8hRtJlRTd9hYnBfhodpIaFt4ObJmv7gulM6PZXNV8lgBtO
+         518PwTpece8YUfGTB6CejjIkws1iTK7gZbFjv2Zx0VmoTGLoUVQfHuS6+NBdcZ2Z9PrC
+         oiIy7klnC0tHKVvcs4XrA8Lf55SaISgmm6iK6DkXMSxJdYeRreFLHYX9IhTVbnCAifpm
+         i0cgzrcrt+0013j+3kXTf2whodFVvqyKcpeagxxvdwsZva8HpBolaFJUj20t9PcpNRu3
+         bwet3wR1CEhrGECsyMOK8N7PX+lC3WLVvY9J60EvYkeYDKJ2eB0GYo4lI41T+qOIA9oq
+         CZMg==
+X-Gm-Message-State: AOJu0YzvNQV26Xj2cSYZGBsWUEC78yL/YT/cYsuFeE79uRDp/ISXctP/
+	tWV71zYwyxtfprGQTLw87n2bhJD0QUanDIfEk/rKOpj/ThnXBLFIEcg=
+X-Gm-Gg: AeBDieu9bfNmqebULOjaPDlzUSIbYQaY6UBVXHtWes6di3LsKc6AjHP5S27+u+mPDh6
+	WyhObJqp+lWEhaTNO8X/+SKXEBVO9QzZNhmrHNssVLS+3tg9xB+ySEEMPV8tTFqI83LQygGH/LB
+	cK8Z3JTxxls/q2tExAKYrVaXqC4Hr19qphdY3fGnUWxVHBpKszpXB6CuZRBeNDSMVieNuUce5Sc
+	7LOovNUDgYo0guijQuSsZ9qcaBtl+vwyT6kbOcT04pqz1R8bgCK9Ym9R5RI69/cfR6exBc7ls9T
+	XwBl5JieaspMDbRn30Cy8OpvaPdxzLTw6iee8IswGKspn4Q3hy/VITf7wRkxVlv2yAlY0eN4ND4
+	qNkcDNfZlUryrBlPboJBn2WUXHLbgxAIimGbqODjHq10hjXbQlbrL0Q/8o7cBgqXyxpi4pwTZWe
+	dTLp/f5+UqrWWxLP8tvyup/l3tl5ZYJFwtSLDAiIyYEQFG+FSpU09WQDdHiJ1kTSa7Ljgt92t8G
+	A4=
+X-Received: by 2002:a05:600c:820a:b0:488:81b1:ae36 with SMTP id 5b1f17b1804b1-488d688688fmr261645175e9.23.1776195432464;
+        Tue, 14 Apr 2026 12:37:12 -0700 (PDT)
+Received: from [192.168.1.3] (p5b05757c.dip0.t-ipconnect.de. [91.5.117.124])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488ede1e826sm143417485e9.6.2026.04.14.12.37.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Apr 2026 12:37:12 -0700 (PDT)
+Message-ID: <554e6039-c7eb-4d1a-bc14-2c84bca188c7@googlemail.com>
+Date: Tue, 14 Apr 2026 21:37:10 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.18 00/83] 6.18.23-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260413155731.019638460@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Am 13.04.2026 um 17:59 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.18.23 release.
+> There are 83 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
+
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
 
---=-cXEFg2QdTvJwlQI/StV6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Beste Grüße,
+Peter Schneider
 
-On Mon, 2026-04-13 at 17:54 +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
->=20
-> [ Upstream commit 854f89a5b56354ba4135e0e1f0e57ab2caee59ee ]
->=20
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is ignored (apart
-> from emitting a warning) and this typically results in resource leaks.
->=20
-> To improve here there is a quest to make the remove callback return
-> void. In the first step of this quest all drivers are converted to
-> .remove_new(), which already returns void. Eventually after all drivers
-> are converted, .remove_new() will be renamed to .remove().
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-But platform_driver::remove_new doesn't exist in 5.10 so this breaks the
-build.
-
-Ben.
-
-> Trivially convert this driver from always returning zero in the remove
-> callback to the void returning variant.
->=20
-> Link: https://lore.kernel.org/r/20231109202830.4124591-3-u.kleine-koenig@=
-pengutronix.de
-> Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
-> Stable-dep-of: 5eb63e9bb65d ("bus: omap-ocp2scp: fix OF populate on drive=
-r rebind")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/bus/omap-ocp2scp.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
->=20
-> diff --git a/drivers/bus/omap-ocp2scp.c b/drivers/bus/omap-ocp2scp.c
-> index e02d0656242b8..7d7479ba0a759 100644
-> --- a/drivers/bus/omap-ocp2scp.c
-> +++ b/drivers/bus/omap-ocp2scp.c
-> @@ -84,12 +84,10 @@ static int omap_ocp2scp_probe(struct platform_device =
-*pdev)
->  	return ret;
->  }
-> =20
-> -static int omap_ocp2scp_remove(struct platform_device *pdev)
-> +static void omap_ocp2scp_remove(struct platform_device *pdev)
->  {
->  	pm_runtime_disable(&pdev->dev);
->  	device_for_each_child(&pdev->dev, NULL, ocp2scp_remove_devices);
-> -
-> -	return 0;
->  }
-> =20
->  #ifdef CONFIG_OF
-> @@ -103,7 +101,7 @@ MODULE_DEVICE_TABLE(of, omap_ocp2scp_id_table);
-> =20
->  static struct platform_driver omap_ocp2scp_driver =3D {
->  	.probe		=3D omap_ocp2scp_probe,
-> -	.remove		=3D omap_ocp2scp_remove,
-> +	.remove_new	=3D omap_ocp2scp_remove,
->  	.driver		=3D {
->  		.name	=3D "omap-ocp2scp",
->  		.of_match_table =3D of_match_ptr(omap_ocp2scp_id_table),
-
---=20
-Ben Hutchings
-73.46% of all statistics are made up.
-
---=-cXEFg2QdTvJwlQI/StV6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnelxcACgkQ57/I7JWG
-EQmw0xAArSYPJ+O8BofzOrtVIlgZ5dSagMP8N97Q1CwZscF9vaVgADaRk3QrHA9Z
-h62IhxfJjftvuRX1fu809xk7WyOC9FqyESOM8532vHlQ0XsfuJqBbiaef0EaGevv
-Xpd+wvvwRHRKaRngVuWj3RUCQ8uKAXY52R8Z7fsMHvuRa54JDmpYSYhbpFn50AN3
-eiLzMuY9FoUvjCe4xG3nbOj0gd94xu+XcFwYw7OD48Oy9DSmdUqIKWrJfEdocw4K
-9H9S1mpli+hUQ4ud7HRUGbhbYNAmzTY5dDjf4oU7k305t3c8wEd4SQZpvzBx0WRt
-NQepVvoew+U568UVJ4woGVtX1UvUvwj9ayKvXZsqwFqZ+3j1YMWyGflPjXG2GukO
-9GzwnZQRduARIEM1vQQAbnxSHD6gO5TukAf7uAwZ4EJq3chDjX/q6ZASNE/M635A
-XRuRcFqFRi3Z37DuD9fX2tvoiFyZAWQIMm2DAL1pSt1qfWeqvo5abn59Vk5CBE3v
-G1B1LimCT7ELZSD7ZAtDEpPFnsyhQazDwBzoVDiYIlKvods6jPT78wudBvbSgWXo
-r6EjuTsed5hq79nz4wspcl1ugcqPNtULj4qsZhJzr698m8NJqGACLNWKmPkhfBgY
-KN8WSiiO4JkKH9t+P4FyChGY2GA28PtdouaY1jnwvKg53TTGojI=
-=FsSj
------END PGP SIGNATURE-----
-
---=-cXEFg2QdTvJwlQI/StV6--
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
