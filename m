@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91CC3DA7FA;
-	Tue, 14 Apr 2026 11:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D7A3DC4C4;
+	Tue, 14 Apr 2026 11:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776165916; cv=none; b=m75XkqjS071wRLEgcQyw6DbJ5gdQbYVRHnaNVCBu2NntPvh0zRxQfuBdfc/+P6jZn7ENhpQrNAD/R6gLMicKPcuxjPRODJnIZHSZtuZ1SYPjYylsBJX+JAQmhAvsPtA6dieU/X3j3Rj4YAISEJMLN/OSwCZ+N4VcDd6XvHbuyE4=
+	t=1776165918; cv=none; b=uWManq72iVTczE0B+z6V/mSatzmSTyGVAZfdhF2ZmZSisI0ap1qO703cyaPhOrRYXfiRBfj/fSDdgrp7XWID6D2q+EhsZThIUWkPdNBvPviS6eSuYCf7D15r9wz4797wdStkBKChvoxJPe4k+JRPPyCmDKsa/YZRbmP3pZDI4a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776165916; c=relaxed/simple;
-	bh=Bzr2bh91YAKJAoTSgULgagBtRIPAUCKSWOYnWZMIWOE=;
+	s=arc-20240116; t=1776165918; c=relaxed/simple;
+	bh=whNo55U9x1E6T13inTkHwz1zqMrj4x7G+rQSoBR7x4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DCct3/tN5YL5fSRNeoMz1HyNCA2JRTt8/EmdndSVppZNWR3PxWiQ1XlewUqysHRtaYYVXmXL/HxxEfx9HYjw8V8N0F+/AA7IusN8rDdad9D7JcfbdUQs360w/OWrPNNd7RXo+WzUZFO6dpKBmRQAbIn0IupCUVatcLYb7qBDxSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZtLwS3nE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BIK5yUia27HAghU6mvPzMj+Qv5gLG4OSvc489+3oONEZ9LF9WhGFreGhx4X8II0+aBq9nw6V1GeYLOciIzpWM8S6Y82xSuGUljefZh9r83ktMzTKgQOOozm/3MYhPQKYhMMmXY24BjYMoW6qxFZaSnykEFdlpup0DLuBULDdoeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eE7pH+ra; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZtLwS3nE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD91C4AF0B;
-	Tue, 14 Apr 2026 11:25:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eE7pH+ra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0B5C19425;
+	Tue, 14 Apr 2026 11:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776165916;
-	bh=Bzr2bh91YAKJAoTSgULgagBtRIPAUCKSWOYnWZMIWOE=;
+	s=k20201202; t=1776165918;
+	bh=whNo55U9x1E6T13inTkHwz1zqMrj4x7G+rQSoBR7x4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZtLwS3nEsRoIG6sLyMR5oY4H+BOyWTQDhoZAMk5Y79B4YmdI+tfrT5Xpt9V1sbnnZ
-	 xFCofmzlHyNjHzI0Qg1qlCaLFwBiT4pLVaRmEDty1/dZUoeJfhovTzqJUy3GWY5hAV
-	 MBTKHwzTCC5LOTIPxasO+o27jbSoNbd59d3vXYA4XWd+Rq35TRv6wvVQqlZN4VJ/Rk
-	 7+JutFU5uyqlleC0R/m3HwKXrOr4li5grqPFh2G9kTrwMefm4DdBfkwwjPK5aH9obz
-	 x2V2j12K52xTITS+i0MlZSmbugK8WK5IZLu0ggJJWoPX7EcQwnCp0OofKMgIbXOzoh
-	 0tCyRmPiTiNWA==
+	b=eE7pH+ra/PM3tm7hNfGj3d3ZkwPni6wIo3BRCy7F80NRkHBW9HvcgW62xeNwaoFB2
+	 CL/hHjr6QeLlcmubfwC9LZtjfPcQn0E8rZaUAZusfhtncYTiyiyB6y1mhc7xmnARXX
+	 XShdmPVeQRZ7TOK2TS8k7vShUXaxMvIXqkFjnTfQoMVAJprEgvdbLUIPfjv292tsNs
+	 cJspY71c2ptndzqbU4+ZenKQMx7cG9YRVeLZAM3Sct4xm7K/E7g2sFvDAKse8BTO2k
+	 T5hj1Q7NU7exGzrAmGNLDrP0KIQELI/Wb6mY020un+6LU3624ECGnP7vZq3NZeM3nT
+	 mNCQWxiRYTxsA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Mario Limonciello <mario.limonciello@amd.com>,
+	Imrane <ihalim.me@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
+	Shyam-sundar.S-k@amd.com,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] wifi: brcmfmac: validate bsscfg indices in IF events
-Date: Tue, 14 Apr 2026 07:25:00 -0400
-Message-ID: <20260414112509.410217-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.6] platform/x86/amd: pmc: Add Thinkpad L14 Gen3 to quirk_s2idle_bug
+Date: Tue, 14 Apr 2026 07:25:01 -0400
+Message-ID: <20260414112509.410217-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260414112509.410217-1-sashal@kernel.org>
 References: <20260414112509.410217-1-sashal@kernel.org>
@@ -49,344 +49,273 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.12
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 304950a467d83678bd0b0f46331882e2ac23b12d ]
+[ Upstream commit 1a9452c428a6b76f0b797bae21daa454fccef1a2 ]
 
-brcmf_fweh_handle_if_event() validates the firmware-provided interface
-index before it touches drvr->iflist[], but it still uses the raw
-bsscfgidx field as an array index without a matching range check.
+This platform is a similar vintage of platforms that had a BIOS bug
+leading to a 10s delay at resume from s0i3.
 
-Reject IF events whose bsscfg index does not fit in drvr->iflist[]
-before indexing the interface array.
+Add a quirk for it.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260323074551.93530-1-pengpeng@iscas.ac.cn
-[add missing wifi prefix]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Imrane <ihalim.me@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221273
+Tested-by: Imrane <ihalim.me@gmail.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260324211647.357924-1-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis. Let me
-compile the findings.
+External sources are blocked by Anubis. No matter — the commit itself
+has sufficient information. Let me complete the analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `wifi: brcmfmac`
-- Action verb: "validate" — this is adding a missing safety check
-- Summary: Adds bounds validation for firmware-provided `bsscfgidx`
-  before using it as an array index
-- Record: [wifi: brcmfmac] [validate] [add missing bounds check for
-  bsscfgidx in IF event handler]
+- Subsystem: `platform/x86/amd: pmc`
+- Action: "Add" (adding hardware to quirk table)
+- Summary: Adding Thinkpad L14 Gen3 to `quirk_s2idle_bug` DMI table
+- Record: [platform/x86/amd/pmc] [Add] [DMI quirk entry for Thinkpad L14
+  Gen3 to workaround s2idle BIOS bug]
 
 **Step 1.2: Tags**
-- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` — author
-- `Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>` — Broadcom
-  subsystem maintainer acked it
-- `Link:
-  https://patch.msgid.link/20260323074551.93530-1-pengpeng@iscas.ac.cn`
-  — original submission
-- `Signed-off-by: Johannes Berg <johannes.berg@intel.com>` — applied by
-  wireless maintainer
-- No Fixes: tag, no Cc: stable, no Reported-by — expected for manual
-  review candidates
+- Reported-by: Imrane <ihalim.me@gmail.com> — real user report
+- Closes: bugzilla.kernel.org #221273 — tracked bug
+- Tested-by: Imrane <ihalim.me@gmail.com> — reporter tested and
+  confirmed the fix
+- Signed-off-by: Mario Limonciello (AMD PMC subsystem author/maintainer)
+- Reviewed-by: Ilpo Järvinen (platform/x86 maintainer)
+- Link: patch.msgid.link to original submission
+- Record: User-reported bug, user-tested fix, reviewed by subsystem
+  maintainer.
 
 **Step 1.3: Commit Body**
-- The commit message explains that `brcmf_fweh_handle_if_event()`
-  already validates `ifidx` before using it to index `drvr->iflist[]`,
-  but does NOT validate `bsscfgidx` before using it the same way.
-- Bug: out-of-bounds array access when firmware provides `bsscfgidx >=
-  BRCMF_MAX_IFS` (16)
-- Failure mode: kernel crash / memory corruption / potential code
-  execution
+- Bug: BIOS bug on this platform causes a 10-second delay at resume from
+  s0i3 (suspend-to-idle)
+- The platform is "similar vintage" to others already in the quirk table
+- The fix is to add a DMI match to invoke the existing workaround
+- Record: [10s resume delay from s0i3] [BIOS firmware bug] [Workaround
+  via existing quirk mechanism]
 
 **Step 1.4: Hidden Bug Fix?**
-- This IS a bug fix. The word "validate" means adding a missing safety
-  check. The commit directly prevents an out-of-bounds array access from
-  firmware-controlled data.
+- This is an explicit hardware workaround addition, not disguised. It
+  fixes a real user-reported issue with sleep/resume.
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- Single file: `drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c`
-- +5 lines added, 0 removed
-- Function modified: `brcmf_fweh_handle_if_event()`
-- Scope: single-file surgical fix
+- Files changed: 1 (`drivers/platform/x86/amd/pmc/pmc-quirks.c`)
+- Lines added: 9 (one DMI table entry + comment)
+- Lines removed: 0
+- Functions modified: None — only data (the `fwbug_list[]` DMI table)
+- Record: Single file, +9 lines, data-only addition to static table.
 
 **Step 2.2: Code Flow Change**
-- BEFORE: `ifevent->bsscfgidx` is used directly as an array index at
-  line 157 (`ifp = drvr->iflist[ifevent->bsscfgidx]`) and at line 162
-  (`brcmf_add_if(drvr, ifevent->bsscfgidx, ...)`), with no bounds check.
-- AFTER: A bounds check `ifevent->bsscfgidx >= BRCMF_MAX_IFS` is added
-  before any array access, returning early with an error log if out of
-  bounds.
-- Only affects the error path for malformed IF events from firmware.
+- Before: Thinkpad L14 Gen3 (DMI_PRODUCT_NAME "21C6") is not matched in
+  `fwbug_list`, so no quirk is applied. The BIOS SMI handler runs during
+  D3->D0 transition, causing 10s delay.
+- After: The device matches, `quirk_s2idle_bug` is set, and
+  `amd_pmc_skip_nvme_smi_handler()` runs during resume to clear bit 0 of
+  the firmware scratch register, skipping the buggy SMI handler.
 
 **Step 2.3: Bug Mechanism**
-- Category: **Buffer overflow / out-of-bounds array access**
-- `drvr->iflist` is declared as `struct brcmf_if *iflist[BRCMF_MAX_IFS]`
-  where `BRCMF_MAX_IFS = 16`
-- `ifevent->bsscfgidx` is a `u8` from firmware (range 0-255), used as
-  index without validation
-- This is the SAME class of bug as **CVE-2022-3628**, which was fixed in
-  the sibling code path by commit `6788ba8aed4e2`
-
-**Critical insight**: There are TWO separate `bsscfgidx` fields from
-firmware:
-1. `event->emsg.bsscfgidx` (event message header) — validated by
-   CVE-2022-3628 fix in `brcmf_fweh_event_worker()`
-2. `ifevent->bsscfgidx` (IF event payload, `struct brcmf_if_event`) —
-   **NOT validated** until this commit
-
-For IF events (BRCMF_E_IF), `brcmf_fweh_event_worker()` calls
-`brcmf_fweh_handle_if_event()` which uses `ifevent->bsscfgidx` from the
-payload, bypassing the header check entirely.
-
-Additionally, `brcmf_add_if()` at `core.c:860` also indexes
-`drvr->iflist[bsscfgidx]` without its own bounds check, so the fix
-protects that path too.
+- Category: Hardware workaround (h)
+- Mechanism: DMI match table entry for existing quirk. No code logic
+  changes.
 
 **Step 2.4: Fix Quality**
-- Obviously correct: identical pattern to `ifidx` check 4 lines above
-  and `bsscfgidx` check in `brcmf_fweh_event_worker()` at line 275
-- Minimal and surgical: 5 lines, one conditional, one log message, one
-  return
-- Zero regression risk: only rejects malformed firmware events, does not
-  change any normal path
+- Obviously correct — identical pattern to dozens of existing entries in
+  the same table.
+- Minimal — 9 lines of data addition.
+- Zero regression risk — only affects this specific Lenovo model
+  (DMI_PRODUCT_NAME "21C6").
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## PHASE 3: GIT HISTORY
 
 **Step 3.1: Blame**
-- The unchecked `drvr->iflist[ifevent->bsscfgidx]` at line 157 was
-  introduced by commit `37a869ec859308` (Hante Meuleman, 2015-10-29),
-  "brcmfmac: Use consistent naming for bsscfgidx." This was a rename of
-  an even older pattern.
-- The buggy code has existed since at least 2015, present in ALL active
-  stable trees.
+- The quirk table and `quirk_s2idle_bug` mechanism were introduced in
+  commit 3bde7ec13c971, present since v6.6.
+- The `pmc-quirks.c` file has been in the tree since v6.6-rc1 (commit
+  92c2fb8fa56c4).
 
-**Step 3.2: CVE-2022-3628 (Related Fix)**
-- Commit `6788ba8aed4e2` fixed the same bug class (CVE-2022-3628) in
-  `brcmf_fweh_event_worker()` but missed the
-  `brcmf_fweh_handle_if_event()` path.
-- That fix was explicitly Cc'd to stable and applied to all active
-  stable trees.
-- This current commit completes the original CVE fix.
+**Step 3.2: Fixes Tag**
+- No Fixes: tag (expected for a quirk addition — there's no single
+  commit that "introduced" this issue; it's a BIOS firmware bug).
 
 **Step 3.3: File History**
-- The file has minimal recent changes. The last relevant bug fix was
-  `6788ba8aed4e2` (the CVE fix). No other patches touch this function.
-- This commit is standalone — no dependencies.
+- The file receives frequent quirk additions (many similar commits in
+  the log). This is a well-established pattern.
+- No dependencies — this is a standalone data addition.
 
 **Step 3.4: Author**
-- Pengpeng Hou also submitted other security-related bounds-check fixes
-  (NFC pn533, bnxt_en, ipv6 ioam6, Bluetooth btusb).
+- Mario Limonciello is the AMD PMC driver author (copyright holder, line
+  8 of pmc-quirks.c). This is the subsystem maintainer adding a quirk.
 
 **Step 3.5: Dependencies**
-- No dependencies. The check pattern already exists for `ifidx` in the
-  same function. Applies cleanly to any tree that has the original code.
+- None. The `quirk_s2idle_bug` structure and the DMI matching
+  infrastructure exist unchanged since v6.6. This patch is self-
+  contained.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: EXTERNAL RESEARCH
 
-**Step 4.1-4.2: Patch Discussion**
-- Acked by Arend van Spriel (Broadcom brcmfmac maintainer) — no caveats
-- Applied by Johannes Berg (wireless maintainer) with only a minor
-  subject prefix fixup
-- Appears to be accepted on v1 (no version indicator in subject)
-
-**Step 4.3: Bug Report**
-- No external bug report — this was found by code inspection (comparing
-  against the CVE-2022-3628 fix)
-
-**Step 4.4-4.5: Related Patches**
-- Standalone fix, not part of a series.
+- Bugzilla #221273 and lore.kernel.org were blocked by Anubis anti-bot
+  protection.
+- From the commit metadata: the fix was Reported-by and Tested-by the
+  same user, reviewed by the platform/x86 maintainer. This is a
+  standard, well-vetted quirk addition.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1-5.2: Functions and Callers**
-- `brcmf_fweh_handle_if_event()` is called only from
-  `brcmf_fweh_event_worker()` (line 303)
-- `brcmf_fweh_event_worker()` is a work queue handler processing
-  firmware events
-- The firmware events come from the Broadcom WiFi hardware/firmware via
-  the event queue
+**Step 5.1-5.4:** No functions are modified. The change is purely data —
+a new entry in the `fwbug_list[]` static DMI table. The execution path
+is:
+1. `amd_pmc_quirks_init()` calls `dmi_first_match(fwbug_list)` at probe
+   time
+2. If matched, sets `dev->quirks = &quirk_s2idle_bug`
+3. On resume, `amd_pmc_process_restore_quirks()` calls
+   `amd_pmc_skip_nvme_smi_handler()` which clears the problematic
+   firmware bit
 
-**Step 5.3-5.4: Call Chain**
-- Firmware sends events → `brcmf_fweh_process_event()` queues them →
-  `brcmf_fweh_event_worker()` processes → `brcmf_fweh_handle_if_event()`
-  handles IF events → unchecked array access
-- The path is reachable from firmware-provided data. For USB-attached
-  Broadcom WiFi devices, a malicious device could craft events with
-  arbitrary bsscfgidx values.
+This path is well-tested by the dozens of other identical entries.
 
-**Step 5.5: Similar Patterns**
-- The exact same check already exists in `brcmf_fweh_event_worker()` at
-  line 275 (for the header's bsscfgidx). This commit adds the equivalent
-  check for the payload's bsscfgidx.
+## PHASE 6: STABLE TREE ANALYSIS
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+**Step 6.1:** The `quirk_s2idle_bug` mechanism exists in:
+- v6.6: Yes (introduced in v6.6 cycle, commit 3bde7ec13c971)
+- v6.12: Yes (22 references to quirk_s2idle_bug)
+- v6.1: No (pmc-quirks.c doesn't exist)
+- Applicable stable trees: 6.6.y, 6.12.y, and any later LTS trees.
 
-**Step 6.1: Buggy Code in Stable Trees**
-- The unvalidated `drvr->iflist[ifevent->bsscfgidx]` access has existed
-  since at least kernel 3.x (original brcmfmac code from 2012-2015).
-- All active stable trees (5.15, 6.1, 6.6, 6.12) contain this bug.
-- The CVE-2022-3628 fix (6788ba8aed4e2) is present in stable 5.15+, but
-  only covered the worker path.
+**Step 6.2:** The patch should apply cleanly or with trivial offset —
+it's adding a new entry to a table. The surrounding context (other
+Lenovo entries) exists in both v6.6 and v6.12. Minor fuzz may be needed
+due to other entries added since branching, but the addition is
+position-independent within the table.
 
-**Step 6.2: Backport Complications**
-- Expected: clean apply. The function has been stable, with no
-  structural changes since the CVE fix.
-- The 5-line patch touches a single, well-isolated location.
+**Step 6.3:** No other fix for this specific hardware (DMI "21C6")
+exists.
 
-**Step 6.3: Related Fixes Already in Stable**
-- CVE-2022-3628 fix is in stable but incomplete — it doesn't cover this
-  code path.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 7.1:** platform/x86/amd/pmc — IMPORTANT subsystem. AMD power
+management affects many laptop users. Sleep/resume is a critical user-
+facing feature.
 
-**Step 7.1: Subsystem Criticality**
-- Subsystem: WiFi driver (brcmfmac — Broadcom FullMAC WiFi)
-- Criticality: IMPORTANT — widely used in Raspberry Pi, many laptops,
-  USB WiFi dongles
-- Broadcom WiFi is one of the most common WiFi chipsets in consumer
-  hardware
-
-**Step 7.2: Subsystem Activity**
-- Moderate activity — recent vendor-specific event handling rework, but
-  the core event handler is mature code.
+**Step 7.2:** Very actively developed — frequent quirk additions for new
+hardware.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected Users**
-- All users with Broadcom brcmfmac WiFi hardware (Raspberry Pi, many
-  laptops, USB WiFi adapters)
+**Step 8.1:** Affected users: Owners of Lenovo Thinkpad L14 Gen3 (a
+popular business laptop).
 
-**Step 8.2: Trigger Conditions**
-- Triggered by malicious/buggy firmware sending an IF event with
-  `bsscfgidx >= 16`
-- For USB WiFi: a malicious USB device can inject arbitrary firmware
-  events (physical access attack vector)
-- For embedded firmware: a firmware bug could produce out-of-range
-  values
+**Step 8.2:** Trigger: Every suspend-to-idle and resume cycle. Very
+common — laptop users suspend/resume constantly.
 
-**Step 8.3: Failure Mode Severity**
-- Out-of-bounds array access on `drvr->iflist[]` (16-element pointer
-  array)
-- Consequence: kernel crash (GPF/oops), potential memory corruption,
-  potential code execution
-- Severity: **CRITICAL** (same class as CVE-2022-3628)
+**Step 8.3:** Failure mode: 10-second delay on every resume from s0i3.
+Not a crash, but a significant usability issue for a standard laptop
+operation. Severity: MEDIUM (user-visible, frequent, annoying).
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Very high — prevents kernel crash and potential security
-  exploit from firmware-controlled data
-- RISK: Very low — 5 lines, identical pattern to existing validated
-  checks, zero normal-path impact
-- Ratio: Strongly favorable for backporting
+**Step 8.4:** Risk-benefit ratio:
+- Benefit: HIGH — fixes a real, user-reported, frequently-triggered
+  issue on a popular laptop model. Tested by the reporter.
+- Risk: VERY LOW — 9 lines of data-only change, only affects one
+  specific hardware model, uses a proven quirk mechanism, zero chance of
+  regression for any other system.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Compilation**
+**Evidence FOR backporting:**
+- Hardware quirk addition — falls in the automatic YES exception
+  category
+- Real user-reported bug (bugzilla #221273) with user-tested fix
+- Author is the AMD PMC subsystem maintainer
+- Reviewed by platform/x86 maintainer
+- Tiny change (9 lines), data-only, zero code logic changes
+- Uses well-established, proven quirk mechanism
+- Fixes a frequently-triggered usability issue (10s resume delay)
+- Zero regression risk (only affects specific DMI-matched hardware)
+- Applicable to v6.6+ stable trees
 
-FOR backporting:
-- Fixes an out-of-bounds array access from firmware-controlled data
-  (same class as CVE-2022-3628)
-- Completes an incomplete CVE fix
-- Extremely small (5 lines), obviously correct, identical pattern to
-  existing checks
-- Acked by Broadcom maintainer, applied by wireless maintainer
-- Bug present in ALL stable trees
-- Zero regression risk — only rejects malformed firmware events
-- Hardware is widely used (Raspberry Pi, laptops, USB WiFi)
+**Evidence AGAINST backporting:**
+- None identified.
 
-AGAINST backporting:
-- No reported real-world trigger (found by code audit)
-- No CVE assigned (yet) — but same class as CVE-2022-3628
+**Stable rules checklist:**
+1. Obviously correct and tested? **Yes** — identical to 20+ existing
+   entries, tested by reporter
+2. Fixes a real bug? **Yes** — BIOS firmware bug causing 10s resume
+   delay
+3. Important issue? **Yes** — sleep/resume is critical for laptop users
+4. Small and contained? **Yes** — 9 lines, one file, data only
+5. No new features or APIs? **Correct** — no new features
+6. Can apply to stable? **Yes** — mechanism exists in 6.6+
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** — identical pattern to existing
-   checks, Acked by maintainer
-2. Fixes a real bug? **YES** — out-of-bounds array access from firmware
-   data
-3. Important issue? **YES** — kernel crash / security vulnerability
-4. Small and contained? **YES** — 5 lines, single file, single function
-5. No new features or APIs? **YES** — pure bug fix
-6. Can apply to stable? **YES** — clean apply expected, no dependencies
-
-**Step 9.3: Exception Categories**
-- Not an exception category — this is a standard, clear-cut
-  security/stability bug fix.
-
-**Step 9.4: Decision**
-- Overwhelming evidence supports backporting. This is a surgical 5-line
-  fix completing a CVE fix that was already backported to stable.
+**Exception category:** Hardware quirk/workaround — automatic YES.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Acked-by from Broadcom maintainer, Link to
-  patch submission, applied by Johannes Berg
-- [Phase 2] Diff analysis: +5 lines in `brcmf_fweh_handle_if_event()`,
-  adds bounds check for `ifevent->bsscfgidx` before `drvr->iflist[]`
-  indexing
-- [Phase 2] Verified TWO separate bsscfgidx fields: `struct
-  brcmf_event_msg_be.bsscfgidx` (fweh.h:234) vs `struct
-  brcmf_if_event.bsscfgidx` (fweh.h:283) — confirmed different
-  structures, different data sources
-- [Phase 2] Verified `brcmf_add_if()` at core.c:860 also uses bsscfgidx
-  as array index without its own bounds check — this fix protects that
-  path too
-- [Phase 3] git blame: line 157 (`drvr->iflist[ifevent->bsscfgidx]`)
-  introduced by commit 37a869ec859308 (2015-10-29)
-- [Phase 3] git show 6788ba8aed4e2: confirmed CVE-2022-3628 fix only
-  added bounds check in `brcmf_fweh_event_worker()`, NOT in
-  `brcmf_fweh_handle_if_event()`
-- [Phase 3] Verified BRCMF_MAX_IFS = 16, iflist array is 16 elements
-  (core.h:118)
-- [Phase 4] Patch acked by Arend van Spriel (Broadcom maintainer) with
-  no caveats
-- [Phase 5] Traced call chain: firmware → brcmf_fweh_process_event() →
-  queue → brcmf_fweh_event_worker() → brcmf_fweh_handle_if_event() →
-  unchecked array access
-- [Phase 5] Confirmed event->emsg.bsscfgidx check at line 275 does NOT
-  protect ifevent->bsscfgidx used at line 157 (different data fields)
-- [Phase 6] Code exists in all active stable trees (5.15, 6.1, 6.6,
-  6.12) — verified via git log
-- [Phase 6] CVE-2022-3628 fix (6788ba8aed4e2) is in stable since 5.15,
-  but incomplete
-- [Phase 8] Failure mode: out-of-bounds read/write on pointer array →
-  kernel GPF/oops, severity CRITICAL
+- [Phase 1] Parsed tags: Reported-by user, Tested-by same user,
+  Reviewed-by platform/x86 maintainer, Closes bugzilla #221273
+- [Phase 2] Diff analysis: +9 lines adding DMI table entry to
+  fwbug_list[], data-only change, no code logic
+- [Phase 3] git show v6.6:pmc-quirks.c: confirmed quirk_s2idle_bug
+  structure exists in v6.6 with identical mechanism
+- [Phase 3] git describe --contains 3bde7ec13c971: confirmed s2idle
+  quirk introduced in v6.6 cycle
+- [Phase 3] git describe --contains 92c2fb8fa56c4: confirmed pmc-
+  quirks.c created in v6.6-rc1
+- [Phase 3] git show v6.1: pmc-quirks.c does NOT exist in v6.1 (not
+  applicable to 6.1.y)
+- [Phase 3] Author Mario Limonciello confirmed as subsystem author
+  (copyright line, git log)
+- [Phase 4] External sources (bugzilla, lore) blocked by Anubis — could
+  not verify mailing list discussion directly
+- [Phase 5] No functions modified — data-only change to static DMI table
+- [Phase 6] v6.6 contains quirk_s2idle_bug with same structure; v6.12
+  has 22 references — patch applicable
+- [Phase 8] Failure mode: 10s resume delay on every s0i3 cycle, severity
+  MEDIUM, frequently triggered
+- UNVERIFIED: Could not access bugzilla #221273 to verify exact bug
+  report details (blocked by Anubis), but commit metadata (Reported-by,
+  Tested-by, Closes) is sufficient
 
 **YES**
 
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-index c2d98ee6652f3..1d25dc9ebca8b 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-@@ -153,6 +153,11 @@ static void brcmf_fweh_handle_if_event(struct brcmf_pub *drvr,
- 		bphy_err(drvr, "invalid interface index: %u\n", ifevent->ifidx);
- 		return;
- 	}
-+	if (ifevent->bsscfgidx >= BRCMF_MAX_IFS) {
-+		bphy_err(drvr, "invalid bsscfg index: %u\n",
-+			 ifevent->bsscfgidx);
-+		return;
-+	}
- 
- 	ifp = drvr->iflist[ifevent->bsscfgidx];
- 
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index ed285afaf9b0d..24506e3429430 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -203,6 +203,15 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
+ 		}
+ 	},
++	/* https://bugzilla.kernel.org/show_bug.cgi?id=221273 */
++	{
++		.ident = "Thinkpad L14 Gen3",
++		.driver_data = &quirk_s2idle_bug,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21C6"),
++		}
++	},
+ 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
+ 	{
+ 		.ident = "Lenovo Yoga 6 13ALC6",
 -- 
 2.53.0
 
