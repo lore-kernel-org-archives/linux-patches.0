@@ -1,34 +1,34 @@
-Received: from n169-112.mail.139.com (n169-112.mail.139.com [120.232.169.112])
+Received: from n169-113.mail.139.com (n169-113.mail.139.com [120.232.169.113])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC652853FD
-	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 02:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.112
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C5C2853FD
+	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 02:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.113
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776135551; cv=none; b=ci+Ul6Ar1PbPqiHQp2MA4fHGQHRn/+f23Zn3Etz5/OwzcCT1KTqNvNUegyCmuuBp0pj1sj26zWlsTxk96KOUxQVCaK97InUIHeCGTXBOfTQ9g4jN2tV661t6WKvGmgCG/AG9j9anqKlsrl/4/rH6f+UOBEidlyahVdTjL7hI3fg=
+	t=1776135563; cv=none; b=oExtGh6S8WBrBBZpTP45PNK4bYgG8OBTSRrvcIn6O4O0JO3WXJny2N7vNdz6GtlNzBHpSvffjsf9i6pb97q+4W+hPVM8OU+tdE+MZGkQvvls0zx7HTWUTmjrMlN9CI9wYdt7319vnt+yWDHZX8BJPYKcdbHpsBpR/Tlc1vgDOYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776135551; c=relaxed/simple;
-	bh=Gju3hMPOQJHrtrP/OEqqpTQEAsKDXPlJqo6PvpOF8Go=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=eLzm6Wz4IpSaY0pZLXZSPC0hIisSVsMI89qD8bf47vVLVlYXJxh/KjKrD6vou5Uy+bGmGeRV5GZ/iPzj/GDyvAbno5rQOqHe3nrTDMbo0XAULSjMjBFdPcf4nq6gXQdOFwtPy3GtUOKLvedlQEMJzkLoFaHu6oakFsDP5q6wjk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=UccZ6Vg3; arc=none smtp.client-ip=120.232.169.112
+	s=arc-20240116; t=1776135563; c=relaxed/simple;
+	bh=GZ7apvgtTWaytSEtupnaOwzdqlQoiMajIdmPt8PxRqg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=u0jAALTTUuKB0Nyvizn04RUssDqRdRQoe/5ERYt4DTcL2hp8dUdQCQyi7nXDRxrlAbfbt+nnAJbrfJFP6/6tpgP6irLKEUtzGRwgIluf3CWu0NlfB7WOgFC8TpW7Pt+QYPSMORJJnaEni42J4JsX1LxqOSrFyO6Go9PnE1c01yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=oqo93p4G; arc=none smtp.client-ip=120.232.169.113
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="UccZ6Vg3"
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="oqo93p4G"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=139.com; s=dkim; l=0;
 	h=from:subject:message-id:to:cc:mime-version;
 	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=UccZ6Vg3OWFDhRDZosqAYSrfjL9/5P1a4icLpLO5bLmQqU08sqUGnBEEcy+tdzSTUyFQHfFqI6540
-	 zHBaK6fnv2Se+O9J8xa/EGUwrZOKcu6GjoHNganYvxR3fQIM1vwyK5EBz70t/Y1RQXpFaGDXt1lbu1
-	 c6jBr458ChuORWS0=
+	b=oqo93p4Ges4iYu5hALUcE0OQhPTXgIisiS/J0mt364vCjxgP3ro7mMnGcv5KbcF9+Enupr6Xx+XQh
+	 Dk1NNJfOxx7mJojzuqZ59/YwkT/tpKhvJl8EeogaZnHoFwG9h5mUwOoUKoKsJ21Xed1VtLRmSuoTqd
+	 bd3l3DAJgvNl0dcc=
 X-RM-TagInfo: emlType=0                                       
 X-RM-SPAM:                                                                                        
 X-RM-SPAM-FLAG:00000000
 Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-23-12026 (RichMail) with SMTP id 2efa69ddad7344f-00454;
-	Tue, 14 Apr 2026 10:59:02 +0800 (CST)
-X-RM-TRANSID:2efa69ddad7344f-00454
+	by rmsmtp-lg-appmail-34-12048 (RichMail) with SMTP id 2f1069ddad82a5b-01a80;
+	Tue, 14 Apr 2026 10:59:16 +0800 (CST)
+X-RM-TRANSID:2f1069ddad82a5b-01a80
 From: Li hongliang <1468888505@139.com>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -47,9 +47,9 @@ Cc: patches@lists.linux.dev,
 	coreteam@netfilter.org,
 	netdev@vger.kernel.org,
 	imv4bel@gmail.com
-Subject: [PATCH 6.1.y] netfilter: conntrack: add missing netlink policy validations
-Date: Tue, 14 Apr 2026 10:59:00 +0800
-Message-Id: <20260414025900.3605300-1-1468888505@139.com>
+Subject: [PATCH 6.6.y] netfilter: conntrack: add missing netlink policy validations
+Date: Tue, 14 Apr 2026 10:59:15 +0800
+Message-Id: <20260414025915.3605859-1-1468888505@139.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -89,10 +89,10 @@ Signed-off-by: Li hongliang <1468888505@139.com>
  2 files changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 89cec02de68b..bcbd77608365 100644
+index 9b089cdfcd35..255996f43d85 100644
 --- a/net/netfilter/nf_conntrack_netlink.c
 +++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3458,7 +3458,7 @@ ctnetlink_change_expect(struct nf_conntrack_expect *x,
+@@ -3454,7 +3454,7 @@ ctnetlink_change_expect(struct nf_conntrack_expect *x,
  
  #if IS_ENABLED(CONFIG_NF_NAT)
  static const struct nla_policy exp_nat_nla_policy[CTA_EXPECT_NAT_MAX+1] = {
@@ -102,10 +102,10 @@ index 89cec02de68b..bcbd77608365 100644
  };
  #endif
 diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
-index 7ffd698497f2..90458799324e 100644
+index 4cc97f971264..fabb2c1ca00a 100644
 --- a/net/netfilter/nf_conntrack_proto_sctp.c
 +++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -600,7 +600,8 @@ static int sctp_to_nlattr(struct sk_buff *skb, struct nlattr *nla,
+@@ -587,7 +587,8 @@ static int sctp_to_nlattr(struct sk_buff *skb, struct nlattr *nla,
  }
  
  static const struct nla_policy sctp_nla_policy[CTA_PROTOINFO_SCTP_MAX+1] = {
