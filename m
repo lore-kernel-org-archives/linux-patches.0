@@ -1,119 +1,128 @@
-Received: from mail-dy1-f202.google.com (mail-dy1-f202.google.com [74.125.82.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0C12F1FE4
-	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 21:06:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9032222CC
+	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 21:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776200800; cv=none; b=sax9h1e9X1geKSmdHBbnAurTBxEEi3fY7zbq2JRweWbPkp4cJxWIwEnI038KGfZvKa+8J2ELEH54GN8t1vgQO1e2NwITvNc+9sVFyzXrrSoOEwXOMnIPvU1CLV5/hcL2NdJRtbW2F91XK3UTdMinCDvH2807VZae0DgrZXvSZXQ=
+	t=1776201101; cv=none; b=Z8xDcNYky5s57JDFP/wnElvZtKVbePVGjbgFnTM+9WC8Or7gf8+R1MqJ6SzzzEAOWl868AgytMifXfn6vkdB9xL3m9qNPEaLSF+84WkfPzBWaCvs+Q1fzl8nUREXgAdgiU28g3CGS8uGqzr+b2IxjQ0VRN5kmiKdYPCRpspu0AI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776200800; c=relaxed/simple;
-	bh=LsvN4Iwj4LpN4c4Tw/gYuHJNYBRDPuQyJDiYk349by4=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Q9i7uX9wF8ww9Q4EwA8jBbLR0bZ/ZLkjDbEET5097Cwc+KlxznyzrjXcFVKf+h05PYDcCglEbTkrKYsnJ5hIykOtUU5sgrRic6nNn2SISpxzQub5DNEB2kNXrUtoDlnSqyXrJArfHDLZUO6yqWhID0J06KOk+0IENnrvclxUt7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--wnliu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=wSHx2Wzj; arc=none smtp.client-ip=74.125.82.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--wnliu.bounces.google.com
+	s=arc-20240116; t=1776201101; c=relaxed/simple;
+	bh=xORBasnnuA1H3U0377J5I1oLYPQvtXv8PgWTLgHHm2M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QzQk0K/Ut8Zpj55YxSigt8DO++NayMJdveLLLG9W+ZKmLWYg+GEhOhMGzH+Vn+Smuz/w6ixQKi2tMSTuL8EqxARxggg9/+peDuTk76NwUPyxYGN9jScapkNojqmZoUOKgWsBj86eS96AjQwEMP81ujSnEK37G3Jsm0Ip1Byc8UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tGg/Daed; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d98EifWU; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="wSHx2Wzj"
-Received: by mail-dy1-f202.google.com with SMTP id 5a478bee46e88-2dd1c74508cso2813707eec.0
-        for <patches@lists.linux.dev>; Tue, 14 Apr 2026 14:06:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1776200798; x=1776805598; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sIiB47+xae8QQS2k1R5QxVK+78ZtZ1GfH0fOqq7eBOY=;
-        b=wSHx2Wzjcc4O7l7h4o1bTDbaha3d5tPl+bXZo3OZDN4wd+CcLZfrNE076QfFFNS5w/
-         CDyGYWyYMOz5BGXDFFx2OFEp8OQJMTbFW8np13VSCrEkjfwtSOIQoTnl/f/wakRVukjY
-         TYFiPe27QmPV/1SdpnK6SsxyTQJL3HldldN+50/7CHRqDeW5F9y+T67oRpgcjS4I5rd5
-         PJa47iMChWI2QJhmJg1TMgjYkhoANkbUk1vHubM/LE2ghXy/jtJhiJO3Qrs/D14Z0Lp/
-         Su2CWy5EALQhlrXxHtYtdxcFvTfoosBaLUqvuseH4psEP4LcNwd6oZKdtHE4rPMgN1IB
-         lcuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776200798; x=1776805598;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sIiB47+xae8QQS2k1R5QxVK+78ZtZ1GfH0fOqq7eBOY=;
-        b=oXQafSSmmUG9r4Bqkh62Ul5GIhkL0jMH9Zd54fAlj+kc/jtRuWUgsUKi9R+ouFmvZz
-         lEv/UsYR0eXajxgpQ3JqlbhcRn6l+waWDihvwyiQJj+A1spRJz9Db91/S3+enZs7A1DH
-         n/R55t2v5PYXbm2mC2RWU7CKRcQ6FqHUP4C+YXjQKxXNZdu0KIZrZ3a7vZVGct8iZu2K
-         P/Svn2CPnsCLeiUHgafjTObQ33/doVd405SCqc2yadRufjKjU1Uk57cT57YGbd/e/vhD
-         Pa5DkIpCeIQoKtTgHOWlTMHaYPrSc7oy3bRJj7lEc/BhnbCFVKUrkZ4o+uqMBB6ZcKIY
-         VbHQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/ZdY1ndrB7v4EcCMpYjX7Nqu19nA3zKBWHGV/HjRpD+jni948ekpszBmQD/6SgRFPiiCpg/whd@lists.linux.dev
-X-Gm-Message-State: AOJu0YxAmM/CoWgtFIcCws5kB8MQclDMsjJ3P1dCtE6z4SG2ha78SdVO
-	LcWU7Pmt7S3/+/OLJgaKHvwc/icjKLPQtYwAQEAtS0t7qgvUC0N8VUesGkhzwZfrzUQE7xX38+s
-	NwA==
-X-Received: from dycnm7.prod.google.com ([2002:a05:7300:d187:b0:2d8:fc66:cd7b])
- (user=wnliu job=prod-delivery.src-stubby-dispatcher) by 2002:a05:7301:5787:b0:2da:10f0:a8df
- with SMTP id 5a478bee46e88-2da10f0b2e4mr4603827eec.12.1776200797666; Tue, 14
- Apr 2026 14:06:37 -0700 (PDT)
-Date: Tue, 14 Apr 2026 21:06:26 +0000
-In-Reply-To: <20260414210626.2097722-1-wnliu@google.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tGg/Daed";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d98EifWU"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 776777A01EF;
+	Tue, 14 Apr 2026 17:11:37 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 14 Apr 2026 17:11:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1776201097;
+	 x=1776287497; bh=LiwgadAiHeZxWcFRtlz5/YVlxTnCSEj1HBd4BPcZ3sY=; b=
+	tGg/DaedcfkWZcbB5s6KZznqtd8ob6ZVtmfM//vrQi8e30Q7IemR7r+xpQmyEz/U
+	s0hPG107B861ya8on4ajnoGuOEHMEvzTIclR8rXbnOMEtMqECcPgkUw5p5nD0c+m
+	FPzKLFA7w/jPwPKVtlAxMTilqLm8/1zH49XBp9fUMpTiCefrLx25YVA5VZva+El2
+	rxwsTsbxSzx3x1+nZthf5D96wkqOTArD3CkqQzfKfzi4956whk1hSPd/f8hUX3RH
+	z9VkKZokntIGRyurRaiS8OgHTdv/DDe5sUK8UVRsMrqK554apGpX6RUbg5LQiUx+
+	KwVQ2AyPj/SlLEdhQtcHFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776201097; x=
+	1776287497; bh=LiwgadAiHeZxWcFRtlz5/YVlxTnCSEj1HBd4BPcZ3sY=; b=d
+	98EifWUfFhb0PGpkVYXhWingDhN5rkBTStKhNnKmNESupAP7nQLFUVWuEBF4ywAt
+	Wl4AiAk6X1I7c1LVHWeEcLQJk2DpLO4uNm9oKKXoNCvFXhftGI89YE62Qvx+mGz8
+	AWdsS+8VyhiOZXQJJHsPEW7wJkEX8u68sXR/debLfky90lGZq76RjwDtfcBqstw1
+	c0qbuKl+lBvbK0O51SWdQ0LR+VpiAPB8YnOSadDnNTnqRAiyvVhahNtqwuIn1ROY
+	c0JCosG9wmVKmGYdebyXYEcd1Rbe3G72bIe39JRi6iABiZZkUm9uEMwFbwaJaVn2
+	Xn96dZmO+5N34gmF0bW4A==
+X-ME-Sender: <xms:iK3eaS2Fwf8dE44_yJEQLybBXQ2_3Swrj0SPxXRA4UA8DKjcspNXkg>
+    <xme:iK3eaQ9xi2ofemUNIFoqX9oy9becLdv_9_2R1Y9Nqbbyv26cxFN-KM1p8PGqQxEot
+    1Z6v-OrDYkw4Q9cGrbaO2yIesNZL1NJOIu-DWLbsGuDSBpIU9PCzNw>
+X-ME-Received: <xmr:iK3eaWaE2umoOZ3luYFtnqGwzGAppzxGOe98QKtLKKpc6GXEfpa4To2_7_E1u4Atj4Fsfzn5CxySNlX_Y-5u_Ny0sKeE8BLt>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegvddvudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefkffggfgfuvfevfhfhjggtgfesthejredttddvjeenucfhrhhomhepfdeurghrrhih
+    ucfmrdcupfgrthhhrghnfdcuoegsrghrrhihnhesphhosghogidrtghomheqnecuggftrf
+    grthhtvghrnhepfeelheekheelkeejlefffefhvdeljeetheeltdeiudffveetffelteeg
+    gfefhfejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrghrrhihnhesphhosghogidrtgho
+    mhdpnhgspghrtghpthhtohepvddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hgrhgvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehs
+    thgrsghlvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghttghhvg
+    hssehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqkhgvrhhn
+    vghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhorhhvrghlughsse
+    hlihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopegrkhhpmheslhhi
+    nhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheplhhinhhugiesrhhovg
+    gtkhdquhhsrdhnvghtpdhrtghpthhtohepshhhuhgrhheskhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphgrthgthhgvsheskhgvrhhnvghltghirdhorhhg
+X-ME-Proxy: <xmx:iK3eaXzteLrL8Y9MAUmGXvYXAeZU92GJy1FrAS15z_1MAraZg5OHpw>
+    <xmx:iK3eac8-lvzOvI6UvzqbmSFhiOL5SebLuu9JqokxYkX5QtHWwg19NQ>
+    <xmx:iK3eabxOlrEXl8cN7hXKZDXcCdaDRw40oPQEhd9rS3nkV9IFF1ORqA>
+    <xmx:iK3eaZuP1k7ATeu3dxZsYo1yFxPh5mTT5ZYOdepEj1-dmnLuas4hug>
+    <xmx:ia3eafLoi-v0jcPUplzKwVQT91cFzSk0otl4gigv3z_2Gi9Sk0AhHTml>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 14 Apr 2026 17:11:33 -0400 (EDT)
+Message-ID: <4553b9d8-9829-4b7e-8bb2-36747d4f5632@pobox.com>
+Date: Tue, 14 Apr 2026 14:11:32 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260414210626.2097722-1-wnliu@google.com>
-X-Mailer: git-send-email 2.54.0.rc0.605.g598a273b03-goog
-Message-ID: <20260414210626.2097722-2-wnliu@google.com>
-Subject: [PATCH v1 1/1] iommu/amd: Don't split flush for amd_iommu_domain_flush_all()
-From: Weinan Liu <wnliu@google.com>
-To: iommu@lists.linux.dev, jgg@nvidia.com
-Cc: joro@8bytes.org, patches@lists.linux.dev, robin.murphy@arm.com, 
-	suravee.suthikulpanit@amd.com, wei.w.wang@hotmail.com, will@kernel.org, 
-	kpsingh@kernel.org, josef@toxicpanda.com, Weinan Liu <wnliu@google.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 00/83] 6.18.23-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260413155731.019638460@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-We have observed multiple full invalidations occurring during device
-detach when we are done using the vfio-device.
+On 4/13/26 08:59, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.23 release.
+> There are 83 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.23-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-blocked_domain_attach_device()
-  -> detach_device()
-    -> amd_iommu_domain_flush_all()
-      -> amd_iommu_domain_flush_pages(..., CMD_INV_IOMMU_ALL_PAGES_ADDRESS)
+Tested on 2 systems (1 amd64, 1 arm64). Working well, no regressions
+observed.
 
-      	while (size != 0) {
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
-          -> __domain_flush_pages( flush_size /* power of 2 flush_size */)
-            -> domain_flush_pages_v1()
-              -> build_inv_iommu_pages()
-                -> build_inv_address()
-
-         }
-
-build_inv_address() will trigger a full invalidation  if the chunk
-size > (1 << 51). Consequently, the guest will issue multiple full
-invalidations for a single call to  amd_iommu_domain_flush_all()
-
-Without this patch, we will see 10 time instead of 1 time full
-invalidations for every amd_iommu_domain_flush_all().
-
-Fixes: a270be1b3fdf ("iommu/amd: Use only natural aligned flushes in a VM")
-
-Suggested-by: Josef Bacik <josef@toxicpanda.com>
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Weinan Liu <wnliu@google.com>
----
- drivers/iommu/amd/iommu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 760d5f4623b5..bcec8721d228 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1769,7 +1769,8 @@ void amd_iommu_domain_flush_pages(struct protection_domain *domain,
- {
- 	lockdep_assert_held(&domain->lock);
- 
--	if (likely(!amd_iommu_np_cache)) {
-+	if (likely(!amd_iommu_np_cache) ||
-+		size == CMD_INV_IOMMU_ALL_PAGES_ADDRESS) {
- 		__domain_flush_pages(domain, address, size);
- 
- 		/* Wait until IOMMU TLB and all device IOTLB flushes are complete */
 -- 
-2.54.0.rc0.605.g598a273b03-goog
-
+-Barry K. Nathan  <barryn@pobox.com>
