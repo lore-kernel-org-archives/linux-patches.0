@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D7A3DC4C4;
-	Tue, 14 Apr 2026 11:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F2F3DCD95;
+	Tue, 14 Apr 2026 11:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776165918; cv=none; b=uWManq72iVTczE0B+z6V/mSatzmSTyGVAZfdhF2ZmZSisI0ap1qO703cyaPhOrRYXfiRBfj/fSDdgrp7XWID6D2q+EhsZThIUWkPdNBvPviS6eSuYCf7D15r9wz4797wdStkBKChvoxJPe4k+JRPPyCmDKsa/YZRbmP3pZDI4a4=
+	t=1776165919; cv=none; b=juUeVMxmZIpyoXCyYdF7wC7v6CT+k7B5C5g69XzQfwVcB3btZOtk+n+mUGRVZfFFC38s6WBL5MyPJEYmB2szpqNrMF0WILwtPPEEXvoU60l1sJ6psXUf0SSxniiil/leOkTCYFZCMwqkf/mbz61BwTWDr7bMH5paZQd91O6pRDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776165918; c=relaxed/simple;
-	bh=whNo55U9x1E6T13inTkHwz1zqMrj4x7G+rQSoBR7x4Y=;
+	s=arc-20240116; t=1776165919; c=relaxed/simple;
+	bh=5IWa6TshAWH4hjpYTKzLaOdn0cI8aHPYQMWN5ZlDuYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BIK5yUia27HAghU6mvPzMj+Qv5gLG4OSvc489+3oONEZ9LF9WhGFreGhx4X8II0+aBq9nw6V1GeYLOciIzpWM8S6Y82xSuGUljefZh9r83ktMzTKgQOOozm/3MYhPQKYhMMmXY24BjYMoW6qxFZaSnykEFdlpup0DLuBULDdoeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eE7pH+ra; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fitziWF5kkHbeC0tw42aPdRuRoCVCmszm8Nmd7gZaOln0gBbpvMPe5MfAXCZ1Bi7yi10eTnrhNvKyLr7agFelGjGgQ9hKAOGea7Y4xdGRnCf4RImqg051TjC8UYqFLj1KHKlt4srL7i6x01LuqdaxnYGv2G/Ow/Wk31f2gxosEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SiAeCH/M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eE7pH+ra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0B5C19425;
-	Tue, 14 Apr 2026 11:25:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SiAeCH/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A688C2BCB5;
+	Tue, 14 Apr 2026 11:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776165918;
-	bh=whNo55U9x1E6T13inTkHwz1zqMrj4x7G+rQSoBR7x4Y=;
+	s=k20201202; t=1776165919;
+	bh=5IWa6TshAWH4hjpYTKzLaOdn0cI8aHPYQMWN5ZlDuYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eE7pH+ra/PM3tm7hNfGj3d3ZkwPni6wIo3BRCy7F80NRkHBW9HvcgW62xeNwaoFB2
-	 CL/hHjr6QeLlcmubfwC9LZtjfPcQn0E8rZaUAZusfhtncYTiyiyB6y1mhc7xmnARXX
-	 XShdmPVeQRZ7TOK2TS8k7vShUXaxMvIXqkFjnTfQoMVAJprEgvdbLUIPfjv292tsNs
-	 cJspY71c2ptndzqbU4+ZenKQMx7cG9YRVeLZAM3Sct4xm7K/E7g2sFvDAKse8BTO2k
-	 T5hj1Q7NU7exGzrAmGNLDrP0KIQELI/Wb6mY020un+6LU3624ECGnP7vZq3NZeM3nT
-	 mNCQWxiRYTxsA==
+	b=SiAeCH/MwX7x0HA5nWAEjLLsucKbpJNSy9E4oWkxvI4NHUChSE4QzvVSfLI5t3av3
+	 5Csqui+FWhOL82e0dX9uhHSlx8dnJPfKaDtWnHWuovWPCAiYZ/Ng3Y+OoA5enxpsvq
+	 Rtbvi+fGXFHuzj9OSyv1CojM07o2NIptwePukxv5DAKX/D03fgR74/yhrdY0bO25O3
+	 bzZUPHtHCET+xMbsjMcWE9SS1gNxGftDmzG7MLxgiTWqXkwuoYl8ULEmdNZ3whYaep
+	 qqEyIiWO/4mRrCyeqQ/7In7tDTBTYL7SktVwsBgnDIoX5tMhYqFde5136IrlvJGWc+
+	 i6HI82FTIQ6Eg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Imrane <ihalim.me@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: =?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Silvan Jegen <s.jegen@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Shyam-sundar.S-k@amd.com,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	erazor_de@users.sourceforge.net,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] platform/x86/amd: pmc: Add Thinkpad L14 Gen3 to quirk_s2idle_bug
-Date: Tue, 14 Apr 2026 07:25:01 -0400
-Message-ID: <20260414112509.410217-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] HID: roccat: fix use-after-free in roccat_report_event
+Date: Tue, 14 Apr 2026 07:25:02 -0400
+Message-ID: <20260414112509.410217-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260414112509.410217-1-sashal@kernel.org>
 References: <20260414112509.410217-1-sashal@kernel.org>
@@ -55,267 +56,342 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.12
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Benoît Sevens <bsevens@google.com>
 
-[ Upstream commit 1a9452c428a6b76f0b797bae21daa454fccef1a2 ]
+[ Upstream commit d802d848308b35220f21a8025352f0c0aba15c12 ]
 
-This platform is a similar vintage of platforms that had a BIOS bug
-leading to a 10s delay at resume from s0i3.
+roccat_report_event() iterates over the device->readers list without
+holding the readers_lock. This allows a concurrent roccat_release() to
+remove and free a reader while it's still being accessed, leading to a
+use-after-free.
 
-Add a quirk for it.
+Protect the readers list traversal with the readers_lock mutex.
 
-Reported-by: Imrane <ihalim.me@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221273
-Tested-by: Imrane <ihalim.me@gmail.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260324211647.357924-1-mario.limonciello@amd.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-External sources are blocked by Anubis. No matter — the commit itself
-has sufficient information. Let me complete the analysis.
+Good. Now I have all the information needed for a complete analysis.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## FULL ANALYSIS
+
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `platform/x86/amd: pmc`
-- Action: "Add" (adding hardware to quirk table)
-- Summary: Adding Thinkpad L14 Gen3 to `quirk_s2idle_bug` DMI table
-- Record: [platform/x86/amd/pmc] [Add] [DMI quirk entry for Thinkpad L14
-  Gen3 to workaround s2idle BIOS bug]
+- Subsystem: `HID: roccat`
+- Action verb: "fix"
+- Summary: Fix use-after-free in `roccat_report_event` — a clear bug
+  fix.
+- Record: [HID: roccat] [fix] [use-after-free when iterating readers
+  list without lock]
 
 **Step 1.2: Tags**
-- Reported-by: Imrane <ihalim.me@gmail.com> — real user report
-- Closes: bugzilla.kernel.org #221273 — tracked bug
-- Tested-by: Imrane <ihalim.me@gmail.com> — reporter tested and
-  confirmed the fix
-- Signed-off-by: Mario Limonciello (AMD PMC subsystem author/maintainer)
-- Reviewed-by: Ilpo Järvinen (platform/x86 maintainer)
-- Link: patch.msgid.link to original submission
-- Record: User-reported bug, user-tested fix, reviewed by subsystem
-  maintainer.
+- `Signed-off-by: Benoît Sevens <bsevens@google.com>` — Author, Google
+  security researcher
+- `Reviewed-by: Silvan Jegen <s.jegen@gmail.com>` — Review from external
+  developer
+- `Signed-off-by: Jiri Kosina <jkosina@suse.com>` — HID subsystem
+  maintainer accepted it
+- No Fixes: tag, no Cc: stable, no Reported-by — expected for manual
+  review candidates
+- Record: Accepted by HID maintainer Jiri Kosina. Author is a Google
+  security researcher (bsevens@google.com — Benoît Sevens is known for
+  kernel security work).
 
-**Step 1.3: Commit Body**
-- Bug: BIOS bug on this platform causes a 10-second delay at resume from
-  s0i3 (suspend-to-idle)
-- The platform is "similar vintage" to others already in the quirk table
-- The fix is to add a DMI match to invoke the existing workaround
-- Record: [10s resume delay from s0i3] [BIOS firmware bug] [Workaround
-  via existing quirk mechanism]
+**Step 1.3: Commit Body Analysis**
+- Bug: `roccat_report_event()` iterates `device->readers` list without
+  holding `readers_lock`
+- Race: Concurrent `roccat_release()` can remove and free a reader while
+  it's being accessed
+- Failure mode: Use-after-free — accessing freed memory
+- Fix: Add `readers_lock` around the list traversal
+- Record: Clear UAF bug. The race is between report_event (iterating
+  readers) and release (freeing a reader). Author explains root cause
+  clearly.
 
 **Step 1.4: Hidden Bug Fix?**
-- This is an explicit hardware workaround addition, not disguised. It
-  fixes a real user-reported issue with sleep/resume.
+- No — this is explicitly labeled as a use-after-free fix. Not disguised
+  at all.
 
-## PHASE 2: DIFF ANALYSIS
+### PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- Files changed: 1 (`drivers/platform/x86/amd/pmc/pmc-quirks.c`)
-- Lines added: 9 (one DMI table entry + comment)
+- Files changed: 1 (`drivers/hid/hid-roccat.c`)
+- Lines added: 2 (`mutex_lock(&device->readers_lock)` and
+  `mutex_unlock(&device->readers_lock)`)
 - Lines removed: 0
-- Functions modified: None — only data (the `fwbug_list[]` DMI table)
-- Record: Single file, +9 lines, data-only addition to static table.
+- Functions modified: `roccat_report_event()`
+- Scope: Single-file, single-function, 2-line surgical fix
+- Record: Minimal +2 line fix in one function in one file.
 
 **Step 2.2: Code Flow Change**
-- Before: Thinkpad L14 Gen3 (DMI_PRODUCT_NAME "21C6") is not matched in
-  `fwbug_list`, so no quirk is applied. The BIOS SMI handler runs during
-  D3->D0 transition, causing 10s delay.
-- After: The device matches, `quirk_s2idle_bug` is set, and
-  `amd_pmc_skip_nvme_smi_handler()` runs during resume to clear bit 0 of
-  the firmware scratch register, skipping the buggy SMI handler.
+- BEFORE: `roccat_report_event()` takes only `cbuf_lock`, then iterates
+  `device->readers` list
+- AFTER: `roccat_report_event()` takes `readers_lock` first, then
+  `cbuf_lock`, iterates `device->readers`, then unlocks both in reverse
+  order
+- The readers list traversal is now protected against concurrent
+  modification by `roccat_release()`
 
 **Step 2.3: Bug Mechanism**
-- Category: Hardware workaround (h)
-- Mechanism: DMI match table entry for existing quirk. No code logic
-  changes.
+- Category: Race condition / Use-after-free
+- Mechanism: `list_for_each_entry(reader, &device->readers, node)`
+  iterates the readers list. Concurrently, `roccat_release()` at line
+  218-221 takes `readers_lock`, calls `list_del(&reader->node)`,
+  unlocks, then calls `kfree(reader)`. Without `readers_lock` in
+  `report_event`, the iterator can be traversing a reader node that gets
+  deleted and freed mid-iteration.
+- Record: Classic list-traversal-vs-concurrent-deletion UAF. Fix is
+  adding the existing designed-for-this-purpose lock.
 
 **Step 2.4: Fix Quality**
-- Obviously correct — identical pattern to dozens of existing entries in
-  the same table.
-- Minimal — 9 lines of data addition.
-- Zero regression risk — only affects this specific Lenovo model
-  (DMI_PRODUCT_NAME "21C6").
+- Obviously correct: The lock `readers_lock` was explicitly designed to
+  "protect modifications of readers list" (comment at line 48). It's
+  already used in `roccat_open()` (line 169) and `roccat_release()`
+  (line 218). The fix simply adds it to the one place that was missing.
+- Minimal: Just 2 lines.
+- Lock ordering: After fix, `readers_lock` -> `cbuf_lock` in
+  `roccat_report_event()`. In `roccat_read()`, only `cbuf_lock` is taken
+  (no `readers_lock`). In `roccat_open()` and `roccat_release()`, only
+  `readers_lock` is taken (no `cbuf_lock`). No conflicting lock ordering
+  exists — no deadlock risk.
+- Record: Fix is obviously correct, minimal, and safe. No regression
+  risk.
 
-## PHASE 3: GIT HISTORY
+### PHASE 3: GIT HISTORY
 
 **Step 3.1: Blame**
-- The quirk table and `quirk_s2idle_bug` mechanism were introduced in
-  commit 3bde7ec13c971, present since v6.6.
-- The `pmc-quirks.c` file has been in the tree since v6.6-rc1 (commit
-  92c2fb8fa56c4).
+- The buggy code (list traversal without `readers_lock`) at line 270 was
+  introduced by commit `206f5f2fcb5ff5` (Stefan Achatz, 2010-05-19), the
+  original roccat module. This code has been present since Linux
+  v2.6.35.
+- The `cbuf_lock` around it was added later by `cacdb14b1c8d3` (Hyunwoo
+  Kim, 2022-09-04) for v6.1.
+- Record: Buggy code from 2010, present in ALL stable trees. The
+  readers_lock was always available but never used here.
 
 **Step 3.2: Fixes Tag**
-- No Fixes: tag (expected for a quirk addition — there's no single
-  commit that "introduced" this issue; it's a BIOS firmware bug).
+- No Fixes: tag present. Based on blame, the bug was introduced by
+  `206f5f2fcb5ff5` (v2.6.35, 2010).
 
 **Step 3.3: File History**
-- The file receives frequent quirk additions (many similar commits in
-  the log). This is a well-established pattern.
-- No dependencies — this is a standalone data addition.
+- Recent changes to hid-roccat.c are mostly cosmetic (constify,
+  sysfs_emit, etc.)
+- The most relevant prior fix is `cacdb14b1c8d3` ("HID: roccat: Fix use-
+  after-free in roccat_read()") which added `cbuf_lock` to
+  `roccat_report_event()`. This fixed a different UAF (concurrent
+  read/write of cbuf), but did NOT address the readers list race.
+- This commit is standalone — no dependencies on other patches.
 
 **Step 3.4: Author**
-- Mario Limonciello is the AMD PMC driver author (copyright holder, line
-  8 of pmc-quirks.c). This is the subsystem maintainer adding a quirk.
+- Benoît Sevens (bsevens@google.com) has 2 other commits visible in the
+  tree, both security fixes:
+  - `3d78386b14445` "HID: wacom: fix out-of-bounds read in
+    wacom_intuos_bt_irq"
+  - `b909df18ce2a9` "ALSA: usb-audio: Fix potential out-of-bound
+    accesses for Extigy and Mbox devices"
+- Pattern: Google security researcher finding and fixing kernel
+  vulnerabilities.
 
 **Step 3.5: Dependencies**
-- None. The `quirk_s2idle_bug` structure and the DMI matching
-  infrastructure exist unchanged since v6.6. This patch is self-
-  contained.
+- The fix depends on `cbuf_lock` existing in the function (added by
+  `cacdb14b1c8d3`, v6.1). For trees v6.1+, this applies cleanly.
+- For trees older than v6.1 (5.15, 5.10), the cbuf_lock won't exist, so
+  the fix would need minor adaptation (just add readers_lock without the
+  cbuf_lock context). But the readers list traversal and the
+  readers_lock mutex exist in all trees.
 
-## PHASE 4: EXTERNAL RESEARCH
+### PHASE 4: MAILING LIST RESEARCH
 
-- Bugzilla #221273 and lore.kernel.org were blocked by Anubis anti-bot
-  protection.
-- From the commit metadata: the fix was Reported-by and Tested-by the
-  same user, reviewed by the platform/x86 maintainer. This is a
-  standard, well-vetted quirk addition.
+**Step 4.1-4.4:** Lore searches were blocked by Anubis CAPTCHA. Could
+not access mailing list discussions. Record: UNVERIFIED — could not
+access lore.kernel.org.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1-5.4:** No functions are modified. The change is purely data —
-a new entry in the `fwbug_list[]` static DMI table. The execution path
-is:
-1. `amd_pmc_quirks_init()` calls `dmi_first_match(fwbug_list)` at probe
-   time
-2. If matched, sets `dev->quirks = &quirk_s2idle_bug`
-3. On resume, `amd_pmc_process_restore_quirks()` calls
-   `amd_pmc_skip_nvme_smi_handler()` which clears the problematic
-   firmware bit
+**Step 5.1: Functions Modified**
+- Only `roccat_report_event()` is modified.
 
-This path is well-tested by the dozens of other identical entries.
+**Step 5.2: Callers**
+- `roccat_report_event()` is an EXPORT_SYMBOL_GPL function called from
+  **16 sites** across 10 different roccat HID drivers (arvo, isku, kone,
+  koneplus, konepure, kovaplus, pyra, ryos, savu). It's called from
+  their `raw_event` handlers — the main HID event processing path for
+  these devices.
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 5.3-5.4: Call Chain**
+- HID subsystem -> raw_event callback in roccat driver ->
+  `roccat_report_event()`
+- This is the core event reporting path for all Roccat hardware. Any
+  user with a Roccat device who opens the chardev and then
+  disconnects/closes while events arrive could trigger the race.
 
-**Step 6.1:** The `quirk_s2idle_bug` mechanism exists in:
-- v6.6: Yes (introduced in v6.6 cycle, commit 3bde7ec13c971)
-- v6.12: Yes (22 references to quirk_s2idle_bug)
-- v6.1: No (pmc-quirks.c doesn't exist)
-- Applicable stable trees: 6.6.y, 6.12.y, and any later LTS trees.
+**Step 5.5: Similar Patterns**
+- The prior fix `cacdb14b1c8d3` fixed an analogous UAF in this same
+  function (cbuf access without lock). The readers_lock omission is the
+  same class of bug — incomplete locking.
 
-**Step 6.2:** The patch should apply cleanly or with trivial offset —
-it's adding a new entry to a table. The surrounding context (other
-Lenovo entries) exists in both v6.6 and v6.12. Minor fuzz may be needed
-due to other entries added since branching, but the addition is
-position-independent within the table.
+### PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.3:** No other fix for this specific hardware (DMI "21C6")
-exists.
+**Step 6.1: Buggy Code in Stable**
+- The original code is from v2.6.35 (2010). Present in ALL active stable
+  trees.
+- The `cbuf_lock` context from `cacdb14b1c8d3` exists in v6.1+. For
+  v6.1, v6.6, and v6.12+ stable trees, the patch applies cleanly.
+- For v5.15 and v5.10 (if still active), minor adaptation needed.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+**Step 6.2: Backport Complications**
+- For v6.1+: Clean apply expected — the cbuf_lock lines exist as
+  context.
+- For older trees: Trivial adaptation (readers_lock wrapping only the
+  list traversal).
 
-**Step 7.1:** platform/x86/amd/pmc — IMPORTANT subsystem. AMD power
-management affects many laptop users. Sleep/resume is a critical user-
-facing feature.
+**Step 6.3: Related Fixes Already in Stable**
+- `cacdb14b1c8d3` (cbuf_lock fix) is in v6.1+ stable trees. This new
+  commit fixes a DIFFERENT, remaining race in the same function.
 
-**Step 7.2:** Very actively developed — frequent quirk additions for new
-hardware.
+### PHASE 7: SUBSYSTEM CONTEXT
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 7.1:** HID subsystem, `drivers/hid/` — IMPORTANT level. Roccat
+devices are popular gaming peripherals.
 
-**Step 8.1:** Affected users: Owners of Lenovo Thinkpad L14 Gen3 (a
-popular business laptop).
+**Step 7.2:** The hid-roccat.c core hasn't changed much since 2022; it's
+mature code with long-standing bugs.
 
-**Step 8.2:** Trigger: Every suspend-to-idle and resume cycle. Very
-common — laptop users suspend/resume constantly.
+### PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.3:** Failure mode: 10-second delay on every resume from s0i3.
-Not a crash, but a significant usability issue for a standard laptop
-operation. Severity: MEDIUM (user-visible, frequent, annoying).
+**Step 8.1: Affected Users**
+- Users of Roccat gaming hardware (keyboards, mice) using the roccat
+  chardev for special events. This is a hardware-specific driver but
+  Roccat is a well-known peripherals brand.
 
-**Step 8.4:** Risk-benefit ratio:
-- Benefit: HIGH — fixes a real, user-reported, frequently-triggered
-  issue on a popular laptop model. Tested by the reporter.
-- Risk: VERY LOW — 9 lines of data-only change, only affects one
-  specific hardware model, uses a proven quirk mechanism, zero chance of
-  regression for any other system.
+**Step 8.2: Trigger Conditions**
+- Race between: event delivery (`roccat_report_event` from HID event
+  handler) and file close (`roccat_release` from userspace close()).
+  Triggering requires concurrent device events and chardev fd close.
+- An unprivileged user who has access to the device can trigger this
+  (open/close the chardev while the device is sending events).
+- Security relevance: UAF can potentially be exploited for privilege
+  escalation.
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 8.3: Failure Mode Severity**
+- Use-after-free: Accessing freed `roccat_reader` memory during list
+  traversal.
+- Consequences: kernel crash/oops, potential memory corruption,
+  potential security exploit.
+- Severity: **HIGH** (UAF = crash or security vulnerability)
 
-**Evidence FOR backporting:**
-- Hardware quirk addition — falls in the automatic YES exception
-  category
-- Real user-reported bug (bugzilla #221273) with user-tested fix
-- Author is the AMD PMC subsystem maintainer
-- Reviewed by platform/x86 maintainer
-- Tiny change (9 lines), data-only, zero code logic changes
-- Uses well-established, proven quirk mechanism
-- Fixes a frequently-triggered usability issue (10s resume delay)
-- Zero regression risk (only affects specific DMI-matched hardware)
-- Applicable to v6.6+ stable trees
+**Step 8.4: Risk-Benefit Ratio**
+- BENEFIT: High — prevents UAF that can crash the kernel or be
+  exploited.
+- RISK: Very low — 2-line addition of a mutex that was designed for
+  exactly this purpose, consistent lock ordering, no deadlock risk.
+- Ratio: Strongly favorable for backporting.
 
-**Evidence AGAINST backporting:**
-- None identified.
+### PHASE 9: FINAL SYNTHESIS
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **Yes** — identical to 20+ existing
-   entries, tested by reporter
-2. Fixes a real bug? **Yes** — BIOS firmware bug causing 10s resume
-   delay
-3. Important issue? **Yes** — sleep/resume is critical for laptop users
-4. Small and contained? **Yes** — 9 lines, one file, data only
-5. No new features or APIs? **Correct** — no new features
-6. Can apply to stable? **Yes** — mechanism exists in 6.6+
+**Step 9.1: Evidence Summary**
 
-**Exception category:** Hardware quirk/workaround — automatic YES.
+FOR backporting:
+- Fixes a real use-after-free bug (HIGH severity)
+- 2-line surgical fix — minimal scope
+- Obviously correct — uses the existing `readers_lock` for its intended
+  purpose
+- No regression risk — consistent lock ordering verified
+- Author is a Google security researcher (credibility)
+- Reviewed-by present, accepted by HID maintainer
+- Bug present since 2010 — affects all stable trees
+- Called from 16 sites across 10 roccat drivers — affects all Roccat
+  hardware users
 
-## Verification
+AGAINST backporting:
+- No Fixes: tag (expected — that's why it needs review)
+- Could not verify lore discussion (Anubis blocked)
+- Minor: comment says "called from interrupt handler" but function
+  already uses mutexes (pre-existing, not introduced by this fix)
 
-- [Phase 1] Parsed tags: Reported-by user, Tested-by same user,
-  Reviewed-by platform/x86 maintainer, Closes bugzilla #221273
-- [Phase 2] Diff analysis: +9 lines adding DMI table entry to
-  fwbug_list[], data-only change, no code logic
-- [Phase 3] git show v6.6:pmc-quirks.c: confirmed quirk_s2idle_bug
-  structure exists in v6.6 with identical mechanism
-- [Phase 3] git describe --contains 3bde7ec13c971: confirmed s2idle
-  quirk introduced in v6.6 cycle
-- [Phase 3] git describe --contains 92c2fb8fa56c4: confirmed pmc-
-  quirks.c created in v6.6-rc1
-- [Phase 3] git show v6.1: pmc-quirks.c does NOT exist in v6.1 (not
-  applicable to 6.1.y)
-- [Phase 3] Author Mario Limonciello confirmed as subsystem author
-  (copyright line, git log)
-- [Phase 4] External sources (bugzilla, lore) blocked by Anubis — could
-  not verify mailing list discussion directly
-- [Phase 5] No functions modified — data-only change to static DMI table
-- [Phase 6] v6.6 contains quirk_s2idle_bug with same structure; v6.12
-  has 22 references — patch applicable
-- [Phase 8] Failure mode: 10s resume delay on every s0i3 cycle, severity
-  MEDIUM, frequently triggered
-- UNVERIFIED: Could not access bugzilla #221273 to verify exact bug
-  report details (blocked by Anubis), but commit metadata (Reported-by,
-  Tested-by, Closes) is sufficient
+UNRESOLVED:
+- Lore discussion not accessible
+
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** — uses existing lock for its
+   documented purpose
+2. Fixes a real bug? **YES** — use-after-free in readers list traversal
+3. Important issue? **YES** — UAF = crash or security vulnerability
+4. Small and contained? **YES** — 2 lines in one function in one file
+5. No new features or APIs? **YES** — purely adding missing locking
+6. Can apply to stable trees? **YES** — clean for v6.1+, trivial
+   adaptation for older
+
+**Step 9.3: Exception Categories**
+- Not an exception category — this is a standard bug fix (the best kind
+  of stable material).
+
+**Step 9.4: Decision**
+This is a textbook stable backport candidate: a small, obviously correct
+fix for a use-after-free vulnerability found by a security researcher,
+with minimal regression risk.
+
+### Verification
+
+- [Phase 1] Parsed tags: Signed-off-by from author (Google security),
+  Reviewed-by present, maintainer SOB (Jiri Kosina)
+- [Phase 2] Diff analysis: +2 lines adding mutex_lock/unlock of
+  readers_lock around list traversal in roccat_report_event()
+- [Phase 2] Lock ordering verified: readers_lock (outer) -> cbuf_lock
+  (inner) is consistent; roccat_read() takes only cbuf_lock;
+  roccat_open()/release() take only readers_lock (under devices_lock).
+  No deadlock path.
+- [Phase 3] git blame: buggy code from commit 206f5f2fcb5ff5 (Stefan
+  Achatz, 2010, v2.6.35), present in all stable trees
+- [Phase 3] Prior fix cacdb14b1c8d3 ("Fix use-after-free in
+  roccat_read()") added cbuf_lock but NOT readers_lock — this is a
+  different remaining bug
+- [Phase 3] Author Benoît Sevens has 2 other security fix commits in the
+  tree (wacom OOB read, ALSA OOB access)
+- [Phase 5] roccat_report_event() called from 16 sites across 10 roccat
+  drivers — core event path for all Roccat hardware
+- [Phase 5] Race confirmed: roccat_release() does list_del+kfree under
+  readers_lock; roccat_report_event() iterates without lock
+- [Phase 6] Buggy code exists in all active stable trees (original from
+  2010)
+- [Phase 6] Clean apply expected for v6.1+ (cbuf_lock context present)
+- [Phase 8] Failure mode: UAF -> kernel crash or potential security
+  exploit, severity HIGH
+- UNVERIFIED: Could not access lore.kernel.org discussion due to Anubis
+  CAPTCHA
 
 **YES**
 
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hid/hid-roccat.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index ed285afaf9b0d..24506e3429430 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -203,6 +203,15 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
- 		}
- 	},
-+	/* https://bugzilla.kernel.org/show_bug.cgi?id=221273 */
-+	{
-+		.ident = "Thinkpad L14 Gen3",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21C6"),
-+		}
-+	},
- 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
- 	{
- 		.ident = "Lenovo Yoga 6 13ALC6",
+diff --git a/drivers/hid/hid-roccat.c b/drivers/hid/hid-roccat.c
+index c7f7562e22e56..e413662f75082 100644
+--- a/drivers/hid/hid-roccat.c
++++ b/drivers/hid/hid-roccat.c
+@@ -257,6 +257,7 @@ int roccat_report_event(int minor, u8 const *data)
+ 	if (!new_value)
+ 		return -ENOMEM;
+ 
++	mutex_lock(&device->readers_lock);
+ 	mutex_lock(&device->cbuf_lock);
+ 
+ 	report = &device->cbuf[device->cbuf_end];
+@@ -279,6 +280,7 @@ int roccat_report_event(int minor, u8 const *data)
+ 	}
+ 
+ 	mutex_unlock(&device->cbuf_lock);
++	mutex_unlock(&device->readers_lock);
+ 
+ 	wake_up_interruptible(&device->wait);
+ 	return 0;
 -- 
 2.53.0
 
