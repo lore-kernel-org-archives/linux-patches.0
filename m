@@ -1,40 +1,40 @@
 Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5697242D9B
-	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 01:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4FE26738D
+	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 01:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776130214; cv=none; b=NCDj23RPGLufhVLOGcoaobHBhW94LcO+BwXnDkTFKGFjOXYSMZOM4pdZHiunuiakkXEwFXmzS7N3AkGT4ZAFM8LiyPlDHc3cialTYlHkUWZTLxDU3OzJ+azFVcORKfrdb4xJ2/y/+OqhjRmuUnN1xzzNfs8XWQjZolVc2yAS3JY=
+	t=1776131552; cv=none; b=TQAMw4nOrT7c6fSYof/oJqKYofXVXsbc9GJpB1QozRCsnrag94BuCbOM1Kgxw/HJlzsmohUhp57P+F/9Zrh1ONd3dx6dOM9u20Qe8V41AFlVACfi8SUwwPmQeM9uuj2wgkgnohIPSxjpPBAejiLBwfYRNgRFORHz4xnjV7Hd7Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776130214; c=relaxed/simple;
-	bh=5d55Sby67zAEYxk/ZlCGmEDM6wEznQfAbF+exNlILNQ=;
+	s=arc-20240116; t=1776131552; c=relaxed/simple;
+	bh=bFU+0bHJyYdNuhNDYHxjYdcmgHjxo3fFijbbuL8bkCQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jWqeAiFHj86ZNHkFEelv6UYWykk+D6Vqh/XV5A0YfoRF90X4To/90BL0KuYwEtOXQD+egRIYiXQr8/FCgRD7mWd3dLlSuHHq1mRp1y19waa5e2iv8kLyTUXm3W0ZYvGYq9PB8e1slKI4Ha48S1/1WTRMCk2s10d5yv8fcNuR4fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=qVinjA+G; arc=none smtp.client-ip=113.46.200.218
+	 In-Reply-To:Content-Type; b=Y0H9vJPffAUJ62PZczIwphyEDJklqT28KzoP9vnBQSqJbVeLDLwo4O6lq3yCUuAxo3zhx8vwv/nTulv+Wal2zrDtXW6M+nRA3aM8KeRSdVVJ6W35P/E+ucoLxGp8YyJ3mOr8DD3FqOEZv6dp/XEWv2JSaRb4UvjzPEeNNRQekKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=55ffHoTE; arc=none smtp.client-ip=113.46.200.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="qVinjA+G"
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="55ffHoTE"
 dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
 	c=relaxed/relaxed; q=dns/txt;
 	h=From;
-	bh=a2lsAbL/CAN5MRMomF38fQZ/Gb6tGyKqmrVF9Fctvfs=;
-	b=qVinjA+G0DIiCayRAsJTmi3Vz9GSSya5RFuqY4oi91XLDrdGb/p/eELTzkvS61swnLkSJfyZh
-	sw/NGaYts3AK9eJXchfUicPqsh6+LpqiNmxe0zMWtd/EOftP0n1LYcYcg2WFTPxJbHRDFkOvV7I
-	R7G00SngLzUb/jmjnoxXQ0c=
-Received: from mail.maildlp.com (unknown [172.19.162.144])
-	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4fvml104gtzpSvH;
-	Tue, 14 Apr 2026 09:23:57 +0800 (CST)
+	bh=IcZrn1p1cpquZpabKF4sukDPIP60uOTXScJqUtxlMGk=;
+	b=55ffHoTEtKg9ICuHBNZYDCB4VNNlKL4zaz2P0j1qG68F81r+4+XzYlwzAYOebdcuC0FtD6em9
+	41FvMucNRY9V25ikI5p/iRJ/5vtnIhtIjIeDQIMCmcCPQheej+mbRuwHxNIsIN+MXDsNutlqzzf
+	i+06/vEv4+ghFHVE2q+kcP0=
+Received: from mail.maildlp.com (unknown [172.19.163.0])
+	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4fvnDm3wbyzpSwY;
+	Tue, 14 Apr 2026 09:46:16 +0800 (CST)
 Received: from kwepemj500018.china.huawei.com (unknown [7.202.194.48])
-	by mail.maildlp.com (Postfix) with ESMTPS id 272364056E;
-	Tue, 14 Apr 2026 09:30:07 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id B362B40574;
+	Tue, 14 Apr 2026 09:52:26 +0800 (CST)
 Received: from [10.174.178.79] (10.174.178.79) by
  kwepemj500018.china.huawei.com (7.202.194.48) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 14 Apr 2026 09:30:06 +0800
-Message-ID: <52ea906c-0953-4d2c-98ee-b873ecc6a075@huawei.com>
-Date: Tue, 14 Apr 2026 09:30:06 +0800
+ 15.2.1544.11; Tue, 14 Apr 2026 09:52:26 +0800
+Message-ID: <14313177-4f06-4666-9c74-7dd3ca797744@huawei.com>
+Date: Tue, 14 Apr 2026 09:52:25 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,16 +42,16 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 14/50] mptcp: fix soft lockup in mptcp_recvmsg()
+Subject: Re: [PATCH 6.12 28/70] mptcp: fix soft lockup in mptcp_recvmsg()
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 CC: <patches@lists.linux.dev>, "Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>, <stable@vger.kernel.org>,
 	<zhangchangzhong@huawei.com>, <weiyongjun1@huawei.com>,
 	<yuehaibing@huawei.com>
-References: <20260413155724.497323914@linuxfoundation.org>
- <20260413155725.042518976@linuxfoundation.org>
+References: <20260413155728.181580293@linuxfoundation.org>
+ <20260413155729.239617101@linuxfoundation.org>
 From: Li Xiasong <lixiasong1@huawei.com>
-In-Reply-To: <20260413155725.042518976@linuxfoundation.org>
+In-Reply-To: <20260413155729.239617101@linuxfoundation.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
@@ -60,22 +60,15 @@ X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
 Hi Greg,
 
 On 4/14/2026 12:00 AM, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
 > 
 
-Sorry for the delayed reply. Please drop this patch from 6.6.y - the fix
-targets mptcp_recvmsg() soft lockup, but the receive queue handling differs
-between mainline and 6.6:
+Sorry for the delayed reply. Same issue as 6.6.y - queue mismatch in
+mptcp_recvmsg() (msk->receive_queue vs sk->sk_receive_queue), so the fix
+is not applicable to 6.12.y either.
 
-  - Mainline: both MSG_PEEK data access and sk_wait_data use
-sk->sk_receive_queue
-  - 6.6.y: MSG_PEEK data access uses msk->receive_queue, while sk_wait_data
-           waits on sk->sk_receive_queue
-
-This structural difference means the fix is not applicable to 6.6.y.
-
-Note that the soft lockup issue still exists in 6.6. A different approach
-may be needed for this branch.
+Note that the soft lockup issue still exists in 6.12. A different approach
+may be needed for these branches and will be addressed later.
 
 Thanks,
 Li Xiasong
@@ -150,7 +143,7 @@ Li Xiasong
 > 
 > --- a/net/mptcp/protocol.c
 > +++ b/net/mptcp/protocol.c
-> @@ -1960,7 +1960,7 @@ static int __mptcp_recvmsg_mskq(struct m
+> @@ -1997,7 +1997,7 @@ static int __mptcp_recvmsg_mskq(struct m
 >  				struct msghdr *msg,
 >  				size_t len, int flags, int copied_total,
 >  				struct scm_timestamping_internal *tss,
@@ -159,7 +152,7 @@ Li Xiasong
 >  {
 >  	struct sk_buff *skb, *tmp;
 >  	int total_data_len = 0;
-> @@ -1976,6 +1976,7 @@ static int __mptcp_recvmsg_mskq(struct m
+> @@ -2013,6 +2013,7 @@ static int __mptcp_recvmsg_mskq(struct m
 >  			/* skip already peeked skbs */
 >  			if (total_data_len + data_len <= copied_total) {
 >  				total_data_len += data_len;
@@ -167,7 +160,7 @@ Li Xiasong
 >  				continue;
 >  			}
 >  
-> @@ -2016,6 +2017,8 @@ static int __mptcp_recvmsg_mskq(struct m
+> @@ -2053,6 +2054,8 @@ static int __mptcp_recvmsg_mskq(struct m
 >  			WRITE_ONCE(msk->rmem_released, msk->rmem_released + skb->truesize);
 >  			__skb_unlink(skb, &msk->receive_queue);
 >  			__kfree_skb(skb);
@@ -176,7 +169,7 @@ Li Xiasong
 >  		}
 >  
 >  		if (copied >= len)
-> @@ -2237,10 +2240,12 @@ static int mptcp_recvmsg(struct sock *sk
+> @@ -2274,10 +2277,12 @@ static int mptcp_recvmsg(struct sock *sk
 >  		cmsg_flags = MPTCP_CMSG_INQ;
 >  
 >  	while (copied < len) {
@@ -190,7 +183,7 @@ Li Xiasong
 >  		if (unlikely(bytes_read < 0)) {
 >  			if (!copied)
 >  				copied = bytes_read;
-> @@ -2298,7 +2303,7 @@ static int mptcp_recvmsg(struct sock *sk
+> @@ -2335,7 +2340,7 @@ static int mptcp_recvmsg(struct sock *sk
 >  
 >  		pr_debug("block timeout %ld\n", timeo);
 >  		mptcp_cleanup_rbuf(msk, copied);
