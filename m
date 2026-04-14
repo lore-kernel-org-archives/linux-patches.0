@@ -1,180 +1,128 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482F435B62F;
-	Mon, 13 Apr 2026 21:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD88212566
+	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 00:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776114660; cv=none; b=TlajuZctwfkOeFc4jTz7tUwmyqmbDcOSC0L9XkXxXQOP7kcyuQGchFYgnCCNNvs9hgfGqD/bybWmxGsvKom09537wGWt/RMzb4G1tDZUCyaM369UFfp8NAubxlWbHlDiX10nfUBPKdWI5zH/nSXWiw+Q1fc0fEN8W5z6Oxjdf68=
+	t=1776126562; cv=none; b=moU5LSCiuoXZhZruJvG627hc4lPUj5IrhvgLGnqRSsxahergRZ3n60nh/kYF2S17p9aTei8TKuQbTTH4Vl2L5UoL0Dcq2Igb/IjHc41EdwXKVQz1dj0MG44fB40A/WnH6Z2gchn/TBOO0SMBvwPgDcoNK0JXixjITVd4TEVsG6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776114660; c=relaxed/simple;
-	bh=E9tlf8Bct13YCtYButRVoDjXu5pfBJtC88O/nwKLvT4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=a8Y55JGvFU0h5zpr0T93yFVTRvNhxymLuck7WLS1pN0/4QoTjDXCTTBekz7Mz0rDBkKvucgiz/OnqQV/owDSSgpA6EKn1Ug2YE3/PBb1AigGSXNTFP009n84RlI2z4aYRl1cb4qiPL0k0wN5jwDWl9nVjytqDCkC8DulMJF1Umk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wCOYc-004n48-0Y;
-	Mon, 13 Apr 2026 21:10:57 +0000
-Received: from ben by deadeye with local (Exim 4.99.1)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wCOYa-00000002kvq-0vui;
-	Mon, 13 Apr 2026 23:10:56 +0200
-Message-ID: <65cd5a0b7c68af467b8b13b4fbce51cc2febb5ad.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 474/491] mmc: core: Drop superfluous validations in
- mmc_hw|sw_reset()
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: patches@lists.linux.dev, Adrian Hunter <adrian.hunter@intel.com>, Sasha
- Levin <sashal@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- stable	 <stable@vger.kernel.org>
-Date: Mon, 13 Apr 2026 23:10:43 +0200
-In-Reply-To: <20260413155836.794775290@linuxfoundation.org>
-References: <20260413155819.042779211@linuxfoundation.org>
-	 <20260413155836.794775290@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-KvvnMgBNjCfGogkaoR+j"
-User-Agent: Evolution 3.56.2-9 
+	s=arc-20240116; t=1776126562; c=relaxed/simple;
+	bh=ilqCm2IWieRAYcDMszPK68i8mdhs9B/KZHu227ICfVI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LzwjvubB4JwawBQv9EhpI7Aw+7EqMCXk832h0U3rnraiJUwGDaGRTnElaJPcA1KIVONvjyOtQ8rYRMTbABZCPzT5JGA4YUwYQleHlXxc+k2V5sbHZNxJ/aF+sOZ5ZfHXGpPvrXNDk6LyMwS8XfLNWzfLy/0qbnpc2mMxkI06jDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0yGxp9TE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fz905O3t; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0yGxp9TE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fz905O3t"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 912187A0273;
+	Mon, 13 Apr 2026 20:29:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Mon, 13 Apr 2026 20:29:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1776126558;
+	 x=1776212958; bh=OzjsKwz9LC30RD2gFYtEDz+hf33m8pEgJ7FdOVeuBoQ=; b=
+	0yGxp9TE4eZ4a23Wb5d4u+EWNY3ztpzpnn1iXjgfodcazbvMSfR6DnYi0NyWV6eP
+	H1o23LzBQm1xcAIsai//pUgP25cUO9FnUHp4aiCBvOzNglKXA0NfAT6fbouKutEX
+	2YEGxb4ulTHMLx4f34FpbJCBmaDWXUHmqV3VkjzXbGyYVdw65ngO6lbxrAMHc4bH
+	COsmtIGWwiyvjVAXPltkJE6kd334vY9ZkhamCKOnM2dphSbDk7xJqkh4tv52xzz2
+	yQScYGltt0XySLcMkj0jmCrKonsdK8R1lVv1xcEQVLrZpg5E8910//ZxQK4EETQH
+	lsQl8klTfj6fBYrmV44NsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776126558; x=
+	1776212958; bh=OzjsKwz9LC30RD2gFYtEDz+hf33m8pEgJ7FdOVeuBoQ=; b=f
+	z905O3tDx3yBlkwyL2T2ryJIict9xe0lyViREzPXy4XPLOfmrcRvRKQdelPMVU4X
+	YRE1GunBMcbpEx5TPHAsw4JKYHI5eg0GKFtYKZMgFAlPqRCwKH2dYd77WbIBWUzW
+	H07dbiA5o0HBql/5dGPhZEBIVe1mkRxowLHIpmAANQjEqZve6qF16qWXx8U8QEwR
+	E6n98AtDQWpJEQNt3hneYekh/yQ4WAKzLHm0s0F6D+M5N5xeQTvWicXwHnuey9Ps
+	IYaZxNhmmT+zhPENMr8ui97mvLL4QG/+YBIZnDpp6EH2gi/IwfOxLteHdL/sSr0l
+	VkdIUim86D4Cr+ofDXQAg==
+X-ME-Sender: <xms:XYrdaT3i3XWmvIeCIoeCnrl7Q084W2yMfgt74VFs3KUk9M82wGJ-PA>
+    <xme:XYrdafwIDAi2o4Qe9Hm2Pm4ayyOWy6M9L0tMIgdDvMOGbufY1Ph8oDgdNygHVJSDi
+    qUslgFJPipLZN6np-RIHgBEIakIggyObiV4kjBWrMur_37OB9SyF-8>
+X-ME-Received: <xmr:XYrdaVol9WADlabLvKC-biZ3pQTkmCARO5a2gNlnhIH5MrgN6FeeR3EBg07eKmRfQA9v7EXx-4zDWNy2UjIL03CPLCMsRgjs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefleeikecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefkffggfgfuvfevfhfhjggtgfesthejredttddvjeenucfhrhhomhepfdeurghrrhih
+    ucfmrdcupfgrthhhrghnfdcuoegsrghrrhihnhesphhosghogidrtghomheqnecuggftrf
+    grthhtvghrnhepfeelheekheelkeejlefffefhvdeljeetheeltdeiudffveetffelteeg
+    gfefhfejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrghrrhihnhesphhosghogidrtgho
+    mhdpnhgspghrtghpthhtohepvddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hgrhgvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehs
+    thgrsghlvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghttghhvg
+    hssehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqkhgvrhhn
+    vghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhorhhvrghlughsse
+    hlihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopegrkhhpmheslhhi
+    nhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheplhhinhhugiesrhhovg
+    gtkhdquhhsrdhnvghtpdhrtghpthhtohepshhhuhgrhheskhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphgrthgthhgvsheskhgvrhhnvghltghirdhorhhg
+X-ME-Proxy: <xmx:XYrdaVV8U37fkado1GMw1xKY9OSmh2tCYdFlhxTHNFFWwMN0-UdDvw>
+    <xmx:XYrdacrk99_ASoh9LzH4cf_2_3qg_GljW17K2hQMS10A-2BkakHDHw>
+    <xmx:XYrdaZEHHDSflAkQ3IuMRHcilD1bg3Ofjxt2WrY_2NodCSlrz8Dyhw>
+    <xmx:XYrdaesyduA-33hKh6EnDk24q5PD9h0RlDwR2LGEouHkNdd_-iboPA>
+    <xmx:XordaQSLWHo0wYfzY6pxqSktO0m6xNjtRnobJ1LIpAZXMjCUa0PIOoJV>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Apr 2026 20:29:15 -0400 (EDT)
+Message-ID: <5ea3d90e-9983-43a5-bbe8-e3999abb9e42@pobox.com>
+Date: Mon, 13 Apr 2026 17:29:14 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 00/70] 6.12.82-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260413155728.181580293@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 4/13/26 08:59, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.82 release.
+> There are 70 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.82-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
---=-KvvnMgBNjCfGogkaoR+j
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Tested on an amd64 laptop (Lenovo ThinkPad T14 Gen 1). Working well, no
+regressions observed.
 
-On Mon, 2026-04-13 at 18:01 +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Ulf Hansson <ulf.hansson@linaro.org>
->=20
-> [ Upstream commit fefdd3c91e0a7b3cbb3f25925d93a57c45cb0f31 ]
->=20
-> The mmc_hw|sw_reset() APIs are designed to be called solely from upper
-> layers, which means drivers that operates on top of the struct mmc_card,
-> like the mmc block device driver and an SDIO functional driver.
->=20
-> Additionally, as long as the struct mmc_host has a valid pointer to a
-> struct mmc_card, the corresponding host->bus_ops pointer stays valid and
-> assigned.
->=20
-> For these reasons, let's drop the superfluous reference counting and the
-> redundant validations in mmc_hw|sw_reset().
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
-Is this reasoning still correct for older branches such as 5.10?
-
-And if so, do they also need commit 406e14808ee6 ("mmc: block: Remove
-error check of hw_reset on reset"), which claims to fix this one?  I
-don't really follow the explanation in its commit message.
-
-Ben.
-
->=20
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-> Link: https://lore.kernel.org/r/20210212131532.236775-1-ulf.hansson@linar=
-o.org
-> Stable-dep-of: 901084c51a0a ("mmc: core: Avoid bitfield RMW for claim/ret=
-une flags")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  drivers/mmc/core/block.c |    2 +-
->  drivers/mmc/core/core.c  |   21 +--------------------
->  2 files changed, 2 insertions(+), 21 deletions(-)
->=20
-> --- a/drivers/mmc/core/block.c
-> +++ b/drivers/mmc/core/block.c
-> @@ -987,7 +987,7 @@ static int mmc_blk_reset(struct mmc_blk_
->  	md->reset_done |=3D type;
->  	err =3D mmc_hw_reset(host);
->  	/* Ensure we switch back to the correct partition */
-> -	if (err !=3D -EOPNOTSUPP) {
-> +	if (err) {
->  		struct mmc_blk_data *main_md =3D
->  			dev_get_drvdata(&host->card->dev);
->  		int part_err;
-> --- a/drivers/mmc/core/core.c
-> +++ b/drivers/mmc/core/core.c
-> @@ -2096,18 +2096,7 @@ int mmc_hw_reset(struct mmc_host *host)
->  {
->  	int ret;
-> =20
-> -	if (!host->card)
-> -		return -EINVAL;
-> -
-> -	mmc_bus_get(host);
-> -	if (!host->bus_ops || host->bus_dead || !host->bus_ops->hw_reset) {
-> -		mmc_bus_put(host);
-> -		return -EOPNOTSUPP;
-> -	}
-> -
->  	ret =3D host->bus_ops->hw_reset(host);
-> -	mmc_bus_put(host);
-> -
->  	if (ret < 0)
->  		pr_warn("%s: tried to HW reset card, got error %d\n",
->  			mmc_hostname(host), ret);
-> @@ -2120,18 +2109,10 @@ int mmc_sw_reset(struct mmc_host *host)
->  {
->  	int ret;
-> =20
-> -	if (!host->card)
-> -		return -EINVAL;
-> -
-> -	mmc_bus_get(host);
-> -	if (!host->bus_ops || host->bus_dead || !host->bus_ops->sw_reset) {
-> -		mmc_bus_put(host);
-> +	if (!host->bus_ops->sw_reset)
->  		return -EOPNOTSUPP;
-> -	}
-> =20
->  	ret =3D host->bus_ops->sw_reset(host);
-> -	mmc_bus_put(host);
-> -
->  	if (ret)
->  		pr_warn("%s: tried to SW reset card, got error %d\n",
->  			mmc_hostname(host), ret);
->=20
->=20
-
---=20
-Ben Hutchings
-When in doubt, use brute force. - Ken Thompson
-
---=-KvvnMgBNjCfGogkaoR+j
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmndW9MACgkQ57/I7JWG
-EQmvOhAAyECeUjLUec+pN3SNMW+GXNfzJjm/+OHbibNapH1vKCwkQaRCXFPMmIEH
-HPlDJFTr4H6OlgQZuCdj5p2s8mlyRT0jmmdLukmQuO6hIZoUxo/8Lfd7w0Z5lRI/
-aRv0zPpjMc5ekuDfNZNqrD+8KRyzjWIPawEOGohksfqK7oU19XdEkFKU3xgcqwqR
-/JL3F5aNGje+aYtgC64nH0RFoGZ1ZYOgAjN1uCgw3aaAMJR4MMbBmN73QqcN07oh
-8TlH9uTQKw/ZDhml4eOfDkIayL6u97s38JKyAOaiMJw1jpjlo5homVI53Krq4b10
-i6BS+cvl/35dNg+F5U4tOBST/jW24ZmT15Q1LRVs/yW5cNy4Nz3iGary30S/sV8c
-C1EAfinV+dIrE3bKgXDDFmrAqVVB8ypNxMhkb2NNYJQiYQPymnFkaPAyAAV7XEsJ
-huKzVIsVBhsPdiTbLL2E9SEM9YcOdxubnIzKNXRQON/IABLKYDOSxo7UnaJMhGkv
-Mz7Grlrob3nso1rCHSldd2oNi13qgFWtVN5s0YBthhOwmwExSdAiDHLx/bVYr5w/
-KCZ8SLkJxaprvrmdQ828tJNKEV+zvGjg5YultBMxsMxvi1xBAwn89lkE9n2M2Go1
-mmhpDQFZ/tm3eRRGEAQRaJjZye4IfWCbIO4b50hwt9gIYO+8xXA=
-=SE/g
------END PGP SIGNATURE-----
-
---=-KvvnMgBNjCfGogkaoR+j--
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
