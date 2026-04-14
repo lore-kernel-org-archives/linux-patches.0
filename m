@@ -1,196 +1,121 @@
-Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
+Received: from n169-112.mail.139.com (n169-112.mail.139.com [120.232.169.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4FE26738D
-	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 01:52:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC652853FD
+	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 02:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.112
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776131552; cv=none; b=TQAMw4nOrT7c6fSYof/oJqKYofXVXsbc9GJpB1QozRCsnrag94BuCbOM1Kgxw/HJlzsmohUhp57P+F/9Zrh1ONd3dx6dOM9u20Qe8V41AFlVACfi8SUwwPmQeM9uuj2wgkgnohIPSxjpPBAejiLBwfYRNgRFORHz4xnjV7Hd7Ow=
+	t=1776135551; cv=none; b=ci+Ul6Ar1PbPqiHQp2MA4fHGQHRn/+f23Zn3Etz5/OwzcCT1KTqNvNUegyCmuuBp0pj1sj26zWlsTxk96KOUxQVCaK97InUIHeCGTXBOfTQ9g4jN2tV661t6WKvGmgCG/AG9j9anqKlsrl/4/rH6f+UOBEidlyahVdTjL7hI3fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776131552; c=relaxed/simple;
-	bh=bFU+0bHJyYdNuhNDYHxjYdcmgHjxo3fFijbbuL8bkCQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Y0H9vJPffAUJ62PZczIwphyEDJklqT28KzoP9vnBQSqJbVeLDLwo4O6lq3yCUuAxo3zhx8vwv/nTulv+Wal2zrDtXW6M+nRA3aM8KeRSdVVJ6W35P/E+ucoLxGp8YyJ3mOr8DD3FqOEZv6dp/XEWv2JSaRb4UvjzPEeNNRQekKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=55ffHoTE; arc=none smtp.client-ip=113.46.200.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1776135551; c=relaxed/simple;
+	bh=Gju3hMPOQJHrtrP/OEqqpTQEAsKDXPlJqo6PvpOF8Go=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=eLzm6Wz4IpSaY0pZLXZSPC0hIisSVsMI89qD8bf47vVLVlYXJxh/KjKrD6vou5Uy+bGmGeRV5GZ/iPzj/GDyvAbno5rQOqHe3nrTDMbo0XAULSjMjBFdPcf4nq6gXQdOFwtPy3GtUOKLvedlQEMJzkLoFaHu6oakFsDP5q6wjk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=UccZ6Vg3; arc=none smtp.client-ip=120.232.169.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="55ffHoTE"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=IcZrn1p1cpquZpabKF4sukDPIP60uOTXScJqUtxlMGk=;
-	b=55ffHoTEtKg9ICuHBNZYDCB4VNNlKL4zaz2P0j1qG68F81r+4+XzYlwzAYOebdcuC0FtD6em9
-	41FvMucNRY9V25ikI5p/iRJ/5vtnIhtIjIeDQIMCmcCPQheej+mbRuwHxNIsIN+MXDsNutlqzzf
-	i+06/vEv4+ghFHVE2q+kcP0=
-Received: from mail.maildlp.com (unknown [172.19.163.0])
-	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4fvnDm3wbyzpSwY;
-	Tue, 14 Apr 2026 09:46:16 +0800 (CST)
-Received: from kwepemj500018.china.huawei.com (unknown [7.202.194.48])
-	by mail.maildlp.com (Postfix) with ESMTPS id B362B40574;
-	Tue, 14 Apr 2026 09:52:26 +0800 (CST)
-Received: from [10.174.178.79] (10.174.178.79) by
- kwepemj500018.china.huawei.com (7.202.194.48) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 14 Apr 2026 09:52:26 +0800
-Message-ID: <14313177-4f06-4666-9c74-7dd3ca797744@huawei.com>
-Date: Tue, 14 Apr 2026 09:52:25 +0800
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="UccZ6Vg3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=139.com; s=dkim; l=0;
+	h=from:subject:message-id:to:cc:mime-version;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	b=UccZ6Vg3OWFDhRDZosqAYSrfjL9/5P1a4icLpLO5bLmQqU08sqUGnBEEcy+tdzSTUyFQHfFqI6540
+	 zHBaK6fnv2Se+O9J8xa/EGUwrZOKcu6GjoHNganYvxR3fQIM1vwyK5EBz70t/Y1RQXpFaGDXt1lbu1
+	 c6jBr458ChuORWS0=
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM:                                                                                        
+X-RM-SPAM-FLAG:00000000
+Received:from NTT-kernel-dev (unknown[60.247.85.88])
+	by rmsmtp-lg-appmail-23-12026 (RichMail) with SMTP id 2efa69ddad7344f-00454;
+	Tue, 14 Apr 2026 10:59:02 +0800 (CST)
+X-RM-TRANSID:2efa69ddad7344f-00454
+From: Li hongliang <1468888505@139.com>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	fw@strlen.de
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	pablo@netfilter.org,
+	kadlec@netfilter.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	horms@kernel.org,
+	kaber@trash.net,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org,
+	netdev@vger.kernel.org,
+	imv4bel@gmail.com
+Subject: [PATCH 6.1.y] netfilter: conntrack: add missing netlink policy validations
+Date: Tue, 14 Apr 2026 10:59:00 +0800
+Message-Id: <20260414025900.3605300-1-1468888505@139.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 28/70] mptcp: fix soft lockup in mptcp_recvmsg()
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <patches@lists.linux.dev>, "Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>, <stable@vger.kernel.org>,
-	<zhangchangzhong@huawei.com>, <weiyongjun1@huawei.com>,
-	<yuehaibing@huawei.com>
-References: <20260413155728.181580293@linuxfoundation.org>
- <20260413155729.239617101@linuxfoundation.org>
-From: Li Xiasong <lixiasong1@huawei.com>
-In-Reply-To: <20260413155729.239617101@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
- kwepemj500018.china.huawei.com (7.202.194.48)
+Content-Transfer-Encoding: 8bit
 
-Hi Greg,
+From: Florian Westphal <fw@strlen.de>
 
-On 4/14/2026 12:00 AM, Greg Kroah-Hartman wrote:
-> 6.12-stable review patch.  If anyone has any objections, please let me know.
-> 
+[ Upstream commit f900e1d77ee0ef87bfb5ab3fe60f0b3d8ad5ba05 ]
 
-Sorry for the delayed reply. Same issue as 6.6.y - queue mismatch in
-mptcp_recvmsg() (msk->receive_queue vs sk->sk_receive_queue), so the fix
-is not applicable to 6.12.y either.
+Hyunwoo Kim reports out-of-bounds access in sctp and ctnetlink.
 
-Note that the soft lockup issue still exists in 6.12. A different approach
-may be needed for these branches and will be addressed later.
+These attributes are used by the kernel without any validation.
+Extend the netlink policies accordingly.
 
-Thanks,
-Li Xiasong
+Quoting the reporter:
+  nlattr_to_sctp() assigns the user-supplied CTA_PROTOINFO_SCTP_STATE
+  value directly to ct->proto.sctp.state without checking that it is
+  within the valid range. [..]
 
-> ------------------
-> 
-> From: Li Xiasong <lixiasong1@huawei.com>
-> 
-> commit 5dd8025a49c268ab6b94d978532af3ad341132a7 upstream.
-> 
-> syzbot reported a soft lockup in mptcp_recvmsg() [0].
-> 
-> When receiving data with MSG_PEEK | MSG_WAITALL flags, the skb is not
-> removed from the sk_receive_queue. This causes sk_wait_data() to always
-> find available data and never perform actual waiting, leading to a soft
-> lockup.
-> 
-> Fix this by adding a 'last' parameter to track the last peeked skb.
-> This allows sk_wait_data() to make informed waiting decisions and prevent
-> infinite loops when MSG_PEEK is used.
-> 
-> [0]:
-> watchdog: BUG: soft lockup - CPU#2 stuck for 156s! [server:1963]
-> Modules linked in:
-> CPU: 2 UID: 0 PID: 1963 Comm: server Not tainted 6.19.0-rc8 #61 PREEMPT(none)
-> Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-> RIP: 0010:sk_wait_data+0x15/0x190
-> Code: 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 41 56 41 55 41 54 49 89 f4 55 48 89 d5 53 48 89 fb <48> 83 ec 30 65 48 8b 05 17 a4 6b 01 48 89 44 24 28 31 c0 65 48 8b
-> RSP: 0018:ffffc90000603ca0 EFLAGS: 00000246
-> RAX: 0000000000000000 RBX: ffff888102bf0800 RCX: 0000000000000001
-> RDX: 0000000000000000 RSI: ffffc90000603d18 RDI: ffff888102bf0800
-> RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000101
-> R10: 0000000000000000 R11: 0000000000000075 R12: ffffc90000603d18
-> R13: ffff888102bf0800 R14: ffff888102bf0800 R15: 0000000000000000
-> FS:  00007f6e38b8c4c0(0000) GS:ffff8881b877e000(0000) knlGS:0000000000000000
-> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> CR2: 000055aa7bff1680 CR3: 0000000105cbe000 CR4: 00000000000006f0
-> Call Trace:
->  <TASK>
->  mptcp_recvmsg+0x547/0x8c0 net/mptcp/protocol.c:2329
->  inet_recvmsg+0x11f/0x130 net/ipv4/af_inet.c:891
->  sock_recvmsg+0x94/0xc0 net/socket.c:1100
->  __sys_recvfrom+0xb2/0x130 net/socket.c:2256
->  __x64_sys_recvfrom+0x1f/0x30 net/socket.c:2267
->  do_syscall_64+0x59/0x2d0 arch/x86/entry/syscall_64.c:94
->  entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:131
-> RIP: 0033:0x7f6e386a4a1d
-> Code: 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 8d 05 f1 de 2c 00 41 89 ca 8b 00 85 c0 75 20 45 31 c9 45 31 c0 b8 2d 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 6b f3 c3 66 0f 1f 84 00 00 00 00 00 41 56 41
-> RSP: 002b:00007ffc3c4bb078 EFLAGS: 00000246 ORIG_RAX: 000000000000002d
-> RAX: ffffffffffffffda RBX: 000000000000861e RCX: 00007f6e386a4a1d
-> RDX: 00000000000003ff RSI: 00007ffc3c4bb150 RDI: 0000000000000004
-> RBP: 00007ffc3c4bb570 R08: 0000000000000000 R09: 0000000000000000
-> R10: 0000000000000103 R11: 0000000000000246 R12: 00005605dbc00be0
-> R13: 00007ffc3c4bb650 R14: 0000000000000000 R15: 0000000000000000
->  </TASK>
-> 
-> Fixes: 8e04ce45a8db ("mptcp: fix MSG_PEEK stream corruption")
-> Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-> Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-> Link: https://patch.msgid.link/20260330120335.659027-1-lixiasong1@huawei.com
-> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> [ Conflicts in protocol.c, because commit bc68b0efa1bf ("mptcp: move the
->   whole rx path under msk socket lock protection") and commit
->   d88b2127b242 ("mptcp: add eat_recv_skb helper") (with some
->   dependences) are not in this version. These conflicts were in the
->   context, and not related to this fix. ]
-> Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  net/mptcp/protocol.c |   11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
-> 
-> --- a/net/mptcp/protocol.c
-> +++ b/net/mptcp/protocol.c
-> @@ -1997,7 +1997,7 @@ static int __mptcp_recvmsg_mskq(struct m
->  				struct msghdr *msg,
->  				size_t len, int flags, int copied_total,
->  				struct scm_timestamping_internal *tss,
-> -				int *cmsg_flags)
-> +				int *cmsg_flags, struct sk_buff **last)
->  {
->  	struct sk_buff *skb, *tmp;
->  	int total_data_len = 0;
-> @@ -2013,6 +2013,7 @@ static int __mptcp_recvmsg_mskq(struct m
->  			/* skip already peeked skbs */
->  			if (total_data_len + data_len <= copied_total) {
->  				total_data_len += data_len;
-> +				*last = skb;
->  				continue;
->  			}
->  
-> @@ -2053,6 +2054,8 @@ static int __mptcp_recvmsg_mskq(struct m
->  			WRITE_ONCE(msk->rmem_released, msk->rmem_released + skb->truesize);
->  			__skb_unlink(skb, &msk->receive_queue);
->  			__kfree_skb(skb);
-> +		} else {
-> +			*last = skb;
->  		}
->  
->  		if (copied >= len)
-> @@ -2274,10 +2277,12 @@ static int mptcp_recvmsg(struct sock *sk
->  		cmsg_flags = MPTCP_CMSG_INQ;
->  
->  	while (copied < len) {
-> +		struct sk_buff *last = NULL;
->  		int err, bytes_read;
->  
->  		bytes_read = __mptcp_recvmsg_mskq(msk, msg, len - copied, flags,
-> -						  copied, &tss, &cmsg_flags);
-> +						  copied, &tss, &cmsg_flags,
-> +						  &last);
->  		if (unlikely(bytes_read < 0)) {
->  			if (!copied)
->  				copied = bytes_read;
-> @@ -2335,7 +2340,7 @@ static int mptcp_recvmsg(struct sock *sk
->  
->  		pr_debug("block timeout %ld\n", timeo);
->  		mptcp_cleanup_rbuf(msk, copied);
-> -		err = sk_wait_data(sk, &timeo, NULL);
-> +		err = sk_wait_data(sk, &timeo, last);
->  		if (err < 0) {
->  			err = copied ? : err;
->  			goto out_err;
-> 
-> 
+  and: ... with exp->dir = 100, the access at
+  ct->master->tuplehash[100] reads 5600 bytes past the start of a
+  320-byte nf_conn object, causing a slab-out-of-bounds read confirmed by
+  UBSAN.
+
+Fixes: 076a0ca02644 ("netfilter: ctnetlink: add NAT support for expectations")
+Fixes: a258860e01b8 ("netfilter: ctnetlink: add full support for SCTP to ctnetlink")
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Li hongliang <1468888505@139.com>
+---
+ net/netfilter/nf_conntrack_netlink.c    | 2 +-
+ net/netfilter/nf_conntrack_proto_sctp.c | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 89cec02de68b..bcbd77608365 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3458,7 +3458,7 @@ ctnetlink_change_expect(struct nf_conntrack_expect *x,
+ 
+ #if IS_ENABLED(CONFIG_NF_NAT)
+ static const struct nla_policy exp_nat_nla_policy[CTA_EXPECT_NAT_MAX+1] = {
+-	[CTA_EXPECT_NAT_DIR]	= { .type = NLA_U32 },
++	[CTA_EXPECT_NAT_DIR]	= NLA_POLICY_MAX(NLA_BE32, IP_CT_DIR_REPLY),
+ 	[CTA_EXPECT_NAT_TUPLE]	= { .type = NLA_NESTED },
+ };
+ #endif
+diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
+index 7ffd698497f2..90458799324e 100644
+--- a/net/netfilter/nf_conntrack_proto_sctp.c
++++ b/net/netfilter/nf_conntrack_proto_sctp.c
+@@ -600,7 +600,8 @@ static int sctp_to_nlattr(struct sk_buff *skb, struct nlattr *nla,
+ }
+ 
+ static const struct nla_policy sctp_nla_policy[CTA_PROTOINFO_SCTP_MAX+1] = {
+-	[CTA_PROTOINFO_SCTP_STATE]	    = { .type = NLA_U8 },
++	[CTA_PROTOINFO_SCTP_STATE]	    = NLA_POLICY_MAX(NLA_U8,
++							 SCTP_CONNTRACK_HEARTBEAT_SENT),
+ 	[CTA_PROTOINFO_SCTP_VTAG_ORIGINAL]  = { .type = NLA_U32 },
+ 	[CTA_PROTOINFO_SCTP_VTAG_REPLY]     = { .type = NLA_U32 },
+ };
+-- 
+2.34.1
+
+
