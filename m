@@ -1,65 +1,65 @@
-Received: from out162-62-57-137.mail.qq.com (out162-62-57-137.mail.qq.com [162.62.57.137])
+Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BFF2472B6
-	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 06:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.137
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EA52DC762
+	for <patches@lists.linux.dev>; Tue, 14 Apr 2026 07:46:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776149172; cv=none; b=ZN4vDQOPZIkY52ubum1ymTE5h1SQIfQ8pu6Xrop2wZBvfITkMKcg0EfE0hZz+Uca3zj4sRPZvDXlYszZ4Z/P41ShsRaHSt0QIO2eUi0RkAnsrN6ZC3+539+djDXTUkvcpcmQxaTmamtnmJYf0bz4y6zSYqMfWetDuWA4PMoQIek=
+	t=1776152768; cv=none; b=OxsKmWsp56NVKbfnxsal9pE7eXlPF4SldcUldUPT27aSsO5HMiOiw1y+nrj69b/rRLwhiRXdTx0bBO7X6cXCcpVtV8ctNoBlCx+dkishBi+DGaZDmTZC+ZCgxQzxAQGRMBgq5j9MEUeMKlF+l58SDeQFdtpeLXybima+lc9puR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776149172; c=relaxed/simple;
-	bh=DpZCdQs4b8+LwP5vOJC4yNhUFG0XN7Mekxfml7YimkM=;
-	h=Message-ID:From:To:Cc:Subject:Date:MIME-Version; b=pT+69vZbTcZUX2iaZFPUfBngktKicc0sU78DfSyKJZ/kySyl8tIBN0QMHakgnkolOsLXJ2X6hu4e2nQwyrd/vubYNGAkJykCVB2xtbDRg0ozZRHWZZcUjbk67cH92Vn71jMpyKncaeg9f4w2EQ/G1C4wkUEF5OjBOQSuP/5X6lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=LyDzYp2/; arc=none smtp.client-ip=162.62.57.137
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	s=arc-20240116; t=1776152768; c=relaxed/simple;
+	bh=2SvYolvgomNB05QQPc5Ipj8Z5sJ0NE/Lr9Y1GU7mXn0=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Ter7sFcmBkOCRlPIs8JkaV8G9opQhfXz14ybugqZzxzujn1doSvSmriYrFL3BncO/rhQL1kU4gxWZOJKv92YaYg/vsK30xZCevDw0kVMs076nXUQ+iSqjPCGVTEPQQVgHkYLLhJiruEo2aCizKcBrdeXPwlDdc/LI0nuwHR9+7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=jXBkWTEc; arc=none smtp.client-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="LyDzYp2/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1776149157; bh=WwN0f6XKuujjTb0gJTYkPaL3YR7Zj7pYP0YCfeToHmM=;
-	h=From:To:Cc:Subject:Date;
-	b=LyDzYp2/qnniIqlQutalDnANRc+cIsTvp97b0vDKcdKwQZ8ArSHYAB82Vb7fvwFSA
-	 U94/6A2EoB455+dUOsggCEkqk/Te+BZaWo6d2tPiIyFXG55m/3q10sqttIS92kDW+k
-	 9yHOECmK1ANmz2dfJhP24a8ytl4MyAb9GBVTWp3Q=
-Received: from NTT-kernel-dev ([60.247.85.88])
-	by newxmesmtplogicsvrsza63-0.qq.com (NewEsmtp) with SMTP
-	id B75018D0; Tue, 14 Apr 2026 14:45:53 +0800
-X-QQ-mid: xmsmtpt1776149153trz5913pw
-Message-ID: <tencent_B4E5A4D17E67F7C7096F7BF8A4C701223008@qq.com>
-X-QQ-XMAILINFO: NVJuObMcvoCvI7KlUgVHao/m62b+xO7xT4B6qbN2gQn4HfCZ9e92aJPs0t7VQB
-	 vKjtNIwr2fVXevhyoun5GPYxJyKtTdNqaClLInwtoWmugGrXT728H6ZUeFweVfwWWx56JIvS10eZ
-	 zbVRLrQ4I4nZnTgXwrc22HWRsu2YpFHfia5/Jmx6aH9WTHGtok6ugz6knvCxTrmwOvaD0c5A/ray
-	 ijxqZopytqR5N7cO1VtMTM/XdLjrM1/ELtMRdb1R0IbwY+jatmIh5cqkNZ/LtgbfFt6s6Il6GqTD
-	 HAyWfL8tc7gj8eYvzr4dIu8A+q+SwjLGj1b7to77QhwFl28PxwwBZazhlGrAIDX5kit1XDpRwkQ5
-	 vV8xXON6YvEwCws5Rj/SsHd8eLu3JAFG+yiVbSN7HEPm4rhgr55gSP8198HLpGbk1+Kamz6xqbeu
-	 oRPH0qtcfCZva7toVlrfZsUKC+3dTlwqqTYwYNQVdUkDaLyyoAJpm9bHVcbZRgBNU1Am5cIOnH//
-	 lM1KBEyNUFcjUJpG3eRbx6VW2fHDZJmh11zmaWf4mSwoyBI0R97bisJtH98AJljm/klWsFIkLW0R
-	 9eYPf19YGOdfT3fKGdMUHRNeAgUlNb7SQLKArZnJj5rlLrTdH9fiLg1DqYqFnnPG6qNFUbV8xXbp
-	 oMvtwb0FQQsiT4EM2NbVRxLSRjXEWcfEdVdIouJuX1wrFlI1vfCksj2tgsXJHYKqueW/C1NqjGCW
-	 dzhJq+ISVcpSP31MnIYZZINyzsnLprUoACnY+g7Hnf+hevLh5t+j76yh9e4ufGdEt4X1N0QFV9ue
-	 bRt4negeBEbhQGgc69AL6YgjKVITN3YgHDWMgBJg1fB1HdoMKjOi8udJ0I/xAymRuijKAgnK4CvH
-	 dTacAVvR9hZcY00kF9GIJxRG71ixz2W/q9aiPGk2NczcYR33Gm9mVqJtMESSLxRLhyuo9NEKq5xU
-	 D3yiS9y4+GEv6dEszyOMGn86Rbe94nK0tpHhqwMwMWVkhVYlYGpTHw9X6W3K5xpC+mqAyp4PCmub
-	 FyapwFkwpug+kqQw9zwmXr4QxAqGrxFXEVvBKkX0xQuDHSDXovY/DxJy9l2XXlsMFu/A5qvSn3zd
-	 CG3rq5
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-From: Fang Wang <32840572@qq.com>
-To: maudspierings@gocontroll.com,
-	gregkh@linuxfoundation.org,
-	stable@vger.kernel.org
-Cc: patches@lists.linux.dev,
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="jXBkWTEc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1776152749;
+	bh=ijOBe32OJaXUt6Lriy0B3ACja7Vy3gV1h+L6V+TUVU4=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version;
+	b=jXBkWTEcpAiuqzv0/u4Ep6zru0sVgQeUyLB3Q6ANgUyVpNXGusR1lkQbTYWm85Ovc
+	 mqjw8aD2AA4ZUCH8vTfNri0DJEHtFXrZ9aXEybAR+WPvuNGWRwPXngpKq/PtozBgTd
+	 MXd2prG4fwtSTC6HHgl5RFPHlql2VxMeTpl+OF4E=
+X-QQ-mid: zesmtpip2t1776152743t05dafc70
+X-QQ-Originating-IP: 90aflYS48oZQTIzKwDmOLG2ZMpBlc0zy4H4mJgn6gkM=
+Received: from localhost.localdomain ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 14 Apr 2026 15:45:40 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 8781629494817420186
+EX-QQ-RecipientCnt: 21
+From: Wentao Guan <guanwentao@uniontech.com>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
 	linux-kernel@vger.kernel.org,
-	jic23@kernel.org,
-	lars@metafoo.de,
-	dimitri.fedrau@liebherr.com,
-	markus.koeniger@liebherr.com,
-	andy@kernel.org,
-	linux-iio@vger.kernel.org,
-	Jonathan.Cameron@huawei.com
-Subject: [PATCH 6.6.y] iio: common: st_sensors: Fix use of uninitialize device structs
-Date: Tue, 14 Apr 2026 14:45:53 +0800
-X-OQ-MSGID: <20260414064553.151857-1-32840572@qq.com>
-X-Mailer: git-send-email 2.34.1
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@nabladev.com,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Wentao Guan <guanwentao@uniontech.com>
+Subject: Re: [PATCH 6.18 00/83] 6.18.23-rc1 review
+Date: Tue, 14 Apr 2026 15:44:35 +0800
+Message-Id: <20260414074435.2566765-1-guanwentao@uniontech.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20260413155731.019638460@linuxfoundation.org>
+References: <20260413155731.019638460@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -67,290 +67,44 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Mrs0LwfWgKNgOj/6Cpu1aQXurFmSIv/YEmjSw12Um/NY+9T83bLABCON
+	9VbWT76ZfJP5nlY3bB0LxNupp852n5ptHh4Y/UUDAtoCtELsz3g03c5N89dYug9Kf06T36L
+	irY3tETfLQx5647I9cCfh83GTKp8Y8gHdYX95cXBRx7dnorOr0981JEAVYJLYfNEbbMRWkg
+	DSlYbJmdZYsO1WT0OLK2UW5aDX9fsT9cicPPDebytCp2BVtmDsCJkBNHzpj3rq0oHTEW6AZ
+	zCu2eq8wiRKr+Jws6bUKqnDHk7y7InR76geha5P4z97gR2xJRja2Wpgiz1dvV/2ec23XxsN
+	tk8ukC29uyRH69okHlY1HUUyGCHcblwaWkK1nR+1/cXT1524AYmh9bQrUzSLBuyI/h3PK77
+	aQ7z4k6fK9jUX1eY0TkY5ZIoy5AKz5d6V3H7qyxJK+5+ZaNY+381aQft9FVzsVYcs5Q4NU5
+	kkkvkkl48ACMUqPi2Om1IIzDowJvN3l9hrpPspsTClYLFNInktwpvhJmo3KaHiilmTEDRyA
+	8NqlN/1No9LUt3KkeU0MCGgRWXuMW5t22JUrjqnNFzfxFb+NugCbfY7YoDOJONz8czboVHO
+	iH/cye3u1x7ymRMZk1fE2YODuCLrubHaeQ1PVWVd1P5R9hN85IMGSWIumtC+kaM8fYSnCvI
+	6h1u2A+cn9JThPQrHmInH48CgKfHODS/b+z1vj+KSACesRzm8qO/XtJxisO1OV+5JLePGOb
+	JP7Woo9dL1l6c0ZckFJiwF66uO4GOsk82RB4XDGUlGCNGSwx8GzA6NOPSjzzRvzeS0w5tsv
+	yRxGNihgMy/4/VdnR+9K3oF8ATh/bkPvM2Uyql7elUGxT8JsA5lONN/eHoEpaI69dEcC6CY
+	5hyobmAyXc2GVt6/qNw+S42JmFOcVOyh920pv4hqnWUWJyVTer3cXDNfHR4VNuhUDt4NUY4
+	zaU6YTjiaCz4jz5Yb9gYtNaX/JtCu0XRQVKlpq7amsGC7B9ihOIQ9RvR9eUMCZDR/upzxJg
+	MsBhgbb70O40EEtWVrwwnrTiFo28QdbVVUzI5tpjc5yVLTiltoE4DMn9+ct7s=
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
-From: Maud Spierings <maudspierings@gocontroll.com>
+Build tested in our x86,arm64,loongarch,riscv config successfully without error.
 
-[ Upstream commit 9f92e93e257b33e73622640a9205f8642ec16ddd ]
+Tested-by: Wentao Guan <guanwentao@uniontech.com>
 
-Throughout the various probe functions &indio_dev->dev is used before it
-is initialized. This caused a kernel panic in st_sensors_power_enable()
-when the call to devm_regulator_bulk_get_enable() fails and then calls
-dev_err_probe() with the uninitialized device.
+BRs
+Wentao Guan
 
-This seems to only cause a panic with dev_err_probe(), dev_err(),
-dev_warn() and dev_info() don't seem to cause a panic, but are fixed
-as well.
+defconfigs:
+https://gist.github.com/opsiff/decbc7d88fbf68488a7d90e46f6d3e59
 
-The issue is reported and traced here: [1]
-
-Link: https://lore.kernel.org/all/AM7P189MB100986A83D2F28AF3FFAF976E39EA@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM/ [1]
-Cc: stable@vger.kernel.org
-Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://... [1]
-Link: https://patch.msgid.link/20250527-st_iio_fix-v4-1-12d89801c761@gocontroll.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fang Wang <32840572@qq.com>
----
- drivers/iio/accel/st_accel_core.c             | 10 +++---
- .../iio/common/st_sensors/st_sensors_core.c   | 36 +++++++++----------
- .../common/st_sensors/st_sensors_trigger.c    | 20 +++++------
- 3 files changed, 31 insertions(+), 35 deletions(-)
-
-diff --git a/drivers/iio/accel/st_accel_core.c b/drivers/iio/accel/st_accel_core.c
-index 51d8de18e6d6..45d2268e042e 100644
---- a/drivers/iio/accel/st_accel_core.c
-+++ b/drivers/iio/accel/st_accel_core.c
-@@ -1342,6 +1342,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	union acpi_object *ont;
- 	union acpi_object *elements;
- 	acpi_status status;
-+	struct device *parent = indio_dev->dev.parent;
- 	int ret = -EINVAL;
- 	unsigned int val;
- 	int i, j;
-@@ -1360,7 +1361,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	};
- 
- 
--	adev = ACPI_COMPANION(indio_dev->dev.parent);
-+	adev = ACPI_COMPANION(parent);
- 	if (!adev)
- 		return -ENXIO;
- 
-@@ -1369,8 +1370,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	if (status == AE_NOT_FOUND) {
- 		return -ENXIO;
- 	} else if (ACPI_FAILURE(status)) {
--		dev_warn(&indio_dev->dev, "failed to execute _ONT: %d\n",
--			 status);
-+		dev_warn(parent, "failed to execute _ONT: %d\n", status);
- 		return status;
- 	}
- 
-@@ -1446,12 +1446,12 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	}
- 
- 	ret = 0;
--	dev_info(&indio_dev->dev, "computed mount matrix from ACPI\n");
-+	dev_info(parent, "computed mount matrix from ACPI\n");
- 
- out:
- 	kfree(buffer.pointer);
- 	if (ret)
--		dev_dbg(&indio_dev->dev,
-+		dev_dbg(parent,
- 			"failed to apply ACPI orientation data: %d\n", ret);
- 
- 	return ret;
-diff --git a/drivers/iio/common/st_sensors/st_sensors_core.c b/drivers/iio/common/st_sensors/st_sensors_core.c
-index c77d7bdcc121..78f5728417d5 100644
---- a/drivers/iio/common/st_sensors/st_sensors_core.c
-+++ b/drivers/iio/common/st_sensors/st_sensors_core.c
-@@ -154,7 +154,7 @@ static int st_sensors_set_fullscale(struct iio_dev *indio_dev, unsigned int fs)
- 	return err;
- 
- st_accel_set_fullscale_error:
--	dev_err(&indio_dev->dev, "failed to set new fullscale.\n");
-+	dev_err(indio_dev->dev.parent, "failed to set new fullscale.\n");
- 	return err;
- }
- 
-@@ -231,8 +231,7 @@ int st_sensors_power_enable(struct iio_dev *indio_dev)
- 					     ARRAY_SIZE(regulator_names),
- 					     regulator_names);
- 	if (err)
--		return dev_err_probe(&indio_dev->dev, err,
--				     "unable to enable supplies\n");
-+		return dev_err_probe(parent, err, "unable to enable supplies\n");
- 
- 	return 0;
- }
-@@ -241,13 +240,14 @@ EXPORT_SYMBOL_NS(st_sensors_power_enable, IIO_ST_SENSORS);
- static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
- 					struct st_sensors_platform_data *pdata)
- {
-+	struct device *parent = indio_dev->dev.parent;
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
- 
- 	/* Sensor does not support interrupts */
- 	if (!sdata->sensor_settings->drdy_irq.int1.addr &&
- 	    !sdata->sensor_settings->drdy_irq.int2.addr) {
- 		if (pdata->drdy_int_pin)
--			dev_info(&indio_dev->dev,
-+			dev_info(parent,
- 				 "DRDY on pin INT%d specified, but sensor does not support interrupts\n",
- 				 pdata->drdy_int_pin);
- 		return 0;
-@@ -256,29 +256,27 @@ static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
- 	switch (pdata->drdy_int_pin) {
- 	case 1:
- 		if (!sdata->sensor_settings->drdy_irq.int1.mask) {
--			dev_err(&indio_dev->dev,
--					"DRDY on INT1 not available.\n");
-+			dev_err(parent, "DRDY on INT1 not available.\n");
- 			return -EINVAL;
- 		}
- 		sdata->drdy_int_pin = 1;
- 		break;
- 	case 2:
- 		if (!sdata->sensor_settings->drdy_irq.int2.mask) {
--			dev_err(&indio_dev->dev,
--					"DRDY on INT2 not available.\n");
-+			dev_err(parent, "DRDY on INT2 not available.\n");
- 			return -EINVAL;
- 		}
- 		sdata->drdy_int_pin = 2;
- 		break;
- 	default:
--		dev_err(&indio_dev->dev, "DRDY on pdata not valid.\n");
-+		dev_err(parent, "DRDY on pdata not valid.\n");
- 		return -EINVAL;
- 	}
- 
- 	if (pdata->open_drain) {
- 		if (!sdata->sensor_settings->drdy_irq.int1.addr_od &&
- 		    !sdata->sensor_settings->drdy_irq.int2.addr_od)
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"open drain requested but unsupported.\n");
- 		else
- 			sdata->int_pin_open_drain = true;
-@@ -336,6 +334,7 @@ EXPORT_SYMBOL_NS(st_sensors_dev_name_probe, IIO_ST_SENSORS);
- int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 					struct st_sensors_platform_data *pdata)
- {
-+	struct device *parent = indio_dev->dev.parent;
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
- 	struct st_sensors_platform_data *of_pdata;
- 	int err = 0;
-@@ -343,7 +342,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 	mutex_init(&sdata->odr_lock);
- 
- 	/* If OF/DT pdata exists, it will take precedence of anything else */
--	of_pdata = st_sensors_dev_probe(indio_dev->dev.parent, pdata);
-+	of_pdata = st_sensors_dev_probe(parent, pdata);
- 	if (IS_ERR(of_pdata))
- 		return PTR_ERR(of_pdata);
- 	if (of_pdata)
-@@ -370,7 +369,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 		if (err < 0)
- 			return err;
- 	} else
--		dev_info(&indio_dev->dev, "Full-scale not possible\n");
-+		dev_info(parent, "Full-scale not possible\n");
- 
- 	err = st_sensors_set_odr(indio_dev, sdata->odr);
- 	if (err < 0)
-@@ -405,7 +404,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 			mask = sdata->sensor_settings->drdy_irq.int2.mask_od;
- 		}
- 
--		dev_info(&indio_dev->dev,
-+		dev_info(parent,
- 			 "set interrupt line to open drain mode on pin %d\n",
- 			 sdata->drdy_int_pin);
- 		err = st_sensors_write_data_with_mask(indio_dev, addr,
-@@ -594,21 +593,20 @@ EXPORT_SYMBOL_NS(st_sensors_get_settings_index, IIO_ST_SENSORS);
- int st_sensors_verify_id(struct iio_dev *indio_dev)
- {
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
-+	struct device *parent = indio_dev->dev.parent;
- 	int wai, err;
- 
- 	if (sdata->sensor_settings->wai_addr) {
- 		err = regmap_read(sdata->regmap,
- 				  sdata->sensor_settings->wai_addr, &wai);
- 		if (err < 0) {
--			dev_err(&indio_dev->dev,
--				"failed to read Who-Am-I register.\n");
--			return err;
-+			return dev_err_probe(parent, err,
-+					     "failed to read Who-Am-I register.\n");
- 		}
- 
- 		if (sdata->sensor_settings->wai != wai) {
--			dev_err(&indio_dev->dev,
--				"%s: WhoAmI mismatch (0x%x).\n",
--				indio_dev->name, wai);
-+			dev_warn(parent, "%s: WhoAmI mismatch (0x%x).\n",
-+				 indio_dev->name, wai);
- 			return -EINVAL;
- 		}
- 	}
-diff --git a/drivers/iio/common/st_sensors/st_sensors_trigger.c b/drivers/iio/common/st_sensors/st_sensors_trigger.c
-index a0df9250a69f..b900acd471bd 100644
---- a/drivers/iio/common/st_sensors/st_sensors_trigger.c
-+++ b/drivers/iio/common/st_sensors/st_sensors_trigger.c
-@@ -127,7 +127,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 	sdata->trig = devm_iio_trigger_alloc(parent, "%s-trigger",
- 					     indio_dev->name);
- 	if (sdata->trig == NULL) {
--		dev_err(&indio_dev->dev, "failed to allocate iio trigger.\n");
-+		dev_err(parent, "failed to allocate iio trigger.\n");
- 		return -ENOMEM;
- 	}
- 
-@@ -143,7 +143,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 	case IRQF_TRIGGER_FALLING:
- 	case IRQF_TRIGGER_LOW:
- 		if (!sdata->sensor_settings->drdy_irq.addr_ihl) {
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"falling/low specified for IRQ but hardware supports only rising/high: will request rising/high\n");
- 			if (irq_trig == IRQF_TRIGGER_FALLING)
- 				irq_trig = IRQF_TRIGGER_RISING;
-@@ -156,21 +156,19 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 				sdata->sensor_settings->drdy_irq.mask_ihl, 1);
- 			if (err < 0)
- 				return err;
--			dev_info(&indio_dev->dev,
-+			dev_info(parent,
- 				 "interrupts on the falling edge or active low level\n");
- 		}
- 		break;
- 	case IRQF_TRIGGER_RISING:
--		dev_info(&indio_dev->dev,
--			 "interrupts on the rising edge\n");
-+		dev_info(parent, "interrupts on the rising edge\n");
- 		break;
- 	case IRQF_TRIGGER_HIGH:
--		dev_info(&indio_dev->dev,
--			 "interrupts active high level\n");
-+		dev_info(parent, "interrupts active high level\n");
- 		break;
- 	default:
- 		/* This is the most preferred mode, if possible */
--		dev_err(&indio_dev->dev,
-+		dev_err(parent,
- 			"unsupported IRQ trigger specified (%lx), enforce rising edge\n", irq_trig);
- 		irq_trig = IRQF_TRIGGER_RISING;
- 	}
-@@ -179,7 +177,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 	if (irq_trig == IRQF_TRIGGER_FALLING ||
- 	    irq_trig == IRQF_TRIGGER_RISING) {
- 		if (!sdata->sensor_settings->drdy_irq.stat_drdy.addr) {
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"edge IRQ not supported w/o stat register.\n");
- 			return -EOPNOTSUPP;
- 		}
-@@ -214,13 +212,13 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 					sdata->trig->name,
- 					sdata->trig);
- 	if (err) {
--		dev_err(&indio_dev->dev, "failed to request trigger IRQ.\n");
-+		dev_err(parent, "failed to request trigger IRQ.\n");
- 		return err;
- 	}
- 
- 	err = devm_iio_trigger_register(parent, sdata->trig);
- 	if (err < 0) {
--		dev_err(&indio_dev->dev, "failed to register iio trigger.\n");
-+		dev_err(parent, "failed to register iio trigger.\n");
- 		return err;
- 	}
- 	indio_dev->trig = iio_trigger_get(sdata->trig);
--- 
-2.34.1
+Log:
+Linux version 6.18.23-rc1-gc600baa82c20 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
+Linux version 6.18.23-rc1-gc600baa82c20 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT_DYNAMIC Tue Apr 14 14:39:43 CST 2026
+Linux version 6.18.23-rc1-loong64-desktop-hwe-gc600baa82c20 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
+Linux version 6.18.23-rc1-loong64-desktop-hwe-gc600baa82c20 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #3 SMP PREEMPT_DYNAMIC Tue Apr 14 15:04:09 CST 2026
+Linux version 6.18.23-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT 
+Linux version 6.18.23-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #4 SMP PREEMPT Tue Apr 14 15:32:22 CST 2026
+Linux version 6.18.23-rc1-gc600baa82c20 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin14) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
+Linux version 6.18.23-rc1-gc600baa82c20 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin14) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Tue Apr 14 14:13:29 CST 2026
 
