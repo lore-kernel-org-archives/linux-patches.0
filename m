@@ -1,82 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9535A29408;
-	Wed, 15 Apr 2026 10:16:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04916337BB5;
+	Wed, 15 Apr 2026 10:22:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776248204; cv=none; b=kFQ5KpClno/MjkB7N6Gm4i+3tNICj1J2zyCEM8fybm4lLHRHyKYcBC9DDx+q/B3uR4hXlsKz72WMS46MUWx4QkmptmtiNIh3tmMQtlhHMLG9ZuWXQAxAabiusUO1RWNb8pP5TnZVAubjTvJFETMqTq9+Q+AUiufNuv34rUC+0I4=
+	t=1776248547; cv=none; b=h02ngr8/ED5CBe2UUy26NkLsOXn4wnHZPelhODCf1+u8x1TICgYe8/y35QI/aZRsQY8rXppXIHTLDgSwxDQpUc2r7Swl7/6kpWfpX/28v0wvv0l11HrjOTJQZsuHygTbyYIaST3Jh6wJEzxOfwYO36BRtkTBoq+uQpwNnjhxVUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776248204; c=relaxed/simple;
-	bh=SdtinQhntMuvRPSxzTe5Z68hfpujzRJOaClR3VLGMAA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kgn5st3/RSq8PcYaSUSRZxAR7nbOlqRBRu67Gk0Vg0nOeAA8n+s6vjkVZPK2IK+tfz0B3nAKpdftTN6Snc8WgxNrk1/yXxWrMCyHRQJW/P6Yi1MSZNfOXC3cjRt9WUQ/t8B6ws1o2HAnC+/xHN7GbFPQXly1k6hBy/zwXztbSWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kL3kDtWH; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kL3kDtWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7DAC19424;
-	Wed, 15 Apr 2026 10:16:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776248204;
-	bh=SdtinQhntMuvRPSxzTe5Z68hfpujzRJOaClR3VLGMAA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kL3kDtWHbm3rKWP3pQQUgfkwOAHDNy72y1/xfnyqj29oHhg4eN6u3X8pOCkeyHAAf
-	 IP7TdqFoLJwReSlMOoM1mIWPpMgwKavtiSS8nzywVKpWGzOmyNyHk40fMbfiZAeqoZ
-	 NiOuGOXM40hFXNe6fj5+8HtoLCAr6GfjkzFkO0iSbXsFdXnnLPegSdNzI7hdGe/tFq
-	 qtbk/mA5iVf/jJCuyDcaLEhBdcFj006OlmDVG1g40lfOZsuXyaiGCG/N3wcw9i4EWv
-	 ytvREIy3s9sdfGZjrhQ+BJgAjDtfMTFGxCSJ9c88mVwqbSu0KqLO/OMDB+x6wN6lW+
-	 Z7Nilit56BlcA==
-Date: Wed, 15 Apr 2026 11:16:38 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.6 00/50] 6.6.135-rc1 review
-Message-ID: <7226b550-7a93-4551-a751-d6f1de977484@sirena.org.uk>
-References: <20260413155724.497323914@linuxfoundation.org>
+	s=arc-20240116; t=1776248547; c=relaxed/simple;
+	bh=+bsK7pj06MoS1zp0BhM4JtpjlhYpLx975TpfaF/5/mI=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=j/KU2drhrqRg8S7Zekc/z2X89FosOLtcOfICCkeBOcTFGZ6BnZIj4oiBSaqLcET2zRFq42qpDuavFbX9/mai2IyisEvwnq/v4Yv1w8laaOgTUyahq2+mznvFm+A4te8h/WLlH59YzDaiYgkC7k90SDkJtCqiWDNmUXiFGOZKXFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wCxO3-004xWm-2p;
+	Wed, 15 Apr 2026 10:22:22 +0000
+Received: from ben by deadeye with local (Exim 4.99.1)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wCxO1-00000003Vny-1fBA;
+	Wed, 15 Apr 2026 12:22:21 +0200
+Message-ID: <9c5431bb22e2c1470f608a60f872c441c21550ff.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 153/491] gve: defer interrupt enabling until NAPI
+ registration
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Ankit Garg <nktgrg@google.com>, Jordan Rhee	
+ <jordanrhee@google.com>, Joshua Washington <joshwash@google.com>, Harshitha
+ Ramamurthy <hramamurthy@google.com>, Paolo Abeni <pabeni@redhat.com>
+Date: Wed, 15 Apr 2026 12:22:16 +0200
+In-Reply-To: <20260413155824.759485387@linuxfoundation.org>
+References: <20260413155819.042779211@linuxfoundation.org>
+	 <20260413155824.759485387@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-leS3f6qP9AucP8AJCK9m"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cFYbj4Z2TXT5n60H"
-Content-Disposition: inline
-In-Reply-To: <20260413155724.497323914@linuxfoundation.org>
-X-Cookie: Non-sequiturs make me eat lampshades.
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
 
---cFYbj4Z2TXT5n60H
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--=-leS3f6qP9AucP8AJCK9m
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 13, 2026 at 06:00:27PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.135 release.
-> There are 50 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Mon, 2026-04-13 at 17:56 +0200, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Ankit Garg <nktgrg@google.com>
+>=20
+> commit 3d970eda003441f66551a91fda16478ac0711617 upstream.
+[...]
+> --- a/drivers/net/ethernet/google/gve/gve_main.c
+> +++ b/drivers/net/ethernet/google/gve/gve_main.c
+[...]
+> @@ -420,6 +422,7 @@ static void gve_remove_napi(struct gve_p
+>  	struct gve_notify_block *block =3D &priv->ntfy_blocks[ntfy_idx];
+> =20
+>  	netif_napi_del(&block->napi);
+> +	disable_irq(block->irq);
 
-Tested-by: Mark Brown <broonie@kernel.org>
+The disable_irq() belongs before the netif_napi_del().  (The upstream
+version got this right.)
 
---cFYbj4Z2TXT5n60H
+Ben.
+
+>  }
+> =20
+>  static int gve_register_qpls(struct gve_priv *priv)
+>=20
+>=20
+
+--=20
+Ben Hutchings
+The obvious mathematical breakthrough [to break modern encryption]
+would be development of an easy way to factor large prime numbers.
+                                                           - Bill Gates
+
+--=-leS3f6qP9AucP8AJCK9m
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnfZYUACgkQJNaLcl1U
-h9DTaAf+IXQXru9I8UY3R1a9TUKBaCevAo0Zgg81uBuzHzmgxxfi2rSiijov2YP0
-l6HToW5FcOuj6xjCHs+CswDY0DOl6qIYx5Y9EAAsePPf3jI6uty1ozRlLA0DwzOo
-f0Rf3J1QRRNoxIwBbCRBe+/U3Le0ujeS2RdnfzmhyAfksi9uqKh7x9JUeJkQMccw
-m3WxhQTqpRcisLaJVEvmERX/131T7actgSEBJ78A9YhkEzViyOW2vf7/4dCCsgjM
-W+7JQcgmJkTJkfTUZnRPyeAiwAZ3KiW/PkuqUrwpUofD8nA3TVtc+bLgq4981r8q
-1NDQpXInoLNn20jgb8dDOMj1pUapRA==
-=6BrX
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnfZtgACgkQ57/I7JWG
+EQkMmRAAiF0kQgxSyE1UWpzGrBJiooGuzVq2iRZVYsN9yPSeUtitdjvA11Xl3rv4
+zv9TRK9YtsFVwX7yYGtDguBKi6ShkHrqF8Z7G+Yz+24fGtpE8pkcoP57bmJEgA5M
+q0e18WbtRmjNfw8WE73dQ8/yKmRqRtUehoCxt90LPlfXkGQPXJHggLt7YEk4IROj
+1KGdpddMFAsXYMctCz+mZI5MfhTsH2UsXGfvb55mWirDueqjDCQ9gXHEFSryvBkr
+hAn61ZKMQMwE6Qg6f67Cml9dVTMh4TWjd98DNOdtH82c+LkNJEYRod1w+lO+NuA7
+Aocp3f4gAsC+PIcGRdNytlSNmW+l0m7MOjytRZO/FQ7GDW+NDGO2BULdjXTNEn9X
+BqCPdzzc66Kkpiu7oAfjqtIxxTNKwCQ8I0907h9ic19s9dVmduV4jALqPPldeBGg
+QMgOh/67abT+jeOciwYZOzqlA1Bk5OfifwBiYNcl9vfB5EC1/yVYywVna7gSG2dd
+E5fzRYtK9b6xmb6ys0mSx/40PMnOhWfvdO1xZBQXKYrmVb1jbiFU6Rd5Pc7vthbp
+7bxThR4JxaISFZRyjIltgI+2WDQf1aD7el8ZFBDdDzZr3YDHQRxhyYq/k5yWLPWK
+MPmi0LuqUuI85PK2JdZYI45nAviyUUExHNJBeMTfx1NG9BetbNQ=
+=+gU6
 -----END PGP SIGNATURE-----
 
---cFYbj4Z2TXT5n60H--
+--=-leS3f6qP9AucP8AJCK9m--
