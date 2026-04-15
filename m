@@ -1,183 +1,251 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8A9361DD2
-	for <patches@lists.linux.dev>; Wed, 15 Apr 2026 05:49:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C0C313E3F
+	for <patches@lists.linux.dev>; Wed, 15 Apr 2026 09:01:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.13
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776232159; cv=pass; b=rGdhm0QO26Uv9wkUVAPT1z9ikqrkOk/28a6IkfFINaPZx4gZmp3LsOtA1/TG6RQFSCPpsIGsJkeIKAmc6QOTG2YBG7AyjMRjLz89H64g2BvNwogOlY7CpgjILmMye6oDtYRngLSkPfBsQOqwlMytLkJW7MbhS7uU+nV1Q0NBRis=
+	t=1776243688; cv=fail; b=THT+W21LXCYIpFL91ZVMCDY2BqJEOEgbZ+8uUgKi6qUrZg9nznqtkIw+ZeNHvhUh+F2K6o34xcfsfcCB3+z39QCWTWaoHMTrwJMlkgP00r4cxQUK/XLcejYN7HvGzd+Kil+1352QeEPvDsOhXn722pZ1fsMvNRa3Vm1KwZFc6Uo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776232159; c=relaxed/simple;
-	bh=0Ko4VIiZxkI/O2taJ+3DwN8b1cZwadpXOzMv+Q9JyHg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z1v7nrtC788zEldY015VRKW88wztu+GvOLh3rnGPz8hqIGrs5j47Ca1x3UOqqOumeO7cxJGAS7PJHRuhz5pPWOv7pMxXDgLz3iQy626457/rvc8L+xoRFKG2+oneQ8m90Jcrrlb/wX+1exD2Dtf+loyp+If0sEuzCSBgjdNfGx0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bqe2JKKU; arc=pass smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1776243688; c=relaxed/simple;
+	bh=kntCP7WDby+yyR1Q/GTVo0VaPM7stxkOqi1bnorEJGM=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=ixBxeOvM9tcmIDxrSL9JPxDOBMTvl7Q3dzXyn9yE7OenwpQyFYwdvgVTNxeE5IoYXUO/WjY/iCsgLt5/mI/nMVoYzHsyqpsHIDrVpqXbS1/qON8GUNCVxv/BKRF0B3no84/GCGs/8vucDlXGaAk24BGVc4PDw2fqCc0fY9rvNpc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZW33SPQY; arc=fail smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bqe2JKKU"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-89fc349b5ceso99259546d6.3
-        for <patches@lists.linux.dev>; Tue, 14 Apr 2026 22:49:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776232156; cv=none;
-        d=google.com; s=arc-20240605;
-        b=S0ccmUqOjHGFJGFyuSJuWnbdM143pvD64dSWOorSDiMfo7SozWOqmlCJvYWE8sc8/O
-         ODymmZVg0poRPqq+PnW9/LiRrkmum/YqLFqgL3PeuIli0UFHepIKJvc/8OC6bcscsg7k
-         HTO3K7+fViVeuxDC/tWpAuUwkAe7cst1R95ScxEiIXEzrcze1k0PBBzz++bKXRUT6dBt
-         D4KTXf6TCUYUKoHfdkGShoXZ0zo6+xre19/pZZ7jPgEoHfd7C7jHJLceEBHog4Rcmgm2
-         GjzNPoMd4grvLISGYYyXHBwtyZhsAKvD7uZYGSaUP5hVryskVkQDC0N/ur6EIn9xyV0h
-         HOSw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=g7jC+e6yTEY26VnAI6j6zPGlJNJqrM6o2NkoHZehI4k=;
-        fh=Zq3XXl6IS4TdCnsE45rTgTO/gtqzLQKZ+RaNNUpFKvM=;
-        b=HPTY/sHGDkHGnM4U3aCs7D5GiXP5FWaddvMFsXE6UK3z3KCuyPr1CUoxBJ13GEuQkp
-         G6puCDdt3Viz8jBWHV02tDACRh8ifTq7dACHL+PnJLMlLZly8uzE5CaPfXdiw0xSu+wL
-         6qCzups2FD3pG/5w1EtD3EqU3w73J/Db3OfmQZePtt55J5LQsfi+vG05XOniDZAGxXl/
-         qDNIzkwiomvLXUIuvVDMSKbqcFatN7WlMAPizRz4RiNLBFQQVjQRPRA+QXbRv4V/bC0v
-         TSeo1BMlA8UXUHdVvqzgmvWZoCGFNXLPmSsaqHebKuQ413E1NXwP6SddMjy0Mp28bXaE
-         2smg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1776232156; x=1776836956; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g7jC+e6yTEY26VnAI6j6zPGlJNJqrM6o2NkoHZehI4k=;
-        b=bqe2JKKU82ht0B3NOcKrXEUPrmebs6fTGrfj7TWy4DzgGPWcRQkIjaf3zwodpEUo5f
-         9ryE1EZ073xVyHp8FoQiV7VuSZTLw4pNIuhhSs1VXrFr/WUJNoltmAf4+TQOMDLr7Lp7
-         JCES892SXbB2Ghf7WphxfgP16UetTSfogHckfZHtUO3rgSw77vpd4PO0fZpNwrJoCSUl
-         NHwqEwuowAOg3AW5QaJmGB97mr8plzE+dmz3OgY62V5AwDCZOhkKdYDbW/ZTsuBMM4fW
-         v74jjrdaOXFxddjxXKgAOSHqm3TjraWvsk+8wDcKgyK1E4uwEh6DVWjTFAG/4OcbHlSJ
-         aApw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776232156; x=1776836956;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=g7jC+e6yTEY26VnAI6j6zPGlJNJqrM6o2NkoHZehI4k=;
-        b=YlWgLTXDuAXz9tkQrsXgMcWNPRw+79qfqvwpjqoYMdVCFIu1TjgFpSQ9hRRaph6U4B
-         zSKNv6RMX3t7NG3w1VCqcsTmvw7FkkisUmGDpvg7YTx5cr0SFgeYLq5Yl7Va2AbJrKdh
-         YP6YGCudA/0ALSl3QJKMU194MqtT9IuP69puexzW8r5Aae7uV7cxzkwa7QQIvO7oVs6y
-         eEPBlWWrgunX4MSFcfhYHJeSynp8lRE5he71lwPxxjfUqMhMR8EqRwoYJkf41Q9I8U7w
-         FnxvH94VBzaomZBhAJ5s6FMWiZBo/s+XDjaETiaVt0QarQIf3iwBKgItx4bQmdJPBfhs
-         vjuQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8Q0//HSJvHA2K7PAk2v4dozjYNQTN3iA9xB7/WZjcqAnNm+n0fOeS0LbSmsB6ni0pGX/uXhWHf@lists.linux.dev
-X-Gm-Message-State: AOJu0YxMzrzLNYUJmiTw6Jrv5EioqgocU5d/nLHM/y993mxeuccoNilm
-	BKa8WBaGJEFyJwsTdIfDf/eQTuxdopi8fBde6iZ9W5hBgEccpmDFHMIVwIGZfzKfOHp6bwFN3Ph
-	ZxFPAN6Mc932435vnLJSOlWMHrM2n4sid+koyB220
-X-Gm-Gg: AeBDievezSfLnmOGFK44Q3tTf6Mfx/NqPcqANcKiW7TZlT/XRoWmM7QWMIEkX5o6yvc
-	wDBQzKl+QRpz08PlWHNq5zpmAHJD/lsE7EaK0oL4/gSmbvcTdm51XBh55tnXbo6N0BQXj1VMh+y
-	dNwujyPTwN0Z3dvjwR57T7D+PMhgiL3m/BgOgSwO1F/A/t5Blp8O3YxJ4vQ/5Gs89knu8jCIRcR
-	BTIfku9wDdze0S05ulIqRbLhoUcLHAWgl33KBzNWMCMnY0reImPLVdbF1HMh7TXZD2kLoRtb0HT
-	REH7M7uQNoqtH1JO0z/bvFVUcADEDamEmNUhEinerkLn9K6alH6YJPc0UMw9PvhshLURkjY=
-X-Received: by 2002:ad4:5bc7:0:b0:8ac:ae56:b493 with SMTP id
- 6a1803df08f44-8acae56b656mr198973546d6.40.1776232155593; Tue, 14 Apr 2026
- 22:49:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZW33SPQY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1776243687; x=1807779687;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=kntCP7WDby+yyR1Q/GTVo0VaPM7stxkOqi1bnorEJGM=;
+  b=ZW33SPQYXhS94AXQs3w9KRULR7iAZOvnKcm9XiKx6BVBZeYZDm4xVfOu
+   wgNy8QO1ZYE0rkul2bLHea/5ZPdWF6s18hPK5lIP/VzfaIjwDvwgdRpbC
+   4m/kyxil+Ckmy+a7RZujvfcyumsjpBLO5q7CwF8V0rsXJQJAJkTcD2gCo
+   OJabOWj1vrkS/NpMIGQClM64PRyXfnQiOwyMzXAPAriw3kR6n+KaME4NW
+   GJW73pSNFkezosS0+eqK/wvqjNOqPyDy/2GrFfBFsxw/KkTGeJ16NpJfa
+   MHXWnjlSDfggO3Vpwyd9ytLNRhyjsbFfVIBsttWWfUxYNRqWk7Ye07rQp
+   g==;
+X-CSE-ConnectionGUID: t1+Kjlw/RT673IvOE393Dw==
+X-CSE-MsgGUID: M80zyJUeRcqT7nZjAmi6+g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11759"; a="79799088"
+X-IronPort-AV: E=Sophos;i="6.23,179,1770624000"; 
+   d="scan'208";a="79799088"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2026 02:01:26 -0700
+X-CSE-ConnectionGUID: YvrxGSHPS4imye0Ie5pqhg==
+X-CSE-MsgGUID: p8aFAU7NQ+engj9YeQi0VQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,179,1770624000"; 
+   d="scan'208";a="234763100"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2026 02:01:26 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 15 Apr 2026 02:01:25 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Wed, 15 Apr 2026 02:01:25 -0700
+Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.55) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 15 Apr 2026 02:01:23 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Owmcyb9ZxAM0ReFVpNv28k2attLXkl3dFQ7tdpmnjH/LBqEPvoD370xrulTGURoLUBcm+6zqeGJV9RO4beo+VH8aDjvyQuy9o/PdOb7jePGCk7n0BEbn1rkQyFutlHKR253CyA4qc5h9sdNXZgxrzAGfJ+m8biKEgUqLiJWC4Ac1erTnHGMB2QRofwVJkPZEA0PaKf2ZFyjF2Q0bQKgEEu22yUwE1nUE3FRBta0dfHyyDArR2Fnn+c/gwBre1MlxpEHnjqUn/5InlvZBudHkaB05lQtwTGtPWbXGFg1x5jBEnAs4cByA5aH85P7rASv52VGWSWJUJgeu/d233MCnxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6XVvOBYbh1vB9qxBulPosGxUwrPs4hLpRWtNFAKHWa4=;
+ b=DeHsDcWe7Fs6pIf1WstgSvTbIbBvTVHYyPsWYAJ3A3xzyyAWFtUMDBy6KZhiGt/o7uTf6y8gZMrSW1QeGy0Jc8ekDxDX6FgHPZ5pCJBEhVKWmg87vJnkpBL5KzAvYN+VPLZDrjg+jEsAGzSCxAh5y4NAo69204WWh9cH4Nxh8KSeNMZpDVb6+gnxeQVIA/C4z91QVhQucSAxQaVoMp5T7UCSnEMTq/WQ5spZdY6+5DVnVUZRU17JUDNF4KPmZjvuZGcMjWaWTkWyqfnZARLWUmWokFTzAjwTYQBYb6fD9scopRVTbJmKKjhDEgjoAoTGR6jONFUqDpWPRiiq1w4Tjw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SA1PR11MB6967.namprd11.prod.outlook.com (2603:10b6:806:2bb::15)
+ by DM3PPF83579A393.namprd11.prod.outlook.com (2603:10b6:f:fc00::f35) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.18; Wed, 15 Apr
+ 2026 09:01:18 +0000
+Received: from SA1PR11MB6967.namprd11.prod.outlook.com
+ ([fe80::36a9:3aca:a63e:c8f4]) by SA1PR11MB6967.namprd11.prod.outlook.com
+ ([fe80::36a9:3aca:a63e:c8f4%4]) with mapi id 15.20.9769.046; Wed, 15 Apr 2026
+ 09:01:18 +0000
+Message-ID: <f440a674-b146-4977-904e-172b4e42a6c2@intel.com>
+Date: Wed, 15 Apr 2026 11:01:12 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 070/491] ASoC: core: Exit all links before removing
+ their components
+To: Ben Hutchings <ben@decadent.org.uk>
+CC: <patches@lists.linux.dev>, =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
+	<amadeuszx.slawinski@linux.intel.com>, Mark Brown <broonie@kernel.org>,
+	"Sasha Levin" <sashal@kernel.org>, Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+References: <20260413155819.042779211@linuxfoundation.org>
+ <20260413155821.667271642@linuxfoundation.org>
+ <5006a2a4e34e7fbbb89fc8969facc6b80c7d00de.camel@decadent.org.uk>
+Content-Language: en-US
+From: Cezary Rojewski <cezary.rojewski@intel.com>
+In-Reply-To: <5006a2a4e34e7fbbb89fc8969facc6b80c7d00de.camel@decadent.org.uk>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VI1PR06CA0142.eurprd06.prod.outlook.com
+ (2603:10a6:803:a0::35) To SA1PR11MB6967.namprd11.prod.outlook.com
+ (2603:10b6:806:2bb::15)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260413155819.042779211@linuxfoundation.org> <39e878af-7418-4538-9e1f-8b62de3d1e3f@nvidia.com>
- <ad30ns8QQDzk0h72@duo.ucw.cz>
-In-Reply-To: <ad30ns8QQDzk0h72@duo.ucw.cz>
-From: Ben Copeland <ben.copeland@linaro.org>
-Date: Wed, 15 Apr 2026 06:49:04 +0100
-X-Gm-Features: AQROBzBEqY4mG6hUOd2h2ReML6KwVLMY91sTJvZDNC4GxKeXzWsyi3AnMxmOomg
-Message-ID: <CAL0q8a65x5mK2K+X8bY3sPrG8JMhbN7uDMje7JJNvvmzaR_SiQ@mail.gmail.com>
-Subject: Re: [PATCH 5.10 000/491] 5.10.253-rc1 review
-To: Pavel Machek <pavel@nabladev.com>
-Cc: Jon Hunter <jonathanh@nvidia.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de, 
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org, 
-	sr@sladewatkins.com, 
-	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA1PR11MB6967:EE_|DM3PPF83579A393:EE_
+X-MS-Office365-Filtering-Correlation-Id: b49a3cdc-649f-4903-20cb-08de9acd8e8e
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|22082099003|56012099003|18002099003;
+X-Microsoft-Antispam-Message-Info: x5+p6So/JMvXKdajIzyMKGsct7rcU/o6/CKy31AqAQBqlgnPm8XjskitcOjWFYdpruivRh1+2ZcOlmLc4W8SnLxj1eMffI252DIrfKKM+AD+lxZUBMwB7VeBbSyrXVV7mNH9BrU8Cv3YL53bu8xBPgz26JbscFwNUxKaP+SZqsabVd2WdB1VX3DasqVKcyyjC7mOmyNSRsMxKL/6vji5i8tpK1lJpOxrg9NNxr3WwcZWOFTRGKBcky97WnaplDmiERgjQESrfAoILpEjUsibaq8aX+my6SMh7bDy8ChKyWXlRu6Fa5h+uQQYuvKGRWkBbgy736btpiCduZzwdNI8N6+fCUv++hRccoB1loydeGCYLXOYsCCjWs8JMJTMMC4AiUrPoh3AITes9N+yhd2kaSYamp2YAUGeJ1OSvSHTyD8U3DMT/pdrFFXV+76AInc6QA0XlQ/OYcnSCN+kZlJcAoKrdwyVK1ZfgsYJeakrPDuKZldwukgYI/f6dStzVYVApRqfIiCIsCWbFhWgIi6apDF6Y9tfyhK1A5ZQloP30hj34x9rDKwaMTjwzczRQG+Tsc7llW127LByRdMoJjldwfU3gCkfm68FZlumAW540hryOPbzUoeRBVg5uCW2kSdZ31wmVw3rJUGZzQBzfjhqFeAsAJ1i6XwF+36Y7Z0mUKBVYYFsoU2i3SDL7DUeB5FICdN3uOS9SVqmP2EcHk1jBFeeKcTfZKkafGPBwfDoHGM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR11MB6967.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(22082099003)(56012099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RndpbmVGcFhpVURuempJbSsyK20zSlJwQXp3dVpiTnh4RGh5WWpVMk9EZ2hy?=
+ =?utf-8?B?SE1UVHJhOTMrZXlxbnNhMjQwYzV3TUJDcVlEMm9VQlFTRURJNi8rM05kQ29W?=
+ =?utf-8?B?OFQvdm9NbzIzYTVMckoxYzdGMGx0VXgzUlZhaTEvcFJNWnE1dWxwQmZXVW9M?=
+ =?utf-8?B?Um42emxxSXp0ZE9aYjRtclZOQ3JoUFNrd3BBUU5xWElRUUlXZFI3UFFpZ1J3?=
+ =?utf-8?B?NjJGSS9Yei9INTFCRTgybWNtd3h0WlFqbmM0N2Zpa3lDbncwYUJZWEVOQXE0?=
+ =?utf-8?B?ZE1JblR5MjRQb0ZDc3FQVUcrZFcwbEpROFBBQWxrbnUraFd0WHR3cS9XMXpZ?=
+ =?utf-8?B?WVN6WnlJalA0cUhnNEMvQ0tzMVA4cXV1ZGJqNVNmd2k3ZW9nS3ozTWhrazFm?=
+ =?utf-8?B?c1N0MU1HOVJYUkdwMnI0bmtKeGw3REVLUU5hV2o4b0hRSnpqTlhYOFNaYUQ3?=
+ =?utf-8?B?dklMNG9zVFEyRDJucHRWQk1YaUVnSnZyMUdqN09OZ0NIT2NONVA5aUJtSVh1?=
+ =?utf-8?B?bmhDc1l2Q3BjU2xEOExhWThYdk5nSFloNkp4NURYK3h5RFZMYW40dDBDY2lF?=
+ =?utf-8?B?Wllvckt5NzBvdFdpdFBYMTh0UG9wRzhQdVRPRVpqeFQydktiSWZrcHFZTzh3?=
+ =?utf-8?B?endlV0habEdvc3ROaEdpNVI4RFl2QjJKT0pUVXNuVkhzaGpIVnZhK3lkZUJT?=
+ =?utf-8?B?N05POTRQeXVQS0t5YlBVUktIYXljdW56SUNhV0hjRHo0dXJMT2hLQjZ6Tllv?=
+ =?utf-8?B?UDMwaGRwRVBiYjdJZHNtVHovOGFDR21IUW5haldSWFVIdm55VlczZ1ZxemIr?=
+ =?utf-8?B?TytzTmIrMmplaTgyVUltMlF5NmIweXNCb1JVeGNtV3dWU1ZLOGpxM1VHaVd0?=
+ =?utf-8?B?SHh5SW1xVlVBTGE0bDF3ODZJcTVtME1jU2NxUnZNUmg3OXZua2daK0JqSjZq?=
+ =?utf-8?B?cmVSU01ibkJGbitCcHlIajRQeFNaRGpkeW5WcndlNlpPNzd4MGN4NmhUZUw4?=
+ =?utf-8?B?K0VtQ1ZuaGZ4V2tvSGVBV1ZHQ0dUdUZveUtVbUROQUlPV0x0UTg2S1Z1dFMy?=
+ =?utf-8?B?UmhMZU5GUE1HTW81Y1RGTmlrbEQwQUFrV3ZtZGp0emd5bXQwdmtsNmhmMFZS?=
+ =?utf-8?B?dW0zVUx2ZmNxa3VXTngzY3N3bkZOSitFSHVNSWRkbndiNlhabGVJaFdsd08v?=
+ =?utf-8?B?dW15T1VXNDNuWGNNN0lPV0pIcHhFU25pdG1RcGhKck5Jb3pvWjBoTFdrUTVr?=
+ =?utf-8?B?KzBITUFpc1l5QmFFNWp4ZnBoTnIzNUtZZlZDOWtwWWNGL242OWtOQk9ML3lW?=
+ =?utf-8?B?anhsSHk1VDd4eU5NUFZ2NkRFQVo1U0U5MVR2WFBoZ2dIY0VjdWp5OHZQQlJL?=
+ =?utf-8?B?VHdVMzNWdVNidTB3Y3FXWnRYSURRVUt2Q3ROQ2Y1NWlRUk0ycHpOWnRjYU9o?=
+ =?utf-8?B?Qk53Y1BPK2UxZGhKait0eEtybjNMblR0cW1NSTU2dmgwWHhpY0FudEVZTG5T?=
+ =?utf-8?B?NkJDUlE5bDFudWY4bDlvUndoOERBQUQ4MWxWVTlXT2NWMlJzMzZRRnZoMkJH?=
+ =?utf-8?B?OVJZUVN3bkdHbnVKOCtzTnA4N2RhbXNjRHozSHFxVTArcDc0amJ1TkZQSDhr?=
+ =?utf-8?B?aTlKa29mcTFEWGt5b2RDWDhoTG54b1YxZUZhNnJsZlVqUDFMYW5UQVhPRFMw?=
+ =?utf-8?B?TWg3emdtMGt3ZUtaL21hK0RCdTNwS29OQVJHeTA4ZSt5YVBFWWxkZEhuZjBk?=
+ =?utf-8?B?RlZnYWxRYXVNMnFWUldHWG1FaWRoa3l3eTNNZWpTWktFc1ZxRDNzTVFrNU5U?=
+ =?utf-8?B?UXQvWDcwWC93MW5yNFRLN0FBRkxDdU5yeXdHTWVzb1I4bGtSd1VUM1RxK0Zn?=
+ =?utf-8?B?Z2V2alBEZ3J3SnRPQWxES0tpeWZ0VDNJZmtzZnN6VE1Nak5ZWWxvZWxEVkxP?=
+ =?utf-8?B?cUdRY3FmZkxUa01JeTBIMW1KLzJHUSs5VjU3aTRQTEd0djVzQ1AxTlZGZWVl?=
+ =?utf-8?B?NTZ3OHVha2U4aXZ1UEt6SWtKZkdva2x5OUNTRi9KcUZFK1QyQmtIeFZJNXI3?=
+ =?utf-8?B?R3hKaWRTcFhQZGxtSDFWY3ZCM0thZnRLc2szK1FPeWEyb2lKeUtlYldZamFN?=
+ =?utf-8?B?VFdCSVRqdHZTNmhhY2lIYkRHUGQxNFFNL3Z2aXZtRi91Mmdzck9zS0l2NzU1?=
+ =?utf-8?B?YnJTRDdHbGxEWGhWMFJ6Tld3eG52NUpuaHFScnpmb2UzSFlIbjYyZjBrQ2s2?=
+ =?utf-8?B?bnV6Tlp2UE1RZEFLb0tyNy9RRDZ6RmNrNUVsWWdSTmluUS8yUmFRVnAxcTlj?=
+ =?utf-8?B?aUZjbTNEcVN0ODNTYTJTd25DdGhTTkkyYURJRmgwbW13cUR5dEZxK1VCbnYw?=
+ =?utf-8?Q?Z3Qr1Crf9t+8U6lE=3D?=
+X-Exchange-RoutingPolicyChecked: i1inRzYHD88QhGM2SGsDbXwWVSBfoghMZUF+ILxGqwH8PQEZtwfjLXoCZXBDxpnqdty9qyftUPSNWUYNVRcJ4RUprL0QDMkdhbE3YF2yO1XLex2Xips7Z88iYrXhhbufzxeE29CDJhZyGlnheUu+0ppHPENfITgD2zB6HaJcDfxQzzo+DQrSsud3YhzDUuvwelbOBTv1+BLQCysdwP05GuGPOjpkGiN2lVmEbnW19Zo+a+XwLajk1wCq+Shlhp84Aqfx7q+wAKNQVntN6Dyl1dC9NEIgsYR7gItH4uukzLmOYYLZ52AdNf5hiLLIFSNatJlzdtEiKyaevqtvwq1MKQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: b49a3cdc-649f-4903-20cb-08de9acd8e8e
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR11MB6967.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2026 09:01:18.6716
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UosYuV6qeN9LzcfkP2zG6htro+anUGSsTqSQ5+DDWcs9ER/8hXtbX7H5LNZFzk9A1ssQPR0MFx6nfp/Up3nzYXNp2i8UTFzaUyZrWb7WAwc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PPF83579A393
+X-OriginatorOrg: intel.com
 
-On Tue, 14 Apr 2026 at 09:03, Pavel Machek <pavel@nabladev.com> wrote:
->
-> On Mon 2026-04-13 19:52:08, Jon Hunter wrote:
-> > Hi Greg,
-> >
-> > On 13/04/2026 16:54, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 5.10.253 release=
-.
-> > > There are 491 patches in this series, all will be posted as a respons=
-e
-> > > to this one.  If anyone has any issues with these being applied, plea=
-se
-> > > let me know.
-> > >
-> > > Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >     https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.10.253-rc1.gz
-> > > or in the git tree and branch at:
-> > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.10.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
-> > >
-> > > -------------
-> > > Pseudo-Shortlog of commits:
-> >
-> > ...
-> > > Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
-> > >      bus: omap-ocp2scp: Convert to platform remove callback returning=
- void
-> >
-> >
-> > I am seeing the following build error due to the above change on ARM pl=
-atforms ...
-> >
-> > drivers/bus/omap-ocp2scp.c:95:10: error: 'struct platform_driver' has n=
-o member named 'remove_new'; did you mean 'remove'?
-> >    95 |         .remove_new     =3D omap_ocp2scp_remove,
-> >       |          ^~~~~~~~~~
-> >       |          remove
-> > drivers/bus/omap-ocp2scp.c:95:27: error: initialization of 'int (*)(str=
-uct platform_device *)' from incompatible pointer type 'void (*)(struct pla=
-tform_device *)' [-Werror=3Dincompatible-pointer-types]
-> >    95 |         .remove_new     =3D omap_ocp2scp_remove,
-> >       |                           ^~~~~~~~~~~~~~~~~~~
-> >
->
-> We see that one, too:
->
-> https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/1390=
-1155305
-> https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines=
-/2450043152
->
-> Best regards,
+On 2026-04-15 12:15 AM, Ben Hutchings wrote:
+> On Mon, 2026-04-13 at 17:55 +0200, Greg Kroah-Hartman wrote:
+>> 5.10-stable review patch.  If anyone has any objections, please let me know.
 
-This was also observed on KernelCI:
+...
 
-https://dashboard.kernelci.org/tree/stable-rc/linux-5.10.y/0abb5988a311f0e6=
-17615aa4b08c90b3ade85c25?df%7Ca%7Carm=3Dtrue
+>> diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+>> index 4294206dff362..562fbc0fb3475 100644
+>> --- a/sound/soc/soc-core.c
+>> +++ b/sound/soc/soc-core.c
+>> @@ -962,9 +962,6 @@ void snd_soc_remove_pcm_runtime(struct snd_soc_card *card,
+>>   
+>>   	lockdep_assert_held(&client_mutex);
+>>   
+>> -	/* release machine specific resources */
+>> -	snd_soc_link_exit(rtd);
+>> -
+>>   	/*
+>>   	 * Notify the machine driver for extra destruction
+>>   	 */
+> 
+> snd_soc_remove_pcm_runtime() is called from remove_link() in
+> soc-topology.c.  I might be misunderstanding it, but it seems to free
+> the structure that snd_soc_link_exit() accesses immediately after
+> snd_soc_remove_pcm_runtime() returns.
 
-The two issues:
+Hello Ben,
 
-https://dashboard.kernelci.org/issue/maestro%3A67d434ff5d6b71886d45efe758ca=
-00ff45cb969a?iv=3D1
-https://dashboard.kernelci.org/issue/maestro%3Ac970827f049cfd67124148e3c19a=
-be1d4aa8347a?iv=3D1
+Good questions all around.  Now, the topology is typically loaded during 
+ASoC's component->probe() and removed during component->remove(). 
+FrontEnd (FE) DAIs spawned during the topology-load process shall be 
+removed during topology-remove process, so component->remove().  That 
+remove() is the last third step - after rtd->exit()s and dai->remove()s 
+and just before the general snd_soc_remove_pcm_runtime().
 
-Regards
+rtds->exit()
+dais->remove()
+components->remove()
+|_snd_soc_tplg_component_remove()
+|__snd_soc_remove_pcm_runtime() // rtds spawned with tplg
+snd_soc_remove_pcm_runtime() // rtds spawned without tplg
 
-Ben
 
->                                                                          =
-       Pavel
+> 
+>> @@ -1928,6 +1925,9 @@ static void soc_cleanup_card_resources(struct snd_soc_card *card)
+>>   
+>>   	snd_soc_dapm_shutdown(card);
+>>   
+>> +	/* release machine specific resources */
+>> +	for_each_card_rtds(card, rtd)
+>> +		snd_soc_link_exit(rtd);
+>>   	/* remove and free each DAI */
+>>   	soc_remove_link_dais(card);
+>>   	soc_remove_link_components(card);
+> 
+> So it wouldn't be safe to defer snd_soc_link_exit() to here.
+> 
+> After ff9226224437 ("ASoC: topology: Change allocations to resource
+> managed") upstream that memory is device-managed, making the lifetime of
+> the link structure long enough for this to be OK.  So none of the newer
+> branches would have this problem.
+
+In essence, the patch fixes the teardown sequence of a card so that it 
+matches its startup equivalent.  For simplicity, component marked as 
+(A), DAI with (B) and rtd with (C).
+
+Existing v5.10 startup flow:
+(A) -> (B) -> (C)
+
+the teardown:
+(B) -> (A) -> (C)
+
+assuming we have an ASoC sound cards with components/DAIs/rtds utilizing 
+their custom probing procedures, it's clear that one may hit unexpected 
+issues when tearing down the card.  Code implementing rtd->exit() shall 
+be able to touch the component its paired with.
+
+Let me know if I'm missing something.  Perhaps v5.10 has more modprobe 
+<> rmmod related problems and that's why you're hitting an obstacle.
+
+
+Kind regards,
+Czarek
