@@ -1,147 +1,128 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1BA190473
-	for <patches@lists.linux.dev>; Wed, 15 Apr 2026 18:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C98D21CC4F
+	for <patches@lists.linux.dev>; Wed, 15 Apr 2026 18:54:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.169
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776278763; cv=pass; b=K5rkGS1B/9dlwrrSjgHPJBt2MJIpJ7NmYnQXoCXO2a0LGs06pc4osLhUqJjE1FlJ3NZUyft1aoYq7DtojWcu6VABj7S9BIN3Yg584QyOREBgptQXDB0ppx7PC+hmSlueZwCBmnxkpooTJ3NzVF68EfXVfEV9GQydJXyKdyiOESI=
+	t=1776279275; cv=pass; b=W910WIQ9bmQPGgAv+RWR67+0qvikih4RUge2UTQGc7Vy48/Zy5aVA8OuPrKe6x3JPA6rCPFPFl9VQnP3UR/4lX0fkm0p0tvW+0nqRgXGzp5wSdx7LdIU1lERV13oKCTiQQx6Y83wKwtg05E/BgdJ0j2clePasf1rwxvGZkkN2Bw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776278763; c=relaxed/simple;
-	bh=tiVxsaCqWWNVXpTWfTarr3wP5tbbpKx//jfudX8htKA=;
+	s=arc-20240116; t=1776279275; c=relaxed/simple;
+	bh=fQaHT0WZJOK65WyNe4PaPMmmwzlL0FOR1eTK/cw4iBw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l75xIeMQOKhJILJjAYr3CivuMWJdKnrdBFPNXmfARxqRUvB2w4OnpEE4QqZx7NCZh6xahEIYPyY7oHszP4vB8W0tn27wnabOTmBmoUzdK2HW/S7n8ttIo7HNWqnk5rqYAtljfUW+PxFuNQBXcLuQ7ry/bwT3e6m//Wlou+vMi0I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sn8Carog; arc=pass smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=tHfyfy5r4LZiZXDQbqaMRo1int106PWQydeYTVfdWOaHL8KVrlzT7zkfhqH90GlEHCAVK5BYwO+aj5N5dGuNiaUE/VeiKISju3V09tXFnqlsDjZ/63RwON2Uxmh+jSZ4RrYM3Edw/kDrpURFHPRSQguz23X4jqO5V76bILzeNo4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SD8OUCsO; arc=pass smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sn8Carog"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-38ddd8d3b7fso53144041fa.3
-        for <patches@lists.linux.dev>; Wed, 15 Apr 2026 11:46:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776278760; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SD8OUCsO"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-50e237ae754so83591cf.1
+        for <patches@lists.linux.dev>; Wed, 15 Apr 2026 11:54:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776279273; cv=none;
         d=google.com; s=arc-20240605;
-        b=it3cFv6/8wiIR8pbCgYNau0yKNlpxYuPYojasnJrlWJtfUZg/7iWc3s3tIKw/KEx5Z
-         zwwJb/ebqbUJYT9tc0WScYYTfamWU3IswOyBIlbrrH4OHJoCjaaGVIGScATW3znUIgDd
-         UKXNdt/muFN0zcOSASlc5Z+1ao+k1I1RFj2RxoOrbjPaUkW5alo/YGhoGKxCUpiV4pUA
-         n6kNlazeXJl5V4UoIoZNXRhZYRBdHKtVgQ933JjJ0ciClqG+Gc4ta3bVQwH8/5EQ1rz/
-         pTpyBFnu1wW3wD7903cdB6gk6noWgDzen02n3AMs1Z1hxMY6the52CZIq/ZwW1FN7jCq
-         BSaw==
+        b=JnXwjbR33ZTP11EUV1wzwnZSbi/b0ykIVEKlBJmsq7Z2R9KD3ixUJJ7ABgWNQAXG4x
+         PPVjk86gADoZxmpfGKKblfR2gkWRszOZwAKZTa1TkTrrQhUHxaYFotQfv3szFaSARRos
+         wYTLKO0NF9kmSvM6FLvplDG/yZ4SOtYICk59gk9mpIrwpaM8fek7haI5KCIUEYJlvxnq
+         G2Pya8uFQPetq6OgqYFpKVlidHVrccoNdHL+5RYXaUprOmPn/97cX82T2yDivpYcNruB
+         E9D0W9PLEjBIeYIksyxMB6+irudPm0fGo65eXMXIEajKACedniYsiEyP1JdjZKgpQg8j
+         L11g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=F9g437KW9i1Y5CVsW3NswmQ5hVUE5gVydtz7VdJHyHk=;
-        fh=hCnKhGpG+3kcmm2MmglGDX20ntDjMm/btUzQSHDx1Tg=;
-        b=Zw2BaVyTVuygkGjaChxJINYsQVkrneR11S6bB7hb+VYyHdIxuSa2+90x/NkBGWkUMz
-         QVKvb8As0O7PBp1b8VkNtToNrMg7XtSZCaca4chkIEXR4l0kImQ8R8Fa27OGxnaUmF3Q
-         5XMRqdVWb+EW5IYowK6hXnyDddozYbfvcrA5+pzsoCbMKeJwS7hbbJcOxJxo26KlqnAa
-         MMvdlVRn7mXTn7u7yu1sq/MCxUGgAQv2u5hSGIkCAP8HYn5Ys1p1xn5+XdS19DNsPgc9
-         0tDROvFllQ6XRZYU+lUuz8iSo5mRI0t80K08cwxo+iEGKLqG3U6q9PttcOffo6dAGqSH
-         Vxew==;
+        bh=fvmVAYeUdSrn9HdmiZpJD5pxR8Gg76A8Jpt7CDjD65g=;
+        fh=2MaUgQrUvsxv5ed8abqzeoY9mhKzBPbjjz5tFkifi3I=;
+        b=fAFsSZDkpYGtspbqO7PbvwYzfJUqnZDefER02ZZ8I3JM22Vaw2h+F0JYzYs0RuKkK0
+         woH68xsH3EcG3yCJyNFjSpIgwJmvk2XsK5a8YABQvRM8QIRsnuzgYKpU7lZx0CXS+m7A
+         amvUiytLyyLwlg41xlj76iHa/MLbr9e8MQEJjv7OMeKxgXL+B81bTQF/tgtieERqvcPe
+         XUbNhSeRzn/W/nUe5P/J/viloPl2eI7QttETA9Qw59uaVezLiEtYeg7y7TouIzUffoD0
+         9qcd2PlKc7k5dBxFZ9P2VADY2SPMj1Ics2CuKP+kg7M+oG8XkfHae7z57KyJnhmosCgd
+         vDyA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776278760; x=1776883560; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1776279273; x=1776884073; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=F9g437KW9i1Y5CVsW3NswmQ5hVUE5gVydtz7VdJHyHk=;
-        b=Sn8CarogPpkj+pPHxCpw+d0XzAxpQPpeAu2cm4ZirVwgn5EQSjWHqQw3DdM4GBHMMI
-         ygqvsv89eLviNrlipD8lxID+BcM1yd8wo3a2Lw2C+kc2JZUCNO0iXRsPjA5gkzNpk5ep
-         q1V3jz/rBNcJaEuSZNHcvY2X06kK8UZRV8H6dVlSmTXumAbmg0LpubOKkADD5uPO8LBn
-         MWA4xFNAqFImwbCmFro1ruFMrZrFr+0zkJ3g1xHEmJLK093Qhl1YnpJtlwbs5PRDmekr
-         SrR5BrnVLlxjvNz2UGK+NI47bH0vugM+YXQodpPygs8VTOG9kz0esHbjYtC8nS3YGVlJ
-         X8xQ==
+        bh=fvmVAYeUdSrn9HdmiZpJD5pxR8Gg76A8Jpt7CDjD65g=;
+        b=SD8OUCsOwqUsd3difI29vueXy+QseiEqjCAcf938hSdL6BkWxfg2yEXyZxix0F5fgF
+         fO1mYg24Qt3DHIwSs/KR89SKBqHbYRhEB78ESHVOt5pbpZLcOHK58nuZyPXmeEaEuz4a
+         7GU1ryEy2DnhfWIMzeLYyG/287l91eBYkMoGTqHbedLy+Wgehf9WNTCVLN8/jwqCyEzH
+         X/Puni5PFbIkRusx+i3NLWpTg2dD34noi4P4wwilO/EdvslNfdo4cNRCa5IWG3DcvPxh
+         nrzuCWjdNKrb1Dni2Xo04UfMsKvF/QqlePYSkBs8akxuo/KWts84UHzai4KDr8VR3BJF
+         TXfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776278760; x=1776883560;
+        d=1e100.net; s=20251104; t=1776279273; x=1776884073;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=F9g437KW9i1Y5CVsW3NswmQ5hVUE5gVydtz7VdJHyHk=;
-        b=UFFUFqGBq+2+QLsX8QTRB4sxi1K91UJZYMlXjJ9kf/zplXQrjwEDKjvSnA+5pbryae
-         9G74OSNrpyYrsNUpOIRNamjtGyotllZeNbUim6L2ZP0cka5maSiNYmU23MBXu65JU+4D
-         jlTsQPMS10NixB5FLUpjDTI+3ISITVNj8iQk2q5bTV1z4DhbgjD0Zq6LOgUP4kWbR1MF
-         EJ7EtVQiutDX2B7rliM7mkCLtoyxm+fdhWtZHXzEVybBDuqpy4lEcXN/+1H1+4qeBScX
-         MzL9+OX2YoK2wYvH6EW3OiV9FazdDrDgMT86P5sLrULCW27n4TytYf0wbOwnhK/JYo2y
-         k7bw==
-X-Forwarded-Encrypted: i=1; AFNElJ+Q/jd0euXDPbRIw/0oVQ53oCA5hoQuMMGXiCESJjmvpQWt/VA4gGkFDnqd4lClvcfI75Hy1yRK@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzv0Z8OihkQDlnvp5zSsnCjH+zO4JjelJ+eIIpDq3npOv4Cu5w8
-	02daqF4wxOX+ALBg28nQec0ZnacSDzagheM9re5hLtPhWXZcTqNb8fdLfIKyOfOzqhdFb0dmQXm
-	M/G5fS7qbEwgZoin3kYpf8ncvurWAVXk=
-X-Gm-Gg: AeBDieuhATJmqeiSpte21qOTxI8rRfnHalnCSiBEw5msNEc9E7FDTPLwoZV5JpjPOxG
-	f3OPnfljfJgCDSSbJ4HR+7+nqdIqZvLrgQtTlyGPNC9FQ1lHrekVMvxmMAbn1N6bedRgO+d/tQP
-	xjwV5MSUBMXiomSTmJc4LSQaaaMc33KnRASDlqWQodYYCOO+SN8TFNDpTLq3KBIfPoAwvVymqlL
-	VvXmOhV/Cl1/kXTGsEhGmyK99RGLDXtskbfr9FGCVHsDlptTd6qru+2qtNds0EDnS5OSevFG54O
-	jugJWk3yIh2EmxWxJSGdH2s+JqOyiAcYc95akLXF
-X-Received: by 2002:a05:6512:401f:b0:5a4:3b6:94ea with SMTP id
- 2adb3069b0e04-5a403b695fbmr3569578e87.23.1776278760065; Wed, 15 Apr 2026
- 11:46:00 -0700 (PDT)
+        bh=fvmVAYeUdSrn9HdmiZpJD5pxR8Gg76A8Jpt7CDjD65g=;
+        b=ZgJ5XmE5dzgQ0XNgLU7oW7NE+iSYXjUwVaQ+EyXKBdoFoUfoiWPxCLGFp1MZQ3EEDK
+         TgRMetU/E1K/OrEe7TyDhk5lZnsc1YXg2Zgkob2I2aFdu4vbQOjnan/fhFYtto6bOHpB
+         NGh/zZtKsmbRNjQq6iaGgjbGuWLEBJuiTIXaiM6vVxKZeoHxP7SAg6gzCZRS2OKoy6v2
+         wvUHU4M4xL8zEaswOBJTpKYk/H0Pkl55DFg4LZ3/54lw0wwhzrzS47qKpIKpve5NbY/A
+         W9sylMau5C4VpGhPL7B4G1VNVO3E6HtuabTNTqO6R5icllEwG5LQH0kJRPeYp/d0m4wD
+         W4DQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8kyGK1hcZ9HG8FSzBH57M/y9zq1UAugjpAJhZTrYEmLXuFJ5EWMK6W7QU42in6QL7TqGNDAemx@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx4+5KnAksuAMzZQewZkMhb/UqtbHoJD3PfKChbtgl7sE24QfNb
+	sKvgCslf8i6NdbL09WX3wHi4E6bHUd05w7aD24qLQJar074tOHJh5+KhtAmUP6rkIouptWdS1QT
+	M0TTtqt3+g8yrRIWbEqKHNYKAsr+btbBtmCijSgGs
+X-Gm-Gg: AeBDieuisa3kyeKVknJaDdl4+6yOFuZf3gAUg/GgsDXPBFpSsIqrS+AvwMMhurHLbvw
+	43Q+R4HGKU34PGPKFjgjdbaBSwxt6EyejsTsbPy23WP8ZCnH3SxwY/2EGd9houFCIzOq1XbcFiL
+	FtuMYWw9Ew0Lpxg+ranOOFyOiYNW9/N/PWWe61cD/EwCosqN/hzbAX5MRRSPbaKer/4Ok7tc8at
+	mkxAbzpivSSiDiUObq5qbykKLQTnSkcx7dKqDgM3kTTs5WixePsYG81ggM8T2m4SDwCqKksClnf
+	k35tLW4sP8BPWRx95WUT+IlK5Awi2VuA1U/BrEFyYSljMLmzSdtgVXsIGw==
+X-Received: by 2002:a05:622a:a9c6:20b0:509:21ff:cd49 with SMTP id
+ d75a77b69052e-50e254bc6e6mr2041191cf.4.1776279272758; Wed, 15 Apr 2026
+ 11:54:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260413155728.181580293@linuxfoundation.org>
-In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
-From: Dileep malepu <dileep.debian@gmail.com>
-Date: Thu, 16 Apr 2026 00:15:48 +0530
-X-Gm-Features: AQROBzDNmmvUj0bf_HHHuzj1RxKBrvQQTZsJ5hhR7f3hm9lmYe2rHCu3RAhKov8
-Message-ID: <CAC-m1rpkx4eDitQ=F7r=5JEJ+FxHaw3ONP-6rmuzs-KzjNwCcw@mail.gmail.com>
-Subject: Re: [PATCH 6.12 00/70] 6.12.82-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
+References: <20260415173735.24437-1-tony.luck@intel.com> <CACw3F522f6p-x6MEU8t7CEoU1P=PtU8dKy7opKjH8sOecdF1kg@mail.gmail.com>
+ <SJ1PR11MB6083BF86FFA17D90FBF86686FC222@SJ1PR11MB6083.namprd11.prod.outlook.com>
+In-Reply-To: <SJ1PR11MB6083BF86FFA17D90FBF86686FC222@SJ1PR11MB6083.namprd11.prod.outlook.com>
+From: Jiaqi Yan <jiaqiyan@google.com>
+Date: Wed, 15 Apr 2026 11:54:18 -0700
+X-Gm-Features: AQROBzCLembwy546Y5LhQ65sboCQA_VYbP6s9bHTxyGDzsDQtWuY3ifv6HzqkA8
+Message-ID: <CACw3F51QuexjytfyCFZe6uRaWqMKbQwrG9qFCvArf--xEr-9jQ@mail.gmail.com>
+Subject: Re: [PATCH v2] ACPI: APEI: EINJ: Fix EINJv2 memory injection
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "Li, Herman" <herman.li@intel.com>, 
+	Zaid Alali <zaidal@os.amperecomputing.com>, 
+	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, 
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 13, 2026 at 9:52=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.12.82 release.
-> There are 70 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.12.82-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-Build and Boot Report  6.12.82-rc1
+Hi Tony,
 
-I built and tested Linux kernel version 6.12.82 using the default configura=
-tions
-on both x86_64 and arm64 architectures in a virtualized environment.
+On Wed, Apr 15, 2026 at 11:15=E2=80=AFAM Luck, Tony <tony.luck@intel.com> w=
+rote:
+>
+> > > +static bool is_memory_injection(u32 type, u64 param2)
+> > > +{
+> > > +       if (is_v2)
+> > > +               return type & BIT(1);
+> >
+> > Hi Tony, just a nit: for readability would it better to introduce a
+> > macro for BIT(1)? like ACPI65_EINJV2_ERROR_TYPE_MEMORY
+>
+> I thought about that. The old (v1?) EINJ type bits are in <acpi/actbl1.h>
+>
+> So "the right thing"(TM) might be to add some V2 defines there:
+>
+> #define ACPI_EINJV2_PROCESSOR   BIT(0)
+> #define ACPI_EINJV2_MEMORY              BIT(1)
+> #define ACPI_EINJV2_PCIX                        BIT(2)
 
-The kernel compiled successfully on both architectures and booted
-without issues.
-I did not observe any regressions or new warnings in dmesg during boot.
+Looks good to me. Let's see what Rafael thinks about adding them.
 
-Kernel version: 6.12.82-rc1
-Configurations tested: x86_64_defconfig, defconfig
-Architectures tested: x86_64, arm64
-Kernel source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux=
--stable-rc.git
-Commit: f4ef43b0a8c401bcd6d40e3eefd2ac504f23fd00
-
-
-Tested-by: Dileep Malepu <dileep.debian@gmail.com>
-
-Best regards,
-Dileep Malepu.
+>
+> Rafael: Do you want that? I can start the process in the ACPICA tree if y=
+ou do.
+>
+> -Tony
