@@ -1,147 +1,147 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F96274B5F
-	for <patches@lists.linux.dev>; Wed, 15 Apr 2026 12:26:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776256005; cv=pass; b=HPsL+Z/eIAtGUeWyoWI51jiwHXsGG1f4jgsQ3Pye6sm3ldWENjmlCeogN5mKNBNTBO1OcPjWwOnwwMOkNLp9ijAnFRXL1RR5Kyb5n7z0VSJWXurehlTVWFbBVU2YXpttwXU6Be/CpLTS1cuiOd3BrIUaQ8dmw0hkC6yDH6plCr4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776256005; c=relaxed/simple;
-	bh=GEeHQr3KyW99nqGCoP60H77ymExJJnsL3KEri2OiJEI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DJ04FFHXhrw7vRmP6kYA+4p2r6N23OXgaVYiGAc+hv1O0tAnM7DuCC4L0RUcczlA73f73lqD5JBnOn0GFmcX8dJYMnns3CO/v+hCj9pUTQBKne+XHwp+z3aTZ6UIdNTxFw5jUUXIp/t6cLy+uBva6sQoPzFuaK8Xoxzp6ZdMEkY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k/EixcrM; arc=pass smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k/EixcrM"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-38df1889fb9so72836281fa.1
-        for <patches@lists.linux.dev>; Wed, 15 Apr 2026 05:26:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776256001; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Dm9Zfkd/r22tQcrAQ/c09o8Rf8snVpOCshqskRrjDv5Hz27bD9Dm1A9FN6E5CMA0GS
-         nyOpuehzBKB8VJUR0PEBRj4+s/rB5G+8KrwJEGeYZSvGll7fXOl6rHhWC8BwCq9S8jXF
-         e0VvH16nmdLmrp5HJnKlilxDRyCbwK8yQPoFrh69D6A5qQ6A1U4Vm74HDCq31l5/f7hv
-         S8omkYGr+Ua59gRDl1jWRONlPkEds71A0xN5EQ4KJ0VRUbP2+5VV9dknj7VpnHIAr8XG
-         787p0gZqMMXwXm8E8K/9qtjGA8nplmX9lx/Xdiqi4DQQvUjFXTjcYtmxCtcg6cZYhwu/
-         G17g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qUV1dTOfFSErWpSsm2W8MI+dW7Ua6AIcmXKVwDRvbSY=;
-        fh=k8vJeFJgPigubtcdAxZTRwk4/YPB+j7Opp/NpwSRnN0=;
-        b=B0tZE+YohvgH5Lxtg3fT7wUUuR7GU8LnawMy4WwABkQzo/irLlSsqKCJ/fgboaedAM
-         At0IQNkmZO+bJn/SyQzbhXeVCMcKaDcFPJBfCx/Lp6H+vEcDkZO5qUxHND900+LrcHOy
-         41FdoxHID8gADT6Ak2jIWk8xQHJSEY51amPrbSCJAcmLDew85V1QB1quwJZmoIDY9pdX
-         wht2uiT5PB6MlwX64MRsl4tZM0xQsQu3EXKweoUqeYgRNEzuHyCtsHvzfzcv1EPsMmaZ
-         EPcDuho4X6G8wJEsTI4OS64M899o2C+8+q4M1qXW6qwIOh2rmbDzeB4ypm/tCqXyE0ia
-         SKSA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776256001; x=1776860801; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qUV1dTOfFSErWpSsm2W8MI+dW7Ua6AIcmXKVwDRvbSY=;
-        b=k/EixcrMU9fiUfZFGwQQeO9KcuThv0fG9BmCFRrcOkEr12mnyzPUxmFIdbDJvlZ+qg
-         rUPY6MFM53rX6PZje2wwk/xM6IRm+l8uvqYCenJLfD9wXhUbMUFFpte9PZVci9eKjeMF
-         RHfzhOFqjsCoTr5tdCu1C2iytk/UesqenMKL/I6S47LJNzajM8emPkwHUACo/kSs1gdq
-         M6OCzh/XIewaj1N0M3sTVCI/Ou89CppXoX1iL2xIrbngU1d7F2iJODSIrJsxnhRjERBA
-         iuJz+Snz2JMsPdiVXKKSVTeamdU4Pqcwd1stL4mmVai54cUezFqdyt6gGbLMkAvSDR1a
-         R27Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776256001; x=1776860801;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qUV1dTOfFSErWpSsm2W8MI+dW7Ua6AIcmXKVwDRvbSY=;
-        b=IIAOC242cZ5YWN1nGvpfoAJgUZi4OEp6vd4GPpNwpWzfhWh35afG9sguNxtXwGIrvQ
-         VKpwsP4hCCjawFSuTEnOT2BSxxplsk/ShTDPN8mQTCwCjfolZUH9ZSMmWdke8x2zrKqk
-         qQ8t7+oGnJ0NEupRqYqXEQ2j4VpsrRFWHIYvZyMX4L2IFTb/LWGEDqzvWdYj2uALJSxp
-         xfp1O78rMoLOcqtS0aVrBAuHo57QwrrHKI7zriwT2f1F+ZYT/Le452KlenxjEsIh23e6
-         JhvDLvbjxVOiSqBzv8YAuKoODaHTYQX3TYG1a/d7vMWJnpWUwyncOaEDr/ZS6GqVbWFT
-         VekA==
-X-Forwarded-Encrypted: i=1; AFNElJ+f+sw1HwkyyN/OlE9okHuGb9MCPIiKm8XL25yvvZctt870Ifn5f5PTULBzAniC20GaetFnLZY5@lists.linux.dev
-X-Gm-Message-State: AOJu0YwuzWy1ReZJeBVqbFsW2pxW81mQeVuTWd+mRWFY8VeWJxYONzI8
-	AAmc9L9aBeEhVrPo5UyrCVOiuzI1jpBB4fMd2yuEeiFi5K7xhbgPaWTKn7s7QkjMzLqL5zRSU5k
-	0RWA7f/TxKb4XJM0JQ1wwuO+zERCweK8=
-X-Gm-Gg: AeBDiesLzlUK5HI4uNFUdRM5AufqzlJdz+nVfDxoMbixvz9nsbhvjwCOCzc0LytS7pj
-	rV+lzhGdRrTQHNvd32rQ8b5S+sqOgQoc+3HpghgoQpO2Xh6f6k0JWQFUcA5M9QW3/M5IVS6csb9
-	XP8ujXlPwVAIaCpm7VbEtoVjyUOMxBJ8GW4AH47Jm5J8h94QdUbZjT9Quq0tCEd7O9YO/JcsjcI
-	knnWYAYsg+nPaTRhYV6zg1TCAGc4wH5vG2op8/TohSqCZ6aheQTfXMXuU8iym2hoAZ7VsqIGBGZ
-	fem2J9V5PBbYMp+ZhSnN/dOSYMMWixCjNVKc2WSeXJ8qRE25xg==
-X-Received: by 2002:a05:6512:3d18:b0:5a2:c62c:1edd with SMTP id
- 2adb3069b0e04-5a3efd78d9fmr7649424e87.25.1776256001069; Wed, 15 Apr 2026
- 05:26:41 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7312A2EC09B;
+	Wed, 15 Apr 2026 12:43:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776256983; cv=none; b=tOeUBCXupernW+lgVmRIIef8/P+b1Prd3K06N9JlOReW2bCpnq2QBfN2ezIVWrQ1hMVrVlhUsidD18v7CAK69cwC2NoNo2dveGG/9PnFGrUZNHKX4Olm8RjHRekANlQj7hp2e3Vj/+Mh872TmaFTSh2N5OYKpRQBwp/Y6eD0ORk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776256983; c=relaxed/simple;
+	bh=+5uqVuOPpVJhB1siKMrAJs+wrhzmMstuLvmxpqP8mD8=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=lD+z/Xn3ce99lo+ziEIcegC1V8c4lH9TvrtHPW5OTa3sQ/PP+LIlamNtZxB8qITpDytd+jr0uHiOaYdBQxvHNx7+6ERSpL0791gnCfhW50ok+Jeuqm0zxOy7iIwebD+Ns5VX+f9wJKxx3QPLvmWUmBAXLairwaHgAxHGbslOOs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wCza7-004ybQ-31;
+	Wed, 15 Apr 2026 12:42:59 +0000
+Received: from ben by deadeye with local (Exim 4.99.1)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wCza5-00000003fPy-1zTL;
+	Wed, 15 Apr 2026 14:42:57 +0200
+Message-ID: <db073c5606570f9dc898275785583a7d32031294.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 199/491] wifi: cfg80211: cancel pmsr_free_wk in
+ cfg80211_pmsr_wdev_down
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+  Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>, Johannes
+ Berg <johannes.berg@intel.com>
+Cc: patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>
+Date: Wed, 15 Apr 2026 14:42:52 +0200
+In-Reply-To: <20260413155826.522907380@linuxfoundation.org>
+References: <20260413155819.042779211@linuxfoundation.org>
+	 <20260413155826.522907380@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-A80GLlubixwLRS5nSxh2"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260413155731.568515178@linuxfoundation.org>
-In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
-From: Dileep malepu <dileep.debian@gmail.com>
-Date: Wed, 15 Apr 2026 17:56:28 +0530
-X-Gm-Features: AQROBzDMaHVELjOLmt_LmQKQ854O8io-UBrQ5UQ56tiNjfT4Q4VKgjvAvqu7LZw
-Message-ID: <CAC-m1ro5_HUtk2gC4wSdatR3LvFzE+Mu36qt=W3GR3sEf5NKPw@mail.gmail.com>
-Subject: Re: [PATCH 6.19 00/86] 6.19.13-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+
+
+--=-A80GLlubixwLRS5nSxh2
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 13, 2026 at 9:35=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.19.13 release.
-> There are 86 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.19.13-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.19.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
+On Mon, 2026-04-13 at 17:57 +0200, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
+>=20
+> [ Upstream commit 6dccbc9f3e1d38565dff7730d2b7d1e8b16c9b09 ]
+>=20
+> When the nl80211 socket that originated a PMSR request is
+> closed, cfg80211_release_pmsr() sets the request's nl_portid
+> to zero and schedules pmsr_free_wk to process the abort
+> asynchronously. If the interface is concurrently torn down
+> before that work runs, cfg80211_pmsr_wdev_down() calls
+> cfg80211_pmsr_process_abort() directly. However, the already-
+> scheduled pmsr_free_wk work item remains pending and may run
+> after the interface has been removed from the driver. This
+> could cause the driver's abort_pmsr callback to operate on a
+> torn-down interface, leading to undefined behavior and
+> potential crashes.
+>=20
+> Cancel pmsr_free_wk synchronously in cfg80211_pmsr_wdev_down()
+> before calling cfg80211_pmsr_process_abort(). This ensures any
+> pending or in-progress work is drained before interface teardown
+> proceeds, preventing the work from invoking the driver abort
+> callback after the interface is gone.
 
-Build and Boot Report  6.19.13-rc1
+But cfg80211_pmsr_wdev_down() holds the wiphy lock which the work item
+also tries to acquire.  Cancelling it synchronously can then lead to
+deadlock.
 
-I built and tested Linux kernel version 6.19.13 using the default configura=
-tions
-on both x86_64 and arm64 architectures in a virtualized environment.
+I don't know whether this is also a problem upstream, as locking in
+cfg80211 has changed significantly since 5.10.
 
-The kernel compiled successfully on both architectures and booted
-without issues.
-I did not observe any regressions or new warnings in dmesg during boot.
+Ben.
 
-Kernel version: 6.19.13-rc1
-Configurations tested: x86_64_defconfig, defconfig
-Architectures tested: x86_64, arm64
-Kernel source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux=
--stable-rc.git
-Commit:
+> Fixes: 9bb7e0f24e7e ("cfg80211: add peer measurement with FTM initiator A=
+PI")
+> Signed-off-by: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.=
+com>
+> Link: https://patch.msgid.link/20260305160712.1263829-3-peddolla.reddy@os=
+s.qualcomm.com
+> Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  net/wireless/pmsr.c | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
+> index 7503c7dd71ab5..32cea07b98fd1 100644
+> --- a/net/wireless/pmsr.c
+> +++ b/net/wireless/pmsr.c
+> @@ -620,6 +620,7 @@ void cfg80211_pmsr_wdev_down(struct wireless_dev *wde=
+v)
+>  	}
+>  	spin_unlock_bh(&wdev->pmsr_lock);
+> =20
+> +	cancel_work_sync(&wdev->pmsr_free_wk);
+>  	if (found)
+>  		cfg80211_pmsr_process_abort(wdev);
+> =20
 
-Tested-by: Dileep Malepu <dileep.debian@gmail.com>
+--=20
+Ben Hutchings
+The obvious mathematical breakthrough [to break modern encryption]
+would be development of an easy way to factor large prime numbers.
+                                                           - Bill Gates
 
-Best regards,
-Dileep Malepu.
+--=-A80GLlubixwLRS5nSxh2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnfh8wACgkQ57/I7JWG
+EQm3kQ/8CYUggObep/7fk7oLK2ajrx5oUXihyBg1qf8Xjwr1aH656A4RiOfJ6bDQ
+NnqXA2IxZM8J0f2mfAMH22pgZuLlKZjwpS0hY/FELE0/e8fVxnundznUE8zrlQ4g
+iQDmEUV5x4OA+h63LNsHGCa9eL5w9Iq/YtMV+THCVhuSXtnhyrCzNAPLKgtQtQp7
+9dBCRWkZDLZ/W//jAFZEsoNmvlGN6apsUMiY45LMp7mqInWILQWFOzv8gGxHuGhS
+zeQlNkpfOZFVRxOmEDIjnfapS7vFwmcUtxYflNXAISB4ScetFopAtQvi7CdF1Kd6
+J065K3mlYGN4ACqbwgjAv7vpslbnXuv78MThKHq6lzGyyrjzKaDaphYitnhYmeHT
+fGgOq8Ai4iq9FplFvGSombe4BSnI+/7y7Awm2fPWn8K8LQSUIHJqqnN+ou6lSEfS
+qm35sxiFnU4+uiIvOQPpbWXupep73jVDEBOaP3QuP76yqtla/MrSB0zI96mI684C
+Ub7HZ9/gcqmBjnftBsvyAY0PD4UIRGq4OTSeavFaLstqnkKK6wN8uXjFydC0ilpL
+3dBIM30apuIImCZfaEcVh9d2hanEy/T9ZhL60MT7LQ3/3HVmqg67g0fVIPB1Lt8J
+mrEuv9+qhAAu5uHRAmLUJIz5+/mHWKJeJYEjdLV67Nl1OiJV0ew=
+=4/ki
+-----END PGP SIGNATURE-----
+
+--=-A80GLlubixwLRS5nSxh2--
