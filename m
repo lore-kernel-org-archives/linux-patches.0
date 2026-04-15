@@ -1,149 +1,147 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16103382CB;
-	Wed, 15 Apr 2026 12:11:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776255069; cv=none; b=oR12hYIBjEoqlhxCIcMmtlKWOtrntSbvCHH47Xl7zPM2Qri/sccn6vc8eHuofXai6JfIkmIhy3hmGlyRpXRHNUH1JY+JN2zD5hS2OfOGu/VnVMhn3vItKeU0W2CGCDpmcT+Q/M5VwFHVYjvRZ+frn6/283lLOa6P4TVjgqxNz7o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776255069; c=relaxed/simple;
-	bh=YPsCldXH4MVx6lVVeFCbqASGiP/XgmRzqYdJ0PDJuNY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=URHmz3XuJY0mMO05cvVKxjMdxdPXW6ISUp5L/lnUgKOixr3v8KmXNpIDta9EdoMmIE22V0pGIZzoEwskefSqOR/9anySZWVCO+Ycx4fuVeoPW/3P6OBIcXDTYmDxImENpwNO4YTDr6ud/gB7m3ZFsbZui2S9SdkvUsJu22oJt3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wCz5G-004yV6-2Q;
-	Wed, 15 Apr 2026 12:11:05 +0000
-Received: from ben by deadeye with local (Exim 4.99.1)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wCz5E-00000003cr6-0j70;
-	Wed, 15 Apr 2026 14:11:04 +0200
-Message-ID: <9e1d8d13f872acab49ac25ccf6d18b3a2698d421.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 191/491] can: gs_usb: gs_can_open(): always
- configure bitrates before starting device
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Marc Kleine-Budde <mkl@pengutronix.de>, Sasha
- Levin <sashal@kernel.org>
-Date: Wed, 15 Apr 2026 14:10:57 +0200
-In-Reply-To: <20260413155826.219285216@linuxfoundation.org>
-References: <20260413155819.042779211@linuxfoundation.org>
-	 <20260413155826.219285216@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-A8/X/vPOLnoV27P0DlDK"
-User-Agent: Evolution 3.56.2-9 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F96274B5F
+	for <patches@lists.linux.dev>; Wed, 15 Apr 2026 12:26:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776256005; cv=pass; b=HPsL+Z/eIAtGUeWyoWI51jiwHXsGG1f4jgsQ3Pye6sm3ldWENjmlCeogN5mKNBNTBO1OcPjWwOnwwMOkNLp9ijAnFRXL1RR5Kyb5n7z0VSJWXurehlTVWFbBVU2YXpttwXU6Be/CpLTS1cuiOd3BrIUaQ8dmw0hkC6yDH6plCr4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776256005; c=relaxed/simple;
+	bh=GEeHQr3KyW99nqGCoP60H77ymExJJnsL3KEri2OiJEI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DJ04FFHXhrw7vRmP6kYA+4p2r6N23OXgaVYiGAc+hv1O0tAnM7DuCC4L0RUcczlA73f73lqD5JBnOn0GFmcX8dJYMnns3CO/v+hCj9pUTQBKne+XHwp+z3aTZ6UIdNTxFw5jUUXIp/t6cLy+uBva6sQoPzFuaK8Xoxzp6ZdMEkY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k/EixcrM; arc=pass smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k/EixcrM"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-38df1889fb9so72836281fa.1
+        for <patches@lists.linux.dev>; Wed, 15 Apr 2026 05:26:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776256001; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Dm9Zfkd/r22tQcrAQ/c09o8Rf8snVpOCshqskRrjDv5Hz27bD9Dm1A9FN6E5CMA0GS
+         nyOpuehzBKB8VJUR0PEBRj4+s/rB5G+8KrwJEGeYZSvGll7fXOl6rHhWC8BwCq9S8jXF
+         e0VvH16nmdLmrp5HJnKlilxDRyCbwK8yQPoFrh69D6A5qQ6A1U4Vm74HDCq31l5/f7hv
+         S8omkYGr+Ua59gRDl1jWRONlPkEds71A0xN5EQ4KJ0VRUbP2+5VV9dknj7VpnHIAr8XG
+         787p0gZqMMXwXm8E8K/9qtjGA8nplmX9lx/Xdiqi4DQQvUjFXTjcYtmxCtcg6cZYhwu/
+         G17g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=qUV1dTOfFSErWpSsm2W8MI+dW7Ua6AIcmXKVwDRvbSY=;
+        fh=k8vJeFJgPigubtcdAxZTRwk4/YPB+j7Opp/NpwSRnN0=;
+        b=B0tZE+YohvgH5Lxtg3fT7wUUuR7GU8LnawMy4WwABkQzo/irLlSsqKCJ/fgboaedAM
+         At0IQNkmZO+bJn/SyQzbhXeVCMcKaDcFPJBfCx/Lp6H+vEcDkZO5qUxHND900+LrcHOy
+         41FdoxHID8gADT6Ak2jIWk8xQHJSEY51amPrbSCJAcmLDew85V1QB1quwJZmoIDY9pdX
+         wht2uiT5PB6MlwX64MRsl4tZM0xQsQu3EXKweoUqeYgRNEzuHyCtsHvzfzcv1EPsMmaZ
+         EPcDuho4X6G8wJEsTI4OS64M899o2C+8+q4M1qXW6qwIOh2rmbDzeB4ypm/tCqXyE0ia
+         SKSA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776256001; x=1776860801; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qUV1dTOfFSErWpSsm2W8MI+dW7Ua6AIcmXKVwDRvbSY=;
+        b=k/EixcrMU9fiUfZFGwQQeO9KcuThv0fG9BmCFRrcOkEr12mnyzPUxmFIdbDJvlZ+qg
+         rUPY6MFM53rX6PZje2wwk/xM6IRm+l8uvqYCenJLfD9wXhUbMUFFpte9PZVci9eKjeMF
+         RHfzhOFqjsCoTr5tdCu1C2iytk/UesqenMKL/I6S47LJNzajM8emPkwHUACo/kSs1gdq
+         M6OCzh/XIewaj1N0M3sTVCI/Ou89CppXoX1iL2xIrbngU1d7F2iJODSIrJsxnhRjERBA
+         iuJz+Snz2JMsPdiVXKKSVTeamdU4Pqcwd1stL4mmVai54cUezFqdyt6gGbLMkAvSDR1a
+         R27Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776256001; x=1776860801;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=qUV1dTOfFSErWpSsm2W8MI+dW7Ua6AIcmXKVwDRvbSY=;
+        b=IIAOC242cZ5YWN1nGvpfoAJgUZi4OEp6vd4GPpNwpWzfhWh35afG9sguNxtXwGIrvQ
+         VKpwsP4hCCjawFSuTEnOT2BSxxplsk/ShTDPN8mQTCwCjfolZUH9ZSMmWdke8x2zrKqk
+         qQ8t7+oGnJ0NEupRqYqXEQ2j4VpsrRFWHIYvZyMX4L2IFTb/LWGEDqzvWdYj2uALJSxp
+         xfp1O78rMoLOcqtS0aVrBAuHo57QwrrHKI7zriwT2f1F+ZYT/Le452KlenxjEsIh23e6
+         JhvDLvbjxVOiSqBzv8YAuKoODaHTYQX3TYG1a/d7vMWJnpWUwyncOaEDr/ZS6GqVbWFT
+         VekA==
+X-Forwarded-Encrypted: i=1; AFNElJ+f+sw1HwkyyN/OlE9okHuGb9MCPIiKm8XL25yvvZctt870Ifn5f5PTULBzAniC20GaetFnLZY5@lists.linux.dev
+X-Gm-Message-State: AOJu0YwuzWy1ReZJeBVqbFsW2pxW81mQeVuTWd+mRWFY8VeWJxYONzI8
+	AAmc9L9aBeEhVrPo5UyrCVOiuzI1jpBB4fMd2yuEeiFi5K7xhbgPaWTKn7s7QkjMzLqL5zRSU5k
+	0RWA7f/TxKb4XJM0JQ1wwuO+zERCweK8=
+X-Gm-Gg: AeBDiesLzlUK5HI4uNFUdRM5AufqzlJdz+nVfDxoMbixvz9nsbhvjwCOCzc0LytS7pj
+	rV+lzhGdRrTQHNvd32rQ8b5S+sqOgQoc+3HpghgoQpO2Xh6f6k0JWQFUcA5M9QW3/M5IVS6csb9
+	XP8ujXlPwVAIaCpm7VbEtoVjyUOMxBJ8GW4AH47Jm5J8h94QdUbZjT9Quq0tCEd7O9YO/JcsjcI
+	knnWYAYsg+nPaTRhYV6zg1TCAGc4wH5vG2op8/TohSqCZ6aheQTfXMXuU8iym2hoAZ7VsqIGBGZ
+	fem2J9V5PBbYMp+ZhSnN/dOSYMMWixCjNVKc2WSeXJ8qRE25xg==
+X-Received: by 2002:a05:6512:3d18:b0:5a2:c62c:1edd with SMTP id
+ 2adb3069b0e04-5a3efd78d9fmr7649424e87.25.1776256001069; Wed, 15 Apr 2026
+ 05:26:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
-
-
---=-A8/X/vPOLnoV27P0DlDK
+References: <20260413155731.568515178@linuxfoundation.org>
+In-Reply-To: <20260413155731.568515178@linuxfoundation.org>
+From: Dileep malepu <dileep.debian@gmail.com>
+Date: Wed, 15 Apr 2026 17:56:28 +0530
+X-Gm-Features: AQROBzDMaHVELjOLmt_LmQKQ854O8io-UBrQ5UQ56tiNjfT4Q4VKgjvAvqu7LZw
+Message-ID: <CAC-m1ro5_HUtk2gC4wSdatR3LvFzE+Mu36qt=W3GR3sEf5NKPw@mail.gmail.com>
+Subject: Re: [PATCH 6.19 00/86] 6.19.13-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2026-04-13 at 17:57 +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Marc Kleine-Budde <mkl@pengutronix.de>
->=20
-> [ Upstream commit 2df6162785f31f1bbb598cfc3b08e4efc88f80b6 ]
-[...]
-> --- a/drivers/net/can/usb/gs_usb.c
-> +++ b/drivers/net/can/usb/gs_usb.c
-> @@ -413,9 +413,8 @@ static void gs_usb_receive_bulk_callback
->  	}
->  }
-> =20
-> -static int gs_usb_set_bittiming(struct net_device *netdev)
-> +static int gs_usb_set_bittiming(struct gs_can *dev)
->  {
-> -	struct gs_can *dev =3D netdev_priv(netdev);
->  	struct can_bittiming *bt =3D &dev->can.bittiming;
->  	struct usb_interface *intf =3D dev->iface;
->  	int rc;
-> @@ -445,7 +444,7 @@ static int gs_usb_set_bittiming(struct n
->  	kfree(dbt);
-> =20
->  	if (rc < 0)
-> -		dev_err(netdev->dev.parent, "Couldn't set bittimings (err=3D%d)",
-> +		dev_err(dev->netdev->dev.parent, "Couldn't set bittimings (err=3D%d)",
->  			rc);
-> =20
->  	return (rc > 0) ? 0 : rc;
-> @@ -675,6 +674,13 @@ static int gs_can_open(struct net_device
->  	if (ctrlmode & CAN_CTRLMODE_3_SAMPLES)
->  		flags |=3D GS_CAN_MODE_TRIPLE_SAMPLE;
-> =20
-> +	rc =3D gs_usb_set_bittiming(dev);
-> +	if (rc) {
-> +		netdev_err(netdev, "failed to set bittiming: %pe\n", ERR_PTR(rc));
-> +		kfree(dm);
+On Mon, Apr 13, 2026 at 9:35=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.19.13 release.
+> There are 86 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.19.13-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+> -------------
 
-This error path leaks the URBs allocated above (but the upstream version
-does not have this problem).
+Build and Boot Report  6.19.13-rc1
 
-I think it would make sense to backport commit 2603be9e8167 ("can:
-gs_usb: gs_can_open(): improve error handling") before this one.
+I built and tested Linux kernel version 6.19.13 using the default configura=
+tions
+on both x86_64 and arm64 architectures in a virtualized environment.
 
-Ben.
+The kernel compiled successfully on both architectures and booted
+without issues.
+I did not observe any regressions or new warnings in dmesg during boot.
 
-> +		return rc;
-> +	}
-> +
->  	/* finally start device */
->  	dev->can.state =3D CAN_STATE_ERROR_ACTIVE;
->  	dm->mode =3D cpu_to_le32(GS_CAN_MODE_START);
-> @@ -888,7 +894,6 @@ static struct gs_can *gs_make_candev(uns
->  	dev->can.state =3D CAN_STATE_STOPPED;
->  	dev->can.clock.freq =3D le32_to_cpu(bt_const->fclk_can);
->  	dev->can.bittiming_const =3D &dev->bt_const;
-> -	dev->can.do_set_bittiming =3D gs_usb_set_bittiming;
-> =20
->  	dev->can.ctrlmode_supported =3D 0;
-> =20
->=20
->=20
+Kernel version: 6.19.13-rc1
+Configurations tested: x86_64_defconfig, defconfig
+Architectures tested: x86_64, arm64
+Kernel source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux=
+-stable-rc.git
+Commit:
 
---=20
-Ben Hutchings
-The obvious mathematical breakthrough [to break modern encryption]
-would be development of an easy way to factor large prime numbers.
-                                                           - Bill Gates
+Tested-by: Dileep Malepu <dileep.debian@gmail.com>
 
---=-A8/X/vPOLnoV27P0DlDK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnfgFEACgkQ57/I7JWG
-EQkEVQ//cJH7FsLT5P9J5VlHsVlX3GIncFn1KyW6OLEHdYKR/SdJ0ggjaaMR3vNk
-f+zcx1HicSyoNvNWV5yAptNpgBpW22OaQMqsBU138LEIUQchpTRZKu48Li7NFnGY
-kv8gf5ulpV3BN6Swy3kLV/o4647rjEZNI8sZV4gF51F9oH1WSRPCj7EZqYu4c5mL
-AoIahbzR+Yzo8X6nPm/wsp0JsYNLoTxS7QnJSyVOwJd8gyEBiYap3rcRKMQsEhr4
-COzrc5OMceDIMIqM6PDjPXIsPvuITGwAparyyCtg3dVrBpRTuXD4MlC+UH/fQrdK
-H792DTLYZZ/aN4fKH6e/j77JAsOjvHq14d+4lYgoSZQekHOldfTQBqv0R8eJkv6l
-vQYEKNuWQaoDHYtmzq8OO7AaZHK0V71F3WCrhRjJBZtBt4esN5196buS/s/fOvyL
-DuSuELPOoL1uQ92KHeOFKVTCa1NcppuQl6R01qjN0afnInRd1u3QSbjW71dcUI9a
-f3G6EI+fjyYI8JBq8AAyLdfq3k7bFD7W5u4Ouybt1wtMlBQzcD7P2+MWWHtsxdXQ
-XD4TRMjPdthxGB8L3SNULlA8scFu3AUQZ7qns4WEo6Iw7iaVFpqpejLY/Lm/x6eD
-NY6hKcfaaByIrmRqGAnCZp5X7Mb/edIWTPIIv0XJSyC1lUNLHZ4=
-=i+9Q
------END PGP SIGNATURE-----
-
---=-A8/X/vPOLnoV27P0DlDK--
+Best regards,
+Dileep Malepu.
