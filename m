@@ -1,128 +1,120 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F252F6910
-	for <patches@lists.linux.dev>; Thu, 16 Apr 2026 22:09:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464713A6B7A;
+	Thu, 16 Apr 2026 23:37:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776377365; cv=none; b=aDa90yb+e2TExAhRChz3amDWjdxlq9HkPBH5bWgMIed0GS6P6Q2UGjWsirOYkgaRYMLIkfd98GZ7l7zqV+BmRLbQsZfleSg0aC86YB4qNe7uB2rRNwKD+iTFc6CtISECG7Cky7txAf83s0JtazoDh1cY8ma0e7NdynmCkECK3oo=
+	t=1776382635; cv=none; b=VlF/T2DEAAbtM9leui5E2E5ZmPi+T5H2j+XzKMXROyxikKzD1oppniHJhlczONfjoHKFxPMV7ubg9rHQas/k0Ld2tWX8584nmZghQuhW5r2OUi6F58u/Cx5p1jv+WXb4Cc8JveG4IDzjpdD/A40yu0D4vVfJI/9KuvHzPj3BNNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776377365; c=relaxed/simple;
-	bh=v4mLI+Jc/jsmLLBiyeClacJrBmyK6a/LIyeRUzroCSo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lZO2GwgX85mWWGsKIo67BDJNOTt6EHthas6onCmXq2cm9MtMf5VPcdJCKRtvlzOAaxqVTd/nOKOyuQ8c0DCXwCDJQ0YtXftUT3wvcmPVVayyDf5GV22bxqymS5sRLdKINk8ybwNZwmQ21d/whiiqJiAjtVenWJbrhfE8r/+HkHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e6HuoB8t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rY2KduLJ; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776382635; c=relaxed/simple;
+	bh=GW5/+NpIhNRfKz0Natu09b2YnTkxIzuoHQWQKYAyVP8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=obfAVxdN+bo6x9ff8QMGIjIOx4jnbqUOBjIts7sSgs+z8EsWDM1/F6f8bSDG+RcBvWmMt3bmZNNh5JKIEyq0/pLa6Dd5/iKmZ2XinZLeI7KUdgwDixlBsqaA/ub0q9xVoA1UPLcUuNyckJZA7oRH0pGg+HtLwr6JFXidlgc6b5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qdsqtQp+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e6HuoB8t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rY2KduLJ"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 633557A0254;
-	Thu, 16 Apr 2026 18:09:22 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 16 Apr 2026 18:09:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1776377362;
-	 x=1776463762; bh=N8EByoorsMjORhHbfQz/C09Q5gBi3bvWw3JJWh5/a7U=; b=
-	e6HuoB8tyVB89QnYAZEtptMJk/y6FfZRzQbMgxA+OVmRq3RxfcgdaOrrX7zv4svX
-	sFCx0rVIWV9hOUrttRbgw9z3cgOHOHY7tgE0wNchHfZ6p/3L9jVRVAsS63xg2/KV
-	KHKUzugjqjhEXlL8lJp3tZt8IMsloLw/M+K4M4aXhdUtNg/3qoseQX96Fznvub1/
-	kyaDNDuIRW3trp+KkWjJPuf0npv/WBdM7SUh4Xo7ifel3QLOUNNzKO0dtx11ahbP
-	nfhu1ep3xO9GE/5FPMzvuFKjOzwEcUVg8KvD5YGMCrNhvZou1ekWbjo4zxiC1CNn
-	esg8ECEtWT9w/eZqS90F1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776377362; x=
-	1776463762; bh=N8EByoorsMjORhHbfQz/C09Q5gBi3bvWw3JJWh5/a7U=; b=r
-	Y2KduLJzg1zCCGShxov+wAzv7Zz3z4n2p6yUypM/hSZL2+jnf0XddaXVsW4TFPfv
-	U4lCT7l7WNmAI7NX44SaPKAq1Gv5iKS9zEXNE/4KR6fKVUxEymFebFjrlXVErlIz
-	ak8LavwGMJxQfYhxwDrtpQ11knhKyffkqN+1/1RKJIY/lvivS5h9hdt6pTwKD5Pu
-	nfEKMv2oD6/Cbk8A8vCWqeqSK48hYb1WK5h2hNGbk9x+YT4OqxAT6+Pso8x5T3td
-	yqlTgt92ri0ptPvyRgkcmJAwrxVuoqoNrVTMPJM7YhOAr8K/oAItEYufGiGVocZ6
-	Z49ERK+s+k+2Lwx3t+9hw==
-X-ME-Sender: <xms:EV7haZShVcMLtZf161VDRdqXRo0kJAO9VZE2eRjaeEI7orysJevg1w>
-    <xme:EV7haeoSFEOJExpiLyEHSlS-m3F8_HoIlpQgTBgegpHpCWk2S7jtsGKsnLzoJC_6R
-    Igyn8oGOMl3lE9UdWZpbwcr016eiftfvdwcVqAkBSvUzTx89DjqlXE>
-X-ME-Received: <xmr:EV7haaUwVv2d2qltjyrvXmJ9-YQG5yUUTPRnBlMJPvyiqd6IU-aGzx5owJorQOzWK6rgF7s1x59p0If-LpqxJ3Ibei_E1rNz>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegkeduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefkffggfgfuvfevfhfhjggtgfesthejredttddvjeenucfhrhhomhepfdeurghrrhih
-    ucfmrdcupfgrthhhrghnfdcuoegsrghrrhihnhesphhosghogidrtghomheqnecuggftrf
-    grthhtvghrnhepfeelheekheelkeejlefffefhvdeljeetheeltdeiudffveetffelteeg
-    gfefhfejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrghrrhihnhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohepvddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hgrhgvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehs
-    thgrsghlvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghttghhvg
-    hssehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqkhgvrhhn
-    vghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhorhhvrghlughsse
-    hlihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopegrkhhpmheslhhi
-    nhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheplhhinhhugiesrhhovg
-    gtkhdquhhsrdhnvghtpdhrtghpthhtohepshhhuhgrhheskhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphgrthgthhgvsheskhgvrhhnvghltghirdhorhhg
-X-ME-Proxy: <xmx:EV7haU_e9Y7Fwnp0ZBpRsKTL7i9_DaiPQ-TcNwPCCZvTUS9pwskvmg>
-    <xmx:EV7haaZaqrIVpPj-lH5PoqbAcuogHBrmezNSvy6yli5TJjNJ8TCxXA>
-    <xmx:EV7haUdTXWXYG1wYJfzvNEzIpnbUKXeb1pPA2p99rnX0l4GwjYONOw>
-    <xmx:EV7hacpgzGJB0ekRHFT2Xy2u3zKHeej1mxVl6ytMWkoxfR4nHmJF_Q>
-    <xmx:El7haUnJvFfNd6wAr_dvchHawlTmtM11dXjEjZZQFCpO4OoMExeMwPLU>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 18:09:19 -0400 (EDT)
-Message-ID: <cbbfe1c3-247c-48d9-a808-addc75c30abb@pobox.com>
-Date: Thu, 16 Apr 2026 15:09:18 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qdsqtQp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1764DC2BCB3;
+	Thu, 16 Apr 2026 23:37:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776382634;
+	bh=GW5/+NpIhNRfKz0Natu09b2YnTkxIzuoHQWQKYAyVP8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qdsqtQp+zeYDmRuIN8cgQYW0kUIYUoDJ0a8w+B6Pwr8F+y2oeHn0QNsrmcZeZBmkU
+	 IThMKQ9X9R1Q6h10hyxAjLkSCrNwu/ia76ou2GmaCeIXj5RQEs0YBsgvf7U7bm/Noy
+	 E3cbvTJ0l7oMOu7nlwfA8aXD/Fj1jE5h0eSOmIdcJ2CXbjBjXNlTzLavyb0npaulI9
+	 D9q9hjJjgU0Q9WSm1Lw7KpfTCWNT8v4466EqEw2t8dv4Gqio6C3otp9AMEZUfOGI+g
+	 Vku4wJmIHFo2KIOfVc9NYf4OrWsg1KDdHB+kXugIagozHSF+0U/qohcfuI1V5iCW58
+	 kfX7xL7le9vwg==
+Date: Thu, 16 Apr 2026 16:37:10 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Hari Bathini <hbathini@linux.ibm.com>
+Cc: linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] powerpc/vdso: Drop -DCC_USING_PATCHABLE_FUNCTION_ENTRY
+ from 32-bit flags with clang
+Message-ID: <20260416233710.GA581965@ax162>
+References: <20260311-ppc-vdso-drop-cc-using-pfe-define-clang-v1-1-66c790e22650@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 00/55] 6.1.169-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260413155724.820472494@linuxfoundation.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260311-ppc-vdso-drop-cc-using-pfe-define-clang-v1-1-66c790e22650@kernel.org>
 
-On 4/13/26 09:00, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.169 release.
-> There are 55 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.169-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Ping? This patch is pretty simple and fixes many build warnings since
+inline is used many times in this file. I can take this via my
+clang-fixes tree with an appropriate ack if that would be easier.
 
-Tested on an amd64 laptop (Lenovo ThinkPad T14 Gen 1). Working well, no
-regressions observed.
-
-Tested-by: Barry K. Nathan <barryn@pobox.com>
-
--- 
--Barry K. Nathan  <barryn@pobox.com>
+On Wed, Mar 11, 2026 at 05:39:56PM -0700, Nathan Chancellor wrote:
+> After commit 73cdf24e81e4 ("powerpc64: make clang cross-build
+> friendly"), building 64-bit little endian + CONFIG_COMPAT=y with clang
+> results in many warnings along the lines of:
+> 
+>   $ cat arch/powerpc/configs/compat.config
+>   CONFIG_COMPAT=y
+> 
+>   $ make -skj"$(nproc)" ARCH=powerpc LLVM=1 ppc64le_defconfig compat.config arch/powerpc/kernel/vdso/
+>   ...
+>   In file included from <built-in>:4:
+>   In file included from lib/vdso/gettimeofday.c:6:
+>   In file included from include/vdso/datapage.h:15:
+>   In file included from include/vdso/cache.h:5:
+>   arch/powerpc/include/asm/cache.h:77:8: warning: unknown attribute 'patchable_function_entry' ignored [-Wunknown-attributes]
+>      77 | static inline u32 l1_icache_bytes(void)
+>         |        ^~~~~~
+>   include/linux/compiler_types.h:235:58: note: expanded from macro 'inline'
+>     235 | #define inline inline __gnu_inline __inline_maybe_unused notrace
+>         |                                                          ^~~~~~~
+>   include/linux/compiler_types.h:215:34: note: expanded from macro 'notrace'
+>     215 | #define notrace                 __attribute__((patchable_function_entry(0, 0)))
+>         |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   ...
+> 
+> arch/powerpc/Makefile adds -DCC_USING_PATCHABLE_FUNCTION_ENTRY to
+> KBUILD_CPPFLAGS, which is inherited by the 32-bit vDSO. However, the
+> 32-bit little endian target does not support
+> '-fpatchable-function-entry', resulting in the warnings above.
+> 
+> Remove -DCC_USING_PATCHABLE_FUNCTION_ENTRY from the 32-bit vDSO flags
+> when building with clang to avoid the warnings.
+> 
+> Fixes: 73cdf24e81e4 ("powerpc64: make clang cross-build friendly")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  arch/powerpc/kernel/vdso/Makefile | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
+> index 8834dfe9d727..368759f81708 100644
+> --- a/arch/powerpc/kernel/vdso/Makefile
+> +++ b/arch/powerpc/kernel/vdso/Makefile
+> @@ -62,6 +62,12 @@ CC32FLAGSREMOVE += -fno-stack-clash-protection
+>  # 32-bit one. clang validates the values passed to these arguments during
+>  # parsing, even when -fno-stack-protector is passed afterwards.
+>  CC32FLAGSREMOVE += -mstack-protector-guard%
+> +# ftrace is disabled for the vdso but arch/powerpc/Makefile adds this define to
+> +# KBUILD_CPPFLAGS, which enables use of the 'patchable_function_entry'
+> +# attribute in the 'inline' define via 'notrace'. This attribute is not
+> +# supported for the powerpcle target, resulting in many instances of
+> +# -Wunknown-attributes.
+> +CC32FLAGSREMOVE += -DCC_USING_PATCHABLE_FUNCTION_ENTRY
+>  endif
+>  LD32FLAGS := -Wl,-soname=linux-vdso32.so.1
+>  AS32FLAGS := -D__VDSO32__
+> 
+> ---
+> base-commit: 35e4f2a17eb40288f9bcdb09549fa04a63a96279
+> change-id: 20260311-ppc-vdso-drop-cc-using-pfe-define-clang-46d6f5041544
+> 
+> Best regards,
+> --  
+> Nathan Chancellor <nathan@kernel.org>
+> 
