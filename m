@@ -1,36 +1,82 @@
-Received: from james.steelbluetech.co.uk (james.steelbluetech.co.uk [78.40.151.100])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0133348898
-	for <patches@lists.linux.dev>; Thu, 16 Apr 2026 18:58:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.40.151.100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F252F6910
+	for <patches@lists.linux.dev>; Thu, 16 Apr 2026 22:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776365912; cv=none; b=btezC4ENee8GguKzuVWdLYeW+HKII6yBqvBDOFYxwABLIvoMXzkqmdSQjrA5XNtc/MODzc6TXIFia0/iHlyyHhCQYq8mv9tG/S3YBczQiIdOcz+CQPy9gn/WdLDp68rYsp/39lfS41kBjrOSzH4TWlojqYcfvwY7EvGRezoQEGg=
+	t=1776377365; cv=none; b=aDa90yb+e2TExAhRChz3amDWjdxlq9HkPBH5bWgMIed0GS6P6Q2UGjWsirOYkgaRYMLIkfd98GZ7l7zqV+BmRLbQsZfleSg0aC86YB4qNe7uB2rRNwKD+iTFc6CtISECG7Cky7txAf83s0JtazoDh1cY8ma0e7NdynmCkECK3oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776365912; c=relaxed/simple;
-	bh=pKAfoM3iQd4d3Pvz0ihfInuTbvgYkVlBfNrHPtW1rew=;
+	s=arc-20240116; t=1776377365; c=relaxed/simple;
+	bh=v4mLI+Jc/jsmLLBiyeClacJrBmyK6a/LIyeRUzroCSo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nDd2eNBt5qMv9QNFWJ51PXAtDdC4PBvqAw+J9WJGqc83zruNPA8W33Z9qQ+V/LwYH+BsPnlSTnWZ0lHKeUhc12sfJIuzpxu3t3G/3l+NQ9wJSRdabnpHePdOw/CO26IUogjOKrDvFecYbSDzq78Q8s0atNVeq23f/FJlmGUxVDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ehuk.net; spf=pass smtp.mailfrom=ehuk.net; dkim=pass (2048-bit key) header.d=ehuk.net header.i=@ehuk.net header.b=Ss9IB/nK; arc=none smtp.client-ip=78.40.151.100
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ehuk.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ehuk.net
+	 In-Reply-To:Content-Type; b=lZO2GwgX85mWWGsKIo67BDJNOTt6EHthas6onCmXq2cm9MtMf5VPcdJCKRtvlzOAaxqVTd/nOKOyuQ8c0DCXwCDJQ0YtXftUT3wvcmPVVayyDf5GV22bxqymS5sRLdKINk8ybwNZwmQ21d/whiiqJiAjtVenWJbrhfE8r/+HkHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e6HuoB8t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rY2KduLJ; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ehuk.net header.i=@ehuk.net header.b="Ss9IB/nK"
-Received: from [10.0.5.25] (tv.ehuk.net [10.0.5.25])
-	by james.steelbluetech.co.uk (Postfix) with ESMTP id 7DF9BBFC14;
-	Thu, 16 Apr 2026 19:55:19 +0100 (BST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 james.steelbluetech.co.uk 7DF9BBFC14
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1776365719; bh=je7F5uCIXmm6y2OPbC+xbMc7O/fNY4uLAiFmFqlSZTA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Ss9IB/nKtnW/SoTDDVlZhLomH6koCN7bh+eAq/9DZcqw0Yn4119fgDvgts7zIXkxi
-	 n473TsOXdnczpgUQ8erPOqwA4eMLMRc0ebhshrgYUe0B/+eyTVraJRNBLswQUiJ1BD
-	 evViADwQtxL1o8caL20v3iTiWqTolvcM9a2yPVk3PSL2QLS/fHusoKehtvg/4NG/PE
-	 tFkhWqrg0Rx3juE6q/C1ByYwJLcd+vYCqfnK/BiBCNbOjLVb2zPg70SMCgorCxBPy3
-	 it/fFLp6Vtjsf8e6Zg45ovcaVNs8MWHPUOmgopwsRKEZX2Y9JtAtMAvGLjq/vCWZzB
-	 DXNKETZ4EDIuw==
-Message-ID: <172f1405-0094-4957-9758-e700ec76516f@ehuk.net>
-Date: Thu, 16 Apr 2026 19:55:19 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e6HuoB8t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rY2KduLJ"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 633557A0254;
+	Thu, 16 Apr 2026 18:09:22 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 16 Apr 2026 18:09:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1776377362;
+	 x=1776463762; bh=N8EByoorsMjORhHbfQz/C09Q5gBi3bvWw3JJWh5/a7U=; b=
+	e6HuoB8tyVB89QnYAZEtptMJk/y6FfZRzQbMgxA+OVmRq3RxfcgdaOrrX7zv4svX
+	sFCx0rVIWV9hOUrttRbgw9z3cgOHOHY7tgE0wNchHfZ6p/3L9jVRVAsS63xg2/KV
+	KHKUzugjqjhEXlL8lJp3tZt8IMsloLw/M+K4M4aXhdUtNg/3qoseQX96Fznvub1/
+	kyaDNDuIRW3trp+KkWjJPuf0npv/WBdM7SUh4Xo7ifel3QLOUNNzKO0dtx11ahbP
+	nfhu1ep3xO9GE/5FPMzvuFKjOzwEcUVg8KvD5YGMCrNhvZou1ekWbjo4zxiC1CNn
+	esg8ECEtWT9w/eZqS90F1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776377362; x=
+	1776463762; bh=N8EByoorsMjORhHbfQz/C09Q5gBi3bvWw3JJWh5/a7U=; b=r
+	Y2KduLJzg1zCCGShxov+wAzv7Zz3z4n2p6yUypM/hSZL2+jnf0XddaXVsW4TFPfv
+	U4lCT7l7WNmAI7NX44SaPKAq1Gv5iKS9zEXNE/4KR6fKVUxEymFebFjrlXVErlIz
+	ak8LavwGMJxQfYhxwDrtpQ11knhKyffkqN+1/1RKJIY/lvivS5h9hdt6pTwKD5Pu
+	nfEKMv2oD6/Cbk8A8vCWqeqSK48hYb1WK5h2hNGbk9x+YT4OqxAT6+Pso8x5T3td
+	yqlTgt92ri0ptPvyRgkcmJAwrxVuoqoNrVTMPJM7YhOAr8K/oAItEYufGiGVocZ6
+	Z49ERK+s+k+2Lwx3t+9hw==
+X-ME-Sender: <xms:EV7haZShVcMLtZf161VDRdqXRo0kJAO9VZE2eRjaeEI7orysJevg1w>
+    <xme:EV7haeoSFEOJExpiLyEHSlS-m3F8_HoIlpQgTBgegpHpCWk2S7jtsGKsnLzoJC_6R
+    Igyn8oGOMl3lE9UdWZpbwcr016eiftfvdwcVqAkBSvUzTx89DjqlXE>
+X-ME-Received: <xmr:EV7haaUwVv2d2qltjyrvXmJ9-YQG5yUUTPRnBlMJPvyiqd6IU-aGzx5owJorQOzWK6rgF7s1x59p0If-LpqxJ3Ibei_E1rNz>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegkeduiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefkffggfgfuvfevfhfhjggtgfesthejredttddvjeenucfhrhhomhepfdeurghrrhih
+    ucfmrdcupfgrthhhrghnfdcuoegsrghrrhihnhesphhosghogidrtghomheqnecuggftrf
+    grthhtvghrnhepfeelheekheelkeejlefffefhvdeljeetheeltdeiudffveetffelteeg
+    gfefhfejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrghrrhihnhesphhosghogidrtgho
+    mhdpnhgspghrtghpthhtohepvddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hgrhgvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehs
+    thgrsghlvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghttghhvg
+    hssehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqkhgvrhhn
+    vghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhorhhvrghlughsse
+    hlihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopegrkhhpmheslhhi
+    nhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheplhhinhhugiesrhhovg
+    gtkhdquhhsrdhnvghtpdhrtghpthhtohepshhhuhgrhheskhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphgrthgthhgvsheskhgvrhhnvghltghirdhorhhg
+X-ME-Proxy: <xmx:EV7haU_e9Y7Fwnp0ZBpRsKTL7i9_DaiPQ-TcNwPCCZvTUS9pwskvmg>
+    <xmx:EV7haaZaqrIVpPj-lH5PoqbAcuogHBrmezNSvy6yli5TJjNJ8TCxXA>
+    <xmx:EV7haUdTXWXYG1wYJfzvNEzIpnbUKXeb1pPA2p99rnX0l4GwjYONOw>
+    <xmx:EV7hacpgzGJB0ekRHFT2Xy2u3zKHeej1mxVl6ytMWkoxfR4nHmJF_Q>
+    <xmx:El7haUnJvFfNd6wAr_dvchHawlTmtM11dXjEjZZQFCpO4OoMExeMwPLU>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Apr 2026 18:09:19 -0400 (EDT)
+Message-ID: <cbbfe1c3-247c-48d9-a808-addc75c30abb@pobox.com>
+Date: Thu, 16 Apr 2026 15:09:18 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,7 +84,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 00/70] 6.12.82-rc1 review
+Subject: Re: [PATCH 6.1 00/55] 6.1.169-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -47,17 +93,16 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, sr@sladewatkins.com
-References: <20260413155728.181580293@linuxfoundation.org>
-Content-Language: en-GB
-From: Eddie Chapman <eddie@ehuk.net>
-In-Reply-To: <20260413155728.181580293@linuxfoundation.org>
+References: <20260413155724.820472494@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260413155724.820472494@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang
 
-On 13/04/2026 16:59, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.82 release.
-> There are 70 patches in this series, all will be posted as a response
+On 4/13/26 09:00, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.169 release.
+> There are 55 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -65,32 +110,19 @@ On 13/04/2026 16:59, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.82-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.169-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
-I just wanted to point out that the revert of "PCI: Enable ACS after 
-configuring IOMMU for OF platforms" is missing here despite being queued 
-in the 6.1 & 6.6 rcs (it is meant to be reverted from 6.12 as well). I 
-noticed when updating to 6.12.82-rc1 today as I was bit by the 
-regression (all my IOMMU groups messed up).
 
-The revert for 6.12 is in fact here:
-https://lore.kernel.org/stable/20260320172335.29778-1-john@kernel.doghat.io/
+Tested on an amd64 laptop (Lenovo ThinkPad T14 Gen 1). Working well, no
+regressions observed.
 
-but unfortunately easily missed as shown by the confusion here (same 
-thread):
-https://lore.kernel.org/stable/99426bd8-32e5-4246-9d3b-772e136bc078@leemhuis.info/
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
-subsequently clarified by the patch author here (also same thread):
-https://lore.kernel.org/stable/5hng5r6q525scbclramuv2h2hphljbcsscwohvrs7teuedgfvl@ncr7tqhr4l4z/
-
-Other than that 6.12.82-rc1 boots and runs fine for me on the one AMD 
-Ryzen system I've tried it on.
-
-Thanks,
-Eddie
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
