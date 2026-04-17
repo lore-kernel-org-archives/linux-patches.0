@@ -1,120 +1,202 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464713A6B7A;
-	Thu, 16 Apr 2026 23:37:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F40A937
+	for <patches@lists.linux.dev>; Fri, 17 Apr 2026 00:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776382635; cv=none; b=VlF/T2DEAAbtM9leui5E2E5ZmPi+T5H2j+XzKMXROyxikKzD1oppniHJhlczONfjoHKFxPMV7ubg9rHQas/k0Ld2tWX8584nmZghQuhW5r2OUi6F58u/Cx5p1jv+WXb4Cc8JveG4IDzjpdD/A40yu0D4vVfJI/9KuvHzPj3BNNE=
+	t=1776384565; cv=none; b=CiXUhw98q9xf9xa6QheGwYXDpzGJyOVEqNFlXRukCdoUtmuCn2ll+QrSW0Xy0sLCiBcEF8+qQ6ftXjys45JmVY4eaBbsKQ5ViEyzUA21cYN78Bdxr1OGzwhuNPAU5YxdX96VYXihkjVxUMJcAuUa5MVZ1lbSVZvb5LOBOkcUnAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776382635; c=relaxed/simple;
-	bh=GW5/+NpIhNRfKz0Natu09b2YnTkxIzuoHQWQKYAyVP8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=obfAVxdN+bo6x9ff8QMGIjIOx4jnbqUOBjIts7sSgs+z8EsWDM1/F6f8bSDG+RcBvWmMt3bmZNNh5JKIEyq0/pLa6Dd5/iKmZ2XinZLeI7KUdgwDixlBsqaA/ub0q9xVoA1UPLcUuNyckJZA7oRH0pGg+HtLwr6JFXidlgc6b5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qdsqtQp+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776384565; c=relaxed/simple;
+	bh=jaoXggD58FVYKNlS5gEyeZYwYQw7MOZ3aLdudKgX4Ak=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qtmm7red5OCB9Aqx+PY3jdXDOCTz9V5+wnrgtQ0tbC2BO1S1zLKzzwx5oA1+OuSOg5nrQbE/oSXTMzNsOXzWBQw8nrD4F/1w2Rh42IbXVOTIWtcNRpC+AhjWuUFEpJ/dd8tHsju28bj2+Zd1xG4qH6n5uVYaF1McXSJrwcSgpFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IEocdZiS; arc=none smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qdsqtQp+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1764DC2BCB3;
-	Thu, 16 Apr 2026 23:37:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776382634;
-	bh=GW5/+NpIhNRfKz0Natu09b2YnTkxIzuoHQWQKYAyVP8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qdsqtQp+zeYDmRuIN8cgQYW0kUIYUoDJ0a8w+B6Pwr8F+y2oeHn0QNsrmcZeZBmkU
-	 IThMKQ9X9R1Q6h10hyxAjLkSCrNwu/ia76ou2GmaCeIXj5RQEs0YBsgvf7U7bm/Noy
-	 E3cbvTJ0l7oMOu7nlwfA8aXD/Fj1jE5h0eSOmIdcJ2CXbjBjXNlTzLavyb0npaulI9
-	 D9q9hjJjgU0Q9WSm1Lw7KpfTCWNT8v4466EqEw2t8dv4Gqio6C3otp9AMEZUfOGI+g
-	 Vku4wJmIHFo2KIOfVc9NYf4OrWsg1KDdHB+kXugIagozHSF+0U/qohcfuI1V5iCW58
-	 kfX7xL7le9vwg==
-Date: Thu, 16 Apr 2026 16:37:10 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Hari Bathini <hbathini@linux.ibm.com>
-Cc: linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] powerpc/vdso: Drop -DCC_USING_PATCHABLE_FUNCTION_ENTRY
- from 32-bit flags with clang
-Message-ID: <20260416233710.GA581965@ax162>
-References: <20260311-ppc-vdso-drop-cc-using-pfe-define-clang-v1-1-66c790e22650@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IEocdZiS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1776384563; x=1807920563;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=jaoXggD58FVYKNlS5gEyeZYwYQw7MOZ3aLdudKgX4Ak=;
+  b=IEocdZiS9uqqRJ0Khk8ZvTVjEfELOrVr4tOFmVcpR63SErIantzl/kTe
+   Rvaf3OhIotdqfI4qByGw4fTchkyFWZN5gcJmKaItmcxZIgYwxvGys03PR
+   G5CFx8wN2U86IRK+/yD3RESvsQ0nzi0avlBiYFIar9JKV8TzJkgI6axRh
+   bQzgSE9UB7BndCpfP+5Vr4J4aXa3TWpd3HvHR74dxlOE5+UnxhvTBLafZ
+   xCT0uNsKD2/6NUjXwY2c4n/scDGgJRMwxrXgRpQetq7N+L01GGTnhrSdz
+   yCIWTcVMgagvbdoU/tHBQ6copQfRy5zUMNASSXKQK6C6V3d7PTa05wN+5
+   Q==;
+X-CSE-ConnectionGUID: 6pMUP6X8QOagZUjBn2Gz1w==
+X-CSE-MsgGUID: v8S7d0mhRyO5e8PgNi1sBQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11761"; a="77270081"
+X-IronPort-AV: E=Sophos;i="6.23,183,1770624000"; 
+   d="scan'208";a="77270081"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2026 17:09:23 -0700
+X-CSE-ConnectionGUID: X0kBPrxuQ9Cj+OfG87fcIQ==
+X-CSE-MsgGUID: 7wJsfx+BSzCMppgdDzGfZw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,183,1770624000"; 
+   d="scan'208";a="232630238"
+Received: from vverma7-desk1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.222.234])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2026 17:09:18 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Cc: Herman Li <herman.li@intel.com>,
+	Zaid Alali <zaidal@os.amperecomputing.com>,
+	Jiaqi Yan <jiaqiyan@google.com>,
+	linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v3] ACPI: APEI: EINJ: Fix EINJV2 memory error injection
+Date: Thu, 16 Apr 2026 17:08:51 -0700
+Message-ID: <20260417000851.78924-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260311-ppc-vdso-drop-cc-using-pfe-define-clang-v1-1-66c790e22650@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-Ping? This patch is pretty simple and fixes many build warnings since
-inline is used many times in this file. I can take this via my
-clang-fixes tree with an appropriate ack if that would be easier.
+Error types in EINJV2 use different bit positions for each flavor of
+injection from legacy EINJ.
 
-On Wed, Mar 11, 2026 at 05:39:56PM -0700, Nathan Chancellor wrote:
-> After commit 73cdf24e81e4 ("powerpc64: make clang cross-build
-> friendly"), building 64-bit little endian + CONFIG_COMPAT=y with clang
-> results in many warnings along the lines of:
-> 
->   $ cat arch/powerpc/configs/compat.config
->   CONFIG_COMPAT=y
-> 
->   $ make -skj"$(nproc)" ARCH=powerpc LLVM=1 ppc64le_defconfig compat.config arch/powerpc/kernel/vdso/
->   ...
->   In file included from <built-in>:4:
->   In file included from lib/vdso/gettimeofday.c:6:
->   In file included from include/vdso/datapage.h:15:
->   In file included from include/vdso/cache.h:5:
->   arch/powerpc/include/asm/cache.h:77:8: warning: unknown attribute 'patchable_function_entry' ignored [-Wunknown-attributes]
->      77 | static inline u32 l1_icache_bytes(void)
->         |        ^~~~~~
->   include/linux/compiler_types.h:235:58: note: expanded from macro 'inline'
->     235 | #define inline inline __gnu_inline __inline_maybe_unused notrace
->         |                                                          ^~~~~~~
->   include/linux/compiler_types.h:215:34: note: expanded from macro 'notrace'
->     215 | #define notrace                 __attribute__((patchable_function_entry(0, 0)))
->         |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   ...
-> 
-> arch/powerpc/Makefile adds -DCC_USING_PATCHABLE_FUNCTION_ENTRY to
-> KBUILD_CPPFLAGS, which is inherited by the 32-bit vDSO. However, the
-> 32-bit little endian target does not support
-> '-fpatchable-function-entry', resulting in the warnings above.
-> 
-> Remove -DCC_USING_PATCHABLE_FUNCTION_ENTRY from the 32-bit vDSO flags
-> when building with clang to avoid the warnings.
-> 
-> Fixes: 73cdf24e81e4 ("powerpc64: make clang cross-build friendly")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  arch/powerpc/kernel/vdso/Makefile | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
-> index 8834dfe9d727..368759f81708 100644
-> --- a/arch/powerpc/kernel/vdso/Makefile
-> +++ b/arch/powerpc/kernel/vdso/Makefile
-> @@ -62,6 +62,12 @@ CC32FLAGSREMOVE += -fno-stack-clash-protection
->  # 32-bit one. clang validates the values passed to these arguments during
->  # parsing, even when -fno-stack-protector is passed afterwards.
->  CC32FLAGSREMOVE += -mstack-protector-guard%
-> +# ftrace is disabled for the vdso but arch/powerpc/Makefile adds this define to
-> +# KBUILD_CPPFLAGS, which enables use of the 'patchable_function_entry'
-> +# attribute in the 'inline' define via 'notrace'. This attribute is not
-> +# supported for the powerpcle target, resulting in many instances of
-> +# -Wunknown-attributes.
-> +CC32FLAGSREMOVE += -DCC_USING_PATCHABLE_FUNCTION_ENTRY
->  endif
->  LD32FLAGS := -Wl,-soname=linux-vdso32.so.1
->  AS32FLAGS := -D__VDSO32__
-> 
-> ---
-> base-commit: 35e4f2a17eb40288f9bcdb09549fa04a63a96279
-> change-id: 20260311-ppc-vdso-drop-cc-using-pfe-define-clang-46d6f5041544
-> 
-> Best regards,
-> --  
-> Nathan Chancellor <nathan@kernel.org>
-> 
+Two issues:
+
+1) The address sanity checks in einj_error_inject() were skipped for V2
+   injections. Noted by sashiko[1]
+2) __einj_error_trigger() failed to drop the entry of the target
+   physical address from the list of resources that need to be
+   requested.
+
+Add a helper function that checks if an injection is to memory and use it
+to solve each of these issues.
+
+Note that the old test in __einj_error_trigger() checked that param2 was
+not zero. This isn't needed because the sanity checks in einj_error_inject()
+reject memory injections with param2 == 0.
+
+Fixes: b47610296d17 ("ACPI: APEI: EINJ: Enable EINJv2 error injections")
+#Reported-by: sashiko <sashiko@sashiko.dev>
+Reported-by: Herman Li <herman.li@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://sashiko.dev/#/patchset/20260415163620.12957-1-tony.luck%40intel.com # [1]
+---
+
+Changes since V2:
+Fix additional issue reported by sashiko when reviewing earlier version.
+
+ drivers/acpi/apei/einj-core.c | 51 +++++++++++++++++++++--------------
+ 1 file changed, 31 insertions(+), 20 deletions(-)
+
+diff --git a/drivers/acpi/apei/einj-core.c b/drivers/acpi/apei/einj-core.c
+index a9248af078f6..25bfab62b73b 100644
+--- a/drivers/acpi/apei/einj-core.c
++++ b/drivers/acpi/apei/einj-core.c
+@@ -46,6 +46,12 @@
+ 				ACPI_EINJ_CXL_MEM_UNCORRECTABLE | \
+ 				ACPI_EINJ_CXL_MEM_FATAL)
+ 
++/* EINJV2 Error types from ACPI v6.5 specification */
++#define ACPI_EINJV2_PROCESSOR	BIT(0)
++#define ACPI_EINJV2_MEMORY	BIT(1)
++#define ACPI_EINJV2_PCIX	BIT(2)
++#define ACPI_EINJV2_VENDOR	BIT(31)
++
+ /*
+  * ACPI version 5 provides a SET_ERROR_TYPE_WITH_ADDRESS action.
+  */
+@@ -401,8 +407,18 @@ static struct acpi_generic_address *einj_get_trigger_parameter_region(
+ 
+ 	return NULL;
+ }
++
++static bool is_memory_injection(u32 type, u32 flags)
++{
++	if (flags & SETWA_FLAGS_EINJV2)
++		return !!(type & ACPI_EINJV2_MEMORY);
++	if (type & ACPI5_VENDOR_BIT)
++		return !!(vendor_flags & SETWA_FLAGS_MEM);
++	return !!(type & MEM_ERROR_MASK);
++}
++
+ /* Execute instructions in trigger error action table */
+-static int __einj_error_trigger(u64 trigger_paddr, u32 type,
++static int __einj_error_trigger(u64 trigger_paddr, u32 type, u32 flags,
+ 				u64 param1, u64 param2)
+ {
+ 	struct acpi_einj_trigger trigger_tab;
+@@ -480,7 +496,7 @@ static int __einj_error_trigger(u64 trigger_paddr, u32 type,
+ 	 * This will cause resource conflict with regular memory.  So
+ 	 * remove it from trigger table resources.
+ 	 */
+-	if ((param_extension || acpi5) && (type & MEM_ERROR_MASK) && param2) {
++	if ((param_extension || acpi5) && is_memory_injection(type, flags)) {
+ 		struct apei_resources addr_resources;
+ 
+ 		apei_resources_init(&addr_resources);
+@@ -660,7 +676,7 @@ static int __einj_error_inject(u32 type, u32 flags, u64 param1, u64 param2,
+ 		return rc;
+ 	trigger_paddr = apei_exec_ctx_get_output(&ctx);
+ 	if (notrigger == 0) {
+-		rc = __einj_error_trigger(trigger_paddr, type, param1, param2);
++		rc = __einj_error_trigger(trigger_paddr, type, flags, param1, param2);
+ 		if (rc)
+ 			return rc;
+ 	}
+@@ -718,35 +734,30 @@ int einj_error_inject(u32 type, u32 flags, u64 param1, u64 param2, u64 param3,
+ 		      SETWA_FLAGS_PCIE_SBDF | SETWA_FLAGS_EINJV2)))
+ 		return -EINVAL;
+ 
++	/*
++	 * Injections targeting a CXL 1.0/1.1 port have to be injected
++	 * via the einj_cxl_rch_error_inject() path as that does the proper
++	 * validation of the given RCRB base (MMIO) address.
++	 */
++	if (einj_is_cxl_error_type(type) && (flags & SETWA_FLAGS_MEM))
++		return -EINVAL;
++
+ 	/* check if type is a valid EINJv2 error type */
+ 	if (is_v2) {
+ 		if (!(type & available_error_type_v2))
+ 			return -EINVAL;
+ 	}
+-	/*
+-	 * We need extra sanity checks for memory errors.
+-	 * Other types leap directly to injection.
+-	 */
+ 
+ 	/* ensure param1/param2 existed */
+ 	if (!(param_extension || acpi5))
+ 		goto inject;
+ 
+-	/* ensure injection is memory related */
+-	if (type & ACPI5_VENDOR_BIT) {
+-		if (vendor_flags != SETWA_FLAGS_MEM)
+-			goto inject;
+-	} else if (!(type & MEM_ERROR_MASK) && !(flags & SETWA_FLAGS_MEM)) {
+-		goto inject;
+-	}
+-
+ 	/*
+-	 * Injections targeting a CXL 1.0/1.1 port have to be injected
+-	 * via the einj_cxl_rch_error_inject() path as that does the proper
+-	 * validation of the given RCRB base (MMIO) address.
++	 * We need extra sanity checks for memory errors.
++	 * Other types leap directly to injection.
+ 	 */
+-	if (einj_is_cxl_error_type(type) && (flags & SETWA_FLAGS_MEM))
+-		return -EINVAL;
++	if (!is_memory_injection(type, flags))
++		goto inject;
+ 
+ 	/*
+ 	 * Disallow crazy address masks that give BIOS leeway to pick
+-- 
+2.53.0
+
