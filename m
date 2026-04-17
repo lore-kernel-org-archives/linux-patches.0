@@ -1,98 +1,160 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from n169-110.mail.139.com (n169-110.mail.139.com [120.232.169.110])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED175153BE9;
-	Fri, 17 Apr 2026 06:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBA23A960A
+	for <patches@lists.linux.dev>; Fri, 17 Apr 2026 08:19:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.110
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776407180; cv=none; b=AjGO5Q1kjXgOgDRzykHaJxP1VbLbf9s5HmIamV51g8eddYwzIScskEpFBAhyaO47Qpabm1w8wRt9AsJQqfVV416HlKT9dgfoYapBQEZY3ZRO4wSkKWJmGlwOjjT9TFGsKblEUj4iZ+vNjNsnKfXUSUQOZl7L7zJAbAyGY2IsKzQ=
+	t=1776413952; cv=none; b=OKFuIWNVUwHlmMBPVeBNxFvfaMD17y7ygWN19g2xFNpBopu5DN+eNj1a9s4FUjlsaEZEPYH8AVzpz8Lp/ggthu50VfPl62AccmfVcKhpqG+uia/iAqdKr0QgG3aHHS3HjoTf9k3s36GMly/b6/sfNZcDQEQYWQS15g1VOn9kty4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776407180; c=relaxed/simple;
-	bh=QLfYJdeUXJOQCpAnvwLBp6nzw8k9f9d/fgS91mKsx1w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n0XQoggC73BRe/5Sf0rxKkfwRcmb1j0D7kuCBYPfKHmnTRucKR6oNjBpgPhSjQoYyXTp3TioNLqe25vp9rCsxUMHK03QojJ97pyyzRqpdmtu/ib6qkQM0BwJJFpF0H6SDoBxqer+PzqumFYf3Tjqfh0unM4cxNtj04QK2ufkxDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0Fi6Ia7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776413952; c=relaxed/simple;
+	bh=QbLpK6Wf1dh+6c+9JcRpmGxBpKpzCVk9xfGNjuzc8Lo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=Z7hegOg1SSUUvVF9+LduaTtOeTxj/m9Qz2yVjL7yJ8SGZ2d1E8dDJ7iuajo5vG30nCZKS3QsjYquu7ypvqnlA7w9EGuAD4IYlpky9gphE9DaVdnkUJpElKeRmJsko+sAJisNIFYWiHIbVyXKxsFR75NGF+iSiaDIpdmPQSPsf/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=a9wdqAzv; arc=none smtp.client-ip=120.232.169.110
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0Fi6Ia7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13505C19425;
-	Fri, 17 Apr 2026 06:26:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776407179;
-	bh=QLfYJdeUXJOQCpAnvwLBp6nzw8k9f9d/fgS91mKsx1w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=c0Fi6Ia7TFZbgjIOF+urms8w478fdHYFHFLUVUuHp+JJL3OUGpPpm1IOaa8raX/Fu
-	 zwo8qll5dAjGGRpNQwErN0A+VJSNRfYASeuAUqlJZ1aPm7SNZ82ZN/8t/K89oPiT5x
-	 70qEWli69g6vSCpAHzo70SgTeDFvzKpPSuxco3bk=
-Date: Fri, 17 Apr 2026 08:25:48 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Eddie Chapman <eddie@ehuk.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.12 00/70] 6.12.82-rc1 review
-Message-ID: <2026041742-armrest-clicker-84fd@gregkh>
-References: <20260413155728.181580293@linuxfoundation.org>
- <172f1405-0094-4957-9758-e700ec76516f@ehuk.net>
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="a9wdqAzv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=139.com; s=dkim; l=0;
+	h=from:subject:message-id:to:cc:mime-version;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	b=a9wdqAzvmfD+h1ADj0/cwLbu9NXym1xRap+5BYwGq47X3KrxfNPZiwLmYyeEJdm6UFlTZEfC29MX8
+	 EeyBE2jBfn0GQM8a1bIGIo0FQzYKi/Ro8QJYBiKIKUwoiHLA9ord3s8Jl1lVuKeV0UHLBRirsjYYwx
+	 WNRTlGa0aeJx+EZY=
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM:                                                                                        
+X-RM-SPAM-FLAG:00000000
+Received:from NTT-kernel-dev (unknown[60.247.85.88])
+	by rmsmtp-lg-appmail-06-12084 (RichMail) with SMTP id 2f3469e1ecee885-018a3;
+	Fri, 17 Apr 2026 16:18:56 +0800 (CST)
+X-RM-TRANSID:2f3469e1ecee885-018a3
+From: Li hongliang <1468888505@139.com>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	pablo@netfilter.org
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	kadlec@netfilter.org,
+	fw@strlen.de,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org,
+	netdev@vger.kernel.org,
+	giki.shergill@proton.me
+Subject: [PATCH 6.6.y] nf_tables: nft_dynset: fix possible stateful expression memleak in error path
+Date: Fri, 17 Apr 2026 16:18:55 +0800
+Message-Id: <20260417081855.3253507-1-1468888505@139.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <172f1405-0094-4957-9758-e700ec76516f@ehuk.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Apr 16, 2026 at 07:55:19PM +0100, Eddie Chapman wrote:
-> On 13/04/2026 16:59, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.12.82 release.
-> > There are 70 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Wed, 15 Apr 2026 15:57:08 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.82-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> I just wanted to point out that the revert of "PCI: Enable ACS after
-> configuring IOMMU for OF platforms" is missing here despite being queued in
-> the 6.1 & 6.6 rcs (it is meant to be reverted from 6.12 as well). I noticed
-> when updating to 6.12.82-rc1 today as I was bit by the regression (all my
-> IOMMU groups messed up).
-> 
-> The revert for 6.12 is in fact here:
-> https://lore.kernel.org/stable/20260320172335.29778-1-john@kernel.doghat.io/
-> 
-> but unfortunately easily missed as shown by the confusion here (same
-> thread):
-> https://lore.kernel.org/stable/99426bd8-32e5-4246-9d3b-772e136bc078@leemhuis.info/
-> 
-> subsequently clarified by the patch author here (also same thread):
-> https://lore.kernel.org/stable/5hng5r6q525scbclramuv2h2hphljbcsscwohvrs7teuedgfvl@ncr7tqhr4l4z/
-> 
-> Other than that 6.12.82-rc1 boots and runs fine for me on the one AMD Ryzen
-> system I've tried it on.
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-That was not obvious at all, please don't make us dig through email
-threads to know what to and not to apply, it doesn't scale when dealing
-with the email volume we get.
+[ Upstream commit 0548a13b5a145b16e4da0628b5936baf35f51b43 ]
 
-Can someone resend that patch, properly marked fro 6.12, so we know to
-apply it there?
+If cloning the second stateful expression in the element via GFP_ATOMIC
+fails, then the first stateful expression remains in place without being
+released.
 
-thanks,
+   unreferenced object (percpu) 0x607b97e9cab8 (size 16):
+     comm "softirq", pid 0, jiffies 4294931867
+     hex dump (first 16 bytes on cpu 3):
+       00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+     backtrace (crc 0):
+       pcpu_alloc_noprof+0x453/0xd80
+       nft_counter_clone+0x9c/0x190 [nf_tables]
+       nft_expr_clone+0x8f/0x1b0 [nf_tables]
+       nft_dynset_new+0x2cb/0x5f0 [nf_tables]
+       nft_rhash_update+0x236/0x11c0 [nf_tables]
+       nft_dynset_eval+0x11f/0x670 [nf_tables]
+       nft_do_chain+0x253/0x1700 [nf_tables]
+       nft_do_chain_ipv4+0x18d/0x270 [nf_tables]
+       nf_hook_slow+0xaa/0x1e0
+       ip_local_deliver+0x209/0x330
 
-greg k-h
+Fixes: 563125a73ac3 ("netfilter: nftables: generalize set extension to support for several expressions")
+Reported-by: Gurpreet Shergill <giki.shergill@proton.me>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
+---
+ include/net/netfilter/nf_tables.h |  2 ++
+ net/netfilter/nf_tables_api.c     |  4 ++--
+ net/netfilter/nft_dynset.c        | 10 +++++++++-
+ 3 files changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 000ae2900f8c..ab0567951e31 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -861,6 +861,8 @@ void *nft_set_elem_init(const struct nft_set *set,
+ 			u64 timeout, u64 expiration, gfp_t gfp);
+ int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
+ 			    struct nft_expr *expr_array[]);
++void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
++			       struct nft_set_elem_expr *elem_expr);
+ void nft_set_elem_destroy(const struct nft_set *set, void *elem,
+ 			  bool destroy_expr);
+ void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 0aaddc1131c6..a0914a92e07d 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6464,8 +6464,8 @@ static void __nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+ 	}
+ }
+ 
+-static void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+-				      struct nft_set_elem_expr *elem_expr)
++void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
++			       struct nft_set_elem_expr *elem_expr)
+ {
+ 	struct nft_expr *expr;
+ 	u32 size;
+diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
+index 9a0aaeed2360..87c6a02675ba 100644
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -30,18 +30,26 @@ static int nft_dynset_expr_setup(const struct nft_dynset *priv,
+ 				 const struct nft_set_ext *ext)
+ {
+ 	struct nft_set_elem_expr *elem_expr = nft_set_ext_expr(ext);
++	struct nft_ctx ctx = {
++		.net	= read_pnet(&priv->set->net),
++		.family	= priv->set->table->family,
++	};
+ 	struct nft_expr *expr;
+ 	int i;
+ 
+ 	for (i = 0; i < priv->num_exprs; i++) {
+ 		expr = nft_setelem_expr_at(elem_expr, elem_expr->size);
+ 		if (nft_expr_clone(expr, priv->expr_array[i], GFP_ATOMIC) < 0)
+-			return -1;
++			goto err_out;
+ 
+ 		elem_expr->size += priv->expr_array[i]->ops->size;
+ 	}
+ 
+ 	return 0;
++err_out:
++	nft_set_elem_expr_destroy(&ctx, elem_expr);
++
++	return -1;
+ }
+ 
+ static void *nft_dynset_new(struct nft_set *set, const struct nft_expr *expr,
+-- 
+2.34.1
+
+
