@@ -1,101 +1,94 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6E913D539;
-	Sat, 18 Apr 2026 11:39:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDB1282F30
+	for <patches@lists.linux.dev>; Sat, 18 Apr 2026 16:51:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776512350; cv=none; b=hlSMkj5WUfGVB3cJn/EBdaoQuWuBHdNuliLtMFH12mAayl0ePSRQLqxWz5kgnrw0TiFxWkFeyqk8zH+qn6imvt6BNEVlom+OjQoN8HA6xRDonSSydmDJizClL7BHKAUj3PYxX8Bx8N3YK+3BZGjrMEKChfdsMRVW8E02ORnU58w=
+	t=1776531071; cv=none; b=RoT4psl0lQ4c2nq3lqH0G0tY3Yvvatx8iKQe2MXE5qUy12zBANC+YifwVDXEyTrUi/1hswoc9rrQl9JiG8zOqOBbEK6bJ7JKgwH3nxa1gn1Z6s/3OZ2loUvOOaWbnoP5b8M5aad6dryMjqPlHOIJoeoLZLMb/SAXqSzybqw9tyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776512350; c=relaxed/simple;
-	bh=h/xPEMjBgVXxyiu2XIneJdCerOWT3S+I/9ksQ4Juam8=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=qxskpUUdfjGOj4oTmmQUMGEKiR63QO+53I9MBbkhvkirCXxt+8u0HyEeXRK3Wihd/5Rp7gD+eE86O+OW5+VYdffZpHGoA0XiTE5wcI6o285DBvRBoRlAXCOHBJ8YO0j9qGj6kqWPreLpam3dVZR+BfT/Tf7huCVmp+OCpzNJnwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wE40r-005QWR-0g;
-	Sat, 18 Apr 2026 11:39:00 +0000
-Received: from ben by deadeye with local (Exim 4.99.1)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wE40p-00000004Q4Q-0wjv;
-	Sat, 18 Apr 2026 13:38:59 +0200
-Message-ID: <d5dde03f796af3efcdabcbadb604e8981268ae5c.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 393/491] phy: renesas: rcar-gen3-usb2: Lock around
- hardware registers and driver data
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Yoshihiro Shimoda	
- <yoshihiro.shimoda.uh@renesas.com>, Lad Prabhakar	
- <prabhakar.mahadev-lad.rj@bp.renesas.com>, Claudiu Beznea	
- <claudiu.beznea.uj@bp.renesas.com>, Vinod Koul <vkoul@kernel.org>, Sasha
- Levin	 <sashal@kernel.org>
-Date: Sat, 18 Apr 2026 13:38:53 +0200
-In-Reply-To: <20260413155833.747676279@linuxfoundation.org>
-References: <20260413155819.042779211@linuxfoundation.org>
-	 <20260413155833.747676279@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-msvjpwEEThymAvOn4Cyc"
-User-Agent: Evolution 3.56.2-9 
+	s=arc-20240116; t=1776531071; c=relaxed/simple;
+	bh=Ht/D7E3a40rysU0EGbxhXZptGJc/YvINGjzqbgLU6ho=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MWtnlYlmwKFV00qK/lvnHyPPF6eM+n8Qq84JXXK+CEDGJIdC7DySY0GJXxh7xbegD/5ki0Q8UtaCF9cAPVjV6wLhAe5zvoZPDENybOzNs0/uoVwuWCjDdMNZNvnLToxqIQOhaS6JjChgaAZTpDhZE3SXZA51qoC04f/EMHNUzpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=QLfcj8Pn; arc=none smtp.client-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="QLfcj8Pn"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8344A1143B6;
+	Sat, 18 Apr 2026 18:51:04 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1776531067;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=TYiYkD9LzUceCOAC/ZE7LE8Rqv3G9vhEboKcik9QaKE=;
+	b=QLfcj8PnITmsT2yPdx6rCPCsvHbK75/InNRyLdZBszYCZSedLgbv/0C16V3AtHVpZZPMGW
+	Yoci1r5+2OSBl/TVrlDRO+Yz8eRfNzrplGzOjonBburB1yi5UswEX3BOzSLttZwn379zeZ
+	nT862dOrVn75JMkW+MJSN2iP0vJTvv5PE5HB095PrNJm/72ZpHTDkx5wGm/mOCxh7DqlSk
+	h0KUWNgU2tt0n6hrmoLFOHyCFYp6DYXDM6dXVLDPDJw3E3dQVQgiLz0U2M3hLEe5a/05IL
+	uN6dgG8fM+8qN6uyexSL9PL6WeVXTSAwD+plwYDM3fQVNqXLbsybrR9rQt71Uw==
+Message-ID: <ba47c207-bbdb-43c7-bcae-a09bddf0806d@nabladev.com>
+Date: Sat, 18 Apr 2026 18:51:03 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 311/491] dmaengine: xilinx: xilinx_dma: Fix unmasked
+ residue subtraction
+To: Ben Hutchings <ben@decadent.org.uk>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Vinod Koul <vkoul@kernel.org>,
+ Sasha Levin <sashal@kernel.org>
+References: <20260413155819.042779211@linuxfoundation.org>
+ <20260413155830.683657586@linuxfoundation.org>
+ <e4bf9ba9ceba4f2e23483b4aa0ebcff8251c0b73.camel@decadent.org.uk>
+ <8c909ddd-c8ff-43a1-987f-1a348917d75a@nabladev.com>
+ <6def01a404f3b10ac374c011000637c86598453b.camel@decadent.org.uk>
+Content-Language: en-US
+From: Marek Vasut <marex@nabladev.com>
+In-Reply-To: <6def01a404f3b10ac374c011000637c86598453b.camel@decadent.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-
---=-msvjpwEEThymAvOn4Cyc
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, 2026-04-13 at 18:00 +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
->=20
-> commit 55a387ebb9219cbe4edfa8ba9996ccb0e7ad4932 upstream.
-[...]
-
-
-This backport wrongly omitted the conversion of msleep() to mdelay()
-inside rcar_gen3_init_otg(), which is now called in atomic context.
-
-Ben.
-
---=20
-Ben Hutchings
-Once a job is fouled up, anything done to improve it makes it worse.
-
---=-msvjpwEEThymAvOn4Cyc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnjbU0ACgkQ57/I7JWG
-EQnsqg/8DaFCKg06pN/PtcUaeglr3Ac6Enty7ljQdig/1daRYuNKAoIF1svRW/yZ
-p6sjKy0pYV/10S923NAS9tL0GXlJ/pr+AM+3y8hNL1j8l6RmEEjfeGhc5M1Ynteb
-d/o76ZVT3hOUZDhdGlxhiGnasgaobpvw2B2dfSQwKsLHcihp3HQ1mmIJqM1HVcYf
-KyAA+MbafTC8j4kCx8Ii+RWcQcrFnM3uZkI6PLDhIYgvyXG6j72emfwKlvx049+5
-sB8zW9zIDO6ZnSOgvAggKTFUJhLucQPRj0nyoA1q7pcjUL+7hP3Ck8lRkqnH9TZo
-JoNO0xYq5ajMYwYQknomxCNgnrQ41A2k6ojwX5PiYQNc86ObJoFk4hC00AWTYGNB
-kFQ+fXuxzWt7VVXDCSICLUhk0MOXDLi5oCxzwxzuTV3La0iTpDInz+teFAr0Hnz4
-CurRNxyCY/QtDzEELAqxLqwSTdJBnmTHfwVzjU0GsMN2l1P8s+PkKr/r1QlvXvdu
-ZdcAaWZKrnIEdvBOJJ74l+Blo3U5c1rINxqfVtzh9QnhBHMI0IdF4QXAOalYWSIP
-t/CNPmv8gK8SvzRQNmeSXNKFnrn6AaFZtru/BN7GnEVdh/nxaBGuY76l9HlqbQh/
-hTTMGjjGLdJURiMBXBfgtcvoCp50T/TQFLPd8vTAmB6s2QAY8xk=
-=zCKV
------END PGP SIGNATURE-----
-
---=-msvjpwEEThymAvOn4Cyc--
+On 4/16/26 8:43 PM, Ben Hutchings wrote:
+> On Thu, 2026-04-16 at 20:20 +0200, Marek Vasut wrote:
+>> On 4/16/26 7:58 PM, Ben Hutchings wrote:
+>>> On Mon, 2026-04-13 at 17:59 +0200, Greg Kroah-Hartman wrote:
+>>>> 5.10-stable review patch.  If anyone has any objections, please let me know.
+>>>>
+>>>> ------------------
+>>>>
+>>>> From: Marek Vasut <marex@nabladev.com>
+>>>>
+>>>> [ Upstream commit c7d812e33f3e8ca0fa9eeabf71d1c7bc3acedc09 ]
+>>>>
+>>>> The segment .control and .status fields both contain top bits which are
+>>>> not part of the buffer size, the buffer size is located only in the bottom
+>>>> max_buffer_len bits. To avoid interference from those top bits, mask out
+>>>> the size using max_buffer_len first, and only then subtract the values.
+>>>
+>>> This change is harmless, but the problem it claims to fix does not
+>>> exist.
+>>
+>> The current code subtracts two independently read values which both
+>> contain status/control MSbits and the actual value LSbits. Depending on
+>> the MSbits being identical in both separately read values is unsafe, so
+>> the change in this patch masks out the MSbits first and then does the
+>> subtraction on the actual value LSbits only, which is safe.
+>>
+>> Why do you think the original unsafe behavior can not trigger a failure?
+> 
+> The old code masked out the MSbits after subtraction.  So, there was no
+> dependency on their being equal before substraction.  Since borrows
+> propagate to the left, not the right, the MSbits could not "interfere"
+> with the LSbits.
+> 
+> If you still aren't convinced, please try to find some example values
+> for which the result would actually change.
+Ah sigh, you're right. I will add this into the list of lessons learnt 
+the hard way. Thank you for the clarification.
