@@ -1,198 +1,81 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E442928469F;
-	Sun, 19 Apr 2026 15:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83326223339
+	for <patches@lists.linux.dev>; Sun, 19 Apr 2026 20:05:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776613565; cv=none; b=hYH1d9PIdlKXoTD/rJAThCIG9pe0Pv/LJhI/aTHGL0vhIuCPNLBNf0ylGpWPUa1tNw57O18UirdzB1xUXQdEdE43OHYpNRfac2WgQOkv2VBW1ELvWR/rZbHfNgaRL1CK/Yzh9SdKuurb7k06peoBEYPItiO5FE7Y/8cAV9fFP2k=
+	t=1776629109; cv=none; b=PxH+qKdjgmuxt/Sto++HL2gskcVoQbRTooXZxuAoO44BgL7AsmjFcn7aagOQl6d4TNjf2wrDe9UeUzHVTJw7nENjgr2Kzi1q9uDKZMZX83dYJnzVO9YxXStmfd0tXoB6XKM3y+2JwFrPb6rlU7Lh5xbQ4NUvhd4mpSHGtyXaa28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776613565; c=relaxed/simple;
-	bh=RkaoqqRXVDD/vZ3nFXaEIpRzSA+WaJCvs7g7BQc65GY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=LmJZKUXWVcgrkq+FTFgDgq3SpAEyPcErCzXERZoyCi6zQ8NjCVCRuir4WqXvMl1y6/yl2iqq4mRtJxTdSQ8Dob5IhCduYBh0ByOfsyaoSNWcuz92USapxvZjpKbRJlpbQjeFmFqxh6foOqNGNbbMUBvY/rXgAnDDVHXWBASupJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wEULM-005WxP-05;
-	Sun, 19 Apr 2026 15:45:55 +0000
-Received: from ben by deadeye with local (Exim 4.99.1)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wEULK-00000004sR3-1cJ6;
-	Sun, 19 Apr 2026 17:45:54 +0200
-Message-ID: <d4b85e905345dc69e9c660c7f51775703fa83320.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 491/491] io_uring/poll: correctly handle
- io_poll_add() return value on update
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-  Jens Axboe <axboe@kernel.dk>
-Cc: patches@lists.linux.dev, 
-	syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
-Date: Sun, 19 Apr 2026 17:45:49 +0200
-In-Reply-To: <20260413155837.438151458@linuxfoundation.org>
-References: <20260413155819.042779211@linuxfoundation.org>
-	 <20260413155837.438151458@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-kEJna/SwI3grbcgqB86B"
-User-Agent: Evolution 3.56.2-9 
+	s=arc-20240116; t=1776629109; c=relaxed/simple;
+	bh=HaEcoPFFJSsso0nYJs1rCaYbcTkCVAnWij1EmPFe39c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=S95lokaNnt6o0s+LNkQWVzIEiG4579XtvXPpr1NW8DagzEzOIQNKIpw/Z/Ms06rIp0ndN7hZvo/H/YdOLF0pGwcEI+Z7J7HzK99LelLzuNDpfRs6F9f44oMLe1ihk8QigeQbLx41KDRQTMYwgcR4RJGcD/dSGbojbr0EhQAGnTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bv8QeHNP; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bv8QeHNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20520C2BCB8
+	for <patches@lists.linux.dev>; Sun, 19 Apr 2026 20:05:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776629109;
+	bh=HaEcoPFFJSsso0nYJs1rCaYbcTkCVAnWij1EmPFe39c=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=Bv8QeHNPR1lyefx454Wnu1aOCVW+FObcN7t7/RrYpU9fjyWcNt2+pzSTJaq2Ws8CC
+	 X+4Znt5+R0opBNUAsoRM3Gpc4QeHQsJyb2yCsQjbw9fGYAAPEe9Mvb/fxT2CIGIcEX
+	 4BzUVjxnxUeuhTb9saAX3q1r5p5YzxpPrm1ZX405ym2J0Nr6i6sQYY6xt6rBelB3eX
+	 ijjn/QnGey9rZXV0Q4jsANz1Nnr5Wv7WsURSsSJfkwznehCcBMcJkwGpHBcS4pg/O/
+	 F64qcsMAMe5n3IstN3F/8eHbfiVuT/cyJC+nj2eg1OKJQ7wjRpuVa3Ag6G7pcE8COw
+	 CvvPWVg3UWb0g==
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5a283c44478so4002564e87.3
+        for <patches@lists.linux.dev>; Sun, 19 Apr 2026 13:05:09 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ9EgDCZTnLRYX4TtJoHaoU1dgmQQwIvC1Te/FyJlgp+7bTBka2YM9xHWXQR4JfN8R/Dm8fZlDUC@lists.linux.dev
+X-Gm-Message-State: AOJu0YzqR7q2Frz04/1RklGh/7cphViAufF8f18hVUIBAVcz8xqIOOJM
+	201D/zq5XpynNOzn4myKdbOrUeMMlJSYp07vlqNB3kqJjXmmhLgl+CmKXpE2zX2MBUrzfTNQ0ag
+	rdeGwQtUIUpsPm6syPuI5wNWryYEPBCw=
+X-Received: by 2002:a05:6512:3981:b0:5a2:c4f1:2635 with SMTP id
+ 2adb3069b0e04-5a4172e307amr3088773e87.41.1776629107806; Sun, 19 Apr 2026
+ 13:05:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
-
-
---=-kEJna/SwI3grbcgqB86B
+References: <20260413155724.820472494@linuxfoundation.org> <8bb67921-d8e7-4535-bbec-249e9702ce62@roeck-us.net>
+In-Reply-To: <8bb67921-d8e7-4535-bbec-249e9702ce62@roeck-us.net>
+From: Linus Walleij <linusw@kernel.org>
+Date: Sun, 19 Apr 2026 22:04:53 +0200
+X-Gmail-Original-Message-ID: <CAD++jL=PEFV_wYtiBixSLixvk3w0xeSOaSrjNtPFEC9fdd5s2A@mail.gmail.com>
+X-Gm-Features: AQROBzCr20naR9jzOpPgtjd3MIvca2modC6ZBLfglVDKvGbe1Zgju9vQ6UXQ4fs
+Message-ID: <CAD++jL=PEFV_wYtiBixSLixvk3w0xeSOaSrjNtPFEC9fdd5s2A@mail.gmail.com>
+Subject: Re: [PATCH 6.1 00/55] 6.1.169-rc1 review
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com, 
+	Vladimir Oltean <vladimir.oltean@nxp.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2026-04-13 at 18:02 +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Jens Axboe <axboe@kernel.dk>
->=20
-> Commit 84230ad2d2afbf0c44c32967e525c0ad92e26b4e upstream.
->=20
-> When the core of io_uring was updated to handle completions
-> consistently and with fixed return codes, the POLL_REMOVE opcode
-> with updates got slightly broken. If a POLL_ADD is pending and
-> then POLL_REMOVE is used to update the events of that request, if that
-> update causes the POLL_ADD to now trigger, then that completion is lost
-> and a CQE is never posted.
->=20
-> Additionally, ensure that if an update does cause an existing POLL_ADD
-> to complete, that the completion value isn't always overwritten with
-> -ECANCELED. For that case, whatever io_poll_add() set the value to
-> should just be retained.
+On Sun, Apr 19, 2026 at 4:31=E2=80=AFPM Guenter Roeck <linux@roeck-us.net> =
+wrote:
 
-This backport is very different from the upstream version, and I have
-some questions about that (inline below).
+> Looking through my test logs, I find that the following build error has b=
+een
+> reported since  v6.1.166.
 
-> Cc: stable@vger.kernel.org
-> Fixes: 97b388d70b53 ("io_uring: handle completions in the core")
-> Reported-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
-> Tested-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
-> Signed-off-by: Jens Axboe <axboe@kernel.dk>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  io_uring/io_uring.c |   26 +++++++++++++++++++-------
->  1 file changed, 19 insertions(+), 7 deletions(-)
->=20
-> --- a/io_uring/io_uring.c
-> +++ b/io_uring/io_uring.c
-> @@ -5980,7 +5980,7 @@ static int io_poll_add_prep(struct io_ki
->  	return 0;
->  }
-> =20
-> -static int io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
-> +static int __io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
->  {
->  	struct io_poll_iocb *poll =3D &req->poll;
->  	struct io_poll_table ipt;
-> @@ -5992,11 +5992,21 @@ static int io_poll_add(struct io_kiocb *
->  	if (!ret && ipt.error)
->  		req_set_fail(req);
->  	ret =3D ret ?: ipt.error;
-> -	if (ret)
-> +	if (ret > 0) {
->  		__io_req_complete(req, issue_flags, ret, 0);
-> +		return ret;
-> +	}
->  	return 0;
->  }
-> =20
-> +static int io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
-> +{
-> +	int ret;
-> +
-> +	ret =3D __io_poll_add(req, issue_flags);
-> +	return ret < 0 ? ret : 0;
+Ugh not good, but no disaster, OpenWrt is the only downstream using stable
+and it only used v6.12 and v6.18.
 
-__io_poll_add() still never returns a negative result, so why is there a
-check for that here?
+> I have copied the patch authors for advice.
 
-> +}
-> +
->  static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags=
-)
->  {
->  	struct io_ring_ctx *ctx =3D req->ctx;
-> @@ -6012,6 +6022,7 @@ static int io_poll_update(struct io_kioc
->  		ret =3D preq ? -EALREADY : -ENOENT;
->  		goto out;
->  	}
-> +	preq->result =3D -ECANCELED;
->  	spin_unlock(&ctx->completion_lock);
-> =20
->  	if (req->poll_update.update_events || req->poll_update.update_user_data=
-) {
-> @@ -6024,16 +6035,17 @@ static int io_poll_update(struct io_kioc
->  		if (req->poll_update.update_user_data)
->  			preq->user_data =3D req->poll_update.new_user_data;
-> =20
-> -		ret2 =3D io_poll_add(preq, issue_flags);
-> +		ret2 =3D __io_poll_add(preq, issue_flags);
->  		/* successfully updated, don't complete poll request */
->  		if (!ret2)
->  			goto out;
-> +		preq->result =3D ret2;
-> +
->  	}
-> -	req_set_fail(preq);
-> -	io_req_complete(preq, -ECANCELED);
-> +	if (preq->result < 0)
-> +		req_set_fail(preq);
-> +	io_req_complete(preq, preq->result);
+I'd just pull them both out again. It's fixing a runtime crash that appear
+only when you use ethtool. Annoying, but fringe system and not appearing
+in normal use.
 
-If __io_poll_add() returned an events mask then it completed preq, but
-then we also complete preq here.  Is that really correct?
-
-Ben.
-
->  out:
-> -	if (ret < 0)
-> -		req_set_fail(req);
->  	/* complete update request, we're done with it */
->  	io_req_complete(req, ret);
->  	io_ring_submit_unlock(ctx, !(issue_flags & IO_URING_F_NONBLOCK));
->=20
->=20
-
---=20
-Ben Hutchings
-Any smoothly functioning technology is indistinguishable
-from a rigged demo.
-
---=-kEJna/SwI3grbcgqB86B
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnk+K0ACgkQ57/I7JWG
-EQlcTBAAx2XEzGqHBT9ChlTEtCa6B0rpSy5AGkRqkMvM3/YSWnxV3d703E4Lgq9U
-dakkOwWeohsv283TOMOV9L5ZqwhEnq+77Yqnse/OoAcO/nAim/OLVAzPd+/RVc6O
-jq7tkWQVPZ5XeaDRZ6VmhCyObM/3e1vBwwcUjSQRpBVDgWP7U9A+PtTXp2be7Jib
-dtQN78xd6rfW7kjsF2qmJNFWQ2GCpN4EbtmlKvy0DdGANzhqSMRaa7mwOFXgjixS
-vIipJW65ZSELU3yQO7XBTE9ppl0MXdfHgxBqvOENYF9CKcHDJqSazP45iKuekGth
-V5CTN29W6VOlwLyrZcXaCkPkMiRGDkAq9BwZ/TXMDGRyU054St3Ky8BScX3zkyva
-aAzdPT07C8W/7vzmqQ8KqJIfzGIfZ9iE++FEhvzZjSRhq6Vw8sU+CNxlPK6T/zI6
-8KwxnYX99kO3Ju4AQpboebY5MaMyQhc1I6PGAB3amChTWP7WIUqA82wHkqi0l9GS
-iAVpicLEtrXY8jxNRilBcOvOmTMcvuphWd24fWBHifINHbCJyQYC/ViINTUsDZdZ
-UTFNeMkCgasmB0pWEoXnImUAQwGIiEnGFaOXpp7QZS3Gzd+2W/9FMPaEOHMmZMP+
-hjnNeauuJuZzrs7u666i+kUEFV2/oTrjDBzN2Yj+FrcJejx2XiY=
-=HRgj
------END PGP SIGNATURE-----
-
---=-kEJna/SwI3grbcgqB86B--
+Yours,
+Linus Walleij
