@@ -1,94 +1,163 @@
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDB1282F30
-	for <patches@lists.linux.dev>; Sat, 18 Apr 2026 16:51:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A80175A6D;
+	Sun, 19 Apr 2026 10:26:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776531071; cv=none; b=RoT4psl0lQ4c2nq3lqH0G0tY3Yvvatx8iKQe2MXE5qUy12zBANC+YifwVDXEyTrUi/1hswoc9rrQl9JiG8zOqOBbEK6bJ7JKgwH3nxa1gn1Z6s/3OZ2loUvOOaWbnoP5b8M5aad6dryMjqPlHOIJoeoLZLMb/SAXqSzybqw9tyk=
+	t=1776594386; cv=none; b=MFD808ts0cvs66px28Lc+iMuz2NliITq+coxd/1oiYTl3NHJ1lGubSdPP/cBBzqfKBCHUG6rRRlSOBFt8bxG5KScmq2zCQwQu+8u9osi20K5kaoiNJ/h4m30aK9ycV9ehoA8divQu5HDQuUvrcBn3m0NaROxp6R7Xet4hAchyuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776531071; c=relaxed/simple;
-	bh=Ht/D7E3a40rysU0EGbxhXZptGJc/YvINGjzqbgLU6ho=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MWtnlYlmwKFV00qK/lvnHyPPF6eM+n8Qq84JXXK+CEDGJIdC7DySY0GJXxh7xbegD/5ki0Q8UtaCF9cAPVjV6wLhAe5zvoZPDENybOzNs0/uoVwuWCjDdMNZNvnLToxqIQOhaS6JjChgaAZTpDhZE3SXZA51qoC04f/EMHNUzpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=QLfcj8Pn; arc=none smtp.client-ip=178.251.229.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="QLfcj8Pn"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8344A1143B6;
-	Sat, 18 Apr 2026 18:51:04 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1776531067;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=TYiYkD9LzUceCOAC/ZE7LE8Rqv3G9vhEboKcik9QaKE=;
-	b=QLfcj8PnITmsT2yPdx6rCPCsvHbK75/InNRyLdZBszYCZSedLgbv/0C16V3AtHVpZZPMGW
-	Yoci1r5+2OSBl/TVrlDRO+Yz8eRfNzrplGzOjonBburB1yi5UswEX3BOzSLttZwn379zeZ
-	nT862dOrVn75JMkW+MJSN2iP0vJTvv5PE5HB095PrNJm/72ZpHTDkx5wGm/mOCxh7DqlSk
-	h0KUWNgU2tt0n6hrmoLFOHyCFYp6DYXDM6dXVLDPDJw3E3dQVQgiLz0U2M3hLEe5a/05IL
-	uN6dgG8fM+8qN6uyexSL9PL6WeVXTSAwD+plwYDM3fQVNqXLbsybrR9rQt71Uw==
-Message-ID: <ba47c207-bbdb-43c7-bcae-a09bddf0806d@nabladev.com>
-Date: Sat, 18 Apr 2026 18:51:03 +0200
+	s=arc-20240116; t=1776594386; c=relaxed/simple;
+	bh=S4ghgkBMPdy1X4QqEQ0xyv4IdtjF8SLm/c0CarDqJKg=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=KDjXcrbKIEb8GX1ZG1W4GTOIc1FwLXqE6llFeNK0wzO60Y+G1FppxH4g7xWki0w8HmUTrt6vgJ6GsqDsgjhabc5bB2m5WZcE5WHLDrKzlxsqtouJy2rp+m670Zunpfzu5NZ1dUGF98ovuHSlhUwKciIIy948j78UAhAnk7L7Agg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wEPM5-005UxS-2E;
+	Sun, 19 Apr 2026 10:26:20 +0000
+Received: from ben by deadeye with local (Exim 4.99.1)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1wEPM3-00000004f2v-0DY0;
+	Sun, 19 Apr 2026 12:26:19 +0200
+Message-ID: <0d3747dc57d7bfa3c53efcf4d133021ead5bef9d.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 430/491] apparmor: validate DFA start states are in
+ bounds in unpack_pdb
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+  John Johansen <john.johansen@canonical.com>
+Cc: patches@lists.linux.dev, Qualys Security Advisory <qsa@qualys.com>, 
+ Salvatore Bonaccorso	 <carnil@debian.org>, Georgia Garcia
+ <georgia.garcia@canonical.com>, Cengiz Can	 <cengiz.can@canonical.com>,
+ Massimiliano Pellizzer	 <massimiliano.pellizzer@canonical.com>
+Date: Sun, 19 Apr 2026 12:26:13 +0200
+In-Reply-To: <20260413155835.127014179@linuxfoundation.org>
+References: <20260413155819.042779211@linuxfoundation.org>
+	 <20260413155835.127014179@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-uv2HiuW6W4Flc1loWdaE"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 311/491] dmaengine: xilinx: xilinx_dma: Fix unmasked
- residue subtraction
-To: Ben Hutchings <ben@decadent.org.uk>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Vinod Koul <vkoul@kernel.org>,
- Sasha Levin <sashal@kernel.org>
-References: <20260413155819.042779211@linuxfoundation.org>
- <20260413155830.683657586@linuxfoundation.org>
- <e4bf9ba9ceba4f2e23483b4aa0ebcff8251c0b73.camel@decadent.org.uk>
- <8c909ddd-c8ff-43a1-987f-1a348917d75a@nabladev.com>
- <6def01a404f3b10ac374c011000637c86598453b.camel@decadent.org.uk>
-Content-Language: en-US
-From: Marek Vasut <marex@nabladev.com>
-In-Reply-To: <6def01a404f3b10ac374c011000637c86598453b.camel@decadent.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
-On 4/16/26 8:43 PM, Ben Hutchings wrote:
-> On Thu, 2026-04-16 at 20:20 +0200, Marek Vasut wrote:
->> On 4/16/26 7:58 PM, Ben Hutchings wrote:
->>> On Mon, 2026-04-13 at 17:59 +0200, Greg Kroah-Hartman wrote:
->>>> 5.10-stable review patch.  If anyone has any objections, please let me know.
->>>>
->>>> ------------------
->>>>
->>>> From: Marek Vasut <marex@nabladev.com>
->>>>
->>>> [ Upstream commit c7d812e33f3e8ca0fa9eeabf71d1c7bc3acedc09 ]
->>>>
->>>> The segment .control and .status fields both contain top bits which are
->>>> not part of the buffer size, the buffer size is located only in the bottom
->>>> max_buffer_len bits. To avoid interference from those top bits, mask out
->>>> the size using max_buffer_len first, and only then subtract the values.
->>>
->>> This change is harmless, but the problem it claims to fix does not
->>> exist.
->>
->> The current code subtracts two independently read values which both
->> contain status/control MSbits and the actual value LSbits. Depending on
->> the MSbits being identical in both separately read values is unsafe, so
->> the change in this patch masks out the MSbits first and then does the
->> subtraction on the actual value LSbits only, which is safe.
->>
->> Why do you think the original unsafe behavior can not trigger a failure?
-> 
-> The old code masked out the MSbits after subtraction.  So, there was no
-> dependency on their being equal before substraction.  Since borrows
-> propagate to the left, not the right, the MSbits could not "interfere"
-> with the LSbits.
-> 
-> If you still aren't convinced, please try to find some example values
-> for which the result would actually change.
-Ah sigh, you're right. I will add this into the list of lessons learnt 
-the hard way. Thank you for the clarification.
+
+--=-uv2HiuW6W4Flc1loWdaE
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, 2026-04-13 at 18:01 +0200, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+>=20
+> commit 9063d7e2615f4a7ab321de6b520e23d370e58816 upstream.
+>=20
+> Backport for conflicts caused by
+>   ad596ea74e74 ("apparmor: group dfa policydb unpacking")
+>   - rearrange and consolidated the unpack.
+>=20
+>   b11e51dd7094 ("apparmor: test: make static symbols visible during kunit=
+ testing")
+>   - rename function and make it visible to kunit tests
+>=20
+> Start states are read from untrusted data and used as indexes into the
+> DFA state tables. The aa_dfa_next() function call in unpack_pdb() will
+> access dfa->tables[YYTD_ID_BASE][start], and if the start state exceeds
+> the number of states in the DFA, this results in an out-of-bound read.
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>  BUG: KASAN: slab-out-of-bounds in aa_dfa_next+0x2a1/0x360
+>  Read of size 4 at addr ffff88811956fb90 by task su/1097
+>  ...
+>=20
+> Reject policies with out-of-bounds start states during unpacking
+> to prevent the issue.
+>=20
+> Fixes: ad5ff3db53c6 ("AppArmor: Add ability to load extended policy")
+> Reported-by: Qualys Security Advisory <qsa@qualys.com>
+> Tested-by: Salvatore Bonaccorso <carnil@debian.org>
+> Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+> Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+> Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.c=
+om>
+> Signed-off-by: John Johansen <john.johansen@canonical.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  security/apparmor/policy_unpack.c |   21 +++++++++++++++++++--
+>  1 file changed, 19 insertions(+), 2 deletions(-)
+>=20
+> --- a/security/apparmor/policy_unpack.c
+> +++ b/security/apparmor/policy_unpack.c
+> @@ -841,9 +841,18 @@ static struct aa_profile *unpack_profile
+>  			error =3D -EPROTO;
+>  			goto fail;
+>  		}
+> -		if (!unpack_u32(e, &profile->policy.start[0], "start"))
+> +		if (!unpack_u32(e, &profile->policy.start[0], "start")) {
+>  			/* default start state */
+>  			profile->policy.start[0] =3D DFA_START;
+> +		} else {
+> +			size_t state_count =3D profile->policy.dfa->tables[YYTD_ID_BASE]->td_=
+lolen;
+> +
+> +			if (profile->policy.start[0] >=3D state_count) {
+> +				info =3D "invalid dfa start state";
+> +				goto fail;
+> +			}
+> +		}
+[...]
+
+Isn't this range check needed even if we use the default start state?=20
+unpack_table() only checks that td_tolen > 0, so we could end up with
+profile->policy.start[0] =3D DFA_START =3D=3D 1 and
+profile->policy.dfa->tables[YYTD_ID_BASE]->td_lolen =3D=3D 1.
+
+(This is specific to the backport as the upstream version didn't put
+this check in an else-block.)
+
+Ben.
+
+
+--=20
+Ben Hutchings
+Any smoothly functioning technology is indistinguishable
+from a rigged demo.
+
+--=-uv2HiuW6W4Flc1loWdaE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnkrcYACgkQ57/I7JWG
+EQkg1A/9FKkNxbCGI3uONMr4AQeXYeKJcdWjOju4zAyrL6XNGsGJTKxIfT31Isls
+SRn9nkqLdWdlZL7jJYjjjrz+HGo2pbJpwtLqhdTkey5+70EL5w+Gkhqj17iGskUj
+VaH5zWVlaPFBIbtWKgJyHBXZqwu2a8Q5ATQ9kzo+Az5KE4AKjBHdL+XNw1ZXGVVz
+HSNwEqjtf4cyqofRXk7ZnZW3FWW3cJOfcWvf/yjGzIMDXmv0Fd5PPMTPXmN109L1
+MVFSBkVvDuqWKDCMRGHV9sBSHV/pP0UMvfL7ZFb+2qeXkoux95UgT1JpfYx2cTCh
+gPvG4ip+Uyb/zvQXhA8W9WJWNFezU1afmhKHmVGEhFApal6GtpKTI+11FHTOITNK
+lXV6T9qgNJw70M2stPMPJpVuBXaWusS06XKsiRgHvgzHyncGNixAiPOjbA75b3OW
+y72bnac0meDxSHbqyTkUNd8rc6DyZL3iNIBlTB8+SZvqeQjX78uTtHnd3Up+rpqI
+jhtXlXi7MktBkFSI4ERRSHTlTJMp9UVe9Hieo3hwhjjiDSACzc15X7jtpKCmkAMr
+Y4cwebdRadHxNCeND9SHJIvp8L4lYrxrc7gBT27+Qqfcwd7d+2c02arbMr/Ijppd
+Ae/oo7eOa4Qr3l20eb815xek0Dl9mBsJ79RlpxshRTQHFPQw0J8=
+=dcXf
+-----END PGP SIGNATURE-----
+
+--=-uv2HiuW6W4Flc1loWdaE--
