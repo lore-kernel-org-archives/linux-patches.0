@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF03A33262B;
-	Mon, 20 Apr 2026 15:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7B1334C39;
+	Mon, 20 Apr 2026 15:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699991; cv=none; b=oEkThrRqw7d9qZ5lZSw2fO9vluMswPBoz4fzZtkj7pisaMs6SkfaFn/Meh3JaXzfaQTNvEKPb1cG+BCGEjZ5w3iS8SwtM2ZulAkHTQv1bPtGV4rwFI0BP2GGqCf8TGM9EUQfw7shnzVZM1qhhFksdnqxEhQky2Q7PeygpzsTHws=
+	t=1776699993; cv=none; b=kTEmQ6tXFdsVMUpN2Ow9MWWZL0y4tOLXP8DdBn2JY7Pa53pH7GLASVNbXGDAUohxhpWo/HaMaGXA38/Re04pAroKI/NPCvavXEj0Th7181nIri8eerE4Tzpu8fOPb8NXrkJsv8OwmKdSuLDSTxnmrf+tS3Hedl/zbxwiLsk0C1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699991; c=relaxed/simple;
-	bh=CA7tYamiV1kwsUSS+Q/+6ctSM+428q5MEPGKxJFlfKc=;
+	s=arc-20240116; t=1776699993; c=relaxed/simple;
+	bh=SyIdSQtCi7WwV+6K83HVskOsmPXmO1nxw58ExItWQNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnCMBHbFRpp44VgB3pqy1+EHq4951ajVP/X3GuqTGa7ChBOvENGMgOy8HN1vGolEnRnVOCPP+mvDMkV5CXQk9Q4JJP06qIY+mAPC6uQDUmu0ISE5VPePe/tWn1m+KIFgGGVgnBuLqXJ8T6dWs0ehO/rLstxXrDydAfDfVGYbc7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU1QOjMK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ey7jKn2NXFoWsCN/8pFTwhDy1nZyuuQzEZPZHp21aarv+ik8ztgb13EU1ypDg0ciQ5ySQNU4yjN0qgOZQWWPZIviksaNcIiMmdn0fFL6T75lEcT6NdXzvf/kTy715k5HqcqvifDm/bKAiEqvLsKLq9iP6SwvpjNkE6mxWZGCKqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnniqgn9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU1QOjMK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86BCDC19425;
-	Mon, 20 Apr 2026 15:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnniqgn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23891C19425;
+	Mon, 20 Apr 2026 15:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699990;
-	bh=CA7tYamiV1kwsUSS+Q/+6ctSM+428q5MEPGKxJFlfKc=;
+	s=korg; t=1776699993;
+	bh=SyIdSQtCi7WwV+6K83HVskOsmPXmO1nxw58ExItWQNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tU1QOjMKkvqXuY5fZS58o9t7W1IJN3L8kqXKMJsPlXBY3qXNnOk1mzzG5+XfEvOmF
-	 Gt1VuqY6Nz3wfrKnhFcC99NKfW7RsiW2qQhjemr7AS5w+rfSAehf/OlupcoFmy1Mob
-	 NeKgL8Iyd0Ti70MnLEvEx5H0mNvCqIle+9c7gUMA=
+	b=tnniqgn9gwjWnfZWcudQKYQlGaFjit5COFpxlivAnWSsgazwL3NXE/amKQjBqQR9i
+	 o4l4OGGbFjOTNGGrnUTewlu/Gu2FdKjzHmRpeFaC/jK/JvR1pbqHF6cRUeec0XZAXV
+	 T7Fq9lEQ2cGkyCo72bvMUcCp8sny4Kr6jQFGjFDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.0 68/76] hwmon: (powerz) Fix use-after-free on USB disconnect
-Date: Mon, 20 Apr 2026 17:42:19 +0200
-Message-ID: <20260420153913.294805555@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.0 69/76] ALSA: 6fire: fix use-after-free on disconnect
+Date: Mon, 20 Apr 2026 17:42:20 +0200
+Message-ID: <20260420153913.329944676@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -50,69 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-commit 08e57f5e1a9067d5fbf33993aa7f51d60b3d13a4 upstream.
+commit b9c826916fdce6419b94eb0cd8810fdac18c2386 upstream.
 
-After powerz_disconnect() frees the URB and releases the mutex, a
-subsequent powerz_read() call can acquire the mutex and call
-powerz_read_data(), which dereferences the freed URB pointer.
+In usb6fire_chip_abort(), the chip struct is allocated as the card's
+private data (via snd_card_new with sizeof(struct sfire_chip)).  When
+snd_card_free_when_closed() is called and no file handles are open, the
+card and embedded chip are freed synchronously.  The subsequent
+chip->card = NULL write then hits freed slab memory.
 
-Fix by:
- - Setting priv->urb to NULL in powerz_disconnect() so that
-   powerz_read_data() can detect the disconnected state.
- - Adding a !priv->urb check at the start of powerz_read_data()
-   to return -ENODEV on a disconnected device.
- - Moving usb_set_intfdata() before hwmon registration so the
-   disconnect handler can always find the priv pointer.
+Call trace:
+  usb6fire_chip_abort sound/usb/6fire/chip.c:59 [inline]
+  usb6fire_chip_disconnect+0x348/0x358 sound/usb/6fire/chip.c:182
+  usb_unbind_interface+0x1a8/0x88c drivers/usb/core/driver.c:458
+  ...
+  hub_event+0x1a04/0x4518 drivers/usb/core/hub.c:5953
 
-Fixes: 4381a36abdf1c ("hwmon: add POWER-Z driver")
+Fix by moving the card lifecycle out of usb6fire_chip_abort() and into
+usb6fire_chip_disconnect().  The card pointer is saved in a local
+before any teardown, snd_card_disconnect() is called first to prevent
+new opens, URBs are aborted while chip is still valid, and
+snd_card_free_when_closed() is called last so chip is never accessed
+after the card may be freed.
+
+Fixes: a0810c3d6dd2 ("ALSA: 6fire: Release resources at card release")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260410002521.422645-2-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260410051341.1069716-1-berkcgoksel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/powerz.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/usb/6fire/chip.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/drivers/hwmon/powerz.c
-+++ b/drivers/hwmon/powerz.c
-@@ -108,6 +108,9 @@ static int powerz_read_data(struct usb_d
- {
- 	int ret;
- 
-+	if (!priv->urb)
-+		return -ENODEV;
-+
- 	priv->status = -ETIMEDOUT;
- 	reinit_completion(&priv->completion);
- 
-@@ -224,6 +227,8 @@ static int powerz_probe(struct usb_inter
- 	mutex_init(&priv->mutex);
- 	init_completion(&priv->completion);
- 
-+	usb_set_intfdata(intf, priv);
-+
- 	hwmon_dev =
- 	    devm_hwmon_device_register_with_info(parent, DRIVER_NAME, priv,
- 						 &powerz_chip_info, NULL);
-@@ -232,8 +237,6 @@ static int powerz_probe(struct usb_inter
- 		return PTR_ERR(hwmon_dev);
+--- a/sound/usb/6fire/chip.c
++++ b/sound/usb/6fire/chip.c
+@@ -53,11 +53,6 @@ static void usb6fire_chip_abort(struct s
+ 			usb6fire_comm_abort(chip);
+ 		if (chip->control)
+ 			usb6fire_control_abort(chip);
+-		if (chip->card) {
+-			snd_card_disconnect(chip->card);
+-			snd_card_free_when_closed(chip->card);
+-			chip->card = NULL;
+-		}
  	}
- 
--	usb_set_intfdata(intf, priv);
--
- 	return 0;
  }
  
-@@ -244,6 +247,7 @@ static void powerz_disconnect(struct usb
- 	mutex_lock(&priv->mutex);
- 	usb_kill_urb(priv->urb);
- 	usb_free_urb(priv->urb);
-+	priv->urb = NULL;
- 	mutex_unlock(&priv->mutex);
- }
+@@ -168,6 +163,7 @@ destroy_chip:
+ static void usb6fire_chip_disconnect(struct usb_interface *intf)
+ {
+ 	struct sfire_chip *chip;
++	struct snd_card *card;
  
+ 	chip = usb_get_intfdata(intf);
+ 	if (chip) { /* if !chip, fw upload has been performed */
+@@ -178,8 +174,19 @@ static void usb6fire_chip_disconnect(str
+ 				chips[chip->regidx] = NULL;
+ 			}
+ 
++			/*
++			 * Save card pointer before teardown.
++			 * snd_card_free_when_closed() may free card (and
++			 * the embedded chip) immediately, so it must be
++			 * called last and chip must not be accessed after.
++			 */
++			card = chip->card;
+ 			chip->shutdown = true;
++			if (card)
++				snd_card_disconnect(card);
+ 			usb6fire_chip_abort(chip);
++			if (card)
++				snd_card_free_when_closed(card);
+ 		}
+ 	}
+ }
 
 
