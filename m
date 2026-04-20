@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF011336EE1;
-	Mon, 20 Apr 2026 16:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B2C33AD9A;
+	Mon, 20 Apr 2026 16:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701383; cv=none; b=M/8ImqM36g7m6JOg9sTAWnwgCRbtBkVnB/CTt/b3myPJAljnvQMoEhS0qzqH56HxCOQmZ7ru/7NlhxujIoBfxQlFZt2mJNwk6kDoASWYDqtljTfDbTVrog9tf9fWu0pGkt+IpjAoJDydYgtRxsk4TNKG7puGMYV0LqHKNkTJQP8=
+	t=1776701386; cv=none; b=dqVQuF3HPzoqbW4pNPft+GMJOdEgfFOoDTOLi4Bllk5BQ1vhzvkcgznzeCznoHoAyT7tMp7rGx1J3oUoCC+skpbAARfy+p9d2qstSxmDi4ajFVRotOYtxoxpPQa9SEYglvOG683z8fX8POrgUbtno3HN8iQESoH5Ost6T5NASqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701383; c=relaxed/simple;
-	bh=IbsVS2MGydAkg0n8mdx2xqXtkRCbv4jF6Q5EwIqYKBY=;
+	s=arc-20240116; t=1776701386; c=relaxed/simple;
+	bh=jLPjjWAj++/xwxzSa3UP020v1MnW/Exi5W1XR43XJFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GpAjWTE3Jh2LpGaEEwj0BczZ0ZhXAV3rUJFJTlFiN6a5I3GTgmFhJdtG9tkL3jQJcTpfR1gu/ImhsMmnMcXHi0FMibkgpLNBaVdrwDQc5gSnhvP09N1KZt53Pghuky3LIbytSJvorWLfDuUq9I0XQ3CPYqtFJmoz9x4lUQHm4kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXUwA1pW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FSPjgvHsM/8Ts3DXua6/Knb8AIjRVYnHz8EcQzurq7XMzxk+WPJOfT8LEDPZy6Adh3BK7BfPVSGsFgan4gDANURbvJXEwpkyzYl1r985PoMjW0Jq1s3SNrKe6NfYsYrnFKMLg13dMor+plsRNGyVCIrEHx/1OYsqspfB6JMGYqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ClAFPqq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXUwA1pW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDB4C19425;
-	Mon, 20 Apr 2026 16:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ClAFPqq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D319CC2BCB4;
+	Mon, 20 Apr 2026 16:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701383;
-	bh=IbsVS2MGydAkg0n8mdx2xqXtkRCbv4jF6Q5EwIqYKBY=;
+	s=korg; t=1776701386;
+	bh=jLPjjWAj++/xwxzSa3UP020v1MnW/Exi5W1XR43XJFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXUwA1pWVxIPuOnbCR2GFPGpGtKehWE737PMU95pdScz/TfFptrCH5hpybqzzqJ4M
-	 GMJo5+LAVKlxA7qPvFrQ9yCgbXtEmFu5eJDbPgue8sk2q+duViObykWHc+RZteIYE6
-	 M3+k8YAoTPRUngVQmHjxhnJwg/wINQi45xm9fHr8=
+	b=2ClAFPqqQcxU2Zwm/ZhNKOpnqJa90V29LdkvE8nWMmuWw9vfQ3gR8L1AW0Mq/AGOo
+	 pSP15RUDF5kfEpd7WPY47O9YahdK0Qj9GYNZ6FLne6LFHovnpqFABbANRm7+7u0zFv
+	 CmlHFQXvVPW2FSdwXxBKjMZoWDbuSev9guWGWy+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 093/162] nfc: llcp: add missing return after LLCP_CLOSED checks
-Date: Mon, 20 Apr 2026 17:42:05 +0200
-Message-ID: <20260420153930.404130904@linuxfoundation.org>
+	Samuel Page <sam@bynar.io>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.12 094/162] can: raw: fix ro->uniq use-after-free in raw_rcv()
+Date: Mon, 20 Apr 2026 17:42:06 +0200
+Message-ID: <20260420153930.440439168@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,48 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxi Qian <qjx1298677004@gmail.com>
+From: Samuel Page <sam@bynar.io>
 
-commit 2b5dd4632966c39da6ba74dbc8689b309065e82c upstream.
+commit a535a9217ca3f2fccedaafb2fddb4c48f27d36dc upstream.
 
-In nfc_llcp_recv_hdlc() and nfc_llcp_recv_disc(), when the socket
-state is LLCP_CLOSED, the code correctly calls release_sock() and
-nfc_llcp_sock_put() but fails to return. Execution falls through to
-the remainder of the function, which calls release_sock() and
-nfc_llcp_sock_put() again. This results in a double release_sock()
-and a refcount underflow via double nfc_llcp_sock_put(), leading to
-a use-after-free.
+raw_release() unregisters raw CAN receive filters via can_rx_unregister(),
+but receiver deletion is deferred with call_rcu(). This leaves a window
+where raw_rcv() may still be running in an RCU read-side critical section
+after raw_release() frees ro->uniq, leading to a use-after-free of the
+percpu uniq storage.
 
-Add the missing return statements after the LLCP_CLOSED branches
-in both functions to prevent the fall-through.
+Move free_percpu(ro->uniq) out of raw_release() and into a raw-specific
+socket destructor. can_rx_unregister() takes an extra reference to the
+socket and only drops it from the RCU callback, so freeing uniq from
+sk_destruct ensures the percpu area is not released until the relevant
+callbacks have drained.
 
-Fixes: d646960f7986 ("NFC: Initial LLCP support")
-Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260408081006.3723-1-qjx1298677004@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 514ac99c64b2 ("can: fix multiple delivery of a single CAN frame for overlapping CAN filters")
+Cc: stable@vger.kernel.org # v4.1+
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
+Link: https://patch.msgid.link/26ec626d-cae7-4418-9782-7198864d070c@bynar.io
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+[mkl: applied manually]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/llcp_core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/can/raw.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1089,6 +1089,7 @@ static void nfc_llcp_recv_hdlc(struct nf
- 	if (sk->sk_state == LLCP_CLOSED) {
- 		release_sock(sk);
- 		nfc_llcp_sock_put(llcp_sock);
-+		return;
- 	}
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -359,6 +359,14 @@ static int raw_notifier(struct notifier_
+ 	return NOTIFY_DONE;
+ }
  
- 	/* Pass the payload upstream */
-@@ -1180,6 +1181,7 @@ static void nfc_llcp_recv_disc(struct nf
- 	if (sk->sk_state == LLCP_CLOSED) {
- 		release_sock(sk);
- 		nfc_llcp_sock_put(llcp_sock);
-+		return;
- 	}
++static void raw_sock_destruct(struct sock *sk)
++{
++	struct raw_sock *ro = raw_sk(sk);
++
++	free_percpu(ro->uniq);
++	can_sock_destruct(sk);
++}
++
+ static int raw_init(struct sock *sk)
+ {
+ 	struct raw_sock *ro = raw_sk(sk);
+@@ -385,6 +393,8 @@ static int raw_init(struct sock *sk)
+ 	if (unlikely(!ro->uniq))
+ 		return -ENOMEM;
  
- 	if (sk->sk_state == LLCP_CONNECTED) {
++	sk->sk_destruct = raw_sock_destruct;
++
+ 	/* set notifier */
+ 	spin_lock(&raw_notifier_lock);
+ 	list_add_tail(&ro->notifier, &raw_notifier_list);
+@@ -432,7 +442,6 @@ static int raw_release(struct socket *so
+ 	ro->bound = 0;
+ 	ro->dev = NULL;
+ 	ro->count = 0;
+-	free_percpu(ro->uniq);
+ 
+ 	sock_orphan(sk);
+ 	sock->sk = NULL;
 
 
