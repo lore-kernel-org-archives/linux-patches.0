@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8480E3446BC;
-	Mon, 20 Apr 2026 16:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99CF3431F8;
+	Mon, 20 Apr 2026 16:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701404; cv=none; b=HdYbV7KtgEjxqIR5xc6SjDg3jy960/16v3tDQi0AOENOIrmuNJOq/yUvZYZqVNwa/inKe5lRNkiTh3t6EzOPHMOY97KtSLCdt+/xdVsVrURbVwG7CLrwDuoqzLc3hvDqDYxs+fjD92+OUWwn6ztMDk3l0GKtubglG78h9jPm/sw=
+	t=1776701406; cv=none; b=pJiiMOr3pAhwhCjvMpRi/KBxNwFRLZYrUS/w2OUHccLEYwlcIS1mla2vJb7IDDFqZ48/gv02lZ2KlcXKn5VEnovZKSm3waf7FpeCvneHAEupNMBz7MKKSKt+KZPazfCLAL1rjVgurnLpPj3sbFevq1jZynwK3+zKVyqhldZ0lP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701404; c=relaxed/simple;
-	bh=fLis9AiKCbUccjCbwaVGPstO8PZCdRS3k8eVprsI90k=;
+	s=arc-20240116; t=1776701406; c=relaxed/simple;
+	bh=wlol1uPfbd2rUPgkthUHUYGQ0J+/sozeGdMsAptECe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXqik99wxeguy5Htf7s2Xx3yhui62pWIrjjEBfmvnh7ZGXmyMaqnVkyKUcyy78+sJNWKQ7CQNzQgXaBQh1QPP+57CD4IgaI+aOIdm8FZNlePMnK1KgwFultoOkPZV/Lk27Ql39mkMsb8xF9WgCTyPV/g/FxW54CrqoUVdz07qQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ds/5NZfM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TW26baVROgOv8yGhdBXjVCDOJYQ4rfwMhQusfVwnw82FVamrhEBz9ZngduWaEvHDHY+Is6PTH7V8qyFzE6vu+iuwZwH+eoVRVUjMbcwaFKxk6uptVsR8oChKNeUa/W2DwMybFiO4TLQKrIzeItXp3HUq/RI2eRy9VJo0s4KoPcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+VhNcXe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ds/5NZfM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46ECC19425;
-	Mon, 20 Apr 2026 16:10:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+VhNcXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486AFC19425;
+	Mon, 20 Apr 2026 16:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701404;
-	bh=fLis9AiKCbUccjCbwaVGPstO8PZCdRS3k8eVprsI90k=;
+	s=korg; t=1776701406;
+	bh=wlol1uPfbd2rUPgkthUHUYGQ0J+/sozeGdMsAptECe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ds/5NZfMBiso7E+DsZbWzQMo9+gQTGi5HmithtcufvJL7fr4FZFogohWjRhc/ccwn
-	 Vae/mtc8jynS88zr3W/Wh3eFmFxDOldxKdTvZj0xrK+5/O6EVGhwh1gIKPairbuYa2
-	 jnn6SbnBJ1p12q1RsbXOsWAWUiyZ+6T9zHV7o2os=
+	b=N+VhNcXetvSltIJNb4YDY83yDmUqr5hvhBRzKOo6QjXOulQYia5ua7lp53K8+geyI
+	 Y7BQP9jJE242BMPSZ0rWTkfP0pbwYjonfkWgXh4dn7W9oehF2jgc1ZmN8vOp4V9vj2
+	 qaDzWpLqiLdXw51FVMtVsokwnBCo6H+tUlfraagk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/162] sched/deadline: Use revised wakeup rule for dl_server
-Date: Mon, 20 Apr 2026 17:41:55 +0200
-Message-ID: <20260420153930.040876538@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.12 101/162] drm/vc4: platform_get_irq_byname() returns an int
+Date: Mon, 20 Apr 2026 17:42:13 +0200
+Message-ID: <20260420153930.698139941@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -46,57 +51,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 14a857056466be9d3d907a94e92a704ac1be149b ]
+commit e597a809a2b97e927060ba182f58eb3e6101bc70 upstream.
 
-John noted that commit 115135422562 ("sched/deadline: Fix 'stuck' dl_server")
-unfixed the issue from commit a3a70caf7906 ("sched/deadline: Fix dl_server
-behaviour").
+platform_get_irq_byname() will return a negative value if an error
+happens, so it should be checked and not just passed directly into
+devm_request_threaded_irq() hoping all will be ok.
 
-The issue in commit 115135422562 was for wakeups of the server after the
-deadline; in which case you *have* to start a new period. The case for
-a3a70caf7906 is wakeups before the deadline.
-
-Now, because the server is effectively running a least-laxity policy, it means
-that any wakeup during the runnable phase means dl_entity_overflow() will be
-true. This means we need to adjust the runtime to allow it to still run until
-the existing deadline expires.
-
-Use the revised wakeup rule for dl_defer entities.
-
-Fixes: 115135422562 ("sched/deadline: Fix 'stuck' dl_server")
-Reported-by: John Stultz <jstultz@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Juri Lelli <juri.lelli@redhat.com>
-Tested-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/20260404102244.GB22575@noisy.programming.kicks-ass.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Cc: Maíra Canal <mcanal@igalia.com>
+Cc: Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: stable <stable@kernel.org>
+Assisted-by: gkh_clanker_2000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026022339-cornflake-t-shirt-2471@gregkh
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/deadline.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_hdmi.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 8acdd97538546..1ef891f8e3f2f 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -1079,7 +1079,7 @@ static void update_dl_entity(struct sched_dl_entity *dl_se)
- 	if (dl_time_before(dl_se->deadline, rq_clock(rq)) ||
- 	    dl_entity_overflow(dl_se, rq_clock(rq))) {
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -2391,17 +2391,23 @@ static int vc4_hdmi_hotplug_init(struct
+ 	int ret;
  
--		if (unlikely(!dl_is_implicit(dl_se) &&
-+		if (unlikely((!dl_is_implicit(dl_se) || dl_se->dl_defer) &&
- 			     !dl_time_before(dl_se->deadline, rq_clock(rq)) &&
- 			     !is_dl_boosted(dl_se))) {
- 			update_dl_revised_wakeup(dl_se, rq);
--- 
-2.53.0
-
+ 	if (vc4_hdmi->variant->external_irq_controller) {
+-		unsigned int hpd_con = platform_get_irq_byname(pdev, "hpd-connected");
+-		unsigned int hpd_rm = platform_get_irq_byname(pdev, "hpd-removed");
++		int hpd = platform_get_irq_byname(pdev, "hpd-connected");
+ 
+-		ret = devm_request_threaded_irq(&pdev->dev, hpd_con,
++		if (hpd < 0)
++			return hpd;
++
++		ret = devm_request_threaded_irq(&pdev->dev, hpd,
+ 						NULL,
+ 						vc4_hdmi_hpd_irq_thread, IRQF_ONESHOT,
+ 						"vc4 hdmi hpd connected", vc4_hdmi);
+ 		if (ret)
+ 			return ret;
+ 
+-		ret = devm_request_threaded_irq(&pdev->dev, hpd_rm,
++		hpd = platform_get_irq_byname(pdev, "hpd-removed");
++		if (hpd < 0)
++			return hpd;
++
++		ret = devm_request_threaded_irq(&pdev->dev, hpd,
+ 						NULL,
+ 						vc4_hdmi_hpd_irq_thread, IRQF_ONESHOT,
+ 						"vc4 hdmi hpd disconnected", vc4_hdmi);
 
 
