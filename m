@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C981433E377;
-	Mon, 20 Apr 2026 15:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AF832E696;
+	Mon, 20 Apr 2026 15:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699921; cv=none; b=kel3pHlqeRLP4dOifhgBhhsow2geReCzyxbXuQW5EQsB3p8RqW87x54xTvjs2XI8kbHpM1ShjDNQY1XCjVdo61ovmYbqHlxprKS9oEpboJc8Me5759BRiz3yKLAICh1U8GtsRaIkCMG5vXD9SIyWAX2j249EBwLwuSoP6kFH+k0=
+	t=1776699924; cv=none; b=pQbx5CP8Tk4U+g8fGmOmCID+LRh8E9qcPEYRsW/ul6NraNj/v7HEkXvx4AXCp28FObjPDNVS9Lt/nEuBr+QMbwtUTPrqTPjH7CCXfVfEKeWMeChkKoFeoy4UEpm4SJTVbnam8JxG8TeYSNlDAj0XoXMmnDN3WfMt2kbkoxiojKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699921; c=relaxed/simple;
-	bh=0G4r1MF7zTNm7U9Dc4eq/3NKxZ++4FPgFiEJUpmULF0=;
+	s=arc-20240116; t=1776699924; c=relaxed/simple;
+	bh=TaEuWs9kG3ZqgUVNnD5WDfyZVC+dtG0BAasQmf4ErNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrV7W4D2zKPNLeAWA8d3FL+jetlzWwWF5kTlu26CIu1qiQCgXXHuuoDRJdbfqq12SvR1XyQx63ypLYfPsN15Ckp7kjqW7e4UZ3OwbFd2mSoArPhzswNoSnshGnZ66IMuMRmyeNBichOkQhM5WzfeutEhVWPhZDHjQeWbGnb2hbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLezl7Bj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=reVJY0iQFJftvz/mlw4C7pM1VWC4WO0XUqKjYHFLijwYI0//5rIN62ujBCCklpvUhilvU3jMnSgv3YZJNn4me7J1AhHMTpL2QIiOKjAhHCJkpj/0rhWr4cMBRhDwzuHo981lqvejJlgGY+SDypg2FDCcWq54HfguE/oriOsZTBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnsrccYe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLezl7Bj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620A8C19425;
-	Mon, 20 Apr 2026 15:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnsrccYe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6FAC19425;
+	Mon, 20 Apr 2026 15:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699921;
-	bh=0G4r1MF7zTNm7U9Dc4eq/3NKxZ++4FPgFiEJUpmULF0=;
+	s=korg; t=1776699924;
+	bh=TaEuWs9kG3ZqgUVNnD5WDfyZVC+dtG0BAasQmf4ErNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLezl7BjWykIlhxJuL4oNSnL1ApHQm4UEuPAjcbwEWcjggJLc9djZoSlrBXcypf3o
-	 Wp9qVhyrxVGjaBdv/PQarxn2KitmJNdqO+erjieGC8Y3gFtf9BNTS9FjOMBGSK70CM
-	 6pqf8afwBYQ3b+yovJh9urWsPP9T+UFinLNBLvBs=
+	b=CnsrccYejkbogkTfk0+023Of5aREN4+4thg+2pgfSC2m9SuiayGwT6eeVguiF5VN1
+	 hAlUcN2+U0v6RtnNdzsTAi7osm3Zh3A9TkbmRuqmUWJNsvZfoRnX9UjAP+2Zjdi5v9
+	 AdwXgphsSDFxkeYknWmAVJc1LGk3RzlVsfp29B/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.0 50/76] KVM: selftests: Remove duplicate LAUNCH_UPDATE_VMSA call in SEV-ES migrate test
-Date: Mon, 20 Apr 2026 17:42:01 +0200
-Message-ID: <20260420153912.645787558@linuxfoundation.org>
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Fiona Behrens <me@kloenk.dev>,
+	Trevor Gross <tmgross@umich.edu>,
+	Tamir Duberstein <tamird@kernel.org>
+Subject: [PATCH 7.0 33/76] scripts: generate_rust_analyzer.py: avoid FD leak
+Date: Mon, 20 Apr 2026 17:41:44 +0200
+Message-ID: <20260420153912.026695766@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -49,37 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Tamir Duberstein <tamird@kernel.org>
 
-commit 25a642b6abc98bbbabbf2baef9fc498bbea6aee6 upstream.
+commit 9b4744d8eda2824041064a5639ccbb079850914d upstream.
 
-Drop the explicit KVM_SEV_LAUNCH_UPDATE_VMSA call when creating an SEV-ES
-VM in the SEV migration test, as sev_vm_create() automatically updates the
-VMSA pages for SEV-ES guests.  The only reason the duplicate call doesn't
-cause visible problems is because the test doesn't actually try to run the
-vCPUs.  That will change when KVM adds a check to prevent userspace from
-re-launching a VMSA (which corrupts the VMSA page due to KVM writing
-encrypted private memory).
+Use `pathlib.Path.read_text()` to avoid leaking file descriptors.
 
-Fixes: 69f8e15ab61f ("KVM: selftests: Use the SEV library APIs in the intra-host migration test")
+Fixes: 8c4555ccc55c ("scripts: add `generate_rust_analyzer.py`")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260310234829.2608037-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Reviewed-by: Fiona Behrens <me@kloenk.dev>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Link: https://patch.msgid.link/20260127-rust-analyzer-fd-leak-v2-1-1bb55b9b6822@kernel.org
+Signed-off-by: Tamir Duberstein <tamird@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/kvm/x86/sev_migrate_tests.c |    2 --
- 1 file changed, 2 deletions(-)
+ scripts/generate_rust_analyzer.py |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/kvm/x86/sev_migrate_tests.c
-+++ b/tools/testing/selftests/kvm/x86/sev_migrate_tests.c
-@@ -36,8 +36,6 @@ static struct kvm_vm *sev_vm_create(bool
+--- a/scripts/generate_rust_analyzer.py
++++ b/scripts/generate_rust_analyzer.py
+@@ -190,9 +190,10 @@ def generate_crates(srctree, objtree, sy
  
- 	sev_vm_launch(vm, es ? SEV_POLICY_ES : 0);
+     def is_root_crate(build_file, target):
+         try:
+-            return f"{target}.o" in open(build_file).read()
++            contents = build_file.read_text()
+         except FileNotFoundError:
+             return False
++        return f"{target}.o" in contents
  
--	if (es)
--		vm_sev_ioctl(vm, KVM_SEV_LAUNCH_UPDATE_VMSA, NULL);
- 	return vm;
- }
- 
+     # Then, the rest outside of `rust/`.
+     #
 
 
