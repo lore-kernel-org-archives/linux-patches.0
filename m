@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5D5478E55;
-	Mon, 20 Apr 2026 13:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF47B478E5F;
+	Mon, 20 Apr 2026 13:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691851; cv=none; b=rpZZVLbSqj/OkzO8Q88NE0pUXQSzv1kbeTQ/FGiNpKyriXKZxWU57+GjBOTzgzX2rCpNgyZhrrR9WoqlPCEIEjP7GE1SsoQiGNBLkiKExY8kbi/ebGBvdHJqe0g6AD/CQGRfxVn2rJks4fMmzqvNwiusLM8bysB10+MZxCfUrGY=
+	t=1776691853; cv=none; b=u2uFXR0/oSiWQo6VCQYf/ohfTjn25Sw14GC+39GwhpMV++t6DVdFo0KIIQ5pHUuaGLjoHADfN6lG4Wz8/GCJFOyKB+t8YZzWq8T85PC9ZgxSyXnGcWrXbWJJO8W3AKLcJj3d04wuMYB1PndROuCa/uNr0uTSUFw65rhO2IvjIfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691851; c=relaxed/simple;
-	bh=j6fd763CQFZzWDOaM0/iX6f8lZNQ0r0PAPKDPJ5VpIs=;
+	s=arc-20240116; t=1776691853; c=relaxed/simple;
+	bh=4xiw5v4GHgFwfDMt4EGl/NU/LMF7cjo7fJz6cVUfIqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fs01RqKgXDtFP/HFazXl1CPhvIi8JYg+JE283ZFxSzvxttBYdxTGlwuArPPsfNAVxn/c/tXCAEP3vcze+G0w31+h4NxUGdvuWysBtyrOXZ88OhGRwxd621UMvjC8P85+r01zf/YDRXPcEielZyPEh8+XJrY6UOjTA7Bv4Bx5AdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LkM0UjAN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=py8NfhpFvfmls10CFaJF+7vfO6yvXRtQLs4H44hEYSMGbjJB4jZgKrtS73osq65RVkrHii0LPObu6lAdlfZYGm4uRUe9mGn2aKRKL05kvQbvG84vqfZfJb8UIjnRVbMTtGSpNhvjl6Yo1cUMqwyx6JfKCamfS91Qp+mf0W122Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dY7JVugp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LkM0UjAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF488C2BCC4;
-	Mon, 20 Apr 2026 13:30:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dY7JVugp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CB4C19425;
+	Mon, 20 Apr 2026 13:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691851;
-	bh=j6fd763CQFZzWDOaM0/iX6f8lZNQ0r0PAPKDPJ5VpIs=;
+	s=k20201202; t=1776691852;
+	bh=4xiw5v4GHgFwfDMt4EGl/NU/LMF7cjo7fJz6cVUfIqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LkM0UjANKeydIQl5KPV4Fn1k+olvinc3QdFGXTD1bBc12LSpAGR7IR1WVL4j/rmg6
-	 yfpK2/5lStihOEUb6Cn1Jfm7d1MNq15aQTDkoHERNcbx4SNLWc2GN20crI2pPhfllW
-	 RlYfWoQ8dZpie0qTE/nCKr4SdpvKlpdRdjKvfY7swbDhmRWBpK/zri3U1jXu8ozuMV
-	 534Hl1Wu3cN4E4/D4MY483dQkkbq8RR+TalhjjWeYMAVeHiEDo39MMrn9sVaK151DY
-	 X1bIk+MlLxs2JvjHqXazH6sYgwcpT2LKyaLwSPWk03GJNjGFN0zWgr8rBx6gX0NupW
-	 kWebEOWuaGEGA==
+	b=dY7JVugpjsAyMhWviSBKV3MNPuSy8IWnJprkOX4G7A+KgTlXGOFdrO+Ht7KyRaA8f
+	 DSnjCQIyB9BAMJrIVl5s6j62EXBe2jGbEo9IoSh6hHcFOXb89a3qM6FtZxQCS9jR/M
+	 7RNdgN+ndOWT8RFYloTlcLwBuQbbeo61siu6v9zmshdfInqg5MQRRP9o32x5J+tG7E
+	 XUomDRxOVx2aGVxQ0OgDAYpkGuMLAV5kNBcG9/8xfUclg29UojZBF4WAmP2GBIq4or
+	 QQ/8J34tSlzc5uwSK7Av7KBiME22/oCdF/aM7D1y6RZKp4eWm4E/tZxh4FsgyrRkpO
+	 nb8i/pF6dZ9hg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jian Zhang <zhangjian.3032@bytedance.com>,
-	Corey Minyard <corey@minyard.net>,
+Cc: Jesse Zhang <Jesse.Zhang@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Jesse Zhang <jesse.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	openipmi-developer@lists.sourceforge.net,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] ipmi: ssif_bmc: cancel response timer on remove
-Date: Mon, 20 Apr 2026 09:20:25 -0400
-Message-ID: <20260420132314.1023554-231-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] drm/amdgpu: guard atom_context in devcoredump VBIOS dump
+Date: Mon, 20 Apr 2026 09:20:26 -0400
+Message-ID: <20260420132314.1023554-232-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -52,342 +58,410 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jian Zhang <zhangjian.3032@bytedance.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 7fc3e2546cf3fa9a28a2acc92a512c779a8e5038 ]
+[ Upstream commit 557fa5a453c9ccb49a22f30a7ad0545573d434b7 ]
 
-The response timer can stay armed across device teardown. If it fires after
-remove, the callback dereferences the SSIF context and the i2c client after
-teardown has started.
+During GPU reset coredump generation, amdgpu_devcoredump_fw_info() unconditionally
+dereferences adev->mode_info.atom_context to print VBIOS fields. On reset/teardown
+paths this pointer can be NULL, causing a kernel page fault from the deferred
+coredump workqueue.
 
-Cancel the timer in remove so the callback cannot run after the device is
-unregistered.
+Fix by checking ctx before printing VBIOS fields:
 
-Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
-Message-ID: <20260403090603.3988423-1-zhangjian.3032@bytedance.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+if ctx is valid, print full VBIOS information as before;
+This prevents NULL-dereference crashes while preserving coredump output.
+
+Observed page fault log:
+[  667.933329] RIP: 0010:amdgpu_devcoredump_format+0x780/0xc00 [amdgpu]
+[  667.941517] amdgpu 0002:01:00.0: Dumping IP State
+[  667.949660] Code: 8d 57 74 48 c7 c6 01 65 9f c2 48 8d 7d 98 e8 97 96 7a ff 49 8d 97 b4 00 00 00 48 c7 c6 18 65 9f c2 48 8d 7d 98 e8 80 96 7a ff <41> 8b 97 f4 00 00 00 48 c7 c6 2f 65 9f c2 48 8d 7d 98 e8 69 96 7a
+[  667.949666] RSP: 0018:ffffc9002302bd50 EFLAGS: 00010246
+[  667.949673] RAX: 0000000000000000 RBX: ffff888110600000 RCX: 0000000000000000
+[  667.949676] RDX: 000000000000a9b5 RSI: 0000000000000405 RDI: 000000000000a999
+[  667.949680] RBP: ffffc9002302be00 R08: ffffffffc09c3084 R09: ffffffffc09c3085
+[  667.949684] R10: 0000000000000000 R11: 0000000000000004 R12: 00000000000048e0
+[  667.993908] amdgpu 0002:01:00.0: Dumping IP State Completed
+[  667.994229] R13: 0000000000000025 R14: 000000000000000c R15: 0000000000000000
+[  667.994233] FS:  0000000000000000(0000) GS:ffff88c44c2c9000(0000) knlGS:0000000000000000
+[  668.000076] amdgpu 0002:01:00.0: [drm] AMDGPU device coredump file has been created
+[  668.008025] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  668.008030] CR2: 00000000000000f4 CR3: 000000011195f001 CR4: 0000000000770ef0
+[  668.008035] PKRU: 55555554
+[  668.008040] Call Trace:
+[  668.008045]  <TASK>
+[  668.016010] amdgpu 0002:01:00.0: [drm] Check your /sys/class/drm/card16/device/devcoredump/data
+[  668.023967]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  668.023988]  ? __pfx___drm_printfn_coredump+0x10/0x10 [drm]
+[  668.031950] amdgpu 0003:01:00.0: Dumping IP State
+[  668.038159]  ? __pfx___drm_puts_coredump+0x10/0x10 [drm]
+[  668.083017] amdgpu 0003:01:00.0: Dumping IP State Completed
+[  668.083824]  amdgpu_devcoredump_deferred_work+0x26/0xc0 [amdgpu]
+[  668.086163] amdgpu 0003:01:00.0: [drm] AMDGPU device coredump file has been created
+[  668.095863]  process_scheduled_works+0xa6/0x420
+[  668.095880]  worker_thread+0x12a/0x270
+[  668.101223] amdgpu 0003:01:00.0: [drm] Check your /sys/class/drm/card24/device/devcoredump/data
+[  668.107441]  kthread+0x10d/0x230
+[  668.107451]  ? __pfx_worker_thread+0x10/0x10
+[  668.107458]  ? __pfx_kthread+0x10/0x10
+[  668.112709] amdgpu 0000:01:00.0: ring vcn_unified_1 timeout, signaled seq=9, emitted seq=10
+[  668.118630]  ret_from_fork+0x17c/0x1f0
+[  668.118640]  ? __pfx_kthread+0x10/0x10
+[  668.118647]  ret_from_fork_asm+0x1a/0x30
+
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to do the full analysis.
+Now I have all the information needed for a comprehensive analysis. Let
+me compile the findings.
 
 ---
 
-## Phase 1: Commit Message Forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 — Subject parsing**
-Record: Subsystem `ipmi: ssif_bmc:`; action verb `cancel` (equivalent to
-"fix/prevent"); summary: cancel response timer in remove path so a
-queued timer callback cannot dereference a torn-down context.
+**Step 1.1: Subject Line**
+- Subsystem: `drm/amdgpu`
+- Action verb: "guard" — implies adding a missing safety check, which is
+  a bug fix pattern
+- Summary: Guard `atom_context` in devcoredump VBIOS dump to prevent
+  NULL dereference
 
-**Step 1.2 — Commit message tags**
-Record:
-- `Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>` (author)
-- `Message-ID: <20260403090603.3988423-1-zhangjian.3032@bytedance.com>`
-  — lore msgid
-- `Signed-off-by: Corey Minyard <corey@minyard.net>` — IPMI subsystem
-  maintainer applied it
-- No `Fixes:` tag, no `Cc: stable`, no `Reported-by:`, no `Reviewed-by:`
-  / `Acked-by:` in the applied version (absence of Fixes/Cc stable is
-  expected in this pipeline and not a negative signal)
-- Related patches 2/5, 3/5, 4/5 in the same series DO carry `Fixes:
-  dd2bc5cc9e25 ("ipmi: ssif_bmc: Add SSIF BMC driver")`
+**Step 1.2: Tags**
+- `Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>` — AMD GPU subsystem
+  reviewer
+- `Suggested-by: Lijo Lazar <lijo.lazar@amd.com>` — the fix approach was
+  suggested by a maintainer
+- `Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>` — author, regular
+  AMD GPU contributor
+- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` — AMD GPU
+  subsystem maintainer who committed it
+- No Fixes: tag (expected for autosel candidates)
+- No Cc: stable (expected)
 
-**Step 1.3 — Body analysis**
-Record: Bug description is explicit — "response timer can stay armed
-across device teardown"; failure mode is "the callback dereferences the
-SSIF context and the i2c client after teardown has started". This is a
-classic **use-after-free** scenario. The author names the exact
-mechanism (pending timer firing after `ssif_bmc_remove()`).
+**Step 1.3: Commit Body**
+- Bug: During GPU reset coredump generation,
+  `amdgpu_devcoredump_fw_info()` unconditionally dereferences
+  `adev->mode_info.atom_context` (via local `ctx` variable) to print
+  VBIOS fields. On reset/teardown paths, this pointer can be NULL.
+- Symptom: Kernel page fault from deferred coredump workqueue. The crash
+  log with `CR2: 00000000000000f4` confirms access at offset 0xf4 from a
+  NULL pointer.
+- The RIP points to `amdgpu_devcoredump_format+0x780` and the call trace
+  shows `amdgpu_devcoredump_deferred_work` → `process_scheduled_works` →
+  `worker_thread`.
 
-**Step 1.4 — Hidden bug detection**
-Record: Not hidden. Clearly presented as a UAF-prevention fix even
-without the word "fix" in the subject. The phrase "so the callback
-cannot run after the device is unregistered" is unambiguous fix
-language.
+**Step 1.4: Hidden Bug Fix Detection**
+- Not hidden — this is an explicit, documented crash fix with a full
+  kernel oops log.
 
-## Phase 2: Diff Analysis
+Record: This is a clear NULL pointer dereference fix with observed crash
+evidence.
 
-**Step 2.1 — Inventory**
-Record: 1 file (`drivers/char/ipmi/ssif_bmc.c`), +1/-0 lines, inside
-`ssif_bmc_remove()`. Single-file surgical fix.
+---
 
-**Step 2.2 — Flow change**
-Record: Before: `ssif_bmc_remove()` calls `i2c_slave_unregister()` then
-`misc_deregister()` and returns, leaving `response_timer` possibly
-pending. After: `timer_delete_sync(&ssif_bmc->response_timer)` is called
-first, which both cancels a pending timer and waits for any in-flight
-callback on another CPU to finish before continuing.
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.3 — Bug mechanism**
-Record: Category (d) memory safety / (b) synchronization with teardown.
-Root cause:
-- `ssif_bmc` is `devm_kzalloc`'d at probe (line 809), so it is freed by
-  devres AFTER `.remove` returns.
-- `response_timer` is armed via `mod_timer(&ssif_bmc->response_timer,
-  jiffies + 500 ms)` inside `handle_request()` (line 335).
-- `response_timeout()` callback dereferences `ssif_bmc`
-  (`timer_container_of`), takes `ssif_bmc->lock` and touches several
-  fields (lines 300–315).
-- Without `timer_delete_sync()` in remove, the timer can fire after
-  remove returns and after devres frees `ssif_bmc`, producing a UAF on
-  `ssif_bmc` and on `ssif_bmc->client`. On module unload the callback
-  address itself may also be in freed module text.
+**Step 2.1: Inventory**
+- Files changed: 1 (`drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c`)
+- Lines: +10, -6 (net +4 lines)
+- Functions modified: `amdgpu_devcoredump_fw_info()`
+- Scope: Single-file surgical fix
 
-**Step 2.4 — Fix quality**
-Record: 1 line, the canonical pattern (`timer_delete_sync()` in remove
-for a driver-owned timer). V1 of the patch used the non-sync variant;
-review led to v2 using `timer_delete_sync()`, which is the correct
-choice because it also waits for a concurrent callback on another CPU.
-Zero-initialized `timer_list` (never armed because `handle_request`
-never ran) is safely handled by `timer_delete_sync()` —
-`timer_pending()` returns false on a zeroed list entry. No regression
-risk.
+**Step 2.2: Code Flow Change**
+- BEFORE: Lines 190-195 unconditionally dereference `ctx->name`,
+  `ctx->vbios_pn`, `ctx->version`, `ctx->vbios_ver_str`, `ctx->date`
+- AFTER: Wrapped in `if (adev->bios)` — if BIOS is available, print full
+  VBIOS info; if not, print "VBIOS Information: NA"
 
-## Phase 3: Git History Investigation
+**Step 2.3: Bug Mechanism**
+Category: **Memory safety — NULL pointer dereference**
+- `ctx` is assigned at line 79: `struct atom_context *ctx =
+  adev->mode_info.atom_context;`
+- `atom_context` is set to NULL by `amdgpu_atombios_fini()` (line 1882
+  of `amdgpu_atombios.c`) during teardown
+- `adev->bios` is set to NULL by `amdgpu_bios_release()` (line 90 of
+  `amdgpu_bios.c`)
+- Both are called from `amdgpu_device_fini_sw()` at lines 4984-4988 of
+  `amdgpu_device.c`
+- The guard uses `adev->bios` because Lijo explained that if BIOS is
+  unavailable (skip_bios platforms), atom_context won't exist — this is
+  a non-error case
 
-**Step 3.1 — Blame**
-Record: `git blame -L 820,870` shows `ssif_bmc_remove` untouched since
-`dd2bc5cc9e2555` (Quan Nguyen, 2022-10-04), which first appears in
-**v6.2**. So the bug has been present in every release from v6.2 onward.
+**Step 2.4: Fix Quality**
+- Obviously correct: simple NULL guard
+- Minimal and surgical: only the VBIOS section is wrapped
+- No regression risk: doesn't change any logic, just prevents access to
+  NULL pointer
+- The `adev->bios` check is the correct proxy per maintainer guidance
 
-**Step 3.2 — Fixes: tag follow-up**
-Record: No explicit `Fixes:` tag on this patch, but companion patches
-2/5, 3/5, 4/5 all point to `dd2bc5cc9e25`. The same commit introduces
-both the timer and the buggy `ssif_bmc_remove()`. `dd2bc5cc9e25` is
-present in stable branches from 6.6.y onward (verified via `git show
-pending-6.6:drivers/char/ipmi/ssif_bmc.c`) but NOT in 6.1.y (`git show
-pending-6.1:drivers/char/ipmi/ssif_bmc.c` reports the file does not
-exist — driver was added after 6.1 branched).
+Record: Clean NULL guard fix, 4 net lines added, zero regression risk.
 
-**Step 3.3 — File history**
-Record: Recent file commits: 41cb08555c416 (treewide
-`timer_container_of()` rename, v6.16), 8fa7292fee5c5 (treewide
-`timer_delete[_sync]()` rename, v6.15), plus prior IPMI fixes. No
-prerequisites for this patch. It is self-contained.
+---
 
-**Step 3.4 — Author context**
-Record: Jian Zhang has multiple prior kernel contributions (NCSI, MCTP,
-i2c-aspeed, etc.). Not the maintainer, but the patch was applied by
-`corey@minyard.net`, the IPMI maintainer, and was discussed with Quan
-Nguyen, the original driver author.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.5 — Dependencies**
-Record: None. A single `timer_delete_sync()` call inside `.remove` does
-not rely on any other patch in the series. For stable branches below
-v6.15, the API is `del_timer_sync()` — a trivial rename that the stable
-maintainers routinely handle as a backport adjustment.
+**Step 3.1: Blame**
+- Lines 190 (header print) introduced by commit `6a0e1bafd70fe5` (Sunil
+  Khatri, 2024-03-26) — "drm/amdgpu: add IP's FW information to
+  devcoredump"
+- Lines 191-195 (ctx dereferences) introduced by commit `3c858cf65e9a2c`
+  (Sunil Khatri, 2024-04-12) — "drm/amdgpu: add missing vbios version
+  from devcoredump"
+- Both first appeared in `v6.10-rc1`
 
-## Phase 4: Mailing List Research
+**Step 3.2: Fixes tag**
+- No Fixes: tag present. Based on analysis, would fix `3c858cf65e9a2c`
+  which added the `ctx->*` dereferences.
 
-**Step 4.1 — Original submission**
-Record: `b4 dig -c 7fc3e2546cf3f` found the thread at `https://lore.kern
-el.org/all/20260403090603.3988423-1-zhangjian.3032@bytedance.com/`. This
-is patch **1/5** in a 5-patch series of IPMI SSIF BMC fixes.
+**Step 3.3: File History**
+- 14 commits to this file since `6a0e1bafd70fe5`, mostly feature
+  additions (IP dump, ring buffer info, device info)
+- No prior fix for this specific NULL dereference
 
-**`b4 dig -a` — revisions**: v1 (2026-04-02) and v2 (2026-04-03). v2
-changelog: "use `timer_delete_sync()` to cancel the timer" — review
-feedback upgraded v1's non-sync delete to the sync variant.
+**Step 3.4: Author**
+- Jesse Zhang is a regular AMD GPU contributor (10 recent commits to
+  amdgpu subsystem found)
+- Fix was suggested and reviewed by Lijo Lazar (AMD GPU maintainer)
 
-In-thread discussion from Corey Minyard (reply to v2 1/5): "Thanks for
-the updates on this. I have the new version in my tree." — explicit
-maintainer acceptance.
+**Step 3.5: Dependencies**
+- Standalone fix, no dependencies on other patches
 
-**Step 4.2 — Recipients**
-Record: CC list on v2 was Corey Minyard (IPMI maintainer), Quan Nguyen
-(original author of the driver / MAINTAINERS entry), openipmi-developer
-list, linux-kernel. Correct audience; reviewed by the right people.
+Record: Buggy code from v6.10-rc1. Fix is standalone with no
+prerequisites.
 
-**Step 4.3 — Bug report**
-Record: No syzbot / bugzilla / user report cited. The bug was apparently
-found through code review or internal testing at Bytedance. Unverified
-whether there is a field occurrence.
+---
 
-**Step 4.4 — Series context**
-Record: Siblings in the same series (all for
-`drivers/char/ipmi/ssif_bmc.c`, all with `Fixes: dd2bc5cc9e25`):
-copy_to_user partial failure fix (2/5), message desynchronization after
-truncated response (3/5), log-level change (4/5), and a kunit test
-(5/5). This patch is independent and applies on its own.
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.5 — Stable-list discussion**
-Record: None visible. Anubis anti-bot blocked direct lore searches, but
-the archived mbox I pulled via `b4 dig -m` contained no stable-list
-cross-post or stable nomination.
+**Step 4.1: Patch Discussion**
+Found the full evolution on amd-gfx mailing list:
+- **V1**: Checked `ctx` directly before VBIOS access
+- **V2** (mail-archive.com/amd-
+  gfx@lists.freedesktop.org/msg139678.html): Still checked `ctx`, added
+  `!adev->bios` check per Lijo's initial feedback
+- **Lijo's V2 review**: "On a second check, this cannot happen when
+  vbios is available. Driver load will fail in that case. In other
+  cases, we operate without VBIOS. For them, probably this may be
+  avoided altogether (preferred) or mark the section as NA." Suggested
+  `drm_printf(p, "\nVBIOS Information: NA\n");`
+- **V3 (committed)**: Jesse incorporated Lijo's feedback — checks
+  `adev->bios` and prints "VBIOS Information: NA"
 
-## Phase 5: Code Semantic Analysis
+**Step 4.2: Reviewers**
+- Lijo Lazar (AMD GPU reviewer) reviewed all versions and provided the
+  fix approach
+- Alex Deucher (AMD GPU maintainer) signed off and committed
 
-**Step 5.1 — Modified function**: `ssif_bmc_remove()`.
+**Step 4.3: Bug Report**
+- No external bug report link, but the commit includes a complete kernel
+  oops log, confirming reproduction
 
-**Step 5.2 — Callers**
-Record: `ssif_bmc_remove` is assigned to `i2c_driver.remove` and invoked
-by the i2c bus core when the device is unbound (rmmod, device unbind via
-sysfs, or driver removal).
+Record: Patch went through 3 revisions with constructive review. Final
+version incorporates maintainer's preferred approach.
 
-**Step 5.3 — Callees/related**
-Record: The fix target is `response_timer`. Arming site is
-`handle_request()` (`mod_timer(... RESPONSE_TIMEOUT=500 ms)`). Callback
-is `response_timeout()` which locks `ssif_bmc->lock` and touches
-`ssif_bmc->busy`, `response_timer_inited`, `aborting` — all of which are
-inside a `devm_kzalloc`'d struct.
+---
 
-**Step 5.4 — Reachability**
-Record: Triggered every time a SSIF IPMI request is handled from the
-host side; the window to teardown can be up to 500 ms per request.
-Remove path is reached when the module is unloaded or the i2c device is
-unbound — a real, not theoretical, code path in BMC firmware
-environments (OpenBMC) that allow driver rebinding.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.5 — Similar patterns**
-Record: `timer_delete_sync()` in driver `.remove` is the standard idiom
-for any driver-owned timer with a pointer to devres-managed state. The
-same pattern is also added in the kunit test (patch 5/5) for correctness
-of the test fixture.
+**Step 5.1: Functions Modified**
+- `amdgpu_devcoredump_fw_info()` — static helper to print firmware info
+  in coredump
 
-## Phase 6: Stable-tree Analysis
+**Step 5.2: Callers**
+- Called from `amdgpu_devcoredump_read()` (line 266 in 7.0 tree), which
+  is the devcoredump read callback passed to `dev_coredumpm()`
+- Triggered when the devcoredump deferred work runs or when userspace
+  reads `/sys/class/drm/cardN/device/devcoredump/data`
 
-**Step 6.1 — Exists in stable?**
-Record: Buggy `ssif_bmc_remove()` exists identically in 6.6.y, 6.12.y,
-6.15.y, 6.16.y and later (verified by `git show
-pending-6.X:drivers/char/ipmi/ssif_bmc.c`). Not present in 6.1.y (driver
-added after 6.1 branched).
+**Step 5.3: Trigger Path**
+- GPU reset → `amdgpu_coredump()` → `dev_coredumpm()` → (later) deferred
+  work or userspace read → `amdgpu_devcoredump_read()` →
+  `amdgpu_devcoredump_fw_info()` → **CRASH** if atom_context is NULL
 
-**Step 6.2 — Backport complications**
-Record: Mainline (7.0) uses `timer_delete_sync()`; stable branches <
-v6.15 expose it as `del_timer_sync()`. This is a trivial rename that
-stable maintainers handle routinely. Otherwise the patch applies cleanly
-— the 3 surrounding lines (`struct ssif_bmc_ctx *ssif_bmc = ...;
-i2c_slave_unregister(client); misc_deregister(&ssif_bmc->miscdev);`) are
-identical in all stable branches I checked.
+**Step 5.4: Reachability**
+- GPU resets happen automatically on GPU hang recovery — very common for
+  AMDGPU users
+- The coredump path is always active when `CONFIG_DEV_COREDUMP` is
+  enabled (default in most distros)
 
-**Step 6.3 — Prior stable fixes**
-Record: No earlier fix for this UAF window has been applied to any
-stable branch I checked.
+Record: The crash path is reachable from normal GPU hang recovery
+operations.
 
-## Phase 7: Subsystem Context
+---
 
-**Step 7.1 — Criticality**: `drivers/char/ipmi/ssif_bmc.c` — PERIPHERAL
-(BMC-side SSIF; used on Linux-running BMCs, e.g. OpenBMC). Real users,
-narrow hardware scope.
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 7.2 — Activity**: Low-frequency but active; Corey Minyard
-actively maintains; Jian Zhang's 5-patch series is a recent hardening
-round.
+**Step 6.1: Buggy Code in Stable**
+- The buggy code was introduced in v6.10-rc1
+- Affects all stable trees from 6.10 onwards: 6.10.y, 6.11.y, 6.12.y,
+  6.13.y, 6.14.y, and this 7.0 tree
 
-## Phase 8: Impact and Risk
+**Step 6.2: Backport Complications**
+- The actual changed code (VBIOS section in
+  `amdgpu_devcoredump_fw_info()`) is identical in the 7.0 tree and the
+  upstream version
+- The diff's trailing context shows `amdgpu_devcoredump_format` but the
+  7.0 tree has `amdgpu_devcoredump_read` — this is just context, not the
+  changed hunk, so it only requires minor fuzz adjustment
 
-**Step 8.1 — Affected users**: Users of Linux BMC firmware that exposes
-SSIF to a host CPU (OpenBMC et al.).
+**Step 6.3: Related Fixes Already in Stable**
+- No related fixes found for this specific issue
 
-**Step 8.2 — Trigger**: Requires device unbind/rmmod while a timer from
-a recent IPMI request is still armed (≤500 ms window per request). Not
-routinely triggered at runtime on production BMCs that never unbind, but
-reachable on development / test / field-service paths and by privileged
-userspace actions.
+Record: Fix applies to all stable trees 6.10+. Minor context adjustment
+needed for 7.0 tree.
 
-**Step 8.3 — Failure mode**: UAF on `ssif_bmc` (and potentially on
-`client`), plus potential call into freed module text on module unload.
-Severity: HIGH — potential kernel crash / memory corruption; the
-callback also takes a spinlock on the freed struct.
+---
 
-**Step 8.4 — Risk/benefit**
-Record: Benefit = eliminates a real UAF window on device removal in a
-driver present in many live stable trees. Risk = near-zero; one line,
-canonical idiom, no control-flow change, safe on a never-initialized
-`timer_list`. Ratio is strongly favorable.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-## Phase 9: Synthesis
+**Step 7.1: Subsystem**
+- `drm/amdgpu` — AMD GPU driver
+- Criticality: **IMPORTANT** — AMDGPU is one of the most widely used GPU
+  drivers (all AMD Radeon GPUs, both discrete and integrated)
 
-**Evidence for**: Classic UAF-prevention pattern; minimal 1-line diff;
-obviously correct; review feedback already incorporated (v1 → v2
-upgraded non-sync to sync); IPMI maintainer applied it; original driver
-author was on CC; self-contained (no dependencies); bug present since
-driver introduction (v6.2).
+**Step 7.2: Activity**
+- Very actively developed subsystem with frequent commits
 
-**Evidence against**: No explicit `Fixes:` tag on this specific patch
-(though companion patches in the series tag dd2bc5cc9e25); no
-syzbot/user report cited; backport to < 6.15 needs `del_timer_sync()`
-rename.
+Record: IMPORTANT subsystem affecting a large user base.
 
-**Stable-rules checklist**
-1. Obviously correct and tested — YES (1 line, canonical, in maintainer
-   tree)
-2. Real bug — YES (UAF on timer callback after teardown)
-3. Important issue — YES (UAF / possible kernel panic)
-4. Small and contained — YES (+1/-0 line, single function)
-5. No new features/APIs — YES (adds a cleanup call only)
-6. Applies to stable — YES, with a trivial API rename for < v6.15
+---
 
-**Exception categories**: Not applicable; stands on bug-fix merit alone.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Decision**: YES. Small UAF fix in a never-canceled timer on device
-teardown, accepted by the subsystem maintainer, safe and trivial to
-backport to all stable trees that carry the driver (6.6.y and later).
+**Step 8.1: Affected Users**
+- All users with AMD GPUs running kernels 6.10+ with
+  `CONFIG_DEV_COREDUMP` enabled (most distros)
+
+**Step 8.2: Trigger Conditions**
+- GPU hang → automatic reset → coredump generation with `atom_context`
+  already freed
+- GPU hangs and resets are common real-world events
+- Does not require unprivileged user action (happens automatically)
+
+**Step 8.3: Failure Mode**
+- Kernel page fault (oops) from workqueue context
+- CR2: 0xf4 — NULL pointer dereference at struct offset 0xf4
+- Severity: **HIGH** (kernel oops, system instability)
+
+**Step 8.4: Risk-Benefit Ratio**
+- **Benefit**: HIGH — prevents kernel crash during GPU reset recovery
+- **Risk**: VERY LOW — 10-line NULL guard, single function, reviewed by
+  maintainer, obviously correct
+- **Ratio**: Strongly favorable for backporting
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: Evidence Summary**
+
+FOR backporting:
+- Fixes a real, observed kernel oops (full stack trace provided)
+- Small, surgical fix (4 net lines changed in one function)
+- Reviewed and suggested by AMD GPU maintainer (Lijo Lazar)
+- Signed off by subsystem maintainer (Alex Deucher)
+- Went through 3 review revisions — well-vetted
+- Affects widely-used AMDGPU driver
+- Bug present since v6.10 — affects all active stable trees
+- Zero regression risk — just a NULL guard
+- Standalone fix with no dependencies
+
+AGAINST backporting:
+- None identified
+- Minor context adjustment may be needed for backport (function name in
+  trailing context differs)
+
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** — simple NULL guard, reviewed
+   by maintainer
+2. Fixes a real bug? **YES** — kernel oops during GPU reset
+3. Important issue? **YES** — kernel crash (oops)
+4. Small and contained? **YES** — 10 lines changed, single file, single
+   function
+5. No new features or APIs? **YES** — only adds a safety check
+6. Can apply to stable? **YES** — with minor context adjustment
+
+**Step 9.3: Exception Categories**
+- Not an exception category; this is a standard bug fix that qualifies
+  on its own merits.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed subject / body / tags directly from the commit and
-  companion series — confirmed no `Fixes:`/`Cc: stable`, but sibling
-  patches in series carry `Fixes: dd2bc5cc9e25`.
-- [Phase 2] Read `ssif_bmc.c` lines 77–100 (struct fields including
-  `response_timer`), 200–228 (`timer_delete()` in write path), 298–336
-  (`response_timeout` callback + `mod_timer` arming site), 804–848
-  (probe/remove) — confirmed `ssif_bmc` is `devm_kzalloc`'d (line 809)
-  and that `response_timeout` dereferences fields inside it.
-- [Phase 3] `git blame -L 820,870 drivers/char/ipmi/ssif_bmc.c` — buggy
-  `ssif_bmc_remove` unchanged since `dd2bc5cc9e2555`.
-- [Phase 3] `git show --stat dd2bc5cc9e255` — initial driver add (Oct
-  2022).
-- [Phase 3] `git tag --contains dd2bc5cc9e255` — earliest release is
-  **v6.2**.
-- [Phase 3] `git tag --contains 8fa7292fee5c5` — `timer_delete_sync()`
-  rename lands in v6.15.
-- [Phase 3] `git tag --contains 41cb08555c416` — `timer_container_of()`
-  rename lands in v6.16.
-- [Phase 4] `b4 dig -c 7fc3e2546cf3f` — matched series at `lore.kernel.o
-  rg/all/20260403090603.3988423-1-zhangjian.3032@bytedance.com/`.
-- [Phase 4] `b4 dig -c 7fc3e2546cf3f -a` — two revisions (v1 and v2);
-  applied version is the latest (v2).
-- [Phase 4] `b4 dig -m /tmp/ssif_thread.mbx` — full thread saved; Corey
-  Minyard acknowledges acceptance: "I have the new version in my tree."
-  v2 changelog: "use timer_delete_sync() to cancel the timer".
-- [Phase 5] `Grep response_timer` in the file — arming site in
-  `handle_request`, callback `response_timeout` dereferences `ssif_bmc`
-  (line 300), uses `ssif_bmc->lock`.
-- [Phase 6] `git show pending-6.6:drivers/char/ipmi/ssif_bmc.c` and
-  `pending-6.12`, `pending-6.15`, `pending-6.16` — confirmed identical
-  buggy `ssif_bmc_remove()` in all of them; confirmed older trees use
-  `del_timer_sync()` / `from_timer()`.
-- [Phase 6] `git show pending-6.1:drivers/char/ipmi/ssif_bmc.c` — file
-  does not exist (driver added after 6.1).
-- [Phase 8] Failure mode: timer callback on freed devres memory → UAF /
-  possible panic on module unload (inferred from code inspection of the
-  callback plus `devm_kzalloc` semantics).
-- UNVERIFIED: no reachable syzbot/bugzilla/user report cited; impact in
-  field is plausible but I did not locate a concrete crash report.
-- UNVERIFIED: did not retrieve v1 body directly (Anubis blocked lore
-  fetch), but v2 changelog and the maintainer reply unambiguously
-  document the v1 → v2 change.
+- [Phase 1] Parsed tags: Reviewed-by and Suggested-by from Lijo Lazar
+  (AMD reviewer), Signed-off-by from Alex Deucher (maintainer)
+- [Phase 2] Diff analysis: wraps 6 `ctx->*` dereferences with `if
+  (adev->bios)` guard in `amdgpu_devcoredump_fw_info()`
+- [Phase 3] git blame: buggy dereferences introduced in commits
+  `6a0e1bafd70fe5` and `3c858cf65e9a2c`, both in v6.10-rc1
+- [Phase 3] `git describe --contains 6a0e1bafd70fe5`: confirmed
+  `v6.10-rc1~148^2~21^2~118`
+- [Phase 3] `git describe --contains 3c858cf65e9a2c`: confirmed
+  `v6.10-rc1~148^2~19^2~49`
+- [Phase 4] mail-archive.com V2 thread: Lijo reviewed, suggested
+  `adev->bios` check and "NA" fallback
+- [Phase 4] mail-archive.com Jesse's response: confirmed V3 incorporates
+  Lijo's feedback
+- [Phase 5] Grep for `amdgpu_devcoredump_fw_info` callers: called from
+  `amdgpu_devcoredump_read()` line 266
+- [Phase 5] Grep for `amdgpu_atombios_fini`: confirmed `atom_context =
+  NULL` at line 1882 of `amdgpu_atombios.c`
+- [Phase 5] Grep for `amdgpu_bios_release`: confirmed `adev->bios =
+  NULL` at line 90 of `amdgpu_bios.c`
+- [Phase 5] Confirmed both called from `amdgpu_device.c` lines 4984-4988
+  during teardown
+- [Phase 6] Code exists in 7.0 tree — lines 190-195 of
+  `amdgpu_dev_coredump.c` show identical buggy code
+- [Phase 6] Function name difference in context (`format` vs `read`) is
+  only in trailing context, not the changed hunk
+- [Phase 8] Failure mode: NULL deref → kernel oops from workqueue during
+  GPU reset, severity HIGH
+
+---
+
+The fix is small, surgical, obviously correct, well-reviewed by AMD GPU
+maintainers, and prevents a real kernel oops triggered during normal GPU
+reset recovery. It meets all stable kernel criteria with minimal risk.
 
 **YES**
 
- drivers/char/ipmi/ssif_bmc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/char/ipmi/ssif_bmc.c b/drivers/char/ipmi/ssif_bmc.c
-index 7a52e3ea49ed8..dc1d5bb4a4604 100644
---- a/drivers/char/ipmi/ssif_bmc.c
-+++ b/drivers/char/ipmi/ssif_bmc.c
-@@ -843,6 +843,7 @@ static void ssif_bmc_remove(struct i2c_client *client)
- {
- 	struct ssif_bmc_ctx *ssif_bmc = i2c_get_clientdata(client);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
+index c38e7371bafce..fed4e73d3492f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
+@@ -187,12 +187,16 @@ static void amdgpu_devcoredump_fw_info(struct amdgpu_device *adev,
+ 	drm_printf(p, "VPE feature version: %u, fw version: 0x%08x\n",
+ 		   adev->vpe.feature_version, adev->vpe.fw_version);
  
-+	timer_delete_sync(&ssif_bmc->response_timer);
- 	i2c_slave_unregister(client);
- 	misc_deregister(&ssif_bmc->miscdev);
+-	drm_printf(p, "\nVBIOS Information\n");
+-	drm_printf(p, "vbios name       : %s\n", ctx->name);
+-	drm_printf(p, "vbios pn         : %s\n", ctx->vbios_pn);
+-	drm_printf(p, "vbios version    : %d\n", ctx->version);
+-	drm_printf(p, "vbios ver_str    : %s\n", ctx->vbios_ver_str);
+-	drm_printf(p, "vbios date       : %s\n", ctx->date);
++	if (adev->bios) {
++		drm_printf(p, "\nVBIOS Information\n");
++		drm_printf(p, "vbios name       : %s\n", ctx->name);
++		drm_printf(p, "vbios pn         : %s\n", ctx->vbios_pn);
++		drm_printf(p, "vbios version    : %d\n", ctx->version);
++		drm_printf(p, "vbios ver_str    : %s\n", ctx->vbios_ver_str);
++		drm_printf(p, "vbios date       : %s\n", ctx->date);
++	}else {
++		drm_printf(p, "\nVBIOS Information: NA\n");
++	}
  }
+ 
+ static ssize_t
 -- 
 2.53.0
 
