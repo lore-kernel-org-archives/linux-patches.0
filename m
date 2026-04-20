@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B1232E696;
-	Mon, 20 Apr 2026 15:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C1532E696;
+	Mon, 20 Apr 2026 15:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700197; cv=none; b=MLUbtQrR2spgpTEFCMk7V14XUKsowPWlc4ly6r/IFlNWyiLBk3Otayn/M451FufLH823pF7k57JWPNOwmjL/0kfhiFYKqU3CQQdyliH250+fhSZEUIvC0C1JSSRYvtvbLJjFzgw6iDy9sUCnfhlpYu5WH28Wz46hjmZ+xx25EQA=
+	t=1776700200; cv=none; b=KadNo8+zTwHYnDUyIF9T98Sot4YqP0R5w/zx5tWWD0kWqe8SPsikQb1azJgMFbQEBfKhwkPBRVLcisKxTVPIsqyuGz3MFrCyo1c5uvTxHtbwLgmBBT25bgALUl3QGMeBhPNXlAgawgHyick2Ip5erzdscCNBw0wyX2DIpmgd1sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700197; c=relaxed/simple;
-	bh=L0SGlk+iQt8HKB1dtVLq2fWEMM7g0t5c5/nCeVsM2xI=;
+	s=arc-20240116; t=1776700200; c=relaxed/simple;
+	bh=i/2RTa5pmmIcQZfwo5t6y/MyllIujMydOrg8NbiDYeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nlP4ugwXUPP6FpffMp6hhEGdhtNJ/0RIJVoSE8ue4xzJT1Tcb4F5+snPYDFKFlj98WICPR+MQ2ECRTmkqm4TIyiacuC90WKg8e+uNRRARm9YqyMG8AQl3L52A2j1OftYBQ8WRRuHWhjWquibf67q8TqOolv0+Bla/ekPyBh9fAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yN5SDggL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ocQ7QwvaPB9BMWzr9uKbdZwyajax0B5+CRRoMngncs0vRXHFb4OnhcK/79plePpKQQigOpWDb2CaXIRBdXsmK3HiuI6SYqT7TptpJ4sumjOc3eGjvrdYGm/haCXCtvyxyUy9v+mhcxxyK3zd/JLSa/pgnJlD+O/59T8c1HQSVxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2J9b8FbL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yN5SDggL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE11C2BCB4;
-	Mon, 20 Apr 2026 15:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2J9b8FbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15ECC19425;
+	Mon, 20 Apr 2026 15:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700197;
-	bh=L0SGlk+iQt8HKB1dtVLq2fWEMM7g0t5c5/nCeVsM2xI=;
+	s=korg; t=1776700200;
+	bh=i/2RTa5pmmIcQZfwo5t6y/MyllIujMydOrg8NbiDYeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yN5SDggLWLUCh99192Wx9sJ3WZcDwyMsTLAXsJUpuCjZE8L2WABmtsWIcLdl9RsIT
-	 usNJH+iA2LT+esfpjxMl2Gh2mFVtMohnTHsymlkVN7qNJXxx1zbX2QGZsjWFRX3DSf
-	 apl/rPrkGnxjDWSMkxFZvsNiWqLkOYJzxkPsBdjs=
+	b=2J9b8FbLrCKsqKzJApS1nQb9mXU3R+XIshC35j0wouNjdtMgeA7D4VtXfsa+WFgBB
+	 yUJWPJMSN5r03AG8EarunupcSJNGnqYH7z5siOxUMwGUAcd1/evlZbcP/Z9Asp9Egd
+	 bDImeDQFIdSqE4Jk0wUTRj353MaYSp7lQPQgEVo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Simon Horman <horms@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Justin Iurman <justin.iurman@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 080/220] net: airoha: Fix memory leak in airoha_qdma_rx_process()
-Date: Mon, 20 Apr 2026 17:40:21 +0200
-Message-ID: <20260420153936.918538156@linuxfoundation.org>
+Subject: [PATCH 6.19 081/220] ipv6: ioam: fix potential NULL dereferences in __ioam6_fill_trace_data()
+Date: Mon, 20 Apr 2026 17:40:22 +0200
+Message-ID: <20260420153936.954187934@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,45 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 285fa6b1e03cff78ead0383e1b259c44b95faf90 ]
+[ Upstream commit 4e65a8b8daa18d63255ec58964dd192c7fdd9f8b ]
 
-If an error occurs on the subsequents buffers belonging to the
-non-linear part of the skb (e.g. due to an error in the payload length
-reported by the NIC or if we consumed all the available fragments for
-the skb), the page_pool fragment will not be linked to the skb so it will
-not return to the pool in the airoha_qdma_rx_process() error path. Fix the
-memory leak partially reverting commit 'd6d2b0e1538d ("net: airoha: Fix
-page recycling in airoha_qdma_rx_process()")' and always running
-page_pool_put_full_page routine in the airoha_qdma_rx_process() error
-path.
+We need to check __in6_dev_get() for possible NULL value, as
+suggested by Yiming Qian.
 
-Fixes: d6d2b0e1538d ("net: airoha: Fix page recycling in airoha_qdma_rx_process()")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260402-airoha_qdma_rx_process-mem-leak-fix-v1-1-b5706f402d3c@kernel.org
+Also add skb_dst_dev_rcu() instead of skb_dst_dev(),
+and two missing READ_ONCE().
+
+Note that @dev can't be NULL.
+
+Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260402101732.1188059-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/ipv6/ioam6.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 454d7dcf198d9..fee5b2eddebb0 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -697,9 +697,8 @@ static int airoha_qdma_rx_process(struct airoha_queue *q, int budget)
- 		if (q->skb) {
- 			dev_kfree_skb(q->skb);
- 			q->skb = NULL;
--		} else {
--			page_pool_put_full_page(q->page_pool, page, true);
- 		}
-+		page_pool_put_full_page(q->page_pool, page, true);
- 	}
- 	airoha_qdma_fill_rx_queue(q);
+diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
+index 8db7f965696aa..12350e1e18bde 100644
+--- a/net/ipv6/ioam6.c
++++ b/net/ipv6/ioam6.c
+@@ -710,7 +710,9 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 				    struct ioam6_schema *sc,
+ 				    unsigned int sclen, bool is_input)
+ {
+-	struct net_device *dev = skb_dst_dev(skb);
++	/* Note: skb_dst_dev_rcu() can't be NULL at this point. */
++	struct net_device *dev = skb_dst_dev_rcu(skb);
++	struct inet6_dev *i_skb_dev, *idev;
+ 	struct timespec64 ts;
+ 	ktime_t tstamp;
+ 	u64 raw64;
+@@ -721,13 +723,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
  
+ 	data = trace->data + trace->remlen * 4 - trace->nodelen * 4 - sclen * 4;
+ 
++	i_skb_dev = skb->dev ? __in6_dev_get(skb->dev) : NULL;
++	idev = __in6_dev_get(dev);
++
+ 	/* hop_lim and node_id */
+ 	if (trace->type.bit0) {
+ 		byte = ipv6_hdr(skb)->hop_limit;
+ 		if (is_input)
+ 			byte--;
+ 
+-		raw32 = dev_net(dev)->ipv6.sysctl.ioam6_id;
++		raw32 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id);
+ 
+ 		*(__be32 *)data = cpu_to_be32((byte << 24) | raw32);
+ 		data += sizeof(__be32);
+@@ -735,18 +740,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 
+ 	/* ingress_if_id and egress_if_id */
+ 	if (trace->type.bit1) {
+-		if (!skb->dev)
++		if (!i_skb_dev)
+ 			raw16 = IOAM6_U16_UNAVAILABLE;
+ 		else
+-			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id);
++			raw16 = (__force u16)READ_ONCE(i_skb_dev->cnf.ioam6_id);
+ 
+ 		*(__be16 *)data = cpu_to_be16(raw16);
+ 		data += sizeof(__be16);
+ 
+-		if (dev->flags & IFF_LOOPBACK)
++		if ((dev->flags & IFF_LOOPBACK) || !idev)
+ 			raw16 = IOAM6_U16_UNAVAILABLE;
+ 		else
+-			raw16 = (__force u16)READ_ONCE(__in6_dev_get(dev)->cnf.ioam6_id);
++			raw16 = (__force u16)READ_ONCE(idev->cnf.ioam6_id);
+ 
+ 		*(__be16 *)data = cpu_to_be16(raw16);
+ 		data += sizeof(__be16);
+@@ -822,7 +827,7 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 		if (is_input)
+ 			byte--;
+ 
+-		raw64 = dev_net(dev)->ipv6.sysctl.ioam6_id_wide;
++		raw64 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id_wide);
+ 
+ 		*(__be64 *)data = cpu_to_be64(((u64)byte << 56) | raw64);
+ 		data += sizeof(__be64);
+@@ -830,18 +835,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 
+ 	/* ingress_if_id and egress_if_id (wide) */
+ 	if (trace->type.bit9) {
+-		if (!skb->dev)
++		if (!i_skb_dev)
+ 			raw32 = IOAM6_U32_UNAVAILABLE;
+ 		else
+-			raw32 = READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id_wide);
++			raw32 = READ_ONCE(i_skb_dev->cnf.ioam6_id_wide);
+ 
+ 		*(__be32 *)data = cpu_to_be32(raw32);
+ 		data += sizeof(__be32);
+ 
+-		if (dev->flags & IFF_LOOPBACK)
++		if ((dev->flags & IFF_LOOPBACK) || !idev)
+ 			raw32 = IOAM6_U32_UNAVAILABLE;
+ 		else
+-			raw32 = READ_ONCE(__in6_dev_get(dev)->cnf.ioam6_id_wide);
++			raw32 = READ_ONCE(idev->cnf.ioam6_id_wide);
+ 
+ 		*(__be32 *)data = cpu_to_be32(raw32);
+ 		data += sizeof(__be32);
 -- 
 2.53.0
 
