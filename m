@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF5833D6FC;
-	Mon, 20 Apr 2026 15:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE9C33262B;
+	Mon, 20 Apr 2026 15:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700137; cv=none; b=RX7sx8IdnGYk2HMZIZxUpn8Jk+tyi1wucy+4CllW8t979xieqyzSPG4bOS/YhfOD49ha++0YVZmVDfWpehJNv/CEuooB1VTqokKkhk+5LAOcLqNow0cPhCuVMtUVGpSI9IK15YN5gIFd9OCnCNj9rSV4w1pQYwM7v6x38Dn9uBA=
+	t=1776700140; cv=none; b=FtUYFgLiEEMuDN3XW+JqsBBu73B/vtnbeOhAoD2SItezbEXDEPIqQwmr0BuIaIhIEy1JQiVJlKZienlhSqOIE2ukzWfPpBKJN7p6pJBq5oHPrSzB0TJY1tfjw2oqHKlz023g+yOW+32cSklXcHAxLSYR0eZXYiaixJs6ffZnoRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700137; c=relaxed/simple;
-	bh=263tf+q1ugULV8KfdHSKfHQXlgU8ghkJSkV+R3NqIJ8=;
+	s=arc-20240116; t=1776700140; c=relaxed/simple;
+	bh=F//j7PmZoYXaEEiiPZFhjEXcViOXWihfQNs1y0FLhmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDMSfP9fZeKdmnR7rRkVEqr0l4OP5gktIBz+VbylE7y8/WKV8pM7HERQv/wgY5x1b+iSQv53KSSMQUUtib/pM+Zk+X6nGAy8UOyob+d6hTdfZ0Qqj8dU6WZd7GslKyA77KK39+LU9UxoFjVnjRUK3Jaf65XNxDOfZ5FC22qm4k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvMGAm7q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LL7/3LPkYbv/AcdHMUFITurklEbvD3pPpcQnB4l1KOI7DS/VWSxJcVEf3XNFqm4rApVxeJXawo273Jqwjn+Ul4rj1LbcBX9b5R84H1Mup30ujrJeBgjLhm/TX4QiwUIy5lZ8NLS6ASf+LDATwlvdOMnaZHynkpTx/hwMz1w6DT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKB8+JSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvMGAm7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71D3C19425;
-	Mon, 20 Apr 2026 15:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKB8+JSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EED8C19425;
+	Mon, 20 Apr 2026 15:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700137;
-	bh=263tf+q1ugULV8KfdHSKfHQXlgU8ghkJSkV+R3NqIJ8=;
+	s=korg; t=1776700139;
+	bh=F//j7PmZoYXaEEiiPZFhjEXcViOXWihfQNs1y0FLhmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvMGAm7qZIsXs/gD98qe5xrX5ZM9oBTx8YYWPyjFSIoxHGde1JO7y8xUn591Z6LmQ
-	 NCv6bj/IjbcfRlTgMWjNO7fwvgZA1x+6Q2n1OKASlDRlsmPdzC8w96oMxojPKc3NpP
-	 CQwCAUhkYnfEaf7KHgGLNsoRCNF4gtFdWn+n0zBE=
+	b=KKB8+JSALfKG1i2Nntf7RhgUf6wmuDgySeVcJB67h9xhEeQA7GnxXuKg2s4JTI0bk
+	 3spWiUzgU9U8WcdwMpbV7yCTDSGac+J2K/KWDNL4li9m/m7AjFKWzd/n+NfwZVhFji
+	 YLcu8/saKuwENBKAn3I7cqZBpU1zOrlGOWeB5TYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
+	Serhii Pievniev <spevnev16@gmail.com>,
 	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 056/220] tools/power turbostat: Fix swidle header vs data display
-Date: Mon, 20 Apr 2026 17:39:57 +0200
-Message-ID: <20260420153936.056810764@linuxfoundation.org>
+Subject: [PATCH 6.19 057/220] tools/power/turbostat: Fix microcode patch level output for AMD/Hygon
+Date: Mon, 20 Apr 2026 17:39:58 +0200
+Message-ID: <20260420153936.093219156@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,49 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Len Brown <len.brown@intel.com>
+From: Serhii Pievniev <spevnev16@gmail.com>
 
-[ Upstream commit b8ead30e2b2c7f32c8d2782e805160b110766592 ]
+[ Upstream commit a444083286434ec1fd127c5da11a3091e6013008 ]
 
-I changed my mind about displaying swidle statistics,
-which are "added counters".  Recently I reverted the
-column headers to 8-columns, but kept print_decimal_value()
-padding out to 16-columns for all 64-bit counters.
+turbostat always used the same logic to read the microcode patch level,
+which is correct for Intel but not for AMD/Hygon.
+While Intel stores the patch level in the upper 32 bits of MSR, AMD
+stores it in the lower 32 bits, which causes turbostat to report the
+microcode version as 0x0 on AMD/Hygon.
 
-Simplify by keeping print_decimial_value() at %lld -- which
-will often fit into 8-columns, and live with the fact
-that it can overflow and shift the other columns,
-which continue to tab-delimited.
+Fix by shifting right by 32 for non-AMD/Hygon, preserving the existing
+behavior for Intel and unknown vendors.
 
-This is a better compromise than inserting a bunch
-of space characters that most users don't like.
-
-Fixes: 1a23ba6a1ba2 ("tools/power turbostat: Print wide names only for RAW 64-bit columns")
-Reported-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+Fixes: 3e4048466c39 ("tools/power turbostat: Add --no-msr option")
+Signed-off-by: Serhii Pievniev <spevnev16@gmail.com>
 Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 1b26d94c373fb..903943d30f713 100644
+index 903943d30f713..83a90f413f976 100644
 --- a/tools/power/x86/turbostat/turbostat.c
 +++ b/tools/power/x86/turbostat/turbostat.c
-@@ -2747,10 +2747,9 @@ static inline int print_hex_value(int width, int *printed, char *delim, unsigned
+@@ -8812,10 +8812,13 @@ void process_cpuid()
+ 	edx_flags = edx;
  
- static inline int print_decimal_value(int width, int *printed, char *delim, unsigned long long value)
- {
--	if (width <= 32)
--		return (sprintf(outp, "%s%d", (*printed++ ? delim : ""), (unsigned int)value));
--	else
--		return (sprintf(outp, "%s%-8lld", (*printed++ ? delim : ""), value));
-+	UNUSED(width);
-+
-+	return (sprintf(outp, "%s%lld", (*printed++ ? delim : ""), value));
- }
+ 	if (!no_msr) {
+-		if (get_msr(sched_getcpu(), MSR_IA32_UCODE_REV, &ucode_patch))
++		if (get_msr(sched_getcpu(), MSR_IA32_UCODE_REV, &ucode_patch)) {
+ 			warnx("get_msr(UCODE)");
+-		else
++		} else {
+ 			ucode_patch_valid = true;
++			if (!authentic_amd && !hygon_genuine)
++				ucode_patch >>= 32;
++		}
+ 	}
  
- static inline int print_float_value(int *printed, char *delim, double value)
+ 	/*
+@@ -8829,7 +8832,7 @@ void process_cpuid()
+ 	if (!quiet) {
+ 		fprintf(outf, "CPUID(1): family:model:stepping 0x%x:%x:%x (%d:%d:%d)", family, model, stepping, family, model, stepping);
+ 		if (ucode_patch_valid)
+-			fprintf(outf, " microcode 0x%x", (unsigned int)((ucode_patch >> 32) & 0xFFFFFFFF));
++			fprintf(outf, " microcode 0x%x", (unsigned int)ucode_patch);
+ 		fputc('\n', outf);
+ 
+ 		fprintf(outf, "CPUID(0x80000000): max_extended_levels: 0x%x\n", max_extended_level);
 -- 
 2.53.0
 
