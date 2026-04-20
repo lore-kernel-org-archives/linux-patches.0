@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F4D478E33;
-	Mon, 20 Apr 2026 13:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5D5478E55;
+	Mon, 20 Apr 2026 13:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691850; cv=none; b=lsjOqx+A2mIL7oZN8rVzB/yTl4+itw4vTJXy7RjuKks5ctBxnnv43vNPTnYfWgUlF0NxmmCLA5ohvshchmgSc2U46tCgvQzvTq3d4ySQkeiAQ5Z7UTteeOhVriafjAZXfmQhncCPP78jmlUsvaXZY8rcXpYcKyFCsxbyaIhyzIg=
+	t=1776691851; cv=none; b=rpZZVLbSqj/OkzO8Q88NE0pUXQSzv1kbeTQ/FGiNpKyriXKZxWU57+GjBOTzgzX2rCpNgyZhrrR9WoqlPCEIEjP7GE1SsoQiGNBLkiKExY8kbi/ebGBvdHJqe0g6AD/CQGRfxVn2rJks4fMmzqvNwiusLM8bysB10+MZxCfUrGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691850; c=relaxed/simple;
-	bh=qiPmeTZ4XazEip5T2a6vKnNullI/kMq3TeKq/0+YzSs=;
+	s=arc-20240116; t=1776691851; c=relaxed/simple;
+	bh=j6fd763CQFZzWDOaM0/iX6f8lZNQ0r0PAPKDPJ5VpIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBynK9MfpCeY5evNBGXMsmRJ3S45xfbUtzO3m57nDbwAF8nAwG5KCyylbzu7XsMAEp99iR/+mFajUY5wq9j1Uv2u7JqdwN8tTuTWA8Qg8kVBzUS3G3JjmHzgDpR6yLZ1Y0pjbr3ds2TayhTHkbCjE1RiBkfYnLZFqnOsXq+piTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LK8fhkbj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Fs01RqKgXDtFP/HFazXl1CPhvIi8JYg+JE283ZFxSzvxttBYdxTGlwuArPPsfNAVxn/c/tXCAEP3vcze+G0w31+h4NxUGdvuWysBtyrOXZ88OhGRwxd621UMvjC8P85+r01zf/YDRXPcEielZyPEh8+XJrY6UOjTA7Bv4Bx5AdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LkM0UjAN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LK8fhkbj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31051C2BCB7;
-	Mon, 20 Apr 2026 13:30:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LkM0UjAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF488C2BCC4;
+	Mon, 20 Apr 2026 13:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691849;
-	bh=qiPmeTZ4XazEip5T2a6vKnNullI/kMq3TeKq/0+YzSs=;
+	s=k20201202; t=1776691851;
+	bh=j6fd763CQFZzWDOaM0/iX6f8lZNQ0r0PAPKDPJ5VpIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LK8fhkbjfs7QmlZuDEo+4Uo41/AiJB5LJ2nqyd8gQwQuZaE4ENGgc5hs0ykAHyIaz
-	 1zZWixcfzjSNHBjytPJJQMnoTkXxoN7IS4034iaDlTBDZXcGlvlB+OWzRk9quQjnsL
-	 qN1uZMsLczAn3WJg3YkTvxDclB2z+1MOTmzGsNgwE08XsG3rEpzSTOGCM3RgfOXMKo
-	 M80D0UpLv/m3tGW9couskg3d0ZSKEi/HBABDQUswT1BxCHJoQa4nkgBmvmAmt7BocB
-	 NkxtSMvpiF+pHYU8p1yS81rToK2KJvBs3+SICcGVdAjx1vjEPT1oU8HCUvxazajqu8
-	 ZGKfTKaXh5Abg==
+	b=LkM0UjANKeydIQl5KPV4Fn1k+olvinc3QdFGXTD1bBc12LSpAGR7IR1WVL4j/rmg6
+	 yfpK2/5lStihOEUb6Cn1Jfm7d1MNq15aQTDkoHERNcbx4SNLWc2GN20crI2pPhfllW
+	 RlYfWoQ8dZpie0qTE/nCKr4SdpvKlpdRdjKvfY7swbDhmRWBpK/zri3U1jXu8ozuMV
+	 534Hl1Wu3cN4E4/D4MY483dQkkbq8RR+TalhjjWeYMAVeHiEDo39MMrn9sVaK151DY
+	 X1bIk+MlLxs2JvjHqXazH6sYgwcpT2LKyaLwSPWk03GJNjGFN0zWgr8rBx6gX0NupW
+	 kWebEOWuaGEGA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ihor Uzlov <igor.uzlov@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Jian Zhang <zhangjian.3032@bytedance.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>,
-	Vijendar.Mukunda@amd.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	openipmi-developer@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.1] ASoC: amd: yc: Add MSI Vector A16 HX A8WHG to quirk table
-Date: Mon, 20 Apr 2026 09:20:24 -0400
-Message-ID: <20260420132314.1023554-230-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] ipmi: ssif_bmc: cancel response timer on remove
+Date: Mon, 20 Apr 2026 09:20:25 -0400
+Message-ID: <20260420132314.1023554-231-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -53,302 +49,345 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ihor Uzlov <igor.uzlov@gmail.com>
+From: Jian Zhang <zhangjian.3032@bytedance.com>
 
-[ Upstream commit 72dcd84938f5026dc44d0e7e1e68d9d571c113a0 ]
+[ Upstream commit 7fc3e2546cf3fa9a28a2acc92a512c779a8e5038 ]
 
-Add the MSI Vector A16 HX A8WHG (board MS-15MM) to the DMI quirk table
-to enable DMIC support. This laptop uses an AMD Ryzen 9 7945HX (Dragon
-Range) with the ACP6x audio coprocessor (rev 0x62) and a Realtek ALC274
-codec. The built-in digital microphone is connected via the ACP PDM
-interface and requires this DMI entry to be activated.
+The response timer can stay armed across device teardown. If it fires after
+remove, the callback dereferences the SSIF context and the i2c client after
+teardown has started.
 
-Tested on MSI Vector A16 HX A8WHG with kernel 6.8.0-107 (Ubuntu 24.04).
-DMIC capture device appears as 'acp6x' and records audio correctly.
+Cancel the timer in remove so the callback cannot run after the device is
+unregistered.
 
-Signed-off-by: Ihor Uzlov <igor.uzlov@gmail.com>
-Link: https://patch.msgid.link/20260410094553.24654-1-igor.uzlov@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
+Message-ID: <20260403090603.3988423-1-zhangjian.3032@bytedance.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Let me
-compile the findings.
+Now I have enough information to do the full analysis.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit Message Forensics
 
-**Step 1.1: Subject Line**
-- Subsystem: `ASoC: amd: yc` (AMD Yellow Carp audio)
-- Action verb: "Add" (adding a new DMI quirk entry)
-- Summary: Add MSI Vector A16 HX A8WHG laptop to the DMI quirk table for
-  DMIC support
-- Record: [ASoC: amd: yc] [Add] [New DMI entry for MSI laptop to enable
-  DMIC]
+**Step 1.1 — Subject parsing**
+Record: Subsystem `ipmi: ssif_bmc:`; action verb `cancel` (equivalent to
+"fix/prevent"); summary: cancel response timer in remove path so a
+queued timer callback cannot dereference a torn-down context.
 
-**Step 1.2: Tags**
-- Signed-off-by: Ihor Uzlov (author)
-- Link:
-  https://patch.msgid.link/20260410094553.24654-1-igor.uzlov@gmail.com
-- Signed-off-by: Mark Brown (ASoC subsystem maintainer, applied the
-  patch)
-- No Fixes: tag (expected for a quirk addition)
-- No Reported-by: tag (user self-submitted)
-- No Cc: stable tag (expected - why this needs review)
-- Record: Author is the laptop owner/tester. Applied by Mark Brown, the
-  ASoC maintainer.
+**Step 1.2 — Commit message tags**
+Record:
+- `Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>` (author)
+- `Message-ID: <20260403090603.3988423-1-zhangjian.3032@bytedance.com>`
+  — lore msgid
+- `Signed-off-by: Corey Minyard <corey@minyard.net>` — IPMI subsystem
+  maintainer applied it
+- No `Fixes:` tag, no `Cc: stable`, no `Reported-by:`, no `Reviewed-by:`
+  / `Acked-by:` in the applied version (absence of Fixes/Cc stable is
+  expected in this pipeline and not a negative signal)
+- Related patches 2/5, 3/5, 4/5 in the same series DO carry `Fixes:
+  dd2bc5cc9e25 ("ipmi: ssif_bmc: Add SSIF BMC driver")`
 
-**Step 1.3: Commit Body**
-- Hardware: MSI Vector A16 HX A8WHG (board MS-15MM), AMD Ryzen 9 7945HX,
-  ACP6x audio coprocessor (rev 0x62), Realtek ALC274 codec
-- Bug: Built-in digital microphone does not work without the DMI quirk
-  entry
-- Tested: kernel 6.8.0-107 (Ubuntu 24.04), DMIC capture via 'acp6x'
-  works correctly
-- Record: Without this entry, the laptop's built-in microphone is non-
-  functional. User-tested and confirmed working.
+**Step 1.3 — Body analysis**
+Record: Bug description is explicit — "response timer can stay armed
+across device teardown"; failure mode is "the callback dereferences the
+SSIF context and the i2c client after teardown has started". This is a
+classic **use-after-free** scenario. The author names the exact
+mechanism (pending timer firing after `ssif_bmc_remove()`).
 
-**Step 1.4: Hidden Bug Fix Detection**
-- This is a hardware enablement quirk, not a hidden bug fix. The
-  microphone hardware exists but the driver lacks the DMI entry to
-  recognize and activate it.
-- Record: This is a straightforward hardware quirk addition, not a
-  disguised bug fix. The "bug" is that the microphone doesn't work at
-  all on this laptop without it.
+**Step 1.4 — Hidden bug detection**
+Record: Not hidden. Clearly presented as a UAF-prevention fix even
+without the word "fix" in the subject. The phrase "so the callback
+cannot run after the device is unregistered" is unambiguous fix
+language.
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-**Step 2.1: Inventory**
-- 1 file modified: `sound/soc/amd/yc/acp6x-mach.c`
-- +7 lines added, 0 lines removed
-- Modifies: `yc_acp_quirk_table[]` (static DMI table, no code logic
-  change)
-- Scope: Single-file, single-table-entry addition
-- Record: [1 file, +7 lines] [yc_acp_quirk_table array] [Trivial table
-  addition]
+**Step 2.1 — Inventory**
+Record: 1 file (`drivers/char/ipmi/ssif_bmc.c`), +1/-0 lines, inside
+`ssif_bmc_remove()`. Single-file surgical fix.
 
-**Step 2.2: Code Flow**
-- Before: The `yc_acp_quirk_table` did not have an entry for "Vector A16
-  HX A8WHG"
-- After: The table now includes this laptop, matched by DMI_BOARD_VENDOR
-  "Micro-Star International Co., Ltd." and DMI_PRODUCT_NAME "Vector A16
-  HX A8WHG"
-- The probe function (`acp6x_probe`) calls
-  `dmi_first_match(yc_acp_quirk_table)` and if it finds a match, it sets
-  the platform driver data to `acp6x_card`, enabling DMIC support
-- Record: [Before: no match -> microphone disabled] [After: match found
-  -> DMIC enabled]
+**Step 2.2 — Flow change**
+Record: Before: `ssif_bmc_remove()` calls `i2c_slave_unregister()` then
+`misc_deregister()` and returns, leaving `response_timer` possibly
+pending. After: `timer_delete_sync(&ssif_bmc->response_timer)` is called
+first, which both cancels a pending timer and waits for any in-flight
+callback on another CPU to finish before continuing.
 
-**Step 2.3: Bug Mechanism**
-- Category: (h) Hardware workaround / DMI match table entry
-- The driver requires either ACPI `_WOV` / `AcpDmicConnected` properties
-  or a DMI quirk match to activate. This laptop apparently lacks the
-  ACPI properties, so a DMI entry is necessary.
-- Record: [Hardware quirk/enablement] [Missing DMI entry prevents
-  microphone from working]
+**Step 2.3 — Bug mechanism**
+Record: Category (d) memory safety / (b) synchronization with teardown.
+Root cause:
+- `ssif_bmc` is `devm_kzalloc`'d at probe (line 809), so it is freed by
+  devres AFTER `.remove` returns.
+- `response_timer` is armed via `mod_timer(&ssif_bmc->response_timer,
+  jiffies + 500 ms)` inside `handle_request()` (line 335).
+- `response_timeout()` callback dereferences `ssif_bmc`
+  (`timer_container_of`), takes `ssif_bmc->lock` and touches several
+  fields (lines 300–315).
+- Without `timer_delete_sync()` in remove, the timer can fire after
+  remove returns and after devres frees `ssif_bmc`, producing a UAF on
+  `ssif_bmc` and on `ssif_bmc->client`. On module unload the callback
+  address itself may also be in freed module text.
 
-**Step 2.4: Fix Quality**
-- Obviously correct: identical pattern to 100+ existing entries in the
-  same table
-- Minimal: 7 lines, pure data addition
-- Zero regression risk: only affects this specific laptop model via DMI
-  matching
-- Record: [Trivially correct, minimal, zero regression risk]
+**Step 2.4 — Fix quality**
+Record: 1 line, the canonical pattern (`timer_delete_sync()` in remove
+for a driver-owned timer). V1 of the patch used the non-sync variant;
+review led to v2 using `timer_delete_sync()`, which is the correct
+choice because it also waits for a concurrent callback on another CPU.
+Zero-initialized `timer_list` (never armed because `handle_request`
+never ran) is safely handled by `timer_delete_sync()` —
+`timer_pending()` returns false on a zeroed list entry. No regression
+risk.
 
-## PHASE 3: GIT HISTORY
+## Phase 3: Git History Investigation
 
-**Step 3.1: Blame**
-- The driver was introduced in commit `fa991481b8b22a` ("ASoC: amd: add
-  YC machine driver using dmic") by Vijendar Mukunda, merged around
-  v5.16 era.
-- The quirk table has been growing steadily since then, with dozens of
-  laptop-specific entries added over time.
-- Record: Driver present since ~v5.16, quirk table is mature and
-  regularly updated.
+**Step 3.1 — Blame**
+Record: `git blame -L 820,870` shows `ssif_bmc_remove` untouched since
+`dd2bc5cc9e2555` (Quan Nguyen, 2022-10-04), which first appears in
+**v6.2**. So the bug has been present in every release from v6.2 onward.
 
-**Step 3.2: No Fixes tag** - Not applicable for a quirk addition.
+**Step 3.2 — Fixes: tag follow-up**
+Record: No explicit `Fixes:` tag on this patch, but companion patches
+2/5, 3/5, 4/5 all point to `dd2bc5cc9e25`. The same commit introduces
+both the timer and the buggy `ssif_bmc_remove()`. `dd2bc5cc9e25` is
+present in stable branches from 6.6.y onward (verified via `git show
+pending-6.6:drivers/char/ipmi/ssif_bmc.c`) but NOT in 6.1.y (`git show
+pending-6.1:drivers/char/ipmi/ssif_bmc.c` reports the file does not
+exist — driver was added after 6.1 branched).
 
-**Step 3.3: File History**
-- The last 20 commits to this file are ALL DMI quirk additions for
-  various laptop models (HP, ASUS, MSI, Acer, Lenovo, etc.). This is the
-  standard pattern.
-- Already 6 MSI entries in the table (Bravo 15 B7ED, Bravo 15 C7VF,
-  Bravo 17 D7VEK, Bravo 17 D7VF, Bravo 15 C7UCX, and now Vector A16 HX
-  A8WHG).
-- Record: [Standalone commit, no prerequisites] [Follows identical
-  pattern to dozens of prior commits]
+**Step 3.3 — File history**
+Record: Recent file commits: 41cb08555c416 (treewide
+`timer_container_of()` rename, v6.16), 8fa7292fee5c5 (treewide
+`timer_delete[_sync]()` rename, v6.15), plus prior IPMI fixes. No
+prerequisites for this patch. It is self-contained.
 
-**Step 3.4: Author**
-- Ihor Uzlov: first commit to this subsystem (likely the laptop owner)
-- Applied by Mark Brown (ASoC maintainer), confirming maintainer
-  acceptance
-- Record: [End-user contributor, patch accepted by subsystem maintainer]
+**Step 3.4 — Author context**
+Record: Jian Zhang has multiple prior kernel contributions (NCSI, MCTP,
+i2c-aspeed, etc.). Not the maintainer, but the patch was applied by
+`corey@minyard.net`, the IPMI maintainer, and was discussed with Quan
+Nguyen, the original driver author.
 
-**Step 3.5: Dependencies**
-- No dependencies. Pure table entry addition. The driver, table
-  structure, and `acp6x_card` all exist in stable trees going back to
-  ~v5.16.
-- Record: [Fully standalone, no dependencies]
+**Step 3.5 — Dependencies**
+Record: None. A single `timer_delete_sync()` call inside `.remove` does
+not rely on any other patch in the series. For stable branches below
+v6.15, the API is `del_timer_sync()` — a trivial rename that the stable
+maintainers routinely handle as a backport adjustment.
 
-## PHASE 4: MAILING LIST
+## Phase 4: Mailing List Research
 
-**Step 4.1-4.5**: Lore.kernel.org and patch.msgid.link are behind anti-
-bot protections. However, the commit has Mark Brown's Signed-off-by,
-confirming the ASoC maintainer reviewed and applied it. The Link tag
-confirms it went through the standard mailing list submission process.
-- Record: [Could not fetch lore discussion due to anti-bot measures]
-  [Maintainer acceptance confirmed via SOB]
+**Step 4.1 — Original submission**
+Record: `b4 dig -c 7fc3e2546cf3f` found the thread at `https://lore.kern
+el.org/all/20260403090603.3988423-1-zhangjian.3032@bytedance.com/`. This
+is patch **1/5** in a 5-patch series of IPMI SSIF BMC fixes.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**`b4 dig -a` — revisions**: v1 (2026-04-02) and v2 (2026-04-03). v2
+changelog: "use `timer_delete_sync()` to cancel the timer" — review
+feedback upgraded v1's non-sync delete to the sync variant.
 
-**Step 5.1**: No functions modified. Only a data table entry added.
+In-thread discussion from Corey Minyard (reply to v2 1/5): "Thanks for
+the updates on this. I have the new version in my tree." — explicit
+maintainer acceptance.
 
-**Step 5.2-5.4**: The `yc_acp_quirk_table` is consumed by
-`dmi_first_match()` in `acp6x_probe()`. The probe function is called
-during platform device enumeration. The DMI matching is a standard
-kernel mechanism - each entry only matches its specific hardware.
-- Record: [Table consumed by acp6x_probe -> dmi_first_match] [Only
-  activates on matching hardware]
+**Step 4.2 — Recipients**
+Record: CC list on v2 was Corey Minyard (IPMI maintainer), Quan Nguyen
+(original author of the driver / MAINTAINERS entry), openipmi-developer
+list, linux-kernel. Correct audience; reviewed by the right people.
 
-**Step 5.5**: There are 100+ similar DMI entries in this same table. The
-pattern is well-established.
-- Record: [Identical pattern used 100+ times in this file]
+**Step 4.3 — Bug report**
+Record: No syzbot / bugzilla / user report cited. The bug was apparently
+found through code review or internal testing at Bytedance. Unverified
+whether there is a field occurrence.
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 4.4 — Series context**
+Record: Siblings in the same series (all for
+`drivers/char/ipmi/ssif_bmc.c`, all with `Fixes: dd2bc5cc9e25`):
+copy_to_user partial failure fix (2/5), message desynchronization after
+truncated response (3/5), log-level change (4/5), and a kunit test
+(5/5). This patch is independent and applies on its own.
 
-**Step 6.1**: The driver and table structure exist in stable trees from
-~v5.16 onward. This is a 7.0 tree, and the underlying
-`yc_acp_quirk_table` and `acp6x_card` are present.
-- Record: [Driver exists in all active stable trees (5.15+)]
+**Step 4.5 — Stable-list discussion**
+Record: None visible. Anubis anti-bot blocked direct lore searches, but
+the archived mbox I pulled via `b4 dig -m` contained no stable-list
+cross-post or stable nomination.
 
-**Step 6.2**: This patch will apply cleanly to any kernel that has this
-file, as it's a pure insertion into a table. Minor context conflicts
-possible depending on how many other quirk entries are present in a
-given stable tree, but these are trivially resolved.
-- Record: [Clean or trivially resolvable apply expected]
+## Phase 5: Code Semantic Analysis
 
-**Step 6.3**: No prior fix for this specific laptop model.
-- Record: [No related fixes already in stable]
+**Step 5.1 — Modified function**: `ssif_bmc_remove()`.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+**Step 5.2 — Callers**
+Record: `ssif_bmc_remove` is assigned to `i2c_driver.remove` and invoked
+by the i2c bus core when the device is unbound (rmmod, device unbind via
+sysfs, or driver removal).
 
-**Step 7.1**: ASoC / AMD audio drivers - IMPORTANT subsystem. Audio is
-critical for laptop users.
-- Record: [sound/soc/amd/yc/] [IMPORTANT - audio hardware enablement for
-  laptops]
+**Step 5.3 — Callees/related**
+Record: The fix target is `response_timer`. Arming site is
+`handle_request()` (`mod_timer(... RESPONSE_TIMEOUT=500 ms)`). Callback
+is `response_timeout()` which locks `ssif_bmc->lock` and touches
+`ssif_bmc->busy`, `response_timer_inited`, `aborting` — all of which are
+inside a `devm_kzalloc`'d struct.
 
-**Step 7.2**: Very active - 20 recent commits are all DMI additions,
-indicating ongoing hardware enablement.
-- Record: [Very active, continuous stream of hardware quirk additions]
+**Step 5.4 — Reachability**
+Record: Triggered every time a SSIF IPMI request is handled from the
+host side; the window to teardown can be up to 500 ms per request.
+Remove path is reached when the module is unloaded or the i2c device is
+unbound — a real, not theoretical, code path in BMC firmware
+environments (OpenBMC) that allow driver rebinding.
 
-## PHASE 8: IMPACT AND RISK
+**Step 5.5 — Similar patterns**
+Record: `timer_delete_sync()` in driver `.remove` is the standard idiom
+for any driver-owned timer with a pointer to devres-managed state. The
+same pattern is also added in the kunit test (patch 5/5) for correctness
+of the test fixture.
 
-**Step 8.1**: Affects users of MSI Vector A16 HX A8WHG laptops
-specifically.
-- Record: [Driver-specific / laptop-model-specific]
+## Phase 6: Stable-tree Analysis
 
-**Step 8.2**: The trigger is deterministic - every boot on this specific
-laptop hardware. Without the quirk, the built-in microphone never works.
-- Record: [Always triggers on affected hardware, microphone completely
-  non-functional without fix]
+**Step 6.1 — Exists in stable?**
+Record: Buggy `ssif_bmc_remove()` exists identically in 6.6.y, 6.12.y,
+6.15.y, 6.16.y and later (verified by `git show
+pending-6.X:drivers/char/ipmi/ssif_bmc.c`). Not present in 6.1.y (driver
+added after 6.1 branched).
 
-**Step 8.3**: Failure mode: Built-in microphone completely non-
-functional. This is a significant usability issue for laptop users (no
-video calls, no voice recording, etc.).
-- Record: [Complete hardware functionality loss, severity: HIGH for
-  affected users]
+**Step 6.2 — Backport complications**
+Record: Mainline (7.0) uses `timer_delete_sync()`; stable branches <
+v6.15 expose it as `del_timer_sync()`. This is a trivial rename that
+stable maintainers handle routinely. Otherwise the patch applies cleanly
+— the 3 surrounding lines (`struct ssif_bmc_ctx *ssif_bmc = ...;
+i2c_slave_unregister(client); misc_deregister(&ssif_bmc->miscdev);`) are
+identical in all stable branches I checked.
 
-**Step 8.4**:
-- BENEFIT: Enables microphone on a real shipping laptop. HIGH for
-  affected users.
-- RISK: 7-line data addition affecting only one specific DMI-matched
-  laptop. VERY LOW.
-- Record: [High benefit for affected users, very low risk universally]
+**Step 6.3 — Prior stable fixes**
+Record: No earlier fix for this UAF window has been applied to any
+stable branch I checked.
 
-## PHASE 9: SYNTHESIS
+## Phase 7: Subsystem Context
 
-**Step 9.1: Evidence FOR backporting:**
-- Pure DMI quirk table addition (7 lines, data only)
-- Fixes completely broken microphone on a real shipping laptop
-- Identical pattern to 100+ existing entries and dozens of prior stable-
-  backported commits
-- Tested by the submitter on the actual hardware
-- Applied by ASoC maintainer Mark Brown
-- Zero regression risk (only triggers on exact DMI match)
-- No dependencies, applies standalone
+**Step 7.1 — Criticality**: `drivers/char/ipmi/ssif_bmc.c` — PERIPHERAL
+(BMC-side SSIF; used on Linux-running BMCs, e.g. OpenBMC). Real users,
+narrow hardware scope.
 
-**Evidence AGAINST backporting:**
-- None identified.
+**Step 7.2 — Activity**: Low-frequency but active; Corey Minyard
+actively maintains; Jian Zhang's 5-patch series is a recent hardening
+round.
 
-**Step 9.2: Stable Rules Checklist:**
-1. Obviously correct? YES - identical to dozens of existing entries
-2. Fixes a real bug? YES - broken microphone on real hardware
-3. Important issue? YES - complete hardware non-functionality
-4. Small and contained? YES - 7 lines, single table entry
-5. No new features? YES - enables existing driver for existing hardware
-6. Can apply to stable? YES - trivially
+## Phase 8: Impact and Risk
 
-**Step 9.3: Exception Category:**
-This is a **hardware quirk/workaround** - DMI match table entry for a
-specific laptop model. This is an explicit exception category that is
-automatically YES for stable.
+**Step 8.1 — Affected users**: Users of Linux BMC firmware that exposes
+SSIF to a host CPU (OpenBMC et al.).
 
-**Step 9.4: Decision:**
-This is a textbook stable backport candidate. It's a trivial DMI quirk
-table addition that enables a broken microphone on a real laptop,
-follows an identical pattern to hundreds of similar entries already in
-the file, and carries zero regression risk.
+**Step 8.2 — Trigger**: Requires device unbind/rmmod while a timer from
+a recent IPMI request is still armed (≤500 ms window per request). Not
+routinely triggered at runtime on production BMCs that never unbind, but
+reachable on development / test / field-service paths and by privileged
+userspace actions.
+
+**Step 8.3 — Failure mode**: UAF on `ssif_bmc` (and potentially on
+`client`), plus potential call into freed module text on module unload.
+Severity: HIGH — potential kernel crash / memory corruption; the
+callback also takes a spinlock on the freed struct.
+
+**Step 8.4 — Risk/benefit**
+Record: Benefit = eliminates a real UAF window on device removal in a
+driver present in many live stable trees. Risk = near-zero; one line,
+canonical idiom, no control-flow change, safe on a never-initialized
+`timer_list`. Ratio is strongly favorable.
+
+## Phase 9: Synthesis
+
+**Evidence for**: Classic UAF-prevention pattern; minimal 1-line diff;
+obviously correct; review feedback already incorporated (v1 → v2
+upgraded non-sync to sync); IPMI maintainer applied it; original driver
+author was on CC; self-contained (no dependencies); bug present since
+driver introduction (v6.2).
+
+**Evidence against**: No explicit `Fixes:` tag on this specific patch
+(though companion patches in the series tag dd2bc5cc9e25); no
+syzbot/user report cited; backport to < 6.15 needs `del_timer_sync()`
+rename.
+
+**Stable-rules checklist**
+1. Obviously correct and tested — YES (1 line, canonical, in maintainer
+   tree)
+2. Real bug — YES (UAF on timer callback after teardown)
+3. Important issue — YES (UAF / possible kernel panic)
+4. Small and contained — YES (+1/-0 line, single function)
+5. No new features/APIs — YES (adds a cleanup call only)
+6. Applies to stable — YES, with a trivial API rename for < v6.15
+
+**Exception categories**: Not applicable; stands on bug-fix merit alone.
+
+**Decision**: YES. Small UAF fix in a never-canceled timer on device
+teardown, accepted by the subsystem maintainer, safe and trivial to
+backport to all stable trees that carry the driver (6.6.y and later).
 
 ## Verification
 
-- [Phase 1] Parsed tags: Link to mailing list, Mark Brown (ASoC
-  maintainer) SOB confirming acceptance
-- [Phase 2] Diff analysis: +7 lines, pure DMI table entry addition in
-  `yc_acp_quirk_table[]`
-- [Phase 3] git blame: Driver introduced in commit fa991481b8b22a
-  (~v5.16), present in all active stable trees
-- [Phase 3] git log --grep="MSI": 4 prior MSI entries in this file, same
-  pattern
-- [Phase 3] git log -20: All 20 recent commits are DMI quirk additions,
-  confirming standard pattern
-- [Phase 5] Read acp6x_probe(): Confirmed table consumed via
-  `dmi_first_match(yc_acp_quirk_table)` at line 791
-- [Phase 6] File and driver exist in stable trees from v5.16+
-- [Phase 7] ASoC AMD YC subsystem is actively maintained with continuous
-  quirk additions
-- [Phase 8] Failure mode: Complete microphone non-functionality on
-  specific laptop, HIGH impact for affected users
-- UNVERIFIED: Could not fetch lore.kernel.org discussion due to anti-bot
-  measures; however, maintainer acceptance is confirmed via SOB
+- [Phase 1] Parsed subject / body / tags directly from the commit and
+  companion series — confirmed no `Fixes:`/`Cc: stable`, but sibling
+  patches in series carry `Fixes: dd2bc5cc9e25`.
+- [Phase 2] Read `ssif_bmc.c` lines 77–100 (struct fields including
+  `response_timer`), 200–228 (`timer_delete()` in write path), 298–336
+  (`response_timeout` callback + `mod_timer` arming site), 804–848
+  (probe/remove) — confirmed `ssif_bmc` is `devm_kzalloc`'d (line 809)
+  and that `response_timeout` dereferences fields inside it.
+- [Phase 3] `git blame -L 820,870 drivers/char/ipmi/ssif_bmc.c` — buggy
+  `ssif_bmc_remove` unchanged since `dd2bc5cc9e2555`.
+- [Phase 3] `git show --stat dd2bc5cc9e255` — initial driver add (Oct
+  2022).
+- [Phase 3] `git tag --contains dd2bc5cc9e255` — earliest release is
+  **v6.2**.
+- [Phase 3] `git tag --contains 8fa7292fee5c5` — `timer_delete_sync()`
+  rename lands in v6.15.
+- [Phase 3] `git tag --contains 41cb08555c416` — `timer_container_of()`
+  rename lands in v6.16.
+- [Phase 4] `b4 dig -c 7fc3e2546cf3f` — matched series at `lore.kernel.o
+  rg/all/20260403090603.3988423-1-zhangjian.3032@bytedance.com/`.
+- [Phase 4] `b4 dig -c 7fc3e2546cf3f -a` — two revisions (v1 and v2);
+  applied version is the latest (v2).
+- [Phase 4] `b4 dig -m /tmp/ssif_thread.mbx` — full thread saved; Corey
+  Minyard acknowledges acceptance: "I have the new version in my tree."
+  v2 changelog: "use timer_delete_sync() to cancel the timer".
+- [Phase 5] `Grep response_timer` in the file — arming site in
+  `handle_request`, callback `response_timeout` dereferences `ssif_bmc`
+  (line 300), uses `ssif_bmc->lock`.
+- [Phase 6] `git show pending-6.6:drivers/char/ipmi/ssif_bmc.c` and
+  `pending-6.12`, `pending-6.15`, `pending-6.16` — confirmed identical
+  buggy `ssif_bmc_remove()` in all of them; confirmed older trees use
+  `del_timer_sync()` / `from_timer()`.
+- [Phase 6] `git show pending-6.1:drivers/char/ipmi/ssif_bmc.c` — file
+  does not exist (driver added after 6.1).
+- [Phase 8] Failure mode: timer callback on freed devres memory → UAF /
+  possible panic on module unload (inferred from code inspection of the
+  callback plus `devm_kzalloc` semantics).
+- UNVERIFIED: no reachable syzbot/bugzilla/user report cited; impact in
+  field is plausible but I did not locate a concrete crash report.
+- UNVERIFIED: did not retrieve v1 body directly (Anubis blocked lore
+  fetch), but v2 changelog and the maintainer reply unambiguously
+  document the v1 → v2 change.
 
 **YES**
 
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/char/ipmi/ssif_bmc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index aa62009331825..5ee149afb022c 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -493,6 +493,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 17 D7VF"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Vector A16 HX A8WHG"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/char/ipmi/ssif_bmc.c b/drivers/char/ipmi/ssif_bmc.c
+index 7a52e3ea49ed8..dc1d5bb4a4604 100644
+--- a/drivers/char/ipmi/ssif_bmc.c
++++ b/drivers/char/ipmi/ssif_bmc.c
+@@ -843,6 +843,7 @@ static void ssif_bmc_remove(struct i2c_client *client)
+ {
+ 	struct ssif_bmc_ctx *ssif_bmc = i2c_get_clientdata(client);
+ 
++	timer_delete_sync(&ssif_bmc->response_timer);
+ 	i2c_slave_unregister(client);
+ 	misc_deregister(&ssif_bmc->miscdev);
+ }
 -- 
 2.53.0
 
