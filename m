@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA17233858B;
-	Mon, 20 Apr 2026 16:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720AB2853F3;
+	Mon, 20 Apr 2026 16:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701503; cv=none; b=U/L9gFSPq7ABz74heHkmdzkRqOW0OlZv01gAkSBAAyR/dAB9GUhSKHg6ZJjEo0RYNdwBXwaztHURUQgq+5aQr94cbQFO58ek+dgMbo9aZfPvR1aaZhaoABguRHgeYMdaH/DnMzU8sBgbar5bRW+n/oJLK2UUgRjoxAX9fdp8Yl4=
+	t=1776701506; cv=none; b=HolNLs9viDUZCHWM6geQhGNfnvlDa2JdsC2mjIvYVExga+FwBnRPefGqW2GLma0av1gpvhKIKYorUZDhEPr3xN/CQgf1MbRB9Dn+6CXybZUVJTpjEVc6gP6EtjgQV20c8aJjCt07wRVcb0O1WcbE7Ee/dW+TXi/rVOVNJpW9MDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701503; c=relaxed/simple;
-	bh=I/h1TcOnLkFnOz8mQ8Rloj2sQKbVtzw59yfD1JTAVq8=;
+	s=arc-20240116; t=1776701506; c=relaxed/simple;
+	bh=GXLHl44sfjyfbiiV3ic/scVPPNH4NAe7AgA6yE+g8kQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QjVJmcTETBhrGYMB8ORk8zoyPnInEUtUWO1m+rTm97RneE1F46F98E1mZODHbH7HiSPY/lSP1hqegdQj5xia/JSmvDwATCsN1PzdgDAyAgDb9mR5hu48eBfy5R1TmfCyJMcLfnkGz28GtU2cJ4ud+JL6G86prwSRCukhv2aBR48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQqBZlAC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ApVkXJVr3dfCxUHZTTKFnzbFrpgUyuRQSWr0tln2rvvWLpl3kh7EbxHE8KTBDYM5ta3rGMp8sxCuWNqxGY64zUYIBZ6ImtXMR/Astkq6FyN5jrNZT4SaGnJTMFQLbCXtW3XDRuMMkj4CzXHdH16JRlujm8dqT//OmMLFm4TIoTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VH9E5gyr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQqBZlAC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F96DC19425;
-	Mon, 20 Apr 2026 16:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VH9E5gyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B21C2BCB4;
+	Mon, 20 Apr 2026 16:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701503;
-	bh=I/h1TcOnLkFnOz8mQ8Rloj2sQKbVtzw59yfD1JTAVq8=;
+	s=korg; t=1776701506;
+	bh=GXLHl44sfjyfbiiV3ic/scVPPNH4NAe7AgA6yE+g8kQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pQqBZlAC0BafFdMJkl05OuuAKUbiWoeUzmJ0wjvHaC2OoHCZpweoAA7lZeXnaG3y1
-	 1M9DANDh4rvdywKNhFprTwbc5PUm2awjxamBOHgzWtB8vxOyJvH49lcuzA0S/+KwSp
-	 0OQ4HqT+gEhKZL+4Xc/oTakEbib+4T+KxFFMb1lA=
+	b=VH9E5gyr5UmoQTmNAWDygMHIjKVWxp4mliCEGWmbTywgfYfJzYlSaDRtOamn1Pc/7
+	 p+ebFdwUs6cyRIZMRyfc7Tbx4pe44u+0pHX3DzyiJp3gtmHOQJ/2+CFPTrCUrWBgVL
+	 0zlKH9NYxWreRebvW7O1oGPWZeOkbhLduQZddORw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.12 139/162] x86-64: rename misleadingly named __copy_user_nocache() function
-Date: Mon, 20 Apr 2026 17:42:51 +0200
-Message-ID: <20260420153932.081465410@linuxfoundation.org>
+Subject: [PATCH 6.12 140/162] x86: rename and clean up __copy_from_user_inatomic_nocache()
+Date: Mon, 20 Apr 2026 17:42:52 +0200
+Message-ID: <20260420153932.117331806@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,165 +51,172 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit d187a86de793f84766ea40b9ade7ac60aabbb4fe upstream.
+commit 5de7bcaadf160c1716b20a263cf8f5b06f658959 upstream.
 
-This function was a masterclass in bad naming, for various historical
-reasons.
+Similarly to the previous commit, this renames the somewhat confusingly
+named function.  But in this case, it was at least less confusing: the
+__copy_from_user_inatomic_nocache is indeed copying from user memory,
+and it is indeed ok to be used in an atomic context, so it will not warn
+about it.
 
-It claimed to be a non-cached user copy.  It is literally _neither_ of
-those things.  It's a specialty memory copy routine that uses
-non-temporal stores for the destination (but not the source), and that
-does exception handling for both source and destination accesses.
+But the previous commit also removed the NTB mis-use of the
+__copy_from_user_inatomic_nocache() function, and as a result every
+call-site is now _actually_ doing a real user copy.  That means that we
+can now do the proper user pointer verification too.
 
-Also note that while it works for unaligned targets, any unaligned parts
-(whether at beginning or end) will not use non-temporal stores, since
-only words and quadwords can be non-temporal on x86.
+End result: add proper address checking, remove the double underscores,
+and change the "nocache" to "nontemporal" to more accurately describe
+what this x86-only function actually does.  It might be worth noting
+that only the target is non-temporal: the actual user accesses are
+normal memory accesses.
 
-The exception handling means that it _can_ be used for user space
-accesses, but not on its own - it needs all the normal "start user space
-access" logic around it.
-
-But typically the user space access would be the source, not the
-non-temporal destination.  That was the original intention of this,
-where the destination was some fragile persistent memory target that
-needed non-temporal stores in order to catch machine check exceptions
-synchronously and deal with them gracefully.
-
-Thus that non-descriptive name: one use case was to copy from user space
-into a non-cached kernel buffer.  However, the existing users are a mix
-of that intended use-case, and a couple of random drivers that just did
-this as a performance tweak.
-
-Some of those random drivers then actively misused the user copying
-version (with STAC/CLAC and all) to do kernel copies without ever even
-caring about the exception handling, _just_ for the non-temporal
-destination.
-
-Rename it as a first small step to actually make it halfway sane, and
-change the prototype to be more normal: it doesn't take a user pointer
-unless the caller has done the proper conversion, and the argument size
-is the full size_t (it still won't actually copy more than 4GB in one
-go, but there's also no reason to silently truncate the size argument in
-the caller).
-
-Finally, use this now sanely named function in the NTB code, which
-mis-used a user copy version (with STAC/CLAC and all) of this interface
-despite it not actually being a user copy at all.
+Also worth noting is that non-x86 targets (and on older 32-bit x86 CPU's
+before XMM2 in the Pentium III) we end up just falling back on a regular
+user copy, so nothing can actually depend on the non-temporal semantics,
+but that has always been true.
 
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/uaccess_64.h    |    5 +++--
- arch/x86/lib/copy_user_uncached_64.S |    6 +++---
- arch/x86/lib/usercopy_64.c           |    4 ++--
- drivers/infiniband/sw/rdmavt/qp.c    |    8 +++-----
- drivers/ntb/ntb_transport.c          |    7 ++++---
- tools/objtool/check.c                |    2 +-
- 6 files changed, 16 insertions(+), 16 deletions(-)
+ arch/x86/include/asm/uaccess.h    |    2 +-
+ arch/x86/include/asm/uaccess_32.h |    8 +-------
+ arch/x86/include/asm/uaccess_64.h |    3 ++-
+ arch/x86/lib/usercopy_32.c        |    9 +++++----
+ drivers/gpu/drm/i915/i915_gem.c   |    2 +-
+ drivers/gpu/drm/qxl/qxl_ioctl.c   |    2 +-
+ include/linux/uaccess.h           |   11 ++++++++---
+ lib/iov_iter.c                    |    2 +-
+ 8 files changed, 20 insertions(+), 19 deletions(-)
 
---- a/arch/x86/include/asm/uaccess_64.h
-+++ b/arch/x86/include/asm/uaccess_64.h
-@@ -147,7 +147,8 @@ raw_copy_to_user(void __user *dst, const
- 	return copy_user_generic((__force void *)dst, src, size);
+--- a/arch/x86/include/asm/uaccess.h
++++ b/arch/x86/include/asm/uaccess.h
+@@ -508,7 +508,7 @@ extern struct movsl_mask {
+ } ____cacheline_aligned_in_smp movsl_mask;
+ #endif
+ 
+-#define ARCH_HAS_NOCACHE_UACCESS 1
++#define ARCH_HAS_NONTEMPORAL_UACCESS 1
+ 
+ /*
+  * The "unsafe" user accesses aren't really "unsafe", but the naming
+--- a/arch/x86/include/asm/uaccess_32.h
++++ b/arch/x86/include/asm/uaccess_32.h
+@@ -26,13 +26,7 @@ raw_copy_from_user(void *to, const void
+ 	return __copy_user_ll(to, (__force const void *)from, n);
  }
  
--extern long __copy_user_nocache(void *dst, const void __user *src, unsigned size);
-+#define copy_to_nontemporal copy_to_nontemporal
-+extern size_t copy_to_nontemporal(void *dst, const void *src, size_t size);
+-static __always_inline unsigned long
+-__copy_from_user_inatomic_nocache(void *to, const void __user *from,
+-				  unsigned long n)
+-{
+-       return __copy_from_user_ll_nocache_nozero(to, from, n);
+-}
+-
++unsigned long __must_check copy_from_user_inatomic_nontemporal(void *, const void __user *, unsigned long n);
+ unsigned long __must_check clear_user(void __user *mem, unsigned long len);
+ unsigned long __must_check __clear_user(void __user *mem, unsigned long len);
+ 
+--- a/arch/x86/include/asm/uaccess_64.h
++++ b/arch/x86/include/asm/uaccess_64.h
+@@ -152,11 +152,12 @@ extern size_t copy_to_nontemporal(void *
  extern long __copy_user_flushcache(void *dst, const void __user *src, unsigned size);
  
  static inline int
-@@ -157,7 +158,7 @@ __copy_from_user_inatomic_nocache(void *
+-__copy_from_user_inatomic_nocache(void *dst, const void __user *src,
++copy_from_user_inatomic_nontemporal(void *dst, const void __user *src,
+ 				  unsigned size)
+ {
  	long ret;
  	kasan_check_write(dst, size);
++	src = mask_user_address(src);
  	stac();
--	ret = __copy_user_nocache(dst, src, size);
-+	ret = copy_to_nontemporal(dst, (__force const void *)src, size);
+ 	ret = copy_to_nontemporal(dst, (__force const void *)src, size);
  	clac();
- 	return ret;
+--- a/arch/x86/lib/usercopy_32.c
++++ b/arch/x86/lib/usercopy_32.c
+@@ -322,10 +322,11 @@ unsigned long __copy_user_ll(void *to, c
  }
---- a/arch/x86/lib/copy_user_uncached_64.S
-+++ b/arch/x86/lib/copy_user_uncached_64.S
-@@ -26,7 +26,7 @@
-  * Output:
-  * rax uncopied bytes or 0 if successful.
-  */
--SYM_FUNC_START(__copy_user_nocache)
-+SYM_FUNC_START(copy_to_nontemporal)
- 	/* If destination is not 7-byte aligned, we'll have to align it */
- 	testb $7,%dil
- 	jne .Lalign
-@@ -238,5 +238,5 @@ _ASM_EXTABLE_UA(95b, .Ldone)
- _ASM_EXTABLE_UA(52b, .Ldone0)
- _ASM_EXTABLE_UA(53b, .Ldone0)
+ EXPORT_SYMBOL(__copy_user_ll);
  
--SYM_FUNC_END(__copy_user_nocache)
--EXPORT_SYMBOL(__copy_user_nocache)
-+SYM_FUNC_END(copy_to_nontemporal)
-+EXPORT_SYMBOL(copy_to_nontemporal)
---- a/arch/x86/lib/usercopy_64.c
-+++ b/arch/x86/lib/usercopy_64.c
-@@ -49,11 +49,11 @@ long __copy_user_flushcache(void *dst, c
- 	long rc;
- 
- 	stac();
--	rc = __copy_user_nocache(dst, src, size);
-+	rc = copy_to_nontemporal(dst, (__force const void *)src, size);
- 	clac();
- 
- 	/*
--	 * __copy_user_nocache() uses non-temporal stores for the bulk
-+	 * copy_to_nontemporal() uses non-temporal stores for the bulk
- 	 * of the transfer, but we need to manually flush if the
- 	 * transfer is unaligned. A cached memory copy is used when
- 	 * destination or size is not naturally aligned. That is:
---- a/drivers/infiniband/sw/rdmavt/qp.c
-+++ b/drivers/infiniband/sw/rdmavt/qp.c
-@@ -92,12 +92,10 @@ static int rvt_wss_llc_size(void)
- static void cacheless_memcpy(void *dst, void *src, size_t n)
+-unsigned long __copy_from_user_ll_nocache_nozero(void *to, const void __user *from,
++unsigned long copy_from_user_inatomic_nontemporal(void *to, const void __user *from,
+ 					unsigned long n)
  {
- 	/*
--	 * Use the only available X64 cacheless copy.  Add a __user cast
--	 * to quiet sparse.  The src agument is already in the kernel so
--	 * there are no security issues.  The extra fault recovery machinery
--	 * is not invoked.
-+	 * Use the only available X64 cacheless copy.
-+	 * The extra fault recovery machinery is not invoked.
- 	 */
--	__copy_user_nocache(dst, (void __user *)src, n);
-+	copy_to_nontemporal(dst, src, n);
- }
- 
- void rvt_wss_exit(struct rvt_dev_info *rdi)
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -1802,12 +1802,13 @@ static void ntb_tx_copy_callback(void *d
- 
- static void ntb_memcpy_tx(struct ntb_queue_entry *entry, void __iomem *offset)
- {
--#ifdef ARCH_HAS_NOCACHE_UACCESS
-+#ifdef copy_to_nontemporal
- 	/*
- 	 * Using non-temporal mov to improve performance on non-cached
--	 * writes, even though we aren't actually copying from user space.
-+	 * writes. This only works if __iomem is strictly memory-like,
-+	 * but that is the case on x86-64
- 	 */
--	__copy_from_user_inatomic_nocache(offset, entry->buf, entry->len);
-+	copy_to_nontemporal(offset, entry->buf, entry->len);
+-	__uaccess_begin_nospec();
++	if (!user_access_begin(from, n))
++		return n;
+ #ifdef CONFIG_X86_INTEL_USERCOPY
+ 	if (n > 64 && static_cpu_has(X86_FEATURE_XMM2))
+ 		n = __copy_user_intel_nocache(to, from, n);
+@@ -334,7 +335,7 @@ unsigned long __copy_from_user_ll_nocach
  #else
- 	memcpy_toio(offset, entry->buf, entry->len);
+ 	__copy_user(to, from, n);
  #endif
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -1258,7 +1258,7 @@ static const char *uaccess_safe_builtin[
- 	"copy_mc_enhanced_fast_string",
- 	"rep_stos_alternative",
- 	"rep_movs_alternative",
--	"__copy_user_nocache",
-+	"copy_to_nontemporal",
- 	NULL
- };
+-	__uaccess_end();
++	user_access_end();
+ 	return n;
+ }
+-EXPORT_SYMBOL(__copy_from_user_ll_nocache_nozero);
++EXPORT_SYMBOL(copy_from_user_inatomic_nontemporal);
+--- a/drivers/gpu/drm/i915/i915_gem.c
++++ b/drivers/gpu/drm/i915/i915_gem.c
+@@ -519,7 +519,7 @@ ggtt_write(struct io_mapping *mapping,
  
+ 	/* We can use the cpu mem copy function because this is X86. */
+ 	vaddr = io_mapping_map_atomic_wc(mapping, base);
+-	unwritten = __copy_from_user_inatomic_nocache((void __force *)vaddr + offset,
++	unwritten = copy_from_user_inatomic_nontemporal((void __force *)vaddr + offset,
+ 						      user_data, length);
+ 	io_mapping_unmap_atomic(vaddr);
+ 	if (unwritten) {
+--- a/drivers/gpu/drm/qxl/qxl_ioctl.c
++++ b/drivers/gpu/drm/qxl/qxl_ioctl.c
+@@ -182,7 +182,7 @@ static int qxl_process_single_command(st
+ 
+ 	/* TODO copy slow path code from i915 */
+ 	fb_cmd = qxl_bo_kmap_atomic_page(qdev, cmd_bo, (release->release_offset & PAGE_MASK));
+-	unwritten = __copy_from_user_inatomic_nocache
++	unwritten = copy_from_user_inatomic_nontemporal
+ 		(fb_cmd + sizeof(union qxl_release_info) + (release->release_offset & ~PAGE_MASK),
+ 		 u64_to_user_ptr(cmd->command), cmd->command_size);
+ 
+--- a/include/linux/uaccess.h
++++ b/include/linux/uaccess.h
+@@ -318,16 +318,21 @@ static inline size_t probe_subpage_write
+ 
+ #endif /* CONFIG_ARCH_HAS_SUBPAGE_FAULTS */
+ 
+-#ifndef ARCH_HAS_NOCACHE_UACCESS
++#ifndef ARCH_HAS_NONTEMPORAL_UACCESS
+ 
+ static inline __must_check unsigned long
+-__copy_from_user_inatomic_nocache(void *to, const void __user *from,
++copy_from_user_inatomic_nontemporal(void *to, const void __user *from,
+ 				  unsigned long n)
+ {
++	if (can_do_masked_user_access())
++		from = mask_user_address(from);
++	else
++		if (!access_ok(from, n))
++			return n;
+ 	return __copy_from_user_inatomic(to, from, n);
+ }
+ 
+-#endif		/* ARCH_HAS_NOCACHE_UACCESS */
++#endif		/* ARCH_HAS_NONTEMPORAL_UACCESS */
+ 
+ extern __must_check int check_zeroed_user(const void __user *from, size_t size);
+ 
+--- a/lib/iov_iter.c
++++ b/lib/iov_iter.c
+@@ -265,7 +265,7 @@ static __always_inline
+ size_t copy_from_user_iter_nocache(void __user *iter_from, size_t progress,
+ 				   size_t len, void *to, void *priv2)
+ {
+-	return __copy_from_user_inatomic_nocache(to + progress, iter_from, len);
++	return copy_from_user_inatomic_nontemporal(to + progress, iter_from, len);
+ }
+ 
+ size_t _copy_from_iter_nocache(void *addr, size_t bytes, struct iov_iter *i)
 
 
