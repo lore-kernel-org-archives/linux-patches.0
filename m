@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8ADA4DA55E;
-	Mon, 20 Apr 2026 13:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510B74DB562;
+	Mon, 20 Apr 2026 13:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776692023; cv=none; b=ZaRZ/4IaQlDN+8/fR3C+jRsB/MFbvUx9jWkii6mIxvUS5jvdg5cfRGH7XFj3QKwLq4Pj/HhLk1ZoXv8+at5Uetz/bNUZeJOlBYXioeXoS8xADdgbmGevhQR2mRqjJ3kMue/b/bikwHlS4zDWFrvloneG+gDRzYdEMFwDoH32KN4=
+	t=1776692025; cv=none; b=RocmT6BaVbJK4vVeOdqTok5XxtHuNM7Y8vGrq3UpccQcAce6zOcGEAhEbPWMsxlE+eqfo9LtyNW5oVPePVfI0jbLpExVvOUVTROV53b/0NXiKxdwQz4efOc6OfVY8Gdk18h6Oas1+G+yMvfvoGN96YVAkjKBrO1ygwwsvi9Yog8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776692023; c=relaxed/simple;
-	bh=E3R1SziPVKzao+a9PFJz2aBzVbupWCLKdEnkj7arJOU=;
+	s=arc-20240116; t=1776692025; c=relaxed/simple;
+	bh=1TOoOAnXei0T+EsPZPKTL55zG+7iN/BKSA/T5ksncro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXlws8gs8XzGoZnm/CDy7fzwKSShXv63avc0MVrD4RlrLlq92TCrhEdMt8bLP85rCTcp3tyt6ykJH30Dz7Q9iKnvRwXl0ES0j4PPyRYEmRMeX9ZDXrf/mgt3E0e3tKT2aKC8ALiucoFR5zWX6Isy7k/U8AcljC+1xEBaNJbqMNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=npsN2f4+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vFq29dQso1LgKJYhKALolbKGkIJ0OfL5lhKxnemkM5BIGjbFZrVpVQM4QWx7UeIk6D95lh1LTyBdQrAWVu/47OK11xDkmnwkTLj9D6UiuzpNSUses7ipohhIea/nsQ+dZvZzDuUREClnKS4+elIBH/Yd3oHyFLwUwT69L00E4LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DoRh2a/H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="npsN2f4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF573C2BCB6;
-	Mon, 20 Apr 2026 13:33:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DoRh2a/H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3591EC19425;
+	Mon, 20 Apr 2026 13:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776692023;
-	bh=E3R1SziPVKzao+a9PFJz2aBzVbupWCLKdEnkj7arJOU=;
+	s=k20201202; t=1776692025;
+	bh=1TOoOAnXei0T+EsPZPKTL55zG+7iN/BKSA/T5ksncro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npsN2f4+CBDTkfMMMqsqmAqkhhrl+5CPxiHF1zqcaI4PLeQmPlipvXtByP/sAXrkt
-	 PA5biZGOSao2f+zJVN3aOYdeZ/kba2v3eg8WQOS2SxHYJ3DnsbCI12DnLO9U/1UZdB
-	 f9lZxLWBY8WE5vYdpu4fvw2I4lmrPSBZmk1DRChg3vWE5lDAP9+PbZiQfjwdW6S/J0
-	 sXFOkNMvKi/OL0Yz3YJcBsPf1r7tZ/W1ue5qoxVXGLFVcpj+8HefNlSnGwh3ESe4zm
-	 YxzJd6q0gq3j+sTdkBF9yJeaCOl5dUgforEzUE5WPsvJ0zM5QbEpF+Z4aBTZjT26wZ
-	 yBc5oXZbTU+4g==
+	b=DoRh2a/Hse/uEx+7ZRtCRGoBA6u8okDZKUxOAcVtrgTMngRPI7YxdjNWa+XGpaJNN
+	 W+YwZwkp3thKUnSO8EvDChWiyygubXrRuUSzRL/pfYhp0s/OGfgzSJmifOFE+7ugoA
+	 jSj8fmYF9LX7fVZlKgW3957rAAIHgmvDCK5uDccnuafiX/D4u+SpGrSGKwF9xF7FS6
+	 quhbKTW5BNP+zAJWR13H/KZxuL4qTjpqQBHNOkYf14f95nmZbErVj+tKNBLix2+g0k
+	 x67Q7mDVhMds3hQuGQBRJGYVQOHNIozZvs1UaMal8ZUnEqPQ86f3Ik+tANYHCqJ/78
+	 xDLegmdjPhTQw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: leo vriska <leo@60228.dev>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: Add quirk for ASUS ROG Flow Z13-KJP GZ302EAC
-Date: Mon, 20 Apr 2026 09:22:03 -0400
-Message-ID: <20260420132314.1023554-329-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] HID: quirks: add HID_QUIRK_ALWAYS_POLL for 8BitDo Pro 3
+Date: Mon, 20 Apr 2026 09:22:04 -0400
+Message-ID: <20260420132314.1023554-330-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -53,16 +53,18 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: leo vriska <leo@60228.dev>
 
-[ Upstream commit 59f68dc1d8df3142cb58fd2568966a9bb7b0ed8a ]
+[ Upstream commit 532743944324a873bbaf8620fcabcd0e69e30c36 ]
 
-Fixes lack of audio output on the ASUS ROG Flow Z13-KJP GZ302EAC model,
-similar to the ASUS ROG Flow Z13 GZ302EA.
+According to a mailing list report [1], this controller's predecessor
+has the same issue. However, it uses the xpad driver instead of HID, so
+this quirk wouldn't apply.
 
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Link: https://patch.msgid.link/20260313172503.285846-1-matthew.schwartz@linux.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[1]: https://lore.kernel.org/linux-input/unufo3$det$1@ciao.gmane.io/
+
+Signed-off-by: leo vriska <leo@60228.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -70,21 +72,36 @@ LLM Generated explanations, may be completely bogus:
 
 Error: Failed to generate final synthesis
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-ids.h    | 3 +++
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 4b06cb48252e2..1959adb6c5189 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7065,6 +7065,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x14e3, "ASUS G513PI/PU/PV", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x14f2, "ASUS VivoBook X515JA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1503, "ASUS G733PY/PZ/PZV/PYV", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x1043, 0x1514, "ASUS ROG Flow Z13 GZ302EAC", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1517, "Asus Zenbook UX31A", ALC269VB_FIXUP_ASUS_ZENBOOK_UX31A),
- 	SND_PCI_QUIRK(0x1043, 0x1533, "ASUS GV302XA/XJ/XQ/XU/XV/XI", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1573, "ASUS GZ301VV/VQ/VU/VJ/VA/VC/VE/VVC/VQC/VUC/VJC/VEC/VCC", ALC285_FIXUP_ASUS_HEADSET_MIC),
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index d9d354f1b8847..a245928933454 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -22,6 +22,9 @@
+ #define USB_DEVICE_ID_3M2256		0x0502
+ #define USB_DEVICE_ID_3M3266		0x0506
+ 
++#define USB_VENDOR_ID_8BITDO		0x2dc8
++#define USB_DEVICE_ID_8BITDO_PRO_3	0x6009
++
+ #define USB_VENDOR_ID_A4TECH		0x09da
+ #define USB_DEVICE_ID_A4TECH_WCP32PU	0x0006
+ #define USB_DEVICE_ID_A4TECH_X5_005D	0x000a
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 3217e436c052c..f6be3ffee0232 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -25,6 +25,7 @@
+  */
+ 
+ static const struct hid_device_id hid_quirks[] = {
++	{ HID_USB_DEVICE(USB_VENDOR_ID_8BITDO, USB_DEVICE_ID_8BITDO_PRO_3), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_GAMEPAD), HID_QUIRK_BADPAD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_PREDATOR), HID_QUIRK_BADPAD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE), HID_QUIRK_ALWAYS_POLL },
 -- 
 2.53.0
 
