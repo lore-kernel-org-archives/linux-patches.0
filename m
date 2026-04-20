@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00D117A31C;
-	Mon, 20 Apr 2026 15:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6456E17A31C;
+	Mon, 20 Apr 2026 15:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700620; cv=none; b=lrV6tN2VlIwXlSkdXPY7fjd0D8Ovqis0BYmya8UHxvW98/YvbKNVg3eEmuVbkWi9vBbqO/1jOV+uy9lgvbM/QwnOiRtaVPHtOD4GryN49rUrNv9S7it2oMrp0K/VjeLm4W7cw7X9B4ZfIfLo5zA0LCQrt802fJVGXgzNcqjLWD4=
+	t=1776700622; cv=none; b=VYlJafWWjS+VGRWOZp8kVC51TJVmLoA9OlHnT16c9F4bdym9QITLFQAQar0QJQXM8aIRHB9Y3X0+nkgg3OG0XcKhkeYbY4eXzTPloxpP/1KDoM/E5UexELi+2en4M7gZdIZ14nDvNtdFIT+utEte80jV8Rs78erVMGJQ5PBK9to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700620; c=relaxed/simple;
-	bh=JuHayxoBQd4lxN14qty1ClS7FwmUntufRXVov6XWEC0=;
+	s=arc-20240116; t=1776700622; c=relaxed/simple;
+	bh=4Bv1i0TQ1Fd/DTnvT+LCgympyUL4i4exzGaRRFzcR2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TDptZv9M5ISKFm6BUBxP+x/iTElm7OPPz74mqwECJGkLNE1VsYVZ3YqUCj1foneFY/+VO9MHqe1GqfD6PveCVklklAWtPaUyFDav7oom40SpZ7vU6N4IsV+jC8/kynVyvPZf5gzOGewQoQk9Ssi5atXIZQVwp0GQMu8a7zRdVhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZnM/SPQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HTSJMnMA/2jb/JkBYKwtEFL2A1TbcPBJ5MSaapXTh0ooMVCh8B+Up6Ht5aSDL5Xr6YP14cIOaz91DkybOth/fXPn7RXGk10af+rIOnDoSjEcZVPKXvo4IRfXH5h9Cyiaa0YVBOsGI403t7fM+3InMjCVyMlaEcFUI6O3AxG8gP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSx2V58i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZnM/SPQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAE4C19425;
-	Mon, 20 Apr 2026 15:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSx2V58i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED533C19425;
+	Mon, 20 Apr 2026 15:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700619;
-	bh=JuHayxoBQd4lxN14qty1ClS7FwmUntufRXVov6XWEC0=;
+	s=korg; t=1776700622;
+	bh=4Bv1i0TQ1Fd/DTnvT+LCgympyUL4i4exzGaRRFzcR2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZnM/SPQqSUhX5F6vXtTecMfFXO+qxKyD+ZRQEOKLa+MkUqQMpUXZhhNL68suirwE
-	 TkPS2k4x/g/mCjHzQjE77Hf8IHf1a8WItpQ9qx6TjBic8fVYVdS2d/38EnNQJJR8e2
-	 a+7hx8Y1TIz2oBxr3FiQyM124cbo3LSyoaLJWWV8=
+	b=jSx2V58iQ26qUtdrW7guQ+sgOMPjcVOSFulEfCCUnRtwo/5XhodDMvSdhUX/B/80I
+	 Yo1SD24jj0vbutbBxKTLnrOpxc0meg+oFbLmFj/1iwdv1T056GELl09kSNj/6dZVIX
+	 NO4YXrzueSS3A2C4WJX9nFIPMMC+SuW9fPmFSOMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun@kernel.org>,
+	Kshamendra Kumar Mishra <kshamendrakumarmishra@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 022/198] srcu: Use irq_work to start GP in tiny SRCU
-Date: Mon, 20 Apr 2026 17:40:01 +0200
-Message-ID: <20260420153936.416139575@linuxfoundation.org>
+Subject: [PATCH 6.18 023/198] ALSA: hda/realtek: add HP Laptop 15-fd0xxx mute LED quirk
+Date: Mon, 20 Apr 2026 17:40:02 +0200
+Message-ID: <20260420153936.451712823@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -52,132 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joel Fernandes <joelagnelf@nvidia.com>
+From: Kshamendra Kumar Mishra <kshamendrakumarmishra@gmail.com>
 
-[ Upstream commit a6fc88b22bc8d12ad52e8412c667ec0f5bf055af ]
+[ Upstream commit faceb5cf5d7a08f4a40335d22d833bb75f05d99e ]
 
-Tiny SRCU's srcu_gp_start_if_needed() directly calls schedule_work(),
-which acquires the workqueue pool->lock.
+HP Laptop 15-fd0xxx with ALC236 codec does not handle the toggling of
+the mute LED.
+This patch adds a quirk entry for subsystem ID 0x8dd7 using
+ALC236_FIXUP_HP_MUTE_LED_COEFBIT2 fixup, enabling correct mute LED
+behavior.
 
-This causes a lockdep splat when call_srcu() is called with a scheduler
-lock held, due to:
-
-  call_srcu() [holding pi_lock]
-    srcu_gp_start_if_needed()
-      schedule_work() -> pool->lock
-
-  workqueue_init() / create_worker() [holding pool->lock]
-    wake_up_process() -> try_to_wake_up() -> pi_lock
-
-Also add irq_work_sync() to cleanup_srcu_struct() to prevent a
-use-after-free if a queued irq_work fires after cleanup begins.
-
-Tested with rcutorture SRCU-T and no lockdep warnings.
-
-[ Thanks to Boqun for similar fix in patch "rcu: Use an intermediate irq_work
-to start process_srcu()" ]
-
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Boqun Feng <boqun@kernel.org>
+Signed-off-by: Kshamendra Kumar Mishra <kshamendrakumarmishra@gmail.com>
+Link: https://patch.msgid.link/DHAB51ISUM96.2K9SZIABIDEQ0@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/srcutiny.h |  4 ++++
- kernel/rcu/srcutiny.c    | 19 ++++++++++++++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/srcutiny.h b/include/linux/srcutiny.h
-index 51ce25f07930e..1f9a226e6fd81 100644
---- a/include/linux/srcutiny.h
-+++ b/include/linux/srcutiny.h
-@@ -11,6 +11,7 @@
- #ifndef _LINUX_SRCU_TINY_H
- #define _LINUX_SRCU_TINY_H
- 
-+#include <linux/irq_work_types.h>
- #include <linux/swait.h>
- 
- struct srcu_struct {
-@@ -24,18 +25,21 @@ struct srcu_struct {
- 	struct rcu_head *srcu_cb_head;	/* Pending callbacks: Head. */
- 	struct rcu_head **srcu_cb_tail;	/* Pending callbacks: Tail. */
- 	struct work_struct srcu_work;	/* For driving grace periods. */
-+	struct irq_work srcu_irq_work;	/* Defer schedule_work() to irq work. */
- #ifdef CONFIG_DEBUG_LOCK_ALLOC
- 	struct lockdep_map dep_map;
- #endif /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
- };
- 
- void srcu_drive_gp(struct work_struct *wp);
-+void srcu_tiny_irq_work(struct irq_work *irq_work);
- 
- #define __SRCU_STRUCT_INIT(name, __ignored, ___ignored)			\
- {									\
- 	.srcu_wq = __SWAIT_QUEUE_HEAD_INITIALIZER(name.srcu_wq),	\
- 	.srcu_cb_tail = &name.srcu_cb_head,				\
- 	.srcu_work = __WORK_INITIALIZER(name.srcu_work, srcu_drive_gp),	\
-+	.srcu_irq_work = { .func = srcu_tiny_irq_work },		\
- 	__SRCU_DEP_MAP_INIT(name)					\
- }
- 
-diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
-index e3b64a5e0ec7e..d9c11d5f0ea45 100644
---- a/kernel/rcu/srcutiny.c
-+++ b/kernel/rcu/srcutiny.c
-@@ -9,6 +9,7 @@
-  */
- 
- #include <linux/export.h>
-+#include <linux/irq_work.h>
- #include <linux/mutex.h>
- #include <linux/preempt.h>
- #include <linux/rcupdate_wait.h>
-@@ -41,6 +42,7 @@ static int init_srcu_struct_fields(struct srcu_struct *ssp)
- 	ssp->srcu_idx_max = 0;
- 	INIT_WORK(&ssp->srcu_work, srcu_drive_gp);
- 	INIT_LIST_HEAD(&ssp->srcu_work.entry);
-+	init_irq_work(&ssp->srcu_irq_work, srcu_tiny_irq_work);
- 	return 0;
- }
- 
-@@ -84,6 +86,7 @@ EXPORT_SYMBOL_GPL(init_srcu_struct);
- void cleanup_srcu_struct(struct srcu_struct *ssp)
- {
- 	WARN_ON(ssp->srcu_lock_nesting[0] || ssp->srcu_lock_nesting[1]);
-+	irq_work_sync(&ssp->srcu_irq_work);
- 	flush_work(&ssp->srcu_work);
- 	WARN_ON(ssp->srcu_gp_running);
- 	WARN_ON(ssp->srcu_gp_waiting);
-@@ -172,6 +175,20 @@ void srcu_drive_gp(struct work_struct *wp)
- }
- EXPORT_SYMBOL_GPL(srcu_drive_gp);
- 
-+/*
-+ * Use an irq_work to defer schedule_work() to avoid acquiring the workqueue
-+ * pool->lock while the caller might hold scheduler locks, causing lockdep
-+ * splats due to workqueue_init() doing a wakeup.
-+ */
-+void srcu_tiny_irq_work(struct irq_work *irq_work)
-+{
-+	struct srcu_struct *ssp;
-+
-+	ssp = container_of(irq_work, struct srcu_struct, srcu_irq_work);
-+	schedule_work(&ssp->srcu_work);
-+}
-+EXPORT_SYMBOL_GPL(srcu_tiny_irq_work);
-+
- static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
- {
- 	unsigned long cookie;
-@@ -184,7 +201,7 @@ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
- 	WRITE_ONCE(ssp->srcu_idx_max, cookie);
- 	if (!READ_ONCE(ssp->srcu_gp_running)) {
- 		if (likely(srcu_init_done))
--			schedule_work(&ssp->srcu_work);
-+			irq_work_queue(&ssp->srcu_irq_work);
- 		else if (list_empty(&ssp->srcu_work.entry))
- 			list_add(&ssp->srcu_work.entry, &srcu_boot_list);
- 	}
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index c782a35f9239d..0c975005793e7 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6977,6 +6977,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8da7, "HP 14 Enstrom OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8da8, "HP 16 Piston OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8dd4, "HP EliteStudio 8 AIO", ALC274_FIXUP_HP_AIO_BIND_DACS),
++	SND_PCI_QUIRK(0x103c, 0x8dd7, "HP Laptop 15-fd0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8de8, "HP Gemtree", ALC245_FIXUP_TAS2781_SPI_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8de9, "HP Gemtree", ALC245_FIXUP_TAS2781_SPI_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8dec, "HP EliteBook 640 G12", ALC236_FIXUP_HP_GPIO_LED),
 -- 
 2.53.0
 
