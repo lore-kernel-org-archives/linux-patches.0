@@ -1,110 +1,102 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mega.nu (mega.nu [108.65.49.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA993ACF1B
-	for <patches@lists.linux.dev>; Mon, 20 Apr 2026 18:17:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613FF26461F
+	for <patches@lists.linux.dev>; Mon, 20 Apr 2026 19:31:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=108.65.49.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776709051; cv=none; b=AmG1PwwQw9Bc+YoM2RXUD5IEZ0O1aMurm8a9qHXA2k2dRvwWfW3/fEqMy0xvwAGE9rJAdanNBys27Mg+0er9n1g2gBuh0FzJkFeJk2zUn12pwXg/Yaq2VLy9L6cnoJB6jcFIPiv3u6Dt3r3M9248Gubx7lf7zOm7tyW5oOu+KjU=
+	t=1776713495; cv=none; b=DYEIpOVyjhxZdo4DidPek4xE/dI1e6n2wrBo3sCvlXwbuMSy6m0sL+aU1jdO28sxp8BgDCVkeTfOIfPXbV+hGA9+eR8JQ9XQ8X7UrEv1QhYGmHK7Ap2CadNwoWkJBEwmdKasbaTysGVmaQzWzSLjvXTMGl62K/p5zcECPxOjCOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776709051; c=relaxed/simple;
-	bh=V5EC+3U8AklyCgan+vJfwHlRkHMhPgczsTl3WMn/fDA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kmQzqJsdk9dHMDWDG0qzg1zMrpEoaxng3b9nfdh9c7HNM/3EmiKLipYLalE9oHsiIddP9qtt9aBG/NwDKFcskOOMjlApZ+bdCL8NYaM4rQnP3Zy5OiZ7X/W80is567cFFPj83ZaRO39Oyq8Bo0fVqX7e7yRSPx1BoVu1X42yUyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HsLmBHKU; arc=none smtp.client-ip=209.85.222.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1776713495; c=relaxed/simple;
+	bh=qlUZsPlGXe7P4xzV4GNXWM21doqptpn7WFrD1e3JHFo=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=bSuipD9y9p6GBUhpl0a82Ph89yc/GyDPx+/UPvcIGnLWpapToRsQiwP8kWdEIhDyxWenwBFrQPbRHscx80Z067KIcYleQZSuKWFa3PZ1CM4GzcFynwBhDLi1EJTvDGR/zFP4kDgNFW2O9SNaHfz0lMcRIjeIizzzxJJ+QJUyE5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mega.nu; spf=pass smtp.mailfrom=mega.nu; dkim=pass (1024-bit key) header.d=mega.nu header.i=@mega.nu header.b=Gr/qGNml; arc=none smtp.client-ip=108.65.49.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mega.nu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mega.nu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HsLmBHKU"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8eb5ad01402so126269685a.2
-        for <patches@lists.linux.dev>; Mon, 20 Apr 2026 11:17:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776709049; x=1777313849; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9lt/Z3RJdhJdXLDrfVQy86Oma13FPqwNnNxDceu5vR8=;
-        b=HsLmBHKUTMhsABqft79HswfjyKOZ+mveWBp1WLbnmlD1aH8FfcbrKwSzIGqjI1VpCm
-         QEN2Lq2/nOFEChSaQNmpxYhPI+fh/uL8hjmFOAhf/uefYLwTa/5xZ+IceGD4BRhp7crI
-         /7dGkV0bxC350gANQMPHRuT8qXAdPY/k9edVDNjEHJOX7wjd0fWAfNCQ7UjfP2/hhwlH
-         AsYNJD8dkV+GQxysnTw4zsj9mnhDIlMWg5tm2/VFI8PvoGeNkyCtnvsoxGaBAOwdiCvx
-         BdOrslfEBGyZAAfxp6b1Cij9UCJW3Le3/EP/Pwh36jqe+oBJJFSJHI10GpNtQXqqLVXn
-         AOYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776709049; x=1777313849;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9lt/Z3RJdhJdXLDrfVQy86Oma13FPqwNnNxDceu5vR8=;
-        b=U1GeFR7NgZo53ABOU4p3QUhdX2FEIyNW7FSiAMQkNkcYd3mo1nJwp1Xa46ejcElkrS
-         e14y8F+FIcoxT8uGP5uPqsSjaabv4dmVGenXtyQmULLYL8My+HuHZDmQRe362hPfrW7t
-         i+gJ6TgZkPpCqHMpuaDjm7VRUBZknLs+k7BciWassGjCK13UlyPbIblHJs/zTwoVUXHM
-         9FYgPT0av46xtp1emUeWw4Sy6CRUrnCp1wuSNRIa4OrZKJCp9368eIIbWWGUTE6ryDht
-         C/WNsKsulLpQCsBDdc3A5c3hH+c+w6/KRipEa6JWfJPRhpDHc6Na5zNCyvJheLrcf9+H
-         IcAg==
-X-Gm-Message-State: AOJu0YzlapKeIe5zuu/66+Dyi8Glv5QgHEEO6Mr7++z2BQO3wwUrfM5f
-	/RqfcxUKhMQTmvGQWAA/P1XViQlSEZcQq+kGaWAUxSwnUEgY7CmcPYvJ
-X-Gm-Gg: AeBDievAak5SCxuN6fpxbWpLxInPmdgtkcMNw8sSRz3VLrEkr1JxSTDhQ5cAlea1O29
-	sMvXTo5cobXC0zp+4brX2w+U32qbDFEIfMISueIGF7rIEf8olirIJcmDgokb0Pga4FW75P2f6RQ
-	qlMR9ebWWGUctBtLqEbVQF35GexV+6VHNsoUFPWR5CpLYofunbAqXeGVkjbsRmtgntDdL8W59JG
-	Yt+jSIsf72olj7YB/w+aELc4Paq73YCj6a64GzOIO9x+ct8CsX6aLB/erDOtwVVtH46z7yXwlyL
-	4OevoCDLViGX4GTfchqjC5lMxWhToAYYlUwHfN/2UuHuIkV+tSadOsUS3f/G9Csaau8m5CWfLpZ
-	UobHtS1QGA8dXYRSQDE1H1mDIVwC85ptd9+qkIXr/UT0lj8/H+k31wtq2KvTwIxroOM92l4Wn7/
-	gEb0/tcl6+KAkDAvr6k3t5kTLxxA98P8I6s7pTyF89Pv40EEzju85n7fiRPFR9
-X-Received: by 2002:a05:620a:4554:b0:8ee:2c17:2ff3 with SMTP id af79cd13be357-8ee2c1733c4mr44142485a.0.1776709049110;
-        Mon, 20 Apr 2026 11:17:29 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d69ae320sm990989085a.20.2026.04.20.11.17.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Apr 2026 11:17:28 -0700 (PDT)
-Message-ID: <7cc779f6-3cad-42fe-a8a3-fcfcea581015@gmail.com>
-Date: Mon, 20 Apr 2026 11:17:23 -0700
+	dkim=pass (1024-bit key) header.d=mega.nu header.i=@mega.nu header.b="Gr/qGNml"
+Received-SPF: pass (mega.nu: authenticated connection)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mega.nu; s=20180922;
+	t=1776713472; bh=ZNE93TcCr+LtUEbKaMkHqTE32uwhkdXnbHLFznJfjq0=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:Content-Type:Cc:
+	 Subject:Reply-To:In-reply-to:References:Content-type;
+	b=Gr/qGNmlaqgSgfszuWhWS8emGBYvOhTkhtT9nlwMUaecZBTqYAaDZ2pEfofIQ7nbP
+	 QDci7NAUmjpFrWRclwHH//Xwwfbxz5M6yNb5V2C2memXhfu/TD0oOE3sXzxOMKUL0r
+	 Zn//7Kq5h8x5nDaxpTq230OrYP9sHRWeBnUD1E/I=
+X-Authenticated-User: douzzer.mobile to mega.nu using PLAIN
+Received: from douzzer.mobile (localhost [127.0.0.1])
+	by mega.nu:587 (8.18.2/8.16.0.41) with ESMTPSA id 63KJVCd1013122
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Mon, 20 Apr 2026 19:31:12 GMT
+	(envelope-from douzzer@mega.nu)
+Message-ID: <4ca0b8a4399db5b89e2164f52246f63723daf49d.camel@mega.nu>
+Subject: Re: [PATCH 6.12 085/162] crypto: algif_aead - Fix minimum RX size
+ check for decryption
+From: Daniel Pouzzner <douzzer@mega.nu>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev,
+        syzbot+aa11561819dc42ebbc7c@syzkaller.appspotmail.com,
+        Herbert Xu
+	 <herbert@gondor.apana.org.au>,
+        Sasha Levin <sashal@kernel.org>
+Date: Mon, 20 Apr 2026 14:31:12 -0500
+In-Reply-To: <20260420153930.113240857@linuxfoundation.org>
+References: <20260420153927.006696811@linuxfoundation.org>
+	 <20260420153930.113240857@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.0 00/76] 7.0.1-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260420153910.810034134@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 4/20/26 08:41, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.0.1 release.
-> There are 76 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 22 Apr 2026 15:38:50 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.1-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+LGTM -- tested (libkcapi, LUKS, WireGuard/WolfGuard, etc.) atop 6.12.82, wi=
+th
+and without patch, with native and libwolfssl.ko crypto, and all 4 scenario=
+s
+were clean.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Assuming same for 6.18 and 6.19 backports, having bracketed with 6.12 and 7=
+.0.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+On Mon, 2026-04-20 at 17:41 +0200, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Herbert Xu <herbert@gondor.apana.org.au>
+>=20
+> [ Upstream commit 3d14bd48e3a77091cbce637a12c2ae31b4a1687c ]
+>=20
+> The check for the minimum receive buffer size did not take the
+> tag size into account during decryption.  Fix this by adding the
+> required extra length.
+>=20
+> Reported-by: syzbot+aa11561819dc42ebbc7c@syzkaller.appspotmail.com
+> Reported-by: Daniel Pouzzner <douzzer@mega.nu>
+> Fixes: d887c52d6ae4 ("crypto: algif_aead - overhaul memory management")
+> Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  crypto/algif_aead.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/crypto/algif_aead.c b/crypto/algif_aead.c
+> index 7d58cbbce4af2..481e66f8708bb 100644
+> --- a/crypto/algif_aead.c
+> +++ b/crypto/algif_aead.c
+> @@ -170,7 +170,7 @@ static int _aead_recvmsg(struct socket *sock, struct =
+msghdr *msg,
+>  	if (usedpages < outlen) {
+>  		size_t less =3D outlen - usedpages;
+> =20
+> -		if (used < less) {
+> +		if (used < less + (ctx->enc ? 0 : as)) {
+>  			err =3D -EINVAL;
+>  			goto free;
+>  		}
