@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C063FF8B3;
-	Mon, 20 Apr 2026 13:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9A03FFAB5;
+	Mon, 20 Apr 2026 13:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691604; cv=none; b=sxzNYVunU3yuR9Q8If89J+3VuvfPeGIZlG7j1jMJqXFhBWGZh2VnhyN4yt1Wt+V5pBBo9g4jce5pJ3ye/+RFTgyz5ZnokyY66cGrShxFRRqfHo+SB2Ez96Y7G8IDnJ/2Q1YRyMdgEmV7DKEdcI2F9vsr3WZjDk96XSPevYbz+FI=
+	t=1776691605; cv=none; b=L2PHpSPIogN0SThCEMd8/tnSgOCfO811mF+5gzXVMbMCjthLowJdSHo4LDzS3DZvHRlXwwdp/ggIOA3FuYonsx4bIMx/ukD17LIFA5N732jmRiUV1Si8gAV11ojyljJfVvy4ruVt73vWXWsCe6eouPx+yhgEX60K/YgLyNhkut8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691604; c=relaxed/simple;
-	bh=dbjLP7ma+mqQn8azWy+pNO9IoasATc0sZWFIDHT0Tk0=;
+	s=arc-20240116; t=1776691605; c=relaxed/simple;
+	bh=QWO1+ilXI4/9bxiArWY+juEy4LrgdzMjjCXGM4ITv6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WL6ql1zRNt9xYpe4tIAxOvhkq4ptkfHOOa0zENQeu/4xjFnRZZbMwhm0b9h9/sPoSm5Oo2YbV+uJIPISanhYFfmZsS9mfkmupbOynbJP5bSwsZhntt6w/6ihFEnG+QJsBNO/iq4c7sNUWPR3Fk8mW69X4f5KmOBYM1/a6zFk2iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qbnBNnTj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bvc+MT8OFDTXVwGcJ072acQQXimQqOfd5ihh9mc+Frj5sUDfXF2WnWJnJLAJJCoOqIyxe4qRp4n9Hl6vxyaW0tbJtrUNmlh6lueZ2ohBIdazbQYdTK+ZdB6YShyyp34r4qi3Y18BZbeWKbzTTQAlIfUdlmk9SgaqwZWs1uB/wnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VMntbf2i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qbnBNnTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF0FC19425;
-	Mon, 20 Apr 2026 13:26:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VMntbf2i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F79C2BCB4;
+	Mon, 20 Apr 2026 13:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691603;
-	bh=dbjLP7ma+mqQn8azWy+pNO9IoasATc0sZWFIDHT0Tk0=;
+	s=k20201202; t=1776691605;
+	bh=QWO1+ilXI4/9bxiArWY+juEy4LrgdzMjjCXGM4ITv6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbnBNnTj4qseCU0OKqnucI20vEYt3mRPyttg7d4SbA4VV5LlLGPs6pMDGUPxcBdB6
-	 gES3/2DwuIj5oGw/4wuYg2WhpQM3QJdpxwEaMUfa6dqb50TjoGIxoWjq3DqDPDIs3m
-	 PIVhVSMuQN5NE8nc8O1L7CTFNKcQfJGtXS6xcCFPKZi+Srv7lGUQNWXCl6zKaUxCmv
-	 Qt692315x0eJWywrAzt1lz79489okMwPZo2C+parwFJtHloc/hagHcc1QlrLqP5JDW
-	 g5R9lGMpDhgI5R8+kQ4qgj2pUgRMuZH1dbpENvlBXOHqBtbHmbbqsIMxRBT7lfSXf1
-	 8uDiwBe8skZQw==
+	b=VMntbf2iURSe+b2zCNOPBX5JWmLmegIQU4pOFNC7vjQ45690+Sx+6ZEmR242OnfVw
+	 IXG2LWZAPlBp3DJ3oIFdtUUnjKPJFHSYhyZMqyzjwyZo0uIFcESpy6PBoOdsZXfm2w
+	 rl5KNZ6GTCye1kRyfWXuMFKoo9PUh1UNzUMjhF68aAmOYOIie2xeGW9jH3WSQ1CsHI
+	 jG2vOg8zf4/wh7XLYy96XRyOSR4qlsUGbTqCR8MFNjziR3nZMqFXb5Nr8bLN7ONnuJ
+	 rMrHeLgOgdNUWWod3jPUGYz3UzUe3o5QUXDRiYGA+pXqqBTePDCtYwwss/Um84YaEv
+	 Op9epaFNV1Zew==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	linusw@kernel.org,
+	brgl@kernel.org,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] media: i2c: imx258: add missing mutex protection for format code access
-Date: Mon, 20 Apr 2026 09:18:40 -0400
-Message-ID: <20260420132314.1023554-126-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] gpio: viperboard: normalize return value of gpio_get
+Date: Mon, 20 Apr 2026 09:18:41 -0400
+Message-ID: <20260420132314.1023554-127-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -54,376 +54,366 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit c3109ecc3bb76aab9ef65f2e795a97a764a0b4a3 ]
+[ Upstream commit c08381ad56a9cc111f893b2b21400ceb468cc698 ]
 
-imx258_open(), imx258_enum_mbus_code(), and imx258_enum_frame_size()
-call imx258_get_format_code() without holding imx258->mutex. However,
-imx258_get_format_code() has lockdep_assert_held(&imx258->mutex)
-indicating that callers must hold this lock.
+The GPIO get callback is expected to return 0 or 1 (or a negative error
+code). Ensure that the value returned by vprbrd_gpiob_get() in the output
+case is normalized to the [0, 1] range.
 
-All other callers of imx258_get_format_code() properly acquire the mutex:
-- imx258_set_pad_format() acquires mutex at imx258.c:918
-- imx258_get_pad_format() acquires mutex at imx258.c:896
-
-The mutex is needed to protect access to imx258->vflip->val and
-imx258->hflip->val which are used to calculate the bayer format code.
-
-Add mutex_lock()/mutex_unlock() around the imx258_get_format_code()
-calls in the affected functions to fix the missing lock protection.
-
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/20260218190657.2974723-7-dmitry.torokhov@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information for a thorough analysis. Let me compile
-the findings.
+Connection lost, reconnecting...
+Retry attempt 1...
+Now I have all the information needed for a comprehensive analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: PARSE THE SUBJECT LINE
-- **Subsystem**: `media: i2c: imx258` (V4L2 camera sensor driver)
-- **Action verb**: "add missing" — indicates a bug fix (adding
-  protection that should have been there)
-- **Summary**: Add missing mutex_lock/unlock around calls to
-  `imx258_get_format_code()` in three functions
+Record: [gpio: viperboard] [normalize] [Normalize return value of
+gpio_get callback to [0, 1] range]
 
 ### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Signed-off-by**: Ziyi Guo <n7l8m4@u.northwestern.edu> (author)
-- **Signed-off-by**: Sakari Ailus <sakari.ailus@linux.intel.com> (media
-  subsystem co-maintainer)
-- **Signed-off-by**: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-  (media subsystem maintainer)
-- No Fixes: tag (expected for candidates under review)
-- No Reported-by: tag
-- No Cc: stable tag
+- `Signed-off-by: Dmitry Torokhov` - Author
+- `Link:` - patch.msgid.link (message ID
+  20260218190657.2974723-**7**-dmitry.torokhov@gmail.com - patch 7/7 in
+  a series)
+- `Signed-off-by: Bartosz Golaszewski` - GPIO subsystem maintainer
+  applied it
+- No Fixes: tag, no Cc: stable, no Reported-by, no Reviewed-by
 
-Record: The patch went through the proper media subsystem chain
-(maintainer SOBs from Sakari Ailus and Mauro Carvalho Chehab). Author
-appears to be a university student contributor.
+Record: Missing Fixes: and Cc: stable tags (expected for candidates).
+Maintainer SOB present. Part of a 7-patch series.
 
 ### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-- **Bug described**: Three functions (`imx258_open()`,
-  `imx258_enum_mbus_code()`, `imx258_enum_frame_size()`) call
-  `imx258_get_format_code()` without holding `imx258->mutex`, violating
-  a lockdep assertion.
-- **Symptom**: With `CONFIG_PROVE_LOCKING`, lockdep will trigger a
-  warning/assertion. Without lockdep, there's a data race on
-  `imx258->vflip->val` and `imx258->hflip->val`.
-- **Root cause**: When `4c05213aeed73` added writable HFLIP/VFLIP
-  controls and `imx258_get_format_code()` with `lockdep_assert_held()`,
-  it failed to add mutex protection in all callers.
+The commit says the GPIO `.get()` callback must return 0 or 1 (or
+negative error). `vprbrd_gpiob_get()` in the output case returns
+`gpio->gpiob_val & (1 << offset)`, which for offset > 0 returns values
+like 2, 4, 8, etc., violating the API contract.
+
+Record: Bug = API contract violation in GPIO get callback. Symptom =
+non-normalized return value (e.g., 32 instead of 1 for offset 5). Root
+cause = missing `!!()` normalization.
 
 ### Step 1.4: DETECT HIDDEN BUG FIXES
-Record: This IS a genuine bug fix — missing synchronization that creates
-a data race on shared state (flip values). The `lockdep_assert_held()`
-assertion explicitly documents the requirement.
+"Normalize" is equivalent to "fix incorrect return value." This is a
+real bug fix - the function returns wrong values for the majority of
+GPIO offsets (1-15 out of 16).
+
+Record: This IS a bug fix, not cleanup.
+
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: INVENTORY THE CHANGES
-- **File modified**: `drivers/media/i2c/imx258.c` (+12/-2 net)
-- **Functions modified**: `imx258_open()`, `imx258_enum_mbus_code()`,
-  `imx258_enum_frame_size()`
-- **Scope**: Single-file, surgical fix
+- `drivers/gpio/gpio-viperboard.c`: 1 line changed (+1/-1)
+- Function modified: `vprbrd_gpiob_get()`
+- Scope: single-file surgical fix, one line
+
+Record: 1 file, 1 line changed, single function, minimal scope.
 
 ### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-- **`imx258_open()`**: Added `mutex_lock/unlock` around the block that
-  calls `imx258_get_format_code()`. Lock is released before the
-  `try_crop` initialization (which doesn't need the lock).
-- **`imx258_enum_mbus_code()`**: Added `mutex_lock/unlock` around the
-  single `imx258_get_format_code()` call.
-- **`imx258_enum_frame_size()`**: Added a local `u32 code` variable,
-  acquires mutex, calls `imx258_get_format_code()` into the local,
-  releases mutex, then uses `code` for the comparison.
+**Before:** When GPIO B pin is set as output, `return gpio->gpiob_val &
+(1 << offset)` returns a bit-masked value (0, 1, 2, 4, 8, ..., 32768).
+
+**After:** `return !!(gpio->gpiob_val & (1 << offset))` returns 0 or 1.
+
+Record: Before = returns arbitrary power-of-2 values. After = returns
+normalized 0/1.
 
 ### Step 2.3: IDENTIFY THE BUG MECHANISM
-- **Category**: Race condition / missing synchronization
-- **Mechanism**: `imx258_get_format_code()` reads `imx258->vflip->val`
-  and `imx258->hflip->val` to compute the bayer format code. These
-  values can be changed concurrently by `imx258_set_ctrl()` (which holds
-  the ctrl handler lock but not necessarily `imx258->mutex` at the same
-  granularity). Without the mutex, there's a race between reading flip
-  values and writing them through V4L2 control operations.
-- The function already has `lockdep_assert_held(&imx258->mutex)`
-  documenting this requirement.
+Category: **Logic / correctness fix** - incorrect return value from API
+callback.
+
+The expression `(1 << offset)` for offset=5 yields 32. If the bit is
+set, `gpiob_val & 32` returns 32, not 1. The `!!` operator normalizes
+any truthy value to exactly 1.
+
+Record: Logic bug - wrong return value for GPIO offsets > 0. Fix is
+`!!()` normalization.
 
 ### Step 2.4: ASSESS THE FIX QUALITY
-- The fix is obviously correct: it adds the required mutex around the
-  calls, matching the pattern used by all other callers
-  (`imx258_get_pad_format()` at line 896, `imx258_set_pad_format()` at
-  line 918).
-- Minimal and surgical — only adds lock/unlock pairs.
-- Low regression risk — the mutex is already used throughout the driver;
-  adding it to more V4L2 callbacks is consistent.
-- The lock scope in `imx258_open()` is appropriately narrow (released
-  before `try_crop` initialization).
+- Obviously correct: `!!` is the standard pattern used throughout the
+  kernel for this exact purpose
+- Minimal: one line
+- The identical fix was applied to `vprbrd_gpioa_get()` in 2015 (commit
+  `80776df4f53e8`)
+- Zero regression risk
+
+Record: Fix is obviously correct, minimal, proven pattern. Zero
+regression risk.
+
+---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: BLAME THE CHANGED LINES
-Record: All calls to `imx258_get_format_code()` in the affected
-functions were introduced by commit `4c05213aeed73` ("media: i2c:
-imx258: Make HFLIP and VFLIP controls writable") by Dave Stevenson,
-which was merged for v6.11-rc1.
+The buggy line (291) was introduced in commit `9d5b72de0d162` by Lars
+Poeschel on 2012-11-05 - the original driver addition. This bug has
+existed since the driver was first added.
 
-### Step 3.2: FOLLOW THE FIXES TARGET
-No Fixes: tag present, but the bug was introduced by `4c05213aeed73`
-(v6.11-rc1). This commit exists in stable trees v6.11, v6.12, v6.13, but
-NOT in v6.6, v6.7–v6.10.
+Record: Buggy code from 2012, present in all stable trees since ~v3.8.
 
-### Step 3.3: FILE HISTORY
-Recent changes to `imx258.c` since v6.11: minor header changes
-(`asm/unaligned.h` → `linux/unaligned.h`), CCI conversion, clock helper
-changes. None conflict with this fix.
+### Step 3.2: FOLLOW THE FIXES: TAG
+No Fixes: tag present. However, sibling commit `e2fa075d5ce19` (iio:
+adc: ti-ads7950, same author, same type of fix) has `Fixes: 86ef402d805d
+("gpiolib: sanitize the return value of gpio_chip::get()")` and `Cc:
+stable@vger.kernel.org`.
 
-### Step 3.4: AUTHOR CONTEXT
-- Ziyi Guo (author): Appears to be a first-time contributor (no other
-  commits found in this subsystem)
-- Signed off by Sakari Ailus (media subsystem maintainer at Intel) —
-  strong endorsement
-- Signed off by Mauro Carvalho Chehab (top-level media maintainer) —
-  accepted through the standard media tree
+The commit `86ef402d805d` (v6.15-rc1, Feb 2025) made gpiolib reject non-
+normalized values by returning `-EBADE`. This was then partially
+reverted by `ec2cceadfae72` (Feb 2026, Cc: stable) to normalize + warn
+instead of error.
 
-### Step 3.5: DEPENDENCIES
-No dependencies. The fix only adds `mutex_lock()/mutex_unlock()` calls
-around existing code. The mutex and `imx258_get_format_code()` already
-exist in all trees that have `4c05213aeed73`.
+Record: The bug was latent since 2012. It became a functional regression
+in v6.15 when `86ef402d805d` started rejecting non-normalized values
+with -EBADE.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+### Step 3.3: CHECK FILE HISTORY
+Commit `80776df4f53e8` (Dec 2015) by Linus Walleij applied the identical
+fix to `vprbrd_gpioa_get()` but missed `vprbrd_gpiob_get()`. This commit
+completes that work 10 years later.
 
-### Step 4.1-4.5
-I was unable to find the specific patch submission on lore.kernel.org
-(searches blocked by anti-scraping protection). The commit has proper
-maintainer signoffs from both Sakari Ailus and Mauro Carvalho Chehab,
-indicating it went through standard review.
+Record: Prior art exists in the same file - identical fix applied to
+gpioa in 2015, gpiob was missed.
 
-Record: The mailing list discussion could not be retrieved. However, the
-dual-maintainer signoff chain confirms proper review.
+### Step 3.4: CHECK THE AUTHOR
+Dmitry Torokhov is a prolific kernel contributor (input subsystem
+maintainer, Google). He authored the gpiolib normalization series fixing
+this same class of bug across 7+ GPIO drivers.
+
+Record: Author is an experienced, well-known kernel developer.
+
+### Step 3.5: CHECK FOR DEPENDENCIES
+This is patch 7/7 in a series of independent per-driver fixes. Each
+patch is completely standalone. No dependencies.
+
+Record: Fully standalone, no dependencies.
+
+---
+
+## PHASE 4: MAILING LIST RESEARCH
+
+### Step 4.1: ORIGINAL PATCH DISCUSSION
+Found via b4 am: This is patch 7/7 in a series:
+1. gpio: bd9571mwv: normalize return value of gpio_get
+2. gpio: cgbc: normalize return value of gpio_get
+3. gpio: da9055: normalize return value of gpio_get
+4. gpio: lp873x: normalize return value of gpio_get
+5. gpio: stp-xway: normalize return value of gpio_get
+6. gpio: tps65086: normalize return value of gpio_get
+7. gpio: viperboard: normalize return value of gpio_get (this one)
+
+No review comments were found in the mbox (no replies). The maintainer
+(Bartosz Golaszewski) applied the patches directly.
+
+Record: Part of a 7-patch series. No review discussion found. Applied by
+GPIO maintainer.
+
+### Step 4.2: REVIEWERS
+The sibling iio commit had `Reviewed-by: Andy Shevchenko`, `Reviewed-by:
+Bartosz Golaszewski`, and `Reviewed-by: Linus Walleij`. This GPIO series
+was applied directly by the maintainer.
+
+Record: Applied by subsystem maintainer Bartosz Golaszewski.
+
+### Step 4.3-4.5: BUG REPORT AND STABLE HISTORY
+The root cause was Dmitry Torokhov's report that `86ef402d805d` broke
+many GPIO drivers. This led to both the gpiolib normalization fix
+(ec2cceadfae72, Cc: stable) and the per-driver cleanup series.
+
+Record: Dmitry Torokhov reported the broader issue, leading to both
+framework and per-driver fixes.
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: KEY FUNCTIONS
-Modified: `imx258_open()`, `imx258_enum_mbus_code()`,
-`imx258_enum_frame_size()`
+### Step 5.1-5.4: FUNCTION ANALYSIS
+`vprbrd_gpiob_get()` is registered as the `.get` callback for GPIO chip
+B in `vprbrd_gpio_probe()` (line 428). It's called by the gpiolib
+framework via `gpiochip_get()` → `gc->get()` whenever any GPIO consumer
+reads a pin value on viperboard GPIO B.
 
-### Step 5.2: TRACE CALLERS
-These are V4L2 subdev ops callbacks:
-- `imx258_open()` → `.open` in `v4l2_subdev_internal_ops` — called when
-  userspace opens the subdev node
-- `imx258_enum_mbus_code()` → `.enum_mbus_code` in `v4l2_subdev_pad_ops`
-  — called via `VIDIOC_SUBDEV_ENUM_MBUS_CODE` ioctl
-- `imx258_enum_frame_size()` → `.enum_frame_size` in
-  `v4l2_subdev_pad_ops` — called via `VIDIOC_SUBDEV_ENUM_FRAME_SIZE`
-  ioctl
+The affected path is specifically the "output cache" early return at
+line 290-291, which is taken whenever a pin configured as output is
+read.
 
-All are reachable from userspace through standard V4L2 ioctls.
-
-### Step 5.3-5.4: CALL CHAIN
-Userspace → V4L2 ioctl → subdev pad ops →
-`imx258_enum_mbus_code()/imx258_enum_frame_size()` →
-`imx258_get_format_code()` (reads `vflip->val`, `hflip->val`). The race
-window exists if another thread simultaneously calls `VIDIOC_S_CTRL` to
-change HFLIP/VFLIP.
+Record: Called via gpiolib framework from any GPIO consumer reading pin
+values. Affected path = output pin value reads.
 
 ### Step 5.5: SIMILAR PATTERNS
-Verified that other callers (`imx258_get_pad_format` at line 896,
-`imx258_set_pad_format` at line 918) already properly hold the mutex.
-The fix makes all callers consistent.
+The exact same bug pattern (`val & BIT(offset)` instead of `!!(val &
+BIT(offset))`) was fixed in 7 drivers in this series alone, plus the
+prior 2015 fix for gpioa in the same file.
+
+Record: Systematic pattern across many GPIO drivers. Well-understood,
+well-tested fix pattern.
+
+---
 
 ## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-### Step 6.1: BUGGY CODE IN STABLE TREES
-The buggy commit `4c05213aeed73` exists in v6.11+. It does NOT exist in
-v6.6 or earlier LTS trees. Applicable stable trees: 6.11.y, 6.12.y,
-6.13.y (and 7.0 which is the target here).
+### Step 6.1: BUGGY CODE IN STABLE?
+The buggy line was introduced in 2012. It exists in ALL active stable
+trees.
 
 ### Step 6.2: BACKPORT COMPLICATIONS
-The patch should apply cleanly to any tree that has `4c05213aeed73`. The
-only unrelated change between v6.11 and HEAD is the `asm/unaligned.h`
-rename, which doesn't touch the affected functions.
+One-line change to ancient code. Will apply cleanly to all stable trees.
 
-### Step 6.3: RELATED FIXES
-No other fix for this specific issue was found in any stable tree.
+### Step 6.3: RELATED FIXES IN STABLE
+`ec2cceadfae72` (gpiolib: normalize the return value on behalf of buggy
+drivers) is Cc: stable and will be backported. This provides a
+framework-level safety net, but the per-driver fix eliminates the
+warning.
+
+Record: gpiolib framework fix will be in stable too, but per-driver fix
+prevents warnings.
+
+---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: SUBSYSTEM CRITICALITY
-- **Subsystem**: drivers/media/i2c — camera sensor driver
-- **Criticality**: PERIPHERAL — affects users of the IMX258 camera
-  sensor specifically (common on Raspberry Pi, some laptops)
+Subsystem: drivers/gpio - device driver, GPIO subsystem.
+Criticality: PERIPHERAL - viperboard is an obscure USB GPIO device.
 
 ### Step 7.2: SUBSYSTEM ACTIVITY
-Moderately active — the file has seen ~20 commits in recent history,
-mostly feature additions.
+Moderate activity in GPIO subsystem overall, but viperboard itself has
+minimal activity (last change was commit `d9d87d90cc0b1`).
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: WHO IS AFFECTED
-Users of the IMX258 camera sensor who have writable HFLIP/VFLIP controls
-(v6.11+).
+Users of Nano River Technologies Viperboard USB GPIO hardware - a very
+small population.
 
 ### Step 8.2: TRIGGER CONDITIONS
-- Concurrent V4L2 operations: one thread enumerating formats while
-  another changes HFLIP/VFLIP controls.
-- Also triggers as a lockdep warning with `CONFIG_PROVE_LOCKING` even
-  without concurrency.
-- Userspace-reachable through standard V4L2 ioctls.
+Any read of a GPIO B pin that is configured as output, at offsets 1-15.
+Common operation for any viperboard GPIO user.
 
 ### Step 8.3: FAILURE MODE SEVERITY
-- With lockdep enabled: WARNING splat in kernel log (MEDIUM)
-- Without lockdep: data race on `vflip->val`/`hflip->val` — could return
-  wrong bayer format code, leading to incorrect image format negotiation
-  (MEDIUM)
-- Not a crash or security vulnerability, but a correctness and data race
-  issue.
-
-Record: Severity: MEDIUM
+- **On stable with 86ef402d805d but not ec2cceadfae72**: Returns -EBADE
+  error instead of pin value - **MEDIUM** (functional regression)
+- **On stable with both**: Produces kernel WARNING - **LOW**
+- **On older stable without either**: GPIO consumers get wrong values
+  (e.g., 32 instead of 1) - **MEDIUM** (incorrect behavior)
 
 ### Step 8.4: RISK-BENEFIT RATIO
-- **Benefit**: Fixes a real data race and lockdep warning. Ensures
-  correct format code under concurrent access. LOW-MEDIUM benefit (fixes
-  correctness, not a crash).
-- **Risk**: VERY LOW — only adds mutex_lock/unlock pairs around existing
-  code, matching the pattern already used by other callers in the same
-  driver.
-- **Ratio**: Favorable — minimal risk, clear correctness improvement.
+**BENEFIT**: Fixes incorrect return value for all viperboard GPIO B
+users. Eliminates kernel warnings.
+**RISK**: Effectively zero - one-line `!!()` change, same pattern used
+everywhere.
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: EVIDENCE COMPILATION
-
 **FOR backporting:**
-- Fixes a real race condition (missing synchronization documented by
-  lockdep_assert_held)
-- Small, surgical fix (12 lines added)
-- Obviously correct — matches the pattern of all other callers
-- Accepted through proper maintainer review chain
-- No dependencies — standalone fix
-- Applies to v6.11+ stable trees
+- Real bug fix: incorrect API return value, present since 2012
+- One-line, obviously correct (identical to fix applied to gpioa in
+  2015)
+- Zero regression risk
+- Part of a series where sibling commits were explicitly tagged Cc:
+  stable
+- Fixes a functional regression on v6.15+ (where gpiolib returns -EBADE
+  for non-normalized values)
+- Standalone, no dependencies, applies cleanly to all stable trees
 
 **AGAINST backporting:**
-- Not a crash or security vulnerability — the race leads to incorrect
-  bayer format code, not a panic
-- Limited user base (IMX258 camera sensor users only)
-- The race requires specific concurrent access patterns
-- No Reported-by tag — no evidence users have hit this in practice
-- Lockdep warning is the main practical symptom
+- Obscure hardware with very few users
+- gpiolib framework fix (ec2cceadfae72, Cc: stable) already handles
+  normalization at the framework level
+- Severity is LOW-MEDIUM (worst case is a kernel WARNING with the
+  framework fix in stable)
+- No Fixes: or Cc: stable tags on this specific commit
 
 ### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **Yes** — follows existing pattern,
-   maintainer-signed
-2. Fixes a real bug? **Yes** — data race, lockdep assertion violation
-3. Important issue? **Medium** — data race, but not
-   crash/security/corruption
-4. Small and contained? **Yes** — 12 lines in one file
-5. No new features? **Correct** — purely adds lock protection
-6. Can apply to stable? **Yes** — clean apply expected for v6.11+
+1. Obviously correct and tested? **YES** - `!!()` pattern, identical to
+   prior gpioa fix
+2. Fixes a real bug? **YES** - incorrect return values from GPIO get
+   callback
+3. Important issue? **BORDERLINE** - functional regression on v6.15+,
+   wrong values on older
+4. Small and contained? **YES** - 1 line, 1 file
+5. No new features? **YES**
+6. Can apply to stable? **YES** - cleanly applies to all trees
 
 ### Step 9.3: EXCEPTION CATEGORIES
-Not an exception category — this is a standard bug fix.
+Not an exception category - this is a standard correctness fix.
 
 ### Step 9.4: DECISION
-This is a small, correct fix for a genuine race condition with
-`lockdep_assert_held` documentation proving the locking requirement. It
-was accepted by the media subsystem maintainers. The fix is minimal risk
-and follows the existing locking pattern. While the severity is medium
-(not a crash), it fixes a real data race that could cause incorrect
-format negotiation and triggers lockdep warnings with
-`CONFIG_PROVE_LOCKING`.
+This is a small, safe, obviously correct fix for a real API contract
+violation that has existed since 2012. While the hardware is obscure,
+the fix is zero-risk and the same class of fix was explicitly marked for
+stable in sibling commits. The `!!()` pattern is well-established and
+was already applied to the other get function in this same file.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: SOBs from Ziyi Guo (author), Sakari Ailus
-  (media co-maintainer), Mauro Carvalho Chehab (media maintainer). No
-  Fixes/Reported-by/Cc:stable tags.
-- [Phase 2] Diff analysis: +12/-2 lines across 3 functions in
-  `imx258.c`, adding `mutex_lock/unlock` around
-  `imx258_get_format_code()` calls.
-- [Phase 2] Verified `lockdep_assert_held(&imx258->mutex)` exists at
-  line 696 in `imx258_get_format_code()`.
-- [Phase 2] Verified other callers (`imx258_get_pad_format` at line 896,
-  `imx258_set_pad_format` at line 918) properly hold mutex.
-- [Phase 3] git blame: All buggy call sites introduced by
-  `4c05213aeed73` ("Make HFLIP and VFLIP controls writable"), first in
-  v6.11-rc1.
-- [Phase 3] `git merge-base --is-ancestor`: buggy commit present in
-  v6.11, v6.12, v6.13; NOT in v6.6–v6.10.
-- [Phase 3] git log: No other mutex-related imx258 fixes found.
-- [Phase 4] b4 dig for `4c05213aeed73`: found original submission as
-  patch v5 20/25 at lore.
-- [Phase 4] UNVERIFIED: Could not retrieve full mailing list discussion
-  for the fix commit due to lore anti-scraping.
-- [Phase 5] Verified callers are V4L2 subdev ops, reachable from
-  userspace ioctls.
-- [Phase 5] Verified `imx258_get_format_code` reads `vflip->val` and
-  `hflip->val` (lines 698-699).
-- [Phase 6] Code changes between v6.11 and HEAD in this file are minimal
-  (header rename, CCI conversion), no conflicts expected.
-- [Phase 8] Failure mode: lockdep WARNING + data race leading to
-  incorrect bayer format code. Severity MEDIUM.
+- [Phase 1] Parsed tags: Signed-off-by by author (Torokhov) and
+  maintainer (Golaszewski), Link to lore.
+- [Phase 2] Diff analysis: Single line change `return gpio->gpiob_val &
+  (1 << offset)` → `return !!(gpio->gpiob_val & (1 << offset))` in
+  vprbrd_gpiob_get().
+- [Phase 3] git blame: Buggy code introduced in 9d5b72de0d162
+  (2012-11-05, original driver addition).
+- [Phase 3] git show 80776df4f53e8: Confirmed identical fix was applied
+  to vprbrd_gpioa_get() in Dec 2015 by Linus Walleij, but gpiob_get was
+  missed.
+- [Phase 3] git show 86ef402d805d: Confirmed this commit (v6.15-rc1)
+  made gpiolib return -EBADE for non-normalized values.
+- [Phase 3] git show ec2cceadfae72: Confirmed this commit (Cc: stable)
+  partially reverts to normalize+warn instead of error.
+- [Phase 3] git show e2fa075d5ce19: Confirmed sibling commit (iio: ti-
+  ads7950) has Fixes: 86ef402d805d and Cc: stable.
+- [Phase 4] b4 am: Confirmed this is patch 7/7 in a series of 7
+  identical fixes across GPIO drivers.
+- [Phase 4] Mbox review: No review comments found; applied directly by
+  maintainer.
+- [Phase 5] Verified vprbrd_gpiob_get registered as .get callback at
+  line 428 of gpio-viperboard.c.
+- [Phase 5] Verified gpiolib framework calls gc->get() via
+  gpiochip_get() in gpiolib.c:3277.
+- [Phase 6] Bug exists in all stable trees (code from 2012). Patch
+  applies cleanly.
+- [Phase 6] Confirmed ec2cceadfae72 is Cc: stable and provides
+  framework-level normalization.
+- [Phase 8] Risk: effectively zero for a `!!()` one-liner.
 
 **YES**
 
- drivers/media/i2c/imx258.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-viperboard.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index e50dcfd830f52..bc9ee449a87c5 100644
---- a/drivers/media/i2c/imx258.c
-+++ b/drivers/media/i2c/imx258.c
-@@ -709,12 +709,16 @@ static int imx258_open(struct v4l2_subdev *sd, struct v4l2_subdev_fh *fh)
- 		v4l2_subdev_state_get_format(fh->state, 0);
- 	struct v4l2_rect *try_crop;
+diff --git a/drivers/gpio/gpio-viperboard.c b/drivers/gpio/gpio-viperboard.c
+index 15e495c109d2a..89087fd48a819 100644
+--- a/drivers/gpio/gpio-viperboard.c
++++ b/drivers/gpio/gpio-viperboard.c
+@@ -288,7 +288,7 @@ static int vprbrd_gpiob_get(struct gpio_chip *chip,
  
-+	mutex_lock(&imx258->mutex);
-+
- 	/* Initialize try_fmt */
- 	try_fmt->width = supported_modes[0].width;
- 	try_fmt->height = supported_modes[0].height;
- 	try_fmt->code = imx258_get_format_code(imx258);
- 	try_fmt->field = V4L2_FIELD_NONE;
+ 	/* if io is set to output, just return the saved value */
+ 	if (gpio->gpiob_out & (1 << offset))
+-		return gpio->gpiob_val & (1 << offset);
++		return !!(gpio->gpiob_val & (1 << offset));
  
-+	mutex_unlock(&imx258->mutex);
-+
- 	/* Initialize try_crop */
- 	try_crop = v4l2_subdev_state_get_crop(fh->state, 0);
- 	try_crop->left = IMX258_PIXEL_ARRAY_LEFT;
-@@ -839,7 +843,9 @@ static int imx258_enum_mbus_code(struct v4l2_subdev *sd,
- 	if (code->index > 0)
- 		return -EINVAL;
+ 	mutex_lock(&vb->lock);
  
-+	mutex_lock(&imx258->mutex);
- 	code->code = imx258_get_format_code(imx258);
-+	mutex_unlock(&imx258->mutex);
- 
- 	return 0;
- }
-@@ -849,10 +855,16 @@ static int imx258_enum_frame_size(struct v4l2_subdev *sd,
- 				  struct v4l2_subdev_frame_size_enum *fse)
- {
- 	struct imx258 *imx258 = to_imx258(sd);
-+	u32 code;
-+
- 	if (fse->index >= ARRAY_SIZE(supported_modes))
- 		return -EINVAL;
- 
--	if (fse->code != imx258_get_format_code(imx258))
-+	mutex_lock(&imx258->mutex);
-+	code = imx258_get_format_code(imx258);
-+	mutex_unlock(&imx258->mutex);
-+
-+	if (fse->code != code)
- 		return -EINVAL;
- 
- 	fse->min_width = supported_modes[fse->index].width;
 -- 
 2.53.0
 
